@@ -1,0 +1,160 @@
+package ekptg.model.pfd;
+
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
+import ekptg.helpers.DB;
+
+public class TestData {
+	private static Vector list = new Vector();
+	private static Vector list2 = new Vector();
+	public static void  setCarianFail(String noFail,String tajukFail,String negeri,String seksyen,String status,String tarikhDaftar)throws Exception {
+	    Db db = null;
+	    list.clear();
+	    String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+	    try {
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      
+		      sql = "SELECT A.ID_FAIL, A.TARIKH_DAFTAR_FAIL,A.TAJUK_FAIL, A.NO_FAIL, B.NAMA_NEGERI,C.KOD_SEKSYEN, D.KETERANGAN AS STATUS_FAIL," +
+	      		" E.KETERANGAN AS STATUS_PERGERAKAN_FAIL" +
+	      		" FROM TBLPFDFAIL A, TBLRUJNEGERI B, TBLRUJSEKSYEN C, TBLRUJSTATUS D, TBLRUJSTATUS E,TBLPFDPERGERAKANFAIL F" +    		
+	      		" WHERE " +
+	      		" A.ID_FAIL = F.ID_FAIL(+)" +
+	      		" AND A.ID_NEGERI = B.ID_NEGERI" +
+	      		" AND A.ID_SEKSYEN = C.ID_SEKSYEN " +
+	      		" AND A.ID_STATUS = D.ID_STATUS(+)" +
+	      		" AND F.ID_STATUS = E.ID_STATUS(+)";	
+		      
+		    //NO FAIL
+		      if (noFail != null) {
+					if (!noFail.trim().equals("")) {
+						sql = sql + " AND UPPER(A.NO_FAIL) LIKE '%' ||'" + noFail.toUpperCase() + "'|| '%'";
+					}
+				}
+		      
+		      //TAJUK FAIL
+		      if (tajukFail != null) {
+					if (!tajukFail.trim().equals("")) {
+						sql = sql + " AND UPPER(A.TAJUK_FAIL) LIKE '%' ||'" + tajukFail.toUpperCase() + "'|| '%'";
+					}
+				}
+		      
+		      //NEGERI
+		      if (negeri != null) {
+					if (!negeri.trim().equals("")) {
+						if (!negeri.trim().equals("0")) {
+							sql = sql + " AND A.ID_NEGERI = '" + negeri + "'";
+						}
+					}
+				}
+		      
+		      //SEKSYEN
+		      if (seksyen != null) {
+					if (!seksyen.trim().equals("")) {
+						if (!seksyen.trim().equals("0")) {
+							sql = sql + " AND A.ID_SEKSYEN = '" + seksyen + "'";
+						}
+					}
+				}
+		      
+		      //STATUS
+		      if (status != null) {
+					if (!status.trim().equals("")) {
+						if (!status.trim().equals("0")) {
+							sql = sql + " AND A.ID_STATUS = '" + status + "'";
+						}
+					}
+				}
+		      
+		      //TARIKH DAFTAR FAIL	      
+		      SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
+		      if (tarikhDaftar != null) {
+					if (!tarikhDaftar.toString().trim().equals("")) {			 
+						sql = sql + " AND A.TARIKH_DAFTAR_FAIL = '" + sdf1.format(sdf.parse(tarikhDaftar)).toUpperCase() +"'";
+					}
+				}
+		     
+		      sql = sql + " ORDER BY A.ID_FAIL DESC";
+		     
+		      ResultSet rs = stmt.executeQuery(sql);
+		    
+		      Hashtable h;
+		      int bil = 1;
+		      int count = 0;
+		      while (rs.next()) {
+		    	  h = new Hashtable();
+		    	  h.put("bil", bil);
+		    	  h.put("id_Fail",rs.getString("ID_FAIL"));
+		    	  h.put("no_Fail", rs.getString("NO_FAIL")== null? "":rs.getString("NO_FAIL"));
+		    	  h.put("tajuk_Fail", rs.getString("TAJUK_FAIL")== null?"":rs.getString("TAJUK_FAIL"));
+		    	  h.put("keterangan1", rs.getString("STATUS_FAIL")== null? "":rs.getString("STATUS_FAIL"));
+		    	  list.addElement(h);
+		    	  bil++;
+		    	  count++;
+		    	  
+		      }
+		     
+		      if (count == 0){
+		    	  h = new Hashtable();
+		    	  h.put("bil","");
+		    	  h.put("id_Fail",0);
+		    	  h.put("no_Fail", "Tiada rekod.");
+		    	  h.put("tajuk_Fail","");
+		    	  h.put("keterangan1", "");
+		    	  
+		    	  list.addElement(h);
+		      }
+		      //return list;
+		    } finally {
+		      if (db != null) db.close();
+		    }
+		}
+		 public static Vector getList(){
+			 
+			  return list;
+		  }
+	    
+	public static void  add(Hashtable data)throws Exception {
+	 	Db db = null;
+	    String sql = "";
+	    Blob blob = null;
+	    
+	   try
+	    {	 
+	    	  long idLampiran = DB.getNextID("TBLPFDRUJLAMPIRAN_SEQ");
+	    	  String idDokumen = (String)data.get("id_Dokumen");
+	    	  String namaFail = (String)data.get("nama_Fail");
+		      String jenisMime = (String)data.get("jenis_Mime");
+		      Blob content = (Blob) data.get("content");
+		      
+		       
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      SQLRenderer r = new SQLRenderer();
+		  
+			  r.add("id_Lampiran",idLampiran);
+		      r.add("id_Dokumen",idDokumen);
+		      r.add("nama_Fail", namaFail);
+		      r.add("jenis_Mime", jenisMime);
+		      r.add("content",content);
+		      
+		      sql = r.getSQLInsert("tblpfdrujlampiran");  
+		      stmt.executeUpdate(sql);
+
+	    }finally {
+		      if (db != null) db.close();
+	    }
+	 
+
+ }
+
+}
