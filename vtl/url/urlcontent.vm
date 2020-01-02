@@ -1,0 +1,41 @@
+$stringbuffer.toString()
+
+#if ( $isLogin && $userId == "anon" )
+
+<table width="100%"><tr><td>
+
+<form name="${formname}" method="post">
+<table width="100%" cellpadding="0" cellspacing="1" bgcolor="lightgrey">
+<tr class="table_row">
+<td align="left">
+<input type="button" value="Edit this content..." onclick="openInEditor('$url')"
+style="font-family:arial; font-size:8pt; font-weight:bold">						
+		<input type="button" value="X" onclick="delete_${formname}()"
+		style="font-family:arial; font-size:8pt; font-weight:bold">
+</td>
+</tr>
+<tr>
+<td align="left">
+<i>$!url</i>
+</td>
+</tr>
+</table>
+<input type="hidden" name="$formname" value="$formname">
+</form>
+
+</td></tr></table>
+<script>
+function change_${formname}() {
+	document.${formname}.action = "?command=changeProperties";
+	document.${formname}.submit();	
+}
+function delete_${formname}() {
+if ( !window.confirm('Are you sure to delete this HTML Module?') ) return;
+	document.${formname}.action = "../x/${securityToken}/lebah.portal.XModule?command=deleteModule&moduleId=$formname";
+	document.${formname}.submit();	
+}
+function openInEditor(url) {
+window.open('../x/${securityToken}/lebah.util.HtmlEditorModule?command=editContent&url=' + url,'mywindow','width=600,height=400,toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,copyhistory=yes,resizable=yes');
+}
+</script>
+#end

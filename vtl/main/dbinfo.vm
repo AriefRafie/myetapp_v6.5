@@ -1,0 +1,17 @@
+##$dbUrl <br>
+##schema : $DBProperties.get("user")<br>
+##AD Server :$DBProperties.get("ADServer")<br>
+##Instance : $catalina <br>
+
+<fieldset> <legend>Server Information</legend>
+##Connected to :$host_name <br>
+#if ($AppServer == "")
+#set ($AppServer = "localhost")
+#end
+Apps Server:$AppServer <br>
+Scema: $DBProperties.get("user")<br>
+Service Name:$instance_name <br>
+DB Server:$instance_ip <br>
+Startup time :$startup_time <br>
+State Code: $StateCode
+</fieldset>

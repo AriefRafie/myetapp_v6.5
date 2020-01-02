@@ -1,0 +1,49 @@
+<div id="div_update_status_empty"></div>
+	<table width="100%" cellspacing="0">
+		<tr>
+			<td >
+			Tukar Status: $!permohonan.fail.noFail
+			</td>
+			<td align="right" >
+			##<input type="button" value="Update Status" onclick="if ( checkUpdateStatus() ) { doDivAjaxCall$formname('jts_status_$permohonan.id','save_jts_status_update','update_status_permohonan_id=$permohonan.id');$('jts_status_update').style.visibility='hidden'; }">
+			##<input type="button" value="Lihat Log" onclick="$('jts_status_log').style.visibility='visible';doDivAjaxCall$formname('jts_status_log','jts_status_log','log_status_permohonan_id=$permohonan.id');">
+			##<input type="button" value="Tutup" onclick="$('jts_status_update').style.visibility='hidden';">
+
+			<input type="button" value="Tukar Status" onclick="doDivAjaxCall$formname('div_jts_status','save_jts_status_update','status_permohonan_id=$permohonan.id');">
+			</td>
+		</tr>
+	</table>
+
+<fieldset>
+<legend class="legend2">No. Permohonan:</legend>
+<table width="100%">
+<tr><td style="width:150px"></td><td style="width:10px"></td><td></td></tr>
+<tr><td class="label">No. Permohonan</td><td>:</td><td>$!permohonan.fail.noFail</td></tr>
+<tr><td class="label">No. Rujukan JTS/JTU</td><td>:</td><td>$!permohonan.noRujukanPTG</td></tr>
+<tr><td class="label">No. Rujukan Lain</td><td>:</td><td>$!permohonan.noRujukanPTD</td></tr>
+<tr><td class="label">No. Rujukan UPT</td><td>:</td><td>$!permohonan.noRujukanUPT</td></tr>
+</table>
+</fieldset>
+
+<fieldset>
+<legend class="legend2">Tukar Status:</legend>
+<table width="100%">
+
+<tr><td style="width:150px"></td><td style="width:10px"></td><td></td></tr>
+
+<tr><td class="label">Status JTS/JTU</td><td>:</td>
+<td>
+<select class="texts" name="jts_status_id">
+<option value=""> - </option>
+#foreach( $s in $jts_status_list )
+<option #if ( $permohonan.jtsStatus.id == $s.id ) selected #end value="$s.id">$s.nama</option>
+#end
+</select>
+</td></tr>
+<tr><td class="label" valign="top">Catatan</td><td valign="top">:</td>
+<td>
+<textarea class="textarea" style="height:100px" id="jts_status_remark" name="jts_status_remark"></textarea>
+</td>
+
+</table>
+</fieldset>

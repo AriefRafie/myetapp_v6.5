@@ -1,0 +1,29 @@
+<table width="80%" cellpadding="1" cellspacing="2">
+<tr><td class="label" style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+<tr><td class="label">No. Fail Permohonan</td><td>:</td><td><input class="texts" type="text" name="find_noFail" value="$!find_noFail"></td></tr>
+<tr><td class="label">No. Rujukan JTS/JTU</td><td>:</td><td><input class="texts" type="text" name="find_noRujukanPTG" value="$!find_noRujukanPTG"></td></tr>
+<tr><td class="label">No. Rujukan Lain</td><td>:</td><td><input class="texts" type="text" name="find_noRujukanPTD" value="$!find_noRujukanPTD"></td></tr>
+<tr><td class="label">No. Rujukan UPT</td><td>:</td><td><input class="texts" type="text" name="find_noRujukanUPT" value="$!find_noRujukanUPT"></td></tr>
+
+#**
+<tr><td class="label">Status Fail</td><td>:</td>
+<td>
+<select class="texts" style="width:200px" name="find_status">
+<option value="">SEMUA STATUS</option>
+<option #if ( $find_status == "11" ) selected #end value="11">PERMOHONAN CAWANGAN</option>
+<option #if ( $find_status == "127" ) selected #end value="127">DISAHKAN PENGARAH</option>
+</select>
+</td></tr>
+**#
+
+<tr><td class="label">Status JTS/JTU</td><td>:</td>
+<td>
+<select class="texts" style="width:200px" name="find_jts_status">
+<option value="">SEMUA STATUS</option>
+#foreach( $s in $jts_status_list )
+<option #if ( $find_jts_status == $s.id ) selected #end value="$s.id">$s.kod - $s.nama</option>
+#end
+</select>
+</td></tr>
+
+</table>

@@ -1,0 +1,1 @@
+<textarea id="KETERANGAN_$ID_OBPERMOHONAN" name="KETERANGAN_$ID_OBPERMOHONAN" style="display:none" >$KETERANGAN</textarea>	

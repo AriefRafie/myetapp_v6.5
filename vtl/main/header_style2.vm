@@ -1,0 +1,33 @@
+<table class="page_header" cellpadding="1" cellspacing="0" width="100%"  border="0">
+    <tr>
+      <td align="left" colspan="2">
+      
+       #if ( $userIsLogged )
+          #parse ( "vtl/main/user_role_tabs_menu.vm" )
+       #end      
+      
+      </td>
+    </tr>
+    <tr>
+        <td valign="top">
+		#parse ( "vtl/main/portal_title.vm" )
+      	  </td>
+        <td valign="top" align="right">
+        #if ( $userIsLogged )
+		#parse ( "vtl/main/greeting.vm" )
+        #elseif ( $showLogin )
+		#parse ( "vtl/main/login_input2.vm" )                   
+        #end
+      </td>
+    </tr>
+</table>
+
+<script>
+		function changeVisitor(visitor) {
+			var visitor = document.flogin.visitor.value;
+			document.location = "?visitor="+visitor;
+		}
+				function changeRole(role) {
+			document.location = "?myrole="+role;
+		}
+		</script> 

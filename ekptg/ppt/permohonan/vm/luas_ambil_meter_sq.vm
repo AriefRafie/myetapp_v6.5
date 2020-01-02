@@ -1,0 +1,6 @@
+<input disabled name="luas_ambil_meter_sq" class="texts" style="width:100px"
+#if ( $_util.isNumeric("$luas_ambil_meter_sq") )
+value="$numFormat.format($!luas_ambil_meter_sq)"> METER PERSEGI
+#else
+value="$!luas_ambil_meter_sq"> METER PERSEGI
+#end

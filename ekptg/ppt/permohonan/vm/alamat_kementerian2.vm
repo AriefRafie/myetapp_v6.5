@@ -1,0 +1,8 @@
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+#input_disabled("alamat1" "Alamat" "$!kementerian.alamat1" "500px")
+#input_disabled("alamat2" "" "$!kementerian.alamat2" "500px")
+#input_disabled("alamat2" "" "$!kementerian.alamat3" "500px")
+#input_disabled("poskod" "Poskod" "$!kementerian.poskod" "500px")
+#input_disabled("negeri" "Negeri" "$!kementerian.negeri.namaNegeri" "500px")
+</table>

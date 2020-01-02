@@ -1,0 +1,10 @@
+
+$dateFormat.applyPattern("EEE d MMM, yyyy")
+
+<td style="width:200px;font-weight:bold">Nama</td>
+<td style="width:150px;font-weight:bold">Nombor Pengenalan</td>
+<td style="width:100px;font-weight:bold">Tarikh Lahir</td>
+<td style="width:350px;font-weight:bold">Alamat</td>
+
+
+

@@ -1,0 +1,104 @@
+#if ( $eAduan != "" )
+	#foreach ( $uRecord in $eAduan )
+		#set ( $u_ID = $uRecord.id )
+		#if ( $uRecord.namaPengadu != "") #set ( $u_Name = $uRecord.namaPengadu ) #else #set ( $u_Name = "" ) #end
+		#if ( $uRecord.emailPengadu != "" ) #set ( $u_Emel = $uRecord.emailPengadu ) #else #set ( $u_Emel = "" ) #end
+		#if ( $uRecord.phonePengadu != "" ) #set ( $u_Phone = $uRecord.phonePengadu ) #else #set ( $u_Phone = "" ) #end
+		#if ( $uRecord.jenisAduan.id != "" ) #set ( $u_Aduan = $uRecord.jenisAduan.jenisAduan ) #else #set ( $u_Aduan = "" ) #end 
+		#if ( $uRecord.catatan != "" ) #set ( $u_Catatan = $uRecord.catatan ) #else #set ( $u_Catatan = "" ) #end 
+	#end
+#end
+#if ($u_Aduan == "")
+	#set ($u_Aduan="")
+#end
+#if ($u_Seksyen == "")
+	#set ($u_Seksyen="")
+#end
+<div class="content">
+<center>
+<fieldset>
+<form name="f" method="post">
+<table width="100%" border="0" cellpadding="1" cellspacing="3">
+    <tr>
+        <td align="left"><h2>Nama</h2></td>
+        <td>:</td>
+        <td><input color="#C0C0C0" type="text" readonly="readonly" name="namaPengadu" id="namaPengadu" value="$u_Name"/></td>
+    </tr>
+    <tr>
+        <td align="left"><h2>E-mail</h2></td>
+        <td>:</td>
+        <td><input type="text" readonly="readonly" name="emailPengadu" id="emailPengadu" value="$u_Emel" tabindex="1"/></td>
+    </tr>
+    <tr>
+        <td align="left"><h2>Phone No.</h2></td>
+        <td>:</td>
+        <td><input type="text" readonly="readonly" name="phonePengadu" id="phonePengadu" value="$u_Phone" tabindex="1"/></td>
+    </tr>
+    <tr>
+        <td align="left"><h2>Jenis Aduan</h2></td>
+        <td>:</td>
+        <td><input type="text" readonly="readonly" name="phonePengadu" id="phonePengadu" value="$u_Aduan" tabindex="1"/></td>
+    </tr>
+    <tr>
+        <td align="left" valign="top"><h2>Aduan</h2></td>
+        <td valign="top">:</td>
+        <td><Textarea name="catatan" readonly="readonly" id="catatan" tabindex="2"/>$u_Catatan</textarea></td>
+    </tr>
+    <tr>
+        <td align="left" valign="top"><h2>Catatan</h2></td>
+        <td valign="top">:</td>
+        <td><Textarea name="catatanSelesai" id="catatanSelesai" tabindex="2"/></textarea></td>
+    </tr>
+    <tr>
+        <td align="left"><h2>Status Semakan</h2></td>
+        <td>:</td>
+        <td>
+            <select name="status" style="width:95%">
+			<option value="">- PILIHAN -</option>
+            <option value="SELESAI">SELESAI DISEMAK</option>
+            <option value="SEMAKKAN SEKSYEN">SEMAKKAN SEKSYEN</option>
+            <option value="DALAM PROSES">DALAM PROSES</option>
+            </select>
+        </td>
+    </tr>
+</table>
+</fieldset>
+</center>
+<table width="90%" border="0" cellpadding="1" cellspacing="3" align="center">
+    <tr>
+        <td colspan="3" align="left">
+            <input id="button" type="submit" value="Hantar" tabindex="3" onclick="submitRegister('update')">
+        </td>
+    </tr>   
+</table>
+<input type="hidden" name="command">
+<input type="hidden" name="idAduan" id="idAduan" value="$u_ID">
+<input type="hidden" name="tarikhKemaskini" id="tarikhKemaskini" value="$dateFormat.format($now)">
+</form>
+<table width="90%" border="0" align="center">
+    <tr>
+        <td nowrap class="content">
+        <b>
+		#if ( $saveinfo == "Success" )
+		<font color="blue" size="1.3em">
+		    Aduan berjaya dikemaskini. <br>
+		    No rujukan aduan : <u>$idAduan</u>
+		</font>
+		#elseif ( $saveinfo == "unSuccess" )
+		<font color="red" size="1.3em">
+			Aduan tidak berjaya dikemaskini. <br>
+			Sila cuba sebentar lagi.
+		</font>		 
+		#end
+        </b>
+        </td>
+    </tr>
+</table>
+</div>
+<script>
+function submitRegister(s) {
+	document.f.command.value = s;
+	document.f.action = "";      
+	document.f.submit(); 
+}   
+</script>

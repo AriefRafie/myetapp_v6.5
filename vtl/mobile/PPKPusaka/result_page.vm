@@ -1,0 +1,107 @@
+<div class="regular" id="div_list" name="div_list" style="position:fixed;visibility:" + $divList + ";width:100%">
+<table width="100%" border="0" cellpadding="1" cellspacing="10">	
+	<tr>
+        <td valign="top" nowrap><label for="negeri">Nama Simati</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!recSimati.simati.namaSimati</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="daerah">No Pengenalan</label></td>
+        <td valign="top">:</td>
+        #if ( $recSimati.simati.noKPLain ) 
+        	#set ( $KPSimati = $recSimati.simati.noKPLain )
+        #elseif ( $recSimati.simati.noKPLama )
+        	#set ( $KPSimati = $recSimati.simati.noKPLama )
+        #elseif ( $recSimati.simati.noKPBaru )
+        	#set ( $KPSimati = $recSimati.simati.noKPBaru )
+        #end
+    	<td valign="top">$KPSimati</td>
+    </tr>   
+    <tr>
+        <td colspan="3" align="left">
+            <input id="button" type="button" value="Tutup" onclick="javascript:getData('0')">
+        </td>
+    </tr>  
+</table>
+</div>
+#set ( $jenisPengenalan = "" )
+#set ( $count = 0 )
+#if ( $records.size() > 0 )
+	#foreach ( $record in $records )
+		#set ( $namaPemohon = $!record.permohonan.pemohon.namaPemohon )
+		#if ( $record.permohonan.pemohon.noKPBaru )
+			#set ( $noPengenalanDiri = $record.permohonan.pemohon.noKPBaru )
+			#set ( $jenisPengenalan = "MyKad" )
+		#elseif ( $record.permohonan.pemohon.noKPLama )
+			#set ( $noPengenalanDiri = $record.permohonan.pemohon.noKPLama )
+			#set ( $jenisPengenalan = "I.C. Lama" )
+		#elseif ( $record.permohonan.pemohon.noKPLain )
+			#set ( $noPengenalanDiri = $record.permohonan.pemohon.noKPLain )
+			#set ( $jenisPengenalan = "Lain-Lain" )
+		#end
+	#end
+#else
+	#set ( $namaPemohon = "-" )
+	#set ( $noPengenalanDiri = "-" )
+#end
+<div class="content">
+<center>
+<fieldset>
+<table width="100%" cellspacing="1" cellpadding="3" align="center">
+	<tr><td width="30%" align="left">Nama Pemohon</td><td width="2%">:</td><td width="65%" align="left">$namaPemohon</td></tr>
+	<tr><td width="30%" align="left">No Pengenalan Diri</td><td width="2%">:</td><td width="65%" align="left">$noPengenalanDiri &nbsp;&nbsp;&nbsp;(&nbsp;$!jenisPengenalan&nbsp;)</td></tr>
+</table>
+</fieldset>
+</center>
+<form name="f" method="post">
+<table width="95%" cellspacing="1" cellpadding="3" align="center">
+	<tr><td>&nbsp;</td></tr>
+	#if ( $records.size() > 0 )
+		<tr class="table_header">
+			<td scope="row" align="center"><strong>Bil.</strong></td>
+			#parse("$row_title_page")
+		</tr>
+	#else
+		<tr class="table_header">
+			<td scope="row" align="center"><strong>Makluman!!!</strong></td>
+		</tr>
+	#end
+	#set ( $list = '' )
+	#if ( $records.size() > 0 )
+		#foreach ( $list in $records )
+		#set ( $count = $count + 1 )
+		#if ( $count % 2 == 0 ) #set ( $bgcolor = "" ) #else #set ( $bgcolor = "#EBBC5D" ) #end
+		<tr id="row_$!list.id" height="30px" style="background-color:$bgcolor;" onmouseout="$('row_$!list.id').style.backgroundColor='$bgcolor'" onmouseover="$('row_$!list.id').style.backgroundColor='#ccc'">
+			<td align="center">$count.</td>
+			#parse("$row_data_page")
+		</tr>
+		#end
+	#else
+		<tr>
+			<td align="center" style="background-color:#EBBC5D"><i>Pilihan tidak tepat / Tiada capaian dalam rekod</i></td>
+		</tr>	
+	#end
+</table>
+
+#if ( $jenisPengenalan == "MyKad" ) #set ( $jenisKP = "noKPBaru") #end
+#if ( $jenisPengenalan == "I.C. Lama" ) #set ( $jenisKP = "noKPLama") #end
+#if ( $jenisPengenalan == "Lain-Lain" ) #set ( $jenisKP = "noKPLain") #end
+<input type="hidden" name="command">
+<input type="hidden" name="dataRecord">
+<input type="hidden" name="submission" value="return">
+<input type="hidden" name="idPemohon" value="$idPemohon">
+<input type="hidden" name="idSimati" value="$idSimati">
+<input type="hidden" name="jenisKPPemohon" value="$jenisKPPemohon">
+<input type="hidden" name="jenisKPSimati" value="$jenisKPSimati">
+<input type="hidden" name="selection" value="$PPKSelection">
+</form>
+</div>
+<script>
+function getData(x) {
+	document.f.submission.value = "getResult";
+	document.f.command.value = 'getData';
+	document.f.dataRecord.value = x;
+	document.f.action = "";  
+	document.f.submit(); 
+}
+</script>

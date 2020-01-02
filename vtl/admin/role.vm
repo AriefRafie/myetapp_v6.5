@@ -1,0 +1,176 @@
+<form name="roleForm" method="post">
+<table id="toptable" width="100%" border="0" cellpadding="2" cellspacing="0">
+<tr>
+    <td>
+    <fieldset>
+        <table cellpadding="2" cellspacing="0">
+        <tr>
+            <td>Role Name</td>
+            <td><input type="text" name="name" size="50" maxlength="99"></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><input type="text" name="description" size="50" maxlength="254"></td>
+        </tr>
+
+    <tr>
+        <td >Theme</td>
+        <td>
+            <select id="theme" name="theme">
+
+            #foreach ( $style in $pageStyleList )
+                #if ( $m_style == $style.getCssName() )
+                    #set ( $selected = "selected")
+                #else
+                    #set ($selected = "")
+                #end
+                <option value="$style.getCssName()" $selected>$style.getTitle()</option>
+            #end
+            </select>
+        </td>
+    </tr>     
+    
+
+        <tr>
+            <td colspan="2">
+                <input class="stylobutton"  type="button" name="btnAdd" value="Add Role" onclick="doAddRole()">
+                <input class="stylobutton"  type="button" name="btnUpdate" value="Update Role" disabled onclick="doUpdateRole()">
+                <input class="stylobutton"  type="button" value="Reset" onclick="doReset()">
+            </td>
+        </tr>
+    </table>
+    </fieldset>
+    </td>
+</tr>
+
+<tr>
+    <td>
+    	    
+    	    <fieldset>
+        <table width="100%" cellpadding="1" cellspacing="0" border="0">
+        <tr>
+            <td class="table_header" colspan="5"><b>&nbsp;Available Roles</b></td>
+        </tr>
+        <tr>
+            <td class="table_header">
+                <table width="100%" cellpadding="2" cellspacing="1" border="0">
+                <tr>
+                    <td width="5%"></td>
+                    <td width="20%"><b>Name</b></td>
+                    <td width="35%"><b>Description</b></td>
+                    <td width="15%"><b>Theme</b></td>
+                    <td width="5%"></td>
+                    <td width="5%"></td>
+                </tr>
+        #if ( $roleList.isEmpty() )
+                <tr>
+                    <td class="row1" colspan="5" align="center">No role was found</td>
+                </tr>
+        #else
+            #foreach ( $role in $roleList )
+                #set( $i = $velocityCount )
+                #if ( ($i % 2) == 0 )
+                    #set( $row = "row2" )
+                #else
+                    #set( $row = "row1" )
+                #end
+                <tr>
+                    <td class="$row" valign="top" align="center">$i</td>
+                    <td class="$row" valign="top">$role.getName()</td>
+                    <td class="$row" valign="top">$role.getDescription()</td>
+                    <td class="$row" valign="top">$role.getTheme()</td>
+                    <td class="$row" valign="top" align="center">
+                    #if ( $role.getName() != "root" )
+                        <a href="javascript: doEditRole('$role.getName()','$role.getDescription()','$role.getTheme()')"><img src="../img/edit.gif" border="0"></a>
+                    #end
+                    </td>
+                    <td class="$row" valign="top" align="center">
+                    #if ( $role.getName() != "root" )
+                        <a href="javascript: doDeleteRole('$role.getName()')"><img src="../img/delete.gif" border="0"></a>
+                    #end
+                    </td>
+                </tr>
+            #end
+        #end
+                </table>
+                </fieldset>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>
+<input type="hidden" name="form_action" value="">
+<input type="hidden" name="old_name" value="">
+</form>
+<script>
+function doSubmit()
+{
+    document.roleForm.action = "";
+    document.roleForm.submit();
+}
+function doAddRole()
+{
+    if (document.roleForm.name.value == "")
+    {
+        alert("Role Name required");
+        document.roleForm.name.focus();
+    } else if (document.roleForm.description.value == "")
+    {
+        alert("Description required");
+        document.roleForm.description.focus();
+    } else
+    {
+        document.roleForm.form_action.value = "add_role";
+        document.roleForm.old_name.value = "";
+        doSubmit();
+    }
+}
+function doEditRole(name,des,theme)
+{
+    document.roleForm.name.value = name;
+    document.roleForm.description.value = des;
+    document.roleForm.old_name.value = name;
+    document.roleForm.btnAdd.disabled = true;
+    document.roleForm.btnUpdate.disabled = false;
+    $jquery('#theme').val(theme); 
+    window.location.hash = 'toptable'; 
+}
+function doUpdateRole()
+{
+    if (document.roleForm.name.value == "")
+    {
+        alert("Role Name required");
+        document.roleForm.name.focus();
+    } else if (document.roleForm.description.value == "")
+    {
+        alert("Description required");
+        document.roleForm.description.focus();
+    } else
+    {
+        document.roleForm.form_action.value = "update_role";
+        doSubmit();
+    }
+}
+function doReset()
+{
+    document.roleForm.old_name.value = "";
+    document.roleForm.name.value = "";
+    document.roleForm.description.value = "";
+    document.roleForm.btnUpdate.disabled = true;
+    document.roleForm.btnAdd.disabled = false;
+    $jquery('#theme').val('default.css'); 
+}
+function doDeleteRole(name)
+{
+    if (confirm("Delete ["+name+"] role?") == false)
+    {
+        return;
+    } else
+    {
+        document.roleForm.old_name.value = name;
+        document.roleForm.form_action.value = "delete_role";
+        doSubmit();
+    }
+}
+</script>

@@ -1,0 +1,116 @@
+#if ( $updateUserSuccess && $operation == "update" )
+    <table width="100%" border="0">
+        <tr>
+            <td>
+            <font color="blue">
+            <b>
+            Successfully updated: <u>$user_name<u>
+            </b>
+            </font>
+            </td>
+        </tr>
+    </table>
+#elseif ( $operation == "update" )
+    <table width="100%" border="0">
+        <tr>
+            <td>
+            <font color="red">
+            <b>
+            Operation has failed!!
+            </b>
+            </font>
+            </td>
+        </tr>
+    </table>
+
+#end
+
+#if ($mode == "doUpdate")
+#set ($style = "")
+#else
+#set ($style = "readonly class='disabled'")
+#end
+<br>
+<fieldset>
+<legend><i>My Profile</i></legend>
+<table border="0" cellpadding="2" cellspacing="2">
+     #if ( $session.getAttribute("_ekptg_user_type") == "online")
+      <tr>
+       <td >Emel</td>
+                    <td><input readonly $style name="user_login" size="20" value="$!user_login"></td>
+           </tr>
+     #else
+    <tr>
+        <td >ID Pengguna</td>
+        <td><input name="user_login" size="20" value="$user_login" readonly class="disabled"></td>
+    </tr> 
+    #end
+    <tr>
+        <td >Nama Pengguna</td>
+        <td><input $style name="user_name" size="50" value="$user_name"></td>
+    </tr>
+   
+   #if ( $session.getAttribute("_ekptg_user_type") == "internal")
+<!--   <tr>
+       <td >No KP Baru</td>
+       <td><input $style name="no_kp_baru" size="25" value="$!no_kp_baru"></td>
+   </tr>
+-->
+   <tr>
+       <td >Emel</td>
+       <td><input $style name="emel" size="50" value="$!emel"></td>
+   </tr>
+   #end
+    <tr>
+        <td >Kata Laluan</td>
+        <td><input $style type="password" name="user_password" size="30" value=""></td>
+    </tr>
+    <tr>
+        <td >Pastikan Kata Laluan</td>
+        <td><input $style type="password" name="user_password2" size="30" value=""></td>
+    </tr>   
+    #if ( $session.getAttribute("_ekptg_user_type") == "internal")
+         <tr>
+             <td >Kementerian</td>
+             <td>$!nama_pejabat</td>
+        </tr>
+        <!-- <tr>
+			<td >Agensi</td>                     
+          	<td>$!nama_seksyen</td>
+        </tr> -->
+     	
+        
+	#end
+    <tr>
+        <td colspan="2" align="left">
+             #if ($mode == "doUpdate")
+             <input class="stylobutton100" type="button" value="Simpan" onclick="submitRegister()">
+             #else
+            <input class="stylobutton100" type="button" value="Kemaskini" onclick="javascript:doAjaxCall${formname}('modeUpdate')">
+            #end
+        </td>
+    </tr>
+    </table>
+    <table>
+</table>
+</fieldset>
+<input type="hidden" name="user_role" value="$user_role">
+<script>
+function submitRegister() {
+    if ( document.${formName}.user_name.value == "" ) { document.${formName}.user_name.focus(); return; }
+    if ( document.${formName}.user_password.value != document.${formName}.user_password2.value ) {
+        alert("Confirm password does not match!");
+        document.${formName}.user_password2.focus();
+        return;
+    }
+
+    document.${formName}.command.value = "update";
+    document.${formName}.action = "";
+    document.${formName}.submit();
+}   
+function resetFields() {
+    document.${formName}.user_name.value = "";
+    document.${formName}.user_password.value = "";  
+    document.${formName}.user_name.focus();
+}
+</script>

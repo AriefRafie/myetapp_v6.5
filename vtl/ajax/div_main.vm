@@ -1,0 +1,10 @@
+#parse("$vmName")
+
+<script>
+	
+	$jquery('#'+'$contentName'+' input').each(function(key, value) {
+	//console.log("input x div main : "+this.type);
+	tukarNamaButtonCetak(this);
+});
+	
+</script>

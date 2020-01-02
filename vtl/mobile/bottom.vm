@@ -1,0 +1,39 @@
+<div class="content">
+<div class="button">
+<table border="0" cellpadding="3" cellspacing="1" width="90%" align="center">
+	#set ($dispSimati="")
+	#set ($dispPemohon="")
+	#set ($m_pemohon="")
+	#set ($m_simati="")
+	#set ($dispPemohonText="")
+	#set ($dispSimatiText="")
+	#set ($selection="")
+<tr><td><a href="$!userSessionId?_portal_module=main_menu">Halaman Utama</a></td></tr>
+#if ( $moduleName.startsWith("aduan") )
+	<tr><td><a href="$!userSessionId?_portal_module=etapp_aduan">Kembali</a></td></tr>
+#elseif ( $moduleName.startsWith("uAduan") )
+	<tr><td><a href="$!userSessionId?_portal_module=aduan_semakaduan">Kembali</a></td></tr>
+#elseif ( $ppkPath.equals("result_page.vm") && $moduleName.equals("etapp_ppkpusaka") )
+	#set ($pPermohonan="")
+	<tr><td><a href="$!userSessionId?_portal_module=etapp_ppkpusaka">Kembali</a></td></tr>
+#elseif ( $htpPath.equals("result_page.vm") && $moduleName.equals("etapp_htphakmilik"))
+	#set ($htpmilik="")
+	#set ($m_negeri="")
+	#set ($m_daerah="")
+	#set ($m_mukim="")
+	#set ($m_kementerian="")
+	<tr><td><a href="$!userSessionId?_portal_module=etapp_htphakmilik">Kembali</a></td></tr>
+#elseif ( $moduleName.endsWith("logout") )
+	<tr><td><a href="$!userSessionId?_portal_module=mobile_login">Log Masuk</a></td></tr>
+#end
+</table>
+</div>
+</div>
+<center>
+<div class="footer1">
+<div class="footer2">
+<div class="clear"></div>
+   	<p>Hakcipta Terpelihara <span style="font-size:1.2em">&copy;</span> Kerajaan Malaysia 2017. Jabatan Ketua Pengarah Tanah dan Galian Persekutuan</p>
+</div>
+</div>
+</center>

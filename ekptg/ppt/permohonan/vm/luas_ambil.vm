@@ -1,0 +1,6 @@
+<input type="hidden" name="unitLuasAmbil_id" value="$tanah.unitLuasAmbil.id">
+#foreach( $str in $listNamaLuasAmbil)
+#if ( $_util.isNumeric("$str") ) <input name="luas_ambil" value="$str" class="texts" style="width:100px"> #else $str #end
+#end
+
+

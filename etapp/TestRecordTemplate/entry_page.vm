@@ -1,0 +1,4 @@
+#title("HTP Permohonan")
+#input("nama" "Nama Pemohon" "$!r.nama")
+#input("nomborPengenalan" "No IC" "$!r.nomborPengenalan")
+#input("alamatTetap1" "Alamat Tetap" "$!r.alamatTetap1")

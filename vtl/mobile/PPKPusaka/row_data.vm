@@ -1,0 +1,7 @@
+<td valign="middle" align="center"><a href="javascript:getData('$!list.id')">$!list.permohonan.noPermohonan</a></td>
+#set ( $date="" )
+#if ( $list.permohonan.tarikhMohon )
+#set ( $date = $dateFormat.format($!list.permohonan.tarikhMohon) )
+#end
+<td valign="middle" align="center">$date</td>
+<td valign="middle" align="center">$!list.permohonan.status.keterangan</td>

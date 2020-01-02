@@ -1,0 +1,39 @@
+<table class="page_header">
+    <tr>
+      <td align="right" colspan="2">
+       ##if ( $userIsLogged )
+       ##parse ( "vtl/main/user_role_tabs_menu.vm" )
+       ##end      
+      
+      </td>
+    </tr>
+    <tr>
+        <td valign="top">
+		#parse ( "vtl/main/portal_title.vm" )
+      	  </td>
+        <td valign="top" align="right">
+       </td>
+    </tr>
+    <tr>
+    <td valign="top" align="right"></td>
+    <td valign="bottom" align="right"> 
+    ##Azam Remark
+    ##if ( $userIsLogged )
+    ##parse ( "vtl/main/greeting.vm" )
+    ##end
+  </td>
+    </tr>
+    #if ( $userIsLogged )
+    #parse ( "vtl/main/greeting.vm" )
+    #end
+</table>
+
+<script>
+function changeVisitor(visitor) {
+	var visitor = document.flogin.visitor.value;
+	document.location = "?visitor="+visitor;
+}
+	function changeRole(role) {
+	document.location = "?myrole="+role;
+}
+</script> 

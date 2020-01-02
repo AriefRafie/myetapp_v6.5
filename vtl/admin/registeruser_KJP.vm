@@ -1,0 +1,178 @@
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+    <td width="8" nowrap></td>
+    <td>
+    #if ( $registerUserStatus == "success" )
+    	Successfully registered new user: <u>$user_name<u><p></p>
+    #else
+    
+    #if ( $registerUserStatus == "userexist" )
+    	ID Pengguna [$!user_login] sudah wujud !<br/><br/>
+    #end
+<fieldset>
+<legend>Maklumat Pengguna - Kementerian Jabatan Pengguna</legend>
+<table border="0" cellpadding="2" cellspacing="2">
+	<tr>
+		<td width='1%'><font color="red">*</font></td>
+        <td width='30%'>Pengguna</td>
+        <td width='69%'>
+        					#set($checked1 = "")
+					        #set($checked2 = "")
+							#if($idjenispengguna == "1")
+					          	#set($checked1 = "checked")
+					         	#set($checked2 = "")
+					            
+					        #elseif($idjenispengguna == "2")
+					         	#set($checked2 ="checked")
+					         	#set($checked1 ="")
+					
+					        #end
+        	<input type="radio" name="socpengguna" value="1" $checked1 onclick="cmdJenisPengguna()"/>Kementerian
+			<input type="radio" name="socpengguna" value="2" $checked2 onclick="cmdJenisPengguna()"/>Agensi
+			<input type="hidden" name="socjenispengguna" value="$idjenispengguna">
+
+        </td>
+    </tr>
+    <tr>
+    	<td><font color="red">*</font></td>
+        <td >ID Pengguna</td>
+        <td><input autocomplete="off" name="user_login" size="20" value="$!user_login"></td>
+    </tr>
+    <tr>
+    	<td><font color="red">*</font></td>
+        <td >Katalaluan</td>
+        <td><input type=password name="user_password" size="20" value="$!user_password"></td>
+    </tr>
+        <tr>
+        	<td>&nbsp;</td>
+            <td >Pastikan Katalaluan</td>
+            <td><input type=password name="user_password2" size="20" value="$!user_password"></td>
+    </tr>
+    <tr>
+    	<td><font color="red">*</font></td>
+        <td >Nama Pengguna</td>
+        <td><input autocomplete="off" name="user_name" size="50" value="$!user_name"></td>
+    </tr>
+     <tr>
+     	 <td><font color="red">*</font></td>
+         <td >Kementerian </td>
+         <td>             
+	 $selectKementerian
+         </td>
+    </tr>
+         <tr>
+         	<td><font color="red">*</font></td>
+             <td >Agensi</td>
+             <td>             
+	     $selectAgensi
+             </td>
+    </tr>
+	
+	<tr>
+		 <td><font color="red">*</font></td>
+         <td >Jawatan</td>
+         <td>$selectJawatan</td>
+    </tr>
+    
+    <tr>
+        <td colspan="3" align="left">
+                <input class="stylobutton" type="button" value="Daftar" onclick="submitRegister()">
+            <input class="stylobutton" type="button" value="Batal" onclick="resetFields()">
+            
+        </td>
+    </tr>   
+</table>
+<input type=hidden name=user_type value=internal>
+<input type=hidden name=user_role value=online_kjp>
+<input type=hidden name=user_roleagensi value=online_kjpagensi>
+<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+</fieldset>
+    #end
+
+<script>
+function submitRegister() {
+
+	var radioSelected = false;
+	for (i = 0;  i < ${formName}.socpengguna.length;  i++){
+		if (${formName}.socpengguna[i].checked)
+		radioSelected = true;
+	}
+	
+	if (!radioSelected){
+		alert("Sila pilih \"Jenis Pengguna\" terlebih dahulu.");
+		return;
+	}
+	else if (document.${formName}.user_login.value == "" ) {
+		alert("Sila masukkan ID Pengguna.");
+		document.${formName}.user_login.focus(); 
+		return;
+	} 
+	
+	else if (document.${formName}.user_password.value == "" ) {
+		alert("Sila masukkan Katalaluan.");
+		document.${formName}.user_password.focus(); 
+		return;
+	}
+	
+    else if ( document.${formName}.user_password.value != document.${formName}.user_password2.value ) { 
+	    alert("Sila Pastikan katalaluan adalah sama");
+	    document.${formName}.user_password2.select();
+	    document.${formName}.user_password2.focus(); 
+	    return; 
+	}
+	
+	else if (document.${formName}.user_name.value == "" ) {
+		alert("Sila masukkan Nama Pengguna.");
+		document.${formName}.user_name.focus(); 
+		return;
+	}
+	
+	else if (document.${formName}.socKementerian.value == "" ) {
+		alert("Sila pilih Kementerian.");
+		document.${formName}.socKementerian.focus(); 
+		return;
+	}
+	
+	else if (document.${formName}.socAgensi.value == "" ) {
+		alert("Sila pilih Agensi.");
+		document.${formName}.socAgensi.focus(); 
+		return;
+	}
+	
+	else if (document.${formName}.socJawatan.value == "" ) {
+		alert("Sila pilih Jawatan.");
+		document.${formName}.socJawatan.focus(); 
+		return;
+	}
+	
+	else {
+	
+		if ( !window.confirm("Adakah Anda Pasti?") ) return;
+		doAjaxCall${formName}("add");
+		
+	}
+	
+	
+}   
+function resetFields() {
+    doAjaxCall${formName}("clear");
+}
+
+
+function doChanges() {
+	doAjaxCall${formName}("doChanges");
+}
+
+	function cmdJenisPengguna(){   
+		field_ = document.${formName}.socpengguna;
+		for (i = 0; i < field_.length; i++){
+			if(field_[i].checked==true){
+				document.${formName}.socjenispengguna.value = field_[i].value;
+			}
+		}
+		doAjaxCall${formName}("doChanges");
+		
+	}
+
+</script>
+

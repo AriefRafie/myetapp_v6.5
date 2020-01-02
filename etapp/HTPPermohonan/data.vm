@@ -1,0 +1,13 @@
+#macro ( show $title $data )
+<tr><td>$title</td><td>:</td><td>$data</td></tr>
+#end
+
+<table>
+<tr><td style="width:200px"></td><td style="width:10px"></td><td style="width:300px"></td></tr>
+#show ("Id" "$!permohonan.id")
+#show ("Tarikh Masuk" "$!permohonan.tarikhMasuk")
+#show ("Tarikh Agihan" "$!permohonan.tarikhAgihan")
+#show ("No Rujukan KJP" "$!permohonan.nomborRujukanKJP")
+#show ("No Rujukan Lain" "$!permohonan.nomborRujukanLain")
+
+</table>

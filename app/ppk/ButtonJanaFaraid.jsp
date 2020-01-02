@@ -1,0 +1,99 @@
+
+#if($!skrin_online != "yes" && $!skrin_online_17 != "yes")
+#if ($EkptgUtil.isSimatiMuslim($idSimati))
+<input type="button" name="button2" id="button2" value="Jana Perakuan Faraid" onClick = "janaFaraid('$id','$idSimati','$id_Permohonansimati')" /> 
+#end
+#if ($EkptgUtil.isSimatiNonMuslim($idSimati))
+<script>var doFaraid=false;</script>
+<input type="button" name="button2" id="button2" value="Jana Akta Pembahagian" onClick = "janaAkta('$id','$idSimati')" /> 
+#end
+<input type="button" name="button2" id="button2" value="Jana Waris" onClick = "janaWaris('$id','$idSimati')" />
+
+<a href="http://10.1.65.37/alis/mainframe_new.html" style="color:#0000FF" target="_blank" onmouseover="showHoverInfo('infoJPN');" onmouseout="hideHoverInfo('infoJPN');">JPN (Sistem ALIS)</a> 
+<div id="infoJPN" style="display:none; position:absolute; border-style: solid; background-color: white; padding: 5px;">
+  Sistem ALIS hanya boleh dicapai dengan menggunakan perisian Internet Explorer sahaja.
+</div>
+#end
+
+
+<script>
+
+function janaFaraid(id,id_mati,id_p_mati){
+	//if (doFaraid === false) {
+	if (typeof doFaraid != 'undefined') {
+		if ( !window.confirm("Simati bukan beragama Islam.\nAdakah pemohon ingin meneruskan pengiraan Faraid?") ) return;
+	}
+	var url = "../x/${securityToken}/ekptg.faraid.FrmFaraid?id_permohonansimati="+id_p_mati+"&id_simati="+id_mati+"&id_permohonan="+id;
+	var hWnd = window.open(url,'printuser','width=500,height=300, resizable=yes,scrollbars=yes,copyhistory=yes,location=no,directories=no,status=yes,toolbar=no,menubar=no');
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
+}
+
+function janaAkta(id,id_mati){
+	var url = "../x/${securityToken}/ekptg.faraid.FrmAkta1958?id_simati="+id_mati+"&id_permohonan="+id;
+	var hWnd = window.open(url,'printuser','width=500,height=300, resizable=yes,scrollbars=yes,copyhistory=yes,location=no,directories=no,status=yes,toolbar=no,menubar=no');
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
+
+}
+
+function janaWaris(id,id_mati){
+	var url = "../servlet/ekptg.report.ppk.BorangJPN?id_simati="+id_mati+"&id_permohonan="+id;
+	var hWnd = window.open(url,'printuser','width=500,height=300, resizable=yes,scrollbars=yes,copyhistory=yes,location=no,directories=no,status=yes,toolbar=no,menubar=no');
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
+
+}
+
+</script>
+<script type="text/javascript" language="JavaScript">
+<!-- Copyright 2006,2007 Bontrager Connection, LLC
+// http://bontragerconnection.com/ and http://willmaster.com/
+// Version: July 28, 2007
+var cX = 0; var cY = 0; var rX = 0; var rY = 0;
+function UpdateCursorPosition(e){ cX = e.pageX; cY = e.pageY;}
+function UpdateCursorPositionDocAll(e){ cX = event.clientX; cY = event.clientY;}
+if(document.all) { document.onmousemove = UpdateCursorPositionDocAll; }
+else { document.onmousemove = UpdateCursorPosition; }
+function AssignPosition(d) {
+if(self.pageYOffset) {
+	rX = self.pageXOffset;
+	rY = self.pageYOffset;
+	}
+else if(document.documentElement && document.documentElement.scrollTop) {
+	rX = document.documentElement.scrollLeft;
+	rY = document.documentElement.scrollTop;
+	}
+else if(document.body) {
+	rX = document.body.scrollLeft;
+	rY = document.body.scrollTop;
+	}
+if(document.all) {
+	cX += rX; 
+	cY += rY;
+	}
+d.style.left = (cX+10) + "px";
+d.style.top = (cY+10) + "px";
+}
+function hideHoverInfo(d) {
+if(d.length < 1) { return; }
+document.getElementById(d).style.display = "none";
+}
+function showHoverInfo(d) {
+if(d.length < 1) { return; }
+var dd = document.getElementById(d);
+AssignPosition(dd);
+dd.style.display = "block";
+}
+function ReverseContentDisplay(d) {
+if(d.length < 1) { return; }
+var dd = document.getElementById(d);
+AssignPosition(dd);
+if(dd.style.display == "none") { dd.style.display = "block"; }
+else { dd.style.display = "none"; }
+}
+//-->
+</script>

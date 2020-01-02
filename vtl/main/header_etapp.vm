@@ -1,0 +1,64 @@
+#if ( $userIsLogged )
+	#parse ( "vtl/main/greeting.vm" )
+#end
+##<div class="module_indicator"></div>
+
+##<div class="">
+##	HEADER
+##</div>
+
+## --------------- Start ADDNEWBY zulfazdliabuas@gmail.com Date 08/10/2017 ----------------
+##New Header
+<div class="main_box_header">
+	<div class="main_box_header_bg">
+##		<div class="header_logo">
+##			
+##		</div>
+##		<div class="header_title">
+##			<div class="title_sistem"></div>
+##			<div class="title_module"></div>
+##		</div>
+	</div>
+</div>
+
+##Old Header Disable
+##<div class="page_header_1">
+##	<div class="page_header_2">
+##		<div class="page_header_3">
+##			<div class="page_header_4">
+##				<div class="page_header_5">
+##					<div class="page_header_6">
+##						<div class="page_header_7">
+##							<div class="page_header_8">
+##								<div class="page_header_9">
+##									<div class="page_header_10">
+##									</div>
+##								</div>
+##							</div>
+##						</div>
+##					</div>
+##				</div>
+##			</div>
+##		</div>
+##	</div>
+##</div>
+## --------------- Start ADDNEWBY zulfazdliabuas@gmail.com Date 08/10/2017 ----------------
+
+<script>
+	function changeVisitor(visitor) {
+		var visitor = document.flogin.visitor.value;
+		document.location = "?visitor="+visitor;
+	
+	}
+	
+	function changeRole(role) {
+		document.location = "?myrole="+role;
+	}
+
+	function changeRoleAll(role) {
+		//var sel = document.getElementById('role');
+		//var role = sel.options[sel.selectedIndex];	
+		document.location = "?myrole="+role;
+		
+	}
+</script> 

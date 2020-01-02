@@ -1,0 +1,204 @@
+<input id="current_page_num" name="current_page_num" type="hidden" value="$!current_page_num">
+<input type="hidden" name="last_page" value="$!total_page">
+#if ( $role == "online" )
+<div class="regular" id="div_list" name="div_list" style="position:fixed;visibility:" + $divList + ";width:90%;">
+<table width="90%" border="0" cellpadding="1" cellspacing="3" align="center">
+    <tr>
+        <td valign="top"nowrap><label for="jenisAduan">Jenis Aduan</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!lAduan.jenisAduan.jenisAduan</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="aduan">Aduan</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!lAduan.catatan</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="catatan">Catatan</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!lAduan.catatanSelesai</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="tarikhKemaskini">Tarikh Kemaskini</label></td>
+        <td valign="top">:</td>
+        #set ( $date="" )
+        #if ( $lAduan.tarikhKemaskini )
+        #set ( $date = $dateFormat.format($lAduan.tarikhKemaskini) )
+        #end
+        <td valign="top">$date</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="statusSemakan">Status Semakan</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!lAduan.status</td>
+    </tr>
+    <tr>
+        <td colspan="3" align="left">
+            <input id="button" type="button" value="Tutup" onclick="javascript:getDetail('hidden')">
+        </td>
+    </tr>   
+</table>
+</div>
+#end
+#set ( $count = 0 )
+<div class="content">
+#set ( $count = $rowSize * ( $current_page_num - 1 ) )
+<center>
+	<form name="f" method="post">
+	#if ( $role != 'online' )
+	<fieldset>
+		<table width="100%" cellspacing="3" cellpadding="1">
+			<tr>
+			    <td align="left">Jenis Aduan</td>
+			    <td>:</td>
+			    <td>
+			        <select name="idJenisAduan" style="width:100%">
+					<option value="">- PILIHAN -</option>
+			        #foreach ( $laduan in $rjenisaduan )
+			            <option value="$laduan.id" $selected>$laduan.jenisAduan.toUpperCase()</option>                
+			        #end
+			        </select>
+			    </td>
+			</tr>
+			<tr>
+			    <td align="left">Status Semakan</td>
+			    <td>:</td>
+			    <td>
+			        <select name="Status" style="width:100%">
+					<option value="">- PILIHAN -</option>
+			        <option value="SELESAI" $selected>SELESAI DISEMAK</option>
+			        <option value="SEMAKKAN SEKSYEN" $selected>SEMAKKAN SEKSYEN</option>
+			        <option value="DALAM PROSES" $selected>DALAM PROSES</option>
+			        </select>
+			    </td>
+			</tr>
+			<tr><td colspan="3" style="font-weight:bold; font-size:0.8em">Number Of Records: <span id="data_size">$data_size</span></td></tr>
+			<tr><td colspan="3" style="font-weight:bold; font-size:0.8em">Number Of Pages: <span id="total_page">$total_page</span></td></tr>
+		</table>
+	</fieldset>
+	<table width="90%" cellspacing="1" cellpadding="3" align="center">
+		<tr>
+		    <td colspan="3" align="left">
+		        <input id="button" type="submit" value="Hantar" tabindex="3" onclick="submitRegister('sendFilter')" />
+		    </td>
+		</tr>
+	</table>	
+	<table width="90%" cellspacing="1" cellpadding="3" align="center" border="0">
+		<tr>
+		#set ( $x = 0 )
+		#set ( $paging = 1 )
+		#if ( $total_page > 7 )
+			#if ( $current_page_num > 3 && $current_page_num <= ($total_page - 3) )
+				#set ( $paging = $current_page_num - 3 )
+			#elseif ( $current_page_num > ($total_page - 3) )
+				#set ( $paging = $total_page - 6 )		
+			#end
+		#end
+		#foreach ( $i in [$paging..$total_page] )
+			#set ( $x = $x + 1 )
+			#if ( $!current_page_num == $i )
+			    #set ( $visited = "roundV" )
+			#else
+			    #set ( $visited = "round" )
+			#end
+			#if ( $x <= 7 )
+				<td><div class=$visited><a href="javascript:getPage('$i')"><p>$i</p></a></div></td>
+			#end
+		#end
+		</tr>
+	</table>
+	#end
+	<table width="90%" cellspacing="1" cellpadding="3">
+		#if ( $records.size() > 0 )
+			<tr class="table_header">
+				<td scope="row" align="center"><strong>Bil.</strong></td>
+				<td scope="row" align="center"><strong>No Aduan</strong></td>
+				<td scope="row" align="center"><strong>Catatan</strong></td>
+				<td scope="row" align="center"><strong>Status</strong></td>
+			</tr>
+		#else
+			<tr class="table_header">
+				<td scope="row" align="center"><strong>Makluman!!!</strong></td>
+			</tr>
+		#end
+		#set ( $list = '' )
+		#if ( $records.size() > 0 )
+			#foreach ( $list in $records )
+			#set ( $count = $count + 1 )
+			#if ( $count % 2 == 0 ) #set ( $bgcolor = "" ) #else #set ( $bgcolor = "#EBBC5D" ) #end
+			<tr id="row_$!list.id" height="30px" style="background-color:$bgcolor;" onmouseout="$('row_$!list.id').style.backgroundColor='$bgcolor'" onmouseover="$('row_$!list.id').style.backgroundColor='#ccc'">
+				<td valign="top" align="center">$count.</td>
+				#if ( $role == "online" )
+					#if ( $list.status == "SELESAI" )
+						<td valign="top" align="center"><a href="javascript:getDetail('list-' + '$!list.id')">$!list.id</a></td>
+					#else
+						<td valign="top" align="center">$!list.id</td>
+					#end
+				#else
+					#if ( $list.status == "DALAM PROSES" )
+						<td valign="top" align="center"><a href="javascript:submitRegister('$!list.id')">$!list.id</a></td>
+					#else
+						<td valign="top" align="center">$!list.id</td>
+					#end				
+				#end
+				#if ( $list.catatan.length() >= 10 ) 
+					<td align="top">$!list.catatan.substring(0,10)...</td>
+				#else
+					<td align="top">$!list.catatan</td>
+				#end
+				<td valign="top" align="center">$!list.status</td>
+			</tr>
+			#end
+		#else
+			<tr>
+				<td align="center" style="background-color:#EBBC5D"><i>Pilihan tidak tepat / Tiada capaian dalam rekod</i></td>
+			</tr>	
+		#end
+	</table>
+	<input type="hidden" name="command">
+	<input type="hidden" name="pageNum">
+	<input type="hidden" name="dataRecord">
+</form>
+</center>
+<table width="90%" border="0" align="center">
+    <tr>
+        <td nowrap class="content">
+        <b>
+		#if ( $saveinfo == "Success" )
+		<font color="blue" size="1.3em">
+		    Aduan berjaya dipadam. <br>
+		    ##No rujukan aduan : <u>$idAduan</u>
+		</font>
+		#elseif ( $saveinfo == "unSuccess" )
+		<font color="red" size="1.3em">
+			Aduan tidak berjaya ddipadam. <br>
+			Sila cuba sebentar lagi.
+		</font>		 
+		#end
+        </b>
+        </td>
+    </tr>
+</table>
+</div>
+<script>
+function submitRegister(s) {
+	if ( s == "sendFilter" ) { 
+		document.f.command.value = s;
+		document.f.action = "";     
+	} else {
+		document.f.command.value = s;
+    	document.f.action = "$!userSessionId?_portal_module=uAduan_aduan";
+	}
+	document.f.submit(); 
+}   
+function getPage(k) {
+	document.f.pageNum.value = k;
+	document.f.action = "";  
+	document.f.submit(); 
+}
+function getDetail(x) {
+	document.f.command.value = x;
+	document.f.action = "";     
+	document.f.submit();  
+}
+</script>

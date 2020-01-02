@@ -1,0 +1,23 @@
+
+
+<td>
+<a style="text-decoration:none" href="javascript:void()" onclick="doDivAjaxCall$formname('div_main','edit','record_id=$r.id&data_size=$data_size&total_page=$total_page')">
+$!r.fail.noFail
+</a>
+</td>
+<td>$!r.noRujukanPTG</td>
+<td>$!r.noRujukanPTD</td>
+##<td>$!r.noRujukanUPT</td>
+<td>$!r.agensi.kementerian.nama</td>
+##<td>$!r.status.nama</td>
+<td>
+
+<span id="jts_status_$r.id">
+#if ($r.jtsStatus) $r.jtsStatus.kod - $r.jtsStatus.nama #end
+</span>
+
+</td>
+
+
+
+

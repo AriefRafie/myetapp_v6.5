@@ -1,0 +1,163 @@
+##Testing-Hazwan
+<input id="current_page_num" name="current_page_num" type="hidden" value="$!current_page_num">
+<input type="hidden" name="last_page" value="$!total_page">
+
+#if ($m_group == "")
+	#set ($m_group="")
+#end
+
+#set ( $count = 0 )
+<br />
+<div class="content">
+<form name="f" method="post">
+<center>
+<fieldset>
+<table border="0" width="100%" cellpadding="3" cellspacing="1">
+    <tr>
+        <td align="left"><label for="Module_Group">Module Group</label></td>
+        <td>
+        	
+        	$rgroup
+            <select id="group" name="moduleGroup" style="width:100%" onChange="submitRegister('getGroup')">
+			<option value="0">- Pilihan -</option>
+			#set ( $group_name = "" )
+            #foreach ( $lgroup in $rgroup )
+            	#if ( $group_name != $lgroup.getGroupName() )
+                    #set ( $group_name = $lgroup.getGroupName() )
+                    #if ( $m_group == $lgroup.getGroupName() )
+                        #set ( $selected = "selected" )
+	                #else
+	                    #set ( $selected = "" )
+	                #end
+                	<option value="$lgroup.getGroupName()"  $selected>$lgroup.getGroupName()</option>
+                #end                
+            #end
+            </select>
+        </td>
+    </tr>
+</table>
+</fieldset>
+</center>
+
+#if ( $records.size() > 0 )
+<table width="95%" cellspacing="1" cellpadding="3" align="center" style="border-bottom:1px solid #E5AEAF; border-right:1px solid #E5AEAF; border-left:1px solid #E5AEAF">
+	<tr><td align="left" style="border:0"><b>Current record view</b> : <i>$records.size()</i></td></tr>
+	<tr><td align="left" style="border:0"><b>Total record</b> : <i>$data_size</i></td></tr>
+	<tr><td align="left" style="border:0"><b>Total page</b> : <i>$total_page</i></td></tr>
+</table>
+#end
+
+<table border="0" align="left">
+    <tr>
+        <td nowrap class="content">
+        <b>
+		#if ( $saveinfo == "Success" )
+		<font color="blue" size="1.3em">
+		    Class ( $className / $classModule.moTitle / $classModule.moClass ) successfully deleted.
+		    ##No rujukan aduan : <u>$idAduan</u>
+		</font>
+		#elseif ( $saveinfo == "unSuccess" )
+		<font color="red" size="1.3em">
+			Failed to delete class.
+		</font>		 
+		#end
+        </b>
+        </td>
+    </tr>
+</table>
+
+#set ( $count = $rowSize * ($current_page_num - 1) )
+#if ( $records.size() > 0 )
+<table cellspacing="1" cellpadding="3" align="center" border="0">
+<tr>
+#set ( $x = 0 )
+#set ( $paging = 1 )
+#if ( $total_page > 7 )
+	#if ( $current_page_num > 3 && $current_page_num <= ($total_page - 3) )
+		#set ( $paging = $current_page_num - 3 )
+	#elseif ( $current_page_num > ($total_page - 3) )
+		#set ( $paging = $total_page - 6 )		
+	#end
+#end
+#foreach ( $i in [$paging..$total_page] )
+	#set ( $x = $x + 1 )
+	#if ( $!current_page_num == $i )
+	    #set ( $visited = "bold" )
+	#else
+	    #set ( $visited = "normal" )
+	#end
+	#if ( $x <= 7 )
+		<td><span style="font-weight:$visited">[<a href="javascript:getPage('$i')">$i</a>]</span></td>
+	#end
+#end
+</tr>
+</table>
+#end
+
+#set ( $list = '' )
+#if ( $records.size() > 0 )
+<table width="95%" cellspacing="1" cellpadding="3" align="center" border="0">
+	<tr><td colspan="4"><hr /></td></tr>
+	<tr><td>&nbsp;</td><td>Modules Title</td><td>Modules Class</td><td>&nbsp;</td></tr>
+	<tr><td colspan="4"><hr /></td></tr>
+	#foreach ( $list in $records )
+	#set ( $count = $count + 1 )
+	<tr>
+		<td align="center">$count.</td>
+		<td>$list.moTitle</td>
+		<td>$list.moClass</td>
+		<td align="center"><a href="javascript:submitEdit('$list.id')"><img src="../img/pencil.gif" border="0"></a>
+            <a href="javascript:submitDelete('$list.id')"><img src="../img/x.gif" border="0"></a></td>
+	</tr>
+	#end
+</table>
+#end
+<input type="hidden" name="nav">
+<input type="hidden" name="command">
+<input type="hidden" name="pageNum">
+<input type="hidden" name="module_id">
+<input type="hidden" name="dataRecord">
+<input type="hidden" name="deleteClass">
+</form>
+</div>
+
+<script>
+function submitRegister(s) {
+
+	var cboGroup=document.getElementById("group").value;
+
+	if ( s == "getGroup" ) {
+		if ( parseInt(cboGroup) != 0 ) {
+		    document.f.command.value = s;
+	    	document.f.action = "";
+	    } else {
+    		alert("Sila buat pilihan terlebih dahulu"); 
+    	}
+	} else {
+		document.f.command.value = s;
+    	document.f.action = "";
+	}
+	document.f.submit();       	
+}   
+
+function getPage(k) {
+	document.f.pageNum.value = k;
+	document.f.command.value = "getPage";
+	document.f.action = "";  
+	document.f.submit(); 
+}
+
+function submitDelete(j) {
+	document.f.deleteClass.value = j;
+	document.f.command.value = "Delete";
+	document.f.action = "";  
+	document.f.submit(); 
+}
+
+function submitEdit(x) {
+    document.f.nav.value = "Edit";
+    document.f.module_id.value = x;
+    document.f.action = "";
+    document.f.submit();
+}
+</script>

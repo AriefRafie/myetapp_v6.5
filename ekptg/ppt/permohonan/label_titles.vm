@@ -1,0 +1,14 @@
+#set ( $button_list_all = "Senarai Semua" )
+#set ( $button_search = "Cari" )
+#set ( $button_reset = "Kosongkan" )
+
+#set ( $button_add = "Daftar Baru" )
+
+
+#set ( $label_search = "Carian" )
+#set ( $label_list = "Senarai Permohonan" )
+
+#set ( $button_add = "Tambah Baru" )
+#set ( $button_save = "Simpan" )
+#set ( $button_done = "Kembali" )
+#set ( $button_save_and_add = "Simpan dan Kemudian Tambah" )

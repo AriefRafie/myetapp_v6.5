@@ -1,0 +1,915 @@
+<script>
+function cancel() {
+	document.${formName}.reset();
+}
+
+function carian() {
+	//document.${formName}.langkah.value = '0->-0';
+	doAjaxCall${formName}("find");
+}
+
+function senaraiPermohonan(id) {
+	document.${formName}.langkah.value = '0->-1';
+	document.${formName}.fail.value = id;
+	doAjaxCall${formName}("pksenaraipermohonan");	
+
+}
+
+function senaraiPermohonanDetail(id) {
+	//document.${formName}.langkah.value = '0->-1';
+	//document.${formName}.fail.value = id;
+	doAjaxCall${formName}("detailList","fail="+id);	
+
+}
+
+function addDetail() {
+	//document.${formName}.langkah.value = '0->-1';
+	//document.${formName}.fail.value = id;
+	doAjaxCall${formName}("addApplication");	
+
+}
+function addHakmilik(id){
+	doAjaxCall${formName}("addHakmilik","idpermohonan="+id);
+
+}
+function ownership(id){
+	doAjaxCall${formName}("ownership","idpermohonan="+id);
+}
+function permohonanChecklist(id){
+	doAjaxCall${formName}("viewChecklist","idpermohonan=id");	
+}
+
+function tambahPermohonan() {
+	//document.${formName}.langkah.value = '0->1';
+	//document.${formName}.pagemode.value = "0";
+	doAjaxCall${formName}("openNewFile");		
+}
+//End of page 1
+
+/*function tambahPermohonan2(id) {
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.command.value = "pkpermohonantambah";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	//pkpermohonankemaskini
+	doAjaxCall${formName}("pkpermohonantambah");
+}*/
+
+function doChangeKementerian() {
+	doAjaxCall${formName}("doChangeKementerian");
+}
+
+function tambahPermohonan2(id) {
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.command.value = "pkpermohonantambah";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkpermohonantambah");	
+}
+
+function simpanFail(){
+	
+  	if ( document.${formName}.socNegeri.value == "" ) { 
+  		alert('Sila pilih negeri terlebih dahulu.');
+  		document.${formName}.socNegeri.focus(); return; 
+  	} 
+    if ( document.${formName}.sockementerian.value == "" ) { 
+  		alert('Sila pilih kementerian terlebih dahulu.');
+    	document.${formName}.sockementerian.focus(); 
+    	return; 
+    } 
+   	if ( document.${formName}.socAgensi.value == "" ) { 
+  		alert('Sila pilih agensi terlebih dahulu.');
+    	document.${formName}.socAgensi.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txttajuk.value == "" ) { 
+    	alert('Sila masukkan maklumat tajuk terlebih dahulu.');
+    	document.${formName}.txttajuk.focus(); 
+    	return; 
+    }
+  	if ( document.${formName}.txdTarikhSuratKJP.value == "" ) { 
+    	alert('Sila masukkan tarikh surat KJP terlebih dahulu.');
+    	document.${formName}.txdTarikhSuratKJP.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txtNoFailLain.value == "" ) { 
+    	alert('Sila masukkan nombor rujukan surat terlebih dahulu.');
+    	document.${formName}.txtNoFailLain.focus(); 
+    	return; 
+    }    
+    
+   
+    doAjaxCall${formName}("createNewFile");
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+
+}
+
+function kemaskiniPermohonan(id) {
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.command.value = "pkpermohonankemaskini";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+ 	//document.${formName}.pagemode.value="3";
+    //doAjaxCall${formName}("pkpermohonankemaskini","pagemode=3");
+    doAjaxCall${formName}("pkpermohonankemaskini","pagemode=0");
+}
+
+//sama dengan kemaskiniPermohonan
+function skrinKemaskiniPermohonan(id) {
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.fail.value = id;
+    doAjaxCall${formName}("pkpermohonankemaskini","pagemode=0");
+}
+
+function semakanPermohonanTambah(id) {
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.pagemode.value="simpan";
+	document.${formName}.pagemode.value="kemaskini";
+	doAjaxCall${formName}("pkpermohonankemaskini");
+}
+
+function semakanPermohonanTambah1(id,f) {
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.pagemode.value=f;
+	doAjaxCall${formName}("pkpermohonankemaskini");
+}
+
+/*function semakanPTambah(id) {
+
+	if ( document.${formName}.cmdSimpan.value == "Kemaskini" ) {
+		document.${formName}.pagemode.value="3";
+	}else {
+		document.${formName}.pagemode.value="4";
+	}
+	doAjaxCall${formName}("pkpermohonankemaskini");
+}*/
+
+function semakanPTambah(id) {
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.pagemode.value="simpan";
+	document.${formName}.pagemode.value="kemaskini";
+	doAjaxCall${formName}("semakanPKP");
+}
+
+function semakanPTPSimpan(id) {
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.pagemode.value="simpan";
+	//document.${formName}.pagemode.value="kemaskini";
+	doAjaxCall${formName}("semakanPKP",'pagemode=simpan');
+}
+
+function semakanPTPKemaskini(id) {
+	document.${formName}.id_kemaskini.value = id;
+		//document.${formName}.pagemode.value="kemaskini";
+	doAjaxCall${formName}('semakanPKP','pagemode=kemaskini&idpermohonan='+id);
+	//doAjaxCall${formName}('semakanPKP','idpermohonan='+id);
+}
+
+function nexti(id) {
+	//document.${formName}.command.value = "pksemakanseterus" pkpemilikseterus;
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.method="post";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pksemakanseterus");
+}
+
+/*function nexti2(id) {
+	//document.${formName}.command.value = "pksemakanseterus" pkpemilikseterus;
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.method="post";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkpemilikseterus");
+}*/
+
+function nexti3(id) {
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.command.value = "pkmaklumatseterus";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkmaklumatseterus");
+}
+
+function nexti4(id) {
+	//document.${formName}.method="post";
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.command.value = "pksemakanpkpseterus";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pksemakanpkpseterus");
+}
+
+function nexti5(id) {
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.command.value = "pkderafseterus";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkderafseterus");
+}
+
+function nexti6(id) {
+	//document.${formName}.command.value = "pksemakanseterus";
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.method="post";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pksemakanseterus");
+}
+
+function nexti7(id) {
+	//document.${formName}.command.value = "pksemakanseterus";
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.method="post";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pksemakanseterus");
+}
+
+/*
+function semakanPTambah(id) {
+	//document.${formName}.command.value = "pkpermohonankemaskini";
+//dalam if document.${formName}.cmdSimpan.value == "Kemaskini"
+	if ( doAjaxCall${formName}("Kemaskini")) {
+		//document.${formName}.cmdSimpan.value = "Simpan";	
+		document.${formName}.pagemode.value="3";
+	}else {
+		//document.${formName}.command.value = "semakankemaskini";
+		//document.${formName}.command.value = "pksenaraipermohonan";
+		document.${formName}.pagemode.value="4";
+	}
+
+	//document.${formName}.command.value = "pkpermohonankemaskini";
+	//document.${formName}.method="post";
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.fail.value = id;
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	
+	doAjaxCall${formName}("pkpermohonankemaskini");
+}	*/
+
+function tambahHakmilik(id) {
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.pagemode.value = 0;
+	doAjaxCall${formName}("pkpemiliktambah");
+}
+
+function skrinTambahHakmilikPemilik(id) {
+
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.pagemode.value = 0;
+	doAjaxCall${formName}("tambahhakmilikpemilik");
+}
+
+function tambahHakmilik2(idhmu,s){
+	//frmPajakanKecilSenaraiPemilik.jsp
+	document.${formName}.fail.value = s;
+	document.${formName}.id_kemaskini.value = idhmu;
+	//document.${formName}.nohakmilik.value = j;
+	document.${formName}.pagemode.value = 0;
+	//document.${formName}.command.value = "pkpemiliktambah";
+	//document.${formName}.command.value = "pkpemilikkemaskini";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkpemilikkemaskini");
+}
+
+function kemaskiniHakmilik(idh,id) {
+	//frmPajakanKecilSenaraiPemilik.jsp
+	document.${formName}.fail.value = idh;
+	document.${formName}.pagemode.value = 1;
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.command.value = "pkpemiliktambah";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkpemiliktambah");
+}
+
+function back(){
+	doAjaxCall${formName}("pkpemilikseterus");
+}
+
+function backPre(id) {
+	//document.${formName}.command.value = "pksenaraipermohonan";
+	document.${formName}.langkah.value = '0->-1';
+	document.${formName}.fail.value = id;
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pksenaraipermohonan");
+}
+
+function backMain() {
+	doAjaxCall${formName}("");
+}
+
+function tambahMaklumat(id) {
+	//frmpajakankecilPemilikKemaskiniN.jsp 
+	if(document.${formName}.sochakmilik.value == "" || document.${formName}.sochakmilik.value == 0){
+		if(document.${formName}.txtnohakmilik.value == "" || document.${formName}.txtnohakmilik.value == 0){
+			alert('Sila pilih No Hakmilik terlebih dahulu @\n Lain-lain bagi kemasukan baru');
+			return;
+		}else if(document.${formName}.txtnolot.value == ""){	
+			alert('Sila masukkan No Lot terlebih dahulu');
+			return;
+		}	
+	}
+
+
+	if ( document.${formName}.txtnama.value == "" ) { 
+    	alert('Sila masukkan nama terlebih dahulu.');
+    	document.${formName}.txtnama.focus(); 
+    	return; 
+    	}    
+	
+	if ( document.${formName}.txtalamat1.value == "" ) { 
+    	alert('Sila masukkan alamat 1 terlebih dahulu.');
+    	document.${formName}.txtalamat1.focus(); 
+    	return; 
+    }    
+    if ( document.${formName}.txtalamat2.value == "" ) { 
+    	alert('Sila masukkan alamat 2 lot terlebih dahulu.');
+    	document.${formName}.txtalamat2.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txtposkod.value == "" ) { 
+    	alert('Sila masukkan maklumat poskod terlebih dahulu.');
+    	document.${formName}.txtposkod.focus(); 
+    	return; 
+    } 
+   	if ( document.${formName}.socDaerah.value == "" ) { 
+    	alert('Sila pilih maklumat daerah terlebih dahulu.');
+    	document.${formName}.socDaerah.focus(); 
+    	return; 
+    }
+    
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.pagemode.value = 1;
+
+	doAjaxCall${formName}("pkpemiliktambah");
+	
+}
+function kemaskiniHakmilik(idh,id) {
+	//frmPAjakanKecilSEnaraiPemilik.jsp
+	document.${formName}.fail.value = idh;
+	document.${formName}.pagemode.value = 1;
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.command.value = "pkpemiliktambah";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkpemiliktambah");
+}
+
+/* function semakanPTambah(id) {
+	//frmPajakaKecilSenaraiPemohon.jsp
+	//document.${formName}.command.value = "pkpermohonankemaskini";
+
+	if ( document.${formName}.cmdSimpan.value == "Kemaskini" ) {
+		//document.${formName}.cmdSimpan.value = "Simpan";	
+		document.${formName}.pagemode.value="3";
+	}else {
+		//document.${formName}.command.value = "semakankemaskini";
+		//document.${formName}.command.value = "pksenaraipermohonan";
+		document.${formName}.pagemode.value="4";
+	}
+
+	//document.${formName}.command.value = "pkpermohonankemaskini";
+	//document.${formName}.method="post";
+	document.${formName}.id_kemaskini.value = id;
+	//document.${formName}.fail.value = id;
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkpermohonankemaskini");
+} */
+
+function tambahMaklumatsewaan(id) {
+	/*var hingga = Date.parse(document.${formName}.txdhingga.value);
+	var dari = Date.parse(document.${formName}.txddari.value);
+	var diff_date =  hingga - dari;
+	alert (new Date());
+	var num_years = diff_date/31536000000;
+	var num_months = (diff_date % 31536000000)/2628000000;
+	var num_days = ((diff_date % 31536000000) % 2628000000)/86400000;
+	alert("this is not a number 1:"+Math.floor(num_years));
+	alert("this is not a number 2:"+Math.floor(num_months));
+	alert("this is not a number 3:"+Math.floor(num_days));
+	*/
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.pagemode.value = 3;
+	//document.${formName}.command.value = "pkmaklumat";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkmaklumat");
+}
+
+function tambahMaklumatsewaansimpan() {
+
+	var dari_bulan;
+	var dari_hari;
+	var dari_tahun;
+	var hingga_bulan;
+	var hingga_hari;
+	var hingga_tahun;
+  	if ( document.${formName}.txtsewa.value == "" ) { 
+  		alert('Sila masukkan maklumat sewa terlebih dahulu.');
+  		document.${formName}.txtsewa.focus(); return; 
+  	}
+    if ( document.${formName}.txddari.value == "" ) { 
+  		alert('Sila masukkan tarikh dari terlebih dahulu.');
+    	//document.freg.txddari.focus(); 
+    	return; 
+    }
+   	if ( document.${formName}.txdhingga.value == "" ) { 
+  		alert('Sila masukkan tarikh hingga terlebih dahulu.');
+    	return; 
+    } 
+    if ( document.${formName}.txtluas.value == "" ) { 
+    	alert('Sila masukkan maklumat luas terlebih dahulu.');
+    	document.${formName}.txtluas.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.socLuas.value == "" ) { 
+    	alert('Sila masukkan maklumat lot terlebih dahulu.');
+    	document.${formName}.socLuas.focus(); 
+    	return; 
+    }
+     if ( document.${formName}.socLuas.value == "" ) { 
+    	alert('Sila masukkan maklumat kod luas terlebih dahulu.');
+    	document.${formName}.socLuas.focus(); 
+    	return; 
+    }    
+    if ( document.${formName}.txtalamat1.value == "" ) { 
+    	alert('Sila masukkan alamat 1 terlebih dahulu.');
+    	document.${formName}.txtalamat1.focus(); 
+    	return; 
+    }    
+    if ( document.${formName}.txtalamat2.value == "" ) { 
+    	alert('Sila masukkan alamat 2 lot terlebih dahulu.');
+    	document.${formName}.txtalamat2.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txtposkod.value == "" ) { 
+    	alert('Sila masukkan maklumat poskod terlebih dahulu.');
+    	document.${formName}.txtposkod.focus(); 
+    	return; 
+    } 
+   	if ( document.${formName}.socDaerah.value == "" ) { 
+    	alert('Sila pilih maklumat daerah terlebih dahulu.');
+    	document.${formName}.socDaerah.focus(); 
+    	return; 
+    }
+    
+      
+    
+	hingga_bulan = document.${formName}.txdhingga.value.substring(3,5);
+	hingga_hari = document.${formName}.txdhingga.value.substring(0,2);
+	hingga_tahun = document.${formName}.txdhingga.value.substring(6,10);
+	var hinggatemp = hingga_bulan+"/"+hingga_hari+"/"+hingga_tahun;
+	dari_bulan = document.${formName}.txddari.value.substring(3,5);
+	dari_hari = document.${formName}.txddari.value.substring(0,2);
+	dari_tahun = document.${formName}.txddari.value.substring(6,10);
+	var daritemp = dari_bulan+"/"+dari_hari+"/"+dari_tahun;
+	
+	var dari = Date.parse(daritemp);
+	var hingga = Date.parse(hinggatemp);
+
+	var diff_date =  hingga - dari;
+	
+	var num_years = diff_date/31536000000;
+	var num_months = (diff_date % 31536000000)/2628000000;
+	var num_days = ((diff_date % 31536000000) % 2628000000)/86400000;
+	//alert("this is not a number 1:"+Math.floor(num_years));
+	//alert("bulan:"+num_months+"cxvcxvcxv:"+Math.floor(num_months));
+	//alert("this is not a number 3:"+Math.floor(num_days));
+	document.${formName}.txtbulan.value = Math.floor(num_months);
+
+	/*var my_string = document.${formName}.txtposkod.value;
+	if(isNaN(my_string)){
+		alert("this is not a number ");
+	}else{
+		alert("this is a number ");
+	}*/
+	//isxNumber(this.txtposkod);
+	//return true ;
+	//var newMode=0;
+	if(document.${formName}.pagemode.value ==3){
+		//document.${formName}.pagemode.value=4;
+		document.${formName}.pagemode.value=0;
+	} 
+	//document.${formName}.command.value = "pkmaklumat";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	//alert(newMode);
+	doAjaxCall${formName}("pkmaklumat");
+}
+
+
+function tambahMaklumatPemilik(id) {
+	
+	if(document.${formName}.sochakmilik.value == "" || document.${formName}.sochakmilik.value == 0){
+		if(document.${formName}.txtnohakmilik.value == "" || document.${formName}.txtnohakmilik.value == 0){
+			alert('Sila pilih No Hakmilik terlebih dahulu @\n Lain-lain bagi kemasukan baru');
+			return;
+		}else if(document.${formName}.txtnolot.value == ""){	
+			alert('Sila masukkan No Lot terlebih dahulu');
+			return;
+		}	
+	}
+
+
+	if ( document.${formName}.txtnama.value == "" ) { 
+    	alert('Sila masukkan nama terlebih dahulu.');
+    	document.${formName}.txtnama.focus(); 
+    	return; 
+    	}    
+	
+	if ( document.${formName}.txtalamat1.value == "" ) { 
+    	alert('Sila masukkan alamat 1 terlebih dahulu.');
+    	document.${formName}.txtalamat1.focus(); 
+    	return; 
+    }    
+    if ( document.${formName}.txtalamat2.value == "" ) { 
+    	alert('Sila masukkan alamat 2 lot terlebih dahulu.');
+    	document.${formName}.txtalamat2.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txtposkod.value == "" ) { 
+    	alert('Sila masukkan maklumat poskod terlebih dahulu.');
+    	document.${formName}.txtposkod.focus(); 
+    	return; 
+    } 
+   	if ( document.${formName}.socDaerah.value == "" ) { 
+    	alert('Sila pilih maklumat daerah terlebih dahulu.');
+    	document.${formName}.socDaerah.focus(); 
+    	return; 
+    }
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.pagemode.value = 1;
+	//document.${formName}.method = "post";
+	//document.${formName}.command.value = "pemiliksimpan";
+	//document.${formName}.command.value = "pkpemiliktambah";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkpemiliktambah");
+	
+}
+
+function addHakmilikPemilik(id) {
+	
+	if(document.${formName}.socHakmilik.value == "" || document.${formName}.socHakmilik.value == 0){
+		if(document.${formName}.txtnohakmilik.value == "" || document.${formName}.txtnohakmilik.value == 0){
+			alert('Sila pilih No Hakmilik terlebih dahulu @\n Lain-lain bagi kemasukan baru');
+			return;
+		}else if(document.${formName}.txtnolot.value == ""){	
+			alert('Sila masukkan No Lot terlebih dahulu');
+			return;
+		}	
+	}
+
+
+	if ( document.${formName}.txtnama.value == "" ) { 
+    	alert('Sila masukkan nama terlebih dahulu.');
+    	document.${formName}.txtnama.focus(); 
+    	return; 
+    	}    
+	
+	if ( document.${formName}.txtalamat1.value == "" ) { 
+    	alert('Sila masukkan alamat 1 terlebih dahulu.');
+    	document.${formName}.txtalamat1.focus(); 
+    	return; 
+    }    
+    if ( document.${formName}.txtalamat2.value == "" ) { 
+    	alert('Sila masukkan alamat 2 lot terlebih dahulu.');
+    	document.${formName}.txtalamat2.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txtposkod.value == "" ) { 
+    	alert('Sila masukkan maklumat poskod terlebih dahulu.');
+    	document.${formName}.txtposkod.focus(); 
+    	return; 
+    } 
+   	if ( document.${formName}.socDaerah.value == "" ) { 
+    	alert('Sila pilih maklumat daerah terlebih dahulu.');
+    	document.${formName}.socDaerah.focus(); 
+    	return; 
+    }
+	
+	doAjaxCall${formName}("saveHakmilik");
+	
+}
+
+
+function tambahMaklumatPemilik2(id) {
+	//N1
+	if ( document.${formName}.txtnama.value == "" ) { 
+    	alert('Sila masukkan nama terlebih dahulu.');
+    	document.${formName}.txtnama.focus(); 
+    	return; 
+    	}    
+	
+	if ( document.${formName}.txtalamat1.value == "" ) { 
+    	alert('Sila masukkan alamat 1 terlebih dahulu.');
+    	document.${formName}.txtalamat1.focus(); 
+    	return; 
+    }    
+    if ( document.${formName}.txtalamat2.value == "" ) { 
+    	alert('Sila masukkan alamat 2 lot terlebih dahulu.');
+    	document.${formName}.txtalamat2.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txtposkod.value == "" ) { 
+    	alert('Sila masukkan maklumat poskod terlebih dahulu.');
+    	document.${formName}.txtposkod.focus(); 
+    	return; 
+    } 
+   	if ( document.${formName}.socDaerah.value == "" ) { 
+    	alert('Sila pilih maklumat daerah terlebih dahulu.');
+    	document.${formName}.socDaerah.focus(); 
+    	return; 
+    }
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.pagemode.value = 1;
+	//document.${formName}.method = "post";
+	//document.${formName}.command.value = "pemiliksimpan";
+	//document.${formName}.command.value = "pkpemiliktambah";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkpemiliktambah2");
+	
+}
+
+// Skrin Senarai Hakmilik
+
+function skrinSenaraiHakmilikPemilik(id) {
+	document.${formName}.id_kemaskini.value = id;
+	doAjaxCall${formName}("pksemakanseterus");
+}
+
+function nexti2(id) {
+	//document.${formName}.command.value = "pksemakanseterus";
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.method="post";
+	//document.${formName}.action = "";
+	//document.${formName}.submit();
+	doAjaxCall${formName}("pkpemilikseterus");
+}
+
+// Skrin Kemasukan Hakmilik
+// Tidak Digunakan
+ function enableField(){
+ 	document.${formName}.txtnohakmilik.value = document.${formName}.sochakmilik.value;
+}
+
+// Skrin Maklumat Penyewaan
+//Fungsi date kemasukan manual
+function trans_date2(t_d){
+
+
+	if(t_d.length == 8){
+		var a = t_d.charAt(0);
+		var b = t_d.charAt(1);
+		var c = t_d.charAt(2);
+		var d = t_d.charAt(3);
+		var e = t_d.charAt(4);
+		var f = t_d.charAt(5);
+		var g = t_d.charAt(6);
+		var h = t_d.charAt(7);
+
+		var trans = a+""+b+"/"+c+""+d+"/"+e+""+f+""+g+""+h;
+		document.${formName}.txddari.value = trans;
+		//document.${formName}.t_d.value = trans;
+
+	}else{
+		return;
+	}
+
+}
+
+function trans_date21(t_d){
+
+
+	if(t_d.length == 8){
+		var a = t_d.charAt(0);
+		var b = t_d.charAt(1);
+		var c = t_d.charAt(2);
+		var d = t_d.charAt(3);
+		var e = t_d.charAt(4);
+		var f = t_d.charAt(5);
+		var g = t_d.charAt(6);
+		var h = t_d.charAt(7);
+
+		var trans = a+""+b+"/"+c+""+d+"/"+e+""+f+""+g+""+h;
+		document.${formName}.txdhingga.value = trans;
+
+	}else{
+		return;
+	}
+
+}
+
+function haha() {
+
+	var dari_bulan;
+	var dari_hari;
+	var dari_tahun;
+	var hingga_bulan;
+	var hingga_hari;
+	var hingga_tahun;
+  	    
+	hingga_bulan = document.${formName}.txdhingga.value.substring(3,5);
+	hingga_hari = document.${formName}.txdhingga.value.substring(0,2);
+	hingga_tahun = document.${formName}.txdhingga.value.substring(6,10);
+	var hinggatemp = hingga_bulan+"/"+hingga_hari+"/"+hingga_tahun;
+	dari_bulan = document.${formName}.txddari.value.substring(3,5);
+	dari_hari = document.${formName}.txddari.value.substring(0,2);
+	dari_tahun = document.${formName}.txddari.value.substring(6,10);
+	var daritemp = dari_bulan+"/"+dari_hari+"/"+dari_tahun;
+	
+	var dari = Date.parse(daritemp);
+	var hingga = Date.parse(hinggatemp);
+
+	var diff_date =  hingga - dari;
+	
+	var num_years = diff_date/31536000000;
+	var num_months = (diff_date % 31536000000)/2628000000;
+	var num_days = ((diff_date % 31536000000) % 2628000000)/86400000;
+
+	document.${formName}.txtbulan.value = Math.floor(num_months);
+
+}
+
+//modified by Rosli on 2010/02/11
+function nexti8(id) {
+	//doAjaxCall${formName}("pkmaklumatseterus","id_kemaskini="+id);	
+	document.${formName}.pagemode.value = 0;	
+	
+	doAjaxCall${formName}('semakanPKP','idpermohonan='+id);
+}
+
+
+function simpanPermohonan(idfail){
+	alert('simpan permohonan');
+  	/*if ( document.${formName}.socNegeri.value == "" ) { 
+  		alert('Sila pilih negeri terlebih dahulu.');
+  		document.${formName}.socNegeri.focus(); return; 
+  	} 
+    if ( document.${formName}.sockementerian.value == "" ) { 
+  		alert('Sila pilih kementerian terlebih dahulu.');
+    	document.${formName}.sockementerian.focus(); 
+    	return; 
+    } 
+   	if ( document.${formName}.socAgensi.value == "" ) { 
+  		alert('Sila pilih agensi terlebih dahulu.');
+    	document.${formName}.socAgensi.focus(); 
+    	return; 
+    }*/
+    if ( document.${formName}.txttajuk.value == "" ) { 
+    	alert('Sila masukkan maklumat tajuk terlebih dahulu.');
+    	document.${formName}.txttajuk.focus(); 
+    	return; 
+    }
+  	if ( document.${formName}.txdTarikhSuratKJP.value == "" ) { 
+    	alert('Sila masukkan tarikh surat KJP terlebih dahulu.');
+    	document.${formName}.txdTarikhSuratKJP.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txtNoFailLain.value == "" ) { 
+    	alert('Sila masukkan nombor rujukan surat terlebih dahulu.');
+    	document.${formName}.txtNoFailLain.focus(); 
+    	return; 
+    }    
+    
+   	document.${formName}.id_kemaskini.value = idfail;
+   	document.${formName}.pagemode.value = "3";
+    doAjaxCall${formName}("simpanpermohonan");
+
+}
+
+//fungsi untuk compare Tarikh
+
+function checkDate() {
+	var today = new Date();
+	
+	dari_bulan = document.${formName}.txdTarikhSuratKJP.value.substring(3,5);
+	dari_hari = document.${formName}.txdTarikhSuratKJP.value.substring(0,2);
+	dari_tahun = document.${formName}.txdTarikhSuratKJP.value.substring(6,10);
+	var daritemp = dari_bulan+"/"+dari_hari+"/"+dari_tahun;
+	
+	var myDate = Date.parse(daritemp);
+	
+
+	if (myDate>today) {
+  		alert("Tarikh yang dimasukkan tidak boleh melebihi Tarikh semasa");
+  		document.${formName}.txdTarikhSuratKJP.value = "";
+  		document.${formName}.txdTarikhSuratKJP.focus();
+ 		return;
+ 	}
+
+}
+
+function validateNumber(elmnt,content) {
+	//if it is character, then remove it..
+    if (isNaN(content)) {
+    	elmnt.value = RemoveNonNumeric(content);
+        return;
+   	}
+}
+
+/*function RemoveNonNumeric( strString ){
+      var strValidCharacters = "1234567890";
+      var strReturn = "";
+      var strBuffer = "";
+      var intIndex = 0;
+
+      // Loop through the string
+      for( intIndex = 0; intIndex < strString.length; intIndex++ )   {
+            strBuffer = strString.substr( intIndex, 1 );
+            // Is this a number
+
+            if( strValidCharacters.indexOf( strBuffer ) > -1 ){
+                  strReturn += strBuffer;
+            }
+      }
+      return strReturn;
+}*/
+
+function tambahMaklumatPemilik(id) {
+	
+	/*if(document.${formName}.sochakmilik.value == "" || document.${formName}.sochakmilik.value == 0){
+		if(document.${formName}.txtnohakmilik.value == "" || document.${formName}.txtnohakmilik.value == 0){
+			alert('Sila pilih No Hakmilik terlebih dahulu @\n Lain-lain bagi kemasukan baru');
+			return;
+		}else if(document.${formName}.txtnolot.value == ""){	
+			alert('Sila masukkan No Lot terlebih dahulu');
+			return;
+		}	
+	}*/
+	
+	if ( document.${formName}.socDaerah1.value == "" ) { 
+    	alert('Sila pilih maklumat daerah Hakmilik terlebih dahulu.');
+    	document.${formName}.socDaerah1.focus(); 
+    	return; 
+    }
+	
+	if ( document.${formName}.socMukim.value == "" ) { 
+    	alert('Sila masukkan nama Mukim terlebih dahulu.');
+    	document.${formName}.socMukim.focus(); 
+    	return; 
+    	}    
+	
+	if ( document.${formName}.socHakmilik.value == "" ) { 
+    	alert('Sila masukkan Jenis Hakmilik terlebih dahulu.');
+    	document.${formName}.socHakmilik.focus(); 
+    	return; 
+    }    
+    if ( document.${formName}.txtnohakmilik.value == "" ) { 
+    	alert('Sila masukkan Nombor Hakmilik terlebih dahulu.');
+    	document.${formName}.txtnohakmilik.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.noLot.value == "" ) { 
+    	alert('Sila masukkan Jenis Lot terlebih dahulu.');
+    	document.${formName}.noLot.focus(); 
+    	return; 
+    } 
+    if(document.${formName}.txtnolot.value == ""){	
+		alert('Sila masukkan No Lot terlebih dahulu');
+    	document.${formName}.txtnolot.focus(); 
+		return;
+	}
+
+	if ( document.${formName}.txtnama.value == "" ) { 
+    	alert('Sila masukkan nama terlebih dahulu.');
+    	document.${formName}.txtnama.focus(); 
+    	return; 
+    	}    
+	
+	if ( document.${formName}.txtalamat1.value == "" ) { 
+    	alert('Sila masukkan alamat 1 terlebih dahulu.');
+    	document.${formName}.txtalamat1.focus(); 
+    	return; 
+    }    
+    if ( document.${formName}.txtalamat2.value == "" ) { 
+    	alert('Sila masukkan alamat 2 lot terlebih dahulu.');
+    	document.${formName}.txtalamat2.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txtposkod.value == "" ) { 
+    	alert('Sila masukkan maklumat poskod terlebih dahulu.');
+    	document.${formName}.txtposkod.focus(); 
+    	return; 
+    } 
+   	if ( document.${formName}.socDaerah.value == "" ) { 
+    	alert('Sila pilih maklumat daerah terlebih dahulu.');
+    	document.${formName}.socDaerah.focus(); 
+    	return; 
+    }
+	document.${formName}.id_kemaskini.value = id;
+	document.${formName}.pagemode.value = 'simpan';
+	doAjaxCall${formName}("tambahhakmilikpemilik");
+	
+}
+
+</script>

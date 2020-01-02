@@ -1,0 +1,3 @@
+<td valign="middle" align="center"><a href="javascript:getData('$list.id')">$m_id</a></td>
+<td valign="middle" align="center">$m_noLot</td>
+##<td valign="middle" align="center">$m_luasBersamaan $m_keterangan</td>

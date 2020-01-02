@@ -1,0 +1,52 @@
+#parse("${viewPath}/label_titles.vm")
+
+
+
+<table width="100%">
+
+<tr><td style="font-weight:bold">
+Jumlah Rekod: <span id="data_size">$data_size</span>, Jumlah Mukasurat: <span id="total_page">$total_page</span>
+<input type="hidden" name="last_page" value="$!total_page">
+</td></tr>
+</table>
+
+<table width="100%">
+<tr>
+<td>
+<input type="button" value="$button_add" onclick="doDivAjaxCall$formname('div_main','add_new_record','')">
+</td>
+<td style="font-weight:bold" align="right">
+
+<span id="_wait"></span>
+
+<select id="page_num" class="autoselect" name="page_num" style="text-align:center" onchange="$('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_page','data_size=$data_size&total_page=$total_page')">
+#foreach ( $i in [1..$total_page] )
+<option value="$i">$i</option>
+#end
+</select>
+<!-- <input type="button" class="button" style="height:22px" value="&lt;&lt;" onclick="$('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_first_page','data_size=$data_size&total_page=$total_page')">
+<input type="button" class="button" style="height:22px" value="&lt;" onclick="if ( $('page_num').value != '1' )  { $('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_previous','data_size=$data_size&total_page=$total_page') }">
+<input type="button" class="button" style="height:22px" value="&gt;" onclick="if ( $('page_num').value != '$total_page' )  { $('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_next','data_size=$data_size&total_page=$total_page'); }">
+<input type="button" class="button" style="height:22px" value="&gt;&gt;" onclick="$('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_last_page','data_size=$data_size&total_page=$total_page')">
+-->
+      	<a alt="" href = "javascript:onclick="$('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_first_page','data_size=$data_size&total_page=$total_page')">
+      		&nbsp;&nbsp;<img border="0" src="../img/paging/page-first.gif" /></a> 
+      	<a alt="" href = "javascript:onclick="if ( $('page_num').value != '1' )  { $('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_previous','data_size=$data_size&total_page=$total_page') }">
+      		&nbsp;&nbsp;<img border="0" src="../img/paging/page-prev.gif" /></a> 
+      	<a alt="" href = "javascript:onclick="if ( $('page_num').value != '$total_page' )  { $('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_next','data_size=$data_size&total_page=$total_page'); }">
+      		&nbsp;&nbsp;<img border="0" src="../img/paging/page-next.gif" /></a> 
+      	<a alt="" href = "javascript:onclick="$('_wait').innerHTML='Please wait...';doDivAjaxCall3$formname('div_items','get_last_page','data_size=$data_size&total_page=$total_page')">
+      		&nbsp;&nbsp;<img border="0" src="../img/paging/page-last.gif" /></a> 
+</td></tr>
+</table>
+
+<table width="100%">
+<tr><td>
+
+##<div id="div_items" style="height:350px;overflow:auto;overflow-x:hidden;">
+<div id="div_items">
+#parse("$templateDir/div_items.vm")
+</div>
+
+</td></tr>
+</table>

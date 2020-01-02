@@ -1,0 +1,13 @@
+<fieldset style="background-color:lightgrey;border-radius: 3px; -moz-border-radius-bottomleft:7px; -moz-border-radius-bottomright:7px; -moz-border-radius-topleft:5px; -moz-border-radius-topright:7px;">
+
+<table border="0">
+<tr>
+<td>
+<input type="button" style="width:100px;height:30px;text-align:center" value="NEW" onclick="doDivAjaxCall${formName}('_div_area','_new','')">
+<input type="button" style="width:100px;height:30px;text-align:center" value="SAVE" onclick="doDivAjaxCall${formName}('_div_area','_save','')">
+<input type="button" style="width:100px;height:30px;text-align:center" value="DELETE" onclick="doDivAjaxCall${formName}('_div_area','_delete','')">
+<input type="button" style="width:100px;height:30px;text-align:center" value="ATTCHMT" onclick="doDivAjaxCall${formName}('_div_area','_attachment','')">
+</td>
+</tr>
+</table>
+</fieldset>

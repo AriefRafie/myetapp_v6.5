@@ -1,0 +1,109 @@
+#if ( $uData.size() > 0 )
+	#foreach ( $usOn in $uOn )
+		#set ( $u_ID = $usOn.id )
+		#if ( $usOn.uName != "") #set ( $u_Name = $usOn.uName ) #else #set ( $u_Name = "" ) #end
+	#end
+	#foreach ( $uRecord in $uData )
+		#if ( $uRecord.uEmel != "" ) #set ( $u_Emel = $uRecord.uEmel ) #else #set ( $u_Emel = "" ) #end
+		#if ( $uRecord.uNoHP != "" ) #set ( $u_Phone = $uRecord.uNoHP ) #else #set ( $u_Phone = "" ) #end 
+	#end
+#end
+#if ($u_Aduan == "")
+	#set ($u_Aduan="")
+#end
+<div class="content">
+<form name="f" method="post">
+<center>
+<fieldset>
+<table width="100%" border="0" cellpadding="3" cellspacing="1">
+    <tr>
+        <td align="left"><label for="nama">Nama</label></td>
+        <td>:</td>
+        <td><input color="#C0C0C0" type="text" name="namaPengadu" id="namaPengadu" value="$!u_Name"/></td>
+    </tr>
+    <tr>
+        <td align="left"><label for="emel">E-mail</label></td>
+        <td>:</td>
+        <td><input type="text" name="emailPengadu" id="emailPengadu" value="$!u_Emel" tabindex="1"/></td>
+    </tr>
+    <tr>
+        <td align="left"><label for="phone">Phone No.</label></td>
+        <td>:</td>
+        <td><input type="text" name="phonePengadu" id="phonePengadu" value="$!u_Phone" tabindex="1"/></td>
+    </tr>
+    <tr>
+        <td align="left"><label for="jenisAduan">Jenis Aduan</label></td>
+        <td>:</td>
+        <td>
+            <select id="jenisAduan" name="idJenisAduan" style="width:100%">
+			<option value="0">- Pilihan -</option>
+            #foreach ( $laduan in $rjenisaduan )
+                #if ( $u_Aduan == $laduan.id )
+                    #set ( $selected = "selected" )
+                #else
+                    #set ( $selected = "" )
+                #end
+                <option value="$laduan.id" $selected>$laduan.jenisAduan.toUpperCase()</option>                
+            #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="left" valign="top"><label for="aduan">Aduan</label></td>
+        <td valign="top">:</td>
+        <td><Textarea name="catatan" id="catatan" tabindex="2"/></textarea></td>
+    </tr>
+</table>
+</fieldset>
+</center>
+<table width="90%" border="0" cellpadding="3" cellspacing="1" align="center">
+    <tr>
+        <td colspan="3" align="left">
+            <input id="button" type="submit" value="Hantar" tabindex="3" onclick="submitRegister('sendComplaint')">
+        </td>
+    </tr>   
+</table>
+<input type="hidden" name="command">
+<input type="hidden" name="idPengadu" id="idPengadu" value="$u_ID">
+<input type="hidden" name="tarikhMasuk" id="tarikhMasuk" value="$dateFormat.format($now)">
+</form>
+<table width="90%" border="0" align="center">
+    <tr>
+        <td nowrap class="content">
+        <b>
+		#if ( $saveinfo == "Success" )
+		<font color="blue" size="1.3em">
+		    Aduan berjaya dihantar. <br>
+		    No rujukan aduan : <u>$idAduan.getId()</u>
+		</font>
+		#elseif ( $saveinfo == "unSuccess" )
+		<font color="red" size="1.3em">
+			Aduan tidak berjaya dihantar. <br>
+			Sila cuba sebentar lagi.
+		</font>		 
+		#end
+        </b>
+        </td>
+    </tr>
+</table>
+</div>
+<script>
+function submitRegister(s) {
+	var cboJenisAduan=document.getElementById("jenisAduan").value;
+	var txtCatatan=document.getElementById("catatan").value;
+	
+	if ( parseInt(cboJenisAduan) != 0 ) {
+		if ( txtCatatan != "" ) {
+			if ( s == "sendComplaint" ) {
+				document.f.command.value = s;
+		    	document.f.action = "";
+			}       
+			document.f.submit();
+		} else {
+			alert("Sila masukkan Aduan yang anda ingin kemukakan pada pihak yang bertanggungjawab");
+		}
+	} else {
+		alert("Sila pilih Jenis Aduan yang anda ingin buat catatan");
+	} 
+}   
+</script>

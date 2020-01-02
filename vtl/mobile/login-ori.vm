@@ -1,0 +1,63 @@
+#if ( $cate == "internal" || $cate == "kjp" ) #set ( $titleC = "Nama Pengguna" ) #else #set ( $titleC = "MyID / MyCOID" ) #end
+#if ( $cate == "internal" || $cate == "kjp" ) #set ( $usertype = "internal" ) #else #set ( $usertype = "online" ) #end
+<div class="content">
+<center> 
+<form name="l" action="login" method="post" target="_self" class="label-top">
+<fieldset>
+	<table width="100%" border="0" cellpadding="3" cellspacing="1" align="center">
+	    <tr>
+	        <td align="left"><label for="kategori">Kategori Pengguna</label></td>
+	        <td>
+	            <select id="kategori" name="idKategori" style="width:100%" onchange="submitChoice()">
+		            #if ( $cate == "online" )
+	                    #set ( $selected = "selected" )
+	                #else
+	                    #set ( $selected = "" )
+	                #end
+	                <option value="online" onclick="submitChoice('getOnline')" $selected>Biasa</option>
+		            #if ( $cate == "internal" )
+	                    #set ( $selected = "selected" )
+	                #else
+	                    #set ( $selected = "" )
+	                #end
+	                <option value="internal" onclick="submitChoice('getInternal')" $selected>Dalaman</option>
+		            #if ( $cate == "kjp" )
+	                    #set ( $selected = "selected" )
+	                #else
+	                    #set ( $selected = "" )
+	                #end
+	                <option value="kjp" onclick="submitChoice('getKJP')" $selected>Kementerian Jabatan Pengguna</option>                 
+	            </select>
+	        </td>
+	    </tr>
+		<tr>
+			<td align="left"><label for="name">$titleC<span class="red">*</span></label></td>
+			<td><input type="text" name="username" id="username" value="" tabindex="1" maxlength="30"/></td>
+		</tr>
+		<tr>
+			<td align="left"><label for="email">Kata Laluan<span class="red">*</span></label></td>
+			<td><input type="password" name="password" id="password" value="" tabindex="2" maxlength="30"/></td>
+		</tr>
+	</table>
+</fieldset>
+	<table width="90%" border="0" cellpadding="1" cellspacing="1">
+		<tr>
+			<td colspan="2" align="left" valign="top"><span style="font-size:.8em;">Sila isikan ruangan yang bertanda <span style="color:red">*</span></span></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="right"><input id="button" type="submit" value="Log Masuk" tabindex="3"/></td>
+		</tr>
+	</table>
+<input type="hidden" name="command">
+<input type="hidden" name="usertype" value=$usertype>
+</form>
+</center>
+</div>
+
+<script>
+function submitChoice(s) {
+    document.l.command.value = s;
+	document.l.action = "";	
+	document.l.submit();
+}
+</script>

@@ -1,0 +1,41 @@
+@charset "iso-8859-1";
+/* CSS Document */
+/*common tools*/
+* {margin: 0px; padding: 0px;}
+body{background:#CCCCCC; font-family:Tahoma, Arial, Helvetica, sans-serif; color:#000000;}
+/* Header*/
+*.atopmenu {text-align:left; font: 11px Tahoma; font-weight:bold; color:#a29d80; text-decoration:none;}
+*.atopmenu a:hover{text-align:left; font: 11px Tahoma; color:#c60000; text-decoration: underline; }
+/* end Header*/
+
+/*BoxHeader*/
+*.menu{background:#FF6600; vertical-align:middle; font:bold 10px Tahoma; color:#FFFFFF; margin-bottom:2px;  margin-top:2px; text-decoration:none;}
+*.menu a{vertical-align:middle; font:bold 10px Tahoma; color:#EEE9D6; padding-left:0px; text-decoration:none;}
+*.menu a:hover{vertical-align:middle; font:bold 10px Tahoma; color:#ffffff; padding-left:0px; text-decoration: underline;}
+*.menu_str{vertical-align:middle; padding-left:7px;}
+*.infoBelow{vertical-align:middle; font:bold 10px Tahoma; color:#000000; margin-bottom:2px;  margin-top:2px; text-decoration:none;}
+*.normal{vertical-align:middle; font:bold 12px Tahoma; color:#FF6600; margin-bottom:2px;  margin-top:2px; text-decoration:none;}
+*.details{vertical-align:middle; font:bold 11px Tahoma; color:#000000; margin-bottom:2px;  margin-top:2px; text-decoration:none;}
+*.fpxfaq{vertical-align:middle; font:bold 12px Tahoma; color:#368DB4; margin-bottom:2px;  margin-top:2px; text-decoration:none;}
+*.productdata {font-family: Verdana, Arial, sans-serif; font-size: 10px;}
+*.searchc a{font:10px Tahoma, Arial, Helvetica, sans-serif;  letter-spacing: 0px;  color:#c60000; text-decoration:none;}
+/*end BoxHeader*/
+
+/*Left column*/
+*.searchc{background:#F0EADA; vertical-align: top; margin:0px; font:10px Tahoma, Arial, Helvetica, sans-serif; color:#c60000; border:0px solid #6B6F75;  padding-bottom:4px;}
+*.innersearch{background:#F0EADA;  margin-left:0px;  border:0px solid #7A7F84; letter-spacing: 0px;  font:10px Tahoma, Arial, Helvetica, sans-serif; color:#c60000;}
+/*end Left column*/
+
+td.main{font-family: Tahoma, Verdana, Arial, sans-serif;  font-size: 11px;  color:#000000;  }
+.infoBox {  background-color: #ffffff;  border:1px solid #E0DAC5;}
+*.productListing {  width:100%;  background-color:#FFFFFF;  }
+
+.productListing-heading {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 10px;
+  color: #000000;
+  font-weight: bold;
+  padding:0px 2px;
+  height:16px; background-color:#F8F5EC;
+  border-bottom: 1px solid #E0DAC5;
+}

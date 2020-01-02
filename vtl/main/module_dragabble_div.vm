@@ -1,0 +1,7 @@
+
+<div id="$portletId" name="$portletId"
+style="visibility:hidden;position:absolute;background-color:white;border: 2px solid;border-color:#99a  #99a #99a #99a;"
+onmousedown="#foreach ( $m in $modules ) document.getElementById('$m.id').style.zIndex = 0; #end this.style.zIndex=50"
+>
+
+

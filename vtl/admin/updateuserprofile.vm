@@ -1,0 +1,166 @@
+#if ( $updateUserSuccess && $operation == "update" )
+    <table width="100%" border="0">
+        <tr>
+            <td>
+            <font color="blue">
+            <b>
+            Successfully updated: <u>$user_name<u>
+            </b>
+            </font>
+            </td>
+        </tr>
+    </table>
+#elseif ( $operation == "update" )
+    <table width="100%" border="0">
+        <tr>
+            <td>
+            <font color="red">
+            <b>
+            Operation has failed!!
+            </b>
+            </font>
+            </td>
+        </tr>
+    </table>
+
+#end
+
+#if ($mode == "doUpdate")
+#set ($style = "")
+#else
+#set ($style = "readonly class='disabled'")
+#end
+<br>
+<fieldset>
+<legend>My Profile</legend>
+<table border="0" cellpadding="2" cellspacing="2">
+     #if ( $session.getAttribute("_ekptg_user_type") == "online")
+      <tr>
+       <td >ID Pengguna</td>
+                    <td><input readonly $style name="user_login" size="20" value="$!user_login"></td>
+       </tr>
+          <tr>
+              <td >Emel</td>
+              <td><input readonly $style name="emel" id="emel" size="35" value="$!emel"></td>
+   </tr>
+     #else
+    <tr>
+        <td >ID Pengguna</td>
+        <td><input name="user_login" size="20" value="$user_login" readonly class="disabled"></td>
+    </tr> 
+    #end
+    <tr>
+        <td >Nama Pengguna</td>
+        <td><input $style name="user_name" size="50" value="$user_name"></td>
+    </tr>
+   
+   #if ( $session.getAttribute("_ekptg_user_type") == "internal")
+   <tr>
+       <td >No KP Baru</td>
+       <td><input $style name="no_kp_baru" size="25" value="$!no_kp_baru"></td>
+   </tr>
+
+   <tr>
+       <td >Emel</td>
+       <td><input $style name="emel" id="emel" size="50" value="$!emel"></td>
+   </tr>
+   #end
+    <tr>
+        <td >Password</td>
+        <td><input $style type="password" name="user_password" size="30" value=""></td>
+    </tr>
+    <tr>
+        <td >Confirm Password</td>
+        <td><input $style type="password" name="user_password2" size="30" value=""></td>
+    </tr>   
+    #if ( $session.getAttribute("_ekptg_user_type") == "internal")
+    
+    <tr>
+        <td >Jawatan</td>
+         <td>$!nama_jawatan</td>
+        </tr>
+         <tr>
+             <td >Seksyen</td>
+             <td>$!nama_seksyen</td>
+        </tr>
+             <tr>
+                 <td >Negeri</td>
+                 <td>$!nama_negeri</td>
+        </tr>
+        
+          <!-- <tr>
+               <td >Daerah</td>
+               
+               <td>$!nama_daerah</td>
+        </tr>
+        -->
+                   <tr>
+                       <td >Nama Pejabat</td>
+                       
+                       <td>     
+                       <!--
+                       <input type=text readonly class=disabled size=50 value="$!nama_pejabat"  >
+                       -->
+                       $!nama_pejabat
+                       </td>
+        </tr>
+               <tr>
+                   <td >Pejabat JKPTG</td>
+              	#set ($address = "$!alamat1$!alamat2$!alamat3" )
+                   <td>             
+        	<!-- -->
+        	<textarea class="disabled" readonly name="AddressPejabatJKPTG" cols="43" rows="4">$!address</textarea>
+                ##$!address
+                </td>
+    </tr>
+                  <tr>
+                      <td >Daerah Jagaan</td>
+                      
+                      <td>             
+           	   $!daerahJagaan
+                      </td>
+    </tr>
+	#end
+    <tr>
+        <td colspan="2" align="left">
+             #if ($mode == "doUpdate")
+             <input class="stylobutton" type="button" value="Simpan" onclick="submitRegister()">
+             #else
+            <input class="stylobutton" type="button" value="Kemaskini" onclick="javascript:doAjaxCall${formname}('modeUpdate')">
+            #end
+        </td>
+    </tr>
+    </table>
+    <table>
+</table>
+</fieldset>
+<input type="hidden" name="user_role" value="$user_role">
+<script>
+function submitRegister() {
+	
+   var item = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    var address = document.${formName}.emel.value;
+
+    if ( document.${formName}.user_name.value == "" ) { document.${formName}.user_name.focus(); return; }
+    if ( document.${formName}.user_password.value != document.${formName}.user_password2.value ) {
+        alert("Confirm password does not match!");
+        document.${formName}.user_password2.focus();
+        return;
+    }
+
+   if('$session.getAttribute("_ekptg_user_type")' == "internal" && (address != "" && item.test(address) == false)) {
+      alert('Invalid Email Address!');
+      document.${formName}.emel.focus();
+      return false;
+   }
+
+    document.${formName}.command.value = "update";
+    document.${formName}.action = "";
+    document.${formName}.submit();
+}   
+function resetFields() {
+    document.${formName}.user_name.value = "";
+    document.${formName}.user_password.value = "";  
+    document.${formName}.user_name.focus();
+}
+</script>

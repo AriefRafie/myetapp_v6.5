@@ -1,0 +1,86 @@
+<div class="content">
+<table border="0" cellpadding="0" cellspacing="0" width="95%" align="center">
+
+#if ( $isLogin )
+	<tr><td colspan="2" align="right"><h3>$dateFormat.format($now)</h3></td></tr>
+	<tr><td colspan="2" align="left"><h3>Selamat Datang $userName</h3></td></tr>
+	<tr><td class="bannerTitle"><h1>Senarai Urusan:</h1></td>
+		<td><div class="arrow"></td></tr>
+#else
+	<tr><td colspan="2" align="right"><h3>$dateFormat.format($now)</h3></td></tr>
+	<tr><td colspan="2"><div class="buttonTop"><a href="$!userSessionId?_portal_module=mobile_login">
+	<img src="../image/myetapp-logo-simple.png" width="93" height="45"><br>Log Masuk ke Perkhidmatan <i>Mobile</i></a></div></td></tr>
+#end
+
+#if ( $isLogin )
+	<tr><td colspan="2">
+	<table width="100%" border="0" cellpadding="5" cellspacing="5" align="center">
+	#foreach( $module in $modules )
+		#if ( $module.id.startsWith("etapp") )
+			#if ( $role.equals("online_kjp") )
+				#if ( $module.id.equals("etapp_htphakmilik") )
+					#set ( $titleModule = "Rekod Tanah KJP" )
+				#elseif ( $module.id.startsWith("etapp") )
+					#set ( $titleModule = $module.title )
+				#end
+				<tr><td class="moduleLink"><a href="$!userSessionId?_portal_module=$module.id"><h2>$titleModule</h2>
+			#else
+				<tr><td class="moduleLink"><a href="$!userSessionId?_portal_module=$module.id"><h2>$module.title</h2>
+			#end			
+			#if ( $module.id.equals("etapp_htphakmilik") )
+				Menyemak rekod tanah persekutuan</span></a></td>
+			#end
+			#if ( $module.title.equals("Permohonan Pembahagian Pusaka") )
+				Menyemak status permohonan pembahagian pusaka kecil</a></td>
+			#end
+			#if ( $module.title.equals("Permohonan Penyewaan") )
+				Membuat semakan permohonan sewaan bagi tanah persekutuan</a></td>
+			#end
+			#if ( $module.title.equals("Permohonan Pengambilan Tanah") )
+				Membuat semakan permohonan pengambilan tanah yang telah dilakukan</a></td>
+			#end
+			#if ( $module.title.equals("Bantahan Mahkamah") )
+				Menyemak rekod atau status bantahan yang telah dibuat</a></td>
+			#end
+			#if ( $module.title.equals("Aduan") )
+				Membuat aduan atau menyemak kembali status aduan yang pernah dibuat</a></td>
+			#end
+			</tr>
+		#end
+	#end
+	</table>
+	</td></tr>
+	<tr><td colspan="2"><div class="button"><a href="$!userSessionId?_portal_module=mobile_logout" style="white-space:nowrap">Log Keluar</a></div></td></tr>
+#else
+	<tr><td><img src="../image/sheet_of_paper.png" height="35" width="35"></td>
+		<td><h2>Semak Status Permohonan</h2></td></tr>
+	<tr><td colspan="2" align="justify">
+		Dengan perkhidmatan <i>mobile</i> kini anda boleh menyemak status permohonan pusaka, penyewaan, bantahan pengambilan tanah, aduan dan lain-lain di mana sahaja
+	</td>
+	</tr>
+	<tr><td width="38"><img src="../image/folder.png" height="35" width="35"></td>
+		<td><h2>Rekod Tanah Persekutuan</h2></td></tr>
+	<tr><td colspan="2" align="justify">
+Pengguna dalaman JKPTG dan Kementerian Jabatan Pengguna (KJP) boleh menyemak rekod tanah persekutuan dengan mudah, ringkas dan cepat
+	</td>
+	</tr>
+	<tr><td width="38"><img src="../image/chat.png" height="35" width="35"></td>
+		<td><h2>Aduan</h2></td></tr>
+	<tr><td colspan="2" align="justify">
+		Pengguna awam boleh mengemukakan sebarang aduan, cadangan dan pertanyaan berkaitan perkhidmatan di JKPTG (P)
+	</td>
+	</tr>
+		<tr><td colspan="2"><div class="button"><a href="$!userSessionId?_portal_module=mobile_login">Log Masuk</a></div></td></tr>
+#end
+
+</table>
+</div>
+<center>
+<div class="footer1">
+<div class="footer2">
+<div class="clear"></div>
+	<p>Paparan terbaik menggunakan pelayan Opera Mobile dan Safari</p>
+   	<p>Hakcipta Terpelihara <span style="font-size:1.2em">&copy;</span> Kerajaan Malaysia 2017. Jabatan Ketua Pengarah Tanah dan Galian Persekutuan</p>
+</div>
+</div>
+</center>

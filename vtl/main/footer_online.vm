@@ -1,0 +1,31 @@
+<!--
+<table  width="100%"  border="0" cellspacing="0" cellpadding="0">
+	<tr>		
+		<td align="center" class="page_footer">
+		
+		&copy; Kementerian Sumber Asli & Alam Sekitar
+		<font size="1" face="Tahoma"><br>PENAFIAN:</font>
+		<font size="1" face="Tahoma">Kerajaan Malaysia tidak bertanggungjawab terhadap sebarang 
+		kehilangan atau kerosakan yang dialami kerana menggunakan maklumat dalam laman ini.</font></p>
+		<p style="font-size: 10px; font-style: normal;" align="center">
+		<strong>Paparan terbaik menggunakan browser Internet Explorer 8.0 dan Mozilla Firefox</strong></p>
+		</td>	
+	</tr>
+</table>
+-->
+<div class="page_footer">
+		
+		&copy; Kementerian Sumber Asli & Alam Sekitar
+		<font size="1" face="Tahoma"><br>PENAFIAN:</font>
+		<font size="1" face="Tahoma">Kerajaan Malaysia tidak bertanggungjawab terhadap sebarang 
+		kehilangan atau kerosakan yang dialami kerana menggunakan maklumat dalam laman ini.</font></p>
+		<p style="font-size: 10px; font-style: normal;" align="center">
+		<strong>Paparan terbaik menggunakan browser Internet Explorer 8.0 dan Mozilla Firefox</strong></p>
+
+</div>
+
+
+<script>
+//window.status = "connected..";
+//set_interval();
+</script>

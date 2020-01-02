@@ -1,0 +1,4 @@
+<td>$!r.nama</td>
+<td>$!r.nomborPengenalan</td>
+<td>#if ( $r.tarikhLahir ) $dateFormat.format($r.tarikhLahir) #end</td>
+<td>$!r.alamatTetap1</td>

@@ -1,0 +1,177 @@
+<fieldset>
+<legend>Maklumat Tanah</legend>
+<table width="100%"><tr><td align="right">
+<input type="button" value="Kembali" onclick="$('div_entry_child').style.display='none';$('div_entry_main').style.display='block';">
+</td></tr></table>
+##$!tanah.id
+<fieldset>
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+<tr><td>Negeri:</td><td>:</td>
+<td>
+#if ( !$filterNegeri )
+<select name="tanah_negeri_id" class="texts" style="width:500px" onchange="doDivAjaxCall$formname('div_tanah_daerah','tanah_list_daerah','')">
+<option value="">SILA PILIH</option>
+#foreach ( $n in $negeri_list )
+<option value="$n.id" #if ( $tanah.negeri.id == $n.id ) selected #end>$n.kodNegeri - $n.namaNegeri</option>
+#end
+</select>
+#else
+<select disabled name="tanah_negeri_id" class="texts" style="width:500px" onchange="doDivAjaxCall$formname('div_tanah_daerah','tanah_list_daerah','')">
+#foreach ( $n in $negeri_list )
+<option value="$n.id" #if ( $tanah.negeri.id == $n.id ) selected #end>$n.kodNegeri - $n.namaNegeri</option>
+#end
+</select>
+#end
+</td>
+</tr>
+
+<tr><td>Daerah:</td><td>:</td>
+<td>
+<div id="div_tanah_daerah">
+#if ( !$filterNegeri )
+
+#if ( $tanah )
+#parse("$viewPath/vm/tanah_select_daerah.vm")
+#end
+
+#else
+#parse("$viewPath/vm/tanah_select_daerah.vm")
+#end
+</div>
+</td>
+</tr>
+
+<tr><td>Mukim:</td><td>:</td>
+<td>
+<div id="div_tanah_mukim">
+#if ( $tanah )
+#parse("$viewPath/vm/tanah_select_mukim.vm")
+#end
+</div>
+</td>
+</tr>
+</table>
+</fieldset>
+
+<fieldset>
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+<tr><td>Jenis Hakmilik</td><td>:</td>
+<td>
+<select name="jenisHakmilik_id" class="texts" style="width:500px">
+<option value="">SILA PILIH</option>
+#foreach( $j in $jenisHakmilik_list )
+<option value="$j.id" #if ( $tanah.jenisHakmilik.id == $j.id ) selected #end>$j.kodJenisHakmilik - $j.keterangan</option>
+#end
+</select>
+</td>
+</tr>
+
+#input2("nomborHakmilik" "No Hakmilik" "$!tanah.nomborHakmilik" "300px")
+
+#if ( $tanah.tarikhDaftar ) #set ( $date = $dateFormat.format($tanah.tarikhDaftar)) #else #set ( $date = "" ) #end
+#date_input("tarikhDaftar" "Tarikh Daftar" "$date")
+
+#input2("nomborSyit" "No Syit" "$!tanah.nomborSyit" "300px")
+#input2("nomborPT" "No PT" "$!tanah.nomborPT" "300px")
+#input2("nomborLot" "No Lot" "$!tanah.nomborLot" "300px")
+
+<tr><td>Kategori Tanah</td><td>:</td>
+<td>
+<select name="kategori_id" class="texts" style="width:500px">
+<option value="">SILA PILIH</option>
+#foreach( $k in $kategori_list )
+<option value="$k.id" #if ( $tanah.kategori.id == $k.id ) selected #end>$k.kod - $k.keterangan</option>
+#end
+</select>
+</td></tr>
+
+</table>
+</fieldset>
+
+<fieldset>
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+##LUAS ASAL
+<tr><td>Unit Luas Asal</td><td>:</td>
+<td>
+<select  class="texts" style="width:500px" 
+onchange="if ( this.value == '${tanah.unitLuasLot.id}-${tanah.unitLuasLot.keterangan}') { unitLuasLot(this.value);  } else { unitLuasLot(this.value); }">
+<option value="">SILA PILIH</option>
+#foreach ( $u in $unitLuas_list )
+<option value="${u.id}-${u.keterangan}" #if ( $tanah.unitLuasLot.id == $u.id ) selected #end ( $>$u.kod - $u.keterangan</option>
+#end
+</select>
+</td>
+</tr>
+
+
+<tr><td>Luas Asal</td><td>:</td>
+<td>
+
+<table><tr><td>
+<span id="div_luas_asal">#parse("$viewPath/vm/luas_asal.vm")</span>
+<input type="button" value="Convert &gt;" onclick="doDivAjaxCall3$formname('div_luas_asal_meter_sq','convert_luas_asal','');">
+</td><td>
+#set ( $luas_asal_meter_sq = $tanah.luasLot )
+<span id="div_luas_asal_meter_sq">#parse("$viewPath/vm/luas_asal_meter_sq.vm")</span>
+</td></tr></table>
+
+</td>
+</tr>
+
+
+</table>
+</fieldset>
+
+<fieldset>
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+##LUAS AMBIL
+
+<tr><td>Unit Luas Ambil</td><td>:</td>
+<td>
+<select  class="texts" style="width:500px" 
+onchange="if ( this.value == '${tanah.unitLuasAmbil.id}-${tanah.unitLuasAmbil.keterangan}') { unitLuasAmbil(this.value);  } else { unitLuasAmbil(this.value); }">
+<option value="">SILA PILIH</option>
+#foreach ( $u in $unitLuas_list )
+<option value="${u.id}-${u.keterangan}" #if ( $tanah.unitLuasAmbil.id == $u.id ) selected #end ( $>$u.kod - $u.keterangan</option>
+#end
+</select>
+</td>
+</tr>
+
+<tr><td>Luas Ambil</td><td>:</td>
+<td>
+
+<table><tr><td>
+<span id="div_luas_ambil">#parse("$viewPath/vm/luas_ambil.vm")</span>
+<input type="button" value="Convert &gt;" onclick="doDivAjaxCall3$formname('div_luas_ambil_meter_sq','convert_luas_ambil','');">
+</td><td>
+#set ( $luas_ambil_meter_sq = $tanah.luasAmbil )
+<span id="div_luas_ambil_meter_sq">#parse("$viewPath/vm/luas_ambil_meter_sq.vm")</span>
+</td></tr></table>
+</td>
+</tr>
+
+
+</table>
+</fieldset>
+
+
+
+<fieldset>
+<table width="100%"><tr><td align="right">
+<span id="wait_hakmilik"></span>
+<input type="button" value="Simpan" onclick="$('wait_hakmilik').innerHTML='<b>Please wait...</b>';doDivAjaxChainCall3$formname('div_entry_child','simpan_hakmilik','hakmilik_id=$!tanah.id','div_list_hakmilik','list_hakmilik','')">
+<input type="button" value="Kembali" onclick="$('div_entry_child').style.display='none';$('div_entry_main').style.display='block';"">
+</td></tr></table>
+</fieldset>
+
+
+</fieldset>

@@ -1,0 +1,39 @@
+<fieldset>
+<legend>Maklumat Tanah</legend>
+<table width="100%"><tr><td align="right">
+<input type="button" value="Kembali" onclick="$('div_entry_child').style.display='none';$('div_entry_main').style.display='block';">
+</td></tr></table>
+##$!dokumen.id
+<fieldset>
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+<tr><td>Nama Dokumen:</td><td>:</td>
+<td>
+<input name="tajuk" class="texts" style="width:500px">
+</td>
+</tr>
+
+<tr><td>Keterangan:</td><td>:</td>
+<td>
+<textarea name="keterangan" class="textarea" style="width:500px;"></textarea>
+</td>
+</tr>
+
+<tr><td>Dokumen:</td><td>:</td>
+<td>
+<input type="file" id="upload_file" name="upload_file" class="texts" style="width:500px">
+</td>
+</tr>
+</table>
+</fieldset>
+<fieldset>
+<table width="100%"><tr><td align="right">
+<span id="wait_dokumen"></span>
+<input type="button" value="Simpan" onclick="uploadDokumen();">
+<input type="button" value="Kembali" onclick="$('div_entry_child').style.display='none';$('div_entry_main').style.display='block';"">
+</td></tr></table>
+</fieldset>
+<iframe id="upload_doc" name="upload_doc" width="0px" height="0px" style="visibility:hidden"></iframe>
+
+</fieldset>

@@ -1,0 +1,5 @@
+<table width="80%" cellpadding="1" cellspacing="0">
+<tr><td class="label" style="width:100px"></td><td style="width:10px"></td><td></td></tr>
+<tr><td class="label">No Pengenalan</td><td>:</td><td><input class="texts" type="text" name="find_nomborPengenalan" value="$!find_nomborPengenalan"></td></tr>
+<tr><td class="label">Nama</td><td>:</td><td><input class="texts" type="text" name="find_nama" value="$!find_nama"></td></tr>
+</table>

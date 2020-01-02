@@ -1,0 +1,38 @@
+<project name="etapp" basedir="../">
+	
+	<property file="${basedir}/ant/build.properties"/>
+    <property name="webroot.dir" value="${basedir}"/>
+    <property name="webinf.dir" value="${webroot.dir}/WEB-INF"/>
+    <property name="build.dir" value="build"/>
+	<property name="project.distname" value="etapp"/>	
+
+	<path id="compile.classpath">
+    	<fileset dir="${webinf.dir}/lib">
+    	    <include name="**/*.jar"/>
+        </fileset>	
+	</path>	
+	
+	<target name="my_enhancer">
+	    <java classname="org.apache.openjpa.enhance.PCEnhancer">
+	    	<classpath refid="compile.classpath"/>
+         	<classpath>
+           		<pathelement location="WEB-INF/classes/META-INF/persistence.xml"/>   
+           		<pathelement path="WEB-INF/classes"/>
+         	</classpath>
+	    </java>	
+	</target> 	
+	
+	<target name="jar-create">
+  		<jar destfile="${build.dir}/lebah-2.jar">
+  			<fileset dir="${webinf.dir}/classes">
+            	<exclude name="**/*.svn"/>
+            	<exclude name="**/*.properties"/>
+            	<exclude name="**/*.xml"/>
+            	<exclude name="ekptg/**"/>
+            	<exclude name="etapp/**"/>
+            </fileset>		
+  		</jar>
+	</target>
+	
+
+</project>

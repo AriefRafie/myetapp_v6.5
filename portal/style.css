@@ -1,0 +1,232 @@
+html,body { 
+font-family : Verdana,Arial,Helvetica,Sans serif;
+font-size:11px;
+background : #FFF;
+color : #000;
+
+} 
+			/*WRAP*/
+#wrap { 
+width : 940px;
+margin-left : auto;
+margin-right : auto;
+padding : 0;
+border : 3px solid #F3E09B;
+color : #555;
+background : #F3E09B url(images/banner.png) repeat-x;
+} 
+			/*BANNER*/
+#masthead { 
+height : 171px;
+padding : 0;
+margin-bottom : 0;
+
+} 
+			/*MAIN CONTAINER*/
+#container { 
+width : 770px;
+margin-left : auto;
+margin-right : auto;
+margin-top : 10px;
+padding : 0;
+line-height : 1.8em;
+} 
+#menucontainer { 
+position : relative;
+height : 56px;
+color : #e0e0e0;
+background : #B78A3D;
+width : 100%;
+font-family : Verdana,Arial,Helvetica,Sans serif;
+} 
+#menunav { 
+position : relative;
+height : 33px;
+font-size : 12px;
+text-transform : uppercase;
+font-weight : bold;
+background : #FFFFFF url(images/menu_bg.gif) repeat-x bottom left;
+padding : 0 0 0 20px;
+} 
+#menunav ul { 
+margin : 0;
+padding : 0;
+list-style-type : none;
+width : auto;
+float : left;
+} 
+#menunav ul li { 
+display : block;
+float : left;
+padding : 0 1px;
+} 
+#menunav ul li a { 
+display : block;
+float : inherit;
+color : #eaf3f8;
+text-decoration : none;
+padding : 0 0 0 10px;
+height : 33px;
+} 
+#menunav ul li a span { 
+padding : 12px 20px 0 0;
+height : 21px;
+float : left;
+} 
+#menunav ul li a:hover { 
+color : #fff;
+background : transparent url(images/menu_bg-OVER.gif) repeat-x bottom left;
+} 
+#menunav ul li a:hover span { 
+display : block;
+width : auto;
+cursor : pointer;
+} 
+#menunav ul li a.current, #menunav ul li a.current:hover { 
+color : #fff;
+background : #1d6893 url(images/menu_left-ON.gif) no-repeat top left;
+line-height : 275%;
+} 
+#menunav ul li a.current span { 
+display : block;
+padding : 0 20px 0 0;
+width : auto;
+background : #1d6893 url(images/menu_right-ON.gif) no-repeat top right;
+height : 33px;
+} 
+
+#menunav li {
+	list-style: none;
+	float: left; }
+	
+#menunav li a {
+	display: block;
+	padding: 3px 8px;
+	color: #000000;
+	text-decoration: none; }
+
+#menunav li ul {
+    display: none;
+    width: 10em; /* Width to help Opera out */
+}
+
+#menunav li:hover ul {
+    display: block;
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+	color: #ffffff;
+	background: #79551C;
+	width: 200px;
+}
+	
+#menunav li:hover li {
+    float: none; }
+	
+#menunav li:hover li a {
+    background-color: #79551c;
+    border-bottom: 0px solid #fff;
+    color: #000; }
+
+#navbar li li a:hover {
+    background-color: #79551C;
+	width: 30px;
+}
+
+			/*TOP NAVIGATION*/
+.content { 
+font-family : Verdana,Arial,Helvetica;
+font-size:10px;
+} 
+			/*SIDEBAR*/
+#sidebar { 
+float : right;
+width : 200px;
+margin-top : 0;
+padding : 0 1em 0 1em;
+} 
+			/*FOOTER*/
+#footer { 
+clear : both;
+height : 50px;
+padding : 0;
+margin-bottom : 0;
+margin-top : 20px;
+text-align : center;
+border-top : 5px solid #f3e09b;
+color : #fff;
+background : #B78A3D;
+} 
+			/*TYPOGRAPHY*/
+h1 { 
+float : center;
+margin : 0;
+padding : 20px 0 20px 25px;
+font : 150% "Trebuchet MS", Helvetica, Arial, Tahoma, sans-serif;
+letter-spacing : 5px;
+color : #fff;
+} 
+h2 { 
+float : right;
+margin : 0;
+padding : 5px 20px 20px 0;
+font : 90% "Trebuchet MS", Helvetica, Arial, Tahoma, sans-serif;
+letter-spacing : 3px;
+color : #f3e09b;
+} 
+h3 { 
+margin : 0;
+padding : 20px 0 20px 0;
+border-bottom : 1px solid #B78A3D;
+font : 150% "Trebuchet MS", Helvetica, Arial, Tahoma, sans-serif;
+font-weight: bold;
+text-transform : uppercase;
+letter-spacing : 1px;
+color : #143c55;
+}
+blockquote {
+font-weight : bold;
+font-style : italic;
+color : #b29b35;
+} 
+			/*LINKS*/
+a:link, a:visited { 
+color : #555;
+background : inherit;
+text-decoration : underline;
+} 
+a:hover { 
+color : #aaa;
+background : inherit;
+text-decoration : none;
+} 
+a img {
+border: 0;
+}
+			/*IMAGES*/
+.left { 
+float : left;
+border : 0 solid #656c4a;
+margin : 5px 0 10px 0;
+padding : 10px;
+} 
+			/*SEARCH BOX*/
+legend { 
+margin-bottom : ;
+color : #143c55;
+background-color: #e6b73a;
+} 
+
+fieldset {
+border-color: #9c7645;
+}
+
+fieldset fieldset{
+border: 10px;
+}
+
+
+.heading {
+height:18px;
+padding-left:0;
+}

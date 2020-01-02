@@ -1,0 +1,21 @@
+<div class="content">
+<table width="90%" cellpadding="5" cellspacing="5" align="center">
+#foreach( $module in $modules )	
+	#if ( $module.id.startsWith($moduleName) )	
+		<tr><td class="moduleLink"><a href="$!userSessionId?_portal_module=$module.id"><h2>$module.title</h2>
+		#if ( $module.title.equals("Semak Aduan") && $role.equals("online_admin_aduan") )
+			Menyemak aduan para pengguna JKPTG(P).</a></td></tr>
+		#end
+		#if ( $module.title.equals("Semak Aduan") && $role.equals("online") )
+			Menyemak aduan yang pernah dikemukakan.</a></td></tr>
+		#end
+		#if ( $module.title.equals("Semak Aduan") && $role.equals("root") )
+			Menyemak aduan.</a></td></tr>
+		#end
+		#if ( $module.title.equals("Buat Aduan") )
+			Mengemukakan sebarang (aduan, cadangan, pertanyaan dll) kepada pihak bertanggungjawab.</a></td></tr>
+		#end
+	#end
+#end
+</table>
+</div>

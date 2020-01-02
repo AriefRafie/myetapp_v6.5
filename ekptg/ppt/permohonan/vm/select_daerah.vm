@@ -1,0 +1,6 @@
+<select name="daerah_id" class="texts" style="width:500px">
+<option value="">SILA PILIH</option>
+#foreach ( $d in $daerah_list )
+<option value="$d.id" #if ( $r.daerah.id == $d.id ) selected #end>$d.kod - $d.nama</option>
+#end
+</select>

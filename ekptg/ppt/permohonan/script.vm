@@ -1,0 +1,148 @@
+function selectTab(i) {
+	if ( i == 1 ) {
+		$('content-1').style.display="block";
+		$('content-2').style.display="none";
+		$('content-3').style.display="none";
+		$('content-4').style.display="none";
+		$('tab-1').className="panelsTabSelected";
+		$('tab-2').className="panelsTab";
+		$('tab-3').className="panelsTab";
+		$('tab-4').className="panelsTab";
+	} else if ( i == 2 ) {
+		$('content-1').style.display="none";
+		$('content-2').style.display="block";
+		$('content-3').style.display="none";
+		$('content-4').style.display="none";
+		$('tab-1').className="panelsTab";
+		$('tab-2').className="panelsTabSelected";
+		$('tab-3').className="panelsTab";
+		$('tab-4').className="panelsTab";
+	}
+	else if ( i == 3 ) {
+		$('content-1').style.display="none";
+		$('content-2').style.display="none";
+		$('content-3').style.display="block";
+		$('content-4').style.display="none";
+		$('tab-1').className="panelsTab";
+		$('tab-2').className="panelsTab";
+		$('tab-3').className="panelsTabSelected";
+		$('tab-4').className="panelsTab";
+		doDivAjaxChainCall$formname("div_selepas_pengambilan","list_selepas_pengambilan","", "div_maklumat_asal","list_maklumat_asal","");
+	}
+	else if ( i == 4 ) {
+		$('content-1').style.display="none";
+		$('content-2').style.display="none";
+		$('content-3').style.display="none";
+		$('content-4').style.display="block";
+		$('tab-1').className="panelsTab";
+		$('tab-2').className="panelsTab";
+		$('tab-3').className="panelsTab";
+		$('tab-4').className="panelsTabSelected";
+		doDivAjaxCall3$formname("div_jts_status","jts_status_log","");
+	}
+	
+}
+
+
+function uploadDokumen() {	
+	document.${formName}.enctype = "multipart/form-data";
+	document.${formName}.encoding = "multipart/form-data";
+	document.${formName}.target = "upload_doc";
+	document.${formName}.action = "?command=save_dokumen";
+	document.${formName}.submit();
+}
+
+function downloadDokumen(id) {
+    var url = "../servlet/ekptg.view.ppt.DisplayBlob?id=" + id;
+    var h = window.open(url, 'displayfile', 'width=800,height=600, resizable=yes,scrollbars=yes');
+    h.focus();
+}
+
+function uploadDone() {
+	$('wait_list_dokumen').innerHTML = '<b>Please Wait...</b>';
+	doDivAjaxCall3$formname('div_list_dokumen','list_dokumen','');
+}  
+
+function unitLuasLot(txt) {
+	var i = txt.indexOf("-");
+	var id = txt.substring(0,i);
+	var strId = "<input type='hidden' name='unitLuasLot_id' value='" + id + "'>";
+	var str = txt.substring(i+1);
+	i = str.indexOf(",");
+	
+	if ( i > -1 ) {
+		var t1 = str.substring(0,i);
+		str = str.substring(i+1);
+		i = str.indexOf(",");
+		if ( i > -1 ) {
+			var t2 = str.substring(0,i);		
+			var t3 = str.substring(i+1);
+			$('div_luas_asal').innerHTML = strId + "<input name='luas_asal' class='texts' style='width:100px;'>&nbsp;" + t1 + "&nbsp;<input name='luas_asal' class='texts' style='width:100px;'>&nbsp;" + t2 + "&nbsp;<input name='luas_asal' class='texts' style='width:100px;'>" + t3;
+		}
+		else {
+			$('div_luas_asal').innerHTML = strId + "<input name='luas_asal' class='texts' style='width:100px;'>&nbsp;" + t1 + "&nbsp;<input name='luas_asal' class='texts' style='width:100px;'>&nbsp;" + str;
+		}
+	}	
+	else {
+		$('div_luas_asal').innerHTML = strId + "<input name='luas_asal' class='texts' style='width:100px;'>&nbsp;" + str;
+	}
+	
+}
+
+function unitLuasAmbil(txt) {
+	var i = txt.indexOf("-");
+	var id = txt.substring(0,i);
+	var strId = "<input type='hidden' name='unitLuasAmbil_id' value='" + id + "'>";
+	var str = txt.substring(i+1);
+	i = str.indexOf(",");
+	
+	if ( i > -1 ) {
+		var t1 = str.substring(0,i);
+		str = str.substring(i+1);
+		i = str.indexOf(",");
+		if ( i > -1 ) {
+			var t2 = str.substring(0,i);		
+			var t3 = str.substring(i+1);
+			$('div_luas_ambil').innerHTML = strId + "<input name='luas_ambil' class='texts' style='width:100px;'>&nbsp;" + t1 + "&nbsp;<input name='luas_ambil' class='texts' style='width:100px;'>&nbsp;" + t2 + "&nbsp;<input name='luas_ambil' class='texts' style='width:100px;'>" + t3;
+		}
+		else {
+			$('div_luas_ambil').innerHTML = strId + "<input name='luas_ambil' class='texts' style='width:100px;'>&nbsp;" + t1 + "&nbsp;<input name='luas_ambil' class='texts' style='width:100px;'>&nbsp;" + str;
+		}
+	}	
+	else {
+		$('div_luas_ambil').innerHTML = strId + "<input name='luas_ambil' class='texts' style='width:100px;'>&nbsp;" + str;
+	}
+	
+}  
+  
+
+function checkUpdateStatus() {
+	if ( $('jts_status_remark').value == "" ) {
+		alert('Sila isikan field Catatan.');
+		return false;
+	}
+	return true;
+}
+
+function cetakBorangK(idpermohonan,idhakmilik) {
+
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=BorangK&selectNoFail=yes";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+    
+}
+
+
+
+function cetakBuktiPenyampaian(idpermohonan,idhakmilik) {
+
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&flagJenisSuratCara=K&report=BuktiPenyampaian&selectNoFail=yes";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+    
+}
+

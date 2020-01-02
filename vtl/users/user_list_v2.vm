@@ -1,0 +1,167 @@
+<link href="*.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+  
+
+}
+//-->
+</script>
+	
+<table border="0" cellpadding="2" cellspacing="0" width="100%">
+  <tbody>
+	<tr>
+		<td>&nbsp;</td>
+    </tr>
+	<tr>
+    <td><fieldset>
+      <legend>CARIAN</legend>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody><tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><form name="searching" method="post">
+            <table border="0" cellpadding="1" cellspacing="2" width="100%">
+              <tbody><tr>
+                <td align="right" width="29%">Nama</td>
+                <td align="center" width="1%"><strong>:</strong></td>
+                <td width="70%"><input name="searchData" id="searchData" size="45" type="text"></td>
+              </tr>
+              <tr>
+                <td align="right" width="29%">Jenis</td>
+                <td align="center" width="1%"><strong>:</strong></td>
+                <td width="70%">
+		<select name="selectType" id="selectType" onchange="MM_jumpMenu('parent',this,1)">
+			<option value="${actionUrl}&command=getJawatan&id=-1">Sila Pilih Jenis Pengguna</option>
+				#foreach($type in $listType)
+			        <option value="${actionUrl}&command=getJawatan&id=$type.UserType" #if($type.UserType == $selectType) selected #end>$type.UserType</option>
+			#end
+		 </select>
+				</td>
+              </tr>	
+			  #if($listJawatan)
+              <tr>
+                <td align="right" width="29%">Jawatan</td>
+                <td align="center" width="1%"><strong>:</strong></td>
+                <td width="70%">
+					<select name="selectJawatan" id="selectType" onchange="MM_jumpMenu('parent',this,1)">
+							<option value="${actionUrl}&command=getSeksyen&id=-1">Sila Pilih Jawatan</option>
+								#foreach($jawatan in $listJawatan)
+							      <option value="${actionUrl}&command=getSeksyen&id=$jawatan.Id_jawatan" #if($jawatan.FullListDropDown == $selectJawatan.FullListDropDown) selected #end>$jawatan.FullListDropDown</option>
+						        #end
+				    </select>
+				</td>
+                </td>
+              </tr>
+			  #end
+			  #if($listSeksyen) 
+              <tr>
+                <td align="right" width="29%">Seksyen</td>
+                <td align="center" width="1%"><strong>:</strong></td>
+                <td width="70%">
+					
+				<select name="selectSeksyen" id="selectSeksyen" onchange="MM_jumpMenu('parent',this,1)">
+							<option value="${actionUrl}&command=getNegeri&id=-1">Sila Pilih Seksyen</option>
+								#foreach($seksyen in $listSeksyen)
+							      <option value="${actionUrl}&command=getNegeri&id=$seksyen.Id_seksyen" #if($seksyen.FullListDropDown == $selectSeksyen.FullListDropDown) selected #end>$seksyen.FullListDropDown</option>
+						        #end
+			    </select>	
+				</td>
+              </tr>
+			  #end
+			  #if($listNegeri)
+              <tr>
+                <td align="right" width="29%">Negeri</td>
+                <td align="center" width="1%"><strong>:</strong></td>
+                <td width="70%">
+						<select name="selectNegeri" id="selectNegeri" onchange="MM_jumpMenu('parent',this,1)">
+							<option value="${actionUrl}&command=getPejabat&id=-1">Sila Pilih Negeri</option>
+								#foreach($negeri in $listNegeri)
+							<option value="${actionUrl}&command=getPejabat&id=$negeri.Id_negeri" #if($negeri.FullListDropDown == $selectNegeri.FullListDropDown) selected #end>$negeri.FullListDropDown</option>
+						    #end
+						 </select>
+				</td>
+              </tr>
+			  #end
+			  #if($listPejabat)
+			  <tr>
+                <td align="right">Pejabat</td>
+                <td align="center"><strong>:</strong></td>
+                <td>
+					
+					<select name="selectPejabat" id="selectPejabat" onchange="MM_jumpMenu('parent',this,1)">
+							<option value="${actionUrl}&command=getRole&id=-1">Sila Pilih Negeri</option>
+								#foreach($pejabat in $listPejabat)
+							<option value="${actionUrl}&command=getRole&id=$pejabat.Id_pejabat" #if($pejabat.FullListDropDown == $selectPejabat.FullListDropDown) selected #end>$pejabat.FullListDropDown</option>
+						    #end
+					 </select>
+				</td>
+              </tr>
+			  #end
+			  
+              <tr>
+                <td align="right">Role</td>
+                <td align="center"><strong>:</strong></td>
+                <td>
+
+					
+				<select name="selectRole" id="selectRole">
+						<option value="-1">Sila Pilih Role</option>
+						#foreach($role in $listRole)
+    					<option value="$role.name">$role.name</option>
+						#end
+                </select>
+				</td>
+              </tr>
+			  
+              <tr>
+                <td align="right" width="29%">&nbsp;</td>
+                <td align="center" width="1%">&nbsp;</td>
+                <td width="70%"><input name="button" id="button" value="Cari" type="button" onclick="search()">
+                  <input name="button2" id="button2" value="Kosongkan" type="reset" onclick="clear()"></td>
+              </tr>
+			  <tr>
+				<td>&nbsp;</td>
+			  </tr>
+            </tbody></table>
+          </form></td>
+        </tr>
+      </tbody></table>
+    </fieldset></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</tbody></table>
+
+<script >
+function doChange(){
+  var x = document.getElementById("searchData").value;
+  document.searching.searchData.value == x;
+}
+
+function clear(){
+	document.searching.command.value = "clear";
+	doSubmit();
+}
+function search(){
+	document.searching.command.value = "search";
+	doSubmit();
+}
+function doSubmit()
+{
+    document.searching.action = "";
+    document.searching.submit();
+}
+</script>

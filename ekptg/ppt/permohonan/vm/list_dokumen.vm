@@ -1,0 +1,29 @@
+<span id="wait_list_dokumen"></span>
+<table width="100%">
+<tr class="table_header">
+<td style="width:40px;font-weight:bold;color:#fff">&nbsp;</td>
+<td style="font-weight:bold;color:#fff">Nama Dokumen</td>
+<td style="font-weight:bold;color:#fff">Keterangan</td>
+<td style="font-weight:bold;color:#fff">Dokumen Sokongan</td>
+<td style="width:40px">&nbsp;</td>
+<td style="width:40px">&nbsp;</td>
+</tr>
+#set ( $c = 0 )
+#foreach( $d in $r.listDokumen )
+#set ( $c = $c + 1 )
+
+#if ( $c%2 == 0 ) #set ($bgcolor="row1") #else #set($bgcolor="row2") #end
+<tr class="$bgcolor">
+<td align="center">$velocityCount</td>
+<td>$!d.tajuk</td>
+<td>$!d.keterangan</td>
+<td>$!d.namaFail</td>
+<td align="center">
+<a href="javascript:void()" onclick="downloadDokumen('$!d.id');"><img src="../img/view-icon.gif" border="0"></a>
+</td>
+<td align="center">
+<a href="javascript:void()" onclick="if ( !confirm('Hapus Dokumen?') ) return; $('wait_list_dokumen').innerHTML='Please wait...';doDivAjaxCall3$formname('div_list_dokumen','hapus_dokumen','dokumen_id=$d.id')"><img src="../img/delete.gif" border="0"></a>
+</td>
+</tr>
+#end
+</table>

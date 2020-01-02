@@ -1,0 +1,41 @@
+
+<fieldset>
+<legend>$label_search:</legend>
+
+<table width="100%">
+<tr><td>
+
+<div id="_search_page" style="display:block;">
+<table width="100%">
+<tr><td align="center">
+#parse("$search_entry_page")
+</td></tr>
+<tr><td align="center">
+##<input type="button" value="$button_list_all" onclick="$('div_list').style.visibility='visible';doDivAjaxCall$formname('div_list','list','')">
+<input  type="button" value="$button_search" onclick="$('div_list').style.visibility='visible';doDivAjaxCall$formname('div_list','list_find','')">
+<input  type="button" value="$button_reset">
+</td></tr>
+</table>
+</div>
+
+</td></tr></table>
+
+</fieldset>
+
+
+<div id="div_entry_fields" style="width:900px;background:#fff;position:absolute;visibility:hidden;">
+</div>
+
+</br>
+
+<fieldset>
+<legend>$label_list:</legend>
+
+<table width="100%"><tr><td>
+<input id="current_page_num" name="current_page_num" type="hidden" value="$!current_page_num">
+<div id="div_list" name="div_list">
+#parse("${templateDir}/list.vm")
+</div>
+</td></tr></table>
+
+</fieldset>

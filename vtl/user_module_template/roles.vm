@@ -1,0 +1,35 @@
+<table width="100%" border="0" cellpadding="2" cellspacing="0">
+<tr><td>
+<form name="f" method="post">
+<fieldset>
+<table align="left">
+<tr>
+<td>
+Select Role:
+<select name="role" onchange="selectRole()">
+<option value="">- select role -</option>
+#foreach( $role in $roles )
+<option value="$role.name">
+#if ( $role.name == "none" &&  $role.kod !="" )
+--------- $role.kod --------- 
+#else
+$role.kod - $role.description
+#end
+</option>
+#end
+</select>
+</td>
+</tr>
+</table>
+</fieldset>
+
+<input type="hidden" name="command">
+</form>
+</td></tr>
+</table>
+<script>
+function selectRole(){
+document.f.command.value = "listTabs";
+document.f.submit();
+}
+</script>

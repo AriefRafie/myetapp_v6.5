@@ -1,0 +1,100 @@
+<!--
+Table Langkah - to be implemented
+-->
+<p/>
+#if ($showLangkah == true)
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td class="module_title_left"></td>
+		<td class="module_title" valign="bottom">
+		 ##$moduleTitle
+		 #set ($portal_module = ${session.getAttribute("_portal_module")})
+		  
+		 #if ($session.getAttribute("portal_display_type") == "left_navigation")
+		 
+		 #if (	($portal_module == "FrmPrmhnnSek8SenaraiSemakInternal" 
+		 	|| $portal_module == "FrmPrmhnnSek8Internal"
+		 	) && $command != "Pemohon"
+		 	)
+			 ##Module : ${session.getAttribute("_portal_module")} <br>
+			 Command:$!command<br>
+			 
+			 #if ( $command == "papar" )
+			 Langkah : 2/3
+			 #elseif ( $command == "Seterusnya" )
+			 Langkah : 3/3
+			 #else
+			 Langkah : 1/3
+			 #end
+			 
+			 -> 1 | 2 | 3
+			 
+		 
+		 ##req:$req.getParameter("command")
+		 
+		 ##<br>--Checking all session---<br>
+		 
+		 <ul>
+		 ##foreach($name in $session.getAttributeNames())
+		 ##  <li> $name = $session.getAttribute($name) </li>
+		 ##end
+		 </ul> 
+		##<br>--Checking all context---<br>		 
+		##foreach ($paramName in $request.getParameterNames())
+		##set ($paramName = $request.getParameter($paramName))
+		##$paramName
+		##end
+
+		 
+		 
+		 #end
+		 
+		 #else
+		 $moduleTitle
+		 #end
+		</td>
+		<td class="module_title_right"></td>
+	</tr>
+	<!-- 
+	<tr>
+		<td class="module_title_left"></td>
+		<td class="module_title"></td>
+		<td class="module_title_right"></td>
+	</tr>
+	
+	<tr>
+		<td class="module_title_left"></td>
+		<td class="module_title" valign="bottom">
+		 ##$moduleTitle
+		 #set ($portal_module = ${session.getAttribute("_portal_module")})
+		  
+		 #if ($session.getAttribute("portal_display_type") == "left_navigation")
+		 
+		 #if ($portal_module == "FrmPrmhnnSek8SenaraiSemakInternal" || $portal_module == "FrmPrmhnnSek8Internal")
+			 Module : ${session.getAttribute("_portal_module")} <br>
+			 Current Step : 1/3
+		 #end
+		 
+		 #else
+		 $moduleTitle
+		 #end
+		</td>
+		<td class="module_title_right"></td>
+	</tr>
+
+	<tr>
+		<td class="module_title_left"></td>
+		<td class="module_title"></td>
+		<td class="module_title_right"></td>
+	</tr>	
+	-->
+	<!--
+	<tr>
+		<td class="module_title_left_bot"></td>
+		<td class="module_title_bot">$moduleTitle</td>
+		<td class="module_title_right_bot"></td>
+	</tr>
+	-->
+
+</table>
+#end

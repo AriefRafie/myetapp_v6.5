@@ -1,0 +1,196 @@
+ 		.diagram td {
+ 			font-size: 7pt;
+ 		}
+ 		.reltype {
+ 		 	border-top-right-radius: 0.4em;
+ 		 	border-top-left-radius: 0.4em;
+            /*background-color: lightgrey;*/
+            -webkit-box-shadow: 0px 2px 4px #000000;
+  			-moz-box-shadow: 0px 2px 4px #000000;
+  			box-shadow: 0px 2px 4px #000000;
+            min-width: 150px;
+            min-height: 55px;
+            border: 2px solid green;
+            padding: 5px;
+            margin: auto;
+            background: -moz-linear-gradient(270deg, rgba(84,144,255,1) 0%, rgba(255,255,255,1) 30%); /* ff3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(84,144,255,1)), color-stop(30%, rgba(255,255,255,1))); /* safari4+,chrome */
+			background: -webkit-linear-gradient(270deg, rgba(84,144,255,1) 0%, rgba(255,255,255,1) 30%); /* safari5.1+,chrome10+ */
+			background: -o-linear-gradient(270deg, rgba(84,144,255,1) 0%, rgba(255,255,255,1) 30%); /* opera 11.10+ */
+			background: -ms-linear-gradient(270deg, rgba(84,144,255,1) 0%, rgba(255,255,255,1) 30%); /* ie10+ */
+			background: linear-gradient(180deg, rgba(84,144,255,1) 0%, rgba(255,255,255,1) 30%); /* w3c */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5490FF', endColorstr='#ffffff',GradientType=0 ); /* ie6-9 */
+            text-align: center;
+            display: block;
+        }
+        
+        .reltype2 {
+            background-color: lightgrey;
+            width: 150px;
+            border: 2px solid green;
+            padding: 7px;
+            margin: auto;
+            text-align: center;
+        }
+       
+        #simati {
+            position: absolute;
+            margin: -100px 0 0 -200px;
+            top: 60%;
+            left: 45%;
+        }
+        #baitulmal {
+            position: absolute;
+            top: 85%;
+            left:1%;
+        }
+        #nohubungan {
+        	position: absolute;
+            top: 5%;
+            left:70%;
+        } 
+        #al {
+            position: absolute;
+            top: 80%;
+            left: 50%;
+        }
+
+         #ap {
+            position: absolute;
+            top: 80%;
+            left: 10%;
+        }
+        
+        #isteri {
+            position: absolute;
+            top: 70%;
+            left: 30%;
+        }
+        #suami {
+            position: absolute;
+            top: 70%;
+            left: 30%;
+        } 
+        #ibu {
+            position: absolute;
+            margin: -100px 0 0 -200px;
+            top: 40%;
+            left: 30%;
+        }
+        
+        #bapa {
+            position: absolute;
+            margin: -100px 0 0 -200px;
+            top: 40%;
+            left: 70%;
+        }
+        
+        #neneksi {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+        }
+        
+        #datuksi {
+            position: absolute;
+            top: 10%;
+            left: 30%;
+        }
+        
+        #neneksb {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+        }
+        
+        #datuksb {
+            position: absolute;
+            top: 10%;
+            left: 70%;
+        }
+        #cucul {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+        }
+
+        #isterial {
+            position: absolute;
+            top: 95%;
+            left: 30%;
+        }
+        #saudaralk {
+            position: absolute;
+            margin: -100px 0 0 0px;
+            top: 60%;
+            left: 50%;
+        }
+        #saudaralb {
+            position: absolute;
+            margin: -100px 0 0 -200px;
+            top: 70%;
+            left: 80%;
+        }
+
+        #saudarali {
+            position: absolute;
+            margin: -100px 0 0 -200px;
+            top: 70%;
+            left: 95%;
+        }
+        #asaudaralk {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+        }
+        #asaudaralb {
+            position: absolute;
+            top: 75%;
+            left: 65%;
+        }
+        #asaudarali {
+            position: absolute;
+            top: 75%;
+            left: 80%;
+        }
+        #bsaudarak {
+            position: absolute;
+            top: 28%;
+            left: 70%;
+        }
+        #bsaudarab {
+            position: absolute;
+            top: 25%;
+            left: 84%;
+        }
+        #absaudarak {
+            position: absolute;
+            top: 40%;
+            left: 70%;
+        }
+        #absaudarab {
+            position: absolute;
+            top: 40%;
+            left: 84%;
+        }
+
+        #saudarapk {
+            position: absolute;
+            margin: -100px 0 0 0px;
+            top: 60%;
+            left: 16%;
+
+        }#saudarapb {
+            position: absolute;
+            margin: -100px 0 0 0px;
+            top: 60%;
+            left: 2%;
+        }
+
+        #saudarapi {
+            position: absolute;
+            margin: -100px 0 0 0px;
+            top: 75%;
+            left: 2%;
+        }
+        /* */

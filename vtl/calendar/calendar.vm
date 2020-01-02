@@ -1,0 +1,527 @@
+<form name="f" method="post">
+
+<table width="100%"><tr><td>
+
+<tr>
+<td><b>$user</b></td>
+<td align="right">
+<input name="peer_id" size="20"><input type="button" value="Get.." onclick="getPeer()">
+</td>
+</tr>
+
+
+<table border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#FFFFFF">
+<tr><td colspan="7" bgcolor="#94BAF9">
+
+<table width="100%"><tr><td style="font-family:arial; font-size:12pt; font-weight:bold">
+$now.monthYearText
+</td><td align="right">
+Month:
+<select name="monthSelect">
+#foreach( $m in [1..12] )
+<option value="$m" #if ( $m == $now.month) selected #end>$m</option>
+#end
+</select>
+Year:
+<select name="yearSelect">
+#foreach( $y in [2009..2020] )
+<option value="$y" #if ( $y == $yearSelect ) selected #end>$y</option>
+#end
+</select>
+<input type="button" value="GET MONTH" onclick="getMonthly()">
+</td></tr>
+</table>
+
+</td></tr>
+<tr>
+#set ( $dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"] )
+#foreach ( $dayName in $dayNames )
+<td align="center" bgcolor="#BCBCBC">
+<b>$dayName</b>
+</td>
+#end
+</tr>
+
+#foreach( $week in $calendarDays )
+#set ( $dayOfWeek = 0 )
+<tr>
+#foreach( $d in $week )
+#set ( $dayOfWeek = $dayOfWeek + 1 )
+<td valign="top" align="center" style="width:110px;height:100px" 
+#if ( $dayOfWeek == 1 ) 
+bgcolor="#BCBCBC"
+#elseif (!$d.now) 
+	bgcolor="#BCBCBC" 
+	#elseif ( $today == $d.day )
+		bgcolor="white" 
+		#else
+		bgcolor="#E0E0E0" 
+#end
+	>
+<table width="100%" cellpadding="1" cellspacing="0">
+<tr><td colspan="2" 
+id="bar_${d.day}-${d.monthYearText}" style="cursor:hand; cursor:pointer"
+onclick="menuLayers.show('div_${d.day}-${d.monthYearText}', event)"
+align="center" #if ( !$d.now ) bgcolor = "#BCBCBC" #else bgcolor="#F8D888" #end>
+<a href="javascript:;" onclick="menuLayers.show('div_${d.day}-${d.monthYearText}', event)">
+<b>${d.day}</b>
+##-${d.monthYearText}
+</a>
+</td></tr>
+#set ( $cnt = 0 )
+#if ($d.eventList.size() > 0 )
+#foreach ($event in $d.eventList)
+				#set ( $cnt = $cnt + 1 )
+			<tr 				#if ( $cnt % 2 == 0 ) bgcolor="#FFFFCA" #else bgcolor="#DBE8F7" #end><td>
+$event.event_id
+</td><td align="right">
+#if( $event.user_id == $current_user )
+<a href="javascript:deleteEvent('$event.uid')">x</a>
+#end
+</td></tr>
+#end
+#end
+
+##FROM TASK SCHEDULER (MY PLANNER)
+#if ( $d.taskList.size() > 0 )
+#foreach( $task in $d.taskList)
+				#set ( $cnt = $cnt + 1 )
+<tr><td colspan="2" 				#if ( $cnt % 2 == 0 ) bgcolor="#FFFFCA" #else bgcolor="#DBE8F7" #end>
+
+
+
+					#if ( $task.subject_code != "" )
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td valign="top">
+																<img src="../img/forum.gif" border="0">
+								</td>
+								<td>
+	${task.time_start}<br>
+					$task.subject_code
+								</td>
+							</tr>
+						</table>
+						
+						#else
+						
+											<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td valign="top">
+<img src="../img/user.gif" border="0">
+								</td>
+								<td>
+		${task.time_start}
+								</td>
+							</tr>
+						</table>
+						#end
+
+
+
+
+
+</td></tr>
+#end
+#end
+
+</table>
+</td>
+#end
+</tr>
+#end
+
+</table>
+
+
+</td></tr>
+<tr><td>
+
+
+<table align="center">
+<tr>
+<td colspan="2">
+<b>Add Whole Day Event:</b>
+</td>
+</tr>
+<tr><td>Date:</td><td>
+<select name="eventDay">
+#foreach ( $d in [1..$now.maxDays] )
+<option value="$d">$d</option>
+#end
+</select>
+
+</td></tr>
+<tr><td>Event:</td><td><input name="eventId" size="30"></td></tr>
+##<tr><td>Text:</td><td><input name="eventText" size="40"></td></tr>
+<tr><td>
+#if ( $session.getAttribute("_portal_role") == "root" || $session.getAttribute("_portal_role") == "admin" )
+Scope:</td><td> 
+<select name="viewScope">
+<option value="public">Public</option>
+<option value="private">Private</option>
+</select>
+#else
+<input type="hidden" name="viewScope" value="private">
+#end
+</td></tr>
+
+<tr><td></td><td><input type="button" value="Add" onclick="addEventMark()"></td></tr>
+</table>
+
+
+
+</td></tr>
+<tr><td>
+
+
+</tr></td></table>
+
+
+
+
+##DISPLAY ALL TASKS FROM PERSONAL SCHEDULER
+##<table width="600px" cellpadding="5"><tr><td>
+#foreach( $week in $calendarDays )
+
+#foreach( $d in $week )
+<div id="div_${d.day}-${d.monthYearText}" name="div_${d.day}-${d.monthYearText}" 
+style="visibility:hidden; position:absolute; background-color:white; border: 2px solid;	 border-color: #f7faff #99a #99a #f7faff;">
+<table width="300px" bgcolor="#0054E3" cellpadding="1" cellspacing="0">
+<tr bgcolor="blue">
+<td id="dragbardiv_${d.day}-${d.monthYearText}" name="dragbardiv_${d.day}-${d.monthYearText}" 
+style="cursor:hand; cursor:pointer; font-weight:bold; font-size:10pt"
+ onmousedown="initializedrag(event, 'div_${d.day}-${d.monthYearText}')">
+
+<ilayer width="100%" onSelectStart="return false"><layer width="100%" onMouseover="dragswitch=1;if (ns4) drag_dropns(showimage)" 
+onMouseout="dragswitch=0">
+<font face="Verdana" color="#FFFFFF"><strong>${d.day}-${d.monthYearText}</strong></font></layer></ilayer>
+</td>
+<td align="right">
+<a href="javascript:closeDiv('div_${d.day}-${d.monthYearText}')"><font face="Verdana" color="#FFFFFF"><strong>X</font></a>
+</td>
+</tr>
+##FROM TASK SCHEDULER (MY PLANNER)
+#if ( $d.taskList.size() > 0 )
+#foreach( $task in $d.taskList)
+				#set ( $cnt = $cnt + 1 )
+<tr><td colspan="2" 				#if ( $cnt % 2 == 0 ) bgcolor="#7A96DF" #else bgcolor="#A4D7A4" #end>
+<b>${task.time_start}-${task.time_end}</b><br>
+$task.task_description
+
+
+
+
+					#if ( $task.subject_code != "" )
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td>
+									<img src="../img/forum.gif" border="0">
+								</td>
+								<td>
+									<b>$task.subject_title ($task.subject_code)</b>
+								</td>
+							</tr>
+						</table>
+						#end
+
+
+
+
+</td></tr>
+#end
+#end
+</table>
+</div>
+#end
+
+#end
+##</td></tr></table>
+
+
+
+
+<input type="hidden" name="command">
+<input type="hidden" name="eventMonth" value="$now.month">
+<input type="hidden" name="eventYear" value="$now.year">
+
+
+</form>
+
+
+<script>
+
+var prev_div = "none";
+
+function toggleVisible(id) {
+	hidePrevious();
+	showDiv(id);
+}
+function hidePrevious() {
+	if ( prev_div == "none") return;
+	obj=document.getElementById(prev_div);
+	obj.style.visibility = "hidden";	
+}
+function showDiv(id) {
+	obj=document.getElementById(id);
+	obj.style.visibility = "visible";
+	prev_div = id;	
+}
+function setBackground(id) {
+	obj = document.getElementById(id);
+	obj.style.background = "#FFDC6C";
+}
+
+function closeDiv(id) {
+	obj=document.getElementById(id);
+	obj.style.visibility = "hidden";
+}
+
+function getMonthly() {
+document.f.command.value = "getMonthly";
+document.f.submit();
+}
+
+function selectDay(day, yr, mn, dy) {
+document.f.eventDate.value = day;
+document.f.yearSelect.value = yr;
+document.f.monthSelect.value = mn;
+document.f.eventYear.value = yr;
+document.f.eventMonth.value = mn;
+document.f.eventDay.value = dy;
+}
+
+function addEventMark() {
+document.f.command.value = "addEventMark";
+document.f.submit();
+}
+function deleteEvent(uid) {
+if ( !window.confirm('Are you sure?') ) return;
+document.f.command.value = "deleteEvent";
+document.f.action = "?uid=" + uid;
+document.f.submit();
+}
+
+function getPeer() {
+document.f.submit();
+}
+
+function showpos(o) {
+	alert(o.Ymargin);
+}
+
+
+/*************************************************************************
+  This code is from Dynamic Web Coding at http://www.dyn-web.com/
+  Copyright 2003 by Sharon Paine 
+  See Terms of Use at http://www.dyn-web.com/bus/terms.html
+  regarding conditions under which you may use this code.
+  This notice must be retained in the code as is!
+*************************************************************************/
+
+var viewport = {
+  getWinWidth: function () {
+    this.width = 0;
+    if (window.innerWidth) this.width = window.innerWidth - 18;
+    else if (document.documentElement && document.documentElement.clientWidth) 
+  		this.width = document.documentElement.clientWidth;
+    else if (document.body && document.body.clientWidth) 
+  		this.width = document.body.clientWidth;
+  },
+  
+  getWinHeight: function () {
+    this.height = 0;
+    if (window.innerHeight) this.height = window.innerHeight - 18;
+  	else if (document.documentElement && document.documentElement.clientHeight) 
+  		this.height = document.documentElement.clientHeight;
+  	else if (document.body && document.body.clientHeight) 
+  		this.height = document.body.clientHeight;
+  },
+  
+  getScrollX: function () {
+    this.scrollX = 0;
+  	if (typeof window.pageXOffset == "number") this.scrollX = window.pageXOffset;
+  	else if (document.documentElement && document.documentElement.scrollLeft)
+  		this.scrollX = document.documentElement.scrollLeft;
+  	else if (document.body && document.body.scrollLeft) 
+  		this.scrollX = document.body.scrollLeft; 
+  	else if (window.scrollX) this.scrollX = window.scrollX;
+  },
+  
+  getScrollY: function () {
+    this.scrollY = 0;    
+    if (typeof window.pageYOffset == "number") this.scrollY = window.pageYOffset;
+    else if (document.documentElement && document.documentElement.scrollTop)
+  		this.scrollY = document.documentElement.scrollTop;
+  	else if (document.body && document.body.scrollTop) 
+  		this.scrollY = document.body.scrollTop; 
+  	else if (window.scrollY) this.scrollY = window.scrollY;
+  },
+  
+  getAll: function () {
+    this.getWinWidth(); this.getWinHeight();
+    this.getScrollX();  this.getScrollY();
+  }
+  
+}
+
+var menuLayers = {
+  timer: null,
+  activeMenuID: null,
+  offX: 4,   // horizontal offset 
+  offY: 6,   // vertical offset 
+  show: function(id, e) {
+    var mnu = document.getElementById? document.getElementById(id): null;
+    if (!mnu) return;
+    this.activeMenuID = id;
+    //if ( mnu.onmouseout == null ) mnu.onmouseout = this.mouseoutCheck;
+    if ( mnu.onmouseover == null ) mnu.onmouseover = this.clearTimer;
+    viewport.getAll();
+    this.position(mnu,e);
+  },
+  
+  hide: function() {
+    this.clearTimer();
+    if (this.activeMenuID && document.getElementById) 
+      this.timer = setTimeout("document.getElementById('"+menuLayers.activeMenuID+"').style.visibility = 'hidden'", 200);
+  },
+  
+  position: function(mnu, e) {
+    
+    var x = e.pageX? e.pageX: e.clientX + viewport.scrollX;
+    var y = e.pageY? e.pageY: e.clientY + viewport.scrollY;
+    
+    if ( x + mnu.offsetWidth + this.offX > viewport.width + viewport.scrollX )
+      x = x - mnu.offsetWidth - this.offX;
+    else x = x + this.offX;
+  
+    if ( y + mnu.offsetHeight + this.offY > viewport.height + viewport.scrollY )
+      y = ( y - mnu.offsetHeight - this.offY > viewport.scrollY )? y - mnu.offsetHeight - this.offY : viewport.height + viewport.scrollY - mnu.offsetHeight;
+    else y = y + this.offY;
+    
+    mnu.style.left = x + "px"; mnu.style.top = y + "px";
+    this.timer = setTimeout("document.getElementById('" + menuLayers.activeMenuID + "').style.visibility = 'visible'", 200);
+  },
+  
+  mouseoutCheck: function(e) {
+    e = e? e: window.event;
+    // is element moused into contained by menu? or is it menu (ul or li or a to menu div)?
+    var mnu = document.getElementById(menuLayers.activeMenuID);
+    var toEl = e.relatedTarget? e.relatedTarget: e.toElement;
+    if ( mnu != toEl && !menuLayers.contained(toEl, mnu) ) menuLayers.hide();
+  },
+  
+  // returns true of oNode is contained by oCont (container)
+  contained: function(oNode, oCont) {
+    if (!oNode) return; // in case alt-tab away while hovering (prevent error)
+    while ( oNode = oNode.parentNode ) 
+      if ( oNode == oCont ) return true;
+    return false;
+  },
+
+  clearTimer: function() {
+    if (menuLayers.timer) clearTimeout(menuLayers.timer);
+  }
+  
+}
+</script>
+
+
+<script type="text/javascript">
+
+
+/******************************************
+* Popup Box- By Jim Silver @ jimsilver47@yahoo.com
+* Visit http://www.dynamicdrive.com/ for full source code
+* This notice must stay intact for use
+******************************************/
+
+var ns4=document.layers
+var ie4=document.all
+var ns6=document.getElementById&&!document.all
+
+//drag drop function for NS 4////
+/////////////////////////////////
+
+var dragswitch=0
+var nsx
+var nsy
+var nstemp
+
+function drag_dropns(name){
+if (!ns4)
+return
+temp=eval(name)
+temp.captureEvents(Event.MOUSEDOWN | Event.MOUSEUP)
+temp.onmousedown=gons
+temp.onmousemove=dragns
+temp.onmouseup=stopns
+}
+
+function gons(e){
+temp.captureEvents(Event.MOUSEMOVE)
+nsx=e.x
+nsy=e.y
+}
+function dragns(e){
+if (dragswitch==1){
+temp.moveBy(e.x-nsx,e.y-nsy)
+return false
+}
+}
+
+function stopns(){
+temp.releaseEvents(Event.MOUSEMOVE)
+}
+
+//drag drop function for ie4+ and NS6////
+/////////////////////////////////
+
+
+
+function drag_drop(e){
+
+if (ie4&&dragapproved){
+crossobj.style.left=tempx+event.clientX-offsetx
+crossobj.style.top=tempy+event.clientY-offsety
+return false
+}
+else if (ns6&&dragapproved){
+crossobj.style.left=tempx+e.clientX-offsetx+"px"
+crossobj.style.top=tempy+e.clientY-offsety+"px"
+return false
+}
+}
+
+function initializedrag(e, id){
+//crossobj=ns6? document.getElementById(id) : document.all.showimage
+crossobj=document.getElementById(id);
+
+var firedobj=ns6? e.target : event.srcElement
+var topelement=ns6? "html" : document.compatMode && document.compatMode!="BackCompat"? "documentElement" : "body"
+while (firedobj.tagName!=topelement.toUpperCase() && firedobj.id!="dragbar" + id){
+firedobj=ns6? firedobj.parentNode : firedobj.parentElement
+}
+
+if (firedobj.id=="dragbar" + id){
+offsetx=ie4? event.clientX : e.clientX
+offsety=ie4? event.clientY : e.clientY
+
+tempx=parseInt(crossobj.style.left)
+tempy=parseInt(crossobj.style.top)
+
+dragapproved=true
+document.onmousemove=drag_drop
+}
+
+}
+document.onmouseup=new Function("dragapproved=false")
+
+////drag drop functions end here//////
+
+
+
+
+
+</script>
+

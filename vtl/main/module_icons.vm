@@ -1,0 +1,16 @@
+		#**
+		<table>
+		#foreach ( $module in $modules )
+		<tr><td align="center">
+		<a href="#" ondblclick="#foreach ( $m in $modules ) document.getElementById('$m.id').style.zIndex=0; #end document.getElementById('$module.id').style.visibility='visible';document.getElementById('$module.id').style.zIndex=50;Effect.Appear('$module.id', { duration: 0.2 });">
+<img src="../img/window.gif" border="0">
+</a>
+</td></tr>
+		<tr><td align="center" class="page_footer">
+<a class="page_footer" href="#" ondblclick="#foreach ( $m in $modules ) document.getElementById('$m.id').style.zIndex=0; #end document.getElementById('$module.id').style.visibility='visible';document.getElementById('$module.id').style.zIndex=50;Effect.Appear('$module.id', { duration: 0.2 });">
+$module.title
+</a>
+</td></tr>
+#end
+</table>
+*#

@@ -1,0 +1,10 @@
+<fieldset>
+<legend>Maklumat Tanah Terlibat</legend>
+
+<table width="100%"><tr><td>
+<input type="button" value="Tambah" onclick="$('div_entry_main').style.display='none';$('div_entry_child').style.display='block';doDivAjaxCall$formname('div_entry_child','add_maklumat_tanah','')">
+</td></tr></table>
+<div id="div_list_hakmilik">
+#parse("$viewPath/vm/list_hakmilik.vm")
+</div>
+</fieldset>

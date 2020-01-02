@@ -1,0 +1,1 @@
+#if ($permohonan.jtsStatus) $permohonan.jtsStatus.nama #else update #end

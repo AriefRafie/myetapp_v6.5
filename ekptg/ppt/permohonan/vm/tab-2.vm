@@ -1,0 +1,10 @@
+<fieldset>
+<legend>Senarai Dokumen Yang Disertakan</legend>
+
+<table width="100%"><tr><td>
+<input type="button" value="Tambah" onclick="$('div_entry_main').style.display='none';$('div_entry_child').style.display='block';doDivAjaxCall$formname('div_entry_child','add_dokumen','')">
+</td></tr></table>
+<div id="div_list_dokumen">
+#parse("$viewPath/vm/list_dokumen.vm")
+</div>
+</fieldset>

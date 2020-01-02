@@ -1,0 +1,98 @@
+<table width="100%" class="navigation_menu" cellspacing="1" cellpadding="0" border="0">
+	<tr>
+		<td>
+			<table cellspacing="0" cellpadding="1" border="0">
+			
+			<tr>
+		
+				#set ( $td_class = "" )
+				#set ( $td_left_top_class = "" )
+				#set ( $td_right_top_class = "" )
+				#set ( $td_left_bot_class = "" )
+				#set ( $td_right_bot_class = "" )
+				#set ( $td_left = "" )
+				#set ( $td_right = "" )
+				#set ( $a_class = "" )
+				
+				#foreach ($module in $modules)
+					#if (${session.getAttribute("_portal_module")} == ${module.id})
+						#set ( $td_class = "nav_background_active")
+						#set ( $td_left_top_class = "nav_background_top_left_active" )
+						#set ( $td_right_top_class = "nav_background_top_right_active" )
+						#set ( $td_left_bot_class = "nav_background_bot_left_active" )
+						#set ( $td_right_bot_class = "nav_background_bot_right_active" )
+						#set ( $td_left = "nav_background_left_active" )
+						#set ( $td_right = "nav_background_right_active" )
+						#set ( $td_top = "nav_background_top_active" )
+						#set ( $td_bot = "nav_background_bot_active" )						
+						#set ( $a_class = "nav_link_active")
+					#else
+						#set ( $td_class = "nav_background")
+						#set ( $td_left_top_class = "nav_background_top_left" )
+						#set ( $td_right_top_class = "nav_background_top_right" )
+						#set ( $td_left_bot_class = "nav_background_bot_left" )
+						#set ( $td_right_bot_class = "nav_background_bot_right" )
+						#set ( $td_left = "nav_background_left" )
+						#set ( $td_right = "nav_background_right" )
+						#set ( $td_top = "nav_background_top" )
+						#set ( $td_bot = "nav_background_bot" )						
+												#set ( $a_class = "nav_link")
+					#end
+					
+					<td valign="top" class="$td_class">
+
+							<table cellspacing="0" cellpadding="0" border="1">
+
+#**
+
+					<tr>
+						<td class="$td_left_top_class"></td>
+						<td class="$td_top">						</td>
+						<td class="$td_right_top_class"></td>
+					</tr>
+**#
+
+#**
+					<tr>
+						<td class="$td_left"></td>
+											<td class="$td_class" align="center">
+						<a class="$a_class" href="${session.getAttribute("_portal_action")}?_portal_module=${module.id}">								
+${module.customTitle}						&nbsp;</a>
+						</td>
+									<td class="$td_right"></td>
+					</tr>
+					**#
+					
+					<tr>
+					<td width="500" align="center">
+					
+					TEST
+					</td>
+					</tr>
+					
+					
+					
+					#**
+					<tr>
+						<td class="$td_left_bot_class"></td>
+						<td class="$td_bot"></td>
+						<td class="$td_right_bot_class"></td>
+					</tr>					
+					**#
+				
+		</table>
+				
+				</td>
+				
+				<td>
+			
+				</td>
+										
+				#end	
+				
+				</tr>
+				</table>
+		</td>
+
+	</tr>
+</table>

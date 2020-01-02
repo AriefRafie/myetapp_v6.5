@@ -1,0 +1,246 @@
+<style type="text/css">
+<!--
+.style1 {
+	color: #FF0000
+}
+-->
+</style>
+#set($saizTxtTujuanPengambilan="500")
+#set($saizTxtRingkasanPengalaman="900")
+<p>
+  <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+  <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
+  <input name="mode" type="hidden" id="mode" value="$mode"/>
+  <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
+  <input name="idNegeriPemohon" type="hidden" id="idNegeriPemohon" value="$idNegeriPemohon"/>
+  <input name="hitButton" type="hidden" id="hitButton"/>
+</p>
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td colspan="2"><fieldset>
+      <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
+      <table width="100%" border="0" cellspacing="2" cellpadding="2">
+        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%" valign="top">No. Permohonan</td>
+          <td width="1%" >:</td>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noPermohonan</strong>
+            <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
+            <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" />            </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td >Urusan</td>
+          <td>:</td>
+          <td>AKTA PELANTAR BENUA
+            <input type="hidden" name="idUrusan" id="idUrusan" value="9"/>
+             <input type="hidden" name="idSubUrusan" id="idSubUrusan" value="57"/></td>
+        </tr>
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%">Jenis Tujuan</td>
+          <td width="1%">:</td>
+          <td width="70%">MENGOREK</td>
+        </tr>
+        <tr>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td>Kaitan Tujuan</td>
+          <td>:</td>
+          <td>$selectTujuanKaitan</td>
+        </tr>
+        <tr>
+          <td valign="top">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td valign="top">Tujuan</td>
+          <td valign="top">:</td>
+          <td valign="top"><textarea name="txtTujuanPengambilan" id="txtTujuanPengambilan" cols="43" rows="5" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" onKeyDown="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" >$beanMaklumatPermohonan.tujuanPengambilan</textarea></td>
+        </tr>
+        #if ($mode == 'new')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">Baki Aksara :&nbsp;
+          <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtTujuanPengambilan" /></td>
+        </tr>
+        #end
+        <tr>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td>Tempoh Lesen Dipohon</td>
+          <td>:</td>
+          <td><!--<input name="txtTempoh" type="text" size="1" maxlength="2" onkeyup="validateNumber(this,this.value);" value="$beanMaklumatPermohonan.tempoh" $readonly class="$inputTextClass"/>
+            $selectTempoh-->            
+            <select name="socTempoh" id="socTempoh" style="width:90px;" $readonly class="$disabled" $disabled >   
+            #if ($beanMaklumatPermohonan.tempoh == '1')
+                <option>SILA PILIH</option>
+                <option value="1" selected="selected">1</option>
+                <option value="2">2</option>  
+                <option value="3">3</option>  
+                <option value="4">4</option>  
+                <option value="5">5</option>  
+            #elseif ($beanMaklumatPermohonan.tempoh == '2')
+                <option>SILA PILIH</option>
+                <option value="1">1</option>
+                <option value="2" selected="selected">2</option>  
+                <option value="3">3</option>  
+                <option value="4">4</option>  
+                <option value="5">5</option> 
+            #elseif ($beanMaklumatPermohonan.tempoh == '3')
+                <option>SILA PILIH</option>
+                <option value="1">1</option>
+                <option value="2">2</option>  
+                <option value="3" selected="selected">3</option>  
+                <option value="4">4</option>  
+                <option value="5">5</option> 
+            #elseif ($beanMaklumatPermohonan.tempoh == '4')
+                <option>SILA PILIH</option>
+                <option value="1">1</option>
+                <option value="2">2</option>  
+                <option value="3">3</option>  
+                <option value="4" selected="selected">4</option>  
+                <option value="5">5</option> 
+            #elseif ($beanMaklumatPermohonan.tempoh == '5')
+                <option>SILA PILIH</option>
+                <option value="1">1</option>
+                <option value="2">2</option>  
+                <option value="3">3</option>  
+                <option value="4">4</option>  
+                <option value="5" selected="selected">5</option>               
+            #else
+                 <option>SILA PILIH</option>
+                <option value="1">1</option>
+                <option value="2">2</option>  
+                <option value="3">3</option>  
+                <option value="4">4</option>  
+                <option value="5">5</option>  
+            #end
+               </select> 
+              TAHUN
+           </td>
+        </tr>
+         #if ($mode == 'new')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top"><i><font color="#ff0000">* </font>Maksimum Tempoh Lesen Dipohon adalah 5 tahun.</i></td>
+        </tr>
+        #end
+        <tr>
+          <td valign="top">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td valign="top">Ringkasan Pengalaman Pemohon</td>
+          <td valign="top">:</td>
+          <td valign="top"><textarea name="txtRingkasanPengalaman" id="txtRingkasanPengalaman" cols="43" rows="5" onKeyUp="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" onKeyDown="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" $readonly class="$inputTextClass">$beanMaklumatPermohonan.pengalaman</textarea></td>
+        </tr>
+        #if ($mode == 'new')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">Baki Aksara :&nbsp;
+              <input type="text" readonly="readonly" class="disabled" name="remLen2" size="3" maxlength="3" value="$!saizTxtRingkasanPengalaman" /></td>
+        </tr>
+        #end
+        #end
+      </table>
+      </fieldset></td>
+  </tr>
+  <tr>
+    <td colspan="2"><fieldset>
+      <legend><strong>KAWASAN PERMOHONAN</strong></legend>
+     <table width="100%" border="0" cellspacing="2" cellpadding="2">
+        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="29%">Luar Perairan Negeri</td>
+          <td width="70%">: $selectFlagLuar</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Negeri</td>
+          <td>: 
+            $selectNegeri</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Lokasi</td>
+          <td>:
+            <input name="txtLokasi" type="text" class="$inputTextClass" id="txtLokasi"  value="$beanMaklumatPermohonan.lokasi" size="43" maxlength="250" $readonly /></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Luas Dipohon</td>
+          <td>:
+            <input type="text" name="txtLuas" id="txtLuas" size="10" onkeyup="validateNumber(this,this.value);" maxlength="10" value="$beanMaklumatPermohonan.luas" $readonly class="$inputTextClass"/>
+            $selectLuas</td>
+        </tr>
+        #end
+      </table>
+      </fieldset></td>
+  </tr>
+  #if ($mode != 'view')
+  <tr>
+    <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Untuk makluman kawasan permohonan mestilah di luar perairan negeri dan pastikan label bertanda <font color="#ff0000">*</font> diisi.</i> </td>
+  </tr>
+  #end
+  <tr>
+    <td width="30%">&nbsp;</td>
+    <td width="70%">       
+      #if ($mode == 'new')
+      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onclick="daftarBaru()"/>
+      <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
+      #end 
+      </td>
+  </tr>
+</table>
+<script>
+function daftarBaru() {
+	
+	if(document.${formName}.socKaitanTujuan.value == ""){
+		alert('Sila pilih Kaitan Tujuan.');
+  		document.${formName}.socKaitanTujuan.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTujuanPengambilan.value == ""){
+		alert('Sila masukkan Tujuan.');
+  		document.${formName}.txtTujuanPengambilan.focus(); 
+		return; 
+	}
+	if(document.${formName}.socTempoh.value == "SILA PILIH"){
+		alert('Sila pilih Tempoh Lesen Dipohon.');
+  		document.${formName}.socTempoh.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtRingkasanPengalaman.value == ""){
+		alert('Sila masukkan Ringkasan Pengalaman Pemohon.');
+  		document.${formName}.txtRingkasanPengalaman.focus(); 
+		return; 
+	}	
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.actionOnline.value = "daftarBaru";
+		return;
+	}
+	
+	document.${formName}.actionOnline.value = "seterusnya";
+	document.${formName}.hitButton.value = "daftarBaru";
+	document.${formName}.mode.value = "view";
+	document.${formName}.submit();
+}
+function kembali() {	
+	document.${formName}.actionOnline.value = "";
+	document.${formName}.submit();
+}
+function seterusnya() {
+	document.${formName}.actionOnline.value = "seterusnya";
+	document.${formName}.submit();
+}
+function textCounter(field, countfield, maxlimit) {
+   if (field.value.length > maxlimit) // if too long...trim it!
+		 field.value = field.value.substring(0, maxlimit);
+    // otherwise, update 'Baki Aksara' counter
+	else
+	 countfield.value = maxlimit - field.value.length;
+}
+</script>

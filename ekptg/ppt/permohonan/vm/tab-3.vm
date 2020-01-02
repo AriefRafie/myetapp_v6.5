@@ -1,0 +1,21 @@
+<fieldset>
+<legend>Maklumat Asal</legend>
+
+<table width="100%"><tr><td>
+##<input type="button" value="Tambah" onclick="$('div_entry_main').style.display='none';$('div_entry_child').style.display='block';doDivAjaxCall$formname('div_entry_child','add_maklumat_tanah','')">
+</td></tr></table>
+<div id="div_maklumat_asal">
+#parse("$viewPath/vm/list_hakmilik_3.vm")
+</div>
+</fieldset>
+
+<fieldset>
+<legend>Maklumat Selepas Pengambilan</legend>
+
+<table width="100%"><tr><td>
+##<input type="button" value="Tambah" onclick="$('div_entry_main').style.display='none';$('div_entry_child').style.display='block';doDivAjaxCall$formname('div_entry_child','add_maklumat_tanah','')">
+</td></tr></table>
+<div id="div_selepas_pengambilan">
+#parse("$viewPath/vm/list_hakmilik_3_2.vm")
+</div>
+</fieldset>

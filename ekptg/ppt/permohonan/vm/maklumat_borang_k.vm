@@ -1,0 +1,130 @@
+<fieldset>
+<legend>Maklumat Lot Asal</legend>
+<table width="100%"><tr><td align="right">
+<input type="button" value="Kembali" onclick="$('div_entry_child').style.display='none';$('div_entry_main').style.display='block';">
+</td></tr></table>
+
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+<tr><td>Jenis Hakmilik:</td><td>:</td><td>$!tanah.jenisHakmilik.keterangan</td></tr>
+<tr><td>Nombor Hakmilik:</td><td>:</td><td>$!tanah.nomborHakmilik</td></tr>
+<tr><td>Daerah:</td><td>:</td><td>$!tanah.daerah.nama</td></tr>
+<tr><td>Bandar/Pekan>Mukim:</td><td>:</td><td>$!tanah.mukim.nama</td></tr>
+<tr><td>No Lot:</td><td>:</td><td>$!tanah.nomborLot</td></tr>
+<tr><td>Kategori Tanah:</td><td>:</td><td>$!tanah.kategori.keterangan</td></tr>
+<tr><td>Luas Diambil:</td><td>:</td><td>$!tanah.luasAmbil</td></tr>
+
+</table>
+
+</fieldset>
+
+
+##*** SELEPAS PENGAMBILAN
+
+<fieldset>
+<table width="100%">
+<legend>Maklumat Lot Selepas Pengambilan</legend>
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+<tr><td>Jenis Hakmilik</td><td>:</td>
+<td>
+<select name="temp_jenisHakmilik_id" class="texts" style="width:500px">
+<option value="">SILA PILIH</option>
+#foreach( $j in $jenisHakmilik_list )
+<option value="$j.id" #if ( $temp.jenisHakmilik.id == $j.id ) selected #end>$j.kodJenisHakmilik - $j.keterangan</option>
+#end
+</select>
+</td>
+</tr>
+
+#input2("temp_nomborHakmilik" "No Hakmilik" "$!temp.nomborHakmilik" "300px")
+
+#if ( $temp.tarikhDaftar ) #set ( $date = $dateFormat.format($temp.tarikhDaftar)) #else #set ( $date = "" ) #end
+#date_input("temp_tarikhDaftar" "Tarikh Daftar" "$date")
+
+#input2("temp_nomborSyit" "No Syit" "$!temp.nomborSyit" "300px")
+#input2("temp_nomborPT" "No PT" "$!temp.nomborPT" "300px")
+#input2("temp_nomborLot" "No Lot" "$!temp.nomborLot" "300px")
+
+<tr><td>Kategori Tanah</td><td>:</td>
+<td>
+<select name="temp_kategori_id" class="texts" style="width:500px">
+<option value="">SILA PILIH</option>
+#foreach( $k in $kategori_list )
+<option value="$k.id" #if ( $temp.kategori.id == $k.id ) selected #end>$k.kod - $k.keterangan</option>
+#end
+</select>
+</td></tr>
+
+</table>
+</fieldset>
+
+##*****
+
+<fieldset>
+<legend>Maklumat Borang K</legend>
+
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+#if ( $borangK.tarikhBorangK ) #set ( $date = $dateFormat.format($borangK.tarikhBorangK)) #else #set ( $date = "" ) #end
+#date_input("tarikhBorangK" "Tarikh Borang K" "$date")
+
+<tr><td>Catatan:</td><td>:</td><td><textarea style="width:300px" name="catatanBorangK">$!borangK.catatan</textarea></td></tr>
+
+</table>
+
+</fieldset>
+
+
+<fieldset>
+<legend>Maklumat Rekod Endorsan Borang K</legend>
+
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+<tr><td>No. Perserahan</td><td>:</td><td><input name="noPerserahan" class="texts" style="width:200px" value="$!endosan.noPerserahan"></td></tr>
+
+#if ( $endosan.tarikhCatatan ) #set ( $date = $dateFormat.format($endosan.tarikhCatatan)) #else #set ( $date = "" ) #end
+#date_input("tarikhCatatan" "Tarikh Catatan Dibuat" "$date")
+
+<tr><td>Masa Catatan Dibuat</td><td>:</td><td><input name="masaCatatan" class="texts" style="width:100px" value="$!endosan.masaCatatan"></td></tr>
+
+#if ( $endosan.tarikhTerima ) #set ( $date = $dateFormat.format($endosan.tarikhTerima)) #else #set ( $date = "" ) #end
+#date_input("tarikhTerima" "Tarikh Diterima" "$date")
+
+</table>
+
+</fieldset>
+
+<fieldset>
+<legend>Lain-lain</legend>
+
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+
+<tr><td>LS 80</td><td>:</td><td><input name="LS80" style="width:300px" value="$!borangK.LS80"></td></tr>
+<tr><td>Pampasan</td><td>:</td><td><input name="pampasan" style="width:300px" value="$!borangK.pampasan"></td></tr>
+<tr><td>Kos Perolehan</td><td>:</td><td><input name="kosPerolehan" style="width:300px" value="$!borangK.kosPerolehan"></td></tr>
+<tr><td>Kaedah Perolehan</td><td>:</td><td><input name="kaedahPerolehan" style="width:300px" value="$!borangK.kaedahPerolehan"></td></tr>
+
+</table>
+
+</fieldset>
+
+
+<fieldset>
+<table width="100%"><tr><td align="right">
+<span id="wait_borangk"></span>
+<input type="button" value="Simpan" onclick="$('wait_borangk').innerHTML='<b>Please wait...</b>';doDivAjaxChainCall3$formname('div_entry_child','simpan_maklumat_k','hakmilik_id=$!tanah.id','div_selepas_pengambilan','list_selepas_pengambilan','')">
+<input type="button" value="Kembali" onclick="$('div_entry_child').style.display='none';$('div_entry_main').style.display='block';"">
+</td></tr></table>
+
+<table width="100%"><tr><td align="right">
+<span id="wait_borangk"></span>
+<input type="button" value="Cetak" onclick="cetakBorangK('$!tanah.permohonan.id','$!tanah.id')">
+
+</td></tr></table>
+
+</fieldset>

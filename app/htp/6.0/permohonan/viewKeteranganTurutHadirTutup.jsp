@@ -1,0 +1,1 @@
+<textarea id="KETERANGAN_TURUTHADIR_$ID_BIKEHADIRAN" name="KETERANGAN_TURUTHADIR_$ID_BIKEHADIRAN" style="display:none" >$KETERANGAN</textarea>	

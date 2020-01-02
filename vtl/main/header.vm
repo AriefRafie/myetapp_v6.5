@@ -1,0 +1,62 @@
+#set ($pagingTitle = "")
+##removed,because of errors when session expired. put in controller instead
+##set ($portal_role = ${session.getAttribute("_portal_role")})
+##set ($_ekptg_user_id = ${session.getAttribute("_ekptg_user_id")})
+
+##-- HEADER STYLE
+
+#set ( $headerStyle = "etapp" ) ##values are "normal", "flash"
+
+##-- PORTAL TITLE
+
+#set ( $portalTitle = "" )
+
+##--DON'T REMOVE THIS --
+#set ( $visitor = $session.getAttribute("_portal_visitor") )
+
+##----SHOW OR HIDE LOGIN FIELDS --
+#set ( $showLogin = false )
+
+##---SHOW OR HIDE SELECT VISITOR'S TYPE --
+#set ( $useVisitor = false )
+
+##---WHETHER TO SELECT VISITOR'S TYPE FROM LIST OR NOT --
+#set ( $useList = false )
+
+##--- ADD VISITOR VALUES HERE --
+
+#set ( $i = $portalVisitorList.put("anon", "English Language" ) )
+#set ( $i = $portalVisitorList.put("anon2", "Bahasa Malaysia" ) )
+
+
+
+##--- END ADD VALUES --
+
+##--- DON'T REMOVE THIS --
+
+#set ( $listVisitor = $portalVisitorList.keySet() )
+
+##-- SHOW HEADER --
+
+#set ( $userIsLogged = false )
+#if ( ${session.getAttribute("_portal_islogin")} == "true" )
+ #set ( $userIsLogged = true )
+#end
+
+#if ( $headerStyle == "etapp" )
+	#parse ( "vtl/main/header_etapp.vm" )
+#elseif ( $headerStyle == "normal" )
+	#parse ( "vtl/main/header_normal.vm" )
+#elseif ( $headerStyle == "2" )
+	#parse ( "vtl/main/header_style2.vm" )
+#elseif ( $headerStyle == "flash" )
+	#parse ( "vtl/main/header_flash.vm" )
+#end
+<script type="text/javascript" src="../CalendarPopup.js" ></script>
+<script type="text/javascript">document.write(getCalendarStyles());</script>
+<script type="text/javascript">var calndr = new CalendarPopup("CalenDarDiv1");</script>
+
+<div id="CalenDarDiv1" style="position:absolute;width:200px;visibility:hidden;background-color:#fff;z-index:10;"></div>
+
+
+

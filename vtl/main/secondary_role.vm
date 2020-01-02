@@ -1,0 +1,128 @@
+<script language="javascript">
+function doCheckAll() {    
+    if (document.f.allbox.checked == true) {
+        if (document.f.roleList.length == null) {
+            document.f.roleList.checked = true;
+        } else {
+            for (i = 0; i < document.f.roleList.length; i++) {
+                document.f.roleList[i].checked = true;
+            }
+        }
+    } else {
+        if (document.f.roleList.length == null) {
+            document.f.roleList.checked = false;
+        } else {
+            for (i = 0; i < document.f.roleList.length; i++) {
+                document.f.roleList[i].checked = false;
+            }
+        }
+    }
+}
+
+function doUpdateCheckAll() {  
+	var c = 0;
+    if(document.f.roleList.length > 1)
+    {     
+          for (i = 0; i < document.f.roleList.length; i++)
+          {
+              if (document.f.roleList[i].checked == false)
+              {	 
+                c++
+              }
+          }  
+    } else {
+        if (document.f.roleList.checked == false) {	 
+            c++;
+        }	 	
+	}
+    
+	if(c > 0) {	  
+    	document.f.allbox.checked = false;
+	} else {
+		document.f.allbox.checked = true;
+	}
+}
+</script>
+
+<table width="100%" border="0" cellpadding="2" cellspacing="0">
+#if ($!user.login)
+	##<tr><td>
+	##$user
+	##</td></tr>
+	<tr><td>
+	<form name="f" method="post">
+	##<center>
+	<fieldset>
+	<table width="100%">
+	<tr><td>
+	User id :<input name="user_id" value="$!user.login"><input type="button" value="GET" onclick="getUser()">
+	</td></tr>
+	</table>
+	</fieldset>
+	##</center>
+	<br>
+	<fieldset>
+	<table align="left">
+	<tr>
+	<td>User Name:</td><td><b>$!user.name</b></td>
+	</tr>
+	<tr>
+	<td>Primary role:</td><td><b>$!user.role.description</b></td>
+	</tr>
+	<tr>
+	<td>
+	&nbsp;
+	</td>
+	<td>
+	<input type="checkbox" name="allbox" onclick="doCheckAll();"/><b><i>Check All</i></b>
+	</td>
+	</tr>
+	<tr>
+	<td valign="top">Secondary roles:</td>
+	<td>
+	#foreach ( $role in $roleList )
+	#if ( $role.name != $user.role.name && $role.name != "anon" )
+	<input type="checkbox" name="roleList" value="$!role.name" onclick="doUpdateCheckAll();" #if ( $user.isRole("$!role.name") ) checked #end>$!role.description</input>
+	<br>
+	#end
+	#end
+	</td>
+	</tr>
+	<tr>
+	<td>
+	</td>
+	<td><input type="button" value="Save Roles" onclick="updateRoles()"></td>
+	</tr>
+	</table>
+	</fieldset>
+	<input type="hidden" name="command">
+	</form>
+	</td></tr>
+#else
+	<tr>
+		<td>
+			<fieldset>
+				<table width="100%">
+					<tr>
+						<td>
+							<b>Tiada data!!!</b>&nbsp;&nbsp;
+							<a href="?_portal_module=lebah.portal.SecondaryUserRoleModule"><input type="button" value="Kembali" style="cursor: pointer;" /></a>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+		</td>
+	</tr>
+#end	
+
+</table>
+<script>
+function getUser(){
+document.f.command.value = "getUser";
+document.f.submit();
+}
+function updateRoles(){
+document.f.command.value = "updateRoles";
+document.f.submit();
+}
+</script>

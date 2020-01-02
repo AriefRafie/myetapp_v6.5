@@ -1,0 +1,221 @@
+
+
+#macro ( title $title )
+<tr><td colspan="3"></td></tr>
+<tr><td class="section_title" colspan="3">$title</td></tr>
+<tr><td colspan="3"></td></tr>
+#end
+
+#macro ( input $input_id $input_title $value)
+<tr><td class="tlabel" valign="top">$input_title</td><td valign="top">:</td><td>
+<input class="texts" type="text" id="$input_id" name="$input_id" value="$value" onkeyup="at(this, event)">
+</td></tr>
+#end
+
+#macro ( input2 $input_id $input_title $value $size)
+<tr><td class="tlabel" valign="top">$input_title</td><td valign="top">:</td><td>
+<input class="texts" style="width:$size" type="text" id="$input_id" name="$input_id" value="$value" onkeyup="at(this, event)">
+</td></tr>
+#end
+
+#macro ( input_disabled $input_id $input_title $value $size)
+<tr><td class="tlabel" valign="top">$input_title</td><td valign="top">:</td><td>
+<input disabled class="texts" style="width:$size;background-color:#D3D7EE;border:#4C2F4D 1px solid;" type="text" id="$input_id" name="$input_id" value="$value" onkeyup="at(this, event)">
+</td></tr>
+#end
+
+#macro ( textarea $input_id $input_title $value)
+<tr><td class="tlabel" valign="top">$input_title</td><td valign="top">:</td><td>
+<textarea class="textarea" id="$input_id" name="$input_id">$value</textarea>
+</td></tr>
+#end
+
+#macro ( select $input_id $input_title $list $value)
+<tr><td class="tlabel" valign="top">$input_title</td><td valign="top">:</td><td>
+<select class="texts" id="$input_id" name="$input_id" value="$value">
+<option value=""></option>
+#foreach( $i in $list )
+<option #if ( $i.id == $value ) selected #end value="$i.id">$i.name</option>
+#end
+</select>
+</td></tr>
+#end
+
+#macro ( date_input $input_id $input_title $value )
+<tr><td class="tlabel">$input_title</td><td>:</td><td>
+$html.dateField.name("$input_id").value("$value").style("width:100px").cssClass("texts")
+</td></tr>
+#end
+
+##$!r.id
+<fieldset>
+<legend>Daftar Permohonan</legend>
+
+<div id="div_entry_main">
+<fieldset>
+<legend>Maklumat Asas Permohonan</legend>
+<table width="100%">
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+#input_disabled("nomborPermohonan" "Bil. Permohonan" "$!r.nomborPermohonan" "200px")
+#input_disabled("noFail" "No. Fail Permohonan" "$!r.fail.noFail" "300px")
+#input2("noRujukanPTG" "No. Rujukan JTS/JTU" "$!r.noRujukanPTG" "300px")
+#input2("noRujukanPTD" "No. Rujukan Lain" "$!r.noRujukanPTD" "300px")
+#input2("noRujukanUPT" "No. Rujukan UPT" "$!r.noRujukanUPT" "300px")
+#if ( $r.tarikhPermohonan ) #set ( $date = $dateFormat.format($r.tarikhPermohonan)) #else #set ( $date = "" ) #end
+#date_input("tarikhPermohonan" "Tarikh Permohonan Diterima" "$date")
+<tr><td>Urusan</td><td>:</td>
+<td>
+<select name="suburusan_id" class="texts" style="width:500px">
+#foreach ( $su in $suburusan_list )
+<option value="$su.id" #if ( $r.fail.subUrusan.id == $su.id ) selected #end>$su.kod - $su.nama</option>
+#end
+</select>
+</td>
+</tr>
+</table>
+</fieldset>
+</br>
+<fieldset>
+<legend>Maklumat Agensi / KJP</legend>
+<table width="100%">
+
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+<td>Kementerian</td>
+<td>:</td>
+<td>
+
+<select name="kementerian_id" class="texts" style="width:500px" onchange="doDivAjaxChainCall$formname('div_list_agensi','list_agensi','','div_alamat_kementerian','alamat_kementerian','');">
+<option value="">SILA PILIH</option>
+#foreach( $k in $kementerian_list )
+<option value="$k.id" #if ( $r.agensi.kementerian.id == $k.id ) selected #end>$k.kod - $k.nama</option>
+#end
+</select>
+
+</td>
+</tr>
+
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+<td>Nama Agensi</td>
+<td>:</td>
+<td>
+#if ( !$r )
+<div id="div_list_agensi">SILA PILIH KEMENTERIAN DAHULU</div>
+#else
+<div id="div_list_agensi">#parse("$viewPath/vm/select_agensi.vm")</div>
+#end
+
+</td>
+</tr>
+
+<tr><td colspan="3">
+<div id="div_alamat_kementerian">
+#parse("$viewPath/vm/alamat_kementerian.vm")
+</div>
+</td></tr>
+
+</table>
+</fieldset>
+</br>
+<fieldset>
+<legend>Maklumat Lengkap Projek</legend>
+<table width="100%">
+
+<tr><td style="width:200px"></td><td style="width:10px"></td><td></td></tr>
+<tr>
+<td>Peruntukan Projek</td><td>:</td>
+<td>
+<input name="flagPeruntukan"  #if ( $r.flagPeruntukan == "1" ) checked #end value="1" type="radio">Ada
+<input name="flagPeruntukan"  #if ( $r.flagPeruntukan == "2" ) checked #end value="2" type="radio">Tiada
+</td>
+</tr>
+
+<tr>
+<td>Pengambilan Segera</td><td>:</td>
+<td>
+<input name="flagSegera" #if ( $r.flagSegera == "1" ) checked #end value="1" type="radio">Ya
+&nbsp;&nbsp;<input name="flagSegera" #if ( $r.flagSegera == "2" ) checked #end value="2" type="radio">Tidak
+</td>
+</tr>
+
+<tr>
+<td>Negeri</td><td>:</td>
+<td>
+#if ( !$filterNegeri )
+<select name="negeri_id" class="texts" style="width:500px" onchange="doDivAjaxCall$formname('div_list_daerah','list_daerah','')">
+<option value="">SILA PILIH</option>
+#foreach ( $n in $negeri_list )
+<option value="$n.id" #if ( $r.daerah.negeri.id == $n.id ) selected #end>$n.kodNegeri - $n.namaNegeri</option>
+#end
+</select>
+#else
+<select disabled name="negeri_id" class="texts" style="width:500px" onchange="doDivAjaxCall$formname('div_list_daerah','list_daerah','')">
+#foreach ( $n in $negeri_list )
+<option value="$n.id" #if ( $r.daerah.negeri.id == $n.id ) selected #end>$n.kodNegeri - $n.namaNegeri</option>
+#end
+
+#end
+</td>
+</tr>
+
+<tr>
+<td>Daerah</td><td>:</td>
+<td>
+<div id="div_list_daerah">
+#if ( !$filterNegeri )
+
+#if ( $r.daerah )
+#parse("$viewPath/vm/select_daerah.vm")
+#end
+
+#else
+#parse("$viewPath/vm/select_daerah.vm")
+#end
+
+</div>
+</td>
+</tr>
+           	  	
+           	  	
+#textarea("tujuan" "Nama Projek" "$!r.tujuan")  
+
+<tr>
+<td></td><td></td>
+<td>
+<input name="flagJenisProjek" value="1" type="radio" #if ( $r.flagJenisProjek == "1" ) checked #end>Jajaran
+<input name="flagJenisProjek" value="2" type="radio" #if ( $r.flagJenisProjek == "2" ) checked #end>Tapak
+</td>
+</tr>
+
+#input2("nomborRujukanSurat" "No. Ruj. Surat KJP" "$!r.nomborRujukanSurat" "300px")
+#if ( $r.tarikhSurat ) #set ( $date = $dateFormat.format($r.tarikhSurat)) #else #set ( $date = "" ) #end
+#date_input("tarikhSurat" "Tarikh Surat KJP" "$date")
+#if ( $r.tarikhKehendaki ) #set ( $date = $dateFormat.format($r.tarikhKehendaki)) #else #set ( $date = "" ) #end
+#date_input("tarikhKehendaki" "Tarikh Dikehendaki" "$date")
+
+
+</table>
+</fieldset>
+
+
+##BUTTON
+
+<table width="100%"><tr><td align="right">
+<input type="button" value="$button_save" onclick="doDivAjaxCall$formname('div_main','save_data','record_id=$!r.id')">
+##<input type="button" value="Pengesahan oleh JKPTG" onclick="doDivAjaxCall$formname('div_pengesahan','pengesahan_jkptg','')">
+
+</td></tr></table>
+<div id="div_pengesahan"></div>
+
+</div> ##div_entry_main
+
+<input type="hidden" name="ppt_permohonan_id" value="$!r.id">
+
+<div id="div_entry_child" style="display:none"></div>
+<br/>
+#if ( $r )
+#parse("$viewPath/vm/tabs.vm")
+#end
+
+
+
+</fieldset>

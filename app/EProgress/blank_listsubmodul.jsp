@@ -1,0 +1,1 @@
+<input type="hidden" id="openSectionSubmodul_$ID_MAINMODUL" name="openSectionSubmodul_$ID_MAINMODUL" value="$openSectionSubmodul" >

@@ -1,0 +1,15 @@
+<table width="900px" align="center" style="background-color:#fff">
+<tr><td>
+<div id="div_main">
+#parse("etapp/HTPPermohonan/list.vm")
+</div>
+</td></tr>
+<tr><td><hr/></td></tr>
+<tr><td>
+<div id="div_data">
+
+</div>
+</td></tr>
+
+
+</table>

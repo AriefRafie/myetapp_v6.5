@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta charset="utf-8">
+
+<title>bootstrap-wysihtml5</title>
+
+
+<link rel="stylesheet" type="text/css" href="lib/css/bootstrap.min.css"></link>
+<link rel="stylesheet" type="text/css" href="lib/css/prettify.css"></link>
+<link rel="stylesheet" type="text/css" href="src/bootstrap-wysihtml5.css"></link>
+
+<style type="text/css" media="screen">
+	.btn.jumbo {
+		font-size: 20px;
+		font-weight: normal;
+		padding: 14px 24px;
+		margin-right: 10px;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+	}
+</style>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-30181385-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="hero-unit" style="margin-top:40px">
+		<h1 style="font-size:58px">bootstrap-wysihtml5 <small>Simple, beautiful wysiwyg editors</small></h1>
+		<hr/>
+		<textarea id="txt" placeholder="Enter text ..." style="width: 810px; height: 200px"></textarea>
+
+<textarea id="txt1" placeholder="Enter text ..." style="width: 810px; height: 200px"></textarea>
+	</div>
+	
+	<div class="row">
+		<div class="span6">
+	        <h2>About</h2>
+	        <p>
+				bootstrap-wysihtml5 is a javascript plugin that makes it easy to create simple, beautiful wysiwyg editors with the help of <a href="https://github.com/xing/wysihtml5">wysihtml5</a> and <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>
+			</p>
+			
+			<p style="text-align:center; margin-top:20px">
+				<a class="btn btn-large btn-primary jumbo" href="https://github.com/jhollingworth/bootstrap-wysihtml5/">View project on Github</a>
+			</p>
+		</div>
+		<div class="span6" >
+			<h2>Usage</h2>
+
+
+		    <p>
+				<pre class="prettyprint linenums">$('.textarea').wysihtml5();</pre>     
+			</p>
+		
+			<h3>Dependencies</h3>
+	        <p>
+				<ul>
+					<li><a href="https://raw.github.com/jhollingworth/bootstrap-wysihtml5/master/src/bootstrap-wysihtml5.js">bootstrap-wysihtml5.js</a></li>
+					<li><a href="https://raw.github.com/jhollingworth/bootstrap-wysihtml5/master/src/bootstrap-wysihtml5.css">bootstrap-wysihtml5.css</a></li>
+					<li><a href="https://github.com/xing/wysihtml5">wysihtml5</a></li>
+					<li><a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a></li>
+				</ul>
+	    	</p> 
+		</div>
+	</div>
+</div>
+
+
+<script src="lib/js/wysihtml5-0.3.0.js"></script>
+<script src="lib/js/jquery-1.7.2.min.js"></script>
+<script src="lib/js/prettify.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<script src="src/bootstrap-wysihtml5.js"></script>
+
+<script>
+	$(function () {
+    var words = ["hello", "helikopter", "world", "test word", "yay", "woot", "multiple words", "blue dog", "blue cat"];
+
+    $('#txt').wysihtml5();
+
+    var editor = $('#txt').data("wysihtml5").editor;
+
+    editor.on('load', function () {
+        var sm = new SuggestMe();
+        sm.init(this.currentView.iframe, words);
+    });
+
+
+    $('#txt1').wysihtml5();
+
+    var editor1 = $('#txt1').data("wysihtml5").editor;
+
+    editor1.on('load', function () {
+        var sm = new SuggestMe();
+        sm.init(this.currentView.iframe, words);
+    });
+
+});
+
+
+if (typeof String.prototype.startsWith != 'function') {
+    String.prototype.startsWith = function (str) {
+        return this.indexOf(str) == 0;
+    };
+}
+
+var SuggestMe = function () {
+    "use strict";
+
+    var self = this;
+
+    return {
+        init: init
+    };
+
+    function init(iframe, words) {
+
+        self.list = [];
+        self.currentIndex = 0;
+        self.currentWord = "";
+        self.$iframe = iframe;
+        self.$editor = $(iframe).contents().find(".wysihtml5-editor");
+
+        self.$editor.on("keydown", function (event) {
+
+            if (event.keyCode === 13) {
+                var sel = rangy.getIframeSelection(self.$iframe);
+
+                if (!sel.isCollapsed) {
+                    var range = sel.getRangeAt(0);
+                    range.collapse(false);
+
+                    var textNode = document.createTextNode("  ");
+                    range.insertNode(textNode);
+
+                    sel.collapseToEnd();
+                    event.preventDefault();
+                    return false;
+                }
+            }
+
+            if (event.keyCode === 9) {
+                var sel = rangy.getIframeSelection(self.$iframe);
+                if (!sel.isCollapsed) {
+                    self.currentIndex++;
+                    var word = self.list[self.currentIndex % self.list.length];
+                    var sel = rangy.getIframeSelection(self.$iframe);
+                    var range = sel.getRangeAt(0);
+                    range.deleteContents();
+                    var term = word.slice(self.currentWord.length, word.length);
+                    var textNode = document.createTextNode(term);
+                    range.insertNode(textNode);
+                    range.selectNodeContents(textNode);
+                    rangy.getSelection().setSingleRange(range);
+
+                    event.preventDefault();
+                    return false;
+                }
+            }
+
+        });
+
+        self.$editor.on("keyup", function (event) {
+
+            var c = String.fromCharCode(event.keyCode);
+            var isWordcharacter = c.match(/\w/);
+
+            if (isWordcharacter && !event.ctrlKey) {
+
+                var $editor = this;
+
+                self.currentWord = getLastWord($editor);
+
+                if (self.currentWord) {
+                    var sel = rangy.getIframeSelection(self.$iframe);
+
+                    if (sel.rangeCount > 0) {
+
+                        self.list = [];
+                        self.currentIndex = 0;
+
+                        $.each(words, function (a) {
+                            var word = words[a].toLowerCase();
+
+                            if (word.startsWith(self.currentWord.toLowerCase())) {
+                                self.list.push(word);
+                            }
+                        });
+                    }
+
+                    if (self.list.length) {
+                        var word = self.list[self.currentIndex];
+                        var sel = rangy.getIframeSelection(self.$iframe);
+                        var range = sel.getRangeAt(0);
+                        var term = word.slice(self.currentWord.length, word.length);
+                        var textNode = document.createTextNode(term);
+                        range.insertNode(textNode);
+                        range.selectNodeContents(textNode);
+                        rangy.getSelection().setSingleRange(range);
+                    }
+
+                }
+            }
+        });
+    }
+
+
+    function getLastWord(elm) {
+        var val = elm.innerText.trim();
+        val = val.replace(/(\r\n|\n|\r)/gm, " ");
+        var idx = val.lastIndexOf(' ');
+        var lastWord = val.substring(idx + 1).trim();
+        console.log(val);
+        return lastWord;
+    }
+
+};
+</script>
+
+<script type="text/javascript" charset="utf-8">
+	$(prettyPrint);
+</script>
+
+</body>
+</html>

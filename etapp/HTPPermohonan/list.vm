@@ -1,0 +1,6 @@
+
+#foreach ( $p in $permohonans )
+
+<a href="javascript:void()" onclick="doDivAjaxCall$formname('div_data','get_data','id=$p.id')">$p.id</a>,
+
+#end

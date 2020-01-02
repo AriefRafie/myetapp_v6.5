@@ -1,0 +1,41 @@
+<table width="100%">
+##	<tr>
+##		<td align="right">
+##			<input type="button" value="Tukar Status" onclick="doDivAjaxCall$formname('div_jts_status','jts_status_update','status_permohonan_id=$permohonan.id');">
+##		</td>
+##	</tr>
+</table>
+<table width="100%" cellspacing="0">
+	<tr class="Xtable_header">
+		<td align="left">
+Log Status: $!permohonan.fail.noFail
+		</td>
+		<td align="right" >
+			<input type="button" value="Tukar Status" onclick="doDivAjaxCall$formname('div_jts_status','jts_status_update','status_permohonan_id=$permohonan.id');">
+		##<input type="button" value="Tutup" onclick="$('jts_status_log').style.visibility='hidden';">
+		</td>
+	</tr>
+</table>
+<div style="overflow:auto;height:260px;background-color:#F4F4F4" >
+<table style="width:100%" cellspacing="2">
+	<tr class="table_header">
+		<td style="width:20px">&nbsp;</td>
+		<td style="width:100px">Nama Status</td>
+		<td style="width:100px">Tarikh</td>
+		<td >Catatan</td>
+		<td style="width:100px">User</td>
+		</tr>
+#set ( $i = 0 )
+#foreach( $p in $logs )
+#set ( $i = $i + 1 )
+#if ( $c%2 == 0 ) #set ($bgcolor="row1") #else #set($bgcolor="row2") #end
+	<tr class="$bgcolor">
+		<td align="center" valign="top">$velocityCount</td>
+		<td valign="top">$!p.status.nama</td>
+		<td valign="top">$dateFormat.format($p.tarikhKemaskini) $timeFormat.format($p.tarikhKemaskini)</td>
+		<td valign="top">$!p.remark</td>
+		<td>$!p.user.nama</td>
+	</tr>
+#end
+</table>
+</div>

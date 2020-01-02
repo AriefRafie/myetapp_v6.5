@@ -1,0 +1,5 @@
+##parse("portal/index.html")
+##parse("portal/header.jsp")
+##parse("portal/sidebar.jsp")
+#parse("portal/content.jsp")
+##parse("portal/footer.jsp")

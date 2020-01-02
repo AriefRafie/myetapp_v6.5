@@ -1,0 +1,1 @@
+<input type="hidden" id="openSectionPenambahbaikan_$ID_SUBMODUL" name="openSectionPenambahbaikan_$ID_SUBMODUL" value="$openSectionPenambahbaikan" >

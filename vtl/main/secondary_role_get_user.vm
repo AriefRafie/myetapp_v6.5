@@ -1,0 +1,29 @@
+<table width="100%" border="0" cellpadding="2" cellspacing="0">
+<tr><td>
+<form name="f" method="post">
+##<center>
+<fieldset>
+<table width="100%">
+<tr><td>
+User id :<input name="user_id" value="$!user.login"><input type="button" value="GET" onclick="getUser()">
+##</center>
+</td></tr>
+</table>
+</fieldset>
+<input type="hidden" name="command">
+</form>
+</td></tr>
+</table>
+#if ( $roleUpdated )
+##<center>
+<b>
+User's Secondary Roles has been updated!
+</b>
+##</center>
+#end
+<script>
+function getUser(){
+document.f.command.value = "getUser";
+document.f.submit();
+}
+</script>

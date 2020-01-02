@@ -1,0 +1,138 @@
+#if ( $isRoleSelected )
+    #set( $btnStatus = "" )
+#else
+    #set( $btnStatus = "disabled" )
+#end
+<form name="roleEditorForm" method="post">
+<table width="100%" border="0" cellpadding="2" cellspacing="0">
+
+<tr>
+    <td align="left">
+    <fieldset>
+        <table width="100%" cellpadding="2" cellspacing="0">
+        <tr>
+            <td nowrap>Select a role</td>
+            <td>
+                <select name="role">
+                    <option value="">- Select One -</option>
+                #foreach ( $role in $roleList )
+                    #if ( $role.getName() != "root" )
+                       <option value="$role.name">
+						#if ( $role.name == "none" &&  $role.kod !="" )
+							--------- $role.kod --------- 
+						#else
+							$role.kod - $role.description
+						#end
+						</option>
+						#end
+                	#end
+                </select>
+            </td>
+            <td width="100%"><input class="stylobutton" type="button" value="Get" onclick="doGetModule()"></td>
+        </tr>
+        <!--
+        <tr>
+            <td valign="top" nowrap><b>Role Description:</b>&nbsp;</td>
+            <td colspan="2">
+            	 #if ( $isRoleSelected ) $description #end 
+            <div id="role_desc"></div>
+            </td>
+        </tr>
+        -->
+        </table>
+    </fieldset>
+    </td>
+</tr>
+<tr>
+                	<td class="table_header" colspan="5" align="left">
+                    <input class="stylobutton" type="button" value="Update Role" onclick="doRoleUpdate()" $btnStatus>
+                </td>
+                </tr>
+<tr>
+    <td>
+        <table width="100%" cellpadding="1" cellspacing="0">
+        <tr>
+            <td class="table_header" colspan="5"><b>&nbsp;List Of Modules</b></td>
+        </tr>
+        <tr>
+            <td class="table_header">
+                <table width="100%" border="0" cellpadding="2" cellspacing="1">
+                <tr>
+                    <td  width="5%"></td>
+                    <td  width="5%"></td>
+                    <td  width="40%"><b>Name</b></td>
+                    <td  width="50%"><b>Description</b></td>
+                    <td class="table_header">
+                  </td>
+                </tr>
+        #if ( !$isRoleSelected )
+                <tr>
+                    <td class="row1" colspan="4" align="center">No role was selected</td>
+                    <td class="table_header"></td>
+                </tr>
+        #else
+            #set ( $group = "" )
+            #foreach ( $module in $moduleList )
+                #if ( $group != $module.getGroup() )
+                    #set ( $group = $module.getGroup() )
+                <tr>
+                    <td  colspan="4"><b>$group</b></td>
+                </tr>
+                #end
+                #if ( $module.isSelected() )
+                    #set( $checked = "checked" )
+                    #set( $row = "selected" )
+                #else
+                    #set( $checked = "" )
+                    #set( $row = "row1" )
+                #end
+                <tr>
+                    <td class="$row" valign="top">$velocityCount</td>
+                    <td class="$row" valign="top">
+                        <input type="checkbox" name="module" value="$module.getId()" $checked>
+                    </td>
+                    <td class="$row" valign="top">
+                    #if ( $module.title == "" )
+                    [<i>$module.id</i>]
+                    #else
+                    $module.title
+                    #end
+                    </td>
+                    <td class="$row" valign="top">
+                    $module.description
+                    </td>
+                </tr>
+            #end
+        #end
+                <tr>
+                	<td class="table_header" colspan="5" align="left">
+                    <input class="stylobutton" type="button" value="Update Role" onclick="doRoleUpdate()" $btnStatus>
+                </td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>
+<input type="hidden" name="form_action" value="">
+</form>
+<script>
+	
+function doSubmit()
+{
+    document.roleEditorForm.action = "";
+    document.roleEditorForm.submit();
+}
+function doGetModule()
+{
+    document.roleEditorForm.form_action.value = "get_modules";
+    doSubmit();
+}
+function doRoleUpdate()
+{
+    document.roleEditorForm.form_action.value = "update_role";
+    doSubmit(); 
+}
+</script>

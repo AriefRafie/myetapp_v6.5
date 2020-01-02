@@ -1,0 +1,119 @@
+<div class="welcome">
+#if ( $userIsLogged )
+
+	#set ( $current_role = "" )
+	#if ( $myrole == "" )
+	#set ( $current_role = $primaryRole.description )
+	#end
+	#foreach( $secondaryRole in $secondaryRoles )
+	#if ( $myrole == $secondaryRole.name )
+	#set ( $current_role = $secondaryRole.description )
+	#end
+	#end
+	<b>Selamat Datang ${session.getAttribute("_portal_username")} </b> | 
+	Current Role: 
+	<select id="role" name="role">
+		<option value="0">- SILA PILIH -</option>
+			#foreach( $secondaryRole in $secondaryRoles )
+				#if ( $secondaryRole.description != "" )
+					#if ( $current_role == $secondaryRole.description ) 
+						#set ( $selected = "selected" )
+					#else
+						#set ( $selected = "" )
+					#end
+					<option value="$!secondaryRole.id" onclick="changeRole('$!secondaryRole.name')" $selected>$!secondaryRole.description</option>
+				#end
+			#end 
+	</select>
+	
+##	<span id="menu_parent_roles2">
+##	<a><font class="font_role_select">Current Role: $current_role</font></a></span>
+##	<div id="menu_child_roles" style="position: absolute; visibility: hidden;z-index:1000">
+##	<a class="pulldown_menu" href="javascript:changeRole('')">$!primaryRole.description</a>
+##	#foreach( $secondaryRole in $secondaryRoles )
+##	#if ( $secondaryRole.description != "" )
+##	<a class="pulldown_menu" href="javascript:changeRole('$!secondaryRole.name')">$!secondaryRole.description</a>
+##	#end
+##	#end
+##	</div>
+##	]
+	#set ( $location = "pagetheme" )
+	#set ( $caption = "Page Template" )
+	#set ( $role  = ${session.getAttribute("_portal_role")} )
+
+
+	#if ( $role == "anon" || $role == "root") 
+		#set ( $location = "customize")
+		#set ( $caption = "Personalize" )
+
+
+		#if ( ${session.getAttribute("_portal_action")} != "customize" && ${session.getAttribute("_portal_action")} != "pagetheme" ) 
+			<a href='javascript:document.location.href = "${location}"' class="font_welcome"><u>${caption}</u></a>
+		#else
+			<a href='javascript:document.location.href = "../c/"' class="font_welcome"><u>Done</u></a>
+		#end
+			|
+	#end ## This mean that, Only anon and root can personalize.Others can't
+
+	#if (${session.getAttribute("_ekptg_loginType")} == "internal")
+		&nbsp;&nbsp;&nbsp;[ <a href='javascript:document.location.href = "logout_internal"' class="font_welcome"><u>Logout</u></a> ]
+	#else
+		&nbsp;&nbsp;&nbsp;[ <a href='javascript:document.location.href = "logout"' class="font_welcome"><u>Logout</u></a> ]
+	#end
+
+	##if anonymous login
+	#if ( ${session.getAttribute("_portal_role")} == "anon" && ${session.getAttribute("_portal_action")} != "customize" && ${session.getAttribute("_portal_action")} != "pagetheme" )
+		#if ( ${session.getAttribute("_portal_action")} != "addHtmlContentModule" &&  ${session.getAttribute("_portal_action")} != "contentManagerModule")
+			| <a href='javascript:document.location.href = "addHtmlContentModule"' class="font_welcome"><u>Add HTML Module</u></a>
+			|
+			<a href='javascript:document.location.href = "contentManagerModule"' class="font_welcome"><u>Content Manager</u></a>
+		#end
+	#end	     
+	##end if anonymous login
+	#if ($role == "rootHLAi") 
+	<a href="../vtl/admin/Browser.jsp">.</a>
+	#end
+	
+	## Attached menu
+	#if ($role != "online")
+	<script type="text/javascript">
+	at_attach("menu_parent_roles2", "menu_child_roles", "hover", "y", "pointer");
+	</script>
+	#end
+	
+	
+#end
+
+<form name=fx>
+<input type=hidden name=command>
+<div class="reportformatting" id="reportformatting">
+##if (${session.getAttribute("_ekptg_loginType")} == "internal")
+	#foreach ($i in ["PDF","RTF","EXCEL"])
+	#if ( ${session.getAttribute("rFormat")} == $i )
+	$i |
+	#else
+	<a href="#" onClick="javascript:doChangeReport('$i');"><u>$i</u></a> |
+	#end
+	#end
+##end
+</div>
+
+
+
+</form>
+
+</div>
+
+<script>
+
+function doChangeReport(x) {
+
+if ( !window.confirm("Tukar format report kepada "+x+" ?") ) return;
+url = "../servlet/ekptg.view.utils.ReportFormat?format="+x;
+actionName = "doChangeReport";
+target = "reportformatting";
+doAjaxUpdater(document.fx, url, target, actionName);
+	
+}
+
+</script>

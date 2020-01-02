@@ -1,0 +1,173 @@
+
+
+#foreach($view in $maklumat_penyediaan)
+#set($id_mmk = $view.ID_MMK)
+#set($id_pembatalan = $view.ID_PEMBATALAN)
+#set($STATUS_SEMAKAN = $view.STATUS_SEMAKAN)
+#set($txtTujuan = $view.TUJUAN)
+#set($txtLatarbelakang = $view.LATARBELAKANG)
+#set($txtImplikasi = $view.IMPLIKASI)
+#set($txtUlasan = $view.ULASAN)
+#set($txtSyor = $view.SYOR)
+#set($txtAsasPertimbangan = $view.ASAS_PERTIMBANGAN)
+#set($txtNilaiAtasTanah = $view.NILAI_ATAS_TANAH)
+#set($txtSebabPenarikan= $view.SEBAB_PENARIKAN)
+#set($txtPerihalTanah= $view.PERIHAL_TANAH)
+#set($txtKesimpulan= $view.KESIMPULAN)
+#set($txtUlasanPengarah= $view.ULASAN_PENGARAH)
+#set($txtTajuk= $view.TAJUK)
+#set($flag_mmk= $view.FLAG_MMK)
+
+#set($txtKeputusan= $view.KEPUTUSAN)
+#set($txtPerihalPohon= $view.PERIHAL_POHON)
+#set($txtNamaTuan= $view.NAMA_TUAN_TANAH)
+#set($txtPerakuanPentadbir= $view.PERAKUAN_PENTADBIR_TNH)
+
+#set($txtPeruntukan= $view.PENGESAHAN_PERUNTUKAN)
+
+
+
+#end
+
+
+
+<style type="text/css">
+<!--
+.style1 {font-family: Arial; font-size: 16px; }
+
+
+-->
+</style>
+<body leftmargin="100" rightmargin="50" bottommargin="4" topmargin="6">
+<table width="65%" border="0">
+  <tr>
+    <td colspan="2" class="style1"><strong><U>SULIT</U></strong></td>
+  </tr>
+  <tr>
+    <td colspan="2">PARAMETER</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2"><span class="style1"><strong><U>DOKUMEN INI IALAH HAKMILIK KERAJAAN NEGERI SELANGOR</U></strong></span></td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2"><center spry:hover="style1" class="style1"><strong>RAHSIA KERAJAAN NEGERI SELANGOR</strong>
+    </center></td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2"><center spry:hover="style1" class="style1"><strong>KERTAS RINGKASAN DARIPADA</strong>
+    </center></td>
+  </tr>
+  <tr>
+    <td colspan="2"><center spry:hover="style1" class="style1">
+      <strong>PENTADBIR TANAH KLANG NEGERI SELANGOR DARUL EHSAN</strong>
+    </center></td>
+  </tr>
+  <tr>
+    <td colspan="2"><u>_____________________________________________________________________________________________</u></td>
+  </tr>
+  <tr><td colspan="2">&nbsp;</td>
+  <tr>
+    <td colspan="2"><table width="100%" border="0">
+      <tr>
+        <td width="10%"><strong class="style1">1.</strong></td>
+        <td width="90%"><strong class="style1">TUJUAN</strong></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="style1"><div align="justify">$!txtTujuan</div></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr><td colspan="2">&nbsp;</td>
+  <tr>
+    <td colspan="2"><table width="100%" border="0">
+      <tr>
+        <td width="10%"><strong class="style1">2.</strong></td>
+        <td width="90%"><strong class="style1">LATAR BELAKANG</strong></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+       <td class="style1"><div align="justify">$!txtLatarbelakang</div></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr><td colspan="2">&nbsp;</td>
+  <tr>
+    <td colspan="2" ><table width="100%" border="0">
+      <tr>
+        <td width="10%"><strong class="style1">3.</strong></td>
+        <td width="90%"><strong class="style1">SYOR PENTADBIR TANAH DAERAH</strong></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td >&nbsp;</td>
+         <td class="style1"><div align="justify">$!txtSyor</div></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr >
+    <td class="style1" width="10%">&nbsp;</td>
+    <td class="style1" width="90%">Dipanjangkan untuk mendapatkan pertimbangan dan kelulusan Y.A.B Tan Sri Dato' Seri Menteri
+    Besar Selangor,</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="style1">&nbsp;</td>
+    <td class="style1">Saya yang menurut perintah,</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+  
+    <td class="style1">&nbsp;</td>
+    <td class="style1"><strong>HJ. CHE ROSLAN B. CHE DAUD</strong><br>
+Pentadbir Kota Bharu<br>
+Jabatan Ketua Pengarah Tanah dan Galian (Persekutuan)<br>
+Negeri Selangor,</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="style1">&nbsp;</td>
+    <td class="style1">Bertarikh: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    2010</td>
+  </tr>
+</table>
+</body>

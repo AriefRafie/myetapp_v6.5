@@ -1,0 +1,136 @@
+#if ($m_negeri == "")
+	#set ($m_negeri="")
+#end
+#if ($m_daerah == "")
+	#set ($m_daerah="")
+#end
+#if ($m_mukim == "")
+	#set ($m_mukim="")
+#end
+#if ($m_kementerian == "")
+	#set ($m_kementerian="")
+#end
+<div class="content">
+<form name="f" method="post">
+<center>
+<fieldset>
+<table border="0" width="100%" cellpadding="3" cellspacing="1">
+    <tr>
+        <td align="left"><label for="negeri">Negeri</label></td>
+        <td>
+            <select id="negeri" name="idNegeri" style="width:100%">
+			<option value="0">- Pilihan -</option>
+            #foreach ( $lnegeri in $rnegeri )
+                #if ( $m_negeri == $lnegeri.id )
+                    #set ( $selected = "selected" )
+                #else
+                    #set ( $selected = "" )
+                #end
+                <option value="$lnegeri.id" onclick="submitRegister('getDaerah')" $selected>$lnegeri.namaNegeri</option>                
+            #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="left"><label for="daerah">Daerah</label></td>
+        <td>
+            <select id="daerah" name="idDaerah" style="width:100%">
+			<option value="0">- Pilihan -</option>
+            #foreach ( $ldaerah in $rdaerah )
+                #if ( $m_daerah == $ldaerah.id )
+                    #set ( $selected = "selected" )
+                #else
+                    #set ( $selected = "" )
+                #end
+                <option value="$ldaerah.id" onclick="submitRegister('getMukim')" $selected>$ldaerah.namaDaerah</option>
+            #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="left"><label for="mukim">Mukim</label></td>
+        <td>
+            <select id="mukim" name="idMukim" style="width:100%">
+			<option value="0">- Pilihan -</option>
+            #foreach ( $lmukim in $rmukim )
+                <option value="$lmukim.id">$lmukim.namaMukim</option>
+            #end
+            </select>
+        </td>
+    </tr>
+    #if ( $role != "online_kjp" )
+	    <tr>
+	        <td align="left"><label for="kementerian">Kementerian</label></td>
+	        <td>
+	            <select id="kementerian" name="idKementerian" style="width:100%">
+				<option value="0">- Pilihan -</option>
+	            #foreach ( $lkementerian in $rkementerian )
+	                <option value="$lkementerian.id">$lkementerian.namaKementerian</option>
+	            #end
+	            </select>
+	        </td>
+	    </tr>
+    #end
+	<tr>
+		<td align="left"><label for="hakmilik">No. Hakmilik</label></td>
+		<td><input type="text" name="noHakmilik" id="hakmilik" tabindex="1" maxlength="15" /></td>
+	</tr>
+	<tr>
+		<td align="left"><label for="warta">No. Warta</label></td>
+		<td><input type="text" name="noWarta" id="warta" tabindex="1" maxlength="15" /></td>
+	</tr>
+	<tr>
+		<td align="left"><label for="lot">No. Lot/PT</label></td>
+		<td><input type="text" name="noLot" id="lot" tabindex="2" maxlength="15" /></td>
+	</tr>
+</table>
+</fieldset>
+</center>
+<table border="0" width="90%" cellpadding="2" cellspacing="2" align="center">
+    <tr>
+        <td colspan="2" align="left">
+            <input id="button" type="submit" value="Hantar" onclick="submitRegister('getResult')">
+        </td>
+    </tr>   
+</table>
+<input type="hidden" name="command">
+#if ( $userKJP.size() > 0 )
+	#foreach ( $recordKJP in $userKJP )
+		#if ( $role == "online_kjp" )
+			<input type="hidden" name="idKementerian" id="kementerian" value=$recordKJP.kementerian.id>
+		#end
+	#end
+#end
+</form>
+</div>
+#set ($rNegeri="")
+#set ($rDaerah="")
+#set ($rMukim="")
+#set ($rKementerian="")
+
+<script>
+function submitRegister(s) {
+
+	var cboNegeri=document.getElementById("negeri").value;
+	var cboDaerah=document.getElementById("daerah").value;
+	var txtHakmilik=document.getElementById("hakmilik").value;
+	var txtWarta=document.getElementById("warta").value;
+	var txtLot=document.getElementById("lot").value;
+
+	if ( s == "getResult" ) {
+		if ( parseInt(cboNegeri) != 0 && parseInt(cboDaerah) != 0 ) {
+		    document.f.command.value = s;
+	    	document.f.action = "";
+    	} else if ( txtHakmilik != "" || txtWarta != "" || txtLot != "" ) {
+		    document.f.command.value = s;
+	    	document.f.action = "";
+	    } else {
+    		alert("Sila pilih sekurang-kurangnya dua pilihan iaitu Negeri dan Daerah, ataupun anda juga boleh memilih untuk mengisi terus No. Hakmilik, No. Warta atau No. Lot/PT"); 
+    	}
+	} else {
+		document.f.command.value = s;
+    	document.f.action = "";
+	}
+	document.f.submit();       	
+}   
+</script>

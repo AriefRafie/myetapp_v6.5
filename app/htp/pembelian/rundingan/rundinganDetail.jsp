@@ -1,0 +1,236 @@
+<table width="98%" border="0" cellspacing="2" cellpadding="2">
+
+  <tr>
+    <td>
+    <fieldset><legend>MAKLUMAT RUNDING HARGA</legend>
+        <table width="100%" align="center" border="0">
+                	<tr>
+						<td valign="top" width="1%">
+				        <!--<span class="labelmandatory">#if ($mode != 'readonly') * #end </span>-->
+				        </td>				        
+				        <td width="30%">
+				        	<div align="right" class="labelinput">
+				        	<div align="left">Harga JPPH (RM)</div>
+				        	</div>
+				       	</td>				      	
+				      	<td width="1%">:</td>				        
+				        <td width="68%">
+				        	#set ( $unit = "" )	
+
+        					#if($rundinganMode == "new" || $rundinganMode == "update" )
+				        	<select name="unit_bersamaan" id="socLuas" style="width:200px;" $mode class="$disabled" ">
+								     
+								      	<option value="">SILA PILIH</option>
+								      	
+									  	<option value="MP" #if($!rundingan.unitBersamaan =="MP") selected #end > MP - METER PERSEGI</option>
+								        <option value="KP" #if($!rundingan.unitBersamaan =="KP") selected #end> KP - KAKI PERSEGI</option>
+								      
+								</select>
+							#else
+								#if($!rundingan.unitBersamaan =="MP")
+									#set ( $unit = 'MP - METER PERSEGI' )
+								#end
+								#if($!rundingan.unitBersamaan =="KP")
+									#set ( $unit = 'KP - KAKI PERSEGI' )
+								#end
+							#end	$!unit
+							<input type="text" name="harga_bersamaan" id="harga_bersamaan" size="11" 
+    						value="$!rundingan.hargaBersamaan" onBlur=""  $mode>
+						</td>
+					</tr>
+					
+                	<tr>
+						<td valign="top" width="1%">
+				        <!--<span class="labelmandatory">#if ($mode != 'readonly') * #end </span>-->
+				        </td>				        
+				        <td width="30%">
+				        	<div align="right" class="labelinput">
+				        	<div align="left">Nilai Tanah Oleh JPPH (RM)</div>
+				        	</div>
+				       	</td>				      	
+				      	<td width="1%">:</td>				        
+				        <td width="68%">
+							<input type="text" name="nilai_tnh" id="nilai_tnh" size="11" 
+    						value="$!rundingan.nilaiTanah" onBlur=""  $mode>
+						</td>
+					</tr>
+                	<tr>
+						<td valign="top" width="1%">
+				        <!--<span class="labelmandatory">#if ($mode != 'readonly') * #end </span>-->
+				        </td>				        
+				        <td width="30%">
+				        	<div align="right" class="labelinput">
+				        	<div align="left">Nilai Bangunan Oleh JPPH (RM)</div>
+				        	</div>
+				       	</td>				      	
+				      	<td width="1%">:</td>				        
+				        <td width="68%">
+							<input type="text" name="nilai_bgn" id="nilai_bgn" size="11" 
+    						value="$!rundingan.nilaiBangunan" onBlur=""  $mode>
+						</td>
+					</tr>
+                	<tr>
+						<td valign="top" width="1%">
+				        <!--<span class="labelmandatory">#if ($mode != 'readonly') * #end </span>-->
+				        </td>				        
+				        <td width="30%">
+				        	<div align="right" class="labelinput">
+				        	<div align="left">Harga Tawaran (RM)</div>
+				        	</div>
+				       	</td>				      	
+				      	<td width="1%">:</td>				        
+				        <td width="68%">
+							<input type="text" name="harga_beli" id="harga_beli" size="11" 
+    						value="$!rundingan.hargaTawaran" onBlur=""  $mode>
+						</td>
+					</tr>
+                	<tr>
+						<td valign="top" width="1%">
+				        <!--<span class="labelmandatory">#if ($mode != 'readonly') * #end </span>-->
+				        </td>				        
+				        <td width="30%">
+				        	<div align="right" class="labelinput">
+				        	<div align="left">Harga Dipersetujui (RM)</div>
+				        	</div>
+				       	</td>				      	
+				      	<td width="1%">:</td>				        
+				        <td width="68%">
+							<input type="text" name="harga_setuju" id="harga_setuju" size="11" 
+    						value="$!rundingan.hargaSetuju" onBlur=""  $mode>
+						</td>
+					</tr>					            
+                <!--	<tr>
+						<td valign="top" width="1%">
+				        </td>				        
+				        <td width="30%">
+				        	<div align="right" class="labelinput">
+				        	<div align="left">Tempoh Serahan
+				       	</td>				      	
+				      	<td width="1%">:</td>				        
+				        <td width="68%">
+							<input type="text" name="tempoh_serah" id="harga_setuju" size="11" 
+    						value="$!rundingan.tempohSerahan" onBlur=""  $mode> Bulan
+						</td>
+					</tr>		-->		
+					<tr>
+						<td valign="top" width="1%">
+				        <span class="labelmandatory"> #if($rundinganMode == "new" || $rundinganMode == "update" ) * #end </span>
+				        </td>
+				         <td width="30%">
+				        	<div align="right" class="labelinput">
+				        	<div align="left">Keputusan Rundingan</div>
+				       	</td>
+						<td width="1%">:</td>				        
+				        <td width="68%">
+				        	
+  				        #set ( $keputus = "" )	
+        				#if($rundinganMode == "new" || $rundinganMode == "update" )
+								<select name="keputusan" $mode>
+									<option value="">SILA PILIH</option>
+									<option value="BERJAYA" #if($!rundingan.keputusan == "BERJAYA") selected #end>BERJAYA</option>
+									<option value="TANGGUH" #if($!rundingan.keputusan == "TANGGUH") selected #end>TANGGUH</option>
+									<option value="BATAL" #if($!rundingan.keputusan == "BATAL") selected #end>BATAL</option>
+								</select>
+						#else
+							#set ( $keputus = $!rundingan.keputusan )
+						#end	$!keputus		
+						</td>
+						
+						
+					</tr>
+					
+					<tr>
+						<td valign="top" width="1%">
+				        <!--<span class="labelmandatory">#if ($mode != 'readonly') * #end </span>-->
+				        </td>
+				         <td width="30%" valign="top">
+				        	<div align="right" class="labelinput">
+				        	<div align="left">Ulasan</div>
+				       	</td>
+						<td width="1%" valign="top">:</td>				        
+				        <td width="68%">
+								<textarea name="ulasan" onkeyup="this.value=this.value.toUpperCase();"  cols="41" rows="5" $mode onKeyDown="textCounter(this.form.ulasan,this.form.remLen4,1500);" onKeyUp="textCounter(this.form.ulasan,this.form.remLen4,1500);">$!rundingan.ulasan</textarea>
+						</td>
+						
+						
+					</tr>
+					<tr>
+					<td valign="top">&nbsp;</td>
+					<td valign="top">&nbsp;</td>
+					<td valign="top">&nbsp;</td>
+					<td valign="top"><input type="text" readonly class="disabled" name="remLen4" size="3" maxlength="3" value="1500"> Baki Aksara</td>
+				</tr>
+
+              <td scope="row">&nbsp;</td>
+              <td>&nbsp;</td>
+            
+        </table>
+	<!--<table width="100%">
+		<tr>
+        		<td>
+        			<span class="labelwar"><em><span class="labelmandatory">Perhatian</span> : Sila pastikan label bertanda <span class="labelmandatory">*</span> diisi.</em></span>
+        		</td>
+           	</tr>
+
+	</table>  -->      
+        
+	  </fieldset>
+    </td>
+  </tr>
+  <tr>
+      <td>
+      	#if($rundinganMode == "new" || $rundinganMode == "update" )
+        	<span class="labelwar"><em><span class="labelmandatory">Perhatian</span> : Sila pastikan label bertanda <span class="labelmandatory">*</span> diisi.</em></span>
+      	#end
+      </td>
+  </tr>
+    <tr>
+      <td>
+  						<div align="center">
+  						
+  						#if($rundinganMode == "new")
+  							<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanRundingan()">
+  							
+  						#elseif($rundinganMode == "update")
+  							<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:updateRundingan()">
+  						#else
+  							<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="javascript:kemaskiniRundingan()">
+  						#end
+  						<!-- 
+  						<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kembali" onclick="skrinSenarai($!rundingan.fail.getNoFail());">
+  						-->
+  						</div>      	
+      </td>
+  </tr>
+ </table>
+ <!--
+ <p align="center">
+
+</p> -->
+<input type="hidden" name="IDMAKLUMATMSYRT" value="$!rundingan.getIdMaklumatMysrt()">
+
+<script>
+	
+	function skrinSenarai(no){
+		doAjaxCall${formName}("","noFail="+no);
+	}
+
+	function textCounter(field, countfield, maxlimit) {
+		if (field.value.length > maxlimit) // if too long...trim it!
+			field.value = field.value.substring(0, maxlimit);
+			// otherwise, update 'Baki Aksara' counter
+		else 
+			countfield.value = maxlimit - field.value.length;
+	}
+	
+	function validateModal(elmnt,content,content2) {
+	//if it is character, then remove it..
+	if (isNaN(content)) {
+		elmnt.value = content2;
+		return;
+	}
+	var num = content * 1;
+	elmnt.value = num.toFixed(2);
+	return;
+}
+</script>

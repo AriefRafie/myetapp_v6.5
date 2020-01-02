@@ -1,0 +1,213 @@
+<input id="current_page_num" name="current_page_num" type="hidden" value="$!current_page_num">
+<input type="hidden" name="last_page" value="$!total_page">
+<div class="regular" id="div_list" name="div_list" style="position:fixed;visibility:" + $divList>
+<table width="90%" border="0" cellpadding="1" cellspacing="1" align="center">
+#if ( $rNegeri == 0 && $rDaerah == 0 && $rMukim == 0 && $rKementerian == 0 && $role != "online_kjp" )	
+    <tr>
+        <td valign="top" nowrap><label for="negeri">Negeri</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.negeri.namaNegeri</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="daerah">Daerah</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.daerah.namaDaerah</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="mukim">Mukim</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.mukim.namaMukim</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="kementerian">Kementerian</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.kementerian.namaKementerian</td>
+    </tr>
+#end
+#if ( $role == "online_kjp" )	
+    <tr>
+        <td valign="top" nowrap><label for="negeri">Negeri</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.negeri.namaNegeri</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="daerah">Daerah</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.daerah.namaDaerah</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="mukim">Mukim</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.mukim.namaMukim</td>
+    </tr>
+#end
+    <tr>
+        <td valign="top" nowrap><label for="noHakmilik">No Hakmilik</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.noHakmilik</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="noLot">No. Lot</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.noLot</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="luasTanah">Luas Tanah</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.luasBersamaan $!listHakmilik.luas.keterangan</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="lokasi">Lokasi</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.lokasi</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="kegunaanTanah">Kegunaan Tanah</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!listHakmilik.kegunaanTanah</td>
+    </tr>
+    <tr>
+        <td colspan="3" align="left">
+            <input id="button" type="button" value="Tutup" onclick="javascript:getData('0')">
+        </td>
+    </tr>   
+</table>
+</div>
+#set ( $count = $rowSize * ($current_page_num - 1) )
+#if ( $rNegeri != 0 )
+	#set ( $namaNegeri = $rNegeri.namaNegeri )
+	#set ( $sNegeri = $rNegeri.id )
+#else
+	#set ( $namaNegeri = "-" )
+	#set ( $sNegeri = 0 )
+#end
+#if ( $rDaerah != 0 )
+	#set ( $namaDaerah = $rDaerah.namaDaerah )
+	#set ( $sDaerah = $rDaerah.id )
+#else
+	#set ( $namaDaerah = "-" )
+	#set ( $sDaerah = 0 )
+#end
+#if ( $rMukim != 0 )
+	#set ( $namaMukim = $rMukim.namaMukim )
+	#set ( $sMukim = $rMukim.id )
+#else
+	#set ( $namaMukim = "-" )
+	#set ( $sMukim = 0 )
+#end
+#if ( $rKementerian != 0 )
+	#set ( $namaKementerian = $rKementerian.namaKementerian )
+	#set ( $sKementerian = $rKementerian.id )
+#else
+	#set ( $namaKementerian = "-" )
+	#set ( $sKementerian = 0 )
+#end
+<div class="content">
+<center>
+<fieldset>
+<table width="90%" cellspacing="1" cellpadding="3" align="center">
+<tr><td width="10%" align="left">Negeri</td><td width="2%">:</td><td width="78%" align="left">$namaNegeri</td></tr>
+<tr><td width="10%" align="left">Daerah</td><td width="2%">:</td><td width="78%" align="left">$namaDaerah</td></tr>
+<tr><td width="10%" align="left">Mukim</td><td width="2%">:</td><td width="78%" align="left">$namaMukim</td></tr>
+<tr><td width="10%" align="left">Kementerian</td><td width="2%">:</td><td width="78%" align="left">$namaKementerian</td></tr>
+<tr><td colspan="3" style="font-weight:bold; font-size:0.8em">Number Of Records: <span id="data_size">$data_size</span></td></tr>
+<tr><td colspan="3" style="font-weight:bold; font-size:0.8em">Number Of Pages: <span id="total_page">$total_page</span></td></tr>
+</table>
+</fieldset>
+</center>
+#if ( $records.size() > 0 )
+<table width="90%" cellspacing="1" cellpadding="3" align="center" border="0">
+<tr>
+#set ( $x = 0 )
+#set ( $paging = 1 )
+#if ( $total_page > 7 )
+	#if ( $current_page_num > 3 && $current_page_num <= ($total_page - 3) )
+		#set ( $paging = $current_page_num - 3 )
+	#elseif ( $current_page_num > ($total_page - 3) )
+		#set ( $paging = $total_page - 6 )		
+	#end
+#end
+#foreach ( $i in [$paging..$total_page] )
+	#set ( $x = $x + 1 )
+	#if ( $!current_page_num == $i )
+	    #set ( $visited = "roundV" )
+	#else
+	    #set ( $visited = "round" )
+	#end
+	#if ( $x <= 7 )
+		<td><div class=$visited><a href="javascript:getPage('$i')"><p>$i</p></a></div></td>
+	#end
+#end
+</tr>
+</table>
+#end
+<form name="f" method="post">
+	<table width="90%" cellspacing="1" cellpadding="3" align="center">
+		#if ( $records.size() <= 0 )
+			<tr><td>&nbsp;</td></tr>
+		#end
+		#if ( $records.size() > 0 )
+			<tr class="table_header">
+				<td scope="row" align="center"><strong>Bil.</strong></td>
+				#parse("$row_title_page")
+			</tr>		
+		#else
+			<tr class="table_header">
+				<td scope="row" align="center"><strong>Makluman!!!</strong></td>
+			</tr>
+		#end
+		#set ( $list = '' )
+		#if ( $records.size() > 0 )
+			#foreach ( $list in $records )				
+			#set ( $count = $count + 1 )
+			#if ( $count % 2 == 0 ) #set ( $bgcolor = "" ) #else #set ( $bgcolor = "#EBBC5D" ) #end
+			#if ( $list.noHakmilik != "" ) #set ( $m_id = $list.jenisHakmilik.kodHakmilik + " " + $list.noHakmilik ) #else #set ( $m_id = "ID Hakmilik : " + $list.id ) #end
+			#if ( $list.nowarta != "" ) #set ( $m_id = $list.noWarta ) #else #set ( $m_id = "ID Hakmilik : " + $list.id ) #end
+			#if ( $list.noLot != "" ) #set ( $m_noLot = $list.lot.keterangan + " " + $list.noLot ) #else #set ( $m_noLot = "Tiada Rekod" ) #end
+			#if ( $list.luasBersamaan != "" ) #set ( $m_luasBersamaan = $list.luasBersamaan ) #else #set ( $m_luasBersamaan = "Tiada Rekod" ) #end
+			#if ( $list.luas.keterangan != "" ) #set ( $m_keterangan = $list.luas.keterangan ) #else #set ( $m_keterangan = "" ) #end
+			<tr id="row_$!list.id" height="30px" style="background-color:$bgcolor;" onmouseout="$('row_$!list.id').style.backgroundColor='$bgcolor'" onmouseover="$('row_$!list.id').style.backgroundColor='#ccc'">
+				<td align="center">$count.</td>
+					#parse("$row_data_page")
+			</tr>
+			#end
+		#else
+			<tr>
+				<td align="center" style="background-color:#EBBC5D"><i>Pilihan tidak tepat / Tiada capaian dalam rekod</i></td>
+			</tr>			
+		#end
+	</table>
+	<input type="hidden" name="command">
+	<input type="hidden" name="submission" value="return">
+	<input type="hidden" name="pageNum">
+	<input type="hidden" name="dataRecord">
+	<input type="hidden" name="idNegeri" id="idNegeri" value="$sNegeri">
+	<input type="hidden" name="idDaerah" id="idDaerah" value="$sDaerah">
+	<input type="hidden" name="idMukim" id="idMukim" value="$sMukim">
+	<input type="hidden" name="idKementerian" id="idKementerian" value="$sKementerian">
+	<input type="hidden" name="noHakmilik" id="noHakmilik" value="$!noHakmilik">
+	<input type="hidden" name="noLot" id="noLot" value="$!noLot">
+</form>
+</fieldset>
+</center>
+</div>
+<script>
+function submitRegister(s) {
+	document.f.command.value = s;
+	document.f.action = "";  
+	document.f.submit(); 
+}   
+function getPage(k) {
+	document.f.submission.value = "getResult";
+	document.f.pageNum.value = k;
+	document.f.action = "";  
+	document.f.submit(); 
+}
+function getData(x) {
+	document.f.submission.value = "getResult";
+	document.f.pageNum.value = '$!current_page_num';
+	document.f.dataRecord.value = x;
+	document.f.action = "";  
+	document.f.submit(); 
+}
+</script>

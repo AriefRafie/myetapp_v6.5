@@ -1,0 +1,212 @@
+body {
+	header.masthead 
+    position: relative;
+    /* width: 100%; */
+    /* padding-top: 150px; */
+    /* padding-bottom: 100px; */
+    color: #777777;
+    /* background: url(../eTapp_Login/img/bg-pattern.png);
+    background: url(../eTapp_Login/img/bg-pattern.png);
+    background: url(../eTapp_Login/img/bg-pattern.png);*/
+   /*  background: url(../eTapp_Login/img/bg-pattern.png),#7b4397;
+    background: url(../eTapp_Login/img/bg-pattern.png),-webkit-linear-gradient(to left,#7b4397,#dc2430);
+    background: url(../eTapp_Login/img/bg-pattern.png),linear-gradient(to left,#7b4397,#dc2430); */ 
+    /*background-color: #666;*/
+}
+.bg-dark {
+    background-color: #343a40 !important;
+}
+.wrapper {
+    width: 900px;
+    margin: auto;
+    /* border:1px solid #ff0; */
+}
+
+.bg_title{
+	/* background-color: #fff;
+    opacity: 0.8; */
+   	background: rgba(76, 175, 80, 0.6);
+}
+
+.div_titile_login{
+	/* border: 1px solid #fff; */
+    height: 500px;
+    border-radius: 10px;
+    /* background: #fff; */
+    background: url("../eTapp_Login/img/bg1.png");
+    box-shadow: 0px 0px 9px #999999;
+}
+
+.div_title{
+	float: left;
+	width: 50%;	
+}
+
+.title_content{
+	color: #fff;
+	margin:20px;
+}
+
+.div_title h1{
+	text-align: center;
+}
+
+.div_login{
+	float: left;
+	width: 50%;
+}
+
+.logo_myetapp{
+	/* border: 1px solid #ff0; */
+	background-image: url(../eTapp_Login/img/logo_myetapp.png);
+	background-repeat:no-repeat;
+    width: 450px;
+    height: 208px;
+    margin: auto;
+}
+
+.box {
+    padding: 20px 50px 40px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 9px #999999;
+    /* background: #fff; */
+}
+
+.padding10{
+	padding:10px;
+}
+
+
+
+/* ###############BOX LOGIN############### */
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.card-login {
+    max-width: 25rem;
+}
+.mx-auto {
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+.mt-5 {
+    margin-top: 3rem !important;
+}
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+label {
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #495057;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    border-radius: .25rem;
+    transition: all .15s ease-in-out;
+}
+.text-center {
+    text-align: center !important;
+}
+.mt-3 {
+    margin-top: 1rem !important;
+}
+.d-block {
+    display: block !important;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+.btn:focus, .btn:hover {
+    text-decoration: none;
+}
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+
+
+/* ###############BOX LOGIN############### */
+
+
+
+.footer{
+	/* border:1px solid #fff; */
+	width: 84%;
+	margin: auto;
+}
+.footitle{
+	font-size: 18px;
+}
+
+
+
+
+

@@ -1,0 +1,120 @@
+#if ( $dispPemohon != "" ) #else #set ( $dispPemohon = "display:visible" ) #end
+#if ( $dispSimati != "" ) #else #set ( $dispSimati = "display:visible" )  #end
+#if ( $dispPemohonText != "" ) #else #set ( $dispPemohonText = "display:none" ) #end
+#if ( $dispSimatiText != "" ) #else #set ( $dispSimatiText = "display:none" )  #end
+<div class="content">
+<form name="f" method="post">
+<center>
+<fieldset>
+<table border="0" width="100%" cellpadding="3" cellspacing="1">
+    <tr style="$dispPemohon">
+        <td align="left">MyID Pemohon</td>
+        <td align="left">:</td>
+        <td align="center">
+			<select id="KPPemohon" name="jenisKPPemohon" style="width:100%" onchange="submitRegister()"> 
+				<option value="">SILA PILIH</option>
+	            #if ( $m_pemohon == "noKPBaru" )
+                    #set ( $selected = "selected" )
+                #else
+                    #set ( $selected = "" )
+                #end
+				<option value="noKPBaru" $selected>No. KP Baru</option>
+	            #if ( $m_pemohon == "noKPLama" )
+                    #set ( $selected = "selected" )
+                #else
+                    #set ( $selected = "" )
+                #end
+				<option value="noKPLama" $selected>No. KP Lama</option>
+	            #if ( $m_pemohon == "noKPLain" )
+                    #set ( $selected = "selected" )
+                #else
+                    #set ( $selected = "" )
+                #end
+				<option value="noKPLain" $selected>No. KP Lain</option>
+			</select>
+        </td>
+    </tr>
+    <tr style="$dispPemohonText">
+        #if ( $m_pemohon == "noKPBaru" )
+            #set ( $dispPemohonTextLength = 12 )
+        #else
+            #set ( $dispPemohonTextLength = 30 )
+        #end
+        <td colspan="3" align="left"><input type="text" name="idPemohon" id="pemohon" value="" tabindex="1" maxlength=$dispPemohonTextLength></td>
+    </tr>
+    <tr style="$dispSimati">
+        <td align="left">MyID Simati</td>
+        <td align="left">:</td>
+        <td align="center">
+			<select id="KPSimati" name="jenisKPSimati" style="width:100%" onchange="submitRegister()"> 
+				<option value="">SILA PILIH</option>
+	            #if ( $m_simati == "noKPBaru" )
+                    #set ( $selected = "selected" )
+                #else
+                    #set ( $selected = "" )
+                #end
+				<option value="noKPBaru" $selected>No. KP Baru</option>
+	            #if ( $m_simati == "noKPLama" )
+                    #set ( $selected = "selected" )
+                #else
+                    #set ( $selected = "" )
+                #end
+				<option value="noKPLama" $selected>No. KP Lama</option>
+	            #if ( $m_simati == "noKPLain" )
+                    #set ( $selected = "selected" )
+                #else
+                    #set ( $selected = "" )
+                #end
+				<option value="noKPLain" $selected>No. KP Lain</option>
+			</select>
+        </td>
+    </tr>
+    <tr style="$dispSimatiText">
+        #if ( $m_simati == "noKPBaru" )
+            #set ( $dispSimatiTextLength = 12 )
+        #else
+            #set ( $dispSimatiTextLength = 30 )
+        #end
+        <td colspan="3" align="left"><input type="text" name="idSimati" id="simati" value="" tabindex="2" maxlength=$dispSimatiTextLength></td>
+    </tr>
+</table>
+</fieldset>
+</center>
+<table border="0" width="90%" cellpadding="3" cellspacing="1" align="center">
+    <tr>
+        <td align="right">
+            <input id="button" type="submit" value="Hantar" tabindex="3" onclick="submitRegister('getResult')">
+        </td>
+    </tr>   
+    <tr>  
+</table>
+<input type="hidden" name="command">
+<input type="hidden" name="selection" value="$selection">
+</form>
+</div>
+<script>
+function submitRegister(s) {
+
+	var cboPemohon=document.getElementById("KPPemohon").value;
+	var cboSimati=document.getElementById("KPSimati").value;
+	var txtPemohon=document.getElementById("pemohon").value;
+	var txtSimati=document.getElementById("simati").value;
+	
+	if ( s == "getResult" ) {
+		if ( cboPemohon != "" || cboSimati != "" ) {
+			if ( txtPemohon != "" || txtSimati != "" ) {
+			    document.f.command.value = s;
+    			document.f.action = "";	
+			} else {
+				alert("Sila masukkan no MyID terlebih dahulu");
+			}			
+		} else {
+			alert("Sila pilih satu pilihan diantara MyID Pemohon ataupun MyID Simati terlebih dahulu");
+		}
+	} else {
+		document.f.command.value = s;
+		document.f.action = "";
+	}
+	document.f.submit(); 
+}   
+</script>

@@ -1,0 +1,23 @@
+#parse("${viewPath}/label_titles.vm")
+
+<table width="100%">
+<tr><td align="right">
+#if ( !$r )
+<input type="button" value="$button_add" onclick="doDivAjaxCall3$formname('div_main','add_new_record','')">
+#end
+##<input type="button" value="$button_save" onclick="doDivAjaxCall$formname('div_main','save_data','record_id=$!r.id')">
+<input type="button" value="$button_done" onclick="doDivAjaxCall$formname('div_main','list_page','page_num=$!current_page_num')">
+</td></tr>
+</table>
+
+#parse("$data_entry_page")
+
+<table width="100%">
+<tr><td align="right">
+#if ( !$r )
+<input type="button" value="$button_save_and_add" onclick="doDivAjaxCall3$formname('div_main','save_add_new_record','record_id=$!r.id')">
+#end
+##<input type="button" value="$button_save" onclick="doDivAjaxCall$formname('div_main','save_data','record_id=$!r.id')">
+<input type="button" value="$button_done" onclick="doDivAjaxCall$formname('div_main','list_page','page_num=$!current_page_num')">
+</td></tr>
+</table>

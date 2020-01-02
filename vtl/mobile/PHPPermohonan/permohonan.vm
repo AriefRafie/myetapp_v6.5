@@ -1,0 +1,103 @@
+<div class="regular" id="div_list" name="div_list" style="position:fixed; $divList; width:100%">
+<table width="90%" border="0" cellpadding="1" cellspacing="3" align="center">
+    <tr>
+        <td valign="top" nowrap><label for="aduan">ID Permohonan</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!sewa.id</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="tarikhSurat">Tarikh Surat</label></td>
+        <td valign="top">:</td>
+        #set ( $dateTS = "" )
+        #if ( $sewa.tarikhSurat )
+        	#set ( $dateTS = $dateFormat.format($sewa.tarikhSurat) )
+        #end
+        <td valign="top">$dateTS</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="tarikhKemaskini">Tarikh Kemaskini</label></td>
+        <td valign="top">:</td>
+        #set ( $dateTK = "" )
+        #if ( $sewa.tarikhKemaskini )
+        	#set ( $date = $dateFormat.format($sewa.tarikhKemaskini) )
+        #end
+        <td valign="top">$dateTK</td>
+    </tr>
+    <tr>
+        <td valign="top" nowrap><label for="tujuan">Tujuan</label></td>
+        <td valign="top">:</td>
+        <td valign="top">$!sewa.tujuan</td>
+    </tr>
+    <tr>
+        <td colspan="3" align="left">
+            <input id="button" type="button" value="Tutup" onclick="javascript:submitRegister('hidden')">
+        </td>
+    </tr>   
+</table>
+</div>
+#set ( $count = 0 )
+<div class="content">
+<form name="f" method="post">
+	<table width="90%" cellspacing="1" cellpadding="3" align="center" border="0">
+		#if ( $sewaan.size() > 0 )
+			<tr class="table_header">
+				<td scope="row" align="center"><strong>Bil.</strong></td>
+				<td scope="row" align="center"><strong>No Permohonan</strong></td>
+				#if ( $list.fail.noFail )
+					<td scope="row" align="center"><strong>No Fail</strong></td>
+				#end
+				<td scope="row" align="center"><strong>Tarikh Masuk</strong></td>
+				<td scope="row" align="center"><strong>Status</strong></td>
+			</tr>
+		#else
+			<tr class="table_header">
+				<td scope="row" align="center"><strong>Makluman!!!</strong></td>
+			</tr>
+		#end
+		#set ( $list = '' )
+		#if ( $sewaan.size() > 0 )
+			#foreach ( $list in $sewaan )
+			#set ( $count = $count + 1 )
+			#if ( $count % 2 == 0 ) #set ( $bgcolor = "" ) #else #set ( $bgcolor = "#EBBC5D" ) #end
+			<tr id="row_$!list.id" height="30px" style="background-color:$bgcolor;" onmouseout="$('row_$!list.id').style.backgroundColor='$bgcolor'" onmouseover="$('row_$!list.id').style.backgroundColor='#ccc'">
+				<td valign="top" align="center">$count.</td>
+				<td valign="top" align="center"><a href="javascript:submitRegister('list-' + '$!list.id')">$!list.noPermohonan</a></td>
+				#if ( $list.fail.noFail )
+					<td valign="top" align="center">$list.fail.noFail</td>
+				#end
+				<td valign="top" align="center">$dateFormat.format($!list.tarikhTerima)</td>
+				#if ( $list.fail.status != "" )
+					<td valign="top" align="center">$!list.fail.status</td>
+				#else
+					<td valign="top" align="center">PENDAFTARAN</td>
+				#end
+			</tr>
+			#end
+		#else
+			<td align="center" style="background-color:#EBBC5D"><i>Pilihan tidak tepat / Tiada capaian dalam rekod</i></td>
+		#end
+	</table>
+<input type="hidden" name="command">
+</form>
+<table width="90%" border="0">
+    <tr>
+        <td nowrap>
+        <font color="blue">
+        <b>
+		#if ( $saveinfo == "Success" )
+		    Aduan berjaya dipadam. <br />
+		    No rujukan aduan : <u>$idAduan</u>
+		#end
+        </b>
+        </font>
+        </td>
+    </tr>
+</table>
+</div>
+<script>
+function submitRegister(s) { 
+	document.f.command.value = s;
+	document.f.action = "";     
+	document.f.submit(); 
+}   
+</script>

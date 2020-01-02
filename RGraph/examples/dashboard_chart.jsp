@@ -1,0 +1,44 @@
+    <canvas id="cvs" width="300" height="150" >[No canvas support]</canvas>
+    <link rel="stylesheet" href="../RGraph/css/website.css" type="text/css" media="screen" />
+    <link rel="icon" type="image/png" href="../RGraph/images/favicon.png">    
+    <script src="../RGraph/libraries/RGraph.common.core.js" ></script>
+    <script src="../RGraph/libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../RGraph/libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../RGraph/libraries/RGraph.common.effects.js" ></script>
+    <script src="../RGraph/libraries/RGraph.hbar.js" ></script>
+    <script src="../RGraph/libraries/RGraph.pie.js" ></script>   
+
+    <script>
+        window.onload = function (e)
+        {
+            var hbar = new RGraph.HBar('cvs', [516592,446861,69623,107]);
+            hbar.Set('chart.units.pre', '');
+            hbar.Set('chart.units.post', '');
+            hbar.Set('chart.colors', ['blue','red','blue','blue']);
+            hbar.Set('chart.strokestyle', 'rgba(0,0,0,0)');
+            hbar.Set('chart.labels.above', true);
+            hbar.Set('chart.vmargin', 5);
+            hbar.Set('chart.background.grid', true);
+            hbar.Set('chart.labels', ['Keseluruhan\n\Fail','Seksyen 8','Seksyen 17','Fail Hapus']);
+            
+            if (!RGraph.isOld()) {
+                hbar.Set('chart.tooltips', ['Keseluruhan Fail','Seksyen 8','Seksyen 17','Fail Hapus']);
+            }
+            
+            hbar.Set('chart.labels.above.decimals', 0);
+            hbar.Set('chart.xlabels', false);
+            hbar.Set('chart.gutter.left', 110);
+            hbar.Set('chart.gutter.right', 60);
+            hbar.Set('chart.gutter.top',10);
+    
+            hbar.Set('chart.noxaxis', true);
+            hbar.Set('chart.noxtickmarks', true);
+            hbar.Set('chart.noytickmarks', true);
+            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);
+           
+           
+        }
+    </script>
+  
+    
+

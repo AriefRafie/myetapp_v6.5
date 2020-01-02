@@ -1,0 +1,10 @@
+<fieldset>
+<legend>Tukar Status</legend>
+
+<table width="100%"><tr><td>
+
+</td></tr></table>
+<div id="div_jts_status">
+#parse("$viewPath/vm/tukar_status.vm")
+</div>
+</fieldset>

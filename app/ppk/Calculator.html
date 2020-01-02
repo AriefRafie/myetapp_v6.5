@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Calculator</title>
+<body>
+<style>
+/* Basic reset */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	
+	/* Better text styling */
+	font: bold 14px Arial, sans-serif;
+}
+
+/* Finally adding some IE9 fallbacks for gradients to finish things up */
+
+/* A nice BG gradient */
+html {
+	height: 100%;
+	background: white;
+	background: radial-gradient(circle, #fff 20%, #ccc);
+	background-size: cover;
+}
+
+/* Using box shadows to create 3D effects */
+#calculator {
+	width: 400px;
+	height: auto;
+	
+	margin: 10px auto;
+	padding: 20px 20px 9px;
+	
+	background: #9dd2ea;
+	background: linear-gradient(#9dd2ea, #8bceec);
+	border-radius: 3px;
+	box-shadow: 0px 4px #009de4, 0px 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Top portion */
+.top span.clear {
+	float: left;
+}
+
+/* Inset shadow on the screen to create indent */
+.top .screen {
+	height: 40px;
+	width: 287px;
+	
+	float: right;
+	
+	padding: 0 10px;
+	
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 3px;
+	box-shadow: inset 0px 4px rgba(0, 0, 0, 0.2);
+	
+	/* Typography */
+	font-size: 17px;
+	line-height: 40px;
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+	text-align: right;
+	letter-spacing: 1px;
+}
+
+/* Clear floats */
+.keys, .top {overflow: hidden;}
+
+/* Applying same to the keys */
+.keys span, .top span.clear {
+	float: left;
+	position: relative;
+	top: 0;
+	
+	cursor: pointer;
+	
+	width: 66px;
+	height: 36px;
+	
+	background: white;
+	border-radius: 3px;
+	box-shadow: 0px 4px rgba(0, 0, 0, 0.2);
+	
+	margin: 0 7px 11px 0;
+	
+	color: #888;
+	line-height: 36px;
+	text-align: center;
+	
+	/* prevent selection of text inside keys */
+	user-select: none;
+	
+	/* Smoothing out hover and active states using css3 transitions */
+	transition: all 0.2s ease;
+}
+
+/* Remove right margins from operator keys */
+/* style different type of keys (operators/evaluate/clear) differently */
+.keys span.operator {
+	background: #FFF0F5;
+	margin-right: 0;
+}
+
+.keys span.eval {
+	background: #f1ff92;
+	box-shadow: 0px 4px #9da853;
+	color: #888e5f;
+}
+
+.top span.clear {
+	background: #ff9fa8;
+	box-shadow: 0px 4px #ff7c87;
+	color: white;
+}
+
+/* Some hover effects */
+.keys span:hover {
+	background: #9c89f6;
+	box-shadow: 0px 4px #6b54d3;
+	color: white;
+}
+
+.keys span.eval:hover {
+	background: #abb850;
+	box-shadow: 0px 4px #717a33;
+	color: #ffffff;
+}
+
+.top span.clear:hover {
+	background: #f68991;
+	box-shadow: 0px 4px #d3545d;
+	color: white;
+}
+
+/* Simulating "pressed" effect on active state of the keys by removing the box-shadow and moving the keys down a bit */
+.keys span:active {
+	box-shadow: 0px 0px #6b54d3;
+	top: 4px;
+}
+
+.keys span.eval:active {
+	box-shadow: 0px 0px #717a33;
+	top: 4px;
+}
+
+.top span.clear:active {
+	top: 4px;
+	box-shadow: 0px 0px #d3545d;
+}
+</style>
+<form name="sci-calc">
+<div id="calculator">
+	<!-- Screen and clear key -->
+	<div class="top">
+		<span class="clear">C</span>
+		<div class="screen"></div>
+	</div>
+	
+	<div class="keys">
+		<!-- operators and other keys -->
+		<span>exp</span>
+		<span>7</span>
+		<span>8</span>
+		<span>9</span>
+		<span class="operator">/</span>
+		<span>In</span>
+		<span>4</span>
+		<span>5</span>
+		<span>6</span>
+		<span class="operator">x</span>
+		<span>Sqrt</span>
+		<span>1</span>
+		<span>2</span>
+		<span>3</span>
+		<span class="operator">+</span>
+		<span>Sq</span>
+		<span>0</span>
+		<span>.</span>
+		<span>+/-</span>
+		<span class="operator">-</span>
+		<span>Back</span>
+		<span>Cos</span>
+		<span>Sin</span>
+		<span>Tan</span>
+		<span class="operator">÷</span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span onClick="alert('')" class="eval">=</span>
+		<span class="operator">Fraction</span>
+		
+	</div>
+</div>
+</form>
+</body>
+</html>
+<script src="fraction-0.3.js" type="text/javascript" type="text/javascript"></script>
+<script type="text/javascript" id="calculator">
+
+// Get all the keys from document
+var keys = document.querySelectorAll('#calculator span');
+var operators = ['+', '-', 'x', '÷', 'exp', 'In', 'Sqrt', 'Sq','Cos', 'Sin', 'Tan', '+/-','Fraction'];
+var decimalAdded = false;
+
+// Add onclick event to all the keys and perform operations
+for(var i = 0; i < keys.length; i++) {
+	keys[i].onclick = function(e) {
+		// Get the input and button values
+		var input = document.querySelector('.screen');
+		var inputVal = input.innerHTML;
+		var btnVal = this.innerHTML;
+		//alert(inputVal);
+		
+		// Now, just append the key values (btnValue) to the input string and finally use javascript's eval function to get the result
+		// If clear key is pressed, erase everything
+		if(btnVal == 'C') {
+			input.innerHTML = '';
+			decimalAdded = false;
+		}
+		
+		// If eval key is pressed, calculate and display the result
+		else if(btnVal == '=') {
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				input.innerHTML = eval(equation);
+				
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == 'exp') {
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				input.innerHTML = Math.exp(equation);
+				
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == 'In') {
+		
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				input.innerHTML = Math.log(equation);
+				
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == 'Sqrt') {
+		
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				input.innerHTML = Math.sqrt(equation);
+				
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == 'Sq') {
+		
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				input.innerHTML = equation * equation;
+				
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == 'Cos') {
+		
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				input.innerHTML = Math.cos(equation);
+				
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == 'Sin') {
+		
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				input.innerHTML = Math.sin(equation);
+				
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == 'Tan') {
+		
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				input.innerHTML = Math.tan(equation);
+				
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == 'Fraction') {
+		
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			var a = equation.split("+").length - 1;
+			var b = equation.split("-").length - 1;
+			var c = equation.split("x").length - 1;
+			var d = equation.split("÷").length - 1;
+			
+			if(equation){				
+				if(equation.indexOf("+")>0){
+					if((equation.split("+").length - 1)==1 && (a+b+c+d)==1){
+						var res = equation.split("+");
+						input.innerHTML = (new Fraction(res[0])).add(new Fraction(res[1]));
+					}else{
+						alert('Hanya satu operasi dibenarkan');
+					}
+				}else if(equation.indexOf("-")>0){
+					if((equation.split("-").length - 1)==1 && (a+b+c+d)==1){
+						var res = equation.split("-");
+						input.innerHTML = (new Fraction(res[0])).subtract(new Fraction(res[1]));
+					}else{
+						alert('Hanya satu operasi dibenarkan');
+					}
+				}else if(equation.indexOf("x")>0){
+					if((equation.split("x").length - 1)==1 && (a+b+c+d)==1){
+						var res = equation.split("x");
+						input.innerHTML = (new Fraction(res[0])).multiply(new Fraction(res[1]));
+					}else{
+						alert('Hanya satu operasi dibenarkan');
+					}
+				}else if(equation.indexOf("÷")>0){
+					if((equation.split("÷").length - 1)==1 && (a+b+c+d)==1){
+						var res = equation.split("÷");
+						input.innerHTML = (new Fraction(res[0])).divide(new Fraction(res[1]));
+					}else{
+						alert('Hanya satu operasi dibenarkan');
+					}
+				}else{
+					var fraction = new Fraction(equation);
+					input.innerHTML = fraction;
+				}
+			}
+
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == 'Back') {
+		
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation)
+				//input.innerHTML = Math.tan(equation);
+				input.innerHTML = equation.substring(0, equation.length - lastChar.length)
+				
+			decimalAdded = false;
+		}
+		
+		else if(btnVal == '+/-') {
+		
+			var equation = inputVal;
+			var lastChar = equation[equation.length - 1];
+			
+			// Replace all instances of x and ÷ with * and / respectively. This can be done easily using regex and the 'g' tag which will replace all instances of the matched character/substring
+			//equation = equation.replace(/x/g, '*').replace(/÷/g, '/');
+			
+			// Final thing left to do is checking the last character of the equation. If it's an operator or a decimal, remove it
+			if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+				equation = equation.replace(/.$/, '');
+			
+			if(equation){
+				//input.innerHTML = equation.substring(0, equation.length - lastChar.length)
+				
+				if(equation.substring(0, 1) == "-")
+					input.innerHTML = equation.substring(1, equation.length)
+				else
+					input.innerHTML = "-" + equation
+				
+				
+			}
+			decimalAdded = false;
+		}
+		
+		//input.value = input.value.substring(0, input.value.length - 1)
+		
+		// Basic functionality of the calculator is complete. But there are some problems like 
+		// 1. No two operators should be added consecutively.
+		// 2. The equation shouldn't start from an operator except minus
+		// 3. not more than 1 decimal should be there in a number
+		
+		// We'll fix these issues using some simple checks
+		
+		// indexOf works only in IE9+
+		else if(operators.indexOf(btnVal) > -1) {
+			// Operator is clicked
+			// Get the last character from the equation
+			var lastChar = inputVal[inputVal.length - 1];
+			
+			// Only add operator if input is not empty and there is no operator at the last
+			if(inputVal != '' && operators.indexOf(lastChar) == -1) 
+				input.innerHTML += btnVal;
+			
+			// Allow minus if the string is empty
+			else if(inputVal == '' && btnVal == '-') 
+				input.innerHTML += btnVal;
+			
+			// Replace the last operator (if exists) with the newly pressed operator
+			if(operators.indexOf(lastChar) > -1 && inputVal.length > 1) {
+				// Here, '.' matches any character while $ denotes the end of string, so anything (will be an operator in this case) at the end of string will get replaced by new operator
+				input.innerHTML = inputVal.replace(/.$/, btnVal);
+			}
+			
+			decimalAdded =false;
+		}
+		
+		// Now only the decimal problem is left. We can solve it easily using a flag 'decimalAdded' which we'll set once the decimal is added and prevent more decimals to be added once it's set. It will be reset when an operator, eval or clear key is pressed.
+		else if(btnVal == '.') {
+			if(!decimalAdded) {
+				input.innerHTML += btnVal;
+				decimalAdded = true;
+			}
+		}
+		
+		// if any other key is pressed, just append it
+		else {
+			input.innerHTML += btnVal;
+		}
+		
+		// prevent page jumps
+		e.preventDefault();
+	} 
+}
+
+Fraction = function(numerator, denominator)
+{
+    /* double argument invocation */
+    if (numerator && denominator) {
+        if (typeof(numerator) === 'number' && typeof(denominator) === 'number') {
+            this.numerator = numerator;
+            this.denominator = denominator;
+        } else if (typeof(numerator) === 'string' && typeof(denominator) === 'string') {
+            // what are they?
+            // hmm....
+            // assume they are ints?
+            this.numerator = parseInt(numerator);
+            this.denominator = parseInt(denominator);
+        }
+    /* single-argument invocation */
+    } else if (!denominator) {
+        num = numerator; // swap variable names for legibility
+        if (typeof(num) === 'number') {  // just a straight number init
+            this.numerator = num;
+            this.denominator = 1;
+        } else if (typeof(num) === 'string') {
+            var a, b;  // hold the first and second part of the fraction, e.g. a = '1' and b = '2/3' in 1 2/3
+                       // or a = '2/3' and b = undefined if we are just passed a single-part number
+            var arr = num.split(' ')
+			if (arr[0]) a = arr[0]
+			if (arr[1]) b = arr[1]
+			//[a, b] = num.split(' ');
+            /* compound fraction e.g. 'A B/C' */
+            //  if a is an integer ...
+            if (a % 1 === 0 && b && b.match('/')) {
+                return (new Fraction(a)).add(new Fraction(b));
+            } else if (a && !b) {
+                /* simple fraction e.g. 'A/B' */
+                if (typeof(a) === 'string' && a.match('/')) {
+                    // it's not a whole number... it's actually a fraction without a whole part written
+                    var f = a.split('/');
+                    this.numerator = f[0]; this.denominator = f[1];
+                /* string floating point */
+                } else if (typeof(a) === 'string' && a.match('\.')) {
+                    return new Fraction(parseFloat(a));
+                /* whole number e.g. 'A' */
+                } else { // just passed a whole number as a string
+                    this.numerator = parseInt(a);
+                    this.denominator = 1;
+                }
+            } else {
+                return undefined; // could not parse
+            }
+        }
+    }
+    this.normalize();
+}
+
+
+Fraction.prototype.clone = function()
+{
+    return new Fraction(this.numerator, this.denominator);
+}
+
+
+/* pretty-printer, converts fractions into whole numbers and fractions */
+Fraction.prototype.toString = function()
+{
+    var wholepart = Math.floor(this.numerator / this.denominator);
+    var numerator = this.numerator % this.denominator 
+    var denominator = this.denominator;
+    var result = [];
+    if (wholepart != 0) 
+        result.push(wholepart);
+    if (numerator != 0)  
+        result.push(numerator + '/' + denominator);
+    return result.length > 0 ? result.join(' ') : 0;
+}
+
+
+/* destructively rescale the fraction by some integral factor */
+Fraction.prototype.rescale = function(factor)
+{
+    this.numerator *= factor;
+    this.denominator *= factor;
+    return this;
+}
+
+
+Fraction.prototype.add = function(b)
+{
+    var a = this.clone();
+    if (b instanceof Fraction) {
+        b = b.clone();
+    } else {
+        b = new Fraction(b);
+    }
+    td = a.denominator;
+    a.rescale(b.denominator);
+    b.rescale(td);
+
+    a.numerator += b.numerator;
+
+    return a.normalize();
+}
+
+
+Fraction.prototype.subtract = function(b)
+{
+    var a = this.clone();
+    if (b instanceof Fraction) {
+        b = b.clone();  // we scale our argument destructively, so clone
+    } else {
+        b = new Fraction(b);
+    }
+    td = a.denominator;
+    a.rescale(b.denominator);
+    b.rescale(td);
+
+    a.numerator -= b.numerator;
+
+    return a.normalize();
+}
+
+
+Fraction.prototype.multiply = function(b)
+{
+    var a = this.clone();
+    if (b instanceof Fraction)
+    {
+        a.numerator *= b.numerator;
+        a.denominator *= b.denominator;
+    } else if (typeof b === 'number') {
+        a.numerator *= b;
+    } else {
+        return a.multiply(new Fraction(b));
+    }
+    return a.normalize();
+}
+
+Fraction.prototype.divide = function(b)
+{
+    var a = this.clone();
+    if (b instanceof Fraction)
+    {
+        a.numerator *= b.denominator;
+        a.denominator *= b.numerator;
+    } else if (typeof b === 'number') {
+        a.denominator *= b;
+    } else {
+        return a.divide(new Fraction(b));
+    }
+    return a.normalize();
+}
+
+Fraction.prototype.equals = function(b)
+{
+    if (!(b instanceof Fraction)) {
+        b = new Fraction(b);
+    }
+    // fractions that are equal should have equal normalized forms
+    var a = this.clone().normalize();
+    var b = b.clone().normalize();
+    return (a.numerator === b.numerator && a.denominator === b.denominator);
+}
+
+
+/* Utility functions */
+
+/* Destructively normalize the fraction to its smallest representation. 
+ * e.g. 4/16 -> 1/4, 14/28 -> 1/2, etc.
+ * This is called after all math ops.
+ */
+Fraction.prototype.normalize = (function()
+{
+
+    var isFloat = function(n)
+    {
+        return (typeof(n) === 'number' && 
+                ((n > 0 && n % 1 > 0 && n % 1 < 1) || 
+                 (n < 0 && n % -1 < 0 && n % -1 > -1))
+               );
+    }
+
+    var roundToPlaces = function(n, places) 
+    {
+        if (!places) {
+            return Math.round(n);
+        } else {
+            var scalar = Math.pow(10, places);
+            return Math.round(n*scalar)/scalar;
+        }
+    }
+        
+    return (function() {
+
+        // XXX hackish.  Is there a better way to address this issue?
+        //
+        /* first check if we have decimals, and if we do eliminate them
+         * multiply by the 10 ^ number of decimal places in the number
+         * round the number to nine decimal places
+         * to avoid js floating point funnies
+         */
+        if (isFloat(this.denominator)) {
+            var rounded = roundToPlaces(this.denominator, 9);
+            var scaleup = Math.pow(10, rounded.toString().split('.')[1].length);
+            this.denominator = Math.round(this.denominator * scaleup); // this !!! should be a whole number
+            //this.numerator *= scaleup;
+            this.numerator *= scaleup;
+        } 
+        if (isFloat(this.numerator)) {
+            var rounded = roundToPlaces(this.numerator, 9);
+            var scaleup = Math.pow(10, rounded.toString().split('.')[1].length);
+            this.numerator = Math.round(this.numerator * scaleup); // this !!! should be a whole number
+            //this.numerator *= scaleup;
+            this.denominator *= scaleup;
+        }
+        var gcf = Fraction.gcf(this.numerator, this.denominator);
+        this.numerator /= gcf;
+        this.denominator /= gcf;
+        return this;
+    });
+
+})();
+
+
+/* Takes two numbers and returns their greatest common factor.
+ */
+Fraction.gcf = function(a, b)
+{
+
+    var common_factors = [];
+    var fa = Fraction.primeFactors(a);
+    var fb = Fraction.primeFactors(b);
+    // for each factor in fa
+    // if it's also in fb
+    // put it into the common factors
+    fa.forEach(function (factor) 
+    { 
+        var i = fb.indexOf(factor);
+        if (i >= 0) {
+            common_factors.push(factor);
+            fb.splice(i,1); // remove from fb
+        }
+    });
+
+    if (common_factors.length === 0)
+        return 1;
+
+    var gcf = (function() {
+        var r = common_factors[0];
+        var i;
+        for (i=1;i<common_factors.length;i++)
+        {
+            r = r * common_factors[i];
+        }
+        return r;
+    })();
+
+    return gcf;
+
+};
+
+
+// Adapted from: 
+// http://www.btinternet.com/~se16/js/factor.htm
+Fraction.primeFactors = function(n) 
+{
+
+    var num = n;
+    var factors = [];
+    var _factor = 2;  // first potential prime factor
+
+    while (_factor * _factor <= num)  // should we keep looking for factors?
+    {      
+      if (num % _factor === 0)  // this is a factor
+        { 
+            factors.push(_factor);  // so keep it
+            num = num/_factor;  // and divide our search point by it
+        }
+        else
+        {
+            _factor++;  // and increment
+        }
+    }
+
+    if (num != 1)                    // If there is anything left at the end...
+    {                                // ...this must be the last prime factor
+        factors.push(num);           //    so it too should be recorded
+    }
+
+    return factors;                  // Return the prime factors
+}
+</script>

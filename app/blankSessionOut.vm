@@ -1,0 +1,25 @@
+
+<span class="blink"><font color="red">Maaf, Sesi Anda Telah Tamat. Sila Log Masuk Semula.</font></span>
+<div id="divTimeLogout" ></div>
+
+<script>
+//nnti dlu
+/*
+var timerLogout = [];
+if (typeof(timerLogout['divTimeLogout']) == 'undefined' || timerLogout['divTimeLogout'] == null)
+{
+	var timeAutoSave = 10;
+	timerLogout['divTimeLogout'] = setInterval(function(){
+	timeAutoSave = timeAutoSave-1;
+	document.getElementById("divTimeLogout").innerHTML = "<span ><font color='blue' >"+timeAutoSave+" saat sebelum <b>'Auto Logout'</b></font></span>";
+		if(timeAutoSave <= 0)
+		{	
+		//alert("logout");
+		window.clearInterval(timerLogout['divTimeLogout']);
+		timerLogout['divTimeLogout'] = null;
+		window.top.location.replace("../index.jsp");
+		}
+	}, 1000);
+}
+*/
+</script>

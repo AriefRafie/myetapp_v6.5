@@ -1,0 +1,32 @@
+<span id="wait_list_hakmilik"></span>
+<table width="100%">
+<tr class="table_header">
+<td style="width:40px;font-weight:bold;color:#fff">&nbsp;</td>
+<td style="font-weight:bold;color:#fff">No.Hakmilik</td>
+<td style="font-weight:bold;color:#fff">No. Lot</td>
+<td style="font-weight:bold;color:#fff">Mukim</td>
+<td style="font-weight:bold;color:#fff" align="center">Luas Lot (m&sup2;)</td>
+<td style="width:40px">&nbsp;</td>
+<td style="width:40px">&nbsp;</td>
+</tr>
+#set ( $c = 0 )
+#foreach( $h in $r.listHakmilik )
+#set ( $c = $c + 1 )
+
+##if ( $c%2 == 0 ) #set ($bgcolor="#B0EFF4") #else #set($bgcolor="#E5FAFB") #end
+#if ( $c%2 == 0 ) #set ($bgcolor="row1") #else #set($bgcolor="row2") #end
+<tr class="$bgcolor">
+<td align="center">$velocityCount</td>
+<td>$!{h.jenisHakmilik.kodJenisHakmilik}&nbsp;$!{h.nomborHakmilik}</td>
+<td>$!h.nomborLot</td>
+<td>$!h.mukim.nama</td>
+<td align="center">$!h.luasLot</td>
+<td align="center">
+<a href="javascript:void()" onclick="$('div_entry_main').style.display='none';$('div_entry_child').style.display='block';doDivAjaxCall$formname('div_entry_child','edit_maklumat_k','hakmilik_id=$!h.id')"><img src="../img/edit.gif" border="0"></a>
+</td>
+<td align="center">
+##<a href="javascript:void()" onclick="if ( !confirm('Hapus Hakmilik?') ) return; $('wait_list_hakmilik').innerHTML='<b>Please wait...</b>';doDivAjaxCall3$formname('div_list_hakmilik','hapus_hakmilik','hakmilik_id=$!h.id')"><img src="../img/delete.gif" border="0"></a>
+</td>
+</tr>
+#end
+</table>

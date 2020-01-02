@@ -1,0 +1,82 @@
+<input type="hidden" id="activityEventId" name="activityEventId" value="$!activityEvent.id">
+
+<table width="600px">
+<tr><td style="width:100px"></td><td style="width:10px"></td><td></td></tr>
+<tr><td>Description</td><td>:</td><td><input class="texts" id="description2" name="description2" value="$!activityEvent.description"></td></tr>
+<tr><td>Location</td><td>:</td><td><input class="texts" id="locationRemark2" name="locationRemark2" value="$!activityEvent.locationRemark"></td></tr>
+
+<tr><td>Start Date</td><td>:</td>
+	<td><input name="txtTarikhMula" type="text" class="$inputTextClass" id="txtTarikhMula"  value="$!activityEvent.start_date" size="9" maxlength="10" $readonly />
+        <a href="javascript:displayDatePicker('txtTarikhMula',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
+</tr>
+            
+<tr><td>End Date</td><td>:</td>
+	<td><input name="txtTarikhTamat" type="text" class="$inputTextClass" id="txtTarikhTamat"  value="$!activityEvent.end_date" size="9" maxlength="10" $readonly />
+        <a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
+</tr>
+
+<tr><td>Time</td><td>:</td><td>
+
+<select id="startTime2" name="startTime2" class="texts" style="width:100px">
+	
+#foreach( $t in $times )
+#set ( $tf = $timeFormat.format($t) )
+<option value="$tf" #if ( $activityEvent.startDateTime && $tf == $timeFormat.format($activityEvent.startDateTime)) selected #end>$tf</option>
+#end
+</select>
+
+-
+
+<select id="endTime2" name="endTime2" class="texts" style="width:100px">
+#foreach( $t in $times )
+#set ( $tf = $timeFormat.format($t) )
+<option value="$tf" #if ( $activityEvent.endDateTime && $tf == $timeFormat.format($activityEvent.endDateTime)) selected #end>$tf</option>
+#end
+</select>
+
+</td></tr>
+
+<tr><td valign="top">Remark</td><td valign="top">:</td>
+<td>
+<textarea class="textarea" id="remark2" name="remark2">$!activityEvent.remark</textarea>
+</td></tr>
+
+<tr><td valign="top">Color</td><td valign="top">:</td>
+<td>
+<table><tr><td id="selected_color2" class="color_box" bgcolor="$!activityEvent.displayColor">&nbsp;</td></tr></table>
+<input type="hidden" id="displayColor2" name="displayColor2" value="$!activityEvent.displayColor">
+<table>
+<tr>
+#foreach( $c in ["#FFCCCC","#FF9999","#FFFF99","#CCCC33","#CCFFCC","#66FF66"] )
+<td class="color_box" style="cursor:pointer" bgcolor="$c" onclick="$('selected_color2').style.backgroundColor='$c';$('displayColor2').value='$c';">&nbsp;</td>
+#end
+</tr>
+
+<tr>
+#foreach( $c in ["#CCFFFF","#66FFFF","#CCCCFF","#9999FF","#FFCCFF","#FF99FF"] )
+<td class="color_box" style="cursor:pointer" bgcolor="$c" onclick="$('selected_color2').style.backgroundColor='$c';$('displayColor2').value='$c';">&nbsp;</td>
+#end
+</tr>
+
+</table>
+
+</td></tr>
+
+#**
+<tr><td>Recurring?</td><td>:</td>
+<td>
+<input type="radio" name="recurring" value="no" checked onclick="$('div_recurring').style.visibility='hidden'">No
+<input type="radio" name="recurring" value="yes" onclick="$('div_recurring').style.visibility='visible'">Yes
+<span id="div_recurring" style="visibility:hidden">
+&nbsp;&nbsp;&nbsp;Until: 
+</span>
+</td>
+</tr>
+**#
+
+<tr><td></td><td></td>
+<td>
+<input type="button" value="Save" onclick="doDivAjaxCall3$formname('calendar_events','save_activity_event_long','');clearActivityEventForm();$('event_entry2').style.visibility='hidden';">
+<input type="button" value="Cancel" onclick="$('event_entry2').style.visibility='hidden';">
+</td>
+</table>

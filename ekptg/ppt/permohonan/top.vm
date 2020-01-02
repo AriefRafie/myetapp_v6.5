@@ -1,0 +1,45 @@
+<style>
+.disabled {
+	background-color: #ECD672;
+}
+
+.jts_status_update {
+	-moz-box-shadow: 10px 10px 5px #888; -webkit-box-shadow: 10px 10px 5px #888; box-shadow: 10px 10px 5px #888;
+	position:absolute;
+	background-color:#E3E3E3;
+	width:600px;
+	height:300px;
+	left:50%;
+	top:50%;
+	margin-left:-300px;
+	margin-top:-150px;
+	vertical-align:middle;
+	padding-top:1px;
+	padding-left:1px;
+	padding-right:1px;
+}
+.jts_status_log {
+	-moz-box-shadow: 10px 10px 5px #888; -webkit-box-shadow: 10px 10px 5px #888; box-shadow: 10px 10px 5px #888;
+	position:absolute;
+	background-color:#E3E3E3;
+	width:600px;
+	height:300px;
+	left:50%;
+	top:50%;
+	margin-left:-300px;
+	margin-top:-150px;
+	vertical-align:middle;
+	padding-top:1px;
+	padding-left:1px;
+	padding-right:1px;
+}
+
+.legend2 {
+	font-family:arial;
+	font-size:9pt;
+	font-weight:bold;
+}
+</style>
+	
+<div id="jts_status_update" class="jts_status_update" style="visibility:hidden;"></div>
+<div id="jts_status_log" class="jts_status_log" style="visibility:hidden;"></div>

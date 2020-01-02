@@ -1,0 +1,2 @@
+Nama:$nama <br>
+<a href="javascript:void()" onclick="javascript:doDivAjaxCall$formName('popupwindow', 'do2', '')">Test 2</a>

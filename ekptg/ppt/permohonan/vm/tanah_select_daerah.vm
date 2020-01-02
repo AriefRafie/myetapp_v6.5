@@ -1,0 +1,6 @@
+<select name="tanah_daerah_id" class="texts" style="width:500px" onchange="doDivAjaxCall$formname('div_tanah_mukim','tanah_list_mukim','')">
+##<option value="">SILA PILIH</option>
+#foreach ( $d in $daerah_list )
+<option value="$d.id" #if ( $tanah.daerah.id == $d.id ) selected #end>$d.kod - $d.nama</option>
+#end
+</select>

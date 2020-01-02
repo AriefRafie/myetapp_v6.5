@@ -1,0 +1,15 @@
+<div id="tabs" class="panels" style="height:400px">
+	<ul class="panelsTabGroup">
+		<li id="tab-1" class="panelsTabSelected"><a style="text-decoration:none" href="javascript:void(0)" onclick="selectTab(1)">Maklumat Tanah Terlibat</a></li>
+		<li id="tab-2" class="panelsTab"><a style="text-decoration:none" href="javascript:void(0)" onclick="selectTab(2)">Senarai Dokumen</a></li>
+		<li id="tab-3" class="panelsTab"><a style="text-decoration:none" href="javascript:void(0)" onclick="selectTab(3)">Maklumat Pengambilan Tanah</a></li>
+		<li id="tab-4" class="panelsTab"><a style="text-decoration:none" href="javascript:void(0)" onclick="selectTab(4)">Tukar Status</a></li>
+	</ul>
+	<div class="panelsContentGroup">
+		<div class="panelsContent" id="content-1" style="display:block;">#parse("$viewPath/vm/tab-1.vm")</div>
+		<div id="content-2" style="display:none">#parse("$viewPath/vm/tab-2.vm")</div>
+		<div id="content-3" style="display:none">#parse("$viewPath/vm/tab-3.vm")</div>
+		<div id="content-4" style="display:none">#parse("$viewPath/vm/tab-4.vm")</div>
+	</div>
+</div>
+
