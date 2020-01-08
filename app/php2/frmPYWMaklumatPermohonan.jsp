@@ -320,7 +320,7 @@
               #if ($idLuas != '99999' && $idLuas != '')
               <tr>
                 <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td>Luas Mohon</td>
+                <td>Luas Dipohon Sewa</td>
                 <td>:</td>
                 <td> #if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' )
                   <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatSewa.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"  $readonly class="$inputTextClass"/>
