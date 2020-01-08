@@ -310,25 +310,26 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
         <td><a href="#" class="style2" onClick="javascript:cetakSuratIringanBorangO('$id_fail','$id_bantahan','$id_hakmilikpb','$id_permohonan')"><font color="blue"> Surat Iringan Borang O - Rujukan Kepada Mahkamah </font></a>
         </td>
       </tr>
-	  <tr>
+	  <!-- Hide Paparan Borang D, E, H, K -->
+	  <!--<tr>
 		<td><a href="#" onClick="javascript:cetakBorangD('$!id_fail','$!saiz_listTanah','$!nama_pengarah')"><font color="blue">Borang D</font></a></td>
 	  </tr>      
       <tr>
-        <td><a href="#" class="style2" onClick="javascript:cetakBorangE('$id_hakmilik','$id_borange','$!tarikh_cetak')"><font color="blue"> Borang E - Pengambilan yang Dicadangkan Pemberitahu Siasatan </font></a>
+         <td><a href="#" class="style2" onClick="javascript:cetakBorangE('$id_hakmilik','$id_borange','$!tarikh_cetak')"><font color="blue"> Borang E - Pengambilan yang Dicadangkan Pemberitahu Siasatan </font></a>
         </td>
-      </tr>  
+      </tr>   -->
       <tr>
         <td><a href="#" class="style2" onClick="javascript:cetakBorangG('$id_fail','$id_hakmilik')"><font color="blue"> Borang G - Pemberian Bertulis Pampasan </font></a>
         </td>
       </tr>   
-      <tr>
+      <!--<tr>
         <td><a href="#" class="style2" onClick="javascript:cetakBorangH('$id_fail','$id_hakmilik')"><font color="blue"> Borang H - Pemberitahu Pemberian dan Tawaran Pampasan </font></a>
         </td>
       </tr>
       <tr>
         <td><a href="#" class="style2" onClick="javascript:cetakBorangK('$id_fail','$id_hakmilik')"><font color="blue"> Borang K - Pemberitahu Bahawa Tanah Telah Diambil </font></a>
         </td>
-      </tr>
+      </tr>-->
       <tr>
         <td><a href="#" class="style2" onClick="javascript:cetakNotaSiasatan('$!id_siasatan','$!id_permohonan')"><font color="blue"> Nota Perbicaraan </font></a>
         </td>
