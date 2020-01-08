@@ -7,6 +7,71 @@ alert("Sila Klik Butang Kembali Dan Klik 'Paging' No.11 Untuk Proses Endorsan");
 </script>
 #end 
 
+<!-- OPEN fieldset borang d -->
+<!-- PENAMBAHAN YATI 6/1/2017 -->
+
+		<fieldset style="width:100%">
+		<legend><strong>Maklumat Borang D</strong></legend>
+		#if($mode=="new")
+		<table width="100%" border="0">   
+                <tr>
+                	<td width="1%"><font color="red">*</font></td>
+                	<td width="30%">Tarikh Borang D</td>
+                	<td width="1%">:</td>
+                	<td width="68%"><input name="txdTarikhBorangD" id="txdTarikhBorangD" size="11" type="text" value="$!tarikh_borangd" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
+            		<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhBorangD',false,'dmy');">&nbsp;$!frmtdate</td>
+    			</tr>
+    				
+    			<tr>
+    				<td>&nbsp;</td>
+    				<td valign="top">Catatan</td>
+    				<td valign="top">:</td>
+    				<td valign="top"><textarea name="txtCatatanBorangD" id="txtCatatanBorangD" rows="3" cols="30%" onKeyUp="textCounter(this.form.txtCatatanBorangD,this.form.remLen1,1500);" onKeyDown="textCounter(this.form.txtCatatanBorangD,this.form.remLen1,1500);" ></textarea></td>
+    			</tr>	
+    	</table>
+    	
+    	#end
+    	
+    #if($mode=="view")
+	
+	#foreach($data in $dataWarta)
+		
+		#set($txdTarikhBorangD = $data.tarikh_borangd)
+		#set($txtCatatanBorangD = $data.catatan)		
+			
+	#end
+	
+	#if($isEdit=="no")
+		#set($disability = "readonly")
+		#set($disabilityx = "class=disabled")
+		#set($disability1 = "disabled")
+		#set($M = "")
+	#else
+		#set($M = "*")
+		#set($disability = "")
+		#set($disabilityx = "")
+		#set($disability1 = "")
+	#end
+	
+	<table width="100%" border="0">   
+                <tr>
+                	<td width="1%"><font color="red">*</font></td>
+                	<td width="30%">Tarikh Borang D</td>
+                	<td width="1%">:</td>
+                	<td width="68%"><input $disability $disabilityx name="txdTarikhBorangD" id="txdTarikhBorangD" size="11" type="text" value="$!txdTarikhBorangD" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
+            		#if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhBorangD',false,'dmy');">&nbsp;$!frmtdate#end</td>
+    			</tr>
+    			<tr>
+    				<td>&nbsp;</td>
+    				<td valign="top">Catatan</td>
+    				<td valign="top">:</td>
+    				<td valign="top"><textarea $disability $disabilityx name="txtCatatanBorangD" id="txtCatatanBorangD" rows="3" cols="30%" onKeyUp="textCounter(this.form.txtCatatanBorangD,this.form.remLen1,1500);" onKeyDown="textCounter(this.form.txtCatatanBorangD,this.form.remLen1,1500);" >$!txtCatatanBorangD</textarea></td>
+    			</tr>	
+    	</table>
+		#end
+		</fieldset>
+		<!-- close borang d -->
+		<br/>
 
 <fieldset id="top" style="width:100%">
 <legend><strong>Maklumat Warta - Seksyen 8</strong></legend>
@@ -148,70 +213,7 @@ alert("Sila Klik Butang Kembali Dan Klik 'Paging' No.11 Untuk Proses Endorsan");
 </fieldset> 
 <!--  CLOSE fieldset maklumat warta -->
 
-<!-- OPEN fieldset borang d -->
-<!-- PENAMBAHAN YATI 6/1/2017 -->
 
-		<fieldset style="width:100%">
-		<legend><strong>Maklumat Borang D</strong></legend>
-		#if($mode=="new")
-		<table width="100%" border="0">   
-                <tr>
-                	<td width="1%"><font color="red">*</font></td>
-                	<td width="30%">Tarikh Borang D</td>
-                	<td width="1%">:</td>
-                	<td width="68%"><input name="txdTarikhBorangD" id="txdTarikhBorangD" size="11" type="text" value="$!tarikh_borangd" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-            		<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhBorangD',false,'dmy');">&nbsp;$!frmtdate</td>
-    			</tr>
-    				
-    			<tr>
-    				<td>&nbsp;</td>
-    				<td valign="top">Catatan</td>
-    				<td valign="top">:</td>
-    				<td valign="top"><textarea name="txtCatatanBorangD" id="txtCatatanBorangD" rows="3" cols="30%" onKeyUp="textCounter(this.form.txtCatatanBorangD,this.form.remLen1,1500);" onKeyDown="textCounter(this.form.txtCatatanBorangD,this.form.remLen1,1500);" ></textarea></td>
-    			</tr>	
-    	</table>
-    	
-    	#end
-    	
-    #if($mode=="view")
-	
-	#foreach($data in $dataWarta)
-		
-		#set($txdTarikhBorangD = $data.tarikh_borangd)
-		#set($txtCatatanBorangD = $data.catatan)		
-			
-	#end
-	
-	#if($isEdit=="no")
-		#set($disability = "readonly")
-		#set($disabilityx = "class=disabled")
-		#set($disability1 = "disabled")
-		#set($M = "")
-	#else
-		#set($M = "*")
-		#set($disability = "")
-		#set($disabilityx = "")
-		#set($disability1 = "")
-	#end
-	
-	<table width="100%" border="0">   
-                <tr>
-                	<td width="1%"><font color="red">*</font></td>
-                	<td width="30%">Tarikh Borang D</td>
-                	<td width="1%">:</td>
-                	<td width="68%"><input $disability $disabilityx name="txdTarikhBorangD" id="txdTarikhBorangD" size="11" type="text" value="$!txdTarikhBorangD" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-            		#if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhBorangD',false,'dmy');">&nbsp;$!frmtdate#end</td>
-    			</tr>
-    			<tr>
-    				<td>&nbsp;</td>
-    				<td valign="top">Catatan</td>
-    				<td valign="top">:</td>
-    				<td valign="top"><textarea $disability $disabilityx name="txtCatatanBorangD" id="txtCatatanBorangD" rows="3" cols="30%" onKeyUp="textCounter(this.form.txtCatatanBorangD,this.form.remLen1,1500);" onKeyDown="textCounter(this.form.txtCatatanBorangD,this.form.remLen1,1500);" >$!txtCatatanBorangD</textarea></td>
-    			</tr>	
-    	</table>
-		#end
-		</fieldset>
-		<!-- close borang d -->
 		
 		<br/>
 		
