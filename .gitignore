@@ -1,5 +1,12 @@
 # ignore all logs
 *.log
-*.log.1
+velocity.log.1
+
 # ignore all class
 *.class
+
+# ignore all properties
+*.properties
+
+.tomcatplugin
+
