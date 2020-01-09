@@ -1,0 +1,5 @@
+# ignore all logs
+*.log
+*.log.1
+# ignore all class
+*.class
