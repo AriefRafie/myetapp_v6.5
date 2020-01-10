@@ -8,5 +8,6 @@ velocity.log.1
 # ignore all properties
 *.properties
 
+work/
 .tomcatplugin
 
