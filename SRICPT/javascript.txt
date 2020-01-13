@@ -1,0 +1,6 @@
+
+# cara tambah .js
+
+1. Fail berada di folder app/integrasi/macgdi/nama_fail_jsp.jsp
+	<script type="text/javascript" src="../../../library/js/report.js" ></script>
+
