@@ -3552,8 +3552,8 @@ public Hashtable getMainFail_bicara_semula(String ID_FAIL) throws Exception {
 			}
 		 
 		 
-		 Vector papar_list_simati = null;
-			public Vector papar_list_simati(String id_fail) throws Exception {
+	Vector<Hashtable<String,String>> papar_list_simati = null;
+	public Vector<Hashtable<String,String>> papar_list_simati(String id_fail) throws Exception {
 				papar_list_simati = new Vector();
 				papar_list_simati.clear();
 				Db db = null;
@@ -3575,7 +3575,7 @@ public Hashtable getMainFail_bicara_semula(String ID_FAIL) throws Exception {
 					while (rs.next()) {
 						Hashtable h = new Hashtable();
 						bil = bil + 1;
-						h.put("BIL", bil);
+						h.put("BIL", String.valueOf(bil));
 						
 						if (rs.getString("ID_SIMATI") == null) {
 							h.put("ID_SIMATI", "");
@@ -3610,83 +3610,79 @@ public Hashtable getMainFail_bicara_semula(String ID_FAIL) throws Exception {
 						papar_list_simati.addElement(h);
 					}
 					return papar_list_simati;
-			} catch (Exception er) {
+		} catch (Exception er) {
+			myLogger.error(er);
+			throw er;
+		} finally {
+			if (db != null)
+			db.close();
+		}
+			
+	}
+			
+	Vector<Hashtable<String,String>> papar_list_pemohon = null;
+	public Vector<Hashtable<String,String>> papar_list_pemohon(String id_fail) throws Exception {
+		papar_list_pemohon = new Vector();
+		papar_list_pemohon.clear();
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+					
+			sql = " select ID_PEMOHON,NAMA_PEMOHON,NO_KP_BARU,NO_KP_LAMA,NO_KP_LAIN from tblppkpemohon where id_pemohon in ( "+
+				" select id_pemohon from tblppkpermohonan where id_fail in ( "+
+				" select id_fail from tblpfdfail where id_fail in ('"+id_fail+"')))";			   
+				myLogger.info("SQL LIST NAMA PEMOHON :"+sql);
+					
+			int bil = 0;
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Hashtable<String,String> h = new Hashtable<String,String>();
+				bil = bil + 1;
+				h.put("BIL", String.valueOf(bil));						
+				if (rs.getString("ID_PEMOHON") == null) {
+					h.put("ID_PEMOHON", "");
+				} else {
+					h.put("ID_PEMOHON", rs.getString("ID_PEMOHON"));
+				}						
+				if (rs.getString("NAMA_PEMOHON") == null) {
+					h.put("NAMA_PEMOHON", "");
+				} else {
+					h.put("NAMA_PEMOHON", rs.getString("NAMA_PEMOHON"));
+				}						
+				if (rs.getString("NO_KP_BARU") == null) {
+					h.put("NO_KP_BARU", "");
+				} else {
+					h.put("NO_KP_BARU", rs.getString("NO_KP_BARU"));
+				}
+				if (rs.getString("NO_KP_LAMA") == null) {
+					h.put("NO_KP_LAMA", "");
+				} else {
+					h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA"));
+				}
+				if (rs.getString("NO_KP_LAIN") == null) {
+					h.put("NO_KP_LAIN", "");
+				} else {
+					h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN"));
+				}						
+				papar_list_pemohon.addElement(h);
+						
+			}
+			return papar_list_pemohon;
+			
+		} catch (Exception er) {
 				myLogger.error(er);
 				throw er;
-				} finally {
-					if (db != null)
-						db.close();
-				}
-			}
 			
-			
-			Vector papar_list_pemohon = null;
-			public Vector papar_list_pemohon(String id_fail) throws Exception {
-				papar_list_pemohon = new Vector();
-				papar_list_pemohon.clear();
-				Db db = null;
-				String sql = "";
-			try {
-					db = new Db();
-					Statement stmt = db.getStatement();
-					SQLRenderer r = new SQLRenderer();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	
+	}
 					
-					sql = " select ID_PEMOHON,NAMA_PEMOHON,NO_KP_BARU,NO_KP_LAMA,NO_KP_LAIN from tblppkpemohon where id_pemohon in ( "+
-						  " select id_pemohon from tblppkpermohonan where id_fail in ( "+
-						  " select id_fail from tblpfdfail where id_fail in ('"+id_fail+"')))";			   
-					
-					myLogger.info("SQL LIST NAMA PEMOHON :"+sql);
-					int bil = 0;
-					ResultSet rs = stmt.executeQuery(sql);
-					while (rs.next()) {
-						Hashtable h = new Hashtable();
-						
-						bil = bil + 1;
-						h.put("BIL", bil);
-						
-						if (rs.getString("ID_PEMOHON") == null) {
-							h.put("ID_PEMOHON", "");
-						} else {
-							h.put("ID_PEMOHON", rs.getString("ID_PEMOHON"));
-						}
-						
-						if (rs.getString("NAMA_PEMOHON") == null) {
-							h.put("NAMA_PEMOHON", "");
-						} else {
-							h.put("NAMA_PEMOHON", rs.getString("NAMA_PEMOHON"));
-						}
-						
-						if (rs.getString("NO_KP_BARU") == null) {
-							h.put("NO_KP_BARU", "");
-						} else {
-							h.put("NO_KP_BARU", rs.getString("NO_KP_BARU"));
-						}
-						
-						if (rs.getString("NO_KP_LAMA") == null) {
-							h.put("NO_KP_LAMA", "");
-						} else {
-							h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA"));
-						}
-						
-						if (rs.getString("NO_KP_LAIN") == null) {
-							h.put("NO_KP_LAIN", "");
-						} else {
-							h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN"));
-						}
-						
-						papar_list_pemohon.addElement(h);
-					}
-					return papar_list_pemohon;
-			} catch (Exception er) {
-				myLogger.error(er);
-				throw er;
-				} finally {
-					if (db != null)
-						db.close();
-				}
-			}
-			
-			
 			Vector list_tukar_pemohon = null;
 			public Vector list_tukar_pemohon(String id_fail) throws Exception {
 				list_tukar_pemohon = new Vector();
@@ -3854,81 +3850,74 @@ public Hashtable getMainFail_bicara_semula(String ID_FAIL) throws Exception {
 				}
 			}
 			
-			Vector papar_list_ob = null;
-			public Vector papar_list_ob(String id_fail) throws Exception {
-				papar_list_ob = new Vector();
-				papar_list_ob.clear();
-				Db db = null;
-				String sql = "";
-			try {
-					db = new Db();
-					Statement stmt = db.getStatement();
-					SQLRenderer r = new SQLRenderer();
+	Vector<Hashtable<String,String>> papar_list_ob = null;
+	public Vector<Hashtable<String,String>> papar_list_ob(String id_fail) throws Exception {
+		papar_list_ob = new Vector();
+		papar_list_ob.clear();
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
 					
-					sql = " select ID_OB,NAMA_OB,NO_KP_BARU,NO_KP_LAMA,ID_PEMOHON,NO_KP_LAIN from tblppkobpermohonan where id_permohonansimati in ( "+
-						  " select id_permohonansimati from tblppkpermohonansimati where "+
-						  " id_permohonan in ( "+
-						  " select id_permohonan from tblppkpermohonan where id_fail in ( "+
-						  " select id_fail from tblpfdfail where id_fail in ('"+id_fail+"'))))";			   
+			sql = " select ID_OB,NAMA_OB,NO_KP_BARU,NO_KP_LAMA,ID_PEMOHON,NO_KP_LAIN from tblppkobpermohonan where id_permohonansimati in ( "+
+				  " select id_permohonansimati from tblppkpermohonansimati where "+
+				  " id_permohonan in ( "+
+				  " select id_permohonan from tblppkpermohonan where id_fail in ( "+
+				  " select id_fail from tblpfdfail where id_fail in ('"+id_fail+"'))))";			   
+			myLogger.info("SQL LIST NAMA OB :"+sql);
+			int bil = 0;
 					
-					myLogger.info("SQL LIST NAMA OB :"+sql);
-					
-				    int bil = 0;
-					
-					
-					ResultSet rs = stmt.executeQuery(sql);
-					while (rs.next()) {
-						Hashtable h = new Hashtable();
-						bil = bil + 1;
-						h.put("BIL", bil);
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				bil = bil + 1;
+				h.put("BIL", String.valueOf(bil));
 						
-						if (rs.getString("ID_OB") == null) {
-							h.put("ID_OB", "");
-						} else {
-							h.put("ID_OB", rs.getString("ID_OB"));
-						}
-						
-						if (rs.getString("ID_PEMOHON") == null) {
-							h.put("ID_PEMOHON", "");
-						} else {
-							h.put("ID_PEMOHON", rs.getString("ID_PEMOHON"));
-						}
-						
-						if (rs.getString("NAMA_OB") == null) {
-							h.put("NAMA_OB", "");
-						} else {
-							h.put("NAMA_OB", rs.getString("NAMA_OB"));
-						}
-						
-						if (rs.getString("NO_KP_BARU") == null) {
-							h.put("NO_KP_BARU", "");
-						} else {
-							h.put("NO_KP_BARU", rs.getString("NO_KP_BARU"));
-						}
-						
-						if (rs.getString("NO_KP_LAMA") == null) {
-							h.put("NO_KP_LAMA", "");
-						} else {
-							h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA"));
-						}
-						
-						if (rs.getString("NO_KP_LAIN") == null) {
-							h.put("NO_KP_LAIN", "");
-						} else {
-							h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN"));
-						}
-						
-						papar_list_ob.addElement(h);
-					}
-					return papar_list_ob;
-			} catch (Exception er) {
-				myLogger.error(er);
-				throw er;
-				} finally {
-					if (db != null)
-						db.close();
+				if (rs.getString("ID_OB") == null) {
+					h.put("ID_OB", "");
+				} else {
+					h.put("ID_OB", rs.getString("ID_OB"));
+				}					
+				if (rs.getString("ID_PEMOHON") == null) {
+					h.put("ID_PEMOHON", "");
+				} else {
+					h.put("ID_PEMOHON", rs.getString("ID_PEMOHON"));
+				}	
+				if (rs.getString("NAMA_OB") == null) {
+					h.put("NAMA_OB", "");
+				} else {
+					h.put("NAMA_OB", rs.getString("NAMA_OB"));
 				}
+				if (rs.getString("NO_KP_BARU") == null) {
+					h.put("NO_KP_BARU", "");
+				} else {
+					h.put("NO_KP_BARU", rs.getString("NO_KP_BARU"));
+				}
+				if (rs.getString("NO_KP_LAMA") == null) {
+					h.put("NO_KP_LAMA", "");
+				} else {
+					h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA"));
+				}
+				if (rs.getString("NO_KP_LAIN") == null) {
+					h.put("NO_KP_LAIN", "");
+				} else {
+					h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN"));
+				}
+				papar_list_ob.addElement(h);
+			
 			}
+			return papar_list_ob;
+					
+		} catch (Exception er) {
+			myLogger.error(er);
+			throw er;
+		} finally {
+			if (db != null)
+			db.close();
+		}
+	}
 			
 			Vector papar_list_bayaran = null;
 			public Vector papar_list_bayaran(String id_fail) throws Exception {
