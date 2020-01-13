@@ -16,8 +16,7 @@ import ekptg.view.ppk.PendaftaranCheck;
 
 public class PendaftaranCheckModel {
 	private static PendaftaranCheckModel instance = null;
-	private static SimpleDateFormat formatter = new SimpleDateFormat(
-			"dd/MM/yyyy");
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	static Logger myLogger = Logger.getLogger(PendaftaranCheck.class);
 
 	public static PendaftaranCheckModel getInstance() {
@@ -34,7 +33,6 @@ public class PendaftaranCheckModel {
 		String kp_baru = "";
 
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -128,7 +126,7 @@ public class PendaftaranCheckModel {
 		String jumlah = "";
 
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -210,7 +208,7 @@ public class PendaftaranCheckModel {
 		String jumlah = "";
 
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -279,13 +277,13 @@ public class PendaftaranCheckModel {
 	}
 
 	// ##
-	Vector l1 = null;
+	Vector<Hashtable<String,String>> l1 = null;
 
-	public Vector List_KP_Baru_Simati(String idp, String kpbaru, String kplama,
+	public Vector<Hashtable<String,String>> List_KP_Baru_Simati(String idp, String kpbaru, String kplama,
 			String kplain) throws Exception {
 		// Azam change on 02.02.2010
 		// Check len first then check DB
-		l1 = new Vector();
+		l1 = new Vector<Hashtable<String,String>>();
 		if (kpbaru == null || "".equals(kpbaru) || kpbaru.length() < 12) {
 			// Checking for valid new ic number
 			// myLogger.debug("no need to check: "+kpbaru);
@@ -293,12 +291,11 @@ public class PendaftaranCheckModel {
 		} else {
 			Db db = null;
 			String sql = "";
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			try {
-
 				db = new Db();
 				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();
+//				SQLRenderer r = new SQLRenderer();
 
 				/*sql = "SELECT F.NO_FAIL,P.ID_PERMOHONAN, SM.NAMA_SIMATI, SM.NO_KP_BARU, "
 						+ "SM.NO_KP_LAMA,SM.NO_KP_LAIN,SM.JANTINA,SM.UMUR ,SM.TARIKH_MATI, "
@@ -337,46 +334,25 @@ public class PendaftaranCheckModel {
 				myLogger.info("MATI CHECK 1 :" + sql.toUpperCase());
 				System.out.println("test1 : " + sql);
 				ResultSet rs = stmt.executeQuery(sql);
-				Hashtable h;
+				Hashtable<String,String> h;
 				while (rs.next()) {
-					h = new Hashtable();
-					h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
-							: rs.getString("NO_KP_BARU"));
-					h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
-							: rs.getString("NO_KP_LAMA"));
-					h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
-							: rs.getString("NO_KP_LAIN"));
-					h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? ""
-							: rs.getString("JENIS_KP"));
-
-					h.put("NAMA_SIMATI",
-							rs.getString("NAMA_SIMATI") == null ? "" : rs
-									.getString("NAMA_SIMATI"));
-					h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
-							.getString("JANTINA"));
-					h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
-							.getString("UMUR"));
-					h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs
-							.getString("NO_FAIL"));
-					h.put("TARIKH_MATI",
-							rs.getString("TARIKH_MATI") == null ? "" : sdf
-									.format(rs.getDate("TARIKH_MATI")));
-					h.put("NAMA_DAERAH",
-							rs.getString("NAMA_DAERAH") == null ? "" : rs
-									.getString("NAMA_DAERAH"));
-					h.put("NAMA_NEGERI",
-							rs.getString("NAMA_NEGERI") == null ? "" : rs
-									.getString("NAMA_NEGERI"));
-					h.put("NAMA_PEJABAT",
-							rs.getString("NAMA_PEJABAT") == null ? "" : rs
-									.getString("NAMA_PEJABAT"));
-					h.put("DAERAH_PEJABAT",
-							rs.getString("DAERAH_PEJABAT") == null ? "" : rs
-									.getString("DAERAH_PEJABAT"));
-					h.put("ID_PERMOHONAN",
-							rs.getString("ID_PERMOHONAN") == null ? "" : rs
-									.getString("ID_PERMOHONAN"));
+					h = new Hashtable<String,String>();
+					h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? "": rs.getString("NO_KP_BARU"));
+					h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? "": rs.getString("NO_KP_LAMA"));
+					h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? "": rs.getString("NO_KP_LAIN"));
+					h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "": rs.getString("JENIS_KP"));
+					h.put("NAMA_SIMATI",rs.getString("NAMA_SIMATI") == null ? "" : rs.getString("NAMA_SIMATI"));
+					h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs.getString("JANTINA"));
+					h.put("UMUR", rs.getString("UMUR") == null ? "" : rs.getString("UMUR"));
+					h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
+					h.put("TARIKH_MATI",rs.getString("TARIKH_MATI") == null ? "" : sdf.format(rs.getDate("TARIKH_MATI")));
+					h.put("NAMA_DAERAH",rs.getString("NAMA_DAERAH") == null ? "" : rs.getString("NAMA_DAERAH"));
+					h.put("NAMA_NEGERI",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));
+					h.put("NAMA_PEJABAT",rs.getString("NAMA_PEJABAT") == null ? "" : rs.getString("NAMA_PEJABAT"));
+					h.put("DAERAH_PEJABAT",rs.getString("DAERAH_PEJABAT") == null ? "" : rs.getString("DAERAH_PEJABAT"));
+					h.put("ID_PERMOHONAN",rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
 					l1.addElement(h);
+					
 				}
 
 			} finally {
@@ -385,21 +361,21 @@ public class PendaftaranCheckModel {
 			}
 			return l1;
 		}
+		
 	}
 
-	Vector l2 = null;
+	Vector<Hashtable<String,String>>  l2 = null;
 
-	public Vector List_KP_Lama_Simati(String idp, String kpbaru, String kplama,
-			String kplain) throws Exception {
+	public Vector<Hashtable<String,String>> List_KP_Lama_Simati(String idp, String kpbaru, String kplama,String kplain) 
+		throws Exception {
 		Db db = null;
-
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
-			l2 = new Vector();
+			l2 = new Vector<Hashtable<String,String>> ();
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+//			SQLRenderer r = new SQLRenderer();
 
 			/*sql = "SELECT F.NO_FAIL,P.ID_PERMOHONAN, SM.NAMA_SIMATI, SM.NO_KP_BARU, "
 					+ "SM.NO_KP_LAMA,SM.NO_KP_LAIN,SM.JANTINA,SM.UMUR ,SM.TARIKH_MATI, "
@@ -441,43 +417,25 @@ public class PendaftaranCheckModel {
 			/*
 			 * if(kplain != "") { sql += " AND SM.NO_KP_LAIN = '"+kplain+"'"; }
 			 */
-
 			myLogger.info("MATI LAMA CHECK :" + sql.toUpperCase());
-
 			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
+			Hashtable<String,String>  h;
 
 			while (rs.next()) {
-				h = new Hashtable();
-				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
-						: rs.getString("NO_KP_BARU"));
-				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
-						: rs.getString("NO_KP_LAMA"));
-				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
-						: rs.getString("NO_KP_LAIN"));
-				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs
-						.getString("JENIS_KP"));
-
-				h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI") == null ? ""
-						: rs.getString("NAMA_SIMATI"));
-				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
-						.getString("JANTINA"));
-				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
-						.getString("UMUR"));
-				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs
-						.getString("NO_FAIL"));
-				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_MATI")));
-				h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? ""
-						: rs.getString("NAMA_DAERAH"));
-				h.put("NAMA_NEGERI", rs.getString("NAMA_NEGERI") == null ? ""
-						: rs.getString("NAMA_NEGERI"));
-				h.put("NAMA_PEJABAT", rs.getString("NAMA_PEJABAT") == null ? ""
-						: rs.getString("NAMA_PEJABAT"));
-				h.put("DAERAH_PEJABAT",
-						rs.getString("DAERAH_PEJABAT") == null ? "" : rs
-								.getString("DAERAH_PEJABAT"));
-
+				h = new Hashtable<String,String>();
+				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? "": rs.getString("NO_KP_BARU"));
+				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? "": rs.getString("NO_KP_LAMA"));
+				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? "": rs.getString("NO_KP_LAIN"));
+				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs.getString("JENIS_KP"));
+				h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI") == null ? "": rs.getString("NAMA_SIMATI"));
+				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs.getString("JANTINA"));
+				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs.getString("UMUR"));
+				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
+				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? "": sdf.format(rs.getDate("TARIKH_MATI")));
+				h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? "": rs.getString("NAMA_DAERAH"));
+				h.put("NAMA_NEGERI", rs.getString("NAMA_NEGERI") == null ? "": rs.getString("NAMA_NEGERI"));
+				h.put("NAMA_PEJABAT", rs.getString("NAMA_PEJABAT") == null ? "": rs.getString("NAMA_PEJABAT"));
+				h.put("DAERAH_PEJABAT",rs.getString("DAERAH_PEJABAT") == null ? "" : rs.getString("DAERAH_PEJABAT"));
 				l2.addElement(h);
 
 			}
@@ -488,21 +446,20 @@ public class PendaftaranCheckModel {
 
 		}
 		return l2;
+	
 	}
 
-	Vector l3 = new Vector();
+	Vector<Hashtable<String,String>> l3 = new Vector<Hashtable<String,String>>();
 
-	public Vector List_KP_Lain_Simati(String idp, String kpbaru, String kplama,
-			String kplain) throws Exception {
+	public Vector<Hashtable<String,String>> List_KP_Lain_Simati(String idp, String kpbaru, String kplama,String kplain) 
+		throws Exception {
 		Db db = null;
 		l3.clear();
-
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+//			SQLRenderer r = new SQLRenderer();
 
 			/*sql = "SELECT F.NO_FAIL,P.ID_PERMOHONAN, SM.NAMA_SIMATI, SM.NO_KP_BARU, "
 					+ "SM.NO_KP_LAMA,SM.NO_KP_LAIN,SM.JANTINA,SM.UMUR ,SM.TARIKH_MATI, "
@@ -544,39 +501,23 @@ public class PendaftaranCheckModel {
 			}
 
 			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
+			Hashtable<String,String> h;
 
 			while (rs.next()) {
-				h = new Hashtable();
-				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
-						: rs.getString("NO_KP_BARU"));
-				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
-						: rs.getString("NO_KP_LAMA"));
-				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
-						: rs.getString("NO_KP_LAIN"));
-				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs
-						.getString("JENIS_KP"));
-
-				h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI") == null ? ""
-						: rs.getString("NAMA_SIMATI"));
-				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
-						.getString("JANTINA"));
-				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
-						.getString("UMUR"));
-				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs
-						.getString("NO_FAIL"));
-				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_MATI")));
-				h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? ""
-						: rs.getString("NAMA_DAERAH"));
-				h.put("NAMA_NEGERI", rs.getString("NAMA_NEGERI") == null ? ""
-						: rs.getString("NAMA_NEGERI"));
-				h.put("NAMA_PEJABAT", rs.getString("NAMA_PEJABAT") == null ? ""
-						: rs.getString("NAMA_PEJABAT"));
-				h.put("DAERAH_PEJABAT",
-						rs.getString("DAERAH_PEJABAT") == null ? "" : rs
-								.getString("DAERAH_PEJABAT"));
-
+				h = new Hashtable<String,String>();
+				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? "": rs.getString("NO_KP_BARU"));
+				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? "": rs.getString("NO_KP_LAMA"));
+				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? "": rs.getString("NO_KP_LAIN"));
+				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs.getString("JENIS_KP"));
+				h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI") == null ? "": rs.getString("NAMA_SIMATI"));
+				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs.getString("JANTINA"));
+				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs.getString("UMUR"));
+				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
+				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? "": sdf.format(rs.getDate("TARIKH_MATI")));
+				h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? "": rs.getString("NAMA_DAERAH"));
+				h.put("NAMA_NEGERI", rs.getString("NAMA_NEGERI") == null ? "": rs.getString("NAMA_NEGERI"));
+				h.put("NAMA_PEJABAT", rs.getString("NAMA_PEJABAT") == null ? "": rs.getString("NAMA_PEJABAT"));
+				h.put("DAERAH_PEJABAT",rs.getString("DAERAH_PEJABAT") == null ? "" : rs.getString("DAERAH_PEJABAT"));
 				l3.addElement(h);
 
 			}
@@ -587,6 +528,7 @@ public class PendaftaranCheckModel {
 
 		}
 		return l3;
+		
 	}
 
 	Vector listNOFAIL = new Vector();
@@ -595,7 +537,7 @@ public class PendaftaranCheckModel {
 		Db db = null;
 		listNOFAIL.clear();
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -648,7 +590,7 @@ public class PendaftaranCheckModel {
 		String jumlah = "";
 		// System.out.println("ID_OB:"+id_ob);
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -712,7 +654,7 @@ public class PendaftaranCheckModel {
 		boolean a = false;
 		String jumlah = "";
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -766,13 +708,13 @@ public class PendaftaranCheckModel {
 		return a;
 	}
 
-	public boolean checkKP_Lain_Ob(String idp, String id_ob, String kpbaru,
-			String kplama, String kplain) throws Exception {
+	public boolean checkKP_Lain_Ob(String idp, String id_ob, String kpbaru,String kplama, String kplain) 
+		throws Exception {
 		Db db = null;
 		boolean a = false;
 		String jumlah = "";
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -834,7 +776,7 @@ public class PendaftaranCheckModel {
 		boolean a = false;
 		String jumlah = "";
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -877,19 +819,19 @@ public class PendaftaranCheckModel {
 		return a;
 	}
 
-	Vector listCopyOb_baru = new Vector();
+	Vector<Hashtable<String,String>> listCopyOb_baru = new Vector<Hashtable<String,String>>();
 
-	public Vector checkKP_list_baru(String idp, String id_ob, String kpbaru,
+	public Vector<Hashtable<String,String>> checkKP_list_baru(String idp, String id_ob, String kpbaru,
 			String kplama, String kplain) throws Exception {
 		Db db = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		listCopyOb_baru.clear();
 		String sql = "";
 
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+			//SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT P.ID_PERMOHONAN,SM.ID_SIMATI,OB.NAMA_OB, OB.NO_KP_BARU, OB.NO_KP_LAMA, OB.NO_KP_LAIN, "
 					+ "OB.JENIS_KP,OB.NO_SURAT_BERANAK,OB.TARIKH_LAHIR,OB.JANTINA,OB.UMUR,OB.ALAMAT_1,OB.ALAMAT_2,OB.ALAMAT_3, OB.POSKOD, "
@@ -915,94 +857,45 @@ public class PendaftaranCheckModel {
 
 			// System.out.print("SQL LIST OB :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
+			Hashtable<String,String> h;
 
 			while (rs.next()) {
-				h = new Hashtable();
-				h.put("NAMA_OB", rs.getString("NAMA_OB") == null ? "" : rs
-						.getString("NAMA_OB"));
-
-				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
-						: rs.getString("NO_KP_BARU"));
-				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
-						: rs.getString("NO_KP_LAMA"));
-				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
-						: rs.getString("NO_KP_LAIN"));
-
-				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs
-						.getString("JENIS_KP"));
-				h.put("NO_SURAT_BERANAK",
-						rs.getString("NO_SURAT_BERANAK") == null ? "" : rs
-								.getString("NO_SURAT_BERANAK"));
-
-				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_LAHIR")));
-				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
-						.getString("JANTINA"));
-
-				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
-						.getString("UMUR"));
-				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs
-						.getString("ALAMAT_1"));
-
-				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs
-						.getString("ALAMAT_1"));
-				h.put("ALAMAT_2", rs.getString("ALAMAT_2") == null ? "" : rs
-						.getString("ALAMAT_2"));
-				h.put("ALAMAT_3", rs.getString("ALAMAT_3") == null ? "" : rs
-						.getString("ALAMAT_3"));
-				h.put("POSKOD", rs.getString("POSKOD") == null ? "" : rs
-						.getString("POSKOD"));
-
-				h.put("ID_BANDAR", rs.getString("ID_BANDAR") == null ? "" : rs
-						.getString("ID_BANDAR"));
-				h.put("NO_HP", rs.getString("NO_HP") == null ? "" : rs
-						.getString("NO_HP"));
-				h.put("NO_TEL", rs.getString("NO_TEL") == null ? "" : rs
-						.getString("NO_TEL"));
-				h.put("STATUS_HIDUP", rs.getString("STATUS_HIDUP") == null ? ""
-						: rs.getString("STATUS_HIDUP"));
-				h.put("ID_TARAFKPTG", rs.getString("ID_TARAFKPTG") == null ? ""
-						: rs.getString("ID_TARAFKPTG"));
-				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? "" : rs
-						.getString("ID_NEGERI"));
-				h.put("JENIS_AGAMA", rs.getString("JENIS_AGAMA") == null ? ""
-						: rs.getString("JENIS_AGAMA"));
-				h.put("JENIS_WARGA", rs.getString("JENIS_WARGA") == null ? ""
-						: rs.getString("JENIS_WARGA"));
-
-				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_MATI")));
-				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_LAHIR")));
-
-				h.put("WAKTU_KEMATIAN",
-						rs.getString("WAKTU_KEMATIAN") == null ? "" : rs
-								.getString("WAKTU_KEMATIAN"));
-				h.put("STATUS_OB", rs.getString("STATUS_OB") == null ? "" : rs
-						.getString("STATUS_OB"));
-				h.put("ALAMAT1_SURAT",
-						rs.getString("ALAMAT1_SURAT") == null ? "" : rs
-								.getString("ALAMAT1_SURAT"));
-				h.put("ALAMAT2_SURAT",
-						rs.getString("ALAMAT2_SURAT") == null ? "" : rs
-								.getString("ALAMAT2_SURAT"));
-				h.put("ALAMAT3_SURAT",
-						rs.getString("ALAMAT3_SURAT") == null ? "" : rs
-								.getString("ALAMAT3_SURAT"));
-				h.put("ID_BANDARSURAT",
-						rs.getString("ID_BANDARSURAT") == null ? "" : rs
-								.getString("ID_BANDARSURAT"));
-				h.put("POSKOD_SURAT", rs.getString("POSKOD_SURAT") == null ? ""
-						: rs.getString("POSKOD_SURAT"));
-				h.put("ID_NEGERISURAT",
-						rs.getString("ID_NEGERISURAT") == null ? "" : rs
-								.getString("ID_NEGERISURAT"));
-
-				h.put("ID_SAUDARA", rs.getString("ID_SAUDARA") == null ? ""
-						: rs.getString("ID_SAUDARA"));
-
+				h = new Hashtable<String,String>();
+				h.put("NAMA_OB", rs.getString("NAMA_OB") == null ? "" : rs.getString("NAMA_OB"));
+				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? "": rs.getString("NO_KP_BARU"));
+				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? "": rs.getString("NO_KP_LAMA"));
+				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? "": rs.getString("NO_KP_LAIN"));
+				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs.getString("JENIS_KP"));
+				h.put("NO_SURAT_BERANAK",rs.getString("NO_SURAT_BERANAK") == null ? "" : rs.getString("NO_SURAT_BERANAK"));
+				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? "": sdf.format(rs.getDate("TARIKH_LAHIR")));
+				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs.getString("JANTINA"));
+				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs.getString("UMUR"));
+				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs.getString("ALAMAT_1"));
+				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs.getString("ALAMAT_1"));
+				h.put("ALAMAT_2", rs.getString("ALAMAT_2") == null ? "" : rs.getString("ALAMAT_2"));
+				h.put("ALAMAT_3", rs.getString("ALAMAT_3") == null ? "" : rs.getString("ALAMAT_3"));
+				h.put("POSKOD", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD"));
+				h.put("ID_BANDAR", rs.getString("ID_BANDAR") == null ? "" : rs.getString("ID_BANDAR"));
+				h.put("NO_HP", rs.getString("NO_HP") == null ? "" : rs.getString("NO_HP"));
+				h.put("NO_TEL", rs.getString("NO_TEL") == null ? "" : rs.getString("NO_TEL"));
+				h.put("STATUS_HIDUP", rs.getString("STATUS_HIDUP") == null ? "": rs.getString("STATUS_HIDUP"));
+				h.put("ID_TARAFKPTG", rs.getString("ID_TARAFKPTG") == null ? "": rs.getString("ID_TARAFKPTG"));
+				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
+				h.put("JENIS_AGAMA", rs.getString("JENIS_AGAMA") == null ? "": rs.getString("JENIS_AGAMA"));
+				h.put("JENIS_WARGA", rs.getString("JENIS_WARGA") == null ? "": rs.getString("JENIS_WARGA"));
+				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? "": sdf.format(rs.getDate("TARIKH_MATI")));
+				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? "": sdf.format(rs.getDate("TARIKH_LAHIR")));
+				h.put("WAKTU_KEMATIAN",rs.getString("WAKTU_KEMATIAN") == null ? "" : rs.getString("WAKTU_KEMATIAN"));
+				h.put("STATUS_OB", rs.getString("STATUS_OB") == null ? "" : rs.getString("STATUS_OB"));
+				h.put("ALAMAT1_SURAT",rs.getString("ALAMAT1_SURAT") == null ? "" : rs.getString("ALAMAT1_SURAT"));
+				h.put("ALAMAT2_SURAT",rs.getString("ALAMAT2_SURAT") == null ? "" : rs.getString("ALAMAT2_SURAT"));
+				h.put("ALAMAT3_SURAT",rs.getString("ALAMAT3_SURAT") == null ? "" : rs.getString("ALAMAT3_SURAT"));
+				h.put("ID_BANDARSURAT",rs.getString("ID_BANDARSURAT") == null ? "" : rs.getString("ID_BANDARSURAT"));
+				h.put("POSKOD_SURAT", rs.getString("POSKOD_SURAT") == null ? "": rs.getString("POSKOD_SURAT"));
+				h.put("ID_NEGERISURAT",rs.getString("ID_NEGERISURAT") == null ? "" : rs.getString("ID_NEGERISURAT"));
+				h.put("ID_SAUDARA", rs.getString("ID_SAUDARA") == null ? "": rs.getString("ID_SAUDARA"));
 				listCopyOb_baru.addElement(h);
+				
 			}
 		} finally {
 			if (db != null)
@@ -1017,19 +910,18 @@ public class PendaftaranCheckModel {
 		return listCopyOb_baru;
 	}
 
-	Vector listCopyOb_lama = new Vector();
+	Vector<Hashtable<String,String>> listCopyOb_lama = new Vector<Hashtable<String,String>>();
 
-	public Vector checkKP_list_lama(String idp, String id_ob, String kpbaru,
-			String kplama, String kplain) throws Exception {
+	public Vector<Hashtable<String,String>> checkKP_list_lama(String idp,String id_ob,String kpbaru,String kplama,String kplain) 
+		throws Exception {
 		Db db = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		listCopyOb_lama.clear();
 		String sql = "";
 
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+			//SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT P.ID_PERMOHONAN,SM.ID_SIMATI,OB.NAMA_OB, OB.NO_KP_BARU, OB.NO_KP_LAMA, OB.NO_KP_LAIN, "
 					+ "OB.JENIS_KP,OB.NO_SURAT_BERANAK,OB.TARIKH_LAHIR,OB.JANTINA,OB.UMUR,OB.ALAMAT_1,OB.ALAMAT_2,OB.ALAMAT_3, OB.POSKOD, "
@@ -1056,94 +948,45 @@ public class PendaftaranCheckModel {
 
 			// /System.out.print("SQL LIST LAMA OB :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
+			Hashtable<String,String> h;
 
 			while (rs.next()) {
-				h = new Hashtable();
-				h.put("NAMA_OB", rs.getString("NAMA_OB") == null ? "" : rs
-						.getString("NAMA_OB"));
-
-				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
-						: rs.getString("NO_KP_BARU"));
-				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
-						: rs.getString("NO_KP_LAMA"));
-				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
-						: rs.getString("NO_KP_LAIN"));
-
-				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs
-						.getString("JENIS_KP"));
-				h.put("NO_SURAT_BERANAK",
-						rs.getString("NO_SURAT_BERANAK") == null ? "" : rs
-								.getString("NO_SURAT_BERANAK"));
-
-				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_LAHIR")));
-				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
-						.getString("JANTINA"));
-
-				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
-						.getString("UMUR"));
-				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs
-						.getString("ALAMAT_1"));
-
-				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs
-						.getString("ALAMAT_1"));
-				h.put("ALAMAT_2", rs.getString("ALAMAT_2") == null ? "" : rs
-						.getString("ALAMAT_2"));
-				h.put("ALAMAT_3", rs.getString("ALAMAT_3") == null ? "" : rs
-						.getString("ALAMAT_3"));
-				h.put("POSKOD", rs.getString("POSKOD") == null ? "" : rs
-						.getString("POSKOD"));
-
-				h.put("ID_BANDAR", rs.getString("ID_BANDAR") == null ? "" : rs
-						.getString("ID_BANDAR"));
-				h.put("NO_HP", rs.getString("NO_HP") == null ? "" : rs
-						.getString("NO_HP"));
-				h.put("NO_TEL", rs.getString("NO_TEL") == null ? "" : rs
-						.getString("NO_TEL"));
-				h.put("STATUS_HIDUP", rs.getString("STATUS_HIDUP") == null ? ""
-						: rs.getString("STATUS_HIDUP"));
-				h.put("ID_TARAFKPTG", rs.getString("ID_TARAFKPTG") == null ? ""
-						: rs.getString("ID_TARAFKPTG"));
-				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? "" : rs
-						.getString("ID_NEGERI"));
-				h.put("JENIS_AGAMA", rs.getString("JENIS_AGAMA") == null ? ""
-						: rs.getString("JENIS_AGAMA"));
-				h.put("JENIS_WARGA", rs.getString("JENIS_WARGA") == null ? ""
-						: rs.getString("JENIS_WARGA"));
-
-				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_MATI")));
-				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_LAHIR")));
-
-				h.put("WAKTU_KEMATIAN",
-						rs.getString("WAKTU_KEMATIAN") == null ? "" : rs
-								.getString("WAKTU_KEMATIAN"));
-				h.put("STATUS_OB", rs.getString("STATUS_OB") == null ? "" : rs
-						.getString("STATUS_OB"));
-				h.put("ALAMAT1_SURAT",
-						rs.getString("ALAMAT1_SURAT") == null ? "" : rs
-								.getString("ALAMAT1_SURAT"));
-				h.put("ALAMAT2_SURAT",
-						rs.getString("ALAMAT2_SURAT") == null ? "" : rs
-								.getString("ALAMAT2_SURAT"));
-				h.put("ALAMAT3_SURAT",
-						rs.getString("ALAMAT3_SURAT") == null ? "" : rs
-								.getString("ALAMAT3_SURAT"));
-				h.put("ID_BANDARSURAT",
-						rs.getString("ID_BANDARSURAT") == null ? "" : rs
-								.getString("ID_BANDARSURAT"));
-				h.put("POSKOD_SURAT", rs.getString("POSKOD_SURAT") == null ? ""
-						: rs.getString("POSKOD_SURAT"));
-				h.put("ID_NEGERISURAT",
-						rs.getString("ID_NEGERISURAT") == null ? "" : rs
-								.getString("ID_NEGERISURAT"));
-
-				h.put("ID_SAUDARA", rs.getString("ID_SAUDARA") == null ? ""
-						: rs.getString("ID_SAUDARA"));
-
+				h = new Hashtable<String,String>();
+				h.put("NAMA_OB", rs.getString("NAMA_OB") == null ? "" : rs.getString("NAMA_OB"));
+				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? "": rs.getString("NO_KP_BARU"));
+				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? "": rs.getString("NO_KP_LAMA"));
+				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? "": rs.getString("NO_KP_LAIN"));
+				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs.getString("JENIS_KP"));
+				h.put("NO_SURAT_BERANAK",rs.getString("NO_SURAT_BERANAK") == null ? "" : rs.getString("NO_SURAT_BERANAK"));
+				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? "": sdf.format(rs.getDate("TARIKH_LAHIR")));
+				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs.getString("JANTINA"));
+				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs.getString("UMUR"));
+//				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs.getString("ALAMAT_1"));
+				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs.getString("ALAMAT_1"));
+				h.put("ALAMAT_2", rs.getString("ALAMAT_2") == null ? "" : rs.getString("ALAMAT_2"));
+				h.put("ALAMAT_3", rs.getString("ALAMAT_3") == null ? "" : rs.getString("ALAMAT_3"));
+				h.put("POSKOD", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD"));
+				h.put("ID_BANDAR", rs.getString("ID_BANDAR") == null ? "" : rs.getString("ID_BANDAR"));
+				h.put("NO_HP", rs.getString("NO_HP") == null ? "" : rs.getString("NO_HP"));
+				h.put("NO_TEL", rs.getString("NO_TEL") == null ? "" : rs.getString("NO_TEL"));
+				h.put("STATUS_HIDUP", rs.getString("STATUS_HIDUP") == null ? "": rs.getString("STATUS_HIDUP"));
+				h.put("ID_TARAFKPTG", rs.getString("ID_TARAFKPTG") == null ? "": rs.getString("ID_TARAFKPTG"));
+				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
+				h.put("JENIS_AGAMA", rs.getString("JENIS_AGAMA") == null ? "": rs.getString("JENIS_AGAMA"));
+				h.put("JENIS_WARGA", rs.getString("JENIS_WARGA") == null ? "": rs.getString("JENIS_WARGA"));
+				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? "": sdf.format(rs.getDate("TARIKH_MATI")));
+				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? "": sdf.format(rs.getDate("TARIKH_LAHIR")));
+				h.put("WAKTU_KEMATIAN",rs.getString("WAKTU_KEMATIAN") == null ? "" : rs.getString("WAKTU_KEMATIAN"));
+				h.put("STATUS_OB", rs.getString("STATUS_OB") == null ? "" : rs.getString("STATUS_OB"));
+				h.put("ALAMAT1_SURAT",rs.getString("ALAMAT1_SURAT") == null ? "" : rs.getString("ALAMAT1_SURAT"));
+				h.put("ALAMAT2_SURAT",rs.getString("ALAMAT2_SURAT") == null ? "" : rs.getString("ALAMAT2_SURAT"));
+				h.put("ALAMAT3_SURAT",rs.getString("ALAMAT3_SURAT") == null ? "" : rs.getString("ALAMAT3_SURAT"));
+				h.put("ID_BANDARSURAT",rs.getString("ID_BANDARSURAT") == null ? "" : rs.getString("ID_BANDARSURAT"));
+				h.put("POSKOD_SURAT", rs.getString("POSKOD_SURAT") == null ? "": rs.getString("POSKOD_SURAT"));
+				h.put("ID_NEGERISURAT",rs.getString("ID_NEGERISURAT") == null ? "" : rs.getString("ID_NEGERISURAT"));
+				h.put("ID_SAUDARA", rs.getString("ID_SAUDARA") == null ? "": rs.getString("ID_SAUDARA"));
 				listCopyOb_lama.addElement(h);
+				
 			}
 		} finally {
 			if (db != null)
@@ -1156,21 +999,21 @@ public class PendaftaranCheckModel {
 			listCopyOb_lama = null;
 		}
 		return listCopyOb_lama;
+	
 	}
 
-	Vector listCopyOb_lain = new Vector();
+	Vector<Hashtable<String,String>> listCopyOb_lain = new Vector<Hashtable<String,String>>();
 
-	public Vector checkKP_list_lain(String idp, String id_ob, String kpbaru,
-			String kplama, String kplain) throws Exception {
+	public Vector<Hashtable<String,String>> checkKP_list_lain(String idp, String id_ob, String kpbaru,String kplama, String kplain) 
+		throws Exception {
 		Db db = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		listCopyOb_lain.clear();
 		String sql = "";
 
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+//			SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT P.ID_PERMOHONAN,SM.ID_SIMATI,OB.NAMA_OB, OB.NO_KP_BARU, OB.NO_KP_LAMA, OB.NO_KP_LAIN, "
 					+ "OB.JENIS_KP,OB.NO_SURAT_BERANAK,OB.TARIKH_LAHIR,OB.JANTINA,OB.UMUR,OB.ALAMAT_1,OB.ALAMAT_2,OB.ALAMAT_3, OB.POSKOD, "
@@ -1198,94 +1041,45 @@ public class PendaftaranCheckModel {
 
 			// System.out.print("SQL LIST OB :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
+			Hashtable<String,String> h;
 
 			while (rs.next()) {
-				h = new Hashtable();
-				h.put("NAMA_OB", rs.getString("NAMA_OB") == null ? "" : rs
-						.getString("NAMA_OB"));
-
-				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
-						: rs.getString("NO_KP_BARU"));
-				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
-						: rs.getString("NO_KP_LAMA"));
-				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
-						: rs.getString("NO_KP_LAIN"));
-
-				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs
-						.getString("JENIS_KP"));
-				h.put("NO_SURAT_BERANAK",
-						rs.getString("NO_SURAT_BERANAK") == null ? "" : rs
-								.getString("NO_SURAT_BERANAK"));
-
-				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_LAHIR")));
-				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
-						.getString("JANTINA"));
-
-				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
-						.getString("UMUR"));
-				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs
-						.getString("ALAMAT_1"));
-
-				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs
-						.getString("ALAMAT_1"));
-				h.put("ALAMAT_2", rs.getString("ALAMAT_2") == null ? "" : rs
-						.getString("ALAMAT_2"));
-				h.put("ALAMAT_3", rs.getString("ALAMAT_3") == null ? "" : rs
-						.getString("ALAMAT_3"));
-				h.put("POSKOD", rs.getString("POSKOD") == null ? "" : rs
-						.getString("POSKOD"));
-
-				h.put("ID_BANDAR", rs.getString("ID_BANDAR") == null ? "" : rs
-						.getString("ID_BANDAR"));
-				h.put("NO_HP", rs.getString("NO_HP") == null ? "" : rs
-						.getString("NO_HP"));
-				h.put("NO_TEL", rs.getString("NO_TEL") == null ? "" : rs
-						.getString("NO_TEL"));
-				h.put("STATUS_HIDUP", rs.getString("STATUS_HIDUP") == null ? ""
-						: rs.getString("STATUS_HIDUP"));
-				h.put("ID_TARAFKPTG", rs.getString("ID_TARAFKPTG") == null ? ""
-						: rs.getString("ID_TARAFKPTG"));
-				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? "" : rs
-						.getString("ID_NEGERI"));
-				h.put("JENIS_AGAMA", rs.getString("JENIS_AGAMA") == null ? ""
-						: rs.getString("JENIS_AGAMA"));
-				h.put("JENIS_WARGA", rs.getString("JENIS_WARGA") == null ? ""
-						: rs.getString("JENIS_WARGA"));
-
-				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_MATI")));
-				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_LAHIR")));
-
-				h.put("WAKTU_KEMATIAN",
-						rs.getString("WAKTU_KEMATIAN") == null ? "" : rs
-								.getString("WAKTU_KEMATIAN"));
-				h.put("STATUS_OB", rs.getString("STATUS_OB") == null ? "" : rs
-						.getString("STATUS_OB"));
-				h.put("ALAMAT1_SURAT",
-						rs.getString("ALAMAT1_SURAT") == null ? "" : rs
-								.getString("ALAMAT1_SURAT"));
-				h.put("ALAMAT2_SURAT",
-						rs.getString("ALAMAT2_SURAT") == null ? "" : rs
-								.getString("ALAMAT2_SURAT"));
-				h.put("ALAMAT3_SURAT",
-						rs.getString("ALAMAT3_SURAT") == null ? "" : rs
-								.getString("ALAMAT3_SURAT"));
-				h.put("ID_BANDARSURAT",
-						rs.getString("ID_BANDARSURAT") == null ? "" : rs
-								.getString("ID_BANDARSURAT"));
-				h.put("POSKOD_SURAT", rs.getString("POSKOD_SURAT") == null ? ""
-						: rs.getString("POSKOD_SURAT"));
-				h.put("ID_NEGERISURAT",
-						rs.getString("ID_NEGERISURAT") == null ? "" : rs
-								.getString("ID_NEGERISURAT"));
-
-				h.put("ID_SAUDARA", rs.getString("ID_SAUDARA") == null ? ""
-						: rs.getString("ID_SAUDARA"));
-
+				h = new Hashtable<String,String>();
+				h.put("NAMA_OB", rs.getString("NAMA_OB") == null ? "" : rs.getString("NAMA_OB"));
+				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? "": rs.getString("NO_KP_BARU"));
+				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? "": rs.getString("NO_KP_LAMA"));
+				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? "": rs.getString("NO_KP_LAIN"));
+				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs.getString("JENIS_KP"));
+				h.put("NO_SURAT_BERANAK",rs.getString("NO_SURAT_BERANAK") == null ? "" : rs.getString("NO_SURAT_BERANAK"));
+				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? "": sdf.format(rs.getDate("TARIKH_LAHIR")));
+				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs.getString("JANTINA"));
+				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs.getString("UMUR"));
+//				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs.getString("ALAMAT_1"));
+				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs.getString("ALAMAT_1"));
+				h.put("ALAMAT_2", rs.getString("ALAMAT_2") == null ? "" : rs.getString("ALAMAT_2"));
+				h.put("ALAMAT_3", rs.getString("ALAMAT_3") == null ? "" : rs.getString("ALAMAT_3"));
+				h.put("POSKOD", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD"));
+				h.put("ID_BANDAR", rs.getString("ID_BANDAR") == null ? "" : rs.getString("ID_BANDAR"));
+				h.put("NO_HP", rs.getString("NO_HP") == null ? "" : rs.getString("NO_HP"));
+				h.put("NO_TEL", rs.getString("NO_TEL") == null ? "" : rs.getString("NO_TEL"));
+				h.put("STATUS_HIDUP", rs.getString("STATUS_HIDUP") == null ? "": rs.getString("STATUS_HIDUP"));
+				h.put("ID_TARAFKPTG", rs.getString("ID_TARAFKPTG") == null ? "": rs.getString("ID_TARAFKPTG"));
+				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
+				h.put("JENIS_AGAMA", rs.getString("JENIS_AGAMA") == null ? "": rs.getString("JENIS_AGAMA"));
+				h.put("JENIS_WARGA", rs.getString("JENIS_WARGA") == null ? "": rs.getString("JENIS_WARGA"));
+				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? "": sdf.format(rs.getDate("TARIKH_MATI")));
+				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? "": sdf.format(rs.getDate("TARIKH_LAHIR")));
+				h.put("WAKTU_KEMATIAN",rs.getString("WAKTU_KEMATIAN") == null ? "" : rs.getString("WAKTU_KEMATIAN"));
+				h.put("STATUS_OB", rs.getString("STATUS_OB") == null ? "" : rs.getString("STATUS_OB"));
+				h.put("ALAMAT1_SURAT",rs.getString("ALAMAT1_SURAT") == null ? "" : rs.getString("ALAMAT1_SURAT"));
+				h.put("ALAMAT2_SURAT",rs.getString("ALAMAT2_SURAT") == null ? "" : rs.getString("ALAMAT2_SURAT"));
+				h.put("ALAMAT3_SURAT",rs.getString("ALAMAT3_SURAT") == null ? "" : rs.getString("ALAMAT3_SURAT"));
+				h.put("ID_BANDARSURAT",rs.getString("ID_BANDARSURAT") == null ? "" : rs.getString("ID_BANDARSURAT"));
+				h.put("POSKOD_SURAT", rs.getString("POSKOD_SURAT") == null ? "": rs.getString("POSKOD_SURAT"));
+				h.put("ID_NEGERISURAT",rs.getString("ID_NEGERISURAT") == null ? "" : rs.getString("ID_NEGERISURAT"));
+				h.put("ID_SAUDARA", rs.getString("ID_SAUDARA") == null ? "": rs.getString("ID_SAUDARA"));
 				listCopyOb_lain.addElement(h);
+				
 			}
 		} finally {
 			if (db != null)
@@ -1298,21 +1092,21 @@ public class PendaftaranCheckModel {
 			listCopyOb_lain = null;
 		}
 		return listCopyOb_lain;
+	
 	}
 
-	Vector listCopyOb_beranak = new Vector();
+	Vector<Hashtable<String,String>> listCopyOb_beranak = new Vector<Hashtable<String,String>>();
 
-	public Vector checkKP_list_beranak(String idp, String id_ob,
-			String no_beranak) throws Exception {
+	public Vector<Hashtable<String,String>> checkKP_list_beranak(String idp, String id_ob,String no_beranak) 
+		throws Exception {
 		Db db = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		listCopyOb_beranak.clear();
 		String sql = "";
 
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+//			SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT P.ID_PERMOHONAN,SM.ID_SIMATI,OB.NAMA_OB, OB.NO_KP_BARU, OB.NO_KP_LAMA, OB.NO_KP_LAIN, "
 					+ "OB.JENIS_KP,OB.NO_SURAT_BERANAK,OB.TARIKH_LAHIR,OB.JANTINA,OB.UMUR,OB.ALAMAT_1,OB.ALAMAT_2,OB.ALAMAT_3, OB.POSKOD, "
@@ -1334,94 +1128,45 @@ public class PendaftaranCheckModel {
 
 			System.out.print("SQL LIST LAMA OB :" + sql);
 			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
+			Hashtable<String,String> h;
 
 			while (rs.next()) {
-				h = new Hashtable();
-				h.put("NAMA_OB", rs.getString("NAMA_OB") == null ? "" : rs
-						.getString("NAMA_OB"));
-
-				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
-						: rs.getString("NO_KP_BARU"));
-				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
-						: rs.getString("NO_KP_LAMA"));
-				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
-						: rs.getString("NO_KP_LAIN"));
-
-				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs
-						.getString("JENIS_KP"));
-				h.put("NO_SURAT_BERANAK",
-						rs.getString("NO_SURAT_BERANAK") == null ? "" : rs
-								.getString("NO_SURAT_BERANAK"));
-
-				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_LAHIR")));
-				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
-						.getString("JANTINA"));
-
-				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
-						.getString("UMUR"));
-				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs
-						.getString("ALAMAT_1"));
-
-				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs
-						.getString("ALAMAT_1"));
-				h.put("ALAMAT_2", rs.getString("ALAMAT_2") == null ? "" : rs
-						.getString("ALAMAT_2"));
-				h.put("ALAMAT_3", rs.getString("ALAMAT_3") == null ? "" : rs
-						.getString("ALAMAT_3"));
-				h.put("POSKOD", rs.getString("POSKOD") == null ? "" : rs
-						.getString("POSKOD"));
-
-				h.put("ID_BANDAR", rs.getString("ID_BANDAR") == null ? "" : rs
-						.getString("ID_BANDAR"));
-				h.put("NO_HP", rs.getString("NO_HP") == null ? "" : rs
-						.getString("NO_HP"));
-				h.put("NO_TEL", rs.getString("NO_TEL") == null ? "" : rs
-						.getString("NO_TEL"));
-				h.put("STATUS_HIDUP", rs.getString("STATUS_HIDUP") == null ? ""
-						: rs.getString("STATUS_HIDUP"));
-				h.put("ID_TARAFKPTG", rs.getString("ID_TARAFKPTG") == null ? ""
-						: rs.getString("ID_TARAFKPTG"));
-				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? "" : rs
-						.getString("ID_NEGERI"));
-				h.put("JENIS_AGAMA", rs.getString("JENIS_AGAMA") == null ? ""
-						: rs.getString("JENIS_AGAMA"));
-				h.put("JENIS_WARGA", rs.getString("JENIS_WARGA") == null ? ""
-						: rs.getString("JENIS_WARGA"));
-
-				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_MATI")));
-				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_LAHIR")));
-
-				h.put("WAKTU_KEMATIAN",
-						rs.getString("WAKTU_KEMATIAN") == null ? "" : rs
-								.getString("WAKTU_KEMATIAN"));
-				h.put("STATUS_OB", rs.getString("STATUS_OB") == null ? "" : rs
-						.getString("STATUS_OB"));
-				h.put("ALAMAT1_SURAT",
-						rs.getString("ALAMAT1_SURAT") == null ? "" : rs
-								.getString("ALAMAT1_SURAT"));
-				h.put("ALAMAT2_SURAT",
-						rs.getString("ALAMAT2_SURAT") == null ? "" : rs
-								.getString("ALAMAT2_SURAT"));
-				h.put("ALAMAT3_SURAT",
-						rs.getString("ALAMAT3_SURAT") == null ? "" : rs
-								.getString("ALAMAT3_SURAT"));
-				h.put("ID_BANDARSURAT",
-						rs.getString("ID_BANDARSURAT") == null ? "" : rs
-								.getString("ID_BANDARSURAT"));
-				h.put("POSKOD_SURAT", rs.getString("POSKOD_SURAT") == null ? ""
-						: rs.getString("POSKOD_SURAT"));
-				h.put("ID_NEGERISURAT",
-						rs.getString("ID_NEGERISURAT") == null ? "" : rs
-								.getString("ID_NEGERISURAT"));
-
-				h.put("ID_SAUDARA", rs.getString("ID_SAUDARA") == null ? ""
-						: rs.getString("ID_SAUDARA"));
-
+				h = new Hashtable<String,String>();
+				h.put("NAMA_OB", rs.getString("NAMA_OB") == null ? "" : rs.getString("NAMA_OB"));
+				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? "": rs.getString("NO_KP_BARU"));
+				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? "": rs.getString("NO_KP_LAMA"));
+				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? "": rs.getString("NO_KP_LAIN"));
+				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs.getString("JENIS_KP"));
+				h.put("NO_SURAT_BERANAK",rs.getString("NO_SURAT_BERANAK") == null ? "" : rs.getString("NO_SURAT_BERANAK"));
+				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? "": sdf.format(rs.getDate("TARIKH_LAHIR")));
+				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs.getString("JANTINA"));
+				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs.getString("UMUR"));
+				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs.getString("ALAMAT_1"));
+				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" : rs.getString("ALAMAT_1"));
+				h.put("ALAMAT_2", rs.getString("ALAMAT_2") == null ? "" : rs.getString("ALAMAT_2"));
+				h.put("ALAMAT_3", rs.getString("ALAMAT_3") == null ? "" : rs.getString("ALAMAT_3"));
+				h.put("POSKOD", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD"));
+				h.put("ID_BANDAR", rs.getString("ID_BANDAR") == null ? "" : rs.getString("ID_BANDAR"));
+				h.put("NO_HP", rs.getString("NO_HP") == null ? "" : rs.getString("NO_HP"));
+				h.put("NO_TEL", rs.getString("NO_TEL") == null ? "" : rs.getString("NO_TEL"));
+				h.put("STATUS_HIDUP", rs.getString("STATUS_HIDUP") == null ? "": rs.getString("STATUS_HIDUP"));
+				h.put("ID_TARAFKPTG", rs.getString("ID_TARAFKPTG") == null ? "": rs.getString("ID_TARAFKPTG"));
+				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
+				h.put("JENIS_AGAMA", rs.getString("JENIS_AGAMA") == null ? "": rs.getString("JENIS_AGAMA"));
+				h.put("JENIS_WARGA", rs.getString("JENIS_WARGA") == null ? "": rs.getString("JENIS_WARGA"));
+				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? "": sdf.format(rs.getDate("TARIKH_MATI")));
+				h.put("TARIKH_LAHIR", rs.getString("TARIKH_LAHIR") == null ? "": sdf.format(rs.getDate("TARIKH_LAHIR")));
+				h.put("WAKTU_KEMATIAN",rs.getString("WAKTU_KEMATIAN") == null ? "" : rs.getString("WAKTU_KEMATIAN"));
+				h.put("STATUS_OB", rs.getString("STATUS_OB") == null ? "" : rs.getString("STATUS_OB"));
+				h.put("ALAMAT1_SURAT",rs.getString("ALAMAT1_SURAT") == null ? "" : rs.getString("ALAMAT1_SURAT"));
+				h.put("ALAMAT2_SURAT",rs.getString("ALAMAT2_SURAT") == null ? "" : rs.getString("ALAMAT2_SURAT"));
+				h.put("ALAMAT3_SURAT",rs.getString("ALAMAT3_SURAT") == null ? "" : rs.getString("ALAMAT3_SURAT"));
+				h.put("ID_BANDARSURAT",rs.getString("ID_BANDARSURAT") == null ? "" : rs.getString("ID_BANDARSURAT"));
+				h.put("POSKOD_SURAT", rs.getString("POSKOD_SURAT") == null ? "": rs.getString("POSKOD_SURAT"));
+				h.put("ID_NEGERISURAT",rs.getString("ID_NEGERISURAT") == null ? "" : rs.getString("ID_NEGERISURAT"));
+				h.put("ID_SAUDARA", rs.getString("ID_SAUDARA") == null ? "": rs.getString("ID_SAUDARA"));
 				listCopyOb_beranak.addElement(h);
+				
 			}
 		} finally {
 			if (db != null)
@@ -1439,9 +1184,8 @@ public class PendaftaranCheckModel {
 			throws Exception {
 		Db db = null;
 		boolean a = false;
-
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -1624,18 +1368,17 @@ public class PendaftaranCheckModel {
 		}
 	}
 
-	Vector alamat_raya = new Vector();
+	Vector<Hashtable<String,String>> alamat_raya = new Vector<Hashtable<String,String>>();
 
-	public Vector getAlamatRaya(String jenis_pej) throws Exception {
+	public Vector<Hashtable<String,String>> getAlamatRaya(String jenis_pej) throws Exception {
 		Db db = null;
 		// String v="08";
 		alamat_raya.clear();
 		String sql = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+//			SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT PEJ.ID_PEJABAT,PEJ.NAMA_PEJABAT, PEJ.ALAMAT1, PEJ.ALAMAT2, PEJ.ALAMAT3, "
 					+ "PEJ.POSKOD, PEJ.ID_BANDAR, PEJ.ID_NEGERI, PEJ.NO_TEL, PEJ.NO_FAX, "
@@ -1651,44 +1394,23 @@ public class PendaftaranCheckModel {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				Hashtable h = new Hashtable();
-
-				h.put("nama_pejabat", rs.getString("NAMA_PEJABAT") == null ? ""
-						: rs.getString("NAMA_PEJABAT")/*
-													 * +" , "+
-													 * (rs.getString("NAMA_BANDAR"
-													 * )==null?"":rs.getString(
-													 * "NAMA_BANDAR"))
-													 */);
-				h.put("id_Pejabat", rs.getString("ID_PEJABAT") == null ? ""
-						: rs.getString("ID_PEJABAT"));
-				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs
-						.getString("ALAMAT1"));
-				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs
-						.getString("ALAMAT2"));
-				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs
-						.getString("ALAMAT3"));
-				h.put("poskod", rs.getString("POSKOD") == null ? "" : rs
-						.getString("POSKOD"));
-				h.put("no_tel", rs.getString("NO_TEL") == null ? "" : rs
-						.getString("NO_TEL"));
-				h.put("no_fax", rs.getString("NO_FAX") == null ? "" : rs
-						.getString("NO_FAX"));
-
-				h.put("nama_negeri", rs.getString("NAMA_NEGERI") == null ? ""
-						: rs.getString("NAMA_NEGERI"));
-				h.put("id_negeri", rs.getString("id_Negeri") == null ? "" : rs
-						.getString("id_Negeri"));
-				h.put("kod_negeri", rs.getString("KOD_NEGERI") == null ? ""
-						: rs.getString("KOD_NEGERI"));
-				h.put("nama_bandar", rs.getString("NAMA_BANDAR") == null ? ""
-						: rs.getString("NAMA_BANDAR"));
-				h.put("id_bandar", rs.getString("ID_BANDAR") == null ? "" : rs
-						.getString("ID_BANDAR"));
-				h.put("kod_bandar", rs.getString("KOD_BANDAR") == null ? ""
-						: rs.getString("KOD_BANDAR"));
-
+				Hashtable<String,String> h = new Hashtable<String,String>();
+				h.put("nama_pejabat", rs.getString("NAMA_PEJABAT") == null ? "": rs.getString("NAMA_PEJABAT"));
+				h.put("id_Pejabat", rs.getString("ID_PEJABAT") == null ? "": rs.getString("ID_PEJABAT"));
+				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs.getString("ALAMAT1"));
+				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs.getString("ALAMAT2"));
+				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs.getString("ALAMAT3"));
+				h.put("poskod", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD"));
+				h.put("no_tel", rs.getString("NO_TEL") == null ? "" : rs.getString("NO_TEL"));
+				h.put("no_fax", rs.getString("NO_FAX") == null ? "" : rs.getString("NO_FAX"));
+				h.put("nama_negeri", rs.getString("NAMA_NEGERI") == null ? "": rs.getString("NAMA_NEGERI"));
+				h.put("id_negeri", rs.getString("id_Negeri") == null ? "" : rs.getString("id_Negeri"));
+				h.put("kod_negeri", rs.getString("KOD_NEGERI") == null ? "": rs.getString("KOD_NEGERI"));
+				h.put("nama_bandar", rs.getString("NAMA_BANDAR") == null ? "": rs.getString("NAMA_BANDAR"));
+				h.put("id_bandar", rs.getString("ID_BANDAR") == null ? "" : rs.getString("ID_BANDAR"));
+				h.put("kod_bandar", rs.getString("KOD_BANDAR") == null ? "": rs.getString("KOD_BANDAR"));
 				alamat_raya.addElement(h);
+				
 			}
 		} catch (DbException e) {
 
@@ -1698,6 +1420,7 @@ public class PendaftaranCheckModel {
 				db.close();
 		}
 		return alamat_raya;
+		
 	}
 
 	static Vector MT1 = null;
@@ -1714,7 +1437,7 @@ public class PendaftaranCheckModel {
 		} else {
 			Db db = null;
 			String sql = "";
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			try {
 
 				db = new Db();
