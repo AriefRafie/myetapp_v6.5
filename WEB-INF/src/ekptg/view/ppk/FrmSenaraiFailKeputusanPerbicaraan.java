@@ -270,7 +270,10 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     			FrmPrmhnnSek8KptsanBicaraData.setViewBicara(idpermohonan);
     			dataBayaran = FrmPrmhnnSek8KptsanBicaraData.getDataBayaran();
       	    	this.context.put("dataBicaraView", dataBayaran);
-
+      	    	
+      	    	// getJumlahBayaranDendaLewatPermohonan TBLPPKPERMOHONAN
+      	    	//Vector getJumlahBayaranDendaLewatPendaftaran = FrmPrmhnnSek8KptsanBicaraData.setJumlahBayaranDendaLewatPendaftaran(tarikhmohon);
+      	    	
       	    	//* 07122009
       			//get jumlah_harta_tarikhmohon TBLPPKPERMOHONAN
       			Vector getJumlahBayaran = FrmPrmhnnSek8KptsanBicaraData.setJumlahBayaran(idpermohonan);
@@ -304,6 +307,23 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       								//ADD BY PEJE
       								bayaranYuran = getBundaranBayaran(bayaranYuran);
       							}
+      			    			
+      			    			/** 
+      			    			 * 7/1/2020: arief 
+      			    			 * berkuatkuasa selepas Akta diluluskan dalam Parlimen baru boleh guna
+      			    			 * 
+      			    			if ((jumlahHartaDeductNilaianAmanahRaya > 0) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000)){
+      								if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+										bayaranYuran = 10.00 ;
+									} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+										bayaranYuran = 30.00 ;
+									} else {
+      									bayaranYuran = 0.05 * jumlahHartaDeductNilaianAmanahRaya ;
+      									bayaranYuran = getBundaranBayaran(bayaranYuran);
+      							} else{
+      								bayaranYuran = 0.05 * jumlahHartaDeductNilaianAmanahRaya ;
+      								bayaranYuran = getBundaranBayaran(bayaranYuran);
+      							}**/
       							this.context.put("txtJumHarta", jumlahHartaDeductNilaianAmanahRaya);
       					}
 
@@ -324,6 +344,23 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       								//ADD BY PEJE
       								bayaranYuran = getBundaranBayaran(bayaranYuran);
       							}
+      							
+      							/** 
+      			    			 * 7/1/2020: arief 
+      			    			 * berkuatkuasa selepas Akta diluluskan dalam Parlimen baru boleh guna
+      			    			 * 
+      			    			if ((jumlahHartaDeductNilaianAmanahRaya > 0) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000)){
+      								if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+										bayaranYuran = 10.00 ;
+									} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+										bayaranYuran = 30.00 ;
+									} else {
+      									bayaranYuran = 0.05 * jumlahHartaDeductNilaianAmanahRaya ;
+      									bayaranYuran = getBundaranBayaran(bayaranYuran);
+      							} else{
+      								bayaranYuran = 0.05 * jumlahHartaDeductNilaianAmanahRaya ;
+      								bayaranYuran = getBundaranBayaran(bayaranYuran);
+      							}**/
       							this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
       					}
       				}
@@ -3671,6 +3708,22 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 							//ADD BY PEJE
 							bayaranYuran = getBundaranBayaran(bayaranYuran);
 						}
+		    			/** 
+		    			 * 8/1/2020: arief 
+		    			 * berkuatkuasa selepas Akta diluluskan dalam Parlimen baru boleh guna
+		    			 * 
+			    		if ( jumlahHartaDeductNilaianAmanahRaya > 0 && (jumlahHartaDeductNilaianAmanahRaya <= 5000000)){
+							if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+								bayaranYuran = 10.00 ;
+							} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+								bayaranYuran = 30.00 ;
+							} else {
+							bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
+							bayaranYuran = getBundaranBayaran(bayaranYuran);
+						} else{
+							bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
+							bayaranYuran = getBundaranBayaran(bayaranYuran);
+						}**/
 						this.context.put("txtJumBayaran", bayaranYuran); //Yuran Perintah
 						this.context.put("txtJumHarta", jumlahHartaDeductNilaianAmanahRaya);
 				}
@@ -3690,14 +3743,30 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		    			jumlah_harta_tarikhmohon = Double.parseDouble(""+a.get("jumlah_harta_tarikhmohon"));
 		    		}
 		    		if ( jumlah_harta_tarikhmohon <= 1000 ) {
+						bayaranYuran = 10.00 ;
+					} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
+						bayaranYuran = 30.00 ;
+					} else {
+						bayaranYuran = (0.2/100) * jumlah_harta_tarikhmohon ;
+						//ADD BY PEJE
+						bayaranYuran = getBundaranBayaran(bayaranYuran);
+					}
+		    		/** 
+		    		 * 8/1/2020: arief 
+		    		 * berkuatkuasa selepas Akta diluluskan dalam Parlimen baru boleh guna
+		    		 * 
+		    		if ( jumlah_harta_tarikhmohon > 0 && (jumlah_harta_tarikhmohon <=5000000)){
+						if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
 							bayaranYuran = 10.00 ;
-						} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
+						} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
 							bayaranYuran = 30.00 ;
 						} else {
-							bayaranYuran = (0.2/100) * jumlah_harta_tarikhmohon ;
-							//ADD BY PEJE
+							bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
 							bayaranYuran = getBundaranBayaran(bayaranYuran);
-						}
+					} else{
+						bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
+						bayaranYuran = getBundaranBayaran(bayaranYuran);
+					}**/
 						this.context.put("txtJumBayaran", bayaranYuran);
 						this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
 				}
