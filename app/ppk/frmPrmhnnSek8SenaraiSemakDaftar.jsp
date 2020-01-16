@@ -219,7 +219,7 @@
             <td width="86%"> #if($chkmode != "disabled") Borang A lengkap diisi #else
               
               Borang A lengkap diisi
-                            Borang A lengkap diisi
+                            Borang A lengkap diisi 2
               
               #end </td>
           </tr>
