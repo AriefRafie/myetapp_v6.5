@@ -891,14 +891,10 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			r.add("ID_JENISPB");
-			r.add("KOD_JENIS_PB");
-			r.add("KETERANGAN");
-			r.add("JENIS_DAFTAR_PB");
-
-			// sql = r.getSQLSelect("Tblrujnegeri", "KOD_NEGERI");
-			sql = "SELECT ID_JENISPB,KOD_JENIS_PB,KETERANGAN,JENIS_DAFTAR_PB FROM TBLRUJJENISPB ORDER BY KOD_JENIS_PB ASC";
+			sql = "SELECT ID_JENISPB,KOD_JENIS_PB,KETERANGAN,JENIS_DAFTAR_PB " +
+				" FROM TBLRUJJENISPB " +
+				" WHERE FLAG_AKTIF='Y' " +
+				" ORDER BY KOD_JENIS_PB ASC";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -908,32 +904,31 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 				if (rs.getString("KETERANGAN") == null) {
 					h.put("KETERANGAN", "");
 				} else {
-					h.put("KETERANGAN", rs.getString("KETERANGAN")
-							.toUpperCase());
+					h.put("KETERANGAN", rs.getString("KETERANGAN").toUpperCase());
 				}
 				if (rs.getString("KOD_JENIS_PB") == null) {
 					h.put("KOD_JENIS_PB", "");
 				} else {
-					h.put("KOD_JENIS_PB", rs.getString("KOD_JENIS_PB")
-							.toUpperCase());
+					h.put("KOD_JENIS_PB", rs.getString("KOD_JENIS_PB").toUpperCase());
 				}
 				if (rs.getString("JENIS_DAFTAR_PB") == null) {
 					h.put("JENIS_DAFTAR_PB", "");
 				} else {
-					h.put("JENIS_DAFTAR_PB", rs.getString("JENIS_DAFTAR_PB")
-							.toUpperCase());
+					h.put("JENIS_DAFTAR_PB", rs.getString("JENIS_DAFTAR_PB").toUpperCase());
 				}
 
 				list_jenispb.addElement(h);
 			}
 			return list_jenispb;
+			
 		} catch (Exception re) {
 			log.error("Error: ", re);
 			throw re;
-			} finally {
+		} finally {
 			if (db != null)
 				db.close();
 		}
+		
 	}
 
 	Vector list_bank = null;
