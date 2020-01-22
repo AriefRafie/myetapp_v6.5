@@ -152,7 +152,7 @@
 	            <input type="button" name="cmdHnatarPeringatan" value="Hantar Peringatan Tempoh Tamat" onClick="javascript:setTable('tableSuratPeringatan')"/>
 	            <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
 		        #if ($flagSebabTamat == '')
-                <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya " onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian "/>
+                <input type="button" name="cmdHantar" id="cmdHantar" value="Aktifkan Perjanjian" onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian "/>
 			    #end 
                 #end
 				#if ($session.getAttribute('FLAG_FROM') == 'failHQ')
@@ -160,13 +160,13 @@
 	            <input type="button" name="cmdHnatarPeringatan" value="Hantar Peringatan Tempoh Tamat" onClick="javascript:setTable('tableSuratPeringatan')"/>
 	          	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
 	          	#if ($idStatus == '1610214') <!-- perjanjian -->
-                <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya " onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian "/>
+                <input type="button" name="cmdHantar" id="cmdHantar" value="Aktifkan Perjanjian" onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian "/>
 			    <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
 			    #elseif ($idStatus == '1610195') <!-- perjanjian aktif -->
                 #if($flagSebabTamat == '')
                 <input type="button" name="cmdTamatSewa" value="Penamatan Penyewaan" onClick="javascript:setTable('tableTamatSewa')"/>
                 #elseif ($flagSebabTamat == '')
-                <input type="button" name="cmdSeterusnya" value="Seterusnya" onClick="gotoMesyuarat()" title="Untuk Ke Proses Mesyuarat"/>
+                <input type="button" name="cmdSeterusnya" value="Ke Mesyuarat" onClick="gotoMesyuarat()" title="Untuk Ke Proses Mesyuarat"/>
                 #end
                 #end
 				<!--#if ($session.getAttribute('FLAG_FROM') != 'failNegeri') -->
@@ -197,7 +197,7 @@
  	          	<input type="button" name="cmdTamatSewa" value="Penamatan Penyewaan" onClick="javascript:setTable('tableTamatSewa')"/> 
                 #end	 		
 				#if ($idStatus == '1610214')
-				<input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian "/> 
+				<input type="button" name="cmdHantar" id="cmdHantar" value="Aktifkan Perjanjian" onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian "/> 
 			    #end    
 	            <!-- #if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ' || $userRole == '(PHP)PYWPenolongPegawaiHQ' || $userRole == '(PHP)PYWPenolongPegawaiTanahNegeri') -->
 				<!--#if ($flagSebabTamat == '') -->
@@ -424,7 +424,7 @@
 		   #else
     	   <input type="button" name="cmdKemaskiniT" id="cmdKemaskiniT" value="Kemaskini " onClick="kemaskiniT()"/>
       	   #if ($flagSebabTamat == 'Y')
-	       <input type="button" name="cmdSeterusnya" value="Seterusnya" onClick="gotoMesyuarat()"/>
+	       <input type="button" name="cmdSeterusnya" value="Ke Mesyuarat" onClick="gotoMesyuarat()"/>
 	       #end 		
     	   #end     	 			
 		  </td>
@@ -588,7 +588,7 @@
 	            <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskini()"/>
 	            <input type="button" name="cmdHnatarPeringatan" value="Hantar Peringatan Tempoh Tamat " onClick="javascript:setTable('tableSuratPeringatan')"/>
 	          	#if ($idStatus == '1610214') <!-- perjanjian -->
-                <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian"/>
+                <input type="button" name="cmdHantar" id="cmdHantar" value="Aktifkan Perjanjian" onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian"/>
 			    <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
 			    #if ($flagSebabTamat == '')
                	<input type="button" name="cmdTamatSewa" value="Penamatan Penyewaan" onClick="javascript:setTable('tableTamatSewa')"/>
@@ -597,13 +597,13 @@
                 #if($flagSebabTamat == '')
                 <input type="button" name="cmdTamatSewa" value="Penamatan Penyewaan" onClick="javascript:setTable('tableTamatSewa')"/>
                 #elseif ($flagSebabTamat == '')
-                <input type="button" name="cmdSeterusnya" value="Seterusnya" onClick="gotoMesyuarat()" title="Untuk Ke Proses Mesyuarat"/>
+                <input type="button" name="cmdSeterusnya" value="Ke Mesyuarat" onClick="gotoMesyuarat()" title="Untuk Ke Proses Mesyuarat"/>
                 #end
                 #end
                 #if ($session.getAttribute('FLAG_FROM') != 'failNegeri')
                 <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
                 #if ($flagSebabTamat == '')
-                <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian"/>
+                <input type="button" name="cmdHantar" id="cmdHantar" value="Aktifkan Perjanjian" onClick="doHantarProses()" title="Untuk Aktifkan Perjanjian"/>
 			    #end 
                 #end
                 #end

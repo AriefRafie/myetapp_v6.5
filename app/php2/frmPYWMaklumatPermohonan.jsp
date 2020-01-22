@@ -177,7 +177,7 @@
                     <tr>
                       <td colspan="8" align="center"> #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                         #if($idStatus == '1610198')
-                        <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+                        <input type="button" name="cmdHantar" id="cmdHantar" value="Ke Jabatan Teknikal" onClick="doSeterusnya()"/>
                         <input type="button" name="cmdBatalPermohonan2" id="cmdBatalPermohonan2" value="Batal Permohonan" onclick="gotoBatalPermohonan()"/>
                         #end
                         #end
@@ -372,7 +372,7 @@
                   #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
                   #if($idStatus == '1610198')
-                  <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+                  <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Ke Jabatan Teknikal" onClick="doSeterusnya()"/>
                   <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
                   #end
                   #end
@@ -552,7 +552,7 @@
                   #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
                   #if($idStatus == '1610198')
-                  <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+                  <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Ke Jabatan Teknikal" onClick="doSeterusnya()"/>
                   <input type="button" name="cmdBatalPermohonan2" id="cmdBatalPermohonan2" value="Batal Permohonan" onclick="gotoBatalPermohonan()"/>
                   #end
                   #end
