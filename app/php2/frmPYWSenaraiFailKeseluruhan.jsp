@@ -112,13 +112,14 @@
       <table align="center" width="100%">
         <tr class="table_header" align="center">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="18%"><strong>No Fail</strong></td>
-          <td width="18%"><strong>No Fail Negeri</strong></td>
-          <td width="20%"><strong>Nama Pemohon</strong></td>
-          <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
-          <td width="8%" align="center"><strong>Tarikh Buka Fail</strong></td>
-          <td width="12%"><strong>Status</strong></td>
-          <td width="15%"><strong>Daftar Oleh</strong></td>
+          <td width="15%"><strong>No Fail</strong></td>
+          <td width="15%"><strong>No Fail Negeri</strong></td>
+          <td width="18%"><strong>Nama Pemohon</strong></td>
+          <td width="6%" align="center"><strong>Tarikh Terima</strong></td>
+          <td width="6%" align="center"><strong>Tarikh Daftar</strong></td>
+          <td width="10%"><strong>Status</strong></td>
+          <td width="12%"><strong>Daftar Oleh</strong></td>
+          <td width="10%"><strong>Tindakan Daripada</strong></td>
         </tr>
         #set ($list = "")
         #if ($SenaraiFail.size() > 0)
@@ -146,6 +147,8 @@
           <td class="$row" align="center">$list.tarikhBukaFail</td>
           <td class="$row">$list.status</td>
           <td class="$row">$list.userLogin</td>
+          <td class="$row">
+          </td>
         </tr>
         #end
         #else
