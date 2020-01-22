@@ -263,7 +263,7 @@
 		       <input type="button" name="cmdHnatarPeringatan" value="Hantar Peringatan Tempoh Tamat" onClick="javascript:setTable('tableSuratPeringatan')"/>
 		       #if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ' || $userRole == '(PHP)PYWPenolongPegawaiHQ' || $userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
 		       #if($afterTamatSewa == 'afterTamatSewa')
-			   <!--<input type="button" name="cmdTamatSewa" value="Penamatan Penyewaan" onClick="javascript:setTable('tableTamatSewa')"/> -->
+			   <!--<input type="button" name="cmdTamatSewa" value="Penamatan Penyewaan " onClick="javascript:setTable('tableTamatSewa')"/> -->
 		       <input type="button" name="cmdHnatarPeringatan" value="Hantar Peringatan Tempoh Tamat" onClick="javascript:setTable('tableSuratPeringatan')"/>
 		       <input type="button" name="cmdSeterusnya" value="Seterusnya" onClick="()"/>
 		       #end
