@@ -106,9 +106,9 @@
       <legend><b>SENARAI TANAH</b></legend>
       #parse("app/utils/record_paging_popup.jsp")
       <table align="center" width="100%">
-      <tr>
-          <td colspan="6" scope="row"><input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:daftarHakmilik()"/></td>
-      	</tr>
+<!--       <tr> -->
+<!--           <td colspan="6" scope="row"><input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:daftarHakmilik()"/></td> -->
+<!--       	</tr> -->
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="15%"><strong>Pegangan Hakmilik</strong></td>

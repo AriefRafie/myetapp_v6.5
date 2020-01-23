@@ -52,28 +52,21 @@
     </fieldset></td>
   </tr>
   #end
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
+  
   #if ($mode != 'view')
   <tr>
     <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font>: Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
   </tr>
   #end
   <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td width="35%">&nbsp;</td>
     <td> #if ($mode == 'view')
       #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
       <input type="button" name="cmdKemaskiniPelapor" id="cmdKemaskiniPelapor" value="Kemaskini" onClick="kemaskiniPelapor()"/>
       #end      
       #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
       #if($idStatus == '1610200')
-      <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
+      <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Ke Cetakan Kertas Ringkasan" onclick="seterusnya()"/>
       <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
       #end
       #end

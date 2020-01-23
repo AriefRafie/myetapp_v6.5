@@ -69,7 +69,7 @@
   <tr>
     <td align="center"> #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
       #if ($idStatus == '1610199')
-      <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+      <input type="button" name="cmdHantar" id="cmdHantar" value="Ke Lawatan Tapak" onClick="doSeterusnya()"/>
       <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
       #end
       #end
