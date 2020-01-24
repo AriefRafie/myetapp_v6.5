@@ -342,6 +342,12 @@
             <input type="hidden" name="kegunaanTanah" id="kegunaanTanah" value="$beanMaklumatTanah.kegunaanTanah" />
             <input type="hidden" name="statusRizab" id="statusRizab" value="$beanMaklumatTanah.statusRizab" /></td>
         </tr>
+        <tr>
+          <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+          <td>Luas Kegunaan</td>
+          <td>:</td>
+          <td >$selectLuasKegunaan</td>
+        </tr>
         #end
         #end
         
@@ -531,6 +537,9 @@ function doChangeKategori() {
 }
 function doChangeNegeri() {
 	doAjaxCall${formName}("doChangeNegeri");
+}
+function doChangeLuasKegunaan() {
+	doAjaxCall${formName}("doChangeLuasKegunaan");
 }
 function pilihTanah() {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmPYWPopupSenaraiTanahView";

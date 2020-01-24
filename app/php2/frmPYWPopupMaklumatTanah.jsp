@@ -80,6 +80,16 @@
             </table></td>
           <td width="50%" valign="top"><table width="100%"  cellpadding="2" cellspacing="2" border="0">
               <tr>
+                <td width="37%" align="right" valign="top">STATUS TANAH :</td>
+                <td width="63%" rowspan="3" valign="top"><font color="blue">$syarat</font></td>
+              </tr>
+              <tr>
+                <td align="right">&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="right">&nbsp;</td>
+              </tr>
+              <tr>
                 <td width="37%" align="right" valign="top">SYARAT NYATA :</td>
                 <td width="63%" rowspan="3" valign="top"><font color="blue">$syarat</font></td>
               </tr>

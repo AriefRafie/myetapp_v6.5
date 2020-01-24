@@ -193,6 +193,7 @@
             </table>
           </div>
           <!-- END MAKLUMAT TANAH BERKAITAN -->
+          <!-- MAKLUMAT PERMOHONAN -->
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatSewa in $BeanMaklumatSewa)
