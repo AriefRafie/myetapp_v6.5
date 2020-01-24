@@ -9,7 +9,7 @@ alert("Sila Klik Butang Kembali Dan Klik 'Paging' No.11 Untuk Proses Endorsan");
 
 <!-- OPEN fieldset borang d -->
 <!-- PENAMBAHAN YATI 6/1/2017 -->
-
+<!-- PPT-05 tukar kedudukan-->
 		<fieldset style="width:100%">
 		<legend><strong>Maklumat Borang D</strong></legend>
 		#if($mode=="new")
