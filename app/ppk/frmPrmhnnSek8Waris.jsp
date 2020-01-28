@@ -1908,7 +1908,8 @@ Click me</a>
                                   </tr>
                                   #end
                                   <tr>
-                                    <td>&nbsp;</td>
+                                    <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   									 								#end</td>
                                     <td class="style38" ><div align="left" class="style72">No Telefon</div></td>
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                     <td><input name="txtNoTeleponBimbitWaris" type="text" id="txtNoTeleponBimbitWaris" style="text-transform:uppercase;" onblur="text-transform:uppercase;" value="$txtNoTeleponBimbitWaris" size="14" maxlength="12" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtNoTeleponBimbitWaris')"/></td>
@@ -1922,7 +1923,8 @@ Click me</a>
                                   </tr>
                                   #end
                                   <tr>
-                                    <td>&nbsp;</td>
+                                    <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   																	#end</td>
                                     <td class="style38" ><div align="left" class="style72">Emel</div></td>
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                     <td><input name="txtEmel" type="text" id="txtEmel" value="$txtEmel" size="30" maxlength="30" $readmodeR class="$readmode" /></td>
@@ -3341,7 +3343,8 @@ Click me</a>
                                     <td valign="top"><span class="style73">cth: 031234567</span></td>
                                   </tr>
                                   <tr>
-                                    <td>&nbsp;</td>
+                                     <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   									 #end</td>
                                     <td class="style38" ><div align="left" class="style72">No Telefon Bimbit</div></td>
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                     <td><input name="txtNoTeleponBimbitWaris" type="text" id="txtNoTeleponBimbitWaris" style="text-transform:uppercase;" onblur="text-transform:uppercase;" value="$txtNoTeleponBimbitWaris" size="14" maxlength="12" $readmode onkeyup="javascript:validateIC(event,this,this.value,'txtNoTeleponBimbitWaris')"/></td>
@@ -3353,7 +3356,8 @@ Click me</a>
                                     <td valign="top"><span class="style73">cth: 0121234567</span></td>
                                   </tr>
                                   <tr>
-                                    <td>&nbsp;</td>
+                                     <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   										#end</td>
                                     <td class="style38" ><div align="left" class="style72">Emel</div></td>
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                     <td><input name="txtEmel" type="text" id="txtEmel" value="$txtEmel" size="30" maxlength="30" $readmode class="$readmode" /></td>
@@ -7833,17 +7837,25 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.txtAlamatTerakhir1WarisSurat.focus()
 	return;
 	}
-		/*
-		else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
+
+		else if (document.f1.checkHidupWaris.checked == false 
+				&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
 	
 	}
-   */
    
+		else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+		{
+		
+		alert("Sila pastikan emel diisi");
+		document.f1.txtEmel.focus()
+		return;
+		}
+	
    else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	
@@ -8172,16 +8184,24 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.txtAlamatTerakhir1WarisSurat.focus()
 	return;
 	}
-	/*
-	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
+	
+	else if (document.f1.checkHidupWaris.checked == false 
+			&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
-	
 	}
-	*/
+	
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+	
+	alert("Sila pastikan emel diisi");
+	document.f1.txtEmel.focus()
+	return;
+	}
+	
 	 else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	
@@ -8537,15 +8557,23 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	return;
 	}
 	
-	/*
-	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
+	else if (document.f1.checkHidupWaris.checked == false 
+			&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
+	}
+		
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
 	
-	}*/
+	alert("Sila pastikan emel diisi");
+	document.f1.txtEmel.focus()
+	return;
+	}
+		
 	 else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	
@@ -8877,15 +8905,25 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.txtAlamatTerakhir1WarisSurat.focus()
 	return;
 	}
-	/*
-	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
+	
+	else if (document.f1.checkHidupWaris.checked == false 
+			&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
 	
-	}*/
+	}
+	
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+	
+	alert("Sila pastikan emel diisi");
+	document.f1.txtEmel.focus()
+	return;
+	}
+	
 	 else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	
@@ -9326,14 +9364,23 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	return;
 	}
 		
-	/*	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "" ))
+	else if (document.f1.checkHidupWaris.checked == false 
+			&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "" ))
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
+	}
 	
-	}*/
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+	
+	alert("Sila pastikan emel diisi");
+	document.f1.txtEmel.focus()
+	return;
+	}
+	
 	else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	
