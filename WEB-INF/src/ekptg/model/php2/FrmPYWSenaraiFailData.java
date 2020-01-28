@@ -1213,7 +1213,8 @@ public class FrmPYWSenaraiFailData {
 			String idKementerianTanah, String idNegeriTanah,
 			String idLuasTanah, String luasTanah, String idUrusan,
 			String idSuburusan, String socFlagProsesFail, String catatan,
-			String idHakmilikSementara, String noFailNegeri, HttpSession session) throws Exception {
+			String idHakmilikSementara, String noFailNegeri, 
+			String idLuasKegunaan, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -1469,6 +1470,7 @@ public class FrmPYWSenaraiFailData {
 				r.add("KEPUTUSAN", "L");
 			}
 			r.add("CATATAN", catatan);
+			r.add("FLAG_GUNA", idLuasKegunaan);
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
