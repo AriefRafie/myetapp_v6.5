@@ -12,7 +12,7 @@ import etapp.entity.rujukan.JenisRizab;
 //import org.apache.log4j.Logger;
 
 
-public class UtilHTMLPilihanJenisPBIndividu implements IUtilHTMLPilihan{
+public class UtilHTMLPilihanJenisNoPB implements IUtilHTMLPilihan{
 
 	//static Logger myLog = Logger.getLogger(ekptg.model.htp.utiliti.UtilHTMLJenisRizabBean.class);
 	
@@ -39,7 +39,7 @@ public class UtilHTMLPilihanJenisPBIndividu implements IUtilHTMLPilihan{
 				sb.append(jsFunction);
 			sb.append(" > ");
 			sb.append("<option value=\"\">SILA PILIH</option>\n");
-			Vector<Tblrujjenisnopb> v = DB.getRujJenisNoPBIndividu();
+			Vector<Tblrujjenisnopb> v = DB.getRujJenisNoPB();
 			//Vector<?> v = getData(null);
 			Tblrujjenisnopb f = null;
 			String s = "";
