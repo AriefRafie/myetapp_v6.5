@@ -638,14 +638,19 @@ public class FrmPYWKeputusanData {
 				long idFail = 0;
 				long idHasil = 0;
 				noFail = rsFail.getString("NO_FAIL");
-				if (noFail.contains("JKPTG/SPHP/931/")) {
-					noFail = noFail.replaceAll("JKPTG/SPHP/931/",
-							"JKPTG/SPHP/359/");
-				}
-				if (noFail.contains("JKPTG/SPHP/909/")) {
-					noFail = noFail.replaceAll("JKPTG/SPHP/909/",
-							"JKPTG/SPHP/359/");
-				}
+				/**
+				 * Kemaskini pada : 29/01/2020
+				 * Kemaskini oleh : Nurul Ain
+				 * Keterangan 	  : No. fail sewa sama dengan hasil 
+				 */
+//				if (noFail.contains("JKPTG/SPHP/931/")) {
+//					noFail = noFail.replaceAll("JKPTG/SPHP/931/",
+//							"JKPTG/SPHP/359/");
+//				}
+//				if (noFail.contains("JKPTG/SPHP/909/")) {
+//					noFail = noFail.replaceAll("JKPTG/SPHP/909/",
+//							"JKPTG/SPHP/359/");
+//				}
 
 				// CHECK JIKA FAIL HASIL PERNAH WUJUD
 				sqlCheckExistFailHasil = "SELECT FAIL.ID_FAIL, FAIL.NO_FAIL, HASIL.ID_HASIL FROM TBLPFDFAIL FAIL, TBLPHPHASIL HASIL WHERE FAIL.ID_FAIL = HASIL.ID_FAIL AND FAIL.NO_FAIL = '"
