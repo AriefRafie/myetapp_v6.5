@@ -326,7 +326,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 										}
 										else 
 										{
-      										bayaranYuran = 0.05 * jumlahHartaDeductNilaianAmanahRaya ;
+      										bayaranYuran = 0.02 * jumlahHartaDeductNilaianAmanahRaya ;
       										bayaranYuran = getBundaranBayaran(bayaranYuran);
 										}
       								}
@@ -373,7 +373,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 									}
       								else 
       								{
-      									bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
+      									bayaranYuran = 0.02 * jumlah_harta_tarikhmohon ;
       									bayaranYuran = getBundaranBayaran(bayaranYuran);
       								}
       			    			}
