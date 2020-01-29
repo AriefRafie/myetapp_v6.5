@@ -11,8 +11,10 @@ import lebah.util.DateUtil;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 
+import ekptg.helpers.AuditTrail;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.model.pfd.FrmTukaranStatus;
 import ekptg.model.ppk.FrmBorangPSek17OnlineData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8Data;
 import ekptg.model.ppk.FrmPrmhnnSek8Data;
@@ -90,6 +92,20 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 
 			vm = "app/ppk/frmPrmhnnStatusPengunaOnline.jsp";
 			setupPage(session, action, senaraiFail);
+			
+		} else if ("doHapus".equals(submit)){
+			
+			myLogger.info("try ::idFail= "+getParam("idFail")+"idPermohonan="+getParam("idPermohonan") );
+			//this.context.put("senaraitugasan", senaraiFail);
+			Hashtable fifah = new Hashtable();
+			fifah.put("id_permohonan", getParam("idPermohonan"));
+			fifah.put("id_fail",  getParam("idFail"));
+			fifah.put("id_masuk", usid);
+			FrmTukaranStatus.hapusfail(fifah);
+			
+//			AuditTrail.logActivity("999","2",this,session,"DEL","NO PERMOHONAN ["+NoFail+"] DIHAPUSKAN");
+
+						
 		}
 		// daftar dan kemaskini seksyen17
 		else if ("check_kp17".equals(submit)) {
