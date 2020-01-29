@@ -8,5 +8,18 @@
     <updateXml>true</updateXml>
     <warLocation></warLocation>
     <extraInfo></extraInfo>
+<<<<<<< Updated upstream
     <webPath>/myetapp7</webPath>
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <mavenClasspath>false</mavenClasspath>
+    <webPath>/myetappgit2</webPath>
+=======
+    <webPath>/myetapp7</webPath>
+>>>>>>> branch 'master' of http://10.19.144.139/root/myetapp_v7
+=======
+    <webPath>/myetapp7</webPath>
+>>>>>>> b8c6baa4920d865538ccad8f0b9643e20d05b552
+>>>>>>> Stashed changes
 </tomcatProjectProperties>

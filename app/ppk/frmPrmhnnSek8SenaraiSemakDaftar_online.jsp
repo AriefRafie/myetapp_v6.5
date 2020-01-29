@@ -510,7 +510,7 @@ parent.document.getElementById("display_ada_harta").innerHTML="<div class=\"warn
             <td width="10%" >&nbsp;</td>
             <td width="1%" >&nbsp;</td>
             <td width="3%" ><input name="cbsemaks" type="checkbox" id="cbsemaks12" $chkmode value="17" $checked17 onClick="ReadOnlyCheckBox(this);checkit16()"/>            </td>
-            <td width="86%"> Salinan dokumen sokongan bagi Harta Alih</td>
+            <td width="86%"> Salinan dokumen sokongan bagi </td>
           </tr>
         </table></td>
       </tr>
