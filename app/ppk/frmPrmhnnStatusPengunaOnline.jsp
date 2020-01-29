@@ -84,6 +84,7 @@
     </td>
 	<td width="4%" align="center">Seksyen</td>
   	<td width="15%">Status Pergerakan Fail</td>
+  	<td width="5%" align="center">Tindakan</td>
   </tr>	
     
 	#foreach ($senarai in $senaraitugasan )
@@ -165,8 +166,6 @@
 	#end
   #end
   
-  
-  
   </td>
   <!--<td class="$row">$!senarai.nokpbarupemohon.toUpperCase()</td>
   <td class="$row">
@@ -179,6 +178,7 @@
   #end</td>-->
   <td class="$row" align="center">$senarai.seksyen</td>
   <td class="$row">$senarai.status</td>
+  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doHapus('$!senarai.idFail','$!senarai.id_Permohonan')"><img border="0" src="../img/hapus.gif"/></a></td>
   </tr>
   #end
 		#if ($cnt == 0)
@@ -215,6 +215,8 @@
  
   <input name="no_subjaket" type="hidden" id="no_subjaket" value="$!no_subjaket"/>
     
+  <input type="hidden" name="idFail">  
+    
     
 </fieldset>
 
@@ -226,7 +228,6 @@ function submitForm() {
 //alert('$val_tab')
 if('$!val_tab' != "" && '$!val_tab' != null)
 {
-
    window.location.hash='$!val_tab';
    goTo('$!val_tab');
    }
@@ -317,5 +318,14 @@ function menuUtama(){
 function doChanges() {
 	
 	doAjaxCall${formName}("doChanges");
+}
+function doHapus(idFail,idPermohonan) {
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	document.${formname}.idPermohonan.value=idPermohonan;
+	document.${formname}.idFail.value=idFail;
+	doAjaxCall${formName}("doHapus");
+	document.${formname}.submit();
 }
 </script>
