@@ -3780,11 +3780,11 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
 	// **added by elly for No PB dlm Hakmilik UPT
 	public static Vector<Tblrujjenispb> getRujKodJenisPB() throws Exception {
 		Db db = null;
-		String sql = "Select id_jenispb, kod_jenis_pb, keterangan from " + " tblrujjenispb where id_jenispb not in (40,41,42) "
+		String sql = "select id_jenispb, kod_jenis_pb, keterangan " +
+				"	from tblrujjenispb where id_jenispb not in (40,41,42) "
 				+ " order by lpad(id_jenispb,10)";
 		try {
 			db = new Db();
@@ -3805,7 +3805,41 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
+	public static Vector<Tblrujjenispb> getRujJenisPB(String idJenisPB) throws Exception {
+		Db db = null;
+		String sql = " ";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r.add("id_jenispb");
+			r.add("kod_jenis_pb");
+			r.add("keterangan");
 
+			if (idJenisPB != null)
+				r.add("id_jenispb", idJenisPB);
+			
+			r.add("flag_aktif","Y");
+			sql = r.getSQLSelect("tblrujjenispb");
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Vector<Tblrujjenispb> v = new Vector<Tblrujjenispb>();
+			Tblrujjenispb s = null;
+			while (rs.next()) {
+				s = new Tblrujjenispb();
+				s.setIdJenispb(rs.getLong("id_jenispb"));
+				s.setKodJenisPb(rs.getString("kod_jenis_pb"));
+				s.setKeterangan(rs.getString("keterangan"));
+
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public static Vector<Tblrujjenispb> getRujKodJenisPB(String idJenisPB) throws Exception {
 		Db db = null;
 		String sql = " ";
