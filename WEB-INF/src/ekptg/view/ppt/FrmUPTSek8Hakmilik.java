@@ -2357,7 +2357,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 			list_jenispb = logic.list_jenispb();
 			this.context.put("list_jenispb", list_jenispb);
 			list_jenisnopb = logic.list_jenisnopb();
-			this.context.put("list_jenisnopb", list_jenisnopb);
+			//this.context.put("list_jenisnopb", list_jenisnopb);
 			list_bank = logic.list_bank();
 			this.context.put("list_bank", list_bank);
 			list_negeri = logic.getListnegeri();

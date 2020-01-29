@@ -1,245 +1,161 @@
-<<<<<<< Updated upstream
-2020-01-15 13:00:37,688 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
-2020-01-15 13:00:37,688 - LogSystem has been deprecated. Please use a LogChute implementation.
-2020-01-15 13:00:37,693 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2020-01-15 13:00:37,697 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:37,699 - FileResourceLoader : initialization starting.
-2020-01-15 13:00:37,700 - Do unicode file recognition:  false
-2020-01-15 13:00:37,700 - FileResourceLoader : adding path 'C:\MyeTaPPv7\myetapp_v7\.'
-2020-01-15 13:00:37,700 - FileResourceLoader : initialization complete.
-2020-01-15 13:00:37,899 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
-2020-01-15 13:00:37,899 - Default ResourceManager initialization complete.
-2020-01-15 13:00:37,901 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
-2020-01-15 13:00:37,902 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
-2020-01-15 13:00:37,903 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
-2020-01-15 13:00:37,904 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2020-01-15 13:00:37,906 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2020-01-15 13:00:37,908 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2020-01-15 13:00:37,911 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2020-01-15 13:00:37,912 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2020-01-15 13:00:37,942 - Created '20' parsers.
-2020-01-15 13:00:37,949 - Velocimacro : initialization starting.
-2020-01-15 13:00:37,949 - Velocimacro : adding VMs from VM library : VM_global_library.vm
-2020-01-15 13:00:37,980 - ResourceManager : found VM_global_library.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:37,981 - Velocimacro : VM library registration complete.
-2020-01-15 13:00:37,981 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2020-01-15 13:00:37,981 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2020-01-15 13:00:37,981 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2020-01-15 13:00:37,981 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2020-01-15 13:00:37,981 - Velocimacro : Velocimacro : initialization complete.
-2020-01-15 13:00:37,981 - RuntimeInstance successfully initialized.
-2020-01-15 13:00:54,535 - ResourceManager : found vtl/main/header.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:54,549 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-15 13:00:54,552 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-15 13:00:54,552 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-15 13:00:54,552 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-15 13:00:54,556 - ResourceManager : found vtl/main/header_etapp.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:54,625 - ResourceManager : found vtl/main/greeting.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:54,639 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:54,640 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-15 13:00:54,643 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-15 13:00:54,643 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-15 13:00:54,643 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-15 13:00:54,643 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-15 13:00:54,643 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-15 13:00:54,643 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-15 13:00:54,643 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-15 13:00:54,841 - ResourceManager : found vtl/main/tabber.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:55,863 - ResourceManager : found vtl/main/moduler.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:56,050 - ResourceManager : found vtl/ajax/ajax_main.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:56,111 - ResourceManager : found app/ppk/dashboard.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 85, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 211, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 221, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 231, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 252, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 262, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 431, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 442, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 548, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 564, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 617, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 699, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 753, column 39] : $row cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 754, column 40] : $row cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 759, column 40] : $row cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 763, column 39] : $row cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 764, column 40] : $row cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 769, column 40] : $row cannot be resolved.
-2020-01-15 13:00:56,301 - Null reference [template 'app/ppk/dashboard.jsp', line 773, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 774, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 779, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 785, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 786, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 791, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 797, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 798, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 803, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 809, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 810, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 815, column 20] : $row cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 873, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 1053, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:56,302 - Null reference [template 'app/ppk/dashboard.jsp', line 1061, column 55] : $queryString cannot be resolved.
-2020-01-15 13:00:57,081 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-01-15 13:00:57,081 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-01-15 13:00:57,081 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-01-15 13:00:57,081 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-01-15 13:00:57,081 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-01-15 13:00:57,081 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-01-15 13:00:57,081 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-01-15 13:00:57,094 - ResourceManager : found vtl/main/footer.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:58,239 - ResourceManager : found vtl/ajax/div_main.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:58,254 - ResourceManager : found app/ppk/showNotifikasi_BU.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:58,254 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:58,507 - ResourceManager : found app/ppk/showNotifikasi_FailLengkap.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:58,508 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:58,898 - ResourceManager : found app/ppk/showNotifikasi_Inbox.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:58,900 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:59,113 - ResourceManager : found app/ppk/showNotifikasi_OnlineS17.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:59,113 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:59,237 - ResourceManager : found app/ppk/showNotifikasi_NotisPerbicaraan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:59,237 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:59,313 - ResourceManager : found app/ppk/dashboard_showCountMT.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:59,313 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:59,534 - ResourceManager : found app/ppk/showNotifikasi_Pindah.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:59,534 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:59,652 - ResourceManager : found app/ppk/showNotifikasi_OnlineS8.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:59,653 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:00:59,926 - ResourceManager : found app/ppk/showNotifikasi_Aduan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:00:59,927 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:00,068 - ResourceManager : found app/ppk/showNotifikasi_Edit.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:00,069 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:00,321 - ResourceManager : found app/ppk/dashboard_showKIV_stats.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:00,322 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:00,720 - ResourceManager : found app/ppk/dashboard_mainstats.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:00,720 - Null reference [template 'app/ppk/dashboard_mainstats.jsp', line 62, column 1] : $jquery cannot be resolved.
-2020-01-15 13:01:00,720 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:07,663 - ResourceManager : found app/ppk/dashboard_tab.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:07,674 - ResourceManager : found app/ppk/frmPengumuman.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:07,675 - Null reference [template 'app/ppk/dashboard_tab.jsp', line 63, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:07,675 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:12,498 - ResourceManager : found app/ppk/dashboard_showBorangB_stats.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:12,498 - Null reference [template 'app/ppk/dashboard_showBorangB_stats.jsp', line 46, column 1] : $jquery cannot be resolved.
-2020-01-15 13:01:12,498 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:12,941 - ResourceManager : found app/ppk/dashboard_showCountTukarPegawai.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:12,941 - Null reference [template 'app/ppk/dashboard_showCountTukarPegawai.jsp', line 12, column 1] : $jquery cannot be resolved.
-2020-01-15 13:01:12,941 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:13,992 - ResourceManager : found app/ppk/dashboard_showCountBicaraOnline.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:13,992 - Null reference [template 'app/ppk/dashboard_showCountBicaraOnline.jsp', line 12, column 1] : $jquery cannot be resolved.
-2020-01-15 13:01:13,992 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:14,875 - ResourceManager : found app/ppk/dashboard_showCountHelpDesk.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:14,875 - Null reference [template 'app/ppk/dashboard_showCountHelpDesk.jsp', line 12, column 1] : $jquery cannot be resolved.
-2020-01-15 13:01:14,875 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-15 13:01:16,494 - ResourceManager : found app/ppk/dashboard_carta_main.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-15 13:01:16,494 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
-2020-01-22 22:18:52,556 - SimpleLog4JLogSystem initialized using logfile 'C:\MyeTaPPv7\myetapp_v7\velocity.log'
-2020-01-22 22:18:52,556 - *******************************************************************
-2020-01-22 22:18:52,556 - Starting Apache Velocity v1.6.2 (compiled: 2009-02-19 16:29:46)
-2020-01-22 22:18:52,556 - RuntimeInstance initializing.
-2020-01-22 22:18:52,556 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
-2020-01-22 22:18:52,556 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogSystem
-2020-01-22 22:18:52,556 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogSystem or necessary supporting classes in classpath.
-2020-01-22 22:18:52,557 - java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
-	at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Unknown Source)
-	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:64)
-	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:96)
-	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:154)
-	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:255)
-	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:795)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:250)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
-	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:135)
-	at lebah.portal.velocity.VelocityEngineHolder.<init>(VelocityEngineHolder.java:26)
-	at lebah.portal.velocity.VelocityEngineHolder.getInstance(VelocityEngineHolder.java:34)
-	at lebah.portal.velocity.VServlet.initVelocity(VServlet.java:55)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:135)
-=======
-2020-01-21 13:05:50,781 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,781 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,781 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,781 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,781 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,782 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,782 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,782 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,782 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,782 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,782 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,782 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,782 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:50,782 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:05:56,345 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:05:56,345 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:05:56,345 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:05:56,345 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:05:56,346 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:05:56,415 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:05:56,991 - Parser Exception: app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp
-2020-01-21 13:05:56,991 - org.apache.velocity.runtime.parser.ParseException: Encountered "=" at line 54, column 41.
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.runtime.parser.Parser.generateParseException(Parser.java:3441)
-	at org.apache.velocity.runtime.parser.Parser.jj_consume_token(Parser.java:3318)
-	at org.apache.velocity.runtime.parser.Parser.Directive(Parser.java:833)
-	at org.apache.velocity.runtime.parser.Parser.Statement(Parser.java:373)
-	at org.apache.velocity.runtime.parser.Parser.process(Parser.java:311)
-	at org.apache.velocity.runtime.parser.Parser.parse(Parser.java:105)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1131)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1086)
-	at org.apache.velocity.Template.process(Template.java:124)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
->>>>>>> Stashed changes
+2020-01-22 12:33:06,442 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2648, column 10] : $jquery cannot be resolved.
+2020-01-22 12:33:06,442 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2694, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:06,442 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2706, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:06,442 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2718, column 10] : $jquery cannot be resolved.
+2020-01-22 12:33:06,442 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2751, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:06,442 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2761, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:06,442 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2772, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:06,443 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3359, column 28] : $id_hakmilikpb cannot be resolved.
+2020-01-22 12:33:06,443 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3359, column 45] : $id_kehadiran cannot be resolved.
+2020-01-22 12:33:06,443 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3359, column 61] : $id_pb cannot be resolved.
+2020-01-22 12:33:06,443 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3582, column 12] : $jquery cannot be resolved.
+2020-01-22 12:33:06,443 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3588, column 12] : $jquery cannot be resolved.
+2020-01-22 12:33:06,443 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3594, column 12] : $jquery cannot be resolved.
+2020-01-22 12:33:06,443 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3602, column 1] : $jquery cannot be resolved.
+2020-01-22 12:33:06,457 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-01-22 12:33:06,457 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-01-22 12:33:06,457 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-01-22 12:33:06,457 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-01-22 12:33:06,458 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-01-22 12:33:06,458 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-01-22 12:33:06,458 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-01-22 12:33:06,462 - ResourceManager : found vtl/main/footer.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 12:33:06,515 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-01-22 12:33:06,515 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-01-22 12:33:06,516 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-01-22 12:33:06,516 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-01-22 12:33:06,517 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-01-22 12:33:06,518 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-01-22 12:33:06,518 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:06,518 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-01-22 12:33:06,518 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-01-22 12:33:06,518 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:06,518 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:06,518 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-01-22 12:33:06,518 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:06,518 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:06,519 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-01-22 12:33:06,520 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-01-22 12:33:06,520 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-01-22 12:33:06,520 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-01-22 12:33:06,520 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-01-22 12:33:06,521 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-01-22 12:33:06,521 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-01-22 12:33:06,521 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-01-22 12:33:06,635 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-01-22 12:33:08,591 - ResourceManager : found app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 12:33:08,594 - ResourceManager : found app/ppt/frmLabelSet.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 12:33:08,595 - Left side ($id_negeriprojek) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp[line 548, column 56]
+2020-01-22 12:33:08,595 - Left side of '>=' operation is not a Number at app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp[line 1362, column 26]
+2020-01-22 12:33:08,621 - ResourceManager : found app/ppt/frmSeksyen8ListHM.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 12:33:08,622 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2616, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:08,622 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2668, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:08,623 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2712, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:08,623 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2752, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:08,623 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2790, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:08,623 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2830, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:08,624 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-01-22 12:33:08,624 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-01-22 12:33:08,624 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-01-22 12:33:08,624 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-01-22 12:33:08,624 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-01-22 12:33:08,624 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-01-22 12:33:08,624 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-01-22 12:33:15,849 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-01-22 12:33:15,849 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-01-22 12:33:15,849 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-01-22 12:33:15,849 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:15,850 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:15,851 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-01-22 12:33:15,851 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-01-22 12:33:15,851 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-01-22 12:33:15,851 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-01-22 12:33:15,851 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-01-22 12:33:15,851 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-01-22 12:33:15,851 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-01-22 12:33:15,851 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-01-22 12:33:15,939 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-01-22 12:33:16,158 - Left side ($maklumat_PB_Salin.size()) of '>' operation has null value at app/ppt/HMdanPB/frmUPTSek8PB.jsp[line 43, column 32]
+2020-01-22 12:33:16,159 - Left side ($maklumat_kehadiran.size()) of '>' operation has null value at app/ppt/HMdanPB/frmUPTSek8PB.jsp[line 66, column 40]
+2020-01-22 12:33:16,160 - Left side ($maklumat_kehadiran.size()) of '>' operation has null value at app/ppt/HMdanPB/frmUPTSek8PB.jsp[line 121, column 89]
+2020-01-22 12:33:16,160 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 167, column 110] : $list.JENISPB cannot be resolved.
+2020-01-22 12:33:16,163 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 264, column 110] : $list.NAMA_KP cannot be resolved.
+2020-01-22 12:33:16,163 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 285, column 110] : $list.NAMA_KP cannot be resolved.
+2020-01-22 12:33:16,163 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 300, column 110] : $list.NAMA_KP cannot be resolved.
+2020-01-22 12:33:16,163 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 316, column 134] : $list.JENISNOPB cannot be resolved.
+2020-01-22 12:33:16,163 - Could not determine type of iterator in #foreach loop at app/ppt/HMdanPB/frmUPTSek8PB.jsp[line 351, column 153]
+2020-01-22 12:33:16,163 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 393, column 118] : $list.NAMA_NEGERI cannot be resolved.
+2020-01-22 12:33:16,164 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 427, column 142] : $list.KETERANGAN cannot be resolved.
+2020-01-22 12:33:16,165 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 550, column 110] : $list.NO_AKAUN cannot be resolved.
+2020-01-22 12:33:16,165 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 570, column 110] : $list.NO_AKAUN cannot be resolved.
+2020-01-22 12:33:16,168 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 615, column 110] : $list.NO_AKAUN cannot be resolved.
+2020-01-22 12:33:16,168 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 638, column 110] : $list.ALAMAT1 cannot be resolved.
+2020-01-22 12:33:16,168 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 658, column 110] : $list.ALAMAT2 cannot be resolved.
+2020-01-22 12:33:16,168 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 673, column 110] : $list.ALAMAT3 cannot be resolved.
+2020-01-22 12:33:16,168 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 689, column 110] : $list.POSKOD cannot be resolved.
+2020-01-22 12:33:16,168 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 710, column 150] : $list.NAMA_NEGERI cannot be resolved.
+2020-01-22 12:33:16,169 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 751, column 142] : $list.NAMA_BANDAR cannot be resolved.
+2020-01-22 12:33:16,169 - Could not determine type of iterator in #foreach loop at app/ppt/HMdanPB/frmUPTSek8PB.jsp[line 770, column 189]
+2020-01-22 12:33:16,177 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 1489, column 25] : $jenis_permohonan cannot be resolved.
+2020-01-22 12:33:16,177 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 1614, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,177 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2083, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,177 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2095, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,177 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2113, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,177 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2126, column 6] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2154, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2166, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2185, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2201, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2324, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2329, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2336, column 6] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2341, column 7] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2349, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2366, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2383, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2508, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2513, column 7] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2518, column 6] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2523, column 7] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2535, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,178 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2582, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,179 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2594, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,179 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2636, column 12] : $jquery cannot be resolved.
+2020-01-22 12:33:16,179 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2648, column 10] : $jquery cannot be resolved.
+2020-01-22 12:33:16,179 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2694, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,179 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2706, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,179 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2718, column 10] : $jquery cannot be resolved.
+2020-01-22 12:33:16,179 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2751, column 8] : $jquery cannot be resolved.
+2020-01-22 12:33:16,179 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2761, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,179 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 2772, column 9] : $jquery cannot be resolved.
+2020-01-22 12:33:16,180 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3582, column 12] : $jquery cannot be resolved.
+2020-01-22 12:33:16,180 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3588, column 12] : $jquery cannot be resolved.
+2020-01-22 12:33:16,180 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3594, column 12] : $jquery cannot be resolved.
+2020-01-22 12:33:16,180 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8PB.jsp', line 3602, column 1] : $jquery cannot be resolved.
+2020-01-22 12:33:16,182 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-01-22 12:33:16,182 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-01-22 12:33:16,182 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-01-22 12:33:16,182 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-01-22 12:33:16,182 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-01-22 12:33:16,182 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-01-22 12:33:16,182 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-01-22 13:03:14,262 - SimpleLog4JLogSystem initialized using logfile '/Users/mohamadrosli/Documents/workspace2019/myetapp/myetapp_v7/velocity.log'
+2020-01-22 13:03:14,263 - *******************************************************************
+2020-01-22 13:03:14,263 - Starting Apache Velocity v1.6.2 (compiled: 2009-02-19 16:29:46)
+2020-01-22 13:03:14,264 - RuntimeInstance initializing.
+2020-01-22 13:03:14,264 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2020-01-22 13:03:14,264 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogSystem
+2020-01-22 13:03:14,264 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogSystem or necessary supporting classes in classpath.
+2020-01-22 13:03:14,265 - java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
 	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
@@ -248,967 +164,68 @@ Was expecting one of:
 	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:748)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:486)
+	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:411)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:338)
 	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
 	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:318)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-<<<<<<< Updated upstream
-Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
-	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1892)
-	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1735)
-	... 49 more
-
-2020-01-22 22:18:52,569 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
-2020-01-22 22:18:52,569 - LogSystem has been deprecated. Please use a LogChute implementation.
-2020-01-22 22:18:52,574 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2020-01-22 22:18:52,579 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-22 22:18:52,581 - FileResourceLoader : initialization starting.
-2020-01-22 22:18:52,581 - Do unicode file recognition:  false
-2020-01-22 22:18:52,581 - FileResourceLoader : adding path 'C:\MyeTaPPv7\myetapp_v7\.'
-2020-01-22 22:18:52,581 - FileResourceLoader : initialization complete.
-2020-01-22 22:18:52,605 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
-2020-01-22 22:18:52,605 - Default ResourceManager initialization complete.
-2020-01-22 22:18:52,607 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
-2020-01-22 22:18:52,609 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
-2020-01-22 22:18:52,610 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
-2020-01-22 22:18:52,611 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2020-01-22 22:18:52,613 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2020-01-22 22:18:52,614 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2020-01-22 22:18:52,617 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2020-01-22 22:18:52,619 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2020-01-22 22:18:52,654 - Created '20' parsers.
-2020-01-22 22:18:52,665 - Velocimacro : initialization starting.
-2020-01-22 22:18:52,665 - Velocimacro : adding VMs from VM library : VM_global_library.vm
-2020-01-22 22:18:52,727 - ResourceManager : found VM_global_library.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-22 22:18:52,728 - Velocimacro : VM library registration complete.
-2020-01-22 22:18:52,728 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2020-01-22 22:18:52,728 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2020-01-22 22:18:52,729 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2020-01-22 22:18:52,729 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2020-01-22 22:18:52,729 - Velocimacro : Velocimacro : initialization complete.
-2020-01-22 22:18:52,729 - RuntimeInstance successfully initialized.
-=======
-
-2020-01-21 13:05:56,992 - ResourceManager.getResource() parse exception
-2020-01-21 13:05:56,992 - org.apache.velocity.exception.ParseErrorException: Encountered "=" at app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp[line 54, column 41]
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.Template.process(Template.java:141)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:318)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-
-2020-01-21 13:12:35,335 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:12:35,335 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:12:35,335 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:12:35,335 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:12:35,336 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:12:35,337 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:12:35,337 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:12:35,453 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:12:36,726 - Parser Exception: app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp
-2020-01-21 13:12:36,726 - org.apache.velocity.runtime.parser.ParseException: Encountered "=" at line 54, column 41.
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.runtime.parser.Parser.generateParseException(Parser.java:3441)
-	at org.apache.velocity.runtime.parser.Parser.jj_consume_token(Parser.java:3318)
-	at org.apache.velocity.runtime.parser.Parser.Directive(Parser.java:833)
-	at org.apache.velocity.runtime.parser.Parser.Statement(Parser.java:373)
-	at org.apache.velocity.runtime.parser.Parser.process(Parser.java:311)
-	at org.apache.velocity.runtime.parser.Parser.parse(Parser.java:105)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1131)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1086)
-	at org.apache.velocity.Template.process(Template.java:124)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-
-2020-01-21 13:12:36,726 - ResourceManager.getResource() parse exception
-2020-01-21 13:12:36,727 - org.apache.velocity.exception.ParseErrorException: Encountered "=" at app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp[line 54, column 41]
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.Template.process(Template.java:141)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-
-2020-01-21 13:15:21,806 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:15:21,807 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:15:21,807 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:15:21,807 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:15:21,807 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:15:21,807 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:15:21,807 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:15:21,807 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:15:21,807 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:15:21,808 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:15:22,130 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:15:23,222 - Parser Exception: app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp
-2020-01-21 13:15:23,223 - org.apache.velocity.runtime.parser.ParseException: Encountered "=" at line 55, column 41.
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.runtime.parser.Parser.generateParseException(Parser.java:3441)
-	at org.apache.velocity.runtime.parser.Parser.jj_consume_token(Parser.java:3318)
-	at org.apache.velocity.runtime.parser.Parser.Directive(Parser.java:833)
-	at org.apache.velocity.runtime.parser.Parser.Statement(Parser.java:373)
-	at org.apache.velocity.runtime.parser.Parser.process(Parser.java:311)
-	at org.apache.velocity.runtime.parser.Parser.parse(Parser.java:105)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1131)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1086)
-	at org.apache.velocity.Template.process(Template.java:124)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-
-2020-01-21 13:15:23,223 - ResourceManager.getResource() parse exception
-2020-01-21 13:15:23,224 - org.apache.velocity.exception.ParseErrorException: Encountered "=" at app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp[line 55, column 41]
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.Template.process(Template.java:141)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-
-2020-01-21 13:38:21,070 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:38:21,071 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:38:21,071 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:38:21,071 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:21,071 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:21,072 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:38:21,072 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:38:21,072 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:38:21,072 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:21,072 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:21,072 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:21,072 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:38:21,072 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:38:21,157 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:38:21,707 - Parser Exception: app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp
-2020-01-21 13:38:21,708 - org.apache.velocity.runtime.parser.ParseException: Encountered "=" at line 55, column 41.
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.runtime.parser.Parser.generateParseException(Parser.java:3441)
-	at org.apache.velocity.runtime.parser.Parser.jj_consume_token(Parser.java:3318)
-	at org.apache.velocity.runtime.parser.Parser.Directive(Parser.java:833)
-	at org.apache.velocity.runtime.parser.Parser.Statement(Parser.java:373)
-	at org.apache.velocity.runtime.parser.Parser.process(Parser.java:311)
-	at org.apache.velocity.runtime.parser.Parser.parse(Parser.java:105)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1131)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1086)
-	at org.apache.velocity.Template.process(Template.java:124)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-
-2020-01-21 13:38:21,708 - ResourceManager.getResource() parse exception
-2020-01-21 13:38:21,708 - org.apache.velocity.exception.ParseErrorException: Encountered "=" at app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp[line 55, column 41]
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.Template.process(Template.java:141)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-
-2020-01-21 13:38:23,694 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:38:23,695 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:38:23,695 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:38:23,695 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:23,695 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:23,696 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:38:23,696 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:38:23,696 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:38:23,696 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:23,696 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:23,696 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:23,696 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:38:23,696 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:38:28,450 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:38:39,342 - ResourceManager : found app/ppk/frmSenaraiFailPusakaKecil.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-21 13:38:45,595 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:38:45,595 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:38:45,595 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:38:45,595 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:38:45,597 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:38:45,683 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:38:49,429 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,429 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,429 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,429 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,429 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,429 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,429 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,429 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:49,430 - RHS of #set statement is null. Context will not be modified. app/ppk/frmSenaraiFailKeputusanPermohonan.jsp[line 113, column 8]
-2020-01-21 13:38:56,038 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:38:56,039 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:38:56,039 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:38:56,039 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:38:56,039 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:38:56,040 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:38:56,129 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:38:56,620 - Parser Exception: app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp
-2020-01-21 13:38:56,621 - org.apache.velocity.runtime.parser.ParseException: Encountered "=" at line 55, column 41.
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.runtime.parser.Parser.generateParseException(Parser.java:3441)
-	at org.apache.velocity.runtime.parser.Parser.jj_consume_token(Parser.java:3318)
-	at org.apache.velocity.runtime.parser.Parser.Directive(Parser.java:833)
-	at org.apache.velocity.runtime.parser.Parser.Statement(Parser.java:373)
-	at org.apache.velocity.runtime.parser.Parser.process(Parser.java:311)
-	at org.apache.velocity.runtime.parser.Parser.parse(Parser.java:105)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1131)
-	at org.apache.velocity.runtime.RuntimeInstance.parse(RuntimeInstance.java:1086)
-	at org.apache.velocity.Template.process(Template.java:124)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:318)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-
-2020-01-21 13:38:56,621 - ResourceManager.getResource() parse exception
-2020-01-21 13:38:56,621 - org.apache.velocity.exception.ParseErrorException: Encountered "=" at app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp[line 55, column 41]
-Was expecting one of:
-    <RPAREN> ...
-    "," ...
-    <IDENTIFIER> ...
-    "{" ...
-    <WORD> ...
-    <STRING_LITERAL> ...
-    <INTEGER_LITERAL> ...
-    "[" ...
-    <FLOATING_POINT_LITERAL> ...
-    "{" ...
-    "true" ...
-    "false" ...
-    
-	at org.apache.velocity.Template.process(Template.java:141)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.loadResource(ResourceManagerImpl.java:446)
-	at org.apache.velocity.runtime.resource.ResourceManagerImpl.getResource(ResourceManagerImpl.java:354)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1400)
-	at org.apache.velocity.runtime.RuntimeInstance.getTemplate(RuntimeInstance.java:1380)
-	at org.apache.velocity.app.VelocityEngine.getTemplate(VelocityEngine.java:401)
-	at ekptg.view.ppk.FrmSenaraiFailKeputusanPermohonanInternal.doTemplate(FrmSenaraiFailKeputusanPermohonanInternal.java:3592)
-	at lebah.portal.velocity.VTemplate.getBuffer(VTemplate.java:115)
-	at lebah.portal.velocity.VTemplate.print(VTemplate.java:146)
-	at lebah.portal.DisplayContent.printContent(DisplayContent.java:1131)
-	at lebah.portal.DisplayContent.showNavigationType(DisplayContent.java:323)
-	at lebah.portal.DesktopController.createPortalPage(DesktopController.java:779)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:512)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:318)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Unknown Source)
-
-2020-01-21 13:42:46,876 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:42:46,876 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:42:46,877 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:42:46,877 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:42:46,877 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:42:46,878 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:42:46,878 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:42:46,878 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:42:46,878 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:42:46,973 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:42:48,802 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp[line 158, column 4]
-2020-01-21 13:42:48,802 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp[line 191, column 1]
-2020-01-21 13:42:48,802 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 196, column 48] : $id_Simati cannot be resolved.
-2020-01-21 13:42:48,802 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 199, column 47] : $id_Simati cannot be resolved.
-2020-01-21 13:42:48,802 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 201, column 48] : $idPemohon cannot be resolved.
-2020-01-21 13:42:48,802 - Left side ($listsept.size()) of '>' operation has null value at app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp[line 342, column 34]
-2020-01-21 13:42:48,802 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 641, column 43] : $userid cannot be resolved.
-2020-01-21 13:43:08,994 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:43:08,994 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:43:08,994 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:43:08,994 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:43:08,995 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:43:09,055 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:43:11,396 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp[line 158, column 4]
-2020-01-21 13:43:11,396 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 196, column 48] : $id_Simati cannot be resolved.
-2020-01-21 13:43:11,396 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 199, column 47] : $id_Simati cannot be resolved.
-2020-01-21 13:43:11,396 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 201, column 48] : $idPemohon cannot be resolved.
-2020-01-21 13:43:11,396 - Left side ($listsept.size()) of '>' operation has null value at app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp[line 342, column 34]
-2020-01-21 13:43:11,396 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 641, column 43] : $userid cannot be resolved.
-2020-01-21 13:43:13,464 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-01-21 13:43:13,464 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-01-21 13:43:13,464 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-01-21 13:43:13,464 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-01-21 13:43:13,465 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-01-21 13:43:13,527 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-01-21 13:43:15,490 - ResourceManager : found app/ppk/frmPrmhnnSek8DaftarSek8.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-21 13:43:15,494 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 293, column 3]
-2020-01-21 13:43:15,494 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 301, column 58] : $id_S cannot be resolved.
-2020-01-21 13:43:15,494 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 302, column 62] : $id_SF cannot be resolved.
-2020-01-21 13:43:15,494 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 305, column 3]
-2020-01-21 13:43:15,495 - Left side ($!headerppk.size()) of '>' operation has null value at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 327, column 26]
-2020-01-21 13:43:15,495 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 334, column 46] : $mode2 cannot be resolved.
-2020-01-21 13:43:15,495 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 335, column 53] : $idPemohonan cannot be resolved.
-2020-01-21 13:43:15,495 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 336, column 48] : $idFail cannot be resolved.
-2020-01-21 13:43:15,496 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 1122, column 5]
-2020-01-21 13:43:15,496 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1396, column 61] : $listpemohon.idTarafkptg cannot be resolved.
-2020-01-21 13:43:15,498 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1612, column 80] : $setMode cannot be resolved.
-2020-01-21 13:43:15,508 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1711, column 80] : $setMode cannot be resolved.
-2020-01-21 13:43:15,509 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 2242, column 30]
-2020-01-21 13:43:15,510 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 2399, column 15]
-2020-01-21 13:43:15,511 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 2412, column 30]
-2020-01-21 13:43:15,511 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 2468, column 35]
-2020-01-21 13:43:15,511 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2625, column 77] : $idFail cannot be resolved.
-2020-01-21 13:43:15,532 - ResourceManager : found app/ppk/SuratMintaMaklumat.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-01-21 13:43:15,533 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
-2020-01-21 13:43:15,638 - Null reference [template 'app/ppk/SuratMintaMaklumat.jsp', line 93, column 89] : $EkptgUtil.getCatatan($IdPermohonan).CATATAN_MAKLUMAT_TAMBAHAN cannot be resolved.
-2020-01-21 13:43:15,638 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2646, column 84] : $idFail cannot be resolved.
-2020-01-21 13:43:15,638 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2649, column 85] : $idFail cannot be resolved.
-2020-01-21 13:43:15,638 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2652, column 88] : $idFail cannot be resolved.
-2020-01-21 13:43:15,638 - Null reference [template 'app/ppk/headerppk_script.jsp', line 19, column 19] : $jquery cannot be resolved.
-2020-01-21 13:43:15,638 - Null reference [template 'app/ppk/headerppk_script.jsp', line 29, column 19] : $jquery cannot be resolved.
-2020-01-21 13:43:15,638 - Null reference [template 'app/ppk/headerppk_script.jsp', line 48, column 11] : $jquery cannot be resolved.
-2020-01-21 13:43:15,638 - Null reference [template 'app/ppk/headerppk_script.jsp', line 56, column 11] : $jquery cannot be resolved.
-2020-01-21 13:43:15,638 - Null reference [template 'app/ppk/headerppk_script.jsp', line 268, column 1] : $jquery cannot be resolved.
-2020-01-21 13:43:15,661 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5297, column 1] : $jquery cannot be resolved.
-2020-01-21 13:43:15,661 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5301, column 1] : $jquery cannot be resolved.
-2020-01-21 13:43:15,661 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5304, column 3] : $jquery cannot be resolved.
-2020-01-21 13:43:15,661 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5307, column 1] : $jquery cannot be resolved.
-2020-01-21 13:43:15,661 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5331, column 83] : $idFail cannot be resolved.
-2020-01-21 13:43:15,661 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5384, column 38] : $jquery cannot be resolved.
-2020-01-21 13:43:15,661 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5387, column 87] : $idFail cannot be resolved.
->>>>>>> Stashed changes
+2020-01-22 13:03:14,265 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+2020-01-22 13:03:14,266 - LogSystem has been deprecated. Please use a LogChute implementation.
+2020-01-22 13:03:14,270 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2020-01-22 13:03:14,281 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 13:03:14,282 - FileResourceLoader : initialization starting.
+2020-01-22 13:03:14,282 - Do unicode file recognition:  false
+2020-01-22 13:03:14,282 - FileResourceLoader : adding path '/Users/mohamadrosli/Documents/workspace2019/myetapp/myetapp_v7/.'
+2020-01-22 13:03:14,282 - FileResourceLoader : initialization complete.
+2020-01-22 13:03:14,313 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2020-01-22 13:03:14,313 - Default ResourceManager initialization complete.
+2020-01-22 13:03:14,315 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2020-01-22 13:03:14,316 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2020-01-22 13:03:14,318 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2020-01-22 13:03:14,321 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2020-01-22 13:03:14,323 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2020-01-22 13:03:14,324 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2020-01-22 13:03:14,327 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2020-01-22 13:03:14,328 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2020-01-22 13:03:14,369 - Created '20' parsers.
+2020-01-22 13:03:14,385 - Velocimacro : initialization starting.
+2020-01-22 13:03:14,385 - Velocimacro : adding VMs from VM library : VM_global_library.vm
+2020-01-22 13:03:14,440 - ResourceManager : found VM_global_library.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 13:03:14,441 - Velocimacro : VM library registration complete.
+2020-01-22 13:03:14,441 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2020-01-22 13:03:14,441 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2020-01-22 13:03:14,441 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2020-01-22 13:03:14,441 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2020-01-22 13:03:14,442 - Velocimacro : Velocimacro : initialization complete.
+2020-01-22 13:03:14,442 - RuntimeInstance successfully initialized.
+2020-01-22 13:03:15,481 - ResourceManager : found vtl/main/header.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 13:03:15,499 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-01-22 13:03:15,500 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-01-22 13:03:15,501 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-01-22 13:03:15,501 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-01-22 13:03:15,506 - ResourceManager : found vtl/main/header_etapp.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 13:03:15,673 - ResourceManager : found vtl/main/greeting.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 13:03:15,679 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-01-22 13:03:15,679 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-01-22 13:03:15,679 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-01-22 13:03:15,679 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-01-22 13:03:15,679 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-01-22 13:03:15,679 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-01-22 13:03:15,679 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-01-22 13:03:15,679 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-01-22 13:03:15,679 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-01-22 13:03:15,680 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-01-22 13:03:15,680 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-01-22 13:03:15,681 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-01-22 13:03:15,681 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-01-22 13:03:15,681 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-01-22 13:03:15,681 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-01-22 13:03:15,681 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-01-22 13:03:15,681 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-01-22 13:03:15,681 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-01-22 13:03:15,839 - ResourceManager : found vtl/main/tabber.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 13:03:16,163 - ResourceManager : found vtl/main/moduler.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 13:03:16,184 - ResourceManager : found vtl/main/module_title.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-01-22 13:03:16,185 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-01-22 13:03:16,597 - ResourceManager : found vtl/main/footer.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader

@@ -461,9 +461,7 @@ public class DesktopController extends VServlet {
 		out.println("<script type=\"text/javascript\" src=\"../bootstrap-wysihtml5-master/lib/js/prettify.js\" ></script>");
 		out.println("<script type=\"text/javascript\" src=\"../bootstrap-wysihtml5-master/lib/js/bootstrap.min.js\" ></script>");
 		out.println("<script type=\"text/javascript\" src=\"../bootstrap-wysihtml5-master/src/bootstrap-wysihtml5.js\" ></script>");
-		
-		
-		
+				
 		out.println("<script>var $jquery = jQuery.noConflict();</script>");
 		out.println((new StringBuilder(
 				"<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/"))
@@ -940,7 +938,7 @@ public class DesktopController extends VServlet {
 		Db db = null;
 		ResultSet rs = null;
 		Statement stmt = null;
-		List listRolei = null;
+		List<Map<String, String>> listRolei = null;
 		String sql = "";
 		
 		try {
@@ -1010,10 +1008,7 @@ public class DesktopController extends VServlet {
 		}
 		return listRolei;
 
-	}
-	
-	
-	
+	}	
 //	private static boolean getx(int y, int m) {
 //		Calendar calendar = Calendar.getInstance();
 //		calendar.set(y, m - 1, 1);

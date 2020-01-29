@@ -110,7 +110,8 @@
       #parse("app/utils/record_paging_popup.jsp")
       <table align="center" width="100%">
       <tr>
-          <td colspan="6" scope="row"><input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:daftarHakmilik()"/>
+          <td colspan="6" scope="row">
+<!--           <input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:daftarHakmilik()"/> -->
           <input name="cmdPilih" type="button" value="Pilih Hakmilik" onClick="javascript:pilihHakmilik()"/>
           </td>
         </tr>

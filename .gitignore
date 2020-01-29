@@ -1,6 +1,6 @@
 # ignore all logs
 *.log
-velocity.log.1
+#*.1
 
 # ignore all class
 *.class
@@ -8,5 +8,7 @@ velocity.log.1
 # ignore all properties
 *.properties
 
+work/
 .tomcatplugin
 
+WEB-INF/classes/

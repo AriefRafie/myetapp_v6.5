@@ -107,7 +107,7 @@
       #end
       #if ($!{session.getAttribute("FLAG_FROM")} == 'failHQ')
       #if($idStatus == '1610201' && $modePopup == '')
-      <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="seterusnya()"/ >
+      <input type="button" name="cmdHantar" id="cmdHantar" value="Ke Keputusan" onClick="seterusnya()"/ >
       <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
       #end
       #end

@@ -16,9 +16,8 @@ import lebah.db.Db;
 import org.apache.log4j.Logger;
 
 import ekptg.report.EkptgReportServlet;
-
+import ekptg.report.ppk.BorangF;
   
-
 public class BorangE extends EkptgReportServlet{
 	static Logger myLogger = Logger.getLogger(BorangE.class);
 	FrmPopupPilihPegawaiReportData logic = new FrmPopupPilihPegawaiReportData();
@@ -169,7 +168,8 @@ public class BorangE extends EkptgReportServlet{
 				double total = 0.0;
 				while (rs.next()) {
 					total += ((rs.getString("NILAI_HTA_TARIKHMOHON").equals("") || rs.getString("NILAI_HTA_TARIKHMOHON") == null) ? 0 : rs.getDouble("NILAI_HTA_TARIKHMOHON"));
-				}			
+				}		
+				myLogger.info("nilaiHTA:total="+total);
 			return total;
 		} finally {
 			/*
@@ -375,70 +375,56 @@ if (db != null)
 	}
 }
 
-	public void doProcessing(HttpServletRequest request,
-			HttpServletResponse response, ServletContext context, Map parameters)
-			throws Exception {
-		
-	//	System.out.println("masuk BORANG e ::::::::::: ");
+	public void doProcessing(HttpServletRequest request
+		,HttpServletResponse response
+		,ServletContext context
+		,Map parameters) throws Exception {		
 		String idfail = "";
 		if (parameters.get("idfail") != null){
 			idfail = (String)parameters.get("idfail");
 		}
 		
 		String nofail = logic.getNoFailByIdFail(idfail);
-		
 		String nilai_1 = "0";
 		String nilai_2 = "00";
 		double total = 0;
-		//System.out.println("masuk idfail e ::::::::::: " + idfail);
-		if(!idfail.equals(""))
-		{
-			
+		if(!idfail.equals("")){
 			Db db = null;
 			try {
-				db = new Db();
-				//System.out.println("TOTAL atas ::::::::::: "+total);
-				
-				double hta = nilaiHTA(idfail,db);
+				db = new Db();			
+				BorangF bhta = new BorangF();
+				double hta = bhta.nilaiHTA(idfail, db);
 				double ha = nilaiHA(idfail,db);
 				double hutang = nilaiHutang(idfail,db);
-				
-				
-				//System.out.println("nilaiHTA  ::::::::::: "+hta);
-				//System.out.println("nilaiHA  ::::::::::: "+ha);
-				//System.out.println("nilaiHTA  ::::::::::: "+hutang);
-				
+//				double hta = nilaiHTA(idfail,db);
+//				double ha = nilaiHA(idfail,db);
+//				double hutang = nilaiHutang(idfail,db);
+				myLogger.info("nilaiHTA="+hta+",nilaiHA="+ha+"nilaiHTA Hutang="+hutang);			
 				
 				total = (hta + ha) - hutang;
-				//System.out.println("TOTAL bawah ::::::::::: "+total);
 				String total_curr = String.format("%,.2f", total);
-				//System.out.println(" total_curr : "+total_curr);
 				//String s = total_curr;
 				if (total_curr.contains(".")) {
-					System.out.println(" ada titik : ");
+//					System.out.println(" ada titik : ");
 					//String[] str_total_curr = total_curr.split(".");
 					//System.out.println(" str_total_curr : "+str_total_curr[0]);
 					nilai_1 = total_curr.substring(0, total_curr.indexOf('.'));
-					//System.out.println(" nilai_1 : "+nilai_1);
 					nilai_2 = total_curr.substring(total_curr.lastIndexOf(".") + 1);
 					//System.out.println(" nilai_2 : "+nilai_2);
 					//nilai_1 = str_total_curr[0];
 					//System.out.println(" nilai_1 : "+nilai_1);
 					//nilai_2 = str_total_curr[1];
 					//System.out.println(" total_curr : "+total_curr+" nilai_1 "+nilai_1+" nilai_2 "+nilai_2);
+				
 				}
 				
-			}
-			catch(Exception e)
-			{
+			}catch(Exception e){
 				System.out.println("ERROR KIRA ++++++++++++++++++++++++++++++++++++++ "+e.toString());
-			}
-			finally {
+			}finally {
 				if (db != null)
 					db.close();
 			}
 			
-	
 		}
 		parameters.put("NILAI_BERSIH_1", nilai_1);
 		parameters.put("NILAI_BERSIH_2", nilai_2);
@@ -477,15 +463,12 @@ if (db != null)
 		String statusFail = "";
 		statusFail = logic.getStatusFail(idfail); 
 		//System.out.println("statusFail==="+statusFail);
-		if (statusFail.equals("21")) {
-			
+		if (statusFail.equals("21")) {			
 			parameters.put("statusFail", "T");
 		//	System.out.println("statusFail===T");
 		} else {
 			parameters.put("statusFail", "Y");
-		//	System.out.println("statusFail===Y");
-			
-			
+		//	System.out.println("statusFail===Y");						
 		}
 		
 		logic.setMaklumatPegawai(idPegawai, "B");
@@ -494,6 +477,7 @@ if (db != null)
 			Hashtable h = (Hashtable) list.get(0);
 			parameters.put("namaPegawai",(String)h.get("nama"));
 			parameters.put("jawatan",(String)h.get("jawatan"));
+		
 		}
 
 		parameters.put("daerahMohon",logic.getDaerahMohon(nofail, "B"));
@@ -507,42 +491,32 @@ if (db != null)
 
 		if (listPentadbir.size() != 0){
 			for(int i = 0; i < listPentadbir.size(); i++){
-			Hashtable h = (Hashtable)listPentadbir.get(i);
-			namaPentadbir = (String)h.get("maklumatPentadbirUtkBorangE");
-			parameters.put("namaPentadbir", namaPentadbir);
-			namaPentadbirBorangF = h.get("maklumatPentadbir").toString();
-			parameters.put("namaPentadbirBorangF", namaPentadbirBorangF);
+				Hashtable h = (Hashtable)listPentadbir.get(i);
+				namaPentadbir = (String)h.get("maklumatPentadbirUtkBorangE");
+				parameters.put("namaPentadbir", namaPentadbir);
+				namaPentadbirBorangF = h.get("maklumatPentadbir").toString();
+				parameters.put("namaPentadbirBorangF", namaPentadbirBorangF);
+			
 			}
-		}
-		else{
+		
+		}else{
 			parameters.put("namaPentadbir", namaPentadbir);
 			parameters.put("namaPentadbirBorangF", namaPentadbirBorangF);
+		
 		}
 		
 		//parameters.put("namaPentadbir", namaPentadbir);
 		//namaPentadbirBorangF = logic.setMaklumatPentadbirString( idfail);
 		//parameters.put("namaPentadbirBorangF", namaPentadbirBorangF);
-		
-		
-		//System.out.println("namaPentadbir==="+namaPentadbir);
-		//System.out.println("namaPentadbirBorangF==="+namaPentadbirBorangF);
-		
-		
-		
-		parameters.put("flagBorangF", logic.getFlagBorangF(idfail));
-		
-		
-		String flagVersion = (String)parameters.get("flagVersion");
-		
+		parameters.put("flagBorangF", logic.getFlagBorangF(idfail));		
+		String flagVersion = (String)parameters.get("flagVersion");		
 		/*if(flagVersion.equals("")){
 			flagVersion = "no";
 		}*/
-		//System.out.println("flagVersion==="+flagVersion);
-		//System.out.println("flagKemaskini==="+flagKemaskini);
-			
-			doVersioningPPK("BorangE",idfail,nofail,flagVersion,flagKemaskini);
-	
-	
+		
+		doVersioningPPK("BorangE",idfail,nofail,flagVersion,flagKemaskini);
 		
 	}
+	
+	
 }

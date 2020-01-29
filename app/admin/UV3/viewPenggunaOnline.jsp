@@ -44,11 +44,7 @@ else
 		<table width="100%" border="0">
 			<tr>
 			<td valign="top"  width="1%"></td><td valign="top"  width="28%"></td><td valign="top"  width="1%"></td><td valign="top"  width="70%"><!-- $viewPengguna --></td>
-			</tr>
-			
-			
-			
-			
+			</tr>			
 			<tr>
 				<td valign="top" >				
 				</td>			

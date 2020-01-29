@@ -310,7 +310,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
         <td><a href="#" class="style2" onClick="javascript:cetakSuratIringanBorangO('$id_fail','$id_bantahan','$id_hakmilikpb','$id_permohonan')"><font color="blue"> Surat Iringan Borang O - Rujukan Kepada Mahkamah </font></a>
         </td>
       </tr>
-	  <!-- Hide Paparan Borang D, E, H, K -->
+	  <!-- PPT-36 Hide Paparan Borang D, E, H, K -->
 	  <!--<tr>
 		<td><a href="#" onClick="javascript:cetakBorangD('$!id_fail','$!saiz_listTanah','$!nama_pengarah')"><font color="blue">Borang D</font></a></td>
 	  </tr>      

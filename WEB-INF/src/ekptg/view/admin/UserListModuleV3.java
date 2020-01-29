@@ -36,6 +36,10 @@ import ekptg.helpers.Paging2;
 //diba tambah
 
 public class UserListModuleV3 extends AjaxBasedModule {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1710185038635698513L;
 	static Logger myLogger = Logger.getLogger(UserListModuleV3.class);
 	String skrin_name = "app/admin/UV3/index.jsp";
 	
@@ -106,18 +110,13 @@ public class UserListModuleV3 extends AjaxBasedModule {
 		String filter_negeri = "";
 		this.context.put("FlagCari", FlagCari);
 		myLogger.info("V3 command : "+command +" FlagCari : "+FlagCari);
-		if(command.equals("carianUtama"))
-		{
+		if(command.equals("carianUtama")){
 			this.context.put("FlagCari", FlagCari);
 			skrin_name = "app/admin/UV3/SenaraiUtama.jsp";
 			
-		}
-		else if(command.equals("batalCarianUtama"))
-		{
+		}else if(command.equals("batalCarianUtama")){
 			skrin_name = "app/admin/UV3/SenaraiUtama.jsp";
-		}		
-		else if(command.equals("UploadDocPIP"))
-		{
+		}else if(command.equals("UploadDocPIP")){
 			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
 			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
 			
@@ -132,21 +131,18 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("returnDIVDOCPIP",returnDIVDOCPIP);
 			saveDocPIP(session,internalType,USER_ID,ID_PERMOHONAN);
 			skrin_name = "app/admin/UV3/index.jsp";
-		}	
 		//open ct
-		else if(command.equals("showCT_HQ") || command.equals("showCT_Negeri") || command.equals("showCT_MOHON"))
-		{
+		}else if(command.equals("showCT_HQ") || command.equals("showCT_Negeri") || command.equals("showCT_MOHON")){
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String CT_FLAGTEPERINCI_CARIAN = getParam("CT_FLAGTEPERINCI_CARIAN");
 			this.context.put("CT_OPENCLOSE_CARIAN",getParam("CT_OPENCLOSE_CARIAN"));
 			this.context.put("CT_FLAGTEPERINCI_CARIAN", CT_FLAGTEPERINCI_CARIAN);
-			
-			
-			if(command.equals("showCT_HQ"))
-			{
+				
+			if(command.equals("showCT_HQ")){
 				this.context.put("CT_ID_NEGERI", "16");	
 				filter_negeri = "16";
+				
 			}
 			list_TBLRUJJAWATAN = listTableRujukanV3(session,"TBLRUJJAWATAN","","",internalType);
 			this.context.put("list_TBLRUJJAWATAN",list_TBLRUJJAWATAN);
@@ -157,28 +153,21 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			listPejabatJKPTG = listPejabatJKPTG(session,getParam("CT_ID_SEKSYEN_"+internalType),getParam("CT_ID_NEGERI_"+internalType));
 			this.context.put("listPejabatJKPTG",listPejabatJKPTG);	
 			
-			if(command.equals("showCT_MOHON"))
-			{
+			if(command.equals("showCT_MOHON")){
 				skrin_name = "app/admin/UV3/skrinCTMOHON.jsp";
-			}
-			else
-			{
+			}else{
 				listRole = listTableRujukanV3(session,"ROLE","","","HQ");
 				this.context.put("listRole",listRole);				
 				skrin_name = "app/admin/UV3/skrinCTInternal.jsp";
 			}
-		}
-		//close ct		
-		//open ct
-		
-		else if(command.equals("showCT_INT"))
-		{
+			
+		//close ct ,//open ct		
+		}else if(command.equals("showCT_INT")){
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String CT_FLAGTEPERINCI_CARIAN = getParam("CT_FLAGTEPERINCI_CARIAN");
 			this.context.put("CT_OPENCLOSE_CARIAN",getParam("CT_OPENCLOSE_CARIAN"));
 			this.context.put("CT_FLAGTEPERINCI_CARIAN", CT_FLAGTEPERINCI_CARIAN);
-			
 			
 			list_TBLINTRUJJENISPEJABAT = listPejabatIntegrasi(session,"","");
 			this.context.put("list_TBLINTRUJJENISPEJABAT",list_TBLINTRUJJENISPEJABAT);	
@@ -188,8 +177,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			String CT_ID_PEJABAT = getParam("CT_ID_PEJABAT_INT");
 			
-			if(CT_ID_PEJABAT.equals("16111"))//JPPH
-			{				
+			if(CT_ID_PEJABAT.equals("16111")){	//JPPH		
 				list_TBLRUJNEGERI = listTableRujukanV3(session,"TBLRUJNEGERI","*","",internalType);
 				this.context.put("list_TBLRUJNEGERI",list_TBLRUJNEGERI);			
 				
@@ -198,13 +186,13 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				
 				listPejabat = listPejabat(session, (String) viewPengguna.get("ID_NEGERI"), "", "3","2");//JPPH + PPK	
 				this.context.put("listPejabat",listPejabat);				
+			
 			}
 			
 			skrin_name = "app/admin/UV3/skrinCTINT.jsp";
-		}
+		
 		//close ct
-		else if(command.equals("showCT_Online"))
-		{
+		}else if(command.equals("showCT_Online")){
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String CT_FLAGTEPERINCI_CARIAN = getParam("CT_FLAGTEPERINCI_CARIAN");
@@ -217,11 +205,9 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("listRole",listRole);
 			
 			skrin_name = "app/admin/UV3/skrinCTOnline.jsp";
-		}
+			
 		//close ct
-		
-		else if(command.equals("showCT_KJP"))
-		{
+		}else if(command.equals("showCT_KJP")){
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String CT_FLAGTEPERINCI_CARIAN = getParam("CT_FLAGTEPERINCI_CARIAN");
@@ -234,12 +220,10 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("list_TBLRUJAGENSI",list_TBLRUJAGENSI);
 			
 			skrin_name = "app/admin/UV3/skrinCTKJP.jsp";
-		}
-		//close ct
 		
-		else if(command.equals("showSenaraiPenggunaInternalNegeri"))
-		{
-			myLogger.info("print negeri ");
+		//close ct
+		}else if(command.equals("showSenaraiPenggunaInternalNegeri")){
+//			myLogger.info("print negeri ");
 			this.context.put("mode", "Negeri");
 			
 			//open ct	
@@ -251,32 +235,28 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			this.context.put("SuccessMesejDeleteUser", "");
 			String FLAG_DELETE = getParam("FLAG_DELETE");			
-			if(FLAG_DELETE.equals("Y"))
-			{
+			if(FLAG_DELETE.equals("Y")){
 				String USER_ID = getParam("USER_ID");
 				String USER_NAME = getParam("USER_NAME");
 				deletePengguna(session,USER_ID,"internal",USER_NAME);
 				this.context.put("SuccessMesejDeleteUser", "Maklumat Pengguna '"+USER_NAME+"' Berjaya Dihapus");
+			
 			}
 			
 			String action = getParam("action");
 			String carianTerperinci = getParam("carianTerperinci");
 			//open ct
-			myLogger.info(" ************ "+getParam("CT_FLAGTEPERINCI_CARIAN_Negeri"));
-			if(!carianTerperinci.equals("") || getParam("CT_FLAGTEPERINCI_CARIAN_Negeri").equals("Y"))
-			{
+//			myLogger.info(" ************ "+getParam("CT_FLAGTEPERINCI_CARIAN_Negeri"));
+			if(!carianTerperinci.equals("") || getParam("CT_FLAGTEPERINCI_CARIAN_Negeri").equals("Y")){
 				listPenggunaInternalNegeri = listPengunaInternal(session,"Negeri",carianTerperinci);
 				setupPageList(session, action, listPenggunaInternalNegeri, "listPenggunaInternalNegeri",command,"div_PenggunaInternalNegeri");
 				//open ct
 				this.context.put("PrintlistPenggunaInternalNegeri",listPenggunaInternalNegeri);
 				//close ct
 			}
-			if(getParam("FlagCetak").equals("Y"))
-			{
+			if(getParam("FlagCetak").equals("Y")){
 				skrin_name = "app/admin/UV3/SenaraiPenggunaInternalNegeri_Print.jsp";
-			}
-			else if (getParam("FlagCetakSemakanNegeri").equals("Y")){
-				
+			}else if (getParam("FlagCetakSemakanNegeri").equals("Y")){	
 				listPenggunaInternalPrint = listPengunaInternal(session,"Negeri",carianTerperinci);
 				setupPageList(session, action, listPenggunaInternalPrint, "listPenggunaInternalPrint",command,"div_PenggunaInternalNegeri");
 				//open ct
@@ -286,15 +266,12 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				this.context.put("listStatsJawatan",listStatsJawatan);
 				
 				skrin_name = "app/admin/UV3/SenaraiPrintPenggunaAllNegeri.jsp";
-			}
-			else
-			{
+			
+			}else{
 				skrin_name = "app/admin/UV3/SenaraiPenggunaInternalNegeri.jsp";
 			}
-		}		
-		
-		else if(command.equals("showSenaraiPenggunaInternalHQ"))
-		{
+			
+		}else if(command.equals("showSenaraiPenggunaInternalHQ")){
 			this.context.put("mode", "HQ");
 			
 			//open ct	
@@ -306,19 +283,18 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			this.context.put("SuccessMesejDeleteUser", "");
 			String FLAG_DELETE = getParam("FLAG_DELETE");			
-			if(FLAG_DELETE.equals("Y"))
-			{
+			if(FLAG_DELETE.equals("Y")){
 				String USER_ID = getParam("USER_ID");
 				String USER_NAME = getParam("USER_NAME");
 				deletePengguna(session,USER_ID,"internal",USER_NAME);
 				this.context.put("SuccessMesejDeleteUser", "Maklumat Pengguna '"+USER_NAME+"' Berjaya Dihapus");
+			
 			}
 			
 			String action = getParam("action");
 			String carianTerperinci = getParam("carianTerperinci");
 			//open ct
-			if(!carianTerperinci.equals("") || getParam("CT_FLAGTEPERINCI_CARIAN_HQ").equals("Y"))
-			{
+			if(!carianTerperinci.equals("") || getParam("CT_FLAGTEPERINCI_CARIAN_HQ").equals("Y")){
 				listPenggunaInternalHQ = listPengunaInternal(session,"HQ",carianTerperinci);
 				setupPageList(session, action, listPenggunaInternalHQ, "listPenggunaInternalHQ",command,"div_PenggunaInternalHQ");
 				//open ct
@@ -326,12 +302,9 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				//close ct
 			}
 			
-			if(getParam("FlagCetak").equals("Y"))
-			{
+			if(getParam("FlagCetak").equals("Y")){
 				skrin_name = "app/admin/UV3/SenaraiPenggunaInternalHQ_Print.jsp";
-			}
-			else if (getParam("FlagCetakSemakanHQ").equals("Y")){
-
+			}else if (getParam("FlagCetakSemakanHQ").equals("Y")){
 				listPenggunaInternalPrint = listPengunaInternal(session,"HQ",carianTerperinci);
 				setupPageList(session, action, listPenggunaInternalPrint, "listPenggunaInternalPrint",command,"div_PenggunaInternalHQ");
 				//open ct
@@ -341,14 +314,12 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				this.context.put("listStatsJawatan",listStatsJawatan);
 				
 				skrin_name = "app/admin/UV3/SenaraiPrintPenggunaAll.jsp";
-			}
-			else
-			{
+			
+			}else{
 				skrin_name = "app/admin/UV3/SenaraiPenggunaInternalHQ.jsp";
 			}
-		}		
-		else if(command.equals("edit_PenggunaInternal"))
-		{
+			
+		}else if(command.equals("edit_PenggunaInternal")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
@@ -366,27 +337,24 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("list_TBLRUJAGAMA",list_TBLRUJAGAMA);
 			
 			String filterNegeriHQ = "";
-			if(internalType.equals("HQ"))
-			{
+			if(internalType.equals("HQ")){
 				filterNegeriHQ = "16";
 			}
 			list_TBLRUJNEGERI = listTableRujukanV3(session,"TBLRUJNEGERI",filterNegeriHQ,USER_ID,internalType);
 			this.context.put("list_TBLRUJNEGERI",list_TBLRUJNEGERI);			
 			listPejabatJKPTG = listPejabatJKPTG(session,(String) viewPengguna.get("ID_SEKSYEN"),(String) viewPengguna.get("ID_NEGERI"));
 			this.context.put("listPejabatJKPTG",listPejabatJKPTG);			
-			if(!viewPengguna.get("ID_PEJABATJKPTG").equals(""))
-			{
-			viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
-			this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
+			if(!viewPengguna.get("ID_PEJABATJKPTG").equals("")){
+				viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
+				this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
 			}
 			listRole = listTableRujukanV3(session,"ROLE","",USER_ID,internalType);
 			this.context.put("listRole",listRole);
 			this.context.put("SuccessMesejDeleteUser","");
 			
 			skrin_name = "app/admin/UV3/editPenggunaInternal.jsp";
-		}		
-		else if(command.equals("edit_PenggunaMOHON"))
-		{
+		
+		}else if(command.equals("edit_PenggunaMOHON")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
@@ -405,16 +373,14 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			list_TBLRUJGRED = listTableRujukanV3(session,"TBLRUJGRED",(String) viewPengguna.get("ID_KLASIFIKASI"),"",internalType);
 			this.context.put("list_TBLRUJGRED",list_TBLRUJGRED);
 			
-			if(!viewPengguna.get("ID_PEJABATJKPTG").equals(""))
-			{
-			viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
-			this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
+			if(!viewPengguna.get("ID_PEJABATJKPTG").equals("")){
+				viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
+				this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
+			
 			}
 			skrin_name = "app/admin/UV3/editPenggunaMOHON.jsp";
-		}
 		
-		else if(command.equals("showAlamatPejabat"))
-		{
+		}else if(command.equals("showAlamatPejabat")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
@@ -424,21 +390,18 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewPejabat = viewPejabat(session,ID_PEJABAT);
 			this.context.put("viewPejabat",viewPejabat);
 			skrin_name = "app/admin/UV3/showAlamatPejabat.jsp";
-		}
-		else if(command.equals("selectPejabatByDaerahNegeri"))
-		{
+		
+		}else if(command.equals("selectPejabatByDaerahNegeri")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String ID_NEGERI = getParam("ID_NEGERI");
 			String ID_DAERAH = getParam("ID_DAERAH");	
-			
 			String ID_JENISPEJABAT = getParam("ID_JENISPEJABAT");
-			myLogger.info("ID_JENISPEJABAT selected for pejabat : "+ID_JENISPEJABAT);
+//			myLogger.info("ID_JENISPEJABAT selected for pejabat : "+ID_JENISPEJABAT);
 			
-			/*String seperator = "/";
-			
+			/*String seperator = "/";	
 			String ID_JENISPEJABAT = ID_JENISPEJABAT2.substring(0, ID_JENISPEJABAT2.indexOf(seperator)).trim();
 			this.context.put("ID_JENISPEJABAT", ID_JENISPEJABAT);
 			myLogger.info("ID_JENISPEJABAT  -- "+ID_JENISPEJABAT);*/
@@ -450,19 +413,16 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("listPejabat",listPejabat);*/
 			
 			skrin_name = "app/admin/UV3/showListPejabatINT.jsp";
-		}
-		else if(command.equals("selectPejabatByDaerahNegeri_CT"))
-		{
+		
+		}else if(command.equals("selectPejabatByDaerahNegeri_CT")){
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String ID_NEGERI = getParam("ID_NEGERI");
-			myLogger.info("ID_NEGERI selected for pejabat : "+ID_NEGERI);
-			
+//			myLogger.info("ID_NEGERI selected for pejabat : "+ID_NEGERI);
 			String ID_JENISPEJABAT = getParam("ID_JENISPEJABAT");
-			myLogger.info("ID_JENISPEJABAT selected for pejabat : "+ID_JENISPEJABAT);
+//			myLogger.info("ID_JENISPEJABAT selected for pejabat : "+ID_JENISPEJABAT);
 			
-			/*String seperator = "/";
-			
+			/*String seperator = "/";		
 			String ID_JENISPEJABAT = ID_JENISPEJABAT2.substring(0, ID_JENISPEJABAT2.indexOf(seperator)).trim();
 			this.context.put("ID_JENISPEJABAT", ID_JENISPEJABAT);
 			myLogger.info("ID_JENISPEJABAT  -- "+ID_JENISPEJABAT);*/
@@ -471,9 +431,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("listPejabat",listPejabat);
 			
 			skrin_name = "app/admin/UV3/showListPejabatINT_CT.jsp";
-		}
-		else if(command.equals("selectDaerahByNegeri"))
-		{
+		
+		}else if(command.equals("selectDaerahByNegeri")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
@@ -483,9 +442,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			list_TBLRUJDAERAH = listTableRujukanV3(session,"TBLRUJDAERAH",ID_NEGERI,"",internalType);
 			this.context.put("list_TBLRUJDAERAH",list_TBLRUJDAERAH);
 			skrin_name = "app/admin/UV3/showListDaerah.jsp";
-		}
-		else if(command.equals("selectDaerahByNegeri_CT"))
-		{
+		
+		}else if(command.equals("selectDaerahByNegeri_CT")){
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String ID_NEGERI = getParam("ID_NEGERI");
@@ -493,22 +451,18 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			list_TBLRUJDAERAH = listTableRujukanV3(session,"TBLRUJDAERAH",ID_NEGERI,"",internalType);
 			this.context.put("list_TBLRUJDAERAH",list_TBLRUJDAERAH);
 			skrin_name = "app/admin/UV3/showListDaerah_CT.jsp";
-		}
 		
-		else if(command.equals("selectJenisPejabatINT"))
-		{
+		}else if(command.equals("selectJenisPejabatINT")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			viewPengguna = viewDataPenggunaINT(session,USER_ID,"");			
-			//this.context.put("viewPengguna", viewPengguna);
-			
+			//this.context.put("viewPengguna", viewPengguna);			
 			String ID_JENISPEJABAT2 = getParam("ID_JENISPEJABAT");
-			myLogger.info("ID_JENISPEJABAT2 onchange -- "+ID_JENISPEJABAT2);
+//			myLogger.info("ID_JENISPEJABAT2 onchange -- "+ID_JENISPEJABAT2);
 			
-			/*String seperator = "/";
-			
+			/*String seperator = "/";			
 			String ID_JENISPEJABAT = ID_JENISPEJABAT2.substring(0, ID_JENISPEJABAT2.indexOf(seperator)).trim();
 			this.context.put("ID_JENISPEJABAT", ID_JENISPEJABAT);
 			myLogger.info("ID_JENISPEJABAT  -- "+ID_JENISPEJABAT);
@@ -533,29 +487,23 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				listPejabat = listPejabat(session, (String) viewPengguna.get("ID_NEGERI"), (String) viewPengguna.get("ID_DAERAH"), "3");	
 				this.context.put("listPejabat",listPejabat);				
 				*/
-				
-				
-				skrin_name = "app/admin/UV3/edit_INT_JPPH.jsp";
+			skrin_name = "app/admin/UV3/edit_INT_JPPH.jsp";
 			//}
 			//else
 			//{
 			//	skrin_name = "app/admin/UV3/edit_INT_blank.jsp";
 			//}
-		}
 		
-		else if(command.equals("selectJenisPejabatINT_CT"))
-		{
+		}else if(command.equals("selectJenisPejabatINT_CT")){
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			
 			String ID_NEGERI = getParam("ID_NEGERI");
-			myLogger.info("ID_NEGERI onchange -- "+ID_NEGERI);
-			
+//			myLogger.info("ID_NEGERI onchange -- "+ID_NEGERI);
 			String ID_JENISPEJABAT2 = getParam("ID_JENISPEJABAT");
-			myLogger.info("ID_JENISPEJABAT2 onchange -- "+ID_JENISPEJABAT2);
+//			myLogger.info("ID_JENISPEJABAT2 onchange -- "+ID_JENISPEJABAT2);
 			
 			/*String seperator = "/";
-			
 			String ID_JENISPEJABAT = ID_JENISPEJABAT2.substring(0, ID_JENISPEJABAT2.indexOf(seperator)).trim();
 			this.context.put("ID_JENISPEJABAT", ID_JENISPEJABAT);
 			myLogger.info("ID_JENISPEJABAT  -- "+ID_JENISPEJABAT);*/
@@ -579,10 +527,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			///{
 				//skrin_name = "app/admin/UV3/edit_INT_blank.jsp";
 			//}
-		}
 		
-		else if(command.equals("edit_PenggunaINT"))
-		{
+		}else if(command.equals("edit_PenggunaINT")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
@@ -620,10 +566,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("SuccessMesejDeleteUser","");
 			
 			skrin_name = "app/admin/UV3/editPenggunaINT.jsp";
-		}
 		
-		else if(command.equals("showDocPIP"))
-		{		
+		}else if(command.equals("showDocPIP")){		
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String USER_ID = getParam("USER_ID");
@@ -633,11 +577,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewPenggunaMOHON = viewDataPenggunaMOHON(session, ID_PERMOHONAN);
 			this.context.put("viewPenggunaMOHON", viewPenggunaMOHON);
 			skrin_name = "app/admin/UV3/displayDocPIP.jsp";
-		}		
 		
-		
-		else if(command.equals("edit_PenggunaKJP"))
-		{
+		}else if(command.equals("edit_PenggunaKJP")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
@@ -653,28 +594,23 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			listRole = listTableRujukanV3(session,"ROLE","",USER_ID,internalType);
 			this.context.put("listRole",listRole);
 			String current_role_kjp = "";
-			if(!USER_ID.equals(""))
-			{
+			if(!USER_ID.equals("")){
 				current_role_kjp = getCurrentRoleKJP(session, USER_ID);
 			}
 			this.context.put("current_role_kjp",current_role_kjp);
 			
-			if(!viewPengguna.get("ID_KEMENTERIAN").equals(""))
-			{
+			if(!viewPengguna.get("ID_KEMENTERIAN").equals("")){
 				viewAlamatKJP = viewAlamatKJP(session, (String)viewPengguna.get("ID_KEMENTERIAN"));
 				this.context.put("viewAlamatKJP",viewAlamatKJP);
-			}
-			else
-			{
+			
+			}else{
 				this.context.put("viewAlamatKJP","");
 			}
 			
-			this.context.put("SuccessMesejDeleteUser","");
-			
+			this.context.put("SuccessMesejDeleteUser","");	
 			skrin_name = "app/admin/UV3/editPenggunaKJP.jsp";
-		}
-		else if(command.equals("edit_PenggunaOnline"))
-		{
+		
+		}else if(command.equals("edit_PenggunaOnline")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
@@ -690,28 +626,23 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			listRole = listTableRujukanV3(session,"ROLE","",USER_ID,internalType);
 			this.context.put("listRole",listRole);
 			
-			if(!viewPengguna.get("ID_NEGERI").equals(""))
-			{
+			if(!viewPengguna.get("ID_NEGERI").equals("")){
 				list_TBLRUJBANDAR = listTableRujukanV3(session,"TBLRUJBANDAR",(String) viewPengguna.get("ID_NEGERI"),"",internalType);
 				this.context.put("list_TBLRUJBANDAR", list_TBLRUJBANDAR);
-			}
-			else
-			{
+			
+			}else{
 				this.context.put("list_TBLRUJBANDAR", "");
 			}
 			this.context.put("SuccessMesejDeleteUser","");			
 			skrin_name = "app/admin/UV3/editPenggunaOnline.jsp";
-		}	
 		
-		else if(command.equals("showFieldPengenalan"))
-		{
+		}else if(command.equals("showFieldPengenalan")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String ID_KATEGORI = getParam("ID_KATEGORI");
-			if(ID_KATEGORI.equals("Individu"))
-			{
+			if(ID_KATEGORI.equals("Individu")){
 				String NO_PENGENALAN1 = getParam("NO_PENGENALAN1");
 				this.context.put("NO_PENGENALAN1", NO_PENGENALAN1);
 				String NO_PENGENALAN2 = getParam("NO_PENGENALAN2");
@@ -720,19 +651,16 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				this.context.put("NO_PENGENALAN3", NO_PENGENALAN3);
 				this.context.put("NO_PENGENALAN", "");
 				skrin_name = "app/admin/UV3/showFieldMyID.jsp";
-			}
-			else if(ID_KATEGORI.equals("Syarikat"))
-			{
-				
+			
+			}else if(ID_KATEGORI.equals("Syarikat")){
 				this.context.put("NO_PENGENALAN1", "");
 				this.context.put("NO_PENGENALAN2", "");
 				this.context.put("NO_PENGENALAN3", "");
 				String NO_PENGENALAN = getParam("NO_PENGENALAN");
 				this.context.put("NO_PENGENALAN", NO_PENGENALAN);				
 				skrin_name = "app/admin/UV3/showFieldMyCOID.jsp";
-			}
-			else
-			{
+			
+			}else{
 				String NO_PENGENALAN1 = getParam("NO_PENGENALAN1");
 				this.context.put("NO_PENGENALAN1", NO_PENGENALAN1);
 				String NO_PENGENALAN2 = getParam("NO_PENGENALAN2");
@@ -741,29 +669,25 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				this.context.put("NO_PENGENALAN3", NO_PENGENALAN3);
 				this.context.put("NO_PENGENALAN", "");
 				skrin_name = "app/admin/UV3/showFieldMyID.jsp";
+			
 			}
 			
-		}		
-		else if(command.equals("showAlamatKJP"))
-		{
+		}else if(command.equals("showAlamatKJP")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String ID_KEMENTERIAN = getParam("ID_KEMENTERIAN");
-			if(!ID_KEMENTERIAN.equals(""))
-			{
+			if(!ID_KEMENTERIAN.equals("")){
 				viewAlamatKJP = viewAlamatKJP(session, ID_KEMENTERIAN);
 				this.context.put("viewAlamatKJP",viewAlamatKJP);
-			}
-			else
-			{
+			
+			}else{
 				this.context.put("viewAlamatKJP","");
 			}
 			skrin_name = "app/admin/UV3/showAlamatKJP.jsp";
-		}
-		else if(command.equals("showListAgensi"))
-		{
+		
+		}else if(command.equals("showListAgensi")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
@@ -773,9 +697,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			list_TBLRUJAGENSI = listTableRujukanV3(session,"TBLRUJAGENSI",ID_KEMENTERIAN,"",internalType);
 			this.context.put("list_TBLRUJAGENSI", list_TBLRUJAGENSI);
 			skrin_name = "app/admin/UV3/showListAgensi.jsp";
-		}
-		else if(command.equals("showListAgensi_CT"))
-		{
+		
+		}else if(command.equals("showListAgensi_CT")){
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String ID_KEMENTERIAN = getParam("ID_KEMENTERIAN");
@@ -783,9 +706,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			list_TBLRUJAGENSI = listTableRujukanV3(session,"TBLRUJAGENSI",ID_KEMENTERIAN,"",internalType);
 			this.context.put("list_TBLRUJAGENSI", list_TBLRUJAGENSI);
 			skrin_name = "app/admin/UV3/showListAgensi_CT.jsp";
-		}
-		else if(command.equals("showListBandar"))
-		{
+		
+		}else if(command.equals("showListBandar")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
@@ -794,9 +716,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			list_TBLRUJBANDAR = listTableRujukanV3(session,"TBLRUJBANDAR",ID_NEGERI,"",internalType);
 			this.context.put("list_TBLRUJBANDAR", list_TBLRUJBANDAR);
 			skrin_name = "app/admin/UV3/showListBandar.jsp";
-		}		
-		else if(command.equals("showListPejabat"))
-		{
+		
+		}else if(command.equals("showListPejabat")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
@@ -807,9 +728,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			listPejabatJKPTG = listPejabatJKPTG(session,ID_SEKSYEN,ID_NEGERI);
 			this.context.put("listPejabatJKPTG",listPejabatJKPTG);	
 			skrin_name = "app/admin/UV3/showListPejabat.jsp";
-		}
-		else if(command.equals("showListPejabat_CT"))
-		{
+		
+		}else if(command.equals("showListPejabat_CT")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
@@ -820,9 +740,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			listPejabatJKPTG = listPejabatJKPTG(session,ID_SEKSYEN,ID_NEGERI);
 			this.context.put("listPejabatJKPTG",listPejabatJKPTG);	
 			skrin_name = "app/admin/UV3/showListPejabat_CT.jsp";
-		}
-		else if(command.equals("checkUSER_LOGIN"))
-		{			
+		
+		}else if(command.equals("checkUSER_LOGIN")){			
 			this.context.put("FLAG_PIP", getParam("FLAG_PIP"));
 			String USER_LOGIN = getParam("USER_LOGIN");
 			this.context.put("USER_LOGIN", USER_LOGIN);
@@ -833,256 +752,227 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("GET_USER_ID_EXIST", "");
 			boolean checkUSERLOGIN = checkUSERLOGIN(session, USER_ID, USER_LOGIN,internalType);
 			
-			if(USER_ID.equals(""))//waktu nak insert
-			{
-				if(checkUSERLOGIN==false)
-				{
+			if(USER_ID.equals("")){//waktu nak insert
+			
+				if(checkUSERLOGIN==false){
 					this.context.put("checkUSERLOGIN", checkUSERLOGIN);
 					//<font color="red" class="blink" >User Login Telah Wujud!</font>
 					String msj = "";
-					if(internalType.equals("HQ"))
-					{
+					if(internalType.equals("HQ")){
 						msj = "<font color='red' class='blink' >User Login Pengguna Telah Wujud!</font>";
-					}
-					else if(internalType.equals("Negeri"))
-					{
+					}else if(internalType.equals("Negeri")){
 						msj = "<font color='red' class='blink' >User Login Pengguna Telah Wujud!</font>";
-					}
-					else if(internalType.equals("Online"))
-					{
+					}else if(internalType.equals("Online")){
 						msj = "<font color='red' class='blink' >User Login Pengguna Jkptg Online Telah Wujud!</font>";
-					}
-					else if(internalType.equals("KJP"))
-					{
+					}else if(internalType.equals("KJP")){
 						msj = "<font color='red' class='blink' >User Login Pengguna KJP Online Telah Wujud!</font>";
-					}
-					else if(internalType.equals("INT"))
-					{
+					}else if(internalType.equals("INT")){
 						msj = "<font color='red' class='blink' >User Login Pengguna Integrasi Telah Wujud!</font>";
 					}
 					this.context.put("display_info_check_id", msj);
 					this.context.put("GET_USER_ID_EXIST", "");
 					
-					
-				}
-				else
-				{
+				}else{
 					this.context.put("GET_USER_ID_EXIST", "");
 					this.context.put("checkUSERLOGIN", "");	
 					this.context.put("viewPenggunaExist", "");	
 					String msj = "";
 					viewPenggunaExist = null;
-					if(internalType.equals("HQ") || internalType.equals("Negeri"))
-					{
+					if(internalType.equals("HQ") || internalType.equals("Negeri")){
 						//check user online dah wujud?
 						viewPenggunaExist = viewDataPenggunaOnline(session, "", USER_LOGIN);
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//if(viewPenggunaExist!=null)
 						
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("NAMA_PENUH")+" - "+viewPenggunaExist.get("NO_PENGENALAN")+"'</b> (Pengguna Online)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
 							msj += "<br>";
+						
 						}
 						
 						viewPenggunaExist = viewDataPenggunaKJP(session, "", USER_LOGIN);
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("NAMA_PENUH")+" - "+viewPenggunaExist.get("NAMA_KEMENTERIAN")+"'</b> (Pengguna KJP)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
 							msj += "<br>";
+						
 						}
 						
 						viewPenggunaExist = viewDataPenggunaINT(session, "", USER_LOGIN);
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("USER_NAME")+" - "+viewPenggunaExist.get("JENIS_PEJABAT")+"'</b> (Pengguna Integrasi)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
+						
 						}
 						
-					}				
-					else if(internalType.equals("Online")) 
-					{
+					}else if(internalType.equals("Online")){
 						//check user internal dah wujud?
 						viewPenggunaExist = viewDataPenggunaInternal(session,"",USER_LOGIN,"");
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//myLogger.info("++++++++++ viewPenggunaExist"+viewPenggunaExist);
 						//if(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("USER_NAME")+" - "+viewPenggunaExist.get("NAMA_BAHAGIAN")+", "+viewPenggunaExist.get("NAMA_PEJABAT")+", "+viewPenggunaExist.get("NEGERI_PEJ")+"'</b> (Pengguna Dalaman)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
 							msj += "<br>";
+						
 						}
 						
 						viewPenggunaExist = viewDataPenggunaKJP(session, "", USER_LOGIN);
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//if(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("NAMA_PENUH")+" - "+viewPenggunaExist.get("NAMA_KEMENTERIAN")+"'</b> (Pengguna KJP)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
 							msj += "<br>";
+						
 						}
 						
 						viewPenggunaExist = viewDataPenggunaINT(session, "", USER_LOGIN);
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("USER_NAME")+" - "+viewPenggunaExist.get("JENIS_PEJABAT")+"'</b> (Pengguna Integrasi)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
+						
 						}
-					}
-					else if(internalType.equals("KJP")) 
-					{
+					
+					}else if(internalType.equals("KJP")) {
 						//check user internal dah wujud?
 						viewPenggunaExist = viewDataPenggunaInternal(session,"",USER_LOGIN,"");
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//if(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("USER_NAME")+" - "+viewPenggunaExist.get("NAMA_BAHAGIAN")+", "+viewPenggunaExist.get("NAMA_PEJABAT")+", "+viewPenggunaExist.get("NEGERI_PEJ")+"'</b> (Pengguna Dalaman)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
 							msj += "<br>";
+						
 						}
 						
 						viewPenggunaExist = viewDataPenggunaOnline(session, "", USER_LOGIN);
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//if(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("NAMA_PENUH")+" - "+viewPenggunaExist.get("NO_PENGENALAN")+"'</b> (Pengguna Online)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
 							msj += "<br>";
+						
 						}
 						
 						viewPenggunaExist = viewDataPenggunaINT(session, "", USER_LOGIN);
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("NAMA_PENUH")+" - "+viewPenggunaExist.get("JENIS_PEJABAT")+"'</b> (Pengguna Integrasi)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
+						
 						}
-					}
-					else if(internalType.equals("INT")) 
-					{
+					
+					}else if(internalType.equals("INT")) {
 						//check user internal dah wujud?
 						viewPenggunaExist = viewDataPenggunaInternal(session,"",USER_LOGIN,"");
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//if(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("USER_NAME")+" - "+viewPenggunaExist.get("NAMA_BAHAGIAN")+", "+viewPenggunaExist.get("NAMA_PEJABAT")+", "+viewPenggunaExist.get("NEGERI_PEJ")+"'</b> (Pengguna Dalaman)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
 							msj += "<br>";
+						
 						}
 						
 						viewPenggunaExist = viewDataPenggunaOnline(session, "", USER_LOGIN);
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//if(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("NAMA_PENUH")+" - "+viewPenggunaExist.get("NO_PENGENALAN")+"'</b> (Pengguna Online)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
 							msj += "<br>";
+						
 						}
 						
 						viewPenggunaExist = viewDataPenggunaKJP(session, "", USER_LOGIN);
 						//if(!viewPenggunaExist.get("USER_ID").toString().equals(""))
 						//if(viewPenggunaExist!=null)
-						if(viewPenggunaExist.get("USER_ID")!=null)
-						{
+						if(viewPenggunaExist.get("USER_ID")!=null){
 							msj += "<font color='blue' class='blink' >User Login Telah Wujud Sebagai <b>'"+viewPenggunaExist.get("NAMA_PENUH")+" - "+viewPenggunaExist.get("NAMA_KEMENTERIAN")+"'</b> (Pengguna KJP)</font>";
 							this.context.put("GET_USER_ID_EXIST", viewPenggunaExist.get("USER_ID"));
 							this.context.put("viewPenggunaExist", viewPenggunaExist);
+						
 						}
+					
 					}
 					this.context.put("display_info_check_id", msj);	
 					
 				}
-			}
-			else // waktu nak update
-			{
-				if(checkUSERLOGIN==false)
-				{
+			
+			}else{ // waktu nak update
+			
+				if(checkUSERLOGIN==false){
 					this.context.put("checkUSERLOGIN", checkUSERLOGIN);
 					//<font color="red" class="blink" >User Login Telah Wujud!</font>
 					String msj = "";
-					if(internalType.equals("HQ"))
-					{
+					if(internalType.equals("HQ")){
 						msj += "<font color='red' class='blink' >User Login Pengguna Telah Wujud!</font>";
 						msj += "<br>";
-					}					
-					else if(internalType.equals("Negeri"))
-					{
-						msj += "<font color='red' class='blink' >User Login Pengguna Telah Wujud!</font>";
-						msj += "<br>";
-					}
 					
-					else if(internalType.equals("Online"))
-					{
+					}else if(internalType.equals("Negeri")){
+						msj += "<font color='red' class='blink' >User Login Pengguna Telah Wujud!</font>";
+						msj += "<br>";
+					
+					}else if(internalType.equals("Online")){
 						msj += "<font color='red' class='blink' >User Login Pengguna Jkptg Online Telah Wujud!</font>";
 						msj += "<br>";
-					}
-					
-					else if(internalType.equals("KJP"))
-					{
+						
+					}else if(internalType.equals("KJP")){
 						msj += "<font color='red' class='blink' >User Login Pengguna KJP Online Telah Wujud!</font>";
 						msj += "<br>";
-					}
-					
-					else if(internalType.equals("INT"))
-					{
+						
+					}else if(internalType.equals("INT")){
 						msj += "<font color='red' class='blink' >User Login Pengguna Integrasi Telah Wujud!</font>";
 						msj += "<br>";
+						
 					}
 					
 					this.context.put("display_info_check_id", msj);
 					this.context.put("GET_USER_ID_EXIST", "");
-				}
-				else
-				{
+				
+				}else{
 					this.context.put("checkUSERLOGIN", checkUSERLOGIN);
 					this.context.put("display_info_check_id", "");
 					this.context.put("GET_USER_ID_EXIST", "");
+				
 				}
 			
 			}
-			
-			
 			skrin_name = "app/admin/UV3/checkUSER_LOGIN.jsp";
-		}		
-		else if(command.equals("showListRole"))
-		{
+		
+		}else if(command.equals("showListRole")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String GET_USER_ID_EXIST = getParam("GET_USER_ID_EXIST");
 			this.context.put("GET_USER_ID_EXIST", GET_USER_ID_EXIST);
 			
 			String current_role_utama = "";
-			myLogger.info(" --------- USER_ID : "+USER_ID);
-			if(!GET_USER_ID_EXIST.equals(""))
-			{
+//			myLogger.info(" --------- USER_ID : "+USER_ID);
+			if(!GET_USER_ID_EXIST.equals("")){
 				current_role_utama = getRoleUtamaUsers(session,GET_USER_ID_EXIST);
-				myLogger.info(" --------- atas current_role_utama : "+current_role_utama);
+//				myLogger.info(" --------- atas current_role_utama : "+current_role_utama);
 			}
 			this.context.put("current_role_utama",current_role_utama);
 			String internalType = getParam("internalType");
@@ -1090,27 +980,23 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			listRole = listTableRujukanV3(session,"ROLE","",GET_USER_ID_EXIST,internalType);
 			this.context.put("listRole",listRole);
 			skrin_name = "app/admin/UV3/listRole.jsp";
-		}
-		else if(command.equals("showDisplayPejabat"))
-		{
+		
+		}else if(command.equals("showDisplayPejabat")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			String ID_PEJABATJKPTG = getParam("ID_PEJABATJKPTG");
-			if(!ID_PEJABATJKPTG.equals(""))
-			{
+			if(!ID_PEJABATJKPTG.equals("")){
 				viewPejabatJKPTG = viewPejabatJKPTG(session,ID_PEJABATJKPTG);
 				this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
-			}
-			else
-			{
+			
+			}else{
 				this.context.put("viewPejabatJKPTG","");
 			}
 			skrin_name = "app/admin/UV3/showDisplayPejabat.jsp";
-		}
-		else if(command.equals("edit_AddRole"))
-		{
+		
+		}else if(command.equals("edit_AddRole")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
@@ -1121,9 +1007,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("listRoleByUserLogin", listRoleByUserLogin);
 			this.context.put("SuccessMesejRole", "");
 			skrin_name = "app/admin/UV3/edit_AddRole.jsp";
-		}
-		else if(command.equals("save_AddRole"))
-		{
+		
+		}else if(command.equals("save_AddRole")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
@@ -1135,23 +1020,18 @@ public class UserListModuleV3 extends AjaxBasedModule {
 					
 			int total_role_update = 0;
 			total_role_update += simpanAdditionalRoles(session,USER_ID, internalType, USER_LOGIN, TEMP_GROUP_CHECKLIST);
-			
-			
-			if(total_role_update>=0)
-			{
+				
+			if(total_role_update>=0){
 				this.context.put("SuccessMesejRole", total_role_update+" Peranan/Role Telah Didaftarkan Kepada '"+USER_LOGIN+"'");
-			}
-			else
-			{
+			}else{
 				this.context.put("SuccessMesejRole", "");
 			}
 			
 			listRoleByUserLogin = listRoleByUserLogin(session, USER_LOGIN,internalType,USER_ID);
 			this.context.put("listRoleByUserLogin", listRoleByUserLogin);
 			skrin_name = "app/admin/UV3/edit_AddRole.jsp";
-		}		
-		else if(command.equals("showDisplayAddRole"))
-		{
+		
+		}else if(command.equals("showDisplayAddRole")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String internalType = getParam("internalType");
@@ -1163,23 +1043,19 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("listAdditionalRoleByUserLogin", listAdditionalRoleByUserLogin);
 			this.context.put("SuccessMesejRole", "");
 			skrin_name = "app/admin/UV3/showDisplayAddRole.jsp";
-		}
-		else if(command.equals("showDisplayDaerahJagaan"))
-		{
+		
+		}else if(command.equals("showDisplayDaerahJagaan")){
 			String ID_PEJABATJKPTG = getParam("ID_PEJABATJKPTG");
 			String ID_JENISPEJABAT = getParam("ID_JENISPEJABAT");
-			if(!ID_PEJABATJKPTG.equals(""))
-			{
+			if(!ID_PEJABATJKPTG.equals("")){
 				listDaerahJagaanByIdPejabat = listDaerahJagaanByIdPejabat(session, ID_PEJABATJKPTG,ID_JENISPEJABAT);
 				this.context.put("listDaerahJagaanByIdPejabat", listDaerahJagaanByIdPejabat);
-			}
-			else
-			{
+			
+			}else{
 				this.context.put("listDaerahJagaanByIdPejabat", "");
 			}
 			skrin_name = "app/admin/UV3/showDisplayDaerahJagaan.jsp";
 		}	
-		
 		
 		/*
 		else if(command.equals("showSenaraiPenggunaInternalNegeri"))
@@ -1240,12 +1116,11 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			skrin_name = "app/admin/UV3/blank_viewPenggunaOnline.jsp";
 		}*/
 		else if(command.equals("close_PenggunaInternal")
-				|| command.equals("close_PenggunaOnline")
-				|| command.equals("close_PenggunaKJP")
-				|| command.equals("close_PenggunaINT")
-				|| command.equals("close_PenggunaMOHON")
-				)
-		{
+			|| command.equals("close_PenggunaOnline")
+			|| command.equals("close_PenggunaKJP")
+			|| command.equals("close_PenggunaINT")
+			|| command.equals("close_PenggunaMOHON")
+			){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
@@ -1253,16 +1128,14 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			skrin_name = "app/admin/UV3/blank_viewPenggunaInternal.jsp";
-		}
-		else if(command.equals("viewPenggunaInternal"))
-		{			
+
+		}else if(command.equals("viewPenggunaInternal")){			
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);	
 			
 			String USER_LOGIN = getParam("USER_LOGIN");
-			this.context.put("USER_LOGIN", USER_LOGIN);	
-			
+			this.context.put("USER_LOGIN", USER_LOGIN);				
 						
 			listAdditionalRoleByUserLogin = listRoleByUserLogin_Selected(session, USER_LOGIN);
 			this.context.put("listAdditionalRoleByUserLogin", listAdditionalRoleByUserLogin);
@@ -1271,10 +1144,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("viewPengguna", viewPengguna);
 			this.context.put("SuccessMesej", "");
 			skrin_name = "app/admin/UV3/viewPenggunaInternal.jsp";
-		}
 		
-		else if(command.equals("viewPLA"))
-		{
+		}else if(command.equals("viewPLA")){
 			String ID_ESADUAN = getParam("ID_ESADUAN");
 			this.context.put("ID_ESADUAN", ID_ESADUAN);
 			String internalType = getParam("internalType");
@@ -1282,22 +1153,17 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewPengunaPLA = viewPengunaPLA(session,ID_ESADUAN);
 			this.context.put("viewPengunaPLA", viewPengunaPLA);
 			skrin_name = "app/admin/UV3/viewPLA.jsp";
-		}
-		else if(command.equals("close_viewPla"))
-		{
+		
+		}else if(command.equals("close_viewPla")){
 			String ID_ESADUAN = getParam("ID_ESADUAN");
 			this.context.put("ID_ESADUAN", ID_ESADUAN);
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
 			skrin_name = "app/admin/UV3/blank_viewPLA.jsp";
-		}
-		else if(command.equals("close_viewHistory"))
-		{
-			skrin_name = "app/admin/UV3/blank_viewHISTORY.jsp";
-		}
 		
-		else if(command.equals("carianUtamaPLA"))
-		{			
+		}else if(command.equals("close_viewHistory")){
+			skrin_name = "app/admin/UV3/blank_viewHISTORY.jsp";
+		}else if(command.equals("carianUtamaPLA")){			
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			Integer totalPLA = getPLACount(session, USER_ID);
@@ -1305,11 +1171,9 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("internalType", internalType);	
 			
 			this.context.put("adaPLA", "");
-			if(totalPLA>0)
-			{
+			if(totalPLA>0){
 				this.context.put("totalPLA", totalPLA);
 				this.context.put("adaPLA", "Y");			
-				
 				
 				String carianTerperinciPLA = getParam("carianTerperinciPLA_"+internalType+USER_ID);
 				String TARIKH_MULA_PLA = getParam("TARIKH_MULA_PLA_"+internalType+USER_ID);
@@ -1342,10 +1206,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			}			
 			skrin_name = "app/admin/UV3/SenaraiPenggunaPLA.jsp";
-		}
 		
-		else if(command.equals("carianUtamaHISTORY"))
-		{			
+		}else if(command.equals("carianUtamaHISTORY")){			
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			Integer totalHISTORY = getHISTORYCount(session, USER_ID);
@@ -1353,11 +1215,9 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("internalType", internalType);	
 			
 			this.context.put("adaHISTORY", "");
-			if(totalHISTORY>0)
-			{
+			if(totalHISTORY>0){
 				this.context.put("totalHISTORY", totalHISTORY);
 				this.context.put("adaHISTORY", "Y");			
-				
 				
 				String carianTerperinciHISTORY = getParam("carianTerperinciHISTORY_"+internalType+USER_ID);
 				String TARIKH_MULA_HISTORY = getParam("TARIKH_MULA_HISTORY_"+internalType+USER_ID);
@@ -1383,10 +1243,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			}			
 			skrin_name = "app/admin/UV3/SenaraiPenggunaHISTORY.jsp";
-		}
 		
-		else if(command.equals("viewHISTORY_SUB"))
-		{
+		}else if(command.equals("viewHISTORY_SUB")){
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);
 			this.context.put("AKTIVITI", getParam("AKTIVITI"));
@@ -1394,27 +1252,23 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);	
 			String ID_SEJARAHPENGGUNAUTAMA = getParam("ID_SEJARAHPENGGUNAUTAMA");
-			myLogger.info("ID_SEJARAHPENGGUNAUTAMA :::::: "+ID_SEJARAHPENGGUNAUTAMA);
+//			myLogger.info("ID_SEJARAHPENGGUNAUTAMA :::::: "+ID_SEJARAHPENGGUNAUTAMA);
 			this.context.put("ID_SEJARAHPENGGUNAUTAMA", ID_SEJARAHPENGGUNAUTAMA);	
 			listPengunaHISTORY_SUB = listPengunaHISTORY(session,USER_ID,ID_SEJARAHPENGGUNAUTAMA,"SUB",
 					"","", "");	
 			this.context.put("listPengunaHISTORY_SUB", listPengunaHISTORY_SUB);	
 			skrin_name = "app/admin/UV3/SenaraiPenggunaHISTORY_SUB.jsp";
-		}
 		
-		else if(command.equals("carianUtamaAT"))
-		{			
+		}else if(command.equals("carianUtamaAT")){			
 			String USER_ID = getParam("USER_ID");
 			Integer totalAT = getATCount(session, USER_ID);
 			this.context.put("USER_ID", USER_ID);
 			this.context.put("adaAT", "");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);	
-			if(totalAT>0)
-			{
+			if(totalAT>0){
 				this.context.put("totalAT", totalAT);
 				this.context.put("adaAT", "Y");			
-				
 				
 				String carianTerperinciAT = getParam("carianTerperinciAT_"+internalType+USER_ID);
 				String TARIKH_MULA_AT = getParam("TARIKH_MULA_AT_"+internalType+USER_ID);
@@ -1446,10 +1300,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			}			
 			skrin_name = "app/admin/UV3/SenaraiPenggunaAT.jsp";
-		}
-
-		else if(command.equals("savePenggunaMOHON"))
-		{			
+		
+		}else if(command.equals("savePenggunaMOHON")){			
 			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
 			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);	
 			String internalType = getParam("internalType");
@@ -1459,17 +1311,14 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewPengguna = viewDataPenggunaMOHON(session, ID_PERMOHONAN);
 			
 			this.context.put("viewPengguna", viewPengguna);
-			if(!viewPengguna.get("ID_PEJABATJKPTG").equals(""))
-			{
-			viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
-			this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
+			if(!viewPengguna.get("ID_PEJABATJKPTG").equals("")){
+				viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
+				this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
+			
 			}
-			
-			
 			skrin_name = "app/admin/UV3/viewPenggunaMOHON.jsp";
-		}	
-		else if(command.equals("viewPenggunaMOHON"))
-		{			
+		
+		}else if(command.equals("viewPenggunaMOHON")){			
 			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
 			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);	
 			String internalType = getParam("internalType");
@@ -1477,10 +1326,9 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewPengguna = viewDataPenggunaMOHON(session, ID_PERMOHONAN);
 			this.context.put("viewPengguna", viewPengguna);
 			
-			if(!viewPengguna.get("ID_PEJABATJKPTG").equals(""))
-			{
-			viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
-			this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
+			if(!viewPengguna.get("ID_PEJABATJKPTG").equals("")){
+				viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
+				this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
 			}
 			
 			//System.out.println("test 123 :: "+InetAddress.getLocalHost());
@@ -1518,13 +1366,10 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
 			        ip = request.getRemoteAddr(); 
 			    } 
-			System.out.println("ipUser2:"+ip);*/  
-			    
-			
+			System.out.println("ipUser2:"+ip);*/  	
 			skrin_name = "app/admin/UV3/viewPenggunaMOHON.jsp";
-		}	
-		else if(command.equals("viewPenggunaKJP"))
-		{			
+		
+		}else if(command.equals("viewPenggunaKJP")){			
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);	
@@ -1533,26 +1378,21 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			listAdditionalRoleByUserLogin = listRoleByUserLogin_Selected(session, USER_LOGIN);
 			this.context.put("listAdditionalRoleByUserLogin", listAdditionalRoleByUserLogin);
 			
-			
-			
 			viewPengguna = viewDataPenggunaKJP(session, USER_ID, "");
 			list_TBLRUJKEMENTERIAN = listTableRujukanV3(session,"TBLRUJKEMENTERIAN","","",internalType);
 			this.context.put("list_TBLRUJKEMENTERIAN",list_TBLRUJKEMENTERIAN);
 			list_TBLRUJAGENSI = listTableRujukanV3(session,"TBLRUJAGENSI",(String) viewPengguna.get("ID_KEMENTERIAN"),"",internalType);
 			this.context.put("list_TBLRUJAGENSI",list_TBLRUJAGENSI);
 			String current_role_kjp = "";
-			if(!USER_ID.equals(""))
-			{
+			if(!USER_ID.equals("")){
 				current_role_kjp = getCurrentRoleKJP(session, USER_ID);
 			}
 			this.context.put("current_role_kjp",current_role_kjp);
 			this.context.put("viewPengguna", viewPengguna);
 			this.context.put("SuccessMesej", "");
 			skrin_name = "app/admin/UV3/viewPenggunaKJP.jsp";
-		}
 		
-		else if(command.equals("viewPenggunaINT"))
-		{			
+		}else if(command.equals("viewPenggunaINT")){			
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);		
@@ -1562,8 +1402,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("viewPengguna", viewPengguna);
 			String ID_JENISPEJABAT = (String) viewPengguna.get("ID_JENISPEJABAT");
 			//if(ID_JENISPEJABAT.equals("16111"))//JPPH
-				if(ID_JENISPEJABAT.equals("3"))
-			{				
+			if(ID_JENISPEJABAT.equals("3")){				
 				list_TBLRUJNEGERI = listTableRujukanV3(session,"TBLRUJNEGERI","*",USER_ID,internalType);
 				this.context.put("list_TBLRUJNEGERI",list_TBLRUJNEGERI);			
 				
@@ -1575,17 +1414,15 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				
 				viewPejabat = viewPejabat(session,(String) viewPengguna.get("ID_PEJABAT"));
 				this.context.put("viewPejabat",viewPejabat);
-			}
 			
+			}
 			listAdditionalRoleByUserLogin = listRoleByUserLogin_Selected(session, USER_LOGIN);
 			this.context.put("listAdditionalRoleByUserLogin", listAdditionalRoleByUserLogin);
 			
 			this.context.put("SuccessMesej", "");
 			skrin_name = "app/admin/UV3/viewPenggunaINT.jsp";
-		}
 		
-		else if(command.equals("viewPenggunaOnline"))
-		{			
+		}else if(command.equals("viewPenggunaOnline")){			
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);		
@@ -1599,9 +1436,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			this.context.put("SuccessMesej", "");
 			skrin_name = "app/admin/UV3/viewPenggunaOnline.jsp";
-		}
-		else if(command.equals("savePenggunaInternal"))
-		{
+		
+		}else if(command.equals("savePenggunaInternal")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
@@ -1612,8 +1448,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewUserBaru = null;
 			viewUserAsal = null;
 			String aktiviti = "UPDATE";
-			if(USER_ID.equals("") && USER_ID!=null)
-			{
+			if(USER_ID.equals("") && USER_ID!=null){
 				aktiviti = "INSERT";
 			}
 			viewUserAsal = viewDataPenggunaInternal(session,USER_ID,"",ID_PERMOHONAN);
@@ -1621,43 +1456,34 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			boolean insert_update_user = false;
 			boolean update_PIP = false;
-			if(!ID_PERMOHONAN.equals("") && USER_ID.equals(""))
-			{				
+			if(!ID_PERMOHONAN.equals("") && USER_ID.equals("")){				
 				String STATUS_PID = getParam("STATUS_PID_"+internalType+USER_ID);
-				if(STATUS_PID.equals("2"))
-				{
-					//no user
+				if(STATUS_PID.equals("2")){	//no user
 					insert_update_user = false;
 					update_PIP = true;
-				}
-				else if(STATUS_PID.equals("3"))
-				{
-					//add user
+				
+				}else if(STATUS_PID.equals("3")){	//add user					
 					insert_update_user = true;
 					update_PIP = true;
+				
 				}
-			}
-			else
-			{
-				//add user
+			
+			}else{	//add user
 				insert_update_user = true;
 				update_PIP = false;
+			
 			}				
 				
-			if(insert_update_user==true)
-			{
+			if(insert_update_user==true){
 				USER_ID = simpanPenggunaInternal(session,USER_ID, internalType);
-				
 			}
 			
-			if(update_PIP==true)
-			{
+			if(update_PIP==true){
 				savePenggunaMOHON_internal(session,ID_PERMOHONAN, getParam("STATUS_PID_"+internalType),getParam("CATATAN_PIP_"+internalType), USER_ID);
 			}
 			
 			viewPengguna = viewDataPenggunaInternal(session,USER_ID,"",ID_PERMOHONAN);
 			this.context.put("viewPengguna", viewPengguna);
-			
 			
 			listAdditionalRoleByUserLogin = listRoleByUserLogin_Selected(session, (String) viewPengguna.get("USER_LOGIN"));
 			this.context.put("listAdditionalRoleByUserLogin", listAdditionalRoleByUserLogin);
@@ -1668,9 +1494,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			//close history
 			
 			skrin_name = "app/admin/UV3/viewPenggunaInternal.jsp";
-		}	
-		else if(command.equals("savePenggunaINT"))
-		{
+		
+		}else if(command.equals("savePenggunaINT")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
@@ -1679,8 +1504,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewUserBaru = null;
 			viewUserAsal = null;
 			String aktiviti = "UPDATE";
-			if(USER_ID.equals("") && USER_ID!=null)
-			{
+			if(USER_ID.equals("") && USER_ID!=null){
 				aktiviti = "INSERT";
 			}
 			viewUserAsal = viewDataPenggunaINT(session,USER_ID,"");
@@ -1692,11 +1516,10 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("viewPengguna", viewPengguna);
 			
 			String ID_JENISPEJABAT = (String) viewPengguna.get("ID_JENISPEJABAT");
-			//if(ID_JENISPEJABAT.equals("16111"))//JPPH
-				if(ID_JENISPEJABAT.equals("3"))
-			{	
+			if(ID_JENISPEJABAT.equals("3")){	
 				viewPejabat = viewPejabat(session,(String) viewPengguna.get("ID_PEJABAT"));
 				this.context.put("viewPejabat",viewPejabat);
+			
 			}			
 			
 			listAdditionalRoleByUserLogin = listRoleByUserLogin_Selected(session, (String) viewPengguna.get("USER_LOGIN"));
@@ -1708,9 +1531,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			//close history
 			
 			skrin_name = "app/admin/UV3/viewPenggunaINT.jsp";
-		}	
-		else if(command.equals("savePenggunaKJP"))
-		{
+		
+		}else if(command.equals("savePenggunaKJP")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
@@ -1719,8 +1541,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewUserBaru = null;
 			viewUserAsal = null;
 			String aktiviti = "UPDATE";
-			if(USER_ID.equals("") && USER_ID!=null)
-			{
+			if(USER_ID.equals("") && USER_ID!=null){
 				aktiviti = "INSERT";
 			}
 			viewUserAsal = viewDataPenggunaKJP(session,USER_ID,"");
@@ -1728,8 +1549,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			String current_role_kjp = "";
 			USER_ID = simpanPenggunaKJP(session,USER_ID, internalType);
-			if(!USER_ID.equals(""))
-			{
+			if(!USER_ID.equals("")){
 				current_role_kjp = getCurrentRoleKJP(session, USER_ID);
 			}
 			this.context.put("current_role_kjp",current_role_kjp);			
@@ -1746,9 +1566,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			//close history
 			
 			skrin_name = "app/admin/UV3/viewPenggunaKJP.jsp";
-		}	
-		else if(command.equals("savePenggunaOnline"))
-		{
+		
+		}else if(command.equals("savePenggunaOnline")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);
@@ -1757,8 +1576,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewUserBaru = null;
 			viewUserAsal = null;
 			String aktiviti = "UPDATE";
-			if(USER_ID.equals("") && USER_ID!=null)
-			{
+			if(USER_ID.equals("") && USER_ID!=null){
 				aktiviti = "INSERT";
 			}
 			viewUserAsal = viewDataPenggunaOnline(session, USER_ID,"");
@@ -1778,10 +1596,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			//close history
 			
 			skrin_name = "app/admin/UV3/viewPenggunaOnline.jsp";
-		}
 		
-		else if(command.equals("showSenaraiPenggunaKJP"))
-		{
+		}else if(command.equals("showSenaraiPenggunaKJP")){
 			//open ct	
 			String CT_OPENCLOSE_CARIAN = getParam("CT_OPENCLOSE_CARIAN_KJP");
 			String CT_FLAGTEPERINCI_CARIAN = getParam("CT_FLAGTEPERINCI_CARIAN_KJP");
@@ -1791,8 +1607,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			this.context.put("SuccessMesejDeleteUser", "");
 			String FLAG_DELETE = getParam("FLAG_DELETE");			
-			if(FLAG_DELETE.equals("Y"))
-			{
+			if(FLAG_DELETE.equals("Y")){
 				String USER_ID = getParam("USER_ID");
 				String USER_NAME = getParam("USER_NAME");
 				deletePengguna(session,USER_ID,"KJP",USER_NAME);
@@ -1802,20 +1617,16 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			String action = getParam("action");
 			String carianTerperinci = getParam("carianTerperinci");
-			if(!carianTerperinci.equals("")  || getParam("CT_FLAGTEPERINCI_CARIAN_KJP").equals("Y"))
-			{
+			if(!carianTerperinci.equals("")  || getParam("CT_FLAGTEPERINCI_CARIAN_KJP").equals("Y")){
 				listPenggunaKJP = listPengunaKJP(session,carianTerperinci);
 				setupPageList(session, action, listPenggunaKJP, "listPenggunaKJP",command,"div_PenggunaKJP");	
 				//open ct
 				this.context.put("PrintlistPenggunaKJP",listPenggunaKJP);
 				//close ct
 			}
-			if(getParam("FlagCetak").equals("Y"))
-			{
+			if(getParam("FlagCetak").equals("Y")){
 				skrin_name = "app/admin/UV3/SenaraiPenggunaKJP_Print.jsp";
-			}
-			else if (getParam("FlagCetakSemakanKJP").equals("Y")){
-				
+			}else if (getParam("FlagCetakSemakanKJP").equals("Y")){	
 				listPenggunaInternalPrint = listPengunaKJP(session,carianTerperinci);
 				setupPageList(session, action, listPenggunaInternalPrint, "listPenggunaKJP",command,"div_PenggunaKJP");	
 				//open ct
@@ -1830,15 +1641,12 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				this.context.put("jumPenyedia",jumPenyedia);*/
 				
 				skrin_name = "app/admin/UV3/SenaraiPrintPenggunaAllKJP.jsp";
-			}
-			else
-			{
+			
+			}else{
 				skrin_name = "app/admin/UV3/SenaraiPenggunaKJP.jsp";
 			}
-		}
-		
-		else if(command.equals("showSenaraiPenggunaINT"))
-		{
+			
+		}else if(command.equals("showSenaraiPenggunaINT")){
 			//open ct	
 			String CT_OPENCLOSE_CARIAN = getParam("CT_OPENCLOSE_CARIAN_INT");
 			String CT_FLAGTEPERINCI_CARIAN = getParam("CT_FLAGTEPERINCI_CARIAN_INT");
@@ -1848,18 +1656,17 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			this.context.put("SuccessMesejDeleteUser", "");
 			String FLAG_DELETE = getParam("FLAG_DELETE");			
-			if(FLAG_DELETE.equals("Y"))
-			{
+			if(FLAG_DELETE.equals("Y")){
 				String USER_ID = getParam("USER_ID");
 				String USER_NAME = getParam("USER_NAME");
 				deletePengguna(session,USER_ID,"INT",USER_NAME);
 				this.context.put("SuccessMesejDeleteUser", "Maklumat Pengguna '"+USER_NAME+"' Berjaya Dihapus");				
+			
 			}
 			
 			String action = getParam("action");
 			String carianTerperinci = getParam("carianTerperinci");
-			if(!carianTerperinci.equals("")  || getParam("CT_FLAGTEPERINCI_CARIAN_INT").equals("Y"))
-			{
+			if(!carianTerperinci.equals("")  || getParam("CT_FLAGTEPERINCI_CARIAN_INT").equals("Y")){
 				listPenggunaINT = listPenggunaINT(session,carianTerperinci);
 				setupPageList(session, action, listPenggunaINT, "listPenggunaINT",command,"div_PenggunaINT");
 				//open ct
@@ -1867,28 +1674,22 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				//close ct
 			}
 			
-			if(getParam("FlagCetak").equals("Y"))
-			{
+			if(getParam("FlagCetak").equals("Y")){
 				skrin_name = "app/admin/UV3/SenaraiPenggunaIntegrasiDalaman_Print.jsp";
-			}
-			else if (getParam("FlagCetakSemakanINT").equals("Y")){
-				
+			}else if (getParam("FlagCetakSemakanINT").equals("Y")){	
 				listPenggunaINT = listPenggunaINT(session,carianTerperinci);
 				setupPageList(session, action, listPenggunaINT, "listPenggunaINT",command,"div_PenggunaINT");
 				this.context.put("PrintlistPengguna",listPenggunaINT);
 				
 				//listStatsJawatan = getStatsJawatan(session,"Negeri",carianTerperinci);
-				//this.context.put("listStatsJawatan",listStatsJawatan);
-				
+				//this.context.put("listStatsJawatan",listStatsJawatan);	
 				skrin_name = "app/admin/UV3/SenaraiPrintPenggunaAllIntegrasi.jsp";
-			}
-			else
-			{
+			
+			}else{
 				skrin_name = "app/admin/UV3/SenaraiPenggunaIntegrasiDalaman.jsp";
 			}
-		}
-		else if(command.equals("showSenaraiPenggunaOnline"))
-		{
+			
+		}else if(command.equals("showSenaraiPenggunaOnline")){
 			//open ct	
 			String CT_OPENCLOSE_CARIAN = getParam("CT_OPENCLOSE_CARIAN_Online");
 			String CT_FLAGTEPERINCI_CARIAN = getParam("CT_FLAGTEPERINCI_CARIAN_Online");
@@ -1898,18 +1699,17 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			
 			this.context.put("SuccessMesejDeleteUser", "");
 			String FLAG_DELETE = getParam("FLAG_DELETE");			
-			if(FLAG_DELETE.equals("Y"))
-			{
+			if(FLAG_DELETE.equals("Y")){
 				String USER_ID = getParam("USER_ID");
 				String USER_NAME = getParam("USER_NAME");
 				deletePengguna(session,USER_ID,"online",USER_NAME);
 				this.context.put("SuccessMesejDeleteUser", "Maklumat Pengguna '"+USER_NAME+"' Berjaya Dihapus");
+			
 			}
 			
 			String action = getParam("action");
 			String carianTerperinci = getParam("carianTerperinci");
-			if(!carianTerperinci.equals("")  || getParam("CT_FLAGTEPERINCI_CARIAN_Online").equals("Y"))
-			{
+			if(!carianTerperinci.equals("")  || getParam("CT_FLAGTEPERINCI_CARIAN_Online").equals("Y")){
 				listPenggunaOnline = listPengunaOnline(session,carianTerperinci);
 				setupPageList(session, action, listPenggunaOnline, "listPenggunaOnline",command,"div_PenggunaOnline");
 				//open ct
@@ -1917,84 +1717,64 @@ public class UserListModuleV3 extends AjaxBasedModule {
 				//close ct				
 			}
 			
-			if(getParam("FlagCetak").equals("Y"))
-			{
+			if(getParam("FlagCetak").equals("Y")){
 				skrin_name = "app/admin/UV3/SenaraiPenggunaOnline_Print.jsp";
-			}
-			else if (getParam("FlagCetakSemakanOnline").equals("Y")){
-				
+			}else if (getParam("FlagCetakSemakanOnline").equals("Y")){				
 				listPenggunaOnline = listPengunaOnline(session,carianTerperinci);
 				setupPageList(session, action, listPenggunaOnline, "listPenggunaOnline",command,"div_PenggunaOnline");
 				this.context.put("PrintlistPengguna",listPenggunaOnline);
 				
 				//listStatsJawatan = getStatsJawatanOnline(session,"Online",carianTerperinci);
-				//this.context.put("listStatsJawatan",listStatsJawatan);
-				
+				//this.context.put("listStatsJawatan",listStatsJawatan);				
 				skrin_name = "app/admin/UV3/SenaraiPrintPenggunaAllOnline.jsp";
-			}
-			else
-			{
+			
+			}else{
 				skrin_name = "app/admin/UV3/SenaraiPenggunaOnline.jsp";
 			}
 			
-		}
-		
-		else if(command.equals("showSenaraiPenggunaMemohon"))
-		{
+		}else if(command.equals("showSenaraiPenggunaMemohon")){
 			//open ct	
 			String CT_OPENCLOSE_CARIAN = getParam("CT_OPENCLOSE_CARIAN_MOHON");
 			String CT_FLAGTEPERINCI_CARIAN = getParam("CT_FLAGTEPERINCI_CARIAN_MOHON");
 			this.context.put("CT_OPENCLOSE_CARIAN",CT_OPENCLOSE_CARIAN);
 			this.context.put("CT_FLAGTEPERINCI_CARIAN", CT_FLAGTEPERINCI_CARIAN);			
 			//close ct
-			
-			
+						
 			this.context.put("SuccessMesejDeleteUser", "");
 			String FLAG_DELETE = getParam("FLAG_DELETE");			
-			if(FLAG_DELETE.equals("Y"))
-			{
+			if(FLAG_DELETE.equals("Y")){
 				String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
 				String NAMA = getParam("NAMA");
 				deletePenggunaMOHON(session,ID_PERMOHONAN,NAMA);
 				this.context.put("SuccessMesejDeleteUser", "Maklumat Permohonan ID Pengguna '"+NAMA+"' Berjaya Dihapus");
+			
 			}
 			
 			String action = getParam("action");
 			String carianTerperinci = getParam("carianTerperinci");
-			if(!carianTerperinci.equals(""))
-			{
+			if(!carianTerperinci.equals("")){
 				listPenggunaMOHON = listPengunaMOHON(session,carianTerperinci);				 
-			}
-			else
-			{
-				if(getParam("CT_FLAGTEPERINCI_CARIAN_MOHON").equals("Y"))
-				{
+			}else{
+				if(getParam("CT_FLAGTEPERINCI_CARIAN_MOHON").equals("Y")){
 					listPenggunaMOHON = listPengunaMOHON(session,carianTerperinci);
-				}
-				else
-				{
+				}else{
 					listPenggunaMOHON = listPengunaMOHON(session,"");
 				}
+			
 			}
 			setupPageList(session, action, listPenggunaMOHON, "listPenggunaMOHON",command,"div_PenggunaMOHON");
 			//open ct
 			this.context.put("PrintlistPenggunaMOHON",listPenggunaMOHON);
 			//close ct
 			
-			if(getParam("FlagCetak").equals("Y"))
-			{
+			if(getParam("FlagCetak").equals("Y")){
 				skrin_name = "app/admin/UV3/SenaraiPenggunaMemohon_Print.jsp";
-			}
-			else
-			{
+			}else{
 				skrin_name = "app/admin/UV3/SenaraiPenggunaMemohon.jsp";
 			}
 			
-			
-		}
 		//tambah untuk print borang pengesahan (with format)
-		else if(command.equals("cetakBorangPengesahan"))
-		{
+		}else if(command.equals("cetakBorangPengesahan")){
 			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
 			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);	
 			
@@ -2004,16 +1784,16 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			viewPengguna = viewDataPenggunaMOHON(session, ID_PERMOHONAN);
 			this.context.put("viewPengguna", viewPengguna);
 			
-			if(!viewPengguna.get("ID_PEJABATJKPTG").equals(""))
-			{
-			viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
-			this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
+			if(!viewPengguna.get("ID_PEJABATJKPTG").equals("")){
+				viewPejabatJKPTG = viewPejabatJKPTG(session,(String) viewPengguna.get("ID_PEJABATJKPTG"));
+				this.context.put("viewPejabatJKPTG",viewPejabatJKPTG);
 			}
 			
 			listRoleByUserLogin = listRoleByUserLogin(session, ID_PERMOHONAN,internalType,ID_PERMOHONAN);
 			this.context.put("listRoleByUserLogin", listRoleByUserLogin);
 			
 			skrin_name = "app/admin/UV3/BorangPengesahanPengguna.jsp";
+		
 		}
 		/*else if(command.equals("cetakLampiranA"))
 		{
@@ -2040,73 +1820,64 @@ public class UserListModuleV3 extends AjaxBasedModule {
 		}*/
 		
 		//Diba tambah untuk Laporan Statistik
-		else if(command.equals("showStats"))
-		{
+		else if(command.equals("showStats")){
 			String mode = getParam("mode");
-			myLogger.info("mode - "+mode);
+//			myLogger.info("mode - "+mode);
 			this.context.put("mode", mode);	
 			
-			if(mode.equals("Online")){
-				
+			if(mode.equals("Online")){			
 				statsOnlineUmur = LaporanStatsAdmin.getStatsUmur();
 				this.context.put("statsOnlineUmur", statsOnlineUmur);	
 				
 				skrin_name = "app/admin/UV3/laporanStatistik/statsLogOnlineUmur.jsp";
-			}
-			else if(mode.equals("OnlineKateg")){ 
-				
+			
+			}else if(mode.equals("OnlineKateg")){ 	
 				statsOnlineKategUser = LaporanStatsAdmin.getStatsKategUser();
 				this.context.put("statsOnlineKategUser", statsOnlineKategUser);	
 				
 				skrin_name = "app/admin/UV3/laporanStatistik/statsLogOnlineKateg.jsp";
-			}
-			else if(mode.equals("OnlineHari")){ 
-				
+			
+			}else if(mode.equals("OnlineHari")){ 	
 				statsOnlineHari = LaporanStatsAdmin.getStatsLogbyHari();
 				this.context.put("statsOnlineHari", statsOnlineHari);	
 				
 				skrin_name = "app/admin/UV3/laporanStatistik/statsLogOnlineHari.jsp";
-			}
-			else if(mode.equals("OnlineNegeri")){ 
-				
+			
+			}else if(mode.equals("OnlineNegeri")){ 	
 				statsOnlineNegeri = LaporanStatsAdmin.getStatsLogbyNegeri(5);
 				this.context.put("statsOnlineNegeri", statsOnlineNegeri);	
 				
 				skrin_name = "app/admin/UV3/laporanStatistik/statsLogOnlineNegeri.jsp";
-			}
-			else if(mode.equals("InternalNegeri")){
-				
+			
+			}else if(mode.equals("InternalNegeri")){	
 				filter_negeri = getParam("filterNegeri");
 				System.out.println("filter_negeri -- "+ filter_negeri);
 				this.context.put("filter_negeri", filter_negeri);
 				
 				if (filter_negeri.equals("16")){
-				statsInternalNegeri = LaporanStatsAdmin.getStatsLogbyNegeri(1);
+					statsInternalNegeri = LaporanStatsAdmin.getStatsLogbyNegeri(1);
 				} else {
 					statsInternalNegeri = LaporanStatsAdmin.getStatsLogbyNegeri(2);
 				}
 				this.context.put("statsInternalNegeri", statsInternalNegeri);	
 				
 				skrin_name = "app/admin/UV3/laporanStatistik/statsLogInternalNegeri.jsp";
-			}
-			else if(mode.equals("KJP")){
-				
+			
+			}else if(mode.equals("KJP")){	
 				statsKJP = LaporanStatsAdmin.getStatsLogbyNegeri(3);
 				this.context.put("statsKJP", statsKJP);	
 				
 				skrin_name = "app/admin/UV3/laporanStatistik/statsLogKJP.jsp";
-			}
-			else if(mode.equals("Integrasi")){
-				
+			
+			}else if(mode.equals("Integrasi")){	
 				statsIntegrasi = LaporanStatsAdmin.getStatsLogbyNegeri(4);
 				this.context.put("statsIntegrasi", statsIntegrasi);	
 				
 				skrin_name = "app/admin/UV3/laporanStatistik/statsLogIntegrasi.jsp";
+			
 			}
-		}
 		
-		else if(command.equals("showListGred"))
-		{
+		}else if(command.equals("showListGred")){
 			String ID_JAWATAN = getParam("ID_JAWATAN");
 			this.context.put("ID_JAWATAN", ID_JAWATAN);
 			String internalType = getParam("internalType");
@@ -2118,50 +1889,42 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("list_TBLRUJGRED", list_TBLRUJGRED);
 			
 			skrin_name = "app/admin/UV3/showListGred.jsp";
-		}
 		
-		else if(command.equals("cetakMaklumatPengguna"))
-		{
+		}else if(command.equals("cetakMaklumatPengguna")){
 			String USER_ID = getParam("USER_ID");
 			String internalType = getParam("internalType");
 			this.context.put("internalType", internalType);	
 			
 			String USER_LOGIN = getParam("USER_LOGIN");
 			this.context.put("USER_LOGIN", USER_LOGIN);	
-			
 						
 			listAdditionalRoleByUserLogin = listRoleByUserLogin_Selected(session, USER_LOGIN);
 			this.context.put("listAdditionalRoleByUserLogin", listAdditionalRoleByUserLogin);
 			
 			if(internalType.equals("HQ")){
-			viewPengguna = viewDataPenggunaInternal(session,USER_ID,"","");
-			this.context.put("viewPengguna", viewPengguna);
-			}
-			else if(internalType.equals("Negeri")){
-			viewPengguna = viewDataPenggunaInternal(session,USER_ID,"","");
-			this.context.put("viewPengguna", viewPengguna);
-			}
-			else if(internalType.equals("KJP")){
-			viewPengguna = viewDataPenggunaKJP(session, USER_ID, "");
-			this.context.put("viewPengguna", viewPengguna);
-			}
-			else if(internalType.equals("INT")){
-			viewPengguna = viewDataPenggunaINT(session, USER_ID, "");
-			this.context.put("viewPengguna", viewPengguna);
-			}
-			else if(internalType.equals("Online")){
-			viewPengguna = viewDataPenggunaOnline(session, USER_ID, "");
-			this.context.put("viewPengguna", viewPengguna);
-			}
-			else {
-	
-			}
+				viewPengguna = viewDataPenggunaInternal(session,USER_ID,"","");
+				this.context.put("viewPengguna", viewPengguna);
 			
+			}else if(internalType.equals("Negeri")){
+				viewPengguna = viewDataPenggunaInternal(session,USER_ID,"","");
+				this.context.put("viewPengguna", viewPengguna);
+			
+			}else if(internalType.equals("KJP")){
+				viewPengguna = viewDataPenggunaKJP(session, USER_ID, "");
+				this.context.put("viewPengguna", viewPengguna);
+			
+			}else if(internalType.equals("INT")){
+				viewPengguna = viewDataPenggunaINT(session, USER_ID, "");
+				this.context.put("viewPengguna", viewPengguna);
+			
+			}else if(internalType.equals("Online")){
+				viewPengguna = viewDataPenggunaOnline(session, USER_ID, "");
+				this.context.put("viewPengguna", viewPengguna);
+			
+			}else { }
 			skrin_name = "app/admin/UV3/printBorangPengguna.jsp";
-		}
 		
-		else if(command.equals("simpanDokumen")){
-			
+		}else if(command.equals("simpanDokumen")){	
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);	
 			String internalType = getParam("internalType");
@@ -2181,10 +1944,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("after_uploadLampiran","Y");			
 			
 			skrin_name = "app/admin/UV3/index.jsp";;
-		}
 		
-		else if(command.equals("showDokumen")){
-			
+		}else if(command.equals("showDokumen")){	
 			String USER_ID = getParam("USER_ID");
 			this.context.put("USER_ID", USER_ID);	
 			
@@ -2192,38 +1953,34 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			this.context.put("internalType", internalType);	
 			
 			String action = getParam("action");
-			
 			String FLAG_DELETE = getParam("FLAG_DELETE");
-			
-			
-			
+						
 			if (FLAG_DELETE.equals("Y")){
 				//delete dokumen
 				String ID_DOKUMENADMIN = getParam("ID_DOKUMENADMIN");
 				deleteDokumen(session, USER_ID, ID_DOKUMENADMIN);	
 				this.context.put("SuccessMesejDeleteUser", "Dokumen Berjaya Dihapus");
+			
 			}
 			
 			listDokumen = getListDoc(session, USER_ID, "user"); //flag user untuk uv3
 			setupPageList(session, action, listDokumen, "listDokumen",command,"Senarai_Doc"+USER_ID);
 			
 			/*listDokumen = getListDoc(session, ID_SEKSYEN);
-			this.context.put("listDokumen",listDokumen);*/
-			
+			this.context.put("listDokumen",listDokumen);*/			
 			skrin_name = "app/admin/UV3/SenaraiLampiranPengguna.jsp";
-		}
 		
-		else
-		{
+		}else{
 			this.context.put("FlagCari", "Y");
 			skrin_name = "app/admin/UV3/index.jsp";
+		
 		}
 		myLogger.info(" skrin_name : "+skrin_name);
 		return skrin_name;
+		
 	}
 	
-	public void setupPageDefaultPut()
-	{
+	public void setupPageDefaultPut(){
 		this.context.put("page_mula", "");
 		this.context.put("page", "");
 		this.context.put("itemsPerPage", "");
@@ -2236,10 +1993,10 @@ public class UserListModuleV3 extends AjaxBasedModule {
 		this.context.put("command", "");
 		this.context.put("div", "");
 		this.context.put("totalRecords", "");
+	
 	}
 	
-	public void defaultPut()
-	{
+	public void defaultPut(){
 		this.context.put("page_mula", "");
 		this.context.put("page", "");
 		this.context.put("itemsPerPage", "");
@@ -2302,8 +2059,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 		this.context.put("commandPIP", "");
 		this.context.put("after_saveDOCPIP", "");
 		this.context.put("ID_PERMOHONAN", "");
-		this.context.put("returnDIVDOCPIP", "");
-		
+		this.context.put("returnDIVDOCPIP", "");	
 		
 		//open ct				
 		this.context.put("CT_NAMA", "");
@@ -2343,11 +2099,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 		
 	}
 	
-	
-	
-
-	 @SuppressWarnings("unchecked")
-		private void saveDocPIP(HttpSession session,String internalType,String USER_ID,String ID_PERMOHONAN) throws Exception {
+	@SuppressWarnings("unchecked")
+	private void saveDocPIP(HttpSession session,String internalType,String USER_ID,String ID_PERMOHONAN) throws Exception {
 		 
 			    DiskFileItemFactory factory = new DiskFileItemFactory();
 			    ServletFileUpload upload = new ServletFileUpload(factory);
@@ -2372,7 +2125,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			    }
 			  }
 	
-	 private void saveDocPIP_DB(FileItem item,String ID_PERMOHONAN) throws Exception {
+	private void saveDocPIP_DB(FileItem item,String ID_PERMOHONAN) throws Exception {
 		    myLogger.info("::: saveDocPIP_DB ------- "+item+" ID_PERMOHONAN : "+ID_PERMOHONAN);
 		 	HttpSession session = request.getSession();	
 		 	
@@ -2394,8 +2147,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			      if (db != null) db.close();
 		    }
 		    
-	  }
-	
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List listDaerahJagaanByIdPejabat(HttpSession session, String ID_PEJABATJKPTG, String ID_JENISPEJABAT)throws Exception {
@@ -9281,5 +9033,7 @@ public Hashtable viewPejabatIntegrasi(HttpSession session,String ID_PEJABAT)thro
 					db.close();
 			}
 		}
+		
+		
 }
 
