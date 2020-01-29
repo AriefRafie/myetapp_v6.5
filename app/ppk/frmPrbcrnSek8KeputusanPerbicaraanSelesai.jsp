@@ -549,7 +549,7 @@ document.getElementById("header_lama").style.display="block";
       <td width="57%" align="left"><input name="flag_tangguh" id="flag_tangguh" type="radio"  value="1" $TEMPcheckedTidakHadir>
             Pemohon / Waris Tidak Hadir </td>
       <td width="43%" align="left"><input name="flag_tangguh" id="flag_tangguh" type="radio"  value="2" $TEMPcheckedWarisTidakLengkap >
-            Senarai Waris Tidak Lengkap </td>
+            Senarai Waris Tidak Lengkap</td>
     </tr>
         <tr align="center">
       <td align="left"><input name="flag_tangguh" id="flag_tangguh" type="radio"  value="3" $TEMPcheckedMahkamahTinggi>
