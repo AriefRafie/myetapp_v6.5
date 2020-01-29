@@ -1499,8 +1499,8 @@
                                         </tr>
                                         #end
                                         <tr id="no_hp">
-                                          <td class="style38" >&nbsp;</td>
-                                       
+                                          <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+                                          #end</td>
                                           <td class="style38" ><div align="left">No Telefon Bimbit</div></td>
                                            <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>
                                           <td><input name="txtNoTelefonBimbitPemohon" onkeyup="javascript:validateIC(event,this,this.value,'txtNoTelefonBimbitPemohon')" type="text" id="txtNoTelefonBimbitPemohon" style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.noHp" size="14" maxlength="14" $readmodeR class="$readmode" /></td>
@@ -1520,7 +1520,8 @@
                                           <td><input name="txtNoFaksPemohon" type="text" id="txtNoFaksPemohon" style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.noFax" size="14" maxlength="12" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtNoFaksPemohon')" /></td>
                                         </tr>
                                         <tr>
-                                          <td class="style38" >&nbsp;</td>
+                                         <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+                                          #end</td>
                                           <td class="style38" ><div align="left">Email</div></td>
                                           <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>                                        
                                           <td>

@@ -96,6 +96,7 @@
 #set ($no_tel = "")
 #set ($nama_pelbagainegara = "")
 #set ($no_hp = "")
+#set ($emel = "")
 #set ($jenis_pemohon = "2")
 #set ($jenis_pej = "")
 #set ($socSaudaraWaris = "")
@@ -1481,12 +1482,14 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
         
         
         <tr id="tr_hp">
-          <td class="style38" valign="top" >&nbsp;</td>
-          <td class="style38" >No Tel (HP)</td>
+          <td class="style38" valign="top" >#if($setmode != "disabled") <span class="style1">*</span> #end</td>
+          
+          <td class="style38" >No. Tel (HP)</td>
           <td>:</td>
           <td>
+          
           <span id="no_hp_1a">
-        <input name="no_hp" type="text" id="no_hp" style="text-transform:uppercase;" onBlur="uppercase()" value="$no_hp" size="14" onKeyUp="javascript:validateIC(event,this,this.value,'txtNoTelefonPemohon')" maxlength="14" $setmodeR class="$setmode" />     
+        <input name="no_hp" type="text" id="no_hp" style="text-transform:uppercase;" onBlur="uppercase()" value="$no_hp" size="14" onKeyUp="javascript:validateIC(event,this,this.value,'no_hp')" maxlength="14" $setmodeR class="$setmode" />     
         </span>
         
         <span id="no_hp_1b">
@@ -1496,7 +1499,19 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
              </td>
         </tr>
         
-        
+       
+       <tr>
+				<td class="style38" valign="top" >#if($setmode != "disabled") <span class="style1">*</span> #end</td>			
+				<td valign="top" >Emel</td>
+				<td valign="top" >
+				:
+				</td>
+				<td valign="top" >
+				<input  size="50" type="text" id="emel" name="emel" value="$emel">
+				</td>
+			</tr>
+			
+			
         
         #end
       </table>
@@ -2202,6 +2217,7 @@ function Simpan(){
 		alert("Sila masukkan poskod");
 		document.f1.txtPoskod.focus();
 	}
+	
 	else if (document.f1.socNegeri[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
 		alert("Sila pilih negeri");
 		document.f1.socNegeri.focus();
@@ -2218,6 +2234,15 @@ function Simpan(){
 		alert("Sila masukkan nombor poskod dengan lengkapnya");
 		document.f1.txtPoskod[1].focus();
 	}
+    if (document.f1.no_hp[0].value == "") {
+		alert("Sila masukkan No. Tel (HP)");
+		document.f1.no_hp[0].focus();
+	}
+	else if (document.f1.emel.value == "" ) {
+		alert("Sila masukkan Emel");
+		document.f1.emel.focus();
+	}
+	
 	
 	else if(document.f1.no_kp1.value == 'yes')
 	{
@@ -3640,7 +3665,6 @@ if(document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == 
 		document.f1.socNegeri[1].value = "";
 		document.f1.socBandar[1].value = "";			
 		document.f1.no_tel[1].value = "";
-		
 		
 		document.f1.socNegeri_dis.value = "";		
 		document.f1.socBandar_dis.value = "";
