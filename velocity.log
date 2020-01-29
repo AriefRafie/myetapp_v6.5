@@ -156,20 +156,6 @@
 2020-01-22 13:03:14,264 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogSystem
 2020-01-22 13:03:14,264 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogSystem or necessary supporting classes in classpath.
 2020-01-22 13:03:14,265 - java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
-	at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Class.java:274)
-	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:64)
-	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:96)
-	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:154)
-	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:255)
-	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:795)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:250)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
-	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:135)
-	at lebah.portal.velocity.VelocityEngineHolder.<init>(VelocityEngineHolder.java:26)
-	at lebah.portal.velocity.VelocityEngineHolder.getInstance(VelocityEngineHolder.java:34)
-	at lebah.portal.velocity.VServlet.initVelocity(VServlet.java:55)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:135)
 	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
@@ -184,32 +170,6 @@
 	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:338)
 	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
 	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:170)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
-	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:950)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:423)
-	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1079)
-	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:620)
-	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
-	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1720)
-	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1571)
-	... 49 more
-
 2020-01-22 13:03:14,265 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
 2020-01-22 13:03:14,266 - LogSystem has been deprecated. Please use a LogChute implementation.
 2020-01-22 13:03:14,270 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
