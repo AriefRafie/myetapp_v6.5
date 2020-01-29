@@ -638,6 +638,11 @@ public class FrmPYWKeputusanData {
 				long idFail = 0;
 				long idHasil = 0;
 				noFail = rsFail.getString("NO_FAIL");
+				/**
+				 * Kemaskini pada : 29/01/2020
+				 * Kemaskini oleh : Nurul Ain
+				 * Keterangan 	  : No. fail sewa sama dengan hasil 
+				 */
 //				if (noFail.contains("JKPTG/SPHP/931/")) {
 //					noFail = noFail.replaceAll("JKPTG/SPHP/931/",
 //							"JKPTG/SPHP/359/");
