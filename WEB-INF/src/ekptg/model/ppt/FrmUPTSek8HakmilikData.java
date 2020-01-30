@@ -355,6 +355,11 @@ public class FrmUPTSek8HakmilikData {
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
 	    		
+	    		//PPT-03  
+	    		String no_bangunan = (String)data.get("txtNoBangunan");
+	    		String no_tingkat = (String)data.get("txtNoTingkat");
+	    		String no_petak = (String)data.get("txtNoPetak");
+
 	    		
 	    		String flagSebahagian = "0";
 	    		
@@ -416,8 +421,12 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("syarat_khas", syaratKhas);
 	    		r.add("sekatan_kepentingan",sekatanKepentingan);
 	    		r.add("sekatan_hak",sekatanHak);
-	    		r.add("no_syit",noSyit);	
-	    		
+	    		r.add("no_syit",noSyit);
+
+	    		r.add("no_bangunan",no_bangunan); //PPT-03 
+	    		r.add("no_tingkat",no_tingkat); //PPT-03 
+	    		r.add("no_petak",no_petak); //PPT-03 
+
 	    		//new
 	    		r.add("id_unitluasambil", id_luasambil);
 	    		r.add("nama_luas_asal", nama_luas_asal);
@@ -523,6 +532,7 @@ public class FrmUPTSek8HakmilikData {
 	    		String sekatanHak = (String)data.get("txtSekatanHak");
 	    		String noSyit = (String)data.get("txtNoSyit");	
 	    		
+
 	    		//new
 	    		String id_luasambil = (String)data.get("unitLuasAmbil");
 	    		String nama_luas_asal = (String)data.get("txtLuasLotAsalSebelumConvert");
@@ -534,7 +544,11 @@ public class FrmUPTSek8HakmilikData {
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
-	    		 
+
+	    		//PPT-03  
+	    		String no_bangunan = (String)data.get("txtNoBangunan");
+	    		String no_tingkat = (String)data.get("txtNoTingkat");
+	    		String no_petak = (String)data.get("txtNoPetak");
 	    		
 	    		String flagSebahagian = "0";
 	    		
@@ -592,7 +606,11 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("syarat_khas", syaratKhas);
 	    		r.add("sekatan_kepentingan",sekatanKepentingan);
 	    		r.add("sekatan_hak",sekatanHak);
-	    		r.add("no_syit",noSyit);	    
+	    		r.add("no_syit",noSyit);
+
+	    		r.add("no_bangunan",no_bangunan); //PPT-03 
+	    		r.add("no_tingkat",no_tingkat); //PPT-03 
+	    		r.add("no_petak",no_petak); //PPT-03 
 	    		
 	    		//new
 	    		r.add("id_unitluasambil", id_luasambil);
