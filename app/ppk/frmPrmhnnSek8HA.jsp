@@ -1046,7 +1046,7 @@
                    
                    
                    
-                   #if ($socJenisHa == "2" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "1" || $socJenisHa == "3" || $socJenisHa == "6" )   
+                   #if ($socJenisHa == "2" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "1" || $socJenisHa == "3" || $socJenisHa == "6" || $socJenisHa == "13")   
            
                    
                    <tr>
@@ -1054,7 +1054,7 @@
                   #if($!skrin_online != "yes" && $!skrin_online_17 != "yes")
                   
                   #else 
-                     #if ($socJenisHa == "1")#elseif ($socJenisHa == "2")
+                     #if ($socJenisHa == "1")#elseif ($socJenisHa == "2" || $socJenisHa == "13") <!-- arief add $socJenisHa == "13" -->
                      <span class="style11">*</span>
                       #elseif ($socJenisHa == "3")
                      <span class="style11">*</span>                     
@@ -1074,7 +1074,7 @@
                     
                       #if ($socJenisHa == "1")
                       Agensi
-                      #elseif ($socJenisHa == "2")
+                      #elseif ($socJenisHa == "2" || $socJenisHa == "13") <!-- arief add $socJenisHa == "13" -->
                       Agensi
                       #elseif ($socJenisHa == "3")
                       Jenis dan Jenama                      
@@ -1094,7 +1094,7 @@
                   </div></td>
                   <td>:</td>
                   <td>
-                  #if ($socJenisHa == "1" || $socJenisHa == "2" || $socJenisHa == "3" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "6" )
+                  #if ($socJenisHa == "1" || $socJenisHa == "2" || $socJenisHa == "3" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "6" || $socJenisHa == "13") <!-- arief add $socJenisHa == "13" -->
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  /> 
  	  #else
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  />	  
@@ -1103,7 +1103,7 @@
       #end
                 
              
-             #if ($socJenisHa == "2" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "1" || $socJenisHa == "3" || $socJenisHa == "6" || $socJenisHa == "98" )   
+             #if ($socJenisHa == "2" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "1" || $socJenisHa == "3" || $socJenisHa == "6" || $socJenisHa == "13" || $socJenisHa == "98" )   <!-- arief add $socJenisHa == "13" -->
                 
                 #if ($socJenisHa == "1")
                 <tr>
@@ -1155,7 +1155,7 @@
                   <td>
                     <div  class="style9">
                   
-                        #if ($socJenisHa == "2")
+                        #if ($socJenisHa == "2" || $socJenisHa == "13") <!-- arief add $socJenisHa == "13" -->
                         No. Akaun
                         #elseif ($socJenisHa == "4")
                         No. Rujukan UPT
@@ -1184,7 +1184,7 @@
                   <td>
                   #if ($socJenisHa == 1 || $socJenisHa == 4 || $socJenisHa == 3 || $socJenisHa == 5 || $socJenisHa == 6) 
       	<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />  
-      #elseif ($socJenisHa == 2)
+      #elseif ($socJenisHa == 2 || $socJenisHa == "13") <!-- arief add $socJenisHa == "13" -->
       <input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;"  value="$norujukan" size="20" maxlength="30" onblur="this.value=this.value.toUpperCase()" $disabledR class="$disabled"  /> 
       #else
       
@@ -1354,7 +1354,7 @@
               <td width="50%" valign="top">
               <table width="100%" border="0">
               -->
-              #if( $socJenisHa != 2 && $socJenisHa != 3  && $socJenisHa != 98 )
+              #if( $socJenisHa != 2 && $socJenisHa != 3  && $socJenisHa != 98  && $socJenisHa != 13)
               <!-- buang dulu filter untuk bahagian -->
               #end
                 <tr>
