@@ -1,4 +1,4 @@
-
+<!--  ViewJenisHa = $ViewJenisHa -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -212,7 +212,7 @@
 		
 
 
-      #if ($EventStatus == 2 || $EventStatus == 3)
+      #if ($EventStatus == 2 || $EventStatus == 3 )
       #foreach($Data in $DataHa)
       #set ($idJenisHa = $Data.id_Jenisha)
       #set ($socJenisHa = $Data.id_Jenisha)
@@ -2263,12 +2263,13 @@ if(document.f1.socJenisHartaAlih.value != 2 && document.f1.socJenisHartaAlih.val
  var b1=parseInt(document.f1.txtBhgnSimati1.value);
  var b2=parseInt(document.f1.txtBhgnSimati2.value);
 }
- if (document.f1.socJenisHartaAlih.value=="0"){
+ */
+ if (document.f1.socJenisHartaAlih.value=="0"){	//arief open comment 11/2/2020
 	alert("Sila pilih Jenis Harta Alih")
 	document.f1.socJenisHartaAlih.focus(); 
 	return; 
 	}
-	
+/*	
 else if((document.f1.socJenisHartaAlih.value != 2 && document.f1.socJenisHartaAlih.value != 3 && document.f1.socJenisHartaAlih.value != 98) && (document.f1.txtBhgnSimati1.value != "" && document.f1.txtBhgnSimati2.value == "") )
       {
        alert('Sila masuk bahagian simati selengkapnya');
@@ -2309,11 +2310,12 @@ else if((document.f1.socJenisHartaAlih.value != 2 && document.f1.socJenisHartaAl
 	
 	//else{
 		//alert('xxx ' + document.f1.socJenisHartaAlih.value);
-		//if(document.f1.txtNilaiTarikhMohon.value == "" || document.f1.txtNilaiTarikhMati.value == "")
-		//	{
-		//	alert('Sila masukkan Nilaian Harta');
-		//	return;
-		//	}
+		 
+		if(document.f1.txtNilaiTarikhMohon.value == "" || document.f1.txtNilaiTarikhMati.value == "") //arief open comment 11/2/2020
+			{
+			alert('Sila masukkan Nilaian Harta ');
+			return;
+			}
 		//else{
 		input_box = confirm("Adakah anda pasti?");
 		if (input_box==true) {
