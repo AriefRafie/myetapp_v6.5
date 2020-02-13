@@ -84,7 +84,9 @@
     </td>
 	<td width="4%" align="center">Seksyen</td>
   	<td width="15%">Status Pergerakan Fail</td>
+  	#if($!skrin_deraf == "yes")
   	<td width="5%" align="center">Tindakan</td>
+  	#end
   </tr>	
     
 	#foreach ($senarai in $senaraitugasan )
@@ -178,7 +180,9 @@
   #end</td>-->
   <td class="$row" align="center">$senarai.seksyen</td>
   <td class="$row">$senarai.status</td>
+  #if($!skrin_deraf == "yes")
   <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doHapus('$!senarai.idFail','$!senarai.id_Permohonan')"><img border="0" src="../img/hapus.gif"/></a></td>
+ #end
   </tr>
   #end
 		#if ($cnt == 0)
