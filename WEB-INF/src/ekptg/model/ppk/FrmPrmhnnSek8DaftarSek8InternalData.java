@@ -9743,6 +9743,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 			while (rs.next()) {
 				h = new Hashtable();
+				//System.out.println("TESTTT ***** = " + rs.getString("id_jenisha"));
 				h.put("idjenisha", rs.getString("id_jenisha"));
 				h.put("kod", rs.getString("kod"));
 				h.put("keterangan", rs.getString("keterangan"));
