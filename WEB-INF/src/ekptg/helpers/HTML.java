@@ -3984,8 +3984,14 @@ public class HTML {
 				} else {
 					s = "";
 				}
+				String kodJawatan = null;
+				if(f.getKodJawatan() != null){
+					kodJawatan = f.getKodJawatan();
+				} else {
+					kodJawatan = "00";
+				}
 				sb.append("<option " + s + " value=" + f.getIdJawatan() + ">"
-						+ f.getKodJawatan() + " - "
+						+ kodJawatan + " - "
 						+ f.getKeterangan().toUpperCase() + "</option>\n");
 			}
 			sb.append("</select>");
