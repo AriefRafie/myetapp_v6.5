@@ -1,0 +1,14 @@
+# ignore all logs
+*.log
+#*.1
+
+# ignore all class
+*.class
+
+# ignore all properties
+*.properties
+
+work/
+.tomcatplugin
+
+WEB-INF/classes/

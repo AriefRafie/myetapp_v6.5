@@ -875,6 +875,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 				h.put("idFail",rs.getString("id_Fail") == null ? "" : rs.getString("id_Fail"));
 				h.put("noFail",rs.getString("no_Fail") == null ? "" : rs.getString("no_Fail"));				
 				h.put("no_fail_online",rs.getString("NO_PERMOHONAN_ONLINE") == null ? "" : rs.getString("NO_PERMOHONAN_ONLINE"));
+				h.put("idNegeri",rs.getString("id_Negeri") == null ? "" : rs.getString("id_Negeri")); /**9/1/2020: arief add**/
 				h.put("idDaerah",rs.getString("id_Daerah") == null ? "" : rs.getString("id_Daerah"));
 
 				h.put("idPermohonan",rs.getString("id_Permohonan") == null ? "" : rs.getString("id_Permohonan"));
@@ -9742,6 +9743,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 			while (rs.next()) {
 				h = new Hashtable();
+				//System.out.println("TESTTT ***** = " + rs.getString("id_jenisha"));
 				h.put("idjenisha", rs.getString("id_jenisha"));
 				h.put("kod", rs.getString("kod"));
 				h.put("keterangan", rs.getString("keterangan"));

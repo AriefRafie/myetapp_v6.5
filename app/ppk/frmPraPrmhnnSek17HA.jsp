@@ -1035,7 +1035,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                    
                    
                    
-                   #if ($socJenisHa == "2" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "1" || $socJenisHa == "3" || $socJenisHa == "6" )   
+                   #if ($socJenisHa == "2" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "1" || $socJenisHa == "3" || $socJenisHa == "6" || $socJenisHa == "13")   
            
                    
                    <tr>
@@ -1063,7 +1063,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                     
                       #if ($socJenisHa == "1")
                       Agensi
-                      #elseif ($socJenisHa == "2")
+                      #elseif ($socJenisHa == "2"|| $socJenisHa == "13")
                       Agensi
                       #elseif ($socJenisHa == "3")
                       Jenis dan Jenama                      
@@ -1083,7 +1083,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                   </div></td>
                   <td>:</td>
                   <td>
-                  #if ($socJenisHa == "1" || $socJenisHa == "2" || $socJenisHa == "3" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "6" )
+                  #if ($socJenisHa == "1" || $socJenisHa == "2" || $socJenisHa == "3" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "6" || $socJenisHa == "13" )
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  /> 
  	  #else
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  />	  
@@ -1092,7 +1092,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
       #end
                 
              
-             #if ($socJenisHa == "2" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "1" || $socJenisHa == "3" || $socJenisHa == "6" || $socJenisHa == "98" )   
+             #if ($socJenisHa == "2" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "1" || $socJenisHa == "3" || $socJenisHa == "6" || $socJenisHa == "98" || $socJenisHa == "13")   
                 
                 #if ($socJenisHa == "1")
                 <tr>
@@ -1144,7 +1144,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                   <td>
                     <div  class="style9">
                   
-                        #if ($socJenisHa == "2")
+                        #if ($socJenisHa == "2" || $socJenisHa == "13")
                         No. Akaun
                         #elseif ($socJenisHa == "4")
                         No. Rujukan UPT
@@ -1173,7 +1173,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                   <td>
                   #if ($socJenisHa == 1 || $socJenisHa == 4 || $socJenisHa == 3 || $socJenisHa == 5 || $socJenisHa == 6) 
       	<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />  
-      #elseif ($socJenisHa == 2)
+      #elseif ($socJenisHa == 2 || $socJenisHa == "13")
       <input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;"  value="$norujukan" size="20" maxlength="30" onblur="this.value=this.value.toUpperCase()" $disabledR class="$disabled"  /> 
       #else
       
@@ -1342,7 +1342,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
               <td width="50%" valign="top">
               <table width="100%" border="0">
               -->
-              #if( $socJenisHa != 2 && $socJenisHa != 3  && $socJenisHa != 98 )
+              #if( $socJenisHa != 2 && $socJenisHa != 3  && $socJenisHa != 98 && $socJenisHa != 13)
               <!-- buang dulu filter untuk bahagian -->
               #end
                 <tr>
@@ -2629,16 +2629,18 @@ if(document.f1.socJenisHartaAlih.value != 2 && document.f1.socJenisHartaAlih.val
 	  		document.f1.txtBhgnSimati1.focus(); 
 			return; 
             }
-			/*
-	else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
-		alert("Sila masukkan nilai tarikh mati")
-		document.f1.txtNilaiTarikhMati.focus(); 
-	}
-	else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
-		alert("Sila masukkan nilai tarikh mohon")
-		document.f1.txtNilaiTarikhMohon.focus(); 
-	}
-	*/
+			
+			
+		else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
+			alert("Sila masukkan Nilai Tarikh Mohon")
+			document.f1.txtNilaiTarikhMohon.focus(); 
+		}
+		else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
+			alert("Sila masukkan Nilai Tarikh Mati")
+			document.f1.txtNilaiTarikhMati.focus(); 
+		}
+	
+	
 	/*
 	else if (document.f1.txtPoskod.value != "" && document.f1.txtPoskod.value.length < 5) {
 		alert("Sila masukkan nombor poskod alamat harta dengan lengkapnya");
@@ -2740,16 +2742,14 @@ if(document.f1.socJenisHartaAlih.value != 2 && document.f1.socJenisHartaAlih.val
 	  		document.f1.txtBhgnSimati1.focus(); 
 			return; 
             }
-			/*
-	else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
-		alert("Sila masukkan nilai tarikh mati")
-		document.f1.txtNilaiTarikhMati.focus(); 
-	}
-	else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
-		alert("Sila masukkan nilai tarikh mohon")
-		document.f1.txtNilaiTarikhMohon.focus(); 
-	}
-	*/
+            else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
+    			alert("Sila masukkan Nilai Tarikh Mohon")
+    			document.f1.txtNilaiTarikhMohon.focus(); 
+    		}
+    		else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
+    			alert("Sila masukkan Nilai Tarikh Mati")
+    			document.f1.txtNilaiTarikhMati.focus(); 
+    		}
 	/*
 	else if (document.f1.txtPoskod.value != "" && document.f1.txtPoskod.value.length < 5) {
 		alert("Sila masukkan nombor poskod alamat harta dengan lengkapnya");
@@ -2809,16 +2809,14 @@ if(document.f1.socJenisHartaAlih.value != 2 && document.f1.socJenisHartaAlih.val
 	  		document.f1.txtBhgnSimati1.focus(); 
 			return; 
             }
-			/*
-	else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
-		alert("Sila masukkan nilai tarikh mati")
-		document.f1.txtNilaiTarikhMati.focus(); 
-	}
-	else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
-		alert("Sila masukkan nilai tarikh mohon")
-		document.f1.txtNilaiTarikhMohon.focus(); 
-	}
-	*/
+            else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
+    			alert("Sila masukkan Nilai Tarikh Mohon")
+    			document.f1.txtNilaiTarikhMohon.focus(); 
+    		}
+    		else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
+    			alert("Sila masukkan Nilai Tarikh Mati")
+    			document.f1.txtNilaiTarikhMati.focus(); 
+    		}
 	/*
 	else if (document.f1.txtPoskod.value != "" && document.f1.txtPoskod.value.length < 5) {
 		alert("Sila masukkan nombor poskod alamat harta dengan lengkapnya");
@@ -3372,17 +3370,15 @@ var mod = mode;
 		{   alert("Sila masukkan No. Sijil")
 			document.f1.txtNoSijil.focus(); 
 			return;
-		}
-		else if (document.f1.txtNilaiTarikhMohon.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mohon")
-			document.f1.txtNilaiTarikhMohon.focus(); 
-			return;
-		}
-		else if (document.f1.txtNilaiTarikhMati.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mati")
-			document.f1.txtNilaiTarikhMati.focus(); 
-			return;
 		}*/
+		else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
+			alert("Sila masukkan Nilai Tarikh Mohon")
+			document.f1.txtNilaiTarikhMohon.focus(); 
+		}
+		else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
+			alert("Sila masukkan Nilai Tarikh Mati")
+			document.f1.txtNilaiTarikhMati.focus(); 
+		}
 		else
 		{
 		simpan_ha_online(mod);
@@ -3399,17 +3395,14 @@ var mod = mode;
 		{   alert("Sila masukkan no. akaun")
 			document.f1.txtNoRujukan.focus(); 
 			return;
-		}	/*	
-		else if (document.f1.txtNilaiTarikhMohon.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mohon")
+		}	else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
+			alert("Sila masukkan Nilai Tarikh Mohon")
 			document.f1.txtNilaiTarikhMohon.focus(); 
-			return;
 		}
-		else if (document.f1.txtNilaiTarikhMati.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mati")
+		else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
+			alert("Sila masukkan Nilai Tarikh Mati")
 			document.f1.txtNilaiTarikhMati.focus(); 
-			return;
-		}*/
+		}
 		else
 		{
 		simpan_ha_online(mod);
@@ -3429,17 +3422,14 @@ var mod = mode;
 		{   alert("Sila masukkan No. Daftar kenderaan")
 			document.f1.txtNoRujukan.focus(); 
 			return;
-		}	/*	
-		else if (document.f1.txtNilaiTarikhMohon.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mohon")
+		}	else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
+			alert("Sila masukkan Nilai Tarikh Mohon")
 			document.f1.txtNilaiTarikhMohon.focus(); 
-			return;
 		}
-		else if (document.f1.txtNilaiTarikhMati.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mati")
+		else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
+			alert("Sila masukkan Nilai Tarikh Mati")
 			document.f1.txtNilaiTarikhMati.focus(); 
-			return;
-		}*/
+		}
 		else
 		{
 		simpan_ha_online(mod);
@@ -3457,17 +3447,15 @@ var mod = mode;
 		{   alert("Sila masukkan no. rujukan UPT")
 			document.f1.txtNoRujukan.focus(); 
 			return;
-		}		
-		else if (document.f1.txtNilaiTarikhMohon.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mohon")
+		}*/		
+		else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
+			alert("Sila masukkan Nilai Tarikh Mohon")
 			document.f1.txtNilaiTarikhMohon.focus(); 
-			return;
 		}
-		else if (document.f1.txtNilaiTarikhMati.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mati")
+		else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
+			alert("Sila masukkan Nilai Tarikh Mati")
 			document.f1.txtNilaiTarikhMati.focus(); 
-			return;
-		}*/
+		}
 		else
 		{
 		simpan_ha_online(mod);
@@ -3485,17 +3473,15 @@ var mod = mode;
 		{   alert("Sila masukkan no. polisi")
 			document.f1.txtNoRujukan.focus(); 
 			return;
-		}/*		
-		else if (document.f1.txtNilaiTarikhMohon.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mohon")
+		}		
+		else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
+			alert("Sila masukkan Nilai Tarikh Mohon")
 			document.f1.txtNilaiTarikhMohon.focus(); 
-			return;
 		}
-		else if (document.f1.txtNilaiTarikhMati.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mati")
+		else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
+			alert("Sila masukkan Nilai Tarikh Mati")
 			document.f1.txtNilaiTarikhMati.focus(); 
-			return;
-		}*/
+		}
 		else
 		{
 		simpan_ha_online(mod);
@@ -3518,12 +3504,15 @@ var mod = mode;
 		{   alert("Sila masukkan no. peti")
 			document.f1.txtNoRujukan.focus(); 
 			return;
-		}/*
-		else if (document.f1.txtNilaiTarikhMati.value=="")
-		{   alert("Sila masukkan nilai anggaran tarikh mati")
+		}
+		else if (document.f1.txtNilaiTarikhMohon.value=="0.00" || document.f1.txtNilaiTarikhMohon.value==""){
+			alert("Sila masukkan Nilai Tarikh Mohon")
+			document.f1.txtNilaiTarikhMohon.focus(); 
+		}
+		else if (document.f1.txtNilaiTarikhMati.value=="0.00" || document.f1.txtNilaiTarikhMati.value=="" ){
+			alert("Sila masukkan Nilai Tarikh Mati")
 			document.f1.txtNilaiTarikhMati.focus(); 
-			return;
-		}*/
+		}
 		else
 		{
 		simpan_ha_online(mod);

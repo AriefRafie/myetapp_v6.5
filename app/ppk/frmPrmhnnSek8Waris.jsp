@@ -1908,7 +1908,8 @@ Click me</a>
                                   </tr>
                                   #end
                                   <tr>
-                                    <td>&nbsp;</td>
+                                    <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   									 								#end</td>
                                     <td class="style38" ><div align="left" class="style72">No Telefon</div></td>
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                     <td><input name="txtNoTeleponBimbitWaris" type="text" id="txtNoTeleponBimbitWaris" style="text-transform:uppercase;" onblur="text-transform:uppercase;" value="$txtNoTeleponBimbitWaris" size="14" maxlength="12" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtNoTeleponBimbitWaris')"/></td>
@@ -1922,11 +1923,22 @@ Click me</a>
                                   </tr>
                                   #end
                                   <tr>
-                                    <td>&nbsp;</td>
+                                    <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   																	#end</td>
                                     <td class="style38" ><div align="left" class="style72">Emel</div></td>
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                     <td><input name="txtEmel" type="text" id="txtEmel" value="$txtEmel" size="30" maxlength="30" $readmodeR class="$readmode" /></td>
                                   </tr>
+                                  <!-- arief add open -->
+                                  #if($readmode != "disabled" )
+                                  <tr>
+                                     <td class="style38" valign="top">&nbsp;</td>
+                                     <td class="style38" valign="top"><div align="left"></div></td>
+                                     <td valign="top">&nbsp;</td>
+                                     <td valign="top" height="1"><span class="style73">cth: abc@email.com </span></td>
+                                  </tr>
+                                  #end
+                                  <!-- arief add close -->
                                   <tr>
                                     <td valign="top"><div align="right"><span class="style38"><span class="style41"></span></span></div></td>
                                     <td class="style38" valign="top"><div align="right" class="style75">
@@ -3341,7 +3353,8 @@ Click me</a>
                                     <td valign="top"><span class="style73">cth: 031234567</span></td>
                                   </tr>
                                   <tr>
-                                    <td>&nbsp;</td>
+                                     <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   									 #end</td>
                                     <td class="style38" ><div align="left" class="style72">No Telefon Bimbit</div></td>
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                     <td><input name="txtNoTeleponBimbitWaris" type="text" id="txtNoTeleponBimbitWaris" style="text-transform:uppercase;" onblur="text-transform:uppercase;" value="$txtNoTeleponBimbitWaris" size="14" maxlength="12" $readmode onkeyup="javascript:validateIC(event,this,this.value,'txtNoTeleponBimbitWaris')"/></td>
@@ -3353,11 +3366,22 @@ Click me</a>
                                     <td valign="top"><span class="style73">cth: 0121234567</span></td>
                                   </tr>
                                   <tr>
-                                    <td>&nbsp;</td>
+                                     <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   										#end</td>
                                     <td class="style38" ><div align="left" class="style72">Emel</div></td>
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                     <td><input name="txtEmel" type="text" id="txtEmel" value="$txtEmel" size="30" maxlength="30" $readmode class="$readmode" /></td>
                                   </tr>
+                                  <!-- arief add open -->
+                                  #if($readmode != "disabled" )
+                                  <tr>
+                                     <td class="style38" valign="top">&nbsp;</td>
+                                     <td class="style38" valign="top"><div align="left"></div></td>
+                                     <td valign="top">&nbsp;</td>
+                                     <td valign="top" height="1"><span class="style73">cth: abc@email.com </span></td>
+                                  </tr>
+                                  #end
+                                  <!-- arief add close -->
                                   <tr>
                                     <td valign="top"><div align="right"><span class="style38"><span class="style41"></span></span></div></td>
                                     <td class="style38" valign="top"><div align="right" class="style38 style72">
@@ -6743,6 +6767,16 @@ onBlur="calculateTarikhLahirWaris();"/>
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                     <td><input name="txtEmel" type="text" id="txtEmel" value="$txtEmel" size="30" maxlength="30" $readmodeR class="$readmode" /></td>
                                   </tr>
+                                  <!-- arief add open -->
+                                  #if($readmode != "disabled" )
+                                  <tr>
+                                     <td class="style38" valign="top">&nbsp;</td>
+                                     <td class="style38" valign="top"><div align="left"></div></td>
+                                     <td valign="top">&nbsp;</td>
+                                     <td valign="top" height="1"><span class="style73">cth: abc@email.com </span></td>
+                                  </tr>
+                                  #end
+                                  <!-- arief add close -->
                                   <tr>
                                     <td valign="top"><div align="right"><span class="style38"><span class="style41"></span></span></div></td>
                                     <td class="style38" valign="top"><div align="right" class="style38 style72">
@@ -7117,6 +7151,35 @@ onBlur="calculateTarikhLahirWaris();"/>
 </form>
 </body>
 <script>
+<!-- arief add open -->
+function emailValidator(elem, helperMsg){
+	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+	
+	if(elem.value!=""){
+	if(elem.value.match(emailExp)){
+		return true;
+	}else{
+		alert(helperMsg);		
+		elem.focus();
+		return false;
+	}
+	}
+}
+
+function emailValidator1(elem, helperMsg){
+	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+	
+	if(elem.value!=""){
+	if(elem.value.match(emailExp)){
+		return true;
+	}else{
+		alert(helperMsg);		
+		elem.focus();
+		return false;
+	}
+	}
+}
+<!-- arief add close -->
 
 function capaianIdentityWaris() {
 	document.f1.command.value = "capaianIdentityWaris";
@@ -7548,7 +7611,9 @@ function batal_waris_lapisan_Simpan() {
 
 function tambah_waris_lapisan_Simpan() {
 
-
+	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+	var em = document.f1.txtEmel.value;	
+	
 
     	
 var negeri_code = document.f1.txtNoKPBaru2Waris.value;
@@ -7833,17 +7898,25 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.txtAlamatTerakhir1WarisSurat.focus()
 	return;
 	}
-		/*
-		else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
+
+		else if (document.f1.checkHidupWaris.checked == false 
+				&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
 	
 	}
-   */
    
+		else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+		{
+		
+		alert("Sila pastikan emel diisi");
+		document.f1.txtEmel.focus()
+		return;
+		}
+	
    else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	
@@ -7888,11 +7961,19 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.submit();
 	
 	}
+	<!-- arief add open -->
+	else if(!em.match(emailExp) && em!=""){
+		
+		alert("Alamat email tidak sah!");		
+		document.f1.txtEmel.focus();
+		return;
+	}
+	<!-- arief add close -->
 	else
 	{return;}  
 	
 	
-	}
+}
 	
 	
 	
@@ -8172,16 +8253,24 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.txtAlamatTerakhir1WarisSurat.focus()
 	return;
 	}
-	/*
-	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
+	
+	else if (document.f1.checkHidupWaris.checked == false 
+			&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
-	
 	}
-	*/
+	
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+	
+	alert("Sila pastikan emel diisi");
+	document.f1.txtEmel.focus()
+	return;
+	}
+	
 	 else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	
@@ -8268,7 +8357,8 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 
 function tambah_waris_SimpanX(){
 
-
+	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+	var em = document.f1.txtEmel.value;
 var negeri_code = document.f1.txtNoKPBaru2Waris.value;
 var dob_code = document.f1.txtNoKPBaru1Waris.value;
 if(dob_code.charAt(0)<3)
@@ -8537,15 +8627,23 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	return;
 	}
 	
-	/*
-	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
+	else if (document.f1.checkHidupWaris.checked == false 
+			&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
+	}
+		
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
 	
-	}*/
+	alert("Sila pastikan emel diisi");
+	document.f1.txtEmel.focus()
+	return;
+	}
+		
 	 else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	
@@ -8877,15 +8975,25 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.txtAlamatTerakhir1WarisSurat.focus()
 	return;
 	}
-	/*
-	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
+	
+	else if (document.f1.checkHidupWaris.checked == false 
+			&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
 	
-	}*/
+	}
+	
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+	
+	alert("Sila pastikan emel diisi");
+	document.f1.txtEmel.focus()
+	return;
+	}
+	
 	 else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	
@@ -9326,14 +9434,23 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	return;
 	}
 		
-	/*	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "" ))
+	else if (document.f1.checkHidupWaris.checked == false 
+			&& (document.f1.txtNoTeleponBimbitWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "" ))
 	{
 	
-	alert("Sila pastikan salah satu no telefon diisi");
-	document.f1.txtNoTeleponWaris.focus()
+	alert("Sila pastikan no telefon bimbit diisi");
+	document.f1.txtNoTeleponBimbitWaris.focus()
 	return;
+	}
 	
-	}*/
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+	
+	alert("Sila pastikan emel diisi");
+	document.f1.txtEmel.focus()
+	return;
+	}
+	
 	else if (document.f1.socStatusOBWaris.value == 0 || document.f1.socStatusOBWaris.value == "")
 	{
 	

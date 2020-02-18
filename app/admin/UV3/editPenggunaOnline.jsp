@@ -54,11 +54,87 @@ else
 								#set ( $selected_syarikat = "selected" )
 							#end
 				<option value="Individu" $selected_individu >INDIVIDU</option>
-				<option value="Syarikat" $selected_syarikat >SYARIKAT</option>
-				</select>			
+				<option value="Syarikat" $selected_syarikat >BUKAN INDIVIDU</option>
+<!-- 				<option value="Syarikat" $selected_syarikat >SYARIKAT</option>
+ -->				</select>			
 				</td>
 			</tr>
-            
+ 
+<!-- 			<tr>
+				<td valign="top" >	
+					<font color="red" >*</font>				
+				</td>			
+				<td valign="top" >
+				</td>
+				<td valign="top" >
+				:
+				</td>				
+				<td valign="top" >
+				<select id="SUBKATEGORI_$internalType$viewPengguna.USER_ID" name="SUBKATEGORI_$internalType$viewPengguna.USER_ID"
+				onChange = "doDivAjaxCall$formname('div_NO_PENGENALAN$internalType$viewPengguna.USER_ID'
+					,'showFieldPengenalan'
+					,'ID_KATEGORI='+$jquery('#KATEGORI_$internalType$viewPengguna.USER_ID').val()+'&internalType=$internalType&USER_ID=$viewPengguna.USER_ID&NO_PENGENALAN=$viewPengguna.NO_PENGENALAN&NO_PENGENALAN1=$viewPengguna.NO_PENGENALAN1&NO_PENGENALAN2=$viewPengguna.NO_PENGENALAN2&NO_PENGENALAN3=$viewPengguna.NO_PENGENALAN3');hiddenMyID('$internalType'
+					,'$viewPengguna.USER_ID');">
+				<option value = "" >SILA PILIH</option>
+				#set ( $selected_warga = "" )
+				#set ( $selected_xwarga = "" )
+							#if($viewPengguna.SUBKATEGORI=="WARGA")
+								#set ( $selected_warga = "selected" )
+							#elseif($viewPengguna.SUBKATEGORI=="XWARGA")
+								#set ( $selected_xwarga = "selected" )
+							#end
+				<option value="warga" $selected_warga >WARGANEGARA</option>
+				<option value="xwarga" $selected_xwarga >BUKAN WARGANEGARA</option>
+				</select>			
+				</td>
+			</tr> -->
+
+			<tr>
+				<td valign="top" >	
+					<font color="red" >*</font>				
+				</td>			
+				<td valign="top" >
+				</td>
+				<td valign="top" >
+				:
+				</td>				
+				<td valign="top" >
+				<select id="SUBKATEGORIEXT_$internalType$viewPengguna.USER_ID" name="SUBKATEGORI_$internalType$viewPengguna.USER_ID"
+				onChange = "doDivAjaxCall$formname('div_NO_PENGENALAN$internalType$viewPengguna.USER_ID'
+					,'showFieldPengenalan'
+					,'ID_KATEGORI='+$jquery('#KATEGORI_$internalType$viewPengguna.USER_ID').val()+'&internalType=$internalType&USER_ID=$viewPengguna.USER_ID&NO_PENGENALAN=$viewPengguna.NO_PENGENALAN&NO_PENGENALAN1=$viewPengguna.NO_PENGENALAN1&NO_PENGENALAN2=$viewPengguna.NO_PENGENALAN2&NO_PENGENALAN3=$viewPengguna.NO_PENGENALAN3');hiddenMyID('$internalType'
+					,'$viewPengguna.USER_ID');">
+				<option value = "" >SILA PILIH</option>
+				#set ( $selected_badan = "" )
+				#set ( $selected_badanx = "" )
+				#set ( $selected_knegeri = "" )
+				#set ( $selected_koperasi = "" )
+				#set ( $selected_syarikat = "" )
+				#set ( $selected_lain = "" )
+				
+				#if($viewPengguna.SUBKATEGORIEXT=="MAMP")
+					#set ( $selected_badan = "selected" )
+				#elseif($viewPengguna.SUBKATEGORIEXT=="ROS")
+					#set ( $selected_badanx = "selected" )
+				#elseif($viewPengguna.SUBKATEGORIEXT=="PBN")
+					#set ( $selected_knegeri = "selected" )
+				#elseif($viewPengguna.SUBKATEGORIEXT=="SKM")
+					#set ( $selected_koperasi = "selected" )							
+				#elseif($viewPengguna.SUBKATEGORIEXT=="SSM")
+					#set ( $selected_syarikat = "selected" )
+				#elseif($viewPengguna.SUBKATEGORIEXT=="LAI")
+					#set ( $selected_lain = "selected" )							
+				#end
+				      	<option value="MAMP" $!selected_badan>BADAN BERKANUN</option>
+				   		<option value="ROS" $!selected_badanx>BADAN BUKAN KERAJAAN</option>
+		                <option value="PBN" $selected_knegeri>KERAJAAN NEGERI/ WILAYAH PERSEKUTUAN</option>
+		               	<option value="SKM" $selected_koperasi>KOPERASI</option>
+		               	<option value="SSM" $selected_syarikat>SYARIKAT</option>
+		               	<option value="LAI" $selected_lain>LAIN-LAIN (NYATAKAN)</option>
+					</select>			
+				</td>
+
+			</tr>			            
             <tr>
 				<td valign="top" >
 				<font color="red" >*</font>				

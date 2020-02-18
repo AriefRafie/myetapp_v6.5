@@ -268,7 +268,7 @@ Maklumat Permohonan telah berjaya disimpan.
          	  	<td valign="top"><font color="red">*</font></td>
            	   	<td valign="top">Nama Projek</td>
            	   	<td valign="top">:</td>
-                <td><textarea name="txtTujuan" id="txtTujuan" cols="40%" rows="4" >$!txtTujuan</textarea></td>
+                <td><textarea name="txtTujuan" id="txtTujuan" cols="40%" rows="4" defaultValue="Permohonan Pengambilan Tanah Bagi Projek">$!txtTujuan</textarea></td>
             </tr>
             
          #if($showSegera=="yes")  
@@ -896,12 +896,18 @@ Maklumat Permohonan telah berjaya disimpan.
           	#if($!id_status=="8")
           	<table width="100%" border="0">
           		<tr>
-          			<td width="9%"><font color=red style=font-size:10px>Perhatian :</font></td>
+          			
+          			<td width="9%"><font color=red style=font-size:10px >Perhatian :</font></td></span>
+          			#if($txtJumHM == $saiz_listTanah)
           			<td width="91%">$!perhatian11 <i><font color=red style=font-size:10px>$!saiz_listTanah/$!txtJumHM</font></i></td>
+          			#else
+          			<td width="91%">$!perhatian11 <i><font color=red style=font-size:10px><span class="blink">$!saiz_listTanah/$!txtJumHM</font></i></td>
+          			#end
           		</tr>
 				<tr>
 					<td>&nbsp;</td>
         			<td>$!perhatian8</td>
+        			
         		</tr>
         		#if(($txtJumHM == $saiz_listTanah) && ($id_suburusan=="51" || $id_suburusan=="52"))  	
 	        		#if($id_jawatan_user == $layer3 && $flag_semakan_online=="3")

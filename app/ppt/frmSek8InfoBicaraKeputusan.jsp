@@ -865,8 +865,9 @@ Lain - Lain Kos</td>
     
     
     <!-- open yati -->
+    <!-- close Fi Penilai -->
  
-  	<fieldset>
+  	<!-- <fieldset>
     <legend>FI PENILAI</legend>
     <table width="100%" cellspacing = "0">
     <tr class="row2">
@@ -909,6 +910,7 @@ Lain - Lain Kos</td>
     </table>
 
         </fieldset>
+        -->
     <!-- close yati -->
     
      </td>

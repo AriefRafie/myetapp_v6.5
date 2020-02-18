@@ -1298,11 +1298,14 @@ public class DB extends EkptgCache implements Serializable {
 	}
 
 	public static Vector<Tblrujjenishakmilik> getJenisHakmilik() throws Exception {
+		myLogger.info("--getJenisHakmilik--");
 		String key = "DB.getJenisHakmilik";
 		Element cachedObject = myCache.get(key);
 		if (cachedObject != null) {
+			myLogger.info("--getJenisHakmilik1--");
 			return (Vector<Tblrujjenishakmilik>) cachedObject.getObjectValue();
 		} else {
+			myLogger.info("--getJenisHakmilik2--");
 			Db db = null;
 			String sql = "";
 			Vector<Tblrujjenishakmilik> v = null;
@@ -1310,13 +1313,13 @@ public class DB extends EkptgCache implements Serializable {
 				db = new Db();
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
-				r.add("id_Jenishakmilik");
-				r.add("kod_Jenis_Hakmilik");
-				r.add("Keterangan");
-				// sql = r.getSQLSelect("Tblrujjenishakmilik",
-				// "lpad(kod_Jenis_Hakmilik,100)");
-				sql = r.getSQLSelect("Tblrujjenishakmilik", "lpad(replace(kod_Jenis_Hakmilik,'00','A'),100)");
-
+				//r.add("id_Jenishakmilik");
+				//r.add("kod_Jenis_Hakmilik");
+				//r.add("Keterangan");
+		
+				//ORIGINAL sql = r.getSQLSelect("Tblrujjenishakmilik", "lpad(replace(kod_Jenis_Hakmilik,'00','A'),100)");
+				sql = "SELECT id_Jenishakmilik, kod_Jenis_Hakmilik, Keterangan  FROM Tblrujjenishakmilik WHERE ID_JENISHAKMILIK != '333' "
+						+ "ORDER BY lpad(replace(kod_Jenis_Hakmilik,'00','A'),100)";
 				ResultSet rs = stmt.executeQuery(sql);
 				v = new Vector<Tblrujjenishakmilik>();
 				Tblrujjenishakmilik j = null;
@@ -1356,10 +1359,11 @@ public class DB extends EkptgCache implements Serializable {
 				SQLRenderer r = new SQLRenderer();
 
 				sql += "SELECT id_Jenishakmilik, kod_Jenis_Hakmilik, Keterangan  " + " FROM Tblrujjenishakmilik "
-						+ " WHERE ID_JENISHAKMILIK IN (0,16,6,4,5,17,15,11,1,3,2,99,135,333) "
+						+ " WHERE ID_JENISHAKMILIK IN (0,16,6,4,5,17,15,11,1,3,2,99,135) "
 						+ " ORDER BY lpad(replace(kod_Jenis_Hakmilik,'00','A'),100)";
 
 				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("SQL getJenisHakmilikSelangor -- :"+sql);
 				v = new Vector<Tblrujjenishakmilik>();
 				Tblrujjenishakmilik j = null;
 				while (rs.next()) {
@@ -3780,11 +3784,11 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
 	// **added by elly for No PB dlm Hakmilik UPT
 	public static Vector<Tblrujjenispb> getRujKodJenisPB() throws Exception {
 		Db db = null;
-		String sql = "Select id_jenispb, kod_jenis_pb, keterangan from " + " tblrujjenispb where id_jenispb not in (40,41,42) "
+		String sql = "select id_jenispb, kod_jenis_pb, keterangan " +
+				"	from tblrujjenispb where id_jenispb not in (40,41,42) "
 				+ " order by lpad(id_jenispb,10)";
 		try {
 			db = new Db();
@@ -3805,7 +3809,41 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
+	public static Vector<Tblrujjenispb> getRujJenisPB(String idJenisPB) throws Exception {
+		Db db = null;
+		String sql = " ";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r.add("id_jenispb");
+			r.add("kod_jenis_pb");
+			r.add("keterangan");
 
+			if (idJenisPB != null)
+				r.add("id_jenispb", idJenisPB);
+			
+			r.add("flag_aktif","Y");
+			sql = r.getSQLSelect("tblrujjenispb");
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Vector<Tblrujjenispb> v = new Vector<Tblrujjenispb>();
+			Tblrujjenispb s = null;
+			while (rs.next()) {
+				s = new Tblrujjenispb();
+				s.setIdJenispb(rs.getLong("id_jenispb"));
+				s.setKodJenisPb(rs.getString("kod_jenis_pb"));
+				s.setKeterangan(rs.getString("keterangan"));
+
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public static Vector<Tblrujjenispb> getRujKodJenisPB(String idJenisPB) throws Exception {
 		Db db = null;
 		String sql = " ";

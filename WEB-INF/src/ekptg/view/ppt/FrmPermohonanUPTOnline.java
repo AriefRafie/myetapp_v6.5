@@ -2995,6 +2995,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
 		h.put("txtCatatan", getParam("txtCatatan"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
+		h.put("txdTarikhPembayaran", getParam("txdTarikhPembayaran"));
 
 		h.put("unitLuas", getParam("socUnitLuasLot"));
 		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));
@@ -3047,6 +3048,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("txtLuasAsal", Utils.RemoveSymbol(getParam("txtLuasLotAsal")));
 		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
 		h.put("txtCatatan", getParam("txtCatatan"));
+		h.put("txdTarikhPembayaran", getParam("txdTarikhPembayaran"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
 
 		h.put("unitLuas", getParam("socUnitLuasLot"));
@@ -3619,6 +3621,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		context.put("txtNoWartaRizab", getParam("txtNoWartaRizab"));
 		context.put("txdTarikhWarta", getParam("txdTarikhWarta"));
 		context.put("txtCatatan", getParam("txtCatatan"));
+		context.put("txdTarikhPembayaran", getParam("txdTarikhPembayaran"));
 
 		context.put("txtLuasLotAsalSebelumConvert", getParam("txtLuasLotAsalSebelumConvert"));
 		context.put("sorDropdownUnitAsal", getParam("sorDropdownUnitAsal"));
@@ -3649,6 +3652,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		context.put("txtNoWartaRizab", "");
 		context.put("txdTarikhWarta", "");
 		context.put("txtCatatan", "");
+		context.put("txdTarikhPembayaran", "");
 
 		context.put("txtLuasLotAsalSebelumConvert", "");
 		context.put("sorDropdownUnitAsal", "");
