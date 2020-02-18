@@ -162,10 +162,10 @@ public class FrmSek8PampasanData {
 		
 		sql += " and (p.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptsiasatan sx, Tblpptborangg bgx "; 
 		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = sx.id_hakmilik and bgx.id_siasatan = sx.id_siasatan ";
-		sql += " and sx.id_siasatan = (select max(sx1.id_siasatan) from Tblpptsiasatan sx1 where sx1.id_hakmilik = hx.id_hakmilik)) ";
-		sql += " OR p.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptsiasatan sx, Tblpptaward ax "; 
-		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = sx.id_hakmilik and ax.id_siasatan = sx.id_siasatan ";
-		sql += " and sx.id_siasatan = (select max(sx1.id_siasatan) from Tblpptsiasatan sx1 where sx1.id_hakmilik = hx.id_hakmilik)))  ";                                                                              
+		sql += " and sx.id_siasatan = (select max(sx1.id_siasatan) from Tblpptsiasatan sx1 where sx1.id_hakmilik = hx.id_hakmilik))) ";
+//		sql += " OR p.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptsiasatan sx, Tblpptaward ax "; 
+//		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = sx.id_hakmilik and ax.id_siasatan = sx.id_siasatan ";
+//		sql += " and sx.id_siasatan = (select max(sx1.id_siasatan) from Tblpptsiasatan sx1 where sx1.id_hakmilik = hx.id_hakmilik)))  ";                                                                              
 
 		
 		if(!userIdNegeri.equals("16") && !userIdNegeri.isEmpty()){

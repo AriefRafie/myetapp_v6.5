@@ -49,7 +49,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#set($txtSyaratNyata=$maklumat_Hakmilik_Salin.syarat_nyata)
 		#set($txtSyaratKhas=$maklumat_Hakmilik_Salin.syarat_khas)		
 		#set($txtSekatanKepentingan=$maklumat_Hakmilik_Salin.sekatan_kepentingan)
-		#set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)	
+		#set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)
+		#set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
         
         
         
@@ -172,7 +173,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 			
 			<tr>
 				<td><font color="red">*</font></td>
-				<td>No. Syit</td>
+				<td>No.Syit</td>
 				<td>:</td>
 				<td><input type="text" name="txtNoSyit" id="txtNoSyit" value="$!txtNoSyit" size="12" maxlength="40"   ></td>
 			</tr>
@@ -410,8 +411,30 @@ Maklumat Hakmilik telah berjaya disimpan.
              	<td valign="top">Baki Aksara :&nbsp;<input type="text" readonly class="disabled" name="remLen1" size="3" maxlength="3" value="4000"></td>
            	</tr> 
 		</table>
-		
+        
+	</fieldset>	
+	#end
+	<fieldset>
 		<table width="100%" border="0">
+		<tr>
+			<td width="1%"></td>
+			<td valign="top" width="23%">Tarikh Pembayaran</td>
+			<td valign="top" width="1%">:</td>
+			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran" size="12" type="text" value="$!txdTarikhPembayaran" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
+            	<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
+		</tr>
+		<tr>
+            	<td valign="top">
+            	<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
+            	<td valign="top">:</td>
+  				<td><input id="fileupload" name="fileupload" type=file size=40 /></td><br/>
+  			</tr>
+		</table>
+	</fieldset>
+	
+	
+
+	<table width="100%" border="0">
         	<tr><td>&nbsp;</td></tr>
         	<tr>
         		<td>$!perhatian3</td>
@@ -419,7 +442,6 @@ Maklumat Hakmilik telah berjaya disimpan.
         </table>
         
 	</fieldset>	
-	#end
 
 	
 	
@@ -451,6 +473,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#set($sorDropdownUnitAmbil=$data.id_unitluasambil_convert)
 		#set($txtLuasLotAsalSebelumConvert=$data.nama_luas_asal)
 		#set($txtLuasLotAmbilSebelumConvert=$data.nama_luas_ambil)
+		#set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
 		#end
 	#end
 	
@@ -793,7 +816,23 @@ Maklumat Hakmilik telah berjaya disimpan.
            	</tr> 
            	#end
 		</table>
-		
+	</fieldset>
+	<fieldset>
+		<table width="100%" border="0">
+		<tr>
+			<td width="1%"></td>
+			<td valign="top" width="23%">Tarikh Pembayaran</td>
+			<td valign="top" width="1%">:</td>
+			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran" size="12" type="text" value="$!txdTarikhPembayaran" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
+            	<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
+		</tr>
+		<tr>
+            	<td valign="top">
+            	<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
+            	<td valign="top">:</td>
+  				<td><input id="fileupload" name="fileupload" type=file size=40 /></td><br/>
+  			</tr>
+		</table>
 		#if($isEdit=="yes")
 		<table width="100%" border="0">
         	<tr><td>&nbsp;</td></tr>
@@ -802,8 +841,7 @@ Maklumat Hakmilik telah berjaya disimpan.
         	</tr>
         </table>
         #end
-        
-	</fieldset>	
+	</fieldset>
 	#end
 	
 	

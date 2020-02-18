@@ -157,6 +157,8 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                   		<td  ><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>
                         #end
                   		<td   ><b><font color="white">LUAS DIAMBIL</font></b></td>
+                  		<td   ><b><font color="white">TARIKH H</font></b></td>
+                  		<td   ><b><font color="white">TARIKH K</font></b></td>
                         
                         #if($flag_skrin == "daftar_sek8_online")  
                         
@@ -280,6 +282,8 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         </td>
                         #end
                 		<td  class="$rowx" >$!listTanah.luas_ambil&nbsp;$!listTanah.unitByKategori</td>
+                		<td  class="$rowx" >$!listTanah.id_hakmilik</td>
+                		<td  class="$rowx" >$!listTanah.id_permohonan</td>
                 		
                         
                         #if($flag_skrin == "daftar_sek8_online") 
