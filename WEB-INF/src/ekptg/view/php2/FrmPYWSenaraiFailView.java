@@ -10,10 +10,15 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import com.apple.dnssd.TXTRecord;
+
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmPYWSenaraiFailData;
+import ekptg.model.php2.utiliti.PHPUtilHTML;
 
 /**
  * @author hilda
@@ -22,6 +27,7 @@ import ekptg.model.php2.FrmPYWSenaraiFailData;
 public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
+	static Logger myLogger = Logger.getLogger(FrmPYWSenaraiFailView.class);
 
 	FrmPYWSenaraiFailData logic = new FrmPYWSenaraiFailData();
 	
@@ -101,6 +107,18 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
 			idLuasKegunaan = "99999";
 		}
+		String idJenisTujuan = getParam("socJenisTujuan");
+		if (idJenisTujuan == null || idJenisTujuan.trim().length() == 0) {
+			idJenisTujuan = "99999";
+		}
+		String idJenisTujuan2 = getParam("socJenisTujuan2");
+		if (idJenisTujuan2 == null || idJenisTujuan2.trim().length() == 0) {
+			idJenisTujuan2 = "99999";
+		}
+		String idJenisTujuan3 = getParam("socJenisTujuan3");
+		if (idJenisTujuan3 == null || idJenisTujuan3.trim().length() == 0) {
+			idJenisTujuan3 = "99999";
+		}
 		
 		//DATE
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -113,10 +131,10 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 						getParam("tarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtPerkara"),
 						idKategoriPemohon, getParam("txtNama"), getParam("txtNamaPegawai"),
 						getParam("txtNoPendaftaran"), getParam("txtPekerjaan"), getParam("txtAlamat1"),
-						getParam("txtAlamat2"), getParam("txtAlamat3"),
-						getParam("txtPoskod"), idBandar, idNegeri,
-						getParam("txtEmel"), getParam("txtNoTel"), getParam("txtNoFaks"),							
-						idHakmilikAgensi, idPPTBorangK, idHakmilikUrusan, idPHPBorangK, getParam("txtTujuan"),
+						getParam("txtAlamat2"), getParam("txtAlamat3"), getParam("txtEmel"), 
+						getParam("txtPoskod"), idBandar, idNegeri, getParam("txtNoTel"), getParam("txtNoFaks"),
+						idHakmilikAgensi, idPPTBorangK, idHakmilikUrusan, idPHPBorangK, idJenisTujuan, idJenisTujuan2,
+						idJenisTujuan3, getParam("txtTujuan"), getParam("txtTujuan2"), getParam("txtTujuan3"),
 						getParam("idKementerianTanah"), getParam("idNegeriTanah"), getParam("idLuasTanah"), getParam("luasTanah"),
 						idUrusan, idSuburusan, "J", getParam("txtCatatan"), idHakmilikSementara, getParam("txtNoFailNegeri"),
 						idLuasKegunaan, session);
@@ -146,11 +164,17 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 				Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
 				idUrusan = (String) hashPermohonan.get("idUrusan");
 				idSuburusan = (String) hashPermohonan.get("idSuburusan");
+				idJenisTujuan = (String) hashPermohonan.get("idJenisTujuan");
+				idJenisTujuan2 = (String) hashPermohonan.get("idJenisTujuan");
+				idJenisTujuan3 = (String) hashPermohonan.get("idJenisTujuan");
 			}
 			
 			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " class=\"disabled\""));
 			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "disabled", " class=\"disabled\""));
-
+			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "disabled", "class=\"disabled\""));
+			this.context.put("selectJenisTujuan2", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan2", Long.parseLong(idJenisTujuan2), "disabled", "class=\"disabled\""));
+			this.context.put("selectJenisTujuan3", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan3", Long.parseLong(idJenisTujuan3), "disabled", "class=\"disabled\""));
+			
 			// MAKLUMAT PEMOHON
 			logic.setMaklumatPemohon(idFail);
 			beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
@@ -215,12 +239,17 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 			hashPermohonan.put("perkara", getParam("txtPerkara") == null ? "": getParam("txtPerkara"));
 			hashPermohonan.put("catatan", getParam("txtCatatan") == null ? "": getParam("txtCatatan"));
 			hashPermohonan.put("tujuan", getParam("txtTujuan") == null ? "": getParam("txtTujuan"));
+			hashPermohonan.put("tujuan2", getParam("txtTujuan2") == null ? "": getParam("txtTujuan2"));
+			hashPermohonan.put("tujuan3", getParam("txtTujuan3") == null ? "": getParam("txtTujuan3"));
 			beanMaklumatPermohonan.addElement(hashPermohonan);
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
 			
 			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "", " onChange=\"doChangeUrusan();\""));
-			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "", " "));
-
+			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "", " onChange=\"doChangeSuburusan();\""));
+			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "", " onChange=\"doChangeTujuan();\""));
+			this.context.put("selectJenisTujuan2", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan2", Long.parseLong(idJenisTujuan2), "", " onChange=\"doChangeTujuan();\""));
+			this.context.put("selectJenisTujuan3", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan3", Long.parseLong(idJenisTujuan3), "", " onChange=\"doChangeTujuan();\""));
+			
 			// MAKLUMAT PEMOHON			
 			beanMaklumatPemohon = new Vector();
 			Hashtable hashPemohon = new Hashtable();
@@ -396,8 +425,14 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idHakmilikUrusan", idHakmilikUrusan);
 		this.context.put("idPHPBorangK", idPHPBorangK);
 		this.context.put("idHakmilikSementara", idHakmilikSementara);
-		
 		this.context.put("idUrusan", idUrusan);
+		this.context.put("idSuburusan", idSuburusan);
+		this.context.put("idJenisTujuan", idJenisTujuan);
+		this.context.put("idJenisTujuan2", idJenisTujuan2);
+		this.context.put("idJenisTujuan3", idJenisTujuan3);
+		this.context.put("namatujuan", logic.getNamaTujuan(idJenisTujuan));
+		this.context.put("namatujuan2", logic.getNamaTujuan(idJenisTujuan2));
+		this.context.put("namatujuan3", logic.getNamaTujuan(idJenisTujuan3));
 		
 		if (session.getAttribute("MSG") != null){
 			this.context.put("errMsg", session.getAttribute("MSG"));
