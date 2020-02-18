@@ -46,6 +46,8 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 		this.context.put("NO_LOT", "");
 		this.context.put("NAMA_PB", "");
 		this.context.put("NO_PB", "");
+		String tarikh_borangh = getParam("tarikh_borangh");
+		this.context.put("tarikh_borangh", tarikh_borangh);
 		String flag_subjaket = "";
 		this.context.put("flag_subjaket", "");
 		PPTHeader header = new PPTHeader();
@@ -62,6 +64,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 		if (flag_skrin.equals("skrin_list_hakmilik_pb_sek8")) {
 			// context.put("showSJ", "yes");
 		}
+		
 
 		Db db = null;
 		try {
@@ -107,7 +110,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			this.context.put("NAMA_PB", getParam("NAMA_PB"));
 			this.context.put("NO_PB", getParam("NO_PB"));
 			displayHakmilik(id_permohonan, flag_skrin, action,
-					getParam("NO_LOT"), getParam("NAMA_PB"), getParam("NO_PB"),
+					getParam("NO_LOT"), getParam("NAMA_PB"), getParam("NO_PB"), tarikh_borangh,
 					db, id_pegawai, id_borange);
 			context.put("saiz_listTanah",
 					getTanah_count(id_permohonan, "", "", db));
@@ -444,11 +447,10 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 	 */
 
 	private void displayHakmilik(String id_permohonan, String flag_skrin,
-			String action, String no_lot, String nama_pb, String no_pb, Db db,
+			String action, String no_lot, String nama_pb, String no_pb, String tarikh_borangh, Db db,
 			String id_pegawai, String id_borange) throws Exception {
 		List<Hashtable> list = null;
-		list = getHakmilik(id_permohonan, flag_skrin, no_lot, nama_pb, no_pb,
-				db, id_pegawai, id_borange);
+		list = getHakmilik(id_permohonan, flag_skrin, no_lot, nama_pb, no_pb, db, id_pegawai, id_borange);
 		context.put("SenaraiFail", list);
 		setupPage(session, action, list);
 	}
