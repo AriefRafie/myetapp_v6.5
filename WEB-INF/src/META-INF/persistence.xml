@@ -334,7 +334,7 @@
 	  
 	<properties>
 	<!-- DB LOCAL  -->
-	<!--  <property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
+	<!-- <property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghqlive"/>	
 	<property name="javax.persistence.jdbc.url" value="jdbc:jdbc:oracle:thin:@//localhost:1521/myetapp"/> -->
 	
@@ -352,7 +352,7 @@
 	<property name="javax.persistence.jdbc.password" value="ekptghqtest"/>
 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/> 	-->
 	<!-- DB LIVE  -->
-	<!-- <property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
+	<!--  <property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghqv6live"/>	
 	<!-- <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.76:1521/myetapp"/> --> 
 	
@@ -360,7 +360,7 @@
 	<property name="javax.persistence.jdbc.user" value="ekptghqtest"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghqtest"/>	
 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/>
-	<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>-->	
+	<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
 	<property name="eclipselink.weaving" value="false" />
 	<property name="eclipselink.id-validation" value="NULL"/> 	
 	<property name="eclipselink.logging.level" value="OFF"/>
