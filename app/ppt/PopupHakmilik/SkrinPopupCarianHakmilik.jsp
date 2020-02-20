@@ -148,17 +148,18 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
         <tr class="table_header">
         
                   		<td align="center" ><b><font color="white">NO</font></b></td>
-                  		<td  ><b><font color="white">NO HAKMILIK</font></b></td>
+                  		<td align="center"><b><font color="white">NO HAKMILIK</font></b></td>
                         #if($flag_skrin != "hakmilik_borangL")
                   		<td  align="center"><b><font color="white">JUMLAH PB</font></b></td>
                         #end
-                  		<td  ><b><font color="white">NO. LOT/NO. PT</font></b></td>    
+                  		<td  align="center"><b><font color="white">NO. LOT/NO. PT</font></b></td>    
                         #if($flag_skrin != "hakmilik_borangL")          
-                  		<td  ><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>
+                  		<td  align="center"><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>
                         #end
-                  		<td   ><b><font color="white">LUAS DIAMBIL</font></b></td>
-                  		<td   ><b><font color="white">TARIKH H</font></b></td>
-                  		<td   ><b><font color="white">TARIKH K</font></b></td>
+                  		<td  align="center"><b><font color="white">LUAS DIAMBIL</font></b></td>
+                  		<td  align="center"><b><font color="white">TARIKH H</font></b></td>
+                  		<td  align="center"><b><font color="white">TARIKH K</font></b></td>
+                  		<td  align="center"><b><font color="white">CETAK</font></b></td>
                         
                         #if($flag_skrin == "daftar_sek8_online")  
                         
@@ -282,8 +283,13 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         </td>
                         #end
                 		<td  class="$rowx" >$!listTanah.luas_ambil&nbsp;$!listTanah.unitByKategori</td>
-                		<td  class="$rowx" >$!listTanah.id_hakmilik</td>
-                		<td  class="$rowx" >$!listTanah.id_permohonan</td>
+                		<td  class="$rowx" >$!listTanah.tarikh_borangh</td>
+                		<td  class="$rowx" >$!listTanah.tarikh_borangk</td>
+                		<td  align="center" class="$rowx" >$!listTanah.cetak
+                		 <input a href="#" type="button" value="Cetak" onClick="javascript:cetakBorangK('$!id_permohonan','$listTanah.id_hakmilik')"><font color="blue"></font></a>
+                                             
+                        </td>
+                		
                 		
                         
                         #if($flag_skrin == "daftar_sek8_online") 
@@ -292,6 +298,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         <td class="$rowx">
                           #if ( ($listTanah.flag_online == '1') || ($listTanah.flag_online == '2') )
                           <font color="red">$listTanah.keteranganStatusBantahan (Permohonan Online)</font>
+                          
                           #else
                           $listTanah.keteranganStatusBantahan
                           #end
@@ -565,9 +572,15 @@ function checkDuplicated(value,div_id,bil,div_alert)
 
 
 
+function cetakBorangK(idpermohonan,idhakmilik) {
 
-
-
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=BorangK&selectNoFail=yes";
+	//var url = "../servlet/ekptg.report.ppt.BorangK?id_hakmilik="+idhakmilik+"&id_Fail="+idfail+"&namaPegawai="+namaPengarah;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
 
 function paparByAgensi(id_hakmilik,status_bantahan_ap,id_permohonan,flag_skrin)
 {

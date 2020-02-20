@@ -46,8 +46,6 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 		this.context.put("NO_LOT", "");
 		this.context.put("NAMA_PB", "");
 		this.context.put("NO_PB", "");
-		String tarikh_borangh = getParam("tarikh_borangh");
-		this.context.put("tarikh_borangh", tarikh_borangh);
 		String flag_subjaket = "";
 		this.context.put("flag_subjaket", "");
 		PPTHeader header = new PPTHeader();
@@ -110,7 +108,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			this.context.put("NAMA_PB", getParam("NAMA_PB"));
 			this.context.put("NO_PB", getParam("NO_PB"));
 			displayHakmilik(id_permohonan, flag_skrin, action,
-					getParam("NO_LOT"), getParam("NAMA_PB"), getParam("NO_PB"), tarikh_borangh,
+					getParam("NO_LOT"), getParam("NAMA_PB"), getParam("NO_PB"),
 					db, id_pegawai, id_borange);
 			context.put("saiz_listTanah",
 					getTanah_count(id_permohonan, "", "", db));
@@ -447,7 +445,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 	 */
 
 	private void displayHakmilik(String id_permohonan, String flag_skrin,
-			String action, String no_lot, String nama_pb, String no_pb, String tarikh_borangh, Db db,
+			String action, String no_lot, String nama_pb, String no_pb, Db db,
 			String id_pegawai, String id_borange) throws Exception {
 		List<Hashtable> list = null;
 		list = getHakmilik(id_permohonan, flag_skrin, no_lot, nama_pb, no_pb, db, id_pegawai, id_borange);
@@ -642,8 +640,9 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			sql += " "
 					+
 					// "SELECT *    FROM ( "+
-					" SELECT  ROW_NUMBER () OVER (ORDER BY MK.NAMA_MUKIM ASC, LPAD (M.NO_LOT, 20) ASC, LPAD (M.NO_PT, 20) ASC, LPAD (M.NO_SUBJAKET, 20) ASC) AS RN, "
-					+ " M.FLAG_SEGERA_SEBAHAGIAN, m.flag_pembatalan_keseluruhan,m.flag_penarikan_keseluruhan,P.NO_RUJUKAN_PTG, P.ID_STATUS, F.NO_FAIL, M.CATATAN, P.ID_PERMOHONAN, LS.KETERANGAN AS UNIT1, LT.KETERANGAN AS UNIT2, M.ID_HAKMILIK, M.ID_NEGERI," 
+					" SELECT  ROW_NUMBER () OVER (ORDER BY MK.NAMA_MUKIM ASC, LPAD (M.NO_LOT, 20) ASC, LPAD (M.NO_PT, 20) ASC, LPAD (M.NO_SUBJAKET, 20) ASC) AS RN, G.TARIKH_BORANGH, K.TARIKH_BORANGK, "
+					+ " M.FLAG_SEGERA_SEBAHAGIAN, m.flag_pembatalan_keseluruhan,m.flag_penarikan_keseluruhan,P.NO_RUJUKAN_PTG, P.ID_STATUS, F.NO_FAIL, M.CATATAN, P.ID_PERMOHONAN, LS.KETERANGAN AS UNIT1, "
+					+ "LT.KETERANGAN AS UNIT2, M.ID_HAKMILIK, M.ID_NEGERI," 
 					+ " M.TARIKH_MASUK AS TARIKH_MASUK,  ";
 
 			if (!idpegawai.equals("") && idpegawai != null) {
@@ -751,16 +750,17 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				sql += " Tblpptborangl LL, ";
 			}
 
-			sql += "TBLRUJLUAS LS, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLRUJJENISHAKMILIK JH,  TBLRUJDAERAH D  "
+			sql += "TBLRUJLUAS LS, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLRUJJENISHAKMILIK JH,  TBLRUJDAERAH D, TBLPPTBORANGG G, TBLPPTBORANGK K  "
 					+ " WHERE M.ID_PERMOHONAN = P.ID_PERMOHONAN  "
 					+ " AND M.ID_NEGERI = N.ID_NEGERI  "
+					+ " AND M.ID_PERMOHONAN = K.ID_PERMOHONAN  "
 					+ " AND P.ID_FAIL = F.ID_FAIL  "
 					+ " AND M.ID_DAERAH = D.ID_DAERAH "
 					+ " AND TEMP_COUNTPB.ID_HAKMILIK(+) = M.ID_HAKMILIK "
 					+ " AND LS.ID_LUAS(+) = M.ID_UNITLUASLOT   "
-					+
+					+ " AND M.ID_BORANGG = G.ID_BORANGG(+)"
 					// " AND M.ID_PEGAWAI = U.USER_ID(+) " +
-					" AND M.ID_JENISHAKMILIK = JH.ID_JENISHAKMILIK(+) "
+					+ " AND M.ID_JENISHAKMILIK = JH.ID_JENISHAKMILIK(+) "
 					+ " AND M.ID_LOT = LT.ID_LOT(+)  "
 					+ " AND M.ID_MUKIM = MK.ID_MUKIM(+)  AND NVL(M.FLAG_PEMBATALAN_KESELURUHAN,0) <> 'Y'   "
 					+ " AND NVL(M.FLAG_PENARIKAN_KESELURUHAN,0) <> 'Y' ";
@@ -886,7 +886,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			// sql +=
 			// " AND (select count(*)from Tblpptborangk a, Tblppthakmilikborangk b where a.id_borangk = b.id_borangk and b.id_hakmilik(+) = m.id_hakmilik) > '0' ";
 
-			if (flag_skrin.equals("hakmilik_borangk")
+			if (flag_skrin.equals("hakmilik_borangk") 
 					|| flag_skrin.equals("hakmilik_borangL")) {
 				sql += " AND M.id_hakmilik = LL.id_hakmilik(+) ";
 				sql += " AND (P.flag_segera = '3' AND M.id_hakmilik in (select distinct hx.id_hakmilik from Tblppthakmilik hx, Tblppthakmilikpb hpbx, Tblpptbayaran bx ";
@@ -896,9 +896,9 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				sql += " where hx.id_permohonan = p.id_permohonan and hx.flag_segera_sebahagian = 'Y') ";
 				sql += " and (select count(*) from Tblpptborangi bix ";
 				sql += " where bix.id_permohonan = p.id_permohonan) > 0 ";
-				sql += " OR flag_segera = '2' AND (select count(*)from tblpptbayaran a, tblppthakmilikpb b ";
+				sql += " OR p.flag_segera = '2' AND (select count(*)from tblpptbayaran a, tblppthakmilikpb b ";
 				sql += " where a.id_hakmilikpb = b.id_hakmilikpb and b.id_hakmilik(+) = m.id_hakmilik) > 0 ";
-				sql += " OR flag_segera = '1' " +
+				sql += " OR p.flag_segera = '1' " +
 						//" AND (select count(*) from Tblpptborangi bix where bix.id_permohonan = p.id_permohonan) > 0" +
 						" ) ";
 
@@ -1117,6 +1117,12 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 						rs.getString("status_hakmilik") == null ? "" : rs
 								.getString("status_hakmilik"));
 
+				h.put("tarikh_borangh",
+						rs.getString("TARIKH_BORANGH") == null ? "" : rs
+								.getString("TARIKH_BORANGH"));
+				h.put("tarikh_borangk",
+						rs.getString("TARIKH_BORANGK") == null ? "" : rs
+								.getString("TARIKH_BORANGK"));
 				h.put("flag_jenis_rizab",
 						rs.getString("flag_jenis_rizab") == null ? "" : rs
 								.getString("flag_jenis_rizab"));
