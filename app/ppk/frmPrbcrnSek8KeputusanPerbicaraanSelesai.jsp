@@ -289,7 +289,7 @@ document.getElementById("header_lama").style.display="block";
   #end
   <table width="100%" border="0">
         <tr>
-      <td width="33%" valign="top"><fieldset>
+      <td width="50%" valign="top"><fieldset>
         <legend>Bayaran Perintah</legend>
         <table width="100%">
           <tr>
@@ -299,6 +299,15 @@ document.getElementById("header_lama").style.display="block";
               <input type="text" size="15" name="txtJumHarta" onblur="this.value=this.value.toUpperCase();" id="txtJumHarta" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumHarta)" />
               </label></td>
           </tr>
+          <!-- arief add Procedur Denda Lewat Permohonan OPEN -->
+          <tr>
+            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Permohonan&nbsp;&nbsp;(RM)</div></td>
+            <td width="2%"><div align="right">:</div></td>
+            <td width="51%"><label>
+              <input type="text" size="15" name="txtJumNilaianDendaLewat" onblur="this.value=this.value.toUpperCase();" id="txtJumNilaianDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumNilaianDendaLewat)" />
+              </label></td>
+          </tr>
+          <!-- arief add CLOSE -->
           <tr>
             <td><div align="left"><font color="red">*</font>&nbsp;Jumlah &nbsp;&nbsp;&nbsp;Bayaran(RM)</div></td>
             <td><div align="right">:</div></td>
@@ -936,6 +945,15 @@ document.getElementById("header_lama").style.display="block";
             <input type="text" size="15" name="txtJumHarta" onblur="this.value=this.value.toUpperCase();" id="txtJumHarta" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumHarta)" />
             </label></td>
         </tr>
+        <!-- arief add Procedur Denda Lewat Permohonan OPEN -->
+          <tr>
+            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Permohonan&nbsp;&nbsp;(RM)</div></td>
+            <td width="2%"><div align="right">:</div></td>
+            <td width="51%"><label>
+              <input type="text" size="15" name="txtJumNilaianDendaLewat" onblur="this.value=this.value.toUpperCase();" id="txtJumNilaianDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumNilaianDendaLewat)" />
+              </label></td>
+          </tr>
+          <!-- arief add CLOSE -->
         <tr>
           <td><div align="left">Jumlah Bayaran&nbsp;&nbsp;(RM)</div></td>
           <td><div align="right">:</div></td>
@@ -1649,6 +1667,15 @@ document.getElementById("header_lama").style.display="block";
               <input type="text" size="15" name="txtJumHartaEDIT" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaEDIT" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($!txtJumHarta)" />
               </label></td>
           </tr>
+          <!-- arief add Procedur Denda Lewat Permohonan OPEN -->
+          <tr>
+            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Permohonan&nbsp;&nbsp;(RM)</div></td>
+            <td width="2%"><div align="right">:</div></td>
+            <td width="51%"><label>
+              <input type="text" size="15" name="txtJumNilaianDendaLewatEdit" onblur="this.value=this.value.toUpperCase();" id="txtJumNilaianDendaLewatEdit" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumNilaianDendaLewatEdit)" />
+              </label></td>
+          </tr>
+          <!-- arief add CLOSE -->
           <tr>
             <td><div align="left">Jumlah Bayaran&nbsp;&nbsp;(RM)</div></td>
             <td><div align="right">:</div></td>
