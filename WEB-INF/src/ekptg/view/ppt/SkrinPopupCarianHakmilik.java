@@ -886,7 +886,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			// sql +=
 			// " AND (select count(*)from Tblpptborangk a, Tblppthakmilikborangk b where a.id_borangk = b.id_borangk and b.id_hakmilik(+) = m.id_hakmilik) > '0' ";
 
-			if (flag_skrin.equals("hakmilik_borangk")
+			if (flag_skrin.equals("hakmilik_borangk") 
 					|| flag_skrin.equals("hakmilik_borangL")) {
 				sql += " AND M.id_hakmilik = LL.id_hakmilik(+) ";
 				sql += " AND (P.flag_segera = '3' AND M.id_hakmilik in (select distinct hx.id_hakmilik from Tblppthakmilik hx, Tblppthakmilikpb hpbx, Tblpptbayaran bx ";

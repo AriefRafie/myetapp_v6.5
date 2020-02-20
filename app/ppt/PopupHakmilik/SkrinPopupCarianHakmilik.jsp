@@ -298,6 +298,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         <td class="$rowx">
                           #if ( ($listTanah.flag_online == '1') || ($listTanah.flag_online == '2') )
                           <font color="red">$listTanah.keteranganStatusBantahan (Permohonan Online)</font>
+                          
                           #else
                           $listTanah.keteranganStatusBantahan
                           #end
