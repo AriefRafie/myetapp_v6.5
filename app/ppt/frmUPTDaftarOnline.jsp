@@ -268,7 +268,7 @@ Maklumat Permohonan telah berjaya disimpan.
          	  	<td valign="top"><font color="red">*</font></td>
            	   	<td valign="top">Nama Projek</td>
            	   	<td valign="top">:</td>
-                <td><textarea name="txtTujuan" id="txtTujuan" cols="40%" rows="4" defaultValue="Permohonan Pengambilan Tanah Bagi Projek">$!txtTujuan</textarea></td>
+                <td><textarea name="txtTujuan" id="txtTujuan" cols="40%" rows="4" value="$!txtTujuan">Permohonan Pengambilan Tanah Bagi Projek</textarea></td>
             </tr>
             
          #if($showSegera=="yes")  
