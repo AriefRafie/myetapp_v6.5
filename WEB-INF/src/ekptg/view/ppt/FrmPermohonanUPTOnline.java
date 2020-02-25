@@ -27,6 +27,8 @@ import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujnegeri;
 import ekptg.model.htp.entity.Permohonan;
+import ekptg.model.htp.rekod.FrmTanahKementerianBean;
+import ekptg.model.htp.rekod.ITanahKementerian;
 import ekptg.model.permohonan.IPermohonan;
 import ekptg.model.ppt.FrmPembatalanInternalData;
 import ekptg.model.ppt.FrmPermohonanUPTData;
@@ -35,6 +37,8 @@ import ekptg.model.ppt.FrmUPTSek8HakmilikData;
 import ekptg.model.ppt.MyInfoPPTData;
 import ekptg.model.ppt.PPTHeader;
 import ekptg.model.ppt.PPTPermohonanBean;
+import ekptg.model.utils.IUtilHTMLPilihan;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisHakmilik;
 import ekptg.view.ppt.email.EmailOnline;
 
 /*
@@ -53,7 +57,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	FrmUPTSek8HakmilikData modelHM = new FrmUPTSek8HakmilikData();
 	MyInfoPPTData myInfo = new MyInfoPPTData();
 	private IPermohonan iPermohonan = null;
-
+	private IUtilHTMLPilihan iPilihanJH = null;
+	
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
 	public String doTemplate2() throws Exception {
@@ -1836,7 +1841,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		// dropdown
 		context.put("selectStatusSPT", HTML.SelectStatusSPT("socStatus", null, "style=width:auto"));
-		context.put("selectJenisHMCarian", HTML.SelectJenisHakmilik("socJenisHakmilik", null, "id=selectJenisHMCarian style=width:auto"));
+		context.put("selectJenisHMCarian", getJenisHakmilik().Pilihan("socJenisHakmilik", null, "id=selectJenisHMCarian style=width:auto"));
 		context.put("selectNegeriCarian", HTML.SelectNegeriMampu("socNegeri", null, null, "style=width:auto"));
 		context.put("txtNoFailCarian", "");
 		context.put("txdTarikhPermohonan", "");
@@ -2922,7 +2927,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				HTML.SelectDaerahPenggawa("socDaerahPenggawa", Utils.parseLong(id_daerahpenggawa), null, " " + mode
 						+ " style=width:274px"));
 
-		// dropdown
+		// dropdown hakmilik
 		if (id_negeriprojek.equals("10")) {
 			context.put("selectJenisHakmilik", HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",
 					Utils.parseLong(id_jenishakmilik), "id=socJenisHakmilik " + mode
@@ -4587,6 +4592,12 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			// if (rs != null) rs.close();
 		}
 		return total;
+	}
+	
+	private IUtilHTMLPilihan getJenisHakmilik(){
+		if(iPilihanJH== null)
+			iPilihanJH = new UtilHTMLPilihanJenisHakmilik();
+		return iPilihanJH;
 	}
 
 }// close class

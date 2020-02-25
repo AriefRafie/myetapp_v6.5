@@ -6,7 +6,14 @@ Just add your function secukup rasa disini. :)
 
 // readonly checkbox
 
-
+	//Label Cetak ditukar kepada Previu/Cetak
+	function tukarNamaButtonCetak(elem){
+		if(elem.type == "button"){
+			if(elem.value == "Cetak"){
+				elem.value = "Previu/Cetak";
+			}
+		}
+	}
 //remove spacing 19042010
 function removeSpaces(string) {
  return string.split(' ').join('');
