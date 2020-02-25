@@ -2327,8 +2327,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	        	Connection con = db.getConnection();
 	        	con.setAutoCommit(false);
 	        	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
-	        			"(id_Dokumen,id_permohonan,nama_Fail,jenis_Mime,content,tajuk,keterangan) " +
-	        			"values(?,?,?,?,?,?,?)");
+	        			"(id_Dokumen,id_permohonan,nama_Fail,jenis_Mime,content,tajuk,keterangan) " + "values(?,?,?,?,?,?,?)");
 	        	ps.setLong(1, id_Dokumen);
 	        	ps.setString(2, getParam("id_permohonan"));
 	        	ps.setString(3,item.getName());

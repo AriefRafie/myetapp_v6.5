@@ -316,6 +316,7 @@ public class FrmUPTSek8HakmilikData {
 	    		String id_mukimProjek = (String)data.get("socMukim");
 	    		String txtseksyen = (String)data.get("txtseksyen");
 	    		String catatan = (String)data.get("txtCatatan");
+	    		String txdTarikhPembayaran =(String)data.get("txdTarikhPembayaran");
 	    		String txtnolot = (String)data.get("txtNoLot");
 	    		String txtnopt = (String)data.get("txtNoPT");
 	    		
@@ -354,6 +355,7 @@ public class FrmUPTSek8HakmilikData {
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
+	    		String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
 	    		
 	    		
 	    		String flagSebahagian = "0";
@@ -406,6 +408,7 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("no_lot", txtnolot);
 	    		r.add("no_pt", txtnopt);
 	    		r.add("catatan",catatan);
+	    		r.add("tarikh_pembayaran", r.unquote(TP));
 	    		r.add("seksyen",txtseksyen);	    		
 	    		r.add("tarikh_daftar",r.unquote(TD));
 	    		r.add("tarikh_luput",r.unquote(TL));
@@ -495,6 +498,8 @@ public class FrmUPTSek8HakmilikData {
 	    		String id_mukimProjek = (String)data.get("socMukim");
 	    		String txtseksyen = (String)data.get("txtseksyen");
 	    		String catatan = (String)data.get("txtCatatan");
+	    		String txdTarikhPembayaran = (String)data.get("txdTarikhPembayaran");
+	    		String fileupload = (String)data.get("fileupload");
 	    		String txtnolot = (String)data.get("txtNoLot");
 	    		String txtnopt = (String)data.get("txtNoPT");
 	    		
@@ -534,6 +539,7 @@ public class FrmUPTSek8HakmilikData {
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
+	    		String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
 	    		 
 	    		
 	    		String flagSebahagian = "0";
@@ -582,6 +588,7 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("no_lot", txtnolot);
 	    		r.add("no_pt", txtnopt);
 	    		r.add("catatan",catatan);
+	    		r.add("tarikh_pembayaran", r.unquote(TP));
 	    		r.add("seksyen",txtseksyen);	    		
 	    		r.add("tarikh_daftar",r.unquote(TD));
 	    		r.add("tarikh_luput",r.unquote(TL));
@@ -2123,7 +2130,7 @@ public class FrmUPTSek8HakmilikData {
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();
 	      
-	    		sql =  " SELECT A.ID_FAIL, B.ID_PERMOHONAN, C.ID_HAKMILIK, C.ID_JENISHAKMILIK, C.ID_MUKIM, B.ID_DAERAH, ";
+	    		sql =  " SELECT A.ID_FAIL, B.ID_PERMOHONAN, C.ID_HAKMILIK, C.ID_, C.ID_MUKIM, B.ID_DAERAH, ";
 	    		sql += " D.NAMA_MUKIM, E.NAMA_DAERAH, G.KOD_JENIS_HAKMILIK, C.NO_HAKMILIK, I.TARIKH_BORANGK, ";
 	    		sql += " CASE ";
 	    		sql += " WHEN C.NO_LOT IS NOT NULL AND C.NO_PT IS NULL THEN C.NO_LOT "; 

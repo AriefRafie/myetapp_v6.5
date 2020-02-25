@@ -94,6 +94,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 		Vector listKeputusan = new Vector();
 		Vector listFail = new Vector();
+		Vector flag5juta =  new Vector();
 
 		listFail.clear();
 
@@ -301,6 +302,14 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					listFail = logic_A.getDataFail();
 					this.context.put("ViewFail", listFail);
 
+					//check 5 juta
+					logic_A.checkFlag5Juta(id);
+					flag5juta = logic_A.getFlag5Juta();
+					
+					
+					//this.context.put("ViewFail", listFail);
+					this.context.put("flag5juta", flag5juta);
+					
 					FrmPrmhnnSek8KeputusanPermohonanInternalData
 							.setMaklumatMahkamah(id);
 					Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
@@ -1310,7 +1319,14 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			// this.context.put("jenis_pej", j_p);
 			logic_A.setDataFail(getParam("idPermohonan"));
 			listFail = logic_A.getDataFail();
+			
+			//check 5 juta
+			logic_A.checkFlag5Juta(id);
+			flag5juta = logic_A.getFlag5Juta();
+			
+			
 			this.context.put("ViewFail", listFail);
+			this.context.put("flag5juta", flag5juta);
 			headerppk_baru(session, getParam("idPermohonan"), "Y", "", "T");
 
 			this.context.put("eve", 8);

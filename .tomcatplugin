@@ -8,5 +8,6 @@
     <updateXml>true</updateXml>
     <warLocation></warLocation>
     <extraInfo></extraInfo>
-    <webPath>/myetapp7</webPath>
+    <mavenClasspath>false</mavenClasspath>
+    <webPath>/myetappgit2</webPath>
 </tomcatProjectProperties>

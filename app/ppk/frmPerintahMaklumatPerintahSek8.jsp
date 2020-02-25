@@ -2501,6 +2501,11 @@ document.getElementById("header_lama").style.display="block";
       <input type="button" name="cmdJanaPerintah" id="cmdJanaPerintah" value="Integrasi Sistem eTanah" onClick="javascript:janaPerintah('$idFail')"/>
       #end
       <!-- END INTERGRASI ETANAH -->
+      <!-- arief add open NOTIFIKASI EMAIL-->
+      #if ($flagStatusFail == "SELESAI")
+      <input type="button" name="cmdNotiEmail" id="cmdNotiEmail" value="Email Perintah" onClick="javascript:emailPerintah('$idFail')"/>
+      #end
+      <!-- arief add close NOTIFIKASI EMAIL-->
       <br>
       <br>
       <span class="style2"><blink>$systemMsg</blink></span></td>
@@ -4007,4 +4012,21 @@ function popupIntergrasiPerintahEtanah(idFail, idPerintah) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+
+//arief add NOTIFIKASI EMAIL open
+function emailPerintah() {
+	document.${formName}.hitButt.value = "emailPerintah";
+	document.${formName}.actionEmailPerintah.value = "papar";
+	document.${formName}.submit();
+}
+function popupEmailPerintah(idFail, idPerintah) {
+	var url = ""+idPerintah+"&idFail="+idFail;
+	
+    var hWnd = window.open(url,'printuser','width=1000,height=350, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+//arief add NOTIFIKASI EMAIL close
 </script>

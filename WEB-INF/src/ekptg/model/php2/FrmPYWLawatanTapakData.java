@@ -37,9 +37,8 @@ public class FrmPYWLawatanTapakData {
 
 			sql = "SELECT ID_LAPORANTANAH FROM TBLPHPLAPORANTANAH WHERE ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
-			System.out.println("Result: "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			if (rs.next()) {
 				return rs.getString("ID_LAPORANTANAH");
 			} else {
@@ -91,7 +90,7 @@ public class FrmPYWLawatanTapakData {
 					+ " JALAN_HUBUNGAN, KAWASAN_BERHAMPIRAN, JARAK_DARIBANDAR, KEADAAN_RUPABUMI, KEADAAN_TANAH, FLAG_KEMUDAHANASAS_AIR,"
 					+ " FLAG_KEMUDAHANASAS_ELEKTRIK, FLAG_KEMUDAHANASAS_TEL, KEMUDAHAN_ASAS, SEMP_UTARA, SEMP_SELATAN, SEMP_TIMUR, SEMP_BARAT,"
 					+ " NAMA_PELAPOR, ID_JAWATANPELAPOR, ID_NEGERIPELAPOR, CATATAN, ID_SEJARAH, SEJARAH_TANAH, NAMA_BANDAR, "
-					+ " NAMA_PENYEMAK, ID_NEGERIPENYEMAK, ID_JAWATANPENYEMAK"
+					+ " NAMA_PENYEMAK, ID_NEGERIPENYEMAK, ID_JAWATANPENYEMAK, CATATAN_PELAPOR, CATATAN_PENYEMAK "
 					+ " FROM TBLPHPLAPORANTANAH"
 					+ " WHERE ID_LAPORANTANAH = '"
 					+ idLaporanTanah + "'";
@@ -171,23 +170,28 @@ public class FrmPYWLawatanTapakData {
 				h.put("idNegeri",
 						rs.getString("ID_NEGERIPELAPOR") == null ? "99999" : rs
 								.getString("ID_NEGERIPELAPOR"));
-				h.put("idSejarah",
-						rs.getString("ID_SEJARAH") == null ? "99999" : rs
-								.getString("ID_SEJARAH"));
+				h.put("idSejarah", rs.getString("ID_SEJARAH") == null ? "99999"
+						: rs.getString("ID_SEJARAH"));
 				h.put("sejarahTanah",
 						rs.getString("SEJARAH_TANAH") == null ? "" : rs
 								.getString("SEJARAH_TANAH"));
-				h.put("namaBandar",
-						rs.getString("NAMA_BANDAR") == null ? "" : rs
-								.getString("NAMA_BANDAR"));
-				h.put("namaPenyemak", rs.getString("NAMA_PENYEMAK") == null ? ""
-						: rs.getString("NAMA_PENYEMAK"));
+				h.put("namaBandar", rs.getString("NAMA_BANDAR") == null ? ""
+						: rs.getString("NAMA_BANDAR"));
+				h.put("namaPenyemak",
+						rs.getString("NAMA_PENYEMAK") == null ? "" : rs
+								.getString("NAMA_PENYEMAK"));
 				h.put("idNegeriPenyemak",
-						rs.getString("ID_NEGERIPENYEMAK") == null ? "99999" : rs
-								.getString("ID_NEGERIPENYEMAK"));
+						rs.getString("ID_NEGERIPENYEMAK") == null ? "99999"
+								: rs.getString("ID_NEGERIPENYEMAK"));
 				h.put("idJawatanPenyemak",
 						rs.getString("ID_JAWATANPENYEMAK") == null ? "99999"
 								: rs.getString("ID_JAWATANPENYEMAK"));
+				h.put("catatanPelapor",
+						rs.getString("CATATAN_PELAPOR") == null ? "" : rs
+								.getString("CATATAN_PELAPOR"));
+				h.put("catatanPenyemak",
+						rs.getString("CATATAN_PENYEMAK") == null ? "" : rs
+								.getString("CATATAN_PENYEMAK"));
 				beanMaklumatLaporanTanah.addElement(h);
 				bil++;
 			}
@@ -237,10 +241,9 @@ public class FrmPYWLawatanTapakData {
 
 			stmt.executeUpdate(sql);
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
-					"FAIL [" + idLaporanTanah
-							+ "] DIKEMASKINI");
+					"FAIL [" + idLaporanTanah + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -256,8 +259,9 @@ public class FrmPYWLawatanTapakData {
 				db.close();
 		}
 	}
-	
-	public void updateMaklumatLaporanTanah(String idPermohonan, String txtLaporanAtasTanah, HttpSession session) throws Exception {
+
+	public void updateMaklumatLaporanTanah(String idPermohonan,
+			String txtLaporanAtasTanah, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -300,12 +304,12 @@ public class FrmPYWLawatanTapakData {
 
 	public void simpanKemaskiniMaklumatLain(String idLaporanTanah,
 			String txtJalanHubungan, String txtKawasanBerhampiran,
-			String txtNamaBandar, String txtJarakDariBandar, String kemudahanAsasA,
-			String kemudahanAsasL, String kemudahanAsasT,
-			String txtKemudahanAsas, String txtKeadaanTanah,
-			String txtKeadaanRupabumi, String txtUtara, String txtSelatan,
-			String txtTimur, String txtBarat, String txtSejarahTanah, HttpSession session)
-			throws Exception {
+			String txtNamaBandar, String txtJarakDariBandar,
+			String kemudahanAsasA, String kemudahanAsasL,
+			String kemudahanAsasT, String txtKemudahanAsas,
+			String txtKeadaanTanah, String txtKeadaanRupabumi, String txtUtara,
+			String txtSelatan, String txtTimur, String txtBarat,
+			String txtSejarahTanah, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -346,10 +350,9 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
-					"FAIL [" + idLaporanTanah
-							+ "] DIKEMASKINI");
+					"FAIL [" + idLaporanTanah + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -487,10 +490,9 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "INS",
-					"FAIL [" + idLaporanTanah
-							+ "] DIDAFTARKAN");
+					"FAIL [" + idLaporanTanah + "] DIDAFTARKAN");
 
 		} catch (SQLException ex) {
 			try {
@@ -536,10 +538,9 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
-					"FAIL [" + idPegawaiLaporanTanah
-							+ "] DIKEMASKINI");
+					"FAIL [" + idPegawaiLaporanTanah + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -556,7 +557,8 @@ public class FrmPYWLawatanTapakData {
 		}
 	}
 
-	public void hapusKehadiran(String idPegawaiLaporanTanah, HttpSession session) throws Exception {
+	public void hapusKehadiran(String idPegawaiLaporanTanah, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -576,10 +578,9 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "DEL",
-					"FAIL [" + idPegawaiLaporanTanah
-							+ "] DIHAPUSKAN");
+					"FAIL [" + idPegawaiLaporanTanah + "] DIHAPUSKAN");
 
 		} catch (SQLException ex) {
 			try {
@@ -631,9 +632,9 @@ public class FrmPYWLawatanTapakData {
 		}
 	}
 
-	public void simpanKemaskiniPelapor(String idLaporanTanah, String txtNama, String idNegeri, String idJawatan, 
-			String txtNamaPenyemak, String idNegeriPenyemak, String idJawatanPenyemak, HttpSession session)
-			throws Exception {
+	public void simpanKemaskiniPelapor(String idLaporanTanah, String txtNama,
+			String idNegeri, String idJawatan, String catatanPelapor,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -652,9 +653,7 @@ public class FrmPYWLawatanTapakData {
 			r.add("NAMA_PELAPOR", txtNama);
 			r.add("ID_JAWATANPELAPOR", idJawatan);
 			r.add("ID_NEGERIPELAPOR", idNegeri);
-			r.add("NAMA_PENYEMAK", txtNamaPenyemak);
-			r.add("ID_JAWATANPENYEMAK", idJawatanPenyemak);
-			r.add("ID_NEGERIPENYEMAK", idNegeriPenyemak);
+			r.add("CATATAN_PELAPOR", catatanPelapor);
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
@@ -663,10 +662,9 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
-					"FAIL [" + idLaporanTanah
-							+ "] DIKEMASKINI");
+					"FAIL [" + idLaporanTanah + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -681,6 +679,57 @@ public class FrmPYWLawatanTapakData {
 			if (db != null)
 				db.close();
 		}
+	}
+
+	public void simpanKemaskiniPenyemak(String idLaporanTanah,
+			String txtNamaPenyemak, String idNegeriPenyemak,
+			String idJawatanPenyemak, String catatanPenyemak,
+			HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPLAPORANTANAH
+			r.update("ID_LAPORANTANAH", idLaporanTanah);
+			r.add("NAMA_PENYEMAK", txtNamaPenyemak);
+			r.add("ID_JAWATANPENYEMAK", idJawatanPenyemak);
+			r.add("ID_NEGERIPENYEMAK", idNegeriPenyemak);
+			r.add("CATATAN_PENYEMAK", catatanPenyemak);
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPLAPORANTANAH");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
+					"FAIL [" + idLaporanTanah + "] DIKEMASKINI");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
 	}
 
 	public void setSenaraiImejan(String idLaporanTanah) throws Exception {
@@ -813,10 +862,9 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "INS",
-					"FAIL [" + idDokumen
-							+ "] DIDAFTARKAN");
+					"FAIL [" + idDokumen + "] DIDAFTARKAN");
 
 		} catch (SQLException ex) {
 			try {
@@ -833,7 +881,8 @@ public class FrmPYWLawatanTapakData {
 		}
 	}
 
-	public void hapusDokumen(String idDokumen, HttpSession session) throws Exception {
+	public void hapusDokumen(String idDokumen, HttpSession session)
+			throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String sql = "";
@@ -852,10 +901,9 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "DEL",
-					"FAIL [" + idDokumen
-							+ "] DIHAPUSKAN");
+					"FAIL [" + idDokumen + "] DIHAPUSKAN");
 
 		} catch (SQLException ex) {
 			try {
@@ -864,6 +912,143 @@ public class FrmPYWLawatanTapakData {
 				throw new Exception("Rollback error : " + e.getMessage());
 			}
 			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public void gotoSemakanPPTKanan(String idFail, String idNegeriUser,
+			HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPLOGTUGASAN
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("FLAG_AKTIF", "Y");
+
+			r.add("FLAG_AKTIF", "T");
+
+			sql = r.getSQLUpdate("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_NEGERI", idNegeriUser);
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("ROLE", "PenyemakNegeri");
+			r.add("FLAG_BUKA", "T");
+			r.add("CATATAN", " Perlu Semakan dan Pengesahan Daripada Penolong Pegawai Tanah(Kanan)");
+
+			r.add("ID_PEGAWAI_SEBELUM", userId);
+			r.add("ID_NEGERI_SEBELUM", idNegeriUser);
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610213", "4", null, session, "UPD",
+					"FAIL [" + idFail + "] DIHANTAR KEPADA PP");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public void doPembetulanMaklumat(String idFail, String idNegeriUser,
+			String catatan, HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idPegawai = "";
+		String idNegeri = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT * FROM TBLPHPLOGTUGASAN WHERE ROLE = '(PHP)PYWPenolongPegawaiTanahNegeri' AND ID_FAIL = '"
+					+ idFail + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				idPegawai = rs.getString("ID_PEGAWAI");
+				idNegeri = rs.getString("ID_NEGERI");
+			}
+
+			// TBLPHPLOGTUGASAN
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("FLAG_AKTIF", "Y");
+
+			r.add("FLAG_AKTIF", "T");
+
+			sql = r.getSQLUpdate("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_PEGAWAI", idPegawai);
+			r.add("ID_NEGERI", idNegeri);
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("FLAG_PEMBETULAN", "Y");
+			r.add("ROLE", "(PHP)PYWPenolongPegawaiTanahNegeri");
+			r.add("CATATAN", catatan);
+			r.add("FLAG_BUKA", "T");
+
+			r.add("ID_PEGAWAI_SEBELUM", userId);
+			r.add("ID_NEGERI_SEBELUM", idNegeriUser);
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610213", "4", null, session, "INS",
+					"FAIL [" + idFail + "] TELAH DIHANTAR");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
 					+ ex.getMessage());
 
 		} finally {
@@ -930,7 +1115,7 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610213", "4", null, session, "UPD",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] PROSES SETERUSNYA");
@@ -1123,7 +1308,7 @@ public class FrmPYWLawatanTapakData {
 			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN WHERE FLAG_DOKUMEN = 'P' AND ID_DOKUMEN = '"
 					+ idDokumen + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			System.out.println("Pelan mana pelan? "+sql);
+			System.out.println("Pelan mana pelan? " + sql);
 
 			Hashtable h;
 			while (rs.next()) {
@@ -1168,10 +1353,9 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
-					"FAIL [" + idDokumen
-							+ "] DIKEMASKINI");
+					"FAIL [" + idDokumen + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -1188,7 +1372,8 @@ public class FrmPYWLawatanTapakData {
 		}
 	}
 
-	public void hapusPelan(String idDokumen, HttpSession session) throws Exception {
+	public void hapusPelan(String idDokumen, HttpSession session)
+			throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String sql = "";
@@ -1207,10 +1392,9 @@ public class FrmPYWLawatanTapakData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "DEL",
-					"FAIL [" + idDokumen
-							+ "] DIHAPUSKAN");
+					"FAIL [" + idDokumen + "] DIHAPUSKAN");
 
 		} catch (SQLException ex) {
 			try {

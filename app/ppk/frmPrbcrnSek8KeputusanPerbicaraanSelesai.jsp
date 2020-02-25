@@ -180,17 +180,16 @@ document.getElementById("header_lama").style.display="block";
         #if($!check_kiv == "1")
         #set($check_kiv_mode = "checked")
          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" checked/>KIV
-		<!--  <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)"/>Dokumen telah dikemukakan--> <!-- arief comment 22/1/2020-->
+		<input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)"/>Dokumen telah dikemukakan
         #elseif($!check_kiv == "0")
         #set($check_kiv_mode = "")
          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" />KIV
-		<!--  <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" checked/>Dokumen telah dikemukakan--> <!-- arief comment 22/1/2020-->
+		<input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" checked/>Dokumen telah dikemukakan
        
         #else
         #set($check_kiv_mode = "")
          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" />KIV
-		 <!-- <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" />Dokumen telah dikemukakan--> <!-- arief comment 22/1/2020-->
-    
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" />Dokumen telah dikemukakan
         #end
        <!--  <input type="checkbox" name="check_kiv" id="check_kiv" $check_kiv_mode value="1"  onclick="" /> -->
     
@@ -290,7 +289,7 @@ document.getElementById("header_lama").style.display="block";
   #end
   <table width="100%" border="0">
         <tr>
-      <td width="33%" valign="top"><fieldset>
+      <td width="50%" valign="top"><fieldset>
         <legend>Bayaran Perintah</legend>
         <table width="100%">
           <tr>
@@ -300,17 +299,15 @@ document.getElementById("header_lama").style.display="block";
               <input type="text" size="15" name="txtJumHarta" onblur="this.value=this.value.toUpperCase();" id="txtJumHarta" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumHarta)" />
               </label></td>
           </tr>
-          <!-- arief add 22/1/2020 open-->
-          #if ($flagDenda == "Ya")
+          <!-- arief add Procedur Denda Lewat Permohonan OPEN -->
           <tr>
-            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Pendaftaran &nbsp;&nbsp;&nbsp;(RM)</div></td>
+            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Permohonan&nbsp;&nbsp;(RM)</div></td>
             <td width="2%"><div align="right">:</div></td>
             <td width="51%"><label>
-              <input type="text" size="15" name="txtJumByrnDendaLewatPndftrn" onblur="this.value=this.value.toUpperCase();" id="txtJumByrnDendaLewatPndftrn" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumByrnDendaLewatPndftrn)" />
+              <input type="text" size="15" name="txtJumNilaianDendaLewat" onblur="this.value=this.value.toUpperCase();" id="txtJumNilaianDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumNilaianDendaLewat)" />
               </label></td>
           </tr>
-          #end
-          <!-- arief add 22/1/2020 close -->
+          <!-- arief add CLOSE -->
           <tr>
             <td><div align="left"><font color="red">*</font>&nbsp;Jumlah &nbsp;&nbsp;&nbsp;Bayaran(RM)</div></td>
             <td><div align="right">:</div></td>
@@ -330,32 +327,6 @@ document.getElementById("header_lama").style.display="block";
               <input type="text" size="15" name="txtNomborResitPerintah" onblur="this.value=this.value.toUpperCase();" id="txtNomborResitPerintah" style="text-transform:uppercase;" maxlength="20" />
               </span></label></td>
           </tr>
-          <!-- arief add 22/1/2020 open -->
-          <tr>
-        	<td><div align="left"><font color="red">*</font>&nbsp; Jenis Pengecualian</div></td>
-            <td><div align="right">:</div></td>
-       		#if($!check_pengecualian == "1")
-       			#set($check_pengecualian_mode = "checked")
-         		<input type="radio" name="check_pengecualian" id="check_sebahagian" value="1" onclick="putValue(this.value)" checked/>Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_keseluruhan" value="0" onclick="putValue(this.value)"/>Keseluruhan
-        	#elseif($!check_pengecualian == "0")
-        		#set($check_pengecualian_mode = "checked")
-        		<input type="radio" name="check_pengecualian" id="check_sebahagian" value="1" onclick="putValue(this.value)" />Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_keseluruhan" value="0" onclick="putValue(this.value)" checked/>Keseluruhan
-        	#else
-        		#set($check_pengecualian_mode = "")
-         		<input type="radio" name="check_pengecualian" id="check_sebahagian" value="1" onclick="putValue(this.value)" />Sebahagian
-		 		<input type="radio" name="check_pengecualian" id="check_keseluruhan" value="0" onclick="putValue(this.value)" />Keseluruhan
-        	#end
-        </tr>
-        if ($check_pengecualian_mode = "checked")
-        	<td><div align="left"><font color="red">*</font>&nbsp; Catatan Pengecualian</div></td>
-            <td><div align="right">:</div></td>
-            <td><div align ="left" textarea name="catatan_pengecualian" cols="35" rows="3" id="catatan_pengecualian">$!catatan_pengecualian</textarea></div></td>
-        #end
-        <tr>
-        </tr>
-        <!-- arief add 22/1/2020 close -->
           <tr>
             <td><div align="left"><font color="red">*</font>&nbsp;Tarikh Bayaran</div></td>
             <td><div align="right">:</div></td>
@@ -549,7 +520,7 @@ document.getElementById("header_lama").style.display="block";
       <td width="57%" align="left"><input name="flag_tangguh" id="flag_tangguh" type="radio"  value="1" $TEMPcheckedTidakHadir>
             Pemohon / Waris Tidak Hadir </td>
       <td width="43%" align="left"><input name="flag_tangguh" id="flag_tangguh" type="radio"  value="2" $TEMPcheckedWarisTidakLengkap >
-            Senarai Waris Tidak Lengkap</td>
+            Senarai Waris Tidak Lengkap </td>
     </tr>
         <tr align="center">
       <td align="left"><input name="flag_tangguh" id="flag_tangguh" type="radio"  value="3" $TEMPcheckedMahkamahTinggi>
@@ -677,15 +648,6 @@ document.getElementById("header_lama").style.display="block";
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta >
         Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta </td>
     </tr>
-    <!-- arief add 22/1/2020 open -->
-    #if ($flag_5juta == "Ya")
-    <tr align="center">
-      <td >&nbsp;</td>
-      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi5Juta >
-        Pindah ke Mahkamah Tinggi kerana harta melebihi RM5 juta </td>
-    </tr>
-    #end
-    <!-- arief add 22/1/2020 close -->
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio" value="5" $TEMPcheckedSebabLainBatal>
@@ -983,15 +945,15 @@ document.getElementById("header_lama").style.display="block";
             <input type="text" size="15" name="txtJumHarta" onblur="this.value=this.value.toUpperCase();" id="txtJumHarta" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumHarta)" />
             </label></td>
         </tr>
-        <!-- arief add 22/1/2020 open-->
-        <tr>
-            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Pendaftaran &nbsp;&nbsp;&nbsp;(RM)</div></td>
+        <!-- arief add Procedur Denda Lewat Permohonan OPEN -->
+          <tr>
+            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Permohonan&nbsp;&nbsp;(RM)</div></td>
             <td width="2%"><div align="right">:</div></td>
             <td width="51%"><label>
-              <input type="text" size="15" name="txtJumByrnDendaLewatPndftrn" onblur="this.value=this.value.toUpperCase();" id="txtJumByrnDendaLewatPndftrn" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumByrnDendaLewatPndftrn)" />
+              <input type="text" size="15" name="txtJumNilaianDendaLewat" onblur="this.value=this.value.toUpperCase();" id="txtJumNilaianDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumNilaianDendaLewat)" />
               </label></td>
-       	</tr>
-          <!-- arief add 22/1/2020 close -->
+          </tr>
+          <!-- arief add CLOSE -->
         <tr>
           <td><div align="left">Jumlah Bayaran&nbsp;&nbsp;(RM)</div></td>
           <td><div align="right">:</div></td>
@@ -999,32 +961,6 @@ document.getElementById("header_lama").style.display="block";
             <input type="text" size="15" name="txtJumBayaran" id="txtJumBayaran" readonly class="disabled" value="$!Util.formatDecimal($!bayaran_perintah)" />
             </label></td>
         </tr>
-        <!-- arief add 22/1/2020 open -->
-          <tr>
-        	<td><div align="left"><font color="red">*</font>&nbsp; Jenis Pengecualian</div></td>
-            <td><div align="right">:</div></td>
-       		#if($!check_pengecualian == "1")
-       			#set($check_pengecualian_mode = "checked")
-         		<input type="radio" name="check_pengecualian" id="check_sebahagian" readonly class="disabled" value="1" onclick="putValue(this.value)" checked/>Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_keseluruhan" readonly class="disabled" value="0" onclick="putValue(this.value)"/>Keseluruhan
-        	#elseif($!check_pengecualian == "0")
-        		#set($check_pengecualian_mode = "checked")
-        		<input type="radio" name="check_pengecualian" id="check_sebahagian" readonly class="disabled" value="1" onclick="putValue(this.value)" />Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_keseluruhan" readonly class="disabled" value="0" onclick="putValue(this.value)" checked/>Keseluruhan
-        	#else
-        		#set($check_pengecualian_mode = "")
-         		<input type="radio" name="check_pengecualian" id="check_sebahagian" readonly class="disabled" value="1" onclick="putValue(this.value)" />Sebahagian
-		 		<input type="radio" name="check_pengecualian" id="check_keseluruhan" readonly class="disabled" value="0" onclick="putValue(this.value)" />Keseluruhan
-        	#end
-        </tr>
-        if ($check_pengecualian_mode = "checked")
-        	<td><div align="left"><font color="red">*</font>&nbsp; Catatan Pengecualian</div></td>
-            <td><div align="right">:</div></td>
-            <td><div align ="left" textarea name="catatan_pengecualian" cols="35" rows="3" id="catatan_pengecualian" readonly class="disabled">$!catatan_pengecualian</textarea></div></td>
-        #end
-        <tr>
-        </tr>
-        <!-- arief add 22/1/2020 close -->
         <tr>
           <td valign="top">No Resit 
        
@@ -1448,14 +1384,6 @@ document.getElementById("header_lama").style.display="block";
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta disabled>
         Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta </td>
     </tr>
-     #if ($flag_5juta == "Ya")
-    <tr align="center">
-      <td >&nbsp;</td>
-      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi5Juta disabled>
-        Pindah ke Mahkamah Tinggi kerana harta melebihi RM5 juta </td>
-    </tr>
-    #end
-    <!-- arief add 22/1/2020 close -->
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio" value="5" $TEMPcheckedSebabLainBatal disabled >
@@ -1626,14 +1554,14 @@ document.getElementById("header_lama").style.display="block";
         #if($!check_kiv == "1")
         #set($check_kiv_mode = "checked")
         <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" checked/>KIV
-        <!--  <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" >Dokumen telah dikemukakan-->
+        <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" >Dokumen telah dikemukakan
         #elseif($!check_kiv == "0")
          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" />KIV
-         <!--  <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" checked/>Dokumen telah dikemukakan-->
+         <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" checked/>Dokumen telah dikemukakan
         #set($check_kiv_mode = "")
         #else
          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" />KIV
-        <!-- <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" />Dokumen telah dikemukakan-->
+         <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" />Dokumen telah dikemukakan
         #set($check_kiv_mode = "")
         #end
         <!-- <input type="checkbox" name="check_kiv" id="check_kiv" $check_kiv_mode value="1"  onclick="" /> -->
@@ -1739,6 +1667,15 @@ document.getElementById("header_lama").style.display="block";
               <input type="text" size="15" name="txtJumHartaEDIT" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaEDIT" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($!txtJumHarta)" />
               </label></td>
           </tr>
+          <!-- arief add Procedur Denda Lewat Permohonan OPEN -->
+          <tr>
+            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Permohonan&nbsp;&nbsp;(RM)</div></td>
+            <td width="2%"><div align="right">:</div></td>
+            <td width="51%"><label>
+              <input type="text" size="15" name="txtJumNilaianDendaLewatEdit" onblur="this.value=this.value.toUpperCase();" id="txtJumNilaianDendaLewatEdit" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumNilaianDendaLewatEdit)" />
+              </label></td>
+          </tr>
+          <!-- arief add CLOSE -->
           <tr>
             <td><div align="left">Jumlah Bayaran&nbsp;&nbsp;(RM)</div></td>
             <td><div align="right">:</div></td>
@@ -2087,14 +2024,6 @@ document.getElementById("header_lama").style.display="block";
         <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta >
           Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta </td>
       </tr>
-       #if ($flag_5juta == "Ya")
-    	<tr align="center">
-      		<td >&nbsp;</td>
-      		<td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi5Juta >
-        	Pindah ke Mahkamah Tinggi kerana harta melebihi RM5 juta </td>
-    	</tr>
-    #end
-    <!-- arief add 22/1/2020 close -->
       <tr align="center">
         <td >&nbsp;</td>
         <td align="left"><input name="flag_batal" id="flag_batal" type="radio" value="5" $TEMPcheckedSebabLainBatal>

@@ -24,7 +24,7 @@ import ekptg.helpers.Utils;
  * 
  */
 public class FrmPYWJabatanTeknikalData {
-	
+
 	private Vector listKJT = null;
 	private Vector beanMaklumatKJT = null;
 	private Vector listKJP = null;
@@ -312,8 +312,6 @@ public class FrmPYWJabatanTeknikalData {
 					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJAGENSI B, TBLPHPRUJDOKUMEN C WHERE A.ID_AGENSI = B.ID_AGENSI(+)"
 					+ " AND A.ID_DOKUMEN = C.ID_DOKUMEN(+) AND A.FLAG_KJP = 'KJP' AND A.ID_PERMOHONAN = '"
 					+ idPermohonan + "' ORDER BY A.ID_ULASANTEKNIKAL DESC";
-			
-			System.out.println("*** setSenaraiKJP --- "+sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -360,7 +358,8 @@ public class FrmPYWJabatanTeknikalData {
 		}
 	}
 
-	public void hapusMaklumatKJPKJT(String idUlasanTeknikal, HttpSession session) throws Exception {
+	public void hapusMaklumatKJPKJT(String idUlasanTeknikal, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -400,10 +399,9 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "DEL",
-					"FAIL [" + idUlasanTeknikal
-							+ "] DIHAPUSKAN");
+					"FAIL [" + idUlasanTeknikal + "] DIHAPUSKAN");
 
 		} catch (SQLException ex) {
 			try {
@@ -474,7 +472,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -572,7 +570,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -659,10 +657,9 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
-					"FAIL [" + idUlasanTeknikal
-							+ "] DIKEMASKINI");
+					"FAIL [" + idUlasanTeknikal + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -844,7 +841,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -937,7 +934,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1011,10 +1008,9 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
-					"FAIL [" + idUlasanTeknikal
-							+ "] DIKEMASKINI");
+					"FAIL [" + idUlasanTeknikal + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -1078,7 +1074,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1169,7 +1165,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1242,10 +1238,9 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
-					"FAIL [" + idUlasanTeknikal
-							+ "] DIKEMASKINI");
+					"FAIL [" + idUlasanTeknikal + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -1310,7 +1305,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1402,7 +1397,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1479,10 +1474,9 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
-					"FAIL [" + idUlasanTeknikal
-							+ "] DIKEMASKINI");
+					"FAIL [" + idUlasanTeknikal + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -1546,7 +1540,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1637,7 +1631,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1662,8 +1656,8 @@ public class FrmPYWJabatanTeknikalData {
 			String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, String flagStatus,
 			String txtTarikhTerima, String txtTarikhSurat, String txtNoRujukan,
-			String txtUlasan, String txtKadarSewaBulan,
-			String txtKadarSewaTahun, HttpSession session) throws Exception {
+			String txtUlasan, String txtKadarSewaBulan, String txtKadarSewaTahun, 
+			String socKadarSewa, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -1703,9 +1697,9 @@ public class FrmPYWJabatanTeknikalData {
 			}
 			r.add("NO_RUJUKAN", txtNoRujukan);
 			r.add("ULASAN", txtUlasan);
+			r.add("JENIS_KADARSEWA", socKadarSewa);
 			r.add("KADAR_SEWA_BULANAN", Utils.RemoveSymbol(txtKadarSewaBulan));
 			r.add("KADAR_SEWA_TAHUNAN", Utils.RemoveSymbol(txtKadarSewaTahun));
-
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
@@ -1713,10 +1707,9 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
-					"FAIL [" + idUlasanTeknikal
-							+ "] DIKEMASKINI");
+					"FAIL [" + idUlasanTeknikal + "] DIKEMASKINI");
 
 		} catch (SQLException ex) {
 			try {
@@ -1929,7 +1922,8 @@ public class FrmPYWJabatanTeknikalData {
 		}
 	}
 
-	public void setMaklumatKJP(String idUlasanTeknikal, String idPermohonan) throws Exception {
+	public void setMaklumatKJP(String idUlasanTeknikal, String idPermohonan)
+			throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -1941,12 +1935,16 @@ public class FrmPYWJabatanTeknikalData {
 			sql = "SELECT B.NAMA_KEMENTERIAN, C.NAMA_AGENSI, A.ID_ULASANTEKNIKAL, A.ID_PERMOHONAN, A.TARIKH_HANTAR, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA, A.FLAG_STATUS, A.FLAG_AKTIF, A.ID_MENTERI, A.ID_AGENSI,"
 					+ " A.TARIKH_TERIMA, A.TARIKH_SURAT, A.NO_RUJUKAN, A.ULASAN, A.FLAG_KEPUTUSAN, "
 
-					//add by aishah 08062017 - untuk dapatkan nama pegawai yang memberi ulasan
+					// add by aishah 08062017 - untuk dapatkan nama pegawai yang
+					// memberi ulasan
 					+ " A.NAMA_PEGAWAI, A.NO_TELEFON"
-					
+
 					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE A.ID_MENTERI = B.ID_KEMENTERIAN"
-					+ " AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"' "
-					+ " AND A.ID_PERMOHONAN = '"+idPermohonan+"' ";
+					+ " AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_ULASANTEKNIKAL = '"
+					+ idUlasanTeknikal
+					+ "' "
+					+ " AND A.ID_PERMOHONAN = '"
+					+ idPermohonan + "' ";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -1998,13 +1996,12 @@ public class FrmPYWJabatanTeknikalData {
 				h.put("flagKeputusan",
 						rs.getString("FLAG_KEPUTUSAN") == null ? "" : rs
 								.getString("FLAG_KEPUTUSAN"));
-				//add by aishah 08062017 - untuk dapatkan nama pegawai yang memberi ulasan
-				h.put("namaPengulas",
-						rs.getString("NAMA_PEGAWAI") == null ? "" : rs
-								.getString("NAMA_PEGAWAI"));
-				h.put("noTelPengulas",
-						rs.getString("NO_TELEFON") == null ? "" : rs
-								.getString("NO_TELEFON"));
+				// add by aishah 08062017 - untuk dapatkan nama pegawai yang
+				// memberi ulasan
+				h.put("namaPengulas", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("noTelPengulas", rs.getString("NO_TELEFON") == null ? ""
+						: rs.getString("NO_TELEFON"));
 				beanMaklumatKJP.addElement(h);
 				bil++;
 			}
@@ -2013,7 +2010,7 @@ public class FrmPYWJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void setLampiranKJP(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -2026,10 +2023,11 @@ public class FrmPYWJabatanTeknikalData {
 
 			sql = " SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, CONTENT, ID_PERMOHONAN, FLAG_DOKUMEN, NAMA_FAIL FROM TBLPHPDOKUMEN "
 					+ " WHERE FLAG_DOKUMEN = 'L' AND ID_ULASANTEKNIKAL IS NULL AND ID_MESYUARAT IS NULL AND ID_PHPHAKMILIK IS NULL "
-					+ " AND ID_PENAWARANKJP IS NULL AND ID_PERMOHONAN = '"+idPermohonan+"' ";
+					+ " AND ID_PENAWARANKJP IS NULL AND ID_PERMOHONAN = '"
+					+ idPermohonan + "' ";
 
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			Hashtable h;
 			int bil = 1;
 			int count = 0;
@@ -2037,9 +2035,8 @@ public class FrmPYWJabatanTeknikalData {
 				h = new Hashtable();
 				h.put("bil", bil);
 				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
-				h.put("namaDokumen",
-						rs.getString("NAMA_DOKUMEN") == null ? "" : rs
-								.getString("NAMA_DOKUMEN"));
+				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
+						: rs.getString("NAMA_DOKUMEN"));
 				h.put("catatan",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
@@ -2049,9 +2046,8 @@ public class FrmPYWJabatanTeknikalData {
 				h.put("idPermohonan",
 						rs.getString("ID_PERMOHONAN") == null ? "" : rs
 								.getString("ID_PERMOHONAN"));
-				h.put("flagDokumen",
-						rs.getString("FLAG_DOKUMEN") == null ? "" : rs
-								.getString("FLAG_DOKUMEN"));
+				h.put("flagDokumen", rs.getString("FLAG_DOKUMEN") == null ? ""
+						: rs.getString("FLAG_DOKUMEN"));
 				h.put("namaFail",
 						rs.getString("NAMA_FAIL") == null ? "" : rs
 								.getString("NAMA_FAIL"));
@@ -2064,7 +2060,7 @@ public class FrmPYWJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public Vector getBeanMaklumatLampiranKJP() {
 		return beanMaklumatLampiranKJP;
 	}
@@ -2079,10 +2075,10 @@ public class FrmPYWJabatanTeknikalData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT ID_ULASANTEKNIKAL, TARIKH_HANTAR, TARIKH_JANGKA_TERIMA, JANGKAMASA, FLAG_STATUS, FLAG_AKTIF, ID_PEJABAT,"
-					+ " TARIKH_TERIMA, TARIKH_SURAT, NO_RUJUKAN, ULASAN, KADAR_SEWA_BULANAN, KADAR_SEWA_TAHUNAN"
+					+ " TARIKH_TERIMA, TARIKH_SURAT, NO_RUJUKAN, ULASAN, KADAR_SEWA_BULANAN, KADAR_SEWA_TAHUNAN, JENIS_KADARSEWA"
 					+ " FROM TBLPHPULASANTEKNIKAL A WHERE ID_ULASANTEKNIKAL = '"
 					+ idUlasanTeknikal + "'";
-
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -2126,6 +2122,9 @@ public class FrmPYWJabatanTeknikalData {
 						rs.getString("KADAR_SEWA_TAHUNAN") == null ? "" : Utils
 								.format2Decimal(rs
 										.getDouble("KADAR_SEWA_TAHUNAN")));
+				h.put("jenisKadarSewa",
+						rs.getString("JENIS_KADARSEWA") == null ? "" : rs
+								.getString("JENIS_KADARSEWA"));
 				beanMaklumatJPPH.addElement(h);
 				bil++;
 			}
@@ -2293,7 +2292,7 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] PROSES SETERUSNYA");
@@ -2769,7 +2768,8 @@ public class FrmPYWJabatanTeknikalData {
 		}
 	}
 
-	public void hapusDokumen(String idUlasanTeknikal, HttpSession session) throws Exception {
+	public void hapusDokumen(String idUlasanTeknikal, HttpSession session)
+			throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String sql = "";
@@ -2788,10 +2788,9 @@ public class FrmPYWJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "DEL",
-					"FAIL [" + idUlasanTeknikal
-							+ "] DIHAPUSKAN");
+					"FAIL [" + idUlasanTeknikal + "] DIHAPUSKAN");
 
 		} catch (SQLException ex) {
 			try {
@@ -2807,8 +2806,9 @@ public class FrmPYWJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanKJT(String idPermohonan, String idDokumen, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanKJT(String idPermohonan, String idDokumen,
+			String ulasan, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2826,7 +2826,7 @@ public class FrmPYWJabatanTeknikalData {
 			r.update("ID_PERMOHONAN", idPermohonan);
 			r.update("FLAG_KERTAS", "1");
 			if ("4".equals(idDokumen)) {
-				r.add("ULASAN_JKPTGN", ulasan); 
+				r.add("ULASAN_JKPTGN", ulasan);
 			}
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
@@ -2850,8 +2850,9 @@ public class FrmPYWJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanKJP(String idPermohonan, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanKJP(String idPermohonan, String ulasan,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2892,8 +2893,9 @@ public class FrmPYWJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanJPPH(String idPermohonan, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanJPPH(String idPermohonan, String ulasan,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2934,9 +2936,10 @@ public class FrmPYWJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanJKT(String idPermohonan, String idKementerianJKT, String idAgensiJKT, 
-			String idPejabatJKT, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanJKT(String idPermohonan, String idKementerianJKT,
+			String idAgensiJKT, String idPejabatJKT, String ulasan,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2949,7 +2952,7 @@ public class FrmPYWJabatanTeknikalData {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			r.update("ID_PERMOHONAN", idPermohonan);
 			r.update("FLAG_KERTAS", "1");
 			// KEMENTERIAN KEWANGAN MALAYSIA
@@ -2957,7 +2960,8 @@ public class FrmPYWJabatanTeknikalData {
 				r.add("ULASAN_KEM_KEWANGAN", ulasan);
 			}
 			// KEMENTERIAN WILAYAH PERSEKUTUAN
-			else if (("31".equals(idKementerianJKT)) && ("1610750".equals(idAgensiJKT))) {
+			else if (("31".equals(idKementerianJKT))
+					&& ("1610750".equals(idAgensiJKT))) {
 				r.add("ULASAN_KEM_WP", ulasan);
 			}
 			// PTG KUALA LUMPUR
@@ -2969,7 +2973,8 @@ public class FrmPYWJabatanTeknikalData {
 				r.add("ULASAN_DBKL", ulasan);
 			}
 			// BAHAGIAN PENGURUSAN HARTANAH
-			else if (("12".equals(idKementerianJKT)) && ("328".equals(idAgensiJKT))) {
+			else if (("12".equals(idKementerianJKT))
+					&& ("328".equals(idAgensiJKT))) {
 				r.add("ULASAN_BPH", ulasan);
 			}
 
@@ -2978,7 +2983,7 @@ public class FrmPYWJabatanTeknikalData {
 
 			sql = r.getSQLUpdate("TBLPHPKERTASKERJAPENYEWAAN");
 			stmt.executeUpdate(sql);
-		
+
 			conn.commit();
 
 		} catch (SQLException ex) {
@@ -2995,8 +3000,9 @@ public class FrmPYWJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanJH(String idPermohonan, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanJH(String idPermohonan, String ulasan,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -3037,8 +3043,6 @@ public class FrmPYWJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	
 
 	public Vector getListKJT() {
 		return listKJT;
@@ -3063,7 +3067,7 @@ public class FrmPYWJabatanTeknikalData {
 	public void setListKJP(Vector listKJP) {
 		this.listKJP = listKJP;
 	}
-	
+
 	public Vector getBeanMaklumatKJP() {
 		return beanMaklumatKJP;
 	}

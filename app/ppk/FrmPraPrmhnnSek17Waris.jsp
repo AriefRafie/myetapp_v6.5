@@ -107,6 +107,7 @@ Click me</a>
 		            #set($waktumatiwaris="")
 		            #set($saudara="")
                      #set($jeniswaktu="")
+                     #set($txtEmel = "") <!-- arief add -->
                     
                     
                            #set($flag_dup_1 = "")
@@ -479,6 +480,7 @@ Click me</a>
                                 #set($socNegeriWaris = $lwu.idnegeri)
                                 #set($txtNoTeleponWaris = $lwu.noTel)
                                 #set($txtNoTeleponBimbitWaris = $lwu.nohp)
+                                #set($txtEmel = $lwu.emel) <!-- arief add -->
                                 #set($txtCatatanWaris = $lwu.catatan)
                                 #set($FLAG_DAFTAR = $lwu.FLAG_DAFTAR)
                                 #set($jeniswaktu = $lwu.jeniswaktu)
@@ -2095,6 +2097,23 @@ Click me</a>
                                           <td valign="top"><span class="style73">cth: 0121234567</span></td>
                                     </tr>
                                     #end
+                                    <!-- arief add open -->
+                                    <tr>
+                                    	<td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   																	#end</td>
+                                    	<td class="style38" ><div align="left" class="style72">Emel</div></td>
+                                    	<td><div align="right"><span class="style38">:</span></div></td>
+                                    	<td><input name="txtEmel" type="text" id="txtEmel" value="$txtEmel" size="30" maxlength="30" $readmodeR class="$readmode" /></td>
+                                  	</tr>
+                                  	#if($readmode != "disabled" )
+                                  	<tr>
+                                     	<td class="style38" valign="top">&nbsp;</td>
+                                     	<td class="style38" valign="top"><div align="left"></div></td>
+                                     	<td valign="top">&nbsp;</td>
+                                     	<td valign="top" height="1"><span class="style73">cth: abc@email.com </span></td>
+                                  	</tr>
+                                  	#end
+                                 	 <!-- arief add open -->
                                         <tr>
                                           <td valign="top"><div align="right"><span class="style38"><span class="style41"></span></span></div></td>
                                           <td class="style38" valign="top"><div align="right" class="style75">
@@ -3517,6 +3536,22 @@ Click me</a>
                                           <td valign="top">&nbsp;</td>
                                           <td valign="top"><span class="style73">cth: 0121234567</span></td>
                                     </tr>
+                                    <!-- arief add email open -->
+                                     <tr>
+                                          <td class="style38" valign="top"> <span class="style44">*</span> </td>
+                                          <td class="style38" ><div align="left">Email</div></td>
+                                          <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>                                        
+                                          <td> <input name="txtEmelWaris" type="text" id="txtEmelWaris"  value="" size="34" maxlength="50" $readmodeR class="$readmode" /></td>
+                                     </tr>
+                                        #if($readmode != "disabled" )
+                                     <tr>
+                                          <td class="style38" valign="top">&nbsp;</td>
+                                          <td class="style38" valign="top"><div align="left"></div></td>
+                                          <td valign="top">&nbsp;</td>
+                                          <td valign="top" height="1"><span class="style73" >cth: abc@email.com </span></td>
+                                        </tr>
+                                        #end
+                                    <!-- arief add email close -->
                                         <tr>
                                           <td valign="top"><div align="right"><span class="style38"><span class="style41"></span></span></div></td>
                                           <td class="style38" valign="top"><div align="right" class="style38 style72">
@@ -5523,6 +5558,23 @@ Click me</a>
                                           <td valign="top">&nbsp;</td>
                                           <td valign="top"><span class="style73">cth: 0121234567</span></td>
                                     </tr>
+                                    <!-- arief add open -->
+                                    <tr>
+                                    	<td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   																	#end</td>
+                                    	<td class="style38" ><div align="left" class="style72">Emel</div></td>
+                                    	<td><div align="right"><span class="style38">:</span></div></td>
+                                    	<td><input name="txtEmel" type="text" id="txtEmel" value="$txtEmel" size="30" maxlength="30" $readmodeR class="$readmode" /></td>
+                                  	</tr>
+                                  	#if($readmode != "disabled" )
+                                  	<tr>
+                                     	<td class="style38" valign="top">&nbsp;</td>
+                                     	<td class="style38" valign="top"><div align="left"></div></td>
+                                     	<td valign="top">&nbsp;</td>
+                                     	<td valign="top" height="1"><span class="style73">cth: abc@email.com </span></td>
+                                  	</tr>
+                                  	#end
+                                 	<!-- arief add open -->
                                         <tr>
                                           <td valign="top"><div align="right"><span class="style38"><span class="style41"></span></span></div></td>
                                           <td class="style38" valign="top"><div align="right" class="style38 style72">
@@ -7290,6 +7342,23 @@ Click me</a>
                                           <td valign="top"><span class="style73">cth: 0121234567</span></td>
                                     </tr>
                                     #end
+                                    <!-- arief add open -->
+                                    <tr>
+                                    	<td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
+   																	#end</td>
+                                    	<td class="style38" ><div align="left" class="style72">Emel</div></td>
+                                    	<td><div align="right"><span class="style38">:</span></div></td>
+                                    	<td><input name="txtEmel" type="text" id="txtEmel" value="$txtEmel" size="30" maxlength="30" $readmodeR class="$readmode" /></td>
+                                  	</tr>
+                                  	#if($readmode != "disabled" )
+                                  	<tr>
+                                     	<td class="style38" valign="top">&nbsp;</td>
+                                     	<td class="style38" valign="top"><div align="left"></div></td>
+                                     	<td valign="top">&nbsp;</td>
+                                     	<td valign="top" height="1"><span class="style73">cth: abc@email.com </span></td>
+                                  	</tr>
+                                  	#end
+                                 	 <!-- arief add open -->
                                         <tr>
                                           <td valign="top"><div align="right"><span class="style38"><span class="style41"></span></span></div></td>
                                           <td class="style38" valign="top"><div align="right" class="style38 style72">
@@ -8479,7 +8548,8 @@ function batal_waris_lapisan_Simpan() {
 
 function tambah_waris_lapisan_Simpan() {
 
-
+var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+var em = document.f1.txtEmel.value;
 
     	
 var negeri_code = document.f1.txtNoKPBaru2Waris.value;
@@ -8543,7 +8613,38 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""+dob_
     var date1 = new Date(yr1, mon1, dt1);
     var date2 = new Date(yr2, mon2, dt2);
    
-   
+    <!-- arief add open -->
+    function emailValidator(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!="")
+    	{
+    		if(elem.value.match(emailExp))
+    		{
+    			return true;
+    		}else
+    		{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    		}
+    	}
+    }
+
+    function emailValidator1(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!=""){
+    		if(elem.value.match(emailExp)){
+    			return true;
+    		}else{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    			}
+    		}
+    }
+    <!-- arief add close -->
    
 	
 	if( document.f1.tambahwarislapisanSimpan.value == "Simpan" ) 
@@ -8838,6 +8939,8 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 }
 
 function tambah_waris_lapisan() {
+	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+	var em = document.f1.txtEmel.value;
     var negeri_code = document.f1.txtNoKPBaru2Waris.value;
 var dob_code = document.f1.txtNoKPBaru1Waris.value;
 if(dob_code.charAt(0)<3)
@@ -8887,7 +8990,38 @@ if(dob_code.charAt(0)<3)
    
     var date1 = new Date(yr1, mon1, dt1);
     var date2 = new Date(yr2, mon2, dt2);
-	
+    <!-- arief add open -->
+    function emailValidator(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!="")
+    	{
+    		if(elem.value.match(emailExp))
+    		{
+    			return true;
+    		}else
+    		{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    		}
+    	}
+    }
+
+    function emailValidator1(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!=""){
+    		if(elem.value.match(emailExp)){
+    			return true;
+    		}else{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    			}
+    		}
+    }
+    <!-- arief add close -->
 	
 	if( document.f1.tambahwarislapisan.value == "Simpan" ) 
 	{
@@ -9108,6 +9242,14 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.txtAlamatTerakhir1WarisSurat.focus()
 	return;
 	}
+	<!-- arief add open -->
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+		alert("Sila pastikan emel diisi");
+		document.f1.txtEmel.focus()
+		return;
+	}
+	<!-- arief add close -->
 	/*
 	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtNoTeleponWaris.value == "" && document.f1.txtNoTeleponBimbitWaris.value == "") )
 	{
@@ -9151,6 +9293,14 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.txtNoSuratBeranakWaris.focus()
 	return;	
 	}
+	<!-- arief add open -->
+	else if(!em.match(emailExp) && em!=""){
+		
+		alert("Alamat email tidak sah!");		
+		document.f1.txtEmel.focus();
+		return;
+	}
+	<!-- arief add close -->
 	else
 	{
 	
@@ -9200,7 +9350,8 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 }
 
 function tambah_waris_SimpanX(){
-
+	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+	var em = document.f1.txtEmel.value;
 
 var negeri_code = document.f1.txtNoKPBaru2Waris.value;
 var dob_code = document.f1.txtNoKPBaru1Waris.value;
@@ -9251,7 +9402,38 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""+dob_
     var date1 = new Date(yr1, mon1, dt1);
     var date2 = new Date(yr2, mon2, dt2);
 	
-	
+    <!-- arief add open -->
+    function emailValidator(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!="")
+    	{
+    		if(elem.value.match(emailExp))
+    		{
+    			return true;
+    		}else
+    		{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    		}
+    	}
+    }
+
+    function emailValidator1(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!=""){
+    		if(elem.value.match(emailExp)){
+    			return true;
+    		}else{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    			}
+    		}
+    }
+    <!-- arief add close -->
 
 	if( document.f1.tambahwarisSimpan.value == "Simpan" ) 
 	{
@@ -9508,6 +9690,19 @@ else if(ch=="yes" && date3 > date2 )
 	document.f1.txtNoSuratBeranakWaris.focus()
 	return;	
 	}
+	<!-- arief add open -->
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+		alert("Sila pastikan emel diisi");
+		document.f1.txtEmel.focus()
+		return;
+	}
+	else if(!em.match(emailExp) && em!=""){
+		alert("Alamat email tidak sah!");		
+		document.f1.txtEmel.focus();
+		return;
+	}
+	<!-- arief add close -->
 	
 		else
 		{
@@ -9535,6 +9730,8 @@ else if(ch=="yes" && date3 > date2 )
 function tambah_waris_Simpan()
 {
 
+var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+var em = document.f1.txtEmelWaris.value;
 var negeri_code = document.f1.txtNoKPBaru2Waris.value;
 var dob_code = document.f1.txtNoKPBaru1Waris.value;
 if(dob_code.charAt(0)<3)
@@ -9560,6 +9757,39 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""+dob_
 	var day = currentTime.getDate();
 	var year = currentTime.getFullYear();
 	var currentDate = day + "/" + month + "/" + year;	
+	
+	<!-- arief add open -->
+    function emailValidator(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!="")
+    	{
+    		if(elem.value.match(emailExp))
+    		{
+    			return true;
+    		}else
+    		{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    		}
+    	}
+    }
+
+    function emailValidator1(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!=""){
+    		if(elem.value.match(emailExp)){
+    			return true;
+    		}else{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    			}
+    		}
+    }
+    <!-- arief add close -->
 	
 	if(document.f1.checkHidupWaris.checked == true && document.f1.txdTarikhMatiWaris.value != "" )
 	{
@@ -9786,7 +10016,14 @@ else if(ch=="yes" && date3 > date2 )
 		document.f1.txtPoskodWarisSurat.focus();
 		return; 
 	}
-	
+	//arief add open
+	else if(!em.match(emailExp) && em!=""){
+		
+		alert("Alamat email tidak sah!");		
+		document.f1.txtEmelWaris.focus();
+		return;
+	}
+	//arief add close
 	
 	
 	
@@ -9845,6 +10082,19 @@ else if(ch=="yes" && date3 > date2 )
 	document.f1.txtNoSuratBeranakWaris.focus()
 	return;	
 	}
+	<!-- arief add open -->
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+		alert("Sila pastikan emel diisi");
+		document.f1.txtEmel.focus()
+		return;
+	}
+	else if(!em.match(emailExp) && em!=""){
+		alert("Alamat email tidak sah!");		
+		document.f1.txtEmel.focus();
+		return;
+	}
+	<!-- arief add close -->
 	
 		else
 		{
@@ -9865,7 +10115,6 @@ else if(ch=="yes" && date3 > date2 )
 	}
    
 }
-
 
 function Checkumur() 
 {
@@ -9942,8 +10191,41 @@ input_box = confirm("Adakah anda pasti?");
 
 function tambah_waris(){
 
-
+	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+	var em = document.f1.txtEmel.value;
 	
+	<!-- arief add open -->
+    function emailValidator(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!="")
+    	{
+    		if(elem.value.match(emailExp))
+    		{
+    			return true;
+    		}else
+    		{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    		}
+    	}
+    }
+
+    function emailValidator1(elem, helperMsg){
+    	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    	
+    	if(elem.value!=""){
+    		if(elem.value.match(emailExp)){
+    			return true;
+    		}else{
+    			alert(helperMsg);		
+    			elem.focus();
+    			return false;
+    			}
+    		}
+    }
+    <!-- arief add close -->
 	if( document.f1.tambahwaris.value == "Tambah" ) 
 	{
 		if(document.f1.txtNamaOBWaris.value == ""){
@@ -9970,7 +10252,7 @@ function tambah_waris(){
 	document.f1.submit();
 	}
 
-
+	
 
 	if( document.f1.tambahwaris.value == "Simpan" ) 
 	{
@@ -10291,6 +10573,19 @@ else if (document.f1.txtNoKPBaru2Waris.value != "" &&(negeri_code!="01" && neger
 	document.f1.txtNoSuratBeranakWaris.focus()
 	return;	
 	}
+	//arief add open
+	else if (document.f1.checkHidupWaris.checked == false && (document.f1.txtEmel.value == "" && document.f1.txtEmel.value == "") )
+	{
+		alert("Sila pastikan emel diisi");
+		document.f1.txtEmel.focus()
+		return;
+	}
+	else if(!em.match(emailExp) && em!=""){
+		alert("Alamat email tidak sah!");		
+		document.f1.txtEmel.focus();
+		return;
+	}
+	//arief add close 
 		else
 		{
 	input_box = confirm("Adakah anda pasti?");
