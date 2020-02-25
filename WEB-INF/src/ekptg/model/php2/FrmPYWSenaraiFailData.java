@@ -786,7 +786,8 @@ public class FrmPYWSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.NO_FAIL_NEGERI, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, B.NO_SAMBUNGAN, G.FLAG_BUKA, G.FLAG_MT, G.FLAG_PINDAAN, H.USER_NAME"
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.NO_FAIL_NEGERI, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, B.NO_SAMBUNGAN, G.FLAG_BUKA,"
+					+ " G.FLAG_MT, G.FLAG_PINDAAN, H.USER_NAME, G.FLAG_PEMBETULAN"
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, TBLPHPLOGTUGASAN G, USERS H"
 					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS"
 					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
@@ -968,6 +969,8 @@ public class FrmPYWSenaraiFailData {
 								.getString("FLAG_MT"));
 				h.put("flagPindaan", rs.getString("FLAG_PINDAAN") == null ? ""
 						: rs.getString("FLAG_PINDAAN"));
+				h.put("flagPembetulan", rs.getString("FLAG_PEMBETULAN") == null ? ""
+						: rs.getString("FLAG_PEMBETULAN"));
 				h.put("userLogin",
 						rs.getString("USER_NAME") == null ? "" : rs
 								.getString("USER_NAME"));

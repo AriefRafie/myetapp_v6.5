@@ -16,7 +16,6 @@
   <input name="hitButton" type="hidden" id="hitButton" />
 
 <body onLoad = $onload >
-
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>    
@@ -26,7 +25,7 @@
           <td width="1%" valign="top"><span class="style1">*</span></td>
           <td width="28%" valign="top">Catatan</td>
           <td width="1%" valign="top">:</td>
-          <td width="70%" valign="top"><textarea name="txtCatatan" id="txtCatatan" rows="5" cols="50" onBlur="this.value=this.value.toUpperCase();"></textarea></td>
+          <td width="70%" valign="top"><textarea name="txtCatatan" id="txtCatatan" rows="5" cols="50" onBlur="this.value=this.value;"></textarea></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
