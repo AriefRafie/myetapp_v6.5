@@ -35,7 +35,7 @@ public class FrmPYWKeputusanData {
 
 	public void simpanMaklumatKeputusan(String idPermohonan,
 			String idKeputusan, String txtTarikhHantar, String idPerjanjian,
-			String txtTarikhMulaDasar, String txtTarikhTamatDasar,
+			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
 			String txtTarikhMula, String txtTempoh, String txtTarikhTamat,
 			String txtKadarSewa, String txtRoyalti, String txtCagaran,
 			HttpSession session) throws Exception {
@@ -69,12 +69,12 @@ public class FrmPYWKeputusanData {
 
 			if ("L".equals(idKeputusan) || "D".equals(idKeputusan)) {
 				if ("".equals(idPerjanjian)) {
-					insertPerjanjian(idPermohonan, txtTarikhMulaDasar,
+					insertPerjanjian(idPermohonan, txtTarikhMulaDasar, txtTempohDasar,
 							txtTarikhTamatDasar, txtTarikhMula, txtTempoh,
 							txtTarikhTamat, txtKadarSewa, txtRoyalti,
 							txtCagaran, db, userId);
 				} else {
-					updatePerjanjian(idPerjanjian, txtTarikhMulaDasar,
+					updatePerjanjian(idPerjanjian, txtTarikhMulaDasar, txtTempohDasar,
 							txtTarikhTamatDasar, txtTarikhMula, txtTempoh,
 							txtTarikhTamat, txtKadarSewa, txtRoyalti,
 							txtCagaran, db, userId);
@@ -118,7 +118,7 @@ public class FrmPYWKeputusanData {
 	}
 
 	private void insertPerjanjian(String idPermohonan,
-			String txtTarikhMulaDasar, String txtTarikhTamatDasar,
+			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
 			String txtTarikhMula, String txtTempoh, String txtTarikhTamat,
 			String txtKadarSewa, String txtRoyalti, String txtCagaran, Db db,
 			String userId) throws Exception {
@@ -138,6 +138,7 @@ public class FrmPYWKeputusanData {
 						r.unquote("to_date('" + txtTarikhMulaDasar
 								+ "','dd/MM/yyyy')"));
 			}
+			r.add("TEMPOH_DASAR", txtTempohDasar);
 			if (!"".equals(txtTarikhTamatDasar)) {
 				r.add("TARIKH_TAMAT_DASAR",
 						r.unquote("to_date('" + txtTarikhTamatDasar
@@ -184,7 +185,7 @@ public class FrmPYWKeputusanData {
 	}
 
 	private void updatePerjanjian(String idPerjanjian,
-			String txtTarikhMulaDasar, String txtTarikhTamatDasar,
+			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
 			String txtTarikhMula, String txtTempoh, String txtTarikhTamat,
 			String txtKadarSewa, String txtRoyalti, String txtCagaran, Db db,
 			String userId) throws Exception {
@@ -202,6 +203,7 @@ public class FrmPYWKeputusanData {
 						r.unquote("to_date('" + txtTarikhMulaDasar
 								+ "','dd/MM/yyyy')"));
 			}
+			r.add("TEMPOH_DASAR", txtTempohDasar);
 			if (!"".equals(txtTarikhTamatDasar)) {
 				r.add("TARIKH_TAMAT_DASAR",
 						r.unquote("to_date('" + txtTarikhTamatDasar
@@ -531,7 +533,8 @@ public class FrmPYWKeputusanData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, ROYALTI, CAGARAN, TARIKH_MULA_DASAR, TARIKH_TAMAT_DASAR FROM TBLPHPPERJANJIAN"
+			sql = "SELECT TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, ROYALTI, CAGARAN, TARIKH_MULA_DASAR, " 
+					+ " TEMPOH_DASAR, TARIKH_TAMAT_DASAR FROM TBLPHPPERJANJIAN"
 					+ " WHERE ID_PERJANJIAN = '" + idPerjanjian + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -541,6 +544,9 @@ public class FrmPYWKeputusanData {
 				h.put("tarikhMulaDasar",
 						rs.getDate("TARIKH_MULA_DASAR") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_MULA_DASAR")));
+				h.put("tempohDasar",
+						rs.getString("TEMPOH_DASAR") == null ? "" : rs
+								.getString("TEMPOH_DASAR"));
 				h.put("tarikhTamatDasar",
 						rs.getDate("TARIKH_TAMAT_DASAR") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_TAMAT_DASAR")));
