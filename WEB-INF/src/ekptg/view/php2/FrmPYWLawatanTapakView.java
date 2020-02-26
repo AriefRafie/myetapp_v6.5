@@ -202,6 +202,9 @@ public class FrmPYWLawatanTapakView extends AjaxBasedModule {
 			}
 			if ("doSeterusnya".equals(hitButton)) {
 				logic.updateStatus(idFail, idPermohonan, idSuburusan, session);
+				session.removeAttribute("ID_FAIL");
+				session.setAttribute("MSG", "FAIL TELAH DIHANTAR UNTUK TUGASAN PENOLONG PEGAWAI TANAH NEGERI");
+	    		this.context.put("onload", "gotoSenaraiFail();");
 			}
 			if ("gotoSemakanPPTKanan".equals(hitButton)){
 				logic.gotoSemakanPPTKanan(idFail, idNegeriUser, session);

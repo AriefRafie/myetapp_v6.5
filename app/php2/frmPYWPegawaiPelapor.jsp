@@ -51,7 +51,8 @@
 				#if($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ') 
 				<input type="button" name="cmdKemaskiniPelapor" id="cmdKemaskiniPelapor" value="Kemaskini" onClick="kemaskiniPelapor()" /> 
 				#end
-				#if($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ') #if($idStatus == '1610200') 
+				#if($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ') 
+				#if($idStatus == '1610200') 
 				#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri') 
 				<input type="button" name="cmdSemakanPPTKanan" id="cmdSemakanPPTKanan" value="Hantar Untuk Semakan" onClick="gotoSemakanPPTKanan()" 
 					title=" Hantar Untuk Semakan Penolong Pegawai Tanah (Kanan) " /> 

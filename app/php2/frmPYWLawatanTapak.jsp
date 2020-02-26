@@ -146,8 +146,7 @@ function doPembetulan(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
-	document.${formName}.hitButton.value = "doMohonPembetulan";
+	document.${formName}.step.value = "doMohonPembetulan";
 	document.${formName}.submit();
 }
 function gotoBatalPermohonan(){	

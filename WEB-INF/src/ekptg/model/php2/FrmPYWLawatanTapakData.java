@@ -955,7 +955,7 @@ public class FrmPYWLawatanTapakData {
 			r.add("FLAG_AKTIF", "Y");
 			r.add("ROLE", "PenyemakNegeri");
 			r.add("FLAG_BUKA", "T");
-			r.add("CATATAN", " Perlu Semakan dan Pengesahan Daripada Penolong Pegawai Tanah(Kanan)");
+			r.add("CATATAN", "Perlu Semakan dan Pengesahan Daripada Penolong Pegawai Tanah(Kanan)");
 
 			r.add("ID_PEGAWAI_SEBELUM", userId);
 			r.add("ID_NEGERI_SEBELUM", idNegeriUser);
@@ -1062,6 +1062,7 @@ public class FrmPYWLawatanTapakData {
 		Db db = null;
 		Connection conn = null;
 		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String idNegeriUser = (String) session.getAttribute("_ekptg_user_negeri");
 		String sql = "";
 
 		try {
@@ -1112,6 +1113,44 @@ public class FrmPYWLawatanTapakData {
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+			
+			String idPegawai = "";
+			String idNegeri = "";
+			sql = "SELECT * FROM TBLPHPLOGTUGASAN WHERE ROLE = '(PHP)PYWPenolongPegawaiTanahNegeri' AND ID_FAIL = '"
+					+ idFail + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				idPegawai = rs.getString("ID_PEGAWAI");
+				idNegeri = rs.getString("ID_NEGERI");
+			}
+			
+			// TBLPHPLOGTUGASAN
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("FLAG_AKTIF", "Y");
+
+			r.add("FLAG_AKTIF", "T");
+
+			sql = r.getSQLUpdate("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+			
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_PEGAWAI", idPegawai);
+			r.add("ID_NEGERI", idNegeri);
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("ROLE", "(PHP)PYWPenolongPegawaiTanahNegeri");
+			r.add("CATATAN", "Sila lengkapkan maklumat di ruangan Cetakan Kertas Ringkasan");
+			r.add("FLAG_BUKA", "T");
+
+			r.add("ID_PEGAWAI_SEBELUM", userId);
+			r.add("ID_NEGERI_SEBELUM", idNegeriUser);
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
 			stmt.executeUpdate(sql);
 
 			conn.commit();
