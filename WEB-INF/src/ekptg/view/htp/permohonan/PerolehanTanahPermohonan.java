@@ -33,10 +33,15 @@ import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8BicaraData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 
+/**
+ * Modul/Submodul	: HTP/ PERMOHONAN (Cara perolehan tanah melalui Permohonan Pemberimilikan/ Perizaban)
+ * Dibuat Oleh		: Mohamad Rosli
+ * Tarikh Buat		: 01/01/2007
+ * Tarikh Kemaskini	: 27/02/2020 - Penambahbaikan susunan skrin
+ * 					: 01/12/2016 - Penambahbaikan penerimaan online	
+ * Versi			: v3.5(2020),v3(2016)
+ */
 public class PerolehanTanahPermohonan extends AjaxBasedModule {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1929527819345292959L;
 	static Logger myLogger = Logger.getLogger(ekptg.view.htp.permohonan.PerolehanTanahPermohonan.class);
 
@@ -55,8 +60,6 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 	//private ResourceBundle rb = ResourceBundle.getBundle(BASENAME);
 	
 	
-	//List listPerbicaraan = null;
-	@SuppressWarnings("unused")
 	@Override
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -64,10 +67,8 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		//String namaSkema = rb.getString("user");
 		//myLogger.info("namaSkema : "+namaSkema);
 		String command = getParam("command");
-		this.context.put("command",command);
-		String action = getParam("action");
 		String fromDashboard = getParam("fromDashboard");
-		this.context.put("fromDashboard",fromDashboard);
+		String action = getParam("action");
 		myLogger.info("command : "+command+" action : "+action);
 		String USER_ID_SYSTEM = (String)session.getAttribute("_ekptg_user_id");
 		
@@ -809,7 +810,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			Db db = null;			
 			try {
 				db = new Db();
-				modelBI.simpanKeteranganPerintah(ID_PERINTAH,ID_PERBICARAAN,CATATAN_KEPUTUSAN_PERBICARAAN,CATATAN,db);				
+				//modelBI.simpanKeteranganPerintah(ID_PERINTAH,ID_PERBICARAAN,CATATAN_KEPUTUSAN_PERBICARAAN,CATATAN,db);				
 			}
 			finally {
 				if (db != null)
@@ -1049,11 +1050,11 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					keteranganSimati += "Saya mengaku simati meninggalkan harta sepert berikut : <br>";
 								
 					String cadanganPembahagian = "<br><div style=\"border-bottom: 1px solid #000;width:100%;\" ><b><u>CADANGAN PEMBAHAGIAN</u></b></div><br>Saya mohon harta simati dibahagi seperti berikut :<br>";
-					cadanganPembahagian += modelBI.defaultListHarta(session,(String)mainID.get("ID_PEMOHON"),(String)mainID.get("ID_SIMATI"),ID_PERBICARAAN,(String)mainID.get("ID_PERMOHONANSIMATI"),(String)mainID.get("ID_PERMOHONAN"), "Y", db);
+					//cadanganPembahagian += modelBI.defaultListHarta(session,(String)mainID.get("ID_PEMOHON"),(String)mainID.get("ID_SIMATI"),ID_PERBICARAAN,(String)mainID.get("ID_PERMOHONANSIMATI"),(String)mainID.get("ID_PERMOHONAN"), "Y", db);
 					
 					if(mainID != null)
 					{						
-						KETERANGAN = bahasa + keteranganSimati + modelBI.defaultListHarta(session,(String)mainID.get("ID_PEMOHON"),(String)mainID.get("ID_SIMATI"),ID_PERBICARAAN,(String)mainID.get("ID_PERMOHONANSIMATI"),(String)mainID.get("ID_PERMOHONAN"), "", db)+cadanganPembahagian;
+						//KETERANGAN = bahasa + keteranganSimati + modelBI.defaultListHarta(session,(String)mainID.get("ID_PEMOHON"),(String)mainID.get("ID_SIMATI"),ID_PERBICARAAN,(String)mainID.get("ID_PERMOHONANSIMATI"),(String)mainID.get("ID_PERMOHONAN"), "", db)+cadanganPembahagian;
 					}
 					
 					
@@ -1468,7 +1469,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				{
 					this.context.put("viewPerbicaraan", modelBI.viewPerbicaraan(session,ID_PERBICARAAN,ID_PERMOHONAN,db));
 				}
-				htmlSkrinMaklumat = modelBI.htmlListKeterangan(session,formName,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,ID_PERMOHONAN,ID_PEMOHON,flagPrint,db);
+				//htmlSkrinMaklumat = modelBI.htmlListKeterangan(session,formName,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,ID_PERMOHONAN,ID_PEMOHON,flagPrint,db);
 				
 			}
 			finally {
@@ -1607,7 +1608,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				ID_PEMOHON = (String)mainID.get("ID_PEMOHON");
 				ID_SIMATI = (String)mainID.get("ID_SIMATI");
 				
-				listHistoryJana = modelBI.listHistoryjana(session, ID_FAIL,ID_PERBICARAAN, db);
+				//listHistoryJana = modelBI.listHistoryjana(session, ID_FAIL,ID_PERBICARAAN, db);
 			}
 			finally {
 				if (db != null)
@@ -2316,7 +2317,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				myLogger.info("NO_PINDAAN : "+NO_PINDAAN);
 				Map setupKeputusanBeforeSave = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI,"",ID_PERBICARAAN, "TBLPPKPERINTAH", db);
 				ID_PERINTAH = savePerintah(session,setupKeputusanBeforeSave,ID_PERMOHONAN,FLAG_JENIS_KEPUTUSAN,ID_PERINTAH,ID_PERMOHONANSIMATI,formName,ID_PERBICARAAN,skrinName,db);
-				htmlContent = modelBI.janaContentCatatanPerintah(session,ID_FAIL,formName,ID_SIMATI,ID_PERBICARAAN,ID_PERMOHONAN,ID_PERMOHONANSIMATI,ID_PEMOHON,ID_PERINTAH,NO_PINDAAN,db);
+				//htmlContent = modelBI.janaContentCatatanPerintah(session,ID_FAIL,formName,ID_SIMATI,ID_PERBICARAAN,ID_PERMOHONAN,ID_PERMOHONANSIMATI,ID_PEMOHON,ID_PERINTAH,NO_PINDAAN,db);
 				Map mapPerbicaraan = modelBI.viewPerbicaraan(session,ID_PERBICARAAN,ID_PERMOHONAN,db);
 				NAMA_PEGAWAI = (String)mapPerbicaraan.get("PEG_PENGENDALI");
 				BIL_BICARA = (Integer)mapPerbicaraan.get("BIL_BICARA")+"";
@@ -2847,7 +2848,11 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		//}
 		//close dynamic ajax call
 		myLogger.info("skrin_name : "+skrin_name);
+		this.context.put("command",command);
+		this.context.put("fromDashboard",fromDashboard);
+
 		return skrin_name;
+		
 	}
 		
 	public void defaultPut()
