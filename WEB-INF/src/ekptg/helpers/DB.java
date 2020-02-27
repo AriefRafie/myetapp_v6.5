@@ -6668,7 +6668,10 @@ public class DB extends EkptgCache implements Serializable {
 			return (Vector<Tblrujnegeri>) cachedObject.getObjectValue();
 		} else {
 			Db db = null;
-			String sql = "Select id_Negeri,kod_Mampu,nama_Negeri from tblrujnegeri" + " order by kod_mampu ";
+			String sql = "select id_negeri,kod_mampu,nama_negeri " +
+					" from tblrujnegeri" +
+					" where id_negeri not in (0) "+
+					" order by kod_mampu ";
 			try {
 				db = new Db();
 				Statement stmt = db.getStatement();
