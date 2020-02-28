@@ -18,10 +18,18 @@
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%">No Permohonan</td>
+          <td width="28%">No Fail</td>
           <td width="1%">:</td>
           <td width="70%"><strong>$beanMaklumatPermohonan.noPermohonan</strong></td>
         </tr>
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%">No Negeri</td>
+          <td width="1%">:</td>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noPermohonan
+          <input name="txtNoFailNegeri" type="text" class="" id="txtNoFailNegeri" value="" 
+          onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50">
+        </strong></td></tr>
         <tr>
           <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Urusan</td>
@@ -34,10 +42,14 @@
           <td>:</td>
           <td>$selectSuburusan</td>
         </tr>
-        #if ($mode == 'new')
-        #end
-        #end
-      </table>
+        <tr>
+          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td valign="top">Tarikh Surat / Borang</td>
+          <td>:</td>
+          <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="9" $readonly class="$inputTextClass"/>
+            #if ($mode != 'view')<a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end</td>
+        </tr>
+         </table>
       </fieldset></td>
   </tr>
   <tr>

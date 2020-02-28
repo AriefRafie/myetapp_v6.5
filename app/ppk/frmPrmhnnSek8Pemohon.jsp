@@ -182,11 +182,6 @@
                 </ul>
                 <div class="TabbedPanelsContentGroup">
                 
-                
-                
-                
-                
-                
                   <div class="TabbedPanelsContent" >  
                   #parse("app/ppk/info_berjaya_disimpan.jsp")   
                      

@@ -128,11 +128,6 @@
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(3,0,0,0);NAview()" >PENGESAHAN PERMOHONAN</li>
       #end
       #end
-      
-      
-   
-      
-      
     </ul>
     <div class="TabbedPanelsContent">
     <div class="TabbedPanelsContentGroup">

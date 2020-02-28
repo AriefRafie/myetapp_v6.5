@@ -148,6 +148,13 @@
 					</tr>
 					<tr>
 						<td>
+						<a href="javascript:goTo('PHPAPB')" class="help" title="Daftar Permohonan Online Akta Pelantar Benua">
+							<font color="blue"><li>Permohonan Akta Pelantar Benua</li></font>
+						</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
 						<a href="javascript:goTo('PermohonanSewa')" class="help" title="Penyemakan Status Permohonan Sewa Tanah dan Ruang Bangunan">
 							<font color="blue"><li>Status Permohonan Penyewaan</li></font>
 						</a>
@@ -291,14 +298,6 @@
 		</table>
 	</td>
 	</tr>
-	
-	
-	
-	
-	
-	
-	
-	
 	</table>
 </td>
 
@@ -428,12 +427,12 @@ else if(location=='PembayaranSewa'){
     document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmStatusPembayaranSewa";
     document.${formName}.submit();
 }
-/* else if(location=='PHPAPB'){
+else if(location=='PHPAPB'){
         document.${formName}.action = "?myrole=php-online-user";
         document.${formName}.namatab.value = "Penguatkuasaan dan Hasil Persekutuan";
         document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
         document.${formName}.submit();
-} */
+}
 else if(location=='ADUAN'){
         document.${formName}.action = "?myrole=online";
         document.${formName}.namatab.value = "Menu";

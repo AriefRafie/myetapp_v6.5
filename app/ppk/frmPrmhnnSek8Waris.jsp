@@ -619,58 +619,23 @@ Click me</a>
                                       <select name="socJantinaWaris" id="socJantinaWaris" onchange="setSelected(0,2,0,0);
                                             tarikh_waris_saudara('socAgamaWaris','up')" class="mediumselect" $readmode style="text-transform:uppercase;" 
                                             onblur="text-transform:uppercase;">
-                                        
-                                              
-                                             
-                                              
-                                      
                                    #if($socJantinaWaris=="1")
-	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Lelaki</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Perempuan</option>
-                                        
-                                              
-                                             
-                                              
-                                      
+	                               
 	                               #elseif($socJantinaWaris=="2")
-	                               
-                                      
-                                              
-                                             
-                                              
+	                             
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Perempuan</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Lelaki</option>
-                                        
-                                              
-                                             
-                                              
                                       
 	                               #else
-	                               
-                                      
-                                              
-                                             
-                                              
+	                                
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Jantina</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Lelaki</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Perempuan</option>
                                         
-                                              
-                                             
-                                              
-                                      
 	                               #end
-                                     
-                                    
-                                    
-                                            
-                                           
-                                            
+	                               
                                       </select>
                                       #end </label></td>
                                   </tr>
@@ -696,63 +661,28 @@ Click me</a>
                                       <input name="socAgamaPe" type="text" id="textfield"  style="text-transform:uppercase;" onblur="uppercase()" size="15"  $readmodeR class="$readmode"  value="$agp" />
                                       #else
                                       <select name="socAgamaWaris" id="socAgamaWaris" class="mediumselect" $readmode style="text-transform:uppercase;" onblur="text-transform:uppercase;">
-                                        
-                                              
-                                             
-                                              
-                                      
+
                                    #if($socAgamaWaris=="1")
 	                               
-	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Islam</option >
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Islam</option>
                                         
-                                              
-                                             
-                                              
-                                      
 	                               #elseif($socAgamaWaris=="2")
 	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Islam</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Islam</option>
                                         
-                                              
-                                             
-                                              
-                                      
 	                               #else
 	                               
-                                      
-                                              
-                                             
-                                         
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Islam</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Islam</option>
-                                        
-                                              
-                                             
-                                              
-                                      
-
+                                    
 	                               #end
-                                      
-                                    
-                                    
-                                            
-                                           
-                                            
+	                               
                                       </select>
                                       #end </label></td>
                                   </tr>
+                                  
                                   <tr>
                                     <td valign="top">&nbsp;</td>
                                     <td valign="top"><div align="left" class="style75"><span class="style38">Warganegara</span></div></td>
@@ -779,80 +709,38 @@ Click me</a>
                                       <input name="socWarganegaraPe" type="text" id="textfield"  style="text-transform:uppercase;" onblur="uppercase()" size="25" $readmodeR class="$readmode" value="$wrp" />
                                       #else
                                       <select name="socWarganegaraWaris" id="socWarganegaraWaris" class="autoselect" $readmode style="text-transform:uppercase;"   onchange="alamatwarga(this.value,'alamatwarga','tr_nama_warga','nama_warga')" onblur="alamatwarga(this.value,'alamatwarga','tr_nama_warga','nama_warga')" >
-                                        
-                                              
-                                             
-                                              
-                                      
+
                                    #if($socWarganegaraWaris=="1")
-	                               
-                                      
-                                              
-                                             
-                                              
+
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Warganegara</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Warganegara</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Pemastautin Tetap</option>
-                                        
-                                              
-                                             
-                                              
-                                      
+
 	                               #elseif($socWarganegaraWaris=="2")
-	                               
-                                      
-                                              
-                                             
-                                              
+
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Warganegara</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Warganegara</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Pemastautin Tetap</option>
-                                        
-                                              
-                                             
-                                              
-                                      
+
 	                               #elseif($socWarganegaraWaris=="3")
-	                               
-                                      
-                                              
-                                             
-                                              
+
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Pemastautin Tetap</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Warganegara</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Warganegara</option>
-                                        
-                                              
-                                             
-                                              
-                                      
+
                                    #else
-                                   
-                                      
-                                              
-                                         
-                                              
+
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Warganegara</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Warganegara</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Pemastautin Tetap</option>
-                                        
-                                              
-                                             
-                                              
-                                      
 	                               #end
-                                  
-                                    
-                                    
-                                            
-                                           
-                                            
                                       </select>
                                       <div id="alamatwarga"></div>
                                       #end
                                       </label>
                                     </td>
                                   </tr>
+                                  
                                   <tr id="tr_nama_warga">
                                     <td valign="top" ></td>
                                     <td><div align="left" class="style38"> Negara </div></td>
@@ -863,6 +751,7 @@ Click me</a>
                                         #end </datalist>
                                     </td>
                                   </tr>
+                                  
                                   <tr>
                                     <td>&nbsp;</td>
                                     <td><div align="left" class="style75"><span class="style38">Tarikh Lahir</span></div></td>
@@ -877,12 +766,14 @@ Click me</a>
                                     <td class="style36"><input name="txtNoSuratBeranakWaris" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"  onkeyup="check_pengenalan_simati_4()" type="text" id="txtNoSuratBeranakWaris" value="$txtNoSuratBeranakWaris" size="15" maxlength="10" $readmodeR class="$readmode" />
                                       <span id="check_kp_4" style="color:red" ></span> </td>
                                   </tr>
+                                  
                                   <tr>
                                     <td  valign="top"><span class="style44">#if($readmode != "disabled") * #end</span></td>
                                     <td><div align="left" class="style75"><span class="style38"><span class="style38 ">#if($readmode != "disabled")</span> Umur   #else Umur  #end</span></div></td>
                                     <td class="style36"><div align="right"><span class="style38">:</span></div></td>
                                     <td class="style36"><input name="txtUmurWaris" style="text-transform:uppercase;" onblur="Checkumur();getStatusByAge(this,this.value,'socStatusOBWaris')" type="text" id="txtUmurWaris" value="$txtUmurWaris" size="3" maxlength="3" onkeyup="javascript:validateIC(event,this,this.value,'txtUmurWaris')" $readmodeR class="$readmode" /></td>
                                   </tr>
+                                  
                                   <tr>
                                     <td  valign="top"><span class="style44">#if($readmode != "disabled") * #end</span></td>
                                     <td><div align="left" class="style75"><span class="style38">Status Waris</span></div></td>
@@ -903,42 +794,25 @@ Click me</a>
                                       <input type="text" name="stat" id="stat" value="$stat" size="25"  style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <select name="socStatusOBWaris"  style="text-transform:uppercase;" onblur="text-transform:uppercase;" class="autoselect" $readmode id="socStatusOBWaris" onchange="status_ob()">
-                                        
-                                            
-                                           
-									
+								  
 								   #if($socStatusOBWaris=="1")
-	                                 
-                                      
-                                           
-                                           
-                                            
+
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="4" style="text-transform:uppercase;" onblur="text-transform:uppercase;">04 - Tidak Sempurna Akal</option>
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
-                                                             
-                                      
-	                              
+
 	                               #elseif($socStatusOBWaris=="2")
-	                                
-	                                  
-                                           
-                                            
+
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="4" style="text-transform:uppercase;" onblur="text-transform:uppercase;">04 - Tidak Sempurna Akal</option>
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
-                                                               
-                                      
-	                              
+
 								   #elseif($socStatusOBWaris=="3")
-	                               
-	                                 
-                                           
-                                            
+
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
@@ -946,35 +820,22 @@ Click me</a>
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
                                                        
                                    #elseif($socStatusOBWaris=="4")
-	                                    
-                                           
-                                            
+
                                         <option value="4" style="text-transform:uppercase;" onblur="text-transform:uppercase;">04 - Tidak Sempurna Akal</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
-                                                             
-                                    
-                                        
+
 	                               #else
-	                                 
-                                      
-                                           
-                                            
+
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="4" style="text-transform:uppercase;" onblur="text-transform:uppercase;">04 - Tidak Sempurna Akal</option>
-                                        
-                                            
-                                           
-                                      
+
 	                               #end
-                                   
-                                         
-                                          
                                       </select>
                                       #end </td>
                                   </tr>
@@ -1035,25 +896,14 @@ Click me</a>
                                 
 	                               
                                               
-                                        <option value="$listsau.id_Saudara" style="text-transform:uppercase;" onblur="text-transform:uppercase;">$listsau.kod - $listsau.keterangan</option>
-                                        
-                                              
+                                        <option value="$listsau.id_Saudara" style="text-transform:uppercase;" onblur="text-transform:uppercase;">$listsau.kod - $listsau.keterangan</option>     
                                    #end
-                                   
-                                   
                                   #end    
 	                               #end
-                                  
-                                  
-                                  
-                                            
-                                           
-                                            
                                       </select>
                                       #else
                                       <select name="socSaudaraWaris" class="largeselect" $readmode style="text-transform:uppercase;" onblur="text-transform:uppercase;" onfocus="insertsaudara()" >
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Talian Persaudaraan</option>
-                                        
                                               
                                   #foreach($listsau in $listsaudara)
                                          #if($socJantinaWaris=="1")
@@ -1064,32 +914,18 @@ Click me</a>
                                           #end                                  
                                          
                                           #if($listsau.jantina==$jantt )
-                                
-	                               
-                                              
+
                                         <option value="$listsau.id_Saudara" style="text-transform:uppercase;" onblur="text-transform:uppercase;">$listsau.kod - $listsau.keterangan</option>
                                         
                                  #end         
-                                 
-                                 
+
                                     #if($listsau.id_Saudara=="27" )
-                                
-	                               
-                                              
+
                                         <option value="$listsau.id_Saudara" style="text-transform:uppercase;" onblur="text-transform:uppercase;">$listsau.kod - $listsau.keterangan</option>
                                         
                                  #end             
-                                   
-                                 
+
 	                               #end
-	                               
-                                         
-                                  
-                                  
-                                  
-                                            
-                                           
-                                            
                                       </select>
                                       #end </td>
                                     #end </tr>
@@ -1137,11 +973,9 @@ Click me</a>
                                       <input name="jeniswaktu" type="hidden" id="jeniswaktu"    value="$jeniswaktu" />
                                       #else
                                       <select name="jeniswaktu" id="jeniswaktu" style="width:100"  onFocus="jeniswaktu2()" >
-                                        
-                                  
+
                                   #if( $jeniswaktu == 1)
-                                  
-                                  
+
                                         <option value="1" id="op_pagi" >PAGI</option>
                                         <option value="2" id="op_tengahari">TENGAHARI</option>
                                         <option value="3" id="op_petang">PETANG</option>
@@ -1181,10 +1015,7 @@ Click me</a>
                                         <option value="4" id="op_malam" >MALAM</option>
                                                     
                                      
-                                    #end                                
-                                    
-                                 
-                                  
+                                    #end
                                       </select>
                                       #end </label>
                                       #if($readmode != "disabled") <span class="style73">format 12 jam (HHMM)</span> #end </td>
@@ -1289,59 +1120,24 @@ Click me</a>
                                   #foreach($listnegpomo in $listnegeri)
                                  
                                   #if($socNegeriWaris!=$listnegpomo.id_Negeri)
-                                    
-	                               
-        
-                                        
+
                                         <option value="$listnegpomo.id_Negeri" style="text-transform:uppercase;" onblur="uppercase()">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
-                                        
-                                        
-        
-                                   
                                   #end    
 	                               #end
-                                  
-                                  
-                                  
-                                  
-      
-                                      
                                       </select>
                                       #else
                                       <select name="socNegeriWaris" class="autoselect" $readmode style="text-transform:uppercase;" onblur="uppercase()" onchange="tarikh_waris_saudara_negeritetap('txtBandarWaris','up')">
                                         <option value="0" style="text-transform:uppercase;" onblur="uppercase()">Sila Pilih Negeri</option>
-                                        
-                                        
-        
+          
                                   #foreach($listnegpomo in $listnegeri)
-                                 
-                                
-	                               
-        
-                                        
+
                                         <option value="$listnegpomo.id_Negeri" style="text-transform:uppercase;" onblur="uppercase()">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
-                                        
-                                        
-        
-                                   
-                                 
+
 	                               #end
-                                  
-                                  
-                                  
-                                  
-      
-                                      
                                       </select>
                                       #end </td>
                                     #end </tr>
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
+                                             
          <tr id="tr_mesej_pelbagainegara">
         <td valign="top">
         </td>
@@ -1364,26 +1160,9 @@ Click me</a>
                                     #foreach($ja in $kenegaraan)
                                     <option label='$!ja.NAMA_WARGA' value = '$!ja.NAMA_WARGA'></option>
                                     #end </datalist>
-                                    
-                                    
-                                    
-                                    
-                                  
-                                    
-                                    
-                                    
-                                    
-                                    
                                     </td>
         </tr>
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
+
                                   <tr>
                                     <td  valign="top" width="1%"><span class="style44">#if($readmode != "disabled" && $checkHidupWaris != 1)  #end</span></td>
                                     <td class="style38"><div align="right" class="style75">
@@ -1394,16 +1173,13 @@ Click me</a>
                                       
                                       
                                       #foreach($listneg in $listBandarTetapbyNegeri)      
-                                      
-                                      
+
                                       #if($txtBandarWaris==$listneg.id)                                      
                                       #set($kodbbb="$listneg.kod - $listneg.nama")
                                       
                                       #end
                                       #end
-                                      
-                                      
-                                      
+
                                       #if($txtBandarWaris!="" && $txtBandarWaris!="0" )
                                       <input name="ntbb" value="$kodbbb" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
@@ -1448,94 +1224,23 @@ Click me</a>
                                       <select name="txtBandarWaris" id="txtBandarWaris" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarTetap()" >
                                         <option value="$txtBandarWaris">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
                                         
-                  
-                  
-                                  
-                                            
-                                              
                                   #foreach($listdaerah in $listBandarTetapbyNegeri)
                                  
                                   #if($txtBandarWaris!=$listdaerah.id)
-              
-                                  
-                  
-                  
+
                                         <option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
-                                        
-                  
-                  
-                                            
-                                              
-                                   
+
                                   #end    
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                                
-                    
-            
-            
-                                
-                
-                
                                       </select>
                                       #else
                                       <select name="txtBandarWaris" id="txtBandarWaris" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarTetap()" >
                                         <option value="">Sila Pilih Bandar</option>
-                                        
-  
-                  
-                                  
-  
-              
-    
-    
-  
-                                              
+                                    
                                   #foreach($listDaerah in $listBandarTetapbyNegeri)
-                                 
-                                
-	                               
-                                              
-  
-    
-    
-              
-  
-                                  
-                  
-  
                                         <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
-                                        
-  
-                  
-                                  
-  
-              
-    
-    
-  
-                                              
-                                   
-                                 
+                                      
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-
-  
-  
-            
-
-                                
-                
-
                                       </select>
                                       #end 
                                       #end </label></td>
@@ -1630,60 +1335,29 @@ Click me</a>
                                       #if($socNegeriWarisSurat!="" && $socNegeriWarisSurat!=0)
                                       <select name="socNegeriWarisSurat" class="autoselect" id="socNegeriWarisSurat" $readmode   onchange="tarikh_waris_saudara_negerisurat('txtBandarWarisSurat','up')" >
                                         <option value="$socNegeriWarisSurat" style="text-transform:uppercase;" onblur="uppercase()">$kod</option>
-                                        
-                                              
-                                        
-                  
+
                                   #foreach($listneg in $listnegeri)                                 
-                                  #if($socNegeriWarisSurat!=$listneg.id_Negeri)
-                       
-                  
-                                        
-                                              
+                                  #if($socNegeriWarisSurat!=$listneg.id_Negeri) 
+                                  
                                         <option value="$listneg.id_Negeri">$listneg.kod_Negeri - $listneg.nama_Negeri</option>
-                                        
-                                              
-                                        
-                  
-                                     
+
                                   #end    
 	                              #end
-                                        
-                
-                                      
-                                            
                                       </select>
                                       #else
                                       <select name="socNegeriWarisSurat" class="autoselect" $readmode  onchange="tarikh_waris_saudara_negerisurat('txtBandarWarisSurat','up')">
                                         <option value="0" >SILA PILIH NEGERI</option>
-                                        
-                                              
-  
-                  
                                   #foreach($listneg in $listnegeri)
-                   
-                  
-  
-                                              
+                                  
                                         <option value="$listneg.id_Negeri" style="text-transform:uppercase;" onblur="uppercase()">$listneg.kod_Negeri - $listneg.nama_Negeri</option>
-                                        
-                                              
-  
-                  
-                                    
-	                               #end
-                                        
-                
 
-                                            
+	                               #end
                                       </select>
                                       #end 
                                       
                                       #end</td>
                                   </tr>
-                                  
-                                  
-                                  
+        
                <tr id="tr_mesej_pelbagainegara_surat">
         <td valign="top">
         </td>
@@ -1706,14 +1380,6 @@ Click me</a>
                                     #foreach($ja in $kenegaraan)
                                     <option label='$!ja.NAMA_WARGA' value = '$!ja.NAMA_WARGA'></option>
                                     #end </datalist>
-                                    
-                                    
-                                    
-                                    
-                                    
-                                   
-                                    
-                                    
                                     </td>
         </tr>
                                   
@@ -1783,110 +1449,22 @@ Click me</a>
                                       <select name="txtBandarWarisSurat" id="txtBandarWarisSurat" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
                                         <option value="$txtBandarWarisSurat">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
                                         
-                                              
-                  
-                  
-                  
-                                  
-                                            
-                                              
                                   #foreach($listdaerah in $listBandarSuratbyNegeri)
                                  
                                   #if($txtBandarWarisSurat!=$listdaerah.id)
-              
-                                  
-                  
-                  
-                  
-                                              
                                         <option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
-                                        
-                                              
-                  
-                  
-                  
-                                            
-                                              
-                                   
                                   #end    
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                                
-                    
-            
-            
-                                
-                
-                
-                
-                                            
                                       </select>
                                       #else
                                       <select name="txtBandarWarisSurat" id="txtBandarWarisSurat" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
                                         <option value="">Sila Pilih Bandar</option>
-                                        
-                                              
-  
-  
-                  
-                                  
-  
-              
-    
-    
-  
-                                              
+                                               
                                   #foreach($listDaerah in $listBandarSuratbyNegeri)
-                                 
-                                
-	                               
-                                              
-  
-    
-    
-              
-  
-                                  
-                  
-  
-  
-                                              
+                                      
                                         <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
-                                        
-                                              
-  
-  
-                  
-                                  
-  
-              
-    
-    
-  
-                                              
-                                   
-                                 
+                                      
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-
-  
-  
-            
-
-                                
-                
-
-
-                                            
                                       </select>
                                       #end 
                                       #end </label></td>
@@ -2187,58 +1765,24 @@ Click me</a>
                                     <td class="style36"><div align="right"><span class="style38">:</span></div></td>
                                     <td class="style36"><label>
                                       <select name="socJantinaWaris" id="socJantinaWaris" onchange="setSelected(0,2,0,0);tarikh_waris_saudara('socAgamaWaris','in')" class="mediumselect" $readmode style="text-transform:uppercase;" onblur="text-transform:uppercase;">
-                                        
-                                              
-                                             
-                                              
                                       
                                    #if($socJantinaWaris=="1")
 	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Lelaki</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Perempuan</option>
-                                        
-                                              
-                                             
-                                              
                                       
 	                               #elseif($socJantinaWaris=="2")
 	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Perempuan</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Lelaki</option>
                                         
-                                              
-                                             
-                                              
-                                      
 	                               #else
 	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Jantina</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Lelaki</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Perempuan</option>
-                                        
-                                              
-                                             
-                                              
-                                      
-	                               #end
                                      
-                                    
-                                    
-                                            
-                                           
-                                            
+	                               #end
                                       </select>
                                       </label></td>
                                   </tr>
@@ -2248,58 +1792,23 @@ Click me</a>
                                     <td class="style36"><div align="right"><span class="style38">:</span></div></td>
                                     <td class="style36"><label>
                                       <select name="socAgamaWaris" id="socAgamaWaris" class="mediumselect" $readmode style="text-transform:uppercase;" onblur="text-transform:uppercase;">
-                                        
-                                              
-                                             
-                                              
                                       
                                    #if($socAgamaWaris=="1")
 	                               
-	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Islam</option >
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Islam</option>
-                                        
-                                              
-                                             
-                                              
-                                      
+                                       
 	                               #elseif($socAgamaWaris=="2")
 	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Islam</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Islam</option>
-                                        
-                                              
-                                             
-                                              
                                       
 	                               #else
 	                               
-                                      
-                                              
-                                         
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Islam</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Islam</option>
                                         
-                                              
-                                             
-                                              
-                                      
 	                               #end
-                                      
-                                    
-                                    
-                                            
-                                           
-                                            
                                       </select>
                                       </label></td>
                                   </tr>
@@ -2310,16 +1819,8 @@ Click me</a>
                                     <td valign="top" class="style36"><label>
                                       <select name="socWarganegaraWaris" id="socWarganegaraWaris" class="autoselect" $readmode style="text-transform:uppercase;" onchange="alamatwarga(this.value,'alamatwarga','tr_nama_warga','nama_warga')" onblur="alamatwarga(this.value,'alamatwarga','tr_nama_warga','nama_warga')" >
                                         
-                                              
-                                             
-                                              
-                                      
                                    #if($socWarganegaraWaris=="1")
 	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Warganegara</option>
                                         
                                            #if($txtNoKPBaru1Waris != "")
@@ -2332,18 +1833,10 @@ Click me</a>
                                         
                                           #end   
                                           
-                                              
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Pemastautin Tetap</option>
-                                        
-                                              
-                                             
-                                              
                                       
 	                               #elseif($socWarganegaraWaris=="2")
 	                               
-                                      
-                                              
-                                             
                                              #if($txtNoKPBaru1Waris != "")
                                            
                                         <option value="2" style="text-transform:uppercase;display:none" onblur="text-transform:uppercase;">Bukan Warganegara</option>
@@ -2356,17 +1849,9 @@ Click me</a>
                                               
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Warganegara</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Pemastautin Tetap</option>
-                                        
-                                              
-                                             
-                                              
-                                      
+                                       
 	                               #elseif($socWarganegaraWaris=="3")
 	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Pemastautin Tetap</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Warganegara</option>
                                         
@@ -2378,16 +1863,8 @@ Click me</a>
                                            
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Bukan Warganegara</option>
                                         
-                                          #end   
-                                              
-                                      
+                                          #end
                                    #else
-                                   
-                                 
-                                              
-                                             
-                                             
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Warganegara</option>
                                         
                                               
@@ -2403,18 +1880,7 @@ Click me</a>
                                              
                                               
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Pemastautin Tetap</option>
-                                        
-                                              
-                                             
-                                              
-                                      
 	                               #end
-                                  
-                                    
-                                    
-                                            
-                                           
-                                            
                                       </select>
                                       <div id="alamatwarga"></div>
                                       </label>
@@ -2455,79 +1921,48 @@ Click me</a>
                                     <td><div align="left" class="style72"><span class="style38">Status Waris</span></div></td>
                                     <td class="style36"><div align="right"><span class="style38">:</span></div></td>
                                     <td class="style36"><select name="socStatusOBWaris"  style="text-transform:uppercase;" onblur="text-transform:uppercase;" class="mediumselect" $readmode id="socStatusOBWaris" onchange="status_ob()">
-                                        
-                                            
-                                           
-									
+                              
 								   #if($socStatusOBWaris=="1")
 	                                 
-                                      
-                                           
-                                           
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="4" style="text-transform:uppercase;" onblur="text-transform:uppercase;">04 - Tidak Sempurna Akal</option>
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
-                                                           
-                                      
-	                              
+                                          
 	                               #elseif($socStatusOBWaris=="2")
 	                                
-	                                  
-                                           
-                                            
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="4" style="text-transform:uppercase;" onblur="text-transform:uppercase;">04 - Tidak Sempurna Akal</option>
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
-                                                           
-                                      
-	                              
+                                        
 								   #elseif($socStatusOBWaris=="3")
 	                               
-	                                 
-                                           
-                                            
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
                                         <option value="4" style="text-transform:uppercase;" onblur="text-transform:uppercase;">04 - Tidak Sempurna Akal</option>
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
-                                                    
-                                     
+                                      
                                    #elseif($socStatusOBWaris=="4")
 	                                    
-                                           
-                                            
                                         <option value="4" style="text-transform:uppercase;" onblur="text-transform:uppercase;">04 - Tidak Sempurna Akal</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
-                                        
-                                    
-                                        
+                                       
 	                               #else
 	                                 
-                                      
-                                           
-                                            
                                         <option value="" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Sila Pilih Status</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">01 - Dewasa/Waras</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">02 - Belum Dewasa</option>
                                         <option value="3" style="text-transform:uppercase;" onblur="text-transform:uppercase;">03 - Hilang/Meninggal Dunia/Tidak Dapat Dikesan</option>
                                         <option value="4" style="text-transform:uppercase;" onblur="text-transform:uppercase;">04 - Tidak Sempurna Akal</option>
-                                        
-                                            
-                                           
                                       
 	                               #end
-                                   
-                                         
-                                          
                                       </select>
                                     </td>
                                   </tr>
@@ -2578,20 +2013,10 @@ Click me</a>
 	                               
                                               
                                         <option value="$listsau.id_Saudara" style="text-transform:uppercase;" onblur="text-transform:uppercase;">$listsau.kod - $listsau.keterangan</option>
-                                        
-                                              
+                                          
                                    #end
-                                   
-                                   
-                                   
                                   #end    
 	                               #end
-                                  
-                                  
-                                  
-                                            
-                                           
-                                            
                                       </select>
                                       #else
                                       <select name="socSaudaraWaris" class="largeselect" $readmode style="text-transform:uppercase;" onblur="text-transform:uppercase;" onfocus="insertsaudara()" >
@@ -2624,14 +2049,6 @@ Click me</a>
                                    
                                  
 	                               #end
-	                               
-                                         
-                                  
-                                  
-                                  
-                                            
-                                           
-                                            
                                       </select>
                                     </td>
                                     #end </tr>
@@ -2721,12 +2138,8 @@ Click me</a>
                                         <option value="2" id="op_tengahari" >TENGAHARI</option>
                                         <option value="3"  id="op_petang" >PETANG</option>
                                         <option value="4" id="op_malam" >MALAM</option>
-                                                    
-                                     
-                                    #end                                
-                                    
-                                 
-                                  
+                                         
+                                    #end
                                       </select>
                                       #end </label>
                                       <span class="style73">format 12 jam (HHMM)</span></td>
@@ -2793,75 +2206,36 @@ Click me</a>
                                     #set($negerikodpemoP=$listnegpomo.kod_Negeri)
                                     #set($negeriketeranganpemoP=$listnegpomo.nama_Negeri)
                                     
-                                    
-                                    
                                     #end 
                                     #end
                                     <td> #if($socNegeriWaris!="" && $socNegeriWaris!="0" )
                                       <select name="socNegeriWaris" class="autoselect" $readmode style="text-transform:uppercase;" onblur="uppercase()" onchange="tarikh_waris_saudara_negeritetap('txtBandarWaris','in')">
                                         <option value="$socNegeriWaris" style="text-transform:uppercase;" onblur="uppercase()">$negerikodpemoP - $negeriketeranganpemoP</option>
                                         
-                                        
-        
                                   #foreach($listnegpomo in $listnegeri)
                                  
                                   #if($socNegeriWaris!=$listnegpomo.id_Negeri)
                                     
-	                               
-        
-                                        
                                         <option value="$listnegpomo.id_Negeri" style="text-transform:uppercase;" onblur="uppercase()">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
-                                        
-                                        
-        
-                                   
+                                       
                                   #end    
 	                               #end
-                                  
-                                  
-                                  
-                                  
-      
-                                      
                                       </select>
                                       #else
                                       <select name="socNegeriWaris" class="autoselect" $readmode style="text-transform:uppercase;" onblur="uppercase()" onchange="tarikh_waris_saudara_negeritetap('txtBandarWaris','in')">
                                         <option value="0" style="text-transform:uppercase;" onblur="uppercase()">Sila Pilih Negeri</option>
-                                        
-                                        
-        
+                                       
                                   #foreach($listnegpomo in $listnegeri)
                                  
-                                
-	                               
-        
-                                        
                                         <option value="$listnegpomo.id_Negeri" style="text-transform:uppercase;" onblur="uppercase()">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
-                                        
-                                        
-        
-                                   
-                                 
-	                               #end
-                                  
-                                  
-                                  
-                                  
-      
                                       
+	                               #end
                                       </select>
                                     </td>
                                     #end </tr>
                                     
                                     
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                       <tr id="tr_mesej_pelbagainegara">
+        <tr id="tr_mesej_pelbagainegara">
         <td valign="top">
         </td>
         <td valign="top">
@@ -2888,11 +2262,7 @@ Click me</a>
                                     
                                     </td>
         </tr>   
-                                    
-                                    
-                                    
-                                    
-                                    
+        
                                   <tr>
                                     <td  valign="top" width="1%"><span class="style44">#if($readmode != "disabled" && $checkHidupWaris!="1")  #end</span></td>
                                     <td class="style38"><div align="right" class="style44 style72">
@@ -2915,10 +2285,6 @@ Click me</a>
                                       
                                       #end
                                       
-                                      
-                                      
-                                      
-                                      
                                       #foreach($listdaerah in $listBandarTetapbyNegeri)                                
                                       #if($txtBandarWaris==$listdaerah.id)                                
                                       #set($listDaerahbyNegeriK=$listdaerah.kod)
@@ -2934,94 +2300,24 @@ Click me</a>
                                       <select name="txtBandarWaris" id="txtBandarWaris" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarTetap()" >
                                         <option value="$txtBandarWaris">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
                                         
-                  
-                  
-                                  
-                                            
-                                              
                                   #foreach($listdaerah in $listBandarTetapbyNegeri)
                                  
                                   #if($txtBandarWaris!=$listdaerah.id)
               
-                                  
-                  
-                  
                                         <option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
                                         
-                  
-                  
-                                            
-                                              
-                                   
                                   #end    
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                                
-                    
-            
-            
-                                
-                
-                
                                       </select>
                                       #else
                                       <select name="txtBandarWaris" id="txtBandarWaris" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarTetap()" >
                                         <option value="">Sila Pilih Bandar</option>
-                                        
-  
-                  
-                                  
-  
-              
-    
-    
-  
                                               
                                   #foreach($listDaerah in $listBandarTetapbyNegeri)
                                  
-                                
-	                               
-                                              
-  
-    
-    
-              
-  
-                                  
-                  
-  
                                         <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
                                         
-  
-                  
-                                  
-  
-              
-    
-    
-  
-                                              
-                                   
-                                 
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-
-  
-  
-            
-
-                                
-                
-
                                       </select>
                                       #end </label></td>
                                   </tr>
@@ -3082,10 +2378,7 @@ Click me</a>
                                       #if($socNegeriWarisSurat==$listnegpomo.id_Negeri)
                                       
                                       #set($kod = "$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri")
-                                      
-                                      
-                                      
-                                      
+                                     
                                       #end 
                                       #end
                                       
@@ -3094,59 +2387,26 @@ Click me</a>
                                       <select name="socNegeriWarisSurat" class="autoselect" id="socNegeriWarisSurat"  onchange="tarikh_waris_saudara_negerisurat('txtBandarWarisSurat','in')" >
                                         <option value="$socNegeriWarisSurat" style="text-transform:uppercase;" onblur="uppercase()">$kod</option>
                                         
-                                              
-                                        
-                  
                                   #foreach($listneg in $listnegeri)                                 
                                   #if($socNegeriWarisSurat!=$listneg.id_Negeri)
-                       
-                  
-                                        
-                                              
+                         
                                         <option value="$listneg.id_Negeri">$listneg.kod_Negeri - $listneg.nama_Negeri</option>
                                         
-                                              
-                                        
-                  
-                                     
                                   #end    
 	                              #end
-                                        
-                
-                                      
-                                            
                                       </select>
                                       #else
                                       <select name="socNegeriWarisSurat" class="autoselect" onchange="tarikh_waris_saudara_negerisurat('txtBandarWarisSurat','in')">
                                         <option value="0" >SILA PILIH NEGERI</option>
                                         
-                                              
-  
-                  
                                   #foreach($listneg in $listnegeri)
                    
-                  
-  
-                                              
                                         <option value="$listneg.id_Negeri" style="text-transform:uppercase;" onblur="uppercase()">$listneg.kod_Negeri - $listneg.nama_Negeri</option>
                                         
-                                              
-  
-                  
-                                    
 	                               #end
-                                        
-                
-
-                                            
                                       </select>
                                       #end </td>
                                   </tr>
-                                  
-                                  
-                                  
-                                  
-                                  
                                   
                                    <tr id="tr_mesej_pelbagainegara_surat">
         <td valign="top">
@@ -3174,12 +2434,6 @@ Click me</a>
                                     </td>
         </tr>
                 
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
                                   <tr>
                                     <td  valign="top" width="1%"><span class="style44">#if($readmode != "disabled" && $checkHidupWaris!="1")  #end</span></td>
                                     <td class="style38"><div align="right" class="style44 style72">
@@ -3202,10 +2456,6 @@ Click me</a>
                                       
                                       #end
                                       
-                                      
-                                      
-                                      
-                                      
                                       #foreach($listdaerah in $listBandarSuratbyNegeri)                                
                                       #if($txtBandarWarisSurat==$listdaerah.id)                                
                                       #set($listDaerahbyNegeriK=$listdaerah.kod)
@@ -3220,111 +2470,25 @@ Click me</a>
                                       #if($txtBandarWarisSurat!="" && $txtBandarWarisSurat!="0" )
                                       <select name="txtBandarWarisSurat" id="txtBandarWarisSurat" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
                                         <option value="$txtBandarWarisSurat">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
-                                        
-                                              
-                  
-                  
-                  
-                                  
-                                            
                                               
                                   #foreach($listdaerah in $listBandarSuratbyNegeri)
                                  
                                   #if($txtBandarWarisSurat!=$listdaerah.id)
-              
-                                  
                   
-                  
-                  
-                                              
                                         <option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
                                         
-                                              
-                  
-                  
-                  
-                                            
-                                              
-                                   
                                   #end    
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                                
-                    
-            
-            
-                                
-                
-                
-                
-                                            
                                       </select>
                                       #else
                                       <select name="txtBandarWarisSurat" id="txtBandarWarisSurat" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
                                         <option value="">Sila Pilih Bandar</option>
-                                        
-                                              
-  
-  
-                  
-                                  
-  
-              
-    
-    
-  
-                                              
+                                               
                                   #foreach($listDaerah in $listBandarSuratbyNegeri)
                                  
-                                
-	                               
-                                              
-  
-    
-    
-              
-  
-                                  
-                  
-  
-  
-                                              
                                         <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
-                                        
-                                              
-  
-  
-                  
-                                  
-  
-              
-    
-    
-  
-                                              
-                                   
-                                 
+                                       
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-
-  
-  
-            
-
-                                
-                
-
-
-                                            
                                       </select>
                                       #end </label></td>
                                   </tr>
@@ -3745,11 +2909,6 @@ Click me</a>
                       </tr>
                       #end 
                       
-                      
-                      
-                      
-                      
-                      
                       #if($show_lapisan_berikut=="yes")
                       
                       #if($show_lapisan_berikut_tambah=="yes")
@@ -3874,37 +3033,18 @@ Click me</a>
                                     <td class="style36"><div align="right"><span class="style38">:</span></div></td>
                                     <td class="style36"><label>
                                       <select name="socJantinaWaris" id="socJantinaWaris" onchange="setSelected(0,2,0,0);tarikh_waris_saudara('socAgamaWaris','in_lap')" class="mediumselect" $readmode style="text-transform:uppercase;" onblur="text-transform:uppercase;">
-                                        
-                                              
-                                             
-                                              
                                       
                                    #if($socJantinaWaris=="1")
 	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Lelaki</option>
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Perempuan</option>
                                         
-                                              
-                                             
-                                              
-                                      
 	                               #elseif($socJantinaWaris=="2")
 	                               
-                                      
-                                              
-                                             
-                                              
                                         <option value="2" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Perempuan</option>
                                         <option value="1" style="text-transform:uppercase;" onblur="text-transform:uppercase;">Lelaki</option>
                                         
-                                              
-                                             
-                                              
-                                      
+                                       
 	                               #else
 	                               
                                       

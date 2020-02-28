@@ -2981,7 +2981,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 			r.add("tarikh_Masuk", r.unquote("sysdate"));
 			sql1 = r.getSQLInsert("tblppksimati");
-			//System.out.println("SQL SIMATI :" + sql1);
+			System.out.println("SQL SIMATI :" + sql1);
 			
 			stmt.executeUpdate(sql1);
 
@@ -11156,7 +11156,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 		String sql = "Select count(p.id_pemohon) as ids from tblppkpemohon pm, tblppkpermohonan p " +
 				"where p.id_pemohon = pm.id_pemohon and p.id_permohonan = '"
 				+ id + "'";
-		// System.out.println("COUNT :" + sql);
+		System.out.println("COUNT :" + sql);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {

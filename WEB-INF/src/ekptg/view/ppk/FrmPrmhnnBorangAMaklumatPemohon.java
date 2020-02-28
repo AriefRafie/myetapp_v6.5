@@ -801,14 +801,14 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 		} else if ("Simpanx".equals(submit)) {
-
+			System.out.println("Simpanx");
 			String passvalue = getParam("passvalue");
 			this.context.put("duplicate", "");
 
 			String IdPermohonan = getParam("idPermohonan");
 			String Idppp = getParam("idpermohonan");
 
-			// System.out.println("Idppp Duplicate"+Idppp);
+			System.out.println("IdPermohonan"+IdPermohonan);
 			check_mode_permohonan(session);
 			chkId = logic_A.getId();
 			Hashtable b = (Hashtable) chkId.get(0);
@@ -1179,11 +1179,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (cntID == 0) {
 					// addPermohonan(session,userIdNeg,userIdPejabat,userIdKodDaerah,userIdKodNegeri);
 					if (bolehsimpan.equals("yes")) {
+						System.out.println("Bolehsimpan");
 						addPermohonan(session);
 						this.context.put("appear_skrin_info", "simpan_daftar");
 					}
 				} else {
 					if (bolehsimpan.equals("yes")) {
+						System.out.println("BolehsimpanUpdate");
 						updatePermohonan(session);
 						this.context.put("appear_skrin_info", "kemaskini");
 					}
@@ -9087,7 +9089,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 
 	private void addPermohonan(HttpSession session) throws Exception {
-
+		Db db = null;
+	    Connection conn = null;
+		db = new Db();
+        conn = db.getConnection();
 		String txtbox = getParam("txtNomborResit1");
 		String tarikhresit = getParam("txdTarikhByrn1");
 
@@ -9188,9 +9193,72 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("adaob", getParam("adaob"));
 		h.put("jenis_pej", getParam("jenis_pej"));
 		h.put("tahun", getParam("tahun"));
-
+		myLogger.info("*****READ HERE1******"); 
 		logic_A.addPermohonan_online(session, h);
+		myLogger.info("*****READ HERE2******"); 
+		String nokp = null;
+		if (no_kpbaru_simati != null)
+		{
+			nokp = no_kpbaru_simati;
+		}
+		else if (no_kplama_simati != null)
+		{
+			nokp = no_kplama_simati;
+		}
+		else if (no_kplain_simati != null)
+		{
+			nokp = no_kplain_simati;
+		}
+		uploadFiles(db,conn,nokp);
 	}
+	
+	private void uploadFiles(Db db,Connection conn, String nokp) throws Exception {
+		myLogger.info("Baca uploadFiles:--------------"); 
+		String no_kp = nokp;
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+	    ServletFileUpload upload = new ServletFileUpload(factory);
+	    List items = upload.parseRequest(this.request);
+	    Iterator itr = items.iterator();	   
+	    while (itr.hasNext()) {    	
+	      FileItem item = (FileItem)itr.next();
+	      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+	    	  System.out.println("item.getName = "+ item.getName());
+	    	  saveData(item,db,conn,no_kp);
+	      }
+	    }
+	  }
+	
+	private void saveData(FileItem item,Db db,Connection conn, String no_kp) throws Exception {
+		//Db db = null;
+	
+    try {
+    	db = new Db();
+
+    	Connection con = db.getConnection();
+    	con.setAutoCommit(false);
+    	String nokp = no_kp;
+    	//String id_permohonansimati = getParam("id_permohonansimati_atheader");
+    	PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKSIMATI SET nama_fail = ?, content = ?, jenis_Mime = ? WHERE (NO_KP_BARU = ? OR NO_KP_BARU = ? OR NO_KP_LAIN = ?)");		
+    	//System.out.println("+nama_pemohon_lama3+ " + nama_pemohon_lama3);
+    	//System.out.println(con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE ID_PERMOHONANSIMATI = ?"));
+    	ps.setString(1,item.getName());
+    	ps.setBinaryStream(2,item.getInputStream(),(int)item.getSize());
+    	ps.setString(3,item.getContentType());
+    	//System.out.println("item.getInputStream = "+ item.getInputStream());
+    	//System.out.println("item.getSize = "+ item.getSize());
+    	//System.out.println("item.getContentType = "+ item.getContentType());
+    	ps.setString(4,nokp);
+    	ps.setString(5,nokp);
+    	ps.setString(6,nokp);
+    	//ps.setString(4,getParam("id_permohonansimati_atheader"));
+    	myLogger.info("Baca SaveData:---------------"); 
+    	ps.executeUpdate();	
+    	myLogger.info("Baca SaveData 2:---------------"); 
+        con.commit();
+    } finally {
+	      if (db != null) db.close();
+    }
+}
 
 	private void ha_negeri(HttpSession session) throws Exception {
 		String id = getParam("idPermohonan");
