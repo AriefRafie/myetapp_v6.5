@@ -1384,7 +1384,6 @@ kod :: $listhath.kod_hakmilik
       	<td width="89%">Saya $!namaPemohon no.k/p $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
 </td></tr>
   	
-
 <tr>
 <td></td>
 <td ></td>
