@@ -49,7 +49,7 @@
     <td><fieldset> 
       <legend><b>SENARAI PERMOHONAN PENYEWAAN</b></legend>
       <table align="center" width="100%">
-      
+      <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/></td>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="20%"><strong>No Fail</strong></td>
@@ -329,6 +329,10 @@ function kembali() {
     //document.${formName}.namatab.value = "Menu";
     document.${formName}.namamodul.value = "ekptg.view.online.FrmOnlineMenuUtama";
     document.${formName}.submit();
+}
+function daftarBaru(){
+	document.${formName}.actionPenyewaan.value = "daftarBaru";
+	document.${formName}.submit();
 }
 /* if(location=='MYINFO'){
     document.${formName}.action = "?myrole=online";

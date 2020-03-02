@@ -208,8 +208,6 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 					//getmaklumatperintah
 					CATATAN_PERINTAH_BI = (String)getNotaHistoryJana.get("NOTA");
 				}
-				
-				
 			}
 			finally {
 				if (db != null)
