@@ -227,10 +227,10 @@ public class BicaraInteraktifData {
 					}
 					else
 					{
-<<<<<<< HEAD
+
 						//sql += daerahJagaan;						
 						sql += " AND PR.ID_UNITPSK IN ("+LIST_ID_UNITPSK+") ";
-=======
+
 						//sql += daerahJagaan;
 						//comment sementara
 						sql += " AND ( " +
@@ -238,7 +238,6 @@ public class BicaraInteraktifData {
 								" ( CASE WHEN  CHECK_TP.ID_PEGAWAIBARU IS NOT NULL THEN  CHECK_TP.ID_PEGAWAIBARU" +
 								" WHEN  CHECK_TP.ID_PEGAWAIBARU IS NULL THEN  PR.ID_UNITPSK END) IN ("+LIST_ID_UNITPSK+")  "+
 										") ";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 					}				
 					//" AND P.ID_STATUS <> '999' " +
 					sql += " AND P.FLAG_JENIS_PERMOHONAN = '1'";
@@ -1355,15 +1354,13 @@ public class BicaraInteraktifData {
 	
 	public String queryListKehadiran(String ID_PERMOHONANSIMATI,String ID_PERMOHONAN, String ID_PERBICARAAN, String ID_PEMOHON)
 	{
-<<<<<<< HEAD
 		String sql = " SELECT A.*, " +
-=======
+
 		myLogger.info("ID_PEMOHON :::: "+ID_PEMOHON);
 		String sql = " SELECT CASE WHEN " +
 				//"TO_NUMBER(NVL(A.UMUR,0)) < 18 AND TO_NUMBER(NVL(A.UMUR,0)) != 0 " +
 				" A.STATUS_OB = '2' OR  A.STATUS_OB = '4' "+
 				" THEN PENJAGA.LISTPENJAGA ELSE ''END AS PENJAGA, A.*, " +
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 				//"B.KETERANGAN," +
 				//"B.NOTA_PEGAWAI " +				
 				"TRIM(REGEXP_REPLACE(B.KETERANGAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS KETERANGAN, " +
@@ -1544,9 +1541,9 @@ public class BicaraInteraktifData {
 				" SUPERMAIN.JENIS_OB,SUPERMAIN.PENGENALAN, SUPERMAIN.STATUS, SUPERMAIN.PENGENALAN," +
 				" SUPERMAIN.JENIS,SUPERMAIN.STATUS_HIDUP,SUPERMAIN.STATUS_OB,SUPERMAIN.NO_SURAT_BERANAK, SUPERMAIN.TARIKH_MATI " +
 				" ORDER BY STATUS_HIDUP,UMUR DESC,NAMA ASC " +
-<<<<<<< HEAD
+
 				" ) A, TBLPPKBIKEHADIRAN B WHERE A.ID_BIKEHADIRAN = B.ID_BIKEHADIRAN(+)";
-=======
+
 				" ) A, TBLPPKBIKEHADIRAN B , " +
 				" (SELECT PJ.ID_OBMINOR, " +
 				" REGEXP_REPLACE(RTRIM (XMLAGG (XMLELEMENT (E, TRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'(,)([^,]*$)',' DAN\\2') AS LISTPENJAGA " +
@@ -1559,7 +1556,7 @@ public class BicaraInteraktifData {
 				" WHERE PJ.ID_OB = OB.ID_OB " +
 				" GROUP BY PJ.ID_OBMINOR ) PENJAGA WHERE A.ID_BIKEHADIRAN = B.ID_BIKEHADIRAN(+) AND A.ID_OB = PENJAGA.ID_OBMINOR(+)  " +
 				" ORDER BY A.ID_PEMOHON";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 		return sql;
 	}
 	
@@ -1583,15 +1580,13 @@ public class BicaraInteraktifData {
 		h.put("ID_BIKEHADIRAN",rs == null ? "" :rs.getString("ID_BIKEHADIRAN") == null ? "" : rs.getString("ID_BIKEHADIRAN").toUpperCase());
 		h.put("KETERANGAN",rs == null ? "" :rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));	
 		h.put("NOTA_PEGAWAI",rs == null ? "" :rs.getString("NOTA_PEGAWAI") == null ? "" : rs.getString("NOTA_PEGAWAI"));	
-<<<<<<< HEAD
-=======
 		h.put("PENJAGA",rs == null ? "" :rs.getString("PENJAGA") == null ? "" : rs.getString("PENJAGA"));	
 		h.put("NAMA_HADIR",rs == null ? "" :rs.getString("NAMA_HADIR") == null ? "" : rs.getString("NAMA_HADIR"));	
 		h.put("PENGENALAN_HADIR",rs == null ? "" :rs.getString("PENGENALAN_HADIR") == null ? "" : rs.getString("PENGENALAN_HADIR"));	
 		h.put("HUBUNGAN_HADIR",rs == null ? "" :rs.getString("HUBUNGAN_HADIR") == null ? "" : rs.getString("HUBUNGAN_HADIR"));	
 		h.put("UMUR_HADIR",rs == null ? "" :rs.getString("UMUR_HADIR") == null ? "" : rs.getString("UMUR_HADIR"));	
 		h.put("STATUS_HADIR",rs == null ? "" :rs.getString("STATUS_HADIR") == null ? "" : rs.getString("STATUS_HADIR"));
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 		return h;	
 	}
 	
@@ -2175,10 +2170,10 @@ public class BicaraInteraktifData {
 		{
 			db1 = new Db();
 		}		
-<<<<<<< HEAD
+
 		stmt = db1.getStatement();			
 		sql += " SELECT A.ID_PERINTAHHTAOBMST, "+
-=======
+
 		stmt = db1.getStatement();	
 		
 		//RAZMAN TAMBAH 23/10/2017		
@@ -2190,7 +2185,6 @@ public class BicaraInteraktifData {
 				" TRIM(REGEXP_REPLACE(MN.CATATAN_1, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN, " +
 				" MN.* FROM (" +
 				" SELECT A.ID_PERINTAHHTAOBMST, "+
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 				" C.KOD_JENIS_HAKMILIK, B.NO_HAKMILIK,B.NO_PT, "+
 				" B.BA_SIMATI, B.BB_SIMATI, D.NAMA_DAERAH, "+
 				" E.NAMA_MUKIM,B.CATATAN AS CATATAN_1, "+
@@ -2325,16 +2319,15 @@ public class BicaraInteraktifData {
 				" AND B.ID_JENISHM = C.ID_JENISHAKMILIK(+) "+
         		" AND A.ID_PERINTAH = '"+ID_PERINTAH+"' "+
 				" AND B.ID_PERMOHONANSIMATI = '"+ID_PERMOHONANSIMATI+"' "+
-<<<<<<< HEAD
+
 				" ORDER BY A.ID_PERINTAHHTAOBMST ASC ";		
-=======
+
 				" ORDER BY A.ID_PERINTAHHTAOBMST ASC) MN ";		
 		
 		//RAZMAN TAMBAH 23/10/2017		
 		sql += " ) ";
-			//	"WHERE SINGLEWARIS != 0 ";
 		
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+			//	"WHERE SINGLEWARIS != 0 ";
 		myLogger.info(" BICARA INTERAKTIF : SQL rekodHartaTakAlihBorangE :"+ sql);		
 		rs = stmt.executeQuery(sql);
 		list = Collections.synchronizedList(new ArrayList());
@@ -4717,9 +4710,6 @@ public class BicaraInteraktifData {
 		}
 	}
 	
-<<<<<<< HEAD
-=======
-	
 
 	public List listHistoryjana(HttpSession session, String ID_FAIL,String ID_PERBICARAAN, String ID_SIMATI,Db db)throws Exception {
 		Db db1 = null;
@@ -4792,7 +4782,7 @@ public class BicaraInteraktifData {
 	}
 
 	
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 	public void simpanInsertBorangjDTL(HttpSession session, String ID_BORANGJ, String ID_OB, String id_perbicaraan, Db db) throws Exception {
 		Db db1 = null;
 		String sql = "";
@@ -4979,9 +4969,7 @@ public class BicaraInteraktifData {
 		}
   }
 	
-	
-<<<<<<< HEAD
-=======
+
 	public void simpanKeteranganPerintah(String ID_PERINTAH,String ID_PERBICARAAN,String CATATAN_KEPUTUSAN_PERBICARAAN,String CATATAN,String INTRO_CATATAN,String CATATAN_DOCKIV,Db db) throws Exception {
 		myLogger.info(" CATATAN_KEPUTUSAN_PERBICARAAN : "+CATATAN_KEPUTUSAN_PERBICARAAN+"; CATATAN : "+CATATAN+"; simpanKeteranganPerintah ");
 		Db db1 = null;
@@ -5043,9 +5031,7 @@ public class BicaraInteraktifData {
 			}
 		}
   }
-	
-	
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 	public void updateFlagPemohonByON(HttpSession session, String ID_SEJARAHBIMAIN, String NAMA_FIELD, 
 			String VALUE_SEBELUM, String KETERANGAN_SEBELUM, String VALUE_SELEPAS, String KETERANGAN_SELEPAS, Db db) throws Exception {
 		Db db1 = null;
@@ -5304,9 +5290,6 @@ public class BicaraInteraktifData {
 	}
 	
 	
-<<<<<<< HEAD
-=======
-	
 			@SuppressWarnings("unchecked")
 	public Map viewPejagaWaris(HttpSession session, String ID_BIKEHADIRAN, String ID_OBPERMOHONAN,Db db)throws Exception {
 		Db db1 = null;
@@ -5369,8 +5352,6 @@ public class BicaraInteraktifData {
 		}
 	}
 	
-	
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 	@SuppressWarnings("unchecked")
 	public Map viewTuruthadir(HttpSession session, String id_bikehadiran, Db db)throws Exception {
 		Db db1 = null;
@@ -5484,13 +5465,8 @@ public class BicaraInteraktifData {
 		return h;	
 		
 	}
-	
-	
-<<<<<<< HEAD
-	public String setDisplayHtaah(Map setup)
-=======
+
 	public String setDisplayHtaah(Map setup,String  flagCP, String currentPrevious,String SEKSYEN)
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 	{
 		String html = "";
 		String NAMA_NEGERI = (String)setup.get("NAMA_NEGERI");
@@ -5502,8 +5478,7 @@ public class BicaraInteraktifData {
 		String FLAG_PT = (String)setup.get("FLAG_PT");
 		String FLAG_SELESAI = (String)setup.get("FLAG_SELESAI");
 		html += "<br>";
-<<<<<<< HEAD
-=======
+
 		if(!MAKLUMAT_HTA.equals(""))
 		{
 			html +=	""+MAKLUMAT_HTA+"; ";
@@ -5517,7 +5492,7 @@ public class BicaraInteraktifData {
 			}
 		}
 		/*
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 		if(!NAMA_NEGERI.equals(""))
 		{
 			html +=	""+NAMA_NEGERI+"; ";
@@ -5543,11 +5518,10 @@ public class BicaraInteraktifData {
 		return html;
 	}
 	
-<<<<<<< HEAD
 	public String setDisplayHtaahx(Map setup)
-=======
+
 	public String setDisplayHtaahx(Map setup,String flagCP, String currentPrevious,String SEKSYEN)
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 	{
 		String html = "";
 		String NAMA_NEGERI = (String)setup.get("NAMA_NEGERI");
@@ -5560,8 +5534,7 @@ public class BicaraInteraktifData {
 		String FLAG_PT = (String)setup.get("FLAG_PT");
 		String FLAG_SELESAI = (String)setup.get("FLAG_SELESAI");
 		html += "<br>";
-<<<<<<< HEAD
-=======
+
 		if(!MAKLUMAT_HTA.equals(""))
 		{
 			html +=	""+MAKLUMAT_HTA+"; ";
@@ -5575,7 +5548,7 @@ public class BicaraInteraktifData {
 			}
 		}
 		/*
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 		if(!NAMA_NEGERI.equals(""))
 		{
 			html +=	""+NAMA_NEGERI+"; ";
@@ -5605,14 +5578,14 @@ public class BicaraInteraktifData {
 		return html;
 	}
 	
-<<<<<<< HEAD
+
 	public String setDisplayHa(Map setup)
 	{
 		String html = "";
 		String JENIS_HA = (String)setup.get("JENIS_HA");
 		String NO_DAFTAR = (String)setup.get("NO_DAFTAR");
 		html += "<br>";
-=======
+
 	public String tujuanPermohonanHarta(String FLAG_PA,String FLAG_PT,String FLAG_SELESAI, String currentPrevious, String SEKSYEN)
 	{
 		String tujuanHarta = "";
@@ -5671,7 +5644,7 @@ public class BicaraInteraktifData {
 		}
 		
 		/*
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 		if(!JENIS_HA.equals("") && !JENIS_HA.equals("-"))
 		{
 			html +=	""+JENIS_HA+"; ";
@@ -5685,12 +5658,12 @@ public class BicaraInteraktifData {
 		return html;
 	}
 	
-<<<<<<< HEAD
+
 	public String defaultListHarta(HttpSession session,String ID_PEMOHON,String ID_SIMATI,String ID_PERBICARAAN,String ID_PERMOHONANSIMATI,String ID_PERMOHONAN, Db db)
-=======
+
 	public String defaultListHarta(HttpSession session,String ID_PEMOHON,String ID_SIMATI,String ID_PERBICARAAN,
 			String ID_PERMOHONANSIMATI,String ID_PERMOHONAN, String flagCP, Db db, String SEKSYEN)
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			throws Exception {
 		String html = "";
 		
@@ -5715,22 +5688,22 @@ public class BicaraInteraktifData {
 		{		
 			for(int i=0; i<listByRequest_htaah_current.size(); i++)
 			{				
-<<<<<<< HEAD
+
 				html += ""+setDisplayHtaah((Map)listByRequest_htaah_current.get(i))+"";
-=======
+
 				html += ""+setDisplayHtaah((Map)listByRequest_htaah_current.get(i),flagCP,"current",SEKSYEN)+"";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			}
 		}
 		if(listByRequest_htaah_previous.size()>0)		
 		{		
 			for(int i=0; i<listByRequest_htaah_previous.size(); i++)
 			{				
-<<<<<<< HEAD
+
 				html += ""+setDisplayHtaah((Map)listByRequest_htaah_previous.get(i))+"";
-=======
+
 				html += ""+setDisplayHtaah((Map)listByRequest_htaah_previous.get(i),flagCP,"previous",SEKSYEN)+"";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			}
 		}
 		
@@ -5743,22 +5716,22 @@ public class BicaraInteraktifData {
 		{		
 			for(int i=0; i<listByRequest_htaahx_current.size(); i++)
 			{				
-<<<<<<< HEAD
+
 				html += ""+setDisplayHtaahx((Map)listByRequest_htaahx_current.get(i))+"";
-=======
+
 				html += ""+setDisplayHtaahx((Map)listByRequest_htaahx_current.get(i),flagCP,"current",SEKSYEN)+"";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			}
 		}
 		if(listByRequest_htaahx_previous.size()>0)		
 		{		
 			for(int i=0; i<listByRequest_htaahx_previous.size(); i++)
 			{				
-<<<<<<< HEAD
+
 				html += ""+setDisplayHtaahx((Map)listByRequest_htaahx_previous.get(i))+"";
-=======
+
 				html += ""+setDisplayHtaahx((Map)listByRequest_htaahx_previous.get(i),flagCP,"previous",SEKSYEN)+"";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			}
 		}
 		
@@ -5771,22 +5744,22 @@ public class BicaraInteraktifData {
 		{		
 			for(int i=0; i<listByRequest_ha_current.size(); i++)
 			{				
-<<<<<<< HEAD
+
 				html += ""+setDisplayHa((Map)listByRequest_ha_current.get(i))+"";
-=======
+
 				html += ""+setDisplayHa((Map)listByRequest_ha_current.get(i),flagCP,"current",SEKSYEN)+"";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			}
 		}
 		if(listByRequest_ha_previous.size()>0)		
 		{		
 			for(int i=0; i<listByRequest_ha_previous.size(); i++)
 			{				
-<<<<<<< HEAD
+
 				html += ""+setDisplayHa((Map)listByRequest_ha_previous.get(i))+"";
-=======
+
 				html += ""+setDisplayHa((Map)listByRequest_ha_previous.get(i),flagCP,"previous",SEKSYEN)+"";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			}
 		}
 		
@@ -6320,13 +6293,12 @@ public class BicaraInteraktifData {
 				{
 					if(flagPrint.equals("N"))
 					{
-<<<<<<< HEAD
 						html += htmlListKeteranganBySrkin(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,db);
 					}
 					else
 					{
 						html += htmlListKeteranganBySrkinPrint(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,db);
-=======
+
 						html += htmlListKeteranganBySrkin(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,UMUR,STATUS_OB,PENJAGA,
 								//NAMA_HADIR,PENGENALAN_HADIR,HUBUNGAN_HADIR,UMUR_HADIR,STATUS_HADIR,JENIS_OB
 								CATATAN_WAKIL,db);
@@ -6336,7 +6308,6 @@ public class BicaraInteraktifData {
 						html += htmlListKeteranganBySrkinPrint(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,UMUR,STATUS_OB,PENJAGA,fontSize,
 								//NAMA_HADIR,PENGENALAN_HADIR,HUBUNGAN_HADIR,UMUR_HADIR,STATUS_HADIR,JENIS_OB
 								CATATAN_WAKIL,db);
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 					}
 				}
 			}
@@ -6361,13 +6332,11 @@ public class BicaraInteraktifData {
 				{
 					if(flagPrint.equals("N"))
 					{
-<<<<<<< HEAD
 						html += htmlListKeteranganBySrkin(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,db);
 					}
 					else
 					{
 						html += htmlListKeteranganBySrkinPrint(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,db);
-=======
 						html += htmlListKeteranganBySrkin(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,0,"",
 								//"","","","","",""
 								"","",db);
@@ -6377,7 +6346,6 @@ public class BicaraInteraktifData {
 						html += htmlListKeteranganBySrkinPrint(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,0,"","",fontSize,
 								//"","","","","",""
 								"",db);
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 					}
 				}
 			}
@@ -6821,7 +6789,7 @@ public class BicaraInteraktifData {
 					}
 					
 					
-<<<<<<< HEAD
+
 					
 					if(!sql_statement.equals(""))
 					{
@@ -6834,9 +6802,7 @@ public class BicaraInteraktifData {
 						myLogger.info("setPerubahanBySkrin >>> FINAL sql_statement_supliment : "+sql_statement_supliment);
 						stmt.executeUpdate(sql_statement_supliment);
 					}	
-					
-=======
-					if(JenisTransaksi.equals("DELETE") || JenisTransaksi.equals("UPDATE"))
+				if(JenisTransaksi.equals("DELETE") || JenisTransaksi.equals("UPDATE"))
 					{
 						if(!sql_statement.equals(""))
 						{
@@ -6883,7 +6849,6 @@ public class BicaraInteraktifData {
 					
 					
 				/*	
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 				}
 				catch (Exception re) {
 					myLogger.info("setPerubahanBySkrin >>> FINAL ERROR : "+re.toString());
@@ -6938,13 +6903,10 @@ public class BicaraInteraktifData {
     	return str;
       }
     
-<<<<<<< HEAD
-    public String janaContentCatatanPerintah(HttpSession session,String ID_FAIL,String formName, String ID_SIMATI, String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,String ID_PEMOHON,String ID_PERINTAH,Db db) throws Exception {
     
-=======
     public String janaContentCatatanPerintah(HttpSession session,String ID_FAIL,String formName, String ID_SIMATI, String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,String ID_PEMOHON,String ID_PERINTAH,String NO_PINDAAN,String fontSize,Db db) throws Exception {
     	//String fontSize = "font-size: 130%;";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
     	String htmlPageSetup = "";
     	Map setupKeputusan = getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,"keputusan",ID_PERMOHONANSIMATI,"",ID_PERBICARAAN, "TBLPPKPERINTAH", db);
     	myLogger.info(" janaContentCatatanPerintah setupKeputusan : "+setupKeputusan);
@@ -7050,10 +7012,10 @@ public class BicaraInteraktifData {
     	
     	if(!CATATAN_SKRIN_PERINTAH.equals("") || !CATATAN_INTRO.equals("") || !INTRO_CATATAN.equals(""))
     	{
-<<<<<<< HEAD
+
 	    	htmlPageSetup += "<div class=\"autoBreak\" >";
 	    	htmlPageSetup += "<br><div style=\"border-bottom: 1px solid #000;width:100%;font-size: 140%;\" ><b>PERINTAH</b></div>";
-=======
+
 	    	htmlPageSetup += "<div " +
 	    			//"class=\"autoBreak\"" +
 	    			" >";
@@ -7066,7 +7028,6 @@ public class BicaraInteraktifData {
 	    	}
 	    	
 	    	htmlPageSetup += "<br><div style=\"border-bottom: 1px solid #000;width:100%;font-size: 140%;\" ><b>"+tajukPerintah+"</b></div>";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 			htmlPageSetup += openHTMLTableCatatanPerintah();    	
 	    	htmlPageSetup += "<tr>";
 	        htmlPageSetup += "<td valign=\"top\"   > ";
@@ -7138,7 +7099,6 @@ public class BicaraInteraktifData {
 		}
     	
     	
-<<<<<<< HEAD
     	htmlPageSetup += "<div class=\"autoBreak\" >";
     	htmlPageSetup += contentBE_HTA(session,ID_PERBICARAAN,ID_PERMOHONAN,ID_PERMOHONANSIMATI,ID_PEMOHON,ID_PERINTAH,db);
     	htmlPageSetup += "</div>";
@@ -7149,10 +7109,7 @@ public class BicaraInteraktifData {
     	htmlPageSetup += "<div class=\"autoBreak\" >";
     	htmlPageSetup += contentBE_Pentadbir(session,ID_FAIL,ID_PERBICARAAN,ID_PERMOHONAN,ID_PERMOHONANSIMATI,ID_PEMOHON,ID_PERINTAH,db);
     	htmlPageSetup += "</div>";
-    	
-    	
-=======
-    	
+  
     	if(FLAG_JENIS_KEPUTUSAN.equals("0"))
     	{
 	    	htmlPageSetup += "<div " +
@@ -7184,7 +7141,6 @@ public class BicaraInteraktifData {
 	    		htmlPageSetup += "<div align=\"right\" class=\"onTT\"  style=\""+fontSize+"\" ><br><br>T.T....................................</div>";
 	    	}
     	}
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
     	
     	
     	if(totalKeterangan>0)
@@ -7328,13 +7284,13 @@ public class BicaraInteraktifData {
 		        	
 		        	
 		        	if(!CATATAN_HARTA.equals(""))
-<<<<<<< HEAD
+
 		        	{
 		        		htmlPageSetup += "<br>Catatan : "+CATATAN_HARTA+"</div>";
-=======
+
 		        	{ 
 		        		htmlPageSetup += "<br><b>Catatan :</b> "+CATATAN_HARTA;
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 		        	}
 		        	htmlPageSetup += "</td>";
 		        	/*
@@ -7363,8 +7319,7 @@ public class BicaraInteraktifData {
     	return htmlPageSetup;
     }
     
-    
-        
+     
     public String contentBE_Pentadbir(HttpSession session,String ID_FAIL,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,
     		String ID_PEMOHON,String ID_PERINTAH,String fontSize,Db db) throws Exception {
     	String htmlPageSetup = "";	
@@ -7401,12 +7356,12 @@ public class BicaraInteraktifData {
     					String CATATAN = (String)h_hta.get("CATATAN");
     					String NILAI_HTA_TARIKHMOHON = (String)h_hta.get("NILAI_HTA_TARIKHMOHON");
     					String SEN_HTA = (String)h_hta.get("SEN_HTA");
-<<<<<<< HEAD
+
     					htmlPageSetup += "<br>"+MAKLUMAT_HTA;    					
     					htmlPageSetup += "<br>"+(ID_JENISPERINTAH.equals("1")?"(" + BA_WARIS + "/" + BB_WARIS + "bhg)" : "(" + BA_SIMATI + "/" + BB_SIMATI + "bhg)")
     					+""+(!CATATAN.equals("") ? "<br><br><b>Catatan : </b>" +CATATAN:"");  
     					htmlPageSetup += "<br>";
-=======
+
     					htmlPageSetup += "<span style=\""+fontSize+"\" ><br>"+MAKLUMAT_HTA; 
     					myLogger.info(" CATATAN >>>>>>>>>>> "+CATATAN);
     					htmlPageSetup += "<br>"+(ID_JENISPERINTAH.equals("1")?"(" + BA_WARIS + "/" + BB_WARIS + "bhg)" : "(" + BA_SIMATI + "/" + BB_SIMATI + "bhg)")    					
@@ -7414,7 +7369,6 @@ public class BicaraInteraktifData {
     					htmlPageSetup += "<br><span>";
     					myLogger.info("htmlPageSetup CATATAN ::::::::: "+htmlPageSetup);
     					
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
     					//htmlPageSetup += "<br>Nilai Harta : RM "+(!NILAI_HTA_TARIKHMOHON.equals("") ? NILAI_HTA_TARIKHMOHON :"00") + "." + (!SEN_HTA.equals("") ? SEN_HTA:"00");
     					
     				}
@@ -7452,9 +7406,9 @@ public class BicaraInteraktifData {
     }
     
     
-<<<<<<< HEAD
+
     public String contentBE_HA(HttpSession session,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,String ID_PEMOHON,String ID_PERINTAH,Db db) throws Exception {
-=======
+
     public String contentBE_Liabiliti(HttpSession session,String ID_FAIL,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,
     		String ID_PEMOHON,String ID_PERINTAH,String fontSize,Db db) throws Exception {
     	String htmlPageSetup = "";	
@@ -7489,7 +7443,7 @@ public class BicaraInteraktifData {
     
     
     public String contentBE_HA(HttpSession session,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,String ID_PEMOHON,String ID_PERINTAH,String fontSize,Db db) throws Exception {
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
     	String htmlPageSetup = "";	
     	List list = rekodHABorangE(session, ID_PERINTAH, ID_PERMOHONANSIMATI, db);
     	if(list.size()>0)
@@ -8626,12 +8580,12 @@ public class BicaraInteraktifData {
 			String KETERANGAN,
 			String NOTA_PEGAWAI,
 			String flagPrint,
-<<<<<<< HEAD
+
 			Db db) throws Exception {
 		String html = "";
 		
 		//html += ">>>>>>>>>>>>>>>>>>>"+NAMA+"<br>";		
-=======
+
 			int UMUR,
 			String STATUS_OB,
 			String PENJAGA,String fontSize,
@@ -8641,7 +8595,7 @@ public class BicaraInteraktifData {
 		//String fontSize = "font-size: 130%;";
 		//html += ">>>>>>>>>>>>>>>>>>>"+NAMA+"<br>";
 		/*
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 		html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bootstrap-wysihtml5-master/lib/css/bootstrap.min.css\"></link>";
 		html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bootstrap-wysihtml5-master/lib/css/prettify.css\"></link>";
 		html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bootstrap-wysihtml5-master/src/bootstrap-wysihtml5.css\"></link>";
@@ -8651,11 +8605,7 @@ public class BicaraInteraktifData {
 		//html += "</tr></thead >";
 		
 		//htmlPageSetup += "<br><div style=\"border-bottom: 1px solid #000;width:100%;font-size: 140%;\" ><b>HARTA TAK ALIH YANG KENA DIBAHAGIKAN</b></div>";
-		
-		
-		
-		
-<<<<<<< HEAD
+	
 		html += "<br><div class=\"autoBreak\" >";
 		html += "<div style=\"width:100%;font-size: 100%;\" ><b>";
 		html += NAMA;	
@@ -8663,7 +8613,7 @@ public class BicaraInteraktifData {
 		{
 			html += " ("+PENGENALAN+")";
 		}		
-=======
+
 		//if(UMUR!= 0 && UMUR < 18)
 		if(STATUS_OB.equals("2") || STATUS_OB.equals("4"))
 		{
@@ -8682,7 +8632,6 @@ public class BicaraInteraktifData {
 		{
 			maklumatIndividu += CATATAN_WAKIL;
 		}
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 		if(!HUBUNGAN.equals(""))
 		{
 			html += "<br>"+HUBUNGAN+"";
@@ -8720,13 +8669,11 @@ public class BicaraInteraktifData {
 					html += "<td width=\"1%\" >";			
 					html += "</td>";	
 					html += "<td width=\"98%\" valign=\"top\" >";	
-<<<<<<< HEAD
+
 					html += "<div style=\"border-bottom: 1px solid #000;width:98%;float:right;\" ><br><b>KETERANGAN INDIVIDU</b></div>";
 					html += "<div align=\"justify\" style=\"width:96%;float:right;\" ><br>"+KETERANGAN+"</div>";
 					html += "<div align=\"right\" style=\"width:96%;float:right;\" class=\"onTT\" ><br><br>T.T....................................</div>";
 					html += "</td>";	
-=======
-					*/
 					
 					
 					html += "<div style=\"border-bottom: 1px solid #000;width:98%;"+fontSize+"\" align=\"left\" ><br><b>KETERANGAN "+maklumatIndividu+" </b></div>";
@@ -8735,7 +8682,7 @@ public class BicaraInteraktifData {
 					
 					
 					//html += "</td>";	
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 					//html += "<td width=\"2%\" >";			
 					//html += "</td>";	
 					html += "</tr>";					
@@ -8761,19 +8708,16 @@ public class BicaraInteraktifData {
 					html += "<div  align=\"justify\" ><br>"+NOTA_PEGAWAI+"</div>";
 					html += "<div  align=\"right\" class=\"onTT\" ><br><br>T.T....................................</div>";
 					*/
-<<<<<<< HEAD
 					html += "<div style=\"border-bottom: 1px solid #000;width:98%;float:right;\" ><br><b>NOTA PEGAWAI</b></div>";
 					html += "<div align=\"justify\" style=\"width:96%;float:right;\" ><br>"+NOTA_PEGAWAI+"</div>";
 					html += "<div align=\"right\" style=\"width:96%;float:right;\" class=\"onTT\" ><br><br>T.T....................................</div>";
 					html += "</td>";
-=======
-										
+	
 					html += "<div style=\"border-bottom: 1px solid #000;width:96%;"+fontSize+"\" align=\"left\"><br><b>NOTA PEGAWAI</b></div>";
 					html += "<div align=\"justify\" style=\"width:96%;"+fontSize+"\" ><br>"+NOTA_PEGAWAI+"</div>";
 					html += "<div align=\"right\" style=\"width:96%;"+fontSize+"\" class=\"onTT\" ><br><br>T.T....................................</div>";
 					
 					//html += "</td>";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 					//html += "<td width=\"2%\" >";			
 					//html += "</td>";
 					html += "</tr>";
@@ -8803,15 +8747,15 @@ public class BicaraInteraktifData {
 			String KETERANGAN,
 			String NOTA_PEGAWAI,
 			String flagPrint,
-<<<<<<< HEAD
+
 			Db db) throws Exception {
-=======
+
 			int UMUR,
 			String STATUS_OB,
 			String PENJAGA,
 			//String NAMA_HADIR,String PENGENALAN_HADIR,String HUBUNGAN_HADIR,String UMUR_HADIR,String STATUS_HADIR,String JENIS_OB,
 			String CATATAN_WAKIL,Db db) throws Exception {
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 		String html = "";
 		
 			html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bootstrap-wysihtml5-master/lib/css/bootstrap.min.css\"></link>";
@@ -8832,9 +8776,7 @@ public class BicaraInteraktifData {
 			html += "</tr>";
 		
 			html += "<tr class=\"\" >";
-<<<<<<< HEAD
 			html += "<td  align=\"left\" valign=\"top\"  width=\"33%\">"+NAMA+"</td>";
-=======
 			html += "<td  align=\"left\" valign=\"top\"  width=\"33%\">";
 			
 
@@ -8854,7 +8796,7 @@ public class BicaraInteraktifData {
 				html += CATATAN_WAKIL;
 			}
 			html += "</td>";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			html += "<td  align=\"left\" valign=\"top\" width=\"33%\">"+PENGENALAN+"</td>";
 			html += "<td  align=\"left\" valign=\"top\" width=\"33%\">"+HUBUNGAN+"</td>";
 			html += "</tr>";
@@ -9957,15 +9899,13 @@ public class BicaraInteraktifData {
 		   	
 		   	String sql_dulu_L1 = " SELECT NULL AS ID_SEJARAHBIMAIN,NULL AS NAMA_TABLE,NULL AS NAMA_FIELD_PK," +
 		   	" TO_CHAR(H.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, " +
-<<<<<<< HEAD
 		   	" TO_CHAR(JP.ID_JENISPERINTAH) AS ID_JENISPERINTAH,JP.JENIS_PERINTAH, N.NAMA_NEGERI,D.NAMA_DAERAH," +
 		   	" TO_CHAR(H.ID_HA) AS ID_HA, TO_CHAR(H.ID_HAPERMOHONAN) AS ID_HAPERMOHONAN, " +
-=======
+
 		   	" TO_CHAR(JP.ID_JENISPERINTAH) AS ID_JENISPERINTAH,JP.JENIS_PERINTAH, " +
 		   	" JP.ID_PERINTAH, JP.ID_PERINTAHHAOBMST, "+//
 		   	" N.NAMA_NEGERI,D.NAMA_DAERAH," +
 		   	" TO_CHAR(H.ID_HA) AS ID_HA, TO_CHAR(H.ID_JENISHA) AS ID_JENISHA, TO_CHAR(H.ID_HAPERMOHONAN) AS ID_HAPERMOHONAN, " +
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 			" RUJ.KETERANGAN AS JENIS_HA, H.NO_DAFTAR, "
 			+ " TO_CHAR(H.BA_SIMATI) AS BA_SIMATI, TO_CHAR(H.BB_SIMATI) AS BB_SIMATI ";
 		   	
@@ -10021,11 +9961,11 @@ public class BicaraInteraktifData {
 			
 			if(namaList.equals("list"+skrinName+"current"))
 			{			
-<<<<<<< HEAD
+
 				sql += " SELECT * FROM (";		
-=======
+
 				sql += " SELECT 	SUPERMAIN.FLAG_PA,SUPERMAIN.FLAG_PT,SUPERMAIN.FLAG_SELESAI,"+maklumat_ha+" SUPERMAIN.* FROM (";		
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 				sql += " SELECT * FROM (";				
 				sql += " SELECT MAIN.* FROM "+sql_open_column;
 				sql += " FROM ( ";
@@ -10046,11 +9986,10 @@ public class BicaraInteraktifData {
 			}			
 			else if(namaList.equals("list"+skrinName+"previous"))
 			{
-<<<<<<< HEAD
+
 				sql += " SELECT * FROM (";
-=======
+
 				sql += " SELECT 	SUPERMAIN.FLAG_PA,SUPERMAIN.FLAG_PT,SUPERMAIN.FLAG_SELESAI,"+maklumat_ha+" SUPERMAIN.* FROM (";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 				sql += " SELECT MAIN.* FROM "+sql_open_column;
 				sql += " FROM ( ";
 				sql += sql_dulu_L1;
@@ -10110,9 +10049,7 @@ public class BicaraInteraktifData {
 		   	sql_avoid_delete += " FROM ("+queryHistoryHarta(skrinName,id,ID_PERBICARAAN,"INSERTDELETE")+"))";		   			
 		   	
 		   	String sql_asal_L1 = " SELECT NULL AS ID_SEJARAHBIMAIN,NULL AS NAMA_TABLE,NULL AS NAMA_FIELD_PK," +
-<<<<<<< HEAD
 		   	" TO_CHAR(H.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, NULL AS ID_JENISPERINTAH, NULL AS JENIS_PERINTAH, N.NAMA_NEGERI,D.NAMA_DAERAH,M.NAMA_MUKIM,  "
-=======
 		   	" TO_CHAR(H.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, " +
 		   	" NULL AS ID_PERINTAH, NULL AS ID_PERINTAHHTAOBMST, "+ //
 		   	" NULL AS ID_JENISPERINTAH, NULL AS JENIS_PERINTAH, N.NAMA_NEGERI," +
@@ -10133,7 +10070,6 @@ public class BicaraInteraktifData {
 			" BP.KETERANGAN AS BANDARPEMAJU," +		   
 	   	
 		   	" D.NAMA_DAERAH,M.NAMA_MUKIM,  "
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 			+ " TO_CHAR(H.ID_HTA) AS  ID_HTA, TO_CHAR(H.ID_HTAPERMOHONAN) AS ID_HTAPERMOHONAN, H.NO_HAKMILIK, RUJ.KOD_JENIS_HAKMILIK, H.NO_PT, "
 			+ " TO_CHAR(H.BA_SIMATI) AS BA_SIMATI, TO_CHAR(H.BB_SIMATI) AS BB_SIMATI, "
 			+ " H.FLAG_PA, H.FLAG_PT, H.FLAG_SELESAI,H.JENIS_HTA, H.NO_PERJANJIAN, TO_CHAR(H.TARIKH_PERJANJIAN,'DD/MM/YYYY') AS TARIKH_PERJANJIAN, H.NO_ROH, H.JENIS_KEPENTINGAN ";
@@ -10151,9 +10087,9 @@ public class BicaraInteraktifData {
 		   	
 		   	String sql_dulu_L1 = " SELECT NULL AS ID_SEJARAHBIMAIN,NULL AS NAMA_TABLE,NULL AS NAMA_FIELD_PK," +
 		   	" TO_CHAR(H.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, " +
-<<<<<<< HEAD
+
 		   	" TO_CHAR(JP.ID_JENISPERINTAH) AS ID_JENISPERINTAH,JP.JENIS_PERINTAH, N.NAMA_NEGERI,D.NAMA_DAERAH,M.NAMA_MUKIM,  "
-=======
+
 		   	" JP.ID_PERINTAH,JP.ID_PERINTAHHTAOBMST, "+//
 		   	" TO_CHAR(JP.ID_JENISPERINTAH) AS ID_JENISPERINTAH,JP.JENIS_PERINTAH, N.NAMA_NEGERI," +
 			" H.NO_LOT_ID,"+
@@ -10172,7 +10108,7 @@ public class BicaraInteraktifData {
 			" BH.KETERANGAN AS BANDARHTA," +
 			" BP.KETERANGAN AS BANDARPEMAJU," +
 		   	" D.NAMA_DAERAH,M.NAMA_MUKIM,  "
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			+ " TO_CHAR(H.ID_HTA) AS ID_HTA, TO_CHAR(H.ID_HTAPERMOHONAN) AS ID_HTAPERMOHONAN, H.NO_HAKMILIK, RUJ.KOD_JENIS_HAKMILIK, H.NO_PT, "
 			+ " TO_CHAR(H.BA_SIMATI) AS BA_SIMATI, TO_CHAR(H.BB_SIMATI) AS BB_SIMATI, "
 			+ " H.FLAG_PA, H.FLAG_PT, H.FLAG_SELESAI,H.JENIS_HTA, H.NO_PERJANJIAN, TO_CHAR(H.TARIKH_PERJANJIAN,'DD/MM/YYYY') AS TARIKH_PERJANJIAN, H.NO_ROH, H.JENIS_KEPENTINGAN  ";
@@ -10180,14 +10116,14 @@ public class BicaraInteraktifData {
 			//sql_dulu_L1 += ", H.FLAG_PA, H.FLAG_PT, H.FLAG_SELESAI ";
 			
 		   	sql_dulu_L1 += " FROM TBLPPKHTA HP, TBLPPKHTAPERMOHONAN H, TBLPPKSIMATI S, TBLPPKPERMOHONANSIMATI MS, "
-<<<<<<< HEAD
+
 			+ " TBLPPKPERMOHONAN P1, TBLPPKPERMOHONAN P, TBLPPKPERMOHONANSIMATI MS1, TBLRUJJENISHAKMILIK RUJ, "
 			+ " (SELECT DISTINCT RP.ID_JENISPERINTAH, RP.KETERANGAN AS JENIS_PERINTAH, OBM.ID_HTA , SM.ID_PERMOHONANSIMATI "
-=======
+
 			+ " TBLPPKPERMOHONAN P1, TBLPPKPERMOHONAN P, TBLPPKPERMOHONANSIMATI MS1, TBLRUJJENISHAKMILIK RUJ, TBLRUJBANDAR BP,TBLRUJBANDAR BH, "
 			+ " (SELECT DISTINCT RP.ID_JENISPERINTAH, RP.KETERANGAN AS JENIS_PERINTAH, OBM.ID_HTA , SM.ID_PERMOHONANSIMATI" +
 			" , PR.ID_PERINTAH, OBM.ID_PERINTAHHTAOBMST "//
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 			+ " FROM TBLPPKPERMOHONAN P, TBLPPKPERMOHONANSIMATI SM, TBLPPKKEPUTUSANPERMOHONAN KP, TBLPPKPERBICARAAN KB, "
 			+ " TBLPPKPERINTAH PR, TBLPPKPERINTAHHTAOBMST OBM, TBLPPKRUJJENISPERINTAH RP "
 			+ " WHERE P.ID_PERMOHONAN = SM.ID_PERMOHONAN "
@@ -10234,11 +10170,11 @@ public class BicaraInteraktifData {
 			
 			if(namaList.equals("list"+skrinName+"current"))
 			{			
-<<<<<<< HEAD
+
 				sql += " SELECT * FROM (";		
-=======
+
 				sql += " SELECT 	SUPERMAIN.FLAG_PA,SUPERMAIN.FLAG_PT,SUPERMAIN.FLAG_SELESAI, "+maklumat_hta+" SUPERMAIN.* FROM (";		
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+
 				sql += " SELECT * FROM (";				
 				sql += " SELECT MAIN.* FROM "+sql_open_column;
 				sql += " FROM ( ";
@@ -10268,11 +10204,8 @@ public class BicaraInteraktifData {
 			}			
 			else if(namaList.equals("list"+skrinName+"previous"))
 			{
-<<<<<<< HEAD
 				sql += " SELECT * FROM (";
-=======
 				sql += " SELECT 	SUPERMAIN.FLAG_PA,SUPERMAIN.FLAG_PT,SUPERMAIN.FLAG_SELESAI, "+maklumat_hta+" SUPERMAIN.* FROM (";
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
 				sql += " SELECT MAIN.* FROM "+sql_open_column;
 				sql += " FROM ( ";
 				sql += sql_dulu_L1;
@@ -10375,8 +10308,7 @@ public class BicaraInteraktifData {
 					"TRIM(REGEXP_REPLACE(PR.CATATAN_DOCKIV, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_DOCKIV, " +
 					"PR.* FROM TBLPPKPERINTAH PR, TBLPPKPERBICARAAN PB WHERE PR.ID_PERBICARAAN = PB.ID_PERBICARAAN AND PR.ID_PERBICARAAN = '"+id+"' ";		
 		}
-<<<<<<< HEAD
-=======
+
 		else if(table_name.equals("TBLPPKPERBICARAAN"))
 		{
 			sql = "SELECT " +
@@ -10386,7 +10318,7 @@ public class BicaraInteraktifData {
 					"TRIM(REGEXP_REPLACE(PR.CATATAN_DOCKIVT, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_DOCKIVT, " +
 					"PR.* FROM TBLPPKPERBICARAAN PR WHERE PR."+pk_field+" = '"+id+"' ";		
 		}
->>>>>>> c03bdc54c9a9eef4ba423ead6510a495bcc10450
+		
 		else if(table_name.equals("TBLPPKSIMATI"))
 		{
 			sql = "SELECT TO_CHAR(SM.TARIKH_MATI,'DD/MM/YYYY') AS TARIKH_MATI,TO_CHAR(SM.TARIKH_LAHIR,'DD/MM/YYYY') AS TARIKH_LAHIR,TO_CHAR(SM.TARIKH_SURAT_AKUAN,'DD/MM/YYYY') AS TARIKH_SURAT_AKUAN,SM.* FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI PSM, TBLPPKPERMOHONAN P WHERE SM.ID_SIMATI = PSM.ID_SIMATI AND PSM.ID_PERMOHONAN = P.ID_PERMOHONAN AND P.ID_PERMOHONAN = '"+id+"'";		
