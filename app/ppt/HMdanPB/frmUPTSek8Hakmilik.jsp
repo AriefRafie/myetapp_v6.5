@@ -38,6 +38,11 @@
 		#set($txtSyaratKhas=$maklumat_Hakmilik_Salin.syarat_khas)		
 		#set($txtSekatanKepentingan=$maklumat_Hakmilik_Salin.sekatan_kepentingan)
 		#set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)
+		
+		<!-- PPT-03 
+		#set($txtNoBangunan=$maklumat_Hakmilik_Salin.no_bangunan)
+		#set($txtNoTingkat=$maklumat_Hakmilik_Salin.no_tingkat)
+		#set($txtNoPetak=$maklumat_Hakmilik_Salin.no_petak)-->
         
         
           #set($showDropdownUnitAsal="yes")
@@ -357,6 +362,26 @@
 			</tr>
 			#end
 			
+			<!-- PPT-03-->
+			<tr>
+				<td>&nbsp;</td>
+				<td>No. Bangunan</td>
+				<td>:</td>
+				<td><input type="text" name="txtNoBangunan" id="txtNoBangunan" value="" size="12" maxlength="100"   ></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>No. Tingkat</td>
+				<td>:</td>
+				<td><input type="text" name="txtNoTingkat" id="txtNoTingkat" value="" size="12" maxlength=""100""   ></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>No. Petak</td>
+				<td>:</td>
+				<td><input type="text" name="txtNoPetak" id="txtNoPetak" value="" size="12" maxlength=""100""   ></td>
+			</tr>
+			
         </table>
      </fieldset>	
      
@@ -484,6 +509,11 @@
 		#set($txtSekatanKepentingan=$data.sekatan_kepentingan)
 		#set($txtSekatanHak=$data.sekatan_hak)	
 		
+		<!-- PPT-03 -->
+		#set($txtNoBangunan=$data.no_bangunan)
+		#set($txtNoTingkat=$data.no_tingkat)
+		#set($txtNoPetak=$data.no_petak)
+		
 		
 		#end
 	#end
@@ -564,7 +594,7 @@
 				<td width="1%"><font color="red">$!M</font></td>
 				<td width="23%">Jenis Hakmilik</td>
 				<td width="1%">:</td>
-				<td width="75%">$!selectJenisHakmilik</td>
+				<td width="75%">$!selectJenisHakmilik</td> 
 			</tr>	
 			<tr>
 				<td><font color="red">$!M</font></td>
@@ -780,6 +810,26 @@
 				</td>
 			</tr>
 			#end
+			
+			 <!-- PPT-03  -->
+			<tr>
+				<td><font color="red">$!M</font></td>
+				<td>No. Bangunan</td>
+				<td>:</td>
+				<td><input $disability $disabilityx type="text" name="txtNoBangunan" id="txtNoBangunan" value="$!txtNoBangunan" size="12" maxlength="50"   ></td>
+			</tr>
+			<tr>
+				<td><font color="red">$!M</font></td>
+				<td>No. Tingkat</td>
+				<td>:</td>
+				<td><input $disability $disabilityx type="text" name="txtNoTingkat" id="txtNoTingkat" value="$!txtNoTingkat" size="12" maxlength="50"   ></td>
+			</tr>
+			<tr>
+				<td><font color="red">$!M</font></td>
+				<td>No. Petak</td>
+				<td>:</td>
+				<td><input $disability $disabilityx type="text" name="txtNoPetak" id="txtNoPetak" value="$!txtNoPetak" size="12" maxlength="50"   ></td>
+			</tr>
 			
         </table>
      </fieldset>	
