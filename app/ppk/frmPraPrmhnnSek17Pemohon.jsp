@@ -1487,7 +1487,7 @@
                                           <td><input name="txtNoFaksPemohon" type="text" id="txtNoFaksPemohon" style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.noFax" size="14" maxlength="12" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtNoFaksPemohon')" /></td>
                                         </tr>
                                         <tr>
-                                          <td class="style38" >&nbsp;</td>
+                                          <td class="style38" valign="top"> <span class="style44">*</span> </td>
                                           <td class="style38" ><div align="left">Email</div></td>
                                           <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>                                        
                                           <td>

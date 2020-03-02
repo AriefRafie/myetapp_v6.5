@@ -145,6 +145,8 @@
           <span class="style1"><blink><strong>MAKLUMAT TAMBAHAN</strong></blink></span>
           #elseif($list.flagPindaan == 'Y')
           <span class="style1"><blink><strong>PINDAAN MAKLUMAT</strong></blink></span>
+          #elseif($list.flagPembetulan == 'Y')
+          <span class="style1"><blink><strong>PEMBETULAN MAKLUMAT</strong></blink></span>
           #else
           <span class="style1"><blink><strong>BARU</strong></blink></span>
           #end
@@ -158,6 +160,8 @@
           <span class="style1"><blink><strong>MAKLUMAT TAMBAHAN</strong></blink></span>
           #elseif($list.flagPindaan == 'Y')
           <span class="style1"><blink><strong>PINDAAN MAKLUMAT</strong></blink></span>
+          #elseif($list.flagPembetulan == 'Y')
+          <span class="style1"><blink><strong>PEMBETULAN MAKLUMAT</strong></blink></span>
           #else
           <span class="style1"><blink><strong>BARU</strong></blink></span>
           #end

@@ -1,12 +1,17 @@
 package ekptg.model.ppt;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
+
+import javax.servlet.http.HttpServletRequest;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
@@ -14,7 +19,9 @@ import lebah.db.SQLRenderer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
-
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ekptg.helpers.Utils;
 /*
  * @author 
@@ -24,7 +31,7 @@ import ekptg.helpers.Utils;
 public class FrmUPTSek8HakmilikData {
 	static Logger myLogger = Logger.getLogger(FrmPermohonanUPTData.class);
 	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");
-	private static final Log log = LogFactory.getLog(FrmUPTSek8HakmilikData.class);
+	static Log log = LogFactory.getLog(FrmUPTSek8HakmilikData.class);
 	
 	private static  Vector listcarian = null;
 	private static  Vector listPB = null;
@@ -293,15 +300,17 @@ public class FrmUPTSek8HakmilikData {
 	
 	
 	@SuppressWarnings("unchecked")
-	public static void simpanHM(Hashtable data,String flagSubjaket) throws Exception
+	public void simpanHM(Hashtable data,String flagSubjaket) throws Exception
 	  {
-		
+		myLogger.info("simpanHM");
 	    Db db = null;
 	    String sql = "";
-	    
+	    Connection conn = null;
 	    try{
 	      
 	    		db = new Db();
+	    		conn = db.getConnection();
+	    		conn.setAutoCommit(false);
 	    		Statement stmt = db.getStatement();
 	    		
 	    		String id_user = (String)data.get("id_user");
@@ -316,6 +325,7 @@ public class FrmUPTSek8HakmilikData {
 	    		String id_mukimProjek = (String)data.get("socMukim");
 	    		String txtseksyen = (String)data.get("txtseksyen");
 	    		String catatan = (String)data.get("txtCatatan");
+	    		String txdTarikhPembayaran =(String)data.get("txdTarikhPembayaran");
 	    		String txtnolot = (String)data.get("txtNoLot");
 	    		String txtnopt = (String)data.get("txtNoPT");
 	    		
@@ -354,6 +364,7 @@ public class FrmUPTSek8HakmilikData {
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
+	    		String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
 	    		
 	    		
 	    		String flagSebahagian = "0";
@@ -406,6 +417,7 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("no_lot", txtnolot);
 	    		r.add("no_pt", txtnopt);
 	    		r.add("catatan",catatan);
+	    		r.add("tarikh_pembayaran", r.unquote(TP));
 	    		r.add("seksyen",txtseksyen);	    		
 	    		r.add("tarikh_daftar",r.unquote(TD));
 	    		r.add("tarikh_luput",r.unquote(TL));
@@ -430,7 +442,8 @@ public class FrmUPTSek8HakmilikData {
 	    		sql = r.getSQLInsert("tblppthakmilik");
 	    		myLogger.info("sql add tanah : "+sql);
 	    		stmt.executeUpdate(sql);
-    	
+	    		conn.commit();
+    			uploadFiles(db,conn,id_permohonan);
 	    		//remove subjaket kalau dah ada
 	    		if(flagSubjaket.equals("1")){
 	    			
@@ -440,7 +453,8 @@ public class FrmUPTSek8HakmilikData {
 	    			r.update("id_permohonan", id_permohonan);		    				
 	    			r.add("flag_subjaket", "");
 	    			r.add("tarikh_kemaskini",r.unquote("sysdate"));
-	    			r.add("id_kemaskini",id_user);    		
+	    			r.add("id_kemaskini",id_user); 
+	    			
 	    			sql = r.getSQLUpdate("Tblpptpermohonan");
 	    			stmt.executeUpdate(sql);
 	    			
@@ -452,6 +466,8 @@ public class FrmUPTSek8HakmilikData {
 	    			r.add("id_kemaskini",id_user);    		
 	    			sql = r.getSQLUpdate("Tblppthakmilik");
 	    			stmt.executeUpdate(sql);
+	    			conn.commit();
+	    			uploadFiles(db,conn,id_permohonan);
 	    		}
 	    		
 	    		
@@ -465,9 +481,60 @@ public class FrmUPTSek8HakmilikData {
 	   
 	}//close simpanHM
 	
+	//upload start
+	
+	private void uploadFiles(Db db,Connection conn, String id_permohonan) throws Exception {
+		myLogger.info("Baca uploadFiles:--------------"); 
+		String nama_pemohon_lama2 = id_permohonan;
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+	    ServletFileUpload upload = new ServletFileUpload(factory);
+	    myLogger.info("Baca uploadFiles1:--------------"); 
+	    List items = upload.parseRequest(this.request);
+	    myLogger.info("Baca uploadFiles2:--------------"); 
+	    Iterator itr = items.iterator();	   
+	    while (itr.hasNext()) {    	
+	      FileItem item = (FileItem)itr.next();
+	      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+	    	  System.out.println("item.getName = "+ item.getName());
+	    	  saveData(item,db,conn,id_permohonan);
+	      }
+	    }
+	  }
+	
+	
+	private static void saveData(FileItem item,Db db,Connection conn, String id_permohonan) throws Exception {
+		//Db db = null;
+	
+    try {
+    	db = new Db();
+
+    	Connection con = db.getConnection();
+    	con.setAutoCommit(false);
+    	String id_permohonan2 = id_permohonan;
+    	//String id_permohonansimati = getParam("id_permohonansimati_atheader");
+    	PreparedStatement ps = con.prepareStatement("UPDATE tblppthakmilik SET content = ?, jenis_Mime = ? WHERE (id_permohonan = ?)");		
+    	//System.out.println("+nama_pemohon_lama3+ " + nama_pemohon_lama3);
+    	//System.out.println(con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE ID_PERMOHONANSIMATI = ?"));
+    	//ps.setString(1,item.getName());
+    	ps.setBinaryStream(1,item.getInputStream(),(int)item.getSize());
+    	ps.setString(2,item.getContentType());
+    	//System.out.println("item.getInputStream = "+ item.getInputStream());
+    	//System.out.println("item.getSize = "+ item.getSize());
+    	//System.out.println("item.getContentType = "+ item.getContentType());
+    	ps.setString(3,id_permohonan2);
+    	//ps.setString(5,nama_pemohon_lama3);
+    	//ps.setString(4,getParam("id_permohonansimati_atheader"));
+    	myLogger.info("Baca SaveData:---------------"); 
+    	ps.executeUpdate();	
+    	myLogger.info("Baca SaveData 2:---------------"); 
+        con.commit();
+    } finally {
+	      if (db != null) db.close();
+    }
+}
 	
 	@SuppressWarnings("unchecked")
-	public static void updateHM(Hashtable data) throws Exception
+	public static void upload(Hashtable data) throws Exception
 	  {
 		
 	    Db db = null;
@@ -495,6 +562,8 @@ public class FrmUPTSek8HakmilikData {
 	    		String id_mukimProjek = (String)data.get("socMukim");
 	    		String txtseksyen = (String)data.get("txtseksyen");
 	    		String catatan = (String)data.get("txtCatatan");
+	    		String txdTarikhPembayaran = (String)data.get("txdTarikhPembayaran");
+	    		String fileupload = (String)data.get("fileupload");
 	    		String txtnolot = (String)data.get("txtNoLot");
 	    		String txtnopt = (String)data.get("txtNoPT");
 	    		
@@ -534,6 +603,7 @@ public class FrmUPTSek8HakmilikData {
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
+	    		String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
 	    		 
 	    		
 	    		String flagSebahagian = "0";
@@ -582,6 +652,166 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("no_lot", txtnolot);
 	    		r.add("no_pt", txtnopt);
 	    		r.add("catatan",catatan);
+	    		r.add("tarikh_pembayaran", r.unquote(TP));
+	    		r.add("seksyen",txtseksyen);	    		
+	    		r.add("tarikh_daftar",r.unquote(TD));
+	    		r.add("tarikh_luput",r.unquote(TL));
+	    		r.add("tempoh_luput", baki);
+	    		r.add("id_kategoritanah",id_kategoriTanah);
+	    		r.add("lokasi",lokasi);	    		
+	    		r.add("syarat_nyata", syaratNyata);
+	    		r.add("syarat_khas", syaratKhas);
+	    		r.add("sekatan_kepentingan",sekatanKepentingan);
+	    		r.add("sekatan_hak",sekatanHak);
+	    		r.add("no_syit",noSyit);	    
+	    		
+	    		//new
+	    		r.add("id_unitluasambil", id_luasambil);
+	    		r.add("nama_luas_asal", nama_luas_asal);
+	    		r.add("nama_luas_ambil", nama_luas_ambil);
+	    		r.add("id_unitluaslot_convert", id_unitluaslot_convert);
+	    		r.add("id_unitluasambil_convert", id_unitluasambil_convert);	
+	    		
+	    		r.add("tarikh_kemaskini",r.unquote("sysdate"));
+	    		r.add("id_kemaskini",id_user); 
+	    		
+	    		sql = r.getSQLUpdate("TBLPPTHAKMILIK");
+	    		myLogger.info("updateHM ****  : "+sql);
+	    		stmt.executeUpdate(sql);
+    	
+	    } catch (Exception re) {
+	    	log.error("Error: ", re);
+	    	throw re;
+	    	}//close try 
+	    finally {
+	      if (db != null) db.close();
+	    }//close finally
+	   
+	  }//close updateHM
+	
+	//upload end
+	
+	
+	@SuppressWarnings("unchecked")
+	public static void updateHM(Hashtable data) throws Exception
+	  {
+		
+	    Db db = null;
+	    String sql = "";
+	    
+	    try{
+	      
+	    		db = new Db();
+	    		Statement stmt = db.getStatement();
+	    		
+	    		String id_user = (String)data.get("id_user");
+	    	
+	    		//pengambilan segera
+	    		String socPSegera = (String)data.get("socPSegera");
+	    		
+	    		
+	    		
+	    		
+	    		
+	    		String socDaerahPenggawa = (String)data.get("socDaerahPenggawa");
+	    		
+	    		String id_hakmilik = (String)data.get("id_hakmilik");
+	    		String id_daerah = (String)data.get("id_daerah");
+	    		
+	    		String id_mukimProjek = (String)data.get("socMukim");
+	    		String txtseksyen = (String)data.get("txtseksyen");
+	    		String catatan = (String)data.get("txtCatatan");
+	    		String txdTarikhPembayaran = (String)data.get("txdTarikhPembayaran");
+	    		String fileupload = (String)data.get("fileupload");
+	    		String txtnolot = (String)data.get("txtNoLot");
+	    		String txtnopt = (String)data.get("txtNoPT");
+	    		
+	    		String id_jenishakmilik = (String)data.get("jenisHakMilik");	 
+	    		String no_hakmilik = (String)data.get("txtNoHakmilik");
+	    		String id_lot = (String)data.get("kodLot");
+	    		String id_luas = (String)data.get("unitLuas");
+	    		String luas_ambil = (String)data.get("txtLuasAmbil");	
+	    		String luas_asal = (String)data.get("txtLuasAsal");
+
+	    		String tarikhLuput = (String)data.get("txdTarikhLuput");	 
+	    		String tarikhDaftar = (String)data.get("txdTarikhDaftar");
+	    		String baki = (String)data.get("txtBakiTempoh");
+	    		String id_kategoriTanah = (String)data.get("socKategoriTanah");
+	    		String lokasi = (String)data.get("txtLokasi");	
+	    	
+	    		//rizab
+		    	String sorJenisRizab = (String)data.get("sorJenisRizab");
+		    	String txtLain = (String)data.get("txtLain");
+		    	String txtNoWartaRizab = (String)data.get("txtNoWartaRizab");
+		    	String txdTarikhWarta = (String)data.get("txdTarikhWarta");
+		    	 
+	    		String syaratNyata = (String)data.get("txtSyaratNyata");	 
+	    		String syaratKhas = (String)data.get("txtSyaratKhas");
+	    		String sekatanKepentingan = (String)data.get("txtSekatanKepentingan");
+	    		String sekatanHak = (String)data.get("txtSekatanHak");
+	    		String noSyit = (String)data.get("txtNoSyit");	
+	    		
+	    		//new
+	    		String id_luasambil = (String)data.get("unitLuasAmbil");
+	    		String nama_luas_asal = (String)data.get("txtLuasLotAsalSebelumConvert");
+	    		String nama_luas_ambil = (String)data.get("txtLuasLotAmbilSebelumConvert");
+	    		String id_unitluaslot_convert = (String)data.get("sorDropdownUnitAsal");
+	    		String id_unitluasambil_convert = (String)data.get("sorDropdownUnitAmbil");
+	    		
+	    		
+	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
+	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
+	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
+	    		String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
+	    		 
+	    		
+	    		String flagSebahagian = "0";
+	    		
+	    		if(!luas_asal.isEmpty() && !luas_ambil.isEmpty()){
+	    			
+	    			//validate sebahagian / keseluruhan
+	    			double luasAsal = Double.parseDouble(luas_asal);
+	    			if(id_unitluaslot_convert.equals("1")){
+	    				luasAsal *= 10000;
+	    			}
+	    		
+	    			double luasAmbil = Double.parseDouble(luas_ambil);
+	    			if(id_unitluasambil_convert.equals("1")){
+	    				luasAmbil *= 10000;
+	    			}
+	    		
+	    			if((luasAsal - luasAmbil) > 0 ){
+	    				flagSebahagian = "1";
+	    			}else if((luasAsal - luasAmbil) == 0 ){
+	    				flagSebahagian = "2";
+	    			}else{
+	    				flagSebahagian = "0";
+	    			}
+	    			
+	    		}
+	    		
+	    		SQLRenderer r = new SQLRenderer();
+	    		r.update("id_hakmilik", id_hakmilik);
+	    		//flag segera
+	    		r.add("FLAG_SEGERA_SEBAHAGIAN", socPSegera);
+	    		r.add("flag_sebahagian", flagSebahagian);
+	    		r.add("id_daerahpenggawa", socDaerahPenggawa);
+	    		r.add("id_jenishakmilik", id_jenishakmilik);
+	    		r.add("id_daerah", id_daerah);
+	    		r.add("id_mukim", id_mukimProjek);
+	    		r.add("id_unitluaslot", id_luas);
+	    		r.add("id_lot", id_lot);
+	    		r.add("luas_lot",luas_asal);
+	    		r.add("no_warta_rizab", txtNoWartaRizab); 	
+		    	r.add("tarikh_warta_rizab", r.unquote(TW));
+		    	r.add("flag_jenis_rizab", sorJenisRizab); 	
+		    	r.add("nama_lain_rizab", txtLain);
+	    		r.add("luas_ambil", luas_ambil);
+	    		r.add("no_hakmilik", no_hakmilik);
+	    		r.add("no_lot", txtnolot);
+	    		r.add("no_pt", txtnopt);
+	    		r.add("catatan",catatan);
+	    		r.add("tarikh_pembayaran", r.unquote(TP));
 	    		r.add("seksyen",txtseksyen);	    		
 	    		r.add("tarikh_daftar",r.unquote(TD));
 	    		r.add("tarikh_luput",r.unquote(TL));
@@ -2123,7 +2353,7 @@ public class FrmUPTSek8HakmilikData {
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();
 	      
-	    		sql =  " SELECT A.ID_FAIL, B.ID_PERMOHONAN, C.ID_HAKMILIK, C.ID_JENISHAKMILIK, C.ID_MUKIM, B.ID_DAERAH, ";
+	    		sql =  " SELECT A.ID_FAIL, B.ID_PERMOHONAN, C.ID_HAKMILIK, C.ID_, C.ID_MUKIM, B.ID_DAERAH, ";
 	    		sql += " D.NAMA_MUKIM, E.NAMA_DAERAH, G.KOD_JENIS_HAKMILIK, C.NO_HAKMILIK, I.TARIKH_BORANGK, ";
 	    		sql += " CASE ";
 	    		sql += " WHEN C.NO_LOT IS NOT NULL AND C.NO_PT IS NULL THEN C.NO_LOT "; 
@@ -2320,6 +2550,6 @@ public class FrmUPTSek8HakmilikData {
 				}
 			}	
 			*/
-
+			protected static HttpServletRequest request;
 	
 }//close class

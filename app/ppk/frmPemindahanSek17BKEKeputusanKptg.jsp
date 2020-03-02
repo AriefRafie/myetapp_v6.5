@@ -130,7 +130,7 @@
         <ul class="TabbedPanelsTabGroup">
 		  <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="PemohonBkeView('0','0','0','0')">PERMOHONAN BKE</li>
           <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="KeputusanView('1','0','0','0')">KEBENARAN</li>
-          <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="KptgView('2','0','0','0')">KEPUTUSAN KPTG/PTG</li>
+          <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="KptgView('2','0','0','0')">KEPUTUSAN PPP</li>
           </ul>
           <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"></div>

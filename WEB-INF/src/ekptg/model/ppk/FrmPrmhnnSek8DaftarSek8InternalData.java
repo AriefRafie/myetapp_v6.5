@@ -2023,11 +2023,18 @@ public Vector setDataNoKP(String idpp) throws Exception {
 	}
 
 	private Vector listFail = new Vector();
+	
+	private Vector flag5juta = new Vector();
+	
 
 	// private static SimpleDateFormat Format = new
 	// SimpleDateFormat("dd/MM/yyyy");
 	public Vector getDataFail() {
 		return listFail;
+	}
+	
+	public Vector getFlag5Juta() {
+		return flag5juta;
 	}
 
 	public void setDataFail(String id) throws Exception {
@@ -2068,6 +2075,42 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 				// System.out.println("sql data-->" + h);
 				listFail.addElement(h);
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	
+	public void checkFlag5Juta(String id) throws Exception {
+		Db db = null;
+		flag5juta.clear();
+		String sql = "";
+	
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT FLAG_5JUTA FROM TBLPPKPERUBAHANAKTA ";
+
+			// System.out.println("SQLXXXXXX FAIL" + sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+
+				h.put("flag_5juta",
+						rs.getString("flag_5juta") == null ? "" : rs
+								.getString("flag_5juta"));
+				
+
+				// System.out.println("sql data-->" + h);
+				flag5juta.addElement(h);
 			}
 		} finally {
 			if (db != null)
@@ -9725,6 +9768,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 			while (rs.next()) {
 				h = new Hashtable();
+				//System.out.println("TESTTT ***** = " + rs.getString("id_jenisha"));
 				h.put("idjenisha", rs.getString("id_jenisha"));
 				h.put("kod", rs.getString("kod"));
 				h.put("keterangan", rs.getString("keterangan"));

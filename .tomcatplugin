@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tomcatProjectProperties>
     <rootDir>/</rootDir>
+    <workDir>/work</workDir>
     <exportSource>false</exportSource>
     <reloadable>true</reloadable>
     <redirectLogger>false</redirectLogger>
@@ -8,4 +9,5 @@
     <warLocation></warLocation>
     <extraInfo></extraInfo>
     <webPath>/myetapp65</webPath>
+
 </tomcatProjectProperties>

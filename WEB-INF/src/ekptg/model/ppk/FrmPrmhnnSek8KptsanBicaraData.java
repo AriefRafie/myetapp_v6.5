@@ -34,6 +34,8 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	private static Vector listWaris17 = new Vector();
 	private static Vector listBayaran = new Vector();
 	private static Vector listBayaran17 = new Vector();
+	private static Vector listBayaranDendaLewatPendaftaran = new Vector(); // arief add
+	private static Vector maklumatBayaranDendaLewat = new Vector (); //arief add
 	private static Vector MaklumatPermohonan17 = new Vector();	
 	private static Vector MaklumatBayaran = new Vector();
 	private static Vector MaklumatPerintah = new Vector();
@@ -157,6 +159,15 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	 public static Vector getListSemakWithData(){
 		return listSemakWithData;
 	 }
+	 //arief add OPEN
+	 public static Vector getListBayaranDendaLewatPendaftaran() {
+		 return listBayaranDendaLewatPendaftaran;
+	 }
+	 public static Vector getMaklumatBayaranDendaLewat() {
+		 return maklumatBayaranDendaLewat;
+	 }
+	 //arief add CLOSE
+	 
 	 
 	public static void setData(String id) throws Exception{
 		Db db = null;
@@ -835,6 +846,42 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      if (db != null) db.close();
 		    }
 		}
+/** 13/1/2020: arief add bagi lewat pendaftaran	(function ini akan beroperasi selepas 1 tahun daripada tarikh Akta dikuatkuasakan)**/	
+		public static Vector listBayaranDendaLewatPendaftaran (String tarikhmohon) throws Exception
+		{
+			Db db = null;
+		    listBayaranDendaLewatPendaftaran.clear();
+		    String sql = "";
+		    try {
+		      Vector localVector1;
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      SQLRenderer r = new SQLRenderer();
+		      
+		      r.add("jumlahBayaranDendaLewatPendaftaran");		      
+		      r.add("tarikh_mohon", tarikhmohon);
+
+		      sql = r.getSQLSelect("Tblppkpermohonan");
+		      myLogger.info("TARIKH PERMOHONAN ::"+sql);
+		      ResultSet rs = stmt.executeQuery(sql);
+		   
+		      Hashtable h;
+		      int bilDendaLewat = 1;
+		      
+		      
+		      while (rs.next()) {
+		    	 h = new Hashtable();
+		    	 h.put("tarikh_mohon", rs.getString("tarikh_mohon")==null?"":Integer.parseInt(rs.getString("tarikh_mohon")));
+		    	 
+		    	 listBayaranDendaLewatPendaftaran.addElement(h);
+		    	 bilDendaLewat++;
+		      }
+		      return listBayaranDendaLewatPendaftaran;
+		    }
+		    finally {
+		      if (db != null) db.close();
+		    }
+		}
 
 		public static Vector setJumlahBayaran(String idpermohonan) throws Exception {
 			
@@ -847,8 +894,10 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
 		      
+		      //r.add("jumlahBayaranDendaLewatPendaftaran");
 		      r.add("jumlah_harta_tarikhmohon");		      
 
+		      //r.add("tarikh_mohon", tarikhmohon);
 		      r.add("id_permohonan",idpermohonan);
 
 		      sql = r.getSQLSelect("Tblppkpermohonan");
