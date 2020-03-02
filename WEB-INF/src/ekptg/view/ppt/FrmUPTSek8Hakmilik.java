@@ -2357,7 +2357,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 			list_jenispb = logic.list_jenispb();
 			this.context.put("list_jenispb", list_jenispb);
 			list_jenisnopb = logic.list_jenisnopb();
-			this.context.put("list_jenisnopb", list_jenisnopb);
+			//this.context.put("list_jenisnopb", list_jenisnopb);
 			list_bank = logic.list_bank();
 			this.context.put("list_bank", list_bank);
 			list_negeri = logic.getListnegeri();
@@ -4036,6 +4036,11 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		h.put("txtCatatan", getParam("txtCatatan"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
 
+		// PPT-03 
+		h.put("txtNoBangunan", getParam("txtNoBangunan"));
+		h.put("txtNoTingkat", getParam("txtNoTingkat"));
+		h.put("txtNoPetak", getParam("txtNoPetak"));
+
 		h.put("unitLuas", getParam("socUnitLuasLot"));
 		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));
 		h.put("txtLuasLotAsalSebelumConvert",
@@ -4106,6 +4111,11 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
 		h.put("txtCatatan", getParam("txtCatatan"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
+
+		// PPT-03 
+		h.put("txtNoBangunan", getParam("txtNoBangunan"));
+		h.put("txtNoTingkat", getParam("txtNoTingkat"));
+		h.put("txtNoPetak", getParam("txtNoPetak"));
 
 		h.put("unitLuas", getParam("socUnitLuasLot"));
 		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));

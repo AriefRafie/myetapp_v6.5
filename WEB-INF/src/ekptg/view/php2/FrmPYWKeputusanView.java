@@ -73,8 +73,8 @@ public class FrmPYWKeputusanView extends AjaxBasedModule {
     		}
 			if ("doSimpan".equals(hitButton)){
 			    logic.simpanMaklumatKeputusan(idPermohonan, idKeputusan, getParam("txtTarikhKeputusan"), idPerjanjian,
-			    		getParam("txtTarikhMulaDasar"), getParam("txtTarikhTamatDasar"), getParam("txtTarikhMula"), getParam("txtTempoh"),
-			    		getParam("txtTarikhTamat"), getParam("txtKadarSewa"),getParam("txtRoyalti"), getParam("txtCagaran"), session);
+			    		getParam("txtTarikhMulaDasar"), getParam("txtTempohDasar"), getParam("txtTarikhTamatDasar"), getParam("txtTarikhMula"), 
+			    		getParam("txtTempoh"), getParam("txtTarikhTamat"), getParam("socJenisKadarSewa"), getParam("txtKadarSewa"),getParam("txtRoyalti"), getParam("txtCagaran"), session);
 			}
 		}
 		
@@ -142,10 +142,12 @@ public class FrmPYWKeputusanView extends AjaxBasedModule {
 	    	beanMaklumatPerjanjian = new Vector();
 			Hashtable hashMaklumatPerjanjian = new Hashtable();
 			hashMaklumatPerjanjian.put("tarikhMulaDasar", getParam("txtTarikhMulaDasar"));
-			hashMaklumatPerjanjian.put("tarikhTamatDasar", getParam("txtTarikhTamatDasar"));	
+			hashMaklumatPerjanjian.put("tarikhTamatDasar", getParam("txtTarikhTamatDasar"));
+			hashMaklumatPerjanjian.put("tempohDasar", getParam("txtTempohDasar"));
 			hashMaklumatPerjanjian.put("tarikhMula", getParam("txtTarikhMula"));	
 			hashMaklumatPerjanjian.put("tempoh", getParam("txtTempoh"));
 			hashMaklumatPerjanjian.put("tarikhTamat", getParam("txtTarikhTamat"));	
+			hashMaklumatPerjanjian.put("jenisKadarSewa", getParam("socJenisKadarSewa"));
 			hashMaklumatPerjanjian.put("kadarSewa", getParam("txtKadarSewa"));
 			hashMaklumatPerjanjian.put("royalti", getParam("txtRoyalti"));
 			hashMaklumatPerjanjian.put("cagaran", getParam("txtCagaran"));	

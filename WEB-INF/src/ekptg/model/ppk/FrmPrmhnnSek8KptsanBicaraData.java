@@ -33,8 +33,9 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	private static Vector ListExistDataBayaran = new Vector();	
 	private static Vector listWaris17 = new Vector();
 	private static Vector listBayaran = new Vector();
-	private static Vector listBayaranDendaLewatPendaftaran = new Vector(); // 13/1/2020: arief add
 	private static Vector listBayaran17 = new Vector();
+	private static Vector listBayaranDendaLewatPendaftaran = new Vector(); // arief add
+	private static Vector maklumatBayaranDendaLewat = new Vector (); //arief add
 	private static Vector MaklumatPermohonan17 = new Vector();	
 	private static Vector MaklumatBayaran = new Vector();
 	private static Vector MaklumatPerintah = new Vector();
@@ -158,6 +159,15 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	 public static Vector getListSemakWithData(){
 		return listSemakWithData;
 	 }
+	 //arief add OPEN
+	 public static Vector getListBayaranDendaLewatPendaftaran() {
+		 return listBayaranDendaLewatPendaftaran;
+	 }
+	 public static Vector getMaklumatBayaranDendaLewat() {
+		 return maklumatBayaranDendaLewat;
+	 }
+	 //arief add CLOSE
+	 
 	 
 	public static void setData(String id) throws Exception{
 		Db db = null;
@@ -836,8 +846,8 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      if (db != null) db.close();
 		    }
 		}
-/** 13/1/2020: arief add bagi lewat pendaftaran	(function ini akan beroperasi selepas 1 tahun daripada tarikh Akta dikuatkuasakan	
-		public static Vector setJumlahBayaranDendaLewatPendaftaran (String tarikhmohon) throws Exception
+/** 13/1/2020: arief add bagi lewat pendaftaran	(function ini akan beroperasi selepas 1 tahun daripada tarikh Akta dikuatkuasakan)**/	
+		public static Vector listBayaranDendaLewatPendaftaran (String tarikhmohon) throws Exception
 		{
 			Db db = null;
 		    listBayaranDendaLewatPendaftaran.clear();
@@ -857,7 +867,6 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		   
 		      Hashtable h;
 		      int bilDendaLewat = 1;
-		      Date tarikhMohon = new Date ();
 		      
 		      
 		      while (rs.next()) {
@@ -872,7 +881,7 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		    finally {
 		      if (db != null) db.close();
 		    }
-		}**/
+		}
 
 		public static Vector setJumlahBayaran(String idpermohonan) throws Exception {
 			

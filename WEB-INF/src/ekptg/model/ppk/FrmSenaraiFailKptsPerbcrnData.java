@@ -23,6 +23,7 @@ public class FrmSenaraiFailKptsPerbcrnData {
 	private static Vector list17 = new Vector();
 	private static Vector checkingNilaian = new Vector();
 	
+	
 	public static Vector getList(){
 		return list;
 	}
@@ -206,6 +207,7 @@ public class FrmSenaraiFailKptsPerbcrnData {
 		      if (db != null) db.close();
 		    }
 		}//close checkingNilaian	
+	
 	
 }
 

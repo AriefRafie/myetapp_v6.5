@@ -144,7 +144,13 @@
 
 <div id="display_ada_harta"></div>
 <script>
-parent.document.getElementById("display_ada_harta").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink> Sila pastikan anda mempunyai harta tak alih. Sekiranya tiada, permohonan tidak dapat diteruskan.<br><input name='cmdSimpan' type='button' id='cmdSimpan'  value='Ada Harta Tak Alih' onClick='DoTheCheck()'/><input name='cmdBatal' type='button'  id='cmdBatal' value='Tiada Harta Tak Alih (Batal)' onClick='hartaTiada()'/></b></div>";
+	window.onload = function (e){
+		document.f1.command.value="Simpan";
+		document.f1.submit();		
+
+	}
+	
+	//parent.document.getElementById("display_ada_harta").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink> Sila pastikan anda mempunyai harta tak alih. Sekiranya tiada, permohonan tidak dapat diteruskan.<br><input name='cmdSimpan' type='button' id='cmdSimpan'  value='Ada Harta Tak Alih' onClick='DoTheCheck()'/><input name='cmdBatal' type='button'  id='cmdBatal' value='Tiada Harta Tak Alih (Batal)' onClick='hartaTiada()'/></b></div>";
 </script>
 
 	
@@ -1439,7 +1445,6 @@ function checkitX(){
 }
 
 function DoTheCheck() {
-
 /*
     var currentTime = new Date();
     var month = currentTime.getMonth() + 1;
@@ -1454,8 +1459,6 @@ function DoTheCheck() {
     var mon1  = parseInt(str1.substring(3,5),10)-1;
     var yr1   = parseInt(str1.substring(6,10),10);   
     var date1 = new Date(yr1, mon1, dt1);
-	
-	
 	
 	if (document.f1.cbsemaks[0].checked == false) {
 		alert("Sila masukkan maklumat Borang A");
@@ -1501,31 +1504,25 @@ function DoTheCheck() {
 	}
 
 }
+
 function Simpan(){
 /*	input_box = confirm("Adakah anda pasti?");
-	if (input_box == true) {*/
-	
-	
+	if (input_box == true) {*/	
 		document.f1.method="POST";
 		document.f1.command.value="Simpan";
 		document.f1.action="";
-		document.f1.submit();
-		
-		
+		document.f1.submit();		
 	//}	
 }
 
-function hartaTiada(){
-	
-	
+function hartaTiada(){	
 	//alert("no"+'$portal_role'+' tabID : '+'$EkptgUtil.getTabID("Menu",$portal_role)');
 	//document.${formName}.method="post";
 	//document.${formName}.hartaYa.value = "Ya";
 	//document.f1.action="?_portal_module=ekptg.view.online.FrmOnlineMenuUtama";
 	//document.f1.action = "$EkptgUtil.getTabID("Menu",$portal_role)?_portal_module=ekptg.view.online.FrmOnlineMenuUtama";
 	//document.f1.submit();
-	//document.f1.submit();
-	
+	//document.f1.submit();	
 	
 	 document.f1.action = "?myrole=online&namatab=Menu&namamodul=ekptg.view.online.FrmOnlineMenuUtama";
 	 document.f1.method="POST";

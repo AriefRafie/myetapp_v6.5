@@ -35,8 +35,8 @@ public class FrmPYWKeputusanData {
 
 	public void simpanMaklumatKeputusan(String idPermohonan,
 			String idKeputusan, String txtTarikhHantar, String idPerjanjian,
-			String txtTarikhMulaDasar, String txtTarikhTamatDasar,
-			String txtTarikhMula, String txtTempoh, String txtTarikhTamat,
+			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
+			String txtTarikhMula, String txtTempoh, String txtTarikhTamat, String socJenisKadarSewa,
 			String txtKadarSewa, String txtRoyalti, String txtCagaran,
 			HttpSession session) throws Exception {
 
@@ -69,14 +69,14 @@ public class FrmPYWKeputusanData {
 
 			if ("L".equals(idKeputusan) || "D".equals(idKeputusan)) {
 				if ("".equals(idPerjanjian)) {
-					insertPerjanjian(idPermohonan, txtTarikhMulaDasar,
+					insertPerjanjian(idPermohonan, txtTarikhMulaDasar, txtTempohDasar,
 							txtTarikhTamatDasar, txtTarikhMula, txtTempoh,
-							txtTarikhTamat, txtKadarSewa, txtRoyalti,
+							txtTarikhTamat, socJenisKadarSewa, txtKadarSewa, txtRoyalti,
 							txtCagaran, db, userId);
 				} else {
-					updatePerjanjian(idPerjanjian, txtTarikhMulaDasar,
+					updatePerjanjian(idPerjanjian, txtTarikhMulaDasar, txtTempohDasar,
 							txtTarikhTamatDasar, txtTarikhMula, txtTempoh,
-							txtTarikhTamat, txtKadarSewa, txtRoyalti,
+							txtTarikhTamat, socJenisKadarSewa, txtKadarSewa, txtRoyalti,
 							txtCagaran, db, userId);
 				}
 			} else {
@@ -118,8 +118,8 @@ public class FrmPYWKeputusanData {
 	}
 
 	private void insertPerjanjian(String idPermohonan,
-			String txtTarikhMulaDasar, String txtTarikhTamatDasar,
-			String txtTarikhMula, String txtTempoh, String txtTarikhTamat,
+			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
+			String txtTarikhMula, String txtTempoh, String txtTarikhTamat, String socJenisKadarSewa, 
 			String txtKadarSewa, String txtRoyalti, String txtCagaran, Db db,
 			String userId) throws Exception {
 
@@ -138,6 +138,7 @@ public class FrmPYWKeputusanData {
 						r.unquote("to_date('" + txtTarikhMulaDasar
 								+ "','dd/MM/yyyy')"));
 			}
+			r.add("TEMPOH_DASAR", txtTempohDasar);
 			if (!"".equals(txtTarikhTamatDasar)) {
 				r.add("TARIKH_TAMAT_DASAR",
 						r.unquote("to_date('" + txtTarikhTamatDasar
@@ -154,6 +155,7 @@ public class FrmPYWKeputusanData {
 						r.unquote("to_date('" + txtTarikhTamat
 								+ "','dd/MM/yyyy')"));
 			}
+			r.add("JENIS_KADAR_SEWA", socJenisKadarSewa);
 			r.add("KADAR_SEWA", Utils.RemoveSymbol(txtKadarSewa));
 			r.add("ROYALTI", Utils.RemoveSymbol(txtRoyalti));
 			r.add("CAGARAN", Utils.RemoveSymbol(txtCagaran));
@@ -184,8 +186,8 @@ public class FrmPYWKeputusanData {
 	}
 
 	private void updatePerjanjian(String idPerjanjian,
-			String txtTarikhMulaDasar, String txtTarikhTamatDasar,
-			String txtTarikhMula, String txtTempoh, String txtTarikhTamat,
+			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
+			String txtTarikhMula, String txtTempoh, String txtTarikhTamat, String socJenisKadarSewa,
 			String txtKadarSewa, String txtRoyalti, String txtCagaran, Db db,
 			String userId) throws Exception {
 
@@ -202,6 +204,7 @@ public class FrmPYWKeputusanData {
 						r.unquote("to_date('" + txtTarikhMulaDasar
 								+ "','dd/MM/yyyy')"));
 			}
+			r.add("TEMPOH_DASAR", txtTempohDasar);
 			if (!"".equals(txtTarikhTamatDasar)) {
 				r.add("TARIKH_TAMAT_DASAR",
 						r.unquote("to_date('" + txtTarikhTamatDasar
@@ -218,6 +221,7 @@ public class FrmPYWKeputusanData {
 						r.unquote("to_date('" + txtTarikhTamat
 								+ "','dd/MM/yyyy')"));
 			}
+			r.add("JENIS_KADAR_SEWA", socJenisKadarSewa);
 			r.add("KADAR_SEWA", Utils.RemoveSymbol(txtKadarSewa));
 			r.add("ROYALTI", Utils.RemoveSymbol(txtRoyalti));
 			r.add("CAGARAN", Utils.RemoveSymbol(txtCagaran));
@@ -531,7 +535,8 @@ public class FrmPYWKeputusanData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, ROYALTI, CAGARAN, TARIKH_MULA_DASAR, TARIKH_TAMAT_DASAR FROM TBLPHPPERJANJIAN"
+			sql = "SELECT TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, ROYALTI, CAGARAN, TARIKH_MULA_DASAR, " 
+					+ " TEMPOH_DASAR, TARIKH_TAMAT_DASAR, JENIS_KADAR_SEWA FROM TBLPHPPERJANJIAN"
 					+ " WHERE ID_PERJANJIAN = '" + idPerjanjian + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -541,6 +546,9 @@ public class FrmPYWKeputusanData {
 				h.put("tarikhMulaDasar",
 						rs.getDate("TARIKH_MULA_DASAR") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_MULA_DASAR")));
+				h.put("tempohDasar",
+						rs.getString("TEMPOH_DASAR") == null ? "" : rs
+								.getString("TEMPOH_DASAR"));
 				h.put("tarikhTamatDasar",
 						rs.getDate("TARIKH_TAMAT_DASAR") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_TAMAT_DASAR")));
@@ -554,6 +562,9 @@ public class FrmPYWKeputusanData {
 						rs.getDate("TARIKH_TAMAT_PERJANJIAN") == null ? ""
 								: sdf.format(rs
 										.getDate("TARIKH_TAMAT_PERJANJIAN")));
+				h.put("jenisKadarSewa",
+						rs.getString("JENIS_KADAR_SEWA") == null ? "" : rs
+								.getString("JENIS_KADAR_SEWA"));
 				h.put("kadarSewa", rs.getString("KADAR_SEWA") == null ? ""
 						: Utils.format2Decimal(rs.getDouble("KADAR_SEWA")));
 				h.put("royalti",
@@ -638,14 +649,19 @@ public class FrmPYWKeputusanData {
 				long idFail = 0;
 				long idHasil = 0;
 				noFail = rsFail.getString("NO_FAIL");
-				if (noFail.contains("JKPTG/SPHP/931/")) {
-					noFail = noFail.replaceAll("JKPTG/SPHP/931/",
-							"JKPTG/SPHP/359/");
-				}
-				if (noFail.contains("JKPTG/SPHP/909/")) {
-					noFail = noFail.replaceAll("JKPTG/SPHP/909/",
-							"JKPTG/SPHP/359/");
-				}
+				/**
+				 * Kemaskini pada : 29/01/2020
+				 * Kemaskini oleh : Nurul Ain
+				 * Keterangan 	  : No. fail sewa sama dengan hasil 
+				 */
+//				if (noFail.contains("JKPTG/SPHP/931/")) {
+//					noFail = noFail.replaceAll("JKPTG/SPHP/931/",
+//							"JKPTG/SPHP/359/");
+//				}
+//				if (noFail.contains("JKPTG/SPHP/909/")) {
+//					noFail = noFail.replaceAll("JKPTG/SPHP/909/",
+//							"JKPTG/SPHP/359/");
+//				}
 
 				// CHECK JIKA FAIL HASIL PERNAH WUJUD
 				sqlCheckExistFailHasil = "SELECT FAIL.ID_FAIL, FAIL.NO_FAIL, HASIL.ID_HASIL FROM TBLPFDFAIL FAIL, TBLPHPHASIL HASIL WHERE FAIL.ID_FAIL = HASIL.ID_FAIL AND FAIL.NO_FAIL = '"

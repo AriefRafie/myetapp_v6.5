@@ -96,7 +96,7 @@
 #set ($no_tel = "")
 #set ($nama_pelbagainegara = "")
 #set ($no_hp = "")
-#set ($EmelPemohon = "")
+#set ($emel = "")
 #set ($jenis_pemohon = "2")
 #set ($jenis_pej = "")
 #set ($socSaudaraWaris = "")
@@ -1473,7 +1473,8 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
        
              </td>
         </tr>
-               
+        
+       
        <tr>
 				<td class="style38" valign="top" >#if($setmode != "disabled") <span class="style1">*</span> #end</td>			
 				<td valign="top" >Emel</td>
@@ -1481,18 +1482,10 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 				:
 				</td>
 				<td valign="top" >
-				<input  name="txtEmelPemohon" type="text" id="txtEmelPemohon" style="text-transform:uppercase;" onBlur="uppercase()" value="$txtEmelPemohon" size="50" onKeyUp="javascript:validateIC(event,this,this.value,'txtEmelPemohon')" maxlength="50" readonly class="disabled" />
+				<input  size="50" type="text" id="emel" name="emel" value="$emel">
 				</td>
 			</tr>
         #end
-        #if($readmode != "disabled" )
-         <tr>
-          <td class="style38" valign="top">&nbsp;</td>
-          <td class="style38" valign="top"><div align="left"></div></td>
-          <td valign="top">&nbsp;</td>
-          <td valign="top" height="1"><span class="style50">cth: abc@email.com </span></td>
-         </tr>
-       #end
       </table>
     </fieldset>
     
@@ -2232,9 +2225,9 @@ function Simpan() {
 		document.f1.no_hp[0].focus();
 	}*/
 	
-	else if (document.f1.txtEmelPemohon.value == "" ) {
+	else if (document.f1.emel.value == "" ) {
 		alert("Sila masukkan Emel");
-		document.f1.txtEmelPemohon.focus();
+		document.f1.emel.focus();
 	}
 	
 	
@@ -2367,7 +2360,7 @@ function Simpan() {
 		
 		var data2 = data + "&txtTarikhMati="+txtTarikhMati.value+"&txtNoKPBaruPemohon1="+txtNoKPBaruPemohon1.value+"&txtNoKPBaruPemohon2="+txtNoKPBaruPemohon2.value+"&txtNoKPBaruPemohon3="+txtNoKPBaruPemohon3.value+"&txtNoKPLamaPemohon="+txtNoKPLamaPemohon.value+"&txtNoKPLainPemohon="+txtNoKPLainPemohon.value+"&txtNamaPemohon="+txtNamaPemohon.value+"&txtAlamat1="+txtAlamat1.value; //&socJenisKPLainPemohon="+socJenisKPLainPemohon.value+"
 		//alert("TING TONG");
-		var data3 = data2+"&txtAlamat2="+txtAlamat2.value+"&txtAlamat3="+txtAlamat3.value+"&negid="+negid.value+"&socDaerah="+socDaerah.value+"&socBandar="+socBandar.value+"&txtPoskod="+txtPoskod.value+"&socNegeri="+socNegeri.value+"&txtUmurSimati="+txtUmurSimati.value+"&socJantinaSimati="+socJantinaSimati.value+"&txtUmurPemohon="+txtUmurPemohon.value+"&socJantinaPemohon="+socJantinaPemohon.value+"&taraf_penting="+taraf_penting.value+"&no_tel="+no_tel.value+"&nama_pelbagainegara="+nama_pelbagainegara.value+"&no_hp="+no_hp.value+"&jenis_pej="+jenis_pej.value+"&jenis_pemohon="+jenis_pemohon.value+"&txtEmelPemohon="+txtEmelPemohon.value+"&socSaudaraWaris="+socSaudaraWaris.value;
+		var data3 = data2+"&txtAlamat2="+txtAlamat2.value+"&txtAlamat3="+txtAlamat3.value+"&negid="+negid.value+"&socDaerah="+socDaerah.value+"&socBandar="+socBandar.value+"&txtPoskod="+txtPoskod.value+"&socNegeri="+socNegeri.value+"&txtUmurSimati="+txtUmurSimati.value+"&socJantinaSimati="+socJantinaSimati.value+"&txtUmurPemohon="+txtUmurPemohon.value+"&socJantinaPemohon="+socJantinaPemohon.value+"&taraf_penting="+taraf_penting.value+"&no_tel="+no_tel.value+"&nama_pelbagainegara="+nama_pelbagainegara.value+"&no_hp="+no_hp.value+"&jenis_pej="+jenis_pej.value+"&jenis_pemohon="+jenis_pemohon.value+"&emel="+emel.value+"&socSaudaraWaris="+socSaudaraWaris.value;
 		//alert("TING TING TONG");
 		var command = "&command=Simpanx";
 		var actionItem = (command+data3);

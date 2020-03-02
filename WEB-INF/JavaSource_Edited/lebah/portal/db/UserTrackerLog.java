@@ -60,8 +60,7 @@ public class UserTrackerLog {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void save2(HttpServletRequest req, String login, String module, String moduleClass) {
-	    
+	public static void save2(HttpServletRequest req, String login, String module, String moduleClass) {	    
 		String remoteAddr = req.getRemoteAddr();
 		java.util.Calendar cal = new java.util.GregorianCalendar();
 	    int year = cal.get(java.util.Calendar.YEAR);
@@ -80,7 +79,7 @@ public class UserTrackerLog {
 	    String h12 = hour12 < 10 ? "0" + hour12 : "" + hour12;
 	    String h24 = hour24 < 10 ? "0" + hour24 : "" + hour24;
 	    String m = min < 10 ? "0" + min : "" + min;
-	    String s = sec < 10 ? "0" + sec : "" + sec;
+	    //String s = sec < 10 ? "0" + sec : "" + sec;
 	    
 	    String time12 = h12 + ":" + m + " " + ampm;
 	    String time24 = h24 + "" + m;
@@ -110,7 +109,7 @@ public class UserTrackerLog {
 			stmt.executeUpdate(sql);
 			
 		} catch ( Exception ex ) {
-			myLog.info("ERROR: " + ex.getMessage());
+			myLog.info("save2:ERROR:: " + ex.getMessage());
 			//ex.printStackTrace();
 		} finally {
 			if ( db != null ) db.close();
@@ -150,9 +149,13 @@ public class UserTrackerLog {
 		return getUserTrackerList(user_login, year, month, day, 0, 0, 0);
 	}	
 	
-	public static Vector getUserTrackerList(String user_login, 
-											int year, int month, int day,
-											int year2, int month2, int day2) throws Exception {
+	public static Vector getUserTrackerList(String user_login
+		,int year
+		,int month
+		,int day
+		,int year2
+		,int month2
+		,int day2) throws Exception {
 		Db db = null;
 		String sql = "";
 		try {
@@ -165,8 +168,8 @@ public class UserTrackerLog {
 				String fmtDate2 = year2 + "-" + fmt(Integer.toString(month2)) + "-" + fmt(Integer.toString(day2));
 				r.add("log_date", fmtDate, ">=");
 				r.add("log_date", fmtDate2, "<=");			
-			}
-			else {
+			
+			}else {
 				if ( year > 0 ) r.add("log_year", year);
 				if ( month > 0 ) r.add("log_month", month);
 				if ( day > 0 ) r.add("log_day", day);	
@@ -182,7 +185,7 @@ public class UserTrackerLog {
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while ( rs.next() ) {
-				Hashtable h = new Hashtable();
+				Hashtable<String,String> h = new Hashtable<String,String>();
 				h.put("user_login", user_login);
 				h.put("remote_add", rs.getString("remote_add"));
 				h.put("module_id", rs.getString("module_id"));
@@ -203,10 +206,13 @@ public class UserTrackerLog {
 		
 	}
 	
-	public static Vector getLogStatistic(String user_login, 
-										    int year, int month, int day,
-										    int year2, int month2, int day2) throws Exception {
-												
+	public static Vector getLogStatistic(String user_login
+		,int year
+		,int month
+		,int day
+		,int year2
+		,int month2
+		,int day2) throws Exception {												
 		Vector logs = new Vector();
 		Vector modules = getModuleList();
 		Db db = null;
@@ -260,7 +266,7 @@ public class UserTrackerLog {
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector list = new Vector();
 			while ( rs.next() ) {
-				Hashtable h = new Hashtable();
+				Hashtable<String,String> h = new Hashtable<String,String>();
 				h.put("id", rs.getString("module_id"));
 				h.put("name", rs.getString("module_title"));
 				h.put("class", rs.getString("module_class"));

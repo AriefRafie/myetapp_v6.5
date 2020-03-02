@@ -1,386 +1,156 @@
-2020-03-02 11:36:53,157 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3904, column 1] : $jquery cannot be resolved.
-2020-03-02 11:38:44,500 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-03-02 11:38:44,500 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-03-02 11:38:44,500 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-03-02 11:38:44,500 - Left side ($secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 31, column 80]
-2020-03-02 11:38:44,501 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
-2020-03-02 11:38:44,501 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,502 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,503 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,503 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,503 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-03-02 11:38:44,503 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-03-02 11:38:44,503 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-03-02 11:38:44,574 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-03-02 11:38:46,165 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 114, column 1]
-2020-03-02 11:38:46,165 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 122, column 1]
-2020-03-02 11:38:46,165 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 262, column 382] : $command cannot be resolved.
-2020-03-02 11:38:46,165 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 284, column 56] : $id_S cannot be resolved.
-2020-03-02 11:38:46,165 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 285, column 60] : $id_SF cannot be resolved.
-2020-03-02 11:38:46,165 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 290, column 1]
-2020-03-02 11:38:46,165 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 322, column 44] : $mode2 cannot be resolved.
-2020-03-02 11:38:46,165 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 323, column 46] : $idFail cannot be resolved.
-2020-03-02 11:38:46,165 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 347, column 48] : $buktimati cannot be resolved.
-2020-03-02 11:38:46,165 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 348, column 48] : $sijilmati cannot be resolved.
-2020-03-02 11:38:46,166 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 684, column 61] : $listpemohon.idTarafkptg cannot be resolved.
-2020-03-02 11:38:46,167 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 811, column 73] : $setMode cannot be resolved.
-2020-03-02 11:38:46,168 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 848, column 73] : $setMode cannot be resolved.
-2020-03-02 11:38:46,168 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1271, column 28]
-2020-03-02 11:38:46,170 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1396, column 28]
-2020-03-02 11:38:46,170 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1484, column 157] : $txtEmelPemohon cannot be resolved.
-2020-03-02 11:38:46,170 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1987, column 79] : $idFail cannot be resolved.
-2020-03-02 11:38:46,171 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
-2020-03-02 11:38:46,221 - Null reference [template 'app/ppk/SuratMintaMaklumat.jsp', line 93, column 89] : $EkptgUtil.getCatatan($IdPermohonan).CATATAN_MAKLUMAT_TAMBAHAN cannot be resolved.
-2020-03-02 11:38:46,221 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2005, column 86] : $idFail cannot be resolved.
-2020-03-02 11:38:46,221 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2009, column 87] : $idFail cannot be resolved.
-2020-03-02 11:38:46,221 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2052, column 52] : $txtNomborResit1 cannot be resolved.
-2020-03-02 11:38:46,221 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2053, column 51] : $txdTarikhByrn1 cannot be resolved.
-2020-03-02 11:38:46,222 - Null reference [template 'app/ppk/headerppk_script.jsp', line 19, column 19] : $jquery cannot be resolved.
-2020-03-02 11:38:46,222 - Null reference [template 'app/ppk/headerppk_script.jsp', line 29, column 19] : $jquery cannot be resolved.
-2020-03-02 11:38:46,222 - Null reference [template 'app/ppk/headerppk_script.jsp', line 48, column 11] : $jquery cannot be resolved.
-2020-03-02 11:38:46,222 - Null reference [template 'app/ppk/headerppk_script.jsp', line 56, column 11] : $jquery cannot be resolved.
-2020-03-02 11:38:46,222 - Null reference [template 'app/ppk/headerppk_script.jsp', line 268, column 1] : $jquery cannot be resolved.
-2020-03-02 11:38:46,255 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2387, column 55] : ${modul} cannot be resolved.
-2020-03-02 11:38:46,257 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3901, column 1] : $jquery cannot be resolved.
-2020-03-02 11:38:46,257 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3904, column 1] : $jquery cannot be resolved.
-2020-03-02 11:40:41,929 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-03-02 11:40:41,929 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-03-02 11:40:41,929 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-03-02 11:40:41,930 - Left side ($secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 31, column 80]
-2020-03-02 11:40:41,930 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
-2020-03-02 11:40:41,930 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,930 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,931 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,931 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,931 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,931 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,931 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,931 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,931 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-03-02 11:40:41,931 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-03-02 11:40:41,931 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-03-02 11:40:42,017 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-03-02 11:40:43,415 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 114, column 1]
-2020-03-02 11:40:43,415 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 122, column 1]
-2020-03-02 11:40:43,415 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 262, column 382] : $command cannot be resolved.
-2020-03-02 11:40:43,415 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 284, column 56] : $id_S cannot be resolved.
-2020-03-02 11:40:43,415 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 285, column 60] : $id_SF cannot be resolved.
-2020-03-02 11:40:43,415 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 290, column 1]
-2020-03-02 11:40:43,415 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 322, column 44] : $mode2 cannot be resolved.
-2020-03-02 11:40:43,415 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 323, column 46] : $idFail cannot be resolved.
-2020-03-02 11:40:43,415 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 347, column 48] : $buktimati cannot be resolved.
-2020-03-02 11:40:43,415 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 348, column 48] : $sijilmati cannot be resolved.
-2020-03-02 11:40:43,417 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 684, column 61] : $listpemohon.idTarafkptg cannot be resolved.
-2020-03-02 11:40:43,418 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 811, column 73] : $setMode cannot be resolved.
-2020-03-02 11:40:43,419 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 848, column 73] : $setMode cannot be resolved.
-2020-03-02 11:40:43,420 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1271, column 28]
-2020-03-02 11:40:43,422 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1396, column 28]
-2020-03-02 11:40:43,423 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1484, column 157] : $txtEmelPemohon cannot be resolved.
-2020-03-02 11:40:43,423 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1987, column 79] : $idFail cannot be resolved.
-2020-03-02 11:40:43,423 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/SuratMintaMaklumat.jsp', line 93, column 89] : $EkptgUtil.getCatatan($IdPermohonan).CATATAN_MAKLUMAT_TAMBAHAN cannot be resolved.
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2005, column 86] : $idFail cannot be resolved.
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2009, column 87] : $idFail cannot be resolved.
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2052, column 52] : $txtNomborResit1 cannot be resolved.
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2053, column 51] : $txdTarikhByrn1 cannot be resolved.
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/headerppk_script.jsp', line 19, column 19] : $jquery cannot be resolved.
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/headerppk_script.jsp', line 29, column 19] : $jquery cannot be resolved.
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/headerppk_script.jsp', line 48, column 11] : $jquery cannot be resolved.
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/headerppk_script.jsp', line 56, column 11] : $jquery cannot be resolved.
-2020-03-02 11:40:43,430 - Null reference [template 'app/ppk/headerppk_script.jsp', line 268, column 1] : $jquery cannot be resolved.
-2020-03-02 11:40:43,437 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2387, column 55] : ${modul} cannot be resolved.
-2020-03-02 11:40:43,437 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3901, column 1] : $jquery cannot be resolved.
-2020-03-02 11:40:43,437 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3904, column 1] : $jquery cannot be resolved.
-2020-03-02 11:44:22,390 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-03-02 11:44:22,390 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-03-02 11:44:22,390 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-03-02 11:44:22,391 - Left side ($secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 31, column 80]
-2020-03-02 11:44:22,391 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
-2020-03-02 11:44:22,391 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,391 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-03-02 11:44:22,392 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-03-02 11:44:22,392 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-03-02 11:44:22,503 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-03-02 11:44:23,928 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 114, column 1]
-2020-03-02 11:44:23,929 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 122, column 1]
-2020-03-02 11:44:23,929 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 262, column 382] : $command cannot be resolved.
-2020-03-02 11:44:23,929 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 284, column 56] : $id_S cannot be resolved.
-2020-03-02 11:44:23,929 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 285, column 60] : $id_SF cannot be resolved.
-2020-03-02 11:44:23,929 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 290, column 1]
-2020-03-02 11:44:23,929 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 322, column 44] : $mode2 cannot be resolved.
-2020-03-02 11:44:23,929 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 323, column 46] : $idFail cannot be resolved.
-2020-03-02 11:44:23,929 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 347, column 48] : $buktimati cannot be resolved.
-2020-03-02 11:44:23,929 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 348, column 48] : $sijilmati cannot be resolved.
-2020-03-02 11:44:23,930 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 684, column 61] : $listpemohon.idTarafkptg cannot be resolved.
-2020-03-02 11:44:23,930 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 811, column 73] : $setMode cannot be resolved.
-2020-03-02 11:44:23,931 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 848, column 73] : $setMode cannot be resolved.
-2020-03-02 11:44:23,931 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1271, column 28]
-2020-03-02 11:44:23,932 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1396, column 28]
-2020-03-02 11:44:23,933 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1484, column 157] : $txtEmelPemohon cannot be resolved.
-2020-03-02 11:44:23,933 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1987, column 79] : $idFail cannot be resolved.
-2020-03-02 11:44:23,933 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
-2020-03-02 11:44:23,960 - Null reference [template 'app/ppk/SuratMintaMaklumat.jsp', line 93, column 89] : $EkptgUtil.getCatatan($IdPermohonan).CATATAN_MAKLUMAT_TAMBAHAN cannot be resolved.
-2020-03-02 11:44:23,960 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2005, column 86] : $idFail cannot be resolved.
-2020-03-02 11:44:23,960 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2009, column 87] : $idFail cannot be resolved.
-2020-03-02 11:44:23,960 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2052, column 52] : $txtNomborResit1 cannot be resolved.
-2020-03-02 11:44:23,960 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2053, column 51] : $txdTarikhByrn1 cannot be resolved.
-2020-03-02 11:44:23,961 - Null reference [template 'app/ppk/headerppk_script.jsp', line 19, column 19] : $jquery cannot be resolved.
-2020-03-02 11:44:23,961 - Null reference [template 'app/ppk/headerppk_script.jsp', line 29, column 19] : $jquery cannot be resolved.
-2020-03-02 11:44:23,961 - Null reference [template 'app/ppk/headerppk_script.jsp', line 48, column 11] : $jquery cannot be resolved.
-2020-03-02 11:44:23,961 - Null reference [template 'app/ppk/headerppk_script.jsp', line 56, column 11] : $jquery cannot be resolved.
-2020-03-02 11:44:23,961 - Null reference [template 'app/ppk/headerppk_script.jsp', line 268, column 1] : $jquery cannot be resolved.
-2020-03-02 11:44:24,009 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2387, column 55] : ${modul} cannot be resolved.
-2020-03-02 11:44:24,010 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3901, column 1] : $jquery cannot be resolved.
-2020-03-02 11:44:24,010 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3904, column 1] : $jquery cannot be resolved.
-2020-03-02 11:48:11,419 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-03-02 11:48:11,419 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-03-02 11:48:11,419 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-03-02 11:48:11,420 - Left side ($secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 31, column 80]
-2020-03-02 11:48:11,420 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
-2020-03-02 11:48:11,420 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,420 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,421 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,421 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,421 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-03-02 11:48:11,421 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-03-02 11:48:11,421 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-03-02 11:48:11,490 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-03-02 11:48:13,176 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 114, column 1]
-2020-03-02 11:48:13,176 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 122, column 1]
-2020-03-02 11:48:13,176 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 262, column 382] : $command cannot be resolved.
-2020-03-02 11:48:13,176 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 284, column 56] : $id_S cannot be resolved.
-2020-03-02 11:48:13,176 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 285, column 60] : $id_SF cannot be resolved.
-2020-03-02 11:48:13,176 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 290, column 1]
-2020-03-02 11:48:13,176 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 322, column 44] : $mode2 cannot be resolved.
-2020-03-02 11:48:13,176 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 323, column 46] : $idFail cannot be resolved.
-2020-03-02 11:48:13,176 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 347, column 48] : $buktimati cannot be resolved.
-2020-03-02 11:48:13,176 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 348, column 48] : $sijilmati cannot be resolved.
-2020-03-02 11:48:13,177 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 684, column 61] : $listpemohon.idTarafkptg cannot be resolved.
-2020-03-02 11:48:13,178 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 811, column 73] : $setMode cannot be resolved.
-2020-03-02 11:48:13,178 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 848, column 73] : $setMode cannot be resolved.
-2020-03-02 11:48:13,179 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1271, column 28]
-2020-03-02 11:48:13,181 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1396, column 28]
-2020-03-02 11:48:13,182 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1484, column 157] : $txtEmelPemohon cannot be resolved.
-2020-03-02 11:48:13,182 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1987, column 79] : $idFail cannot be resolved.
-2020-03-02 11:48:13,183 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
-2020-03-02 11:48:13,205 - Null reference [template 'app/ppk/SuratMintaMaklumat.jsp', line 93, column 89] : $EkptgUtil.getCatatan($IdPermohonan).CATATAN_MAKLUMAT_TAMBAHAN cannot be resolved.
-2020-03-02 11:48:13,205 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2005, column 86] : $idFail cannot be resolved.
-2020-03-02 11:48:13,205 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2009, column 87] : $idFail cannot be resolved.
-2020-03-02 11:48:13,206 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2052, column 52] : $txtNomborResit1 cannot be resolved.
-2020-03-02 11:48:13,206 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2053, column 51] : $txdTarikhByrn1 cannot be resolved.
-2020-03-02 11:48:13,206 - Null reference [template 'app/ppk/headerppk_script.jsp', line 19, column 19] : $jquery cannot be resolved.
-2020-03-02 11:48:13,206 - Null reference [template 'app/ppk/headerppk_script.jsp', line 29, column 19] : $jquery cannot be resolved.
-2020-03-02 11:48:13,207 - Null reference [template 'app/ppk/headerppk_script.jsp', line 48, column 11] : $jquery cannot be resolved.
-2020-03-02 11:48:13,207 - Null reference [template 'app/ppk/headerppk_script.jsp', line 56, column 11] : $jquery cannot be resolved.
-2020-03-02 11:48:13,207 - Null reference [template 'app/ppk/headerppk_script.jsp', line 268, column 1] : $jquery cannot be resolved.
-2020-03-02 11:48:13,257 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2387, column 55] : ${modul} cannot be resolved.
-2020-03-02 11:48:13,258 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3901, column 1] : $jquery cannot be resolved.
-2020-03-02 11:48:13,258 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3904, column 1] : $jquery cannot be resolved.
-2020-03-02 11:59:28,979 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-03-02 11:59:28,979 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-03-02 11:59:28,979 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-03-02 11:59:28,980 - Left side ($secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 31, column 80]
-2020-03-02 11:59:28,980 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
-2020-03-02 11:59:28,980 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,980 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,981 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,981 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,981 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,981 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,981 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-03-02 11:59:28,981 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-03-02 11:59:28,981 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-03-02 11:59:29,055 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-03-02 11:59:30,335 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 114, column 1]
-2020-03-02 11:59:30,335 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 122, column 1]
-2020-03-02 11:59:30,335 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 262, column 382] : $command cannot be resolved.
-2020-03-02 11:59:30,335 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 284, column 56] : $id_S cannot be resolved.
-2020-03-02 11:59:30,335 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 285, column 60] : $id_SF cannot be resolved.
-2020-03-02 11:59:30,336 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 290, column 1]
-2020-03-02 11:59:30,336 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 322, column 44] : $mode2 cannot be resolved.
-2020-03-02 11:59:30,336 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 323, column 46] : $idFail cannot be resolved.
-2020-03-02 11:59:30,336 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 347, column 48] : $buktimati cannot be resolved.
-2020-03-02 11:59:30,336 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 348, column 48] : $sijilmati cannot be resolved.
-2020-03-02 11:59:30,337 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 684, column 61] : $listpemohon.idTarafkptg cannot be resolved.
-2020-03-02 11:59:30,338 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 811, column 73] : $setMode cannot be resolved.
-2020-03-02 11:59:30,338 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 848, column 73] : $setMode cannot be resolved.
-2020-03-02 11:59:30,339 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1271, column 28]
-2020-03-02 11:59:30,343 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp[line 1396, column 28]
-2020-03-02 11:59:30,344 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1484, column 157] : $txtEmelPemohon cannot be resolved.
-2020-03-02 11:59:30,344 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 1987, column 79] : $idFail cannot be resolved.
-2020-03-02 11:59:30,345 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
-2020-03-02 11:59:30,371 - Null reference [template 'app/ppk/SuratMintaMaklumat.jsp', line 93, column 89] : $EkptgUtil.getCatatan($IdPermohonan).CATATAN_MAKLUMAT_TAMBAHAN cannot be resolved.
-2020-03-02 11:59:30,371 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2005, column 86] : $idFail cannot be resolved.
-2020-03-02 11:59:30,371 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2009, column 87] : $idFail cannot be resolved.
-2020-03-02 11:59:30,371 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2052, column 52] : $txtNomborResit1 cannot be resolved.
-2020-03-02 11:59:30,371 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2053, column 51] : $txdTarikhByrn1 cannot be resolved.
-2020-03-02 11:59:30,371 - Null reference [template 'app/ppk/headerppk_script.jsp', line 19, column 19] : $jquery cannot be resolved.
-2020-03-02 11:59:30,372 - Null reference [template 'app/ppk/headerppk_script.jsp', line 29, column 19] : $jquery cannot be resolved.
-2020-03-02 11:59:30,372 - Null reference [template 'app/ppk/headerppk_script.jsp', line 48, column 11] : $jquery cannot be resolved.
-2020-03-02 11:59:30,372 - Null reference [template 'app/ppk/headerppk_script.jsp', line 56, column 11] : $jquery cannot be resolved.
-2020-03-02 11:59:30,372 - Null reference [template 'app/ppk/headerppk_script.jsp', line 268, column 1] : $jquery cannot be resolved.
-2020-03-02 11:59:30,398 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 2387, column 55] : ${modul} cannot be resolved.
-2020-03-02 11:59:30,399 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3901, column 1] : $jquery cannot be resolved.
-2020-03-02 11:59:30,399 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp', line 3904, column 1] : $jquery cannot be resolved.
+2020-03-02 12:44:41,568 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:41,568 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:41,569 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:41,569 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:41,585 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:41,585 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:41,585 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:41,585 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:41,586 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-03-02 12:44:41,587 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
+2020-03-02 12:44:41,587 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-03-02 12:44:41,587 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-03-02 12:44:41,587 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-03-02 12:44:41,587 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-03-02 12:44:41,587 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-03-02 12:44:41,587 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-03-02 12:44:41,587 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-03-02 12:44:41,820 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-03-02 12:44:47,863 - Null reference [template 'app/online/manuUtama/index.jsp', line 292, column 49] : $jquery cannot be resolved.
+2020-03-02 12:44:47,864 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 94, column 1] : $jquery cannot be resolved.
+2020-03-02 12:44:47,864 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 95, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:47,864 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 102, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:47,864 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 105, column 35] : $jquery cannot be resolved.
+2020-03-02 12:44:47,865 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 106, column 36] : $jquery cannot be resolved.
+2020-03-02 12:44:47,865 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 108, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:47,865 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 114, column 19] : $jquery cannot be resolved.
+2020-03-02 12:44:47,865 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 115, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:47,865 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 116, column 19] : $jquery cannot be resolved.
+2020-03-02 12:44:47,865 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 117, column 19] : $jquery cannot be resolved.
+2020-03-02 12:44:47,865 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 118, column 19] : $jquery cannot be resolved.
+2020-03-02 12:44:47,866 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 119, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:47,866 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 125, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:47,866 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 126, column 11] : $jquery cannot be resolved.
+2020-03-02 12:44:47,866 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 127, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:47,899 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-03-02 12:44:47,900 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-03-02 12:44:47,900 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-03-02 12:44:47,901 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-03-02 12:44:47,901 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-03-02 12:44:47,901 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-03-02 12:44:47,901 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-03-02 12:44:48,046 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-03-02 12:44:48,046 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-03-02 12:44:48,046 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-03-02 12:44:48,047 - Left side ($secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 31, column 80]
+2020-03-02 12:44:48,047 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
+2020-03-02 12:44:48,047 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
+2020-03-02 12:44:48,047 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,047 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,048 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,048 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,048 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,048 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,048 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,048 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,048 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,048 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,049 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,049 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,049 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,049 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,049 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,049 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,049 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,050 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,050 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:48,050 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:48,051 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-03-02 12:44:48,051 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
+2020-03-02 12:44:48,051 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-03-02 12:44:48,051 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-03-02 12:44:48,051 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-03-02 12:44:48,051 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-03-02 12:44:48,051 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-03-02 12:44:48,051 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-03-02 12:44:48,051 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-03-02 12:44:48,353 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-03-02 12:44:49,020 - ResourceManager : found app/ppk/frmPrmhnnStatusPengunaOnline.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-03-02 12:44:49,060 - ResourceManager : found app/utils/record_paging.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-03-02 12:44:49,062 - Left side ($senarai.nokpbarusimati) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnStatusPengunaOnline.jsp[line 175, column 34]
+2020-03-02 12:44:49,063 - Null reference [template 'app/ppk/frmPrmhnnStatusPengunaOnline.jsp', line 185, column 20] : $senarai.nama_pejabat cannot be resolved.
+2020-03-02 12:44:49,063 - Left side ($senarai.nokpbarusimati) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnStatusPengunaOnline.jsp[line 175, column 34]
+2020-03-02 12:44:49,064 - Null reference [template 'app/ppk/frmPrmhnnStatusPengunaOnline.jsp', line 185, column 20] : $senarai.nama_pejabat cannot be resolved.
+2020-03-02 12:44:49,064 - Null reference [template 'app/ppk/frmPrmhnnStatusPengunaOnline.jsp', line 231, column 10] : $val_tab cannot be resolved.
+2020-03-02 12:44:49,135 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-03-02 12:44:49,135 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-03-02 12:44:49,135 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-03-02 12:44:49,136 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-03-02 12:44:49,136 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-03-02 12:44:49,136 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-03-02 12:44:49,136 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-03-02 12:44:53,231 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-03-02 12:44:53,231 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-03-02 12:44:53,231 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-03-02 12:44:53,232 - Left side ($secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 31, column 80]
+2020-03-02 12:44:53,232 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
+2020-03-02 12:44:53,232 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
+2020-03-02 12:44:53,232 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,232 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,232 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,233 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,233 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,233 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,233 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,233 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,233 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-03-02 12:44:53,234 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:53,234 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-03-02 12:44:53,235 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-03-02 12:44:53,235 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
