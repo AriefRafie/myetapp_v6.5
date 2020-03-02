@@ -79,8 +79,7 @@ public class AuthenticateUser
                 		" FROM USERS U "+
                 		" WHERE U.USER_LOGIN = '"+username+"'  "+
                 		" AND U.USER_PASSWORD = '"+PasswordService.encrypt(password)+"' ";
-                
-                myLog.info(" TEST CHECK AUTH : "+sql);
+//              myLog.info(" TEST CHECK AUTH : "+sql);
                 rs = stmt.executeQuery(sql);
                 if(rs.next())
                 {

@@ -38,9 +38,9 @@ public class PendaftaranCheck implements IServlet2 {
 	static Logger myLogger = Logger.getLogger(PendaftaranCheck.class);
 //	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
  
-	public void doService(HttpServletRequest request,
-			HttpServletResponse response, ServletContext context)
-			throws IOException, ServletException {
+	public void doService(HttpServletRequest request
+		,HttpServletResponse response
+		,ServletContext context) throws IOException, ServletException {
 
 		// String name="";
 		// String value="";
@@ -60,6 +60,7 @@ public class PendaftaranCheck implements IServlet2 {
 //		String username = request.getParameter("username");
 //		String password = request.getParameter("password");
 		String submit = request.getParameter("command");
+		myLogger.info("submit="+submit);
 		String securityToken = (String) session.getAttribute("securityToken");
 		String module = (String) session.getAttribute("_portal_module");
 //		System.out.println("module ::::::::::::::: "+module);

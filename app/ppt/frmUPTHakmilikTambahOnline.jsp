@@ -1,7 +1,7 @@
 #parse("app/ppt/frmLabelSet.jsp")
-#parse("app/ppt/HadAksesOnlinePPT.jsp")
-
-#set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
+#parse("app/ppt/HadAksesOnlinePPT.jsp") #set($frmtdate = "&nbsp;
+<i><font color='blue' style='font-size: 10px'>dd/mm/yyyy</font></i>
+")
 <!--  
 $saiz_listTanah
 <br>
@@ -17,52 +17,48 @@ Maklumat Hakmilik telah berjaya disimpan.
 #end -->
 
 
-	#if($mode=="new")
-    
-    
-    #if($maklumat_Hakmilik_Salin.size()>0)
-		
-		#set($nama_negeriprojek=$maklumat_Hakmilik_Salin.nama_negeri)
-		#set($nama_daerah=$maklumat_Hakmilik_Salin.nama_daerah)
+#if($mode=="new") #if($maklumat_Hakmilik_Salin.size()>0)
 
-		#set($txtSeksyen=$maklumat_Hakmilik_Salin.seksyen)
-		#set($txtNoHakmilik=$maklumat_Hakmilik_Salin.no_hakmilik)				
-		#set($txdTarikhLuput=$maklumat_Hakmilik_Salin.tarikh_luput)		
-		#set($txdTarikhDaftar=$maklumat_Hakmilik_Salin.tarikh_daftar)				
-		#set($txtBakiTempoh=$maklumat_Hakmilik_Salin.tempoh_luput)
-		#set($txtNoSyit=$maklumat_Hakmilik_Salin.no_syit)
-		#set($txtNoLot=$maklumat_Hakmilik_Salin.no_lot)
-		#set($txtNoPT=$maklumat_Hakmilik_Salin.no_pt)	
-		#set($txtLuasLotAmbil=$maklumat_Hakmilik_Salin.luas_ambil)
-		#set($txtLuasLotAsal=$maklumat_Hakmilik_Salin.luas_lot)		
-		#set($txtCatatan=$maklumat_Hakmilik_Salin.catatan)		
-		#set($txtNoWartaRizab=$maklumat_Hakmilik_Salin.no_warta_rizab)		
-		#set($txdTarikhWarta=$maklumat_Hakmilik_Salin.tarikh_warta_rizab)		
-		#set($txtLain=$maklumat_Hakmilik_Salin.nama_lain_rizab)		
-		#set($sorJenisRizab=$maklumat_Hakmilik_Salin.flag_jenis_rizab)
-		#set($sorDropdownUnitAsal=$maklumat_Hakmilik_Salin.id_unitluaslot_convert)
-		#set($sorDropdownUnitAmbil=$maklumat_Hakmilik_Salin.id_unitluasambil_convert)
-		#set($txtLuasLotAsalSebelumConvert=$maklumat_Hakmilik_Salin.nama_luas_asal)
-		#set($txtLuasLotAmbilSebelumConvert=$maklumat_Hakmilik_Salin.nama_luas_ambil)
-		
-		#set($txtLokasi=$maklumat_Hakmilik_Salin.lokasi)
-		#set($txtSyaratNyata=$maklumat_Hakmilik_Salin.syarat_nyata)
-		#set($txtSyaratKhas=$maklumat_Hakmilik_Salin.syarat_khas)		
-		#set($txtSekatanKepentingan=$maklumat_Hakmilik_Salin.sekatan_kepentingan)
-		#set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)
-		#set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
-        
-        
-        
-         
-        #set($showDropdownUnitAsal="yes")
-        #set($showDropdownUnitAmbil="yes")
-        
-        #set($showFieldAsalBeforeConvert="yes")
-        #set($showFieldAmbilBeforeConvert="yes")
-        
-        
-        <script>
+#set($nama_negeriprojek=$maklumat_Hakmilik_Salin.nama_negeri)
+#set($nama_daerah=$maklumat_Hakmilik_Salin.nama_daerah)
+
+#set($txtSeksyen=$maklumat_Hakmilik_Salin.seksyen)
+#set($txtNoHakmilik=$maklumat_Hakmilik_Salin.no_hakmilik)
+#set($txdTarikhLuput=$maklumat_Hakmilik_Salin.tarikh_luput)
+#set($txdTarikhDaftar=$maklumat_Hakmilik_Salin.tarikh_daftar)
+#set($txtBakiTempoh=$maklumat_Hakmilik_Salin.tempoh_luput)
+#set($txtNoSyit=$maklumat_Hakmilik_Salin.no_syit)
+#set($txtNoLot=$maklumat_Hakmilik_Salin.no_lot)
+#set($txtNoPT=$maklumat_Hakmilik_Salin.no_pt)
+#set($txtLuasLotAmbil=$maklumat_Hakmilik_Salin.luas_ambil)
+#set($txtLuasLotAsal=$maklumat_Hakmilik_Salin.luas_lot)
+#set($txtCatatan=$maklumat_Hakmilik_Salin.catatan)
+#set($txtNoWartaRizab=$maklumat_Hakmilik_Salin.no_warta_rizab)
+#set($txdTarikhWarta=$maklumat_Hakmilik_Salin.tarikh_warta_rizab)
+#set($txtLain=$maklumat_Hakmilik_Salin.nama_lain_rizab)
+#set($sorJenisRizab=$maklumat_Hakmilik_Salin.flag_jenis_rizab)
+#set($sorDropdownUnitAsal=$maklumat_Hakmilik_Salin.id_unitluaslot_convert)
+#set($sorDropdownUnitAmbil=$maklumat_Hakmilik_Salin.id_unitluasambil_convert)
+#set($txtLuasLotAsalSebelumConvert=$maklumat_Hakmilik_Salin.nama_luas_asal)
+#set($txtLuasLotAmbilSebelumConvert=$maklumat_Hakmilik_Salin.nama_luas_ambil)
+
+#set($txtLokasi=$maklumat_Hakmilik_Salin.lokasi)
+#set($txtSyaratNyata=$maklumat_Hakmilik_Salin.syarat_nyata)
+#set($txtSyaratKhas=$maklumat_Hakmilik_Salin.syarat_khas)
+#set($txtSekatanKepentingan=$maklumat_Hakmilik_Salin.sekatan_kepentingan)
+#set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)
+#set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
+
+
+
+
+#set($showDropdownUnitAsal="yes") #set($showDropdownUnitAmbil="yes")
+
+#set($showFieldAsalBeforeConvert="yes")
+#set($showFieldAmbilBeforeConvert="yes")
+
+
+<script>
 		
 		/*
 		$jquery(document).ready(function()
@@ -76,815 +72,875 @@ Maklumat Hakmilik telah berjaya disimpan.
 		
 	
 		</script>
-		
-		
-		#end
-    
-	<fieldset id="top">
-	<legend><strong>Maklumat Hakmilik</strong></legend>	
-		
-		<br/>
-		
-		<table width="100%" border="0">
-			<tr>
-				<td width="1%">&nbsp;</td>
-				<td width="23%">Negeri</td>
-				<td width="1%">:</td>
-				<td width="75%">$!nama_negeriprojek</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				#if($showJajahan=="yes")
-				<td>Jajahan</td>
-				#else
-				<td>Daerah</td>
-				#end
-				<td>:</td>
-				<td>$!nama_daerah</td>
-			</tr>
-			#if($showJajahan=="yes")
-			<tr>
-				<td></td>
-				<td>Daerah</td>
-				<td>:</td>
-				<td>$!SelectDaerahPenggawa</td>
-			</tr>
-			#end
-			<tr>
-				<td><font color="red">*</font></td>
-				<td>Bandar/Pekan/Mukim</td>
-				<td>:</td>
-				<td>$!selectMukim</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>Seksyen</td>
-				<td>:</td>
-				<td><input type="text" name="txtSeksyen" id="txtSeksyen" value="$!txtSeksyen" size="10" maxlength="30"   ></td>
-			</tr>
-		</table>
-		
-	</fieldset>
-	
-	
-	<fieldset>	
-		<table width="100%" border="0">
-			<tr>
-				<td width="1%">#if($hideFieldHakmilik=="no")<font color="red">*</font>#end</td>
-				<td width="23%">Jenis Hakmilik</td>
-				<td width="1%">:</td>
-				<td width="75%">$!selectJenisHakmilik</td>
-			</tr>	
-			<tr>
-				<td>#if($hideFieldHakmilik=="no")<font color="red">*</font>#end</td>
-				<td>No.Hakmilik</td>
-				<td>:</td>
-				<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50"   ></td>
-			</tr>
-			
-		
-		#if($hideFieldHakmilik=="no")	
-		
-			<tr>
-				<td>&nbsp;</td>
-				<td>Tarikh Daftar</td>
-				<td>:</td>
-				<td><input type="text" name="txdTarikhDaftar" id="txdTarikhDaftar" value="$!txdTarikhDaftar" size="12" maxlength="10" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)">
-				<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhDaftar',false,'dmy');">&nbsp;$!frmtdate</td>
-			</tr>
-		
-			
-			#if($showLuput=="yes")
-			<tr>
-				<td>&nbsp;</td>
-				<td>Tarikh Luput</td>
-				<td>:</td>
-				<td><input type="text" name="txdTarikhLuput" id="txdTarikhLuput" value="$!txdTarikhLuput" size="12" maxlength="10" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)">
-				<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLuput',false,'dmy');">&nbsp;$!frmtdate</td>
-			</tr>
-			
-			<tr>
-				<td>&nbsp;</td>
-				<td>Baki Tempoh (Tahun)</td>
-				<td>:</td>
-				<td><input type="text" name="txtBakiTempoh" id="txtBakiTempoh" value="$!txtBakiTempoh" size="12" maxlength="10"   ></td>
-			</tr>
-			#end
-			
-			<tr>
-				<td><font color="red">*</font></td>
-				<td>No.Syit</td>
-				<td>:</td>
-				<td><input type="text" name="txtNoSyit" id="txtNoSyit" value="$!txtNoSyit" size="12" maxlength="40"   ></td>
-			</tr>
-		
-		#end
-			
-			<tr>
-				<td>&nbsp;</td>
-            	<td>No.PT</td>
-            	<td>:</td>
-            	<td>$!selectKodLot</td>
-            </tr>
-            
-            <tr>
-            	<td>&nbsp;</td>
-            	<td>&nbsp;</td>
-            	<td>&nbsp;</td>
-                <td><input type="text" name="txtNoPT" id="txtNoPT" value="$!txtNoPT" size="12" maxlength="20"></td>
-			</tr>
-            
-            <tr>
-            	<td>&nbsp;</td>
-            	<td>No.LOT</td>
-            	<td>:</td>
-                <td><input type="text" name="txtNoLot" id="txtNoLot" value="$!txtNoLot" size="12" maxlength="20">
-                 <a href="javascript:popupCarianHakmilikSalin('$id_permohonan','skrin_hakmilik_sek8_KJP','$id_daerah')"><font color="blue">>> SALIN MAKLUMAT HAKMILIK/LOT</font></a>
-                
-                
-                </td>
-			</tr>
-		
-		
-		#if($hideFieldHakmilik=="no")
-			
-			<tr>
-				<td><font color="red">*</font></td>
-				<td>Kategori Tanah</td>
-				<td>:</td>
-				<td>$!selectKategoriTanah</td>
-			</tr>
-			<tr>
-				<td><font color="red">*</font></td>
-				<td>Unit Luas Asal</td>
-				<td>:</td>
-				<td>$!selectUnitLuasLot</td>
-			</tr>
-			<tr>
-				<td valign="top"><font color="red">*</font></td>
-				<td valign="top">Luas Asal</td>
-				<td valign="top">:</td>
-				<td>
-					
-					#if($showFieldAsalBeforeConvert=="yes")
-					<input type="text" name="txtLuasLotAsalSebelumConvert" id="txtLuasLotAsalSebelumConvert" size="50" value="$!txtLuasLotAsalSebelumConvert" maxlength="100"   /><p/>
-					#end
-					
-					<input type="text" name="txtLuasLotAsal" id="txtLuasLotAsal" size="15" value="$!txtLuasLotAsal" maxlength="20" onkeyup="validateNilai(this,this.value);" />
-					#if($showBoxAsal2=="yes" || $showBoxAsal3=="yes")<input type="text" name="txtLuasLotAsal2" id="txtLuasLotAsal2" size="15" value="$!txtLuasLotAsal2" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
-					#if($showBoxAsal3=="yes")<input type="text" name="txtLuasLotAsal3" id="txtLuasLotAsal3" size="15" value="$!txtLuasLotAsal3" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
-					
-					#if($showDropdownUnitAsal=="yes")
-					<select name="sorDropdownUnitAsal" style="width:132px" onchange="onchangeUnitAsal()">
-      		
-      					#if($sorDropdownUnitAsal=="1")
-      					<option value="1">HEKTAR</option>
-						<option value="2">METER PERSEGI</option>	
-      					#elseif($sorDropdownUnitAsal=="2")
-      					<option value="2">METER PERSEGI</option>
-      					<option value="1">HEKTAR</option>
-      					#else
-      					<option value="">SILA PILIH</option>
-      					<option value="1">HEKTAR</option>
-						<option value="2">METER PERSEGI</option>	
-      					#end
 
-					</select>
-					#end
-					
-				</td>
-			</tr>
-			
-			#if($showButtonConvertAsal=="yes" || $showFieldAsalBeforeConvert=="yes")
-			<tr>
-				<td colspan="3">&nbsp;</td>
-				<td>
-					#if($showButtonConvertAsal=="yes")
-					<input type="button" name="cmdConvert" value ="Convert" onClick="javascript:convertNilaiAsal('$!showBoxAsal2','$!showBoxAsal3')">
-					#end
-					#if($showFieldAsalBeforeConvert=="yes")
-					<input type="button" name="cmdClear" value ="Kosongkan" onClick="javascript:clearConvertAsal()">
-					#end
-				</td>
-			</tr>
-			#end
-			
-			<tr>
-				<td><font color="red">*</font></td>
-				<td>Unit Luas Ambil</td>
-				<td>:</td>
-				<td>$!selectUnitLuasAmbil</td>
-			</tr>
-			<tr>
-				<td valign="top"><font color="red">*</font></td>
-				<td valign="top">Luas Diambil</td>
-				<td valign="top">:</td>
-				<td>
-					
-					#if($showFieldAmbilBeforeConvert=="yes")
-					<input type="text" name="txtLuasLotAmbilSebelumConvert" id="txtLuasLotAmbilSebelumConvert" size="50" value="$!txtLuasLotAmbilSebelumConvert" maxlength="100"   /><p/>
-					#end
-					
-					<input type="text" name="txtLuasLotAmbil" id="txtLuasLotAmbil" size="15" value="$!txtLuasLotAmbil" maxlength="20" onkeyup="validateNilai(this,this.value);" />
-					#if($showBoxAmbil2=="yes" || $showBoxAmbil3=="yes")<input type="text" name="txtLuasLotAmbil2" id="txtLuasLotAmbil2" size="15" value="$!txtLuasLotAmbil2" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
-					#if($showBoxAmbil3=="yes")<input type="text" name="txtLuasLotAmbil3" id="txtLuasLotAmbil3" size="15" value="$!txtLuasLotAmbil3" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
-				
-					#if($showDropdownUnitAmbil=="yes")
-					<select name="sorDropdownUnitAmbil" style="width:132px" onchange="onchangeUnitAmbil()">
-      		
-      					#if($sorDropdownUnitAmbil=="1")
-      					<option value="1">HEKTAR</option>
-						<option value="2">METER PERSEGI</option>	
-      					#elseif($sorDropdownUnitAmbil=="2")
-      					<option value="2">METER PERSEGI</option>
-      					<option value="1">HEKTAR</option>
-      					#else
-      					<option value="">SILA PILIH</option>
-      					<option value="1">HEKTAR</option>
-						<option value="2">METER PERSEGI</option>	
-      					#end
 
-					</select>
-					#end
-					
-				</td>
-			</tr>		
-			
-			#if($showButtonConvertAmbil=="yes" || $showFieldAmbilBeforeConvert=="yes")
-			<tr>
-				<td colspan="3">&nbsp;</td>
-				<td>
-					#if($showButtonConvertAmbil=="yes")
-					<input type="button" name="cmdConvert" value ="Convert" onClick="javascript:convertNilaiAmbil('$!showBoxAmbil2','$!showBoxAmbil3')">
-					#end
-					#if($showFieldAmbilBeforeConvert=="yes")
-					<input type="button" name="cmdClear" value ="Kosongkan" onClick="javascript:clearConvertAmbil()">
-					#end
-				</td>
-			</tr>
-			#end
-			
-		#end
-			
-        </table>
-     </fieldset>	
-   
-   
-   #if($hideFieldHakmilik=="no")
-     
-     <fieldset>
-       <table width="100%" border="0">
-       		
-       		#set($checkSorA="")
-       		#set($checkSorB="")
-       		#set($checkSorC="")
-       		#set($checkSorD="")
-       		#set($checkSorE="")
-       
-       		#if($sorJenisRizab=="1")
-       			#set($checkSorA="checked")
-       		#elseif($sorJenisRizab=="2")
-       			#set($checkSorB="checked")
-       		#elseif($sorJenisRizab=="3")
-       			#set($checkSorC="checked")
-       		#elseif($sorJenisRizab=="4")
-       			#set($checkSorD="checked")
-       		#elseif($sorJenisRizab=="5")
-       			#set($checkSorE="checked")
-       		#end
-       		
-       
-       		<tr>
-       			<td width="1%">&nbsp;</td>
-            	<td valign="top" width="23%">Jenis Rizab</td>
-            	<td valign="top" width="1%">:</td>
-            	<td width="75%">
-  					<input type="radio" name="sorJenisRizab" id="sorRizabMelayu" $checkSorA value="1" onclick="doOnchange('0')">Kawasan Rizab Melayu<br/>
-  					<input type="radio" name="sorJenisRizab" id="sorOrangAsli" $checkSorB value="2" onclick="doOnchange('0')">Kawasan Orang Asli<br/>
-  					<input type="radio" name="sorJenisRizab" id="sorRizabOrangAsli" $checkSorC value="3" onclick="doOnchange('0')">Rizab Orang Asli<br/>
-  					<input type="radio" name="sorJenisRizab" id="sorBerkelompok" $checkSorD value="4" onclick="doOnchange('0')">Kawasan Penempatan Berkelompok<br/>
-  					<input type="radio" name="sorJenisRizab" id="sorLain" $checkSorE value="5" onclick="doOnchange('0')">Lain - lain
-  					#if($showLainLain=="yes")
-  					&nbsp;: <input type="text" name="txtLain" size="25" value="$!txtLain" maxlength="80" id="txtLain"  >
-  					#end
-  				</td>
-            </tr>
-            
-            #if($sorJenisRizab!="")
-            <tr>
-            	<td colspan="3">&nbsp;</td>
-            	<td>&nbsp;<a href="javascript:doOnchange('1')"><font color="blue">kosongkan pilihan</font></a></td>
-            </tr>
-            #end
-            
-            #if($showWarta=="yes")
-            <tr>
-            	<td>&nbsp;</td>
-            	<td>No.Warta</td>
-            	<td>:</td>
-            	<td><input type="text" name="txtNoWartaRizab" size="20" value="$!txtNoWartaRizab" maxlength="20" id="txtNoWartaRizab"  ></td>
-            </tr>
-            <tr>
-            	<td>&nbsp;</td>
-        		<td>Tarikh Warta</td>
-        		<td>:</td>
-            	<td><input name="txdTarikhWarta" id="txdTarikhWarta" size="12" type="text" value="$!txdTarikhWarta" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-            	<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhWarta',false,'dmy');">&nbsp;$!frmtdate</td>
-        	</tr>
-        	#end
-        	
-       </table>
-     </fieldset>
-     
-     #end
-     
-     <fieldset>       
-        <table width="100%" border="0">    
-			<tr>
-				<td width="1%">&nbsp;</td>
-            	<td valign="top" width="23%">Catatan</td>
-            	<td valign="top" width="1%">:</td>
-            	<td width="75%"><textarea name="txtCatatan" id="txtCatatan" cols="70%" rows="10"  onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$!txtCatatan</textarea></td>
-            </tr>
-            <tr>
-        		<td colspan="3">&nbsp;</td>
-             	<td valign="top">Baki Aksara :&nbsp;<input type="text" readonly class="disabled" name="remLen1" size="3" maxlength="3" value="4000"></td>
-           	</tr> 
-		</table>
-        
-	</fieldset>	
-	#end
-	<fieldset>
-		<table width="100%" border="0">
-		<tr>
-			<td width="1%"></td>
-			<td valign="top" width="23%">Tarikh Pembayaran</td>
-			<td valign="top" width="1%">:</td>
-			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran" size="12" type="text" value="$!txdTarikhPembayaran" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-            	<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
-		</tr>
-		<tr>
-            	<td valign="top">
-            	<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
-            	<td valign="top">:</td>
-  				<td><input id="fileupload" name="fileupload" type=file size=40 /></td><br/>
-  			</tr>
-		</table>
-	</fieldset>
-	
-	
+#end
+
+<fieldset id="top">
+	<legend>
+		<strong>Maklumat Hakmilik</strong>
+	</legend>
+
+	<br />
 
 	<table width="100%" border="0">
-        	<tr><td>&nbsp;</td></tr>
-        	<tr>
-        		<td>$!perhatian3</td>
-        	</tr>
-        </table>
-        
-	</fieldset>	
-
-	
-	
-	
-	#if($mode=="view")
-
-	#if($onchangeHM=="no")
-		#foreach($data in $dataMaklumatTanah)
-		
-		#set($nama_negeriprojek=$data.nama_negeri)
-		#set($nama_daerah=$data.nama_daerah)
-
-		#set($txtSeksyen=$data.seksyen)
-		#set($txtNoHakmilik=$data.no_hakmilik)				
-		#set($txdTarikhLuput=$data.tarikh_luput)		
-		#set($txdTarikhDaftar=$data.tarikh_daftar)				
-		#set($txtBakiTempoh=$data.tempoh_luput)
-		#set($txtNoSyit=$data.no_syit)
-		#set($txtNoLot=$data.no_lot)
-		#set($txtNoPT=$data.no_pt)	
-		#set($txtLuasLotAmbil=$data.luas_ambil)
-		#set($txtLuasLotAsal=$data.luas_lot)		
-		#set($txtCatatan=$data.catatan)		
-		#set($txtNoWartaRizab=$data.no_warta_rizab)		
-		#set($txdTarikhWarta=$data.tarikh_warta_rizab)		
-		#set($txtLain=$data.nama_lain_rizab)		
-		#set($sorJenisRizab=$data.flag_jenis_rizab)
-		#set($sorDropdownUnitAsal=$data.id_unitluaslot_convert)
-		#set($sorDropdownUnitAmbil=$data.id_unitluasambil_convert)
-		#set($txtLuasLotAsalSebelumConvert=$data.nama_luas_asal)
-		#set($txtLuasLotAmbilSebelumConvert=$data.nama_luas_ambil)
-		#set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
-		#end
-	#end
-	
-	
-		#if($isEdit=="no")
-		#set($disability = "readonly")
-		#set($disabilityx = "class=disabled")
-		#set($disability1 = "disabled")
-		#set($M = "")
-		#else
-		#set($M = "*")
-		#set($disability = "")
-		#set($disabilityx = "")
-		#set($disability1 = "")
-		#end
-		
-	<fieldset id="top">
-	<legend><strong>Maklumat Hakmilik</strong></legend>	
-		
-		<br/>
-		
-		<table width="100%" border="0">
-			<tr>
-				<td width="1%">&nbsp;</td>
-				<td width="23%">Negeri</td>
-				<td width="1%">:</td>
-				<td width="75%">$!nama_negeriprojek</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				#if($showJajahan=="yes")
-				<td>Jajahan</td>
-				#else
-				<td>Daerah</td>
-				#end
-				<td>:</td>
-				<td>$!nama_daerah</td>
-			</tr>
-			#if($showJajahan=="yes")
-			<tr>
-				<td></td>
-				<td>Daerah</td>
-				<td>:</td>
-				<td>$!SelectDaerahPenggawa</td>
-			</tr>
-			#end
-			<tr>
-				<td><font color="red">$!M</font></td>
-				<td>Bandar/Pekan/Mukim</td>
-				<td>:</td>
-				<td>$!selectMukim</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>Seksyen</td>
-				<td>:</td>
-				<td><input $disability $disabilityx type="text" name="txtSeksyen" id="txtSeksyen" value="$!txtSeksyen" size="10" maxlength="30"   ></td>
-			</tr>
-		</table>
-		
-	</fieldset>
-	
-	
-	<fieldset>	
-		<table width="100%" border="0">
-			<tr>
-				<td width="1%">#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end</td>
-				<td width="23%">Jenis Hakmilik</td>
-				<td width="1%">:</td>
-				<td width="75%">$!selectJenisHakmilik</td>
-			</tr>	
-			<tr>
-				<td>#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end</td>
-				<td>No.Hakmilik</td>
-				<td>:</td>
-				<td><input $disability $disabilityx type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50"   ></td>
-			</tr>
-			
-		#if($hideFieldHakmilik=="no")
-			
-			<tr>
-				<td>&nbsp;</td>
-				<td>Tarikh Daftar</td>
-				<td>:</td>
-				<td><input $disability $disabilityx type="text" name="txdTarikhDaftar" id="txdTarikhDaftar" value="$!txdTarikhDaftar" size="12" maxlength="10" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)">
-				#if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhDaftar',false,'dmy');">&nbsp;$!frmtdate#end</td>
-			</tr>
-			
-			#if($showLuput=="yes")
-			<tr>
-				<td>&nbsp;</td>
-				<td>Tarikh Luput</td>
-				<td>:</td>
-				<td><input $disability $disabilityx type="text" name="txdTarikhLuput" id="txdTarikhLuput" value="$!txdTarikhLuput" size="12" maxlength="10" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)">
-				#if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLuput',false,'dmy');">&nbsp;$!frmtdate#end</td>
-			</tr>
-			
-			<tr>
-				<td>&nbsp;</td>
-				<td>Baki Tempoh (Tahun)</td>
-				<td>:</td>
-				<td><input $disability $disabilityx type="text" name="txtBakiTempoh" id="txtBakiTempoh" value="$!txtBakiTempoh" size="12" maxlength="10"   ></td>
-			</tr>
-			#end
-			
-			<tr>
-				<td><font color="red">$!M</font></td>
-				<td>No. Syit</td>
-				<td>:</td>
-				<td><input $disability $disabilityx type="text" name="txtNoSyit" id="txtNoSyit" value="$!txtNoSyit" size="12" maxlength="40"   ></td>
-			</tr>
-		
-		#end 
-			
-			<tr>
-				<td>&nbsp;</td>
-            	<td>No.PT</td>
-            	<td>:</td>
-            	<td>$!selectKodLot</td>
-            </tr>
-            
-            <tr>
-            	<td>&nbsp;</td>
-            	<td>&nbsp;</td>
-            	<td>&nbsp;</td>
-                <td><input $disability $disabilityx type="text" name="txtNoPT" id="txtNoPT" value="$!txtNoPT" size="12" maxlength="20"></td>
-			</tr>
-            
-            <tr>
-            	<td>&nbsp;</td>
-            	<td>No.LOT</td>
-            	<td>:</td>
-                <td><input $disability $disabilityx type="text" name="txtNoLot" id="txtNoLot" value="$!txtNoLot" size="12" maxlength="20"></td>
-			</tr>
-		
-		#if($hideFieldHakmilik=="no")
-			
-			<tr>
-				<td><font color="red">$!M</font></td>
-				<td>Kategori Tanah</td>
-				<td>:</td>
-				<td>$!selectKategoriTanah</td>
-			</tr>
-			<tr>
-				<td><font color="red">$!M</font></td>
-				<td>Unit Luas Asal</td>
-				<td>:</td>
-				<td>$!selectUnitLuasLot</td>
-			</tr>
-			<tr>
-				<td valign="top"><font color="red">$!M</font></td>
-				<td valign="top">Luas Asal</td>
-				<td valign="top">:</td>
-				<td>
-					
-					#if($showFieldAsalBeforeConvert=="yes")
-					<input type="text" name="txtLuasLotAsalSebelumConvert" $disability $disabilityx id="txtLuasLotAsalSebelumConvert" size="50" value="$!txtLuasLotAsalSebelumConvert" maxlength="100"   /><p/>
-					#end
-					
-					<input type="text" $disability $disabilityx name="txtLuasLotAsal" id="txtLuasLotAsal" size="15" value="$!txtLuasLotAsal" maxlength="20" onkeyup="validateNilai(this,this.value);" />
-					#if($showBoxAsal2=="yes" || $showBoxAsal3=="yes")<input type="text" name="txtLuasLotAsal2" id="txtLuasLotAsal2" size="15" value="$!txtLuasLotAsal2" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
-					#if($showBoxAsal3=="yes")<input type="text" name="txtLuasLotAsal3" id="txtLuasLotAsal3" size="15" value="$!txtLuasLotAsal3" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
-					
-					#if($showDropdownUnitAsal=="yes")
-					<select $disability1 $disabilityx name="sorDropdownUnitAsal" style="width:132px" onchange="onchangeUnitAsalUpdate()">
-      		
-      					#if($sorDropdownUnitAsal=="1")
-      					<option value="1">HEKTAR</option>
-						<option value="2">METER PERSEGI</option>	
-      					#elseif($sorDropdownUnitAsal=="2")
-      					<option value="2">METER PERSEGI</option>
-      					<option value="1">HEKTAR</option>
-      					#else
-      					<option value="">SILA PILIH</option>
-      					<option value="1">HEKTAR</option>
-						<option value="2">METER PERSEGI</option>	
-      					#end
-
-					</select>
-					#end
-					
-				</td>
-			</tr>
-			
-			
-			#if($isEdit=="yes" && ($showButtonConvertAsal=="yes" || $showFieldAsalBeforeConvert=="yes"))
-			<tr>
-				<td colspan="3">&nbsp;</td>
-				<td>
-					#if($showButtonConvertAsal=="yes")
-					<input type="button" name="cmdConvert" value ="Convert" onClick="javascript:convertNilaiAsalUpdate('$!showBoxAsal2','$!showBoxAsal3')">
-					#end
-					#if($showFieldAsalBeforeConvert=="yes")
-					<input type="button" name="cmdClear" value ="Kosongkan" onClick="javascript:clearConvertAsalUpdate()">
-					#end
-				</td>
-			</tr>
-			#end
-			
-			<tr>
-				<td><font color="red">$!M</font></td>
-				<td>Unit Luas Ambil</td>
-				<td>:</td>
-				<td>$!selectUnitLuasAmbil</td>
-			</tr>
-			<tr>
-				<td valign="top"><font color="red">$!M</font></td>
-				<td valign="top">Luas Diambil</td>
-				<td valign="top">:</td>
-				<td>
-					
-					#if($showFieldAmbilBeforeConvert=="yes")
-					<input type="text" $disability $disabilityx name="txtLuasLotAmbilSebelumConvert" id="txtLuasLotAmbilSebelumConvert" size="50" value="$!txtLuasLotAmbilSebelumConvert" maxlength="100"   /><p/>
-					#end
-					
-					<input $disability $disabilityx type="text" name="txtLuasLotAmbil" id="txtLuasLotAmbil" size="15" value="$!txtLuasLotAmbil" maxlength="20" onkeyup="validateNilai(this,this.value);" />
-					#if($showBoxAmbil2=="yes" || $showBoxAmbil3=="yes")<input type="text" name="txtLuasLotAmbil2" id="txtLuasLotAmbil2" size="15" value="$!txtLuasLotAmbil2" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
-					#if($showBoxAmbil3=="yes")<input type="text" name="txtLuasLotAmbil3" id="txtLuasLotAmbil3" size="15" value="$!txtLuasLotAmbil3" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
-				
-					#if($showDropdownUnitAmbil=="yes")
-					<select $disability1 $disabilityx name="sorDropdownUnitAmbil" style="width:132px" onchange="onchangeUnitAmbilUpdate()">
-      		
-      					#if($sorDropdownUnitAmbil=="1")
-      					<option value="1">HEKTAR</option>
-						<option value="2">METER PERSEGI</option>	
-      					#elseif($sorDropdownUnitAmbil=="2")
-      					<option value="2">METER PERSEGI</option>
-      					<option value="1">HEKTAR</option>
-      					#else
-      					<option value="">SILA PILIH</option>
-      					<option value="1">HEKTAR</option>
-						<option value="2">METER PERSEGI</option>	
-      					#end
-
-					</select>
-					#end
-					
-				</td>
-			</tr>		
-			
-			#if($isEdit=="yes" && ($showButtonConvertAmbil=="yes" || $showFieldAmbilBeforeConvert=="yes"))
-			<tr>
-				<td colspan="3">&nbsp;</td>
-				<td>
-					#if($showButtonConvertAmbil=="yes")
-					<input type="button" name="cmdConvert" value ="Convert" onClick="javascript:convertNilaiAmbilUpdate('$!showBoxAmbil2','$!showBoxAmbil3')">
-					#end
-					#if($showFieldAmbilBeforeConvert=="yes")
-					<input type="button" name="cmdClear" value ="Kosongkan" onClick="javascript:clearConvertAmbilUpdate()">
-					#end
-				</td>
-			</tr>
-			#end
-		
-		#end
-			
-        </table>
-     </fieldset>	
-     
-     #if($hideFieldHakmilik=="no")
-     
-     <fieldset>
-       <table width="100%" border="0">
-       		
-       		#set($checkSorA="")
-       		#set($checkSorB="")
-       		#set($checkSorC="")
-       		#set($checkSorD="")
-       		#set($checkSorE="")
-       
-       		#if($sorJenisRizab=="1")
-       			#set($checkSorA="checked")
-       		#elseif($sorJenisRizab=="2")
-       			#set($checkSorB="checked")
-       		#elseif($sorJenisRizab=="3")
-       			#set($checkSorC="checked")
-       		#elseif($sorJenisRizab=="4")
-       			#set($checkSorD="checked")
-       		#elseif($sorJenisRizab=="5")
-       			#set($checkSorE="checked")
-       		#end
-       		
-       
-       		<tr>
-       			<td width="1%">&nbsp;</td>
-            	<td valign="top" width="23%">Jenis Rizab</td>
-            	<td valign="top" width="1%">:</td>
-            	<td width="75%">
-  					<input type="radio" $disability1 name="sorJenisRizab" id="sorRizabMelayu" $checkSorA value="1" onclick="doOnchangeUpdate('0')">Kawasan Rizab Melayu<br/>
-  					<input type="radio" $disability1 name="sorJenisRizab" id="sorOrangAsli" $checkSorB value="2" onclick="doOnchangeUpdate('0')">Kawasan Orang Asli<br/>
-  					<input type="radio" $disability1 name="sorJenisRizab" id="sorRizabOrangAsli" $checkSorC value="3" onclick="doOnchangeUpdate('0')">Rizab Orang Asli<br/>
-  					<input type="radio" $disability1 name="sorJenisRizab" id="sorBerkelompok" $checkSorD value="4" onclick="doOnchangeUpdate('0')">Kawasan Penempatan Berkelompok<br/>
-  					<input type="radio" $disability1 name="sorJenisRizab" id="sorLain" $checkSorE value="5" onclick="doOnchangeUpdate('0')">Lain - lain
-  					#if($showLainLain=="yes")
-  					&nbsp;: <input type="text" $disability $disabilityx name="txtLain" size="25" value="$!txtLain" maxlength="80" id="txtLain"  >
-  					#end
-  				</td>
-            </tr>
-            
-            #if($isEdit=="yes" && $sorJenisRizab!="")
-            <tr>
-            	<td colspan="3">&nbsp;</td>
-            	<td>&nbsp;<a href="javascript:doOnchangeUpdate('1')"><font color="blue">kosongkan pilihan</font></a></td>
-            </tr>
-            #end
-            
-            #if($showWarta=="yes")
-            <tr>
-            	<td>&nbsp;</td>
-            	<td>No.Warta</td>
-            	<td>:</td>
-            	<td><input type="text" $disability $disabilityx name="txtNoWartaRizab" size="20" value="$!txtNoWartaRizab" maxlength="20" id="txtNoWartaRizab"  ></td>
-            </tr>
-            <tr>
-            	<td>&nbsp;</td>
-        		<td>Tarikh Warta</td>
-        		<td>:</td>
-            	<td><input $disability $disabilityx name="txdTarikhWarta" id="txdTarikhWarta" size="12" type="text" value="$!txdTarikhWarta" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-            	#if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhWarta',false,'dmy');">&nbsp;$!frmtdate#end</td>
-        	</tr>
-        	#end
-        	
-       </table>
-     </fieldset>
-     
-     #end
-     
-     <fieldset>       
-        <table width="100%" border="0">    
-			<tr>
-				<td width="1%">&nbsp;</td>
-            	<td valign="top" width="23%">Catatan</td>
-            	<td valign="top" width="1%">:</td>
-            	<td width="75%"><textarea $disability $disabilityx name="txtCatatan" id="txtCatatan" cols="70%" rows="10"  onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$!txtCatatan</textarea></td>
-            </tr>
-            #if($isEdit=="yes")
-            <tr>
-        		<td colspan="3">&nbsp;</td>
-             	<td valign="top">Baki Aksara :&nbsp;<input type="text" readonly class="disabled" name="remLen1" size="3" maxlength="3" value="4000"></td>
-           	</tr> 
-           	#end
-		</table>
-	</fieldset>
-	<fieldset>
-		<table width="100%" border="0">
 		<tr>
-			<td width="1%"></td>
-			<td valign="top" width="23%">Tarikh Pembayaran</td>
-			<td valign="top" width="1%">:</td>
-			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran" size="12" type="text" value="$!txdTarikhPembayaran" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-            	<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">Negeri</td>
+			<td width="1%">:</td>
+			<td width="75%">$!nama_negeriprojek</td>
 		</tr>
 		<tr>
-            	<td valign="top">
-            	<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
-            	<td valign="top">:</td>
-  				<td><input id="fileupload" name="fileupload" type=file size=40 /></td><br/>
-  			</tr>
-		</table>
-		#if($isEdit=="yes")
-		<table width="100%" border="0">
-        	<tr><td>&nbsp;</td></tr>
-        	<tr>
-        		<td>$!perhatian3</td>
-        	</tr>
-        </table>
-        #end
-	</fieldset>
-	#end
-	
-	
-	<table width="100%" border="0">
-		<tr align="center">
-			<td>
-				#if($roleAgensi=="no")
-				
-				#if($mode=="new")
-					#if($jumlah_hakmilik == $saiz_listTanah)
-					<span class="blink"><font color="red">Jumlah Hakmilik Telah Mencukupi!</font></span>
-					#else
-					<input type="button" name="cmdSimpan" value ="Simpan" onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
-					#end
-				#end
-				
-				#if($mode=="view" && ($id_status=="8" || $flagStatusOnline=="1"))
-					#if($isEdit=="no")
-						#if(($id_jawatan_user == $layer1 && ($flag_semakan_online=="" || $flag_semakan_online=="4" )) || 
-							($id_jawatan_user == $layer2 && ($flag_semakan_online=="" || $flag_semakan_online=="1" )) ||
-							($id_jawatan_user == $layer3 && ($flag_semakan_online=="" || $flag_semakan_online=="1" || $flag_semakan_online=="2")))
-						<input type="button" name="cmdKemaskini" value ="Kemaskini" onClick="javascript:kemaskiniHM('$!id_hakmilik')">
-						<input type="button" name="cmdHapus" value="Hapus" onClick="hapusHM('$!id_hakmilik')">
-						#end
-					#else
-					<input type="button" name="cmdUpdate" value ="Simpan" onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
-					<input type="button" name="cmdBatal" value ="Batal" onClick="javascript:batalKemaskini('$!id_hakmilik')">
-					#end
-				#end
-				
-				#end
-				<input type="button" name="cmdKembali" value ="Kembali" onClick="javascript:kembali('$!id_permohonan')">
-			</td>
+			<td>&nbsp;</td> #if($showJajahan=="yes")
+			<td>Jajahan</td> #else
+			<td>Daerah</td> #end
+			<td>:</td>
+			<td>$!nama_daerah</td>
+		</tr>
+		#if($showJajahan=="yes")
+		<tr>
+			<td></td>
+			<td>Daerah</td>
+			<td>:</td>
+			<td>$!SelectDaerahPenggawa</td>
+		</tr>
+		#end
+		<tr>
+			<td><font color="red">*</font></td>
+			<td>Bandar/Pekan/Mukim</td>
+			<td>:</td>
+			<td>$!selectMukim</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Seksyen</td>
+			<td>:</td>
+			<td><input type="text" name="txtSeksyen" id="txtSeksyen"
+				value="$!txtSeksyen" size="10" maxlength="30"
+				onblur="javascript:updatetxtSeksyen('$!txtSeksyen')"></td>
 		</tr>
 	</table>
-	
 
-	
+</fieldset>
 
 
-		<!-- TAB -->
-		<input name="tabId" type="hidden" id="tabId" value="$selectedTab"/>
+<fieldset>
+	<table width="100%" border="0">
+		<tr>
+			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red">*</font>#end
+			</td>
+			<td width="23%">Jenis Hakmilik</td>
+			<td width="1%">:</td>
+			<td width="75%">$!selectJenisHakmilik</td>
+		</tr>
+		<tr>
+			<td>#if($hideFieldHakmilik=="no")<font color="red">*</font>#end
+			</td>
+			<td>No.Hakmilik</td>
+			<td>:</td>
+			<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik"
+				value="$!txtNoHakmilik" size="12" maxlength="50"></td>
+		</tr>
 
+
+		#if($hideFieldHakmilik=="no")
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>Tarikh Daftar</td>
+			<td>:</td>
+			<td><input type="text" name="txdTarikhDaftar"
+				id="txdTarikhDaftar" value="$!txdTarikhDaftar" size="12"
+				maxlength="10" onkeyup="validateTarikh(this,this.value)"
+				onblur="check_date(this);javascript:updatetxdTarikhDaftar()">
+				<img src="../img/calendar.gif"
+				onclick="displayDatePicker('txdTarikhDaftar',false,'dmy');">&nbsp;$!frmtdate</td>
+		</tr>
+
+
+		#if($showLuput=="yes")
+		<tr>
+			<td>&nbsp;</td>
+			<td>Tarikh Luput</td>
+			<td>:</td>
+			<td><input type="text" name="txdTarikhLuput" id="txdTarikhLuput"
+				value="$!txdTarikhLuput" size="12" maxlength="10"
+				onkeyup="validateTarikh(this,this.value)"
+				onblur="check_date(this);javascript:updatetxdTarikhLuput()">
+				<img src="../img/calendar.gif"
+				onclick="displayDatePicker('txdTarikhLuput',false,'dmy');">&nbsp;$!frmtdate</td>
+		</tr>
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>Baki Tempoh (Tahun)</td>
+			<td>:</td>
+			<td><input type="text" name="txtBakiTempoh" id="txtBakiTempoh"
+				value="$!txtBakiTempoh" size="12" maxlength="10"
+				onblur="javascript:updatetxtBakiTempoh('$!txtBakiTempoh')"></td>
+		</tr>
+		#end
+
+		<tr>
+			<td><font color="red">*</font></td>
+			<td>No.Syit</td>
+			<td>:</td>
+			<td><input type="text" name="txtNoSyit" id="txtNoSyit"
+				value="$!txtNoSyit" size="12" maxlength="40"
+				onblur="javascript:updatetxtNoSyit('$!txtNoSyit')"></td>
+		</tr>
+
+		#end
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>No.PT</td>
+			<td>:</td>
+			<td>$!selectKodLot</td>
+		</tr>
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td><input type="text" name="txtNoPT" id="txtNoPT"
+				value="$!txtNoPT" size="12" maxlength="20"></td>
+		</tr>
+
+		<tr>
+
+			<td>&nbsp;</td>
+			<td>No.LOT</td>
+			<td>:</td>
+			<td><input type="text" name="txtNoLot" id="txtNoLot"
+				value="$!txtNoLot" size="12" maxlength="20"> <a
+				href="javascript:popupCarianHakmilikSalin('$id_permohonan','skrin_hakmilik_sek8_KJP','$id_daerah')"><font
+					color="blue">>> SALIN MAKLUMAT HAKMILIK/LOT</font></a></td>
+		</tr>
+
+
+		#if($hideFieldHakmilik=="no")
+
+		<tr>
+			<td><font color="red">*</font></td>
+			<td>Kategori Tanah</td>
+			<td>:</td>
+			<td>$!selectKategoriTanah</td>
+		</tr>
+		<tr>
+			<td><font color="red">*</font></td>
+			<td>Unit Luas Asal</td>
+			<td>:</td>
+			<td>$!selectUnitLuasLot</td>
+		</tr>
+		<tr>
+			<td valign="top"><font color="red">*</font></td>
+			<td valign="top">Luas Asal</td>
+			<td valign="top">:</td>
+			<td>#if($showFieldAsalBeforeConvert=="yes") <input type="text"
+				name="txtLuasLotAsalSebelumConvert"
+				id="txtLuasLotAsalSebelumConvert" size="50"
+				value="$!txtLuasLotAsalSebelumConvert" maxlength="100"
+				onblur="javasript:updatetxtLuasLotAsalSebelumConvert('$!txtLuasLotAsalSebelumConvert')" />
+				<p /> #end <input type="text" name="txtLuasLotAsal"
+				id="txtLuasLotAsal" size="15" value="$!txtLuasLotAsal"
+				maxlength="20" onkeyup="validateNilai(this,this.value);" />
+				#if($showBoxAsal2=="yes" || $showBoxAsal3=="yes")<input type="text"
+				name="txtLuasLotAsal2" id="txtLuasLotAsal2" size="15"
+				value="$!txtLuasLotAsal2" maxlength="20"
+				onkeyup="validateNilai(this,this.value);" />#end
+				#if($showBoxAsal3=="yes")<input type="text" name="txtLuasLotAsal3"
+				id="txtLuasLotAsal3" size="15" value="$!txtLuasLotAsal3"
+				maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
+
+				#if($showDropdownUnitAsal=="yes") <select name="sorDropdownUnitAsal"
+				style="width: 132px" onchange="onchangeUnitAsal()">
+
+					#if($sorDropdownUnitAsal=="1")
+					<option value="1">HEKTAR</option>
+					<option value="2">METER PERSEGI</option>
+					#elseif($sorDropdownUnitAsal=="2")
+					<option value="2">METER PERSEGI</option>
+					<option value="1">HEKTAR</option> #else
+					<option value="">SILA PILIH</option>
+					<option value="1">HEKTAR</option>
+					<option value="2">METER PERSEGI</option> #end
+
+			</select> #end
+
+			</td>
+		</tr>
+
+		#if($showButtonConvertAsal=="yes" ||
+		$showFieldAsalBeforeConvert=="yes")
+		<tr>
+			<td colspan="3">&nbsp;</td>
+			<td>#if($showButtonConvertAsal=="yes") <input type="button"
+				name="cmdConvert" value="Convert"
+				onClick="javascript:convertNilaiAsal('$!showBoxAsal2','$!showBoxAsal3')">
+				#end #if($showFieldAsalBeforeConvert=="yes") <input type="button"
+				name="cmdClear" value="Kosongkan"
+				onClick="javascript:clearConvertAsal()"> #end
+			</td>
+		</tr>
+		#end
+
+		<tr>
+			<td><font color="red">*</font></td>
+			<td>Unit Luas Ambil</td>
+			<td>:</td>
+			<td>$!selectUnitLuasAmbil</td>
+		</tr>
+		<tr>
+			<td valign="top"><font color="red">*</font></td>
+			<td valign="top">Luas Diambil</td>
+			<td valign="top">:</td>
+			<td>#if($showFieldAmbilBeforeConvert=="yes") <input type="text"
+				name="txtLuasLotAmbilSebelumConvert"
+				id="txtLuasLotAmbilSebelumConvert" size="50"
+				value="$!txtLuasLotAmbilSebelumConvert" maxlength="100"
+				onblur="javascript:updatetxtLuasLotAmbilSebelumConvert('$!txtLuasLotAmbilSebelumConvert')" />
+				<p /> #end <input type="text" name="txtLuasLotAmbil"
+				id="txtLuasLotAmbil" size="15" value="$!txtLuasLotAmbil"
+				maxlength="20" onkeyup="validateNilai(this,this.value);" />
+				#if($showBoxAmbil2=="yes" || $showBoxAmbil3=="yes")<input
+				type="text" name="txtLuasLotAmbil2" id="txtLuasLotAmbil2" size="15"
+				value="$!txtLuasLotAmbil2" maxlength="20"
+				onkeyup="validateNilai(this,this.value);" />#end
+				#if($showBoxAmbil3=="yes")<input type="text" name="txtLuasLotAmbil3"
+				id="txtLuasLotAmbil3" size="15" value="$!txtLuasLotAmbil3"
+				maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
+
+				#if($showDropdownUnitAmbil=="yes") <select
+				name="sorDropdownUnitAmbil" style="width: 132px"
+				onchange="onchangeUnitAmbil()">
+
+					#if($sorDropdownUnitAmbil=="1")
+					<option value="1">HEKTAR</option>
+					<option value="2">METER PERSEGI</option>
+					#elseif($sorDropdownUnitAmbil=="2")
+					<option value="2">METER PERSEGI</option>
+					<option value="1">HEKTAR</option> #else
+					<option value="">SILA PILIH</option>
+					<option value="1">HEKTAR</option>
+					<option value="2">METER PERSEGI</option> #end
+
+			</select> #end
+
+			</td>
+		</tr>
+
+		#if($showButtonConvertAmbil=="yes" ||
+		$showFieldAmbilBeforeConvert=="yes")
+		<tr>
+			<td colspan="3">&nbsp;</td>
+			<td>#if($showButtonConvertAmbil=="yes") <input type="button"
+				name="cmdConvert" value="Convert"
+				onClick="javascript:convertNilaiAmbil('$!showBoxAmbil2','$!showBoxAmbil3')">
+				#end #if($showFieldAmbilBeforeConvert=="yes") <input type="button"
+				name="cmdClear" value="Kosongkan"
+				onClick="javascript:clearConvertAmbil()"> #end
+			</td>
+		</tr>
+		#end #end
+
+	</table>
+</fieldset>
+
+
+#if($hideFieldHakmilik=="no")
+
+<fieldset>
+	<table width="100%" border="0">
+
+		#set($checkSorA="") #set($checkSorB="") #set($checkSorC="")
+		#set($checkSorD="") #set($checkSorE="") #if($sorJenisRizab=="1")
+		#set($checkSorA="checked") #elseif($sorJenisRizab=="2")
+		#set($checkSorB="checked") #elseif($sorJenisRizab=="3")
+		#set($checkSorC="checked") #elseif($sorJenisRizab=="4")
+		#set($checkSorD="checked") #elseif($sorJenisRizab=="5")
+		#set($checkSorE="checked") #end
+
+
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td valign="top" width="23%">Jenis Rizab</td>
+			<td valign="top" width="1%">:</td>
+			<td width="75%"><input type="radio" name="sorJenisRizab"
+				id="sorRizabMelayu" $checkSorA value="1" onclick="doOnchange('0')">Kawasan
+				Rizab Melayu<br /> <input type="radio" name="sorJenisRizab"
+				id="sorOrangAsli" $checkSorB value="2" onclick="doOnchange('0')">Kawasan
+				Orang Asli<br /> <input type="radio" name="sorJenisRizab"
+				id="sorRizabOrangAsli" $checkSorC value="3"
+				onclick="doOnchange('0')">Rizab Orang Asli<br /> <input
+				type="radio" name="sorJenisRizab" id="sorBerkelompok" $checkSorD
+				value="4" onclick="doOnchange('0')">Kawasan Penempatan
+				Berkelompok<br /> <input type="radio" name="sorJenisRizab"
+				id="sorLain" $checkSorE value="5" onclick="doOnchange('0')">Lain
+				- lain #if($showLainLain=="yes") &nbsp;: <input type="text"
+				name="txtLain" size="25" value="$!txtLain" maxlength="80"
+				id="txtLain" onblur="javascript:updatetxtLain('$!txtLain')">
+				#end</td>
+		</tr>
+
+		#if($sorJenisRizab!="")
+		<tr>
+			<td colspan="3">&nbsp;</td>
+			<td>&nbsp;<a href="javascript:doOnchange('1')"><font
+					color="blue">kosongkan pilihan</font></a></td>
+		</tr>
+		#end #if($showWarta=="yes")
+		<tr>
+			<td>&nbsp;</td>
+			<td>No.Warta</td>
+			<td>:</td>
+			<td><input type="text" name="txtNoWartaRizab" size="20"
+				value="$!txtNoWartaRizab" maxlength="20" id="txtNoWartaRizab"
+				onblur="javascript:updateNoWartaRizab('$!txtNoWartaRizab')"></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Tarikh Warta</td>
+			<td>:</td>
+			<td><input name="txdTarikhWarta" id="txdTarikhWarta" size="12"
+				type="text" value="$!txdTarikhWarta"
+				onkeyup="validateTarikh(this,this.value)"
+				onblur="check_date(this);javascript:updateTarikhWarta()"> <img
+				src="../img/calendar.gif"
+				onclick="displayDatePicker('txdTarikhWarta',false,'dmy');">&nbsp;$!frmtdate</td>
+		</tr>
+		#end
+
+	</table>
+</fieldset>
+
+#end
+
+<fieldset>
+	<table width="100%" border="0">
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td valign="top" width="23%">Catatan</td>
+			<td valign="top" width="1%">:</td>
+			<td width="75%"><textarea name="txtCatatan" id="txtCatatan"
+					cols="70%" rows="10"
+					onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);"
+					onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);"
+					onblur="javascript:updatetxtCatatan('$!txtCatatan')">$!txtCatatan</textarea></td>
+		</tr>
+		<tr>
+			<td colspan="3">&nbsp;</td>
+			<td valign="top">Baki Aksara :&nbsp;<input type="text" readonly
+				class="disabled" name="remLen1" size="3" maxlength="3" value="4000"></td>
+		</tr>
+	</table>
+
+</fieldset>
+#end
+<fieldset>
+	<table width="100%" border="0">
+		<tr>
+			<td width="1%"></td>
+			<td valign="top" width="23%">Tarikh Pembayaran</td>
+			<td valign="top" width="1%">:</td>
+			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran"
+				size="12" type="text" value="$!txdTarikhPembayaran"
+				onkeyup="validateTarikh(this,this.value)"
+				onblur="check_date(this);javascript:updatetxdTarikhPembayaran()">
+				<img src="../img/calendar.gif"
+				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
+			<td valign="top">:</td>
+			<td><input id="fileupload" name="fileupload" type=file size=40 /></td>
+			<br />
+		</tr>
+	</table>
+</fieldset>
+
+
+
+<table width="100%" border="0">
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>$!perhatian3</td>
+	</tr>
+</table>
+
+</fieldset>
+
+
+
+
+#if($mode=="view") #if($onchangeHM=="no") #foreach($data in
+$dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
+#set($nama_daerah=$data.nama_daerah) #set($txtSeksyen=$data.seksyen)
+#set($txtNoHakmilik=$data.no_hakmilik)
+#set($txdTarikhLuput=$data.tarikh_luput)
+#set($txdTarikhDaftar=$data.tarikh_daftar)
+#set($txtBakiTempoh=$data.tempoh_luput) #set($txtNoSyit=$data.no_syit)
+#set($txtNoLot=$data.no_lot) #set($txtNoPT=$data.no_pt)
+#set($txtLuasLotAmbil=$data.luas_ambil)
+#set($txtLuasLotAsal=$data.luas_lot) #set($txtCatatan=$data.catatan)
+#set($txtNoWartaRizab=$data.no_warta_rizab)
+#set($txdTarikhWarta=$data.tarikh_warta_rizab)
+#set($txtLain=$data.nama_lain_rizab)
+#set($sorJenisRizab=$data.flag_jenis_rizab)
+#set($sorDropdownUnitAsal=$data.id_unitluaslot_convert)
+#set($sorDropdownUnitAmbil=$data.id_unitluasambil_convert)
+#set($txtLuasLotAsalSebelumConvert=$data.nama_luas_asal)
+#set($txtLuasLotAmbilSebelumConvert=$data.nama_luas_ambil)
+#set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
+#end #end #if($isEdit=="no") #set($disability = "readonly")
+#set($disabilityx = "class=disabled") #set($disability1 = "disabled")
+#set($M = "") #else #set($M = "*") #set($disability = "")
+#set($disabilityx = "") #set($disability1 = "") #end
+
+<fieldset id="top">
+	<legend>
+		<strong>Maklumat Hakmilik</strong>
+	</legend>
+
+	<br />
+
+	<table width="100%" border="0">
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">Negeri</td>
+			<td width="1%">:</td>
+			<td width="75%">$!nama_negeriprojek</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td> #if($showJajahan=="yes")
+			<td>Jajahan</td> #else
+			<td>Daerah</td> #end
+			<td>:</td>
+			<td>$!nama_daerah</td>
+		</tr>
+		#if($showJajahan=="yes")
+		<tr>
+			<td></td>
+			<td>Daerah</td>
+			<td>:</td>
+			<td>$!SelectDaerahPenggawa</td>
+		</tr>
+		#end
+		<tr>
+			<td><font color="red">$!M</font></td>
+			<td>Bandar/Pekan/Mukim</td>
+			<td>:</td>
+			<td>$!selectMukim</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Seksyen</td>
+			<td>:</td>
+			<td><input $disability $disabilityx type="text"
+				name="txtSeksyen" id="txtSeksyen" value="$!txtSeksyen" size="10"
+				maxlength="30" onblur="javascript:updatetxtSeksyen('$!txtSeksyen')"></td>
+		</tr>
+	</table>
+
+</fieldset>
+
+
+<fieldset>
+	<table width="100%" border="0">
+		<tr>
+			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
+			</td>
+			<td width="23%">Jenis Hakmilik</td>
+			<td width="1%">:</td>
+			<td width="75%">$!selectJenisHakmilik</td>
+		</tr>
+		<tr>
+			<td>#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
+			</td>
+			<td>No.Hakmilik</td>
+			<td>:</td>
+			<td><input $disability $disabilityx type="text"
+				name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik"
+				size="12" maxlength="50"></td>
+		</tr>
+
+		#if($hideFieldHakmilik=="no")
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>Tarikh Daftar</td>
+			<td>:</td>
+			<td><input $disability $disabilityx type="text"
+				name="txdTarikhDaftar" id="txdTarikhDaftar"
+				value="$!txdTarikhDaftar" size="12" maxlength="10"
+				onkeyup="validateTarikh(this,this.value)"
+				onblur="check_date(this);javascript:updatetxdTarikhDaftar()">
+				#if($isEdit=="yes")<img src="../img/calendar.gif"
+				onclick="displayDatePicker('txdTarikhDaftar',false,'dmy');">&nbsp;$!frmtdate#end</td>
+		</tr>
+
+		#if($showLuput=="yes")
+		<tr>
+			<td>&nbsp;</td>
+			<td>Tarikh Luput</td>
+			<td>:</td>
+			<td><input $disability $disabilityx type="text"
+				name="txdTarikhLuput" id="txdTarikhLuput" value="$!txdTarikhLuput"
+				size="12" maxlength="10" onkeyup="validateTarikh(this,this.value)"
+				onblur="check_date(this)"> #if($isEdit=="yes")<img
+				src="../img/calendar.gif"
+				onclick="displayDatePicker('txdTarikhLuput',false,'dmy');">&nbsp;$!frmtdate#end</td>
+		</tr>
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>Baki Tempoh (Tahun)</td>
+			<td>:</td>
+			<td><input $disability $disabilityx type="text"
+				name="txtBakiTempoh" id="txtBakiTempoh" value="$!txtBakiTempoh"
+				size="12" maxlength="10"
+				onblur="javascript:updatetxtBakiTempoh('$!txtBakiTempoh')"></td>
+		</tr>
+		#end
+
+		<tr>
+			<td><font color="red">$!M</font></td>
+			<td>No. Syit</td>
+			<td>:</td>
+			<td><input $disability $disabilityx type="text" name="txtNoSyit"
+				id="txtNoSyit" value="$!txtNoSyit" size="12" maxlength="40"
+				onblur="javascript:updatetxtNoSyit('$!txtNoSyit')"></td>
+		</tr>
+
+		#end
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>No.PT</td>
+			<td>:</td>
+			<td>$!selectKodLot</td>
+		</tr>
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td><input $disability $disabilityx type="text" name="txtNoPT"
+				id="txtNoPT" value="$!txtNoPT" size="12" maxlength="20"></td>
+		</tr>
+
+		<tr>
+			<td>&nbsp;</td>
+			<td>No.LOT</td>
+			<td>:</td>
+			<td><input $disability $disabilityx type="text" name="txtNoLot"
+				id="txtNoLot" value="$!txtNoLot" size="12" maxlength="20"></td>
+		</tr>
+
+		#if($hideFieldHakmilik=="no")
+
+		<tr>
+			<td><font color="red">$!M</font></td>
+			<td>Kategori Tanah</td>
+			<td>:</td>
+			<td>$!selectKategoriTanah</td>
+		</tr>
+		<tr>
+			<td><font color="red">$!M</font></td>
+			<td>Unit Luas Asal</td>
+			<td>:</td>
+			<td>$!selectUnitLuasLot</td>
+		</tr>
+		<tr>
+			<td valign="top"><font color="red">$!M</font></td>
+			<td valign="top">Luas Asal</td>
+			<td valign="top">:</td>
+			<td>#if($showFieldAsalBeforeConvert=="yes") <input type="text"
+				name="txtLuasLotAsalSebelumConvert" $disability $disabilityx
+				id="txtLuasLotAsalSebelumConvert" size="50"
+				value="$!txtLuasLotAsalSebelumConvert" maxlength="100"
+				onblur="javasript:updatetxtLuasLotAsalSebelumConvert('$!txtLuasLotAsalSebelumConvert')" />
+				<p /> #end 
+					<input type="text" $disability $disabilityx name="txtLuasLotAsal"
+						id="txtLuasLotAsal" size="15" value="$!txtLuasLotAsal"
+						maxlength="20" onkeyup="validateNilai(this,this.value);" />
+					#if($showBoxAsal2=="yes" || $showBoxAsal3=="yes")<input type="text"
+						name="txtLuasLotAsal2" id="txtLuasLotAsal2" size="15"
+						value="$!txtLuasLotAsal2" maxlength="20"
+						onkeyup="validateNilai(this,this.value);" />#end
+					#if($showBoxAsal3=="yes")<input type="text" name="txtLuasLotAsal3"
+						id="txtLuasLotAsal3" size="15" value="$!txtLuasLotAsal3"
+						maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
+					
+					#if($showDropdownUnitAsal=="yes")
+					<select $disability1 $disabilityx name="sorDropdownUnitAsal"
+						style="width:132px" onchange="onchangeUnitAsalUpdate()">
+      		
+      					#if($sorDropdownUnitAsal=="1")
+      					<option value="1">HEKTAR</option>
+						<option value="2">METER PERSEGI</option>	
+      					#elseif($sorDropdownUnitAsal=="2")
+      					<option value="2">METER PERSEGI</option>
+      					<option value="1">HEKTAR</option>
+      					#else
+      					<option value="">SILA PILIH</option>
+      					<option value="1">HEKTAR</option>
+						<option value="2">METER PERSEGI</option>	
+      					#end
+
+					</select>
+					#end
+					
+				</td>
+		</tr>
+
+
+		#if($isEdit=="yes" && ($showButtonConvertAsal=="yes" ||
+		$showFieldAsalBeforeConvert=="yes"))
+		<tr>
+			<td colspan="3">&nbsp;</td>
+			<td>#if($showButtonConvertAsal=="yes") <input type="button"
+				name="cmdConvert" value="Convert"
+				onClick="javascript:convertNilaiAsalUpdate('$!showBoxAsal2','$!showBoxAsal3')">
+				#end #if($showFieldAsalBeforeConvert=="yes") <input type="button"
+				name="cmdClear" value="Kosongkan"
+				onClick="javascript:clearConvertAsalUpdate()"> #end
+			</td>
+		</tr>
+		#end
+
+		<tr>
+			<td><font color="red">$!M</font></td>
+			<td>Unit Luas Ambil</td>
+			<td>:</td>
+			<td>$!selectUnitLuasAmbil</td>
+		</tr>
+		<tr>
+			<td valign="top"><font color="red">$!M</font></td>
+			<td valign="top">Luas Diambil</td>
+			<td valign="top">:</td>
+			<td>#if($showFieldAmbilBeforeConvert=="yes") <input type="text"
+				$disability $disabilityx name="txtLuasLotAmbilSebelumConvert"
+				id="txtLuasLotAmbilSebelumConvert" size="50"
+				value="$!txtLuasLotAmbilSebelumConvert" maxlength="100"
+				onblur="javascript:updatetxtLuasLotAmbilSebelumConvert($!txtLuasLotAmbilSebelumConvert)" />
+				<p /> #end 
+					<input $disability $disabilityx type="text" name="txtLuasLotAmbil"
+						id="txtLuasLotAmbil" size="15" value="$!txtLuasLotAmbil"
+						maxlength="20" onkeyup="validateNilai(this,this.value);" />
+					#if($showBoxAmbil2=="yes" || $showBoxAmbil3=="yes")<input
+						type="text" name="txtLuasLotAmbil2" id="txtLuasLotAmbil2"
+						size="15" value="$!txtLuasLotAmbil2" maxlength="20"
+						onkeyup="validateNilai(this,this.value);" />#end
+					#if($showBoxAmbil3=="yes")<input type="text"
+						name="txtLuasLotAmbil3" id="txtLuasLotAmbil3" size="15"
+						value="$!txtLuasLotAmbil3" maxlength="20"
+						onkeyup="validateNilai(this,this.value);" />#end
+				
+					#if($showDropdownUnitAmbil=="yes")
+					<select $disability1 $disabilityx name="sorDropdownUnitAmbil"
+						style="width:132px" onchange="onchangeUnitAmbilUpdate()">
+      		
+      					#if($sorDropdownUnitAmbil=="1")
+      					<option value="1">HEKTAR</option>
+						<option value="2">METER PERSEGI</option>	
+      					#elseif($sorDropdownUnitAmbil=="2")
+      					<option value="2">METER PERSEGI</option>
+      					<option value="1">HEKTAR</option>
+      					#else
+      					<option value="">SILA PILIH</option>
+      					<option value="1">HEKTAR</option>
+						<option value="2">METER PERSEGI</option>	
+      					#end
+
+					</select>
+					#end
+					
+				</td>
+		</tr>
+
+		#if($isEdit=="yes" && ($showButtonConvertAmbil=="yes" ||
+		$showFieldAmbilBeforeConvert=="yes"))
+		<tr>
+			<td colspan="3">&nbsp;</td>
+			<td>#if($showButtonConvertAmbil=="yes") <input type="button"
+				name="cmdConvert" value="Convert"
+				onClick="javascript:convertNilaiAmbilUpdate('$!showBoxAmbil2','$!showBoxAmbil3')">
+				#end #if($showFieldAmbilBeforeConvert=="yes") <input type="button"
+				name="cmdClear" value="Kosongkan"
+				onClick="javascript:clearConvertAmbilUpdate()"> #end
+			</td>
+		</tr>
+		#end #end
+
+	</table>
+</fieldset>
+
+#if($hideFieldHakmilik=="no")
+
+<fieldset>
+	<table width="100%" border="0">
+
+		#set($checkSorA="") #set($checkSorB="") #set($checkSorC="")
+		#set($checkSorD="") #set($checkSorE="") #if($sorJenisRizab=="1")
+		#set($checkSorA="checked") #elseif($sorJenisRizab=="2")
+		#set($checkSorB="checked") #elseif($sorJenisRizab=="3")
+		#set($checkSorC="checked") #elseif($sorJenisRizab=="4")
+		#set($checkSorD="checked") #elseif($sorJenisRizab=="5")
+		#set($checkSorE="checked") #end
+
+
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td valign="top" width="23%">Jenis Rizab</td>
+			<td valign="top" width="1%">:</td>
+			<td width="75%"><input type="radio" $disability1
+				name="sorJenisRizab" id="sorRizabMelayu" $checkSorA value="1"
+				onclick="doOnchangeUpdate('0')">Kawasan Rizab Melayu<br />
+				<input type="radio" $disability1 name="sorJenisRizab"
+				id="sorOrangAsli" $checkSorB value="2"
+				onclick="doOnchangeUpdate('0')">Kawasan Orang Asli<br /> <input
+				type="radio" $disability1 name="sorJenisRizab"
+				id="sorRizabOrangAsli" $checkSorC value="3"
+				onclick="doOnchangeUpdate('0')">Rizab Orang Asli<br /> <input
+				type="radio" $disability1 name="sorJenisRizab" id="sorBerkelompok"
+				$checkSorD value="4" onclick="doOnchangeUpdate('0')">Kawasan
+				Penempatan Berkelompok<br /> <input type="radio" $disability1
+				name="sorJenisRizab" id="sorLain" $checkSorE value="5"
+				onclick="doOnchangeUpdate('0')">Lain - lain
+				#if($showLainLain=="yes") &nbsp;: <input type="text"
+				$disability $disabilityx name="txtLain" size="25" value="$!txtLain"
+				maxlength="80" id="txtLain"
+				onblur="javascript:updatetxtLain('$!txtLain')"> #end</td>
+		</tr>
+
+		#if($isEdit=="yes" && $sorJenisRizab!="")
+		<tr>
+			<td colspan="3">&nbsp;</td>
+			<td>&nbsp;<a href="javascript:doOnchangeUpdate('1')"><font
+					color="blue">kosongkan pilihan</font></a></td>
+		</tr>
+		#end #if($showWarta=="yes")
+		<tr>
+			<td>&nbsp;</td>
+			<td>No.Warta</td>
+			<td>:</td>
+			<td><input type="text" $disability $disabilityx
+				name="txtNoWartaRizab" size="20" value="$!txtNoWartaRizab"
+				maxlength="20" id="txtNoWartaRizab"
+				onblur="javascript:updateNoWartaRizab('$!txtNoWartaRizab')"></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Tarikh Warta</td>
+			<td>:</td>
+			<td><input $disability $disabilityx name="txdTarikhWarta"
+				id="txdTarikhWarta" size="12" type="text" value="$!txdTarikhWarta"
+				onkeyup="validateTarikh(this,this.value)"
+				onblur="check_date(this);javascript:updateTarikhWarta()">
+				#if($isEdit=="yes")<img src="../img/calendar.gif"
+				onclick="displayDatePicker('txdTarikhWarta',false,'dmy');">&nbsp;$!frmtdate#end</td>
+		</tr>
+		#end
+
+	</table>
+</fieldset>
+
+#end
+
+<fieldset>
+	<table width="100%" border="0">
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td valign="top" width="23%">Catatan</td>
+			<td valign="top" width="1%">:</td>
+			<td width="75%"><textarea $disability $disabilityx
+					name="txtCatatan" id="txtCatatan" cols="70%" rows="10"
+					onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);"
+					onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);"
+					onblur="javascript:updatetxtCatatan('$!txtCatatan')">$!txtCatatan</textarea></td>
+		</tr>
+		#if($isEdit=="yes")
+		<tr>
+			<td colspan="3">&nbsp;</td>
+			<td valign="top">Baki Aksara :&nbsp;<input type="text" readonly
+				class="disabled" name="remLen1" size="3" maxlength="3" value="4000"></td>
+		</tr>
+		#end
+	</table>
+</fieldset>
+<fieldset>
+	<table width="100%" border="0">
+		<tr>
+			<td width="1%"></td>
+			<td valign="top" width="23%">Tarikh Pembayaran</td>
+			<td valign="top" width="1%">:</td>
+			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran"
+				size="12" type="text" value="$!txdTarikhPembayaran"
+				onkeyup="validateTarikh(this,this.value)"
+				onblur="check_date(this);javascript:updatetxdTarikhPembayaran()">
+				<img src="../img/calendar.gif"
+				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
+			<td valign="top">:</td>
+			<td><input id="fileupload" name="fileupload" type=file size=40 /></td>
+			<br />
+		</tr>
+	</table>
+	#if($isEdit=="yes")
+	<table width="100%" border="0">
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>$!perhatian3</td>
+		</tr>
+	</table>
+	#end
+</fieldset>
+#end
+
+
+<table width="100%" border="0">
+	<tr align="center">
+		<td>#if($roleAgensi=="no") #if($mode=="new") #if($jumlah_hakmilik
+			== $saiz_listTanah) <span class="blink"><font color="red">Jumlah
+					Hakmilik Telah Mencukupi!</font></span> #else <input type="button"
+			name="cmdSimpan" value="Simpan"
+			onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
+			#end #end #if($mode=="view" && ($id_status=="8" ||
+			$flagStatusOnline=="1")) #if($isEdit=="no") #if(($id_jawatan_user ==
+			$layer1 && ($flag_semakan_online=="" || $flag_semakan_online=="4" ))
+			|| ($id_jawatan_user == $layer2 && ($flag_semakan_online=="" ||
+			$flag_semakan_online=="1" )) || ($id_jawatan_user == $layer3 &&
+			($flag_semakan_online=="" || $flag_semakan_online=="1" ||
+			$flag_semakan_online=="2"))) <input type="button" name="cmdKemaskini"
+			value="Kemaskini" onClick="javascript:kemaskiniHM('$!id_hakmilik')">
+			<input type="button" name="cmdHapus" value="Hapus"
+			onClick="hapusHM('$!id_hakmilik')"> #end #else <input
+			type="button" name="cmdUpdate" value="Simpan"
+			onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
+			<input type="button" name="cmdBatal" value="Batal"
+			onClick="javascript:batalKemaskini('$!id_hakmilik')"> #end
+			#end #end <input type="button" name="cmdKembali" value="Kembali"
+			onClick="javascript:kembali('$!id_permohonan')">
+		</td>
+	</tr>
+</table>
+
+
+
+
+
+
+<!-- TAB -->
+<input name="tabId" type="hidden" id="tabId" value="$selectedTab" />
 <!--  		
 #if($mode=="view" && $hideFieldHakmilik=="no")
 
@@ -1021,31 +1077,36 @@ Maklumat Hakmilik telah berjaya disimpan.
 #end
 -->
 
-<table width="100%" border="0"><tr><td>&nbsp;</td></tr></table>  
- 
-	<fieldset id="bottom">
-	<legend><strong>Maklumat Tanah Terlibat</strong>
-    
-    #if($mode=="view" && ($id_status=="8" || $flagStatusOnline=="1"))
-	                		#if(($id_jawatan_user == $layer1 && $flag_semakan_online=="") || 
-								($id_jawatan_user == $layer2 && ($flag_semakan_online=="" || $flag_semakan_online=="1" )) ||
-								($id_jawatan_user == $layer3 && ($flag_semakan_online=="" || $flag_semakan_online=="1" || $flag_semakan_online=="2")))
-	                    	
-	                    	#if($jumlah_hakmilik != $saiz_listTanah)
-	                    	<input type="button" name="cmdTambah" value="Tambah" onClick="javascript:tambahHM('$!flag_subjaket');">
-	                    	#end
-	    					
-	    					#end
-    					#end
-	
+<table width="100%" border="0">
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+</table>
 
-    
-    
-    
-    </legend>
-     <a href="javascript:popupCarianHakmilik('$id_permohonan','skrin_hakmilik_sek8_KJP')"><font color="blue">>> SKRIN CAPAIAN HAKMILIK</font></a>
-    
-			<!--
+<fieldset id="bottom">
+	<legend>
+		<strong>Maklumat Tanah Terlibat</strong> #if($mode=="view" &&
+		($id_status=="8" || $flagStatusOnline=="1")) #if(($id_jawatan_user ==
+		$layer1 && $flag_semakan_online=="") || ($id_jawatan_user == $layer2
+		&& ($flag_semakan_online=="" || $flag_semakan_online=="1" )) ||
+		($id_jawatan_user == $layer3 && ($flag_semakan_online=="" ||
+		$flag_semakan_online=="1" || $flag_semakan_online=="2")))
+
+		#if($jumlah_hakmilik != $saiz_listTanah) <input type="button"
+			name="cmdTambah" value="Tambah"
+			onClick="javascript:tambahHM('$!flag_subjaket');"> #end #end
+		#end
+
+
+
+
+
+	</legend>
+	<a
+		href="javascript:popupCarianHakmilik('$id_permohonan','skrin_hakmilik_sek8_KJP')"><font
+		color="blue">>> SKRIN CAPAIAN HAKMILIK</font></a>
+
+	<!--
 			<table width="100%" border="0">   
                 	<tr>
                 		#if($mode=="view" && ($id_status=="8" || $flagStatusOnline=="1"))
@@ -1105,7 +1166,7 @@ Maklumat Hakmilik telah berjaya disimpan.
                 </div>
             #end
 	-->
-	</fieldset>
+</fieldset>
 
 <input type="hidden" name="id_bebanan">
 <input type="hidden" name="id_pihakberkepentingan">
@@ -1116,6 +1177,20 @@ Maklumat Hakmilik telah berjaya disimpan.
 <input type="hidden" name="command4">
 <input type="hidden" name="command5">
 <input type="hidden" name="flag_subjaket" value="$!flag_subjaket">
+<input type="hidden" name="txdTarikhLuputHidden" value="$!txdTarikhLuput">
+<input type="hidden" name="txdTarikhDaftarHidden" value="$!txdTarikhDaftar">
+<input type="hidden" name="txtBakiTempohHidden" value="$!txtBakiTempoh">
+<input type="hidden" name="txdTarikhPembayaranHidden" value="$!txdTarikhPembayaran">
+<input type="hidden" name="txtCatatanHidden" value="$!txtCatatan">
+<input type="hidden" name="txtseksyenHidden" value="$!txtSeksyen">
+<input type="hidden" name="txtLainHidden" value="$!txtLain">
+<input type="hidden" name="txtNoWartaRizabHidden" value="$!txtNoWartaRizab">
+<input type="hidden" name="txdTarikhWartaHidden" value="$!txdTarikhWarta">
+<input type="hidden" name="txtLuasLotAmbilSebelumConvertHidden" value="$!txtLuasLotAmbilSebelumConvert">
+<input type="hidden" name="txtLuasLotAsalSebelumConvertHidden" value="$!txtLuasLotAsalSebelumConvert">
+<input type="hidden" name="txtNoSyitHidden" value="$!txtNoSyit">
+
+
 
 <!-- Id daerah & Id projek negeri -->
 <input type="hidden" name="id_daerah" value="$!id_daerah">
@@ -1196,6 +1271,48 @@ function tambahBebanan(idHakmilik){
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
 	document.${formName}.submit();
 }
+
+function updateNoWartaRizab(txtNoWartaRizab){
+	document.${formName}.txtNoWartaRizabHidden.value = document.${formName}.txtNoWartaRizab.value;
+}
+
+function updateTarikhWarta(){
+	document.${formName}.txdTarikhWartaHidden.value = document.${formName}.txdTarikhWarta.value;
+}
+function updatetxdTarikhLuput(){
+	document.${formName}.txdTarikhLuputHidden.value = document.${formName}.txdTarikhLuput.value;
+}
+function updatetxdTarikhDaftar(){
+	document.${formName}.txdTarikhDaftarHidden.value = document.${formName}.txdTarikhDaftar.value;
+}
+function updatetxtBakiTempoh(txtBakiTempoh){
+	document.${formName}.txtBakiTempohHidden.value = document.${formName}.txtBakiTempoh.value;
+} 
+function updatetxdTarikhPembayaran(){
+	document.${formName}.txdTarikhPembayaranHidden.value = document.${formName}.txdTarikhPembayaran.value;
+}
+function updatetxtCatatan(txtCatatan){
+	document.${formName}.txtCatatanHidden.value = document.${formName}.txtCatatan.value;
+}
+function updatetxtSeksyen(txtSeksyen){
+	document.${formName}.txtSeksyenHidden.value = document.${formName}.txtSeksyen.value;
+}
+function updatetxtLain(txtLain){
+	document.${formName}.txtLainHidden.value = document.${formName}.txtLain.value;
+}
+function updatetxtLuasLotAmbilSebelumConvert(txtLuasLotAmbilSebelumConvert){
+	document.${formName}.txtLuasLotAmbilSebelumConvertHidden.value = document.${formName}.txtLuasLotAmbilSebelumConvert.value;
+}
+function updatetxtLuasLotAsalSebelumConvert(txtLuasLotAsalSebelumConvert){
+	document.${formName}.txtLuasLotAsalSebelumConvertHidden.value = document.${formName}.txtLuasLotAsalSebelumConvert.value;
+}
+function updatetxtNoSyit(txtNoSyit){
+	document.${formName}.txtNoSyitHidden.value = document.${formName}.txtNoSyit.value;
+}
+
+
+
+
 function viewBebanan(idBebanan){
 
 	document.${formName}.ScreenLocation.value = "changeBebanan";	
@@ -1563,7 +1680,6 @@ function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode)
 		
 		document.${formName}.flag_subjaket.value = flagSubjaket;
 		document.${formName}.id_permohonan.value = id_permohonan;
-
 		if(mode=="new"){
 			document.${formName}.ScreenLocation.value = "alertSave";
 			document.${formName}.CursorPoint.value = "";
@@ -1574,8 +1690,49 @@ function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode)
 			document.${formName}.command2.value = "kemaskiniHM";
 			document.${formName}.command3.value = "updateHM";
 		}
-		
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
+		//for upload function
+		var command = document.${formName}.command.value;
+		var command2 = document.${formName}.command2.value;
+		var command3 = document.${formName}.command3.value;
+		var id_negeriprojek = document.${formName}.id_negeriprojek.value;
+		var id_daerah = document.${formName}.id_daerah.value;
+	    var socJenisHakmilik = document.${formName}.socJenisHakmilik.value;
+		var txtNoHakmilik = document.${formName}.txtNoHakmilik.value;
+		var txdTarikhLuput = document.${formName}.txdTarikhLuputHidden.value;
+		var txdTarikhDaftar = document.${formName}.txdTarikhDaftarHidden.value;
+		var txtBakiTempoh = document.${formName}.txtBakiTempohHidden.value;
+		var socKategoriTanah = document.${formName}.socKategoriTanah.value;
+		var socMukim = document.${formName}.socMukim.value;
+		var kodLot = document.${formName}.socKodLot.value;
+		var txtNoSyit = document.${formName}.txtNoSyitHidden.value;
+		var txtNoLot = document.${formName}.txtNoLot.value;
+		var txtNoPT = document.${formName}.txtNoPT.value;
+		var txtLuasAsal = document.${formName}.txtLuasLotAsal.value;
+		var txtLuasAmbil = document.${formName}.txtLuasLotAmbil.value;
+		var txtCatatan = document.${formName}.txtCatatanHidden.value;
+		var txtSeksyen = document.${formName}.txtseksyenHidden.value;
+		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaran.value;
+		var unitLuas = document.${formName}.socUnitLuasLot.value;
+		var txtLuasLotAmbilSebelumConvert = document.${formName}.txtLuasLotAmbilSebelumConvertHidden.value;
+		var txtLuasLotAsalSebelumConvert = document.${formName}.txtLuasLotAsalSebelumConvertHidden.value;
+		var sorDropdownUnitAsal = document.${formName}.sorDropdownUnitAsal.value;
+		var sorDropdownUnitAmbil = document.${formName}.sorDropdownUnitAmbil.value;
+		var sorJenisRizab = document.${formName}.sorJenisRizab.value;
+		var txtLain = document.${formName}.txtLainHidden.value;
+		var txtNoWartaRizab = document.${formName}.txtNoWartaRizabHidden.value;
+		var txdTarikhWarta = document.${formName}.txdTarikhWartaHidden.value;
+		document.${formName}.enctype = "multipart/form-data";
+		document.${formName}.encoding = "multipart/form-data";
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command="+command+"&command2="+command2+
+				"&command3="+command3+"&id_permohonan="+id_permohonan+"&flagSubjaket="+flagSubjaket+"&id_negeriprojek="+id_negeriprojek+
+				"&id_daerah="+id_daerah+"&socJenisHakmilik="+socJenisHakmilik+"&txtNoHakmilik="+txtNoHakmilik+
+				"&txdTarikhLuput="+txdTarikhLuput+"&txdTarikhDaftar="+txdTarikhDaftar+"&txtBakiTempoh="+txtBakiTempoh+"&socKategoriTanah="+socKategoriTanah+
+				"&socMukim="+socMukim+"&txtNoSyit="+txtNoSyit+"&kodLot="+kodLot+"&txtNoLot="+txtNoLot+"&txtNoPT="+txtNoPT+"&txtLuasAsal="+txtLuasAsal+
+				"&txtLuasAmbil="+txtLuasAmbil+"&txtCatatan="+txtCatatan+"&txtSeksyen="+txtSeksyen+"&txdTarikhPembayaran="+txdTarikhPembayaran+"&unitLuas="+unitLuas+
+				"&txtLuasLotAsalSebelumConvert="+txtLuasLotAsalSebelumConvert+"&txtLuasLotAmbilSebelumConvert="+txtLuasLotAmbilSebelumConvert+
+				"&sorDropdownUnitAsal="+sorDropdownUnitAsal+"&sorDropdownUnitAmbil="+sorDropdownUnitAmbil+"&sorJenisRizab="+sorJenisRizab+"&txtLain="+txtLain+
+				"&txtNoWartaRizab="+txtNoWartaRizab+"&txdTarikhWarta="+txdTarikhWarta;
+		//end upload
 		document.${formName}.submit();
 	}
 }

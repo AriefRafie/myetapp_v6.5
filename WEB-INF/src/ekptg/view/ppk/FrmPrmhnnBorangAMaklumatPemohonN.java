@@ -12,10 +12,12 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import lebah.portal.AjaxBasedModule;
 import lebah.portal.velocity.VTemplate;
 import lebah.util.DateUtil;
 
@@ -45,12 +47,12 @@ import ekptg.model.ppk.util.LampiranBean;
 import ekptg.model.utils.IUtilHTMLPilihanExt;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisPBPPK;
 
-public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
+public class FrmPrmhnnBorangAMaklumatPemohonN extends AjaxBasedModule {
 
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
 	String currentDate = dateFormat.format(date);
-	static Logger myLogger = Logger.getLogger(FrmPrmhnnBorangAMaklumatPemohon.class);
+	static Logger myLogger = Logger.getLogger(FrmPrmhnnBorangAMaklumatPemohonN.class);
 
 	private static final long serialVersionUID = 1L;
 	
@@ -82,7 +84,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	private LampiranBean lBean = null;
 	
 	@Override
-	public Template doTemplate() throws Exception {
+	public String doTemplate2() throws Exception {
 		
 		logic = new FrmPrmhnnSek8InternalData();
 		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
@@ -1012,9 +1014,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					listIds = logic_A.getIds();
 
 					Hashtable kx = (Hashtable) listIds.get(0);
-					this.context.put("IdSimati", Long.parseLong(kx.get("idsimati").toString()));
-					this.context.put("IdPemohon", Long.parseLong(kx.get("idpemohon").toString()));
+					this.context.put("IdSimati", Long.parseLong(kx.get(
+							"idsimati").toString()));
+					this.context.put("IdPemohon", Long.parseLong(kx.get(
+							"idpemohon").toString()));
 					this.context.put("IdPermohonan", getParam("idPermohonan"));
+
 					this.context.put("duplicate", "yes");
 
 				}
@@ -1058,7 +1063,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				Hashtable h = null;
 				try {
 					h = (Hashtable) list3.get(0);
-				}catch (Exception e) {
+				}
+
+				catch (Exception e) {
 					throw new Exception("Ralat dalam mendapatkan maklumat.Sila cuba lagi.");
 				}
 
@@ -1068,7 +1075,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 				} else {
 					this.context.put("negeri", h.get("pmidnegeri").toString());
-					Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(h.get("pmidnegeri").toString()));
+					Vector s3 = logic_A.getListBandarByNegeri(Integer
+							.parseInt(h.get("pmidnegeri").toString()));
 					this.context.put("listBandarbyNegeri", s3);
 					// this.context.put("daerah","");
 					// this.context.put("selectNegeri",
@@ -1110,7 +1118,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
-		}else if ("getBandar".equals(submit)||submit.equals("getlampiran")) {
+		}else if ("getBandar".equals(submit)) {
 			String IdPermohonan = getParam("idPermohonan");
 			String Idppp = getParam("idpermohonan");
 
@@ -1126,6 +1134,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			String bandar_bandar = getParam("socBandar");
 
 			if (cntID == 0) {
+
 				this.context.put("tarikhmohondaftar", currentDate);
 
 				int idflag = 0;
@@ -1173,7 +1182,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("negeri", "");
 					this.context.put("daerah", "");
 					this.context.put("listBandarbyNegeri", "");
-				
 				} else {
 					this.context.put("negeri", negri);
 					Vector s = logic_A.getListBandarByNegeri(Integer.parseInt(negri));
@@ -1183,7 +1191,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 					// this.context.put("selectNegeri",
 					// HTML.SelectNegeri("socNegeri",Long.parseLong(negri),"class=\"autoselect\" "));
-				
 				}
 
 				this.context.put("tarikhMohonm", getParam("txdTarikhMohon"));
@@ -1360,22 +1367,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
 
-			if(submit.equals("getlampiran")){
-				lBean = new LampiranBean();
-				String idRujukan ="";
-				myLogger.info("idRujukan="+idRujukan);
-				myLogger.info("idRujukan2="+idRujukan);
-				myLogger.info("idRujukan3="+getParam("check_no_kp_lain_simati").length());
-
-				idRujukan = getParam("check_no_kp_baru_simati").equals("")?"-":getParam("check_no_kp_baru_simati");
-				idRujukan += getParam("check_no_kp_lama_simati").equals("")?"-":getParam("check_no_kp_lama_simati");
-				idRujukan += getParam("socJenisKPLainSimati").equals("0")?"-":getParam("socJenisKPLainSimati");
-				idRujukan += (getParam("check_no_kp_lain_simati").equals("")?"-":getParam("check_no_kp_lain_simati"));
-				myLogger.info("idRujukan="+idRujukan);
-				this.context.put("lampirans", lBean.getLampiranSimatiPapar(idRujukan, "99201"));				
-
-			}
-			
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
 		} else if ("Pemohon".equals(submit)) {
@@ -5262,7 +5253,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 //				String id = getParam("idpermohonan");
 //				logic_A.updateDataNilai(id, mati, idUser);
 //				
-//			}
+//			}cnwqdjnnnncccc
 			
 			
 			//2018
@@ -5661,8 +5652,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				db.close();
 		}
 
-		Template template = this.engine.getTemplate(vm);
-		return template;
+		//Template template = this.engine.getTemplate(vm);
+		return vm;
 
 	}
 
@@ -7403,10 +7394,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		logic_A.addPermohonan_online(session, h);
 		
-		//lBean = new LampiranBean();
-		//lBean.dokumenSimati(request,logic_A.getIDSimati(),String.valueOf(session.getAttribute("_ekptg_user_id")));
-		//lBean.simpanDokumen("PPKDOKUMENSIMATI", idRujukan, item, jenisDok, no_kplain_simati);
-
 	}
 
 	private void ha_negeri(HttpSession session) throws Exception {

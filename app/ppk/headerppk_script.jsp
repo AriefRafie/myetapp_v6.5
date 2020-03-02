@@ -1,40 +1,42 @@
 
-
 <script>
 
+	function selectPelbagaiNegarav2(id_negeri,div_negara,tr_negara,nama_negara,tr_poskod,tr_bandar){	
+		//alert("cek negara masuk :"+id_negeri);		
+		if(id_negeri == '17'){			
+			//$jquery("#"+div_negara).html("<font size = '-3' color = 'blue' >Bagi yang <b>Pelbagai Negara</b>, Sila masukkan nama negara didalam ruangan yang disediakan dibawah.</font>");			
+			document.getElementById(div_negara).innerHTML = "<font size = '-3' color = 'blue' >Bagi yang <b>Pelbagai Negara</b>, Sila masukkan nama negara didalam ruangan yang disediakan dibawah.</font>";
+			document.getElementById(tr_negara).style.display="";
+			document.getElementById(tr_poskod).style.display="none";
+			document.getElementById(tr_bandar).style.display="none";
 
+		}else{
+			document.getElementById(div_negara).innerHTML = "";			
+			//$jquery("#"+div_negara).html("");
+			document.getElementById(tr_negara).style.display="none";
+			document.getElementById(nama_negara).value = "";
+			document.getElementById(tr_poskod).style.display="";
+			document.getElementById(tr_bandar).style.display="";
+			
+		}
 
-
-
-
-
-function selectPelbagaiNegara(id_negeri,div_negara,tr_negara,nama_negara)
-{
-
-	//alert("cek negara masuk :"+id_negeri);
-	
-	if(id_negeri == '17')
-	{
-		
-		//$jquery("#"+div_negara).html("<font size = '-3' color = 'blue' >Bagi yang <b>Pelbagai Negara</b>, Sila masukkan nama negara didalam ruangan yang disediakan dibawah.</font>");
-		
-		document.getElementById(div_negara).innerHTML = "<font size = '-3' color = 'blue' >Bagi yang <b>Pelbagai Negara</b>, Sila masukkan nama negara didalam ruangan yang disediakan dibawah.</font>";
-		document.getElementById(tr_negara).style.display="";
-		//alert("Y");
 	}
-	else
-	{
-		document.getElementById(div_negara).innerHTML = "";
-		
-		//$jquery("#"+div_negara).html("");
-		document.getElementById(tr_negara).style.display="none";
-		document.getElementById(nama_negara).value = "";
-		//alert("t");
+
+	function selectPelbagaiNegara(id_negeri,div_negara,tr_negara,nama_negara){
+		if(id_negeri == '17'){			
+			//$jquery("#"+div_negara).html("<font size = '-3' color = 'blue' >Bagi yang <b>Pelbagai Negara</b>, Sila masukkan nama negara didalam ruangan yang disediakan dibawah.</font>");			
+			document.getElementById(div_negara).innerHTML = "<font size = '-3' color = 'blue' >Bagi yang <b>Pelbagai Negara</b>, Sila masukkan nama negara didalam ruangan yang disediakan dibawah.</font>";
+			document.getElementById(tr_negara).style.display="";
+
+		}else{
+			document.getElementById(div_negara).innerHTML = "";			
+			//$jquery("#"+div_negara).html("");
+			document.getElementById(tr_negara).style.display="none";
+			document.getElementById(nama_negara).value = "";
+
+		}
+
 	}
-	//alert("OUT");
-}
-
-
 
 
 function alamatwarga(jenis_warga,div_warga,tr_nama_warga,nama_warga)
