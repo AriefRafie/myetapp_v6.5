@@ -1373,6 +1373,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				idRujukan += (getParam("check_no_kp_lain_simati").equals("")?"-":getParam("check_no_kp_lain_simati"));
 				myLogger.info("idRujukan="+idRujukan);
 				this.context.put("lampirans", lBean.getLampiranSimatiPapar(idRujukan, "99201"));				
+				this.context.put("lampiranSijil", lBean.getLampiranSimatiPapar(idRujukan, "99202"));				
 
 			}
 			
