@@ -49,7 +49,7 @@ public class DBPPT extends ekptg.helpers.DB{
 				r.add("keterangan");
 				r.add("kod_jenis_hakmilik","TDK","!=");
 				sql = r.getSQLSelect("tblrujjenishakmilik", "lpad(replace(kod_jenis_hakmilik,'00','A'),100)");
-				myLog.info("sql="+sql);
+//				myLog.info("sql="+sql);
 				ResultSet rs = stmt.executeQuery(sql);
 				v = new Vector<Tblrujjenishakmilik>();
 				Tblrujjenishakmilik j = null;
