@@ -46,18 +46,14 @@ public class BicaraInteraktifData {
 	public String fontSize = rbCetakan.getString("fontSizeCetakan");
 	
 	public List object = null;
-    public void setCachedObject(List obj)
-    {
-      this.object = obj;
-      
+    public void setCachedObject(List obj){
+      this.object = obj;     
     }
-    public List getCachedObject()
-    {
+    public List getCachedObject(){
       return this.object;
     }
 
-	public String queryPerbicaraan(HttpSession session, String id_permohonan,String user_id, String id_jawatan, String id_negeri, String flagCari,Db db) throws Exception
-	{
+	public String queryPerbicaraan(HttpSession session, String id_permohonan,String user_id, String id_jawatan, String id_negeri, String flagCari,Db db) throws Exception{
 		//PEGAWAI BICARA
 		//GET ID_PEGAWAI BY LOGIN
 		user_id = (String)session.getAttribute("_ekptg_user_id");
@@ -7296,11 +7292,17 @@ public class BicaraInteraktifData {
     }
    
     
-    public String contentBE_HTA(HttpSession session,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,String ID_PEMOHON,String ID_PERINTAH,String fontSize,Db db) throws Exception {
+    public String contentBE_HTA(HttpSession session
+    	,String ID_PERBICARAAN
+    	,String ID_PERMOHONAN
+    	,String ID_PERMOHONANSIMATI
+    	,String ID_PEMOHON
+    	,String ID_PERINTAH
+    	,String fontSize
+    	,Db db) throws Exception {
     	String htmlPageSetup = "";	
     	List list = rekodHTABorangE(session, ID_PERINTAH, ID_PERMOHONANSIMATI, db);
-    	if(list.size()>0)
-		{	
+    	if(list.size()>0){	
     		/*
     		htmlPageSetup += openHTMLTableCatatanPerintah();    		
     		htmlPageSetup += "<tr>";
@@ -7342,13 +7344,10 @@ public class BicaraInteraktifData {
         	htmlPageSetup += "</thead>";
         	
         	htmlPageSetup += "<tfoot ><tr><td colspan=\"10\" style=\"border-top: 1px solid #000;\"></td></tr></tfoot>";
-        	
-        	
-        	for(int i=0; i<list.size(); i++)
-			{							
+        	     	
+        	for(int i=0; i<list.size(); i++){							
 				Map setup = (Map) list.get(i);
-				if(setup!=null)
-				{
+				if(setup!=null){
 					String MAKLUMAT_HTA = (String)setup.get("MAKLUMAT_HTA");
 					String NAMA_MUKIM = (String)setup.get("NAMA_MUKIM");
 					String NAMA_DAERAH = (String)setup.get("NAMA_DAERAH");
@@ -7356,9 +7355,7 @@ public class BicaraInteraktifData {
 					String STATUS_PEMILIKAN = (String)setup.get("STATUS_PEMILIKAN");
 					String NAMA_SIMATI = (String)setup.get("NAMA_SIMATI");
 					String KP_SIMATI = (String)setup.get("KP_SIMATI");
-					String CATATAN_HARTA = (String)setup.get("CATATAN_HARTA");
-					
-					
+					String CATATAN_HARTA = (String)setup.get("CATATAN_HARTA");					
 					
 					int SINGLEWARIS = (Integer)setup.get("SINGLEWARIS");
 					int SINGLEPA = (Integer)setup.get("SINGLEPA");
@@ -7369,8 +7366,7 @@ public class BicaraInteraktifData {
 					int DOUBLEPAOBHILANG = (Integer)setup.get("DOUBLEPAOBHILANG");
 					int TRIPLEPAOBHILANG = (Integer)setup.get("TRIPLEPAOBHILANG");
 					int FOURPAOBHILANG = (Integer)setup.get("FOURPAOBHILANG");
-					
-					
+									
 					htmlPageSetup += "<tr>";
 		            htmlPageSetup += "<td valign=\"top\"  align=\"left\"  style=\"border: 1px solid #000;"+fontSize+"\" > ";
 		        	htmlPageSetup += ""+MAKLUMAT_HTA;
@@ -7384,8 +7380,7 @@ public class BicaraInteraktifData {
 		        	htmlPageSetup += "<td valign=\"top\"  align=\"left\"  style=\"border: 1px solid #000;"+fontSize+"\" > ";
 		        	
 		            htmlPageSetup += contentBE_HARTASubreport1(session,"HTA",ID_PERMOHONANSIMATI,ID_PERINTAHHTAOBMST,STATUS_PEMILIKAN,NAMA_SIMATI,KP_SIMATI,fontSize,db); 
-		           
-		            
+		           		            
 		            //Pemegang Amanah - PA
 		            if(SINGLEPA > 0)
 		            {
@@ -7453,12 +7448,20 @@ public class BicaraInteraktifData {
 			//htmlPageSetup += "<br>";
 		}
     	return htmlPageSetup;
+    	
     }
     
     
         
-    public String contentBE_Pentadbir(HttpSession session,String ID_FAIL,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,
-    		String ID_PEMOHON,String ID_PERINTAH,String fontSize,Db db) throws Exception {
+    public String contentBE_Pentadbir(HttpSession session
+    	,String ID_FAIL
+    	,String ID_PERBICARAAN
+    	,String ID_PERMOHONAN
+    	,String ID_PERMOHONANSIMATI
+    	,String ID_PEMOHON
+    	,String ID_PERINTAH
+    	,String fontSize
+    	,Db db) throws Exception {
     	String htmlPageSetup = "";	
     	
     	modelReport.setSenaraiOBPentadbir(ID_FAIL,"Y",db);
@@ -18083,7 +18086,8 @@ public class BicaraInteraktifData {
 			
 			
 			email.TO_CC = new String[1]; 
-			email.TO_CC[0] = "razman.zainal@gmail.com";
+			//email.TO_CC[0] = "razman.zainal@gmail.com";
+			email.TO_CC[0] = "roslizakaria@gmail.com";
 			
 			
 			
@@ -18211,8 +18215,7 @@ public class BicaraInteraktifData {
 
 
 */
-	
-	
+		
 	public String emelPegawaiPusaka(HttpSession session,String ID_PEGAWAI,Db db) throws Exception {
 		String returnemel = "";
 		if(!ID_PEGAWAI.equals(""))
@@ -18503,88 +18506,10 @@ public class BicaraInteraktifData {
 				" WHERE  DATE_REF_TBL.DRPG  = MAIN1.DRPG (+)  "+
 				" ORDER BY DATE_REF_TBL.ID_NEGERI ASC,MAIN1.TARIKH_BICARA ASC,MAIN1.JUMLAH_PERBICARAAN DESC  "+
 				" )    ";
-				
-				
-				/*
-				" SELECT * FROM ( "+
-				" SELECT 3 AS LAYER1, 2 AS LAYER2, DATE_REF.DR AS TARIKH_BICARA_DISPLAY, MAIN1.* FROM ( "+			
-				" SELECT DISTINCT " +
-				" UPSK.ID_UNITPSK," +
-				" UPPER(UPSK.NAMA_PEGAWAI) AS NAMA_PEGAWAI,NULL AS NAMA_NEGERI,UPSK.ID_NEGERI,PERB.TARIKH_BICARA, "+
-				" COUNT(DISTINCT PERB.ID_PERBICARAAN) AS JUMLAH_PERBICARAAN, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('08:30 AM','HH:MI AM') AND TO_DATE('08:59 AM','HH:MI AM') THEN 1 ELSE 0 END) AS T0830AM_0859AM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('09:00 AM','HH:MI AM') AND TO_DATE('09:29 AM','HH:MI AM') THEN 1 ELSE 0 END) AS T0900AM_0929AM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('09:30 AM','HH:MI AM') AND TO_DATE('09:59 AM','HH:MI AM') THEN 1 ELSE 0 END) AS T0930AM_0959AM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('10:00 AM','HH:MI AM') AND TO_DATE('10:29 AM','HH:MI AM') THEN 1 ELSE 0 END) AS T1000AM_1029AM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('10:30 AM','HH:MI AM') AND TO_DATE('10:59 AM','HH:MI AM') THEN 1 ELSE 0 END) AS T1030AM_1059AM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('11:00 AM','HH:MI AM') AND TO_DATE('11:29 AM','HH:MI AM') THEN 1 ELSE 0 END) AS T1100AM_1129AM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('11:30 AM','HH:MI AM') AND TO_DATE('11:59 AM','HH:MI AM') THEN 1 ELSE 0 END) AS T1130AM_1159AM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('12:00 PM','HH:MI AM') AND TO_DATE('12:29 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T1200PM_1229PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('12:30 PM','HH:MI AM') AND TO_DATE('12:59 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T1230PM_1259PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('01:00 PM','HH:MI AM') AND TO_DATE('01:29 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0100PM_0129PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('01:30 PM','HH:MI AM') AND TO_DATE('01:59 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0130PM_0159PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('02:00 PM','HH:MI AM') AND TO_DATE('02:29 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0200PM_0229PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('02:30 PM','HH:MI AM') AND TO_DATE('02:59 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0230PM_0259PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('03:00 PM','HH:MI AM') AND TO_DATE('03:29 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0300PM_0329PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('03:30 PM','HH:MI AM') AND TO_DATE('03:59 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0330PM_0359PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('04:00 PM','HH:MI AM') AND TO_DATE('04:29 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0400PM_0429PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('04:30 PM','HH:MI AM') AND TO_DATE('04:59 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0430PM_0459PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('05:00 PM','HH:MI AM') AND TO_DATE('05:29 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0500PM_0529PM, "+
-				" SUM(CASE WHEN PERB.WAKTU_BICARA_CONVERT BETWEEN  TO_DATE('05:30 PM','HH:MI AM') AND TO_DATE('05:59 PM','HH:MI PM') THEN 1 ELSE 0 END) AS T0530PM_0559PM "+
-				" FROM TBLPPKRUJUNIT UPSK,  "+
-				" (SELECT PR.ID_PERBICARAAN, RK.NAMA_PEGAWAI, PR.ID_UNITPSK, P.ID_DAERAHMHN, F.ID_NEGERI, F.NO_FAIL, PR.TARIKH_BICARA, SYSDATE, "+
-				" PR.MASA_BICARA,TO_DATE( "+
-				" CASE WHEN PR.MASA_BICARA LIKE '%.%' THEN "+ 
-				" (CASE WHEN NVL(length(SUBSTR(PR.MASA_BICARA, 1, INSTR(PR.MASA_BICARA, '.') - 1)),0) = 1 THEN '0' || "+  
-				" CASE WHEN NVL(length(SUBSTR(PR.MASA_BICARA, INSTR(PR.MASA_BICARA, '.') + 1)),0) = 1 THEN PR.MASA_BICARA || '0' ELSE PR.MASA_BICARA END "+ 
-				" WHEN NVL(length(SUBSTR(PR.MASA_BICARA, INSTR(PR.MASA_BICARA, '.') + 1)),0) = 1 THEN PR.MASA_BICARA || '0'  "+
-				" ELSE PR.MASA_BICARA END)  "+
-				" WHEN LENGTH(PR.MASA_BICARA) = 4 THEN SUBSTR(PR.MASA_BICARA, 1, 2) || '.' || SUBSTR(PR.MASA_BICARA, 3) "+ 
-				" ELSE '' END || (CASE WHEN PR.JENIS_MASA_BICARA = '1' THEN ' AM'  "+
-				" WHEN PR.JENIS_MASA_BICARA = '2' THEN ' PM'  "+
-				" WHEN PR.JENIS_MASA_BICARA = '3' THEN ' PM' ELSE '' END),'HH:MI AM') AS WAKTU_BICARA_CONVERT "+
-				" FROM TBLPPKPERBICARAAN PR, TBLPPKPERINTAH PH,  "+
-				" TBLPPKKEPUTUSANPERMOHONAN KP, TBLPPKPERMOHONAN P, TBLPFDFAIL F, TBLPPKRUJUNIT RK "+
-				" WHERE PR.ID_PERBICARAAN = PH.ID_PERBICARAAN(+) AND PR.ID_UNITPSK = RK.ID_UNITPSK AND  RK.STATUS_PEG=1 "+
-				" AND KP.ID_KEPUTUSANPERMOHONAN = PR.ID_KEPUTUSANPERMOHONAN AND KP.ID_PERMOHONAN = P.ID_PERMOHONAN AND P.ID_FAIL = F.ID_FAIL ";
-				if(!id_negeri.equals(""))
-				{
-					sql += " AND RK.ID_NEGERI = '"+id_negeri+"' ";
-				}
-				sql += " AND PR.TARIKH_BICARA BETWEEN TO_DATE('"+tarikhMula+"','DD/MM/YYYY') AND TO_DATE('"+tarikhAkhir+"','DD/MM/YYYY') "+
-				" ORDER BY PR.TARIKH_BICARA, PR.MASA_BICARA) PERB "+
-				" WHERE ";
-				//sql += " UPSK.NAMA_PEGAWAI = PERB.NAMA_PEGAWAI(+) ";
-				sql += " UPSK.ID_UNITPSK = PERB.ID_UNITPSK(+) ";
-				
-				if(!namaPegawai.equals(""))
-				{
-					sql += " AND  UPPER(UPSK.NAMA_PEGAWAI) LIKE '%"+namaPegawai.toUpperCase()+"%' ";
-				}
-				
-				sql += " AND UPSK.STATUS_PEG=1 ";
-				
-				if(!id_negeri.equals(""))
-				{
-					sql += " AND UPSK.ID_NEGERI = '"+id_negeri+"' ";
-				}
-				
-				sql += " GROUP BY " +
-						" UPSK.ID_UNITPSK," +
-						" UPSK.NAMA_PEGAWAI,UPSK.ID_NEGERI,PERB.TARIKH_BICARA "+
-				" ) MAIN1, (SELECT TO_DATE('"+tarikhMula+"', 'DD/MM/YYYY') + ROWNUM -1 AS DR "+
-				" FROM DUAL  CONNECT BY LEVEL <= TO_DATE('"+tarikhAkhir+"', 'DD/MM/YYYY') - TO_DATE('"+tarikhMula+"', 'DD/MM/YYYY') + 1) DATE_REF ";
-				//sql += " WHERE  (DATE_REF.DR = MAIN1.TARIKH_BICARA OR MAIN1.TARIKH_BICARA IS NULL) ";
-				
-				sql += " ORDER BY ID_NEGERI ASC,TARIKH_BICARA ASC,JUMLAH_PERBICARAAN DESC) "+
-				*/
-						
-				
-				
-				
+								
 			sql += " UNION ALL ";
 								
-			 sql += " SELECT 1 AS layer1, 1 AS layer2, "+
+			sql += " SELECT 1 AS layer1, 1 AS layer2, "+
 						" date_ref.dr AS tarikh_bicara_display, " +
 						" NULL AS id_unitpsk, "+
 						" NULL AS NAMA_PEGAWAI, NAMA_NEGERI AS NAMA_NEGERI, "+
@@ -18743,5 +18668,6 @@ public class BicaraInteraktifData {
         }
 		return new String(array);
     }
+	
 	
 }
