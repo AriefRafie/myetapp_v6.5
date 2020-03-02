@@ -30,7 +30,7 @@ import ekptg.view.ppk.PendaftaranCheck;
 
 
 public class FrmPrmhnnSek8DaftarSek8InternalData {
-	static Logger myLogger = Logger.getLogger(PendaftaranCheck.class);
+	static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8DaftarSek8InternalData.class);
 	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy");
 
 	private Vector list = new Vector();
@@ -38,20 +38,18 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 	private Vector listDataHadulu_pilihan = new Vector();
 	private Vector list_permohonan = new Vector();
 	private Vector list_setData_online_8 = new Vector();
-	
+	private String idSimati = "0";
 
 	public Vector getDataPPSPP() {
-		return list;
-		
+		return list;	
 	}
-	
 	
 	public Vector setDataPemohon_C(String id) throws Exception {
 		Db db = null;
 		list_permohonan.clear();
 		String sql = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		System.out.println("Keluar sini8");
+//		System.out.println("Keluar sini8");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -125,7 +123,7 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			System.out.println("Keluar sini1 id >>> "+id);
+//			System.out.println("Keluar sini1 id >>> "+id);
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, " +
 					//"D.ID_DAERAH, " +
 					"P.ID_PERMOHONAN, P.TARIKH_MOHON, "
@@ -240,7 +238,7 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 				h.put("idSimati",
 						rs.getString("id_Simati") == null ? "" : rs
 								.getString("id_Simati"));
-				System.out.println("Keluar sini1a");
+//				System.out.println("Keluar sini1a");
 				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
 						: rs.getString("nama_Simati"));
 				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
@@ -456,7 +454,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			System.out.println("Keluar sini2");
+//			System.out.println("Keluar sini2");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, " +
 					//"D.ID_DAERAH, " +
 					"P.ID_PERMOHONAN, P.TARIKH_MOHON, "
@@ -560,7 +558,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 				h.put("idSimati",
 						rs.getString("id_Simati") == null ? "" : rs
 								.getString("id_Simati"));
-				System.out.println("Keluar sini2a");
+//				System.out.println("Keluar sini2a");
 				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
 						: rs.getString("nama_Simati"));
 				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
@@ -774,9 +772,9 @@ public Vector setDataNoKP(String idpp) throws Exception {
 		db = new Db();
 		Statement stmt = db.getStatement();
 		SQLRenderer r = new SQLRenderer();
-		System.out.println("Keluar sini3");
+//		System.out.println("Keluar sini3");
 		sql = "SELECT NO_KP_BARU, NO_KP_LAMA, NO_KP_LAIN FROM TBLPPKSIMATI WHERE ID_SIMATI = (SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = '"+idpp+"')";
-		System.out.println("******** SQL SET DATANOKP:" + sql.toUpperCase());
+//		System.out.println("******** SQL SET DATANOKP:" + sql.toUpperCase());
 		ResultSet rs = stmt.executeQuery(sql);
 		Hashtable h;
 
@@ -814,7 +812,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			System.out.println("Keluar sini3");
+//			System.out.println("Keluar sini3");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON,  "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU, "
@@ -1129,7 +1127,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			System.out.println("Keluar sini3");
+//			System.out.println("Keluar sini3");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON,  "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU, "
@@ -1195,7 +1193,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			System.out.println("Keluar sini3");
+//			System.out.println("Keluar sini3");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON,  "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU, "
@@ -1265,7 +1263,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			System.out.println("Keluar sini4");
+//			System.out.println("Keluar sini4");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON, "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP AS JENISKP_SIMATI, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU AS NO_KP_BARU_PM, "
@@ -1359,11 +1357,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
             AND p.id_permohonan = '1611551698'			 
 			 */
 			
-			
-			
-
-			System.out.println("SQL FAR ONLINE" + sql);
-
+//			System.out.println("SQL FAR ONLINE" + sql);
 			myLogger.info("******** SQL SET DATA ONLINE:" + sql.toUpperCase());
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -1421,7 +1415,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 				h.put("idSimati",
 						rs.getString("id_Simati") == null ? "" : rs
 								.getString("id_Simati"));
-				System.out.println("Keluar sini4a");
+//				System.out.println("Keluar sini4a");
 				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
 						: rs.getString("nama_Simati"));
 				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
@@ -1660,7 +1654,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			System.out.println("Keluar sini5");
+//			System.out.println("Keluar sini5");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON, "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU, "
@@ -1730,7 +1724,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 				h.put("idSimati",
 						rs.getString("id_Simati") == null ? "" : rs
 								.getString("id_Simati"));
-				System.out.println("Keluar sini5a");
+//				System.out.println("Keluar sini5a");
 				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
 						: rs.getString("nama_Simati"));
 				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
@@ -1926,7 +1920,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 					+ "'"
 					+ " AND P.NO_SUBJAKET = '" + jaket + "'" + "  AND F.NO_FAIL is not null ";
 
-			System.out.println("SQLXXXXXX" + sql);
+//			System.out.println("SQLXXXXXX" + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 
@@ -1998,7 +1992,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			     " AND SM.ID_SIMATI = '" + idsimati + "' "+
 			     " ORDER BY NAMA_PEMOHON ";
 
-			 System.out.println("SQLXXXXXX" + sql);
+//			 System.out.println("SQLXXXXXX" + sql);
 			myLogger.info("LIST PEMOHON OB DAHULU :" + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -2018,7 +2012,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 				h.put("nama_pemohon", rs.getString("NAMA_PEMOHON") == null ? ""
 						: rs.getString("NAMA_PEMOHON"));
 				
-				System.out.println("nama pemohon=="+ rs.getString("NAMA_PEMOHON"));
+//				System.out.println("nama pemohon=="+ rs.getString("NAMA_PEMOHON"));
 
 				listSenaraiPemohonSimati.addElement(h);
 			}
@@ -2143,7 +2137,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			System.out.println("Keluar sini6");
+//			System.out.println("Keluar sini6");
 			sql = "SELECT SM.ID_SIMATI, SM.NAMA_SIMATI, P.NO_SUBJAKET, P.ID_PERMOHONAN"
 					+ " FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI PS, TBLPPKPERMOHONAN P"
 					+ " WHERE SM.ID_SIMATI = '"
@@ -2224,7 +2218,6 @@ public Vector setDataNoKP(String idpp) throws Exception {
 	public void addPermohonan(HttpSession session,Hashtable data) throws Exception {
 		// Azam add Transaction on 02.02.2010
 		
-		
 		Connection conn = null;
 		Db db = null;
 		// Db dbOB = null;
@@ -2272,7 +2265,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 			String no_daerah = (String) data.get("no_daerah");
 			// System.out.println("IDPPPPP Daerah!!!!" + no_daerah);
-			System.out.println("NegId 2 ::::" + NegId);
+//			System.out.println("NegId 2 ::::" + NegId);
 			int id_d = Integer.parseInt(no_daerah);
 
 			Vector vd = new Vector();
@@ -2284,7 +2277,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 			String negeri = (String) data.get("negeri");
 			
-			System.out.println("negeri 1 ::::" + negeri);
+//			System.out.println("negeri 1 ::::" + negeri);
 			String no_kpbaru_pemohon = (String) data.get("no_kpbaru_pemohon");
 			String no_kplama_pemohon = (String) data.get("no_kplama_pemohon");
 			String nama_simati = (String) data.get("nama_simati");
@@ -2295,8 +2288,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			String no_kplain_simati = (String) data.get("no_kplain_simati");
 			String tarikhLahirSimati = (String) data.get("tarikhLahirSimati");
 			String userIdKodDaerah = (String) data.get("userIdKodDaerah");
-
-			System.out.println("USER KOD DAERAH!!!::" + userIdKodDaerah);
+//			System.out.println("USER KOD DAERAH!!!::" + userIdKodDaerah);
 
 			String userIdKodNegeri = (String) data.get("userIdKodNegeri");
 			String tarikh_simati = (String) data.get("tarikh_simati");
@@ -2445,7 +2437,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			String tarikh_lahir_simati = "to_date('" + tarikhLahirSimati
 			+ "','dd/MM/yyyy')";
 			
-			System.out.println("idNeg 3 :::::::::::::"+idNeg);
+//			System.out.println("idNeg 3 :::::::::::::"+idNeg);
 			// db = new Db();
 			// Statement stmtA = db.getStatement();
 			// SQLRenderer r = new SQLRenderer();
@@ -2821,7 +2813,6 @@ public Vector setDataNoKP(String idpp) throws Exception {
 		String sqlbayaran = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
-
 			db = new Db();
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
@@ -2834,18 +2825,15 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			long idsimati = DB.getNextID(db, "TBLPPKSIMATI_SEQ");
 			long idBayaran = DB.getNextID(db, "TBLPPKBAYARAN_SEQ");
 			long idP_mati = DB.getNextID(db, "TBLPPKPERMOHONANSIMATI_SEQ");
-
 			long idPermohonan = Long.parseLong((String) data.get("IdPermohonan"));
-			
-			long idSubUrusanStatus = DB.getNextID(db,
-					"TBLRUJSUBURUSANSTATUS_SEQ");
+			long idSubUrusanStatus = DB.getNextID(db,"TBLRUJSUBURUSANSTATUS_SEQ");
 
+			idSimati = String.valueOf(idP_mati);
 			//int UserIdPejabat = Integer.parseInt((String) data.get("userIdPejabat"));
 			String userIdNeg = (String) data.get("userIdNeg");
 			String userId = (String) data.get("userId");
 			String NegId = (String) data.get("negId");
 			String id_Fail = (String) data.get("id_Fail");
-
 			String no_daerah = (String) data.get("no_daerah");
 
 			int id_d = Integer.parseInt(no_daerah);
@@ -2871,8 +2859,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 			String userIdKodNegeri = (String) data.get("userIdKodNegeri");
 			String tarikh_simati = (String) data.get("tarikh_simati");
-			String sel_jeniskp_pemohon = (String) data
-					.get("sel_jeniskp_pemohon");
+			String sel_jeniskp_pemohon = (String) data.get("sel_jeniskp_pemohon");
 			String no_kplain_pemohon = (String) data.get("no_kplain_pemohon");
 			String nama_pemohon = (String) data.get("nama_pemohon");
 			String alamat1 = (String) data.get("alamat1");
@@ -2894,8 +2881,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			String tarikhresit = (String) data.get("tarikhresit");
 
 			String no_tel = (String) data.get("no_tel");
-			String nama_pelbagainegara = (String) data.get("nama_pelbagainegara");
-			
+			String nama_pelbagainegara = (String) data.get("nama_pelbagainegara");		
 			
 			String no_hp = (String) data.get("no_hp");
 			String taraf_penting = (String) data.get("taraf_penting");
@@ -2940,7 +2926,6 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("d.id_daerah", nod);
 
 			String sql12 = r.getSQLSelect("Tblrujdaerah d, Tblrujnegeri n");
-
 			ResultSet rs12 = stmt.executeQuery(sql12);
 			// Vector list = new Vector(;
 			Hashtable h;
@@ -2963,6 +2948,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 				kod = rs12.getString("kod_daerah");
 				kodn = rs12.getString("kod_negeri");
+			
 			}
 
 		    //belum create no fail...awal...no fail ganerate dekat pengesahan
@@ -3024,8 +3010,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 			r.add("tarikh_Masuk", r.unquote("sysdate"));
 			sql1 = r.getSQLInsert("tblppksimati");
-			//System.out.println("SQL SIMATI :" + sql1);
-			
+			//System.out.println("SQL SIMATI :" + sql1);			
 			stmt.executeUpdate(sql1);
 
 			// db = new Db();
@@ -3041,6 +3026,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 				r.add("umur", txtUmurPemohon);
 				r.add("jantina", socJantinaPemohon);
 				r.add("no_hp", no_hp);
+				
 			} else {
 				r.add("no_kp_baru", "");
 				r.add("no_kp_lama", "");
@@ -3069,8 +3055,6 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("no_tel", no_tel);
 			r.add("id_saudara", socSaudaraWaris);
 			
-			
-
 			r.add("id_tarafkptg", taraf_penting);
 			r.add("status_pemohon", jenis_pemohon);
 			r.add("id_Arb", jenis_pej);
@@ -3137,6 +3121,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 					rOB.add("jantina", socJantinaPemohon);
 					rOB.add("no_Hp", no_hp);
 					rOB.add("status_ob", "1");
+			
 				} else {
 					rOB.add("no_Kp_Baru", "");
 					rOB.add("no_Kp_Lain", "");
@@ -3146,6 +3131,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 					rOB.add("jantina", "");
 					rOB.add("no_Hp", "");
 					rOB.add("status_ob", "");
+				
 				}
 				rOB.add("id_Tarafkptg", taraf_penting);
 				rOB.add("jenis_pemiutang", jenis_pemohon);
@@ -3182,9 +3168,6 @@ public Vector setDataNoKP(String idpp) throws Exception {
 				// System.out.println(sqlOB);
 				stmtOB.executeUpdate(sqlOB);
 				
-				
-				
-				
 				rOB.clear();
 				rOB.add("id_ob", id_ob);
 				rOB.add("id_Simati", idsimati);
@@ -3198,6 +3181,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 					rOB.add("jantina", socJantinaPemohon);
 					rOB.add("no_Hp", no_hp);
 					rOB.add("status_ob", "1");
+				
 				} else {
 					rOB.add("no_Kp_Baru", "");
 					rOB.add("no_Kp_Lain", "");
@@ -3207,6 +3191,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 					rOB.add("jantina", "");
 					rOB.add("no_Hp", "");
 					rOB.add("status_ob", "");
+				
 				}
 				rOB.add("id_Tarafkptg", taraf_penting);
 				rOB.add("jenis_pemiutang", jenis_pemohon);
@@ -3239,6 +3224,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 				
 				sqlOB = rOB.getSQLInsert("tblppkobpermohonan");
 				stmtOB.executeUpdate(sqlOB);
+			
 			}
 
 			/*
@@ -3301,7 +3287,6 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			*/
 
 			// baru
-
 			// db = new Db();
 			// Statement stmtF = db.getStatement();
 			// SQLRenderer r5 = new SQLRenderer();
@@ -3321,10 +3306,8 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 			sql5 = r.getSQLInsert("tblrujsuburusanstatusfail");
 			stmt.executeUpdate(sql5);*/
-			
-			
+						
 			//:::SUB
-
 			// //System.out.println("NO RESIT :" + txtbox);
 
 			// db = new Db();
@@ -3343,11 +3326,13 @@ public Vector setDataNoKP(String idpp) throws Exception {
 				tr = "to_date('" + tarikhresit + "','dd/MM/yyyy')";
 				r.add("tarikh_bayaran", r.unquote(tr));
 				r.add("jumlah_bayaran", 10);
+			
 			} else {
 				r.add("no_resit", "");
 				tr = "to_date('" + tarikhresit + "','dd/MM/yyyy')";
 				r.add("tarikh_bayaran", "");
 				r.add("jumlah_bayaran", 0);
+			
 			}
 			// r1.add("id_masuk",6);
 
@@ -3358,8 +3343,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			//sqlbayaran = r.getSQLInsert("tblppkbayaran");
 			// System.out.println("sqlbayaran-->" + sqlbayaran);
 			//stmt.executeUpdate(sqlbayaran);
-
-			
+	
 			conn.commit();
 			//:::SUB
 			myLogger.info("SSF KEMASKINI 2");
@@ -3379,6 +3363,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			if (db != null)
 				db.close();
 		}
+		
 	}
 
 	public Vector checkwaris(String idob) throws Exception {
@@ -5223,8 +5208,8 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("lain_tujuan", lt);
 			r.add("id_permohonanterdahulu", idp_dulu);
 			sql3 = r.getSQLInsert("tblppkpermohonan");
-			System.out.println("bkp===="+bkp);
-			System.out.println("sql3===="+sql3);
+//			System.out.println("bkp===="+bkp);
+//			System.out.println("sql3===="+sql3);
 			stmt.executeUpdate(sql3);
 
 			String sqlr = "";
@@ -8031,14 +8016,11 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("tarikh_Kemaskini", r.unquote("sysdate"));
 
 			sql1 = r.getSQLUpdate("tblppksimati");
-			System.out.println("peje --- " + sql1);
+//			System.out.println("peje --- " + sql1);
 			stmt.executeUpdate(sql1);
 			
-
 			// db = new Db();
 			// Statement stmtc = db.getStatement();
-			
-			
 			
 			r.clear();
 			r.update("id_pemohon", IdPemohon);
@@ -10422,9 +10404,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 					+ " FROM TBLPPKHA H1,TBLPPKHAPERMOHONAN H, TBLPPKRUJJENISHA J"
 					+ " WHERE H1.ID_HA = H.ID_HA AND H.ID_JENISHA = J.ID_JENISHA   "
 					+ " AND H.ID_HA = '" + id3 + "' ";
-
-			System.out.println("HARTA ALIH :" + sql.toUpperCase());
-
+//			System.out.println("HARTA ALIH :" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 			int bil = 1;
@@ -10617,7 +10597,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("tarikh_Kemaskini", r.unquote("sysdate"));
 			r.add("FLAG_DAFTAR", FLAG_DAFTAR);
 			sql = r.getSQLUpdate("tblppkha");
-			System.out.println("sql = "+sql);
+//			System.out.println("sql = "+sql);
 			stmt.executeUpdate(sql);
 			
 			r.clear();
@@ -10665,7 +10645,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("tarikh_Kemaskini", r.unquote("sysdate"));
 			r.add("FLAG_DAFTAR", FLAG_DAFTAR);
 			sql = r.getSQLUpdate("tblppkhapermohonan");
-			System.out.println("sql = "+sql);
+//			System.out.println("sql = "+sql);
 			stmt.executeUpdate(sql);
 			
 			conn.commit();
@@ -10835,7 +10815,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("keterangan");
 
 			sql = r.getSQLSelect("Tblppkrujtarafkptg", "kod");
-			System.out.print("SQL 333" + sql.toUpperCase());
+//			System.out.print("SQL 333" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -10989,7 +10969,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 		//Db db = null;
 		// String sql =
 		// "select a.id_agensi, a.kod_agensi, a.nama_agensi, a.alamat1, a.alamat2, a.alamat3, a.poskod, a.jawatan, a.id_negeri from tblrujagensi a order by a.id_negeri";
-		System.out.print("getListnegeriDb");
+//		System.out.print("getListnegeriDb");
 		String sql = "";
 		try {
 			//db = new Db();
@@ -11000,7 +10980,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("kod_Negeri");
 			
 			sql = r.getSQLSelect("Tblrujnegeri", "kod_Negeri");
-			System.out.print("SQL 111" + sql.toUpperCase());
+//			System.out.print("SQL 111" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -11135,7 +11115,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("kod");
 
 			sql = r.getSQLSelect("Tblppkrujbuktimati", "kod");
-			System.out.print("SQL 555" + sql.toUpperCase());
+//			System.out.print("SQL 555" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -11629,7 +11609,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("kod_Daerah");
 			// r.add("id_Negeri");
 			sql = r.getSQLSelect("Tblrujdaerah", "kod_Daerah");
-			System.out.print("SQL 666" + sql.toUpperCase());
+//			System.out.print("SQL 666" + sql.toUpperCase());
 			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
@@ -11808,7 +11788,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			// r.add("id_Negeri");
 
 			sql = r.getSQLSelect("Tblrujluas", "kod_Luas");
-			System.out.print("SQL 777" + sql.toUpperCase());
+//			System.out.print("SQL 777" + sql.toUpperCase());
 			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
@@ -11904,7 +11884,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("jenis_Daftar_Pb", status);
 
 			sql = r.getSQLSelect("Tblrujjenispb", "kod_Jenis_Pb");
-			System.out.print("SQL 888" + sql.toUpperCase());
+//			System.out.print("SQL 888" + sql.toUpperCase());
 			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
@@ -11989,7 +11969,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			// 2017/09/17
 			//sql = r.getSQLSelect("Tblrujjenistanah", "kod_Jenis_Tanah");
 			sql = r.getSQLSelect("tblppkrujjenistanah", "kod_Jenis_Tanah");
-			System.out.print("SQL 999" + sql.toUpperCase());
+//			System.out.print("SQL 999" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -12074,7 +12054,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("id_Daerah");
 
 			sql = r.getSQLSelect("Tblrujmukim", "kod_Mukim");
-			System.out.print("SQL 101010" + sql.toUpperCase());
+//			System.out.print("SQL 101010" + sql.toUpperCase());
 			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
@@ -12313,9 +12293,8 @@ public Vector setDataNoKP(String idpp) throws Exception {
 		String idUser = userid;
 		String sql = "Select d.id_daerah,d.kod_daerah,d.id_negeri,r.id_pejabatjkptg,n.kod_negeri From users_internal u, tblrujdaerah d, tblrujpejabaturusan r, tblrujnegeri n "
 				+ "Where u.id_negeri = d.id_negeri and d.id_daerah = r.id_daerah and d.id_negeri = r.id_negeri and r.id_negeri = n.id_negeri and u.user_id = "
-				+ idUser + "";
-		
-		System.out.println("negeri user ::::"+sql);
+				+ idUser + "";		
+//		System.out.println("negeri user ::::"+sql);
 		
 		// String sql = "";
 		try {
@@ -12412,7 +12391,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 				+ " ORDER BY id_negeri,kod_daerah";
 
-		System.out.println("@@@@" + sql);
+//		System.out.println("@@@@" + sql);
 
 		try {
 			db = new Db();
@@ -14138,7 +14117,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 		//Db db = null;
 		// String sql =
 		// "select a.id_agensi, a.kod_agensi, a.nama_agensi, a.alamat1, a.alamat2, a.alamat3, a.poskod, a.jawatan, a.id_negeri from tblrujagensi a order by a.id_negeri";
-		System.out.print("getNofailduniaDb");
+//		System.out.print("getNofailduniaDb");
 		String sql = "";
 		try {
 			//db = new Db();
@@ -14162,7 +14141,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 					+ sekkk
 					+ "'"
 					+ " group by F.id_seksyen,to_char(F.TARIKH_DAFTAR_FAIL, 'YYYY')";
-			System.out.print("SQL 222" + sql.toUpperCase());
+//			System.out.print("SQL 222" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -14546,8 +14525,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 		}
 	}
     
- public String getNamaStatus(String id_status) throws Exception {
-		
+    public String getNamaStatus(String id_status) throws Exception {	
 		Db db = null;
 		String sql = "";
 		String nama_status_temp = "";
@@ -14567,8 +14545,9 @@ public Vector setDataNoKP(String idpp) throws Exception {
 		}
 	}
 	
-	
+ 	public String getIDSimati() {
+		return idSimati;	
+	}	
 
 	
-
 }
