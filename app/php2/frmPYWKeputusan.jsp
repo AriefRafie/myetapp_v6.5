@@ -135,6 +135,46 @@
                 <td><input name="txtTarikhTamat" type="text" class="$inputTextClass" id="txtTarikhTamat" onBlur="check_date(this);calcDate()" value="$beanMaklumatPerjanjian.tarikhTamat" size="9" maxlength="10" $readonly />
                   #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
               </tr>
+              <tr>
+              	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+              	<td>Jenis Kadar Sewa</td>
+              	<td>:</td>
+              	<td><select name="socJenisKadarSewa" id="socJenisKadarSewa"
+					style="width: 139px;" $readonly class="$inputTextClass"
+					onchange="javascript:doChangeJenisKadarSewa(this.value)" $disabled>
+					#if ($beanMaklumatPerjanjian.jenisKadarSewa == 'B')
+						<option value="">SILA PILIH</option>
+						<option value="B" selected="selected">BULANAN</option>
+						<option value="M">SEMUSIM</option>
+						<option value="T">SEUNIT</option>
+						<option value="S">SEKALIGUS</option>
+					#elseif ($beanMaklumatPerjanjian.jenisKadarSewa == 'M')
+						<option value="">SILA PILIH</option>
+						<option value="B">BULANAN</option>
+						<option value="M" selected="selected">SEMUSIM</option>
+						<option value="T">SEUNIT</option>
+						<option value="S">SEKALIGUS</option>
+					#elseif ($beanMaklumatPerjanjian.jenisKadarSewa == 'T')
+						<option value="">SILA PILIH</option>
+						<option value="B">BULANAN</option>
+						<option value="M">SEMUSIM</option>
+						<option value="T" selected="selected">SEUNIT</option>
+						<option value="S">SEKALIGUS</option>
+					#elseif ($beanMaklumatPerjanjian.jenisKadarSewa == 'S')
+						<option value="">SILA PILIH</option>
+						<option value="B">BULANAN</option>
+						<option value="M">SEMUSIM</option>
+						<option value="T">SEUNIT</option>
+						<option value="S" selected="selected">SEKALIGUS</option>
+					#else
+						<option value="" selected="selected">SILA PILIH</option>
+						<option value="B">BULANAN</option>
+						<option value="M">SEMUSIM</option>
+						<option value="T">SEUNIT</option>
+						<option value="S">SEKALIGUS</option>
+					#end
+				</select></td>
+              </tr>
               #if($idSuburusan != '27')
               <tr>
                 <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
@@ -214,6 +254,46 @@
                 <td>:</td>
                 <td><input name="txtTarikhTamat" type="text" class="$inputTextClass" id="txtTarikhTamat" onBlur="check_date(this);calcDate()" value="$beanMaklumatPerjanjian.tarikhTamat" size="9" maxlength="10" $readonly />
                   #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
+              </tr>
+              <tr>
+              	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+              	<td>Jenis Kadar Sewa</td>
+              	<td>:</td>
+              	<td><select name="socJenisKadarSewa" id="socJenisKadarSewa"
+					style="width: 139px;" $readonly class="$inputTextClass"
+					onchange="javascript:doChangeJenisKadarSewa(this.value)" $disabled>
+					#if ($beanMaklumatPerjanjian.jenisKadarSewa == 'B')
+						<option value="">SILA PILIH</option>
+						<option value="B" selected="selected">BULANAN</option>
+						<option value="M">SEMUSIM</option>
+						<option value="T">SEUNIT</option>
+						<option value="S">SEKALIGUS</option>
+					#elseif ($beanMaklumatPerjanjian.jenisKadarSewa == 'M')
+						<option value="">SILA PILIH</option>
+						<option value="B">BULANAN</option>
+						<option value="M" selected="selected">SEMUSIM</option>
+						<option value="T">SEUNIT</option>
+						<option value="S">SEKALIGUS</option>
+					#elseif ($beanMaklumatPerjanjian.jenisKadarSewa == 'T')
+						<option value="">SILA PILIH</option>
+						<option value="B">BULANAN</option>
+						<option value="M">SEMUSIM</option>
+						<option value="T" selected="selected">SEUNIT</option>
+						<option value="S">SEKALIGUS</option>
+					#elseif ($beanMaklumatPerjanjian.jenisKadarSewa == 'S')
+						<option value="">SILA PILIH</option>
+						<option value="B">BULANAN</option>
+						<option value="M">SEMUSIM</option>
+						<option value="T">SEUNIT</option>
+						<option value="S" selected="selected">SEKALIGUS</option>
+					#else
+						<option value="" selected="selected">SILA PILIH</option>
+						<option value="B">BULANAN</option>
+						<option value="M">SEMUSIM</option>
+						<option value="T">SEUNIT</option>
+						<option value="S">SEKALIGUS</option>
+					#end
+				</select></td>
               </tr>
               #if($idSuburusan != '27')
               <tr>
@@ -370,6 +450,11 @@ function simpanKeputusan(idKeputusan,idSuburusan) {
 		if(document.${formName}.txtTarikhTamat.value == ""){
 			alert('Sila masukkan Tarikh Tamat Perjanjian');
 			document.${formName}.txtTarikhTamat.focus(); 
+			return; 
+		}
+		if(document.${formName}.socJenisKadarSewa.value == ""){
+			alert('Sila pilih Jenis Kadar Sewa');
+			document.${formName}.socJenisKadarSewa.focus(); 
 			return; 
 		}
 		if(idSuburusan != '27'){

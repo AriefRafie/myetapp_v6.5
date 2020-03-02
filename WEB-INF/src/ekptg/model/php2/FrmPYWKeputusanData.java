@@ -36,7 +36,7 @@ public class FrmPYWKeputusanData {
 	public void simpanMaklumatKeputusan(String idPermohonan,
 			String idKeputusan, String txtTarikhHantar, String idPerjanjian,
 			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
-			String txtTarikhMula, String txtTempoh, String txtTarikhTamat,
+			String txtTarikhMula, String txtTempoh, String txtTarikhTamat, String socJenisKadarSewa,
 			String txtKadarSewa, String txtRoyalti, String txtCagaran,
 			HttpSession session) throws Exception {
 
@@ -71,12 +71,12 @@ public class FrmPYWKeputusanData {
 				if ("".equals(idPerjanjian)) {
 					insertPerjanjian(idPermohonan, txtTarikhMulaDasar, txtTempohDasar,
 							txtTarikhTamatDasar, txtTarikhMula, txtTempoh,
-							txtTarikhTamat, txtKadarSewa, txtRoyalti,
+							txtTarikhTamat, socJenisKadarSewa, txtKadarSewa, txtRoyalti,
 							txtCagaran, db, userId);
 				} else {
 					updatePerjanjian(idPerjanjian, txtTarikhMulaDasar, txtTempohDasar,
 							txtTarikhTamatDasar, txtTarikhMula, txtTempoh,
-							txtTarikhTamat, txtKadarSewa, txtRoyalti,
+							txtTarikhTamat, socJenisKadarSewa, txtKadarSewa, txtRoyalti,
 							txtCagaran, db, userId);
 				}
 			} else {
@@ -119,7 +119,7 @@ public class FrmPYWKeputusanData {
 
 	private void insertPerjanjian(String idPermohonan,
 			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
-			String txtTarikhMula, String txtTempoh, String txtTarikhTamat,
+			String txtTarikhMula, String txtTempoh, String txtTarikhTamat, String socJenisKadarSewa, 
 			String txtKadarSewa, String txtRoyalti, String txtCagaran, Db db,
 			String userId) throws Exception {
 
@@ -155,6 +155,7 @@ public class FrmPYWKeputusanData {
 						r.unquote("to_date('" + txtTarikhTamat
 								+ "','dd/MM/yyyy')"));
 			}
+			r.add("JENIS_KADAR_SEWA", socJenisKadarSewa);
 			r.add("KADAR_SEWA", Utils.RemoveSymbol(txtKadarSewa));
 			r.add("ROYALTI", Utils.RemoveSymbol(txtRoyalti));
 			r.add("CAGARAN", Utils.RemoveSymbol(txtCagaran));
@@ -186,7 +187,7 @@ public class FrmPYWKeputusanData {
 
 	private void updatePerjanjian(String idPerjanjian,
 			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
-			String txtTarikhMula, String txtTempoh, String txtTarikhTamat,
+			String txtTarikhMula, String txtTempoh, String txtTarikhTamat, String socJenisKadarSewa,
 			String txtKadarSewa, String txtRoyalti, String txtCagaran, Db db,
 			String userId) throws Exception {
 
@@ -220,6 +221,7 @@ public class FrmPYWKeputusanData {
 						r.unquote("to_date('" + txtTarikhTamat
 								+ "','dd/MM/yyyy')"));
 			}
+			r.add("JENIS_KADAR_SEWA", socJenisKadarSewa);
 			r.add("KADAR_SEWA", Utils.RemoveSymbol(txtKadarSewa));
 			r.add("ROYALTI", Utils.RemoveSymbol(txtRoyalti));
 			r.add("CAGARAN", Utils.RemoveSymbol(txtCagaran));
@@ -534,7 +536,7 @@ public class FrmPYWKeputusanData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, ROYALTI, CAGARAN, TARIKH_MULA_DASAR, " 
-					+ " TEMPOH_DASAR, TARIKH_TAMAT_DASAR FROM TBLPHPPERJANJIAN"
+					+ " TEMPOH_DASAR, TARIKH_TAMAT_DASAR, JENIS_KADAR_SEWA FROM TBLPHPPERJANJIAN"
 					+ " WHERE ID_PERJANJIAN = '" + idPerjanjian + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -560,6 +562,9 @@ public class FrmPYWKeputusanData {
 						rs.getDate("TARIKH_TAMAT_PERJANJIAN") == null ? ""
 								: sdf.format(rs
 										.getDate("TARIKH_TAMAT_PERJANJIAN")));
+				h.put("jenisKadarSewa",
+						rs.getString("JENIS_KADAR_SEWA") == null ? "" : rs
+								.getString("JENIS_KADAR_SEWA"));
 				h.put("kadarSewa", rs.getString("KADAR_SEWA") == null ? ""
 						: Utils.format2Decimal(rs.getDouble("KADAR_SEWA")));
 				h.put("royalti",
