@@ -30,6 +30,16 @@
 
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 
+<!-- arief add 5 JUTA -->
+#foreach ($Listflag5juta in $flag5juta)
+	#set($check5juta = $Listflag5juta.flag_5juta )
+#end
+
+#if($check5juta=='T')
+	#set($nilaiHartaMaximum = 5000000)
+#else
+	#set($nilaiHartaMaximum = 2000000)
+#end
 
 #set ($tarikh_Hantar_BorangB = "")
 #set ($tarikh_Terima_BorangC = "")
@@ -479,7 +489,7 @@
     #set ($setMode = "")
     #set ($setMode1 = "")
     
-    #if($Overalldum >= 2000000)
+    #if($Overalldum >= $nilaiHartaMaximum)
     #if($id_taraf_mohon == "6")
      #set ($setMode2 = "")
     #else
@@ -539,7 +549,7 @@
     
   
     
-    #if($Overalldum >= 2000000)
+    #if($Overalldum >= $nilaiHartaMaximum)
     
     #if($id_taraf_mohon == "6")
     #set ($setMode2 = "")
@@ -604,7 +614,7 @@
    
 #elseif ($keputusan == "70")
  <!-- //ubah  -->
-    #if($Overalldum >= 2000000)
+    #if($Overalldum >= $nilaiHartaMaximum)
    
     #set ($check5 = "checked")
     #set ($check1 = "")
@@ -809,7 +819,7 @@
  #set ($EventStatus = 0)  
  #set($dum=$Overalldum)
 
-    #if($dum >= 2000000) 
+    #if($dum >= $nilaiHartaMaximum) 
     
         #set ($check8 = "checked")
         #set  ($check3 = "")     
@@ -1152,6 +1162,17 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
       </tr>
     </table>
     </fieldset></td>
+  </tr>
+  <!-- tambah textbox hidden -->
+  <tr>
+  	<td>
+  		<input type="hidden" name="txdflag5juta" style="visibility:hidden" value="$flag5juta"/>
+    </td>
+  </tr>
+  <tr>
+  	<td>
+  		<input type="hidden" name="txdnilaiMax" style="visibility:hidden" value="$nilaiHartaMaximum"/>
+    </td>
   </tr>
   <tr>
     <td height="280" colspan="2" scope="col">
@@ -2012,11 +2033,22 @@ Pindah ke Mahkamah Tinggi
       <td width="70%">
        #if($setMode == "disabled")
        
-       #if($tujuanPindah == "2")
-       	Wasiat
-       #else
-       	Jumlah Harta > RM 2,000,000
-       #end
+       <!-- arief add 5 JUTA -->
+       #if($nilaiHartaMaximum == 5000000)
+			#if($tujuanPindah == "2")
+       			Wasiat
+       		#else
+       			Jumlah Harta > RM 5,000,000
+       		#end
+		#else
+			#if($tujuanPindah == "2")
+       			Wasiat
+       		#else
+       			Jumlah Harta > RM 2,000,000
+       		#end
+		#end
+       
+       
        
        <input  type="hidden" name="tujuanPindah" id="tujuanPindah" value="$tujuanPindah" >
        
@@ -2031,7 +2063,7 @@ Pindah ke Mahkamah Tinggi
        #set($setModeTujuan2 = "")
        
        
-       #if($Overalldum >= 2000000)        
+       #if($Overalldum >= $nilaiHartaMaximum)        
     <!--   ----- kurang -->
         #set($setModeTujuan1 = "")
        	#set($setModeTujuan2 = "")      
@@ -2046,7 +2078,7 @@ Pindah ke Mahkamah Tinggi
        	 #set($selectedTujuan1 = "")
        	 #set($selectedTujuan2 = "checked")
        #else
-       	 #if($Overalldum < 2000000)
+       	 #if($Overalldum < $nilaiHartaMaximum)
              #set($selectedTujuan1 = "")
              #set($selectedTujuan2 = "checked")
          #else
@@ -2055,12 +2087,18 @@ Pindah ke Mahkamah Tinggi
          #end
        #end
        
-     
-      
-      <input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan1 $setModeTujuan1 value="1"   />     
+    <!-- arief add 5 JUTA -->
+    #if($nilaiHartaMaximum == 5000000)
+		<input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan1 $setModeTujuan1 value="1"   />     
+        Harta Melebihi 5 Juta
+      <input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan2 $setModeTujuan2 value="2"  />
+        Wasiat
+	#else
+		<input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan1 $setModeTujuan1 value="1"   />     
         Harta Melebihi 2 Juta
       <input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan2 $setModeTujuan2 value="2"  />
         Wasiat
+	#end
       
       
       
@@ -2737,8 +2775,16 @@ function muatTurunBorangC() {
 
 function getSimpan() {
 
+//arief add 5 Juta
+var check5juta = document.f1.txdflag5juta;
+var nilaimax = document.f1.nilaiHartaMaximum;
 
-
+if (check5juta == "T"){
+	nilaimax = 5000000;
+}
+else{
+	nilaimax = 2000000;
+}
 
 var check_batal = document.f1.sorPenentuanBidangKuasa[3].checked;
 
@@ -2999,7 +3045,7 @@ function selectRadio1() {
 if(document.f1.sorPenentuanBidangKuasa[0].checked == true)
 {
 
-if(document.f1.jumlah.value >= 2000000)
+if(document.f1.jumlah.value >= nilaimax)
 {
 document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
 document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = true;
@@ -3143,7 +3189,7 @@ document.f1.tempatmohonawal.value = "";
 
 function putih(){
 
-if(document.f1.jumlah.value >= 2000000)
+if(document.f1.jumlah.value >= nilaimax)
 {
 document.f1.sorKeputusanBorangC[0].checked = true;
 document.f1.sorKeputusanBorangC[1].checked = false;
@@ -3238,7 +3284,7 @@ else
 
 //alert("::::: IDM"+idm);
 
-if(document.f1.jumlah.value >= 2000000)
+if(document.f1.jumlah.value >= nilaimax)
 {
 
 
@@ -3344,7 +3390,7 @@ document.f1.setMode6.value = "";
 }
 
 /*
-if(document.f1.jumlah.value > 2000000)
+if(document.f1.jumlah.value > nilaimax)
 {
 
  #set ($check8 = "checked")
@@ -3488,7 +3534,7 @@ if(document.f1.sorKeputusanBorangC[1].checked == true && document.getElementById
 	document.f1.setMode1.value = "checked";
 		document.getElementById(id).style.display="block";
 
-if(jum >= 2000000)
+if(jum >= nilaimax)
 {
 document.getElementById('tableReportX').style.display="none";
 		document.f1.radio_j[2].checked = true;
@@ -3805,7 +3851,7 @@ else if(document.f1.sorKeputusanBorangC[0].checked == true && document.getElemen
 	   //razman add close
 	   
 	  
-	    if(document.f1.jumlah.value >= 2000000)
+	    if(document.f1.jumlah.value >= nilaimax)
 		{
 		 	document.getElementById(idx).style.display="block";		
 			if(document.f1.sorPenentuanBidangKuasa[3].checked == true)
@@ -3816,7 +3862,7 @@ else if(document.f1.sorKeputusanBorangC[0].checked == true && document.getElemen
 		}
 		
 		
-		if(document.f1.jumlah.value < 2000000)
+		if(document.f1.jumlah.value < nilaimax)
 		{
 	
 		//document.getElementById(idx).style.display="none"; //razman comment
@@ -3857,7 +3903,7 @@ else
 //razman add close
 
 
-if(document.f1.jumlah.value >= 2000000)
+if(document.f1.jumlah.value >= nilaimax)
 {
 	//alert('lebih');
 document.getElementById(idx).style.display="block";

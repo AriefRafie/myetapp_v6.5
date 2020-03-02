@@ -174,7 +174,7 @@ public class FrmPYWJabatanTeknikalView extends AjaxBasedModule {
         		logic.simpanKemaskiniMaklumatJPPH(idUlasanTeknikal, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), flagStatus, getParam("txtTarikhTerima"),
         				getParam("txtTarikhSurat"), getParam("txtNoRujukan"), getParam("txtUlasan"),
-        				getParam("txtKadarSewaBulan"), getParam("txtKadarSewaTahun"), session);
+        				getParam("txtKadarSewaBulan"), getParam("txtKadarSewaTahun"), getParam("socKadarSewa"), session);
         		if (getParam("txtUlasan").trim().length() > 0)
         			logic.updateUlasanJPPH(idPermohonan, getParam("txtUlasan"),  session);
     		}
@@ -651,6 +651,7 @@ public class FrmPYWJabatanTeknikalView extends AjaxBasedModule {
 	    			hashMaklumatJPPH.put("ulasan", getParam("txtUlasan"));
 	    			hashMaklumatJPPH.put("kadarSewaBulan", getParam("txtKadarSewaBulan"));
 	    			hashMaklumatJPPH.put("kadarSewaTahun", getParam("txtKadarSewaTahun"));
+	    			hashMaklumatJPPH.put("jenisKadarSewa", getParam("socKadarSewa"));
 	    			beanMaklumatJPPH.addElement(hashMaklumatJPPH);
 					this.context.put("BeanMaklumatJPPH", beanMaklumatJPPH);
 					
@@ -979,16 +980,12 @@ public class FrmPYWJabatanTeknikalView extends AjaxBasedModule {
         this.context.put("flagStatus", flagStatus);
         this.context.put("aktif", aktif);
         this.context.put("flagPermohonanDari", flagPermohonanDari);
-        
         this.context.put("idAgensi", idAgensi);
         this.context.put("idPejabat", idPejabat);
-        
         this.context.put("idKementerianJKT", idKementerianJKT);
         this.context.put("idAgensiJKT", idAgensiJKT);
         this.context.put("idPejabatJKT", idPejabatJKT);
-	    
-        this.context.put("step",step);
-        
+        this.context.put("step",step);       
         if (!"".equals(getParam("flagFrom"))){
         	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
         }

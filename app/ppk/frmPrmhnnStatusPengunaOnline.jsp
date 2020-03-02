@@ -60,30 +60,34 @@
   <tr class="table_header">
   	<td width="2%" align="center">No</td>
   	<td width="9%"align="center">
-    #if($!skrin_deraf == "yes")
-    Tarikh Kemasukkan Maklumat Permohonan
-    #else
-    Tarikh Hantar Permohonan ke Unit Pusaka
-    #end
+    	#if($!skrin_deraf == "yes")
+    		Tarikh Kemasukkan Maklumat Permohonan
+    	#else
+    		Tarikh Hantar Permohonan ke Unit Pusaka
+    	#end
     </td>	
 	<td width="14%" align="center">
-     #if($!skrin_deraf == "yes")
-    Nama Simati
-    #else
-    No Rujukan Online
-    #end
-    
+    	#if($!skrin_deraf == "yes")
+    		Nama Simati
+    	#else
+    		No Rujukan Online
+    	#end
     </td>
 	<td width="17%" align="center">
-    #if($!skrin_deraf == "yes")
-    Nama Pemohon
-    #else
-    No Fail
-    #end
+    	#if($!skrin_deraf == "yes")
+    		Nama Pemohon
+    	#else
+    		No Fail
+    	#end
     
     </td>
 	<td width="4%" align="center">Seksyen</td>
   	<td width="15%">Status Pergerakan Fail</td>
+  	<td width="5%" align="center">Tindakan</td>
+  	<!-- Tambah column Maklumat unit Pusaka 25/2/2020 -->
+  		#if($!skrin_deraf != "yes")
+  			<td width="10%" align="center">Maklumat Unit Pusaka</td>
+  		#end
   </tr>	
     
 	#foreach ($senarai in $senaraitugasan )
@@ -165,8 +169,6 @@
 	#end
   #end
   
-  
-  
   </td>
   <!--<td class="$row">$!senarai.nokpbarupemohon.toUpperCase()</td>
   <td class="$row">
@@ -179,7 +181,8 @@
   #end</td>-->
   <td class="$row" align="center">$senarai.seksyen</td>
   <td class="$row">$senarai.status</td>
-  </tr>
+  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doHapus('$!senarai.idFail','$!senarai.id_Permohonan')"><img border="0" src="../img/hapus.gif"/></a></td>
+  <td class="$row">$senarai.nama_pejabat</td>  </tr>
   #end
 		#if ($cnt == 0)
 		<tr> 
@@ -215,6 +218,8 @@
  
   <input name="no_subjaket" type="hidden" id="no_subjaket" value="$!no_subjaket"/>
     
+  <input type="hidden" name="idFail">  
+    
     
 </fieldset>
 
@@ -226,7 +231,6 @@ function submitForm() {
 //alert('$val_tab')
 if('$!val_tab' != "" && '$!val_tab' != null)
 {
-
    window.location.hash='$!val_tab';
    goTo('$!val_tab');
    }
@@ -317,5 +321,14 @@ function menuUtama(){
 function doChanges() {
 	
 	doAjaxCall${formName}("doChanges");
+}
+function doHapus(idFail,idPermohonan) {
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	document.${formname}.idPermohonan.value=idPermohonan;
+	document.${formname}.idFail.value=idFail;
+	doAjaxCall${formName}("doHapus");
+	document.${formname}.submit();
 }
 </script>

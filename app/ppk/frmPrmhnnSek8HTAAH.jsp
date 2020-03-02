@@ -912,7 +912,7 @@ $listnegeri -->
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td class="style38"><div align="left">Status Pemilikan </div></td>
+                                    <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Status Pemilikan</div></td> <!-- arief add mandatori -->
                                     <td><div align="right">:</div></td>
                                     <td>#foreach($listpemilik in $listpemilikan)
                                       
@@ -2331,7 +2331,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       #end </label></td>
                                   </tr>
                                   <tr>
-                                    <td class="style38"><div align="left">Status Pemilikan</div></td>
+                                    <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Status Pemilikan</div></td>
                                     <td>:</td>
                                     <td>#foreach($listpemilik in $listpemilikan)
                                       

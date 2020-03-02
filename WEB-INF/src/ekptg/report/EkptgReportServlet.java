@@ -61,8 +61,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	static Logger myLogger = Logger.getLogger(ekptg.report.EkptgReportServlet.class);
 
 	private String reportFileName;
-	private Map parameters;
-	//private byte[] bytes;
+	private Map<String, Object> parameters;
 	private String SQL = null;
 	private String folderName;
 	private boolean setMaklumatPegawai;
@@ -94,12 +93,12 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		this.errorMsg = errorMsg;
 	}
 
-	private Vector beanMaklumatPegawai = null;
-	private Vector beanMaklumatPermohonan = null;
-	private Vector beanMaklumatPemohon = null;
-	private Vector beanMaklumatSimati = null;
-	private Vector beanMaklumatPerbicaraan = null;
-	private Vector beanMaklumatHTA = null;
+	private Vector<Hashtable<String,String>> beanMaklumatPegawai = null;
+	private Vector<Hashtable<String,String>> beanMaklumatPermohonan = null;
+	private Vector<Hashtable<String,String>> beanMaklumatPemohon = null;
+	private Vector<Hashtable<String,String>> beanMaklumatSimati = null;
+	private Vector<Hashtable<String,String>> beanMaklumatPerbicaraan = null;
+	private Vector<Hashtable<String,String>> beanMaklumatHTA = null;
 	
 	String new_url = "";
 
@@ -134,23 +133,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			if (this.parameters != null)
 				parameters = this.parameters;
-//				String realPathReport = context.getRealPath(File.separator + "reports" + File.separator)
-//					.replace("johor" + File.separator, "")
-//					.replace("kedah" + File.separator, "")
-//					.replace("ekptgv3" + File.separator, "")
-//					.replace("kelantan" + File.separator, "")
-//					.replace("melaka" + File.separator, "")
-//					.replace("ns" + File.separator, "")
-//					.replace("pahang" + File.separator, "")
-//					.replace("penang" + File.separator, "")
-//					.replace("perak" + File.separator, "")
-//					.replace("perlis" + File.separator, "")
-//					.replace("selangor" + File.separator, "")
-//					.replace("terengganu" + File.separator, "")
-//					.replace("hq" + File.separator, "")
-//					.replace("ekptgv2" + File.separator, "")
-//					.replace("myetapp_201611" + File.separator, "")
-//					.replace("wp" + File.separator, "");
+
 			String realPathReport = getReportPath(context,"reports");
 			
 			// parameters.put("BaseDir",new File(context.getRealPath("/img/")));
@@ -170,6 +153,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				value = request.getParameter(name);
 				// System.out.println(name +"="+value);
 				parameters.put(name, value);
+			
 			}
 			// Get all paramaters to global
 			this.parameters = parameters;
@@ -188,6 +172,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				if (reportFileName == null || "".equals(reportFileName)) {
 					fileNameEmpty(response);
 					return;
+			
 				}
 				// Versioning
 				myLogger.debug("this.setVersion:" + this.setVersion);
@@ -200,51 +185,51 @@ public abstract class EkptgReportServlet implements IServlet2 {
 						if ("pindaanN".equals(this.doSaveVersion)) {
 							doNoPindaanSaveVersioning(request, response, context, request.getQueryString());
 							return;
-						}
-						else if ("pindaanP".equals(this.doSaveVersion)) {
-							
+				
+						}else if ("pindaanP".equals(this.doSaveVersion)) {	
 							doPindaanSaveVersioning(request, response, context, request.getQueryString());
 							return;
+							
 						} else if ("view".equals(this.doSaveVersion)) {
 							viewPDF(request, response, (String) parameters.get("idborang"));
 							return;
 						
 						}else{
-							
 							askForVersionPindaan(request, response);
 							return;
+						
 						}
+					
 					}
 					
 				}else{
-				
 					if (this.setVersion) {
 						if ("yes".equals(this.doSaveVersion)) {
 							doSaveVersioning(request, response, context, request.getQueryString());
 							return;
-						}
-						else if ("hantarPNB".equals(this.doSaveVersion)) {
+						
+						}else if ("hantarPNB".equals(this.doSaveVersion)) {
 							hantarKePNB(request, response, context, request.getQueryString());
 							return;
-						}
-						else if ("no".equals(this.doSaveVersion)) {
+						
+						}else if ("no".equals(this.doSaveVersion)) {
 							// Ok-now we just print the report
 						} else if ("view".equals(this.doSaveVersion)) {
 							viewPDF(request, response, (String) parameters.get("idborang"));
 							return;
-						}
-						else if ("viewPNB".equals(this.doSaveVersion)) {
+						
+						}else if ("viewPNB".equals(this.doSaveVersion)) {
 							viewPDFPNB(request, response, (String) parameters.get("idborangpnb"));
 							return;
-						}
-						else if ("popupPNB".equals(this.doSaveVersion)) {
+						
+						}else if ("popupPNB".equals(this.doSaveVersion)) {
 							askForPNB(request, response);
 							return;
-						}
 						
-						else {
+						}else {
 							askForVersion(request, response);
 							return;
+						
 						}
 	
 					}
@@ -265,9 +250,8 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				if (this.setMaklumatHTA)
 					doHTA(request, response, context, parameters);
 
-				//
-				myLogger.info("checking...");
-				myLogger.debug("bil dokumen="+parameters.get("bilDokumen"));
+				//myLogger.info("checking...");
+				myLogger.debug("checking...\nbil dokumen="+parameters.get("bilDokumen"));
 				if ("".equals(parameters.get("bilDokumen"))) {
 					parameters.put("bilDokumen", "1");
 				}
@@ -276,6 +260,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				// e.printStackTrace();
 				doException(response, contextPath, e);
 				return;
+			
 			}
 
 			byte[] bytes = null;
@@ -296,11 +281,13 @@ public abstract class EkptgReportServlet implements IServlet2 {
 					statement = conn.createStatement();
 					resultSet = statement.executeQuery(SQL);
 					resultSetDataSource = new JRResultSetDataSource(resultSet);
+			
 				}
 
 				if (isGenerateTextFile()) {
 					createTEXTReport(request, response, parameters, jasperReport, conn, (String) parameters.get("id_simati"));
 					return;
+				
 				}
 				if ("HTML".equals(reportType)) {
 					JasperPrint jasperPrint = null;
@@ -342,7 +329,6 @@ public abstract class EkptgReportServlet implements IServlet2 {
 					if (db != null)
 						db.close();
 				} catch (SQLException xx) {}
-
 			}
 		}
 	
@@ -360,7 +346,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		this.folderName = folderName;
 	}
 
-	public void setParameters(Map params) {
+	public void setParameters(Map<String,Object> params) {
 		this.parameters = params;
 	}
 
@@ -414,6 +400,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		exporter.setParameter(JRHtmlExporterParameter.IMAGES_MAP, imagesMap);
 		exporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, "/" + session.getAttribute("_portal_appname") + "/servlets/image?image=");
 		exporter.exportReport();
+	
 	}
 
 	private void createRTFReport(HttpServletResponse response, Map parameters, JasperReport jasperReport, Connection conn,
@@ -443,54 +430,37 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		}
 	}
 
-//	***** Start Disable by zulfazdliabuas@gmail.com Date: 13/11/2017 *****
-//	***** Note : Code asal untuk cetak excel, tapi ada error = (java.lang.NoClassDefFoundError: Could not initialize class net.sf.jasperreports.engine.export.JRXlsExporter)	
-//	private void createExcelReport(HttpServletResponse response, Map parameters, JasperReport jasperReport, Connection conn)
-//		throws JRException, SQLException, IOException {
-//		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
-//
-//		OutputStream ouputStream = response.getOutputStream();
-//		JRXlsExporter exporter = null;
-//		response.setContentType("application/xls");
-//		response.setHeader("Content-Disposition", "inline; filename=\"eTapp.xls\"");
-//		//exporter = new JRXlsExporter();
-//		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-//		exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, ouputStream);
-//		try {
-//			exporter.exportReport();
-//		} catch (JRException e) {
-//			e.printStackTrace();
-//		}
-//		ouputStream.flush();
-//		ouputStream.close();
-//		
-//	}
-//	***** End Disable by zulfazdliabuas@gmail.com *****
-//	***** Start AddNew by zulfazdliabuas@gmail.com Date: 13/11/2017 *****
-//	***** Note : Create New untuk Cetak Excel
+	/**
+	 * Note : Create New untuk Cetak Excel
+	 * @param response
+	 * @param parameters
+	 * @param jasperReport
+	 * @param conn
+	 * @throws JRException
+	 * @throws SQLException
+	 * @throws IOException
+	 */
 	private void createExcelReport(HttpServletResponse response, Map parameters, JasperReport jasperReport, Connection conn) 
-			throws JRException,SQLException, IOException {
-	
+		throws JRException,SQLException, IOException {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
 		OutputStream ouputStream = response.getOutputStream();
 		net.sf.jasperreports.engine.export.JExcelApiExporter exporter = null;
-		try
-		{
+		try{
 			exporter = new net.sf.jasperreports.engine.export.JExcelApiExporter();
 			response.setContentType("application/xls");
 			response.setHeader("Content-Disposition", "inline; filename=\"MyeTaPP.xls\"");
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, ouputStream);
 			exporter.exportReport();
-		}
-		catch (JRException e)
-		{
+			
+		}catch (JRException e){
 			e.printStackTrace();
 		}
 		ouputStream.flush();  
 		ouputStream.close();
+	
 	}
-//	******** End Create New by zulfazdliabuas@gmail.com *********
+	//	******** End Create New by zulfazdliabuas@gmail.com *********
 
 	private void createTEXTReport(HttpServletRequest request, HttpServletResponse response, Map parameters, JasperReport jasperReport,
 		Connection conn, String title) throws JRException, SQLException, IOException {
@@ -541,8 +511,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			ouputStream.close();
 		
 		} else
-			emptyResponse(response);
-	
+			emptyResponse(response);	
 	}
 
 	private void createPDFReport(HttpServletResponse response, Map parameters, JasperReport jasperReport
@@ -603,6 +572,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		out.println("<span class=\"bold\">Empty response.</span>");
 		out.println("</body>");
 		out.println("</html>");
+	
 	}
 
 	private void fileNameEmpty(HttpServletResponse response) throws IOException {
@@ -657,23 +627,6 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		} else if (SystemUtils.IS_OS_WINDOWS) {
 			path = path.replace("/", "\\");
 		}
-		/*System.out.println("folderName==="+folderName);
-		System.out.println("fileName==="+fileName);
-		System.out.println("path==="+path);*/
-//		String realPathJasper = context.getRealPath(path + ".jasper").replace("johor" + File.separator, "")
-//				.replace("kedah" + File.separator, "").replace("ekptgv3" + File.separator, "").replace("kelantan" + File.separator, "")
-//				.replace("melaka" + File.separator, "").replace("ns" + File.separator, "").replace("pahang" + File.separator, "")
-//				.replace("penang" + File.separator, "").replace("perak" + File.separator, "").replace("perlis" + File.separator, "")
-//				.replace("selangor" + File.separator, "").replace("terengganu" + File.separator, "")
-//				.replace("hq" + File.separator, "").replace("ekptgv2" + File.separator, "").replace("test" + File.separator, "").replace("wp" + File.separator, "");
-//		
-//		String realPathJrxml = context.getRealPath(path + ".jrxml").replace("johor" + File.separator, "")
-//				.replace("kedah" + File.separator, "").replace("ekptgv3" + File.separator, "").replace("kelantan" + File.separator, "")
-//				.replace("melaka" + File.separator, "").replace("ns" + File.separator, "").replace("pahang" + File.separator, "")
-//				.replace("penang" + File.separator, "").replace("perak" + File.separator, "").replace("perlis" + File.separator, "")
-//				.replace("selangor" + File.separator, "").replace("terengganu" + File.separator, "")
-//				.replace("hq" + File.separator, "").replace("ekptgv2" + File.separator, "").replace("test" + File.separator, "").replace("wp" + File.separator, "");
-//		
 		String realPathJasper = getReportPath(context,path+".jasper");
 		String realPathJrxml = getReportPath(context,path+".jrxml");
 
@@ -709,7 +662,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	
 	}
 
-	public void setIdPermohonan(String idfail, Map parameters) {
+	public void setIdPermohonan(String idfail, Map<String, String> parameters) {
 		Db db = null;
 		String sql = "";
 		try {
@@ -732,15 +685,17 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 	}
 
-	public void doPegawai(HttpServletRequest request, HttpServletResponse response
-		, ServletContext context, Map parameters) throws Exception {
-		Vector listPegawai = null;
+	public void doPegawai(HttpServletRequest request
+		, HttpServletResponse response
+		, ServletContext context
+		, Map<String, Object> parameters) throws Exception {
+		Vector<Hashtable<String,String>> listPegawai = null;
 		try {
-			listPegawai = new Vector();
+			listPegawai = new Vector<Hashtable<String,String>>();
 			setMaklumatPegawai(parameters);
 			listPegawai = getBeanMaklumatPegawai();
 			if (listPegawai.size() != 0) {
-				Hashtable h = (Hashtable) listPegawai.get(0);
+				Hashtable<String,String> h = (Hashtable<String,String>) listPegawai.get(0);
 				parameters.put("namaPegawai", h.get("nama").toString());
 				parameters.put("jawatan", h.get("jawatan").toString());
 			}
@@ -750,18 +705,19 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		
 	}
 	
-	public void doPermohonan(HttpServletRequest request, HttpServletResponse response
-		, ServletContext context, Map parameters) throws Exception {
-		Vector listPermohonan = null;
+	public void doPermohonan(HttpServletRequest request
+		, HttpServletResponse response
+		, ServletContext context
+		, Map<String, Object> parameters) throws Exception {
+		Vector<Hashtable<String,String>> listPermohonan = null;
 		try {
 
-			listPermohonan = new Vector();
+			listPermohonan = new Vector<Hashtable<String,String>>();
 			setMaklumatPermohonan(parameters);
 			listPermohonan = getBeanMaklumatPermohonan();
 
 			if (listPermohonan.size() != 0) {
-				Hashtable h = (Hashtable) listPermohonan.get(0);
-
+				Hashtable<String,String> h = (Hashtable<String,String>) listPermohonan.get(0);
 				parameters.put("idPermohonan", h.get("idPermohonan").toString());
 				parameters.put("idNegeriMhn", h.get("idNegeri").toString());
 				parameters.put("idDaerahMhn", h.get("idDaerah").toString());
@@ -783,17 +739,18 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 	}
 
-	public void doPemohon(HttpServletRequest request, HttpServletResponse response
-		, ServletContext context, Map parameters) throws Exception {
-		Vector listPemohon = null;
-
+	public void doPemohon(HttpServletRequest request
+		, HttpServletResponse response
+		, ServletContext context
+		, Map<String,Object> parameters) throws Exception {
+		Vector<Hashtable<String,String>> listPemohon = null;
 		try {
-			listPemohon = new Vector();
+			listPemohon = new Vector<Hashtable<String,String>>();
 			setMaklumatPemohon(parameters);
 			listPemohon = getBeanMaklumatPemohon();
 
 			if (listPemohon.size() != 0) {
-				Hashtable h = (Hashtable) listPemohon.get(0);
+				Hashtable<String,String> h = (Hashtable<String,String>) listPemohon.get(0);
 				parameters.put("idPermohonan", h.get("idPermohonan").toString());
 				parameters.put("namaPemohon", h.get("namaPemohon").toString());
 				parameters.put("singleLineAlamatPemohon", h.get("singleLineAlamatPemohon").toString());
@@ -811,17 +768,19 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	
 	}
 
-	public void doSimati(HttpServletRequest request, HttpServletResponse response
-		, ServletContext context, Map parameters) throws Exception {
-		Vector listSimati = null;
+	public void doSimati(HttpServletRequest request
+		, HttpServletResponse response
+		, ServletContext context
+		, Map<String,Object> parameters) throws Exception {
+		Vector<Hashtable<String,String>> listSimati = null;
 		try {
 
-			listSimati = new Vector();
+			listSimati = new Vector<Hashtable<String,String>>();
 			setMaklumatSimati(parameters);
 			listSimati = getBeanMaklumatSimati();
 
 			if (listSimati.size() != 0) {
-				Hashtable h = (Hashtable) listSimati.get(0);
+				Hashtable<String,String> h = (Hashtable<String,String>) listSimati.get(0);
 				parameters.put("idPermohonan", h.get("idPermohonan").toString());
 				parameters.put("namaSimati", h.get("namaSimati").toString());
 				parameters.put("singleLineAlamatSimati", h.get("singleLineAlamatSimati").toString());
@@ -843,17 +802,19 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	
 	}
 
-	public void doPerbicaraan(HttpServletRequest request, HttpServletResponse response
-		, ServletContext context, Map parameters) throws Exception {
-		Vector listPerbicaraan = null;
+	public void doPerbicaraan(HttpServletRequest request
+		, HttpServletResponse response
+		, ServletContext context
+		, Map<String,Object> parameters) throws Exception {
+		Vector<Hashtable<String,String>> listPerbicaraan = null;
 
 		try {
-			listPerbicaraan = new Vector();
+			listPerbicaraan = new Vector<Hashtable<String,String>>();
 			setMaklumatPerbicaraan(parameters);
 			listPerbicaraan = getBeanMaklumatPerbicaraan();
 
 			if (listPerbicaraan.size() != 0) {
-				Hashtable h = (Hashtable) listPerbicaraan.get(0);
+				Hashtable<String,String> h = (Hashtable<String,String>) listPerbicaraan.get(0);
 				parameters.put("idPermohonan", h.get("idPermohonan").toString());
 				parameters.put("pegPengendali", h.get("pegPengendali").toString());
 				parameters.put("singleLineAlamat", h.get("singleLineAlamat").toString());
@@ -871,16 +832,18 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 	}
 
-	public void doHTA(HttpServletRequest request, HttpServletResponse response
-		, ServletContext context, Map parameters) throws Exception {
-		Vector listHTA = null;
+	public void doHTA(HttpServletRequest request
+		, HttpServletResponse response
+		, ServletContext context
+		, Map<String,Object> parameters) throws Exception {
+		Vector<Hashtable<String,String>> listHTA = null;
 		try {
-			listHTA = new Vector();
+			listHTA = new Vector<Hashtable<String,String>>();
 			setMaklumatHTA(parameters);
 			listHTA = getBeanMaklumatHTA();
 
 			if (listHTA.size() != 0) {
-				Hashtable h = (Hashtable) listHTA.get(0);
+				Hashtable<String,String> h = (Hashtable<String,String>) listHTA.get(0);
 				parameters.put("idnegerijaagan", h.get("idnegerijaagan").toString());
 				parameters.put("iddaerahjagaan", h.get("iddaerahjagaan").toString());
 
@@ -892,13 +855,13 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 	}
 
-	private void setMaklumatPegawai(Map parameters) throws Exception {
+	private void setMaklumatPegawai(Map<String,Object> parameters) throws Exception {
 		Db db = null;
 		String sql = "";
 
 		try {
 			db = new Db();
-			beanMaklumatPegawai = new Vector();
+			beanMaklumatPegawai = new Vector<Hashtable<String,String>>();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
@@ -910,12 +873,12 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			sql = r.getSQLSelect("TBLPPKRUJUNIT");
 			ResultSet rs = stmt.executeQuery(sql);
 
-			Hashtable h;
-			int bil = 1;
+			Hashtable<String,String> h;
+			//int bil = 1;
 			Integer count = 0;
 
 			while (rs.next()) {
-				h = new Hashtable();
+				h = new Hashtable<String,String>();
 
 				if (parameters.get("flagReport").toString().equals("S")) {
 					h.put("nama", rs.getString("NAMA_PEGAWAI").toUpperCase());
@@ -926,7 +889,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				}
 
 				beanMaklumatPegawai.addElement(h);
-				bil++;
+				//bil++;
 				count++;
 			}
 
@@ -937,13 +900,13 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 	}
 
-	private void setMaklumatPermohonan(Map parameters) throws Exception {
+	private void setMaklumatPermohonan(Map<String,Object> parameters) throws Exception {
 		Db db = null;
 		String sql = "";
 		//System.out.println("No fail = " + parameters.get("NoFail"));
 		try {
 			db = new Db();
-			beanMaklumatPermohonan = new Vector();
+			beanMaklumatPermohonan = new Vector<Hashtable<String,String>>();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
@@ -969,12 +932,12 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			sql = r.getSQLSelect("TBLPPKPERMOHONAN A, TBLPFDFAIL B, TBLRUJNEGERI C,TBLRUJDAERAH D");
 			ResultSet rs = stmt.executeQuery(sql);
 
-			Hashtable h;
-			int bil = 1;
+			Hashtable<String,String> h;
+//			int bil = 1;
 			Integer count = 0;
 
 			while (rs.next()) {
-				h = new Hashtable();
+				h = new Hashtable<String,String>();
 
 				h.put("idPermohonan", rs.getString("ID_PERMOHONAN"));
 				h.put("idNegeri", rs.getString("NAMA_NEGERI"));
@@ -989,8 +952,9 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				h.put("noFail", rs.getString("NO_FAIL"));
 				h.put("seksyen", rs.getString("SEKSYEN"));
 				beanMaklumatPermohonan.addElement(h);
-				bil++;
+//				bil++;
 				count++;
+				
 			}
 
 		} finally {
@@ -1000,13 +964,13 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		
 	}
 
-	private void setMaklumatPemohon(Map parameters) throws Exception {
+	private void setMaklumatPemohon(Map<String,Object> parameters) throws Exception {
 		Db db = null;
 		String sql = "";
 
 		try {
 			db = new Db();
-			beanMaklumatPemohon = new Vector();
+			beanMaklumatPemohon = new Vector<Hashtable<String,String>>();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
@@ -1030,11 +994,10 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			sql = r.getSQLSelect("TBLPPKPEMOHON A, TBLPPKPERMOHONAN B, TBLRUJNEGERI C,TBLRUJBANDAR D, TBLPFDFAIL E");
 			myLogger.info(sql);
 			ResultSet rs = stmt.executeQuery(sql);
-
 			// System.out.println("sql pemohon == " + sql);
 
-			Hashtable h;
-			int bil = 1;
+			Hashtable<String,String> h;
+			//int bil = 1;
 			Integer count = 0;
 			String alamat1 = "";
 			String alamat2 = "";
@@ -1043,8 +1006,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			String bandar = "";
 			String negeri = "";
 			while (rs.next()) {
-				h = new Hashtable();
-
+				h = new Hashtable<String,String>();
 				alamat1 = rs.getString("ALAMAT1_SURAT") == null ? "" : rs.getString("ALAMAT1_SURAT");
 				alamat2 = rs.getString("ALAMAT2_SURAT") == null ? "" : rs.getString("ALAMAT2_SURAT");
 				alamat3 = rs.getString("ALAMAT3_SURAT") == null ? "" : rs.getString("ALAMAT3_SURAT");
@@ -1069,7 +1031,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				h.put("poskodPemohon", rs.getString("POSKOD_SURAT") == null ? "" : rs.getString("POSKOD_SURAT"));
 				h.put("noTel", rs.getString("NO_TEL_SURAT") == null ? "" : rs.getString("NO_TEL_SURAT"));
 				beanMaklumatPemohon.addElement(h);
-				bil++;
+				//bil++;
 				count++;
 			}
 
@@ -1079,15 +1041,15 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		}
 		
 	}
-
-	private void setMaklumatSimati(Map parameters) throws Exception {
+// Semakan sehingga baris 1044, 21/01/2020
+	private void setMaklumatSimati(Map<String,Object> parameters) throws Exception {
 		Db db = null;
 		String sql = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		try {
 			db = new Db();
-			beanMaklumatSimati = new Vector();
+			beanMaklumatSimati = new Vector<Hashtable<String,String>>();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
@@ -1117,8 +1079,8 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			myLogger.debug(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
-			Hashtable h;
-			int bil = 1;
+			Hashtable<String,String> h;
+			//int bil = 1;
 			Integer count = 0;
 
 			String alamat1 = "";
@@ -1126,8 +1088,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			String alamat3 = "";
 
 			while (rs.next()) {
-				h = new Hashtable();
-
+				h = new Hashtable<String,String>();
 				alamat1 = rs.getString("ALAMAT_1") == null ? "" : rs.getString("ALAMAT_1").toUpperCase();
 				alamat2 = rs.getString("ALAMAT_2") == null ? "" : rs.getString("ALAMAT_2").toUpperCase();
 				alamat3 = rs.getString("ALAMAT_3") == null ? "" : rs.getString("ALAMAT_3").toUpperCase();
@@ -1145,8 +1106,9 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				h.put("waktuKematian", rs.getString("WAKTU_KEMATIAN") == null ? "" : rs.getString("WAKTU_KEMATIAN"));
 				h.put("buktiKematian", rs.getString("KETERANGAN"));
 				beanMaklumatSimati.addElement(h);
-				bil++;
+				//bil++;
 				count++;
+				
 			}
 
 		} finally {
@@ -1156,13 +1118,13 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		
 	}
 
-	private void setMaklumatPerbicaraan(Map parameters) throws Exception {
+	private void setMaklumatPerbicaraan(Map<String,Object> parameters) throws Exception {
 		Db db = null;
 		String sql = "";
 
 		try {
 			db = new Db();
-			beanMaklumatPerbicaraan = new Vector();
+			beanMaklumatPerbicaraan = new Vector<Hashtable<String,String>>();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
@@ -1185,12 +1147,12 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			sql = r.getSQLSelect("TBLPPKPERBICARAAN A, TBLPPKPERMOHONAN B, TBLRUJNEGERI C,TBLPFDFAIL D, TBLPPKKEPUTUSANPERMOHONAN E");
 			ResultSet rs = stmt.executeQuery(sql);
 
-			Hashtable h;
-			int bil = 1;
+			Hashtable<String,String> h;
+			//int bil = 1;
 			Integer count = 0;
 
 			while (rs.next()) {
-				h = new Hashtable();
+				h = new Hashtable<String,String>();
 
 				h.put("idPermohonan", rs.getString("ID_PERMOHONAN"));
 				h.put("pegPengendali", rs.getString("PEG_PENGENDALI"));
@@ -1203,7 +1165,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				h.put("poskod", rs.getString("POSKOD"));
 				h.put("masaBicara", masaBicara(rs.getString("ID_PERMOHONAN")));
 				beanMaklumatPerbicaraan.addElement(h);
-				bil++;
+				//bil++;
 				count++;
 			}
 
@@ -1214,13 +1176,13 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		
 	}
 
-	private void setMaklumatHTA(Map parameters) throws Exception {
+	private void setMaklumatHTA(Map<String,Object> parameters) throws Exception {
 		Db db = null;
 		String sql = "";
 
 		try {
 			db = new Db();
-			beanMaklumatHTA = new Vector();
+			beanMaklumatHTA = new Vector<Hashtable<String,String>>();
 			sql = "SELECT"
 					+ " J.ID_NEGERI AS idnegerijaagan , J.ID_DAERAH as iddaerahjagaan"
 					+ " FROM TBLPFDFAIL A, TBLPPKPERMOHONAN B, TBLPPKPEMOHON P,TBLRUJBANDAR PPBANDAR, TBLRUJNEGERI PPNEGERI,TBLPPKPERMOHONANSIMATI C,"
@@ -1239,17 +1201,16 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
-			Hashtable h;
-			int bil = 1;
+			Hashtable<String,String> h;
+			//int bil = 1;
 			Integer count = 0;
 
 			while (rs.next()) {
-				h = new Hashtable();
-
+				h = new Hashtable<String,String>();
 				h.put("idnegerijaagan", rs.getString("idnegerijaagan"));
 				h.put("iddaerahjagaan", rs.getString("iddaerahjagaan"));
 				beanMaklumatHTA.addElement(h);
-				bil++;
+				//bil++;
 				count++;
 			}
 
@@ -1372,27 +1333,27 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 	}
 
-	private Vector getBeanMaklumatPegawai() {
+	private Vector<Hashtable<String,String>> getBeanMaklumatPegawai() {
 		return beanMaklumatPegawai;
 	}
 
-	public Vector getBeanMaklumatPermohonan() {
+	public Vector<Hashtable<String,String>> getBeanMaklumatPermohonan() {
 		return beanMaklumatPermohonan;
 	}
 
-	public Vector getBeanMaklumatPemohon() {
+	public Vector<Hashtable<String,String>> getBeanMaklumatPemohon() {
 		return beanMaklumatPemohon;
 	}
 
-	public Vector getBeanMaklumatSimati() {
+	public Vector<Hashtable<String,String>> getBeanMaklumatSimati() {
 		return beanMaklumatSimati;
 	}
 
-	public Vector getBeanMaklumatPerbicaraan() {
+	public Vector<Hashtable<String,String>> getBeanMaklumatPerbicaraan() {
 		return beanMaklumatPerbicaraan;
 	}
 
-	public Vector getBeanMaklumatHTA() {
+	public Vector<Hashtable<String,String>> getBeanMaklumatHTA() {
 		return beanMaklumatHTA;
 	}
 	// Versioning Control
@@ -1417,8 +1378,6 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	}
 	// Versioning Control
 	
-	
-	
 	public void doVersioning(String borang, String idfail, String nofail, String doSaveVersion) {
 		this.setVersion = true;
 		this.borang = borang;
@@ -1435,15 +1394,12 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		this.nofail = nofail;
 		this.flag_keb_kemaskini = flag_kemaskini;
 		this.doSaveVersion = doSaveVersion;
-
 		
 	}
 
-	public void askForVersion(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
-		
+	public void askForVersion(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {		
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("_ekptg_user_id");
-		
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -1453,7 +1409,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		out.println("</head>");
 		out.println("<body bgcolor=\"white\">");
 		out.println("<center>");
-		out.println("No Fail:" + this.nofail + "<br><br>");
+		out.println("No. Fail:" + this.nofail + "<br><br>");
 		out.println("<hr>");
 		String qS = request.getQueryString();
 		out.println("<a href=" + new_url + "?idfail=" + this.idfail + "&user_id="+user_id+"&flagVersion=yes&flag_batal=Y&" + qS + ">Simpan History</a> |");
@@ -1485,15 +1441,10 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		out.println("<hr>");
 		String qS = request.getQueryString();
 		/*out.println("<a href=" + new_url + "?idfail=" + this.idfail + "&flagVersion=yes&flag_batal=Y&" + qS + ">Simpan History</a> |");*/
-		
-		
-		System.out.println("this.flag_keb_kemaskini==="+this.flag_keb_kemaskini);
-		
-		
+				
+		System.out.println("this.flag_keb_kemaskini==="+this.flag_keb_kemaskini);		
 		if(this.flag_keb_kemaskini!=null)	{
-			
-		
-			
+						
 			if((this.flag_keb_kemaskini).equals("yes")){
 				System.out.println("::::::::8::::::::::");
 				out.println("<a href=" + new_url + "?idfail=" + this.idfail + "&flagVersion=pindaanP&" + qS + ">Cetak</a><br>");
@@ -1680,67 +1631,65 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 }
 	
-	public void doListingPindaan(HttpServletRequest request, HttpServletResponse response, String idfail, String borang) throws IOException,
-	Exception {
-	PrintWriter out = response.getWriter();
-	out.println("<hr>");
-	out.println("Senarai </br>");
-
-	String sql = "";
-	String flag_kemaskini = "";
-	Db db = null;
-	try {
-		db = new Db();
-		sql = "Select id_borang,tarikh_masuk,FLAG_KEB_KEMASKINI  from TBLPPKBORANG_HISTORY where id_fail ='" + idfail + "' and nama_borang='" + borang
-				+ "' order by tarikh_masuk desc";
-		myLogger.info(sql);
-		ResultSet rs = db.getStatement().executeQuery(sql);
-		int x = 1;
-		out.println("<table width='70%'   align='center'>");
-		out.println("  <tr>");
-		out.println(" <td width='2%' align='center' >Bil</td>");
-		out.println(" <td width='1%' ></td>");
-		out.println(" <td width='37%' align='left' >ID CETAKAN</a></td>");
-		out.println(" <td width='40%' align='left'>Tarikh / Waktu Cetak</td>");
-		out.println(" <td width='20%' align='left'>Status</td>");
-		out.println("  </tr>");
-
-		while (rs.next()) {
-			
-			
-			if(rs.getString("FLAG_KEB_KEMASKINI")!= null){
-				if(rs.getString("FLAG_KEB_KEMASKINI").equals("1")){
-					flag_kemaskini = "Pindaan Fail";
-					
+	public void doListingPindaan(HttpServletRequest request, HttpServletResponse response, String idfail, String borang) 
+		throws IOException,Exception {
+		PrintWriter out = response.getWriter();
+		out.println("<hr>");
+		out.println("Senarai </br>");
+	
+		String sql = "";
+		String flag_kemaskini = "";
+		Db db = null;
+		try {
+			db = new Db();
+			sql = "Select id_borang,tarikh_masuk,FLAG_KEB_KEMASKINI " +
+				" from TBLPPKBORANG_HISTORY " +
+				" where id_fail ='" + idfail + "' " +
+				" and nama_borang='" + borang + "' " +
+				" order by tarikh_masuk desc";
+	//		myLogger.info(sql);
+			ResultSet rs = db.getStatement().executeQuery(sql);
+			int x = 1;
+			out.println("<table width='70%'   align='center'>");
+			out.println("  <tr>");
+			out.println(" <td width='2%' align='center' >Bil</td>");
+			out.println(" <td width='1%' ></td>");
+			out.println(" <td width='37%' align='left' >ID CETAKAN</a></td>");
+			out.println(" <td width='40%' align='left'>Tarikh / Waktu Cetak</td>");
+			out.println(" <td width='20%' align='left'>Status</td>");
+			out.println("  </tr>");
+	
+			while (rs.next()) {				
+				if(rs.getString("FLAG_KEB_KEMASKINI")!= null){
+					if(rs.getString("FLAG_KEB_KEMASKINI").equals("1")){
+						flag_kemaskini = "Pindaan Fail";						
+					}
+				}else{
+					flag_kemaskini = "-";
 				}
-			}else{
-				flag_kemaskini = "-";
+			
+				out.println("  <tr>");
+				out.println(" <td width='2%' >" + x + "</td>");
+				out.println(" <td width='1%' >:</td>");
+				out.println(" <td width='37%' > <a href=" + new_url + "?idfail=" + idfail + "&flagVersion=view&flag_batal=Y&idborang="
+						+ rs.getString("id_borang") + ">" + rs.getString("id_borang") + "</a></td>");
+				out.println(" <td width='40%' >" + (rs.getString("tarikh_masuk") == null ? "" : rs.getString("tarikh_masuk")) + "</td>");
+				out.println(" <td width='20%' >" + flag_kemaskini + "</td>");
+				out.println("  </tr>");
+	
+				// out.println(x+":"+rs.getString("id_borang")+"<br>");
+				// out.println(x+" : <a href="+new_url+"?idfail="+idfail+"&flagVersion=view&idborang="+rs.getString("id_borang")+">"+rs.getString("id_borang")+"</a> <br>");
+				x++;
 			}
 			
-	
-
-			out.println("  <tr>");
-			out.println(" <td width='2%' >" + x + "</td>");
-			out.println(" <td width='1%' >:</td>");
-			out.println(" <td width='37%' > <a href=" + new_url + "?idfail=" + idfail + "&flagVersion=view&flag_batal=Y&idborang="
-					+ rs.getString("id_borang") + ">" + rs.getString("id_borang") + "</a></td>");
-			out.println(" <td width='40%' >" + (rs.getString("tarikh_masuk") == null ? "" : rs.getString("tarikh_masuk")) + "</td>");
-			out.println(" <td width='20%' >" + flag_kemaskini + "</td>");
-			out.println("  </tr>");
-
-			// out.println(x+":"+rs.getString("id_borang")+"<br>");
-			// out.println(x+" : <a href="+new_url+"?idfail="+idfail+"&flagVersion=view&idborang="+rs.getString("id_borang")+">"+rs.getString("id_borang")+"</a> <br>");
-			x++;
+		} catch (Exception e) {
+			throw new Exception("error getting listing:" + e.getMessage());
+		} finally {
+			if (db != null)
+				db.close();
 		}
-	} catch (Exception e) {
-		throw new Exception("error getting listing:" + e.getMessage());
-	} finally {
-		if (db != null)
-			db.close();
-	}
-
-}
 	
+	}
 	
 	public void doListingPNB(HttpServletRequest request, HttpServletResponse response, String idfail, String idperbicaraan) throws IOException,
 	Exception {
@@ -2540,7 +2489,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	
 	
 	
-	public Hashtable infoPerbicaraan(String ID_FAIL, String ID_PERBICARAAN) throws Exception {
+	public Hashtable<String,String> infoPerbicaraan(String ID_FAIL, String ID_PERBICARAAN) throws Exception {
 		Db db = null;
 		String sql = "";
 		ResultSet rs = null;
@@ -2561,8 +2510,8 @@ public abstract class EkptgReportServlet implements IServlet2 {
 					" AND PB.ID_PERBICARAAN = '"+ID_PERBICARAAN+"' AND F.ID_FAIL = '"+ID_FAIL+"' ";
 			myLogger.info(" infoPerbicaraan :" + sql.toUpperCase());
 			rs = stmt.executeQuery(sql);
-			Hashtable h;
-			h = new Hashtable();
+			Hashtable<String,String> h;
+			h = new Hashtable<String,String>();
 			
 			while (rs.next()) {
 				h.put("ID_FAIL",rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
@@ -2865,9 +2814,6 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				db.close();
 		}
 	}
-	
-	
-	
 	
 	public static synchronized int getSeqNoPNB(String tahun,String id_negeri,String kod_modul)
 			throws DbException {
