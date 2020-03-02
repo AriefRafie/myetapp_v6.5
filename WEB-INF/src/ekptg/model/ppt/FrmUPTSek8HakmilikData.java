@@ -772,17 +772,13 @@ public class FrmUPTSek8HakmilikData {
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
-<<<<<<< WEB-INF/src/ekptg/model/ppt/FrmUPTSek8HakmilikData.java
 
 	    		//PPT-03  
 	    		String no_bangunan = (String)data.get("txtNoBangunan");
 	    		String no_tingkat = (String)data.get("txtNoTingkat");
 	    		String no_petak = (String)data.get("txtNoPetak");
-=======
 	    		String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
-	    		 
->>>>>>> WEB-INF/src/ekptg/model/ppt/FrmUPTSek8HakmilikData.java
-	    		
+	    		 	    		
 	    		String flagSebahagian = "0";
 	    		
 	    		if(!luas_asal.isEmpty() && !luas_ambil.isEmpty()){
