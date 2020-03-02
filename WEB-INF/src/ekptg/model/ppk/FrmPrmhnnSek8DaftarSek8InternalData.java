@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +20,9 @@ import javax.servlet.http.HttpSession;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.AuditTrail;
@@ -240,7 +245,7 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 				h.put("idSimati",
 						rs.getString("id_Simati") == null ? "" : rs
 								.getString("id_Simati"));
-				System.out.println("Keluar sini1a");
+				//System.out.println("Keluar sini1a");
 				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
 						: rs.getString("nama_Simati"));
 				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
@@ -2933,6 +2938,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 					+ "','dd/MM/yyyy')";
 			String tarikh_mati = "to_date('" + tarikh_simati
 					+ "','dd/MM/yyyy')";
+			System.out.println("idNeg :" + NegId);
 			int idNeg = Integer.parseInt(NegId);
 
 			r.clear();
@@ -3321,6 +3327,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			//:::SUB
 			myLogger.info("SSF KEMASKINI 2");
 			kemaskiniSubUrusanStatusFail(session,idPermohonan+"",userId,"150","436",idFail+"");
+			//uploadFiles(idPermohonan);
 
 		} /*catch (SQLException se) {
 			try {
@@ -3337,6 +3344,22 @@ public Vector setDataNoKP(String idpp) throws Exception {
 				db.close();
 		}
 	}
+	
+	/*private void uploadFiles(String idPermohonan) throws Exception {
+		myLogger.info("Baca uploadFiles:--------------"); 
+		String idPermohonan1 = idPermohonan;
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+	    ServletFileUpload upload = new ServletFileUpload(factory);
+	    List items = upload.parseRequest(this.request);
+	    Iterator itr = items.iterator();	   
+	    while (itr.hasNext()) {    	
+	      FileItem item = (FileItem)itr.next();
+	      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+	    	  System.out.println("item.getName = "+ item.getName());
+	    	  saveData(item,db,conn,idPermohonan);
+	      }
+	    }
+	  }*/
 
 	public Vector checkwaris(String idob) throws Exception {
 		Vector listcheckwaris = new Vector();

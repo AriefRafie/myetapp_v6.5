@@ -96,7 +96,7 @@
 #set ($no_tel = "")
 #set ($nama_pelbagainegara = "")
 #set ($no_hp = "")
-#set ($emel = "")
+#set ($EmelPemohon = "")
 #set ($jenis_pemohon = "2")
 #set ($jenis_pej = "")
 #set ($socSaudaraWaris = "")
@@ -267,8 +267,8 @@
 <input type="hidden" name="v_tab" id="v_tab" value="" />
 <input type="hidden" name="online_skrin" id="online_skrin" value="yes" />
 <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
- <input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
- <input name="flagForView" type="hidden" id="flagForView" value="$!flagForView"/>
+<input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
+<input name="flagForView" type="hidden" id="flagForView" value="$!flagForView"/>
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 <input type="hidden" name="id_Permohonansimati" id="id_Permohonansimati" value="$!id_Permohonansimati" >
 
@@ -319,9 +319,7 @@ $listFail.id_Suburusanstatus
 <p></p>
 <p>
   <input name="mode1" type="hidden" value="$mode1" />
-  <input name="mode2" type="hidden" value="$mode2" />
-  <input name="idpermohonan" type="text" value="$idPemohonan" />
- 
+  <input name="mode2" type="hidden" value="$mode2" /> 
   <input name="id_Fail" type="hidden" value="$idFail" />
   #foreach($ls in $ListSemakan)
   
@@ -1475,8 +1473,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
        
              </td>
         </tr>
-        
-       
+               
        <tr>
 				<td class="style38" valign="top" >#if($setmode != "disabled") <span class="style1">*</span> #end</td>			
 				<td valign="top" >Emel</td>
@@ -1484,10 +1481,18 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 				:
 				</td>
 				<td valign="top" >
-				<input  size="50" type="text" id="emel" name="emel" value="$emel">
+				<input  name="txtEmelPemohon" type="text" id="txtEmelPemohon" style="text-transform:uppercase;" onBlur="uppercase()" value="$txtEmelPemohon" size="50" onKeyUp="javascript:validateIC(event,this,this.value,'txtEmelPemohon')" maxlength="50" readonly class="disabled" />
 				</td>
 			</tr>
         #end
+        #if($readmode != "disabled" )
+         <tr>
+          <td class="style38" valign="top">&nbsp;</td>
+          <td class="style38" valign="top"><div align="left"></div></td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top" height="1"><span class="style50">cth: abc@email.com </span></td>
+         </tr>
+       #end
       </table>
     </fieldset>
     
@@ -2149,7 +2154,7 @@ function checkSumaICsimati(command)
 }
 
 function Simpan() {
-	alert("Simpan");
+//alert("Simpan");
 	/*	
 	check_pengenalan_simati_1();
 	check_pengenalan_simati_2();
@@ -2227,9 +2232,9 @@ function Simpan() {
 		document.f1.no_hp[0].focus();
 	}*/
 	
-	else if (document.f1.emel.value == "" ) {
+	else if (document.f1.txtEmelPemohon.value == "" ) {
 		alert("Sila masukkan Emel");
-		document.f1.emel.focus();
+		document.f1.txtEmelPemohon.focus();
 	}
 	
 	
@@ -2327,13 +2332,7 @@ function Simpan() {
 	}
 	else if (document.f1.txtNoKPLainSimati.value!="" && document.f1.socJenisKPLainSimati.value=="0") {
 		alert("Sila pilih jenis MyID Lain Simati");
-	}
-    
-    else if(document.f1.fileupload[0].value == ""){
-		alert('Sila muatnaik dokumen MyID');
-  		document.f1.fileupload[0].focus();
-	}
-	
+	}	
 	else if (document.f1.txtNamaSimati != 'null' && document.f1.txtNamaSimati.value=="" 
 			//&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
 			) {
@@ -2351,28 +2350,28 @@ function Simpan() {
 		alert("Sila pastikan tarikh mati tidak melebihi dari tarikh hari ini.");
 		document.f1.txtTarikhMati.focus();
 	}
-//	else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
-	//	alert('Sila muatnaik MyID simati.');
- // 		document.f1.fileupload.focus(); 
-//	}
-	//if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
-		//alert('Sila muatnaik sijil simati.');
-  //		document.f1.fileupload.focus();
-	//}
+//   else if(document.f1.uploadmyid != 'null' && document.f1.uploadmyid.value==""){
+//   	  alert('Sila muatnaik MyID simati.');
+//       document.f1.uploadmyid.focus(); 
+//    }
+//   else if(document.f1.uploadsijil != 'null' && document.f1.uploadsijil.value==""){
+//    	  alert('Sila muatnaik sijil simati.');
+//       document.f1.uploadsijil.focus();
+// 	}
 	
 	else{
 		//alert("TING");
 		var data = "&idPermohonan="+idPermohonan.value+"&txtNoKPBaruSimati1="+txtNoKPBaruSimati1.value+"&txtNoKPBaruSimati2="+txtNoKPBaruSimati2.value+"&txtNoKPBaruSimati3="+txtNoKPBaruSimati3.value+"&txdTarikhMohon="+txdTarikhMohon.value+"&txtNamaSimati="+txtNamaSimati.value+"&txtNoKPLamaSimati="+txtNoKPLamaSimati.value+"&socJenisKPLainSimati="+socJenisKPLainSimati.value+"&txtNoKPLainSimati="+txtNoKPLainSimati.value;
 		
 		// "&id_fail_carian="+id_fail+"&txtNoFailSub="+txtNoFailSub.value+"&id_ob_pemohon="+id_ob_pemohon+"&id_permohonansimati_atheader="+id_permohonansimati_atheader+"&sebab="+sebab2;
-		alert(data);
+		
 		var data2 = data + "&txtTarikhMati="+txtTarikhMati.value+"&txtNoKPBaruPemohon1="+txtNoKPBaruPemohon1.value+"&txtNoKPBaruPemohon2="+txtNoKPBaruPemohon2.value+"&txtNoKPBaruPemohon3="+txtNoKPBaruPemohon3.value+"&txtNoKPLamaPemohon="+txtNoKPLamaPemohon.value+"&txtNoKPLainPemohon="+txtNoKPLainPemohon.value+"&txtNamaPemohon="+txtNamaPemohon.value+"&txtAlamat1="+txtAlamat1.value; //&socJenisKPLainPemohon="+socJenisKPLainPemohon.value+"
 		//alert("TING TONG");
-		var data3 = data2+"&txtAlamat2="+txtAlamat2.value+"&txtAlamat3="+txtAlamat3.value+"&socBandar="+socBandar.value+"&txtPoskod="+txtPoskod.value+"&socNegeri="+socNegeri.value+"&txtUmurSimati="+txtUmurSimati.value+"&socJantinaSimati="+socJantinaSimati.value+"&txtUmurPemohon="+txtUmurPemohon.value+"&socJantinaPemohon="+socJantinaPemohon.value+"&taraf_penting="+taraf_penting.value+"&no_tel="+no_tel.value+"&nama_pelbagainegara="+nama_pelbagainegara.value+"&no_hp="+no_hp.value+"&jenis_pej="+jenis_pej.value+"&jenis_pemohon="+jenis_pemohon.value+"&emel="+emel.value+"&socSaudaraWaris="+socSaudaraWaris.value;
+		var data3 = data2+"&txtAlamat2="+txtAlamat2.value+"&txtAlamat3="+txtAlamat3.value+"&negid="+negid.value+"&socDaerah="+socDaerah.value+"&socBandar="+socBandar.value+"&txtPoskod="+txtPoskod.value+"&socNegeri="+socNegeri.value+"&txtUmurSimati="+txtUmurSimati.value+"&socJantinaSimati="+socJantinaSimati.value+"&txtUmurPemohon="+txtUmurPemohon.value+"&socJantinaPemohon="+socJantinaPemohon.value+"&taraf_penting="+taraf_penting.value+"&no_tel="+no_tel.value+"&nama_pelbagainegara="+nama_pelbagainegara.value+"&no_hp="+no_hp.value+"&jenis_pej="+jenis_pej.value+"&jenis_pemohon="+jenis_pemohon.value+"&txtEmelPemohon="+txtEmelPemohon.value+"&socSaudaraWaris="+socSaudaraWaris.value;
 		//alert("TING TING TONG");
 		var command = "&command=Simpanx";
 		var actionItem = (command+data3);
-		
+		alert(actionItem);
 		document.f1.enctype = "multipart/form-data";
 	  document.f1.encoding = "multipart/form-data";
 		//alert(document.f1.idPermohonan.value);

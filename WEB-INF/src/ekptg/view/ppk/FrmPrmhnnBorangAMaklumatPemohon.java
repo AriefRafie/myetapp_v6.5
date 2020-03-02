@@ -103,6 +103,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				.getAttribute("_ekptg_user_id"));
 		Hashtable jenis_user_hash = (Hashtable) jenis_user_list.get(0);
 		String jenis_user = jenis_user_hash.get("USER_TYPE").toString();
+		myLogger.info(jenis_user);
 		String upload = getParam("upload");
 
 		if (jenis_user.equals("internal")) {
@@ -112,14 +113,14 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		}
 
 		if (doPost.equals("true")) {
-			myLogger.info("browser true **********");
+			//myLogger.info("browser true **********");
 			bolehsimpan = "yes";
 		} else {
 			myLogger.info("browser false **********");
 			if (jenis_user.equals("internal")) {
 				bolehsimpan = "yes";
 			} else {
-				bolehsimpan = "";
+				bolehsimpan = "yes";
 			}
 
 		}
@@ -365,16 +366,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("daerah", "");
 				this.context.put("listBandarbyNegeri", "");
 
-
-
-				// comment dulu sebab online xleh dapat user id internal
 				view_get_userid(session);
 				listUserid = logic_A.getUserIds();
-				// Hashtable t = (Hashtable)listUserid.get(0);
-				// String userIdDaerah = t.get("idDaerah").toString();
-				// String idNegeri = t.get("idNegeri").toString();
-				// this.context.put("NegId", idNegeri);
-
 				listDaerahByUser = logic_A
 						.getDaerahByNegeriUser((String) session
 								.getAttribute("_ekptg_user_id"));
@@ -1174,8 +1167,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			}
 
-			else {
-
+			else {				System.out.println(cntID);
 				if (cntID == 0) {
 					// addPermohonan(session,userIdNeg,userIdPejabat,userIdKodDaerah,userIdKodNegeri);
 					if (bolehsimpan.equals("yes")) {
@@ -1501,7 +1493,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 				k.put("jenis_pej", getParam("jenis_pej"));
 				k.put("no_hp", getParam("no_hp"));
-				k.put("emel", getParam("emel"));
+				k.put("emel", getParam("txtEmelPemohon"));
 				k.put("jenis_pemohon", getParam("jenis_pemohon"));
 
 				v.addElement(k);
@@ -1720,7 +1712,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				listPemohonOB = logic.getDataPemohonOB();
 				this.context.put("listPemohonOB", listPemohonOB);
 				String idsaudara = getParam("socTarafKePemohonanPemohon");
-				// System.out.println("SAUUUU"+idsaudara);
 
 				String id_bandartetap = "";
 				String id_bandarsurat = "";
@@ -1749,8 +1740,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("listBandarSuratbyNegeri", "");
 					id_bandarsurat = "";
 				}
-
-				// System.out.println("bandar event :"+getParam("bandar_event"));
 
 				if (bandarevent.equals("no")) {
 					id_saudare = "";
@@ -1965,8 +1954,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
 
-			// logic_A.setData_online(id,(String)
-			// session.getAttribute("_ekptg_user_id"));
 			list = logic_A.setData_online(id, (String) session
 					.getAttribute("_ekptg_user_id"));
 			headerppk_baru(session, id, "Y", "", "T");
@@ -4516,6 +4503,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			String id1 = (String) n.get("idsimati");
 			String id2 = (String) n.get("idPemohon");
 			String id = getParam("idPermohonan");
+			//String namaPemohon = 
 
 			this.context.put("idStatus", (String) n.get("idstatus"));
 			this.context.put("IdPermohonan", id);
@@ -9100,6 +9088,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		String IdPermohonan = getParam("idPermohonan");
 		String no_daerah = getParam("socDaerah");
+		myLogger.info("no_daerah = "+no_daerah);
 		String tarikh_masuk = getParam("txdTarikhMohon");
 		String no_kpbaru_simati = getParam("txtNoKPBaruSimati1")
 				+ getParam("txtNoKPBaruSimati2")

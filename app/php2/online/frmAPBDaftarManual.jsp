@@ -267,7 +267,7 @@
         <tr>
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td width="29%">Luar Perairan Negeri</td>
-          <td width="70%">: $selectFlagLuar</td>
+          <td width="90%">: $selectFlagLuar</td>
         </tr>
         <tr>
           <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
@@ -286,7 +286,7 @@
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
   </tr>
   #end
-  <tr>
+   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'new')
       <input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/>
@@ -573,10 +573,6 @@ function janaTajuk(){
 }
 
 function seterusnya(){
-	document.${formName}.action = "$EkptgUtil.getTabID("Akta Pelantar Benua",$portal_role)?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView.java";
-	document.${formName}.submit();
-}
-function gotoSenaraiFail(){
 	document.${formName}.action = "$EkptgUtil.getTabID("Akta Pelantar Benua",$portal_role)?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView.java";
 	document.${formName}.submit();
 }

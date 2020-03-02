@@ -237,6 +237,17 @@ parent.document.getElementById("display_ada_harta").innerHTML="<div class=\"warn
   <input name="idpermohonan" type="hidden" value="$IdPermohonan" />
   <input name="idPemohon" type="hidden" value="$idPemohon" />
 </p>
+<table width="100%" cellspacing="0" cellpadding="0">
+   		<tbody><tr>
+    		<td width="4%">&nbsp;</td>
+    		<td width="1%" valign="top"><font color="red">*</font></td>
+    		<td width="3%"><input type="checkbox" value="1" name="cbsemaks10" id="cbsemaks10"></td>
+      		<td width="3%">1.</td>
+      		<td width="89%">Pelan Pengambilan Tanah yang lengkap.</td>
+  		</tr>
+        
+  </tbody></table>
+  
 <table width="100%" border="0">
 <tr>
 <td width="50%"   >

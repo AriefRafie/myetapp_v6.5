@@ -114,10 +114,9 @@ function papar(idFail,idStatus) {
 	
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idStatus.value = idStatus;
-	document.${formName}.idPemohon.value = idPemohon;
-	document.${formName}.actionOnline.value = "seterusnya"; 	
 	document.${formName}.submit();
 }
+
 function daftarBaru(){
 	document.${formName}.actionOnline.value = "daftarBaru";
 	document.${formName}.submit();

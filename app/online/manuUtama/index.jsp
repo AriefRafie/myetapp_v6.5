@@ -239,6 +239,13 @@
 						</a>
 						</td>
 					</tr>
+						<tr>
+						<td>
+						<a href="javascript:goTo('NOTIS')" class="help" title="Semakan Notis Perbicaraan Pembahagian Pusaka">
+							<font color="blue"><li>Notis Perbicaraan Pembahagian Pusaka</li></font>
+						</a>
+						</td>
+					</tr>
 					</table>
 				</td>
 			</tr>
@@ -402,6 +409,12 @@ else if(location=='DERAFPPK'){
         document.${formName}.namatab.value = "Pusaka Kecil";
         document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
         document.${formName}.submit();
+}
+else if(location=='NOTIS'){
+    document.${formName}.action = "?myrole=ppk-online-user";
+    document.${formName}.namatab.value = "Pusaka Kecil";
+    document.${formName}.namamodul.value = "ekptg.view.ppk.CarianNotisPerbicaraan";
+    document.${formName}.submit();
 }
 else if(location=='PPT'){
         document.${formName}.action = "?myrole=ppt-online-user";

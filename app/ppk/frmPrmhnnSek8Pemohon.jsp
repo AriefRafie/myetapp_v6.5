@@ -1262,49 +1262,24 @@
                                             
                                             
                                             <option value="$listneg.id_Negeri">$listneg.kod_Negeri - $listneg.nama_Negeri</option>
-                                            
-                                            
-                                            
-                                     
-                                  #end    
+                                #end    
 	                              #end
-                                        
-                                          
-                                          
                                           </select>
                                           #else
                                           <select name="socNegeriPemohonSurat" id="socNegeriPemohonSurat" class="autoselect" onchange="getBandarSurat('txtBandarPemohonSurat')" >
                                             <option value="0" >SILA PILIH NEGERI</option>
-                                            
-                                            
-                                            
                                   #foreach($listneg in $listnegeri)
                    
-                                            
-                                            
                                             <option value="$listneg.id_Negeri" style="text-transform:uppercase;" onblur="uppercase()">$listneg.kod_Negeri - $listneg.nama_Negeri</option>
-                                            
-                                            
-                                            
-                                    
-	                               #end
-                                        
                                           
-                                          
+	                               #end                                          
                                           </select>
                                           #end   
                                           
                                           #end </td>
                                       </tr>
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      <tr id="tr_mesej_pelbagainegara_surat">
+                                                                           
+        <tr id="tr_mesej_pelbagainegara_surat">
         <td valign="top">
         </td>
         <td valign="top">
@@ -1328,13 +1303,6 @@
                                     #end </datalist>
                                     </td>
         </tr>
-        
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
                                       <tr>
                                         <td class="style38" valign="top">#if($readmode != "disabled" )  #end</td>
                                         <td class="style38"><div align="left">#if($readmode != "disabled" ) </div>
@@ -1391,88 +1359,22 @@
             #end
             #if($bandarsurat!="" && $bandarsurat!="0" )
             <select name="txtBandarPemohonSurat" id="txtBandarPemohonSurat" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
-              <option value="$bandarsurat">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
-              
-              
-              
-                      
-                                                  
-                                            
-                                              
+              <option value="$bandarsurat">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>   
                                   #foreach($listdaerah in $listBandarSuratbyNegeri)
                                  
                                   #if($bandarsurat!=$listdaerah.id)
-                                    
-	                               
-                                              
-                                            
-                                                  
-                      
-              
-              
               <option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
-              
-              
-              
-                      
-                                                  
-                                            
-                                              
-                                   
                                   #end    
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                                
-                    
-            
-            
             </select>
 #else
 <select name="txtBandarPemohonSurat" id="txtBandarPemohonSurat" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
   <option value="">Sila Pilih Bandar</option>
-  
-  
-              
-    
-    
-  
-                                              
+            
                                   #foreach($listDaerah in $listBandarSuratbyNegeri)
                                  
-                                
-	                               
-                                              
-  
-    
-    
-              
-  
   <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
-  
-  
-              
-    
-    
-  
-                                              
-                                   
-                                 
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-
-  
-  
-            
-
 </select>
 #end 
 #end
@@ -1521,7 +1423,7 @@
                                           <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>                                        
                                           <td>
                                             
-                                        <input name="txtEmelPemohon" type="text" id="txtEmelPemohon"  value="$listpemohon.emel" size="45" maxlength="100" $readmodeR class="$readmode" />                                        </td>
+                                        <input name="txtEmelPemohon" type="text" id="txtEmelPemohon"  style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.emel"  size="45" maxlength="100" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtEmelPemohon')" /> </td>
                                           </tr>
                                         #if($readmode != "disabled" )
                                         <tr>
