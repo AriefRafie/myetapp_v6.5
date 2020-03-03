@@ -1751,27 +1751,33 @@ public class BicaraInteraktifData {
 		return list;
 	}
 	
-	
 	@SuppressWarnings("unchecked")
-	public List rekodHTABorangE(HttpSession session, String ID_PERINTAH, String ID_PERMOHONANSIMATI, Db db)throws Exception {
+	public List rekodHTABorangE(HttpSession session, String ID_PERINTAH, String ID_PERMOHONANSIMATI, Db db)
+		throws Exception {
 		Db db1 = null;
 		ResultSet rs = null;
 		Statement stmt = null;
 		List list = null;
 		String sql = "";	
 		
-		try{
-			
-		if(db != null)
-		{
-			db1 = db;
-		}
-		else
-		{
-			db1 = new Db();
-		}		
-		stmt = db1.getStatement();			
-		sql += " SELECT A.ID_PERINTAHHTAOBMST, "+
+		try{			
+			if(db != null){
+				db1 = db;
+			}else{
+				db1 = new Db();
+			}		
+		
+			stmt = db1.getStatement();	
+		
+		//RAZMAN TAMBAH 23/10/2017		
+		sql += " SELECT * FROM ( ";
+		
+		sql += " SELECT " +
+				" TRIM(REGEXP_REPLACE(MN.MAKLUMAT_HTA_1, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS MAKLUMAT_HTA, " +
+				" TRIM(REGEXP_REPLACE(MN.CATATAN_HARTA_1, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_HARTA, " +
+				" TRIM(REGEXP_REPLACE(MN.CATATAN_1, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN, " +
+				" MN.* FROM (" +
+				" SELECT A.ID_PERINTAHHTAOBMST, "+
 				" C.KOD_JENIS_HAKMILIK, B.NO_HAKMILIK,B.NO_PT, "+
 				" B.BA_SIMATI, B.BB_SIMATI, D.NAMA_DAERAH, "+
 				" E.NAMA_MUKIM,B.CATATAN, "+
@@ -1906,7 +1912,12 @@ public class BicaraInteraktifData {
 				" AND B.ID_JENISHM = C.ID_JENISHAKMILIK(+) "+
         		" AND A.ID_PERINTAH = '"+ID_PERINTAH+"' "+
 				" AND B.ID_PERMOHONANSIMATI = '"+ID_PERMOHONANSIMATI+"' "+
-				" ORDER BY A.ID_PERINTAHHTAOBMST ASC ";		
+				" ORDER BY A.ID_PERINTAHHTAOBMST ASC) MN ";		
+		
+		//RAZMAN TAMBAH 23/10/2017		
+		sql += " ) ";
+			//	"WHERE SINGLEWARIS != 0 ";
+		
 		myLogger.info(" BICARA INTERAKTIF : SQL rekodHartaTakAlihBorangE :"+ sql);		
 		rs = stmt.executeQuery(sql);
 		list = Collections.synchronizedList(new ArrayList());
@@ -1984,6 +1995,9 @@ public class BicaraInteraktifData {
 		}		
 		stmt = db1.getStatement();			
 		sql += " SELECT D.ID_PERINTAHHAOBMST, "+
+				" TRIM(REGEXP_REPLACE(MN.MAKLUMAT_HA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS MAKLUMAT_HA, " +
+				" TRIM(REGEXP_REPLACE(MN.CATATAN_HARTA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_HARTA, " +
+				"MN.* FROM (SELECT D.ID_PERINTAHHAOBMST, "+
 				" E.ID_HA, "+
 				" D.CATATAN AS CATATAN_HARTA, "+
 				" CASE "+
@@ -2184,16 +2198,18 @@ public class BicaraInteraktifData {
 				
 		try{
 			
-		if(db != null)
-		{
-			db1 = db;
-		}
-		else
-		{
-			db1 = new Db();
-		}		
-		stmt = db1.getStatement();			
-		sql += " SELECT DISTINCT A.ID_HTA,L.NO_HAKMILIK,SUBSTR(TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'),1,LENGTH (TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'))-3 ) AS NILAI_HTA_TARIKHMOHON ,C.BA_WARIS, C.BB_WARIS, "+
+			if(db != null){
+				db1 = db;
+			}else{
+				db1 = new Db();
+			}		
+		stmt = db1.getStatement();					
+	
+		sql += " SELECT  " +
+				" TRIM(REGEXP_REPLACE(MN.MAKLUMAT_HTA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS MAKLUMAT_HTA, " +
+				" TRIM(REGEXP_REPLACE(MN.CATATAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN, " +
+				" MN.* " +
+				" FROM (SELECT DISTINCT A.ID_HTA,L.NO_HAKMILIK,SUBSTR(TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'),1,LENGTH (TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'))-3 ) AS NILAI_HTA_TARIKHMOHON ,C.BA_WARIS, C.BB_WARIS, "+
 				" REPLACE(REPLACE(REPLACE(REPLACE(A.CATATAN,'<br />',''),'&nbsp;',' '),'<p>',''),'</p>','')AS CATATAN,L.FLAG_KATEGORI_HTA,L.BA_SIMATI,L.BB_SIMATI,A.ID_JENISPERINTAH, "+
 				" CASE   WHEN LENGTH(REPLACE(SUBSTR(L.NILAI_HTA_TARIKHMOHON,INSTR(L.NILAI_HTA_TARIKHMOHON,'.'),LENGTH(L.NILAI_HTA_TARIKHMOHON)),'.')) =  LENGTH(L.NILAI_HTA_TARIKHMOHON) THEN '00' "+
 				" WHEN LENGTH(REPLACE(SUBSTR(L.NILAI_HTA_TARIKHMOHON,INSTR(L.NILAI_HTA_TARIKHMOHON,'.'),LENGTH(L.NILAI_HTA_TARIKHMOHON)),'.')) = 1 THEN REPLACE(SUBSTR(L.NILAI_HTA_TARIKHMOHON,INSTR(L.NILAI_HTA_TARIKHMOHON,'.'),LENGTH(L.NILAI_HTA_TARIKHMOHON)),'.') || '0' "+
@@ -5077,7 +5093,18 @@ public class BicaraInteraktifData {
 		return list;
 	}
 	
-	public String htmlList(HttpSession session,String ID_PEMOHON,String ID_SIMATI,String ID_PERBICARAAN,String ID_PERMOHONAN,String tajukList,String skrinName,String current_previous,String command, String ID_PERMOHONANSIMATI,String formName,Db db) throws Exception {
+	public String htmlList(HttpSession session
+		,String ID_PEMOHON
+		,String ID_SIMATI
+		,String ID_PERBICARAAN
+		,String ID_PERMOHONAN
+		,String tajukList
+		,String skrinName
+		,String current_previous
+		,String command
+		,String ID_PERMOHONANSIMATI
+		,String formName
+		,Db db) throws Exception {
 		String html = "";
 		
 		Db db1 = null;
@@ -5465,7 +5492,15 @@ public class BicaraInteraktifData {
 	}
 	
 	
-	public String htmlListKeterangan(HttpSession session,String formName,String ID_SIMATI,String ID_PERMOHONANSIMATI,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PEMOHON,String flagPrint,Db db) throws Exception {
+	public String htmlListKeterangan(HttpSession session
+		,String formName
+		,String ID_SIMATI
+		,String ID_PERMOHONANSIMATI
+		,String ID_PERBICARAAN
+		,String ID_PERMOHONAN
+		,String ID_PEMOHON
+		,String flagPrint
+		,Db db) throws Exception {
 		
 		String html = "";
 		if(flagPrint.equals("N"))
