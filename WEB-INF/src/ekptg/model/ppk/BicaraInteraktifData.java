@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,7 +28,6 @@ import ekptg.engine.EmailProperty;
 import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
-import ekptg.helpers.Utils;
 import ekptg.report.ppk.FrmPopupPilihPegawaiReportData;
 
 public class BicaraInteraktifData {
