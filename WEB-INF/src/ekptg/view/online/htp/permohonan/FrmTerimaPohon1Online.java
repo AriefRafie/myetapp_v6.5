@@ -245,11 +245,9 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		String command = getParam("command");
 		String noRujukanOnline = getParam("txtNoRujukanOnline");
 		String portal_role = String.valueOf(session.getAttribute("myrole"));
-		//---------- end addby zul 27/7/2017---------- 
 		
 		try{
 			
-			//---------- Start addby zul ----------
 			tanahBean = new HTPPermohonanTanahBean();
 			tanahBean.setLabelDaerah(context, idnegeri);
 			
@@ -1841,9 +1839,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		
 		FrmTerimaPohonData.Notis5A(hNotis,mode,idNotis);
 }
-	
-	/////////////
-	
+		
 	private void SimpanBuktiBayaranNotis()throws Exception {
 		
 		Hashtable data = null;
@@ -1863,7 +1859,6 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		this.context.put("BuktiBayaranInfo", BuktiBayaranInfo);
 	}
 	
-	////////////////////////////
 	public void setPaging(boolean page1,boolean page2,boolean page3,boolean page4,boolean page5) {
 		this.context.put("page1",page1);
 		this.context.put("page2",page2);

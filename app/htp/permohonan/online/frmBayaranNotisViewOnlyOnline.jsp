@@ -404,9 +404,65 @@
 </fieldset>	
 <!-- ****************** END UNTUK MAKLUMAT NOTIS 5A KTN ************************* -->
 
+<!-- ****************** START UNTUK MAKLUMAT DOKUMEN ************************* -->
+
+<fieldset>
+<legend>Maklumat Dokumen
+<tr>
+	   		<td valign="top">
+				<table width="100%" border="0">	
+					<tr>
+						<td valign="top" width="1%">
+							</td>
+						<td valign="top" width="40%">
+							<div align="right" class="labelinput">
+								<div align="left">Nama Dokumen</div>
+							</div>             
+						</td>
+						<td valign="top" width="1%">:</td>
+						<td width="58%">
+							$!dat.perihalrayuan
+						</td>
+					</tr>						
+					<tr>
+						<td valign="top" width="1%">
+							</td>
+						<td valign="top" width="40%">
+							<div align="right" class="labelinput">
+								<div align="left">Keterangan</div>
+							</div>             
+						</td>
+						<td valign="top" width="1%">:</td>
+						<td width="58%">
+							$!dat.tempohRayuan
+						</td>
+					</tr>	
+					<tr>
+						<td valign="top" width="1%">
+							</td>
+						<td valign="top" width="40%">
+							<div align="right" class="labelinput">
+								<div align="left">Lampiran Dokumen</div>
+							</div>             
+						</td>
+						<td valign="top" width="1%">:</td>
+						<td width="58%">
+							
+						</td>
+					</tr>																				
+				</table>
+			</td>
+	 	</tr>
+
+</fieldset>
+
+
+
+<!-- ****************** END UNTUK MAKLUMAT DOKUMEN *************************** -->
+
 <!-- ****************** START UNTUK Senarai Bukti Pembayaran ************************* -->
 <fieldset>
-	<legend>Senarai Bukti Pembayaran</legend>
+	<legend>Senarai Bukti Pembayaran
 	<table width="100%" border="0">
 		<tr class="table_header">
 			<td width="3%">Bil.</td>
