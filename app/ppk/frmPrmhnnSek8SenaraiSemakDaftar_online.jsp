@@ -951,11 +951,6 @@ if(document.f1.txtNomborPermit.value == "")
    // document.f1.cbsemaks[3].checked = false;
 	//document.f1.cbsemaks[4].checked = false;
     document.f1.txtNomborPermit.value = "";
-//	document.f1.txtNomborSijil.value = ""
-
-   // document.f1.cbsemaks[5].checked = false;
-	//document.f1.cbsemaks[6].checked = false;
-   // document.f1.cbsemaks[7].checked = false;
 }
 
 }
