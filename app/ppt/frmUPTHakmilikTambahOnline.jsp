@@ -452,7 +452,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		</tr>
 		<tr>
 			<td valign="top">
-			<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
+			<td valign="top" width="23%">Bukti Pembayaran (baucer)</td>
 			<td valign="top">:</td>
 			<td><input id="fileupload" name="fileupload" type=file size=40 /></td>
 			<br />
