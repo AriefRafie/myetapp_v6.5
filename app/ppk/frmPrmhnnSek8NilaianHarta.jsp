@@ -1371,12 +1371,24 @@ kod :: $listhath.kod_hakmilik
   <font  style="text-transform:uppercase;">$!no_fax</font></strong></td>
 </tr>
 #end
+
+#foreach($View in $View_pengesahan_pemohonan)
+        #set ($namaPemohon = $View.namaPemohon)
+        #set ($noKpBaruPemohon1 = $View.noKpBaruPemohon1)
+        #set ($noKpBaruPemohon2 = $View.noKpBaruPemohon2)
+        #set ($noKpBaruPemohon3 = $View.noKpBaruPemohon3)
+    #end
+<tr><td>
+    		<td width="1%" valign="top"></td>
+    		<td width="3%"><input type="checkbox" value="1" $disCheck $chkmode name='$!namecb1' id='$!namecb1' $checked10 ></td>
+      	<td width="89%">Saya $!namaPemohon no.k/p $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+</td></tr>
+  	
 <tr>
 <td></td>
 <td ></td>
 <td></td>
 <td>
-
 	<label align="left" valign="top"> 
 	<b><font color="BLUE" size="2"><span class="blink">Sekiranya permohonan telah dihantar, pemohon sudah tidak boleh mengemaskini permohonan.
 	<br> Jika terdapat sebarang maklumat yang perlu ditambah, sila mengemaskini permohonan terlebih dahulu sebelum menghantar permohonan.</span></font></b>
@@ -1437,14 +1449,9 @@ Sila Muat Turun perisian Acrobat Reader <a href="http://get.adobe.com/reader/" >
 </div>
 #end
 
-
-
 </p>    </td>
   </tr>
-</table>
-
-
-       
+</table>       
   </fieldset>
    </td>
   </tr>

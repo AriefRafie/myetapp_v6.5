@@ -162,13 +162,11 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 			}
 			skrin_name = "app/ppk/BicaraInteraktif/popupStatsPegawai.jsp";	
 		}
-		else if(command.equals("showCatatanPerintah") || command.equals("showJanaNota"))
+		else if(command.equals("showCatatanPerintah"))
 		{
 			this.context.put("tajukLaporan", "");
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
 			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);	
-			String ID_HISTORYJANANOTA = getParam("ID_HISTORYJANANOTA");
-			this.context.put("ID_HISTORYJANANOTA", ID_HISTORYJANANOTA);	
 			//String skrinName = "perubahan";
 			//this.context.put("skrinName", skrinName);			
 			this.context.put("scrolPosition", getParam("scrolPosition"));
@@ -180,7 +178,6 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 			String htmlSkrinMaklumat = "";
 			String CATATAN_PERINTAH_BI = "";
 			String CATATAN = "";
-			String NO_FAIL = "";
 			Db db = null;
 			try {
 				db = new Db();		
@@ -189,25 +186,14 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 				ID_PERMOHONAN = (String)mainID.get("ID_PERMOHONAN");
 				ID_PEMOHON = (String)mainID.get("ID_PEMOHON");
 				ID_SIMATI = (String)mainID.get("ID_SIMATI");
-				NO_FAIL = (String)mainID.get("NO_FAIL");
 				this.context.put("viewPerbicaraan", modelBI.viewPerbicaraan(session,ID_PERBICARAAN,ID_PERMOHONAN,db));
 				//htmlSkrinMaklumat = modelBI.htmlListPerubahan(session,formName,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,ID_PERMOHONAN,ID_PEMOHON,flagPrint,db);
 				
-				if(command.equals("showCatatanPerintah"))
-				{
-					Map perintahInfo = modelBI.getMaklumatPerintahByIdPerbicaraan(session, ID_PERBICARAAN, db);
-					myLogger.info("perintahInfo : "+perintahInfo);
-					//getmaklumatperintah
-					CATATAN_PERINTAH_BI = (String)perintahInfo.get("CATATAN_PERINTAH_BI");
-					CATATAN = (String)perintahInfo.get("CATATAN");
-				}
-				else if(command.equals("showJanaNota"))
-				{
-					Map getNotaHistoryJana = modelBI.getNotaHistoryJana(session, ID_HISTORYJANANOTA, db);
-					myLogger.info("getNotaHistoryJana : "+getNotaHistoryJana);
-					//getmaklumatperintah
-					CATATAN_PERINTAH_BI = (String)getNotaHistoryJana.get("NOTA");
-				}
+				Map perintahInfo = modelBI.getMaklumatPerintahByIdPerbicaraan(session, ID_PERBICARAAN, db);
+				myLogger.info("perintahInfo : "+perintahInfo);
+				//getmaklumatperintah
+				CATATAN_PERINTAH_BI = (String)perintahInfo.get("CATATAN_PERINTAH_BI");
+				CATATAN = (String)perintahInfo.get("CATATAN");
 				
 				
 			}
@@ -215,7 +201,6 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 				if (db != null)
 					db.close();
 			}
-			this.context.put("NO_FAIL", NO_FAIL);
 			this.context.put("ID_PEMOHON", ID_PEMOHON);
 			this.context.put("ID_SIMATI", ID_SIMATI);
 			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
