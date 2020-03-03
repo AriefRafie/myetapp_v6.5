@@ -2224,26 +2224,22 @@ public class BicaraInteraktifData {
 		return list;
 	}
 	
-	
 	@SuppressWarnings("unchecked")
-	public List rekodHTABorangE(HttpSession session, String ID_PERINTAH, String ID_PERMOHONANSIMATI, Db db)throws Exception {
+	public List rekodHTABorangE(HttpSession session, String ID_PERINTAH, String ID_PERMOHONANSIMATI, Db db)
+		throws Exception {
 		Db db1 = null;
 		ResultSet rs = null;
 		Statement stmt = null;
 		List list = null;
 		String sql = "";	
 		
-		try{
-			
-		if(db != null)
-		{
-			db1 = db;
-		}
-		else
-		{
-			db1 = new Db();
-		}		
-		stmt = db1.getStatement();	
+		try{			
+			if(db != null){
+				db1 = db;
+			}else{
+				db1 = new Db();
+			}		
+			stmt = db1.getStatement();	
 		
 		//RAZMAN TAMBAH 23/10/2017		
 		sql += " SELECT * FROM ( ";
@@ -6006,8 +6002,18 @@ public class BicaraInteraktifData {
 		return list;
 	}
 	
-	public String htmlList(HttpSession session,String ID_PEMOHON,String ID_SIMATI,String ID_PERBICARAAN,String ID_PERMOHONAN,
-			String tajukList,String skrinName,String current_previous,String command, String ID_PERMOHONANSIMATI,String formName,Db db) throws Exception {
+	public String htmlList(HttpSession session
+		,String ID_PEMOHON
+		,String ID_SIMATI
+		,String ID_PERBICARAAN
+		,String ID_PERMOHONAN
+		,String tajukList
+		,String skrinName
+		,String current_previous
+		,String command
+		,String ID_PERMOHONANSIMATI
+		,String formName
+		,Db db) throws Exception {
 		String html = "";
 		
 		Db db1 = null;
@@ -6400,8 +6406,16 @@ public class BicaraInteraktifData {
 	}
 	
 	
-	public String htmlListKeterangan(HttpSession session,String formName,String ID_SIMATI,String ID_PERMOHONANSIMATI,String ID_PERBICARAAN,
-			String ID_PERMOHONAN,String ID_PEMOHON,String flagPrint,String fontSize,Db db) throws Exception {
+	public String htmlListKeterangan(HttpSession session
+		,String formName
+		,String ID_SIMATI
+		,String ID_PERMOHONANSIMATI
+		,String ID_PERBICARAAN
+		,String ID_PERMOHONAN
+		,String ID_PEMOHON
+		,String flagPrint
+		,String fontSize
+		,Db db) throws Exception {
 		
 		String html = "";
 		if(flagPrint.equals("N"))
