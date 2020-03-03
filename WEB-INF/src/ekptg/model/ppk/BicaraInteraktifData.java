@@ -1995,7 +1995,6 @@ public class BicaraInteraktifData {
 		}		
 		stmt = db1.getStatement();			
 		sql += " SELECT D.ID_PERINTAHHAOBMST, "+
-		sql += " SELECT " +
 				" TRIM(REGEXP_REPLACE(MN.MAKLUMAT_HA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS MAKLUMAT_HA, " +
 				" TRIM(REGEXP_REPLACE(MN.CATATAN_HARTA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_HARTA, " +
 				"MN.* FROM (SELECT D.ID_PERINTAHHAOBMST, "+
@@ -2199,18 +2198,12 @@ public class BicaraInteraktifData {
 				
 		try{
 			
-		if(db != null)
-		{
-			db1 = db;
-		}
-		else
-		{
-			db1 = new Db();
-		}		
-		stmt = db1.getStatement();			
-		sql += " SELECT DISTINCT A.ID_HTA,L.NO_HAKMILIK,SUBSTR(TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'),1,LENGTH (TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'))-3 ) AS NILAI_HTA_TARIKHMOHON ,C.BA_WARIS, C.BB_WARIS, "+
-		stmt = db1.getStatement();	
-		
+			if(db != null){
+				db1 = db;
+			}else{
+				db1 = new Db();
+			}		
+		stmt = db1.getStatement();					
 	
 		sql += " SELECT  " +
 				" TRIM(REGEXP_REPLACE(MN.MAKLUMAT_HTA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS MAKLUMAT_HTA, " +
@@ -5507,7 +5500,6 @@ public class BicaraInteraktifData {
 		,String ID_PERMOHONAN
 		,String ID_PEMOHON
 		,String flagPrint
-		,String fontSize
 		,Db db) throws Exception {
 		
 		String html = "";
