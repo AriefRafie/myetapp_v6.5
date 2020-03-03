@@ -1,7 +1,6 @@
 package ekptg.view.ppk;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -11,8 +10,6 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -22,14 +19,12 @@ import lebah.db.SQLRenderer;
 import lebah.portal.velocity.VTemplate;
 import lebah.util.DateUtil;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
+import ekptg.helpers.Utils;
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8InternalData;
@@ -40,16 +35,27 @@ import ekptg.model.ppk.FrmPrmhnnSek8SenaraiSemakInternalData;
 import ekptg.model.ppk.FrmSenaraiFailInternalCarianData;
 import ekptg.model.ppk.FrmSenaraiFailInternalData;
 import ekptg.model.ppk.PendaftaranCheckModel;
+import ekptg.model.ppk.UtilHTML;
+import ekptg.model.ppk.harta.FrmPermohonanHTAData;
+import ekptg.model.ppk.harta.HABean;
+import ekptg.model.ppk.harta.HTABean;
+import ekptg.model.ppk.harta.HTATHBean;
+import ekptg.model.ppk.harta.IMaklumatHarta;
+import ekptg.model.ppk.util.LampiranBean;
+import ekptg.model.utils.IUtilHTMLPilihanExt;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisPBPPK;
 
 public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
 	String currentDate = dateFormat.format(date);
-	static Logger myLogger = Logger
-			.getLogger(FrmPrmhnnBorangAMaklumatPemohon.class);
+	static Logger myLogger = Logger.getLogger(FrmPrmhnnBorangAMaklumatPemohon.class);
 
 	private static final long serialVersionUID = 1L;
+	
+	private String idUser = "";
+	FrmPermohonanHTAData permohonanInternal = null;
 	FrmPrmhnnSek8InternalData logic = null;
 	FrmPrmhnnSek8DaftarSek8InternalData logic_A = null;
 	FrmPrmhnnSek8SenaraiHTATHInternalData logic_B = null;
@@ -67,10 +73,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	String disability1 = "";
 	String disability2 = "";
 	String readability1 = "";
-	String readability2 = "";
-
-	@SuppressWarnings("unchecked")
+	String readability2 = "";	
+	Vector senaraiHTAX = null;
+	private HTABean htaBean = null;
+	private HTATHBean htathBean = null;
+	private HABean haBean = null;
+	private UtilHTMLPilihanJenisPBPPK jenisPB = null;
+	private LampiranBean lBean = null;
+	
+	@Override
 	public Template doTemplate() throws Exception {
+		
 		logic = new FrmPrmhnnSek8InternalData();
 		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 		logic_B = new FrmPrmhnnSek8SenaraiHTATHInternalData();
@@ -91,8 +104,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		Calendar cal = Calendar.getInstance();
 		Calendar currentcal = Calendar.getInstance();
 		cal.set(2009, Calendar.SEPTEMBER, 1);
-		currentcal.set(currentcal.get(Calendar.YEAR), currentcal
-				.get(Calendar.MONTH), currentcal.get(Calendar.DAY_OF_MONTH));
+		currentcal.set(currentcal.get(Calendar.YEAR), currentcal.get(Calendar.MONTH), currentcal.get(Calendar.DAY_OF_MONTH));
 
 		String bolehsimpan = "";
 		HttpSession session = this.request.getSession();
@@ -103,27 +115,32 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				.getAttribute("_ekptg_user_id"));
 		Hashtable jenis_user_hash = (Hashtable) jenis_user_list.get(0);
 		String jenis_user = jenis_user_hash.get("USER_TYPE").toString();
+		myLogger.info(jenis_user);
 		String upload = getParam("upload");
+		//String jenis_user = jenis_user_hash.get("USER_TYPE").toString();
+		//String upload = getParam("upload");
 
-		if (jenis_user.equals("internal")) {
-			this.context.put("skrin_online_popup", "yes");
-		} else {
-			this.context.put("skrin_online_popup", "");
-		}
+		this.context.put("skrin_online_popup", "");
 
 		if (doPost.equals("true")) {
-			myLogger.info("browser true **********");
+			//myLogger.info("browser true **********");
 			bolehsimpan = "yes";
 		} else {
+
 			myLogger.info("browser false **********");
 			if (jenis_user.equals("internal")) {
 				bolehsimpan = "yes";
 			} else {
-				bolehsimpan = "";
+				bolehsimpan = "yes";
 			}
-
+			bolehsimpan = "";
+			//myLogger.info("browser false **********");
+//			if (jenis_user.equals("internal")) {
+//				bolehsimpan = "yes";
+//			} else {
+//				bolehsimpan = "";
+//			}
 		}
-		// bolehsimpan = "yes";
 
 		String flagFromSenaraiFailSek8 = getParam("flagFromSenaraiFailSek8");
 		String flagFromSenaraiPermohonanSek8 = getParam("flagFromSenaraiPermohonanSek8");
@@ -147,8 +164,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		String submit = getParam("command");
 		String mode = getParam("mode");
 		String idAlert = getParam("idAlert");
-		myLogger.info("------------------command :" + submit);
-		myLogger.info("------------------mode :" + mode);
+		myLogger.info("------------------command :" + submit+",mode :" + mode);
 
 		this.context.put("SimpanStatus", simpanStatus);
 		this.context.put("EventStatus", eventStatus);
@@ -167,7 +183,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		Vector listKeputusan = null;
 		Vector listWaris = null;
 		Vector listWarisOB = null;
-		Vector listHTA = null;
+		Vector<Hashtable<String,String>> listHTA = null;
 		Vector listHTAX = null;
 		Vector listHTAid = null;
 		Vector listHTAXid = null;
@@ -228,16 +244,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		String hideTabPengesahan_simati = "";
 		String hideTabPengesahan_hta = "";
 
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = new Date();
-		String currentDate = dateFormat.format(date);
-
-		this.context.put("Util", new lebah.util.Util());
-
 		String v_tab = getParam("v_tab");
 		this.context.put("val_tab", v_tab);
-
-		System.out.println("submit online ppk:::::"+submit);
+		myLogger.info("submit online ppk:submit="+submit);
+		//2018
+		idUser = String.valueOf(session.getAttribute("_ekptg_user_id"));
+		String socStyle = "class=\"autoselect\" style=\"text-transform:uppercase;\" ";
 
 		if ("Kemaskini".equals(submit)) {
 			String tempid = getParam("idtemp");
@@ -257,6 +269,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			}
 			this.context.put("daftar", "yes");
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online";
+		
 		} else if ("papar".equals(submit)) {
 			readability1 = " ";
 			readability2 = "readonly";
@@ -281,8 +294,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("ListSemakanSimati", listSemakSimati);
 
 			String idp = getParam("idpermohonan");
-			list2 = logic_A.setData_online(idp, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list2 = logic_A.setData_online(idp, idUser);
 			headerppk_baru(session, idp, "Y", "", "T");
 			if (list2.size() > 0) {
 				this.context.put("nofail", "yes");
@@ -290,6 +302,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("daftar", "yes");
 			this.context.put("list2", list2);
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
+			
 		} else if ("kembali_daftar_pemohon".equals(submit)) {
 			String tempid = getParam("idtemp");
 			String idper = tempid;
@@ -303,8 +316,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("ListSemakan", listSemak);
 
 			String idp = getParam("idtemp");
-			list2 = logic_A.setData_online(idp, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list2 = logic_A.setData_online(idp, idUser);
 			headerppk_baru(session, idp, "Y", "", "T");
 			if (list2.size() > 0) {
 				this.context.put("nofail", "yes");
@@ -313,10 +325,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("list2", list2);
 
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
-		}
-
-		else if ("Simpan".equals(submit)) {
-			String uu = (String) session.getAttribute("_ekptg_user_id");
+		
+		}else if ("Simpan".equals(submit)) {
 			String eventstatus = getParam("eventStatus");
 			eventStatus = Integer.parseInt(eventstatus);
 			if (eventStatus == 0) {
@@ -335,8 +345,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			}
 
 			String idp = getParam("idtemp");
-			list2 = logic_A.setData_online(idp, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list2 = logic_A.setData_online(idp, idUser);
 			headerppk_baru(session, idp, "Y", "", "T");
 			if (list2.size() > 0) {
 				this.context.put("nofail", "yes");
@@ -365,8 +374,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("daerah", "");
 				this.context.put("listBandarbyNegeri", "");
 
-
-
+				view_get_userid(session);
+				listUserid = logic_A.getUserIds();
+				listDaerahByUser = logic_A
+						.getDaerahByNegeriUser((String) session
+								.getAttribute("_ekptg_user_id"));
+				
 				// comment dulu sebab online xleh dapat user id internal
 				view_get_userid(session);
 				listUserid = logic_A.getUserIds();
@@ -375,9 +388,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				// String idNegeri = t.get("idNegeri").toString();
 				// this.context.put("NegId", idNegeri);
 
-				listDaerahByUser = logic_A
-						.getDaerahByNegeriUser((String) session
-								.getAttribute("_ekptg_user_id"));
+				listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 				this.context.put("ListDaerahByUser", listDaerahByUser);
 				this.context.put("EventStatus", 0);
 				this.context.put("IdSimati", 0);
@@ -387,12 +398,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				listSemak = logic_C.getListSemakan();
 				this.context.put("ListSemakan", listSemak);
 				this.context.put("ViewFail", "");
-			}
-
-			else {
+			
+			}else {
 				this.context.put("tarikhmohon", currentDate);
 				String id = getParam("idtemp");
-				list2 = logic_A.setData_online(id, (String) session.getAttribute("_ekptg_user_id"));
+				list2 = logic_A.setData_online(id,idUser);
 				headerppk_baru(session, id, "Y", "", "T");
 				int idflag = 2;
 				int flagNo = 2;
@@ -428,7 +438,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("daerah", h.get("idbandar").toString());
 				}
 
-				listDaerahByUser = logic_A.getDaerahByNegeriUser((String) session.getAttribute("_ekptg_user_id"));
+				listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 				this.context.put("ListDaerahByUser", listDaerahByUser);
 				this.context.put("selectDaerah", HTML.SelectDaerahByNegeri(IdNeg, "socDaerah", Long.parseLong(h.get("idDaerah").toString()), "class=disabled"));
 				this.context.put("tarikhmohondaftar", "");
@@ -454,12 +464,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("txdTarikhByrn1", tarikhresit);
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
-		}
-
-		else if ("Kemaskini_daftar_pemohon".equals(submit)) {
-
+		}else if ("Kemaskini_daftar_pemohon".equals(submit)) {
 			// list2 = new Vector();
-
 			this.context.put("tarikhmohondaftar", "");
 			this.context.put("tarikhmohon", currentDate);
 
@@ -475,8 +481,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			String id = getParam("idPermohonan");
 
 			this.context.put("IdPermohonan", tempid);
-			list2 = logic_A.setData_online(id, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list2 = logic_A.setData_online(id, idUser);
 			headerppk_baru(session, id, "Y", "", "T");
 			this.context.put("View", list2);
 			this.context.put("ViewX", list2);
@@ -498,7 +503,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 
 				if (h.get("idbandar").toString() == "") {
-
 					this.context.put("daerah", "");
 				} else {
 					this.context.put("daerah", h.get("idbandar").toString());
@@ -518,8 +522,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			}
 
-			listDaerahByUser = logic_A.getDaerahByNegeriUser((String) session
-					.getAttribute("_ekptg_user_id"));
+			listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 			this.context.put("ListDaerahByUser", listDaerahByUser);
 
 			this.context.put("duplicate", "");
@@ -550,8 +553,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("id2", id2);
 			this.context.put("id1", id1);
 			// logic_A.setData_online(id);
-			list = logic_A.setData_online(id, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list = logic_A.setData_online(id, idUser);
 			headerppk_baru(session, id, "Y", "", "T");
 			this.context.put("View", list);
 			logic.setDataSimati(id);
@@ -594,15 +596,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			disability1 = "disabled";
 			disability2 = "";
 			String id = getParam("idpermohonan");
-			// System.out.println("IDDD :::"+id);
-			// int id2 = Integer.parseInt(getParam("idPemohon"));
-			// int id1 = Integer.parseInt(getParam("idSimati"));
-			// this.context.put("id", id);
-			// this.context.put("id2", id2);
-			// this.context.put("id1", id1);
-			// logic_A.setData_online(id);
-			list = logic_A.setData_online(id, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list = logic_A.setData_online(id,idUser);
 			headerppk_baru(session, id, "Y", "", "T");
 			this.context.put("View", list);
 			logic.setDataSimati(id);
@@ -632,16 +626,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			vm = "app/ppk/frmPrmhnnSek8Simati.jsp";
 
-		}
-
-		else if ("kembali_simati".equals(submit)) {
-
+		}else if ("kembali_simati".equals(submit)) {
 			String id = getParam("idPermohonan");
 			/*
 			view1 = logic_A.getJenisKp();
 			this.context.put("listkp", view1);
-			 */
-
+			*/
+			
 			idFlag = 2;
 			flag_no = 2;
 			eventStatus = 1;
@@ -651,8 +642,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("flagno", flag_no);
 			this.context.put("idFlag", idFlag);
 			this.context.put("EventStatus", 1);
-			list2 = logic_A.setData_online(id, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list2 = logic_A.setData_online(id,idUser);
 			headerppk_baru(session, id, "Y", "", "T");
 			this.context.put("View", list2);
 			this.context.put("ViewX", list2);
@@ -663,42 +653,26 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("negeri", "");
 				this.context.put("daerah", "");
 
-				// this.context.put("selectNegeri",
-				// HTML.SelectNegeri("socNegeri",null,"class=\"autoselect\" disabled "));
 			} else {
-				// this.context.put("selectNegeri",
-				// HTML.SelectNegeri("socNegeri",Long.parseLong(h.get("pmidnegeri").toString()),"class=\"autoselect\" disabled "));
 				this.context.put("negeri", h.get("pmidnegeri").toString());
-				Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(h
-						.get("pmidnegeri").toString()));
+				Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(h.get("pmidnegeri").toString()));
 				this.context.put("listBandarbyNegeri", s3);
 				this.context.put("daerah", "");
 			}
 			if (h.get("idbandar").toString() == "") {
-
 				this.context.put("daerah", "");
-
-				// this.context.put("selectNegeri",
-				// HTML.SelectNegeri("socNegeri",null,"class=\"autoselect\" disabled "));
 			} else {
-				// this.context.put("selectNegeri",
-				// HTML.SelectNegeri("socNegeri",Long.parseLong(h.get("pmidnegeri").toString()),"class=\"autoselect\" disabled "));
 				this.context.put("daerah", h.get("idbandar").toString());
-
 			}
 
-			// logic_A.setData_online(id,(String)session.getAttribute("_ekptg_user_id"));
 			logic_A.setGetId(id);
 			listIds = logic_A.getIds();
 			Hashtable k = (Hashtable) listIds.get(0);
-			this.context.put("IdSimati", Long.parseLong(k.get("idsimati")
-					.toString()));
-			this.context.put("IdPemohon", Long.parseLong(k.get("idpemohon")
-					.toString()));
+			this.context.put("IdSimati", Long.parseLong(k.get("idsimati").toString()));
+			this.context.put("IdPemohon", Long.parseLong(k.get("idpemohon").toString()));
 			this.context.put("IdPermohonan", getParam("idPermohonan"));
 
-			listDaerahByUser = logic_A.getDaerahByNegeriUser((String) session
-					.getAttribute("_ekptg_user_id"));
+			listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 			this.context.put("ListDaerahByUser", listDaerahByUser);
 
 			this.context.put("tarikhmohondaftar", "");
@@ -714,19 +688,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
-		}
-
-		else if ("getDaftarStatus".equals(submit)) {
-
-			// System.out.println("ST FAIL ::"+getParam("id_Suburusanstatusfail"));
-
+		}else if ("getDaftarStatus".equals(submit)) {
 			String id_sub = getParam("id_Suburusanstatusfail");
 			String id_Fail = getParam("id_Fail");
 			String id = getParam("idPermohonan");
 			long idper = Long.parseLong(id);
 			if (bolehsimpan.equals("yes")) {
-				logic_A.daftarstatus(session, id, (String) session
-						.getAttribute("_ekptg_user_id"), id_sub, id_Fail);
+				logic_A.daftarstatus(session, id,idUser, id_sub, id_Fail);
 			}
 
 			idFlag = 2;
@@ -743,42 +711,28 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			String idSimatim = getParam("idSimati");
 
-			list2 = logic_A.setData_online(id, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list2 = logic_A.setData_online(id, idUser);
 			headerppk_baru(session, id, "Y", "", "T");
 			this.context.put("View", list2);
 			Hashtable h = (Hashtable) list2.get(0);
 			// String sj="";
-			this.context.put("tarikhmohondaftar", h.get("tarikhMohon")
-					.toString());
+			this.context.put("tarikhmohondaftar", h.get("tarikhMohon").toString());
 			if (h.get("pmidnegeri").toString() == "") {
 				this.context.put("negeri", "");
 				this.context.put("daerah", "");
 
-				// this.context.put("selectNegeri",
-				// HTML.SelectNegeri("socNegeri",null,null,"class=\"autoselect\" disabled "));
 			} else {
 				this.context.put("negeri", h.get("pmidnegeri").toString());
-				Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(h
-						.get("pmidnegeri").toString()));
+				Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(h.get("pmidnegeri").toString()));
 				this.context.put("listBandarbyNegeri", s3);
 				this.context.put("daerah", "");
-				// this.context.put("selectNegeri",
-				// HTML.SelectNegeri("socNegeri",Long.parseLong(h.get("pmidnegeri").toString()),"class=\"autoselect\" disabled"));
+
 			}
 
 			if (h.get("idbandar").toString() == "") {
-
 				this.context.put("daerah", "");
-
-				// this.context.put("selectNegeri",
-				// HTML.SelectNegeri("socNegeri",null,null,"class=\"autoselect\" disabled "));
 			} else {
 				this.context.put("daerah", h.get("idbandar").toString());
-
-				// this.context.put("daerah","");
-				// this.context.put("selectNegeri",
-				// HTML.SelectNegeri("socNegeri",Long.parseLong(h.get("pmidnegeri").toString()),"class=\"autoselect\" disabled"));
 			}
 
 			logic_A.setGetId(id);
@@ -789,8 +743,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("IdPemohon", Long.parseLong(k.get("idpemohon")
 					.toString()));
 			this.context.put("IdPermohonan", getParam("idPermohonan"));
-			listDaerahByUser = logic_A.getDaerahByNegeriUser((String) session
-					.getAttribute("_ekptg_user_id"));
+			listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 			this.context.put("ListDaerahByUser", listDaerahByUser);
 
 			this.context.put("duplicate", "");
@@ -800,7 +753,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("listPemohonOB", listPemohonOB);
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
-		} else if ("Simpanx".equals(submit)) {
+
+		} //else if ("Simpanx".equals(submit)) {
+			//System.out.println("Simpanx");
+
+		//} 
+		else if ("Simpanx".equals(submit)) {
 
 			String passvalue = getParam("passvalue");
 			this.context.put("duplicate", "");
@@ -808,24 +766,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			String IdPermohonan = getParam("idPermohonan");
 			String Idppp = getParam("idpermohonan");
 
-			// System.out.println("Idppp Duplicate"+Idppp);
+			System.out.println("IdPermohonan"+IdPermohonan);
 			check_mode_permohonan(session);
 			chkId = logic_A.getId();
 			Hashtable b = (Hashtable) chkId.get(0);
 			int cntID = Integer.parseInt(b.get("count_id").toString());
-
-			String useridx = (String) session.getAttribute("_ekptg_user_id");
-			// String useridx = "14";
-
-			/*
-			 * logic_A.setGetUserId(useridx); listUserid = logic_A.getUserIds();
-			 * Hashtable t = (Hashtable)listUserid.get(0); String userIdDaerah =
-			 * t.get("idDaerah").toString(); String userIdNeg =
-			 * t.get("idNegeri").toString(); String userIdKodDaerah =
-			 * t.get("kodDaerah").toString(); String userIdKodNegeri =
-			 * t.get("kodnegeri").toString(); String userIdPejabat =
-			 * t.get("idpejabat").toString();
-			 */
 
 			String no_kpbaru_simati = getParam("txtNoKPBaruSimati1")
 					+ getParam("txtNoKPBaruSimati2")
@@ -834,25 +779,19 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			String sel_jeniskp_simati = getParam("socJenisKPLainSimati");
 			String no_kplain_simati = getParam("txtNoKPLainSimati");
 
-			logic_E.setListKPSimati(IdPermohonan, no_kpbaru_simati,
-					no_kplama_simati, no_kplain_simati);
+			logic_E.setListKPSimati(IdPermohonan, no_kpbaru_simati,no_kplama_simati, no_kplain_simati);
 			listKPSimati = logic_E.getListKPSimati();
 
-			if (logic_E.checkKPSimati(IdPermohonan, no_kpbaru_simati,
-					no_kplama_simati, no_kplain_simati) == true) {
+			if (logic_E.checkKPSimati(IdPermohonan, no_kpbaru_simati,no_kplama_simati, no_kplain_simati) == true) {
 				this.context.put("listKPSimati", 1);
 			} else {
 				this.context.put("listKPSimati", 0);
 			}
 
-			myLogger.info("dah wujud simati? :"
-					+ logic_E.checkKPSimati(IdPermohonan, no_kpbaru_simati,
-							no_kplama_simati, no_kplain_simati));
+			//myLogger.info("dah wujud simati? :" + logic_E.checkKPSimati(IdPermohonan, no_kpbaru_simati,no_kplama_simati, no_kplain_simati));
+			//myLogger.info("dah wujud pemohon? :" + cntID);
 
-			myLogger.info("dah wujud pemohon? :" + cntID);
-
-			if ((logic_E.checkKPSimati(IdPermohonan, no_kpbaru_simati,
-					no_kplama_simati, no_kplain_simati)) == true) {
+			if ((logic_E.checkKPSimati(IdPermohonan, no_kpbaru_simati,no_kplama_simati, no_kplain_simati)) == true) {
 				if (cntID == 0) {
 					this.context.put("duplicate", "yes");
 
@@ -868,15 +807,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					maklumatSimati_WithoutNoFail.clear();
 					maklumatSimati.clear();
 
-					PendaftaranCheckModel.setmaklumatSimati(no_kpbaru_simati,
-							no_kplama_simati, no_kplain_simati);
+					PendaftaranCheckModel.setmaklumatSimati(no_kpbaru_simati,no_kplama_simati, no_kplain_simati);
 					maklumatSimati = PendaftaranCheckModel.getmaklumatSimati();
 
 					PendaftaranCheckModel.setmaklumatSimati_WithoutNoFail(
 							no_kpbaru_simati, no_kplama_simati,
 							no_kplain_simati);
-					maklumatSimati_WithoutNoFail = PendaftaranCheckModel
-							.getmaklumatSimati_WithoutNoFail();
+					maklumatSimati_WithoutNoFail = PendaftaranCheckModel.getmaklumatSimati_WithoutNoFail();
 
 					if (maklumatSimati.size() != 0) {
 						Hashtable mt = (Hashtable) maklumatSimati.get(0);
@@ -884,15 +821,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 						no_fail = mt.get("NO_FAIL").toString();
 						nama_pejabat = mt.get("NAMA_PEJABAT").toString();
 						daerah_mohon = mt.get("NAMA_DAERAH").toString();
-						no_rujukan_online = mt.get("NO_PERMOHONAN_ONLINE")
-								.toString();
+						no_rujukan_online = mt.get("NO_PERMOHONAN_ONLINE").toString();
 						id_status_daftar = mt.get("ID_STATUS").toString();
+						
 					} else if (maklumatSimati_WithoutNoFail.size() != 0) {
-						Hashtable mz = (Hashtable) maklumatSimati_WithoutNoFail
-								.get(0);
+						Hashtable mz = (Hashtable) maklumatSimati_WithoutNoFail.get(0);
 						nama_simati = mz.get("NAMA_SIMATI").toString();
-						no_rujukan_online = mz.get("NO_PERMOHONAN_ONLINE")
-								.toString();
+						no_rujukan_online = mz.get("NO_PERMOHONAN_ONLINE").toString();
 						id_status_daftar = mz.get("ID_STATUS").toString();
 					}
 					context.put("POPSimati", nama_simati.toUpperCase());
@@ -904,7 +839,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					/*
 					view1 = logic_A.getJenisKp();
 					this.context.put("listkp", view1);
-					 */
+					*/
 					this.context.put("tarikhmohondaftar", currentDate);
 
 					int idflag = 0;
@@ -919,36 +854,18 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("IdPermohonan", tempid);
 					long idPemohon = DB.getNextID("TBLPPKPEMOHON_SEQ");
 					this.context.put("IdPemohon", idPemohon);
-					this.context.put("selectNegeri", HTML.SelectNegeri(
-							"socNegeri", "class=autoselect"));
+					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri", "class=autoselect"));
 
 					view_get_userid(session);
 					listUserid = logic_A.getUserIds();
-					/*
-					 * t = (Hashtable)listUserid.get(0); userIdDaerah =
-					 * t.get("idDaerah").toString(); String idNegeri =
-					 * t.get("idNegeri").toString(); this.context.put("NegId",
-					 * idNegeri);
-					 */
-
-					listDaerahByUser = logic_A
-							.getDaerahByNegeriUser((String) session
-									.getAttribute("_ekptg_user_id"));
+					listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 					this.context.put("ListDaerahByUser", listDaerahByUser);
-
 					this.context.put("EventStatus", 0);
 					this.context.put("IdSimati", 0);
 
-					// long idp = Long.parseLong(tempid);
-
-					// FrmPrmhnnSek8SenaraiSemakInternalData
-					// frmPrmhnnSek8SenaraiSemakData = new
-					// FrmPrmhnnSek8SenaraiSemakInternalData();
 					logic_C.setDataSemakan(tempid);
-
 					listSemak = logic_C.getListSemakan();
 					this.context.put("ListSemakan", listSemak);
-
 					this.context.put("noFail", getParam("txtNoFail"));
 					this.context.put("idDaerahx", getParam("socDaerah"));
 
@@ -964,59 +881,33 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					} else {
 						this.context.put("negeri", negri);
 						this.context.put("daerah", getParam("socDaerah"));
-						Vector s1 = logic_A.getListBandarByNegeri(Integer
-								.parseInt(negri));
+						Vector s1 = logic_A.getListBandarByNegeri(Integer.parseInt(negri));
 						this.context.put("listBandarbyNegeri", s1);
-
-						// this.context.put("selectNegeri",
-						// HTML.SelectNegeri("socNegeri",Long.parseLong(negri),"class=\"autoselect\" "));
 					}
 					if (getParam("socBandar") == "") {
-						// this.context.put("selectNegeri",
-						// HTML.SelectNegeri("socNegeri",null,"class=\"autoselect\" "));
-
 						this.context.put("daerah", "");
 
 					} else {
-
 						this.context.put("daerah", getParam("socBandar"));
-
-						// this.context.put("selectNegeri",
-						// HTML.SelectNegeri("socNegeri",Long.parseLong(negri),"class=\"autoselect\" "));
 					}
 
-					this.context
-					.put("tarikhMohonm", getParam("txdTarikhMohon"));
+					this.context.put("tarikhMohonm", getParam("txdTarikhMohon"));
 					this.context.put("namaSimatim", getParam("txtNamaSimati"));
-					this.context.put("nokpbaru1m",
-							getParam("txtNoKPBaruSimati1"));
-					this.context.put("nokpbaru2m",
-							getParam("txtNoKPBaruSimati2"));
-					this.context.put("nokpbaru3m",
-							getParam("txtNoKPBaruSimati3"));
-					this.context.put("no_kplama_simatim",
-							getParam("txtNoKPLamaSimati"));
-					this.context.put("jenisKpMati",
-							getParam("socJenisKPLainSimati"));
-					this.context.put("no_kplain_simatim",
-							getParam("txtNoKPLainSimati"));
-					this.context.put("tarikh_simatim",
-							getParam("txtTarikhMati"));
-					this.context.put("no_kpbaru_pemohon1m",
-							getParam("txtNoKPBaruPemohon1"));
-					this.context.put("no_kpbaru_pemohon2m",
-							getParam("txtNoKPBaruPemohon2"));
-					this.context.put("no_kpbaru_pemohon3m",
-							getParam("txtNoKPBaruPemohon3"));
-					this.context.put("no_kplama_pemohonm",
-							getParam("txtNoKPLamaPemohon"));
+					this.context.put("nokpbaru1m",getParam("txtNoKPBaruSimati1"));
+					this.context.put("nokpbaru2m",getParam("txtNoKPBaruSimati2"));
+					this.context.put("nokpbaru3m",getParam("txtNoKPBaruSimati3"));
+					this.context.put("no_kplama_simatim",getParam("txtNoKPLamaSimati"));
+					this.context.put("jenisKpMati",getParam("socJenisKPLainSimati"));
+					this.context.put("no_kplain_simatim",getParam("txtNoKPLainSimati"));
+					this.context.put("tarikh_simatim",getParam("txtTarikhMati"));
+					this.context.put("no_kpbaru_pemohon1m",getParam("txtNoKPBaruPemohon1"));
+					this.context.put("no_kpbaru_pemohon2m",getParam("txtNoKPBaruPemohon2"));
+					this.context.put("no_kpbaru_pemohon3m",getParam("txtNoKPBaruPemohon3"));
+					this.context.put("no_kplama_pemohonm",getParam("txtNoKPLamaPemohon"));
 					// this.context.put("jenisKpPemohon",getParam("socJenisKPLainPemohon"));
-					this.context.put("jenisKpPemohon",
-							getParam("socJenisKPLainPemohon"));
-					this.context.put("no_kplain_pemohonm",
-							getParam("txtNoKPLainPemohon"));
-					this.context.put("nama_pemohonm",
-							getParam("txtNamaPemohon"));
+					this.context.put("jenisKpPemohon",getParam("socJenisKPLainPemohon"));
+					this.context.put("no_kplain_pemohonm",getParam("txtNoKPLainPemohon"));
+					this.context.put("nama_pemohonm",getParam("txtNamaPemohon"));
 					this.context.put("alamat1m", getParam("txtAlamat1"));
 					this.context.put("alamat2m", getParam("txtAlamat2"));
 					this.context.put("alamat3m", getParam("txtAlamat3"));
@@ -1024,30 +915,22 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("poskodm", getParam("txtPoskod"));
 					this.context.put("negerim", getParam("socNegeri"));
 					this.context.put("umursimati", getParam("txtUmurSimati"));
-					this.context.put("jantinasimati",
-							getParam("socJantinaSimati"));
+					this.context.put("jantinasimati",getParam("socJantinaSimati"));
 					this.context.put("umurpemohon", getParam("txtUmurPemohon"));
-					this.context.put("jantinapemohon",
-							getParam("socJantinaPemohon"));
-
-					this.context
-					.put("taraf_penting", getParam("taraf_penting"));
+					this.context.put("jantinapemohon",getParam("socJantinaPemohon"));
+					this.context.put("taraf_penting", getParam("taraf_penting"));
 					this.context.put("no_tel", getParam("no_tel"));
 					this.context.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 					this.context.put("no_hp", getParam("no_hp"));
 					this.context.put("jenis_pej", getParam("jenis_pej"));
-					this.context
-					.put("jenis_pemohon", getParam("jenis_pemohon"));
-					this.context.put("emel", getParam("emel"));
-					this.context.put("socSaudaraWaris",
-							getParam("socSaudaraWaris"));
-
+					this.context.put("jenis_pemohon", getParam("jenis_pemohon"));
+					this.context.put("socSaudaraWaris",getParam("socSaudaraWaris"));
 
 				} else {
 					/*
 					view1 = logic_A.getJenisKp();
 					this.context.put("listkp", view1);
-					 */
+					*/
 					this.context.put("tarikhmohon", currentDate);
 
 					int evenstatus = 0;
@@ -1120,8 +1003,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					// view_mode_pemohon(session);
 					String id = tempid;
 					// logic_A.setData_online(id);
-					list2 = logic_A.setData_online(id, (String) session
-							.getAttribute("_ekptg_user_id"));
+					list2 = logic_A.setData_online(id, idUser);
 					headerppk_baru(session, id, "Y", "", "T");
 					this.context.put("View", list2);
 
@@ -1130,20 +1012,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 					Hashtable h = (Hashtable) list2.get(0);
 					if (getParam("socNegeri") == "") {
-
 						this.context.put("negeri", "");
-						// this.context.put("daerah","");
-						// this.context.put("selectNegeri",
-						// HTML.SelectNegeri("socNegeri","class=autoselect"));
 					} else {
 						this.context.put("negeri", getParam("socNegeri"));
 
-						Vector s2 = logic_A.getListBandarByNegeri(Integer
-								.parseInt(getParam("socNegeri")));
+						Vector s2 = logic_A.getListBandarByNegeri(Integer.parseInt(getParam("socNegeri")));
 						this.context.put("listBandarbyNegeri", s2);
-						// this.context.put("daerah","");
-						// this.context.put("selectNegeri",
-						// HTML.SelectNegeri("socNegeri",Long.parseLong(h.get("pmidnegeri").toString()),"class=\"autoselect\" disabled"));
+
 					}
 
 					if (getParam("socBandar") == "") {
@@ -1153,37 +1028,34 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 					}
 
-					listDaerahByUser = logic_A
-							.getDaerahByNegeriUser((String) session
-									.getAttribute("_ekptg_user_id"));
+					listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 					this.context.put("ListDaerahByUser", listDaerahByUser);
 
 					view_get_id(session);
 					listIds = logic_A.getIds();
 
 					Hashtable kx = (Hashtable) listIds.get(0);
-					this.context.put("IdSimati", Long.parseLong(kx.get(
-							"idsimati").toString()));
-					this.context.put("IdPemohon", Long.parseLong(kx.get(
-							"idpemohon").toString()));
+					this.context.put("IdSimati", Long.parseLong(kx.get("idsimati").toString()));
+					this.context.put("IdPemohon", Long.parseLong(kx.get("idpemohon").toString()));
 					this.context.put("IdPermohonan", getParam("idPermohonan"));
-
 					this.context.put("duplicate", "yes");
-
 				}
-
 			}
 
-			else {
-
+			//else {				System.out.println(cntID);
+			
+			//}
+		else {
 				if (cntID == 0) {
 					// addPermohonan(session,userIdNeg,userIdPejabat,userIdKodDaerah,userIdKodNegeri);
 					if (bolehsimpan.equals("yes")) {
+						System.out.println("Bolehsimpan");
 						addPermohonan(session);
 						this.context.put("appear_skrin_info", "simpan_daftar");
 					}
 				} else {
 					if (bolehsimpan.equals("yes")) {
+						System.out.println("BolehsimpanUpdate");
 						updatePermohonan(session);
 						this.context.put("appear_skrin_info", "kemaskini");
 					}
@@ -1191,7 +1063,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				/*
 				view1 = logic_A.getJenisKp();
 				this.context.put("listkp", view1);
-				 */
+				*/
 
 				idFlag = 2;
 				flag_no = 2;
@@ -1207,30 +1079,24 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				// view_mode_pemohon(session);
 				String id = getParam("idPermohonan");
 				// logic_A.setData_online(id);
-				Vector list3 = logic_A.setData_online(id, (String) session
-						.getAttribute("_ekptg_user_id"));
+				Vector list3 = logic_A.setData_online(id, idUser);
 				headerppk_baru(session, id, "Y", "", "T");
 				this.context.put("View", list3);
 				this.context.put("ViewX", list2);
 				Hashtable h = null;
 				try {
 					h = (Hashtable) list3.get(0);
-				}
-
-				catch (Exception e) {
-					throw new Exception(
-							"Ralat dalam mendapatkan maklumat.Sila cuba lagi.");
+				}catch (Exception e) {
+					throw new Exception("Ralat dalam mendapatkan maklumat.Sila cuba lagi.");
 				}
 
 				if (h.get("pmidnegeri").toString() == "") {
 					this.context.put("negeri", "");
 					this.context.put("daerah", "");
-					// this.context.put("selectNegeri",
-					// HTML.SelectNegeri("socNegeri",null,"class=\"autoselect\" disabled "));
+
 				} else {
 					this.context.put("negeri", h.get("pmidnegeri").toString());
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(h.get("pmidnegeri").toString()));
+					Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(h.get("pmidnegeri").toString()));
 					this.context.put("listBandarbyNegeri", s3);
 					// this.context.put("daerah","");
 					// this.context.put("selectNegeri",
@@ -1241,7 +1107,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("daerah", "");
 				} else {
 					this.context.put("daerah", h.get("idbandar").toString());
-
 				}
 
 				// view_get_id(session);
@@ -1255,12 +1120,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 						.toString()));
 				this.context.put("IdPermohonan", getParam("idPermohonan"));
 
-				listDaerahByUser = logic_A
-						.getDaerahByNegeriUser((String) session
-								.getAttribute("_ekptg_user_id"));
-
-				// Vector listDaerahByUser =
-				// FrmPrmhnnSek8DaftarSek8Data.getDaerahByNegeriUser("14");
+				listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 
 				this.context.put("ListDaerahByUser", listDaerahByUser);
 				this.context.put("tarikhmohondaftar", "");
@@ -1279,9 +1139,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
 		}
-
-		else if ("getBandar".equals(submit)) {
-
+		else if ("getBandar".equals(submit)||submit.equals("getlampiran")) {
 			String IdPermohonan = getParam("idPermohonan");
 			String Idppp = getParam("idpermohonan");
 
@@ -1291,32 +1149,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			Hashtable b = (Hashtable) chkId.get(0);
 			int cntID = Integer.parseInt(b.get("count_id").toString());
 
-			// view_get_userid(session);
-			String useridx = (String) session.getAttribute("_ekptg_user_id");
-			// String useridx = "14";
-			logic_A.setGetUserId(useridx);
+			logic_A.setGetUserId(idUser);
 			listUserid = logic_A.getUserIds();
-			/*
-			 * Hashtable t = (Hashtable)listUserid.get(0); String userIdDaerah =
-			 * t.get("idDaerah").toString(); String userIdNeg =
-			 * t.get("idNegeri").toString(); String userIdKodDaerah =
-			 * t.get("kodDaerah").toString(); String userIdKodNegeri =
-			 * t.get("kodnegeri").toString(); String userIdPejabat =
-			 * t.get("idpejabat").toString();
-			 */
-
 			String negeribandar = getParam("socNegeri");
 			String bandar_bandar = getParam("socBandar");
 
 			if (cntID == 0) {
-
-				// //System.out.println("DAH ADA SIMATI, size::"+listKPSimati.size());
-				// this.context.put("duplicate", "yes");
-				// this.context.put("duplicate", "");
-				/*
-				view1 = logic_A.getJenisKp();
-				this.context.put("listkp", view1);
-				 */
 				this.context.put("tarikhmohondaftar", currentDate);
 
 				int idflag = 0;
@@ -1331,8 +1169,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("IdPermohonan", tempid);
 				long idPemohon = DB.getNextID("TBLPPKPEMOHON_SEQ");
 				this.context.put("IdPemohon", idPemohon);
-				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",
-						"class=autoselect"));
+				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri","class=autoselect"));
 
 				view_get_userid(session);
 				listUserid = logic_A.getUserIds();
@@ -1341,19 +1178,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				// String idNegeri = t.get("idNegeri").toString();
 				// this.context.put("NegId", idNegeri);
 
-				listDaerahByUser = logic_A
-						.getDaerahByNegeriUser((String) session
-								.getAttribute("_ekptg_user_id"));
+				listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 				this.context.put("ListDaerahByUser", listDaerahByUser);
 
 				this.context.put("EventStatus", 0);
 				this.context.put("IdSimati", 0);
 
 				String idper = tempid;
-
-				// FrmPrmhnnSek8SenaraiSemakInternalData
-				// frmPrmhnnSek8SenaraiSemakData = new
-				// FrmPrmhnnSek8SenaraiSemakInternalData();
 				logic_C.setDataSemakan(idper);
 
 				listSemak = logic_C.getListSemakan();
@@ -1371,16 +1202,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("negeri", "");
 					this.context.put("daerah", "");
 					this.context.put("listBandarbyNegeri", "");
+				
 				} else {
 					this.context.put("negeri", negri);
-					Vector s = logic_A.getListBandarByNegeri(Integer
-							.parseInt(negri));
+					Vector s = logic_A.getListBandarByNegeri(Integer.parseInt(negri));
 					this.context.put("listBandarbyNegeri", s);
 					this.context.put("daerah", "");
 					// this.context.put("daerah","");
 
 					// this.context.put("selectNegeri",
 					// HTML.SelectNegeri("socNegeri",Long.parseLong(negri),"class=\"autoselect\" "));
+				
 				}
 
 				this.context.put("tarikhMohonm", getParam("txdTarikhMohon"));
@@ -1419,23 +1251,20 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("umursimati", getParam("txtUmurSimati"));
 				this.context.put("jantinasimati", getParam("socJantinaSimati"));
 				this.context.put("umurpemohon", getParam("txtUmurPemohon"));
-				this.context.put("jantinapemohon",
-						getParam("socJantinaPemohon"));
-
+				this.context.put("jantinapemohon",getParam("socJantinaPemohon"));
 				this.context.put("taraf_penting", getParam("taraf_penting"));
 				this.context.put("no_tel", getParam("no_tel"));
 				this.context.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 				this.context.put("no_hp", getParam("no_hp"));
 				this.context.put("jenis_pej", getParam("jenis_pej"));
 				this.context.put("jenis_pemohon", getParam("jenis_pemohon"));
-				this.context
-				.put("socSaudaraWaris", getParam("socSaudaraWaris"));
+				this.context.put("socSaudaraWaris", getParam("socSaudaraWaris"));
 
 			} else {
 				/*
 				view1 = logic_A.getJenisKp();
 				this.context.put("listkp", view1);
-				 */
+				*/
 				this.context.put("tarikhmohon", currentDate);
 
 				int evenstatus = 0;
@@ -1499,7 +1328,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 				k.put("jenis_pej", getParam("jenis_pej"));
 				k.put("no_hp", getParam("no_hp"));
-				k.put("emel", getParam("emel"));
+				k.put("emel", getParam("txtEmelPemohon"));
+
 				k.put("jenis_pemohon", getParam("jenis_pemohon"));
 
 				v.addElement(k);
@@ -1535,9 +1365,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					// HTML.SelectNegeri("socNegeri",Long.parseLong(h.get("pmidnegeri").toString()),"class=\"autoselect\" disabled"));
 				}
 
-				listDaerahByUser = logic_A
-						.getDaerahByNegeriUser((String) session
-								.getAttribute("_ekptg_user_id"));
+				listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 				this.context.put("ListDaerahByUser", listDaerahByUser);
 
 				view_get_id(session);
@@ -1563,6 +1391,23 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
 
+			if(submit.equals("getlampiran")){
+				lBean = new LampiranBean();
+				String idRujukan ="";
+				myLogger.info("idRujukan="+idRujukan);
+				myLogger.info("idRujukan2="+idRujukan);
+				myLogger.info("idRujukan3="+getParam("check_no_kp_lain_simati").length());
+
+				idRujukan = getParam("check_no_kp_baru_simati").equals("")?"-":getParam("check_no_kp_baru_simati");
+				idRujukan += getParam("check_no_kp_lama_simati").equals("")?"-":getParam("check_no_kp_lama_simati");
+				idRujukan += getParam("socJenisKPLainSimati").equals("0")?"-":getParam("socJenisKPLainSimati");
+				idRujukan += (getParam("check_no_kp_lain_simati").equals("")?"-":getParam("check_no_kp_lain_simati"));
+				myLogger.info("idRujukan="+idRujukan);
+				this.context.put("lampirans", lBean.getLampiranSimatiPapar(idRujukan, "99201"));				
+				this.context.put("lampiranSijil", lBean.getLampiranSimatiPapar(idRujukan, "99202"));				
+
+			}
+			
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
 		} else if ("Pemohon".equals(submit)) {
@@ -1614,7 +1459,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("show_peguam_tab", "");
 				}
 				this.context
-				.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
+						.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
 
 				this.context.put("readmode", "disabled");
 				this.context.put("show_kemaskini_button", "yes");
@@ -1697,7 +1542,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 				this.context.put("listPemohon", listPemohon);
 				this.context
-				.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
+						.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
 				logic.setCheckPeguam_online(id);
 				listCheckPeguam = logic.getCheckPeguam_online();
 				this.context.put("listCheckPeguam", listCheckPeguam);
@@ -1718,7 +1563,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				listPemohonOB = logic.getDataPemohonOB();
 				this.context.put("listPemohonOB", listPemohonOB);
 				String idsaudara = getParam("socTarafKePemohonanPemohon");
-				// System.out.println("SAUUUU"+idsaudara);
 
 				String id_bandartetap = "";
 				String id_bandarsurat = "";
@@ -1747,8 +1591,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("listBandarSuratbyNegeri", "");
 					id_bandarsurat = "";
 				}
-
-				// System.out.println("bandar event :"+getParam("bandar_event"));
 
 				if (bandarevent.equals("no")) {
 					id_saudare = "";
@@ -1833,18 +1675,18 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					k.put("idnegeri", getParam("socNegeriPemohon"));
 
 					k
-					.put("alamat1Surat",
-							getParam("txtAlamatTerakhir1Pemohon"));
+							.put("alamat1Surat",
+									getParam("txtAlamatTerakhir1Pemohon"));
 					k
-					.put("alamat2Surat",
-							getParam("txtAlamatTerakhir2Pemohon"));
+							.put("alamat2Surat",
+									getParam("txtAlamatTerakhir2Pemohon"));
 					k
-					.put("alamat3Surat",
-							getParam("txtAlamatTerakhir3Pemohon"));
+							.put("alamat3Surat",
+									getParam("txtAlamatTerakhir3Pemohon"));
 					k.put("poskodSurat", getParam("txtPoskodPemohon"));
 					k.put("bandarsurat", id_bandartetap);
 					k.put("idnegeriSurat", getParam("socNegeriPemohon"));
-
+					
 					k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 					k.put("nama_pelbagainegara_surat",getParam("nama_pelbagainegara"));
 				} else if (bandarevent.equals("copycancel")) {
@@ -1861,7 +1703,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					k.put("poskodSurat", "");
 					k.put("bandarsurat", "");
 					k.put("idnegeriSurat", "");
-
+					
 					k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 					k.put("nama_pelbagainegara_surat",""); 
 
@@ -1882,7 +1724,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					k.put("poskodSurat", getParam("txtPoskodPemohonSurat"));
 					k.put("bandarsurat", id_bandarsurat);
 					k.put("idnegeriSurat", getParam("socNegeriPemohonSurat"));
-
+					
 					k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 					k.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
 
@@ -1963,10 +1805,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
 
-			// logic_A.setData_online(id,(String)
-			// session.getAttribute("_ekptg_user_id"));
 			list = logic_A.setData_online(id, (String) session
 					.getAttribute("_ekptg_user_id"));
+			
+			// logic_A.setData_online(id,(String)
+			// session.getAttribute("_ekptg_user_id"));
+			list = logic_A.setData_online(id, idUser);
+
 			headerppk_baru(session, id, "Y", "", "T");
 			this.context.put("View", list);
 
@@ -1978,6 +1823,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
 
 			vm = "app/ppk/frmPrmhnnSek8Pemohon.jsp";
+			
 		} else if ("Waris".equals(submit)) {
 			this.context.put("flag_dup", getParam("flag_dup"));
 			readability1 = "";
@@ -1988,34 +1834,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("check_copy", check_copy);
 			String check_copyP = getParam("copyAlamatP");
 			this.context.put("check_copyP", check_copyP);
-			this.context.put("Tambah_lapisan_berikut", "");
-			this.context.put("addnew", "");
-			this.context.put("show_lapisan_berikut", "");
-			this.context.put("show_waris_update", "");
-			this.context.put("buttonwaris", "");
-			this.context.put("show_lapisan_waris", "");
-			this.context.put("show_batal_waris", "");
-			this.context.put("show_table_waris", "");
-			this.context.put("readmode", "");
-			this.context.put("buttonwarisSimpan", "");
-			this.context.put("show_batal_waris", "");
-			this.context.put("show_tambah_waris1", "");
-			this.context.put("button_Kembali1", "");
-			this.context.put("show_lapisan_berikut", "");
-			this.context.put("show_lapisan_berikut_tambah", "");
-			this.context.put("show_tarikh", "");
-			this.context.put("show_button_lapisan", "");
-			this.context.put("buttonwarislapisanSimpan", "");
-			this.context.put("buttonwarislapisan", "");
-			this.context.put("buttonwarislapisan", "");
-			this.context.put("buttonwarislapisanSimpan", "");
-			this.context.put("nk_tambah_lapisan", "");
-			this.context.put("show_button_lapisan", "");
-			this.context.put("show_button", "");
-			this.context.put("show_senarai_lapis_pertama", "");
-			this.context.put("show_lapisan_bawah", "");
-			this.context.put("show_lapisan_berikut_update", "");
-			this.context.put("showdefaulttarikh", "");
+
+			clearContext();
 
 			if ("Warisview".equals(mode)) {
 				this.context.put("show_senarai_lapis_pertama", "yes");
@@ -2191,7 +2011,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				if (getParam("simpanmode").equals("copy1_true")) {
 					this.context.put("nama_pelbagainegara_surat",getParam("nama_pelbagainegara"));
-
+					
 					this.context.put("txtAlamatTerakhir1WarisSurat",
 							getParam("txtAlamatTerakhir1Waris"));
 					this.context.put("txtAlamatTerakhir2WarisSurat",
@@ -2218,7 +2038,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				if (getParam("simpanmode").equals("copy1_false")) {
 					this.context.put("nama_pelbagainegara_surat", "");
-
+					
 					this.context.put("txtAlamatTerakhir1WarisSurat", "");
 					this.context.put("txtAlamatTerakhir2WarisSurat", "");
 					this.context.put("txtAlamatTerakhir3WarisSurat", "");
@@ -2296,14 +2116,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put(key, value);
 				}
 				String id = getParam("idPermohonan");
-				list = logic_A.setData_online(id, (String) session
-						.getAttribute("_ekptg_user_id"));
-				myLogger.info(" LIST ATAS : "+list);
+				list = logic_A.setData_online(id, idUser);
+				//myLogger.info(" LIST ATAS : "+list);
 				headerppk_baru(session, id, "Y", "", "T");
 				// list = logic_A.getData();
 
 				Hashtable x = (Hashtable) list.get(0);
-				myLogger.info(" HASHTABLE ATAS : "+x);
+				//myLogger.info(" HASHTABLE ATAS : "+x);
 				if (getParam("checkHidupWaris").equals("")) {
 					this.context.put("checkHidupWaris", "0");
 					this.context.put("show_tarikh", "");
@@ -2361,9 +2180,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				if (getParam("simpanmode").equals("copy1_true")) {
 					// (x.get("pmidnegeri").toString() == "");
-					myLogger.info("CHECK XXXXXXXXXXXXXX :"+x);
+					//myLogger.info("CHECK XXXXXXXXXXXXXX :"+x);
 					this.context.put("nama_pelbagainegara", x.get("nama_pelbagainegara").toString());
-					this.context.put("nama_pelbagainegara_surat", x.get("nama_pelbagainegara_surat").toString());
+		            this.context.put("nama_pelbagainegara_surat", x.get("nama_pelbagainegara_surat").toString());
 
 					this.context.put("txtAlamatTerakhir1WarisSurat", x.get(
 							"alamat1surat").toString());
@@ -2416,8 +2235,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				if (getParam("simpanmode").equals("copy1_false")) {
 					this.context.put("nama_pelbagainegara_surat", "");
-					this.context.put("nama_pelbagainegara", "");
-
+		             this.context.put("nama_pelbagainegara", "");
+		             
 					this.context.put("txtAlamatTerakhir1WarisSurat", "");
 					this.context.put("txtAlamatTerakhir2WarisSurat", "");
 					this.context.put("txtAlamatTerakhir3WarisSurat", "");
@@ -2520,6 +2339,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("buttonwaris", "Kemaskini");
 				this.context.put("show_senarai_lapis_pertama", "yes");
 				this.context.put("show_tambah_waris1", "yes");
+				
 			} else if ("Lapisan_berikut".equals(mode)) {
 				String idwaris = getParam("idwarisup");
 				this.context.put("idparent", idwaris);
@@ -2533,6 +2353,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("listWa", listWarisParent);
 				this.context.put("show_lapisan_berikut", "yes");
 				this.context.put("nk_tambah_lapisan", "yes");
+			
 			} else if ("Lapisan_berikut_lapisan".equals(mode)) {
 				String idwaris = getParam("idwarisup");
 				this.context.put("ip", idwaris);
@@ -2594,8 +2415,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("listWarisLapisanUpdate", listWarisUpdate);
 				this.context.put("listWarisParent", listWarisParent);
 				logic.setDataWarisLapisanIdMatiDelete(idwaris);
-				listWarisLapisanIdMatiDelete = logic
-						.getDataWarisLapisanIdMatiDelete();
+				listWarisLapisanIdMatiDelete = logic.getDataWarisLapisanIdMatiDelete();
 
 				Hashtable h = (Hashtable) listWarisUpdate.get(0);
 				if (h.get("idnegeriSurat").toString() != ""
@@ -2616,8 +2436,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("listBandarTetapbyNegeri", "");
 				}
 
-				this.context.put("listWarisLapisanIdMatiDelete",
-						listWarisLapisanIdMatiDelete);
+				this.context.put("listWarisLapisanIdMatiDelete",listWarisLapisanIdMatiDelete);
 				this.context.put("nk_tambah_lapisan", "yes");
 				this.context.put("show_button_lapisan", "yes");
 				this.context.put("show_lapisan_berikut_update", "yes");
@@ -2627,8 +2446,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			} else if ("hapus_waris_lapisan".equals(mode)) {
 				String idwarisup = getParam("idwarisup");
-				logic.deleteWarisHubungan(idwarisup,
-						getParam("id_Permohonansimati"));
+				logic.deleteWarisHubungan(idwarisup,getParam("id_Permohonansimati"));
 				logic.deleteWaris(idwarisup, getParam("id_Permohonansimati"));
 				String idparent = getParam("idparentlapis");
 				this.context.put("idparent", idparent);
@@ -2658,15 +2476,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				logic.setDataWarisLapisan(idparent);
 				listWarisLapisan = logic.getDataWarisLapisan();
 				this.context.put("listWarisLapisan", listWarisLapisan);
-				logic.setDataWarisUpdate(idwaris,
-						getParam("id_Permohonansimati"));
+				logic.setDataWarisUpdate(idwaris,getParam("id_Permohonansimati"));
 				listWarisUpdate = logic.getDataWarisUpdate();
 				this.context.put("listWarisLapisanUpdate", listWarisUpdate);
 				logic.setDataWarisLapisanIdMatiDelete(idwaris);
-				listWarisLapisanIdMatiDelete = logic
-						.getDataWarisLapisanIdMatiDelete();
-				this.context.put("listWarisLapisanIdMatiDelete",
-						listWarisLapisanIdMatiDelete);
+				listWarisLapisanIdMatiDelete = logic.getDataWarisLapisanIdMatiDelete();
+				this.context.put("listWarisLapisanIdMatiDelete",listWarisLapisanIdMatiDelete);
 				logic.setDataWarisParent(idparent);
 				listWarisParent = logic.getDataWarisParent();
 				this.context.put("listWarisParent", listWarisParent);
@@ -2674,8 +2489,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				Hashtable h = (Hashtable) listWarisUpdate.get(0);
 				if (h.get("idnegeriSurat").toString() != ""
 						&& h.get("idnegeriSurat").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(h.get("idnegeriSurat").toString()));
+					Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(h.get("idnegeriSurat").toString()));
 					this.context.put("listBandarSuratbyNegeri", s3);
 				} else {
 					this.context.put("listBandarSuratbyNegeri", "");
@@ -2683,8 +2497,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 				if (h.get("idnegeri").toString() != ""
 						&& h.get("idnegeri").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(h.get("idnegeri").toString()));
+					Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(h.get("idnegeri").toString()));
 					this.context.put("listBandarTetapbyNegeri", s3);
 				} else {
 					this.context.put("listBandarTetapbyNegeri", "");
@@ -2698,6 +2511,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_lapisan_berikut", "yes");
 				this.context.put("buttonwarislapisan", "Kemaskini");
 				this.context.put("readmode", "disabled");
+				
 			} else if ("Tambah_lapisan_berikut".equals(mode)) {
 				listWarisup = new Vector();
 				String idp = getParam("idparentlapis");
@@ -2738,6 +2552,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_lapisan_bawah", "yes");
 				this.context.put("show_tambah_waris1", "yes");
 				this.context.put("button_Kembali1", "yes");
+			
 			} else if ("hapus_waris".equals(mode)) {
 				String idwarisup = getParam("idwarisup");
 				logic.deleteWaris(idwarisup, getParam("id_Permohonansimati"));
@@ -2755,10 +2570,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_lapisan_bawah", "yes");
 				this.context.put("show_tambah_waris1", "yes");
 				this.context.put("button_Kembali1", "yes");
+			
 			} else if ("kemaskini_waris".equals(mode)) {
 				String idwaris = getParam("idwarisup");
-				logic.setDataWarisUpdate(idwaris,
-						getParam("id_Permohonansimati"));
+				logic.setDataWarisUpdate(idwaris,getParam("id_Permohonansimati"));
 				listWarisUpdate = logic.getDataWarisUpdate();
 				this.context.put("listWarisUpdate", listWarisUpdate);
 				Hashtable h = (Hashtable) listWarisUpdate.get(0);
@@ -2785,6 +2600,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_batal_waris", "yes");
 				this.context.put("show_senarai_lapis_pertama", "yes");
 				this.context.put("show_tambah_waris1", "yes");
+				
 			} else if ("kemaskini_waris_lapisan".equals(mode)) {
 				String idwaris = getParam("idwarisup");
 				String idparent = getParam("idparentlapis");
@@ -2831,6 +2647,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_lapisan_berikut_update", "yes");
 				this.context.put("show_lapisan_berikut", "yes");
 				this.context.put("buttonwarislapisan", "Simpan");
+				
 			} else if ("simpan_waris".equals(mode)) {
 
 				disability1 = "disabled";
@@ -2839,8 +2656,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("appear_skrin_info", "kemaskini");
 				}
 
-				logic.setDataWarisUpdate(getParam("idwarisup"),
-						getParam("id_Permohonansimati"));
+				logic.setDataWarisUpdate(getParam("idwarisup"),getParam("id_Permohonansimati"));
 				listWarisUpdate = logic.getDataWarisUpdate();
 				this.context.put("listWarisUpdate", listWarisUpdate);
 				Hashtable h = (Hashtable) listWarisUpdate.get(0);
@@ -2867,9 +2683,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_senarai_lapis_pertama", "yes");
 				this.context.put("show_tambah_waris1", "yes");
 
-			}
-
-			else if ("simpan_waris_lapisan".equals(mode)) {
+			}else if ("simpan_waris_lapisan".equals(mode)) {
 				listpenting = new Vector();
 				String idparent = getParam("idparentlapis");
 				// int idxx= Integer.parseInt(getParam("idwarisup"));
@@ -2944,8 +2758,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			// logic_A.setData_online(id,(String)
 			// session.getAttribute("_ekptg_user_id"));
 			// list = logic_A.getData();
-			list = logic_A.setData_online(id, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list = logic_A.setData_online(id, idUser);
 			this.context.put("View", list);
 			headerppk_baru(session, id, "Y", "", "T");
 
@@ -2963,11 +2776,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			Vector kenegaraan = null;
 			kenegaraan = mainheader.kenegaraan();
 			this.context.put("kenegaraan", kenegaraan);
-			 */
+	*/
 			vm = "app/ppk/frmPrmhnnSek8Waris.jsp";
-		}
-
-		else if ("Penting".equals(submit) || "Saksi".equals(submit)
+		
+		}else if ("Penting".equals(submit) || "Saksi".equals(submit)
 				|| "Pemiutang".equals(submit) || "Penghutang".equals(submit)) {
 			String check_copy = getParam("copyAlamat");
 			this.context.put("check_copy", check_copy);
@@ -3081,7 +2893,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (jenisbandar.equals("copy")
 						&& getParam("simpanmode").equals("insert")) {
 					this.context.put("nama_pelbagainegara_surat",getParam("nama_pelbagainegara"));
-
+					
 					this.context.put("txtAlamatTerakhir1WarisSurat",
 							getParam("txtAlamatTerakhir1Penting"));
 					this.context.put("txtAlamatTerakhir2WarisSurat",
@@ -3122,13 +2934,14 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 							getParam("socBandarPentingU"));
 					if (getParam("socNegeriPentingU") != ""
 							&& getParam("socNegeriPentingU") != "0") {
-						Vector s3 = logic_A.getListBandarByNegeri(Integer
-								.parseInt(getParam("socNegeriPentingU")));
+						Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(getParam("socNegeriPentingU")));
 						this.context.put("listBandarSuratbyNegeri", s3);
 						this.context.put("listBandarTetapbyNegeri", s3);
+						
 					} else {
 						this.context.put("listBandarSuratbyNegeri", "");
 						this.context.put("listBandarTetapbyNegeri", "");
+					
 					}
 				}
 				if (jenisbandar.equals("copyfalse")) {
@@ -3140,17 +2953,20 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("socNegeriWarisSurat", "");
 					this.context.put("txtBandarWarisSurat", "");
 					this.context.put("socBandarWarisSurat", "");
+				
 				}
 				if (getParam("simpanmode").equals("insert")) {
 					this.context.put("buttonpenting", "tambah");
 					this.context.put("nk_tambah_penting", "yes");
 					this.context.put("nk_button_penting", "yes");
+				
 				}
 				if (getParam("simpanmode").equals("update")) {
 					this.context.put("nk_button_penting", "yes");
 					this.context.put("nk_update_penting", "yes");
 					this.context.put("buttonpenting", "Simpan");
 					this.context.put("tambah_ob_button", "yes");
+				
 				}
 			} else if ("tambah_penting_baru".equals(mode)) {
 				this.context.put("insertbaru", "yes");
@@ -3163,9 +2979,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("readmodekp", "disabled");
 				this.context.put("readmodesy", "disabled");
 				this.context.put("readmodesy", "disabled");
-			}
-
-			else if ("hapus_penting".equals(mode)) {
+			
+			}else if ("hapus_penting".equals(mode)) {
 				String iddob = getParam("txtIdOb");
 
 				if ("Penghutang".equals(submit)) {
@@ -3175,9 +2990,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				this.context.put("tambah_ob_button", "yes");
 				this.context.put("kembali_ob_button", "yes");
-			}
-
-			else if ("GetPenting".equals(mode)) {
+			
+			}else if ("GetPenting".equals(mode)) {
 
 				String idob = getParam("txtIdOb");
 
@@ -3332,9 +3146,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
 
-		}
-
-		else if ("harta_alih".equals(submit)) {
+		}else if ("harta_alih".equals(submit)) {
 
 			this.context.put("showbuttonkembali", "");
 			this.context.put("showbuttontambah", "");
@@ -3357,859 +3169,802 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("idha", "");
 
 			String socJenisha = "0";
-
-			if ("view_harta_alih".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-				listppkhta = logic_B.getDataHta();
-				logic_B.setDataHta(id);
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-
-				this.context
-				.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
-
-				this.context.put("showbuttonkembali", "yes");
-				this.context.put("showbuttontambah", "yes");
-				this.context.put("EventStatus", 1);
-
-			}
-
-			else if ("tambah_harta".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-				String eventstatus = getParam("eventStatus");
-
-				socJenisha = getParam("socJenisHartaAlih");
-				this.context.put("socJenisHa", socJenisha);
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-				listppkhta = logic_B.getDataHta();
-				logic_B.setDataHta(id);
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				this.context.put("negeri", "");
-				this.context.put("daerah", "");
-				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
-				this.context.put("norujukan", "");
-				this.context.put("nosijil", "");
-				this.context.put("bilunit", "");
-				this.context.put("nilaiseunit", "");
-				this.context.put("agensi", "");
-				this.context.put("nama_saham", "");
-				this.context.put("txtAlamat1", getParam("txtAlamat1"));
-				this.context.put("txtAlamat2", getParam("txtAlamat2"));
-				this.context.put("txtAlamat3", getParam("txtAlamat3"));
-
-				this.context.put("txtPoskod", getParam("txtPoskod"));
-				this.context.put("negeri", getParam("socNegeriHtaam"));
-				this.context.put("daerah", getParam("socDaerahHtaam"));
-				this.context.put("bhgnmati1", getParam("txtBhgnSimati1"));
-				this.context.put("bhgnmati2", getParam("txtBhgnSimati2"));
-
-				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-
-				this.context.put("nilaitarikhmati",
-						getParam("txtNilaiTarikhMati"));
-				this.context.put("nilaitarikhmohon",
-						getParam("txtNilaiTarikhMohon"));
-				this.context.put("catatan", getParam("txtCatatan"));
-				// ::
-				this.context.put("butiran", getParam("butiran"));
-				String jh = "0";
-				jh = getParam("socJenisHartaAlih");
-				int jj = 0;
-				if (jh != null && jh != "" && jh != "0") {
-					jj = Integer.parseInt(jh);
-				} else {
-					jj = 0;
-				}
-
-				if (jj > 0) {
-					this.context.put("showadd", "1");
-				} else {
-					this.context.put("showadd", "0");
-
-				}
-
-				int idne = 0;
-				if (!"".equals(getParam("socNegeriHtaam"))
-						&& !"0".equals(getParam("socNegeriHtaam"))) {
-					idne = Integer.parseInt(getParam("socNegeriHtaam"));
-
-				} else {
-					idne = 0;
-
-				}
-
-				if (jh != "0" && jh != "") {
-					if (idne != 0) {
-						listnegeribydaerah = logic_A.getListDaerahbyNegeri(idne);
-						this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-					} else {
-						this.context.put("readmodedaerah", "");
-						this.context.put("listDaerahbyNegeri", "");
-					}
-
-				}
-
-				else {
-
-					this.context.put("readmodedaerah", "");
-					this.context.put("listDaerahbyNegeri", "");
-				}
-				this.context.put("EventStatus", eventstatus);
-			}
-
-			else if ("tambah_harta_baru".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-
-				this.context.put("EventStatus", 0);
-				this.context.put("barula", "yes");
-				this.context.put("id", id);
-				this.context.put("id1", id1);
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-
-				logic_B.setDataHta(id);
-				listppkhta = logic_B.getDataHta();
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				this.context.put("negeri", "");
-				this.context.put("daerah", "");
-				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
-				this.context.put("norujukan", "");
-				this.context.put("nosijil", "");
-				this.context.put("bilunit", "");
-				this.context.put("nilaiseunit", "");
-				this.context.put("agensi", "");
-				this.context.put("txtAlamat1", "");
-				this.context.put("txtAlamat2", "");
-				this.context.put("txtAlamat3", "");
-
-				this.context.put("txtPoskod", "");
-				this.context.put("nama_saham", "");
-				this.context.put("negeri", "");
-				this.context.put("daerah", "");
-				this.context.put("bhgnmati1", "");
-				this.context.put("bhgnmati2", "");
-				this.context.put("nilaitarikhmati", "");
-				this.context.put("nilaitarikhmohon", "");
-				this.context.put("catatan", "");
-				this.context.put("butiran", "");
-				this.context.put("readmodedaerah", "");
-
-				this.context.put("FLAG_DAFTAR", "");
-
-			}
-
-			// //tanda////
-
-			else if ("simpan_harta".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-				String eventstatus = getParam("eventStatus");
-				if (bolehsimpan.equals("yes")) {
-					addHa(session);
-					this.context.put("appear_skrin_info", "simpan");
-				}
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-
-				logic_B.setDataHta(id);
-				listppkhta = logic_B.getDataHta();
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				this.context.put("showbuttonkembali", "yes");
-				this.context.put("showbuttontambah", "yes");
-				this.context.put("tutup", "yes");
-				this.context.put("EventStatus", eventstatus);
-				this.context.put("id", id);
-				this.context.put("id1", id1);
-				this.context.put("id2", id2);
-
-			} else if ("batal_harta".equals(mode)) {
-
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-				String idha = getParam("idha");
-				String eventstatus = getParam("eventStatus");
-
-				logic_A.setSelectedDataHa(mati, idha);
-				selectedppkha = logic_A.getSelectedDataHa();
-				this.context.put("DataHa", selectedppkha);
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-
-				logic_B.setDataHta(id);
-				listppkhta = logic_B.getDataHta();
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				this.context.put("showbuttontambah", "yes");
-				this.context.put("showadd", "1");
-				this.context.put("EventStatus", eventstatus);
-				this.context.put("id", id);
-				this.context.put("id1", id1);
-				this.context.put("id2", id2);
-
-			} else if ("edit_harta".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-				String eventstatus = getParam("eventStatus");
-
-				String idha = getParam("idha");
-
-				this.context.put("id", id);
-				this.context.put("id1", id1);
-				this.context.put("id2", id2);
-				this.context.put("idha", idha);
-
-				logic_A.setSelectedDataHa(mati, idha);
-				selectedppkha = logic_A.getSelectedDataHa();
-				this.context.put("DataHa", selectedppkha);
-
-				Hashtable b = (Hashtable) selectedppkha.get(0);
-				String nn = b.get("negeri").toString();
-				if (nn != "" && nn != "0") {
-					int idn = Integer.parseInt(nn);
-
-					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-				} else {
-					this.context.put("readmodedaerah", "");
-					this.context.put("listDaerahbyNegeri", "");
-				}
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-
-				logic_B.setDataHta(id);
-				listppkhta = logic_B.getDataHta();
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				listdaerah = logic_A.getListDaerah();
-				this.context.put("listDaerahbyNegeri", listdaerah);
-
-				this.context.put("showbuttontambah", "yes");
-				this.context.put("showadd", "1");
-				this.context.put("tutup", "yes");
-				// this.context.put("EventStatus", eventstatus);
-				this.context.put("EventStatus", 3);
-
-			} else if ("kemaskini_harta".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-
-				String idha = getParam("idha");
-
-				logic_A.setSelectedDataHa(mati, idha);
-				selectedppkha = logic_A.getSelectedDataHa();
-				this.context.put("DataHa", selectedppkha);
-
-				Hashtable b = (Hashtable) selectedppkha.get(0);
-				String nn = b.get("negeri").toString();
-				if (nn != "" && nn != "0") {
-					int idn = Integer.parseInt(nn);
-					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-				} else {
-					this.context.put("readmodedaerah", "");
-					this.context.put("listDaerahbyNegeri", "");
-				}
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				logic_B.setDataHta(id);
-				listppkhta = logic_B.getDataHta();
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				this.context.put("id", id);
-				this.context.put("id2", id2);
-				this.context.put("idha", idha);
-				this.context.put("tutup", "yes");
-				this.context.put("EventStatus", 3);
-				this.context.put("id1", id1);
-				this.context.put("showbuttontambah", "yes");
-				this.context.put("showadd", "1");
-
-			} else if ("update_harta".equals(mode)) {
-				if (bolehsimpan.equals("yes")) {
-					updateHa(session);
-					this.context.put("appear_skrin_info", "kemaskini");
-				}
-
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-				String eventstatus = getParam("eventStatus");
-				String idha = getParam("idha");
-
-				logic_A.setSelectedDataHa(mati, idha);
-				selectedppkha = logic_A.getSelectedDataHa();
-				this.context.put("DataHa", selectedppkha);
-
-				Hashtable b = (Hashtable) selectedppkha.get(0);
-
-				String nn = b.get("negeri").toString();
-
-				if (nn != "" && nn != "0") {
-					int idn = Integer.parseInt(nn);
-
-					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-				}
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-
-				logic_B.setDataHta(id);
-				listppkhta = logic_B.getDataHta();
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				this.context.put("id", id);
-				this.context.put("id1", id1);
-				this.context.put("id2", id2);
-				this.context.put("idha", idha);
-				this.context.put("tutup", "yes");
-				// this.context.put("EventStatus", eventstatus);
-				this.context.put("EventStatus", 3);
-				this.context.put("showbuttontambah", "yes");
-				this.context.put("showadd", "1");
-
-			} else if ("hapus_harta".equals(mode)) {
-
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-				String eventstatus = getParam("eventStatus");
-				String idha = getParam("idha");
-				delete_mode_ppkha(session, mati, idha);
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-
-				logic_B.setDataHta(id);
-				listppkhta = logic_B.getDataHta();
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				this.context.put("showbuttonkembali", "yes");
-				this.context.put("showbuttontambah", "yes");
-				this.context.put("id", id);
-				this.context.put("id1", id1);
-				this.context.put("idha", idha);
-				this.context.put("EventStatus", eventstatus);
-
-			} else if ("negerichange".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-				String eventstatus = getParam("eventStatus");
-
-				int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
-
-				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-
-				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
-				this.context.put("norujukan", getParam("txtNoRujukan"));
-				this.context.put("nosijil", getParam("txtNoSijil"));
-				this.context.put("bilunit", getParam("txtBilUnit"));
-				this.context.put("nilaiseunit", getParam("txtNilaiSeunit"));
-				this.context.put("agensi", getParam("txtAgensi"));
-				this.context.put("txtAlamat1", getParam("txtAlamat1"));
-				this.context.put("txtAlamat2", getParam("txtAlamat2"));
-				this.context.put("txtAlamat3", getParam("txtAlamat3"));
-				this.context.put("txtPoskod", getParam("txtPoskod"));
-				this.context.put("negeri", getParam("socNegeriHtaam"));
-				this.context.put("daerah", getParam("socDaerahHtaam"));
-				this.context.put("bhgnmati1", getParam("txtBhgnSimati1"));
-				this.context.put("bhgnmati2", getParam("txtBhgnSimati2"));
-				this.context.put("nilaitarikhmati",
-						getParam("txtNilaiTarikhMati"));
-				this.context.put("nilaitarikhmohon",
-						getParam("txtNilaiTarikhMohon"));
-				this.context.put("catatan", getParam("txtCatatan"));
-				this.context.put("butiran", getParam("butiran"));
-				this.context.put("nama_saham", getParam("nama_saham"));
-				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-
-				this.context.put("EventStatus", 0);
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-
-				logic_B.setDataHta(id);
-				listppkhta = logic_B.getDataHta();
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				this.context.put("negeri", idnegeri);
-				this.context.put("id", id);
-				this.context.put("id1", id1);
-				this.context.put("showadd", "1");
-
-				if (getParam("socNegeriHtaam") != ""
-						&& getParam("socNegeriHtaam") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriHtaam")));
-					this.context.put("listBandarSuratbyNegeri", s3);
-					System.out.println("listBandarSuratbyNegeri30");
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-					System.out.println("listBandarSuratbyNegeri30a");
-				}
-
-			}
-
-			else if ("negerichangeU".equals(mode)) {
-
-				listabc = new Vector();
-
-				String id = getParam("idPermohonan");
-				String id2 = getParam("idPemohon");
-				String id1 = getParam("idSimati");
-				String mati = getParam("id_Permohonansimati");
-				String eventstatus = getParam("eventStatus");
-				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
-
-				int idnegeri = 0;
-				if (!"".equals(getParam("socNegeriHtaam"))
-						&& !"0".equals(getParam("socNegeriHtaam"))) {
-					idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
-				} else {
-					idnegeri = 0;
-				}
-				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-
-				Hashtable h;
-				h = new Hashtable();
-
-				String idha = getParam("idha");
-
-				h.put("negeri", idnegeri);
-				h.put("daerah", "");
-				h.put("socJenisHa", getParam("socJenisHartaAlih"));
-				h.put("norujukan", getParam("txtNoRujukan"));
-				h.put("nosijil", getParam("txtNoSijil"));
-				h.put("bilunit", getParam("txtBilUnit"));
-				h.put("jenama", getParam("txtAgensi"));
-
-				h.put("nilaiseunit", getParam("txtNilaiSeunit"));
-				h.put("agensi", getParam("txtAgensi"));
-				h.put("alamat1", getParam("txtAlamat1"));
-				h.put("alamat2", getParam("txtAlamat2"));
-				h.put("alamat3", getParam("txtAlamat3"));
-				h.put("poskod", getParam("txtPoskod"));
-
-				// h.put("negeri", idnegeri);
-				// h.put("daerah", getParam("socDaerahHtaam"));
-				h.put("basimati", getParam("txtBhgnSimati1"));
-				h.put("bbsimati", getParam("txtBhgnSimati2"));
-				h.put("nilaiha_tarikhmati", getParam("txtNilaiTarikhMati"));
-				h.put("nilaiha_tarikhmohon", getParam("txtNilaiTarikhMohon"));
-				h.put("catatan", getParam("txtCatatan"));
-				h.put("nama_saham", getParam("nama_saham"));
-				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-				h.put("butiran", getParam("butiran"));
-				listabc.addElement(h);
-
-				this.context.put("DataHa", listabc);
-
-				logic_A.setDataHa(mati);
-				listppkha = logic_A.getDataHa();
-				this.context.put("listHa", listppkha);
-				int countList = listppkha.size();
-				this.context.put("jumList", countList);
-
-				logic_A.setSumDataHa(mati);
-				sumppkha = logic_A.getSumDataHa();
-				this.context.put("jumppkha", sumppkha);
-
-				// FrmPrmhnnSek8SenaraiHTATHInternalData
-				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-
-				logic_B.setDataHta(id);
-				listppkhta = logic_B.getDataHta();
-				this.context.put("listhta2", listppkhta);
-				int countListhta = listppkhta.size();
-				this.context.put("jumListhta2", countList);
-
-				logic_B.setDataHa(id);
-				listppkha2 = logic_B.getHa2();
-				this.context.put("listHa2", listppkha2);
-				int countListha2 = listppkha2.size();
-				this.context.put("jumListHa2", countListha2);
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-				logic_A.setOverallSum(mati);
-				overallnilai = logic_A.getOverallSum();
-				this.context.put("overall", overallnilai);
-
-				logic_A.setOverallSumMati(mati);
-				overallnilaimati = logic_A.getOverallSumMati();
-				this.context.put("overallmati", overallnilaimati);
-
-				listJenisha = logic_A.getJenisHa();
-				this.context.put("ViewJenisHa", listJenisha);
-
-				this.context.put("showbuttontambah", "yes");
-				this.context.put("tutup", "yes");
-				this.context.put("EventStatus", 3);
-				this.context.put("id", id);
-				this.context.put("id2", id2);
-				this.context.put("idha", idha);
-				this.context.put("id", id);
-				this.context.put("id1", id1);
-				this.context.put("showadd", "1");
-			}
+			myLogger.info("harta_alih:"+mode);
+			
+			Hashtable dataParam = new Hashtable();
+			dataParam.put("bolehSimpan",bolehsimpan);
+			dataParam.put("idUser",idUser);
+			getHA().getHarta(mode, dataParam, logic, request, session, context);
+//			if ("view_harta_alih".equals(mode)) {
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				listppkhta = logic_B.getDataHta();
+//				logic_B.setDataHta(id);
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati, idUser);
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
+//
+//				this.context.put("showbuttonkembali", "yes");
+//				this.context.put("showbuttontambah", "yes");
+//				this.context.put("EventStatus", 1);
+//
+//			}else if ("tambah_harta".equals(mode)) {
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//				String eventstatus = getParam("eventStatus");
+//
+//				socJenisha = getParam("socJenisHartaAlih");
+//				this.context.put("socJenisHa", socJenisha);
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				// FrmPrmhnnSek8SenaraiHTATHInternalData
+//				// frmPrmhnnSek8SenaraiHTATHInternalData = new
+//				// FrmPrmhnnSek8SenaraiHTATHInternalData();
+//				listppkhta = logic_B.getDataHta();
+//				logic_B.setDataHta(id);
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati, idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				this.context.put("negeri", "");
+//				this.context.put("daerah", "");
+//				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
+//				this.context.put("norujukan", "");
+//				this.context.put("nosijil", "");
+//				this.context.put("bilunit", "");
+//				this.context.put("nilaiseunit", "");
+//				this.context.put("agensi", "");
+//				this.context.put("nama_saham", "");
+//				this.context.put("txtAlamat1", getParam("txtAlamat1"));
+//				this.context.put("txtAlamat2", getParam("txtAlamat2"));
+//				this.context.put("txtAlamat3", getParam("txtAlamat3"));
+//
+//				this.context.put("txtPoskod", getParam("txtPoskod"));
+//				this.context.put("negeri", getParam("socNegeriHtaam"));
+//				this.context.put("daerah", getParam("socDaerahHtaam"));
+//				this.context.put("bhgnmati1", getParam("txtBhgnSimati1"));
+//				this.context.put("bhgnmati2", getParam("txtBhgnSimati2"));
+//
+//				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
+//
+//				this.context.put("nilaitarikhmati",getParam("txtNilaiTarikhMati"));
+//				this.context.put("nilaitarikhmohon",getParam("txtNilaiTarikhMohon"));
+//				this.context.put("catatan", getParam("txtCatatan"));
+//				this.context.put("butiran", getParam("butiran"));
+//				
+//				String jh = "0";
+//				jh = getParam("socJenisHartaAlih");
+//				int jj = 0;
+//				if (jh != null && jh != "" && jh != "0") {
+//					jj = Integer.parseInt(jh);
+//				} else {
+//					jj = 0;
+//				}
+//
+//				if (jj > 0) {
+//					this.context.put("showadd", "1");
+//				} else {
+//					this.context.put("showadd", "0");
+//
+//				}
+//
+//				int idne = 0;
+//				if (!"".equals(getParam("socNegeriHtaam"))
+//						&& !"0".equals(getParam("socNegeriHtaam"))) {
+//					idne = Integer.parseInt(getParam("socNegeriHtaam"));
+//
+//				} else {
+//					idne = 0;
+//
+//				}
+//
+//				if (jh != "0" && jh != "") {
+//					if (idne != 0) {
+//						listnegeribydaerah = logic_A.getListDaerahbyNegeri(idne);
+//						this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//					} else {
+//						this.context.put("readmodedaerah", "");
+//						this.context.put("listDaerahbyNegeri", "");
+//					}
+//
+//				}else {
+//
+//					this.context.put("readmodedaerah", "");
+//					this.context.put("listDaerahbyNegeri", "");
+//				}
+//				this.context.put("EventStatus", eventstatus);
+//			
+//			}else if ("tambah_harta_baru".equals(mode)) {
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//
+//				this.context.put("EventStatus", 0);
+//				this.context.put("barula", "yes");
+//				this.context.put("id", id);
+//				this.context.put("id1", id1);
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				logic_B.setDataHta(id);
+//				listppkhta = logic_B.getDataHta();
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati, idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				this.context.put("negeri", "");
+//				this.context.put("daerah", "");
+//				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
+//				this.context.put("norujukan", "");
+//				this.context.put("nosijil", "");
+//				this.context.put("bilunit", "");
+//				this.context.put("nilaiseunit", "");
+//				this.context.put("agensi", "");
+//				this.context.put("txtAlamat1", "");
+//				this.context.put("txtAlamat2", "");
+//				this.context.put("txtAlamat3", "");
+//
+//				this.context.put("txtPoskod", "");
+//				this.context.put("nama_saham", "");
+//				this.context.put("negeri", "");
+//				this.context.put("daerah", "");
+//				this.context.put("bhgnmati1", "");
+//				this.context.put("bhgnmati2", "");
+//				this.context.put("nilaitarikhmati", "");
+//				this.context.put("nilaitarikhmohon", "");
+//				this.context.put("catatan", "");
+//				this.context.put("butiran", "");
+//				this.context.put("readmodedaerah", "");
+//
+//				this.context.put("FLAG_DAFTAR", "");
+//
+//			}else if ("simpan_harta".equals(mode)) {
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//				String eventstatus = getParam("eventStatus");
+//				if (bolehsimpan.equals("yes")) {
+//					addHa(session);
+//					this.context.put("appear_skrin_info", "simpan");
+//				}
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				logic_B.setDataHta(id);
+//				listppkhta = logic_B.getDataHta();
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati,idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				this.context.put("showbuttonkembali", "yes");
+//				this.context.put("showbuttontambah", "yes");
+//				this.context.put("tutup", "yes");
+//				this.context.put("EventStatus", eventstatus);
+//				this.context.put("id", id);
+//				this.context.put("id1", id1);
+//				this.context.put("id2", id2);
+//
+//			} else if ("batal_harta".equals(mode)) {
+//
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//				String idha = getParam("idha");
+//				String eventstatus = getParam("eventStatus");
+//
+//				logic_A.setSelectedDataHa(mati, idha);
+//				selectedppkha = logic_A.getSelectedDataHa();
+//				this.context.put("DataHa", selectedppkha);
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				logic_B.setDataHta(id);
+//				listppkhta = logic_B.getDataHta();
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati, idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				this.context.put("showbuttontambah", "yes");
+//				this.context.put("showadd", "1");
+//				this.context.put("EventStatus", eventstatus);
+//				this.context.put("id", id);
+//				this.context.put("id1", id1);
+//				this.context.put("id2", id2);
+//
+//			} else if ("edit_harta".equals(mode)) {
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//				String eventstatus = getParam("eventStatus");
+//
+//				String idha = getParam("idha");
+//
+//				this.context.put("id", id);
+//				this.context.put("id1", id1);
+//				this.context.put("id2", id2);
+//				this.context.put("idha", idha);
+//
+//				logic_A.setSelectedDataHa(mati, idha);
+//				selectedppkha = logic_A.getSelectedDataHa();
+//				this.context.put("DataHa", selectedppkha);
+//
+//				Hashtable b = (Hashtable) selectedppkha.get(0);
+//				String nn = b.get("negeri").toString();
+//				if (nn != "" && nn != "0") {
+//					int idn = Integer.parseInt(nn);
+//
+//					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
+//					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//				} else {
+//					this.context.put("readmodedaerah", "");
+//					this.context.put("listDaerahbyNegeri", "");
+//				}
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				logic_B.setDataHta(id);
+//				listppkhta = logic_B.getDataHta();
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati, idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				listdaerah = logic_A.getListDaerah();
+//				this.context.put("listDaerahbyNegeri", listdaerah);
+//
+//				this.context.put("showbuttontambah", "yes");
+//				this.context.put("showadd", "1");
+//				this.context.put("tutup", "yes");
+//				// this.context.put("EventStatus", eventstatus);
+//				this.context.put("EventStatus", 3);
+//
+//			} else if ("kemaskini_harta".equals(mode)) {
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//
+//				String idha = getParam("idha");
+//
+//				logic_A.setSelectedDataHa(mati, idha);
+//				selectedppkha = logic_A.getSelectedDataHa();
+//				this.context.put("DataHa", selectedppkha);
+//
+//				Hashtable b = (Hashtable) selectedppkha.get(0);
+//				String nn = b.get("negeri").toString();
+//				if (nn != "" && nn != "0") {
+//					int idn = Integer.parseInt(nn);
+//					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
+//					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//				} else {
+//					this.context.put("readmodedaerah", "");
+//					this.context.put("listDaerahbyNegeri", "");
+//				}
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				logic_B.setDataHta(id);
+//				listppkhta = logic_B.getDataHta();
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati, idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				this.context.put("id", id);
+//				this.context.put("id2", id2);
+//				this.context.put("idha", idha);
+//				this.context.put("tutup", "yes");
+//				this.context.put("EventStatus", 3);
+//				this.context.put("id1", id1);
+//				this.context.put("showbuttontambah", "yes");
+//				this.context.put("showadd", "1");
+//
+//			} else if ("update_harta".equals(mode)) {
+//				if (bolehsimpan.equals("yes")) {
+//					updateHa(session);
+//					this.context.put("appear_skrin_info", "kemaskini");
+//				}
+//
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//				String eventstatus = getParam("eventStatus");
+//				String idha = getParam("idha");
+//
+//				logic_A.setSelectedDataHa(mati, idha);
+//				selectedppkha = logic_A.getSelectedDataHa();
+//				this.context.put("DataHa", selectedppkha);
+//
+//				Hashtable b = (Hashtable) selectedppkha.get(0);
+//
+//				String nn = b.get("negeri").toString();
+//
+//				if (nn != "" && nn != "0") {
+//					int idn = Integer.parseInt(nn);
+//
+//					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
+//					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//				}
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				logic_B.setDataHta(id);
+//				listppkhta = logic_B.getDataHta();
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati, idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				this.context.put("id", id);
+//				this.context.put("id1", id1);
+//				this.context.put("id2", id2);
+//				this.context.put("idha", idha);
+//				this.context.put("tutup", "yes");
+//				// this.context.put("EventStatus", eventstatus);
+//				this.context.put("EventStatus", 3);
+//				this.context.put("showbuttontambah", "yes");
+//				this.context.put("showadd", "1");
+//
+//			} else if ("hapus_harta".equals(mode)) {
+//
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//				String eventstatus = getParam("eventStatus");
+//				String idha = getParam("idha");
+//				delete_mode_ppkha(session, mati, idha);
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				logic_B.setDataHta(id);
+//				listppkhta = logic_B.getDataHta();
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati, idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				this.context.put("showbuttonkembali", "yes");
+//				this.context.put("showbuttontambah", "yes");
+//				this.context.put("id", id);
+//				this.context.put("id1", id1);
+//				this.context.put("idha", idha);
+//				this.context.put("EventStatus", eventstatus);
+//
+//			} else if ("negerichange".equals(mode)) {
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//				String eventstatus = getParam("eventStatus");
+//
+//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
+//
+//				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
+//				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//
+//				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
+//				this.context.put("norujukan", getParam("txtNoRujukan"));
+//				this.context.put("nosijil", getParam("txtNoSijil"));
+//				this.context.put("bilunit", getParam("txtBilUnit"));
+//				this.context.put("nilaiseunit", getParam("txtNilaiSeunit"));
+//				this.context.put("agensi", getParam("txtAgensi"));
+//				this.context.put("txtAlamat1", getParam("txtAlamat1"));
+//				this.context.put("txtAlamat2", getParam("txtAlamat2"));
+//				this.context.put("txtAlamat3", getParam("txtAlamat3"));
+//				this.context.put("txtPoskod", getParam("txtPoskod"));
+//				this.context.put("negeri", getParam("socNegeriHtaam"));
+//				this.context.put("daerah", getParam("socDaerahHtaam"));
+//				this.context.put("bhgnmati1", getParam("txtBhgnSimati1"));
+//				this.context.put("bhgnmati2", getParam("txtBhgnSimati2"));
+//				this.context.put("nilaitarikhmati",getParam("txtNilaiTarikhMati"));
+//				this.context.put("nilaitarikhmohon",getParam("txtNilaiTarikhMohon"));
+//				this.context.put("catatan", getParam("txtCatatan"));
+//				this.context.put("butiran", getParam("butiran"));
+//				this.context.put("nama_saham", getParam("nama_saham"));
+//				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
+//
+//				this.context.put("EventStatus", 0);
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				logic_B.setDataHta(id);
+//				listppkhta = logic_B.getDataHta();
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati,idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				this.context.put("negeri", idnegeri);
+//				this.context.put("id", id);
+//				this.context.put("id1", id1);
+//				this.context.put("showadd", "1");
+//				
+//				if (getParam("socNegeriHtaam") != ""
+//						&& getParam("socNegeriHtaam") != "0") {
+//					Vector s3 = logic_A.getListBandarByNegeri(Integer
+//							.parseInt(getParam("socNegeriHtaam")));
+//					this.context.put("listBandarSuratbyNegeri", s3);
+//					//System.out.println("listBandarSuratbyNegeri30");
+//				} else {
+//					this.context.put("listBandarSuratbyNegeri", "");
+//					//System.out.println("listBandarSuratbyNegeri30a");
+//				}
+//
+//			}
+//
+//			else if ("negerichangeU".equals(mode)) {
+//
+//				listabc = new Vector();
+//
+//				String id = getParam("idPermohonan");
+//				String id2 = getParam("idPemohon");
+//				String id1 = getParam("idSimati");
+//				String mati = getParam("id_Permohonansimati");
+//				String eventstatus = getParam("eventStatus");
+//				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
+//
+//				int idnegeri = 0;
+//				if (!"".equals(getParam("socNegeriHtaam"))
+//						&& !"0".equals(getParam("socNegeriHtaam"))) {
+//					idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
+//				} else {
+//					idnegeri = 0;
+//				}
+//				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
+//				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//
+//				Hashtable h;
+//				h = new Hashtable();
+//
+//				String idha = getParam("idha");
+//
+//				h.put("negeri", idnegeri);
+//				h.put("daerah", "");
+//				h.put("socJenisHa", getParam("socJenisHartaAlih"));
+//				h.put("norujukan", getParam("txtNoRujukan"));
+//				h.put("nosijil", getParam("txtNoSijil"));
+//				h.put("bilunit", getParam("txtBilUnit"));
+//				h.put("jenama", getParam("txtAgensi"));
+//
+//				h.put("nilaiseunit", getParam("txtNilaiSeunit"));
+//				h.put("agensi", getParam("txtAgensi"));
+//				h.put("alamat1", getParam("txtAlamat1"));
+//				h.put("alamat2", getParam("txtAlamat2"));
+//				h.put("alamat3", getParam("txtAlamat3"));
+//				h.put("poskod", getParam("txtPoskod"));
+//
+//				// h.put("negeri", idnegeri);
+//				// h.put("daerah", getParam("socDaerahHtaam"));
+//				h.put("basimati", getParam("txtBhgnSimati1"));
+//				h.put("bbsimati", getParam("txtBhgnSimati2"));
+//				h.put("nilaiha_tarikhmati", getParam("txtNilaiTarikhMati"));
+//				h.put("nilaiha_tarikhmohon", getParam("txtNilaiTarikhMohon"));
+//				h.put("catatan", getParam("txtCatatan"));
+//				h.put("nama_saham", getParam("nama_saham"));
+//				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
+//				h.put("butiran", getParam("butiran"));
+//				listabc.addElement(h);
+//
+//				this.context.put("DataHa", listabc);
+//
+//				logic_A.setDataHa(mati);
+//				listppkha = logic_A.getDataHa();
+//				this.context.put("listHa", listppkha);
+//				int countList = listppkha.size();
+//				this.context.put("jumList", countList);
+//
+//				logic_A.setSumDataHa(mati);
+//				sumppkha = logic_A.getSumDataHa();
+//				this.context.put("jumppkha", sumppkha);
+//
+//				logic_B.setDataHta(id);
+//				listppkhta = logic_B.getDataHta();
+//				this.context.put("listhta2", listppkhta);
+//				int countListhta = listppkhta.size();
+//				this.context.put("jumListhta2", countList);
+//
+//				logic_B.setDataHa(id);
+//				listppkha2 = logic_B.getHa2();
+//				this.context.put("listHa2", listppkha2);
+//				int countListha2 = listppkha2.size();
+//				this.context.put("jumListHa2", countListha2);
+//
+//				logic_A.updateDataNilai(id, mati, idUser);
+//
+//				logic_A.setOverallSum(mati);
+//				overallnilai = logic_A.getOverallSum();
+//				this.context.put("overall", overallnilai);
+//
+//				logic_A.setOverallSumMati(mati);
+//				overallnilaimati = logic_A.getOverallSumMati();
+//				this.context.put("overallmati", overallnilaimati);
+//
+//				listJenisha = logic_A.getJenisHa();
+//				this.context.put("ViewJenisHa", listJenisha);
+//
+//				this.context.put("showbuttontambah", "yes");
+//				this.context.put("tutup", "yes");
+//				this.context.put("EventStatus", 3);
+//				this.context.put("id", id);
+//				this.context.put("id2", id2);
+//				this.context.put("idha", idha);
+//				this.context.put("id", id);
+//				this.context.put("id1", id1);
+//				this.context.put("showadd", "1");
+//			}
 			context.put("DATEUTIL", new DateUtil());
 			String id = getParam("idPermohonan");
 			this.context.put("selectedTabatas", 2);
@@ -4218,15 +3973,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("selectedTabtepi", 0);
 			this.context.put("selectLevelTab", 0);
 			// logic_A.setData_online(id);
-			list = logic_A.setData_online(id, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list = logic_A.setData_online(id, idUser);
 			headerppk_baru(session, id, "Y", "", "T");
 			this.context.put("View", list);
 
 			// String id = getParam("idPermohonan");
 			String mati = getParam("id_Permohonansimati");
-			logic_A.updateDataNilai(id, mati, (String) session
-					.getAttribute("_ekptg_user_id"));
+			logic_A.updateDataNilai(id, mati, idUser);
 
 			hideTabPengesahan_simati = checkEmptyField_simati(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_simati", hideTabPengesahan_simati);
@@ -4235,10 +3988,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
 
-			vm = "app/ppk/frmPrmhnnSek8HA.jsp";
-		}
-
-		else if ("Peguam".equals(submit)) {
+			//vm = "app/ppk/frmPrmhnnSek8HA.jsp";
+			vm = "app/ppk/harta/frmPermohonanHA.jsp";
+		
+		}else if ("Peguam".equals(submit)) {
 
 			String id = getParam("idPermohonan");
 			String id2 = getParam("idPemohon");
@@ -4265,32 +4018,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("listBandarTetapbyNegeri", "");
 
 			if ("Peguamview".equals(mode)) {
-				/*
-				 * String id = getParam("idPermohonan"); String id2 =
-				 * getParam("idPemohon"); String mati =
-				 * getParam("id_Permohonansimati"); logic.setDataPeguam(id2);
-				 * listpeguam=logic.getDataPeguam();
-				 * this.context.put("listPenting",listpeguam);
-				 */
-
 				this.context.put("button_Kembali", "yes");
 				this.context.put("button_tambah", "yes");
 
-			}
-
-			else if ("peguam_baru".equals(mode)) {
-				/*
-				 * String id = getParam("idPermohonan"); String id2 =
-				 * getParam("idPemohon"); logic.setCheckPeguam_online(id);
-				 * listCheckPeguam = logic.getCheckPeguam_online();
-				 * this.context.put("listCheckPeguam", listCheckPeguam);
-				 * 
-				 * logic.setDataPeguam(id2);
-				 * listpeguamcheck=logic.getDataPeguam();
-				 * logic.setDataPeguam(id2); listpeguam=logic.getDataPeguam();
-				 * this.context.put("listPenting",listpeguam);
-				 */
-
+			}else if ("peguam_baru".equals(mode)) {
 				this.context.put("add_new_peguam", "yes");
 				this.context.put("insertbaru", "yes");
 
@@ -4313,6 +4044,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 
 				this.context.put("add_new_peguam", "yes");
+				
 			} else if ("getBandar".equals(mode)) {
 
 				Hashtable h = new Hashtable();
@@ -4348,14 +4080,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("button_tambah", "yes");
 				this.context.put("add_new_peguam", "update");
 
-			}
-
-			else if ("kemaskini_peguam".equals(mode)) {
-				/*
-				 * String id = getParam("idPermohonan"); String id2 =
-				 * getParam("idPemohon");
-				 */
-				// int idpeguam = Integer.parseInt(getParam("idPeguam"));
+			}else if ("kemaskini_peguam".equals(mode)) {
 				logic.setDataPeguamX(getParam("idPeguam"));
 				listpeguamX = logic.getDataPeguamX();
 				this.context.put("listpeguamX", listpeguamX);
@@ -4377,9 +4102,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("button_tambah", "yes");
 				this.context.put("add_new_peguam", "update");
 
-			}
-
-			else if ("GetPeguam".equals(mode)) {
+			}else if ("GetPeguam".equals(mode)) {
 				/*
 				 * String id = getParam("idPermohonan"); String id2 =
 				 * getParam("idPemohon");
@@ -4434,9 +4157,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("button_Kembali", "yes");
 				this.context.put("button_tambah", "yes");
 
-			}
-
-			else if ("simpan_peguam".equals(mode)) {
+			}else if ("simpan_peguam".equals(mode)) {
 
 				String id2X = getParam("idPemohon");
 				// int idpeguam = Integer.parseInt(getParam("idPeguam"));
@@ -4469,8 +4190,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			}
 			String idX = getParam("idPermohonan");
-			list = logic_A.setData_online(idX, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list = logic_A.setData_online(idX, idUser);
 			headerppk_baru(session, idX, "Y", "", "T");
 
 			this.context.put("selectedTabatas", 0);
@@ -4486,9 +4206,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
 			vm = "app/ppk/frmPrmhnnSek8Peguam.jsp";
 
-		}
-
-		else if ("nilai_harta".equals(submit)) {
+		}else if ("nilai_harta".equals(submit)) {
 			this.context.put("id", "");
 			this.context.put("id2", "");
 			this.context.put("id1", "");
@@ -4509,17 +4227,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			View_pengesahan_pemohonan = logic_A.setData_online(getParam("idPermohonan"), (String) session.getAttribute("_ekptg_user_id"));
 			headerppk_baru(session, getParam("idPermohonan"), "Y", "", "T");
 			this.context.put("View_pengesahan_pemohonan", View_pengesahan_pemohonan);
-
+			
 			Hashtable n = (Hashtable) list.get(0);
 			String id1 = (String) n.get("idsimati");
 			String id2 = (String) n.get("idPemohon");
 			String id = getParam("idPermohonan");
-
+			//String namaPemohon = 
 			this.context.put("idStatus", (String) n.get("idstatus"));
 			this.context.put("IdPermohonan", id);
 			this.context.put("idSimati", id1);
 			this.context.put("idPemohon", id2);
-
+			
 			if (n.get("nopermohonanonline") == "") n.put("nopermohonanonline", "");
 			this.context.put("nopermohonanonline", n.get("nopermohonanonline").toString());
 
@@ -4535,7 +4253,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("saizData", listNegeriByPpkUnit.size());
 
 			if (n.get("idnegerimhn").toString() != "") {
-				myLogger.info("part 1");
+				//myLogger.info("part 1");
 				int idnegerimhn = Integer.parseInt(n.get("idnegerimhn")
 						.toString());
 				int iddaerahmhn = Integer.parseInt(n.get("iddaerahmhn")
@@ -4546,31 +4264,25 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("negerimhn", idnegerimhn);
 				this.context.put("daerahmhn", iddaerahmhn);
 
-				listnegeribydaerah = logiconline.getListDaerahByhta(
-						idnegerimhn, id1);
-
+				listnegeribydaerah = logiconline.getListDaerahByhta(idnegerimhn, id1);
 				this.context.put("selectedDaerah", listnegeribydaerah);
 
-				Vector getPpkAddressNegerimhn = logiconline
-						.getListDaerahByPpkUnitSelected(idnegerimhn,
-								iddaerahmhn);
-				this.context
-				.put("selectedDaerahByUnit", getPpkAddressNegerimhn);
+				Vector getPpkAddressNegerimhn = logiconline.getListDaerahByPpkUnitSelected(idnegerimhn,iddaerahmhn);
+				this.context.put("selectedDaerahByUnit", getPpkAddressNegerimhn);
 
-				Vector getAddressPpkDaerahmhn = logiconline.getAddress(Integer
-						.parseInt(n.get("iddaerahmhn").toString()));
+				Vector getAddressPpkDaerahmhn = logiconline.getAddress(Integer.parseInt(n.get("iddaerahmhn").toString()));
 				this.context.put("selectedPpkAddress", getAddressPpkDaerahmhn);
 				context.put("disabled", "readonly class = \"disabled\"");
 				context.put("readonly", "readonly");
 
 			} else if (n.get("idnegerimhn").toString() != ""
 					&& n.get("iddaerahmhn").toString() != "") {
-				myLogger.info("part 2");
+				//myLogger.info("part 2");
 				Vector getAddressPpkDaerahmhn = logiconline.getAddress(Integer
 						.parseInt(n.get("iddaerahmhn").toString()));
 				this.context.put("selectedPpkAddress", getAddressPpkDaerahmhn);
 			} else {
-				myLogger.info("part 3");
+				//myLogger.info("part 3");
 				initInputPpkPengesahan();
 			}
 
@@ -4613,8 +4325,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					String poskod = m.get("poskod").toString();
 					String notel = m.get("notel").toString();
 					String nofax = m.get("nofax").toString();
-					String notel_sambungan = m.get("notel_sambungan")
-							.toString();
+					String notel_sambungan = m.get("notel_sambungan").toString();
 					String negeriNama = m.get("negerinama").toString();
 
 					this.context.put("namapejabat", namaPejabat);
@@ -4632,6 +4343,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("selectedPpkAddress", getPpkAddress);
 					initInputPpkPengesahan();
 				}
+				
 			} else if ("selection_daerah".equals(mode)) {
 				initTabData();
 
@@ -4660,6 +4372,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("selNegeri", 0);
 				}
 				this.context.put("kemaskini_pejabat", "yes");
+			
 			} else if ("ppkAddressView".equals(mode)) {
 				initTabData();
 
@@ -4696,8 +4409,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				id1 = (String) n.get("idsimati");
 				id2 = (String) n.get("idPemohon");
 				id = getParam("idPermohonan");
-				System.out.println("id status permohonan :"
-						+ (String) n.get("idstatus"));
+				//System.out.println("id status permohonan :" + (String) n.get("idstatus"));
 				this.context.put("idStatus", (String) n.get("idstatus"));
 				this.context.put("command", "cetak_surat");
 				String idPermohonan = getParam("idPermohonan");
@@ -4706,6 +4418,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					temp = "0";
 				}
 				String temp2 = getParam("socDaerahPengesahan");
+				if(temp2.equals("1613161"))
+				{
+					temp2 = "121";
+					//System.out.println("temp2 >>> "+temp2);
+				}
 				if (temp2.equals("")) {
 					temp2 = "0";
 				}
@@ -4721,8 +4438,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (bolehsimpan.equals("yes")) {
 					logiconline.insertDaerahMohon(idnegeri, iddaerah,
 							idPermohonan, (String) session
-							.getAttribute("_ekptg_user_id"), (String) t
-							.get("noidfail"));
+									.getAttribute("_ekptg_user_id"), (String) t
+									.get("noidfail"));
 					this.context.put("appear_skrin_info", "hantar");
 				}
 				Vector getAddressPpk = logiconline.getAddress(iddaerah);
@@ -4756,8 +4473,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				id1 = (String) n.get("idsimati");
 				id2 = (String) n.get("idPemohon");
 				id = getParam("idPermohonan");
-				System.out.println("id status permohonan :"
-						+ (String) n.get("idstatus"));
+				System.out.println("id status permohonan :"+ (String) n.get("idstatus"));
+
 				this.context.put("idStatus", (String) n.get("idstatus"));
 				this.context.put("command", "cetak_surat");
 				String idPermohonan = getParam("idPermohonan");
@@ -4773,8 +4490,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				int iddaerah = Integer.parseInt(temp2);
 				this.context.put("selNegeri", getParam("socNegeriPengesahan"));
 				this.context.put("selDaerah", getParam("socDaerahPengesahan"));
-				context.put("disabledDropdown",
-						"disabled readonly class = \"disabled\"");
+				context.put("disabledDropdown","disabled readonly class = \"disabled\"");
 				context.put("readonly", "readonly");
 				Vector idfail = logiconline.getIdFail(idPermohonan);
 				Hashtable t = (Hashtable) idfail.get(0);
@@ -4785,15 +4501,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				Vector getAddressPpk = logiconline.getAddress(iddaerah);
 				this.context.put("selectedPpkAddress", getAddressPpk);
 
-				this.context.put("idStatus", logiconline
-						.getIdStatus(getParam("idPermohonan")));
+				this.context.put("idStatus", logiconline.getIdStatus(getParam("idPermohonan")));
 
 				list = logiconline.semakDataSimati(getParam("idPermohonan"));
 				Hashtable nx = (Hashtable) list.get(0);
-				int idnegerimhn = Integer.parseInt(nx.get("idnegerimhn")
-						.toString());
-				int iddaerahmhn = Integer.parseInt(nx.get("iddaerahmhn")
-						.toString());
+				int idnegerimhn = Integer.parseInt(nx.get("idnegerimhn").toString());
+				int iddaerahmhn = Integer.parseInt(nx.get("iddaerahmhn").toString());
 
 				listnegeribydaerah = logiconline.getListDaerahByhta(Integer
 						.parseInt(getParam("socNegeriPengesahan")),id1);
@@ -4805,9 +4518,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 				// vm = "app/ppk/frmPrmhnnBorangAPengesahan.jsp";
 
-			}
-
-			else if ("simpan_pejabat".equals(mode)) {
+			}else if ("simpan_pejabat".equals(mode)) {
 				initTabData();
 
 				list = logiconline.semakDataSimati(getParam("idPermohonan"));
@@ -4816,8 +4527,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				id1 = (String) n.get("idsimati");
 				id2 = (String) n.get("idPemohon");
 				id = getParam("idPermohonan");
-				System.out.println("id status permohonan :"
-						+ (String) n.get("idstatus"));
+				System.out.println("id status permohonan :"+ (String) n.get("idstatus"));
 				this.context.put("idStatus", (String) n.get("idstatus"));
 				this.context.put("command", "cetak_surat");
 				String idPermohonan = getParam("idPermohonan");
@@ -4841,12 +4551,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (bolehsimpan.equals("yes")) {
 					logiconline.insertDaerahMohon(idnegeri, iddaerah,
 							idPermohonan, (String) session
-							.getAttribute("_ekptg_user_id"), (String) t
-							.get("noidfail"));
+									.getAttribute("_ekptg_user_id"), (String) t
+									.get("noidfail"));
 					this.context.put("appear_skrin_info", "simpan");
 					View_pengesahan_pemohonan = logic_A.setData_online(
 							getParam("idPermohonan"), (String) session
-							.getAttribute("_ekptg_user_id"));
+									.getAttribute("_ekptg_user_id"));
 					headerppk_baru(session, getParam("idPermohonan"), "Y", "",
 							"T");
 					this.context.put("View_pengesahan_pemohonan",
@@ -4877,267 +4587,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				// vm = "app/ppk/frmPrmhnnBorangAPengesahan.jsp";
 
 			}
-			// vm = "app/ppk/frmPrmhnnBorangAPengesahan.jsp";
-
-			/*
-			 * if ("view_nilai_harta".equals(mode)) { String id =
-			 * getParam("idPermohonan"); String id2 = getParam("idPemohon");
-			 * String id1 = getParam("idSimati"); String mati =
-			 * getParam("id_Permohonansimati");
-			 * 
-			 * id1 = getParam("idSimati"); logic_A.updateDataNilai(id, mati,
-			 * (String) session.getAttribute("_ekptg_user_id"));
-			 * 
-			 * this.context.put("id", id); this.context.put("id2", id2);
-			 * this.context.put("id1", id1);
-			 * 
-			 * logic_A.setSumDataHta(mati); sumppkhta = logic_A.getSumDataHta();
-			 * this.context.put("jumppkhta", sumppkhta);
-			 * 
-			 * logic_A.setOverallSumHta(mati); sumoverallppkhta =
-			 * logic_A.getOverallSumHta(); this.context.put("jumoverallppkhta",
-			 * sumoverallppkhta);
-			 * 
-			 * logic_A.setDataHa(mati); listppkha = logic_A.getDataHa();
-			 * this.context.put("listHa", listppkha); int countList =
-			 * listppkha.size(); this.context.put("jumList", countList);
-			 * 
-			 * logic_A.setSumDataHa(mati); sumppkha = logic_A.getSumDataHa();
-			 * this.context.put("jumppkha", sumppkha);
-			 * 
-			 * 
-			 * logic_B.setDataHta(id); listppkhta = logic_B.getDataHta();
-			 * this.context.put("listhta2", listppkhta); int countListhta =
-			 * listppkhta.size(); this.context.put("jumListhta2", countList);
-			 * 
-			 * logic_B.setDataHa(id); listppkha2 = logic_B.getHa2();
-			 * this.context.put("listHa2", listppkha2); int countListha2 =
-			 * listppkha2.size(); this.context.put("jumListHa2", countListha2);
-			 * 
-			 * logic_A.setOverallSum(mati); overallnilai =
-			 * logic_A.getOverallSum(); this.context.put("overall",
-			 * overallnilai);
-			 * 
-			 * logic_A.setOverallSumMati(mati); overallnilaimati =
-			 * logic_A.getOverallSumMati(); this.context.put("overallmati",
-			 * overallnilaimati);
-			 * 
-			 * logic_B.setDataHtath(id); listppkhtath = logic_B.getHtath();
-			 * this.context.put("listHtaht2", listppkhtath); int countListhtath
-			 * = listppkhtath.size(); this.context.put("jumListHtaht",
-			 * countList);
-			 * 
-			 * this.context .put("selectNegeri",
-			 * HTML.SelectNegeri("socNegeri")); this.context.put("readmode",
-			 * "disabled"); this.context.put("show_kemaskini_button", "yes");
-			 * 
-			 * 
-			 * 
-			 * 
-			 * 
-			 * }
-			 * 
-			 * else if ("kemaskini_nilai_harta".equals(mode)) { String id =
-			 * getParam("idPermohonan"); String id2 = getParam("idPemohon");
-			 * String id1 = getParam("idSimati"); String mati =
-			 * getParam("id_Permohonansimati");
-			 * 
-			 * this.context.put("EventStatus", 4); this.context.put("id", id);
-			 * this.context.put("id1", id1);
-			 * 
-			 * logic_A.updateDataNilai(id, mati, (String)
-			 * session.getAttribute("_ekptg_user_id"));
-			 * 
-			 * logic_A.setSumDataHta(mati); sumppkhta = logic_A.getSumDataHta();
-			 * this.context.put("jumppkhta", sumppkhta);
-			 * 
-			 * logic_A.setOverallSumHta(mati); sumoverallppkhta =
-			 * logic_A.getOverallSumHta(); this.context.put("jumoverallppkhta",
-			 * sumoverallppkhta);
-			 * 
-			 * logic_A.setDataHa(mati); listppkha = logic_A.getDataHa();
-			 * this.context.put("listHa", listppkha); int countList =
-			 * listppkha.size(); this.context.put("jumList", countList);
-			 * 
-			 * logic_A.setSumDataHa(mati); sumppkha = logic_A.getSumDataHa();
-			 * this.context.put("jumppkha", sumppkha);
-			 * 
-			 * // FrmPrmhnnSek8SenaraiHTATHInternalData //
-			 * frmPrmhnnSek8SenaraiHTATHInternalData = new //
-			 * FrmPrmhnnSek8SenaraiHTATHInternalData(); logic_B.setDataHta(id);
-			 * listppkhta = logic_B.getDataHta(); this.context.put("listhta2",
-			 * listppkhta); int countListhta = listppkhta.size();
-			 * this.context.put("jumListhta2", countList);
-			 * 
-			 * logic_B.setDataHa(id); listppkha2 = logic_B.getHa2();
-			 * this.context.put("listHa2", listppkha2); int countListha2 =
-			 * listppkha2.size(); this.context.put("jumListHa2", countListha2);
-			 * 
-			 * logic_A.setOverallSum(mati); overallnilai =
-			 * logic_A.getOverallSum(); this.context.put("overall",
-			 * overallnilai);
-			 * 
-			 * logic_A.setOverallSumMati(mati); overallnilaimati =
-			 * logic_A.getOverallSumMati(); this.context.put("overallmati",
-			 * overallnilaimati);
-			 * 
-			 * logic_B.setDataHtath(id); listppkhtath = logic_B.getHtath();
-			 * this.context.put("listHtaht2", listppkhtath); int countListhtath
-			 * = listppkhtath.size(); this.context.put("jumListHtaht",
-			 * countList);
-			 * 
-			 * } else if ("hantar_harta".equals(mode)) { String id =
-			 * getParam("idPermohonan"); String id2 = getParam("idPemohon");
-			 * String id1 = getParam("idSimati"); String mati =
-			 * getParam("id_Permohonansimati");
-			 * 
-			 * String idstatus = getParam("idstatus"); //
-			 * if(bolehsimpan.equals("yes")){ updateStatus(session); // }
-			 * 
-			 * this.context.put("EventStatus", 1); this.context.put("id", id);
-			 * this.context.put("id1", id1);
-			 * 
-			 * String[] idHta = this.request.getParameterValues("idHta");
-			 * String[] idHa = this.request.getParameterValues("idHa"); String[]
-			 * HtaNilaiTarikhMohon = this.request
-			 * .getParameterValues("txtHtaNilaiTarikhMohon"); String[]
-			 * HtaNilaiTarikhMati = this.request
-			 * .getParameterValues("txtHtaNilaiTarikhMati"); String[]
-			 * HaNilaiTarikhMohon = this.request
-			 * .getParameterValues("txtHaNilaiTarikhMohon"); String[]
-			 * HaNilaiTarikhMati = this.request
-			 * .getParameterValues("txtHaNilaiTarikhMati");
-			 * 
-			 * if (idHta != null) { for (int i = 0; i < idHta.length; i++) { for
-			 * (int i2 = 0; i2 < HtaNilaiTarikhMohon.length; i2++) { for (int i3
-			 * = 0; i3 < HtaNilaiTarikhMati.length; i3++) {
-			 * logic.updateNilaiHartaBaruHta(idHta[i], HtaNilaiTarikhMohon[i],
-			 * HtaNilaiTarikhMati[i], String.valueOf(mati), String.valueOf(id));
-			 * } } } } if (idHa != null) { for (int i = 0; i < idHa.length; i++)
-			 * { for (int i2 = 0; i2 < HaNilaiTarikhMohon.length; i2++) { for
-			 * (int i3 = 0; i3 < HaNilaiTarikhMati.length; i3++) {
-			 * logic.updateNilaiHartaBaruHa(idHa[i], HaNilaiTarikhMohon[i],
-			 * HaNilaiTarikhMati[i], String.valueOf(mati), String.valueOf(id));
-			 * } } } } logic_A.updateDataNilai(id, mati, (String)
-			 * session.getAttribute("_ekptg_user_id"));
-			 * 
-			 * logic_A.setSumDataHta(mati); sumppkhta = logic_A.getSumDataHta();
-			 * this.context.put("jumppkhta", sumppkhta);
-			 * 
-			 * logic_A.setOverallSumHta(mati); sumoverallppkhta =
-			 * logic_A.getOverallSumHta(); this.context.put("jumoverallppkhta",
-			 * sumoverallppkhta);
-			 * 
-			 * logic_A.setDataHa(mati); listppkha = logic_A.getDataHa();
-			 * this.context.put("listHa", listppkha); int countList =
-			 * listppkha.size(); this.context.put("jumList", countList);
-			 * 
-			 * logic_A.setSumDataHa(mati); sumppkha = logic_A.getSumDataHa();
-			 * this.context.put("jumppkha", sumppkha);
-			 * 
-			 * // FrmPrmhnnSek8SenaraiHTATHInternalData //
-			 * frmPrmhnnSek8SenaraiHTATHInternalData = new //
-			 * FrmPrmhnnSek8SenaraiHTATHInternalData();
-			 * 
-			 * logic_B.setDataHta(id); listppkhta = logic_B.getDataHta();
-			 * this.context.put("listhta2", listppkhta); int countListhta =
-			 * listppkhta.size(); this.context.put("jumListhta2", countList);
-			 * 
-			 * logic_B.setDataHa(id); listppkha2 = logic_B.getHa2();
-			 * this.context.put("listHa2", listppkha2); int countListha2 =
-			 * listppkha2.size(); this.context.put("jumListHa2", countListha2);
-			 * 
-			 * logic_A.setOverallSum(mati); overallnilai =
-			 * logic_A.getOverallSum(); this.context.put("overall",
-			 * overallnilai);
-			 * 
-			 * logic_A.setOverallSumMati(mati); overallnilaimati =
-			 * logic_A.getOverallSumMati(); this.context.put("overallmati",
-			 * overallnilaimati);
-			 * 
-			 * logic_B.setDataHtath(id); listppkhtath = logic_B.getHtath();
-			 * this.context.put("listHtaht2", listppkhtath); int countListhtath
-			 * = listppkhtath.size(); this.context.put("jumListHtaht",
-			 * countList);
-			 * 
-			 * }
-			 * 
-			 * else if ("simpan_nilai_harta".equals(mode)) { String id =
-			 * getParam("idPermohonan"); String id2 = getParam("idPemohon");
-			 * String id1 = getParam("idSimati"); String mati =
-			 * getParam("id_Permohonansimati");
-			 * 
-			 * this.context.put("EventStatus", 1); this.context.put("id", id);
-			 * this.context.put("id1", id1);
-			 * 
-			 * String[] idHta = this.request.getParameterValues("idHta");
-			 * String[] idHa = this.request.getParameterValues("idHa"); String[]
-			 * HtaNilaiTarikhMohon = this.request
-			 * .getParameterValues("txtHtaNilaiTarikhMohon"); String[]
-			 * HtaNilaiTarikhMati = this.request
-			 * .getParameterValues("txtHtaNilaiTarikhMati"); String[]
-			 * HaNilaiTarikhMohon = this.request
-			 * .getParameterValues("txtHaNilaiTarikhMohon"); String[]
-			 * HaNilaiTarikhMati = this.request
-			 * .getParameterValues("txtHaNilaiTarikhMati");
-			 * 
-			 * if (idHta != null) { for (int i = 0; i < idHta.length; i++) { for
-			 * (int i2 = 0; i2 < HtaNilaiTarikhMohon.length; i2++) { for (int i3
-			 * = 0; i3 < HtaNilaiTarikhMati.length; i3++) {
-			 * logic.updateNilaiHartaBaruHta(idHta[i], HtaNilaiTarikhMohon[i],
-			 * HtaNilaiTarikhMati[i], String.valueOf(mati), String.valueOf(id));
-			 * } } } } if (idHa != null) { for (int i = 0; i < idHa.length; i++)
-			 * { for (int i2 = 0; i2 < HaNilaiTarikhMohon.length; i2++) { for
-			 * (int i3 = 0; i3 < HaNilaiTarikhMati.length; i3++) {
-			 * logic.updateNilaiHartaBaruHa(idHa[i], HaNilaiTarikhMohon[i],
-			 * HaNilaiTarikhMati[i], String.valueOf(mati), String.valueOf(id));
-			 * } } } } logic_A.updateDataNilai(id, mati, (String)
-			 * session.getAttribute("_ekptg_user_id"));
-			 * 
-			 * logic_A.setSumDataHta(mati); sumppkhta = logic_A.getSumDataHta();
-			 * this.context.put("jumppkhta", sumppkhta);
-			 * 
-			 * logic_A.setOverallSumHta(mati); sumoverallppkhta =
-			 * logic_A.getOverallSumHta(); this.context.put("jumoverallppkhta",
-			 * sumoverallppkhta);
-			 * 
-			 * logic_A.setDataHa(mati); listppkha = logic_A.getDataHa();
-			 * this.context.put("listHa", listppkha); int countList =
-			 * listppkha.size(); this.context.put("jumList", countList);
-			 * 
-			 * logic_A.setSumDataHa(mati); sumppkha = logic_A.getSumDataHa();
-			 * this.context.put("jumppkha", sumppkha);
-			 * 
-			 * // FrmPrmhnnSek8SenaraiHTATHInternalData //
-			 * frmPrmhnnSek8SenaraiHTATHInternalData = new //
-			 * FrmPrmhnnSek8SenaraiHTATHInternalData();
-			 * 
-			 * logic_B.setDataHta(id); listppkhta = logic_B.getDataHta();
-			 * this.context.put("listhta2", listppkhta); int countListhta =
-			 * listppkhta.size(); this.context.put("jumListhta2", countList);
-			 * 
-			 * logic_B.setDataHa(id); listppkha2 = logic_B.getHa2();
-			 * this.context.put("listHa2", listppkha2); int countListha2 =
-			 * listppkha2.size(); this.context.put("jumListHa2", countListha2);
-			 * 
-			 * logic_A.setOverallSum(mati); overallnilai =
-			 * logic_A.getOverallSum(); this.context.put("overall",
-			 * overallnilai);
-			 * 
-			 * logic_A.setOverallSumMati(mati); overallnilaimati =
-			 * logic_A.getOverallSumMati(); this.context.put("overallmati",
-			 * overallnilaimati);
-			 * 
-			 * logic_B.setDataHtath(id); listppkhtath = logic_B.getHtath();
-			 * this.context.put("listHtaht2", listppkhtath); int countListhtath
-			 * = listppkhtath.size(); this.context.put("jumListHtaht",
-			 * countList);
-			 * 
-			 * }
-			 */
-
-			list = logic_A.setData_online(getParam("idPermohonan"),
-					(String) session.getAttribute("_ekptg_user_id"));
+	
+			list = logic_A.setData_online(getParam("idPermohonan"),idUser);
 			headerppk_baru(session, getParam("idPermohonan"), "Y", "", "T");
 			this.context.put("View", list);
 			context.put("DATEUTIL", new DateUtil());
@@ -5151,8 +4602,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			// String id = getParam("idPermohonan");
 			String mati = getParam("id_Permohonansimati");
-			logic_A.updateDataNilai(id, mati, (String) session
-					.getAttribute("_ekptg_user_id"));
+			logic_A.updateDataNilai(id, mati, idUser);
 
 			this.context.put("masuk_skrin_pengesahan", "yes");
 			hideTabPengesahan_simati = checkEmptyField_simati(getParam("idPermohonan"));
@@ -5164,7 +4614,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			vm = "app/ppk/frmPrmhnnSek8NilaianHarta.jsp";
 
-			// TODO START HTAAM
+		// START HTAAM
 		} else if ("Htaam".equals(submit)) {
 			this.context.put("add_new_harta", "");
 			this.context.put("buttonhtaam", "");
@@ -5191,717 +4641,685 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("listDaerahbyNegeri", "");
 			this.context.put("listMukimbyDaerah", "");
 			this.context.put("listnegeri", "");
-
-			if ("Htaamview".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-				this.context.put("tambahharta", "yes");
-				this.context.put("kembaliharta", "yes");
-
-			}
-
-			else if ("add_new".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-
-				this.context.put("readmodedaerah", "readmode");
-				this.context.put("readmodemukim", "readmode");
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-				this.context.put("add_new_harta", "yes");
-				this.context.put("buttonhtaam", "Tambah");
-
-			}
-
-			else if ("masukkan".equals(mode)) {
-
-				String id = getParam("idPermohonan");
-				String mati = getParam("id_Permohonansimati");
-				if (bolehsimpan.equals("yes")) {
-					addHtaam(session);
-					this.context.put("appear_skrin_info", "simpan");
-				}
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-				this.context.put("tambahharta", "yes");
-				this.context.put("kembaliharta", "yes");
-
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-			}
-
-			else if ("negerichange".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-				this.context.put("noHakmilik", getParam("txtNoHakmilikHtaam"));
-				this.context.put("idSimati", getParam("idSimati"));
-				this.context.put("nopt", getParam("txtNoPTHtaam"));
-				this.context.put("nilai_Hta_memohon",
-						getParam("txtNilaiTarikhMohonHtaa"));
-				this.context.put("nilai_Hta_mati",
-						getParam("txtNilaiTarikhMatiHtaam"));
-				this.context.put("kategori", getParam("socKategoriTanahHtaam"));
-				this.context.put("jenishakmilik",
-						getParam("socJenisHakmilikHtaam"));
-				this.context.put("pemilikan",
-						getParam("socStatusPemilikanHtaam"));
-				this.context.put("luashmp", getParam("txtLuasHMpHtaam"));
-				this.context.put("luasasal", getParam("txtLuasAsalHtaam"));
-				this.context.put("nopajakan", getParam("txtNoPajakan"));
-				this.context.put("jenistanah", getParam("socJenisTanahHtaam"));
-				this.context.put("basimati", getParam("txtBahagianSimati1"));
-				this.context.put("bbsimati", getParam("txtBahagianSimati2"));
-				this.context.put("tanggungan", getParam("txtTanggunganHtaam"));
-				this.context.put("jenisluas", getParam("socJenisLuasHtaam"));
-				this.context.put("catatan", getParam("txtCatatanHtaam"));
-				this.context.put("noperserahan", getParam("txtNoPersHtaam"));
-				this.context.put("negeri", idnegeri);
-				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-
-				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
-				this.context.put("sekatan", getParam("txtSekatan"));
-				this.context.put("syaratNyata", getParam("txtSyaratNyata"));
-
-				if (getParam("socNegeriHtaam") != ""
-						&& getParam("socNegeriHtaam") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriHtaam")));
-					this.context.put("listBandarSuratbyNegeri", s3);
-					System.out.println("listBandarSuratbyNegeri30");
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-					System.out.println("listBandarSuratbyNegeri30a");
-				}
-			}
-
-			else if ("daerahchange".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				int iddaerah = Integer.parseInt(getParam("socDaerahHtaam"));
-				int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-				listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-				this.context.put("listMukimbyDaerah", listmukim);
-
-				this.context.put("noHakmilik", getParam("txtNoHakmilikHtaam"));
-				this.context.put("idSimati", getParam("idSimati"));
-				this.context.put("nopt", getParam("txtNoPTHtaam"));
-				this.context.put("nilai_Hta_memohon",
-						getParam("txtNilaiTarikhMohonHtaa"));
-				this.context.put("nilai_Hta_mati",
-						getParam("txtNilaiTarikhMatiHtaam"));
-				this.context.put("kategori", getParam("socKategoriTanahHtaam"));
-				this.context.put("jenishakmilik",
-						getParam("socJenisHakmilikHtaam"));
-				this.context.put("pemilikan",
-						getParam("socStatusPemilikanHtaam"));
-				this.context.put("luashmp", getParam("txtLuasHMpHtaam"));
-				this.context.put("luasasal", getParam("txtLuasAsalHtaam"));
-				this.context.put("nopajakan", getParam("txtNoPajakan"));
-				this.context.put("jenistanah", getParam("socJenisTanahHtaam"));
-				this.context.put("basimati", getParam("txtBahagianSimati1"));
-				this.context.put("bbsimati", getParam("txtBahagianSimati2"));
-				this.context.put("tanggungan", getParam("txtTanggunganHtaam"));
-				this.context.put("jenisluas", getParam("socJenisLuasHtaam"));
-				this.context.put("catatan", getParam("txtCatatanHtaam"));
-				this.context.put("noperserahan", getParam("txtNoPersHtaam"));
-				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("negeri", idnegeri);
-				this.context.put("daerah", iddaerah);
-				this.context.put("show_htaa_add_table", "yes");
-
-				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
-				this.context.put("sekatan", getParam("txtSekatan"));
-				this.context.put("syaratNyata", getParam("txtSyaratNyata"));
-
-			} else if ("checkWujudLot".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				Hashtable getLot = null;
-				getLot = mainheader.getWujudLot(mati, getParam("txtNoPTHtaam"),
-						getParam("socNegeriHtaam"), getParam("socDaerahHtaam"),
-						getParam("socMukimHtaam"),
-						getParam("socJenisHakmilikHtaam"),
-						getParam("txtNoHakmilikHtaam"),
-						getParam("txtNoPTHtaam"));
-				this.context.put("nopt", getParam("txtNoPTHtaam"));
-				myLogger.info("---- hashtable get LOT :"
-						+ (String) getLot.get("ID_HTA"));
-
-				if ((String) getLot.get("ID_HTA") != null) {
-					this.context.put("noHakmilik", (String) getLot
-							.get("NO_HAKMILIK"));
-					this.context.put("idSimati", (String) getLot
-							.get("ID_SIMATI"));
-					this.context.put("nilai_Hta_memohon", (String) getLot
-							.get("NILAI_HTA_TARIKHMOHON"));
-					this.context.put("nilai_Hta_mati", (String) getLot
-							.get("NILAI_HTA_TARIKHMATI"));
-					this.context.put("kategori", (String) getLot
-							.get("ID_KATEGORI"));
-					this.context.put("jenishakmilik", (String) getLot
-							.get("ID_JENISHM"));
-					this.context.put("pemilikan", (String) getLot
-							.get("STATUS_PEMILIKAN"));
-					this.context
-					.put("luashmp", (String) getLot.get("LUAS_HMP"));
-					this.context.put("luasasal", (String) getLot.get("LUAS"));
-					this.context.put("nopajakan", (String) getLot
-							.get("NO_PAJAKAN"));
-					this.context.put("jenistanah", (String) getLot
-							.get("JENIS_TNH"));
-					this.context.put("basimati", (String) getLot
-							.get("BA_SIMATI"));
-					this.context.put("bbsimati", (String) getLot
-							.get("BB_SIMATI"));
-					this.context.put("tanggungan", (String) getLot
-							.get("TANGGUNGAN"));
-					this.context.put("jenisluas", (String) getLot
-							.get("ID_LUAS"));
-					this.context.put("catatan", (String) getLot.get("CATATAN"));
-					this.context.put("noperserahan", (String) getLot
-							.get("NO_PERSERAHAN"));
-					this.context.put("FLAG_DAFTAR", (String) getLot
-							.get("FLAG_DAFTAR"));
-					if (!((String) getLot.get("ID_NEGERI").toString())
-							.equals("")) {
-						int idnegeri = Integer.parseInt((String) getLot
-								.get("ID_NEGERI"));
-						listnegeribydaerah = logic_A
-								.getListDaerahbyNegeri(idnegeri);
-						this.context.put("listDaerahbyNegeri",
-								listnegeribydaerah);
-						this.context.put("negeri", idnegeri);
-					} else {
-						this.context.put("listDaerahbyNegeri", "");
-						this.context.put("negeri", "");
-					}
-					if (!((String) getLot.get("ID_DAERAH").toString())
-							.equals("")) {
-						int iddaerah = Integer.parseInt((String) getLot
-								.get("ID_DAERAH"));
-						listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-						this.context.put("listMukimbyDaerah", listmukim);
-						this.context.put("daerah", iddaerah);
-					} else {
-						this.context.put("listMukimbyDaerah", "");
-						this.context.put("daerah", "");
-					}
-					if (!((String) getLot.get("ID_MUKIM").toString())
-							.equals("")) {
-						int idmukim = Integer.parseInt((String) getLot
-								.get("ID_MUKIM"));
-						this.context.put("mukim", idmukim);
-					} else {
-						this.context.put("mukim", "");
-					}
-					this.context.put("CheckWujudLot", "Y");
-				} else {
-					if (!getParam("socNegeriHtaam").equals("")) {
-						int idnegeri = Integer
-								.parseInt(getParam("socNegeriHtaam"));
-						listnegeribydaerah = logic_A
-								.getListDaerahbyNegeri(idnegeri);
-						this.context.put("listDaerahbyNegeri",
-								listnegeribydaerah);
-						this.context.put("negeri", idnegeri);
-					} else {
-						this.context.put("listDaerahbyNegeri", "");
-						this.context.put("negeri", "");
-					}
-					if (!getParam("socDaerahHtaam").equals("")) {
-						int iddaerah = Integer
-								.parseInt(getParam("socDaerahHtaam"));
-						listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-						this.context.put("listMukimbyDaerah", listmukim);
-						this.context.put("daerah", iddaerah);
-					} else {
-						this.context.put("listMukimbyDaerah", "");
-						this.context.put("daerah", "");
-					}
-					if (!getParam("socMukimHtaam").equals("")) {
-						int idmukim = Integer
-								.parseInt(getParam("socMukimHtaam"));
-						this.context.put("mukim", idmukim);
-					} else {
-						this.context.put("mukim", "");
-					}
-					this.context.put("noHakmilik",
-							getParam("txtNoHakmilikHtaam"));
-					this.context.put("idSimati", getParam("idSimati"));
-					// this.context.put("nopt", getParam("txtNoPTHtaam"));
-					this.context.put("nilai_Hta_memohon",
-							getParam("txtNilaiTarikhMohonHtaa"));
-					this.context.put("nilai_Hta_mati",
-							getParam("txtNilaiTarikhMatiHtaam"));
-					this.context.put("kategori",
-							getParam("socKategoriTanahHtaam"));
-					this.context.put("jenishakmilik",
-							getParam("socJenisHakmilikHtaam"));
-					this.context.put("pemilikan",
-							getParam("socStatusPemilikanHtaam"));
-					this.context.put("luashmp", getParam("txtLuasHMpHtaam"));
-					this.context.put("luasasal", getParam("txtLuasAsalHtaam"));
-					this.context.put("nopajakan", getParam("txtNoPajakan"));
-					this.context.put("jenistanah",
-							getParam("socJenisTanahHtaam"));
-					this.context
-					.put("basimati", getParam("txtBahagianSimati1"));
-					this.context
-					.put("bbsimati", getParam("txtBahagianSimati2"));
-					this.context.put("tanggungan",
-							getParam("txtTanggunganHtaam"));
-					this.context
-					.put("jenisluas", getParam("socJenisLuasHtaam"));
-					this.context.put("catatan", getParam("txtCatatanHtaam"));
-					this.context
-					.put("noperserahan", getParam("txtNoPersHtaam"));
-					this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-					this.context.put("CheckWujudLot", "T");
-				}
-
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-
-			} else if ("negerichangeup".equals(mode)) {
-				v = new Vector();
-				String mati = getParam("id_Permohonansimati");
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-				int idnegeri = Integer.parseInt(getParam("socNegeriHtaamUp"));
-				this.context.put("negeriup", idnegeri);
-				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-				if (!getParam("socNegeriHtaamUp").equals("")
-						&& !getParam("socNegeriHtaamUp").equals("0")) {
-					Vector s4 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriHtaamUp")));
-					this.context.put("listBandarSuratbyNegeri", s4);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				Hashtable h = new Hashtable();
-				// this.context.put("idhta", "");
-				h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
-				h.put("idSimati", getParam("idSimati"));
-				h.put("idhta", getParam("id_htaam"));
-				h.put("nopt", getParam("txtNoPTHtaamUp"));
-				h.put("nilai_Hta_memohon", getParam("txtNilaiTarikhMohonHt"));
-				h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamUpd"));
-				h.put("kategori", getParam("socKategoriTanahHtaamUp"));
-				h.put("jenishakmilik", getParam("socJenisHakmilikHtaamUp"));
-				h.put("pemilikan", getParam("socStatusPemilikanHtaamUpd"));
-				h.put("negeri", idnegeri);
-				h.put("daerah", "");
-				h.put("mukim", "");
-				// this.context.put("mukim", getParam("socMukimHtaam"));
-				h.put("luashmp", getParam("txtLuasHMpHtaamUpd"));
-				h.put("luasasal", getParam("txtLuasAsalHtaamUpd"));
-				// this.context.put("nocagaran", "");
-				h.put("nopajakan", getParam("txtNoPajakanUp"));
-				h.put("jenistanah", getParam("socJenisTanahHtaamUpd"));
-				h.put("basimati", getParam("txtBahagianSimati1Up"));
-				h.put("bbsimati", getParam("txtBahagianSimati2Up"));
-				// this.context.put("jenishta","");
-				h.put("tanggungan", getParam("txtTanggunganHtaamUp"));
-				h.put("jenisluas", getParam("socJenisLuasHtaamUpd"));
-				h.put("catatan", getParam("txtCatatanHt"));
-				h.put("noperserahan", getParam("txtNoPersHtaamUp"));
-				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-
-				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
-				h.put("sekatan", getParam("txtSekatan"));
-				h.put("syaratNyata", getParam("txtSyaratNyata"));
-
-				v.addElement(h);
-				this.context.put("listHTAid", v);
-
-				this.context.put("show_save_update_htaam", "yes");
-				this.context.put("show_batal_update_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("tambahharta", "yes");
-				this.context.put("negeriup", idnegeri);
-
-			} else if ("daerahchangeup".equals(mode)) {
-				v = new Vector();
-
-				String mati = getParam("id_Permohonansimati");
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-				int idnegeri = Integer.parseInt(getParam("socNegeriHtaamUp"));
-				int iddaerah = Integer.parseInt(getParam("socDaerahHtaamUp"));
-				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-				listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-				this.context.put("listMukimbyDaerah", listmukim);
-
-				Hashtable h = new Hashtable();
-				// this.context.put("idhta", "");
-				h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
-				h.put("idSimati", getParam("idSimati"));
-				h.put("idhta", getParam("id_htaam"));
-				h.put("nopt", getParam("txtNoPTHtaamUp"));
-				h.put("nilai_Hta_memohon", getParam("txtNilaiTarikhMohonHt"));
-				h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamUpd"));
-				h.put("kategori", getParam("socKategoriTanahHtaamUp"));
-				h.put("jenishakmilik", getParam("socJenisHakmilikHtaamUp"));
-				h.put("pemilikan", getParam("socStatusPemilikanHtaamUpd"));
-				h.put("negeri", idnegeri);
-				h.put("daerah", iddaerah);
-				h.put("mukim", "");
-				// this.context.put("mukim", getParam("socMukimHtaam"));
-				h.put("luashmp", getParam("txtLuasHMpHtaamUpd"));
-				h.put("luasasal", getParam("txtLuasAsalHtaamUpd"));
-				// this.context.put("nocagaran", "");
-				h.put("nopajakan", getParam("txtNoPajakanUp"));
-				h.put("jenistanah", getParam("socJenisTanahHtaamUpd"));
-				h.put("basimati", getParam("txtBahagianSimati1Up"));
-				h.put("bbsimati", getParam("txtBahagianSimati2Up"));
-				// this.context.put("jenishta","");
-				h.put("tanggungan", getParam("txtTanggunganHtaamUp"));
-				h.put("jenisluas", getParam("socJenisLuasHtaamUpd"));
-				h.put("catatan", getParam("txtCatatanHt"));
-				h.put("noperserahan", getParam("txtNoPersHtaamUp"));
-				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-
-				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
-				h.put("sekatan", getParam("txtSekatan"));
-				h.put("syaratNyata", getParam("txtSyaratNyata"));
-
-				v.addElement(h);
-				this.context.put("listHTAid", v);
-
-				this.context.put("show_save_update_htaam", "yes");
-				this.context.put("show_batal_update_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("tambahharta", "yes");
-
-			}
-
-			else if ("getHtaam".equals(mode)) {
-
-				String idhtaam = getParam("idhtaam");
-				String mati = getParam("id_Permohonansimati");
-
-				logic.setDataHTAbyIdHtaam(idhtaam,
-						getParam("id_Permohonansimati"));
-				listHTAid = logic.getDataHTAbyIdHtaam();
-				Hashtable b = (Hashtable) listHTAid.get(0);
-				String nn = b.get("negeri").toString();
-				String dd = b.get("daerah").toString();
-				if (nn != "" && nn != "0") {
-					int idn = Integer.parseInt(nn);
-
-					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-
-				}
-				if (dd != "" && dd != "0") {
-					int idd = Integer.parseInt(dd);
-					listmukim = logic_A.getListMukimbyDaerah(idd);
-					this.context.put("listMukimbyDaerah", listmukim);
-
-				}
-
-
-				myLogger.info("ID_NEGERI : "+nn);
-				if (!nn.equals("")
-						&& !nn.equals("0")) {
-					Vector s4 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(nn));
-					this.context.put("listBandarSuratbyNegeri", s4);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-
-				this.context.put("listHTA", listHTA);
-				this.context.put("idhtaam", idhtaam);
-				this.context.put("listHTAid", listHTAid);
-
-				this.context.put("show_kemaskini_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				this.context.put("tambahharta", "yes");
-				this.context.put("readmodenegeri", "disabled");
-				this.context.put("readmodedaerah", "disabled");
-				this.context.put("readmodemukim", "disabled");
-				this.context.put("readmode", "disabled");
-
-			}
-
-			else if ("getHtaamStatus".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-				this.context.put("tambahharta", "yes");
-				this.context.put("kembaliharta", "yes");
-
-				String id = getParam("idPermohonan");
-				String id_sub = getParam("id_Suburusanstatusfail");
-				String id_Fail = getParam("id_Fail");
-
-				if (bolehsimpan.equals("yes")) {
-					logic_A.htaamstatus(session, id, (String) session
-							.getAttribute("_ekptg_user_id"), id_sub, id_Fail);
-				}
-
-				/*
-				 * 
-				 * int idhtaam=Integer.parseInt(getParam("idhtaamid")); String
-				 * mati = getParam("id_Permohonansimati"); String id =
-				 * getParam("idPermohonan"); int id_sub =
-				 * Integer.parseInt(getParam("id_Suburusanstatusfail")); int
-				 * id_Fail = Integer.parseInt(getParam("id_Fail"));
-				 * if(bolehsimpan.equals("yes")){
-				 * logic_A.htaamstatus(id,(String)
-				 * session.getAttribute("_ekptg_user_id"),id_sub,id_Fail); }
-				 * logic.setDataHTAbyIdHtaam(idhtaam); listHTAid =
-				 * logic.getDataHTAbyIdHtaam(); logic.setDataHTA(mati); listHTA
-				 * = logic.getDataHTA(); this.context.put("listHTA",listHTA);
-				 * this.context.put("idhtaam", idhtaam);
-				 * this.context.put("listHTAid", listHTAid);
-				 * 
-				 * this.context.put("show_kemaskini_htaam","yes");
-				 * this.context.put("show_hapus_htaam","yes");
-				 * this.context.put("show_kembali_htaam","yes");
-				 * this.context.put("show_button","yes");
-				 * this.context.put("show_htaa_update_table","yes");
-				 * this.context.put("tambahharta","yes");
-				 * this.context.put("readmodenegeri", "disabled");
-				 * this.context.put("readmodedaerah", "disabled");
-				 * this.context.put("readmodemukim", "disabled");
-				 * this.context.put("readmode", "disabled");
-				 */
-
-			}
-			/*
-			 * else if ("batalHtaam".equals(mode)) { String id =
-			 * getParam("idPermohonan"); String id2 = getParam("idPemohon");
-			 * String mati = getParam("id_Permohonansimati"); int
-			 * idhtaam=Integer.parseInt(getParam("idhtaamid"));
-			 * logic.setDataHTAbyIdHtaam(idhtaam); listHTAid =
-			 * logic.getDataHTAbyIdHtaam(); this.context.put("idhtaam",
-			 * idhtaam); this.context.put("listHTAid", listHTAid);
-			 * logic.setDataHTA(mati); listHTA = logic.getDataHTA();
-			 * this.context.put("listHTA",listHTA);
-			 * 
-			 * this.context.put("tambahharta","yes");
-			 * this.context.put("readmodedaerah", "disabled");
-			 * this.context.put("readmodemukim", "disabled");
-			 * this.context.put("show_save_update_htaam","yes");
-			 * this.context.put("show_batal_update_htaam","yes");
-			 * this.context.put("show_hapus_htaam","yes");
-			 * this.context.put("show_kembali_htaam","yes");
-			 * this.context.put("show_htaa_update_table","yes");
-			 * this.context.put("show_button","yes");
-			 * 
-			 * }
-			 */
-			else if ("hapusHtaam".equals(mode)) {
-				String idhtaam = getParam("idhtaamid");
-				String mati = getParam("id_Permohonansimati");
-				logic.deleteHtaam(session, idhtaam, getParam("id_Permohonansimati"));
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-
-				this.context.put("tambahharta", "yes");
-				this.context.put("kembaliharta", "yes");
-
-			} else if ("kemaskiniHtaam".equals(mode)) {
-
-				String flag_tukar_jenis_hta = getParam("flag_tukar_jenis_hta");
-				if (flag_tukar_jenis_hta.equals("ADA")) {
-					if (bolehsimpan.equals("yes")) {
-
-						if (getParam("nama_skrin").equals("tiadahakmilik")) {
-							updateHtaamX(session);
-						} else {
-							updateHtaam(session);
-						}
-					}
-				}
-
-				String mati = getParam("id_Permohonansimati");
-				String idhtaam = getParam("idhtaamid");
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-				this.context.put("listHTA", listHTA);
-				logic.setDataHTAbyIdHtaam(idhtaam,
-						getParam("id_Permohonansimati"));
-				listHTAid = logic.getDataHTAbyIdHtaam();
-				Hashtable b = (Hashtable) listHTAid.get(0);
-				String nn = b.get("negeri").toString();
-				String dd = b.get("daerah").toString();
-
-				// System.out.println("negeri :"+nn+"daerah :"+dd);
-
-				if (nn != "" && nn != "0") {
-					int idn = Integer.parseInt(nn);
-
-					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-
-				}
-
-				if (dd != "" && dd != "0") {
-					int idd = Integer.parseInt(dd);
-					listmukim = logic_A.getListMukimbyDaerah(idd);
-					this.context.put("listMukimbyDaerah", listmukim);
-
-				}
-				this.context.put("idhtaam", idhtaam);
-				this.context.put("listHTAid", listHTAid);
-				this.context.put("show_save_update_htaam", "yes");
-				this.context.put("show_batal_update_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				this.context.put("tambahharta", "yes");
-			} 
-
-			else if ("simpanHtaam".equals(mode)) {
-
-				String idhtaam = getParam("idhtaamid");
-				String mati = getParam("id_Permohonansimati");
-				if (bolehsimpan.equals("yes")) {
-					updateHtaam(session);
-					uploadFilesA(idhtaam,session);
-					this.context.put("appear_skrin_info", "kemaskini");
-				}
-
-				logic.setDataHTAbyIdHtaam(idhtaam,
-						getParam("id_Permohonansimati"));
-				listHTAid = logic.getDataHTAbyIdHtaam();
-				this.context.put("idhtaam", idhtaam);
-				this.context.put("listHTAid", listHTAid);
-
-
-				Hashtable b = (Hashtable) listHTAid.get(0);
-				String nn = b.get("negeri").toString();
-				String dd = b.get("daerah").toString();
-				if (nn != "" && nn != "0") {
-					int idn = Integer.parseInt(nn);
-
-					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-
-				}
-				if (dd != "" && dd != "0") {
-					int idd = Integer.parseInt(dd);
-					listmukim = logic_A.getListMukimbyDaerah(idd);
-					this.context.put("listMukimbyDaerah", listmukim);
-
-				}
-
-
-				myLogger.info("ID_NEGERI : "+nn);
-				if (!nn.equals("")
-						&& !nn.equals("0")) {
-					Vector s4 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(nn));
-					this.context.put("listBandarSuratbyNegeri", s4);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-
-
-				logic.setDataHTA(mati);
-				listHTA = logic.getDataHTA();
-
-				Hashtable hta = (Hashtable) listHTAid.get(0);
-				String idPermohonan2 = hta.get("negeri").toString();
-
-
-
-				this.context.put("listHTA", listHTA);
-
-				this.context.put("show_kemaskini_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				this.context.put("tambahharta", "yes");
-				this.context.put("readmodedaerah", "disabled");
-				this.context.put("readmodenegeri", "disabled");
-				this.context.put("readmodemukim", "disabled");
-				this.context.put("readmode", "disabled");
-
-				String id = getParam("idpermohonan");
-				//System.out.println("id >>> "+id+" dan >>> "+getParam("idpermohonan"));
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-
-
-			}
-
+			String socNegeri = "";
+			String socDaerah = "";
+			String socMukim = "";
+			permohonanInternal = new FrmPermohonanHTAData();
+			String mati = getParam("id_Permohonansimati");				
+			
+//			if ("Htaamview".equals(mode)) {
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");	
+//				
+//				//System.out.println("mati======"+mati);
+//				///logic.setDataHTA(mati);
+//				//listHTA = logic.getDataHTA();
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
+//				this.context.put("listHTA", listHTA);
+//				this.context.put("tambahharta", "yes");
+//				this.context.put("kembaliharta", "yes");
+//
+//			}else if ("add_new".equals(mode)) {
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");
+//				Hashtable b = new Hashtable();
+//				b.put("negeri", "0");
+//				b.put("daerah", "0");
+//				b.put("mukim", "0");
+//				b.put("bandar", "0");
+//				b.put("kategori", "0");
+//				b.put("jenisluas", "0");
+//				b.put("pemilikan", "X");
+//
+//				setSocValues(b
+//						,"socNegeriHtaam","negerichange"
+//						,"socDaerahHtaam","daerahchange"
+//						,"socMukimHtaam"
+//						,"txtBandarHartaHtaamX2",""
+//						,"socJenisHakmilikHtaam","socKategoriTanahHtaam"
+//						,"socJenisLuasHtaam","socStatusPemilikanHtaam"
+//						);
+//
+//				this.context.put("readmodedaerah", "readmode");
+//				this.context.put("readmodemukim", "readmode");
+//				this.context.put("show_simpan_add_htaam", "yes");
+//				this.context.put("show_batal_add_htaam", "yes");
+//				this.context.put("show_button", "yes");
+//				this.context.put("show_htaa_add_table", "yes");
+//				this.context.put("add_new_harta", "yes");
+//				this.context.put("buttonhtaam", "Tambah");
+//
+//			}else if ("masukkan".equals(mode)) {				
+//				String id = getParam("idPermohonan");
+//				if (bolehsimpan.equals("yes")) {
+//					addHtaam(session);
+//					this.context.put("appear_skrin_info", "simpan");
+//				}
+//				logic_A.updateDataNilai(id, mati, idUser);
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
+//
+//				this.context.put("tambahharta", "yes");
+//				this.context.put("kembaliharta", "yes");
+//
+//			}else if ("negerichange".equals(mode)) {
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");	
+//				
+//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
+//				Hashtable b = setParamValues(String.valueOf(idnegeri),"0","0","0","0","0","0","X");
+//
+//				setSocValues(b
+//						,"socNegeriHtaam","negerichange"
+//						,"socDaerahHtaam","daerahchange"
+//						,"socMukimHtaam"
+//						,"txtBandarHartaHtaamX2",""
+//						,"socJenisHakmilikHtaam","socKategoriTanahHtaam"
+//						,"socJenisLuasHtaam","socStatusPemilikanHtaam"
+//						);
+//				
+//				//listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
+//				//this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//				this.context.put("noHakmilik", getParam("txtNoHakmilikHtaam"));
+//				this.context.put("idSimati", getParam("idSimati"));
+//				this.context.put("nopt", getParam("txtNoPTHtaam"));
+//				this.context.put("nilai_Hta_memohon",getParam("txtNilaiTarikhMohonHtaa"));
+//				this.context.put("nilai_Hta_mati",getParam("txtNilaiTarikhMatiHtaam"));
+//				this.context.put("kategori", getParam("socKategoriTanahHtaam"));
+//				this.context.put("jenishakmilik",getParam("socJenisHakmilikHtaam"));
+//				this.context.put("pemilikan",getParam("socStatusPemilikanHtaam"));
+//				this.context.put("luashmp", getParam("txtLuasHMpHtaam"));
+//				this.context.put("luasasal", getParam("txtLuasAsalHtaam"));
+//				this.context.put("nopajakan", getParam("txtNoPajakan"));
+//				this.context.put("jenistanah", getParam("socJenisTanahHtaam"));
+//				this.context.put("basimati", getParam("txtBahagianSimati1"));
+//				this.context.put("bbsimati", getParam("txtBahagianSimati2"));
+//				this.context.put("tanggungan", getParam("txtTanggunganHtaam"));
+//				this.context.put("jenisluas", getParam("socJenisLuasHtaam"));
+//				this.context.put("catatan", getParam("txtCatatanHtaam"));
+//				this.context.put("noperserahan", getParam("txtNoPersHtaam"));
+//				this.context.put("negeri", idnegeri);
+//				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
+//				
+//				this.context.put("show_simpan_add_htaam", "yes");
+//				this.context.put("show_batal_add_htaam", "yes");
+//				this.context.put("show_kembali_htaam", "yes");
+//				this.context.put("show_button", "yes");
+//				this.context.put("show_htaa_add_table", "yes");
+//				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
+//				this.context.put("sekatan", getParam("txtSekatan"));
+//				this.context.put("syaratNyata", getParam("txtSyaratNyata"));
+//				
+////				if (getParam("socNegeriHtaam") != ""
+////						&& getParam("socNegeriHtaam") != "0") {
+////					Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(getParam("socNegeriHtaam")));
+////					this.context.put("listBandarSuratbyNegeri", s3);
+////					//System.out.println("listBandarSuratbyNegeri30");
+////					
+////				} else {
+////					this.context.put("listBandarSuratbyNegeri", "");
+////					//System.out.println("listBandarSuratbyNegeri30a");
+////				}
+//				
+//			}else if ("daerahchange".equals(mode)) {
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");		
+//				
+//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
+//				int iddaerah = Integer.parseInt(getParam("socDaerahHtaam"));
+//				
+//				Hashtable b = setParamValues(String.valueOf(idnegeri),String.valueOf(iddaerah),"0","0","0","0","0","X");
+//
+//				setSocValues(b
+//						,"socNegeriHtaam","negerichange"
+//						,"socDaerahHtaam","daerahchange"
+//						,"socMukimHtaam"
+//						,"txtBandarHartaHtaamX2",""
+//						,"socJenisHakmilikHtaam","socKategoriTanahHtaam"
+//						,"socJenisLuasHtaam","socStatusPemilikanHtaam"
+//						);
+//						
+//
+////				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
+////				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+////				listmukim = logic_A.getListMukimbyDaerah(iddaerah);
+////				this.context.put("listMukimbyDaerah", listmukim);
+//
+//				this.context.put("noHakmilik", getParam("txtNoHakmilikHtaam"));
+//				this.context.put("idSimati", getParam("idSimati"));
+//				this.context.put("nopt", getParam("txtNoPTHtaam"));
+//				this.context.put("nilai_Hta_memohon",getParam("txtNilaiTarikhMohonHtaa"));
+//				this.context.put("nilai_Hta_mati",getParam("txtNilaiTarikhMatiHtaam"));
+//				this.context.put("kategori", getParam("socKategoriTanahHtaam"));
+//				this.context.put("jenishakmilik",getParam("socJenisHakmilikHtaam"));
+//				this.context.put("pemilikan",getParam("socStatusPemilikanHtaam"));
+//				this.context.put("luashmp", getParam("txtLuasHMpHtaam"));
+//				this.context.put("luasasal", getParam("txtLuasAsalHtaam"));
+//				this.context.put("nopajakan", getParam("txtNoPajakan"));
+//				this.context.put("jenistanah", getParam("socJenisTanahHtaam"));
+//				this.context.put("basimati", getParam("txtBahagianSimati1"));
+//				this.context.put("bbsimati", getParam("txtBahagianSimati2"));
+//				this.context.put("tanggungan", getParam("txtTanggunganHtaam"));
+//				this.context.put("jenisluas", getParam("socJenisLuasHtaam"));
+//				this.context.put("catatan", getParam("txtCatatanHtaam"));
+//				this.context.put("noperserahan", getParam("txtNoPersHtaam"));
+//				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
+//
+//				this.context.put("show_simpan_add_htaam", "yes");
+//				this.context.put("show_batal_add_htaam", "yes");
+//				this.context.put("show_button", "yes");
+//				this.context.put("show_kembali_htaam", "yes");
+//				this.context.put("negeri", idnegeri);
+//				this.context.put("daerah", iddaerah);
+//				this.context.put("show_htaa_add_table", "yes");
+//				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
+//				this.context.put("sekatan", getParam("txtSekatan"));
+//				this.context.put("syaratNyata", getParam("txtSyaratNyata"));
+//
+//			} else if ("checkWujudLot".equals(mode)) {
+//				Hashtable getLot = null;
+//				String idnegeri = getParam("socNegeriHtaam");
+//				String iddaerah = getParam("socDaerahHtaam");
+//				String idMukim = getParam("socMukimHtaam");
+//				String jenisHakmilik = getParam("socJenisHakmilikHtaam");
+//				Hashtable b = setParamValues(idnegeri,iddaerah,idMukim,"0",jenisHakmilik,"0","0","X");
+//
+//				setSocValues(b
+//						,"socNegeriHtaam","negerichange"
+//						,"socDaerahHtaam","daerahchange"
+//						,"socMukimHtaam"
+//						,"txtBandarHartaHtaamX2",""
+//						,"socJenisHakmilikHtaam","socKategoriTanahHtaam"
+//						,"socJenisLuasHtaam","socStatusPemilikanHtaam"
+//						);
+//										
+//				getLot = mainheader.getWujudLot(mati, getParam("txtNoPTHtaam")
+//						,idnegeri, iddaerah,idMukim
+//						,jenisHakmilik
+//						,getParam("txtNoHakmilikHtaam"),getParam("txtNoPTHtaam"));
+//				this.context.put("nopt", getParam("txtNoPTHtaam"));
+//				myLogger.info("---- hashtable get LOT :"+ (String) getLot.get("ID_HTA"));
+//
+//				if ((String) getLot.get("ID_HTA") != null) {
+//					this.context.put("noHakmilik", (String) getLot.get("NO_HAKMILIK"));
+//					this.context.put("idSimati", (String) getLot.get("ID_SIMATI"));
+//					this.context.put("nilai_Hta_memohon", (String) getLot.get("NILAI_HTA_TARIKHMOHON"));
+//					this.context.put("nilai_Hta_mati", (String) getLot.get("NILAI_HTA_TARIKHMATI"));
+//					this.context.put("kategori", (String) getLot.get("ID_KATEGORI"));
+//					this.context.put("jenishakmilik", (String) getLot.get("ID_JENISHM"));
+//					this.context.put("pemilikan", (String) getLot.get("STATUS_PEMILIKAN"));
+//					this.context.put("luashmp", (String) getLot.get("LUAS_HMP"));
+//					this.context.put("luasasal", (String) getLot.get("LUAS"));
+//					this.context.put("nopajakan", (String) getLot.get("NO_PAJAKAN"));
+//					this.context.put("jenistanah", (String) getLot.get("JENIS_TNH"));
+//					this.context.put("basimati", (String) getLot.get("BA_SIMATI"));
+//					this.context.put("bbsimati", (String) getLot.get("BB_SIMATI"));
+//					this.context.put("tanggungan", (String) getLot.get("TANGGUNGAN"));
+//					this.context.put("jenisluas", (String) getLot.get("ID_LUAS"));
+//					this.context.put("catatan", (String) getLot.get("CATATAN"));
+//					this.context.put("noperserahan", (String) getLot.get("NO_PERSERAHAN"));
+//					this.context.put("FLAG_DAFTAR", (String) getLot.get("FLAG_DAFTAR"));
+////					if (!((String) getLot.get("ID_NEGERI").toString()).equals("")) {
+////						int idnegeri = Integer.parseInt((String) getLot.get("ID_NEGERI"));
+////						listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
+////						this.context.put("listDaerahbyNegeri",listnegeribydaerah);
+////						this.context.put("negeri", idnegeri);
+////						
+////					} else {
+////						this.context.put("listDaerahbyNegeri", "");
+////						this.context.put("negeri", "");
+////						
+////					}
+////					if (!((String) getLot.get("ID_DAERAH").toString()).equals("")) {
+////						int iddaerah = Integer.parseInt((String) getLot.get("ID_DAERAH"));
+////						listmukim = logic_A.getListMukimbyDaerah(iddaerah);
+////						this.context.put("listMukimbyDaerah", listmukim);
+////						this.context.put("daerah", iddaerah);
+////						
+////					} else {
+////						this.context.put("listMukimbyDaerah", "");
+////						this.context.put("daerah", "");
+////					
+////					}
+////					if (!((String) getLot.get("ID_MUKIM").toString()).equals("")) {
+////						int idmukim = Integer.parseInt((String) getLot.get("ID_MUKIM"));
+////						this.context.put("mukim", idmukim);
+////						
+////					} else {
+////						this.context.put("mukim", "");
+////					}
+//					this.context.put("CheckWujudLot", "Y");
+//				
+//				} else {
+////					if (!getParam("socNegeriHtaam").equals("")) {
+////						int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
+////						listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
+////						this.context.put("listDaerahbyNegeri",listnegeribydaerah);
+////						this.context.put("negeri", idnegeri);
+////						
+////					} else {
+////						this.context.put("listDaerahbyNegeri", "");
+////						this.context.put("negeri", "");
+////					
+////					}
+////					if (!getParam("socDaerahHtaam").equals("")) {
+////						int iddaerah = Integer.parseInt(getParam("socDaerahHtaam"));
+////						listmukim = logic_A.getListMukimbyDaerah(iddaerah);
+////						this.context.put("listMukimbyDaerah", listmukim);
+////						this.context.put("daerah", iddaerah);
+////						
+////					} else {
+////						this.context.put("listMukimbyDaerah", "");
+////						this.context.put("daerah", "");
+////					
+////					}
+////					if (!getParam("socMukimHtaam").equals("")) {
+////						int idmukim = Integer.parseInt(getParam("socMukimHtaam"));
+////						this.context.put("mukim", idmukim);
+////						
+////					} else {
+////						this.context.put("mukim", "");
+////					}
+//					this.context.put("noHakmilik",getParam("txtNoHakmilikHtaam"));
+//					this.context.put("idSimati", getParam("idSimati"));
+//					// this.context.put("nopt", getParam("txtNoPTHtaam"));
+//					this.context.put("nilai_Hta_memohon",getParam("txtNilaiTarikhMohonHtaa"));
+//					this.context.put("nilai_Hta_mati",getParam("txtNilaiTarikhMatiHtaam"));
+//					this.context.put("kategori",getParam("socKategoriTanahHtaam"));
+//					this.context.put("jenishakmilik",getParam("socJenisHakmilikHtaam"));
+//					this.context.put("pemilikan",getParam("socStatusPemilikanHtaam"));
+//					this.context.put("luashmp", getParam("txtLuasHMpHtaam"));
+//					this.context.put("luasasal", getParam("txtLuasAsalHtaam"));
+//					this.context.put("nopajakan", getParam("txtNoPajakan"));
+//					this.context.put("jenistanah",getParam("socJenisTanahHtaam"));
+//					this.context.put("basimati", getParam("txtBahagianSimati1"));
+//					this.context.put("bbsimati", getParam("txtBahagianSimati2"));
+//					this.context.put("tanggungan",getParam("txtTanggunganHtaam"));
+//					this.context.put("jenisluas", getParam("socJenisLuasHtaam"));
+//					this.context.put("catatan", getParam("txtCatatanHtaam"));
+//					this.context.put("noperserahan", getParam("txtNoPersHtaam"));
+//					this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
+//					this.context.put("CheckWujudLot", "T");
+//					
+//				}
+//
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
+//
+//				this.context.put("show_simpan_add_htaam", "yes");
+//				this.context.put("show_batal_add_htaam", "yes");
+//				this.context.put("show_button", "yes");
+//				this.context.put("show_kembali_htaam", "yes");
+//				this.context.put("show_htaa_add_table", "yes");
+//				
+//			} else if ("negerichangeup".equals(mode)) {
+//				v = new Vector();
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
+//
+//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaamUp"));
+//				this.context.put("negeriup", idnegeri);
+//				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
+//				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//				if (!getParam("socNegeriHtaamUp").equals("")
+//					&& !getParam("socNegeriHtaamUp").equals("0")) {
+//					Vector s4 = logic_A.getListBandarByNegeri(Integer.parseInt(getParam("socNegeriHtaamUp")));
+//					this.context.put("listBandarSuratbyNegeri", s4);
+//					
+//				} else {
+//					this.context.put("listBandarSuratbyNegeri", "");
+//				}
+//
+//				Hashtable h = new Hashtable();
+//				// this.context.put("idhta", "");
+//				h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
+//				h.put("idSimati", getParam("idSimati"));
+//				h.put("idhta", getParam("id_htaam"));
+//				h.put("nopt", getParam("txtNoPTHtaamUp"));
+//				h.put("nilai_Hta_memohon", getParam("txtNilaiTarikhMohonHt"));
+//				h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamUpd"));
+//				h.put("kategori", getParam("socKategoriTanahHtaamUp"));
+//				h.put("jenishakmilik", getParam("socJenisHakmilikHtaamUp"));
+//				h.put("pemilikan", getParam("socStatusPemilikanHtaamUpd"));
+//				h.put("negeri", idnegeri);
+//				h.put("daerah", "");
+//				h.put("mukim", "");
+//				// this.context.put("mukim", getParam("socMukimHtaam"));
+//				h.put("luashmp", getParam("txtLuasHMpHtaamUpd"));
+//				h.put("luasasal", getParam("txtLuasAsalHtaamUpd"));
+//				// this.context.put("nocagaran", "");
+//				h.put("nopajakan", getParam("txtNoPajakanUp"));
+//				h.put("jenistanah", getParam("socJenisTanahHtaamUpd"));
+//				h.put("basimati", getParam("txtBahagianSimati1Up"));
+//				h.put("bbsimati", getParam("txtBahagianSimati2Up"));
+//				// this.context.put("jenishta","");
+//				h.put("tanggungan", getParam("txtTanggunganHtaamUp"));
+//				h.put("jenisluas", getParam("socJenisLuasHtaamUpd"));
+//				h.put("catatan", getParam("txtCatatanHt"));
+//				h.put("noperserahan", getParam("txtNoPersHtaamUp"));
+//				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
+//				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
+//				h.put("sekatan", getParam("txtSekatan"));
+//				h.put("syaratNyata", getParam("txtSyaratNyata"));
+//
+//				v.addElement(h);
+//				this.context.put("listHTAid", v);
+//
+//				this.context.put("show_save_update_htaam", "yes");
+//				this.context.put("show_batal_update_htaam", "yes");
+//				this.context.put("show_hapus_htaam", "yes");
+//				this.context.put("show_kembali_htaam", "yes");
+//				this.context.put("show_htaa_update_table", "yes");
+//				this.context.put("show_button", "yes");
+//				this.context.put("tambahharta", "yes");
+//				this.context.put("negeriup", idnegeri);
+//
+//			} else if ("daerahchangeup".equals(mode)) {
+//				v = new Vector();
+//
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
+//
+//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaamUp"));
+//				int iddaerah = Integer.parseInt(getParam("socDaerahHtaamUp"));
+//				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
+//				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//				listmukim = logic_A.getListMukimbyDaerah(iddaerah);
+//				this.context.put("listMukimbyDaerah", listmukim);
+//
+//				Hashtable h = new Hashtable();
+//				// this.context.put("idhta", "");
+//				h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
+//				h.put("idSimati", getParam("idSimati"));
+//				h.put("idhta", getParam("id_htaam"));
+//				h.put("nopt", getParam("txtNoPTHtaamUp"));
+//				h.put("nilai_Hta_memohon", getParam("txtNilaiTarikhMohonHt"));
+//				h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamUpd"));
+//				h.put("kategori", getParam("socKategoriTanahHtaamUp"));
+//				h.put("jenishakmilik", getParam("socJenisHakmilikHtaamUp"));
+//				h.put("pemilikan", getParam("socStatusPemilikanHtaamUpd"));
+//				h.put("negeri", idnegeri);
+//				h.put("daerah", iddaerah);
+//				h.put("mukim", "");
+//				// this.context.put("mukim", getParam("socMukimHtaam"));
+//				h.put("luashmp", getParam("txtLuasHMpHtaamUpd"));
+//				h.put("luasasal", getParam("txtLuasAsalHtaamUpd"));
+//				// this.context.put("nocagaran", "");
+//				h.put("nopajakan", getParam("txtNoPajakanUp"));
+//				h.put("jenistanah", getParam("socJenisTanahHtaamUpd"));
+//				h.put("basimati", getParam("txtBahagianSimati1Up"));
+//				h.put("bbsimati", getParam("txtBahagianSimati2Up"));
+//				// this.context.put("jenishta","");
+//				h.put("tanggungan", getParam("txtTanggunganHtaamUp"));
+//				h.put("jenisluas", getParam("socJenisLuasHtaamUpd"));
+//				h.put("catatan", getParam("txtCatatanHt"));
+//				h.put("noperserahan", getParam("txtNoPersHtaamUp"));
+//				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
+//				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
+//				h.put("sekatan", getParam("txtSekatan"));
+//				h.put("syaratNyata", getParam("txtSyaratNyata"));
+//
+//				v.addElement(h);
+//				this.context.put("listHTAid", v);
+//
+//				this.context.put("show_save_update_htaam", "yes");
+//				this.context.put("show_batal_update_htaam", "yes");
+//				this.context.put("show_hapus_htaam", "yes");
+//				this.context.put("show_kembali_htaam", "yes");
+//				this.context.put("show_htaa_update_table", "yes");
+//				this.context.put("show_button", "yes");
+//				this.context.put("tambahharta", "yes");
+//
+//			}else if ("getHtaam".equals(mode)) {
+//				String idhtaam = getParam("idhtaam");
+//				Hashtable b = permohonanInternal.getDataHTAbyIdHtaam(idhtaam,mati);
+//				myLogger.info("getHtaam:b="+b);
+//
+//				String nn = String.valueOf(b.get("negeri"));
+//				String dd = String.valueOf(b.get("daerah"));				
+//				String idMukim = String.valueOf(b.get("mukim"));
+//				socNegeri = HTML.SelectNegeri("socNegeriHtaamUp", Long.valueOf(nn)
+//						," $readmodenegeri id=\"socNegeriHtaamUp\" onchange=\"negerichangeup('socDaerahHtaamUp')\" "+socStyle);
+//				socDaerah = HTML.SelectDaerahByNegeri(nn, "socDaerahHtaamUp", Utils.parseLong(dd)
+//						," $readmodedaerah id=\"socDaerahHtaamUp\" onchange=\"setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()\" "+socStyle);
+//				socMukim = HTML.SelectMukimByDaerah(dd, "socMukimHtaamUp", Utils.parseLong(idMukim)
+//						," $readmodemukim id=\"socMukimHtaamUp\" "+socStyle);
+//				
+////				if (nn != "" && nn != "0") {
+////					int idn = Integer.parseInt(nn);
+////					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
+////					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+////
+////				}
+////				if (dd != "" && dd != "0") {
+////					int idd = Integer.parseInt(dd);
+////					listmukim = logic_A.getListMukimbyDaerah(idd);
+////					this.context.put("listMukimbyDaerah", listmukim);
+////									
+////				}								
+//				//myLogger.info("ID_NEGERI : "+nn);
+////				if (!nn.equals("")
+////					&& !nn.equals("0")) {
+////					Vector s4 = logic_A.getListBandarByNegeri(Integer.parseInt(nn));
+////					this.context.put("listBandarSuratbyNegeri", s4);
+////					
+////				} else {
+////					this.context.put("listBandarSuratbyNegeri", "");
+////				}
+//				String bandar = String.valueOf(b.get("bandar"));
+//				String socBandar = HTML.SelectBandarByNegeri(nn,"txtBandarHartaHtaamX2", Utils.parseLong(bandar)
+//						," id=\"txtBandarHartaHtaamX2\" onclick=\"CheckBandarSurat()\" "+socStyle);
+//				this.context.put("socBandar", socBandar);
+//				
+//				String jenisHakmilik = String.valueOf(b.get("jenishakmilik"));
+//				String socJenisHakmilik = HTML.SelectJenisHakmilik("socJenisHakmilikHtaamUp", Utils.parseLong(jenisHakmilik)
+//						," $socJenisHakmilikHtaam2 id=\"socJenisHakmilikHtaamUp\" "+socStyle);
+//				this.context.put("socJenisHakmilik", socJenisHakmilik);
+//				
+//				String kaTanah = String.valueOf(b.get("kategori"));
+//				String socKaTanah = HTML.SelectKategoriTanah("socKategoriTanahHtaamUp", Utils.parseLong(kaTanah),""
+//						," $!readmode id=\"socKategoriTanahHtaamUp\" "+socStyle);
+//				this.context.put("socKaTanah", socKaTanah);
+//
+//				String jenisLuas = String.valueOf(b.get("jenisluas"));
+//				String socLuas = HTML.SelectLuas("socJenisLuasHtaamUpd",Utils.parseLong(jenisLuas), ""
+//					," $!readmode id=\"socJenisLuasHtaamUpd\"" +
+//					"onchange=\"pilih_jenis_luas('socJenisLuasHtaamUpd','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')\" "+socStyle);
+//				this.context.put("socLuas", socLuas);
+//				
+//				String jenisPB = String.valueOf(b.get("pemilikan"));
+//				myLogger.info("jenisPB="+jenisPB);
+//				String socPB = UtilHTML.SelectJenisPB("socStatusPemilikanHtaamUpd",jenisPB,"",socStyle,null);
+//				this.context.put("socPB", socPB);
+//				
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
+//
+//				this.context.put("idhtaam", idhtaam);
+//				this.context.put("listHTAid", permohonanInternal.getDataHTA());
+//				this.context.put("htaHash", b);
+//
+//				this.context.put("show_kemaskini_htaam", "yes");
+//				this.context.put("show_hapus_htaam", "yes");
+//				this.context.put("show_kembali_htaam", "yes");
+//				this.context.put("show_button", "yes");
+//				this.context.put("show_htaa_update_table", "yes");
+//				this.context.put("tambahharta", "yes");
+//				this.context.put("readmodenegeri", "disabled");
+//				this.context.put("readmodedaerah", "disabled");
+//				this.context.put("readmodemukim", "disabled");
+//				this.context.put("readmode", "disabled");
+//
+//			}else if ("getHtaamStatus".equals(mode)) {
+//				String idhtaam = getParam("idhtaam");
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
+//
+//				this.context.put("tambahharta", "yes");
+//				this.context.put("kembaliharta", "yes");
+//
+//				String id = getParam("idPermohonan");
+//				String id_sub = getParam("id_Suburusanstatusfail");
+//				String id_Fail = getParam("id_Fail");
+//
+//				if (bolehsimpan.equals("yes")) {
+//					logic_A.htaamstatus(session, id, idUser, id_sub, id_Fail);
+//				}
+//
+//				this.context.put("idhtaamX", idhtaam);
+//				this.context.put("idhtaam", idhtaam);
+//				this.context.put("idhtaam", getParam("idhtaamid"));
+//				this.context.put("show_save_update_htaam", "yes");
+//				this.context.put("show_batal_update_htaam", "yes");
+//				this.context.put("show_hapus_htaam", "yes");
+//				this.context.put("show_kembali_htaam", "yes");
+//				this.context.put("show_htaa_update_table", "yes");
+//				this.context.put("tambahbutton", "yes");
+//				this.context.put("show_button", "yes");
+//
+//			} else if ("hapusHtaamX".equals(mode)) {
+//				String idhtaam = getParam("idhtaamXid");
+//				//String mati = getParam("id_Permohonansimati");
+//				String idhtaam_ = getParam("idhtaamXid");
+//				//String idDokumen = getParam("idDokumen");//IL
+//				logic.deleteHtaam(session, idhtaam, getParam("id_Permohonansimati"));
+//				logic.setDataHTAX(mati);
+//				listHTAX = logic.getDataHTAX();
+//				//logic_internal.deleteHtaamInternal(idDokumen, idhtaam_, getParam("id_Permohonansimati"));//IL
+//				//senaraiHTAX = permohonanInternal.getDataHTAX(mati);
+//				this.context.put("listHTAX", listHTAX);
+//
+//				this.context.put("tambahbutton", "yes");
+//				this.context.put("kembalibutton", "yes");
+//
+//				this.context.put("tambahharta", "yes");
+//				this.context.put("kembaliharta", "yes");
+//
+//			} else if ("kemaskiniHtaam".equals(mode)) {
+//				String flag_tukar_jenis_hta = getParam("flag_tukar_jenis_hta");
+//				if (flag_tukar_jenis_hta.equals("ADA")) {
+//					if (bolehsimpan.equals("yes")) {
+//
+//						if (getParam("nama_skrin").equals("tiadahakmilik")) {
+//							updateHtaamX(session);
+//						} else {
+//							updateHtaam(session);
+//						}
+//					}
+//					
+//				}
+//
+//				String idhtaam = getParam("idhtaamid");
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
+//
+//				Hashtable b = permohonanInternal.getDataHTAbyIdHtaam(idhtaam,mati);
+//				String nn = b.get("negeri").toString();
+//				String dd = b.get("daerah").toString();
+//
+//				if (nn != "" && nn != "0") {
+//					int idn = Integer.parseInt(nn);
+//					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
+//					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
+//
+//				}
+//
+//				if (dd != "" && dd != "0") {
+//					int idd = Integer.parseInt(dd);
+//					listmukim = logic_A.getListMukimbyDaerah(idd);
+//					this.context.put("listMukimbyDaerah", listmukim);
+//
+//				}
+//				this.context.put("idhtaam", idhtaam);
+//				this.context.put("listHTAid", permohonanInternal.getDataHTA());
+//				this.context.put("show_save_update_htaam", "yes");
+//				this.context.put("show_batal_update_htaam", "yes");
+//				this.context.put("show_hapus_htaam", "yes");
+//				this.context.put("show_kembali_htaam", "yes");
+//				this.context.put("show_button", "yes");
+//				this.context.put("show_htaa_update_table", "yes");
+//				this.context.put("tambahharta", "yes");
+//			
+//			}else if ("simpanHtaam".equals(mode)) {			
+//				String idhtaam = getParam("idhtaamid");
+//				if (bolehsimpan.equals("yes")) {
+//					updateHtaam(session);
+//					//uploadFilesA(idhtaam,session);
+//					this.context.put("appear_skrin_info", "kemaskini");
+//				
+//				}
+//				
+//				Hashtable b = permohonanInternal.getDataHTAbyIdHtaam(idhtaam,mati);
+//				String nn = b.get("negeri").toString();
+//				String dd = b.get("daerah").toString();
+//				String idMukim = String.valueOf(b.get("mukim"));
+//				
+//				socNegeri = HTML.SelectNegeri("socNegeriHtaamUp", Long.valueOf(nn)
+//						," $readmodenegeri id=\"socNegeriHtaamUp\" onchange=\"negerichangeup('socDaerahHtaamUp')\" "+socStyle);
+//				socDaerah = HTML.SelectDaerahByNegeri(nn, "socDaerahHtaamUp", Utils.parseLong(dd)
+//						," $readmodedaerah id=\"socDaerahHtaamUp\" onchange=\"setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()\" "+socStyle);
+//				socMukim = HTML.SelectMukimByDaerah(dd, "socMukimHtaamUp", Utils.parseLong(idMukim)
+//						," $readmodemukim id=\"socMukimHtaamUp\" "+socStyle);
+//				
+//				String bandar = String.valueOf(b.get("bandar"));
+//				String socBandar = HTML.SelectBandarByNegeri(nn,"txtBandarHartaHtaamX2", Utils.parseLong(bandar)
+//						," id=\"txtBandarHartaHtaamX2\" onclick=\"CheckBandarSurat()\" "+socStyle);
+//				this.context.put("socBandar", socBandar);
+//				
+//				String jenisHakmilik = String.valueOf(b.get("jenishakmilik"));
+//				String socJenisHakmilik = HTML.SelectJenisHakmilik("socJenisHakmilikHtaamUp", Utils.parseLong(jenisHakmilik)
+//						," $socJenisHakmilikHtaam2 id=\"socJenisHakmilikHtaamUp\" "+socStyle);
+//				this.context.put("socJenisHakmilik", socJenisHakmilik);
+//				
+//				String kaTanah = String.valueOf(b.get("kategori"));
+//				String socKaTanah = HTML.SelectKategoriTanah("socKategoriTanahHtaamUp", Utils.parseLong(kaTanah),""
+//						," $!readmode id=\"socKategoriTanahHtaamUp\" "+socStyle);
+//				this.context.put("socKaTanah", socKaTanah);
+//
+//				String jenisLuas = String.valueOf(b.get("jenisluas"));
+//				String socLuas = HTML.SelectLuas("socJenisLuasHtaamUpd",Utils.parseLong(jenisLuas), ""
+//					," $!readmode id=\"socJenisLuasHtaamUpd\"" +
+//					" onchange=\"pilih_jenis_luas('socJenisLuasHtaamUpd','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')\" "+socStyle);
+//				this.context.put("socLuas", socLuas);
+//				
+//				String jenisPB = String.valueOf(b.get("jeniskepentingan"));
+//				String socPB = UtilHTML.SelectJenisPB("socStatusPemilikanHtaamUpd",jenisPB,"",socStyle,null);
+//				this.context.put("socPB", socPB);
+//
+//				this.context.put("idhtaam", idhtaam);
+//				this.context.put("listHTAid", permohonanInternal.getDataHTA());
+//				this.context.put("htaHash", b);
+//								
+//				listHTA = permohonanInternal.getDataHTA(mati,"Y");								
+//
+//				this.context.put("show_kemaskini_htaam", "yes");
+//				this.context.put("show_hapus_htaam", "yes");
+//				this.context.put("show_kembali_htaam", "yes");
+//				this.context.put("show_button", "yes");
+//				this.context.put("show_htaa_update_table", "yes");
+//				this.context.put("tambahharta", "yes");
+//				this.context.put("readmodedaerah", "disabled");
+//				this.context.put("readmodenegeri", "disabled");
+//				this.context.put("readmodemukim", "disabled");
+//				this.context.put("readmode", "disabled");
+//				
+//				String id = getParam("idpermohonan");
+//				logic_A.updateDataNilai(id, mati, idUser);
+//				
+//			}
+			
+			
+			//2018
+			String id = getParam("idPermohonan");
+			
+			Hashtable dataParam = new Hashtable();
+			dataParam.put("bolehSimpan",bolehsimpan);
+			dataParam.put("idUser",idUser);
+			dataParam.put("idPermohonan",id);
+			dataParam.put("idSimati",getParam("idSimati"));			
+			dataParam.put("id_Permohonansimati",mati);
+			
+			getHTA().getHarta(mode, dataParam, logic, request, session, context);
+			
 			this.context.put("selectedTabatas", 1);
 			this.context.put("selectedTabtengah", 0);
 			this.context.put("selectedTabbawah", 0);
 			this.context.put("selectedTabtepi", 0);
 			context.put("DATEUTIL", new DateUtil());
-			String id = getParam("idPermohonan");
 			// logic_A.setData_online(id);
 			//if(!id.equals("$ID")){
 			//	id = getParam("idPermohonan");
 			//}
-			list = logic_A.setData_online(id, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list = logic_A.setData_online(id, idUser);
 			headerppk_baru(session, id, "Y", "", "T");
 			this.context.put("View", list);
 			logic_A.setDataFail(id);
@@ -5909,1314 +5327,125 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("ViewFail", listFail);
 
 			// String id = getParam("idPermohonan");
-			String mati = getParam("id_Permohonansimati");
-			logic_A.updateDataNilai(id, mati, (String) session
-					.getAttribute("_ekptg_user_id"));
-			hideTabPengesahan_simati = checkEmptyField_simati(getParam("idPermohonan"));
+			logic_A.updateDataNilai(id, mati, idUser);
+			hideTabPengesahan_simati = checkEmptyField_simati(id);
 			context.put("hideTabPengesahan_simati", hideTabPengesahan_simati);
-			hideTabPengesahan_pemohon = checkEmptyField_pemohon(getParam("idPermohonan"));
+			hideTabPengesahan_pemohon = checkEmptyField_pemohon(id);
 			context.put("hideTabPengesahan_pemohon", hideTabPengesahan_pemohon);
-			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
+			hideTabPengesahan_hta = checkEmptyField_hta(id);
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
-			vm = "app/ppk/frmPrmhnnSek8HTAAH.jsp";
-		} // TODO END HTAAM
-
-		else if ("HtaamX".equals(submit)) {
-
-			this.context.put("idhtaamX", "");
-			this.context.put("idhtaam", "");
-			this.context.put("add_new", "");
-			this.context.put("tambahbutton", "");
-			this.context.put("kembalibutton", "");
-			this.context.put("show_button", "");
-			this.context.put("HtaamviewX1", "");
-			this.context.put("HtaamviewX2", "");
-			this.context.put("HtaamviewX3", "");
-			this.context.put("negeri", "");
-			this.context.put("daerah", "");
-			this.context.put("mukim", "");
-			this.context.put("readmode", "");
-			this.context.put("readmodenegeri", "");
-			this.context.put("readmodedaerah", "");
-			this.context.put("readmodemukim", "");
-			this.context.put("show_simpan_add_htaam", "");
-			this.context.put("show_batal_add_htaam", "");
-			this.context.put("show_kemaskini_htaam", "");
-			this.context.put("show_save_update_htaam", "");
-			this.context.put("show_batal_update_htaam", "");
-			this.context.put("show_hapus_htaam", "");
-			this.context.put("show_kembali_htaam", "");
-			this.context.put("show_htaa_update_table", "");
-			this.context.put("show_htaa_add_table", "");
-			this.context.put("buttonhtaam", "");
-			this.context.put("tambahbutton", "");
-			this.context.put("kembalibutton", "");
-			this.context.put("radio1", "");
-			this.context.put("radio2", "");
-			this.context.put("radio3", "");
-			this.context.put("checked1", "");
-			this.context.put("checked2", "");
-			this.context.put("checked3", "");
-
-			if ("HtaamviewX".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String mati = getParam("id_Permohonansimati");
-				String radioX1 = getParam("radioHtaamViewX1");
-				String radioX2 = getParam("radioHtaamViewX2");
-				String radioX3 = getParam("radioHtaamViewX3");
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				this.context.put("tambahbutton", "yes");
-				this.context.put("kembalibutton", "yes");
-
-			}
-
-			if ("add_new".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String mati = getParam("id_Permohonansimati");
-				String radioX1 = getParam("radioHtaamViewX1");
-				String radioX2 = getParam("radioHtaamViewX2");
-				String radioX3 = getParam("radioHtaamViewX3");
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				this.context.put("show_button", "yes");
-				this.context.put("add_new", "yes");
-				this.context.put("buttonhtaam", "Tambah");
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-
-			}
-			if ("HtaamviewX1".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				String radioX1 = getParam("radioHtaamViewX1");
-				String radioX2 = getParam("radioHtaamViewX2");
-				String radioX3 = getParam("radioHtaamViewX3");
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				this.context.put("HtaamviewX1", "yes");
-				this.context.put("buttonhtaam", "Tambah");
-				this.context.put("radio2", "yes");
-				this.context.put("checked1", "checked");
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-				this.context.put("show_button", "yes");
-			}
-
-			if ("HtaamviewX2".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				String radioX1 = getParam("radioHtaamViewX1");
-				String radioX2 = getParam("radioHtaamViewX2");
-				String radioX3 = getParam("radioHtaamViewX3");
-
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				this.context.put("radio3", "yes");
-				this.context.put("checked2", "checked");
-				this.context.put("buttonhtaam", "Tambah");
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("HtaamviewX2", "yes");
-
-			}
-
-			if ("HtaamviewX3".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				String radioX1 = getParam("radioHtaamViewX1");
-				String radioX2 = getParam("radioHtaamViewX2");
-				String radioX3 = getParam("radioHtaamViewX3");
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				this.context.put("buttonhtaam", "Tambah");
-				this.context.put("checked3", "checked");
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("HtaamviewX3", "yes");
-
-			}
-
-			else if ("masukkanX".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				if (bolehsimpan.equals("yes")) {
-					addHtaamX(session);
-					this.context.put("appear_skrin_info", "simpan");
-				}
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				this.context.put("tambahbutton", "yes");
-				this.context.put("kembalibutton", "yes");
-
-				String id = getParam("idPermohonan");
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-			}
-
-			else if ("negerichangeX".equals(mode)) {
-				String mati = getParam("id_Permohonansimati");
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					int idnegeri = Integer
-							.parseInt(getParam("socNegeriHtaamX"));
-					listnegeribydaerah = logic_A
-							.getListDaerahbyNegeri(idnegeri);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-					this.context.put("negeri", idnegeri);
-					this.context.put("bandarhta", "");
-				} else {
-					this.context.put("listDaerahbyNegeri", "");
-					this.context.put("negeri", "");
-					this.context.put("bandarhta", "");
-				}
-
-				if (getParam("socNegeriPemajuHtaamX") != ""
-						&& getParam("socNegeriPemajuHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriPemajuHtaamX")));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriHtaamX")));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				String[] radioHtaamViewX = this.request
-						.getParameterValues("radioHtaamViewX");
-				int n = 0;
-				for (int i = 0; i < radioHtaamViewX.length; i++) {
-					if (radioHtaamViewX[i].equals("1")) {
-						n = 1;
-					} else if (radioHtaamViewX[i].equals("2")) {
-						n = 2;
-					} else if (radioHtaamViewX[i].equals("3")) {
-						n = 3;
-					}
-				}
-				String radioX = getParam("noradio");
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-				if (n == 1) {
-					this.context.put("radio2", "yes");
-					this.context.put("checked1", "checked");
-
-				}
-				if (n == 2) {
-					this.context.put("radio3", "yes");
-					this.context.put("checked2", "checked");
-
-				}
-				if (n == 3) {
-
-					this.context.put("checked3", "checked");
-				}
-
-				this.context.put("idSimati", getParam("idSimatiX"));
-				this.context.put("nopt", getParam("txtNoPTHtaamX"));
-				this.context.put("nilai_Hta_memohon",
-						getParam("txtNilaiTarikhMohonHtaaX"));
-				this.context.put("nilai_Hta_mati",
-						getParam("txtNilaiTarikhMatiHtaamX"));
-				this.context
-				.put("kategori", getParam("socKategoriTanahHtaamX"));
-				this.context.put("luashmp", getParam("txtLuasHMpHtaamX"));
-				this.context.put("luasasal", getParam("txtLuasAsalHtaamX"));
-				this.context.put("nopajakan", getParam("txtNoPajakanX"));
-				this.context.put("jenistanah", getParam("socJenisTanahHtaamX"));
-				this.context.put("basimati", getParam("txtBahagianSimati1X"));
-				this.context.put("bbsimati", getParam("txtBahagianSimati2X"));
-				this.context.put("tanggungan", getParam("txtTanggunganHtaamX"));
-				this.context.put("jenisluas", getParam("socJenisLuasHtaamX"));
-				this.context.put("catatan", getParam("txtCatatanHtaamX"));
-				this.context.put("namapemaju", getParam("txtNamaPemajuHtaamX"));
-				this.context.put("alamatpemaju1",
-						getParam("txtAlamatPemaju1HtaamX"));
-				this.context.put("alamatpemaju2",
-						getParam("txtAlamatPemaju2HtaamX"));
-				this.context.put("alamatpemaju3",
-						getParam("txtAlamatPemaju3HtaamX"));
-				this.context.put("poskodpemaju",
-						getParam("txtPoskodPemaju1HtaamX"));
-				this.context.put("bandarpemaju",
-						getParam("txtBandarPemaju1HtaamX"));
-				this.context.put("negeripemaju",
-						getParam("socNegeriPemajuHtaamX"));
-				this.context.put("alamathta1",
-						getParam("txtAlamatHarta1HtaamX"));
-				this.context.put("alamathta2",
-						getParam("txtAlamatHarta2HtaamX"));
-				this.context.put("alamathta3",
-						getParam("txtAlamatHarta3HtaamX"));
-				this.context.put("poskodhta", getParam("txtPoskodHartaHtaamX"));
-
-				this.context.put("noperjanjian",
-						getParam("txtNoPerjanjianHtaamX"));
-				this.context.put("tarikhperjanjian",
-						getParam("txtTarikhPerjanjianHtaamX"));
-				this.context.put("namarancangan",
-						getParam("txtNamaRancanganHtaamX"));
-				this.context.put("noroh", getParam("txtNoRohHtaamX"));
-				this.context.put("nolot", getParam("txtLotIdHtaamX"));
-				this.context.put("nolot", getParam("txtLotIdHtaamX"));
-				this.context.put("nocagaran", getParam("txtNoCagaranX"));
-				this.context.put("pemilikan",
-						getParam("socStatusPemilikanHtaamX"));
-				this.context.put("jeniskepentingan",
-						getParam("txtJenisKepentinganX"));
-				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-
-				this.context.put("show_button", "yes");
-
-			}
-
-			else if ("negerichangepemajuX".equals(mode)) {
-				String mati = getParam("id_Permohonansimati");
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					int idnegeri = Integer
-							.parseInt(getParam("socNegeriHtaamX"));
-					listnegeribydaerah = logic_A
-							.getListDaerahbyNegeri(idnegeri);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-					this.context.put("negeri", idnegeri);
-				} else {
-					this.context.put("listDaerahbyNegeri", "");
-					this.context.put("negeri", "");
-				}
-
-				if (getParam("socDaerahHtaamX") != ""
-						&& getParam("socDaerahHtaamX") != "0") {
-					int iddaerah = Integer
-							.parseInt(getParam("socDaerahHtaamX"));
-					listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-					this.context.put("listMukimbyDaerah", listmukim);
-					this.context.put("daerah", iddaerah);
-					this.context.put("mukim", getParam("socMukimHtaamX"));
-
-				} else {
-					this.context.put("listMukimbyDaerah", "");
-					this.context.put("daerah", "");
-					this.context.put("mukim", "");
-				}
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriHtaamX")));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				if (getParam("socNegeriPemajuHtaamX") != ""
-						&& getParam("socNegeriPemajuHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriPemajuHtaamX")));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				String[] radioHtaamViewX = this.request
-						.getParameterValues("radioHtaamViewX");
-				int n = 0;
-				for (int i = 0; i < radioHtaamViewX.length; i++) {
-					if (radioHtaamViewX[i].equals("1")) {
-						n = 1;
-					} else if (radioHtaamViewX[i].equals("2")) {
-						n = 2;
-					} else if (radioHtaamViewX[i].equals("3")) {
-						n = 3;
-					}
-				}
-				String radioX = getParam("noradio");
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-				if (n == 1) {
-					this.context.put("radio2", "yes");
-					this.context.put("checked1", "checked");
-
-				}
-				if (n == 2) {
-					this.context.put("radio3", "yes");
-					this.context.put("checked2", "checked");
-
-				}
-				if (n == 3) {
-
-					this.context.put("checked3", "checked");
-				}
-
-				this.context.put("idSimati", getParam("idSimatiX"));
-				this.context.put("nopt", getParam("txtNoPTHtaamX"));
-				this.context.put("nilai_Hta_memohon",
-						getParam("txtNilaiTarikhMohonHtaaX"));
-				this.context.put("nilai_Hta_mati",
-						getParam("txtNilaiTarikhMatiHtaamX"));
-				this.context
-				.put("kategori", getParam("socKategoriTanahHtaamX"));
-				this.context.put("luashmp", getParam("txtLuasHMpHtaamX"));
-				this.context.put("luasasal", getParam("txtLuasAsalHtaamX"));
-				this.context.put("nopajakan", getParam("txtNoPajakanX"));
-				this.context.put("jenistanah", getParam("socJenisTanahHtaamX"));
-				this.context.put("basimati", getParam("txtBahagianSimati1X"));
-				this.context.put("bbsimati", getParam("txtBahagianSimati2X"));
-				this.context.put("tanggungan", getParam("txtTanggunganHtaamX"));
-				this.context.put("jenisluas", getParam("socJenisLuasHtaamX"));
-				this.context.put("catatan", getParam("txtCatatanHtaamX"));
-				this.context.put("namapemaju", getParam("txtNamaPemajuHtaamX"));
-				this.context.put("alamatpemaju1",
-						getParam("txtAlamatPemaju1HtaamX"));
-				this.context.put("alamatpemaju2",
-						getParam("txtAlamatPemaju2HtaamX"));
-				this.context.put("alamatpemaju3",
-						getParam("txtAlamatPemaju3HtaamX"));
-				this.context.put("poskodpemaju",
-						getParam("txtPoskodPemaju1HtaamX"));
-				this.context.put("bandarpemaju", "");
-				this.context.put("negeripemaju",
-						getParam("socNegeriPemajuHtaamX"));
-				this.context.put("alamathta1",
-						getParam("txtAlamatHarta1HtaamX"));
-				this.context.put("alamathta2",
-						getParam("txtAlamatHarta2HtaamX"));
-				this.context.put("alamathta3",
-						getParam("txtAlamatHarta3HtaamX"));
-				this.context.put("poskodhta", getParam("txtPoskodHartaHtaamX"));
-				this.context.put("bandarhta", getParam("txtBandarHartaHtaamX"));
-				this.context.put("noperjanjian",
-						getParam("txtNoPerjanjianHtaamX"));
-				this.context.put("tarikhperjanjian",
-						getParam("txtTarikhPerjanjianHtaamX"));
-				this.context.put("namarancangan",
-						getParam("txtNamaRancanganHtaamX"));
-				this.context.put("noroh", getParam("txtNoRohHtaamX"));
-				this.context.put("nolot", getParam("txtLotIdHtaamX"));
-				this.context.put("nolot", getParam("txtLotIdHtaamX"));
-				this.context.put("nocagaran", getParam("txtNoCagaranX"));
-				this.context.put("pemilikan",
-						getParam("socStatusPemilikanHtaamX"));
-				this.context.put("jeniskepentingan",
-						getParam("txtJenisKepentinganX"));
-				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-				this.context.put("show_button", "yes");
-
-			}
-
-			else if ("negerichangeupX".equals(mode)) {
-				v = new Vector();
-				String mati = getParam("id_Permohonansimati");
-				this.context.put("listMukimbyDaerah", "");
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					int idnegeri = Integer
-							.parseInt(getParam("socNegeriHtaamX"));
-					listnegeribydaerah = logic_A
-							.getListDaerahbyNegeri(idnegeri);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-					this.context.put("negeri", idnegeri);
-					this.context.put("bandarhta", "");
-				} else {
-					this.context.put("listDaerahbyNegeri", "");
-					this.context.put("negeri", "");
-					this.context.put("bandarhta", "");
-				}
-
-				if (getParam("socNegeriPemajuHtaamX") != ""
-						&& getParam("socNegeriPemajuHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriPemajuHtaamX")));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriHtaamX")));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				Hashtable h = new Hashtable();
-				h.put("idhta", getParam("idhtaamid"));
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					int idnegeri = Integer
-							.parseInt(getParam("socNegeriHtaamX"));
-					h.put("negeri", idnegeri);
-				} else {
-					h.put("negeri", "");
-				}
-
-				h.put("daerah", "");
-				h.put("mukim", "");
-				h.put("idSimati", getParam("idSimatiX"));
-				h.put("nopt", getParam("txtNoPTHtaamX"));
-				h
-				.put("nilai_Hta_memohon",
-						getParam("txtNilaiTarikhMohonHtaaX"));
-				h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamX"));
-				h.put("kategori", getParam("socKategoriTanahHtaamX"));
-				h.put("luashmp", getParam("txtLuasHMpHtaamX"));
-				h.put("luasasal", getParam("txtLuasAsalHtaamX"));
-				h.put("nopajakan", getParam("txtNoPajakanX"));
-				h.put("jenistanah", getParam("socJenisTanahHtaamX"));
-				h.put("basimati", getParam("txtBahagianSimati1X"));
-				h.put("bbsimati", getParam("txtBahagianSimati2X"));
-				h.put("tanggungan", getParam("txtTanggunganHtaamX"));
-				h.put("jenisluas", getParam("socJenisLuasHtaamX"));
-				h.put("catatan", getParam("txtCatatanHtaamX"));
-				h.put("namapemaju", getParam("txtNamaPemajuHtaamX"));
-				h.put("alamatpemaju1", getParam("txtAlamatPemaju1HtaamX"));
-				h.put("alamatpemaju2", getParam("txtAlamatPemaju2HtaamX"));
-				h.put("alamatpemaju3", getParam("txtAlamatPemaju3HtaamX"));
-				h.put("poskodpemaju", getParam("txtPoskodPemaju1HtaamX"));
-				h.put("bandarpemaju", getParam("txtBandarPemaju1HtaamX"));
-				h.put("negeripemaju", getParam("socNegeriPemajuHtaamX"));
-				h.put("alamathta1", getParam("txtAlamatHarta1HtaamX"));
-				h.put("alamathta2", getParam("txtAlamatHarta2HtaamX"));
-				h.put("alamathta3", getParam("txtAlamatHarta3HtaamX"));
-				h.put("poskodhta", getParam("txtPoskodHartaHtaamX"));
-				h.put("bandarhta", "");
-				h.put("noperjanjian", getParam("txtNoPerjanjianHtaamX"));
-				h
-				.put("tarikhperjanjian",
-						getParam("txtTarikhPerjanjianHtaamX"));
-				h.put("namarancangan", getParam("txtNamaRancanganHtaamX"));
-				h.put("noroh", getParam("txtNoRohHtaamX"));
-				h.put("nolot", getParam("txtLotIdHtaamX"));
-				h.put("nolot", getParam("txtLotIdHtaamX"));
-				h.put("flag", getParam("flag"));
-				h.put("nocagaran", getParam("txtNoCagaranX"));
-				h.put("pemilikan", getParam("socStatusPemilikanHtaamX"));
-				h.put("jeniskepentingan", getParam("txtJenisKepentinganX"));
-				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-				v.addElement(h);
-				this.context.put("listHTAXid", v);
-
-				this.context.put("show_save_update_htaam", "yes");
-				this.context.put("show_batal_update_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				// this.context.put("negeri", idnegeri);
-				this.context.put("tambahbutton", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("idhtaam", getParam("idhtaamid"));
-
-			}
-
-			else if ("negerichangepemajuupX".equals(mode)) {
-				v = new Vector();
-				String mati = getParam("id_Permohonansimati");
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					int idnegeri = Integer
-							.parseInt(getParam("socNegeriHtaamX"));
-					listnegeribydaerah = logic_A
-							.getListDaerahbyNegeri(idnegeri);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-					this.context.put("negeri", idnegeri);
-				} else {
-					this.context.put("listDaerahbyNegeri", "");
-					this.context.put("negeri", "");
-				}
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriHtaamX")));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				if (getParam("socNegeriPemajuHtaamX") != ""
-						&& getParam("socNegeriPemajuHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriPemajuHtaamX")));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				Hashtable h = new Hashtable();
-				h.put("idhta", getParam("idhtaamid"));
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					int idnegeri = Integer
-							.parseInt(getParam("socNegeriHtaamX"));
-					h.put("negeri", idnegeri);
-				} else {
-					h.put("negeri", "");
-				}
-
-				if (getParam("socDaerahHtaamX") != ""
-						&& getParam("socDaerahHtaamX") != "0") {
-					int iddaerah = Integer
-							.parseInt(getParam("socDaerahHtaamX"));
-					listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-					this.context.put("listMukimbyDaerah", listmukim);
-					h.put("daerah", iddaerah);
-					h.put("mukim", getParam("socMukimHtaamX"));
-				} else {
-					this.context.put("listMukimbyDaerah", "");
-					h.put("daerah", "");
-					h.put("mukim", "");
-				}
-
-				h.put("idSimati", getParam("idSimatiX"));
-				h.put("nopt", getParam("txtNoPTHtaamX"));
-				h
-				.put("nilai_Hta_memohon",
-						getParam("txtNilaiTarikhMohonHtaaX"));
-				h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamX"));
-				h.put("kategori", getParam("socKategoriTanahHtaamX"));
-				h.put("luashmp", getParam("txtLuasHMpHtaamX"));
-				h.put("luasasal", getParam("txtLuasAsalHtaamX"));
-				h.put("nopajakan", getParam("txtNoPajakanX"));
-				h.put("jenistanah", getParam("socJenisTanahHtaamX"));
-				h.put("basimati", getParam("txtBahagianSimati1X"));
-				h.put("bbsimati", getParam("txtBahagianSimati2X"));
-				h.put("tanggungan", getParam("txtTanggunganHtaamX"));
-				h.put("jenisluas", getParam("socJenisLuasHtaamX"));
-				h.put("catatan", getParam("txtCatatanHtaamX"));
-				h.put("namapemaju", getParam("txtNamaPemajuHtaamX"));
-				h.put("alamatpemaju1", getParam("txtAlamatPemaju1HtaamX"));
-				h.put("alamatpemaju2", getParam("txtAlamatPemaju2HtaamX"));
-				h.put("alamatpemaju3", getParam("txtAlamatPemaju3HtaamX"));
-				h.put("poskodpemaju", getParam("txtPoskodPemaju1HtaamX"));
-				h.put("bandarpemaju", "");
-				h.put("negeripemaju", getParam("socNegeriPemajuHtaamX"));
-				h.put("alamathta1", getParam("txtAlamatHarta1HtaamX"));
-				h.put("alamathta2", getParam("txtAlamatHarta2HtaamX"));
-				h.put("alamathta3", getParam("txtAlamatHarta3HtaamX"));
-				h.put("poskodhta", getParam("txtPoskodHartaHtaamX"));
-				h.put("bandarhta", getParam("txtBandarHartaHtaamX"));
-				h.put("noperjanjian", getParam("txtNoPerjanjianHtaamX"));
-				h
-				.put("tarikhperjanjian",
-						getParam("txtTarikhPerjanjianHtaamX"));
-				h.put("namarancangan", getParam("txtNamaRancanganHtaamX"));
-				h.put("noroh", getParam("txtNoRohHtaamX"));
-				h.put("nolot", getParam("txtLotIdHtaamX"));
-				h.put("nolot", getParam("txtLotIdHtaamX"));
-				h.put("flag", getParam("flag"));
-				h.put("nocagaran", getParam("txtNoCagaranX"));
-				h.put("pemilikan", getParam("socStatusPemilikanHtaamX"));
-				h.put("jeniskepentingan", getParam("txtJenisKepentinganX"));
-				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-				v.addElement(h);
-				this.context.put("listHTAXid", v);
-
-				this.context.put("show_save_update_htaam", "yes");
-				this.context.put("show_batal_update_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				// this.context.put("negeri", idnegeri);
-				this.context.put("tambahbutton", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("idhtaam", getParam("idhtaamid"));
-
-			}
-
-			else if ("daerahchangeupX".equals(mode)) {
-				v = new Vector();
-				String mati = getParam("id_Permohonansimati");
-				int idnegeri = Integer.parseInt(getParam("socNegeriHtaamX"));
-				int iddaerah = Integer.parseInt(getParam("socDaerahHtaamX"));
-				listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-				this.context.put("listMukimbyDaerah", listmukim);
-				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriHtaamX")));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				if (getParam("socNegeriPemajuHtaamX") != ""
-						&& getParam("socNegeriPemajuHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriPemajuHtaamX")));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				Hashtable h = new Hashtable();
-				// h.put("idhta",getParam("idhtaamXid"));
-				h.put("idhta", getParam("idhtaamid"));
-				h.put("negeri", idnegeri);
-				h.put("daerah", iddaerah);
-				h.put("mukim", "");
-				h.put("idSimati", getParam("idSimatiX"));
-				h.put("nopt", getParam("txtNoPTHtaamX"));
-				h
-				.put("nilai_Hta_memohon",
-						getParam("txtNilaiTarikhMohonHtaaX"));
-				h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamX"));
-				h.put("kategori", getParam("socKategoriTanahHtaamX"));
-				h.put("luashmp", getParam("txtLuasHMpHtaamX"));
-				h.put("luasasal", getParam("txtLuasAsalHtaamX"));
-				h.put("nopajakan", getParam("txtNoPajakanX"));
-				h.put("jenistanah", getParam("socJenisTanahHtaamX"));
-				h.put("basimati", getParam("txtBahagianSimati1X"));
-				h.put("bbsimati", getParam("txtBahagianSimati2X"));
-				h.put("tanggungan", getParam("txtTanggunganHtaamX"));
-				h.put("jenisluas", getParam("socJenisLuasHtaamX"));
-				h.put("catatan", getParam("txtCatatanHtaamX"));
-				h.put("namapemaju", getParam("txtNamaPemajuHtaamX"));
-				h.put("alamatpemaju1", getParam("txtAlamatPemaju1HtaamX"));
-				h.put("alamatpemaju2", getParam("txtAlamatPemaju2HtaamX"));
-				h.put("alamatpemaju3", getParam("txtAlamatPemaju3HtaamX"));
-				h.put("poskodpemaju", getParam("txtPoskodPemaju1HtaamX"));
-				h.put("bandarpemaju", getParam("txtBandarPemaju1HtaamX"));
-				h.put("negeripemaju", getParam("socNegeriPemajuHtaamX"));
-				h.put("alamathta1", getParam("txtAlamatHarta1HtaamX"));
-				h.put("alamathta2", getParam("txtAlamatHarta2HtaamX"));
-				h.put("alamathta3", getParam("txtAlamatHarta3HtaamX"));
-				h.put("poskodhta", getParam("txtPoskodHartaHtaamX"));
-				h.put("bandarhta", getParam("txtBandarHartaHtaamX"));
-				h.put("noperjanjian", getParam("txtNoPerjanjianHtaamX"));
-				h
-				.put("tarikhperjanjian",
-						getParam("txtTarikhPerjanjianHtaamX"));
-				h.put("namarancangan", getParam("txtNamaRancanganHtaamX"));
-				h.put("noroh", getParam("txtNoRohHtaamX"));
-				h.put("nolot", getParam("txtLotIdHtaamX"));
-				h.put("nolot", getParam("txtLotIdHtaamX"));
-				h.put("flag", getParam("flag"));
-				h.put("nocagaran", getParam("txtNoCagaranX"));
-				h.put("pemilikan", getParam("socStatusPemilikanHtaamX"));
-				h.put("jeniskepentingan", getParam("txtJenisKepentinganX"));
-				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-				v.addElement(h);
-				this.context.put("listHTAXid", v);
-
-				this.context.put("show_save_update_htaam", "yes");
-				this.context.put("show_batal_update_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				this.context.put("negeri", idnegeri);
-				this.context.put("daerah", iddaerah);
-				this.context.put("tambahbutton", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("idhtaam", getParam("idhtaamid"));
-
-			}
-
-			else if ("getHtaamStatus".equals(mode)) {
-				String id = getParam("idPermohonan");
-				String mati = getParam("id_Permohonansimati");
-				String radioX1 = getParam("radioHtaamViewX1");
-				String radioX2 = getParam("radioHtaamViewX2");
-				String radioX3 = getParam("radioHtaamViewX3");
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-				this.context.put("tambahbutton", "yes");
-				this.context.put("kembalibutton", "yes");
-
-				String id_sub = getParam("id_Suburusanstatusfail");
-				String id_Fail = getParam("id_Fail");
-				if (bolehsimpan.equals("yes")) {
-					logic_A.htaamstatus(session, id, (String) session
-							.getAttribute("_ekptg_user_id"), id_sub, id_Fail);
-				}
-
-				/*
-				 * String mati = getParam("id_Permohonansimati"); int
-				 * idhtaam=Integer.parseInt(getParam("idhtaamXid"));
-				 * logic.setDataHTAXbyIdHtaam(idhtaam); listHTAXid =
-				 * logic.getDataHTAXbyIdHtaam(); logic.setDataHTAX(mati);
-				 * listHTAX = logic.getDataHTAX();
-				 * this.context.put("listHTAX",listHTAX); listmukim =
-				 * logic_A.getListMukim(); this.context.put("listMukimbyDaerah",
-				 * listmukim); String id = getParam("idPermohonan"); int id_sub
-				 * = Integer.parseInt(getParam("id_Suburusanstatusfail")); int
-				 * id_Fail = Integer.parseInt(getParam("id_Fail"));
-				 * if(bolehsimpan.equals("yes")){
-				 * logic_A.htaamstatus(id,(String)
-				 * session.getAttribute("_ekptg_user_id"),id_sub,id_Fail); }
-				 * this.context.put("tambahbutton","yes");
-				 * this.context.put("show_button","yes");
-				 * this.context.put("idhtaamX", idhtaam);
-				 * this.context.put("idhtaam", idhtaam);
-				 * this.context.put("listHTAXid", listHTAXid);
-				 * this.context.put("readmodenegeri", "disabled");
-				 * this.context.put("readmodedaerah", "disabled");
-				 * this.context.put("readmodemukim", "disabled");
-				 * this.context.put("readmode", "disabled");
-				 * this.context.put("show_kemaskini_htaam","yes");
-				 * this.context.put("show_hapus_htaam","yes");
-				 * this.context.put("show_kembali_htaam","yes");
-				 * this.context.put("show_htaa_update_table","yes");
-				 */
-			}
-
-			else if ("getHtaamX".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				String idhtaam = getParam("idhtaamXid");
-				logic.setDataHTAXbyIdHtaam(idhtaam,
-						getParam("id_Permohonansimati"));
-				listHTAXid = logic.getDataHTAXbyIdHtaam();
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				Hashtable b = (Hashtable) listHTAXid.get(0);
-				String nn = b.get("negeri").toString();
-				String dd = b.get("daerah").toString();
-
-				if (nn != "" && nn != "0") {
-					int idn = Integer.parseInt(nn);
-
-					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-
-				}
-
-				if (dd != "" && dd != "0") {
-					int idd = Integer.parseInt(dd);
-					listmukim = logic_A.getListMukimbyDaerah(idd);
-					this.context.put("listMukimbyDaerah", listmukim);
-
-				}
-
-				Hashtable m = (Hashtable) listHTAXid.get(0);
-				if (m.get("negeripemaju").toString() != ""
-						&& m.get("negeripemaju").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(m.get("negeripemaju").toString()));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				Hashtable k = (Hashtable) listHTAXid.get(0);
-				if (k.get("negeri").toString() != ""
-						&& k.get("negeri").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(k.get("negeri").toString()));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				this.context.put("tambahbutton", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("idhtaamX", idhtaam);
-				this.context.put("idhtaam", idhtaam);
-				this.context.put("listHTAXid", listHTAXid);
-				this.context.put("readmodenegeri", "disabled");
-				this.context.put("readmodedaerah", "disabled");
-				this.context.put("readmodemukim", "disabled");
-				this.context.put("readmode", "disabled");
-				this.context.put("show_kemaskini_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-
-			}
-
-			else if ("getHtaamXstatus".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				String idhtaam = getParam("idhtaamXid");
-
-				String id = getParam("idPermohonan");
-				String id_sub = getParam("id_Suburusanstatusfail");
-				String id_Fail = getParam("id_Fail");
-				if (bolehsimpan.equals("yes")) {
-					logic_A.htaamstatus(session, id, (String) session
-							.getAttribute("_ekptg_user_id"), id_sub, id_Fail);
-				}
-
-				logic.setDataHTAXbyIdHtaam(idhtaam,
-						getParam("id_Permohonansimati"));
-				listHTAXid = logic.getDataHTAXbyIdHtaam();
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-				listmukim = logic_A.getListMukim();
-				this.context.put("listMukimbyDaerah", listmukim);
-
-				this.context.put("tambahbutton", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("idhtaamX", idhtaam);
-				this.context.put("idhtaam", idhtaam);
-				this.context.put("listHTAXid", listHTAXid);
-				this.context.put("readmodenegeri", "disabled");
-				this.context.put("readmodedaerah", "disabled");
-				this.context.put("readmodemukim", "disabled");
-				this.context.put("readmode", "disabled");
-				this.context.put("show_kemaskini_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-
-			}
-			/*
-			 * else if ("getHtaamX".equals(mode)) {
-			 * 
-			 * String mati = getParam("id_Permohonansimati"); int
-			 * idhtaam=Integer.parseInt(getParam("idhtaamXid"));
-			 * logic.setDataHTAXbyIdHtaam(idhtaam); listHTAXid =
-			 * logic.getDataHTAXbyIdHtaam();
-			 * 
-			 * Hashtable m = (Hashtable)listHTAXid.get(0);
-			 * if(m.get("negeripemaju").toString()!="" &&
-			 * m.get("negeripemaju").toString()!="0"){ Vector s3 =
-			 * logic_A.getListBandarByNegeri
-			 * (Integer.parseInt(m.get("negeripemaju").toString()));
-			 * this.context.put("listBandarTetapbyNegeri",s3);}
-			 * else{this.context.put("listBandarTetapbyNegeri","");}
-			 * 
-			 * Hashtable k = (Hashtable)listHTAXid.get(0);
-			 * if(k.get("negeri").toString()!="" &&
-			 * k.get("negeri").toString()!="0"){ Vector s3 =
-			 * logic_A.getListBandarByNegeri
-			 * (Integer.parseInt(k.get("negeri").toString()));
-			 * this.context.put("listBandarSuratbyNegeri",s3);}
-			 * else{this.context.put("listBandarSuratbyNegeri","");}
-			 * 
-			 * 
-			 * logic.setDataHTAX(mati); listHTAX = logic.getDataHTAX();
-			 * this.context.put("listHTAX",listHTAX); listmukim =
-			 * logic_A.getListMukim(); this.context.put("listMukimbyDaerah",
-			 * listmukim);
-			 * 
-			 * this.context.put("tambahbutton","yes");
-			 * this.context.put("show_button","yes");
-			 * this.context.put("idhtaamX", idhtaam);
-			 * this.context.put("idhtaam", idhtaam);
-			 * this.context.put("listHTAXid", listHTAXid);
-			 * this.context.put("readmodenegeri", "disabled");
-			 * this.context.put("readmodedaerah", "disabled");
-			 * this.context.put("readmodemukim", "disabled");
-			 * this.context.put("readmode", "disabled");
-			 * this.context.put("show_kemaskini_htaam","yes");
-			 * this.context.put("show_hapus_htaam","yes");
-			 * this.context.put("show_kembali_htaam","yes");
-			 * this.context.put("show_htaa_update_table","yes");
-			 * 
-			 * 
-			 * 
-			 * }
-			 */
-
-			else if ("batalHtaamX".equals(mode)) {
-
-				String mati = getParam("id_Permohonansimati");
-				String idhtaam = getParam("idhtaamXid");
-				logic.setDataHTAXbyIdHtaam(idhtaam,
-						getParam("id_Permohonansimati"));
-				listHTAXid = logic.getDataHTAXbyIdHtaam();
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-				this.context.put("listHTAXid", listHTAXid);
-
-				Hashtable m = (Hashtable) listHTAXid.get(0);
-				if (m.get("negeripemaju").toString() != ""
-						&& m.get("negeripemaju").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(m.get("negeripemaju").toString()));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				Hashtable k = (Hashtable) listHTAXid.get(0);
-				if (k.get("negeri").toString() != ""
-						&& k.get("negeri").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(k.get("negeri").toString()));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				this.context.put("idhtaamX", idhtaam);
-				this.context.put("idhtaam", idhtaam);
-				this.context.put("idhtaam", getParam("idhtaamid"));
-				this.context.put("show_save_update_htaam", "yes");
-				this.context.put("show_batal_update_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				this.context.put("tambahbutton", "yes");
-				this.context.put("show_button", "yes");
-
-			} else if ("hapusHtaamX".equals(mode)) {
-
-				String idhtaam = getParam("idhtaamXid");
-				String mati = getParam("id_Permohonansimati");
-				logic.deleteHtaam(session, idhtaam, getParam("id_Permohonansimati"));
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				this.context.put("tambahbutton", "yes");
-				this.context.put("kembalibutton", "yes");
-
-			} else if ("kemaskiniHtaamX".equals(mode)) {
-
-				String flag_tukar_jenis_hta = getParam("flag_tukar_jenis_hta");
-				if (flag_tukar_jenis_hta.equals("TIADA")) {
-					if (bolehsimpan.equals("yes")) {
-
-						if (getParam("nama_skrin").equals("adahakmilik")) {
-							updateHtaam(session);
-						} else {
-							updateHtaamX(session);
-						}
-					}
-				}
-
-				String mati = getParam("id_Permohonansimati");
-				String idhtaam = getParam("idhtaamXid");
-				logic.setDataHTAXbyIdHtaam(idhtaam,
-						getParam("id_Permohonansimati"));
-				listHTAXid = logic.getDataHTAXbyIdHtaam();
-				this.context.put("listHTAXid", listHTAXid);
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				Hashtable m = (Hashtable) listHTAXid.get(0);
-				if (m.get("negeripemaju").toString() != ""
-						&& m.get("negeripemaju").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(m.get("negeripemaju").toString()));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				Hashtable k = (Hashtable) listHTAXid.get(0);
-				if (k.get("negeri").toString() != ""
-						&& k.get("negeri").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(k.get("negeri").toString()));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				Hashtable b = (Hashtable) listHTAXid.get(0);
-				String nn = b.get("negeri").toString();
-				String dd = b.get("daerah").toString();
-
-				// System.out.println("negeri :"+nn+"daerah :"+dd);
-
-				if (nn != "" && nn != "0") {
-					int idn = Integer.parseInt(nn);
-
-					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-
-				}
-
-				if (dd != "" && dd != "0") {
-					int idd = Integer.parseInt(dd);
-					listmukim = logic_A.getListMukimbyDaerah(idd);
-					this.context.put("listMukimbyDaerah", listmukim);
-
-				}
-				this.context.put("idhtaamX", idhtaam);
-				this.context.put("idhtaam", idhtaam);
-				this.context.put("show_save_update_htaam", "yes");
-				this.context.put("show_batal_update_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				this.context.put("tambahbutton", "yes");
-				this.context.put("show_button", "yes");
-
-			} else if ("simpanHtaamX".equals(mode)) {
-
-				String idhtaam = getParam("idhtaamid");
-				String mati = getParam("id_Permohonansimati");
-				if (bolehsimpan.equals("yes")) {
-					updateHtaamX(session);
-					uploadFilesA(idhtaam,session);
-					this.context.put("appear_skrin_info", "kemaskini");
-				}
-				// int idhtaam=Integer.parseInt(getParam("idhtaamXid"));
-				// h.put("idhta",getParam("idhtaamid"));
-
-				logic.setDataHTAXbyIdHtaam(idhtaam,
-						getParam("id_Permohonansimati"));
-				listHTAXid = logic.getDataHTAXbyIdHtaam();
-				this.context.put("listHTAXid", listHTAXid);
-
-				Hashtable m = (Hashtable) listHTAXid.get(0);
-				if (m.get("negeripemaju").toString() != ""
-						&& m.get("negeripemaju").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(m.get("negeripemaju").toString()));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				Hashtable k = (Hashtable) listHTAXid.get(0);
-				if (k.get("negeri").toString() != ""
-						&& k.get("negeri").toString() != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(k.get("negeri").toString()));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-				this.context.put("idhtaamX", idhtaam);
-				this.context.put("idhtaam", idhtaam);
-
-				this.context.put("readmodenegeri", "disabled");
-				this.context.put("readmodedaerah", "disabled");
-				this.context.put("readmodemukim", "disabled");
-				this.context.put("readmode", "disabled");
-				this.context.put("show_kemaskini_htaam", "yes");
-				this.context.put("show_hapus_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_update_table", "yes");
-				this.context.put("radio2", "yes");
-				this.context.put("checked1", "checked");
-				this.context.put("tambahbutton", "yes");
-				this.context.put("show_button", "yes");
-				this.context.put("idhtaam", getParam("idhtaamid"));
-
-				String id = getParam("idPermohonan");
-				logic_A.updateDataNilai(id, mati, (String) session
-						.getAttribute("_ekptg_user_id"));
-
-			} else if ("daerahchangeX".equals(mode)) {
-				String mati = getParam("id_Permohonansimati");
-				int iddaerah = Integer.parseInt(getParam("socDaerahHtaamX"));
-				int idnegeri = Integer.parseInt(getParam("socNegeriHtaamX"));
-				listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-				this.context.put("listMukimbyDaerah", listmukim);
-				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-				logic.setDataHTAX(mati);
-				listHTAX = logic.getDataHTAX();
-				this.context.put("listHTAX", listHTAX);
-
-				if (getParam("socNegeriPemajuHtaamX") != ""
-						&& getParam("socNegeriPemajuHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriPemajuHtaamX")));
-					this.context.put("listBandarTetapbyNegeri", s3);
-				} else {
-					this.context.put("listBandarTetapbyNegeri", "");
-				}
-
-				if (getParam("socNegeriHtaamX") != ""
-						&& getParam("socNegeriHtaamX") != "0") {
-					Vector s3 = logic_A.getListBandarByNegeri(Integer
-							.parseInt(getParam("socNegeriHtaamX")));
-					this.context.put("listBandarSuratbyNegeri", s3);
-				} else {
-					this.context.put("listBandarSuratbyNegeri", "");
-				}
-
-				String[] radioHtaamViewX = this.request
-						.getParameterValues("radioHtaamViewX");
-				int n = 0;
-				for (int i = 0; i < radioHtaamViewX.length; i++) {
-					if (radioHtaamViewX[i].equals("1")) {
-						n = 1;
-					} else if (radioHtaamViewX[i].equals("2")) {
-						n = 2;
-					} else if (radioHtaamViewX[i].equals("3")) {
-						n = 3;
-					}
-				}
-
-				if (n == 1) {
-					this.context.put("radio2", "yes");
-					this.context.put("checked1", "checked");
-
-				}
-				if (n == 2) {
-
-					this.context.put("radio3", "yes");
-					this.context.put("checked2", "checked");
-				}
-				if (n == 3) {
-
-					this.context.put("checked3", "checked");
-				}
-
-				this.context.put("idSimati", getParam("idSimatiX"));
-				this.context.put("nopt", getParam("txtNoPTHtaamX"));
-				this.context.put("nilai_Hta_memohon",
-						getParam("txtNilaiTarikhMohonHtaaX"));
-				this.context.put("nilai_Hta_mati",
-						getParam("txtNilaiTarikhMatiHtaamX"));
-				this.context
-				.put("kategori", getParam("socKategoriTanahHtaamX"));
-				this.context.put("luashmp", getParam("txtLuasHMpHtaamX"));
-				this.context.put("luasasal", getParam("txtLuasAsalHtaamX"));
-				this.context.put("nopajakan", getParam("txtNoPajakanX"));
-				this.context.put("jenistanah", getParam("socJenisTanahHtaamX"));
-				this.context.put("basimati", getParam("txtBahagianSimati1X"));
-				this.context.put("bbsimati", getParam("txtBahagianSimati2X"));
-				this.context.put("tanggungan", getParam("txtTanggunganHtaamX"));
-				this.context.put("jenisluas", getParam("socJenisLuasHtaamX"));
-				this.context.put("catatan", getParam("txtCatatanHtaamX"));
-				this.context.put("namapemaju", getParam("txtNamaPemajuHtaamX"));
-				this.context.put("alamatpemaju1",
-						getParam("txtAlamatPemaju1HtaamX"));
-				this.context.put("alamatpemaju2",
-						getParam("txtAlamatPemaju2HtaamX"));
-				this.context.put("alamatpemaju3",
-						getParam("txtAlamatPemaju3HtaamX"));
-				this.context.put("poskodpemaju",
-						getParam("txtPoskodPemaju1HtaamX"));
-				this.context.put("bandarpemaju",
-						getParam("txtBandarPemaju1HtaamX"));
-				this.context.put("negeripemaju",
-						getParam("socNegeriPemajuHtaamX"));
-				this.context.put("alamathta1",
-						getParam("txtAlamatHarta1HtaamX"));
-				this.context.put("alamathta2",
-						getParam("txtAlamatHarta2HtaamX"));
-				this.context.put("alamathta3",
-						getParam("txtAlamatHarta3HtaamX"));
-				this.context.put("poskodhta", getParam("txtPoskodHartaHtaamX"));
-				this.context.put("bandarhta", getParam("txtBandarHartaHtaamX"));
-				this.context.put("noperjanjian",
-						getParam("txtNoPerjanjianHtaamX"));
-				this.context.put("tarikhperjanjian",
-						getParam("txtTarikhPerjanjianHtaamX"));
-				this.context.put("namarancangan",
-						getParam("txtNamaRancanganHtaamX"));
-				this.context.put("noroh", getParam("txtNoRohHtaamX"));
-				this.context.put("nolot", getParam("txtLotIdHtaamX"));
-				this.context.put("nolot", getParam("txtLotIdHtaamX"));
-				this.context.put("nocagaran", getParam("txtNoCagaranX"));
-				this.context.put("pemilikan",
-						getParam("socStatusPemilikanHtaamX"));
-				this.context.put("jeniskepentingan",
-						getParam("txtJenisKepentinganX"));
-
-				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-
-				this.context.put("show_simpan_add_htaam", "yes");
-				this.context.put("show_batal_add_htaam", "yes");
-				this.context.put("show_kembali_htaam", "yes");
-				this.context.put("show_htaa_add_table", "yes");
-				this.context.put("negeri", idnegeri);
-				this.context.put("daerah", iddaerah);
-				this.context.put("show_button", "yes");
-
-			}
-
-			this.context.put("selectedTabatas", 1);
-			this.context.put("selectedTabtengah", 0);
-			this.context.put("selectedTabbawah", 0);
-			this.context.put("selectedTabtepi", 1);
+			
+			//2018
+			this.context.put("listNegeri", socNegeri);
+			this.context.put("listDaerah", socDaerah);
+			this.context.put("listMukim", socMukim);
+
+			listHTA = permohonanInternal.getDataHTA(mati,"Y");								
+			this.context.put("listHTA", listHTA);
+
+			//vm = "app/ppk/frmPrmhnnSek8HTAAH.jsp";
+			vm = "app/ppk/harta/frmPermohonanHTA.jsp";
+	
+		//END HTAAM	
+		}else if ("HtaamX".equals(submit)) {
+
+			Hashtable dataParam = new Hashtable();
+			dataParam.put("id_Permohonansimati", getParam("id_Permohonansimati"));
+			dataParam.put("idPermohonan", getParam("idPermohonan"));
+			dataParam.put("radioHtaamViewX1", getParam("radioHtaamViewX1"));
+			dataParam.put("radioHtaamViewX2", getParam("radioHtaamViewX2"));
+			dataParam.put("radioHtaamViewX3", getParam("radioHtaamViewX3"));
+			dataParam.put("selectedHartaTakAlih", getParam("selectedHartaTakAlih"));
+			
+			dataParam.put("idUser", idUser);
+			dataParam.put("bolehsimpan", bolehsimpan);
+			//SOC
+			dataParam.put("socNegeriHtaamX", getParam("socNegeriHtaamX"));
+			dataParam.put("socDaerahHtaamX", getParam("socDaerahHtaamX"));
+			dataParam.put("socMukimHtaamX", getParam("socMukimHtaamX"));
+			dataParam.put("txtBandarHartaHtaamX", getParam("txtBandarHartaHtaamX"));
+			dataParam.put("socKategoriTanahHtaamX", getParam("socKategoriTanahHtaamX"));
+			dataParam.put("socJenisLuasHtaamX", getParam("socJenisLuasHtaamX").equals("")?"0":getParam("socJenisLuasHtaamX"));
+			dataParam.put("socStatusPemilikanHtaamX", getParam("socStatusPemilikanHtaamX"));
+			dataParam.put("socNegeriPemajuHtaamX", getParam("socNegeriPemajuHtaamX"));
+			dataParam.put("txtBandarPemaju1HtaamX", getParam("txtBandarPemaju1HtaamX"));
+				
+			//dataParam.put("radioHtaamViewX", getParam("id_Permohonansimati"));
+			dataParam.put("noradio", getParam("noradio"));
+			
+			//dataParam.put("idSimatiX", getParam("idSimatiX"));
+			dataParam.put("idSimati", getParam("idSimati"));
+			dataParam.put("txtNoPTHtaamX", getParam("txtNoPTHtaamX"));
+			dataParam.put("txtNilaiTarikhMohonHtaaX", getParam("txtNilaiTarikhMohonHtaaX"));
+			dataParam.put("txtNilaiTarikhMatiHtaamX", getParam("txtNilaiTarikhMatiHtaamX"));
+			dataParam.put("socKategoriTanahHtaamX", getParam("socKategoriTanahHtaamX"));
+			dataParam.put("txtLuasHMpHtaamX", getParam("txtLuasHMpHtaamX"));
+			dataParam.put("txtLuasAsalHtaamX", getParam("txtLuasAsalHtaamX"));
+			dataParam.put("txtNoPajakanX", getParam("txtNoPajakanX"));
+			dataParam.put("socJenisTanahHtaamX", getParam("socJenisTanahHtaamX"));
+			dataParam.put("txtBahagianSimati1X", getParam("txtBahagianSimati1X"));
+			dataParam.put("txtBahagianSimati2X", getParam("txtBahagianSimati2X"));
+			dataParam.put("txtTanggunganHtaamX", getParam("txtTanggunganHtaamX"));
+			myLogger.info("jenis_luas="+getParam("socJenisLuasHtaamX"));
+			dataParam.put("socJenisLuasHtaamX", getParam("socJenisLuasHtaamX"));
+			dataParam.put("txtCatatanHtaamX", getParam("txtCatatanHtaamX"));
+			dataParam.put("txtNamaPemajuHtaamX", getParam("txtNamaPemajuHtaamX"));
+			dataParam.put("txtAlamatPemaju1HtaamX", getParam("txtAlamatPemaju1HtaamX"));
+			dataParam.put("txtAlamatPemaju2HtaamX", getParam("txtAlamatPemaju2HtaamX"));
+			dataParam.put("txtAlamatPemaju3HtaamX", getParam("txtAlamatPemaju3HtaamX"));
+			dataParam.put("txtPoskodPemaju1HtaamX", getParam("txtPoskodPemaju1HtaamX"));
+			dataParam.put("txtBandarPemaju1HtaamX", getParam("txtBandarPemaju1HtaamX"));			
+			dataParam.put("txtPoskodPemaju1HtaamX", getParam("txtPoskodPemaju1HtaamX"));
+			
+			dataParam.put("txtAlamatHarta1HtaamX", getParam("txtAlamatHarta1HtaamX"));
+			dataParam.put("txtAlamatHarta2HtaamX", getParam("txtAlamatHarta2HtaamX"));
+			dataParam.put("txtAlamatHarta3HtaamX", getParam("txtAlamatHarta3HtaamX"));
+			dataParam.put("txtPoskodHartaHtaamX", getParam("txtPoskodHartaHtaamX"));
+			
+			dataParam.put("txtNoPerjanjianHtaamX", getParam("txtNoPerjanjianHtaamX"));
+			dataParam.put("txtTarikhPerjanjianHtaamX", getParam("txtTarikhPerjanjianHtaamX"));
+			dataParam.put("txtNamaRancanganHtaamX", getParam("txtNamaRancanganHtaamX"));			
+			dataParam.put("txtNoRohHtaamX", getParam("txtNoRohHtaamX"));
+			dataParam.put("txtLotIdHtaamX", getParam("txtLotIdHtaamX"));
+			dataParam.put("txtNoCagaranX", getParam("txtNoCagaranX"));
+			dataParam.put("socStatusPemilikanHtaamX", getParam("socStatusPemilikanHtaamX"));
+			dataParam.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
+			dataParam.put("idhtaamXid", getParam("idhtaamXid"));
+			dataParam.put("id_Suburusanstatusfail", getParam("id_Suburusanstatusfail"));
+			dataParam.put("id_Fail", getParam("id_Fail"));
+			dataParam.put("flag_tukar_jenis_hta", getParam("flag_tukar_jenis_hta"));
+			dataParam.put("nama_skrin", getParam("nama_skrin"));
+			dataParam.put("flag", getParam("flag"));
+			// Kemaskini
+			//dataParam.put("idhta", getParam("id_htaam"));
+			dataParam.put("idhta", getParam("idhtaamid"));
+
+			getHTATH().getHTA(mode,dataParam,logic,this.request,session,this.context);
 
 			String id = getParam("idPermohonan");
 			// logic_A.setData_online(id);
-			list = logic_A.setData_online(id, (String) session
-					.getAttribute("_ekptg_user_id"));
+			list = logic_A.setData_online(id,idUser);
 			headerppk_baru(session, id, "Y", "", "T");
 			this.context.put("View", list);
 
-			// String id = getParam("idPermohonan");
-			String mati = getParam("id_Permohonansimati");
-			logic_A.updateDataNilai(id, mati, (String) session
-					.getAttribute("_ekptg_user_id"));
+			logic_A.updateDataNilai(id, getParam("id_Permohonansimati"),idUser);
 
 			logic_A.setDataFail(id);
 			listFail = logic_A.getDataFail();
 			this.context.put("ViewFail", listFail);
-			context.put("DATEUTIL", new DateUtil());
+			this.context.put("DATEUTIL", new DateUtil());
 			hideTabPengesahan_simati = checkEmptyField_simati(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_simati", hideTabPengesahan_simati);
 			hideTabPengesahan_pemohon = checkEmptyField_pemohon(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_pemohon", hideTabPengesahan_pemohon);
 			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
-			vm = "app/ppk/frmPrmhnnSek8HTATH.jsp";
+			
+			//vm = "app/ppk/frmPrmhnnSek8HTATH.jsp";
+			vm = "app/ppk/harta/frmPermohonanHTATH.jsp";
 
-		}
 		// simati
-		else if ("Simati".equals(submit)) {
-
+		}else if ("Simati".equals(submit)) {
 			readability2 = "readonly";
 			disability1 = "disabled";
 			this.context.put("show_kemaskini_button", "");
@@ -7235,7 +5464,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			} else {
 				this.context.put("listBandarTetapbyNegeri", "");
 			}
-			myLogger.info("mode-------------------------------------"+mode);
+			//myLogger.info("mode-------------------------------------"+mode);
 			if ("Simatiview".equals(mode)) {
 				/*
 				 * String id = getParam("idPermohonan"); String id2 =
@@ -7271,8 +5500,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			} else if ("simpan_simati".equals(mode)) {
 				// String id = getParam("idPermohonan");
 				disability1 = "disabled";
-				myLogger.info("PEJE START-------------------------------------");
-				myLogger.info(bolehsimpan);
+				//myLogger.info("PEJE START-------------------------------------");
+				//myLogger.info(bolehsimpan);
 				// updatesimati(session);
 				if (bolehsimpan.equals("yes")) {
 					updatesimati(session);
@@ -7297,8 +5526,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				} else {
 					this.context.put("listBandarTetapbyNegeri", "");
 				}
-
-
+				
+				
 				// System.out.println("PEJE END-------------------------------------");
 			} else if ("getBandar".equals(mode)) {
 				Hashtable h = new Hashtable();
@@ -7359,6 +5588,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("selectedTabtepi", 0);
 			String idm = getParam("idPermohonan");
 
+			//2018/11/22
+			this.context.put("id", idm);
+
 			list = logic_A.setData_online(idm, (String) session.getAttribute("_ekptg_user_id"));
 			headerppk_baru(session, idm, "Y", "", "T");
 			this.context.put("View", list);
@@ -7370,15 +5602,14 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
 			vm = "app/ppk/frmPrmhnnSek8Simati.jsp";
+		
 		} else if ("simpanUploadHTAAH".equals(submit)) {
-			System.out.println("peje");
-
-			String idhtaam = getParam("idhtaam");//IL
-
+			System.out.println("peje");			
+			String idhtaam = getParam("idhtaam");//IL			
+			
 			updateHtaam(session);	
-			uploadFilesA(idhtaam,session);
-
 			vm = "app/ppk/frmPrmhnnSek8HTAAHLampiran.jsp";
+			
 		} else {
 			// System.out.println("cal :"+cal+"currentcal :"+currentcal);
 			if (cal.before(currentcal)) {
@@ -7391,91 +5622,77 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
 
-		}
+		}		
+		//System.out.println("vm :::::: "+vm);		
+		myLogger.info("vm="+vm);
 
-		System.out.println("vm :::::: "+vm);
-
-		String usid = "";
-		// usid="81"; //kelantan
-		// session.setAttribute("_ekptg_user_id", usid);
-		// this.context.put("usid",usid);
-
-		usid = (String) session.getAttribute("_ekptg_user_id");
-		this.context.put("usid", usid);
-
+		this.context.put("usid", idUser);
 		this.context.put("DATEUTIL", new DateUtil());
-
-
+		
 		Db db = null;
 		try {
 			db = new Db();
-
+	
 			listnegeri = logic_A.getListnegeriDb(db);
 			this.context.put("listnegeri", listnegeri);
-
+	
 			Vector count_dunia = logic_A.getNofailduniaDb(2, 1, 8,db);
 			this.context.put("count_dunia", count_dunia);
-
+	
 			Vector listtaraf = logic_A.getListtarafDb(db);
 			this.context.put("listtaraf", listtaraf);
-
+	
 			Vector listsaudara = logic_A.getListsaudaraDb(db);
 			this.context.put("listsaudara", listsaudara);
-
+	
 			Vector listbuktimati = logic_A.getListbuktimatiDb(db);
 			this.context.put("listbuktimati", listbuktimati);
-
+	
 			listdaerah = logic_A.getListDaerahDb(db);
 			this.context.put("listdaerah", listdaerah);
-
+	
 			Vector listluas = logic_A.getListLuasDb(db);
 			this.context.put("listluas", listluas);
-
+	
 			String statuspemilik = "Y";
 			Vector listpemilikan = logic_A.getListStatusPemilikDb(statuspemilik,db);
 			this.context.put("listpemilikan", listpemilikan);
-
+	
 			Vector listtanah = logic_A.getListJenisTanahDb(db);
 			this.context.put("listtanah", listtanah);
-
+	
 			listmukim = logic_A.getListMukimDb(db);
 			this.context.put("listmukim", listmukim);
-
+	
 			String statushak = "Y";
 			Vector listjenishakmilik = logic_A.getListJenisHakMilikDb(statushak,db);
 			this.context.put("listJenisHakMilik", listjenishakmilik);
-
+	
 			Vector listkategori = logic_A.getListKategoriDb(db);
 			this.context.put("listkategori", listkategori);
-
+	
 			this.context.put("flagFromSenaraiFailSek8", flagFromSenaraiFailSek8);
 			this.context.put("flagForView", flagForView);
-			this.context.put("flagFromSenaraiPermohonanSek8",
-					flagFromSenaraiPermohonanSek8);
-
+			this.context.put("flagFromSenaraiPermohonanSek8",flagFromSenaraiPermohonanSek8);
+			
 			Vector kenegaraan = null;
 			kenegaraan = mainheader.kenegaraanDb(db);
 			this.context.put("kenegaraan", kenegaraan);
-
+	
 			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamahARBDb(db);
-			Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
-					.getMaklumatMahkamahARB();
+			Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData.getMaklumatMahkamahARB();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
-
+			
 			view1 = logic_A.getJenisKpDb(db);
 			this.context.put("listkp", view1);
-			this.context.put("listkp2", view1);
-
-
-		}
-		catch (SQLException se2) {
+			this.context.put("listkp2", view1);		
+			
+		}catch (SQLException se2) {
 			throw new Exception("Error:" + se2.getMessage());
-		}
-		finally {		
+		}finally {		
 			if (db != null)
 				db.close();
 		}
-
 
 		Template template = this.engine.getTemplate(vm);
 		return template;
@@ -7484,6 +5701,36 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 	private void clearContext() {
 		readability1 = "";
+		this.context.put("Tambah_lapisan_berikut", "");
+		this.context.put("addnew", "");
+		this.context.put("show_lapisan_berikut", "");
+		this.context.put("show_waris_update", "");
+		this.context.put("buttonwaris", "");
+		this.context.put("show_lapisan_waris", "");
+		this.context.put("show_batal_waris", "");
+		this.context.put("show_table_waris", "");
+		this.context.put("readmode", "");
+		this.context.put("buttonwarisSimpan", "");
+		this.context.put("show_batal_waris", "");
+		this.context.put("show_tambah_waris1", "");
+		this.context.put("button_Kembali1", "");
+		this.context.put("show_lapisan_berikut", "");
+		this.context.put("show_lapisan_berikut_tambah", "");
+		this.context.put("show_tarikh", "");
+		this.context.put("show_button_lapisan", "");
+		this.context.put("buttonwarislapisanSimpan", "");
+		this.context.put("buttonwarislapisan", "");
+		this.context.put("buttonwarislapisan", "");
+		this.context.put("buttonwarislapisanSimpan", "");
+		this.context.put("nk_tambah_lapisan", "");
+		this.context.put("show_button_lapisan", "");
+		this.context.put("show_button", "");
+		this.context.put("show_senarai_lapis_pertama", "");
+		this.context.put("show_lapisan_bawah", "");
+		this.context.put("show_lapisan_berikut_update", "");
+		this.context.put("showdefaulttarikh", "");
+		
+		
 		this.context.put("CheckWujudLot", "");
 		this.context.put("daftar", "");
 		this.context.put("nofail", "");
@@ -7548,7 +5795,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		this.context.put("listPemohonOB", "");
 	}
 
-	// ////////////////////////////////////
 	private void delete_semakan(HttpSession session, String idPermohonan)
 			throws Exception {
 		// FrmPrmhnnSek8SenaraiSemakInternalData frmonline = new
@@ -7716,15 +5962,15 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("tarikh_Kemaskini", getParam(""));
 		h.put("id_Db", getParam(""));
 		h.put("jeniswaktu", getParam("jeniswaktu"));
-
+		
 		if(getParam("socBuktiKematianSimati").equals("2")){
 			h.put("tarikhSuratAkuan", getParam("txdTarikhSuratAkuan"));
 		}else{
 			h.put("tarikhSuratAkuan", "");
 		}
-
-
-
+		
+		
+		
 		logic.updatesimati_online(h);
 	}
 
@@ -7738,8 +5984,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		// System.out.println("CW SIZE :"+cpw.size());
 
 		k.put("pemohonwaris", cpw.size());
-
-
+		
+		
 		String nkpbarupemohon = getParam("txtnoKpBaru1Pemohon")
 				+ getParam("txtnoKpBaru2Pemohon")
 				+ getParam("txtnoKpBaru3Pemohon");
@@ -7841,10 +6087,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			k.put("idnegeriSurat", Integer
 					.parseInt(getParam("socNegeriPemohonSurat")));
 		}
-
-
+		
+		
 		k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
-		k.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
+        k.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
 
 		logic.updatepemohon(k);
 
@@ -7981,8 +6227,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			h.put("statusWaris", 0);
 		} else {
 			h
-			.put("statusWaris", Integer
-					.parseInt(getParam("socStatusOBWaris")));
+					.put("statusWaris", Integer
+							.parseInt(getParam("socStatusOBWaris")));
 		}
 
 		if (getParam("checkHidupWaris").equals("")) {
@@ -8006,10 +6252,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
 		h.put("tarikh_Masuk", currentDate);
 		h.put("jeniswaktu", getParam("jeniswaktu"));
-
-
+		
+		
 		h.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
-		h.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
+        h.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
 		logic.addWaris(h);
 	}
 
@@ -8102,8 +6348,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			h.put("statusWaris", 0);
 		} else {
 			h
-			.put("statusWaris", Integer
-					.parseInt(getParam("socStatusOBWaris")));
+					.put("statusWaris", Integer
+							.parseInt(getParam("socStatusOBWaris")));
 		}
 
 		if (getParam("checkHidupWaris").equals("")) {
@@ -8132,8 +6378,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
 
 		h.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
-		h.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
-
+        h.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
+        
 		logic.addWarisBerikut(h);
 	}
 
@@ -8225,7 +6471,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			h.put("statusWaris", "0");
 		} else {
 			h
-			.put("statusWaris", getParam("socStatusOBWaris"));
+					.put("statusWaris", getParam("socStatusOBWaris"));
 		}
 
 		if (getParam("checkHidupWaris").equals("")) {
@@ -8258,10 +6504,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				getParam("id_ob_list_getListOBUpdate"));
 
 		h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-
+		
 		h.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
-		h.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
-
+        h.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
+        
 		logic.updateWaris(h);
 
 	}
@@ -8585,12 +6831,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 
 	public void addHtaam(HttpSession session) throws Exception {
-		System.out.println("-------Read Here8----");
+		//System.out.println("-------Read Here8----");
 		Hashtable h = new Hashtable();
-
+		
 		h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
 		h.put("noHakmilik", getParam("txtNoHakmilikHtaam"));
-
+		
 		// ADD BY AISHAH - TAMBAH FIELD ALAMAT
 		h.put("alamat_hta1", getParam("txtAlamat1Htaam1"));
 		h.put("alamat_hta2", getParam("txtAlamat2Htaam"));
@@ -8598,8 +6844,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("poskod", getParam("txtAlamatPoskodHtaam"));
 
 		h.put("id_bandarhta", getParam("txtBandarHartaHtaamX2"));
-
-
+		
+		
 		h.put("idSimati", getParam("idSimati"));
 		h.put("id_Permohonansimati", getParam("id_Permohonansimati"));
 		// String mati = getParam("id_Permohonansimati");
@@ -8683,7 +6929,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		h.put("catatan", getParam("txtCatatanHtaam"));
 		h.put("noperserahan", getParam("txtNoPersHtaam"));
-
+		
 		h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
 		h.put("tarikh_Masuk", currentDate);
 
@@ -8696,9 +6942,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				: getParam("txtSyaratNyata"));
 
 		logic.addHtaam(h);
-		System.out.println("-------Read Here8j ends----");
+		//System.out.println("-------Read Here8j ends----");
 	}
-
+	
 	public void addHtaamX(HttpSession session) throws Exception {
 
 		Hashtable h = new Hashtable();
@@ -8765,8 +7011,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		if (getParam("socJenisLuasHtaamX") != "") {
 			h
-			.put("jenisluas", Integer
-					.parseInt(getParam("socJenisLuasHtaamX")));
+					.put("jenisluas", Integer
+							.parseInt(getParam("socJenisLuasHtaamX")));
 		} else {
 			h.put("jenisluas", 0);
 		}
@@ -8852,7 +7098,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		logic.addHtaamX(h);
 
 	}
-
+	
 	private void addHa(HttpSession session) throws Exception {
 		String id = getParam("id");
 		String id1 = getParam("idSimati");
@@ -9088,6 +7334,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 	private void addPermohonan(HttpSession session) throws Exception {
 
+		Db db = null;
+	    Connection conn = null;
+		db = new Db();
+        conn = db.getConnection();
+
 		String txtbox = getParam("txtNomborResit1");
 		String tarikhresit = getParam("txdTarikhByrn1");
 
@@ -9095,18 +7346,19 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		String IdPermohonan = getParam("idPermohonan");
 		String no_daerah = getParam("socDaerah");
+		myLogger.info("no_daerah = "+no_daerah);
 		String tarikh_masuk = getParam("txdTarikhMohon");
 		String no_kpbaru_simati = getParam("txtNoKPBaruSimati1")
-				+ getParam("txtNoKPBaruSimati2")
-				+ getParam("txtNoKPBaruSimati3");
+								+ getParam("txtNoKPBaruSimati2")
+								+ getParam("txtNoKPBaruSimati3");
 		String no_kplama_simati = getParam("txtNoKPLamaSimati");
 		String sel_jeniskp_simati = getParam("socJenisKPLainSimati");
 		String no_kplain_simati = getParam("txtNoKPLainSimati");
 		String nama_simati = getParam("txtNamaSimati");
 		String tarikh_simati = getParam("txtTarikhMati");
 		String no_kpbaru_pemohon = getParam("txtNoKPBaruPemohon1")
-				+ getParam("txtNoKPBaruPemohon2")
-				+ getParam("txtNoKPBaruPemohon3");
+								+ getParam("txtNoKPBaruPemohon2")
+								+ getParam("txtNoKPBaruPemohon3");
 		String no_kplama_pemohon = getParam("txtNoKPLamaPemohon");
 		String sel_jeniskp_pemohon = getParam("socJenisKPLainPemohon");
 		String no_kplain_pemohon = getParam("txtNoKPLainPemohon");
@@ -9188,9 +7440,77 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("adaob", getParam("adaob"));
 		h.put("jenis_pej", getParam("jenis_pej"));
 		h.put("tahun", getParam("tahun"));
-
+		myLogger.info("*****READ HERE1******"); 
 		logic_A.addPermohonan_online(session, h);
+		
+		myLogger.info("*****READ HERE2******"); 
+		String nokp = null;
+		if (no_kpbaru_simati != null)
+		{
+			nokp = no_kpbaru_simati;
+		}
+		else if (no_kplama_simati != null)
+		{
+			nokp = no_kplama_simati;
+		}
+		else if (no_kplain_simati != null)
+		{
+			nokp = no_kplain_simati;
+		}
+		uploadFiles(db,conn,nokp);
+
+		//lBean = new LampiranBean();
+		//lBean.dokumenSimati(request,logic_A.getIDSimati(),String.valueOf(session.getAttribute("_ekptg_user_id")));
+		//lBean.simpanDokumen("PPKDOKUMENSIMATI", idRujukan, item, jenisDok, no_kplain_simati);
 	}
+	
+	private void uploadFiles(Db db,Connection conn, String nokp) throws Exception {
+		myLogger.info("Baca uploadFiles:--------------"); 
+		String no_kp = nokp;
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+	    ServletFileUpload upload = new ServletFileUpload(factory);
+	    List items = upload.parseRequest(this.request);
+	    Iterator itr = items.iterator();	   
+	    while (itr.hasNext()) {    	
+	      FileItem item = (FileItem)itr.next();
+	      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+	    	  System.out.println("item.getName = "+ item.getName());
+	    	  saveData(item,db,conn,no_kp);
+	      }
+	    }
+	  }
+	
+	private void saveData(FileItem item,Db db,Connection conn, String no_kp) throws Exception {
+		//Db db = null;
+	
+    try {
+    	db = new Db();
+
+    	Connection con = db.getConnection();
+    	con.setAutoCommit(false);
+    	String nokp = no_kp;
+    	//String id_permohonansimati = getParam("id_permohonansimati_atheader");
+    	PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKSIMATI SET nama_fail = ?, content = ?, jenis_Mime = ? WHERE (NO_KP_BARU = ? OR NO_KP_BARU = ? OR NO_KP_LAIN = ?)");		
+    	//System.out.println("+nama_pemohon_lama3+ " + nama_pemohon_lama3);
+    	//System.out.println(con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE ID_PERMOHONANSIMATI = ?"));
+    	ps.setString(1,item.getName());
+    	ps.setBinaryStream(2,item.getInputStream(),(int)item.getSize());
+    	ps.setString(3,item.getContentType());
+    	//System.out.println("item.getInputStream = "+ item.getInputStream());
+    	//System.out.println("item.getSize = "+ item.getSize());
+    	//System.out.println("item.getContentType = "+ item.getContentType());
+    	ps.setString(4,nokp);
+    	ps.setString(5,nokp);
+    	ps.setString(6,nokp);
+    	//ps.setString(4,getParam("id_permohonansimati_atheader"));
+    	myLogger.info("Baca SaveData:---------------"); 
+    	ps.executeUpdate();	
+    	myLogger.info("Baca SaveData 2:---------------"); 
+        con.commit();
+    } finally {
+	      if (db != null) db.close();
+    }
+}
 
 	private void ha_negeri(HttpSession session) throws Exception {
 		String id = getParam("idPermohonan");
@@ -9246,7 +7566,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 
 	public void initTabData() {
-		System.out.println("tab tengah " + getParam("tabIdtengah"));
+		//System.out.println("tab tengah " + getParam("tabIdtengah"));
 		this.context.put("selectedTabatas", getParam("tabIdatas"));
 		this.context.put("selectedTabtengah", getParam("tabIdtengah"));
 		this.context.put("selectedTabbawah", getParam("tabIdbawah"));
@@ -9459,8 +7779,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		if (getParam("socJenisLuasHtaamX") != "") {
 			h
-			.put("jenisluas", Integer
-					.parseInt(getParam("socJenisLuasHtaamX")));
+					.put("jenisluas", Integer
+							.parseInt(getParam("socJenisLuasHtaamX")));
 		} else {
 			h.put("jenisluas", 0);
 		}
@@ -9521,7 +7841,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		// /fungsi baru untuk penambahbaikkan...boleh kemaskini jenis HTATH
 		String radioHtaamViewX_update = getParam("radioHtaamViewX_update");
-		myLogger.info("radioHtaamViewX_update :" + radioHtaamViewX_update);
+		//myLogger.info("radioHtaamViewX_update :" + radioHtaamViewX_update);
 		String no_flag = "1";
 		if (radioHtaamViewX_update.equals("1")) {
 			no_flag = "1";
@@ -9548,31 +7868,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		logic.updateHtaamX(h);
 
 	}
-
-	private void uploadFilesA(String idhtaam , HttpSession session) throws Exception {
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		if (isMultipart != false) {
-			List items = upload.parseRequest(request);
-			Iterator itr = items.iterator();
-			while (itr.hasNext()) {
-				FileItem item = (FileItem) itr.next();
-				if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-					if (item.getSize() < 500000000L)
-					{
-						hapusDokumenPPK(idhtaam);
-						saveDataA(idhtaam , item, session);
-					}
-					else
-					{
-						this.context.put("limitExceed", true);
-					}
-				}
-			}
-		}
-	}
-
+		
 	public void hapusDokumenPPK(String idHta) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -9584,15 +7880,15 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-
+			
 			sql = " DELETE FROM TBLPPKUPLOADPELAN P WHERE P.ID_HTA = '"+idHta+"'";
 			System.out.println("sql1 >>> "+sql);
 			stmt.executeUpdate(sql);
-
+			
 			sql = " DELETE FROM TBLPPKDOKUMEN D WHERE D.ID_DOKUMEN IN (SELECT P.ID_DOKUMEN FROM TBLPPKUPLOADPELAN P WHERE P.ID_HTA = '"+idHta+"') ";
 			System.out.println("sql2 >>> "+sql);
 			stmt.executeUpdate(sql);
-
+			
 			conn.commit();
 
 		} catch (SQLException ex) {
@@ -9610,51 +7906,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		}
 	}
 
-
-	private void saveDataA(String idhtaam ,FileItem item, HttpSession session) throws Exception {
-
-		Db db = null;
-		String userId = (String) session.getAttribute("_ekptg_user_id");
-		//		String idHtaSession = (String) session.getAttribute("idHtaSession");
-
-		try {
-			db = new Db();
-
-			// TBLPPKDOKUMEN
-			long idDokumen = DB.getNextID("TBLPPKDOKUMEN_SEQ");
-			Connection con = db.getConnection();
-			con.setAutoCommit(false);
-			PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMEN "
-					+ "(ID_DOKUMEN,NAMA_DOKUMEN,ID_MASUK,TARIKH_MASUK,KANDUNGAN,FORMAT) " + "VALUES(?,?,?,SYSDATE,?,?)");
-			ps.setLong(1, idDokumen);
-			ps.setString(2, getParam("txtNamaPelanUp"));
-			ps.setString(3, userId);
-			ps.setBinaryStream(4, item.getInputStream(), (int) item.getSize());
-			ps.setString(5, item.getContentType());
-			ps.executeUpdate();
-
-			// TBLPPKUPLOADDOKUMEN
-			long idPelan = DB.getNextID("TBLPPKUPLOADPELAN_SEQ");
-			// long id_hta = DB.getNextID(db, "TBLPPKHTA_SEQ");
-			PreparedStatement ps1 = con.prepareStatement("INSERT INTO TBLPPKUPLOADPELAN"
-					+ "(ID_PELAN,ID_DOKUMEN,ID_HTA,ID_MASUK,TARIKH_MASUK) " + "VALUES(?,?,?,?,SYSDATE)");
-			ps1.setLong(1, idPelan);
-			ps1.setLong(2, idDokumen);
-			ps1.setString(3, idhtaam);
-			ps1.setString(4, userId);
-			ps1.executeUpdate();
-
-			con.commit();
-
-			session.setAttribute("idHtaSession", null);
-
-		} finally {
-			if (db != null)
-				db.close();
-		}
-		this.context.put("completed", true);
-	}
-
 	private void updateHtaam(HttpSession session) throws Exception {
 
 		Vector v = new Vector();
@@ -9665,32 +7916,21 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
 		h.put("idSimati", getParam("idSimati"));
 		h.put("nopt", getParam("txtNoPTHtaamUp"));
-
+		
 		// ADD BY SALNIZAM - TAMBAH FIELD ALAMAT
 		h.put("alamat_hta1", getParam("txtAlamat1Htaam1"));
 		h.put("alamat_hta2", getParam("txtAlamat2Htaam"));
 		h.put("alamat_hta3", getParam("txtAlamat3Htaam"));
 		h.put("poskod", getParam("txtAlamatPoskodHtaam"));
-		myLogger.info("txtBandarHartaHtaamX2 : "+getParam("txtBandarHartaHtaamX2"));
-		if (getParam("txtBandarHartaHtaamX2") != "") {
-			h.put("id_bandarhta", getParam("txtBandarHartaHtaamX2"));
-		} else {
-			h.put("id_bandarhta", 0);
-		}
-		myLogger.info("txtAlamatPoskodHtaam :" + getParam("txtBandarHartaHtaamX2"));
-		/*
-		 * if (getParam("txtNilaiTarikhMohonHt") != "") {
-		 * h.put("nilai_Hta_memohon", Double
-		 * .parseDouble(getParam("txtNilaiTarikhMohonHt"))); } else {
-		 * h.put("nilai_Hta_memohon", 0.0); }
-		 */
+//		myLogger.info("txtBandarHartaHtaamX2 : "+getParam("txtBandarHartaHtaamX2"));
+//		if (getParam("txtBandarHartaHtaamX2") != "") {
+//			h.put("id_bandarhta", getParam("txtBandarHartaHtaamX2"));
+//		} else {
+//			h.put("id_bandarhta", 0);
+//		}
+		h.put("id_bandarhta", getParam("txtBandarHartaHtaamX2").equals("")?"0":getParam("txtBandarHartaHtaamX2"));
+		//myLogger.info("txtAlamatPoskodHtaam :" + getParam("txtBandarHartaHtaamX2"));
 		h.put("nilai_Hta_memohon", getParam("txtNilaiTarikhMohonHt"));
-		/*
-		 * if (getParam("txtNilaiTarikhMatiHtaamUpd") != "") {
-		 * h.put("nilai_Hta_mati", Double
-		 * .parseDouble(getParam("txtNilaiTarikhMatiHtaamUpd"))); } else {
-		 * h.put("nilai_Hta_mati", 0.0); }
-		 */
 		h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamUpd"));
 		if (getParam("socKategoriTanahHtaamUp") != "") {
 			h.put("kategori", Integer
@@ -9752,7 +7992,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		// /fungsi baru untuk penambahbaikkan...boleh kemaskini jenis HTATH
 		String radioHtaamViewX_update = getParam("radioHtaamViewX_update");
-		myLogger.info("radioHtaamViewX_update :" + radioHtaamViewX_update);
+		//myLogger.info("radioHtaamViewX_update :" + radioHtaamViewX_update);
 		String no_flag = "1";
 		if (radioHtaamViewX_update.equals("1")) {
 			no_flag = "1";
@@ -9788,7 +8028,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 	private void headerppk_baru(HttpSession session, String id_permohonan,
 			String flag_permohonan, String id_fail, String flag_fail)
-					throws Exception {
+			throws Exception {
 		// hashtable maklumat header
 		this.context.put("headerppk", mainheader.getHeaderData(session,
 				id_permohonan, flag_permohonan, id_fail, flag_fail));
@@ -9809,4 +8049,107 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		this.context.put("flag_jenis_vm", "vtemplate");
 		this.context.put("kenegaraan", "");
 	}
+	
+	private void setSocValues(Hashtable b
+		,String negeriNama,String negeriFunc
+		,String daerahNama,String daerahFunc
+		,String mukimNama
+		,String bandarNama,String bandarFunc
+		,String jenisNama,String katNama
+		,String luasNama,String pbNama
+		) throws Exception{
+		myLogger.info("setSocValues:b="+b);
+		String socStyle = "class=\"autoselect\" style=\"text-transform:uppercase;\" ";
+		
+		try{
+			String nn = String.valueOf(b.get("negeri"));
+			String dd = String.valueOf(b.get("daerah"));				
+			String idMukim = String.valueOf(b.get("mukim"));
+			String socNegeri = HTML.SelectNegeri(negeriNama, Long.valueOf(nn)
+					," $!readmodenegeri id=\""+negeriNama+"\" onchange=\""+negeriFunc+"('"+daerahNama+"')\" "+socStyle);
+			String socDaerah = HTML.SelectDaerahByNegeri(nn, daerahNama, Utils.parseLong(dd)
+					," $!readmodedaerah id=\""+daerahNama+"\" onchange=\"setSelected(1,0,0,0);"+daerahFunc+"('"+mukimNama+"');daerah_harta();check_harta()\" "+socStyle);
+			String socMukim = HTML.SelectMukimByDaerah(dd, mukimNama, Utils.parseLong(idMukim)
+					," $!readmodemukim id=\""+mukimNama+"\" "+socStyle);
+			
+			String bandar = String.valueOf(b.get("bandar"));
+			String socBandar = HTML.SelectBandarByNegeri(nn,bandarNama, Utils.parseLong(bandar)
+					," id=\""+bandarNama+"\" onclick=\"CheckBandarSurat()\" "+socStyle);
+			
+			String jenisHakmilik = String.valueOf(b.get("jenishakmilik"));
+			String socJenisHakmilik = HTML.SelectJenisHakmilik(jenisNama, Utils.parseLong(jenisHakmilik)
+					," $!socJenisHakmilikHtaam2 id=\""+jenisNama+"\" "+socStyle);
+			
+			String kaTanah = String.valueOf(b.get("kategori"));
+			String socKaTanah = HTML.SelectKategoriTanah(katNama, Utils.parseLong(kaTanah),""
+					," $!readmode id=\""+katNama+"\" "+socStyle);
+	
+			String jenisLuas = String.valueOf(b.get("jenisluas"));
+			String socLuas = HTML.SelectLuas(luasNama,Utils.parseLong(jenisLuas), ""
+				," $!readmode id=\""+luasNama+"\"" +
+				"onchange=\"pilih_jenis_luas('"+luasNama+"','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')\" "+socStyle);
+			
+			String jenisPB = String.valueOf(b.get("pemilikan"));
+			String socPB = getPilihanPB().Pilihan(pbNama,jenisPB,"",socStyle,null);
+			
+			this.context.put("socNegeri", socNegeri);
+			this.context.put("socDaerah", socDaerah);
+			this.context.put("socMukim", socMukim);
+			this.context.put("socBandar", socBandar);
+			this.context.put("socJenisHakmilik", socJenisHakmilik);
+			this.context.put("socKaTanah", socKaTanah);
+			this.context.put("socLuas", socLuas);
+			this.context.put("socPB", socPB);
+			
+		}catch (Exception e){
+			throw new Exception("setSocValues:Ralat");
+		}
+				
+	}
+
+	private Hashtable<String,String> setParamValues(String negeri,String daerah,String mukim,String bandar
+			,String jenisHakmilik,String kat,String luas,String pemilikan){
+		Hashtable<String,String> b = new Hashtable<String,String>();
+		b.put("negeri", negeri);
+		b.put("daerah", daerah);
+		b.put("mukim", mukim);
+		b.put("bandar", bandar);
+		b.put("jenishakmilik", jenisHakmilik);
+		b.put("kategori", kat);
+		b.put("jenisluas", luas);
+		b.put("pemilikan", pemilikan);
+		return b;
+		
+	}
+
+	private IMaklumatHarta getHTA(){
+		if(htaBean==null){
+			htaBean = new HTABean();
+		}
+		return htaBean;
+				
+	}
+	private IMaklumatHarta getHTATH(){
+		if(htathBean==null){
+			htathBean = new HTATHBean();
+		}
+		return htathBean;
+				
+	}	
+	private IMaklumatHarta getHA(){
+		if(haBean==null){
+			haBean = new HABean();
+		}
+		return haBean;
+				
+	}	
+	
+	private IUtilHTMLPilihanExt getPilihanPB(){
+		if(jenisPB==null){
+			jenisPB = new UtilHTMLPilihanJenisPBPPK();
+		}
+		return jenisPB;
+				
+	}
+	
 }

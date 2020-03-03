@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,7 +28,6 @@ import ekptg.engine.EmailProperty;
 import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
-import ekptg.helpers.Utils;
 import ekptg.report.ppk.FrmPopupPilihPegawaiReportData;
 
 public class BicaraInteraktifData {
@@ -203,8 +201,7 @@ public class BicaraInteraktifData {
 					}
 					else
 					{
-						//sql += daerahJagaan;
-						//comment sementara
+						//sql += daerahJagaan;						
 						sql += " AND PR.ID_UNITPSK IN ("+LIST_ID_UNITPSK+") ";
 					}				
 					//" AND P.ID_STATUS <> '999' " +
@@ -398,48 +395,6 @@ public class BicaraInteraktifData {
 				h.put("JAWATAN",rs == null ? "" :rs.getString("JAWATAN") == null ? "" : rs.getString("JAWATAN"));
 				h.put("STATUS_PEG",rs == null ? "" :rs.getString("STATUS_PEG") == null ? "" : rs.getString("STATUS_PEG"));
 			}
-			return h;
-		} finally {
-			if (db == null)
-			{
-				db1.close();
-			}
-		}
-	}
-	
-	
-	public Map getMaklumatPindaan(HttpSession session, String ID_FAIL, Db db)throws Exception {
-		Db db1 = null;
-		ResultSet rs = null;
-		Statement stmt = null;
-		String sql = "";
-		try {
-			if(db != null)
-			{
-				db1 = db;
-			}
-			else
-			{
-				db1 = new Db();
-			}
-			stmt = db1.getStatement();
-			sql += " SELECT NO_PINDAAN,TARIKH_MASUK,SYSDATE FROM (SELECT * FROM TBLPPKBORANG_HISTORY "+
-					" WHERE NO_PINDAAN IS NOT NULL AND ID_FAIL = '"+ID_FAIL+"' " +
-							" AND SYSDATE > TARIKH_MASUK " +
-							" ORDER BY TARIKH_MASUK DESC "+
-					" ) " +
-					" WHERE ROWNUM = 1 " +
-					" ";
-			
-			myLogger.info(" BICARA INTERAKTIF : SQL getMaklumatPindaan :"+ sql);			
-			rs = stmt.executeQuery(sql);
-			Map h = null;		
-			while (rs.next()) {	
-				myLogger.info(" BICARA INTERAKTIF : SQL getMaklumatPindaan HASH NO PINDAAN :"+ rs.getString("NO_PINDAAN"));	
-				h = Collections.synchronizedMap(new HashMap());		
-				h.put("NO_PINDAAN",rs == null ? "" :rs.getString("NO_PINDAAN") == null ? "" : rs.getString("NO_PINDAAN"));
-			}
-			myLogger.info(" BICARA INTERAKTIF : SQL getMaklumatPindaan HASH :"+ h);	
 			return h;
 		} finally {
 			if (db == null)
@@ -743,48 +698,6 @@ public class BicaraInteraktifData {
 		}
 	}
 	
-	public Map getNotaHistoryJana(HttpSession session, String ID_HISTORYJANANOTA, Db db)throws Exception {
-		Db db1 = null;
-		ResultSet rs = null;
-		Statement stmt = null;
-		String sql = "";
-		try {
-			if(db != null)
-			{
-				db1 = db;
-			}
-			else
-			{
-				db1 = new Db();
-			}
-			stmt = db1.getStatement();	
-			sql += " SELECT NOTA FROM TBLPPKHISTORYJANANOTA WHERE ID_HISTORYJANANOTA = '"+ID_HISTORYJANANOTA+"' ";
-			myLogger.info(" BICARA INTERAKTIF : SQL getNotaHistoryJana :"+ sql);			
-			rs = stmt.executeQuery(sql);
-			Map h = Collections.synchronizedMap(new HashMap());		
-			
-			
-			String NOTA = "";
-			
-			
-			
-			
-						
-			while (rs.next()) {					
-				NOTA = (rs == null ? "" :rs.getString("NOTA") == null ? "" : rs.getString("NOTA"));
-			}
-			
-			h.put("NOTA",NOTA);
-			
-			return h;
-		} finally {
-			if (db == null)
-			{
-				db1.close();
-			}
-		}
-	}
-	
 	public Map jumlahHarta(HttpSession session, String id_permohonansimati, String id_perbicaraan, String flagNilaiAmamahraya, Db db)throws Exception {
 		Db db1 = null;
 		ResultSet rs = null;
@@ -824,7 +737,7 @@ public class BicaraInteraktifData {
 					" TO_NUMBER(NVL(rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NILAI_HTA_TARIKHMOHON' THEN  NVL(S.VALUE_SELEPAS,'0') END)) )).extract ('//text()')),'0'))  AS A		 "+	
 					" FROM TBLPPKSEJARAHBIMAIN M,TBLPPKSEJARAHBISUB S WHERE M.ID_SEJARAHBIMAIN = S.ID_SEJARAHBIMAIN   "+
 					" AND M.NAMA_TABLE = 'TBLPPKHTAPERMOHONAN' AND ID_PERMOHONANSIMATI = '"+id_permohonansimati+"' AND ID_PERBICARAAN = '"+id_perbicaraan+"' "+
-					" AND M.JENIS_AKTIVITI IN ('INSERT')  GROUP BY m.id_sejarahbimain ";
+					" AND M.JENIS_AKTIVITI IN ('INSERT') ";
 					
 					sql += " UNION ";					
 			}
@@ -857,7 +770,7 @@ public class BicaraInteraktifData {
 					" TO_NUMBER(NVL(rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NILAI_HA_TARIKHMOHON' THEN  NVL(S.VALUE_SELEPAS,'0') END)) )).extract ('//text()')),'0'))  AS A "+			
 					" FROM TBLPPKSEJARAHBIMAIN M,TBLPPKSEJARAHBISUB S WHERE M.ID_SEJARAHBIMAIN = S.ID_SEJARAHBIMAIN  "+
 					" AND M.NAMA_TABLE = 'TBLPPKHAPERMOHONAN' AND ID_PERMOHONANSIMATI = '"+id_permohonansimati+"' AND ID_PERBICARAAN = '"+id_perbicaraan+"'  "+
-					" AND M.JENIS_AKTIVITI IN ('INSERT')  GROUP BY m.id_sejarahbimain ) ";
+					" AND M.JENIS_AKTIVITI IN ('INSERT')) ";
 			if(flagNilaiAmamahraya.equals("Y"))
 			{
 				sql += "WHERE  ID_JENISHA = '98'  ";
@@ -1168,7 +1081,7 @@ public class BicaraInteraktifData {
 	
 	public String queryListKehadiran(String ID_PERMOHONANSIMATI,String ID_PERMOHONAN, String ID_PERBICARAAN, String ID_PEMOHON)
 	{
-		String sql = " SELECT CASE WHEN TO_NUMBER(NVL(A.UMUR,0)) < 18 AND TO_NUMBER(NVL(A.UMUR,0)) != 0 THEN PENJAGA.LISTPENJAGA ELSE ''END AS PENJAGA, A.*, " +
+		String sql = " SELECT A.*, " +
 				//"B.KETERANGAN," +
 				//"B.NOTA_PEGAWAI " +				
 				"TRIM(REGEXP_REPLACE(B.KETERANGAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS KETERANGAN, " +
@@ -1218,9 +1131,6 @@ public class BicaraInteraktifData {
 		" ) OBMAIN, " +
 		"("+queryHistoryOB("",ID_PERMOHONANSIMATI,ID_PERBICARAAN,"UPDATE")+") HIS " +
 				" WHERE OBMAIN.ID_OBPERMOHONAN = HIS.ID_OBPERMOHONAN(+) "+
-		
-		" AND OBMAIN.ID_OBPERMOHONAN  NOT IN (SELECT NVL(ID_OBPERMOHONAN,'') "+
-		" FROM ("+queryHistoryOB("",ID_PERMOHONANSIMATI,ID_PERBICARAAN,"INSERT")+")) "+
 		
 		" UNION ALL "+
 				
@@ -1326,13 +1236,7 @@ public class BicaraInteraktifData {
 				" FROM TBLPPKBIKEHADIRAN BK WHERE BK.ID_PERBICARAAN = '"+ID_PERBICARAAN+"') HADIR WHERE TO_CHAR(SUPERMAIN.ID_OBPERMOHONAN) = HADIR.ID_HADIR(+)  " +
 				" GROUP BY NAMA,PENGENALAN, STATUS, PENGENALAN,JENIS,STATUS_HIDUP,STATUS_OB,NO_SURAT_BERANAK, TARIKH_MATI " +
 				" ORDER BY STATUS_HIDUP,UMUR DESC,NAMA ASC " +
-				" ) A, TBLPPKBIKEHADIRAN B , " +
-				" (SELECT PJ.ID_OBMINOR, " +
-				" REGEXP_REPLACE(RTRIM (XMLAGG (XMLELEMENT (E, TRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'(,)([^,]*$)',' DAN\\2') AS LISTPENJAGA " +
-				" FROM TBLPPKPENJAGA PJ, TBLPPKOB OB " +
-				" WHERE PJ.ID_OB = OB.ID_OB " +
-				" GROUP BY PJ.ID_OBMINOR ) PENJAGA WHERE A.ID_BIKEHADIRAN = B.ID_BIKEHADIRAN(+) AND A.ID_OB = PENJAGA.ID_OBMINOR(+)  " +
-				" ORDER BY A.ID_PEMOHON";
+				" ) A, TBLPPKBIKEHADIRAN B WHERE A.ID_BIKEHADIRAN = B.ID_BIKEHADIRAN(+)";
 		return sql;
 	}
 	
@@ -1348,7 +1252,6 @@ public class BicaraInteraktifData {
 		h.put("NAMA",rs == null ? "" :rs.getString("NAMA") == null ? "" : rs.getString("NAMA"));
 		h.put("PENGENALAN",rs == null ? "" :rs.getString("PENGENALAN") == null ? "" : rs.getString("PENGENALAN"));
 		h.put("UMUR",rs == null ? "" :rs.getString("UMUR") == null ? "" : rs.getString("UMUR"));
-		h.put("UMUR_INT",rs == null ? "" :rs.getString("UMUR") == null ? 0 : rs.getInt("UMUR"));
 		h.put("STATUS_OB",rs == null ? "" :rs.getString("STATUS_OB") == null ? "" : rs.getString("STATUS_OB"));
 		h.put("STATUS",rs == null ? "" :rs.getString("STATUS") == null ? "" : rs.getString("STATUS"));
 		h.put("JENIS",rs == null ? "" :rs.getString("JENIS") == null ? "" : rs.getString("JENIS").toUpperCase());
@@ -1356,7 +1259,6 @@ public class BicaraInteraktifData {
 		h.put("ID_BIKEHADIRAN",rs == null ? "" :rs.getString("ID_BIKEHADIRAN") == null ? "" : rs.getString("ID_BIKEHADIRAN").toUpperCase());
 		h.put("KETERANGAN",rs == null ? "" :rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));	
 		h.put("NOTA_PEGAWAI",rs == null ? "" :rs.getString("NOTA_PEGAWAI") == null ? "" : rs.getString("NOTA_PEGAWAI"));	
-		h.put("PENJAGA",rs == null ? "" :rs.getString("PENJAGA") == null ? "" : rs.getString("PENJAGA"));	
 		return h;	
 	}
 	
@@ -1868,16 +1770,8 @@ public class BicaraInteraktifData {
 		{
 			db1 = new Db();
 		}		
-		stmt = db1.getStatement();	
-		
-	
-		
-		sql += " SELECT " +
-				" TRIM(REGEXP_REPLACE(MN.MAKLUMAT_HTA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS MAKLUMAT_HTA, " +
-				" TRIM(REGEXP_REPLACE(MN.CATATAN_HARTA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_HARTA, " +
-				" TRIM(REGEXP_REPLACE(MN.CATATAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN, " +
-				" MN.* FROM (" +
-				" SELECT A.ID_PERINTAHHTAOBMST, "+
+		stmt = db1.getStatement();			
+		sql += " SELECT A.ID_PERINTAHHTAOBMST, "+
 				" C.KOD_JENIS_HAKMILIK, B.NO_HAKMILIK,B.NO_PT, "+
 				" B.BA_SIMATI, B.BB_SIMATI, D.NAMA_DAERAH, "+
 				" E.NAMA_MUKIM,B.CATATAN, "+
@@ -2012,7 +1906,7 @@ public class BicaraInteraktifData {
 				" AND B.ID_JENISHM = C.ID_JENISHAKMILIK(+) "+
         		" AND A.ID_PERINTAH = '"+ID_PERINTAH+"' "+
 				" AND B.ID_PERMOHONANSIMATI = '"+ID_PERMOHONANSIMATI+"' "+
-				" ORDER BY A.ID_PERINTAHHTAOBMST ASC) MN ";		
+				" ORDER BY A.ID_PERINTAHHTAOBMST ASC ";		
 		myLogger.info(" BICARA INTERAKTIF : SQL rekodHartaTakAlihBorangE :"+ sql);		
 		rs = stmt.executeQuery(sql);
 		list = Collections.synchronizedList(new ArrayList());
@@ -2089,10 +1983,7 @@ public class BicaraInteraktifData {
 			db1 = new Db();
 		}		
 		stmt = db1.getStatement();			
-		sql += " SELECT " +
-				" TRIM(REGEXP_REPLACE(MN.MAKLUMAT_HA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS MAKLUMAT_HA, " +
-				" TRIM(REGEXP_REPLACE(MN.CATATAN_HARTA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_HARTA, " +
-				"MN.* FROM (SELECT D.ID_PERINTAHHAOBMST, "+
+		sql += " SELECT D.ID_PERINTAHHAOBMST, "+
 				" E.ID_HA, "+
 				" D.CATATAN AS CATATAN_HARTA, "+
 				" CASE "+
@@ -2134,7 +2025,7 @@ public class BicaraInteraktifData {
 				" AND F.ID_JENISHA  = E.ID_JENISHA "+
 				" AND D.ID_PERINTAH = '"+ID_PERINTAH+"' "+
 				" AND E.ID_PERMOHONANSIMATI = '"+ID_PERMOHONANSIMATI+"' "+
-				" ORDER BY D.ID_PERINTAHHAOBMST ASC) MN ";		
+				" ORDER BY D.ID_PERINTAHHAOBMST ASC ";		
 		myLogger.info(" BICARA INTERAKTIF : SQL rekodHABorangE :"+ sql);		
 		rs = stmt.executeQuery(sql);
 		list = Collections.synchronizedList(new ArrayList());
@@ -2301,14 +2192,8 @@ public class BicaraInteraktifData {
 		{
 			db1 = new Db();
 		}		
-		stmt = db1.getStatement();	
-		
-	
-		sql += " SELECT  " +
-				" TRIM(REGEXP_REPLACE(MN.MAKLUMAT_HTA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS MAKLUMAT_HTA, " +
-				" TRIM(REGEXP_REPLACE(MN.CATATAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN, " +
-				" MN.* " +
-				" FROM (SELECT DISTINCT A.ID_HTA,L.NO_HAKMILIK,SUBSTR(TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'),1,LENGTH (TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'))-3 ) AS NILAI_HTA_TARIKHMOHON ,C.BA_WARIS, C.BB_WARIS, "+
+		stmt = db1.getStatement();			
+		sql += " SELECT DISTINCT A.ID_HTA,L.NO_HAKMILIK,SUBSTR(TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'),1,LENGTH (TO_CHAR(L.NILAI_HTA_TARIKHMOHON,'999,999,999.99'))-3 ) AS NILAI_HTA_TARIKHMOHON ,C.BA_WARIS, C.BB_WARIS, "+
 				" REPLACE(REPLACE(REPLACE(REPLACE(A.CATATAN,'<br />',''),'&nbsp;',' '),'<p>',''),'</p>','')AS CATATAN,L.FLAG_KATEGORI_HTA,L.BA_SIMATI,L.BB_SIMATI,A.ID_JENISPERINTAH, "+
 				" CASE   WHEN LENGTH(REPLACE(SUBSTR(L.NILAI_HTA_TARIKHMOHON,INSTR(L.NILAI_HTA_TARIKHMOHON,'.'),LENGTH(L.NILAI_HTA_TARIKHMOHON)),'.')) =  LENGTH(L.NILAI_HTA_TARIKHMOHON) THEN '00' "+
 				" WHEN LENGTH(REPLACE(SUBSTR(L.NILAI_HTA_TARIKHMOHON,INSTR(L.NILAI_HTA_TARIKHMOHON,'.'),LENGTH(L.NILAI_HTA_TARIKHMOHON)),'.')) = 1 THEN REPLACE(SUBSTR(L.NILAI_HTA_TARIKHMOHON,INSTR(L.NILAI_HTA_TARIKHMOHON,'.'),LENGTH(L.NILAI_HTA_TARIKHMOHON)),'.') || '0' "+
@@ -2601,7 +2486,7 @@ public class BicaraInteraktifData {
 				" AND D.ID_NEGERI = K.ID_NEGERI "+
 				" AND D.ID_BANDAR = J.ID_BANDAR(+) "+
 				" AND L.ID_HTA = A.ID_HTA "+
-				" AND M.ID_JENISHAKMILIK(+) = L.ID_JENISHM "+
+				" AND M.ID_JENISHAKMILIK = L.ID_JENISHM "+
 				" AND N.ID_MUKIM = L.ID_MUKIM "+
 				" AND O.ID_DAERAH = L.ID_DAERAH "+
 				" AND P.ID_SIMATI = Q.ID_SIMATI "+
@@ -2611,11 +2496,8 @@ public class BicaraInteraktifData {
 				" AND A.ID_JENISPERINTAH = 2 "+
 				" AND I.FLAG_JENIS_KEPUTUSAN = 0 "+
 				" AND A.FLAG_HARTA = 'B' "+
-				" AND E.ID_FAIL = '"+ID_FAIL+"') MN ";		
+				" AND E.ID_FAIL = '"+ID_FAIL+"' ";		
 		myLogger.info(" BICARA INTERAKTIF : SQL rekodHTALantikPentadbir :"+ sql);		
-		
-		
-		
 		rs = stmt.executeQuery(sql);
 		list = Collections.synchronizedList(new ArrayList());
 		Map h = null;
@@ -2661,97 +2543,6 @@ public class BicaraInteraktifData {
 	
 	
 	@SuppressWarnings("unchecked")
-	public List rekodLiabilitiPentadbir(HttpSession session,String ID_FAIL, Db db)throws Exception {
-		Db db1 = null;
-		ResultSet rs = null;
-		Statement stmt = null;
-		List list = null;
-		String sql = "";	
-				
-		try{
-			
-		if(db != null)
-		{
-			db1 = db;
-		}
-		else
-		{
-			db1 = new Db();
-		}		
-		stmt = db1.getStatement();	
-		
-	
-		sql += " SELECT TRIM(SUBSTR(TO_CHAR(A.NILAI_HUTANG,'999,999,999.99'),1,LENGTH (TO_CHAR(A.NILAI_HUTANG,'999,999,999.99'))-3 )) AS NILAI_HUTANG, "+
-				" CASE "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.BUTIRAN_HUTANG IS NOT NULL AND LENGTH(AAA.NO_KP1)<12 THEN A.NAMA_OB || ' ' || '(' ||RTRIM(AAA.NO_KP1)|| ')' || '<br>' || 'Butiran Hutang: ' || '<br>' || A.BUTIRAN_HUTANG  "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.BUTIRAN_HUTANG IS NOT NULL AND LENGTH(RTRIM(AAA.NO_KP1))=12 THEN A.NAMA_OB || ' ' || '(' || SUBSTR(AAA.NO_KP1,1,6) || '-' || SUBSTR(AAA.NO_KP1,7,2) || '-' || SUBSTR(AAA.NO_KP1,9,4) || ')' || '<br>' || 'Butiran Hutang: ' || '<br>' || A.BUTIRAN_HUTANG "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.BUTIRAN_HUTANG IS NOT NULL AND A.NO_AKAUN IS NOT NULL THEN A.NAMA_OB || '<br>'  || 'No Akaun : ' || REPLACE(REPLACE(A.NO_AKAUN,'/'),'NO. KAVEAT:') || '<br>' || 'Butiran Hutang: ' || '<br>' || A.BUTIRAN_HUTANG "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.NO_AKAUN IS NULL AND A.BUTIRAN_HUTANG IS NOT NULL THEN A.NAMA_OB || '<br>' || 'Butiran Hutang: ' || '<br>' || A.BUTIRAN_HUTANG "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.BUTIRAN_HUTANG IS NOT NULL AND LENGTH(AAA.NO_KP1)<12 AND AAA.NO_KP1 = 'TDK' THEN A.NAMA_OB || '<br>' || 'Butiran Hutang: ' || '<br>' || A.BUTIRAN_HUTANG  "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.BUTIRAN_HUTANG IS NULL AND LENGTH(AAA.NO_KP1)<12 THEN A.NAMA_OB || ' ' || '(' ||RTRIM(AAA.NO_KP1)|| ')'  "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.BUTIRAN_HUTANG IS NULL AND LENGTH(RTRIM(AAA.NO_KP1))=12 THEN A.NAMA_OB || ' ' || '(' || SUBSTR(AAA.NO_KP1,1,6) || '-' || SUBSTR(AAA.NO_KP1,7,2) || '-' || SUBSTR(AAA.NO_KP1,9,4) || ')'  "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.BUTIRAN_HUTANG IS NULL AND A.NO_AKAUN IS NOT NULL THEN A.NAMA_OB || '<br>'  || 'No Akaun : ' || REPLACE(REPLACE(A.NO_AKAUN,'/'),'NO. KAVEAT:') "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.NO_AKAUN IS NULL AND A.BUTIRAN_HUTANG IS NULL THEN A.NAMA_OB  "+
-				" WHEN A.NAMA_OB IS NOT NULL AND A.BUTIRAN_HUTANG IS NULL AND LENGTH(AAA.NO_KP1)<12 AND AAA.NO_KP1 = 'TDK' THEN A.NAMA_OB  "+
-				" END AS MAKLUMAT_PEMIUTANG, "+
-				" CASE "+
-				" WHEN LENGTH(REPLACE(SUBSTR(A.NILAI_HUTANG,INSTR(A.NILAI_HUTANG,'.'),LENGTH(A.NILAI_HUTANG)),'.')) =  LENGTH(A.NILAI_HUTANG) THEN '00' "+
-				" WHEN LENGTH(REPLACE(SUBSTR(A.NILAI_HUTANG,INSTR(A.NILAI_HUTANG,'.'),LENGTH(A.NILAI_HUTANG)),'.')) = 1 THEN REPLACE(SUBSTR(A.NILAI_HUTANG,INSTR(A.NILAI_HUTANG,'.'),LENGTH(A.NILAI_HUTANG)),'.') ||'0' "+
-				" ELSE REPLACE(SUBSTR(A.NILAI_HUTANG,INSTR(A.NILAI_HUTANG,'.'),LENGTH(A.NILAI_HUTANG)),'.') "+
-				" END AS SEN_HUTANG "+
-				" FROM TBLPPKOB A, "+
-				" TBLPPKPERMOHONAN B, "+
-				" TBLPPKPERMOHONANSIMATI C, "+
-				" TBLPPKSIMATI D,      "+
-				" (SELECT  "+
-				" CASE  "+
-				" WHEN TBLPPKOB.NO_KP_BARU IS NULL AND TBLPPKOB.NO_KP_LAMA IS NOT NULL THEN  TBLPPKOB.NO_KP_LAMA "+
-				" WHEN TBLPPKOB.NO_KP_BARU IS NULL AND TBLPPKOB.NO_KP_LAMA IS NULL THEN  TBLPPKOB.NO_KP_LAIN "+
-				" WHEN TBLPPKOB.NO_KP_BARU IS NULL AND TBLPPKOB.NO_KP_LAIN IS NULL THEN  TBLPPKOB.NO_KP_LAMA  "+
-				" ELSE TBLPPKOB.NO_KP_BARU "+
-				" END || '' ||      "+
-				" CASE  "+
-				" WHEN TBLPPKOB.NO_KP_BARU IS NOT NULL AND TBLPPKOB.NO_KP_LAMA IS NOT NULL THEN TBLPPKOB.NO_KP_LAMA "+
-				" END || '' ||      "+
-				" CASE  "+
-				" WHEN TBLPPKOB.NO_KP_BARU IS  NULL AND TBLPPKOB.NO_KP_LAMA IS NOT NULL THEN TBLPPKOB.NO_KP_LAIN    "+  
-				" END AS NO_KP1, ID_OB, NO_KP_LAMA      "+
-				" FROM TBLPPKOB ) AAA           "+    
-				" WHERE D.ID_SIMATI = A.ID_SIMATI "+
-				" AND D.ID_SIMATI = C.ID_SIMATI "+
-				" AND A.ID_OB = AAA.ID_OB(+) "+
-				" AND B.ID_PERMOHONAN = C.ID_PERMOHONAN "+
-				" AND A.ID_TARAFKPTG = 2 "+
-				" AND B.ID_FAIL = '"+ID_FAIL+"' ";
-	
-		myLogger.info(" BICARA INTERAKTIF : SQL rekodLiabilitiPentadbir :"+ sql);		
-		
-		
-		
-		rs = stmt.executeQuery(sql);
-		list = Collections.synchronizedList(new ArrayList());
-		Map h = null;
-		int bil = 0;
-		while (rs.next()) {
-			h = Collections.synchronizedMap(new HashMap());
-			
-			
-			h.put("NILAI_HUTANG",rs == null ? "" :rs.getString("NILAI_HUTANG") == null ? "" : rs.getString("NILAI_HUTANG"));
-			h.put("SEN_HUTANG",rs == null ? "" :rs.getString("SEN_HUTANG") == null ? "" : rs.getString("SEN_HUTANG"));
-			h.put("MAKLUMAT_PEMIUTANG",rs == null ? "" :rs.getString("MAKLUMAT_PEMIUTANG") == null ? "" : rs.getString("MAKLUMAT_PEMIUTANG"));
-			list.add(h);
-		}
-
-		} finally {
-			if (db == null)
-			{
-				db1.close();
-			}
-		}
-		return list;
-	}
-	
-	@SuppressWarnings("unchecked")
 	public List rekodHALantikPentadbir(HttpSession session,String ID_FAIL, Db db)throws Exception {
 		Db db1 = null;
 		ResultSet rs = null;
@@ -2769,13 +2560,8 @@ public class BicaraInteraktifData {
 		{
 			db1 = new Db();
 		}		
-		stmt = db1.getStatement();	
-		
-		sql += " SELECT " +
-				" TRIM(REGEXP_REPLACE(MN.MAKLUMAT_HA, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS MAKLUMAT_HA, " +
-				" TRIM(REGEXP_REPLACE(MN.CATATAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN, " +
-				" MN.* FROM ( " +
-				" SELECT DISTINCT SUBSTR(TO_CHAR(L.NILAI_HA_TARIKHMOHON,'999,999,999.99'),1,LENGTH (TO_CHAR(L.NILAI_HA_TARIKHMOHON,'999,999,999.99'))-3 ) AS NILAI_HA_TARIKHMOHON, "+
+		stmt = db1.getStatement();			
+		sql += " SELECT DISTINCT SUBSTR(TO_CHAR(L.NILAI_HA_TARIKHMOHON,'999,999,999.99'),1,LENGTH (TO_CHAR(L.NILAI_HA_TARIKHMOHON,'999,999,999.99'))-3 ) AS NILAI_HA_TARIKHMOHON, "+
 				" REPLACE(REPLACE(REPLACE(REPLACE(A.CATATAN,'<br />',''),'&nbsp;',' '),'<p>',''),'</p>','') AS CATATAN, "+
 				" TO_CHAR(C.BA_WARIS) BA_WARIS, TO_CHAR(C.BB_WARIS) BB_WARIS, "+
 				" TO_CHAR(L.BA_SIMATI) BA_SIMATI, TO_CHAR(L.BB_SIMATI) BB_SIMATI, "+
@@ -2786,15 +2572,15 @@ public class BicaraInteraktifData {
 				" ELSE REPLACE(SUBSTR(L.NILAI_HA_TARIKHMOHON,INSTR(L.NILAI_HA_TARIKHMOHON,'.'),LENGTH(L.NILAI_HA_TARIKHMOHON)),'.') "+
 				" END AS SEN_HA, "+
 				" CASE "+
-				" WHEN L.ID_JENISHA = '1' AND L.NAMA_SAHAM IS NOT NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.NAMA_SAHAM || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
-				" WHEN L.ID_JENISHA = '1' AND L.NAMA_SAHAM IS NOT NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NULL  THEN M.KETERANGAN ||' - ' || L.NAMA_SAHAM || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' ||'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
-				" WHEN L.ID_JENISHA = '1' AND L.NAMA_SAHAM IS NOT NULL AND L.NO_DAFTAR IS NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.NAMA_SAHAM || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
-				" WHEN L.ID_JENISHA = '1' AND L.NAMA_SAHAM IS NOT NULL AND L.NO_DAFTAR IS NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.NAMA_SAHAM || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
-				" WHEN L.ID_JENISHA = '1' AND L.JENAMA IS NOT NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NULL AND L.NAMA_SAHAM IS NULL THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
-				" WHEN L.ID_JENISHA = '1' AND L.JENAMA IS NOT NULL AND L.NO_DAFTAR IS NULL AND L.NO_SIJIL IS NULL AND L.NAMA_SAHAM IS NOT NULL THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || L.NAMA_SAHAM || L.CATATAN "+
-				" WHEN L.ID_JENISHA = '1' AND L.NAMA_SAHAM IS NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT "+
-				" WHEN L.ID_JENISHA = '1' AND L.NAMA_SAHAM IS NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NULL  THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' ||'Bil. Unit: '|| L.BIL_UNIT "+
-				" WHEN L.ID_JENISHA = '1' AND L.NAMA_SAHAM IS NULL AND L.NO_DAFTAR IS NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT "+
+				" WHEN L.ID_JENISHA = '01' AND L.NAMA_SAHAM IS NOT NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.NAMA_SAHAM || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
+				" WHEN L.ID_JENISHA = '01' AND L.NAMA_SAHAM IS NOT NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NULL  THEN M.KETERANGAN ||' - ' || L.NAMA_SAHAM || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' ||'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
+				" WHEN L.ID_JENISHA = '01' AND L.NAMA_SAHAM IS NOT NULL AND L.NO_DAFTAR IS NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.NAMA_SAHAM || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
+				" WHEN L.ID_JENISHA = '01' AND L.NAMA_SAHAM IS NOT NULL AND L.NO_DAFTAR IS NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.NAMA_SAHAM || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
+				" WHEN L.ID_JENISHA = '01' AND L.JENAMA IS NOT NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NULL AND L.NAMA_SAHAM IS NULL THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT || L.CATATAN "+
+				" WHEN L.ID_JENISHA = '01' AND L.JENAMA IS NOT NULL AND L.NO_DAFTAR IS NULL AND L.NO_SIJIL IS NULL AND L.NAMA_SAHAM IS NOT NULL THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || L.NAMA_SAHAM || L.CATATAN "+
+				" WHEN L.ID_JENISHA = '01' AND L.NAMA_SAHAM IS NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT "+
+				" WHEN L.ID_JENISHA = '01' AND L.NAMA_SAHAM IS NULL AND L.NO_DAFTAR IS NOT NULL AND L.NO_SIJIL IS NULL  THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || 'No Ahli: ' || NVL(L.NO_DAFTAR,' - ') || '<br>' ||'Bil. Unit: '|| L.BIL_UNIT "+
+				" WHEN L.ID_JENISHA = '01' AND L.NAMA_SAHAM IS NULL AND L.NO_DAFTAR IS NULL AND L.NO_SIJIL IS NOT NULL  THEN M.KETERANGAN ||' - ' || L.JENAMA || '<br>' || 'No Sijil: ' || NVL(L.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| L.BIL_UNIT "+
 				" WHEN M.KOD  = '02' THEN M.KETERANGAN ||' - '|| L.JENAMA || '<br>' || 'No Akaun: ' || L.NO_DAFTAR  "+
 				" WHEN M.KOD  = '03' THEN M.KETERANGAN || ' - ' || L.JENAMA || '<br>' || 'No Pendaftaran: ' || L.NO_DAFTAR "+            
 				" WHEN M.KOD  = '04' THEN M.KETERANGAN || ' - ' || L.JENAMA || '<br>' || 'No Lot: ' || L.NO_DAFTAR           "+
@@ -2990,8 +2776,7 @@ public class BicaraInteraktifData {
 				" AND D.ID_NEGERI                 = K.ID_NEGERI AND D.ID_BANDAR                 = J.ID_BANDAR(+) "+
 				" AND L.ID_HA                     = A.ID_HA AND M.ID_JENISHA                = L.ID_JENISHA "+
 				" AND A.ID_JENISPERINTAH          = 2 AND I.FLAG_JENIS_KEPUTUSAN      = 0 "+
-				" AND A.FLAG_HARTA                = 'B' AND E.ID_FAIL                   =  '"+ID_FAIL+"' ) " +
-						" MN";
+				" AND A.FLAG_HARTA                = 'B' AND E.ID_FAIL                   =  '"+ID_FAIL+"'";
 		
 		myLogger.info(" BICARA INTERAKTIF : SQL rekodHALantikPentadbir :"+ sql);		
 		rs = stmt.executeQuery(sql);
@@ -3838,12 +3623,7 @@ public class BicaraInteraktifData {
 						db1 = new Db();
 					}		
 					stmt = db1.getStatement();			
-					sql += " SELECT ROWNUM, MAIN.* FROM (" +
-							"SELECT DISTINCT " +
-							//" ROWNUM," +
-							" A.STATUS_TADBIR," +
-							//" A.ID_OB," +
-							"  B.NAMA_OB, B.NO_KP_BARU, "+
+					sql += " SELECT ROWNUM,A.STATUS_TADBIR,A.ID_OB, B.NAMA_OB, B.NO_KP_BARU, "+
 							" B.NO_KP_LAMA, B.NO_KP_LAIN, B.JENIS_WARGA,B.ID_TARAFKPTG, "+
 							" CASE "+
 							" WHEN B.NO_KP_BARU IS NULL AND B.NO_KP_LAMA IS NOT NULL THEN B.NO_KP_LAMA "+
@@ -3872,8 +3652,7 @@ public class BicaraInteraktifData {
 								sql += " AND A.ID_OB IS NULL AND A.STATUS_TADBIR = 'Y'";
 							}
 							
-							sql += " AND A.BA_WARIS != 0 " +
-									" ) MAIN ";		
+							sql += " AND A.BA_WARIS != 0 ";		
 					myLogger.info(" BICARA INTERAKTIF : SQL rekod"+type+"BorangESubReport3_2PA_1 ("+subtype+") :"+ sql);		
 					rs = stmt.executeQuery(sql);
 					list = Collections.synchronizedList(new ArrayList());
@@ -3894,7 +3673,7 @@ public class BicaraInteraktifData {
 						h.put("rowCss",rowCss);
 						h.put("BIL",bil);
 						h.put("ROWNUM",rs == null ? 0 :rs.getString("ROWNUM") == null ? 0 : rs.getInt("ROWNUM"));
-						//h.put("ID_OB",rs == null ? "" :rs.getString("ID_OB") == null ? "" : rs.getString("ID_OB"));
+						h.put("ID_OB",rs == null ? "" :rs.getString("ID_OB") == null ? "" : rs.getString("ID_OB"));
 						h.put("NAMA_OB",rs == null ? "" :rs.getString("NAMA_OB") == null ? "" : rs.getString("NAMA_OB"));
 						h.put("NO_KP_BARU",rs == null ? "" :rs.getString("NO_KP_BARU") == null ? "" : rs.getString("NO_KP_BARU"));
 						h.put("NO_KP_LAMA",rs == null ? "" :rs.getString("NO_KP_LAMA") == null ? "" : rs.getString("NO_KP_LAMA"));
@@ -4469,7 +4248,7 @@ public class BicaraInteraktifData {
 		}
 	}
 	
-	public void simpanBantahan(HttpSession session, String ID_PERBICARAAN, String VALUE_FLAG_BANTAHAN, String KETERANGAN_BANTAHAN, Db db) throws Exception {
+	public void simpanBantahan(HttpSession session, String ID_PERBICARAAN, String VALUE_FLAG_BANTAHAN, Db db) throws Exception {
 		Db db1 = null;
 		String sql = "";
 		String USER_ID_SYSTEM = (String)session.getAttribute("_ekptg_user_id");	
@@ -4486,7 +4265,6 @@ public class BicaraInteraktifData {
 			SQLRenderer r = new SQLRenderer();
 			r.update("ID_PERBICARAAN", ID_PERBICARAAN);
 			r.add("FLAG_BANTAHAN", VALUE_FLAG_BANTAHAN);
-			r.add("KETERANGAN_BANTAHAN", KETERANGAN_BANTAHAN.toUpperCase());
 			r.add("ID_KEMASKINI", USER_ID_SYSTEM);
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 			sql = r.getSQLUpdate("TBLPPKPERBICARAAN",db1);			
@@ -4503,78 +4281,6 @@ public class BicaraInteraktifData {
 			}
 		}
 	}
-	
-	
-
-	public List listHistoryjana(HttpSession session, String ID_FAIL,String ID_PERBICARAAN, Db db)throws Exception {
-		Db db1 = null;
-		ResultSet rs = null;
-		Statement stmt = null;
-		List listHistoryjana = null;
-		String sql = "";	
-		
-		try{
-			
-		if(db != null)
-		{
-			db1 = db;
-		}
-		else
-		{
-			db1 = new Db();
-		}
-		
-		stmt = db1.getStatement();			
-		sql += " SELECT J.*,  TO_CHAR(J.TARIKH_MASUK,'DD/MM/YYYY HH24:MI:SS') AS TARIKH_TRANSAKSI_FULL, U.USER_NAME AS PENJANA FROM TBLPPKHISTORYJANANOTA J, USERS U "+
-				" WHERE J.ID_MASUK = U.USER_ID(+) AND ID_FAIL = '"+ID_FAIL+"' ORDER BY J.TARIKH_MASUK DESC ";
-		myLogger.info(" BICARA INTERAKTIF : SQL listHistoryjana :"+ sql);
-		
-		rs = stmt.executeQuery(sql);
-		listHistoryjana = Collections.synchronizedList(new ArrayList());
-		
-		Map h = null;
-		int bil = 0;
-		while (rs.next()) {
-			h = Collections.synchronizedMap(new HashMap());
-			bil++;
-			String rowCss = "";
-			
-			if ( (bil % 2) == 0 )
-			{
-				rowCss = "row2";
-			}
-	        else
-	        {
-	        	rowCss = "row1";
-	        }			
-			h.put("rowCss",rowCss);
-			h.put("BIL",bil);
-			h.put("ID_HISTORYJANANOTA",rs == null ? "" :rs.getString("ID_HISTORYJANANOTA") == null ? "" : rs.getString("ID_HISTORYJANANOTA"));
-			h.put("ID_PERBICARAAN",rs == null ? "" :rs.getString("ID_PERBICARAAN") == null ? "" : rs.getString("ID_PERBICARAAN"));
-			h.put("ID_PERINTAH",rs == null ? "" :rs.getString("ID_PERINTAH") == null ? "" : rs.getString("ID_PERINTAH"));
-			h.put("NOTA",rs == null ? "" :rs.getString("NOTA") == null ? "" : rs.getString("NOTA"));
-			h.put("ID_FAIL",rs == null ? "" :rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
-			h.put("NO_FAIL",rs == null ? "" :rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
-			h.put("WAKTU_BICARA",rs == null ? "" :rs.getString("WAKTU_BICARA") == null ? "" : rs.getString("WAKTU_BICARA"));
-			h.put("NAMA_PEGAWAI",rs == null ? "" :rs.getString("NAMA_PEGAWAI") == null ? "" : rs.getString("NAMA_PEGAWAI"));
-			h.put("BIL_BICARA",rs == null ? "" :rs.getString("BIL_BICARA") == null ? "" : rs.getString("BIL_BICARA"));
-			h.put("TARIKH_TRANSAKSI_FULL",rs == null ? "" :rs.getString("TARIKH_TRANSAKSI_FULL") == null ? "" : rs.getString("TARIKH_TRANSAKSI_FULL"));		
-			h.put("PENJANA",rs == null ? "" :rs.getString("PENJANA") == null ? "" : rs.getString("PENJANA"));		
-			h.put("NO_PINDAAN",rs == null ? "" :rs.getString("NO_PINDAAN") == null ? "" : rs.getString("NO_PINDAAN"));		
-			listHistoryjana.add(h);
-		}
-
-		} finally {
-			if (db == null)
-			{
-				db1.close();
-			}
-		}
-		
-		
-		return listHistoryjana;
-	}
-
 	
 	public void simpanInsertBorangjDTL(HttpSession session, String ID_BORANGJ, String ID_OB, String id_perbicaraan, Db db) throws Exception {
 		Db db1 = null;
@@ -4747,48 +4453,6 @@ public class BicaraInteraktifData {
         	ps.setString(2, nota_pegawai);
         	ps.setString(3, ID_BIKEHADIRAN);        
         	ps.executeUpdate();  
-        	con.commit();
-	    }finally {
-			if(db==null)
-			{
-				if (db1 != null)
-					db1.close();
-			}
-		}
-  }
-	
-	
-	public void simpanKeteranganPerintah(String ID_PERINTAH,String ID_PERBICARAAN,String CATATAN_KEPUTUSAN_PERBICARAAN,String CATATAN,Db db) throws Exception {
-		myLogger.info(" CATATAN_KEPUTUSAN_PERBICARAAN : "+CATATAN_KEPUTUSAN_PERBICARAAN+"; CATATAN : "+CATATAN+"; simpanKeteranganPerintah ");
-		Db db1 = null;
-  		 try {
-  			if(db == null)
-			{
-				db1 = new Db();
-			}
-			else
-			{
-				db1 = db;
-			}  			
-        	Connection con = db1.getConnection();
-        	con.setAutoCommit(false);
-        	
-        	if(ID_PERINTAH.equals(""))
-        	{
-	        	PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKPERBICARAAN SET CATATAN_KP_TEMP = TRIM(REGEXP_REPLACE(?, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')), CATATAN_PERINTAH_TEMP = TRIM(REGEXP_REPLACE(?, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' '))  WHERE ID_PERBICARAAN = ? ");
-	        	ps.setString(1, CATATAN_KEPUTUSAN_PERBICARAAN);
-	        	ps.setString(2, CATATAN);
-	        	ps.setString(3, ID_PERBICARAAN);       	
-	        	ps.executeUpdate();  
-        	}
-        	else
-        	{
-        		PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKPERINTAH SET CATATAN_KEPUTUSAN_PERBICARAAN = TRIM(REGEXP_REPLACE(?, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')), CATATAN = TRIM(REGEXP_REPLACE(?, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' '))  WHERE ID_PERINTAH = ? ");
-	        	ps.setString(1, CATATAN_KEPUTUSAN_PERBICARAAN);
-	        	ps.setString(2, CATATAN);
-	        	ps.setString(3, ID_PERINTAH);       	
-	        	ps.executeUpdate();  
-        	}        	
         	con.commit();
 	    }finally {
 			if(db==null)
@@ -5058,62 +4722,6 @@ public class BicaraInteraktifData {
 	}
 	
 	
-	
-			@SuppressWarnings("unchecked")
-	public Map viewPejagaWaris(HttpSession session, String ID_BIKEHADIRAN, String ID_OBPERMOHONAN,Db db)throws Exception {
-		Db db1 = null;
-		ResultSet rs = null;
-		Statement stmt = null;
-		String sql = "";
-		try {
-			if(db != null)
-			{
-				db1 = db;
-			}
-			else
-			{
-				db1 = new Db();
-			}
-			stmt = db1.getStatement();
-			/*
-			sql += " SELECT KH.ID_BIKEHADIRAN,  OBP.ID_OBPERMOHONAN, PEJAGA.LISTPENJAGA FROM TBLPPKOBPERMOHONAN OBP, "+
-					" (SELECT PJ.ID_OBMINOR,  REGEXP_REPLACE(RTRIM (XMLAGG (XMLELEMENT (E, TRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'(,)([^,]*$)',' DAN\\2') AS LISTPENJAGA  "+ 
-					" FROM TBLPPKPENJAGA PJ, TBLPPKOB OB, TBLPPKOBPERMOHONAN OBPP  " +
-					" WHERE PJ.ID_OB = OB.ID_OB AND OBPP.ID_OB = OB.ID_OB AND OBPP.ID_OBPERMOHONAN = '"+ID_OBPERMOHONAN.replace("OB", "")+"'  GROUP BY PJ.ID_OBMINOR) PEJAGA, TBLPPKBIKEHADIRAN KH "+
-					" WHERE OBP.ID_OB = PEJAGA.ID_OBMINOR(+) "+
-					" AND 'OB' || OBP.ID_OBPERMOHONAN = KH.ID_HADIR "+
-					" AND KH.ID_BIKEHADIRAN = '"+ID_BIKEHADIRAN+"' "+
-					" AND NVL(OBP.UMUR,0) != 0 AND NVL(OBP.UMUR,0) < 18  ";
-					*/
-			
-			sql +=  " SELECT OBPP.ID_OBPERMOHONAN, PJ.ID_OBMINOR,  " +
-					" REGEXP_REPLACE(RTRIM (XMLAGG (XMLELEMENT (E, TRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'(,)([^,]*$)',' DAN\2') AS LISTPENJAGA   FROM   " +
-					" TBLPPKPENJAGA PJ, TBLPPKOB OB, TBLPPKOB OBP, TBLPPKOBPERMOHONAN OBPP    " +
-					" WHERE PJ.ID_OB = OB.ID_OB AND OBP.ID_OB = PJ.ID_OBMINOR AND OBPP.ID_OB = OBP.ID_OB  " +
-					" AND OBPP.ID_OBPERMOHONAN = '"+ID_OBPERMOHONAN.replace("OB", "")+"'   " +
-					" AND NVL(OBPP.UMUR,0) != 0 AND NVL(OBPP.UMUR,0) < 18    " +
-					" GROUP BY OBPP.ID_OBPERMOHONAN,PJ.ID_OBMINOR ";
-		
-			myLogger.info(" BICARA INTERAKTIF : SQL viewPejagaWaris :"+ sql);			
-			rs = stmt.executeQuery(sql);
-			Map h = null;		
-			while (rs.next()) {			
-				h = Collections.synchronizedMap(new HashMap());
-				h.put("ID_BIKEHADIRAN",ID_BIKEHADIRAN);
-				h.put("ID_OBPERMOHONAN",ID_OBPERMOHONAN.replace("OB", ""));
-				h.put("LISTPENJAGA",rs == null ? "" :rs.getString("LISTPENJAGA") == null ? "" : rs.getString("LISTPENJAGA").toUpperCase());
-			}
-			
-			return h;
-		} finally {
-			if (db == null)
-			{
-				db1.close();
-			}
-		}
-	}
-	
-	
 	@SuppressWarnings("unchecked")
 	public Map viewTuruthadir(HttpSession session, String id_bikehadiran, Db db)throws Exception {
 		Db db1 = null;
@@ -5229,21 +4837,15 @@ public class BicaraInteraktifData {
 	}
 	
 	
-	public String setDisplayHtaah(Map setup,String  flagCP)
+	public String setDisplayHtaah(Map setup)
 	{
 		String html = "";
-		String MAKLUMAT_HTA = (String)setup.get("MAKLUMAT_HTA");
 		String NAMA_NEGERI = (String)setup.get("NAMA_NEGERI");
 		String NAMA_DAERAH = (String)setup.get("NAMA_DAERAH");
 		String NAMA_MUKIM = (String)setup.get("NAMA_MUKIM");
 		String NO_HAKMILIK_FULL = (String)setup.get("NO_HAKMILIK_FULL");
 		String NO_PT = (String)setup.get("NO_PT");
 		html += "<br>";
-		if(!MAKLUMAT_HTA.equals(""))
-		{
-			html +=	""+MAKLUMAT_HTA+"; ";
-		}
-		/*
 		if(!NAMA_NEGERI.equals(""))
 		{
 			html +=	""+NAMA_NEGERI+"; ";
@@ -5263,24 +4865,15 @@ public class BicaraInteraktifData {
 		if(!NO_PT.equals("") && !NO_PT.equals("-"))
 		{
 			html +=	""+NO_PT+"; ";
-		}	
-		*/				
+		}					
 		html += "";
-        if(flagCP.equals(""))
-        {
-        	html += "<br><br>...<br>";
-        }
-        else
-        {
-        	html += "<br>...";
-        }
+		html += "<br><br>...<br>";
 		return html;
 	}
 	
-	public String setDisplayHtaahx(Map setup,String flagCP)
+	public String setDisplayHtaahx(Map setup)
 	{
 		String html = "";
-		String MAKLUMAT_HTA = (String)setup.get("MAKLUMAT_HTA");
 		String NAMA_NEGERI = (String)setup.get("NAMA_NEGERI");
 		String NAMA_DAERAH = (String)setup.get("NAMA_DAERAH");
 		String NAMA_MUKIM = (String)setup.get("NAMA_MUKIM");		
@@ -5288,11 +4881,6 @@ public class BicaraInteraktifData {
 		String NO_PERJANJIAN_FULL = (String)setup.get("NO_PERJANJIAN_FULL");
 		String JENIS_KEPENTINGAN = (String)setup.get("JENIS_KEPENTINGAN");
 		html += "<br>";
-		if(!MAKLUMAT_HTA.equals(""))
-		{
-			html +=	""+MAKLUMAT_HTA+"; ";
-		}
-		/*
 		if(!NAMA_NEGERI.equals(""))
 		{
 			html +=	""+NAMA_NEGERI+"; ";
@@ -5316,32 +4904,18 @@ public class BicaraInteraktifData {
 		if(!JENIS_KEPENTINGAN.equals("") && !JENIS_KEPENTINGAN.equals("-"))
 		{
 			html +=	"<br>"+JENIS_KEPENTINGAN+"; ";
-		}
-		*/					
+		}					
 		html += "";
-		if(flagCP.equals(""))
-        {
-        	html += "<br><br>...<br>";
-        }
-        else
-        {
-        	html += "<br>...";
-        }
+		html += "<br><br>...<br>";
 		return html;
 	}
 	
-	public String setDisplayHa(Map setup,String flagCP)
+	public String setDisplayHa(Map setup)
 	{
 		String html = "";
-		String MAKLUMAT_HA = (String)setup.get("MAKLUMAT_HA");
-		//String JENIS_HA = (String)setup.get("JENIS_HA");
-		//String NO_DAFTAR = (String)setup.get("NO_DAFTAR");
+		String JENIS_HA = (String)setup.get("JENIS_HA");
+		String NO_DAFTAR = (String)setup.get("NO_DAFTAR");
 		html += "<br>";
-		if(!MAKLUMAT_HA.equals("") && !MAKLUMAT_HA.equals("-"))
-		{
-			html +=	""+MAKLUMAT_HA+"; ";
-		}
-		/*
 		if(!JENIS_HA.equals("") && !JENIS_HA.equals("-"))
 		{
 			html +=	""+JENIS_HA+"; ";
@@ -5349,38 +4923,29 @@ public class BicaraInteraktifData {
 		if(!NO_DAFTAR.equals("") && !NO_DAFTAR.equals("-"))
 		{
 			html +=	""+NO_DAFTAR+"; ";
-		}	
-		*/				
+		}					
 		html += "";
-		if(flagCP.equals(""))
-        {
-        	html += "<br><br>...<br>";
-        }
-        else
-        {
-        	html += "<br>...";
-        }
+		html += "<br><br>...<br>";
 		return html;
 	}
 	
-	public String defaultListHarta(HttpSession session,String ID_PEMOHON,String ID_SIMATI,String ID_PERBICARAAN,
-			String ID_PERMOHONANSIMATI,String ID_PERMOHONAN, String flagCP, Db db)
+	public String defaultListHarta(HttpSession session,String ID_PEMOHON,String ID_SIMATI,String ID_PERBICARAAN,String ID_PERMOHONANSIMATI,String ID_PERMOHONAN, Db db)
 			throws Exception {
 		String html = "";
 		
-		List listByRequest_htaah_current =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"htaah", "current",ID_PERMOHONANSIMATI,ID_PERMOHONAN,"Y", db);
-		List listByRequest_htaah_previous =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"htaah", "previous",ID_PERMOHONANSIMATI,ID_PERMOHONAN,"Y", db);
-		List listByRequest_htaahx_current =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"htaahx", "current",ID_PERMOHONANSIMATI,ID_PERMOHONAN,"Y", db);
-		List listByRequest_htaahx_previous =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"htaahx", "previous",ID_PERMOHONANSIMATI,ID_PERMOHONAN,"Y", db);
-		List listByRequest_ha_current =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"ha", "current",ID_PERMOHONANSIMATI,ID_PERMOHONAN,"Y", db);
-		List listByRequest_ha_previous =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"ha", "previous",ID_PERMOHONANSIMATI,ID_PERMOHONAN,"Y", db);
+		List listByRequest_htaah_current =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"htaah", "current",ID_PERMOHONANSIMATI,ID_PERMOHONAN, db);
+		List listByRequest_htaah_previous =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"htaah", "previous",ID_PERMOHONANSIMATI,ID_PERMOHONAN, db);
+		List listByRequest_htaahx_current =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"htaahx", "current",ID_PERMOHONANSIMATI,ID_PERMOHONAN, db);
+		List listByRequest_htaahx_previous =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"htaahx", "previous",ID_PERMOHONANSIMATI,ID_PERMOHONAN, db);
+		List listByRequest_ha_current =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"ha", "current",ID_PERMOHONANSIMATI,ID_PERMOHONAN, db);
+		List listByRequest_ha_previous =  listByRequest(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,"ha", "previous",ID_PERMOHONANSIMATI,ID_PERMOHONAN, db);
 		
 		if(listByRequest_htaah_current.size()>0 || listByRequest_htaah_previous.size()>0 || listByRequest_htaahx_current.size()>0 || listByRequest_htaahx_previous.size()>0 || listByRequest_ha_current.size()>0 || listByRequest_ha_previous.size()>0)		
 		{
-			//html += "<br>";
+			html += "<br>";
 		}
 		
-		if((listByRequest_htaah_current.size()>0 || listByRequest_htaah_previous.size()>0) && flagCP.equals(""))		
+		if(listByRequest_htaah_current.size()>0 || listByRequest_htaah_previous.size()>0)		
 		{
 			html += "<br><div style=\"border-bottom: 1px solid #000;width:100%;\" ><b><u>HARTA TAK ALIH (ADA HAKMILIK)</u></b></div>";
 		}
@@ -5389,18 +4954,18 @@ public class BicaraInteraktifData {
 		{		
 			for(int i=0; i<listByRequest_htaah_current.size(); i++)
 			{				
-				html += ""+setDisplayHtaah((Map)listByRequest_htaah_current.get(i),flagCP)+"";
+				html += ""+setDisplayHtaah((Map)listByRequest_htaah_current.get(i))+"";
 			}
 		}
 		if(listByRequest_htaah_previous.size()>0)		
 		{		
 			for(int i=0; i<listByRequest_htaah_previous.size(); i++)
 			{				
-				html += ""+setDisplayHtaah((Map)listByRequest_htaah_previous.get(i),flagCP)+"";
+				html += ""+setDisplayHtaah((Map)listByRequest_htaah_previous.get(i))+"";
 			}
 		}
 		
-		if((listByRequest_htaahx_current.size()>0 || listByRequest_htaahx_previous.size()>0) && flagCP.equals("") )	
+		if(listByRequest_htaahx_current.size()>0 || listByRequest_htaahx_previous.size()>0)		
 		{
 			html += "<br><div style=\"border-bottom: 1px solid #000;width:100%;\" ><b><u>HARTA TAK ALIH (TIADA HAKMILIK)</u></b></div>";
 		}
@@ -5409,18 +4974,18 @@ public class BicaraInteraktifData {
 		{		
 			for(int i=0; i<listByRequest_htaahx_current.size(); i++)
 			{				
-				html += ""+setDisplayHtaahx((Map)listByRequest_htaahx_current.get(i),flagCP)+"";
+				html += ""+setDisplayHtaahx((Map)listByRequest_htaahx_current.get(i))+"";
 			}
 		}
 		if(listByRequest_htaahx_previous.size()>0)		
 		{		
 			for(int i=0; i<listByRequest_htaahx_previous.size(); i++)
 			{				
-				html += ""+setDisplayHtaahx((Map)listByRequest_htaahx_previous.get(i),flagCP)+"";
+				html += ""+setDisplayHtaahx((Map)listByRequest_htaahx_previous.get(i))+"";
 			}
 		}
 		
-		if((listByRequest_ha_current.size()>0 || listByRequest_ha_previous.size()>0) && flagCP.equals(""))	
+		if(listByRequest_ha_current.size()>0 || listByRequest_ha_previous.size()>0)		
 		{
 			html += "<br><div style=\"border-bottom: 1px solid #000;width:100%;\" ><b><u>HARTA ALIH</u></b></div>";
 		}
@@ -5429,24 +4994,21 @@ public class BicaraInteraktifData {
 		{		
 			for(int i=0; i<listByRequest_ha_current.size(); i++)
 			{				
-				html += ""+setDisplayHa((Map)listByRequest_ha_current.get(i),flagCP)+"";
+				html += ""+setDisplayHa((Map)listByRequest_ha_current.get(i))+"";
 			}
 		}
 		if(listByRequest_ha_previous.size()>0)		
 		{		
 			for(int i=0; i<listByRequest_ha_previous.size(); i++)
 			{				
-				html += ""+setDisplayHa((Map)listByRequest_ha_previous.get(i),flagCP)+"";
+				html += ""+setDisplayHa((Map)listByRequest_ha_previous.get(i))+"";
 			}
 		}
 		
 		return html;
 	}
 	
-	public List listByRequest(HttpSession session,String ID_PEMOHON,String ID_SIMATI,String ID_PERBICARAAN,String skrinName, 
-			String current_previous,String ID_PERMOHONANSIMATI,String ID_PERMOHONAN, 
-			String flagDefaultKeterangan,
-			Db db)throws Exception {
+	public List listByRequest(HttpSession session,String ID_PEMOHON,String ID_SIMATI,String ID_PERBICARAAN,String skrinName, String current_previous,String ID_PERMOHONANSIMATI,String ID_PERMOHONAN, Db db)throws Exception {
 		Db db1 = null;
 		ResultSet rs = null;
 		Statement stmt = null;
@@ -5486,7 +5048,7 @@ public class BicaraInteraktifData {
 				db1 = new Db();
 			}			
 			stmt = db1.getStatement();			
-			sql += queryGetList(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,skrinName, current_previous, ID_PERMOHONANSIMATI,ID_PERMOHONAN,flagDefaultKeterangan);		
+			sql += queryGetList(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,skrinName, current_previous, ID_PERMOHONANSIMATI,ID_PERMOHONAN);		
 			myLogger.info(" BICARA INTERAKTIF : SQL listByRequest :"+ sql);		
 			rs = stmt.executeQuery(sql);
 			
@@ -5535,7 +5097,7 @@ public class BicaraInteraktifData {
 			}
 		
 			stmt = db1.getStatement();			
-			sql += queryGetList(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,skrinName, current_previous, ID_PERMOHONANSIMATI,ID_PERMOHONAN,"");
+			sql += queryGetList(session,ID_PEMOHON,ID_SIMATI,ID_PERBICARAAN,skrinName, current_previous, ID_PERMOHONANSIMATI,ID_PERMOHONAN);
 			myLogger.info(" BICARA INTERAKTIF : SQL dynamicList :"+ sql);		
 			rs = stmt.executeQuery(sql);		
 			String paramStandard = "ID_PEMOHON="+ID_PEMOHON+"&ID_SIMATI="+ID_SIMATI+"&ID_PERMOHONAN="+ID_PERMOHONAN+"&ID_PERBICARAAN="+ID_PERBICARAAN+"&ID_PERMOHONANSIMATI="+ID_PERMOHONANSIMATI;
@@ -5925,9 +5487,7 @@ public class BicaraInteraktifData {
 			for(int i=0; i<listKehadiran.size(); i++)
 			{
 				Map setupKehadiran = (Map) listKehadiran.get(i);
-				String PENJAGA = (String)setupKehadiran.get("PENJAGA");
 				String NAMA = (String)setupKehadiran.get("NAMA");
-				int UMUR = (Integer)setupKehadiran.get("UMUR_INT");
 				String PENGENALAN = (String)setupKehadiran.get("PENGENALAN");
 				String HUBUNGAN = (String)setupKehadiran.get("HUBUNGAN");
 				String KETERANGAN = (String)setupKehadiran.get("KETERANGAN");
@@ -5936,11 +5496,11 @@ public class BicaraInteraktifData {
 				{
 					if(flagPrint.equals("N"))
 					{
-						html += htmlListKeteranganBySrkin(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,UMUR,PENJAGA,db);
+						html += htmlListKeteranganBySrkin(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,db);
 					}
 					else
 					{
-						html += htmlListKeteranganBySrkinPrint(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,UMUR,PENJAGA,db);
+						html += htmlListKeteranganBySrkinPrint(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,db);
 					}
 				}
 			}
@@ -5965,11 +5525,11 @@ public class BicaraInteraktifData {
 				{
 					if(flagPrint.equals("N"))
 					{
-						html += htmlListKeteranganBySrkin(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,0,"",db);
+						html += htmlListKeteranganBySrkin(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,db);
 					}
 					else
 					{
-						html += htmlListKeteranganBySrkinPrint(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,0,"",db);
+						html += htmlListKeteranganBySrkinPrint(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,db);
 					}
 				}
 			}
@@ -6412,39 +5972,18 @@ public class BicaraInteraktifData {
 					}
 					
 					
-					if(JenisTransaksi.equals("DELETE"))
+					
+					if(!sql_statement.equals(""))
 					{
-						if(!sql_statement.equals(""))
-						{
-							myLogger.info("setPerubahanBySkrin >>> FINAL sql_statement : "+sql_statement);
-							stmt.executeUpdate(sql_statement);
-						}
-						
-						if(!sql_statement_supliment.equals(""))
-						{
-							myLogger.info("setPerubahanBySkrin >>> FINAL sql_statement_supliment : "+sql_statement_supliment);
-							stmt.executeUpdate(sql_statement_supliment);
-						}	
-						
-					}
-					if(JenisTransaksi.equals("INSERT") || JenisTransaksi.equals("UPDATE"))
-					{
-						if(!sql_statement_supliment.equals(""))
-						{
-							myLogger.info("setPerubahanBySkrin >>> FINAL sql_statement_supliment : "+sql_statement_supliment);
-							stmt.executeUpdate(sql_statement_supliment);
-						}	
-						
-						if(!sql_statement.equals(""))
-						{
-							myLogger.info("setPerubahanBySkrin >>> FINAL sql_statement : "+sql_statement);
-							stmt.executeUpdate(sql_statement);
-						}
-						
+						myLogger.info("setPerubahanBySkrin >>> FINAL sql_statement : "+sql_statement);
+						stmt.executeUpdate(sql_statement);
 					}
 					
-					
-					
+					if(!sql_statement_supliment.equals(""))
+					{
+						myLogger.info("setPerubahanBySkrin >>> FINAL sql_statement_supliment : "+sql_statement_supliment);
+						stmt.executeUpdate(sql_statement_supliment);
+					}	
 					
 				}
 				catch (Exception re) {
@@ -6464,7 +6003,7 @@ public class BicaraInteraktifData {
     	return str;
       }
     
-    public String janaContentCatatanPerintah(HttpSession session,String ID_FAIL,String formName, String ID_SIMATI, String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,String ID_PEMOHON,String ID_PERINTAH,String NO_PINDAAN,Db db) throws Exception {
+    public String janaContentCatatanPerintah(HttpSession session,String ID_FAIL,String formName, String ID_SIMATI, String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,String ID_PEMOHON,String ID_PERINTAH,Db db) throws Exception {
     
     	String htmlPageSetup = "";
     	Map setupKeputusan = getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,"keputusan",ID_PERMOHONANSIMATI,"",ID_PERBICARAAN, "TBLPPKPERINTAH", db);
@@ -6474,9 +6013,6 @@ public class BicaraInteraktifData {
     	String INTROFIELD3 = setupKeputusan == null ? "" :(String) setupKeputusan.get("INTROFIELD3") == null ? "" : (String) setupKeputusan.get("INTROFIELD3");
     	String CATATAN_SKRIN_PERINTAH = setupKeputusan == null ? "" :(String) setupKeputusan.get("CATATAN") == null ? "" : (String) setupKeputusan.get("CATATAN");
     	String CATATAN_KEPUTUSAN_PERBICARAAN = setupKeputusan == null ? "" :(String) setupKeputusan.get("CATATAN_KEPUTUSAN_PERBICARAAN") == null ? "" : (String) setupKeputusan.get("CATATAN_KEPUTUSAN_PERBICARAAN");
-    	
-    	
-    	//htmlPageSetup += "<thead><div align=\"right\" class=\"onTT\" >NO_FAIL</div></thead>";
     	
     	List listKehadiran = listKehadiran(session,ID_PERMOHONANSIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PEMOHON,db);
 		List listTurutHadir = listTurutHadir(session,ID_PERBICARAAN, db);
@@ -6540,15 +6076,7 @@ public class BicaraInteraktifData {
     	if(!CATATAN_SKRIN_PERINTAH.equals("") || !CATATAN_INTRO.equals(""))
     	{
 	    	htmlPageSetup += "<div class=\"autoBreak\" >";
-	    	
-	    	String tajukPerintah = "PERINTAH";
-	    	
-	    	if(!NO_PINDAAN.equals(""))
-	    	{
-	    		tajukPerintah = "PEMBETULAN PERINTAH ("+NO_PINDAAN+")";
-	    	}
-	    	
-	    	htmlPageSetup += "<br><div style=\"border-bottom: 1px solid #000;width:100%;font-size: 140%;\" ><b>"+tajukPerintah+"</b></div>";
+	    	htmlPageSetup += "<br><div style=\"border-bottom: 1px solid #000;width:100%;font-size: 140%;\" ><b>PERINTAH</b></div>";
 			htmlPageSetup += openHTMLTableCatatanPerintah();    	
 	    	htmlPageSetup += "<tr>";
 	        htmlPageSetup += "<td valign=\"top\"   > ";
@@ -6625,11 +6153,6 @@ public class BicaraInteraktifData {
     	htmlPageSetup += "</div>";
     	
     	
-    	htmlPageSetup += "<div class=\"autoBreak\" >";
-    	htmlPageSetup += contentBE_Liabiliti(session,ID_FAIL,ID_PERBICARAAN,ID_PERMOHONAN,ID_PERMOHONANSIMATI,ID_PEMOHON,ID_PERINTAH,db);
-    	htmlPageSetup += "</div>";
-    	
-    	htmlPageSetup += "<div align=\"right\" class=\"onTT\" ><br><br>T.T....................................</div>";
     	
     	
     	if(totalKeterangan>0)
@@ -6768,8 +6291,8 @@ public class BicaraInteraktifData {
 		        	
 		        	
 		        	if(!CATATAN_HARTA.equals(""))
-		        	{ 
-		        		htmlPageSetup += "<br><b>Catatan :</b> "+CATATAN_HARTA+"</div>";
+		        	{
+		        		htmlPageSetup += "<br>Catatan : "+CATATAN_HARTA+"</div>";
 		        	}
 		        	htmlPageSetup += "</td>";
 		        	/*
@@ -6782,7 +6305,7 @@ public class BicaraInteraktifData {
 				}
 			}
 			
-			/*
+			
 			htmlPageSetup += "<tr>";
             htmlPageSetup += "<td colspan=\"3\" > ";
         	htmlPageSetup += "</td>";
@@ -6790,7 +6313,6 @@ public class BicaraInteraktifData {
         	htmlPageSetup += "<div align=\"right\" class=\"onTT\" ><br><br>T.T....................................</div>";
         	htmlPageSetup += "</td>";
         	htmlPageSetup += "</tr>";
-        	*/
         	
 			htmlPageSetup += closeHTMLTableCatatanPerintah();	
 			//htmlPageSetup += "<div align=\"right\" ><br><br>T.T....................................</div>";
@@ -6836,13 +6358,10 @@ public class BicaraInteraktifData {
     					String CATATAN = (String)h_hta.get("CATATAN");
     					String NILAI_HTA_TARIKHMOHON = (String)h_hta.get("NILAI_HTA_TARIKHMOHON");
     					String SEN_HTA = (String)h_hta.get("SEN_HTA");
-    					htmlPageSetup += "<br>"+MAKLUMAT_HTA; 
-    					myLogger.info(" CATATAN >>>>>>>>>>> "+CATATAN);
-    					htmlPageSetup += "<br>"+(ID_JENISPERINTAH.equals("1")?"(" + BA_WARIS + "/" + BB_WARIS + "bhg)" : "(" + BA_SIMATI + "/" + BB_SIMATI + "bhg)")    					
+    					htmlPageSetup += "<br>"+MAKLUMAT_HTA;    					
+    					htmlPageSetup += "<br>"+(ID_JENISPERINTAH.equals("1")?"(" + BA_WARIS + "/" + BB_WARIS + "bhg)" : "(" + BA_SIMATI + "/" + BB_SIMATI + "bhg)")
     					+""+(!CATATAN.equals("") ? "<br><br><b>Catatan : </b>" +CATATAN:"");  
     					htmlPageSetup += "<br>";
-    					myLogger.info("htmlPageSetup CATATAN ::::::::: "+htmlPageSetup);
-    					
     					//htmlPageSetup += "<br>Nilai Harta : RM "+(!NILAI_HTA_TARIKHMOHON.equals("") ? NILAI_HTA_TARIKHMOHON :"00") + "." + (!SEN_HTA.equals("") ? SEN_HTA:"00");
     					
     				}
@@ -6871,47 +6390,13 @@ public class BicaraInteraktifData {
     					
     				}
     			}
-    			//htmlPageSetup += "<div align=\"right\" class=\"onTT\" ><br><br>T.T....................................</div>";
+    			htmlPageSetup += "<div align=\"right\" class=\"onTT\" ><br><br>T.T....................................</div>";
 			}
-        
         	
-        
         	
 		}
     	return htmlPageSetup;
     }
-    
-    
-    public String contentBE_Liabiliti(HttpSession session,String ID_FAIL,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,String ID_PEMOHON,String ID_PERINTAH,Db db) throws Exception {
-    	String htmlPageSetup = "";	
-    	
-    	List rekodLiabilitiPentadbir = rekodLiabilitiPentadbir(session,ID_FAIL, db);			
-		myLogger.info("listPentadbir ::::::::: "+rekodLiabilitiPentadbir +" ID_FAIL : "+ID_FAIL); 
-		
-		if(rekodLiabilitiPentadbir.size()>0)
-		{	
-    		htmlPageSetup += "<br><div style=\"border-bottom: 1px solid #000;width:100%;font-size: 140%;\" ><b>LIABILITI</b></div>";
-    		        	
-        	for(int i=0; i<rekodLiabilitiPentadbir.size(); i++)
-			{			
-        		Map h = (Map)rekodLiabilitiPentadbir.get(i);
-    			String MAKLUMAT_PEMIUTANG = h.get("MAKLUMAT_PEMIUTANG").toString();
-    			String NILAI_HUTANG = h.get("NILAI_HUTANG").toString();
-    			String SEN_HUTANG = h.get("SEN_HUTANG").toString();
-    			htmlPageSetup += "<div style=\"width:100%;\" >";
-    			htmlPageSetup += MAKLUMAT_PEMIUTANG.replace("\n", "<br>");
-    			if(!NILAI_HUTANG.equals(""))
-    			{
-    				htmlPageSetup += "<br>"+NILAI_HUTANG+"."+SEN_HUTANG;
-    			}
-    			htmlPageSetup += "</div>";
-
-    			//htmlPageSetup += "<div align=\"right\" class=\"onTT\" ><br><br>T.T....................................</div>";
-			}     	
-		}
-    	return htmlPageSetup;
-    }
-    
     
     
     public String contentBE_HA(HttpSession session,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PERMOHONANSIMATI,String ID_PEMOHON,String ID_PERINTAH,Db db) throws Exception {
@@ -6990,7 +6475,7 @@ public class BicaraInteraktifData {
 		        	
 		        	if(!CATATAN_HARTA.equals(""))
 		        	{
-		        		htmlPageSetup += "<br><b>Catatan :</b> "+CATATAN_HARTA+"</div>";
+		        		htmlPageSetup += "<br>Catatan : "+CATATAN_HARTA+"</div>";
 		        	}
 		        	htmlPageSetup += "</td>";
 		        	/*
@@ -7003,7 +6488,6 @@ public class BicaraInteraktifData {
 				}
 			}
         	
-        	/*
         	htmlPageSetup += "<tr>";
             htmlPageSetup += "<td > ";
         	htmlPageSetup += "</td>";
@@ -7011,7 +6495,6 @@ public class BicaraInteraktifData {
         	htmlPageSetup += "<div align=\"right\" class=\"onTT\" ><br><br>T.T....................................</div>";
         	htmlPageSetup += "</td>";
         	htmlPageSetup += "</tr>";
-        	*/
 			
 			htmlPageSetup += closeHTMLTableCatatanPerintah();	
 			//htmlPageSetup += "<div align=\"right\" ><br><br>T.T....................................</div>";
@@ -8043,58 +7526,35 @@ public class BicaraInteraktifData {
 			String KETERANGAN,
 			String NOTA_PEGAWAI,
 			String flagPrint,
-			int UMUR,
-			String PENJAGA,
 			Db db) throws Exception {
 		String html = "";
 		
-		//html += ">>>>>>>>>>>>>>>>>>>"+NAMA+"<br>";
-		/*
+		//html += ">>>>>>>>>>>>>>>>>>>"+NAMA+"<br>";		
 		html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bootstrap-wysihtml5-master/lib/css/bootstrap.min.css\"></link>";
 		html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bootstrap-wysihtml5-master/lib/css/prettify.css\"></link>";
 		html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bootstrap-wysihtml5-master/src/bootstrap-wysihtml5.css\"></link>";
-		*/
+				
 		//html += "<thead ><tr>";
 		//html += "<th colspan=\"10\"><br></th>";
 		//html += "</tr></thead >";
 		
 		//htmlPageSetup += "<br><div style=\"border-bottom: 1px solid #000;width:100%;font-size: 140%;\" ><b>HARTA TAK ALIH YANG KENA DIBAHAGIKAN</b></div>";
 		
-		html += "<br>" +
-				//"<div " +
-				//"class=\"autoBreak\"" +
-				//" >" +
-				"";
-		
-		String maklumatIndividu = "";		
 		
 		
-		//maklumatIndividu += "<div style=\"width:100%;font-size: 100%;\" >";
 		
-		if(UMUR!= 0 && UMUR < 18)
-		{
-			if(!PENJAGA.equals(""))
-			{
-				maklumatIndividu += "<b>"+PENJAGA+"</b> <br>sebagai <b>PENJAGA</b> kepada <br>";
-			}
-		}  
-		maklumatIndividu += "<b>";
-		maklumatIndividu += ""+NAMA;	
+		html += "<br><div class=\"autoBreak\" >";
+		html += "<div style=\"width:100%;font-size: 100%;\" ><b>";
+		html += NAMA;	
 		if(!PENGENALAN.equals(""))
 		{
-			maklumatIndividu += " ("+PENGENALAN+")";
+			html += " ("+PENGENALAN+")";
 		}		
 		if(!HUBUNGAN.equals(""))
 		{
-			maklumatIndividu += "<br>HUBUNGAN : "+HUBUNGAN+"";
+			html += "<br>"+HUBUNGAN+"";
 		}
-		maklumatIndividu += "</b>";
-		//maklumatIndividu += "</div> ";
-		
-		//tutup atas ni
-		//html += maklumatIndividu;
-		
-		html +=	" <div align=\"right\" >";
+		html += "</b></div>";
 		/*
 			html += "<table " +
 			" style=\"border-collapse:collapse;\" " +
@@ -8120,7 +7580,6 @@ public class BicaraInteraktifData {
 			{
 				if(!KETERANGAN.equals(""))
 				{
-					/*
 					html += "<table style=\"border-collapse:collapse;\" cellspacing=\"1\" cellpadding=\"1\" width=\"100%\" >";
 					html += "<tr>";
 					html += "<td width=\"1%\" >";			
@@ -8128,31 +7587,23 @@ public class BicaraInteraktifData {
 					html += "<td width=\"1%\" >";			
 					html += "</td>";	
 					html += "<td width=\"98%\" valign=\"top\" >";	
-					*/
-					
-					
-					html += "<div style=\"border-bottom: 1px solid #000;width:98%;\" align=\"left\" ><br><b>KETERANGAN "+maklumatIndividu+" </b></div>";
-					html += "<div align=\"justify\" style=\"width:96%;\" ><br>"+KETERANGAN+"</div>";
-					html += "<div align=\"right\" style=\"width:96%;\" class=\"onTT\" ><br><br>T.T....................................</div>";
-					
-					
-					//html += "</td>";	
+					html += "<div style=\"border-bottom: 1px solid #000;width:98%;float:right;\" ><br><b>KETERANGAN INDIVIDU</b></div>";
+					html += "<div align=\"justify\" style=\"width:96%;float:right;\" ><br>"+KETERANGAN+"</div>";
+					html += "<div align=\"right\" style=\"width:96%;float:right;\" class=\"onTT\" ><br><br>T.T....................................</div>";
+					html += "</td>";	
 					//html += "<td width=\"2%\" >";			
 					//html += "</td>";	
-					//html += "</tr>";					
-					//html += "</table>";					
+					html += "</tr>";					
+					html += "</table>";					
 					//setting page brake
-					//html += "</div>";
+					html += "</div>";
 				}
 				if(!NOTA_PEGAWAI.equals(""))
 				{
 					if(!KETERANGAN.equals(""))
 					{
-						  //html += "<div " +
-						  		//" class=\"autoBreak\" " +
-						  //		" >";
+						  html += "<div class=\"autoBreak\" >";
 					}
-					/*
 					html += "<table style=\"border-collapse:collapse;\" cellspacing=\"1\" cellpadding=\"2\" width=\"100%\" >";
 					html += "<tr>";
 					html += "<td width=\"1%\" >";			
@@ -8160,37 +7611,32 @@ public class BicaraInteraktifData {
 					html += "<td width=\"1%\" >";			
 					html += "</td>";	
 					html += "<td width=\"98%\" valign=\"top\" >";
-					*/
-					
 					/*
 					html += "<div style=\"border-bottom: 1px solid #000;width:100%\" ><br><b>Nota Pegawai</b></div>";
 					html += "<div  align=\"justify\" ><br>"+NOTA_PEGAWAI+"</div>";
 					html += "<div  align=\"right\" class=\"onTT\" ><br><br>T.T....................................</div>";
 					*/
-										
-					html += "<div style=\"border-bottom: 1px solid #000;width:96%;\" align=\"left\"><br><b>NOTA PEGAWAI</b></div>";
-					html += "<div align=\"justify\" style=\"width:96%;\" ><br>"+NOTA_PEGAWAI+"</div>";
-					html += "<div align=\"right\" style=\"width:96%;\" class=\"onTT\" ><br><br>T.T....................................</div>";
-					
-					//html += "</td>";
+					html += "<div style=\"border-bottom: 1px solid #000;width:98%;float:right;\" ><br><b>NOTA PEGAWAI</b></div>";
+					html += "<div align=\"justify\" style=\"width:96%;float:right;\" ><br>"+NOTA_PEGAWAI+"</div>";
+					html += "<div align=\"right\" style=\"width:96%;float:right;\" class=\"onTT\" ><br><br>T.T....................................</div>";
+					html += "</td>";
 					//html += "<td width=\"2%\" >";			
 					//html += "</td>";
-					//html += "</tr>";
-					//html += "</table>";
+					html += "</tr>";
+					html += "</table>";
 					
 					//setting page brake
 					if(!KETERANGAN.equals(""))
 					{
-						//html += "</div>";
+						html += "</div>";
 					}
 					if(KETERANGAN.equals(""))
 					{
-						//html += "</div>";
+						html += "</div>";
 					}
 				}
 				
 			}
-			html += "</div>";
 			return html;		
 	}
 	
@@ -8203,8 +7649,6 @@ public class BicaraInteraktifData {
 			String KETERANGAN,
 			String NOTA_PEGAWAI,
 			String flagPrint,
-			int UMUR,
-			String PENJAGA,
 			Db db) throws Exception {
 		String html = "";
 		
@@ -8226,20 +7670,7 @@ public class BicaraInteraktifData {
 			html += "</tr>";
 		
 			html += "<tr class=\"\" >";
-			html += "<td  align=\"left\" valign=\"top\"  width=\"33%\">";
-			
-
-			if(UMUR!= 0 && UMUR < 18)
-			{
-				if(!PENJAGA.equals(""))
-				{
-					html += ""+PENJAGA+" sebagai <b>PENJAGA</b> kepada ";
-				}
-			}
-	             
-			
-			html += NAMA;
-			html += "</td>";
+			html += "<td  align=\"left\" valign=\"top\"  width=\"33%\">"+NAMA+"</td>";
 			html += "<td  align=\"left\" valign=\"top\" width=\"33%\">"+PENGENALAN+"</td>";
 			html += "<td  align=\"left\" valign=\"top\" width=\"33%\">"+HUBUNGAN+"</td>";
 			html += "</tr>";
@@ -8487,8 +7918,6 @@ public class BicaraInteraktifData {
 		String namaList = "list"+skrinName+current_previous;
 		myLogger.info(" listColumnForSenaraiHartaAlih namaList : "+namaList);
 		listColumnForSenarai = Collections.synchronizedList(new ArrayList());
-		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "MAKLUMAT_HA", "", "hidden", namaList));	
-		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "BAHAGIAN_SIMATI", "", "hidden", namaList));		
 		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "JENIS_HA", "Jenis Harta Alih", "left", namaList));		
 		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "NO_DAFTAR", "No. Rujukan UPT / No Daftar / No Akaun / No Ahli", "left", namaList));		
 		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "BAHAGIAN_SIMATI", "Bahagian Simati", "center", namaList));
@@ -8521,8 +7950,6 @@ public class BicaraInteraktifData {
 		String namaList = "list"+skrinName+current_previous;
 		myLogger.info(" listColumnForSenaraiHarta namaList : "+namaList);
 		listColumnForSenarai = Collections.synchronizedList(new ArrayList());
-		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "MAKLUMAT_HTA", "", "hidden", namaList));	
-		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "BAHAGIAN_SIMATI", "", "hidden", namaList));	
 		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "NAMA_NEGERI", "Negeri", "left", namaList));		
 		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "NAMA_DAERAH", "Daerah", "left", namaList));
 		listColumnForSenarai.add(getColumnForSenarai(session,skrinName, "NAMA_MUKIM", "Mukim", "left", namaList));
@@ -8699,8 +8126,7 @@ public class BicaraInteraktifData {
 	{
 		String queryHistory = "";
 		
-			queryHistory +=  " SELECT TH.*, N.NAMA_NEGERI, D.NAMA_DAERAH, M.NAMA_MUKIM, BH.KETERANGAN AS BANDARHTA, BP.KETERANGAN AS BANDARPEMAJU, JHM.KOD_JENIS_HAKMILIK, " +
-					" NULL AS JENIS_PERINTAH  FROM ( "+
+			queryHistory +=  " SELECT TH.*, N.NAMA_NEGERI, D.NAMA_DAERAH, M.NAMA_MUKIM, JHM.KOD_JENIS_HAKMILIK, NULL AS JENIS_PERINTAH  FROM ( "+
 				" SELECT M.JENIS_AKTIVITI,M.ID_SEJARAHBIMAIN, M.ID_PERMOHONANSIMATI, M.NAMA_TABLE, M.NAMA_FIELD_PK,  "+
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_HTAPERMOHONAN' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_HTAPERMOHONAN, "+
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_HTA' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_HTA, "+
@@ -8716,23 +8142,7 @@ public class BicaraInteraktifData {
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NO_PERJANJIAN' THEN  NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS NO_PERJANJIAN, " +
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'TARIKH_PERJANJIAN' THEN NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS TARIKH_PERJANJIAN, " +
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NO_ROH' THEN NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS NO_ROH, " +
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NO_LOT_ID' THEN NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS NO_LOT_ID, " +
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NAMA_RANCANGAN' THEN NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS NAMA_RANCANGAN, " +
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'JENIS_KEPENTINGAN' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS JENIS_KEPENTINGAN, " +				
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'CATATAN' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS CATATAN, " +				
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'FLAG_KATEGORI_HTA' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS FLAG_KATEGORI_HTA , "+				
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ALAMAT_HTA1' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS ALAMAT_HTA1, " +	
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ALAMAT_HTA2' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS ALAMAT_HTA2, " +	
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ALAMAT_HTA3' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS ALAMAT_HTA3, " +	
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'POSKOD_HTA' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS POSKOD_HTA, " +
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NAMA_PEMAJU' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS NAMA_PEMAJU, " +	
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ALAMAT_PEMAJU1' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS ALAMAT_PEMAJU1, " +	
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ALAMAT_PEMAJU2' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS ALAMAT_PEMAJU2, " +	
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ALAMAT_PEMAJU3' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS ALAMAT_PEMAJU3, " +	
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'POSKOD_PEMAJU' THEN   NVL(S.VALUE_SELEPAS,'-') END)) )).extract ('//text()'))  AS POSKOD_PEMAJU, " +	
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_BANDARPEMAJU' THEN   S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_BANDARPEMAJU, " +	
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_BANDARHTA' THEN   S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_BANDARHTA, " +
-				
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'JENIS_HTA' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS JENIS_HTA " +
 				" FROM TBLPPKSEJARAHBIMAIN M,TBLPPKSEJARAHBISUB S "+
 				" WHERE M.ID_SEJARAHBIMAIN = S.ID_SEJARAHBIMAIN  ";
@@ -8761,11 +8171,8 @@ public class BicaraInteraktifData {
 				
 				queryHistory += " AND M.NAMA_TABLE = 'TBLPPKHTAPERMOHONAN' AND ID_PERMOHONANSIMATI = '"+id+"' AND ID_PERBICARAAN = '"+ID_PERBICARAAN+"'  "+
 				" GROUP BY M.JENIS_AKTIVITI, M.ID_SEJARAHBIMAIN,M.ID_PERMOHONANSIMATI, M.NAMA_TABLE, M.NAMA_FIELD_PK) TH," +
-				" TBLRUJNEGERI N, TBLRUJDAERAH D,TBLRUJMUKIM M, TBLRUJJENISHAKMILIK JHM,TBLRUJBANDAR BP,TBLRUJBANDAR BH  " +
-				" WHERE TH.ID_NEGERI = N.ID_NEGERI(+) " +
-				" AND TH.ID_BANDARHTA = BH.ID_BANDAR(+) "+
-				" AND TH.ID_BANDARPEMAJU = BP.ID_BANDAR(+) "+
-				" AND TH.ID_DAERAH = D.ID_DAERAH(+) AND TH.ID_MUKIM = M.ID_MUKIM(+) AND TH.ID_JENISHM = JHM.ID_JENISHAKMILIK(+) ";	
+				" TBLRUJNEGERI N, TBLRUJDAERAH D,TBLRUJMUKIM M, TBLRUJJENISHAKMILIK JHM  " +
+				" WHERE TH.ID_NEGERI = N.ID_NEGERI(+) AND TH.ID_DAERAH = D.ID_DAERAH(+) AND TH.ID_MUKIM = M.ID_MUKIM(+) AND TH.ID_JENISHM = JHM.ID_JENISHAKMILIK(+) ";	
 				myLogger.info("queryHistory HARTA : "+queryHistory);
 				
 				return queryHistory;
@@ -8780,19 +8187,13 @@ public class BicaraInteraktifData {
 				" SELECT M.JENIS_AKTIVITI,M.ID_SEJARAHBIMAIN, M.ID_PERMOHONANSIMATI, M.NAMA_TABLE, M.NAMA_FIELD_PK,  "+
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_HAPERMOHONAN' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_HAPERMOHONAN, "+
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_HA' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_HA, "+
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_JENISHA' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_JENISHA, "+
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_SIMATI' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_SIMATI, "+
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_NEGERI' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_NEGERI, "+
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_DAERAH' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_DAERAH, "+
+				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'ID_JENISHA' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS ID_JENISHA, "+
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NO_DAFTAR' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS NO_DAFTAR, "+
 				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'BA_SIMATI' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS BA_SIMATI, " +
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'BB_SIMATI' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS BB_SIMATI, " +				
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NAMA_SAHAM' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS NAMA_SAHAM, " +
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'NO_SIJIL' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS NO_SIJIL, " +
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'BIL_UNIT' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS BIL_UNIT, " +
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'CATATAN' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS CATATAN, " +
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'JENAMA' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS JENAMA, " +
-				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'BUTIRAN' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS BUTIRAN " +				
+				" rtrim (xmlagg (xmlelement (e, ((CASE WHEN S.NAMA_FIELD = 'BB_SIMATI' THEN  S.VALUE_SELEPAS END)) )).extract ('//text()'))  AS BB_SIMATI " +
 				" FROM TBLPPKSEJARAHBIMAIN M,TBLPPKSEJARAHBISUB S "+
 				" WHERE M.ID_SEJARAHBIMAIN = S.ID_SEJARAHBIMAIN  ";
 			
@@ -8870,7 +8271,7 @@ public class BicaraInteraktifData {
 		
 	
 	public String queryGetList(HttpSession session,String ID_PEMOHON,String ID_SIMATI,String ID_PERBICARAAN,String skrinName, 
-			String current_previous, String id,String ID_PERMOHONAN,String flagDefaultKeterangan)
+			String current_previous, String id,String ID_PERMOHONAN)
 	{
 		String namaList = "list"+skrinName+current_previous;
 		myLogger.info("namaList : "+namaList);
@@ -9314,19 +8715,14 @@ public class BicaraInteraktifData {
 			}			
 			
 		}
-		
 		else if(skrinName.equals("ha"))
 		{
-			
-			
-			
 			String sql_open_column = " (SELECT HIS.JENIS_AKTIVITI,NVL(HIS.ID_SEJARAHBIMAIN,'') AS ID_SEJARAHBIMAIN,HIS.NAMA_TABLE,HIS.NAMA_FIELD_PK," +
 					" TO_CHAR(OBMAIN.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, " +
 			"(CASE WHEN HIS.JENIS_PERINTAH IS NOT NULL THEN HIS.JENIS_PERINTAH ELSE OBMAIN.JENIS_PERINTAH END)  AS JENIS_PERINTAH,"+
 			"(CASE WHEN HIS.NAMA_NEGERI IS NOT NULL THEN HIS.NAMA_NEGERI ELSE OBMAIN.NAMA_NEGERI END)  AS NAMA_NEGERI,"+
 			"(CASE WHEN HIS.NAMA_DAERAH IS NOT NULL THEN HIS.NAMA_DAERAH ELSE OBMAIN.NAMA_DAERAH END)  AS NAMA_DAERAH,"+
 			" OBMAIN.ID_HA, " +
-			"(CASE WHEN HIS.ID_JENISHA IS NOT NULL THEN HIS.ID_JENISHA ELSE OBMAIN.ID_JENISHA END)  AS ID_JENISHA,"+
 			" OBMAIN.ID_HAPERMOHONAN, " +
 			"(CASE WHEN HIS.JENIS_HA IS NOT NULL THEN HIS.JENIS_HA ELSE OBMAIN.JENIS_HA END)  AS JENIS_HA,"+
 			"(CASE WHEN HIS.NO_DAFTAR IS NOT NULL THEN HIS.NO_DAFTAR ELSE OBMAIN.NO_DAFTAR END)  AS NO_DAFTAR,"+
@@ -9334,18 +8730,7 @@ public class BicaraInteraktifData {
 			"(CASE WHEN HIS.BA_SIMATI IS NOT NULL THEN HIS.BA_SIMATI ELSE OBMAIN.BA_SIMATI END)"+
 			" || '/' ||  " +
 			"(CASE WHEN HIS.BB_SIMATI IS NOT NULL THEN HIS.BB_SIMATI ELSE OBMAIN.BB_SIMATI END)"+
-			" ) AS BAHAGIAN_SIMATI, "+
-			
-			"(CASE WHEN HIS.NAMA_SAHAM IS NOT NULL THEN HIS.NAMA_SAHAM ELSE OBMAIN.NAMA_SAHAM END)  AS NAMA_SAHAM,"+
-			"(CASE WHEN HIS.NO_SIJIL IS NOT NULL THEN HIS.NO_SIJIL ELSE OBMAIN.NO_SIJIL END)  AS NO_SIJIL,"+
-			"(CASE WHEN HIS.BIL_UNIT IS NOT NULL THEN HIS.BIL_UNIT ELSE OBMAIN.BIL_UNIT END)  AS BIL_UNIT,"+
-			"(CASE WHEN HIS.CATATAN IS NOT NULL THEN HIS.CATATAN ELSE OBMAIN.CATATAN END)  AS CATATAN,"+
-			"(CASE WHEN HIS.JENAMA IS NOT NULL THEN HIS.JENAMA ELSE OBMAIN.JENAMA END)  AS JENAMA,"+
-			"(CASE WHEN HIS.BUTIRAN IS NOT NULL THEN HIS.BUTIRAN ELSE OBMAIN.BUTIRAN END)  AS BUTIRAN ";
-			
-			
-			
-			
+			" ) AS BAHAGIAN_SIMATI ";
 			
 			sql_open_column += ", OBMAIN.FLAG_PA, OBMAIN.FLAG_PT, OBMAIN.FLAG_SELESAI ";
 			
@@ -9358,17 +8743,9 @@ public class BicaraInteraktifData {
 		   	String sql_asal_L1 = " SELECT NULL AS ID_SEJARAHBIMAIN,NULL AS NAMA_TABLE,NULL AS NAMA_FIELD_PK," +
 		   	" TO_CHAR(H.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, NULL AS ID_JENISPERINTAH, NULL AS JENIS_PERINTAH, N.NAMA_NEGERI,D.NAMA_DAERAH," +
 		   	" TO_CHAR(H.ID_HA) AS  ID_HA, " +
-		   	" TO_CHAR(H.ID_JENISHA) AS  ID_JENISHA, " +
 			" TO_CHAR(H.ID_HAPERMOHONAN) AS ID_HAPERMOHONAN, " +
 			" RUJ.KETERANGAN AS JENIS_HA, H.NO_DAFTAR, "
-			+ " TO_CHAR(H.BA_SIMATI) AS BA_SIMATI, TO_CHAR(H.BB_SIMATI) AS BB_SIMATI, "
-		   	
-			+" H.NAMA_SAHAM AS NAMA_SAHAM, "
-		   	+" H.NO_SIJIL AS NO_SIJIL, "
-			+" TO_CHAR(H.BIL_UNIT) AS BIL_UNIT, "
-		   	+" H.CATATAN AS CATATAN, "
-		   	+" H.JENAMA AS JENAMA, "
-		   	+" H.BUTIRAN AS BUTIRAN ";
+			+ " TO_CHAR(H.BA_SIMATI) AS BA_SIMATI, TO_CHAR(H.BB_SIMATI) AS BB_SIMATI ";
 		   	
 		   	sql_asal_L1 += ", H.FLAG_PA, H.FLAG_PT, H.FLAG_SELESAI ";
 		   	
@@ -9384,20 +8761,9 @@ public class BicaraInteraktifData {
 		   	String sql_dulu_L1 = " SELECT NULL AS ID_SEJARAHBIMAIN,NULL AS NAMA_TABLE,NULL AS NAMA_FIELD_PK," +
 		   	" TO_CHAR(H.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, " +
 		   	" TO_CHAR(JP.ID_JENISPERINTAH) AS ID_JENISPERINTAH,JP.JENIS_PERINTAH, N.NAMA_NEGERI,D.NAMA_DAERAH," +
-		   	" TO_CHAR(H.ID_HA) AS ID_HA, TO_CHAR(H.ID_JENISHA) AS ID_JENISHA, TO_CHAR(H.ID_HAPERMOHONAN) AS ID_HAPERMOHONAN, " +
+		   	" TO_CHAR(H.ID_HA) AS ID_HA, TO_CHAR(H.ID_HAPERMOHONAN) AS ID_HAPERMOHONAN, " +
 			" RUJ.KETERANGAN AS JENIS_HA, H.NO_DAFTAR, "
-			+ " TO_CHAR(H.BA_SIMATI) AS BA_SIMATI, TO_CHAR(H.BB_SIMATI) AS BB_SIMATI, "
-		   	+" H.NAMA_SAHAM AS NAMA_SAHAM, "
-		   	+" H.NO_SIJIL AS NO_SIJIL, "
-			+" TO_CHAR(H.BIL_UNIT) AS BIL_UNIT, "
-		   	+" H.CATATAN AS CATATAN, "
-		   	+" H.JENAMA AS JENAMA, "
-		   	+" H.BUTIRAN AS BUTIRAN ";
-		   
-			
-		   	
-			
-		   	
+			+ " TO_CHAR(H.BA_SIMATI) AS BA_SIMATI, TO_CHAR(H.BB_SIMATI) AS BB_SIMATI ";
 		   	
 		   	sql_dulu_L1 += ", H.FLAG_PA, H.FLAG_PT, H.FLAG_SELESAI ";
 		   	
@@ -9432,17 +8798,9 @@ public class BicaraInteraktifData {
 		   	String sql_history = " (SELECT  OBMAIN.JENIS_AKTIVITI,OBMAIN.ID_SEJARAHBIMAIN,OBMAIN.NAMA_TABLE,OBMAIN.NAMA_FIELD_PK," +
 		   	" TO_CHAR(OBMAIN.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, " +		   			
 			" OBMAIN.JENIS_PERINTAH, OBMAIN.NAMA_NEGERI,OBMAIN.NAMA_DAERAH,  "+
-			" OBMAIN.ID_HA, OBMAIN.ID_JENISHA, OBMAIN.ID_HAPERMOHONAN, OBMAIN.JENIS_HA, " +
+			" OBMAIN.ID_HA, OBMAIN.ID_HAPERMOHONAN, OBMAIN.JENIS_HA, " +
 			" OBMAIN.NO_DAFTAR, "
-			+ " (OBMAIN.BA_SIMATI || '/' ||  OBMAIN.BB_SIMATI) AS BAHAGIAN_SIMATI, "
-		   	
-		   	+" OBMAIN.NAMA_SAHAM AS NAMA_SAHAM, "
-		   	+" OBMAIN.NO_SIJIL AS NO_SIJIL, "
-		   	+" TO_CHAR(OBMAIN.BIL_UNIT) AS BIL_UNIT, "
-		   	+" OBMAIN.CATATAN AS CATATAN, "
-		   	+" OBMAIN.JENAMA AS JENAMA, "
-		   	+" OBMAIN.BUTIRAN AS BUTIRAN ";
-		   	
+			+ " (OBMAIN.BA_SIMATI || '/' ||  OBMAIN.BB_SIMATI) AS BAHAGIAN_SIMATI ";
 		   	
 		   	sql_history += ", '' AS FLAG_PA, '' AS FLAG_PT, '' AS FLAG_SELESAI ";
 		   	
@@ -9451,31 +8809,9 @@ public class BicaraInteraktifData {
 			sql_history += " ) OBMAIN  WHERE  OBMAIN.ID_HAPERMOHONAN IS NOT NULL ";
 			sql_history += ") MAIN";
 			
-			
-			String maklumat_ha = "	CASE "+
-					" WHEN SUPERMAIN.ID_JENISHA = '1' AND SUPERMAIN.NAMA_SAHAM IS NOT NULL AND SUPERMAIN.NO_DAFTAR IS NOT NULL AND SUPERMAIN.NO_SIJIL IS NOT NULL  THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.NAMA_SAHAM || '<br>' || 'No Ahli: ' || NVL(SUPERMAIN.NO_DAFTAR,' - ') || '<br>' || 'No Sijil: ' || NVL(SUPERMAIN.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| SUPERMAIN.BIL_UNIT || SUPERMAIN.CATATAN "+
-					" WHEN SUPERMAIN.ID_JENISHA = '1' AND SUPERMAIN.NAMA_SAHAM IS NOT NULL AND SUPERMAIN.NO_DAFTAR IS NOT NULL AND SUPERMAIN.NO_SIJIL IS NULL  THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.NAMA_SAHAM || '<br>' || 'No Ahli: ' || NVL(SUPERMAIN.NO_DAFTAR,' - ') || '<br>' ||'Bil. Unit: '|| SUPERMAIN.BIL_UNIT || SUPERMAIN.CATATAN "+
-					" WHEN SUPERMAIN.ID_JENISHA = '1' AND SUPERMAIN.NAMA_SAHAM IS NOT NULL AND SUPERMAIN.NO_DAFTAR IS NULL AND SUPERMAIN.NO_SIJIL IS NOT NULL  THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.NAMA_SAHAM || '<br>' || 'No Sijil: ' || NVL(SUPERMAIN.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| SUPERMAIN.BIL_UNIT || SUPERMAIN.CATATAN "+
-					" WHEN SUPERMAIN.ID_JENISHA = '1' AND SUPERMAIN.NAMA_SAHAM IS NOT NULL AND SUPERMAIN.NO_DAFTAR IS NULL AND SUPERMAIN.NO_SIJIL IS NOT NULL  THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.NAMA_SAHAM || '<br>' || 'No Sijil: ' || NVL(SUPERMAIN.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| SUPERMAIN.BIL_UNIT || SUPERMAIN.CATATAN "+
-					" WHEN SUPERMAIN.ID_JENISHA = '1' AND SUPERMAIN.JENAMA IS NOT NULL AND SUPERMAIN.NO_DAFTAR IS NOT NULL AND SUPERMAIN.NO_SIJIL IS NULL AND SUPERMAIN.NAMA_SAHAM IS NULL THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.JENAMA || '<br>' || 'No Ahli: ' || NVL(SUPERMAIN.NO_DAFTAR,' - ') || '<br>' || 'No Sijil: ' || NVL(SUPERMAIN.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| SUPERMAIN.BIL_UNIT || SUPERMAIN.CATATAN "+
-					" WHEN SUPERMAIN.ID_JENISHA = '1' AND SUPERMAIN.JENAMA IS NOT NULL AND SUPERMAIN.NO_DAFTAR IS NULL AND SUPERMAIN.NO_SIJIL IS NULL AND SUPERMAIN.NAMA_SAHAM IS NOT NULL THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.JENAMA || '<br>' || SUPERMAIN.NAMA_SAHAM || SUPERMAIN.CATATAN "+
-					" WHEN SUPERMAIN.ID_JENISHA = '1' AND SUPERMAIN.NAMA_SAHAM IS NULL AND SUPERMAIN.NO_DAFTAR IS NOT NULL AND SUPERMAIN.NO_SIJIL IS NOT NULL  THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.JENAMA || '<br>' || 'No Ahli: ' || NVL(SUPERMAIN.NO_DAFTAR,' - ') || '<br>' || 'No Sijil: ' || NVL(SUPERMAIN.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| SUPERMAIN.BIL_UNIT "+
-					" WHEN SUPERMAIN.ID_JENISHA = '1' AND SUPERMAIN.NAMA_SAHAM IS NULL AND SUPERMAIN.NO_DAFTAR IS NOT NULL AND SUPERMAIN.NO_SIJIL IS NULL  THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.JENAMA || '<br>' || 'No Ahli: ' || NVL(SUPERMAIN.NO_DAFTAR,' - ') || '<br>' ||'Bil. Unit: '|| SUPERMAIN.BIL_UNIT "+
-					" WHEN SUPERMAIN.ID_JENISHA = '1' AND SUPERMAIN.NAMA_SAHAM IS NULL AND SUPERMAIN.NO_DAFTAR IS NULL AND SUPERMAIN.NO_SIJIL IS NOT NULL  THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.JENAMA || '<br>' || 'No Sijil: ' || NVL(SUPERMAIN.NO_SIJIL,' - ')|| '<br>'|| 'Bil. Unit: '|| SUPERMAIN.BIL_UNIT "+
-					" WHEN SUPERMAIN.ID_JENISHA = '98' AND SUPERMAIN.NAMA_SAHAM IS NULL AND SUPERMAIN.JENAMA IS NULL AND SUPERMAIN.NO_SIJIL IS NULL AND SUPERMAIN.NO_DAFTAR IS NOT NULL  THEN SUPERMAIN.JENIS_HA ||' - ' || SUPERMAIN.NO_DAFTAR  "+
-					" WHEN SUPERMAIN.ID_JENISHA  = '2' THEN SUPERMAIN.JENIS_HA ||' - '|| SUPERMAIN.JENAMA || '<br>' || 'No Akaun: ' || SUPERMAIN.NO_DAFTAR  "+
-					" WHEN SUPERMAIN.ID_JENISHA  = '3' THEN SUPERMAIN.JENIS_HA || ' - ' || SUPERMAIN.JENAMA || '<br>' || 'No Pendaftaran: ' || SUPERMAIN.NO_DAFTAR "+
-					" WHEN SUPERMAIN.ID_JENISHA  = '4' THEN SUPERMAIN.JENIS_HA || ' - ' || SUPERMAIN.JENAMA || '<br>' || 'No Lot: ' || SUPERMAIN.NO_DAFTAR "+
-					" WHEN SUPERMAIN.ID_JENISHA  = '5' THEN SUPERMAIN.JENIS_HA || ' - ' || SUPERMAIN.JENAMA || '<br>' || 'No Polisi: ' || SUPERMAIN.NO_DAFTAR || '<br>' || SUPERMAIN.CATATAN "+
-					" WHEN SUPERMAIN.ID_JENISHA  = '6' THEN SUPERMAIN.JENIS_HA || ' - ' || SUPERMAIN.JENAMA "+
-					" WHEN SUPERMAIN.ID_JENISHA  = '7' OR SUPERMAIN.ID_JENISHA   = '11' THEN SUPERMAIN.JENIS_HA || SUPERMAIN.CATATAN "+
-					" WHEN SUPERMAIN.ID_JENISHA  = '12' THEN SUPERMAIN.JENIS_HA || ' - ' || SUPERMAIN.BUTIRAN "+
-					" ELSE SUPERMAIN.JENIS_HA || ' - ' || SUPERMAIN.BUTIRAN "+
-					" END || '<br>BHGN SIMATI : ' || SUPERMAIN.BAHAGIAN_SIMATI AS MAKLUMAT_HA, ";			
-			
 			if(namaList.equals("list"+skrinName+"current"))
 			{			
-				sql += " SELECT "+maklumat_ha+" SUPERMAIN.* FROM (";		
+				sql += " SELECT * FROM (";		
 				sql += " SELECT * FROM (";				
 				sql += " SELECT MAIN.* FROM "+sql_open_column;
 				sql += " FROM ( ";
@@ -9485,7 +8821,7 @@ public class BicaraInteraktifData {
 				sql += sql_avoid_delete;				
 				sql += " UNION ALL ";
 				sql += " SELECT MAIN.* FROM " + sql_history;
-				sql += " ) SUPERMAIN ";
+				sql += " ) ";
 				
 				sql += " WHERE (CASE WHEN ID_SEJARAHBIMAIN = ''  OR ID_SEJARAHBIMAIN IS NULL " +
 						" AND FLAG_SELESAI != 'Y'" +
@@ -9498,12 +8834,12 @@ public class BicaraInteraktifData {
 			}			
 			else if(namaList.equals("list"+skrinName+"previous"))
 			{
-				sql += " SELECT "+maklumat_ha+" SUPERMAIN.* FROM (";
+				sql += " SELECT * FROM (";
 				sql += " SELECT MAIN.* FROM "+sql_open_column;
 				sql += " FROM ( ";
 				sql += sql_dulu_L1;
 				sql += ") "+sql_close_column_L1;
-				sql += " ) SUPERMAIN ";
+				sql += " ) ";
 				sql += sql_avoid_delete;
 				
 				
@@ -9517,31 +8853,12 @@ public class BicaraInteraktifData {
 		else if(skrinName.equals("htaah") || skrinName.equals("htaahx"))
 		{
 			//id = permohonansimati
-				
-			
 			String sql_open_column = " (SELECT HIS.JENIS_AKTIVITI,NVL(HIS.ID_SEJARAHBIMAIN,'') AS ID_SEJARAHBIMAIN,HIS.NAMA_TABLE,HIS.NAMA_FIELD_PK," +
 					" TO_CHAR(OBMAIN.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, " +
 			"(CASE WHEN HIS.JENIS_PERINTAH IS NOT NULL THEN HIS.JENIS_PERINTAH ELSE OBMAIN.JENIS_PERINTAH END)  AS JENIS_PERINTAH,"+
-			"(CASE WHEN HIS.NAMA_NEGERI IS NOT NULL THEN HIS.NAMA_NEGERI ELSE OBMAIN.NAMA_NEGERI END)  AS NAMA_NEGERI,"+			
-			"(CASE WHEN HIS.NO_LOT_ID IS NOT NULL THEN HIS.NO_LOT_ID  ELSE OBMAIN.NO_LOT_ID END)  AS NO_LOT_ID,"+
-			"(CASE WHEN HIS.NAMA_RANCANGAN IS NOT NULL THEN HIS.NAMA_RANCANGAN ELSE OBMAIN.NAMA_RANCANGAN  END)  AS NAMA_RANCANGAN,"+
-			"(CASE WHEN HIS.CATATAN IS NOT NULL THEN HIS.CATATAN ELSE OBMAIN.CATATAN END)  AS CATATAN,"+
-			"(CASE WHEN HIS.FLAG_KATEGORI_HTA IS NOT NULL THEN HIS.FLAG_KATEGORI_HTA ELSE OBMAIN.FLAG_KATEGORI_HTA END)  AS FLAG_KATEGORI_HTA,"+
-			"(CASE WHEN HIS.ALAMAT_HTA1 IS NOT NULL THEN HIS.ALAMAT_HTA1 ELSE OBMAIN.ALAMAT_HTA1 END)  AS ALAMAT_HTA1,"+
-			"(CASE WHEN HIS.ALAMAT_HTA2 IS NOT NULL THEN HIS.ALAMAT_HTA2 ELSE OBMAIN.ALAMAT_HTA2 END)  AS ALAMAT_HTA2,"+
-			"(CASE WHEN HIS.ALAMAT_HTA3 IS NOT NULL THEN HIS.ALAMAT_HTA3 ELSE OBMAIN.ALAMAT_HTA3 END)  AS ALAMAT_HTA3,"+
-			"(CASE WHEN HIS.POSKOD_HTA IS NOT NULL THEN HIS.POSKOD_HTA ELSE OBMAIN.POSKOD_HTA END)  AS POSKOD_HTA,"+
-			"(CASE WHEN HIS.NAMA_PEMAJU IS NOT NULL THEN HIS.NAMA_PEMAJU ELSE OBMAIN.NAMA_PEMAJU END)  AS NAMA_PEMAJU,"+
-			"(CASE WHEN HIS.ALAMAT_PEMAJU1 IS NOT NULL THEN HIS.ALAMAT_PEMAJU1 ELSE OBMAIN.ALAMAT_PEMAJU1 END)  AS ALAMAT_PEMAJU1,"+
-			"(CASE WHEN HIS.ALAMAT_PEMAJU2 IS NOT NULL THEN HIS.ALAMAT_PEMAJU2 ELSE OBMAIN.ALAMAT_PEMAJU2 END)  AS ALAMAT_PEMAJU2,"+
-			"(CASE WHEN HIS.ALAMAT_PEMAJU3 IS NOT NULL THEN HIS.ALAMAT_PEMAJU3 ELSE OBMAIN.ALAMAT_PEMAJU3 END)  AS ALAMAT_PEMAJU3,"+
-			"(CASE WHEN HIS.POSKOD_PEMAJU IS NOT NULL THEN HIS.POSKOD_PEMAJU ELSE OBMAIN.POSKOD_PEMAJU END)  AS POSKOD_PEMAJU,"+
-			"(CASE WHEN HIS.BANDARPEMAJU IS NOT NULL THEN HIS.BANDARPEMAJU ELSE OBMAIN.BANDARPEMAJU END)  AS BANDARPEMAJU,"+
-			"(CASE WHEN HIS.BANDARHTA IS NOT NULL THEN HIS.BANDARHTA ELSE OBMAIN.BANDARHTA END)  AS BANDARHTA,"+
-			
-			
+			"(CASE WHEN HIS.NAMA_NEGERI IS NOT NULL THEN HIS.NAMA_NEGERI ELSE OBMAIN.NAMA_NEGERI END)  AS NAMA_NEGERI,"+
 			"(CASE WHEN HIS.NAMA_DAERAH IS NOT NULL THEN HIS.NAMA_DAERAH ELSE OBMAIN.NAMA_DAERAH END)  AS NAMA_DAERAH,"+
-			"(CASE WHEN HIS.NAMA_MUKIM IS NOT NULL THEN HIS.NAMA_MUKIM ELSE OBMAIN.NAMA_MUKIM END)  AS NAMA_MUKIM,"+		
+			"(CASE WHEN HIS.NAMA_MUKIM IS NOT NULL THEN HIS.NAMA_MUKIM ELSE OBMAIN.NAMA_MUKIM END)  AS NAMA_MUKIM,"+
 			" OBMAIN.ID_HTA, " +
 			" OBMAIN.ID_HTAPERMOHONAN, " +
 			" (" +
@@ -9571,24 +8888,7 @@ public class BicaraInteraktifData {
 		   	sql_avoid_delete += " FROM ("+queryHistoryHarta(skrinName,id,ID_PERBICARAAN,"INSERTDELETE")+"))";		   			
 		   	
 		   	String sql_asal_L1 = " SELECT NULL AS ID_SEJARAHBIMAIN,NULL AS NAMA_TABLE,NULL AS NAMA_FIELD_PK," +
-		   	" TO_CHAR(H.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, NULL AS ID_JENISPERINTAH, NULL AS JENIS_PERINTAH, N.NAMA_NEGERI," +
-		   	" H.NO_LOT_ID,"+
-			" H.NAMA_RANCANGAN,"+
-		   	" H.CATATAN," +
-		   	" H.FLAG_KATEGORI_HTA," +
-		   	" H.ALAMAT_HTA1," +
-		   	" H.ALAMAT_HTA2," +
-		   	" H.ALAMAT_HTA3," +
-		   	" H.POSKOD_HTA," +
-		   	" H.NAMA_PEMAJU," +
-		   	" H.ALAMAT_PEMAJU1," +
-		   	" H.ALAMAT_PEMAJU2," +
-		   	" H.ALAMAT_PEMAJU3," +
-		   	" H.POSKOD_PEMAJU," +
-			" BH.KETERANGAN AS BANDARHTA," +
-			" BP.KETERANGAN AS BANDARPEMAJU," +		   
-	   	
-		   	" D.NAMA_DAERAH,M.NAMA_MUKIM,  "
+		   	" TO_CHAR(H.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, NULL AS ID_JENISPERINTAH, NULL AS JENIS_PERINTAH, N.NAMA_NEGERI,D.NAMA_DAERAH,M.NAMA_MUKIM,  "
 			+ " TO_CHAR(H.ID_HTA) AS  ID_HTA, TO_CHAR(H.ID_HTAPERMOHONAN) AS ID_HTAPERMOHONAN, H.NO_HAKMILIK, RUJ.KOD_JENIS_HAKMILIK, H.NO_PT, "
 			+ " TO_CHAR(H.BA_SIMATI) AS BA_SIMATI, TO_CHAR(H.BB_SIMATI) AS BB_SIMATI, "
 			+ " H.FLAG_PA, H.FLAG_PT, H.FLAG_SELESAI,H.JENIS_HTA, H.NO_PERJANJIAN, TO_CHAR(H.TARIKH_PERJANJIAN,'DD/MM/YYYY') AS TARIKH_PERJANJIAN, H.NO_ROH, H.JENIS_KEPENTINGAN ";
@@ -9596,35 +8896,17 @@ public class BicaraInteraktifData {
 			//sql_asal_L1 += ", H.FLAG_PA, H.FLAG_PT, H.FLAG_SELESAI ";
 			
 			sql_asal_L1 += " FROM TBLPPKHTA HP,TBLPPKHTAPERMOHONAN H, TBLPPKSIMATI S, TBLPPKPERMOHONANSIMATI MS, TBLRUJJENISHAKMILIK RUJ,"
-			+" TBLRUJNEGERI N, TBLRUJDAERAH D,TBLRUJMUKIM M,TBLRUJBANDAR BP,TBLRUJBANDAR BH "
+			+" TBLRUJNEGERI N, TBLRUJDAERAH D,TBLRUJMUKIM M "
 			+ " WHERE H.ID_SIMATI = S.ID_SIMATI AND H.ID_NEGERI = N.ID_NEGERI AND H.ID_DAERAH = D.ID_DAERAH AND H.ID_MUKIM = M.ID_MUKIM  "
 			+ " AND HP.ID_HTA = H.ID_HTA AND HP.ID_PERMOHONANSIMATI = H.ID_PERMOHONANSIMATI  "
 			+ " AND H.ID_JENISHM = RUJ.ID_JENISHAKMILIK(+) "
-			+ " AND H.ID_BANDARHTA = BH.ID_BANDAR(+) "
-			+ " AND H.ID_BANDARPEMAJU = BP.ID_BANDAR(+) "
 			+ " AND H.ID_SIMATI = MS.ID_SIMATI "
 			+ " AND MS.ID_PERMOHONANSIMATI = H.ID_PERMOHONANSIMATI "
 			+ " AND MS.ID_PERMOHONANSIMATI = '"+ id+ "'  ";
 		   	
 		   	String sql_dulu_L1 = " SELECT NULL AS ID_SEJARAHBIMAIN,NULL AS NAMA_TABLE,NULL AS NAMA_FIELD_PK," +
 		   	" TO_CHAR(H.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, " +
-		   	" TO_CHAR(JP.ID_JENISPERINTAH) AS ID_JENISPERINTAH,JP.JENIS_PERINTAH, N.NAMA_NEGERI," +
-			" H.NO_LOT_ID,"+
-			" H.NAMA_RANCANGAN,"+
-		   	" H.CATATAN," +
-		   	" H.FLAG_KATEGORI_HTA," +
-		   	" H.ALAMAT_HTA1," +
-		   	" H.ALAMAT_HTA2," +
-		   	" H.ALAMAT_HTA3," +
-		   	" H.POSKOD_HTA," +
-		   	" H.NAMA_PEMAJU," +
-		   	" H.ALAMAT_PEMAJU1," +
-		   	" H.ALAMAT_PEMAJU2," +
-		   	" H.ALAMAT_PEMAJU3," +
-		   	" H.POSKOD_PEMAJU," +
-			" BH.KETERANGAN AS BANDARHTA," +
-			" BP.KETERANGAN AS BANDARPEMAJU," +
-		   	" D.NAMA_DAERAH,M.NAMA_MUKIM,  "
+		   	" TO_CHAR(JP.ID_JENISPERINTAH) AS ID_JENISPERINTAH,JP.JENIS_PERINTAH, N.NAMA_NEGERI,D.NAMA_DAERAH,M.NAMA_MUKIM,  "
 			+ " TO_CHAR(H.ID_HTA) AS ID_HTA, TO_CHAR(H.ID_HTAPERMOHONAN) AS ID_HTAPERMOHONAN, H.NO_HAKMILIK, RUJ.KOD_JENIS_HAKMILIK, H.NO_PT, "
 			+ " TO_CHAR(H.BA_SIMATI) AS BA_SIMATI, TO_CHAR(H.BB_SIMATI) AS BB_SIMATI, "
 			+ " H.FLAG_PA, H.FLAG_PT, H.FLAG_SELESAI,H.JENIS_HTA, H.NO_PERJANJIAN, TO_CHAR(H.TARIKH_PERJANJIAN,'DD/MM/YYYY') AS TARIKH_PERJANJIAN, H.NO_ROH, H.JENIS_KEPENTINGAN  ";
@@ -9632,7 +8914,7 @@ public class BicaraInteraktifData {
 			//sql_dulu_L1 += ", H.FLAG_PA, H.FLAG_PT, H.FLAG_SELESAI ";
 			
 		   	sql_dulu_L1 += " FROM TBLPPKHTA HP, TBLPPKHTAPERMOHONAN H, TBLPPKSIMATI S, TBLPPKPERMOHONANSIMATI MS, "
-			+ " TBLPPKPERMOHONAN P1, TBLPPKPERMOHONAN P, TBLPPKPERMOHONANSIMATI MS1, TBLRUJJENISHAKMILIK RUJ, TBLRUJBANDAR BP,TBLRUJBANDAR BH, "
+			+ " TBLPPKPERMOHONAN P1, TBLPPKPERMOHONAN P, TBLPPKPERMOHONANSIMATI MS1, TBLRUJJENISHAKMILIK RUJ, "
 			+ " (SELECT DISTINCT RP.ID_JENISPERINTAH, RP.KETERANGAN AS JENIS_PERINTAH, OBM.ID_HTA , SM.ID_PERMOHONANSIMATI "
 			+ " FROM TBLPPKPERMOHONAN P, TBLPPKPERMOHONANSIMATI SM, TBLPPKKEPUTUSANPERMOHONAN KP, TBLPPKPERBICARAAN KB, "
 			+ " TBLPPKPERINTAH PR, TBLPPKPERINTAHHTAOBMST OBM, TBLPPKRUJJENISPERINTAH RP "
@@ -9645,8 +8927,6 @@ public class BicaraInteraktifData {
 					" TBLRUJNEGERI N, TBLRUJDAERAH D,TBLRUJMUKIM M "
 			+ " WHERE H.ID_SIMATI = S.ID_SIMATI "
 			+ " AND H.ID_HTA = HP.ID_HTA AND H.ID_NEGERI = N.ID_NEGERI AND H.ID_DAERAH = D.ID_DAERAH AND H.ID_MUKIM = M.ID_MUKIM "
-			+ " AND H.ID_BANDARHTA = BH.ID_BANDAR(+) "
-			+ " AND H.ID_BANDARPEMAJU = BP.ID_BANDAR(+) "
 			+ " AND H.ID_PERMOHONANSIMATI = '" + id + "' "
 			+ " AND H.ID_SIMATI = MS.ID_SIMATI "
 			+ " AND H.ID_JENISHM = RUJ.ID_JENISHAKMILIK(+) "
@@ -9663,26 +8943,7 @@ public class BicaraInteraktifData {
 		   		   	
 		   	String sql_history = " (SELECT  OBMAIN.JENIS_AKTIVITI,OBMAIN.ID_SEJARAHBIMAIN,OBMAIN.NAMA_TABLE,OBMAIN.NAMA_FIELD_PK," +
 		   	" TO_CHAR(OBMAIN.ID_PERMOHONANSIMATI) AS ID_PERMOHONANSIMATI, " +		   			
-			" OBMAIN.JENIS_PERINTAH, OBMAIN.NAMA_NEGERI, " +
-		   	
-			" OBMAIN.NO_LOT_ID,"+
-			" OBMAIN.NAMA_RANCANGAN,"+
-			" OBMAIN.CATATAN, " +
-			
-			" OBMAIN.FLAG_KATEGORI_HTA," +
-				" OBMAIN.ALAMAT_HTA1," +
-				" OBMAIN.ALAMAT_HTA2," +
-				" OBMAIN.ALAMAT_HTA3," +
-				" OBMAIN.POSKOD_HTA," +
-				" OBMAIN.NAMA_PEMAJU," +
-				" OBMAIN.ALAMAT_PEMAJU1," +
-				" OBMAIN.ALAMAT_PEMAJU2," +
-				" OBMAIN.ALAMAT_PEMAJU3," +
-				" OBMAIN.POSKOD_PEMAJU," +
-			" OBMAIN.BANDARHTA," +
-			" OBMAIN.BANDARPEMAJU," +
-						
-			" OBMAIN.NAMA_DAERAH,OBMAIN.NAMA_MUKIM,  "+
+			" OBMAIN.JENIS_PERINTAH, OBMAIN.NAMA_NEGERI,OBMAIN.NAMA_DAERAH,OBMAIN.NAMA_MUKIM,  "+
 			" OBMAIN.ID_HTA, OBMAIN.ID_HTAPERMOHONAN, " +
 			" (OBMAIN.KOD_JENIS_HAKMILIK || '' ||  OBMAIN.NO_HAKMILIK) AS NO_HAKMILIK_FULL, " +
 			" OBMAIN.NO_PT, "
@@ -9696,22 +8957,9 @@ public class BicaraInteraktifData {
 			sql_history += " ) OBMAIN  WHERE  OBMAIN.ID_HTAPERMOHONAN IS NOT NULL ";
 			sql_history += ") MAIN";
 			
-			
-			
-			String maklumat_hta = "	CASE "+
-					"	WHEN SUPERMAIN.JENIS_HTA = 'Y' THEN SUPERMAIN.NO_HAKMILIK_FULL || ' ' || SUPERMAIN.NO_PT ||' '|| SUPERMAIN.NAMA_MUKIM || ', ' ||  SUPERMAIN.NAMA_DAERAH "+
-					"	WHEN SUPERMAIN.JENIS_HTA = 'T' AND SUPERMAIN.FLAG_KATEGORI_HTA = '1' AND SUPERMAIN.ALAMAT_HTA1 IS NULL THEN 'Harta beralamat: -' "+
-					"	WHEN SUPERMAIN.JENIS_HTA = 'T' AND SUPERMAIN.FLAG_KATEGORI_HTA = '1' AND SUPERMAIN.ALAMAT_HTA2 IS NULL AND SUPERMAIN.ALAMAT_HTA3 IS NULL THEN  'Harta beralamat: ' || REPLACE(UPPER(SUPERMAIN.ALAMAT_HTA1),',') || ', ' || REPLACE(UPPER(SUPERMAIN.POSKOD_HTA),',') || ' ' || REPLACE(UPPER(SUPERMAIN.BANDARHTA),',') ||', '|| REPLACE(UPPER(SUPERMAIN.NAMA_NEGERI),',') || '<br>' || 'Kepentingan si mati mengikut Surat Perjanjian Jualbeli - di antara ' || UPPER(SUPERMAIN.NAMA_PEMAJU) || ' dengan Simati bertarikh ' || SUPERMAIN.TARIKH_PERJANJIAN  "+
-					"	WHEN SUPERMAIN.JENIS_HTA = 'T' AND SUPERMAIN.FLAG_KATEGORI_HTA = '1' AND SUPERMAIN.ALAMAT_HTA2 IS NULL THEN 'Harta beralamat: ' || REPLACE(UPPER(SUPERMAIN.ALAMAT_HTA1),',') ||', ' || REPLACE(UPPER(SUPERMAIN.ALAMAT_HTA3),',') || ', ' || REPLACE(UPPER(SUPERMAIN.POSKOD_HTA),',') || ' ' ||REPLACE(UPPER(SUPERMAIN.BANDARHTA),',') ||', '|| REPLACE(UPPER(SUPERMAIN.NAMA_NEGERI),',') || '<br>' || 'Kepentingan si mati mengikut Surat Perjanjian Jualbeli - di antara ' || UPPER(SUPERMAIN.NAMA_PEMAJU) || ' dengan Simati bertarikh ' || SUPERMAIN.TARIKH_PERJANJIAN "+
-					"	WHEN SUPERMAIN.JENIS_HTA = 'T' AND SUPERMAIN.FLAG_KATEGORI_HTA = '1' AND SUPERMAIN.ALAMAT_HTA3 IS NULL THEN 'Harta beralamat: ' || REPLACE(UPPER(SUPERMAIN.ALAMAT_HTA1),',') ||', ' || REPLACE(UPPER(SUPERMAIN.ALAMAT_HTA2),',') || ', ' || REPLACE(UPPER(SUPERMAIN.POSKOD_HTA),',') || ' ' ||REPLACE(UPPER(SUPERMAIN.BANDARHTA),',') ||', '|| REPLACE(UPPER(SUPERMAIN.NAMA_NEGERI),',')|| '<br>' || 'Kepentingan si mati mengikut Surat Perjanjian Jualbeli - di antara ' || UPPER(SUPERMAIN.NAMA_PEMAJU) || ' dengan Simati bertarikh ' || SUPERMAIN.TARIKH_PERJANJIAN "+
-					"	WHEN SUPERMAIN.JENIS_HTA = 'T' AND SUPERMAIN.FLAG_KATEGORI_HTA = '1' AND SUPERMAIN.ALAMAT_HTA3 IS NOT NULL THEN 'Harta beralamat: ' || REPLACE(UPPER(SUPERMAIN.ALAMAT_HTA1),',')||', ' || REPLACE(UPPER(SUPERMAIN.ALAMAT_HTA2),',') || ', ' || REPLACE(UPPER(SUPERMAIN.ALAMAT_HTA3),',') || ', ' || REPLACE(UPPER(SUPERMAIN.POSKOD_HTA),',') || ' ' || REPLACE(UPPER(SUPERMAIN.BANDARHTA),',') ||', '|| REPLACE(UPPER(SUPERMAIN.NAMA_NEGERI),',') || '<br>' || 'Kepentingan si mati mengikut Surat Perjanjian Jualbeli - di antara ' || UPPER(SUPERMAIN.NAMA_PEMAJU) || ' dengan Simati bertarikh ' || SUPERMAIN.TARIKH_PERJANJIAN "+
-					"	WHEN SUPERMAIN.JENIS_HTA = 'T' AND SUPERMAIN.FLAG_KATEGORI_HTA = '2' THEN SUPERMAIN.NO_ROH || ' ' || SUPERMAIN.NO_LOT_ID || '<br>' || SUPERMAIN.NAMA_RANCANGAN || ',' || SUPERMAIN.NAMA_MUKIM || ',' || SUPERMAIN.NAMA_DAERAH "+
-					"	WHEN SUPERMAIN.JENIS_HTA = 'T' AND SUPERMAIN.FLAG_KATEGORI_HTA = '3' THEN SUPERMAIN.JENIS_KEPENTINGAN ELSE '' END " +
-					" || '<br>BHGN SIMATI : ' || SUPERMAIN.BAHAGIAN_SIMATI AS MAKLUMAT_HTA, ";			
-			
 			if(namaList.equals("list"+skrinName+"current"))
 			{			
-				sql += " SELECT "+maklumat_hta+" SUPERMAIN.* FROM (";		
+				sql += " SELECT * FROM (";		
 				sql += " SELECT * FROM (";				
 				sql += " SELECT MAIN.* FROM "+sql_open_column;
 				sql += " FROM ( ";
@@ -9721,7 +8969,7 @@ public class BicaraInteraktifData {
 				sql += sql_avoid_delete;				
 				sql += " UNION ALL ";
 				sql += " SELECT MAIN.* FROM " + sql_history;
-				sql += " ) SUPERMAIN ";
+				sql += " ) ";
 				
 			   	if(skrinName.equals("htaah"))
 			   	{
@@ -9741,12 +8989,12 @@ public class BicaraInteraktifData {
 			}			
 			else if(namaList.equals("list"+skrinName+"previous"))
 			{
-				sql += " SELECT "+maklumat_hta+" SUPERMAIN.* FROM (";
+				sql += " SELECT * FROM (";
 				sql += " SELECT MAIN.* FROM "+sql_open_column;
 				sql += " FROM ( ";
 				sql += sql_dulu_L1;
 				sql += ") "+sql_close_column_L1;
-				sql += " ) SUPERMAIN ";
+				sql += " ) ";
 				sql += sql_avoid_delete;
 				if(skrinName.equals("htaah"))
 			   	{
@@ -9840,19 +9088,9 @@ public class BicaraInteraktifData {
 					"TRIM(REGEXP_REPLACE(PR.CATATAN_KEPUTUSAN_PERBICARAAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_KEPUTUSAN_PERBICARAAN, " +
 					"PR.* FROM TBLPPKPERINTAH PR, TBLPPKPERBICARAAN PB WHERE PR.ID_PERBICARAAN = PB.ID_PERBICARAAN AND PR.ID_PERBICARAAN = '"+id+"' ";		
 		}
-		else if(table_name.equals("TBLPPKPERBICARAAN"))
-		{
-			sql = "SELECT " +
-					"TRIM(REGEXP_REPLACE(PR.CATATAN_PERINTAH_TEMP, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_PERINTAH_TEMP, " +
-					"TRIM(REGEXP_REPLACE(PR.CATATAN_KP_TEMP, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS CATATAN_KP_TEMP, " +
-					"PR.* FROM TBLPPKPERBICARAAN PR WHERE PR."+pk_field+" = '"+id+"' ";		
-		}
 		else if(table_name.equals("TBLPPKSIMATI"))
 		{
-			sql = "SELECT " +
-					"TRIM(REGEXP_REPLACE(SM.TEMPAT_MATI, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS TEMPAT_MATI, " +
-					"TRIM(REGEXP_REPLACE(SM.SEBAB_MATI, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS SEBAB_MATI, " +
-					" TO_CHAR(SM.TARIKH_MATI,'DD/MM/YYYY') AS TARIKH_MATI,TO_CHAR(SM.TARIKH_LAHIR,'DD/MM/YYYY') AS TARIKH_LAHIR,TO_CHAR(SM.TARIKH_SURAT_AKUAN,'DD/MM/YYYY') AS TARIKH_SURAT_AKUAN,SM.* FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI PSM, TBLPPKPERMOHONAN P WHERE SM.ID_SIMATI = PSM.ID_SIMATI AND PSM.ID_PERMOHONAN = P.ID_PERMOHONAN AND P.ID_PERMOHONAN = '"+id+"'";		
+			sql = "SELECT TO_CHAR(SM.TARIKH_MATI,'DD/MM/YYYY') AS TARIKH_MATI,TO_CHAR(SM.TARIKH_LAHIR,'DD/MM/YYYY') AS TARIKH_LAHIR,TO_CHAR(SM.TARIKH_SURAT_AKUAN,'DD/MM/YYYY') AS TARIKH_SURAT_AKUAN,SM.* FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI PSM, TBLPPKPERMOHONAN P WHERE SM.ID_SIMATI = PSM.ID_SIMATI AND PSM.ID_PERMOHONAN = P.ID_PERMOHONAN AND P.ID_PERMOHONAN = '"+id+"'";		
 		}
 		else if(table_name.equals("TBLPPKOBPERMOHONAN"))
 		{
@@ -10085,18 +9323,6 @@ public class BicaraInteraktifData {
 	
 	
 	@SuppressWarnings("unchecked")	
-	public String setRowEditButtonBantahan(HttpSession session,String flagShowLantik,String jenis_transaction,String AKTIVITI,String FIELD_PK,String id,String current_previous,String skrinName, String mode, Map map_data, String formName, String table_name,String divLoad, String command, String params, String retainScrollPosition, String ID_PEMOHON_MAIN,Db db) throws Exception {
-		String html = "<table width='100%' align='center' border='0' cellpadding='1' cellspacing='1' style='margin-top:5px'  >";
-		html += "<tr>";
-		html += "<td align='center' valign='top' width='100%'>";
-		html += "<input type='button' id='cmdKemaskini"+skrinName+"' name='cmdKemaskini"+skrinName+"' value='Kemaskini' onClick=\"doDivAjaxCall"+formName+"('"+divLoad+"','"+command+"','"+params+"&scrolPosition='+getPageLocation());\" >";
-		html +=	"</td>";
-		html += "</tr></table>";
-		return html;
-	}
-	
-	
-	@SuppressWarnings("unchecked")	
 	public String setRowEditButton(HttpSession session,String flagShowLantik,String jenis_transaction,String AKTIVITI,String FIELD_PK,String id,String current_previous,String skrinName, String mode, Map map_data, String formName, String table_name,String divLoad, String command, String params, String retainScrollPosition, String ID_PEMOHON_MAIN,Db db) throws Exception {
 		String html = "<table width='100%' align='center' border='0' cellpadding='1' cellspacing='1' style='margin-top:5px'  >";
 		html += "<tr>";
@@ -10136,17 +9362,6 @@ public class BicaraInteraktifData {
 			}
 		}
 		
-		html +=	"</td>";
-		html += "</tr></table>";
-		return html;
-	}
-	
-	public String setRowSaveButtonBantahan(HttpSession session,String jenis_transaction,String AKTIVITI,String FIELD_PK,String id,String current_previous,String skrinName,String mode, Map map_data, String formName, String table_name,String divLoad, String commandSimpan,String commandBatal, String params, String retainScrollPosition, Db db) throws Exception {
-		String html = "<table width='100%' align='center' border='0' cellpadding='1' cellspacing='1' style='margin-top:5px'  >";
-		html += "<tr>";
-		html += "<td align='center' valign='top' width='100%'>";
-		html += "<input type='button' id='cmdSimpan"+skrinName+"' name='cmdSimpan"+skrinName+"' value='Simpan' onClick=\"if(valSimpan"+skrinName+"('"+skrinName+"') == true) {doDivAjaxCall"+formName+"('"+divLoad+"','"+commandSimpan+"','"+params+"&scrolPosition='+getPageLocation());}\" >";
-		html += "<input type='button' id='cmdKemaskini"+skrinName+"' name='cmdKemaskini"+skrinName+"' value='Batal' onClick=\"doDivAjaxCall"+formName+"('"+divLoad+"','"+commandBatal+"','"+params+"&scrolPosition='+getPageLocation())\" >";
 		html +=	"</td>";
 		html += "</tr></table>";
 		return html;
@@ -11144,8 +10359,7 @@ public class BicaraInteraktifData {
 		
 		//special kes
 		html += "<div id=\"locationreSetup"+skrinName+column_name+"\" ></div>";
-		html += "<div id=\"dummyDivResetup"+skrinName+column_name+"\" style=\"display:none;\" >"+getValue+"</div>";		
-		html += "<div id=\"timer_"+skrinName+column_name+"\" align=\"right\" ></div>";
+		html += "<div id=\"dummyDivResetup"+skrinName+column_name+"\" style=\"display:none;\" >"+getValue+"</div>";
 		
 		if(changes == true && JENIS_AKTIVITI.equals("UPDATE"))
 		{
@@ -11377,7 +10591,6 @@ public class BicaraInteraktifData {
 	}
 	
 	
-	
 	public String setRowSelect(HttpSession session,String ID_SEJARAHBIMAIN,String ID_PERMOHONANSIMATI,String skrinName,String command,String mode, Map map_data, String label, String table_name, 
 			String field_main_PK,String value_main_PK,String id_perbicaraan,
 			String column_name, String mandatory, String jenis_field, String showTitik, String refTable, String field_PK_refTable, 
@@ -11389,9 +10602,6 @@ public class BicaraInteraktifData {
 		column_name = column_name.toUpperCase().trim();
 		Map getChanges = null;
 		String getValue = "";
-		//special case
-		String getID_BANDARHTA = "";
-		Map getChangesID_BANDARHTA  = null;
 		if(map_data!=null)
 		{
 			//untuk kes kemaskini
@@ -11400,19 +10610,6 @@ public class BicaraInteraktifData {
 			{
 				getChanges = getChanges(session,"",ID_PERMOHONANSIMATI, table_name,field_main_PK,value_main_PK,id_perbicaraan,column_name, db);
 			}
-			
-			if(column_name.equals("ID_DAERAH") && (skrinName.equals("htaah") || skrinName.equals("htaahx")))
-			{
-				myLogger.info("MASUK >>>>>>>>>>>>>>>>>>> getID_BANDARHTA");
-				getID_BANDARHTA  = getValue(session,ID_PERMOHONANSIMATI, map_data,table_name,field_main_PK,value_main_PK,id_perbicaraan,"ID_BANDARHTA", db);
-				getChangesID_BANDARHTA = getChanges(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI, table_name,field_main_PK,value_main_PK,id_perbicaraan,"ID_BANDARHTA", db);
-				if(getChangesID_BANDARHTA!=null)
-				{
-					getID_BANDARHTA = (String) getChangesID_BANDARHTA.get("VALUE_SELEPAS");
-				}
-				myLogger.info(getChangesID_BANDARHTA + ">>>>>>>>>>>>>>>>>>> getID_BANDARHTA : "+getID_BANDARHTA);
-			}
-			
 		}
 		else
 		{
@@ -11433,7 +10630,6 @@ public class BicaraInteraktifData {
 		String VALUE_SELEPAS="";
 		String KETERANGAN_SELEPAS = "";
 		boolean changes = false;
-		myLogger.info(column_name +" getValue asal ::: "+getValue);
 		if(getChanges!=null)
 		{
 			changes = true;
@@ -11443,8 +10639,7 @@ public class BicaraInteraktifData {
 			VALUE_SELEPAS = (String) getChanges.get("VALUE_SELEPAS");
 			KETERANGAN_SELEPAS = (String) getChanges.get("KETERANGAN_SELEPAS");
 			getValue = VALUE_SELEPAS;
-		}
-		myLogger.info(column_name +" getValue lepas ::: "+getValue);
+		}		
 		
 		String html = "";
 		
@@ -11485,11 +10680,10 @@ public class BicaraInteraktifData {
 					formName,db);
 		}
 		else
-		{		
-			myLogger.info("refDropDown >>>>>>>> "+column_name +" getValue lepas ::: "+getValue);
+		{				
 			html += refDropDown(session,jenis_field,id_perbicaraan,skrinName,command,table_name,refTable,field_PK_refTable,field_KOD_refTable,field_VALUE_refTable,field_FK_refTable,VALUE_FK_refTable,column_name,mode,getValue,divCall,
 					tableCall, fieldtableCall, field_FK_TableCall, field_PK_TableCall, field_KOD_TableCall, field_VALUE_TableCall,
-					formName,map_data,getID_BANDARHTA,db);
+					formName,db);
 		}			
 		html += "</div>";
 		if(changes == true && JENIS_AKTIVITI.equals("UPDATE"))
@@ -11901,10 +11095,6 @@ public class BicaraInteraktifData {
 				else if(column_name.equals("STATUS_HIDUP"))
 				{
 					specialFunctionOnChange += "showMaklumatMatiWaris(this.value,'"+skrinName+"','"+mode+"');";
-				}
-				else if(column_name.equals("FLAG_BANTAHAN"))
-				{
-					specialFunctionOnChange += "showKeteranganBantahan(this.value,'"+skrinName+"','"+mode+"');";
 				}
 				else if(column_name.equals("JENIS_HTA"))
 				{
@@ -12457,10 +11647,6 @@ public class BicaraInteraktifData {
 		{
 			html += "pilihJenisKategoriHTA('"+value+"','"+skrinName+"','"+mode+"');";
 		}
-		else if(column_name.equals("FLAG_BANTAHAN"))
-		{
-			html += "showKeteranganBantahan('"+value+"','"+skrinName+"','"+mode+"');";
-		}
 		else if(column_name.equals("FLAG_JENIS_KEPUTUSAN") && table_name.equals("TBLPPKPERINTAH"))
 		{
 			
@@ -12511,11 +11697,10 @@ public class BicaraInteraktifData {
 			String field_KOD_refTable, String field_VALUE_refTable, String field_FK_refTable,String VALUE_FK_refTable, 
 			String column_name,String mode, 
 			String value, String divCall,String tableCall, String fieldtableCall, String field_FK_TableCall, String field_PK_TableCall, String field_KOD_TableCall, String field_VALUE_TableCall, 
-			String formName, Map map_data,String getID_BANDARHTA, Db db) throws Exception {
-		
+			String formName, Db db) throws Exception {
 		String html = "";
 		
-		myLogger.info("refDropDown >>> column_name : "+column_name+" table_name : "+table_name+" value : "+value);
+		//myLogger.info("refDropDown >>> column_name : "+column_name+" table_name : "+table_name);
 		
 		String ID_PERMOHONANSIMATI = "";
 		String ID_PERMOHONAN = "";
@@ -12637,8 +11822,6 @@ public class BicaraInteraktifData {
 						
 						if(jenis_field.equals("select"))
 						{
-							myLogger.info("DALAM SELECT >>> column_name : "+column_name+" table_name : "+table_name+" value : "+value);
-							
 							html += "<select id='"+skrinName+column_name+"' name='"+skrinName+column_name+"' class='fullwidth_input'  onChange = \""+specialFunctionOnChange+ajaxCall+"\"> ";	
 							myLogger.info("listRefTable : "+listRefTable);
 							html += "<option value='' >SILA PILIH</option>";
@@ -12659,7 +11842,8 @@ public class BicaraInteraktifData {
 							html += "</select>";
 						}
 						else if(jenis_field.equals("radio"))
-						{							
+						{
+							
 							if (listRefTable.size() != 0) {
 								html += "<table width='75%' cellspacing='0' cellpadding='0' border='0' >";
 								for (int i = 0; i < listRefTable.size(); i++) {
@@ -12751,36 +11935,23 @@ public class BicaraInteraktifData {
 									html += "</td>";
 									html += "</tr>";
 								}
-								
-								
-								
 								html += "</table>";
 							}
-							
-							
-							
 							html += "<input type='hidden'  name='"+skrinName+column_name+"' id='"+skrinName+column_name+"' value='"+value+"' >";
 							if(column_name.equals("ID_INTROPERINTAH"))
 							{
 								html += " <div  id='loadOnclik"+skrinName+column_name+"'  ></div>";
 							}
-							
-							
-							
-							
 						}
 					}
 					
 					
 					if(column_name.equals("ID_DAERAH") && (skrinName.equals("htaah") || skrinName.equals("htaahx")))
 					{
-						
 						//load bandar harta
 						String ajaxCallBandar = "doDivAjaxCall"+formName+"('div"+skrinName+"ID_BANDARHTA','ajaxCallDropDown'," +
-								"'refTable=TBLRUJBANDAR&PK_refTable=ID_BANDAR" +
-								"&field_KOD_refTable=KOD_BANDAR&field_VALUE_refTable=KETERANGAN&field_FK_refTable=ID_NEGERI&VALUE_FK_refTable="+skrinName+"ID_NEGERI" +
-										"&column_name=ID_BANDARHTA&mainTable="+table_name+"&ID_PERBICARAAN="+ID_PERBICARAAN+"&skrinName="+skrinName+"&currentValue="+getID_BANDARHTA+"');";
-						myLogger.info(":::: ajaxCallBandar ::::"+ajaxCallBandar+" getChangesID_BANDARHTA "+getID_BANDARHTA);
+								"'refTable=TBLRUJBANDAR&PK_refTable=ID_BANDAR&field_KOD_refTable=KOD_BANDAR&field_VALUE_refTable=KETERANGAN&field_FK_refTable=ID_NEGERI&VALUE_FK_refTable="+skrinName+"ID_NEGERI&column_name=ID_BANDARHTA&mainTable="+table_name+"&ID_PERBICARAAN="+ID_PERBICARAAN+"&skrinName="+skrinName+"');";
+						myLogger.info(":::: ajaxCallBandar ::::"+ajaxCallBandar);
 						html += "<script>$jquery(document).ready(function (){ "+ajaxCallBandar+" });</script>";
 					}
 					divCall = "div"+skrinName+"ID_MUKIM";
@@ -12945,7 +12116,7 @@ public class BicaraInteraktifData {
 		html += "<tr><td align='left'><a class=\"blue\" href=\"javascript:printKeteranganhadir('"+ID_PERBICARAAN+"');\">&nbsp;<u>Lampiran Keterangan Kehadiran</u></td></tr>";
 		html += "<tr><td align='left'><a class=\"blue\" href=\"javascript:cetakNotaPerbicaraan('"+NO_FAIL+"','"+ID_PERBICARAAN+"','"+ID_FAIL+"','"+ID_SIMATI+"','"+SEKSYEN+"','"+TARIKH_MOHON+"','Y');\">&nbsp;<u>Nota Perbicaraan (Bicara Interaktif - Senarai Kehadiran Yang Dijana Daripada Skrin Kehadiran Perbicaraan Interaktif)</u></td></tr>";
 		html += "<tr><td align='left'><a class=\"blue\" href=\"javascript:cetakNotaPerbicaraan('"+NO_FAIL+"','"+ID_PERBICARAAN+"','"+ID_FAIL+"','"+ID_SIMATI+"','"+SEKSYEN+"','"+TARIKH_MOHON+"','N');\">&nbsp;<u>Nota Perbicaraan (Asal - Nota Bicara Seperti Di Skrin Notis Perbicaraan)</u></td></tr>";
-		html += "<tr><td width='100%' align='left'><a class=\"blue\" href=\"javascript:printCatatanPerintah('"+ID_PERBICARAAN+"');\">&nbsp;<u>Nota Keterangan & Perintah</u></td></tr>";
+		html += "<tr><td width='100%' align='left'><a class=\"blue\" href=\"javascript:printCatatanPerintah('"+ID_PERBICARAAN+"');\">&nbsp;<u>Catatan Perintah</u></td></tr>";
 		
 		if(ID_JENISPERINTAH.equals("6") 
 				&& FLAG_TANGGUH.equals("5") 
@@ -13442,18 +12613,9 @@ public class BicaraInteraktifData {
 				}
 				else
 				{
-					if(!column_name.equals("ID_INTROPERINTAH"))
-					{
-						sql += " ORDER BY "+field_VALUE_refTable;
-					}
+					sql += " ORDER BY "+field_VALUE_refTable;
 				}				
 				
-			}
-			
-			if(column_name.equals("ID_INTROPERINTAH"))
-			{
-				sql += " UNION ALL "+
-							" SELECT NULL AS ID_INTROPERINTAH, 'Tiada Pilihan' AS INTRO FROM DUAL ORDER BY "+field_VALUE_refTable;
 			}
 			
 			myLogger.info(" ("+refTable+") BICARA INTERAKTIF : SQL listRefTable :"+ sql);	
@@ -13714,7 +12876,7 @@ public class BicaraInteraktifData {
 		else if(column_name.toUpperCase().contains("JENIS_WARGA") || column_name.toUpperCase().contains("ID_WARGANEGARA"))
 		{
 			keterangan = getValueRefTable(session, "TBLRUJWARGANEGARA","ID_WARGANEGARA","KOD_WARGA","KETERANGAN", value, db);
-		}		
+		}
 		else if(column_name.toUpperCase().contains("ID_NEGERI"))
 		{
 			keterangan = getValueRefTable(session, "TBLRUJNEGERI","ID_NEGERI","KOD_NEGERI","NAMA_NEGERI", value, db);
@@ -13754,7 +12916,7 @@ public class BicaraInteraktifData {
 		else if(column_name.toUpperCase().contains("ID_BANDAR"))
 		{
 			keterangan = getValueRefTable(session, "TBLRUJBANDAR","ID_BANDAR","KOD_BANDAR","KETERANGAN", value, db);
-		}		
+		}
 		else if(column_name.toUpperCase().contains("ID_BUKTIMATI"))
 		{
 			keterangan = getValueRefTable(session, "TBLPPKRUJBUKTIMATI","ID_BUKTIMATI","KOD","KETERANGAN", value, db);
@@ -14256,11 +13418,8 @@ public class BicaraInteraktifData {
 			{
 				sql += " AND M.VALUE_FIELD_PK = '"+VALUE_FIELD_PK+"' ";
 			}
-			sql += " AND M.ID_PERBICARAAN = '"+ID_PERBICARAAN+"' AND S.NAMA_FIELD = '"+NAMA_FIELD+"' ";	
-			if(NAMA_FIELD.equals("ID_BANDARHTA"))
-			{
-				myLogger.info(" BICARA INTERAKTIF : SQL getChanges :"+ sql);	
-			}
+			sql += " AND M.ID_PERBICARAAN = '"+ID_PERBICARAAN+"' AND S.NAMA_FIELD = '"+NAMA_FIELD+"' ";		
+			//myLogger.info(" BICARA INTERAKTIF : SQL getChanges :"+ sql);			
 			rs = stmt.executeQuery(sql);
 			Map h = null;			
 			while (rs.next()) {	
@@ -14375,29 +13534,6 @@ public class BicaraInteraktifData {
 		}
 		return html;
 	}
-	
-	public String setupButtonBantahan(HttpSession session,String flagShowLantik,String jenis_transaction,Map setupSkrinHistory,String FIELD_PK,String id,String current_previous,String skrinName,String formName,String flag_editable,String mode,Map setupSkrin,String table_name,String divViewMaklumat,String paramsButton,String ID_PEMOHON_MAIN, Db db) throws Exception {
-		String html = "";
-		String AKTIVITI = "";
-		if(setupSkrinHistory!=null)
-		{
-			AKTIVITI = (String)setupSkrinHistory.get("JENIS_AKTIVITI");
-		}
-		myLogger.info("divViewMaklumat : "+divViewMaklumat);
-		if(flag_editable.equals("Y"))
-		{
-			if(mode.equals("view"))
-			{
-				html += setRowEditButtonBantahan(session,flagShowLantik,jenis_transaction,AKTIVITI,FIELD_PK,id,current_previous,skrinName,mode,setupSkrin,formName,table_name,divViewMaklumat, "edit_bantahan", paramsButton, "Y", ID_PEMOHON_MAIN, db);
-			}
-			else
-			{
-				html += setRowSaveButtonBantahan(session,jenis_transaction,AKTIVITI,FIELD_PK,id,current_previous,skrinName,mode,setupSkrin,formName,table_name,divViewMaklumat, "save_bantahan","edit_bantahan", paramsButton, "Y", db);
-			}
-		}
-		return html;
-	}
-	
 	
 	public String setupButtonKeputusan(HttpSession session,String keputusanBicara,String flagShowLantik,String jenis_transaction,Map setupSkrinHistory,String FIELD_PK,String id,String current_previous,String skrinName,String formName,String flag_editable,String mode,Map setupSkrin,String table_name,String divViewMaklumat,String paramsButton,String ID_PEMOHON_MAIN, Db db) throws Exception {
 		String html = "";
@@ -15861,37 +14997,5 @@ public class BicaraInteraktifData {
 		return list;
 	}
 	
-	public static String removeLastKoma(String value) {
-		value = value.trim();
-		myLogger.info("removeLastKoma["+value+"]"+"CHAR LAST : "+value.charAt(value.length() - 1));
-		String lastChar = value.charAt(value.length() - 1)+"";
-		if(lastChar.equals(","))
-		{
-			value = value.substring(0,value.length()-1);
-			myLogger.info("LEPAS BUANG KOMA : "+value);
-		}
-		return value;
-	}
-	
-	public static String dotdotIfBlank(String value) {
-		String dotdot = ".............";
-		if(!value.equals("") && value != null)
-		{
-			dotdot = value;
-		}
-		return dotdot;
-	}
-	
-	public static String upperCaseAllFirst(String value) {
-		value = value.toLowerCase();
-        char[] array = value.toCharArray();
-        array[0] = Character.toUpperCase(array[0]);
-        for (int i = 1; i < array.length; i++) {
-            if (Character.isWhitespace(array[i - 1])) {
-                array[i] = Character.toUpperCase(array[i]);
-            }
-        }
-		return new String(array);
-    }
 	
 }

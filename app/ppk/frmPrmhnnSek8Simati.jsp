@@ -169,11 +169,6 @@ resetOnBlur:false
       #end
       #end
       
-      
-    
-      
-      
-      
     </ul>
     <div class="TabbedPanelsContent">
     <div class="TabbedPanelsContentGroup">
@@ -204,7 +199,7 @@ resetOnBlur:false
               
                 <tr>
                   <td>
-                    <p>#foreach($listmati in $listSimati)                    </p>
+                    <p>#foreach($listmati in $listSimati)</p>
                     <fieldset>
                     <legend>MAKLUMAT SIMATI</legend>
                     <table width="100%">

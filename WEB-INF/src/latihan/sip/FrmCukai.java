@@ -35,8 +35,8 @@ public class FrmCukai extends AjaxBasedModule{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private final String PATH="app/tranningjava/202002/";
+	private static final long fz = 1L;
+	private final String PATH="app/tranningjava/20200228/";
 	static Logger myLog = Logger.getLogger(latihan.sip.FrmCukai.class);
 	private String peringkatBayar = "";
 	private String idPermohonan = "";
@@ -59,7 +59,7 @@ public class FrmCukai extends AjaxBasedModule{
 	private Daerah daerah = null;
 	private Bayaran bayaran = null;
 		
-	public String doTemplate2()throws Exception {
+	public String doTemplate2() throws Exception {
 		
 	    HttpSession session = this.request.getSession();
 	    String template_name = "";
@@ -93,12 +93,18 @@ public class FrmCukai extends AjaxBasedModule{
 		tahunParam = (!getParam("tahun_cukai").equals("")?getParam("tahun_cukai"):lebah.util.Util.getDateTime(new Date(), "yyyy"));
 		
 		template_name= PATH+"index.jsp";
+		template_name="app/tranningjava/20200228/index.jsp";
 	    //myLog.info("command01="+request.getParameter("command01"));
 //	    this.context.put("nama1", request.getParameter("command01"));
 	    this.context.put("nama1",getParam("command01"));
 	    
 	    Vector vPPT = DBPPT.getJenisHakmiliks("");
 		
+	    if(submit.equals("upload")){
+	    	myLog.info("fungsi upload");	
+	    	
+	    }
+	    
 		if("cukaiperingkatbayar".equals(submit)){
 //			myLog.info("cukaiperingkatbayar:"+pageMode);
 //		    template_name = PATH+"frmCukaiPenyata.jsp";

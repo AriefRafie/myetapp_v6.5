@@ -148,6 +148,13 @@
 					</tr>
 					<tr>
 						<td>
+						<a href="javascript:goTo('PHPAPB')" class="help" title="Daftar Permohonan Online Akta Pelantar Benua">
+							<font color="blue"><li>Permohonan Akta Pelantar Benua</li></font>
+						</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
 						<a href="javascript:goTo('PermohonanSewa')" class="help" title="Penyemakan Status Permohonan Sewa Tanah dan Ruang Bangunan">
 							<font color="blue"><li>Status Permohonan Penyewaan</li></font>
 						</a>
@@ -232,6 +239,13 @@
 						</a>
 						</td>
 					</tr>
+						<tr>
+						<td>
+						<a href="javascript:goTo('NOTIS')" class="help" title="Semakan Notis Perbicaraan Pembahagian Pusaka">
+							<font color="blue"><li>Notis Perbicaraan Pembahagian Pusaka</li></font>
+						</a>
+						</td>
+					</tr>
 					</table>
 				</td>
 			</tr>
@@ -291,14 +305,6 @@
 		</table>
 	</td>
 	</tr>
-	
-	
-	
-	
-	
-	
-	
-	
 	</table>
 </td>
 
@@ -404,6 +410,12 @@ else if(location=='DERAFPPK'){
         document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
         document.${formName}.submit();
 }
+else if(location=='NOTIS'){
+    document.${formName}.action = "?myrole=ppk-online-user";
+    document.${formName}.namatab.value = "Pusaka Kecil";
+    document.${formName}.namamodul.value = "ekptg.view.ppk.CarianNotisPerbicaraan";
+    document.${formName}.submit();
+}
 else if(location=='PPT'){
         document.${formName}.action = "?myrole=ppt-online-user";
         document.${formName}.namatab.value = "Pengambilan Tanah";
@@ -428,12 +440,12 @@ else if(location=='PembayaranSewa'){
     document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmStatusPembayaranSewa";
     document.${formName}.submit();
 }
-/* else if(location=='PHPAPB'){
+else if(location=='PHPAPB'){
         document.${formName}.action = "?myrole=php-online-user";
         document.${formName}.namatab.value = "Penguatkuasaan dan Hasil Persekutuan";
         document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
         document.${formName}.submit();
-} */
+}
 else if(location=='ADUAN'){
         document.${formName}.action = "?myrole=online";
         document.${formName}.namatab.value = "Menu";

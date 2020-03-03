@@ -29,9 +29,9 @@ public class Portal implements IServlet2 {
 	static Logger myLogger = Logger.getLogger(Portal.class);
 
 	@Override
-	public void doService(HttpServletRequest request,
-			HttpServletResponse response, ServletContext context)
-			throws IOException, ServletException {
+	public void doService(HttpServletRequest request
+		,HttpServletResponse response
+		,ServletContext context) throws IOException, ServletException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		String contextPath = request.getContextPath();
@@ -51,10 +51,10 @@ public class Portal implements IServlet2 {
 		String poskod = request.getParameter("poskod");
 
 		username = NoKPBaru;
-		myLogger.info("submit:"+submit);
+//		myLogger.info("submit:"+submit);
 		if ("doLogin".equals(submit)) {
 			try {
-				myLogger.debug("doUserLogin=" + username);
+//				myLogger.debug("doUserLogin=" + username);
 				doUserLogin(username, password, session, out);
 			} catch (Exception e) {
 				out.println("error :" + e.getMessage());

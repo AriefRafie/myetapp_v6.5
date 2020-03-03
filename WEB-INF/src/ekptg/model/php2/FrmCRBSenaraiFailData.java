@@ -196,7 +196,6 @@ public class FrmCRBSenaraiFailData {
 			}
 
 			sql = sql + " ORDER BY B.TARIKH_TERIMA DESC NULLS LAST ";
-			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;

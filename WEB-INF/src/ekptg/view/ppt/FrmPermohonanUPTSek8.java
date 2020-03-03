@@ -35,6 +35,7 @@ import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.ppt.FrmUPTSek8HakmilikData;
 import ekptg.model.ppt.MyInfoPPTData;
 import ekptg.model.ppt.PPTHeader;
+import ekptg.model.ppt.util.LampiranBean;
 /*
  * @author 
  * Muhamad Syazreen bin Yahaya
@@ -50,13 +51,13 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 	FrmPermohonanUPTData model = new FrmPermohonanUPTData();
 	PPTHeader header = new PPTHeader();
 	MyInfoPPTData myInfo = new MyInfoPPTData();
+	LampiranBean lampiran = null;
+	String idpermohonan ="";
 	
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
 	public String doTemplate2() throws Exception{
-		
-		
-		
+	
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		
@@ -87,8 +88,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	context.put("showFieldAsalBeforeConvert", "no");
     	context.put("showFieldAmbilBeforeConvert", "no");
     	context.put("showDropdownUnitAsal", "no");
-    	context.put("showDropdownUnitAmbil", "no");
-    	
+    	context.put("showDropdownUnitAmbil", "no");   	
 
 		this.context.put("maklumat_PB_Salin", "");
 		this.context.put("id_hakmilikpb_salin", "");
@@ -98,8 +98,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	//get current date
 		String now = "";
 		now = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");
-		context.put("currentDATE",now);
-    	
+		context.put("currentDATE",now);	
     	
     	Vector listPageDepan = new Vector();
     	Vector senaraiSemak = new Vector();
@@ -115,12 +114,9 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	String screenTanah = "app/ppt/DaftarS8/frmUPTHakmilikTambahSek8.jsp";
     	String screenDokumen = "app/ppt/DaftarS8/frmUPTDocTambahSek8.jsp";
     	
-    	
     	//prevent duplicate when refresh page
     	String doPost = (String) session.getAttribute("doPost");
-    	
-		
-		
+   	
     	//anchor
     	anchor();
     	
@@ -157,7 +153,8 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 		String id_fail = "";
 		String flag_subjaket = "";
 		String id_projekNegeri = "";
-    	String idpermohonan = getParam("id_permohonan");
+    	idpermohonan = getParam("id_permohonan");
+//    	String idpermohonan = getParam("id_permohonan");
     	
     	Vector dataHeader = null;
     	if(!idpermohonan.equals(""))
@@ -546,43 +543,35 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     		
     	}//close semakPendaftaran
     	
-    	else 
-    	if("tambahDokumen".equals(submit)){
-    			
+    	else if("tambahDokumen".equals(submit)){	
     		//alert jsp
     		context.put("completed",false); 
-    		
     		//list dokumen
     		ListDokumen(idpermohonan);
-    		
     		String submit2 = getParam("command2");
         	myLogger.info("submit[2] : " + submit2);
-        	
         	if("uploadFile".equals(submit2)){
-        		
         		if (doPost.equals("true")) {
         			//upload file
-            		uploadFiles();
-             	}
+        			lampiran = new LampiranBean();
+        			Hashtable<String,String> data = new Hashtable<String,String>();
+        			data.put("jenisLampiran","default");
 
+        			lampiran.uploadFiles(data, request);
+            		//uploadFiles();
+             	}
         		//list dokumen
         		ListDokumen(idpermohonan);
-        		
              	//alert jsp
              	context.put("completed",true);
         		
         	}//close uploadFile
-    		
     		//screen
             vm = screenDokumen;
             
-    	}//close tambahDokumen
-    	
-    	else
-        if("hapusDokumen".equals(submit)){
-        		
+    	//close tambahDokumen
+    	}else if("hapusDokumen".equals(submit)){
         	hapusDokumen(session);
-        	
         	//form validation
     		context.put("mode","view");
     		context.put("isEdit","no");
@@ -789,8 +778,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
         }//close tambahHakmilik
     	
     	
-        else if("viewHM".equals(submit)){
-    		
+        else if("viewHM".equals(submit)){ 		
     		//form validation
     		context.put("mode","view");
     		context.put("isEdit","no");
@@ -807,12 +795,10 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     		//data hakmilik
     		dataHakmilik(idHakmilik,"disabled");
     		
-    		
     		String submit2 = getParam("command2");
         	myLogger.info("submit[2] : " + submit2);
         	
-        	if("kemaskiniHM".equals(submit2)){
-        		
+        	if("kemaskiniHM".equals(submit2)){	
         		//form validation
         		context.put("mode","view");
         		context.put("isEdit","yes");
@@ -823,8 +809,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
         		String submit3 = getParam("command3");
             	myLogger.info("submit[3] : " + submit3);
             	
-            	if("doOnchangeUpdate".equals(submit3)){
-            		
+            	if("doOnchangeUpdate".equals(submit3)){           		
             		//onchange validation
             		context.put("onchangeHM","yes");
             		
@@ -837,41 +822,29 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
             		//get and set data
             		getAndSetHM(idpermohonan,"view",id_projekNegeri);
             		
-            		
             		String submit4 = getParam("command4");
                 	myLogger.info("submit[4] : " + submit4);
                 	
-                	if("onchangeUnitLuasAsalUpdate".equals(submit4)){
-                		
+                	if("onchangeUnitLuasAsalUpdate".equals(submit4)){	
                 		//validations for luas asal
                 		validationConvertLuas();
                 		
                 		String submit5 = getParam("command5");
                     	myLogger.info("submit[5] : " + submit5);
                     	
-                    	if("convertNilaiAsalUpdate".equals(submit5)){
-                    		
-                    		calculateNilaiAsal();
-                    		
-                    	}//close convertNilaiAsalUpdate
-                    	
-                    	else if("clearConvertAsalUpdate".equals(submit5)){
-                    		
-                    		clearConvertAsal("view");
-                    		
-                    	}//close clearConvertAsalUpdate
-                    	
-                    	else if("onchangeUnitAsalUpdate".equals(submit5)){
-                    		
+                    	if("convertNilaiAsalUpdate".equals(submit5)){	
+                    		calculateNilaiAsal();                    		
+                    	//close convertNilaiAsalUpdate
+                    	}else if("clearConvertAsalUpdate".equals(submit5)){                    		
+                    		clearConvertAsal("view");                    		
+                    	//close clearConvertAsalUpdate
+                    	}else if("onchangeUnitAsalUpdate".equals(submit5)){                    		
                     		//convert nilai lain
-                    		changeUnitAsal();
-                    		
+                    		changeUnitAsal();                  		
                     	}//close onchangeUnitAsalUpdate
                     	
-                	}//close onchangeUnitLuasAsalUpdate
-                	
-                	else if("onchangeUnitLuasAmbilUpdate".equals(submit4)){
-                		
+                	//close onchangeUnitLuasAsalUpdate
+                    }else if("onchangeUnitLuasAmbilUpdate".equals(submit4)){                		
                 		//validations for luas ambil
                 		validationConvertLuasAmbil();
                 		
@@ -901,8 +874,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
                 	
             	}//close doOnchangeUpdate
         		
-            	else if("updateHM".equals(submit3)){
-            		
+            	else if("updateHM".equals(submit3)){           		
             		updateHM(session,idHakmilik,id_projekDaerah);
             		
             		//form validation
@@ -2261,10 +2233,8 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 	}//close simpanHM
 	
 	@SuppressWarnings("unchecked")
-	private void updateHM(HttpSession session,String idHakmilik,String id_projekDaerah) throws Exception{
-		
-		Hashtable h = new Hashtable();
-		
+	private void updateHM(HttpSession session,String idHakmilik,String id_projekDaerah) throws Exception{		
+		Hashtable h = new Hashtable();		
 		h.put("txtLokasi", "");		
 		h.put("txtSyaratNyata", "");
 		h.put("txtSyaratKhas", "");
@@ -2310,6 +2280,17 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 		
 		FrmUPTSek8HakmilikData.updateHM(h);
+		
+		lampiran = new LampiranBean();
+		//Hashtable<String,String> data = new Hashtable<String,String>();
+		//idPermohonan,idRujukan(idHakmilik),idUser,jenisDok=99203(bayaran),namaTable=PPTDOKUMENHAKMILIK
+		h.put("idPermohonan",idpermohonan);
+		h.put("idRujukan",idHakmilik);
+		h.put("idUser",session.getAttribute("_ekptg_user_id"));
+		h.put("jenisDok","99203");
+		h.put("jenisLampiran","default");		
+		h.put("namaTable",session.getAttribute("PPTDOKUMENHAKMILIK"));	
+		lampiran.uploadFiles(h, request);
 		
 	}//close updateHM
 	
@@ -2947,54 +2928,54 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 	}//close newDataSetting
 	
 	@SuppressWarnings("unchecked")
-	private void hapusDokumen(HttpSession session) throws Exception{
-	    
+	private void hapusDokumen(HttpSession session) throws Exception{	    
 		Hashtable h = new Hashtable();		
 		h.put("id_dokumen", getParam("id_dokumen"));		
 		FrmPermohonanUPTData.hapusDokumen(h);
 		
 	}//close hapusdokumen
-	
-	
-	@SuppressWarnings("unchecked")
-	private void uploadFiles() throws Exception {
-		    DiskFileItemFactory factory = new DiskFileItemFactory();
-		    ServletFileUpload upload = new ServletFileUpload(factory);
-		    List items = upload.parseRequest(request);
-		    Iterator itr = items.iterator();
-		    while (itr.hasNext()) {
-		      FileItem item = (FileItem)itr.next();
-		      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-		    	  saveData(item);
-		      }
-		    }
-		  }
-	 private void saveData(FileItem item) throws Exception {
-	  		Db db = null;
-	        try {
-	        	db = new Db();
-	        	long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
-	        	Connection con = db.getConnection();
-	        	con.setAutoCommit(false);
-	        	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
-	        			"(id_Dokumen,id_permohonan,nama_Fail,jenis_Mime,content,tajuk,keterangan) " +
-	        			"values(?,?,?,?,?,?,?)");
-	        	ps.setLong(1, id_Dokumen);
-	        	ps.setString(2, getParam("id_permohonan"));
-	        	ps.setString(3,item.getName());
-	        	ps.setString(4,item.getContentType());
-	        	ps.setBinaryStream(5,item.getInputStream(),(int)item.getSize());
-	        	ps.setString(6, getParam("nama_dokumen"));
-	        	ps.setString(7, getParam("keterangan"));
-	        	ps.executeUpdate();
-	            con.commit();
-	            
-		    }catch (SQLException se) { 
-		    	throw new Exception("Ralat : Masalah muatnaik fail");
-		    }finally {
-			      if (db != null) db.close();
-		    }
-	  }
+		
+//	@SuppressWarnings("unchecked")
+//	private void uploadFiles() throws Exception {
+//		DiskFileItemFactory factory = new DiskFileItemFactory();
+//	    ServletFileUpload upload = new ServletFileUpload(factory);
+//	    List items = upload.parseRequest(request);
+//	    Iterator itr = items.iterator();
+//	    while (itr.hasNext()) {
+//	    	FileItem item = (FileItem)itr.next();
+//	    	if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+//	    		saveData(item);
+//	    	}
+//	    }
+//		  
+//	}
+//	
+//	private void saveData(FileItem item) throws Exception {
+//	  		Db db = null;
+//	        try {
+//	        	db = new Db();
+//	        	long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
+//	        	Connection con = db.getConnection();
+//	        	con.setAutoCommit(false);
+//	        	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
+//	        			"(id_Dokumen,id_permohonan,nama_Fail,jenis_Mime,content,tajuk,keterangan) " +
+//	        			"values(?,?,?,?,?,?,?)");
+//	        	ps.setLong(1, id_Dokumen);
+//	        	ps.setString(2, getParam("id_permohonan"));
+//	        	ps.setString(3,item.getName());
+//	        	ps.setString(4,item.getContentType());
+//	        	ps.setBinaryStream(5,item.getInputStream(),(int)item.getSize());
+//	        	ps.setString(6, getParam("nama_dokumen"));
+//	        	ps.setString(7, getParam("keterangan"));
+//	        	ps.executeUpdate();
+//	            con.commit();
+//	            
+//		    }catch (SQLException se) { 
+//		    	throw new Exception("Ralat : Masalah muatnaik fail");
+//		    }finally {
+//			      if (db != null) db.close();
+//		    }
+//	  }
 	 
 	@SuppressWarnings({"unchecked", "static-access"})
 	private String dataHeader(String idpermohonan) throws Exception{

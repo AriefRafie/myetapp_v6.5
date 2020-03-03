@@ -12,8 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.apple.dnssd.TXTRecord;
-
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
