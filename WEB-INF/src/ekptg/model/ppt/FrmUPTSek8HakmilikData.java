@@ -46,11 +46,6 @@ public class FrmUPTSek8HakmilikData {
 	private static  Vector dataExistBahagianPB = null;
 	private static  Vector listcarianHM = null;
 	
-	
-	
-	
-	
-	
 	public static  Vector getListCarian(){
 		return listcarian;
 	}
@@ -297,11 +292,9 @@ public class FrmUPTSek8HakmilikData {
 	    }
 	    
 	  }//close carian
-	
-	
+		
 	@SuppressWarnings("unchecked")
-	public void simpanHM(Hashtable data,String flagSubjaket) throws Exception
-	  {
+	public static void simpanHM(Hashtable data,String flagSubjaket) throws Exception{
 		myLogger.info("simpanHM");
 	    Db db = null;
 	    String sql = "";
@@ -452,7 +445,7 @@ public class FrmUPTSek8HakmilikData {
 	    		myLogger.info("sql add tanah : "+sql);
 	    		stmt.executeUpdate(sql);
 	    		conn.commit();
-    			uploadFiles(db,conn,id_permohonan);
+    			//uploadFiles(db,conn,id_permohonan);
 	    		//remove subjaket kalau dah ada
 	    		if(flagSubjaket.equals("1")){
 	    			
@@ -476,7 +469,7 @@ public class FrmUPTSek8HakmilikData {
 	    			sql = r.getSQLUpdate("Tblppthakmilik");
 	    			stmt.executeUpdate(sql);
 	    			conn.commit();
-	    			uploadFiles(db,conn,id_permohonan);
+	    			//uploadFiles(db,conn,id_permohonan);
 	    		}
 	    		
 	    		
@@ -490,9 +483,8 @@ public class FrmUPTSek8HakmilikData {
 	   
 	}//close simpanHM
 	
-	//upload start
-	
-	private void uploadFiles(Db db,Connection conn, String id_permohonan) throws Exception {
+	//upload start	
+	/*public static void uploadFiles(Db db,Connection conn, String id_permohonan) throws Exception {
 		myLogger.info("Baca uploadFiles:--------------"); 
 		String nama_pemohon_lama2 = id_permohonan;
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -509,11 +501,9 @@ public class FrmUPTSek8HakmilikData {
 	      }
 	    }
 	  }
-	
-	
+		
 	private static void saveData(FileItem item,Db db,Connection conn, String id_permohonan) throws Exception {
-		//Db db = null;
-	
+		//Db db = null;	
     try {
     	db = new Db();
 
@@ -540,8 +530,8 @@ public class FrmUPTSek8HakmilikData {
     } finally {
 	      if (db != null) db.close();
     }
-}
-	
+	}
+	*/
 	@SuppressWarnings("unchecked")
 	public static void upload(Hashtable data) throws Exception
 	  {
@@ -700,28 +690,15 @@ public class FrmUPTSek8HakmilikData {
 	
 	//upload end
 	
-	
-	@SuppressWarnings("unchecked")
-	public static void updateHM(Hashtable data) throws Exception
-	  {
-		
+	public static void updateHM(Hashtable data) throws Exception{		
 	    Db db = null;
-	    String sql = "";
-	    
-	    try{
-	      
+	    String sql = "";	    
+	    try{	      
 	    		db = new Db();
-	    		Statement stmt = db.getStatement();
-	    		
-	    		String id_user = (String)data.get("id_user");
-	    	
+	    		Statement stmt = db.getStatement();	    		
+	    		String id_user = (String)data.get("id_user");	    	
 	    		//pengambilan segera
 	    		String socPSegera = (String)data.get("socPSegera");
-	    		
-	    		
-	    		
-	    		
-	    		
 	    		String socDaerahPenggawa = (String)data.get("socDaerahPenggawa");
 	    		
 	    		String id_hakmilik = (String)data.get("id_hakmilik");
@@ -760,14 +737,12 @@ public class FrmUPTSek8HakmilikData {
 	    		String sekatanHak = (String)data.get("txtSekatanHak");
 	    		String noSyit = (String)data.get("txtNoSyit");	
 	    		
-
 	    		//new
 	    		String id_luasambil = (String)data.get("unitLuasAmbil");
 	    		String nama_luas_asal = (String)data.get("txtLuasLotAsalSebelumConvert");
 	    		String nama_luas_ambil = (String)data.get("txtLuasLotAmbilSebelumConvert");
 	    		String id_unitluaslot_convert = (String)data.get("sorDropdownUnitAsal");
-	    		String id_unitluasambil_convert = (String)data.get("sorDropdownUnitAmbil");
-	    		
+	    		String id_unitluasambil_convert = (String)data.get("sorDropdownUnitAmbil");	    		
 	    		
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
@@ -781,8 +756,7 @@ public class FrmUPTSek8HakmilikData {
 	    		 	    		
 	    		String flagSebahagian = "0";
 	    		
-	    		if(!luas_asal.isEmpty() && !luas_ambil.isEmpty()){
-	    			
+	    		if(!luas_asal.isEmpty() && !luas_ambil.isEmpty()){	    			
 	    			//validate sebahagian / keseluruhan
 	    			double luasAsal = Double.parseDouble(luas_asal);
 	    			if(id_unitluaslot_convert.equals("1")){
@@ -864,7 +838,7 @@ public class FrmUPTSek8HakmilikData {
 	      if (db != null) db.close();
 	    }//close finally
 	   
-	  }//close updateHM
+	}//close updateHM
 	
 	
 	  public static void hapusHM(String id_hakmilik) throws Exception{
