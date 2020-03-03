@@ -1433,10 +1433,6 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             #end </td>
         </tr>
         
-        
-         
-       
-        
          <tr>
           <td class="style38" valign="top" >&nbsp;</td>
           <td class="style38" >No Tel (R/P)</td>
