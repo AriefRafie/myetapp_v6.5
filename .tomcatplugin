@@ -9,5 +9,5 @@
     <warLocation></warLocation>
     <extraInfo></extraInfo>
     <mavenClasspath>false</mavenClasspath>
-    <webPath>/myetappgit2</webPath>
+    <webPath>/myetappgit3</webPath>
 </tomcatProjectProperties>
