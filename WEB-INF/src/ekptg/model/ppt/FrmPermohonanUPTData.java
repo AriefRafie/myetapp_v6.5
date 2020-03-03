@@ -4680,28 +4680,25 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		
 
 	@SuppressWarnings("unchecked")
-	public static void hapusDokumen(Hashtable data) throws Exception {
-	   
+	public static void hapusDokumen(Hashtable data) throws Exception {	   
 		Db db = null;
-	    String sql = "";
-	   
-	    try{
-	    	
-	    	 	db = new Db();
-	    	 	Statement stmt = db.getStatement();
-			  
-	    		String iddokumen = (String)data.get("id_dokumen");
-	    		
-	    		sql = "DELETE FROM tblpptdokumen where id_dokumen = '"+iddokumen+"'";
-	    		stmt.executeUpdate(sql);
+	    String sql = "";	   
+	    try{	    	
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	String iddokumen = (String)data.get("id_dokumen");
+	    	sql = "DELETE FROM tblpptdokumen where id_dokumen = '"+iddokumen+"'";
+	    	stmt.executeUpdate(sql);
+	    
 	    } catch (Exception re) {
 	    	log.error("Error: ", re);
 	    	throw re;
-	    	}
-	    finally {
-	    if (db != null) db.close();
 	    }
-	  }//close hapus
+	    finally {
+	    	if (db != null) db.close();
+	    }
+	  
+	}//close hapus
 	
 	@SuppressWarnings("unchecked")
 	public static void updateFlagSah(Hashtable data) throws Exception {
