@@ -6,6 +6,7 @@ import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 import ekptg.model.php2.FrmPYWPopupCetakLaporanData;
+import ekptg.model.php2.utiliti.PHPUtilHTML;
 
 public class FrmPYWPopupCetakLaporanView extends AjaxBasedModule{
 	
@@ -40,7 +41,10 @@ public class FrmPYWPopupCetakLaporanView extends AjaxBasedModule{
 	    String idUlasanTeknikal = getParam("idUlasanTeknikal");
 		String idTanah = getParam("idTanah");
 		String report = getParam("report");
-		
+		String jenisNoFail = getParam("displaytext");
+		String noFailHQ = "";
+		String noFailNegeri = "";
+
 		String idPegawai = getParam("socPegawai");
 		if (idPegawai == null || idPegawai.trim().length() == 0){
 			idPegawai = "99999";
@@ -50,7 +54,8 @@ public class FrmPYWPopupCetakLaporanView extends AjaxBasedModule{
 			idKementerian = "99999";
 		}
 		
-		String noFail = logic.getNoFailByIdFail(idFail);
+		noFailHQ = logic.getNoFailByIdFail(idFail);
+		noFailNegeri = logic.getNoFailNegeriByIdFail(idFail);
 		
 		this.context.put("selectPegawai",HTML.selectPegawaiUnitPenyewaanByNegeri(idNegeriUser,"socPegawai", Utils.parseLong(idPegawai), "", ""));
 		this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian",Utils.parseLong(idKementerian), "", ""));
@@ -61,7 +66,9 @@ public class FrmPYWPopupCetakLaporanView extends AjaxBasedModule{
 		this.context.put("idUlasanTeknikal", idUlasanTeknikal);
 		this.context.put("idTanah", idTanah);
 		this.context.put("report", report);
-		this.context.put("noFail", noFail);
+		this.context.put("noFailHQ", noFailHQ);
+		this.context.put("noFailNegeri", noFailNegeri);
+		this.context.put("displaytext", jenisNoFail);
 		
 		return vm;
 	}
