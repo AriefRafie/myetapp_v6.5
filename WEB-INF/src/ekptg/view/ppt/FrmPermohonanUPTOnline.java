@@ -60,7 +60,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	MyInfoPPTData myInfo = new MyInfoPPTData();
 	private IPermohonan iPermohonan = null;
 	private IUtilHTMLPilihan iPilihanJH = null;
-	
+
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
 	public String doTemplate2() throws Exception {
@@ -105,11 +105,11 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			context.put("hideAdd", "no");
 			context.put("PBexist", false);
 			context.put("idExistPB", "");
-			
-			//tmbh
+
+			// tmbh
 			context.put("listPermohonan", "");
 			context.put("list_size", "");
-			
+
 			Vector listPageDepan = new Vector();
 			Vector listDelete = new Vector();
 			Vector senaraiSemak = new Vector();
@@ -135,38 +135,26 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			listDelete.clear();
 
 			/*
-			Db dbx = null;
-			try {
-				dbx = new Db();
-
-				if (checkRegPopup("ekptg.view.ppt.SkrinPopupHakmilik", dbx) == 0) {
-					// reg class
-					insertPopupReg("ekptg.view.ppt.SkrinPopupHakmilik", "Skrin Salin Hakmilik", "EKPTG - PPT", dbx);
-				}
-				if (checkRegPopup("ekptg.view.ppt.SkrinPopupCarianHakmilik", dbx) == 0) {
-					// reg class
-					insertPopupReg("ekptg.view.ppt.SkrinPopupCarianHakmilik", "Skrin Capaian Hakmilik", "EKPTG - PPT", dbx);
-				}
-				// KJP
-				if (checkRegPopup_KJP("ekptg.view.ppt.SkrinPopupCarianHakmilik", dbx) == 0) {
-					// reg class
-					insertPopupReg_KJP("ekptg.view.ppt.SkrinPopupCarianHakmilik", "Skrin Capaian Hakmilik", "EKPTG - PPT", dbx);
-				}
-				if (checkRegPopup_KJP("ekptg.view.ppt.SkrinPopupHakmilik", dbx) == 0) {
-					// reg class
-					insertPopupReg_KJP("ekptg.view.ppt.SkrinPopupHakmilik", "Skrin Salin Hakmilik", "EKPTG - PPT", dbx);
-				}
-				if (checkRegPopup_KJP("ekptg.view.ppt.SkrinPopupSalinPBHakmilik", dbx) == 0) {
-					// reg class
-					insertPopupReg_KJP("ekptg.view.ppt.SkrinPopupSalinPBHakmilik", "Skrin Capaian Salin Hakmilik", "EKPTG - PPT",
-							dbx);
-				}
-
-			} finally {
-				if (dbx != null)
-					dbx.close();
-			}
-			*/
+			 * Db dbx = null; try { dbx = new Db();
+			 * 
+			 * if (checkRegPopup("ekptg.view.ppt.SkrinPopupHakmilik", dbx) == 0) { // reg
+			 * class insertPopupReg("ekptg.view.ppt.SkrinPopupHakmilik",
+			 * "Skrin Salin Hakmilik", "EKPTG - PPT", dbx); } if
+			 * (checkRegPopup("ekptg.view.ppt.SkrinPopupCarianHakmilik", dbx) == 0) { // reg
+			 * class insertPopupReg("ekptg.view.ppt.SkrinPopupCarianHakmilik",
+			 * "Skrin Capaian Hakmilik", "EKPTG - PPT", dbx); } // KJP if
+			 * (checkRegPopup_KJP("ekptg.view.ppt.SkrinPopupCarianHakmilik", dbx) == 0) { //
+			 * reg class insertPopupReg_KJP("ekptg.view.ppt.SkrinPopupCarianHakmilik",
+			 * "Skrin Capaian Hakmilik", "EKPTG - PPT", dbx); } if
+			 * (checkRegPopup_KJP("ekptg.view.ppt.SkrinPopupHakmilik", dbx) == 0) { // reg
+			 * class insertPopupReg_KJP("ekptg.view.ppt.SkrinPopupHakmilik",
+			 * "Skrin Salin Hakmilik", "EKPTG - PPT", dbx); } if
+			 * (checkRegPopup_KJP("ekptg.view.ppt.SkrinPopupSalinPBHakmilik", dbx) == 0) {
+			 * // reg class insertPopupReg_KJP("ekptg.view.ppt.SkrinPopupSalinPBHakmilik",
+			 * "Skrin Capaian Salin Hakmilik", "EKPTG - PPT", dbx); }
+			 * 
+			 * } finally { if (dbx != null) dbx.close(); }
+			 */
 
 			// screen jsp
 			String listdepan = "app/ppt/frmSenaraiPermohonanUPTOnline.jsp";
@@ -184,7 +172,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			// prevent duplicate when refresh page
 			String doPost = (String) session.getAttribute("doPost");
-			System.out.println("doPost >>> "+doPost);
+			System.out.println("doPost >>> " + doPost);
 			String portal_role = (String) session.getAttribute("_portal_role");
 
 			// anchor
@@ -214,7 +202,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			context.put("emelUser", emelUser);
 
 			// default list
-			//listPageDepan = modelOnline.getListPemohon(id_user, portal_role,"");
+			// listPageDepan = modelOnline.getListPemohon(id_user, portal_role,"");
 
 			// header
 			String flag_semakan_online = "";
@@ -235,32 +223,30 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			String id_kementerian = getParam("socKementerian");
 			String id_jawatan = getParam("id_jawatan");
 			Vector dataHeader = null;
-			if(!idpermohonan.equals(""))
-			{
-			header.setDataHeader(idpermohonan);
-			dataHeader = header.getDataHeader();
-			context.put("dataHeader", dataHeader);
-			if (dataHeader.size() != 0) {
-				Hashtable dh = (Hashtable) dataHeader.get(0);
-				id_status = (String) dh.get("id_status");
-				flagSegera = dh.get("flag_segera").toString();
-				id_fail = dh.get("id_fail").toString();
-				no_fail = dh.get("no_fail").toString();
-				flag_subjaket = dh.get("flag_subjaket").toString();
-				id_projekNegeri = dh.get("id_projekNegeri").toString();
-				id_suburusan = dh.get("id_suburusan").toString();
-				flagStatusOnline = (String) dh.get("flag_status_online");
-				catatan_status_online = (String) dh.get("catatan_status_online");
-				id_projekDaerah = dh.get("id_projekDaerah").toString();
-				flag_semakan_online = dh.get("flag_semakan_online").toString();
-				namaProjek = dh.get("tujuan").toString();
-				TarikhPermohonan = dh.get("tarikh_permohonan").toString();
-				noPermohonan = String.valueOf(dh.get("no_permohonan"));
-			}
+			if (!idpermohonan.equals("")) {
+				header.setDataHeader(idpermohonan);
+				dataHeader = header.getDataHeader();
+				context.put("dataHeader", dataHeader);
+				if (dataHeader.size() != 0) {
+					Hashtable dh = (Hashtable) dataHeader.get(0);
+					id_status = (String) dh.get("id_status");
+					flagSegera = dh.get("flag_segera").toString();
+					id_fail = dh.get("id_fail").toString();
+					no_fail = dh.get("no_fail").toString();
+					flag_subjaket = dh.get("flag_subjaket").toString();
+					id_projekNegeri = dh.get("id_projekNegeri").toString();
+					id_suburusan = dh.get("id_suburusan").toString();
+					flagStatusOnline = (String) dh.get("flag_status_online");
+					catatan_status_online = (String) dh.get("catatan_status_online");
+					id_projekDaerah = dh.get("id_projekDaerah").toString();
+					flag_semakan_online = dh.get("flag_semakan_online").toString();
+					namaProjek = dh.get("tujuan").toString();
+					TarikhPermohonan = dh.get("tarikh_permohonan").toString();
+					noPermohonan = String.valueOf(dh.get("no_permohonan"));
+				}
 			}
 			// get fail tamat tempoh
-			if(idpermohonan.equals(""))
-			{
+			if (idpermohonan.equals("")) {
 				listFailExpired = modelOnline.getListFailExpired(id_user);
 				context.put("listFailExpired", listFailExpired);
 				context.put("typeList", "online");
@@ -295,12 +281,11 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// context.put("selectNegeriProjek", HTML.SelectNegeri(
 				// "socNegeriProjek", null, null,
 				// "style=width:300px onChange=\"doChangeProjekNegeri();\""));
-				context.put(
-						"selectNegeriProjek",
-						SelectNegeriPengambilan("socNegeriProjek", null, null,
-								"style=width:300px onChange=\"doChangeProjekNegeri();\""));
-				context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(userIdKementerian),
-						"disabled class=disabled style=width:500px onChange=\"doChangeKementerian();\""));
+				context.put("selectNegeriProjek", SelectNegeriPengambilan("socNegeriProjek", null, null,
+						"style=width:300px onChange=\"doChangeProjekNegeri();\""));
+				context.put("selectKementerian",
+						HTML.SelectKementerian("socKementerian", Utils.parseLong(userIdKementerian),
+								"disabled class=disabled style=width:500px onChange=\"doChangeKementerian();\""));
 				context.put("selectNegeri",
 						HTML.SelectNegeriMampu("socNegeri", null, "class=disabled disabled style=width:325px"));
 
@@ -315,9 +300,11 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				getAndSetDataOnchangeKementerian(userIdKementerian, getParam("sorUrusan"), "new");
 
 				// if(userIdNeg!=""){
-				// context.put("selectDaerah",HTML.SelectDaerahByNegeri(userIdNeg,"socDaerah",null,null,"id=socDaerah style=width:300px"));
+				// context.put("selectDaerah",HTML.SelectDaerahByNegeri(userIdNeg,"socDaerah",null,null,"id=socDaerah
+				// style=width:300px"));
 				// }else{
-				context.put("selectDaerah", HTML.SelectDaerah("socDaerah", null, null, "id=socDaerah style=width:300px"));
+				context.put("selectDaerah",
+						HTML.SelectDaerah("socDaerah", null, null, "id=socDaerah style=width:300px"));
 				// }
 
 				// validation jajahan
@@ -332,13 +319,13 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 				if ("doChangeKementerian".equals(submit2)) {
 
-					//String id_kementerian = getParam("socKementerian");
+					// String id_kementerian = getParam("socKementerian");
 					String id_urusan = getParam("sorUrusan");
 
 					// get and set data
 					getAndSetDataOnchangeKementerian(id_kementerian, id_urusan, "new");
 
-				}// close doChangeKementerian
+				} // close doChangeKementerian
 
 				else if ("doChangeProjekNegeri".equals(submit2)) {
 
@@ -348,7 +335,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					// get and set data
 					getAndSetDataOnchangeNegeri(id_negeriprojek, id_urusan, "new", userIdKementerian);
 
-				}// close doChangeProjekNegeri
+				} // close doChangeProjekNegeri
 
 				else if ("doChangeUrusan".equals(submit2)) {
 
@@ -358,7 +345,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					// get and set data
 					getAndSetDataOnchangeNegeri(id_negeriprojek, id_urusan, "new", userIdKementerian);
 
-				}// close doChangeUrusan
+				} // close doChangeUrusan
 
 				else if ("simpanPendaftaran".equals(submit2)) {
 
@@ -406,8 +393,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// LIST DEPAN
 					} else {
 						String jawatan = request.getParameter("jawatan");
-						 //System.out.println("JAWATAN DARI MENU UTAMA : " +jawatan);
-						listPageDepan = modelOnline.getListPemohon(id_user, portal_role,"");
+						// System.out.println("JAWATAN DARI MENU UTAMA : " +jawatan);
+						listPageDepan = modelOnline.getListPemohon(id_user, portal_role, "");
 
 						resetValueCarian();
 
@@ -416,17 +403,17 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						vm = listdepan;
 						return vm;
 
-					}// validation after add
+					} // validation after add
 
-				}// close simpanPendaftaran
+				} // close simpanPendaftaran
 
 				// screen
 				vm = screenUtama;
 
-			}// close pendaftaran
+			} // close pendaftaran
 
 			else if ("semakPendaftaran".equals(submit)) {
-				
+
 				context.remove("flag_semakan_online");
 				context.remove("flag_status_online");
 
@@ -456,9 +443,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// GO TO ULASAN JABATAN TEKNIKAL
 				Vector listJabatanTeknikal = new Vector();
 				listJabatanTeknikal.clear();
-				
+
 				listJabatanTeknikal = modelOnline.setJabatanTeknikal(idpermohonan);
-				this.context.put("listJabatanTeknikal",listJabatanTeknikal);
+				this.context.put("listJabatanTeknikal", listJabatanTeknikal);
 
 				if ("hantarSemakan".equals(submit2)) {
 
@@ -466,7 +453,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					updateFlag(session, "1");
 
 					if (doPost.equals("true")) {
-						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user, "hantarSemakan");
+						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user,
+								"hantarSemakan");
 					}
 
 					header.setDataHeader(idpermohonan);
@@ -475,16 +463,17 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					if (dataHeader.size() != 0) {
 						Hashtable dh = (Hashtable) dataHeader.get(0);
 						flag_semakan_online = dh.get("flag_semakan_online").toString();
-						//flag_semakan_online = dh.get("flag_status_online").toString();
+						// flag_semakan_online = dh.get("flag_status_online").toString();
 					}
 
 				} else if ("sahSemakan".equals(submit2)) {
-					
+
 					// update flag
 					updateFlag(session, "2");
-					
+
 					if (doPost.equals("true")) {
-						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user, "hantarLulus");
+						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user,
+								"hantarLulus");
 					}
 
 					header.setDataHeader(idpermohonan);
@@ -496,11 +485,11 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					}
 
 				} else if ("lulusPermohonan".equals(submit2)) {
-					
+
 					// update flag
-					
+
 					updateFlag(session, "3");
-					
+
 					if (doPost.equals("true")) {
 						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user, "lulus");
 					}
@@ -515,7 +504,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 				} else if ("returnFile".equals(submit2)) {
 					String flagreturn = getParam("returnType");
-					System.out.println("flagreturn ::::: "+flagreturn);
+					System.out.println("flagreturn ::::: " + flagreturn);
 					// update flag
 					updateFlag(session, flagreturn);
 					// if (doPost.equals("true")) {
@@ -536,7 +525,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						hantarPermohonan(session, idpermohonan, flagStatusOnline);
 						Permohonan permohonan = getPermohonan().getMaklumatPermohonan(idpermohonan);
 						EmailOnline emel = new EmailOnline();
-						String kementerian = permohonan.getNamaAgensi() + ", " + permohonan.getPfdFail().getNamaKementerian();
+						String kementerian = permohonan.getNamaAgensi() + ", "
+								+ permohonan.getPfdFail().getNamaKementerian();
 						String rujukanOnline = permohonan.getNoPermohonan();
 						emel.hantarEmel("", "", "", rujukanOnline, namaProjek, TarikhPermohonan, kementerian, id_user);
 					}
@@ -558,7 +548,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					context.put("dataPermohonan", dataPermohonan);
 					context.put("showPopupHantar", "yes");
 
-				}  else if ("kemaskiniPendaftaran".equals(submit2)) {
+				} else if ("kemaskiniPendaftaran".equals(submit2)) {
 
 					// form validation
 					context.put("mode", "view");
@@ -576,12 +566,12 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						context.put("onchange", "yes");
 
 						String id_urusan = getParam("sorUrusan");
-						//String id_kementerian = getParam("socKementerian");
+						// String id_kementerian = getParam("socKementerian");
 
 						// get and set data
 						getAndSetDataOnchangeKementerian(id_kementerian, id_urusan, "view");
 
-					}// close doChangeKementerianUpdate
+					} // close doChangeKementerianUpdate
 
 					else if ("doChangeProjekNegeriUpdate".equals(submit3)) {
 
@@ -594,7 +584,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// get and set data
 						getAndSetDataOnchangeNegeri(id_negeriprojek, id_urusan, "view", userIdKementerian);
 
-					}// close doChangeProjekNegeriUpdate
+					} // close doChangeProjekNegeriUpdate
 
 					else if ("doChangeUrusanUpdate".equals(submit3)) {
 
@@ -607,7 +597,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// get and set data
 						getAndSetDataOnchangeNegeri(id_negeriprojek, id_urusan, "view", userIdKementerian);
 
-					}// close doChangeUrusan
+					} // close doChangeUrusan
 
 					else if ("updatePendaftaran".equals(submit3)) {
 
@@ -632,25 +622,27 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// data pendaftaran
 						DataPermohonan(idpermohonan, "disabled");
 
-					}// close updatePendaftaran
+					} // close updatePendaftaran
 
-				}// close kemaskiniPendaftaran
+				} // close kemaskiniPendaftaran
 
 				// screen
 				vm = screenUtama;
 
-			}// close semakPendaftaran
-			
+			} // close semakPendaftaran
+
 			else if ("hapus_fail".equals(submit)) {
-				
+
 				logic1.deleteFail(id_fail, session);
-				
-				String notifikasi = request.getParameter("notifikasi") != null ? (String) request.getParameter("notifikasi") : "0";
-				listPageDepan = modelOnline.getListPemohon(id_user, portal_role,"");
+
+				String notifikasi = request.getParameter("notifikasi") != null
+						? (String) request.getParameter("notifikasi")
+						: "0";
+				listPageDepan = modelOnline.getListPemohon(id_user, portal_role, "");
 				context.put("notifikasi", Integer.parseInt(notifikasi));
 				System.out.println("Jumlah Notifikasi : " + notifikasi);
 				resetValueCarian();
-				
+
 				// screen
 				vm = listdepan;
 			}
@@ -679,12 +671,12 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					// alert jsp
 					context.put("completed", true);
 
-				}// close uploadFile
+				} // close uploadFile
 
 				// screen
 				vm = screenDokumen;
 
-			}// close tambahDokumen
+			} // close tambahDokumen
 
 			else if ("hapusDokumen".equals(submit)) {
 
@@ -709,7 +701,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// screen
 				vm = screenUtama;
 
-			}// close hapusDokumen
+			} // close hapusDokumen
 
 			else if ("hapusDokumenII".equals(submit)) {
 
@@ -724,7 +716,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// screen
 				vm = screenDokumen;
 
-			}// close hapusDokumenII
+			} // close hapusDokumenII
 
 			else if ("salinHakmilik".equals(submit)) {
 
@@ -744,7 +736,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				}
 				vm = screenTanah;
 
-			}// close tambahHM
+			} // close tambahHM
 			else if ("tambahHakmilik".equals(submit)) {
 
 				// form validation
@@ -791,22 +783,22 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 							calculateNilaiAsal();
 
-						}// close convertNilaiAsal
+						} // close convertNilaiAsal
 
 						else if ("clearConvertAsal".equals(submit4)) {
 
 							clearConvertAsal("new");
 
-						}// close clearConvertAsal
+						} // close clearConvertAsal
 
 						else if ("onchangeUnitAsal".equals(submit4)) {
 
 							// convert nilai lain
 							changeUnitAsal();
 
-						}// close onchangeUnitAsal
+						} // close onchangeUnitAsal
 
-					}// close onchangeUnitLuasAsal
+					} // close onchangeUnitLuasAsal
 
 					else if ("onchangeUnitLuasAmbil".equals(submit3)) {
 
@@ -820,31 +812,31 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 							calculateNilaiAmbil();
 
-						}// close convertNilaiAmbil
+						} // close convertNilaiAmbil
 
 						else if ("clearConvertAmbil".equals(submit4)) {
 
 							clearConvertAmbil("new");
 
-						}// close clearConvertAmbil
+						} // close clearConvertAmbil
 
 						else if ("onchangeUnitAmbil".equals(submit4)) {
 
 							// convert nilai lain
 							changeUnitAmbil();
 
-						}// close onchangeUnitAmbil
+						} // close onchangeUnitAmbil
 
-					}// close onchangeUnitLuasAmbil
+					} // close onchangeUnitLuasAmbil
 
-				}// close doOnchange
+				} // close doOnchange
 
 				else if ("simpanHakmilik".equals(submit2)) {
-					myLogger.info("idpermohonan = "+idpermohonan);
+					myLogger.info("idpermohonan = " + idpermohonan);
 					myLogger.info("simpanHakmilik");
-					
+
 					String flagSubjaket = getParam("flag_subjaket");
-					
+
 					if (doPost.equals("false")) {
 						// simpan hm
 						myLogger.info("simpanHM(session)");
@@ -873,12 +865,12 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						flag_subjaket = dh.get("flag_subjaket").toString();
 					}
 
-				}// close simpanHakmilik
+				} // close simpanHakmilik
 
 				// screen
 				vm = screenTanah;
 
-			}// close tambahHakmilik
+			} // close tambahHakmilik
 
 			else if ("viewHM".equals(submit)) {
 
@@ -959,22 +951,22 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 								calculateNilaiAsal();
 
-							}// close convertNilaiAsalUpdate
+							} // close convertNilaiAsalUpdate
 
 							else if ("clearConvertAsalUpdate".equals(submit5)) {
 
 								clearConvertAsal("view");
 
-							}// close clearConvertAsalUpdate
+							} // close clearConvertAsalUpdate
 
 							else if ("onchangeUnitAsalUpdate".equals(submit5)) {
 
 								// convert nilai lain
 								changeUnitAsal();
 
-							}// close onchangeUnitAsalUpdate
+							} // close onchangeUnitAsalUpdate
 
-						}// close onchangeUnitLuasAsalUpdate
+						} // close onchangeUnitLuasAsalUpdate
 
 						else if ("onchangeUnitLuasAmbilUpdate".equals(submit4)) {
 
@@ -988,24 +980,24 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 								calculateNilaiAmbil();
 
-							}// close convertNilaiAmbilUpdate
+							} // close convertNilaiAmbilUpdate
 
 							else if ("clearConvertAmbilUpdate".equals(submit5)) {
 
 								clearConvertAmbil("view");
 
-							}// close clearConvertAmbilUpdate
+							} // close clearConvertAmbilUpdate
 
 							else if ("onchangeUnitAmbilUpdate".equals(submit5)) {
 
 								// convert nilai lain
 								changeUnitAmbil();
 
-							}// close onchangeUnitAmbilUpdate
+							} // close onchangeUnitAmbilUpdate
 
-						}// close onchangeUnitLuasAmbilUpdate
+						} // close onchangeUnitLuasAmbilUpdate
 
-					}// close doOnchangeUpdate
+					} // close doOnchangeUpdate
 
 					else if ("updateHM".equals(submit3)) {
 
@@ -1024,14 +1016,14 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// data hakmilik
 						dataHakmilik(idHakmilik, "disabled");
 
-					}// close updateHM
+					} // close updateHM
 
-				}// close kemaskiniHM
+				} // close kemaskiniHM
 
 				// screen
 				vm = screenTanah;
 
-			}// close viewHM
+			} // close viewHM
 
 			else if ("hapusHM".equals(submit)) {
 
@@ -1052,7 +1044,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// screen
 				vm = screenTanah;
 
-			}// close hapusHM
+			} // close hapusHM
 
 			/************** PIHAK BERKEPENTINGAN *****************/
 
@@ -1084,8 +1076,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				context.put("selectJenisPB", HTML.SelectJenisPb("socJenisPB", null, "style=width:300px"));
 				context.put("selectBangsa", HTML.SelectBangsa("socBangsa", null, "style=width:300px"));
 				context.put("selectWarga", HTML.SelectWarganegara("socWarga", null, "style=width:auto"));
-				context.put("selectNegeri",
-						HTML.SelectNegeriMampu("socNegeri", null, null, "style=width:300px onChange=\"onchangeNegeri();\""));
+				context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", null, null,
+						"style=width:300px onChange=\"onchangeNegeri();\""));
 				context.put("selectBandar", HTML.SelectBandar("socBandar", null, "style=width:300px"));
 
 				// get size bahagian pb and dropdown bahagian syer
@@ -1102,12 +1094,14 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					String idBahagian = getParam("socBahagianPB");
 
 					// dropdown
-					context.put("selectBahagianPB", HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB",
-							Utils.parseLong(idBahagian), null, "style=width:250px onChange=\"onchangeGetBahagian();\""));
+					context.put("selectBahagianPB",
+							HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB", Utils.parseLong(idBahagian),
+									null, "style=width:250px onChange=\"onchangeGetBahagian();\""));
 
 					// dropdown by
 					if (idNegeri != "") {
-						context.put("selectBandar", HTML.SelectBandarByNegeri(idNegeri, "socBandar", null, "style=width:300px"));
+						context.put("selectBandar",
+								HTML.SelectBandarByNegeri(idNegeri, "socBandar", null, "style=width:300px"));
 					} else {
 						context.put("selectBandar", HTML.SelectBandar("socBandar", null, "style=width:300px"));
 					}
@@ -1115,7 +1109,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					// get and set back
 					getAndSetDataPB(session, "new");
 
-				}// close onchangenegeri
+				} // close onchangenegeri
 
 				else if ("simpanPB".equals(submit2)) {
 
@@ -1148,7 +1142,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					// get size bahagian pb and dropdown bahagian syer
 					sizeAndDropdownBahagian(idHakmilik);
 
-				}// close simpanPB
+				} // close simpanPB
 
 				else if ("onchangeGetBahagian".equals(submit2)) {
 
@@ -1159,13 +1153,14 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					String idBahagian = getParam("socBahagianPB");
 
 					// dropdown
-					context.put("selectBahagianPB", HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB",
-							Utils.parseLong(idBahagian), null, "style=width:250px onChange=\"onchangeGetBahagian();\""));
+					context.put("selectBahagianPB",
+							HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB", Utils.parseLong(idBahagian),
+									null, "style=width:250px onChange=\"onchangeGetBahagian();\""));
 
 					// dropdown by
 					if (idNegeri != "") {
-						context.put("selectBandar",
-								HTML.SelectBandarByNegeri(idNegeri, "socBandar", Utils.parseLong(idBandar), "style=width:300px"));
+						context.put("selectBandar", HTML.SelectBandarByNegeri(idNegeri, "socBandar",
+								Utils.parseLong(idBandar), "style=width:300px"));
 					} else {
 						context.put("selectBandar",
 								HTML.SelectBandar("socBandar", Utils.parseLong(idBandar), "style=width:300px"));
@@ -1177,7 +1172,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					// get bahagian
 					getBahagianExist(idBahagian);
 
-				}// close onchangeGetBahagian
+				} // close onchangeGetBahagian
 
 				else if ("checkExistPB".equals(submit2)) {
 
@@ -1187,8 +1182,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					String idBahagian = getParam("socBahagianPB");
 
 					// dropdown
-					context.put("selectBahagianPB", HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB",
-							Utils.parseLong(idBahagian), null, "style=width:250px onChange=\"onchangeGetBahagian();\""));
+					context.put("selectBahagianPB",
+							HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB", Utils.parseLong(idBahagian),
+									null, "style=width:250px onChange=\"onchangeGetBahagian();\""));
 
 					// check exist pb
 					checkExistPB(session);
@@ -1221,12 +1217,12 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 					}
 
-				}// close checkExistPB
+				} // close checkExistPB
 
 				// screen
 				vm = screenPB;
 
-			}// close tambahPB
+			} // close tambahPB
 
 			else if ("viewPB".equals(submit)) {
 
@@ -1303,19 +1299,21 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 							HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(id_jenisNoPB), "style=width:auto"));
 					context.put("selectJenisPB",
 							HTML.SelectJenisPb("socJenisPB", Utils.parseLong(id_jenisPB), "style=width:300px"));
-					context.put("selectBangsa", HTML.SelectBangsa("socBangsa", Utils.parseLong(id_bangsa), "style=width:300px"));
+					context.put("selectBangsa",
+							HTML.SelectBangsa("socBangsa", Utils.parseLong(id_bangsa), "style=width:300px"));
 					context.put("selectWarga",
 							HTML.SelectWarganegara("socWarga", Utils.parseLong(id_warganegara), "style=width:auto"));
 					context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri),
 							"style=width:300px onChange=\"onchangeNegeriUpdate();\""));
 
 					// dropdown bahagian
-					context.put("selectBahagianPB", HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB",
-							Utils.parseLong(id_bahagianpb), null, "style=width:250px onChange=\"onchangeGetBahagianUpdate();\""));
+					context.put("selectBahagianPB",
+							HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB", Utils.parseLong(id_bahagianpb),
+									null, "style=width:250px onChange=\"onchangeGetBahagianUpdate();\""));
 
 					if (id_negeri != "") {
-						context.put("selectBandar", HTML.SelectBandarByNegeri(id_negeri, "socBandar", Utils.parseLong(id_bandar),
-								"style=width:300px"));
+						context.put("selectBandar", HTML.SelectBandarByNegeri(id_negeri, "socBandar",
+								Utils.parseLong(id_bandar), "style=width:300px"));
 					} else {
 						context.put("selectBandar",
 								HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar), "style=width:300px"));
@@ -1333,9 +1331,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						id_bahagianpb = getParam("socBahagianPB");
 
 						// dropdown bahagian
-						context.put("selectBahagianPB", HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB",
-								Utils.parseLong(id_bahagianpb), null,
-								"style=width:250px onChange=\"onchangeGetBahagianUpdate();\""));
+						context.put("selectBahagianPB",
+								HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB",
+										Utils.parseLong(id_bahagianpb), null,
+										"style=width:250px onChange=\"onchangeGetBahagianUpdate();\""));
 
 						// dropdown by
 						if (idNegeri != "") {
@@ -1348,7 +1347,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// get and set back
 						getAndSetDataPB(session, "view");
 
-					}// close onchangeNegeriUpdate
+					} // close onchangeNegeriUpdate
 
 					else if ("onchangeGetBahagianUpdate".equals(submit3)) {
 
@@ -1360,8 +1359,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						String idBahagian = getParam("socBahagianPB");
 
 						// dropdown
-						context.put("selectBahagianPB", HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB",
-								Utils.parseLong(idBahagian), null, "style=width:250px onChange=\"onchangeGetBahagianUpdate();\""));
+						context.put("selectBahagianPB",
+								HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB",
+										Utils.parseLong(idBahagian), null,
+										"style=width:250px onChange=\"onchangeGetBahagianUpdate();\""));
 
 						// dropdown by
 						if (idNegeri != "") {
@@ -1378,7 +1379,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// get bahagian
 						getBahagianExist(idBahagian);
 
-					}// close onchangeGetBahagian
+					} // close onchangeGetBahagian
 
 					else if ("updatePB".equals(submit3)) {
 
@@ -1402,14 +1403,14 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// list PB
 						listPB(session, idHakmilik, namaPB);
 
-					}// close updatePB
+					} // close updatePB
 
-				}// close kemaskiniPB
+				} // close kemaskiniPB
 
 				// screen
 				vm = screenPB;
 
-			}// close viewPB
+			} // close viewPB
 
 			else if ("hapusPB".equals(submit)) {
 
@@ -1437,7 +1438,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// screen
 				vm = screenTanah;
 
-			}// close hapusPB
+			} // close hapusPB
 
 			/*******************************/
 
@@ -1486,7 +1487,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 					// dropdown by
 					if (idNegeri != "") {
-						context.put("selectBandar", HTML.SelectBandarByNegeri(idNegeri, "socBandar", null, "style=width:300px"));
+						context.put("selectBandar",
+								HTML.SelectBandarByNegeri(idNegeri, "socBandar", null, "style=width:300px"));
 					} else {
 						context.put("selectBandar", HTML.SelectBandar("socBandar", null, "style=width:300px"));
 					}
@@ -1494,7 +1496,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					// get and set back
 					getAndSetDataBebanan(session, "new");
 
-				}// close onchangeNegeriBebanan
+				} // close onchangeNegeriBebanan
 
 				else if ("simpanBebanan".equals(submit2)) {
 
@@ -1506,12 +1508,12 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					// list Bebanan
 					listBebanan(session, idHakmilik, noSerah);
 
-				}// close simpanBebanan
+				} // close simpanBebanan
 
 				// screen
 				vm = screenBebanan;
 
-			}// close tambahBebanan
+			} // close tambahBebanan
 
 			else if ("viewBebanan".equals(submit)) {
 
@@ -1566,12 +1568,12 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 							HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(id_jenisnopb), "style=width:auto"));
 					context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri), null,
 							"style=width:300px onChange=\"onchangeNegeriBebananUpdate();\""));
-					context.put("selectBebanan",
-							HTML.SelectBebanan("socJenisBebanan", Utils.parseLong(id_jenisbebanan), "style=width:auto"));
+					context.put("selectBebanan", HTML.SelectBebanan("socJenisBebanan", Utils.parseLong(id_jenisbebanan),
+							"style=width:auto"));
 
 					if (id_negeri != "") {
-						context.put("selectBandar", HTML.SelectBandarByNegeri(id_negeri, "socBandar", Utils.parseLong(id_bandar),
-								"style=width:300px"));
+						context.put("selectBandar", HTML.SelectBandarByNegeri(id_negeri, "socBandar",
+								Utils.parseLong(id_bandar), "style=width:300px"));
 					} else {
 						context.put("selectBandar",
 								HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar), "style=width:300px"));
@@ -1598,7 +1600,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// get and set back
 						getAndSetDataBebanan(session, "view");
 
-					}// close onchangeNegeriBebananUpdate
+					} // close onchangeNegeriBebananUpdate
 
 					else if ("updateBebanan".equals(submit3)) {
 
@@ -1617,14 +1619,14 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						// list Bebanan
 						listBebanan(session, idHakmilik, noSerah);
 
-					}// close updateBebanan
+					} // close updateBebanan
 
-				}// close kemaskiniBebanan
+				} // close kemaskiniBebanan
 
 				// screen
 				vm = screenBebanan;
 
-			}// close viewBebanan
+			} // close viewBebanan
 
 			else if ("hapusBebanan".equals(submit)) {
 
@@ -1653,7 +1655,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// screen
 				vm = screenTanah;
 
-			}// close hapusBebanan
+			} // close hapusBebanan
 
 			/*******************************/
 
@@ -1667,9 +1669,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				} else {
 
 					if (doPost.equals("true")) {
-						//hantarPermohonan(session, idpermohonan, flagStatusOnline);
+						// hantarPermohonan(session, idpermohonan, flagStatusOnline);
 						Permohonan permohonan = getPermohonan().getMaklumatPermohonan(idpermohonan);
-						String kementerian = permohonan.getNamaAgensi() + ", " + permohonan.getPfdFail().getNamaKementerian();
+						String kementerian = permohonan.getNamaAgensi() + ", "
+								+ permohonan.getPfdFail().getNamaKementerian();
 						String rujukanOnline = permohonan.getNoPermohonan();
 						hantarEmel("", "", "", rujukanOnline, namaProjek, TarikhPermohonan, kementerian, id_user);
 					}
@@ -1711,17 +1714,16 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// list dokumen
 				ListDokumen(idpermohonan);
 
-			}// close hantarPendaftaran
+			} // close hantarPendaftaran
 			/*
 			 * else if("hantar".equals(submit)){
 			 * 
 			 * if (doPost.equals("true")) {
 			 * hantarPermohonan(session,idpermohonan,flagStatusOnline); }
 			 * 
-			 * header.setDataHeader(idpermohonan); dataHeader =
-			 * header.getDataHeader(); context.put("dataHeader", dataHeader);
-			 * if(dataHeader.size()!=0){ Hashtable dh = (Hashtable)
-			 * dataHeader.get(0); flagStatusOnline =
+			 * header.setDataHeader(idpermohonan); dataHeader = header.getDataHeader();
+			 * context.put("dataHeader", dataHeader); if(dataHeader.size()!=0){ Hashtable dh
+			 * = (Hashtable) dataHeader.get(0); flagStatusOnline =
 			 * (String)dh.get("flag_status_online"); catatan_status_online =
 			 * (String)dh.get("catatan_status_online"); }
 			 * 
@@ -1744,21 +1746,23 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// screen
 				vm = listdepan;
 
-			}// close cari
+			} // close cari
 
 			else {
 				String flag_noti = getParam("flag_noti");
-				String notifikasi = request.getParameter("notifikasi") != null ? (String) request.getParameter("notifikasi") : "0";
-				listPageDepan = modelOnline.getListPemohon(id_user, portal_role,flag_noti);
+				String notifikasi = request.getParameter("notifikasi") != null
+						? (String) request.getParameter("notifikasi")
+						: "0";
+				listPageDepan = modelOnline.getListPemohon(id_user, portal_role, flag_noti);
 				context.put("notifikasi", Integer.parseInt(notifikasi));
 				resetValueCarian();
-				
+
 				// screen
-			
+
 				vm = listdepan;
-				
-			}// close else
-			System.out.println("VM ni kat mana :::::: "+vm);
+
+			} // close else
+			System.out.println("VM ni kat mana :::::: " + vm);
 			// list permohonan
 			context.put("listPermohonan", listPageDepan);
 			context.put("list_size", listPageDepan.size());
@@ -1769,7 +1773,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			// flag subjaket
 			context.put("flag_subjaket", flag_subjaket);
 
-			// id 
+			// id
 			context.put("id_permohonan", idpermohonan);
 			context.put("id_hakmilik", idHakmilik);
 			context.put("id_status", id_status);
@@ -1779,7 +1783,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			context.put("flagStatusOnline", flagStatusOnline);
 			context.put("catatan_status_online", catatan_status_online);
 			context.put("flag_semakan_online", flag_semakan_online);
-//			context.put("ulasanjt", ulasanjt);
+			// context.put("ulasanjt", ulasanjt);
 
 			this.context.put("selectedTab", selectedTab);
 			setupPage(session, action, listPageDepan);
@@ -1794,12 +1798,11 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	}// close public template
 
 	// --METHOD--//
-	
-	private void hantarEmel(String string, String string2, String string3,
-			String rujukanOnline, String namaProjek, String tarikhPermohonan,
-			String kementerian, String id_user) {
+
+	private void hantarEmel(String string, String string2, String string3, String rujukanOnline, String namaProjek,
+			String tarikhPermohonan, String kementerian, String id_user) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public String getUserIC(HttpSession session, String USER_ID) throws Exception {
@@ -1810,20 +1813,18 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		try {
 			db = new Db();
 			stmt = db.getStatement();
-			String getUserIC="";
-			sql = " SELECT UO.NO_KP_BARU FROM USERS U, USERS_ONLINE UO "+
-					" WHERE U.USER_ID = UO.USER_ID "+
-					" AND U.USER_ID = '"+USER_ID+"'";				
-				myLogger.info(" OT : getUserIC :" + sql.toUpperCase());
-				rs = stmt.executeQuery(sql);
-				
-				
-				while (rs.next()) {				
+			String getUserIC = "";
+			sql = " SELECT UO.NO_KP_BARU FROM USERS U, USERS_ONLINE UO " + " WHERE U.USER_ID = UO.USER_ID "
+					+ " AND U.USER_ID = '" + USER_ID + "'";
+			myLogger.info(" OT : getUserIC :" + sql.toUpperCase());
+			rs = stmt.executeQuery(sql);
 
-					getUserIC = (rs.getString("NO_KP_BARU") == null ? "" : rs.getString("NO_KP_BARU"));
-					
-				}
-			
+			while (rs.next()) {
+
+				getUserIC = (rs.getString("NO_KP_BARU") == null ? "" : rs.getString("NO_KP_BARU"));
+
+			}
+
 			return getUserIC;
 		} finally {
 			if (rs != null)
@@ -1836,11 +1837,13 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	}
 
 	@SuppressWarnings({ "static-access" })
-	private void sendEmail(String nama_projek, String tarikh_permohonan, String userIdKementerian, String id_jawatan_user, String id_user, String purpose) throws Exception {
+	private void sendEmail(String nama_projek, String tarikh_permohonan, String userIdKementerian,
+			String id_jawatan_user, String id_user, String purpose) throws Exception {
 
 		EmailOnline et = new EmailOnline();
-		et.setEmail("", "", purpose, "", nama_projek, tarikh_permohonan, "", userIdKementerian, id_jawatan_user, id_user);
-		System.out.println("*** sendEmail : "+nama_projek+" "+tarikh_permohonan);
+		et.setEmail("", "", purpose, "", nama_projek, tarikh_permohonan, "", userIdKementerian, id_jawatan_user,
+				id_user);
+		System.out.println("*** sendEmail : " + nama_projek + " " + tarikh_permohonan);
 
 	}// close sendEmail
 
@@ -1848,7 +1851,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		// dropdown
 		context.put("selectStatusSPT", HTML.SelectStatusSPT("socStatus", null, "style=width:auto"));
-		context.put("selectJenisHMCarian", getJenisHakmilik().Pilihan("socJenisHakmilik", null, "id=selectJenisHMCarian style=width:auto"));
+		context.put("selectJenisHMCarian",
+				getJenisHakmilik().Pilihan("socJenisHakmilik", null, "id=selectJenisHMCarian style=width:auto"));
 		context.put("selectNegeriCarian", HTML.SelectNegeriMampu("socNegeri", null, null, "style=width:auto"));
 		context.put("txtNoFailCarian", "");
 		context.put("txdTarikhPermohonan", "");
@@ -1887,12 +1891,12 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("id_permohonan", getParam("id_permohonan"));
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 		h.put("flag_semakan_online", flag);
-		
-		System.out.println("flag return 1 :::: "+flag);
-		
+
+		System.out.println("flag return 1 :::: " + flag);
+
 		FrmPermohonanUPTData.updateFlag(h);
-		
-		System.out.println("flag return 2 :::: "+flag);
+
+		System.out.println("flag return 2 :::: " + flag);
 
 	}// close updateFlag
 
@@ -1954,8 +1958,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		String idJenisBebanan = getParam("socJenisBebanan");
 
 		// dropdown (new)
-		context.put("selectJenisNoPB", HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(idJenisNoPB), "style=width:auto"));
-		context.put("selectBebanan", HTML.SelectBebanan("socJenisBebanan", Utils.parseLong(idJenisBebanan), "style=width:auto"));
+		context.put("selectJenisNoPB",
+				HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(idJenisNoPB), "style=width:auto"));
+		context.put("selectBebanan",
+				HTML.SelectBebanan("socJenisBebanan", Utils.parseLong(idJenisBebanan), "style=width:auto"));
 
 		if (mode.equals("new")) {
 			context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(idNegeri), null,
@@ -2025,44 +2031,35 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		}
 
 		// untuk kelantan shj
-		context.put(
-				"SelectDaerahPenggawa",
-				HTML.SelectDaerahPenggawa("socDaerahPenggawa", Utils.parseLong(id_daerahpenggawa), null, " " + mode
-						+ " style=width:274px"));
+		context.put("SelectDaerahPenggawa", HTML.SelectDaerahPenggawa("socDaerahPenggawa",
+				Utils.parseLong(id_daerahpenggawa), null, " " + mode + " style=width:274px"));
 
 		// dropdown
 		if (id_negeriprojek.equals("10")) {
-			context.put("selectJenisHakmilik", HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",
-					Utils.parseLong(id_jenishakmilik), "id=socJenisHakmilik " + mode + " style=width:auto onchange=doOnchange()"));
+			context.put("selectJenisHakmilik",
+					HTML.SelectJenisHakmilikSelangor("socJenisHakmilik", Utils.parseLong(id_jenishakmilik),
+							"id=socJenisHakmilik " + mode + " style=width:auto onchange=doOnchange()"));
 		} else {
-			context.put(
-					"selectJenisHakmilik",
-					HTML.SelectJenisHakmilik("socJenisHakmilik", Utils.parseLong(id_jenishakmilik), "id=socJenisHakmilik " + mode
-							+ " style=width:auto onchange=doOnchange()"));
+			context.put("selectJenisHakmilik",
+					HTML.SelectJenisHakmilik("socJenisHakmilik", Utils.parseLong(id_jenishakmilik),
+							"id=socJenisHakmilik " + mode + " style=width:auto onchange=doOnchange()"));
 		}
 
-		context.put(
-				"selectKategoriTanah",
-				HTML.SelectKategoriTanah("socKategoriTanah", Utils.parseLong(id_kategoritanah), "id=socKategoriTanah " + mode
-						+ " style=width:auto", null));
-		context.put("selectKodLot", HTML.SelectUnitPT("socKodLot", Utils.parseLong(id_lot), "style=width:auto " + mode + " "));
+		context.put("selectKategoriTanah", HTML.SelectKategoriTanah("socKategoriTanah",
+				Utils.parseLong(id_kategoritanah), "id=socKategoriTanah " + mode + " style=width:auto", null));
+		context.put("selectKodLot",
+				HTML.SelectUnitPT("socKodLot", Utils.parseLong(id_lot), "style=width:auto " + mode + " "));
 
 		// dropdown unit luas
-		context.put(
-				"selectUnitLuasLot",
-				HTML.SelectLuas("socUnitLuasLot", Utils.parseLong(id_luaslot), "style=width:250px " + mode
-						+ " id=socUnitLuasLot onchange=onchangeUnitLuasAsal()"));
-		context.put(
-				"selectUnitLuasAmbil",
-				HTML.SelectLuas("socUnitLuasAmbil", Utils.parseLong(id_unitluasambil), "style=width:250px " + mode
-						+ " id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbil()"));
+		context.put("selectUnitLuasLot", HTML.SelectLuas("socUnitLuasLot", Utils.parseLong(id_luaslot),
+				"style=width:250px " + mode + " id=socUnitLuasLot onchange=onchangeUnitLuasAsal()"));
+		context.put("selectUnitLuasAmbil", HTML.SelectLuas("socUnitLuasAmbil", Utils.parseLong(id_unitluasambil),
+				"style=width:250px " + mode + " id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbil()"));
 
 		// dropdown by
 		if (id_daerah != "") {
-			context.put(
-					"selectMukim",
-					HTML.SelectMukimNoKodByDaerah(id_daerah, "socMukim", Utils.parseLong(id_mukim), "style=width:auto " + mode
-							+ ""));
+			context.put("selectMukim", HTML.SelectMukimNoKodByDaerah(id_daerah, "socMukim", Utils.parseLong(id_mukim),
+					"style=width:auto " + mode + ""));
 		} else {
 			context.put("selectMukim",
 					HTML.SelectMukimNoKod("socMukim", Utils.parseLong(id_mukim), "style=width:auto " + mode + ""));
@@ -2089,12 +2086,12 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		}
 
 		// dropdown (disabled)
-		context.put("selectJenisNoPB",
-				HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(id_jenisnopb), "style=width:auto disabled class=disabled"));
+		context.put("selectJenisNoPB", HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(id_jenisnopb),
+				"style=width:auto disabled class=disabled"));
 		context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri), null,
 				"style=width:300px disabled class=disabled"));
-		context.put("selectBandar",
-				HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar), "style=width:300px disabled class=disabled"));
+		context.put("selectBandar", HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar),
+				"style=width:300px disabled class=disabled"));
 		context.put("selectBebanan", HTML.SelectBebanan("socJenisBebanan", Utils.parseLong(id_jenisbebanan),
 				"style=width:auto disabled class=disabled"));
 
@@ -2199,23 +2196,23 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		context.put("dataDetailPB", dataDetailPB);
 
 		// dropdown (view)
-		context.put("selectJenisNoPB",
-				HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(id_jenisNoPB), "style=width:auto class=disabled disabled"));
-		context.put("selectJenisPB",
-				HTML.SelectJenisPb("socJenisPB", Utils.parseLong(id_jenisPB), "style=width:300px class=disabled disabled"));
-		context.put("selectBangsa",
-				HTML.SelectBangsa("socBangsa", Utils.parseLong(id_bangsa), "style=width:300px class=disabled disabled"));
-		context.put("selectWarga",
-				HTML.SelectWarganegara("socWarga", Utils.parseLong(id_warganegara), "style=width:auto class=disabled disabled"));
-		context.put("selectNegeri",
-				HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri), "style=width:300px class=disabled disabled"));
-		context.put("selectBandar",
-				HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar), "style=width:300px class=disabled disabled"));
+		context.put("selectJenisNoPB", HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(id_jenisNoPB),
+				"style=width:auto class=disabled disabled"));
+		context.put("selectJenisPB", HTML.SelectJenisPb("socJenisPB", Utils.parseLong(id_jenisPB),
+				"style=width:300px class=disabled disabled"));
+		context.put("selectBangsa", HTML.SelectBangsa("socBangsa", Utils.parseLong(id_bangsa),
+				"style=width:300px class=disabled disabled"));
+		context.put("selectWarga", HTML.SelectWarganegara("socWarga", Utils.parseLong(id_warganegara),
+				"style=width:auto class=disabled disabled"));
+		context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri),
+				"style=width:300px class=disabled disabled"));
+		context.put("selectBandar", HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar),
+				"style=width:300px class=disabled disabled"));
 
 		// dropdown bahagian
-		context.put("selectBahagianPB", HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB",
-				Utils.parseLong(id_bahagianpb), null,
-				" class=disabled disabled style=width:250px onChange=\"onchangeGetBahagianUpdate();\""));
+		context.put("selectBahagianPB",
+				HTML.SelectBahagianPBbyHakmilik(idHakmilik, "socBahagianPB", Utils.parseLong(id_bahagianpb), null,
+						" class=disabled disabled style=width:250px onChange=\"onchangeGetBahagianUpdate();\""));
 
 	}// close dataPBVIEW
 
@@ -2269,17 +2266,22 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		}
 
 		// dropdown (new)
-		context.put("selectJenisNoPB", HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(id_jenisNoPB), "style=width:auto"));
-		context.put("selectJenisPB", HTML.SelectJenisPb("socJenisPB", Utils.parseLong(id_jenisPB), "style=width:300px"));
+		context.put("selectJenisNoPB",
+				HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(id_jenisNoPB), "style=width:auto"));
+		context.put("selectJenisPB",
+				HTML.SelectJenisPb("socJenisPB", Utils.parseLong(id_jenisPB), "style=width:300px"));
 		context.put("selectBangsa", HTML.SelectBangsa("socBangsa", Utils.parseLong(id_bangsa), "style=width:300px"));
-		context.put("selectWarga", HTML.SelectWarganegara("socWarga", Utils.parseLong(id_warganegara), "style=width:auto"));
-		context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri), "style=width:300px"));
+		context.put("selectWarga",
+				HTML.SelectWarganegara("socWarga", Utils.parseLong(id_warganegara), "style=width:auto"));
+		context.put("selectNegeri",
+				HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri), "style=width:300px"));
 
 		if (id_negeri != "") {
 			context.put("selectBandar",
 					HTML.SelectBandarByNegeri(id_negeri, "socBandar", Utils.parseLong(id_bandar), "style=width:300px"));
 		} else {
-			context.put("selectBandar", HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar), "style=width:300px"));
+			context.put("selectBandar",
+					HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar), "style=width:300px"));
 		}
 
 		// set exist data pb
@@ -2426,7 +2428,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		String txtNoAkaun = getParam("txtNoAkaun");
 
 		// dropdown (new)
-		context.put("selectJenisNoPB", HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(idJenisNoPB), "style=width:auto"));
+		context.put("selectJenisNoPB",
+				HTML.SelectJenisNoPb("socJenisNoPB", Utils.parseLong(idJenisNoPB), "style=width:auto"));
 		context.put("selectJenisPB", HTML.SelectJenisPb("socJenisPB", Utils.parseLong(idJenisPB), "style=width:300px"));
 		context.put("selectBangsa", HTML.SelectBangsa("socBangsa", Utils.parseLong(idBangsa), "style=width:300px"));
 		context.put("selectWarga", HTML.SelectWarganegara("socWarga", Utils.parseLong(idWarga), "style=width:auto"));
@@ -2929,45 +2932,35 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		}
 
 		// untuk kelantan shj
-		context.put(
-				"SelectDaerahPenggawa",
-				HTML.SelectDaerahPenggawa("socDaerahPenggawa", Utils.parseLong(id_daerahpenggawa), null, " " + mode
-						+ " style=width:274px"));
+		context.put("SelectDaerahPenggawa", HTML.SelectDaerahPenggawa("socDaerahPenggawa",
+				Utils.parseLong(id_daerahpenggawa), null, " " + mode + " style=width:274px"));
 
 		// dropdown hakmilik
 		if (id_negeriprojek.equals("10")) {
-			context.put("selectJenisHakmilik", HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",
-					Utils.parseLong(id_jenishakmilik), "id=socJenisHakmilik " + mode
-							+ " style=width:auto onchange=doOnchangeUpdate()"));
+			context.put("selectJenisHakmilik",
+					HTML.SelectJenisHakmilikSelangor("socJenisHakmilik", Utils.parseLong(id_jenishakmilik),
+							"id=socJenisHakmilik " + mode + " style=width:auto onchange=doOnchangeUpdate()"));
 		} else {
-			context.put(
-					"selectJenisHakmilik",
-					HTML.SelectJenisHakmilik("socJenisHakmilik", Utils.parseLong(id_jenishakmilik), "id=socJenisHakmilik " + mode
-							+ " style=width:auto onchange=doOnchangeUpdate()"));
+			context.put("selectJenisHakmilik",
+					HTML.SelectJenisHakmilik("socJenisHakmilik", Utils.parseLong(id_jenishakmilik),
+							"id=socJenisHakmilik " + mode + " style=width:auto onchange=doOnchangeUpdate()"));
 		}
 
-		context.put(
-				"selectKategoriTanah",
-				HTML.SelectKategoriTanah("socKategoriTanah", Utils.parseLong(id_kategoritanah), "id=socKategoriTanah " + mode
-						+ " style=width:auto", null));
-		context.put("selectKodLot", HTML.SelectUnitPT("socKodLot", Utils.parseLong(id_lot), "style=width:auto " + mode + " "));
+		context.put("selectKategoriTanah", HTML.SelectKategoriTanah("socKategoriTanah",
+				Utils.parseLong(id_kategoritanah), "id=socKategoriTanah " + mode + " style=width:auto", null));
+		context.put("selectKodLot",
+				HTML.SelectUnitPT("socKodLot", Utils.parseLong(id_lot), "style=width:auto " + mode + " "));
 
 		// dropdown unit luas
-		context.put(
-				"selectUnitLuasLot",
-				HTML.SelectLuas("socUnitLuasLot", Utils.parseLong(id_luaslot), "style=width:250px " + mode
-						+ " id=socUnitLuasLot onchange=onchangeUnitLuasAsalUpdate()"));
-		context.put(
-				"selectUnitLuasAmbil",
-				HTML.SelectLuas("socUnitLuasAmbil", Utils.parseLong(id_unitluasambil), "style=width:250px " + mode
-						+ " id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbilUpdate()"));
+		context.put("selectUnitLuasLot", HTML.SelectLuas("socUnitLuasLot", Utils.parseLong(id_luaslot),
+				"style=width:250px " + mode + " id=socUnitLuasLot onchange=onchangeUnitLuasAsalUpdate()"));
+		context.put("selectUnitLuasAmbil", HTML.SelectLuas("socUnitLuasAmbil", Utils.parseLong(id_unitluasambil),
+				"style=width:250px " + mode + " id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbilUpdate()"));
 
 		// dropdown by
 		if (id_daerah != "") {
-			context.put(
-					"selectMukim",
-					HTML.SelectMukimNoKodByDaerah(id_daerah, "socMukim", Utils.parseLong(id_mukim), "style=width:auto " + mode
-							+ ""));
+			context.put("selectMukim", HTML.SelectMukimNoKodByDaerah(id_daerah, "socMukim", Utils.parseLong(id_mukim),
+					"style=width:auto " + mode + ""));
 		} else {
 			context.put("selectMukim",
 					HTML.SelectMukimNoKod("socMukim", Utils.parseLong(id_mukim), "style=width:auto " + mode + ""));
@@ -3027,249 +3020,248 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		// pengambilan segera
 		h.put("socPSegera", getParam("socPSegera"));
 
-		//FrmUPTSek8HakmilikData.
+		// FrmUPTSek8HakmilikData.
 		simpanHM2(h, flagSubjaket);
-		//FrmUPTSek8HakmilikData.upload(h, getParam("id_permohonan"));
+		// FrmUPTSek8HakmilikData.upload(h, getParam("id_permohonan"));
 
 	}// close simpanHM
-	
-	public void simpanHM2(Hashtable data,String flagSubjaket) throws Exception
-	  {
-		myLogger.info("simpanHM");
-	    Db db = null;
-	    String sql = "";
-	    Connection conn = null;
-	    try{
-	      
-	    		db = new Db();
-	    		conn = db.getConnection();
-	    		conn.setAutoCommit(false);
-	    		Statement stmt = db.getStatement();
-	    		
-	    		String id_user = (String)data.get("id_user");
 
-	    		//pengambilan segera
-	    		String socPSegera = (String)data.get("socPSegera");
-	    		
-	    		String socDaerahPenggawa = (String)data.get("socDaerahPenggawa");
-	    		String id_permohonan = (String)data.get("id_permohonan");
-	    		String id_negeriProjek = (String)data.get("id_negeriProjek");
-	    		String id_daerahProjek = (String)data.get("id_daerahProjek");
-	    		String id_mukimProjek = (String)data.get("socMukim");
-	    		String txtseksyen = (String)data.get("txtseksyen");
-	    		String catatan = (String)data.get("txtCatatan");
-	    		String txdTarikhPembayaran =(String)data.get("txdTarikhPembayaran");
-	    		String txtnolot = (String)data.get("txtNoLot");
-	    		String txtnopt = (String)data.get("txtNoPT");
-	    		
-	    		String id_jenishakmilik = (String)data.get("jenisHakMilik");	 
-	    		String no_hakmilik = (String)data.get("txtNoHakmilik");
-	    		String id_lot = (String)data.get("kodLot");
-	    		String id_luasasal = (String)data.get("unitLuas");
-	    		String luas_ambil = (String)data.get("txtLuasAmbil");	
-	    		String luas_asal = (String)data.get("txtLuasAsal");
-	    		
-	    		String tarikhLuput = (String)data.get("txdTarikhLuput");	 
-	    		String tarikhDaftar = (String)data.get("txdTarikhDaftar");
-	    		String baki = (String)data.get("txtBakiTempoh");
-	    		String id_kategoriTanah = (String)data.get("socKategoriTanah");
-	    		String lokasi = (String)data.get("txtLokasi");	
-	    	
-	    		//new
-	    		String id_luasambil = (String)data.get("unitLuasAmbil");
-	    		String nama_luas_asal = (String)data.get("txtLuasLotAsalSebelumConvert");
-	    		String nama_luas_ambil = (String)data.get("txtLuasLotAmbilSebelumConvert");
-	    		String id_unitluaslot_convert = (String)data.get("sorDropdownUnitAsal");
-	    		String id_unitluasambil_convert = (String)data.get("sorDropdownUnitAmbil");
-	    		
-	    		//rizab
-	    		String sorJenisRizab = (String)data.get("sorJenisRizab");
-	    		String txtLain = (String)data.get("txtLain");
-	    		String txtNoWartaRizab = (String)data.get("txtNoWartaRizab");
-	    		String txdTarikhWarta = (String)data.get("txdTarikhWarta");
-	    		
-	    		String syaratNyata = (String)data.get("txtSyaratNyata");	 
-	    		String syaratKhas = (String)data.get("txtSyaratKhas");
-	    		String sekatanKepentingan = (String)data.get("txtSekatanKepentingan");
-	    		String sekatanHak = (String)data.get("txtSekatanHak");
-	    		String noSyit = (String)data.get("txtNoSyit");	
-	    		
-	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
-	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
-	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
-	    		String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
-	    		
-	    		
-	    		String flagSebahagian = "0";
-	    		
-	    		if(!luas_asal.isEmpty() && !luas_ambil.isEmpty()){
-	    			
-	    			//validate sebahagian / keseluruhan
-	    			double luasAsal = Double.parseDouble(luas_asal);
-	    			if(id_unitluaslot_convert.equals("1")){
-	    				luasAsal *= 10000;
-	    			}
-	    		
-	    		
-	    			double luasAmbil = Double.parseDouble(luas_ambil);
-	    			if(id_unitluasambil_convert.equals("1")){
-	    				luasAmbil *= 10000;
-	    			}
-	    		
-	    			if((luasAsal - luasAmbil) > 0 ){
-	    				flagSebahagian = "1";
-	    			}else if((luasAsal - luasAmbil) == 0 ){
-	    				flagSebahagian = "2";
-	    			}else{
-	    				flagSebahagian = "0";
-	    			}
-	    		
-	    		}
-	    		
-	    		//1 = sebahagian
-	    		//2 = keseluruhan	    		
-	    		SQLRenderer r = new SQLRenderer();
-	    		r.add("flag_sebahagian",flagSebahagian);
-	    		//flag segera
-	    		r.add("FLAG_SEGERA_SEBAHAGIAN", socPSegera);
-	    		r.add("id_daerahpenggawa", socDaerahPenggawa);
-	    		r.add("id_permohonan", id_permohonan);
-	    		r.add("id_negeri", id_negeriProjek); 	
-	    		r.add("id_jenishakmilik", id_jenishakmilik);
-	    		r.add("id_daerah", id_daerahProjek);
-	    		r.add("no_warta_rizab", txtNoWartaRizab); 	
-	    		r.add("tarikh_warta_rizab", r.unquote(TW));
-	    		r.add("flag_jenis_rizab", sorJenisRizab); 	
-	    		r.add("nama_lain_rizab", txtLain);
-	    		r.add("id_mukim", id_mukimProjek);
-	    		r.add("id_unitluaslot", id_luasasal);
-	    		r.add("id_lot", id_lot);
-	    		r.add("luas_lot",luas_asal);
-	    		r.add("luas_ambil", luas_ambil);
-	    		r.add("no_hakmilik", no_hakmilik);
-	    		r.add("no_lot", txtnolot);
-	    		r.add("no_pt", txtnopt);
-	    		r.add("catatan",catatan);
-	    		r.add("tarikh_pembayaran", r.unquote(TP));
-	    		r.add("seksyen",txtseksyen);	    		
-	    		r.add("tarikh_daftar",r.unquote(TD));
-	    		r.add("tarikh_luput",r.unquote(TL));
-	    		r.add("tempoh_luput", baki);
-	    		r.add("id_kategoritanah",id_kategoriTanah);
-	    		r.add("lokasi",lokasi);	    		
-	    		r.add("syarat_nyata", syaratNyata);
-	    		r.add("syarat_khas", syaratKhas);
-	    		r.add("sekatan_kepentingan",sekatanKepentingan);
-	    		r.add("sekatan_hak",sekatanHak);
-	    		r.add("no_syit",noSyit);	
-	    		
-	    		//new
-	    		r.add("id_unitluasambil", id_luasambil);
-	    		r.add("nama_luas_asal", nama_luas_asal);
-	    		r.add("nama_luas_ambil", nama_luas_ambil);
-	    		r.add("id_unitluaslot_convert", id_unitluaslot_convert);
-	    		r.add("id_unitluasambil_convert", id_unitluasambil_convert);	
-	    		
-	    		r.add("tarikh_masuk",r.unquote("sysdate"));
-	    		r.add("id_masuk",id_user);    		
-	    		sql = r.getSQLInsert("tblppthakmilik");
-	    		myLogger.info("sql add tanah : "+sql);
-	    		stmt.executeUpdate(sql);
-	    		conn.commit();
-  			uploadFiles(db,conn,id_permohonan);
-	    		//remove subjaket kalau dah ada
-	    		if(flagSubjaket.equals("1")){
-	    			
-	    			r.clear();
-	    		
-	    			//update flag di tblpptpermohonan
-	    			r.update("id_permohonan", id_permohonan);		    				
-	    			r.add("flag_subjaket", "");
-	    			r.add("tarikh_kemaskini",r.unquote("sysdate"));
-	    			r.add("id_kemaskini",id_user); 
-	    			
-	    			sql = r.getSQLUpdate("Tblpptpermohonan");
-	    			stmt.executeUpdate(sql);
-	    			
-	    			r.clear();
-	    			
-	    			r.update("id_permohonan", id_permohonan);		    				
-	    			r.add("no_subjaket", "");
-	    			r.add("tarikh_kemaskini",r.unquote("sysdate"));
-	    			r.add("id_kemaskini",id_user);    		
-	    			sql = r.getSQLUpdate("Tblppthakmilik");
-	    			stmt.executeUpdate(sql);
-	    			conn.commit();
-	    			uploadFiles(db,conn,id_permohonan);
-	    		}
-	    		
-	    		
-	    } catch (Exception re) {
-	    	Category log = null;
+	public void simpanHM2(Hashtable data, String flagSubjaket) throws Exception {
+		myLogger.info("simpanHM");
+		Db db = null;
+		String sql = "";
+		Connection conn = null;
+		try {
+
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+
+			String id_user = (String) data.get("id_user");
+
+			// pengambilan segera
+			String socPSegera = (String) data.get("socPSegera");
+
+			String socDaerahPenggawa = (String) data.get("socDaerahPenggawa");
+			String id_permohonan = (String) data.get("id_permohonan");
+			String id_negeriProjek = (String) data.get("id_negeriProjek");
+			String id_daerahProjek = (String) data.get("id_daerahProjek");
+			String id_mukimProjek = (String) data.get("socMukim");
+			String txtseksyen = (String) data.get("txtseksyen");
+			String catatan = (String) data.get("txtCatatan");
+			String txdTarikhPembayaran = (String) data.get("txdTarikhPembayaran");
+			String txtnolot = (String) data.get("txtNoLot");
+			String txtnopt = (String) data.get("txtNoPT");
+
+			String id_jenishakmilik = (String) data.get("jenisHakMilik");
+			String no_hakmilik = (String) data.get("txtNoHakmilik");
+			String id_lot = (String) data.get("kodLot");
+			String id_luasasal = (String) data.get("unitLuas");
+			String luas_ambil = (String) data.get("txtLuasAmbil");
+			String luas_asal = (String) data.get("txtLuasAsal");
+
+			String tarikhLuput = (String) data.get("txdTarikhLuput");
+			String tarikhDaftar = (String) data.get("txdTarikhDaftar");
+			String baki = (String) data.get("txtBakiTempoh");
+			String id_kategoriTanah = (String) data.get("socKategoriTanah");
+			String lokasi = (String) data.get("txtLokasi");
+
+			// new
+			String id_luasambil = (String) data.get("unitLuasAmbil");
+			String nama_luas_asal = (String) data.get("txtLuasLotAsalSebelumConvert");
+			String nama_luas_ambil = (String) data.get("txtLuasLotAmbilSebelumConvert");
+			String id_unitluaslot_convert = (String) data.get("sorDropdownUnitAsal");
+			String id_unitluasambil_convert = (String) data.get("sorDropdownUnitAmbil");
+
+			// rizab
+			String sorJenisRizab = (String) data.get("sorJenisRizab");
+			String txtLain = (String) data.get("txtLain");
+			String txtNoWartaRizab = (String) data.get("txtNoWartaRizab");
+			String txdTarikhWarta = (String) data.get("txdTarikhWarta");
+
+			String syaratNyata = (String) data.get("txtSyaratNyata");
+			String syaratKhas = (String) data.get("txtSyaratKhas");
+			String sekatanKepentingan = (String) data.get("txtSekatanKepentingan");
+			String sekatanHak = (String) data.get("txtSekatanHak");
+			String noSyit = (String) data.get("txtNoSyit");
+
+			String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
+			String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
+			String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
+			String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
+
+			String flagSebahagian = "0";
+
+			if (!luas_asal.isEmpty() && !luas_ambil.isEmpty()) {
+
+				// validate sebahagian / keseluruhan
+				double luasAsal = Double.parseDouble(luas_asal);
+				if (id_unitluaslot_convert.equals("1")) {
+					luasAsal *= 10000;
+				}
+
+				double luasAmbil = Double.parseDouble(luas_ambil);
+				if (id_unitluasambil_convert.equals("1")) {
+					luasAmbil *= 10000;
+				}
+
+				if ((luasAsal - luasAmbil) > 0) {
+					flagSebahagian = "1";
+				} else if ((luasAsal - luasAmbil) == 0) {
+					flagSebahagian = "2";
+				} else {
+					flagSebahagian = "0";
+				}
+
+			}
+
+			// 1 = sebahagian
+			// 2 = keseluruhan
+			SQLRenderer r = new SQLRenderer();
+			r.add("flag_sebahagian", flagSebahagian);
+			// flag segera
+			r.add("FLAG_SEGERA_SEBAHAGIAN", socPSegera);
+			r.add("id_daerahpenggawa", socDaerahPenggawa);
+			r.add("id_permohonan", id_permohonan);
+			r.add("id_negeri", id_negeriProjek);
+			r.add("id_jenishakmilik", id_jenishakmilik);
+			r.add("id_daerah", id_daerahProjek);
+			r.add("no_warta_rizab", txtNoWartaRizab);
+			r.add("tarikh_warta_rizab", r.unquote(TW));
+			r.add("flag_jenis_rizab", sorJenisRizab);
+			r.add("nama_lain_rizab", txtLain);
+			r.add("id_mukim", id_mukimProjek);
+			r.add("id_unitluaslot", id_luasasal);
+			r.add("id_lot", id_lot);
+			r.add("luas_lot", luas_asal);
+			r.add("luas_ambil", luas_ambil);
+			r.add("no_hakmilik", no_hakmilik);
+			r.add("no_lot", txtnolot);
+			r.add("no_pt", txtnopt);
+			r.add("catatan", catatan);
+			r.add("tarikh_pembayaran", r.unquote(TP));
+			r.add("seksyen", txtseksyen);
+			r.add("tarikh_daftar", r.unquote(TD));
+			r.add("tarikh_luput", r.unquote(TL));
+			r.add("tempoh_luput", baki);
+			r.add("id_kategoritanah", id_kategoriTanah);
+			r.add("lokasi", lokasi);
+			r.add("syarat_nyata", syaratNyata);
+			r.add("syarat_khas", syaratKhas);
+			r.add("sekatan_kepentingan", sekatanKepentingan);
+			r.add("sekatan_hak", sekatanHak);
+			r.add("no_syit", noSyit);
+
+			// new
+			r.add("id_unitluasambil", id_luasambil);
+			r.add("nama_luas_asal", nama_luas_asal);
+			r.add("nama_luas_ambil", nama_luas_ambil);
+			r.add("id_unitluaslot_convert", id_unitluaslot_convert);
+			r.add("id_unitluasambil_convert", id_unitluasambil_convert);
+
+			r.add("tarikh_masuk", r.unquote("sysdate"));
+			r.add("id_masuk", id_user);
+			sql = r.getSQLInsert("tblppthakmilik");
+			myLogger.info("sql add tanah : " + sql);
+			stmt.executeUpdate(sql);
+			conn.commit();
+			uploadFiles(db, conn, id_permohonan);
+			// remove subjaket kalau dah ada
+			if (flagSubjaket.equals("1")) {
+
+				r.clear();
+
+				// update flag di tblpptpermohonan
+				r.update("id_permohonan", id_permohonan);
+				r.add("flag_subjaket", "");
+				r.add("tarikh_kemaskini", r.unquote("sysdate"));
+				r.add("id_kemaskini", id_user);
+
+				sql = r.getSQLUpdate("Tblpptpermohonan");
+				stmt.executeUpdate(sql);
+
+				r.clear();
+
+				r.update("id_permohonan", id_permohonan);
+				r.add("no_subjaket", "");
+				r.add("tarikh_kemaskini", r.unquote("sysdate"));
+				r.add("id_kemaskini", id_user);
+				sql = r.getSQLUpdate("Tblppthakmilik");
+				stmt.executeUpdate(sql);
+				conn.commit();
+				uploadFiles(db, conn, id_permohonan);
+			}
+
+		} catch (Exception re) {
+			Category log = null;
 			log.error("Error: ", re);
-	    	throw re;
-	    	}//close try 
-	    finally {
-	      if (db != null) db.close();
-	    }//close finally
-	   
-	}//close simpanHM
-	
-	//upload start
-	
-	
-	private void uploadFiles(Db db,Connection conn, String id_permohonan) throws Exception {
-		myLogger.info("Baca uploadFiles:--------------"); 
+			throw re;
+		} // close try
+		finally {
+			if (db != null)
+				db.close();
+		} // close finally
+
+	}// close simpanHM
+
+	// upload start
+
+	private void uploadFiles(Db db, Connection conn, String id_permohonan) throws Exception {
+		myLogger.info("Baca uploadFiles:--------------");
 		String nama_pemohon_lama2 = id_permohonan;
 		DiskFileItemFactory factory = new DiskFileItemFactory();
-	    ServletFileUpload upload = new ServletFileUpload(factory);
-	    myLogger.info("Baca uploadFiles1:--------------"); 
-	    List items = upload.parseRequest(request);
-	    myLogger.info("Baca uploadFiles2:--------------"); 
-	    Iterator itr = items.iterator();	   
-	    while (itr.hasNext()) {    	
-	      FileItem item = (FileItem)itr.next();
-	      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-	    	  System.out.println("item.getName = "+ item.getName());
-	    	  saveData(item,db,conn,id_permohonan);
-	      }
-	    }
-	  }
-	
-	
-	private static void saveData(FileItem item,Db db,Connection conn, String id_permohonan) throws Exception {
-		//Db db = null;
-	
-    try {
-    	db = new Db();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		myLogger.info("Baca uploadFiles1:--------------");
+		List items = upload.parseRequest(request);
+		myLogger.info("Baca uploadFiles2:--------------");
+		Iterator itr = items.iterator();
+		while (itr.hasNext()) {
+			FileItem item = (FileItem) itr.next();
+			if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+				System.out.println("item.getName = " + item.getName());
+				saveData(item, db, conn, id_permohonan);
+			}
+		}
+	}
 
-    	Connection con = db.getConnection();
-    	con.setAutoCommit(false);
-    	String id_permohonan2 = id_permohonan;
-    	//String id_permohonansimati = getParam("id_permohonansimati_atheader");
-    	PreparedStatement ps = con.prepareStatement("UPDATE tblppthakmilik SET nama_fail_upload = ?, content = ?, jenis_Mime = ? WHERE (id_permohonan = ?)");		
-    	//System.out.println("+nama_pemohon_lama3+ " + nama_pemohon_lama3);
-    	//System.out.println(con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE ID_PERMOHONANSIMATI = ?"));
-    	ps.setString(1,item.getName());
-    	ps.setBinaryStream(2,item.getInputStream(),(int)item.getSize());
-    	ps.setString(3,item.getContentType());
-    	//System.out.println("item.getInputStream = "+ item.getInputStream());
-    	//System.out.println("item.getSize = "+ item.getSize());
-    	//System.out.println("item.getContentType = "+ item.getContentType());
-    	ps.setString(4,id_permohonan2);
-    	//ps.setString(5,nama_pemohon_lama3);
-    	//ps.setString(4,getParam("id_permohonansimati_atheader"));
-    	myLogger.info("id_permohonan:---------------"+id_permohonan); 
-    	myLogger.info("Baca SaveData:---------------"); 
-    	myLogger.info("Baca SaveData:************"); 
-    	myLogger.info("ps.executeUpdate()" + ps.executeUpdate());
-    	ps.executeUpdate();	
-    	myLogger.info("Baca SaveData 2:---------------"); 
-        con.commit();
-    } finally {
-	      if (db != null) db.close();
-    }
-}
+	private static void saveData(FileItem item, Db db, Connection conn, String id_permohonan) throws Exception {
+		// Db db = null;
+		myLogger.info("read here saveData");
+		try {
+			db = new Db();
+
+			Connection con = db.getConnection();
+			con.setAutoCommit(false);
+			String id_permohonan2 = id_permohonan;
+			// String id_permohonansimati = getParam("id_permohonansimati_atheader");
+			PreparedStatement ps = con.prepareStatement(
+					//"UPDATE tblpptdokumenhakmilik SET nama_dokumen = ?, kandungan = ?, format = ? WHERE (id_permohonan = ?)");
+					"INSERT INTO tblpptdokumenhakmilik (nama_dokumen,kandungan,format,id_permohonan)VALUES(?,?,?,?)");
+			// System.out.println("+nama_pemohon_lama3+ " + nama_pemohon_lama3);
+			// System.out.println(con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti
+			// = ?, content = ?, jenis_Mime = ? WHERE ID_PERMOHONANSIMATI = ?"));
+			ps.setString(1, item.getName());
+			ps.setBinaryStream(2, item.getInputStream(), (int) item.getSize());
+			ps.setString(3, item.getContentType());
+			// System.out.println("item.getInputStream = "+ item.getInputStream());
+			// System.out.println("item.getSize = "+ item.getSize());
+			// System.out.println("item.getContentType = "+ item.getContentType());
+			ps.setString(4, id_permohonan2);
+			// ps.setString(5,nama_pemohon_lama3);
+			// ps.setString(4,getParam("id_permohonansimati_atheader"));
+			myLogger.info("id_permohonan:---------------" + id_permohonan);
+			myLogger.info("Baca SaveData:---------------");
+			myLogger.info("Baca SaveData:************");
+			myLogger.info("ps.executeUpdate()" + ps.executeUpdate());
+			ps.executeUpdate();
+			myLogger.info("Baca SaveData 2:---------------");
+			con.commit();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	private void updateHM(HttpSession session, String idHakmilik, String id_projekDaerah) throws Exception {
@@ -3471,7 +3463,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "KILOMETER PERSEGI";
 
-		}// close kilometer persegi
+		} // close kilometer persegi
 
 		// 2 = hektar
 		if (unitLuasAsal.equals("2")) {
@@ -3485,7 +3477,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "HEKTAR";
 
-		}// close hektar
+		} // close hektar
 
 		// 3 = meter persegi
 		if (unitLuasAsal.equals("3")) {
@@ -3499,15 +3491,17 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "METER PERSEGI";
 
-		}// close meter persegi
+		} // close meter persegi
 
 		// 4 = ekar/rood/pole
 		if (unitLuasAsal.equals("4")) {
 			if (id_kategoritanah.equals("2")) {
-				total = (Double.parseDouble(luasAsal1) + (Double.parseDouble(luasAsal2) / 4) + (Double.parseDouble(luasAsal3) / 160)) * 0.404686;
+				total = (Double.parseDouble(luasAsal1) + (Double.parseDouble(luasAsal2) / 4)
+						+ (Double.parseDouble(luasAsal3) / 160)) * 0.404686;
 				sorDropdownUnitAsal = "1";
 			} else {
-				total = (Double.parseDouble(luasAsal1) + (Double.parseDouble(luasAsal2) / 4) + (Double.parseDouble(luasAsal3) / 160)) * 4046.86;
+				total = (Double.parseDouble(luasAsal1) + (Double.parseDouble(luasAsal2) / 4)
+						+ (Double.parseDouble(luasAsal3) / 160)) * 4046.86;
 				sorDropdownUnitAsal = "2";
 			}
 
@@ -3515,7 +3509,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			unitSebelumConvert2 = "ROOD";
 			unitSebelumConvert3 = "POLE";
 
-		}// close ekar/rood/pole
+		} // close ekar/rood/pole
 
 		// 5 = kaki persegi
 		if (unitLuasAsal.equals("5")) {
@@ -3529,7 +3523,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "KAKI PERSEGI";
 
-		}// close kaki persegi
+		} // close kaki persegi
 
 		// 6 = ekar perpuluhan
 		if (unitLuasAsal.equals("6")) {
@@ -3543,7 +3537,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "EKAR PERPULUHAN";
 
-		}// close ekar perpuluhan
+		} // close ekar perpuluhan
 
 		// 7 = ekar/depa
 		if (unitLuasAsal.equals("7")) {
@@ -3558,15 +3552,17 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			unitSebelumConvert1 = "EKAR";
 			unitSebelumConvert2 = "DEPA";
 
-		}// close ekar/depa
+		} // close ekar/depa
 
 		// 8 = relong/jemba/kaki persegi
 		if (unitLuasAsal.equals("8")) {
 			if (id_kategoritanah.equals("2")) {
-				total = (Double.parseDouble(luasAsal1) + (Double.parseDouble(luasAsal2) / 484) + (Double.parseDouble(luasAsal3) / 30976)) * 0.711111 * 0.404686;
+				total = (Double.parseDouble(luasAsal1) + (Double.parseDouble(luasAsal2) / 484)
+						+ (Double.parseDouble(luasAsal3) / 30976)) * 0.711111 * 0.404686;
 				sorDropdownUnitAsal = "1";
 			} else {
-				total = (Double.parseDouble(luasAsal1) + (Double.parseDouble(luasAsal2) / 484) + (Double.parseDouble(luasAsal3) / 30976)) * 0.711111 * 4046.86;
+				total = (Double.parseDouble(luasAsal1) + (Double.parseDouble(luasAsal2) / 484)
+						+ (Double.parseDouble(luasAsal3) / 30976)) * 0.711111 * 4046.86;
 				sorDropdownUnitAsal = "2";
 			}
 
@@ -3574,7 +3570,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			unitSebelumConvert2 = "JEMBA";
 			unitSebelumConvert3 = "KAKI PERSEGI";
 
-		}// close relong/jemba/kaki persegi
+		} // close relong/jemba/kaki persegi
 
 		// 9 = batu nautika
 		if (unitLuasAsal.equals("9")) {
@@ -3588,7 +3584,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "BATU NAUTIKA";
 
-		}// close batu nautika
+		} // close batu nautika
 
 		// put data luas asal
 		context.put("txtLuasLotAsal", Utils.formatLuasHM(total));
@@ -3639,7 +3635,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "KILOMETER PERSEGI";
 
-		}// close kilometer persegi
+		} // close kilometer persegi
 
 		// 2 = hektar
 		if (unitLuasAmbil.equals("2")) {
@@ -3653,7 +3649,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "HEKTAR";
 
-		}// close hektar
+		} // close hektar
 
 		// 3 = meter persegi
 		if (unitLuasAmbil.equals("3")) {
@@ -3667,15 +3663,17 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "METER PERSEGI";
 
-		}// close meter persegi
+		} // close meter persegi
 
 		// 4 = ekar/rood/pole
 		if (unitLuasAmbil.equals("4")) {
 			if (id_kategoritanah.equals("2")) {
-				total = (Double.parseDouble(luasAmbil1) + (Double.parseDouble(luasAmbil2) / 4) + (Double.parseDouble(luasAmbil3) / 160)) * 0.404686;
+				total = (Double.parseDouble(luasAmbil1) + (Double.parseDouble(luasAmbil2) / 4)
+						+ (Double.parseDouble(luasAmbil3) / 160)) * 0.404686;
 				sorDropdownUnitAmbil = "1";
 			} else {
-				total = (Double.parseDouble(luasAmbil1) + (Double.parseDouble(luasAmbil2) / 4) + (Double.parseDouble(luasAmbil3) / 160)) * 4046.86;
+				total = (Double.parseDouble(luasAmbil1) + (Double.parseDouble(luasAmbil2) / 4)
+						+ (Double.parseDouble(luasAmbil3) / 160)) * 4046.86;
 				sorDropdownUnitAmbil = "2";
 			}
 
@@ -3683,7 +3681,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			unitSebelumConvert2 = "ROOD";
 			unitSebelumConvert3 = "POLE";
 
-		}// close ekar/rood/pole
+		} // close ekar/rood/pole
 
 		// 5 = kaki persegi
 		if (unitLuasAmbil.equals("5")) {
@@ -3697,7 +3695,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "KAKI PERSEGI";
 
-		}// close kaki persegi
+		} // close kaki persegi
 
 		// 6 = ekar perpuluhan
 		if (unitLuasAmbil.equals("6")) {
@@ -3711,7 +3709,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "EKAR PERPULUHAN";
 
-		}// close ekar perpuluhan
+		} // close ekar perpuluhan
 
 		// 7 = ekar/depa
 		if (unitLuasAmbil.equals("7")) {
@@ -3726,17 +3724,17 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			unitSebelumConvert1 = "EKAR";
 			unitSebelumConvert2 = "DEPA";
 
-		}// close ekar/depa
+		} // close ekar/depa
 
 		// 8 = relong/jemba/kaki persegi
 		if (unitLuasAmbil.equals("8")) {
 			if (id_kategoritanah.equals("2")) {
-				total = (Double.parseDouble(luasAmbil1) + (Double.parseDouble(luasAmbil2) / 484) + (Double
-						.parseDouble(luasAmbil3) / 30976)) * 0.711111 * 0.404686;
+				total = (Double.parseDouble(luasAmbil1) + (Double.parseDouble(luasAmbil2) / 484)
+						+ (Double.parseDouble(luasAmbil3) / 30976)) * 0.711111 * 0.404686;
 				sorDropdownUnitAmbil = "1";
 			} else {
-				total = (Double.parseDouble(luasAmbil1) + (Double.parseDouble(luasAmbil2) / 484) + (Double
-						.parseDouble(luasAmbil3) / 30976)) * 0.711111 * 4046.86;
+				total = (Double.parseDouble(luasAmbil1) + (Double.parseDouble(luasAmbil2) / 484)
+						+ (Double.parseDouble(luasAmbil3) / 30976)) * 0.711111 * 4046.86;
 				sorDropdownUnitAmbil = "2";
 			}
 
@@ -3744,7 +3742,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			unitSebelumConvert2 = "JEMBA";
 			unitSebelumConvert3 = "KAKI PERSEGI";
 
-		}// close relong/jemba/kaki persegi
+		} // close relong/jemba/kaki persegi
 
 		// 9 = batu nautika
 		if (unitLuasAmbil.equals("9")) {
@@ -3758,7 +3756,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			unitSebelumConvert1 = "BATU NAUTIKA";
 
-		}// close batu nautika
+		} // close batu nautika
 
 		// put data luas ambil
 		context.put("txtLuasLotAmbil", Utils.formatLuasHM(total));
@@ -3780,37 +3778,43 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		if (mode.equals("new")) {
 
 			if (id_projekNegeri.equals("10")) {
-				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",
-						Utils.parseLong(getParam("socJenisHakmilik")),
-						"id=socJenisHakmilik style=width:auto onchange=doOnchange()"));
+				context.put("selectJenisHakmilik",
+						HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",
+								Utils.parseLong(getParam("socJenisHakmilik")),
+								"id=socJenisHakmilik style=width:auto onchange=doOnchange()"));
 			} else {
-				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik",
-						Utils.parseLong(getParam("socJenisHakmilik")),
-						"id=socJenisHakmilik style=width:auto onchange=doOnchange()"));
+				context.put("selectJenisHakmilik",
+						HTML.SelectJenisHakmilik("socJenisHakmilik", Utils.parseLong(getParam("socJenisHakmilik")),
+								"id=socJenisHakmilik style=width:auto onchange=doOnchange()"));
 			}
 
 			// dropdown unit luas
-			context.put("selectUnitLuasLot", HTML.SelectLuas("socUnitLuasLot", Utils.parseLong(getParam("socUnitLuasLot")),
-					"style=width:250px id=socUnitLuasLot onchange=onchangeUnitLuasAsal()"));
-			context.put("selectUnitLuasAmbil", HTML.SelectLuas("socUnitLuasAmbil", Utils.parseLong(getParam("socUnitLuasAmbil")),
-					"style=width:250px id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbil()"));
+			context.put("selectUnitLuasLot",
+					HTML.SelectLuas("socUnitLuasLot", Utils.parseLong(getParam("socUnitLuasLot")),
+							"style=width:250px id=socUnitLuasLot onchange=onchangeUnitLuasAsal()"));
+			context.put("selectUnitLuasAmbil",
+					HTML.SelectLuas("socUnitLuasAmbil", Utils.parseLong(getParam("socUnitLuasAmbil")),
+							"style=width:250px id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbil()"));
 		} else {
 
 			if (id_projekNegeri.equals("10")) {
-				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",
-						Utils.parseLong(getParam("socJenisHakmilik")),
-						"id=socJenisHakmilik style=width:auto onchange=doOnchangeUpdate()"));
+				context.put("selectJenisHakmilik",
+						HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",
+								Utils.parseLong(getParam("socJenisHakmilik")),
+								"id=socJenisHakmilik style=width:auto onchange=doOnchangeUpdate()"));
 			} else {
-				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik",
-						Utils.parseLong(getParam("socJenisHakmilik")),
-						"id=socJenisHakmilik style=width:auto onchange=doOnchangeUpdate()"));
+				context.put("selectJenisHakmilik",
+						HTML.SelectJenisHakmilik("socJenisHakmilik", Utils.parseLong(getParam("socJenisHakmilik")),
+								"id=socJenisHakmilik style=width:auto onchange=doOnchangeUpdate()"));
 			}
 
 			// dropdown unit luas
-			context.put("selectUnitLuasLot", HTML.SelectLuas("socUnitLuasLot", Utils.parseLong(getParam("socUnitLuasLot")),
-					"style=width:250px id=socUnitLuasLot onchange=onchangeUnitLuasAsalUpdate()"));
-			context.put("selectUnitLuasAmbil", HTML.SelectLuas("socUnitLuasAmbil", Utils.parseLong(getParam("socUnitLuasAmbil")),
-					"style=width:250px id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbilUpdate()"));
+			context.put("selectUnitLuasLot",
+					HTML.SelectLuas("socUnitLuasLot", Utils.parseLong(getParam("socUnitLuasLot")),
+							"style=width:250px id=socUnitLuasLot onchange=onchangeUnitLuasAsalUpdate()"));
+			context.put("selectUnitLuasAmbil",
+					HTML.SelectLuas("socUnitLuasAmbil", Utils.parseLong(getParam("socUnitLuasAmbil")),
+							"style=width:250px id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbilUpdate()"));
 		}
 
 		String id_daerah = "";
@@ -3828,7 +3832,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		// dropdown
 		context.put("selectKategoriTanah", HTML.SelectKategoriTanah("socKategoriTanah",
 				Utils.parseLong(getParam("socKategoriTanah")), "id=socKategoriTanah style=width:auto", null));
-		context.put("selectKodLot", HTML.SelectUnitPT("socKodLot", Utils.parseLong(getParam("socKodLot")), "style=width:auto"));
+		context.put("selectKodLot",
+				HTML.SelectUnitPT("socKodLot", Utils.parseLong(getParam("socKodLot")), "style=width:auto"));
 
 		// dropdown by
 		if (id_daerah != "") {
@@ -3953,7 +3958,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		}
 
 		// untuk kelantan shj
-		context.put("SelectDaerahPenggawa", HTML.SelectDaerahPenggawa("socDaerahPenggawa", null, null, "style=width:274px"));
+		context.put("SelectDaerahPenggawa",
+				HTML.SelectDaerahPenggawa("socDaerahPenggawa", null, null, "style=width:274px"));
 
 		// dropdown
 		if (id_negeriprojek.equals("10")) {
@@ -3969,8 +3975,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		context.put("selectKodLot", HTML.SelectUnitPT("socKodLot", null, "style=width:auto"));
 
 		// dropdown unit luas
-		context.put("selectUnitLuasLot",
-				HTML.SelectLuas("socUnitLuasLot", null, "style=width:250px id=socUnitLuasLot onchange=onchangeUnitLuasAsal()"));
+		context.put("selectUnitLuasLot", HTML.SelectLuas("socUnitLuasLot", null,
+				"style=width:250px id=socUnitLuasLot onchange=onchangeUnitLuasAsal()"));
 		context.put("selectUnitLuasAmbil", HTML.SelectLuas("socUnitLuasAmbil", null,
 				"style=width:250px id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbil()"));
 
@@ -4021,7 +4027,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			Connection con = db.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN "
-					+ "(id_Dokumen,id_permohonan,nama_Fail,jenis_Mime,content,tajuk,keterangan,id_jenisdokumen) " + "values(?,?,?,?,?,?,?,?)");
+					+ "(id_Dokumen,id_permohonan,nama_Fail,jenis_Mime,content,tajuk,keterangan,id_jenisdokumen) "
+					+ "values(?,?,?,?,?,?,?,?)");
 			ps.setLong(1, id_Dokumen);
 			ps.setString(2, getParam("id_permohonan"));
 			ps.setString(3, item.getName());
@@ -4063,14 +4070,14 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		 * Vector listHakmilik = new Vector(); listHakmilik.clear();
 		 * 
 		 * 
-		 * model.setListMaklumatTanah(idpermohonan, noLOT, idpegawai);
-		 * listHakmilik = model.getListMaklumatTanah(); if (listHakmilik.size()
-		 * != 0) { Hashtable lmt = (Hashtable) listHakmilik.get(0); nama2Mukim =
-		 * (String) lmt.get("nama2Mukim"); }
+		 * model.setListMaklumatTanah(idpermohonan, noLOT, idpegawai); listHakmilik =
+		 * model.getListMaklumatTanah(); if (listHakmilik.size() != 0) { Hashtable lmt =
+		 * (Hashtable) listHakmilik.get(0); nama2Mukim = (String) lmt.get("nama2Mukim");
+		 * }
 		 * 
 		 * // data context.put("listMaklumatTanah", listHakmilik);
-		 * context.put("saiz_listTanah", listHakmilik.size());
-		 * context.put("nama2Mukim", nama2Mukim);
+		 * context.put("saiz_listTanah", listHakmilik.size()); context.put("nama2Mukim",
+		 * nama2Mukim);
 		 */
 		String nama2Mukim = "";
 		Hashtable senarai_mukim_lot = model.getListMukimLot(idpermohonan, noLOT, idpegawai, 0, 0);
@@ -4088,9 +4095,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		Vector listDokumen = new Vector();
 		listDokumen.clear();
-		
+
 		Vector jenis_dokumen = new Vector();
-		
+
 		jenis_dokumen = model.dropdown_jenisdokumen();
 		this.context.put("jenis_dokumen", jenis_dokumen);
 
@@ -4129,12 +4136,11 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			id_daerah = dp.get("idDaerah").toString();
 			id_negeriprojek = dp.get("idProjekNegeri").toString();
 			id_urusan = dp.get("idSuburusan").toString();
-			//ulasanjt = dp.get("ulasanjt").toString();
-			
+			// ulasanjt = dp.get("ulasanjt").toString();
+
 		}
 
-	//	context.put("ulasanjt", ulasanjt);
-
+		// context.put("ulasanjt", ulasanjt);
 
 		String mode = "";
 		if (disability.equals("enabled")) {
@@ -4145,36 +4151,28 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		// dropdown by
 		if (id_kementerian != "") {
-			context.put(
-					"selectAgensi",
-					HTML.SelectAgensiByKementerian("socAgensi", id_kementerian, Utils.parseLong(id_agensi), "id=socAgensi "
-							+ mode + " style=width:500px"));
+			context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", id_kementerian,
+					Utils.parseLong(id_agensi), "id=socAgensi " + mode + " style=width:500px"));
 		} else {
-			context.put("selectAgensi",
-					HTML.SelectAgensi("socAgensi", Utils.parseLong(id_agensi), "id=socAgensi " + mode + " style=width:500px"));
+			context.put("selectAgensi", HTML.SelectAgensi("socAgensi", Utils.parseLong(id_agensi),
+					"id=socAgensi " + mode + " style=width:500px"));
 		}
 
 		if (id_negeriprojek != "") {
-			context.put(
-					"selectDaerah",
-					HTML.SelectDaerahByNegeri(id_negeriprojek, "socDaerah", Utils.parseLong(id_daerah), null, "id=socDaerah "
-							+ mode + " style=width:300px"));
+			context.put("selectDaerah", HTML.SelectDaerahByNegeri(id_negeriprojek, "socDaerah",
+					Utils.parseLong(id_daerah), null, "id=socDaerah " + mode + " style=width:300px"));
 		} else {
-			context.put(
-					"selectDaerah",
-					HTML.SelectDaerah("socDaerah", Utils.parseLong(id_daerah), null, "id=socDaerah " + mode
-							+ " style=width:300px"));
+			context.put("selectDaerah", HTML.SelectDaerah("socDaerah", Utils.parseLong(id_daerah), null,
+					"id=socDaerah " + mode + " style=width:300px"));
 		}
 
 		// dropdown
 		context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian), "",
 				"disabled class=disabled style=width:500px " + mode + " onChange=\"doChangeKementerianUpdate();\""));
-		context.put("selectNegeri",
-				HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri), "class=disabled disabled style=width:325px"));
-		context.put(
-				"selectNegeriProjek",
-				HTML.SelectNegeriMampu("socNegeriProjek", Utils.parseLong(id_negeriprojek), null, "style=width:300px " + mode
-						+ " onChange=\"doChangeProjekNegeriUpdate();\""));
+		context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri),
+				"class=disabled disabled style=width:325px"));
+		context.put("selectNegeriProjek", HTML.SelectNegeriMampu("socNegeriProjek", Utils.parseLong(id_negeriprojek),
+				null, "style=width:300px " + mode + " onChange=\"doChangeProjekNegeriUpdate();\""));
 
 		// validation jajahan
 		if (id_negeriprojek.equals("3")) {
@@ -4189,8 +4187,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		} else {
 			context.put("showSegera", "no");
 		}
-		
-		
+
 	}// close DataPermohonan
 
 	@SuppressWarnings({ "unchecked", "static-access" })
@@ -4234,7 +4231,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("txdTarikhPermohonan", getParam("txdTarikhPermohonan"));
 		h.put("tarikh_permohonan_kjp", getParam("tarikh_permohonan_kjp"));
 		h.put("ulasanjt", getParam("txtUlasan"));
-		
+
 		h.put("jenis_projek", getParam("sorJenisProjek"));
 
 		h.put("jumlahHakmilik", getParam("txtJumHM"));
@@ -4298,10 +4295,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		} else {
 			h.put("semak7", getParam("cbsemaks7"));
 		}
-		if (getParam("txdPermohonanLengkap") == null){
+		if (getParam("txdPermohonanLengkap") == null) {
 			h.put("txdPermohonanLengkap", getParam("txdPermohonanLengkap"));
 		}
-		
+
 		h.put("txdTarikhPermohonan", getParam("txdTarikhPermohonan"));
 		h.put("tarikh_permohonan_kjp", getParam("tarikh_permohonan_kjp"));
 		h.put("tujuan", getParam("txtTujuan"));
@@ -4344,28 +4341,29 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		h.put("txtTujuanBI", "");
 
-		//FrmPermohonanUPTData.update(h);
-		
+		// FrmPermohonanUPTData.update(h);
+
 		FrmPermohonanUPTOnlineData.update(h);
 
 	}// close updatePendaftaran
 
 	@SuppressWarnings({ "unchecked", "static-access" })
-	private void getAndSetDataOnchangeNegeri(String id_negeriprojek, String id_urusan, String mode, String userIdKementerian)
-			throws Exception {
+	private void getAndSetDataOnchangeNegeri(String id_negeriprojek, String id_urusan, String mode,
+			String userIdKementerian) throws Exception {
 
 		String id_kementerian = userIdKementerian;
 
 		if (mode.equals("new")) {
-			context.put("selectNegeriProjek", HTML.SelectNegeriMampu("socNegeriProjek", Utils.parseLong(id_negeriprojek), null,
-					"style=width:300px onChange=\"doChangeProjekNegeri();\" "));
-			context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian), null,
-					"disabled class=disabled style=width:500px onChange=\"doChangeKementerian();\" "));
+			context.put("selectNegeriProjek", HTML.SelectNegeriMampu("socNegeriProjek",
+					Utils.parseLong(id_negeriprojek), null, "style=width:300px onChange=\"doChangeProjekNegeri();\" "));
+			context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),
+					null, "disabled class=disabled style=width:500px onChange=\"doChangeKementerian();\" "));
 		} else {
-			context.put("selectNegeriProjek", HTML.SelectNegeriMampu("socNegeriProjek", Utils.parseLong(id_negeriprojek), null,
-					"style=width:300px onChange=\"doChangeProjekNegeriUpdate();\" "));
-			context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian), null,
-					"disabled class=disabled style=width:500px onChange=\"doChangeKementerianUpdate();\" "));
+			context.put("selectNegeriProjek",
+					HTML.SelectNegeriMampu("socNegeriProjek", Utils.parseLong(id_negeriprojek), null,
+							"style=width:300px onChange=\"doChangeProjekNegeriUpdate();\" "));
+			context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),
+					null, "disabled class=disabled style=width:500px onChange=\"doChangeKementerianUpdate();\" "));
 		}
 
 		Vector dataKementerian = model.getAlamatKementerian(id_kementerian);
@@ -4409,24 +4407,24 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		// dropdown by
 		if (id_kementerian != "") {
-			context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", id_kementerian, Utils.parseLong(id_agensi),
-					"id=socAgensi style=width:500px"));
+			context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", id_kementerian,
+					Utils.parseLong(id_agensi), "id=socAgensi style=width:500px"));
 		} else {
 			context.put("selectAgensi",
 					HTML.SelectAgensi("socAgensi", Utils.parseLong(id_agensi), "id=socAgensi style=width:500px"));
 		}
 
 		if (id_negeriprojek != "") {
-			context.put("selectDaerah", HTML.SelectDaerahByNegeri(id_negeriprojek, "socDaerah", Utils.parseLong(id_daerah), null,
-					"id=socDaerah style=width:300px"));
+			context.put("selectDaerah", HTML.SelectDaerahByNegeri(id_negeriprojek, "socDaerah",
+					Utils.parseLong(id_daerah), null, "id=socDaerah style=width:300px"));
 		} else {
 			context.put("selectDaerah",
 					HTML.SelectDaerah("socDaerah", Utils.parseLong(id_daerah), null, "id=socDaerah style=width:300px"));
 		}
 
 		// dropdown
-		context.put("selectNegeri",
-				HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri), "class=disabled disabled style=width:325px"));
+		context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri),
+				"class=disabled disabled style=width:325px"));
 
 		// validation jajahan
 		if (id_negeriprojek.equals("3")) {
@@ -4445,28 +4443,28 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	}// close getAndSetDataKementerian
 
 	@SuppressWarnings({ "unchecked", "static-access" })
-	private void getAndSetDataOnchangeKementerian(String id_kementerian, String id_urusan, String mode) throws Exception {
+	private void getAndSetDataOnchangeKementerian(String id_kementerian, String id_urusan, String mode)
+			throws Exception {
 
 		String id_negeriprojek = getParam("socNegeriProjek");
 
 		if (mode.equals("new")) {
-			context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian), null,
-					"disabled class=disabled style=width:500px onChange=\"doChangeKementerian();\" "));
+			context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),
+					null, "disabled class=disabled style=width:500px onChange=\"doChangeKementerian();\" "));
 			// Dikemaskini oleh Mohamad Rosli, Pilihan negeri tidak termasuk
 			// JOHOR
 			// context.put("selectNegeriProjek", HTML.SelectNegeri(
 			// "socNegeriProjek", null, null,
 			// "style=width:300px onChange=\"doChangeProjekNegeri();\""));
-			context.put(
-					"selectNegeriProjek",
-					SelectNegeriPengambilan("socNegeriProjek", Utils.parseLong(id_negeriprojek), null,
-							"style=width:300px onChange=\"doChangeProjekNegeri();\""));
+			context.put("selectNegeriProjek", SelectNegeriPengambilan("socNegeriProjek",
+					Utils.parseLong(id_negeriprojek), null, "style=width:300px onChange=\"doChangeProjekNegeri();\""));
 
 		} else {
-			context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian), null,
-					"disabled class=disabled style=width:500px onChange=\"doChangeKementerianUpdate();\" "));
-			context.put("selectNegeriProjek", HTML.SelectNegeriMampu("socNegeriProjek", Utils.parseLong(id_negeriprojek), null,
-					"style=width:300px onChange=\"doChangeProjekNegeriUpdate();\" "));
+			context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),
+					null, "disabled class=disabled style=width:500px onChange=\"doChangeKementerianUpdate();\" "));
+			context.put("selectNegeriProjek",
+					HTML.SelectNegeriMampu("socNegeriProjek", Utils.parseLong(id_negeriprojek), null,
+							"style=width:300px onChange=\"doChangeProjekNegeriUpdate();\" "));
 		}
 
 		Vector dataKementerian = model.getAlamatKementerian(id_kementerian);
@@ -4508,21 +4506,22 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		// dropdown by
 		if (id_kementerian != "") {
-			context.put("selectAgensi",
-					HTML.SelectAgensiByKementerian("socAgensi", id_kementerian, null, "id=socAgensi style=width:500px"));
+			context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", id_kementerian, null,
+					"id=socAgensi style=width:500px"));
 		} else {
 			context.put("selectAgensi", HTML.SelectAgensi("socAgensi", null, "id=socAgensi style=width:500px"));
 		}
 		if (id_negeriprojek != "") {
-			context.put("selectDaerah", HTML.SelectDaerahByNegeri(id_negeriprojek, "socDaerah", Utils.parseLong(id_daerah), null,
-					"style=width:300px"));
+			context.put("selectDaerah", HTML.SelectDaerahByNegeri(id_negeriprojek, "socDaerah",
+					Utils.parseLong(id_daerah), null, "style=width:300px"));
 		} else {
-			context.put("selectDaerah", HTML.SelectDaerah("socDaerah", Utils.parseLong(id_daerah), null, "style=width:300px"));
+			context.put("selectDaerah",
+					HTML.SelectDaerah("socDaerah", Utils.parseLong(id_daerah), null, "style=width:300px"));
 		}
 
 		// dropdown
-		context.put("selectNegeri",
-				HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri), "class=disabled disabled style=width:325px"));
+		context.put("selectNegeri", HTML.SelectNegeriMampu("socNegeri", Utils.parseLong(id_negeri),
+				"class=disabled disabled style=width:325px"));
 
 		// validation jajahan
 		if (id_negeriprojek.equals("3")) {
@@ -4624,7 +4623,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		context.put("txtNoFailCarian", getParam("txtNoFailCarian").trim());
 		context.put("txdTarikhPermohonan", getParam("txdTarikhPermohonan").trim());
-		//context.put("tarikh_permohonan_kjp", getParam("tarikh_permohonan_kjp").trim());
+		// context.put("tarikh_permohonan_kjp",
+		// getParam("tarikh_permohonan_kjp").trim());
 		context.put("sorUrusanCarian", getParam("sorUrusanCarian"));
 		context.put("txtBilPermohonanCarian", getParam("txtBilPermohonanCarian").trim());
 		context.put("txtNamaPBCarian", getParam("txtNamaPBCarian").trim());
@@ -4635,9 +4635,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		modelOnline.setListCarian(getParam("socStatus"), getParam("socJenisHakmilik"), getParam("socNegeri"),
 				getParam("txtNoFailCarian").trim(), getParam("txdTarikhPermohonan").trim(), getParam("sorUrusanCarian"),
-				getParam("txtBilPermohonanCarian").trim(), getParam("txtNamaPBCarian").trim(), getParam("txtNoPBCarian").trim(),
-				getParam("txtNoHakmilikCarian").trim(), getParam("txtNoLotCarian").trim(), getParam("txtTujuanCarian").trim(),
-				id_user, portalRole, flag_noti);
+				getParam("txtBilPermohonanCarian").trim(), getParam("txtNamaPBCarian").trim(),
+				getParam("txtNoPBCarian").trim(), getParam("txtNoHakmilikCarian").trim(),
+				getParam("txtNoLotCarian").trim(), getParam("txtTujuanCarian").trim(), id_user, portalRole, flag_noti);
 
 	}// close listcarian
 
@@ -4712,8 +4712,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				} else {
 					s = "";
 				}
-				sb.append("<option " + s + " value=" + f.getIdNegeri() + ">" + f.getKodNegeri() + " - " + f.getNamaNegeri()
-						+ "</option>\n");
+				sb.append("<option " + s + " value=" + f.getIdNegeri() + ">" + f.getKodNegeri() + " - "
+						+ f.getNamaNegeri() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -4752,7 +4752,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 	}
 
-	public void insertPopupReg_KJP(String nama_class, String tajuk_class, String group, Db db) throws Exception {
+	public void PopupReg_KJP(String nama_class, String tajuk_class, String group, Db db) throws Exception {
 		// Db db = null;
 		try {
 			// db = new Db();
@@ -4760,11 +4760,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			/*
 			 * String sql = " INSERT INTO MODULE ( "+
 			 * " MODULE_ID, MODULE_TITLE, MODULE_CLASS,  "+
-			 * " MODULE_GROUP, MODULE_DESCRIPTION)  "+
-			 * " VALUES ('"+nama_class+"','"
+			 * " MODULE_GROUP, MODULE_DESCRIPTION)  "+ " VALUES ('"+nama_class+"','"
 			 * +tajuk_class+"','"+nama_class+"','"+group+"','') ";
-			 * myLogger.info("REG CLASS :"+sql.toUpperCase());
-			 * stmt.executeUpdate(sql);
+			 * myLogger.info("REG CLASS :"+sql.toUpperCase()); stmt.executeUpdate(sql);
 			 */
 
 			String sql = " INSERT INTO ROLE_MODULE ( " + " MODULE_ID, USER_ROLE) " + " SELECT '" + nama_class
@@ -4840,9 +4838,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		}
 		return total;
 	}
-	
-	private IUtilHTMLPilihan getJenisHakmilik(){
-		if(iPilihanJH== null)
+
+	private IUtilHTMLPilihan getJenisHakmilik() {
+		if (iPilihanJH == null)
 			iPilihanJH = new UtilHTMLPilihanJenisHakmilik();
 		return iPilihanJH;
 	}
