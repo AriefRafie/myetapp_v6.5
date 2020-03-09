@@ -3455,6 +3455,8 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			sql += " hk.flag_jenis_rizab, hk.nama_lain_rizab, hk.no_warta_rizab, hk.tarikh_warta_rizab, hk.id_pegawai, ";
 			sql += " hk.id_unitluaslot_convert, hk.id_unitluasambil_convert, hk.nama_luas_asal, hk.nama_luas_ambil, ";
 			
+			sql += " hk.no_bangunan, hk.no_tingkat, hk.no_petak, "; //PPT-03 
+
 			sql += " CASE ";
 			sql += " WHEN hk.no_lot IS NOT NULL AND hk.no_pt IS NULL THEN hk.no_lot "; 
 			sql += " WHEN hk.no_lot IS NULL AND hk.no_pt IS NULL THEN lt.keterangan || hk.no_pt ";
@@ -3569,6 +3571,11 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			h.put("jenis_hakmilik", rs.getString("jenis_hakmilik")==null?"":rs.getString("jenis_hakmilik"));
 			h.put("kategori_tanah", rs.getString("kategori_tanah")==null?"":rs.getString("kategori_tanah"));
 			
+			//PPT-03 
+			h.put("no_bangunan", rs.getString("no_bangunan")==null?"":rs.getString("no_bangunan"));
+			h.put("no_tingkat", rs.getString("no_tingkat")==null?"":rs.getString("no_tingkat"));
+			h.put("no_petak", rs.getString("no_petak")==null?"":rs.getString("no_petak"));
+
 			maklumatTanah.addElement(h);
 		}
 		} catch (Exception re) {
@@ -4673,28 +4680,25 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		
 
 	@SuppressWarnings("unchecked")
-	public static void hapusDokumen(Hashtable data) throws Exception {
-	   
+	public static void hapusDokumen(Hashtable data) throws Exception {	   
 		Db db = null;
-	    String sql = "";
-	   
-	    try{
-	    	
-	    	 	db = new Db();
-	    	 	Statement stmt = db.getStatement();
-			  
-	    		String iddokumen = (String)data.get("id_dokumen");
-	    		
-	    		sql = "DELETE FROM tblpptdokumen where id_dokumen = '"+iddokumen+"'";
-	    		stmt.executeUpdate(sql);
+	    String sql = "";	   
+	    try{	    	
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	String iddokumen = (String)data.get("id_dokumen");
+	    	sql = "DELETE FROM tblpptdokumen where id_dokumen = '"+iddokumen+"'";
+	    	stmt.executeUpdate(sql);
+	    
 	    } catch (Exception re) {
 	    	log.error("Error: ", re);
 	    	throw re;
-	    	}
-	    finally {
-	    if (db != null) db.close();
 	    }
-	  }//close hapus
+	    finally {
+	    	if (db != null) db.close();
+	    }
+	  
+	}//close hapus
 	
 	@SuppressWarnings("unchecked")
 	public static void updateFlagSah(Hashtable data) throws Exception {

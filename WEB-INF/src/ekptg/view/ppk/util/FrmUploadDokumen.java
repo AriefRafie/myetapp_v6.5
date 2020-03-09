@@ -49,7 +49,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 
 		myLog.info("actionPopup="+actionPopup);
 		myLog.info("hitButton="+hitButton);
-		myLog.info("idHarta="+idHarta);
+//		myLog.info("idHarta="+idHarta);
 		
 		if ("simpanHakmilik".equals(hitButton)){
 
@@ -74,7 +74,6 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			hitButton = "";
 		
 		}else if(hitButton.equals("simpanMyID")){
-			//String iDokumen = getParam("iDokumen");
 			//99201 (dokumen pdf)
 			l.lampiranSimati(request,idRujukan,"99201",idUser);
 			hitButton = "";
@@ -85,7 +84,13 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			l.hapusLampiranSimati(iDokumen, null,true);
 			//uploadFiles(idHarta,true);
 			hitButton = "";
-			
+
+		}else if(hitButton.equals("simpancod")){
+			//99202 (dokumen)
+			l.lampiranSimati(request,idRujukan,"99202",idUser);
+			hitButton = "";
+			//this.context.put("num_files", jumLampiran);
+	
 		}
 
 		//myLog.info("actionPopup="+actionPopup);
@@ -132,7 +137,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			dokumens = l.getLampiranSimati(idRujukan, null,"99201");
 			// end Lampiran
 
-	    }else if (actionPopup.equals("sijil")){
+	    }else if (actionPopup.equals("cod")){
 			disability = "";
 		   	readability = "";
 			//Lampiran

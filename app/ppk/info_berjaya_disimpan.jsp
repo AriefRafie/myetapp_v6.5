@@ -26,4 +26,3 @@ parent.document.getElementById("info_simpan_berjaya").innerHTML="<div class=\"su
 </script>
 
 #end
-

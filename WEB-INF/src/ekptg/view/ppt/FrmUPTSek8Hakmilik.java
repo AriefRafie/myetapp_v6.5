@@ -4036,6 +4036,11 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		h.put("txtCatatan", getParam("txtCatatan"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
 
+		// PPT-03 
+		h.put("txtNoBangunan", getParam("txtNoBangunan"));
+		h.put("txtNoTingkat", getParam("txtNoTingkat"));
+		h.put("txtNoPetak", getParam("txtNoPetak"));
+
 		h.put("unitLuas", getParam("socUnitLuasLot"));
 		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));
 		h.put("txtLuasLotAsalSebelumConvert",
@@ -4106,6 +4111,11 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
 		h.put("txtCatatan", getParam("txtCatatan"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
+
+		// PPT-03 
+		h.put("txtNoBangunan", getParam("txtNoBangunan"));
+		h.put("txtNoTingkat", getParam("txtNoTingkat"));
+		h.put("txtNoPetak", getParam("txtNoPetak"));
 
 		h.put("unitLuas", getParam("socUnitLuasLot"));
 		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));
