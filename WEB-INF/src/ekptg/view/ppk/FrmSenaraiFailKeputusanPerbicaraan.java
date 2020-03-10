@@ -318,10 +318,11 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 									} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
 										bayaranYuran = 30.00 ;
 									} else {
-      									bayaranYuran = 0.05 * jumlahHartaDeductNilaianAmanahRaya ;
+      									bayaranYuran = 0.002 * jumlahHartaDeductNilaianAmanahRaya ;
       									bayaranYuran = getBundaranBayaran(bayaranYuran);
+									}
       							} else{
-      								bayaranYuran = 0.05 * jumlahHartaDeductNilaianAmanahRaya ;
+      								bayaranYuran = 0.005 * jumlahHartaDeductNilaianAmanahRaya ;
       								bayaranYuran = getBundaranBayaran(bayaranYuran);
       							}**/
       							this.context.put("txtJumHarta", jumlahHartaDeductNilaianAmanahRaya);
@@ -335,7 +336,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       				   		double jumlah_harta_tarikhmohon;
       			    		double bayaranYuran;
       			    		jumlah_harta_tarikhmohon = Double.parseDouble(a.get("jumlah_harta_tarikhmohon").toString());
-      							if ( jumlah_harta_tarikhmohon <= 1000 ) {
+      			    		if ( jumlah_harta_tarikhmohon <= 1000 ) {
       								bayaranYuran = 10.00 ;
       							} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
       								bayaranYuran = 30.00 ;
@@ -345,20 +346,21 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       								bayaranYuran = getBundaranBayaran(bayaranYuran);
       							}
       							
-      							/** 
+      			    			/**
       			    			 * 7/1/2020: arief 
       			    			 * berkuatkuasa selepas Akta diluluskan dalam Parlimen baru boleh guna
       			    			 * 
-      			    			if ((jumlahHartaDeductNilaianAmanahRaya > 0) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000)){
-      								if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+      			    			if ((jumlah_harta_tarikhmohon > 0) && (jumlah_harta_tarikhmohon <= 5000000)){
+      								if ( jumlah_harta_tarikhmohon <= 1000 ) {
 										bayaranYuran = 10.00 ;
-									} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+									} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
 										bayaranYuran = 30.00 ;
 									} else {
-      									bayaranYuran = 0.05 * jumlahHartaDeductNilaianAmanahRaya ;
+      									bayaranYuran = 0.002 * jumlah_harta_tarikhmohon ;
       									bayaranYuran = getBundaranBayaran(bayaranYuran);
+      								}
       							} else{
-      								bayaranYuran = 0.05 * jumlahHartaDeductNilaianAmanahRaya ;
+      								bayaranYuran = 0.005 * jumlah_harta_tarikhmohon ;
       								bayaranYuran = getBundaranBayaran(bayaranYuran);
       							}**/
       							this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
@@ -3718,10 +3720,11 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 							} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
 								bayaranYuran = 30.00 ;
 							} else {
-							bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
-							bayaranYuran = getBundaranBayaran(bayaranYuran);
+								bayaranYuran = 0.002 * jumlah_harta_tarikhmohon ;
+								bayaranYuran = getBundaranBayaran(bayaranYuran);
+							}
 						} else{
-							bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
+							bayaranYuran = 0.005 * jumlah_harta_tarikhmohon ;
 							bayaranYuran = getBundaranBayaran(bayaranYuran);
 						}**/
 						this.context.put("txtJumBayaran", bayaranYuran); //Yuran Perintah
@@ -3756,21 +3759,22 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		    		 * berkuatkuasa selepas Akta diluluskan dalam Parlimen baru boleh guna
 		    		 * 
 		    		if ( jumlah_harta_tarikhmohon > 0 && (jumlah_harta_tarikhmohon <=5000000)){
-						if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+						if ( jumlah_harta_tarikhmohon <= 1000 ) {
 							bayaranYuran = 10.00 ;
-						} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+						} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
 							bayaranYuran = 30.00 ;
 						} else {
-							bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
+							bayaranYuran = 0.002 * jumlah_harta_tarikhmohon ;
 							bayaranYuran = getBundaranBayaran(bayaranYuran);
+						}
 					} else{
-						bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
+						bayaranYuran = 0.005 * jumlah_harta_tarikhmohon ;
 						bayaranYuran = getBundaranBayaran(bayaranYuran);
 					}**/
-						this.context.put("txtJumBayaran", bayaranYuran);
-						this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
+					this.context.put("txtJumBayaran", bayaranYuran);
+					this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
 				}
-					context.put("dataJumlahBayaran", getJumlahBayaran);
+				context.put("dataJumlahBayaran", getJumlahBayaran);
 
 			}
 
