@@ -766,8 +766,8 @@ public class HABean17 extends EkptgCache implements IMaklumatHarta {
 		
 		//razman komen dlu
 		//ni versi baru
-		BicaraInteraktifData modelBI = new BicaraInteraktifData();
-		modelBI.generateListHartaSkrinPerintahBySimpanPilihanHarta(session, "", per_mati, null);
+		//BicaraInteraktifData modelBI = new BicaraInteraktifData();
+		//modelBI.generateListHartaSkrinPerintahBySimpanPilihanHarta(session, "", per_mati, null);
 		
 	}
 	
