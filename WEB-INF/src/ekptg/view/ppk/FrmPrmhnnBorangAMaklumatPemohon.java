@@ -1037,12 +1037,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("IdPermohonan", getParam("idPermohonan"));
 					this.context.put("duplicate", "yes");
 				}
-			}
-
-			//else {				System.out.println(cntID);
-			
-			//}
-		else {
+			}else {
 				if (cntID == 0) {
 					// addPermohonan(session,userIdNeg,userIdPejabat,userIdKodDaerah,userIdKodNegeri);
 					if (bolehsimpan.equals("yes")) {
