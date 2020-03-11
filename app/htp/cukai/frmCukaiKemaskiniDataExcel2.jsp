@@ -118,6 +118,7 @@
 		    <td width="5%">Proses</td> -->
 		    <td width="3%"><input type="checkbox" name="all" onClick="doCheckAll()"></td>
 		</tr>
+  	#set ( $cnt_ = 0 )			
   	#set ( $cnt = 0 )			
    	#set ( $cntTotal = $SenaraiFail.size() )			
   	##foreach ( $senarai in $SenaraiFailOrig )
@@ -147,6 +148,8 @@
       	#else
         	#set ($inputstyle3 = "class=disabled" )
      	#end
+
+  		#set ( $cnt_ = $cnt_ + $senarai.cukaiJumlah )
         		<tr>
         			
                		<input type="hidden" nama="senaraiNO_HAKMILIKUPLOAD" id="senaraiNO_HAKMILIKUPLOAD" value="$!senarai.NO_HAKMILIKUPLOAD" >
@@ -242,17 +245,22 @@
 						<input type="hidden" name="idhakmilikcukai${cnt}" id="idhakmilikcukai${cnt}" value="$senarai.ID_HAKMILIKCUKAI" >
 		  		</tr>
     		#end
- 
+ 				<tr>
+		    		<td colspan="10" class="$row"></td>
+		    		<td colspan="2" class="$row"><b>Jumlah</b></td>
+		    		<td class="$row" align="right"><b>$!UTIL.format2Decimal($!cnt_)</b>
+		    			<!-- <input type="text" size="10" name="cnt_" value="$!UTIL.format2Decimal($!cnt_)" disabled class="inputnumberdisabled" > -->
+		    		</td>
+		    		<td class="$row"></td>
+		  		</tr>
 		 	#if ($cnt == 0)
 		  		<tr>
 		    		<td colspan="14" class="$row"><font color="#FF0000">Tiada Rekod.</font></td>
 		  		</tr>
 		 	#end
  	
-			</table>
-	
+			</table>	
 		</fieldset>
-
 		</td>
 	</tr>
 #if ($cnt != 0)
