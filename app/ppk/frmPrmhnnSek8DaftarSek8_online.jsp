@@ -1433,10 +1433,6 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             #end </td>
         </tr>
         
-        
-         
-       
-        
          <tr>
           <td class="style38" valign="top" >&nbsp;</td>
           <td class="style38" >No Tel (R/P)</td>
@@ -1911,29 +1907,36 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                     <em><span class="style3 style4 style2">dd/mm/yyyy</span></em>#end               </td>
             </tr>
             #if ($SimpanStatus != "2")
-          #end
-          
-          <tr>
-             <td valign="top" width="2%">#if($setmode != "disabled")
-             <span class="style1">*</span>
-              #end</td>
-             <td width="28%"> Muatnaik MyID </td>
-             <td width="1%">:</td> 
-             <td width="9%">
-             <input id="fileupload" name="fileupload" type="file" size="40">
-             </td>
-             </tr>
-             
-            <tr>
-     <td valign="top" width="2%">#if($setmode != "disabled")
-             <span class="style1">*</span>
-              #end</td>
-     <td width="28%"> Muatnaik Sijil Mati </td>
-     <td width="1%">:</td> 
-     <td width="9%">
-     <input id="fileupload" name="fileupload" type="file" size="40">
-     </td>
-      </tr>
+         	#end          
+          			<tr>
+		            	<td valign="top" width="2%">
+		            #if($setmode != "disabled")
+		             		<span class="style1">*</span>
+		            #end
+		              	</td>
+		             	<td width="28%"> Muatnaik MyID </td>
+		             	<td width="1%">:</td> 
+		             	<td width="9%">
+							<input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'MyID')">
+							<br>
+							$!lampirans
+						</td>
+             		</tr>
+					
+					<tr>            
+				    	<td valign="top" width="2%">
+				    	#if($setmode != "disabled")
+				       		<span class="style1">*</span>
+				      	#end
+				      	</td>
+				     	<td width="28%"> Muatnaik Sijil Mati </td>
+				     	<td width="1%">:</td> 
+				     	<td width="9%">
+							<input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'cod')">
+							<br>
+							$!lampiranSijil     
+						</td>
+      				</tr>
           </table>
         </fieldset></td>
       </tr>
@@ -2048,9 +2051,60 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
  #parse("app/ppk/headerppk_script.jsp")
 </form>
 </body>
+
 <script>
 
-//selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');
+	function paparLampiran(id_){
+		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
+	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener=document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}	
+
+	function semakLampiran(v_t){
+		alert('Semak Lampiran');
+		document.f1.method = "POST";
+		document.f1.command.value="getlampiran";
+		document.f1.eventStatus.value="1";
+		document.f1.action = "";
+		document.f1.v_tab.value = v_t;
+		document.f1.submit();
+	}
+	
+ 	function getRujukan(ic,idlama,jenis,lain){
+ 		var rujukan ='';
+ 		rujukan = ic != ''?ic:'-';
+ 		rujukan += idlama != ''?idlama:'-';
+ 		rujukan += jenis != 0?jenis:'-';
+ 		rujukan += lain != ''?lain:'-';
+ 		return rujukan;
+ 		
+ 	}
+ 
+	function lampiran(rujukanSimati,isMyID) {
+		ic = document.f1.check_no_kp_baru_simati.value;
+		idlama = document.f1.check_no_kp_lama_simati.value;
+		jenis = document.f1.socJenisKPLainSimati.value;
+		lain = document.f1.check_no_kp_lain_simati.value;
+		rujukanSimati = getRujukan(ic,idlama,jenis,lain);
+		//alert("rujukanSimati 1="+returnSimati1);
+		//return;
+		
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?jenisdokumen=myid&actionrefresh=paparmyid&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
+	    //
+	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus(); /**/
+	    //
+	    var title = 'Cetakan';
+		var w =1024;
+		var h = 800;
+	    var left = (screen.width/2)-(w/2);
+
+	}
 
 function Batal() {
 
@@ -3907,11 +3961,7 @@ $jquery("#kpi_ppk").html("<span  style='color:red'></span>");
 		hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();
 	}
-	
-	function check()
-	{
-	//alert("masuk!");
-	}
+
 	
 </script>
 
