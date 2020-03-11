@@ -564,24 +564,24 @@ public class DesktopController extends VServlet {
 		//open language
 		String language_type = req.getParameter("language_type") == null ? "": req.getParameter("language_type");
 		String currentLanguage = ((String) session.getAttribute("selectedLanguage") == null ? "" : (String) session.getAttribute("selectedLanguage")); 
-		ResourceBundle rb_lang = null;
+		ResourceBundle rb = null;
 		Enumeration bundleKeys = null;		
 		//system.out.println("language_type : "+language_type+" currentLanguage : "+currentLanguage);		
 		if(language_type.equals("ENGLISH") || (language_type.equals("") && currentLanguage.equals("ENGLISH"))){
-			rb_lang = ResourceBundle.getBundle("eng_lang");
+			rb = ResourceBundle.getBundle("eng_lang");
 			session.setAttribute("selectedLanguage", "ENGLISH");			
 	
 		}else{
-			rb_lang = ResourceBundle.getBundle("malay_lang");
+			rb = ResourceBundle.getBundle("malay_lang");
 			session.setAttribute("selectedLanguage", "MALAY");
 		
 		}
 		
-		if(rb_lang!=null){
-			bundleKeys = rb_lang.getKeys();
+		if(rb!=null){
+			bundleKeys = rb.getKeys();
 			while (bundleKeys.hasMoreElements()) {
 			    String key = (String)bundleKeys.nextElement();
-			    String value = rb_lang.getString(key);
+			    String value = rb.getString(key);
 			    context.put(key,value);			   
 			
 			}
@@ -617,18 +617,24 @@ public class DesktopController extends VServlet {
 		 * Dikemaskini Oleh : Razman 
 		 * Dikemaskini Pada : 24/01/2017
 		 */
-		ResourceBundle rb = ResourceBundle.getBundle("file");
+		rb = ResourceBundle.getBundle("file");
 		String moduleVer ="";
+		String hakcipta ="";
+		String pemilik ="";
 		if(myrole==null){
 			moduleVer = rb.getString("ver_"+UserData.getModuleByID(login));
 		}else{
-			//moduleVer = rb.getString("ver_"+UserData.getModuleByRole(myrole.equals(null)?user.getRole().getName():myrole));
 			moduleVer = rb.getString("ver_"+UserData.getModuleByRole(myrole));
-		}
+		}			
+		hakcipta = rb.getString("hakcipta");
+		pemilik = rb.getString("pemilik");
+
 		//myLog.info("489:module_="+moduleVer+",role="+userData.getModuleByRole(myrole));
 		//session.removeAttribute("_moduleVer");
 		session.setAttribute("rbFile", rb);
 		session.setAttribute("_moduleVer", moduleVer);
+		session.setAttribute("hakcipta", hakcipta);
+		session.setAttribute("pemilik", pemilik);
 		// Tamat
 		context.put("_ekptg_user_id",session.getAttribute("_ekptg_user_negeri"));
 		context.put("portal_role", session.getAttribute("myrole"));
