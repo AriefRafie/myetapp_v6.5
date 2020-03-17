@@ -547,6 +547,11 @@ function batalDokumen(){
 	document.${formName}.modePopup.value = "";
 	doAjaxCall${formName}("");
 }
+function batalKemaskiniDokumen(){
+	document.${formName}.flagPopup.value = "openPopupDokumen";
+	document.${formName}.modePopup.value = "view";
+	doAjaxCall${formName}("");
+}
 function kemaskiniDokumen(){
 	document.${formName}.flagPopup.value = "openPopupDokumen";
 	document.${formName}.modePopup.value = "update";
