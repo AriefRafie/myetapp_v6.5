@@ -32,6 +32,37 @@
 					</tr>
 					#end
 					<tr>
+						<td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+						<td width="28%">Jenis Imej</td>
+						<td width="1%">:</td>
+						<td><select name="socJenisImej" id="socJenisImej"
+											style="width: 275px;" $readonlyPopup class="inputTextClassPopup"
+											onchange="javascript:doChangeJenisImej(this.value)" $disabled>
+							#if ($beanMaklumatImejan.jenisImej == 'SB')
+								<option value="0">SILA PILIH</option>
+								<option value="SB" selected="selected">IMEJ SEBELUM OPERASI</option>
+								<option value="SM">IMEJ SEMASA OPERASI</option>
+								<option value="SL">IMEJ SELEPAS OPERASI</option>
+							#elseif ($beanMaklumatImejan.jenisImej == 'SM')	
+								<option value="0">SILA PILIH</option>
+								<option value="SB">IMEJ SEBELUM OPERASI</option>
+								<option value="SM" selected="selected">IMEJ SEMASA OPERASI</option>
+								<option value="SL">IMEJ SELEPAS OPERASI</option>
+							#elseif ($beanMaklumatImejan.jenisImej == 'SL')	
+								<option value="0">SILA PILIH</option>
+								<option value="SB">IMEJ SEBELUM OPERASI</option>
+								<option value="SM">IMEJ SEMASA OPERASI</option>
+								<option value="SL" selected="selected">IMEJ SELEPAS OPERASI</option>
+							#else
+								<option value="0" selected="selected">SILA PILIH</option>
+								<option value="SB">IMEJ SEBELUM OPERASI</option>
+								<option value="SM">IMEJ SEMASA OPERASI</option>
+								<option value="SL">IMEJ SELEPAS OPERASI</option>
+							#end
+							</select>
+						</td>
+					</tr>
+					<tr>
 						<td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end
 						</td>
 						<td width="28%">Nama Imej</td>
@@ -54,7 +85,7 @@
 						</td>
 						<td>Direktori Imej</td>
 						<td>:</td>
-						<td><input id="fileupload" name="fileupload" type="file"
+						<td><input id="fileupload" name="fileupload" type="file" multiple
 							size="40" $readonlyPopup2 class="$inputTextClassPopup" /></td>
 					</tr>
 					<tr>
