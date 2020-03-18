@@ -1,4 +1,5 @@
 
+<%@ page import="java.util.ResourceBundle" %>
 <!-- Edited by Hazwan -->
 <html>
 <head>
@@ -16,14 +17,14 @@
 <script type="text/javascript" src="library/scriptaculous/effects.js" ></script>
 <script type="text/javascript" src="library/scriptaculous/controls.js" ></script>
 <script type="text/javascript" src="library/scriptaculous/ajax.js" ></script>
-<!-- Jquery -->
-<script type="text/javascript" src="library/js/jquery-1.3.2.min.js"></script>
+<!-- JQuery -->
+<script type="text/javascript" src="library/js/jquery-1.8.0.js">
+<!-- <script type="text/javascript" src="library/js/jquery-1.3.2.min.js"></script> -->
 <script>var $jquery = jQuery.noConflict();</script>
 <script type="text/javascript" src="library/js/jquery.pstrength-min.1.2.js"></script>
 <script type="text/javascript" src="library/js/jquery.captchaRefresh.js"></script>
 <script type="text/javascript" src="library/js/ekptgTools.js" ></script>
-
-<!-- addBy zulfazdliabuas@gmail.com Date 06/10/2017 -->
+<!-- add by zulfazdliabuas@gmail.com Date 06/10/2017 -->
 <link href="css/eTapp_Login/login.css" rel="stylesheet" type="text/css"> 
 
 <script type="text/javascript">
@@ -176,6 +177,7 @@ function checkBrowser() {
 -->
 <body onLoad="document.flogin.username.focus();">
 <!--
+<body onLoad="document.flogin.username.focus();">
 remove checking browser
 checkBrowser();
 -->
@@ -252,6 +254,7 @@ checkBrowser();
 					    			onclick="Modalbox.show(this.href, {title: this.title, height: 700, width: 700, evalScripts: true, afterLoad: function() { pwdStrength();} }); return false;">
 					    			<span style="font-size:1.2em; font-weight:bold">Permohonan ID Pengguna Dalaman</span>
 				    			</a>
+				    			  
 				    		</td>
 						</tr>
 						<!-- close Razman --> 
@@ -279,12 +282,14 @@ checkBrowser();
 			</div>
 			
 		</div>
-		
+		<% 
+		ResourceBundle rb = ResourceBundle.getBundle("file");
+		%>
 		<!-- <div class="body-banner"></div> -->
 		<div class="body-footer">
 			<div class="title_footer">
-				<div class="hakcipta"><span>Hakcipta Terpelihara @ Kerajaan Malaysia 2017</span></div>
-				<div class="jabatan"><span class="bold">JABATAN KETUA PENGARAH TANAH DAN GALIAN PERSEKUTUAN</span></div>
+				<div class="hakcipta"><span><%=rb.getString("hakcipta")%></span></div>
+				<div class="jabatan"><span class="bold"><%=rb.getString("pemilik")%></span></div>
 			</div>
 		</div>
 		

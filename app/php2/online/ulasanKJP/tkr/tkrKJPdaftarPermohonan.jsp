@@ -73,9 +73,9 @@
           <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" >$beanMaklumatPermohonan.perkara</textarea>
             #if ($mode == 'new')
             #if ($idJenisTanah == '1' || $idJenisTanah == '2')
-            <input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk('$idKategoriPemohon')"/>
+            <input type="button" name="cmdJana" id="cmdJana" value="Jana Tajuk" onclick="janaTajuk()"/>
             #end
-            #end </td>
+            #end</td>
         </tr>
         #if ($mode != 'view')
         <tr>
@@ -89,8 +89,7 @@
       </table>
       </fieldset></td>
   </tr>
-  <tr>
-    <td colspan="2"><fieldset>
+   <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PEMOHON</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
@@ -117,8 +116,7 @@
           <td>&nbsp;</td>
           <td>Nama</td>
           <td>:</td>
-          <td>$beanMaklumatAgensi.namaAgensi
-            <input type="hidden" name="namaAgensiKem" id="namaAgensiKem" value="$beanMaklumatAgensi.namaAgensi"/></td>
+          <td>$beanMaklumatAgensi.namaAgensi</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -151,13 +149,93 @@
           <td>$beanMaklumatAgensi.negeri</td>
         </tr>
         #end        
-        #end
-        #if($idKategoriPemohon == '8')
+        #end        
+        #if($idKategoriPemohon == '1' || $idKategoriPemohon == '2' || $idKategoriPemohon == '6' || $idKategoriPemohon == '7')
+        #foreach ($beanMaklumatPemohon in $BeanMaklumatPemohon)
+        <tr>
+          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td>Nama</td>
+          <td>:</td>
+          <td><input name="txtNama" type="text" class="$inputTextClass" id="txtNama" value="$beanMaklumatPemohon.nama" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          #if($idKategoriPemohon == '1')
+          <td>No. Kad Pengenalan/<em>MyID</em></td>
+          #else
+          <td>No. Pendaftaran Syarikat/<em>MyCoid</em></td>
+          #end
+          <td>:</td>
+          <td><input name="txtNoPendaftaran" type="text" class="$inputTextClass" id="txtNoPendaftaran" value="$beanMaklumatPemohon.noPendaftaran" maxlength="12" $readonly onblur="this.value=this.value.toUpperCase();"/>
+          </td>
+        </tr>
+        <tr>
+          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td>Alamat</td>
+          <td>:</td>
+          <td><input name="txtAlamat1" type="text" class="$inputTextClass" id="txtAlamat1" value="$beanMaklumatPemohon.alamat1" size="43" maxlength="80" $readonly />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><input name="txtAlamat2" type="text" class="$inputTextClass" id="txtAlamat2" value="$beanMaklumatPemohon.alamat2" size="43" maxlength="80" $readonly /></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><input name="txtAlamat3" type="text" class="$inputTextClass" id="txtAlamat3" value="$beanMaklumatPemohon.alamat3" size="43" maxlength="80" $readonly /></td>
+        </tr>
+        <tr>
+          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td>Poskod</td>
+          <td>:</td>
+          <td><input name="txtPoskod" type="text" class="$inputTextClass" id="txtPoskod" value="$beanMaklumatPemohon.poskod" size="5" maxlength="5" $readonly onblur="validateLength(this.value);"/>
+          </td>
+        </tr>
         <tr>
           <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td>Negeri</td>
           <td>:</td>
           <td>$selectNegeri</td>
+        </tr>
+        <tr>
+          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td>Bandar</td>
+          <td>:</td>
+          <td>$selectBandar</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>E-mel</td>
+          <td>:</td>
+          <td><input name="txtEmel" type="text" class="$inputTextClass" id="txtEmel" value="$beanMaklumatPemohon.emel" maxlength="50" $readonly/>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Tel</td>
+          <td>:</td>
+          <td><input name="txtNoTel" type="text" class="$inputTextClass" id="txtNoTel" onkeyup="validateNumber(this,this.value);" value="$beanMaklumatPemohon.noTel" maxlength="12" $readonly/></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Faks</td>
+          <td>:</td>
+          <td><input name="txtNoFaks" type="text" class="$inputTextClass" id="txtNoFaks" onkeyup="validateNumber(this,this.value);" value="$beanMaklumatPemohon.noFaks" maxlength="12" $readonly/>
+          </td>
+        </tr>
+        #end
+        #end
+        #if($idKategoriPemohon == '4' || $idKategoriPemohon == '5' || $idKategoriPemohon == '8')
+        <tr>
+          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td>Negeri</td>
+          <td>:</td>
+          <td>$selectNegeri </td>
         </tr>
         <tr>
           <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
@@ -206,8 +284,7 @@
           <td>&nbsp;</td>
           <td>Negeri</td>
           <td>:</td>
-          <td>$beanMaklumatPejabat.negeri
-            #set($idNegeriJKPTG = $beanMaklumatPejabat.idNegeri) </td>
+          <td>$beanMaklumatPejabat.negeri</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -226,66 +303,6 @@
       </table>
       </fieldset></td>
   </tr>
-  #if($idKategoriPemohon == '8')
-  <tr>
-    <td colspan="2"><fieldset>
-      <legend><strong>MAKLUMAT AGENSI</strong></legend>
-      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-        <tr>
-          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td width="28%">Kementerian</td>
-          <td width="1%">:</td>
-          <td width="70%">$selectKementerian</td>
-        </tr>
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Agensi</td>
-          <td>:</td>
-          <td>$selectAgensi</td>
-        </tr>
-        #foreach ($beanMaklumatAgensi in $BeanMaklumatAgensi)
-        <tr>
-          <td>&nbsp;</td>
-          <td>Nama</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.namaAgensi
-            <input type="hidden" name="namaAgensiJKPTG" id="namaAgensiJKPTG" value="$beanMaklumatAgensi.namaAgensi"/></td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Alamat</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.alamat1</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.alamat2</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.alamat3</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Poskod</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.poskod</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Negeri</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.negeri</td>
-        </tr>
-        #end
-      </table>
-      </fieldset></td>
-  </tr>
-  #end
   <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT TANAH</strong></legend>
@@ -303,33 +320,30 @@
         </tr>
         #if ($idJenisTanah == '1' || $idJenisTanah == '2')
         #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
-        <tr>
+         <tr>
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td width="28%">Pegangan Hakmilik</td>
           <td width="1%">:</td>
           <td width="70%"> #if ($mode == 'new')
             #if ($idKategoriPemohon == '3')
-            #if ($idAgensi != '' && $idAgensi != '99999')
+            #if ($idKementerian != '' && $idKementerian != '99999')
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();"/>
-            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','$idAgensi' , '99999')"/>
+            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','$idKementerian' , '99999')"/>
             #else
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled" />
             #end
-            #elseif ($idKategoriPemohon == '8')
-            #if ($idAgensi != '' && $idAgensi != '99999' && $idPejabat !='' && $idPejabat !='99999')
-            <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();"/>
-            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','$idAgensi','$idNegeriJKPTG')"/>
+            #elseif ($idKategoriPemohon != '3')
+            #if ($idNegeri != '' && $idNegeri != '99999')
+            <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();" />
+            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','99999' , '$idNegeri')"/>
             #else
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled" />
             #end
-            #else
-            <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled" />
             #end
             #else
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
             #end <span class="style1">$errorPeganganHakmilik</span> </td>
         </tr>
-        <tr>
           <td>&nbsp;</td>
           <td>No. Lot</td>
           <td>:</td>
@@ -412,7 +426,7 @@
         #end
         #end
         
-        #if ($idJenisTanah == '3')
+       #if ($idJenisTanah == '3')
         <tr>
           <td colspan="4"><fieldset>
             <legend><strong>Maklumat Lot</strong></legend>
@@ -424,21 +438,19 @@
                 <td width="1%">:</td>
                 <td width="70%"> #if ($mode == 'new')
                   #if ($idKategoriPemohon == '3')
-                  #if ($idAgensi != '' && $idAgensi != '99999')
+                  #if ($idKementerian != '' && $idKementerian != '99999')
                   <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatBorangK.peganganHakmilik" onblur="doChangePeganganHakmilikBorangK();"/>
-                  <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Borang K" onclick="pilihBorangK('$idKategoriPemohon','$idAgensi' , '99999')"/>
+                  <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Borang K" onclick="pilihBorangK('$idKategoriPemohon','$idKementerian' , '99999')"/>
                   #else
                   <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatBorangK.peganganHakmilik" readonly="readonly" class="disabled" />
                   #end
-                  #elseif ($idKategoriPemohon == '8')
-                  #if ($idAgensi != '' && $idAgensi != '99999' && $idPejabat !='' && $idPejabat !='99999')
-                  <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatBorangK.peganganHakmilik" onblur="doChangePeganganHakmilikBorangK();"/>
-                  <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Borang K" onclick="pilihBorangK('$idKategoriPemohon','$idAgensi','$idNegeriJKPTG')"/>
+                  #elseif ($idKategoriPemohon != '3')
+                  #if ($idNegeri != '' && $idNegeri != '99999')
+                  <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatBorangK.peganganHakmilik" onblur="doChangePeganganHakmilikBorangK();" />
+                  <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Borang K" onclick="pilihBorangK('$idKategoriPemohon','99999' , '$idNegeri')"/>
                   #else
                   <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatBorangK.peganganHakmilik" readonly="readonly" class="disabled" />
                   #end
-                  #else
-                  <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatBorangK.peganganHakmilik" readonly="readonly" class="disabled" />
                   #end
                   #else
                   <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatBorangK.peganganHakmilik" readonly="readonly" class="disabled">
@@ -455,8 +467,8 @@
                 <td>Luas Lot</td>
                 <td>:</td>
                 <td>$beanMaklumatBorangK.luas
-                  <input type="hidden" name="idLuasTanah" id="idLuasTanah" value="$beanMaklumatBorangK.idLuas" />
-                    <input type="hidden" name="luasTanah" id="luasTanah" value="$beanMaklumatBorangK.luasBersamaan" /></td>
+                  <input type="hidden" name="idLuasTanah" id="idLuasTanah" value="$beanMaklumatBorangK.idLuas">
+                  <input type="hidden" name="luasTanah" id="luasTanah" value="$beanMaklumatBorangK.luasBersamaan"></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -481,14 +493,14 @@
                 <td>Negeri</td>
                 <td>:</td>
                 <td>$beanMaklumatBorangK.negeri
-                  <input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatBorangK.idNegeri" /></td>
+                  <input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatBorangK.idNegeri"></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td>Kementerian</td>
                 <td>:</td>
                 <td>$beanMaklumatBorangK.kementerian
-                  <input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatBorangK.idKementerian" /></td>
+                  <input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatBorangK.idKementerian"></td>
               </tr>
               <tr>
                 <td height="31">&nbsp;</td>
@@ -573,13 +585,14 @@
           <td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td valign="top">Tujuan Kegunaan</td>
           <td valign="top">:</td>
-          <td valign="top"><textarea name="txtTujuanKegunaan" id="txtTujuanKegunaan" rows="5" cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tujuanKegunaan</textarea>
-          	#if ($mode == 'new')
-            #if ($idJenisTanah == '1' || $idJenisTanah == '2')
-            <input type="button" name="cmdDaftarBaru2" id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk('$idKategoriPemohon')"/>
-            #end
-            #end
-          </td>
+          <td valign="top"><p>
+              <textarea name="txtTujuanKegunaan" id="txtTujuanKegunaan" rows="5" cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tujuanKegunaan</textarea>
+              #if ($mode == 'new')
+              #if ($idJenisTanah == '1' || $idJenisTanah == '2')
+              <input type="button" name="cmdJana" id="cmdJana" value="Jana Tajuk" onclick="janaTajuk()"/>
+              #end
+              #end </p>
+            <p>&nbsp; </p></td>
         </tr>
         #end
       </table>
@@ -594,18 +607,13 @@
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td width="28%">Surat Permohonan Rasmi</td>
           <td width="1%">:</td>
-          <td width="70%">$selectLuasKegunaan </td>
+          <td><input id="fileupload" name="fileupload" type=file size=40 /></td><br/>
         </tr>
         <tr>
           <td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td valign="top">Pelan Pra-Hitungan</td>
           <td valign="top">:</td>
-          <td valign="top"><textarea name="txtTujuanKegunaan" id="txtTujuanKegunaan" rows="5" cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tujuanKegunaan</textarea>
-          	#if ($mode == 'new')
-            #if ($idJenisTanah == '1' || $idJenisTanah == '2')
-            <input type="button" name="cmdDaftarBaru2" id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk('$idKategoriPemohon')"/>
-            #end
-            #end
+          <td><input id="fileupload" name="fileupload" type=file size=40 /></td><br/>
           </td>
         </tr>
         #end
@@ -648,8 +656,8 @@ function doChangeNegeri() {
 function doChangePejabat() {
 	doAjaxCall${formName}("doChangePejabat");
 }
-function pilihTanah(idKategoriPemohon,idAgensiPemohon,idNegeriJKPTG) {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmTKRPopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idAgensiPemohon="+idAgensiPemohon+"&idNegeriJKPTG="+idNegeriJKPTG;
+function pilihTanah(idKategoriPemohon,idKementerianPemohon,idNegeri) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmPLPPopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idKementerianPemohon="+idKementerianPemohon+"&idNegeriPemohon="+idNegeri;
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -664,6 +672,24 @@ function refreshFromPilihTanah(idHakmilikAgensi,idHakmilikSementara) {
 }
 function doChangePeganganHakmilik() {
 	doAjaxCall${formName}("doChangePeganganHakmilik");
+}
+function pilihBorangK(idKategoriPemohon,idKementerianPemohon,idNegeri) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmPLPPopupSenaraiBorangKView?idKategoriPemohon="+idKategoriPemohon+"&idKementerianPemohon="+idKementerianPemohon+"&idNegeriPemohon="+idNegeri;
+    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function refreshFromPilihBorangK(idPPTBorangK,idHakmilikUrusan,idPHPBorangK) {
+	
+	document.${formName}.idPPTBorangK.value = idPPTBorangK;
+	document.${formName}.idHakmilikUrusan.value = idHakmilikUrusan;
+	document.${formName}.idPHPBorangK.value = idPHPBorangK;
+	doAjaxCall${formName}("doChangeMaklumatBorangK");
+}
+function doChangePeganganHakmilikBorangK() {
+	doAjaxCall${formName}("doChangePeganganHakmilikBorangK");
 }
 function daftarBaru() {
 	//CHECK DATE   
@@ -726,17 +752,44 @@ function daftarBaru() {
 			alert('Sila pilih Kementerian.');
 			document.${formName}.socKementerian.focus(); 
 			return; 
-		}	
+		}
 		if(document.${formName}.socAgensi.value == ""){
 			alert('Sila pilih Agensi.');
 			document.${formName}.socAgensi.focus(); 
 			return; 
-		}		
+		}
 	}
-	else if(document.${formName}.socKategoriPemohon.value == "8") {
-		if(document.${formName}.socNegeriJKPTG.value == ""){
+	if(document.${formName}.socKategoriPemohon.value == "1" || document.${formName}.socKategoriPemohon.value == "2" || document.${formName}.socKategoriPemohon.value == "6" || document.${formName}.socKategoriPemohon.value == "7"){
+		if(document.${formName}.txtNama.value == ""){
+			alert('Sila masukan Nama.');
+  			document.${formName}.txtNama.focus(); 
+			return; 
+		}		
+		if(document.${formName}.txtAlamat1.value == ""){
+			alert('Sila masukan Alamat.');
+  			document.${formName}.txtAlamat1.focus(); 
+			return; 
+		}
+		if(document.${formName}.txtPoskod.value == ""){
+			alert('Sila masukan Poskod.');
+  			document.${formName}.txtPoskod.focus(); 
+			return; 
+		}
+		if(document.${formName}.socNegeri.value == ""){
+			alert('Sila masukan Negeri.');
+  			document.${formName}.socNegeri.focus(); 
+			return; 
+		}		
+		if(document.${formName}.socBandar.value == ""){
+			alert('Sila masukan Bandar.');
+  			document.${formName}.socBandar.focus(); 
+			return; 
+		}			
+	}
+	if((document.${formName}.socKategoriPemohon.value == "4") || (document.${formName}.socKategoriPemohon.value == "5") || (document.${formName}.socKategoriPemohon.value == "8")){
+		if(document.${formName}.socNegeri.value == ""){
 			alert('Sila pilih Negeri.');
-			document.${formName}.socNegeriJKPTG.focus(); 
+			document.${formName}.socNegeri.focus(); 
 			return; 
 		}
 		if(document.${formName}.socPejabat.value == ""){
@@ -744,17 +797,8 @@ function daftarBaru() {
 			document.${formName}.socPejabat.focus(); 
 			return; 
 		}
-		if(document.${formName}.socKementerian.value == ""){
-			alert('Sila pilih Kementerian.');
-			document.${formName}.socKementerian.focus(); 
-			return; 
-		}	
-		if(document.${formName}.socAgensi.value == ""){
-			alert('Sila pilih Agensi.');
-			document.${formName}.socAgensi.focus(); 
-			return; 
-		}
 	}
+	
 	if(document.${formName}.socJenisTanah.value == "3"){
 		if(document.${formName}.idPPTBorangK.value == "" && document.${formName}.idHakmilikUrusan.value == "" && document.${formName}.idPHPBorangK.value == ""){
 			alert('Sila pilih Pegangan Hakmilik.');
@@ -765,7 +809,7 @@ function daftarBaru() {
 			alert('Sila pilih Pegangan Hakmilik.');
 			return; 
 		}
-	}
+	}	
 	
 	if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila masukkan Luas Kegunaan.');
@@ -779,11 +823,11 @@ function daftarBaru() {
 	}
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		document.${formName}.actionTukarguna.value = "daftarBaru";
+		document.${formName}.actionPelepasan.value = "daftarBaru";
 		return;
 	}
 	
-	document.${formName}.actionTukarguna.value = "papar";
+	document.${formName}.actionPelepasan.value = "papar";
 	document.${formName}.hitButton.value = "daftarBaru";
 	doAjaxCall${formName}("");
 }
@@ -913,24 +957,5 @@ function janaTajuk(idKategoriPemohon) {
 	strTajuk = "PERMOHONAN TUKARGUNA " + luasKegunaan +" TANAH " + statusRizabTnh + " PERSEKUTUAN " + str1 +", " + milikOrRizab + ", "+ str4 + ", " + str5+ ", " + str6 +" ( " + kegunaanTanah + " )" + " DARIPADA " + kjpTnh + " KEPADA " + pemohon +" BAGI TUJUAN " + tujuanKegunaan;
 	
 	document.${formName}.txtPerkara.value = strTajuk;
-}
-
-function pilihBorangK(idKategoriPemohon,idAgensiPemohon,idNegeriJKPTG) {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmTKRPopupSenaraiBorangKView?idKategoriPemohon="+idKategoriPemohon+"&idAgensiPemohon="+idAgensiPemohon+"&idNegeriJKPTG="+idNegeriJKPTG;
-    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
-}
-function refreshFromPilihBorangK(idPPTBorangK,idHakmilikUrusan,idPHPBorangK) {
-	
-	document.${formName}.idPPTBorangK.value = idPPTBorangK;
-	document.${formName}.idHakmilikUrusan.value = idHakmilikUrusan;
-	document.${formName}.idPHPBorangK.value = idPHPBorangK;
-	doAjaxCall${formName}("doChangeMaklumatBorangK");
-}
-function doChangePeganganHakmilikBorangK() {
-	doAjaxCall${formName}("doChangePeganganHakmilikBorangK");
 }
 </script>

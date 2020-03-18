@@ -208,8 +208,8 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 		
 		//razman komen dlu
 		//ni versi baru
-		BicaraInteraktifData modelBI = new BicaraInteraktifData();
-		modelBI.generateListHartaSkrinPerintahBySimpanPilihanHarta(session, "", per_mati, null);
+		//BicaraInteraktifData modelBI = new BicaraInteraktifData();
+		//modelBI.generateListHartaSkrinPerintahBySimpanPilihanHarta(session, "", per_mati, null);
 	    
 	}
 	//private void simpanpilihanHTAX(HttpSession session, String bolehsimpan)
@@ -382,8 +382,8 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 		// this.context.put("appear_skrin_info", "simpan_pilihan");
 		
 		//razman komen dlu, ni versi baru
-		BicaraInteraktifData modelBI = new BicaraInteraktifData();
-		modelBI.generateListHartaSkrinPerintahBySimpanPilihanHarta(session, "", per_mati, null);
+		//BicaraInteraktifData modelBI = new BicaraInteraktifData();
+		//modelBI.generateListHartaSkrinPerintahBySimpanPilihanHarta(session, "", per_mati, null);
 	
 	}
 	

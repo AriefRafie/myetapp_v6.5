@@ -1128,8 +1128,6 @@ kod :: $listhath.kod_hakmilik
 <td width="74%"><strong> #if($disabledDropdown == 'disabled')
 #set($nama_negeri="") 
  #foreach($listneg in $senaraiNegeriByPpkUnit) 
-                                       
-                                        
                                         #if($negerimhn == $listneg.idnegeri)
                                         
                                         #set($nama_negeri="$listneg.namanegeri")
@@ -1378,11 +1376,12 @@ kod :: $listhath.kod_hakmilik
         #set ($noKpBaruPemohon2 = $View.noKpBaruPemohon2)
         #set ($noKpBaruPemohon3 = $View.noKpBaruPemohon3)
     #end
+    #if($!skrin_deraf == "yes")
 <tr><td>
     		<td width="1%" valign="top"></td>
     		<td width="3%"><input type="checkbox" value="1" $disCheck $chkmode name='$!namecb1' id='$!namecb1' $checked10 ></td>
       	<td width="89%">Saya $!namaPemohon no.k/p $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-</td></tr>
+</td></tr>#end
   	
 <tr>
 <td></td>
