@@ -20,6 +20,7 @@ import ekptg.helpers.Utils;
 
 public class FrmPYWHeaderData {
 
+	private Vector<Hashtable<String,String>> beanMaklumatPemohon = null;
 	private Vector beanMaklumatPermohonan = null;
 	private Vector beanMaklumatHakmilik = null;
 	private static final Log log = LogFactory.getLog(FrmPYWHeaderData.class);
@@ -641,4 +642,74 @@ public class FrmPYWHeaderData {
 	public void setBeanMaklumatHakmilik(Vector beanMaklumatHakmilik) {
 		this.beanMaklumatHakmilik = beanMaklumatHakmilik;
 	}
+
+	public Vector<Hashtable<String,String>> setMaklumatPermohonan(String idFail) throws Exception {
+		Db db = null;
+		String sql = "";
+	
+		try {
+			beanMaklumatPemohon = new Vector<Hashtable<String,String>> ();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			int bil = 1;
+			Hashtable h;
+			SQLRenderer r = new SQLRenderer();
+	
+	
+			/*sql = "SELECT PEMOHON.ID_PEMOHON, PEMOHON.ID_KATEGORIPEMOHON, PEMOHON.ID_PEJABAT, PEMOHON.NAMA, " +
+				  " PEMOHON.NO_PENGENALAN, PEMOHON.ALAMAT1_TETAP, PEMOHON.ALAMAT2_TETAP, PEMOHON.ALAMAT3_TETAP, " +
+				  " PEMOHON.POSKOD_TETAP, RUJBANDAR.KETERANGAN AS NAMA_BANDAR, RUJNEGERI.NAMA_NEGERI, PEMOHON.NO_TEL, " +
+				  " PEMOHON.NO_FAX, PEMOHON.EMEL " +
+				  " FROM TBLPHPPEMOHON PEMOHON, TBLRUJNEGERI RUJNEGERI, TBLRUJBANDAR RUJBANDAR,tblpermohonan p"+			  
+				  " WHERE " +
+				  " PEMOHON.ID_NEGERITETAP = RUJNEGERI.ID_NEGERI(+) " +
+				  "	AND PEMOHON.ID_BANDARTETAP = RUJBANDAR.ID_BANDAR(+) " +
+				  " AND P.ID_PEMOHON=PEMOHON.ID_PEMOHON "+
+				  " AND P.ID_PERMOHONAN = '" + idFail + "'";*/
+			
+			sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UO.NO_KP_BARU, UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3, " +
+					  " UO.POSKOD, UO.NO_FAX, UO.NO_HP, UO.EMEL, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI FROM USERS U, " +
+					  " USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
+					  " WHERE U.USER_ID = UO.USER_ID AND UO.ID_BANDAR = RB.ID_BANDAR AND UO.ID_NEGERI = RN.ID_NEGERI" +
+					  " AND U.USER_ID = '" + idFail + "'";
+			log.info("header:sql="+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+	
+			if (rs.next()) {
+				h = new Hashtable();
+				h.put("iduser", rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
+				h.put("kategoriPemohon", rs.getString("KATEGORI") == null ? "" : rs.getString("KATEGORI").toUpperCase());
+				h.put("namaPemohon", rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME").toUpperCase());
+				h.put("noPengenalan", rs.getString("NO_KP_BARU") == null ? "" : rs.getString("NO_KP_BARU").toUpperCase());
+				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs.getString("ALAMAT1").toUpperCase());
+				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs.getString("ALAMAT2").toUpperCase());
+				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs.getString("ALAMAT3").toUpperCase());
+				h.put("poskod", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD").toUpperCase());
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI").toUpperCase());
+				h.put("bandar", rs.getString("NAMA_BANDAR") == null ? "" : rs.getString("NAMA_BANDAR").toUpperCase());
+				h.put("noTel", rs.getString("NO_HP") == null ? "" : rs.getString("NO_HP").toUpperCase());
+				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs.getString("NO_FAX").toUpperCase());
+				h.put("emel", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
+//				h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS").toUpperCase());
+	
+				
+				beanMaklumatPemohon.addElement(h);
+				bil++;
+			}
+				//session.setAttribute("ID_FAIL", rs.getString("ID_FAIL"));
+	
+			
+	
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+			} finally {
+			if (db != null)
+				db.close();
+		}
+	
+		return beanMaklumatPemohon;
+	}		
+	
+
 }
