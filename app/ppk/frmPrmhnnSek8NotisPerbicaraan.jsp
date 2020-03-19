@@ -4,6 +4,8 @@
 	#set($flag_cetak_PPBPP=$list.FLAG_PRINT_NILAIAN_HARTA)
 	#set($setlistflaglistPPSPP = $flag_cetak_PPBPP)
 #end
+ 
+<textarea id="signedData" name="signedData" style="display:none;">$!signedData</textarea>
 
 <input type="hidden" id="dateEvent">
 #set($perhatian="<i><font color=red style=font-size:10px>Perhatian</font><font style=font-size:10px>: Sila pastikan label bertanda</font>&nbsp;<font color=red style=font-size:10px>*</font>&nbsp;<font style=font-size:10px>diisi.</font></i>")
@@ -124,7 +126,7 @@ document.getElementById("header_lama").style.display="block";
       #else
       <li class="TabbedPanelsTab" tabindex="0" onclick="setSelected(0);NotisWITH()">NOTIS PERBICARAAN</li>
       #end
-    <!--disabled dulu   <li class="TabbedPanelsTab" tabindex="0" onclick="setSelected(1);TindakanPeg()">TINDAKAN PEGAWAI</li> -->
+   <li class="TabbedPanelsTab" tabindex="0" onclick="setSelected(1);TindakanPeg()">TINDAKAN PEGAWAI</li> 
      
       <li class="TabbedPanelsTab" tabindex="0" onclick="setSelected(2);Laporan()">LAPORAN PENYAMPAIAN NOTIS</li>
     </ul>
@@ -176,8 +178,8 @@ document.getElementById("header_lama").style.display="block";
               <td>Tarikh Notis</td>
               <td>:&nbsp;
                    <!--  <input type="text" size="11" name="txdTarikhNotis" maxlength="10" id="txdTarikhNotis" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);checkEventDate('notisNew','new');" /> -->
-                    <input type="text" size="11" name="txdTarikhNotis" maxlength="10" id="txdTarikhNotis" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);" />
-                    <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhNotis',false,'dmy');">&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i></td>
+                    <input type="text" size="11" name="txdTarikhNotis" class="disabled" maxlength="10" id="txdTarikhNotis" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);" />
+                    <!-- <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhNotis',false,'dmy');">&nbsp; -->&nbsp;&nbsp;&nbsp;&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i></td>
             		 <input type="hidden" name="edityes" value=$edit>
             </tr>
                 <tr>
@@ -235,7 +237,7 @@ document.getElementById("header_lama").style.display="block";
                 <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td><font color="white">:</font>&nbsp;$selectBicara</td>
+              <td>:&nbsp;$selectBicara</td>
             </tr>
                 <tr>
               <td valign="top"><font color="red">*</font></td>
@@ -246,13 +248,13 @@ document.getElementById("header_lama").style.display="block";
                 <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td><font color="white">:</font>&nbsp;
+              <td>:&nbsp;
                     <input $!addressReadonly $!addressReadonlyClass type="text"  size="52" name="txtAlamatBicara2" id="txtAlamatBicara2" value="$alamat2" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
             </tr>
                 <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td><font color="white">:</font>&nbsp;
+              <td>:&nbsp;
                     <input type="text" $!addressReadonlyClass $!addressReadonly size="52" name="txtAlamatBicara3" id="txtAlamatBicara3" value="$alamat3" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
             </tr>
                 <tr>
@@ -299,6 +301,12 @@ document.getElementById("header_lama").style.display="block";
               #if ($flagFromSenaraiFailSek8 == "" && $flagFromSenaraiPermohonanSek8 == "" && $flagFromKeputusanPermohonan == "" && $flagForView == "")
               <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="kembali()" />
               #elseif ($flagFromKeputusanPermohonan == 'yes')
+              
+              <p align="center" valign="top"> 
+				<b><font color="RED" size="2">Sila cetak Nilaian Harta oleh PPBPP sebelum meneruskan permohonan.</font>
+				<br><font color="RED" size="1">Cetakan berada di tab Nilaian Harta.</font></b>
+			  </p>
+              
               <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="javascript:kembaliKeputusanPermohonan('$id_permohonan','$idpermohonansimati','$tarikhMohon')"/>
               #elseif ($flagFromSenaraiFailSek8 == "yes")
               <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="javascript:kembaliSenaraiFail('$NO_FAIL')"/>
@@ -325,7 +333,7 @@ document.getElementById("header_lama").style.display="block";
                     <td width="10%"><b>Umur</b></td>
                     <td width="15%"><b>Status OB</b></td>
                     <td width="20%"><b>Taraf Kepentingan</b></td>
-                    <td width="10%" align="center"><b>Serahan Tangan</b></td>
+                    <td width="10%" align="center"><b>Serahan Tangan / Pos</b></td>
 					<td width="10%" align="center"><b>Emel</b></td>
 					<td width="10%" align="center"><b>PNMB</b></td>
                     
@@ -365,11 +373,11 @@ document.getElementById("header_lama").style.display="block";
   					  <td colspan=3 class="$row" >&nbsp;</td>
                    
                   	#else
-                  	 <td class="$row" align="center"><input type="radio" name="radioJenisSerah$ob.id_ob" id="radioJenisSerah$ob.id_ob" value="1" onClick="doCheckAllOBserahTgn($ob.bil,'1')" disabled></td>
+                  	 <td class="$row" align="center"><input type="radio" name="radioJenisSerah$ob.id_ob" id="radioJenisSerah$ob.id_ob" value="1" onClick="doCheckAllOBserahTgn($ob.bil,'1')" ></td>
 					
 					#if($ob.emel != '')
 					
-					<td class="$row" align="center"><input type="radio" name="radioJenisSerah$ob.id_ob" id="radioJenisSerah$ob.id_ob" value="3" onClick="doCheckAllOBserahTgn($ob.bil,'3')" disabled></td>
+					<td class="$row" align="center"><input type="radio" name="radioJenisSerah$ob.id_ob" id="radioJenisSerah$ob.id_ob" value="3" onClick="doCheckAllOBserahTgn($ob.bil,'3')" ></td>
 					#else
 					 <td class="$row" >&nbsp;</td>
 					#end
@@ -582,8 +590,8 @@ document.getElementById("header_lama").style.display="block";
               <td>Tarikh Notis</td>
               <td>:&nbsp;
                    <!--  <input type="text" size="11" name="txdTarikhNotis" id="txdTarikhNotis" maxlength="10" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);checkEventDate('notisNew','new');" /> -->
-                    <input type="text" size="11" name="txdTarikhNotis" id="txdTarikhNotis" maxlength="10" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);" />
-                    <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhNotis',false,'dmy');">&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i></td>
+                    <input type="text" size="11" name="txdTarikhNotis" class="disabled" id="txdTarikhNotis" maxlength="10" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);" />
+                    <!-- <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhNotis',false,'dmy');">&nbsp; -->&nbsp;&nbsp;&nbsp;&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i></td>
             	 <input type="hidden" name="edityes" value=$edit>
             </tr>
                 <tr>
@@ -650,7 +658,7 @@ document.getElementById("header_lama").style.display="block";
                 <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td><font color="white">:</font>&nbsp;$selectBicara</td>
+              <td>:&nbsp;$selectBicara</td>
             </tr>
                 <tr>
               <td valign="top"><font color="red">*</font></td>
@@ -661,13 +669,13 @@ document.getElementById("header_lama").style.display="block";
                 <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td><font color="white">:</font>&nbsp;
+              <td>:&nbsp;
                     <input $!addressReadonly $!addressReadonlyClass type="text" size="52" name="TGAlamatBicara2" id="TGAlamatBicara2" value="$alamat2" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
             </tr>
                 <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td><font color="white">:</font>&nbsp;
+              <td>:&nbsp;
                     <input $!addressReadonly $!addressReadonlyClass type="text" size="52" name="TGAlamatBicara3" id="TGAlamatBicara3" value="$alamat3" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
             </tr>
                 <tr>
@@ -776,7 +784,7 @@ document.getElementById("header_lama").style.display="block";
                     <td width="10%"><b>Umur</b></td>
                     <td width="15%"><b>Status OB</b></td>
                     <td width="20%"><b>Taraf Kepentingan</b></td>
-                    <td width="10%" align="center"><b>Serahan Tangan</b></td>
+                    <td width="10%" align="center"><b>Serahan Tangan / Pos</b></td>
 					<td width="10%" align="center"><b>Emel</b></td>
 					<td width="10%" align="center"><b>PNMB</b></td>
                     
@@ -834,7 +842,7 @@ document.getElementById("header_lama").style.display="block";
 	                     
 				       			<td class="$row" align="center">
 				       			<input type="radio" name="radioJenisSerah$ob.id_ob" id="radioJenisSerah$ob.id_ob" value="1" onClick="doCheckAllOBserahTgn()" 
-				       			#if($jenis_serah=='1' && $id_ob_notis==$id_ob) checked #end	 disabled >
+				       			#if($jenis_serah=='1' && $id_ob_notis==$id_ob) checked #end	  >
 				       			</td>
 				       			
 				       			
@@ -842,7 +850,7 @@ document.getElementById("header_lama").style.display="block";
 				       			
 				       			#if($ob.emel != '')
 				       				<input type="radio" name="radioJenisSerah$ob.id_ob" id="radioJenisSerah$ob.id_ob" value="3" onClick="doCheckAllOBserahTgn()" 
-				       				#if($jenis_serah=='3' && $id_ob_notis==$id_ob) checked #end	disabled>
+				       				#if($jenis_serah=='3' && $id_ob_notis==$id_ob) checked #end	>
 				       			#else
 				       				&nbsp;
 				       			#end
@@ -1243,9 +1251,9 @@ document.getElementById("header_lama").style.display="block";
               <td><font color="red">&nbsp;</font></td>
               <td>&nbsp;</td>
               #if($edit=="no")
-              <td><font color="white">:</font>&nbsp;$!showBicara</td>
+              <td>:&nbsp;$!showBicara</td>
               #else
-              <td><font color="white">:</font>&nbsp;$!SELECTBicara</td>
+              <td>:&nbsp;$!SELECTBicara</td>
               #end </tr>
                 <tr>
               <td valign="top">#if($edit=="yes")<font color="red">*</font>#else&nbsp;#end</td>
@@ -1256,13 +1264,13 @@ document.getElementById("header_lama").style.display="block";
                 <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td><font color="white">:</font>&nbsp;
+              <td>:&nbsp;
                     <input $addressReadonly $addressReadonlyClass type="text" size="52" name="editAlamatBicara2" id="editAlamatBicara2" value="$!alamatb2" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
             </tr>
                 <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-              <td><font color="white">:</font>&nbsp;
+              <td>:&nbsp;
                     <input $addressReadonly $addressReadonlyClass type="text" size="52" name="editAlamatBicara3" id="editAlamatBicara3" value="$!alamatb3" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
             </tr>
                 <tr>
@@ -1307,31 +1315,28 @@ document.getElementById("header_lama").style.display="block";
                 <td>
              
               #if($edit=="no")
-              
-              
-              
 	              #if($id_status!="21"  && $id_status!="64" && $id_status!="163" && $id_status!="164" && $id_status!="165" && $id_status!="169" && $id_status!="166" && $id_status!="167" && $id_status!="180")
 	              
 	              #end
-	              #if($isAllSendNotis=="yes")	             
+	            <!--   #if($SIGNED_TEXT.equals(""))
+	             <input type="button" name="cmdKemaskini1"  id="cmdKemaskini1" value="Kemaskini" onClick="kemaskini()" /> -->
 	              <!-- #if($!id_perbicaraan!="")
 		              <span id="span_PNB" >
 		              <input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Hantar PNB (Borang D)" onClick="cetakBorangD('$!NO_FAIL','$!id_perbicaraan','$!id_fail')" />
 		              </span>
 		           #end  -->
-		          #end
+		         <!--  #end -->
 		          
 	              
 	          
               
               #end
-              
               #if($edit=="yes")
 	              <input type="button" name="cmdUpdate" id="cmdUpdate" value="Simpan" onClick="updateNotis()" />
 	              <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onClick="batal('$id_permohonan')" />
               #end
               #if($edit=="no")
-                <input type="button" name="cmdKemaskini1"  id="cmdKemaskini1" value="Kemaskini" onClick="kemaskini()" />
+                <input type="button" name="cmdKemaskini1"  id="cmdKemaskini1" value="Kemaskini" onClick="kemaskini()" /> 
               	<input type="button" name="button" id="button" value="Cetak" onClick="javascript:setTable('tableReport1')" />
               	
 	              #if ($flagFromSenaraiFailSek8 == "" && $flagFromSenaraiPermohonanSek8 == "" && $flagFromKeputusanPermohonan == "" && $flagForView == "")
@@ -1376,7 +1381,7 @@ document.getElementById("header_lama").style.display="block";
                     <td width="10%"><b>Status OB</b></td>
                     <td width="25%"><b>Taraf Kepentingan</b></td>
                    
-					<td width="10%" align="center"><b>Serahan Tangan</b></td>
+					<td width="10%" align="center"><b>Serahan Tangan / Pos</b></td>
 					<td width="10%" align="center"><b>Emel</b></td>
 					<td width="10%" align="center"><b>PNMB</b></td>
                     #end
@@ -1436,7 +1441,7 @@ document.getElementById("header_lama").style.display="block";
                     
                     #if($ob.age < 18 || $ob.status_ob == 4)
                     
-	                    <td colspan =3  class="$row">&nbsp;</td>
+	                    <td colspan =3  class="$row">&nbsp;  </td>
 	                    
 	                #else
 	                
@@ -1453,25 +1458,41 @@ document.getElementById("header_lama").style.display="block";
 		                    #end
 	              		#end
 	                    
-	                   
+	                  
+	                    
 				       			<td class="$row" align="center">
+				       <!--<input type=text name=jenisSerah_hidden id=jenisSerah_hidden value="$jenis_serah" size=20 /> -->
+				       
+				        <input type=hidden name=statusPNB_hidden id=statusPNB_hidden value="$statusPNB" size=10 />
+				       <input type=hidden name=listPenerimaNotis_hidden id=listPenerimaNotis_hidden value="$listPenerimaNotis.size()" size=20 /> 
 				       			<input type="radio" name="radioJenisSerah$ob.id_ob" id="radioJenisSerah$ob.id_ob" value="1" onClick="doCheckAllOBserahTgn()" 
-				       			#if($jenis_serah=='1' && $id_ob_notis==$id_ob) checked #end	 #if($edit=='no') #end disabled  >
+				       			
+				       			
+				       			#if($jenis_serah=='1' && $id_ob_notis==$id_ob) checked #end	 #if($edit=='no' || $listPenerimaNotis.size()>0 || ($statusPNB=="yes") ) disabled #end >
+				       			
+				       			
 				       			</td>
 				       			
 				       			<td class="$row" align="center">
 				       			#if($ob.emel!='')
 				       			<input type="radio" name="radioJenisSerah$ob.id_ob" id="radioJenisSerah$ob.id_ob" value="3" onClick="doCheckAllOBserahTgn()" 
-				       			#if($jenis_serah=='3' && $id_ob_notis==$id_ob) checked #end	#if($edit=='no')  #end disabled>
+				       			#if($jenis_serah=='3' && $id_ob_notis==$id_ob) checked #end	#if($edit=='no' || $listPenerimaNotis.size() >0) disabled #end >
 				       			#end
+				       			
+				       			
 				       			</td>
 				       			
 				       			<td class="$row" align="center">
 				       			<input type="radio" name="radioJenisSerah$ob.id_ob" id="radioJenisSerah$ob.id_ob" value="5" onClick="doCheckAllOBserahTgn()" 
-				       			#if($jenis_serah=='5' && $id_ob_notis==$id_ob) checked #end	#if($edit=='no')  #end disabled> 
+				       			#if($jenis_serah=='5' && $id_ob_notis==$id_ob) checked #end	#if($edit=='no' || $listPenerimaNotis.size() >0) disabled #end disabled> 
+				       			
+				       			
+				       			
 				       			</td>
 	                
 	                #end
+	                
+	       
                    <!--  <td class="$row"><input type="checkbox" value="$ob.id_obserahtgn" name="idsOBserahTgn" onClick="doUpdateCheckAllOBserahTgn()" $obDisabled $obChecked/>  $obChecked</td>
                     <td class="$row">$ob.emel<input type="checkbox" value="$ob.id_obemel" name="idsOBemel" onClick="doUpdateCheckAllOBemel()" $obDisabled $obChecked/></td>
                     <td class="$row"><input type="checkbox" value="$ob.id_obpnmb" name="idsOBpnmb" onClick="doUpdateCheckAllOBpnmb()" $obDisabled $obChecked/></td> -->
@@ -1678,17 +1699,15 @@ document.getElementById("header_lama").style.display="block";
       <!-- End Content 1 [view form]--> 
       
       <!-- Start Content Tindakan Pegawai -->
-      <!-- 05102017 close atas sebab intergrasi dgn digital signature masih belum dilaksanakan -->
-     <!--  <div class="TabbedPanelsContent"> <br/>-->
-    	<!--	parse("/app/ppk/tindakanPegawai.jsp")-->
-      <!--</div> -->
+      
+      <div class="TabbedPanelsContent"> <br/>
+    		#parse("/app/ppk/tindakanPegawai.jsp")
+      </div>
       
       <!-- End Content Tindakan Pegawai -->
       
       <!-- Start Content 2 -->
       <div class="TabbedPanelsContent"> <br/>
-      
-    
             #set($c5=0)         
             #foreach($ob in $selectedOB)           
             
@@ -1825,15 +1844,17 @@ document.getElementById("header_lama").style.display="block";
                     #if($sta=="sta18") #if($disableZERO!="readonly")<img id="imejCal" src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhHantar',false,'dmy');">&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i>#end #end
               </td>
             </tr>
-                <tr>
+               
+               <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td> 
               <td>&nbsp;&nbsp;&nbsp; &nbsp;
+             <!--  close 30/08/2018 sebab pn syaida minta tutp email ilaunch --> 
                     Alamat Emel&nbsp;:&nbsp;
-                    <input type="text" #if($disC=="no")disabled #end $classZero name="txtAlamatEmel" id="txtAlamatEmel" value="$!alamatEmel" maxlength="30" $checkClass size="20">
+                    <input type="hidden" #if($disC=="no")disabled #end $classZero name="txtAlamatEmel" id="txtAlamatEmel" value="$!alamatEmel" maxlength="30" $checkClass size="20">
               </td>
-            </tr>
+            </tr> 
            <!--   aishahlatip 17052017 tambah pos -->
             <tr>
               <td>&nbsp;</td>
@@ -1874,46 +1895,18 @@ document.getElementById("header_lama").style.display="block";
               <td width="25%">Nama Penghantar Notis</td>
               <td width="1%">:&nbsp;</td>
               <td width="73%"><select onchange="changeVal();" $disableZERO1 $classZero $check1 $checkClass name="txtNamaPenghantarNotis" style="width:320">
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-        										
-        										#if($onchangeMyList=="no")
-        											
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
+                 #if($onchangeMyList=="no")
                   <option value="">SILA PILIH&nbsp;</option>
-             
-        											#foreach($pn in $penghantarNotis)
-             
-                  
+             		#foreach($pn in $penghantarNotis)            
                   <option value="$pn.id_penghantarnotis">$pn.kod_penghantar_notis - $pn.nama.toUpperCase()</option>
-              
-	                    							#end  
-	                    						#else
-	                    							
-                <option value="$idPenghantar">$kodPenghantar - $namaPenghantar.toUpperCase()</option>
+              		#end  
+	             #else
+	              <option value="$idPenghantar">$kodPenghantar - $namaPenghantar.toUpperCase()</option>
                   <option value="">SILA PILIH&nbsp;</option>
-               	
-	                    							#foreach($pnoc in $penghantarNotisONCHANGE)
-	                    							
-               
-                  <option value="$pnoc.id_penghantarnotis">$pnoc.kod_penghantar_notis - $pnoc.nama.toUpperCase()</option>
-                  
-	                    							#end
-	                    						#end
+               	  #foreach($pnoc in $penghantarNotisONCHANGE)
+	               <option value="$pnoc.id_penghantarnotis">$pnoc.kod_penghantar_notis - $pnoc.nama.toUpperCase()</option>
+                  #end
+	             #end
 	                    						
                 
                 </select>
@@ -1935,54 +1928,14 @@ document.getElementById("header_lama").style.display="block";
               <td>Nama Penerima</td>
               <td>:&nbsp;</td>
               <td>#if($sta=="sta18") #if($disableZERO!="readonly")
-                    <select id="myList" name="myList" onchange="onchangemyList()" style="width:140">
-                  <option value="">SILA PILIH&nbsp;</option>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
+                  <select id="myList" name="myList" onchange="onchangemyList()" style="width:140">
+                  <option value="">SILA PILIH&nbsp;</option>                 
                     	#foreach($listOB in $listOBatas18)
-                    		
-                    			
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  <option value="$listOB.id_ob">$listOB.nama_ob.toUpperCase()</option>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                    		
-                    		
-                    	#end  
-                    	   		
-							
-                
-                
-                
-                
-                
-                
-                
-                
-                </select>
+                    	<option value="$listOB.id_ob">$listOB.nama_ob.toUpperCase()</option>
+                  		#end  
+                   </select>
                     &nbsp;#end #end
-                    <input type="text" id="namaPenerima" $check $disableZERO $classZero $checkClass name="txtNamaPenerima" value="$namaPenerima" maxlength="80" size="50" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+                   <input type="text" id="namaPenerima" $check $disableZERO $classZero $checkClass name="txtNamaPenerima" value="$namaPenerima" maxlength="80" size="50" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
             </tr>
                 <tr>
               <td>&nbsp;</td>
@@ -2374,10 +2327,11 @@ document.getElementById("header_lama").style.display="block";
               <td>&nbsp;</td>
               <td>&nbsp;</td> 
               <td>&nbsp;&nbsp;&nbsp; &nbsp;
+                <!--  close 30/08/2018 sebab pn syaida minta tutp email ilaunch --> 
                     Alamat Emel&nbsp;:&nbsp;
-                    <input type="text"$disabledTxtAlamatEmel  $classZero name="txtAlamatEmel" id="txtAlamatEmel" value="$!alamatEmel" maxlength="20" $checkClass size="20">
+                    <input type="hidden" $disabledTxtAlamatEmel  $classZero name="txtAlamatEmel" id="txtAlamatEmel" value="$!alamatEmel" maxlength="20" $checkClass size="20">
               </td>
-            </tr>
+            </tr> 
             <tr>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
@@ -2877,7 +2831,7 @@ document.getElementById("header_lama").style.display="block";
 <script>
 $jquery(document).ready(function () {
 
-	cetakBorangD('$NO_FAIL','$id_perbicaraan','$idfail');
+	cetakBorangD('$NO_FAIL','$id_perbicaraan','$idfail','$signedData');
 	
 	
 	 
@@ -3067,7 +3021,7 @@ function getTarikhNotisUPDATE() {
 	var b = TB.substring(3,5);
    	var c = TB.substring(6,10);
    	
-	var dt1   = parseInt(TB.substring(0,2),10)-6;
+	var dt1   = parseInt(TB.substring(0,2),10)-7;
    	var mon1  = parseInt(TB.substring(3,5),10)-1;
    	var yr1   = parseInt(TB.substring(6,10),10);
 
@@ -3095,10 +3049,48 @@ function getTarikhNotisUPDATE() {
 	
 	
 	if(a!="" && b!="" && c!=""){
-	document.getElementById("editTarikhNotis").value = tarikhNotis ;
-	}else{
-	document.getElementById("editTarikhNotis").value = "" ;
-	}
+	//document.getElementById("editTarikhNotis").value = tarikhNotis ;
+	//}else{
+	//document.getElementById("editTarikhNotis").value = "" ;
+	//}
+		var tt = tarikhNotis;
+		var dt_dob   = parseInt(tt.substring(0,2),10);
+	    var mon_dob  = parseInt(tt.substring(3,5),10)-1;
+	    var yr_dob   = parseInt(tt.substring(6,10),10);
+		var date_dob = new Date(yr_dob, mon_dob, dt_dob);	
+		var currentTime = new Date(); 	
+	    var month = currentTime.getMonth() + 1;
+		var day = currentTime.getDate();
+		var year = currentTime.getFullYear();
+		
+		if(day < 10)
+		{
+		day = "0"+day;
+		}
+		if(month < 10)
+		{
+		month = "0"+month;
+		}
+		
+		var currentDate = day + "/" + month + "/" + year;	
+		
+			if(date_dob < currentTime)
+			{
+			document.getElementById("editTarikhNotis").value = tarikhNotis ;
+			}
+			else if(date_dob > currentTime)
+			{
+			document.getElementById("editTarikhNotis").value = currentDate ;
+			}
+			else
+			{
+			document.getElementById("editTarikhNotis").value = tarikhNotis ;
+			}
+			
+		}else{
+		document.getElementById("editTarikhNotis").value = "" ;
+		alert("Tarikh yang dipilih merupakan cuti umum. Sila pilih tarikh lain.");
+		}
 }
 function doChangeidTempatBicara() {
 	document.${formName}.command.value = "doChangeidTempatBicara";
@@ -3233,13 +3225,12 @@ function simpan() {
 	
 	//aishahlatip
 	var jenisSerahChecked = true;
-	//tutup sementara PNMB belum live
-	/* if ($jquery('input[name="idob_hidden"]').length > 0){
+	if ($jquery('input[name="idob_hidden"]').length > 0){
 		
 		if($jquery('input:radio[name^=radioJenisSerah]:checked').length == 0){
 			jenisSerahChecked = false;
 		}
-	} */
+	}
 
    	
 	if (document.${formName}.txtPoskod.value != "" && document.${formName}.txtPoskod.value.length < 5) {
@@ -3572,13 +3563,12 @@ function simpanNotisTambah() {
 	}
 	//aishahlatip
 	var jenisSerahChecked = true;
-	//tutup sementara PNMB belum live
-	/* if ($jquery('input[name="idob_hidden"]').length > 0){
+	if ($jquery('input[name="idob_hidden"]').length > 0){
 		
 		if($jquery('input:radio[name^=radioJenisSerah]:checked').length == 0){
 			jenisSerahChecked = false;
 		}
-	} */
+	}
 	
 	if (document.${formName}.TGPoskod.value != "" && document.${formName}.TGPoskod.value.length < 5) {
 		alert("Sila masukkan nombor poskod dengan selengkapnya");
@@ -3916,14 +3906,26 @@ function updateNotis() {
 	}
 	
 	//aishahlatip
-	var jenisSerahChecked = true;
-	//tutup sementara PNMB belum live
-	/* if ($jquery('input[name="idob_hidden"]').length > 0){
+	var statusPNB= $jquery('#statusPNB_hidden').val();
+	var listPenerimaNotis = $jquery('#listPenerimaNotis_hidden').val();
+	var jenisSerahChecked = true;	
+
+	if ($jquery('input[name="idob_hidden"]').length > 0){
 		
 		if($jquery('input:radio[name^=radioJenisSerah]:checked').length == 0){
-			jenisSerahChecked = false;
+			
+			if(statusPNB=="no"){
+				if(listPenerimaNotis<0){
+			
+					jenisSerahChecked = false;
+				}else{
+					jenisSerahChecked = true;
+				}
+			}else{
+				jenisSerahChecked = true;
+			}
 		}
-	} */
+	}
 	
 	
 	if (document.${formName}.editPoskod.value != "" && document.${formName}.editPoskod.value.length < 5) {
@@ -5229,28 +5231,41 @@ function cetakNotaPerbicaraan(NO_FAIL,id_perbicaraan,idfail) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-function cetakBorangD(NO_FAIL,id_perbicaraan,idfail) {
+function cetakBorangD(NO_FAIL,id_perbicaraan,idfail,signedData) {
+
 	//alert("NO_FAIL : "+NO_FAIL+" id_perbicaraan : "+id_perbicaraan+" idfail :"+idfail );
+	document.getElementById("cmdHPNB1").disabled = true;
+	document.getElementById("signedData").value = signedData;//signedData
 	
-	//nofail=JKPTG/PK/05/05/0015/2017&idfail=1617661072&idperbicaraan=1617336396&flagVersion=popupPNB
-    var url = "../servlet/ekptg.report.ppk.BorangD?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&flagVersion=popupPNB";
-    //var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+NO_FAIL+"&idperbicaraan="+id_perbicaraan+"&report=BorangD&flagReport=B";
+	var url = "../servlet/ekptg.report.ppk.BorangD?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&signedData="+signedData
+	+"&flagVersion=hantarPNB";
     var hWnd = window.open(url,'Cetak','width=1200,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
     hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-function cetakBorangD_X(NO_FAIL,id_perbicaraan,idfail) {
 
-	//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiNotis?NO_FAIL="+NO_FAIL+"&id_perbicaraan="+id_perbicaraan+"&idfail="+idfail+"&open_pupop=Y&command=tindakanPeg";
-  //  document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmSenaraiNotis?NO_FAIL="+NO_FAIL+"&id_perbicaraan="+id_perbicaraan+"&idfail="+idfail+"&open_pupop=Y";
-//	
+function cetakBorangD_PDF(NO_FAIL,id_perbicaraan,idfail) {
+	//alert("NO_FAIL : "+NO_FAIL+" id_perbicaraan : "+id_perbicaraan+" idfail :"+idfail );
+	
+	var url = "../servlet/ekptg.report.ppk.BorangD?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&flagVersion=popupPNB";
+    var hWnd = window.open(url,'Cetak','width=1200,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+function cetakBorangD_X(NO_FAIL,id_perbicaraan,idfail,signedData) {
 
+document.getElementById("signedData").value = signedData;
+document.getElementById("cmdHPNB1").disabled = true;
+console.log("cetakBorangD_X signedData :"+signedData);
 
-	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmSenaraiNotis&NO_FAIL="+NO_FAIL+"&id_perbicaraan="+id_perbicaraan+"&idfail="+idfail+"&open_pupop=Y";
+	 document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmSenaraiNotis&NO_FAIL="+NO_FAIL+"&id_perbicaraan="+id_perbicaraan+"&idfail="+idfail
+	// +"&signedData="+signedData
+	 +"&open_pupop=Y";
 	document.${formName}.command.value = "tindakanPeg";
 	document.${formName}.submit();
-	//document.${formName}.submit();
+
     
 }
 function cetakBorangDD(NO_FAIL,id_perbicaraan,idpermohonansimati,idsimati) {
@@ -5532,8 +5547,10 @@ function kemaskiniFail(idstatus,noFail) {
 function RPP(id_fail) 
 {
    // var url = "../servlet/ekptg.report.ppk.RPP?nofail="+noFail;
+  
+   var id_perbicaraan = document.${formName}.id_perbicaraan.value;
    
-    var url = "../servlet/ekptg.report.ppk.LaporanPenghantarNotis?nofail="+id_fail;
+    var url = "../servlet/ekptg.report.ppk.LaporanPenghantarNotis?nofail="+id_fail+ "&idperbicaraan="+id_perbicaraan;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -5708,9 +5725,17 @@ function checkCutiAm(datePick){
 }
 
 function sendDGcert(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
-
-
+		
 	    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert";
+	    /* var url = "../servlet/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert"; */
+		var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	    hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+}
+
+function verifyDGcert(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
+	    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=verify";
 	    /* var url = "../servlet/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert"; */
 		var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
@@ -5946,6 +5971,8 @@ function changeVal(){
 
 </script>
 #end
+
+
 
 
 
