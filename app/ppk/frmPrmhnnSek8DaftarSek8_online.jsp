@@ -83,15 +83,12 @@
 #set ($alamat3x = "")
 #set ($poskodx = "")
 #set ($bandarx = "")
-
 #set ($umursimati = "")
 #set ($jantinasimati = "")
 #set ($umurpemohon = "")
 #set ($jantinapemohon = "")
-
-#set($jenisKpPemohon = "0")
-#set($jenisKpMati = "0")
-
+#set ($jenisKpPemohon = "0")
+#set ($jenisKpMati = "0")
 #set ($taraf_penting = "")
 #set ($no_tel = "")
 #set ($nama_pelbagainegara = "")
@@ -104,10 +101,11 @@
 
 #end
 
-#if ($idAlert == "1" || $idAlert == "2")
 
-#set ($tarikhmohonx = $tarikhMohonm)
-#set ($nokpbaru1x = $nokpbaru1m)
+
+#if ($idAlert == "1" || $idAlert == "2")
+	#set ($tarikhmohonx = $tarikhMohonm)
+	#set ($nokpbaru1x = $nokpbaru1m)
 #set ($nokpbaru2x = $nokpbaru2m)
 #set ($nokpbaru3x = $nokpbaru3m)
 #set ($noKpLamax = $no_kplama_simatim)
@@ -127,17 +125,15 @@
 #set ($alamat3x = $alamat3m)
 #set ($poskodx = $poskodm)
 #set ($bandarx = $bandarm)
-
 #set ($umursimati = $umursimati)
 #set ($jantinasimati = $jantinasimati)
 #set ($umurpemohon = $umurpemohon)
 #set ($jantinapemohon = $jantinapemohon)
-
-
 #set ($taraf_penting = $taraf_penting)
 #set ($no_tel = $no_tel)
 #set ($nama_pelbagainegara = $nama_pelbagainegara)
 #set ($no_hp = $no_hp)
+#set ($emel = $emel)
 #set ($jenis_pemohon = $jenis_pemohon)
 #set ($jenis_pej = $jenis_pej)
 #set ($socSaudaraWaris = $socSaudaraWaris)
@@ -149,13 +145,7 @@
 #set ($idPemohon = "")
 #set ($noFail = "")
 #set ($no_fail_online = "")
-
-
 #set ($tarikhDaftar = $tarikhmohon)
-
-
-        
-
 #set ($tarikhMohon = "")
 #set ($noKpBaru1 = "")
 #set ($noKpBaru2 = "")
@@ -174,10 +164,7 @@
 #set ($alamat2 = "")
 #set ($alamat3 = "")
 #set ($poskod = "")
-
-
 #set ($bandar = "")
-
 #set ($setmode2 = "")
 
 
@@ -222,26 +209,19 @@
         #set ($noKpLainPemohon = $View.noKpLainPemohon)
         #set ($jenisKpPemohon = $View.jenisKpPemohon)
         #set ($namaPemohon = $View.namaPemohon)
-         
+        #set ($emel = $View.emel)
         #set ($socSaudaraWaris = $View.socSaudaraWaris)
-        
         #set ($taraf_penting = $View.taraf_penting)
-         #set ($no_tel = $View.no_tel)
-          #set ($nama_pelbagainegara = $View.nama_pelbagainegara)
-            #set ($no_hp = $View.no_hp)
-          #set ($jenis_pemohon = $View.jenis_pemohon)
-      
-         
+        #set ($no_tel = $View.no_tel)
+        #set ($nama_pelbagainegara = $View.nama_pelbagainegara)
+        #set ($no_hp = $View.no_hp)
+        #set ($jenis_pemohon = $View.jenis_pemohon)
         #set ($alamat1 = $View.alamat1)
         #set ($alamat2 = $View.alamat2)
         #set ($alamat3 = $View.alamat3)
         #set ($poskod = $View.poskod)
         #set ($bandar = $View.bandar)
-        
-        
         #set ($jenis_pej = $View.jenis_pej)
-        
-          
         #set ($idDaerahx = $View.idDaerah)
         #if ($View.idDaerah != "")
         	#set ($setmode2 = "disabled")
@@ -259,16 +239,29 @@
 	#set ($setmode = "disabled")
 #end
 
+
+
+
+
+
+
+
+
+
+
 <body onLoad="submitForm();calcDate();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();pilih_taraf();check();check_kp_pemohon_onload();sorok_fieldset('$IdFail');selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');checkSumaICsimati('$command');">
 
 
 <form id="form1" name="f1" method="post" action="">
 
+
+
+
 <input type="hidden" name="v_tab" id="v_tab" value="" />
 <input type="hidden" name="online_skrin" id="online_skrin" value="yes" />
 <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
-<input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
-<input name="flagForView" type="hidden" id="flagForView" value="$!flagForView"/>
+ <input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
+ <input name="flagForView" type="hidden" id="flagForView" value="$!flagForView"/>
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 <input type="hidden" name="id_Permohonansimati" id="id_Permohonansimati" value="$!id_Permohonansimati" >
 
@@ -319,7 +312,9 @@ $listFail.id_Suburusanstatus
 <p></p>
 <p>
   <input name="mode1" type="hidden" value="$mode1" />
-  <input name="mode2" type="hidden" value="$mode2" /> 
+  <input name="mode2" type="hidden" value="$mode2" />
+  <input name="idpermohonan" type="hidden" value="$idPemohonan" />
+ 
   <input name="id_Fail" type="hidden" value="$idFail" />
   #foreach($ls in $ListSemakan)
   
@@ -406,7 +401,7 @@ $listFail.id_Suburusanstatus
               <td >&nbsp;</td>
               <td >Nama Simati</td>
               <td >:</td>
-              <td ><strong>$namaSimati</strong></td>
+              <td ><strong>$namaSimati              </strong></td>
             </tr>
             
              
@@ -1432,7 +1427,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             #end
             #end </td>
         </tr>
-        
+         
          <tr>
           <td class="style38" valign="top" >&nbsp;</td>
           <td class="style38" >No Tel (R/P)</td>
@@ -1450,39 +1445,45 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
         </tr>
         
         
-        
-        
         <tr id="tr_hp">
           <td class="style38" valign="top" >#if($setmode != "disabled") <span class="style1">*</span> #end</td>
-          
           <td class="style38" >No. Tel (HP)</td>
           <td>:</td>
           <td>
-          
-          <span id="no_hp_1a">
-        <input name="no_hp" type="text" id="no_hp" style="text-transform:uppercase;" onBlur="uppercase()" value="$no_hp" size="14" onKeyUp="javascript:validateIC(event,this,this.value,'no_hp')" maxlength="14" $setmodeR class="$setmode" />     
-        </span>
-        
-        <span id="no_hp_1b">
-         <input name="no_hp" type="text" id="no_hp" style="text-transform:uppercase;" onBlur="uppercase()" value="$no_hp" size="14" onKeyUp="javascript:validateIC(event,this,this.value,'txtNoTelefonPemohon')" maxlength="14" readonly class="disabled" />  
-        </span>
-       
-             </td>
+          	<span id="no_hp_1a">
+        			<input name="no_hp" type="text" id="no_hp" style="text-transform:uppercase;" onBlur="uppercase()" value="$no_hp" size="14" onKeyUp="javascript:validateIC(event,this,this.value,'no_hp')" maxlength="14" $setmodeR class="$setmode" />     
+        		</span>
+        		<span id="no_hp_1b">
+         			<input name="no_hp" type="text" id="no_hp" style="text-transform:uppercase;" onBlur="uppercase()" value="$no_hp" size="14" onKeyUp="javascript:validateIC(event,this,this.value,'txtNoTelefonPemohon')" maxlength="14" readonly class="disabled" />  
+        		</span>
+          </td>
         </tr>
-        
        
-       <tr>
-				<td class="style38" valign="top" >#if($setmode != "disabled") <span class="style1">*</span> #end</td>			
-				<td valign="top" >Emel</td>
-				<td valign="top" >
-				:
-				</td>
-				<td valign="top" >
-				<input  size="50" type="text" id="emel" name="emel" value="$emel">
-				</td>
-			</tr>
+	      <tr>
+	      	<td class="style38" valign="top" >#if($setmode != "disabled") <span class="style1">*</span> #end</td>
+	      	<td>Email</td>
+	      	<td>:</td>  
+	      	<td>
+	      		<span id="emel_1a">
+	      			<input name="txtEmelPemohon" id="txtEmelPemohon" type="text" style="text-transform:toLowerCase;"  onblur="toLowerCase()" value="$emel" size="50" maxlength="200" class="$setmode" $setmodeR />
+	      		</span> 
+	            
+	      		<span id="emel_1b">
+	      			<input name="txtEmelPemohon" id="txtEmelPemohon" type="text" class="disabled" style="text-transform:toLowerCase;"  onblur="toLowerCase()" value="$emel" size="50" maxlength="200" readonly />
+	      		</span>
+	      	</td>
+	      </tr>
+      
+      #if($readmode != "disabled" )
+      <tr>
+       <td class="style38" valign="top">&nbsp;</td>
+       <td class="style38" valign="top"><div align="left"></div></td>
+       <td valign="top">&nbsp;</td>
+       <td valign="top" height="1"><em><span class="style3 style4 style2">cth: abc@email.com </span></em></td>
+       </tr>
+      #end                                             
         #end
-      </table>
+      </table>      
     </fieldset>
     
        <br> 
@@ -1672,9 +1673,12 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
              #end
             
        <input name="txtNoKPLainSimati" type="text" class="disabled" id="txtNoKPLainSimati" style="width: 97px; text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();check_kp_lain();check_pengenalan_simati_3();kp_lain_pemohon()" value="$noKpLain" readonly />
-            #end 
-            </td>
+          
+            
+           
+            #end              </td>
             </tr>
+            
             
             #else
             <tr>
@@ -1684,6 +1688,9 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
               <td >MyID Baru</td>
               <td >:</td>
               <td > 
+              
+              
+              
               
               #if ($idAlert == "1" || $idAlert == "2") 
                 
@@ -1737,11 +1744,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
   #end
    </td>
             </tr>
-            
-            
-   
-            
-            
+          
             
             <tr>
               <td>&nbsp;</td>
@@ -1820,13 +1823,8 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             </select>
             #end
             
-            
-            
            
-            #if ($idAlert == "1" || $idAlert == "2") 
-            
-            
-            
+            #if ($idAlert == "1" || $idAlert == "2")          
             #if($jenisKpMati=="" || $jenisKpMati=="0")            
             #if($setmode=="disabled")
             #set($setmod="disabled")
@@ -1841,6 +1839,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             #end
             
             
+           
             	<input name="txtNoKPLainSimati" type="text" class="$setmod" id="txtNoKPLainSimati" style="width: 97px; text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();check_kp_lain();check_pengenalan_simati_3();kp_lain_pemohon()" value="$noKpLainx" maxlength="30" $setmodR />
                 <span id="check_kp_3" style="color:red" ><input name='no_kp3' type='hidden' value='' /></span>
             #else
@@ -1861,11 +1860,16 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
              #end             
              #end
             
-       <input name="txtNoKPLainSimati" type="text" class="$setmod" id="txtNoKPLainSimati" style="width: 97px; text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();check_kp_lain();check_pengenalan_simati_3();kp_lain_pemohon()" value="$noKpLain" maxlength="30" $setmodR />
+       	<input name="txtNoKPLainSimati" type="text" class="$setmod" id="txtNoKPLainSimati" style="width: 97px; text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();check_kp_lain();check_pengenalan_simati_3();kp_lain_pemohon()" value="$noKpLain" maxlength="30" $setmodR />
             <span id="check_kp_3" style="color:red" ><input name='no_kp3' type='hidden' value='' /></span> 
+            
+           
             #end              </td>
             </tr>
-            #end            
+            #end
+            
+            
+            
             
             <tr>
               <td valign="top" width="2%">#if($setmode != "disabled")
@@ -1884,8 +1888,6 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                 <input name="txtNamaSimati" type="text" class="$setmode" id="txtNamaSimati" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" value="$namaSimati" size="50" maxlength="200" $setmodeR/>
                 #end</td>
             </tr>
-            
-            
             <tr>
               <td valign="top">
               #if($setmode != "disabled")<span class="style1">*</span>#end
@@ -1906,9 +1908,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
               		<a href="javascript:displayDatePicker('txtTarikhMati',false,'dmy');"/>#parse("app/ppk/ppk_calender.jsp")</a>
                     <em><span class="style3 style4 style2">dd/mm/yyyy</span></em>#end               </td>
             </tr>
-            #if ($SimpanStatus != "2")
-         	#end          
-          			<tr>
+            <tr>
 		            	<td valign="top" width="2%">
 		            #if($setmode != "disabled")
 		             		<span class="style1">*</span>
@@ -1936,7 +1936,9 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 							<br>
 							$!lampiranSijil     
 						</td>
-      				</tr>
+      				</tr>            
+            #if ($SimpanStatus != "2")
+          #end
           </table>
         </fieldset></td>
       </tr>
@@ -2053,59 +2055,62 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 </body>
 
 <script>
+function paparLampiran(id_){
+	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}	
 
-	function paparLampiran(id_){
-		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
-	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
-	    if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener=document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-	}	
+function semakLampiran(v_t){
+	alert('Semak Lampiran');
+	document.f1.method = "POST";
+	document.f1.command.value="getlampiran";
+	document.f1.eventStatus.value="1";
+	document.f1.action = "";
+	document.f1.v_tab.value = v_t;
+	document.f1.submit();
+}
 
-	function semakLampiran(v_t){
-		alert('Semak Lampiran');
-		document.f1.method = "POST";
-		document.f1.command.value="getlampiran";
-		document.f1.eventStatus.value="1";
-		document.f1.action = "";
-		document.f1.v_tab.value = v_t;
-		document.f1.submit();
-	}
-	
- 	function getRujukan(ic,idlama,jenis,lain){
- 		var rujukan ='';
- 		rujukan = ic != ''?ic:'-';
- 		rujukan += idlama != ''?idlama:'-';
- 		rujukan += jenis != 0?jenis:'-';
- 		rujukan += lain != ''?lain:'-';
- 		return rujukan;
- 		
- 	}
- 
-	function lampiran(rujukanSimati,isMyID) {
-		ic = document.f1.check_no_kp_baru_simati.value;
-		idlama = document.f1.check_no_kp_lama_simati.value;
-		jenis = document.f1.socJenisKPLainSimati.value;
-		lain = document.f1.check_no_kp_lain_simati.value;
-		rujukanSimati = getRujukan(ic,idlama,jenis,lain);
-		//alert("rujukanSimati 1="+returnSimati1);
-		//return;
+	function getRujukan(ic,idlama,jenis,lain){
+		var rujukan ='';
+		rujukan = ic != ''?ic:'-';
+		rujukan += idlama != ''?idlama:'-';
+		rujukan += jenis != 0?jenis:'-';
+		rujukan += lain != ''?lain:'-';
+		return rujukan;
 		
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?jenisdokumen=myid&actionrefresh=paparmyid&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
-	    //
-	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
-	    if ((document.window != null) && (!hWnd.opener))
-	       hWnd.opener = document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-		hWnd.focus(); /**/
-	    //
-	    var title = 'Cetakan';
-		var w =1024;
-		var h = 800;
-	    var left = (screen.width/2)-(w/2);
-
 	}
 
+function lampiran(rujukanSimati,isMyID) {
+	ic = document.f1.check_no_kp_baru_simati.value;
+	idlama = document.f1.check_no_kp_lama_simati.value;
+	jenis = document.f1.socJenisKPLainSimati.value;
+	lain = document.f1.check_no_kp_lain_simati.value;
+	rujukanSimati = getRujukan(ic,idlama,jenis,lain);
+	
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
+   	if(isMyID == 'cod')
+   		url +="&jenisdokumen=cod";
+   	else
+   		url +="&jenisdokumen=myid";
+		
+	//
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+			 hWnd.focus(); /**/
+    //
+    var title = 'Lampiran';
+	  var w =1024;
+	  var h = 800;
+    var left = (screen.width/2)-(w/2);
+
+}
+
+//selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');
 function Batal() {
 
 input_box = confirm("Adakah anda pasti?");
@@ -2142,56 +2147,9 @@ function Kemaskini() {
 		document.f1.action = "";
 		document.f1.submit();
 }
-/*
-
-
-var now = new Date();
-var yesterday = new Date(2005,09,13,00,00,00);
-var tomorrow= new Date(2005,09,15,00,00,00);
-
-alert('now : ' + now + '\nyesterday : '  +  yesterday + '\ntomorrow : '+ tomorrow);
-
-alert((yesterday - now)+ '\n' + (tomorrow - now))
-
-if((yesterday  - now)<0){
-
-    alert('date tested as before now');
-
-}
-
-
-
-///////////
-
-
-   var str1  = document.getElementById("Fromdate").value;
-   var str2  = document.getElementById("Todate").value;
-   var dt1   = parseInt(str1.substring(0,2),10);
-   var mon1  = parseInt(str1.substring(3,5),10);
-   var yr1   = parseInt(str1.substring(6,10),10);
-   var dt2   = parseInt(str2.substring(0,2),10);
-   var mon2  = parseInt(str2.substring(3,5),10);
-   var yr2   = parseInt(str2.substring(6,10),10);
-   var date1 = new Date(yr1, mon1, dt1);
-   var date2 = new Date(yr2, mon2, dt2);
-
-   if(date2 < date1)
-   {
-      alert("To date cannot be greater than from date");
-      return false;
-   }
-   else
-   {
-      alert("Submitting ...");
-      document.form1.submit();
-   } 
-
-
-*/
 
 function checkSumaICsimati(command)
 {
-	//alert('MASUK checkSumaICsimati');
 	if(command == "getBandar")
 	{
 		check_pengenalan_simati_1();
@@ -2200,14 +2158,10 @@ function checkSumaICsimati(command)
 	}
 }
 
-function Simpan() {
-//alert("Simpan");
-	/*	
-	check_pengenalan_simati_1();
-	check_pengenalan_simati_2();
-	check_pengenalan_simati_3();
-	*/
-	
+function Simpan(){
+	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+	var em = document.f1.txtEmelPemohon.value;
+		
 	var str1  = document.getElementById("txtTarikhMati").value;
 	
 	var dt1   = parseInt(str1.substring(0,2),10);
@@ -2253,7 +2207,6 @@ function Simpan() {
 		alert("Sila masukkan poskod");
 		document.f1.txtPoskod.focus();
 	}
-	
 	else if (document.f1.socNegeri[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
 		alert("Sila pilih negeri");
 		document.f1.socNegeri.focus();
@@ -2270,18 +2223,15 @@ function Simpan() {
 		alert("Sila masukkan nombor poskod dengan lengkapnya");
 		document.f1.txtPoskod[1].focus();
 	}
+	
 	else if (document.f1.no_hp[0].value == "" && (document.f1.no_hp.value != "6" && document.f1.taraf_penting.value != "8")){
 		alert("Sila masukkan No. Tel (HP)");
 		document.f1.no_hp.focus();
 	}
-   /*if (document.f1.no_hp[0].value == "") {
-		alert("Sila masukkan No. Tel (HP)");
-		document.f1.no_hp[0].focus();
-	}*/
 	
-	else if (document.f1.emel.value == "" ) {
-		alert("Sila masukkan Emel");
-		document.f1.emel.focus();
+	else if (document.f1.txtEmelPemohon[0].value == "" && (document.f1.txtEmelPemohon.value != "6" && document.f1.taraf_penting.value != "8")){
+		alert("Sila masukkan Email");
+		document.f1.txtEmelPemohon.focus();
 	}
 	
 	
@@ -2297,22 +2247,7 @@ function Simpan() {
 	{
 		alert("No kp lain simati telah wujud!");	 
 	}
-	
-	/*
-	else if(document.f1.online_skrin.value != "" && document.f1.online_skrin.value == 'yes')
-	{
-		alert("No kp baru simati telah wujud!");	 
-	} 
-	 else if(document.f1.txtNoKPLamaSimati != null && document.f1.txtNoKPLamaSimati.value == 'yes')
-	{
-		alert("No kp lama simati telah wujud!");	 
-	}
-	 else if(document.f1.txtNoKPLainSimati != null && document.f1.txtNoKPLainSimati.value == 'yes')
-	{
-		alert("No kp lain simati telah wujud!");	 
-	}
-	*/
-	
+		
 	
 	else if (isNaN(document.f1.txtNoKPBaruSimati1.value)) {
 		alert("Sila masukkan nombor sahaja");
@@ -2379,14 +2314,15 @@ function Simpan() {
 	}
 	else if (document.f1.txtNoKPLainSimati.value!="" && document.f1.socJenisKPLainSimati.value=="0") {
 		alert("Sila pilih jenis MyID Lain Simati");
-	}	
+	}
+	
+	
 	else if (document.f1.txtNamaSimati != 'null' && document.f1.txtNamaSimati.value=="" 
 			//&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
 			) {
-		alert("Sila masukkan nama simati");
+		alert("Sila masukkan nama simati ");
 		document.f1.txtNamaSimati.focus();
 	}
- 	
 	else if (document.f1.txtTarikhMati != 'null' && document.f1.txtTarikhMati.value=="" 
 			//&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
 			) {
@@ -2396,47 +2332,28 @@ function Simpan() {
 	else if (date1 > currentTime){
 		alert("Sila pastikan tarikh mati tidak melebihi dari tarikh hari ini.");
 		document.f1.txtTarikhMati.focus();
-	}
-//   else if(document.f1.uploadmyid != 'null' && document.f1.uploadmyid.value==""){
-//   	  alert('Sila muatnaik MyID simati.');
-//       document.f1.uploadmyid.focus(); 
-//    }
-//   else if(document.f1.uploadsijil != 'null' && document.f1.uploadsijil.value==""){
-//    	  alert('Sila muatnaik sijil simati.');
-//       document.f1.uploadsijil.focus();
-// 	}
-	
+	}	
+  //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
+	 // alert('Sila muatnaik MyID simati.');
+	  //document.f1.fileupload.focus(); 
+	//}
+  //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
+	//  alert('Sila muatnaik Sijil Mati.');
+//  document.f1.fileupload.focus(); 
+	//}	
 	else{
-		//alert("TING");
-		var data = "&idPermohonan="+idPermohonan.value+"&txtNoKPBaruSimati1="+txtNoKPBaruSimati1.value+"&txtNoKPBaruSimati2="+txtNoKPBaruSimati2.value+"&txtNoKPBaruSimati3="+txtNoKPBaruSimati3.value+"&txdTarikhMohon="+txdTarikhMohon.value+"&txtNamaSimati="+txtNamaSimati.value+"&txtNoKPLamaSimati="+txtNoKPLamaSimati.value+"&socJenisKPLainSimati="+socJenisKPLainSimati.value+"&txtNoKPLainSimati="+txtNoKPLainSimati.value;
-		
-		// "&id_fail_carian="+id_fail+"&txtNoFailSub="+txtNoFailSub.value+"&id_ob_pemohon="+id_ob_pemohon+"&id_permohonansimati_atheader="+id_permohonansimati_atheader+"&sebab="+sebab2;
-		
-		var data2 = data + "&txtTarikhMati="+txtTarikhMati.value+"&txtNoKPBaruPemohon1="+txtNoKPBaruPemohon1.value+"&txtNoKPBaruPemohon2="+txtNoKPBaruPemohon2.value+"&txtNoKPBaruPemohon3="+txtNoKPBaruPemohon3.value+"&txtNoKPLamaPemohon="+txtNoKPLamaPemohon.value+"&txtNoKPLainPemohon="+txtNoKPLainPemohon.value+"&txtNamaPemohon="+txtNamaPemohon.value+"&txtAlamat1="+txtAlamat1.value; //&socJenisKPLainPemohon="+socJenisKPLainPemohon.value+"
-		//alert("TING TONG");
-		var data3 = data2+"&txtAlamat2="+txtAlamat2.value+"&txtAlamat3="+txtAlamat3.value+"&negid="+negid.value+"&socDaerah="+socDaerah.value+"&socBandar="+socBandar.value+"&txtPoskod="+txtPoskod.value+"&socNegeri="+socNegeri.value+"&txtUmurSimati="+txtUmurSimati.value+"&socJantinaSimati="+socJantinaSimati.value+"&txtUmurPemohon="+txtUmurPemohon.value+"&socJantinaPemohon="+socJantinaPemohon.value+"&taraf_penting="+taraf_penting.value+"&no_tel="+no_tel.value+"&nama_pelbagainegara="+nama_pelbagainegara.value+"&no_hp="+no_hp.value+"&jenis_pej="+jenis_pej.value+"&jenis_pemohon="+jenis_pemohon.value+"&emel="+emel.value+"&socSaudaraWaris="+socSaudaraWaris.value;
-		//alert("TING TING TONG");
-		var command = "&command=Simpanx";
-		var actionItem = (command+data3);
-		alert(actionItem);
-		document.f1.enctype = "multipart/form-data";
-	  document.f1.encoding = "multipart/form-data";
-		//alert(document.f1.idPermohonan.value);
 		input_box = confirm("Adakah anda pasti?");
-		
-		
 		if (input_box == true) {
-		//document.f1.method = "POST";
-		//var actionItem = ("&command=Simpanx");
-		//document.f1.command.value="Simpanx";
+		document.f1.method = "POST";
+		document.f1.command.value="Simpanx";
 		document.f1.eventStatus.value="1";
-		//document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon"+actionItem; 
-		document.f1.action = "?_portal_module=${modul}&ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon"+actionItem;
-		//document.f1.action = "";
+		document.f1.action = "";
 		document.f1.submit();
 		}
 	}
+	
 }
+
 
 
 function kp1()
@@ -2777,8 +2694,6 @@ if(flag != "yes" && flagB != "yes")
 
 
 
-
-
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
 		document.getElementById(id).style.display="block";
@@ -3111,10 +3026,6 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 
 function pilih_taraf()
 {
-
-
-//alert(document.f1.taraf_penting.value);
-
 if(document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "2" && document.f1.taraf_penting.value != "4")
 {
 
@@ -3253,6 +3164,12 @@ if(document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != 
 		document.getElementById('no_hp_1b').style.display="none";
 		}	
 		
+		if(document.getElementById('emel_1a') != null)
+		{
+		document.getElementById('emel_1a').style.display="";
+		document.getElementById('emel_1b').style.display="none";
+		}	
+		
 		
 		document.getElementById('tr_hp').style.display="";
 		document.getElementById('tr_pelbagainegara').style.display="";
@@ -3375,9 +3292,6 @@ else if(document.f1.taraf_penting.value == "8")
 		
 		// amanah raya 
 		
-		
-		
-		
 		if(document.getElementById('no_tel_1a') != null)
 		{
 		document.getElementById('no_tel_1a').style.display="none";
@@ -3397,6 +3311,11 @@ else if(document.f1.taraf_penting.value == "8")
 		document.getElementById('no_hp_1b').style.display="none";
 		}	
 		
+		if(document.getElementById('emel_1a') != null)
+		{
+		document.getElementById('emel_1a').style.display="none";
+		document.getElementById('emel_1b').style.display="none";
+		}	
 
 }
 
@@ -3534,10 +3453,11 @@ else if(document.f1.taraf_penting.value == "2" || document.f1.taraf_penting.valu
 		document.getElementById('no_tel_1a').style.display="";
 		document.getElementById('no_tel_1b').style.display="none";
 		}	
-		
-		
-		
-	
+		if(document.getElementById('emel_1a') != null)
+		{
+		document.getElementById('emel_1a').style.display="";
+		document.getElementById('emel_1b').style.display="none";
+		}	
 	
 }
 
@@ -3661,10 +3581,7 @@ document.getElementById('baitulmal').style.display="none";
 	    }
 		
 		// amanah raya 
-		
-		
-		
-		
+	
 		if(document.getElementById('no_tel_1a') != null)
 		{
 		document.getElementById('no_tel_1a').style.display="none";
@@ -3684,12 +3601,12 @@ document.getElementById('baitulmal').style.display="none";
 		document.getElementById('no_hp_1b').style.display="none";
 		}	
 		
+		if(document.getElementById('emel_1a') != null)
+		{
+		document.getElementById('emel_1a').style.display="none";
+		document.getElementById('emel_1b').style.display="none";
+		}
 		
-		
-	
-	  
-
-
 }
 else
 {
@@ -3707,15 +3624,7 @@ else
 							
 							 
 					 		document.f1.no_tel[0].disabled = ''; 	
-							/*
-							alert("xxxxxxxxxxxxxxx"+document.f1.socNegeri[0].value);
-							 			 		
-					 		document.f1.socNegeri[0].disabled = ''; 						
-							
-					 		document.f1.socBandar[0].disabled = ''; 							 
-							*/ 
-							 	
-							 
+												 
 							 
 }
 
@@ -3732,6 +3641,7 @@ if(document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == 
 		document.f1.socNegeri[1].value = "";
 		document.f1.socBandar[1].value = "";			
 		document.f1.no_tel[1].value = "";
+		
 		
 		document.f1.socNegeri_dis.value = "";		
 		document.f1.socBandar_dis.value = "";
@@ -3783,12 +3693,7 @@ var kp2 = document.f1.txtNoKPBaruPemohon2.value;
 var kp3 = document.f1.txtNoKPBaruPemohon3.value;
 var baru = kp1 + kp2 + kp3;
 document.f1.check_no_kp_baru_pemohon.value = baru;
-//alert("baru betol")
-/*
- <input name="check_no_kp_baru_pemohon" id="check_no_kp_baru_pemohon" type="hidden"  />   
- <input name="check_no_kp_lama_pemohon" id="check_no_kp_lama_pemohon" type="hidden"  />  
- <input name="check_no_kp_lain_pemohon" id="check_no_kp_lain_pemohon" type="hidden"  />  
-*/
+
 if('$!skrin_online_popup' == "yes")
 {
 url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
@@ -3800,10 +3705,6 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 	actionName = "check_kpbaru_pemohon";
 	target = "check_kp_p1";
 	doAjaxUpdater(document.f1, url, target, actionName);
-
-
-//alert("baru betol")
-
 
 }
 
@@ -3827,14 +3728,11 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 	target = "check_kp_p2";
 	doAjaxUpdater(document.f1, url, target, actionName);
 
-
-
-//alert("lama betol")
 }
 
 function kp_lain_pemohon()
 {
-//alert("sdjhjsdhjsd")
+
 var kplain = document.f1.txtNoKPLainPemohon.value;
 
 
@@ -3851,13 +3749,10 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 	target = "check_kp_p3";
 	doAjaxUpdater(document.f1, url, target, actionName);
 
-
-//alert("lain betol")
 }
 
 function check_kp_pemohon_onload()
 {
-//alert("XXXXXXXXXXXXXXXX");
 kp_baru_pemohon();
 kp_lama_pemohon();
 kp_lain_pemohon();
@@ -3961,7 +3856,11 @@ $jquery("#kpi_ppk").html("<span  style='color:red'></span>");
 		hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();
 	}
-
+	
+	function check()
+	{
+	//alert("masuk!");
+	}
 	
 </script>
 
