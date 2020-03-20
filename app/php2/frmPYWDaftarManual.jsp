@@ -8,26 +8,20 @@
 
 #set($saizTxtPerkara="1000")
 <p>
-	<input type="hidden" name="form_token"
-		value='$!{session.getAttribute("form_token")}'> <input
-		name="actionPenyewaan" type="hidden" id="actionPenyewaan"
-		value="$actionPenyewaan" /> <input name="mode" type="hidden"
-		id="mode" value="$mode" /> <input name="hitButton" type="hidden"
-		id="hitButton" /> <input name="idFail" type="hidden" id="idFail"
-		value="$idFail" /> <input name="idStatus" type="hidden" id="idStatus"
-		value="$idStatus" /> <input type="hidden" name="idHakmilikAgensi"
-		id="idHakmilikAgensi" value="$idHakmilikAgensi" /> <input
-		type="hidden" name="idHakmilikSementara" id="idHakmilikSementara"
-		value="$idHakmilikSementara" /> <input type="hidden"
-		name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> <input
-		type="hidden" name="idPPTBorangK" id="idPPTBorangK"
-		value="$idPPTBorangK" /> <input type="hidden" name="idHakmilikUrusan"
-		id="idHakmilikUrusan" value="$idHakmilikUrusan" /> <input type="text"
-		name="namatujuan2" id="namatujuan2" value="$namatujuan2" /> <input
-		type="text" name="namatujuan" id="namatujuan" value="$namatujuan" />
-		
-		<input
-		type="text" name="namatujuan3" id="namatujuan3" value="$namatujuan3" />
+	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'> 
+	<input name="actionPenyewaan" type="hidden" id="actionPenyewaan" value="$actionPenyewaan" /> 
+	<input name="mode" type="hidden" id="mode" value="$mode" /> 
+	<input name="hitButton" type="hidden" id="hitButton" /> 
+	<input name="idFail" type="hidden" id="idFail" value="$idFail" /> 
+	<input name="idStatus" type="hidden" id="idStatus" value="$idStatus" /> 
+	<input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi" /> 
+	<input type="hidden" name="idHakmilikSementara" id="idHakmilikSementara" value="$idHakmilikSementara" /> 
+	<input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> 
+	<input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" /> 
+	<input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" /> 
+	<input type="text" name="namatujuan2" id="namatujuan2" value="$namatujuan2" /> 
+	<input type="text" name="namatujuan" id="namatujuan" value="$namatujuan" />
+	<input type="text" name="namatujuan3" id="namatujuan3" value="$namatujuan3" />
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
