@@ -16,8 +16,8 @@
 <input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> 
 <input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" /> 
 <input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
-<input type="hidden" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" 
-        onblur="check_date(this);cekTarikhTerima(this)" size="9" $readonly class="$inputTextClass" />
+
+<input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />        
 <table width="100%" border="0">
   <tr>
   
@@ -219,7 +219,7 @@
           <td>Kementerian</td>
           <td>:</td>
           <td>$beanMaklumatTanah.kementerian
-            <input type="hidden" name="idKementerian" id="idKementerian" value="$beanMaklumatTanah.idKementerian">
+            <input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatTanah.idKementerian">
             <input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian">
           </td>
         </tr>
@@ -331,6 +331,8 @@
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0">
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)        
+        <input type="hidden" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" 
+        onblur="check_date(this);cekTarikhTerima(this)" size="9" $readonly class="$inputTextClass" />
         <tr>
         	<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
         	<td width="28%">Urusan</td>
@@ -343,23 +345,6 @@
           	<td>:</td>
           	<td>$selectSuburusan</td>
         </tr>
-        <tr>
-        	<td>#if($mode == 'new')<span class="style1">*</span>#end</td>
-        	<td>Tujuan Sewa 1</td>
-        	<td>:</td>
-        	<td>$selectJenisTujuan</td>
-        </tr>
-        #if($idJenisTujuan == '32' || $idJenisTujuan == '38' || $idJenisTujuan == '46' || $idJenisTujuan == '52')
-		<tr>
-			<td width="1%" valign="top">
-				#if ($mode != 'view')<span class="style1">*</span>#end
-			</td>
-			<td valign="top">Lain - Lain Tujuan</td>
-			<td valign="top">:</td>
-			<td><textarea name="txtTujuan" id="txtTujuan" rows="5" cols="50" $readonly class="$inputTextClass" 
-			onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tujuan</textarea></td>
-		</tr>
-		#end
         <tr>
         	<td></td>
         	<td>Tarikh Surat/Borang</td>
