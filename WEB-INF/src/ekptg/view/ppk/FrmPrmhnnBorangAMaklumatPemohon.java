@@ -751,11 +751,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
-		} //else if ("Simpanx".equals(submit)) {
-			//System.out.println("Simpanx");
-
-		//} 
-		else if ("Simpanx".equals(submit)) {
+		}else if ("Simpanx".equals(submit)) {
 
 			String passvalue = getParam("passvalue");
 			this.context.put("duplicate", "");
@@ -833,10 +829,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					context.put("POPDaerahMohon", daerah_mohon.toUpperCase());
 					context.put("POPNoOnline", no_rujukan_online);
 					context.put("id_status_daftar", id_status_daftar);
-					/*
-					view1 = logic_A.getJenisKp();
-					this.context.put("listkp", view1);
-					*/
+					
 					this.context.put("tarikhmohondaftar", currentDate);
 
 					int idflag = 0;
@@ -870,8 +863,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 					// Hashtable h = (Hashtable)list2.get(0);
 					if (negri == "") {
-						// this.context.put("selectNegeri",
-						// HTML.SelectNegeri("socNegeri",null,"class=\"autoselect\" "));
+						
 						this.context.put("negeri", "");
 						this.context.put("daerah", "");
 
@@ -922,6 +914,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("jenis_pej", getParam("jenis_pej"));
 					this.context.put("jenis_pemohon", getParam("jenis_pemohon"));
 					this.context.put("socSaudaraWaris",getParam("socSaudaraWaris"));
+					this.context.put("emel", getParam("txtEmelPemohon"));
 
 				} else {
 					/*
@@ -992,6 +985,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					k.put("jenis_pej", getParam("jenis_pej"));
 					k.put("jenis_pemohon", getParam("jenis_pemohon"));
 					k.put("socSaudaraWaris", getParam("socSaudaraWaris"));
+					k.put("emel", getParam("txtEmelPemohon"));
+
 
 					v.addElement(k);
 					this.context.put("View", v);
@@ -1251,6 +1246,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("jenis_pej", getParam("jenis_pej"));
 				this.context.put("jenis_pemohon", getParam("jenis_pemohon"));
 				this.context.put("socSaudaraWaris", getParam("socSaudaraWaris"));
+				this.context.put("emel", getParam("txtEmelPemohon"));
 
 			} else {
 				/*
@@ -5829,7 +5825,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		String socJantinaSimati = getParam("socJantinaSimati");
 		String txtUmurPemohon = getParam("txtUmurPemohon");
 		String socJantinaPemohon = getParam("socJantinaPemohon");
-
+		String emel = getParam("txtEmelPemohon");
 		String no_tel = getParam("no_tel");
 		String nama_pelbagainegara = getParam("nama_pelbagainegara");
 		String taraf_penting = getParam("taraf_penting");
@@ -5870,7 +5866,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("socJantinaSimati", socJantinaSimati);
 		h.put("txtUmurPemohon", txtUmurPemohon);
 		h.put("socJantinaPemohon", socJantinaPemohon);
-
+		h.put("emel", emel);
 		h.put("no_hp", getParam("no_hp"));
 		h.put("jenis_pej", getParam("jenis_pej"));
 		h.put("no_tel", no_tel);
@@ -7355,6 +7351,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		String sel_jeniskp_pemohon = getParam("socJenisKPLainPemohon");
 		String no_kplain_pemohon = getParam("txtNoKPLainPemohon");
 		String nama_pemohon = getParam("txtNamaPemohon");
+		String emel = getParam("txtEmelPemohon");
 		String alamat1 = getParam("txtAlamat1");
 		String alamat2 = getParam("txtAlamat2");
 		String alamat3 = getParam("txtAlamat3");
@@ -7414,7 +7411,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("idbandar", idbandar);
 		h.put("poskod", poskod);
 		h.put("negeri", negeri);
-
+		h.put("emel", emel);
 		h.put("buktimati", buktimati);
 		h.put("sijilmati", sijilmati);
 
