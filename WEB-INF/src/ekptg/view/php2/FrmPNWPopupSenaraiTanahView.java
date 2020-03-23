@@ -30,7 +30,7 @@ public class FrmPNWPopupSenaraiTanahView extends AjaxBasedModule {
 	    String actionPopup = getParam("actionPopup");
 	    String submit = getParam("command");
 	    String idHakmilikAgensi = getParam("idHakmilikAgensi");
-	    String idKategoriPemohon = getParam("idKategoriPemohon");
+	    String idKategoriPemohon = "3";
 	    String idAgensiPemohon = getParam("idAgensiPemohon");
 	    String idHakmilikSementara = getParam("idHakmilikSementara");
 	    String hitButton = getParam("hitButton");
