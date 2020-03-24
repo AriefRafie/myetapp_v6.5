@@ -34,7 +34,7 @@
 	#end 
 	<tr class="table_header" >
 		   <td   align="center" valign="top" width="5%">Bil.</td>
-		   <td   align="left" valign="top" >Nama</td>
+		   <td   align="left" valign="top" width="30%" >Nama</td>
            <td   align="left" valign="top" >Pengenalan</td>
 		   <td   align="left" valign="top" >Kaitan / Hubungan</td>	
            <td   align="center" valign="top" >Umur</td>	
@@ -48,11 +48,36 @@
 		<tr  >
 			   <td class="$pr.rowCss"  align="center" valign="top" >$pr.BIL </td>
                <td class="$pr.rowCss"  align="left" valign="top" >
-               
               
               
+    		   #set($typeKehadiran = "hidden")
+               #if($pr.JENIS_OB == "1" && $pr.ID_BIKEHADIRAN != "")
+               #set($typeKehadiran = "text")
+               #end
                
-               #if($pr.UMUR_INT != 0 && $pr.UMUR_INT < 18)
+               #set($nama_hadir = $pr.NAMA)
+               #if($pr.ID_BIKEHADIRAN != "")
+               #set($nama_hadir = $pr.NAMA_HADIR)
+               #end
+               
+               
+              
+               
+               <input type="$typeKehadiran" style="text-transform:uppercase" name="NAMA_$pr.ID_OBPERMOHONAN" id="NAMA_$pr.ID_OBPERMOHONAN" class="fullwidth_input" value = "$nama_hadir" />          
+	           
+               #if($typeKehadiran == "text")
+               <span class="showWakil" style="display:none" >$nama_hadir</span>  
+               #end 
+                  
+               #if($pr.JENIS_OB == "1" && $pr.NAMA != $pr.NAMA_HADIR && $pr.ID_BIKEHADIRAN != "")
+              
+               <br />
+               wakil kepada
+             
+               #end
+               
+               <!--  $pr.UMUR_INT != 0 && $pr.UMUR_INT < 18 -->
+               #if( $pr.STATUS_OB == "2" ||  $pr.STATUS_OB == "4")
                
                
                #if($pr.PENJAGA != "") 
@@ -76,15 +101,69 @@
                #if($pr.ID_PEMOHON != "" && $pr.ID_PEMOHON != "-")
                <span class="blue"> (Pemohon)</span> 
                #if($pr.KETERANGAN == "")
-               <div><i><span class="blue blink">Info</span> : Sebelum memasukkan keterangan pemohon, pastikan semak terlebih dahulu jika ada harta tertingal. Sekiranya ada, sila tambah harta tersebut pada tab harta didalam skrin ini. Harta-harta yang dimasukan akan dipaparkan secara 'default' didalam keterangan pemohon</i></div>
+               <br /><br />
+               <div id="disInfoSHT$pr.ID_OBPERMOHONAN" ><i><span class="blue blink">Info</span> : Sebelum memasukkan keterangan pemohon, pastikan semak terlebih dahulu jika ada harta tertingal. Sekiranya ada, sila tambah harta tersebut pada tab harta didalam skrin ini. Harta-harta yang dimasukan akan dipaparkan secara 'default' didalam keterangan pemohon</i></div>
+               <script>
+			   checkHartaTertingal('disInfoSHT$pr.ID_OBPERMOHONAN');
+               </script>
                #end
                
                #end 
-               <input type="hidden" name="NAMA_$pr.ID_OBPERMOHONAN" id="NAMA_$pr.ID_OBPERMOHONAN" value = "$pr.NAMA" /></td>
-               <td class="$pr.rowCss"  align="left" valign="top" >$pr.PENGENALAN<input type="hidden" name="PENGENALAN_$pr.ID_OBPERMOHONAN" id="PENGENALAN_$pr.ID_OBPERMOHONAN" value = "$pr.PENGENALAN" /></td>
-               <td class="$pr.rowCss"  align="left" valign="top" >$pr.HUBUNGAN<input type="hidden" name="HUBUNGAN_$pr.ID_OBPERMOHONAN" id="HUBUNGAN_$pr.ID_OBPERMOHONAN" value = "$pr.HUBUNGAN" /></td>	
-               <td class="$pr.rowCss"  align="center" valign="top" >$pr.UMUR<input type="hidden" name="UMUR_$pr.ID_OBPERMOHONAN" id="UMUR_$pr.ID_OBPERMOHONAN" value = "$pr.UMUR" /></td>
-               <td class="$pr.rowCss"  align="left" valign="top" >$pr.STATUS<input type="hidden" name="STATUS_$pr.ID_OBPERMOHONAN" id="STATUS_$pr.ID_OBPERMOHONAN" value = "$pr.STATUS" /></td>	
+               
+              
+               </td>
+               
+              
+               
+               
+               <td class="$pr.rowCss"  align="left" valign="top" >
+               #set($pengenalan_hadir = $pr.PENGENALAN)
+               #if($pr.ID_BIKEHADIRAN != "")
+               #set($pengenalan_hadir = $pr.PENGENALAN_HADIR)
+               #end
+               <input type="$typeKehadiran" style="text-transform:uppercase" class="fullwidth_input" name="PENGENALAN_$pr.ID_OBPERMOHONAN" id="PENGENALAN_$pr.ID_OBPERMOHONAN" value = "$pengenalan_hadir" />
+               #if($typeKehadiran == "text")
+               <span class="showWakil" style="display:none" >$pengenalan_hadir</span>  
+               #end 
+               $pr.PENGENALAN
+               </td>
+               <td class="$pr.rowCss"  align="left" valign="top" >
+               $dataHubungan               
+               
+               
+               #set($hubungan_hadir = $pr.HUBUNGAN)
+               #if($pr.ID_BIKEHADIRAN != "")
+               #set($hubungan_hadir = $pr.HUBUNGAN_HADIR)
+               #end
+               <input type="$typeKehadiran" class="fullwidth_input" style="text-transform:uppercase" name="HUBUNGAN_$pr.ID_OBPERMOHONAN" id="HUBUNGAN_$pr.ID_OBPERMOHONAN" value = "$hubungan_hadir"   maxlength="100" list="dataHubungan"/>
+               #if($typeKehadiran == "text")
+               <span class="showWakil" style="display:none" >$hubungan_hadir</span>  
+               #end 
+               $pr.HUBUNGAN
+               </td>	
+               <td class="$pr.rowCss"  align="center" valign="top" >
+               #set($umur_hadir = $pr.UMUR)
+               #if($pr.ID_BIKEHADIRAN != "")
+               #set($umur_hadir = $pr.UMUR_HADIR)
+               #end
+               <input type="$typeKehadiran"  class="fullwidth_input" name="UMUR_$pr.ID_OBPERMOHONAN" id="UMUR_$pr.ID_OBPERMOHONAN" maxlength="3" onkeydown="validateNumber(event);" value = "$umur_hadir" />
+               #if($typeKehadiran == "text")
+               <span class="showWakil" style="display:none" >$umur_hadir</span>  
+               #end 
+               $pr.UMUR
+               </td>
+               <td class="$pr.rowCss"  align="left" valign="top" >
+               $dataStatusOB
+               #set($status_hadir = $pr.STATUS)
+               #if($pr.ID_BIKEHADIRAN != "")
+               #set($status_hadir = $pr.STATUS_HADIR)
+               #end
+               <input type="$typeKehadiran" class="fullwidth_input" name="STATUS_$pr.ID_OBPERMOHONAN" style="text-transform:uppercase" id="STATUS_$pr.ID_OBPERMOHONAN" value = "$status_hadir"  maxlength="100" list="dataStatusOB"  />
+               #if($typeKehadiran == "text")
+               <span class="showWakil" style="display:none" >$status_hadir</span>  
+               #end 
+               $pr.STATUS
+               </td>	
                <td class="$pr.rowCss"  align="center" valign="top" ><!--$pr.ID_BIKEHADIRAN-->
                <input type="checkbox" id="checkKehadiran" name="checkKehadiran" #if($pr.ID_BIKEHADIRAN != '')checked#end value="$pr.ID_OBPERMOHONAN" onclick="doCheckKehadiran('checkKehadiran', 'checkAllkehadiran');"  />
                <span id="spanIconKeterangan$pr.ID_OBPERMOHONAN" style="display:none">
@@ -131,7 +210,8 @@
 <div id="view_turuthadir">
 
 <script> 
-	$jquery(document).ready(function () {	
+	$jquery(document).ready(function () {
+		//alert("x");	
 	doDivAjaxCall$formname('view_turuthadir','show_turuthadir','ID_PERBICARAAN=$ID_PERBICARAAN&ID_PERMOHONAN=$ID_PERMOHONAN&scrolPosition='+getPageLocation());			 	  
 	});
 </script>
@@ -143,9 +223,13 @@
 
 <script>
 var flagDisable = document.getElementById("flagDisable").value;
+
+//alert("flagDisable : "+flagDisable);
+
 if(flagDisable == "Y")
 {
 	disableInput("view_kehadiran");
+	showInfoWakil("view_kehadiran")
 }
 </script>
 

@@ -28,8 +28,11 @@
     	@media print{ 		
 			.tableMain {page-break-inside:auto !important;}
 			.trMain {page-break-inside:auto !important;}
-			table { page-break-inside:auto }
-			tr    { page-break-inside:avoid; page-break-after:auto;  }
+			/*table { page-break-inside:auto }
+			tr    { page-break-inside:avoid; page-break-after:auto;  }*/
+			
+			
+			
 			.autoBreak { page-break-inside:avoid; page-break-before:auto;  }
 			.onTT {display:block;}
 			.divKeteranganPrint {
@@ -56,7 +59,7 @@
         <td width="100%">  
         -->   
         <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tableMain"  >
-        <thead ><tr class="trMain"><td valign="top"  align="right" colspan="10" >$NO_FAIL<br /><br /></td></tr></thead>
+        <thead ><tr class="trMain"><td valign="top"  align="right" colspan="10" style="font-size:14px" >$NO_FAIL<br /><br /></td></tr></thead>
         <tr  class="trMain"><td>        
         	#parse("app/ppk/BicaraInteraktif/viewHeaderPrint.jsp")       
         #end
@@ -184,20 +187,23 @@
 		}
 		
 		
-		if(PEGAWAIBICARAASLOGIN!="Y" || parseInt(JAGAAN_MATCH)==0)
+		if(PEGAWAIBICARAASLOGIN!="Y" 
+		//|| parseInt(JAGAAN_MATCH)==0
+		)
 		{
-			//alert("1"+divLocation);
-			//offIconByClass("buttonHapus");
-			//disableInput(divLocation);
-			//alert("2");
-			$jquery("#view_keputusan input[id=cmdSimpankeputusan]").hide();		
-			$jquery("#view_keputusan input[id=cmdKemaskinikeputusan]").hide();	
-			
+			//komen dlu
+			//$jquery("#view_keputusan input[id=cmdSimpankeputusan]").hide();		
+			//$jquery("#view_keputusan input[id=cmdKemaskinikeputusan]").hide();	
+			mesej += "<br><font color=\"red\" ><strong class=\"blink\" style=\"color:red\">PERHATIAN!</strong> HANYA PEGAWAI BICARA YANG DITUGASKAN BOLEH MENGEMASKINI MAKLUMAT</font>";
+			//en seh request, hanya pegawai yg membicarakan saja bleh bukak skrin ni			
 		}
+		
+		
 		
 		
 		if(adaMasalah=="Y" 
 		//|| parseInt(JAGAAN_MATCH)==0 
+		|| PEGAWAIBICARAASLOGIN!="Y"
 		|| LEPASTARIKHHARINI=="Y")
 		{
 			$jquery("#"+divLocation).html("<div class=\"viewMaklumatTR\">"+mesej+"<br><br></div>");

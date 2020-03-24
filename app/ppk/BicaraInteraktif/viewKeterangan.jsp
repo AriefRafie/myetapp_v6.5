@@ -73,7 +73,8 @@
 		});	
 		
 		var resizeIframe = function() {
-			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");								
+			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");	
+			getTimeAutoSave("timer_KETERANGAN_$ID_OBPERMOHONAN","$ID_OBPERMOHONAN","FOCUS","$ID_BIKEHADIRAN");
 			document.getElementById('buttonKeterangan$ID_OBPERMOHONAN').style.display = "none";
 			document.getElementById('infobuttonKeterangan$ID_OBPERMOHONAN').style.display = "";
 			$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";			

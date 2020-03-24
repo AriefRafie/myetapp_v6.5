@@ -8,6 +8,12 @@
 
 
 .onTT {display:none;}
+
+.scrollYes {
+	overflow-x:auto;
+	height: 1000px;
+}
+
 #sddmheader
 {	
 	margin: 0;
@@ -233,7 +239,7 @@
  overflow: hidden;
  position: relative;
 }
-.textmarq h3 {
+.textmarq h3  {
  /*font-size: 3em;*/
  /*color: limegreen;*/
  position: absolute;
@@ -375,8 +381,9 @@
 
 </style>
 
-
+<!--  
 <div class="blink" ><font color="red" ><strong class="blink">PERHATIAN!</strong> MODUL INI DIDALAM TEMPOH PENGUJIAN, SILA ABAIKAN BUAT SEMENTARA WAKTU.</font></div>
+-->
 
 #set($showListTukarPegawai = "")
 #if($id_jawatan_login != "4" && $id_jawatan_login != "5")
@@ -475,6 +482,9 @@ doDivAjaxCall$formname('listPerbicaraan','showListPerbicaraan','');
 
 
 <script>
+
+
+
 var refreshInterval_showtime = [];
 
 //alert(trim(document.getElementById("inputMinify").innerHTML));
@@ -1211,6 +1221,7 @@ function doCheckAllKehadiran(main_check,sub_check)
 		}
 	}	
 }
+
 function getPageLocation()
 {
 	var tempScrollTop = $jquery(window).scrollTop();
@@ -1237,7 +1248,7 @@ $jquery.fn.scrollView = function () {
   return this.each(function () {
     $jquery('html, body').animate({
       scrollTop: $jquery(this).offset().top - 50
-    }, 1000);
+    }, 0);
   });
 }
 
@@ -1283,6 +1294,11 @@ function hideByClass(cl)
 {
 	$jquery("."+cl).addClass("hidebutton");
 	$jquery("."+cl).removeClass(cl);	
+}
+
+function showInfoWakil(div)
+{
+	$jquery("#"+div+" [class=showWakil]").show();
 }
 
 function disableInput(div)
@@ -3220,6 +3236,13 @@ function valSimpanKeputusan(skrinName)
 		document.getElementById(skrinName+"TARIKH_PERINTAH").focus();
 		bool_check = false;
 	}
+	/*
+	else if(document.getElementById("checkCatatan"+skrinName).value=="Y")
+	{
+		alert("Masih terdapat 7 daripada 8 keterangan kehadiran waris yang belum dicatat!");
+		bool_check = false;
+	}
+	*/
 	else if(jp=="0" && document.getElementById(skrinName+"CHECK_KIV").value!="" && document.getElementById(skrinName+"DATE_KIV").value=="")
 	{
 		alert("Masukkan Tarikh KIV!");
@@ -3262,6 +3285,14 @@ function valSimpanKeputusan(skrinName)
 		document.getElementById(skrinName+"TARIKH_BAYARAN24").focus();
 		bool_check = false;
 	}	
+	
+	else if(jp=="0" && document.getElementById(skrinName+"CATATAN_KEPUTUSAN_PERBICARAAN").value == "")
+	{
+		alert("Masukkan Catatan Keputusan Perbicaraan!");
+		document.getElementById(skrinName+"CATATAN_KEPUTUSAN_PERBICARAAN").focus();
+		bool_check = false;
+	}
+	
 	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value=="")
 	{
 		alert("Masukkan Alasan Tangguh Perbicaraan!");
@@ -3397,6 +3428,15 @@ function valSimpanKeputusan(skrinName)
 		document.getElementById(skrinName+"ID_PEJABATMAHKAMAH").focus();
 		bool_check = false;
 	}
+	else if(jp=="1" && document.getElementById(skrinName+"SEBAB_TANGGUH").value == "")
+	{
+		alert("Masukkan Keterangan Tangguh!");
+		document.getElementById(skrinName+"SEBAB_TANGGUH").focus();
+		bool_check = false;
+	}
+	
+	
+	
 	
 	
 	//BATAL
@@ -3418,7 +3458,12 @@ function valSimpanKeputusan(skrinName)
 		document.getElementById(skrinName+"ID_PEJABATMAHKAMAH").focus();
 		bool_check = false;
 	}
-	
+	else if(jp=="2" && document.getElementById(skrinName+"SEBAB_BATAL").value == "")
+	{
+		alert("Masukkan Alasan Pembatalan!");
+		document.getElementById(skrinName+"SEBAB_BATAL").focus();
+		bool_check = false;
+	}
 	
 	
 	var bool_check_last = false;
@@ -5360,6 +5405,44 @@ function getWordAtPosition(position, element) {
 */
 
 
+function fckeditorWordCatatanPerintah(elem, divId) {
+	//alert("masuk : "+divId+" divViewEditorkeputusanCATATAN_PERINTAH_BI : "+$jquery("#divViewEditorkeputusanCATATAN_PERINTAH_BI").height());
+	
+	var val = elem.innerHTML;
+	//alert("divId : "+divId);
+	//alert("val : "+val);
+	//alert("fckeditor_word_count : "+val);
+    var matches = val.replace(/<[^<|>]+?>|&nbsp;/gi,' ').match(/\b/g);
+	//alert("matches : "+matches);
+    var count = 0;
+    if(matches) {
+        count = matches.length/2;
+    }
+	//alert("count : "+count+" divId : "+divId);
+    //document.getElementById(divId).innerHTML = count + " Perkataan" + (count == 1 ? "" : "s") + " approx";
+	document.getElementById(divId).innerHTML = "Jumlah Perkataan : <span class=\"blue\"><b>"+count+"</b></span>";
+	//alert("viewHeight : "+viewHeight);
+	$jquery("#divViewEditorkeputusanCATATAN_PERINTAH_BI").removeClass("scrollYes");
+	var viewHeight = $jquery("#divViewEditorkeputusanCATATAN_PERINTAH_BI").height();
+	//alert("viewHeight : "+viewHeight);
+	if(viewHeight>1000)
+	{
+		//document.getElementById("divViewEditorkeputusanCATATAN_PERINTAH_BI").setAttribute("style","overflow:auto;");
+		$jquery("#divViewEditorkeputusanCATATAN_PERINTAH_BI").addClass("scrollYes");
+	}
+	
+}
+
+function replaceText(selector, text, newText, flags) {
+  var matcher = new RegExp(text, flags);
+  var elems = document.querySelectorAll(selector), i;
+
+  for (i = 0; i < elems.length; i++)
+    if (!elems[i].childNodes.length)
+      elems[i].innerHTML = elems[i].innerHTML.replace(matcher, newText);
+}
+
+
 function fckeditor_word_count(elem, divId) {
 	var val = elem.value;
 	//alert("fckeditor_word_count : "+val);
@@ -5408,10 +5491,16 @@ function editorKeputusan(skrinName,columnName,value)
 		});	
 		//alert("2");
 		var resizeIframeK = function() {
+		
 			fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);								
 			document.getElementById('button'+skrinName).style.display = "none";
 			document.getElementById('trinfobutton'+skrinName+columnName).style.display = "";
 			$jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.iframe.style.height = $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight + 50 + "px";	
+			
+			if((skrinName+columnName)=="keputusanINTRO_CATATAN" || (skrinName+columnName)=="keputusanCATATAN_DOCKIV"  || (skrinName+columnName)=="keputusanCATATAN" || (skrinName+columnName)=="keputusanCATATAN_KEPUTUSAN_PERBICARAAN")
+			{
+				getTimeAutoSavePerintah("timer_"+skrinName+columnName,"FOCUS")
+			}
 			
 			if ($jquery('#trJanaCatatan').length > 0 && skrinName == "keputusan"
 			 //&& columnName == "CATATAN_PERINTAH_BI"
@@ -5423,7 +5512,7 @@ function editorKeputusan(skrinName,columnName,value)
 		//alert("3");
 		var resizeIframeBlurK = function() {
 			fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);
-			if((skrinName+columnName)=="keputusanCATATAN" || (skrinName+columnName)=="keputusanCATATAN_KEPUTUSAN_PERBICARAAN")
+			if((skrinName+columnName)=="keputusanINTRO_CATATAN" || (skrinName+columnName)=="keputusanCATATAN_DOCKIV"  || (skrinName+columnName)=="keputusanCATATAN" || (skrinName+columnName)=="keputusanCATATAN_KEPUTUSAN_PERBICARAAN")
 			{
 				getTimeAutoSavePerintah("timer_"+skrinName+columnName,"BLUR")
 			}	
@@ -5439,8 +5528,9 @@ function editorKeputusan(skrinName,columnName,value)
 		//alert("4");
 		var resizeIframeKeyUpK = function() {
 			fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);	
-			if((skrinName+columnName)=="keputusanCATATAN" || (skrinName+columnName)=="keputusanCATATAN_KEPUTUSAN_PERBICARAAN")
+			if((skrinName+columnName)=="keputusanINTRO_CATATAN" || (skrinName+columnName)=="keputusanCATATAN_DOCKIV" || (skrinName+columnName)=="keputusanCATATAN" || (skrinName+columnName)=="keputusanCATATAN_KEPUTUSAN_PERBICARAAN")
 			{
+				//console.log("resizeIframeKeyUpK : "+columnName);
 				getTimeAutoSavePerintah("timer_"+skrinName+columnName,"KEYUP")
 			}
 			document.getElementById('button'+skrinName).style.display = "none";
@@ -5465,6 +5555,7 @@ function editorKeputusan(skrinName,columnName,value)
 		
 		$jquery("#"+skrinName+columnName).data("wysihtml5").editor.on("load", function() {
 		  fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);
+		  console.log("columnName : "+$jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight);
 		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.iframe.style.height = $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight + 50 + "px";		  	
 		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.addEventListener("keyup", resizeIframeKeyUpK , false);
 		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.addEventListener("keydown", resizeIframeKeyUpK , false);
@@ -5479,14 +5570,73 @@ function editorKeputusan(skrinName,columnName,value)
 	
 }
 
+function showHideTextIntro(val,skrinName,columnName)
+{
+	if(val != "")
+	{
+		//$jquery("#"+skrinName+columnName).data("wysihtml5").editor.setValue("");
+		$jquery("#row"+skrinName+columnName).hide();
+		//$jquery("#trinfobutton"+skrinName+columnName).hide();
+		$jquery("#trword"+skrinName+columnName).hide();
+		$jquery("#"+skrinName+columnName).val("");
+		//editorKeputusan(skrinName,columnName,value);
+		
+	}
+	else
+	{
+		$jquery("#row"+skrinName+columnName).show();
+		//$jquery("#trinfobutton"+skrinName+columnName).show();
+		$jquery("#trword"+skrinName+columnName).show();
+	}
+	
+}
+
+function showHideTextDocKembali(val,skrinName,columnName)
+{
+	//console.log("showHideTextDocKembali :: val : "+val+" skrinName : "+skrinName+" columnName : "+columnName);
+	
+	if(val == "1" || val == "")
+	{
+		//alert("test 1");
+		//$jquery("#"+skrinName+columnName).data("wysihtml5").editor.setValue("");
+		$jquery("#row"+skrinName+columnName).hide();
+			//$jquery("#trinfobutton"+skrinName+columnName).hide();
+		$jquery("#trword"+skrinName+columnName).hide();
+		$jquery("#"+skrinName+columnName).val("");
+		//editorKeputusan(skrinName,columnName,value);		
+	}
+	else
+	{
+		//alert("test 2");
+		$jquery("#row"+skrinName+columnName).show();
+			//$jquery("#trinfobutton"+skrinName+columnName).show();
+		$jquery("#trword"+skrinName+columnName).show();
+		
+	}
+	
+}
+
 function reAssignFieldEditorContent(fieldname)
 {
-	//alert("XXXXXXXXXXXX : "+document.getElementById("dummyDivResetup"+fieldname).innerHTML);
-	$jquery("#"+fieldname).data("wysihtml5").editor.setValue(document.getElementById("dummyDivResetup"+fieldname).innerHTML);
+	/*
+	var fs = "$fontSize";
+	alert(" fs : "+fs)
+	var regex = new RegExp(fs, "g");
+	$jquery("#"+fieldname).data("wysihtml5").editor.setValue(document.getElementById("dummyDivResetup"+fieldname).innerHTML.replace(regex, ''));
+	*/
 	//alert("2");
+	$jquery("#"+fieldname).data("wysihtml5").editor.setValue(document.getElementById("dummyDivResetup"+fieldname).innerHTML);
 }
 
 
+function setDalamDiv(div)	 
+{
+	 document.getElementById("keputusanCATATAN_PERINTAH_BI").value = document.getElementById("dummyJanaCatatan").innerHTML;
+	 var fs = "$fontSize";
+	 var regex = new RegExp(fs, "g");
+	 //console.log("::: "+document.getElementById("dummyJanaCatatan").innerHTML.replace(regex, ''));
+	 document.getElementById(div).innerHTML = document.getElementById("dummyJanaCatatan").innerHTML.replace(regex, '');
+}
 
 
 function cetakNotaPerbicaraan(NO_FAIL,id_perbicaraan,idfail,idsimati,seksyen,tarikh_permohonan,flagBicaraOnline) {
@@ -5538,6 +5688,27 @@ function goToBU()
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 }
+
+function checkHartaTertingal(id_button)
+{
+	//alert("checkHartaTerintggal : "+document.getElementById(id_button));
+	
+	var BI_FLAG_HARTA_TERINGGAL =   document.getElementById("BI_FLAG_HARTA_TERINGGAL").value;
+	var seksyen_headerppk =   document.getElementById("seksyen_headerppk").value;
+	
+	console.log("BI_FLAG_HARTA_TERINGGAL : "+BI_FLAG_HARTA_TERINGGAL+" seksyen_headerppk : "+seksyen_headerppk);
+	if(BI_FLAG_HARTA_TERINGGAL == "T" && seksyen_headerppk == "17")
+	{
+		document.getElementById(id_button).style.display = "none";
+	}
+	else
+	{
+		document.getElementById(id_button).style.display = "";
+	}
+	
+}
+
+
 
 function goToPerintah()
 {
@@ -5626,7 +5797,156 @@ function cetakBorangN(nofail,idFail,id_perbicaraan) {
     if (hWnd.focus != null) hWnd.focus();
 }
 
+
+var flagDahFocusKeyin = [];
+
 function getTimeAutoSave(divUnique_id,unique_id,action,ID_BIKEHADIRAN)
+{
+		//alert("x : "+refreshInterval_showtime[divUnique_id]);
+		var command = "";
+		if(unique_id=="")
+		{
+			command = "autoSaveKeteranganTuruthadir";		
+		}
+		else
+		{
+			command = "autoSaveKeterangan";		
+		}
+			
+				
+		if((flagDahFocusKeyin[divUnique_id] == undefined || flagDahFocusKeyin[divUnique_id] == null) && action=="KEYUP" )
+		{
+			if (typeof(refreshInterval_showtime[divUnique_id]) != 'undefined' && refreshInterval_showtime[divUnique_id] != null)
+			{
+				window.clearInterval(refreshInterval_showtime[divUnique_id]);
+				refreshInterval_showtime[divUnique_id] = null;
+				document.getElementById(divUnique_id).innerHTML = "";
+			}		
+			//alert("masuk");
+			var timeAutoSave = 30;//5 minit
+			//alert("timeAutoSave : "+timeAutoSave);
+			refreshInterval_showtime[divUnique_id] = setInterval(function(){	
+			timeAutoSave = timeAutoSave-1;
+			//console.log("****");
+			//console.log("flagDahFocusKeyin[divUnique_id] >>>>>>>> "+flagDahFocusKeyin[divUnique_id]);
+			document.getElementById(divUnique_id).innerHTML = "<span class=\"blue\">"+timeAutoSave+" saat sebelum 'auto save'</span>";
+			
+			if(timeAutoSave <= 0)
+			{	
+				window.clearInterval(refreshInterval_showtime[divUnique_id]);
+				refreshInterval_showtime[divUnique_id] = null;
+				getTimeAutoSave(divUnique_id,unique_id,"FOCUS",ID_BIKEHADIRAN);
+				if(flagDahFocusKeyin[divUnique_id] == true)
+				{
+					flagDahFocusKeyin[divUnique_id] = null;
+					doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);	
+				}
+			}
+			
+			}, 1000);
+		}
+		else if(action=="BLUR")
+		{
+			window.clearInterval(refreshInterval_showtime[divUnique_id]);
+			refreshInterval_showtime[divUnique_id] = null;
+			flagDahFocusKeyin[divUnique_id] = null;
+			document.getElementById(divUnique_id).innerHTML = "";		
+			doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);
+		}
+		
+		if(action=="KEYUP")
+		{
+			flagDahFocusKeyin[divUnique_id] = true;
+		}
+}
+
+function getTimeAutoSavePerintah(divUnique_id,action)
+{
+	var command = "autoSaveKeteranganPerintah";
+		
+			
+	if((flagDahFocusKeyin[divUnique_id] == undefined || flagDahFocusKeyin[divUnique_id] == null) && action=="KEYUP" )
+	{		
+		if (typeof(refreshInterval_showtime[divUnique_id]) != 'undefined' && refreshInterval_showtime[divUnique_id] != null)
+		{
+			window.clearInterval(refreshInterval_showtime[divUnique_id]);
+			refreshInterval_showtime[divUnique_id] = null;
+			document.getElementById(divUnique_id).innerHTML = "";
+		}		
+		//alert("masuk");
+		var timeAutoSave = 30;//5 minit
+		//alert("timeAutoSave : "+timeAutoSave);
+		refreshInterval_showtime[divUnique_id] = setInterval(function(){	
+		timeAutoSave = timeAutoSave-1;
+		//console.log("****");
+		//console.log("flagDahFocusKeyin[divUnique_id] >>>>>>>> "+flagDahFocusKeyin[divUnique_id]);
+		document.getElementById(divUnique_id).innerHTML = "<span class=\"blue\">"+timeAutoSave+" saat sebelum 'auto save'</span>";
+		
+		if(timeAutoSave <= 0)
+		{	
+			window.clearInterval(refreshInterval_showtime[divUnique_id]);
+			refreshInterval_showtime[divUnique_id] = null;
+			getTimeAutoSavePerintah(divUnique_id,"FOCUS")
+			if(flagDahFocusKeyin[divUnique_id] == true)
+			{
+				flagDahFocusKeyin[divUnique_id] = null;
+				//doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);
+				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
+			}
+		}
+		
+		}, 1000);
+	}
+	else if(action=="BLUR")
+	{
+		window.clearInterval(refreshInterval_showtime[divUnique_id]);
+		refreshInterval_showtime[divUnique_id] = null;
+		flagDahFocusKeyin[divUnique_id] = null;
+		document.getElementById(divUnique_id).innerHTML = "";		
+		//doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);
+		doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
+	}	
+	
+	if(action=="KEYUP")
+	{
+		flagDahFocusKeyin[divUnique_id] = true;
+	}
+
+		//console.log("getTimeAutoSavePerintah : "+divUnique_id);
+		/*
+		if (typeof(refreshInterval_showtime[divUnique_id]) != 'undefined' && refreshInterval_showtime[divUnique_id] != null)
+		{
+			window.clearInterval(refreshInterval_showtime[divUnique_id]);
+			refreshInterval_showtime[divUnique_id] = null;
+			document.getElementById(divUnique_id).innerHTML = "";
+		}
+		
+		var command = "autoSaveKeteranganPerintah";
+		
+		if(action=="KEYUP")
+		{
+			var timeAutoSave = 10;//5 minit
+			refreshInterval_showtime[divUnique_id] = setInterval(function(){	
+			timeAutoSave = timeAutoSave-1;
+			document.getElementById(divUnique_id).innerHTML = "<span class=\"blue\">"+timeAutoSave+" saat sebelum 'auto save'</span>";
+			if(timeAutoSave <= 0)
+			{	
+				window.clearInterval(refreshInterval_showtime[divUnique_id]);
+				refreshInterval_showtime[divUnique_id] = null;
+				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
+			}
+			
+			}, 1000);
+		}
+		else if(action=="BLUR")
+		{
+			doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
+		}
+		*/
+}
+
+
+function getTimeAutoSave_ASAL(divUnique_id,unique_id,action,ID_BIKEHADIRAN)
 {
 		//alert("x : "+refreshInterval_showtime[divUnique_id]);
 		if (typeof(refreshInterval_showtime[divUnique_id]) != 'undefined' && refreshInterval_showtime[divUnique_id] != null)
@@ -5675,9 +5995,10 @@ function getTimeAutoSave(divUnique_id,unique_id,action,ID_BIKEHADIRAN)
 }
 
 
-function getTimeAutoSavePerintah(divUnique_id,action)
+function getTimeAutoSavePerintah_ASAL(divUnique_id,action)
 {
-		//alert("x : "+refreshInterval_showtime[divUnique_id]);
+		console.log("getTimeAutoSavePerintah : "+divUnique_id);
+		
 		if (typeof(refreshInterval_showtime[divUnique_id]) != 'undefined' && refreshInterval_showtime[divUnique_id] != null)
 		{
 			window.clearInterval(refreshInterval_showtime[divUnique_id]);
