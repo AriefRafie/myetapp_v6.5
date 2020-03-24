@@ -7,23 +7,8 @@
           <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
           <td width="28%">Jenis Dokumen</td>
           <td width="1%">:</td>
-          <td width="70%">$selectDokumen</td>
+          <td width="70%">04 - SURAT MINTA LAPORAN TAPAK</td>
         </tr>
-        #if ($idDokumen == '1')
-        <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-          <td>Kementerian</td>
-          <td>:</td>
-          <td>$selectKementerian</td>
-        </tr>
-        <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-          <td>Agensi</td>
-          <td>:</td>
-          <td>$selectAgensi</td>
-        </tr>
-        #end
-        #if ($idDokumen == '4')
         <tr>
           <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
           <td>Negeri</td>
@@ -79,7 +64,6 @@
           <td>:</td>
           <td>$beanMaklumatPejabat.negeri</td>
         </tr>
-        #end
         #end
         #foreach ($beanMaklumatKJT in $BeanMaklumatKJT)
         #if ($flagStatus == '1')
