@@ -712,63 +712,29 @@ public class FrmPNWSenaraiFailData {
 			long idPemohon = DB.getNextID("TBLPHPPEMOHON_SEQ");
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_KATEGORIPEMOHON", idKategoriPemohon);
+			r.add("ID_KEMENTERIAN", idKementerianPemohon);
+			r.add("ID_AGENSI", idAgensiPemohon);
 
-			if ("3".equals(idKategoriPemohon)) {
-				r.add("ID_KEMENTERIAN", idKementerianPemohon);
-				r.add("ID_AGENSI", idAgensiPemohon);
-
-				sql = "SELECT * FROM TBLRUJAGENSI WHERE ID_AGENSI = '"
+			sql = "SELECT * FROM TBLRUJAGENSI WHERE ID_AGENSI = '"
 						+ idAgensiPemohon + "'";
-				ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery(sql);
 
-				if (rs.next()) {
-					r.add("NAMA", rs.getString("NAMA_AGENSI") == null ? "" : rs
-							.getString("NAMA_AGENSI").toUpperCase());
-					r.add("ALAMAT1_TETAP", rs.getString("ALAMAT1") == null ? ""
-							: rs.getString("ALAMAT1").toUpperCase());
-					r.add("ALAMAT2_TETAP", rs.getString("ALAMAT2") == null ? ""
-							: rs.getString("ALAMAT2").toUpperCase());
-					r.add("ALAMAT3_TETAP", rs.getString("ALAMAT3") == null ? ""
-							: rs.getString("ALAMAT3").toUpperCase());
-					r.add("POSKOD_TETAP", rs.getString("POSKOD") == null ? ""
-							: rs.getString("POSKOD").toUpperCase());
-					r.add("ID_NEGERITETAP",
-							rs.getString("ID_NEGERI") == null ? "" : rs
-									.getString("ID_NEGERI").toUpperCase());
-				}
-
-			} else if ("8".equals(idKategoriPemohon)) {
-				r.add("ID_PEJABAT", "102");
-
-				sql = "SELECT * FROM TBLRUJPEJABATJKPTG WHERE ID_PEJABATJKPTG = '102'";
-				ResultSet rs = stmt.executeQuery(sql);
-
-				if (rs.next()) {
-					r.add("NAMA", rs.getString("NAMA_PEJABAT") == null ? ""
-							: rs.getString("NAMA_PEJABAT").toUpperCase());
-					r.add("ALAMAT1_TETAP", rs.getString("ALAMAT1") == null ? ""
-							: rs.getString("ALAMAT1").toUpperCase());
-					r.add("ALAMAT2_TETAP", rs.getString("ALAMAT2") == null ? ""
-							: rs.getString("ALAMAT2").toUpperCase());
-					r.add("ALAMAT3_TETAP", rs.getString("ALAMAT3") == null ? ""
-							: rs.getString("ALAMAT3").toUpperCase());
-					r.add("POSKOD_TETAP", rs.getString("POSKOD") == null ? ""
-							: rs.getString("POSKOD").toUpperCase());
-					r.add("ID_BANDARTETAP",
-							rs.getString("ID_BANDAR") == null ? "" : rs
-									.getString("ID_BANDAR").toUpperCase());
-					r.add("ID_NEGERITETAP",
-							rs.getString("ID_NEGERI") == null ? "" : rs
-									.getString("ID_NEGERI").toUpperCase());
-					r.add("NO_TEL",
-							rs.getString("NO_TEL") == null ? "" : rs
-									.getString("NO_TEL"));
-					r.add("NO_FAX",
-							rs.getString("NO_FAX") == null ? "" : rs
-									.getString("NO_FAX"));
-				}
-
+			if (rs.next()) {
+				r.add("NAMA", rs.getString("NAMA_AGENSI") == null ? "" : rs
+						.getString("NAMA_AGENSI").toUpperCase());
+				r.add("ALAMAT1_TETAP", rs.getString("ALAMAT1") == null ? ""
+						: rs.getString("ALAMAT1").toUpperCase());
+				r.add("ALAMAT2_TETAP", rs.getString("ALAMAT2") == null ? ""
+						: rs.getString("ALAMAT2").toUpperCase());
+				r.add("ALAMAT3_TETAP", rs.getString("ALAMAT3") == null ? ""
+						: rs.getString("ALAMAT3").toUpperCase());
+				r.add("POSKOD_TETAP", rs.getString("POSKOD") == null ? ""
+						: rs.getString("POSKOD").toUpperCase());
+				r.add("ID_NEGERITETAP",
+					rs.getString("ID_NEGERI") == null ? "" : rs
+								.getString("ID_NEGERI").toUpperCase());
 			}
+			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
@@ -817,69 +783,7 @@ public class FrmPNWSenaraiFailData {
 
 			// TBLPHPHAKMILIK
 			String peganganHakmilik = "";
-			if ("3".equals(idJenisTanah)) {
-				setMaklumatBorangK(idPPTBorangK, idHakmilikUrusan, idPHPBorangK);
-				if (getBeanMaklumatBorangK().size() != 0) {
-					Hashtable hashTanah = (Hashtable) getBeanMaklumatBorangK()
-							.get(0);
-
-					r = new SQLRenderer();
-					long idHakmilik = DB.getNextID("TBLPHPHAKMILIK_SEQ");
-					r.add("ID_HAKMILIK", idHakmilik);
-					r.add("ID_HAKMILIKPERMOHONAN", idhakmilikPermohonan);
-					if (hashTanah.get("peganganHakmilik").toString().trim()
-							.length() > 0) {
-						r.add("PEGANGAN_HAKMILIK",
-								hashTanah.get("peganganHakmilik"));
-					} else {
-						peganganHakmilik = getKodNegeri((String) hashTanah
-								.get("idNegeri"))
-								+ getKodDaerah((String) hashTanah
-										.get("idDaerah"))
-								+ getKodMukim((String) hashTanah.get("idMukim"))
-								+ getKodJenisHakmilik((String) hashTanah
-										.get("idJenisHakmilik"))
-								+ Utils.digitLastFormatted(
-										(String) hashTanah.get("noHakmilik"), 8);
-						r.add("PEGANGAN_HAKMILIK", peganganHakmilik);
-					}
-					r.add("ID_NEGERI", hashTanah.get("idNegeri"));
-					r.add("ID_DAERAH", hashTanah.get("idDaerah"));
-					r.add("ID_MUKIM", hashTanah.get("idMukim"));
-					r.add("ID_JENISHAKMILIK", hashTanah.get("idJenisHakmilik"));
-					r.add("NO_HAKMILIK", hashTanah.get("noHakmilik"));
-					r.add("ID_LOT", hashTanah.get("idLot"));
-					r.add("NO_LOT", hashTanah.get("noLot"));
-					r.add("ID_LUAS", hashTanah.get("idLuas"));
-					r.add("LUAS", hashTanah.get("luasBersamaan"));
-					r.add("SYARAT", hashTanah.get("syarat"));
-					r.add("SEKATAN", hashTanah.get("sekatan"));
-					r.add("KEGUNAAN_TANAH", hashTanah.get("kegunaanTanah"));
-					r.add("ID_KATEGORI", hashTanah.get("idKategori"));
-					r.add("ID_SUBKATEGORI", hashTanah.get("idSubKategori"));
-					r.add("ID_KEMENTERIAN", hashTanah.get("idKementerian"));
-					r.add("ID_AGENSI", hashTanah.get("idAgensi"));
-
-					r.add("TARIKH_BORANGK",
-							r.unquote("to_date('"
-									+ hashTanah.get("tarikhBorangK")
-									+ "','dd/MM/yyyy')"));
-					r.add("CATATAN", hashTanah.get("catatan"));
-					r.add("NO_PERSERAHAN", hashTanah.get("noPerserahan"));
-					r.add("TARIKH_CATATAN",
-							r.unquote("to_date('"
-									+ hashTanah.get("tarikhCatatan")
-									+ "','dd/MM/yyyy')"));
-					r.add("TARIKH_TERIMA",
-							r.unquote("to_date('"
-									+ hashTanah.get("tarikhTerima")
-									+ "','dd/MM/yyyy')"));
-
-					sql = r.getSQLInsert("TBLPHPHAKMILIK");
-					stmt.executeUpdate(sql);
-
-				}
-			} else {
+			if ("1".equals(idJenisTanah)) {
 				setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
 				if (getBeanMaklumatTanah().size() != 0) {
 					Hashtable hashTanah = (Hashtable) getBeanMaklumatTanah()
@@ -1236,6 +1140,31 @@ public class FrmPNWSenaraiFailData {
 				bil++;
 			}
 
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getKategoriPemohonPenawaran() throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT ID_KATEGORIPEMOHON, KOD_KATEGORIPEMOHON, KETERANGAN FROM TBLRUJKATEGORIPEMOHON"
+					+ " WHERE ID_KATEGORIPEMOHON IN (3) ORDER BY KOD_KATEGORIPEMOHON ASC";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()) {
+				return (String) rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase();
+			} else {
+				return "";
+			}
+			
 		} finally {
 			if (db != null)
 				db.close();
