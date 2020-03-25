@@ -16,7 +16,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 
 	FrmAPBOnlineSenaraiFailData logic = new FrmAPBOnlineSenaraiFailData();
 	
-	String userId = null;
+	//String userId = null;
 	
 	@Override
 	public String doTemplate2() throws Exception {
@@ -28,7 +28,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    if (doPost.equals("true")) {
 	        postDB = true;
 	    }
-    
+	    String userId =  (String) session.getAttribute("_ekptg_user_id");
+	    
 	    //DROP DOWN PENDAFTARAN
 	    String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
 	    String vm = ""; 
@@ -46,7 +47,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         if (mode.isEmpty()){
         	mode = "view";
         }
-        //System.out.println("hhdhdhd " +mode);
+        
         String selectedTabUpper = (String) getParam("selectedTabUpper");
 		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
 			selectedTabUpper = "0";
@@ -128,7 +129,6 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         	//GO TO DAFTAR BARU APB    
         	vm = "app/php2/online/frmAPBDaftarManual.jsp";
    
-        	//mode = "new";
         	this.context.put("mode", "view");
         	this.context.put("readonly", "readonly");
         	this.context.put("inputTextClass", "disabled");
@@ -177,11 +177,10 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         	//GO TO DAFTAR BARU APB        	
         	vm = "app/php2/online/frmAPBDaftarManual.jsp";
         	
-        	//mode = "new";
-           	this.context.put("mode", "new");
+        	this.context.put("mode", "new");
         	this.context.put("readonly", "");
         	this.context.put("inputTextClass", "");
-        	this.context.put("disabled","");
+        	//this.context.put("disabled","");
         	
         	//MAKLUMAT PERMOHONAN
         	beanMaklumatPermohonan = new Vector();
@@ -283,34 +282,23 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         	
         } else {
         	
-        	String idStatusC = getParam("socStatusC");
-			if (idStatusC == null || idStatusC.trim().length() == 0) {
-				idStatusC = "99999";
-			}
-
-			// GO TO MAKLUMAT PERMOHONAN  
-       		//vm = "app/php2/online/frmAPBMaklumatPermohonan.jsp";
-			
-			//CARIAN      	
-			vm = "app/php2/online/frmAPBSenaraiFail.jsp";
-
-			logic.carianFail(getParam("txtNoFail"),getParam("txtPemohon"), getParam("txdTarikhTerima"), idStatusC);
+        	//GO TO LIST FAIL APB       	
+        	vm = "app/php2/online/frmAPBSenaraiFail.jsp";
+        	
+        	logic.carianFail(getParam("txtNoPermohonan"),getParam("txtNoFail"),getParam("txdTarikhTerima"));
 			list = new Vector();
 			list = logic.getSenaraiFail();
 			this.context.put("SenaraiFail", list);
-				
 			this.context.put("txtNoFail", getParam("txtNoFail"));
-			this.context.put("txtPemohon", getParam("txtPemohon"));
+			this.context.put("txtNoPermohonan", getParam("txtNoPermohonan"));
 			this.context.put("txdTarikhTerima", getParam("txdTarikhTerima"));
-			this.context.put("selectStatus", HTML.SelectStatusAPB("socStatusC", Long.parseLong(idStatusC), "", ""));
 			setupPage(session,action,list);
 				
 		    }
      
         //SET DEFAULT PARAM
 		this.context.put("actionOnline", actionOnline);	
-		this.context.put("mode",mode);
-		this.context.put("selectedTabUpper", selectedTabUpper);
+		
 		
 		//SET DEFAULT ID PARAM
         this.context.put("idFail", idFail);
