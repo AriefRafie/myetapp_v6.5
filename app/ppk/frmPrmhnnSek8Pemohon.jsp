@@ -1423,7 +1423,7 @@
                                           <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>                                        
                                           <td>
                                             
-                                        <input name="txtEmelPemohon" type="text" id="txtEmelPemohon"  style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.emel"  size="45" maxlength="100" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtEmelPemohon')" /> </td>
+                                        <input name="txtEmelPemohon" type="text" id="txtEmelPemohon"  style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.emel"  size="45" maxlength="100" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtEmelPemohon')" /></td>
                                           </tr>
                                         #if($readmode != "disabled" )
                                         <tr>
@@ -1905,13 +1905,7 @@ else if (document.f1.status_pemohon.value == "2" && document.f1.txtnoKpBaru2Pemo
 	}
 	*/
 	
-	
-		
-	
-
-		
-		
-			else{
+	else{
 		input_box = confirm("Adakah anda pasti?");		
 		if (input_box == true)
 		 {

@@ -3,131 +3,150 @@
 .style1 {
 	color: #FF0000
 }
+
 .style2 {
 	color: #0000FF
 }
 -->
 </style>
 <p>
-  <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
-  <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
-  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
-  <input name="idUlasanTeknikal" type="hidden" id="idUlasanTeknikal" value="$idUlasanTeknikal"/>
-  <input name="idLaporanTanah" type="hidden" id="idLaporanTanah" value="$idLaporanTanah"/>
-  <input name="idPenceroboh" type="hidden" id="idPenceroboh" value="$idPenceroboh"/>
-  <input name="idPegawaiLaporanTanah" type="hidden" id="idPegawaiLaporanTanah" value="$idPegawaiLaporanTanah"/>
-  <input name="idKementerianTanah" type="hidden" id="idKementerianTanah" value="$idKementerianTanah"/>
-  <input name="idAgensiTanah" type="hidden" id="idAgensiTanah" value="$idAgensiTanah"/>
-  <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
-  <input name="actionCRB" type="hidden" id="actionCRB" value="$actionCRB"/>
-  <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
-  <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
-  <input name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus"/>
-  <input name="hitButton" type="hidden" id="hitButton"/>
-  <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
-  <input name="selectedTabLower" type="hidden" id="selectedTabLower" value="$selectedTabLower"/>
+	<input type="hidden" name="form_token"
+		value='$!{session.getAttribute("form_token")}'> <input
+		name="idFail" type="hidden" id="idFail" value="$idFail" /> <input
+		name="idStatus" type="hidden" id="idStatus" value="$idStatus" /> <input
+		name="idPermohonan" type="hidden" id="idPermohonan"
+		value="$idPermohonan" /> <input name="idUlasanTeknikal" type="hidden"
+		id="idUlasanTeknikal" value="$idUlasanTeknikal" /> <input
+		name="idLaporanTanah" type="hidden" id="idLaporanTanah"
+		value="$idLaporanTanah" /> <input name="idPenceroboh" type="hidden"
+		id="idPenceroboh" value="$idPenceroboh" /> <input
+		name="idPegawaiLaporanTanah" type="hidden" id="idPegawaiLaporanTanah"
+		value="$idPegawaiLaporanTanah" /> <input name="idKementerianTanah"
+		type="hidden" id="idKementerianTanah" value="$idKementerianTanah" /> <input
+		name="idAgensiTanah" type="hidden" id="idAgensiTanah"
+		value="$idAgensiTanah" /> <input name="idDokumen" type="hidden"
+		id="idDokumen" value="$idDokumen" /> <input name="actionCRB"
+		type="hidden" id="actionCRB" value="$actionCRB" /> <input
+		name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup" /> <input
+		name="modePopup" type="hidden" id="modePopup" value="$modePopup" /> <input
+		name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus" />
+	<input name="hitButton" type="hidden" id="hitButton" /> <input
+		name="selectedTabUpper" type="hidden" id="selectedTabUpper"
+		value="$selectedTabUpper" /> <input name="selectedTabLower"
+		type="hidden" id="selectedTabLower" value="$selectedTabLower" />
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($idFail != '')
-  <tr>
-    <td> #parse("app/php2/frmCRBHeader.jsp") </td>
-  </tr>
-  #else
-  <tr>
-    <td>&nbsp;
-      <div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
-  </tr>
-  #end
-  #if ($idFail != '' && $flagOpenDetail)
-  <tr>
-    <td><div id="TabbedPanels1" class="TabbedPanels">
-        <ul class="TabbedPanelsTabGroup">
-          <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">LAPORAN OPERASI</li>
-          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">SURAT PENGHARGAAN</li>
-        </ul>
-        <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-              #if ($actionCRB == "newLaporanOperasi")
-              <tr>
-                <td>#parse("app/php2/frmCRBLaporanOperasi.jsp")</td>
-              </tr>
-              #end
-              #if ($actionCRB == "viewLaporanOperasi")
-              <tr>
-                <td>#parse("app/php2/frmCRBOperasiPenguatkuasaan.jsp")</td>
-              </tr>
-              #end
-              #if ($actionCRB == "")
-              <tr>
-                <td><fieldset>
-                  <legend><strong>SENARAI LAPORAN OPERASI</strong></legend>
-                  <table align="center" width="100%">
-                    <tr>
-                      <td colspan="4" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:doDaftarBaruLO()"/></td>
-                    </tr>
-                    <tr class="table_header">
-                      <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-                      <td width="15%" align="center"><strong>Tarikh Mula Operasi</strong></td>
-                       <td width="15%" align="center"><strong>Tarikh Tamat Operasi</strong></td>
-                      <td width="55%" align="center"><strong>Pegawai Pelapor</strong></td>
-                      <td width="10%" align="center"><strong>Hapus</strong></td>
-                    </tr>
-                    #set ($senaraiLaporanOperasi = "")
-                    #if ($SenaraiLaporanOperasi.size() > 0)
-                    #foreach ($senaraiLaporanOperasi in $SenaraiLaporanOperasi)
-                    #if ($senaraiLaporanOperasi.bil == '')
-                    #set( $row = "row1" )
-                    #elseif (($senaraiLaporanOperasi.bil % 2) != 0)
-                    #set( $row = "row1" )
-                    #else 
-                    #set( $row = "row2" )
-                    #end
-                    <tr>
-                      <td class="$row" align="center">$senaraiLaporanOperasi.bil</td>
-                      <td class="$row" align="center"><a href="javascript:paparLO('$senaraiLaporanOperasi.idLaporanTanah')" class="style2">$senaraiLaporanOperasi.tarikhMulaOperasi</a></td>
-                      <td class="$row" align="center">$senaraiLaporanOperasi.tarikhTamatOperasi</td>
-                      <td class="$row">$senaraiLaporanOperasi.pegawaiPelapor</td>
-                      <td class="$row" align="center"><input name="cmdHapusLO" id="cmdHapusLO" type="button" value="Hapus" onClick="hapusLO('$senaraiLaporanOperasi.idLaporanTanah')" ></td>
-                    </tr>
-                    #end
-                    #else
-                    <tr>
-                      <td class="row1" align="center">&nbsp;</td>
-                      <td class="row1">Tiada Rekod</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                    </tr>
-                    #end
-                    <tr>
-                      <td colspan="4">&nbsp;</td>
-                    </tr>
-                  </table>
-                  </fieldset></td>
-              </tr>
-              #end
-            </table>
-          </div>
-          <div class="TabbedPanelsContent"> <br>
-            #parse("app/php2/frmCRBSuratPenghargaan.jsp")</div>
-        </div>
-      </div></td>
-  </tr>
-  #if ($idStatus == '1610217' && $actionCRB == '' && $flagPopup == '')
-  <tr>
-    <td align="center">
-      <input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
-      <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-    </td>
-  </tr>
-  #end
-  #elseif ($idFail != '')
-  <tr>
-    <td> 
-      <div class="warning"><strong>STATUS FAIL MASIH DI PERINGKAT $!status</strong></div></td>
-  </tr>
-  #end
+	#if ($idFail != '')
+	<tr>
+		<td>#parse("app/php2/frmCRBHeader.jsp")</td>
+	</tr>
+	#else
+	<tr>
+		<td>&nbsp;
+			<div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH
+				DAHULU</div>
+		</td>
+	</tr>
+	#end #if ($idFail != '' && $flagOpenDetail)
+	<tr>
+		<td><div id="TabbedPanels1" class="TabbedPanels">
+				<ul class="TabbedPanelsTabGroup">
+					<li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab"
+						tabindex="0">LAPORAN OPERASI</li>
+					<li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab"
+						tabindex="0">SURAT PENGHARGAAN</li>
+				</ul>
+				<div class="TabbedPanelsContentGroup">
+					<div class="TabbedPanelsContent">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							#if ($actionCRB == "newLaporanOperasi")
+							<tr>
+								<td>#parse("app/php2/frmCRBLaporanOperasi.jsp")</td>
+							</tr>
+							#end #if ($actionCRB == "viewLaporanOperasi")
+							<tr>
+								<td>#parse("app/php2/frmCRBOperasiPenguatkuasaan.jsp")</td>
+							</tr>
+							#end #if ($actionCRB == "")
+							<tr>
+								<td><fieldset>
+										<legend>
+											<strong>SENARAI LAPORAN OPERASI</strong>
+										</legend>
+										<table align="center" width="100%">
+											<tr>
+												<td colspan="4" scope="row"><input name="cmdDaftar"
+													type="button" value="Tambah"
+													onClick="javascript:doDaftarBaruLO()" /></td>
+											</tr>
+											<tr class="table_header">
+												<td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+												<td width="15%" align="center"><strong>Tarikh
+														Mula Operasi</strong></td>
+												<td width="15%" align="center"><strong>Tarikh
+														Tamat Operasi</strong></td>
+												<td width="55%" align="center"><strong>Pegawai
+														Pelapor</strong></td>
+												<td width="10%" align="center"><strong>Hapus</strong></td>
+											</tr>
+											#set ($senaraiLaporanOperasi = "") #if
+											($SenaraiLaporanOperasi.size() > 0) #foreach
+											($senaraiLaporanOperasi in $SenaraiLaporanOperasi) #if
+											($senaraiLaporanOperasi.bil == '') #set( $row = "row1" )
+											#elseif (($senaraiLaporanOperasi.bil % 2) != 0) #set( $row =
+											"row1" ) #else #set( $row = "row2" ) #end
+											<tr>
+												<td class="$row" align="center">$senaraiLaporanOperasi.bil</td>
+												<td class="$row" align="center"><a
+													href="javascript:paparLO('$senaraiLaporanOperasi.idLaporanTanah')"
+													class="style2">$senaraiLaporanOperasi.tarikhMulaOperasi</a></td>
+												<td class="$row" align="center">$senaraiLaporanOperasi.tarikhTamatOperasi</td>
+												<td class="$row">$senaraiLaporanOperasi.pegawaiPelapor</td>
+												<td class="$row" align="center"><input
+													name="cmdHapusLO" id="cmdHapusLO" type="button"
+													value="Hapus"
+													onClick="hapusLO('$senaraiLaporanOperasi.idLaporanTanah')"></td>
+											</tr>
+											#end #else
+											<tr>
+												<td class="row1" align="center">&nbsp;</td>
+												<td class="row1">Tiada Rekod</td>
+												<td class="row1">&nbsp;</td>
+												<td class="row1">&nbsp;</td>
+											</tr>
+											#end
+											<tr>
+												<td colspan="4">&nbsp;</td>
+											</tr>
+										</table>
+									</fieldset></td>
+							</tr>
+							#end
+						</table>
+					</div>
+					<div class="TabbedPanelsContent">
+						<br> #parse("app/php2/frmCRBSuratPenghargaan.jsp")
+					</div>
+				</div>
+			</div></td>
+	</tr>
+	#if ($idStatus == '1610217' && $actionCRB == '' && $flagPopup == '')
+	<tr>
+		<td align="center"><input type="button"
+			name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan"
+			value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()" /> <input
+			type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan"
+			value="Batal Permohonan" onClick="gotoBatalPermohonan()" /></td>
+	</tr>
+	#end #elseif ($idFail != '')
+	<tr>
+		<td> 
+			<div class="warning">
+				<strong>STATUS FAIL MASIH DI PERINGKAT $!status</strong>
+			</div>
+		</td>
+	</tr>
+	#end
 </table>
 <script type="text/javascript">
 #if ($idFail != '')
@@ -515,6 +534,11 @@ function daftarDokumen() {
 }
 function simpanDokumen(idLaporanTanah,idPermohonan) {
 	
+	if(document.${formName}.socJenisImej.value == ""){
+		alert('Sila pilih Jenis Imej.');
+  		document.${formName}.socJenisImej.focus(); 
+		return; 
+	}
 	if(document.${formName}.txtNamaImej.value == ""){
 		alert('Sila masukkan Nama Imej.');
   		document.${formName}.txtNamaImej.focus(); 
@@ -530,13 +554,13 @@ function simpanDokumen(idLaporanTanah,idPermohonan) {
 		return;
 	}
 	
+	var jenisImej = document.${formName}.socJenisImej.value;
 	var namaImej = document.${formName}.txtNamaImej.value;
-
  	var catatanImej = document.${formName}.txtCatatanImej.value ;
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmCRBOperasiPenguatkuasaanView&hitButton=simpanDokumen&namaImej="+namaImej+"&catatanImej="+catatanImej+"&idLaporanTanah="+idLaporanTanah+"&idPermohonan="+idPermohonan+"&selectedTabUpper=0&selectedTabLower=2&actionCRB=viewLaporanOperasi"+dopost;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmCRBOperasiPenguatkuasaanView&hitButton=simpanDokumen&namaImej="+namaImej+"&catatanImej="+catatanImej+"&socJenisImej="+socJenisImej+"&idLaporanTanah="+idLaporanTanah+"&idPermohonan="+idPermohonan+"&selectedTabUpper=0&selectedTabLower=2&actionCRB=viewLaporanOperasi"+dopost;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";
@@ -545,6 +569,11 @@ function simpanDokumen(idLaporanTanah,idPermohonan) {
 function batalDokumen(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
+	doAjaxCall${formName}("");
+}
+function batalKemaskiniDokumen(){
+	document.${formName}.flagPopup.value = "openPopupDokumen";
+	document.${formName}.modePopup.value = "view";
 	doAjaxCall${formName}("");
 }
 function kemaskiniDokumen(){
@@ -629,7 +658,7 @@ function cetakSuratPagarTanah(idFail) {
 }
 </script>
 
-<input name="step" type="hidden" id="step"/>
+<input name="step" type="hidden" id="step" />
 <script>
 function gotoSelesaiPermohonan(){	
 	document.${formName}.step.value = "selesaiPermohonan";

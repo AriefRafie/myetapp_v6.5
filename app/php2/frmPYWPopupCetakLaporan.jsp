@@ -8,7 +8,9 @@
 <p>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idUlasanTeknikal" type="hidden" id="idUlasanTeknikal" value="$idUlasanTeknikal"/>
-  <input name="report" type="hidden" id="report" value="$report"/>
+  <input name="report" type="hidden" id="report" value="$report"/>  
+  <input name="noFailNegeri" type="hidden" id="noFailNegeri" value="$noFailNegeri"/>
+  <input name="noFailHQ" type="hidden" id="noFailHQ" value="$noFailHQ"/>
 </p>
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
   <tr>
@@ -17,24 +19,38 @@
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="29%">&nbsp;</td>
-          <td width="70%">&nbsp;</td>
+          <td width="25%">&nbsp;</td>
+          <td width="2%">&nbsp;</td>
+          <td width="72%">&nbsp;</td>
         </tr>
         <tr>
-          <td >&nbsp;</td>
+          <td><span class="style1">*</span></td>
+          <td>Jenis No Fail</td>
+          <td>:</td>
+          <td><select name="socJenisNoFail" id="socJenisNoFail" onchange="javascript:doChangeJenisFail()">
+            	<option value="">SILA PILIH</option>
+	            <option value="1">NO. FAIL JKPTG HQ</option>
+	            <option value="2">NO. FAIL JKPTG NEGERI</option>
+          </select></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
           <td>No Fail</td>
-          <td>: <strong>$noFail</strong></td>
+          <td>:</td>
+          <td><strong><p id="noFail"></p></strong></td>
         </tr>
         <tr>
           <td><span class="style1">*</span></td>
           <td>Kandungan</td>
-          <td>:
-            <input name="txtKandungan" type="text" size="2" maxlength="2" onBlur="validateNumber(this,this.value);"></td>
+          <td>:</td>
+          <td><input name="txtKandungan" type="text" size="2" maxlength="2" onBlur="validateNumber(this,this.value);"></td>
         </tr>
         <tr>
           <td ><span class="style1">*</span></td>
           <td>Pegawai yang Menandatangani</td>
-          <td>: $selectPegawai</td>
+          <td>:</td>
+          <td>$selectPegawai</td>
         </tr>
         <tr>
           <td colspan="3" >&nbsp;</td>
@@ -161,6 +177,18 @@ function validateNumber(elmnt,content) {
 			document.${formName}.txtKandungan.value = "0" + content;
 		}
 	}
+}
+function doChangeJenisFail(){
+	var a = document.getElementById("socJenisNoFail").value;
+	var displaytext = "";
+	
+	if(a == "1"){
+		displaytext = document.${formName}.noFailHQ.value;
+	} 
+	else if (a == "2"){
+		displaytext = document.${formName}.noFailNegeri.value;
+	}
+	document.getElementById("noFail").innerHTML = displaytext;
 }
 </script>
 <!-- SALINAN KEPADA BY AIN (9/5/2017) -->

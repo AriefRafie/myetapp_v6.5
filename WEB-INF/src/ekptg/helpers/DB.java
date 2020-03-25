@@ -7831,6 +7831,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 				+ " AND A.USER_ROLE IN ('(PHP)UserPelepasan')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_NEGERI = '16'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -7839,8 +7841,10 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND A.USER_LOGIN = D.USER_ID"
 				+ " AND D.ROLE_ID IN ('(PHP)UserPelepasan')"
 				+ " AND B.FLAG_AKTIF = '1'"
-				+ " ORDER BY USER_NAME ASC";	
-		
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_NEGERI = '16'"
+				+ " ORDER BY USER_NAME ASC";
+				
 		try {
 	
 			db = new Db();
@@ -7871,6 +7875,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 				+ " AND A.USER_ROLE IN ('(PHP)UserHasil')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -7879,6 +7885,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND A.USER_LOGIN = D.USER_ID"
 				+ " AND D.ROLE_ID IN ('(PHP)UserHasil')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " ORDER BY USER_NAME ASC";
 		
 		try {
@@ -7911,6 +7919,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 				+ " AND A.USER_ROLE IN ('(PHP)UserPenguatkuasaan')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -7919,8 +7929,10 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND A.USER_LOGIN = D.USER_ID"
 				+ " AND D.ROLE_ID IN ('(PHP)UserPenguatkuasaan')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " ORDER BY USER_NAME ASC";
-		
+				
 		try {
 	
 			db = new Db();
@@ -7951,6 +7963,7 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 				+ " AND A.USER_ROLE IN ('(PHP)UserAPB')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -7959,8 +7972,9 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND A.USER_LOGIN = D.USER_ID"
 				+ " AND D.ROLE_ID IN ('(PHP)UserAPB')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
 				+ " ORDER BY USER_NAME ASC";
-		
+				
 		try {
 	
 			db = new Db();
@@ -7994,6 +8008,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " '(PHP)PYWPenolongPengarahNegeri', '(PHP)PYWPenolongPegawaiTanahNegeri')"
 			    + " AND B.FLAG_AKTIF = '1'"
 			    + " AND B.ID_NEGERI = '" + idNegeri + "'"
+			    + " AND B.ID_SEKSYEN = '4'"
+			    + " AND C.ID_JAWATAN IN (4, 5, 9, 161738)"
 			    + " UNION"
 			    + " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 			    + " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -8005,6 +8021,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " '(PHP)PYWPenolongPengarahNegeri', '(PHP)PYWPenolongPegawaiTanahNegeri')"
 			    + " AND B.FLAG_AKTIF = '1'"
 			    + " AND B.ID_NEGERI = '" + idNegeri + "'"
+			    + " AND B.ID_SEKSYEN = '4'"
+			    + " AND C.ID_JAWATAN IN (4, 5, 9, 161738)"
 			    + " ORDER BY USER_NAME ASC";	
 
 		try {
