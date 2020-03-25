@@ -10,30 +10,25 @@
 -->
 </style>
 <p>
-	<input type="hidden" name="form_token"
-		value='$!{session.getAttribute("form_token")}'> <input
-		name="idFail" type="hidden" id="idFail" value="$idFail" /> <input
-		name="idStatus" type="hidden" id="idStatus" value="$idStatus" /> <input
-		name="idPermohonan" type="hidden" id="idPermohonan"
-		value="$idPermohonan" /> <input name="idUlasanTeknikal" type="hidden"
-		id="idUlasanTeknikal" value="$idUlasanTeknikal" /> <input
-		name="idLaporanTanah" type="hidden" id="idLaporanTanah"
-		value="$idLaporanTanah" /> <input name="idPenceroboh" type="hidden"
-		id="idPenceroboh" value="$idPenceroboh" /> <input
-		name="idPegawaiLaporanTanah" type="hidden" id="idPegawaiLaporanTanah"
-		value="$idPegawaiLaporanTanah" /> <input name="idKementerianTanah"
-		type="hidden" id="idKementerianTanah" value="$idKementerianTanah" /> <input
-		name="idAgensiTanah" type="hidden" id="idAgensiTanah"
-		value="$idAgensiTanah" /> <input name="idDokumen" type="hidden"
-		id="idDokumen" value="$idDokumen" /> <input name="actionCRB"
-		type="hidden" id="actionCRB" value="$actionCRB" /> <input
-		name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup" /> <input
-		name="modePopup" type="hidden" id="modePopup" value="$modePopup" /> <input
-		name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus" />
-	<input name="hitButton" type="hidden" id="hitButton" /> <input
-		name="selectedTabUpper" type="hidden" id="selectedTabUpper"
-		value="$selectedTabUpper" /> <input name="selectedTabLower"
-		type="hidden" id="selectedTabLower" value="$selectedTabLower" />
+	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'> 
+	<input name="idFail" type="hidden" id="idFail" value="$idFail" /> 
+	<input name="idStatus" type="hidden" id="idStatus" value="$idStatus" /> 
+	<input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan" /> 
+	<input name="idUlasanTeknikal" type="hidden" id="idUlasanTeknikal" value="$idUlasanTeknikal" /> 
+	<input name="idLaporanTanah" type="hidden" id="idLaporanTanah" value="$idLaporanTanah" /> 
+	<input name="idPenceroboh" type="hidden" id="idPenceroboh" value="$idPenceroboh" /> 
+	<input name="idPegawaiLaporanTanah" type="hidden" id="idPegawaiLaporanTanah" value="$idPegawaiLaporanTanah" /> 
+	<input name="idKementerianTanah" type="hidden" id="idKementerianTanah" value="$idKementerianTanah" /> 
+	<input name="idAgensiTanah" type="hidden" id="idAgensiTanah" value="$idAgensiTanah" /> 
+	<input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen" /> 
+	<input name="actionCRB" type="hidden" id="actionCRB" value="$actionCRB" /> 
+	<input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup" /> 
+	<input name="modePopup" type="hidden" id="modePopup" value="$modePopup" /> 
+	<input name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus" />
+	<input name="hitButton" type="hidden" id="hitButton" /> 
+	<input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper" /> 
+	<input name="selectedTabLower" type="hidden" id="selectedTabLower" value="$selectedTabLower" />
+	<input name="socJenisImej" type="text" id="socJenisImej" value="$socJenisImej" />
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	#if ($idFail != '')
