@@ -77,7 +77,7 @@ function simpanLampiran(idPermohonan) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token=" + dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView&hitButton=simpanLampiran&namaLampiran="+namaLampiran+"&catatanLampiran="+catatanLampiran+"&idPermohonan="+idPermohonan+"&selectedTabUpper=2"+dopost+"&actionpenyewaan=paparMaklumatPenyewaan&flagPopup=openPopupLampiran&modePopup=new";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView&hitButton=simpanLampiran&namaLampiran="+namaLampiran+"&catatanLampiran="+catatanLampiran+"&idPermohonan="+idPermohonan+"&actionPenyewaan=paparMaklumatPenyewaan&selectedTabUpper=2"+dopost+"&mode=view&flagPopup=openPopupLampiran&modePopup=new";
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";

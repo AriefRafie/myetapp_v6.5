@@ -12,7 +12,7 @@
 #set($saizTxtTujuan="500")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  <input name="idFail" type="text" id="idFail" value="$idFail"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idPermohonanSewa" type="hidden" id="idPermohonanSewa" value="$idPermohonanSewa"/>
   <input name="idPemohon" type="hidden" id="idPemohon" value="$idPemohon"/>
@@ -989,7 +989,7 @@ function daftarLampiran() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.actionPenyewaan="paparMaklumatPenyewaan";	
-	//document.${formName}.mode.value = "view";	
+	document.${formName}.mode.value = "view";	
 	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.submit();

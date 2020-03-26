@@ -2875,4 +2875,6 @@ public class FrmPYWOnlineSenaraiFailData {
 	public void setListLampiran(Vector listLampiran) {
 		this.listLampiran = listLampiran;
 	}
+	
+	
 }

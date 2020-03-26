@@ -207,8 +207,8 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			idHakmilikAgensi = (String) hashHeader.get("idHakmilikAgensi");	
     		}
     		
-    		//POPUP LAMPIRAN
-			if ("2".equals(selectedTabUpper)) {
+    		//POPUP LAMPIRAN (TRY NK PINDAHKN KE MODE VIEW)
+			/*if ("2".equals(selectedTabUpper)) {
 				
 				if ("openPopupLampiran".equals(flagPopup)){
 	        		
@@ -247,7 +247,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
 	        		}
 	        	} 
-			}
+			}*/
 			
 			//SENARAI LAMPIRAN
 			senaraiLampiran = new Vector();
@@ -300,6 +300,47 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			Vector<Hashtable<String,String>> vec = header.setMaklumatPermohonan("1613133103");
     			//this.context.put("pemohon", vec.get(0));
     			this.context.put("pemohon", vec);*/
+    			//POPUP LAMPIRAN
+    			if ("2".equals(selectedTabUpper)) {
+    				
+    				if ("openPopupLampiran".equals(flagPopup)){
+    	        		
+    	        		if ("new".equals(modePopup)){
+    	        			
+    	        			this.context.put("readonlyPopup", "");
+    		    			this.context.put("inputTextClassPopup", "");
+    		    			
+    		    			beanMaklumatLampiran = new Vector();    			
+    		    			Hashtable hashMaklumatLampiran = new Hashtable();
+    		    			hashMaklumatLampiran.put("namaLampiran", "");
+    		    			hashMaklumatLampiran.put("catatanLampiran", "");
+    		    			beanMaklumatLampiran.addElement(hashMaklumatLampiran);
+    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
+    		    			
+    	        		} else if ("update".equals(modePopup)){
+    	        			
+    	        			this.context.put("readonlyPopup", "");
+    		    			this.context.put("inputTextClassPopup", "");
+    		    			
+    		    			//MAKLUMAT LAMPIRAN
+    		    			beanMaklumatLampiran = new Vector();
+    						logic.setMaklumatLampiran(idDokumen);
+    						beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
+    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
+    		    			
+    	        		} else if ("view".equals(modePopup)){
+    	        			
+    	        			this.context.put("readonlyPopup", "readonly");
+    		    			this.context.put("inputTextClassPopup", "disabled");
+    		    			
+    		    			//MAKLUMAT LAMPIRAN
+    		    			beanMaklumatLampiran = new Vector();
+    						logic.setMaklumatLampiran(idDokumen);
+    						beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
+    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
+    	        		}
+    	        	} 
+    			}
     		}
     		
     		// MODE UPDATE

@@ -14,8 +14,6 @@
   <input type="hidden" name="idPemohon" />
   <input type="hidden" id="namamodul" name="namamodul"  >
   <input type="hidden" id="namatab" name="namatab"  >
-  <input name="initiateFlagBuka" type="text" id="initiateFlagBuka"/>
-  
 </p>
 
 <div id="divMainForm">
@@ -74,8 +72,7 @@
         
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row">
-          <a href="javascript:papar('$list.idPermohonan')" class="style1">$list.NO_PERMOHONAN</a></td>
+          <td class="$row"><a id="hoverover" style="cursor:pointer; color:#0000FF" onClick="ShowPopup(this,$list.bil);" title="Klik untuk maklumat lengkap">$list.NO_PERMOHONAN</a></td>
           <td class="$row" align="center">$list.TARIKH_TERIMA</td>
           <td class="$row">$list.PERKARA</td>
           <td class="$row">$list.STATUS</td>
@@ -308,15 +305,6 @@ function ShowPopup(hoveritem,tab)
         hp.style.visibility = "collapse";
     }
 }
-
-function papar(idPermohonan) {
-	document.${formName}.idFail.value = idPermohonan;
-	document.${formName}.initiateFlagBuka.value = "Y";
-	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView";
-	document.${formName}.submit();
-
-}
-
 function findKosongkan() {
 	document.${formName}.findNoFail.value = "";
 	document.${formName}.findNoHakmilik.value = "";
