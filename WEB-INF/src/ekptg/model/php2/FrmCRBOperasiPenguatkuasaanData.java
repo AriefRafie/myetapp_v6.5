@@ -285,7 +285,7 @@ public class FrmCRBOperasiPenguatkuasaanData {
 			beanMaklumatImejan = new Vector();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN WHERE ID_DOKUMEN = '"
+			sql = "SELECT ID_DOKUMEN, JENIS_IMEJ, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN WHERE ID_DOKUMEN = '"
 					+ idDokumen + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -293,6 +293,7 @@ public class FrmCRBOperasiPenguatkuasaanData {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+				h.put("jenisImej", rs.getString("JENIS_IMEJ"));
 				h.put("namaImej", rs.getString("NAMA_DOKUMEN") == null ? ""
 						: rs.getString("NAMA_DOKUMEN").toUpperCase());
 				h.put("catatanImej",

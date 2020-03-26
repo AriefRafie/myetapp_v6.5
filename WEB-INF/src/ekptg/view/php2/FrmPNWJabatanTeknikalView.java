@@ -51,15 +51,11 @@ private static final long serialVersionUID = 1L;
         String idNegeriTanah = getParam("idNegeriTanah");
         String idKementerianTanah = getParam("idKementerianTanah");
         String idAgensiTanah = getParam("idAgensiTanah");
-       
         String flagStatus = getParam("flagStatus");
         String flagAktif = getParam("flagAktif");
+        String idDokumen = "4";
         
         //GET DROPDOWN PARAM
-        String idDokumen = getParam("socDokumen");
-		if (idDokumen == null || idDokumen.trim().length() == 0){
-			idDokumen = "99999";
-		}
         String idKementerian = getParam("socKementerian");
 		if (idKementerian == null || idKementerian.trim().length() == 0){
 			idKementerian = "99999";
@@ -90,15 +86,15 @@ private static final long serialVersionUID = 1L;
         //SEND TO MODEL
         if (postDB) {
         	if ("simpanMaklumatKJT".equals(hitButton)){
-        		idUlasanTeknikal = logic.simpanMaklumatKJT(idPermohonan, idDokumen, idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
+        		idUlasanTeknikal = logic.simpanMaklumatKJT(idPermohonan, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
     		}
         	if ("simpanMaklumatUlanganKJT".equals(hitButton)){
-        		idUlasanTeknikal = logic.simpanMaklumatUlanganKJT(idUlasanTeknikal, idPermohonan, idDokumen, idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
+        		idUlasanTeknikal = logic.simpanMaklumatUlanganKJT(idUlasanTeknikal, idPermohonan, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
     		}
         	if ("simpanKemaskiniMaklumatKJT".equals(hitButton)){
-        		logic.simpanKemaskiniMaklumatKJT(idUlasanTeknikal, idDokumen, idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
+        		logic.simpanKemaskiniMaklumatKJT(idUlasanTeknikal, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), flagStatus, getParam("txtTarikhTerima"),
         				getParam("txtTarikhSurat"), getParam("txtNoRujukan"), getParam("txtUlasan"), session);
     		}
@@ -172,14 +168,14 @@ private static final long serialVersionUID = 1L;
 					this.context.put("BeanMaklumatKJT", beanMaklumatKJT);
     			}
     			
-    			this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "", " onChange=\"doChangeJenisDokumen();\""));
+    			//this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "", " onChange=\"doChangeJenisDokumen();\""));
     			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\""));
 				this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Utils.parseLong(idAgensi), "", ""));
 				if ("99999".equals(idNegeri) && !"".equals(idNegeriTanah)){
 					idNegeri = idNegeriTanah;
 				}
 				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), ""," onChange=\"doChangeNegeri();\""));
-				this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri));
+				this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri, "4"));
 				
 				beanMaklumatPejabat = new Vector();
 				logic.setMaklumatPejabatJKPTG(idPejabat);
@@ -214,14 +210,14 @@ private static final long serialVersionUID = 1L;
 					this.context.put("BeanMaklumatKJT", beanMaklumatKJT);
     			}
     			
-    			this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "disabled", " class=\"disabled\""));
+    			//this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "disabled", " class=\"disabled\""));
     			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian), "disabled", " class=\"disabled\""));
 				this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Utils.parseLong(idAgensi), "disabled", " class=\"disabled\""));
 				if ("99999".equals(idNegeri) && !"".equals(idNegeriTanah)){
 					idNegeri = idNegeriTanah;
 				}
 				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
-				this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri));
+				this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 				
 				beanMaklumatPejabat = new Vector();
 				logic.setMaklumatPejabatJKPTG(idPejabat);
@@ -248,11 +244,11 @@ private static final long serialVersionUID = 1L;
 					flagStatus = (String) hashMaklumatKJT.get("flagStatus");
 					flagAktif = (String) hashMaklumatKJT.get("flagAktif");
 				}
-				this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "disabled", " class=\"disabled\""));
+				//this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "disabled", " class=\"disabled\""));
     			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian), "disabled", " class=\"disabled\""));
 				this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Utils.parseLong(idAgensi), "disabled", " class=\"disabled\""));
 				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
-				this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled", " class=\"disabled\"", idNegeri));
+				this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 				
     			beanMaklumatPejabat = new Vector();
 				logic.setMaklumatPejabatJKPTG(idPejabat);
@@ -277,23 +273,24 @@ private static final long serialVersionUID = 1L;
 				this.context.put("BeanMaklumatKJT", beanMaklumatKJT);
     			
 				if ("1".equals(flagStatus)){
-					this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "", " onChange=\"doChangeJenisDokumen();\""));
+					//this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "", " onChange=\"doChangeJenisDokumen();\""));
 	    			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\""));
 					this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Utils.parseLong(idAgensi), "", ""));
 					if ("99999".equals(idNegeri) && !"".equals(idNegeriTanah)){
 						idNegeri = idNegeriTanah;
 					}
 					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), ""," onChange=\"doChangeNegeri();\""));
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri, "4"));
+
 				} else {
-					this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "disabled", " class=\"disabled\""));
+					//this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "disabled", " class=\"disabled\""));
 	    			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian), "disabled", " class=\"disabled\""));
 					this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Utils.parseLong(idAgensi), "disabled", " class=\"disabled\""));
 					if ("99999".equals(idNegeri) && !"".equals(idNegeriTanah)){
 						idNegeri = idNegeriTanah;
 					}
 					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 				}					
 				
 				beanMaklumatPejabat = new Vector();
