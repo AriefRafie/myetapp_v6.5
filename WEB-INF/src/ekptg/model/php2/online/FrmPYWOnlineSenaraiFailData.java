@@ -20,10 +20,12 @@ import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.util.Util;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
+import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
@@ -44,6 +46,8 @@ public class FrmPYWOnlineSenaraiFailData {
 	private Vector beanMaklumatSewa = null;
 	private Vector beanMaklumatHakmilik = null;
 	private Vector beanMaklumatBorangK = null;
+	private Vector beanMaklumatLampiran = null;
+	private Vector listLampiran = null;
 	private static final Log log = LogFactory.getLog(FrmPYWOnlineSenaraiFailData.class);
 	
 	private  Vector listPohon = new Vector();
@@ -612,7 +616,7 @@ public class FrmPYWOnlineSenaraiFailData {
 					" AND USERS_ONLINE.USER_ID = '"+id_user+"' ";*/
 			
 			sql = 	 " SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.NO_PERMOHONAN, TO_CHAR(B.TARIKH_TERIMA, 'DD/MM/YYYY') AS TARIKH_TERIMA, " +
-					 " D.KETERANGAN, B.ID_STATUS, H.USER_LOGIN, B.NO_SAMBUNGAN, A.ID_MASUK,	 " +
+					 " D.KETERANGAN, B.ID_STATUS, H.USER_LOGIN, B.NO_SAMBUNGAN, A.ID_MASUK, A.TAJUK_FAIL,	 " +
 					 " G.NO_HAKMILIK, G.NO_LOT, D.KETERANGAN " +
 					 " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, " +
 					 " TBLHTPHAKMILIKAGENSI F, TBLHTPHAKMILIK G, USERS H " +
@@ -659,10 +663,18 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("TARIKH_TERIMA", rs.getString("TARIKH_TERIMA") == null ? "" : rs.getString("TARIKH_TERIMA"));
 				h.put("NO_LOT", rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT"));
 				h.put("NO_HAKMILIK", rs.getString("NO_HAKMILIK") == null ? "" : rs.getString("NO_HAKMILIK"));
-				//h.put("ID_PEMOHON", rs.getString("ID_PEMOHON") == null ? "" : rs.getString("ID_PEMOHON"));
-				//h.put("ID_STATUS,", rs.getString("ID_STATUS,") == null ? "" : rs.getString("ID_STATUS,"));
+				h.put("PERKARA", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL"));
+				h.put("ID_STATUS", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
+				if ("1610197".equals(rs.getString("ID_STATUS")) || "1610212".equals(rs.getString("ID_STATUS"))|| 
+						"1610208".equals(rs.getString("ID_STATUS")) || "1610207".equals(rs.getString("ID_STATUS"))){
+					h.put("STATUS", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase());
+				}else if ("".equals(rs.getString("ID_STATUS")) || rs.getString("ID_STATUS") == null){
+					h.put("STATUS", " PENDAFTARAN");
+				} else {
+					h.put("STATUS", " SEDANG DIPROSES");
+				}
 				//h.put("NO_FAIL_NEGERI", rs.getString("NO_FAIL_NEGERI") == null ? "" : rs.getString("NO_FAIL_NEGERI").toUpperCase());
-				h.put("STATUS", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				//h.put("STATUS", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
 				//h.put("NAMA_URUSAN", rs.getString("NAMA_URUSAN") == null ? "" : rs.getString("NAMA_URUSAN"));
 				//h.put("NAMA_SUBURUSAN", rs.getString("NAMA_SUBURUSAN") == null ? "" : rs.getString("NAMA_SUBURUSAN"));
 				//h.put("TARIKH_SURAT", rs.getString("TARIKH_SURAT") == null ? "" : rs.getString("TARIKH_SURAT"));
@@ -2120,7 +2132,7 @@ public class FrmPYWOnlineSenaraiFailData {
 					" FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C "+  
 					" WHERE A.ID_FAIL = B.ID_FAIL "+ 
 					" AND B.ID_PERMOHONAN = C.ID_PERMOHONAN "+
-					" AND A.ID_FAIL = '" + idFail + "'";
+					" AND B.ID_PERMOHONAN = '" + idFail + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -2653,6 +2665,166 @@ public class FrmPYWOnlineSenaraiFailData {
 		}
 	}
 	
+	public void simpanKemaskiniLampiran(String idDokumen, String txtNamaLampiran,
+			String txtCatatan, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPDOKUMEN
+			r.update("ID_DOKUMEN", idDokumen);
+			r.add("NAMA_DOKUMEN", txtNamaLampiran);
+			r.add("CATATAN", txtCatatan);
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPDOKUMEN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
+					"FAIL [" + idDokumen + "] DIKEMASKINI");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void hapusLampiran(String idDokumen, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+
+			// TBLPHPDOKUMEN
+			SQLRenderer r = new SQLRenderer();
+			r.add("ID_DOKUMEN", idDokumen);
+
+			sql = r.getSQLDelete("TBLPHPDOKUMEN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610198", "4", null, session, "DEL",
+					"FAIL [" + idDokumen + "] DIHAPUSKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void setMaklumatLampiran(String idDokumen) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			beanMaklumatLampiran = new Vector();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, JENIS_MIME FROM TBLPHPDOKUMEN WHERE ID_DOKUMEN = '"
+					+ idDokumen + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+				h.put("namaLampiran", rs.getString("NAMA_DOKUMEN") == null ? ""
+						: rs.getString("NAMA_DOKUMEN").toUpperCase());
+				h.put("catatanLampiran",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				h.put("jenisMime",
+						rs.getString("JENIS_MIME") == null ? "" : StringUtils.substringBefore(rs.getString("JENIS_MIME"), "/"));
+				beanMaklumatLampiran.addElement(h);
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void setSenaraiLampiran(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		try {
+			db = new Db();
+			listLampiran = new Vector();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN"
+					+ " WHERE ID_PERMOHONAN = '" + idPermohonan + "' AND FLAG_DOKUMEN = 'L'"
+					+ " AND ID_ULASANTEKNIKAL IS NULL AND ID_MESYUARAT IS NULL AND ID_PHPHAKMILIK IS NULL AND ID_PENAWARANKJP IS NULL";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int bil = 1;
+			int count = 0;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
+						: rs.getString("NAMA_DOKUMEN"));
+				h.put("catatan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				listLampiran.addElement(h);
+				bil++;
+				count++;
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Vector getBeanMaklumatLampiran() {
+		return beanMaklumatLampiran;
+	}
+
+	public void setBeanMaklumatLampiran(Vector beanMaklumatLampiran) {
+		this.beanMaklumatLampiran = beanMaklumatLampiran;
+	}
+	
 	public Vector getBeanMaklumatSewa() {
 		return beanMaklumatSewa;
 	}
@@ -2696,5 +2868,11 @@ public class FrmPYWOnlineSenaraiFailData {
 	}
 	public void setBeanMaklumatBorangK(Vector beanMaklumatBorangK) {
 		this.beanMaklumatBorangK = beanMaklumatBorangK;
+	}
+	public Vector getListLampiran() {
+		return listLampiran;
+	}
+	public void setListLampiran(Vector listLampiran) {
+		this.listLampiran = listLampiran;
 	}
 }
