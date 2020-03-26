@@ -52,11 +52,10 @@
       <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/></td>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>No Fail</strong></td>
-          <td width="20%"><strong>No Fail Negeri</strong></td>
-          <!-- <td width="25%"><strong>Nama Pemohon</strong></td> -->
+          <td width="20%"><strong>No Permohonan</strong></td>
           <td width="10%" align="center"><strong>Tarikh Terima</strong></td>
-          <td width="20%"><strong>Status</strong></td>
+          <td width="30%" align="center"><strong>Perkara</strong></td>
+          <td width="10%"><strong>Status</strong></td>
         </tr>
         
         #set ($list = "")
@@ -73,10 +72,9 @@
         
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row"><a id="hoverover" style="cursor:pointer; color:#0000FF" onClick="ShowPopup(this,$list.bil);" title="Klik untuk maklumat lengkap">$list.NO_FAIL</a></td>
-          <td class="$row">$list.NO_FAIL_NEGERI</td>
-          <!-- <td class="$row">$list.NAMA</td> -->
+          <td class="$row"><a id="hoverover" style="cursor:pointer; color:#0000FF" onClick="ShowPopup(this,$list.bil);" title="Klik untuk maklumat lengkap">$list.NO_PERMOHONAN</a></td>
           <td class="$row" align="center">$list.TARIKH_TERIMA</td>
+          <td class="$row">$list.PERKARA</td>
           <td class="$row">$list.STATUS</td>
         </tr>
         
