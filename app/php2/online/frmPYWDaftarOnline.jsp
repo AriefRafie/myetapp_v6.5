@@ -8,6 +8,7 @@
 #set($saizTxtPerkara="1000")
 <input name="actionPenyewaan" type="hidden" id="actionPenyewaan" value="$actionPenyewaan"/>
 <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+<input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
 <input name="idPemohon" type="hidden" id="idPemohon" value="$idPemohon"/>
 <input name="hitButton" type="hidden" id="hitButton"/>
 <input name="mode" type="hidden" id="mode" value="$mode"/>
@@ -16,8 +17,6 @@
 <input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> 
 <input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" /> 
 <input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
-
-<input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />        
 <table width="100%" border="0">
   <tr>
   
