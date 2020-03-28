@@ -17,6 +17,9 @@
 <input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> 
 <input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" /> 
 <input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
+<input type="hidden" name="namatujuan" id="namatujuan" value="$namatujuan" />
+<input type="hidden" name="namatujuan2" id="namatujuan2" value="$namatujuan2" />
+<input type="hidden" name="namatujuan3" id="namatujuan3" value="$namatujuan3" />
 <table width="100%" border="0">
   <tr>
   
@@ -344,6 +347,56 @@
           	<td>:</td>
           	<td>$selectSuburusan</td>
         </tr>
+        
+        <!-- TAMBAH MEDAN TUJUAN -->
+        <tr>
+			<td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			<td valign="top">Tujuan</td>
+			<td valign="top">:</td>
+			<td>$selectJenisTujuan</td>
+		</tr>
+		#if($idJenisTujuan == '32' || $idJenisTujuan == '38' || $idJenisTujuan == '46' || $idJenisTujuan == '52')
+		<tr>
+			<td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			<td valign="top">Lain - Lain Tujuan</td>
+			<td valign="top">:</td>
+			<td><textarea name="txtTujuan" id="txtTujuan" rows="5" cols="50" $readonly class="$inputTextClass"
+				onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tujuan</textarea></td>
+		</tr>
+		#end
+		
+		<tr>
+			<td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			<td valign="top">Tujuan 2</td>
+			<td valign="top">:</td>
+			<td>$selectJenisTujuan2</td>
+		</tr>
+		#if($idJenisTujuan2 == '32' || $idJenisTujuan2 == '38' || $idJenisTujuan2 == '46' || $idJenisTujuan2 == '52')
+		<tr>
+			<td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			<td valign="top">Lain - Lain Tujuan</td>
+			<td valign="top">:</td>
+			<td><textarea name="txtTujuan2" id="txtTujuan2" rows="5" cols="50" $readonly class="$inputTextClass"
+				onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tujuan2</textarea></td>
+		</tr>
+		#end
+		
+		<tr>
+			<td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			<td valign="top">Tujuan 3</td>
+			<td valign="top">:</td>
+			<td>$selectJenisTujuan3</td>
+		</tr>
+		#if($idJenisTujuan3 == '32' || $idJenisTujuan3 == '38' || $idJenisTujuan3 == '46' || $idJenisTujuan3 == '52')
+		<tr>
+			<td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			<td valign="top">Lain - Lain Tujuan</td>
+			<td valign="top">:</td>
+			<td><textarea name="txtTujuan3" id="txtTujuan3" rows="5" cols="50" $readonly class="$inputTextClass"
+				onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tujuan3</textarea></td>
+		</tr>
+		#end
+        <!-- TAMAT -->
         <tr>
         	<td></td>
         	<td>Tarikh Surat/Borang</td>

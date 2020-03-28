@@ -1773,7 +1773,7 @@ public class FrmPYWOnlineSenaraiFailData {
 	public String daftarBaru(String idUrusan, String idSuburusan, String idHakmilikAgensi, String perkara, 
 			String noRujukanSurat, String tarikhSurat, String idJenisTanah, String idPHPBorangK, String idPPTBorangK, 
 			String idHakmilikUrusan, String idKementerianTanah, String idNegeriTanah, String tarikhTerima, 
-			HttpSession session) throws Exception {
+			String idJenisTujuan, String idJenisTujuan2, String idJenisTujuan3, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -1787,6 +1787,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		String luas = "";
 		String namaUser = "";
 		String emelUser = "";
+		String idTujuan = "";
 
 		try {
 			db = new Db();
@@ -1930,9 +1931,9 @@ public class FrmPYWOnlineSenaraiFailData {
 			} else {
 				r.add("FLAG_PERMOHONANDARI", "1");
 			}
-			if ("12".equals(idUrusan)){
+			/*if ("12".equals(idUrusan)){
 				r.add("TUJUAN", "Mengeluarkan hasil " + getNamaSuburusan(idSuburusan));
-			}
+			}*/
 			r.add("FLAG_PROSESFAIL", "J");
 			
 			r.add("ID_MASUK", userId);
@@ -1941,6 +1942,17 @@ public class FrmPYWOnlineSenaraiFailData {
 			sql = r.getSQLInsert("TBLPHPPERMOHONANSEWA");
 			stmt.executeUpdate(sql);
 			
+			// INSERT JENIS TUJUAN ON TBLPHPPERMOHONANTUJUAN
+			if(!"".equals(idJenisTujuan)){
+				insertTujuan(idPHPPermohonanSewa, idJenisTujuan, userId, db);
+			}
+			if(!"".equals(idJenisTujuan2)){
+				insertTujuan(idPHPPermohonanSewa, idJenisTujuan2, userId, db);
+			}
+			if(!"".equals(idJenisTujuan3)){
+				insertTujuan(idPHPPermohonanSewa, idJenisTujuan3, userId, db);
+			}
+						
 			// TBLPHPHAKMILIK
 			String peganganHakmilik = "";			
 									
@@ -2876,5 +2888,59 @@ public class FrmPYWOnlineSenaraiFailData {
 		this.listLampiran = listLampiran;
 	}
 	
+	// 6. TUJUAN
+	public String getNamaTujuan(String idJenisTujuan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT KETERANGAN AS NAMA_TUJUAN FROM TBLPHPRUJJENISTUJUAN WHERE ID_JENISTUJUAN = '"
+					+ idJenisTujuan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("NAMA_TUJUAN");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+private void insertTujuan(long idPHPPermohonanSewa, String idJenisTujuan, String userId, Db db) throws Exception{
+		
+		String sql = "";
+		try {
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			// TBLPHPPERMOHONANTUJUAN
+			r = new SQLRenderer();
+			long idPHPPermohonanTujuan = DB
+					.getNextID("TBLPHPPERMOHONANTUJUAN_SEQ");
+			r.add("ID_PHPPERMOHONANTUJUAN", idPHPPermohonanTujuan);
+			r.add("ID_PHPPERMOHONANSEWA", idPHPPermohonanSewa);
+			r.add("ID_JENISTUJUAN", idJenisTujuan);
+	
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			
+			sql = r.getSQLInsert("TBLPHPPERMOHONANTUJUAN");
+			stmt.executeUpdate(sql);		
+			
+		} catch (SQLException ex) {
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+		}
+	}
 	
 }
