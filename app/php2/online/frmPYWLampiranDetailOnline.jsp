@@ -74,12 +74,10 @@
             <input name="cmdSimpan" type="button" value="Simpan" onClick="simpanLampiran('$idPermohonan')" />
             <input name="cmdBatal" type="button" value="Kembali" onClick="batalLampiran()" />
             #end
-            #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
             #if ($modePopup == 'view')
             <input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniLampiran()" />
             <input name="cmdHapus" type="button" value="Hapus" onClick="hapusLampiran()" >
             <input name="cmdBatal" type="button" value="Kembali" onClick="batalLampiran()" />
-            #end
             #end
             #if ($modePopup == 'update')
             <input name="cmdSimpanKemaskini" type="button" value="Simpan" onClick="simpanKemaskiniLampiran()" />
