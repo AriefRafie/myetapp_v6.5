@@ -10,7 +10,23 @@ public class MTRegManagerTest {
 		//System.out.println("Trying to start service at...[" + im.getURL() + "]");
 		
 		
-		String strRes = im.PendaftaranBaharu(causeofaction
+		//CauseofactionType causeofaction = new CauseofactionType();
+        int array[] = new int[7];
+        //16A	B8BA9758-E1CE-40A2-99FC-01FAD4462FB4	Rayuan di bawah undang-undang bertulis selain daripada rayuan di bawah kod-kod spesifik	A
+        
+        CauseofactionType cof = new CauseofactionType("16A"
+        		,""
+        		,"B8BA9758-E1CE-40A2-99FC-01FAD4462FB4"
+        		);
+        CauseofactionType[] causeofaction = null;
+        causeofaction = new CauseofactionType[1];
+        //causeofaction = cof;
+        
+        DocumentType[] document = new DocumentType[1];
+
+        PartyType[] party = new PartyType[1];
+        
+        String strRes = im.PendaftaranBaharu(causeofaction
 				, document
 				, party
 				, "RA" 	//MT Kangar
