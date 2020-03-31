@@ -14,17 +14,13 @@ import org.apache.log4j.Logger;
 // Referenced classes of package lebah.portal.db:
 //            AuthenticateUser
 
-public class UserLogger
-{
+public class UserLogger{
 
-    static Logger myLogger = Logger.getLogger(UserLogger.class);
+    static Logger myLogger = Logger.getLogger(lebah.portal.db.UserLogger.class);
 
-    public UserLogger()
-    {
-    }
+    public UserLogger(){}
 
-    public static void save(HttpServletRequest req, String username) throws Exception
-    {
+    public static void save(HttpServletRequest req, String username) throws Exception{
         String remoteAddr;
         int year;
         int month;
@@ -39,6 +35,7 @@ public class UserLogger
             if (remoteAddr == null || "".equals(remoteAddr)) {
                 remoteAddr = req.getRemoteAddr();
             }
+            
         }
         
         Calendar cal = new GregorianCalendar();
@@ -47,13 +44,12 @@ public class UserLogger
         day = cal.get(5);
         int hour12 = cal.get(10);
         int min = cal.get(12);
-        int sec = cal.get(13);
+        //int sec = cal.get(13);
         String ampm = cal.get(9) != 0 ? "PM" : "AM";
         logString = (new StringBuilder("[")).append(remoteAddr).append("] - ").append(year).append("/").append(month).append("/").append(day).append(" ").append(hour12).append(":").append(min).append(" ").append(ampm).toString();
         logString = (new StringBuilder(String.valueOf(logString))).append(" ").append(username).toString();
         db = null;
-        try
-        {
+        try{
             db = new Db();
             Statement stmt = db.getStatement();
             SQLRenderer r = new SQLRenderer();
@@ -65,37 +61,17 @@ public class UserLogger
             r.add("log_day", day);
             r.add("log_date", r.unquote("sysdate"));
             String sql = r.getSQLInsert("web_logger");
-            myLogger.debug(" SAVE web_logger : "+sql);
+            //myLogger.debug(" SAVE web_logger : "+sql);
             stmt.executeUpdate(sql);
-        }
-        catch (Exception re) {
+        
+        }catch (Exception re) {
     		throw re;
     	}finally {
     		if (db != null)
     			db.close();
     	}
-        /*
-        catch(Exception exception)
-        {
-            if(db != null)
-            {
-                db.close();
-            }
-            break MISSING_BLOCK_LABEL_355;
-        }
-        break MISSING_BLOCK_LABEL_345;
-        Exception exception1;
-        exception1;
-        if(db != null)
-        {
-            db.close();
-        }
-        throw exception1;
-        if(db != null)
-        {
-            db.close();
-        }
-        */
+ 
     }
+    
 
 }

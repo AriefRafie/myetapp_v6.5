@@ -27,7 +27,7 @@ import lebah.portal.db.UserTrackerLog;
 import lebah.portal.element.Tab;
 import lebah.portal.handler.DeviceHandler;
 import lebah.portal.velocity.VServlet;
-import lebah.portal.velocity.VTemplate;
+//import lebah.portal.velocity.VTemplate;
 import lebah.util.Util;
 
 import org.apache.log4j.Logger;
@@ -39,34 +39,28 @@ import ekptg.helpers.Utils;
 //            PortalControllerModule, Title, Props, Header, 
 //            Tabber, DisplayContent, ErrorMsg
 
-public class OnlineController extends VServlet
-    implements Serializable
-{
+public class OnlineController extends VServlet implements Serializable{
 
-	static Logger myLogger = Logger.getLogger(OnlineController.class);
-	
-    public OnlineController()
-    {
+	static Logger myLogger = Logger.getLogger(lebah.portal.OnlineController.class);
+	static int counter;
+  	private DeviceHandler loginIntercept;
+
+    public OnlineController(){
         loginIntercept = null;
     }
 
     @Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
-        throws ServletException, IOException
-    {
+        throws ServletException, IOException{
         doPost(req, res);
     }
 
     @Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
-        throws ServletException, IOException
-    {
-        try
-        {
+        throws ServletException, IOException{
+        try{
             doBody(req, res);
-        }
-        catch(Exception e)
-        {
+        }catch(Exception e){
             PrintWriter out = res.getWriter();
             String contextPath = req.getContextPath();
             out.println((new StringBuilder("<link rel=\"stylesheet\" type=\"text/css\" href=\"")).append(contextPath).append("/default.css\" />").toString());
@@ -78,25 +72,19 @@ public class OnlineController extends VServlet
             out.println("</div>");
             out.close();
         }
+        
     }
 
     public synchronized void doBody(HttpServletRequest req, HttpServletResponse res)
-        throws Exception
-    {
-    	
-    	
-    	
-    	
-//        myLogger.debug("Online...");
+        throws Exception{
+//      myLogger.debug("Online...");
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
         //HttpSession session = req.getSession();
         HttpSession session = req.getSession();
-        if(session.getAttribute("_onlinecontext") != null)
-        {
+        if(session.getAttribute("_onlinecontext") != null){
             context = (VelocityContext)session.getAttribute("_onlinecontext");
-        } else
-        {
+        } else{
             initVelocity(getServletConfig());
             session.setAttribute("_onlinecontext", context);
         }
@@ -105,23 +93,18 @@ public class OnlineController extends VServlet
         context.put("userAgent", userAgent);
         if(userAgent.indexOf("MSIE") > 0)
             browser = "ie";
-        else
-        if(userAgent.indexOf("Firefox") > 0)
+        else if(userAgent.indexOf("Firefox") > 0)
             browser = "firefox";
-        else
-        if(userAgent.indexOf("Netscape") > 0)
+        else if(userAgent.indexOf("Netscape") > 0)
             browser = "netscape";
-        else
-        if(userAgent.indexOf("Safari") > 0)
+        else if(userAgent.indexOf("Safari") > 0)
             browser = "safari";
-        else
-        if(userAgent.indexOf("MIDP") > 0)
+        else if(userAgent.indexOf("MIDP") > 0)
             browser = "midp";
         else
 //            myLogger.info(userAgent);
         context.put("browser", browser);
-        session.setAttribute("_ekptg_user_type", "online");
-       
+        session.setAttribute("_ekptg_user_type", "online");       
         
         context.put("relativeDir", "../");
         res.setHeader("Expires", "Tue, 25 Dec 1993 23:59:59 GMT");
@@ -133,31 +116,25 @@ public class OnlineController extends VServlet
         context.put("EkptgUtil", EkptgUtil);
         context.put("label", Labels.getInstance().getTitles());
         String securityToken = (String)session.getAttribute("securityToken");
-        if(securityToken == null || "".equals(securityToken))
-        {
+        if(securityToken == null || "".equals(securityToken)){
             securityToken = UniqueID.getUID();
             session.setAttribute("securityToken", securityToken);
         }
         context.put("securityToken", securityToken);
-        if(session.getAttribute("_VELOCITY_INITIALIZED") == null)
-        {
+        if(session.getAttribute("_VELOCITY_INITIALIZED") == null){
             session.setAttribute("_VELOCITY_ENGINE", engine);
             session.setAttribute("_VELOCITY_CONTEXT", context);
             session.setAttribute("_VELOCITY_INITIALIZED", "true");
         }
         String prev_token = session.getAttribute("form_token") == null ? "" : (String)session.getAttribute("form_token");
         String form_token = req.getParameter("form_token") == null ? "empty" : req.getParameter("form_token");
-        if(prev_token.equals(form_token))
-        {
+        if(prev_token.equals(form_token)){
             session.setAttribute("doPost", "true");
             session.setAttribute("isPost", new Boolean(true));
-        } else
-        if("empty".equals(form_token))
-        {
+        } else if("empty".equals(form_token)){
             session.setAttribute("doPost", "false");
             session.setAttribute("isPost", new Boolean(false));
-        } else
-        {
+        } else{
             session.setAttribute("doPost", "false");
             session.setAttribute("isPost", new Boolean(false));
         }
@@ -190,14 +167,14 @@ public class OnlineController extends VServlet
         session.setAttribute("_portal_pathInfo", pathInfo);
         String action = pathInfo == null ? "" : pathInfo;
         session.setAttribute("_ekptg_loginType", "online");
-        if(session.getAttribute("_portal_role") == null || "".equals(session.getAttribute("_portal_role")))
-        {
+        if(session.getAttribute("_portal_role") == null || "".equals(session.getAttribute("_portal_role"))){
             session.setAttribute("_portal_role", "anon");
             session.setAttribute("_portal_username", "Anonymous");
             session.setAttribute("_portal_login", "anon");
             session.setAttribute("_portal_islogin", "false");
             session.setAttribute("_portal_css", null);
             action = "";
+            
         }
         String module = req.getParameter("_portal_module") == null ? "" : req.getParameter("_portal_module");
         if(session.getAttribute("_portal_module") != null && (module == null || "".equals(module)))
@@ -205,11 +182,9 @@ public class OnlineController extends VServlet
         if("anon".equals(session.getAttribute("_portal_role")) && "false".equals(session.getAttribute("_portal_islogin")))
         {
             String visitor = req.getParameter("visitor") == null ? session.getAttribute("_portal_visitor") == null ? "anon" : (String)session.getAttribute("_portal_visitor") : req.getParameter("visitor");
-            if(!"anon".equals(visitor) && "anon".equals(PrepareUser.getRole(visitor)))
-            {
+            if(!"anon".equals(visitor) && "anon".equals(PrepareUser.getRole(visitor))){
                 session.setAttribute("_portal_login", visitor);
-            } else
-            {
+            } else{
                 visitor = "anon";
                 session.setAttribute("_portal_login", "anon");
             }
@@ -228,36 +203,30 @@ public class OnlineController extends VServlet
         }else synchronized(this){
             createPortalPage(req, res, out, session, action, module, EkptgUtil);
         }
+        
     }
 
     private void createPortalPage(HttpServletRequest req, HttpServletResponse res, PrintWriter out, HttpSession session, String action, String module, Utils EkptgUtil)
-        throws Exception
-    {
-        String islogin = (String)session.getAttribute("_portal_islogin");
+       throws Exception{
+//        String islogin = (String)session.getAttribute("_portal_islogin");
         String login = (String)session.getAttribute("_portal_login");
-        
-
-      
-		
-      //open language
+ 
+        //open language
   		String language_type = req.getParameter("language_type") == null ? "": req.getParameter("language_type");
   		String currentLanguage = ((String) session.getAttribute("selectedLanguage") == null ? "" : (String) session.getAttribute("selectedLanguage")); 
   		ResourceBundle rb_lang = null;
   		Enumeration bundleKeys = null;		
   		//System.out.println("language_type : "+language_type+" currentLanguage : "+currentLanguage);		
-  		if(language_type.equals("ENGLISH") || (language_type.equals("") && currentLanguage.equals("ENGLISH")))
-  		{
+  		if(language_type.equals("ENGLISH") 
+  			|| (language_type.equals("") && currentLanguage.equals("ENGLISH"))){
   			rb_lang = ResourceBundle.getBundle("eng_lang");
   			session.setAttribute("selectedLanguage", "ENGLISH");			
-  		}
-  		else
-  		{
+  		}else{
   			rb_lang = ResourceBundle.getBundle("malay_lang");
   			session.setAttribute("selectedLanguage", "MALAY");
   		}
   		
-  		if(rb_lang!=null)
-  		{
+  		if(rb_lang!=null){
   			bundleKeys = rb_lang.getKeys();
   			while (bundleKeys.hasMoreElements()) {
   			    String key = (String)bundleKeys.nextElement();
@@ -267,12 +236,8 @@ public class OnlineController extends VServlet
   			}
   		}
   		//close language
-        
-      		
-      		
-      		
-        if(login == null || "anon".equals(login))
-        {
+              		
+        if(login == null || "anon".equals(login)){
             String page = req.getParameter("page");
             String path = req.getRealPath((new StringBuilder("/portal/")).append(page).append(".jsp").toString());
             if(!EkptgUtil.isFileExist(path))
@@ -281,16 +246,12 @@ public class OnlineController extends VServlet
                 page = "";
             context.put("page", page);
             PortalControllerModule Portal = new PortalControllerModule(engine, context, req, res);
-            try
-            {
+            try{
                 Portal.print();
-            }
-            catch(Exception ex)
-            {
+            }catch(Exception ex){
                 out.println(ex.getMessage());
             }
-        } else
-        {
+        } else{
             User user = UserData.getUser(login);
             context.put("secondaryRoles", user.getSecondaryRoles());
             context.put("numRoles", Integer.valueOf(user.getSecondaryRoles().length));
@@ -299,26 +260,22 @@ public class OnlineController extends VServlet
 //            session.setAttribute("_portal_userId", user.getLogin());
             session.setAttribute("_portal_role", user.getRole().getName());
             String myrole = req.getParameter("myrole");
-            if(myrole == null)
-            {
+            if(myrole == null){
                 myrole = (String)session.getAttribute("myrole");
                 if (myrole == null)
     				session.setAttribute("myrole",session.getAttribute("_portal_role"));
-            } 
-            else
-            {
+            
+            } else{
                 session.setAttribute("myrole", myrole);
                 if(!"".equals(myrole))
                     session.setAttribute("_portal_role", myrole);
                 action = "";
             }
-            
-            
-            
+                       
             context.put("myrole", myrole != null ? ((Object) ((String)session.getAttribute("myrole"))) : "");
             String css = "online.css";
             session.setAttribute("_portal_css", css);
-            VTemplate content = null;
+//            VTemplate content = null;
             out.println("<html>");
             out.println("<title>");
             Title cTitle = new Title(engine, context, req, res);
@@ -346,7 +303,7 @@ public class OnlineController extends VServlet
             out.println("<script type=\"text/javascript\" src=\"../library/js/jquery-1.3.2.min.js\" ></script>");
             out.println("<script>var $jquery = jQuery.noConflict();</script>");
             out.println((new StringBuilder("<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/")).append(css).append("\" />").toString());
-            out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/SpryTabbedPanels.css\" />");
+            //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/SpryTabbedPanels.css\" />");
             out.println("<link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"../library/css/sweetalert.css\" />"); //addby zulfazdli untuk confirmation logout date 19-04-2017
             out.println("<script type=\"text/javascript\" src=\"../library/js/sweetalert.min.js\" ></script>");  //addby zulfazdli untuk confirmation logout date 19-04-2017
@@ -362,32 +319,28 @@ public class OnlineController extends VServlet
             cHeader.print();
             
             Tabber cTabber = new Tabber(engine, context, req, res);
-            if("".equals(action) || "c".equals(action))
-            {
+            if("".equals(action) || "c".equals(action)){
                 Tab firstTab = cTabber.getFirstTab();
                 if(firstTab != null)
                     action = firstTab.getId();
+                
                 session.setAttribute("_portal_action", action);
                 session.setAttribute("_tab_id", action);
-            } else
-            {
+            
+            } else{
                 session.setAttribute("_tab_id", action);
             }
 //            out.println("<tr><td>");
-            try
-            {
+            try{
                 if(cTabber != null)
                     cTabber.print();
-                else
-                    System.out.println("THERE ARE NO TABS DEFINED!!");
-            }
-            catch(Exception ex)
-            {
+//                else
+//                    System.out.println("THERE ARE NO TABS DEFINED!!");
+            }catch(Exception ex){
                 out.println(ex.getMessage());
             }
 //            out.println("</td></tr>");
-            try
-            {
+            try{
             	out.println("<div class=\"container\">");
                 String usrlogin = (String)session.getAttribute("_portal_login");
                 String display_type = UserPage.getDisplayType(usrlogin, action, myrole);
@@ -423,13 +376,10 @@ public class OnlineController extends VServlet
 				else
 					DisplayContent.showNavigationType(engine, context, getServletConfig(), req, res, module, out, session);
                 out.println("</div>");
-            }
-            catch(Exception ex)
-            {
+            
+            }catch(Exception ex){
                 out.println(ex.getMessage());
-            }
-            finally
-            {
+            }finally{
 				//long totalMem = Runtime.getRuntime().totalMemory();
 				//long freeMem = Runtime.getRuntime().freeMemory();
 				//System.gc();
@@ -440,36 +390,28 @@ public class OnlineController extends VServlet
         Footer cFooter = new Footer(engine, context, req, res);
 //        out.println("</table>");
         out.println("</div>");
-        try
-        {
+        try{
             cFooter.print();
-        }
-        catch(Exception ex)
-        {
+        }catch(Exception ex){
             out.println(ex.getMessage());
         }
         out.println("</div>");
         out.println("</body>");
         out.println("</html>");
         }
+        
     }
 
-    private void showError(String err, HttpServletRequest req, HttpServletResponse res)
-    {
+    private void showError_(String err, HttpServletRequest req, HttpServletResponse res){
         ErrorMsg emsg = new ErrorMsg(engine, context, req, res);
         emsg.setError(err);
-        try
-        {
+        try{
             emsg.print();
-        }
-        catch(Exception ex)
-        {
+        }catch(Exception ex){
             System.out.println("ERROR WHILE SHOW ERROR");
         }
+        
     }
-
-//    static Logger myLogger = Logger.getLogger(lebah/portal/OnlineController);
-    static int counter;
-    private DeviceHandler loginIntercept;
+    
 
 }
