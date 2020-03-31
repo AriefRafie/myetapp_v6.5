@@ -29,7 +29,7 @@ import ekptg.view.online.PermohonanID;
 
 public class ChangeRole implements IServlet2 {
 	
-	static Logger myLogger = Logger.getLogger(ChangeRole.class);
+	static Logger myLogger = Logger.getLogger(ekptg.view.utils.ChangeRole.class);
 	Hashtable viewPengguna = null;
 	PermohonanID mohonId = new PermohonanID();
 
@@ -166,7 +166,7 @@ public class ChangeRole implements IServlet2 {
 				String style = "<style> .container  table{ display:none;} .navigation_menu  td{ display:none;} .apps-body  div{ display:none;} .page_footer_body  div{display:none;} .apps-body .welcome:first-of-type{display : block;} .apps-body .welcome .table_tukar_password:first-of-type{display : block;}  .apps-body .welcome .table_tukar_password .pstrength-bar:first-of-type{display : block;} </style> ";
 				
 				String setfield="";
-				myLogger.info("KENA TUKAR LOGIN : "+isInteger(USER_LOGIN));
+				//myLogger.info("KENA TUKAR LOGIN : "+isInteger(USER_LOGIN));
 				//x
 				if((USER_LOGIN.length()!=12 || isInteger(USER_LOGIN)==false) && user_type.equals("internal")){					
 					setfield += "document.getElementById('changeLogin').value='Y';";
@@ -265,7 +265,7 @@ public class ChangeRole implements IServlet2 {
 				|| role.equals("ppk-online-user")){
 				try {
 					 //updateUserType(USER_ID_SYSTEM,"online");
-					    //String roleOne = getOneInternalRole(USER_LOGIN);
+					 //String roleOne = getOneInternalRole(USER_LOGIN);
 					updateUserMainTypeRole(USER_ID_SYSTEM,"online",role);
 		    		deleteUserRole(USER_LOGIN, role);
 		    		insertToReplaceUserRole(USER_LOGIN,_portal_role);
@@ -621,27 +621,27 @@ public class ChangeRole implements IServlet2 {
 	}
 	    
 	public boolean checkDuplicateMyID(String username, String USERID) throws Exception {
-			Db db = null;
-			String sql = "";
-			ResultSet rs = null;
-			Statement stmt = null;
-			boolean duplicate = false;
+		Db db = null;
+		String sql = "";
+		ResultSet rs = null;
+		Statement stmt = null;
+		boolean duplicate = false;
 		try {
-				db = new Db();
-				stmt = db.getStatement();
-				int count = 0;
+			db = new Db();
+			stmt = db.getStatement();
+			int count = 0;
 				
-				sql = "  SELECT COUNT(*) AS FOUND FROM USERS WHERE USER_LOGIN = '"+username.trim()+"' AND USER_ID != '"+USERID+"' ";
+			sql = "  SELECT COUNT(*) AS FOUND FROM USERS WHERE USER_LOGIN = '"+username.trim()+"' AND USER_ID != '"+USERID+"' ";
 //					myLogger.info("checkDuplicateMyID : "+sql);
-					rs = stmt.executeQuery(sql);				
-					while (rs.next()) {
-						count = rs.getString("FOUND") == null ? 0 : rs.getInt("FOUND");
-					}	
+			rs = stmt.executeQuery(sql);				
+			while (rs.next()) {
+				count = rs.getString("FOUND") == null ? 0 : rs.getInt("FOUND");
+			}	
 					
-				if(count>0){
-					duplicate = true;
-				}			
-				return duplicate;
+			if(count>0){
+				duplicate = true;
+			}			
+			return duplicate;
 			
 		} finally {
 			if (rs != null)
@@ -657,34 +657,35 @@ public class ChangeRole implements IServlet2 {
 	    
 	public Hashtable checkKeaftifanByRole(String USER_ID) throws Exception {
 		Db db = null;
-			String sql = "";
-			ResultSet rs = null;
-			Statement stmt = null;
+		String sql = "";
+		ResultSet rs = null;
+		Statement stmt = null;
 		try {
-				db = new Db();
-				stmt = db.getStatement();
-				String KUMPULAN = "";
+			db = new Db();
+			stmt = db.getStatement();
+			String KUMPULAN = "";
 				
-				sql = "  SELECT  U.USER_ID, U.USER_ROLE, U.USER_NAME "+
+			sql = "  SELECT  U.USER_ID, U.USER_ROLE, U.USER_NAME "+
 						"  ,(SELECT COUNT(*) FROM USERS_INTERNAL UI WHERE U.USER_ID = UI.USER_ID AND (UI.FLAG_AKTIF IS NULL OR UI.FLAG_AKTIF = '' OR UI.FLAG_AKTIF = '1')) AS CHECK_USERS_INTERNAL "+
 						"  ,(SELECT COUNT(*) FROM USERS_ONLINE UO WHERE U.USER_ID = UO.USER_ID AND (UO.FLAG_AKTIF IS NULL OR UO.FLAG_AKTIF = '' OR UO.FLAG_AKTIF = '1')) AS CHECK_USERS_ONLINE  "+
 						"  ,(SELECT COUNT(*) FROM USERS_KEMENTERIAN UK WHERE U.USER_ID = UK.USER_ID AND (UK.FLAG_AKTIF IS NULL OR UK.FLAG_AKTIF = '' OR UK.FLAG_AKTIF = '1')) AS CHECK_USERS_KJP "+
 						"  ,(SELECT COUNT(*) FROM USERS_INTEGRASI UINT WHERE U.USER_ID = UINT.USER_ID AND (UINT.FLAG_AKTIF IS NULL OR UINT.FLAG_AKTIF = '' OR UINT.FLAG_AKTIF = '1')) AS CHECK_USERS_INT  "+
 						"  FROM USERS U WHERE USER_ID = '"+USER_ID+"' ";
 					//system.out.println("checkKeaftifanByRole : "+sql);
-					rs = stmt.executeQuery(sql);
-					Hashtable h;
-					h = new Hashtable();
-					while (rs.next()) {
-						h.put("USER_ID",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
-						h.put("USER_ROLE",rs.getString("USER_ROLE") == null ? "" : rs.getString("USER_ROLE"));
-						h.put("USER_NAME",rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
-						h.put("CHECK_USERS_INTERNAL",rs.getString("CHECK_USERS_INTERNAL") == null ? "" : rs.getInt("CHECK_USERS_INTERNAL"));
-						h.put("CHECK_USERS_ONLINE",rs.getString("CHECK_USERS_ONLINE") == null ? "" : rs.getInt("CHECK_USERS_ONLINE"));
-						h.put("CHECK_USERS_KJP",rs.getString("CHECK_USERS_KJP") == null ? "" : rs.getInt("CHECK_USERS_KJP"));
-						h.put("CHECK_USERS_INT",rs.getString("CHECK_USERS_INT") == null ? "" : rs.getInt("CHECK_USERS_INT"));
-					}				
-				return h;
+			rs = stmt.executeQuery(sql);
+			Hashtable h;
+			h = new Hashtable();
+			while (rs.next()) {
+				h.put("USER_ID",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
+				h.put("USER_ROLE",rs.getString("USER_ROLE") == null ? "" : rs.getString("USER_ROLE"));
+				h.put("USER_NAME",rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
+				h.put("CHECK_USERS_INTERNAL",rs.getString("CHECK_USERS_INTERNAL") == null ? "" : rs.getInt("CHECK_USERS_INTERNAL"));
+				h.put("CHECK_USERS_ONLINE",rs.getString("CHECK_USERS_ONLINE") == null ? "" : rs.getInt("CHECK_USERS_ONLINE"));
+				h.put("CHECK_USERS_KJP",rs.getString("CHECK_USERS_KJP") == null ? "" : rs.getInt("CHECK_USERS_KJP"));
+				h.put("CHECK_USERS_INT",rs.getString("CHECK_USERS_INT") == null ? "" : rs.getInt("CHECK_USERS_INT"));
+					
+			}				
+			return h;
 			
 		} finally {
 			if (rs != null)
@@ -701,15 +702,14 @@ public class ChangeRole implements IServlet2 {
 	public void updatePassword(HttpSession session,String USER_ID,String password_baru) throws Exception {
 		Connection conn = null;
 		Db db = null;
-			String sql = "";
-			
+		String sql = "";	
 		try {
-				db = new Db();
-				conn = db.getConnection();
-				conn.setAutoCommit(false);
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
 				
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();	
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();	
 						
 			String sql_gen = " UPDATE USERS U SET U.USER_PASSWORD_GEN_3 = U.USER_PASSWORD_GEN_2,  " +
 						"U.USER_PASSWORD_GEN_2 = U.USER_PASSWORD  " +
@@ -717,14 +717,14 @@ public class ChangeRole implements IServlet2 {
 //			myLogger.info(" UPDATE PASSWORD GEN : "+sql_gen);
 			stmt.executeUpdate(sql_gen);
 					
-				r.clear();
-				r.update("USER_ID",USER_ID);
-				r.add("USER_PASSWORD",PasswordService.encrypt(password_baru));
-				r.add("LAST_CHANGEPASSWORD", r.unquote("sysdate"));
-				sql = r.getSQLUpdate("USERS");
-				myLogger.info(" UPDATE PASSWORD : "+sql);
-				stmt.executeUpdate(sql);
-				conn.commit();
+			r.clear();
+			r.update("USER_ID",USER_ID);
+			r.add("USER_PASSWORD",PasswordService.encrypt(password_baru));
+			r.add("LAST_CHANGEPASSWORD", r.unquote("sysdate"));
+			sql = r.getSQLUpdate("USERS");
+			myLogger.info(" UPDATE PASSWORD : "+sql);
+			stmt.executeUpdate(sql);
+			conn.commit();
 			
 		}catch (SQLException se) { 
 			myLogger.error(se);
@@ -734,8 +734,8 @@ public class ChangeRole implements IServlet2 {
 	    		throw new Exception("Rollback error:"+se2.getMessage());
 	    	}
 	    	throw new Exception("Ralat Pendaftaran Maklumat Bantahan:"+se.getMessage());
-		}
-		catch (Exception re) {
+		
+		}catch (Exception re) {
 			throw re;
 		}finally {
 			if (db != null)
@@ -745,27 +745,26 @@ public class ChangeRole implements IServlet2 {
 	}
 	    
 	public void updateUsername(HttpSession session,String USER_ID,String Username_Baru) throws Exception {
-			Connection conn = null;
-			Db db = null;
-			String sql = "";
-			
+		Connection conn = null;
+		Db db = null;
+		String sql = "";		
 		try {
 			db = new Db();
-				conn = db.getConnection();
-				conn.setAutoCommit(false);
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
 				
-				String user_login_lama = getUSER_LOGINBYID(session, USER_ID,db);
+			String user_login_lama = getUSER_LOGINBYID(session, USER_ID,db);
 				
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();	
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();	
 					
-				r.clear();
-				r.update("USER_ID",USER_ID);
-				r.add("USER_LOGIN",Username_Baru);
-				//r.add("LAST_CHANGEPASSWORD", r.unquote("sysdate"));
-				sql = r.getSQLUpdate("USERS");
-//				myLogger.info(" UPDATE USERNAME : "+sql);
-				stmt.executeUpdate(sql);
+			r.clear();
+			r.update("USER_ID",USER_ID);
+			r.add("USER_LOGIN",Username_Baru);
+			//r.add("LAST_CHANGEPASSWORD", r.unquote("sysdate"));
+			sql = r.getSQLUpdate("USERS");
+//			myLogger.info(" UPDATE USERNAME : "+sql);
+			stmt.executeUpdate(sql);
 				
 			if(checkTableExist(session,"TBLUSERACTIVITYEVENT",db)>0){
 				r.clear();
@@ -901,16 +900,16 @@ public class ChangeRole implements IServlet2 {
 		ResultSet rs = null;
 		Statement stmt = null;
 		try {
-				//db = new Db();
+			//db = new Db();
 			stmt = db.getStatement();
-				int ada=0;
-				sql = "  select count(table_name) as ada from all_tables where table_name='"+table_name+"' ";	
-//				myLogger.info(" OT : USER_LOGIN :" + sql.toUpperCase());
-				rs = stmt.executeQuery(sql);				
-				while (rs.next()) {							
-					ada = (rs.getString("ada") == null ? 0 : rs.getInt("ada"));
-				}			
-				return ada;
+			int ada=0;
+			sql = "  select count(table_name) as ada from all_tables where table_name='"+table_name+"' ";	
+//			myLogger.info(" OT : USER_LOGIN :" + sql.toUpperCase());
+			rs = stmt.executeQuery(sql);				
+			while (rs.next()) {							
+				ada = (rs.getString("ada") == null ? 0 : rs.getInt("ada"));
+			}			
+			return ada;
 			
 		} finally {
 				//if (rs != null)
@@ -925,22 +924,21 @@ public class ChangeRole implements IServlet2 {
 	}		
 	    		
 	public String getUSER_LOGINBYID(HttpSession session, String USER_ID, Db db) throws Exception {
-			//Db db = null;
+		//Db db = null;
 		String sql = "";
 		ResultSet rs = null;
 		Statement stmt = null;
 		try {
-				//db = new Db();
-				stmt = db.getStatement();
-				String USER_LOGIN="";
-				sql = " SELECT USER_LOGIN FROM USERS WHERE USER_ID = '"+USER_ID+"' ";	
-//				myLogger.info(" OT : USER_LOGIN :" + sql.toUpperCase());
-					rs = stmt.executeQuery(sql);				
-					while (rs.next()) {				
-						
-						USER_LOGIN = (rs.getString("USER_LOGIN") == null ? "" : rs.getString("USER_LOGIN"));
-					}			
-				return USER_LOGIN;
+			//db = new Db();
+			stmt = db.getStatement();
+			String USER_LOGIN="";
+			sql = " SELECT USER_LOGIN FROM USERS WHERE USER_ID = '"+USER_ID+"' ";	
+//			myLogger.info(" OT : USER_LOGIN :" + sql.toUpperCase());
+			rs = stmt.executeQuery(sql);				
+			while (rs.next()) {				
+				USER_LOGIN = (rs.getString("USER_LOGIN") == null ? "" : rs.getString("USER_LOGIN"));
+			}			
+			return USER_LOGIN;
 			
 		} finally {
 				//if (rs != null)
@@ -999,18 +997,18 @@ public class ChangeRole implements IServlet2 {
 	}
 	    
 	public void cleanupVelocity(HttpSession session, VelocityContext context,HttpServletRequest request) {
-	    	//HttpSession session = this.request.getSession();    		
-	    	//system.out.println("** CR cleanupVelocity **");
+	    //HttpSession session = this.request.getSession();    		
+	    //system.out.println("** CR cleanupVelocity **");
 	    context = (VelocityContext) session.getAttribute("VELOCITY_CONTEXT");
 		if (context != null) {
-				//system.out.println("** CR cleanupVelocity **");
-				Object objArray[] = context.getKeys();
-				for (int i = 0; i < objArray.length; i++) {
-					//system.out.println(" name context : "+objArray[i]);
-					context.remove(objArray[i]);
-					//myLogger.debug((new StringBuilder("removed:")).append(objArray[i]).toString());
-					////system.out.println((new StringBuilder("removed:")).append(objArray[i]).toString());
-				}
+			//system.out.println("** CR cleanupVelocity **");
+			Object objArray[] = context.getKeys();
+			for (int i = 0; i < objArray.length; i++) {
+				//system.out.println(" name context : "+objArray[i]);
+				context.remove(objArray[i]);
+				//myLogger.debug((new StringBuilder("removed:")).append(objArray[i]).toString());
+				////system.out.println((new StringBuilder("removed:")).append(objArray[i]).toString());
+			}
 		
 		}
 		removeSession(request,session);	
