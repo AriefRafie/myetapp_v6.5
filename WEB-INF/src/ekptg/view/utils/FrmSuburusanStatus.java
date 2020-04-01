@@ -28,7 +28,6 @@ public class FrmSuburusanStatus extends AjaxBasedModule {
 	private String selectUrusan = "";
 	Hashtable<?, ?> details = null;
 	
-	@SuppressWarnings("unchecked")
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
 		String template = "app/utils/frmSuburusanStatus.jsp";		
@@ -83,7 +82,7 @@ public class FrmSuburusanStatus extends AjaxBasedModule {
 	 				,id_Suburusan==""?null:Utils.parseLong(id_Suburusan),null);
 	        this.context.put("selectStatus2",UtilHTML.SelectStatus("Form_id_status", Utils.parseLong(id_status), ""));
 	        this.context.put("id",id);
-			Vector<?> v = new Vector();
+			Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
 			v = FrmKPIData.getStatusFailBySuburusan(id_Urusan, id_Suburusan);
 	        this.context.put("langkah",v);	            
 	        String sg = ekptg.model.htp.UtilHTML.SelectGroup("selectgroup","",""," onChange=\"doChanges1()\" ");
@@ -99,16 +98,19 @@ public class FrmSuburusanStatus extends AjaxBasedModule {
 	 		if ("filterDaerah".equals(action)) {
 	 			//myLog.info("filterDaerah");
 	  			id_Urusan = getParam("id_Urusan")==""?"0":getParam("id_Urusan");
-	 			id_Suburusan = getParam("Form_id_Suburusan");
+				id_Suburusan = getParam("Form_id_Suburusan")==""?"0":getParam("Form_id_Suburusan");	 			
 	 			
 	 		} else {
 	 			//myLog.info("X filterDaerah");
-	 			//myLog.info("getParam(\"id_Suburusan\")="+getParam("id_Suburusan"));
 	  			id_Urusan = getParam("id_Urusan")==""?"0":getParam("id_Urusan");
-				id_Suburusan = getParam("id_Suburusan")==""?"0":getParam("id_Suburusan");	 			
+	  			id_Suburusan = getParam("id_Suburusan")==""?"0":getParam("id_Suburusan");	 			
 				id_status = getParam("Form_id_Status")==""?"0":getParam("Form_id_Status");
 	
 	 		}
+//	 		myLog.info("edit:id_Urusan="+id_Urusan);
+//	 		myLog.info("edit:id_Suburusan="+id_Suburusan);
+//	 		myLog.info("edit:id_status="+id_status);
+
 		    selectUrusan = HTML.SelectUrusan("id_Urusan",Utils.parseLong(id_Urusan),null
 		    		," onChange=\"doChangesSubmit('addNewPejabat')\"");
 		    selectSuburusan = HTML.SelectSuburusanByIdUrusan(id_Urusan==""?"0":id_Urusan,"Form_id_Suburusan"
@@ -116,7 +118,7 @@ public class FrmSuburusanStatus extends AjaxBasedModule {
 	        this.context.put("selectStatus2",UtilHTML.SelectStatus("Form_id_Status"
 	        		,id_status==""?null:Utils.parseLong(id_status),""));
 	 		
-	    	Vector<?> v = new Vector();
+	    	Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
 			v = FrmKPIData.getStatusFailBySuburusan(id_Urusan, id_Suburusan);
 	        this.context.put("langkah",v);        
 	        String sg = ekptg.model.htp.UtilHTML.SelectGroup("group_Id","",""," onChange=\"doChanges1()\" ");
@@ -188,8 +190,10 @@ public class FrmSuburusanStatus extends AjaxBasedModule {
 	    this.context.put("selectUrusan",selectUrusan);
         this.context.put("selectSuburusan",selectSuburusan);
         lists = f.getListing(id_Urusan,id_Suburusan);
-		setupPage(session,action,lists);		
-		return template;
+        if(lists.isEmpty())
+        	setupPage(session,action,lists);		
+	
+        return template;
 		
 	}
 
