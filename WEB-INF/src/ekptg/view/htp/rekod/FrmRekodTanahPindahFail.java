@@ -235,10 +235,10 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
     			idKementerian = "99999";
         		
         	}
-			list = getIHakmilikRizab().getCarianSenaraiHakmilikRizab(idJenisTanah
-					, idNegeri, idDaerah, idMukim
-					, noFail, idJenisHakmilikBaru, noHakmilik, noWarta
-					, idLotHR, noLot, idAgensi, idKementerian, idStatus);
+//			list = getIHakmilikRizab().getCarianSenaraiHakmilikRizab(idJenisTanah
+//					, idNegeri, idDaerah, idMukim
+//					, noFail, idJenisHakmilikBaru, noHakmilik, noWarta
+//					, idLotHR, noLot, idAgensi, idKementerian, idStatus);
 			this.context.put("SenaraiTanah", list);
 			this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(idJenisHakmilik), ""));
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Utils.parseLong(idNegeri), " onChange=\"doChangeState();\""));
