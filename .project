@@ -16,11 +16,4 @@
 		<nature>com.sysdeo.eclipse.tomcat.tomcatnature</nature>
 		<nature>net.sf.eclipse.tomcat.tomcatnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src_integrasi</name>
-			<type>2</type>
-			<location>/Users/mohamadrosli/Documents/workspace2019/myetapp/myetapp_v7/WEB-INF/src_integrasi</location>
-		</link>
-	</linkedResources>
 </projectDescription>
