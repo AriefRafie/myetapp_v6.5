@@ -20,6 +20,7 @@ import ekptg.helpers.Utils;
 
 public class FrmPYWHeaderData {
 
+	private Vector<Hashtable> beanMaklumatPermohonann = null;
 	private Vector<Hashtable<String,String>> beanMaklumatPemohon = null;
 	private Vector beanMaklumatPermohonan = null;
 	private Vector beanMaklumatHakmilik = null;
@@ -626,24 +627,8 @@ public class FrmPYWHeaderData {
 				db.close();
 		}
 	}
-
-	public Vector getBeanMaklumatPermohonan() {
-		return beanMaklumatPermohonan;
-	}
-
-	public void setBeanMaklumatPermohonan(Vector beanMaklumatPermohonan) {
-		this.beanMaklumatPermohonan = beanMaklumatPermohonan;
-	}
-
-	public Vector getBeanMaklumatHakmilik() {
-		return beanMaklumatHakmilik;
-	}
-
-	public void setBeanMaklumatHakmilik(Vector beanMaklumatHakmilik) {
-		this.beanMaklumatHakmilik = beanMaklumatHakmilik;
-	}
-
-	public Vector<Hashtable<String,String>> setMaklumatPermohonan(String idFail) throws Exception {
+	
+	public Vector<Hashtable<String,String>> setMaklumatPemohon(String idUser) throws Exception {
 		Db db = null;
 		String sql = "";
 	
@@ -654,24 +639,12 @@ public class FrmPYWHeaderData {
 			int bil = 1;
 			Hashtable h;
 			SQLRenderer r = new SQLRenderer();
-	
-	
-			/*sql = "SELECT PEMOHON.ID_PEMOHON, PEMOHON.ID_KATEGORIPEMOHON, PEMOHON.ID_PEJABAT, PEMOHON.NAMA, " +
-				  " PEMOHON.NO_PENGENALAN, PEMOHON.ALAMAT1_TETAP, PEMOHON.ALAMAT2_TETAP, PEMOHON.ALAMAT3_TETAP, " +
-				  " PEMOHON.POSKOD_TETAP, RUJBANDAR.KETERANGAN AS NAMA_BANDAR, RUJNEGERI.NAMA_NEGERI, PEMOHON.NO_TEL, " +
-				  " PEMOHON.NO_FAX, PEMOHON.EMEL " +
-				  " FROM TBLPHPPEMOHON PEMOHON, TBLRUJNEGERI RUJNEGERI, TBLRUJBANDAR RUJBANDAR,tblpermohonan p"+			  
-				  " WHERE " +
-				  " PEMOHON.ID_NEGERITETAP = RUJNEGERI.ID_NEGERI(+) " +
-				  "	AND PEMOHON.ID_BANDARTETAP = RUJBANDAR.ID_BANDAR(+) " +
-				  " AND P.ID_PEMOHON=PEMOHON.ID_PEMOHON "+
-				  " AND P.ID_PERMOHONAN = '" + idFail + "'";*/
 			
 			sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UO.NO_KP_BARU, UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3, " +
 					  " UO.POSKOD, UO.NO_FAX, UO.NO_HP, UO.EMEL, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI FROM USERS U, " +
 					  " USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
 					  " WHERE U.USER_ID = UO.USER_ID AND UO.ID_BANDAR = RB.ID_BANDAR AND UO.ID_NEGERI = RN.ID_NEGERI" +
-					  " AND U.USER_ID = '" + idFail + "'";
+					  " AND U.USER_ID = '" + idUser + "'";
 			log.info("header:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 	
@@ -690,16 +663,14 @@ public class FrmPYWHeaderData {
 				h.put("noTel", rs.getString("NO_HP") == null ? "" : rs.getString("NO_HP").toUpperCase());
 				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs.getString("NO_FAX").toUpperCase());
 				h.put("emel", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
-//				h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS").toUpperCase());
+				//h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS").toUpperCase());
 	
 				
 				beanMaklumatPemohon.addElement(h);
 				bil++;
 			}
-				//session.setAttribute("ID_FAIL", rs.getString("ID_FAIL"));
-	
+			//session.setAttribute("ID_FAIL", rs.getString("ID_FAIL"));
 			
-	
 		} catch (Exception re) {
 			log.error("Error: ", re);
 			throw re;
@@ -709,7 +680,123 @@ public class FrmPYWHeaderData {
 		}
 	
 		return beanMaklumatPemohon;
-	}		
+	}	
 	
+	public Vector<Hashtable> getMaklumatPermohonan(String idFail, HttpSession session) throws Exception {
+		Db db = null;
+		String sql = "";
+	
+		try {
+			beanMaklumatPermohonann = new Vector<Hashtable> ();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			int bil = 1;
+			Hashtable h;
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = "SELECT FAIL.ID_FAIL, FAIL.NO_FAIL, FAIL.NO_FAIL_NEGERI, FAIL.TAJUK_FAIL, MOHON.ID_PERMOHONAN, MOHON.TARIKH_TERIMA, MOHON.TARIKH_SURAT, MOHON.NO_RUJ_SURAT,"
+					+ " PEMOHON.ID_PEMOHON, PEMOHON.ID_KATEGORIPEMOHON, PEMOHON.ID_PEJABAT, PEMOHON.NAMA, PEMOHON.NO_PENGENALAN, PEMOHON.ALAMAT1_TETAP, PEMOHON.ALAMAT2_TETAP, PEMOHON.ALAMAT3_TETAP, PEMOHON.POSKOD_TETAP,"
+					+ " RUJBANDAR.KETERANGAN AS NAMA_BANDAR, RUJNEGERI.NAMA_NEGERI, PEMOHON.NO_TEL, PEMOHON.NO_FAX, PEMOHON.EMEL, MOHON.ID_STATUS, RUJSTATUS.KETERANGAN AS STATUS,"
+					+ " MOHONSEWA.FLAG_PROSESFAIL, MOHON.NO_SAMBUNGAN, RUJURUSAN.NAMA_URUSAN, RUJSUBURUSAN.NAMA_SUBURUSAN, MOHONSEWA.FLAG_PERMOHONANDARI, FAIL.ID_URUSAN, FAIL.ID_SUBURUSAN,"
+					+ " MOHONSEWA.KEPUTUSAN, MOHON.CATATAN_BATAL, MOHON.TARIKH_BATAL, MOHON.FLAG_AKTIF, FAIL.FLAG_JENIS_FAIL"
+					+ ", MOHONSEWA.ID_PHPPERMOHONANSEWA, MOHONSEWA.FLAG_SEBAB_TAMAT, MOHONSEWA.FLAG_TEMPOHSEWA "
 
+					+ " FROM TBLPFDFAIL FAIL, TBLPERMOHONAN MOHON, TBLRUJSTATUS RUJSTATUS, TBLPHPPEMOHON PEMOHON, TBLRUJNEGERI RUJNEGERI, TBLRUJBANDAR RUJBANDAR,"
+					+ " TBLPHPPERMOHONANSEWA MOHONSEWA, TBLRUJURUSAN RUJURUSAN, TBLRUJSUBURUSAN RUJSUBURUSAN"
+
+					+ " WHERE FAIL.ID_FAIL = MOHON.ID_FAIL(+) AND MOHON.ID_STATUS = RUJSTATUS.ID_STATUS(+) AND MOHON.ID_PEMOHON = PEMOHON.ID_PEMOHON(+)"
+					+ " AND PEMOHON.ID_BANDARTETAP = RUJBANDAR.ID_BANDAR(+) AND PEMOHON.ID_NEGERITETAP = RUJNEGERI.ID_NEGERI(+)"
+					+ " AND MOHON.ID_PERMOHONAN = MOHONSEWA.ID_PERMOHONAN"
+					+ " AND FAIL.ID_URUSAN = RUJURUSAN.ID_URUSAN(+) AND FAIL.ID_SUBURUSAN = RUJSUBURUSAN.ID_SUBURUSAN(+)"
+					+ " AND FAIL.ID_SEKSYEN = 4 AND FAIL.ID_URUSAN IN (7,12,13) AND MOHON.FLAG_PERJANJIAN = 'U'"
+					+ " AND FAIL.ID_FAIL = '" + idFail + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()) {
+				h = new Hashtable();
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
+				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
+						.getString("NO_FAIL").toUpperCase());
+				h.put("noFailNegeri", rs.getString("NO_FAIL_NEGERI") == null ? "" : rs
+						.getString("NO_FAIL_NEGERI").toUpperCase());
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN").toUpperCase());
+				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_TERIMA")));
+				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_SURAT")));
+				h.put("noRujSurat", rs.getString("NO_RUJ_SURAT") == null ? ""
+						: rs.getString("NO_RUJ_SURAT").toUpperCase());
+				h.put("tajukFail", rs.getString("TAJUK_FAIL") == null ? "" : rs
+						.getString("TAJUK_FAIL").toUpperCase());
+				h.put("idUrusan",
+						rs.getString("ID_URUSAN") == null ? "" : rs
+								.getString("ID_URUSAN"));
+				h.put("urusan",
+						rs.getString("NAMA_URUSAN") == null ? "" : rs
+								.getString("NAMA_URUSAN"));
+				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? ""
+						: rs.getString("ID_SUBURUSAN"));
+				h.put("subUrusan", rs.getString("NAMA_SUBURUSAN") == null ? ""
+						: rs.getString("NAMA_SUBURUSAN"));
+				h.put("noSambungan", rs.getString("NO_SAMBUNGAN") == null ? ""
+						: rs.getString("NO_SAMBUNGAN"));
+								h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("tarikhBatal", rs.getDate("TARIKH_BATAL") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_BATAL")));
+				h.put("catatanBatal",
+						rs.getString("CATATAN_BATAL") == null ? "" : rs
+								.getString("CATATAN_BATAL").toUpperCase());
+
+				h.put("flagJenisFail",
+						rs.getString("FLAG_JENIS_FAIL") == null ? "" : rs
+								.getString("FLAG_JENIS_FAIL").toUpperCase());
+				h.put("idPermohonanSewa",
+						rs.getString("ID_PHPPERMOHONANSEWA") == null ? "" : rs
+								.getString("ID_PHPPERMOHONANSEWA").toUpperCase());
+				h.put("flagSebabTamat",
+						rs.getString("FLAG_SEBAB_TAMAT") == null ? "" : rs
+								.getString("FLAG_SEBAB_TAMAT").toUpperCase());
+				h.put("flagTempohsewa",
+						rs.getString("FLAG_TEMPOHSEWA") == null ? "" : rs
+								.getString("FLAG_TEMPOHSEWA").toUpperCase());
+				
+				beanMaklumatPermohonann.addElement(h);
+				bil++;
+				session.setAttribute("ID_FAIL", rs.getString("ID_FAIL"));
+				
+			}
+			
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+			} finally {
+			if (db != null)
+				db.close();
+			
+		}
+		return beanMaklumatPermohonann;
+	}
+
+	public Vector getBeanMaklumatPermohonan() {
+		return beanMaklumatPermohonan;
+	}
+
+	public void setBeanMaklumatPermohonan(Vector beanMaklumatPermohonan) {
+		this.beanMaklumatPermohonan = beanMaklumatPermohonan;
+	}
+
+	public Vector getBeanMaklumatHakmilik() {
+		return beanMaklumatHakmilik;
+	}
+
+	public void setBeanMaklumatHakmilik(Vector beanMaklumatHakmilik) {
+		this.beanMaklumatHakmilik = beanMaklumatHakmilik;
+	}
+		
 }
