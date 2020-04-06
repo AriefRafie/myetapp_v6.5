@@ -2063,6 +2063,17 @@ public class FrmPYWOnlineSenaraiFailData {
 		return noFail;
 	}
 	
+//	public String getSenaraiNoFail(String idFail){
+//		Db db = null;
+//		String sql = "";
+//		
+//		try {
+//			db = new Db();
+//			Statement stmt = db.getStatement();
+//			
+//		}
+//	}
+	
 	public String getKodKementerian(String idKementerian) throws Exception {
 		Db db = null;
 		String sql = "";

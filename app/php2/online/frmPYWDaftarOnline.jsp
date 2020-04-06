@@ -17,23 +17,10 @@
 <input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> 
 <input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" /> 
 <input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
+<input name="idJenisPermohonan" type="hidden" id="idJenisPermohonan" value="$idJenisPermohonan"/> 
+<input name="idFailLama" type="TEXT" id="idFailLama" value="$idFailLama"/>
 <table width="100%" border="0">
-  <tr>
-  
-<!-- TAMBAH JENIS PERMOHONAN -->
-  	<td><fieldset><legend><strong>JENIS PERMOHONAN</strong></legend>
-  	<table width="100%" border="0">
-  	<tr>
-  		<td width="1%"><span class="style1">*</span></td>
-    	<td width="28%">Jenis Permohonan</td>
-        <td width="1%">:</td>
-        <td width="70%"></td>
-  	</tr>
-  	</table>
-  	</td>
-  </tr>
-
-<!-- TAMBAH MAKLUMAT PEMOHON -->
+  <!-- TAMBAH MAKLUMAT PEMOHON -->
   <tr>
   	<td><fieldset><legend><strong>MAKLUMAT PEMOHON</strong></legend>
   	<table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -116,8 +103,31 @@
   	</fieldset></table>
   	</td>
   </tr>
-  
-<!-- MAKLUMAT TANAH -->
+  <!-- JENIS PERMOHONAN -->
+  <tr>  
+  		<td colspan="2"><fieldset>
+  			<legend><strong>JENIS PERMOHONAN</strong></legend>
+  			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  				<tr>
+  					<td width="1%"><span class="style1">*</span></td>
+    				<td width="28%">Jenis Permohonan</td>
+       				<td width="1%">:</td>
+        			<td width="70%">
+        				<select name="socJenisPermohonan"
+							id="socJenisPermohonan" onchange="doChangeJenisPermohonan()"
+							$inputTextClass class="$inputTextClass">
+							<option $selected_0 value="0">SILA PILIH</option>
+							<option $selected_1 value="1">PERMOHONAN BARU</option>
+							<option $selected_2 value="2">PERMOHONAN PERLANJUTAN</option>
+							<option $selected_3 value="3">PERMOHONAN PENGURANGAN KADAR SEWA</option>
+						</select>
+					</td>
+  				</tr>
+  			</table>
+  		</td>
+  </tr>
+  #if($idJenisPermohonan == '1')
+  <!-- MAKLUMAT TANAH -->
   <tr>
     <td><fieldset>
       <legend>MAKLUMAT TANAH</legend>
@@ -323,8 +333,7 @@
 		</table>
 	</fieldset></td>
   </tr>
-  
-<!-- MAKLUMAT PERMOHONAN -->
+  <!-- MAKLUMAT PERMOHONAN -->
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
@@ -390,6 +399,68 @@
          </table>
       </fieldset></td>
   </tr>
+  #end
+  
+  
+  #if($idJenisPermohonan == '2')
+  <tr>
+    <td><fieldset>
+      <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
+      <table width="100%" border="0">
+  		<tr>
+  			<td width="1%"><span class="style1">*</span></td>
+    		<td width="28%">Senarai No. Fail Lama</td>
+       		<td width="1%">:</td>
+        	<td width="70%">$!selectNoFailLama</td>
+  		</tr>
+  		#if($idFailLama != '99999' && $idFailLama != 'null')
+        <tr>
+        	<td></td>
+        	<td width="28%">Urusan</td>
+          	<td width="1%">:</td>
+          	<td width="70%">$!pemohon.get("namaPemohon")</td>
+        </tr>
+        <tr>
+          	<td></td>
+          	<td>Suburusan</td>
+          	<td>:</td>
+          	<td>$!beanMaklumatPermohonan.suburusan</td>
+        </tr>
+        <tr>
+        	<td></td>
+        	<td>Tarikh Surat/Borang</td>
+        	<td>:</td>
+        	<td>$!beanMaklumatPermohonan.tarikhSurat</td>
+        </tr>
+        <tr>
+        	<td></td>
+        	<td>No. Rujukan Surat</td>
+        	<td>:</td>
+        	<td>$!beanMaklumatPermohonan.noRujukanSurat</td>
+        </tr>
+        <tr>
+        <td></td>
+        <td valign="top">Perkara</td>
+        <td valign="top">:</td>
+        <td>$!beanMaklumatPermohonan.perkara</td>
+		</tr>
+        #end
+      </table>
+   </fieldset></td>
+  </tr>
+  #end  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   #if ($mode != 'view')
@@ -443,6 +514,12 @@ function doChangePeganganHakmilikBorangK() {
 function doChangeTujuan() {
 	doAjaxCall${formName}("doChangeTujuan");
 }
+function doChangeJenisPermohonan() {
+	doAjaxCall${formName}("doChangeJenisPermohonan");
+}   
+function doChangeNoFailLama() {
+	doAjaxCall${formName}("doChangeNoFailLama");
+} 
 function daftar() {
 	if(document.${formName}.socUrusan.value == ""){
 		alert('Sila pilih Urusan.');
