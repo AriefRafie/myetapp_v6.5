@@ -28,6 +28,8 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td><strong>Nama Lampiran</strong></td>
+          <td><strong>Lampiran</strong></td>
+          <td><strong>Catatan</strong></td>
         </tr>
         #set ($senaraiLampiran = "")
         #if ($SenaraiLampiran.size() > 0)
@@ -41,7 +43,9 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
         #end
         <tr>
           <td class="$row" align="center">$senaraiLampiran.bil</td>
-          <td class="$row"><a href="javascript:paparLampiran('$senaraiLampiran.idDokumen')" class="style2">$!senaraiLampiran.namaDokumen</a></td>
+          <td class="$row">$!senaraiLampiran.namaDokumen</td>
+          <td class="$row"><a href="javascript:cetakLampiran('$senaraiLampiran.idDokumen')" class="style2">Muat Turun Lampiran</td>
+          <td class="$row">$!senaraiLampiran.catatan</td>
         </tr>
         #end
         #else
@@ -113,6 +117,7 @@ function simpanKemaskiniLampiran() {
 function paparLampiran(idDokumen){
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView";
 	document.${formName}.method="POST";
+	document.${formName}.actionPenyewaan = "paparMaklumatPenyewaan";
 	document.${formName}.idDokumen.value = idDokumen;
 	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "view";
@@ -129,7 +134,7 @@ function hapusLampiran(){
 	document.${formName}.submit();
 }
 function cetakLampiran(id){
-	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+	var url = "../servlet/ekptg.view.php2.online.FrmDisplayImage?id="+id;
     var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;
