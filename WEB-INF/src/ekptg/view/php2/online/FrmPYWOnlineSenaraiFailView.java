@@ -79,6 +79,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		String idHakmilikUrusan = getParam("idHakmilikUrusan");
 		String idPPTBorangK = getParam("idPPTBorangK");
         String idDokumen = getParam("idDokumen"); // ADD MAKLUMAT LAMPIRAN
+        String kategori = getParam("kategori");
 
 		
 		String mode = getParam("mode");
@@ -101,6 +102,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		Vector beanMaklumatBorangK = null;
         Vector beanMaklumatLampiran = null;
         Vector senaraiLampiran = null;
+        Vector senaraiSemak = null;
 		
 		String idUrusan = getParam("socUrusan");
 		if (idUrusan == null || idUrusan.trim().length() == 0) {
@@ -122,10 +124,15 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		if (idJenisTanah == null || idJenisTanah.trim().length() == 0){
 			idJenisTanah = "99999";
 		}
+		String idJenisPermohonan = getParam("socJenisPermohonan");
+		if(idJenisPermohonan == null || idJenisPermohonan.trim().length() == 0){
+			idJenisPermohonan = "99999";
+		}
 		/*String idJenisTujuan = getParam("socJenisTujuan");
 		if (idJenisTujuan == null || idJenisTujuan.trim().length() == 0) {
 			idJenisTujuan = "99999";
 		}*/
+		
 
 		this.context.put("errorPeganganHakmilik", "");
 		this.context.put("onload", "");
@@ -140,11 +147,15 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				idFail = logic.daftarBaru(idUrusan, idSuburusan, idHakmilikAgensi, getParam("txtperkara"), 
 				getParam("txtNoRujukanSurat"), getParam("txttarikhSurat"), idJenisTanah, idPHPBorangK, idPPTBorangK,
 				getParam("idKementerianTanah"), getParam("idNegeriTanah"), idHakmilikUrusan, getParam("tarikhTerima"),
-				session);
+				idJenisPermohonan,session);
 			}
 			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
         		logic.updateTanah(idPermohonan,idHakmilikAgensi,session);	
             }
+			if("doSimpanSenaraiSemak".equals(hitButton)){
+				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"), 
+						session);
+			}
 			if ("doSimpanKemaskiniMaklumatPenyewaan".equals(hitButton)){
         		logic.updatePermohonanSewa(idPermohonanSewa,
 						getParam("txtTujuan"), getParam("socTempohSewa"), idLuasKegunaan,
@@ -173,6 +184,11 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			if ("hapusLampiran".equals(hitButton)) {
 				logic.hapusLampiran(idDokumen, session);
 			}
+			//SENARAI SEMAK
+			if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
+        		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
+    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
+        	}
 		}
 		
 		//ajax command
@@ -195,7 +211,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			
         	//HEADER
             beanHeader = new Vector();
-            logic.setMaklumatHeader(idFail);
+            logic.setMaklumatHeader(idFail, getParam("initiateFlagBuka"), session);
             beanHeader = logic.getBeanMaklumatHeader();
     		this.context.put("BeanHeader", beanHeader);
     		
@@ -220,12 +236,11 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			beanMaklumatTanah = logic.getBeanMaklumatTanah();
     			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
     			
-    			/*//MAKLUMAT PENYEWA
-    			FrmPYWHeaderData headerPenyewa = new FrmPYWHeaderData();
-    			Vector<Hashtable<String,String>> maklumatPenyewa = headerPenyewa.setMaklumatPenyewa(idPermohonan);
-    			this.context.put("penyewa", maklumatPenyewa.get(0));
-    			//this.context.put("penyewa", maklumatPenyewa);*/
-    			
+    			//MAKLUMAT PEMOHON
+            	FrmPYWHeaderData header = new FrmPYWHeaderData();
+    			Vector<Hashtable<String,String>> vec = header.setMaklumatPermohonan(id_user);
+    			this.context.put("pemohon", vec.get(0));
+    						
     			//MAKLUMAT SEWA
     			beanMaklumatSewa = new Vector();
     			logic.setMaklumatSewa(idPermohonan);
@@ -248,13 +263,28 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			
     			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\" style=\"width:auto\""));
         		
+    			if ("new".equals(modePopup)){
+        			
+        			this.context.put("readonlyPopup", "");
+	    			this.context.put("inputTextClassPopup", "");
+	    			
+	    			beanMaklumatLampiran = new Vector();    			
+	    			Hashtable hashMaklumatLampiran = new Hashtable();
+	    			hashMaklumatLampiran.put("namaLampiran", "");
+	    			hashMaklumatLampiran.put("catatanLampiran", "");
+	    			beanMaklumatLampiran.addElement(hashMaklumatLampiran);
+					this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
+    			}
     			/*FrmPYWHeaderData header = new FrmPYWHeaderData();
     			Vector<Hashtable<String,String>> vec = header.setMaklumatPermohonan("1613133103");
     			//this.context.put("pemohon", vec.get(0));
     			this.context.put("pemohon", vec);*/
     			
+    			senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+    			this.context.put("SenaraiSemak", senaraiSemak);
+    			
     			//POPUP LAMPIRAN
-    			if ("2".equals(selectedTabUpper)) {
+    			if ("3".equals(selectedTabUpper)) {
     				
     				if ("openPopupLampiran".equals(flagPopup)){
     	        		
@@ -294,7 +324,6 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     	        		}
     	        	} 
     			}
-    			
     			//SENARAI LAMPIRAN
     			senaraiLampiran = new Vector();
     			logic.setSenaraiLampiran(idPermohonan);
@@ -460,6 +489,43 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);			
 			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), ""," onChange=\"doChangeUrusan();\""));
 			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan,"socSuburusan", Long.parseLong(idSuburusan), ""," onChange=\"doChangeSuburusan();\""));
+			
+			if ("1".equals(idJenisPermohonan)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "selected");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "");
+				this.context.put("idJenisPermohonan", idJenisPermohonan);
+        	}else if ("2".equals(idJenisPermohonan)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "selected");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "");
+				this.context.put("idJenisPermohonan", idJenisPermohonan);
+        	}else if ("3".equals(idJenisPermohonan)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "selected");
+				this.context.put("selected4", "");
+				this.context.put("idJenisPermohonan", idJenisPermohonan);
+        	}else if ("4".equals(idJenisPermohonan)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "selected");
+				this.context.put("idJenisPermohonan", idJenisPermohonan);
+        	}else{
+    			this.context.put("selected", "selected");
+    			this.context.put("selected1", "");
+    			this.context.put("selected2", "");
+    			this.context.put("selected3", "");
+    			this.context.put("selected4", "");
+    			this.context.put("idJenisPermohonan", 0);
+            }
 				
 			//MAKLUMAT HAKMILIK
 			if ("doChangePeganganHakmilik".equals(submit)) {
@@ -489,6 +555,12 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			logic.setMaklumatBorangK(idPPTBorangK, idHakmilikUrusan, idPHPBorangK);
 			beanMaklumatBorangK = logic.getBeanMaklumatBorangK();
 			this.context.put("BeanMaklumatBorangK", beanMaklumatBorangK);
+			if ("doChangeJenisTanah".equals(submit)){
+				idHakmilikAgensi = "";
+				idPPTBorangK = "";
+				idHakmilikUrusan = "";
+				idPHPBorangK = "";
+			}
 			
 			if ("1".equals(idJenisTanah)) {
 				this.context.put("selected", "");
@@ -527,13 +599,11 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			this.context.put("idJenisTanah", 0);
             }
 
-		} else if ("cari".equals(command)) {
+		} //else if ("cari".equals(command)) {
+		else{
 			
-			String findNoFail = getParam("findNoFail");
-			String findNoHakmilik = getParam("findNoHakmilik");
-			String findNoLot = getParam("findNoLot");
-			
-			Vector status_PermohonanSewa = logic.statusPermohonanSewa(findNoFail, findNoHakmilik, findNoLot, id_user);
+			Vector status_PermohonanSewa = logic.statusPermohonanSewa(getParam("findNoFail"), 
+					getParam("findNoHakmilik"), getParam("findNoLot"), id_user);
 			this.context.put("status_PermohonanSewa", status_PermohonanSewa);
 			setupPage(session, action, status_PermohonanSewa);
 			
@@ -546,7 +616,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 
 		}// close cari
 		
-		else {
+		/*else {
 			
 			Vector status_PermohonanSewa = logic.statusPermohonanSewa(null, null, null, id_user);
 			this.context.put("status_PermohonanSewa", status_PermohonanSewa);
@@ -557,7 +627,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			context.remove("findNoSiasatan");
 			
 			vm = "app/php2/online/frmPYWSenaraiFailOnline.jsp";
-		}
+		}*/
 		
 //		System.out.println("vm FrmPYWOnlineSenaraiFailView : "+vm);
 
@@ -593,10 +663,8 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			int page = getParam("page") == "" ? 1 : getParamAsInteger("page");
 
 			int itemsPerPage;
-			if (this.context.get("itemsPerPage") == null
-					|| this.context.get("itemsPerPage") == "") {
-				itemsPerPage = getParam("itemsPerPage") == "" ? 10
-						: getParamAsInteger("itemsPerPage");
+			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10: getParamAsInteger("itemsPerPage");
 			} else {
 				itemsPerPage = (Integer) this.context.get("itemsPerPage");
 			}
@@ -615,7 +683,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 
 			if (page > paging.getTotalPages())
 				page = 1; // reset page number
-			this.context.put("SenaraiFail", paging.getPage(page));
+			this.context.put("status_PermohonanSewa", paging.getPage(page));
 			this.context.put("page", new Integer(page));
 			this.context.put("itemsPerPage", new Integer(itemsPerPage));
 			this.context.put("totalPages", new Integer(paging.getTotalPages()));
