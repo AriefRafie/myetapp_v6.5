@@ -27,7 +27,14 @@
   		<td width="1%"><span class="style1">*</span></td>
     	<td width="28%">Jenis Permohonan</td>
         <td width="1%">:</td>
-        <td width="70%"></td>
+        <td width="70%"> 
+        <select name="socJenisPermohonan" id="socJenisPermohonan" onchange="doChangeJenisPermohonan()"
+			$inputTextClass class="$inputTextClass">
+			<option $selected value="0">SILA PILIH</option>
+			<option $selected1 value="1">PERMOHONAN BARU</option>
+			<option $selected2 value="2">PERMOHONAN PERLANJUTAN SEWA</option>
+			<option $selected3 value="3">PENGURANGAN KADAR SEWA</option>
+		</select></td>
   	</tr>
   	</table>
   	</td>
@@ -116,7 +123,7 @@
   	</fieldset></table>
   	</td>
   </tr>
-  
+  #if($idJenisPermohonan != '2' || $idJenisPermohonan != '3')
 <!-- MAKLUMAT TANAH -->
   <tr>
     <td><fieldset>
@@ -397,6 +404,7 @@
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
   </tr>
   #end
+  #end
   <tr>
     <td width="100%" align="center"> 
     #if ($mode == 'new')
@@ -442,6 +450,9 @@ function doChangePeganganHakmilikBorangK() {
 }
 function doChangeTujuan() {
 	doAjaxCall${formName}("doChangeTujuan");
+}
+function doChangeJenisPermohonan() {
+	doAjaxCall${formName}("doChangeJenisPermohonan");
 }
 function daftar() {
 	if(document.${formName}.socUrusan.value == ""){

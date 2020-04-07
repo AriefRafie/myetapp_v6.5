@@ -558,7 +558,8 @@ public class FrmPYWOnlineSenaraiFailData {
 		return (int) ((date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24));
 	}
 	
-	public Vector statusPermohonanSewa(String findNoFail, String findNoHakmilik, String findNoLot, String id_user) throws Exception {
+	public Vector statusPermohonanSewa(String findNoFail, String findNoHakmilik, String findNoLot, 
+			String id_user) throws Exception {
 		
 		Vector status_PermohonanSewa = new Vector();
 		Db db = null;
@@ -624,29 +625,32 @@ public class FrmPYWOnlineSenaraiFailData {
 					 " AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS(+) " +
 					 " AND E.ID_HAKMILIKAGENSI = F.ID_HAKMILIKAGENSI(+) AND F.ID_HAKMILIK = G.ID_HAKMILIK(+) " +
 					 " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND B.FLAG_AKTIF = 'Y' " +
-					 " AND A.ID_MASUK = H.USER_ID(+) AND A.ID_MASUK = '"+id_user+"'" +
-					 " ORDER BY TARIKH_TERIMA DESC";
+					 " AND A.ID_MASUK = H.USER_ID(+) AND A.ID_MASUK = '"+id_user+"'";// +
+					 //" ORDER BY TARIKH_TERIMA DESC";
 
 			if (findNoFail != null) {
 				if (!findNoFail.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLPFDFAIL.NO_FAIL) LIKE '%' ||'"
+					sql = sql + " AND UPPER(B.NO_PERMOHONAN) LIKE '%' ||'"
 							+ findNoFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
+
 			if (findNoHakmilik != null) {
 				if (!findNoHakmilik.trim().equals("")) {
 					//sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_HAKMILIK) LIKE '%' ||'" + findNoHakmilik.trim().toUpperCase() + "'|| '%'";
-					sql = sql + "AND UPPER(TBLHTPHAKMILIK.NO.HAKMILIK) LIKE '%' ||'" + findNoHakmilik.trim()
-							.toUpperCase() + "'|| '%'";
+					sql = sql + "AND UPPER(G.NO_HAKMILIK) LIKE '%' ||'" 
+							+ findNoHakmilik.trim().toUpperCase() + "'|| '%'";
 				}
 			}
 			if (findNoLot != null) {
 				if (!findNoLot.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLHTPHAKMILIK.NO_LOT) LIKE '%' ||'"
+					sql = sql + " AND UPPER(G.NO_LOT) LIKE '%' ||'"
 							+ findNoLot.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			        
+			  
+			sql = sql + "ORDER BY TARIKH_TERIMA DESC";
+			
 			System.out.println(" SQL PEMOHON LIST FROM MODEL PERMOHONAN SEWA 1 :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -1773,7 +1777,7 @@ public class FrmPYWOnlineSenaraiFailData {
 	public String daftarBaru(String idUrusan, String idSuburusan, String idHakmilikAgensi, String perkara, 
 			String noRujukanSurat, String tarikhSurat, String idJenisTanah, String idPHPBorangK, String idPPTBorangK, 
 			String idHakmilikUrusan, String idKementerianTanah, String idNegeriTanah, String tarikhTerima, 
-			HttpSession session) throws Exception {
+			String idJenisPermohonan, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -2240,16 +2244,22 @@ public class FrmPYWOnlineSenaraiFailData {
 		}
 	}
 	
-	public void setMaklumatHeader(String idFail) throws Exception {
+	public void setMaklumatHeader(String idFail, String initiateFlagBuka,
+			HttpSession session) throws Exception {
 		Db db = null;
 		String sql = "";
-
+			
 		try {
 			beanMaklumatHeader = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
 			int bil = 1;
 			Hashtable h;
+			
+			SQLRenderer r = new SQLRenderer();
+			if ("".equals(idFail) && session.getAttribute("ID_FAIL") != null) {
+				idFail = (String) session.getAttribute("ID_FAIL");
+			}
 
 			sql = "SELECT A.ID_FAIL,F.ID_HAKMILIKPERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.ID_PERMOHONAN, B.TARIKH_TERIMA, " +
 					"B.TARIKH_SURAT, C.ID_PEMOHON, C.NAMA, C.ID_NEGERITETAP, C.ID_KATEGORIPEMOHON, C.ID_PEJABAT, " +
@@ -2271,7 +2281,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			
 			ResultSet rs = stmt.executeQuery(sql);
 
-			while (rs.next()) {
+			if (rs.next()) {
 				h = new Hashtable();
 				h.put("idFail", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
@@ -2298,9 +2308,12 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("idHakmilikAgensi", rs.getString("ID_HAKMILIKAGENSI") == null ? "" : rs.getString("ID_HAKMILIKAGENSI"));
 				beanMaklumatHeader.addElement(h);
 				bil++;
+				
+				session.setAttribute("ID_FAIL", rs.getString("ID_FAIL"));
 			}
 			
-			if (bil == 1){
+			//if (bil == 1){
+			else{
 				h = new Hashtable();
 				h.put("idFail", "");
 				h.put("noFail", "");
@@ -2877,5 +2890,158 @@ public class FrmPYWOnlineSenaraiFailData {
 		this.listLampiran = listLampiran;
 	}
 	
+	public void updateSenaraiSemak(String idPermohonanSewa, String txtTujuan, String socTempohSewa, String idLuasKegunaan, String idLuas, String txtLuasMohon1, String txtLuasMohon2,
+			String txtLuasMohon3, String txtLuasBersamaan, String txtBakiLuas, HttpSession session) throws Exception {
+		
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+					
+			//TBLPHPPERMOHONANSEWA
+			r.update("ID_PHPPERMOHONANSEWA", idPermohonanSewa);
+			r.add("TUJUAN", txtTujuan);
+			r.add("FLAG_GUNA",idLuasKegunaan);
+			r.add("ID_LUASMHN", idLuas);
+			r.add("LUAS_MHN1", txtLuasMohon1);
+			r.add("LUAS_MHN2", txtLuasMohon2);
+			r.add("LUAS_MHN3", txtLuasMohon3);			
+			r.add("ID_LUASMHNBERSAMAAN", "2");
+			r.add("LUAS_MHNBERSAMAAN", txtLuasBersamaan);
+			r.add("ID_LUASBAKI", "2");
+			r.add("LUAS_BAKI", txtBakiLuas);
+			r.add("FLAG_TEMPOHSEWA", socTempohSewa);
+			
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPPERMOHONANSEWA");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+		} catch (SQLException ex) { 
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+	    	
+	    } finally {
+			if (db != null)
+				db.close();
+		}		
+	}
+	public String getIdHTPHakmilikByIdHakmilikPermohonan(
+			String idHakmilikPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT HTPAGENSI.ID_HAKMILIK FROM TBLPHPHAKMILIKPERMOHONAN PHPHMP, TBLHTPHAKMILIKAGENSI HTPAGENSI"
+					+ " WHERE PHPHMP.ID_HAKMILIKAGENSI = HTPAGENSI.ID_HAKMILIKAGENSI AND PHPHMP.ID_HAKMILIKPERMOHONAN = '"
+					+ idHakmilikPermohonan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("ID_HAKMILIK");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	
+	//SENARAI SEMAK
+	public Vector getSenaraiSemak(String idPermohonan, String kategori) throws Exception {
+
+		Db db = null;
+		String sql = "";
+		Vector senaraiSemak = new Vector();
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_RUJSENARAISEMAK, A.KETERANGAN,"
+					+ " CASE WHEN A.ID_RUJSENARAISEMAK IN (SELECT ID_RUJSENARAISEMAK FROM TBLPHPSENARAISEMAK WHERE ID_PERMOHONAN = '" + idPermohonan + "')"
+					+ " THEN 'Y' END AS FLAG, "
+					+ " CASE WHEN B.KETERANGAN = 'INDIVIDU' THEN '1' ELSE '2' END AS ID_KATEGORIPEMOHON "
+					+ " FROM TBLPHPRUJSENARAISEMAK A, TBLRUJKATEGORIPEMOHON B "
+					+ " WHERE A.ID_KATEGORIPEMOHON = B.ID_KATEGORIPEMOHON AND A.FLAG_AKTIF = 'Y' AND B.KETERANGAN = '" + kategori + "' ";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idSenaraiSemak", rs.getString("ID_RUJSENARAISEMAK") == null ? "" : rs.getString("ID_RUJSENARAISEMAK"));
+				h.put("keterangan", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				h.put("flag", rs.getString("FLAG") == null ? "" : rs.getString("FLAG"));
+				senaraiSemak.addElement(h);
+			}
+
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+			} finally {
+			if (db != null)
+				db.close();
+		}
+		return senaraiSemak;
+	}
+	
+	//UPDATE SENARAI SEMAK
+	public void updateSenaraiSemak(String idPermohonan, String[] semaks, HttpSession session) throws Exception {
+		
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		Db db = new Db();
+		String sql = "";		
+		
+		try {
+			Connection conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r = new SQLRenderer();
+			
+			r.add("ID_PERMOHONAN", idPermohonan);
+			sql = r.getSQLDelete("TBLPHPSENARAISEMAK");
+			stmt.executeUpdate(sql);
+			
+			for (int i = 0; i < semaks.length; i++) {
+			 	r = new SQLRenderer();
+				long ID_SENARAISEMAK = DB.getNextID("TBLPHPSENARAISEMAK_SEQ");
+				r.add("ID_SENARAISEMAK", ID_SENARAISEMAK);
+				r.add("ID_PERMOHONAN", idPermohonan);
+				r.add("ID_RUJSENARAISEMAK", semaks[i]);
+				r.add("ID_MASUK", userId);
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+				sql = r.getSQLInsert("TBLPHPSENARAISEMAK");
+				stmt.executeUpdate(sql);
+			}
+			conn.commit();
+			
+			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
+					"FAIL [" + idPermohonan + "] DIKEMASKINI");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
