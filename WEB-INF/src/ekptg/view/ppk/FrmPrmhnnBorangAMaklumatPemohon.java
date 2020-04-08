@@ -368,6 +368,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				long idPemohon = DB.getNextID("TBLPPKPEMOHON_SEQ");
 				this.context.put("IdPemohon", idPemohon);
 				this.context.put("negeri", "");
+				this.context.put("negera", "");
 				this.context.put("daerah", "");
 				this.context.put("listBandarbyNegeri", "");
 
@@ -1181,12 +1182,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("idDaerahx", getParam("socDaerah"));
 
 				String negri = getParam("socNegeri");
-
+				String negra = getParam("socNegra");
 				// Hashtable h = (Hashtable)list2.get(0);
 				if (negri == "") {
 					// this.context.put("selectNegeri",
 					// HTML.SelectNegeri("socNegeri",null,"class=\"autoselect\" "));
 					this.context.put("negeri", "");
+					this.context.put("negara", "");
 					this.context.put("daerah", "");
 					this.context.put("listBandarbyNegeri", "");
 				
@@ -1199,7 +1201,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 					// this.context.put("selectNegeri",
 					// HTML.SelectNegeri("socNegeri",Long.parseLong(negri),"class=\"autoselect\" "));
-				
 				}
 
 				this.context.put("tarikhMohonm", getParam("txdTarikhMohon"));
@@ -1314,6 +1315,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				k.put("taraf_penting", getParam("taraf_penting"));
 				k.put("no_tel", getParam("no_tel"));
 				k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
+				
+				k.put("jenisWarga", getParam("socWarganegaraPemohon"));
+								
 				k.put("jenis_pej", getParam("jenis_pej"));
 				k.put("no_hp", getParam("no_hp"));
 				k.put("emel", getParam("txtEmelPemohon"));
@@ -1352,7 +1356,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					// this.context.put("selectNegeri",
 					// HTML.SelectNegeri("socNegeri",Long.parseLong(h.get("pmidnegeri").toString()),"class=\"autoselect\" disabled"));
 				}
-
+						
 				listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 				this.context.put("ListDaerahByUser", listDaerahByUser);
 
@@ -1640,8 +1644,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				k.put("idsaudara", id_saudare);
 
 				k.put("jenisWarga", getParam("socWarganegaraPemohon"));
-				k.put("nama_warga", getParam("nama_warga"));
-
+				
 				k.put("jenisAgama", getParam("socAgamaPemohon"));
 				if (getParam("txtUmurPemohon") != "") {
 					k.put("umur", getParam("txtUmurPemohon"));
@@ -1716,7 +1719,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 					k.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
 
-				}
+					}
 
 				k.put("catatan", getParam("txtCatatanPemohon"));
 				k.put("adataraf", getParam("adataraf"));
