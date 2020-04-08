@@ -468,7 +468,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				this.context.put("selected_1", "");
 				this.context.put("selected_2", "");
 				this.context.put("selected_3", "");
-				this.context.put("idJenisPermohonan", "0");
+				this.context.put("idJenisPermohonan", "0"); 
         	}
 			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\""));  
         	
