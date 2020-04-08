@@ -155,11 +155,11 @@ public class ChangeRole implements IServlet2 {
 		else if(submit.equals("doCheckExpired")){
 			try {
 				//String LAST_CHANGEPASSWORD = checkPasswordExpiry(USER_ID_SYSTEM,90);	
-				Hashtable hariTukarPass = checkPassExpByDay(USER_ID_SYSTEM,90);
+				Hashtable<String,String> hariTukarPass = checkPassExpByDay(USER_ID_SYSTEM,90);
 				String LAST_CHANGEPASSWORD = (String) hariTukarPass.get("LAST_CHANGEPASSWORD");
 				String EXP_DATE = (String) hariTukarPass.get("EXP_DATE");
-				int HARI = (int) hariTukarPass.get("HARI");
-				int BAKI = (int) hariTukarPass.get("BAKI");
+				int HARI = Integer.parseInt(String.valueOf(hariTukarPass.get("HARI")));
+				int BAKI = Integer.parseInt(String.valueOf(hariTukarPass.get("BAKI")));
 				
 				String mesej = "";
 				String println = "";
@@ -170,7 +170,7 @@ public class ChangeRole implements IServlet2 {
 				//x
 				if((USER_LOGIN.length()!=12 || isInteger(USER_LOGIN)==false) && user_type.equals("internal")){					
 					setfield += "document.getElementById('changeLogin').value='Y';";
-					mesej += "Sila kemaskini username anda daripada ["+USER_LOGIN+"] kepada MyID/No. KP Baru. <br>";
+					mesej += "Sila kemaskini Id Pengguna anda daripada ["+USER_LOGIN+"] kepada MyID/No. KP Baru. <br>";
 					//mesej += "Katalaluan anda telah tamat tempoh (melebihi 90), tarikh terakhir anda menukar katalaluan adalah pada "+LAST_CHANGEPASSWORD+".<br> ";
 				}else{
 					setfield += "document.getElementById('changeLogin').value='N';";	
@@ -179,7 +179,7 @@ public class ChangeRole implements IServlet2 {
 				//if(!LAST_CHANGEPASSWORD.equals(""))
 				if(HARI>90){
 					setfield += "document.getElementById('changePassword').value='Y';";
-					mesej += "Katalaluan anda telah tamat tempoh (melebihi 90), tarikh terakhir anda menukar katalaluan adalah pada "+LAST_CHANGEPASSWORD+".<br> ";
+					mesej += "Kata Laluan anda telah tamat tempoh (melebihi 90), tarikh terakhir anda menukar katalaluan adalah pada "+LAST_CHANGEPASSWORD+".<br> ";
 					//mesej += "Katalaluan anda telah tamat tempoh (melebihi 90).<br> ";
 					
 				}else{
@@ -187,8 +187,7 @@ public class ChangeRole implements IServlet2 {
 					
 					//expiry reminder & reset afterLogin session.. sbb nak check semasa login ja
 					//alert bila tingal lagi sebulan or less
-					if(afterLogin.equals("Y") && BAKI <= 30)
-					{
+					if(afterLogin.equals("Y") && BAKI <= 30){
 						setfield += " alert('Tarikh luput kata laluan anda pada "+EXP_DATE+" (Baki "+BAKI+" hari). Sila tukar kata laluan anda sebelum tarikh tersebut untuk mengelakkan ID anda disekat!'); ";
 					}
 					
@@ -482,33 +481,35 @@ public class ChangeRole implements IServlet2 {
 		
 	}
 	    
-	public Hashtable checkPassExpByDay(String user_id, Integer maxday) throws Exception {
+	public Hashtable<String,String> checkPassExpByDay(String user_id, Integer maxday) throws Exception {
 		Db db = null;
 		String sql = "";
 		ResultSet rs = null;
 		Statement stmt = null;
 		try {
 			db = new Db();
-				stmt = db.getStatement();
+			stmt = db.getStatement();
 				
-				sql = "  SELECT U.USER_ID,TO_CHAR(U.LAST_CHANGEPASSWORD,'DD/MM/YYYY') AS LAST_CHANGEPASSWORD, " +
-						" ("+maxday+" - NVL(TRUNC(SYSDATE - TO_DATE(U.LAST_CHANGEPASSWORD)),0)) as BAKI, " +
-						" NVL(TRUNC(SYSDATE - TO_DATE(U.LAST_CHANGEPASSWORD)),0) as HARI, " +
-						" TO_CHAR(TRUNC(SYSDATE + ("+maxday+" - NVL(TRUNC(SYSDATE - TO_DATE(U.LAST_CHANGEPASSWORD)),0))),'DD/MM/YYYY') as EXP_DATE "+
-						" FROM USERS U "+
-						" WHERE U.USER_ID = '"+user_id+"' ";
+			sql = "  SELECT U.USER_ID,TO_CHAR(U.LAST_CHANGEPASSWORD,'DD/MM/YYYY') AS LAST_CHANGEPASSWORD, " +
+					" ("+maxday+" - NVL(TRUNC(SYSDATE - TO_DATE(U.LAST_CHANGEPASSWORD)),0)) as BAKI, " +
+					" NVL(TRUNC(SYSDATE - TO_DATE(U.LAST_CHANGEPASSWORD)),0) as HARI, " +
+					" TO_CHAR(TRUNC(SYSDATE + ("+maxday+" - NVL(TRUNC(SYSDATE - TO_DATE(U.LAST_CHANGEPASSWORD)),0))),'DD/MM/YYYY') as EXP_DATE "+
+					" FROM USERS U "+
+					" WHERE U.USER_ID = '"+user_id+"' ";
 //				myLogger.info(" checkPassExpByDay :" + sql.toUpperCase());
-				rs = stmt.executeQuery(sql);
-				Hashtable h;
-				h = new Hashtable();
-				
-				while (rs.next()) {
-					h.put("LAST_CHANGEPASSWORD",rs.getString("LAST_CHANGEPASSWORD") == null ? "" : rs.getString("LAST_CHANGEPASSWORD"));
-					h.put("BAKI",rs.getString("BAKI") == null ? 0 : rs.getInt("BAKI"));
-					h.put("HARI",rs.getString("HARI") == null ? 0 : rs.getInt("HARI"));
-					h.put("EXP_DATE",rs.getString("EXP_DATE") == null ? "" : rs.getString("EXP_DATE"));					
-				}
-				return h;
+			rs = stmt.executeQuery(sql);
+			Hashtable<String,String> h;
+			h = new Hashtable<String,String>();
+			while (rs.next()) {
+				h.put("LAST_CHANGEPASSWORD",rs.getString("LAST_CHANGEPASSWORD") == null ? "" : rs.getString("LAST_CHANGEPASSWORD"));
+				h.put("BAKI",rs.getString("BAKI") == null ? "0" : rs.getString("BAKI"));
+				h.put("HARI",rs.getString("HARI") == null ? "0" : rs.getString("HARI"));
+//				h.put("BAKI",rs.getString("BAKI") == null ? 0 : rs.getInt("BAKI"));
+//				h.put("HARI",rs.getString("HARI") == null ? 0 : rs.getInt("HARI"));
+				h.put("EXP_DATE",rs.getString("EXP_DATE") == null ? "" : rs.getString("EXP_DATE"));					
+			
+			}
+			return h;
 		
 		} finally {
 			if (rs != null)

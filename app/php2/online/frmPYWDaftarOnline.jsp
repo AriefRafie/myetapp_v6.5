@@ -20,7 +20,8 @@
 <input name="idJenisPermohonan" type="hidden" id="idJenisPermohonan" value="$idJenisPermohonan"/> 
 <input name="idFailLama" type="TEXT" id="idFailLama" value="$idFailLama"/>
 <table width="100%" border="0">
-  <!-- TAMBAH MAKLUMAT PEMOHON -->
+
+<!-- TAMBAH MAKLUMAT PEMOHON -->
   <tr>
   	<td><fieldset><legend><strong>MAKLUMAT PEMOHON</strong></legend>
   	<table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -400,8 +401,7 @@
       </fieldset></td>
   </tr>
   #end
-  
-  
+
   #if($idJenisPermohonan == '2')
   <tr>
     <td><fieldset>
@@ -451,22 +451,11 @@
   #end  
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   #if ($mode != 'view')
   <tr>
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
   </tr>
+  #end
   #end
   <tr>
     <td width="100%" align="center"> 
@@ -520,6 +509,7 @@ function doChangeJenisPermohonan() {
 function doChangeNoFailLama() {
 	doAjaxCall${formName}("doChangeNoFailLama");
 } 
+}
 function daftar() {
 	if(document.${formName}.socUrusan.value == ""){
 		alert('Sila pilih Urusan.');
