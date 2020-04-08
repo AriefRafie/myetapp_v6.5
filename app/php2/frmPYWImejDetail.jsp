@@ -52,7 +52,7 @@
           <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
           <td>Direktori Imej</td>
           <td>:</td>
-          <td><input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup2  class="$inputTextClassPopup" /></td>
+          <td><input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup2  multiple class="$inputTextClassPopup" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
