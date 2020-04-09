@@ -27,6 +27,12 @@
   </tr>
   <tr>
     <td>&nbsp;</td>
+    <td>Email</td>
+    <td>:</td>
+    <td><input name="txtEmail" type="text" class="$inputTextClassPopup" id="txtEmail" value="$beanMaklumatKehadiran.email" size="50" $readonlyPopup /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
     <td>Pengerusi</td>
     <td>:</td>
     <td><select name="socPengerusi" id="socPengerusi" style="width:80;" $readonlyPopup class="$inputTextClassPopup" $inputTextClassPopup>
