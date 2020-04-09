@@ -126,9 +126,6 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		if (idFailLama == null || idFailLama.trim().length() == 0) {
 			idFailLama = "99999";
 		}
-		if(idJenisPermohonan == null || idJenisPermohonan.trim().length() == 0){
-			idJenisPermohonan = "99999";
-		}
 		/*String idJenisTujuan = getParam("socJenisTujuan");
 		if (idJenisTujuan == null || idJenisTujuan.trim().length() == 0) {
 			idJenisTujuan = "99999";
@@ -192,7 +189,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		}
 		
 		//ajax command
-		if ("showStatusPermohonanSewa".equals(submit)){			
+		if ("showStatusPermohonanSewa".equals(submit)){
 			String id_fail = getParam("id_fail");
 			this.context.put("id_fail", id_fail);
 			
@@ -237,8 +234,8 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
     			
     			//MAKLUMAT PEMOHON
-            	FrmPYWHeaderData header = new FrmPYWHeaderData();
-    			Vector<Hashtable<String,String>> vec = header.setMaklumatPermohonan(id_user);
+            	header = new FrmPYWHeaderData();
+    			Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);
     			this.context.put("pemohon", vec.get(0));
     						
     			//MAKLUMAT SEWA

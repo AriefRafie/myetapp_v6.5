@@ -120,6 +120,10 @@ import ekptg.model.php2.online.FrmPYWOnlineKJPSenaraiFailData;
 			if (idAgensi == null || idAgensi.trim().length() == 0){
 				idAgensi = "99999";
 			}
+			String idJenisTujuan = getParam("socJenisTujuan");
+			if (idJenisTujuan == null || idJenisTujuan.trim().length() == 0){
+				idJenisTujuan = "99999";
+			}
 			
 			//VECTOR
 			Vector list = null;
@@ -146,8 +150,8 @@ import ekptg.model.php2.online.FrmPYWOnlineKJPSenaraiFailData;
 	        	if ("doSimpanKemaskiniMaklumatSewa".equals(hitButton)) {
 					logic.updatePermohonanSewa(idFail, idPermohonan,
 							getParam("tarikhTerima"), getParam("tarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtNoFailNegeri"),
-							getParam("txtPerkara"), idPermohonanSewa,
-							getParam("txtTujuan"), getParam("socTempohSewa"), idLuasKegunaan,
+							getParam("txtPerkara"), idPermohonanSewa, getParam("txtTujuan"), 
+							idJenisTujuan, getParam("socTempohSewa"), idLuasKegunaan,
 							idLuas, getParam("txtLuasMohon1"),
 							getParam("txtLuasMohon2"), getParam("txtLuasMohon3"),
 							getParam("txtLuasBersamaan"), getParam("txtBakiLuas"),
