@@ -83,7 +83,9 @@
     </td>
 	<td width="4%" align="center">Seksyen</td>
   	<td width="15%">Status Pergerakan Fail</td>
+  	#if($!skrin_deraf == "yes")
   	<td width="5%" align="center">Tindakan</td>
+  	#end
   	<!-- Tambah column Maklumat unit Pusaka 25/2/2020 -->
   		#if($!skrin_deraf != "yes")
   			<td width="10%" align="center">Maklumat Unit Pusaka</td>
@@ -181,8 +183,16 @@
   #end</td>-->
   <td class="$row" align="center">$senarai.seksyen</td>
   <td class="$row">$senarai.status</td>
-  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doHapus('$!senarai.idFail','$!senarai.id_Permohonan')"><img border="0" src="../img/hapus.gif"/></a></td>
-  <td class="$row">$senarai.nama_pejabat</td>  </tr>
+  #if($!skrin_deraf =="yes")
+  	<td class="$row" align="center">
+  		<a href="#" class="style2" onClick="javascript:doHapus('$!senarai.idFail','$!senarai.id_Permohonan')"><img border="0" src="../img/hapus.gif"/></a>
+  	</td>
+  #end
+  #if($!skrin_deraf !="yes")
+  <td class="$row">$senarai.nama_pejabat</td>
+  #end
+  
+  </tr>
   #end
 		#if ($cnt == 0)
 		<tr> 

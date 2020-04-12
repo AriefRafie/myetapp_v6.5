@@ -25,9 +25,9 @@
           <td width="8%" align="center"><strong>Tarikh Cek</strong></td>
           <td width="12%"><strong>No Cek / Rujukan</strong></td>
           <td width="19%"><strong>Butiran</strong></td>
-          <td width="10%" align="right"><strong>Debit (RM)</strong></td>
-          <td width="10%" align="right"><strong>Kredit (RM)</strong></td>
-          <td width="10%" align="right"><strong>Baki (RM)</strong></td>
+          ##<td width="10%" align="right"><strong>Debit (RM)</strong></td>
+          ##<td width="10%" align="right"><strong>Kredit (RM)</strong></td>
+          <td width="10%" align="right"><strong>Jumlah (RM)</strong></td>
         </tr>
         #set ($list = "")
         #if ($SenaraiFiLesen.size() > 0)
@@ -51,8 +51,8 @@
           <td class="$row" align="center">$list.tarikhCek</td>  
           <td class="$row">$list.noRujukan</td>
           <td class="$row">#if ($!list.butiran == '') $!list.jenisBayaran #else $!list.butiran #end</td>
-          <td class="$row" align="right">$list.debit</td>
-          <td class="$row" align="right">$list.kredit</td>
+          ##<td class="$row" align="right">$list.debit</td>
+          ##<td class="$row" align="right">$list.kredit</td>
           <td class="$row" align="right">$list.baki</td>
         </tr>
         #end
@@ -65,8 +65,8 @@
           <td class="row1">&nbsp;</td>
           <td class="row1">&nbsp;</td>
           <td class="row1">&nbsp;</td>
-          <td class="row1" align="right">&nbsp;</td>
-          <td class="row1" align="right">&nbsp;</td>
+          ##<td class="row1" align="right">&nbsp;</td>
+          ##<td class="row1" align="right">&nbsp;</td>
           <td class="row1" align="right">&nbsp;</td>
         </tr>
         #end
@@ -81,8 +81,8 @@
           <td>&nbsp;</td>
           <td align="right">&nbsp;</td>
           <td align="right"><strong>JUMLAH</strong></td>
-          <td align="right">&nbsp;</td>
-          <td align="right">&nbsp;</td>          
+          ##<td align="right">&nbsp;</td>
+          ##<td align="right">&nbsp;</td>          
           <td align="right"><strong>RM $total</strong></td>
         </tr>
       </table>

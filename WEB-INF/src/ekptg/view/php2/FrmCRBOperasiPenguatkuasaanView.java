@@ -76,6 +76,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		String flagStatus = getParam("flagStatus");
 		String flagAktif = getParam("flagAktif");
 		String flagSuratKe = getParam("idSuratKe");
+		String socJenisImej = getParam("socJenisImej");
 		String idHakmilik = "";
 
 		this.context.put("completed", false);
@@ -353,6 +354,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 
 							beanMaklumatImejan = new Vector();
 							Hashtable hashMaklumatImejan = new Hashtable();
+							hashMaklumatImejan.put("jenisImej", "");
 							hashMaklumatImejan.put("namaImej", "");
 							hashMaklumatImejan.put("catatanImej", "");
 							beanMaklumatImejan.addElement(hashMaklumatImejan);
@@ -368,6 +370,10 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 							beanMaklumatImejan = new Vector();
 							logic.setMaklumatImej(idDokumen);
 							beanMaklumatImejan = logic.getBeanMaklumatImejan();
+							Hashtable hashMaklumatImejanDB = (Hashtable) logic.getBeanMaklumatImejan().get(0);
+							Hashtable hashMaklumatImejan = new Hashtable();
+							hashMaklumatImejan.put("jenisImej", getParam("socJenisImej"));
+							beanMaklumatImejan.addElement(hashMaklumatImejan);
 							this.context.put("BeanMaklumatImejan",
 									beanMaklumatImejan);
 
@@ -761,6 +767,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		this.context.put("flagAktif", flagAktif);
 		this.context.put("idSuratKe", flagSuratKe);
 		this.context.put("actionCRB", actionCRB);
+		this.context.put("socJenisImej", socJenisImej);
 
 		this.context.put("flagOpenDetail", flagOpenDetail);
 		this.context.put("status", status.toUpperCase());
@@ -799,8 +806,8 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 			con.setAutoCommit(false);
 			PreparedStatement ps = con
 					.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
-							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_LAPORANTANAH,FLAG_DOKUMEN,ID_PERMOHONAN) "
-							+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?,?)");
+							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_LAPORANTANAH,FLAG_DOKUMEN,ID_PERMOHONAN, JENIS_IMEJ) "
+							+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?,?,?)");
 			ps.setLong(1, idDokumen);
 			ps.setString(2, getParam("namaImej"));
 			ps.setString(3, getParam("catatanImej"));
@@ -811,6 +818,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 			ps.setString(8, idLaporanTanah);
 			ps.setString(9, "I");
 			ps.setString(10, idPermohonan);
+			ps.setString(11, getParam("socJenisImej"));
 			ps.executeUpdate();
 
 			con.commit();

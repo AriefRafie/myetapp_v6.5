@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import ekptg.model.entities.Tblpfdfail;
 import ekptg.model.entities.Tblphprujjenistujuan;
 
 public class PHPUtilHTML {
@@ -85,5 +86,40 @@ public class PHPUtilHTML {
 		}
  
 		return sb.toString();
+	}
+	
+	public static String SelectNoFailByIdPemohon(String userId, String selectName,
+			Long selectedValue, String disability, String jsFunction)
+	 throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+
+			sb.append("<option value=>SILA PILIH</option>\n");
+			Vector<Tblpfdfail> v = PHPUtilData.getNoFailByIdPemohon(userId);
+			Tblpfdfail senaraiNoFail = null;
+			String noFail = "";
+			for (int i = 0; i < v.size(); i++) {
+				senaraiNoFail = (Tblpfdfail) v.get(i);
+				if (senaraiNoFail.getIdFail().equals(selectedValue)) {
+					noFail = "selected";
+				} else {
+					noFail = "";
+				}
+				sb.append("<option " + noFail + " value=" + senaraiNoFail.getIdFail() + ">"
+						+ senaraiNoFail.getNoFail()
+						+ "</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+		return sb.toString();		
 	}
 }

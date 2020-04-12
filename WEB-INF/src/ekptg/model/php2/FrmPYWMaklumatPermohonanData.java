@@ -566,7 +566,7 @@ public class FrmPYWMaklumatPermohonanData {
 
 	public void updatePermohonanSewa(String idFail, String idPermohonan,
 			String tarikhTerima, String tarikhSurat, String noRujukanSurat, String noFailNegeri,
-			String txtPerkara, String idPermohonanSewa, String txtTujuan,
+			String txtPerkara, String idPermohonanSewa, String txtTujuan, String idJenisTujuan,
 			String socTempohSewa, String idLuasKegunaan, String idLuas,
 			String txtLuasMohon1, String txtLuasMohon2, String txtLuasMohon3,
 			String txtLuasBersamaan, String txtBakiLuas, HttpSession session)
@@ -612,7 +612,11 @@ public class FrmPYWMaklumatPermohonanData {
 			// TBLPHPPERMOHONANSEWA
 			r = new SQLRenderer();
 			r.update("ID_PHPPERMOHONANSEWA", idPermohonanSewa);
-			r.add("TUJUAN", txtTujuan);
+			if(!"".equals(txtTujuan)){
+				r.add("TUJUAN", txtTujuan);
+			} else {
+				insertSocTujuan(idPermohonanSewa, idJenisTujuan, userId, db);
+			}
 			r.add("FLAG_GUNA", idLuasKegunaan);
 			r.add("ID_LUASMHN", idLuas);
 			r.add("LUAS_MHN1", Utils.RemoveComma(txtLuasMohon1));
@@ -647,6 +651,36 @@ public class FrmPYWMaklumatPermohonanData {
 		} finally {
 			if (db != null)
 				db.close();
+		}
+	}
+	
+	private void insertSocTujuan(String idPermohonanSewa, String idJenisTujuan,
+			String userId, Db db) throws Exception {
+
+		String sql = "";
+		try {
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPPERMOHONANTUJUAN
+			r = new SQLRenderer();
+			long idPHPPermohonanTujuan = DB
+					.getNextID("TBLPHPPERMOHONANTUJUAN_SEQ");
+			r.add("ID_PHPPERMOHONANTUJUAN", idPHPPermohonanTujuan);
+			r.add("ID_PHPPERMOHONANSEWA", idPermohonanSewa);
+			r.add("ID_JENISTUJUAN", idJenisTujuan);
+
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPPERMOHONANTUJUAN");
+			stmt.executeUpdate(sql);
+
+		} catch (SQLException ex) {
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
 		}
 	}
 
@@ -883,6 +917,36 @@ public class FrmPYWMaklumatPermohonanData {
 		}
 	}
 
+	public String getIdTujuanByIdPermohonanSewa(String idPermohonanSewa) throws Exception {
+		Db db = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = " SELECT C.ID_JENISTUJUAN FROM TBLPHPPERMOHONANSEWA A, TBLPHPPERMOHONANTUJUAN B, TBLPHPRUJJENISTUJUAN C "
+				+ " WHERE A.ID_PHPPERMOHONANSEWA = B.ID_PHPPERMOHONANSEWA(+) "
+				+ " AND B.ID_JENISTUJUAN = C.ID_JENISTUJUAN "
+				+ " AND A.ID_PHPPERMOHONANSEWA = '"+ idPermohonanSewa +"'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()) {
+				return rs.getString("ID_JENISTUJUAN");
+			} else {
+				return "";
+			}
+			
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+			} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public String getNoFailByIdPermohonan(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";

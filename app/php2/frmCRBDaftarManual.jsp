@@ -26,86 +26,54 @@
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
-    <td colspan="2"><fieldset>
-      <legend><strong>MAKLUMAT FAIL</strong></legend>
-      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Fail</td>
-          <td width="1%" >:</td>
-          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong>
-            <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
-            <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
-        </tr>
-        <!--tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Jenis Fail</td>
-          <td>:</td>
-          <td><select name="jenisFail" id="jenisFail" style="width:170px;" $readonly class="$inputTextClass" $inputTextClass>
-              #if($beanMaklumatPermohonan.jenisFail == "1") 
-               <option value="">SILA PILIH</option>
-               <option value="1" selected="selected">1 - PENGUATKUASAAN</option>
-               <option value="2">2 - PELBAGAI</option>
-			  #elseif($beanMaklumatPermohonan.jenisFail == "2") 
-				<option value="">SILA PILIH</option>
-               <option value="1">1 - PENGUATKUASAAN</option>
-               <option value="2" selected="selected">2 - PELBAGAI</option>
-              #elseif($beanMaklumatPermohonan.jenisFail == "") 
-               <option value="" selected="selected">SILA PILIH</option>
-               <option value="1">1 - PENGUATKUASAAN</option>
-               <option value="2">2 - PELBAGAI</option>
-              #end
-             </select>
-          </td>
-        </tr-->
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td valign="top">Urusan</td>
-          <td>:</td>
-          <td>PENGUATKUASAAN</td>
-        </tr>
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td valign="top">Suburusan</td>
-          <td>:</td>
-          <td>PENGUATKUASAAN</td>
-        </tr>
-        <tr>
-          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Tarikh Terima Aduan</td>
-          <td>:</td>
-          <td><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" onblur="check_date(this);cekTarikhTerima(this)" size="9" $readonly class="$inputTextClass"/>
-            #if ($mode != 'view') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
-        </tr>
-        <tr>
-          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Tarikh Surat Aduan</td>
-          <td>:</td>
-          <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="9" $readonly class="$inputTextClass"/>
-            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</td>
-        </tr>
-        <tr>
-          <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Perkara</td>
-          <td valign="top">:</td>
-          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onBlur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" >$beanMaklumatPermohonan.perkara</textarea>
-            #if ($mode == 'new')
-            <input type="button" name="cmdDaftarBaru2" id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk()"/>
-            #end </td>
-        </tr>
-        #if ($mode != 'view')
-        <tr>
-          <td valign="top">&nbsp;</td>
-          <td valign="top">&nbsp;</td>
-          <td valign="top">&nbsp;</td>
-          <td>Baki Aksara :&nbsp;
-            <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtPerkara" /></td>
-        </tr>
-        #end  
-        #end
-      </table>
-      </fieldset></td>
+  	<td colspan="2"><fieldset>
+  		<legend><strong>MAKLUMAT FAIL</strong></legend>
+  		<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  			#foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+	  		<tr>
+	          <td width="1%">&nbsp;</td>
+	          <td width="28%" valign="top">No. Fail</td>
+	          <td width="1%" >:</td>
+	          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong>
+	            <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
+	            <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
+	        </tr>
+	        <!--tr>
+	          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+	          <td>Jenis Fail</td>
+	          <td>:</td>
+	          <td><select name="jenisFail" id="jenisFail" style="width:170px;" $readonly class="$inputTextClass" $inputTextClass>
+	              #if($beanMaklumatPermohonan.jenisFail == "1") 
+	               <option value="">SILA PILIH</option>
+	               <option value="1" selected="selected">1 - PENGUATKUASAAN</option>
+	               <option value="2">2 - PELBAGAI</option>
+				  #elseif($beanMaklumatPermohonan.jenisFail == "2") 
+					<option value="">SILA PILIH</option>
+	               <option value="1">1 - PENGUATKUASAAN</option>
+	               <option value="2" selected="selected">2 - PELBAGAI</option>
+	              #elseif($beanMaklumatPermohonan.jenisFail == "") 
+	               <option value="" selected="selected">SILA PILIH</option>
+	               <option value="1">1 - PENGUATKUASAAN</option>
+	               <option value="2">2 - PELBAGAI</option>
+	              #end
+	             </select>
+	          </td>
+	        </tr-->
+	        <tr>
+	          <td width="1%">&nbsp;</td>
+	          <td width="28%" valign="top">Urusan</td>
+	          <td width="1%">:</td>
+	          <td width="70%">PENGUATKUASAAN</td>
+	        </tr>
+	        <tr>
+	          <td width="1%">&nbsp;</td>
+	          <td width="28%" valign="top">Suburusan</td>
+	          <td width="1%">:</td>
+	          <td width="70%">PENGUATKUASAAN</td>
+	        </tr>
+	        #end
+  		</table>
+  	</fieldset></td>
   </tr>
   <tr>
     <td colspan="2"><fieldset>
@@ -287,7 +255,7 @@
         #if($idKategoriPemohon == '8')
         <tr>
           <td></td>
-          <td>Seksyen</td>
+          <td>Bahagian</td>
           <td>:</td>
           <td>$selectSeksyen</td>
         </tr>
@@ -371,6 +339,7 @@
               <option $selected1 value="1">TANAH MILIK PERSEKUTUAN</option>
               <option $selected2 value="2">TANAH RIZAB PERSEKUTUAN</option>
               <option $selected3 value="3">BORANG K</option>
+              <option $selected4 value="4">LAIN-LAIN TANAH</option>
             </select></td>
         </tr>
         #if ($idJenisTanah == '1' || $idJenisTanah == '2')
@@ -479,6 +448,82 @@
           <td>$beanMaklumatTanah.kegunaanTanah
             <input type="hidden" name="kegunaanTanah" id="kegunaanTanah" value="$beanMaklumatTanah.kegunaanTanah" />
             <input type="hidden" name="statusRizab" id="statusRizab" value="$beanMaklumatTanah.statusRizab" /></td>
+        </tr>
+        #end
+        #end
+        
+        
+        #if ($idJenisTanah == '4')
+        #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+        <tr>
+          <td>&nbsp;</td>
+          <td>Pegangan Hakmilik</td>
+          <td>:</td>
+          <td><input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik"/></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Lot</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.lot
+            <input type="text" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.noLot" />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Luas Lot</td>
+          <td>:</td>
+          <td>
+            <input type="text" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luas"/>
+              Unit Luas : <input type="text" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luasBersamaan" />
+           </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Hakmilik</td>
+          <td>:</td>
+          <td>
+          	<input type="text" name="hakmilik" id="hakmilik" value="$beanMaklumatTanah.hakmilik" />
+            <input type="text" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.noHakmilik" />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Warta</td>
+          <td>:</td>
+          <td>
+            <input type="text" name="noWartaTanah" id="noWartaTanah" value="$beanMaklumatTanah.noWarta">
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Tarikh Warta</td>
+          <td>:</td>
+          <td>
+          	<input type="text" name="tarikhWarta" id="tarikhWarta" value="$beanMaklumatTanah.tarikhWarta">
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Mukim</td>
+          <td>:</td>
+          <td>
+            <input type="text" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Daerah</td>
+          <td>:</td>
+          <td>
+            <input type="text" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Negeri</td>
+          <td>:</td>
+          <td>
+            <input type="text" name="namaNegeriTanah" id="namaNegeriTanah" value="$beanMaklumatTanah.negeri" /></td>
         </tr>
         #end
         #end
@@ -610,6 +655,47 @@
             </table>
             </fieldset></td>
         </tr>
+        #end
+      </table>
+      </fieldset></td>
+  </tr>
+  <tr>
+    <td colspan="2"><fieldset>
+      <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
+      <table width="100%" border="0" cellspacing="2" cellpadding="2">
+        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+        <tr>
+          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td width="28%" valign="top">Tarikh Terima Aduan</td>
+          <td width="1%">:</td>
+          <td width="70%"><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" onblur="check_date(this);cekTarikhTerima(this)" size="9" $readonly class="$inputTextClass"/>
+            #if ($mode != 'view') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
+        </tr>
+        <tr>
+          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td valign="top">Tarikh Surat Aduan</td>
+          <td>:</td>
+          <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="9" $readonly class="$inputTextClass"/>
+            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</td>
+        </tr>
+        <tr>
+          <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td valign="top">Perkara</td>
+          <td valign="top">:</td>
+          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onBlur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" >$beanMaklumatPermohonan.perkara</textarea>
+            #if ($mode == 'new')
+            <input type="button" name="cmdDaftarBaru2" id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk()"/>
+            #end </td>
+        </tr>
+        #if ($mode != 'view')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td>Baki Aksara :&nbsp;
+            <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtPerkara" /></td>
+        </tr>
+        #end  
         #end
       </table>
       </fieldset></td>
@@ -789,7 +875,7 @@ function daftarBaru() {
 	}
 	if(document.${formName}.socKategoriPemohon.value == "1" || document.${formName}.socKategoriPemohon.value == "2" || document.${formName}.socKategoriPemohon.value == "6" || document.${formName}.socKategoriPemohon.value == "7" || document.${formName}.socKategoriPemohon.value == "9"){
 		if(document.${formName}.txtNama.value == ""){
-			alert('Sila masukan Nama.');
+			alert('Sila masukkan Nama.');
   			document.${formName}.txtNama.focus(); 
 			return; 
 		}

@@ -125,19 +125,25 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 		//HITBUTTON
 		if (postDB) {
 			if ("daftarBaru".equals(hitButton)) {
-				idFail = logic.daftarBaru(idJenisTanah, getParam("tarikhTerima"),
-						getParam("tarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtPerkara"),
-						idKategoriPemohon, getParam("txtNama"), getParam("txtNamaPegawai"),
-						getParam("txtNoPendaftaran"), getParam("txtPekerjaan"), getParam("txtAlamat1"),
-						getParam("txtAlamat2"), getParam("txtAlamat3"), getParam("txtEmel"), 
-						getParam("txtPoskod"), idBandar, idNegeri, getParam("txtNoTel"), getParam("txtNoFaks"),
-						idHakmilikAgensi, idPPTBorangK, idHakmilikUrusan, idPHPBorangK, idJenisTujuan, idJenisTujuan2,
-						idJenisTujuan3, getParam("txtTujuan"), getParam("txtTujuan2"), getParam("txtTujuan3"),
-						getParam("idKementerianTanah"), getParam("idNegeriTanah"), getParam("idLuasTanah"), getParam("luasTanah"),
-						idUrusan, idSuburusan, "J", getParam("txtCatatan"), idHakmilikSementara, getParam("txtNoFailNegeri"),
-						idLuasKegunaan, session);
-				
-				idStatus = "1610198"; //MAKLUMAT PERMOHONAN	
+				idFail = logic.daftarBaru(idJenisTanah,
+						getParam("tarikhTerima"), getParam("tarikhSurat"),
+						getParam("txtNoRujukanSurat"), getParam("txtPerkara"),
+						idKategoriPemohon, getParam("txtNama"),
+						getParam("txtNamaPegawai"),
+						getParam("txtNoPendaftaran"), getParam("txtPekerjaan"),
+						getParam("txtAlamat1"), getParam("txtAlamat2"),
+						getParam("txtAlamat3"), getParam("txtEmel"),
+						getParam("txtPoskod"), idBandar, idNegeri,
+						getParam("txtNoTel"), getParam("txtNoFaks"),
+						idHakmilikAgensi, idPPTBorangK, idHakmilikUrusan,
+						idPHPBorangK, idJenisTujuan, idJenisTujuan2,
+						idJenisTujuan3, getParam("idKementerianTanah"),
+						getParam("idNegeriTanah"), getParam("idLuasTanah"),
+						getParam("luasTanah"), idUrusan, idSuburusan, "J",
+						getParam("txtCatatan"), idHakmilikSementara,
+						getParam("txtNoFailNegeri"), idLuasKegunaan, session);
+
+				idStatus = "1610198"; // MAKLUMAT PERMOHONAN
 			}
 		}
 		
@@ -163,8 +169,8 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 				idUrusan = (String) hashPermohonan.get("idUrusan");
 				idSuburusan = (String) hashPermohonan.get("idSuburusan");
 				idJenisTujuan = (String) hashPermohonan.get("idJenisTujuan");
-				idJenisTujuan2 = (String) hashPermohonan.get("idJenisTujuan");
-				idJenisTujuan3 = (String) hashPermohonan.get("idJenisTujuan");
+				idJenisTujuan2 = (String) hashPermohonan.get("idJenisTujuan2");
+				idJenisTujuan3 = (String) hashPermohonan.get("idJenisTujuan3");
 			}
 			
 			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " class=\"disabled\""));

@@ -148,15 +148,22 @@
 					</tr>
 					<tr>
 						<td>
-						<a href="javascript:goTo('PHPAPB')" class="help" title="Daftar Permohonan Online Akta Pelantar Benua">
+						<a href="javascript:goTo('PHPAPB')" class="help" title="Permohonan Akta Pelantar Benua">
 							<font color="blue"><li>Permohonan Akta Pelantar Benua</li></font>
 						</a>
 						</td>
 					</tr>
 					<tr>
 						<td>
-						<a href="javascript:goTo('PermohonanSewa')" class="help" title="Penyemakan Status Permohonan Sewa Tanah dan Ruang Bangunan">
-							<font color="blue"><li>Status Permohonan Penyewaan</li></font>
+						<a href="javascript:goTo('')" class="help" title="Pengaduan Aktiviti Pencerobohan">
+							<font color="blue"><li>Permohonan Penguatkuasaan</li></font>
+						</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<a href="javascript:goTo('PermohonanSewa')" class="help" title="Permohonan Urusan Penyewaan">
+							<font color="blue"><li>Permohonan Penyewaan</li></font>
 						</a>
 						</td>
 					</tr>

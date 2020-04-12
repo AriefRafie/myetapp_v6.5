@@ -301,17 +301,20 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    				 * 8/1/2020: arief 
 	    				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
 	    				 * 
-	    				if ( jumlah_harta17_tarikhmohon > 0 && jumlah_harta17_tarikhmohon <= 1000 ) {
-	    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
-	    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				} else if ( (jumlah_harta17_tarikhmohon > 5000) && (jumlah_harta17_tarikhmohon <= 2000000) ){
-	    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				} else {
-	    					bayaranYuranPerintah17 = 0.05 * jumlah_harta17_tarikhmohon ;
+	    				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
+	    					if ( jumlah_harta17_tarikhmohon <= 1000 ) {
+	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+	    						if (bayaranYuranPerintah17 < 10) {
+	    							bayaranYuranPerintah17 = 10.00 ;
+	    						}							
+	    					} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
+	    						bayaranYuranPerintah17 = 30.00 ;
+	    					} else {
+	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+	    						bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					}
+	    				}else{
+	    					bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 	    				}**/
 	    				double j = 0;
@@ -1283,17 +1286,20 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    				 * 8/1/2020: arief 
 	    				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
 	    				 * 
-	    				if ( jumlah_harta17_tarikhmohon > 0 && jumlah_harta17_tarikhmohon <= 1000 ) {
-	    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
-	    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				} else if ( (jumlah_harta17_tarikhmohon > 5000) && (jumlah_harta17_tarikhmohon <= 2000000) ){
-	    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				} else {
-	    					bayaranYuranPerintah17 = 0.05 * jumlah_harta17_tarikhmohon ;
+	    				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
+	    					if ( jumlah_harta17_tarikhmohon <= 1000 ) {
+	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+	    						if (bayaranYuranPerintah17 < 10) {
+	    							bayaranYuranPerintah17 = 10.00 ;
+	    						}							
+	    					} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
+	    						bayaranYuranPerintah17 = 30.00 ;
+	    					} else {
+	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+	    						bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					}
+	    				}else{
+	    					bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 	    				}**/
 	    				double j = 0;
@@ -1544,17 +1550,20 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    				 * 8/1/2020: arief 
 	    				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
 	    				 * 
-	    				if ( jumlah_harta17_tarikhmohon > 0 && jumlah_harta17_tarikhmohon <= 1000 ) {
-	    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
-	    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				} else if ( (jumlah_harta17_tarikhmohon > 5000) && (jumlah_harta17_tarikhmohon <= 2000000) ){
-	    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				} else {
-	    					bayaranYuranPerintah17 = 0.05 * jumlah_harta17_tarikhmohon ;
+	    				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
+	    					if ( jumlah_harta17_tarikhmohon <= 1000 ) {
+	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+	    						if (bayaranYuranPerintah17 < 10) {
+	    							bayaranYuranPerintah17 = 10.00 ;
+	    						}							
+	    					} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
+	    						bayaranYuranPerintah17 = 30.00 ;
+	    					} else {
+	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+	    						bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					}
+	    				}else{
+	    					bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 	    				}**/
 	    				double j = 0;
@@ -3781,19 +3790,22 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     				 * 8/1/2020: arief 
     				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
     				 * 
-    				if ( jumlahHartaDeductNilaianAmanahRaya > 0 && jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
-    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-    				} else if ( (jumlahHartaDeductNilaianAmanahRaya > 1000) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
-    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-    				} else if ( (jumlahHartaDeductNilaianAmanahRaya > 5000) && (jumlahHartaDeductNilaianAmanahRaya <= 2000000) ){
-    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-    				} else {
-    					bayaranYuranPerintah17 = 0.05 * jumlah_harta17_tarikhmohon ;
-    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-    				}**/
+    				if ((jumlahHartaDeductNilaianAmanahRaya > 0) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000)){
+	    				if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+	    					bayaranYuranPerintah17 = 0.002 * jumlahHartaDeductNilaianAmanahRaya ;
+	    					if (bayaranYuranPerintah17 < 10) {
+	    						bayaranYuranPerintah17 = 10.00 ;
+	    					}							
+	    				} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+	    					bayaranYuranPerintah17 = 30.00 ;
+	    				} else {
+	    					bayaranYuranPerintah17 = 0.002 * jumlahHartaDeductNilaianAmanahRaya ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				}
+	    			}else{
+	    				bayaranYuranPerintah17 = 0.005 * jumlahHartaDeductNilaianAmanahRaya ;
+	    				bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    			}**/
 
 					double j = 0;
 						if (batal_kuasa_pentadbir.equals("Y")) {
@@ -3849,19 +3861,22 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     				 * 8/1/2020: arief 
     				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
     				 * 
-    				if ( jumlah_harta17_tarikhmohon > 0 && jumlah_harta17_tarikhmohon <= 1000 ) {
-    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-    				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
-    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-    				} else if ( (jumlah_harta17_tarikhmohon > 5000) && (jumlah_harta17_tarikhmohon <= 2000000) ){
-    					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-    				} else {
-    					bayaranYuranPerintah17 = 0.05 * jumlah_harta17_tarikhmohon ;
-    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-    				}**/
+    				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
+	    				if ( jumlah_harta17_tarikhmohon <= 1000 ) {
+	    					bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+	    					if (bayaranYuranPerintah17 < 10) {
+	    						bayaranYuranPerintah17 = 10.00 ;
+	    					}							
+	    				} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
+	    					bayaranYuranPerintah17 = 30.00 ;
+	    				} else {
+	    					bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				}
+	    			}else{
+	    				bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
+	    				bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    			}**/
 
 					double j = 0;
 						if (batal_kuasa_pentadbir.equals("Y")) {
@@ -6901,20 +6916,24 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 				/** 
 				 * 7/1/2020: arief 
 				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen baru boleh guna
-				 * 
-	    		if ( jumlah_harta17_tarikhmohon > 0 && jumlah_harta17_tarikhmohon <= 1000 ) {
-					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
+				 * 				
+				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
+						if ( jumlah_harta17_tarikhmohon <= 1000 ) {
+							bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+							if (bayaranYuranPerintah17 < 10) {
+								bayaranYuranPerintah17 = 10.00 ;
+							}							
+						} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
+							bayaranYuranPerintah17 = 30.00 ;
+						} else {
+							bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
+							bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+						}
+				}else{
+					bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
 					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
-					bayaranYuranPerintah17 = 0.02 * jumlah_harta17_tarikhmohon ;
-					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-				} else if ((jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 2000000)){
-					bayaranYuran = 0.02 * jumlah_harta_tarikhmohon ;
-					bayaranYuran = getBundaranBayaran(bayaranYuran);
-				} else{
-					bayaranYuran = 0.05 * jumlah_harta_tarikhmohon ;
-					bayaranYuran = getBundaranBayaran(bayaranYuran);
 				}**/
+
 				double j = 0;
 					if (batal_kuasa_pentadbir.equals("Y")) {
 						j += 30.00 ;

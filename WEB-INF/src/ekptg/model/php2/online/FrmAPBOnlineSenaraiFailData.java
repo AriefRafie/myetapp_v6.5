@@ -33,69 +33,40 @@ public class FrmAPBOnlineSenaraiFailData {
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
-	public void carianFail(String noFail, String namaPemohon,
-			String tarikhTerima,String idStatus) throws Exception {
-
+public void carianFail(String userId,String noPermohonan, String tarikhPermohonan) throws Exception {
+		
 		Db db = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String sql = "";	
-		
+		String sql = "";
+
 		try {
 			senaraiFail = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN,"
-					+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN"
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E"
-					+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PEMOHON = C.ID_PEMOHON "
-					+ " AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NOT NULL ";
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN, B.NO_PERMOHONAN, C.ID_PEMOHON "
+				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E"
+				+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.FLAG_JENIS_FAIL = '4' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS(+) AND B.ID_PEMOHON = C.ID_PEMOHON " 
+				+ " AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND A.ID_MASUK = '" + userId + "'";
 			
-			//noFAIL
-			if (noFail != null) {
-				if (!noFail.trim().equals("")) {
-					sql = sql + " AND UPPER(A.NO_FAIL) LIKE '%' ||'"
-							+ noFail.trim().toUpperCase() + "'|| '%'";
+			//noPermohonan
+			if (noPermohonan != null) {
+				if (!noPermohonan.trim().equals("")) {
+					sql = sql + " AND UPPER(B.NO_PERMOHONAN) LIKE '%' ||'"
+							+ noPermohonan.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			
-			// namaPemohon
-			if (namaPemohon != null) {
-				if (!namaPemohon.trim().equals("")) {
-					sql = sql + " AND UPPER(C.NAMA) LIKE '%' ||'"
-							+ namaPemohon.trim().toUpperCase() + "'|| '%'";
-				}
-			}
-			
-			// noPengenalan
-			//if (noPengenalan != null) {
-				//if (!noPengenalan.trim().equals("")) {
-					//sql = sql + " AND UPPER(C.NO_PENGENALAN) LIKE '%' ||'"
-							//+ noPengenalan.trim().toUpperCase() + "'|| '%'";
-				//}
-			//}
-
+				
 			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
+			//tarikhPermohonan
+			if (tarikhPermohonan != null) {
+				if (!tarikhPermohonan.toString().trim().equals("")) {
+					sql = sql + " AND TO_CHAR(B.TARIKH_TERIMA,'dd-MON-YY') = '" + sdf1.format(sdf.parse(tarikhPermohonan)).toUpperCase() +"'";
+				}
+			}	
 			
-			// tarikhTerima
-			if (tarikhTerima != null) {
-				if (!tarikhTerima.toString().trim().equals("")) {
-					sql = sql
-						+ " AND TO_CHAR(B.TARIKH_TERIMA,'dd-MON-YY') = '"
-						+ sdf1.format(sdf.parse(tarikhTerima))
-								.toUpperCase() + "'";
-					}
-			}
-
-			// idStatus
-			if (idStatus != null) {
-				if (!idStatus.trim().equals("")
-					&& !idStatus.trim().equals("99999")) {
-						sql = sql + " AND B.ID_STATUS = '" + idStatus.trim() + "'";
-					}
-			}
-
-		    sql = sql + " ORDER BY B.TARIKH_TERIMA DESC NULLS LAST ";
+			sql = sql + " ORDER BY B.ID_PERMOHONAN DESC";
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -103,65 +74,29 @@ public class FrmAPBOnlineSenaraiFailData {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("bil", bil);
-				h.put("idFail",
-						rs.getString("ID_FAIL") == null ? "" : rs
-								.getString("ID_FAIL"));
-				String idPermohonan = rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN");
-				h.put("idPermohonan", idPermohonan);
-				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
-						.getString("NO_FAIL").toUpperCase());
-				h.put("noRayuan",
-						rs.getString("NO_RAYUAN") == null ? "0" : rs
-								.getString("NO_RAYUAN"));
-				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_TERIMA")));
-				h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs
-						.getString("NAMA").toUpperCase());
-				String statusID = rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS");
-				h.put("idStatus",statusID);
-				h.put("status",
-						rs.getString("KETERANGAN") == null ? "" : rs
-								.getString("KETERANGAN"));
-
-				String statusLesen = "";
-				int bilHari = 0;
-				if (rs.getString("ID_STATUS") != null
-						&& rs.getString("ID_STATUS").equals("1610207")) {
-					if (rs.getDate("TARIKH_TAMAT_LESEN") != null
-							&& rs.getDate("TARIKH_TAMAT_LESEN").toString()
-									.length() > 0) {
-						Calendar calCurrent = new GregorianCalendar();
-						Date dateCurrent = new Date();
-						calCurrent.setTime(dateCurrent);
-
-						Calendar calTamat = new GregorianCalendar();
-						Date dateTamat = sdf.parse(sdf.format(rs
-								.getDate("TARIKH_TAMAT_LESEN")));
-						calTamat.setTime(dateTamat);
-
-						bilHari = daysBetween(calTamat.getTime(),
-								calCurrent.getTime());
-
-						if (calCurrent.getTime().after(calTamat.getTime())) {
-							statusLesen = "LESEN TAMAT TEMPOH";
-						} else if (calCurrent.getTime().before(
-								calTamat.getTime())
-								&& bilHari <= 90) {
-							statusLesen = bilHari + " HARI LAGI";
-						}
-					}
+				h.put("idFail", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
+				h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
+				h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
+				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
+				h.put("tarikhPermohonan", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
+				h.put("namaPemohon",rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
+				h.put("idPemohon", rs.getString("ID_PEMOHON") == null ? "" : rs.getString("ID_PEMOHON"));
+				h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
+				if ("1610197".equals(rs.getString("ID_STATUS")) || "1610212".equals(rs.getString("ID_STATUS"))|| 
+						"1610208".equals(rs.getString("ID_STATUS")) || "1610207".equals(rs.getString("ID_STATUS"))){
+					h.put("status", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase());
+				}else if ("".equals(rs.getString("ID_STATUS")) || rs.getString("ID_STATUS") == null){
+					h.put("status", " PENDAFTARAN");
+				} else {
+					h.put("status", " SEDANG DIPROSES");
 				}
-				h.put("statusLesen", statusLesen);
-				
-		//CODING UNTUK CEK TARIKH TAMAT KELULUSAN DASAR
-		h.put("statusKelulusanDasar", getStatusKelulusanDasar(statusID, idPermohonan, db));
-	    senaraiFail.addElement(h);
-		  bil++;
-		}
+				senaraiFail.addElement(h);
+				bil++;
+			}
 
-	} finally {
-		if (db != null)
-			db.close();
+		} finally {
+			if (db != null)
+				db.close();
 		}
 }
 

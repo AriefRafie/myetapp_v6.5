@@ -44,18 +44,10 @@
           <td class="$row" align="center">$list.tarikhHantar</td>
           <td class="$row" align="center">$list.tarikhJangkaTerima</td>
           <td class="$row">$list.status</td>
-          #if($list.idDokumen == '1')
-          #if ($list.bilUlangan == '' || $list.bilUlangan == '0')
-          <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:cetakPNWSMUKJT('$idFail','$list.idUlasanTeknikal')"><img border="0" src="../img/print.gif"/></a></td>
-          #else
-          <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:cetakPNWSuratUlanganKJT('$idFail','$list.idUlasanTeknikal','$list.bilUlangan')"><img border="0" src="../img/print.gif"/></a></td>
-          #end
-          #elseif($list.idDokumen == '4')
           #if ($list.bilUlangan == '' || $list.bilUlangan == '0')
           <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:cetakPNWSuratMULT('$idFail','$list.idUlasanTeknikal')"><img border="0" src="../img/print.gif"/></a></td>
           #else
           <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:cetakPNWSuratUlanganLT('$idFail','$list.idUlasanTeknikal','$list.bilUlangan')"><img border="0" src="../img/print.gif"/></a></td>
-          #end
           #end                    
         </tr>
         #end
