@@ -142,13 +142,15 @@ public class FrmCRBMesyuaratView extends AjaxBasedModule {
 						.getParameterValues("txtJawatan");
 				String listNoTel[] = this.request
 						.getParameterValues("txtNoTel");
+				String listEmail[] = this.request
+						.getParameterValues("txtEmail");
 
 				if (listNama != null) {
 					for (int i = 0; i < listNama.length; i++) {
 						if (!listNama[i].equals("")) {
 							logic.saveKehadiran(i, idMesyuarat, listNama[i],
 									listAgensi[i], listJawatan[i],
-									listNoTel[i], getParam("flagPengerusi"),
+									listNoTel[i], listEmail[i], getParam("flagPengerusi"),
 									session);
 						}
 					}
@@ -157,7 +159,7 @@ public class FrmCRBMesyuaratView extends AjaxBasedModule {
 			if ("simpanKemaskiniKehadiran".equals(hitButton)) {
 				logic.updateKehadiran(idMesyuarat, idKehadiran,
 						getParam("txtNama"), getParam("txtAgensi"),
-						getParam("txtNoTel"), getParam("txtJawatan"),
+						getParam("txtNoTel"), getParam("txtJawatan"),getParam("txtEmail"),
 						getParam("socPengerusi"), session);
 			}
 			if ("hapusKehadiran".equals(hitButton)) {

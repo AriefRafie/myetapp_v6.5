@@ -37,6 +37,29 @@ public class FrmPYWPopupCetakLaporanData {
 		}
 	}
 	
+	public String getNoFailNegeriByIdFail(String idFail) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+
+			sql = "SELECT NO_FAIL_NEGERI FROM TBLPFDFAIL WHERE ID_FAIL = '" + idFail
+					+ "'";
+
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return rs.getString("NO_FAIL_NEGERI");
+			}
+			return "";
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	//GET MAKLUMAT PEGAWAI FROM USERS -AIN 17052017-
 	public void setMaklumatPegawai(String idPegawai) throws Exception {
 		Db db = null;

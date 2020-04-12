@@ -238,6 +238,7 @@
                   <input type="text" readonly="readonly" class="disabled" name="remLen" size="3" maxlength="3" value="$!saizTxtPerkara" /></td>
               </tr>
               #end
+              #if ($beanMaklumatSewa.tujuan != '')
               <tr>
                 <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
                 <td valign="top">Tujuan</td>
@@ -251,6 +252,20 @@
                 <td>&nbsp;</td>
                 <td>Baki Aksara :&nbsp;
                   <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtTujuan" /></td>
+              </tr>
+              #end
+              #else
+              <tr>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">Tujuan 1</td>
+                <td valign="top">:</td>
+                <td>$selectJenisTujuan</td>
+              </tr>
+              <tr>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">Tujuan 2</td>
+                <td valign="top">:</td>
+                <td>$selectJenisTujuan2</td>
               </tr>
               #end
               <tr>
@@ -690,6 +705,9 @@ function doChangeLuasKegunaan() {
 }
 function doChangeLuas() {
 	doAjaxCall${formName}("doChangeLuas");
+}
+function doChangeTujuan() {
+	doAjaxCall${formName}("doChangeTujuan");
 }
 function validateCurrency(elmnt,content,content2) {
 	//if it is character, then remove it..

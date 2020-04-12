@@ -47,9 +47,9 @@ padding:0 0.25em;
 -->
 </style>
 #if(!$!flagOnline.equals(''))
-<link rel="stylesheet" type="text/css" href="../../css/online.css" />
-#else
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPK.css" />
+#else
+<link rel="stylesheet" type="text/css" href="../../css/online.css" />
 #end
   	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   	<input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan"/>

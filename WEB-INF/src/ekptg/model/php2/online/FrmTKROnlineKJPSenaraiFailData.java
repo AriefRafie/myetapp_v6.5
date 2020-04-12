@@ -1,3 +1,4 @@
+
 package ekptg.model.php2.online;
 
 import java.sql.Connection;
@@ -2194,4 +2195,12 @@ public class FrmTKROnlineKJPSenaraiFailData {
 		this.beanMaklumatPejabat = beanMaklumatPejabat;
 	}
 }
+
+	
+
+}
+
+
+
+
 

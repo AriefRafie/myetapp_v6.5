@@ -149,7 +149,7 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 							" PM.ID_BANDARSURAT,"
 					+ " P.BATAL_KUASA_PENTADBIR, P.LANTIK_PENTADBIR, P.BATAL_P_AMANAH, " +
 							"P.LANTIK_P_AMANAH, P.HARTA_TINGGAL, P.LAIN_TUJUAN, PM.ID_TARAFKPTG," +
-							"PM.NO_TEL,PM.NO_HP,PM.STATUS_PEMOHON,PM.ID_ARB,S.TARIKH_MATI," +
+							"PM.NO_TEL,PM.NO_HP, PM.EMEL, PM.STATUS_PEMOHON,PM.ID_ARB,S.TARIKH_MATI," +
 							//"U.ID_NEGERI AS ID_NEGERIPEJABAT," +
 							"PM.ID_SAUDARA,P.NO_PERMOHONAN_ONLINE,P.TARIKH_MOHON_ONLINE   "
 					+ " FROM TBLPFDFAIL F, TBLPPKPERMOHONAN P," +
@@ -363,8 +363,12 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 
 				h.put("no_hp",
 						rs.getString("NO_HP") == null ? "" : rs
-								.getString("NO_HP"));
-
+								.getString("NO_HP")); 
+								
+				h.put("emel",
+						rs.getString("EMEL") == null ? "" : rs
+								.getString("EMEL"));				
+ 
 				h.put("jenis_pej",
 						rs.getString("ID_ARB") == null ? "" : rs
 								.getString("ID_ARB"));
@@ -2809,7 +2813,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 
 			String no_tel = (String) data.get("no_tel");
 			String nama_pelbagainegara = (String) data.get("nama_pelbagainegara");		
-			
+			String emel = (String) data.get("emel");
 			String no_hp = (String) data.get("no_hp");
 			String taraf_penting = (String) data.get("taraf_penting");
 			String jenis_pemohon = (String) data.get("jenis_pemohon");
@@ -2981,7 +2985,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("id_negerisurat", negeri);
 			r.add("no_tel", no_tel);
 			r.add("id_saudara", socSaudaraWaris);
-			
+			r.add("emel", emel);
 			r.add("id_tarafkptg", taraf_penting);
 			r.add("status_pemohon", jenis_pemohon);
 			r.add("id_Arb", jenis_pej);
@@ -7844,30 +7848,19 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			String idbandar = (String) data.get("idbandar");
 			String poskod = (String) data.get("poskod");
 			String id_Masuk = (String) data.get("id_Masuk");
-
 			String txtUmurSimati = (String) data.get("txtUmurSimati");
 			String socJantinaSimati = (String) data.get("socJantinaSimati");
 			String txtUmurPemohon = (String) data.get("txtUmurPemohon");
 			String socJantinaPemohon = (String) data.get("socJantinaPemohon");
-
 			String no_tel = (String) data.get("no_tel");
-			
 			String nama_pelbagainegara = (String) data.get("nama_pelbagainegara");
-			
-			
 			String jenis_pej = (String) data.get("jenis_pej");
-
+			String emel = (String) data.get("emel");
 			String no_hp = (String) data.get("no_hp");
 			String taraf_penting = (String) data.get("taraf_penting");
 			String jenis_pemohon = (String) data.get("jenis_pemohon");
 			String adaob = (String) data.get("adaob");
-			
 			String socSaudaraWaris = (String) data.get("socSaudaraWaris");
-				
-			
-			
-			
-			
 			String id_Permohonansimati = (String) data
 					.get("id_Permohonansimati");
 
@@ -7988,7 +7981,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 			r.add("id_bandarsurat", idbandar);
 			r.add("bandar_surat", bandar);
 			r.add("id_negerisurat", negeri);
-			
+			r.add("emel", emel);
 			r.add("no_tel", no_tel);
 
 			r.add("id_tarafkptg", taraf_penting);
