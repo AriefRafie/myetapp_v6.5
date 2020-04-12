@@ -75,7 +75,7 @@
 <input type="hidden" name="txtCukaiSemasa" value="$txtCukaiTerkini" />
 <input type="hidden" name="txtKodSocJenisHakmilik" value="$txtKodSocJenisHakmilik" />
 <input type="hidden" name="flagAdvSearch" value="$!flagAdvSearch" />
-<input type="hidden" name="skrin" value="skrinhakmilik" />
+<input type="hidden" name="skrin" value="skrinrizab" />
 <input type="hidden" name="txtLuasGabung" value="$txtLuasLama" />
 
 <script>

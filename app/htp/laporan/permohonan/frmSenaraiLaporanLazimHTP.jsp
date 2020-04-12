@@ -24,21 +24,6 @@
 		<legend>PILIHAN</legend>
 			<table border="0" align="center" width="60%" >      
 		     <tbody> 
-
-		      <tr> 
-		        <td scope="row" align="left" valign="top">&nbsp;Laporan</td>
-		        <td valign="top">:&nbsp;</td>
-		        <td>
-
-			    	<input type="radio" name="soclaporantemp" value="N" $!checkN  onclick="senaraiLaporan()"/>Laporan Mengikut Negeri
-					</br><input type="radio" name="soclaporantemp" value="D" $!checkD  onclick="senaraiLaporan()"/>Laporan Mengikut Daerah
-					</br><input type="radio" name="soclaporantemp" value="K" $!checK  onclick="senaraiLaporan()"/>Laporan Mengikut Kementerian
-					</br><input type="radio" name="soclaporantemp" value="A" $!checkA  onclick="senaraiLaporan()"/>Laporan Mengikut Agensi
-					</br><input type="radio" name="soclaporantemp" value="L" $!checkL  onclick="senaraiLaporan()"/>Laporan Lain
-					</br><input type="hidden" name="socjenislaporan" value="$!jenisLaporan">
-		        
-		        </td>
-		      </tr>	
 		      <tr> 
 		        <td scope="row" align="left">&nbsp;Urusan</td>
 		        <td>:&nbsp;</td>
@@ -73,7 +58,22 @@
 					<input type="hidden" name="socJenisTanah" value="$!jenisTanah">
 		        
 		        </td>
-		      </tr>  				      
+		      </tr>  
+
+		      <tr> 
+		        <td scope="row" align="left" valign="top">&nbsp;Laporan</td>
+		        <td valign="top">:&nbsp;</td>
+		        <td>
+
+			    	<input type="radio" name="soclaporantemp" value="N" $!checkN  onclick="senaraiLaporan()"/>Laporan Mengikut Negeri
+					</br><input type="radio" name="soclaporantemp" value="D" $!checkD  onclick="senaraiLaporan()"/>Laporan Mengikut Daerah
+					</br><input type="radio" name="soclaporantemp" value="K" $!checK  onclick="senaraiLaporan()"/>Laporan Mengikut Kementerian
+					</br><input type="radio" name="soclaporantemp" value="A" $!checkA  onclick="senaraiLaporan()"/>Laporan Mengikut Agensi
+					</br><input type="radio" name="soclaporantemp" value="L" $!checkL  onclick="senaraiLaporan()"/>Laporan Lain
+					</br><input type="hidden" name="socjenislaporan" value="$!jenisLaporan">
+		        
+		        </td>
+		      </tr>					      
 		      	     
 		      <tr> 
 		        <td scope="row" align="left">&nbsp;Negeri </td>
@@ -172,8 +172,8 @@
 			 	</td>
 		   	</tr>	
 		   	<tr>
-			  	<td width="3%" class="row1">3.</td>
-			  	<td width="97%" class="row1">
+			  	<td width="3%" class="row2">3.</td>
+			  	<td width="97%" class="row2">
 			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','urusnegnotisbayar','HTPermohonanTanahNotis5ASudahBayar')" class="style1" >SENARAI PERMOHONAN (NOTIS 5A - SUDAH BAYAR)</a>
 			 	</td>
 		   	</tr>	
@@ -184,8 +184,8 @@
 			 	</td>
 		   	</tr>	
 	   		<tr>
-			  	<td width="3%" class="row1">5.</td>
-			  	<td width="97%" class="row1">
+			  	<td width="3%" class="row2">5.</td>
+			  	<td width="97%" class="row2">
 			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','urusnegbelum','HTPermohonanTanah')" class="style1" >SENARAI PERMOHONAN BELUM DAFTAR HAKMILIK/ WARTA</a>
 			 	</td>
 		   	</tr>		   	
@@ -196,10 +196,10 @@
 			 	</td>
 		   	</tr>		   			   	
 			<tr>
-		  	<td width="3%" class="row2">7.</td>
-		  	<td width="97%" class="row2">
-		  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','ringkasan','HTPermohonanTanahRingkasanMengikutNegeri')" class="style1" >RINGKASAN PERMOHONAN</a>
-		 	</td>
+		  		<td width="3%" class="row2">7.</td>
+		  		<td width="97%" class="row2">
+		  			<a href="javascript:openReport('ekptg.report.htp.permohonan.	LaporanPermohonan','IDSUBURUSAN=1','ringkasan','HTPermohonanTanahRingkasanMengikutNegeri')" class="style1" >RINGKASAN PERMOHONAN</a>
+		 		</td>
 		   	</tr>
 		  	<tr>
 			  	<td width="3%" class="row1">8.</td>
@@ -207,7 +207,7 @@
 			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','ringkasanurus','HTPermohonanTanah')" class="style1" >RINGKASAN PERMOHONAN MENGIKUT STATUS</a>
 			 	</td>
 		   	</tr>
- 	  	<tr>
+ 	  		<tr>
 			  	<td width="3%" class="row2">9.</td>
 			  	<td width="97%" class="row2">
 			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','ringkasanotis','HTPPermohonanRingkasanNotis5AMengikutNegeri')" class="style1" >RINGKASAN NOTIS 5A</a>
@@ -244,8 +244,8 @@
 			 	</td>
 		   	</tr>		   	
 		   	<tr>
-			  	<td width="3%" class="row1">3.</td>
-			  	<td width="97%" class="row1">
+			  	<td width="3%" class="row2">3.</td>
+			  	<td width="97%" class="row2">
 			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','urusdaedaftar','HTPermohonanTanah')" class="style1" >SENARAI PERMOHONAN TELAH DAFTAR HAKMILIK/ WARTA</a>
 			 	</td>
 		   	</tr>		   	
@@ -292,8 +292,8 @@
 			 	</td>
 		   	</tr>	
 		   	<tr>
-			  	<td width="3%" class="row1">3.</td>
-			  	<td width="97%" class="row1">
+			  	<td width="3%" class="row2">3.</td>
+			  	<td width="97%" class="row2">
 			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','uruskemnotisbayar','HTPermohonanTanahNotis5ASudahBayar')" class="style1" >SENARAI PERMOHONAN (NOTIS 5A - SUDAH BAYAR)</a>
 			 	</td>
 		   	</tr>	
@@ -304,8 +304,8 @@
 			 	</td>
 		   	</tr>	
 	   	<tr>
-			  	<td width="3%" class="row1">5.</td>
-			  	<td width="97%" class="row1">
+			  	<td width="3%" class="row2">5.</td>
+			  	<td width="97%" class="row2">
 			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','uruskembelum','HTPermohonanTanah')" class="style1" >SENARAI PERMOHONAN BELUM DAFTAR HAKMILIK/ WARTA</a>
 			 	</td>
 		   	</tr>		   	
@@ -365,8 +365,8 @@
 			 	</td>
 		   	</tr>		   	
 		   	<tr>
-			  	<td width="3%" class="row1">3.</td>
-			  	<td width="97%" class="row1">
+			  	<td width="3%" class="row2">3.</td>
+			  	<td width="97%" class="row2">
 			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','urusagendaftar','HTPermohonanTanah')" class="style1" >SENARAI PERMOHONAN TELAH DAFTAR HAKMILIK/ WARTA</a>
 			 	</td>
 		   	</tr>		   	
@@ -806,26 +806,26 @@ function doChangeSelect() {
 	}
 	
 	function semak_tarikh(field){	
-	/*
-	 * utk format : ddmmyy
-	 * 				ddmmyyyy
-	 * 				ddXmmXyy   
-	 * 				ddXmmXyyyy
-	 * 
-	 * 				( X = sign selain 0-9 )
-	 */
-	var returnValue = true;
-	var checkstr = "0123456789";
-	var DateField = field;
-	var Datevalue = "";
-	var DateTemp = "";
-	var seperator = "/";
-	var day;
-	var month;
-	var year;
-	var leap = 0;
-	var err = 0;
-	var i;
+		/*
+		 * utk format : ddmmyy
+		 * 				ddmmyyyy
+		 * 				ddXmmXyy   
+		 * 				ddXmmXyyyy
+		 * 
+		 * 				( X = sign selain 0-9 )
+		 */
+		var returnValue = true;
+		var checkstr = "0123456789";
+		var DateField = field;
+		var Datevalue = "";
+		var DateTemp = "";
+		var seperator = "/";
+		var day;
+		var month;
+		var year;
+		var leap = 0;
+		var err = 0;
+		var i;
 	   err = 0;
 	   DateValue = DateField.value;
 	   /* Delete all chars except 0..9 */

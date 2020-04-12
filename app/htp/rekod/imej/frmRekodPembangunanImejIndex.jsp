@@ -32,7 +32,7 @@
 				                            	</div>
 				                        	</td>
 				                  			<td width="1%" class="labelinput" >:</td>
-				                   			<td width="68%" class="pautanms" >
+				                   			<td width="68%" class="labelinput" >
 				 								$txtNamaKementerian
 				  							</td>
 				                		</tr>
@@ -45,7 +45,7 @@
 				                            	</div>
 				                        	</td>
 				                  			<td width="1%" class="labelinput" >:</td>
-				                   			<td width="68%" class="pautanms" >
+				                   			<td width="68%" class="labelinput" >
 				 								$txtNoFailSeksyen 
 				  							</td>
 				                		</tr>
@@ -58,7 +58,7 @@
 				                            	</div>
 				                        	</td>
 				                  			<td width="1%" class="labelinput" >:</td>
-				                   			<td width="68%" class="pautanms" >
+				                   			<td width="68%" class="labelinput" >
 				 								$txtFailPTG 
 				  							</td>
 				                		</tr>
@@ -71,7 +71,7 @@
 				                            	</div>
 				                        	</td>
 				                  			<td width="1%" class="labelinput" >:</td>
-				                   			<td width="68%" class="pautanms" >
+				                   			<td width="68%" class="labelinput" >
 				 								$txtTajuk
 				  							</td>
 				                		</tr>
@@ -89,7 +89,7 @@
 				                            	</div>
 				                        	</td>
 				                  			<td width="1%" class="labelinput" >:</td>
-				                   			<td width="68%" class="pautanms" >
+				                   			<td width="68%" class="labelinput" >
 				 								$txtNamaAgensi
 				  							</td>
 				                		</tr>
@@ -103,7 +103,7 @@
 				                            	</div>
 				                        	</td>
 				                  			<td width="1%" class="labelinput" >:</td>
-				                   			<td width="68%" class="pautanms" >
+				                   			<td width="68%" class="labelinput" >
 				 								$txtFailKJP
 				  							</td>
 				                		</tr>
@@ -117,7 +117,7 @@
 				                            	</div>
 				                        	</td>
 				                  			<td width="1%" class="labelinput" >:</td>
-				                   			<td width="68%" class="pautanms" >
+				                   			<td width="68%" class="labelinput" >
 				 								$!txtFailPTD
 				  							</td>
 				                		</tr>
