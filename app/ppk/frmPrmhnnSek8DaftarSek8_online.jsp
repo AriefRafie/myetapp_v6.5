@@ -259,7 +259,7 @@
 	#set ($setmode = "disabled")
 #end
 
-<body onLoad="submitForm();calcDate();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();pilih_taraf();check();check_kp_pemohon_onload();sorok_fieldset('$IdFail');selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');checkSumaICsimati('$command');">
+<body onLoad="submitForm();calcDate();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();pilih_taraf();check_kp_pemohon_onload();sorok_fieldset('$IdFail');selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');checkSumaICsimati('$command');">
 
 
 <form id="form1" name="f1" method="post" action="">
@@ -2091,15 +2091,20 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 		//alert("rujukanSimati 1="+returnSimati1);
 		//return;
 		
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?jenisdokumen=myid&actionrefresh=paparmyid&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
-	    //
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
+	   	if(isMyID == 'cod')
+	   		url +="&jenisdokumen=cod";
+	   	else
+	   		url +="&jenisdokumen=myid";
+  		
+		//
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();
 		hWnd.focus(); /**/
 	    //
-	    var title = 'Cetakan';
+	    var title = 'Lampiran';
 		var w =1024;
 		var h = 800;
 	    var left = (screen.width/2)-(w/2);
@@ -2396,7 +2401,7 @@ function Simpan() {
 	else if (date1 > currentTime){
 		alert("Sila pastikan tarikh mati tidak melebihi dari tarikh hari ini.");
 		document.f1.txtTarikhMati.focus();
-	}
+	
 //   else if(document.f1.uploadmyid != 'null' && document.f1.uploadmyid.value==""){
 //   	  alert('Sila muatnaik MyID simati.');
 //       document.f1.uploadmyid.focus(); 
@@ -2406,37 +2411,20 @@ function Simpan() {
 //       document.f1.uploadsijil.focus();
 // 	}
 	
-	else{
-		//alert("TING");
-		var data = "&idPermohonan="+idPermohonan.value+"&txtNoKPBaruSimati1="+txtNoKPBaruSimati1.value+"&txtNoKPBaruSimati2="+txtNoKPBaruSimati2.value+"&txtNoKPBaruSimati3="+txtNoKPBaruSimati3.value+"&txdTarikhMohon="+txdTarikhMohon.value+"&txtNamaSimati="+txtNamaSimati.value+"&txtNoKPLamaSimati="+txtNoKPLamaSimati.value+"&socJenisKPLainSimati="+socJenisKPLainSimati.value+"&txtNoKPLainSimati="+txtNoKPLainSimati.value;
-		
-		// "&id_fail_carian="+id_fail+"&txtNoFailSub="+txtNoFailSub.value+"&id_ob_pemohon="+id_ob_pemohon+"&id_permohonansimati_atheader="+id_permohonansimati_atheader+"&sebab="+sebab2;
-		
-		var data2 = data + "&txtTarikhMati="+txtTarikhMati.value+"&txtNoKPBaruPemohon1="+txtNoKPBaruPemohon1.value+"&txtNoKPBaruPemohon2="+txtNoKPBaruPemohon2.value+"&txtNoKPBaruPemohon3="+txtNoKPBaruPemohon3.value+"&txtNoKPLamaPemohon="+txtNoKPLamaPemohon.value+"&txtNoKPLainPemohon="+txtNoKPLainPemohon.value+"&txtNamaPemohon="+txtNamaPemohon.value+"&txtAlamat1="+txtAlamat1.value; //&socJenisKPLainPemohon="+socJenisKPLainPemohon.value+"
-		//alert("TING TONG");
-		var data3 = data2+"&txtAlamat2="+txtAlamat2.value+"&txtAlamat3="+txtAlamat3.value+"&negid="+negid.value+"&socDaerah="+socDaerah.value+"&socBandar="+socBandar.value+"&txtPoskod="+txtPoskod.value+"&socNegeri="+socNegeri.value+"&txtUmurSimati="+txtUmurSimati.value+"&socJantinaSimati="+socJantinaSimati.value+"&txtUmurPemohon="+txtUmurPemohon.value+"&socJantinaPemohon="+socJantinaPemohon.value+"&taraf_penting="+taraf_penting.value+"&no_tel="+no_tel.value+"&nama_pelbagainegara="+nama_pelbagainegara.value+"&no_hp="+no_hp.value+"&jenis_pej="+jenis_pej.value+"&jenis_pemohon="+jenis_pemohon.value+"&emel="+emel.value+"&socSaudaraWaris="+socSaudaraWaris.value;
-		//alert("TING TING TONG");
-		var command = "&command=Simpanx";
-		var actionItem = (command+data3);
-		alert(actionItem);
-		document.f1.enctype = "multipart/form-data";
-	  document.f1.encoding = "multipart/form-data";
-		//alert(document.f1.idPermohonan.value);
-		input_box = confirm("Adakah anda pasti?");
-		
-		
-		if (input_box == true) {
-		//document.f1.method = "POST";
-		//var actionItem = ("&command=Simpanx");
-		//document.f1.command.value="Simpanx";
-		document.f1.eventStatus.value="1";
-		//document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon"+actionItem; 
-		document.f1.action = "?_portal_module=${modul}&ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon"+actionItem;
-		//document.f1.action = "";
-		document.f1.submit();
+		}else{
+			input_box = confirm("Adakah anda pasti?");
+			if (input_box == true) {
+				document.f1.method = "POST";
+				document.f1.command.value="Simpanx";
+				document.f1.eventStatus.value="1";
+				document.f1.action = "";
+				document.f1.submit();
+			
+			}
+	
 		}
+
 	}
-}
 
 
 function kp1()
