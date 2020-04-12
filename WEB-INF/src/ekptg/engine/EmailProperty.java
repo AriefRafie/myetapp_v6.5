@@ -51,6 +51,10 @@ public class EmailProperty {
 		return aduanCc;
 	}
 	
+	public String getKata() {
+		return rb.getString("password");	//emel gmail
+	}
+	
 	public static EmailProperty getInstance(){
 		if(singleton == null){
 			synchronized(EmailProperty.class){

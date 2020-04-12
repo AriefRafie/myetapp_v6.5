@@ -49,8 +49,12 @@ public class BicaraInteraktifData {
       return this.object;
     }
 
-	public String queryPerbicaraan(HttpSession session, String id_permohonan,String user_id, String id_jawatan, String id_negeri, String flagCari,Db db) throws Exception
-	{
+	public String queryPerbicaraan(HttpSession session
+		,String id_permohonan
+		,String user_id
+		,String id_jawatan
+		,String id_negeri
+		,String flagCari,Db db) throws Exception{
 		//PEGAWAI BICARA
 		//GET ID_PEGAWAI BY LOGIN
 		user_id = (String)session.getAttribute("_ekptg_user_id");
@@ -199,9 +203,9 @@ public class BicaraInteraktifData {
 							sql += " AND (P.ID_NEGERIMHN = '"+id_negeri+"' OR PR.ID_UNITPSK IN ("+LIST_ID_UNITPSK+")) ";
 						}						
 					}
-					else
-					{
+					else{
 						//sql += daerahJagaan;						
+						//2020/03/27 
 						sql += " AND PR.ID_UNITPSK IN ("+LIST_ID_UNITPSK+") ";
 					}				
 					//" AND P.ID_STATUS <> '999' " +
@@ -210,13 +214,11 @@ public class BicaraInteraktifData {
 				//check kkp
 				
 				}
-				
-				
-				
+							
 		return sql;
+	
 	}
-	
-	
+		
 	@SuppressWarnings("unchecked")
 	public String jenisTransaction(HttpSession session, String NAMA_TABLE, String NAMA_FIELD_PK, 
 			String SKRIN_NAME, String VALUE_FIELD_PK, String ID_PERMOHONANSIMATI, String ID_PERBICARAAN, Db db)throws Exception {
@@ -313,6 +315,16 @@ public class BicaraInteraktifData {
 				db1 = new Db();
 			}
 			stmt = db1.getStatement();			
+			if(username.substring(1, 7).contentEquals("upport")){
+				sql += " SELECT "+ 
+				"(rtrim (xmlagg (xmlelement (e, RU.ID_UNITPSK || ','  )).extract ('//text()')) || 0) AS LIST_ID_UNITPSK "+
+				"FROM TBLPPKRUJUNIT RU, USERS_INTERNAL UI "+
+				"WHERE "+
+				"RU.ID_JKPTG=UI.ID_PEJABATJKPTG "+
+				"AND UI.USER_ID= "+USER_ID_SYSTEM +" "+
+				"GROUP BY UI.ID_PEJABATJKPTG";
+	
+			}else{
 			sql += " SELECT LIST_ID_UNITPSK || (SELECT ',' || (rtrim (xmlagg (xmlelement (e, ID_UNITPSK || ','  )).extract ('//text()'))|| 0) FROM TBLPPKRUJUNIT  WHERE USER_ID = '"+USER_ID_SYSTEM+"'  GROUP BY USER_ID) AS LIST_ID_UNITPSK FROM ( " +
 					" SELECT (rtrim (xmlagg (xmlelement (e, ID_UNITPSK || ','  )).extract ('//text()')) || 0) " +
 				  // " || (SELECT ',' || (rtrim (xmlagg (xmlelement (e, ID_UNITPSK || ','  )).extract ('//text()'))|| 0) FROM TBLPPKRUJUNIT " +
@@ -321,6 +333,7 @@ public class BicaraInteraktifData {
 				   " AS LIST_ID_UNITPSK FROM ( "+
 				   " SELECT ID_UNITPSK,NAMA_PEGAWAI, UTL_MATCH.edit_distance(UPPER(NAMA_PEGAWAI),UPPER('"+username+"')) TOT_BEZA "+
 				   " FROM TBLPPKRUJUNIT ) WHERE  TOT_BEZA < 4 ) ";			
+			}
 			myLogger.info(" BICARA INTERAKTIF : SQL getDetailPegawaiList :"+ sql);			
 			rs = stmt.executeQuery(sql);
 			

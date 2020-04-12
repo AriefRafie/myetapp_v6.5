@@ -13,7 +13,7 @@ public interface IHakmilikRizab{
 			, String idLot, String noLot
 			, String idAgensi, String idKementerian
 			, String idStatus)throws Exception ;
-	public Vector getCarianSenaraiHakmilikRizab(String idJenisTanah
+	public Vector<Hashtable<String, String>> getCarianSenaraiHakmilikRizab(String idJenisTanah
 			, String idNegeri, String idDaerah, String idMukim
 			, String noFail
 			, String idJenisHakmilik,String noHakmilik

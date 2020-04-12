@@ -1061,8 +1061,7 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 				" AND H.ID_PERMOHONANSIMATI = '"+ idPerSimati+ "' "+
 				" AND H.JENIS_HTA = '"+jenisHarta+"' " + //Y-Ada hakmilik, T-Tiada Hakmilik
 				" ORDER BY H.ID_HTA DESC ";
-			//
-			myLog.info("getDataHTA:sql=" + sql.toUpperCase());
+			//myLog.info("getDataHTA:sql=" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String,String> h;
 			int i = 0;
@@ -1116,6 +1115,7 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 			    listHarta.addElement(h);
 				
 			}
+			
 		} finally {
 			if (db != null)
 				db.close();

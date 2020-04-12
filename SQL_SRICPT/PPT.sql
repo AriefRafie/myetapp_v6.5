@@ -1,3 +1,47 @@
+
+--02/03/2020
+02032020--------------------------------------------------------------------------------
+
+DROP TRIGGER PPTDOKUMENHAKMILIK_BI;
+
+CREATE OR REPLACE TRIGGER PPTDOKUMENHAKMILIK_BI    
+before insert on     TBLPPTDOKUMENHAKMILIK    for each row
+begin    if :new.ID_DOKUMEN   is null    then SELECT (SELECT kod_negeri FROM tbllookupstate) || TO_CHAR (SYSDATE, 'YY') || PPTDOKUMENHAKMILIK_SEQ.NEXTVAL into :new.ID_DOKUMEN          from dual;    end if;    end;
+/
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+--02/03/2020 
+DROP SEQUENCE PPTDOKUMENHAKMILIK_SEQ;
+
+CREATE SEQUENCE PPTDOKUMENHAKMILIK_SEQ
+  START WITH 1
+  MAXVALUE 999999999
+  MINVALUE 1
+  NOCYCLE
+  NOCACHE
+  NOORDER;
+  
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+CREATE TABLE TBLPPTDOKUMENHAKMILIK (
+	ID_DOKUMEN NUMBER(16,0),
+	ID_RUJUKAN NUMBER(16,0),
+	ID_PERMOHONAN NUMBER(16,0),
+	ID_JENISDOKUMEN NUMBER(16,0),
+	NAMA_DOKUMEN VARCHAR2(200),
+	FORMAT VARCHAR2(100),
+	SAIZ NUMBER(16,0),
+	KANDUNGAN BLOB,
+	TARIKH_DOKUMEN DATE,
+	TARIKH_MASUK DATE,
+	ID_MASUK NUMBER(16,0),
+	TARIKH_KEMASKINI DATE,
+	ID_KEMASKINI NUMBER(16,0)
+);
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 ALTER TABLE TBLPPTPERMOHONAN
 MODIFY(NO_RUJUKAN_PTD VARCHAR2(100 BYTE));
 

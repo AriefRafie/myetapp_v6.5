@@ -383,7 +383,7 @@ public class FrmHakmilikRizabBean implements IHakmilikRizab {
 	            " AND A.ID_LOT = LOT.ID_LOT "+
 	            " AND RKME.ID_KEMENTERIANLAMA = A.ID_KEMENTERIAN "+
 	            " AND RKME.ID_KEMENTERIANBARU = RK.ID_KEMENTERIAN " +
-	            " AND A.STATUS_SAH = SAH.STATUS_SAH "+
+	            " AND A.STATUS_SAH = SAH.STATUS_SAH(+) "+ //2020/04/04
 	      	    " AND A.ID_HAKMILIK = UP.ID_HAKMILIK "+
 	      	    " AND A.ID_HAKMILIK = TPHT.ID_HAKMILIK(+) " +
 	            " AND A.ID_HAKMILIK = HIMEJ.ID_HAKMILIK(+) "+
@@ -505,7 +505,7 @@ public class FrmHakmilikRizabBean implements IHakmilikRizab {
 				sql += " AND A.KEGUNAAN_TANAH LIKE '%"+kegunaan+"%'";
 			}
 			sql = sql +" ORDER BY P.NO_FAIL DESC ";
-			myLog.debug("getCarianSenaraiHakmilikRizab:sql= "+sql);
+			myLog.info("getCarianSenaraiHakmilikRizab:sql= "+sql);
 			ResultSet rs = stmt.executeQuery(sql);	    
 			Hashtable<String,String> h;
 	      	int bil = 1;

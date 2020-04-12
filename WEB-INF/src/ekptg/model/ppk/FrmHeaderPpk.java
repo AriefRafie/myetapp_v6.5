@@ -397,7 +397,7 @@ public class FrmHeaderPpk {
 					+ " <= (SELECT NVL(NO_SUBJAKET,'0') "
 					+ " FROM TBLPPKPERMOHONAN WHERE ID_STATUS <> '999' AND  ID_PERMOHONAN = '"
 					+ id_permohonan + "'))  ";
-			myLogger.info(" HEADER SQL listIdPermohonanSebelum :" + sql);
+//			myLogger.info(" HEADER SQL listIdPermohonanSebelum :" + sql);
 			rs = stmt.executeQuery(sql);
 			listIdPermohonanSebelum = Collections
 					.synchronizedList(new ArrayList());

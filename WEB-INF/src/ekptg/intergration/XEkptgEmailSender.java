@@ -12,6 +12,7 @@ import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -59,10 +60,15 @@ public class XEkptgEmailSender {
 	
 	private Properties getMailProperties(){
 		props = new Properties();
+		if(EMAIL_HOST.equals("smtp.gmail.com")){
+			props = getGMailProperties();
+		}else{
 		props.setProperty("mail.transport.protocol", "smtp");
 	    props.setProperty("mail.host", EMAIL_HOST);
 	    props.setProperty("mail.smtp.port", String.valueOf(SMTP_PORT));
 	    props.put("mail.debug", "true");
+	    
+		}
 	   	return props;
 	   	
 	}
@@ -233,9 +239,16 @@ public class XEkptgEmailSender {
 	}
 
 	private Session getMailSession(){
-		mailSession = Session.getDefaultInstance(props);
+		//mailSession = Session.getDefaultInstance(props);
+		mailSession = Session.getDefaultInstance(props,  
+    	    new javax.mail.Authenticator() {
+    	       protected PasswordAuthentication getPasswordAuthentication() {  
+    	       return new PasswordAuthentication(FROM,"etapp123");  
+    	   }});		
 		return mailSession;
 		
+	
+
 	}
 	
 	

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
+import lebah.portal.element.User;
 import lebah.util.PasswordService;
 
 import org.apache.log4j.Logger;
@@ -30,9 +31,11 @@ import ekptg.helpers.DB;
 import ekptg.helpers.Paging2;
 
 public class UserProfileInternal extends AjaxBasedModule {
+	
+	private static final long serialVersionUID = -1637013627096359472L;
 	static Logger myLogger = Logger.getLogger(UserProfileInternal.class);
 	String skrin_name = "app/admin/MyProfile/index.jsp";
-	
+
 	@Override
 	public String doTemplate2() throws Exception {
 		
@@ -1994,6 +1997,113 @@ public String queryPLA(HttpSession session,String user_id, String carianTerperin
 			}
 		}	
 		
+		public User getPenggunaInternal(String user_id) throws Exception {
+			Db db = null;
+			User user = null;
+			String sql = "";
+			ResultSet rs = null;
+			Statement stmt = null;
+			try {
+				db = new Db();
+				stmt = db.getStatement();
+				//Hashtable h = new Hashtable();
+				if(!user_id.equals("")){
+					sql = " SELECT U.FLAG_AKTIF, UI.ID_SEKSYEN, U.USER_ID, U.USER_LOGIN, UPPER(U.USER_NAME) AS USER_NAME, UI.EMEL, "+					
+							" UI.ID_JAWATAN, UPPER(J.KETERANGAN) AS JAWATAN, UI.ID_AGAMA, UPPER(AG.KETERANGAN) AS AGAMA, "+
+							" UI.ID_BANGSA, UPPER(BG.KETERANGAN) AS BANGSA, UPPER(SY.NAMA_SEKSYEN) AS NAMA_BAHAGIAN, "+
+							" UI.ALAMAT1, UI.ALAMAT2, UI.ALAMAT3, UI.POSKOD, UI.ID_NEGERI, UI.ID_BANDAR,  "+
+							" UPPER(NEG.NAMA_NEGERI) AS NAMA_NEGERI, UPPER(BAN.KETERANGAN) AS NAMA_BANDAR, "+
+							" UI.ID_PEJABATJKPTG, UPPER(PEJ.NAMA_PEJABAT) AS NAMA_PEJABAT, UPPER(PEJ.ALAMAT1) AS ALAMAT1_PEJ, "+
+							" UPPER(PEJ.ALAMAT2) AS ALAMAT2_PEJ,UPPER(PEJ.ALAMAT3) AS ALAMAT3_PEJ,PEJ.POSKOD AS POSKOD_PEJ,  "+
+							" PEJ.ID_BANDAR AS ID_BANDAR_PEJ, PEJ.ID_NEGERI AS ID_NEGERI_PEJ, "+
+							" UPPER(BAN_PEJ.KETERANGAN) AS BANDAR_PEJ, UPPER(NEG_PEJ.NAMA_NEGERI) AS NEGERI_PEJ, "+
+							" PEJ.NO_TEL AS NO_TEL_PEJ,PEJ.NO_FAX AS NO_FAX_PEJ, RL.NAME AS ROLE_MAIN, UPPER(RL.DESCRIPTION) AS ROLE_MAIN_DETAILS, "+
+							" TO_CHAR(MAX(WL.LOG_DATE),'DD/MM/YYYY') AS LAST_LOGIN, TO_CHAR(TO_DATE(U.LAST_CHANGEPASSWORD + 90),'DD/MM/YYYY') AS DAYS_AFTERCHANGEPASS, (90 - TRUNC(SYSDATE - TO_DATE(U.LAST_CHANGEPASSWORD))) AS TEMPOH_SAH, " +
+							" UPPER(U.USER_TYPE) AS JENIS_PENGGUNA, U.USER_TYPE AS ID_JENIS_PENGGUNA, TO_CHAR(U.TARIKH_MASUK, 'DD/MM/YYYY')AS TARIKH_MASUK, TO_CHAR(U.TARIKH_KEMASKINI, 'DD/MM/YYYY')AS TARIKH_KEMASKINI  "+
+							" FROM USERS U, USERS_INTERNAL UI, TBLRUJJAWATAN J, TBLRUJAGAMA AG, TBLRUJBANGSA BG,  "+
+							" TBLRUJSEKSYEN SY, TBLRUJNEGERI NEG, TBLRUJBANDAR BAN, TBLRUJPEJABATJKPTG PEJ, "+
+							" TBLRUJNEGERI NEG_PEJ, TBLRUJBANDAR BAN_PEJ, ROLE RL, WEB_LOGGER WL "+
+							" WHERE U.USER_ID = UI.USER_ID "+
+							" AND UI.ID_JAWATAN = J.ID_JAWATAN(+) "+
+							" AND UI.ID_AGAMA = AG.ID_AGAMA(+) "+
+							" AND UI.ID_BANGSA = BG.ID_BANGSA(+) "+
+							" AND UI.ID_SEKSYEN = SY.ID_SEKSYEN(+) "+
+							" AND UI.ID_NEGERI = NEG.ID_NEGERI(+) "+
+							" AND UI.ID_BANDAR = BAN.ID_BANDAR(+) "+
+							" AND UI.ID_PEJABATJKPTG = PEJ.ID_PEJABATJKPTG "+
+							" AND PEJ.ID_BANDAR = BAN_PEJ.ID_BANDAR(+) "+
+							" AND PEJ.ID_NEGERI = NEG_PEJ.ID_NEGERI(+) " +
+							" AND U.USER_LOGIN = WL.USER_NAME " +
+							" AND U.USER_ROLE = RL.NAME ";	
+							
+							if(!user_id.equals("")){
+							sql += " AND U.USER_ID = '"+user_id+"' ";
+							}
+							
+							sql += " GROUP BY U.USER_ID,UI.ID_SEKSYEN,UI.EMEL, " +
+								   " U.USER_LOGIN,SY.NAMA_SEKSYEN,U.USER_NAME,UI.ID_JAWATAN, " +
+								   "  J.KETERANGAN,RL.DESCRIPTION,U.FLAG_AKTIF,UI.ID_AGAMA, AG.KETERANGAN, " +
+								   "  UI.ID_BANGSA,BG.KETERANGAN,UI.ALAMAT1, UI.ALAMAT2, UI.ALAMAT3, " +
+		                           " UI.POSKOD, UI.ID_NEGERI, UI.ID_BANDAR, BAN.KETERANGAN, " +
+		                           " UI.ID_PEJABATJKPTG, " +
+		                           " PEJ.ALAMAT1, " +
+		                           " PEJ.ALAMAT2,PEJ.ALAMAT3, " +
+		                           " PEJ.POSKOD, " +
+		                           " PEJ.ID_BANDAR, " +
+		                           " PEJ.ID_NEGERI, " +
+		                           " BAN_PEJ.KETERANGAN, " +
+		                           " NEG_PEJ.NAMA_NEGERI,PEJ.NO_TEL,PEJ.NO_FAX, RL.NAME, " +
+		                           " U.USER_TYPE, " +
+		                           " U.LAST_CHANGEPASSWORD,U.TARIKH_MASUK,U.TARIKH_KEMASKINI, " +
+		                           " PEJ.NAMA_PEJABAT, NEG.NAMA_NEGERI" ;
+							myLogger.info(" viewDataPenggunaInternal :" + sql.toUpperCase());
+							rs = stmt.executeQuery(sql);
+						
+					while (rs.next()) {
+						user = new User();
+						user.setName(rs.getString("USER_NAME") );
+						user.setEmel(rs.getString("EMEL"));
+						user.setNama_seksyen(rs.getString("NAMA_BAHAGIAN"));
+						user.setAlamat(rs.getString("ALAMAT1") == null ? "" : rs.getString("ALAMAT1"));
+						user.setAlamat2(rs.getString("ALAMAT2") == null ? "" : rs.getString("ALAMAT2"));
+						user.setAlamat3(rs.getString("ALAMAT3") == null ? "" : rs.getString("ALAMAT3"));
+						//h.put("POSKOD",rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD"));
+						//h.put("ID_NEGERI",rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
+						//h.put("ID_BANDAR",rs.getString("ID_BANDAR") == null ? "" : rs.getString("ID_BANDAR"));
+						//h.put("NAMA_NEGERI",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));
+						//h.put("NAMA_BANDAR",rs.getString("NAMA_BANDAR") == null ? "" : rs.getString("NAMA_BANDAR"));
+								
+					}
+				
+				}
+			} catch (Exception e) {							
+				throw new Exception(getErrorHTML("UserProfileInternal:::getPenggunaInternal::"+ e.getMessage()));					
+			} finally {
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+				if (db != null)
+					db.close();
+			}
+				
+			return user;
+				
+		}
+		
+		public String getErrorHTML(String msg) throws Exception,SQLException {
+			StringBuffer sb = new StringBuffer("");
+			sb.append("<table width=\"100%\" border=\"0\">");
+			sb.append("  <tr>");
+			sb.append("    <td>");
+			sb.append("    	&nbsp;<div class=\"warning\">"+msg+"</div>");
+			sb.append("    </td>");
+			sb.append("  </tr>");
+			sb.append(" </table>");
+			sb.append("</select>");
+			return sb.toString();
+		
+		}
 		public Hashtable ViewKemaskini(HttpSession session, String user_id, String USER_LOGIN) throws Exception {
 			Db db = null;
 			String sql = "";
@@ -3602,112 +3712,117 @@ public List listPejabatIntegrasi(HttpSession session, String ID_NEGERI, String I
 
 }
 
-public String simpanPenggunaINT(HttpSession session,String USER_ID, String internalType) throws Exception {
-	Connection conn = null;
-	Db db = null;
-	String returnUSERID = "";
-	String sql = "";
-	
-	String flag_operasi = "INSERT";
-	if(!USER_ID.equals(""))
-	{
-		flag_operasi = "UPDATE";
-	}
-	long USER_ID_INSERT = 0;
-	
-	try {
-		db = new Db();
-		conn = db.getConnection();
-		conn.setAutoCommit(false);
+	public String simpanPenggunaINT(HttpSession session,String USER_ID, String internalType) throws Exception {
+		Connection conn = null;
+		Db db = null;
+		String returnUSERID = "";
+		String sql = "";
 		
-		String USER_ID_SYSTEM = (String)session.getAttribute("_ekptg_user_id");
-		String GET_USER_ID_EXIST = getParam("GET_USER_ID_EXIST_"+internalType+USER_ID);
-		String USER_LOGIN = getParam("USER_LOGIN_"+internalType+USER_ID);
-		String PASSWORD = getParam("PASSWORD_"+internalType+USER_ID);
-		String USER_NAME = getParam("USER_NAME_"+internalType+USER_ID);
-		String EMEL = getParam("EMEL_"+internalType+USER_ID);
-		String JAWATAN = getParam("JAWATAN_"+internalType+USER_ID);
-		
-		
-		String ID_JENISPEJABAT = getParam("ID_JENISPEJABAT_"+internalType+USER_ID);
-		String ID_NEGERI = getParam("ID_NEGERI_"+internalType+USER_ID);
-		String ID_DAERAH = getParam("ID_DAERAH_"+internalType+USER_ID);
-		String ID_PEJABAT = getParam("ID_PEJABAT_"+internalType+USER_ID);
-		
-		String ROLE_MAIN = getParam("ROLE_MAIN_"+internalType+USER_ID);
-		
-		String USER_TYPE = "";
-		if(internalType.equals("HQ") || internalType.equals("Negeri") || internalType.equals("INT") || internalType.equals("KJP"))
+		String flag_operasi = "INSERT";
+		if(!USER_ID.equals(""))
 		{
-			USER_TYPE = "internal";
+			flag_operasi = "UPDATE";
 		}
+		long USER_ID_INSERT = 0;
 		
-		
-		if(flag_operasi.equals("INSERT"))
-		{
-			if(GET_USER_ID_EXIST.equals(""))
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			
+			String USER_ID_SYSTEM = (String)session.getAttribute("_ekptg_user_id");
+			String GET_USER_ID_EXIST = getParam("GET_USER_ID_EXIST_"+internalType+USER_ID);
+			String USER_LOGIN = getParam("USER_LOGIN_"+internalType+USER_ID);
+			String PASSWORD = getParam("PASSWORD_"+internalType+USER_ID);
+			String USER_NAME = getParam("USER_NAME_"+internalType+USER_ID);
+			String EMEL = getParam("EMEL_"+internalType+USER_ID);
+			String JAWATAN = getParam("JAWATAN_"+internalType+USER_ID);			
+			
+			String ID_JENISPEJABAT = getParam("ID_JENISPEJABAT_"+internalType+USER_ID);
+			String ID_NEGERI = getParam("ID_NEGERI_"+internalType+USER_ID);
+			String ID_DAERAH = getParam("ID_DAERAH_"+internalType+USER_ID);
+			String ID_PEJABAT = getParam("ID_PEJABAT_"+internalType+USER_ID);
+			
+			String ROLE_MAIN = getParam("ROLE_MAIN_"+internalType+USER_ID);
+			
+			String USER_TYPE = "";
+			if(internalType.equals("HQ") || internalType.equals("Negeri") || internalType.equals("INT") || internalType.equals("KJP"))
 			{
-				USER_ID_INSERT = DB.getNextID(db,"USERS_SEQ");
-				returnUSERID = USER_ID_INSERT+"";
-			}
-			else
-			{
-				USER_ID_INSERT = Long.parseLong(GET_USER_ID_EXIST);
-				returnUSERID = USER_ID_INSERT+"";
+				USER_TYPE = "internal";
 			}
 			
-		}
-		else
-		{
-			returnUSERID = USER_ID;
-		}
-		
-		
-		
-		Statement stmt = db.getStatement();
-		SQLRenderer r = new SQLRenderer();
-		
-		if(flag_operasi.equals("INSERT"))
-		{
-			if(GET_USER_ID_EXIST.equals(""))
+			if(flag_operasi.equals("INSERT"))
 			{
-				r.add("USER_ID", USER_ID_INSERT);
-				r.add("USER_ROLE", ROLE_MAIN);
-				r.add("USER_TYPE", "internal");
+				if(GET_USER_ID_EXIST.equals(""))
+				{
+					USER_ID_INSERT = DB.getNextID(db,"USERS_SEQ");
+					returnUSERID = USER_ID_INSERT+"";
+				}
+				else
+				{
+					USER_ID_INSERT = Long.parseLong(GET_USER_ID_EXIST);
+					returnUSERID = USER_ID_INSERT+"";
+				}
+				
 			}
 			else
 			{
-				r.update("USER_ID", GET_USER_ID_EXIST);
-				
-			}
-		}
-		else
-		{
-			r.update("USER_ID", USER_ID);
-			r.add("USER_ROLE", ROLE_MAIN);
-		}
-		
-		r.add("USER_LOGIN", USER_LOGIN);
-		if(!PASSWORD.equals(""))
-		{
-			r.add("USER_PASSWORD", PasswordService.encrypt(PASSWORD));
-			r.add("LAST_CHANGEPASSWORD", r.unquote("sysdate"));
-		}			
-		r.add("USER_NAME", USER_NAME.toUpperCase());
-		r.add("DATE_REGISTERED", r.unquote("sysdate"));
-		r.add("USER_TYPE", "internal");
-		
-		
-		if(flag_operasi.equals("INSERT"))
-		{
-			if(GET_USER_ID_EXIST.equals(""))
+				returnUSERID = USER_ID;
+			}		
+			
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			if(flag_operasi.equals("INSERT"))
 			{
-				r.add("ID_MASUK", USER_ID_SYSTEM);
-				r.add("TARIKH_MASUK", r.unquote("sysdate"));
-				sql = r.getSQLInsert("USERS");		
-				myLogger.info("V3 : INSERT USERS : "+sql);
-				this.context.put("SuccessMesej", "Insert");
-				AuditTrail.logActivity(this,session,"INS","USER ["+USER_NAME+"] Added");
+				if(GET_USER_ID_EXIST.equals(""))
+				{
+					r.add("USER_ID", USER_ID_INSERT);
+					r.add("USER_ROLE", ROLE_MAIN);
+					r.add("USER_TYPE", "internal");
+				}
+				else
+				{
+					r.update("USER_ID", GET_USER_ID_EXIST);
+					
+				}
+			}
+			else
+			{
+				r.update("USER_ID", USER_ID);
+				r.add("USER_ROLE", ROLE_MAIN);
+			}
+			
+			r.add("USER_LOGIN", USER_LOGIN);
+			if(!PASSWORD.equals(""))
+			{
+				r.add("USER_PASSWORD", PasswordService.encrypt(PASSWORD));
+				r.add("LAST_CHANGEPASSWORD", r.unquote("sysdate"));
+			}			
+			r.add("USER_NAME", USER_NAME.toUpperCase());
+			r.add("DATE_REGISTERED", r.unquote("sysdate"));
+			r.add("USER_TYPE", "internal");
+				
+			if(flag_operasi.equals("INSERT"))
+			{
+				if(GET_USER_ID_EXIST.equals(""))
+				{
+					r.add("ID_MASUK", USER_ID_SYSTEM);
+					r.add("TARIKH_MASUK", r.unquote("sysdate"));
+					sql = r.getSQLInsert("USERS");		
+					myLogger.info("V3 : INSERT USERS : "+sql);
+					this.context.put("SuccessMesej", "Insert");
+					AuditTrail.logActivity(this,session,"INS","USER ["+USER_NAME+"] Added");
+				}
+				else
+				{
+					r.add("ID_KEMASKINI", USER_ID_SYSTEM);
+					r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
+					sql = r.getSQLUpdate("USERS");		
+					myLogger.info("V3 : UPDATE USERS : "+sql);
+					this.context.put("SuccessMesej", "Update");
+					AuditTrail.logActivity(this,session,"UPD","USER ["+USER_NAME+"] Updated");
+				}
 			}
 			else
 			{
@@ -3717,51 +3832,49 @@ public String simpanPenggunaINT(HttpSession session,String USER_ID, String inter
 				myLogger.info("V3 : UPDATE USERS : "+sql);
 				this.context.put("SuccessMesej", "Update");
 				AuditTrail.logActivity(this,session,"UPD","USER ["+USER_NAME+"] Updated");
-			}
-		}
-		else
-		{
-			r.add("ID_KEMASKINI", USER_ID_SYSTEM);
-			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
-			sql = r.getSQLUpdate("USERS");		
-			myLogger.info("V3 : UPDATE USERS : "+sql);
-			this.context.put("SuccessMesej", "Update");
-			AuditTrail.logActivity(this,session,"UPD","USER ["+USER_NAME+"] Updated");
-		}		
-		stmt.executeUpdate(sql);
-		
-		
-		r.clear();
-		sql = "";
-		if(flag_operasi.equals("INSERT"))
-		{
+			}		
+			stmt.executeUpdate(sql);
 			
-			if(GET_USER_ID_EXIST.equals(""))
+			
+			r.clear();
+			sql = "";
+			if(flag_operasi.equals("INSERT"))
 			{
-				r.add("USER_ID", USER_ID_INSERT);
+				
+				if(GET_USER_ID_EXIST.equals(""))
+				{
+					r.add("USER_ID", USER_ID_INSERT);
+				}
+				else
+				{
+					if(!checkUsersInternal(session,GET_USER_ID_EXIST).equals(""))
+					{
+						r.update("USER_ID", GET_USER_ID_EXIST);
+					}
+				}
+				
 			}
 			else
 			{
-				if(!checkUsersInternal(session,GET_USER_ID_EXIST).equals(""))
-				{
-					r.update("USER_ID", GET_USER_ID_EXIST);
-				}
+				r.update("USER_ID", USER_ID);
 			}
 			
-		}
-		else
-		{
-			r.update("USER_ID", USER_ID);
-		}
-		
-		if(flag_operasi.equals("INSERT"))
-		{
-			if(GET_USER_ID_EXIST.equals(""))
+			if(flag_operasi.equals("INSERT"))
 			{
-				r.add("ID_MASUK", USER_ID_SYSTEM);
-				r.add("TARIKH_MASUK", r.unquote("sysdate"));
-				sql = r.getSQLInsert("USERS_INTERNAL");		
-				myLogger.info("V3 : INSERT USERS INTERNAL : "+sql);
+				if(GET_USER_ID_EXIST.equals(""))
+				{
+					r.add("ID_MASUK", USER_ID_SYSTEM);
+					r.add("TARIKH_MASUK", r.unquote("sysdate"));
+					sql = r.getSQLInsert("USERS_INTERNAL");		
+					myLogger.info("V3 : INSERT USERS INTERNAL : "+sql);
+				}
+				else
+				{
+					r.add("ID_KEMASKINI", USER_ID_SYSTEM);
+					r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
+					sql = r.getSQLUpdate("USERS_INTERNAL");		
+					myLogger.info("V3 : UPDATE USERS INTERNAL : "+sql);
+				}
 			}
 			else
 			{
@@ -3769,93 +3882,80 @@ public String simpanPenggunaINT(HttpSession session,String USER_ID, String inter
 				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 				sql = r.getSQLUpdate("USERS_INTERNAL");		
 				myLogger.info("V3 : UPDATE USERS INTERNAL : "+sql);
-			}
-		}
-		else
-		{
-			r.add("ID_KEMASKINI", USER_ID_SYSTEM);
-			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
-			sql = r.getSQLUpdate("USERS_INTERNAL");		
-			myLogger.info("V3 : UPDATE USERS INTERNAL : "+sql);
-		}		
-		stmt.executeUpdate(sql);
-		
-		
-		
-		
-		
-		
-		
-		r.clear();
-		sql = "";
-		if(flag_operasi.equals("INSERT"))
-		{
-			r.add("ID_USERSINTEGRASI", DB.getNextID(db,"USERS_INTEGRASI_SEQ"));
-			r.add("USER_ID", USER_ID_INSERT);				
-		}
-		else
-		{
-			r.update("USER_ID", USER_ID);
-		}
-		
-		r.add("ID_JENISPEJABAT", ID_JENISPEJABAT);
-		r.add("ID_NEGERI", ID_NEGERI);
-		r.add("ID_DAERAH", ID_DAERAH);
-		r.add("ID_PEJABAT", ID_PEJABAT);
-		r.add("EMEL", EMEL);
-		r.add("JAWATAN", JAWATAN);
-		
-		
-		if(flag_operasi.equals("INSERT"))
-		{
-			r.add("ID_MASUK", USER_ID_SYSTEM);
-			r.add("TARIKH_MASUK", r.unquote("sysdate"));
-			sql = r.getSQLInsert("USERS_INTEGRASI");		
-			myLogger.info("V3 : INSERT USERS_INTEGRASI : "+sql);
+			}		
+			stmt.executeUpdate(sql);
 			
-		}
-		else
-		{
-			r.add("ID_KEMASKINI", USER_ID_SYSTEM);
-			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
-			sql = r.getSQLUpdate("USERS_INTEGRASI");		
-			myLogger.info("V3 : UPDATE USERS_INTEGRASI : "+sql);
-		}		
-		stmt.executeUpdate(sql);
-		
-		if(flag_operasi.equals("INSERT"))
-		{
-			if(!GET_USER_ID_EXIST.equals(""))
+			r.clear();
+			sql = "";
+			if(flag_operasi.equals("INSERT"))
 			{
-			//add user role online	
-				r.clear();
-				r.add("USER_ID", USER_LOGIN);
-				r.add("ROLE_ID", ROLE_MAIN);
-				sql = r.getSQLInsert("USER_ROLE");		
-				myLogger.info("V3 : INSERT USERS_ROLE : "+sql);
-				stmt.executeUpdate(sql);
+				r.add("ID_USERSINTEGRASI", DB.getNextID(db,"USERS_INTEGRASI_SEQ"));
+				r.add("USER_ID", USER_ID_INSERT);				
 			}
+			else
+			{
+				r.update("USER_ID", USER_ID);
+			}
+			
+			r.add("ID_JENISPEJABAT", ID_JENISPEJABAT);
+			r.add("ID_NEGERI", ID_NEGERI);
+			r.add("ID_DAERAH", ID_DAERAH);
+			r.add("ID_PEJABAT", ID_PEJABAT);
+			r.add("EMEL", EMEL);
+			r.add("JAWATAN", JAWATAN);
+			
+			
+			if(flag_operasi.equals("INSERT"))
+			{
+				r.add("ID_MASUK", USER_ID_SYSTEM);
+				r.add("TARIKH_MASUK", r.unquote("sysdate"));
+				sql = r.getSQLInsert("USERS_INTEGRASI");		
+				myLogger.info("V3 : INSERT USERS_INTEGRASI : "+sql);
+				
+			}
+			else
+			{
+				r.add("ID_KEMASKINI", USER_ID_SYSTEM);
+				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
+				sql = r.getSQLUpdate("USERS_INTEGRASI");		
+				myLogger.info("V3 : UPDATE USERS_INTEGRASI : "+sql);
+			}		
+			stmt.executeUpdate(sql);
+			
+			if(flag_operasi.equals("INSERT"))
+			{
+				if(!GET_USER_ID_EXIST.equals(""))
+				{
+				//add user role online	
+					r.clear();
+					r.add("USER_ID", USER_LOGIN);
+					r.add("ROLE_ID", ROLE_MAIN);
+					sql = r.getSQLInsert("USER_ROLE");		
+					myLogger.info("V3 : INSERT USERS_ROLE : "+sql);
+					stmt.executeUpdate(sql);
+				}
+			}
+			
+			conn.commit();
+			
+		} 
+		catch (SQLException se) { 
+			myLogger.error(se);
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException se2) {
+	    		throw new Exception("Rollback error:"+se2.getMessage());
+	    	}
+	    	throw new Exception("Ralat Pendaftaran Maklumat Bantahan:"+se.getMessage());
 		}
-		
-		conn.commit();
-		
-	} 
-	catch (SQLException se) { 
-		myLogger.error(se);
-    	try {
-    		conn.rollback();
-    	} catch (SQLException se2) {
-    		throw new Exception("Rollback error:"+se2.getMessage());
-    	}
-    	throw new Exception("Ralat Pendaftaran Maklumat Bantahan:"+se.getMessage());
+		catch (Exception re) {
+			throw re;
+		}finally {
+			if (db != null)
+				db.close();
+		}
+		return returnUSERID;
 	}
-	catch (Exception re) {
-		throw re;
-	}finally {
-		if (db != null)
-			db.close();
-	}
-	return returnUSERID;
-}
+
 
 }
