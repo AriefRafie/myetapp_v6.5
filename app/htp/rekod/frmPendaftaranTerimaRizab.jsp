@@ -314,7 +314,7 @@
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
                    			<td width="68%" class="labeldisplay" >
-								<select name="socLuas" id="socLuas" style="width:200px;" $readonly class="$disabled" $disabled onchange="doChangeTarafRizab('$changeLuas')">
+								<select name="socLuas" id="socLuas" style="width:200px;" $readonly class="$disabled" $disabled onchange="doChangeTarafRizab('$!changeLuas')">
 								      #if($socLuas == '1')
 								      <option value="">SILA PILIH</option>
 								        <option value="1" selected="selected"> KM - KILOMETER PERSEGI</option>
@@ -460,7 +460,7 @@
                   			<td width="1%" class="labelinput" >:</td>
                    			<td width="68%" class="labeldisplay" >
                             
-							#if($mode == "update")
+							#if($mode == 'new' || $mode == 'update')
 							    #if($socLuas == '1' || $socLuas == '2' || $socLuas == '3' || $socLuas == '5' || $socLuas == '6')
 							      <input value="$!txtLuasLama" name="txtLuas1" type="text" class="$disabled" id="txtLuas1" size="30" maxlength="15" $readonly onkeyup="validateNumber(this,this.value);" onBlur="kiraLuas('$socLuas')" />
 							    #elseif($socLuas == '8' || $socLuas == '4')
