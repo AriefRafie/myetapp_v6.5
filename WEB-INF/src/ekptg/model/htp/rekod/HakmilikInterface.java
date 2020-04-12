@@ -16,7 +16,7 @@ public interface HakmilikInterface {
 	public HakmilikAgensi kemaskiniHakmilikAgensi(HakmilikAgensi ha) throws Exception;
 	public void kemaskiniHakmilikTambahSambungan(Hashtable data) throws Exception;
 	public String getKodJenisHakmilik(String idJenisHakmilik) throws Exception;
-	public Vector getSenaraiHakmilikSambungan(String noHakmilikAsal,String idNegeri
+	public Vector<Hashtable<String,String>> getSenaraiHakmilikSambungan(String noHakmilikAsal,String idNegeri
 			,String idDaerah,String idMukim) throws Exception;
 	public void hapusHakmilikById(String idHakmilik) throws Exception ;
 	public Vector getMaklumatImejByIdHakmilikDist(String id) throws Exception;
@@ -33,7 +33,7 @@ public interface HakmilikInterface {
 	public boolean isWarta(String idNegeri, String idDaerah,String idMukim
 			,String noWarta, String idLot, String noLot) throws Exception;
 	public String getSQLHakmilik(String idHakmilik);
-	public Vector getPaparMaklumatFailById(String idHakmilik) throws Exception;
+	public Vector<Hashtable<String,String>> getPaparMaklumatFailById(String idHakmilik) throws Exception;
 	public String getSQLHakmilikPermohonan(String idPermohonan);
 
 }	

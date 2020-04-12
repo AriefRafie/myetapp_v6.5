@@ -177,7 +177,7 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
         			//+ " AND D.ID_DAERAH = P.ID_DAERAHMHN  "
 					//+ " AND U.ID_DAERAH = DX.ID_DAERAH(+) "
 					+ " AND P.ID_PERMOHONAN = '" + id + "' ";
-			myLogger.info("******** SQL SET DATA ONLINE xxxxxxxxxxxx:" + sql.toUpperCase());
+//			myLogger.info("******** SQL SET DATA ONLINE xxxxxxxxxxxx:" + sql.toUpperCase());
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -10853,8 +10853,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 					+ " AND id_Saudara <> 30" + " AND id_Saudara <> 34"
 					+ " AND id_Saudara <> 35" + "ORDER BY kod";
 
-			// System.out.println("SAUDARA :" + sql);
-			System.out.print("SQL 444" + sql.toUpperCase());
+			//System.out.print("SQL 444" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {

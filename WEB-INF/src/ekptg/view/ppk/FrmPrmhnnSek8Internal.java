@@ -249,6 +249,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		this.context.put("Util", new lebah.util.Util());
 		this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
 		String v_tab = getParam("v_tab");
+		myLogger.info("doTemplate:v_tab="+v_tab);
 		this.context.put("val_tab", v_tab);		
 		// Vector getMTKeputusan = null;
 		// getMTKeputusan = FrmMTBorangC.MTKeputusanPenuh();
@@ -842,6 +843,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			listPemohonOB = logic_internal.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
+			
 		} else if ("kembali_simati".equals(submit)) {			
 			String id = getParam("idPermohonan");
 			/*view1 = logic_A.getJenisKp();

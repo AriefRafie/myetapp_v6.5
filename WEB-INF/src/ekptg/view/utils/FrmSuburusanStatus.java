@@ -190,7 +190,7 @@ public class FrmSuburusanStatus extends AjaxBasedModule {
 	    this.context.put("selectUrusan",selectUrusan);
         this.context.put("selectSuburusan",selectSuburusan);
         lists = f.getListing(id_Urusan,id_Suburusan);
-        if(lists.isEmpty())
+        if(lists.isEmpty()==false)
         	setupPage(session,action,lists);		
 	
         return template;
