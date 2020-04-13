@@ -24,6 +24,7 @@ input[readonly] {
 					<td align="right">No Petisyen</td>
 					<td>:</td>
 					<td colspan="2">
+						<input type="hidden" name="idFail" value="$idFail">
 						<input type="text" name="noPetisyen" value="$!noPetisyen" readonly="readonly" size="40" style="text-transform:uppercase;" />
 						#if($!semakPermohonan=='ada')
 							<br /><font color="#FF0000" size="1"><i>Permohonan semakan telah dihantar.</font>
@@ -54,7 +55,29 @@ input[readonly] {
 					<td align="right">No. Pengenalan Lain Simati</td>
 					<td>:</td>
 					<td colspan="2"><input type="text" name="noKPSimatiLain" value="$!noKPSimatiLain" size="25" readonly="readonly" /></td>
-				</tr>			
+				</tr>
+				
+				<!-- Tambah supporting documents -->	
+				<tr>
+					<td align="right">Jenis Pengenalan Simati</td>
+					<td>:</td>
+					<td colspan="2"><input type="text" name="jenisPengenalanSimati" value="$!jeniskp" size="25" readonly="readonly" /></td>
+				</tr>
+				
+				<tr>
+					<td align="right">Dokumen Sokongan</td>
+					<td>:</td>
+					
+					
+                    <td colspan="2"><input type="text" name="namaDokumen" value="$!namaDokumen" size="25" readonly="readonly" /></td>
+					
+					
+					
+				</tr>
+				
+				<!--  -->
+				
+						
 				<tr>
 					<td align="right">Tarikh Mati</td>
 					<td>:</td>
@@ -135,7 +158,8 @@ input[readonly] {
 					<td align="right">Tarikh Hantar Borang B</td>
 					<td>:</td>
 					
-					<td><input type="text" name="tarikhHantarBorangB" value="$!dateHantarBorangB" size="30" maxlength="30" readonly="readonly" /></td>
+					<input type="hidden" name="tarikhHantarBorangB" value="$!dateHantarBorangB" size="30" maxlength="30" readonly="readonly" />
+                    <td><input type="text" name="tarikhHantarBrgB" value="$!tarikhHantarBrgB" size="30" maxlength="30" readonly="readonly" /></td>
 					<td align="left">
 					<!-- 
 					#if ($!semakPermohonan == 'tiada')
@@ -166,6 +190,8 @@ input[readonly] {
 			</table>
 		</fieldset>
 		<table border="0" cellpadding="1" cellspacing="1" width="100%">
+		
+		 
 			<!-- <tr>
 				<td align="left">
 					<font color="#FF0000" size="1"><i>Perhatian</font>
@@ -185,17 +211,42 @@ input[readonly] {
 				<!-- <input type="button" name="cetak" id="cetak" value="Cetak" align="center" onClick="javascript:cetakBorangB2_A4('$idFail')" /> -->
 				<input type="button" name="cetak" id="cetak" value="Cetak Maklumat Borang B" align="center" onClick="javascript:cetakPPKBorangB('$idFail','$kodPejabat')" />
 				<input type="button" name="tutup" id="tutup" value="Tutup" align="center" onClick="tutupTetingkap()" />
-					#if ($!semakPermohonan == 'tiada' )
-						<input type="button" name="hantar2" id="hantar2" value="Hantar" align="left" onClick="javascript:hantarPermohonan()" />
-		      <input type="hidden" name="applicationType" id="applicationType" value="I">
-					#end
 					
-					#if ( $!semakPermohonan == 'ada' )
-					#if ( $!semakPetioner ==  'ada' )
-						<input type="button" name="hantar" id="hantar" value="Hantar" align="left" onClick="javascript:hantarPermohonanPetioner()" />
+               		<!--  
+                    #if ($!semakPermohonan == 'tiada' )
+                    #if ( $!isExistPetioner == 'tiada' )
+						<input type="button" name="hantar2" id="hantar2" value="Hantar" align="left" onClick="javascript:hantarPermohonan()" />
+		      			<input type="hidden" name="applicationType" id="applicationType" value="I">
+					#end
+                    #end
+					
+					#if ( $!semakPermohonan == 'ada' ) 
+					#if ( $!isExistPetioner ==  'ada' )
+						<input type="button" name="hantar" id="hantar" value="HantarPetioner" align="left" onClick="javascript:hantarPermohonanPetioner()" />
 						<input type="hidden" name="applicationType" id="applicationType" value="P">
 					#end
-					#end				</td>
+					#end				
+					-->
+					#set($applicatiType = "")
+					#if ($!sendI == 'ada' && $!semakPermohonan == 'tiada' && $!Errormsg != 'Error1')
+						<input type="button" name="hantar2" id="hantar2" value="Hantar" align="left" onClick="javascript:hantarPermohonan()" />
+		      			#set($applicatiType = "I")
+					#elseif ( $!semakPermohonan == 'ada' )
+						#if ( $!sendI == 'tiada' ) 
+							<input type="button" name="hantar" id="hantar" value="Hantar" align="left" onClick="javascript:hantarPermohonanPetioner()" />
+							#set($applicatiType = "P")
+						#end
+					#end
+					#if ($Errormsg == 'Error1')
+					
+					<input type="button" name="hantar2" id="hantar2" disabled value="Hantar" align="left" onClick="javascript:hantarPermohonan()" />
+					<p align="center">
+					<b><font color="red">Permohonan tidak boleh dihantar. Sila muatnaik dokumen sokongan terlebih dahulu.</font></b></p>
+					#end
+					<input type="hidden" name="applicationType" id="applicationType" value="$applicatiType">
+					<!-- <input type="text" name="docContent" id="docContent" value="$docContent"> -->
+					
+					</td>
 			</tr>
 		</table>
 		
@@ -210,16 +261,21 @@ input[readonly] {
 </body>
 <script>
 function hantarPermohonan() {
+	
+	var tarikhMati = document.f1.tarikhMati.value;
+	
+
 	if(document.f1.noPetisyen.value==""){
 		alert('Sila pastikan No. Petisyen telah diisi');
 		return;
 	} else if(document.f1.namaSimati.value==""){
 		alert('Sila pastikan Nama Simati telah diisi');
 		return;
-	} else if(document.f1.noKPSimatiBaru.value==""){
-		alert('Sila pastikan MyId Simati telah diisi');
-		return;
-	} else if(document.f1.tarikhMati.value==""){
+	} //else if(document.f1.noKPSimatiBaru.value==""){
+		//alert('Sila pastikan MyId Simati telah diisi');
+		//return;
+	//} 
+	else if(document.f1.tarikhMati.value==""){
 		alert('Sila pastikan Tarikh Mati telah diisi');
 		return;
 	} else if(document.f1.namaPemohon.value==""){
@@ -234,8 +290,19 @@ function hantarPermohonan() {
 	} else {
 		input_box = confirm("Sila pastikan butiran yang dihantar adalah tepat!");
 		if (input_box == true) {
+			var data = "&tarikhMati="+document.f1.tarikhMati.value+"&tarikhJanaBorangB="+document.f1.tarikhJanaBorangB.value+"&noPetisyen="+document.f1.noPetisyen.value;
+			data = data+"&namaSimati="+document.f1.namaSimati.value+"&namaSimatiLain="+document.f1.namaSimatiLain.value;
+			data = data+"&noKPSimatiBaru="+document.f1.noKPSimatiBaru.value+"&noKPSimatiLama="+document.f1.noKPSimatiLama.value;
+			data = data+"&noKPSimatiLain="+document.f1.noKPSimatiLain.value+"&namaPemohon="+document.f1.namaPemohon.value;
+			data = data+"&noKPPemohon="+document.f1.noKPPemohon.value+"&hubSimatiPemohon="+document.f1.hubSimatiPemohon.value;
+			data = data+"&kodPejabat="+document.f1.kodPejabat.value+"&applicationType="+applicationType;
+			data = data+"&idnegeri="+document.f1.idnegeri.value+"&jeniskp="+document.f1.jeniskp.value;
+			data = data+"&idFail="+document.f1.idFail.value;
+			//data = data+"&docContent="+document.f1.docContent.value;
+			//alert("data ="+data);
 			document.f1.method="post";
 			document.f1.action="ekptg.view.ppk.FrmIntegrasiMT?command=hantarPermohonan";
+			
 			document.f1.submit();			
 		}
 	}
