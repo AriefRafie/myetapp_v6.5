@@ -41,12 +41,43 @@ $skrinName<br />
 	 //$jquery("#keputusanCATATAN_PERINTAH_BI").val(document.getElementById("dummyJanaCatatan").innerHTML);
 	 //alert('2');
 	 //$jquery("#divViewEditorkeputusanCATATAN_PERINTAH_BI").html(document.getElementById("dummyJanaCatatan").innerHTML);
+	 
+	 
 	 document.getElementById("keputusanCATATAN_PERINTAH_BI").value = document.getElementById("dummyJanaCatatan").innerHTML;
-	 document.getElementById("divViewEditorkeputusanCATATAN_PERINTAH_BI").innerHTML = document.getElementById("dummyJanaCatatan").innerHTML;
+	 var fs = "$fontSize";
+	 var regex = new RegExp(fs, "g");
+	 //console.log("::: "+document.getElementById("dummyJanaCatatan").innerHTML.replace(regex, ''));
+	 document.getElementById("divViewEditorkeputusanCATATAN_PERINTAH_BI").innerHTML = document.getElementById("dummyJanaCatatan").innerHTML.replace(regex, '');
+	 //document.getElementById("keputusanCATATAN_PERINTAH_BI").value = document.getElementById("dummyJanaCatatan").innerHTML.replace(/font-size: 14px;/g, '');
+	 
+	 
+	// console.log("$fontSize");
+	 //console.log(document.getElementById("dummyJanaCatatan").innerHTML.replace(/"$fontSize"./g, ""));
+	 
+	 /*
+	 var dmja = document.getElementById("dummyJanaCatatan").innerHTML;
+	 var fs = "$fontSize";
+	 console.log("$fontSize"+" : DM : "+dmja.replace(fs, "XXXXXXXXXXXXXXXXXXXXXXX"));
+	 */
+	 /*
+	    var djc = $jquery('#dummyJanaCatatan');
+		djc.find('$fontSize').each(function(){
+		
+			curColor="Blue";
+			newColor="Green";
+			this.src = this.src.replace(curColor,newColor);
+		
+		});
+	 */
+	 
+	 
+	 
+	
+	 fckeditorWordCatatanPerintah(document.getElementById("divViewEditorkeputusanCATATAN_PERINTAH_BI"),"wordkeputusanCP");
 	 //alert("masuk 1");
 	 //document.getElementById("tdDisplayLinkJana").innerHTML = "* <a href=\"javascript:janaCatatanPerintahT('$ID_SIMATI','$ID_PERINTAH','$ID_PERMOHONAN','$ID_PERMOHONANSIMATI','$ID_PERBICARAAN','$ID_PEMOHON','$skrinName');\" ><font color=\"blue\"><u><b>>> Simpan & Jana Catatan Perintah</b></u></font></a> ";
 	 //alert("masuk 2");
-	 
+	 	
 	 //alert('3');
 	 
 	 

@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" output="WEB-INF/classes" path="WEB-INF/src"/>
-	<classpathentry kind="src" path="WEB-INF/src_integrasi"/>
 	<classpathentry kind="src" path="WEB-INF/JavaSource_Edited"/>
 	<classpathentry kind="src" path="WEB-INF/src_mobile"/>
 	<classpathentry kind="src" path="WEB-INF/src_pms"/>

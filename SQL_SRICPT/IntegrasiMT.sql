@@ -1,3 +1,6 @@
+--08022018 kak ecah
+ALTER TABLE TBLINTMTKEPUTUSAN
+ ADD (FLAG_BUKA  VARCHAR2(1 BYTE)                   DEFAULT 'T');
 
 -- 2020/04/13 (ekptghqfat)
 -- 06/03/3020, run on ekptghqtest 

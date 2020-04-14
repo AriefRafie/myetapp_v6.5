@@ -168,7 +168,21 @@ Nama Simati
                <td class="$pr.rowCss"  align="left" valign="top" >$pr.NAMA_SIMATI</td>
                <td class="$pr.rowCss"  align="left" valign="top" >$pr.MASA_BICARA</td>
                <td class="$pr.rowCss"  align="center" valign="top" >$pr.TARIKH_BICARA</td>	
-               <td class="$pr.rowCss"  align="left" valign="top" >$pr.PEG_PENGENDALI</td>		
+               <td class="$pr.rowCss"  align="left" valign="top" >
+               
+               #if($pr.ID_PEGAWAIBARU != "")
+               $pr.NAMA_PEGAWAI_BARU 
+                   #if($pr.NAMA_PEGAWAI_BARU != $pr.PEG_PENGENDALI) 
+                    <br />(Asal : $pr.PEG_PENGENDALI)
+                   #end
+               #else
+               $pr.PEG_PENGENDALI
+               #end
+               
+               
+               
+               
+               </td>		
                <td class="$pr.rowCss"  align="left" valign="top" >$pr.KETERANGAN_KEPUTUSAN</td>		   
 			   <td class="$pr.rowCss"  align="center" valign="top">
 			   <a href="javascript:doDivAjaxCall$formname('div_viewPerbicaraan','viewPerbicaraan','ID_PEMOHON=$pr.ID_PEMOHON&ID_SIMATI=$pr.ID_SIMATI&ID_PERBICARAAN=$pr.ID_PERBICARAAN&ID_PERMOHONAN=$pr.ID_PERMOHONAN&ID_PERMOHONANSIMATI=$pr.ID_PERMOHONANSIMATI')"><img title="Kemaskini" src="../img/edit.gif" border="0"></a>	  
