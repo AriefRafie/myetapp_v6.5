@@ -1446,10 +1446,9 @@ resetOnBlur:false
   </tr>
 </table>
 #foreach($list in $View)
-#set($noFail = $list.noFail)
-#set($idPemohon = $list.idPemohon)
+	#set($noFail = $list.noFail)
+	#set($idPemohon = $list.idPemohon)
 #end
-
 
 #parse("app/ppk/paging_sek8.jsp") 
 #parse("app/ppk/headerppk_script.jsp")
@@ -1458,34 +1457,27 @@ resetOnBlur:false
 
 <script>
 
-
 selectPelbagaiNegara(document.f1.socNegeriSimati.value,'div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');
 <!-- TAB -->
 
-function testing()
-{
-alert('$!skrin_online');
-}
+	function testing(){
+		alert('$!skrin_online');
+	}
 
-
-
-function HtaamViewX() {
-
-if('$!skrin_online' == 'yes')
-{
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
-}
-else
-{
-document.f1.action = "";
-}
-
+	function HtaamViewX() {
+		if('$!skrin_online' == 'yes'){
+			document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
+		}else{
+		document.f1.action = "";
+		}
 	
-	document.f1.mode.value = "HtaamviewX";
-	document.f1.command.value = "HtaamX";
-	document.f1.submit();
-}
-function HtaamView() {
+		document.f1.mode.value = "HtaamviewX";
+		document.f1.command.value = "HtaamX";
+		document.f1.submit();
+	
+	}
+
+	function HtaamView() {
 	if('$!skrin_online' == 'yes')
 {
 document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
