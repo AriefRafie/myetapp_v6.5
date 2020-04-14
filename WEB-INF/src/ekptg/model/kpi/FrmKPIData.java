@@ -1178,7 +1178,7 @@ public class FrmKPIData {
 			}
 		}
 
-		public static Vector<Hashtable<String, Comparable>> getStatusFailBySuburusan(String idUrusan,String idSuburusan) throws Exception {
+		public static Vector<Hashtable<String, String>> getStatusFailBySuburusan(String idUrusan,String idSuburusan) throws Exception {
 			Db db = null;
 			String sql = "";
 			try {
@@ -1203,11 +1203,12 @@ public class FrmKPIData {
 
 	
 				ResultSet rs = stmt.executeQuery(sql);
-				Vector<Hashtable<String, Comparable>> v = new Vector<Hashtable<String, Comparable>>();
-				Hashtable<String, Comparable> s = null;
+				Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
+				Hashtable<String, String> s = null;
 				while (rs.next()) {
-					s = new Hashtable<String, Comparable>();
-					s.put("idsuburusanstatus",rs.getLong("id_suburusanstatus"));
+					s = new Hashtable<String, String>();
+					s.put("idsuburusanstatus",rs.getString("id_suburusanstatus"));
+//					s.put("idsuburusanstatus",rs.getLong("id_suburusanstatus"));
 					s.put("namasuburusan",rs.getString("nama_suburusan"));
 					s.put("status",rs.getString("keterangan"));
 					v.addElement(s);

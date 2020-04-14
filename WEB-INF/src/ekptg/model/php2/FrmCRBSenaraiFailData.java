@@ -495,7 +495,10 @@ public class FrmCRBSenaraiFailData {
 					+ " AND HMS.ID_HAKMILIKSEMENTARA = '" + idHakmilikSementara
 					+ "'";
 
-			System.out.println("cek pilih tanah = " + sql);
+			if ("".equals(idHakmilikAgensi) || "".equals(idHakmilikSementara)){
+				sql = " ";
+			}
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -662,7 +665,7 @@ public class FrmCRBSenaraiFailData {
 			String idKementerianTanah, String idNegeriTanah,
 			String idHakmilikAgensi, String idPPTBorangK,
 			String idHakmilikUrusan, String idPHPBorangK,
-			String idHakmilikSementara, HttpSession session) throws Exception {
+			String idHakmilikSementara, String txtPeganganHakmilik, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -942,6 +945,16 @@ public class FrmCRBSenaraiFailData {
 					stmt.executeUpdate(sql);
 
 				}
+			} if ("4".equals(idJenisTanah)) {
+				r = new SQLRenderer();
+				long idHakmilik = DB.getNextID("TBLPHPHAKMILIK_SEQ");
+				r.add("ID_HAKMILIK", idHakmilik);
+				r.add("ID_HAKMILIKPERMOHONAN", idhakmilikPermohonan);
+				r.add("PEGANGAN_HAKMILIK", txtPeganganHakmilik);
+				
+				sql = r.getSQLInsert("TBLPHPHAKMILIK");
+				stmt.executeUpdate(sql);
+				
 			} else {
 				setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
 				if (getBeanMaklumatTanah().size() != 0) {
