@@ -2107,6 +2107,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 	}
 
 	private Vector listFail = new Vector();
+	private Vector flag5juta = new Vector();
 
 	// private static SimpleDateFormat Format = new
 	// SimpleDateFormat("dd/MM/yyyy");
@@ -2116,6 +2117,10 @@ public Vector setSupportingDoc(String id) throws Exception {
 	
 	public Vector getSupportingDoc() {
 		return listSupportingDoc;
+	}
+
+	public Vector getFlag5Juta() {
+		return flag5juta;
 	}
 
 	public void setDataFail(String id) throws Exception {
