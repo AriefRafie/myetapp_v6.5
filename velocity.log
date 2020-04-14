@@ -1,181 +1,588 @@
-2020-04-13 14:40:25,810 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-04-13 14:40:25,810 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:25,810 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:26,056 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-04-13 14:40:26,514 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 205, column 1]
-2020-04-13 14:40:26,515 - Null reference [template 'app/ppk/headerppk.jsp', line 71, column 82] : $headerppk.id_permohonan_param cannot be resolved.
-2020-04-13 14:40:26,515 - RHS of #set statement is null. Context will not be modified. app/ppk/headerppk.jsp[line 77, column 1]
-2020-04-13 14:40:26,515 - Null reference [template 'app/ppk/headerppk.jsp', line 146, column 60] : $id_perbicaraan cannot be resolved.
-2020-04-13 14:40:26,516 - Null reference [template 'app/ppk/headerppk.jsp', line 807, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:26,516 - Null reference [template 'app/ppk/headerppk.jsp', line 811, column 17] : $jquery cannot be resolved.
-2020-04-13 14:40:26,516 - Null reference [template 'app/ppk/headerppk.jsp', line 815, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:26,516 - Null reference [template 'app/ppk/headerppk.jsp', line 820, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:26,516 - Null reference [template 'app/ppk/headerppk.jsp', line 828, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:26,516 - Null reference [template 'app/ppk/headerppk.jsp', line 832, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 837, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 850, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 854, column 33] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 858, column 33] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 863, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 871, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 875, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 882, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 1159, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/headerppk.jsp', line 1162, column 21] : $jquery cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 339, column 46] : $mode2 cannot be resolved.
-2020-04-13 14:40:26,517 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 1132, column 5]
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1449, column 61] : $listpemohon.idTarafkptg cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1462, column 160] : $readmodeR cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1463, column 176] : $readmodeR cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1665, column 80] : $setMode cannot be resolved.
-2020-04-13 14:40:26,517 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1764, column 80] : $setMode cannot be resolved.
-2020-04-13 14:40:26,518 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
-2020-04-13 14:40:26,554 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2762, column 54] : $txtNomborResit1 cannot be resolved.
-2020-04-13 14:40:26,554 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2763, column 53] : $txdTarikhByrn1 cannot be resolved.
-2020-04-13 14:40:26,555 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
-2020-04-13 14:40:26,555 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
-2020-04-13 14:40:26,555 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
-2020-04-13 14:40:26,555 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
-2020-04-13 14:40:26,555 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
-2020-04-13 14:40:26,555 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
-2020-04-13 14:40:26,555 - Null reference [template 'app/ppk/headerppk_script.jsp', line 270, column 1] : $jquery cannot be resolved.
-2020-04-13 14:40:26,562 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5506, column 1] : $jquery cannot be resolved.
-2020-04-13 14:40:26,562 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5510, column 1] : $jquery cannot be resolved.
-2020-04-13 14:40:26,562 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5513, column 3] : $jquery cannot be resolved.
-2020-04-13 14:40:26,562 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5516, column 1] : $jquery cannot be resolved.
-2020-04-13 14:40:26,562 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5602, column 38] : $jquery cannot be resolved.
-2020-04-13 14:40:31,461 - Null reference [template 'app/ppk/integrasi/MahkamahTinggi.jsp', line 247, column 106] : $docContent cannot be resolved.
-2020-04-13 14:40:35,959 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-04-13 14:40:35,959 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-04-13 14:40:35,959 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-04-13 14:40:35,959 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:35,959 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:36,211 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-04-13 14:40:36,483 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 205, column 1]
-2020-04-13 14:40:36,484 - Null reference [template 'app/ppk/headerppk.jsp', line 71, column 82] : $headerppk.id_permohonan_param cannot be resolved.
-2020-04-13 14:40:36,484 - RHS of #set statement is null. Context will not be modified. app/ppk/headerppk.jsp[line 77, column 1]
-2020-04-13 14:40:36,484 - Null reference [template 'app/ppk/headerppk.jsp', line 146, column 60] : $id_perbicaraan cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 807, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 811, column 17] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 815, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 820, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 828, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 832, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 837, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 850, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 854, column 33] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 858, column 33] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 863, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 871, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 875, column 25] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 882, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 1159, column 9] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/headerppk.jsp', line 1162, column 21] : $jquery cannot be resolved.
-2020-04-13 14:40:36,487 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 339, column 46] : $mode2 cannot be resolved.
-2020-04-13 14:40:36,487 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 342, column 5]
-2020-04-13 14:40:36,487 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 1132, column 5]
-2020-04-13 14:40:36,488 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1449, column 61] : $listpemohon.idTarafkptg cannot be resolved.
-2020-04-13 14:40:36,488 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1665, column 80] : $setMode cannot be resolved.
-2020-04-13 14:40:36,488 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1764, column 80] : $setMode cannot be resolved.
-2020-04-13 14:40:36,488 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 2297, column 30]
-2020-04-13 14:40:36,488 - Left side ($disabled) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 2467, column 30]
-2020-04-13 14:40:36,489 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
-2020-04-13 14:40:36,504 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2762, column 54] : $txtNomborResit1 cannot be resolved.
-2020-04-13 14:40:36,504 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2763, column 53] : $txdTarikhByrn1 cannot be resolved.
-2020-04-13 14:40:36,504 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
-2020-04-13 14:40:36,504 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
-2020-04-13 14:40:36,504 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
-2020-04-13 14:40:36,504 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
-2020-04-13 14:40:36,504 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
-2020-04-13 14:40:36,504 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
-2020-04-13 14:40:36,504 - Null reference [template 'app/ppk/headerppk_script.jsp', line 270, column 1] : $jquery cannot be resolved.
-2020-04-13 14:40:36,510 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5506, column 1] : $jquery cannot be resolved.
-2020-04-13 14:40:36,511 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5510, column 1] : $jquery cannot be resolved.
-2020-04-13 14:40:36,511 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5513, column 3] : $jquery cannot be resolved.
-2020-04-13 14:40:36,511 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5516, column 1] : $jquery cannot be resolved.
-2020-04-13 14:40:36,511 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5602, column 38] : $jquery cannot be resolved.
-2020-04-13 14:40:45,563 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-04-13 14:41:01,826 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-04-13 14:41:37,478 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-04-13 14:41:37,478 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-04-13 14:41:37,478 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-04-13 14:41:37,478 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-04-13 14:41:37,478 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-04-13 14:41:37,478 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-04-13 14:41:37,478 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-04-13 14:41:37,479 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-04-13 14:41:37,679 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-04-13 14:41:40,543 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 205, column 1]
-2020-04-13 14:41:40,544 - Null reference [template 'app/ppk/headerppk.jsp', line 71, column 82] : $headerppk.id_permohonan_param cannot be resolved.
-2020-04-13 14:41:40,544 - RHS of #set statement is null. Context will not be modified. app/ppk/headerppk.jsp[line 77, column 1]
-2020-04-13 14:41:40,544 - Null reference [template 'app/ppk/headerppk.jsp', line 146, column 60] : $id_perbicaraan cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 807, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 811, column 17] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 815, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 820, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 828, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 832, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 837, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 850, column 25] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 854, column 33] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 858, column 33] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 863, column 25] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 871, column 25] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 875, column 25] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 882, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 1159, column 9] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/headerppk.jsp', line 1162, column 21] : $jquery cannot be resolved.
-2020-04-13 14:41:40,546 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 339, column 46] : $mode2 cannot be resolved.
-2020-04-13 14:41:40,546 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 342, column 5]
-2020-04-13 14:41:40,547 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1449, column 61] : $listpemohon.idTarafkptg cannot be resolved.
-2020-04-13 14:41:40,547 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1462, column 160] : $readmodeR cannot be resolved.
-2020-04-13 14:41:40,547 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1463, column 176] : $readmodeR cannot be resolved.
-2020-04-13 14:41:40,547 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1665, column 80] : $setMode cannot be resolved.
-2020-04-13 14:41:40,547 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1764, column 80] : $setMode cannot be resolved.
-2020-04-13 14:41:40,548 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
-2020-04-13 14:41:40,567 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2762, column 54] : $txtNomborResit1 cannot be resolved.
-2020-04-13 14:41:40,567 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2763, column 53] : $txdTarikhByrn1 cannot be resolved.
-2020-04-13 14:41:40,567 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
-2020-04-13 14:41:40,567 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
-2020-04-13 14:41:40,567 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
-2020-04-13 14:41:40,567 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
-2020-04-13 14:41:40,567 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
-2020-04-13 14:41:40,567 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
-2020-04-13 14:41:40,567 - Null reference [template 'app/ppk/headerppk_script.jsp', line 270, column 1] : $jquery cannot be resolved.
-2020-04-13 14:41:40,575 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5506, column 1] : $jquery cannot be resolved.
-2020-04-13 14:41:40,575 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5510, column 1] : $jquery cannot be resolved.
-2020-04-13 14:41:40,575 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5513, column 3] : $jquery cannot be resolved.
-2020-04-13 14:41:40,575 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5516, column 1] : $jquery cannot be resolved.
-2020-04-13 14:41:40,575 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5602, column 38] : $jquery cannot be resolved.
-2020-04-13 14:41:50,601 - Null reference [template 'app/ppk/integrasi/MahkamahTinggiSuccess.jsp', line 118, column 6] : $jquery cannot be resolved.
+2020-04-14 10:04:21,744 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,745 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,745 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,745 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,745 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,746 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,746 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,747 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,747 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,747 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,747 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:04:21,747 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:04:21,747 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:04:21,747 - Left side ($setmodeN) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 748, column 37]
+2020-04-14 10:04:21,747 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 754, column 77] : $idNegerix cannot be resolved.
+2020-04-14 10:04:21,747 - Left side ($setmodeN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 755, column 37]
+2020-04-14 10:04:21,747 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 756, column 68] : $setmodeN cannot be resolved.
+2020-04-14 10:04:21,747 - Left side ($idNegerix) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 760, column 39]
+2020-04-14 10:04:21,751 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 1178, column 5]
+2020-04-14 10:04:21,751 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1452, column 61] : $listpemohon.idTarafkptg cannot be resolved.
+2020-04-14 10:04:21,769 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1465, column 160] : $readmodeR cannot be resolved.
+2020-04-14 10:04:21,769 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1466, column 176] : $readmodeR cannot be resolved.
+2020-04-14 10:04:21,770 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1668, column 80] : $setMode cannot be resolved.
+2020-04-14 10:04:21,770 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1767, column 80] : $setMode cannot be resolved.
+2020-04-14 10:04:21,773 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
+2020-04-14 10:04:21,895 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2763, column 54] : $txtNomborResit1 cannot be resolved.
+2020-04-14 10:04:21,895 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2764, column 53] : $txdTarikhByrn1 cannot be resolved.
+2020-04-14 10:04:21,895 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
+2020-04-14 10:04:21,895 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
+2020-04-14 10:04:21,896 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
+2020-04-14 10:04:21,896 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
+2020-04-14 10:04:21,896 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
+2020-04-14 10:04:21,896 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
+2020-04-14 10:04:21,896 - Null reference [template 'app/ppk/headerppk_script.jsp', line 270, column 1] : $jquery cannot be resolved.
+2020-04-14 10:04:21,911 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5439, column 1] : $jquery cannot be resolved.
+2020-04-14 10:04:21,911 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5443, column 1] : $jquery cannot be resolved.
+2020-04-14 10:04:21,911 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5446, column 3] : $jquery cannot be resolved.
+2020-04-14 10:04:21,911 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5449, column 1] : $jquery cannot be resolved.
+2020-04-14 10:04:21,911 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5526, column 38] : $jquery cannot be resolved.
+2020-04-14 10:04:51,126 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-04-14 10:04:51,127 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-14 10:04:51,127 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-14 10:04:51,127 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-14 10:04:51,128 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-14 10:04:51,523 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-14 10:07:13,787 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-04-14 10:07:13,787 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-14 10:07:13,787 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-14 10:07:13,787 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-14 10:07:13,788 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-14 10:07:14,297 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-14 10:07:30,117 - Null reference [template 'app/ppk/headerppk.jsp', line 71, column 82] : $headerppk.id_permohonan_param cannot be resolved.
+2020-04-14 10:07:30,118 - RHS of #set statement is null. Context will not be modified. app/ppk/headerppk.jsp[line 77, column 1]
+2020-04-14 10:07:30,118 - Null reference [template 'app/ppk/headerppk.jsp', line 146, column 60] : $id_perbicaraan cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 807, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 811, column 17] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 815, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 820, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 828, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 832, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 837, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 850, column 25] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 854, column 33] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 858, column 33] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 863, column 25] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 871, column 25] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 875, column 25] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 882, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 1159, column 9] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/headerppk.jsp', line 1162, column 21] : $jquery cannot be resolved.
+2020-04-14 10:07:35,757 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemak.jsp', line 662, column 43] : $userid cannot be resolved.
+2020-04-14 10:07:35,758 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
+2020-04-14 10:07:35,758 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
+2020-04-14 10:07:35,758 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
+2020-04-14 10:07:35,758 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
+2020-04-14 10:07:35,758 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
+2020-04-14 10:07:35,758 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
+2020-04-14 10:07:35,758 - Null reference [template 'app/ppk/headerppk_script.jsp', line 270, column 1] : $jquery cannot be resolved.
+2020-04-14 10:10:16,479 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-04-14 10:10:16,480 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-14 10:10:16,480 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-14 10:10:16,480 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:16,481 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-14 10:10:16,482 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-14 10:10:16,482 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-14 10:10:16,482 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-14 10:10:16,482 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-14 10:10:16,482 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-14 10:10:16,482 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-14 10:10:16,482 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-14 10:10:16,938 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-14 10:10:30,686 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 203, column 1]
+2020-04-14 10:10:30,687 - Null reference [template 'app/ppk/headerppk.jsp', line 71, column 82] : $headerppk.id_permohonan_param cannot be resolved.
+2020-04-14 10:10:30,688 - RHS of #set statement is null. Context will not be modified. app/ppk/headerppk.jsp[line 77, column 1]
+2020-04-14 10:10:30,688 - Null reference [template 'app/ppk/headerppk.jsp', line 146, column 60] : $id_perbicaraan cannot be resolved.
+2020-04-14 10:10:30,748 - Null reference [template 'app/ppk/headerppk.jsp', line 807, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:30,748 - Null reference [template 'app/ppk/headerppk.jsp', line 811, column 17] : $jquery cannot be resolved.
+2020-04-14 10:10:30,748 - Null reference [template 'app/ppk/headerppk.jsp', line 815, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:30,748 - Null reference [template 'app/ppk/headerppk.jsp', line 820, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:30,748 - Null reference [template 'app/ppk/headerppk.jsp', line 828, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 832, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 837, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 850, column 25] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 854, column 33] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 858, column 33] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 863, column 25] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 871, column 25] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 875, column 25] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 882, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 1159, column 9] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/headerppk.jsp', line 1162, column 21] : $jquery cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 335, column 46] : $mode2 cannot be resolved.
+2020-04-14 10:10:30,749 - Left side ($setmodeN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 737, column 58]
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,749 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,749 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,750 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,750 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,750 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,750 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,750 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,750 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:10:30,750 - Left side ($setmodeN) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 748, column 37]
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 754, column 77] : $idNegerix cannot be resolved.
+2020-04-14 10:10:30,750 - Left side ($setmodeN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 755, column 37]
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 756, column 68] : $setmodeN cannot be resolved.
+2020-04-14 10:10:30,750 - Left side ($idNegerix) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 760, column 39]
+2020-04-14 10:10:30,750 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 1178, column 5]
+2020-04-14 10:10:30,750 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1452, column 61] : $listpemohon.idTarafkptg cannot be resolved.
+2020-04-14 10:10:30,751 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1465, column 160] : $readmodeR cannot be resolved.
+2020-04-14 10:10:30,751 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1466, column 176] : $readmodeR cannot be resolved.
+2020-04-14 10:10:30,751 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1668, column 80] : $setMode cannot be resolved.
+2020-04-14 10:10:36,182 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1767, column 80] : $setMode cannot be resolved.
+2020-04-14 10:10:36,184 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
+2020-04-14 10:10:36,393 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2763, column 54] : $txtNomborResit1 cannot be resolved.
+2020-04-14 10:10:36,393 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2764, column 53] : $txdTarikhByrn1 cannot be resolved.
+2020-04-14 10:10:36,394 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
+2020-04-14 10:10:36,394 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
+2020-04-14 10:10:36,394 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
+2020-04-14 10:10:36,394 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
+2020-04-14 10:10:36,394 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
+2020-04-14 10:10:36,394 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
+2020-04-14 10:10:36,394 - Null reference [template 'app/ppk/headerppk_script.jsp', line 270, column 1] : $jquery cannot be resolved.
+2020-04-14 10:10:44,888 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5439, column 1] : $jquery cannot be resolved.
+2020-04-14 10:10:44,888 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5443, column 1] : $jquery cannot be resolved.
+2020-04-14 10:10:44,888 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5446, column 3] : $jquery cannot be resolved.
+2020-04-14 10:10:44,888 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5449, column 1] : $jquery cannot be resolved.
+2020-04-14 10:10:44,888 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5526, column 38] : $jquery cannot be resolved.
+2020-04-14 10:12:29,535 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-04-14 10:12:29,535 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-14 10:12:29,535 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-14 10:12:29,535 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-14 10:12:29,536 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-14 10:12:29,869 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-14 10:12:30,297 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 203, column 1]
+2020-04-14 10:12:30,298 - Null reference [template 'app/ppk/headerppk.jsp', line 71, column 82] : $headerppk.id_permohonan_param cannot be resolved.
+2020-04-14 10:12:30,298 - RHS of #set statement is null. Context will not be modified. app/ppk/headerppk.jsp[line 77, column 1]
+2020-04-14 10:12:30,298 - Null reference [template 'app/ppk/headerppk.jsp', line 146, column 60] : $id_perbicaraan cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 807, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 811, column 17] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 815, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 820, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 828, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 832, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 837, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 850, column 25] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 854, column 33] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 858, column 33] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 863, column 25] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 871, column 25] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 875, column 25] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 882, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 1159, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:30,300 - Null reference [template 'app/ppk/headerppk.jsp', line 1162, column 21] : $jquery cannot be resolved.
+2020-04-14 10:12:30,301 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 335, column 46] : $mode2 cannot be resolved.
+2020-04-14 10:12:30,301 - Left side ($setmodeN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 737, column 58]
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:12:30,318 - Left side ($setmodeN) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 748, column 37]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 754, column 77] : $idNegerix cannot be resolved.
+2020-04-14 10:12:30,318 - Left side ($setmodeN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 755, column 37]
+2020-04-14 10:12:30,318 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 756, column 68] : $setmodeN cannot be resolved.
+2020-04-14 10:12:30,318 - Left side ($idNegerix) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 760, column 39]
+2020-04-14 10:12:30,319 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 1178, column 5]
+2020-04-14 10:12:30,319 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1452, column 61] : $listpemohon.idTarafkptg cannot be resolved.
+2020-04-14 10:12:30,319 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1465, column 160] : $readmodeR cannot be resolved.
+2020-04-14 10:12:30,319 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1466, column 176] : $readmodeR cannot be resolved.
+2020-04-14 10:12:30,319 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1668, column 80] : $setMode cannot be resolved.
+2020-04-14 10:12:30,319 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1767, column 80] : $setMode cannot be resolved.
+2020-04-14 10:12:30,321 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
+2020-04-14 10:12:30,372 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2763, column 54] : $txtNomborResit1 cannot be resolved.
+2020-04-14 10:12:30,372 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2764, column 53] : $txdTarikhByrn1 cannot be resolved.
+2020-04-14 10:12:30,373 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
+2020-04-14 10:12:30,373 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
+2020-04-14 10:12:30,373 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
+2020-04-14 10:12:30,373 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
+2020-04-14 10:12:30,373 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
+2020-04-14 10:12:30,373 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
+2020-04-14 10:12:30,373 - Null reference [template 'app/ppk/headerppk_script.jsp', line 270, column 1] : $jquery cannot be resolved.
+2020-04-14 10:12:30,389 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5439, column 1] : $jquery cannot be resolved.
+2020-04-14 10:12:30,389 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5443, column 1] : $jquery cannot be resolved.
+2020-04-14 10:12:30,389 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5446, column 3] : $jquery cannot be resolved.
+2020-04-14 10:12:30,389 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5449, column 1] : $jquery cannot be resolved.
+2020-04-14 10:12:30,390 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5526, column 38] : $jquery cannot be resolved.
+2020-04-14 10:12:37,047 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-04-14 10:12:37,047 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-14 10:12:37,047 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-14 10:12:37,047 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-14 10:12:37,048 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-14 10:12:37,049 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-14 10:12:37,049 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-14 10:12:37,049 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-14 10:12:37,049 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-14 10:12:37,049 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-14 10:12:37,049 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-14 10:12:37,432 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-14 10:13:07,848 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-04-14 10:13:07,848 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-14 10:13:07,848 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-14 10:13:07,848 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-14 10:13:07,848 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-14 10:13:07,848 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-14 10:13:07,848 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:07,848 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-14 10:13:07,849 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-14 10:13:07,849 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:07,849 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:07,849 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-14 10:13:07,849 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:07,849 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:07,849 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-14 10:13:07,850 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-14 10:13:07,850 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-14 10:13:07,850 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:07,850 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:07,850 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:07,850 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:07,850 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:08,232 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-14 10:13:08,745 - Null reference [template 'app/ppk/headerppk.jsp', line 71, column 82] : $headerppk.id_permohonan_param cannot be resolved.
+2020-04-14 10:13:08,745 - RHS of #set statement is null. Context will not be modified. app/ppk/headerppk.jsp[line 77, column 1]
+2020-04-14 10:13:08,745 - Null reference [template 'app/ppk/headerppk.jsp', line 146, column 60] : $id_perbicaraan cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 807, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 811, column 17] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 815, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 820, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 828, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 832, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 837, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 850, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 854, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 858, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 863, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 871, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 875, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 882, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 1159, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/headerppk.jsp', line 1162, column 21] : $jquery cannot be resolved.
+2020-04-14 10:13:08,783 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemak.jsp', line 662, column 43] : $userid cannot be resolved.
+2020-04-14 10:13:08,784 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
+2020-04-14 10:13:08,784 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
+2020-04-14 10:13:08,784 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
+2020-04-14 10:13:08,784 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
+2020-04-14 10:13:08,784 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
+2020-04-14 10:13:08,784 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
+2020-04-14 10:13:08,784 - Null reference [template 'app/ppk/headerppk_script.jsp', line 270, column 1] : $jquery cannot be resolved.
+2020-04-14 10:13:11,392 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-04-14 10:13:11,392 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-14 10:13:11,392 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-14 10:13:11,392 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:11,393 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:11,650 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-14 10:13:12,254 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 203, column 1]
+2020-04-14 10:13:12,255 - Null reference [template 'app/ppk/headerppk.jsp', line 71, column 82] : $headerppk.id_permohonan_param cannot be resolved.
+2020-04-14 10:13:12,255 - RHS of #set statement is null. Context will not be modified. app/ppk/headerppk.jsp[line 77, column 1]
+2020-04-14 10:13:12,255 - Null reference [template 'app/ppk/headerppk.jsp', line 146, column 60] : $id_perbicaraan cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 807, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 811, column 17] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 815, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 820, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 828, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 832, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 837, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 850, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 854, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 858, column 33] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 863, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 871, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 875, column 25] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 882, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 1159, column 9] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/headerppk.jsp', line 1162, column 21] : $jquery cannot be resolved.
+2020-04-14 10:13:12,258 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 335, column 46] : $mode2 cannot be resolved.
+2020-04-14 10:13:12,259 - Left side ($setmodeN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 737, column 58]
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,259 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,259 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,260 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,260 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,260 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,260 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,260 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,260 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,260 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,260 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,260 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,260 - Both right ($idNegerix and left $ld.id sides of '==' operation returned null.If references, they may not be in the context.app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 743, column 34]
+2020-04-14 10:13:12,260 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 33] : $ld.kod cannot be resolved.
+2020-04-14 10:13:12,261 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 744, column 43] : $ld.nama cannot be resolved.
+2020-04-14 10:13:12,261 - Left side ($setmodeN) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 748, column 37]
+2020-04-14 10:13:12,261 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 754, column 77] : $idNegerix cannot be resolved.
+2020-04-14 10:13:12,261 - Left side ($setmodeN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 755, column 37]
+2020-04-14 10:13:12,261 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 756, column 68] : $setmodeN cannot be resolved.
+2020-04-14 10:13:12,261 - Left side ($idNegerix) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 760, column 39]
+2020-04-14 10:13:12,261 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8DaftarSek8.jsp[line 1178, column 5]
+2020-04-14 10:13:12,262 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1452, column 61] : $listpemohon.idTarafkptg cannot be resolved.
+2020-04-14 10:13:12,262 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1465, column 160] : $readmodeR cannot be resolved.
+2020-04-14 10:13:12,262 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1466, column 176] : $readmodeR cannot be resolved.
+2020-04-14 10:13:12,262 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1668, column 80] : $setMode cannot be resolved.
+2020-04-14 10:13:12,262 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 1767, column 80] : $setMode cannot be resolved.
+2020-04-14 10:13:12,264 - Left side ($flagSeksyen17) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/SuratMintaMaklumat.jsp[line 10, column 23]
+2020-04-14 10:13:12,406 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2763, column 54] : $txtNomborResit1 cannot be resolved.
+2020-04-14 10:13:12,406 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 2764, column 53] : $txdTarikhByrn1 cannot be resolved.
+2020-04-14 10:13:12,407 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
+2020-04-14 10:13:12,407 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
+2020-04-14 10:13:12,407 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
+2020-04-14 10:13:12,407 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
+2020-04-14 10:13:12,407 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
+2020-04-14 10:13:12,407 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
+2020-04-14 10:13:12,407 - Null reference [template 'app/ppk/headerppk_script.jsp', line 270, column 1] : $jquery cannot be resolved.
+2020-04-14 10:13:12,426 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5439, column 1] : $jquery cannot be resolved.
+2020-04-14 10:13:12,426 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5443, column 1] : $jquery cannot be resolved.
+2020-04-14 10:13:12,426 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5446, column 3] : $jquery cannot be resolved.
+2020-04-14 10:13:12,426 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5449, column 1] : $jquery cannot be resolved.
+2020-04-14 10:13:12,426 - Null reference [template 'app/ppk/frmPrmhnnSek8DaftarSek8.jsp', line 5526, column 38] : $jquery cannot be resolved.
