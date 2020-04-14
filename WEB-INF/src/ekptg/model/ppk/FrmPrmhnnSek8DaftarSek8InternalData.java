@@ -1,9 +1,7 @@
-/**
- *
- */
+
 package ekptg.model.ppk;
+
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,19 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.AuditTrail;
@@ -37,65 +29,26 @@ import ekptg.view.ppk.PendaftaranCheck;
 
 
 public class FrmPrmhnnSek8DaftarSek8InternalData {
-	//private static final HttpServletRequest  = null;
-	//private static final HttpServletRequest request = null;
-	protected HttpServletRequest request;
-	static Logger myLogger = Logger.getLogger(PendaftaranCheck.class);
+	static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8DaftarSek8InternalData.class);
 	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy");
 
 	private Vector list = new Vector();
-	private Vector listSupportingDoc = new Vector();
-	private Vector listUbah = new Vector();
 	private Vector listSenaraiPemohonSimati = new Vector();
 	private Vector listDataHadulu_pilihan = new Vector();
 	private Vector list_permohonan = new Vector();
 	private Vector list_setData_online_8 = new Vector();
-	
+	private String idSimati = "0";
+
 	public Vector getDataPPSPP() {
-		return list;
-		
+		return list;	
 	}
 	
-
-	public Vector getPerubahanAkta() {
-		return listUbah;
-		
-	}
-	
-	public  Vector setPerubahanAkta() throws Exception {
-		Db db = null;
-		listUbah.clear();
-		String sql = "";
-		myLogger.info("perubahanAkta");
-		try{
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			sql = "SELECT * FROM TBLPPKPERUBAHANAKTA";
-			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
-			
-			while (rs.next()){
-				h = new Hashtable();
-				h.put("flag_email_pemohon",rs.getString("flag_email_pemohon") == null ? "" : rs.getString("flag_email_pemohon"));
-				h.put("flag_notelefonbimbit_pemohon",rs.getString("flag_notelefonbimbit_pemohon") == null ? "" : rs.getString("flag_notelefonbimbit_pemohon"));
-				h.put("flag_email_waris",rs.getString("flag_email_waris") == null ? "" : rs.getString("flag_email_waris"));
-				listUbah.addElement(h);
-			}
-			return listUbah;
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
-
 	public Vector setDataPemohon_C(String id) throws Exception {
 		Db db = null;
 		list_permohonan.clear();
 		String sql = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		myLogger.info("Keluar sini8");
+//		System.out.println("Keluar sini8");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -169,7 +122,7 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			myLogger.info("Keluar sini1 id >>> "+id);
+//			System.out.println("Keluar sini1 id >>> "+id);
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, " +
 					//"D.ID_DAERAH, " +
 					"P.ID_PERMOHONAN, P.TARIKH_MOHON, "
@@ -196,7 +149,7 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 							" PM.ID_BANDARSURAT,"
 					+ " P.BATAL_KUASA_PENTADBIR, P.LANTIK_PENTADBIR, P.BATAL_P_AMANAH, " +
 							"P.LANTIK_P_AMANAH, P.HARTA_TINGGAL, P.LAIN_TUJUAN, PM.ID_TARAFKPTG," +
-							"PM.NO_TEL,PM.NO_HP,PM.STATUS_PEMOHON,PM.ID_ARB,S.TARIKH_MATI," +
+							"PM.NO_TEL,PM.NO_HP, PM.EMEL, PM.STATUS_PEMOHON,PM.ID_ARB,S.TARIKH_MATI," +
 							//"U.ID_NEGERI AS ID_NEGERIPEJABAT," +
 							"PM.ID_SAUDARA,P.NO_PERMOHONAN_ONLINE,P.TARIKH_MOHON_ONLINE   "
 					+ " FROM TBLPFDFAIL F, TBLPPKPERMOHONAN P," +
@@ -224,11 +177,6 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
         			//+ " AND D.ID_DAERAH = P.ID_DAERAHMHN  "
 					//+ " AND U.ID_DAERAH = DX.ID_DAERAH(+) "
 					+ " AND P.ID_PERMOHONAN = '" + id + "' ";
-			
-		
-         
-			//myLogger.info("SQL FAR" + sql);
-
 			myLogger.info("******** SQL SET DATA ONLINE xxxxxxxxxxxx:" + sql.toUpperCase());
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -284,7 +232,6 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 				h.put("idSimati",
 						rs.getString("id_Simati") == null ? "" : rs
 								.getString("id_Simati"));
-				myLogger.info("Keluar sini1a");
 				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
 						: rs.getString("nama_Simati"));
 				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
@@ -416,8 +363,12 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 
 				h.put("no_hp",
 						rs.getString("NO_HP") == null ? "" : rs
-								.getString("NO_HP"));
-
+								.getString("NO_HP")); 
+								
+				h.put("emel",
+						rs.getString("EMEL") == null ? "" : rs
+								.getString("EMEL"));				
+ 
 				h.put("jenis_pej",
 						rs.getString("ID_ARB") == null ? "" : rs
 								.getString("ID_ARB"));
@@ -452,16 +403,7 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 				} else {
 					h.put("jpphlepas", "no");
 				}
-
-				
 				h.put("tarikhMohonOnline", rs.getString("TARIKH_MOHON_ONLINE") == null ? "": sdf.format(rs.getDate("TARIKH_MOHON_ONLINE")));
-
-				
-				//h.put("test","keluar la");
-				
-				
-				
-				
 				if (rs.getString("tarikh_Mohon") != ""
 						&& rs.getString("tarikh_Mohon") != null) {
 					DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -476,8 +418,6 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 						h.put("lepassatusept", "no");
 					}
 				}
-
-				
 				list_setData_online_8.addElement(h);
 			}
 			return list_setData_online_8;
@@ -500,7 +440,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			myLogger.info("Keluar sini2");
+//			System.out.println("Keluar sini2");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, " +
 					//"D.ID_DAERAH, " +
 					"P.ID_PERMOHONAN, P.TARIKH_MOHON, "
@@ -556,7 +496,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 			
 		
          
-			//myLogger.info("SQL FAR" + sql);
+			//System.out.println("SQL FAR" + sql);
 
 			myLogger.info("******** SQL SET DATA ONLINE 17 XXXXXXXXXXXXXXXXXXXXXX:" + sql.toUpperCase());
 
@@ -604,7 +544,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 				h.put("idSimati",
 						rs.getString("id_Simati") == null ? "" : rs
 								.getString("id_Simati"));
-				myLogger.info("Keluar sini2a");
+//System.out.println("Keluar sini2a");
 				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
 						: rs.getString("nama_Simati"));
 				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
@@ -775,9 +715,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 				} else {
 					h.put("jpphlepas", "no");
 				}
-
-				
-				h.put("tarikhMohonOnline", rs.getString("TARIKH_MOHON_ONLINE") == null ? "": sdf.format(rs.getDate("TARIKH_MOHON_ONLINE")));
+h.put("tarikhMohonOnline", rs.getString("TARIKH_MOHON_ONLINE") == null ? "": sdf.format(rs.getDate("TARIKH_MOHON_ONLINE")));
 
 			
 				
@@ -795,8 +733,6 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 						h.put("lepassatusept", "no");
 					}
 				}
-
-				
 				list_setData_online_17.addElement(h);
 			}
 			return list_setData_online_17;
@@ -818,9 +754,9 @@ public Vector setDataNoKP(String idpp) throws Exception {
 		db = new Db();
 		Statement stmt = db.getStatement();
 		SQLRenderer r = new SQLRenderer();
-		myLogger.info("Keluar sini3");
+//System.out.println("Keluar sini3");
 		sql = "SELECT NO_KP_BARU, NO_KP_LAMA, NO_KP_LAIN FROM TBLPPKSIMATI WHERE ID_SIMATI = (SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = '"+idpp+"')";
-		myLogger.info("******** SQL SET DATANOKP:" + sql.toUpperCase());
+//System.out.println("******** SQL SET DATANOKP:" + sql.toUpperCase());
 		ResultSet rs = stmt.executeQuery(sql);
 		Hashtable h;
 
@@ -848,45 +784,6 @@ public Vector setDataNoKP(String idpp) throws Exception {
 	}
 }
 
-public Vector setSupportingDoc(String id) throws Exception {
-	myLogger.info("******** setSupportingDoc ");
-	Db db = null;
-	listSupportingDoc.clear();
-	String sql = "";
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-	try {
-		db = new Db();
-		Statement stmt = db.getStatement();
-		SQLRenderer r = new SQLRenderer();
-		
-		sql = "SELECT NAMA_DOKUMEN FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = (SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = '" + id + "') ";
-
-		//myLogger.info("SQL FAR" + sql);
-
-		myLogger.info("******** SQL SET DATA:" + sql.toUpperCase());
-
-		ResultSet rs = stmt.executeQuery(sql);
-		Hashtable h;
-
-		
-		
-		while (rs.next()) {
-			h = new Hashtable();
-			h.put("NAMA_DOKUMEN", rs.getString("NAMA_DOKUMEN") == null ? ""
-					: rs.getString("NAMA_DOKUMEN"));
-
-			
-			// myLogger.info("sql data-->" + h);
-			listSupportingDoc.addElement(h);
-		}
-		return listSupportingDoc;
-	} finally {
-		if (db != null)
-			db.close();
-	}
-}
-
 	public Vector setData(String id, String userid) throws Exception {
 		Db db = null;
 		list.clear();
@@ -897,7 +794,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			myLogger.info("Keluar sini3");
+//System.out.println("Keluar sini3");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON,  "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU, "
@@ -928,7 +825,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ " AND U.ID_DAERAH = DX.ID_DAERAH(+) "
 					+ " AND P.ID_PERMOHONAN = '" + id + "' ";
 
-			//myLogger.info("SQL FAR" + sql);
+			//System.out.println("SQL FAR" + sql);
 
 			myLogger.info("******** SQL SET DATA:" + sql.toUpperCase());
 
@@ -958,6 +855,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				h.put("idFail",rs.getString("id_Fail") == null ? "" : rs.getString("id_Fail"));
 				h.put("noFail",rs.getString("no_Fail") == null ? "" : rs.getString("no_Fail"));				
 				h.put("no_fail_online",rs.getString("NO_PERMOHONAN_ONLINE") == null ? "" : rs.getString("NO_PERMOHONAN_ONLINE"));
+				h.put("idNegeri",rs.getString("id_Negeri") == null ? "" : rs.getString("id_Negeri")); /**9/1/2020: arief add**/
 				h.put("idDaerah",rs.getString("id_Daerah") == null ? "" : rs.getString("id_Daerah"));
 
 				h.put("idPermohonan",rs.getString("id_Permohonan") == null ? "" : rs.getString("id_Permohonan"));
@@ -1002,12 +900,12 @@ public Vector setSupportingDoc(String id) throws Exception {
 						rs.getString(18) == null ? "" : rs.getString(18));
 
 				h.put("alamat1",rs.getString("alamat_1") == null ? "" : rs.getString("alamat_1"));
-				//myLogger.info("Alamat1 " + rs.getString("alamat_1"));
-				//myLogger.info("Alamat1dlmFrmPrmhnnSek8DaftarSek8InternalData");
+				//System.out.println("Alamat1 " + rs.getString("alamat_1"));
+				//System.out.println("Alamat1dlmFrmPrmhnnSek8DaftarSek8InternalData");
 				h.put("alamat2",
 						rs.getString("alamat_2") == null ? "" : rs
 								.getString("alamat_2"));
-				//myLogger.info("Alamat2 " + rs.getString("alamat_2"));
+				//System.out.println("Alamat2 " + rs.getString("alamat_2"));
 				h.put("alamat3",
 						rs.getString("alamat_3") == null ? "" : rs
 								.getString("alamat_3"));
@@ -1097,7 +995,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				h.put("bkp", rs.getString("BATAL_KUASA_PENTADBIR") == null ? ""
 						: rs.getString("BATAL_KUASA_PENTADBIR"));
 				
-				//myLogger.info("BATAL_KUASA_PENTADBIR-->" + rs.getString("BATAL_KUASA_PENTADBIR"));
+				//System.out.println("BATAL_KUASA_PENTADBIR-->" + rs.getString("BATAL_KUASA_PENTADBIR"));
 				h.put("lp",
 						rs.getString("LANTIK_PENTADBIR") == null ? "" : rs
 								.getString("LANTIK_PENTADBIR"));
@@ -1164,7 +1062,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 				// " P.BATAL_KUASA_PENTADBIR, P.LANTIK_PENTADBIR, P.BATAL_P_AMANAH, P.LANTIK_P_AMANAH, P.HARTA_TINGGAL, P.LAIN_TUJUAN  "
 
-				// //myLogger.info("Today = " +
+				// //System.out.println("Today = " +
 				// h.get("tarikhMohon").toString());
 
 				if (rs.getString("tarikh_Mohon") != ""
@@ -1172,7 +1070,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 					Date t_m = df.parse(sdf.format(rs.getDate("tarikh_Mohon")));
 					Date sep_m = df.parse("01/09/2009");
-					// myLogger.info("Today = "
+					// System.out.println("Today = "
 					// + h.get("tarikhMohon").toString());
 
 					if (t_m.before(sep_m)) {
@@ -1188,11 +1086,11 @@ public Vector setSupportingDoc(String id) throws Exception {
 						rs.getString("EMEL") == null ? "" : rs
 								.getString("EMEL"));
 				
-				// myLogger.info("sql data-->" + h);
+				// System.out.println("sql data-->" + h);
 				list.addElement(h);
 			}
 			
-			//myLogger.info("sql data-->" + list.size() );
+			//System.out.println("sql data-->" + list.size() );
 			return list;
 		} finally {
 			if (db != null)
@@ -1211,7 +1109,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			myLogger.info("Keluar sini3");
+//			System.out.println("Keluar sini3");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON,  "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU, "
@@ -1242,7 +1140,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ " AND U.ID_DAERAH = DX.ID_DAERAH(+) "
 					+ " AND P.ID_PERMOHONAN = '" + id + "' ";
 
-			//myLogger.info("SQL FAR" + sql);
+			//System.out.println("SQL FAR" + sql);
 
 			myLogger.info("******** SQL SET DATA:" + sql.toUpperCase());
 
@@ -1257,7 +1155,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 						: rs.getString("FLAG_PRINT_NILAIAN_HARTA"));
 	
 				
-				// myLogger.info("sql data-->" + h);
+				// System.out.println("sql data-->" + h);
 				list.addElement(h);
 			}
 			return list;
@@ -1277,7 +1175,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			myLogger.info("Keluar sini3");
+//System.out.println("Keluar sini3");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON,  "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU, "
@@ -1309,7 +1207,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ " AND P.HARTA_TINGGAL = 'Y' "
 					+ " AND P.ID_PERMOHONAN = '" + id + "' ";
 
-			//myLogger.info("SQL FAR" + sql);
+			//System.out.println("SQL FAR" + sql);
 
 			myLogger.info("******** SQL SET DATA:" + sql.toUpperCase());
 
@@ -1324,7 +1222,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 						: rs.getString("FLAG_PRINT_NILAIAN_HARTA"));
 	
 				
-				// myLogger.info("sql data-->" + h);
+				// System.out.println("sql data-->" + h);
 				list.addElement(h);
 			}
 			return list;
@@ -1347,7 +1245,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			myLogger.info("Keluar sini4");
+//			System.out.println("Keluar sini4");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON, "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP AS JENISKP_SIMATI, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU AS NO_KP_BARU_PM, "
@@ -1392,60 +1290,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					/*+ " AND U.ID_DAERAH = DX.ID_DAERAH(+) "*/
 					+ " AND P.ID_PERMOHONAN = '" + id + "' ";
 			
-			/*
-			SELECT DISTINCT f.id_fail, f.no_fail, d.id_daerah, p.id_permohonan,
-                p.tarikh_mohon, s.no_kp_baru, s.no_kp_lama, s.jenis_kp,
-                s.no_kp_lain, s.id_simati, s.nama_simati, s.tarikh_mati,
-                pm.id_pemohon, pm.nama_pemohon, pm.no_kp_baru, pm.no_kp_lama,
-                pm.jenis_kp, pm.no_kp_lain, pm.alamat_1, pm.alamat_2,
-                pm.alamat_3, pm.poskod, pm.bandar, n.id_negeri, n.nama_negeri,
-                d.nama_daerah, p.seksyen, st.keterangan, p.id_status,
-               -- u.nama_pejabat, 
-                pm.id_negeri, mosi.id_permohonansimati,
-                s.umur, s.jantina, pm.umur, pm.jantina, 
-                --u.id_pejabatjkptg,
-                p.no_subjaket, pm.alamat1_surat, pm.alamat2_surat,
-                pm.alamat3_surat, pm.poskod_surat, pm.bandar_surat,
-                pm.id_negerisurat, pm.id_bandar, 
-                --u.alamat1,
-                --dx.nama_daerah AS d_p, 
-                pm.id_bandarsurat,
-                p.batal_kuasa_pentadbir, p.lantik_pentadbir, p.batal_p_amanah,
-                p.lantik_p_amanah, p.harta_tinggal, p.lain_tujuan,
-                pm.id_tarafkptg, pm.no_tel, pm.no_hp, pm.status_pemohon,
-                pm.id_arb, s.tarikh_mati,
-                -- u.id_negeri AS id_negeripejabat,
-                pm.id_saudara, p.no_permohonan_online
-           FROM tblpfdfail f,
-                tblppkpermohonan p,
-                tblrujnegeri n,
-                tblrujdaerah d,
-                --tblrujdaerah dx,
-                tblppksimati s,
-                tblppkpemohon pm,
-                tblrujstatus st,
-                --tblrujpejabatjkptg u,
-                tblppkpermohonansimati mosi
-                --,users_internal ur
-          WHERE f.id_negeri = n.id_negeri(+)
-            AND p.id_daerahmhn = d.id_daerah(+)
-             --AND ur.user_id = '16114413'
-           -- AND ur.id_pejabatjkptg = u.id_pejabatjkptg
-            AND p.id_fail = f.id_fail
-            AND p.id_pemohon = pm.id_pemohon(+)
-            AND s.id_simati = mosi.id_simati
-            AND p.id_permohonan = mosi.id_permohonan
-            AND p.id_status = st.id_status(+)
-            AND d.id_daerah = p.id_daerahmhn
-           -- AND u.id_daerah = dx.id_daerah(+)
-            AND p.id_permohonan = '1611551698'			 
-			 */
-			
-			
-			
-
-			myLogger.info("SQL FAR ONLINE" + sql);
-
+//			System.out.println("SQL FAR ONLINE" + sql);
 			myLogger.info("******** SQL SET DATA ONLINE:" + sql.toUpperCase());
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -1473,8 +1318,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 				h.put("noFail",
 						rs.getString("no_Fail") == null ? "" : rs
 								.getString("no_Fail"));
-				
-				
 				h.put("no_fail_online",
 						rs.getString("NO_PERMOHONAN_ONLINE") == null ? "" : rs
 								.getString("NO_PERMOHONAN_ONLINE"));
@@ -1503,7 +1346,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				h.put("idSimati",
 						rs.getString("id_Simati") == null ? "" : rs
 								.getString("id_Simati"));
-				myLogger.info("Keluar sini4a");
+//				System.out.println("Keluar sini4a");
 				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
 						: rs.getString("nama_Simati"));
 				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
@@ -1700,7 +1543,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 				// " P.BATAL_KUASA_PENTADBIR, P.LANTIK_PENTADBIR, P.BATAL_P_AMANAH, P.LANTIK_P_AMANAH, P.HARTA_TINGGAL, P.LAIN_TUJUAN  "
 
-				// //myLogger.info("Today = " +
+				// //System.out.println("Today = " +
 				// h.get("tarikhMohon").toString());
 
 				if (rs.getString("tarikh_Mohon") != ""
@@ -1708,7 +1551,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 					Date t_m = df.parse(sdf.format(rs.getDate("tarikh_Mohon")));
 					Date sep_m = df.parse("01/09/2009");
-					// myLogger.info("Today = "
+					// System.out.println("Today = "
 					// + h.get("tarikhMohon").toString());
 
 					if (t_m.before(sep_m)) {
@@ -1720,7 +1563,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					}
 				}
 
-				// myLogger.info("sql data-->" + h);
+				// System.out.println("sql data-->" + h);
 				list.addElement(h);
 			}
 			return list;
@@ -1742,7 +1585,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			myLogger.info("Keluar sini5");
+//			System.out.println("Keluar sini5");
 			sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL, D.ID_DAERAH, P.ID_PERMOHONAN, P.TARIKH_MOHON, "
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU, "
@@ -1772,7 +1615,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ " AND P.ID_PERMOHONAN = '" + id + "' ";
 
 				myLogger.info("setDataBaru : "+sql);
-			// //myLogger.info("SQLXXXXXX BARU" + sql);
+			// //System.out.println("SQLXXXXXX BARU" + sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -1812,7 +1655,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				h.put("idSimati",
 						rs.getString("id_Simati") == null ? "" : rs
 								.getString("id_Simati"));
-				myLogger.info("Keluar sini5a");
+//				System.out.println("Keluar sini5a");
 				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
 						: rs.getString("nama_Simati"));
 				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
@@ -1921,7 +1764,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				h.put("tarikhMohon", rs.getDate("tarikh_Mohon") == null ? ""
 						: sdf.format(rs.getDate("tarikh_Mohon")));
 
-				// //myLogger.info("Today = " +
+				// //System.out.println("Today = " +
 				// h.get("tarikhMohon").toString());
 
 				if (rs.getString("tarikh_Mohon") != ""
@@ -1929,7 +1772,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 					Date t_m = df.parse(sdf.format(rs.getDate("tarikh_Mohon")));
 					Date sep_m = df.parse("01/09/2009");
-					// myLogger.info("Today = "
+					// System.out.println("Today = "
 					// + h.get("tarikhMohon").toString());
 
 					if (t_m.before(sep_m)) {
@@ -1945,7 +1788,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					Date sep_m = dateFormat.parse("01/09/2009");
 					String currentDate = dateFormat.format(date);
 
-					// myLogger.info("DATE :::"+date);
+					// System.out.println("DATE :::"+date);
 
 					if (date.before(sep_m)) {
 						h.put("lepassatusept", "yes");
@@ -1972,7 +1815,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 						rs.getString("HARTA_TINGGAL") == null ? "" : rs
 								.getString("HARTA_TINGGAL"));
 
-				// myLogger.info("sql data-->" + h);
+				// System.out.println("sql data-->" + h);
 				listb.addElement(h);
 			}
 			return listb;
@@ -1989,7 +1832,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 	}
 
 	public void setDataLama(String idsimati, int jaket) throws Exception {
-		myLogger.info("setDataLama");
 		Db db = null;
 		listFailLama.clear();
 		String sql = "";
@@ -2009,7 +1851,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ "'"
 					+ " AND P.NO_SUBJAKET = '" + jaket + "'" + "  AND F.NO_FAIL is not null ";
 
-			myLogger.info("SQLXXXXXX" + sql);
+//			System.out.println("SQLXXXXXX" + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 
@@ -2081,7 +1923,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			     " AND SM.ID_SIMATI = '" + idsimati + "' "+
 			     " ORDER BY NAMA_PEMOHON ";
 
-			 myLogger.info("SQLXXXXXX" + sql);
+//			 System.out.println("SQLXXXXXX" + sql);
 			myLogger.info("LIST PEMOHON OB DAHULU :" + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -2101,7 +1943,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				h.put("nama_pemohon", rs.getString("NAMA_PEMOHON") == null ? ""
 						: rs.getString("NAMA_PEMOHON"));
 				
-				myLogger.info("nama pemohon=="+ rs.getString("NAMA_PEMOHON"));
+//				System.out.println("nama pemohon=="+ rs.getString("NAMA_PEMOHON"));
 
 				listSenaraiPemohonSimati.addElement(h);
 			}
@@ -2112,6 +1954,9 @@ public Vector setSupportingDoc(String id) throws Exception {
 	}
 
 	private Vector listFail = new Vector();
+	
+	private Vector flag5juta = new Vector();
+	
 
 	// private static SimpleDateFormat Format = new
 	// SimpleDateFormat("dd/MM/yyyy");
@@ -2119,8 +1964,8 @@ public Vector setSupportingDoc(String id) throws Exception {
 		return listFail;
 	}
 	
-	public Vector getSupportingDoc() {
-		return listSupportingDoc;
+	public Vector getFlag5Juta() {
+		return flag5juta;
 	}
 
 	public void setDataFail(String id) throws Exception {
@@ -2141,7 +1986,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					// " AND (sub.id_Suburusanstatus = 340 OR sub.id_Suburusanstatus = 353) "+
 					" AND sub.id_permohonan = '" + id + "'" + "";
 
-			//myLogger.info("SQLXXXXXX FAIL" + sql);
+			// System.out.println("SQLXXXXXX FAIL" + sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -2159,8 +2004,44 @@ public Vector setSupportingDoc(String id) throws Exception {
 						rs.getString("id_permohonan") == null ? "" : rs
 								.getString("id_permohonan"));
 
-				// myLogger.info("sql data-->" + h);
+				// System.out.println("sql data-->" + h);
 				listFail.addElement(h);
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	
+	public void checkFlag5Juta(String id) throws Exception {
+		Db db = null;
+		flag5juta.clear();
+		String sql = "";
+	
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT FLAG_5JUTA FROM TBLPPKPERUBAHANAKTA ";
+
+			// System.out.println("SQLXXXXXX FAIL" + sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+
+				h.put("flag_5juta",
+						rs.getString("flag_5juta") == null ? "" : rs
+								.getString("flag_5juta"));
+				
+
+				// System.out.println("sql data-->" + h);
+				flag5juta.addElement(h);
 			}
 		} finally {
 			if (db != null)
@@ -2187,7 +2068,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+//			System.out.println("Keluar sini6");
 			sql = "SELECT SM.ID_SIMATI, SM.NAMA_SIMATI, P.NO_SUBJAKET, P.ID_PERMOHONAN"
 					+ " FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI PS, TBLPPKPERMOHONAN P"
 					+ " WHERE SM.ID_SIMATI = '"
@@ -2196,7 +2077,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ " AND PS.ID_PERMOHONAN = P.ID_PERMOHONAN"
 					+ " AND PS.ID_SIMATI = SM.ID_SIMATI"
 					+ " AND P.NO_SUBJAKET = '" + subjaket + "'" + "";
-			myLogger.info("SQL setlistGetPermohonanSebelum " + sql);
+			// System.out.println("SQLXXXXXX FAIL" + sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -2210,7 +2091,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 						rs.getString("id_permohonan") == null ? "" : rs
 								.getString("id_permohonan"));
 
-				// myLogger.info("sql data-->" + h);
+				// System.out.println("sql data-->" + h);
 				listGetPermohonanSebelum.addElement(h);
 			}
 		} finally {
@@ -2268,7 +2149,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 	public void addPermohonan(HttpSession session,Hashtable data) throws Exception {
 		// Azam add Transaction on 02.02.2010
 		
-		
 		Connection conn = null;
 		Db db = null;
 		// Db dbOB = null;
@@ -2299,11 +2179,11 @@ public Vector setSupportingDoc(String id) throws Exception {
 			long idBayaran = DB.getNextID(db, "TBLPPKBAYARAN_SEQ");
 			long idP_mati = DB.getNextID(db, "TBLPPKPERMOHONANSIMATI_SEQ");
 
-			// myLogger.info("idFail"+idFail+"idP_mati"+idP_mati);
+			// System.out.println("idFail"+idFail+"idP_mati"+idP_mati);
 			long idPermohonan = Long.parseLong((String) data
 					.get("IdPermohonan"));
 
-			// myLogger.info("IDPPPPP" + idPermohonan);
+			// System.out.println("IDPPPPP" + idPermohonan);
 			long idSubUrusanStatus = DB.getNextID(db,
 					"TBLRUJSUBURUSANSTATUS_SEQ");
 
@@ -2315,20 +2195,20 @@ public Vector setSupportingDoc(String id) throws Exception {
 			String id_Fail = (String) data.get("id_Fail");
 
 			String no_daerah = (String) data.get("no_daerah");
-			// myLogger.info("IDPPPPP Daerah!!!!" + no_daerah);
-			myLogger.info("NegId 2 ::::" + NegId);
+			// System.out.println("IDPPPPP Daerah!!!!" + no_daerah);
+//			System.out.println("NegId 2 ::::" + NegId);
 			int id_d = Integer.parseInt(no_daerah);
 
 			Vector vd = new Vector();
 			vd = getListnegeriByDaerah(id_d);
 			int idneg = 0;
-			//myLogger.info("USER KOD DAERAH!!!::");
+			//System.out.println("USER KOD DAERAH!!!::");
 			Hashtable l = (Hashtable) vd.get(0);
 			idneg = Integer.parseInt(l.get("id_Negeri").toString());
 
 			String negeri = (String) data.get("negeri");
 			
-			myLogger.info("negeri 1 ::::" + negeri);
+//			System.out.println("negeri 1 ::::" + negeri);
 			String no_kpbaru_pemohon = (String) data.get("no_kpbaru_pemohon");
 			String no_kplama_pemohon = (String) data.get("no_kplama_pemohon");
 			String nama_simati = (String) data.get("nama_simati");
@@ -2339,8 +2219,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			String no_kplain_simati = (String) data.get("no_kplain_simati");
 			String tarikhLahirSimati = (String) data.get("tarikhLahirSimati");
 			String userIdKodDaerah = (String) data.get("userIdKodDaerah");
-
-			myLogger.info("USER KOD DAERAH!!!::" + userIdKodDaerah);
+//			System.out.println("USER KOD DAERAH!!!::" + userIdKodDaerah);
 
 			String userIdKodNegeri = (String) data.get("userIdKodNegeri");
 			String tarikh_simati = (String) data.get("tarikh_simati");
@@ -2382,7 +2261,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			
 			String socSaudaraWaris = (String) data.get("socSaudaraWaris");
 
-			// myLogger.info("sijilmatimodel::" + sijilmati);
+			// System.out.println("sijilmatimodel::" + sijilmati);
 
 			//
 
@@ -2414,7 +2293,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				negeri = "0";
 			}
 
-			// myLogger.info("USER KOD DAERAH MOHON!!!::" + no_daerah);
+			// System.out.println("USER KOD DAERAH MOHON!!!::" + no_daerah);
 
 			int nod = Integer.parseInt(no_daerah);
 
@@ -2466,13 +2345,9 @@ public Vector setSupportingDoc(String id) throws Exception {
 			}
 			
 			
-			String X = String.format("%04d", File.getSeqNoPPK(session, db, 2, 382, 0,
+			String X = String.format("%04d", File.getSeqNo(db, 2, 382, 0,
 					Integer.parseInt(idnegerifail), Integer.parseInt(no_daerah),
 					false, false, thn, 0));
-			
-			AuditTrail at = new AuditTrail();
-			at.logActivity(382+"","","2",null,session,"","CREATE NO FAIL INTERNAL : ID_SEKSYEN = '"+2+"';ID_URUSAN = '"+382+"';ID_KEMENTERIAN = '"+0+"';ID_NEGERI = '"+Integer.parseInt(userIdNeg)+"';ID_DAERAH = '"+Integer.parseInt(no_daerah)+"';TAHUN = '"+getYear+"'; SEQ : "+X+"; idFail : "+idFail);
-			
 
 
 			// String getNoFile = "JKPTG/PK/"+ userIdKodNegeri + "/"+
@@ -2482,7 +2357,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			String getNoFile = "JKPTG/PK/" + kodn + "/" + kod + "/" + X + "/"
 					+ tahun;
 
-			// myLogger.info("getNoFile:" + getNoFile);
+			// System.out.println("getNoFile:" + getNoFile);
 
 			tarikh_masuk = (String) data.get("tarikh_masuk");
 			tarikh_simati = (String) data.get("tarikh_simati");
@@ -2493,7 +2368,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			String tarikh_lahir_simati = "to_date('" + tarikhLahirSimati
 			+ "','dd/MM/yyyy')";
 			
-			myLogger.info("idNeg 3 :::::::::::::"+idNeg);
+//			System.out.println("idNeg 3 :::::::::::::"+idNeg);
 			// db = new Db();
 			// Statement stmtA = db.getStatement();
 			// SQLRenderer r = new SQLRenderer();
@@ -2701,7 +2576,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				rOB.add("id_saudara", socSaudaraWaris);
 
 				sqlOB = rOB.getSQLInsert("tblppkob");
-				// myLogger.info(sqlOB);
+				// System.out.println(sqlOB);
 				myLogger.info(" INSERT OB :"+sqlOB);
 				stmtOB.executeUpdate(sqlOB);
 				
@@ -2791,7 +2666,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			
 			
 
-			// //myLogger.info("NO RESIT :" + txtbox);
+			// //System.out.println("NO RESIT :" + txtbox);
 
 			// db = new Db();
 			// Statement stmtL = db.getStatement();
@@ -2821,7 +2696,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("tarikh_masuk", r.unquote("sysdate"));
 			sqlbayaran = r.getSQLInsert("tblppkbayaran");
 			myLogger.info(" INSERT BAYARAN:"+sqlbayaran);
-			// myLogger.info("sqlbayaran-->" + sqlbayaran);
+			// System.out.println("sqlbayaran-->" + sqlbayaran);
 			stmt.executeUpdate(sqlbayaran);
 
 			//
@@ -2869,7 +2744,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 		String sqlbayaran = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
-
 			db = new Db();
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
@@ -2882,18 +2756,15 @@ public Vector setSupportingDoc(String id) throws Exception {
 			long idsimati = DB.getNextID(db, "TBLPPKSIMATI_SEQ");
 			long idBayaran = DB.getNextID(db, "TBLPPKBAYARAN_SEQ");
 			long idP_mati = DB.getNextID(db, "TBLPPKPERMOHONANSIMATI_SEQ");
-
 			long idPermohonan = Long.parseLong((String) data.get("IdPermohonan"));
-			
-			long idSubUrusanStatus = DB.getNextID(db,
-					"TBLRUJSUBURUSANSTATUS_SEQ");
+			long idSubUrusanStatus = DB.getNextID(db,"TBLRUJSUBURUSANSTATUS_SEQ");
 
+			idSimati = String.valueOf(idP_mati);
 			//int UserIdPejabat = Integer.parseInt((String) data.get("userIdPejabat"));
 			String userIdNeg = (String) data.get("userIdNeg");
 			String userId = (String) data.get("userId");
 			String NegId = (String) data.get("negId");
 			String id_Fail = (String) data.get("id_Fail");
-
 			String no_daerah = (String) data.get("no_daerah");
 
 			int id_d = Integer.parseInt(no_daerah);
@@ -2919,8 +2790,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			String userIdKodNegeri = (String) data.get("userIdKodNegeri");
 			String tarikh_simati = (String) data.get("tarikh_simati");
-			String sel_jeniskp_pemohon = (String) data
-					.get("sel_jeniskp_pemohon");
+			String sel_jeniskp_pemohon = (String) data.get("sel_jeniskp_pemohon");
 			String no_kplain_pemohon = (String) data.get("no_kplain_pemohon");
 			String nama_pemohon = (String) data.get("nama_pemohon");
 			String alamat1 = (String) data.get("alamat1");
@@ -2942,9 +2812,8 @@ public Vector setSupportingDoc(String id) throws Exception {
 			String tarikhresit = (String) data.get("tarikhresit");
 
 			String no_tel = (String) data.get("no_tel");
-			String nama_pelbagainegara = (String) data.get("nama_pelbagainegara");
-			
-			
+			String nama_pelbagainegara = (String) data.get("nama_pelbagainegara");		
+			String emel = (String) data.get("emel");
 			String no_hp = (String) data.get("no_hp");
 			String taraf_penting = (String) data.get("taraf_penting");
 			String jenis_pemohon = (String) data.get("jenis_pemohon");
@@ -2988,7 +2857,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("d.id_daerah", nod);
 
 			String sql12 = r.getSQLSelect("Tblrujdaerah d, Tblrujnegeri n");
-
 			ResultSet rs12 = stmt.executeQuery(sql12);
 			// Vector list = new Vector(;
 			Hashtable h;
@@ -3011,6 +2879,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 				kod = rs12.getString("kod_daerah");
 				kodn = rs12.getString("kod_negeri");
+			
 			}
 
 		    //belum create no fail...awal...no fail ganerate dekat pengesahan
@@ -3072,8 +2941,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			r.add("tarikh_Masuk", r.unquote("sysdate"));
 			sql1 = r.getSQLInsert("tblppksimati");
-			//myLogger.info("SQL SIMATI :" + sql1);
-			
+			//System.out.println("SQL SIMATI :" + sql1);			
 			stmt.executeUpdate(sql1);
 
 			// db = new Db();
@@ -3089,6 +2957,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				r.add("umur", txtUmurPemohon);
 				r.add("jantina", socJantinaPemohon);
 				r.add("no_hp", no_hp);
+				
 			} else {
 				r.add("no_kp_baru", "");
 				r.add("no_kp_lama", "");
@@ -3116,9 +2985,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("id_negerisurat", negeri);
 			r.add("no_tel", no_tel);
 			r.add("id_saudara", socSaudaraWaris);
-			
-			
-
+			r.add("emel", emel);
 			r.add("id_tarafkptg", taraf_penting);
 			r.add("status_pemohon", jenis_pemohon);
 			r.add("id_Arb", jenis_pej);
@@ -3185,6 +3052,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					rOB.add("jantina", socJantinaPemohon);
 					rOB.add("no_Hp", no_hp);
 					rOB.add("status_ob", "1");
+			
 				} else {
 					rOB.add("no_Kp_Baru", "");
 					rOB.add("no_Kp_Lain", "");
@@ -3194,6 +3062,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					rOB.add("jantina", "");
 					rOB.add("no_Hp", "");
 					rOB.add("status_ob", "");
+				
 				}
 				rOB.add("id_Tarafkptg", taraf_penting);
 				rOB.add("jenis_pemiutang", jenis_pemohon);
@@ -3227,11 +3096,8 @@ public Vector setSupportingDoc(String id) throws Exception {
 				rOB.add("nama_pelbagainegara_surat", nama_pelbagainegara);
 
 				sqlOB = rOB.getSQLInsert("tblppkob");
-				// myLogger.info(sqlOB);
+				// System.out.println(sqlOB);
 				stmtOB.executeUpdate(sqlOB);
-				
-				
-				
 				
 				rOB.clear();
 				rOB.add("id_ob", id_ob);
@@ -3246,6 +3112,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					rOB.add("jantina", socJantinaPemohon);
 					rOB.add("no_Hp", no_hp);
 					rOB.add("status_ob", "1");
+				
 				} else {
 					rOB.add("no_Kp_Baru", "");
 					rOB.add("no_Kp_Lain", "");
@@ -3255,6 +3122,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					rOB.add("jantina", "");
 					rOB.add("no_Hp", "");
 					rOB.add("status_ob", "");
+				
 				}
 				rOB.add("id_Tarafkptg", taraf_penting);
 				rOB.add("jenis_pemiutang", jenis_pemohon);
@@ -3287,6 +3155,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				
 				sqlOB = rOB.getSQLInsert("tblppkobpermohonan");
 				stmtOB.executeUpdate(sqlOB);
+			
 			}
 
 			/*
@@ -3343,13 +3212,12 @@ public Vector setSupportingDoc(String id) throws Exception {
 				rOB.add("id_saudara", socSaudaraWaris);
 
 				sqlOB = rOB.getSQLInsert("tblppkob");
-				// myLogger.info(sqlOB);
+				// System.out.println(sqlOB);
 				stmtOB.executeUpdate(sqlOB);
 			}
 			*/
 
 			// baru
-
 			// db = new Db();
 			// Statement stmtF = db.getStatement();
 			// SQLRenderer r5 = new SQLRenderer();
@@ -3369,11 +3237,9 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 			sql5 = r.getSQLInsert("tblrujsuburusanstatusfail");
 			stmt.executeUpdate(sql5);*/
-			
-			
+						
 			//:::SUB
-
-			// //myLogger.info("NO RESIT :" + txtbox);
+			// //System.out.println("NO RESIT :" + txtbox);
 
 			// db = new Db();
 			// Statement stmtL = db.getStatement();
@@ -3391,11 +3257,13 @@ public Vector setSupportingDoc(String id) throws Exception {
 				tr = "to_date('" + tarikhresit + "','dd/MM/yyyy')";
 				r.add("tarikh_bayaran", r.unquote(tr));
 				r.add("jumlah_bayaran", 10);
+			
 			} else {
 				r.add("no_resit", "");
 				tr = "to_date('" + tarikhresit + "','dd/MM/yyyy')";
 				r.add("tarikh_bayaran", "");
 				r.add("jumlah_bayaran", 0);
+			
 			}
 			// r1.add("id_masuk",6);
 
@@ -3404,10 +3272,9 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 			r.add("tarikh_masuk", r.unquote("sysdate"));
 			//sqlbayaran = r.getSQLInsert("tblppkbayaran");
-			// myLogger.info("sqlbayaran-->" + sqlbayaran);
+			// System.out.println("sqlbayaran-->" + sqlbayaran);
 			//stmt.executeUpdate(sqlbayaran);
-
-			
+	
 			conn.commit();
 			//:::SUB
 			myLogger.info("SSF KEMASKINI 2");
@@ -3427,6 +3294,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			if (db != null)
 				db.close();
 		}
+		
 	}
 
 	public Vector checkwaris(String idob) throws Exception {
@@ -3443,7 +3311,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			sql = "select id_ob,id_pemohon from tblppkob where id_ob is not null and  id_ob = '"
 					+ idob + "' ";
 
-			// myLogger.info("SQL PRINT PEMOHON WARIS:"+sql);
+			// System.out.println("SQL PRINT PEMOHON WARIS:"+sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -3481,7 +3349,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			sql = "select id_ob,id_pemohon from tblppkob where id_pemohon is not null and  id_pemohon = '"
 					+ idpemohon + "' ";
 
-			// myLogger.info("SQL PRINT PEMOHON WARIS:"+sql);
+			// System.out.println("SQL PRINT PEMOHON WARIS:"+sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -3519,7 +3387,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			sql = "select id_ob,id_pemohon from tblppkob where id_pemohon is not null and  id_pemohon = '"
 					+ idpemohon + "' ";
 
-			// myLogger.info("SQL PRINT PEMOHON WARIS:"+sql);
+			// System.out.println("SQL PRINT PEMOHON WARIS:"+sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -3574,7 +3442,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			long idPermohonan = Long.parseLong((String) data
 					.get("IdPermohonan"));
 
-			// myLogger.info("IDPPPPP" + idPermohonan);
+			// System.out.println("IDPPPPP" + idPermohonan);
 			long idSubUrusanStatus = DB.getNextID(db,
 					"TBLRUJSUBURUSANSTATUS_SEQ");
 
@@ -3586,7 +3454,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			String id_Fail = (String) data.get("id_Fail");
 
 			String no_daerah = (String) data.get("no_daerah");
-			// myLogger.info("IDPPPPP Daerah!!!!" + no_daerah);
+			// System.out.println("IDPPPPP Daerah!!!!" + no_daerah);
 
 			int id_d = Integer.parseInt(no_daerah);
 
@@ -3613,7 +3481,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			String userIdKodDaerah = (String) data.get("userIdKodDaerah");
 
-			// myLogger.info("USER KOD DAERAH!!!::" + userIdKodDaerah);
+			// System.out.println("USER KOD DAERAH!!!::" + userIdKodDaerah);
 
 			String userIdKodNegeri = (String) data.get("userIdKodNegeri");
 			String tarikh_simati = (String) data.get("tarikh_simati");
@@ -3648,7 +3516,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			
 			String socSaudaraWaris = (String) data.get("socSaudaraWaris");
 
-			// myLogger.info("sijilmatimodel::" + sijilmati);
+			// System.out.println("sijilmatimodel::" + sijilmati);
 
 			java.util.Calendar calendar = java.util.Calendar.getInstance();
 			int getYear = calendar.get(java.util.Calendar.YEAR);
@@ -3672,7 +3540,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				negeri = "0";
 			}
 
-			// myLogger.info("USER KOD DAERAH MOHON!!!::" + no_daerah);
+			// System.out.println("USER KOD DAERAH MOHON!!!::" + no_daerah);
 
 			int nod = Integer.parseInt(no_daerah);
 
@@ -3725,7 +3593,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			// String getNoFile = "JKPTG/PK/" + kodn + "/" + kod + "/" + X + "/"
 			// + getYear;
 
-			// myLogger.info("getNoFile:" + getNoFile);
+			// System.out.println("getNoFile:" + getNoFile);
 
 			tarikh_masuk = (String) data.get("tarikh_masuk");
 			tarikh_simati = (String) data.get("tarikh_simati");
@@ -4100,7 +3968,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 			r.add("tarikh_masuk", r.unquote("sysdate"));
 			sqlbayaran = r.getSQLInsert("tblppkbayaran");
-			// myLogger.info("sqlbayaran-->" + sqlbayaran);
+			// System.out.println("sqlbayaran-->" + sqlbayaran);
 			stmt.executeUpdate(sqlbayaran);
 
 			conn.commit();
@@ -4158,7 +4026,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			long idPermohonan = Long.parseLong((String) data
 					.get("IdPermohonan"));
 
-			// myLogger.info("IDPPPPP" + idPermohonan);
+			// System.out.println("IDPPPPP" + idPermohonan);
 			long idSubUrusanStatus = DB.getNextID(db,
 					"TBLRUJSUBURUSANSTATUS_SEQ");
 
@@ -4181,7 +4049,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			String lt = (String) data.get("lt");
 			String idp_dulu = (String) data.get("idp_dulu");
 
-			// myLogger.info("no_subjaket :>>>>>" + no_subjaket);
+			// System.out.println("no_subjaket :>>>>>" + no_subjaket);
 
 			String idsimati = (String) data.get("idSimati");
 
@@ -4189,7 +4057,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					.get("id_Suburusanstatusfail");
 
 			String no_daerah = (String) data.get("no_daerah");
-			// myLogger.info("IDPPPPP Daerah!!!!" + no_daerah);
+			// System.out.println("IDPPPPP Daerah!!!!" + no_daerah);
 
 			String negeri = (String) data.get("negeri");
 			String no_kpbaru_pemohon = (String) data.get("no_kpbaru_pemohon");
@@ -4204,7 +4072,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			String userIdKodDaerah = (String) data.get("userIdKodDaerah");
 
-			// myLogger.info("USER KOD DAERAH!!!::" + userIdKodDaerah);
+			// System.out.println("USER KOD DAERAH!!!::" + userIdKodDaerah);
 
 			String userIdKodNegeri = (String) data.get("userIdKodNegeri");
 			// String tarikh_simati = (String)data.get("tarikh_simati");
@@ -4245,7 +4113,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			
 
 
-			// myLogger.info("sijilmatimodel::" + sijilmati);
+			// System.out.println("sijilmatimodel::" + sijilmati);
 
 			java.util.Calendar calendar = java.util.Calendar.getInstance();
 			int getYear = calendar.get(java.util.Calendar.YEAR);
@@ -4270,7 +4138,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				negeri = "0";
 			}
 
-			// myLogger.info("USER KOD DAERAH MOHON!!!::" + no_daerah);
+			// System.out.println("USER KOD DAERAH MOHON!!!::" + no_daerah);
 
 			int nod = Integer.parseInt(no_daerah);
 
@@ -4327,7 +4195,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				jacket = 1;
 				jac = "" + jacket;
 
-				// myLogger.info("jac::" + jac);
+				// System.out.print("jac::" + jac);
 			} else {
 				jacket = Integer.parseInt(no_subjaket);
 				jacket_count = jacket + 1;
@@ -4339,7 +4207,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			int f_l = txtNoFail.length();
 			int s_b = no_subjaket.length();
-			// myLogger.info("FAIL LENGHT :" + f_l);
+			// System.out.println("FAIL LENGHT :" + f_l);
 
 			String s = "";
 
@@ -4355,7 +4223,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			}
 
 			String getNoFile = s + "/S17-" + jac;
-			// myLogger.info("getNoFile:" + getNoFile);
+			// System.out.println("getNoFile:" + getNoFile);
 
 			tarikh_masuk = (String) data.get("tarikh_masuk");
 			// tarikh_simati = (String)data.get("tarikh_simati");
@@ -4518,7 +4386,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("id_masuk", userId);
 			r.add("tarikh_masuk", r.unquote("sysdate"));
 			sqlbayaran = r.getSQLInsert("tblppkbayaran");
-			// myLogger.info("sqlbayaran-->" + sqlbayaran);
+			// System.out.println("sqlbayaran-->" + sqlbayaran);
 			stmt.executeUpdate(sqlbayaran);
 			/*
 			 * db = new Db(); Statement stmt8 = db.getStatement(); SQLRenderer
@@ -4907,7 +4775,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			long idPermohonan = Long.parseLong((String) data
 					.get("IdPermohonan"));
 
-			// myLogger.info("IDPPPPP" + idPermohonan);
+			// System.out.println("IDPPPPP" + idPermohonan);
 			long idSubUrusanStatus = DB.getNextID(db,
 					"TBLRUJSUBURUSANSTATUS_SEQ");
 
@@ -5062,7 +4930,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				jacket = 1;
 				jac = "" + jacket;
 
-				// myLogger.info("jac::" + jac);
+				// System.out.print("jac::" + jac);
 			} else {
 				jacket = Integer.parseInt(no_subjaket);
 				jacket_count = jacket + 1;
@@ -5071,7 +4939,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			int f_l = txtNoFail.length();
 			int s_b = no_subjaket.length();
-			// myLogger.info("FAIL LENGHT :" + f_l);
+			// System.out.println("FAIL LENGHT :" + f_l);
 
 			String s = "";
 
@@ -5271,8 +5139,8 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("lain_tujuan", lt);
 			r.add("id_permohonanterdahulu", idp_dulu);
 			sql3 = r.getSQLInsert("tblppkpermohonan");
-			myLogger.info("bkp===="+bkp);
-			myLogger.info("sql3===="+sql3);
+//			System.out.println("bkp===="+bkp);
+//			System.out.println("sql3===="+sql3);
 			stmt.executeUpdate(sql3);
 
 			String sqlr = "";
@@ -5787,7 +5655,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			long idPermohonan = Long.parseLong((String) data
 					.get("IdPermohonan"));
 
-			// myLogger.info("IDPPPPP" + idPermohonan);
+			// System.out.println("IDPPPPP" + idPermohonan);
 			long idSubUrusanStatus = DB.getNextID(db,
 					"TBLRUJSUBURUSANSTATUS_SEQ");
 
@@ -5949,7 +5817,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				jacket = 1;
 				jac = "" + jacket;
 
-				// myLogger.info("jac::" + jac);
+				// System.out.print("jac::" + jac);
 			} else {
 				jacket = Integer.parseInt(no_subjaket);
 				jacket_count = jacket + 1;
@@ -5958,7 +5826,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			int f_l = txtNoFail.length();
 			int s_b = no_subjaket.length();
-			// myLogger.info("FAIL LENGHT :" + f_l);
+			// System.out.println("FAIL LENGHT :" + f_l);
 
 			String s = "";
 
@@ -6294,7 +6162,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				r.add("id_saudara", socSaudaraWaris);
 
 				sqlOB = r.getSQLInsert("tblppkob");
-				// myLogger.info(sqlOB);
+				// System.out.println(sqlOB);
 				stmt.executeUpdate(sqlOB);
 			}
 
@@ -6851,7 +6719,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			long idPermohonan = Long.parseLong((String) data
 					.get("IdPermohonan"));
 
-			// myLogger.info("IDPPPPP" + idPermohonan);
+			// System.out.println("IDPPPPP" + idPermohonan);
 			long idSubUrusanStatus = DB.getNextID(db,
 					"TBLRUJSUBURUSANSTATUS_SEQ");
 
@@ -6874,7 +6742,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			String lt = (String) data.get("lt");
 			String idp_dulu = (String) data.get("idp_dulu");
 
-			// myLogger.info("no_subjaket :>>>>>" + no_subjaket);
+			// System.out.println("no_subjaket :>>>>>" + no_subjaket);
 
 			String idsimati = (String) data.get("idSimati");
 
@@ -6882,7 +6750,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					.get("id_Suburusanstatusfail");
 
 			String no_daerah = (String) data.get("no_daerah");
-			// myLogger.info("IDPPPPP Daerah!!!!" + no_daerah);
+			// System.out.println("IDPPPPP Daerah!!!!" + no_daerah);
 
 			String negeri = (String) data.get("negeri");
 			String no_kpbaru_pemohon = (String) data.get("no_kpbaru_pemohon");
@@ -6897,7 +6765,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			String userIdKodDaerah = (String) data.get("userIdKodDaerah");
 
-			// myLogger.info("USER KOD DAERAH!!!::" + userIdKodDaerah);
+			// System.out.println("USER KOD DAERAH!!!::" + userIdKodDaerah);
 
 			String userIdKodNegeri = (String) data.get("userIdKodNegeri");
 			// String tarikh_simati = (String)data.get("tarikh_simati");
@@ -6940,7 +6808,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			Vector cpw = checkpemohonwarislong(idPemohon);
 
-			// myLogger.info("sijilmatimodel::" + sijilmati);
+			// System.out.println("sijilmatimodel::" + sijilmati);
 
 			java.util.Calendar calendar = java.util.Calendar.getInstance();
 			int getYear = calendar.get(java.util.Calendar.YEAR);
@@ -6965,7 +6833,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				negeri = "0";
 			}
 
-			// myLogger.info("USER KOD DAERAH MOHON!!!::" + no_daerah);
+			// System.out.println("USER KOD DAERAH MOHON!!!::" + no_daerah);
 
 			int nod = Integer.parseInt(no_daerah);
 
@@ -7022,7 +6890,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				jacket = 1;
 				jac = "" + jacket;
 
-				// myLogger.info("jac::" + jac);
+				// System.out.print("jac::" + jac);
 			} else {
 				jacket = Integer.parseInt(no_subjaket);
 				jacket_count = jacket + 1;
@@ -7034,7 +6902,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			int f_l = txtNoFail.length();
 			int s_b = no_subjaket.length();
-			// myLogger.info("FAIL LENGHT :" + f_l);
+			// System.out.println("FAIL LENGHT :" + f_l);
 
 			String s = "";
 
@@ -7050,7 +6918,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			}
 
 			String getNoFile = s + "/S17-" + jac;
-			// myLogger.info("getNoFile:" + getNoFile);
+			// System.out.println("getNoFile:" + getNoFile);
 
 			tarikh_masuk = (String) data.get("tarikh_masuk");
 			// tarikh_simati = (String)data.get("tarikh_simati");
@@ -7224,7 +7092,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("id_masuk", userId);
 			r.add("tarikh_masuk", r.unquote("sysdate"));
 			sqlbayaran = r.getSQLInsert("tblppkbayaran");
-			// myLogger.info("sqlbayaran-->" + sqlbayaran);
+			// System.out.println("sqlbayaran-->" + sqlbayaran);
 			stmt.executeUpdate(sqlbayaran);
 			/*
 			 * db = new Db(); Statement stmt8 = db.getStatement(); SQLRenderer
@@ -7667,7 +7535,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 	 * long idPermohonan = Long.parseLong((String)data.get("IdPermohonan"));
 	 * 
 	 * 
-	 * //myLogger.info("IDPPPPP"+idPermohonan); long idSubUrusanStatus =
+	 * //System.out.println("IDPPPPP"+idPermohonan); long idSubUrusanStatus =
 	 * DB.getNextID("TBLRUJSUBURUSANSTATUS_SEQ");
 	 * 
 	 * int UserIdPejabat = Integer.parseInt((String)data.get("userIdPejabat"));
@@ -7684,7 +7552,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 	 * pemohonSimati = (String)data.get("pemohonSimati");
 	 * 
 	 * 
-	 * //myLogger.info("no_subjaket :>>>>>"+no_subjaket);
+	 * //System.out.println("no_subjaket :>>>>>"+no_subjaket);
 	 * 
 	 * String idsimati = (String)data.get("idSimati");
 	 * 
@@ -7694,7 +7562,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 	 * 
 	 * 
 	 * String no_daerah = (String)data.get("no_daerah");
-	 * //myLogger.info("IDPPPPP Daerah!!!!"+no_daerah);
+	 * //System.out.println("IDPPPPP Daerah!!!!"+no_daerah);
 	 * 
 	 * String negeri = (String)data.get("negeri"); String no_kpbaru_pemohon =
 	 * (String)data.get("no_kpbaru_pemohon"); String no_kplama_pemohon =
@@ -7708,7 +7576,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 	 * 
 	 * String userIdKodDaerah = (String)data.get("userIdKodDaerah");
 	 * 
-	 * //myLogger.info("USER KOD DAERAH!!!::"+userIdKodDaerah);
+	 * //System.out.println("USER KOD DAERAH!!!::"+userIdKodDaerah);
 	 * 
 	 * 
 	 * String userIdKodNegeri = (String)data.get("userIdKodNegeri"); //String
@@ -7733,7 +7601,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 	 * txdTarikhByrnH = (String)data.get("txdTarikhByrnH");
 	 * 
 	 * 
-	 * //myLogger.info("sijilmatimodel::"+sijilmati);
+	 * //System.out.println("sijilmatimodel::"+sijilmati);
 	 * 
 	 * 
 	 * 
@@ -7748,7 +7616,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 	 * = no_daerah; } if (userIdNeg.length() < 1){ userIdNeg = "0"+userIdNeg;
 	 * }else{ userIdNeg = userIdNeg; } if (negeri.equals("")){ negeri = "0"; }
 	 * 
-	 * //myLogger.info("USER KOD DAERAH MOHON!!!::"+no_daerah);
+	 * //System.out.println("USER KOD DAERAH MOHON!!!::"+no_daerah);
 	 * 
 	 * int nod=Integer.parseInt(no_daerah);
 	 * 
@@ -7794,21 +7662,21 @@ public Vector setSupportingDoc(String id) throws Exception {
 	 * 
 	 * if(no_subjaket == "") { jacket=1; jac=""+jacket;
 	 * 
-	 * //myLogger.info("jac::"+jac); } else { jacket =
+	 * //System.out.print("jac::"+jac); } else { jacket =
 	 * Integer.parseInt(no_subjaket); jacket_count = jacket+ 1;
 	 * jac=""+jacket_count; }
 	 * 
 	 * //nosubjacket = ""; //txtNoFail
 	 * 
 	 * // String txtNoFail = "JKPTG/PK/03/02/0009/2009/S17-1"; String s =
-	 * txtNoFail.substring(0,24); // //myLogger.info("getNoFile SSSS:"+s);
+	 * txtNoFail.substring(0,24); // //System.out.println("getNoFile SSSS:"+s);
 	 * 
 	 * // String s = txtNoFail.substring(txtNoFail.lastIndexOf('/')+1); //
-	 * //myLogger.info("getNoFile SSSS:"+s);
+	 * //System.out.println("getNoFile SSSS:"+s);
 	 * 
 	 * // String getNoFile = "JKPTG/PK/"+ userIdKodNegeri + "/"+ userIdKodDaerah
 	 * + "/"+X+"/"+getYear; String getNoFile = s+"/S17-"+jac;
-	 * //myLogger.info("getNoFile:"+getNoFile);
+	 * //System.out.println("getNoFile:"+getNoFile);
 	 * 
 	 * tarikh_masuk = (String)data.get("tarikh_masuk"); //tarikh_simati =
 	 * (String)data.get("tarikh_simati"); String tarikh_mohon = "to_date('" +
@@ -7898,7 +7766,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 	 * r77.add("id_masuk",userId);
 	 * r77.add("tarikh_masuk",r77.unquote("sysdate")); sqlbayaran =
 	 * r77.getSQLInsert("tblppkbayaran");
-	 * //myLogger.info("sqlbayaran-->"+sqlbayaran);
+	 * //System.out.println("sqlbayaran-->"+sqlbayaran);
 	 * stmtM.executeUpdate(sqlbayaran);
 	 * 
 	 * 
@@ -7951,7 +7819,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 		try {
 			db = new Db();
 			conn = db.getConnection();
-			conn.setAutoCommit(true);
+			conn.setAutoCommit(false);
 			String IdFail = (String) data.get("IdFail");
 			String IdSimati = (String) data.get("IdSimati");
 			String IdPemohon = (String) data.get("IdPemohon");
@@ -7980,37 +7848,26 @@ public Vector setSupportingDoc(String id) throws Exception {
 			String idbandar = (String) data.get("idbandar");
 			String poskod = (String) data.get("poskod");
 			String id_Masuk = (String) data.get("id_Masuk");
-
 			String txtUmurSimati = (String) data.get("txtUmurSimati");
 			String socJantinaSimati = (String) data.get("socJantinaSimati");
 			String txtUmurPemohon = (String) data.get("txtUmurPemohon");
 			String socJantinaPemohon = (String) data.get("socJantinaPemohon");
-
 			String no_tel = (String) data.get("no_tel");
-			
 			String nama_pelbagainegara = (String) data.get("nama_pelbagainegara");
-			
-			
 			String jenis_pej = (String) data.get("jenis_pej");
-
+			String emel = (String) data.get("emel");
 			String no_hp = (String) data.get("no_hp");
 			String taraf_penting = (String) data.get("taraf_penting");
 			String jenis_pemohon = (String) data.get("jenis_pemohon");
 			String adaob = (String) data.get("adaob");
-			
 			String socSaudaraWaris = (String) data.get("socSaudaraWaris");
-				
-			
-			
-			
-			
 			String id_Permohonansimati = (String) data
 					.get("id_Permohonansimati");
 
 			// String pemohonSimati = (String) data.get("pemohonSimati");
 			Vector cpw = checkpemohonwaris(IdPemohon);
 
-			// myLogger.info("ADA OB??"+adaob);
+			// System.out.print("ADA OB??"+adaob);
 
 			// int umursimati = Integer.parseInt(txtUmurSimati);
 			// int jantinasimati = Integer.parseInt(socJantinaSimati);
@@ -8038,34 +7895,20 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ "tarikh_kemaskini = sysdate where id_permohonan = "
 					+ IdPermohonan + " ";*/
 			
-			
-			
-			
+			sql = "UPDATE TBLPPKPERMOHONAN SET tarikh_mohon=" + tarikh_mohon
+			+ ", id_pemohon = " + IdPemohon + ",id_kemaskini = " + id_Masuk + ","
+			+ "tarikh_kemaskini = sysdate where id_permohonan = "
+			+ IdPermohonan + " ";
+
+			myLogger.debug(sql);
+			stmt.executeUpdate(sql);
+
+			db = new Db();
 			// Statement stmt = db.getStatement();
 			sql = "UPDATE TBLPFDFAIL SET tarikh_daftar_fail=sysdate, "
 					+ "tarikh_kemaskini = sysdate where id_fail = " + IdFail
 					+ " ";
-			//myLogger.debug("sql2 = "+ sql);
-			myLogger.info("sql2 = "+ sql);
 			stmt.executeUpdate(sql);
-			
-			
-			db = new Db();
-//			sql = "UPDATE TBLPPKPERMOHONAN SET tarikh_mohon=" + tarikh_mohon
-//			+ ", id_pemohon = " + IdPemohon + ",id_kemaskini = " + id_Masuk + ","
-//			+ "tarikh_kemaskini = sysdate where id_permohonan = "
-//			+ IdPermohonan + " ";
-			
-			sql = "UPDATE TBLPPKPERMOHONAN SET id_pemohon = " + IdPemohon + ",id_kemaskini = " + id_Masuk + ","
-			+ "tarikh_kemaskini = sysdate where id_permohonan = "
-			+ IdPermohonan + " ";
-
-			//myLogger.debug("sql1 = "+ sql);
-			myLogger.info("sql1 = "+ sql);
-			stmt.executeUpdate(sql);
-			myLogger.info("*************");
-			
-			
 
 			// db = new Db();
 			// Statement stmtA = db.getStatement();
@@ -8093,15 +7936,11 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("tarikh_Kemaskini", r.unquote("sysdate"));
 
 			sql1 = r.getSQLUpdate("tblppksimati");
-			myLogger.info("peje --- " + sql1);
+//			System.out.println("peje --- " + sql1);
 			stmt.executeUpdate(sql1);
 			
-			
-
 			// db = new Db();
 			// Statement stmtc = db.getStatement();
-			
-			
 			
 			r.clear();
 			r.update("id_pemohon", IdPemohon);
@@ -8142,7 +7981,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("id_bandarsurat", idbandar);
 			r.add("bandar_surat", bandar);
 			r.add("id_negerisurat", negeri);
-			
+			r.add("emel", emel);
 			r.add("no_tel", no_tel);
 
 			r.add("id_tarafkptg", taraf_penting);
@@ -8469,7 +8308,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			 * db = new Db(); Statement stmtd = db.getStatement(); sql4 =
 			 * "UPDATE TBLPPKPERMOHONAN set id_daerahmhn = "+ no_daerah
 			 * +" where " + "id_permohonan = "+ IdPermohonan +" and id_fail="+
-			 * IdFail +""; //myLogger.info("sql4 Permohonan-->"+sql4);
+			 * IdFail +""; //System.out.println("sql4 Permohonan-->"+sql4);
 			 * stmtd.executeUpdate(sql4);
 			 */
 			conn.commit();
@@ -8560,7 +8399,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			// String pemohonSimati = (String) data.get("pemohonSimati");
 			Vector cpw = checkpemohonwaris(IdPemohon);
 
-			// myLogger.info("ADA OB??"+adaob);
+			// System.out.print("ADA OB??"+adaob);
 
 			// int umursimati = Integer.parseInt(txtUmurSimati);
 			// int jantinasimati = Integer.parseInt(socJantinaSimati);
@@ -9723,7 +9562,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 	public Vector getJenisKpDb(Db db) throws Exception {
 		//Db db = null;
 		String sql = "Select id_jenisnopb,keterangan"
-				+ " from tblrujjenisnopb where id_jenisnopb in(4,5,6,13,7) ";
+				+ " from tblrujjenisnopb where id_jenisnopb in(4,5,6,7) ";
 		try {
 			//db = new Db();
 			Statement stmt = db.getStatement();
@@ -9849,6 +9688,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			while (rs.next()) {
 				h = new Hashtable();
+				//System.out.println("TESTTT ***** = " + rs.getString("id_jenisha"));
 				h.put("idjenisha", rs.getString("id_jenisha"));
 				h.put("kod", rs.getString("kod"));
 				h.put("keterangan", rs.getString("keterangan"));
@@ -9893,7 +9733,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			String butiran = (String) data.get("butiran");
 
-			// myLogger.info("POSKODDDD:" + txtPoskod);
+			// System.out.println("POSKODDDD:" + txtPoskod);
 
 			String socNegeriHtaam = (String) data.get("socNegeriHtaam");
 			String socDaerahHtaam = (String) data.get("socDaerahHtaam");
@@ -10031,7 +9871,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 							" AND MS.ID_PERMOHONANSIMATI = '"
 					+ id + "' " + "ORDER BY H.ID_JENISHA,H.ID_HA DESC ";
 			myLogger.info("setDataHa at nilaian :"+sql);
-			// myLogger.info("WWWW:::" + sql.toUpperCase());
+			// System.out.println("WWWW:::" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 			int bil = 1;
@@ -10484,9 +10324,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ " FROM TBLPPKHA H1,TBLPPKHAPERMOHONAN H, TBLPPKRUJJENISHA J"
 					+ " WHERE H1.ID_HA = H.ID_HA AND H.ID_JENISHA = J.ID_JENISHA   "
 					+ " AND H.ID_HA = '" + id3 + "' ";
-
-			myLogger.info("HARTA ALIH :" + sql.toUpperCase());
-
+//			System.out.println("HARTA ALIH :" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 			int bil = 1;
@@ -10679,7 +10517,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("tarikh_Kemaskini", r.unquote("sysdate"));
 			r.add("FLAG_DAFTAR", FLAG_DAFTAR);
 			sql = r.getSQLUpdate("tblppkha");
-			myLogger.info("sql = "+sql);
+//			System.out.println("sql = "+sql);
 			stmt.executeUpdate(sql);
 			
 			r.clear();
@@ -10727,7 +10565,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("tarikh_Kemaskini", r.unquote("sysdate"));
 			r.add("FLAG_DAFTAR", FLAG_DAFTAR);
 			sql = r.getSQLUpdate("tblppkhapermohonan");
-			myLogger.info("sql = "+sql);
+//			System.out.println("sql = "+sql);
 			stmt.executeUpdate(sql);
 			
 			conn.commit();
@@ -10789,7 +10627,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 				" and ps.id_Permohonansimati = '"
 				+ mati + "' and p1.id_simati = ps.id_simati";
 
-		// myLogger.info("listSumDataHa" + sql);
+		// System.out.println("listSumDataHa" + sql);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
@@ -10897,6 +10735,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("keterangan");
 
 			sql = r.getSQLSelect("Tblppkrujtarafkptg", "kod");
+//			System.out.print("SQL 333" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -10950,7 +10789,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ " AND id_Saudara <> 30" + " AND id_Saudara <> 34"
 					+ " AND id_Saudara <> 35" + "ORDER BY kod";
 
-			// myLogger.info("SAUDARA :" + sql);
+			// System.out.println("SAUDARA :" + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -11007,8 +10846,8 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ " AND id_Saudara <> 30" + " AND id_Saudara <> 34"
 					+ " AND id_Saudara <> 35" + "ORDER BY kod";
 
-			// myLogger.info("SAUDARA :" + sql);
-			myLogger.info("SQL 444" + sql.toUpperCase());
+			// System.out.println("SAUDARA :" + sql);
+			System.out.print("SQL 444" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -11050,7 +10889,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 		//Db db = null;
 		// String sql =
 		// "select a.id_agensi, a.kod_agensi, a.nama_agensi, a.alamat1, a.alamat2, a.alamat3, a.poskod, a.jawatan, a.id_negeri from tblrujagensi a order by a.id_negeri";
-		myLogger.info("getListnegeriDb");
+//		System.out.print("getListnegeriDb");
 		String sql = "";
 		try {
 			//db = new Db();
@@ -11061,6 +10900,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("kod_Negeri");
 			
 			sql = r.getSQLSelect("Tblrujnegeri", "kod_Negeri");
+//			System.out.print("SQL 111" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -11195,7 +11035,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("kod");
 
 			sql = r.getSQLSelect("Tblppkrujbuktimati", "kod");
-			myLogger.info("SQL 555" + sql.toUpperCase());
+//			System.out.print("SQL 555" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -11260,7 +11100,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 		String sql = "Select count(p.id_pemohon) as ids from tblppkpemohon pm, tblppkpermohonan p " +
 				"where p.id_pemohon = pm.id_pemohon and p.id_permohonan = '"
 				+ id + "'";
-		myLogger.info("COUNT :" + sql);
+		// System.out.println("COUNT :" + sql);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
@@ -11376,9 +11216,10 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ "JUM_HARTA_TAMBAHAN_TKHMOHON = NVL(JUM_HTA_TAMBAHAN_TKHMOHON,0) + NVL(JUM_HA_TAMBAHAN_TKHMOHON,0), "
 					+ "JUM_HARTA_TAMBAHAN_TKHMATI = NVL(JUM_HTA_TAMBAHAN_TKHMATI,0) + NVL(JUM_HA_TAMBAHAN_TKHMATI,0) "
 					+ "where id_permohonan = " + id + "";
-			//System.out.println("UPDATE DATA NILAI :" + sqlT.toUpperCase());
 			stmtT.executeUpdate(sqlT);
 			
+			// System.out.println("UPDATE DATA NILAI :" + sql.toUpperCase());
+
 		} finally {
 			if (db != null)
 				db.close();
@@ -11489,7 +11330,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			myLogger.info("UPDATE DATA NILAI :" + sqlT.toUpperCase());
 			stmtT.executeUpdate(sqlT);
 
-			// myLogger.info("UPDATE DATA NILAI :" + sql.toUpperCase());
+			// System.out.println("UPDATE DATA NILAI :" + sql.toUpperCase());
 
 		} finally {
 			if (db != null)
@@ -11602,7 +11443,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			sql = r.getSQLSelect("Tblrujmukim", "kod_Mukim");*/
 			
 			sql = "Select id_Mukim, NAMA_MUKIM , kod_Mukim  FROM "
-					+ "Tblrujmukim p Where id_Daerah =  '" + iddaerah + "' AND (FLAG_AKTIF is null or FLAG_AKTIF ='Y')   ORDER BY kod_mukim ";
+					+ "Tblrujmukim p Where id_Daerah =  '" + iddaerah + "' AND (FLAG_AKTIF is null or FLAG_AKTIF ='Y')  ";
 			
 			myLogger.info("sql mukim = " + sql);
 			ResultSet rs = stmt.executeQuery(sql);
@@ -11688,7 +11529,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("kod_Daerah");
 			// r.add("id_Negeri");
 			sql = r.getSQLSelect("Tblrujdaerah", "kod_Daerah");
-			myLogger.info("SQL" + sql.toUpperCase());
+//			System.out.print("SQL 666" + sql.toUpperCase());
 			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
@@ -11719,7 +11560,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 	
 	
 	Vector negeri_id = null;
-	
 
 	public Vector getNegeriID(String idd) throws Exception {
 		Db db = null;
@@ -11868,7 +11708,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			// r.add("id_Negeri");
 
 			sql = r.getSQLSelect("Tblrujluas", "kod_Luas");
-			myLogger.info("SQL" + sql.toUpperCase());
+//			System.out.print("SQL 777" + sql.toUpperCase());
 			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
@@ -11964,8 +11804,8 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("jenis_Daftar_Pb", status);
 
 			sql = r.getSQLSelect("Tblrujjenispb", "kod_Jenis_Pb");
-			//System.out.print("SQL 888" + sql.toUpperCase());
-			 
+//			System.out.print("SQL 888" + sql.toUpperCase());
+			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -11996,53 +11836,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 				db.close();*/
 		}
 	}
-	
-	private void uploadFiles(Db db,Connection conn, String idSimati, String id_Masuk) throws Exception {
-		myLogger.info("Baca uploadFiles:--------------"); 
-		String idSimati1 = idSimati;
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-	    ServletFileUpload upload = new ServletFileUpload(factory);
-	    myLogger.info("Baca uploadFiles2:--------------"); 
-	    List items = upload.parseRequest(this.request);
-	    Iterator itr = items.iterator();
-	    myLogger.info("Baca uploadFiles3:--------------"); 
-	    while (itr.hasNext()) {    	
-	      FileItem item = (FileItem)itr.next();
-	      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-	    	  System.out.println("item.getName = "+ item.getName());
-	    	  saveData(item,db,conn,idSimati1,id_Masuk);
-	      }
-	    }
-	  }
-	
-	private void saveData(FileItem item,Db db,Connection conn, String idSimati, String id_Masuk) throws Exception {
-		//Db db = null;
-	
-    try {
-    	db = new Db();
-
-    	Connection con = db.getConnection();
-    	con.setAutoCommit(false);
-    	String idSimati1 = idSimati;
-    	//String id_permohonansimati = getParam("id_permohonansimati_atheader");
-    	PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMENSIMATI (ID_SIMATI,ID_JENISDOKUMEN,NAMA_DOKUMEN, FORMAT, KANDUNGAN, ID_MASUK) VALUES (?,?,?,?,?,?)");		
-    	
-    	ps.setString(1,idSimati1);
-    	ps.setString(2,"99201");
-    	ps.setString(3,item.getName());
-    	ps.setString(4,item.getContentType());
-    	ps.setBinaryStream(5,item.getInputStream(),(int)item.getSize());
-    		
-    	ps.setString(6,id_Masuk);
-    	//ps.setString(4,getParam("id_permohonansimati_atheader"));
-    	myLogger.info("Baca SaveData:---------------"); 
-    	ps.executeUpdate();	
-    	myLogger.info("Baca SaveData 2:---------------"); 
-        con.commit();
-    } finally {
-	      if (db != null) db.close();
-    }
-}
 	
 	public Vector getListJenisTanah() throws Exception {
 		Db db = null;
@@ -12096,7 +11889,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			// 2017/09/17
 			//sql = r.getSQLSelect("Tblrujjenistanah", "kod_Jenis_Tanah");
 			sql = r.getSQLSelect("tblppkrujjenistanah", "kod_Jenis_Tanah");
-			myLogger.info("SQL 999" + sql.toUpperCase());
+//			System.out.print("SQL 999" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -12181,7 +11974,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			r.add("id_Daerah");
 
 			sql = r.getSQLSelect("Tblrujmukim", "kod_Mukim");
-			myLogger.info("SQL 101010" + sql.toUpperCase());
+//			System.out.print("SQL 101010" + sql.toUpperCase());
 			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
@@ -12234,7 +12027,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					// "--WHERE status_Hakmilik = 'Y'  " +
 					"ORDER BY kod_Jenis_Hakmilik";
 
-			// myLogger.info("JENIS HAKMILIK :"+sql);
+			// System.out.println("JENIS HAKMILIK :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -12292,7 +12085,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					// "--WHERE status_Hakmilik = 'Y'  " +
 					"ORDER BY kod_Jenis_Hakmilik";
 
-			// myLogger.info("JENIS HAKMILIK :"+sql);
+			// System.out.println("JENIS HAKMILIK :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -12420,9 +12213,8 @@ public Vector setSupportingDoc(String id) throws Exception {
 		String idUser = userid;
 		String sql = "Select d.id_daerah,d.kod_daerah,d.id_negeri,r.id_pejabatjkptg,n.kod_negeri From users_internal u, tblrujdaerah d, tblrujpejabaturusan r, tblrujnegeri n "
 				+ "Where u.id_negeri = d.id_negeri and d.id_daerah = r.id_daerah and d.id_negeri = r.id_negeri and r.id_negeri = n.id_negeri and u.user_id = "
-				+ idUser + "";
-		
-		//myLogger.info("negeri user ::::"+sql);
+				+ idUser + "";		
+//		System.out.println("negeri user ::::"+sql);
 		
 		// String sql = "";
 		try {
@@ -12504,28 +12296,23 @@ public Vector setSupportingDoc(String id) throws Exception {
 		// String sql =
 		// "Select d.id_daerah,d.kod_daerah,d.nama_daerah,d.id_negeri From users_internal u, tblrujdaerah d, tblrujpejabaturusan r  Where u.id_negeri = d.id_negeri and d.id_daerah = r.id_daerah and d.id_negeri = r.id_negeri and u.user_id = 14 group by d.id_daerah,d.kod_daerah,d.nama_daerah,d.id_negeri order by d.id_daerah";
 
-		String sql = "select id_daerah,kod_daerah,nama_daerah from " +
-					" tblRujDaerah where id_daerah in ( " +
-					" 	select distinct u.id_daerahurus from " +
-					" 	tblrujpejabaturusan u, users_internal ur where " +
-					"	u.id_pejabatjkptg = ur.id_pejabatjkptg" +
-					//" 	and u.id_jenispejabat != '3' " +
-					" 	and u.id_jenispejabat != '22' " +
-					"	and ur.user_id='"+ userid + "' ";
-				sql += " UNION "+                                                                            
-					" SELECT DISTINCT PBU_U.ID_DAERAHURUS FROM "+ 
-					" TBLPERMOHONANBANTUUNIT PBU,TBLRUJPEJABATURUSAN PBU_U WHERE "+ 
-					" ID_STATUS = 2  "+ 
+		String sql = "select id_daerah,kod_daerah,nama_daerah from tblRujDaerah where id_daerah in ( select distinct u.id_daerahurus from"
+				+ " TBLRUJPEJABATURUSAN u, users_internal ur where u.id_pejabatjkptg=ur.id_pejabatjkptg and u.id_jenispejabat != '3' and ur.user_id='"
+				+ userid + "' ";
+				 sql += " UNION "+                                                                            
+					" SELECT DISTINCT PBU_U.ID_DAERAHURUS  "+ 
+					" FROM TBLPERMOHONANBANTUUNIT PBU,TBLRUJPEJABATURUSAN PBU_U "+ 
+					" WHERE ID_STATUS = 2  "+ 
 					" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') >= TO_DATE(TO_CHAR(PBU.TARIKH_MULA,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
 					" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') <= TO_DATE(TO_CHAR(PBU.TARIKH_AKHIR,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
 					" AND PBU.ID_UNIT = PBU_U.ID_PEJABATJKPTG  "+ 
-					" AND flag_aktif = 'Y' AND PBU.ID_PEMOHON = "+userid+"  " +
-					"";
-				sql += " ) "
+					" AND PBU.ID_PEMOHON = "+userid+"  ";
+				sql += " )"
 
 				+ " ORDER BY id_negeri,kod_daerah";
 
-		//myLogger.info("@@@@" + sql);
+//		System.out.println("@@@@" + sql);
+
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -12541,20 +12328,22 @@ public Vector setSupportingDoc(String id) throws Exception {
 
 			while (rs.next()) {
 				h = new Hashtable();
-				h.put("iddaerah",rs.getString("id_daerah") == null ? "" : rs.getString("id_daerah"));
-				h.put("koddaerah",rs.getString("kod_daerah") == null ? "" : rs.getString("kod_daerah"));
-				h.put("namadaerah", rs.getString("nama_daerah") == null ? "": rs.getString("nama_daerah"));
+				h.put("iddaerah",
+						rs.getString("id_daerah") == null ? "" : rs
+								.getString("id_daerah"));
+				h.put("koddaerah",
+						rs.getString("kod_daerah") == null ? "" : rs
+								.getString("kod_daerah"));
+				h.put("namadaerah", rs.getString("nama_daerah") == null ? ""
+						: rs.getString("nama_daerah"));
+
 				listDaerahByUser.addElement(h);
-				
 			}
 			return listDaerahByUser;
-			
 		} finally {
 			if (db != null)
 				db.close();
 		}
-		
-		
 	}
 
 	public Vector getDaerahUser(String userid) throws Exception {
@@ -12597,7 +12386,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 	// kira jumlah nilai mohon hta
 	private Vector listSumDataHta = new Vector();
 	private Vector listSumDataHtaDulu = new Vector();
-	private Vector listSimati = new Vector();
 
 	public void setSumDataHta(String id2) throws Exception {
 		Db db = null;
@@ -12628,7 +12416,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ "AND P.ID_PERMOHONAN = MS.ID_PERMOHONAN AND SM.ID_SIMATI = MS.ID_SIMATI  "
 					+ "AND MS.ID_PERMOHONANSIMATI = '" + id2 + "' ";
 
-			// myLogger.info("SQL NILAI HTA" + sql.toUpperCase());
+			// System.out.println("SQL NILAI HTA" + sql.toUpperCase());
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -12697,57 +12485,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 		}
 	}
 
-	public void setSimati(String idSimati) throws Exception {
-		Db db = null;
-		listSimati.clear();
-		String sql = "";
-		try{
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			sql = "SELECT NAMA_SIMATI, NO_KP_BARU, JENIS_WARGA, ID_BUKTIMATI, TARIKH_MATI, TEMPAT_MATI, SEBAB_MATI, "
-				+ " ALAMAT_1, POSKOD, ID_NEGERI, ID_BANDAR FROM TBLPPKSIMATI WHERE ID_SIMATI = '"
-				+ idSimati + "'";
-			
-			System.out.println("Maklumat Simati = " + sql.toUpperCase());
-			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
-
-			while (rs.next()) {
-				h = new Hashtable();
-				h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI") == null ? "" 
-						: rs.getString("NAMA_SIMATI"));
-				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
-						: rs.getString("NO_KP_BARU"));
-				h.put("JENIS_WARGA", rs.getString("JENIS_WARGA") == null ? ""
-						: rs.getString("JENIS_WARGA"));
-				h.put("ID_BUKTIMATI", rs.getString("ID_BUKTIMATI") == null ? "" 
-						: rs.getString("ID_BUKTIMATI"));
-				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
-						: rs.getString("TARIKH_MATI"));
-				h.put("TEMPAT_MATI", rs.getString("TEMPAT_MATI") == null ? ""
-						: rs.getString("TEMPAT_MATI"));
-				h.put("SEBAB_MATI", rs.getString("SEBAB_MATI") == null ? ""
-						: rs.getString("SEBAB_MATI"));
-				h.put("ALAMAT_1", rs.getString("ALAMAT_1") == null ? "" 
-						: rs.getString("ALAMAT_1"));
-				h.put("POSKOD", rs.getString("POSKOD") == null ? ""
-						: rs.getString("POSKOD"));
-				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? ""
-						: rs.getString("ID_NEGERI"));
-				h.put("BANDAR", rs.getString("ID_BANDAR") == null ? "" 
-						: rs.getString("ID_BANDAR"));
-
-				listSimati.addElement(h);
-				
-			}
-			// return list;
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
 	public void setSumDataHtaDulu(String id2) throws Exception {
 		Db db = null;
 		listSumDataHtaDulu.clear();
@@ -12802,7 +12539,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ "AND P.ID_PERMOHONAN = MS.ID_PERMOHONAN(+)  "
 					+ "AND P1.NO_SUBJAKET < P.NO_SUBJAKET ORDER BY HTA.ID_HTA DESC ";
 
-			// myLogger.info("SQL NILAI HTA" + sql.toUpperCase());
+			// System.out.println("SQL NILAI HTA" + sql.toUpperCase());
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -12886,10 +12623,6 @@ public Vector setSupportingDoc(String id) throws Exception {
 		return listSumDataHta;
 	}
 
-	public Vector getSimati() {
-		return listSimati;
-		
-	}
 	public Vector getSumDataHtaDulu() {
 		return listSumDataHtaDulu;
 	}
@@ -14304,7 +14037,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 		//Db db = null;
 		// String sql =
 		// "select a.id_agensi, a.kod_agensi, a.nama_agensi, a.alamat1, a.alamat2, a.alamat3, a.poskod, a.jawatan, a.id_negeri from tblrujagensi a order by a.id_negeri";
-		myLogger.info("getNofailduniaDb");
+//		System.out.print("getNofailduniaDb");
 		String sql = "";
 		try {
 			//db = new Db();
@@ -14328,7 +14061,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 					+ sekkk
 					+ "'"
 					+ " group by F.id_seksyen,to_char(F.TARIKH_DAFTAR_FAIL, 'YYYY')";
-			myLogger.info("SQL 222" + sql.toUpperCase());
+//			System.out.print("SQL 222" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -14411,7 +14144,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 			sql = "SELECT ID_BANDAR, KOD_BANDAR, KETERANGAN, ID_NEGERI FROM TBLRUJBANDAR WHERE ID_NEGERI = '"
 					+ idnegeri + "' ORDER BY KOD_BANDAR ASC";
 			
-			//myLogger.info(" getListBandarByNegeri :"+sql);
+			myLogger.info(" getListBandarByNegeri :"+sql);
 
 			
 			ResultSet rs = stmt.executeQuery(sql);
@@ -14712,8 +14445,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 		}
 	}
     
-    public String getNamaStatus(String id_status) throws Exception {
-		
+    public String getNamaStatus(String id_status) throws Exception {	
 		Db db = null;
 		String sql = "";
 		String nama_status_temp = "";
@@ -14731,8 +14463,9 @@ public Vector setSupportingDoc(String id) throws Exception {
 			if (db != null)
 				db.close();
 		}
+	}
 	
-    }
-	
-	
+ 	public String getIDSimati() {
+		return idSimati;	
+	}		
 }

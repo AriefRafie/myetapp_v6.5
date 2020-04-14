@@ -1,5 +1,4 @@
 package ekptg.model.ppk;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -7,7 +6,6 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import lebah.db.Db;
-import lebah.db.DbException;
 
 import org.apache.log4j.Logger;
 
@@ -694,7 +692,7 @@ sql += "                   ) A, "+
 		      sql += "               ORDER BY A.ID_FAIL DESC "+
 		    		  "               ) ";
 
-		      System.out.println(" SENARAI S17 : "+sql);
+		      myLogger.info(" SENARAI S17 : "+sql);
 		      //System.out.println("sql--->>>>>"+sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable h;
@@ -741,83 +739,7 @@ sql += "                   ) A, "+
 
 		 private  Vector listSenarai17 = new Vector();
 
-		 public void updateDatabase() throws Exception
-		 {
-			 	Db db = null;
-			 	Db db3 = null;
-			 	Db db2 = null;
-			 	Db db4 = null;
-			 	Db db2a = null;
-			    listSenarai17.clear();
-			    String sql = "";
-			    String sql2 = "";
-			    String sql3 = "";
-			    String sql4 = "";
-			    try {
-				      db = new Db();
-				      Statement stmt = db.getStatement();
-				      
-				      sql += " SELECT * FROM TBLRUJSUBURUSANSTATUSFAIL WHERE id_permohonan IN (SELECT id_permohonan FROM TBLRUJSUBURUSANSTATUSFAIL "
-				    		  + " WHERE ID_SUBURUSANSTATUS = '340' "
-				    		  + " AND AKTIF = '1' "
-				    		  + " AND ID_PERMOHONAN in (SELECT ID_PERMOHONAN FROM TBLPPKPERMOHONAN WHERE ID_STATUS = '152' AND  ID_NEGERIMHN='11')) ";
-				      System.out.println("sql--->>>>>"+sql);
-				      ResultSet rs = stmt.executeQuery(sql);
-				      
-				      
-				      while (rs.next()) {
-				    	  db2 = new Db();
-				    	  Statement stmt2 = db2.getStatement();
-				    	  String id_permohonan = rs.getString("id_Permohonan");
-				    	  //String id_permohonan = "99191174433";
-				    	  sql2 = "UPDATE TBLRUJSUBURUSANSTATUSFAIL SET AKTIF = '0' WHERE id_permohonan IN ("+id_permohonan+")";
-				    	  sql3 = "SELECT TARIKH_KEMASKINI,ID_KEMASKINI,ID_FAIL FROM TBLPPKPERMOHONAN WHERE ID_PERMOHONAN IN ("+id_permohonan+")";
-				    	  System.out.println("sql2--->>>>>"+sql2);
-				    	  System.out.println("sql3--->>>>>"+sql3);
-				    	  System.out.println("----------------");
-				    	  try {
-				    		  db2a = new Db();
-				    		  Statement stmt2a = db2a.getStatement();
-				    		  ResultSet rs2 = stmt2a.executeQuery(sql2);
-				    		 // while (rs2.next()){
-				    			  db3 = new Db();
-				    			  Statement stmt3 = db3.getStatement();
-				    			  ResultSet rs3 = stmt3.executeQuery(sql3);
-						      		while (rs3.next()){
-						      			Date tarikh_kemaskini = rs3.getDate("TARIKH_KEMASKINI");
-						      			String id_kemaskini = rs3.getString("ID_KEMASKINI");
-						      			String id_fail = rs3.getString("ID_FAIL");
-						      			System.out.println("----TARIKH KEMASKINI----"+tarikh_kemaskini+"----------------");
-						      			System.out.println("-----ID KEMASKINI----"+id_kemaskini+"----------------");
-						      			sql4 = "Insert into TBLRUJSUBURUSANSTATUSFAIL "
-						    				  + " (ID_PERMOHONAN, ID_SUBURUSANSTATUS, AKTIF, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, ID_FAIL) "
-						    				  + " Values "
-						    				  + "("+id_permohonan+", 454, '1', "+id_kemaskini+", TO_DATE('"+tarikh_kemaskini+" 23:59:59', 'YYYY-MM-DD HH24:MI:SS'), "+id_kemaskini+", TO_DATE('"+tarikh_kemaskini+" 23:59:59', 'YYYY-MM-DD HH24:MI:SS'), "+id_fail+")";
-						      			System.out.println("sql4--->>>>>"+sql4);
-						      			try {
-						      				db4 = new Db();
-						      				Statement stmt4 = db4.getStatement();
-						      				ResultSet rs4 = stmt4.executeQuery(sql4);
-						      				
-						      					System.out.println("====================");
-						      				
-						      		
-						      			}finally {
-						      				if (db4 != null) db4.close();
-						      			}
-						      			}   	
-				    	 // }  	
-						   
-				      }finally {
-					      if (db2 != null) db2.close();
-					    } 
-				      
-			    
-			    }} finally {
-				      if (db != null) db.close();
-				    }
-			    
-		 }
+
 		 public  void  setCarianFailSenarai17(String noFail, String namaPemohon, String namaSimati, String icSimati, String JenisIc, String userid)throws Exception {
 			    Db db = null;
 			    listSenarai17.clear();
