@@ -16,7 +16,7 @@
 <script type="text/javascript" src="../library/scriptaculous/effects.js" ></script>
 <script type="text/javascript" src="../library/scriptaculous/controls.js" ></script>
 <script type="text/javascript" src="../library/scriptaculous/ajax.js" ></script>
-<!-- Jquery -->
+<!-- JQuery -->
 <script type="text/javascript" src="../library/js/jquery-1.3.2.min.js"></script>
 <script>var $jquery = jQuery.noConflict();</script>
 <script type="text/javascript" src="../library/js/jquery.pstrength-min.1.2.js"></script>
