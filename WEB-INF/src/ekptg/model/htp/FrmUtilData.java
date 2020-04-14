@@ -3578,7 +3578,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 				r.add("ID_DAERAH", data.get("socDaerahHR"));
 				r.add("ID_MUKIM", data.get("socMukimHR"));
 				r.add("ID_JENISHAKMILIK", data.get("socJenisHakmilikHR"));
-				    //add by rosli format 0000000
+				//add by rosli format 0000000
 				//r.add("NO_HAKMILIK", data.get("txtNoHakmilik"));
 				//String ph = ""+data.get("socNegeriHR")+data.get("socDaerahHR")+data.get("socMukimHR")+data.get("socKodJenisHakmilikHR")+data.get("txtNoHakmilik");
 				//comment on 07/06/2010
@@ -3597,37 +3597,31 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		
 				r.add("PEGANGAN_HAKMILIK", ph);
 				r.add("ID_LOT", data.get("socLotHR"));
-				r.add("NO_LOT", data.get("txtNoLot"));
-				//convert date before add
-				String tarikhTerima = (String)(data.get("txdTarikhTerima"));
+				r.add("NO_LOT", data.get("txtNoLot"));				
+				String tarikhTerima = (String)(data.get("txdTarikhTerima"));	//convert date before add
 				String txdTarikhTerima = "to_date('" + tarikhTerima + "','dd/MM/yyyy')";	    	  
-				r.add("TARIKH_TERIMA",r.unquote(txdTarikhTerima));  	
-				//convert date before add
-				String tarikhDaftar = (String)data.get("txdTarikhDaftar");
+				r.add("TARIKH_TERIMA",r.unquote(txdTarikhTerima));  					
+				String tarikhDaftar = (String)data.get("txdTarikhDaftar");	//convert date before add
 				String txdTarikhDaftar = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";	  			  			  
 				r.add("TARIKH_DAFTAR", r.unquote(txdTarikhDaftar));
-				   	 
 				r.add("LOKASI", data.get("txtLokasi"));
 				r.add("ID_LUAS", data.get("socLuas"));
-				r.add("ID_LUAS_BERSAMAAN","2");//Default utk hektar
+				r.add("ID_LUAS_BERSAMAAN","2");	//Default utk hektar
 				r.add("TARAF_HAKMILIK", data.get("socTaraf"));
 				r.add("ID_KATEGORI", data.get("socKategori"));
 				r.add("NO_PELAN", data.get("txtNoPelan"));
 				r.add("LUAS_BERSAMAAN", Utils.RemoveComma((String)data.get("txtLuas")));
-				//AZAM ADD
 				r.add("LUAS", data.get("txtLuasGabung"));
 				r.add("TEMPOH", data.get("txtTempoh"));
 				r.add("NO_FAIL_JOPA", data.get("txtNoFailJopa"));	    	  
 				r.add("HAKMILIK_ASAL", data.get("txtHakmilikAsal"));
 				r.add("CUKAI", Utils.RemoveComma((String)data.get("txtCukaiTahun")));
-				r.add("CUKAI_TERKINI", Utils.RemoveComma((String)data.get("txtCukaiTerkini")));
-				//convert date before add
-				String tarikhLuput = (String)data.get("txdTarikhLuput");
+				r.add("CUKAI_TERKINI", Utils.RemoveComma((String)data.get("txtCukaiTerkini")));				
+				String tarikhLuput = (String)data.get("txdTarikhLuput");	//convert date before add
 				String txdTarikhLuput = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";	  			  			 
 				r.add("TARIKH_LUPUT", r.unquote(txdTarikhLuput));
-				r.add("NO_PU", data.get("txtNoPu"));
-				//convert date before add
-				String tarikhWarta = (String)data.get("txdTarikhWarta");
+				r.add("NO_PU", data.get("txtNoPu"));		
+				String tarikhWarta = (String)data.get("txdTarikhWarta");	//convert date before add
 				String txdTarikhWarta = "to_date('" + tarikhWarta + "','dd/MM/yyyy')";		    	  
 				r.add("TARIKH_RIZAB", r.unquote(txdTarikhWarta));
 				r.add("KAWASAN_RIZAB", data.get("txtKawasanRizab"));
@@ -3636,26 +3630,22 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 				r.add("SEKATAN", data.get("txtSekatan"));	  
 				r.add("SYARAT", data.get("txtSyarat"));	  
 				r.add("HAKMILIK_BERIKUT", data.get("txtHakmilikBerikut"));
-				r.add("STATUS_SAH", data.get("socStatus"));
-				//convert date before add
-				//String tarikhKemaskini = currentDate;
-				//String txdTarikhKemaskini = "to_date('" + tarikhKemaskini + "','dd/MM/yyyy')";		    	  
+				//r.add("STATUS_SAH", data.get("socStatus")); //by default tiada status
 				r.add("TARIKH_KEMASKINI",r.unquote("sysdate"));
 				r.add("TARIKH_MASUK", r.unquote("sysdate"));
 				r.add("ID_RIZAB", data.get("socJenisRizab"));    
 				r.add("STATUS_RIZAB",data.get("socRizab"));
-				//AZAM CHANGE TO GET ID SUB KATEGORI
 				//r.add("ID_SUBKATEGORI",data.get("socKategori"));
 				r.add("ID_SUBKATEGORI",getSubCategory((String)data.get("socKategori")));
 				r.add("ID_AGENSI", data.get("idAgensi"));
 				r.add("ID_KEMENTERIAN", data.get("idKementerian"));
 				//r.add("STATUS_RIZAB", "Y");
 				r.add("KEGUNAAN_TANAH", data.get("txtKegunaanTanah"));
-				//tambah pada 20100709 - hakmilik strata
+				//tambah pada 20100709 - hakmilik strata (no_bangunan,no_tingakt,no_petak)
 				r.add("NO_BANGUNAN", data.get("noBangunan"));				
 				r.add("NO_TINGKAT", data.get("noTingkat"));				
 				r.add("NO_PETAK", data.get("noPetak"));				
-				r.add("catatan", data.get("catatan"));				
+				r.add("CATATAN", data.get("catatan"));				
 				sql = r.getSQLInsert("TBLHTPHAKMILIK");
 				//myLog.info(sql);
 				stmt.executeUpdate(sql);
@@ -3671,6 +3661,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 //							    Db db2 = null;
 //							    String sql2 = "";
 			return idHakmilik;
+			
 		}
 
 		// INSERT TBLHTPHAKMILIK PERIHAL
@@ -3773,13 +3764,13 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 				conn = db.getConnection();
 				conn.setAutoCommit(false);
 				idHakmilik = FrmUtilData.insertHTPHakmilik(db,data);
-				//Remark - put KEGUNAAN_TANAH dalam table Hakmilik instead
-				//FrmUtilData.insertHakmilikPerihal(db,data,idHakmilik);
 									
 				FrmUtilData.insertHakmilikAgensi(db,data,idHakmilik);
-				FrmUtilData.insertHakmilikCukai(db,
-						Utils.RemoveComma((String)data.get("txtCukaiTahun")),
-						userId,idHakmilik);
+
+				FrmUtilData.insertHakmilikCukai(db
+							,Utils.RemoveComma((String)data.get("txtCukaiTahun"))
+							,userId
+							,idHakmilik);
 				conn.commit();
 
 			}catch (SQLException se) {
@@ -3828,7 +3819,6 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 				
 		}
 		/**
-		 * 
 		 * @param data
 		 * @throws Exception
 		 * Diguna dalam 

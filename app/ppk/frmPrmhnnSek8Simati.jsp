@@ -69,51 +69,41 @@ resetOnBlur:false
 
 
 <table width="100%" border="0">
-
-
- <input type="hidden" name="command" value="">
- <input type="hidden" name="mode" value="">
+	<input type="hidden" name="command" value="">
+ 	<input type="hidden" name="mode" value="">
  
- <input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
- <input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$selectedTabtengah"/>
- <input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
- <input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
+ 	<input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
+ 	<input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$selectedTabtengah"/>
+ 	<input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
+ 	<input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
 
 #foreach($list in $View)
     #set ($id = $list.idPermohonan)
     #set ($idPemohon = $list.idPemohon)
     #set ($idSimati = $list.idSimati)
     #set($id_Status = $list.id_Status)
-    
-    <input name="idPermohonanp" type="hidden"  value="$list.idPermohonan"/>
-     <input name="idpermohonan" type="hidden"  value="$id"/>
-    
-    <input name="idPermohonan" type="hidden"  value="$id"/>
-     <input name="idPemohon" type="hidden"  value="$idPemohon"/>
-      <input name="idSimati" type="hidden"  value="$idSimati"/>
-       <input name="idtemp" type="hidden"  value="$id"/>
-       
-        
-<input name="id_Suburusanstatus" type="hidden"  value="$list.id_Suburusanstatus"/>
-<input name="id_Suburusanstatusfail" type="hidden"  value="$list.id_Suburusanstatusfail"/>
-<input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
-
-
-
-#set($listnoFail = $list.noFail)
-#set($listidnegeri = $list.idnegeri)
-#set($listnamadaerah = $list.namadaerah)
-#set($listnamaPejabat = $list.namaPejabat)
-#set($listketerangan = $list.keterangan)
-#set($listseksyen = $list.seksyen)
-#set($listtarikhMohon = $list.tarikhMohon)
-#set($listnamaSimati = $list.namaSimati )
-#set($listnamaPemohon = $list.namaPemohon)
-#set($listtarikhMohon = $list.tarikhMohon)
-#set($listidSimati = $list.idSimati)
+   	<input name="idPermohonanp" type="hidden"  value="$list.idPermohonan"/>
+   	<input name="idpermohonan" type="hidden"  value="$id"/>
+    <input type="hidden" name="idPermohonan" value="$id"/>
+  	<input name="idPemohon" type="hidden"  value="$idPemohon"/>
+   	<input name="idSimati" type="hidden"  value="$idSimati"/>
+   	<input name="idtemp" type="hidden"  value="$id"/>    
+	<input name="id_Suburusanstatus" type="hidden"  value="$list.id_Suburusanstatus"/>
+	<input name="id_Suburusanstatusfail" type="hidden"  value="$list.id_Suburusanstatusfail"/>
+	<input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
+	#set($listnoFail = $list.noFail)
+	#set($listidnegeri = $list.idnegeri)
+	#set($listnamadaerah = $list.namadaerah)
+	#set($listnamaPejabat = $list.namaPejabat)
+	#set($listketerangan = $list.keterangan)
+	#set($listseksyen = $list.seksyen)
+	#set($listtarikhMohon = $list.tarikhMohon)
+	#set($listnamaSimati = $list.namaSimati )
+	#set($listnamaPemohon = $list.namaPemohon)
+	#set($listtarikhMohon = $list.tarikhMohon)
+	#set($listidSimati = $list.idSimati)
  
 #end
-
 
 <tr>
 <td>

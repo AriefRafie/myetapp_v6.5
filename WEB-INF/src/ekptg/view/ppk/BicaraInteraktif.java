@@ -3173,12 +3173,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			sql += " AND PR.TARIKH_BICARA < TO_DATE('"+carianBicaraTARIKH_BICARAAKHIR+"','DD/MM/YYYY') ";
 			}
 						
-		}
-		else
-		{
-			//ni yg sebenar
-			//by default akan memaparkan bicara pagawai berkenaan pada hari tersebut sahaja
-			sql += " AND TO_CHAR(PR.TARIKH_BICARA,'DD/MM/YYYY') = TO_CHAR(SYSDATE,'DD/MM/YYYY') AND P.ID_STATUS = '18' ";
+		}else{
+			//ni yg sebenar, by default akan memaparkan bicara pagawai berkenaan pada hari tersebut sahaja
+			// 2020/03/27 - komen untuk paparan local
+			//sql += " AND TO_CHAR(PR.TARIKH_BICARA,'DD/MM/YYYY') = TO_CHAR(SYSDATE,'DD/MM/YYYY') AND P.ID_STATUS = '18' ";
 			
 			//ni yg sementara
 			//sql += " AND TO_CHAR(PR.TARIKH_BICARA,'DD/MM/YYYY') = '10/02/2010' ";
@@ -3232,8 +3230,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		rs = stmt.executeQuery(sql);
 		listPerbicaraan = Collections.synchronizedList(new ArrayList());
 		
-		if(flagDashboard.equals(""))
-		{
+		if(flagDashboard.equals("")){
 			//RETURN PARAM CARIAN
 			this.context.put("carianBicaraNO_FAIL",carianBicaraNO_FAIL);
 			this.context.put("carianBicaraNAMA_SIMATI",carianBicaraNAMA_SIMATI);
@@ -3276,14 +3273,13 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				stmt.close();
 			}
 			*/
-			if (db == null)
-			{
+			if (db == null){
 				db1.close();
 			}
 		}
 		return listPerbicaraan;
-	}	
 	
+	}	
 	
 	public List listPermohonanTukarPegawai(HttpSession session, String user_id,String id_jawatan_login,String id_negeri_login,String flagCari,String flagDashboard,
 			String id_perbicaraan,String id_tukarpegawai,Db db)throws Exception {

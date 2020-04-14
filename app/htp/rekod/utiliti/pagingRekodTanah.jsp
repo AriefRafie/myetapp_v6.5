@@ -11,7 +11,24 @@
 			<div align="right">
 	
 	<!-- PENDAFTARAN HAKMLIK DAN RIZAB-->
-	#if($jenis_button == "1")<img src="../img/1current.png" alt="" border="0" title="Senarai Hakmilik/Rizab"/>#else<img src="../img/1enable.png" alt="" border="0" title="Senarai Hakmilik/Rizab" onclick="screen1()" onMouseOver="this.style.cursor='pointer';"/>#end<img src="../img/arrowgaris.png" alt="" border="0"/>#if($jenis_button == "2")<img src="../img/2current.png" alt="" border="0" title="Hakmilik/Rizab"/>#else<img src="../img/2enable.png" alt="" border="0" title="Hakmilik/Rizab" onclick="screen2('$idHakmilik','$socRizab')" onMouseOver="this.style.cursor='pointer';"/>#end<img src="../img/arrowgaris.png" alt="" border="0"/>#if($jenis_button == "3")<img src="../img/3current.png" alt="" border="0" title="Pembangunan"/>#else<img src="../img/3enable.png" alt="" border="0" title="Pembangunan" onclick="screen3('$idHakmilik')" onMouseOver="this.style.cursor='pointer';"/>#end<img src="../img/arrowgaris.png" alt="" border="0"/><!-- PENDAFTARAN IMEJAN-->#if($jenis_button == "4")<img src="../img/4current2.png" alt="" border="0" title="Imejan"/>#else<img src="../img/4enable2.png" alt="" border="0" title="Imejan" onclick="screen4('$idHakmilik')" onMouseOver="this.style.cursor='pointer';"/>#end
+	#if($jenis_button == "1")<img src="../img/1current.png" alt="" border="0" title="Senarai Hakmilik/Rizab"/>
+	#else<img src="../img/1enable.png" alt="" border="0" title="Senarai Hakmilik/Rizab" onclick="screen1()" onMouseOver="this.style.cursor='pointer';"/>
+	#end	
+	<img src="../img/arrowgaris.png" alt="" border="0"/>
+	
+	#if($jenis_button == "2")<img src="../img/2current.png" alt="" border="0" title="Hakmilik/Rizab"/>
+	#else<img src="../img/2enable.png" alt="" border="0" title="Hakmilik/Rizab" onclick="screen2('$idHakmilik','$!jenisTanah')" onMouseOver="this.style.cursor='pointer';"/>
+	#end
+	<img src="../img/arrowgaris.png" alt="" border="0"/>
+	
+	#if($jenis_button == "3")<img src="../img/3current.png" alt="" border="0" title="Pembangunan"/>
+	#else<img src="../img/3enable.png" alt="" border="0" title="Pembangunan" onclick="screen3('$idHakmilik')" onMouseOver="this.style.cursor='pointer';"/>
+	#end
+	<img src="../img/arrowgaris.png" alt="" border="0"/><!-- PENDAFTARAN IMEJAN-->
+	
+	#if($jenis_button == "4")<img src="../img/4current2.png" alt="" border="0" title="Imejan"/>
+	#else<img src="../img/4enable2.png" alt="" border="0" title="Imejan" onclick="screen4('$idHakmilik')" onMouseOver="this.style.cursor='pointer';"/>
+	#end
 	
 	
 	

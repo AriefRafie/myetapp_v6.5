@@ -1,7 +1,7 @@
 package ekptg.view.htp.rekod;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+//import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -17,10 +17,12 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
+import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmRekodPendaftaranHakmilikRizabData;
 import ekptg.model.htp.FrmRekodPendaftaranHakmilikSementaraData;
 import ekptg.model.htp.FrmUtilData;
 import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHTPStatus;
 import ekptg.model.htp.IHtp;
 import ekptg.model.htp.UtilHTML;
 import ekptg.model.htp.entity.HakMilik;
@@ -30,6 +32,7 @@ import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.htp.rekod.FrmHakmilikRizabPengesahanTanahBean;
 import ekptg.model.htp.rekod.FrmRekodUtilData;
+import ekptg.model.htp.rekod.HTPStatusRekodBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
 import ekptg.model.htp.rekod.IHakmilikRizabPengesahanTanah;
@@ -41,15 +44,18 @@ import ekptg.model.htp.utiliti.fail.IHTPFail;
 public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 
 	private final String PATH="app/htp/rekod/";
+	private final String IDSUBURUSAN = "61";
 	private IHtp iHTP = null;  
  	private IHTPFail iHTPFail = null;  
- 	private IKod iKod = null;  
+	private IHTPStatus iStatus = null;
+	private IKod iKod = null;  
 	private IPembelian iPembelian = null;
 	private IHakmilikRizabPengesahanTanah iPengesahan = null;
 	private HakmilikInterface iHakmilik = null;
 	private HakMilik hakmilik = null;
 	private HakmilikAgensi hakmilikAgensi = null;
 	private HtpPermohonan htpPermohonan = null;
+	private Hashtable<String, String> makTanah = null;
 	private static final long serialVersionUID = 1L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.rekod.FrmRekodPendaftaranPra.class);
 	FrmRekodUtilData frmRekodUtilData = null;
@@ -66,20 +72,20 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 	String readOnly = "";
 	String style = "";
  	String userId = "";
-	String vm = PATH+"frmPendaftaranTanahIndex.jsp";
+	String vm = PATH+"pendaftaran/frmPendaftaranTanahIndex.jsp";
 	private String idnegeri = "";
  	private String iddaerah = "";
  	private String idmukim = "";
  	private String idJenisHakmilik = "";
  	private String tarikhSemasa = "";
- 	private String idLuas = "";
+ 	//private String idLuas = "";
 	
 	public String doTemplate2() throws Exception {
 		
 		frmRekodUtilData = FrmRekodUtilData.getInstance();
-		String idRizab = getParam("socRizab");
+		//String idRizab = getParam("socRizab");
 		String firstAction = getParam("firstAction");
-		String socKementerian = "";
+		//String socKementerian = "";
 		String submit = getParam("command");
 		action = getParam("action");		
 		idAgensi = getParam("socAgensi");
@@ -104,14 +110,14 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 		if(session == null){
 			throw new Exception(getIHTP().getErrorHTML("[HTP REKOD] SILA LOGIN SEMULA"));
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String noFail = getParam("txtNoFail");
 		String txtTajukFail = getParam("txtTajukFail");
-		String noHakmilik = getParam("txtNoHakmilikC");
-		String noHakmilikAsal = getParam("txtNoHakmilik");
-		String noWarta = getParam("txtNoWarta");
-		String noLot = getParam("txtNoLotC");
-		Vector listSambungan = null;		
+		//String noHakmilik = getParam("txtNoHakmilikC");
+		//String noHakmilikAsal = getParam("txtNoHakmilik");
+		//String noWarta = getParam("txtNoWarta");
+		//String noLot = getParam("txtNoLotC");
+		//Vector listSambungan = null;		
 		userId = (String)session.getAttribute("_ekptg_user_id");		
 		this.context.put("modePopup", "");
 		//myLog.info("command:"+submit +","+"mode:"+mode);				
@@ -299,7 +305,7 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 			
 		}else if (submit.equals("simpanRizab")){
 			 vm = PATH+"frmPendaftaranTerimaRizab.jsp";
-			 Hashtable rizab = new Hashtable();
+			 Hashtable<String,String> rizab = new Hashtable<String,String>();
 			 String idPermohonan = getParam("idPermohonan");
 			 String idHakmilik = getParam("idHakmilik");
 			 idKementerianKemasukan = getParam("txtIdKementerian");
@@ -332,7 +338,7 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 
 			 rizab.put("idHakmilik", idHakmilik);
 			 rizab.put("idPermohonan", idPermohonan);
-			 rizab.put("socStatus", "D");
+			 //rizab.put("socStatus", "D");
 			 rizab.put("idMasuk", userId);
 			 rizab.put("idKemaskini", userId);
 			 rizab.put("txtCatatan", getParam("txtKemAgenTerkini"));
@@ -348,12 +354,26 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 				 hakmilikAgensi.setIdHakmilikAgensi(Long.parseLong(idAgensiKemasukan));
 				 hakmilikAgensi.setIdKementerian(Long.parseLong(idKementerianKemasukan));
 				 hakmilikAgensi = getIHakmilik().kemaskiniHakmilikAgensi(hakmilikAgensi);
+				 
 				 AuditTrail.logActivity("1", idSeksyen, this, session, "UPD", "HAKMILIK/RIZAB  ["+noTanah+"] DIKEMASKINI ");
 				 
 			 }else{
 				 //AZAM CHANGE TO TRANSACTION
 				  idHakmilik = FrmUtilData.XinsertHTPRizabTransaction(rizab,userId);
-				  AuditTrail.logActivity("1", idSeksyen, this, session, "INS", "HAKMILIK/RIZAB  ["+noTanah+"] DITAMBAH ");
+				  
+				  Tblrujsuburusanstatusfail susf = new Tblrujsuburusanstatusfail();
+					String idSubUrusanStatus = getStatus().getIdSuburusanStatusByLangkah("6",IDSUBURUSAN,"=");
+					susf.setIdSuburusanstatus(Long.parseLong(idSubUrusanStatus));
+					susf.setAktif("1");
+					susf.setUrl("-");
+					susf.setIdFail(Long.parseLong(idHakmilik));
+					susf.setIdPermohonan(Long.parseLong(idPermohonan));
+					susf.setIdMasuk(Long.parseLong(userId));
+				
+					getStatus().simpanKemaskiniStatus(susf, Long.parseLong(idSubUrusanStatus));					
+				  
+				   AuditTrail.logActivity("1", idSeksyen, this, session, "INS", "HAKMILIK/RIZAB  ["+noTanah+"] DITAMBAH ");
+			 
 			 }
 			 //VIEW SEMULA RIZAB YANG DISIMPAN
 			 this.context.put("readOnly", "readonly"); 
@@ -433,28 +453,25 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 				list = getIHTPFail().getSenaraiFailMengikutUrusans(null,noFail,txtTajukFail
 						,idKementerian,idAgensi
 						,idnegeri,iddaerah,idmukim
-						,"1,10,2,5", "", ""
+						,"1,10,2,5,4", "", ""
 						,"", true);
 		    	flagAdvSearch = "Y";
 		    } else {
-		    	//list = frmRekodUtilData.getHakmilikUrusanMengikutUrusan("1,10,2,5");	
-				list = getIHTPFail().getSenaraiFailMengikutUrusans(null, "", ""
+				list = getIHTPFail().getSenaraiFailMengikutUrusans(userId, "", ""
 						, "", ""
 						, "", "", ""
-						, "1,10,2,5", "", ""
+						, "1,10,2,5,4", "", ""
 						,"", false);
 
 		    	if(flagAdvSearch.equals("Y")){
-//		    		list = frmRekodUtilData.senaraiFailMengikutCarian(null,noFail,txtTajukFail,
-//			    			idKementerian,idAgensi,
-//			    			idnegeri,iddaerah,idmukim,"-1");
 					list = getIHTPFail().getSenaraiFailMengikutUrusans(null,noFail,txtTajukFail
 							,idKementerian,idAgensi
 							,idnegeri,iddaerah,idmukim
-							,"1,10,2,5", "", ""
+							,"1,10,2,5,4", "", ""
 							,"", true);
 			    	//log.info("kosong 396");
 		    	}
+		    	
 		    }
 			this.context.put("txtNoHakmilik", "");			
 			this.context.put("SenaraiHakmilik", list); 
@@ -1869,7 +1886,6 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 			boolean isHTPHakmilik = frmRekodUtilData.isHTPHakmilik(idPermohonan);
 			//myLog.debug("isHTPHakmilik:"+isHTPHakmilik);
 			if (isHTPHakmilik && "".equals(mode)) {
-				//myLog.debug("**isHTPHakmilik**");
 				context.remove("SenaraiTanah");
 				//Senaraikan hakmilik
 				this.context.put("page2",true);
@@ -1911,7 +1927,19 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 			// Langkah Ketiga (3)
 			} else if ("doAddHakmilik".equals(mode)) { 
 				//myLog.debug(" **doAddHakmilik**");
-				idHakmilik = doInsertDetailHakmilik2();
+				//idHakmilik = doInsertDetailHakmilik2();
+				idHakmilik = "161094744";
+				Tblrujsuburusanstatusfail susf = new Tblrujsuburusanstatusfail();
+				String idSubUrusanStatus = getStatus().getIdSuburusanStatusByLangkah("6",IDSUBURUSAN,"=");
+				susf.setIdSuburusanstatus(Long.parseLong(idSubUrusanStatus));
+				susf.setAktif("1");
+				susf.setUrl("-");
+				susf.setIdFail(Long.parseLong(idHakmilik));
+				susf.setIdPermohonan(Long.parseLong(idPermohonan));
+				susf.setIdMasuk(Long.parseLong(userId));
+			
+				getStatus().simpanKemaskiniStatus(susf, Long.parseLong(idSubUrusanStatus));
+				
 				//VIEW SEMULA HAKMILIK 
  				readOnly = "readonly";
 				disabled = "disabled";
@@ -1997,62 +2025,61 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 		 String idHakmilik = "0";
 		 String idJenisRizab = getParam("socJenisRizab");
 		 try {
-			 Hashtable hHakmilikUpdate = new Hashtable();
-			 hHakmilikUpdate.put("idPermohonan", getParam("idPermohonan"));
-			 hHakmilikUpdate.put("socNegeriHR", getParam("socNegeri"));
-			 hHakmilikUpdate.put("socDaerahHR", getParam("socDaerah"));
-			 hHakmilikUpdate.put("socMukimHR", getParam("socMukim"));
-			 hHakmilikUpdate.put("socJenisHakmilikHR", getParam("socJenisHakmilik"));
-			 hHakmilikUpdate.put("socKodJenisHakmilikHR",frmRekodUtilData.getKodJenisHakmilik(getParam("socJenisHakmilik")));
+			 makTanah = new Hashtable<String,String>();
+			 makTanah.put("idPermohonan", getParam("idPermohonan"));
+			 makTanah.put("socNegeriHR", getParam("socNegeri"));
+			 makTanah.put("socDaerahHR", getParam("socDaerah"));
+			 makTanah.put("socMukimHR", getParam("socMukim"));
+			 makTanah.put("socJenisHakmilikHR", getParam("socJenisHakmilik"));
+			 makTanah.put("socKodJenisHakmilikHR",frmRekodUtilData.getKodJenisHakmilik(getParam("socJenisHakmilik")));
 
-			 hHakmilikUpdate.put("txtNoHakmilik", getParam("txtNoHakmilik"));	
-			 hHakmilikUpdate.put("socLotHR", getParam("noLot"));
-			 hHakmilikUpdate.put("txtNoLot", getParam("txtNoLot"));
-			 hHakmilikUpdate.put("txdTarikhTerima", getParam("txdTarikhTerima"));
-			 hHakmilikUpdate.put("txdTarikhDaftar", getParam("txdTarikhDaftar"));
-			 hHakmilikUpdate.put("txtCukaiTahun", getParam("txtCukaiTahun"));
-			 hHakmilikUpdate.put("txtLokasi", getParam("txtLokasi"));			
-			 hHakmilikUpdate.put("socLuas", getParam("socLuas"));
-			 hHakmilikUpdate.put("socTaraf", getParam("socTaraf"));
-			 hHakmilikUpdate.put("socKategori", getParam("socKategori"));			
-			 hHakmilikUpdate.put("txtNoPelan", getParam("txtNoPelan"));
-			 hHakmilikUpdate.put("txtTempoh", getParam("txtTempoh"));			
-			 hHakmilikUpdate.put("txtSyarat", getParam("txtSyarat"));
+			 makTanah.put("txtNoHakmilik", getParam("txtNoHakmilik"));	
+			 makTanah.put("socLotHR", getParam("noLot"));
+			 makTanah.put("txtNoLot", getParam("txtNoLot"));
+			 makTanah.put("txdTarikhTerima", getParam("txdTarikhTerima"));
+			 makTanah.put("txdTarikhDaftar", getParam("txdTarikhDaftar"));
+			 makTanah.put("txtCukaiTahun", getParam("txtCukaiTahun"));
+			 makTanah.put("txtLokasi", getParam("txtLokasi"));			
+			 makTanah.put("socLuas", getParam("socLuas"));
+			 makTanah.put("socTaraf", getParam("socTaraf"));
+			 makTanah.put("socKategori", getParam("socKategori"));			
+			 makTanah.put("txtNoPelan", getParam("txtNoPelan"));
+			 makTanah.put("txtTempoh", getParam("txtTempoh"));			
+			 makTanah.put("txtSyarat", getParam("txtSyarat"));
 			 //hHakmilikUpdate.put("txtNoFailJopa", getParam("txtNoFailJopa"));			
 			 //hHakmilikUpdate.put("txtHakmilikAsal", getParam("txtHakmilikAsal"));
 			 //hHakmilikUpdate.put("txtCukaiTerkini", getParam("txtCukaiTerkini"));
-			 hHakmilikUpdate.put("txtKegunaanTanah", getParam("txtKegunaanTanah"));
-			 hHakmilikUpdate.put("txtLuas", getParam("txtLuas"));
-			 hHakmilikUpdate.put("txtLuasGabung", getParam("txtLuasGabung"));
-			 hHakmilikUpdate.put("txtTarafHakmilik", getParam("txtTarafHakmilik"));
-			 hHakmilikUpdate.put("txdTarikhLuput", getParam("txdTarikhLuput"));			
-			 hHakmilikUpdate.put("txtNoPu", getParam("txtNoPu"));
-			 hHakmilikUpdate.put("txdTarikhWarta", getParam("txdTarikhWarta"));
-			 hHakmilikUpdate.put("txtKawasanRizab", getParam("txtKawasanRizab"));
-			 hHakmilikUpdate.put("txtNoSyit", getParam("txtNoSyit"));
-			 hHakmilikUpdate.put("txtNoWarta", getParam("txtNoWarta"));
-			 hHakmilikUpdate.put("txtSekatan", getParam("txtSekatan"));
-			 hHakmilikUpdate.put("txtSyarat", getParam("txtSyarat"));
-			 hHakmilikUpdate.put("txtKawasanRizab", getParam("txtKawasanRizab"));
-			 hHakmilikUpdate.put("txtHakmilikBerikut", getParam("txtHakmilikBerikut"));
+			 makTanah.put("txtKegunaanTanah", getParam("txtKegunaanTanah"));
+			 makTanah.put("txtLuas", getParam("txtLuas"));
+			 makTanah.put("txtLuasGabung", getParam("txtLuasGabung"));
+			 makTanah.put("txtTarafHakmilik", getParam("txtTarafHakmilik"));
+			 makTanah.put("txdTarikhLuput", getParam("txdTarikhLuput"));			
+			 makTanah.put("txtNoPu", getParam("txtNoPu"));
+			 makTanah.put("txdTarikhWarta", getParam("txdTarikhWarta"));
+			 makTanah.put("txtKawasanRizab", getParam("txtKawasanRizab"));
+			 makTanah.put("txtNoSyit", getParam("txtNoSyit"));
+			 makTanah.put("txtNoWarta", getParam("txtNoWarta"));
+			 makTanah.put("txtSekatan", getParam("txtSekatan"));
+			 makTanah.put("txtSyarat", getParam("txtSyarat"));
+			 makTanah.put("txtKawasanRizab", getParam("txtKawasanRizab"));
+			 makTanah.put("txtHakmilikBerikut", getParam("txtHakmilikBerikut"));
 			 //hHakmilikUpdate.put("socStatus", getParam("socStatus"));
 			 //AZAM REMARK-NOT SURE WHY D?
-			 hHakmilikUpdate.put("socStatus", "D");
-			 hHakmilikUpdate.put("txdTarikhKemaskini", getParam("txdTarikhKemaskini"));			
-			 hHakmilikUpdate.put("socJenisRizab",idJenisRizab );	
-			 //hHakmilikUpdate.put("socRizab", getParam("socRizab"));	
-			 hHakmilikUpdate.put("socRizab", (("".equals( getParam("socRizab")))?getParam("socRizab"):"X"));	
-			 hHakmilikUpdate.put("idKementerian", getParam("txtIdKementerian"));	
-			 hHakmilikUpdate.put("idAgensi", getParam("txtIdAgensi"));	
-			 hHakmilikUpdate.put("txtFailKJP", getParam("txtFailKJP"));	
-			 
-			 
-			 hHakmilikUpdate.put("idMasuk",userId);	
+			 makTanah.put("socStatus", "D");
+			 makTanah.put("txdTarikhKemaskini", getParam("txdTarikhKemaskini"));			
+			 makTanah.put("socJenisRizab",idJenisRizab );	
+			 //makTanah.put("socRizab", getParam("socRizab"));	
+			 makTanah.put("socRizab", (("".equals( getParam("socRizab")))?getParam("socRizab"):"X"));	
+			 makTanah.put("idKementerian", getParam("txtIdKementerian"));	
+			 makTanah.put("idAgensi", getParam("txtIdAgensi"));	
+			 makTanah.put("txtFailKJP", getParam("txtFailKJP"));	
+			 		 
+			 makTanah.put("idMasuk",userId);	
 			 //Tambah pada 2010/07/09
-			 hHakmilikUpdate.put("noBangunan", getParam("txtNoBangunan"));	
-			 hHakmilikUpdate.put("noTingkat", getParam("txtNoTingkat"));	
-			 hHakmilikUpdate.put("noPetak", getParam("txtNoPetak"));	
-			 hHakmilikUpdate.put("catatan", getParam("txtKemAgenTerkini"));	
+			 makTanah.put("noBangunan", getParam("txtNoBangunan"));	
+			 makTanah.put("noTingkat", getParam("txtNoTingkat"));	
+			 makTanah.put("noPetak", getParam("txtNoPetak"));	
+			 makTanah.put("catatan", getParam("txtKemAgenTerkini"));	
 			 
 			 //AZAM ADD TRANSACTION HERE
 			 /*
@@ -2062,7 +2089,7 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 			 FrmUtilData.insertHakmilikCukai((String)hHakmilikUpdate.get("txtCukaiTahun"),
 					 						  userId,idHakmilik);
 		 	 */
-			 idHakmilik = FrmUtilData.insertHTPHakmilikTransaction(hHakmilikUpdate,userId);
+			 idHakmilik = FrmUtilData.insertHTPHakmilikTransaction(makTanah,userId);
 			 
 		 } catch (SQLException se) {
 			 throw new Exception(se.getMessage());
@@ -2267,6 +2294,7 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 		return iPembelian;
 	}
 	
+	
 	private HakmilikInterface getIHakmilik(){
 		if (iHakmilik==null){
 			iHakmilik=new HakmilikBean();
@@ -2291,6 +2319,14 @@ public class FrmRekodPendaftaranPra extends AjaxBasedModule {
 			iHTPFail = new HTPFailBean();
 		}
 		return iHTPFail;
+	}
+
+	private IHTPStatus getStatus() {
+		if (iStatus == null) {
+			iStatus = new HTPStatusRekodBean();
+		}
+		return iStatus;
+
 	}
 	
 	private IHakmilikRizabPengesahanTanah getIPengesahan(){

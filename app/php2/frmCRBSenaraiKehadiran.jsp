@@ -27,6 +27,7 @@
           <td width="30%" align="left"><strong>KJP/Agensi/Syarikat</strong></td>
           <td width="20%"><strong>Jawatan</strong></td>
           <td width="10%"><strong>No Telefon</strong></td>
+          <td width="10%"><strong>Email</strong></td>
           <td width="5%" align="center">&nbsp;</td>
         </tr>
         #set ($senaraiKehadiran = "")
@@ -45,6 +46,7 @@
           <td class="$row">$senaraiKehadiran.namaAgensi</td>
           <td class="$row">$senaraiKehadiran.namaJawatan</td>
           <td class="$row">$senaraiKehadiran.noTelefon</td>
+          <td class="$row">$senaraiKehadiran.email</td>
           <td class="$row" align="center"><input name="cmdHapus" type="button" value="Hapus" onclick="hapusKehadiran('$senaraiKehadiran.idKehadiran')"/></td>
         </tr>
         #end
@@ -52,6 +54,7 @@
         <tr>
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">Tiada Rekod</td>
+          <td class="row1">&nbsp;</td>
           <td class="row1">&nbsp;</td>
           <td class="row1">&nbsp;</td>
           <td class="row1">&nbsp;</td>

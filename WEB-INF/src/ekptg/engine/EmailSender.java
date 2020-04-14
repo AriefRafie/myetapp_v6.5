@@ -46,30 +46,32 @@ public class EmailSender {
 		getMailSession();
 		
 	}
-	//final  String sender_password ="ProjekeTaPP2016";
-	final  String sender_password ="m.rosligmail";
+	final  String sender_password = pro.getKata();
 	public static synchronized EmailSender getInstance(){
-			singleton = new EmailSender();
+		singleton = new EmailSender();
 		return singleton;
 	}
 	private Properties getMailProperties(){
 		props = new Properties();
 		
 		//gmail		
-		props.put("mail.smtp.auth", "true");
-		props.setProperty("mail.transport.protocol", "smtp");
-	    props.setProperty("mail.host", EMAIL_HOST);
-	    props.setProperty("mail.smtp.port", String.valueOf(SMTP_PORT));
-	    props.put("mail.debug", "true");
-	    props.put("mail.smtp.starttls.enable", "true");
+		if(EMAIL_HOST.equals("smtp.gmail.com")){
+			props.setProperty("mail.transport.protocol", "smtp");
+		    props.setProperty("mail.host", EMAIL_HOST);
+		    props.setProperty("mail.smtp.port", String.valueOf(SMTP_PORT));
+		    props.put("mail.debug", "true");
+			props.put("mail.smtp.auth", "true");
+		    props.put("mail.smtp.starttls.enable", "true");
 	    
-	    
+		}else{
 		//ekptgemail	    
-//		props = new Properties();
-//		props.setProperty("mail.transport.protocol", "smtp");
-//	    props.setProperty("mail.host", EMAIL_HOST);
-//	    props.setProperty("mail.smtp.port", String.valueOf(SMTP_PORT));
-//	    props.put("mail.debug", "true");	    	    
+//			props = new Properties();
+			props.setProperty("mail.transport.protocol", "smtp");
+		    props.setProperty("mail.host", EMAIL_HOST);
+		    props.setProperty("mail.smtp.port", String.valueOf(SMTP_PORT));
+		    props.put("mail.debug", "true");	
+		    
+		}
 	   	return props;
 	   	
 	}
@@ -197,17 +199,18 @@ public class EmailSender {
 	}
 	private Session getMailSession(){
 		//System.out.println(" FROM : "+FROM+" sender_password : "+sender_password);
-		//gmail
-		
-		mailSession = Session.getDefaultInstance(props,  
-	    	    new javax.mail.Authenticator() {
-	    	       protected PasswordAuthentication getPasswordAuthentication() {  
-	    	       return new PasswordAuthentication(FROM,sender_password);  
-	    	   }});
-	    
-		
-		//ekptgemail
-//		mailSession = Session.getDefaultInstance(props);		
+		if(EMAIL_HOST.equals("postmaster.1govuc.gov.my")){
+		//ekptgemail		
+			mailSession = Session.getDefaultInstance(props);		
+		}else{			
+		//gmail 
+			mailSession = Session.getDefaultInstance(props,  
+							new javax.mail.Authenticator() {
+	    	       				protected PasswordAuthentication getPasswordAuthentication() {  
+	    	       					return new PasswordAuthentication(FROM,sender_password);  
+	    	       				}});
+
+		}
 		return mailSession;
 		
 	}

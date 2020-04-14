@@ -239,18 +239,7 @@
 	#set ($setmode = "disabled")
 #end
 
-
-
-
-
-
-
-
-
-
-
-<body onLoad="submitForm();calcDate();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();pilih_taraf();check();check_kp_pemohon_onload();sorok_fieldset('$IdFail');selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');checkSumaICsimati('$command');">
-
+<body onLoad="submitForm();calcDate();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();pilih_taraf();check_kp_pemohon_onload();sorok_fieldset('$IdFail');selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');checkSumaICsimati('$command');">
 
 <form id="form1" name="f1" method="post" action="">
 
@@ -2090,6 +2079,44 @@ function lampiran(rujukanSimati,isMyID) {
 	lain = document.f1.check_no_kp_lain_simati.value;
 	rujukanSimati = getRujukan(ic,idlama,jenis,lain);
 	
+<<<<<<< app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
+ 	function getRujukan(ic,idlama,jenis,lain){
+ 		var rujukan ='';
+ 		rujukan = ic != ''?ic:'-';
+ 		rujukan += idlama != ''?idlama:'-';
+ 		rujukan += jenis != 0?jenis:'-';
+ 		rujukan += lain != ''?lain:'-';
+ 		return rujukan;
+ 		
+ 	}
+ 
+	function lampiran(rujukanSimati,isMyID) {
+		ic = document.f1.check_no_kp_baru_simati.value;
+		idlama = document.f1.check_no_kp_lama_simati.value;
+		jenis = document.f1.socJenisKPLainSimati.value;
+		lain = document.f1.check_no_kp_lain_simati.value;
+		rujukanSimati = getRujukan(ic,idlama,jenis,lain);
+		//alert("rujukanSimati 1="+returnSimati1);
+		//return;
+		
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
+	   	if(isMyID == 'cod')
+	   		url +="&jenisdokumen=cod";
+	   	else
+	   		url +="&jenisdokumen=myid";
+  		
+		//
+	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus(); /**/
+	    //
+	    var title = 'Lampiran';
+		var w =1024;
+		var h = 800;
+	    var left = (screen.width/2)-(w/2);
+=======
 	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
    	if(isMyID == 'cod')
    		url +="&jenisdokumen=cod";
@@ -2107,6 +2134,7 @@ function lampiran(rujukanSimati,isMyID) {
 	  var w =1024;
 	  var h = 800;
     var left = (screen.width/2)-(w/2);
+>>>>>>> app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
 
 }
 
@@ -2332,6 +2360,29 @@ function Simpan(){
 	else if (date1 > currentTime){
 		alert("Sila pastikan tarikh mati tidak melebihi dari tarikh hari ini.");
 		document.f1.txtTarikhMati.focus();
+<<<<<<< app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
+	
+//   else if(document.f1.uploadmyid != 'null' && document.f1.uploadmyid.value==""){
+//   	  alert('Sila muatnaik MyID simati.');
+//       document.f1.uploadmyid.focus(); 
+//    }
+//   else if(document.f1.uploadsijil != 'null' && document.f1.uploadsijil.value==""){
+//    	  alert('Sila muatnaik sijil simati.');
+//       document.f1.uploadsijil.focus();
+// 	}
+	
+		}else{
+			input_box = confirm("Adakah anda pasti?");
+			if (input_box == true) {
+				document.f1.method = "POST";
+				document.f1.command.value="Simpanx";
+				document.f1.eventStatus.value="1";
+				document.f1.action = "";
+				document.f1.submit();
+			
+			}
+	
+=======
 	}	
   //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
 	 // alert('Sila muatnaik MyID simati.');
@@ -2349,10 +2400,15 @@ function Simpan(){
 		document.f1.eventStatus.value="1";
 		document.f1.action = "";
 		document.f1.submit();
+>>>>>>> app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
 		}
+
 	}
+<<<<<<< app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
+=======
 	
 }
+>>>>>>> app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
 
 
 

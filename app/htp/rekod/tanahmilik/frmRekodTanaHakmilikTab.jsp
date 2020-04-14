@@ -78,8 +78,7 @@
 <input type="hidden" name="skrin" value="skrinhakmilik" />
 <input type="hidden" name="txtLuasGabung" value="$txtLuasLama" />
 
-<script>
-	
+<script>	
 	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$!selectedTab});	
 
 </script>

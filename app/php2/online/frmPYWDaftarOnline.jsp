@@ -6,34 +6,22 @@
 -->
 </style>
 #set($saizTxtPerkara="1000")
-<input name="actionPenyewaan" type="hidden" id="actionPenyewaan" value="$actionPenyewaan"/>
-<input name="idFail" type="hidden" id="idFail" value="$idFail"/>
-<input name="idPemohon" type="hidden" id="idPemohon" value="$idPemohon"/>
-<input name="hitButton" type="hidden" id="hitButton"/>
-<input name="mode" type="hidden" id="mode" value="$mode"/>
-<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-<input name="idJenisTanah" type="hidden" id="idJenisTanah" value="$idJenisTanah"/> 
-<input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> 
-<input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" /> 
-<input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
-
-<input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />        
+<p>
+	<input name="actionPenyewaan" type="hidden" id="actionPenyewaan" value="$actionPenyewaan"/>
+	<input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+	<input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+	<input name="idPemohon" type="hidden" id="idPemohon" value="$idPemohon"/>
+	<input name="hitButton" type="hidden" id="hitButton"/>
+	<input name="mode" type="hidden" id="mode" value="$mode"/>
+	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+	<input name="idJenisTanah" type="hidden" id="idJenisTanah" value="$idJenisTanah"/> 
+	<input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> 
+	<input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" /> 
+	<input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
+	<input name="idJenisPermohonan" type="text" id="idJenisPermohonan" value="$idJenisPermohonan"/> 
+	<input name="idFailLama" type="hidden" id="idFailLama" value="$idFailLama"/>
+</p>
 <table width="100%" border="0">
-  <tr>
-  
-<!-- TAMBAH JENIS PERMOHONAN -->
-  	<td><fieldset><legend><strong>JENIS PERMOHONAN</strong></legend>
-  	<table width="100%" border="0">
-  	<tr>
-  		<td width="1%"><span class="style1">*</span></td>
-    	<td width="28%">Jenis Permohonan</td>
-        <td width="1%">:</td>
-        <td width="70%"></td>
-  	</tr>
-  	</table>
-  	</td>
-  </tr>
-
 <!-- TAMBAH MAKLUMAT PEMOHON -->
   <tr>
   	<td><fieldset><legend><strong>MAKLUMAT PEMOHON</strong></legend>
@@ -392,7 +380,6 @@
       </fieldset></td>
   </tr>
   
-  
   #if ($mode != 'view')
   <tr>
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
@@ -407,6 +394,7 @@
     </td>
   </tr>
 </table>
+
 <script>
 function pilihTanah() {
 	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmPYWOnlinePopupSenaraiTanahView";

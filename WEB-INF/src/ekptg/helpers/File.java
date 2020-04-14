@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 public class File implements Serializable  {
 	
 	public static final String SEQ_TABLE = "TBLRUJSEQFAIL";
-	static Logger myLogger = Logger.getLogger(File.class);
+	static Logger myLogger = Logger.getLogger(ekptg.helpers.File.class);
 
 	public static void main (String args[]) {
 		try {
@@ -847,6 +847,37 @@ public class File implements Serializable  {
 		if (db != null) db.close();
 		}
 	}
-
+	public static synchronized String getIDFailByPermohonan(String idPermohonan) throws DbException  {
+		Db db = null;
+		Connection conn = null;
+		String noFail = "";
+		StringBuffer sb = new StringBuffer();
+		try {
+			db = new Db();
+			conn = db.getConnection();
+					
+			sb.append("SELECT F.ID_FAIL ");
+			sb.append("FROM TBLPFDFAIL F, TBLPERMOHONAN P WHERE ");
+			sb.append("P.ID_FAIL=F.ID_FAIL AND P.ID_PERMOHONAN = " +idPermohonan);	
+			myLogger.info("getIDFailByPermohonan:sql="+sb.toString());
+			ResultSet rs = db.getStatement().executeQuery(sb.toString()); 
+			
+			if ( rs.next() ) {
+				noFail= rs.getString("ID_FAIL");   	  
+	        }
+			
+		} catch (Exception ex) {
+		try {
+			conn.rollback(); 
+		} catch (SQLException localSQLException1) {}
+		throw new DbException(ex.getMessage() + ": " + sb.toString());
+		}finally {
+			if (db != null) db.close();
+		}		
+		return noFail;
+		
+	}
+	
+	
 
 }
