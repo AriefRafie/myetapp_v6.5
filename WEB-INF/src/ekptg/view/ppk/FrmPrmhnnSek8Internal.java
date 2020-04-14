@@ -46,6 +46,7 @@ import ekptg.model.ppk.FrmSenaraiFailInternalCarianData;
 import ekptg.model.ppk.FrmSenaraiFailInternalData;
 import ekptg.model.ppk.harta.HTABean;
 import ekptg.model.ppk.harta.IMaklumatHarta;
+import ekptg.model.ppk.util.LampiranBean;
 import ekptg.ws.arb.AmanahRayaManager;
 import ekptg.ws.bursa.BursaManager;
 import ekptg.ws.identity.IdentityManager;
@@ -856,6 +857,11 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			logic_A.setSupportingDoc(id);
 			listSupportingDoc = logic_A.setSupportingDoc(id);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			//20200415 Lampiran
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans"
+				, lBean.getLampiranSimatiPapari(String.valueOf(h.get("idSimati")), "99201"));				
+
 			this.context.put("senaraisemak", "");
 			this.context.put("Errormsg", "");
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
@@ -912,6 +918,10 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("listPemohonOB", listPemohonOB);
 			listSupportingDoc = logic_A.setSupportingDoc(id);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans"
+				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idSimati")), "99201"));				
+
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 		} else if ("Kemaskini_daftar_pemohon".equals(submit)) {
 			this.context.put("ViewFail", "");
@@ -969,6 +979,11 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("listPemohonOB", listPemohonOB);
 			listSupportingDoc = logic_A.setSupportingDoc(id);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans"
+				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idSimati")), "99201"));				
+
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 		} else if ("getBandar".equals(submit)) {
 			String IdPermohonan = getParam("idPermohonan");
@@ -1072,6 +1087,10 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("listPemohonOB", listPemohonOB);
 			listSupportingDoc = logic_A.setSupportingDoc(id);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans"
+				, lBean.getLampiranSimatiPapari(String.valueOf(kx.get("idSimati")), "99201"));				
+
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 		} 
 		else if ("deleteSuppDoc".equals(submit)) {
@@ -1128,6 +1147,11 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("listPemohonOB", listPemohonOB);
 			listSupportingDoc = logic_A.setSupportingDoc(id);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans"
+				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idSimati")), "99201"));				
+
 		}
 		else if ("Simpanx".equals(submit)) {
 			myLogger.info("Simpanx");
@@ -1209,6 +1233,11 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 					this.context.put("listPemohonOB", listPemohonOB);
 					listSupportingDoc = logic_A.setSupportingDoc(id);
 					this.context.put("ViewSupportingDoc", listSupportingDoc);
+					
+//					LampiranBean lBean = new LampiranBean();
+//					this.context.put("lampirans"
+//						, lBean.getLampiranSimatiPapar(String.valueOf(h.get("idSimati")), "99201"));				
+
 					this.context.put("Errormsg", "Error1");
 				}
 				else
@@ -1361,6 +1390,8 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 					this.context.put("listPemohonOB", listPemohonOB);
 					listSupportingDoc = logic_A.setSupportingDoc(id);
 					this.context.put("ViewSupportingDoc", listSupportingDoc);
+					
+
 					this.context.put("Errormsg", "");
 				}
 			}
@@ -1469,6 +1500,10 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			String noKpBaru = h1.get("noKpBaru1").toString()+"-"+h1.get("noKpBaru2").toString()+"-"+h1.get("noKpBaru3").toString();
 			this.context.put("noPengenalan", noKpBaru);
 			//IL end
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans"
+				, lBean.getLampiranSimatiPapari(String.valueOf(h1.get("idSimati")), "99201"));
+			
 			if ("Simatiview".equals(mode)) {
 				this.context.put("readmode", disability1);
 				this.context.put("setmode", "disabled");
