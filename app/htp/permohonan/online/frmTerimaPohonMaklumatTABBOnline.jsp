@@ -48,7 +48,7 @@
 					<!-- *** End *** -->
 					
 			    #else
-			        <li class="TabbedPanelsTab" title="Maklumat Asas Tanah" tabindex="0" onclick="javascript:selectTab(0,'kemaskinipermohonan','MakAsasTanah',0,'$idpermohonanlokasi')" >MAKLUMAT ASAS TANAH</li>
+			        <li class="TabbedPanelsTab" title="Maklumat Asas Tanahhhhh" tabindex="0" onclick="javascript:selectTab(0,'kemaskinipermohonan','MakAsasTanah',0,'$idpermohonanlokasi')" >MAKLUMAT ASAS TANAH</li>
 			        <li class="TabbedPanelsTab" title="Borang K" tabindex="0" onclick="javascript:selectTab(1,'kemaskinipermohonan','BorangK',0,'$idpermohonanlokasi')">BORANG K</li>
 					
 					<!-- ******* Start Addby zulfazdli 11/5/2017 - for view sahaja Maklumat Notis untuk user online ******* -->

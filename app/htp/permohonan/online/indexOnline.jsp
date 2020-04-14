@@ -345,9 +345,75 @@
 	
 	/* Untuk Simpan Hantar Semakan */
 	function hantarPengesahan(){
-		/* alert("hantarPengesahan"); */
+		//alert("hantarPengesahan"); */
 		doAjaxCall${formName}("kemaskinipermohonan","mode=MakAsasTanah&pagemode=0&hittButton=hantarPengesahan");
 		
+	}
+	
+	function updatetxtNamaDokumen(){
+		document.${formName}.txtNamaDokumenHidden.value = document.${formName}.txtNamaDokumen.value;
+	}
+	
+	function updatetxtKeterangan(){
+		document.${formName}.txtKeteranganHidden.value = document.${formName}.txtKeterangan.value;
+	}
+	//simpan bukti pembayaran 
+	function simpanBuktiPembayaran(id_permohonan, mode){
+		
+		if ( !window.confirm("Adakah Anda Pasti?") ) 
+			{
+			return;
+			}
+		
+			if(mode=="new"){
+				
+			}else{
+				//doAjaxCall${formName}("kemaskinipermohonan","mode="+mode+"&pagemode=0&button=simpanBuktiPembayaran");
+				//doAjaxCall${formName}("simpanBuktiBayaran");
+				
+
+					document.${formName}.method="POST";
+					document.${formName}.value="simpanBuktiPembayaran1";
+					document.${formName}.action = "?_portal_module=ekptg.view.online.htp.permohonan.FrmTerimaPohon1Online&command=simpanBuktiPembayaran";
+					document.${formName}.submit();
+					//document.${formName}.modePopup.value = "";
+					//alert("Sukses");
+		
+		}
+	}
+	//simpan maklumat dokumen
+	function simpanMD(id_permohonan, mode){
+		
+		var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;
+		
+		if(txtNamaDokumen == ""){
+			alert("Sila masukkan \"Nama Dokumen\" terlebih dahulu. ");
+			document.${formName}.txtNamaDokumen.focus(); 
+			return;
+		}
+		else if(document.${formName}.txtNamaDokumen2.value == ""){
+			alert("Sila masukkan \"Lampiran Dokumen\" terlebih dahulu. ");
+			document.${formName}.txtNamaDokumen2.focus(); 
+			return;
+		}
+		else if ( !window.confirm("Adakah Anda Pasti?") ) 
+			{
+			return;
+			}
+		
+			if(mode=="new"){
+				
+			}else{
+				
+			var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;		
+			var txtKeterangan = document.${formName}.txtKeteranganHidden.value;
+			document.${formName}.enctype='multipart/form-data';
+			document.${formName}.encoding ='multipart/form-data';
+			document.${formName}.action = "?_portal_module=ekptg.view.online.htp.permohonan.FrmTerimaPohon1Online&command=uploadDoc&command2=simpanMaklumatDokumen&txtNamaDokumen="+txtNamaDokumen+"&txtKeterangan="+txtKeterangan+"&id_permohonan="+id_permohonan;
+			document.${formName}.submit();
+				
+		 
+		}
 	}
 	
 	/* function ini adalah apabila tekan button TAMBAH pada tab Maklumat Asas Tanah*/
