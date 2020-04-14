@@ -2167,6 +2167,41 @@ public Vector setSupportingDoc(String id) throws Exception {
 				db.close();
 		}
 	}
+	
+	public void checkFlag5Juta(String id) throws Exception {
+		Db db = null;
+		flag5juta.clear();
+		String sql = "";
+	
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT FLAG_5JUTA FROM TBLPPKPERUBAHANAKTA ";
+
+			// System.out.println("SQLXXXXXX FAIL" + sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+
+				h.put("flag_5juta",
+						rs.getString("flag_5juta") == null ? "" : rs
+								.getString("flag_5juta"));
+				
+
+				// System.out.println("sql data-->" + h);
+				flag5juta.addElement(h);
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 
 	private Vector listGetPermohonanSebelum = new Vector();
 
