@@ -206,14 +206,16 @@ public class SkrinPopupUploadDokumen extends AjaxBasedModule {
     	Connection con = db.getConnection();
     	con.setAutoCommit(false);
     	
-    	long idDokumen = DB.getNextID(db, "TBLPPKDOKUMENSIMATI_SEQ");
+    	long idDokumen = DB.getNextID(db, "PPKDOKUMENSIMATI_SEQ");
+    	//long idDokumen = DB.getNextID(db, "TBLPPKDOKUMENSIMATI_SEQ");
+    	
     	String idSimati1 = idSimati;
     	myLogger.info("idSimati1***** = "+idSimati1);
     	myLogger.info("id_Masuk***** = "+id_Masuk);
     	myLogger.info("id_jenisDoc***** = "+id_jenisDoc);
     	
     	//String id_permohonansimati = getParam("id_permohonansimati_atheader");
-    	PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMENSIMATI (ID_DOKUMEN, ID_SIMATI,ID_JENISDOKUMEN,NAMA_DOKUMEN, FORMAT, KANDUNGAN, ID_MASUK, TARIKH) VALUES (?,?,?,?,?,?,?,"+r.unquote("sysdate")+")");	
+    	PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMENSIMATI (ID_DOKUMEN, ID_SIMATI,ID_JENISDOKUMEN,NAMA_DOKUMEN, FORMAT, KANDUNGAN, ID_MASUK, TARIKH_MASUK) VALUES (?,?,?,?,?,?,?,"+r.unquote("sysdate")+")");	
     	ps.setLong(1,idDokumen);
     	ps.setString(2,idSimati1);
     	ps.setString(3,id_jenisDoc);
