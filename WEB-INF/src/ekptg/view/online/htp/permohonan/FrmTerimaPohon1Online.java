@@ -1913,11 +1913,6 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		Vector BuktiBayaranInfo = fData.getBuktiBayaranNotis5A(idpermohonan);
 		this.context.put("BuktiBayaranInfo", BuktiBayaranInfo);
 	}
-	private void viewBuktiBayaranNotis2() throws Exception {
-		Vector BuktiBayaranInfo2 = fData.getBuktiBayaranNotis5A2(idpermohonan);
-		this.context.put("BuktiBayaranInfo2", BuktiBayaranInfo2);
-	}
-
 	public void setPaging(boolean page1,boolean page2,boolean page3,boolean page4,boolean page5) {
 		this.context.put("page1",page1);
 		this.context.put("page2",page2);
