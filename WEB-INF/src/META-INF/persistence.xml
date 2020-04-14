@@ -153,8 +153,8 @@
 <!-- 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/myetapp"/> -->
 	
 	<!-- DB LOCAL ARIEF-->
-	<property name="javax.persistence.jdbc.user" value="ekptghqlive"/> -->
-	<property name="javax.persistence.jdbc.password" value="ekptghqv6live"/>	 -->
+	<property name="javax.persistence.jdbc.user" value="ekptghqlive"/> 
+	<property name="javax.persistence.jdbc.password" value="ekptghqv6live"/>	
 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/EKPTGLOCAL"/>
 
 

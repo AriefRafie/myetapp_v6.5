@@ -36,7 +36,11 @@ resetOnBlur:false
 </head>
 
 <!-- onLoad="self.focus();document.f1.socWaktuKematianSimati.focus()" -->
+#set ($namaDoC = "")
 
+#foreach($listSupportingDoc in $ViewSupportingDoc)
+#set($namaDoC = $listSupportingDoc.NAMA_DOKUMEN)
+#end
 
 <body  onload="submitForm();jeniswaktu2();qryHowOld();calculateTarikhLahirSimati()" >
 <form name="f1" method="post" action=""  >
@@ -47,6 +51,9 @@ resetOnBlur:false
 <input type="hidden" name="v_tab" id="v_tab" value="" />
 <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
  <input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
+
+
+
 #foreach($list in $View)
 #set($noFail = $list.noFail)
 #set($idPemohon = $list.idPemohon)
@@ -169,6 +176,11 @@ resetOnBlur:false
       #end
       #end
       
+      
+    
+      
+      
+      
     </ul>
     <div class="TabbedPanelsContent">
     <div class="TabbedPanelsContentGroup">
@@ -199,9 +211,18 @@ resetOnBlur:false
               
                 <tr>
                   <td>
-                    <p>#foreach($listmati in $listSimati)</p>
+                    <p>#foreach($listmati in $listSimati)                    </p>
                     <fieldset>
                     <legend>MAKLUMAT SIMATI</legend>
+
+					#if ($setmode != "disabled")
+					<table width="100%">
+					 <tr>
+					    <td><span class="style44"><em>Perhatian</em></span><span class="style50"><em> : Sila masukkan salah satu nombor MyID dan pastikan label bertanda <span class="style49">*</span> diisi.</em></span></td>
+					  </tr>
+					  </table>
+					#end
+                    
                     <table width="100%">
                       <tr>
                         <td width="50%">
@@ -336,10 +357,8 @@ resetOnBlur:false
                              
                                #end
                              
-                             
-                             
                              <tr>
-                                <td width="1%"><span class="style38"></span></td>
+                                <td><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
                                 <td width="28%"><div align="left" class="style38">MyID Baru</div></td>
                                 <td width="1%" class="style36" >:</td>
                                 
@@ -392,14 +411,18 @@ resetOnBlur:false
                                    #elseif($listmati.jenisKp=="7")
                                   #set($jkp="Lain-lain")
                                   
+                                  #elseif($listmati.jenisKp=="13")
+                                  #set($jkp="Perintah Mahkamah Tinggi")
+                                  
+                                  
                                   #else
                                   #set($jkp="")
                                   #end
                                   
                                   #if($jkp=="")
-                                  <input name="textfield4" type="text" id="textfield" value="" size="10" maxlength="9"  $readmodeR class="$readmode" onBlur="this.value=this.value.toUpperCase()"      $readmode  />
+                                  <input name="textfield4" type="text" id="textfield" value="" size="15" maxlength="15"  $readmodeR class="$readmode" onBlur="this.value=this.value.toUpperCase()"      $readmode  />
                                   #else
-                                  <input name="textfield4"  type="text" id="textfield" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  value="$jkp"  size="10" maxlength="9" $readmodeR class="$readmode" />
+                                  <input name="textfield4"  type="text" id="textfield" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  value="$jkp"  size="15" maxlength="15" $readmodeR class="$readmode" />
                                   #end
                                   <input name="socJenisKPLainSimati" type="hidden" id="textfield" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  value="$jkp"  size="15" $readmodeR class="$readmode" />
                                   #else
@@ -408,12 +431,14 @@ resetOnBlur:false
 	                                    <option value="4" selected>PASPORT</option>
 	                                    <option value="6">POLIS</option>
 	                                    <option value="5" >TENTERA</option>
+	                                    <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
                                           <option value="7" >LAIN-LAIN</option>
                                          <option value="0" >-KOSONGKAN-</option>
 		                               #elseif($listmati.jenisKp=="5")
                                          <option value="5" selected>TENTERA</option>
 										<option value="4">PASPORT</option>
 	                                    <option value="6">POLIS</option>
+	                                    <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
                                          <option value="7" >LAIN-LAIN</option>
                                        <option value="0" >-KOSONGKAN-</option>
 	                                  
@@ -422,22 +447,35 @@ resetOnBlur:false
 										<option value="4">PASPORT</option>
 	                                    
 	                                    <option value="5">TENTERA</option>
+	                                    <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
                                          <option value="7" >LAIN-LAIN</option>
+                                         
                                          <option value="0" >-KOSONGKAN-</option>
                                           #elseif($listmati.jenisKp=="7")
-                                           <option value="7" >LAIN-LAIN</option>
-                                       <option value="6" selected>POLIS</option>
+                                           <option value="7" selected>LAIN-LAIN</option>
+                                       <option value="6" >POLIS</option>
 										<option value="4">PASPORT</option>
 	                                    
 	                                    <option value="5">TENTERA</option>
-                                        
+                                        <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
+                                         <option value="0" >-KOSONGKAN-</option>
+                                         
+                                         #elseif($listmati.jenisKp=="13")
+                                           <option value="13" selected>PERINTAH MAHKAMAH TINGGI</option>
+                                       <option value="6" >POLIS</option>
+										<option value="4">PASPORT</option>
+	                                    
+	                                    <option value="5">TENTERA</option>
+                                        <option value="7" >LAIN-LAIN</option>
                                          <option value="0" >-KOSONGKAN-</option>
 		                               #else
 	                                    <option value="0">SILA PILIH JENIS KP</option>
 	                                    <option value="4">PASPORT</option>
 	                                    <option value="6">POLIS</option>
 	                                    <option value="5">TENTERA</option>
+	                                    <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
                                          <option value="7" >LAIN-LAIN</option>
+                                         
 		                               #end
                                   </select>
                                   #end
@@ -464,10 +502,10 @@ resetOnBlur:false
                                 <td class="style36" >:</td>
                                 <td class="style36" >
                                 #if($readmode == "disabled")
-                                 <input name="txtNoKPLainSimati" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" type="text" id="textfield5"  value="$listmati.noKpLain" size="10" maxlength="25"  $readmodeR class="$readmode" />
+                                 <input name="txtNoKPLainSimati" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" type="text" id="textfield5"  value="$listmati.noKpLain" size="30" maxlength="35"  $readmodeR class="$readmode" />
                                  #else
                                
-                                <input name="txtNoKPLainSimati" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" type="text" id="textfield5"  value="$listmati.noKpLain" size="10" maxlength="25" $readmodekp />
+                                <input name="txtNoKPLainSimati" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" type="text" id="textfield5"  value="$listmati.noKpLain" size="30" maxlength="35" $readmodekp />
                                 #end</td>
                               </tr>
                               
@@ -809,7 +847,7 @@ resetOnBlur:false
                                      #end
                                      
                                      #if($readmode!="disabled")                                    
-	                                     #if($listmati.idBuktimati=="1" || $listmati.idBuktimati=="4")
+	                                     #if($listmati.idBuktimati=="1" || $listmati.idBuktimati=="4"  || $listmati.idBuktimati=="3")
 	                                      	#set($readmodesy="")       
 	                                     #else
 	                                      	#set($readmodesy="disabled")
@@ -829,9 +867,9 @@ resetOnBlur:false
                                 <td class="style36" style="text-transform:uppercase;"><label>
                               
                                 #if($readmode == "disabled")
-                                 <input name="txtNoSijilMatiSimati" onBlur="this.value=this.value.toUpperCase()" type="text" id="txtNoSijilMatiSimati" style="text-transform:uppercase;" value="$listmati.noSijilMati" size="10" maxlength="25" $readmodeR class="$readmode"/>
+                                 <input name="txtNoSijilMatiSimati" onBlur="this.value=this.value.toUpperCase()" type="text" id="txtNoSijilMatiSimati" style="text-transform:uppercase;" value="$listmati.noSijilMati" size="30" maxlength="100" $readmodeR class="$readmode"/>
                                 #else
-                                  <input name="txtNoSijilMatiSimati" onBlur="this.value=this.value.toUpperCase()" type="text" id="txtNoSijilMatiSimati" style="text-transform:uppercase;" value="$listmati.noSijilMati" size="10" maxlength="10" $readmodesy />
+                                  <input name="txtNoSijilMatiSimati" onBlur="this.value=this.value.toUpperCase()" type="text" id="txtNoSijilMatiSimati" style="text-transform:uppercase;" value="$listmati.noSijilMati" size="30" maxlength="15" $readmodesy />
                                 #end
                                 </label></td>
                               </tr>
@@ -1272,16 +1310,52 @@ resetOnBlur:false
                       
                     </table>
                                    
-                     #if($readmode != "disabled") 
+                     <!-- #if($readmode != "disabled") 
                     <table width="100%">
-  <tr>
-    <td><span class="style44">Perhatian</span><span class="style50"> : Sila masukkan salah satu nombor MyID  dan pastikan label bertanda <span class="style49">*</span> diisi.</span></td>
-  </tr>
-</table>
-#end
+					  <tr>
+					    <td><span class="style44">Perhatian</span><span class="style50"> : Sila masukkan salah satu nombor MyID  dan pastikan label bertanda <span class="style49">*</span> diisi.</span></td>
+					  </tr>
+					</table>
+					#end -->
                     
                     </fieldset>
                     <p> #end </p>                </tr>
+                    
+                    
+<tr>
+            <td><fieldset>
+              <legend>DOKUMEN SOKONGAN</legend>
+              <table width="100%" border="0">
+                #if ($Errormsg == "Error1")
+                <tr>
+                <td colspan="4" ><b><font color="red">Sila muatnaik dokumen sokongan terlebih dahulu.</font></b></td>
+                </tr>
+                #end
+                <tr>
+                  <td width="1%" valign="top"><!-- #if($setmode!="disabled")<span class="style49">*</span>#end --></td>
+                  <td width="14%">#if($readmode!="disabled") Muatnaik Dokumen Sokongan #else
+                    Dokumen Sokongan
+                    #end </td>
+                  <td width="1%">:</td>
+                  <td width="84%"> 
+                  #if($readmode!="disabled" &&  $namaDoC != "")
+                  <input type="text" disabled value=$!namaDoC> &nbsp;&nbsp; <input name="deleteSuppDoc1" type="button" value="Padam" onclick="deleteSuppDoc()" />
+                  #end
+                  #if($readmode=="disabled" && $namaDoC != "")
+                  <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />
+                  <!-- <input type="text" disabled value=$!namaDoC> -->	
+                  #end
+                  
+                  #if($readmode!="disabled" && $namaDoC == "") 
+                  <input name="cetak" type="button" value="Tambah Dokumen Sokongan" onclick="uploadSuppDoc('$id','$idSimati')" />
+                  <!-- <input id="fileupload" name="fileupload" type="file" size="40" onchange="uploadSuppDoc()">  -->
+                  
+                  #end
+                    </td>
+                </tr>
+                 </table>
+                 </fieldset></td>
+            </tr>
                 
                 
                  <tr>
@@ -1299,8 +1373,7 @@ resetOnBlur:false
              
                 #if($boleh_kemaskini == "yes")
                 #end  
-               
-                #if($!skrin_online != "yes") 
+                                                                                                                                                                                                                                                #if($!skrin_online != "yes") 
                 <input type="button" name="cmdKemaskini1" id="cmdKemaskini1" value="Kemaskini" onClick="setSelected(0,0,0,0);kemaskini_simati()" />
                  #if($flag_kemaskini_selesai != "yes")
                 <script>
@@ -1734,7 +1807,64 @@ function SimpanSimati() {
 		
 	}
 	
-	else if (document.f1.txtNoKPBaru1Simati.value=="" && document.f1.txtNoKPBaru2Simati.value=="" && document.f1.txtNoKPBaru3Simati.value=="" && document.f1.txtNoKPLamaSimati.value=="" && document.f1.socJenisKPLainSimati.value=="" && document.f1.txtNoKPLainSimati.value=="") {
+	else if (document.f1.txtNoKPBaru1Simati.value =="" && document.f1.txtNoKPBaru2Simati.value=="" && document.f1.txtNoKPBaru3Simati.value=="" && document.f1.txtNoKPLamaSimati.value=="" && document.f1.socJenisKPLainSimati.value=="0" && document.f1.txtNoKPLainSimati.value=="") {
+		alert("Sila masukkan salah satu MyID Simati");
+	}
+	
+	else if(document.f1.txtNoKPLamaSimati.value != "" && document.f1.txtNoKPLamaSimati.value != "TDK" && document.f1.txtNoKPLamaSimati.value.length<7)
+	{
+		alert("Sila lengkapkan MyID Lama Simati");
+		document.f1.txtNoKPLamaSimati.focus();	
+	}
+	
+	else if ((document.f1.socJenisKPLainSimati.value!="0"  && document.f1.socJenisKPLainSimati.value!="") && document.f1.txtNoKPLainSimati.value=="") {
+		alert("Sila masukkan MyID Lain Simati");
+		document.f1.txtNoKPLainSimati.focus();
+	}
+	
+	else if (document.f1.txtNoKPLainSimati.value!="" && document.f1.socJenisKPLainSimati.value=="0") {
+		alert("Sila pilih jenis MyID Lain Simati");
+	}
+	
+	else if (document.f1.txtNoKPBaru1Simati.value !="" && document.f1.txtNoKPBaru1Simati.value.length<6) {
+		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+		document.f1.txtNoKPBaru1Simati.focus();
+	}
+	else if (document.f1.txtNoKPBaru2Simati.value !="" && document.f1.txtNoKPBaru2Simati.value.length<2) {
+		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+		document.f1.txtNoKPBaru2Simati.focus();
+	}
+	else if (document.f1.txtNoKPBaru3Simati.value !="" && document.f1.txtNoKPBaru3Simati.value.length<4) {
+		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+		document.f1.txtNoKPBaru3Simati.focus();
+	}
+	
+	else if (document.f1.txtNoKPBaru1Simati.value !="" && document.f1.txtNoKPBaru2Simati.value=="" && document.f1.txtNoKPBaru3Simati.value=="") {
+		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+		document.f1.txtNoKPBaru2Simati.focus();
+	}
+	else if (document.f1.txtNoKPBaru1Simati.value !="" && document.f1.txtNoKPBaru2Simati.value!="" && document.f1.txtNoKPBaru3Simati.value=="") {
+		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+		document.f1.txtNoKPBaru3Simati.focus();
+	}
+	else if (document.f1.txtNoKPBaru1Simati.value !="" && document.f1.txtNoKPBaru2Simati.value=="" && document.f1.txtNoKPBaru3Simati.value!="") {
+		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+		document.f1.txtNoKPBaru2Simati.focus();
+	}
+	else if (document.f1.txtNoKPBaru2Simati.value!="" && document.f1.txtNoKPBaru1Simati.value=="" && document.f1.txtNoKPBaru3Simati.value!="") {
+		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+		document.f1.txtNoKPBaru1Simati.focus();
+	}
+	else if (document.f1.txtNoKPBaru2Simati.value!="" && document.f1.txtNoKPBaru1Simati.value=="" &&  document.f1.txtNoKPBaru3Simati.value=="") {
+		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+		document.f1.txtNoKPBaru1Simati.focus();
+	}	
+	else if (document.f1.txtNoKPBaru1Simati.value=="" &&  document.f1.txtNoKPBaru2Simati.value=="" && document.f1.txtNoKPBaru3Simati.value!="") {
+		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+		document.f1.txtNoKPBaru1Simati.focus();
+	}
+	
+	/* else if (document.f1.txtNoKPBaru1Simati.value=="" && document.f1.txtNoKPBaru2Simati.value=="" && document.f1.txtNoKPBaru3Simati.value=="" && document.f1.txtNoKPLamaSimati.value=="" && document.f1.socJenisKPLainSimati.value=="" && document.f1.txtNoKPLainSimati.value=="") {
 		alert("Sila masukkan salah satu nombor MyID simati");
 		document.f1.txtNoKPBaru1Simati.focus();
 		return; 
@@ -1791,7 +1921,7 @@ function SimpanSimati() {
 	{
 		alert("Sila lengkapkan MyID Lama Simati");
 		document.f1.txtNoKPLamaSimati.focus();	
-	}
+	} */
 	
 	else if (document.f1.txtPoskodSimati.value != "" && document.f1.txtPoskodSimati.value.length < 5) {
 		alert("Sila masukkan nombor poskod dengan lengkapnya");
@@ -1966,6 +2096,18 @@ else if( val=="4" )
 document.f1.txtNoSijilMatiSimati.disabled = "";
 document.f1.txtNoSijilMatiSimati.value = "";
 document.f1.socBuktiKematianSimati.value="4";
+
+document.f1.txdTarikhSuratAkuan.disabled = "disabled";
+document.f1.txdTarikhSuratAkuan.value = "";
+
+}
+
+else if( val=="3" )
+{
+
+document.f1.txtNoSijilMatiSimati.disabled = "";
+document.f1.txtNoSijilMatiSimati.value = "";
+document.f1.socBuktiKematianSimati.value="3";
 
 document.f1.txdTarikhSuratAkuan.disabled = "disabled";
 document.f1.txdTarikhSuratAkuan.value = "";
@@ -2315,6 +2457,47 @@ function trans_date(t_d){
 		return;
 	}
 
+}
+
+function deleteSuppDoc()
+{
+	input_box = confirm("Adakah anda pasti?");
+	if (input_box == true) {
+	document.f1.method = "POST";
+	document.f1.mode.value="deleteSuppDocMode";
+	document.f1.command.value = "Simati";
+	document.f1.eventStatus.value="1";
+	document.f1.action = "";
+	document.f1.submit();
+	}
+	else
+		{
+		return
+		}
+	
+	
+}
+
+function uploadSuppDoc(id,IdSimati)
+{
+	
+	var url = "../x/${securityToken}/ekptg.view.ppk.SkrinPopupUploadDokumen?&id_Permohonan="+id+"&IdSimati="+IdSimati+"&id_jenisDoc=99201";
+	var hWnd = window.open(url,'printuser','width=350,height=200, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	
+}
+
+function doOpen(id) {
+	//alert('id : '+id);
+    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 
 function trans_dateAkuan(t_d){
