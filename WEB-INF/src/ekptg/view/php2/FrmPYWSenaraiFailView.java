@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package ekptg.view.php2;
 
 import java.text.SimpleDateFormat;
@@ -25,7 +23,7 @@ import ekptg.model.php2.utiliti.PHPUtilHTML;
 public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
-	static Logger myLogger = Logger.getLogger(FrmPYWSenaraiFailView.class);
+	static Logger myLogger = Logger.getLogger(ekptg.view.php2.FrmPYWSenaraiFailView.class);
 
 	FrmPYWSenaraiFailData logic = new FrmPYWSenaraiFailData();
 	
@@ -489,4 +487,6 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 			this.context.put("error", e.getMessage());
 		}
 	}
+	
+	
 }
