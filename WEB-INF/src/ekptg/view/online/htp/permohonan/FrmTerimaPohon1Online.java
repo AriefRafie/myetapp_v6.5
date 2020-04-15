@@ -2208,6 +2208,10 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    	String txdTarikhResit = "to_date('" + tarikhResit + "','dd/MM/yyyy')";
 		    	String txtJumlahBaucer = jumlahBaucer;
 		    	
+		    	Date now = new Date();
+		    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		    	String tarikhMasuk = "to_date('"+formatter.format(now)+"', 'dd/MM/yyyy')";
+		    	
 		    	SQLRenderer r = new SQLRenderer();
 		    	
 		    	r.add("ID_BAYARAN", idBayaran);
@@ -2217,6 +2221,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    	r.add("TARIKH_BAUCER", r.unquote(txdTarikhBaucer));
 		    	r.add("TARIKH_RESIT", r.unquote(txdTarikhResit));
 		    	r.add("JUMLAH_BAUCER", txtJumlahBaucer);
+		    	r.add("TARIKH_MASUK", r.unquote(tarikhMasuk));
 		    	
 		    	myLog.info("TarikhBauce: "+ tarikhBaucer);
 		    	myLog.info("id User: "+ idUser);
