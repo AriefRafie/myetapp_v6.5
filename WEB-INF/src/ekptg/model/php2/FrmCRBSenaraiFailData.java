@@ -494,10 +494,6 @@ public class FrmCRBSenaraiFailData {
 					+ " AND HMS.ID_AGENSI = RUJAGENSI.ID_AGENSI(+) AND RUJAGENSI.ID_KEMENTERIAN = RUJKEMENTERIAN.ID_KEMENTERIAN(+)"
 					+ " AND HMS.ID_HAKMILIKSEMENTARA = '" + idHakmilikSementara
 					+ "'";
-
-			if ("".equals(idHakmilikAgensi) || "".equals(idHakmilikSementara)){
-				sql = " ";
-			}
 			
 			ResultSet rs = stmt.executeQuery(sql);
 

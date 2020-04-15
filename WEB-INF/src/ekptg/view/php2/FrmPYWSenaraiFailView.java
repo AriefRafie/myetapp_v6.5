@@ -60,6 +60,7 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 		String hitButton = getParam("hitButton");
 
 		// GET ID PARAM
+		String idPemohon = "";
 		String idFail = getParam("idFail");
 		String idStatus = getParam("idStatus");
 		String idHakmilikAgensi = getParam("idHakmilikAgensi");
@@ -104,6 +105,14 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 		String idLuasKegunaan = getParam("socLuasKegunaan");
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
 			idLuasKegunaan = "99999";
+		}
+		String idJenisPermohonan = getParam("socJenisPermohonan");
+		if (idJenisPermohonan == null || idJenisPermohonan.trim().length() == 0) {
+			idJenisPermohonan = "99999";
+		}
+		String idFailLama = getParam("socNoFailLama");
+		if (idFailLama == null || idFailLama.trim().length() == 0) {
+			idFailLama = "99999";
 		}
 		String idJenisTujuan = getParam("socJenisTujuan");
 		if (idJenisTujuan == null || idJenisTujuan.trim().length() == 0) {
@@ -230,6 +239,36 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 				idPPTBorangK = "";
 				idHakmilikUrusan = "";
 			}
+			
+			// JENIS PERMOHONAN
+			if ("1".equals(idJenisPermohonan)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "selected");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("idJenisPermohonan", idJenisPermohonan);
+        	} else if ("2".equals(idJenisPermohonan)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "selected");
+				this.context.put("selected3", "");
+				this.context.put("idJenisPermohonan", idJenisPermohonan);
+        	} else if ("3".equals(idJenisPermohonan)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "selected");
+				this.context.put("idJenisPermohonan", idJenisPermohonan);
+        	} else {
+        		this.context.put("selected", "selected");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("idJenisPermohonan", "0");
+        	}
+			
+//			idFailLama = idFail;
+//			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(idPemohon, "socNoFailLama", Long.parseLong(idFailLama), "", " "));
 
 			// MAKLUMAT PERMOHONAN
 			beanMaklumatPermohonan = new Vector();
@@ -431,6 +470,7 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idHakmilikSementara", idHakmilikSementara);
 		this.context.put("idUrusan", idUrusan);
 		this.context.put("idSuburusan", idSuburusan);
+		this.context.put("idJenisPermohonan", idJenisPermohonan); 
 		this.context.put("idJenisTujuan", idJenisTujuan);
 		this.context.put("idJenisTujuan2", idJenisTujuan2);
 		this.context.put("idJenisTujuan3", idJenisTujuan3);

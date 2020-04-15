@@ -10,15 +10,15 @@ import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
 import ekptg.model.entities.Tblpfdfail;
-import ekptg.model.entities.Tblphprujjenistujuan;
+import ekptg.model.entities.Tblrujsubsuburusan;
 
 
 public class PHPUtilData {
 	
 	static Logger myLogger = Logger.getLogger(ekptg.model.php2.utiliti.PHPUtilData.class);
 	
-	public static Vector<Tblphprujjenistujuan> getTujuanBySubUrusan (String idSuburusan) throws Exception {
-		Vector<Tblphprujjenistujuan> v = null;
+	public static Vector<Tblrujsubsuburusan> getTujuanBySubUrusan (String idSuburusan) throws Exception {
+		Vector<Tblrujsubsuburusan> v = null;
 		Db db = null;
 		String sql = "";
 		
@@ -30,14 +30,14 @@ public class PHPUtilData {
 			r.add("kod_jenistujuan");
 			r.add("keterangan");
 			r.add("id_suburusan", Integer.parseInt(idSuburusan));
-			v = new Vector<Tblphprujjenistujuan>();
-			sql = r.getSQLSelect("Tblphprujjenistujuan");
+			v = new Vector<Tblrujsubsuburusan>();
+			sql = r.getSQLSelect("Tblrujsubsuburusan");
 			myLogger.info("test :" +sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			Tblphprujjenistujuan t = null;
+			Tblrujsubsuburusan t = null;
 			while (rs.next()) {
-				t = new Tblphprujjenistujuan();
+				t = new Tblrujsubsuburusan();
 				t.setIdJenistujuan(rs.getLong("id_jenistujuan"));
 				t.setKodJenistujuan(rs.getString("kod_jenistujuan"));
 				t.setKeterangan(rs.getString("keterangan"));

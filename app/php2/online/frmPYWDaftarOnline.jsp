@@ -13,13 +13,14 @@
 	<input name="idPemohon" type="hidden" id="idPemohon" value="$idPemohon"/>
 	<input name="hitButton" type="hidden" id="hitButton"/>
 	<input name="mode" type="hidden" id="mode" value="$mode"/>
-	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+	<input name="form_token" type="hidden" value='$!{session.getAttribute("form_token")}'>
 	<input name="idJenisTanah" type="hidden" id="idJenisTanah" value="$idJenisTanah"/> 
-	<input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> 
-	<input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" /> 
-	<input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
-	<input name="idJenisPermohonan" type="text" id="idJenisPermohonan" value="$idJenisPermohonan"/> 
+	<input name="idPHPBorangK" id="idPHPBorangK" type="hidden" value="$idPHPBorangK" /> 
+	<input name="idPPTBorangK" id="idPPTBorangK" type="hidden" value="$idPPTBorangK" /> 
+	<input name="idHakmilikUrusan" id="idHakmilikUrusan" type="hidden" value="$idHakmilikUrusan" />
+	<input name="idJenisPermohonan" type="hidden" id="idJenisPermohonan" value="$idJenisPermohonan"/> 
 	<input name="idFailLama" type="hidden" id="idFailLama" value="$idFailLama"/>
+	<input name="idSuburusan" type="text" id="idSuburusan" value="$idSuburusan"/>
 </p>
 <table width="100%" border="0">
 <!-- TAMBAH MAKLUMAT PEMOHON -->
@@ -171,7 +172,7 @@
           <td>&nbsp;</td>
           <td>No. Lot</td>
           <td>:</td>
-          <td>$beanMaklumatTanah.noLot
+          <td>$!beanMaklumatTanah.lot
           <input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.lot" /></td>
         </tr>
         <tr>
@@ -356,6 +357,12 @@
           	<td>$selectSuburusan</td>
         </tr>
         <tr>
+			<td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
+			<td>Tujuan</td>
+			<td>:</td>
+			<td>$selectJenisTujuan</td>
+		</tr>
+        <tr>
         	<td></td>
         	<td>Tarikh Surat/Borang</td>
         	<td>:</td>
@@ -510,7 +517,6 @@ function doChangeJenisPermohonan() {
 function doChangeNoFailLama() {
 	doAjaxCall${formName}("doChangeNoFailLama");
 } 
-}
 function daftar() {
 	if(document.${formName}.socUrusan.value == ""){
 		alert('Sila pilih Urusan.');

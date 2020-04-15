@@ -1842,7 +1842,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			stmt.executeUpdate(sql);
 						
 			sql = "SELECT A.USER_NAME, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_NEGERI,B.NO_FAX, B.NO_HP,"
-				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL "
+				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.KATEGORI "
 				+ " FROM USERS A, USERS_ONLINE B"
 				+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
 			
@@ -1854,11 +1854,19 @@ public class FrmPYWOnlineSenaraiFailData {
 			r = new SQLRenderer();
 			long idPemohon = DB.getNextID("TBLPHPPEMOHON_SEQ");
 			r.add("ID_PEMOHON", idPemohon);
-			r.add("ID_KATEGORIPEMOHON", "2");
 			if (rsUser.next()){
 				if (rsUser.getString("USER_NAME") != null){
 					namaUser = rsUser.getString("USER_NAME");
 				}
+				if (rsUser.getString("KATEGORI") != null){
+					if("Individu".equals(rsUser.getString("KATEGORI"))){
+						r.add("ID_KATEGORIPEMOHON", "1");
+						
+					} else if("Syarikat".equals(rsUser.getString("KATEGORI"))){
+						r.add("ID_KATEGORIPEMOHON", "2");
+					}
+				}
+				
 				r.add("NAMA", namaUser);
 				r.add("NO_PENGENALAN", rsUser.getString("NO_KP_BARU") == null ? "" : rsUser.getString("NO_KP_BARU"));
 				r.add("NO_TEL", rsUser.getString("NO_TEL") == null ? "" : rsUser.getString("NO_TEL"));
@@ -1895,7 +1903,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			
 			
 			Calendar currentDate = new GregorianCalendar();			
-			String noPermohonan = "JKPTG/SPHP/04/" + getKodUrusanByIdUrusan(idUrusan) + "/" + currentDate.get(Calendar.YEAR) + "/" + File.getSeqNo(db, 4, Integer.parseInt(idUrusan), 0, 0, 0, false, false, currentDate.get(Calendar.YEAR), 0);
+			String noPermohonan = "JKPTG/BPHP/04/" + getKodUrusanByIdUrusan(idUrusan) + "/" + currentDate.get(Calendar.YEAR) + "/" + File.getSeqNo(db, 4, Integer.parseInt(idUrusan), 0, 0, 0, false, false, currentDate.get(Calendar.YEAR), 0);
 			r.add("NO_PERMOHONAN", noPermohonan);
 			r.add("FLAG_AKTIF", "Y");
 			r.add("FLAG_PERJANJIAN", "U");

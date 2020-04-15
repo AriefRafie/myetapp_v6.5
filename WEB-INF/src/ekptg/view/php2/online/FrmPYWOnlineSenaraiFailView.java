@@ -126,10 +126,10 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		if (idFailLama == null || idFailLama.trim().length() == 0) {
 			idFailLama = "99999";
 		}
-		/*String idJenisTujuan = getParam("socJenisTujuan");
+		String idJenisTujuan = getParam("socJenisTujuan");
 		if (idJenisTujuan == null || idJenisTujuan.trim().length() == 0) {
 			idJenisTujuan = "99999";
-		}*/
+		}
 
 		this.context.put("errorPeganganHakmilik", "");
 		this.context.put("onload", "");
@@ -511,13 +511,12 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			hashPermohonan.put("perkara", getParam("txtperkara") == null ? "": getParam("txtperkara"));
     			hashPermohonan.put("tarikhSurat", getParam("txttarikhSurat") == null ? "" : getParam("txttarikhSurat"));
     			hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
-
-    			
     			beanMaklumatPermohonan.addElement(hashPermohonan);
+    			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);		
     			
-    			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);			
     			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), ""," onChange=\"doChangeUrusan();\""));
     			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan,"socSuburusan", Long.parseLong(idSuburusan), ""," onChange=\"doChangeSuburusan();\""));
+    			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "", " onChange=\"doChangeTujuan();\""));
     				
         	} else if ("2".equals(idJenisPermohonan)){
         		Vector<Hashtable<String,String>> vec1 = header.setMaklumatPemohon(id_user);
@@ -648,6 +647,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idPHPBorangK", idPHPBorangK);
 		this.context.put("idDokumen", idDokumen);
 		this.context.put("idFailLama", idFailLama); 
+		this.context.put("idJenisTujuan", idJenisTujuan); 
 
 		return vm;
 	}
