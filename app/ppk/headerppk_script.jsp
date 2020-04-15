@@ -106,6 +106,7 @@ document.onclick = mclose;
 #if($!flag_jenis_vm == "vtemplate")
 <script type="text/javascript">
 var idPermohonan = document.f1.idPermohonan;
+//var idPermohonan = document.${formName}.idPermohonan;
 var idPermohonanSimati = document.f1.idPermohonanSimati;
 var idStatus = document.f1.idStatus;
 var flagFromSenaraiFailSek8 = document.f1.flagFromSenaraiFailSek8;

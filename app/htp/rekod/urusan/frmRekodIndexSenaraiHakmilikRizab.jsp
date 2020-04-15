@@ -34,8 +34,6 @@
 		doAjaxCall${formName}("","firstAction=carianHakmilikRizab");
 		
 	}
-
-
 	
 	function hakmilik_detail(id,status){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&idHakmilik="+id+"&statusSah="+status;

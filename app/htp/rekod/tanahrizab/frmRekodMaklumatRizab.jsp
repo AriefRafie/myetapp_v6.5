@@ -15,7 +15,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" valign="top">:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtNamaKementerian
   							</td>
                 		</tr>
@@ -28,7 +28,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtNoFailSeksyen
   							</td>
                 		</tr>
@@ -41,7 +41,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtFailPTG
   							</td>
                 		</tr>
@@ -54,7 +54,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" valign="top" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtTajuk
   							</td>
                 		</tr>
@@ -64,57 +64,57 @@
                 <td valign="top">
                		<table width="100%">
                    	<tr>
-  							<td width="1%" valign="top" >
-				        	</td>				        
-                        	<td width="30%">
+  							<td width="1%" valign="top" ></td>				        
+                        	<td width="30%" valign="top">
                             	<div align="left">
                             		<span class="labelinput">Agensi</span>
                             	</div>
                         	</td>
-                  			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                  			<td width="1%" class="labelinput" valign="top">:</td>
+                   			<td width="68%" class="labelinput" valign="top">
  								$txtNamaAgensi
-  							</td>
+ 							#if ($!mode == 'update' || $!mode == 'view') 
+						        <br><a href="javascript:viewTransaksiAgensi('$idHakmilik')" title="Kementerian/ Agensi Terkini" class="pautanms">Kementerian/ Agensi Terkini</a>     						
+						     #end
+ 		
+ 							</td>
                 		</tr>
               			
             			<tr>
-  							<td width="1%" valign="top" >
-				        	</td>				        
+  							<td width="1%" valign="top" ></td>				        
                         	<td width="30%">
                             	<div align="left">
                             		<span class="labelinput">No. Fail KJP</span>
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtFailKJP
   							</td>
                 		</tr>
 
                     	<tr>
-  							<td width="1%" valign="top" >
-				        	</td>				        
+  							<td width="1%" valign="top" ></td>				        
                         	<td width="30%">
                             	<div align="left">
                             		<span class="labelinput">No. Fail PTD</span>
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$!txtFailPTD
   							</td>
                 		</tr>
                     	<tr>
-  							<td width="1%" valign="top" >
-				        	</td>				        
+  							<td width="1%" valign="top" ></td>				        
                         	<td width="30%">
                             	<div align="left">
                             		<span class="labelinput">Cara Perolehan</span>
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
- 								$caraPerolehan
+                   			<td width="68%" class="labelinput" >
+ 								$!caraPerolehan
   							</td>
                 		</tr>
                 	</table>
@@ -525,7 +525,7 @@
 	                        	</td>
 	                  			<td width="1%" class="labelinput" >&nbsp;</td>
 	                   			<td width="68%" class="labeldisplay" >
-	        					#if(!$!jenisAkses.equals('Readonly'))	        			
+	        					#if(!$!jenisAkses.equals('readonly'))	        			
 		                   				<a href="javascript:pergerakanhakmilik_detail('$!idHakmilik');" class="pautanms">Maklumat Pergerakan</a>
 	                   			#end
 	                   			</td>
@@ -704,26 +704,57 @@
 		<tr>
 	    <td colspan="2" ><div align="center">        
 	        <p>
-		      ##if($statusBatal!='S' || $statusBatal!='P' || $statusBatal!='B')
-		          #if ($mode == 'view')
-		        	##set($portal_role = "${session.getAttribute('myrole')}")
-					##if ($portal_role!='(HTP)PenggunaNegeri' && $portal_role!='(HTP)PegawaiNegeri' && $portal_role!='(HTP)PengarahNegeri')
-		        	#if (!$!jenisAkses.equals('Readonly'))		          	
-				    <input type="button" class="stylobutton100" name="btnUpdate" value="Kemaskini" onclick="kemaskini_detailRizab($idHakmilik)" />
-		            
-		            #end
-		            <!--<input type="button" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:setTable('tableReport1')" class="stylobutton" /> -->
-			        <input type="button" class="stylobutton100" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:cetakMaklumatRizab($idHakmilik);" />
-		          #end
+	#if($statusBatal!='S' || $statusBatal!='P' || $statusBatal!='B')
+		#if ($mode == 'view')
 		          
-		          #if ($mode == 'update')
+			#if($!statusBatal == '')
+		    	#set($labelPengesahan = '')
+		    	
+		    	#if ($statuSemasa =='1' && ($portal_role_ =='(HTP)PenggunaNegeri' || $portal_role_ =='(HTP)PenggunaNegeriSS'))
+		    		#set($labelPengesahan = 'Hantar Semakan')		
+		    		    	
+		    	#elseif($statuSemasa =='3' && ($portal_role_ =='(HTP)PegawaiNegeri' || $portal_role_ =='(HTP)PegawaiNegeriSS'))
+		    		#set($labelPengesahan = 'Hantar Pengesahan')
+		    	
+		    	#elseif($statuSemasa =='4' && ($portal_role_ =='(HTP)PengarahNegeri' || $portal_role_ =='(HTP)PengarahNegeriSS'))		     
+		    		#set($labelPengesahan = 'Hantar Ke HQ')
+
+		  		#elseif($statuSemasa =='5' && $portal_role_ =='(HTP)HQPengguna')
+		  			#set($labelPengesahan = 'Hantar Ke Unit Rekod')
+		  		
+		  		#elseif($statuSemasa =='6' && $portal_role_ =='(HTP)HQPenggunaRekod')
+		  			#set($labelPengesahan = 'Hantar Semakan')
+
+		  		#elseif($statuSemasa =='7' && ($portal_role_ =='(HTP)HQPegawai1' || $portal_role_ =='(HTP)HQPegawai'))
+		  			#set($labelPengesahan = 'Hantar Pengesahan')
+
+		  		#elseif($statuSemasa =='8' && $portal_role_ =='(HTP)HQPengarah')
+		  			#set($labelPengesahan = 'Sahkan Maklumat Tanah')
+		  		
+		  		#end
+		  		
+		 		#if($!labelPengesahan != '')	
+		  		<input type="button" name="cmdSimpan" id="cmdpengesahan" value="$!labelPengesahan" onclick="doAjaxCall${formName}('simpanpengesahan','idFail=$!idFail')" />
+		 		#end
+		 	
+		 	#end
+		        	
+		 	#if (!$!jenisAkses.equals('readonly'))		          	
+				<input type="button" class="stylobutton100" name="btnUpdate" value="Kemaskini" onclick="kemaskini_detailRizab($idHakmilik)" />
+			#end
+		   		<!--<input type="button" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:setTable('tableReport1')" class="stylobutton" /> -->
+				<input type="button" class="stylobutton100" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:cetakMaklumatRizab($idHakmilik);" />
+		
+		#end
+		          
+		#if ($mode == 'update')
 		          	<!-- Tidak digunakan
 				    	<input type="button" class="stylobutton100" name="btnSaveRizab" id="btnSaveRizab" value="Simpan" onclick="update_detailRizab($idHakmilik)" />
 				    	<input type="button" class="stylobutton100" name="btnResetRizab" id="btnResetRizab"  value="Batal" onclick="rizab_detail('$!idHakmilik','$!sstatus');"/>
 		          	-->
-		          #end
+		#end
 		          
-	          ##end
+	#end
 				<input type="button" class="stylobutton100" name="btnBackRizab" id="btnBackRizab" value="Kembali" onclick="kembaliHakmilik()" />
 	        </p>
 	    </div></td>

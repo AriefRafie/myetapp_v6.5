@@ -1,9 +1,12 @@
 package ekptg.model.utils;
 
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public interface IUserPegawai {
+	//public List<Map<String,String>> penggunaMengikutRole(String ROLE_ID,String ID_NEGERI) throws Exception;
 	public boolean delete(String id);
 	public Vector<Hashtable<String, String>> getSenaraiPegawai(String idSeksyen,String idSuburusan,String idNegeri) throws Exception ;	
 	public Hashtable<String, String> getSenaraiPegawai(String idPegawai) throws Exception;

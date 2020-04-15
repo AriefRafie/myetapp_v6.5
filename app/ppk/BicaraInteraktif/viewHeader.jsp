@@ -142,6 +142,8 @@ $viewPerbicaraan.ID_STATUS == "21"
 <tr>
 <td width="1%"></td><td width="28%"></td><td width="1%"></td><td width="70%"></td>
 </tr>
+<input type="hidden" id="BI_FLAG_HARTA_TERINGGAL" name="BI_FLAG_HARTA_TERINGGAL" value="$viewPerbicaraan.HARTA_TERTINGGAL"  />
+
 #if($viewPerbicaraan.SEKSYEN == "17")
 <tr>
 <td valign="top" ></td><td valign="top">Tujuan Permohonan</td><td valign="top">:</td><td valign="top" class="HeaderFont">
@@ -169,8 +171,20 @@ LAIN-LAIN TUJUAN : $viewPerbicaraan.CATATAN_LAIN_TUJUAN<br />
 </tr>
 #end
 <tr>
-<td valign="top" ></td><td valign="top">Peg. Pengendali</td><td valign="top">:</td><td valign="top" class="HeaderFont">$viewPerbicaraan.PEG_PENGENDALI
+<td valign="top" ></td><td valign="top">Peg. Pengendali</td><td valign="top">:</td><td valign="top" class="HeaderFont">
 
+
+#if($viewPerbicaraan.ID_PEGAWAIBARU != "")
+$viewPerbicaraan.NAMA_PEGAWAI_BARU
+
+#if($viewPerbicaraan.NAMA_PEGAWAI_BARU != $viewPerbicaraan.PEG_PENGENDALI) 
+<br />(Asal : $viewPerbicaraan.PEG_PENGENDALI)
+#end
+
+#else
+$viewPerbicaraan.PEG_PENGENDALI
+#end
+               
 
 #set($openFormTukarPegawai="")
 #if($viewPerbicaraan.FLAG_JENIS_KEPUTUSAN != "" || $flagFailSelesai == "Y")
@@ -206,11 +220,8 @@ LAIN-LAIN TUJUAN : $viewPerbicaraan.CATATAN_LAIN_TUJUAN<br />
     #end
 #end
 
-<!--  SEMENTARA -->
 
 <input type="hidden" name="PEGAWAIBICARAASLOGIN" id="PEGAWAIBICARAASLOGIN" value="$viewPerbicaraan.PEGAWAIBICARAASLOGIN"  />
-
-
 <input type="hidden" name="flagDisable" id="flagDisable" value="$flagDisable"  />
 <input type="hidden" name="adaMasalah" id="adaMasalah" value="$adaMasalah"  />
 

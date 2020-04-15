@@ -153,7 +153,7 @@ public class FrmCRBMesyuaratData {
 	}
 
 	public void saveKehadiran(int i, String idMesyuarat, String nama,
-			String agensi, String jawatan, String noTel, String flagPengerusi,
+			String agensi, String jawatan, String noTel, String email, String flagPengerusi,
 			HttpSession session) throws Exception {
 
 		Db db = null;
@@ -182,6 +182,7 @@ public class FrmCRBMesyuaratData {
 			r.add("NAMA_AGENSI", agensi);
 			r.add("NAMA_JAWATAN", jawatan);
 			r.add("NO_TELEFON", noTel);
+			r.add("EMAIL", email);
 			if (!"".equals(flagPengerusi)) {
 				if (Integer.parseInt(flagPengerusi) == (i + 1)) {
 					r.add("FLAG_PENGERUSI", "Y");
@@ -248,7 +249,7 @@ public class FrmCRBMesyuaratData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_KEHADIRAN, NAMA_PEGAWAI, NAMA_AGENSI, NO_TELEFON, NAMA_JAWATAN, FLAG_PENGERUSI"
+			sql = "SELECT ID_KEHADIRAN, NAMA_PEGAWAI, NAMA_AGENSI, NO_TELEFON, EMAIL, NAMA_JAWATAN, FLAG_PENGERUSI"
 					+ " FROM TBLPHPKEHADIRANMESY WHERE ID_KEHADIRAN = '"
 					+ idKehadiran + "'";
 
@@ -269,6 +270,9 @@ public class FrmCRBMesyuaratData {
 				h.put("noTelefon",
 						rs.getString("NO_TELEFON") == null ? "" : rs
 								.getString("NO_TELEFON"));
+				h.put("email",
+						rs.getString("EMAIL") == null ? "" : rs
+								.getString("EMAIL"));
 				h.put("jawatan",
 						rs.getString("NAMA_JAWATAN") == null ? "" : rs
 								.getString("NAMA_JAWATAN"));
@@ -300,6 +304,7 @@ public class FrmCRBMesyuaratData {
 			r.add("NAMA_AGENSI");
 			r.add("NAMA_JAWATAN");
 			r.add("NO_TELEFON");
+			r.add("EMAIL");
 			r.add("FLAG_PENGERUSI");
 			r.add("ID_MESYUARAT", idMesyuarat);
 
@@ -322,6 +327,9 @@ public class FrmCRBMesyuaratData {
 				h.put("noTelefon",
 						rs.getString("NO_TELEFON") == null ? "" : rs
 								.getString("NO_TELEFON"));
+				h.put("email",
+						rs.getString("EMAIL") == null ? "" : rs
+								.getString("EMAIL"));
 				h.put("flagPengerusi",
 						rs.getString("FLAG_PENGERUSI") == null ? "" : rs
 								.getString("FLAG_PENGERUSI"));
@@ -622,7 +630,7 @@ public class FrmCRBMesyuaratData {
 	}
 
 	public void updateKehadiran(String idMesyuarat, String idKehadiran,
-			String namaPegawai, String agensi, String noTel, String txtJawatan,
+			String namaPegawai, String agensi, String noTel, String txtJawatan,String txtEmail,
 			String flagPengerusi, HttpSession session) throws Exception {
 
 		Db db = null;
@@ -647,6 +655,7 @@ public class FrmCRBMesyuaratData {
 			r.add("NAMA_AGENSI", agensi);
 			r.add("NO_TELEFON", noTel);
 			r.add("NAMA_JAWATAN", txtJawatan);
+			r.add("EMAIL", txtEmail);
 			r.add("FLAG_PENGERUSI", flagPengerusi);
 
 			r.add("ID_KEMASKINI", userId);

@@ -3,10 +3,13 @@
 .style1 {color: #0000FF}
 -->
 </style>
+
+
+
 <table width="98%" border="0">
 	<tr>
-		<td>
-			&nbsp;
+		<td>&nbsp;
+			
 		</td>
 	</tr>
 	<tr>
@@ -47,7 +50,6 @@
 					    	<input type="hidden" name="socJenisTanah" value="$idJenisTanah">
 					    </td>
 			  		</tr>
-
 			      
 				#if ($flagAdvSearch == 'open')			      
 			      	<tr>       
@@ -56,7 +58,13 @@
 				        <td>$selectNegeri</td>
 			      	</tr>
 			      	<tr>
-				        <td align="right"><div align="right">Daerah</div></td>
+				        <td align="right"><div align="right">
+				        	#if ($idNegeri == '13' )
+				        		Bahagian
+				        	#else
+				        		Daerah
+				        	#end
+				        	</div></td>
 				        <td><div align="center">:</div></td>
 				        <td>$selectDaerah</td>
 			      	</tr>
@@ -85,7 +93,7 @@
 				        <option $selectedStatus1 value="1">AKTIF</option>
 				        <option $selectedStatus2 value="2">BATAL</option>
 				        -->
-				        #set ($listJenisStatus = ["SILA PILIH","AKTIF","BATAL"])
+				        #set ($listJenisStatus = ["SILA PILIH","AKTIF","TIDAK AKTIF"])
 				        #set( $counter2 = 0 )
 				        #foreach ($i in $listJenisStatus)
 				        #if ($idStatus == $counter2) 
@@ -135,7 +143,7 @@
 			      	</tr>    
 				
 				  	<tr>
-					    <td align="right"><div align="right">No Fail</div></td>
+					    <td align="right"><div align="right">No. Fail</div></td>
 					    <td><div align="center">:</div></td>
 					   	<td><input name="txtNoFailC" type="text" id="txtNoFailC" value="$txtNoFailC" size="43" />
 					     #if ($flagAdvSearch == '')
@@ -145,7 +153,15 @@
 				            #end
 					     </td>
 				  	<tr/>	
-				  	#if ($flagAdvSearch == 'open')			      
+				  	#if ($flagAdvSearch == 'open')	
+				  	<tr >
+			        	<td valign="top" align="right"><div align="right">Kegunaan Tanah</div></td>
+			        	<td valign="top"><div align="center">:</div></td>
+				        <td>
+								<textarea name="txtkegunaantanahc" cols="40" rows="2" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase();">$txtKegunaanTanahC</textarea>
+							 
+				        </td>
+			      	</tr>  		      
 				  	#end		      
 			      	<tr>
 				        <td></td>
@@ -168,9 +184,9 @@
 				    	<td colspan="8">#parse("app/utils/record_paging.jsp") </td>
 				    </tr>
 					<tr class="table_header">
-					  <td width="3%">Bil.</td>
-				   	  <td width="15%"><div align="left">No Fail</div></td>
-				   	  <td width="12%"><div align="left">
+					  <td width="3%"><strong>Bil.</strong></td>
+				   	  <td width="15%"><div align="left"><strong>No. Fail</strong></div></td>
+				   	  <td width="12%"><div align="left"><strong>
 				   	  #if ($idJenisTanah==1)
 				   	  	No. Hakmilik
 				   	  #elseif ($idJenisTanah==2)
@@ -178,20 +194,26 @@
 				   	  #else
 				   	  	No. Hakmilik/Warta
 				      #end
-				      </div></td>
-				  	  <td width="10%"><div align="left">
+				      </strong></div></td>
+				  	  <td width="10%"><div align="left"><strong>
 				  	  #if ($idJenisTanah==2)
 				   	   	No. Lot
 				   	  #else
 				  	  	No. Lot/PT
-				      #end </div></td>
-				   	  <td width="15%"><div align="left">Status<br />
+				      #end </strong></div></td>
+				   	  <td width="15%"><div align="center"><strong>Status</strong><br />
 				   	  </div></td>
-				  	  <td width="40%"><div align="left">Kegunaan Tanah</div></td>
+				  	  <td width="30%"><div align="left"><strong>Kegunaan Tanah</strong></div></td>
+				  	  <td width="10%"><div align="center"><strong>Tindakan</strong></div></td>
 				  </tr>
+				
 				##Kemaskini pd 21/09/2011 oleh Mohamad Rosli (Penyelesaian kpd page number apabila Vector kosong) 
-				##foreach ($senarai in $SenaraiTanah)
+				##foreach ($senarai in $SenaraiTanah) 
+				#if ($!SenaraiFail.size()>0)
 				#foreach ($senarai in $SenaraiFail)
+					#set($maklumatGis ="nofail="+$!senarai.noFail+"&kod="+$!senarai.gisStatus+"&upi="+$!senarai.gisHantar)
+					
+					       
 				  #set( $i = $velocityCount )
 				    #if ( ($i % 2) != 1 )
 				       #set( $row = "row2" )
@@ -202,14 +224,14 @@
 				    <td width="1%">$senarai.bil</td>
 				    #if($senarai.bil != '')
 				      #if($senarai.jenisTanah == 'M')     	
-				       <td width="18%"><a href="javascript:hakmilik_detail('$senarai.idHakmilik','$senarai.statusSah');" class="style1">$senarai.noFail</a></td>
+				       <td width="18%"><a href="javascript:hakmilikDetail('$senarai.idHakmilik','$senarai.statusSah');" class="style1">$senarai.noFail</a></td>
 				      #elseif($senarai.jenisTanah == 'R')
-				   	    <td width="18%"><a href="javascript:rizab_detail('$senarai.idHakmilik','$senarai.statusSah');" class="style1">$senarai.noFail</a></td>
+				   	    <td width="18%"><a href="javascript:rizabDetail('$senarai.idHakmilik','$senarai.statusSah');" class="style1">$senarai.noFail</a></td>
 				      #else
-				   	    <td width="18%">$senarai.noFail</td>
+				   	    <td width="18%">$!senarai.noFail</td>
 				      #end    
 				    #else
-				    	<td width="18%">$senarai.noFail</td>
+				    	<td width="18%">$!senarai.noFail</td>
 				    #end
 				   	<td width="8%"><div align="left">$senarai.kodJenis $senarai.noHakmilik $senarai.noWarta</div></td>
 				    <td width="8%"><div align="left">$senarai.kodLot$senarai.noLot</div></td>
@@ -217,11 +239,37 @@
 				    <td width="23%">
 				    	$senarai.kegunaanTanah <font color="red"><b>$!senarai.ceroboh</b></font> 
 				    	#if($senarai.isImej.equals('IMEJ'))
-				    		<a href="javascript:maklumatImej('$senarai.idHakmilik')" class="style1">Tetingkap Baru(Imej)</a>	    				
+				    		<!-- <a href="javascript:maklumatImej('$senarai.idHakmilik')" class="style1">Tetingkap Baru(Imej)</a> -->	    				
 	    				#end
 				    	</td>
+				 		<td><div align="center">
+				 		<!-- <a href="javascript:maklumatGIS('$!maklumatGis')" class="style1">GIS</a> -->
+				 			#if($senarai.isImej.equals('IMEJ'))
+				 				<a alt="Lampiran" href = "javascript:maklumatImej('$senarai.idHakmilik');">
+						      		<img border="0" src="../img/main.png" width="20" height="15"/>
+						      	</a>
+	    					#end
+  								#if ($senarai.gisCharting != 'N')			      				 									      				
+						      	<a alt="GIS" href = "javascript:gisWindow('TIADA','$!maklumatGis');">
+						      		<img border="0" src="../img/online/map.png" width="20" height="15"/>
+						      	</a>
+						      	#end  
+  							#if ($!gisPage == 'GIS')	
+  								#if ($senarai.gisHantar == 'N')			      				 									      				
+			      				<a alt="GIS" href = "javascript:tambahGISRekod('$!senarai.noFail','$!senarai.gisStatus','$senarai.idHakmilik');">
+						      		<img border="0" src="../img/plus.gif" width="20" height="15"/>
+						      	</a> 
+						      	#end  
+						     #end 				
+				 		</div></td>
 					</tr> 
 				 #end
+				 
+			    #else
+				  <tr>
+				    <td colspan="7" class="row1"><font color="#FF0000">Tiada Rekod.</font></td>
+				  </tr>
+			    #end
 				</table>
 			</fieldset>
 
@@ -229,10 +277,22 @@
 	</tr>
 </table>
 				        	
-<input name="flagAdvSearch" type="hidden" value="$!flagAdvSearch" />
+<input type="hidden" id="flagAdvSearch" name="flagAdvSearch" value="$!flagAdvSearch" />
+<input type="hidden" id="isimpangis" name="isimpangis" value="$!notifikasiSimpan"/>
+<input type="hidden" id="firstAction" name="firstAction" value="$!firstAction" />
 
 <script>
-			
+
+	if(document.${formName}.isimpangis.value == 'true'){
+		alert("Maklumat untuk GIS telah dihantar.");
+	}
+
+	//frmRekodSenaraiHakmilikRizabIndex.jsp -5
+	function tambahGISRekod(file,perolehan,idHakmilik){
+		document.${formName}.firstAction.value = "carianHakmilikRizab";
+		tambahGISC("",file,perolehan,idHakmilik,"firstAction=carianHakmilikRizab&");
+	}
+	//frmRekodSenaraiHakmilikRizabIndex.jsp -1
 	function cari(){   
 		field_ = document.${formName}.socJenisTanahtemp;
 		for (i = 0; i < field_.length; i++){
@@ -240,6 +300,7 @@
 				document.${formName}.socJenisTanah.value = field_[i].value;
 			}
 		}
+		document.${formName}.firstAction.value = "carianHakmilikRizab";
 		doAjaxCall${formName}("","firstAction=carianHakmilikRizab");
 		
 	}
@@ -263,9 +324,12 @@
 	 	
 	}
 	
+	//frmRekodSenaraiHakmilikRizabIndex.jsp -2
 	function kosongCarian(idJenisTanah){
 		document.${formName}.flagAdvSearch.value = "N";
 		document.${formName}.reset();
+		//2020/04/12
+		document.${formName}.firstAction.value = ""; 
 	 	doAjaxCall${formName}("","nextAction=reset");
 	 	
 	}
@@ -294,14 +358,15 @@
 		
 	}
 
-	function doChangeTarafRizab(x) { 
-		
+	function doChangeLuasRizab(id_) { 	
+		//doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailRizab&lastAction=doChange&idHakmilik=");			
 	}
 
 	function more(){
 		document.${formName}.flagAdvSearch.value = "open";
 		//document.${formName}.submit();
 		//doAjaxCall${formName}("","flagAdvSearch=open");
+		document.${formName}.firstAction.value = ""; 		
 		doAjaxCall${formName}("");
 		
 	}
@@ -309,53 +374,73 @@
 	function less(){
 		document.${formName}.flagAdvSearch.value = "";
 		//document.${formName}.submit();
+		document.${formName}.firstAction.value = ""; 		
 		doAjaxCall${formName}("");
 		
-	}
-	
+	}	
 	//HAKMILIK
-	//[link No. Hakmilik]	
-	function hakmilik_detail(id,status){
+	//frmRekodSenaraiHakmilikRizabIndex.jsp -3 [link No. Hakmilik]	
+	function hakmilikDetail(id_,status){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.rekod.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&idHakmilik="+id+"&statusSah="+status;
 		//document.${formName}.submit();
-		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&idHakmilik="+id+"&statusSah="+status);
+		//2020/04/12
+		document.${formName}.firstAction.value = "PendaftaranHakmilik"; 
+		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&idHakmilik="+id_+"&statusSah="+status);
+	}
+	function hakmilik_detail(id_,status){
+		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&idHakmilik="+id_+"&statusSah="+status);
 	}
 	
 	function doChangeStateHR() {
-	  doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailHakmilik&lastAction=doChangeStateHR");
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 
+	  	doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailHakmilik&lastAction=doChangeStateHR");
 	}
 	
 	function doChangeDaerahHR() {
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailHakmilik&lastAction=doChangeDaerahHR");
 	}
 	
 	function doChangeMukimHR() {
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailHakmilik&lastAction=doChangeMukimHR");
 	}
-	
-	
 	//[Kembali]
 	function kembaliHakmilik(){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=carianHakmilikRizab";	
 		//document.${formName}.submit();
 		doAjaxCall${formName}("","firstAction=carianHakmilikRizab");
 	}
-	
 	//[Kemaskini]
-	function kemaskini_detailHakmilik(id){
+	function kemaskini_detailHakmilik(id_){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailHakmilik&idHakmilik="+id;
 		//document.${formName}.submit();
-		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailHakmilik&idHakmilik="+id);
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 
+		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailHakmilik&idHakmilik="+id_);
 	}
 	
+	function updateKegunaanTanah(idHakmilik) {
+		var url = "../x/${securityToken}/ekptg.view.htp.FrmPopupIntergrasiEtanahView?idHakmilik="+idHakmilik;
+		var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		   hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	}
 	//[Simpan]
 	function update_detailHakmilik(id){
+		
 		//VALIDATAION
 		 if(document.${formName}.socNegeriHR.value == 99999){ 
 			alert('Sila masukkan " Negeri " terlebih dahulu.'); 
 			document.${formName}.socNegeriHR.focus();
 			return; 
 		 }
+		 
 		 if(document.${formName}.socDaerahHR.value == ""){ 
 			alert('Sila masukkan " Daerah " terlebih dahulu.'); 
 			document.${formName}.socDaerahHR.focus();
@@ -366,21 +451,72 @@
 			document.${formName}.socMukimHR.focus();
 			return; 
 		 }
+		 if(document.${formName}.socJenisHakmilikHR.value == ""){ 
+			alert('Sila masukkan " Jenis Hakmilik " terlebih dahulu.'); 
+			document.${formName}.socJenisHakmilikHR.focus();
+			return; 
+		 }
+		 if(document.${formName}.txtNoHakmilik.value == ""){ 
+				alert('Sila masukkan " Nombor Hakmilik " terlebih dahulu.'); 
+				document.${formName}.txtNoHakmilik.focus();
+				return; 
+		 }
+		 
+		 if(document.${formName}.socLotHR.value == ""){ 
+				alert('Sila masukkan " Kod LOT/PT " terlebih dahulu.'); 
+				document.${formName}.socLotHR.focus();
+				return; 
+		 }
+		 if(document.${formName}.txtNoLot.value == ""){ 
+				alert('Sila masukkan " No LOT/PT " terlebih dahulu.'); 
+				document.${formName}.txtNoLot.focus();
+				return; 
+		 }
+		 if(document.${formName}.socTaraf.value == ""){ 
+				alert('Sila masukkan " Taraf Hakmilik " terlebih dahulu.'); 
+				document.${formName}.socTaraf.focus(); 
+				return; 
+		 }	
+		 if(document.${formName}.socTaraf.value == "P" && document.${formName}.txtTempoh.value == ""){ 
+				alert('Sila masukkan " Tempoh " terlebih dahulu.'); 
+				document.${formName}.txtTempoh.focus();
+				return; 
+		 }
+		 if(document.${formName}.txtCukaiTerkini.value == ""){ 
+				alert('Sila masukkan " Tempoh " terlebih dahulu.'); 
+				document.${formName}.txtCukaiTerkini.focus();
+				return; 
+		 }
+		 
+		 if(document.${formName}.socLuas.value == ""){ 
+				alert('Sila masukkan " Jenis Luas " terlebih dahulu.'); 
+				document.${formName}.socLuas.focus();
+				return; 
+	     }   
+		 if(document.${formName}.txtLuas1.value == "" &&  document.${formName}.txtLuas2.value == "" && 
+			document.${formName}.txtLuas3.value == "" &&  document.${formName}.txtLuas4.value == "" &&
+			document.${formName}.txtLuas5.value == "" &&  document.${formName}.txtLuas6.value == ""){ 
+				alert('Sila masukkan " Luas " terlebih dahulu.'); 
+				//document.${formName}.txtLuas.focus();
+				return; 
+		 }
+		 if(document.${formName}.socRizab.value == ""){ 
+				alert('Sila masukkan " Rizab " terlebih dahulu.'); 
+				document.${formName}.socRizab.focus();
+				return; 
+	     } 
 		 if(document.${formName}.txdTarikhTerima.value == ""){ 
 			alert('Sila masukkan " Tarikh Terima " terlebih dahulu.'); 
 			document.${formName}.txdTarikhTerima.focus();
 			return; 
 		 }
+		 
 		 if(document.${formName}.txdTarikhDaftar.value == ""){ 
 			alert('Sila masukkan " Tarikh Daftar " terlebih dahulu.'); 
 			document.${formName}.txdTarikhDaftar.focus();
 			return; 
 		 }
-		 if(document.${formName}.socTaraf.value == ""){ 
-			alert('Sila masukkan " Taraf Hakmilik " terlebih dahulu.'); 
-			document.${formName}.socTaraf.focus(); 
-			return; 
-		 }	
+		 
 		 if(document.${formName}.txtCukaiTahun.value == ""){ 
 			alert('Sila masukkan " Cukai Tahun Pertama " terlebih dahulu.'); 
 			document.${formName}.txtCukaiTahun.focus();
@@ -395,28 +531,19 @@
 			alert('Sila masukkan " Kegunaan Tanah " terlebih dahulu.'); 
 			document.${formName}.txtKegunaanTanah.focus();
 			return; 
-		 }			
-		 if(document.${formName}.socLuas.value == ""){ 
-			alert('Sila masukkan " Jenis Luas " terlebih dahulu.'); 
-			document.${formName}.socLuas.focus();
-			return; 
-		 }   
-		 if(document.${formName}.txtLuas.value == ""){ 
-			alert('Sila masukkan " Luas " terlebih dahulu.'); 
-			document.${formName}.txtLuas.focus();
-			return; 
-		 }
+		 }		
+		 
 		 if(document.${formName}.socKategori.value == ""){ 
 			alert('Sila masukkan " Kategori " terlebih dahulu.'); 
 			document.${formName}.socKategori.focus();
 			return; 
 		 }
-		 if(document.${formName}.socStatus.value == ""){ 
+		 if(document.${formName}.socStatusDaftar.value == ""){ 
 			alert('Sila masukkan " Status Sah " terlebih dahulu.'); 
-			document.${formName}.socStatus.focus();
+			document.${formName}.socStatusDaftar.focus();
 			return; 
 		 }        
-		
+		 
 		  var str1 = document.${formName}.txdTarikhTerima.value; 
 		  var dt1 = parseInt(str1.substring(0,2),10); 
 		  var mon1 = parseInt(str1.substring(3,5),10)-1; 
@@ -448,19 +575,30 @@
 		//END OF VALIDATION
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=updateDetailHakmilik&idHakmilik="+id;	
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=updateDetailHakmilik&idHakmilik="+id);
 		
 	}
-	
 	//[Link] Skrin Hakmilik Sambungan, No. Hakmilik
 	//27/06/2012
 	function hakmilikDetailSamb(id,status){
 		document.${formName}.idHakmilik.value = id;
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&statusSah="+status);
 	
 	}
 
-		
+	//20/10/2010
+	//05/02/2013 
+	//[Link] Skrin Hakmilik Sambungan, No. Hakmilik (Selepas simpan)
+	function hakmilikDetailSambungan(id,status){
+		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=papardetailhakmiliksamb&idHakmilik="+id+"&statusSah="+status;
+		//document.${formName}.submit();
+		hakmilikDetailSamb(id,status);
+
+	}		
 	//[Cetak]
 	//01/06/2010
 	function cetakMaklumatHakmilik(idhakmilik){
@@ -471,17 +609,20 @@
 	    if (hWnd.focus != null) hWnd.focus();
 	    
 	}
-	
-// START PAGING
-
+	// START PAGING
 	function screen1(id){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=";
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = ""; 
 		doAjaxCall${formName}("","firstAction=");
 		
 	}
 	
 	function screen2(id,jenis){
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 
+		
 	   	//if(jenis == 'Y' || jenis == 'T'){
 		if(jenis == 'M'){
 			//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&idHakmilik="+id;
@@ -497,40 +638,47 @@
 		//document.${formName}.command.value = "";
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranPembangunan&idHakmilik="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranPembangunan"; 				
 		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&idHakmilik="+id);
 	}
 	
 	function screen4(id){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&idHakmilik="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 				
 		doAjaxCall${formName}("","firstAction=PendaftaranImej&idHakmilik="+id);
 	}
 	
 	function screen5(id){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=paparDetailHakmilik&idHakmilik="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "paparDetailHakmilik"; 				
 		doAjaxCall${formName}("","firstAction=paparDetailHakmilik&idHakmilik="+id);
 	}
 	//END PAGING	
 	
-	//TAB
-	
+	//TAB	
 	function selectTab2(tabId,command,mode,tabmode){
 		doAjaxCall${formName}(command,'mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode);
 	}
-	
 	//[Tab]
 	function selectTab(id){
 		//alert('selectTab');
 		//document.${formName}.command.value = "";
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&tabId="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 				
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&tabId="+id);
 		
-	}
-	
+	}	
 	// SELECTED ITEM STATUS SAH (UPDATE) 
 	function doChangeTaraf() {
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 				
 		if(document.${formName}.socStatusDaftar.value=='S'){
 			doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskinidetailhakmiliksamb&lastAction=doChange");	
 		}else{
@@ -558,6 +706,27 @@
 			document.${formName}.socMukimHR.focus();
 			return; 
 		}
+	 	if(document.${formName}.socJenisHakmilikHR.value == ""){ 
+			alert('Sila masukkan " Jenis Hakmilik " terlebih dahulu.'); 
+			document.${formName}.socJenisHakmilikHR.focus();
+			return; 
+		 }
+		 if(document.${formName}.txtNoHakmilik.value == ""){ 
+				alert('Sila masukkan " Nombor Hakmilik " terlebih dahulu.'); 
+				document.${formName}.txtNoHakmilik.focus();
+				return; 
+		 }
+		 
+		 if(document.${formName}.socLotHR.value == ""){ 
+				alert('Sila masukkan " Kod LOT/PT " terlebih dahulu.'); 
+				document.${formName}.socLotHR.focus();
+				return; 
+		 }
+		 if(document.${formName}.txtNoLot.value == ""){ 
+				alert('Sila masukkan " No LOT/PT " terlebih dahulu.'); 
+				document.${formName}.txtNoLot.focus();
+				return; 
+		 }
 	 	if(document.${formName}.txdTarikhTerima.value == ""){ 
 			alert('Sila masukkan " Tarikh Terima " terlebih dahulu.'); 
 			document.${formName}.txdTarikhTerima.focus();
@@ -603,7 +772,7 @@
 			document.${formName}.txtLuas.focus();
 			return; 
 	 	}*/
-	 		if(document.${formName}.socLuas.value == "" || document.${formName}.socLuas.value == "0"){ 
+	 	if(document.${formName}.socLuas.value == "" || document.${formName}.socLuas.value == "0"){ 
 			alert('Sila masukkan " Unit Luas " terlebih dahulu.'); 
 			document.${formName}.socLuas.focus();
 			return false; 
@@ -645,14 +814,19 @@
 			}
 			 
 	 	} 	
+	 	if(document.${formName}.socRizab.value == ""){ 
+			alert('Sila masukkan " Rizab " terlebih dahulu.'); 
+			document.${formName}.socRizab.focus();
+			return; 
+     	} 
 	 	if(document.${formName}.socKategori.value == ""){ 
 			alert('Sila masukkan " Kategori " terlebih dahulu.'); 
 			document.${formName}.socKategori.focus();
 			return; 
 	 	}
-	 	if(document.${formName}.socStatus.value == ""){ 
+	 	if(document.${formName}.socStatusDaftar.value == ""){ 
 			alert('Sila masukkan " Status Sah " terlebih dahulu.'); 
-			document.${formName}.socStatus.focus();
+			document.${formName}.socStatusDaftar.focus();
 			return; 
 	 	}        
 	
@@ -700,6 +874,8 @@
 		
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=updateDetailHakmilik&idHakmilik="+id;	
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 				
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=updateDetailHakmilik&tabId="+id);
 	
 	}
@@ -721,7 +897,6 @@
 	 	}
 	
 	}
-
 	//semakan Tarikh semasa null
 	function validateTarikhSemasaIsNull(inputfield) {
 		var today = new Date();	
@@ -737,23 +912,31 @@
 		  		inputfield.value="";
 		  		inputfield.focus();
 		 		return;
+	
 		 	}
 		}
 		
 	}	
-	
 	//[link] Maklumat Pergerakan
 	function pergerakanhakmilik_detail(id){
-		document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPergerakanHakmilik&firstAction=paparDetailPergerakanHakmilik&idHakmilik="+id;	
+		//2020/04/12
+		//document.${formName}.firstAction.value = "paparDetailPergerakanHakmilik"; 				
+		document.${formName}.action = "?_portal_module=ekptg.view.htp.rekod.FrmRekodPergerakanHakmilik&firstAction=paparDetailPergerakanHakmilik&idHakmilik="+id;	
 		document.${formName}.submit();
 		//doAjaxCall${formName}("","firstAction=paparDetailPergerakanHakmilik&idHakmilik="+id);
-	}
-	
-//	pembangunan/frmRekodPembangunanPentadbiranIndex
- 
+	}	
+	//	pembangunan/frmRekodPembangunanPentadbiranIndex 
 	 //[Simpan]
-	 function XtambahPerihalHakmilik(id,luasAsal,luasCurrent,luasJumlahGuna){
-		 var diff1;var diff2;var combine;
+	 function tambahPerihalHakmilik(id,luasAsal,luasCurrent,luasJumlahGuna){
+		var urljava = "";
+		
+		if(document.${formName}.negeri.value=="SARAWAK" || document.${formName}.negeri.value=="SABAH"){ 			
+			urljava = "ekptg.view.htp.negeri.rekod.FrmRekodTanahNegeri";			
+		}else{			
+			urljava = "ekptg.view.htp.rekod.FrmRekodTanah";			
+		}
+		
+	     var diff1;var diff2;var combine;
 		 
 		 combine = eval(luasJumlahGuna) + eval(document.${formName}.txtLuas.value);
 		 diff1 = eval(luasAsal) - eval(document.${formName}.txtLuas.value);
@@ -772,9 +955,9 @@
 		 	return; 
 		
 		}
-		if(document.${formName}.txtLuas.value == ""){ 
+		if(document.${formName}.txtLuas.value == "" || document.${formName}.txtLuas.value == "0"){ 
 			alert('Sila masukkan " Luas " terlebih dahulu.'); 
-		 	document.${formName}.txtLuas.focus(); 
+		 	//document.${formName}.txtLuas.focus(); 
 		 	return; 
 		
 		}	
@@ -793,28 +976,49 @@
 		 	return;
 		
 		}
-		//}		 
-		//END OF VALIDATAION
+		//aeda 
 		
-		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranPembangunan&nextAction=tambahDetailKeluasan&idHakmilik="+id;
-		//document.${formName}.submit();
-		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=tambahDetailKeluasan&idHakmilik="+id);
+		if ( !window.confirm("Adakah Anda Pasti?")) return;
+		var socJenisBinaan = document.${formName}.socJenisBinaan.value;
+		var txtNoJKR = document.${formName}.txtNoJKR.value;
+		var txdTarikhBina = document.${formName}.txdTarikhBina.value;
+		var txtHarga = document.${formName}.txtHarga.value;
+		var socLuas = document.${formName}.socLuas.value;
+		var txtLuas1 = document.${formName}.txtLuas1.value;
+		var txtCatatan = document.${formName}.txtCatatan.value;
+		var perihal = document.${formName}.txtPerihalImej.value;
+		
+		/* if (document.${formName}.fileupload.value == ""){ 
+			
+    		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=tambahDetailKeluasanNoAttachement&idHakmilik="+id);
+			
+		}else{*/
+			//2020/04/12
+			//document.${formName}.firstAction.value = "PendaftaranPembangunan"; 				
+		
+    		document.${formName}.action = "?_portal_module="+urljava+"&firstAction=PendaftaranPembangunan&nextAction=tambahDetailKeluasan&idHakmilik="+id+"&socJenisBinaan="+socJenisBinaan+"&txtNoJKR="+txtNoJKR+"&txdTarikhBina="+txdTarikhBina+"&txtHarga="+txtHarga+"&socLuas="+socLuas+"&txtLuas1="+txtLuas1+"&txtCatatan="+txtCatatan+"&txtPerihalImej="+perihal;
+    		document.${formName}.method="post";
+    		document.${formName}.enctype="multipart/form-data";
+    	    document.${formName}.encoding="multipart/form-data";
+    		document.${formName}.submit();
+    	
+    	//}
 	
 	}	
-	
-	
-	
+		
 	 function XviewDetailPerihal(id){
 	 	//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranPembangunan&nextAction=viewDetailKeluasan&idHakmilikPerihal="+id;
 	 	//document.${formName}.submit();
-	 	document.${formName}.idHakmilikPerihal.value = id; 	
+	 	document.${formName}.idHakmilikPerihal.value = id;
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranPembangunan"; 				
 		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=viewDetailKeluasan");
 	 }
 	 
-	 function XkemaskiniDetailPerihal(id){
-	 	//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranPembangunan&nextAction=kemaskiniDetailKeluasan&idHakmilikPerihal="+id;
-	 	//document.${formName}.submit();
-		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=kemaskiniDetailKeluasan&idHakmilikPerihal="+id);
+	 function XkemaskiniDetailPerihal(id,idGambar){
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranPembangunan"; 				
+		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=kemaskiniDetailKeluasan&idHakmilikPerihal="+id+"&idGambar="+idGambar);
 	 }
  
  	function XupdatePerihalHakmilik(id,luasAsal,luasCurrent,luasJumlahGuna,luasYgDiUpdate){
@@ -853,11 +1057,16 @@
  	document.${formName}.idHakmilikPerihal.value = id;
  	//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranPembangunan&nextAction=updateDetailKeluasan&idHakmilikPerihal="+id;
  	//document.${formName}.submit();
+ 		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranPembangunan"; 				
  	doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=updateDetailKeluasan&idHakmilikPerihal="+id);
  	
  }
  
 	function kembali(id,jenis){
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 				
+
     	if(jenis == 'Y' || jenis == 'T'){
  			document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&idHakmilik="+id;
  		}else{
@@ -902,91 +1111,100 @@
 	 	//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranPembangunan&nextAction=deleteDetailPembangunan&idHakmilikPerihal="+id;
 	 	//document.${formName}.submit();
 	 	document.${formName}.idHakmilikPerihal.value = id;
- 		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=deleteDetailPembangunan");
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranPembangunan"; 				
+	 	doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=deleteDetailPembangunan");
 	 	
 	 }
 	 
- //function x3baru(id){
- function XbaruPembangunan(id){
- 	//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranPembangunan&idHakmilik="+id;
- 	//document.${formName}.submit();
-	doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&idHakmilik="+id);
- }
+ 	//function x3baru(id){
+ 	function XbaruPembangunan(id){
+ 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranPembangunan&idHakmilik="+id;
+ 		//document.${formName}.submit();
+ 		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranPembangunan"; 				
+		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&idHakmilik="+id);
+ 	}
  
- function x3doChangeTaraf() {
- 	doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=doChangeLuas");
- }
+ 	function x3doChangeTaraf() {
+ 		//2020/04/12
+		document.${formName}.firstAction.value = "PendaftaranPembangunan"; 				
+ 		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=doChangeLuas");
+ 	}
  
- function XdoChangeTaraf2(mode) {
- 	doAjaxCall${formName}("","mode="+mode+"&firstAction=PendaftaranPembangunan&nextAction=doChangeLuas");
- }
+ 	function XdoChangeTaraf2(mode) {
+ 		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranPembangunan"; 				
+ 		doAjaxCall${formName}("","mode="+mode+"&firstAction=PendaftaranPembangunan&nextAction=doChangeLuas");
+ 	}
  
- function kiraLuas(idLuas){
-   var jenisLuas = idLuas;
-   // KILOMETER PERSEGI
-   if(jenisLuas == "1"){
-   	var luasK = (document.${formName}.txtLuas1.value);
- 	var luasH = luasK*100;
-   	document.${formName}.txtLuas.value = luasH;
-    }
-    else
-    //HEKTER
-     if(jenisLuas == "2"){
-   	var luasH = (document.${formName}.txtLuas1.value);
-   	document.${formName}.txtLuas.value = luasH;
-    }
-    else
-    // METER PERSEGI
-    if(jenisLuas == "3"){
-   	  var luasM = document.${formName}.txtLuas1.value;
-   	  var luasH = (luasM*0.0001);
- 	  document.${formName}.txtLuas.value = luasH;
-    }
-    else
-    //EKAR, ROOD, POLE
-    if(jenisLuas == "4"){
-   	  var luasE = document.${formName}.txtLuas2.value;
- 	  var luasR = document.${formName}.txtLuas3.value;
- 	  var luasP = document.${formName}.txtLuas4.value;
- 	  var luasH = (luasE*0.4046864)+(luasR*0.1011716)+(luasP*0.00252929);
-   	  document.${formName}.txtLuas.value = luasH;
-    }
-    else
-    //KAKI PERSEGI
-    if(jenisLuas == "5"){
-   	  var luasAsal = document.${formName}.txtLuas1.value;
- 	  var luasK = luasAsal*0.0000092;
-   	  document.${formName}.txtLuas.value = luasK;
+ 	function kiraLuas(idLuas){
+   		var jenisLuas = idLuas;
+   		// KILOMETER PERSEGI
+   		if(jenisLuas == "1"){
+   			var luasK = (document.${formName}.txtLuas1.value);
+ 			var luasH = luasK*100;
+   			document.${formName}.txtLuas.value = luasH;
+    	
+    	}else
+    	//HEKTER
+     		if(jenisLuas == "2"){
+   				var luasH = (document.${formName}.txtLuas1.value);
+   				document.${formName}.txtLuas.value = luasH;
+    		
+    		}else
+    	// METER PERSEGI
+    	if(jenisLuas == "3"){
+   	 	var luasM = document.${formName}.txtLuas1.value;
+   	  	var luasH = (luasM*0.0001);
+ 	  	document.${formName}.txtLuas.value = luasH;
+    	
+    	}else
+    	//EKAR, ROOD, POLE
+    	if(jenisLuas == "4"){
+   	  		var luasE = document.${formName}.txtLuas2.value;
+ 	  		var luasR = document.${formName}.txtLuas3.value;
+ 	  		var luasP = document.${formName}.txtLuas4.value;
+ 	  		var luasH = (luasE*0.4046864)+(luasR*0.1011716)+(luasP*0.00252929);
+   	  		document.${formName}.txtLuas.value = luasH;
+    	}else
+    	//KAKI PERSEGI
+    	if(jenisLuas == "5"){
+   	  		var luasAsal = document.${formName}.txtLuas1.value;
+ 	  		var luasK = luasAsal*0.0000092;
+   	  		document.${formName}.txtLuas.value = luasK;
    	  
-    }else if(jenisLuas == "6"){	//EKAR PERPULUHAN
-   	  var luasAsal = document.${formName}.txtLuas1.value;
- 	  /* AZAM */
- 	  var luasK = luasAsal*0.405;
-   	  document.${formName}.txtLuas.value = luasK.toFixed(4);
+    	}else if(jenisLuas == "6"){	//EKAR PERPULUHAN
+   	  		var luasAsal = document.${formName}.txtLuas1.value;
+ 	  		/* AZAM */
+ 	  		var luasK = luasAsal*0.405;
+   	  		document.${formName}.txtLuas.value = luasK.toFixed(4);
    	  
-    }
+    	}
     else
-    //EKAR,DEPA
-    if(jenisLuas == "7"){
-   	  var luasE = document.${formName}.txtLuas5.value;
- 	  var luasD = document.${formName}.txtLuas6.value;
+    	//EKAR,DEPA
+    	if(jenisLuas == "7"){
+   	  		var luasE = document.${formName}.txtLuas5.value;
+ 	  		var luasD = document.${formName}.txtLuas6.value;
  	  
- 	  var luasH = (luasE*0.4046864)+(luasD*0.00040469);
-   	  document.${formName}.txtLuas.value = luasH;
+ 	  		var luasH = (luasE*0.4046864)+(luasD*0.00040469);
+   	  		document.${formName}.txtLuas.value = luasH;
+    
     }
      else
     //RELONG,JEMBA,KAKI PERSEGI
-    if(jenisLuas == "8"){
-   	  var luasR = document.${formName}.txtLuas2.value;
- 	  var luasJ = document.${formName}.txtLuas3.value;
- 	  var luasK = document.${formName}.txtLuas4.value;
+    	if(jenisLuas == "8"){
+   	  	var luasR = document.${formName}.txtLuas2.value;
+ 	  	var luasJ = document.${formName}.txtLuas3.value;
+ 	  	var luasK = document.${formName}.txtLuas4.value;
  	  
- 	  var luasH = (luasR*0.2877764)+(luasJ*0.0005945)+(luasK*0.0000092);
-   	  document.${formName}.txtLuas.value = luasH;
+ 	  	var luasH = (luasR*0.2877764)+(luasJ*0.0005945)+(luasK*0.0000092);
+   	 	 document.${formName}.txtLuas.value = luasH;
+    
     }
+ 
+ 
  }
-	
-	
 	
 //	imej/frmRekodPembangunanImejIndex
 
@@ -994,11 +1212,13 @@
 	function baru(id){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&idHakmilik="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 				
 		doAjaxCall${formName}("","firstAction=PendaftaranImej&idHakmilik="+id);
 	}
 	
 	//[Simpan]
-	function simpanDetailImej(id){
+	function XsimpanDetailImej(id){
 		if(document.${formName}.fileupload.value == ""){
 			alert("Sila pilih fail terlebih dahulu");
 			return;
@@ -1007,6 +1227,9 @@
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
 		var perihal = document.${formName}.txtPerihalImej.value;
 		var ringkas = document.${formName}.txtRingkas.value ;
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 				
+
 		document.${formName}.action = "?_portal_module=ekptg.view.htp.rekod.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&nextAction=tambahDetailImej&idHakmilik="+id+"&txtPerihalImej="+perihal+"&txtRingkas="+ringkas;
 		document.${formName}.method="post";
 		document.${formName}.enctype="multipart/form-data";
@@ -1014,28 +1237,94 @@
 		document.${formName}.submit();
 		
 	}
+
+	// 2013/01/08
+	function simpanDetailImej(id){
+		
+		/*if(document.${formName}.fileupload.value == ""){
+			alert("Sila pilih fail terlebih dahulu");
+			return;
+		}*/
+
+		
+		var size = document.${formName}.fileupload.length;
+		var pass=true;
+	
+		if(size>1){
+			for(var i=0 ; i < document.${formName}.fileupload.length; i++) { 
+	    		if (document.${formName}.fileupload[i].value==""){
+	    			pass=false;
+	  			}
+			}
+		}else{
+			if (document.${formName}.fileupload.value==""){
+				pass=false; 
+	    	}
+		}
+	
+		if(!pass){
+			alert("Sila pilih fail terlebih dahulu");
+	  		document.${formName}.fileupload.focus(); 
+			return;
+		}
+		
+		var urljava = "";
+		
+		if(document.${formName}.negeri.value=="SARAWAK" || document.${formName}.negeri.value=="SABAH"){ 
+			
+			urljava = "ekptg.view.htp.negeri.rekod.FrmRekodTanahNegeri";
+			
+		}else{
+			
+			urljava = "ekptg.view.htp.rekod.FrmRekodTanah";
+			
+		}
+		
+		
+		
+		if ( !window.confirm("Adakah Anda Pasti?")) return;
+		var perihal = document.${formName}.txtPerihalImej.value;
+		var ringkas = document.${formName}.txtRingkas.value ;
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 				
+
+		document.${formName}.action = "?_portal_module="+urljava+"&firstAction=PendaftaranImej&nextAction=tambahDetailImej&idHakmilik="+id+"&txtPerihalImej="+perihal+"&txtRingkas="+ringkas;
+		document.${formName}.method="post";
+		document.${formName}.enctype="multipart/form-data";
+	    document.${formName}.encoding="multipart/form-data";
+		document.${formName}.submit();
+	
+	}
 	
 	function viewDetailImej(id){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&nextAction=viewDetailImej&idGambar="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 				
 		doAjaxCall${formName}("","firstAction=PendaftaranImej&nextAction=viewDetailImej&idGambar="+id);
 	}
 	
 	function viewDetailInfo(id){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&nextAction=viewDetailInfo&idGambar="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 				
 		doAjaxCall${formName}("","firstAction=PendaftaranImej&nextAction=viewDetailInfo&idGambar="+id);
 	}
 	
 	function kemaskininDetailImej(id){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&nextAction=kemaskiniDetailImej&idGambar="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 				
 		doAjaxCall${formName}("","firstAction=PendaftaranImej&nextAction=kemaskiniDetailImej&idGambar="+id);
 	}
 	
 	function updateDetailImej(id){
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&nextAction=updateDetailImej&idGambar="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 		
 		doAjaxCall${formName}("","firstAction=PendaftaranImej&nextAction=updateDetailImej&idGambar="+id);
 	}
 	
@@ -1047,21 +1336,37 @@
 	    if (hWnd.focus != null) hWnd.focus();
 	}
 	
-	function deleteDetailImej(id){
+	function deleteDetailImej(id){	
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
 		//document.${formName}.command.value = "";
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&nextAction=deleteDetailImej&idGambar="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 		
 		doAjaxCall${formName}("","firstAction=PendaftaranImej&nextAction=deleteDetailImej&idGambar="+id);
 	}
-	
-	function doChangeJumlahLampiran(IDJadualLampiran,j,a) {
+
+	function doChangeJumlahLampiran(IDJadualLampiran,j,a) {		
 		if (j.value < 1) {
 			alert("Sila masukkan nombor yang sah");
 			j.value = 1;
 			return;
 		}//&nextAction=viewDetailImej
-	 	doAjaxCall${formName}("imej","firstAction=PendaftaranImej&X="+a+"&action=changeLampiran&IDJadualLampiran="+IDJadualLampiran);
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranImej"; 		
+		doAjaxCall${formName}("imej","firstAction=PendaftaranImej&X="+a+"&action=changeLampiran&IDJadualLampiran="+IDJadualLampiran);
+	
+	}
+		
+	function doChangeJumlahLampiran1(IDJadualLampiran,j,a) {
+		if (j.value < 1) {
+			alert("Sila masukkan nombor yang sah");
+			j.value = 1;
+			return;
+		}//&nextAction=viewDetailImej
+		//2020/04/12
+		//document.${formName}.firstAction.value = "ImejPembangunan"; 		
+	 	doDivAjaxCall${formName}("imejId","ImejPembangunan","firstAction=ImejPembangunan&X="+a+"&action=changeLampiran1&IDJadualLampiran="+IDJadualLampiran);
 	
 	}
 	
@@ -1075,7 +1380,17 @@
 	    if (hWnd.focus != null) hWnd.focus();
 	    
 	}
-	
+	//06/05/2017
+	function maklumatGIS(idhakmilik){
+		//var url = "../servlet/ekptg.view.htp.utiliti.FrmSenaraiImej?template=MaklumatHakmilik&idHakmilik="+idhakmilik;
+		var params = "&nofail=&kod=";
+		var url = "http://10.19.127.155/viewmap.php?upi=0108020000002153";
+	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener=document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	    
+	}	
 	function cetakImejSenarai(id){
 		doAjaxCall${formName}("view","idGambar="+id);
 	}
@@ -1086,22 +1401,30 @@
 	
 	//RIZAB
 	
-	//[link No. Warta]	
-	function rizab_detail(id,status){
-		//document.${formName}.action = "?_portal_module=ekptg.view.htp.rekod.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&idHakmilik="+id;
-		//document.${formName}.submit();
-		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&idHakmilik="+id+"&statusSah="+status);
+	//frmRekodSenaraiHakmilikRizabIndex.jsp -4 [link No. Warta]	
+	function rizabD_detail(id_,status){
+		//2020/04/12
+		document.${formName}.firstAction.value = "PendaftaranHakmilik"; 		
+		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&idHakmilik="+id_+"&statusSah="+status);
+	}
+
+	function rizab_detail(id_,status){
+		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&idHakmilik="+id_+"&statusSah="+status);
 	}
 	
 	//[Tab Rizab]
 	function selectTabRizab(id){
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 	
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&tabId="+id);		
 	}
 	
-	function kemaskini_detailRizab(id){
-		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailRizab&idHakmilik="+id;
+	function kemaskini_detailRizab(id_){
+		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&/PendaftaranHakmilik&nextAction=kemaskiniDetailRizab&idHakmilik="+id;
 		//document.${formName}.submit();
-		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailRizab&idHakmilik="+id);		
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 	
+		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailRizab&idHakmilik="+id_);		
 	}
 	
 	
@@ -1197,6 +1520,8 @@
 		//END OF VALIDATION
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranHakmilik&nextAction=updateDetailRizab&idHakmilik="+id;
 		//document.${formName}.submit();
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 	
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=updateDetailRizab&tabId="+id);
 	
 	}	
@@ -1235,10 +1560,50 @@
 	    
 	}
 	
-	
-	//END OF LAIN2
+	function doPengesahanHq(idHakmilikPerihal) {
+	 	document.${formName}.idHakmilikPerihal.value = idHakmilikPerihal; 	
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranPembangunan"; 	
+		doAjaxCall${formName}("","firstAction=PendaftaranPembangunan&nextAction=pengesahanHq");
+	}
 	
 </script>
 #parse("app/htp/rekod/utiliti/javaScriptRekodPembangunan.jsp")
-#parse("app/htp/utiliti/javaScriptUmum.jsp")
 #parse("app/htp/rekod/utiliti/pindahfail/javaScriptRekodFailBaru.jsp")
+#parse("app/htp/utiliti/javaScriptUmum.jsp")
+
+<script>
+
+</script>
+
+<script>
+function viewDetailSewa(){
+	alert('frmRekodSenaraiHakmilikRizabIndexV03');
+	doDivAjaxCall$formname('div_maklumatPenyewaan','doViewDetailSewa','');
+}
+
+function terperinciPajakan(idPer,idTanah){
+	alert('frmRekodSenaraiHakmilikRizabIndexV03:terperinciPajakan');
+	doDivAjaxCall$formname('divmaklumatpajakan','pajakanterperinci','');
+}
+</script>
+
+
+<!-- LINK FROM DASHBOARD! -->
+#if($!fromDashboard.equalsIgnoreCase("yes"))
+	<script>
+		window.onload = function () {
+			var idhm = '$!idHakmilikDashboard';
+			var stt = '$!statusSahDashboard';
+			var noHakmilikDashboard = '$!noHakmilikDashboard';
+			
+			if(noHakmilikDashboard!="" && noHakmilikDashboard!=null){
+				doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailHakmilik&idHakmilik="+idhm+"&statusSah="+stt);
+			}else{
+				doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&idHakmilik="+idhm+"&statusSah="+stt);
+			}
+		}
+	</script>	
+#end
+
+

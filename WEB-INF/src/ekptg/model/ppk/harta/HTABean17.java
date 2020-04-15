@@ -692,9 +692,10 @@ public class HTABean17 extends EkptgCache implements IMaklumatHarta {
 		,String mukimNama
 		,String bandarNama,String bandarFunc
 		,String jenisNama,String katNama
-		,String luasNama,String pbNama,String disablility
-		,org.apache.velocity.VelocityContext context
-		) throws Exception{
+		,String luasNama
+		,String pbNama
+		,String disablility
+		,org.apache.velocity.VelocityContext context) throws Exception{
 			myLog.info("setSocValues:b="+b);
 			String socStyle = "class=\"autoselect\" style=\"text-transform:uppercase;\" "+disablility;
 			
@@ -759,8 +760,7 @@ public class HTABean17 extends EkptgCache implements IMaklumatHarta {
 		,String katNama
 		,String luasNama
 		,String pbNama
-		,org.apache.velocity.VelocityContext context
-		) throws Exception{
+		,org.apache.velocity.VelocityContext context) throws Exception{
 		
 		//myLog.info("setSocValues:b="+b);
 		String socStyle = "class=\"autoselect\" style=\"text-transform:uppercase;\" ";
@@ -1470,7 +1470,7 @@ public class HTABean17 extends EkptgCache implements IMaklumatHarta {
 			tambahharta = "yes";
 			kembaliharta = "yes";
 			
-		}else if ("add_new".equals(mode)) {
+		}else if ("add_new_".equals(mode)) {
 			idPermohonanSimati = mati;
 			if (mati.length() == 0) {
 				idPermohonanSimati = matiHeader;

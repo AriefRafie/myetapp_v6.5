@@ -1,5 +1,5 @@
 
-
+permohonan
 #if($list_id_pegawai == "0" && $id_jawatan_login == "9")
 	<div style="margin:5px" ><i><font color='red' class="blink" size="+1">Perhatian</font> <font size="+1">: Login anda tidak direkodkan sebagai pegawai perbicaraan. Sila hubungi BPICT atau etappsupport.</font></i></div>
 #end
@@ -7,47 +7,7 @@
 <fieldset style="margin-top:5px">
 <legend>Carian</legend>
 $htmlCarianBicara
-<!--
-<table width="100%" align="center" border="0" cellspacing="1" cellpadding="3">	
-<tr>
-<td valign="top"  width="1%"></td><td valign="top"  width="28%"></td><td valign="top"  width="1%"></td><td valign="top"  width="70%"></td>
-</tr>
-<tr>
-<td valign="top" >				
-</td>			
-<td valign="top" >
-No. Fail	
-</td>
-<td valign="top" >
-:
-</td>
-<td valign="top" ><input size="50" type="text" id="CT_NO_FAIL" name="CT_NO_FAIL" style="text-transform:uppercase;" value="$CT_NO_FAIL"></td>
-</tr>
-<tr>
-<td valign="top" >				
-</td>			
-<td valign="top" >
-Nama Simati	
-</td>
-<td valign="top" >
-:
-</td>
-<td valign="top" ><input size="50" type="text" id="CT_NAMA_SIMATI" name="CT_NAMA_SIMATI" style="text-transform:uppercase;"  value="$CT_NAMA_SIMATI"></td>
-</tr>
-<tr>
-<td valign="top" >				
-</td>			
-<td valign="top" >
-</td>
-<td valign="top" >
-</td>
-<td valign="top" >
-<input type="button" id="cmdCariListCari" name="cmdCariListCari" value="Cari" onClick="doDivAjaxCall$formname('listPerbicaraan','cariListPerbicaraan','')" >
-<input type="button" id="cmdCariListReset" name="cmdCariListReset" value="Reset" onClick="resetListPerbicaraan();" >
-</td>
-</tr>
-</table>
--->
+
 </fieldset>
 <br />
 <div style="margin:5px"><i><font color='blue'>Info</font> : Paparan senarai perbicaraan secara 'default' adalah mengikut tarikh perbicaraan (hari ini) dan pegawai bicara yang ditetapkan pada peringkat notis.</i></div>

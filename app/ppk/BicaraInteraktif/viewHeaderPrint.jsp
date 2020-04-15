@@ -17,29 +17,29 @@
 <td width="1%"></td><td width="28%"></td><td width="1%"></td><td width="70%"></td>
 </tr>
 <tr>
-<td valign="top" ></td><td valign="top">No. Fail</td><td valign="top">:</td><td valign="top" >$viewPerbicaraan.NO_FAIL</td>
+<td valign="top" ></td><td valign="top" style="$fontSize">No. Fail</td><td valign="top" style="$fontSize">:</td><td valign="top" style="$fontSize" >$viewPerbicaraan.NO_FAIL</td>
 </tr>
 <tr>
-<td valign="top" ></td><td valign="top">Status Permohonan</td><td valign="top">:</td><td valign="top" class="HeaderFont">$viewPerbicaraan.STATUS_PERMOHONAN</td>
+<td valign="top" ></td><td valign="top" style="$fontSize">Status Permohonan</td><td valign="top" style="$fontSize">:</td><td valign="top" class="HeaderFont" style="$fontSize">$viewPerbicaraan.STATUS_PERMOHONAN</td>
 </tr>
 <tr>
-<td valign="top" ></td><td valign="top">Nama Simati</td><td valign="top">:</td><td valign="top" >$viewPerbicaraan.NAMA_SIMATI</td>
+<td valign="top" ></td><td valign="top" style="$fontSize">Nama Simati</td><td valign="top" style="$fontSize">:</td><td valign="top" style="$fontSize">$viewPerbicaraan.NAMA_SIMATI</td>
 </tr>
 <tr>
-<td valign="top" ></td><td valign="top">Nama Pemohon</td><td valign="top">:</td><td valign="top" >$viewPerbicaraan.NAMA_PEMOHON</td>
+<td valign="top" ></td><td valign="top" style="$fontSize">Nama Pemohon</td><td valign="top" style="$fontSize">:</td><td valign="top" style="$fontSize">$viewPerbicaraan.NAMA_PEMOHON</td>
 </tr>
 <tr>
-<td valign="top" ></td><td valign="top">Waktu Bicara</td><td valign="top">:</td><td valign="top" >$viewPerbicaraan.TARIKH_BICARA $viewPerbicaraan.MASA_BICARA</td>
+<td valign="top" ></td><td valign="top" style="$fontSize">Waktu Bicara</td><td valign="top" style="$fontSize">:</td><td valign="top" style="$fontSize" >$viewPerbicaraan.TARIKH_BICARA $viewPerbicaraan.MASA_BICARA</td>
 </tr>
 <tr>
-<td valign="top" ></td><td valign="top">Bil. Bicara</td><td valign="top">:</td><td valign="top" >$viewPerbicaraan.BIL_BICARA</td>
+<td valign="top" ></td><td valign="top" style="$fontSize">Bil. Bicara</td><td valign="top" style="$fontSize">:</td><td valign="top" style="$fontSize">$viewPerbicaraan.BIL_BICARA</td>
 </tr>
 <tr>
 <td width="1%"></td><td width="28%"></td><td width="1%"></td><td width="70%"></td>
 </tr>
 #if($viewPerbicaraan.SEKSYEN == "17")
 <tr>
-<td valign="top" ></td><td valign="top">Tujuan Permohonan</td><td valign="top">:</td><td valign="top" >
+<td valign="top" ></td><td valign="top" style="$fontSize">Tujuan Permohonan</td><td valign="top">:</td><td valign="top" style="$fontSize">
 
 #if($viewPerbicaraan.HARTA_TERTINGGAL == "Y")
 HARTA TERTINGGAL DI PERMOHONAN AWAL<br />
@@ -63,10 +63,17 @@ LAIN-LAIN TUJUAN : viewPerbicaraan.CATATAN_LAIN_TUJUAN<br />
 </tr>
 #end
 <tr>
-<td valign="top" ></td><td valign="top">Peg. Pengendali</td><td valign="top">:</td><td valign="top" >$viewPerbicaraan.PEG_PENGENDALI</td>
+<td valign="top" ></td><td valign="top" style="$fontSize">Peg. Pengendali</td><td valign="top" style="$fontSize">:</td><td valign="top" style="$fontSize">
+
+#if($viewPerbicaraan.ID_PEGAWAIBARU != "")
+$viewPerbicaraan.NAMA_PEGAWAI_BARU 
+#else
+$viewPerbicaraan.PEG_PENGENDALI
+#end
+</td>
 </tr>
 <tr>
-<td valign="top" ></td><td valign="top">Keputusan Perbicaraan</td><td valign="top">:</td><td valign="top" >
+<td valign="top" ></td><td valign="top" style="$fontSize">Keputusan Perbicaraan</td><td valign="top" style="$fontSize">:</td><td valign="top" style="$fontSize">
 <input type="hidden" name="jenis_keputusan" id="jenis_keputusan" value="$viewPerbicaraan.FLAG_JENIS_KEPUTUSAN"  />
 #set($flagDisable = "")
 #if($viewPerbicaraan.FLAG_JENIS_KEPUTUSAN!="")

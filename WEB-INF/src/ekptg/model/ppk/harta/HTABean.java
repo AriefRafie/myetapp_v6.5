@@ -28,6 +28,7 @@ import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8InternalData;
 import ekptg.model.ppk.harta.FrmPermohonanHTAData;
 import ekptg.model.ppk.UtilHTML;
+import ekptg.model.utils.Fungsi;
 import ekptg.model.utils.IUtilHTMLPilihanExt;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisPBPPK;
 
@@ -74,6 +75,13 @@ public class HTABean implements IMaklumatHarta {
 	String socNegeriHtaamUp = "0";
 	String socDaerahHtaamUp = "0";
 	String idHarta = "0";
+	
+	String idaerahStr = "0";
+	String idBandarStr = "0";
+	String idJenisHakmilik =  "";
+	String idMukimStr = "0";
+	String idNegeriStr = "0";
+
 	FrmPermohonanHTAData permohonanInternal = null;
 	private UtilHTMLPilihanJenisPBPPK jenisPB = null;
 
@@ -463,6 +471,29 @@ public class HTABean implements IMaklumatHarta {
 		addHtaamX(h);
 
 	}
+	private void setSOC(Hashtable hParam,org.apache.velocity.VelocityContext context) throws Exception  {
+		Hashtable b = setSocParamValues(String.valueOf(hParam.get("socNegeri"))
+				,String.valueOf(hParam.get("socDaerah"))
+				,String.valueOf(hParam.get("socMukim"))
+				,String.valueOf(hParam.get("txtBandarHarta"))
+				,String.valueOf(hParam.get("socJenisHakmilik"))
+				,String.valueOf(hParam.get("socKategoriTanah"))
+				,String.valueOf(hParam.get("socJenisLuas"))
+				,String.valueOf(hParam.get("socStatusPemilikan")));
+		
+		setSocValues(b
+			,"socNegeriHtaam","negerichange"
+			,"socDaerahHtaam","daerahchange"
+			,"socMukimHtaam"
+			,"txtBandarHartaHtaamX2",""
+			,"socJenisHakmilikHtaam"
+			,"socKategoriTanahHtaam"
+			,"socJenisLuasHtaam"
+			,"socStatusPemilikanHtaam",""
+			,context
+			);
+
+	}
 	
 	private void setSocHTATH(Hashtable hParam,org.apache.velocity.VelocityContext context) throws Exception  {
 		Hashtable b = setSocParamValues(String.valueOf(hParam.get("socNegeriHtaamX")),String.valueOf(hParam.get("socNegeriPemajuHtaamX"))
@@ -560,8 +591,7 @@ public class HTABean implements IMaklumatHarta {
 			,String bandarNama,String bandarFunc
 			,String jenisNama,String katNama
 			,String luasNama,String pbNama
-			,org.apache.velocity.VelocityContext context
-			) throws Exception{
+			,org.apache.velocity.VelocityContext context) throws Exception{
 			myLog.info("setSocValues:b="+b);
 			String socStyle = "class=\"autoselect\" style=\"text-transform:uppercase;\" ";
 			
@@ -611,6 +641,68 @@ public class HTABean implements IMaklumatHarta {
 					
 		}
 	
+		public void setSocValues(Hashtable b
+			,String negeriNama,String negeriFunc
+			,String daerahNama,String daerahFunc
+			,String mukimNama
+			,String bandarNama,String bandarFunc
+			,String jenisNama,String katNama
+			,String luasNama
+			,String pbNama
+			,String disablility
+			,org.apache.velocity.VelocityContext context) throws Exception{
+				myLog.info("setSocValues:b="+b);
+				String socStyle = "class=\"autoselect\" style=\"text-transform:uppercase;\" "+disablility;
+				
+				try{
+					String nn = String.valueOf(b.get("negeri"));
+					String dd = String.valueOf(b.get("daerah"));				
+					String idMukim = String.valueOf(b.get("mukim"));
+//					String socNegeri = HTML.SelectNegeri(negeriNama, Long.valueOf(nn)
+//							," $!readmodenegeri id=\""+negeriNama+"\" onchange=\""+negeriFunc+"('"+daerahNama+"')\" "+socStyle);
+					String socNegeri = HTML.SelectNegeriExcludePelbagaiNegeri(negeriNama, Long.valueOf(nn),""
+							," $!readmodenegeri id=\""+negeriNama+"\" onchange=\""+negeriFunc+"('"+daerahNama+"')\" "+socStyle);
+					String socDaerah = HTML.SelectDaerahByNegeri(nn, daerahNama, Utils.parseLong(dd)
+							," $!readmodedaerah id=\""+daerahNama+"\" onchange=\"setSelected(1,0,0,0);"+daerahFunc+"('"+mukimNama+"');daerah_harta();check_harta()\" "+socStyle);
+					String socMukim = HTML.SelectMukimByDaerah(dd, mukimNama, Utils.parseLong(idMukim)
+							," $!readmodemukim id=\""+mukimNama+"\" "+socStyle);
+					
+					String bandar = String.valueOf(b.get("bandar"));
+					String socBandar = HTML.SelectBandarByNegeri(nn,bandarNama, Utils.parseLong(bandar)
+							," id=\""+bandarNama+"\" onclick=\"CheckBandarSurat()\" "+socStyle);
+					
+					String jenisHakmilik = String.valueOf(b.get("jenishakmilik"));
+					String socJenisHakmilik = HTML.SelectJenisHakmilik(jenisNama, Utils.parseLong(jenisHakmilik)
+							," $!socJenisHakmilikHtaam2 id=\""+jenisNama+"\" "+socStyle);
+					
+					String kaTanah = String.valueOf(b.get("kategori"));
+					String socKaTanah = HTML.SelectKategoriTanah(katNama, Utils.parseLong(kaTanah),""
+							," $!readmode id=\""+katNama+"\" "+socStyle);
+			
+					String jenisLuas = String.valueOf(b.get("jenisluas"));
+	                //<select name="socJenisLuasHtaam" class="autoselect" $readmode id="socJenisLuasHtaam" style="text-transform:uppercase;" onblur="uppercase()" 
+						//onchange="pilih_jenis_luas('socJenisLuasHtaam','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaam','txtLuasHMpHtaam','meterhektar')"   >
+					String socLuas = HTML.SelectLuas(luasNama,Utils.parseLong(jenisLuas), ""
+						," $!readmode id=\""+luasNama+"\"" +
+						"onchange=\"pilih_jenis_luas('"+luasNama+"','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaam','txtLuasHMpHtaam','meterhektar')\" "+socStyle);
+					
+					String jenisPB = String.valueOf(b.get("pemilikan"));
+					String socPB = getPilihanPB().Pilihan(pbNama,jenisPB,"",socStyle,null);
+					
+					context.put("socNegeri", socNegeri);
+					context.put("socDaerah", socDaerah);
+					context.put("socMukim", socMukim);
+					context.put("socBandar", socBandar);
+					context.put("socJenisHakmilik", socJenisHakmilik);
+					context.put("socKaTanah", socKaTanah);
+					context.put("socLuas", socLuas);
+					context.put("socPB", socPB);
+					
+			}catch (Exception e){
+				throw new Exception("public void setSocValues:Ralat");
+			}
+						
+		}
 	//@Override
 	public void setSocValues(Hashtable b
 		,String negeriNama,String negeriFunc
@@ -622,8 +714,7 @@ public class HTABean implements IMaklumatHarta {
 		,String katNama
 		,String luasNama
 		,String pbNama
-		,org.apache.velocity.VelocityContext context
-		) throws Exception{
+		,org.apache.velocity.VelocityContext context) throws Exception{
 		
 		//myLog.info("setSocValues:b="+b);
 		String socStyle = "class=\"autoselect\" style=\"text-transform:uppercase;\" ";
@@ -730,6 +821,8 @@ public class HTABean implements IMaklumatHarta {
 		
 		//25/08/2017
 		FrmPermohonanHTAData permohonanHarta = new FrmPermohonanHTAData();
+		Fungsi fnc = new Fungsi();
+		Hashtable<String,String> mh = null;
 		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();		
 		//senaraiHTA = new Vector();
 		Vector beanMaklumatPelan = null;
@@ -741,35 +834,46 @@ public class HTABean implements IMaklumatHarta {
 		Hashtable hashHTAid = null;
 		
 		//PARAM
+		String bolehsimpan = String.valueOf(hParam.get("bolehsimpan"));
+		userID = String.valueOf(session.getAttribute("_ekptg_user_id"));
+		String idPermohonan = String.valueOf(hParam.get("idPermohonan"));
+		idSimati = String.valueOf(hParam.get("idSimati"));
 		String mati = String.valueOf(hParam.get("id_Permohonansimati"));
 		String matiHeader = String.valueOf(hParam.get("id_permohonansimati_atheader"));
+		
+		//dari controller (FrmPrmhnnBorangAMaklumatPemohon)
+//		dataParam.put("bolehSimpan",bolehsimpan);
+//		dataParam.put("idUser",idUser); //boleh komen, guna cara session.getAttribute("_ekptg_user_id")
+//		dataParam.put("idPermohonan",idPermohonan);
+//		dataParam.put("idSimati",getParam("idSimati"));			
+//		dataParam.put("id_Permohonansimati",mati);	
+		
 		String idDokumen = String.valueOf(hParam.get("idDokumen"));
 		String selectedHartaTakAlih = String.valueOf(hParam.get("selectedHartaTakAlih"));
 		String idhtaam = String.valueOf(hParam.get("idhtaam"));
 		String upload = String.valueOf(hParam.get("upload"));
-		String idPermohonan = String.valueOf(hParam.get("idPermohonan"));
+		
 		//MAKLUMAT TANAH
 		txtNoHakmilikHtaam = String.valueOf(hParam.get("txtNoHakmilikHtaam"));
-		 idSimati = String.valueOf(hParam.get("idSimati"));
-		 txtNoPTHtaam = String.valueOf(hParam.get("txtNoPTHtaam"));
-		 txtNilaiTarikhMohonHtaa = String.valueOf(hParam.get("txtNilaiTarikhMohonHtaa"));
-		 txtNilaiTarikhMatiHtaam = String.valueOf(hParam.get("txtNilaiTarikhMatiHtaam"));
-		 socKategoriTanahHtaam = String.valueOf(hParam.get("socKategoriTanahHtaam"));
-		 socJenisHakmilikHtaam = String.valueOf(hParam.get("socJenisHakmilikHtaam"));
-		 socStatusPemilikanHtaam = String.valueOf(hParam.get("socStatusPemilikanHtaam"));
-		 txtLuasHMpHtaam = String.valueOf(hParam.get("txtLuasHMpHtaam"));
-		 txtLuasAsalHtaam = String.valueOf(hParam.get("txtLuasAsalHtaam"));
-		 txtNoPajakan = String.valueOf(hParam.get("txtNoPajakan"));
-		 socJenisTanahHtaam = String.valueOf(hParam.get("socJenisTanahHtaam"));
-		 txtBahagianSimati1 = String.valueOf(hParam.get("txtBahagianSimati1"));
-		 txtBahagianSimati2 = String.valueOf(hParam.get("txtBahagianSimati2"));
-		 txtTanggunganHtaam = String.valueOf(hParam.get("txtTanggunganHtaam"));
-		 socJenisLuasHtaam = String.valueOf(hParam.get("socJenisLuasHtaam"));
-		 txtCatatanHtaam = String.valueOf(hParam.get("txtCatatanHtaam"));
-		 txtNoPersHtaam = String.valueOf(hParam.get("txtNoPersHtaam"));
-		 FLAG_DAFTAR = String.valueOf(hParam.get("FLAG_DAFTAR"));
-		 txtSekatan = String.valueOf(hParam.get("txtSekatan"));
-		 txtSyaratNyata = String.valueOf(hParam.get("txtSyaratNyata"));
+		txtNoPTHtaam = String.valueOf(hParam.get("txtNoPTHtaam"));
+		txtNilaiTarikhMohonHtaa = String.valueOf(hParam.get("txtNilaiTarikhMohonHtaa"));
+		txtNilaiTarikhMatiHtaam = String.valueOf(hParam.get("txtNilaiTarikhMatiHtaam"));
+		socKategoriTanahHtaam = String.valueOf(hParam.get("socKategoriTanahHtaam"));
+		socJenisHakmilikHtaam = String.valueOf(hParam.get("socJenisHakmilikHtaam"));
+		socStatusPemilikanHtaam = String.valueOf(hParam.get("socStatusPemilikanHtaam"));
+		txtLuasHMpHtaam = String.valueOf(hParam.get("txtLuasHMpHtaam"));
+		txtLuasAsalHtaam = String.valueOf(hParam.get("txtLuasAsalHtaam"));
+		txtNoPajakan = String.valueOf(hParam.get("txtNoPajakan"));
+		socJenisTanahHtaam = String.valueOf(hParam.get("socJenisTanahHtaam"));
+		txtBahagianSimati1 = String.valueOf(hParam.get("txtBahagianSimati1"));
+		txtBahagianSimati2 = String.valueOf(hParam.get("txtBahagianSimati2"));
+		txtTanggunganHtaam = String.valueOf(hParam.get("txtTanggunganHtaam"));
+		socJenisLuasHtaam = String.valueOf(hParam.get("socJenisLuasHtaam"));
+		txtCatatanHtaam = String.valueOf(hParam.get("txtCatatanHtaam"));
+		txtNoPersHtaam = String.valueOf(hParam.get("txtNoPersHtaam"));
+		FLAG_DAFTAR = String.valueOf(hParam.get("FLAG_DAFTAR"));
+		txtSekatan = String.valueOf(hParam.get("txtSekatan"));
+		txtSyaratNyata = String.valueOf(hParam.get("txtSyaratNyata"));
 		//SOC
 		String socNegeriHtaam = String.valueOf(hParam.get("socNegeriHtaam"));
 		String socDaerahHtaam = String.valueOf(hParam.get("socDaerahHtaam"));
@@ -777,86 +881,70 @@ public class HTABean implements IMaklumatHarta {
 		
 		socNegeriHtaamUp = String.valueOf(hParam.get("socNegeriHtaamUp"));
 		socDaerahHtaamUp = String.valueOf(hParam.get("socDaerahHtaamUp"));
-		idhtaamid = String.valueOf(hParam.get("idhtaamid"));
+		//idhtaamid = String.valueOf(hParam.get("idhtaamid"));
 		String idPelan = String.valueOf(hParam.get("idPelan"));
-		userID = String.valueOf(session.getAttribute("_ekptg_user_id"));
 		
-		String bolehsimpan = String.valueOf(hParam.get("bolehsimpan"));
+		idhtaamid = fnc.getParam(request,"idhtaamid");
 
-		myLog.info("mode="+mode);
+		myLog.info("mode="+mode+",mati="+mati);
+		myLog.info("idHarta="+idhtaamid);
 		if ("Htaamview".equals(mode)) {
-//			String mati = getParam("id_permohonansimati_atheader");
-			idPermohonanSimati = matiHeader;
-			if (matiHeader.length() == 0) {
-				idPermohonanSimati = mati;
-			}
-
-			senaraiHTA = permohonanHarta.getDataHTA(idPermohonanSimati,"Y");
+			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
 			tambahharta = "yes";
 			kembaliharta = "yes";
 			
 		}else if ("add_new".equals(mode)) {
-			idPermohonanSimati = mati;
-			if (mati.length() == 0) {
-				idPermohonanSimati = matiHeader;
-			}
-
-			senaraiHTA = permohonanHarta.getDataHTA(idPermohonanSimati,"Y");
-
+			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
+			
+			idNegeriStr = fnc.getParam(request,"socNegeriHtaam").equals("")
+					?idNegeriStr:fnc.getParam(request,"socNegeriHtaam");
+			idJenisHakmilik =  fnc.getParam(request,"socJenisTanahHtaam");
+			socKategoriTanahHtaam =  fnc.getParam(request,"socKategoriTanahHtaam"); 
+			socJenisLuasHtaam = fnc.getParam(request,"socJenisLuasHtaam");
+			socStatusPemilikanHtaam =  fnc.getParam(request,"socStatusPemilikanHtaam");
+			
+			mh = new Hashtable<String,String>();
+			mh.put("socNegeri", idNegeriStr);
+			mh.put("socDaerah", idaerahStr);
+			mh.put("socMukim", idMukimStr);
+			mh.put("txtBandarHarta", "0");
+			mh.put("socJenisHakmilik",idJenisHakmilik);
+			mh.put("socKategoriTanah",socKategoriTanahHtaam);
+			mh.put("socJenisLuas", socJenisLuasHtaam);
+			mh.put("socStatusPemilikan", socStatusPemilikanHtaam);
+			setSOC(mh,context);
+	
 			readmodenegeri = READMODE;
 			readmodedaerah = READMODE;
 			readmodemukim = READMODE;
 			show_simpan_add_htaam = YES;
 			show_batal_add_htaam = YES;
-			show_kemaskini_htaam = YES;
+			//show_kemaskini_htaam = YES;
 			show_button = YES;
 			show_htaa_add_table = YES;		
 			add_new_harta = YES;
 			buttonhtaam = "Tambah";
 			
 		}else if ("masukkan".equals(mode)) {
-//			String idhtaam = getParam("idhtaam");//IL
-			if (bolehsimpan.equals("yes")) {
-				Hashtable gParam = new Hashtable();
-				gParam.put("socNegeriHtaam",socNegeriHtaam);
-				addHtaam(session,gParam,logic_internal);
-			}
-			//IL
-			if (upload.equals("simpanUpload")) {
-				//addHtaam(session);
-//				uploadFiles(session);
-				// mode = "";
-			}
-			//end IL
+			//if (bolehsimpan.equals("yes")) {
+				Hashtable<String,String> gParam = new Hashtable<String,String>();
+				//gParam.put("socNegeriHtaam",socNegeriHtaam);
+				gParam = addHtaam(fnc,logic_internal,request);
+				session.setAttribute("idHtaSession", gParam.get("idHtaSession"));
+				context.put("appear_skrin_info", "simpan");
+				
+			//}
 
-			//String id = idPermohonan;
-			idPermohonanSimati = mati;
-			//start IL
-			if (mati.length() == 0) {
-				idPermohonanSimati = matiHeader;
-			}
-//			String idDokumen = getParam("idDokumen");
-			//end IL
+			logic_A.updateDataNilai(idPermohonan, mati, userID);
+
 			senaraiHTA = permohonanHarta.getDataHTA(idPermohonanSimati,"Y");
 
 			tambahharta = YES;
 			kembaliharta = YES;
-			context.put("command", "");//IL
-			context.put("mode", "");//IL
-			context.put("action", "");//IL
-			logic_A.updateDataNilai(idPermohonan, idPermohonanSimati, (String) session.getAttribute("_ekptg_user_id"));
-			// String send =
-			// this.request.getRequestURI()+"?_portal_module=FrmPrmhnnSek8Internal";;
-			// this.response.sendRedirect(send);
 			
 		} else if ("negerichange".equals(mode)) {
-			idPermohonanSimati = mati;
-//			String idDokumen = getParam("idDokumen");//IL
-			negeri = Integer.parseInt(socNegeriHtaam);
 			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
 
-//			context.put("BeanMaklumatPelan", beanMaklumatPelan);//IL
-			listnegeribydaerah = logic_A.getListDaerahbyNegeri(negeri);
 //			context.put("listDaerahbyNegeri", listnegeribydaerah);
 			context.put("noHakmilik", txtNoHakmilikHtaam);
 			context.put("idSimati",idSimati);
@@ -878,51 +966,68 @@ public class HTABean implements IMaklumatHarta {
 			context.put("noperserahan",txtNoPersHtaam);
 //			negeri = idnegeri;
 			context.put("FLAG_DAFTAR", "FLAG_DAFTAR");
+			// ADD BY PEJE TAMBAH FIELD SEKATAN & SYARAT NYATA
+			context.put("sekatan", txtSekatan);
+			context.put("syaratNyata",txtSyaratNyata);
+			
+			idNegeriStr = fnc.getParam(request,"socNegeriHtaam").equals("")
+					?idNegeriStr:fnc.getParam(request,"socNegeriHtaam");			
+			idJenisHakmilik =  fnc.getParam(request,"socJenisTanahHtaam");
+			socKategoriTanahHtaam =  fnc.getParam(request,"socKategoriTanahHtaam"); 
+			socJenisLuasHtaam = fnc.getParam(request,"socJenisLuasHtaam");
+			socStatusPemilikanHtaam =  fnc.getParam(request,"socStatusPemilikanHtaam");
+			
+			mh = new Hashtable<String,String>();
+			mh.put("socNegeri", idNegeriStr);
+			mh.put("socDaerah", idaerahStr);
+			mh.put("socMukim", idMukimStr);
+			mh.put("txtBandarHarta", "0");
+			mh.put("socJenisHakmilik",idJenisHakmilik);
+			mh.put("socKategoriTanah",socKategoriTanahHtaam);
+			mh.put("socJenisLuas", socJenisLuasHtaam);
+			mh.put("socStatusPemilikan", socStatusPemilikanHtaam);
+			setSOC(mh,context);
+			
+			add_new_harta = YES;
 			show_simpan_add_htaam = YES;
 			show_batal_add_htaam = YES;
 			//show_kemaskini_htaam = YES;
 			show_button = YES;
 			show_kembali_htaam = YES;
 			show_htaa_add_table = YES;		
-			// ADD BY PEJE TAMBAH FIELD SEKATAN & SYARAT NYATA
-			context.put("sekatan", txtSekatan);
-			context.put("syaratNyata",txtSyaratNyata);
-			
-			if (socNegeriHtaam != ""
-				&& socNegeriHtaam != "0") {
-				Vector s3 = logic_A.getListBandarByNegeri(negeri);
-				context.put("listBandarSuratbyNegeri", s3);
-			} else {
-				context.put("listBandarSuratbyNegeri", "");
-			}
+
 			
 		} else if ("daerahchange".equals(mode)) {
-			idPermohonanSimati = mati;
-			myLog.info("socNegeriHtaam="+socNegeriHtaam+",socDaerahHtaam="+socDaerahHtaam);
-			daerah = Integer.parseInt(socDaerahHtaam);
-			negeri = Integer.parseInt(socNegeriHtaam);
 			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
+			
+			idNegeriStr = fnc.getParam(request,"socNegeriHtaam").equals("")
+					?idNegeriStr:fnc.getParam(request,"socNegeriHtaam");
+			idaerahStr = fnc.getParam(request,"socDaerahHtaam").equals("")
+					?idaerahStr:fnc.getParam(request,"socDaerahHtaam");			
+			idJenisHakmilik =  fnc.getParam(request,"socJenisTanahHtaam");
+			socKategoriTanahHtaam =  fnc.getParam(request,"socKategoriTanahHtaam"); 
+			socJenisLuasHtaam = fnc.getParam(request,"socJenisLuasHtaam");
+			socStatusPemilikanHtaam =  fnc.getParam(request,"socStatusPemilikanHtaam");
 
-//			listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegerii);
-//			context.put("listDaerahbyNegeri", listnegeribydaerah);
-			listnegeribydaerah = logic_A.getListDaerahbyNegeri(negeri);
-			//25/08/2017 By Mohamad Rosli
-			context.put("senaraiDaerahbyNegeri", HTML.SelectDaerahByNegeri(socNegeriHtaam, "socDaerahHtaam",Utils.parseLong(socDaerahHtaam),"", "onChange=\"doChanges2()\""));
-			listmukim = logic_A.getListMukimbyDaerah(daerah);
-//			context.put("listMukimbyDaerah", listmukim);
-			listMukimbyDaerah = listmukim;
+			mh = new Hashtable<String,String>();
+			mh.put("socNegeri", idNegeriStr);
+			mh.put("socDaerah", idaerahStr);
+			mh.put("socMukim", idMukimStr);
+			mh.put("txtBandarHarta", "0");
+			mh.put("socJenisHakmilik",idJenisHakmilik);
+			mh.put("socKategoriTanah",socKategoriTanahHtaam);
+			mh.put("socJenisLuas", socJenisLuasHtaam);
+			mh.put("socStatusPemilikan", socStatusPemilikanHtaam);
+			setSOC(mh,context);
 
-			//25/08/2017 By Mohamad Rosli
-			context.put("senaraiMukimbyDaerah", HTML.SelectMukimByDaerah(socDaerahHtaam, "socMukimHtaam", Utils.parseLong(socMukimHtaam) ,""));
 			setContextTanah(context);
 
 			show_simpan_add_htaam = YES;
 			show_batal_add_htaam = YES;
 			show_button = YES;
 			show_kembali_htaam = YES;
-			//negeri = idnegeri;
-			//daerah=iddaerah;
 			show_htaa_add_table = YES;		
+			add_new_harta = YES;
 
 		}else if ("checkWujudLot".equals(mode)) {
 //			String idDokumen = getParam("idDokumen");//IL
@@ -1094,15 +1199,9 @@ public class HTABean implements IMaklumatHarta {
 			tambahharta = "yes";
 			
 		} else if ("getHtaam".equals(mode)) {
-//			String idhtaam = getParam("idhtaam");
-//			String mati = getParam("id_Permohonansimati");
-			idPermohonanSimati = mati;
-			idHarta = idhtaam;
-//			logic_internal.setDataHTAbyIdHtaam(idhtaam,mati);
-//			listHTAid = logic_internal.getDataHTAbyIdHtaam();
+			idHarta = idhtaamid;
 			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
 
-//			Hashtable k = (Hashtable) senaraiHTA.get(0);
 			Hashtable k = permohonanHarta.getDataHTAbyIdHtaam(idHarta, mati);
 			if (k.get("negeri").toString() != "" && k.get("negeri").toString() != "0") {
 				Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(k.get("negeri").toString()));
@@ -1254,7 +1353,7 @@ public class HTABean implements IMaklumatHarta {
 //		this.context.put("id_Permohonansimati", mati);//IL
 		context.put("DATEUTIL", new DateUtil());
 //		String id = getParam("idPermohonan");
-		Vector list = logic_A.setData(idPermohonan, (String) session.getAttribute("_ekptg_user_id"));
+		Vector list = logic_A.setData(idPermohonan,userID);
 		context.put("View", list);
 		//IL start
 //		String selectedHartaTakAlih = getParam("selectedHartaTakAlih");
@@ -1317,7 +1416,7 @@ public class HTABean implements IMaklumatHarta {
 		context.put("show_kembali_htaam",show_kembali_htaam);
 		context.put("show_htaa_update_table",show_htaa_update_table);		
 		//
-		context.put("id_Permohonansimati", idPermohonanSimati);//IL
+		context.put("id_Permohonansimati", mati);//IL
 		context.put("idhtaam", idhtaam);
 		context.put("idDokumen", idDokumen);
 		context.put("idPelan", idPelan);//IL
@@ -1381,7 +1480,11 @@ public class HTABean implements IMaklumatHarta {
 		
 		//25/08/2017
 		FrmPermohonanHTAData permohonanHarta = new FrmPermohonanHTAData();
-		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();		
+		Fungsi fnc = new Fungsi();
+		Hashtable<String,String> mh = null;
+
+		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();	
+
 		//senaraiHTA = new Vector();
 		Vector beanMaklumatPelan = null;
 		Vector listnegeribydaerah = null;
@@ -1447,12 +1550,25 @@ public class HTABean implements IMaklumatHarta {
 			kembaliharta = "yes";
 			
 		}else if ("add_new".equals(mode)) {
-			idPermohonanSimati = mati;
-			if (mati.length() == 0) {
-				idPermohonanSimati = matiHeader;
-			}
-
-			senaraiHTA = permohonanHarta.getDataHTA(idPermohonanSimati,"Y");
+			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
+			
+			idNegeriStr = fnc.getParam(request,"socNegeriHtaam").equals("")
+					?idNegeriStr:fnc.getParam(request,"socNegeriHtaam");
+			idJenisHakmilik =  fnc.getParam(request,"socJenisTanahHtaam");
+			socKategoriTanahHtaam =  fnc.getParam(request,"socKategoriTanahHtaam"); 
+			socJenisLuasHtaam = fnc.getParam(request,"socJenisLuasHtaam");
+			socStatusPemilikanHtaam =  fnc.getParam(request,"socStatusPemilikanHtaam");
+			
+			mh = new Hashtable<String,String>();
+			mh.put("socNegeri", idNegeriStr);
+			mh.put("socDaerah", idaerahStr);
+			mh.put("socMukim", idMukimStr);
+			mh.put("txtBandarHarta", "0");
+			mh.put("socJenisHakmilik",idJenisHakmilik);
+			mh.put("socKategoriTanah",socKategoriTanahHtaam);
+			mh.put("socJenisLuas", socJenisLuasHtaam);
+			mh.put("socStatusPemilikan", socStatusPemilikanHtaam);
+			setSOC(mh,context);
 
 			readmodenegeri = READMODE;
 			readmodedaerah = READMODE;
@@ -1466,29 +1582,13 @@ public class HTABean implements IMaklumatHarta {
 			buttonhtaam = "Tambah";
 			
 		}else if ("masukkan".equals(mode)) {
-//			String idhtaam = getParam("idhtaam");//IL
 			if (bolehsimpan.equals("yes")) {
 				Hashtable gParam = new Hashtable();
 				gParam.put("socNegeriHtaam",socNegeriHtaam);
 				addHtaam(session,gParam,logic_internal);
 			}
-			//IL
-			if (upload.equals("simpanUpload")) {
-				//addHtaam(session);
-//				uploadFiles(session);
-				// mode = "";
-			}
-			//end IL
 
-			//String id = idPermohonan;
-			idPermohonanSimati = mati;
-			//start IL
-			if (mati.length() == 0) {
-				idPermohonanSimati = matiHeader;
-			}
-//			String idDokumen = getParam("idDokumen");
-			//end IL
-			senaraiHTA = permohonanHarta.getDataHTA(idPermohonanSimati,"Y");
+			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
 
 			tambahharta = YES;
 			kembaliharta = YES;
@@ -1500,15 +1600,9 @@ public class HTABean implements IMaklumatHarta {
 			// this.request.getRequestURI()+"?_portal_module=FrmPrmhnnSek8Internal";;
 			// this.response.sendRedirect(send);
 			
-		} else if ("negerichange".equals(mode)) {
-			idPermohonanSimati = mati;
-//			String idDokumen = getParam("idDokumen");//IL
-			negeri = Integer.parseInt(socNegeriHtaam);
+		} else if ("negerichange".equals(mode) || mode.equals("daerahchange")) {
 			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
 
-//			context.put("BeanMaklumatPelan", beanMaklumatPelan);//IL
-			listnegeribydaerah = logic_A.getListDaerahbyNegeri(negeri);
-//			context.put("listDaerahbyNegeri", listnegeribydaerah);
 			context.put("noHakmilik", txtNoHakmilikHtaam);
 			context.put("idSimati",idSimati);
 			context.put("nopt",txtNoPTHtaam);
@@ -1539,15 +1633,28 @@ public class HTABean implements IMaklumatHarta {
 			context.put("sekatan", txtSekatan);
 			context.put("syaratNyata",txtSyaratNyata);
 			
-			if (socNegeriHtaam != ""
-				&& socNegeriHtaam != "0") {
-				Vector s3 = logic_A.getListBandarByNegeri(negeri);
-				context.put("listBandarSuratbyNegeri", s3);
-			} else {
-				context.put("listBandarSuratbyNegeri", "");
-			}
+			idNegeriStr = fnc.getParam(request,"socNegeriHtaam").equals("")
+					?idNegeriStr:fnc.getParam(request,"socNegeriHtaam");
+			idJenisHakmilik =  fnc.getParam(request,"socJenisTanahHtaam");
+			socKategoriTanahHtaam =  fnc.getParam(request,"socKategoriTanahHtaam"); 
+			socJenisLuasHtaam = fnc.getParam(request,"socJenisLuasHtaam");
+			socStatusPemilikanHtaam =  fnc.getParam(request,"socStatusPemilikanHtaam");
 			
-		} else if ("daerahchange".equals(mode)) {
+			mh = new Hashtable<String,String>();
+			mh.put("socNegeri", idNegeriStr);
+			mh.put("socDaerah", idaerahStr);
+			mh.put("socMukim", idMukimStr);
+			mh.put("txtBandarHarta", "0");
+			mh.put("socJenisHakmilik",idJenisHakmilik);
+			mh.put("socKategoriTanah",socKategoriTanahHtaam);
+			mh.put("socJenisLuas", socJenisLuasHtaam);
+			mh.put("socStatusPemilikan", socStatusPemilikanHtaam);
+			setSOC(mh,context);
+			
+		} else if (mode.equals("daerahchange")) {
+			idaerahStr = fnc.getParam(request,"socDaerahHtaam").equals("")
+					?idaerahStr:fnc.getParam(request,"socDaerahHtaam");
+
 			idPermohonanSimati = mati;
 			myLog.info("socNegeriHtaam="+socNegeriHtaam+",socDaerahHtaam="+socDaerahHtaam);
 			daerah = Integer.parseInt(socDaerahHtaam);
@@ -1571,8 +1678,6 @@ public class HTABean implements IMaklumatHarta {
 			show_batal_add_htaam = YES;
 			show_button = YES;
 			show_kembali_htaam = YES;
-			//negeri = idnegeri;
-			//daerah=iddaerah;
 			show_htaa_add_table = YES;		
 
 		}else if ("checkWujudLot".equals(mode)) {
@@ -2278,58 +2383,123 @@ public class HTABean implements IMaklumatHarta {
 		logic_internal.updateHtaamX(h);
 
 	}
+	
+	private Hashtable<String,String> addHtaam(Fungsi fnc
+		,FrmPrmhnnSek8InternalData logicInternal
+		,HttpServletRequest request) throws Exception {
+	//private Hashtable<String,String> setHtaam(Fungsi fnc,HttpServletRequest request) throws Exception {
+		myLog.info("getHtaam:param");
+		Hashtable<String,String> h = new Hashtable<String,String>();
+		
+		h.put("FLAG_DAFTAR",fnc.getParam(request,"FLAG_DAFTAR"));
+		h.put("noHakmilik", fnc.getParam(request,"txtNoHakmilikHtaam"));
+		h.put("alamat_hta1", fnc.getParam(request,"txtAlamat1Htaam1"));
+		h.put("alamat_hta2", fnc.getParam(request,"txtAlamat2Htaam"));
+		h.put("alamat_hta3", fnc.getParam(request,"txtAlamat3Htaam"));
+		h.put("poskod", fnc.getParam(request,"txtAlamatPoskodHtaam"));
+		h.put("id_bandarhta", fnc.getParam(request,"txtBandarHartaHtaamX2"));
+		h.put("idSimati", fnc.getParam(request,"idSimati"));
+		h.put("id_Permohonansimati", fnc.getParam(request,"id_Permohonansimati"));
+		h.put("nopt", fnc.getParam(request,"txtNoPTHtaam"));
+		h.put("nilai_Hta_memohon", fnc.getParam(request,"txtNilaiTarikhMohonHtaa"));
+		h.put("nilai_Hta_mati", fnc.getParam(request,"txtNilaiTarikhMatiHtaam"));
+		//int
+		if (fnc.getParam(request,"socKategoriTanahHtaam") != "") {
+			h.put("kategori", fnc.getParam(request,"socKategoriTanahHtaam"));
+		} else {
+			h.put("kategori", "0");
+		}
+
+		if (fnc.getParam(request,"socJenisHakmilikHtaam") != "") {
+			h.put("jenishakmilik", fnc.getParam(request,"socJenisHakmilikHtaam"));
+		} else {
+			h.put("jenishakmilik", "0");
+		}
+
+		h.put("pemilikan", fnc.getParam(request,"socStatusPemilikanHtaam"));
+		if (fnc.getParam(request,"socNegeriHtaam") != "") {
+			h.put("negeri", fnc.getParam(request,"socNegeriHtaam"));
+		} else {
+			h.put("negeri", "0");
+		}
+		
+		if (fnc.getParam(request,"socDaerahHtaam") != "") {
+			h.put("daerah", fnc.getParam(request,"socDaerahHtaam"));
+		} else {
+			h.put("daerah", "0");
+		}
+
+		if (fnc.getParam(request,"socMukimHtaam") != "") {
+			h.put("mukim", fnc.getParam(request,"socMukimHtaam"));
+		} else {
+			h.put("mukim", "0");
+		}
+
+		h.put("luashmp", fnc.getParam(request,"txtLuasHMpHtaam"));
+		h.put("luasasal", fnc.getParam(request,"txtLuasAsalHtaam"));
+		h.put("nopajakan", fnc.getParam(request,"txtNoPajakan"));
+		h.put("jenistanah", fnc.getParam(request,"socJenisTanahHtaam"));
+
+		if (fnc.getParam(request,"txtBahagianSimati1") != "") {
+			h.put("basimati", fnc.getParam(request,"txtBahagianSimati1"));
+		} else {
+			h.put("basimati", "0");
+		}
+
+		if (fnc.getParam(request,"txtBahagianSimati2") != "") {
+			h.put("bbsimati", fnc.getParam(request,"txtBahagianSimati2"));
+		} else {
+			h.put("bbsimati", "0");
+		}
+
+		if (fnc.getParam(request,"socJenisLuasHtaam") != "") {
+			h.put("jenisluas", fnc.getParam(request,"socJenisLuasHtaam"));
+		} else {
+			h.put("jenisluas", "0");
+		}
+
+		h.put("tanggungan", fnc.getParam(request,"txtTanggunganHtaam"));
+		h.put("catatan", fnc.getParam(request,"txtCatatanHtaam"));
+		h.put("noperserahan", fnc.getParam(request,"txtNoPersHtaam"));
+		h.put("id_Masuk", userID);
+		h.put("tarikh_Masuk", currentDate);
+		h.put("sekatan", fnc.getParam(request,"txtSekatan") == null ? "": fnc.getParam(request,"txtSekatan"));
+		h.put("syaratNyata", fnc.getParam(request,"txtSyaratNyata") == null ? "": fnc.getParam(request,"txtSyaratNyata"));
+		String idHta = logicInternal.addHtaamUpload(h);
+		h.put("idHtaSession", idHta);
+		myLog.info("-------Read Here8j ends:h="+h);
+		
+		return h;
+		
+	}
+	
+	//private void addHtaam(Hashtable hParam,FrmPrmhnnSek8InternalData logic_internal) throws Exception {
 	private void addHtaam(HttpSession session
 		,Hashtable hParam
-		,FrmPrmhnnSek8InternalData logic_internal
-		) throws Exception {
+		,FrmPrmhnnSek8InternalData logic_internal) throws Exception {
 		myLog.info("addHtaam:-------Read Here8----");
+		
 		Hashtable h = new Hashtable();
 
 		h.put("FLAG_DAFTAR", hParam.get("FLAG_DAFTAR"));
 		h.put("noHakmilik", hParam.get("txtNoHakmilikHtaam"));
-		// ADD BY SALNIZAM - TAMBAH FIELD ALAMAT
 		h.put("alamat_hta1", hParam.get("txtAlamat1Htaam1"));
 		h.put("alamat_hta2", hParam.get("txtAlamat2Htaam"));
 		h.put("alamat_hta3", hParam.get("txtAlamat3Htaam"));
 		h.put("poskod", hParam.get("txtAlamatPoskodHtaam"));
-		//if (getParam("txtBandarHartaHtaamX2") != "") {
-			h.put("id_bandarhta", hParam.get("txtBandarHartaHtaamX2"));
-		//} else {
-		//	h.put("id_bandarhta", "99999");
-		//}
-		
-		//h.put("bandar_hta", getParam("txtBandarHartaHtaamX2"));
+		h.put("id_bandarhta", hParam.get("txtBandarHartaHtaamX2"));
 		h.put("idSimati", hParam.get("idSimati"));
 
-		//IL start
+		h.put("id_Permohonansimati", hParam.get("id_Permohonansimati"));
+//		String mati = String.valueOf(hParam.get("id_permohonansimati_atheader"));
+//		if (mati.length() == 0) {
+//			mati =  String.valueOf(hParam.get("id_Permohonansimati"));
+//		}
+//		h.put("id_Permohonansimati", mati);
 		//h.put("id_Permohonansimati", getParam("id_Permohonansimati"));
 
-		String mati = String.valueOf(hParam.get("id_permohonansimati_atheader"));
-		if (mati.length() == 0) {
-			mati =  String.valueOf(hParam.get("id_Permohonansimati"));
-		}
-
-		h.put("id_Permohonansimati", mati);
-		//IL end
-
-		// int mati = Integer.parseInt(getParam("id_Permohonansimati"));
 		h.put("nopt", hParam.get("txtNoPTHtaam"));
-		
-		/*
-		 * if (getParam("txtNilaiTarikhMohonHtaa") != "") {
-		 * h.put("nilai_Hta_memohon", Double
-		 * .parseDouble(getParam("txtNilaiTarikhMohonHtaa"))); } else {
-		 * h.put("nilai_Hta_memohon", 0.0); }
-		 */
-
 		h.put("nilai_Hta_memohon", hParam.get("txtNilaiTarikhMohonHtaa"));
-		/*
-		 * if (getParam("txtNilaiTarikhMatiHtaam") != "") {
-		 * h.put("nilai_Hta_mati", Double
-		 * .parseDouble(getParam("txtNilaiTarikhMatiHtaam"))); } else {
-		 * h.put("nilai_Hta_mati", 0.0); }
-		 */
-
 		h.put("nilai_Hta_mati", hParam.get("txtNilaiTarikhMatiHtaam"));
 
 		if (hParam.get("socKategoriTanahHtaam") != "") {
@@ -2394,21 +2564,19 @@ public class HTABean implements IMaklumatHarta {
 		h.put("catatan", hParam.get("txtCatatanHtaam"));
 		h.put("noperserahan", hParam.get("txtNoPersHtaam"));
 
-		h.put("id_Masuk", session.getAttribute("_ekptg_user_id"));
+		h.put("id_Masuk", hParam.get("id_Masuk"));
 		h.put("tarikh_Masuk", currentDate);
 
-		// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
-		h.put("sekatan", hParam.get("txtSekatan") == null ? ""
-				: hParam.get("txtSekatan"));
-		h.put("syaratNyata", hParam.get("txtSyaratNyata") == null ? ""
-				: hParam.get("txtSyaratNyata"));
+		h.put("sekatan", hParam.get("txtSekatan") == null ? "": hParam.get("txtSekatan"));
+		h.put("syaratNyata", hParam.get("txtSyaratNyata") == null ? "": hParam.get("txtSyaratNyata"));
 
 		//logic_internal.addHtaam(h);	//IL comment
 		String idHta = logic_internal.addHtaamUpload(h);//IL
 		session.setAttribute("idHtaSession", idHta);//IL
-		System.out.println("-------Read Here8j ends----");
+		myLog.info("-------Read Here8j ends:idHta----"+idHta);
 		
 	}
+	
 	private void setContextTanah(org.apache.velocity.VelocityContext context){
 		context.put("noHakmilik", txtNoHakmilikHtaam);
 		context.put("idSimati",idSimati);

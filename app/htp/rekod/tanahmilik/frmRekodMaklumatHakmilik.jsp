@@ -1,6 +1,6 @@
 <!-- <fieldset>
-<legend>MAKLUMAT HAKMILIK</legend> -->
-<input name="idHakmilik" type="hidden" value="$idHakmilik" />
+<legend>MAKLUMAT HAKMILIK</legend> 
+<input name="idHakmilik" type="hidden" value="$idHakmilik" />-->
 	<fieldset>
 		<table width="100%">
        		<tr>
@@ -15,7 +15,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" valign="top">:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtNamaKementerian
   							</td>
                 		</tr>
@@ -28,7 +28,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtNoFailSeksyen
   							</td>
                 		</tr>
@@ -41,7 +41,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtFailPTG
   							</td>
                 		</tr>
@@ -54,7 +54,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" valign="top" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtTajuk
   							</td>
                 		</tr>
@@ -64,20 +64,19 @@
                 <td valign="top">
                		<table width="100%">
                    	<tr>
-  							<td width="1%" valign="top" >
-				        	</td>				        
-                        	<td width="30%">
-                            	<div align="left">
+  							<td width="1%" valign="top" ></td>				        
+                        	<td width="30%" valign="top" >
+                            	<div align="left" >
                             		<span class="labelinput">Agensi</span>
                             	</div>
                         	</td>
-                  			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                  			<td width="1%" valign="top" class="labelinput" >:</td>
+                   			<td width="68%" valign="top" class="labelinput" >
  								$txtNamaAgensi
- 								<!-- if (mode == 'update' || mode == 'view') 
+ 								#if ($!mode == 'update' || $!mode == 'view') 
 						        	<br><a href="javascript:viewTransaksiAgensi('$idHakmilik')" title="Kementerian/ Agensi Terkini" class="pautanms">Kementerian/ Agensi Terkini</a>     						
-						       	end  -->
- 								
+						       	#end
+						
   							</td>
                 		</tr>
               			
@@ -90,7 +89,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$!txtFailKJP
   							</td>
                 		</tr>
@@ -104,7 +103,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$!txtFailPTD
   							</td>
                 		</tr>
@@ -117,7 +116,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$caraPerolehan
   							</td>
                 		</tr>
@@ -708,7 +707,7 @@
                         	</td>
                   			<td width="1%" class="labelinput" >&nbsp;</td>
                    			<td width="68%" class="labeldisplay" >
-	        				#if(!$!jenisAkses.equals('Readonly'))	        			
+	        				#if(!$!jenisAkses.equals('readonly'))	        			
                    				<a href="javascript:pergerakanhakmilik_detail('$!idHakmilik');" class="pautanms">Maklumat Pergerakan</a>
  							#end		
                    			</td>
@@ -1144,22 +1143,52 @@
    	 
 	<table width="100%">
 		<tr>
-	    <td colspan="2" ><div align="center">	  	          
+	    <td colspan="2" ><div align="center">        
 	        <p>
 	    	<!--  <input type="button" name="cmdSimpan" id="cmdsemakan" value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan')" />
 	    	<input type="button" name="cmdSimpan" id="cmdpengesahan" value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan')" />-->
-	    	<input type="button" name="cmdSimpan" id="cmdpengesahan" value="Hantar Ke HQ" onclick="doAjaxCall${formName}('simpanpengesahan')" />
-		      #if($statusBatal!='S' || $statusBatal!='P' || $statusBatal!='B')
-		    	#if ($mode == 'view')
-		        	##set($portal_role = "${session.getAttribute('myrole')}")
-					##if ($portal_role!='(HTP)PenggunaNegeri' || $portal_role!='(HTP)PegawaiNegeri' || $portal_role!='(HTP)PengarahNegeri' || $portal_role!='(HTP)PenggunaNegeriSS' || $portal_role!='(HTP)PegawaiNegeriSS' || $portal_role!='(HTP)PengarahNegeriSS')
-		        	#if (!$!jenisAkses.equals('Readonly'))		          	
-		          	<input type="button" class="stylobutton100" name="btnUpdateHakmilik" id="btnUpdateHakmilik" value="Kemaskini" onclick="kemaskini_detailHakmilik($idHakmilik)" />
-		     		
-		     		#end		            
-		            <!--<input type="button" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:setTable('tableReport1')" class="stylobutton" /> -->
-		            <input type="button" class="stylobutton100" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:cetakMaklumatHakmilik($idHakmilik);" />
-		          #end
+	#if($!statusBatal != 'S' || $!statusBatal != 'P' || $!statusBatal != 'B')
+		#if ($mode == 'view')
+		    ##set($portal_role = "${session.getAttribute('myrole')}")
+		    
+		    #if($!statusBatal == '')
+		    	#set($labelPengesahan = '')
+		    	
+		    	#if ($statuSemasa =='1' && ($portal_role_ =='(HTP)PenggunaNegeri' || $portal_role_ =='(HTP)PenggunaNegeriSS'))
+		    		#set($labelPengesahan = 'Hantar Semakan')		
+		    		    	
+		    	#elseif($statuSemasa =='3' && ($portal_role_ =='(HTP)PegawaiNegeri' || $portal_role_ =='(HTP)PegawaiNegeriSS'))
+		    		#set($labelPengesahan = 'Hantar Pengesahan')
+		    	
+		    	#elseif($statuSemasa =='4' && ($portal_role_ =='(HTP)PengarahNegeri' || $portal_role_ =='(HTP)PengarahNegeriSS'))		     
+		    		#set($labelPengesahan = 'Hantar Ke HQ')
+
+		  		#elseif($statuSemasa =='5' && $portal_role_ =='(HTP)HQPengguna')
+		  			#set($labelPengesahan = 'Hantar Ke Unit Rekod')
+		  		
+		  		#elseif($statuSemasa =='6' && $portal_role_ =='(HTP)HQPenggunaRekod')
+		  			#set($labelPengesahan = 'Hantar Semakan')
+
+		  		#elseif($statuSemasa =='7' && ($portal_role_ =='(HTP)HQPegawai1' || $portal_role_ =='(HTP)HQPegawai'))
+		  			#set($labelPengesahan = 'Hantar Pengesahan')
+
+		  		#elseif($statuSemasa =='8' && $portal_role_ =='(HTP)HQPengarah')
+		  			#set($labelPengesahan = 'Sahkan Maklumat Tanah')
+		  		
+		  		#end
+		  		
+		  		#if($!labelPengesahan != '')	
+		  	<input type="button" name="cmdSimpan" id="cmdpengesahan" value="$!labelPengesahan" onclick="doAjaxCall${formName}('simpanpengesahan','idFail=$!idFail')" />
+		  		#end
+		  		
+		  	#end 
+		  		
+			#if (!$!jenisAkses.equals('readonly'))		          	
+	      	<input type="button" class="stylobutton100" name="btnUpdateHakmilik" id="btnUpdateHakmilik" value="Kemaskini" onclick="kemaskini_detailHakmilik($idHakmilik)" />	     		
+		  	#end		            
+		    	<!--<input type="button" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:setTable('tableReport1')" class="stylobutton" /> -->
+			<input type="button" class="stylobutton100" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:cetakMaklumatHakmilik($idHakmilik);" />
+		#end
 		          
 		          #if ($mode == 'update')
 		          	#if($statusBatal=='S' || $socStatus=='S' || $statusBatal=='B' )
@@ -1172,9 +1201,11 @@
 		       		#end
 		          #end
 		          
-	          #end
-	          <input type="button" class="stylobutton100" name="btnBackHakmilik" id="btnBackHakmilik" value="Kembali" onclick="kembaliHakmilik()" />
-              <input type="button"  name="intergrasiEtanah" id="intergrasiEtanah" value="Integrasi Sistem eTanah" onclick="updateKegunaanTanah('$idHakmilik')" />
+	#end
+	          <input type="button" class="stylobutton100" name="btnBackHakmilik" id="btnBackHakmilik" value="Kembali" onclick="kembaliHakmilik()" />             
+      		#if ($!etanah04 == 'papar')              
+              <input type="button"  name="integrasiEtanah" id="integrasiEtanah" value="Integrasi e-TANAH" onclick="updateKegunaanTanah('$idHakmilik')" />
+	 		#end
 	        </p>
 	    </div></td>
 	  </tr>

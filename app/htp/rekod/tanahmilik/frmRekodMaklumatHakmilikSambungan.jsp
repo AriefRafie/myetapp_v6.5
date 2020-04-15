@@ -15,7 +15,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" valign="top">:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtNamaKementerian
   							</td>
                 		</tr>
@@ -28,7 +28,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtNoFailSeksyen
   							</td>
                 		</tr>
@@ -41,7 +41,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtFailPTG
   							</td>
                 		</tr>
@@ -54,7 +54,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" valign="top" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtTajuk
   							</td>
                 		</tr>
@@ -64,16 +64,18 @@
                 <td valign="top">
                		<table width="100%">
                    	<tr>
-  							<td width="1%" valign="top" >
-				        	</td>				        
-                        	<td width="30%">
+  							<td width="1%" valign="top" ></td>				        
+                        	<td width="30%" valign="top" >
                             	<div align="left">
                             		<span class="labelinput">Agensi</span>
                             	</div>
                         	</td>
-                  			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                  			<td width="1%" valign="top" class="labelinput" >:</td>
+                   			<td width="68%" valign="top" class="labelinput" >
  								$txtNamaAgensi
+ 							#if ($!mode == 'update' || $!mode == 'view') 
+						        <br><a href="javascript:viewTransaksiAgensi('$idHakmilik')" title="Kementerian/ Agensi Terkini" class="pautanms">Kementerian/ Agensi Terkini</a>     						
+						     #end
   							</td>
                 		</tr>
               			
@@ -86,7 +88,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$txtFailKJP
   							</td>
                 		</tr>
@@ -100,7 +102,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$!txtFailPTD
   							</td>
                 		</tr>
@@ -113,7 +115,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms" >
+                   			<td width="68%" class="labelinput" >
  								$caraPerolehan
   							</td>
                 		</tr>
@@ -242,7 +244,7 @@
 				        	</td>				        
                         	<td width="30%">
                             	<div align="left">
-                            		<span class="labelinput">No Lot/PT</span>
+                            		<span class="labelinput">No. Lot/PT</span>
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
@@ -698,7 +700,9 @@
                         	</td>
                   			<td width="1%" class="labelinput" >&nbsp;</td>
                    			<td width="68%" class="labeldisplay" >
+	        					#if(!$!jenisAkses.equals('readonly'))	        			
                    				<a href="javascript:pergerakanhakmilik_detail('$!idHakmilik');" class="pautanms">Maklumat Pergerakan</a>
+                   				#end
                    			</td>
                 		</tr>                		
                  	</table>

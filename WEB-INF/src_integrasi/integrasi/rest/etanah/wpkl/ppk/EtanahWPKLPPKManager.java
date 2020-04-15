@@ -4,16 +4,16 @@
 package integrasi.rest.etanah.wpkl.ppk;
 
 import integrasi.rest.etanah.wpkl.RESTInvoker;
-import integrasi.rest.etanah.wpkl.ppk.entities.BorangET;
-import integrasi.rest.etanah.wpkl.ppk.entities.BorangF;
-import integrasi.rest.etanah.wpkl.ppk.entities.BorangH;
-import integrasi.rest.etanah.wpkl.ppk.entities.Hakmilik;
-import integrasi.rest.etanah.wpkl.ppk.entities.HakmilikPerintah;
-import integrasi.rest.etanah.wpkl.ppk.entities.ParamForm;
-import integrasi.rest.etanah.wpkl.ppk.entities.Perintah;
-import integrasi.rest.etanah.wpkl.ppk.entities.PihakBerkepentinganList;
-import integrasi.rest.etanah.wpkl.ppk.entities.ResponseForm;
-import integrasi.rest.etanah.wpkl.ppk.entities.UrusanList;
+import integrasi.rest.etanah.wpkl.entities.BorangET;
+import integrasi.rest.etanah.wpkl.entities.BorangF;
+import integrasi.rest.etanah.wpkl.entities.BorangH;
+import integrasi.rest.etanah.wpkl.entities.Hakmilik;
+import integrasi.rest.etanah.wpkl.entities.HakmilikPerintah;
+import integrasi.rest.etanah.wpkl.entities.ParamForm;
+import integrasi.rest.etanah.wpkl.entities.Perintah;
+import integrasi.rest.etanah.wpkl.entities.PihakBerkepentinganList;
+import integrasi.rest.etanah.wpkl.entities.ResponseForm;
+import integrasi.rest.etanah.wpkl.entities.UrusanList;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,7 +26,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import lebah.db.Db;
+import lebah.db.SQLRenderer;
+import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 
 /**
@@ -36,43 +40,77 @@ import ekptg.helpers.Utils;
 public class EtanahWPKLPPKManager {
 	
 	
-	private static String flagMsg = null;
-	private static String outputMsg = null;
+	private static String flagMsg = "";
+	private static String outputMsg = "";
+	private static String semakanPemilikMsg = "";
 	
 	//START 1ST POINT OF INTERGRATION - GET MAKLUMAT HAKMILIK FROM ETANAH
-	public static void getMaklumatHakmilikFromEtanah(String idPermohonanSimati, String noResit, String idHakmilik, String idPengguna) {
-		
+	public Hakmilik getMaklumatHakmilikFromEtanah(String idHakmilik, String noResit, String idPengguna, String idPermohonanSimati) {
+		Hakmilik hakmilik = null;
 		//DEFAULT MSG
 		flagMsg = "Y";
 		outputMsg = "CAPAIAN HAKMILIK BERJAYA";
-		try {
-			Hakmilik hakmilik = null;
-			
+		try {			
 			ParamForm param = new ParamForm();
 			param.setIdHakmilik(idHakmilik);
 			param.setNoResit(noResit);
 			
 			hakmilik = RESTInvoker.getMaklumatHakmilik(idPengguna, idHakmilik, noResit);
-			if (hakmilik != null && hakmilik.getIdHakmilik() != null) {
-				insertHakmilikFromEtanah(idPermohonanSimati, noResit, hakmilik);
+			if (hakmilik != null) {
+				if ("BATAL".equalsIgnoreCase(hakmilik.getStatusHakmilik())) {
+					flagMsg = "N";
+					outputMsg = "STATUS HAKMILIK ADALAH BATAL DI SISTEM E-TANAH";
+				}
+				semakanPemilikHakmilik(hakmilik, idPermohonanSimati);
 			} else {
 				flagMsg = "N";
-				outputMsg = "HAKMILIK TIDAK DITEMUI";
+				outputMsg = "HAKMILIK TIDAK WUJUD DI SISTEM E-TANAH";
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			flagMsg = "N";
 			outputMsg = e.toString();
 		}
+		
+		return hakmilik;
+	}
+
+	private static void semakanPemilikHakmilik(Hakmilik hakmilik, String idPermohonanSimati) {
+		semakanPemilikMsg = "";
+		boolean simatiIsPemilik = false;
+		try {
+			String noKPSimati = getNoKPSimati(idPermohonanSimati);
+			if (noKPSimati != null) {
+				if (hakmilik.getPihakBerkepentinganList() != null) {	
+					for (PihakBerkepentinganList pb : hakmilik.getPihakBerkepentinganList()){
+						if (noKPSimati.equalsIgnoreCase(Utils.RemoveDash(pb.getNoPengenalanPB()))) {
+							//SIMATI ADALAH PEMILIK MELALUI IC
+							simatiIsPemilik = true;
+						} else {
+							String namaSimati = getNamaSimati(idPermohonanSimati);
+							if (namaSimati.toUpperCase().contains(pb.getNamaPB().toUpperCase()) || pb.getNamaPB().toUpperCase().contains(namaSimati.toUpperCase())) {
+								//SIMATI ADALAH PEMILIK MELALUI NAMA
+								simatiIsPemilik = true;
+							}
+						}
+					}
+					if (!simatiIsPemilik) {
+						semakanPemilikMsg = "SIMATI TIDAK DIDAFTARKAN SEBAGAI PEMILIK HAKMILIK.";
+					}
+				} else {
+					semakanPemilikMsg = "HAKMILIK TIADA PEMILIK / PIHAK BERKEPENTINGAN.";
+				}
+			} else {
+				semakanPemilikMsg = "NO. PENGENALAN SIMATI TIDAK DIDAFTARKAN.";
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
-	private static void insertHakmilikFromEtanah(String idPermohonanSimati, String noResit, Hakmilik hakmilik) {
-		
-		String sql = "";
-		String noKPSimati = "";
-		String BA_Simati = "";
-		String BB_Simati = "";
+	public void insertMaklumatHakmilik(String idPermohonanSimati, Hakmilik hakmilik, String nama, String noPengenalan, String ba, String bb, String idHakmilik, String noResit, HttpSession session) {		
+		String userId = (String) session.getAttribute("_ekptg_user_id");
 		
 		String gadaian = "";
 		String noPerserahanGadaian = "";
@@ -80,8 +118,7 @@ public class EtanahWPKLPPKManager {
 		String noPerserahanPajakan = "";
 		String kaveat = "";
 		String noPerserahanKaveat = "";
-		
-		boolean pemilikHakmilik = false;
+		String sql = "";
 		
 		Db db = null;
 		try {
@@ -89,102 +126,116 @@ public class EtanahWPKLPPKManager {
 			Connection con = db.getConnection();
 			con.setAutoCommit(false);
 			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();			
 			
-			noKPSimati = getNoKPSimati(idPermohonanSimati);
-			
-			if (hakmilik.getPihakBerkepentinganList() != null) {		
-				for (int i = 0; i < hakmilik.getPihakBerkepentinganList().size(); i++){
-					PihakBerkepentinganList pemilik = hakmilik.getPihakBerkepentinganList().get(i);
-					if (noKPSimati != null){
-						if (noKPSimati.equalsIgnoreCase(Utils.RemoveDash(pemilik.getNoPengenalanPB()))) {
-							pemilikHakmilik = true;
-							BA_Simati = pemilik.getBA();
-							BB_Simati = pemilik.getBB();
+			if (hakmilik.getUrusanList() != null) {		
+				for (int i = 0; i < hakmilik.getUrusanList().size(); i++){
+					UrusanList urusan = hakmilik.getUrusanList().get(i);
+					if (urusan.getNoPerserahan() != null){
+						
+						//GADAIAN
+						if (isUrusan(urusan.getJenisUrusan().toUpperCase(), "G")) {
+							if (gadaian.equals("")) {
+								gadaian = urusan.getJenisUrusan();
+								noPerserahanGadaian = urusan.getNoPerserahan();
+							} else {
+								gadaian = gadaian + ", " + urusan.getJenisUrusan();
+								noPerserahanGadaian = noPerserahanGadaian + ", " + urusan.getNoPerserahan();
+							}
 						}
-					}
-				} 
-				
-				if (pemilikHakmilik) {
-					if (hakmilik.getUrusanList() != null) {		
-						for (int i = 0; i < hakmilik.getUrusanList().size(); i++){
-							UrusanList urusan = hakmilik.getUrusanList().get(i);
-							if (urusan.getNoPerserahan() != null){
-								
-								//GADAIAN
-								if (isUrusan(urusan.getJenisUrusan().toUpperCase(), "G")) {
-									if (gadaian.equals("")) {
-										gadaian = urusan.getJenisUrusan();
-										noPerserahanGadaian = urusan.getNoPerserahan();
-									} else {
-										gadaian = gadaian + ", " + urusan.getJenisUrusan();
-										noPerserahanGadaian = noPerserahanGadaian + ", " + urusan.getNoPerserahan();
-									}
-								}
-								
-								//PAJAKAN
-								if (isUrusan(urusan.getJenisUrusan().toUpperCase(), "P")) {
-									if (pajakan.equals("")) {
-										pajakan = urusan.getJenisUrusan();
-										noPerserahanPajakan = urusan.getNoPerserahan();
-									} else {
-										pajakan = pajakan + ", " + urusan.getJenisUrusan();
-										noPerserahanPajakan = noPerserahanPajakan + ", " + urusan.getNoPerserahan();
-									}
-								}
-								
-								//KAVEAT
-								if (isUrusan(urusan.getJenisUrusan().toUpperCase(), "K")) {
-									if (kaveat.equals("")) {
-										kaveat = urusan.getJenisUrusan();
-										noPerserahanKaveat = urusan.getNoPerserahan();
-									} else {
-										kaveat = kaveat + ", " + urusan.getJenisUrusan();
-										noPerserahanKaveat = noPerserahanKaveat + ", " + urusan.getNoPerserahan();
-									}
-								}
+						
+						//PAJAKAN
+						if (isUrusan(urusan.getJenisUrusan().toUpperCase(), "P")) {
+							if (pajakan.equals("")) {
+								pajakan = urusan.getJenisUrusan();
+								noPerserahanPajakan = urusan.getNoPerserahan();
+							} else {
+								pajakan = pajakan + ", " + urusan.getJenisUrusan();
+								noPerserahanPajakan = noPerserahanPajakan + ", " + urusan.getNoPerserahan();
+							}
+						}
+						
+						//KAVEAT
+						if (isUrusan(urusan.getJenisUrusan().toUpperCase(), "K")) {
+							if (kaveat.equals("")) {
+								kaveat = urusan.getJenisUrusan();
+								noPerserahanKaveat = urusan.getNoPerserahan();
+							} else {
+								kaveat = kaveat + ", " + urusan.getJenisUrusan();
+								noPerserahanKaveat = noPerserahanKaveat + ", " + urusan.getNoPerserahan();
 							}
 						}
 					}
-						
-					sql = "INSERT INTO INT_PPKHTA (ID_PERMOHONANSIMATI, NO_RESIT, ID_HAKMILIK,"
-							+ " ID_JENISHM, NO_HAKMILIK, NO_PT,"
-							+ " ID_KATEGORI, ID_JENISPB, ID_NEGERI,"
-							+ " ID_DAERAH, ID_MUKIM, ID_LUAS,"
-							+ " LUAS, CATATAN, BA_SIMATI, BB_SIMATI, "
-							+ " STATUS_PEMILIKAN, JENIS_TNH,"
-							+ " SYARAT_NYATA, SEKATAN,"							
-							+ " GADAIAN, NO_PERSERAHAN_GADAIAN,"
-							+ " PAJAKAN, NO_PERSERAHAN_PAJAKAN,"
-							+ " KAVEAT, NO_PERSERAHAN_KAVEAT,"							
-							+ " TARIKH_TERIMA, FLAG_AKTIF, FLAG_TERIMA)"
-							+ " VALUES ( '" + idPermohonanSimati + "', '" + noResit + "', '" + hakmilik.getIdHakmilik() + "',"
-							+ " '" + getIdJenisHakmilik(hakmilik.getIdJenisHakmilik().toUpperCase()) + "', '" + hakmilik.getNoHakmilik() + "', '" + hakmilik.getNoPTNoLot()+ "',"
-							+ " '" + getIdKategoriTanah(hakmilik.getIdKategoriTanah().toUpperCase()) + "', '1', '" + getIdNegeri(hakmilik.getIdNegeri().toUpperCase()) + "',"
-							+ " '" + getIdDaerah(hakmilik.getIdNegeri().toUpperCase(), hakmilik.getIdDaerah().toUpperCase()) + "', '" + getIdMukim(hakmilik.getIdNegeri().toUpperCase(), hakmilik.getIdDaerah().toUpperCase(), hakmilik.getIdMukim().toUpperCase()) + "', '" + getIdLuas(hakmilik.getUnitLuas().toUpperCase()) + "',"
-							+ " '" + hakmilik.getLuas() + "', '" + cleanDataString(hakmilik.getCatatan()) + "',"
-							+ " '" + BA_Simati + "', '" + BB_Simati + "',"
-							+ " '', '',"
-							+ " '" + cleanDataString(hakmilik.getSyaratNyata()) + "', '" + cleanDataString(hakmilik.getSekatan()) + "',"
-							
-							+ " '" + cleanDataString(gadaian) + "', '" + cleanDataString(noPerserahanGadaian) + "',"
-							+ " '" + cleanDataString(pajakan) + "', '" + cleanDataString(noPerserahanPajakan) + "',"
-							+ " '" + cleanDataString(kaveat) + "', '" + cleanDataString(noPerserahanKaveat) + "',"
-							
-							+ " SYSDATE, 'Y', 'Y')";
-					stmt.executeUpdate(sql);
-					con.commit();
-					
-					flagMsg = "Y";
-					outputMsg = "CAPAIAN HAKMILIK BERJAYA";
-				} else {
-					flagMsg = "N";
-					outputMsg = "SIMATI BUKAN PEMILIK";
 				}
-			} else {
-				flagMsg = "N";
-				outputMsg = "HAKMILIK TIDAK MEMPUNYAI PEMILIK";
-			}					
+			}
+			
+			//INSERT
+			long idHTA = DB.getNextID("TBLPPKHTA_SEQ");
+			r.add("ID_HTA", idHTA);
+			r.add("ID_PERMOHONANSIMATI", idPermohonanSimati);
+			r.add("ID_SIMATI", getIdSimati(idPermohonanSimati, db));
+			r.add("NO_HAKMILIK", hakmilik.getNoHakmilik());
+			r.add("NO_PT", hakmilik.getNoPTNoLot());
+			r.add("ID_KATEGORI", getIdKategoriTanah(hakmilik.getIdKategoriTanah().toUpperCase()));
+			r.add("ID_JENISHM", getIdJenisHakmilik(hakmilik.getIdJenisHakmilik().toUpperCase()));
+			r.add("ID_JENISPB", 1);
+			r.add("ID_NEGERI", getIdNegeri(hakmilik.getIdNegeri().toUpperCase()));
+			r.add("ID_DAERAH", getIdDaerah(hakmilik.getIdNegeri().toUpperCase(), hakmilik.getIdDaerah().toUpperCase()));
+			r.add("ID_MUKIM", getIdMukim(hakmilik.getIdNegeri().toUpperCase(), hakmilik.getIdDaerah().toUpperCase(), hakmilik.getIdMukim().toUpperCase()));	
+			r.add("ID_LUAS", getIdLuas(hakmilik.getUnitLuas().toUpperCase()));
+			r.add("LUAS", hakmilik.getLuas());
+			r.add("LUAS_HMP", hakmilik.getLuas());
+			r.add("NO_PERSERAHAN", cleanDataString(noPerserahanPajakan));	
+			r.add("CATATAN", cleanDataString(hakmilik.getCatatan()));					
+			r.add("BA_SIMATI", ba);
+			r.add("BB_SIMATI", bb);
+			r.add("JENIS_HTA", "Y");
+			r.add("SYARAT_NYATA", cleanDataString(hakmilik.getSyaratNyata()));
+			r.add("SEKATAN", cleanDataString(hakmilik.getSekatan()));
+			r.add("NO_RESIT_CARIAN", noResit);
+			r.add("ID_HAKMILIK_ETANAH", idHakmilik);
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
+			sql = r.getSQLInsert("TBLPPKHTA");
+			stmt.executeUpdate(sql);
+			
+			r = new SQLRenderer();
+			long idHTAPermohonan = DB.getNextID("TBLPPKHTAPERMOHONAN_SEQ");
+			r.add("ID_HTAPERMOHONAN", idHTAPermohonan);
+			r.add("ID_HTA", idHTA);
+			r.add("ID_PERMOHONANSIMATI", idPermohonanSimati);
+			r.add("ID_SIMATI", getIdSimati(idPermohonanSimati, db));
+			r.add("NO_HAKMILIK", hakmilik.getNoHakmilik());
+			r.add("NO_PT", hakmilik.getNoPTNoLot());
+			r.add("ID_KATEGORI", getIdKategoriTanah(hakmilik.getIdKategoriTanah().toUpperCase()));
+			r.add("ID_JENISHM", getIdJenisHakmilik(hakmilik.getIdJenisHakmilik().toUpperCase()));
+			r.add("ID_JENISPB", 1);
+			r.add("ID_NEGERI", getIdNegeri(hakmilik.getIdNegeri().toUpperCase()));
+			r.add("ID_DAERAH", getIdDaerah(hakmilik.getIdNegeri().toUpperCase(), hakmilik.getIdDaerah().toUpperCase()));
+			r.add("ID_MUKIM", getIdMukim(hakmilik.getIdNegeri().toUpperCase(), hakmilik.getIdDaerah().toUpperCase(), hakmilik.getIdMukim().toUpperCase()));	
+			r.add("ID_LUAS", getIdLuas(hakmilik.getUnitLuas().toUpperCase()));
+			r.add("LUAS", hakmilik.getLuas());
+			r.add("LUAS_HMP", hakmilik.getLuas());
+			r.add("NO_PERSERAHAN", cleanDataString(noPerserahanPajakan));	
+			r.add("CATATAN", cleanDataString(hakmilik.getCatatan()));					
+			r.add("BA_SIMATI", ba);
+			r.add("BB_SIMATI", bb);
+			r.add("JENIS_HTA", "Y");
+			r.add("SYARAT_NYATA", cleanDataString(hakmilik.getSyaratNyata()));
+			r.add("SEKATAN", cleanDataString(hakmilik.getSekatan()));
+			r.add("NO_RESIT_CARIAN", noResit);
+			r.add("ID_HAKMILIK_ETANAH", idHakmilik);
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPPKHTAPERMOHONAN");
+			stmt.executeUpdate(sql);	
+			con.commit();
+			
+			flagMsg = "Y";
+			outputMsg = "MAKLUMAT HAKMILIK BERJAYA DIDAFTARKAN";
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			flagMsg = "N";
@@ -195,7 +246,22 @@ public class EtanahWPKLPPKManager {
 		}
 	}
 	
-	private static boolean isUrusan(String jenisUrusan, String kategoriUrusan) {
+	private String getIdSimati(String idPermohonanSimati, Db db) throws Exception {
+		String sql = "";
+
+		Statement stmt = db.getStatement();
+		
+		sql = "SELECT * FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONANSIMATI = '" + idPermohonanSimati + "'";
+		ResultSet rs = stmt.executeQuery(sql);
+
+		if (rs.next()){
+			return rs.getString("ID_SIMATI");
+		} else {
+			return "";
+		}	
+	}
+	
+	public static boolean isUrusan(String jenisUrusan, String kategoriUrusan) {
 		boolean isUrusan = false;
 		Db db = null;
 		try {		
@@ -242,6 +308,29 @@ public class EtanahWPKLPPKManager {
 				db.close();
 		}
 		return noKP;
+	}
+	
+	private static String getNamaSimati(String idPermohonanSimati) throws Exception {
+		Db db = null;
+		String sql = "";
+		String namaSimati = null;
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT SM.NAMA_SIMATI FROM TBLPPKPERMOHONANSIMATI PSM, TBLPPKSIMATI SM WHERE PSM.ID_SIMATI = SM.ID_SIMATI AND PSM.ID_PERMOHONANSIMATI = '" + idPermohonanSimati + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()){
+				namaSimati = rs.getString("NAMA_SIMATI");
+			} 
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return namaSimati;
 	}
 	
 	private static String getIdJenisHakmilik(String jenisHakmilik) throws Exception {
@@ -920,7 +1009,7 @@ public class EtanahWPKLPPKManager {
 		}
 	}
 
-	public static String getFlagMsg() {
+	public String getFlagMsg() {
 		return flagMsg;
 	}
 
@@ -928,11 +1017,19 @@ public class EtanahWPKLPPKManager {
 		EtanahWPKLPPKManager.flagMsg = flagMsg;
 	}
 
-	public static String getOutputMsg() {
+	public String getOutputMsg() {
 		return outputMsg;
 	}
 
 	public static void setOutputMsg(String outputMsg) {
 		EtanahWPKLPPKManager.outputMsg = outputMsg;
-	}	
+	}
+
+	public String getSemakanPemilikMsg() {
+		return semakanPemilikMsg;
+	}
+
+	public static void setSemakanPemilikMsg(String semakanPemilikMsg) {
+		EtanahWPKLPPKManager.semakanPemilikMsg = semakanPemilikMsg;
+	}		
 }

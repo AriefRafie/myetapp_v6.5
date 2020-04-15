@@ -23,10 +23,12 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
+import ekptg.helpers.File;
 import ekptg.helpers.HTML;
 import ekptg.helpers.InternalUserUtil;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
+import ekptg.model.admin.EmailConfig;
 import ekptg.model.entities.InternalUser;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmRekodPembangunanImejData;
@@ -64,9 +66,10 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	
 	private boolean isSambungan = false;
 	private final String IDSUBURUSAN = "61";
+	private final String JENISAKSES = "readonly";
 	private final String PATH="app/htp/rekod/";
 	private HakmilikInterface iHakmilik = null;
-	private Hashtable hastableHakmilik = null;
+	private Hashtable<String,String> hastableHakmilik = null;
 	private IHakmilikUrusan iHakmilikStatus = null;
 	private IHakmilikUrusan iHakmilikStatusP = null; 
 	private IHakmilikUrusan iHakmilikStatusS = null; 
@@ -80,9 +83,11 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.negeri.rekod.FrmRekodTanahNegeri.class);
 	private String socStatusTemp = "";
-	private String idHakmilik = "";
+	private String idTanah = "";
+	private String idPermohonan = "";
+	private String langkah = "0"; //diguna untuk suburusanstatusfail
 	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
-	private Vector vector = null;
+	private Vector<Hashtable<String,String>> vector = null;
 	String userId = "";
 	FrmRekodUtilData frmRekodUtilData = null;
 	private HakMilik hakmilik = null;
@@ -94,16 +99,13 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	
 	@Override
 	public String doTemplate2() throws Exception {
-		String vm = "";
-		myLog.info("firstt meee tanah negeri");
-		
+		String vm = "";		
 		//FROM DASHBOARD
 		context.put("fromDashboard", getParam("fromDashboard"));
 		context.put("noHakmilikDashboard", getParam("noHakmilikDashboard"));
 		context.put("idHakmilikDashboard", getParam("idHakmilikDashboard"));
 		context.put("statusSahDashboard", getParam("statusSahDashboard"));
-		
-		
+				
 		HttpSession session = this.request.getSession();
 		frmRekodUtilData = FrmRekodUtilData.getInstance();
 		Boolean postDB = false;
@@ -124,7 +126,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		this.context.put("command",submit);
 		String action = getParam("action");//2nd
 		actionI = action;
-		myLog.info("firstAction :" +firstAction+"|nextAction :" +nextAction+"|lastAction :" +lastAction+"|submit :" +submit+"|action :" +action);	
+		myLog.info("firstAction:" +firstAction+"|nextAction:" +nextAction+"|lastAction:" +lastAction+"|submit:" +submit+"|action:" +action);	
 		Vector list =null;
 		Vector listSambungan = null;		
 	    //****************FIRST PAGE INITIALIZATION VALUE **************************
@@ -193,13 +195,12 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		if (idLotHR == null || idLotHR.trim().length() == 0){
 			idLotHR = "99999";
 		}
-		//log.info("jenis lot :" +idLotHR);		
 		String idCaraBayar = getParam("socCaraBayar");
 		if (idCaraBayar == null || idCaraBayar.trim().length() == 0){
 			idCaraBayar = "99999";
 		}
 		String noHakmilikAsal = getParam("txtNoHakmilik");
-		//log.info("noHakmilikAsal :" +noHakmilikAsal);
+		//log.info("jenis lot=" +idLotHR+",noHakmilikAsal=" +noHakmilikAsal);
 			
 		//****************THIRD PAGE INITIALIZATION VALUE **************************
 		Vector listPembangunan = null;
@@ -207,32 +208,25 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		Vector listPerihal =null;
 		String luasAsal ="";
 		//String 
-		idHakmilik = getParam("idHakmilik");
+		idTanah = getParam("idHakmilik");
 		String idHakmilikPerihal = getParam("idHakmilikPerihal");
 		this.context.put("idHakmilikPerihal", idHakmilikPerihal);
 		String idLuasBanguanan = getParam("socLuasBangunan");
 		if (idLuasBanguanan == null || idLuasBanguanan.trim().length() == 0){
 			idLuasBanguanan = "99999";
 		}
-		String popupSkrin ="";
+		//String popupSkrin ="";
 		//****************FOURTH PAGE INITIALIZATION VALUE **************************
 		Vector listImej	=null;
 		String idGambar = getParam("idGambar");
 		this.context.put("idGambar", idGambar);	
-		
-		/*
-		 * @author : Firzan
-		 * comment : copy from FrmRekodHakmilikSementara to cater Hakmilik Sambungan
-		 * 
-		 * 
-		 * */
 		//****************FIFTH PAGE INITIALIZATION VALUE **************************
 		String idJenisHakmilikBaru = getParam("socJenisHakmilikBaru");
 		if (idJenisHakmilikBaru == null || idJenisHakmilikBaru.trim().length() == 0){
 			idJenisHakmilikBaru = "99999";
 		}
 		
-		String msg ="Hakmilik "+getParam("txtHakmilikAsal")+" telah dibatalkan. No Hakmilik Sambungan "+getParam("txtHakmilikBerikut")+" telah berjaya didaftarkan";
+		String msg ="Hakmilik "+getParam("txtHakmilikAsal")+" telah dibatalkan. No. Hakmilik Sambungan "+getParam("txtHakmilikBerikut")+" telah berjaya didaftarkan";
 		this.context.put("msg", msg);
 		
 		this.context.put("modePopup", "");
@@ -244,8 +238,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		String skrin = getParam("skrin");
 		//context.remove("totalRecords");
 		//log.debug("idJenisTanah:"+idJenisTanah);
-		myLog.debug("idStatus:"+idStatus);
-
+		myLog.info("idStatus:"+idStatus);
 
 		String idpermohonan = getParam("id_permohonan");
 		
@@ -258,16 +251,88 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
      		
 			context.put("dataPHPPenyewaan", dataPHPPenyewaan);
 			context.put("div_maklumatPenyewaan_open", "Y");
-			System.out.println("dataPHPPenyewaan "+dataPHPPenyewaan);
 			return PATH+"div_maklumatPenyewaan.jsp";
+			
+		}else if (submit.equals("simpanpengesahan")) {
+			myLog.info("simpanpengesahan:skrin="+skrin);
+			hastableHakmilik = new Hashtable<String,String>();
+			//String idFail = getParam("idFail");
+			EmailConfig ef = new EmailConfig();
+			String userMail = "roslizakariasip@gmail.com";
+			String tajuk = "Modul Pengurusan Tanah: Semakan/ Pengesahan Maklumat Tanah";
+			String kandungan = "<br/>" +
+					"<br/<br/>>" +
+					"Sila <i>login</i> masuk ke www.myetapp.gov.my untuk membuat semakan/ pengesahan." +
+					"<br/><br/>" +
+					"";
+			
+
+			this.context.put("readonly", JENISAKSES);
+			this.context.put("disabled", "disabled");
+			this.context.put("mode", "view");		
+        	// VIEW HEADER
+        	view_modeMaklumatFail(); 					
+
+			if(skrin.equals("skrinhakmilik")){
+				vm = PATH+"tanahmilik/frmRekodPendaftaranHakmilikTab.jsp";	
+				isSambungan = false;
+				
+				noHakmilikAsal = viewMaklumatFailMengikutHakmilik();				
+				viewModeHakmilik(nextAction,lastAction
+					,idNegeriHR,idDaerahHR,idMukimHR
+					,idJenisHakmilikHR,idCaraBayar,idJenisHakmilikBaru);				
+				
+				if(isSambungan){	 
+					vm = PATH+"tanahmilik/frmRekodPendaftaranHakmilikSambunganTab.jsp";	
+					noHakmilikAsal = viewModeHakmilikSambungan(session,submit);			
+					
+					listSambungan = getIHakmilik().getSenaraiHakmilikSambungan(noHakmilikAsal
+									, String.valueOf(hakmilik.getNegeri().getIdNegeri())
+									, String.valueOf(hakmilik.getDaerah().getIdDaerah())
+									, String.valueOf(hakmilik.getMukim().getIdMukim()));
+					this.context.put("listSambungan",listSambungan);
+					
+			   }
+
+			}else if(skrin.equals("skrinrizab")){
+				vm = PATH+"tanahrizab/frmRekodPendaftaranRizabTab.jsp";
+	        	this.context.put("rizab_hakmilik_label", "RIZAB");
+	        	viewModeRizab(session,nextAction,lastAction,idNegeriHR,idDaerahHR,idMukimHR,idJenisHakmilikHR,idCaraBayar,idJenisHakmilikBaru);
+		
+			}
+			
+			if(portal_role.contains("PenggunaNegeri")){
+	  			langkah = "1";
+    			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"2");
+    			ef.emelByRole(userMail, portal_role, null, tajuk, kandungan);
+    					
+    		}else if(portal_role.contains("PegawaiNegeri")){
+	  			langkah = "2";
+    			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"3");
+    			ef.emelByRole(userMail, portal_role, null, tajuk, kandungan);
+    			
+    		}else if(portal_role.contains("PengarahNegeri")){
+	  			langkah = "3";
+    			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"4");
+    			ef.emelByRole(userMail, portal_role, null, tajuk, kandungan);
+    		
+    		}
+			
+			this.context.put("jenisAkses", JENISAKSES);
+			String statuSemasa = "0";
+			Hashtable<String,String> hashStatus = getStatusRekod().getInfoStatusPermohonanFail(idTanah, idPermohonan,langkah);
+			if(hashStatus != null)
+				statuSemasa = hashStatus.get("langkah");
+
+			this.context.put("statuSemasa", statuSemasa);
+			
 		}
 		
 		//****************FIRST PAGE PROCESS **************************
 		//VIEW SENARAI HAKMILIK DAN RIZAB
 		vm = PATH+"frmRekodSenaraiHakmilikRizabIndexV03.jsp";
 		if(firstAction.equals("")){
-			myLog.info("firstAction : Kosong");
-			//vm = PATH+"frmRekodSenaraiHakmilikRizabIndex.jsp";
+			//myLog.info("firstAction : Kosong");
 			if(!"".equals(skrin)){
 			   //idNegeri = getParam("socNegeriHR");		   
 			}		   
@@ -463,59 +528,77 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 			if (nextAction.equals("paparDetailHakmilik")){
 				vm = PATH+"tanahmilik/frmRekodPendaftaranHakmilikTab.jsp";	
 				isSambungan = false;
-				this.context.put("readonly", "readonly");
+				this.context.put("readonly", JENISAKSES);
 				this.context.put("disabled", "disabled");
 				this.context.put("mode", "view");		
 				
-			    // VIEW HEADER (MASTER) BY ID
 				// Kemaskini pada 2011/02/28 return id_hakmilik (asal)
-				noHakmilikAsal = viewMaklumatFailMengikutHakmilik(session);
-				
-				System.out.println("isSambungan "+isSambungan);
-				//System.out.println("noHakmilikAsal 1 "+noHakmilikAsal);
-				
-				System.out.println("idNegeriHR "+idNegeriHR);
-				System.out.println("idDaerahHR "+idDaerahHR);
-				System.out.println("idMukimHR "+idMukimHR);
-				System.out.println("idJenisHakmilikHR "+idJenisHakmilikHR);
-				System.out.println("idCaraBayar "+idCaraBayar);
-				System.out.println("idJenisHakmilikBaru "+idJenisHakmilikBaru);
+				noHakmilikAsal = viewMaklumatFailMengikutHakmilik();				
 				
 				// VIEW MAKLUMAT HAKMILIK BY ID
-				viewModeHakmilik(session,nextAction,lastAction
-						,idNegeriHR,idDaerahHR,idMukimHR
-						,idJenisHakmilikHR,idCaraBayar,idJenisHakmilikBaru);				
-				//LIST HAKMILIK SAMBUNGAN
+				viewModeHakmilik(nextAction,lastAction
+					,idNegeriHR,idDaerahHR,idMukimHR
+					,idJenisHakmilikHR,idCaraBayar,idJenisHakmilikBaru);				
+				//SENARAI HAKMILIK SAMBUNGAN
 				myLog.info("isSambungan:"+isSambungan);
 				if(isSambungan){	 
-					//vm = PATH+"tanahmilik/frmRekodPendaftaranHakmilikSambunganView.jsp";	
 					vm = PATH+"tanahmilik/frmRekodPendaftaranHakmilikSambunganTab.jsp";	
-					noHakmilikAsal = viewModeHakmilikSambungan(session,submit);
-			
-					System.out.println("noHakmilikAsal 2 "+noHakmilikAsal);
+					noHakmilikAsal = viewModeHakmilikSambungan(session,submit);			
 					
-					//28/01/2011
 					listSambungan = getIHakmilik().getSenaraiHakmilikSambungan(noHakmilikAsal
-							, String.valueOf(hakmilik.getNegeri().getIdNegeri())
-							, String.valueOf(hakmilik.getDaerah().getIdDaerah())
-							, String.valueOf(hakmilik.getMukim().getIdMukim()));
+									, String.valueOf(hakmilik.getNegeri().getIdNegeri())
+									, String.valueOf(hakmilik.getDaerah().getIdDaerah())
+									, String.valueOf(hakmilik.getMukim().getIdMukim()));
 					this.context.put("listSambungan",listSambungan);
 					
 			   }
-			   
+				this.context.put("jenisAkses", JENISAKSES);
+				String statuSemasa = "0";
+	    		if(portal_role.contains("PenggunaNegeri")){
+		  			langkah = "1";
+	    		}else if(portal_role.contains("PegawaiNegeri")){
+		  			langkah = "2";
+	    		}else if(portal_role.contains("PengarahNegeri")){
+		  			langkah = "3";	    		
+	    		}
+				Hashtable<String,String> hashStatus = getStatusRekod().getInfoStatusPermohonanFail(idTanah, idPermohonan,langkah);
+				if(hashStatus != null)
+					statuSemasa = hashStatus.get("langkah");
+					
+				//myLog.info("statuSemasa="+statuSemasa);
+				//this.context.put("idFail", idFail);
+				this.context.put("statuSemasa", statuSemasa);
+
 	        }else if (nextAction.equals("paparDetailRizab")){	// VIEW DETAIL RIZAB
-	        	// Kemaskini Oleh Mohamad Rosli pada 18/07/2012, Tab 
+	        	// 18/07/2012, Kemaskini Oleh Mohamad Rosli - paparan Tab 
 	        	vm = PATH+"tanahrizab/frmRekodPendaftaranRizabTab.jsp";
 	        	
 	        	this.context.put("rizab_hakmilik_label", "RIZAB");
 	        	this.context.put("readonly", "readonly");
 	        	this.context.put("disabled", "disabled");
 	        	this.context.put("mode", "view");						
-	        	// VIEW HEADER(MASTER) BY ID
-	        	view_modeMaklumatFail(session); 					
-	        	// VIEW MAKLUMAT RIZAB BY ID
+	        	// VIEW HEADER
+	        	view_modeMaklumatFail(); 					
+	        	// VIEW MAKLUMAT RIZAB
 	        	viewModeRizab(session,nextAction,lastAction,idNegeriHR,idDaerahHR,idMukimHR,idJenisHakmilikHR,idCaraBayar,idJenisHakmilikBaru);
-		    
+				
+				this.context.put("jenisAkses", JENISAKSES);
+				String statuSemasa = "0";
+	    		if(portal_role.contains("PenggunaNegeri")){
+		  			langkah = "1";
+	    		}else if(portal_role.contains("PegawaiNegeri")){
+		  			langkah = "2";
+	    		}else if(portal_role.contains("PengarahNegeri")){
+		  			langkah = "3";	    		
+	    		}
+				Hashtable<String,String> hashStatus = getStatusRekod().getInfoStatusPermohonanFail(idTanah, idPermohonan,langkah);
+				if(hashStatus != null)
+					statuSemasa = hashStatus.get("langkah");
+					
+				//myLog.info("statuSemasa="+statuSemasa);
+				//this.context.put("idFail", idFail);
+				this.context.put("statuSemasa", statuSemasa);
+
 			}else if (nextAction.equals("kemaskiniDetailHakmilik")){	//KEMASKINI DETAIL MAKLUMAT HAKMILIK
 			    vm = PATH+"tanahmilik/frmRekodPendaftaranHakmilik.jsp";
 				
@@ -541,7 +624,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				 this.context.put("disabled", "");	
 				 this.context.put("mode", "update");
 				 // VIEW HEADER(MASTER) BY ID
-				 viewModeMaklumatFail(session,idHakmilik);
+				 viewModeMaklumatFail(session,idTanah);
 				 // VIEW MAKLUMAT HAKMILIK BY ID
 				 viewModeHakmilikSambungan(session,nextAction,lastAction
 						 ,idNegeriHR,idDaerahHR,idMukimHR
@@ -554,9 +637,9 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				this.context.put("readonly", "");
 				this.context.put("disabled", "");	
 				this.context.put("mode", "update");			
-				// VIEW HEADER(MASTER) BY ID
-				view_modeMaklumatFail(session);
-				// VIEW MAKLUMAT RIZAB BY ID
+				// VIEW HEADER
+				view_modeMaklumatFail();
+				// VIEW MAKLUMAT RIZAB
 				viewModeRizab(session,nextAction,lastAction
 						,idNegeriHR,idDaerahHR,idMukimHR
 						,idJenisHakmilikHR,idCaraBayar,idJenisHakmilikBaru);
@@ -690,9 +773,9 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 
 			 	 }else{
 			 		 FrmRekodPendaftaranHakmilikRizabData.updateHakmilikById(hHakmilikUpdate);
-					 // VIEW HEADER (MASTER) BY ID
-					 noHakmilikAsal = view_modeMaklumatFail(session);
-					 // VIEW MAKLUMAT HAKMILIK BY ID
+					 // VIEW HEADER
+					 noHakmilikAsal = view_modeMaklumatFail();
+					 // VIEW MAKLUMAT HAKMILIK
 					 view_modeHakmilikRizab(session,nextAction,lastAction,idNegeriHR,idDaerahHR,idMukimHR,idJenisHakmilikHR,idCaraBayar,idJenisHakmilikBaru);	 		 
 			 	 
 			 	 }
@@ -746,7 +829,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				this.context.put("disabled", "disabled");	
 				this.context.put("mode", "view");
 				//VIEW MAKLUMAT RIZAB
-				view_modeMaklumatFail(session); 					
+				view_modeMaklumatFail(); 					
 				viewModeRizab(session,nextAction,lastAction,idNegeriHR,idDaerahHR,idMukimHR,idJenisHakmilikHR,idCaraBayar,idJenisHakmilikBaru);
 			   
 				//20/10/2010
@@ -758,8 +841,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				this.context.put("mode", "update");
 				
 				//Kemaskini Oleh Rosli pada 01/03/2011, kemaskini paparan kod hakmilik, no hakmilik  
-				//noHakmilikAsal = view_modeMaklumatFail(session);
-				noHakmilikAsal = viewMaklumatFailMengikutHakmilik(session);
+				noHakmilikAsal = viewMaklumatFailMengikutHakmilik();
 				kemaskiniMaklumatHakmilik(noHakmilikAsal);
 							   
 			}else if (nextAction.equals("maklumathakmiliksambarureadonly")){	
@@ -770,9 +852,9 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				this.context.put("mode", "view");
 				
 			    // VIEW HEADER (MASTER) BY ID
-				noHakmilikAsal = viewMaklumatFailMengikutHakmilik(session);
+				noHakmilikAsal = viewMaklumatFailMengikutHakmilik();
 				// VIEW MAKLUMAT HAKMILIK BY ID
-				viewModeHakmilik(session,nextAction,lastAction
+				viewModeHakmilik(nextAction,lastAction
 						,idNegeriHR,idDaerahHR,idMukimHR
 						,idJenisHakmilikHR,idCaraBayar,idJenisHakmilikBaru);
 											   
@@ -1063,28 +1145,24 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		   
 		   }
 		   
-<<<<<<< .mine
-		}else if("PendaftaranPembangunan".equals(firstAction)){			
-=======
 		}*/
 		else if("PendaftaranPembangunan".equals(firstAction)){
 			//fix bug get idpermohonan
-			idpermohonan = DBgetIdPermohonanByIdHakmilik(idHakmilik);
+			idpermohonan = DBgetIdPermohonanByIdHakmilik(idTanah);
 			//System.out.println("::PendaftaranPembangunan");
 			myLog.info("PendaftaranPembangunan:firstAction="+firstAction);
 			vm = PATH+"pembangunan/frmRekodPembangunanIndex.jsp";
 	    	boolean disableFungsi = false;
 	    	Hashtable hFungsi = null;
     		Hashtable hInsert = null; 	
-	    	String langkah = "0";
 			String sumber = "REKOD_PEMBANGUNAN";
 
 			this.context.put("jenis_button","3");
 		    // VIEW HEADER (MASTER) BY ID
-		    view_modeMaklumatFail(session);	    
+		    view_modeMaklumatFail();	    
 		   		   
 		    // GET LUAS ASAL DAN BAKI TERKINI
-		    luasAsal = FrmRekodPembangunanPentadbiranData.getLuasAsal(idHakmilik);
+		    luasAsal = FrmRekodPembangunanPentadbiranData.getLuasAsal(idTanah);
 		    //VIEW LUAS TERKUMPUL
 		    //view_modeLuasTerkumpul(session);
 		    this.context.put("readonly", "");
@@ -1098,7 +1176,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		    this.context.put("txtLuasH","");
 		    this.context.put("txtCatatan","");
 		    this.context.put("mode", "new");
-		    this.context.put("idHakmilik",idHakmilik);
+		    this.context.put("idHakmilik",idTanah);
 	  		if(portal_role.contains("HQPengguna")){
 	  			langkah = "24";
 			}else if(portal_role.contains("HQPegawai")){
@@ -1107,7 +1185,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	  			langkah = "26";
 			}
 			
-			listPembangunan = viewSenaraiPembangunan(idHakmilik,langkah);
+			listPembangunan = viewSenaraiPembangunan(idTanah,langkah);
 			
 			this.context.put("txtPerihalImej", "");
 			this.context.put("mode", "new");
@@ -1161,11 +1239,11 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				   	hAddDetailKeluasan.put("idMasuk", userId);
 				   	String idHakmilikPerihalBaru = FrmRekodPembangunanPentadbiranData.addDetailKeluasan(hAddDetailKeluasan);
 	
-				   	String idSusulan = getISusulanPembangunan().simpan(setSusulanValues(idHakmilik,idHakmilikPerihal
-	    					,String.valueOf(context.get("txdTarikhBina")),String.valueOf(context.get("txtCatatan"))));
+				   	String idSusulan = getISusulanPembangunan().simpan(
+				   						setSusulanValues(idTanah,idHakmilikPerihal,String.valueOf(context.get("txdTarikhBina")),String.valueOf(context.get("txtCatatan"))));
 				   	
 				  
-	    			String idStatusFail = kemaskiniSimpanStatusSelesai(idHakmilik,idpermohonan,IDSUBURUSAN,langkah);
+	    			String idStatusFail = kemaskiniSimpanStatusSelesai(idTanah,idpermohonan,IDSUBURUSAN,langkah);
 		    		hInsert = new Hashtable(); 	
 	    			hInsert.put("idStatusFail", idStatusFail);
 	    			hInsert.put("idSusulan", idSusulan);
@@ -1178,7 +1256,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				
 		    	//SENARAI PEMBANGUNAN BY ID HAKMILIK
 				this.context.put("FlagLepasUpload", "Y");
-		    	listPembangunan = viewSenaraiPembangunan(idHakmilik,langkah);
+		    	listPembangunan = viewSenaraiPembangunan(idTanah,langkah);
 		    	this.context.put("SenaraiPembangunan", listPembangunan);
 		    	//VIEW LUAS TERKUMPUL
 		    	view_modeLuasTerkumpul(session);
@@ -1230,12 +1308,11 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				String idHakmilikPerihalBaru = FrmRekodPembangunanPentadbiranData.addDetailKeluasan(hAddDetailKeluasan);
 
 				String idSusulan = getISusulanPembangunan().simpan(
-						setSusulanValues(idHakmilik, idHakmilikPerihal,
+						setSusulanValues(idTanah, idHakmilikPerihal,
 								String.valueOf(context.get("txdTarikhBina")),
 								String.valueOf(context.get("txtCatatan"))));
 
-				String idStatusFail = kemaskiniSimpanStatusSelesai(idHakmilik,
-						idpermohonan, IDSUBURUSAN, langkah);
+				String idStatusFail = kemaskiniSimpanStatusSelesai(idTanah,idpermohonan, IDSUBURUSAN, langkah);
 				hInsert = new Hashtable<String, String>();
 				hInsert.put("idStatusFail", idStatusFail);
 				hInsert.put("idSusulan", idSusulan);
@@ -1243,7 +1320,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				hInsert.put("sumber", "REKOD_PEMBANGUNAN");
 				getISusulanPembangunan().simpanSusulanStatusFail(hInsert);
 				// SENARAI PEMBANGUNAN BY ID HAKMILIK
-				listPembangunan = viewSenaraiPembangunan(idHakmilik, langkah);
+				listPembangunan = viewSenaraiPembangunan(idTanah, langkah);
 				this.context.put("SenaraiPembangunan", listPembangunan);
 				// VIEW LUAS TERKUMPUL
 				view_modeLuasTerkumpul(session);
@@ -1284,7 +1361,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 			   
 		    	}		    	
 		    	//SENARAI PEMBANGUNAN BY ID HAKMILIK
-		    	listPembangunan = viewSenaraiPembangunan(idHakmilik, langkah);
+		    	listPembangunan = viewSenaraiPembangunan(idTanah, langkah);
 		    	this.context.put("SenaraiPembangunan", listPembangunan);
 		    	//VIEW LUAS TERKUMPUL
 		    	view_modeLuasTerkumpul(session);
@@ -1311,12 +1388,12 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 
 			   //PAPARAN PENGESAHAN MAKLUMAT/ KEMASUKAN MAKLUMAT SUSULAN
 		    	//idHakmilik
-		    	if(getISusulan().getMaklumat(idHakmilik,sumber,idHakmilikPerihal)==null){
+		    	if(getISusulan().getMaklumat(idTanah,sumber,idHakmilikPerihal)==null){
 		    		hInsert = new Hashtable(); 	
 
-	    			String idSusulan = getISusulanPembangunan().simpan(setSusulanValues(idHakmilik,idHakmilikPerihal
+	    			String idSusulan = getISusulanPembangunan().simpan(setSusulanValues(idTanah,idHakmilikPerihal
 	    					,String.valueOf(context.get("txdTarikhBina")),String.valueOf(context.get("txtCatatan"))));
-	    			String idStatusFail = kemaskiniSimpanStatusSelesai(idHakmilik,idHakmilikPerihal,IDSUBURUSAN,langkah);
+	    			String idStatusFail = kemaskiniSimpanStatusSelesai(idTanah,idHakmilikPerihal,IDSUBURUSAN,langkah);
 	    			hInsert.put("idStatusFail", idStatusFail);
 	    			hInsert.put("idSusulan", idSusulan);
 	    			hInsert.put("idMasuk", userId);
@@ -1324,7 +1401,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 					getISusulanPembangunan().simpanSusulanStatusFail(hInsert);
 		    	}
 			    //listPembangunan = view_modeSenaraiPembangunan(session);
-				listPembangunan = viewSenaraiPembangunan(idHakmilik,langkah);
+				listPembangunan = viewSenaraiPembangunan(idTanah,langkah);
 		    	String idStatusFail = getParam("idstatusfail");
 		    	String idSusulanStatus = getParam("idsusulanstatus");
 		    	context.put("idSusulanStatus", idSusulanStatus);
@@ -1403,7 +1480,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		      	   
 			    //SENARAI PEMBANGUNAN BY ID HAKMILIK
 			   //listPembangunan = view_modeSenaraiPembangunan(session);
-			   listPembangunan = viewSenaraiPembangunan(idHakmilik,langkah);
+			   listPembangunan = viewSenaraiPembangunan(idTanah,langkah);
 			   //this.context.put("SenaraiPembangunan", listPembangunan);
 			   
 		       this.context.put("readOnly", "");
@@ -1473,7 +1550,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				
 				// SENARAI PEMBANGUNAN BY ID HAKMILIK
 				// listPembangunan = view_modeSenaraiPembangunan(session);
-				listPembangunan = viewSenaraiPembangunan(idHakmilik, langkah);
+				listPembangunan = viewSenaraiPembangunan(idTanah, langkah);
 				// this.context.put("SenaraiPembangunan", listPembangunan);
 
 				this.context.put("readOnly", "");
@@ -1507,7 +1584,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 			   FrmRekodPembangunanPentadbiranData.hapusPembangunanById(getParam("idHakmilikPerihal"));			   
 			    
 			   //SENARAI PEMBANGUNAN BY ID HAKMILIK
-			   listPembangunan = viewSenaraiPembangunan(idHakmilik,langkah);
+			   listPembangunan = viewSenaraiPembangunan(idTanah,langkah);
 			   this.context.put("SenaraiPembangunan", listPembangunan);			   
 				//VIEW LUAS TERKUMPUL
 			    view_modeLuasTerkumpul(session);
@@ -1535,7 +1612,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 			   myLog.info(idSusulanStatusLama);
 	    		
 			   if(portal_role.contains("HQPengguna")){
-				   String idStatusFail = kemaskiniSimpanStatusSelesai(idHakmilik,idHakmilikPerihal,IDSUBURUSAN,String.valueOf((Integer.parseInt(langkah)+1)));
+				   String idStatusFail = kemaskiniSimpanStatusSelesai(idTanah,idHakmilikPerihal,IDSUBURUSAN,String.valueOf((Integer.parseInt(langkah)+1)));
 				   hInsert = new Hashtable(); 			
 				   hInsert.put("idStatusFail", idStatusFail);
 				   hInsert.put("idsusulan", idHakmilikPerihal);
@@ -1544,7 +1621,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				   getISusulanPembangunan().simpanSusulanStatusFail(hInsert);				
 				
 	    		}else if(portal_role.contains("HQPegawai")){
-	    			String idStatusFail = kemaskiniSimpanStatusSelesai(idHakmilik,idHakmilikPerihal,IDSUBURUSAN,String.valueOf((Integer.parseInt(langkah)+1)));
+	    			String idStatusFail = kemaskiniSimpanStatusSelesai(idTanah,idHakmilikPerihal,IDSUBURUSAN,String.valueOf((Integer.parseInt(langkah)+1)));
 	    			hInsert = new Hashtable(); 			
 	    			hInsert.put("idStatusFail", idStatusFail);
 					hInsert.put("idsusulan", idHakmilikPerihal);
@@ -1553,7 +1630,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 					getISusulanPembangunan().simpanSusulanStatusFail(hInsert);				
 
 	    		}else if(portal_role.contains("HQPengarah")){
-	    			String idStatusFail = kemaskiniSimpanStatusSelesai(idHakmilik,idHakmilikPerihal,IDSUBURUSAN,String.valueOf((Integer.parseInt(langkah)+1)));
+	    			String idStatusFail = kemaskiniSimpanStatusSelesai(idTanah,idHakmilikPerihal,IDSUBURUSAN,String.valueOf((Integer.parseInt(langkah)+1)));
 					hInsert = new Hashtable(); 			
 					hInsert.put("idStatusFail", idStatusFail);
 					hInsert.put("idsusulan", idHakmilikPerihal);
@@ -1564,7 +1641,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	    		}			   
 			   viewPerihalByIdHakmilikPerihal(idHakmilikPerihal);
 			   //listPembangunan = view_modeSenaraiPembangunan(session);
-			   listPembangunan = viewSenaraiPembangunan(idHakmilik,langkah);
+			   listPembangunan = viewSenaraiPembangunan(idTanah,langkah);
 
 		   }else if(nextAction.equals("pengesahanHq")){	
 			   System.out.println("pengesahanHq : "+getParam("idHakmilikPerihal"));
@@ -1577,7 +1654,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				setupPagePentadbiran(session,action,listPembangunan);
 			}		   
 		    //VIEW LUAS TERKUMPUL
-			viewLuasTerkumpul(idHakmilik);   
+			viewLuasTerkumpul(idTanah);   
 		    context.put("txtLuasAsal",luasAsal); 
 	    	context.put("disableFungsi",disableFungsi);
 	    	context.put("langkah",langkah);
@@ -1591,7 +1668,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 //			myLog.info("myrole="+(String)session.getAttribute("myrole"))   ;
 //			myLog.info("_portal_role="+(String)session.getAttribute("_portal_role"))   ;			
 			//VIEW HEADER(MASTER) BY ID
-			view_modeMaklumatFail(session);
+			view_modeMaklumatFail();
 			//SENARAI IMEJ BY ID HAKMILIK
 			listImej = view_modeSenaraiImej(session);
 			this.context.put("SenaraiImej", listImej);
@@ -1700,7 +1777,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 					// myLog.info("_portal_role="+(String)session.getAttribute("_portal_role"))
 					// ;
 					// VIEW HEADER(MASTER) BY ID
-					view_modeMaklumatFail(session);
+					view_modeMaklumatFail();
 					// SENARAI IMEJ BY ID HAKMILIK
 					listImej = view_modeSenaraiImej(session);
 					this.context.put("SenaraiImej", listImej);
@@ -1833,10 +1910,10 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	
 	//****************SECOND PAGE METHOD/FUCTION **************************
 	// VIEW HEADER BY ID
-	private String view_modeMaklumatFail(HttpSession session) throws Exception {
-		myLog.info("view_modeMaklumatFail:idHakmilik="+idHakmilik);
+	private String view_modeMaklumatFail() throws Exception {
+		//myLog.info("view_modeMaklumatFail:idHakmilik="+idHakmilik);
 		String idHakmilik = getParam("idHakmilik");
-		myLog.info("view_modeMaklumatFail:idHakmilik="+idHakmilik);
+		//myLog.info("view_modeMaklumatFail:idHakmilik="+idHakmilik);
 		Vector list =null;
 
 		// Kemaskini 2012 04 06
@@ -1866,7 +1943,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	}
 	
 	// VIEW HEADER BY ID
-	private String viewMaklumatFailMengikutHakmilik(HttpSession session) throws Exception {
+	private String viewMaklumatFailMengikutHakmilik() throws Exception {
 		String idHakmilik = getParam("idHakmilik");	
 		myLog.info("idHakmilik:"+idHakmilik);
 		Vector list =null;
@@ -1933,11 +2010,11 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	
 	// VIEW HEADER BY ID
 	private String viewModeMaklumatFail(HttpSession session,String idHakmilik) throws Exception {
-		vector = new Vector();
+		vector = new Vector<Hashtable<String,String>>();
 		// Kemaskini 2012 04 06
 		//vector = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
 		vector = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
-		Hashtable hMaklumatFail = (Hashtable) vector.get(0);	
+		Hashtable hMaklumatFail = (Hashtable<String,String>) vector.get(0);	
 		this.context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
 		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
 		this.context.put("txtTajuk",(String)hMaklumatFail.get("tajukFail"));
@@ -2073,12 +2150,12 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	}	
 	//Add by rosli 30/06/2010
 	
-	   // VIEW MAKLUMAT HAKMILIK BY ID
+	// VIEW MAKLUMAT RIZAB
 	private void viewModeRizab(HttpSession session,String nextAction,String lastAction,String idNegeriHR, String idDaerahHR, String idMukimHR,String idJenisHakmilikHR, String idCaraBayar, String idJenisHakmilikBaru) throws Exception {
 		myLog.info("viewModeRizab:nextAction="+nextAction);
-		String idHakmilik = getParam("idHakmilik");
+		//String idHakmilik = getParam("idHakmilik");
 		Vector list =null;
-		list = FrmRekodPendaftaranHakmilikRizabData.getPaparRizabById(idHakmilik);
+		list = FrmRekodPendaftaranHakmilikRizabData.getPaparRizabById(idTanah);
 		Hashtable hHakmilik = null;
 		if (list.size() > 0) {
 			hHakmilik = (Hashtable) list.get(0);
@@ -2086,6 +2163,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 			throw new Exception("Maklumat Rekod Tidak Lengkap");
 		}
 		
+		idPermohonan =String.valueOf(hHakmilik.get("idPermohonan"));
 		this.context.put("idHakmilik", (String)hHakmilik.get("idHakmilik"));
 		this.context.put("statusBatal", (String)hHakmilik.get("socStatus"));
 		this.context.put("txtKodSocJenisHakmilik", (String)hHakmilik.get("kodJenisHakmilik"));
@@ -2269,28 +2347,24 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		
 	}	
 	
-	//add by Rosli 14/10/2010
-	// VIEW MAKLUMAT HAKMILIK BY ID
-	private void viewModeHakmilik(HttpSession session,String nextAction,String lastAction
-			,String idNegeriHR, String idDaerahHR, String idMukimHR
-			,String idJenisHakmilikHR, String idCaraBayar, String idJenisHakmilikBaru) throws Exception {
-		myLog.info("viewModeHakmilik:nextAction="+nextAction);
-		String idHakmilik = getParam("idHakmilik");
-		
-		System.out.println("idHakmilik "+idHakmilik);
+	// 14/10/2010 Add by Rosli-VIEW MAKLUMAT HAKMILIK BY ID
+	private void viewModeHakmilik(String nextAction,String lastAction
+		,String idNegeriHR, String idDaerahHR, String idMukimHR
+		,String idJenisHakmilikHR, String idCaraBayar, String idJenisHakmilikBaru) throws Exception {
+		myLog.info("viewModeHakmilik:nextAction="+nextAction+",idTanah ="+idTanah);
+		//String idHakmilik = getParam("idHakmilik");
 		
 		isSambungan = false;
-		vector = new Vector();
-		vector = FrmRekodPendaftaranHakmilikRizabData.getPaparHakmilikRizabById(idHakmilik);
-		
-		System.out.println("vector "+vector.get(0));
+		vector = new Vector<Hashtable<String,String>>();
+		vector = FrmRekodPendaftaranHakmilikRizabData.getPaparHakmilikRizabById(idTanah);
 		
 		Hashtable hHakmilik = null;
 		if (vector.size() > 0) {
-			hHakmilik = (Hashtable) vector.get(0);			
+			hHakmilik = (Hashtable<String,String>) vector.get(0);			
 		} else {
 			throw new Exception("Maklumat Rekod Tidak Lengkap");		
 		}
+		idPermohonan =String.valueOf(hHakmilik.get("idPermohonan"));
 		socStatusTemp = String.valueOf(hHakmilik.get("socStatus"));		
 		this.context.put("idHakmilik", String.valueOf(hHakmilik.get("idHakmilik")));
 		this.context.put("statusBatal", String.valueOf(hHakmilik.get("socStatus")));
@@ -2477,11 +2551,11 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		myLog.info("maklumatHakmilik:nextAction="+nextAction);
 		String idHakmilik = getParam("idHakmilik");
 		isSambungan = false;
-		vector = new Vector();
+		vector = new Vector<Hashtable<String,String>>();
 		vector = FrmRekodPendaftaranHakmilikRizabData.getPaparHakmilikRizabById(idHakmilik);
 		Hashtable hHakmilik = null;
 		if (vector.size() > 0) {
-			hHakmilik = (Hashtable) vector.get(0);	
+			hHakmilik = (Hashtable<String,String>) vector.get(0);	
 		} else {
 			throw new Exception(getIHTP().getErrorHTML("Maklumat Rekod Tidak Lengkap"));			
 		}
@@ -2682,17 +2756,16 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	//add by Rosli 18/10/2010
 	// VIEW MAKLUMAT HAKMILIK & SAMBUNGAN
 	private void viewModeHakmilikSambungan(HttpSession session,String nextAction,String lastAction
-			,String idNegeriHR, String idDaerahHR, String idMukimHR
-			,String idJenisHakmilikHR, String idCaraBayar, String idJenisHakmilikBaru) throws Exception {
-		myLog.info("viewModeHakmilikSambungan:nextAction="+nextAction);
-		myLog.info("idHakmilik="+idHakmilik);
+		,String idNegeriHR, String idDaerahHR, String idMukimHR
+		,String idJenisHakmilikHR, String idCaraBayar, String idJenisHakmilikBaru) throws Exception {
+		myLog.info("viewModeHakmilikSambungan:nextAction="+nextAction+",idTanah="+idTanah);
 		//myLog.info("idHakmilik 1="+getParam("idHakmilik"));
 		//String idHakmilik = getParam("idHakmilik");
-		vector = new Vector();
-		vector = FrmRekodPendaftaranHakmilikRizabData.getPaparHakmilikRizabById(idHakmilik);
+		vector = new Vector<Hashtable<String,String>>();
+		vector = FrmRekodPendaftaranHakmilikRizabData.getPaparHakmilikRizabById(idTanah);
 		hastableHakmilik = new Hashtable();
 		if (vector.size() > 0) {
-			hastableHakmilik = (Hashtable) vector.get(0);			
+			hastableHakmilik = (Hashtable<String,String>) vector.get(0);			
 		} else {
 			throw new Exception(getIHTP().getErrorHTML("MAKLUMAT REKOD TIDAK LENGKAP"));
 		}
@@ -3248,103 +3321,14 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				e.printStackTrace();
 				this.context.put("error",e.getMessage());
 			}	
-		}
-	 	
-	 	/*
-	 	 * @author : Firzan
-	 	 * comment : this method is copied from frmRekodHakmilikSementara to cater Hakmilik sambungan being
-	 	 * 			 joined to Rekod Hakmilik/rizab
-	 	 * */
-	 	
-	 // VIEW MAKLUMAT FAIL BY ID (MASTER)
-//		private void view_modeMaklumatFailFrmRekodHakmilikSementara(HttpSession session) throws Exception {
-//			String idHakmilik = getParam("idHakmilik");	
-//			Vector list =null;
-//			list = FrmRekodPendaftaranHakmilikSementaraData.getPaparMaklumatFailById(idHakmilik);
-//			Hashtable hMaklumatFail = (Hashtable) list.get(0);
-//			
-//			this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
-//			this.context.put("txtTajuk",(String)hMaklumatFail.get("tajukFail"));
-//			this.context.put("txtNamaKementerian", (String)hMaklumatFail.get("namaKementerian"));
-//			this.context.put("txtNoFailSeksyen", (String)hMaklumatFail.get("noFailSeksyen"));
-//			this.context.put("txtNamaNegeri", (String)hMaklumatFail.get("namaNegeri"));
-//			this.context.put("txtNamaDaerah", (String)hMaklumatFail.get("namaDaerah"));
-//			this.context.put("txtNamaMukim", (String)hMaklumatFail.get("namaMukim"));
-//			this.context.put("txtNamaAgensi", (String)hMaklumatFail.get("namaAgensi"));
-//			this.context.put("txtJenisHakmilik", (String)hMaklumatFail.get("jenisHakmilik"));
-//			this.context.put("txtFailKJP", (String)hMaklumatFail.get("noFailKjp"));
-//			this.context.put("txtNoWarta", (String)hMaklumatFail.get("noWarta"));
-//			this.context.put("txtNoHakmilik",(String) hMaklumatFail.get("noHakmilik"));
-//			this.context.put("txtNoLot", (String)hMaklumatFail.get("noLot"));	
-//			this.context.put("caraPerolehan", (String)hMaklumatFail.get("caraPerolehan"));
-//		}
-		
-		// VIEW MAKLUMAT DETAIL HAKMILIK DAN RIZAB BY ID 
-//		private void view_modeHakmilikSementara(HttpSession session) throws Exception {
-//			String idHakmilik = getParam("idHakmilik");
-//			Vector list =null;
-//			list = FrmRekodPendaftaranHakmilikSementaraData.getPaparHakmilikSementaraById(idHakmilik);
-//			Hashtable hHakmilik = (Hashtable) list.get(0);
-//
-//			this.context.put("idHakmilik", (String)hHakmilik.get("idHakmilik"));
-//			this.context.put("txdTarikhTerima", (String)hHakmilik.get("tarikhTerima"));
-//			this.context.put("txdTarikhDaftar", (String)hHakmilik.get("tarikhDaftar"));
-//			this.context.put("txtCukaiTahun", (String)hHakmilik.get("cukai"));
-//			this.context.put("txtLokasi", (String)hHakmilik.get("lokasi"));
-//	        this.context.put("selectNegeriHR", HTML.SelectNegeri("socNegeriHR",Utils.parseLong((String)hHakmilik.get("idNegeriHR")),"disabled", " style=\"width:200px\" onChange=\"doChangeStateHR();\" class=\"disabled\""));
-//		    this.context.put("selectDaerahHR", HTML.SelectDaerahByNegeri((String)hHakmilik.get("idNegeriHR"),"socDaerahHR", Utils.parseLong((String)hHakmilik.get("idDaerahHR")),"disabled"," style=\"width:200px\" onChange=\"doChangeDaerahHR();\" class=\"disabled\""));
-//		    this.context.put("selectMukimHR", HTML.SelectMukimByDaerah((String)hHakmilik.get("idDaerahHR"),"socMukimHR", Utils.parseLong((String)hHakmilik.get("idMukimHR")),"disabled"," style=\"width:200px\" class=\"disabled\""));
-//		    this.context.put("selectJenisHakmilikHR", HTML.SelectJenisHakmilik("socJenisHakmilikHR",Utils.parseLong((String)hHakmilik.get("idJenisHakmilikHR")),"disabled", " style=\"width:200px\"  class=\"disabled\""));
-//		    this.context.put("selectJenisLotHR", HTML.SelectLot("socLotHR",Utils.parseLong((String)hHakmilik.get("idLot")),"disabled", " style=\"width:200px\" class=\"disabled\""));
-//			//this.context.put("selectLuas", HTML.SelectLuas("socLuas",Utils.parseLong((String)hHakmilik.get("idLuas")), "disabled"," style=\"width:200px\" class=\"disabled\""));
-//		    this.context.put("selectLuas", HTML.SelectLuas("socLuas",Utils.parseLong((String)hHakmilik.get("idLuasLama")), "disabled"," style=\"width:200px\" class=\"disabled\""));
-//		    this.context.put("selectKategori", HTML.SelectKategori("socKategori",Utils.parseLong((String)hHakmilik.get("idKategori")), "disabled"," style=\"width:200px\" class=\"disabled\""));
-//			this.context.put("selectRizab", HTML.SelectRizab("socRizab",Utils.parseLong((String)hHakmilik.get("idJenisRizab")), "disabled", " style=\"width:200px\" class=\"disabled\""));
-//			this.context.put("kodJenis", (String)hHakmilik.get("kodJenis"));
-//			this.context.put("noHakmilik", (String)hHakmilik.get("noHakmilik"));
-//			this.context.put("txtCukaiTerkini",(String)hHakmilik.get("cukaiTerkini"));
-//			this.context.put("txtNoBangunan",(String)hHakmilik.get("noBangunan"));
-//			this.context.put("txtNoTingkat",(String)hHakmilik.get("noTingkat"));
-//			this.context.put("txtNoPetak",(String)hHakmilik.get("noPetak"));
-//			this.context.put("txtNoPelan", (String)hHakmilik.get("noPelan"));
-//			this.context.put("txtTempoh", (String)hHakmilik.get("tempoh"));
-//			this.context.put("txtSyarat", (String)hHakmilik.get("syarat"));
-//			this.context.put("txtHakmilikAsal", (String)hHakmilik.get("hakmilikAsal"));
-//			this.context.put("txtNoFailJopa", (String)hHakmilik.get("noFailJopa"));
-//			this.context.put("txtTarafHakmilik", (String)hHakmilik.get("tarafHakmilik"));
-//			this.context.put("txdTarikhLuput", (String)hHakmilik.get("tarikhLuput"));
-//			this.context.put("txtCukaiTerkini", (String)hHakmilik.get("cukaiTerkini"));
-//			this.context.put("txtKegunaanTanah", (String)hHakmilik.get("kegunaanTanah"));
-//			this.context.put("txtLuas", (String)hHakmilik.get("luas"));
-//			this.context.put("txtNoPu", (String)hHakmilik.get("noPu"));
-//			this.context.put("txdTarikhWarta",(String)hHakmilik.get("tarikhWarta"));
-//			this.context.put("txtNoWarta",(String)hHakmilik.get("noWarta"));
-//			this.context.put("txtNoRizab",(String)hHakmilik.get("noRizab"));
-//			this.context.put("txdTarikhRizab",(String)hHakmilik.get("tarikhRizab"));
-//			this.context.put("txtKawasanRizab",(String)hHakmilik.get("kawasanRizab"));
-//			this.context.put("txtNoSyit",(String)hHakmilik.get("noSyit"));
-//			this.context.put("txtSekatan",(String)hHakmilik.get("sekatan"));
-//			this.context.put("txtHakmilikBerikut",(String)hHakmilik.get("hakmilikBerikut"));
-//			this.context.put("socStatus", getParam("socStatus") == "" ? (String)hHakmilik.get("socStatus"):getParam("socStatus"));
-//			this.context.put("txtKemAgenTerkini", getParam("txtKemAgenTerkini") == "" ? (String)hHakmilik.get("catatan"):getParam("txtKemAgenTerkini"));
-//			this.context.put("socTaraf",(String)hHakmilik.get("socTaraf"));
-//			this.context.put("socRizab", (String)hHakmilik.get("socRizab"));
-//			this.context.put("statusRizab", (String)hHakmilik.get("statusRizab"));
-//			this.context.put("txdTarikhKemaskini", (String)hHakmilik.get("tarikhKemaskini"));
-//			this.context.put("txtPegawaiAkhir", (String)hHakmilik.get("userName"));
-//			this.context.put("socLuas",(String)hHakmilik.get("idLuasLama"));
-//			this.context.put("txtLuasLama",(String)hHakmilik.get("luasLama"));
-//			this.context.put("txtLuas",(String)hHakmilik.get("luasConvert"));		
-//			this.context.put("txtNoHakmilikAsal",(String)hHakmilik.get("hakmilikAsal"));		
-//		}
-		
+		}		
 		 // VIEW MAKLUMAT DETAIL HAKMILIK DAN RIZAB BY ID 
 		private String viewModeHakmilikSambungan(HttpSession session,String submit) throws Exception {
-			String idHakmilik = getParam("idHakmilik");
-			myLog.info("idHakmilik :"+idHakmilik);
+			//String idHakmilik = getParam("idHakmilik");
+			//myLog.info("idHakmilik ="+idHakmilik);
 			Vector list =null;
 			
-			list = FrmRekodPendaftaranHakmilikSementaraData.getPaparHakmilikSementaraById(idHakmilik);
+			list = FrmRekodPendaftaranHakmilikSementaraData.getPaparHakmilikSementaraById(idTanah);
 			Hashtable hHakmilik = (Hashtable) list.get(0);
 
 			this.context.put("idHakmilik", (String)hHakmilik.get("idHakmilik"));
@@ -3392,9 +3376,10 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 			this.context.put("txtNoHakmilikAsal",getParam("txtNoHakmilikAsal") == "" ? (String)hHakmilik.get("hakmilikAsal"):getParam("txtNoHakmilikAsal"));
 			this.context.put("txtKemAgenTerkini",getParam("txtKemAgenTerkini") == "" ? (String)hHakmilik.get("catatan"):getParam("txtKemAgenTerkini"));
 			
-			hakmilik = getIHakmilik().getHakmilik(idHakmilik);
+			hakmilik = getIHakmilik().getHakmilik(idTanah);
 
 			return (String)hHakmilik.get("kodJenisHakmilik")+hHakmilik.get("noHakmilik");
+			
 		}	
 		
 		  // VIEW MAKLUMAT DETAIL HAKMILIK DAN RIZAB BY ID 
@@ -3469,11 +3454,11 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		private void kemaskiniMaklumatHakmilik(String idHakmilik) throws Exception {
 			myLog.info("kemaskiniMaklumatHakmilik:="+idHakmilik);
 			isSambungan = false;
-			vector = new Vector();
+			vector = new Vector<Hashtable<String,String>>();
 			vector = FrmRekodPendaftaranHakmilikRizabData.getPaparHakmilikRizabById(idHakmilik);
 			Hashtable hHakmilik = null;
 			if (vector.size() > 0) {
-				hHakmilik = (Hashtable) vector.get(0);
+				hHakmilik = (Hashtable<String,String>) vector.get(0);
 				
 			} else {
 				//throw new Exception("Maklumat Rekod Tidak Lengkap");
@@ -3673,14 +3658,15 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		}		
 
 		// Skrin Tindakan
-		private String kemaskiniSimpanStatusSelesai(String idFail,String idPermohonan
-			,String idSubUrusan,String langkah)throws Exception {
-			try {
-				
-				System.out.println("idFail : "+idFail);
-				System.out.println("idPermohonan : "+idPermohonan);
-				System.out.println("idSubUrusan : "+idSubUrusan);
-				System.out.println("langkah : "+langkah);
+		private String kemaskiniSimpanStatusSelesai(String idFail
+			,String idPermohonan
+			,String idSubUrusan
+			,String langkah) throws Exception {
+			try {				
+//				System.out.println("idFail : "+idFail);
+//				System.out.println("idPermohonan : "+idPermohonan);
+//				System.out.println("idSubUrusan : "+idSubUrusan);
+//				System.out.println("langkah : "+langkah);
 				
 				subUrusanStatusFail = new Tblrujsuburusanstatusfail();
 				subUrusanStatusFail.setIdPermohonan(Long.parseLong(idPermohonan));
@@ -3701,9 +3687,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		
 		}	
 		
-		
-		private String DBgetIdPermohonanByIdHakmilik(String idHakmilik){
-			
+		private String DBgetIdPermohonanByIdHakmilik(String idHakmilik){			
 			Db db = null;
 			String sql = "";
 			String idPermohonan = "";
@@ -3799,5 +3783,4 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		}
 		
 		
-
 }	

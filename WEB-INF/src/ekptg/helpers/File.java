@@ -5,8 +5,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpSession;
+
 import lebah.db.Db;
 import lebah.db.DbException;
+import lebah.portal.velocity.VTemplate;
 
 import org.apache.log4j.Logger;
 
@@ -14,7 +17,7 @@ import org.apache.log4j.Logger;
 public class File implements Serializable  {
 	
 	public static final String SEQ_TABLE = "TBLRUJSEQFAIL";
-	static Logger myLogger = Logger.getLogger(File.class);
+	static Logger myLogger = Logger.getLogger(ekptg.helpers.File.class);
 
 	public static void main (String args[]) {
 		try {
@@ -194,6 +197,76 @@ public class File implements Serializable  {
 		
 		return seqno;
 	}
+	
+	public static synchronized int getSeqNoPPK(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
+			   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun) throws DbException  {
+		return getSeqNoPPK(session,id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,tahun,0);
+
+	}
+	
+	public static synchronized int getSeqNoPPK(HttpSession session,int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
+			   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan) throws DbException  {
+		return getSeqNoPPK(session,new Db(),id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,tahun,bulan);
+
+	}
+	
+	//razman add	
+	public static synchronized int getSeqNoPPK(HttpSession session,Db db,int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
+			   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan ) 
+			throws DbException  {
+			
+			myLogger.debug("File getSeqNoPPK SEQNO:"+id_seksyen+"-"+id_urusan);
+			
+			//Db db = null;
+			//Connection conn = null;
+			File f = null;
+			StringBuffer sb = new StringBuffer();
+			int seqno=0;
+			try {
+			//db = new Db();
+			//conn = db.getConnection();
+			//conn.setAutoCommit(false);
+			
+			f = new File();
+			boolean found = false;
+			
+			sb.append("SELECT NO_TURUTAN,NO_TURUTAN_JILID,NO_TURUTAN_SUBJAKET FROM "+SEQ_TABLE+" WHERE ");
+			sb.append("id_seksyen=" +id_seksyen);
+			sb.append(" AND id_urusan=" +id_urusan);
+			sb.append(" AND id_kementerian=" +id_kementerian);
+			sb.append(" AND id_negeri=" +id_negeri);
+			sb.append(" AND id_daerah=" +id_daerah);
+			if (tahun > 0) sb.append(" AND tahun=" +tahun);
+			if (bulan > 0) sb.append(" AND bulan=" +bulan);
+			
+			myLogger.info(">>>>>>>>>> getSeqNoPPK :: "+sb.toString());
+			ResultSet rs = db.getStatement().executeQuery(sb.toString()); 
+			
+			if (rs.next()) found = true;
+			if (found) {
+			f.increaseSeqPPK(session, db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,getNoJilid,getNoSubjaket,bulan,tahun);     
+			} else {
+			f.addNew(db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,tahun,bulan);	        	  
+			}
+			ResultSet rs2 = db.getStatement().executeQuery(sb.toString());
+			if ( rs2.next() ) {
+			if (getNoJilid) {
+				  seqno = rs2.getInt("NO_TURUTAN_JILID");
+			}else if (getNoSubjaket) {
+				  seqno = rs2.getInt("NO_TURUTAN_SUBJAKET");
+			}
+			else {
+				  seqno = rs2.getInt("NO_TURUTAN");
+			}
+			}
+			
+			}  catch (Exception ex) {
+			throw new DbException(ex.getMessage() + ": " + sb.toString());
+			}
+			
+			return seqno;
+}
+
 
 	public static synchronized int getSeqNoJilid(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
 			   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun) throws DbException  {
@@ -591,11 +664,16 @@ public class File implements Serializable  {
 		sb.append("id_urusan = '"+id_urusan+"' AND ");
 		sb.append("id_kementerian = '"+id_kementerian+"' AND ");
 		sb.append("id_negeri = '"+id_negeri+"'");
+		
 		sb.append(" AND id_daerah = '"+id_daerah+"'");
 		try {
 			//db = new Db();
 			try{
 			db.getStatement().executeUpdate(sb.toString());
+			
+			AuditTrail at = new AuditTrail();
+			at.logActivity(id_urusan+"","","2",null,null,"","increaseSeq CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ");
+			
 			} catch (SQLException x) {x.printStackTrace();}
 		}catch (Exception ex) {
 			throw new DbException(ex.getMessage() + ": " + sb.toString());
@@ -604,6 +682,57 @@ public class File implements Serializable  {
 //		if (db != null) db.close();
 //		}
 	}
+	
+	AuditTrail at = new AuditTrail();
+	public void increaseSeqPPK(HttpSession session, Db db,int id_seksyen,int id_urusan,int id_kementerian,
+			   int id_negeri,int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int bulan,int tahun) throws Exception  {
+
+		//Db db = null;
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("UPDATE "+SEQ_TABLE+"  SET "); 
+		if (getNoJilid) {
+			sb.append("no_turutan_jilid=no_turutan_jilid+1 ");
+		} else if (getNoSubjaket) {
+			sb.append("no_turutan_subjaket=no_turutan_subjaket+1 ");
+		} else {
+			sb.append("no_turutan=(SELECT NEW_TURUTAN FROM ( "+
+					" SELECT M.NO_TURUTAN AS CURRENT_TURUTAN, M.NO_FAIL AS NO_FAIL_SEQ, CASE WHEN F.NO_FAIL IS NOT NULL THEN M.NO_TURUTAN + 1 ELSE M.NO_TURUTAN END AS NEW_TURUTAN "+
+					" FROM TBLPFDFAIL F, (SELECT NO_TURUTAN, 'JKPTG/PK/' ||  N.KOD_NEGERI || '/' || D.KOD_DAERAH || '/' || TRIM(TO_CHAR(RS.NO_TURUTAN,'0000')) || '/' || "+tahun+" AS NO_FAIL "+
+					" FROM TBLRUJSEQFAIL RS, TBLRUJNEGERI N, TBLRUJDAERAH D WHERE RS.ID_NEGERI = N.ID_NEGERI(+) AND RS.ID_DAERAH = D.ID_DAERAH(+) AND RS.ID_KEMENTERIAN = 0 "+
+					" AND RS.ID_URUSAN = 382 AND RS.ID_SEKSYEN = 2 AND RS.BULAN = 0 AND RS.ID_DAERAH = "+id_daerah+" AND RS.ID_NEGERI = "+id_negeri+" AND RS.TAHUN = "+tahun+") M WHERE M.NO_FAIL = F.NO_FAIL(+) "+
+					" ) WHERE ROWNUM = 1) ");
+		}
+		sb.append(" WHERE ");
+		sb.append("id_seksyen = '"+id_seksyen+"' AND ");
+		sb.append("id_urusan = '"+id_urusan+"' AND ");
+		sb.append("id_kementerian = '"+id_kementerian+"' AND ");
+		sb.append("id_negeri = '"+id_negeri+"'");
+		sb.append(" AND tahun=" +tahun);
+		sb.append(" AND id_daerah = '"+id_daerah+"'");
+		try {
+			//db = new Db();
+			try{
+			myLogger.info("UPDATE SEQ BARU >>>>>>>>>>>>>>>>>>>>>>>> "+sb.toString());
+			db.getStatement().executeUpdate(sb.toString());
+						
+			//at.logActivity("","2",null,null,"","increaseSeqPPK CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ",db);
+			at.logActivity(id_urusan+"","","2",null,session,"","increaseSeqPPK CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ",db); 
+			
+			} catch (SQLException x) {x.printStackTrace();}
+		}catch (Exception ex) {
+			throw new DbException(ex.getMessage() + ": " + sb.toString());
+		}
+		
+		
+		
+//		finally {
+//		if (db != null) db.close();
+//		}
+	}
+	
+	
+	
 	public void increaseSeqJilid(Db db,int id_fail,boolean getNoJilid) throws DbException  {
 		
 
@@ -718,6 +847,37 @@ public class File implements Serializable  {
 		if (db != null) db.close();
 		}
 	}
-
+	public static synchronized String getIDFailByPermohonan(String idPermohonan) throws DbException  {
+		Db db = null;
+		Connection conn = null;
+		String noFail = "";
+		StringBuffer sb = new StringBuffer();
+		try {
+			db = new Db();
+			conn = db.getConnection();
+					
+			sb.append("SELECT F.ID_FAIL ");
+			sb.append("FROM TBLPFDFAIL F, TBLPERMOHONAN P WHERE ");
+			sb.append("P.ID_FAIL=F.ID_FAIL AND P.ID_PERMOHONAN = " +idPermohonan);	
+			myLogger.info("getIDFailByPermohonan:sql="+sb.toString());
+			ResultSet rs = db.getStatement().executeQuery(sb.toString()); 
+			
+			if ( rs.next() ) {
+				noFail= rs.getString("ID_FAIL");   	  
+	        }
+			
+		} catch (Exception ex) {
+		try {
+			conn.rollback(); 
+		} catch (SQLException localSQLException1) {}
+		throw new DbException(ex.getMessage() + ": " + sb.toString());
+		}finally {
+			if (db != null) db.close();
+		}		
+		return noFail;
+		
+	}
+	
+	
 
 }

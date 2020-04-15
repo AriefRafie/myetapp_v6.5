@@ -8332,37 +8332,35 @@ System.out.println("TARIKH_SURAT_AKUAN=="+TARIKH_SURAT_AKUAN);
 
 	}
 
-//IL start
-public String addHtaamUpload(Hashtable data) throws Exception {
+	//IL start
+	public String addHtaamUpload(Hashtable data) throws Exception {
 		Connection conn = null;
 		Db db = null;
 		String sql = "";
 		Long idHtaRet = null;
 
 		try {
-
+			int daerah = Integer.parseInt(String.valueOf(data.get("daerah")));
+			int jenishakmilik = Integer.parseInt(String.valueOf(data.get("jenishakmilik")));
+			int jenisluas = Integer.parseInt(String.valueOf(data.get("jenisluas")));
+			int kategori = Integer.parseInt(String.valueOf(data.get("kategori")));
+			int mukim = Integer.parseInt(String.valueOf(data.get("mukim")));
+			int negeri = Integer.parseInt(String.valueOf(data.get("negeri")));
+			
 			String noHakmilik = (String) data.get("noHakmilik");
 			String idsimati = (String) data.get("idSimati");
 			String id_Permohonansimati = (String) data.get("id_Permohonansimati");
 			String nopt = (String) data.get("nopt");
 			String nilai_Hta_memohon = (String) data.get("nilai_Hta_memohon");
 			String nilai_Hta_mati = (String) data.get("nilai_Hta_mati");
-			int kategori = (Integer) data.get("kategori");
-			int jenishakmilik = (Integer) data.get("jenishakmilik");
 			String pemilikan = (String) data.get("pemilikan");
-			int negeri = (Integer) data.get("negeri");
-			int daerah = (Integer) data.get("daerah");
-			int mukim = (Integer) data.get("mukim");
 			String alamat_hta1 = (String) data.get("alamat_hta1");
 			String alamat_hta2 = (String) data.get("alamat_hta2");
 			String alamat_hta3 = (String) data.get("alamat_hta3");
 			String poskod_hta = (String) data.get("poskod_hta");
-			
-			
-			System.out.println("txtBandarHartaHtaamX2----"+(String) data.get("txtBandarHartaHtaamX2"));
-			String bandar_hta = (String) data.get("id_bandarhta");
-			
-			System.out.println("bandar_hta---"+bandar_hta);
+			//System.out.println("txtBandarHartaHtaamX2----"+(String) data.get("txtBandarHartaHtaamX2"));
+			String bandar_hta = (String) data.get("id_bandarhta");			
+			//System.out.println("bandar_hta---"+bandar_hta);
 			String luashmp = (String) data.get("luashmp");
 			String luasasal = (String) data.get("luasasal");
 			String nopajakan = (String) data.get("nopajakan");
@@ -8370,14 +8368,11 @@ public String addHtaamUpload(Hashtable data) throws Exception {
 			String basimati = (String) data.get("basimati");
 			String bbsimati = (String) data.get("bbsimati");
 			String tanggungan = (String) data.get("tanggungan");
-			int jenisluas = (Integer) data.get("jenisluas");
 			String catatan = (String) data.get("catatan");
 			String noperserahan = (String) data.get("noperserahan");
 			String id_Masuk = (String) data.get("id_Masuk");
 			String tarikh_Masuk = (String) data.get("tarikh_Masuk");
-
 			String FLAG_DAFTAR = (String) data.get("FLAG_DAFTAR");
-
 			// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
 			String sekatan = (String) data.get("sekatan");
 			String syaratNyata = (String) data.get("syaratNyata");
@@ -8439,8 +8434,7 @@ public String addHtaamUpload(Hashtable data) throws Exception {
 			}
 			if(!bandar_hta.equals("")){
 				r.add("bandar_hta", bandar_hta);
-			}
-		
+			}		
 			
 			r.add("id_bandarhta", bandar_hta);
 			r.add("luas_Hmp", luashmp);
@@ -8466,9 +8460,7 @@ public String addHtaamUpload(Hashtable data) throws Exception {
 			r.add("flag_pa", "T");
 			r.add("flag_pt", "T");
 			r.add("flag_selesai", "T");
-
 			r.add("FLAG_DAFTAR", FLAG_DAFTAR);
-
 			// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
 			r.add("SEKATAN", sekatan);
 			r.add("SYARAT_NYATA", syaratNyata);
@@ -8565,17 +8557,18 @@ public String addHtaamUpload(Hashtable data) throws Exception {
 			conn.commit();
 
 			idHtaRet = id_hta;
+			
 		} catch (Exception re) {
 			myLogger.error("Error: ", re);
 			throw re;
+			
 		}finally {
 			if (db != null)
 				db.close();
 		}
-
 		return idHtaRet.toString();
 	}
-//end IL
+	//end IL
 
 	public void updateHtaam(Hashtable data) throws Exception {
 		Db db = null;
