@@ -2044,23 +2044,23 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 </body>
 
 <script>
-function paparLampiran(id_){
-	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
-    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener=document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}	
+  function paparLampiran(id_){
+  	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
+      var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+      if ((document.window != null) && (!hWnd.opener))
+  	hWnd.opener=document.window;
+      if (hWnd.focus != null) hWnd.focus();
+  }	
 
-function semakLampiran(v_t){
-	alert('Semak Lampiran');
-	document.f1.method = "POST";
-	document.f1.command.value="getlampiran";
-	document.f1.eventStatus.value="1";
-	document.f1.action = "";
-	document.f1.v_tab.value = v_t;
-	document.f1.submit();
-}
+  function semakLampiran(v_t){
+  	alert('Semak Lampiran');
+  	document.f1.method = "POST";
+  	document.f1.command.value="getlampiran";
+  	document.f1.eventStatus.value="1";
+  	document.f1.action = "";
+  	document.f1.v_tab.value = v_t;
+  	document.f1.submit();
+  }
 
 	function getRujukan(ic,idlama,jenis,lain){
 		var rujukan ='';
@@ -2072,24 +2072,6 @@ function semakLampiran(v_t){
 		
 	}
 
-function lampiran(rujukanSimati,isMyID) {
-	ic = document.f1.check_no_kp_baru_simati.value;
-	idlama = document.f1.check_no_kp_lama_simati.value;
-	jenis = document.f1.socJenisKPLainSimati.value;
-	lain = document.f1.check_no_kp_lain_simati.value;
-	rujukanSimati = getRujukan(ic,idlama,jenis,lain);
-	
-<<<<<<< app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
- 	function getRujukan(ic,idlama,jenis,lain){
- 		var rujukan ='';
- 		rujukan = ic != ''?ic:'-';
- 		rujukan += idlama != ''?idlama:'-';
- 		rujukan += jenis != 0?jenis:'-';
- 		rujukan += lain != ''?lain:'-';
- 		return rujukan;
- 		
- 	}
- 
 	function lampiran(rujukanSimati,isMyID) {
 		ic = document.f1.check_no_kp_baru_simati.value;
 		idlama = document.f1.check_no_kp_lama_simati.value;
@@ -2116,1593 +2098,826 @@ function lampiran(rujukanSimati,isMyID) {
 		var w =1024;
 		var h = 800;
 	    var left = (screen.width/2)-(w/2);
-=======
-	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
-   	if(isMyID == 'cod')
-   		url +="&jenisdokumen=cod";
-   	else
-   		url +="&jenisdokumen=myid";
-		
-	//
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-			 hWnd.focus(); /**/
-    //
-    var title = 'Lampiran';
-	  var w =1024;
-	  var h = 800;
-    var left = (screen.width/2)-(w/2);
->>>>>>> app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
 
-}
+	}
 
 //selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');
-function Batal() {
+  function Batal() {
+    input_box = confirm("Adakah anda pasti?");
+    if (input_box == true) {
+      document.f1.method = "POST";
+      document.f1.command.value="Kemaskini_daftar_pemohon";
+    	document.f1.idFlag.value="1";
+    	document.f1.flagno.value="2";
+    	document.f1.action = "";
+    	document.f1.submit();
+    	
+    }else{
+    	return;
+    }
 
-input_box = confirm("Adakah anda pasti?");
-		if (input_box == true) {
-	document.f1.method = "POST";
-    document.f1.command.value="Kemaskini_daftar_pemohon";
-	document.f1.idFlag.value="1";
-	document.f1.flagno.value="2";
-	document.f1.action = "";
-	document.f1.submit();
-	}
-	else
-	{
-	return;
-	}
-}
-function kembalix() {
-	document.f1.method = "POST";
-	document.f1.command.value="papar";
-	document.f1.action = "";
-	document.f1.submit();
-}
-function seterusnya_tab() {
-	document.f1.method = "POST";
-	//document.f1.command.value="seterusnya";
-	document.f1.command.value="Simati";
-	document.f1.mode.value="Simatiview";
-	document.f1.action = "";
-	document.f1.submit();
-}
-function Kemaskini() {
-		//document.f1.method = "POST";
-		document.f1.command.value="Kemaskini_daftar_pemohon";
-		document.f1.action = "";
-		document.f1.submit();
-}
+  }
 
-function checkSumaICsimati(command)
-{
-	if(command == "getBandar")
-	{
-		check_pengenalan_simati_1();
-		check_pengenalan_simati_2();
-		check_pengenalan_simati_3();
-	}
-}
+  function kembalix() {
+  	document.f1.method = "POST";
+  	document.f1.command.value="papar";
+  	document.f1.action = "";
+  	document.f1.submit();
+  
+  }
 
-function Simpan(){
-	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
-	var em = document.f1.txtEmelPemohon.value;
-		
-	var str1  = document.getElementById("txtTarikhMati").value;
-	
-	var dt1   = parseInt(str1.substring(0,2),10);
-	var mon1  = parseInt(str1.substring(3,5),10)-1;
-	var yr1   = parseInt(str1.substring(6,10),10);
+  function seterusnya_tab() {
+  	document.f1.method = "POST";
+  	//document.f1.command.value="seterusnya";
+  	document.f1.command.value="Simati";
+  	document.f1.mode.value="Simatiview";
+  	document.f1.action = "";
+  	document.f1.submit();
+  }
 
-	var currentTime = new Date();
-	var date1 = new Date(yr1, mon1, dt1);
-	
-	if (document.f1.taraf_penting.value == "0" || document.f1.taraf_penting.value == "") {
-		alert("Sila pilih Taraf Kepentingan");
-		document.f1.taraf_penting.focus();
-	}
-	else if (document.f1.taraf_penting.value == "6" && document.f1.jenis_pej1.value == "") {
-		alert("Sila pilih Amanah Raya");
-		document.f1.jenis_pej1.focus();
-	}
-	else if (document.f1.taraf_penting.value == "8" && document.f1.jenis_pej2.value == "") {
-		alert("Sila pilih Baitulmal");
-		document.f1.jenis_pej2.focus();
-	}
-	else if (document.f1.taraf_penting.value == "1" && document.f1.socSaudaraWaris.value == "") {
-		alert("Sila pilih Talian Persaudaraan Dengan Simati");
-		document.f1.socSaudaraWaris.focus();
-	}
-	else if ((document.f1.txtNoKPBaruPemohon1.value=="" && document.f1.txtNoKPBaruPemohon2.value=="" && document.f1.txtNoKPBaruPemohon3.value=="" && document.f1.txtNoKPLamaPemohon.value=="" && document.f1.txtNoKPLainPemohon.value=="") && (document.f1.jenis_pemohon.value == "2" )) {
-		alert("Sila masukkan salah satu MyID Pemohon");
-		document.f1.txtNoKPBaruPemohon1.focus();
-	}
-	else if ((document.f1.socJenisKPLainPemohon.value!="0" && document.f1.txtNoKPLainPemohon.value=="") && (document.f1.jenis_pemohon.value == "2" )) {
-		alert("Sila masukkan MyID Lain Pemohon");
-		document.f1.txtNoKPLainPemohon.focus();
-	}
-	else if (document.f1.txtNamaPemohon[0] != 'null' && document.f1.txtNamaPemohon[0].value=="" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") ) {
-		alert("Sila masukkan nama pemohon.");
-		document.f1.txtNamaPemohon[0].focus();
-	}
-	else if (document.f1.txtAlamat1[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
-		alert("Sila masukkan alamat tetap");
-		document.f1.txtAlamat1.focus();
-	}
-	else if (document.f1.txtPoskod[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
-		alert("Sila masukkan poskod");
-		document.f1.txtPoskod.focus();
-	}
-	else if (document.f1.socNegeri[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
-		alert("Sila pilih negeri");
-		document.f1.socNegeri.focus();
-	}
-	else if (document.f1.socBandar[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
-		alert("Sila pilih bandar");
-		document.f1.socBandar.focus();
-	}
-	else if (document.f1.txtPoskod[0] != 'null' && document.f1.txtPoskod[0].value != "" && document.f1.txtPoskod[0].value.length < 5 && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") ) {
-		alert("Sila masukkan nombor poskod dengan lengkapnya");
-		document.f1.txtPoskod[0].focus();
-	}
-	else if (document.f1.txtPoskod[1] != 'null' && document.f1.txtPoskod[1].value != "" && document.f1.txtPoskod[1].value.length < 5 && (document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == "8") ) {
-		alert("Sila masukkan nombor poskod dengan lengkapnya");
-		document.f1.txtPoskod[1].focus();
-	}
-	
-	else if (document.f1.no_hp[0].value == "" && (document.f1.no_hp.value != "6" && document.f1.taraf_penting.value != "8")){
-		alert("Sila masukkan No. Tel (HP)");
-		document.f1.no_hp.focus();
-	}
-	
-	else if (document.f1.txtEmelPemohon[0].value == "" && (document.f1.txtEmelPemohon.value != "6" && document.f1.taraf_penting.value != "8")){
-		alert("Sila masukkan Email");
-		document.f1.txtEmelPemohon.focus();
-	}
-	
-	
-	else if(document.f1.no_kp1.value == 'yes')
-	{
-		alert("No kp baru simati telah wujud!");	 
-	} 
-	 else if(document.f1.no_kp2.value == 'yes')
-	{
-		alert("No kp lama simati telah wujud!");	 
-	}
-	 else if(document.f1.no_kp3.value == 'yes')
-	{
-		alert("No kp lain simati telah wujud!");	 
-	}
-		
-	
-	else if (isNaN(document.f1.txtNoKPBaruSimati1.value)) {
-		alert("Sila masukkan nombor sahaja");
-		document.f1.txtNoKPBaruSimati1.focus();
-	}
-	else if (isNaN(document.f1.txtNoKPBaruSimati2.value)) {
-		alert("Sila masukkan nombor sahaja");
-		document.f1.txtNoKPBaruSimati2.focus();
-	}
-	else if (isNaN(document.f1.txtNoKPBaruSimati3.value)) {
-		alert("Sila masukkan nombor sahaja");
-		document.f1.txtNoKPBaruSimati3.focus();
-	}
-	else if (document.f1.txtNoKPBaruSimati1.value =="" && document.f1.txtNoKPBaruSimati2.value=="" && document.f1.txtNoKPBaruSimati3.value=="" && document.f1.txtNoKPLamaSimati.value=="" && document.f1.socJenisKPLainSimati.value=="0" && document.f1.txtNoKPLainSimati.value=="") {
-		alert("Sila masukkan salah satu MyID Simati");
-	}
-	
-	
-	
-	else if (document.f1.txtNoKPBaruSimati1.value !="" && document.f1.txtNoKPBaruSimati1.value.length<6) {
-		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
-		document.f1.txtNoKPBaruSimati1.focus();
-	}
-	else if (document.f1.txtNoKPBaruSimati2.value !="" && document.f1.txtNoKPBaruSimati2.value.length<2) {
-		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
-		document.f1.txtNoKPBaruSimati2.focus();
-	}
-	else if (document.f1.txtNoKPBaruSimati3.value !="" && document.f1.txtNoKPBaruSimati3.value.length<4) {
-		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
-		document.f1.txtNoKPBaruSimati3.focus();
-	}
-	else if (document.f1.txtNoKPBaruSimati1.value !="" && document.f1.txtNoKPBaruSimati2.value=="" && document.f1.txtNoKPBaruSimati3.value=="") {
-		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
-		document.f1.txtNoKPBaruSimati2.focus();
-	}
-	else if (document.f1.txtNoKPBaruSimati1.value !="" && document.f1.txtNoKPBaruSimati2.value!="" && document.f1.txtNoKPBaruSimati3.value=="") {
-		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
-		document.f1.txtNoKPBaruSimati3.focus();
-	}
-	else if (document.f1.txtNoKPBaruSimati1.value !="" && document.f1.txtNoKPBaruSimati2.value=="" && document.f1.txtNoKPBaruSimati3.value!="") {
-		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
-		document.f1.txtNoKPBaruSimati2.focus();
-	}
-	else if (document.f1.txtNoKPBaruSimati2.value!="" && document.f1.txtNoKPBaruSimati1.value=="" && document.f1.txtNoKPBaruSimati3.value!="") {
-		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
-		document.f1.txtNoKPBaruSimati1.focus();
-	}
-	else if (document.f1.txtNoKPBaruSimati2.value!="" && document.f1.txtNoKPBaruSimati1.value=="" &&  document.f1.txtNoKPBaruSimati3.value=="") {
-		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
-		document.f1.txtNoKPBaruSimati1.focus();
-	}	
-	else if (document.f1.txtNoKPBaruSimati1.value=="" &&  document.f1.txtNoKPBaruSimati2.value=="" && document.f1.txtNoKPBaruSimati3.value!="") {
-		alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
-		document.f1.txtNoKPBaruSimati1.focus();
-	}
-	else if(document.f1.txtNoKPLamaSimati.value != "" && document.f1.txtNoKPLamaSimati.value != "TDK" && document.f1.txtNoKPLamaSimati.value.length<7)
-	{
-		alert("Sila lengkapkan MyID Lama Simati");
-		document.f1.txtNoKPLamaSimati.focus();	
-	}
-	else if ((document.f1.socJenisKPLainSimati.value!="0"  && document.f1.socJenisKPLainSimati.value!="") && document.f1.txtNoKPLainSimati.value=="") {
-		alert("Sila masukkan MyID Lain Simati");
-		document.f1.txtNoKPLainSimati.focus();
-	}
-	else if (document.f1.txtNoKPLainSimati.value!="" && document.f1.socJenisKPLainSimati.value=="0") {
-		alert("Sila pilih jenis MyID Lain Simati");
-	}
-	
-	
-	else if (document.f1.txtNamaSimati != 'null' && document.f1.txtNamaSimati.value=="" 
-			//&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
-			) {
-		alert("Sila masukkan nama simati ");
-		document.f1.txtNamaSimati.focus();
-	}
-	else if (document.f1.txtTarikhMati != 'null' && document.f1.txtTarikhMati.value=="" 
-			//&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
-			) {
-		alert("Sila masukkan tarikh mati");
-		document.f1.txtTarikhMati.focus();
-	}
-	else if (date1 > currentTime){
-		alert("Sila pastikan tarikh mati tidak melebihi dari tarikh hari ini.");
-		document.f1.txtTarikhMati.focus();
-<<<<<<< app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
-	
-//   else if(document.f1.uploadmyid != 'null' && document.f1.uploadmyid.value==""){
-//   	  alert('Sila muatnaik MyID simati.');
-//       document.f1.uploadmyid.focus(); 
-//    }
-//   else if(document.f1.uploadsijil != 'null' && document.f1.uploadsijil.value==""){
-//    	  alert('Sila muatnaik sijil simati.');
-//       document.f1.uploadsijil.focus();
-// 	}
-	
-		}else{
-			input_box = confirm("Adakah anda pasti?");
-			if (input_box == true) {
-				document.f1.method = "POST";
-				document.f1.command.value="Simpanx";
-				document.f1.eventStatus.value="1";
-				document.f1.action = "";
-				document.f1.submit();
-			
-			}
-	
-=======
-	}	
-  //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
-	 // alert('Sila muatnaik MyID simati.');
-	  //document.f1.fileupload.focus(); 
-	//}
-  //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
-	//  alert('Sila muatnaik Sijil Mati.');
-//  document.f1.fileupload.focus(); 
-	//}	
-	else{
-		input_box = confirm("Adakah anda pasti?");
-		if (input_box == true) {
-		document.f1.method = "POST";
-		document.f1.command.value="Simpanx";
-		document.f1.eventStatus.value="1";
-		document.f1.action = "";
-		document.f1.submit();
->>>>>>> app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
-		}
+  function Kemaskini() {
+  		//document.f1.method = "POST";
+  		document.f1.command.value="Kemaskini_daftar_pemohon";
+  		document.f1.action = "";
+  		document.f1.submit();
+  }
 
-	}
-<<<<<<< app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
-=======
-	
-}
->>>>>>> app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp
+  function checkSumaICsimati(command){
+  	if(command == "getBandar"){
+  		check_pengenalan_simati_1();
+  		check_pengenalan_simati_2();
+  		check_pengenalan_simati_3();
 
+  	}
 
+  }
 
-function kp1()
-{
+//Simpan
+ function Simpan(){
+    var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    var em = document.f1.txtEmelPemohon.value;
+      
+    var str1  = document.getElementById("txtTarikhMati").value;
+    
+    var dt1   = parseInt(str1.substring(0,2),10);
+    var mon1  = parseInt(str1.substring(3,5),10)-1;
+    var yr1   = parseInt(str1.substring(6,10),10);
 
-document.f1.kp1.value = document.f1.txtNoKPBaruSimati1.value;
-}
-function kp2()
-{
+    var currentTime = new Date();
+    var date1 = new Date(yr1, mon1, dt1);
+    
+    if (document.f1.taraf_penting.value == "0" || document.f1.taraf_penting.value == "") {
+      alert("Sila pilih Taraf Kepentingan");
+      document.f1.taraf_penting.focus();
+    }
+    else if (document.f1.taraf_penting.value == "6" && document.f1.jenis_pej1.value == "") {
+      alert("Sila pilih Amanah Raya");
+      document.f1.jenis_pej1.focus();
+    }
+    else if (document.f1.taraf_penting.value == "8" && document.f1.jenis_pej2.value == "") {
+      alert("Sila pilih Baitulmal");
+      document.f1.jenis_pej2.focus();
+    }
+    else if (document.f1.taraf_penting.value == "1" && document.f1.socSaudaraWaris.value == "") {
+      alert("Sila pilih Talian Persaudaraan Dengan Simati");
+      document.f1.socSaudaraWaris.focus();
+    }
+    else if ((document.f1.txtNoKPBaruPemohon1.value=="" && document.f1.txtNoKPBaruPemohon2.value=="" && document.f1.txtNoKPBaruPemohon3.value=="" && document.f1.txtNoKPLamaPemohon.value=="" && document.f1.txtNoKPLainPemohon.value=="") && (document.f1.jenis_pemohon.value == "2" )) {
+      alert("Sila masukkan salah satu MyID Pemohon");
+      document.f1.txtNoKPBaruPemohon1.focus();
+    }
+    else if ((document.f1.socJenisKPLainPemohon.value!="0" && document.f1.txtNoKPLainPemohon.value=="") && (document.f1.jenis_pemohon.value == "2" )) {
+      alert("Sila masukkan MyID Lain Pemohon");
+      document.f1.txtNoKPLainPemohon.focus();
+    }
+    else if (document.f1.txtNamaPemohon[0] != 'null' && document.f1.txtNamaPemohon[0].value=="" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") ) {
+      alert("Sila masukkan nama pemohon.");
+      document.f1.txtNamaPemohon[0].focus();
+    }
+    else if (document.f1.txtAlamat1[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
+      alert("Sila masukkan alamat tetap");
+      document.f1.txtAlamat1.focus();
+    }
+    else if (document.f1.txtPoskod[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
+      alert("Sila masukkan poskod");
+      document.f1.txtPoskod.focus();
+    }
+    else if (document.f1.socNegeri[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
+      alert("Sila pilih negeri");
+      document.f1.socNegeri.focus();
+    }
+    else if (document.f1.socBandar[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
+      alert("Sila pilih bandar");
+      document.f1.socBandar.focus();
+    }
+    else if (document.f1.txtPoskod[0] != 'null' && document.f1.txtPoskod[0].value != "" && document.f1.txtPoskod[0].value.length < 5 && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") ) {
+      alert("Sila masukkan nombor poskod dengan lengkapnya");
+      document.f1.txtPoskod[0].focus();
+    }
+    else if (document.f1.txtPoskod[1] != 'null' && document.f1.txtPoskod[1].value != "" && document.f1.txtPoskod[1].value.length < 5 && (document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == "8") ) {
+      alert("Sila masukkan nombor poskod dengan lengkapnya");
+      document.f1.txtPoskod[1].focus();
+    }
+    
+    else if (document.f1.no_hp[0].value == "" && (document.f1.no_hp.value != "6" && document.f1.taraf_penting.value != "8")){
+      alert("Sila masukkan No. Tel (HP)");
+      document.f1.no_hp.focus();
+    }
+    
+    else if (document.f1.txtEmelPemohon[0].value == "" && (document.f1.txtEmelPemohon.value != "6" && document.f1.taraf_penting.value != "8")){
+      alert("Sila masukkan Email");
+      document.f1.txtEmelPemohon.focus();
+    }
+    
+    
+    else if(document.f1.no_kp1.value == 'yes')
+    {
+      alert("No kp baru simati telah wujud!");   
+    } 
+     else if(document.f1.no_kp2.value == 'yes')
+    {
+      alert("No kp lama simati telah wujud!");   
+    }
+     else if(document.f1.no_kp3.value == 'yes')
+    {
+      alert("No kp lain simati telah wujud!");   
+    }
+      
+    
+    else if (isNaN(document.f1.txtNoKPBaruSimati1.value)) {
+      alert("Sila masukkan nombor sahaja");
+      document.f1.txtNoKPBaruSimati1.focus();
+    }
+    else if (isNaN(document.f1.txtNoKPBaruSimati2.value)) {
+      alert("Sila masukkan nombor sahaja");
+      document.f1.txtNoKPBaruSimati2.focus();
+    }
+    else if (isNaN(document.f1.txtNoKPBaruSimati3.value)) {
+      alert("Sila masukkan nombor sahaja");
+      document.f1.txtNoKPBaruSimati3.focus();
+    }
+    else if (document.f1.txtNoKPBaruSimati1.value =="" && document.f1.txtNoKPBaruSimati2.value=="" && document.f1.txtNoKPBaruSimati3.value=="" && document.f1.txtNoKPLamaSimati.value=="" && document.f1.socJenisKPLainSimati.value=="0" && document.f1.txtNoKPLainSimati.value=="") {
+      alert("Sila masukkan salah satu MyID Simati");
+    }
+    
+    
+    
+    else if (document.f1.txtNoKPBaruSimati1.value !="" && document.f1.txtNoKPBaruSimati1.value.length<6) {
+      alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+      document.f1.txtNoKPBaruSimati1.focus();
+    }
+    else if (document.f1.txtNoKPBaruSimati2.value !="" && document.f1.txtNoKPBaruSimati2.value.length<2) {
+      alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+      document.f1.txtNoKPBaruSimati2.focus();
+    }
+    else if (document.f1.txtNoKPBaruSimati3.value !="" && document.f1.txtNoKPBaruSimati3.value.length<4) {
+      alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+      document.f1.txtNoKPBaruSimati3.focus();
+    }
+    else if (document.f1.txtNoKPBaruSimati1.value !="" && document.f1.txtNoKPBaruSimati2.value=="" && document.f1.txtNoKPBaruSimati3.value=="") {
+      alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+      document.f1.txtNoKPBaruSimati2.focus();
+    }
+    else if (document.f1.txtNoKPBaruSimati1.value !="" && document.f1.txtNoKPBaruSimati2.value!="" && document.f1.txtNoKPBaruSimati3.value=="") {
+      alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+      document.f1.txtNoKPBaruSimati3.focus();
+    }
+    else if (document.f1.txtNoKPBaruSimati1.value !="" && document.f1.txtNoKPBaruSimati2.value=="" && document.f1.txtNoKPBaruSimati3.value!="") {
+      alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+      document.f1.txtNoKPBaruSimati2.focus();
+    }
+    else if (document.f1.txtNoKPBaruSimati2.value!="" && document.f1.txtNoKPBaruSimati1.value=="" && document.f1.txtNoKPBaruSimati3.value!="") {
+      alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+      document.f1.txtNoKPBaruSimati1.focus();
+    }
+    else if (document.f1.txtNoKPBaruSimati2.value!="" && document.f1.txtNoKPBaruSimati1.value=="" &&  document.f1.txtNoKPBaruSimati3.value=="") {
+      alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+      document.f1.txtNoKPBaruSimati1.focus();
+    } 
+    else if (document.f1.txtNoKPBaruSimati1.value=="" &&  document.f1.txtNoKPBaruSimati2.value=="" && document.f1.txtNoKPBaruSimati3.value!="") {
+      alert("Sila masukkan MyID Baru Simati dengan lengkapnya");
+      document.f1.txtNoKPBaruSimati1.focus();
+    }
+    else if(document.f1.txtNoKPLamaSimati.value != "" && document.f1.txtNoKPLamaSimati.value != "TDK" && document.f1.txtNoKPLamaSimati.value.length<7)
+    {
+      alert("Sila lengkapkan MyID Lama Simati");
+      document.f1.txtNoKPLamaSimati.focus();  
+    }
+    else if ((document.f1.socJenisKPLainSimati.value!="0"  && document.f1.socJenisKPLainSimati.value!="") && document.f1.txtNoKPLainSimati.value=="") {
+      alert("Sila masukkan MyID Lain Simati");
+      document.f1.txtNoKPLainSimati.focus();
+    }
+    else if (document.f1.txtNoKPLainSimati.value!="" && document.f1.socJenisKPLainSimati.value=="0") {
+      alert("Sila pilih jenis MyID Lain Simati");
+    }
+    
+    
+    else if (document.f1.txtNamaSimati != 'null' && document.f1.txtNamaSimati.value=="" 
+        //&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
+        ) {
+      alert("Sila masukkan nama simati ");
+      document.f1.txtNamaSimati.focus();
+    }
+    else if (document.f1.txtTarikhMati != 'null' && document.f1.txtTarikhMati.value=="" 
+        //&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
+        ) {
+      alert("Sila masukkan tarikh mati");
+      document.f1.txtTarikhMati.focus();
+    
+    }else if (date1 > currentTime){
+      alert("Sila pastikan tarikh mati tidak melebihi dari tarikh hari ini.");
+      document.f1.txtTarikhMati.focus();
+      
+      
+    //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
+     // alert('Sila muatnaik MyID simati.');
+      //document.f1.fileupload.focus(); 
+    //}
+    //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
+    //  alert('Sila muatnaik Sijil Mati.');
+  //  document.f1.fileupload.focus(); 
+    }else{
+      input_box = confirm("Adakah anda pasti?");
+      if (input_box == true) {
+        document.f1.method = "POST";
+        document.f1.command.value="Simpanx";
+        document.f1.eventStatus.value="1";
+        document.f1.action = "";
+        document.f1.submit();
+    
+      }
+      
+    }
+  
+  } 
+    function kp1(){
+      document.f1.kp1.value = document.f1.txtNoKPBaruSimati1.value;
+    }
+    
+    function kp2(){
+      document.f1.kp2.value = document.f1.txtNoKPBaruSimati2.value;
+    }
 
-document.f1.kp2.value = document.f1.txtNoKPBaruSimati2.value;
-}
-function kp3()
-{
+    function kp3(){
+      document.f1.kp3.value = document.f1.txtNoKPBaruSimati3.value;
+    }
 
-document.f1.kp3.value = document.f1.txtNoKPBaruSimati3.value;
-}
+    function kembalidaftar(){
+      document.f1.command.value="kembali_daftar_pemohon";
+      document.f1.eventStatus.value="1";
+      document.f1.action = "";
+      document.f1.submit();
 
+    }
 
-function kembalidaftar()
-{
-        document.f1.command.value="kembali_daftar_pemohon";
-		document.f1.eventStatus.value="1";
-		document.f1.action = "";
-		document.f1.submit();
-}
+  function jantinaic(){
+    var ch=document.f1.txtNoKPBaruSimati3.value.charAt(3);
 
-function jantinaic()
-{
-var ch=document.f1.txtNoKPBaruSimati3.value.charAt(3);
+    if(ch%2 == 0){
+      document.f1.socJantinaSimati.value = 2 ;
+    }
+    if(ch%2 != 0){
+      document.f1.socJantinaSimati.value = 1 ;
+    }
+    return;
 
-if(ch%2 == 0)
-{
-document.f1.socJantinaSimati.value = 2 ;
+  }
 
+  function jantinaic1(){
+    var ch=document.f1.txtNoKPBaruPemohon3.value.charAt(3);
 
-}
-if(ch%2 != 0)
-{
-document.f1.socJantinaSimati.value = 1 ;
+    if(ch%2 == 0){
+      document.f1.socJantinaPemohon.value = 2 ;
+    }
+    if(ch%2 != 0){
+      document.f1.socJantinaPemohon.value = 1 ;
+    }
+    return;
 
-}
+  }
 
-return;
-}
+  function kplain(val){
+    if(val!="0" && val!=""){
+      document.f1.txtNoKPLainSimati.disabled = false;
+      document.f1.txtNoKPLainSimati.value = "";
+      //document.f1.txtNoKPLainSimati.focus();
+      return;
+    
+    }else{
+      document.f1.txtNoKPLainSimati.disabled = true;
+      document.f1.txtNoKPLainSimati.value = "";
+      return;
 
+    }
 
-function jantinaic1()
-{
-var ch=document.f1.txtNoKPBaruPemohon3.value.charAt(3);
+  }
 
-if(ch%2 == 0)
-{
-document.f1.socJantinaPemohon.value = 2 ;
+  function kplainX(val){
+    if(val!="0" && val!=""){
+      document.f1.txtNoKPLainSimati.focus();
+      return;
 
+    }
 
-}
-if(ch%2 != 0)
-{
-document.f1.socJantinaPemohon.value = 1 ;
+  }
 
-}
+  function kplain1(val){
+    if(val!="0" && val!=""){
+      document.f1.txtNoKPLainPemohon.disabled = "";
+      document.f1.txtNoKPLainPemohon.value = "";
 
-return;
-}
+      document.f1.txtNoKPLainPemohon.focus();
+      return;
 
+    }else{
+      document.f1.txtNoKPLainPemohon.disabled = "disabled";
+      document.f1.txtNoKPLainPemohon.value = "";
+      return;
 
+    }
 
-function kplain(val)
-{
-if(val!="0" && val!="")
-{
-document.f1.txtNoKPLainSimati.disabled = false;
-document.f1.txtNoKPLainSimati.value = "";
-//document.f1.txtNoKPLainSimati.focus();
-return;
-}
-else
-{
-document.f1.txtNoKPLainSimati.disabled = true;
-document.f1.txtNoKPLainSimati.value = "";
-return;
-}
-}
+  }
 
+  function kplain1X(val){
+    if(val!="0" && val!=""){
+      document.f1.txtNoKPLainPemohon.focus();
+      return;
 
-function kplainX(val)
-{
-if(val!="0" && val!="")
-{
-document.f1.txtNoKPLainSimati.focus();
-return;
-}
+    }
 
-}
-
-
-
-
-
-function kplain1(val)
-{
-if(val!="0" && val!="")
-{
-document.f1.txtNoKPLainPemohon.disabled = "";
-document.f1.txtNoKPLainPemohon.value = "";
-
-document.f1.txtNoKPLainPemohon.focus();
-
-
-
-
-return;
-}
-else
-{
-document.f1.txtNoKPLainPemohon.disabled = "disabled";
-document.f1.txtNoKPLainPemohon.value = "";
-return;
-}
-
-
-
-}
-
-function kplain1X(val)
-{
-if(val!="0" && val!="")
-{
-
-document.f1.txtNoKPLainPemohon.focus();
-
-
-
-return;
-}
-
-}
+  }
 
 var dtCh= "/";
-var minYear=1900;
-var maxYear=2100;
+  var minYear=1900;
+  var maxYear=2100;
 
-function isInteger(s){
-	var i;
-    for (i = 0; i < s.length; i++){   
-        // Check that current character is number.
-        var c = s.charAt(i);
-        if (((c < "0") || (c > "9"))) return false;
+  function isInteger(s){
+    var i;
+      for (i = 0; i < s.length; i++){   
+          // Check that current character is number.
+          var c = s.charAt(i);
+          if (((c < "0") || (c > "9"))) return false;
+      }
+      // All characters are numbers.
+      return true;
+
+  }
+
+  function stripCharsInBag(s, bag){
+    var i;
+      var returnString = "";
+      // Search through string's characters one by one.
+      // If character is not in bag, append to returnString.
+      for (i = 0; i < s.length; i++){   
+          var c = s.charAt(i);
+          if (bag.indexOf(c) == -1) returnString += c;
+      }
+      return returnString;
+  
+  }
+
+  function daysInFebruary (year){
+    // February has 29 days in any year evenly divisible by four,
+      // EXCEPT for centurial years which are not also divisible by 400.
+      return (((year % 4 == 0) && ( (!(year % 100 == 0)) || (year % 400 == 0))) ? 29 : 28 );
+  }
+
+  function DaysArray(n) {
+    for (var i = 1; i <= n; i++) {
+      this[i] = 31
+      if (i==4 || i==6 || i==9 || i==11) {this[i] = 30}
+      if (i==2) {this[i] = 29}
+     } 
+     return this
+
+  }
+
+  function isDate(dtStr){
+    var daysInMonth = DaysArray(12)
+    var pos1=dtStr.indexOf(dtCh)
+    var pos2=dtStr.indexOf(dtCh,pos1+1)
+    var strDay=dtStr.substring(0,pos1)
+    var strMonth=dtStr.substring(pos1+1,pos2)
+    var strYear=dtStr.substring(pos2+1)
+    strYr=strYear
+    if (strDay.charAt(0)=="0" && strDay.length>1) strDay=strDay.substring(1)
+    if (strMonth.charAt(0)=="0" && strMonth.length>1) strMonth=strMonth.substring(1)
+    for (var i = 1; i <= 3; i++) {
+      if (strYr.charAt(0)=="0" && strYr.length>1) strYr=strYr.substring(1)
     }
-    // All characters are numbers.
+    month=parseInt(strMonth)
+    day=parseInt(strDay)
+    year=parseInt(strYr)
+    if (pos1==-1 || pos2==-1){
+      alert("Format tarikh mestilah seperti ini, dd/mm/yyyy")
+      return false
+    }
+    if (strMonth.length<1 || month<1 || month>12){
+      alert("Sila masukkan bulan yg sah")
+      return false
+    }
+    if (strDay.length<1 || day<1 || day>31 || (month==2 && day>daysInFebruary(year)) || day > daysInMonth[month]){
+      alert("Sila masukkan hari yg sah")
+      return false
+    }
+    if (strYear.length != 4 || year==0 || year<minYear || year>maxYear){
+      alert("Sila masukkan tahun yang sah antara "+minYear+" dan "+maxYear)
+      return false
+    }
+    if (dtStr.indexOf(dtCh,pos2+1)!=-1 || isInteger(stripCharsInBag(dtStr, dtCh))==false){
+      alert("Sila masukkan tarikh yg sah")
+      return false
+    }
     return true;
-}
 
-function stripCharsInBag(s, bag){
-	var i;
-    var returnString = "";
-    // Search through string's characters one by one.
-    // If character is not in bag, append to returnString.
-    for (i = 0; i < s.length; i++){   
-        var c = s.charAt(i);
-        if (bag.indexOf(c) == -1) returnString += c;
+  }
+
+  function isIc(dtStr){
+    var daysInMonth = DaysArray(12)
+    var pos1=dtStr.indexOf(dtCh)
+    var pos2=dtStr.indexOf(dtCh,pos1+1)
+    var strDay=dtStr.substring(0,pos1)
+    var strMonth=dtStr.substring(pos1+1,pos2)
+    var strYear=dtStr.substring(pos2+1)
+    strYr=strYear
+    if (strDay.charAt(0)=="0" && strDay.length>1) strDay=strDay.substring(1)
+    if (strMonth.charAt(0)=="0" && strMonth.length>1) strMonth=strMonth.substring(1)
+    for (var i = 1; i <= 3; i++) {
+      if (strYr.charAt(0)=="0" && strYr.length>1) strYr=strYr.substring(1)
     }
-    return returnString;
-}
+    month=parseInt(strMonth)
+    day=parseInt(strDay)
+    year=parseInt(strYr)
+    if (pos1==-1 || pos2==-1){
+      alert("Format no kp baru seperti ini, cth : 800808-08-0008 ")
+      return false
+    }
+    if (strMonth.length<1 || month<1 || month>12){
+      alert("Sila masukkan bulan yang sah pada no kp baru")
+      return false
+    }
+    if (strDay.length<1 || day<1 || day>31 || (month==2 && day>daysInFebruary(year)) || day > daysInMonth[month]){
+      alert("Sila masukkan hari yang sah pada no kp baru")
+      return false
+    }
+    if (strYear.length != 4 || year==0 || year<minYear || year>maxYear){
+      alert("Sila masukkan tahun yang sah antara "+minYear+" dan "+maxYear)
+      return false
+    }
+    if (dtStr.indexOf(dtCh,pos2+1)!=-1 || isInteger(stripCharsInBag(dtStr, dtCh))==false){
+      alert("Sila masukkan no kp yang sah")
+      return false
+    }
+    return true
 
-function daysInFebruary (year){
-	// February has 29 days in any year evenly divisible by four,
-    // EXCEPT for centurial years which are not also divisible by 400.
-    return (((year % 4 == 0) && ( (!(year % 100 == 0)) || (year % 400 == 0))) ? 29 : 28 );
-}
-function DaysArray(n) {
-	for (var i = 1; i <= n; i++) {
-		this[i] = 31
-		if (i==4 || i==6 || i==9 || i==11) {this[i] = 30}
-		if (i==2) {this[i] = 29}
-   } 
-   return this
-}
-
-function isDate(dtStr){
-	var daysInMonth = DaysArray(12)
-	var pos1=dtStr.indexOf(dtCh)
-	var pos2=dtStr.indexOf(dtCh,pos1+1)
-	var strDay=dtStr.substring(0,pos1)
-	var strMonth=dtStr.substring(pos1+1,pos2)
-	var strYear=dtStr.substring(pos2+1)
-	strYr=strYear
-	if (strDay.charAt(0)=="0" && strDay.length>1) strDay=strDay.substring(1)
-	if (strMonth.charAt(0)=="0" && strMonth.length>1) strMonth=strMonth.substring(1)
-	for (var i = 1; i <= 3; i++) {
-		if (strYr.charAt(0)=="0" && strYr.length>1) strYr=strYr.substring(1)
-	}
-	month=parseInt(strMonth)
-	day=parseInt(strDay)
-	year=parseInt(strYr)
-	if (pos1==-1 || pos2==-1){
-		alert("Format tarikh mestilah seperti ini, dd/mm/yyyy")
-		return false
-	}
-	if (strMonth.length<1 || month<1 || month>12){
-		alert("Sila masukkan bulan yg sah")
-		return false
-	}
-	if (strDay.length<1 || day<1 || day>31 || (month==2 && day>daysInFebruary(year)) || day > daysInMonth[month]){
-		alert("Sila masukkan hari yg sah")
-		return false
-	}
-	if (strYear.length != 4 || year==0 || year<minYear || year>maxYear){
-		alert("Sila masukkan tahun yang sah antara "+minYear+" dan "+maxYear)
-		return false
-	}
-	if (dtStr.indexOf(dtCh,pos2+1)!=-1 || isInteger(stripCharsInBag(dtStr, dtCh))==false){
-		alert("Sila masukkan tarikh yg sah")
-		return false
-	}
-return true
-}
-
-function isIc(dtStr){
-	var daysInMonth = DaysArray(12)
-	var pos1=dtStr.indexOf(dtCh)
-	var pos2=dtStr.indexOf(dtCh,pos1+1)
-	var strDay=dtStr.substring(0,pos1)
-	var strMonth=dtStr.substring(pos1+1,pos2)
-	var strYear=dtStr.substring(pos2+1)
-	strYr=strYear
-	if (strDay.charAt(0)=="0" && strDay.length>1) strDay=strDay.substring(1)
-	if (strMonth.charAt(0)=="0" && strMonth.length>1) strMonth=strMonth.substring(1)
-	for (var i = 1; i <= 3; i++) {
-		if (strYr.charAt(0)=="0" && strYr.length>1) strYr=strYr.substring(1)
-	}
-	month=parseInt(strMonth)
-	day=parseInt(strDay)
-	year=parseInt(strYr)
-	if (pos1==-1 || pos2==-1){
-		alert("Format no kp baru seperti ini, cth : 800808-08-0008 ")
-		return false
-	}
-	if (strMonth.length<1 || month<1 || month>12){
-		alert("Sila masukkan bulan yang sah pada no kp baru")
-		return false
-	}
-	if (strDay.length<1 || day<1 || day>31 || (month==2 && day>daysInFebruary(year)) || day > daysInMonth[month]){
-		alert("Sila masukkan hari yang sah pada no kp baru")
-		return false
-	}
-	if (strYear.length != 4 || year==0 || year<minYear || year>maxYear){
-		alert("Sila masukkan tahun yang sah antara "+minYear+" dan "+maxYear)
-		return false
-	}
-	if (dtStr.indexOf(dtCh,pos2+1)!=-1 || isInteger(stripCharsInBag(dtStr, dtCh))==false){
-		alert("Sila masukkan no kp yang sah")
-		return false
-	}
-return true
-}
+  }
 
 
-function cetak(noFail,idfail) {
-    var url = "../servlet/ekptg.report.ppk.KulitFail?NoFail="+noFail+"&idfail="+idfail+"";
-    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}
+  function cetak(noFail,idfail) {
+      var url = "../servlet/ekptg.report.ppk.KulitFail?NoFail="+noFail+"&idfail="+idfail+"";
+      var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+      if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+      if (hWnd.focus != null) hWnd.focus();
+  }
 
+  function cetakSuratAkuanTerima(noFail) {
+    var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=suratAkuanTerima&flagReport=S";
+      var hWnd = window.open(url,'printuser','width=800,height=300, resizable=yes,scrollbars=yes');
+      if ((document.window != null) && (!hWnd.opener))
+         hWnd.opener = document.window;
+      if (hWnd.focus != null) hWnd.focus();
+    hWnd.focus();
 
+  }
 
-function cetakSuratAkuanTerima(noFail) {
-	var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=suratAkuanTerima&flagReport=S";
-    var hWnd = window.open(url,'printuser','width=800,height=300, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
-}
+  function cetakSuratIringanBorangB(noFail) {
+    var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratIringanBorangB&flagReport=S";
+   //   var url = "../servlet/ekptg.report.ppk.SuratIringanBorangB?nofail="+noFail;
+      var hWnd = window.open(url,'Cetak','width=800,height=300, resizable=yes,scrollbars=yes');
+      if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+      if (hWnd.focus != null) hWnd.focus();
+  
+  }
 
-function cetakSuratIringanBorangB(noFail) {
-var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratIringanBorangB&flagReport=S";
- //   var url = "../servlet/ekptg.report.ppk.SuratIringanBorangB?nofail="+noFail;
-    var hWnd = window.open(url,'Cetak','width=800,height=300, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}
+  function cetakMaklumatTambahan(noFail) {
+    var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratMaklumatTambahan&flagReport=S";
+   //   var url = "../servlet/ekptg.report.ppk.SuratIringanBorangB?nofail="+noFail;
+      var hWnd = window.open(url,'Cetak','width=800,height=300, resizable=yes,scrollbars=yes');
+      if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+      if (hWnd.focus != null) hWnd.focus();
+  
+  }
 
-function cetakMaklumatTambahan(noFail) {
-var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratMaklumatTambahan&flagReport=S";
- //   var url = "../servlet/ekptg.report.ppk.SuratIringanBorangB?nofail="+noFail;
-    var hWnd = window.open(url,'Cetak','width=800,height=300, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}
-
-
-
-
-
-function cetakBorangB(noFail,idfail,flag,flagB) {
+  function cetakBorangB(noFail,idfail,flag,flagB) {
     var url = "../servlet/ekptg.report.ppk.BorangB2?nofail="+noFail+"&idfail="+idfail;  
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
+      hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 
+    if(flag != "yes" && flagB != "yes"){
+        document.f1.command.value="getDaftarStatus";
+    //  document.f1.mode.value="getHtaamStatus";    
+      document.f1.action="";
+      document.f1.submit();
+      
+    }
+    
+  }
 
-if(flag != "yes" && flagB != "yes")
-	{
-	    document.f1.command.value="getDaftarStatus";
-	//	document.f1.mode.value="getHtaamStatus";		
-		document.f1.action="";
-		document.f1.submit();
-		}
-	
-}
-
-
-
-function cetakBorangB2(noFail,idfail,flag,flagB) {
+  function cetakBorangB2(noFail,idfail,flag,flagB) {
     var url = "../servlet/ekptg.report.ppk.BorangB3?nofail="+noFail+"&idfail="+idfail;  
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+  
     if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
+     hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 
-
-if(flag != "yes" && flagB != "yes")
-	{
-	    document.f1.command.value="getDaftarStatus";
-	//	document.f1.mode.value="getHtaamStatus";		
-		document.f1.action="";
-		document.f1.submit();
-		}
-	
-}
-
-
-
-function setTable(id){
-	if(document.getElementById(id).style.display=="none"){
-		document.getElementById(id).style.display="block";
-	}
-	else if(document.getElementById(id).style.display=="block"){
-		document.getElementById(id).style.display="none";
-	}
-}
-
-function qryHowOld()
-   {
-   
-   var dob_code = document.f1.txtNoKPBaruSimati1.value;
-if(dob_code.charAt(0)<2)
-	{
-	 var dum = "20";
-	}
-	else
-	{
-	var dum = "19";
-	}
-	
-var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""+dob_code.charAt(3)+"/"+dum+dob_code.charAt(0)+""+dob_code.charAt(1);	
-	 var dt_dob   = parseInt(tt.substring(0,2),10);
-     var mon_dob  = parseInt(tt.substring(3,5),10)-1;
-     var yr_dob   = parseInt(tt.substring(6,10),10);
-	
-	 
-	 
-	 
-var dob_codeX = document.f1.txtTarikhMati.value;
-
-	
-     var ttX = dob_codeX;	
-	 var dt_dobX   = parseInt(ttX.substring(0,2),10);
-     var mon_dobX  = parseInt(ttX.substring(3,5),10)-1;
-     var yr_dobX   = parseInt(ttX.substring(6,10),10);
-	
-	 
-	 
-	 
-     var varAsOfDate = new Date(yr_dobX, mon_dobX, dt_dobX);
-	 var varBirthDate = new Date(yr_dob, mon_dob, dt_dob);
-	 
-	 var year1 = varAsOfDate.getFullYear();
-	 var year2 = varBirthDate.getFullYear();
-	 
-
-    if(dob_code != "")
-	{
-	
-	if((year1 - year2)>0){
-    document.f1.txtUmurSimati.value = year1 - year2 ;
-	}
-	else
-	{
-	document.f1.txtUmurSimati.value = 0 ;
-	}
-	
-	}
-	else
-	{
-	
-	document.f1.txtUmurSimati.value = "";
-	}
-
-   
-   }
-   
-   
-   function trans_date(t_d)
-{
-
-
-if(t_d.length == 8)
-{
-var a = t_d.charAt(0);
-var b = t_d.charAt(1);
-var c = t_d.charAt(2);
-var d = t_d.charAt(3);
-var e = t_d.charAt(4);
-var f = t_d.charAt(5);
-var g = t_d.charAt(6);
-var h = t_d.charAt(7);
-
-var trans = a+""+b+"/"+c+""+d+"/"+e+""+f+""+g+""+h;
-//alert("value :"+t_d+"lenght :"+t_d.length+"trans :"+trans)
-
-
-document.f1.txtTarikhMati.value = trans;
-
-}
-else
-{
-return;
-}
-
-}
-
-function CheckBandar()
-{
-if(document.f1.socNegeri.value == "" || document.f1.socNegeri.value == "0")
-{
-/*	
-  alert("Sila pilih negeri terlebih dahulu.");
-  document.f1.socNegeri.focus();
-  return;
-  */
-	  	
-}
-
-
-}
-
-function getBandar(v_t)
-{
-
-        document.f1.method = "POST";
-		document.f1.command.value="getBandar";
-		document.f1.eventStatus.value="1";
-		document.f1.action = "";
-		document.f1.v_tab.value = v_t;
-		document.f1.submit();
-
-}
-/*
-function submitForm() {    
-  
-window.location.hash='$val_tab';
-goTo('$val_tab');
-	
-} */
-
-function submitForm() {    
-//alert('$val_tab')
-if('$!val_tab' != "" && '$!val_tab' != null)
-{
-
-   window.location.hash='$!val_tab';
-   var nextFieldID = '$!val_tab';
-   document.getElementById(nextFieldID).focus();
-   }
-   else
-{
-window.location.hash='tab_Daftar';
-//goTo('tab_Daftar');
-}
-	
-} 
-
-
-function kembaliSenaraiFail(noFail) {
-	document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailSek8&txtNoFail="+noFail;
-	document.f1.submit();
-}
-function kembaliSenaraiPermohonan(noFail) {
-	document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiPermohonanSeksyen8&txtNoFail="+noFail;
-	document.f1.method="POST";
-	document.f1.submit();
-}
-function Kembali(){
-	document.f1.method="POST";
-	document.f1.command.value="xxx";
-	document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
-	document.f1.submit();
-}
-
-               
-               function trans_date2(t_d)
-{
-
-
-if(t_d.length == 8)
-{
-var a = t_d.charAt(0);
-var b = t_d.charAt(1);
-var c = t_d.charAt(2);
-var d = t_d.charAt(3);
-var e = t_d.charAt(4);
-var f = t_d.charAt(5);
-var g = t_d.charAt(6);
-var h = t_d.charAt(7);
-
-var trans = a+""+b+"/"+c+""+d+"/"+e+""+f+""+g+""+h;
-//alert("value :"+t_d+"lenght :"+t_d.length+"trans :"+trans)
-
-
-document.f1.txdTarikhMohon.value = trans;
-
-}
-else
-{
-return;
-}
-
-}
+    if(flag != "yes" && flagB != "yes"){
+     document.f1.command.value="getDaftarStatus";
+    //  document.f1.mode.value="getHtaamStatus";    
+     document.f1.action="";
+     document.f1.submit();
+      
+    }
     
-	
-function check_kp() 
-{
-var s = document.f1.txtNoKPBaruSimati1.value + document.f1.txtNoKPBaruSimati2.value + document.f1.txtNoKPBaruSimati3.value;
-document.f1.check_no_kp_baru_simati.value = s;
+  }
 
+    function setTable(id){
+    if(document.getElementById(id).style.display=="none"){
+      document.getElementById(id).style.display="block";
+    }else if(document.getElementById(id).style.display=="block"){
+      document.getElementById(id).style.display="none";
+    }
 
-}
+  }
 
-function check_kp_lama()
-{
-document.f1.check_no_kp_lama_simati.value = document.f1.txtNoKPLamaSimati.value;
+  function qryHowOld(){ 
+    var dob_code = document.f1.txtNoKPBaruSimati1.value;
 
-}
+    if(dob_code.charAt(0)<2){
+     var dum = "20";
+   }else{
+     var dum = "19";
+   }
+  
+    var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""+dob_code.charAt(3)+"/"+dum+dob_code.charAt(0)+""+dob_code.charAt(1);  
+    var dt_dob   = parseInt(tt.substring(0,2),10);
+    var mon_dob  = parseInt(tt.substring(3,5),10)-1;
+    var yr_dob   = parseInt(tt.substring(6,10),10);
+  
+    var dob_codeX = document.f1.txtTarikhMati.value;
+  
+    var ttX = dob_codeX;  
+    var dt_dobX   = parseInt(ttX.substring(0,2),10);
+    var mon_dobX  = parseInt(ttX.substring(3,5),10)-1;
+    var yr_dobX   = parseInt(ttX.substring(6,10),10);
+  
+    var varAsOfDate = new Date(yr_dobX, mon_dobX, dt_dobX);
+    var varBirthDate = new Date(yr_dob, mon_dob, dt_dob);
+   
+    var year1 = varAsOfDate.getFullYear();
+    var year2 = varBirthDate.getFullYear();
+   
+    if(dob_code != ""){
+  
+      if((year1 - year2)>0){
+        document.f1.txtUmurSimati.value = year1 - year2 ;
+      }else{
+       document.f1.txtUmurSimati.value = 0 ;
+      }
+      
+    }else{
+      document.f1.txtUmurSimati.value = "";
+    }
 
-function check_kp_lain()
-{
-document.f1.check_no_kp_lain_simati.value = document.f1.txtNoKPLainSimati.value;
+  }
+   
+  function trans_date(t_d){
 
-}
+    if(t_d.length == 8){
+      var a = t_d.charAt(0);
+      var b = t_d.charAt(1);
+      var c = t_d.charAt(2);
+      var d = t_d.charAt(3);
+      var e = t_d.charAt(4);
+      var f = t_d.charAt(5);
+      var g = t_d.charAt(6);
+      var h = t_d.charAt(7);
 
+      var trans = a+""+b+"/"+c+""+d+"/"+e+""+f+""+g+""+h;
+      //alert("value :"+t_d+"lenght :"+t_d.length+"trans :"+trans)
 
-function check_pengenalan_simati_1()
-{
-	//alert(document.f1.txtNoKPBaruSimati1.value+"-"+document.f1.txtNoKPBaruSimati2.value+"-"+document.f1.txtNoKPBaruSimati3.value);
-	url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-	actionName = "check_simati_kp_baru";
-	target = "check_kp_1";
-	doAjaxUpdater(document.f1, url, target, actionName);
-}
+      document.f1.txtTarikhMati.value = trans;
 
-/* function check_pengenalan_simati_2()
-{
-alert(document.f1.txtNoKPLamaSimati.value);
-if(document.f1.txtNoKPLamaSimati.value != "" || document.f1.txtNoKPLamaSimati.value != "TDK")
-	{
-	url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-	actionName = "check_simati_kp_lama";
-	target = "check_kp_2";
-	doAjaxUpdater(document.f1, url, target, actionName);
-	}
-} */
+    }else{
+      return;
+      
+    }
 
-function check_pengenalan_simati_2()
-{
-	//alert(document.f1.txtNoKPLamaSimati.value);
-	url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-	actionName = "check_simati_kp_lama";
-	target = "check_kp_2";
-	doAjaxUpdater(document.f1, url, target, actionName);
-}
+  }
 
-function check_pengenalan_simati_3()
-{
-	//alert("MyID Lain = "+document.f1.txtNoKPLainSimati.value)
-	url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-	actionName = "check_simati_kp_lain";
-	target = "check_kp_3";
-	doAjaxUpdater(document.f1, url, target, actionName);
-}
+  function CheckBandar(){
+    if(document.f1.socNegeri.value == "" || document.f1.socNegeri.value == "0"){
+      /*  
+        alert("Sila pilih negeri terlebih dahulu.");
+        document.f1.socNegeri.focus();
+        return;
+        */
+            
+    }
 
+  }
 
+  function getBandar(v_t){
+    document.f1.method = "POST";
+    document.f1.command.value="getBandar";
+    document.f1.eventStatus.value="1";
+    document.f1.action = "";
+    document.f1.v_tab.value = v_t;
+    document.f1.submit();
 
-function check_pengenalan_simati_1_onload()
-{
-/*
-	if('$!skrin_online_popup' == "yes")
-{
-url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
-}
-else
-{
-url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-}
-	actionName = "check_simati_kp_baru_onload";
-	target = "check_kp_1";
-	doAjaxUpdater(document.f1, url, target, actionName);*/
-}
+  }
 
+    function submitForm() {    
+    //alert('$val_tab')
+    if('$!val_tab' != "" && '$!val_tab' != null){
+       window.location.hash='$!val_tab';
+       var nextFieldID = '$!val_tab';
+       document.getElementById(nextFieldID).focus();
+       
+    }else{
+      window.location.hash='tab_Daftar';
+      //goTo('tab_Daftar');
+    }
+    
+  } 
 
-function check_pengenalan_simati_2_onload()
-{
-if(document.f1.txtNoKPLamaSimati.value != "" && document.f1.txtNoKPLamaSimati.value != "TDK")
-{
-	/*if('$!skrin_online_popup' == "yes")
-{
-url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
-}
-else
-{
-url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-}
-	actionName = "check_simati_kp_lama_onload";
-	target = "check_kp_2";
-	doAjaxUpdater(document.f1, url, target, actionName);*/
-	}
-}
-function check_pengenalan_simati_3_onload()
-{
-/*
-	if('$!skrin_online_popup' == "yes")
-{
-url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
-}
-else
-{
-url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-}
-	actionName = "check_simati_kp_lain_onload";
-	target = "check_kp_3";
-	doAjaxUpdater(document.f1, url, target, actionName);*/
-	
-}
+  function kembaliSenaraiFail(noFail) {
+    document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailSek8&txtNoFail="+noFail;
+    document.f1.submit();
+  }
 
+  function kembaliSenaraiPermohonan(noFail) {
+    document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiPermohonanSeksyen8&txtNoFail="+noFail;
+    document.f1.method="POST";
+    document.f1.submit();
+  }
 
+  function Kembali(){
+    document.f1.method="POST";
+    document.f1.command.value="xxx";
+    document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
+    document.f1.submit();
+  }
 
-function get_bandar_simati()
-{
-	if('$!skrin_online_popup' == "yes")
-{
-url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
-}
-else
-{
-url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-}
-	actionName = "getbandar_daftar";
-	target = "check_bandar";
-	doAjaxUpdater(document.f1, url, target, actionName);
-}
+  function trans_date2(t_d){
 
+    if(t_d.length == 8){
+      var a = t_d.charAt(0);
+      var b = t_d.charAt(1);
+      var c = t_d.charAt(2);
+      var d = t_d.charAt(3);
+      var e = t_d.charAt(4);
+      var f = t_d.charAt(5);
+      var g = t_d.charAt(6);
+      var h = t_d.charAt(7);
 
+      var trans = a+""+b+"/"+c+""+d+"/"+e+""+f+""+g+""+h;
+      //alert("value :"+t_d+"lenght :"+t_d.length+"trans :"+trans)
+      document.f1.txdTarikhMohon.value = trans;
 
-function pilih_taraf()
-{
-if(document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "2" && document.f1.taraf_penting.value != "4")
-{
+    }else{
+      return;
+    }
 
+  }
+    
+  function check_kp(){
+    var s = document.f1.txtNoKPBaruSimati1.value + document.f1.txtNoKPBaruSimati2.value + document.f1.txtNoKPBaruSimati3.value;
+    document.f1.check_no_kp_baru_simati.value = s;
 
-		if(document.f1.taraf_penting.value != "1")
-		{
-        document.getElementById("hubungan").style.display="none";
-		if(document.f1.baca.value != "disabled")
-		{
-		document.f1.socSaudaraWaris.value = "";	
-		}
-		}
-		else
-		{
-		document.getElementById("hubungan").style.display="";
-		//document.f1.socSaudaraWaris.value = "";	
-		}	
+  }
 
-		document.getElementById("kp1").style.display="";	
-		document.getElementById("kp2").style.display="";	
-		document.getElementById("kp3").style.display="";	
-		document.getElementById('amanah').style.display="none";
-		document.getElementById('baitulmal').style.display="none";
-			
-		document.f1.jenis_pemohon.value = "2"
-		
-		if(document.getElementById('jenis_pemohon_drop') != null)
-		{document.getElementById("jenis_pemohon_drop").style.display="none";}
-		if(document.getElementById('jenis_pemohon_dis') != null)
-		{document.getElementById("jenis_pemohon_dis").style.display="";}
-		
-		
-		
-		
-		
-		if(document.f1.jenis_pemohon_display != null)
-		{document.f1.jenis_pemohon_display.value = "02-INDIVIDU";}
-		
-		
-		if(document.getElementById('txtNamaPemohon_1a') != null)
-		{
-		document.getElementById('txtNamaPemohon_1a').style.display="";
-		document.getElementById('txtNamaPemohon_1b').style.display="none";
-		}		
-		if(document.getElementById('txtNamaPemohon_2a') != null)
-		{
-		document.getElementById('txtNamaPemohon_2a').style.display="";
-		document.getElementById('txtNamaPemohon_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('txtAlamat1_1a') != null)
-		{
-		document.getElementById('txtAlamat1_1a').style.display="";
-		document.getElementById('txtAlamat1_1b').style.display="none";
-		}		
-		if(document.getElementById('txtAlamat1_2a') != null)
-		{
-		document.getElementById('txtAlamat1_2a').style.display="";
-		document.getElementById('txtAlamat1_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('txtAlamat2_1a') != null)
-		{
-		document.getElementById('txtAlamat2_1a').style.display="";
-		document.getElementById('txtAlamat2_1b').style.display="none";
-		}		
-		if(document.getElementById('txtAlamat2_2a') != null)
-		{
-		document.getElementById('txtAlamat2_2a').style.display="";
-		document.getElementById('txtAlamat2_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('txtAlamat3_1a') != null)
-		{
-		document.getElementById('txtAlamat3_1a').style.display="";
-		document.getElementById('txtAlamat3_1b').style.display="none";
-		}		
-		if(document.getElementById('txtAlamat3_2a') != null)
-		{
-		document.getElementById('txtAlamat3_2a').style.display="";
-		document.getElementById('txtAlamat3_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('txtPoskod_1a') != null)
-		{
-		document.getElementById('txtPoskod_1a').style.display="";
-		document.getElementById('txtPoskod_1b').style.display="none";
-		}		
-		if(document.getElementById('txtPoskod_2a') != null)
-		{
-		document.getElementById('txtPoskod_2a').style.display="";
-		document.getElementById('txtPoskod_2b').style.display="none";
-	    }
-	
-	
-		if(document.getElementById('socNegeri_1a') != null)
-		{
-		document.getElementById('socNegeri_1a').style.display="";		
-		document.getElementById('socNegeri_1b').style.display="none";
-		document.getElementById('socNegeri').disabled=false;
-		document.getElementById('socNegeri').readonly=false;
-		}		
-		if(document.getElementById('socNegeri_2a') != null)
-		{
-		document.getElementById('socNegeri_2a').style.display="";
-		document.getElementById('socNegeri_2b').style.display="none";
-		document.getElementById('socNegeri').disabled=false;
-		document.getElementById('socNegeri').readonly=false;
-	    }
-		
-		if(document.getElementById('socBandar_1a') != null)
-		{
-		document.getElementById('socBandar_1a').style.display="";
-		document.getElementById('socBandar_1b').style.display="none";
-		document.getElementById('socBandar').disabled=false;
-		document.getElementById('socBandar').readonly=false;
-		}		
-		if(document.getElementById('socBandar_2a') != null)
-		{
-		document.getElementById('socBandar_2a').style.display="";
-		document.getElementById('socBandar').disabled=false;
-		document.getElementById('socBandar').readonly=false;
-		document.getElementById('socBandar_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('no_tel_1a') != null)
-		{
-		document.getElementById('no_tel_1a').style.display="";
-		document.getElementById('no_tel_1b').style.display="none";
-		}	
-		
-		
-		if(document.getElementById('no_hp_1a') != null)
-		{
-		document.getElementById('no_hp_1a').style.display="";
-		document.getElementById('no_hp_1b').style.display="none";
-		}	
-		
-		if(document.getElementById('emel_1a') != null)
-		{
-		document.getElementById('emel_1a').style.display="";
-		document.getElementById('emel_1b').style.display="none";
-		}	
-		
-		
-		document.getElementById('tr_hp').style.display="";
-		document.getElementById('tr_pelbagainegara').style.display="";
-		document.getElementById('tr_mesej_pelbagainegara').style.display="";
+  function check_kp_lama(){
+    document.f1.check_no_kp_lama_simati.value = document.f1.txtNoKPLamaSimati.value;
 
-}
+  }
 
-else if(document.f1.taraf_penting.value == "8")
-{
-	
-		
-		if(document.f1.baca.value == "disabled")
-		{
-				document.getElementById('amanah').style.display="none";
-				document.getElementById('baitulmal').style.display="none";
-		}
-		else
-		{
-		document.getElementById('amanah').style.display="none";
-		document.getElementById('baitulmal').style.display="";
-		}
-				
-		
-		document.getElementById("kp1").style.display="none";	
-		document.getElementById("kp2").style.display="none";	
-		document.getElementById("kp3").style.display="none";
-		
-		document.getElementById("hubungan").style.display="none";
-		if(document.f1.baca.value != "disabled")
-		{
-		document.f1.socSaudaraWaris.value = "";	
-		}		
-	
-		document.f1.jenis_pemohon.value = "1"
-		
-		if(document.getElementById('jenis_pemohon_drop') != null)
-		{document.getElementById("jenis_pemohon_drop").style.display="none";}
-		if(document.getElementById('jenis_pemohon_dis') != null)
-		{document.getElementById("jenis_pemohon_dis").style.display="";}
-		
-		if(document.f1.jenis_pemohon_display != null)
-		{document.f1.jenis_pemohon_display.value = "01-AGENSI"}
-		
-		if(document.getElementById('txtNamaPemohon_1a') != null)
-		{document.getElementById('txtNamaPemohon_1a').style.display="none";		
-		document.getElementById('txtNamaPemohon_1b').style.display="";}
-		if(document.getElementById('txtNamaPemohon_2a') != null)
-		{document.getElementById('txtNamaPemohon_2a').style.display="none";		
-		document.getElementById('txtNamaPemohon_2b').style.display="";
-	    }
-		
-		if(document.getElementById('txtAlamat1_1a') != null)
-		{
-		document.getElementById('txtAlamat1_1a').style.display="none";
-		document.getElementById('txtAlamat1_1b').style.display="";
-		}		
-		if(document.getElementById('txtAlamat1_2a') != null)
-		{
-		document.getElementById('txtAlamat1_2a').style.display="none";
-		document.getElementById('txtAlamat1_2b').style.display="";
-	    }
-		
-		if(document.getElementById('txtAlamat2_1a') != null)
-		{
-		document.getElementById('txtAlamat2_1a').style.display="none";
-		document.getElementById('txtAlamat2_1b').style.display="";
-		}		
-		if(document.getElementById('txtAlamat2_2a') != null)
-		{
-		document.getElementById('txtAlamat2_2a').style.display="none";
-		document.getElementById('txtAlamat2_2b').style.display="";
-	    }
-		
-		if(document.getElementById('txtAlamat3_1a') != null)
-		{
-		document.getElementById('txtAlamat3_1a').style.display="none";
-		document.getElementById('txtAlamat3_1b').style.display="";
-		}		
-		if(document.getElementById('txtAlamat3_2a') != null)
-		{
-		document.getElementById('txtAlamat3_2a').style.display="none";
-		document.getElementById('txtAlamat3_2b').style.display="";
-	    }
-		
-		if(document.getElementById('txtPoskod_1a') != null)
-		{
-		document.getElementById('txtPoskod_1a').style.display="none";
-		document.getElementById('txtPoskod_1b').style.display="";
-		}		
-		if(document.getElementById('txtPoskod_2a') != null)
-		{
-		document.getElementById('txtPoskod_2a').style.display="none";
-		document.getElementById('txtPoskod_2b').style.display="";
-	    }
-		
-		if(document.getElementById('socNegeri_1a') != null)
-		{
-		document.getElementById('socNegeri_1a').style.display="none";
-		document.getElementById('socNegeri_1b').style.display="";
-		}		
-		if(document.getElementById('socNegeri_2a') != null)
-		{
-		document.getElementById('socNegeri_2a').style.display="none";
-		document.getElementById('socNegeri_2b').style.display="";
-	    }
-		
-		
-		if(document.getElementById('socBandar_1a') != null)
-		{
-		document.getElementById('socBandar_1a').style.display="none";
-		document.getElementById('socBandar_1b').style.display="";
-		document.f1.socBandar[0].disabled=true;
-		}		
-		if(document.getElementById('socBandar_2a') != null)
-		{
-		document.getElementById('socBandar_2a').style.display="none";
-		document.getElementById('socBandar_2b').style.display="";
-		document.f1.socBandar[0].disabled=true;
-	    }
-		
-		// amanah raya 
-		
-		if(document.getElementById('no_tel_1a') != null)
-		{
-		document.getElementById('no_tel_1a').style.display="none";
-		document.getElementById('no_tel_1b').style.display="";
-		}	
-		
-		
-		document.getElementById('tr_hp').style.display="none";
-		
-		document.getElementById('tr_pelbagainegara').style.display="none";
-		document.getElementById('tr_mesej_pelbagainegara').style.display="none";
-		document.getElementById('nama_pelbagainegara').value = "";
-		
-		if(document.getElementById('no_hp_1a') != null)
-		{
-		document.getElementById('no_hp_1a').style.display="none";
-		document.getElementById('no_hp_1b').style.display="none";
-		}	
-		
-		if(document.getElementById('emel_1a') != null)
-		{
-		document.getElementById('emel_1a').style.display="none";
-		document.getElementById('emel_1b').style.display="none";
-		}	
+  function check_kp_lain(){
+    document.f1.check_no_kp_lain_simati.value = document.f1.txtNoKPLainSimati.value;
 
-}
+  }
 
-else if(document.f1.taraf_penting.value == "2" || document.f1.taraf_penting.value == "4")
-{
-	document.getElementById("hubungan").style.display="none";
-		if(document.f1.baca.value != "disabled")
-		{
-		document.f1.socSaudaraWaris.value = "";	
-		}	
-	
-		if(document.getElementById('jenis_pemohon_drop') != null)
-		{document.getElementById("jenis_pemohon_drop").style.display="";}
-		if(document.getElementById('jenis_pemohon_dis') != null)
-		{document.getElementById("jenis_pemohon_dis").style.display="none";}		
-		
-		if(document.f1.jenis_pemohon.value == "2")
-		{		
-		document.getElementById('amanah').style.display="none";
-		document.getElementById('baitulmal').style.display="none";
-		document.getElementById("kp1").style.display="";	
-		document.getElementById("kp2").style.display="";	
-		document.getElementById("kp3").style.display="";
-		
-		if(document.getElementById('no_hp_1a') != null)
-		{
-		document.getElementById('no_hp_1a').style.display="";
-		document.getElementById('no_hp_1b').style.display="none";
-		}		
-		document.getElementById('tr_hp').style.display="";	
-		
-		document.getElementById('tr_pelbagainegara').style.display="";
-		document.getElementById('tr_mesej_pelbagainegara').style.display="";
-		
-		}
-		else{
-		document.getElementById('amanah').style.display="none";
-		document.getElementById('baitulmal').style.display="none";
-		document.getElementById("kp1").style.display="none";	
-		document.getElementById("kp2").style.display="none";	
-		document.getElementById("kp3").style.display="none";
-		
-		if(document.getElementById('no_hp_1a') != null)
-		{
-		document.getElementById('no_hp_1a').style.display="none";
-		document.getElementById('no_hp_1b').style.display="none";
-		}		
-		document.getElementById('tr_hp').style.display="none";	
-		
-		document.getElementById('tr_pelbagainegara').style.display="none";
-		document.getElementById('tr_mesej_pelbagainegara').style.display="none";
-		document.getElementById('nama_pelbagainegara').value = "";		
-		}	
-	
-		if(document.getElementById('txtNamaPemohon_1a') != null)
-		{
-		document.getElementById('txtNamaPemohon_1a').style.display="";
-		document.getElementById('txtNamaPemohon_1b').style.display="none";
-		}
-		if(document.getElementById('txtNamaPemohon_2a') != null)
-		{
-		document.getElementById('txtNamaPemohon_2a').style.display="";
-		document.getElementById('txtNamaPemohon_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('txtAlamat1_1a') != null)
-		{
-		document.getElementById('txtAlamat1_1a').style.display="";
-		document.getElementById('txtAlamat1_1b').style.display="none";
-		}		
-		if(document.getElementById('txtAlamat1_2a') != null)
-		{
-		document.getElementById('txtAlamat1_2a').style.display="";
-		document.getElementById('txtAlamat1_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('txtAlamat2_1a') != null)
-		{
-		document.getElementById('txtAlamat2_1a').style.display="";
-		document.getElementById('txtAlamat2_1b').style.display="none";
-		}		
-		if(document.getElementById('txtAlamat2_2a') != null)
-		{
-		document.getElementById('txtAlamat2_2a').style.display="";
-		document.getElementById('txtAlamat2_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('txtAlamat3_1a') != null)
-		{
-		document.getElementById('txtAlamat3_1a').style.display="";
-		document.getElementById('txtAlamat3_1b').style.display="none";
-		}		
-		if(document.getElementById('txtAlamat3_2a') != null)
-		{
-		document.getElementById('txtAlamat3_2a').style.display="";
-		document.getElementById('txtAlamat3_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('txtPoskod_1a') != null)
-		{
-		document.getElementById('txtPoskod_1a').style.display="";
-		document.getElementById('txtPoskod_1b').style.display="none";
-		}		
-		if(document.getElementById('txtPoskod_2a') != null)
-		{
-		document.getElementById('txtPoskod_2a').style.display="";
-		document.getElementById('txtPoskod_2b').style.display="none";
-	    }
-		
-		
-		if(document.getElementById('socNegeri_1a') != null)
-		{
-		document.getElementById('socNegeri_1a').style.display="";
-		document.getElementById('socNegeri_1b').style.display="none";
-		}		
-		if(document.getElementById('socNegeri_2a') != null)
-		{
-		document.getElementById('socNegeri_2a').style.display="";
-		document.getElementById('socNegeri_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('socBandar_1a') != null)
-		{
-		document.getElementById('socBandar_1a').style.display="";
-		document.getElementById('socBandar_1b').style.display="none";
-		}		
-		if(document.getElementById('socBandar_2a') != null)
-		{
-		document.getElementById('socBandar_2a').style.display="";
-		document.getElementById('socBandar_2b').style.display="none";
-	    }
-		
-		if(document.getElementById('no_tel_1a') != null)
-		{
-		document.getElementById('no_tel_1a').style.display="";
-		document.getElementById('no_tel_1b').style.display="none";
-		}	
-		if(document.getElementById('emel_1a') != null)
-		{
-		document.getElementById('emel_1a').style.display="";
-		document.getElementById('emel_1b').style.display="none";
-		}	
-	
-}
+  function check_pengenalan_simati_1(){
+    //alert(document.f1.txtNoKPBaruSimati1.value+"-"+document.f1.txtNoKPBaruSimati2.value+"-"+document.f1.txtNoKPBaruSimati3.value);
+    url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+    actionName = "check_simati_kp_baru";
+    target = "check_kp_1";
+    doAjaxUpdater(document.f1, url, target, actionName);
 
-else if(document.f1.taraf_penting.value == "6")
-{
+  }
 
-document.getElementById("hubungan").style.display="none";
+    function check_pengenalan_simati_2(){
+    //alert(document.f1.txtNoKPLamaSimati.value);
+    url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+    actionName = "check_simati_kp_lama";
+    target = "check_kp_2";
+    doAjaxUpdater(document.f1, url, target, actionName);
+  
+  }
 
-if(document.f1.baca.value != "disabled")
-		{
-		document.f1.socSaudaraWaris.value = "";	
-		}	
-		
+  function check_pengenalan_simati_3(){
+    //alert("MyID Lain = "+document.f1.txtNoKPLainSimati.value)
+    url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+    actionName = "check_simati_kp_lain";
+    target = "check_kp_3";
+    doAjaxUpdater(document.f1, url, target, actionName);
+  
+  }
 
+  function check_pengenalan_simati_1_onload(){
+  /*
+    if('$!skrin_online_popup' == "yes")
+  {
+  url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
+  }
+  else
+  {
+  url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+  }
+    actionName = "check_simati_kp_baru_onload";
+    target = "check_kp_1";
+    doAjaxUpdater(document.f1, url, target, actionName);*/
+  }
 
-if(document.f1.baca.value == "disabled")
-{
-		document.getElementById('amanah').style.display="none";
-		document.getElementById('baitulmal').style.display="none";
-}
-else
-{
+  function check_pengenalan_simati_2_onload(){
+    if(document.f1.txtNoKPLamaSimati.value != "" && document.f1.txtNoKPLamaSimati.value != "TDK"){
+    /*if('$!skrin_online_popup' == "yes")
+  {
+  url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
+  }
+  else
+  {
+  url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+  }
+    actionName = "check_simati_kp_lama_onload";
+    target = "check_kp_2";
+    doAjaxUpdater(document.f1, url, target, actionName);*/
+    }
 
-document.getElementById('amanah').style.display="";
-document.getElementById('baitulmal').style.display="none";
-}
+  }
 
+  function check_pengenalan_simati_3_onload(){
+  /*
+    if('$!skrin_online_popup' == "yes")
+  {
+  url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
+  }
+  else
+  {
+  url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+  }
+    actionName = "check_simati_kp_lain_onload";
+    target = "check_kp_3";
+    doAjaxUpdater(document.f1, url, target, actionName);*/
+    
+  }
 
-		document.getElementById("kp1").style.display="none";	
-		document.getElementById("kp2").style.display="none";	
-		document.getElementById("kp3").style.display="none";		
-	
-		document.f1.jenis_pemohon.value = "1"
-		
-		if(document.getElementById('jenis_pemohon_drop') != null)
-		{document.getElementById("jenis_pemohon_drop").style.display="none";}
-		if(document.getElementById('jenis_pemohon_dis') != null)
-		{document.getElementById("jenis_pemohon_dis").style.display="";}
-		
-		if(document.f1.jenis_pemohon_display != null)
-		{document.f1.jenis_pemohon_display.value = "01-AGENSI"}
-		
-		
-		
-		
-		if(document.getElementById('txtNamaPemohon_1a') != null)
-		{document.getElementById('txtNamaPemohon_1a').style.display="none";		
-		document.getElementById('txtNamaPemohon_1b').style.display="";}
-		if(document.getElementById('txtNamaPemohon_2a') != null)
-		{document.getElementById('txtNamaPemohon_2a').style.display="none";		
-		document.getElementById('txtNamaPemohon_2b').style.display="";
-	    }
-		
-		if(document.getElementById('txtAlamat1_1a') != null)
-		{
-		document.getElementById('txtAlamat1_1a').style.display="none";
-		document.getElementById('txtAlamat1_1b').style.display="";
-		}		
-		if(document.getElementById('txtAlamat1_2a') != null)
-		{
-		document.getElementById('txtAlamat1_2a').style.display="none";
-		document.getElementById('txtAlamat1_2b').style.display="";
-	    }
-		
-		if(document.getElementById('txtAlamat2_1a') != null)
-		{
-		document.getElementById('txtAlamat2_1a').style.display="none";
-		document.getElementById('txtAlamat2_1b').style.display="";
-		}		
-		if(document.getElementById('txtAlamat2_2a') != null)
-		{
-		document.getElementById('txtAlamat2_2a').style.display="none";
-		document.getElementById('txtAlamat2_2b').style.display="";
-	    }
-		
-		if(document.getElementById('txtAlamat3_1a') != null)
-		{
-		document.getElementById('txtAlamat3_1a').style.display="none";
-		document.getElementById('txtAlamat3_1b').style.display="";
-		}		
-		if(document.getElementById('txtAlamat3_2a') != null)
-		{
-		document.getElementById('txtAlamat3_2a').style.display="none";
-		document.getElementById('txtAlamat3_2b').style.display="";
-	    }
-		
-		if(document.getElementById('txtPoskod_1a') != null)
-		{
-		document.getElementById('txtPoskod_1a').style.display="none";
-		document.getElementById('txtPoskod_1b').style.display="";
-		}		
-		if(document.getElementById('txtPoskod_2a') != null)
-		{
-		document.getElementById('txtPoskod_2a').style.display="none";
-		document.getElementById('txtPoskod_2b').style.display="";
-	    }
-		
-		if(document.getElementById('socNegeri_1a') != null)
-		{
-		document.getElementById('socNegeri_1a').style.display="none";
-		document.getElementById('socNegeri_1b').style.display="";
-		}		
-		if(document.getElementById('socNegeri_2a') != null)
-		{
-		document.getElementById('socNegeri_2a').style.display="none";
-		document.getElementById('socNegeri_2b').style.display="";
-	    }
-		
-		
-		if(document.getElementById('socBandar_1a') != null)
-		{
-		document.getElementById('socBandar_1a').style.display="none";
-		document.getElementById('socBandar_1b').style.display="";
-		document.f1.socBandar[0].disabled=true;
-		}		
-		if(document.getElementById('socBandar_2a') != null)
-		{
-		document.getElementById('socBandar_2a').style.display="none";
-		document.getElementById('socBandar_2b').style.display="";
-		document.f1.socBandar[0].disabled=true;
-	    }
-		
-		// amanah raya 
-	
-		if(document.getElementById('no_tel_1a') != null)
-		{
-		document.getElementById('no_tel_1a').style.display="none";
-		document.getElementById('no_tel_1b').style.display="";
-		}	
-		
-		
-		document.getElementById('tr_hp').style.display="none";
-		
-		document.getElementById('tr_pelbagainegara').style.display="none";
-		document.getElementById('tr_mesej_pelbagainegara').style.display="none";
-		document.getElementById('nama_pelbagainegara').value = "";
-		
-		if(document.getElementById('no_hp_1a') != null)
-		{
-		document.getElementById('no_hp_1a').style.display="none";
-		document.getElementById('no_hp_1b').style.display="none";
-		}	
-		
-		if(document.getElementById('emel_1a') != null)
-		{
-		document.getElementById('emel_1a').style.display="none";
-		document.getElementById('emel_1b').style.display="none";
-		}
-		
-}
-else
-{
+  function get_bandar_simati(){
+    if('$!skrin_online_popup' == "yes"){
+      url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
+    }else{
+      url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+    }
+    actionName = "getbandar_daftar";
+    target = "check_bandar";
+    doAjaxUpdater(document.f1, url, target, actionName);
+  
+  }
 
-}
-
-
-
-							document.f1.txtNamaPemohon[0].disabled = '';					 		
-					 		 document.f1.txtAlamat1[0].disabled = '';				
-					 		 document.f1.txtAlamat2[0].disabled = ''; 			
-					 		 document.f1.txtAlamat3[0].disabled = ''; 	
-					 		 document.f1.txtPoskod[0].disabled = ''; 
-							 
-							
-							 
-					 		document.f1.no_tel[0].disabled = ''; 	
-												 
-							 
-}
-
-function pilih_amanah()
+  function pilih_amanah()
 {
 
 if(document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == "8"){
- 		
-		document.f1.txtNamaPemohon[1].value = "";		
-		document.f1.txtAlamat1[1].value = "";
-		document.f1.txtAlamat2[1].value = "";
-		document.f1.txtAlamat3[1].value = "";		
-		document.f1.txtPoskod[1].value = "";		
-		document.f1.socNegeri[1].value = "";
-		document.f1.socBandar[1].value = "";			
-		document.f1.no_tel[1].value = "";
-		
-		
-		document.f1.socNegeri_dis.value = "";		
-		document.f1.socBandar_dis.value = "";
-		
-		}
+    
+    document.f1.txtNamaPemohon[1].value = "";   
+    document.f1.txtAlamat1[1].value = "";
+    document.f1.txtAlamat2[1].value = "";
+    document.f1.txtAlamat3[1].value = "";   
+    document.f1.txtPoskod[1].value = "";    
+    document.f1.socNegeri[1].value = "";
+    document.f1.socBandar[1].value = "";      
+    document.f1.no_tel[1].value = "";
+    
+    
+    document.f1.socNegeri_dis.value = "";   
+    document.f1.socBandar_dis.value = "";
+    
+    }
 }
 
 
@@ -3727,20 +2942,18 @@ else
 {
 url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 }
-	actionName = "getalamat_raya";
-	target = "add_alamat_raya";
-	doAjaxUpdater(document.f1, url, target, actionName);
+  actionName = "getalamat_raya";
+  target = "add_alamat_raya";
+  doAjaxUpdater(document.f1, url, target, actionName);
 
 }
 
-
-
-function default_amanah()
-{
-document.f1.jenis_pej1.value = "";
-document.f1.jenis_pej2.value = "";
-document.f1.jenis_pej.value = "";
-}
+  function default_amanah(){
+    document.f1.jenis_pej1.value = "";
+    document.f1.jenis_pej2.value = "";
+    document.f1.jenis_pej.value = "";
+  
+  }
 
 function kp_baru_pemohon()
 {
@@ -3758,9 +2971,9 @@ else
 {
 url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 }
-	actionName = "check_kpbaru_pemohon";
-	target = "check_kp_p1";
-	doAjaxUpdater(document.f1, url, target, actionName);
+  actionName = "check_kpbaru_pemohon";
+  target = "check_kp_p1";
+  doAjaxUpdater(document.f1, url, target, actionName);
 
 }
 
@@ -3780,9 +2993,9 @@ else
 {
 url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 }
-	actionName = "check_kplama_pemohon";
-	target = "check_kp_p2";
-	doAjaxUpdater(document.f1, url, target, actionName);
+  actionName = "check_kplama_pemohon";
+  target = "check_kp_p2";
+  doAjaxUpdater(document.f1, url, target, actionName);
 
 }
 
@@ -3801,54 +3014,603 @@ else
 {
 url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 }
-	actionName = "check_kplain_pemohon";
-	target = "check_kp_p3";
-	doAjaxUpdater(document.f1, url, target, actionName);
+  actionName = "check_kplain_pemohon";
+  target = "check_kp_p3";
+  doAjaxUpdater(document.f1, url, target, actionName);
 
 }
 
-function check_kp_pemohon_onload()
-{
-kp_baru_pemohon();
-kp_lama_pemohon();
-kp_lain_pemohon();
+  function check_kp_pemohon_onload(){
+    kp_baru_pemohon();
+    kp_lama_pemohon();
+    kp_lain_pemohon();
 
+  }
+
+  function ForView(noFail) {
+    document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailSek8ForView&txtNoFail="+noFail;
+    document.f1.submit();
+
+  }
+
+  function sorok_fieldset(IdFail){
+    //alert("test1");
+    if(IdFail!="" && IdFail != 0){
+    //alert("test");
+      document.getElementById('maklumat_pemohon').style.display="none";
+      document.getElementById('maklumat_simati').style.display="none";
+    
+    }else{
+      document.getElementById('maklumat_asas').style.display="none";
+    }
+
+  }
+
+    function pilih_taraf(){
+      if(document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "2" && document.f1.taraf_penting.value != "4"){
+
+      if(document.f1.taraf_penting.value != "1"){
+            document.getElementById("hubungan").style.display="none";
+      
+            if(document.f1.baca.value != "disabled"){
+            document.f1.socSaudaraWaris.value = ""; 
+          }
+        
+          }else{
+          document.getElementById("hubungan").style.display="";
+          //document.f1.socSaudaraWaris.value = ""; 
+      } 
+
+        document.getElementById("kp1").style.display="";  
+        document.getElementById("kp2").style.display="";  
+        document.getElementById("kp3").style.display="";  
+        document.getElementById('amanah').style.display="none";
+        document.getElementById('baitulmal').style.display="none";
+          
+        document.f1.jenis_pemohon.value = "2"
+      
+      if(document.getElementById('jenis_pemohon_drop') != null){
+            document.getElementById("jenis_pemohon_drop").style.display="none";
+        }
+      
+      if(document.getElementById('jenis_pemohon_dis') != null){
+            document.getElementById("jenis_pemohon_dis").style.display="";
+        }
+      
+      if(document.f1.jenis_pemohon_display != null){ 
+            document.f1.jenis_pemohon_display.value = "02-INDIVIDU";
+        }
+      
+      if(document.getElementById('txtNamaPemohon_1a') != null){
+          document.getElementById('txtNamaPemohon_1a').style.display="";
+          document.getElementById('txtNamaPemohon_1b').style.display="none";
+      }   
+      
+        if(document.getElementById('txtNamaPemohon_2a') != null){
+          document.getElementById('txtNamaPemohon_2a').style.display="";
+          document.getElementById('txtNamaPemohon_2b').style.display="none";
+        }
+      
+      if(document.getElementById('txtAlamat1_1a') != null){
+          document.getElementById('txtAlamat1_1a').style.display="";
+          document.getElementById('txtAlamat1_1b').style.display="none";
+      } 
+
+      if(document.getElementById('txtAlamat1_2a') != null){
+          document.getElementById('txtAlamat1_2a').style.display="";
+          document.getElementById('txtAlamat1_2b').style.display="none";
+      }
+      
+      if(document.getElementById('txtAlamat2_1a') != null){
+        document.getElementById('txtAlamat2_1a').style.display="";
+        document.getElementById('txtAlamat2_1b').style.display="none";
+      }   
+
+      if(document.getElementById('txtAlamat2_2a') != null){
+        document.getElementById('txtAlamat2_2a').style.display="";
+        document.getElementById('txtAlamat2_2b').style.display="none";
+      }
+      
+      if(document.getElementById('txtAlamat3_1a') != null){
+        document.getElementById('txtAlamat3_1a').style.display="";
+        document.getElementById('txtAlamat3_1b').style.display="none";
+      }   
+      
+      if(document.getElementById('txtAlamat3_2a') != null){
+        document.getElementById('txtAlamat3_2a').style.display="";
+        document.getElementById('txtAlamat3_2b').style.display="none";
+        }
+      
+      if(document.getElementById('txtPoskod_1a') != null){
+        document.getElementById('txtPoskod_1a').style.display="";
+        document.getElementById('txtPoskod_1b').style.display="none";
+      }   
+      
+      if(document.getElementById('txtPoskod_2a') != null){
+        document.getElementById('txtPoskod_2a').style.display="";
+        document.getElementById('txtPoskod_2b').style.display="none";
+      }
+    
+      if(document.getElementById('socNegeri_1a') != null){
+        document.getElementById('socNegeri_1a').style.display="";   
+        document.getElementById('socNegeri_1b').style.display="none";
+        document.getElementById('socNegeri').disabled=false;
+        document.getElementById('socNegeri').readonly=false;
+      }   
+      
+      if(document.getElementById('socNegeri_2a') != null){
+        document.getElementById('socNegeri_2a').style.display="";
+        document.getElementById('socNegeri_2b').style.display="none";
+        document.getElementById('socNegeri').disabled=false;
+        document.getElementById('socNegeri').readonly=false;
+        }
+      
+      if(document.getElementById('socBandar_1a') != null){
+        document.getElementById('socBandar_1a').style.display="";
+        document.getElementById('socBandar_1b').style.display="none";
+        document.getElementById('socBandar').disabled=false;
+        document.getElementById('socBandar').readonly=false;
+      }   
+
+      if(document.getElementById('socBandar_2a') != null){
+        document.getElementById('socBandar_2a').style.display="";
+        document.getElementById('socBandar').disabled=false;
+        document.getElementById('socBandar').readonly=false;
+        document.getElementById('socBandar_2b').style.display="none";
+      }
+      
+      if(document.getElementById('no_tel_1a') != null){
+        document.getElementById('no_tel_1a').style.display="";
+        document.getElementById('no_tel_1b').style.display="none";
+      } 
+      
+      if(document.getElementById('no_hp_1a') != null){
+        document.getElementById('no_hp_1a').style.display="";
+        document.getElementById('no_hp_1b').style.display="none";
+      } 
+      
+      if(document.getElementById('emel_1a') != null){
+        document.getElementById('emel_1a').style.display="";
+        document.getElementById('emel_1b').style.display="none";
+      } 
+      
+      document.getElementById('tr_hp').style.display="";
+      document.getElementById('tr_pelbagainegara').style.display="";
+      document.getElementById('tr_mesej_pelbagainegara').style.display="";
+
+      }else if(document.f1.taraf_penting.value == "8"){
+    
+      if(document.f1.baca.value == "disabled"){
+        document.getElementById('amanah').style.display="none";
+        document.getElementById('baitulmal').style.display="none";
+      }else{
+        document.getElementById('amanah').style.display="none";
+        document.getElementById('baitulmal').style.display="";
+      }
+        
+      document.getElementById("kp1").style.display="none";  
+      document.getElementById("kp2").style.display="none";  
+      document.getElementById("kp3").style.display="none";
+      
+      document.getElementById("hubungan").style.display="none";
+
+      if(document.f1.baca.value != "disabled"){
+        document.f1.socSaudaraWaris.value = ""; 
+      }   
+  
+      document.f1.jenis_pemohon.value = "1"
+      
+      if(document.getElementById('jenis_pemohon_drop') != null)
+      {document.getElementById("jenis_pemohon_drop").style.display="none";}
+      if(document.getElementById('jenis_pemohon_dis') != null)
+      {document.getElementById("jenis_pemohon_dis").style.display="";}
+      
+      if(document.f1.jenis_pemohon_display != null)
+      {document.f1.jenis_pemohon_display.value = "01-AGENSI"}
+      
+      if(document.getElementById('txtNamaPemohon_1a') != null)
+      {document.getElementById('txtNamaPemohon_1a').style.display="none";   
+      document.getElementById('txtNamaPemohon_1b').style.display="";}
+      if(document.getElementById('txtNamaPemohon_2a') != null)
+      {document.getElementById('txtNamaPemohon_2a').style.display="none";   
+      document.getElementById('txtNamaPemohon_2b').style.display="";
+        }
+    
+      if(document.getElementById('txtAlamat1_1a') != null)
+      {
+      document.getElementById('txtAlamat1_1a').style.display="none";
+      document.getElementById('txtAlamat1_1b').style.display="";
+      }   
+      if(document.getElementById('txtAlamat1_2a') != null)
+      {
+      document.getElementById('txtAlamat1_2a').style.display="none";
+      document.getElementById('txtAlamat1_2b').style.display="";
+        }
+      
+      if(document.getElementById('txtAlamat2_1a') != null)
+      {
+      document.getElementById('txtAlamat2_1a').style.display="none";
+      document.getElementById('txtAlamat2_1b').style.display="";
+      }   
+      if(document.getElementById('txtAlamat2_2a') != null)
+      {
+      document.getElementById('txtAlamat2_2a').style.display="none";
+      document.getElementById('txtAlamat2_2b').style.display="";
+        }
+      
+      if(document.getElementById('txtAlamat3_1a') != null)
+      {
+      document.getElementById('txtAlamat3_1a').style.display="none";
+      document.getElementById('txtAlamat3_1b').style.display="";
+      }   
+      if(document.getElementById('txtAlamat3_2a') != null)
+      {
+      document.getElementById('txtAlamat3_2a').style.display="none";
+      document.getElementById('txtAlamat3_2b').style.display="";
+        }
+      
+      if(document.getElementById('txtPoskod_1a') != null)
+      {
+      document.getElementById('txtPoskod_1a').style.display="none";
+      document.getElementById('txtPoskod_1b').style.display="";
+      }   
+      if(document.getElementById('txtPoskod_2a') != null)
+      {
+      document.getElementById('txtPoskod_2a').style.display="none";
+      document.getElementById('txtPoskod_2b').style.display="";
+        }
+      
+      if(document.getElementById('socNegeri_1a') != null)
+      {
+      document.getElementById('socNegeri_1a').style.display="none";
+      document.getElementById('socNegeri_1b').style.display="";
+      }   
+      if(document.getElementById('socNegeri_2a') != null)
+      {
+      document.getElementById('socNegeri_2a').style.display="none";
+      document.getElementById('socNegeri_2b').style.display="";
+        } 
+    
+      if(document.getElementById('socBandar_1a') != null)
+      {
+      document.getElementById('socBandar_1a').style.display="none";
+      document.getElementById('socBandar_1b').style.display="";
+      document.f1.socBandar[0].disabled=true;
+      }   
+      if(document.getElementById('socBandar_2a') != null)
+      {
+      document.getElementById('socBandar_2a').style.display="none";
+      document.getElementById('socBandar_2b').style.display="";
+      document.f1.socBandar[0].disabled=true;
+        }
+    
+      // amanah raya 
+      if(document.getElementById('no_tel_1a') != null)
+      {
+      document.getElementById('no_tel_1a').style.display="none";
+      document.getElementById('no_tel_1b').style.display="";
+      } 
+      
+      
+      document.getElementById('tr_hp').style.display="none";
+      
+      document.getElementById('tr_pelbagainegara').style.display="none";
+      document.getElementById('tr_mesej_pelbagainegara').style.display="none";
+      document.getElementById('nama_pelbagainegara').value = "";
+      
+      if(document.getElementById('no_hp_1a') != null)
+      {
+      document.getElementById('no_hp_1a').style.display="none";
+      document.getElementById('no_hp_1b').style.display="none";
+      } 
+      
+        if(document.getElementById('emel_1a') != null){
+          document.getElementById('emel_1a').style.display="none";
+          document.getElementById('emel_1b').style.display="none";
+        } 
+
+      }else if(document.f1.taraf_penting.value == "2" || document.f1.taraf_penting.value == "4"){
+        document.getElementById("hubungan").style.display="none";
+
+    if(document.f1.baca.value != "disabled")
+    {
+    document.f1.socSaudaraWaris.value = ""; 
+    } 
+  
+    if(document.getElementById('jenis_pemohon_drop') != null)
+    {document.getElementById("jenis_pemohon_drop").style.display="";}
+    if(document.getElementById('jenis_pemohon_dis') != null)
+    {document.getElementById("jenis_pemohon_dis").style.display="none";}    
+    
+    if(document.f1.jenis_pemohon.value == "2")
+    {   
+    document.getElementById('amanah').style.display="none";
+    document.getElementById('baitulmal').style.display="none";
+    document.getElementById("kp1").style.display="";  
+    document.getElementById("kp2").style.display="";  
+    document.getElementById("kp3").style.display="";
+    
+    if(document.getElementById('no_hp_1a') != null)
+    {
+    document.getElementById('no_hp_1a').style.display="";
+    document.getElementById('no_hp_1b').style.display="none";
+    }   
+    document.getElementById('tr_hp').style.display="";  
+    
+    document.getElementById('tr_pelbagainegara').style.display="";
+    document.getElementById('tr_mesej_pelbagainegara').style.display="";
+    
+    }
+    else{
+    document.getElementById('amanah').style.display="none";
+    document.getElementById('baitulmal').style.display="none";
+    document.getElementById("kp1").style.display="none";  
+    document.getElementById("kp2").style.display="none";  
+    document.getElementById("kp3").style.display="none";
+    
+    if(document.getElementById('no_hp_1a') != null)
+    {
+    document.getElementById('no_hp_1a').style.display="none";
+    document.getElementById('no_hp_1b').style.display="none";
+    }   
+    document.getElementById('tr_hp').style.display="none";  
+    
+    document.getElementById('tr_pelbagainegara').style.display="none";
+    document.getElementById('tr_mesej_pelbagainegara').style.display="none";
+    document.getElementById('nama_pelbagainegara').value = "";    
+    } 
+  
+    if(document.getElementById('txtNamaPemohon_1a') != null)
+    {
+    document.getElementById('txtNamaPemohon_1a').style.display="";
+    document.getElementById('txtNamaPemohon_1b').style.display="none";
+    }
+    if(document.getElementById('txtNamaPemohon_2a') != null)
+    {
+    document.getElementById('txtNamaPemohon_2a').style.display="";
+    document.getElementById('txtNamaPemohon_2b').style.display="none";
+      }
+    
+    if(document.getElementById('txtAlamat1_1a') != null)
+    {
+    document.getElementById('txtAlamat1_1a').style.display="";
+    document.getElementById('txtAlamat1_1b').style.display="none";
+    }   
+    if(document.getElementById('txtAlamat1_2a') != null)
+    {
+    document.getElementById('txtAlamat1_2a').style.display="";
+    document.getElementById('txtAlamat1_2b').style.display="none";
+      }
+    
+    if(document.getElementById('txtAlamat2_1a') != null)
+    {
+    document.getElementById('txtAlamat2_1a').style.display="";
+    document.getElementById('txtAlamat2_1b').style.display="none";
+    }   
+    if(document.getElementById('txtAlamat2_2a') != null)
+    {
+    document.getElementById('txtAlamat2_2a').style.display="";
+    document.getElementById('txtAlamat2_2b').style.display="none";
+      }
+    
+    if(document.getElementById('txtAlamat3_1a') != null)
+    {
+    document.getElementById('txtAlamat3_1a').style.display="";
+    document.getElementById('txtAlamat3_1b').style.display="none";
+    }   
+    if(document.getElementById('txtAlamat3_2a') != null)
+    {
+    document.getElementById('txtAlamat3_2a').style.display="";
+    document.getElementById('txtAlamat3_2b').style.display="none";
+      }
+    
+    if(document.getElementById('txtPoskod_1a') != null)
+    {
+    document.getElementById('txtPoskod_1a').style.display="";
+    document.getElementById('txtPoskod_1b').style.display="none";
+    }   
+    if(document.getElementById('txtPoskod_2a') != null)
+    {
+    document.getElementById('txtPoskod_2a').style.display="";
+    document.getElementById('txtPoskod_2b').style.display="none";
+      }
+    
+    
+    if(document.getElementById('socNegeri_1a') != null)
+    {
+    document.getElementById('socNegeri_1a').style.display="";
+    document.getElementById('socNegeri_1b').style.display="none";
+    }   
+    if(document.getElementById('socNegeri_2a') != null)
+    {
+    document.getElementById('socNegeri_2a').style.display="";
+    document.getElementById('socNegeri_2b').style.display="none";
+      }
+    
+    if(document.getElementById('socBandar_1a') != null)
+    {
+    document.getElementById('socBandar_1a').style.display="";
+    document.getElementById('socBandar_1b').style.display="none";
+    }   
+    if(document.getElementById('socBandar_2a') != null)
+    {
+    document.getElementById('socBandar_2a').style.display="";
+    document.getElementById('socBandar_2b').style.display="none";
+      }
+    
+    if(document.getElementById('no_tel_1a') != null)
+    {
+    document.getElementById('no_tel_1a').style.display="";
+    document.getElementById('no_tel_1b').style.display="none";
+    } 
+    if(document.getElementById('emel_1a') != null)
+    {
+    document.getElementById('emel_1a').style.display="";
+    document.getElementById('emel_1b').style.display="none";
+    } 
+  
 }
 
-
-
-function ForView(noFail) {
-	document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailSek8ForView&txtNoFail="+noFail;
-	document.f1.submit();
-}
-
-
-function sorok_fieldset(IdFail)
+else if(document.f1.taraf_penting.value == "6")
 {
-//alert("test1");
-if(IdFail!="" && IdFail != 0)
+
+document.getElementById("hubungan").style.display="none";
+
+if(document.f1.baca.value != "disabled")
+    {
+    document.f1.socSaudaraWaris.value = ""; 
+    } 
+    
+
+
+if(document.f1.baca.value == "disabled")
 {
-//alert("test");
-document.getElementById('maklumat_pemohon').style.display="none";
-document.getElementById('maklumat_simati').style.display="none";
+    document.getElementById('amanah').style.display="none";
+    document.getElementById('baitulmal').style.display="none";
 }
 else
 {
-document.getElementById('maklumat_asas').style.display="none";
+
+document.getElementById('amanah').style.display="";
+document.getElementById('baitulmal').style.display="none";
 }
 
 
-}
-
+    document.getElementById("kp1").style.display="none";  
+    document.getElementById("kp2").style.display="none";  
+    document.getElementById("kp3").style.display="none";    
+  
+    document.f1.jenis_pemohon.value = "1"
+    
+    if(document.getElementById('jenis_pemohon_drop') != null)
+    {document.getElementById("jenis_pemohon_drop").style.display="none";}
+    if(document.getElementById('jenis_pemohon_dis') != null)
+    {document.getElementById("jenis_pemohon_dis").style.display="";}
+    
+    if(document.f1.jenis_pemohon_display != null)
+    {document.f1.jenis_pemohon_display.value = "01-AGENSI"}
+    
+    
+    
+    
+    if(document.getElementById('txtNamaPemohon_1a') != null)
+    {document.getElementById('txtNamaPemohon_1a').style.display="none";   
+    document.getElementById('txtNamaPemohon_1b').style.display="";}
+    if(document.getElementById('txtNamaPemohon_2a') != null)
+    {document.getElementById('txtNamaPemohon_2a').style.display="none";   
+    document.getElementById('txtNamaPemohon_2b').style.display="";
+      }
+    
+    if(document.getElementById('txtAlamat1_1a') != null)
+    {
+    document.getElementById('txtAlamat1_1a').style.display="none";
+    document.getElementById('txtAlamat1_1b').style.display="";
+    }   
+    if(document.getElementById('txtAlamat1_2a') != null)
+    {
+    document.getElementById('txtAlamat1_2a').style.display="none";
+    document.getElementById('txtAlamat1_2b').style.display="";
+      }
+    
+    if(document.getElementById('txtAlamat2_1a') != null)
+    {
+    document.getElementById('txtAlamat2_1a').style.display="none";
+    document.getElementById('txtAlamat2_1b').style.display="";
+    }   
+    if(document.getElementById('txtAlamat2_2a') != null)
+    {
+    document.getElementById('txtAlamat2_2a').style.display="none";
+    document.getElementById('txtAlamat2_2b').style.display="";
+      }
+    
+    if(document.getElementById('txtAlamat3_1a') != null)
+    {
+    document.getElementById('txtAlamat3_1a').style.display="none";
+    document.getElementById('txtAlamat3_1b').style.display="";
+    }   
+    if(document.getElementById('txtAlamat3_2a') != null)
+    {
+    document.getElementById('txtAlamat3_2a').style.display="none";
+    document.getElementById('txtAlamat3_2b').style.display="";
+      }
+    
+    if(document.getElementById('txtPoskod_1a') != null)
+    {
+    document.getElementById('txtPoskod_1a').style.display="none";
+    document.getElementById('txtPoskod_1b').style.display="";
+    }   
+    if(document.getElementById('txtPoskod_2a') != null)
+    {
+    document.getElementById('txtPoskod_2a').style.display="none";
+    document.getElementById('txtPoskod_2b').style.display="";
+      }
+    
+    if(document.getElementById('socNegeri_1a') != null)
+    {
+    document.getElementById('socNegeri_1a').style.display="none";
+    document.getElementById('socNegeri_1b').style.display="";
+    }   
+    if(document.getElementById('socNegeri_2a') != null)
+    {
+    document.getElementById('socNegeri_2a').style.display="none";
+    document.getElementById('socNegeri_2b').style.display="";
+      }
+    
+    
+    if(document.getElementById('socBandar_1a') != null)
+    {
+    document.getElementById('socBandar_1a').style.display="none";
+    document.getElementById('socBandar_1b').style.display="";
+    document.f1.socBandar[0].disabled=true;
+    }   
+    if(document.getElementById('socBandar_2a') != null)
+    {
+    document.getElementById('socBandar_2a').style.display="none";
+    document.getElementById('socBandar_2b').style.display="";
+    document.f1.socBandar[0].disabled=true;
+      }
+    
+    // amanah raya 
+  
+    if(document.getElementById('no_tel_1a') != null)
+    {
+    document.getElementById('no_tel_1a').style.display="none";
+    document.getElementById('no_tel_1b').style.display="";
+    } 
+    
+    
+    document.getElementById('tr_hp').style.display="none";
+    
+    document.getElementById('tr_pelbagainegara').style.display="none";
+    document.getElementById('tr_mesej_pelbagainegara').style.display="none";
+    document.getElementById('nama_pelbagainegara').value = "";
+    
+    if(document.getElementById('no_hp_1a') != null)
+    {
+    document.getElementById('no_hp_1a').style.display="none";
+    document.getElementById('no_hp_1b').style.display="none";
+    } 
+    
+    if(document.getElementById('emel_1a') != null)
+    {
+    document.getElementById('emel_1a').style.display="none";
+    document.getElementById('emel_1b').style.display="none";
+    }
+    
+    }else{}
+      document.f1.txtNamaPemohon[0].disabled = '';              
+      document.f1.txtAlamat1[0].disabled = '';        
+      document.f1.txtAlamat2[0].disabled = '';      
+      document.f1.txtAlamat3[0].disabled = '';  
+      document.f1.txtPoskod[0].disabled = '';             
+      document.f1.no_tel[0].disabled = '';  
+                                       
+  }
 
 </script>
 
-
-
-
 <script type="text/javascript">
-    function AddItem(Text,Value)
-    {
+    function AddItem(Text,Value){
         // Create an Option object        
 
         var opt = document.createElement("option");
@@ -3862,48 +3624,49 @@ document.getElementById('maklumat_asas').style.display="none";
 
     }
 	
+	function calcDate(){
 	
+		if (document.f1.tdaftar.value != "" ){
+		
+			var tarikhHantar = document.f1.tdaftar.value;
+			var days = 165;
+			
+			var dt1 = parseInt(tarikhHantar.substring(0,2),10) + days;
+			var mon1 = parseInt(tarikhHantar.substring(3,5),10)-1;
+			var yr1 = parseInt(tarikhHantar.substring(6,10),10);
+			
+			var myDate = new Date(yr1, mon1, dt1);
+			
+			var day = myDate.getDate();
+			var month = myDate.getMonth()+1;
+			var year = myDate.getFullYear();
+			
+			var tarikhJangkaTerima = "";
+			
+			if(month>=10){
+				if(day>=10){
+					tarikhJangkaTerima = day + "/" + month + "/" + year;
+				} else {
+					tarikhJangkaTerima = "0"+ day + "/" + month + "/" + year;
+				}
+			
+			} else {
+				if(day>=10){
+					tarikhJangkaTerima = day + "/0" + month + "/" + year;
+				} else {
+					tarikhJangkaTerima = "0"+ day + "/0" + month + "/" + year;
+				}
+			
+			}
 	
-function calcDate(){
-
-if (document.f1.tdaftar.value != "" ){
-
-var tarikhHantar = document.f1.tdaftar.value;
-var days = 165;
-
-var dt1 = parseInt(tarikhHantar.substring(0,2),10) + days;
-var mon1 = parseInt(tarikhHantar.substring(3,5),10)-1;
-var yr1 = parseInt(tarikhHantar.substring(6,10),10);
-
-var myDate = new Date(yr1, mon1, dt1);
-
-var day = myDate.getDate();
-var month = myDate.getMonth()+1;
-var year = myDate.getFullYear();
-
-var tarikhJangkaTerima = "";
-if(month>=10){
-if(day>=10){
-tarikhJangkaTerima = day + "/" + month + "/" + year;
-} else {
-tarikhJangkaTerima = "0"+ day + "/" + month + "/" + year;
-}
-} else {
-if(day>=10){
-tarikhJangkaTerima = day + "/0" + month + "/" + year;
-} else {
-tarikhJangkaTerima = "0"+ day + "/0" + month + "/" + year;
-}
-}
-
-$jquery("#kpi_ppk").html("<span  style='color:red'>"+tarikhJangkaTerima+"</span>");
-
-} else {
-$jquery("#kpi_ppk").html("<span  style='color:red'></span>");
-}
-
-//alert("check date");
-} 
+			$jquery("#kpi_ppk").html("<span  style='color:red'>"+tarikhJangkaTerima+"</span>");
+	
+		} else {
+			$jquery("#kpi_ppk").html("<span  style='color:red'></span>");
+		}	
+	//alert("check date");
+	
+	} 
 
 	function cetakDokumen(id,template) {
 	    var url = "../servlet/ekptg.report.frmPaparDokumenByPermohonan?idpermohonan="+id+"&dirfolder=ppk&template="+template;
@@ -3913,13 +3676,8 @@ $jquery("#kpi_ppk").html("<span  style='color:red'></span>");
 	    if (hWnd.focus != null) hWnd.focus();
 	}
 	
-	function check()
-	{
+	function check(){
 	//alert("masuk!");
 	}
 	
 </script>
-
-
-
-
