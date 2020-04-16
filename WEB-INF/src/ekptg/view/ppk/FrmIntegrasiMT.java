@@ -7,7 +7,6 @@ import my.gov.kehakiman.eip.services.MTManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -91,8 +90,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			}
 			context.put("sendI", sendI);
 			// CHECK EXIST PETIONER
-			if (existPetioner(idFail)) {
-				
+			if (existPetioner(idFail)) {				
 //				isExistPetioner = "ada";
 //				myLogger.info("isExistPetioner 3--- "+isExistPetioner);
 				context.put("semakPetioner", "ada");
@@ -103,9 +101,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			/*myLogger.info("isExistPetioner 4--- "+isExistPetioner);
 			myLogger.info("isExistPetioner--------------"+isExistPetioner);
 			myLogger.info("isExistPetioner context 1--------------"+context.put("isExistPetioner", isExistPetioner));*/
-			context.put("isExistPetioner", isExistPetioner);
-			
-			
+			context.put("isExistPetioner", isExistPetioner);		
 
 			// CHECK SUCCESS SENT
 			if (successSend(idFail)) {
@@ -387,15 +383,7 @@ public class FrmIntegrasiMT extends VTemplate {
 
 			vm = "app/ppk/integrasi/MahkamahTinggi.jsp";
 			
-		
-
-		} 
-		
-		
-		
-		
-		
-		else if ("hantarPermohonan".equals(submit)) {
+		}else if ("hantarPermohonan".equals(submit)) {
 			String idFail = request.getParameter("idFail");
 			Hashtable permohonanMT = getPermohonanMT(user, idFail);
 			String docContent = (String) permohonanMT.get("docContent");//(String) permohonanMT.get("docContent");
@@ -540,12 +528,13 @@ public class FrmIntegrasiMT extends VTemplate {
 					vm = "app/ppk/integrasi/MahkamahTinggiSuccess.jsp";
 					
 					IntLogManager.recordLogMT(noFail, "I", "O", "Y", "SUCCESS");
+				
 				} else {
-
 					context.put("details", details);
 					vm = "app/ppk/integrasi/MahkamahTinggiFailed.jsp";
 
 					IntLogManager.recordLogMT(noFail, "I", "O", "T", details);
+				
 				}
 
 			} else {
@@ -1152,4 +1141,6 @@ public class FrmIntegrasiMT extends VTemplate {
 		}
 		return TarikhHantarMT;
 	}
+	
+	
 }
