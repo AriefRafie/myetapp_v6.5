@@ -112,9 +112,10 @@ input[readonly]{
 			</tr>
 		</table>
 		
-		<input type="hidden" name="idPerintah" id="idPerintah" value="$!idPerintah">
-		<input type="hidden" name="jenisPerintah" id="jenisPerintah" value="$!jenisPerintah">
 		<input type="hidden" name="blueCardId" id="blueCardId" value="$!blueCardId">
+		<input type="hidden" name="idPerintah" id="idPerintah" value="$!idPerintah">
+		<input type="hidden" name="idpermohonan" id="idPerintah" value="$!idPermohonan">
+		<input type="hidden" name="jenisPerintah" id="jenisPerintah" value="$!jenisPerintah">
 	</form>
 </body>
 
