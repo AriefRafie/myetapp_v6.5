@@ -42,6 +42,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	private IHtp iHTP = null;  	
 	private Long idSubUrusanStatusFail = 0L;
 	private Db db = null;
+	private Connection conn = null;
 	
 	@Override
 	public Tblrujsuburusanstatus getDetails(String id) {
@@ -78,7 +79,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 		return detailsData;
 	  
 	}
-
+	//UrusanRekod - Tidak digunakan
 	@Override
 	public Tblrujsuburusanstatusfail getStatusFailPermohonanAktif(String idFail,String idPermohonan) throws Exception {		
 		Tblrujsuburusanstatusfail susf = null;
@@ -123,25 +124,25 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	    
 	  }//close Tblrujsuburusanstatusfail
 	@Override
-	public void statusChangeActionL1(String idFail,String idPermohonan,String idSuburusan,String user){
+	public void statusChangeActionL1(String idHakmilik,String idPermohonan,String idSuburusan,String user){
 		try{
-			String idSubUrusanStatusFailStr = String.valueOf(DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ"));
+			//String idSubUrusanStatusFailStr = String.valueOf(DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ"));
 			String idSubUrusanStatus = getIdSuburusanStatusByLangkah("1",idSuburusan,"=");
 
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			r.add("Id_Suburusanstatusfail", idSubUrusanStatusFailStr);
-			r.add("id_Permohonan", idPermohonan);
-			r.add("id_fail", idFail);
-			r.add("Id_Suburusanstatus",idSubUrusanStatus);
-			r.add("aktif","1");
+			//r.add("Id_Suburusanstatusfail", idSubUrusanStatusFailStr);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("ID_FAIL", idHakmilik);
+			r.add("IS_SUBURUSANSTATUS",idSubUrusanStatus);
+			r.add("AKTIF","1");
 			r.add("ID_MASUK", r.unquote(user));
 			r.add("TARIKH_MASUK", r.unquote("sysdate"));
 			r.add("ID_KEMASKINI", r.unquote(user));
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
-			sql = r.getSQLInsert("tblrujsuburusanstatusfail");
-			myLog.info("FrmGadaianSemakanData::StatusChange_Action::TBLRUJSUBURUSANSTATUSFAIL = "+sql);
+			sql = r.getSQLInsert("TBLHTPRUJSUBURUSANSTATUSFAIL");
+			myLog.info("statusChangeActionL1:sql = "+sql);
 			stmt.executeUpdate(sql);
 		      
 		  }catch(Exception ex){
@@ -183,45 +184,37 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	}
 	
 	@Override
-	public Hashtable<String, String> getInfoStatusPermohonanFail(String idFail,String idPermohonan,String langkah) throws Exception {		
+	public Hashtable<String, String> getInfoStatusPermohonanFail(String idTanah,String idPermohonan,String langkah) throws Exception {		
 	    Hashtable<String, String> h = null;
 	    try {	    	
 	    	db = new Db();
 	    	Statement stmt = db.getStatement();	    		
-	    	//SYARAT
-	    	sql = "SELECT distinct f.id_fail, f.no_fail, a.id_permohonan, ";
-	    	sql += " a.id_status, s.keterangan, stf.id_suburusanstatusfail, stf.aktif,f.id_suburusan ";
-	    	sql += " ,F.ID_MASUK,ST.ID_SUBURUSANSTATUS,STF.URL CATATAN" +
-	    			",TO_CHAR(STF.TARIKH_MASUK,'dd/mm/yyyy') TARIKH_MASUK " +
-	    			",TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI " +
-	    			"FROM Tblpermohonan a, Tblpfdfail f, Tblrujstatus s, ";
-	    	sql += " tblrujsuburusanstatus st, tblrujsuburusanstatusfail stf  ";
-	    	sql += " WHERE " ;
-	    	sql += " a.id_fail = f.id_fail ";
-	    	sql += " AND st.id_status = s.id_status ";
-	    	sql += " AND stf.id_suburusanstatus = st.id_suburusanstatus ";
-	    	sql += " AND stf.id_permohonan = a.id_permohonan ";
-	    	sql += " AND stf.ID_FAIL = A.ID_FAIL ";
-	    	sql += " AND F.id_status <> '999' ";
-	    	sql += " AND ST.LANGKAH = '"+langkah+"' ";
-	    	//sql += " AND stf.aktif = 1 ";
-	    	sql += " AND STF.ID_PERMOHONAN = '" + idPermohonan + "'";
-	    	sql += " AND STF.ID_FAIL = '" + idFail + "'";
-	    	//myLog.info("getInfoSelesaiPermohonan 2:sql="+sql);
+	    	sql = "SELECT SUSF.ID_SUBURUSANSTATUSFAIL,SUS.LANGKAH " +
+	    		" FROM " +
+		    	" TBLHTPRUJSUBURUSANSTATUSFAIL SUSF,TBLRUJSUBURUSANSTATUS SUS "+
+		    	" WHERE "+
+		    	" SUS.ID_SUBURUSANSTATUS = SUSF.ID_SUBURUSANSTATUS "+
+		    	" AND SUSF.ID_FAIL = " + idTanah + 
+		    	" AND SUSF.ID_PERMOHONAN = " + idPermohonan +
+		    	" AND SUSF.AKTIF = 1 "+
+		    	" AND SUS.LANGKAH = "+langkah+
+	    		" ";
+//	    	myLog.info("getInfoStatusPermohonanFail:"+sql);
 	    	ResultSet rs = stmt.executeQuery(sql);	      	
 			 
 	    	while (rs.next()) {
 	    		h = new Hashtable<String, String>();  
-	    		h.put("level",rs.getString("ID_MASUK"));	 
-	    		h.put("id_permohonan", rs.getString("id_permohonan"));
-	    		h.put("id_status", rs.getString("id_suburusan"));
-	    		h.put("id_suburusanstatusfail", rs.getString("id_suburusanstatusfail"));
-	    		h.put("id_suburusanstatus", rs.getString("id_suburusanstatus"));
-	    		h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
-	    		h.put("no_fail", rs.getString("no_fail")==null?"":rs.getString("no_fail"));
-	    		h.put("catatan", Utils.isNull(rs.getString("CATATAN")));
-	    		h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
-	    		h.put("tarikhSelesai", rs.getString("TARIKH_SELESAI").equals("01/01/1900")?"":Utils.isNull(rs.getString("TARIKH_SELESAI")));
+//	    		h.put("level",rs.getString("ID_MASUK"));	 
+//	    		h.put("id_permohonan", rs.getString("id_permohonan"));
+//	    		h.put("id_status", rs.getString("id_suburusan"));
+	    		h.put("idSuburusanStatusFail", rs.getString("id_suburusanstatusfail"));
+	    		h.put("langkah",rs.getString("LANGKAH"));	 
+//	    		h.put("id_suburusanstatus", rs.getString("id_suburusanstatus"));
+//	    		h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
+//	    		h.put("no_fail", rs.getString("no_fail")==null?"":rs.getString("no_fail"));
+//	    		h.put("catatan", Utils.isNull(rs.getString("CATATAN")));
+//	    		h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
+//	    		h.put("tarikhSelesai", rs.getString("TARIKH_SELESAI").equals("01/01/1900")?"":Utils.isNull(rs.getString("TARIKH_SELESAI")));
 
 	    	}	    	  
 	    	return h;
@@ -231,7 +224,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	    }	    
 	    
 	  }//close list	
-	
+	// Urusan Rekod - Tidak Digunakan
 	@Override
 	public void simpanKemaskiniStatus(Tblrujsuburusanstatusfail s,Long setIdStatus) throws Exception {
 		Connection conn = null;
@@ -244,46 +237,35 @@ public class HTPStatusRekodBean implements IHTPStatus {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			if(isSubUrusanStatusPermohonan(s)){
-				r.update("ID_PERMOHONAN",r.unquote(String.valueOf(s.getIdPermohonan())));
-				r.update("ID_FAIL",r.unquote(String.valueOf(s.getIdFail())));
-				r.update("ID_SUBURUSANSTATUS",r.unquote(String.valueOf(s.getIdSuburusanstatus())));
-				if(isSubUrusanStatusPermohonanAktif(s))	
-					r.add("AKTIF",s.getAktif());
+//			if(isSubUrusanStatusPermohonan(s,null)){
+//				r.update("ID_PERMOHONAN",r.unquote(String.valueOf(s.getIdPermohonan())));
+//				r.update("ID_FAIL",r.unquote(String.valueOf(s.getIdFail())));
+//				r.update("ID_SUBURUSANSTATUS",r.unquote(String.valueOf(s.getIdSuburusanstatus())));
+//				if(isSubUrusanStatusPermohonanAktif(s))	
+//					r.add("AKTIF",s.getAktif());
+//
+//				r.add("ID_KEMASKINI",s.getIdKemaskini());
+//				r.add("TARIKH_KEMASKINI",r.unquote("sysdate")); 
+//				sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
+//				myLog.info("UPDATE:sql="+sql);
+//				stmt.executeUpdate(sql);	
+//							
+//			}else{
+//				r = new SQLRenderer();
+//				r.update("ID_PERMOHONAN",r.unquote(String.valueOf(s.getIdPermohonan())));
+//				r.update("ID_FAIL",r.unquote(String.valueOf(s.getIdFail())));
+//				r.update("AKTIF", "1");
+//				r.add("AKTIF","0");
+//				r.add("ID_KEMASKINI", s.getIdKemaskini());
+//				r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
+//				sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
+//				//myLog.info("UPDATE:sql="+sql);
+//				stmt.executeUpdate(sql);
 
-				r.add("ID_KEMASKINI",s.getIdKemaskini());
-				r.add("TARIKH_KEMASKINI",r.unquote("sysdate")); 
-				sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
-				myLog.info("UPDATE:sql="+sql);
-				stmt.executeUpdate(sql);	
-				
-				//TBLPERMOHONAN
-				r = new SQLRenderer();
-				r.update("ID_PERMOHONAN", String.valueOf(s.getIdPermohonan()));
-				r.add("ID_STATUS",setIdStatus);
-
-				r.add("ID_KEMASKINI", String.valueOf(s.getIdMasuk()));
-				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-				sql = r.getSQLUpdate("TBLPERMOHONAN");
-				myLog.info("UPDATE:sql="+sql);
-				stmt.executeUpdate(sql);
-			
-			}else{
-				r = new SQLRenderer();
-				r.update("ID_PERMOHONAN",r.unquote(String.valueOf(s.getIdPermohonan())));
-				r.update("ID_FAIL",r.unquote(String.valueOf(s.getIdFail())));
-				r.update("AKTIF", "1");
-				r.add("AKTIF","0");
-				r.add("ID_KEMASKINI", s.getIdKemaskini());
-				r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
-				sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
-				//myLog.info("UPDATE:sql="+sql);
-				stmt.executeUpdate(sql);
-
-				long IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");		  
+				//long IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");		  
 				r = new SQLRenderer();		  
-				r.add("ID_SUBURUSANSTATUSFAIL", IdSuburusanstatusfail);
+				//r.add("ID_SUBURUSANSTATUSFAIL", IdSuburusanstatusfail);
+				r.add("ID_FAIL",r.unquote(String.valueOf(s.getIdFail())));
 				r.add("ID_PERMOHONAN", String.valueOf(s.getIdPermohonan()));
 				r.add("ID_SUBURUSANSTATUS", r.unquote(String.valueOf(s.getIdSuburusanstatus())));
 				r.add("AKTIF",s.getAktif());
@@ -292,36 +274,21 @@ public class HTPStatusRekodBean implements IHTPStatus {
 				r.add("TARIKH_MASUK", r.unquote("sysdate"));
 				r.add("ID_KEMASKINI", String.valueOf(s.getIdMasuk()));
 				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
-				r.add("ID_FAIL",r.unquote(String.valueOf(s.getIdFail())));
-				sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+				sql = r.getSQLInsert("TBLHTPRUJSUBURUSANSTATUSFAIL");
 				myLog.info("INSERT:sql="+sql);
 			    stmt.executeUpdate(sql);
-			    
-				//TBLPERMOHONAN
-				r = new SQLRenderer();
-				r.update("ID_PERMOHONAN", String.valueOf(s.getIdPermohonan()));
-				r.add("ID_STATUS",setIdStatus);
-				r.add("ID_KEMASKINI", String.valueOf(s.getIdMasuk()));
-				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-				sql = r.getSQLUpdate("TBLPERMOHONAN");
-				myLog.info("INSERT:sql="+sql);
-				stmt.executeUpdate(sql);
-
-				
-			}	
+			    				
+			//}	
 		    conn.commit();
 	
 		}catch (SQLException se) { 
 			try {
-				conn.rollback();
-			    
+				conn.rollback();		    
 			} catch (SQLException se2) {
 				//throw new Exception("Rollback error:"+se2.getMessage());
 				 getIHTP().getErrorHTML("Rollback error:"+se2.toString());
 				
 			}
-			//throw new Exception("Ralat Kemaskini Status:"+se.getMessage());
 			 getIHTP().getErrorHTML("Ralat Kemaskini Status:"+se.toString());
 			    
 		}catch(Exception ex){
@@ -335,34 +302,35 @@ public class HTPStatusRekodBean implements IHTPStatus {
 			if (conn != null) conn.close();
 	
 		}		  
+
 	}	
 	
-	public boolean isSubUrusanStatusPermohonan(Tblrujsuburusanstatusfail rsus) throws Exception {
-		boolean returnValue = false;
-		Db db = null;
-	    String sql = "";
-	    try {
-	      db = new Db();
-	      SQLRenderer r = new SQLRenderer();
-	      r.add("ID_SUBURUSANSTATUSFAIL");
-		  r.add("ID_SUBURUSANSTATUS",rsus.getIdSuburusanstatus());
-		  r.add("ID_PERMOHONAN",rsus.getIdPermohonan());
-		  r.add("ID_FAIL",rsus.getIdFail());
-	      sql = r.getSQLSelect("TBLRUJSUBURUSANSTATUSFAIL");		      
-	      Statement stmt = db.getStatement();
-	      ResultSet rs = stmt.executeQuery(sql);
-	      while (rs.next()) { returnValue = true;	}
-	      
-	    }catch(Exception e){
-			//e.printStackTrace();
-			getIHTP().getErrorHTML(e.toString());	      
-	    } finally {
-	      if (db != null) db.close();
-	    }		
-	    return returnValue;
-	
-	}
-	
+//	public boolean isSubUrusanStatusPermohonan(Tblrujsuburusanstatusfail rsus) throws Exception {
+//		boolean returnValue = false;
+//		Db db = null;
+//	    String sql = "";
+//	    try {
+//	      db = new Db();
+//	      SQLRenderer r = new SQLRenderer();
+//	      r.add("ID_SUBURUSANSTATUSFAIL");
+//		  r.add("ID_SUBURUSANSTATUS",rsus.getIdSuburusanstatus());
+//		  r.add("ID_PERMOHONAN",rsus.getIdPermohonan());
+//		  r.add("ID_FAIL",rsus.getIdFail());
+//	      sql = r.getSQLSelect("TBLRUJSUBURUSANSTATUSFAIL");		      
+//	      Statement stmt = db.getStatement();
+//	      ResultSet rs = stmt.executeQuery(sql);
+//	      while (rs.next()) { returnValue = true;	}
+//	      
+//	    }catch(Exception e){
+//			//e.printStackTrace();
+//			getIHTP().getErrorHTML(e.toString());	      
+//	    } finally {
+//	      if (db != null) db.close();
+//	    }		
+//	    return returnValue;
+//	
+//	}
+	//Urusan Rekod - Tidak digunakan
 	public boolean isSubUrusanStatusPermohonanAktif(Tblrujsuburusanstatusfail rsus) throws Exception {
 		boolean returnValue = false;
 		Db db = null;
@@ -374,7 +342,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 		  //r.add("ID_SUBURUSANSTATUS",rsus.getIdSuburusanstatus());
 		  r.add("ID_PERMOHONAN",rsus.getIdPermohonan());
 		  r.add("ID_FAIL",rsus.getIdFail());
-	      sql = r.getSQLSelect("TBLRUJSUBURUSANSTATUSFAIL");		      
+	      sql = r.getSQLSelect("TBLHTPRUJSUBURUSANSTATUSFAIL");		      
 	      Statement stmt = db.getStatement();
 	      ResultSet rs = stmt.executeQuery(sql);
 	      while (rs.next()) { returnValue = true;	}
@@ -388,7 +356,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	    return returnValue;
 	
 	}
-	
+	//Urusan Rekod - Tidak digunakan
 	public void hapusSubUrusanStatusPermohonan(Tblrujsuburusanstatusfail rsus) throws Exception {
 		Connection conn = null;
 		Db db = null;
@@ -562,10 +530,12 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	    } finally {
 	      if (db != null) db.close();
 	    }	    
-	  }//close list	
+	  }//close list
+	//Urusan Rekod - Tidak digunakan
 	@Override
 	public Tblrujsuburusanstatusfail kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail sLama
-			, Tblrujsuburusanstatusfail sBaru, String tahun) throws Exception {
+		, Tblrujsuburusanstatusfail sBaru
+		, String tahun) throws Exception {
 		Connection conn = null;
 		Db db = null;
 		String sql = "";
@@ -577,7 +547,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			if(isSubUrusanStatusPermohonanCukai(sBaru,tahun )){	
+			if(isSubUrusanStatusPermohonan(sBaru,tahun )){	
 				myLog.info("idSubUrusanStatusFail = "+idSubUrusanStatusFail);
 				IdSuburusanstatusfail = idSubUrusanStatusFail ;
 				//r.update("id_permohonan",r.unquote(String.valueOf(sLama.getIdPermohonan())));
@@ -652,69 +622,69 @@ public class HTPStatusRekodBean implements IHTPStatus {
 		
 	}
 	
-	@Override
-	public void kemaskiniSimpanStatusCukai(Tblrujsuburusanstatusfail sLama
-			, Tblrujsuburusanstatusfail sBaru, String tahun) throws Exception {
-		Connection conn = null;
-		Db db = null;
-		String sql = "";
-		Tblrujsuburusanstatusfail terbaru = null;
-		long idStatusCukai = 0;
-		try{
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			if(isSubUrusanStatusPermohonanCukai(sLama,tahun )){			
-				r.update("ID_SUBURUSANSTATUSFAIL",r.unquote(String.valueOf(sLama.getIdSuburusanstatusfail())));
-				r.add("id_kemaskini", sBaru.getIdKemaskini());
-				r.add("tarikh_kemaskini", r.unquote("sysdate")); 
-				sql = r.getSQLUpdate("TBLHTPRUJSTATUSCUKAI");
-				myLog.info("kemaskini:"+sBaru.getTarikhMasuk());
-				stmt.executeUpdate(sql);
-			}else{
-				idStatusCukai = DB.getNextID("TBLHTPRUJSTATUSCUKAI_SEQ");		  
-				r = new SQLRenderer();		  
-				r.add("ID_STATUSCUKAI", idStatusCukai);
-				r.add("ID_SUBURUSANSTATUSFAIL", r.unquote(String.valueOf(sBaru.getIdSuburusanstatusfail())));
-				r.add("ID_MASUK", sBaru.getIdMasuk());
-				r.add("TARIKH_MASUK", r.unquote("sysdate"));
-				r.add("ID_KEMASKINI", sBaru.getIdMasuk());
-				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
-				sql = r.getSQLInsert("TBLHTPRUJSTATUSCUKAI");
-				myLog.info("TBLHTPRUJSTATUSCUKAI="+sql);
-				stmt.executeUpdate(sql);			
-				
-			}
-			conn.commit();
-			
-		}catch (SQLException se) { 
-			try {
-				conn.rollback();
-			    
-			} catch (SQLException se2) {
-				throw new Exception("Rollback error:"+se2.getMessage());
-				
-			}
-			throw new Exception("Ralat Pendaftaran Permohonan:"+se.getMessage());
-			    
-		}catch(Exception ex){
-			 conn.rollback();
-			 ex.printStackTrace();
-			 throw new Exception("Ralat:"+ex.getMessage());
-		
-		}finally{
-			if (db != null) db.close();
-			if (conn != null) conn.close();
-	
-		}	
-		
-		//return terbaru;
-		
-	}
-	
-	public boolean isSubUrusanStatusPermohonanCukai(Tblrujsuburusanstatusfail rsus, String tahun) throws Exception {
+//	@Override
+//	public void kemaskiniSimpanStatusCukai(Tblrujsuburusanstatusfail sLama
+//			, Tblrujsuburusanstatusfail sBaru, String tahun) throws Exception {
+//		Connection conn = null;
+//		Db db = null;
+//		String sql = "";
+//		Tblrujsuburusanstatusfail terbaru = null;
+//		long idStatusCukai = 0;
+//		try{
+//			db = new Db();
+//			conn = db.getConnection();
+//			conn.setAutoCommit(false);
+//			Statement stmt = db.getStatement();
+//			SQLRenderer r = new SQLRenderer();
+//			if(isSubUrusanStatusPermohonan(sLama,tahun )){			
+//				r.update("ID_SUBURUSANSTATUSFAIL",r.unquote(String.valueOf(sLama.getIdSuburusanstatusfail())));
+//				r.add("id_kemaskini", sBaru.getIdKemaskini());
+//				r.add("tarikh_kemaskini", r.unquote("sysdate")); 
+//				sql = r.getSQLUpdate("TBLHTPRUJSTATUSCUKAI");
+//				myLog.info("kemaskini:"+sBaru.getTarikhMasuk());
+//				stmt.executeUpdate(sql);
+//			}else{
+//				idStatusCukai = DB.getNextID("TBLHTPRUJSTATUSCUKAI_SEQ");		  
+//				r = new SQLRenderer();		  
+//				r.add("ID_STATUSCUKAI", idStatusCukai);
+//				r.add("ID_SUBURUSANSTATUSFAIL", r.unquote(String.valueOf(sBaru.getIdSuburusanstatusfail())));
+//				r.add("ID_MASUK", sBaru.getIdMasuk());
+//				r.add("TARIKH_MASUK", r.unquote("sysdate"));
+//				r.add("ID_KEMASKINI", sBaru.getIdMasuk());
+//				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
+//				sql = r.getSQLInsert("TBLHTPRUJSTATUSCUKAI");
+//				myLog.info("TBLHTPRUJSTATUSCUKAI="+sql);
+//				stmt.executeUpdate(sql);			
+//				
+//			}
+//			conn.commit();
+//			
+//		}catch (SQLException se) { 
+//			try {
+//				conn.rollback();
+//			    
+//			} catch (SQLException se2) {
+//				throw new Exception("Rollback error:"+se2.getMessage());
+//				
+//			}
+//			throw new Exception("Ralat Pendaftaran Permohonan:"+se.getMessage());
+//			    
+//		}catch(Exception ex){
+//			 conn.rollback();
+//			 ex.printStackTrace();
+//			 throw new Exception("Ralat:"+ex.getMessage());
+//		
+//		}finally{
+//			if (db != null) db.close();
+//			if (conn != null) conn.close();
+//	
+//		}	
+//		
+//		//return terbaru;
+//		
+//	}
+	// Urusan Rekod - Tidak digunakan
+	public boolean isSubUrusanStatusPermohonan(Tblrujsuburusanstatusfail rsus, String tahun) throws Exception {
 		boolean returnValue = false;
 		Db db = null;
 	    String sql = "";
@@ -722,12 +692,12 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	      db = new Db();
 	      SQLRenderer r = new SQLRenderer();
 	      r.add("RSUSF.ID_SUBURUSANSTATUSFAIL");
-		  r.add("RSUSF.ID_SUBURUSANSTATUSFAIL",r.unquote("RSUSC.ID_SUBURUSANSTATUSFAIL"));
+		  r.add("RSUSF.ID_SUBURUSANSTATUS",r.unquote("RSUSC.ID_SUBURUSANSTATUS"));
 		  r.add("RSUSF.ID_PERMOHONAN",rsus.getIdPermohonan());
 		  r.add("RSUSF.ID_FAIL",rsus.getIdFail());
 		  r.add("RSUSF.ID_SUBURUSANSTATUS",rsus.getIdSuburusanstatus());
-		  r.add("RSUSC.TAHUN",tahun);
-	      sql = r.getSQLSelect("TBLRUJSUBURUSANSTATUSFAIL RSUSF, TBLHTPRUJSTATUSCUKAI RSUSC");		      
+		  //r.add("RSUSC.TAHUN",tahun);
+	      sql = r.getSQLSelect("TBLRUJSUBURUSANSTATUSFAIL RSUSF, TBLRUJSUBURUSANSTATUS RSUSC");		      
 	      Statement stmt = db.getStatement();
 	      ResultSet rs = stmt.executeQuery(sql);
 	      while (rs.next()) { 
@@ -793,13 +763,13 @@ public class HTPStatusRekodBean implements IHTPStatus {
 			
 			IdSuburusanstatusfail = DB.getNextID("HTPRUJSUBURUSANSTATUSFAIL_SEQ");		  
 			r = new SQLRenderer();		  
-			r.add("Id_Suburusanstatusfail", IdSuburusanstatusfail);
-			r.add("id_Permohonan", String.valueOf(s.getIdPermohonan()));
-			r.add("Id_Suburusanstatus", r.unquote(String.valueOf(sBaru.getIdSuburusanstatus())));
+			r.add("id_suburusanstatusfail", IdSuburusanstatusfail);
+			r.add("id_permohonan", String.valueOf(s.getIdPermohonan()));
+			r.add("id_suburusanstatus", r.unquote(String.valueOf(sBaru.getIdSuburusanstatus())));
 			r.add("aktif",sBaru.getAktif());
-			r.add("URL",sBaru.getUrl());
-			r.add("id_Masuk", String.valueOf(sBaru.getIdMasuk()));
-			r.add("tarikh_Masuk", r.unquote("sysdate"));
+			r.add("url",sBaru.getUrl());
+			r.add("id_masuk", String.valueOf(sBaru.getIdMasuk()));
+			r.add("tarikh_masuk", r.unquote("sysdate"));
 			r.add("id_kemaskini", String.valueOf(sBaru.getIdMasuk()));
 			r.add("tarikh_kemaskini", r.unquote("sysdate"));
 			r.add("id_fail",r.unquote(String.valueOf(s.getIdFail())));
@@ -820,7 +790,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 			    
 		}catch(Exception ex){
 			 conn.rollback();
-			 ex.printStackTrace();
+			 //ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
 		
 		}finally{
@@ -831,7 +801,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 		return String.valueOf(IdSuburusanstatusfail);
 		
 	}	
-	
+	//Urusan Rekod - Tidak digunakan
 	@Override
 	public String kemaskiniSimpanStatusAktif(Tblrujsuburusanstatusfail s,Tblrujsuburusanstatusfail sBaru
 			,String strTarikh) throws Exception {
@@ -857,15 +827,15 @@ public class HTPStatusRekodBean implements IHTPStatus {
 			
 			IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");		  
 			r = new SQLRenderer();		  
-			r.add("Id_Suburusanstatusfail", IdSuburusanstatusfail);
-			r.add("id_Permohonan", String.valueOf(s.getIdPermohonan()));
-			r.add("Id_Suburusanstatus", r.unquote(String.valueOf(sBaru.getIdSuburusanstatus())));
+			r.add("id_suburusanstatusfail", IdSuburusanstatusfail);
+			r.add("id_permohonan", String.valueOf(s.getIdPermohonan()));
+			r.add("id_suburusanstatus", r.unquote(String.valueOf(sBaru.getIdSuburusanstatus())));
 			r.add("aktif",sBaru.getAktif());
-			r.add("URL",sBaru.getUrl());
-			r.add("id_Masuk", String.valueOf(sBaru.getIdMasuk()));
+			r.add("url",sBaru.getUrl());
+			r.add("id_masuk", String.valueOf(sBaru.getIdMasuk()));
 			//String tarikMasuk = "to_date('" + strTarikh + "','dd/MM/yyyy')";
 			String tarikMasuk = "sysdate";
-			r.add("tarikh_Masuk", r.unquote(tarikMasuk));
+			r.add("tarikh_masuk", r.unquote(tarikMasuk));
 			r.add("id_kemaskini", String.valueOf(sBaru.getIdMasuk()));
 			//String tarikhKemaskini = "sysdate";
 			//myLog.info("txttarikhsuratPTGPTD 3 ="+strTarikh);
@@ -900,44 +870,38 @@ public class HTPStatusRekodBean implements IHTPStatus {
 		return String.valueOf(IdSuburusanstatusfail);
 		
 	}
-	
+	/** Kemaskini STATUS_SAH tanah kepada D (DAFTAR)*/
 	@Override
-	public void kemaskiniStatusPermohonan(String idPermohonan, String subUrusan, String langkah,String userId) 
+	public void kemaskiniStatusPermohonan(String idHakmilik, String kodStatus, String langkah,String userId) 
 		throws Exception {
-		Connection conn = null;
-		Db db = null;
-		String sql = "";
 		try{
 			db = new Db();
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			Long setIdStatus = 0L;
-			setIdStatus = FrmUtilData.getIdStatusByLangkah(langkah,subUrusan,"=");
 	
-			r.update("ID_PERMOHONAN",idPermohonan);
-			r.add("ID_STATUS", setIdStatus);
+			r.update("ID_HAKMILIK",idHakmilik);
+			r.add("STATUS_SAH", kodStatus);	//D-DAFTAR
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
-			sql = r.getSQLUpdate("TBLPERMOHONAN");
+			sql = r.getSQLUpdate("TBLHTPHAKMILIK");
 			stmt.executeUpdate(sql);				
 		    conn.commit();
 	
 		}catch (SQLException se) { 
 			try {
-				conn.rollback();
-			    
+				conn.rollback();			    
 			} catch (SQLException se2) {
-				 getIHTP().getErrorHTML("Rollback error:"+se2.toString());
+				 getIHTP().getErrorHTML("kemaskiniStatusPermohonan:Rollback error::"+se2.toString());
 				
 			}
-			 getIHTP().getErrorHTML("Ralat Kemaskini Status:"+se.toString());
+			getIHTP().getErrorHTML("kemaskiniStatusPermohonan:Ralat Kemaskini Status::"+se.toString());
 			    
 		}catch(Exception ex){
 			 conn.rollback();
-			 getIHTP().getErrorHTML(ex.toString());
+			 getIHTP().getErrorHTML("kemaskiniStatusPermohonan:"+ex.toString());
 		
 		}finally{
 			if (db != null) db.close();
@@ -991,11 +955,11 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	}	
 	
 	@Override
-	public Vector getInfoStatusPermohonan(String idUrusan,String idSubUrusan,String langkah)
+	public Vector<Hashtable<String,String>> getInfoStatusPermohonan(String idUrusan,String idSubUrusan,String langkah)
 		throws Exception{
 	    Db db = null;
-	    Hashtable h = null;
-		Vector senaraiMaklumat = null;
+	    Hashtable<String,String> h = null;
+		Vector<Hashtable<String,String>> senaraiMaklumat = null;
 	    try {	    	
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();	    		
@@ -1031,9 +995,9 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	    		//myLog.info("getInfoStatusPermohonan 2:sql="+sql);
 	    		ResultSet rs = stmt.executeQuery(sql);	      			  
 				int bil = 1;
-				senaraiMaklumat = new Vector();
+				senaraiMaklumat = new Vector<Hashtable<String,String>>();
 	    		while (rs.next()) {
-	        			h = new Hashtable();  
+	        			h = new Hashtable<String,String>();  
 	    				//h.put("level",rs.getString("ID_MASUK"));	 
 	    	    		h.put("bil", String.valueOf(bil));
 	    				h.put("id_permohonan", rs.getString("id_permohonan"));
@@ -1150,6 +1114,39 @@ public class HTPStatusRekodBean implements IHTPStatus {
 	    }	    
 	     return senaraiMaklumat;
 	  }//close list	
+	
+	public void semakStatusSemasa(org.apache.velocity.VelocityContext context
+		,String akses
+		,String idPermohonan
+		,String idTanah
+		,String portal_role) throws Exception{
+		//lebah.portal.velocity.VTemplate context
+		String langkah = "";
+		String statuSemasa = "0";
+		if(portal_role.contains("PenggunaNegeri")){
+			langkah = "1";
+		}else if(portal_role.contains("PegawaiNegeri")){
+			langkah = "3";
+		}else if(portal_role.contains("PengarahNegeri")){
+			langkah = "4";	    		
+		}else if(portal_role.equals("HQPengguna")){
+			langkah = "5";	    		
+		}else if(portal_role.contains("HQPenggunaRekod")){
+			langkah = "6";	    		
+		}else if(portal_role.contains("(HTP)HQPegawai")){
+			langkah = "7";	    		
+		}else if(portal_role.contains("(HTP)HQPengarah")){
+			langkah = "8";	    		
+		}
+		
+		Hashtable<String,String> hashStatus = getInfoStatusPermohonanFail(idTanah, idPermohonan,langkah);
+		if(hashStatus != null)
+			statuSemasa = hashStatus.get("langkah");
+			
+		context.put("jenisAkses", akses);
+		context.put("statuSemasa", statuSemasa);
+	
+	}
 	
 	private IHtp getIHTP(){
 		if(iHTP== null)
