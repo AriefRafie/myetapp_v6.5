@@ -21,12 +21,12 @@ import ekptg.model.htp.FrmCukaiKemaskiniDataBaru;
 import ekptg.model.htp.FrmCukaiPenyataData;
 import ekptg.model.htp.FrmCukaiSenaraiFailExcelUpload;
 import ekptg.model.htp.FrmUtilData;
-import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHTPStatus;
 import ekptg.model.htp.IHtp;
 import ekptg.model.htp.cukai.CukaiBean;
 import ekptg.model.htp.cukai.FrmCukaiPenyataBean;
+import ekptg.model.htp.cukai.HTPStatusCukaiBean;
 import ekptg.model.htp.cukai.ICukai;
 import ekptg.model.htp.cukai.entity.CukaiTemp;
 import ekptg.model.htp.entity.HakMilik;
@@ -932,7 +932,7 @@ public class FrmCukaiPelarasanNegeri extends AjaxBasedModule{
 			subUrusanStatusFailN.setIdKemaskini(Long.parseLong(userId));
 			Tblrujsuburusanstatusfail terbaru = getStatus().kemaskiniSimpanStatusPermohonanAktif(subUrusanStatusFail
 					,subUrusanStatusFailN,socTahun);
-			 getStatus().kemaskiniSimpanStatusCukai(subUrusanStatusFailN, terbaru, socTahun);
+			 getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFailN, terbaru, socTahun);
 
 			 context.put("statussemasa", langkah);
 
@@ -976,7 +976,7 @@ public class FrmCukaiPelarasanNegeri extends AjaxBasedModule{
 
 	private IHTPStatus getStatus(){
 		if(iStatus==null){
-			iStatus = new HTPStatusBean();
+			iStatus = new HTPStatusCukaiBean();
 		}
 		return iStatus;
 			

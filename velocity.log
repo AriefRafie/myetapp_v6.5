@@ -1,0 +1,498 @@
+2020-04-17 13:25:00,712 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-17 13:25:00,712 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:00,712 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:00,712 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-17 13:25:00,712 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:00,712 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-17 13:25:00,713 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-17 13:25:00,713 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-17 13:25:00,990 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-17 13:25:01,414 - Null reference [template 'app/online/manuUtama/index.jsp', line 299, column 49] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 94, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 95, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 102, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 105, column 35] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 106, column 36] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 108, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 114, column 19] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 115, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 116, column 19] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 117, column 19] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 118, column 19] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 119, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 125, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 126, column 11] : $jquery cannot be resolved.
+2020-04-17 13:25:01,415 - Null reference [template 'app/online/manuUtama/frmPengumuman.jsp', line 127, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:01,437 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:01,437 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-04-17 13:25:01,437 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-04-17 13:25:01,437 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-04-17 13:25:01,437 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-04-17 13:25:01,437 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-04-17 13:25:01,437 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-04-17 13:25:01,488 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-17 13:25:01,488 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-17 13:25:01,488 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-17 13:25:01,488 - Left side ($secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 31, column 80]
+2020-04-17 13:25:01,489 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
+2020-04-17 13:25:01,489 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
+2020-04-17 13:25:01,489 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,489 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,489 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,489 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,489 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,489 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,490 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,490 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,490 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,490 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,490 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,490 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,490 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,491 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,491 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,491 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,491 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,491 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,491 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:01,491 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:01,491 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
+2020-04-17 13:25:01,491 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-17 13:25:01,492 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:01,492 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:01,492 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-17 13:25:01,492 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:01,492 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:01,492 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-17 13:25:01,492 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:01,493 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:01,493 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-17 13:25:01,493 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
+2020-04-17 13:25:01,493 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-17 13:25:01,493 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-17 13:25:01,493 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-17 13:25:01,493 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-17 13:25:01,493 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-17 13:25:01,493 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-17 13:25:01,493 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-17 13:25:01,756 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-17 13:25:02,214 - ResourceManager : found app/php2/online/frmPYWSenaraiFailOnline.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:25:02,214 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 10, column 65] : $flagDetail cannot be resolved.
+2020-04-17 13:25:02,214 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 77, column 28] : $list.NO_FAIL_NEGERI cannot be resolved.
+2020-04-17 13:25:02,214 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 78, column 33] : $list.NAMA cannot be resolved.
+2020-04-17 13:25:02,214 - Left side ($list.NAMA_URUSAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 95, column 48]
+2020-04-17 13:25:02,215 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 98, column 35] : $list.NAMA_URUSAN cannot be resolved.
+2020-04-17 13:25:02,215 - Left side ($list.NAMA_SUBURUSAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 101, column 51]
+2020-04-17 13:25:02,215 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 104, column 39] : $list.NAMA_SUBURUSAN cannot be resolved.
+2020-04-17 13:25:02,215 - Left side ($list.TARIKH_SURAT) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 107, column 49]
+2020-04-17 13:25:02,215 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 110, column 35] : $list.TARIKH_SURAT cannot be resolved.
+2020-04-17 13:25:02,215 - Left side ($list.NO_RUJ_SURAT) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 113, column 49]
+2020-04-17 13:25:02,215 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 116, column 35] : $list.NO_RUJ_SURAT cannot be resolved.
+2020-04-17 13:25:02,215 - Left side ($list.TAJUK_FAIL) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 120, column 47]
+2020-04-17 13:25:02,215 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 123, column 35] : $list.TAJUK_FAIL cannot be resolved.
+2020-04-17 13:25:02,215 - Left side ($list.FLAG_TEMPOHSEWA) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 132, column 52]
+2020-04-17 13:25:02,215 - Left side ($list.FLAG_TEMPOHSEWA) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 136, column 48]
+2020-04-17 13:25:02,215 - Left side ($list.FLAG_TEMPOHSEWA) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 138, column 52]
+2020-04-17 13:25:02,215 - Left side ($list.FLAG_TEMPOHSEWA) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 140, column 52]
+2020-04-17 13:25:02,215 - Left side ($list.LUAS_MHNBERSAMAAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 146, column 54]
+2020-04-17 13:25:02,215 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 149, column 36] : $list.LUAS_MHNBERSAMAAN cannot be resolved.
+2020-04-17 13:25:02,215 - Left side ($list.LUAS_LOT) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 164, column 45]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 167, column 35] : $list.LUAS_LOT cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.NO_WARTA) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 176, column 45]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 179, column 35] : $list.NO_WARTA cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.TARIKH_WARTA) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 182, column 49]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 185, column 35] : $list.TARIKH_WARTA cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.NAMA_MUKIM) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 188, column 47]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 191, column 35] : $list.NAMA_MUKIM cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.NAMA_DAERAH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 194, column 48]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 197, column 35] : $list.NAMA_DAERAH cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.NAMA_NEGERI) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 200, column 40]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 203, column 35] : $list.NAMA_NEGERI cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.KATEGORI_TANAH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 206, column 51]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 209, column 35] : $list.KATEGORI_TANAH cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.SUBKATEGORI_TANAH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 212, column 54]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 215, column 35] : $list.SUBKATEGORI_TANAH cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.SYARAT) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 218, column 43]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 221, column 35] : $list.SYARAT cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.SEKATAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 224, column 44]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 227, column 35] : $list.SEKATAN cannot be resolved.
+2020-04-17 13:25:02,216 - Left side ($list.KEGUNAAN_TANAH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 230, column 51]
+2020-04-17 13:25:02,216 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 233, column 35] : $list.KEGUNAAN_TANAH cannot be resolved.
+2020-04-17 13:25:02,217 - Left side ($list.NAMA_AGENSI) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 236, column 40]
+2020-04-17 13:25:02,217 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 239, column 35] : $list.NAMA_AGENSI cannot be resolved.
+2020-04-17 13:25:02,217 - Left side ($list.NAMA_KEMENTERIAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 242, column 53]
+2020-04-17 13:25:02,217 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 245, column 35] : $list.NAMA_KEMENTERIAN cannot be resolved.
+2020-04-17 13:25:02,217 - Left side ($list.idStatus) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 252, column 31]
+2020-04-17 13:25:02,217 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 77, column 28] : $list.NO_FAIL_NEGERI cannot be resolved.
+2020-04-17 13:25:02,217 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 78, column 33] : $list.NAMA cannot be resolved.
+2020-04-17 13:25:02,217 - Left side ($list.NAMA_URUSAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 95, column 48]
+2020-04-17 13:25:02,217 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 98, column 35] : $list.NAMA_URUSAN cannot be resolved.
+2020-04-17 13:25:02,217 - Left side ($list.NAMA_SUBURUSAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 101, column 51]
+2020-04-17 13:25:02,217 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 104, column 39] : $list.NAMA_SUBURUSAN cannot be resolved.
+2020-04-17 13:25:02,217 - Left side ($list.TARIKH_SURAT) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 107, column 49]
+2020-04-17 13:25:02,217 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 110, column 35] : $list.TARIKH_SURAT cannot be resolved.
+2020-04-17 13:25:02,218 - Left side ($list.NO_RUJ_SURAT) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 113, column 49]
+2020-04-17 13:25:02,218 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 116, column 35] : $list.NO_RUJ_SURAT cannot be resolved.
+2020-04-17 13:25:02,218 - Left side ($list.TAJUK_FAIL) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 120, column 47]
+2020-04-17 13:25:02,218 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 123, column 35] : $list.TAJUK_FAIL cannot be resolved.
+2020-04-17 13:25:02,218 - Left side ($list.FLAG_TEMPOHSEWA) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 132, column 52]
+2020-04-17 13:25:02,218 - Left side ($list.FLAG_TEMPOHSEWA) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 136, column 48]
+2020-04-17 13:25:02,218 - Left side ($list.FLAG_TEMPOHSEWA) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 138, column 52]
+2020-04-17 13:25:02,218 - Left side ($list.FLAG_TEMPOHSEWA) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 140, column 52]
+2020-04-17 13:25:02,218 - Left side ($list.LUAS_MHNBERSAMAAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 146, column 54]
+2020-04-17 13:25:02,218 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 149, column 36] : $list.LUAS_MHNBERSAMAAN cannot be resolved.
+2020-04-17 13:25:02,218 - Left side ($list.LUAS_LOT) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 164, column 45]
+2020-04-17 13:25:02,218 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 167, column 35] : $list.LUAS_LOT cannot be resolved.
+2020-04-17 13:25:02,218 - Left side ($list.NO_WARTA) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 176, column 45]
+2020-04-17 13:25:02,218 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 179, column 35] : $list.NO_WARTA cannot be resolved.
+2020-04-17 13:25:02,218 - Left side ($list.TARIKH_WARTA) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 182, column 49]
+2020-04-17 13:25:02,218 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 185, column 35] : $list.TARIKH_WARTA cannot be resolved.
+2020-04-17 13:25:02,218 - Left side ($list.NAMA_MUKIM) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 188, column 47]
+2020-04-17 13:25:02,218 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 191, column 35] : $list.NAMA_MUKIM cannot be resolved.
+2020-04-17 13:25:02,218 - Left side ($list.NAMA_DAERAH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 194, column 48]
+2020-04-17 13:25:02,219 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 197, column 35] : $list.NAMA_DAERAH cannot be resolved.
+2020-04-17 13:25:02,219 - Left side ($list.NAMA_NEGERI) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 200, column 40]
+2020-04-17 13:25:02,219 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 203, column 35] : $list.NAMA_NEGERI cannot be resolved.
+2020-04-17 13:25:02,219 - Left side ($list.KATEGORI_TANAH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 206, column 51]
+2020-04-17 13:25:02,219 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 209, column 35] : $list.KATEGORI_TANAH cannot be resolved.
+2020-04-17 13:25:02,219 - Left side ($list.SUBKATEGORI_TANAH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 212, column 54]
+2020-04-17 13:25:02,219 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 215, column 35] : $list.SUBKATEGORI_TANAH cannot be resolved.
+2020-04-17 13:25:02,219 - Left side ($list.SYARAT) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 218, column 43]
+2020-04-17 13:25:02,219 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 221, column 35] : $list.SYARAT cannot be resolved.
+2020-04-17 13:25:02,219 - Left side ($list.SEKATAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 224, column 44]
+2020-04-17 13:25:02,219 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 227, column 35] : $list.SEKATAN cannot be resolved.
+2020-04-17 13:25:02,219 - Left side ($list.KEGUNAAN_TANAH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 230, column 51]
+2020-04-17 13:25:02,219 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 233, column 35] : $list.KEGUNAAN_TANAH cannot be resolved.
+2020-04-17 13:25:02,219 - Left side ($list.NAMA_AGENSI) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 236, column 40]
+2020-04-17 13:25:02,219 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 239, column 35] : $list.NAMA_AGENSI cannot be resolved.
+2020-04-17 13:25:02,219 - Left side ($list.NAMA_KEMENTERIAN) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 242, column 53]
+2020-04-17 13:25:02,219 - Null reference [template 'app/php2/online/frmPYWSenaraiFailOnline.jsp', line 245, column 35] : $list.NAMA_KEMENTERIAN cannot be resolved.
+2020-04-17 13:25:02,219 - Left side ($list.idStatus) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/php2/online/frmPYWSenaraiFailOnline.jsp[line 252, column 31]
+2020-04-17 13:25:02,220 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:02,220 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-04-17 13:25:02,220 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-04-17 13:25:02,220 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-04-17 13:25:02,220 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-04-17 13:25:02,220 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-04-17 13:25:02,220 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-04-17 13:25:03,864 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-17 13:25:03,865 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-17 13:25:03,865 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-17 13:25:03,865 - Left side ($secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 31, column 80]
+2020-04-17 13:25:03,865 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
+2020-04-17 13:25:03,865 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
+2020-04-17 13:25:03,865 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,866 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,866 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,866 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,866 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,866 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,866 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,866 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,866 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,866 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,867 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,867 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,867 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,867 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,867 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,867 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,867 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,867 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,868 - Left side ($!secondaryRole.LAYER) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 82, column 69]
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-17 13:25:03,868 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-17 13:25:03,869 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
+2020-04-17 13:25:03,869 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-17 13:25:03,869 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-17 13:25:03,869 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-17 13:25:03,869 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-17 13:25:03,870 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-17 13:25:03,870 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-17 13:25:03,870 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-17 13:25:04,172 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-17 13:25:04,688 - ResourceManager : found app/php2/online/frmPYWDaftarOnline.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:25:04,688 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 13, column 69] : $idPemohon cannot be resolved.
+2020-04-17 13:25:04,689 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:04,689 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-04-17 13:25:04,689 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-04-17 13:25:04,689 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-04-17 13:25:04,689 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-04-17 13:25:04,689 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-04-17 13:25:04,689 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-04-17 13:25:07,766 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 13, column 69] : $idPemohon cannot be resolved.
+2020-04-17 13:25:07,766 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 152, column 73] : $beanMaklumatTanah.lot cannot be resolved.
+2020-04-17 13:25:07,766 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 159, column 75] : $beanMaklumatTanah.idLuas cannot be resolved.
+2020-04-17 13:25:07,766 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 160, column 71] : $beanMaklumatTanah.luasBersamaan cannot be resolved.
+2020-04-17 13:25:07,766 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 167, column 77] : $beanMaklumatTanah.hakmilik cannot be resolved.
+2020-04-17 13:25:07,767 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 201, column 81] : $beanMaklumatTanah.idNegeriTanah cannot be resolved.
+2020-04-17 13:25:07,767 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 210, column 91] : $beanMaklumatTanah.idKementerian cannot be resolved.
+2020-04-17 13:25:07,767 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 211, column 83] : $beanMaklumatTanah.kodKementerian cannot be resolved.
+2020-04-17 13:25:07,767 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:07,767 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-04-17 13:25:07,767 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-04-17 13:25:07,767 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-04-17 13:25:07,767 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-04-17 13:25:07,767 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-04-17 13:25:07,767 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-04-17 13:25:10,619 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 13, column 69] : $idPemohon cannot be resolved.
+2020-04-17 13:25:10,619 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 152, column 73] : $beanMaklumatTanah.lot cannot be resolved.
+2020-04-17 13:25:10,619 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 159, column 75] : $beanMaklumatTanah.idLuas cannot be resolved.
+2020-04-17 13:25:10,619 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 160, column 71] : $beanMaklumatTanah.luasBersamaan cannot be resolved.
+2020-04-17 13:25:10,619 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 167, column 77] : $beanMaklumatTanah.hakmilik cannot be resolved.
+2020-04-17 13:25:10,619 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 201, column 81] : $beanMaklumatTanah.idNegeriTanah cannot be resolved.
+2020-04-17 13:25:10,620 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 210, column 91] : $beanMaklumatTanah.idKementerian cannot be resolved.
+2020-04-17 13:25:10,620 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 211, column 83] : $beanMaklumatTanah.kodKementerian cannot be resolved.
+2020-04-17 13:25:10,620 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:10,620 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-04-17 13:25:10,620 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-04-17 13:25:10,620 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-04-17 13:25:10,620 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-04-17 13:25:10,620 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-04-17 13:25:10,620 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-04-17 13:25:17,715 - ResourceManager : found app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:25:17,764 - ResourceManager : found app/utils/record_paging_popup.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:25:17,765 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,765 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,765 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,765 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,765 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,765 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,765 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,765 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,765 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,765 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,765 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,765 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,765 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,766 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,766 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,766 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,766 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,766 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,766 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 34]
+2020-04-17 13:25:17,766 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/tanah/frmPajakanPopupSenaraiTanah.jsp[line 150, column 40]
+2020-04-17 13:25:17,766 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:17,950 - ResourceManager : found vtl/main/security_token_denied.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:25:29,985 - ResourceManager : found app/htp/pajakan/fail/tanah/frmPajakanPopupMaklumatTanahKemaskini.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:25:29,985 - Null reference [template 'app/htp/pajakan/fail/tanah/frmPajakanPopupMaklumatTanahKemaskini.jsp', line 52, column 69] : $hitButton cannot be resolved.
+2020-04-17 13:25:29,990 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/tanah/frmPajakanPopupMaklumatTanahKemaskini.jsp[line 79, column 1]
+2020-04-17 13:25:30,009 - ResourceManager : found app/htp/unit_luas.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:25:30,009 - Null reference [template 'app/htp/pajakan/fail/tanah/frmPajakanPopupMaklumatTanahKemaskini.jsp', line 225, column 81] : $style cannot be resolved.
+2020-04-17 13:25:30,009 - Null reference [template 'app/htp/pajakan/fail/tanah/frmPajakanPopupMaklumatTanahKemaskini.jsp', line 225, column 166] : $tabmode cannot be resolved.
+2020-04-17 13:25:30,009 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:36,781 - Left side of math operation ($list.bil) is not a Number. app/htp/pajakan/fail/frmDaftarHakmilik.jsp[line 317, column 50]
+2020-04-17 13:25:36,781 - Left side ($list.bil % 2) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/htp/pajakan/fail/frmDaftarHakmilik.jsp[line 317, column 56]
+2020-04-17 13:25:36,781 - Null reference [template 'app/htp/pajakan/fail/frmDaftarHakmilik.jsp', line 601, column 48] : $EkptgUtil.getTabID('Penswastaan',$portal_role) cannot be resolved.
+2020-04-17 13:25:36,781 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:36,781 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-04-17 13:25:36,781 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-04-17 13:25:36,781 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-04-17 13:25:36,781 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-04-17 13:25:36,781 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-04-17 13:25:36,781 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-04-17 13:25:41,035 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 13, column 69] : $idPemohon cannot be resolved.
+2020-04-17 13:25:41,036 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 160, column 71] : $beanMaklumatTanah.luasBersamaan cannot be resolved.
+2020-04-17 13:25:41,036 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 167, column 77] : $beanMaklumatTanah.hakmilik cannot be resolved.
+2020-04-17 13:25:41,036 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 201, column 81] : $beanMaklumatTanah.idNegeriTanah cannot be resolved.
+2020-04-17 13:25:41,036 - Null reference [template 'app/php2/online/frmPYWDaftarOnline.jsp', line 211, column 83] : $beanMaklumatTanah.kodKementerian cannot be resolved.
+2020-04-17 13:25:41,036 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:25:41,036 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-04-17 13:25:41,037 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-04-17 13:25:41,037 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-04-17 13:25:41,037 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-04-17 13:25:41,037 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-04-17 13:25:41,037 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-04-17 13:37:49,664 - SimpleLog4JLogSystem initialized using logfile 'G:\Myetappv7\myetapp_v7\velocity.log'
+2020-04-17 13:37:49,664 - *******************************************************************
+2020-04-17 13:37:49,664 - Starting Apache Velocity v1.6.2 (compiled: 2009-02-19 16:29:46)
+2020-04-17 13:37:49,664 - RuntimeInstance initializing.
+2020-04-17 13:37:49,664 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2020-04-17 13:37:49,664 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogSystem
+2020-04-17 13:37:49,664 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogSystem or necessary supporting classes in classpath.
+2020-04-17 13:37:49,665 - java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Unknown Source)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:64)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:96)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:154)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:255)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:795)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:250)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:135)
+	at lebah.portal.velocity.VelocityEngineHolder.<init>(VelocityEngineHolder.java:26)
+	at lebah.portal.velocity.VelocityEngineHolder.getInstance(VelocityEngineHolder.java:34)
+	at lebah.portal.velocity.VServlet.initVelocity(VServlet.java:55)
+	at lebah.portal.DesktopController.doBody(DesktopController.java:135)
+	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
+	at lebah.portal.DesktopController.doGet(DesktopController.java:78)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:624)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:747)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:485)
+	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:410)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:337)
+	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
+	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:218)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:442)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1083)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:640)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1892)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1735)
+	... 50 more
+
+2020-04-17 13:37:49,665 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+2020-04-17 13:37:49,665 - LogSystem has been deprecated. Please use a LogChute implementation.
+2020-04-17 13:37:49,667 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2020-04-17 13:37:49,670 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:49,671 - FileResourceLoader : initialization starting.
+2020-04-17 13:37:49,671 - Do unicode file recognition:  false
+2020-04-17 13:37:49,671 - FileResourceLoader : adding path 'G:\Myetappv7\myetapp_v7\.'
+2020-04-17 13:37:49,671 - FileResourceLoader : initialization complete.
+2020-04-17 13:37:49,682 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2020-04-17 13:37:49,682 - Default ResourceManager initialization complete.
+2020-04-17 13:37:49,683 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2020-04-17 13:37:49,684 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2020-04-17 13:37:49,685 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2020-04-17 13:37:49,685 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2020-04-17 13:37:49,686 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2020-04-17 13:37:49,687 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2020-04-17 13:37:49,689 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2020-04-17 13:37:49,690 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2020-04-17 13:37:49,711 - Created '20' parsers.
+2020-04-17 13:37:49,716 - Velocimacro : initialization starting.
+2020-04-17 13:37:49,716 - Velocimacro : adding VMs from VM library : VM_global_library.vm
+2020-04-17 13:37:49,749 - ResourceManager : found VM_global_library.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:49,750 - Velocimacro : VM library registration complete.
+2020-04-17 13:37:49,750 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2020-04-17 13:37:49,750 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2020-04-17 13:37:49,750 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2020-04-17 13:37:49,750 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2020-04-17 13:37:49,750 - Velocimacro : Velocimacro : initialization complete.
+2020-04-17 13:37:49,750 - RuntimeInstance successfully initialized.
+2020-04-17 13:37:50,123 - ResourceManager : found vtl/main/header.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:50,130 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-04-17 13:37:50,131 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-04-17 13:37:50,131 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-04-17 13:37:50,131 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-04-17 13:37:50,135 - ResourceManager : found vtl/main/header_etapp.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:50,218 - ResourceManager : found vtl/main/greeting.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:50,223 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-04-17 13:37:50,223 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-04-17 13:37:50,224 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-04-17 13:37:50,224 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-04-17 13:37:50,224 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-04-17 13:37:50,224 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-04-17 13:37:50,224 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-04-17 13:37:50,224 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-04-17 13:37:50,224 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-04-17 13:37:50,224 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-04-17 13:37:50,224 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-04-17 13:37:50,226 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-04-17 13:37:50,226 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-04-17 13:37:50,226 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-04-17 13:37:50,226 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-04-17 13:37:50,226 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-04-17 13:37:50,227 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-04-17 13:37:50,227 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-04-17 13:37:50,338 - ResourceManager : found vtl/main/tabber.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:50,685 - ResourceManager : found vtl/main/moduler.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:50,695 - ResourceManager : found vtl/main/module_title.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:50,695 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-04-17 13:37:51,159 - ResourceManager : found vtl/ajax/ajax_main.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,273 - ResourceManager : found app/htp/pajakan/fail/index.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,294 - ResourceManager : found app/utils/record_paging.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,301 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,301 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,303 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,303 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,303 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,303 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,303 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,303 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,303 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,303 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,304 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,304 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,304 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,304 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,304 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,304 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,305 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,305 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,305 - Left side of math operation ($cnt) has a null value. app/htp/pajakan/fail/index.jsp[line 155, column 61]
+2020-04-17 13:37:51,305 - RHS of #set statement is null. Context will not be modified. app/htp/pajakan/fail/index.jsp[line 155, column 1]
+2020-04-17 13:37:51,353 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakanTindakan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,363 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakanPenamatan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,406 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakanBayaran.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,488 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakanPerjanjian.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,629 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakanMJM.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,655 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakanPermohonan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,692 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakanPaging.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,711 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakanDaftar.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,734 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakanIndex.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,784 - ResourceManager : found app/htp/utiliti/javascript/javaScriptPajakan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,806 - ResourceManager : found app/htp/utiliti/javaScriptUmum.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:51,806 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:37:51,807 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-04-17 13:37:51,807 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-04-17 13:37:51,807 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-04-17 13:37:51,807 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-04-17 13:37:51,807 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-04-17 13:37:51,807 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-04-17 13:37:51,816 - ResourceManager : found vtl/main/footer.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:54,094 - ResourceManager : found app/htp/pajakan/fail/frmDaftar.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-04-17 13:37:54,095 - Null reference [template 'app/htp/pajakan/fail/frmDaftar.jsp', line 111, column 94] : $classDis cannot be resolved.
+2020-04-17 13:37:54,095 - Null reference [template 'app/htp/pajakan/fail/frmDaftar.jsp', line 111, column 226] : $readOnly cannot be resolved.
+2020-04-17 13:37:54,095 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-04-17 13:37:54,096 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-04-17 13:37:54,096 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-04-17 13:37:54,096 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-04-17 13:37:54,096 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-04-17 13:37:54,096 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-04-17 13:37:54,096 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.

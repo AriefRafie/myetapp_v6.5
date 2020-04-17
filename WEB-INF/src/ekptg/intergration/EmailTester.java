@@ -3,12 +3,13 @@ package ekptg.intergration;
 public class EmailTester {
 	public static void main(String args []){
 		XEkptgEmailSender email = XEkptgEmailSender.getInstance();
-		email.FROM ="roslizakaria@gmail.com";
+		email.FROM ="etapp.pla@gmail.com";
+//		email.FROM ="roslizakaria@gmail.com";
 		email.SUBJECT="PANGGILAN MESYUARAT(sistem under testing please ignore) ";
 		email.MESSAGE = setMessageTable()+"<b>"+setParaGraph();
 		email.MULTIPLE_RECIEPIENT = new String[2];
-		email.MULTIPLE_RECIEPIENT[0]="rosli@hla-group.com";
-		email.MULTIPLE_RECIEPIENT[1]="razman@hla-group.com";
+		email.MULTIPLE_RECIEPIENT[0]="roslizakariasip@gmail.com";
+		email.MULTIPLE_RECIEPIENT[1]="rosli@si-protech.com.my";
 		
 		email.sendEmail();
 	}

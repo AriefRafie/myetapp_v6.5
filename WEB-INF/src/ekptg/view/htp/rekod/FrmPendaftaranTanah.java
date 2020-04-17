@@ -2504,9 +2504,7 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 			this.context.put("idHakmilik",idTanah);
 			this.context.put("page2",true);
 			this.context.put("page3",false);					
-			//System.out.println("fix bug: mode : "+mode);			
 			boolean isHTPHakmilik = frmRekodUtilData.isHTPHakmilik(idPermohonan);
-			//System.out.println("fix bug: isHTPHakmilik : "+isHTPHakmilik);
 			
 			//myLog.debug("isHTPHakmilik:"+isHTPHakmilik);
 			if (mode.equals("") && isHTPHakmilik) {
@@ -2557,9 +2555,9 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 				
 			//Langkah Ketiga (3)
 			} else if (mode.equals("doAddHakmilik")) { 
-				myLog.debug("mode=doAddHakmilik");
-				idTanah = doInsertDetailHakmilik2();
 				//VIEW SEMULA HAKMILIK 
+				myLog.info("mode=doAddHakmilik");
+				idTanah = doInsertDetailHakmilik2();
  				readOnly = "readonly";
 				disabled = "disabled";
 				style = readOnly + " class="+disabled+" ";
@@ -2706,7 +2704,6 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 	
 	public String doInsertDetailHakmilik2() throws Exception {
 		 //doUpdateDetailHakmilik2 ni sebenarnya INSERT.
-		 //azam change method name accordingly
 		 String idHakmilik = "0";
 		 String idJenisRizab = getParam("socJenisRizab");
 		 try {
@@ -3105,9 +3102,9 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 	
 	private void simpanKemaskiniFail(String idSubUrusanDef,String langkah) throws Exception{
 		//idSubUrusan = idSubUrusanDef; // Sub Urusan LAIN-LAIN RIZAB
-		if(getStatus().getInfoStatusPermohonan(
-			String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan())
-			,String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail()),langkah)== null){
+		if(getStatus().getInfoStatusPermohonan(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan())
+			,String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail())
+			,langkah)== null){
 			myLog.info("getStatus():INSERT="+htpPermohonan+","+getParam("idPermohonan"));
 			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(
 					langkah,String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan()),"=");
@@ -3288,11 +3285,11 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 		return iHakmilik;
 	}
 
-
 	private ITanahKementerian getTanahKem(){
 		if(iTanahKem== null)
 			iTanahKem = new FrmTanahKementerianBean();
 		return iTanahKem;
 	}		
+	
 
 }

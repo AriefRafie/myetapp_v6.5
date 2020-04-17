@@ -41,11 +41,13 @@
 </head>
 <body>
 <!-- <body onload="submitForm();no_lot1();checklot();daerah_harta();check_harta()"> -->
-<form id="form1" name="f1" method="post"> 
-	<input type="hidden" name=upload id="upload" value="$upload" />
+<!-- <form id="form1" name="${formName}"> 
+<form id="form1" name="${formName}" method="post"> --> 
+<form id="form1" name="f1" method="post">
+	<!-- <input type="hidden" name=upload id="upload" value="$upload" /> -->
 	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}' />
 	<input type="hidden" name="v_tab" id="v_tab" value="" />
-	<input type="text" name="idPermohonan" id="idPermohonan" value="$idPermohonan"/>
+	<input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan"/>
 	<!-- <input type="hidden" name="idpermohonan" id="idpermohonan" value="$id"/> -->
 	<input type="hidden" name="noPengenalan" value="$noPengenalan"/>
 	<input type="hidden" name="flagFromSenaraiFailSek8" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
@@ -53,8 +55,16 @@
 	<input type="hidden" name="load" id="load"/>
 	<input type="hidden" name="paramOnline" value="$paramOnline" id="paramOnline"/>
   
+ 	<input type="hidden" name="command" value="$!_command">
+	<input type="hidden" name="mode" value="$!_mode">
+	<input type="hidden" name="tabIdatas" id="tabIdatas" value="$selectedTabatas"/>
+	<input type="hidden" name="tabIdtengah" id="tabIdtengah" value="$selectedTabtengah"/>
+	<input type="hidden" name="tabIdbawah" id="tabIdbawah" value="$selectedTabbawah"/>
+	<input type="hidden" name="tabIdtepi" id="tabIdtepi" value="$selectedTabtepi"/>
+    
+    <input type="hidden" name="eventStatus" id="eventStatus"/>
+     
   #if($add_new_harta == "yes")
-  
 	  #set($listBandarSuratbyNegeri="")
 	  #set($idhta="")	
 	  #set($noHakmilik="")		    
@@ -113,15 +123,8 @@
   #end
   
   #parse("app/ppk/paging_sek8.jsp")
-  	<input name="eventStatus" id="eventStatus" type="hidden" />
   #parse("app/ppk/bil_fail.jsp")
   	<table width="100%" border="0">
-	    <input type="hidden" name="command" value="">
-	    <input type="hidden" name="mode" value="">
-	    <input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
-	    <input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$selectedTabtengah"/>
-	    <input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
-	    <input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
     #foreach($listFail in $ViewFail)
 	    <input name="id_Suburusanstatus" type="hidden"  value="$listFail.id_Suburusanstatus"/>
 	    <input name="id_Suburusanstatusfail" type="hidden"  value="$listFail.id_Suburusanstatusfail"/>
@@ -132,15 +135,15 @@
 	    #set ($idPemohon = $list.idPemohon)
 	    #set ($idSimati = $list.idSimati)
 	    #set($id_Status = $list.id_Status)
-	    <input name="jpphlepas" type="hidden"  value="$list.jpphlepas"/>
-	    <input name="idPermohonanp" type="hidden" value="$list.idPermohonan"/>
+	    <input type="hidden" name="jpphlepas" value="$list.jpphlepas"/>
+	    <input type="hidden" name="idPermohonanp" value="$list.idPermohonan"/>
 	    <!-- <input name="idPermohonan" type="hidden" value="$id"/> -->
-	    <input name="idpermohonan" type="hidden" id="idpermohonan" value="$id"/>
-	    <input name="idPemohon" type="hidden"  value="$idPemohon"/>
-	    <input name="idSimati" type="hidden"  value="$idSimati" id="idSimati"/>
-	    <input name="idtemp" type="hidden"  value="$id"/>
-	    <input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
-	    <input name="id_Fail" id="id_Fail" type="hidden" value="$list.idFail" />
+	    <!-- <input name="idpermohonan" type="hidden" id="idpermohonan" value="$id"/> -->
+	    <input type="hidden" name="idPemohon" value="$idPemohon"/>
+	    <input type="hidden" name="idSimati" value="$idSimati" id="idSimati"/>
+	    <input type="hidden" name="idtemp" value="$id"/>
+	    <input type="hidden" name="id_Permohonansimati" value="$list.id_Permohonansimati"/>
+	    <input type="hidden" name="id_Fail" id="id_Fail" value="$list.idFail" />
 	    #set($id_fail = $list.idFail) 
 	    #set($listnoFail = $list.noFail)
 	    #set($listidnegeri = $list.idnegeri)
@@ -156,9 +159,10 @@
 	    #set($idPermohonanSimati = $list.id_Permohonansimati)
     #end
 	    <tr>
-	      <td> #parse("app/ppk/maklumat_sek8.jsp")
+	      <td> 
+	  	#parse("app/ppk/maklumat_sek8.jsp")
 	                
-	        #set($md=$listtarikhMohon)
+	  	#set($md=$listtarikhMohon)
 	        <input type="hidden" name="txtSeksyen" value="$listseksyen" readonly="true"/>
 	        <input type="hidden" name="txdTarikhMohon" id="txdTarikhMohon" value="$listtarikhMohon" />
 	        <input type="hidden" name="txtNamaPemohon" value="$listnamaPemohon" readonly="true"/>
@@ -395,7 +399,7 @@
 								                                  <tr>
 								                                 		<td valign="top" class="style45">&nbsp;</td>
 								                                    	<td class="style38" valign="top"><div align="right" class="style44">
-								                                        	<div align="left">No Perserahan</div>
+								                                        	<div align="left">No. Perserahan</div>
 								                                      	</div></td>
 								                                    	<td valign="top"><div align="right">:</div></td>
 								                                    	<td valign="top"><label>
@@ -537,7 +541,7 @@
                                     <td width="1%"><div align="right">:</div></td>
                                     <td><label> 
                                		#if($jenistanah!="" && $jenistanah!="0")
-                                   		<select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()">
+                                   		<select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;">
 										#if($jenistanah=="3")  
                                         	<option value="3">TANAH GSA</option>
                                         	<option value="4">BUKAN TANAH GSA</option>
@@ -548,7 +552,7 @@
                                			#end
                                       	</select>
                                		#else
-                                      	<select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()">
+                                      	<select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;">
                                       		<option value="0">Sila Pilih Jenis Tanah</option>
 	                                     	<option value="3">TANAH GSA</option>
 	                                        <option value="4">BUKAN TANAH GSA</option>
@@ -595,7 +599,7 @@
                                	#end
                               			<input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar1 id="FLAG_DAFTAR" value="1" />
                                       Pendaftaran <br />
-                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar2 id="FLAG_DAFTAR" value="2" />
+                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar2 id="FLAG_DAFTAR2" value="2" />
                                       Perbicaraan
                      		#else
                                 #set($text_daftar = "")
@@ -604,7 +608,7 @@
                            		#elseif($FLAG_DAFTAR == '2') 
                                       #set($text_daftar = "PERBICARAAN")                                         
                                	#end
-                                      <input name="FLAG_DAFTAR_TEXT" type="text" id="FLAG_DAFTAR_TEXT" style="text-transform:uppercase;"  value="$text_daftar" size="18" maxlength="40" $readmodeR class="$readmode" />
+                                      <input type="text" name="FLAG_DAFTAR_TEXT" id="FLAG_DAFTAR_TEXT" style="text-transform:uppercase;"  value="$text_daftar" size="18" maxlength="40" $readmodeR class="$readmode" />
                                       <input type="hidden" name="FLAG_DAFTAR" id="FLAG_DAFTAR" value="$FLAG_DAFTAR"  />
                                	#end 
                               		</td>
@@ -1186,7 +1190,7 @@
                               	#end
                                       
                            	#else
-                           			<select name="socJenisTanahHtaamUpd" class="autoselect" $readmode id="socJenisTanahHtaam2" style="text-transform:uppercase;" onblur="uppercase()">
+                           			<select name="socJenisTanahHtaamUpd" class="autoselect" $readmode id="socJenisTanahHtaam2" style="text-transform:uppercase;">
                                     #if($!htaHash.jenistanah=="3")
                                     	<option selected value="3">TANAH GSA</option>
                                     	<option value="4">BUKAN TANAH GSA</option>                                  	
@@ -1249,7 +1253,7 @@
                                       <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar1 id="FLAG_DAFTAR" 
                                           value="1" />
                                       Pendaftaran <br />
-                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar2 id="FLAG_DAFTAR" 
+                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar2 id="FLAG_DAFTAR2" 
                                           value="2" />
                                       Perbicaraan
                                       
@@ -1262,7 +1266,7 @@
                                       #elseif($FLAG_DAFTAR == '2') 
                                       #set($text_daftar = "PERBICARAAN")                                         
                                       #end
-                                      <input name="FLAG_DAFTAR_TEXT" type="text" id="FLAG_DAFTAR_TEXT" style="text-transform:uppercase;"  value="$text_daftar" size="18" maxlength="40" $readmodeR class="$readmode" />
+                                      <input type="text" name="FLAG_DAFTAR_TEXT" id="FLAG_DAFTAR_TEXT" style="text-transform:uppercase;"  value="$text_daftar" size="18" maxlength="40" $readmodeR class="$readmode" />
                                       <input type="hidden" name="FLAG_DAFTAR" id="FLAG_DAFTAR" value="$FLAG_DAFTAR"  />
                                       #end 
                            		</td>
@@ -1325,7 +1329,7 @@
                        				<td align="center"> 
 					#if($open_button_online == "yes")
   						#if($show_simpan_add_htaam == "yes")
-				 						<input type="submit" name="simpanhta" id="simpanhta" $readmode value="Simpan" onclick="setSelected(1,0,0,0);tambahHarta('$idhta','$idPermohonan')"/>                      	
+				 						<input type="submit" name="simpanhta" id="simpanhta" $readmode value="Simpan" onclick="setSelected(1,0,0,0);add_Htaam('$idhta','$idPermohonan')"/>                      	
   						#end 
   					#else	    
   					#end 
@@ -1505,17 +1509,18 @@
           			</div>
         		</div>
         	</td>
-      		<input name="no_lot_hta" id="no_lot_hta" type="hidden"  />
-      		<input type="text" name="id_harta" id="id_harta" value="$!idhta"  />
-      		<input name="id_daerah_harta" id="id_daerah_harta" type="hidden" />
-      		<input name="save_harta" id="save_harta" type="hidden" />
+      		<input type="hidden" name="no_lot_hta" id="no_lot_hta"/>
+      		<input type="hidden" name="id_harta" id="id_harta" value="$!idhta"  />
+      		<input type="hidden" name="id_daerah_harta" id="id_daerah_harta"/>
+      		<input type="hidden" name="save_harta" id="save_harta"" />
     	</tr>
   	</table>
   	#parse("app/ppk/paging_sek8.jsp") 
-	#parse("app/ppk/headerppk_script.jsp")
+	##parse("app/ppk/headerppkScript.jsp")
 </form>
 
 <script>
+	//internal||online
 	function info(jenis) {
 	    //
 		var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
@@ -1534,30 +1539,34 @@
 	
 	}
 
-if(document.f1.selectedHartaTakAlih.value.length>0){
-	var selectHTAs = document.getElementsByName('selectHTA');
-	var arrayCarryHartaTakAlih = document.f1.selectedHartaTakAlih.value;
-	var selectedHartaTakAlihAdaHakmilik = []; 
-	
-	for (var i=0; i<arrayCarryHartaTakAlih.length; i++) {
-		var carryHartaTakAlih = '';
-		if(arrayCarryHartaTakAlih.indexOf(",")>0){ 
-			carryHartaTakAlih = arrayCarryHartaTakAlih.substring(0, arrayCarryHartaTakAlih.indexOf(",")); 		
-// 			selectedHartaTakAlihAdaHakmilik.push(carryHartaTakAlih);
-			arrayCarryHartaTakAlih = arrayCarryHartaTakAlih.substring(arrayCarryHartaTakAlih.indexOf(",")+1, arrayCarryHartaTakAlih.length);
-		} else {
-			carryHartaTakAlih = arrayCarryHartaTakAlih;
-// 			selectedHartaTakAlihAdaHakmilik.push(carryHartaTakAlih);
-			arrayCarryHartaTakAlih = "";
-		}
+	//if(document.${formName}.selectedHartaTakAlih.value.length>0){
+	if(document.f1.selectedHartaTakAlih.value.length>0){
+		var selectHTAs = document.getElementsByName('selectHTA');
+		//var arrayCarryHartaTakAlih = document.${formName}.selectedHartaTakAlih.value;
+		var arrayCarryHartaTakAlih = document.f1.selectedHartaTakAlih.value;
+		var selectedHartaTakAlihAdaHakmilik = []; 
 		
-		for(var j=0; j<selectHTAs.length; j++){
-			if(selectHTAs[j].value == carryHartaTakAlih){
-				selectHTAs[j].checked = true;
+		for (var i=0; i<arrayCarryHartaTakAlih.length; i++) {
+			var carryHartaTakAlih = '';
+			if(arrayCarryHartaTakAlih.indexOf(",")>0){ 
+				carryHartaTakAlih = arrayCarryHartaTakAlih.substring(0, arrayCarryHartaTakAlih.indexOf(",")); 		
+	// 			selectedHartaTakAlihAdaHakmilik.push(carryHartaTakAlih);
+				arrayCarryHartaTakAlih = arrayCarryHartaTakAlih.substring(arrayCarryHartaTakAlih.indexOf(",")+1, arrayCarryHartaTakAlih.length);
+			
+			} else {
+				carryHartaTakAlih = arrayCarryHartaTakAlih;
+	// 			selectedHartaTakAlihAdaHakmilik.push(carryHartaTakAlih);
+				arrayCarryHartaTakAlih = "";
+			
+			}
+			
+			for(var j=0; j<selectHTAs.length; j++){
+				if(selectHTAs[j].value == carryHartaTakAlih){
+					selectHTAs[j].checked = true;
+				}
 			}
 		}
 	}
-}
 
 function doChangeMaklumat() {
 	document.f1.command.value = "doChangeMaklumat";
@@ -1608,36 +1617,30 @@ function doCheckAll1_HTA(){
     }
 }
 
-function doUpdateCheckAll1_HTA(){  
-	var c = 0;
-	if(document.f1.selectHTA.length > 1) {     
+	function doUpdateCheckAll1_HTA(){  
+		var c = 0;
+		if(document.f1.selectHTA.length > 1) {     
 		  for (i = 0; i < document.f1.selectHTA.length; i++) {
-	      if (document.f1.selectHTA[i].checked == false)
-		  {	 
-		  c++
-	      }
+	      	if (document.f1.selectHTA[i].checked == false){	 
+		  		c++
+	      	}
+		
 		  }  
-	}
-	else
-	{
-	if (document.f1.selectHTA.checked == false)
-	{	 
-	c++;
-	}	 	
-	}	 
-	   if(c>0)
-		  {	  
-		  document.f1.selectallHTA.checked = false;
-		  }
-		  else
-		  {
-		  document.f1.selectallHTA.checked = true;
-		  }
+		
+		}else{
+			if (document.f1.selectHTA.checked == false){	 
+				c++;
+			}	 	
+		}	 
+	   
+		if(c>0){	  
+			document.f1.selectallHTA.checked = false;
+		}else{
+		  document.f1.selectallHTA.checked = true;  
+		}
 		  
-	}
-
-		/* END HARTA TAK ALIH   */
-
+	} /* END HARTA TAK ALIH   */
+/* 2020/03/10
 if(document.f1.upload.value=='simpanUpload' && document.f1.paramOnline.value != ''){
 	document.f1.mode.value = "Htaamview";
 	document.f1.command.value = "Htaam";
@@ -1649,7 +1652,7 @@ if(document.f1.upload.value=='simpanUpload' && document.f1.paramOnline.value != 
 // 	else
 // 	    document.f1.action = "?_portal_module=FrmPrmhnnSek8Internal#maklumat_pemohon";
 	document.f1.submit();
-}
+} */
 
 <!-- TAB -->
 function setHartaTakAlih(){
@@ -1809,13 +1812,17 @@ function kembali_simati(){
 	document.f1.submit();
 }
 
-function setSelected(tabIdatas,tabIdtengah,tabIdbawah,tabIdtepi)
- {
-    document.f1.tabIdatas.value = tabIdatas;
-    document.f1.tabIdtengah.value = tabIdtengah;
-    document.f1.tabIdbawah.value = tabIdbawah;	
-	document.f1.tabIdtepi.value = tabIdtepi;	
-}
+	function setSelected(tabIdatas,tabIdtengah,tabIdbawah,tabIdtepi){
+	    /*document.${formName}.tabIdatas.value = tabIdatas;
+	    document.${formName}.tabIdtengah.value = tabIdtengah;
+	    document.${formName}.tabIdbawah.value = tabIdbawah;	
+		document.${formName}.tabIdtepi.value = tabIdtepi; */
+		document.f1.tabIdatas.value = tabIdatas;
+	    document.f1.tabIdtengah.value = tabIdtengah;
+	    document.f1.tabIdbawah.value = tabIdbawah;	
+		document.f1.tabIdtepi.value = tabIdtepi;	
+	
+	}
 
 function cancelwaris() {
 input_box = confirm("Adakah anda pasti?");
@@ -1837,10 +1844,14 @@ document.f1.socNegeriHtaam.focus();
 }
 
 function nktambah(paramOnline) {
+	/*document.${formName}.command.value = "Htaam";
+	document.${formName}.mode.value = "add_new";
+	document.${formName}.submit(); */
+
 	document.f1.reset();
 	document.f1.command.value = "Htaam";
 	document.f1.mode.value = "add_new";
-	var path = window.location.href;
+	//var path = window.location.href;
 // 	alert(path);
 		
 // 	if(window.location.href == 'seksyen8online')
@@ -1852,16 +1863,17 @@ function nktambah(paramOnline) {
 // 		document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnSek8Internal";
 // 	}
 
-	document.f1.action = "";
+	//document.f1.action = "";
 	document.f1.submit();
+
 }
 
-function get_htaam( idPermohonanSimati, idhtaam , idDokumen) {
-	document.f1.id_Permohonansimati.value= idPermohonanSimati;
-    document.f1.command.value = "Htaam";
-	document.f1.idhtaam.value = idhtaam;
-	document.f1.idDokumen.value = idDokumen;
-	document.f1.mode.value = "getHtaam";
+	function get_htaam( idPermohonanSimati, idhtaam , idDokumen) {
+		document.f1.id_Permohonansimati.value= idPermohonanSimati;
+	    document.f1.command.value = "Htaam";
+		document.f1.idhtaam.value = idhtaam;
+		document.f1.idDokumen.value = idDokumen;
+		document.f1.mode.value = "getHtaam";
 	
 // 	var path = window.location.href;
 // 	if(path.indexOf("FrmPrmhnnBorangAMaklumatPemohon")> -1){
@@ -1873,9 +1885,10 @@ function get_htaam( idPermohonanSimati, idhtaam , idDokumen) {
 // 	}else{
 // 		document.f1.action = "";
 // 	}
-	document.f1.action = "";
-	document.f1.submit();
-}
+		document.f1.action = "";
+		document.f1.submit();
+		
+	}
 
 	function negerichange(v_t){
 		document.f1.command.value="Htaam";
@@ -1986,35 +1999,15 @@ function tambah_simpan_penting(){
 	document.f1.action = "";
 	document.f1.submit();
 	}
-	
-	function tambahHarta(idhta,id){
-		alert('add_Htaam idhta='+idhta);
-        document.f1.v_tab.value = 'socDaerahHtaam';
-
-		
-		if(document.f1.socNegeriHtaam.value == ""){
-			alert('Sila pilih " Negeri " terlebih dahulu.');
-	  		document.f1.socNegeriHtaam.focus(); 
-			return; 
-            
-		}else if(document.f1.socDaerahHtaam.value == ""){
-			alert('Sila pilih " Daerah " terlebih dahulu.');
-	  		document.f1.socDaerahHtaam.focus(); 
-			return;
-		}
-		alert('selesai');
-
-	}
 
 	function add_Htaam(idhta,id){
-		alert('add_Htaam idhta='+idhta);
-		alert('add_Htaam idPermohonan='+id);
-    	var b1=parseInt(document.f1.txtBahagianSimati1.value);
+		//alert('add_Htaam: idhta='+idhta+',idPermohonan='+id);
+		var b1=parseInt(document.f1.txtBahagianSimati1.value);
    		var b2=parseInt(document.f1.txtBahagianSimati2.value);
-
+ 
       	if(document.f1.socNegeriHtaam.value == ""){
 			alert('Sila pilih " Negeri " terlebih dahulu.');
-	  		document.f1.socNegeriHtaam.focus(); 
+	  		document.${formName}.socNegeriHtaam.focus(); 
 			return; 
             
 		}else if(document.f1.socDaerahHtaam.value == ""){
@@ -2022,7 +2015,7 @@ function tambah_simpan_penting(){
 	  		document.f1.socDaerahHtaam.focus(); 
 			return;  
             
-      	/*}else if(document.f1.socMukimHtaam.value == ""){
+      	}else if(document.f1.socMukimHtaam.value == ""){
 			alert('Sila pilih " Mukim " terlebih dahulu.');
 	  		document.f1.socMukimHtaam.focus(); 
 			return; 
@@ -2033,12 +2026,12 @@ function tambah_simpan_penting(){
 			return; 
             
       	}else if(document.f1.txtNoHakmilikHtaam.value == ""){
-			alert('Sila masukkan no hakmilik');
+			alert('Sila masukkan no. hakmilik');
 	  		document.f1.txtNoHakmilikHtaam.focus(); 
 			return; 
             
       	}else if(document.f1.txtNoPTHtaam.value == ""){
-			alert('Sila masukkan no PT ataupun no Lot');
+			alert('Sila masukkan no. PT ataupun no. Lot');
 	  		document.f1.txtNoPTHtaam.focus(); 
 			return; 
             
@@ -2087,10 +2080,10 @@ function tambah_simpan_penting(){
 	  		document.f1.txtBahagianSimati1.focus(); 
 			return; 
             
-		}else if(document.f1.save_harta.value == "yes" ){
-            alert('Sila masukkan maklumat hta dibawah jagaan unit terlebih dahulu!');
-	  	//	document.f1.txtBahagianSimati1.focus(); 
-			return; 
+		//}else if(document.f1.save_harta.value == "yes" ){
+        //    alert('Sila masukkan maklumat hta dibawah jagaan unit terlebih dahulu!');
+	  		//	document.f1.txtBahagianSimati1.focus(); 
+		//	return; 
             
 		}else{
             input_box = confirm("Adakah anda pasti?");
@@ -2100,9 +2093,9 @@ function tambah_simpan_penting(){
 		    	document.f1.action="";
 		    	document.f1.submit();
 		    	
-		    //}else{
-            //	return;
-            } */
+		    }else{
+            	return;
+            } 
        
 		}
 

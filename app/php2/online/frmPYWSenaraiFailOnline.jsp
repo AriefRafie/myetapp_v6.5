@@ -9,12 +9,11 @@
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'/>
   <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
   <input type="hidden" name="actionPenyewaan" />
-  <input type="hidden" name="idStatus" />
   <input type="hidden" name="idFail" />
+  <input type="hidden" name="idStatus" />
   <input type="hidden" name="idPemohon" />
   <input type="hidden" id="namamodul" name="namamodul"  >
   <input type="hidden" id="namatab" name="namatab"  >
-  <input type="hidden" name="initiateFlagBuka" id="initiateFlagBuka"/>
 </p>
 
 <div id="divMainForm">
@@ -24,7 +23,7 @@
         <legend><b>CARIAN</b></legend>
         <table width="100%" align="center" border="0">
           <tr>
-            <td width="30%" height="24" scope="row" align="right">No Permohonan : </td>
+            <td width="30%" height="24" scope="row" align="right">No Fail : </td>
             <td width="70%"><input name="findNoFail" id="findNoFail" type="text" value="$!findNoFail" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
           </tr>
           <tr>
@@ -49,15 +48,15 @@
   <tr>
     <td><fieldset> 
       <legend><b>SENARAI PERMOHONAN PENYEWAAN</b></legend>
-      #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
       <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/></td>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>No Permohonan</strong></td>
+          <td width="20%"><strong>No Fail</strong></td>
+          <td width="20%"><strong>No Fail Negeri</strong></td>
+          <!-- <td width="25%"><strong>Nama Pemohon</strong></td> -->
           <td width="10%" align="center"><strong>Tarikh Terima</strong></td>
-          <td width="30%" align="center"><strong>Perkara</strong></td>
-          <td width="10%"><strong>Status</strong></td>
+          <td width="20%"><strong>Status</strong></td>
         </tr>
         
         #set ($list = "")
@@ -74,13 +73,10 @@
         
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row">
-          <!-- <a id="hoverover" style="cursor:pointer; color:#0000FF" onClick="ShowPopup(this,$list.bil);" title="Klik untuk maklumat lengkap">$list.NO_PERMOHONAN</a>-->
-          <a href="javascript:ShowInfo('$list.ID_FAIL')" class="style1" title="Klik untuk maklumat lengkap">$list.NO_PERMOHONAN</a>
-          
-          </td>
+          <td class="$row"><a id="hoverover" style="cursor:pointer; color:#0000FF" onClick="ShowPopup(this,$list.bil);" title="Klik untuk maklumat lengkap">$list.NO_FAIL</a></td>
+          <td class="$row">$list.NO_FAIL_NEGERI</td>
+          <!-- <td class="$row">$list.NAMA</td> -->
           <td class="$row" align="center">$list.TARIKH_TERIMA</td>
-          <td class="$row">$list.PERKARA</td>
           <td class="$row">$list.STATUS</td>
         </tr>
         
@@ -310,13 +306,6 @@ function ShowPopup(hoveritem,tab)
         hp.style.display = "none";
         hp.style.visibility = "collapse";
     }
-}
-function ShowInfo(idFail){
-	document.${formName}.idFail.value = idFail;
-	document.${formName}.initiateFlagBuka.value = "Y";
-	document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
-	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan dan Hasil Persekutuan",$portal_role)?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView";
-	document.${formName}.submit();
 }
 function findKosongkan() {
 	document.${formName}.findNoFail.value = "";

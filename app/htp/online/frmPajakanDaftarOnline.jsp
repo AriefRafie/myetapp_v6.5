@@ -12,7 +12,7 @@
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
   <input name="idFail" type="text" id="idFail" value="$idFail"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
-  <input nama="idpemohon" type="hidden" id="idpemohon" value="$!pemohon.get("iduser")"/>
+  <input nama="idpemohon" type="hidden" id="idpemohon"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>

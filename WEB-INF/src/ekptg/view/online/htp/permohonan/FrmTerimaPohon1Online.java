@@ -1,17 +1,29 @@
 package ekptg.view.online.htp.permohonan;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.AuditTrail;
+import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 import ekptg.intergration.BorangKIntergrationBean;
@@ -177,6 +189,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	public String doTemplate2() throws Exception {	
 		fData = FrmSenaraiFailTerimaPohonData.getInstance();
 		HttpSession session = this.request.getSession();
+		
 		//idUser = (String)session.getAttribute("_ekptg_user_id");
 		idUser = String.valueOf(session.getAttribute("_ekptg_user_id"));
 		if(idUser == null){
@@ -245,9 +258,11 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		String command = getParam("command");
 		String noRujukanOnline = getParam("txtNoRujukanOnline");
 		String portal_role = String.valueOf(session.getAttribute("myrole"));
+		//---------- end addby zul 27/7/2017---------- 
 		
 		try{
 			
+			//---------- Start addby zul ----------
 			tanahBean = new HTPPermohonanTanahBean();
 			tanahBean.setLabelDaerah(context, idnegeri);
 			
@@ -694,7 +709,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 							myLog.debug("Simpan Pembayaran");
 		    				Pembayaran("insert");
 		    				initMaklumatPembayaran("readonly");
-		    			} else if ("KemaskiniPembayaran".equals(button)){
+		    			}else if ("KemaskiniPembayaran".equals(button)){
 		    				Pembayaran("update");
 		    				initMaklumatPembayaran("readonly");
 		    				this.context.put("visible","0");
@@ -722,7 +737,11 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    		
 		    		idNotis = getParam("idNotis");
 		    		this.context.put("idNotis", idNotis);
+		    		TerimaPohonInfo = fData.getTerimaPohonInfo(idfail);
+					idpermohonan = (String)TerimaPohonInfo.get("lblIdPermohonan");
 		    		myLog.debug("idNotis:"+idNotis);
+		    		myLog.debug("idpermohonan:"+idpermohonan);
+		    		this.context.put("idpermohonan", idpermohonan);
 		    		
 		    		if("TambahNotis".equals(button)){
 		    			//View Form Untuk Tambah Notis 5A
@@ -750,8 +769,44 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 //		    	/* ***END FOR TAB MAKLUMAT*** */
 		    	
 //		    /* *** addby zulfazdliabuas@gmail.com *** */
-	
-			}else if("pohonfailbaru".equals(submit)){
+		    	
+		    	
+		    	
+		   ///
+		    //Simpan Bukti Pembayaran-indexOnline.jsp
+			} else if ("simpanBuktiPembayaran".equals(submit)) {
+				Hashtable TerimaPohonInfo = null;
+				System.out.println("-------Read simpanBuktiPembayaran-------");
+				TerimaPohonInfo = fData.getTerimaPohonInfo(idfail);
+				idpermohonan = (String)TerimaPohonInfo.get("lblIdPermohonan");
+	    		myLog.debug("idpermohonan:"+idpermohonan);
+	    		this.context.put("idpermohonan", idpermohonan);
+				
+				String noBaucer = getParam("txtNoBaucer");
+				String noResit = getParam("txtNoResit");
+				String tarikhBaucer = getParam("txdTarikhBaucer");
+				String tarikhResit = getParam("txdTarikhResit");
+				String jumlahBaucer = getParam("txtJumlahBaucer");
+		
+				saveData(noBaucer,noResit,tarikhBaucer,tarikhResit,jumlahBaucer);
+				template_name = PATH + "indexOnline.jsp";
+				
+				
+			} else if ("uploadDoc".equals(submit)) {
+				myLog.debug("uploadDoc=" + submit);
+
+				String id_permohonan = getParam("id_permohonan");
+				String keterangan = getParam("txtKeterangan");
+				String namaDokumen = getParam("txtNamaDokumen");
+				String xxxxx = getParam("txtNamaDokumen2");
+
+				// myLog.debug("xxxxx="+xxxxx);
+				myLog.debug("session=" + session);
+
+				uploadFiles(id_permohonan, keterangan, namaDokumen, session);
+				template_name = PATH + "indexOnline.jsp";
+
+			} else if ("pohonfailbaru".equals(submit)) {
 				
 				myLog.info("SIMPAN PERMOHONAN BARU DARIPADA USER ONLINE");
 				template_name = PATH +"frmMaklumatPermohonanForm.jsp";
@@ -1839,7 +1894,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		
 		FrmTerimaPohonData.Notis5A(hNotis,mode,idNotis);
 }
-		
+	
 	private void SimpanBuktiBayaranNotis()throws Exception {
 		
 		Hashtable data = null;
@@ -1858,7 +1913,6 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		Vector BuktiBayaranInfo = fData.getBuktiBayaranNotis5A(idpermohonan);
 		this.context.put("BuktiBayaranInfo", BuktiBayaranInfo);
 	}
-	
 	public void setPaging(boolean page1,boolean page2,boolean page3,boolean page4,boolean page5) {
 		this.context.put("page1",page1);
 		this.context.put("page2",page2);
@@ -2113,6 +2167,107 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		if(iHTPEmel == null)
 			iHTPEmel = new HTPEmelSemakBean();
 		return iHTPEmel;
+	}
+	private void uploadFiles(String id_permohonan, String keterangan,
+			String namaDokumen, HttpSession session) throws FileUploadException {
+		
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		
+		
+		if (isMultipart != false) {
+			
+			List items = upload.parseRequest(request);
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				
+				
+				FileItem item = (FileItem) itr.next();
+				
+				if ((!(item.isFormField())) && (item.getName() != null)	&& (!("".equals(item.getName())))) {
+					
+					saveData(item, id_permohonan, keterangan, namaDokumen, session);
+				}
+			}
+		}		
+	}
+	private void saveData(String noBaucer, String noResit, String tarikhBaucer, String tarikhResit, String jumlahBaucer) throws Exception {
+		Db db = null;
+		String sqlInsertTblhtpbayaran = "";
+		System.out.println("Dalam SaveData Bukti Pembayaran");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	long idBayaran =  DB.getNextID(db,"TBLHTPBAYARAN_SEQ");
+		    	String txtNoBaucer = noBaucer;
+		    	String txtNoResit = noResit;
+		    	String txdTarikhBaucer = "to_date('" + tarikhBaucer + "','dd/MM/yyyy')";
+		    	String txdTarikhResit = "to_date('" + tarikhResit + "','dd/MM/yyyy')";
+		    	String txtJumlahBaucer = jumlahBaucer;
+		    	
+		    	SQLRenderer r = new SQLRenderer();
+		    	
+		    	r.add("ID_BAYARAN", idBayaran);
+		    	r.add("ID_PERMOHONAN", idpermohonan);
+		    	r.add("NO_BAUCER", txtNoBaucer);
+		    	r.add("NO_RESIT", txtNoResit);
+		    	r.add("TARIKH_BAUCER", r.unquote(txdTarikhBaucer));
+		    	r.add("TARIKH_RESIT", r.unquote(txdTarikhResit));
+		    	r.add("JUMLAH_BAUCER", txtJumlahBaucer);
+		    	
+		    	myLog.info("TarikhBauce: "+ tarikhBaucer);
+		    	myLog.info("id User: "+ idUser);
+		  
+		    	sqlInsertTblhtpbayaran = r.getSQLInsert("TBLHTPBAYARAN");
+		    	System.out.println("sqlInsertTblhtpbayaran = " + sqlInsertTblhtpbayaran);
+				stmt.executeUpdate(sqlInsertTblhtpbayaran);
+				
+		    	con.commit();
+		    	return;
+		    }
+		    finally {
+			      if (db != null) db.close();
+		    }
+			}
+
+	private void saveData(FileItem item, String id_permohonan,
+			String keterangan, String namaDokumen, HttpSession session) {
+		System.out.println("saveDAta ");
+		Db db = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id"); 
+		
+		try {
+			db = new Db();
+			// TBLPPKDOKUMENSENARAIHUTANG
+			long idDokumen = DB.getNextID("TBLHTPDOKUMEN_SEQ");
+			Connection con = db.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement ps = con
+					.prepareStatement("INSERT INTO TBLHTPDOKUMEN"
+							+ " (ID_DOKUMEN, ID_PERMOHONAN, NAMA_DOKUMEN, CONTENT, JENIS_MIME, ID_MASUK, KETERANGAN, TARIKH_MASUK)"
+							+ " VALUES(?,?,?,?,?,?,?,SYSDATE)");
+			ps.setLong(1, idDokumen);
+			ps.setLong(2, Long.valueOf(id_permohonan));
+			ps.setString(3, namaDokumen);
+			//ps.setString(4, item.getName());
+			ps.setBinaryStream(4, item.getInputStream(), (int) item.getSize()); //content
+			ps.setString(5, item.getContentType()); //jenis mime
+			ps.setString(6, userId);
+			ps.setString(7, keterangan);
+			System.out.println("ps : " + ps.toString());
+			ps.executeUpdate();
+
+			con.commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null) db.close();
+		}
+		
+		context.put("id_permohonan", id_permohonan);
 	}
 	
 /*	private Permohonan getlistPermohonan(){

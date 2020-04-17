@@ -1,14 +1,12 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
  <persistence-unit name="persistence">
- 
    	 
    	<!-- 
    	<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
    	-->
    	<!--  use eclipse link from now on -->
 	<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-	
-	
+		
 	<class>etapp.entity.ppt.PPTBorangK</class>
 	<class>etapp.entity.ppt.PPTEndosanBorangK</class>
 
@@ -152,20 +150,27 @@
 <!-- 	<property name="javax.persistence.jdbc.password" value="ekptghqv6live"/>	 -->
 <!-- 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/myetapp"/> -->
 	
-<<<<<<< HEAD
+	<!-- DB POC  -->
+	<!--  <property name="javax.persistence.jdbc.user" value="ekptghq"/>
+
+	<!-- DB LOCAL ARIEF-->
+	<property name="javax.persistence.jdbc.user" value="ekptghqlive"/> 
+	<property name="javax.persistence.jdbc.password" value="ekptghqv6live"/>	
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/EKPTGLOCAL"/>
+
+
 	<!-- DB POC  -->
 	<!--  <property name="javax.persistence.jdbc.user" value="ekptghq"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghq"/>	
 	  <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.1.102:1521/orclocal"/> -->
 	<!--<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.8.112:1521/orclocal"/> -->
-=======
+
 	<!-- DB LOCAL DELL -->
-	<!----><property name="javax.persistence.jdbc.user" value="ekptghq"/>
+	<!--<property name="javax.persistence.jdbc.user" value="ekptghq"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghq"/>	 	 
-	<!----><property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.8.112:1521/orclocal"/>
-	<!--<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.1.102:1521/orclocal"/> -->
-	<!--<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.43.128:1521/orclocal"/> -->
-	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.63:1521/myetapp"/>  -->
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.8.112:1521/orclocal"/>
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.1.102:1521/orclocal"/>
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.43.128:1521/orclocal"/>
 	
 	<!-- DB LIVE 
 	<property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
@@ -173,9 +178,9 @@
 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.76:1521/myetapp"/>   -->
 	
 	<!-- DB TEST -->
-	<property name="javax.persistence.jdbc.user" value="ekptghqtest"/>
+	<!--<property name="javax.persistence.jdbc.user" value="ekptghqtest"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghqtest"/>	
-	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/>	
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/> -->	
 	<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>	
 	<property name="eclipselink.weaving" value="false" />
 	<property name="eclipselink.id-validation" value="NULL"/> 	

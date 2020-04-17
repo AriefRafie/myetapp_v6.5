@@ -1,35 +1,26 @@
 package ekptg.view.ppk;
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
-import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
 import ekptg.engine.CacheManager;
 import ekptg.engine.CachedObject;
-import ekptg.helpers.DB;
-import ekptg.helpers.Paging2;
 import ekptg.model.ppk.BicaraInteraktifData;
 import ekptg.model.ppk.FrmHeaderPpk;
-import ekptg.model.ppk.FrmPrmhnnSek8InternalData;
 
 public class BicaraInteraktifPrint extends AjaxBasedModule {
 	static Logger myLogger = Logger.getLogger(BicaraInteraktifPrint.class);
@@ -37,9 +28,13 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 	String formNameAjax = "Fekptg_view_ppk_BicaraInteraktifPrint";
 	BicaraInteraktifData modelBI = new BicaraInteraktifData();
 	FrmHeaderPpk mainheader = new FrmHeaderPpk();
+	public ResourceBundle rbCetakan = ResourceBundle.getBundle("cetakan");
+	//public String fontSize = "font-size: 16px;";
+	public String fontSize = rbCetakan.getString("fontSizeCetakan");
 	//List listPerbicaraan = null;
 	@Override
 	public String doTemplate2() throws Exception {
+		this.context.put("fontSize",fontSize);
 		HttpSession session = this.request.getSession();
 		String command = getParam("command");
 		//String action = getParam("action");
@@ -162,11 +157,13 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 			}
 			skrin_name = "app/ppk/BicaraInteraktif/popupStatsPegawai.jsp";	
 		}
-		else if(command.equals("showCatatanPerintah"))
+		else if(command.equals("showCatatanPerintah") || command.equals("showJanaNota"))
 		{
 			this.context.put("tajukLaporan", "");
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
 			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);	
+			String ID_HISTORYJANANOTA = getParam("ID_HISTORYJANANOTA");
+			this.context.put("ID_HISTORYJANANOTA", ID_HISTORYJANANOTA);	
 			//String skrinName = "perubahan";
 			//this.context.put("skrinName", skrinName);			
 			this.context.put("scrolPosition", getParam("scrolPosition"));
@@ -178,6 +175,7 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 			String htmlSkrinMaklumat = "";
 			String CATATAN_PERINTAH_BI = "";
 			String CATATAN = "";
+			String NO_FAIL = "";
 			Db db = null;
 			try {
 				db = new Db();		
@@ -186,14 +184,25 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 				ID_PERMOHONAN = (String)mainID.get("ID_PERMOHONAN");
 				ID_PEMOHON = (String)mainID.get("ID_PEMOHON");
 				ID_SIMATI = (String)mainID.get("ID_SIMATI");
+				NO_FAIL = (String)mainID.get("NO_FAIL");
 				this.context.put("viewPerbicaraan", modelBI.viewPerbicaraan(session,ID_PERBICARAAN,ID_PERMOHONAN,db));
 				//htmlSkrinMaklumat = modelBI.htmlListPerubahan(session,formName,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,ID_PERMOHONAN,ID_PEMOHON,flagPrint,db);
 				
-				Map perintahInfo = modelBI.getMaklumatPerintahByIdPerbicaraan(session, ID_PERBICARAAN, db);
-				myLogger.info("perintahInfo : "+perintahInfo);
-				//getmaklumatperintah
-				CATATAN_PERINTAH_BI = (String)perintahInfo.get("CATATAN_PERINTAH_BI");
-				CATATAN = (String)perintahInfo.get("CATATAN");
+				if(command.equals("showCatatanPerintah"))
+				{
+					Map perintahInfo = modelBI.getMaklumatPerintahByIdPerbicaraan(session, ID_PERBICARAAN, db);
+					//myLogger.info("perintahInfo : "+perintahInfo);
+					//getmaklumatperintah
+					CATATAN_PERINTAH_BI = (String)perintahInfo.get("CATATAN_PERINTAH_BI");
+					CATATAN = (String)perintahInfo.get("CATATAN");
+				}
+				else if(command.equals("showJanaNota"))
+				{
+					Map getNotaHistoryJana = modelBI.getNotaHistoryJana(session, ID_HISTORYJANANOTA, db);
+					//myLogger.info("getNotaHistoryJana : "+getNotaHistoryJana);
+					//getmaklumatperintah
+					CATATAN_PERINTAH_BI = (String)getNotaHistoryJana.get("NOTA");
+				}
 				
 				
 			}
@@ -201,6 +210,7 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 				if (db != null)
 					db.close();
 			}
+			this.context.put("NO_FAIL", NO_FAIL);
 			this.context.put("ID_PEMOHON", ID_PEMOHON);
 			this.context.put("ID_SIMATI", ID_SIMATI);
 			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
@@ -240,6 +250,7 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 		}
 		else if(command.equals("showMaklumatketeranganhadirPrint"))
 		{
+			
 			this.context.put("tajukLaporan", "LAMPIRAN KETERANGAN PERBICARAAN");
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
 			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);	
@@ -252,6 +263,7 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 			String ID_SIMATI = "";
 			String flagPrint = "Y";
 			String htmlSkrinMaklumat = "";
+			String NO_FAIL = "";
 			Db db = null;
 			try {
 				db = new Db();		
@@ -260,13 +272,15 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 				ID_PERMOHONAN = (String)mainID.get("ID_PERMOHONAN");
 				ID_PEMOHON = (String)mainID.get("ID_PEMOHON");
 				ID_SIMATI = (String)mainID.get("ID_SIMATI");
+				NO_FAIL = (String)mainID.get("NO_FAIL");
 				this.context.put("viewPerbicaraan", modelBI.viewPerbicaraan(session,ID_PERBICARAAN,ID_PERMOHONAN,db));
-				htmlSkrinMaklumat = modelBI.htmlListKeterangan(session,formName,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,ID_PERMOHONAN,ID_PEMOHON,flagPrint,db);
+				htmlSkrinMaklumat = modelBI.htmlListKeterangan(session,formName,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,ID_PERMOHONAN,ID_PEMOHON,flagPrint,fontSize,db);
 			}
 			finally {
 				if (db != null)
 					db.close();
 			}
+			this.context.put("NO_FAIL", NO_FAIL);
 			this.context.put("ID_PEMOHON", ID_PEMOHON);
 			this.context.put("ID_SIMATI", ID_SIMATI);
 			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
@@ -380,6 +394,7 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 	public void defaultPut()
 	{
 		//initiate default value
+		this.context.put("NO_FAIL", "");
 		this.context.put("tajukLaporan", "");
 		this.context.put("rowCss","");
 		this.context.put("BIL","");
@@ -663,4 +678,8 @@ public class BicaraInteraktifPrint extends AjaxBasedModule {
 	
 
 }
+
+
+
+
 

@@ -3707,8 +3707,7 @@ private void insertBorangLama(HttpSession session) throws Exception {
 		    	  h.put("txtBandarPeguam", getParam("txtBandarPeguam"));
 		    	  h.put("txtNomborTelefonPeguam", getParam("txtNomborTelefonPeguam"));
 
-		     }else
-		     {
+		     }else{
 		    	  h.put("txtNamaKaveat", "");
 		    	  h.put("txtNoKaveat", "");
 		    	  h.put("txtNamaFirma", "");
@@ -3721,23 +3720,17 @@ private void insertBorangLama(HttpSession session) throws Exception {
 		    	  h.put("txtNomborTelefonPeguam", "");
 		     }
 
-
-
-
-
 		//System.out.println("daerah :"+getParam("socDaerah")+"negeri :"+getParam("socNegeri"));
-
 	    h.put("userId", (String)session.getAttribute("_ekptg_user_id"));
         h.put("id_Suburusanstatus",getParam("id_Suburusanstatus"));
         h.put("id_Suburusanstatusfail", getParam("id_Suburusanstatusfail"));
         h.put("id_Fail", getParam("id_Fail"));
         h.put("id_Kemaskini", (String)session.getAttribute("_ekptg_user_id"));
-
-
-
+        h.put("salinan_arahan", "1");
+       
 	    FrmPrmhnnSek8KeputusanPermohonanInternalData.updateBorangLama(session,h,"17");
+	    
 	}
-
 
 	private void prepareItemForDisplay(HttpSession session, Vector objVector, int cntItemPage, String command) {
 		int x;
@@ -3803,8 +3796,7 @@ private void insertBorangLama(HttpSession session) throws Exception {
 
 		startno = i;
 
-		session.setAttribute("_portal_startnoInternalFail",
-				new Integer(startno));
+		session.setAttribute("_portal_startnoInternalFail",new Integer(startno));
 
 	}
 	
@@ -3816,8 +3808,7 @@ private void insertBorangLama(HttpSession session) throws Exception {
 		this.context.put("list_sub_header",list_sub);
 		this.context.put("flag_jenis_vm","vtemplate");
 	}
-	private void headerppk_baru_default()
-	{
+	private void headerppk_baru_default(){
 		Hashtable headerppk = null;
 		this.context.put("headerppk","");
 		this.context.put("list_sub_header","");

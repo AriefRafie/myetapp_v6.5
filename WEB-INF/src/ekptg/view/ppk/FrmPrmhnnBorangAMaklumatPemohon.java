@@ -35,7 +35,6 @@ import ekptg.model.ppk.FrmPrmhnnSek8SenaraiSemakInternalData;
 import ekptg.model.ppk.FrmSenaraiFailInternalCarianData;
 import ekptg.model.ppk.FrmSenaraiFailInternalData;
 import ekptg.model.ppk.PendaftaranCheckModel;
-import ekptg.model.ppk.UtilHTML;
 import ekptg.model.ppk.harta.FrmPermohonanHTAData;
 import ekptg.model.ppk.harta.HABean;
 import ekptg.model.ppk.harta.HTABean;
@@ -5290,12 +5289,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			
 			
 			//2018
-			String id = getParam("idPermohonan");
+			String idPermohonan = getParam("idPermohonan");
 			
 			Hashtable dataParam = new Hashtable();
 			dataParam.put("bolehSimpan",bolehsimpan);
 			dataParam.put("idUser",idUser);
-			dataParam.put("idPermohonan",id);
+			dataParam.put("idPermohonan",idPermohonan);
 			dataParam.put("idSimati",getParam("idSimati"));			
 			dataParam.put("id_Permohonansimati",mati);
 			
@@ -5310,22 +5309,21 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			//if(!id.equals("$ID")){
 			//	id = getParam("idPermohonan");
 			//}
-			list = logic_A.setData_online(id, idUser);
-			headerppk_baru(session, id, "Y", "", "T");
+			list = logic_A.setData_online(idPermohonan, idUser);
+			headerppk_baru(session, idPermohonan, "Y", "", "T");
 			this.context.put("View", list);
-			logic_A.setDataFail(id);
+			logic_A.setDataFail(idPermohonan);
 			listFail = logic_A.getDataFail();
 			this.context.put("ViewFail", listFail);
 
 			// String id = getParam("idPermohonan");
-			logic_A.updateDataNilai(id, mati, idUser);
-			hideTabPengesahan_simati = checkEmptyField_simati(id);
+			logic_A.updateDataNilai(idPermohonan, mati, idUser);
+			hideTabPengesahan_simati = checkEmptyField_simati(idPermohonan);
 			context.put("hideTabPengesahan_simati", hideTabPengesahan_simati);
-			hideTabPengesahan_pemohon = checkEmptyField_pemohon(id);
+			hideTabPengesahan_pemohon = checkEmptyField_pemohon(idPermohonan);
 			context.put("hideTabPengesahan_pemohon", hideTabPengesahan_pemohon);
-			hideTabPengesahan_hta = checkEmptyField_hta(id);
-			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
-			
+			hideTabPengesahan_hta = checkEmptyField_hta(idPermohonan);
+			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);			
 			//2018
 			this.context.put("listNegeri", socNegeri);
 			this.context.put("listDaerah", socDaerah);
@@ -5333,13 +5331,14 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			listHTA = permohonanInternal.getDataHTA(mati,"Y");								
 			this.context.put("listHTA", listHTA);
-
+			this.context.put("idPermohonan", idPermohonan); //2020/03/05
+			
 			//vm = "app/ppk/frmPrmhnnSek8HTAAH.jsp";
 			vm = "app/ppk/harta/frmPermohonanHTA.jsp";
 	
 		//END HTAAM	
 		}else if ("HtaamX".equals(submit)) {
-
+			
 			Hashtable dataParam = new Hashtable();
 			dataParam.put("id_Permohonansimati", getParam("id_Permohonansimati"));
 			dataParam.put("idPermohonan", getParam("idPermohonan"));
@@ -5684,6 +5683,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			if (db != null)
 				db.close();
 		}
+		//2020/03/05
+		this.context.put("open_button_online","yes");
+		this.context.put("_command",submit);
+		this.context.put("_mode",mode);
 
 		Template template = this.engine.getTemplate(vm);
 		return template;

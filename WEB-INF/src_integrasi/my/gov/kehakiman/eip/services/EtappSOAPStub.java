@@ -115,7 +115,7 @@ public class EtappSOAPStub extends org.apache.axis.client.Stub implements my.gov
 
             qName = new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", "NewType");
             cachedSerQNames.add(qName);
-            cls = my.gov.kehakiman.eip.services.NewType_.class;
+            cls = my.gov.kehakiman.eip.services.NewType.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);

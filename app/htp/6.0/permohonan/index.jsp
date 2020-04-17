@@ -376,7 +376,9 @@
 </style>
 
 
-<div class="blink" ><font color="red" ><strong class="blink">PERHATIAN!</strong> MODUL INI DIDALAM TEMPOH PENGUJIAN, SILA ABAIKAN BUAT SEMENTARA WAKTU.</font></div>
+<!-- <div class="blink" >
+<font color="red" ><strong class="blink">PERHATIAN!</strong> MODUL INI DIDALAM TEMPOH PENGUJIAN, SILA ABAIKAN BUAT SEMENTARA WAKTU.</font>
+</div> -->
 
 #set($showListTukarPegawai = "")
 #if($id_jawatan_login != "4" && $id_jawatan_login != "5")
@@ -442,40 +444,80 @@ openCloseTukarPegawai();
 </table>
 </div>
 
-<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0"  class="box_shadow" >
-<tr class="table_header" >
-<td width="2%" class="underline_td_main">
-</td>
-<td width="58%" class="underline_td_main">
-<strong>PERBICARAAN INTERAKTIF</strong> </td>
-<td width="20%" class="underline_td_main" align="right" valign="top" >		
-</td>
-<td width="20%" class="underline_td_main" align="right">
-<input type="button" id="cmdKembaliSenarai" name="cmdKembaliSenarai" value="Senarai Perbicaraan" onClick="kembaliSenarai()" style="display:none;" >		
-</td>
-</tr>
-</table>
+	<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0"  class="box_shadow" >
+		<tr class="table_header" >
+			<td width="2%" class="underline_td_main"></td>
+			<td width="58%" class="underline_td_main"><strong>SENARAI FAIL</strong> </td>
+			<td width="20%" class="underline_td_main" align="right" valign="top" ></td>
+			<td width="20%" class="underline_td_main" align="right">
+				<input type="button" id="cmdKembaliSenarai" name="cmdKembaliSenarai" value="Senarai Perbicaraan" onClick="kembaliSenarai()" style="display:none;" >		
+			</td>
+		</tr>
+	</table>
 
-<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0"  >
-<tr>
-<td >
-<div id="div_viewPerbicaraan">
-</div>
-<div id="listPerbicaraan">
-<script> 
-$jquery(document).ready(function () {
-doDivAjaxCall$formname('listPerbicaraan','showListPerbicaraan','');			 	  
-});
-</script>
-</div>
-</td>
-</tr>
-</table>
-
-
+	<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0"  >
+		<tr>
+			<td >
+				<div id="div_viewPerbicaraan"></div>
+				<div id="listPerbicaraan">
+				<script> 
+				$jquery(document).ready(function () {
+				doDivAjaxCall$formname('listPerbicaraan','senaraitugasan','');			 	  
+				//doDivAjaxCall$formname('listPerbicaraan','showListPerbicaraan','');			 	  
+				});
+				</script>
+				</div>
+			</td>
+		</tr>
+	</table>
 
 <script>
 var refreshInterval_showtime = [];
+
+//Carian
+	// 2020/02/28
+	function cancel() {
+		doAjaxCall${formName}("","mode=cancel");
+	}
+	function carianFail(){
+		var command = 'terimapohoncarian';
+		doAjaxCall${formName}(command);	
+	}
+	function doChangeNegeriX() {
+		//doAjaxCall${formName}("","mode=changeNegeri");
+		doDivAjaxCall$formname('listPerbicaraan','senaraitugasan','mode=terimapohoncarian');			 	  
+
+	}
+	function less(){
+		document.${formName}.flagAdvSearch.value = "";
+		doAjaxCall${formName}("");
+		
+	}
+	function more(){
+		document.${formName}.flagAdvSearch.value = "open";
+		doAjaxCall${formName}("");
+			
+	}
+	function tambahPermohonan(){
+		doAjaxCall${formName}("pohonfailbaru");
+	}
+	function viewMaklumatPermohonan(id){
+		var mode = 'viewMaklumatPermohonan';
+		//<a href="javascript:doDivAjaxCall$formname('div_viewPerbicaraan','viewPerbicaraan','ID_PEMOHON=$pr.ID_PEMOHON&ID_SIMATI=$pr.ID_SIMATI&ID_PERBICARAAN=$pr.ID_PERBICARAAN&ID_PERMOHONAN=$pr.ID_PERMOHONAN&ID_PERMOHONANSIMATI=$pr.ID_PERMOHONANSIMATI')"><img title="Kemaskini" src="../img/edit.gif" border="0"></a>	  
+		doDivAjaxCall$formname('div_viewPerbicaraan',mode,'mode='+mode+'&idfail='+id+'&pagemode=0');
+		//doAjaxCall${formName}(mode,"mode="+mode+"&idfail="+id+"&pagemode=0");
+		
+		document.getElementById('listPerbicaraan').style.display = "none";
+	}
+
+// EndCarian	
+	function doChanges() {
+		//document.${formName}.cmdSimpan.value = "doChangeSubUrusan";
+		document.${formName}.mode.value ='doChanges';
+		alert(document.${formName}.mode.value);
+		doAjaxCall${formName}("pohonfailbaru","mode=doChanges");
+		//doAjaxCall${formName}(mode,"mode="+mode+"&idfail="+id+"&pagemode=0");
+	}
 
 //alert(trim(document.getElementById("inputMinify").innerHTML));
 //alert(document.getElementById("inputMinify").value.replace( new RegExp( "\>[ ]+\<" , "g" ) , "><" ));

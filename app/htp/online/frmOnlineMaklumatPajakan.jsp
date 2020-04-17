@@ -51,7 +51,7 @@
      				#if ($selectedTab == '0')
 
                    <fieldset>
-                    <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
+                    <legend><strong>MAKLUMAT PERMOHONAN cccc</strong></legend>
                     
                         <table width="100%" border="0" cellspacing="2" cellpadding="2">
                         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)

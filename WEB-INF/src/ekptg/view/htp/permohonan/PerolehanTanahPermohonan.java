@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,7 +29,14 @@ import ekptg.engine.CacheManager;
 import ekptg.engine.CachedObject;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
+import ekptg.helpers.HTML;
 import ekptg.helpers.Paging2;
+import ekptg.helpers.Utils;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHtp;
+import ekptg.model.htp.UtilHTML;
+import ekptg.model.htp.permohonan.IPermohonanPerizapan;
+import ekptg.model.htp.permohonan.PermohonanPerizapanBean;
 import ekptg.model.ppk.BicaraInteraktifData;
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8BicaraData;
@@ -43,11 +52,15 @@ import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
  */
 public class PerolehanTanahPermohonan extends AjaxBasedModule {
 	private static final long serialVersionUID = 1929527819345292959L;
-	static Logger myLogger = Logger.getLogger(ekptg.view.htp.permohonan.PerolehanTanahPermohonan.class);
+	static Logger myLog = Logger.getLogger(ekptg.view.htp.permohonan.PerolehanTanahPermohonan.class);
 
+	private final String JENISTANAH = "1,2,3,6";
+	//private final String JENISTANAHPENGAMBILAN = "3";
+	private final String IDSUBURUSANPERMOHONAN = "42";
 	private final String PATHTP="app/htp/";
 	private final String PATHVER = PATHTP+ResourceBundle.getBundle("file").getString("ver_htp")+"/";
 	private final String PATH = PATHVER+"permohonan/";
+
 
 	String skrin_name = PATH+"index.jsp";	
 	//String skrin_name = "app/ppk/BicaraInteraktif/index.jsp";	
@@ -59,17 +72,63 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 	//private final String BASENAME = "dbconnection";
 	//private ResourceBundle rb = ResourceBundle.getBundle(BASENAME);
 	
+	//Carian
+	private String flagAdvSearch = "";
+	private String noFail = "";
+	private String noPermohonan = "";
+	private String socNegeri = "";
+	private String txtTajukCarian = "";
+
+	private String tarikhBukaFail = "";
+	private String tarikhHantar = "";
+	private String tarikhKeputusan = "";
+	private String tarikhSurat = "";
+
+	//Interfaces
+	private IHtp iHTP = null;  
+	private ekptg.model.htp.permohonan.IPermohonanPerizapan ipr= null;
 	
+	//Pilihan
+	String socAgensi = "";
+	String socDaerah = "";
+	String socJenisFail = "";	
+	String socKementerian = "";	
+	String socStatusTanah = "";
+	String socSubUrusan = "";
+	String socUrusan = "";
+
+	//Profile
+	String userId = "";
+	//Umum
+ 	String idAgensi = "";
+ 	String iDaerah = "";
+	String idKementerian = "";
+ 	String idMukim = "";
+	String idNegeri = "";
+ 	String idUrusan = "";
+ 	String idSuburusan = "";
+ 
+	Vector<Hashtable<String, String>> senaraiPermohonan = null;
+
 	@Override
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
 		
 		//String namaSkema = rb.getString("user");
-		//myLogger.info("namaSkema : "+namaSkema);
+		//myLog.info("namaSkema : "+namaSkema);
 		String command = getParam("command");
 		String fromDashboard = getParam("fromDashboard");
 		String action = getParam("action");
-		myLogger.info("command : "+command+" action : "+action);
+		String mode = getParam("mode");
+
+		myLog.info("command="+command+" ,action= "+action);
+		myLog.info("mode="+mode);
+		//Profile
+		userId = String.valueOf(session.getAttribute("_ekptg_user_id"));
+		if(userId == null){
+			getHTP().getErrorHTML("[HTP PERMOHONAN] SILA LOGIN SEMULA");
+		}
+		//XXX
 		String USER_ID_SYSTEM = (String)session.getAttribute("_ekptg_user_id");
 		
 		/*
@@ -80,20 +139,20 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		else
 		{
 		*/			
-			Map getDetailUsers = modelBI.getDetailUsers(session, "", USER_ID_SYSTEM, "", null);
-			String id_jawatan_login = "";
-			String id_negeri_login = "";
-			String id_seksyen_login = "";
-			if(getDetailUsers!=null)
-			{
-				id_jawatan_login = (String)getDetailUsers.get("ID_JAWATAN");
-				id_negeri_login = (String)getDetailUsers.get("ID_NEGERI");
-				id_seksyen_login = (String)getDetailUsers.get("ID_SEKSYEN");
-			}
-			this.context.put("id_jawatan_login",id_jawatan_login);
-			this.context.put("id_negeri_login",id_negeri_login);
-			this.context.put("id_seksyen_login",id_seksyen_login);
-			
+//			Map getDetailUsers = modelBI.getDetailUsers(session, "", USER_ID_SYSTEM, "", null);
+//			String id_jawatan_login = "";
+//			String id_negeri_login = "";
+//			String id_seksyen_login = "";
+//			if(getDetailUsers!=null)
+//			{
+//				id_jawatan_login = (String)getDetailUsers.get("ID_JAWATAN");
+//				id_negeri_login = (String)getDetailUsers.get("ID_NEGERI");
+//				id_seksyen_login = (String)getDetailUsers.get("ID_SEKSYEN");
+//			}
+//			this.context.put("id_jawatan_login",id_jawatan_login);
+//			this.context.put("id_negeri_login",id_negeri_login);
+//			this.context.put("id_seksyen_login",id_seksyen_login);
+//			
 			List listKehadiran = null;
 			List listPermohonanTukarPegawai = null;
 			List listTurutHadir = null;
@@ -102,8 +161,124 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			List listKronologiStatus = null;
 			defaultPut();
 		
-		if(command.equals("showListPerbicaraan") || command.equals("cariListPerbicaraan"))
-		{
+		 	this.context.put("PAGES",PATH+"recordPageList.jsp");	
+
+			if(command.equals("senaraitugasan") || command.equals("cariListPerbicaraan..")){
+				//default parameter
+				if(mode.equals("")){
+					socNegeri = HTML.SelectNegeriMampu("socNegeri","onChange=doChangeNegeriX();");
+				
+					senaraiPermohonan = getPermohonan().TerimaPohongetList(userId
+	    							,""
+	    							,""
+	    							,""
+	    							,""
+	    							,""
+	    							,""
+	    							,""
+	    							,""
+	    							,tarikhBukaFail);
+				
+				}else{	//mode terimapohoncarian
+				 	idNegeri = getParam("socNegeri");
+					noFail = getParam("txtNoFail").trim();
+					noPermohonan = getParam("txtNoPermohonanOnline").trim();
+					txtTajukCarian = getParam("txtTajukFail");
+					
+		    	 	idAgensi = getParam("socAgensi");
+		    	 	iDaerah = getParam("socDaerah");
+		    	 	idKementerian = getParam("socKementerian");
+		    	 	idMukim = getParam("socMukim");
+		    	 	idUrusan = getParam("socUrusan");
+		    		tarikhSurat = getParam("txdtarikhsuratfail");
+		    		tarikhHantar = getParam("txdtarikhantarfail");
+		    		tarikhKeputusan = getParam("txdtarikhkeputusanfail");
+
+				 	senaraiPermohonan = getPermohonan().TerimaPohongetList(null,noFail,txtTajukCarian,
+							idKementerian,idAgensi
+							,idNegeri,iDaerah,idMukim
+							,idUrusan
+							,tarikhSurat,tarikhBukaFail,tarikhHantar,tarikhKeputusan);
+
+					//SET CONTEXT CARIAN TERPERINCI
+				 	this.context.put("tarikhBukaFail",tarikhBukaFail);	
+					this.context.put("txdtarikhantarfail",tarikhHantar);
+					this.context.put("txdtarikhkeputusanfail",tarikhKeputusan);
+		    		this.context.put("txdtarikhsuratfail",tarikhSurat);
+				 
+				}
+				//CARIAN (default),SET CONTEXT 
+				doListing(session,action,mode,senaraiPermohonan);
+				
+				setContext();
+
+				skrin_name = PATH+"fail/senaraiTugasan.jsp";
+				
+			}else if(command.equals("pohonfailbaru")){
+		    	String hitButton = getParam("hittButton");
+				myLog.info("submit=pohonfailbaru, hittButton="+hitButton);
+				
+			 	iDaerah = getParam("socDaerah");
+			 	idAgensi = getParam("socAgensi");
+			 	idKementerian = getParam("socKementerian");
+			 	idNegeri = getParam("socNegeri");
+			 	idUrusan = getParam("socUrusan");
+			 	if ("".equals(idUrusan)) idUrusan="-1";
+			 	idSuburusan = getParam("socSubUrusan");
+	
+				if (hitButton.equals("Simpan")) {
+				}else{
+					this.context.put("readOnly", "");
+					this.context.put("disabled", "");	
+			    	this.context.put("idpermohonan","");
+			    	this.context.put("idfail","");
+					viewPohonFailBaru(mode);
+
+					skrin_name = PATH+"fail/paparanPermohonanEdit.jsp";
+	
+				}
+				
+
+			//CARIAN
+			}else if (command.equals("viewMaklumatPermohonan_")) {
+				skrin_name = PATH+"fail/frmMaklumatFail.jsp";
+				this.context.put("readOnly", "readonly");
+				this.context.put("disabled", "disabled");	
+			
+			 	idNegeri = getParam("socNegeri");
+				noFail = getParam("txtNoFail").trim();
+				noPermohonan = getParam("txtNoPermohonanOnline").trim();
+				txtTajukCarian = getParam("txtTajukFail");
+				
+	    	 	idAgensi = getParam("socAgensi");
+	    	 	iDaerah = getParam("socDaerah");
+	    	 	idKementerian = getParam("socKementerian");
+	    	 	idMukim = getParam("socMukim");
+	    	 	idUrusan = getParam("socUrusan");
+	    		tarikhSurat = getParam("txdtarikhsuratfail");
+	    		tarikhHantar = getParam("txdtarikhantarfail");
+	    		tarikhKeputusan = getParam("txdtarikhkeputusanfail");
+
+			 	senaraiPermohonan = getPermohonan().TerimaPohongetList(null
+			 						,noFail
+			 						,txtTajukCarian
+			 						,idKementerian
+			 						,idAgensi
+			 						,idNegeri
+			 						,iDaerah
+			 						,idMukim
+			 						,idUrusan
+			 						,tarikhSurat
+			 						,tarikhBukaFail
+			 						,tarikhHantar
+			 						,tarikhKeputusan);
+
+			 	this.context.put("tarikhBukaFail",tarikhBukaFail);		
+			 	
+				doListing(session,action,mode,senaraiPermohonan);
+				
+			}else if(command.equals("showListPerbicaraan") || command.equals("cariListPerbicaraan"))
+			{
 			String paramsButton = "";
 			String flagCari = "";
 			String htmlSkrin = "";
@@ -115,16 +290,16 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String cacheID = "listPerbicaraanBicaraInteraktif"+USER_ID_SYSTEM;
 			CachedObject get_co_listPerbicaraan =  (CachedObject)CacheManager.getCache(cacheID);
 			
-			myLogger.info("action : "+action+" get_co_listPerbicaraan : "+get_co_listPerbicaraan);
+			myLog.info("action ="+action+" ,get_co_listPerbicaraan= "+get_co_listPerbicaraan);
 			Db db = null;
 			try {
 				db = new Db();
 				String username = "";
-				if(getDetailUsers != null)
-				{
-					username = (String)getDetailUsers.get("USER_NAME");
-				}					
-				String list_id_pegawai = modelBI.getDetailPegawaiList(session, username, db);
+//				if(getDetailUsers != null)
+//				{
+//					username = (String)getDetailUsers.get("USER_NAME");
+//				}					
+				String list_id_pegawai = modelBI.getDetailPegawaiList(session, "16113734", db);
 				this.context.put("list_id_pegawai",list_id_pegawai);
 				if(
 						action.equals("") 
@@ -132,7 +307,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 						||  //comment dlu sementara
 						get_co_listPerbicaraan == null)					
 				{		
-					listPerbicaraan = listPerbicaraan(session,USER_ID_SYSTEM,id_jawatan_login,id_negeri_login,flagCari,"",db);
+					//listPerbicaraan = listPerbicaraan(session,USER_ID_SYSTEM,id_jawatan_login,id_negeri_login,flagCari,"",db);
 					CachedObject set_co_listPerbicaraan = new CachedObject(listPerbicaraan, cacheID, 0);
 					CacheManager.putCache(set_co_listPerbicaraan);				
 				}
@@ -151,18 +326,18 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				if (db != null)
 					db.close();
 			}
-			myLogger.info("SIZE : "+listPerbicaraan.size());
+			myLog.info("SIZE : "+listPerbicaraan.size());
 			this.context.put("div", "listPerbicaraan");
 			this.context.put("htmlCarianBicara", htmlSkrin);
 			this.context.put("flagOpenTP", getParam("flagOpenTP"));
 			setupPageMainList(session, action, listPerbicaraan,"listPerbicaraan",command);
-			skrin_name = "app/ppk/BicaraInteraktif/listPerbicaraan.jsp";	
+			skrin_name = PATH+"listPerbicaraan.jsp";	
 		}
 		else if(command.equals("showPermohonanTukarPegawai") || command.equals("cariPermohonanTukarPegawai"))
 		{
 			String cacheID = "listPermohonanTukarPegawai"+USER_ID_SYSTEM;
 			CachedObject get_co_listPermohonanTukarPegawai =  (CachedObject)CacheManager.getCache(cacheID);
-			myLogger.info("action : "+action+" get_co_listPerbicaraan : "+get_co_listPermohonanTukarPegawai);
+			myLog.info("action : "+action+" get_co_listPerbicaraan : "+get_co_listPermohonanTukarPegawai);
 			String htmlSkrin = "";
 			String flagCari = "";
 			String paramsButton = "";
@@ -181,7 +356,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 						||  //comment dlu sementara
 						get_co_listPermohonanTukarPegawai == null)					
 				{		
-					listPermohonanTukarPegawai = listPermohonanTukarPegawai(session,USER_ID_SYSTEM,id_jawatan_login,id_negeri_login,flagCari,"","","",null);
+					//listPermohonanTukarPegawai = listPermohonanTukarPegawai(session,USER_ID_SYSTEM,id_jawatan_login,id_negeri_login,flagCari,"","","",null);
 					CachedObject set_co_listPermohonanTukarPegawai = new CachedObject(listPermohonanTukarPegawai, cacheID, 0);
 					CacheManager.putCache(set_co_listPermohonanTukarPegawai);				
 				}
@@ -200,18 +375,22 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					db.close();
 			}
 			
-			myLogger.info("SIZE : "+listPermohonanTukarPegawai.size());
+			myLog.info("SIZE : "+listPermohonanTukarPegawai.size());
 			this.context.put("div", "listPermohonanTukarPegawai");
 			this.context.put("htmlCarianTukarPegawai", htmlSkrin);	
 			this.context.put("flagOpenTPK", getParam("flagOpenTPK"));
 			setupPageMainList(session, action, listPermohonanTukarPegawai,"listPermohonanTukarPegawai",command);
 			skrin_name = "app/ppk/BicaraInteraktif/listPermohonanTukarPegawai.jsp";	
+		
 		}
-		else if(command.equals("viewPerbicaraan") || command.equals("viewPerbicaraanFromPerintah"))
-		{
-			
+		else if(command.equals("viewMaklumatPermohonan_") ||
+			command.equals("viewPerbicaraan") || command.equals("viewPerbicaraanFromPerintah")){
+			//skrin_name = PATH+"fail/frmMaklumatFail.jsp";
+			this.context.put("readOnly", "readonly");
+			this.context.put("disabled", "disabled");	
+		
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");		
-			myLogger.info(">>>>>>>>>>>>>>> ID_PERBICARAAN : "+ID_PERBICARAAN);
+			myLog.info(">>>>>>>>>>>>>>> ID_PERBICARAAN : "+ID_PERBICARAAN);
 			String ID_PEMOHON = getParam("ID_PEMOHON");			
 			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
 			String ID_SIMATI = getParam("ID_SIMATI");			
@@ -225,7 +404,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				Map mainID = modelBI.mainID(session, ID_PERBICARAAN, db);
 				//this.context.put("ID_PERMOHONANSIMATI", ID_PERMOHONANSIMATI);
 				FLAG_CREATE_HISTORY = (String)mainID.get("FLAG_CREATE_HISTORY");
-				myLogger.info("FLAG_CREATE_HISTORY :::::::: "+FLAG_CREATE_HISTORY);
+				myLog.info("FLAG_CREATE_HISTORY :::::::: "+FLAG_CREATE_HISTORY);
 				//incase ada rekod yg belum ada history
 				
 				if(command.equals("viewPerbicaraanFromPerintah"))
@@ -345,7 +524,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		{
 			
 			String setupSkrin = "";
-			String mode = getParam("mode");
+			//String mode = getParam("mode");
 			String skrinName = getParam("skrinName");
 			this.context.put("skrinName", skrinName);
 			String NAMA_TABLE = getParam("NAMA_TABLE");
@@ -394,16 +573,16 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					if(listID_PERBICARAAN != null)
 					{
 						for (String lp : listID_PERBICARAAN) {
-							myLogger.info("::: ID_PERIBICARAAN ::: "+lp);
+							myLog.info("::: ID_PERIBICARAAN ::: "+lp);
 							String checkBoxBicara = getParam("selectTP"+lp);
-				    		myLogger.info("checkBoxBicara :::::::::: "+checkBoxBicara);
+				    		myLog.info("checkBoxBicara :::::::::: "+checkBoxBicara);
 				    		
 				    		if(!checkBoxBicara.equals(""))
 				    		{
 				    			h_listBicaraMohonMultiple = Collections.synchronizedMap(new HashMap());
 				    			bil++;
 				    						    			
-				    			myLogger.info("skrinName :::::::::: "+skrinName);
+				    			myLog.info("skrinName :::::::::: "+skrinName);
 				    			ID_PERBICARAAN = checkBoxBicara;
 				    			ID_PERMOHONANSIMATI = getParam("listID_PERMOHONANSIMATI"+ID_PERBICARAAN);
 				    			ID_FAIL = getParam("listID_FAIL"+ID_PERBICARAAN);
@@ -441,27 +620,27 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				    				STATUS_TUKARPEGAWAI = "2";
 				    			}				    			
 				    			
-				    			myLogger.info("ID_PERBICARAAN : "+ID_PERBICARAAN);
-				    			myLogger.info("ID_PERMOHONANSIMATI : "+ID_PERMOHONANSIMATI);
-				    			myLogger.info("ID_FAIL : "+ID_FAIL);
-				    			myLogger.info("ID_PERMOHONAN : "+ID_PERMOHONAN);
-				    			myLogger.info("ID_PEGAWAIASAL : "+ID_PEGAWAIASAL);
-				    			myLogger.info("ID_PEMOHONTUKARPEGAWAI : "+ID_PEMOHONTUKARPEGAWAI);
-				    			myLogger.info("STATUS_TUKARPEGAWAI : "+STATUS_TUKARPEGAWAI);
-				    			myLogger.info("ID_NEGERIPEGAWAIBARU : "+ID_NEGERIPEGAWAIBARU);
-				    			myLogger.info("ID_PEGAWAIBARU : "+ID_PEGAWAIBARU);
-				    			myLogger.info("CATATAN_PEMOHON : "+CATATAN_PEMOHON);
-				    			myLogger.info("CATATAN_PELULUS : "+CATATAN_PELULUS);
-				    			myLogger.info("TARIKH_MOHON : "+TARIKH_MOHON);
-				    			myLogger.info("TARIKH_KEPUTUSAN : "+TARIKH_KEPUTUSAN);
-				    			myLogger.info("FLAG_DAFTAR_TERUS : "+FLAG_DAFTAR_TERUS);
-				    			myLogger.info("ID_NEGERIPEGAWAIASAL : "+ID_NEGERIPEGAWAIASAL);				    			
-				    			myLogger.info("NO_FAIL : "+NO_FAIL);
-				    			myLogger.info("TARIKH_BICARA : "+TARIKH_BICARA);
-				    			myLogger.info("MASA_BICARA : "+MASA_BICARA);
-				    			myLogger.info("BIL_BICARA : "+BIL_BICARA);
-				    			myLogger.info("PEG_PENGENDALI : "+PEG_PENGENDALI);
-				    			myLogger.info("--------------------------------------------------------");		
+				    			myLog.info("ID_PERBICARAAN : "+ID_PERBICARAAN);
+				    			myLog.info("ID_PERMOHONANSIMATI : "+ID_PERMOHONANSIMATI);
+				    			myLog.info("ID_FAIL : "+ID_FAIL);
+				    			myLog.info("ID_PERMOHONAN : "+ID_PERMOHONAN);
+				    			myLog.info("ID_PEGAWAIASAL : "+ID_PEGAWAIASAL);
+				    			myLog.info("ID_PEMOHONTUKARPEGAWAI : "+ID_PEMOHONTUKARPEGAWAI);
+				    			myLog.info("STATUS_TUKARPEGAWAI : "+STATUS_TUKARPEGAWAI);
+				    			myLog.info("ID_NEGERIPEGAWAIBARU : "+ID_NEGERIPEGAWAIBARU);
+				    			myLog.info("ID_PEGAWAIBARU : "+ID_PEGAWAIBARU);
+				    			myLog.info("CATATAN_PEMOHON : "+CATATAN_PEMOHON);
+				    			myLog.info("CATATAN_PELULUS : "+CATATAN_PELULUS);
+				    			myLog.info("TARIKH_MOHON : "+TARIKH_MOHON);
+				    			myLog.info("TARIKH_KEPUTUSAN : "+TARIKH_KEPUTUSAN);
+				    			myLog.info("FLAG_DAFTAR_TERUS : "+FLAG_DAFTAR_TERUS);
+				    			myLog.info("ID_NEGERIPEGAWAIASAL : "+ID_NEGERIPEGAWAIASAL);				    			
+				    			myLog.info("NO_FAIL : "+NO_FAIL);
+				    			myLog.info("TARIKH_BICARA : "+TARIKH_BICARA);
+				    			myLog.info("MASA_BICARA : "+MASA_BICARA);
+				    			myLog.info("BIL_BICARA : "+BIL_BICARA);
+				    			myLog.info("PEG_PENGENDALI : "+PEG_PENGENDALI);
+				    			myLog.info("--------------------------------------------------------");		
 				    			
 				    			Map setupTukarPegawai= modelBI.getValueColumn(session,"",ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI,"",ID_PERBICARAAN,NAMA_TABLE,db);
 					    		saveTukarPegawai(session,command,setupTukarPegawai,ID_FAIL,ID_PERMOHONAN,"",
@@ -481,15 +660,15 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					if(listkID_TUKARPEGAWAI != null)
 					{
 						for (String lp : listkID_TUKARPEGAWAI) {
-							myLogger.info("::: ID_TUKARPEGAWAI ::: "+lp);
+							myLog.info("::: ID_TUKARPEGAWAI ::: "+lp);
 							String checkBoxPegawai = getParam("selectTPK"+lp);
-				    		myLogger.info("checkBoxPegawai :::::::::: "+checkBoxPegawai);
+				    		myLog.info("checkBoxPegawai :::::::::: "+checkBoxPegawai);
 				    		if(!checkBoxPegawai.equals(""))
 				    		{
 				    			bil++;
 				    			h_listBicaraMohonMultiple = Collections.synchronizedMap(new HashMap());
 				    			
-				    			myLogger.info("skrinName :::::::::: "+skrinName);
+				    			myLog.info("skrinName :::::::::: "+skrinName);
 				    			ID_TUKARPEGAWAI = checkBoxPegawai;
 				    			ID_PERBICARAAN = getParam("listkID_PERBICARAAN"+ID_TUKARPEGAWAI);
 				    			ID_PERMOHONANSIMATI = getParam("listkID_PERMOHONANSIMATI"+ID_TUKARPEGAWAI);
@@ -535,22 +714,22 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				    			h_listBicaraMohonMultiple.put("NAMA_PEGAWAI_BARU",NAMA_PEGAWAI_BARU);
 				    			listBicaraMohonMultiple.add(h_listBicaraMohonMultiple);
 				    			
-				    			myLogger.info("ID_PERBICARAAN : "+ID_PERBICARAAN);
-				    			myLogger.info("ID_PERMOHONANSIMATI : "+ID_PERMOHONANSIMATI);
-				    			myLogger.info("ID_FAIL : "+ID_FAIL);
-				    			myLogger.info("ID_PERMOHONAN : "+ID_PERMOHONAN);
-				    			myLogger.info("ID_PEGAWAIASAL : "+ID_PEGAWAIASAL);
-				    			myLogger.info("ID_PEMOHONTUKARPEGAWAI : "+ID_PEMOHONTUKARPEGAWAI);
-				    			myLogger.info("STATUS_TUKARPEGAWAI : "+STATUS_TUKARPEGAWAI);
-				    			myLogger.info("ID_NEGERIPEGAWAIBARU : "+ID_NEGERIPEGAWAIBARU);
-				    			myLogger.info("ID_PEGAWAIBARU : "+ID_PEGAWAIBARU);
-				    			myLogger.info("CATATAN_PEMOHON : "+CATATAN_PEMOHON);
-				    			myLogger.info("CATATAN_PELULUS : "+CATATAN_PELULUS);
-				    			myLogger.info("TARIKH_MOHON : "+TARIKH_MOHON);
-				    			myLogger.info("TARIKH_KEPUTUSAN : "+TARIKH_KEPUTUSAN);
-				    			myLogger.info("FLAG_DAFTAR_TERUS : "+FLAG_DAFTAR_TERUS);
-				    			myLogger.info("ID_NEGERIPEGAWAIASAL : "+ID_NEGERIPEGAWAIASAL);
-				    			myLogger.info("--------------------------------------------------------");		
+				    			myLog.info("ID_PERBICARAAN : "+ID_PERBICARAAN);
+				    			myLog.info("ID_PERMOHONANSIMATI : "+ID_PERMOHONANSIMATI);
+				    			myLog.info("ID_FAIL : "+ID_FAIL);
+				    			myLog.info("ID_PERMOHONAN : "+ID_PERMOHONAN);
+				    			myLog.info("ID_PEGAWAIASAL : "+ID_PEGAWAIASAL);
+				    			myLog.info("ID_PEMOHONTUKARPEGAWAI : "+ID_PEMOHONTUKARPEGAWAI);
+				    			myLog.info("STATUS_TUKARPEGAWAI : "+STATUS_TUKARPEGAWAI);
+				    			myLog.info("ID_NEGERIPEGAWAIBARU : "+ID_NEGERIPEGAWAIBARU);
+				    			myLog.info("ID_PEGAWAIBARU : "+ID_PEGAWAIBARU);
+				    			myLog.info("CATATAN_PEMOHON : "+CATATAN_PEMOHON);
+				    			myLog.info("CATATAN_PELULUS : "+CATATAN_PELULUS);
+				    			myLog.info("TARIKH_MOHON : "+TARIKH_MOHON);
+				    			myLog.info("TARIKH_KEPUTUSAN : "+TARIKH_KEPUTUSAN);
+				    			myLog.info("FLAG_DAFTAR_TERUS : "+FLAG_DAFTAR_TERUS);
+				    			myLog.info("ID_NEGERIPEGAWAIASAL : "+ID_NEGERIPEGAWAIASAL);
+				    			myLog.info("--------------------------------------------------------");		
 				    			
 				    			Map setupTukarPegawai= modelBI.getValueColumn(session,"",ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI,"",ID_PERBICARAAN,NAMA_TABLE,db);
 					    		saveTukarPegawai(session,command,setupTukarPegawai,ID_FAIL,ID_PERMOHONAN,ID_TUKARPEGAWAI,
@@ -575,8 +754,8 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 							ID_PEGAWAIBARU, STATUS_TUKARPEGAWAI,multipleDaftar, SELECTED_NAMA_NEGERI,SELECTED_NAMA_PEGAWAI,listBicaraMohonMultiple, db);
 				}
 				
-				setupSkrin = setupPegawaiMultiple(session,mode,skrinName, null, NAMA_TABLE,  FIELD_PK, command, 
-					id_jawatan_login,id_negeri_login, standardParam, "pemohon", openFrom, db);
+//				setupSkrin = setupPegawaiMultiple(session,mode,skrinName, null, NAMA_TABLE,  FIELD_PK, command, 
+//					id_jawatan_login,id_negeri_login, standardParam, "pemohon", openFrom, db);
 			}
 			finally {
 				if (db != null)
@@ -621,7 +800,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			this.context.put("NAMA_TABLE", NAMA_TABLE);
 			String FIELD_PK = getParam("FIELD_PK");
 			this.context.put("FIELD_PK", FIELD_PK);
-			String mode = getParam("mode");
+			//String mode = getParam("mode");
 			this.context.put("div", getParam("div"));
 			String skrinName = getParam("skrinName");
 			this.context.put("skrinName", skrinName);
@@ -635,7 +814,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			try {
 				db = new Db();
 				
-				myLogger.info("dari skrin skrinName >>>>>>>>>> "+skrinName);
+				myLog.info("dari skrin skrinName >>>>>>>>>> "+skrinName);
 				
 				
 				
@@ -679,17 +858,15 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				//untuk KPP
 				
 				String statusTukarPegawai = modelBI.getValue(session,ID_PERMOHONANSIMATI,setupTukarPegawai,NAMA_TABLE,"","",ID_PERBICARAAN,"STATUS_TUKARPEGAWAI",db);
-				myLogger.info("----------------------------------------");
-				myLogger.info(">>>>>>>>>>> skrinName : "+skrinName);
-				myLogger.info(">>>>>>>>>>> statusTukarPegawai : "+statusTukarPegawai);
-				myLogger.info(">>>>>>>>>>> id_jawatan_login : "+id_jawatan_login);
-				myLogger.info(">>>>>>>>>>> id_negeri_login : "+id_negeri_login);
-				myLogger.info("----------------------------------------");
+				myLog.info("----------------------------------------");
+				myLog.info(">>>>>>>>>>> skrinName : "+skrinName);
+				myLog.info(">>>>>>>>>>> statusTukarPegawai : "+statusTukarPegawai);
+				myLog.info("----------------------------------------");
 				
-				if(skrinName.equals("tukarpegawaiKPP") && statusTukarPegawai.equals("1") && (id_jawatan_login.equals("4") ||  id_jawatan_login.equals("5")))
-				{
-					mode = "edit";
-				}				
+//				if(skrinName.equals("tukarpegawaiKPP") && statusTukarPegawai.equals("1") && (id_jawatan_login.equals("4") ||  id_jawatan_login.equals("5")))
+//				{
+//					mode = "edit";
+//				}				
 				
 				if(!openFormTukarPegawai.equals("N"))
 				{
@@ -720,9 +897,9 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					}
 					else
 					{
-						setupSkrin = setupSkrinTukarPegawai(session,"","","","","",null,setupTukarPegawai,ID_PERMOHONAN,
-								ID_PERMOHONANSIMATI,ID_PERBICARAAN,skrinName,command,ID_PERMOHONAN,formNameAjax,"view_"+skrinName,NAMA_TABLE,
-								FIELD_PK,mode,standardParam,"Y","pemohon",id_jawatan_login,id_negeri_login,openFrom,db);
+//						setupSkrin = setupSkrinTukarPegawai(session,"","","","","",null,setupTukarPegawai,ID_PERMOHONAN,
+//								ID_PERMOHONANSIMATI,ID_PERBICARAAN,skrinName,command,ID_PERMOHONAN,formNameAjax,"view_"+skrinName,NAMA_TABLE,
+//								FIELD_PK,mode,standardParam,"Y","pemohon",id_jawatan_login,id_negeri_login,openFrom,db);
 					}
 				}
 				else
@@ -804,8 +981,8 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String CATATAN = getParam("keputusanCATATAN");
 			String divUnique_id = getParam("divUnique_id");
 			
-			myLogger.info("autoSaveKeteranganPerintah >>>> ID_PERINTAH : "+ID_PERINTAH);
-			myLogger.info("autoSaveKeteranganPerintah >>>> ID_PERBICARAAN : "+ID_PERBICARAAN);
+			myLog.info("autoSaveKeteranganPerintah >>>> ID_PERINTAH : "+ID_PERINTAH);
+			myLog.info("autoSaveKeteranganPerintah >>>> ID_PERBICARAAN : "+ID_PERBICARAAN);
 			
 			Db db = null;			
 			try {
@@ -857,13 +1034,13 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					viewTuruthadir = modelBI.viewTuruthadir(session, ID_BIKEHADIRAN, db);
 					NAMA = (String) viewTuruthadir.get("NAMA") == null ? "" : (String) viewTuruthadir.get("NAMA");
 				}
-				myLogger.info("NAMA ::::::::::: "+NAMA);
+				myLog.info("NAMA ::::::::::: "+NAMA);
 				
 				if(command.equals("simpanKeterangan") || command.equals("tutupKeterangan"))
 				{
 					modelBI.simpanKeterangan(ID_BIKEHADIRAN,getParam("KETERANGAN_"+ID_OBPERMOHONAN),getParam("NOTA_PEGAWAI_"+ID_OBPERMOHONAN),db);
 				}
-				viewPejagaWaris = modelBI.viewPejagaWaris(session, ID_BIKEHADIRAN, ID_OBPERMOHONAN, db);
+				//viewPejagaWaris = modelBI.viewPejagaWaris(session, ID_BIKEHADIRAN, ID_OBPERMOHONAN, db);
 				
 				if(viewPejagaWaris!=null)
 				{
@@ -1007,10 +1184,10 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					*/
 					if(!TEMPAT_MATI.equals(""))
 					{
-						alamatTerakhir = modelBI.upperCaseAllFirst(modelBI.removeLastKoma(TEMPAT_MATI));
+						//alamatTerakhir = modelBI.upperCaseAllFirst(modelBI.removeLastKoma(TEMPAT_MATI));
 					}
 					
-					alamatTerakhir = modelBI.dotdotIfBlank(alamatTerakhir);
+					//alamatTerakhir = modelBI.dotdotIfBlank(alamatTerakhir);
 					
 					String buktiMati = "";
 					if(ID_BUKTIMATI.equals("1"))
@@ -1018,7 +1195,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 						buktiMati = "No. Sijil Kematian : ";
 						if(!NO_SIJIL_MATI.equals(""))
 						{
-							buktiMati += modelBI.dotdotIfBlank(NO_SIJIL_MATI);
+							//buktiMati += modelBI.dotdotIfBlank(NO_SIJIL_MATI);
 						}
 					}
 					else if(ID_BUKTIMATI.equals("2"))
@@ -1026,7 +1203,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 						buktiMati = "Tarikh Surat Akuan Kematian : ";
 						if(!NO_SIJIL_MATI.equals(""))
 						{
-							buktiMati += modelBI.dotdotIfBlank(TARIKH_SURAT_AKUAN);
+							//buktiMati += modelBI.dotdotIfBlank(TARIKH_SURAT_AKUAN);
 						}
 					}
 					else if(ID_BUKTIMATI.equals("3"))
@@ -1038,16 +1215,16 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 						buktiMati = "Permit Pengkuburan : ";
 						if(!NO_SIJIL_MATI.equals(""))
 						{
-							buktiMati += modelBI.dotdotIfBlank(NO_SIJIL_MATI);
+							//buktiMati += modelBI.dotdotIfBlank(NO_SIJIL_MATI);
 						}
 					}
-					buktiMati = modelBI.dotdotIfBlank(buktiMati);
+					//buktiMati = modelBI.dotdotIfBlank(buktiMati);
 					
-					String keteranganSimati = "<br>Simati bernama "+modelBI.upperCaseAllFirst(NAMA_SIMATI)+", No. KP "+modelBI.dotdotIfBlank(noKPSimati)+", mati ketika berumur "+modelBI.dotdotIfBlank(UMUR)+" tahun, ";
-					keteranganSimati += "meninggal dunia pada "+modelBI.dotdotIfBlank(TARIKH_MATI)+", di "+alamatTerakhir+" ";
-					keteranganSimati += buktiMati+". Meninggal dunia sebab "+modelBI.dotdotIfBlank("")+". Kebumi di "+modelBI.dotdotIfBlank("")+".<br><br>";
+					//String keteranganSimati = "<br>Simati bernama "+modelBI.upperCaseAllFirst(NAMA_SIMATI)+", No. KP "+modelBI.dotdotIfBlank(noKPSimati)+", mati ketika berumur "+modelBI.dotdotIfBlank(UMUR)+" tahun, ";
+					//keteranganSimati += "meninggal dunia pada "+modelBI.dotdotIfBlank(TARIKH_MATI)+", di "+alamatTerakhir+" ";
+					//keteranganSimati += buktiMati+". Meninggal dunia sebab "+modelBI.dotdotIfBlank("")+". Kebumi di "+modelBI.dotdotIfBlank("")+".<br><br>";
 					
-					keteranganSimati += "Saya mengaku simati meninggalkan harta sepert berikut : <br>";
+					//keteranganSimati += "Saya mengaku simati meninggalkan harta sepert berikut : <br>";
 								
 					String cadanganPembahagian = "<br><div style=\"border-bottom: 1px solid #000;width:100%;\" ><b><u>CADANGAN PEMBAHAGIAN</u></b></div><br>Saya mohon harta simati dibahagi seperti berikut :<br>";
 					//cadanganPembahagian += modelBI.defaultListHarta(session,(String)mainID.get("ID_PEMOHON"),(String)mainID.get("ID_SIMATI"),ID_PERBICARAAN,(String)mainID.get("ID_PERMOHONANSIMATI"),(String)mainID.get("ID_PERMOHONAN"), "Y", db);
@@ -1141,8 +1318,8 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			this.context.put("scrolPosition", getParam("scrolPosition"));
 			this.context.put("div", getParam("div"));			
 			String jenis_transaction = "";
-			myLogger.info(" div bantahan : "+getParam("div"));			
-			String mode = "view";
+			myLog.info(" div bantahan : "+getParam("div"));			
+			//String mode = "view";
 			if(command.equals("edit_bantahan"))
 			{
 				mode = "edit";
@@ -1156,7 +1333,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				
 				if(command.equals("save_bantahan"))
 				{
-					modelBI.simpanBantahan(session, ID_PERBICARAAN, getParam(skrinName+"FLAG_BANTAHAN"),  getParam(skrinName+"KETERANGAN_BANTAHAN"), db); 
+					//modelBI.simpanBantahan(session, ID_PERBICARAAN, getParam(skrinName+"FLAG_BANTAHAN"),  getParam(skrinName+"KETERANGAN_BANTAHAN"), db); 
 				}
 				
 				Map setupSkrinBantahan = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI,"ID_PERBICARAAN", ID_PERBICARAAN, "TBLPPKPERBICARAAN", db);
@@ -1321,9 +1498,9 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				if(checkKehadiran != null)
 				{
 					for (String ck : checkKehadiran) {
-						myLogger.info("::: CHECK KEHADIRAN ::: "+ck);
-						myLogger.info("::: CHECK KETERANGAN_ ::: "+getParam("KETERANGAN_"+ck));
-						myLogger.info("::: CHECK NOTA_PEGAWAI_ ::: "+getParam("NOTA_PEGAWAI_"+ck));
+						myLog.info("::: CHECK KEHADIRAN ::: "+ck);
+						myLog.info("::: CHECK KETERANGAN_ ::: "+getParam("KETERANGAN_"+ck));
+						myLog.info("::: CHECK NOTA_PEGAWAI_ ::: "+getParam("NOTA_PEGAWAI_"+ck));
 						modelBI.simpanKehadiran(session,getParam("KETERANGAN_"+ck),getParam("NOTA_PEGAWAI_"+ck), "", ID_PERBICARAAN, getParam("NAMA_"+ck), getParam("HUBUNGAN_"+ck), 
 								 getParam("PENGENALAN_"+ck),  getParam("STATUS_"+ck),  getParam("UMUR_"+ck), 
 								"OB", ck, db);
@@ -1381,7 +1558,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				
 				if(command.equals("deleteHistory"))
 				{
-					myLogger.info("deleteHistory >>> ID_SEJARAHBIMAIN :::::::::::::::: "+ID_SEJARAHBIMAIN);
+					myLog.info("deleteHistory >>> ID_SEJARAHBIMAIN :::::::::::::::: "+ID_SEJARAHBIMAIN);
 					modelBI.deleteHISTORY(command,ID_SEJARAHBIMAIN,"","","","",db);
 				}
 				/*
@@ -1647,8 +1824,8 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			this.context.put("div", getParam("div"));
 			String FLAG_KEPUTUSAN = getParam("FLAG_KEPUTUSAN");			
 			String setupSkrin = "";
-			String mode = getParam("mode");
-			myLogger.info("MODE ::::::::::::: "+mode);
+			//String mode = getParam("mode");
+			myLog.info("MODE ::::::::::::: "+mode);
 			Db db = null;
 			try {
 				db = new Db();				
@@ -1695,9 +1872,9 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String FLAG_TANGGUH = getParam("FLAG_TANGGUH");
 			String FLAG_BATAL = getParam("FLAG_BATAL");
 			String setupSkrin = "";
-			String mode = getParam("mode");
-			myLogger.info("MODE ::::::::::::: "+mode);
-			myLogger.info("viewSuplimentTangguh FLAG_TANGGUH ::::::::::::: "+FLAG_TANGGUH);
+			//String mode = getParam("mode");
+			myLog.info("MODE ::::::::::::: "+mode);
+			myLog.info("viewSuplimentTangguh FLAG_TANGGUH ::::::::::::: "+FLAG_TANGGUH);
 			Db db = null;
 			try {
 				db = new Db();
@@ -1781,7 +1958,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			}
 			String FLAG_JENIS_KEPUTUSAN = getParam(skrinName+"FLAG_JENIS_KEPUTUSAN");			
 			String setupSkrin = "";
-			String mode = getParam("mode");
+			//String mode = getParam("mode");
 			Db db = null;
 			Connection conn = null;
 			try {
@@ -1827,7 +2004,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 							+"&skrinName="+skrinName;
 					
 					
-					myLogger.info("MODE KEPUTUSAN : "+mode);
+					myLog.info("MODE KEPUTUSAN : "+mode);
 					setupSkrin = setupSkrinKeputusan(session,"",current_previous,"",ID_SIMATI,"",null,setupKeputusan,ID_PERMOHONAN,
 							ID_PERMOHONANSIMATI,ID_PERBICARAAN,skrinName,command,ID_PERMOHONAN,formNameAjax,"view_"+skrinName, NAMA_TABLE,
 							FIELD_PK,mode,
@@ -1848,7 +2025,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			catch (SQLException se) {
 				try {
 					conn.rollback();
-					myLogger.info("ROLLBACK");
+					myLog.info("ROLLBACK");
 				} catch (SQLException se2) {
 					throw new Exception("ROLLBACK ERROR :" + se2.getMessage());
 				}
@@ -1935,7 +2112,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				id = ID_HAPERMOHONAN;
 			}
 						
-			String mode = "view";
+			//String mode = "view";
 			String aktiviti = "";
 			boolean saveTransaction = false;
 			String setupSkrin = NAMA_TABLE;
@@ -1960,7 +2137,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				else if(command.equals("deleteMaklumat"))
 				{
 					Map mapDataAsal = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI, FIELD_PK, id, NAMA_TABLE, db);
-					myLogger.info("ID_SEJARAHBIMAIN : "+ID_SEJARAHBIMAIN+" skrinName : "+skrinName+" id : "+id+" FIELD_PK : "+FIELD_PK+" getParam(skrinName+FIELD_PK) : "+getParam(skrinName+FIELD_PK)+" NAMA_TABLE : "+NAMA_TABLE+" ID_PERBICARAAN : "+ID_PERBICARAAN);
+					myLog.info("ID_SEJARAHBIMAIN : "+ID_SEJARAHBIMAIN+" skrinName : "+skrinName+" id : "+id+" FIELD_PK : "+FIELD_PK+" getParam(skrinName+FIELD_PK) : "+getParam(skrinName+FIELD_PK)+" NAMA_TABLE : "+NAMA_TABLE+" ID_PERBICARAAN : "+ID_PERBICARAAN);
 					savePerubahan(session,command,ID_SEJARAHBIMAIN,mapDataAsal,skrinName,ID_PERMOHONANSIMATI,id,FIELD_PK,id,formNameAjax,NAMA_TABLE,"DELETE",ID_PERBICARAAN,"",ID_SIMATI,ID_PERMOHONAN,db);
 				}
 				
@@ -1969,9 +2146,9 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				
 				if(saveTransaction == true)
 				{
-					myLogger.info("CHECK DATA ASAL skrinName : "+skrinName+" FIELD_PK : "+FIELD_PK+" NAMA_TABLE"+NAMA_TABLE+" VALUE : "+getParam(skrinName+FIELD_PK));
+					myLog.info("CHECK DATA ASAL skrinName : "+skrinName+" FIELD_PK : "+FIELD_PK+" NAMA_TABLE"+NAMA_TABLE+" VALUE : "+getParam(skrinName+FIELD_PK));
 					Map mapDataAsal = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI, FIELD_PK, id, NAMA_TABLE, db);
-					myLogger.info("CHECK DATA ASAL : "+mapDataAsal);
+					myLog.info("CHECK DATA ASAL : "+mapDataAsal);
 					
 					if(aktiviti.equals("UPDATE"))
 					{
@@ -2007,18 +2184,18 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 							String JENIS_AKTIVITI_MAP = (String) checkCurrentPemohonPadaOB.get("JENIS_AKTIVITI");
 							String ID_TARAFKPTG_MAP = (String) checkCurrentPemohonPadaOB.get("ID_TARAFKPTG");
 							String SKRIN_NAME_MAP = (String) checkCurrentPemohonPadaOB.get("SKRIN_NAME");
-							myLogger.info("---------------------------------------------------");
-							myLogger.info("ID_SEJARAHBIMAIN_MAP : "+ID_SEJARAHBIMAIN_MAP);
-							myLogger.info("ID_OBPERMOHONAN_MAP : "+ID_OBPERMOHONAN_MAP);
-							myLogger.info("ID_OB_MAP : "+ID_OB_MAP);
-							myLogger.info("ID_PEMOHON_MAP : "+ID_PEMOHON_MAP);
-							myLogger.info("ID_PEMOHON_SEBELUM_MAP : "+ID_PEMOHON_SEBELUM_MAP);
-							myLogger.info("ID_SIMATI_MAP : "+ID_SIMATI_MAP);
-							myLogger.info("ID_PERMOHONANSIMATI_MAP : "+ID_PERMOHONANSIMATI_MAP);
-							myLogger.info("JENIS_AKTIVITI_MAP : "+JENIS_AKTIVITI_MAP);
-							myLogger.info("ID_TARAFKPTG_MAP : "+ID_TARAFKPTG_MAP);
-							myLogger.info("SKRIN_NAME_MAP : "+SKRIN_NAME_MAP);
-							myLogger.info("---------------------------------------------------");
+							myLog.info("---------------------------------------------------");
+							myLog.info("ID_SEJARAHBIMAIN_MAP : "+ID_SEJARAHBIMAIN_MAP);
+							myLog.info("ID_OBPERMOHONAN_MAP : "+ID_OBPERMOHONAN_MAP);
+							myLog.info("ID_OB_MAP : "+ID_OB_MAP);
+							myLog.info("ID_PEMOHON_MAP : "+ID_PEMOHON_MAP);
+							myLog.info("ID_PEMOHON_SEBELUM_MAP : "+ID_PEMOHON_SEBELUM_MAP);
+							myLog.info("ID_SIMATI_MAP : "+ID_SIMATI_MAP);
+							myLog.info("ID_PERMOHONANSIMATI_MAP : "+ID_PERMOHONANSIMATI_MAP);
+							myLog.info("JENIS_AKTIVITI_MAP : "+JENIS_AKTIVITI_MAP);
+							myLog.info("ID_TARAFKPTG_MAP : "+ID_TARAFKPTG_MAP);
+							myLog.info("SKRIN_NAME_MAP : "+SKRIN_NAME_MAP);
+							myLog.info("---------------------------------------------------");
 							if(!ID_OBPERMOHONAN_MAP.equals(""))
 							{	
 								if(!ID_SEJARAHBIMAIN_MAP.equals(""))
@@ -2038,7 +2215,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 											}
 										}
 									}
-									myLogger.info(":::::::::::::::: countAdaFieldLain : "+countAdaFieldLain);
+									myLog.info(":::::::::::::::: countAdaFieldLain : "+countAdaFieldLain);
 									//sudah ada rekod history
 									if(countAdaFieldLain>0)
 									{
@@ -2090,9 +2267,9 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					{
 						//kalo waris or ob adalah pemohon
 						String ID_PEMOHON_OB  = getParam(skrinName+"ID_PEMOHON");
-						myLogger.info("OB ADALAH PEMOHON : "+ID_PEMOHON_OB);
+						myLog.info("OB ADALAH PEMOHON : "+ID_PEMOHON_OB);
 						Map mapDataAsal_pemohon = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI, "", ID_PERMOHONAN, "TBLPPKPEMOHON", db);
-						myLogger.info("mapDataAsal_pemohon: "+mapDataAsal_pemohon);
+						myLog.info("mapDataAsal_pemohon: "+mapDataAsal_pemohon);
 						
 						if(!ID_PEMOHON_OB.equals(""))
 						{
@@ -2117,7 +2294,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 						//kalo waris or ob adalah pemohon
 						String ID_OBPERMOHONAN_PEMOHON  = getParam(skrinName+"ID_OBPERMOHONAN");
 						String ID_TARAF_PEMOHON  = getParam(skrinName+"ID_TARAFKPTG");
-						myLogger.info("OB ADALAH OB : "+ID_OBPERMOHONAN_PEMOHON);
+						myLog.info("OB ADALAH OB : "+ID_OBPERMOHONAN_PEMOHON);
 						if(!ID_OBPERMOHONAN_PEMOHON.equals(""))
 						{
 							String skrinNamePemohonOb = "";
@@ -2139,7 +2316,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 							}
 							
 							Map mapDataAsal_ob = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI, "ID_OBPERMOHONAN", ID_OBPERMOHONAN_PEMOHON, "TBLPPKOBPERMOHONAN", db);
-							myLogger.info("mapDataAsal_ob: "+mapDataAsal_ob);
+							myLog.info("mapDataAsal_ob: "+mapDataAsal_ob);
 							savePerubahan(session,command,"",mapDataAsal_ob,skrinName,ID_PERMOHONANSIMATI,ID_PERMOHONAN,"ID_OBPERMOHONAN",ID_OBPERMOHONAN_PEMOHON,formNameAjax,"TBLPPKOBPERMOHONAN",aktiviti,ID_PERBICARAAN,skrinNamePemohonOb,ID_SIMATI,ID_PERMOHONAN,db);
 						}
 					}
@@ -2147,7 +2324,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				
 				
 				String jenis_transaction = modelBI.jenisTransaction(session, NAMA_TABLE, FIELD_PK,skrinName, getParam(FIELD_PK), ID_PERMOHONANSIMATI, ID_PERBICARAAN, db);
-				myLogger.info(" jenis_transaction  :::::::::::::::::::::::: "+jenis_transaction);				
+				myLog.info(" jenis_transaction  :::::::::::::::::::::::: "+jenis_transaction);				
 					
 				String standardParam = "ID_PEMOHON="+ID_PEMOHON+"&ID_SIMATI="+ID_SIMATI+"&ID_PERMOHONANSIMATI="+ID_PERMOHONANSIMATI+"&ID_PERBICARAAN="+ID_PERBICARAAN+"&ID_PERMOHONAN="+ID_PERMOHONAN+"&NAMA_TABLE="+NAMA_TABLE+"&FIELD_PK="+FIELD_PK+"&skrinName="+skrinName+"&aktiviti="+aktiviti+"&current_previous="+current_previous+"&jenis_transaction="+jenis_transaction;
 				
@@ -2171,7 +2348,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				{
 					String divId = getParam("divId");//open maklumat dalam senarai
 					this.context.put("divId",divId);
-					myLogger.info(" ::: divId ::: "+divId);
+					myLog.info(" ::: divId ::: "+divId);
 					String addParam = "&divId="+divId;//div load ajax dynamicly by senarai
 					Map setupSkrinWaris = null;
 					if(skrinName.equals("waris") || skrinName.equals("ob") || skrinName.equals("saksi")  || skrinName.equals("pemiutang"))
@@ -2209,7 +2386,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 								"&ID_SEJARAHBIMAIN="+ID_SEJARAHBIMAIN;
 						setupSkrinWaris = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI,FIELD_PK, ID_HAPERMOHONAN, "TBLPPKHAPERMOHONAN", db);
 					}
-					myLogger.info(">>>>>>>>>>>>>> setupSkrinWaris : "+setupSkrinWaris);
+					myLog.info(">>>>>>>>>>>>>> setupSkrinWaris : "+setupSkrinWaris);
 					Map setupSkrinWarisHistory = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI,"ID_SEJARAHBIMAIN", ID_SEJARAHBIMAIN, "TBLPPKSEJARAHBIMAIN", db);
 					
 					if(mode.equals("view"))
@@ -2287,11 +2464,11 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String skrinName = getParam("skrinName");
 			String FLAG_JENIS_KEPUTUSAN = getParam(skrinName+"FLAG_JENIS_KEPUTUSAN");	
 			String ID_INTROPERINTAH = getParam(skrinName+"ID_INTROPERINTAH");
-			myLogger.info("ID_PERINTAH >>>>>>>>> "+ID_PERINTAH);
-			myLogger.info("ID_PERMOHONANSIMATI >>>>>>>>> "+ID_PERMOHONANSIMATI);
-			myLogger.info("ID_PERBICARAAN >>>>>>>>> "+ID_PERBICARAAN);
-			myLogger.info("ID_PEMOHON >>>>>>>>> "+ID_PEMOHON);
-			myLogger.info("skrinName >>>>>>>>> "+skrinName);
+			myLog.info("ID_PERINTAH >>>>>>>>> "+ID_PERINTAH);
+			myLog.info("ID_PERMOHONANSIMATI >>>>>>>>> "+ID_PERMOHONANSIMATI);
+			myLog.info("ID_PERBICARAAN >>>>>>>>> "+ID_PERBICARAAN);
+			myLog.info("ID_PEMOHON >>>>>>>>> "+ID_PEMOHON);
+			myLog.info("skrinName >>>>>>>>> "+skrinName);
 			String htmlContent = "";
 			String ID_FAIL = "";
 			String NO_FAIL = "";
@@ -2307,14 +2484,14 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				Map mainID = modelBI.mainID(session, ID_PERBICARAAN, db);
 				ID_FAIL = (String)mainID.get("ID_FAIL");
 				NO_FAIL = (String)mainID.get("NO_FAIL");
-				Map getMaklumatPindaan = modelBI.getMaklumatPindaan(session, ID_FAIL, db);
-				myLogger.info("getMaklumatPindaan atas : "+getMaklumatPindaan);
-				if(getMaklumatPindaan!=null)
-				{
-					myLogger.info("getMaklumatPindaan bawah : "+getMaklumatPindaan);
-					NO_PINDAAN = (String)getMaklumatPindaan.get("NO_PINDAAN");
-				}				
-				myLogger.info("NO_PINDAAN : "+NO_PINDAAN);
+				//Map getMaklumatPindaan = modelBI.getMaklumatPindaan(session, ID_FAIL, db);
+//				myLog.info("getMaklumatPindaan atas : "+getMaklumatPindaan);
+//				if(getMaklumatPindaan!=null)
+//				{
+//					myLog.info("getMaklumatPindaan bawah : "+getMaklumatPindaan);
+//					NO_PINDAAN = (String)getMaklumatPindaan.get("NO_PINDAAN");
+//				}				
+				myLog.info("NO_PINDAAN : "+NO_PINDAAN);
 				Map setupKeputusanBeforeSave = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI,"",ID_PERBICARAAN, "TBLPPKPERINTAH", db);
 				ID_PERINTAH = savePerintah(session,setupKeputusanBeforeSave,ID_PERMOHONAN,FLAG_JENIS_KEPUTUSAN,ID_PERINTAH,ID_PERMOHONANSIMATI,formName,ID_PERBICARAAN,skrinName,db);
 				//htmlContent = modelBI.janaContentCatatanPerintah(session,ID_FAIL,formName,ID_SIMATI,ID_PERBICARAAN,ID_PERMOHONAN,ID_PERMOHONANSIMATI,ID_PEMOHON,ID_PERINTAH,NO_PINDAAN,db);
@@ -2421,7 +2598,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
 			String ID_PERMOHONANSIMATI = getParam("ID_PERMOHONANSIMATI");
 			String ID_PARENT = getParam("ID_PARENT");
-			myLogger.info("ID_PARENT ::::: "+ID_PARENT);
+			myLog.info("ID_PARENT ::::: "+ID_PARENT);
 			String skrinName = getParam("skrinName");
 			String formDynamicDropDown = "";
 			Db db = null;
@@ -2494,7 +2671,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				{
 					
 					String flag_tangguh = getParam(skrinName+"FLAG_TANGGUH");
-					myLogger.info("getAlamatMahkamah >>> flag_tangguh :: "+flag_tangguh);
+					myLog.info("getAlamatMahkamah >>> flag_tangguh :: "+flag_tangguh);
 					if(flag_tangguh.equals("6"))
 					{
 						setupSkrin = modelBI.getValueColumn(session,"",ID_PERBICARAAN,skrinName,"","ID_PEJABATJKPTG", ID_MAHKAMAH, "TBLRUJPEJABATJKPTG",db);
@@ -2553,7 +2730,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				String NEGARA = "";
 				String ID_PEMOHON = "";
 				Map setupSkrin = modelBI.getValueColumn(session,"",ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI,"", ID_PERMOHONAN, "TBLPPKPEMOHON",db);	
-				myLogger.info("setupSkrin pemohon : "+setupSkrin);
+				myLog.info("setupSkrin pemohon : "+setupSkrin);
 				//set data pejabat
 				if(setupSkrin!=null)
 				{
@@ -2627,7 +2804,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String ID_NEGERI = getParam("ID_NEGERISALIN");
 			String ID_BANDAR = getParam("ID_BANDARSALIN");
 			String skrinName = getParam("skrinName");
-			myLogger.info("--------- skrinName : "+skrinName);
+			myLog.info("--------- skrinName : "+skrinName);
 			String divID = "";
 			String commandSalin = "";
 			String formDynamicDropDown = "";
@@ -2647,21 +2824,21 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				{
 					divID = "div"+skrinName+"ID_BANDARSURAT";
 					commandSalin = "showBandarSurat";
-					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,"TBLPPKPEMOHON","TBLRUJNEGERI","ID_NEGERI",
-							"KOD_NEGERI", "NAMA_NEGERI", "","", 
-							"ID_NEGERISURAT","edit", ID_NEGERI, 
-							"div"+skrinName+"ID_BANDARSURAT","TBLRUJBANDAR", "ID_BANDARSURAT", "ID_NEGERI", "ID_BANDAR", "KOD_BANDAR", "KETERANGAN", 
-							formNameAjax, null,"", db);
+//					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,"TBLPPKPEMOHON","TBLRUJNEGERI","ID_NEGERI",
+//							"KOD_NEGERI", "NAMA_NEGERI", "","", 
+//							"ID_NEGERISURAT","edit", ID_NEGERI, 
+//							"div"+skrinName+"ID_BANDARSURAT","TBLRUJBANDAR", "ID_BANDARSURAT", "ID_NEGERI", "ID_BANDAR", "KOD_BANDAR", "KETERANGAN", 
+//							formNameAjax, null,"", db);
 				}
 				else if(command.equals("showNegeri"))
 				{
 					divID = "div"+skrinName+"ID_BANDAR";
 					commandSalin = "showBandar";
-					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,"TBLPPKPEMOHON","TBLRUJNEGERI","ID_NEGERI",
-							"KOD_NEGERI", "NAMA_NEGERI", "","", 
-							"ID_NEGERI","edit", ID_NEGERI, 
-							"div"+skrinName+"ID_BANDAR","TBLRUJBANDAR", "ID_BANDAR", "ID_NEGERI", "ID_BANDAR", "KOD_BANDAR", "KETERANGAN", 
-							formNameAjax, null,"",db);
+//					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,"TBLPPKPEMOHON","TBLRUJNEGERI","ID_NEGERI",
+//							"KOD_NEGERI", "NAMA_NEGERI", "","", 
+//							"ID_NEGERI","edit", ID_NEGERI, 
+//							"div"+skrinName+"ID_BANDAR","TBLRUJBANDAR", "ID_BANDAR", "ID_NEGERI", "ID_BANDAR", "KOD_BANDAR", "KETERANGAN", 
+//							formNameAjax, null,"",db);
 				}
 				
 			}
@@ -2685,26 +2862,26 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String ID_BANDAR = getParam("ID_BANDARSALIN");
 			String ID_NEGERI = getParam("ID_NEGERISALIN");
 			String skrinName = getParam("skrinName");
-			myLogger.info("--------- skrinName : "+skrinName);
+			myLog.info("--------- skrinName : "+skrinName);
 			String formDynamicDropDown = "";
 			Db db = null;
 			try {
 				db = new Db();
 				if(command.equals("showBandarSurat"))
 				{
-					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,"TBLPPKPEMOHON","TBLRUJBANDAR","ID_BANDAR",
-							"KOD_BANDAR","KETERANGAN","ID_NEGERI",ID_NEGERI, 
-							"ID_BANDARSURAT","edit", ID_BANDAR, 
-							"","", "", "", "", "", "", 
-							formNameAjax,null,"", db);
+//					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,"TBLPPKPEMOHON","TBLRUJBANDAR","ID_BANDAR",
+//							"KOD_BANDAR","KETERANGAN","ID_NEGERI",ID_NEGERI, 
+//							"ID_BANDARSURAT","edit", ID_BANDAR, 
+//							"","", "", "", "", "", "", 
+//							formNameAjax,null,"", db);
 				}
 				else if(command.equals("showBandar"))
 				{
-					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,"TBLPPKPEMOHON","TBLRUJBANDAR","ID_BANDAR",
-							"KOD_BANDAR","KETERANGAN","ID_NEGERI",ID_NEGERI, 
-							"ID_BANDAR","edit", ID_BANDAR, 
-							"","", "", "", "", "", "", 
-							formNameAjax,null,"", db);
+//					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,"TBLPPKPEMOHON","TBLRUJBANDAR","ID_BANDAR",
+//							"KOD_BANDAR","KETERANGAN","ID_NEGERI",ID_NEGERI, 
+//							"ID_BANDAR","edit", ID_BANDAR, 
+//							"","", "", "", "", "", "", 
+//							formNameAjax,null,"", db);
 				}
 			}
 			finally {
@@ -2726,11 +2903,11 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			Db db = null;
 			try {
 				db = new Db();
-			formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,mainTable,"TBLRUJPEJABAT","ID_PEJABAT",
-					"KOD_PEJABAT", "NAMA_PEJABAT", "ID_JENISPEJABAT",ID_TARAFKPTG, 
-					"ID_ARB","edit", ID_ARB, 
-					"","", "", "", "", "", "", 
-					formNameAjax, null,"",db);
+//			formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,mainTable,"TBLRUJPEJABAT","ID_PEJABAT",
+//					"KOD_PEJABAT", "NAMA_PEJABAT", "ID_JENISPEJABAT",ID_TARAFKPTG, 
+//					"ID_ARB","edit", ID_ARB, 
+//					"","", "", "", "", "", "", 
+//					formNameAjax, null,"",db);
 			}
 			finally {
 				if (db != null)
@@ -2762,20 +2939,20 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			if(column_name.equals("ID_BANDARHTA"))
 			{
 				currentValue = getParam("currentValue");
-				myLogger.info("currentValue ID_BANDARHTA : "+currentValue);
+				myLog.info("currentValue ID_BANDARHTA : "+currentValue);
 				
 			}
 			String id_jenispejabat_mahkamah = "8";
 			if(column_name.equals("ID_MAHKAMAH") && skrinName.equals("keputusan"))
 			{
-				myLogger.info("BEFORE MAHKAMAH VALUE_FK_refTable : "+VALUE_FK_refTable);
+				myLog.info("BEFORE MAHKAMAH VALUE_FK_refTable : "+VALUE_FK_refTable);
 				String flag_rujukan = getParam(skrinName+"FLAG_RUJUKAN");
 				if(flag_rujukan.equals("1"))
 				{
 					id_jenispejabat_mahkamah = "41";					
 				}
 				VALUE_FK_refTable = id_jenispejabat_mahkamah + VALUE_FK_refTable;
-				myLogger.info("AFTER MAHKAMAH VALUE_FK_refTable : "+VALUE_FK_refTable);
+				myLog.info("AFTER MAHKAMAH VALUE_FK_refTable : "+VALUE_FK_refTable);
 			}
 			else if(column_name.equals("ID_PEJABATMAHKAMAH") && skrinName.equals("keputusan"))
 			{
@@ -2786,14 +2963,14 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				}
 			}
 			
-			myLogger.info("mainTable : "+mainTable);
-			myLogger.info("refTable : "+refTable);
-			myLogger.info("PK_refTable : "+PK_refTable);
-			myLogger.info("field_KOD_refTable : "+field_KOD_refTable);
-			myLogger.info("field_VALUE_refTable : "+field_VALUE_refTable);
-			myLogger.info("field_FK_refTable : "+field_FK_refTable);
-			myLogger.info("VALUE_FK_refTable : "+VALUE_FK_refTable);
-			myLogger.info("column_name : "+column_name);
+			myLog.info("mainTable : "+mainTable);
+			myLog.info("refTable : "+refTable);
+			myLog.info("PK_refTable : "+PK_refTable);
+			myLog.info("field_KOD_refTable : "+field_KOD_refTable);
+			myLog.info("field_VALUE_refTable : "+field_VALUE_refTable);
+			myLog.info("field_FK_refTable : "+field_FK_refTable);
+			myLog.info("VALUE_FK_refTable : "+VALUE_FK_refTable);
+			myLog.info("column_name : "+column_name);
 			
 			String formDynamicDropDown = "";
 			Db db = null;
@@ -2830,11 +3007,11 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				}
 				else
 				{
-					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,mainTable,refTable,PK_refTable,
-							field_KOD_refTable, field_VALUE_refTable, field_FK_refTable,VALUE_FK_refTable, 
-							column_name,"edit", currentValue, 
-							divCall,tableCall, fieldtableCall, field_FK_TableCall, field_PK_TableCall, field_KOD_TableCall, field_VALUE_TableCall, 
-							formNameAjax,null,"", db);
+//					formDynamicDropDown = modelBI.refDropDown(session,"select",ID_PERBICARAAN,skrinName,command,mainTable,refTable,PK_refTable,
+//							field_KOD_refTable, field_VALUE_refTable, field_FK_refTable,VALUE_FK_refTable, 
+//							column_name,"edit", currentValue, 
+//							divCall,tableCall, fieldtableCall, field_FK_TableCall, field_PK_TableCall, field_KOD_TableCall, field_VALUE_TableCall, 
+//							formNameAjax,null,"", db);
 				}
 				
 			}
@@ -2847,14 +3024,139 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		}
 		//}
 		//close dynamic ajax call
-		myLogger.info("skrin_name : "+skrin_name);
+		myLog.info("skrin_name : "+skrin_name);
 		this.context.put("command",command);
 		this.context.put("fromDashboard",fromDashboard);
 
 		return skrin_name;
 		
 	}
+	/**
+	 * Fungsi paparan default fail baru
+	 * @param mode
+	 * @throws Exception
+	 */
+	public void viewPohonFailBaru(String mode) throws Exception {
+		socNegeri = HTML.SelectNegeriMampu("socNegeri",Utils.parseLong(idNegeri),"","onChange=\"doChanges()\" ");
+		socDaerah = HTML.SelectDaerahByNegeri(idNegeri,"socDaerah",Utils.parseLong(iDaerah),"","");
+		socKementerian = UtilHTML.SelectKementerianAktif("socKementerian", Utils.parseLong(idKementerian), null,"onChange=\"doChanges()\" style=\"width:400\"");
+ 		socAgensi = HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Utils.parseLong(idAgensi), "style=\"width:400\"");
+		socUrusan = UtilHTML.SelectUrusan("socUrusan",Utils.parseLong(idUrusan),"onChange=\"doChanges()\" ");//disabled class=disabled
+ 		socSubUrusan = HTML.SelectSuburusanByIdUrusan(idUrusan,"socSubUrusan",Utils.parseLong(idSuburusan), "");
+ 		if (idUrusan.equals("1")){
+ 	 		socSubUrusan = HTML.SelectSuburusanByIdUrusan(idUrusan,"socSubUrusan",Utils.parseLong(IDSUBURUSANPERMOHONAN), "");	
+ 		}
+// 		if (mode.indexOf("reset") != -1) {
+// 			socNegeri = HTML.SelectNegeri("socNegeri",Utils.parseLong("99999"),"","onChange=\"doChanges()\" ");
+// 			socDaerah = HTML.SelectDaerahByNegeri(idnegeri,"socDaerah",Utils.parseLong("99999"),"","");
+// 			socKementerian = UtilHTML.SelectKementerianAktif("socKementerian", Utils.parseLong("99999"), null,"onChange=\"doChanges()\" ");
+//
+// 		}
+
+		context.put("socKementerian", socKementerian);
+		context.put("socUrusan", socUrusan);
+		context.put("socAgensi", socAgensi);
+		context.put("socDaerah", socDaerah);
+		context.put("socSubUrusan", socSubUrusan);
+		String statusTanah = "";
+		String jenisFail = "";
+		if (mode.indexOf("doChange") != -1) {
+			myLog.info(" ** CHANGES DETECTED !!");
+			statusTanah = String.valueOf(getParamAsInteger("socStatustanah"));
+			jenisFail = String.valueOf(getParamAsInteger("socjenisFail"));
+			socStatusTanah = UtilHTML.SelectJenisTanah("socStatustanah",Long.parseLong(statusTanah),"",JENISTANAH);
+			socJenisFail = HTML.SelectTarafKeselamatan("socjenisFail",Long.parseLong(jenisFail),"");
+			context.put("socStatustanah", socStatusTanah);
+			context.put("socjenisFail", socJenisFail);
+			context.put("txtTajuk",getParam("txtTajuk"));
+			context.put("noFail","");
+			//context.put("txtnoFailKJP","");
+	 		// modified by rosli 2010/09/03
+			context.put("txtnoFailKJP",getParam("txtnoFailKJP"));
+			//context.put("txtnoFailUPT","");
+	 		// modified by rosli 2010/09/03
+			context.put("txtnoFailUPT",getParam("txtnoFailUPT"));
+			//context.put("txdTarikhSuratKJP",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
+	 		// modified by rosli 2010/09/03
+			context.put("txdTarikhSuratKJP",getParam("txdTarikhSuratKJP"));	
+			context.put("statusTanah",idUrusan);	
+			
+	    } else {
+	    	//1-Tanah Kerajaan ,3-Tanah Kerajaan(Pengambilan),6-Tanah Kerajaan(Penswastaan)
+	 		socStatusTanah = UtilHTML.SelectJenisTanah("socStatustanah",JENISTANAH);
+			socJenisFail = HTML.SelectTarafKeselamatan("socjenisFail");
+			context.put("socStatustanah", socStatusTanah);
+			context.put("socjenisFail", socJenisFail);
+			context.put("txtTajuk","");
+			context.put("noFail","");
+			context.put("txtnoFailKJP","");
+			context.put("txtnoFailUPT","");
+			context.put("txdTarikhSuratKJP",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
+	 
+	    }
+		setContext();
 		
+	}
+	
+	public void doListing(HttpSession session,String action,String mode,Vector<Hashtable<String, String>> v) 
+		throws Exception {
+		if (mode.indexOf("carian") != -1) {
+//			if (mode.indexOf("change") != -1) {
+			myLog.debug("changes detected...");
+	    	initContext();
+
+		}
+		flagAdvSearch = getParam("flagAdvSearch");
+
+    	this.context.put("flagAdvSearch",flagAdvSearch);
+		this.context.put("txtNoFail",noFail);
+		this.context.put("txtNoPermohonanOnline",noPermohonan);	        
+		this.context.put("txtTajukCarian",txtTajukCarian);
+//		    
+//			socUrusan = UtilHTML.SelectUrusan("socUrusan",Utils.parseLong(idurusan),null);//disabled class=disabled
+//			socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian), null,"onChange=\"doChangeKementerianX()\" style=\"width:400\"");
+//			socAgensi = HTML.SelectAgensiByKementerian("socAgensi", id_kementerian, Utils.parseLong(id_agensi), ""," style=\"width:400\"");
+//			//socNegeri = HTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri),null,"onChange=doChangeNegeriX();");
+//			socNegeri = UtilHTML.SelectNegeri("socNegeri",Utils.parseLong(idNegeri),null,"onChange=doChangeNegeriX();");
+//			socDaerah = HTML.SelectDaerahByNegeri(idnegeri, "socDaerah",Utils.parseLong(iddaerah),null, "onChange=\"doChangeDaerahX()\"");
+//			socMukim = HTML.SelectMukimByDaerah(iddaerah, "socMukim", Utils.parseLong(idmukim) , "");
+//			this.context.put("socUrusan", socUrusan);
+//		   	this.context.put("socKementerian", socKementerian);
+//		   	this.context.put("socAgensi", socAgensi);
+//		    this.context.put("socDaerah", socDaerah);
+//			this.context.put("socNegeri", socNegeri);
+//			this.context.put("socMukim", socMukim);		
+//			this.context.put("senaraiList1", v); 
+			setupPage(session,action,v);
+			
+		
+	}
+	
+	public void initContext() throws Exception {
+		//socNegeri = HTML.SelectNegeriMampu("socNegeri","onChange=doChangeNegeriX();");
+		socNegeri = HTML.SelectNegeriMampu("socNegeri",Utils.parseLong(idNegeri),null,"onChange=doChangeNegeriX();");
+		this.context.put("socMukim","");
+	}
+	
+	public void setContext() throws Exception {
+		context.put("socNegeri", socNegeri);
+
+	}
+	
+	private IHtp getHTP(){
+		if(iHTP == null)
+			iHTP = new HtpBean();
+		return iHTP;
+		
+	}
+
+	private IPermohonanPerizapan getPermohonan(){
+		if(ipr == null)
+			ipr = new PermohonanPerizapanBean();
+		return ipr;
+	
+	}
+	
 	public void defaultPut()
 	{
 		this.context.put("carianBicaraNO_FAIL","");
@@ -2908,7 +3210,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 	public void setupPageMainList(HttpSession session, String action, List list, String namaList, String command) {
 		try {
 			String scrolPosition = getParam("scrolPosition");
-			myLogger.info(" ------- scrolPosition :"+scrolPosition);
+			myLog.info(" ------- scrolPosition :"+scrolPosition);
 			this.context.put("scrolPosition", scrolPosition);
 			this.context.put("namaList", namaList);
 			this.context.put("command", command);
@@ -2933,12 +3235,12 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				page = getParamAsInteger("value");
 			} else if (("doChangeItemPerPage").equals(action)) {
 				itemsPerPage = getParamAsInteger("itemsPerPage"+command);
-				myLogger.info(" ------- itemsPerPage :"+itemsPerPage);
+				myLog.info(" ------- itemsPerPage :"+itemsPerPage);
 			}
 			else if (("specialFromList").equals(action)) {
 				itemsPerPage = getParamAsInteger("itemsPerPage"+command);
 				page = getParamAsInteger("currentPage"+command);
-				myLogger.info(" ------- itemsPerPage :"+itemsPerPage);
+				myLog.info(" ------- itemsPerPage :"+itemsPerPage);
 			}
 			
 			Paging2 paging = new Paging2(session, list, itemsPerPage);
@@ -3139,7 +3441,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				" WHEN PR.JENIS_MASA_BICARA = '2' THEN ' PM'  "+
 				" WHEN PR.JENIS_MASA_BICARA = '3' THEN ' PM' ELSE ' AM' END) ASC ";
 		
-		myLogger.info(" BICARA INTERAKTIF : SQL listPerbicaraan :"+ sql);
+		myLog.info(" BICARA INTERAKTIF : SQL listPerbicaraan :"+ sql);
 		
 		rs = stmt.executeQuery(sql);
 		listPerbicaraan = Collections.synchronizedList(new ArrayList());
@@ -3395,7 +3697,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		sql += " ORDER BY TP.STATUS_TUKARPEGAWAI ASC, TP.TARIKH_MOHON DESC, PR.TARIKH_BICARA DESC) ";		
 		
 		
-		myLogger.info(" BICARA INTERAKTIF : SQL listPermohonanTukarPegawai :"+ sql);
+		myLog.info(" BICARA INTERAKTIF : SQL listPermohonanTukarPegawai :"+ sql);
 		
 		rs = stmt.executeQuery(sql);
 		listPermohonanTukarPegawai = Collections.synchronizedList(new ArrayList());
@@ -3543,7 +3845,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			htmlPageSetup += modelBI.setRowTextArea(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"Keterangan Bantahan",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"KETERANGAN_BANTAHAN","Y","text","Y","4000","Y","",0,db1);
 			htmlPageSetup += modelBI.closeHTMLTable();			
 			htmlPageSetup += "</fieldset>";
-			htmlPageSetup += modelBI.setupButtonBantahan(session,"",jenis_transaction,setupSkrinHistory,field_main_PK,id,current_previous,skrinName,formName,flag_editable,mode,setupSkrin,table_name,divViewMaklumat,paramsButton,"",db1);
+			//htmlPageSetup += modelBI.setupButtonBantahan(session,"",jenis_transaction,setupSkrinHistory,field_main_PK,id,current_previous,skrinName,formName,flag_editable,mode,setupSkrin,table_name,divViewMaklumat,paramsButton,"",db1);
 			
 		} finally {
 			if (db == null)
@@ -3994,7 +4296,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				db1 = new Db();
 			}		
 			String value_main_PK = modelBI.getValue(session,ID_PERMOHONANSIMATI,setupSkrin,table_name,field_main_PK,id,ID_PERBICARAAN,field_main_PK,db1);
-			myLogger.info("****** waris value_main_PK : "+value_main_PK);
+			myLog.info("****** waris value_main_PK : "+value_main_PK);
 			htmlPageSetup += modelBI.openHTMLTableDivided_top(setupSkrinHistory,jenis_transaction,skrinName,mode);
 			htmlPageSetup += modelBI.openHTMLTable();
 			htmlPageSetup += modelBI.setRowText(session,"",ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_OB","","hidden","","","","",1,db1);
@@ -4444,11 +4746,11 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				db1 = new Db();
 			}	
 			
-			myLogger.info("setupSkrinTangguh setupSkrin : "+setupSkrin);
+			myLog.info("setupSkrinTangguh setupSkrin : "+setupSkrin);
 			
 			//yg ni untuk perintah
 			String value_main_PK = modelBI.getValue(session,ID_PERMOHONANSIMATI, setupSkrin,table_name,field_main_PK,"",ID_PERBICARAAN,field_main_PK,db1);
-			myLogger.info("setupSkrinJenisKeputusan perintah : "+value_main_PK);
+			myLog.info("setupSkrinJenisKeputusan perintah : "+value_main_PK);
 			
 			htmlPageSetup += modelBI.openHTMLTable();
 			htmlPageSetup += modelBI.setRowText(session,"",ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_BORANGJ","","hidden","","","","",0,db1);
@@ -4547,10 +4849,10 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			{
 				db1 = new Db();
 			}			
-			myLogger.info("setupSkrinTangguhKoleteral table_name : "+table_name);			
+			myLog.info("setupSkrinTangguhKoleteral table_name : "+table_name);			
 			Map setupPerintah = modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,ID_PERMOHONANSIMATI,"",ID_PERBICARAAN, "TBLPPKPERINTAH", db);
 			String value_main_PK = modelBI.getValue(session,ID_PERMOHONANSIMATI, setupSkrin,table_name,field_main_PK,"",ID_PERBICARAAN,field_main_PK,db1);
-			//myLogger.info("setupSkrinJenisKeputusan perintah : "+value_main_PK);
+			//myLog.info("setupSkrinJenisKeputusan perintah : "+value_main_PK);
 			
 			htmlPageSetup += modelBI.openHTMLTable();
 			htmlPageSetup += "<tr><td colspan=\"4\" class=\"table_header\">Maklumat Perbicaraan</td></tr>";
@@ -4560,7 +4862,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			htmlPageSetup += modelBI.setRowText(session,"",ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"Waktu Bicara (24 jam HHMM)",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"MASA_BICARA","Y","numbersOnly","Y","4","Y","",0,db1);
 			htmlPageSetup += modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,command,mode,setupPerintah,"Tempat Bicara",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_PEJABATMAHKAMAH","Y","select","Y","TBLRUJPEJABATJKPTG","ID_PEJABATJKPTG","KOD_JKPTG","NAMA_PEJABAT","ID_PERMOHONAN",ID_PERMOHONAN,"","","","","","","",formName,"",0,db1);
 			//htmlPageSetup += "<div id=\"divSetPejabatKeputusanID_PEJABATMAHKAMAH\"></div>";
-			myLogger.info(">>>>>>> ID_PEJABATMAHKAMAH ::::::::::: " + modelBI.getValue(session,ID_PERMOHONANSIMATI,setupPerintah,table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_PEJABATMAHKAMAH",db1));
+			myLog.info(">>>>>>> ID_PEJABATMAHKAMAH ::::::::::: " + modelBI.getValue(session,ID_PERMOHONANSIMATI,setupPerintah,table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_PEJABATMAHKAMAH",db1));
 			Map defaultAlamatPejabat = modelBI.getValueColumn(session,"",ID_PERBICARAAN,skrinName,"","ID_PEJABATJKPTG", 
 					modelBI.getValue(session,ID_PERMOHONANSIMATI,setupPerintah,table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_PEJABATMAHKAMAH",db1)
 					, "TBLRUJPEJABATJKPTG",db1);
@@ -4573,7 +4875,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String id_bandar = "";
 			String no_tel = "";
 			String no_fax = "";
-			myLogger.info(">>>>>>> defaultAlamatPejabat ::::::::::: "+defaultAlamatPejabat);
+			myLog.info(">>>>>>> defaultAlamatPejabat ::::::::::: "+defaultAlamatPejabat);
 			if(defaultAlamatPejabat!=null)
 			{
 				nama_pejabat = (String)defaultAlamatPejabat.get("NAMA_PEJABAT");
@@ -4649,7 +4951,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				
 				
 				//setupPerintah
-				myLogger.info(">>>>>>>>>>>>>>>>>>>> FLAG_TANGGUH >>>>>>>>>>>>>>>>>>>>"+modelBI.getValue(session,ID_PERMOHONANSIMATI, setupPerintah,"","","",ID_PERBICARAAN,"FLAG_TANGGUH",db1));
+				myLog.info(">>>>>>>>>>>>>>>>>>>> FLAG_TANGGUH >>>>>>>>>>>>>>>>>>>>"+modelBI.getValue(session,ID_PERMOHONANSIMATI, setupPerintah,"","","",ID_PERBICARAAN,"FLAG_TANGGUH",db1));
 				/*
 				if(setupSkrin != null &&
 						modelBI.getValue(session,ID_PERMOHONANSIMATI, setupPerintah,"","","",ID_PERBICARAAN,"FLAG_TANGGUH",db1).equals("6"))
@@ -4741,15 +5043,15 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			{
 				db1 = new Db();
 			}			
-			myLogger.info("setupSkrinBatalWasiat table_name : "+table_name);			
+			myLog.info("setupSkrinBatalWasiat table_name : "+table_name);			
 			String value_main_PK = modelBI.getValue(session,ID_PERMOHONANSIMATI, setupSkrin,table_name,field_main_PK,"",ID_PERBICARAAN,field_main_PK,db1);
-			//myLogger.info("setupSkrinJenisKeputusan perintah : "+value_main_PK);
+			//myLog.info("setupSkrinJenisKeputusan perintah : "+value_main_PK);
 			htmlPageSetup += modelBI.openHTMLTable();
 			htmlPageSetup += "<tr><td colspan=\"4\" class=\"table_header\">Maklumat Rujukan Mahkamah Tinggi</td></tr>";
 			htmlPageSetup += modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,command,mode,setupSkrin,"Kod Keluar Perintah",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"JENIS_KELUAR_PERINTAH","Y","select","Y","","","","","","","","","","","","","",formName,"",0,db1);
 					
 			//htmlPageSetup += modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,command,mode,setupSkrin,"Mahkamah",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_PEJABATMAHKAMAH","Y","select","Y","TBLRUJPEJABATJKPTG","ID_PEJABATJKPTG","KOD_JKPTG","NAMA_PEJABAT","ID_PERMOHONAN",ID_PERMOHONAN,"","","","","","","",formName,"",0,db1);
-			//myLogger.info(">>>>>>> ID_PEJABATMAHKAMAH ::::::::::: " + modelBI.getValue(session,ID_PERMOHONANSIMATI,setupSkrin,table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_PEJABATMAHKAMAH",db1));
+			//myLog.info(">>>>>>> ID_PEJABATMAHKAMAH ::::::::::: " + modelBI.getValue(session,ID_PERMOHONANSIMATI,setupSkrin,table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_PEJABATMAHKAMAH",db1));
 			Map defaultAlamatPejabat = modelBI.getValueColumn(session,"",ID_PERBICARAAN,skrinName,"","ID_PEJABAT", 
 					modelBI.getValue(session,ID_PERMOHONANSIMATI,setupSkrin,table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_PEJABATMAHKAMAH",db1)
 					, "TBLRUJPEJABAT",db1);
@@ -4762,7 +5064,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String id_bandar = "";
 			String no_tel = "";
 			String no_fax = "";
-			myLogger.info(">>>>>>> defaultAlamatPejabat ::::::::::: "+defaultAlamatPejabat);
+			myLog.info(">>>>>>> defaultAlamatPejabat ::::::::::: "+defaultAlamatPejabat);
 			if(defaultAlamatPejabat!=null)
 			{
 				nama_pejabat = (String)defaultAlamatPejabat.get("NAMA_PEJABAT");
@@ -4823,7 +5125,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			//yg ni untuk perintah
 			String value_main_PK = modelBI.getValue(session,ID_PERMOHONANSIMATI, setupSkrin,table_name,field_main_PK,"",ID_PERBICARAAN,field_main_PK,db1);
 			String ID_PERINTAH = setupSkrin == null ? "" :(String) setupSkrin.get("ID_PERINTAH") == null ? "" : (String) setupSkrin.get("ID_PERINTAH");
-			myLogger.info("setupSkrinJenisKeputusan perintah : "+value_main_PK);
+			myLog.info("setupSkrinJenisKeputusan perintah : "+value_main_PK);
 			
 			String CATATAN_PERINTAH_TEMP = "";
 			String CATATAN_KP_TEMP = "";
@@ -4882,18 +5184,18 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				{
 					totalharta = Double.parseDouble(SUMHARTA); 
 				}
-				myLogger.info("totalharta : "+totalharta);
+				myLog.info("totalharta : "+totalharta);
 				if(!SUMHARTA_AR.equals(""))
 				{
 					totalhartaAR = Double.parseDouble(SUMHARTA_AR); 
 				}
-				myLogger.info("totalhartaAR : "+totalhartaAR);
+				myLog.info("totalhartaAR : "+totalhartaAR);
 				
 				if(SEKSYEN.equals("17"))
 				{
 					totalharta = totalharta - totalhartaAR;
 				}
-				myLogger.info("totalharta - totalhartaAR : "+totalharta);
+				myLog.info("totalharta - totalhartaAR : "+totalharta);
 				
 				if(totalharta > 0)
 				{
@@ -4922,7 +5224,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
     					defaultYuranPerintah = modelBI.getBundaranBayaran(defaultYuranPerintah);
     				}
 				}
-				myLogger.info("defaultYuranPerintah : "+defaultYuranPerintah);
+				myLog.info("defaultYuranPerintah : "+defaultYuranPerintah);
 				
 				double extraBayaranPerintah = 0;				
 				if(totalhartaAR <= 0 && SEKSYEN.equals("17"))
@@ -4935,7 +5237,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					}
 				}
 				
-				myLogger.info("extraBayaranPerintah : "+extraBayaranPerintah);
+				myLog.info("extraBayaranPerintah : "+extraBayaranPerintah);
 				
 				defaultBayaranPerintah = defaultYuranPerintah + extraBayaranPerintah;
 				defaultBayaranPerintah = modelBI.getBundaranBayaran(defaultBayaranPerintah);
@@ -4945,7 +5247,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					defaultBayaranPerintah = 10.00;
 				}
 				
-				myLogger.info("defaultBayaranPerintah :::::::::::: "+defaultBayaranPerintah);
+				myLog.info("defaultBayaranPerintah :::::::::::: "+defaultBayaranPerintah);
 				
 				String str_defaultBayaranPerintah = "";
 				if(mode.equals("view") && setupBayaranPerintah == null)
@@ -4977,7 +5279,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					}
 					info_perintah += "<br>";
 				}
-				myLogger.info("info perintah : "+info_perintah);
+				myLog.info("info perintah : "+info_perintah);
 				htmlPageSetup += info_perintah;
 				htmlPageSetup += modelBI.openHTMLTable();
 				//xx tanda sini
@@ -5426,7 +5728,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			}
 						
 			String value_main_PK = modelBI.getValue(session,ID_PERMOHONANSIMATI, setupSkrin,table_name,field_main_PK,"",ID_PERBICARAAN,field_main_PK,db1);
-			myLogger.info("value_main_PK perintah : "+value_main_PK);
+			myLog.info("value_main_PK perintah : "+value_main_PK);
 			
 			String id_negeri_fail = "";
 			Map getFail = modelBI.getFail(session,ID_PERMOHONAN, db);
@@ -5434,7 +5736,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			{
 				id_negeri_fail = (String)getFail.get("ID_NEGERI");
 			}
-			myLogger.info("id_negeri_fail perintah : "+id_negeri_fail);
+			myLog.info("id_negeri_fail perintah : "+id_negeri_fail);
 			
 			
 			String STATUS_TUKARPEGAWAI = modelBI.getValue(session,ID_PERMOHONANSIMATI,setupSkrin,table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"STATUS_TUKARPEGAWAI",db1);
@@ -5643,7 +5945,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			}
 						
 			String value_main_PK = modelBI.getValue(session,ID_PERMOHONANSIMATI, setupSkrin,table_name,field_main_PK,"",ID_PERBICARAAN,field_main_PK,db1);
-			myLogger.info("value_main_PK perintah : "+value_main_PK);
+			myLog.info("value_main_PK perintah : "+value_main_PK);
 			
 			String id_negeri_fail = "";
 			Map getFail = modelBI.getFail(session,ID_PERMOHONAN, db);
@@ -5651,7 +5953,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			{
 				id_negeri_fail = (String)getFail.get("ID_NEGERI");
 			}
-			myLogger.info("id_negeri_fail perintah : "+id_negeri_fail);
+			myLog.info("id_negeri_fail perintah : "+id_negeri_fail);
 						
 			htmlPageSetup += "<a class=\"blue\" href=\"javascript:doDivAjaxCall"+formName+"('view_"+skrinName+"','showKeputusan','NAMA_TABLE="+table_name+"&FIELD_PK="+field_main_PK+"&ID_SIMATI="+ID_SIMATI+"&ID_PERBICARAAN="+ID_PERBICARAAN+"&ID_PERMOHONAN="+ID_PERMOHONAN+"&ID_PERMOHONANSIMATI="+ID_PERMOHONANSIMATI+"&skrinName="+skrinName+"&scrolPosition='+getPageLocation());\"><u>'Refresh'</u></a>";	   
 			if(!mode.equals("view"))
@@ -5820,10 +6122,10 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 	}
 	
 	public String savePerintah(HttpSession session,Map setupKeputusanBeforeSave,String ID_PERMOHONAN,String FLAG_JENIS_KEPUTUSAN,String ID_PERINTAH,String ID_PERMOHONANSIMATI,String formName,String ID_PERBICARAAN,String skrinName,Db db)throws Exception {
-		myLogger.info("savePerintah FLAG_JENIS_KEPUTUSAN : "+FLAG_JENIS_KEPUTUSAN);
-		myLogger.info("savePerintah ID_PERINTAH : "+ID_PERINTAH);
-		myLogger.info("savePerintah ID_PERMOHONANSIMATI : "+ID_PERMOHONANSIMATI);
-		myLogger.info("savePerintah ID_PERBICARAAN : "+ID_PERBICARAAN);
+		myLog.info("savePerintah FLAG_JENIS_KEPUTUSAN : "+FLAG_JENIS_KEPUTUSAN);
+		myLog.info("savePerintah ID_PERINTAH : "+ID_PERINTAH);
+		myLog.info("savePerintah ID_PERMOHONANSIMATI : "+ID_PERMOHONANSIMATI);
+		myLog.info("savePerintah ID_PERBICARAAN : "+ID_PERBICARAAN);
 				
 		//String FLAG_BANTAHAN = getParam(skrinName+"FLAG_BANTAHAN");
 		
@@ -5854,19 +6156,19 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		
 		
 		
-		myLogger.info("savePerintah ID_UNITPSK : "+ID_UNITPSK);
-		myLogger.info("savePerintah TARIKH_PERINTAH : "+TARIKH_PERINTAH);
-		myLogger.info("savePerintah CHECK_KIV : "+CHECK_KIV);
-		myLogger.info("savePerintah DATE_KIV : "+DATE_KIV);
-		myLogger.info("savePerintah CATATAN_KIV : "+CATATAN_KIV);
-		myLogger.info("savePerintah ID_INTROPERINTAH : "+ID_INTROPERINTAH);
+		myLog.info("savePerintah ID_UNITPSK : "+ID_UNITPSK);
+		myLog.info("savePerintah TARIKH_PERINTAH : "+TARIKH_PERINTAH);
+		myLog.info("savePerintah CHECK_KIV : "+CHECK_KIV);
+		myLog.info("savePerintah DATE_KIV : "+DATE_KIV);
+		myLog.info("savePerintah CATATAN_KIV : "+CATATAN_KIV);
+		myLog.info("savePerintah ID_INTROPERINTAH : "+ID_INTROPERINTAH);
 		
 		Map mainID = modelBI.mainID(session, ID_PERBICARAAN, db);
 		String ID_FAIL = (String)mainID.get("ID_FAIL");
 		String NO_FAIL = (String)mainID.get("NO_FAIL");
 		String SEKSYEN = (String)mainID.get("SEKSYEN");
 		
-		myLogger.info("savePerintah CATATAN_PERINTAH_BI : "+CATATAN_PERINTAH_BI);
+		myLog.info("savePerintah CATATAN_PERINTAH_BI : "+CATATAN_PERINTAH_BI);
 		Connection conn = null;
 		Db db1 = null;
 		String return_ID_PERINTAH= "";
@@ -5973,7 +6275,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				r.add("TARIKH_MASUK", r.unquote("sysdate"));				
 				sql = r.getSQLInsert("TBLPPKPERINTAH");	
 			}
-			myLogger.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKPERINTAH : "+sql);				
+			myLog.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKPERINTAH : "+sql);				
 			stmt.executeUpdate(sql);	
 			
 			
@@ -6297,7 +6599,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			r.add("ID_MASUK", USER_ID_SYSTEM);
 		    r.add("TARIKH_MASUK", r.unquote("sysdate"));				
 		    sql = r.getSQLInsert("TBLPPKHISTORYJANANOTA");	
-			myLogger.info("BICARA INTERAKTIF : INSERT saveHistoryJana : "+sql);				
+			myLog.info("BICARA INTERAKTIF : INSERT saveHistoryJana : "+sql);				
 			stmt.executeUpdate(sql);	
 						
 			
@@ -6326,9 +6628,9 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String CATATAN_PEMOHON,String CATATAN_PELULUS,String STATUS_TUKARPEGAWAI,String TARIKH_MOHON,String TARIKH_KEPUTUSAN,
 			String ID_PEMOHONTUKARPEGAWAI,String FLAG_DAFTAR_TERUS,String FLAG_MULTiPLE,
 			Db db)throws Exception {
-		myLogger.info("saveTukarPegawai ID_PERMOHONANSIMATI : "+ID_PERMOHONANSIMATI);
-		myLogger.info("saveTukarPegawai ID_PERBICARAAN : "+ID_PERBICARAAN);
-		myLogger.info("saveTukarPegawai ID_TUKARPEGAWAI : "+ID_TUKARPEGAWAI);
+		myLog.info("saveTukarPegawai ID_PERMOHONANSIMATI : "+ID_PERMOHONANSIMATI);
+		myLog.info("saveTukarPegawai ID_PERBICARAAN : "+ID_PERBICARAAN);
+		myLog.info("saveTukarPegawai ID_TUKARPEGAWAI : "+ID_TUKARPEGAWAI);
 		/*
 		String ID_PEGAWAIASAL = "";
 		String ID_PEGAWAIBARU = "";
@@ -6342,11 +6644,11 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		String ID_PEMOHONTUKARPEGAWAI = "";	
 		String FLAG_DAFTAR_TERUS = "";	
 		*/
-		myLogger.info("skrinName : "+skrinName);
-		myLogger.info("ID_PEGAWAIASAL ATAS : "+ID_PEGAWAIASAL);
+		myLog.info("skrinName : "+skrinName);
+		myLog.info("ID_PEGAWAIASAL ATAS : "+ID_PEGAWAIASAL);
 		if(ID_PEGAWAIASAL==null)
 		{
-			myLogger.info("ID_PEGAWAIASAL BAWAH : "+ID_PEGAWAIASAL);
+			myLog.info("ID_PEGAWAIASAL BAWAH : "+ID_PEGAWAIASAL);
 			ID_PEGAWAIASAL = getParam(skrinName+"ID_PEGAWAIASAL");
 		}
 		if(ID_PEGAWAIBARU==null)
@@ -6542,7 +6844,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				r.add("TARIKH_MASUK", r.unquote("sysdate"));				
 				sql = r.getSQLInsert("TBLPPKTUKARPEGAWAI");	
 			}
-			myLogger.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKTUKARPEGAWAI : "+sql);				
+			myLog.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKTUKARPEGAWAI : "+sql);				
 			stmt.executeUpdate(sql);	
 			
 			
@@ -6554,7 +6856,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				r.update("ID_PERBICARAAN", ID_PERBICARAAN);				
 				r.add("ID_UNITPSK", ID_PEGAWAIBARU);
 				sql = r.getSQLUpdate("TBLPPKPERBICARAAN");				
-				myLogger.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKPERBICARAAN : "+sql);				
+				myLog.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKPERBICARAAN : "+sql);				
 				stmt.executeUpdate(sql);
 				
 				AuditTrail.logActivity(this,session,"UPD","TBLPPKPERBICARAAN [TUKAR PEGAWAI BICARAI : ID_UNITPSK ASAL ("+ID_PEGAWAIASAL+"), ID_UNITPSK BARU ("+ID_PEGAWAIBARU+")]",db1);
@@ -6602,7 +6904,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		String[] sub_ob = request.getParameterValues("sub_ob");
 	    if ( sub_ob  != null ){
 	    	for (int i = 0; i < sub_ob.length; i++) {
-	    		myLogger.info("saveDTL_ROS >> sub_ob : "+sub_ob);
+	    		myLog.info("saveDTL_ROS >> sub_ob : "+sub_ob);
 	    		//insertFunction TBLPPKBORANGJDTL
 	    		modelBI.simpanInsertBorangjDTL(session, ID_BORANGJ, sub_ob[i]+"", ID_PERBICARAAN, db);
 	    	}
@@ -6615,7 +6917,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		String[] subPlantif_ob = request.getParameterValues("subPlantif_ob");
 	    if ( subPlantif_ob  != null ){
 	    	for (int i = 0; i < subPlantif_ob.length; i++) {
-	    		myLogger.info("saveDTL_Koleteral >> subPlantif_ob : "+subPlantif_ob);
+	    		myLog.info("saveDTL_Koleteral >> subPlantif_ob : "+subPlantif_ob);
 	    		//insertFunction TBLPPKKOLATERALDTL
 	    		modelBI.simpanInsertKolateralDTL(session, ID_KOLATERALMST, subPlantif_ob[i]+"", "PL", ID_PERBICARAAN, db);	    		
 	    	}
@@ -6624,7 +6926,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 	    String[] subDefendan_ob = request.getParameterValues("subDefendan_ob");
 	    if ( subDefendan_ob  != null ){
 	    	for (int i = 0; i < subDefendan_ob.length; i++) {
-	    		myLogger.info("saveDTL_Koleteral >> subDefendan_ob : "+subDefendan_ob);
+	    		myLog.info("saveDTL_Koleteral >> subDefendan_ob : "+subDefendan_ob);
 	    		//insertFunction TBLPPKKOLATERALDTL
 	    		modelBI.simpanInsertKolateralDTL(session, ID_KOLATERALMST, subDefendan_ob[i]+"", "DF", ID_PERBICARAAN, db);
 	    	}
@@ -6641,10 +6943,10 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		String NO_RESIT = getParam(skrinName+"NO_RESIT"+ID_JENISBAYARAN);
 		String TARIKH_BAYARAN = getParam(skrinName+"TARIKH_BAYARAN"+ID_JENISBAYARAN);
 		
-		myLogger.info("savePerintah ID_BAYARAN : "+ID_BAYARAN);
-		myLogger.info("savePerintah JUMLAH_BAYARAN : "+JUMLAH_BAYARAN);
-		myLogger.info("savePerintah NO_RESIT : "+NO_RESIT);
-		myLogger.info("savePerintah TARIKH_BAYARAN : "+TARIKH_BAYARAN);
+		myLog.info("savePerintah ID_BAYARAN : "+ID_BAYARAN);
+		myLog.info("savePerintah JUMLAH_BAYARAN : "+JUMLAH_BAYARAN);
+		myLog.info("savePerintah NO_RESIT : "+NO_RESIT);
+		myLog.info("savePerintah TARIKH_BAYARAN : "+TARIKH_BAYARAN);
 				
 		Db db1 = null;
 		String return_ID_BAYARAN= "";
@@ -6698,7 +7000,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				r.add("TARIKH_MASUK", r.unquote("sysdate"));				
 				sql = r.getSQLInsert("TBLPPKBAYARAN");	
 			}
-			myLogger.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKBAYARAN : "+sql);				
+			myLog.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKBAYARAN : "+sql);				
 			stmt.executeUpdate(sql);			
 		} 
 		catch (Exception re) {
@@ -6736,23 +7038,23 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		String CATATAN1 = getParam(skrinName+"CATATAN1");
 		String KEPUTUSAN_MAHKAMAH = getParam(skrinName+"KEPUTUSAN_MAHKAMAH");
 				
-		myLogger.info("saveBorangJ ID_BORANGJ : "+ID_BORANGJ);
-		myLogger.info("saveBorangJ TARIKH_MOHON : "+TARIKH_MOHON);
-		myLogger.info("saveBorangJ JENIS_RUJUKAN : "+JENIS_RUJUKAN);
-		myLogger.info("saveBorangJ FLAG_RUJUKAN : "+FLAG_RUJUKAN);
-		myLogger.info("saveBorangJ ID_NEGERIMAHKAMAH : "+ID_NEGERIMAHKAMAH);
-		myLogger.info("saveBorangJ ID_MAHKAMAH : "+ID_MAHKAMAH);
-		myLogger.info("saveBorangJ NAMA_PEJABAT : "+NAMA_PEJABAT);
-		myLogger.info("saveBorangJ ALAMAT1 : "+ALAMAT1);
-		myLogger.info("saveBorangJ ALAMAT2 : "+ALAMAT2);
-		myLogger.info("saveBorangJ ALAMAT3 : "+ALAMAT3);
-		myLogger.info("saveBorangJ POSKOD : "+POSKOD);
-		myLogger.info("saveBorangJ ID_NEGERI : "+ID_NEGERI);
-		myLogger.info("saveBorangJ ID_BANDAR : "+ID_BANDAR);
-		myLogger.info("saveBorangJ NO_TEL : "+NO_TEL);
-		myLogger.info("saveBorangJ NO_FAX : "+NO_FAX);
-		myLogger.info("saveBorangJ CATATAN1 : "+CATATAN1);
-		myLogger.info("saveBorangJ KEPUTUSAN_MAHKAMAH : "+KEPUTUSAN_MAHKAMAH);
+		myLog.info("saveBorangJ ID_BORANGJ : "+ID_BORANGJ);
+		myLog.info("saveBorangJ TARIKH_MOHON : "+TARIKH_MOHON);
+		myLog.info("saveBorangJ JENIS_RUJUKAN : "+JENIS_RUJUKAN);
+		myLog.info("saveBorangJ FLAG_RUJUKAN : "+FLAG_RUJUKAN);
+		myLog.info("saveBorangJ ID_NEGERIMAHKAMAH : "+ID_NEGERIMAHKAMAH);
+		myLog.info("saveBorangJ ID_MAHKAMAH : "+ID_MAHKAMAH);
+		myLog.info("saveBorangJ NAMA_PEJABAT : "+NAMA_PEJABAT);
+		myLog.info("saveBorangJ ALAMAT1 : "+ALAMAT1);
+		myLog.info("saveBorangJ ALAMAT2 : "+ALAMAT2);
+		myLog.info("saveBorangJ ALAMAT3 : "+ALAMAT3);
+		myLog.info("saveBorangJ POSKOD : "+POSKOD);
+		myLog.info("saveBorangJ ID_NEGERI : "+ID_NEGERI);
+		myLog.info("saveBorangJ ID_BANDAR : "+ID_BANDAR);
+		myLog.info("saveBorangJ NO_TEL : "+NO_TEL);
+		myLog.info("saveBorangJ NO_FAX : "+NO_FAX);
+		myLog.info("saveBorangJ CATATAN1 : "+CATATAN1);
+		myLog.info("saveBorangJ KEPUTUSAN_MAHKAMAH : "+KEPUTUSAN_MAHKAMAH);
 		
 		
 		Connection conn = null;
@@ -6820,7 +7122,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				r.add("TARIKH_MASUK", r.unquote("sysdate"));				
 				sql = r.getSQLInsert("TBLPPKBORANGJ");	
 			}
-			myLogger.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKBORANGJ : "+sql);				
+			myLog.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKBORANGJ : "+sql);				
 			stmt.executeUpdate(sql);		
 			
 			conn = db1.getConnection();
@@ -6856,12 +7158,12 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 		String CATATAN_KEPUTUSAN = getParam(skrinName+"CATATAN_KEPUTUSAN");
 		
 		
-		myLogger.info("saveKoleteral ID_KOLATERALMST : "+ID_KOLATERALMST);
-		myLogger.info("saveKoleteral TARIKH_BICARA : "+TARIKH_BICARA);
-		myLogger.info("saveKoleteral TARIKH_PERAKUAN : "+TARIKH_PERAKUAN);
-		myLogger.info("saveKoleteral MASA_BICARA : "+MASA_BICARA);
-		myLogger.info("saveKoleteral ID_UNITPSK : "+ID_UNITPSK);
-		myLogger.info("saveKoleteral ID_NEGERIBICARA : "+ID_NEGERIBICARA);
+		myLog.info("saveKoleteral ID_KOLATERALMST : "+ID_KOLATERALMST);
+		myLog.info("saveKoleteral TARIKH_BICARA : "+TARIKH_BICARA);
+		myLog.info("saveKoleteral TARIKH_PERAKUAN : "+TARIKH_PERAKUAN);
+		myLog.info("saveKoleteral MASA_BICARA : "+MASA_BICARA);
+		myLog.info("saveKoleteral ID_UNITPSK : "+ID_UNITPSK);
+		myLog.info("saveKoleteral ID_NEGERIBICARA : "+ID_NEGERIBICARA);
 		
 		
 		
@@ -6901,12 +7203,12 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				r.add("ID_KOLATERALMST", id_long);
 			}
 						
-			myLogger.info("saveKoleteral ID_KOLATERALMST : "+ID_KOLATERALMST);
-			myLogger.info("saveKoleteral TARIKH_BICARA : "+TARIKH_BICARA);
-			myLogger.info("saveKoleteral TARIKH_PERAKUAN : "+TARIKH_PERAKUAN);
-			myLogger.info("saveKoleteral MASA_BICARA : "+MASA_BICARA);
-			myLogger.info("saveKoleteral ID_UNITPSK : "+ID_UNITPSK);
-			myLogger.info("saveKoleteral ID_NEGERIBICARA : "+ID_NEGERIBICARA);
+			myLog.info("saveKoleteral ID_KOLATERALMST : "+ID_KOLATERALMST);
+			myLog.info("saveKoleteral TARIKH_BICARA : "+TARIKH_BICARA);
+			myLog.info("saveKoleteral TARIKH_PERAKUAN : "+TARIKH_PERAKUAN);
+			myLog.info("saveKoleteral MASA_BICARA : "+MASA_BICARA);
+			myLog.info("saveKoleteral ID_UNITPSK : "+ID_UNITPSK);
+			myLog.info("saveKoleteral ID_NEGERIBICARA : "+ID_NEGERIBICARA);
 			
 			r.add("MASA_BICARA", MASA_BICARA);
 			r.add("ID_UNITPSK", ID_UNITPSK);
@@ -6928,7 +7230,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				r.add("TARIKH_MASUK", r.unquote("sysdate"));				
 				sql = r.getSQLInsert("TBLPPKKOLATERALMST");	
 			}
-			myLogger.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKKOLATERALMST : "+sql);				
+			myLog.info("BICARA INTERAKTIF : INSERT / UPDATE TBLPPKKOLATERALMST : "+sql);				
 			stmt.executeUpdate(sql);		
 			
 			conn = db1.getConnection();
@@ -6954,7 +7256,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			String ID_PERMOHONANSIMATI,String VALUE_getValue,String FIELD_PK,String VALUE_PK, String formName,String table_name,
 			String aktiviti,String ID_PERBICARAAN,String skrinNamePemohonOb,String ID_SIMATI,String ID_PERMOHONAN,Db db)throws Exception {
 		//Map mapDataAsal = modelBI.getValueColumn(session, "", VALUE_getValue, table_name, db);
-		myLogger.info(":::: mapDataAsal :::: "+mapDataAsal);
+		myLog.info(":::: mapDataAsal :::: "+mapDataAsal);
 		Map mapDataBaru = null;
 		List listColumnByTable = modelBI.listColumnByTable(session,skrinName,table_name,db);					
 		if (listColumnByTable.size() != 0) {
@@ -7026,7 +7328,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				}
 			}
 		}	
-		myLogger.info(":::: mapDataBaru :::: "+mapDataBaru);
+		myLog.info(":::: mapDataBaru :::: "+mapDataBaru);
 		String skrin_asal = "";
 		if(!skrinNamePemohonOb.equals(""))
 		{
@@ -7073,7 +7375,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 				count_ada_changes++;
 			}
 		}
-		myLogger.info(" checkForHistory ada changes : "+count_ada_changes);	
+		myLog.info(" checkForHistory ada changes : "+count_ada_changes);	
 		if(count_ada_changes == 0)
 		{
 			modelBI.deleteHISTORY("deleteHistory",ID_SEJARAHBIMAIN,tableName,FIELD_PK,VALUE_PK,ID_PERBICARAAN,db);
@@ -7089,7 +7391,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			if(VALUE_PK.equals(""))
 			{
 				ID_PK = DB.getNextID(db,tableName+"_SEQ");
-					myLogger.info("SEQ ID_PK :::::: "+ID_PK);
+					myLog.info("SEQ ID_PK :::::: "+ID_PK);
 				VALUE_PK = ID_PK+"";				
 			}
 			
@@ -7125,7 +7427,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 						if(rekod_baru.equals(""))
 						{
 							ID_OB_PK = DB.getNextID(db,"TBLPPKOB_SEQ");
-							myLogger.info("SEQ ID_OB_PK :::::: "+ID_OB_PK);
+							myLog.info("SEQ ID_OB_PK :::::: "+ID_OB_PK);
 							rekod_baru = ID_OB_PK+"";				
 						}
 						id_obHubungan = rekod_baru;
@@ -7260,7 +7562,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					{
 						if(key.equals("ID_PARENTOB"))
 						{
-							myLogger.info("rekod_asal >>>>>>>>>>>>>>>>>>>>> "+rekod_asal);
+							myLog.info("rekod_asal >>>>>>>>>>>>>>>>>>>>> "+rekod_asal);
 							String namaParent = "";
 							if(!rekod_asal.equals(""))
 							{
@@ -7310,13 +7612,13 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					/*
 					if(key.equals("ID_PEMOHON") && tableName.equals("TBLPPKOBPERMOHONAN"))
 					{
-						myLogger.info("222:: REKOD ASAL CHECK :: "+key+" rekod_asal : "+rekod_asal+" keterangan_asal : "+keterangan_asal);
+						myLog.info("222:: REKOD ASAL CHECK :: "+key+" rekod_asal : "+rekod_asal+" keterangan_asal : "+keterangan_asal);
 					}
 					*/
 					//keterangan baru
 					if(key.equals("ID_PARENTOB"))
 					{
-						myLogger.info("rekod_baru >>>>>>>>>>>>>>>>>>>>> "+rekod_asal);
+						myLog.info("rekod_baru >>>>>>>>>>>>>>>>>>>>> "+rekod_asal);
 						String namaParent = "";
 						if(!rekod_baru.equals(""))
 						{
@@ -7337,7 +7639,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					{
 						keterangan_baru = modelBI.getValueKeterangan(session, tableName, key, rekod_baru, db).toUpperCase();						
 					}					
-					//myLogger.info("CHANGES -- FIELDNAME : " + key + "; VALUE ASAL : " + rekod_asal +"; KETERANGAN ASAL : "+keterangan_asal+ "; VALUE BARU : " + rekod_baru +"; KETERANGAN BARU : "+keterangan_baru);
+					//myLog.info("CHANGES -- FIELDNAME : " + key + "; VALUE ASAL : " + rekod_asal +"; KETERANGAN ASAL : "+keterangan_asal+ "; VALUE BARU : " + rekod_baru +"; KETERANGAN BARU : "+keterangan_baru);
 					//saveHistorySub(session,id_history_utama,rekod_asal,rekod_baru,key);
 					String label = "";
 					String _turutan_str = "";
@@ -7362,7 +7664,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 					}
 					else
 					{
-						//myLogger.info(skrinName+key+"_label"+":::::::::: LABEL ::::::::: skrinName : "+skrinName+" key : "+key+" value : "+getParam(skrinName+key+"_label"));
+						//myLog.info(skrinName+key+"_label"+":::::::::: LABEL ::::::::: skrinName : "+skrinName+" key : "+key+" value : "+getParam(skrinName+key+"_label"));
 						label = getParam(skrinName+key+"_label");
 						_turutan_str = getParam(skrinName+key+"_turutan");
 					}	
@@ -7379,22 +7681,22 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 			}			
 		}
 		
-		//myLogger.info("CHECK >>>>>>>>>>>>>>>>> setHubungan :::::::::::::::::::::: "+setHubungan);
+		//myLog.info("CHECK >>>>>>>>>>>>>>>>> setHubungan :::::::::::::::::::::: "+setHubungan);
 		//UNTUK SETING HUBUNGAN OB	
 		if(setHubungan==true)
 		{
 			List listHubungan = modelBI.listHubungan(session,ID_PERMOHONANSIMATI,ID_PERBICARAAN,skrinName,id_obHubungan,db);
-			//myLogger.info("CHECK >>>>>>>>>>>>>>>>> listHubungan.size() : "+listHubungan.size());
+			//myLog.info("CHECK >>>>>>>>>>>>>>>>> listHubungan.size() : "+listHubungan.size());
 			if(listHubungan.size()>0)
 			{
 				
 				for(int i=0; i<listHubungan.size(); i++)
 				{
-					//myLogger.info("CHECK >>>>>>>>>>>>>>>>> ADA HUBUNGAN ");
+					//myLog.info("CHECK >>>>>>>>>>>>>>>>> ADA HUBUNGAN ");
 					Map setupHubungan = (Map) listHubungan.get(i);
 					if(setupHubungan!=null)
 					{
-						//myLogger.info("CHECK >>>>>>>>>>>>>>>>> setupHubungan : "+setupHubungan);
+						//myLog.info("CHECK >>>>>>>>>>>>>>>>> setupHubungan : "+setupHubungan);
 						String ID_HUBUNGANOBPERMOHONAN_ASAL_HBG = (String) setupHubungan.get("ID_HUBUNGANOBPERMOHONAN");
 						String ID_PERMOHONANSIMATI_ASAL_HBG = (String) setupHubungan.get("ID_PERMOHONANSIMATI");
 						String ID_HUBUNGANOB_ASAL_HBG = (String) setupHubungan.get("ID_HUBUNGANOB");
@@ -7410,7 +7712,7 @@ public class PerolehanTanahPermohonan extends AjaxBasedModule {
 						}
 						
 						String id_his_delete = modelBI.saveHistoryUtama(session,"",skrinName,"TBLPPKHUBUNGANOBPERMOHONAN","ID_HUBUNGANOBPERMOHONAN",ID_HUBUNGANOBPERMOHONAN_ASAL_HBG, hubungan_Aktiviti, ID_PERBICARAAN,ID_PERMOHONANSIMATI, db);
-						//myLogger.info("CHECK >>>>>>>>>>>>>>>>> id_his_delete : "+id_his_delete);
+						//myLog.info("CHECK >>>>>>>>>>>>>>>>> id_his_delete : "+id_his_delete);
 						modelBI.saveHistorySub(session,id_his_delete,"ID_HUBUNGANOBPERMOHONAN","ID_HUBUNGANOBPERMOHONAN",ID_HUBUNGANOBPERMOHONAN_ASAL_HBG,"",ID_HUBUNGANOBPERMOHONAN_ASAL_HBG,"",1,skrinName,db);
 						modelBI.saveHistorySub(session,id_his_delete,"ID_PERMOHONANSIMATI","ID_PERMOHONANSIMATI",ID_PERMOHONANSIMATI_ASAL_HBG,"",ID_PERMOHONANSIMATI_ASAL_HBG,"",2,skrinName,db);
 						modelBI.saveHistorySub(session,id_his_delete,"ID_HUBUNGANOB","ID_HUBUNGANOB",ID_HUBUNGANOB_ASAL_HBG,"",ID_HUBUNGANOB_ASAL_HBG,"",3,skrinName,db);

@@ -1,15 +1,24 @@
+//package integrasi.ws.mt;
 
 package my.gov.kehakiman.eip.services;
+
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.rmi.RemoteException;
 
-//import javax.xml.rpc.Service;
+import javax.xml.rpc.Service;
+
+import org.apache.log4j.Logger;
+
+import ekptg.view.ppk.FrmIntegrasiMT;
+import org.apache.axis.AxisFault;
 
 
-public class MTManager {	
+
+public class MTManager {
+	
 	//url sit 
 	private static String url ="http://sit-ws.kehakiman.gov.my/sit/etapp?wsdl";
 	//private static String url = "https://eip.kehakiman.gov.my/sit/etapp?wsdl";
@@ -23,26 +32,25 @@ public class MTManager {
 	private static String idKadBiru = null;
 
 	public static boolean isUrlValid(String url) {
-		try {
-			URL obj = new URL(url);
-	        obj.toURI();
-	        return true;
-	      
-		} catch (MalformedURLException e) {
-	      return false;
-		} catch (URISyntaxException e) {
-			return false;
-		}
-	
-	}
+	      try {
+	         URL obj = new URL(url);
+	         obj.toURI();
+	         return true;
+	      } catch (MalformedURLException e) {
+	         return false;
+	      } catch (URISyntaxException e) {
+	         return false;
+	      }
+	   }
 	
 	public static String sendMaklumat2Court(String noPetisyen,
-		String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
-		String noKPSimatiLama, String noKPSimatiLain, String tarikhMati,
-		String namaPemohon, String noKPPemohon, String hubSimatiPemohon,
-		String tarikhJanaBorangB, String tarikhHantarBorangB,
-		String kodPejabat, String namaPejabat, String idnegeri,
-		String jeniskp,String docContent, String applicationType, String transactionID) {//String docContent,		
+			String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
+			String noKPSimatiLama, String noKPSimatiLain, String tarikhMati,
+			String namaPemohon, String noKPPemohon, String hubSimatiPemohon,
+			String tarikhJanaBorangB, String tarikhHantarBorangB,
+			String kodPejabat, String namaPejabat, String idnegeri,
+			String jeniskp,  String docContent, String applicationType, String transactionID) {//String docContent,
+		
 		String relationship = "";
 		String reldetails = "";
 		String msg = "";		
@@ -117,8 +125,8 @@ public class MTManager {
 			ex.printStackTrace();
 			msg = " " + "," + ex.getMessage();
 		}
+	
 		return msg;		
-		
 	}
 	
 	public static String sendMaklumat2CourtPetioner(String noPetisyen,
@@ -196,21 +204,22 @@ public class MTManager {
 			ex.printStackTrace();
 			msg = " " + "," + ex.getMessage();
 		}
+
 		return msg;
-		
 	}
 	
 	public static String sendMaklumatPerintah2Court(String noPetisyen,
-		String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
-		String noKPSimatiLama, String noKPSimatiLain, String tarikhMati,
-		String namaPemohon, String noKPPemohon, String hubSimatiPemohon,
-		String tarikhPerintah, String dateHantarNotisPerintah,
-		String kodPejabat, String namaPejabat, String idnegeri,
-		String jeniskp, String applicationType, String grandName,
-		String blueCardId, String transactionID) {	
-		String msg = "";
+			String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
+			String noKPSimatiLama, String noKPSimatiLain, String tarikhMati,
+			String namaPemohon, String noKPPemohon, String hubSimatiPemohon,
+			String tarikhPerintah, String dateHantarNotisPerintah,
+			String kodPejabat, String namaPejabat, String idnegeri,
+			String jeniskp, String applicationType, String grandName,
+			String blueCardId, String transactionID) {
 		
-		try {	
+		String msg = "";
+		try {
+			
 			//DATA
 			NewType data = new NewType();
 			data.setPetitionNo((noPetisyen != null ? noPetisyen : ""));
@@ -236,7 +245,10 @@ public class MTManager {
 			data.setGrantName((grandName != null ? grandName : ""));
 			data.setOfficeName((kodPejabat != null ? kodPejabat : ""));
 			data.setOfficeAddress("");
-				
+			
+			
+						
+			
 			SubmitApplicationResponse response = submitToMT(data, transactionID);			
 			if (response != null) {
 				msg = response.getCode() + "," + response.getDescription() + " , " + response.getDetail();
@@ -251,12 +263,12 @@ public class MTManager {
 			ex.printStackTrace();
 			msg = " " + "," + ex.getMessage();
 		}
+	
 		return msg;
-		
 	}
 
-	private static SubmitApplicationResponse submitToMT(NewType data, String transactionID) 
-		throws RemoteException, MalformedURLException {				
+	private static SubmitApplicationResponse submitToMT(NewType data, String transactionID) throws RemoteException, MalformedURLException {
+				
 		EtappSOAPStub stub;
 		SubmitApplicationResponse response = new SubmitApplicationResponse();
 		URL obj = null;
@@ -279,7 +291,6 @@ public class MTManager {
 		response = stub.submitApplication(request);
 		
 		return response;
-	
 	}
 
 	public static String getIdKadBiru() {
@@ -289,6 +300,4 @@ public class MTManager {
 	public static void setIdKadBiru(String idKadBiru) {
 		MTManager.idKadBiru = idKadBiru;
 	}
-	
-	
 }

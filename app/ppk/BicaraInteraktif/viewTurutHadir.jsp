@@ -81,11 +81,19 @@
 </fieldset>
 <script>
 	document.getElementById('rowAddTurutHadir').style.display = "";
-</script>
-<script>
-var flagDisable = document.getElementById("flagDisable").value;
-if(flagDisable == "Y")
-{
-	disableInput("view_turuthadir");
-}
+
+	var flagDisable = document.getElementById("flagDisable").value;
+	if(flagDisable == "Y")
+	{
+		disableInput("view_turuthadir");
+	}
+ 
+	$jquery(document).ready(function () {
+		//alert("x : "+$jquery('#divPeringatanMesrakeputusan').length);	
+	if($jquery('#divPeringatanMesrakeputusan').length > 0)
+	{
+		doDivAjaxCall$formname('divPeringatanMesrakeputusan','show_PeringatanMesra','ID_PERBICARAAN=$ID_PERBICARAAN&ID_PERMOHONAN=$ID_PERMOHONAN&ID_PERMOHONANSIMATI=$ID_PERMOHONANSIMATI');	
+	}
+			 	  
+	});
 </script>

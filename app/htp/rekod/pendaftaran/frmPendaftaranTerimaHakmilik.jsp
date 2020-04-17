@@ -73,7 +73,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="labeldisplay" >
+                   			<td width="68%" class="labelinput" >
  								$txtNamaNegeri
   							</td>
                 		</tr>
@@ -87,7 +87,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="labeldisplay" >
+                   			<td width="68%" class="labelinput" >
  								$txtNamaDaerah
   							</td>
                 		</tr>
@@ -101,7 +101,7 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="labeldisplay" >
+                   			<td width="68%" class="labelinput" >
  								$txtNamaMukim
   							</td>
                 		</tr>

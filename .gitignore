@@ -1,28 +1,17 @@
 # ignore all logs
 velocity.log
-velocity.log.1
+velocity.log*.1
 
 # ignore all class
 *.class
 
 # ignore all properties
 *.properties
-WEB-INF/src/cetakan.properties
-WEB-INF/src/dbconnection.properties
-WEB-INF/src/ekptgmail.properties
-WEB-INF/src/eng_lang.properties
-WEB_INF/src/file.properties
-WEB-INF/src/fpxgateway.propert
-WEB-INF/src/labels.properties
-WEB-INF/src/log4j.properties
-WEB-INF/src/malay_lang.properties
-WEB-INF/src/quartz.properties
-WEB-INF/src/RazTemplete.properties
-WEB-INF/src/StateLookup.properties
+WEB-INF/src/META-INF/*.properties
+
+WEB-INF/src/META-INF/persistence.xml
 
 work/
 .tomcatplugin
 
 WEB-INF/classes/
-
-WEB-INF/src/META-INF/persistence.xml

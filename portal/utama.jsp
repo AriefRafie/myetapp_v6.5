@@ -16,7 +16,7 @@
 <script type="text/javascript" src="../library/scriptaculous/effects.js" ></script>
 <script type="text/javascript" src="../library/scriptaculous/controls.js" ></script>
 <script type="text/javascript" src="../library/scriptaculous/ajax.js" ></script>
-<!-- Jquery -->
+<!-- JQuery -->
 <script type="text/javascript" src="../library/js/jquery-1.3.2.min.js"></script>
 <script>var $jquery = jQuery.noConflict();</script>
 <script type="text/javascript" src="../library/js/jquery.pstrength-min.1.2.js"></script>
@@ -166,7 +166,9 @@ function checkBrowser() {
 	if (BrowserDetect.browser != "Firefox") {
 		var browser = BrowserDetect.browser + " " + BrowserDetect.version + " pada " + BrowserDetect.OS;
 		alert("Anda menggunakan " + browser + "\nSila gunakan browser Mozilla Firefox untuk paparan terbaik");		
+	
 	}
+	
 }
 </script>
 
@@ -174,9 +176,8 @@ function checkBrowser() {
 <!--
 <body leftmargin="0" topmargin="5" rightmargin="0" bottommargin="0" onLoad="document.flogin.username.focus();" marginwidth="0">
 -->
-<body onLoad="document.portallogin.username.focus();checkBrowser();">
-
-<!-- Start Ediby zulfazdliabuas@gmail.com for New design Login Page Online Date 09/10/2017-->
+<body>
+<!-- <body document.portallogin.username.focus() onLoad="checkBrowser();"> -->
 <center>
 	<div id="logincontent">
 	
@@ -207,7 +208,7 @@ function checkBrowser() {
 						<tr>
 				        	<td rowspan="5">&nbsp;</td>
 				            <td colspan="2" style="padding-left: 3px; padding-bottom: 3px;">
-				            	<label for="username"><span style="font-size:0.9em">MYID / MYCOID</span></label>
+				            	<label for="username"><span style="font-size:0.9em">MyID / MyCoID</span></label>
 				            </td>
 				          	<td rowspan="5">&nbsp;</td>
 				        </tr>

@@ -1,21 +1,26 @@
 package integrasi.rest.etanah.wpkl.ppt;
 
 import integrasi.rest.etanah.wpkl.RESTInvoker;
-import integrasi.rest.etanah.wpkl.ppk.entities.ResponseForm;
-import integrasi.rest.etanah.wpkl.ppt.entities.Fail;
-import integrasi.rest.etanah.wpkl.ppt.entities.HakmilikPermohonan;
-import integrasi.rest.etanah.wpkl.ppt.entities.PermohonanForm;
+import integrasi.rest.etanah.wpkl.entities.DokumenPermohonan;
+import integrasi.rest.etanah.wpkl.entities.HakmilikPermohonanD;
+import integrasi.rest.etanah.wpkl.entities.HakmilikPermohonanK;
+import integrasi.rest.etanah.wpkl.entities.HakmilikPermohonanPD;
+import integrasi.rest.etanah.wpkl.entities.PermohonanDForm;
+import integrasi.rest.etanah.wpkl.entities.PermohonanKForm;
+import integrasi.rest.etanah.wpkl.entities.PermohonanPDForm;
+import integrasi.rest.etanah.wpkl.entities.ResponseForm;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import lebah.db.Db;
 
@@ -24,22 +29,20 @@ public class EtanahWPKLPPTManager {
 	private static String flagMsg = null;
 	private static String outputMsg = null;
 	
-	public static void hantarBorangD(String noFail, String idPengguna) {
+	public static void hantarBorangD(String idPermohonan, String idPengguna, Db db) {
 		//DEFAULT MSG
 		flagMsg = "Y";
 		outputMsg = "MAKLUMAT PERMOHONAN BERJAYA DIHANTAR";
 		
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(new Date());
-		PermohonanForm permohonan = null;
+		PermohonanDForm permohonan = null;
 		
 		try {
-			permohonan = preparePermohonan(noFail, "D");	
-			ResponseForm response = RESTInvoker.hantarBorangD(permohonan, cal, idPengguna);
+			permohonan = preparePermohonanD(idPermohonan, db);	
+			ResponseForm response = RESTInvoker.hantarBorangD(idPermohonan, permohonan, cal, idPengguna);
 			if (response != null) {
-				System.out.println(response.getKodRalat());
-				System.out.println(response.getCatatan());
-				updateFlagHantar(noFail, "D", cal.getTime(), response);
+				updateFlagHantar(idPermohonan, cal.getTime(), response,db, idPengguna);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,22 +51,20 @@ public class EtanahWPKLPPTManager {
 		}	
 	}
 	
-	public static void hantarBorangK(String noFail, String idPengguna) {
+	public static void hantarBorangK(String idPermohonan, String idPengguna, Db db) {
 		//DEFAULT MSG
 		flagMsg = "Y";
 		outputMsg = "MAKLUMAT PERMOHONAN BERJAYA DIHANTAR";
 		
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(new Date());
-		PermohonanForm permohonan = null;
+		PermohonanKForm permohonan = null;
 		
 		try {
-			permohonan = preparePermohonan(noFail, "K");	
-			ResponseForm response = RESTInvoker.hantarBorangK(permohonan, cal, idPengguna);
+			permohonan = preparePermohonanK(idPermohonan,db);	
+			ResponseForm response = RESTInvoker.hantarBorangK(idPermohonan, permohonan, cal, idPengguna);
 			if (response != null) {
-				System.out.println(response.getKodRalat());
-				System.out.println(response.getCatatan());
-				updateFlagHantar(noFail, "K", cal.getTime(), response);
+				updateFlagHantar(idPermohonan, cal.getTime(), response, db, idPengguna);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,22 +73,20 @@ public class EtanahWPKLPPTManager {
 		}	
 	}
 	
-	public static void hantarPenarikanBalik(String noFail, String idPengguna) {
+	public static void hantarPenarikanBalik(String idPermohonan, String idPengguna, Db db) {
 		//DEFAULT MSG
 		flagMsg = "Y";
 		outputMsg = "MAKLUMAT PERMOHONAN BERJAYA DIHANTAR";
 		
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(new Date());
-		PermohonanForm permohonan = null;
+		PermohonanPDForm permohonan = null;
 		
 		try {
-			permohonan = preparePermohonan(noFail, "PD");	
-			ResponseForm response = RESTInvoker.hantarBorangK(permohonan, cal, idPengguna);
+			permohonan = preparePermohonanPD(idPermohonan,db);	
+			ResponseForm response = RESTInvoker.hantarBorangPenarikanBalik(idPermohonan, permohonan, cal, idPengguna);
 			if (response != null) {
-				System.out.println(response.getKodRalat());
-				System.out.println(response.getCatatan());
-				updateFlagHantar(noFail, "PD", cal.getTime(), response);
+				updateFlagHantar(idPermohonan, cal.getTime(), response, db, idPengguna);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,204 +95,407 @@ public class EtanahWPKLPPTManager {
 		}	
 	}
 	
-	private static PermohonanForm preparePermohonan(String noFail, String flagUrusan) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String sql = "";
-		Db db = null;		
-		PermohonanForm permohonanForm = null;
+	private static PermohonanDForm preparePermohonanD(String idPermohonan, Db db) {
+		String sql = "";	
+		PermohonanDForm permohonanForm = null;
 		
-		try {
-			db = new Db();			
+		try {		
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT * FROM INT_PPTPERMOHONAN WHERE FLAG_HANTAR = 'T' AND FLAG_URUSAN = '" + flagUrusan + "' AND NO_FAIL = '" + noFail + "'";
+			sql = "SELECT * FROM INT_PPTPERMOHONAN WHERE FLAG_HANTAR = 'T' AND ID_PERMOHONAN = '" + idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
-				permohonanForm = new PermohonanForm();
-				permohonanForm.setIdTransaksi(rs.getString("ID_PERMOHONAN"));
+				permohonanForm = new PermohonanDForm();
 				permohonanForm.setNoFailPTG(rs.getString("NO_FAIL"));
 				permohonanForm.setNamaKementerian(rs.getString("NAMA_KEMENTERIAN"));
-				permohonanForm.setNamaProjek(rs.getString("NAMA_PROJEK"));
-				permohonanForm.setNoWarta(rs.getString("NO_WARTA"));
-				Date tarikhWarta = sdf.parse(rs.getString("TARIKH_WARTA"));
-				Calendar calWarta = new GregorianCalendar();
-				calWarta.setTime(tarikhWarta);
-				String tarikhWartaString = String.valueOf(calWarta.get(Calendar.YEAR)) + "-" 
-						+ new DecimalFormat("00").format(calWarta.get(Calendar.MONTH) + 1) + "-" 
-						+ new DecimalFormat("00").format(calWarta.get(Calendar.DATE))
-						+ "T00:00:00";				
+				permohonanForm.setNamaProjek(rs.getString("NAMA_PROJEK"));			
 				
-				permohonanForm.setTarikhWarta(tarikhWartaString);
-				
-				sql = "SELECT * FROM INT_PPTHAKMILIKPERMOHONAN WHERE ID_PERMOHONAN = '" + rs.getString("ID_PERMOHONAN") + "'";
+				sql = "SELECT * FROM INT_PPTHAKMILIKPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
 				ResultSet rsHakmilik = stmt.executeQuery(sql);
 				
-				List<HakmilikPermohonan> listHakmilikPermohonan = null;
+				List listHakmilik = Collections.synchronizedList(new ArrayList());
+				Map h = null;
 				while (rsHakmilik.next()) {
-					if (listHakmilikPermohonan == null) {
-						listHakmilikPermohonan = new ArrayList<>();
+					h = Collections.synchronizedMap(new HashMap());
+					h.put("ID_HAKMILIKPERMOHONAN",rsHakmilik.getString("ID_HAKMILIKPERMOHONAN") == null ? "" : rsHakmilik.getString("ID_HAKMILIKPERMOHONAN"));
+					listHakmilik.add(h);					
+				}				
+				List<HakmilikPermohonanD> listHakmilikPermohonan = null;
+				for(int i = 0; i < listHakmilik.size();i++)
+			    {			   
+					Map map = (Map) listHakmilik.get(i);
+					if(map!=null)
+					{
+						if (listHakmilikPermohonan == null) {
+							listHakmilikPermohonan = new ArrayList<>();
+						}
+						String ID_HAKMILIKPERMOHONAN = (String) map.get("ID_HAKMILIKPERMOHONAN");
+						listHakmilikPermohonan.add(getHakmilikPermohonanD(ID_HAKMILIKPERMOHONAN,db));
 					}
-					listHakmilikPermohonan.add(getHakmilikPermohonan(rsHakmilik.getString("ID_HAKMILIKPERMOHONAN")));
-				}
-				permohonanForm.setHakmilikPermohonanList(listHakmilikPermohonan);
+			    }			
+				permohonanForm.setBorangList(listHakmilikPermohonan);
 				
-				sql = "SELECT * FROM INT_PPTDOKUMENPERMOHONAN WHERE ID_PERMOHONAN = '" + rs.getString("ID_PERMOHONAN") + "'";
-				ResultSet rsFail = stmt.executeQuery(sql);
-				
-				List<Fail> listFail = null;
-				while (rsFail.next()) {
-					if (listFail == null) {
-						listFail = new ArrayList<>();
+				sql = "SELECT * FROM INT_PPTDOKUMENPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+				ResultSet rsDokumen = stmt.executeQuery(sql);
+								
+				List listDoc = Collections.synchronizedList(new ArrayList());
+				Map hDoc = null;
+				while (rsDokumen.next()) {
+					h = Collections.synchronizedMap(new HashMap());
+					h.put("ID_DOKUMENPERMOHONAN",rsDokumen.getString("ID_DOKUMENPERMOHONAN") == null ? "" : rsDokumen.getString("ID_DOKUMENPERMOHONAN"));
+					listDoc.add(h);					
+				}				
+				List<DokumenPermohonan> listDokumenPermohonan = null;
+				for(int i = 0; i < listDoc.size();i++)
+			    {			   
+					Map mapDoc = (Map) listDoc.get(i);
+					if(mapDoc!=null)
+					{
+						if (listDokumenPermohonan == null) {
+							listDokumenPermohonan = new ArrayList<>();
+						}
+						String ID_DOKUMENPERMOHONAN = (String) mapDoc.get("ID_DOKUMENPERMOHONAN");
+						listDokumenPermohonan.add(getDokumenPermohonan(ID_DOKUMENPERMOHONAN,db));
 					}
-					listFail.add(getFail(rsFail.getString("ID_DOKUMENPERMOHONAN")));
-				}
-				permohonanForm.setFailList(listFail);
+			    }			
+				
+				permohonanForm.setFailList(listDokumenPermohonan);
 			}
 					
 		} catch (Exception e) {
 			e.printStackTrace();
 			flagMsg = "N";
 			outputMsg = e.toString();
-		} finally {
-			if (db != null)
-				db.close();
 		}	
 		return permohonanForm;
 	}
 	
-	private static HakmilikPermohonan getHakmilikPermohonan(String idHakmilikPermohonan) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private static HakmilikPermohonanD getHakmilikPermohonanD(String idHakmilikPermohonan,Db db) {
 		String sql = "";
-		Db db = null;
-		HakmilikPermohonan hakmilikPermohonan = null;
+		HakmilikPermohonanD hakmilikPermohonan = null;
 		
-		try {
-			
-			db = new Db();			
+		try {	
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT * FROM INT_PPTHAKMILIKPERMOHONAN WHERE ID_HAKMILIKPERMOHONAN = '" + idHakmilikPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if (rs.next()){
-				hakmilikPermohonan = new HakmilikPermohonan();
-				hakmilikPermohonan.setNoSubjaket(rs.getString("NO_SUBJAKET"));	
+				hakmilikPermohonan = new HakmilikPermohonanD();
 				hakmilikPermohonan.setIdHakmilik(rs.getString("ID_HAKMILIK"));				
 				hakmilikPermohonan.setKodLot(rs.getString("KOD_LOT"));
 				hakmilikPermohonan.setNoLot(rs.getString("NO_LOT"));
-				hakmilikPermohonan.setUnitLuasAsal(getKeteranganLuasByKod(rs.getString("KOD_LUAS_ASAL")));					
-				hakmilikPermohonan.setLuasAsal(rs.getString("LUAS_ASAL"));
-				hakmilikPermohonan.setUnitLuasAmbil(getKeteranganLuasByKod(rs.getString("KOD_LUAS_AMBIL")));					
+				hakmilikPermohonan.setUnitLuasAsal(rs.getString("KOD_LUAS_ASAL"));		
+				hakmilikPermohonan.setLuasAsal(rs.getString("LUAS_ASAL"));	
+				hakmilikPermohonan.setUnitLuasAmbil(rs.getString("KOD_LUAS_AMBIL"));					
 				hakmilikPermohonan.setLuasAmbil(rs.getString("LUAS_AMBIL"));
 				hakmilikPermohonan.setNoWarta(rs.getString("NO_WARTA"));
-				Date tarikhWarta = sdf.parse(rs.getString("TARIKH_WARTA"));
-				Calendar calWarta = new GregorianCalendar();
-				calWarta.setTime(tarikhWarta);
-				String tarikhWartaString = String.valueOf(calWarta.get(Calendar.YEAR)) + "-" 
-						+ new DecimalFormat("00").format(calWarta.get(Calendar.MONTH) + 1) + "-" 
-						+ new DecimalFormat("00").format(calWarta.get(Calendar.DATE))
-						+ "T00:00:00";				
-				
-				hakmilikPermohonan.setTarikhWarta(tarikhWartaString);
-				hakmilikPermohonan.setCatatan(rs.getString("SEBAB_PENARIKANBALIK"));
-				
-				Date tarikhBorangK = sdf.parse(rs.getString("TARIKH_BORANGK"));
-				Calendar calBorangK = new GregorianCalendar();
-				calBorangK.setTime(tarikhBorangK);
-				String tarikhBorangKString = String.valueOf(calBorangK.get(Calendar.YEAR)) + "-" 
-						+ new DecimalFormat("00").format(calBorangK.get(Calendar.MONTH) + 1) + "-" 
-						+ new DecimalFormat("00").format(calBorangK.get(Calendar.DATE))
-						+ "T00:00:00";				
-				
-				hakmilikPermohonan.setTarikhBorangK(tarikhBorangKString);
-				hakmilikPermohonan.setStatusAmbil(rs.getString("STATUS_AMBIL"));
-				
+				if (rs.getString("TARIKH_WARTA") != null) {
+					Date tarikhWarta = rs.getDate("TARIKH_WARTA");
+					Calendar calWarta = new GregorianCalendar();
+					calWarta.setTime(tarikhWarta);
+					String tarikhWartaString = String.valueOf(calWarta.get(Calendar.YEAR)) + "-" 
+							+ new DecimalFormat("00").format(calWarta.get(Calendar.MONTH) + 1) + "-" 
+							+ new DecimalFormat("00").format(calWarta.get(Calendar.DATE))
+							+ "T00:00:00";				
+					
+					hakmilikPermohonan.setTarikhWarta(tarikhWartaString);
+				}				
+				hakmilikPermohonan.setCatatan("");				
 			}
 		
 		} catch (Exception e) {
 			e.printStackTrace();
 			flagMsg = "N";
 			outputMsg = e.toString();
-		} finally {
-			if (db != null)
-				db.close();
 		}
 		
 		return hakmilikPermohonan;
 	}
 	
-	private static Fail getFail(String idDokumenPermohonan) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private static DokumenPermohonan getDokumenPermohonan(String idDokumenPermohonan, Db db) {
 		String sql = "";
-		Db db = null;
-		Fail fail = null;
+		DokumenPermohonan dokumenPermohonan = null;
 		
-		try {
-			
-			db = new Db();			
+		try {		
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT * FROM INT_PPTDOKUMENPERMOHONAN WHERE ID_DOKUMENPERMOHONAN = '" + idDokumenPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if (rs.next()){
-				fail = new Fail();
-				fail.setFailString(rs.getString("KOD_DOKUMEN"));					
+				dokumenPermohonan = new DokumenPermohonan();				
+				dokumenPermohonan.setKodJenisDokumen(rs.getString("FLAG_DOKUMEN"));				
+				dokumenPermohonan.setNamaFail(rs.getString("KOD_DOKUMEN"));		
 			}
 		
 		} catch (Exception e) {
 			e.printStackTrace();
 			flagMsg = "N";
 			outputMsg = e.toString();
-		} finally {
-			if (db != null)
-				db.close();
 		}
 		
-		return fail;
+		return dokumenPermohonan;
 	}
 	
-	private static String getKeteranganLuasByKod(String kodLuas) throws Exception {
-		Db db = null;
-		String sql = "";
-
-		try {
-			db = new Db();
+	private static PermohonanKForm preparePermohonanK(String idPermohonan,Db db) {
+		String sql = "";	
+		PermohonanKForm permohonanForm = null;
+		
+		try {		
 			Statement stmt = db.getStatement();
-			
-			sql = "SELECT KETERANGAN FROM TBLRUJLUAS WHERE KOD_LUAS = '" + kodLuas + "'";
+
+			sql = "SELECT * FROM INT_PPTPERMOHONAN WHERE FLAG_HANTAR = 'T' AND ID_PERMOHONAN = '" + idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-
-			if (rs.next()){
-				return rs.getString("KETERANGAN");
-			} else {
-				return "";
+			if (rs.next()) {
+				permohonanForm = new PermohonanKForm();
+				permohonanForm.setNoFailPTG(rs.getString("NO_FAIL"));
+				permohonanForm.setNamaKementerian(rs.getString("NAMA_KEMENTERIAN"));
+				permohonanForm.setNamaProjek(rs.getString("NAMA_PROJEK"));			
+				permohonanForm.setNoWarta(rs.getString("NO_WARTA"));
+				if (rs.getString("TARIKH_WARTA") != null) {
+					Date tarikhWarta = rs.getDate("TARIKH_WARTA");
+					Calendar calWarta = new GregorianCalendar();
+					calWarta.setTime(tarikhWarta);
+					String tarikhWartaString = String.valueOf(calWarta.get(Calendar.YEAR)) + "-" 
+							+ new DecimalFormat("00").format(calWarta.get(Calendar.MONTH) + 1) + "-" 
+							+ new DecimalFormat("00").format(calWarta.get(Calendar.DATE))
+							+ "T00:00:00";				
+					
+					permohonanForm.setTarikhWarta(tarikhWartaString);
+				}	
+				
+				sql = "SELECT * FROM INT_PPTHAKMILIKPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+				ResultSet rsHakmilik = stmt.executeQuery(sql);
+								
+				List listHakmilikK = Collections.synchronizedList(new ArrayList());
+				Map h = null;
+				while (rsHakmilik.next()) {
+					h = Collections.synchronizedMap(new HashMap());
+					h.put("ID_HAKMILIKPERMOHONAN",rsHakmilik.getString("ID_HAKMILIKPERMOHONAN") == null ? "" : rsHakmilik.getString("ID_HAKMILIKPERMOHONAN"));
+					listHakmilikK.add(h);					
+				}				
+				List<HakmilikPermohonanK> listHakmilikPermohonan = null;
+				for(int i = 0; i < listHakmilikK.size();i++)
+			    {			   
+					Map mapK = (Map) listHakmilikK.get(i);
+					if(mapK!=null)
+					{
+						if (listHakmilikPermohonan == null) {
+							listHakmilikPermohonan = new ArrayList<>();
+						}
+						String ID_HAKMILIKPERMOHONAN = (String) mapK.get("ID_HAKMILIKPERMOHONAN");
+						listHakmilikPermohonan.add(getHakmilikPermohonanK(ID_HAKMILIKPERMOHONAN,db));
+					}
+			    }				
+				permohonanForm.setBorangList(listHakmilikPermohonan);
+				
+				sql = "SELECT * FROM INT_PPTDOKUMENPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+				ResultSet rsDokumen = stmt.executeQuery(sql);
+				
+				List listDoc = Collections.synchronizedList(new ArrayList());
+				Map hDoc = null;
+				while (rsDokumen.next()) {
+					h = Collections.synchronizedMap(new HashMap());
+					h.put("ID_DOKUMENPERMOHONAN", rsDokumen.getString("ID_DOKUMENPERMOHONAN") == null ? "" : rsDokumen.getString("ID_DOKUMENPERMOHONAN"));
+					listDoc.add(h);					
+				}				
+				List<DokumenPermohonan> listDokumenPermohonan = null;
+				for(int i = 0; i < listDoc.size();i++)
+			    {			   
+					Map mapDoc = (Map) listDoc.get(i);
+					if(mapDoc!=null)
+					{
+						if (listDokumenPermohonan == null) {
+							listDokumenPermohonan = new ArrayList<>();
+						}
+						String ID_DOKUMENPERMOHONAN = (String) mapDoc.get("ID_DOKUMENPERMOHONAN");
+						listDokumenPermohonan.add(getDokumenPermohonan(ID_DOKUMENPERMOHONAN,db));
+					}
+			    }			
+				
+				permohonanForm.setFailList(listDokumenPermohonan);
 			}
-			
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
-	private static void updateFlagHantar(String noFail, String flagUrusan, Date tarikhHantar, ResponseForm response) {
-		String sql = "";
-		Db db = null;		
-		try {
-			db = new Db();			
-			Connection con = db.getConnection();
-			con.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			
-			sql = "UPDATE INT_PPTPERMOHONAN SET FLAG_HANTAR = 'Y', TARIKH_HANTAR = SYSDATE, FLAG_TRANSAKSI = '" + response.getKodRalat() + "', , KETERANGAN_TRANSAKSI = '" + response.getCatatan() + "'"
-					 + " WHERE NO_FAIL = '" + noFail + "' AND FLAG_URUSAN = '" + flagUrusan + "'";
-			stmt.executeUpdate(sql);
-			con.commit();
+					
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (db != null)
-				db.close();
+			flagMsg = "N";
+			outputMsg = e.toString();
+		}	
+		return permohonanForm;
+	}
+	
+	private static HakmilikPermohonanK getHakmilikPermohonanK(String idHakmilikPermohonan, Db db) {
+		String sql = "";
+		HakmilikPermohonanK hakmilikPermohonan = null;
+		
+		try {	
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT * FROM INT_PPTHAKMILIKPERMOHONAN WHERE ID_HAKMILIKPERMOHONAN = '" + idHakmilikPermohonan + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()){
+				hakmilikPermohonan = new HakmilikPermohonanK();
+				hakmilikPermohonan.setNoSubjaket(rs.getString("NO_SUBJAKET"));	
+				hakmilikPermohonan.setIdHakmilik(rs.getString("ID_HAKMILIK"));				
+				hakmilikPermohonan.setKodLot(rs.getString("KOD_LOT"));
+				hakmilikPermohonan.setNoLot(rs.getString("NO_LOT"));
+				hakmilikPermohonan.setUnitLuasAsal(rs.getString("KOD_LUAS_ASAL"));		
+				hakmilikPermohonan.setLuasAsal(rs.getString("LUAS_ASAL"));	
+				hakmilikPermohonan.setUnitLuasAmbil(rs.getString("KOD_LUAS_AMBIL"));					
+				hakmilikPermohonan.setLuasAmbil(rs.getString("LUAS_AMBIL"));
+				if (rs.getString("TARIKH_BORANGK") != null) {
+					Date tarikhBorangK = rs.getDate("TARIKH_BORANGK");
+					Calendar calBorangK = new GregorianCalendar();
+					calBorangK.setTime(tarikhBorangK);
+					String tarikhBorangKString = String.valueOf(calBorangK.get(Calendar.YEAR)) + "-" 
+							+ new DecimalFormat("00").format(calBorangK.get(Calendar.MONTH) + 1) + "-" 
+							+ new DecimalFormat("00").format(calBorangK.get(Calendar.DATE))
+							+ "T00:00:00";				
+					
+					hakmilikPermohonan.setTarikhBorangK(tarikhBorangKString);
+				}				
+				hakmilikPermohonan.setStatusAmbil(rs.getString("STATUS_AMBIL"));				
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			flagMsg = "N";
+			outputMsg = e.toString();
+		}
+		
+		return hakmilikPermohonan;
+	}
+	
+	private static PermohonanPDForm preparePermohonanPD(String idPermohonan, Db db) {
+		String sql = "";
+		PermohonanPDForm permohonanForm = null;
+		
+		try {
+			db = new Db();			
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT * FROM INT_PPTPERMOHONAN WHERE FLAG_HANTAR = 'T' AND ID_PERMOHONAN = '" + idPermohonan + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				permohonanForm = new PermohonanPDForm();
+				permohonanForm.setNoFailPTG(rs.getString("NO_FAIL"));
+				permohonanForm.setNamaKementerian(rs.getString("NAMA_KEMENTERIAN"));
+				permohonanForm.setNamaProjek(rs.getString("NAMA_PROJEK"));			
+				
+				sql = "SELECT * FROM INT_PPTHAKMILIKPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+				ResultSet rsHakmilik = stmt.executeQuery(sql);
+				
+				
+				List listHakmilik = Collections.synchronizedList(new ArrayList());
+				Map h = null;
+				while (rsHakmilik.next()) {
+					h = Collections.synchronizedMap(new HashMap());
+					h.put("ID_HAKMILIKPERMOHONAN",rsHakmilik.getString("ID_HAKMILIKPERMOHONAN") == null ? "" : rsHakmilik.getString("ID_HAKMILIKPERMOHONAN"));
+					listHakmilik.add(h);					
+				}				
+				List<HakmilikPermohonanPD> listHakmilikPermohonan = null;
+				for(int i = 0; i < listHakmilik.size();i++)
+			    {			   
+					Map mapHakmilik = (Map) listHakmilik.get(i);
+					if(mapHakmilik!=null)
+					{
+						if (listHakmilikPermohonan == null) {
+							listHakmilikPermohonan = new ArrayList<>();
+						}
+						String ID_HAKMILIKPERMOHONAN = (String) mapHakmilik.get("ID_HAKMILIKPERMOHONAN");
+						listHakmilikPermohonan.add(getHakmilikPermohonanPD(ID_HAKMILIKPERMOHONAN,db));
+					}
+			    }	
+				permohonanForm.setBorangList(listHakmilikPermohonan);
+				
+				sql = "SELECT * FROM INT_PPTDOKUMENPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+				ResultSet rsDokumen = stmt.executeQuery(sql);
+				List listDoc = Collections.synchronizedList(new ArrayList());
+				Map hDoc = null;
+				while (rsDokumen.next()) {
+					h = Collections.synchronizedMap(new HashMap());
+					h.put("ID_DOKUMENPERMOHONAN",rsDokumen.getString("ID_DOKUMENPERMOHONAN") == null ? "" : rsDokumen.getString("ID_DOKUMENPERMOHONAN"));
+					listDoc.add(h);					
+				}				
+				List<DokumenPermohonan> listDokumenPermohonan = null;
+				for(int i = 0; i < listDoc.size();i++)
+			    {			   
+					Map mapDoc = (Map) listDoc.get(i);
+					if(mapDoc!=null)
+					{
+						if (listDokumenPermohonan == null) {
+							listDokumenPermohonan = new ArrayList<>();
+						}
+						String ID_DOKUMENPERMOHONAN = (String) mapDoc.get("ID_DOKUMENPERMOHONAN");
+						listDokumenPermohonan.add(getDokumenPermohonan(ID_DOKUMENPERMOHONAN,db));
+					}
+			    }			
+				permohonanForm.setFailList(listDokumenPermohonan);
+			}
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+			flagMsg = "N";
+			outputMsg = e.toString();
+		}	
+		return permohonanForm;
+	}
+	
+	private static HakmilikPermohonanPD getHakmilikPermohonanPD(String idHakmilikPermohonan,Db db) {
+		String sql = "";
+		HakmilikPermohonanPD hakmilikPermohonan = null;
+		
+		try {		
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT * FROM INT_PPTHAKMILIKPERMOHONAN WHERE ID_HAKMILIKPERMOHONAN = '" + idHakmilikPermohonan + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()){
+				hakmilikPermohonan = new HakmilikPermohonanPD();
+				hakmilikPermohonan.setNoSubjaket(rs.getString("NO_SUBJAKET"));		
+				hakmilikPermohonan.setIdHakmilik(rs.getString("ID_HAKMILIK"));				
+				hakmilikPermohonan.setKodLot(rs.getString("KOD_LOT"));
+				hakmilikPermohonan.setNoLot(rs.getString("NO_LOT"));
+				hakmilikPermohonan.setUnitLuasAsal(rs.getString("KOD_LUAS_ASAL"));		
+				hakmilikPermohonan.setLuasAsal(rs.getString("LUAS_ASAL"));	
+				hakmilikPermohonan.setUnitLuasAmbil(rs.getString("KOD_LUAS_AMBIL"));					
+				hakmilikPermohonan.setLuasAmbil(rs.getString("LUAS_AMBIL"));
+				hakmilikPermohonan.setNoWarta(rs.getString("NO_WARTA"));
+				if (rs.getString("TARIKH_WARTA") != null) {
+					Date tarikhWarta = rs.getDate("TARIKH_WARTA");
+					Calendar calWarta = new GregorianCalendar();
+					calWarta.setTime(tarikhWarta);
+					String tarikhWartaString = String.valueOf(calWarta.get(Calendar.YEAR)) + "-" 
+							+ new DecimalFormat("00").format(calWarta.get(Calendar.MONTH) + 1) + "-" 
+							+ new DecimalFormat("00").format(calWarta.get(Calendar.DATE))
+							+ "T00:00:00";				
+					
+					hakmilikPermohonan.setTarikhWarta(tarikhWartaString);
+				}				
+				hakmilikPermohonan.setCatatan(rs.getString("SEBAB_PENARIKANBALIK"));				
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			flagMsg = "N";
+			outputMsg = e.toString();
+		}
+		
+		return hakmilikPermohonan;
+	}
+	
+	private static void updateFlagHantar(String idPermohonan, Date tarikhHantar, ResponseForm response, Db db, String idPengguna) {
+		String sql = "";	
+		try {
+			Statement stmt = db.getStatement();
+			
+			sql = "UPDATE INT_PPTPERMOHONAN SET FLAG_HANTAR = 'Y', TARIKH_HANTAR = SYSDATE WHERE ID_PERMOHONAN = '" + idPermohonan + "' AND ID_PENGGUNA = '" + idPengguna + "'";
+			stmt.executeUpdate(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}	
 	}
 
