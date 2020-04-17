@@ -1,0 +1,280 @@
+#parse("${viewPath}/label_titles.vm")
+
+<style>
+td { font-family:verdana; font-size:8pt; }
+.shadow { -moz-box-shadow: 10px 10px 5px #888; -webkit-box-shadow: 10px 10px 5px #888; box-shadow: 10px 10px 5px #888; }
+.gradient { background: -moz-linear-gradient(top, #E1E1E1 0%, #B4B4B4 100%); font-weight:bold;}
+
+.div_error {
+	-moz-box-shadow: 10px 10px 5px #888; -webkit-box-shadow: 10px 10px 5px #888; box-shadow: 10px 10px 5px #888;
+	position:absolute;
+	background-color:#F7A2A9;
+	width:200px;
+	height:100px;
+	left:50%;
+	top:50%;
+	margin-left:-100px;
+	margin-top:-50px;
+	vertical-align:middle;
+	padding-top:10px;
+	padding-left:5px;
+	padding-right:5px;
+	}
+
+.legend {
+	background-color:#ECD672;
+	padding: 0.5em 0.5em;
+	font-weight:bold;
+}
+
+.texts {
+		color:#000;
+		font-weight:normal;
+		font-family:verdana;
+		font-size:8pt; 
+		width:100%; 
+		padding-left:5px; 
+		padding-top:2px; 
+		padding-bottom: 2px;
+}
+.texts:focus {
+	-moz-box-shadow: 5px 5px 5px #888; -webkit-box-shadow: 5px 5px 5px #888; box-shadow: 5px 5px 5px #888; 
+	}
+	
+.text_disabled {
+		color:#000;
+		font-weight:normal;
+		font-family:verdana;
+		font-size:8pt; 
+		width:100%; 
+		padding-left:5px; 
+		padding-top:2px; 
+		padding-bottom: 2px;
+		/*background-color:#EBEBEB;
+		10/12/2012 */
+		background-color:#ADE3E6;
+		border:#35A6AC 1px solid;
+		color:#000;
+}	
+	
+	
+.textarea {
+	height:50px; 
+	width:100%;
+	color:#000;
+	font-weight:normal;
+	font-family:verdana;
+	font-size:8pt; 
+	padding-left:5px; 
+	padding-top:2px; 
+	padding-bottom: 2px;
+	}
+.textarea:focus {
+	-moz-box-shadow: 5px 5px 5px #888; -webkit-box-shadow: 5px 5px 5px #888; box-shadow: 5px 5px 5px #888;		
+	}
+
+
+.panels {
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	clear: none;
+	width: 100%; /* IE Hack to force proper layout when preceded by a paragraph. (hasLayout Bug)*/
+}
+
+.panelsTabGroup {
+	margin: 0px;
+	padding: 0px;
+}
+
+
+.panelsTab {
+	position: relative;
+	top: 1px;
+	float: left;
+	padding: 4px 10px;
+	margin: 0px 1px 0px 0px;
+	font: bold 12px sans-serif;
+	/* background-color: #A3ECEF;
+	10/12/2012 */
+	background-color: #B5B1DD;
+	list-style: none;
+	border-left: solid 1px #CCC;
+	border-bottom: solid 1px #999;
+	border-top: solid 1px #999;
+	border-right: solid 1px #999;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	cursor: pointer;
+}
+
+.panelsTabSelected {
+	position: relative;
+	top: 1px;
+	float: left;
+	padding: 4px 10px;
+	margin: 0px 1px 0px 0px;
+	font: bold 12px sans-serif;
+	list-style: none;
+	border-left: solid 1px #CCC;
+	border-top: solid 1px #999;
+	border-right: solid 1px #999;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	cursor: pointer;
+	/* background-color: #CFF5F7; 
+	10/12/2012 */
+	background-color: #D6D4EC;
+	border-bottom: 1px solid #FAF8CC;
+}   
+
+.panelsContent {
+	padding: 4px;
+}   
+
+.panelsContentGroup {
+	clear: both;
+	border-left: solid 1px #CCC;
+	border-bottom: solid 1px #CCC;
+	border-top: solid 1px #999;
+	border-right: solid 1px #999;
+	/* 2012/12/13
+	background-color: #E5FAFB;*/
+		background-color: #D6D4EC;
+
+}   
+
+.TabbedPanelsContentGroup {
+	clear: both;
+	border: 1px solid #bbb;
+	/*border-left: solid 1px #CCC;
+	border-bottom: solid 1px #CCC;
+	border-top: solid 1px #999;
+	border-right: solid 1px #999;*/
+	background-color: #E6E8F4;
+}
+
+.TabbedPanelsContent {
+	padding: 4px;
+	/*border: 1px solid #ddd;
+	background:url(eTapp_SabahSarawak/background.jpg);*/
+	background-color: #E6E8F4;	
+}
+
+.TabbedPanelsContentVisible {
+	background-color: #E6E8F4;
+	/*background:url(eTapp_SabahSarawak/background.jpg);*/
+}
+
+.record_header {
+	background-color:#89BFC1;
+	/*background-color:#996600;*/
+	font-weight:bold;
+	color:#fff;
+}    
+
+.record_row1 {
+	background-color:#EDFACC;
+	/*background-color:#EBBC5D;*/
+}
+
+.record_row2 {
+	background-color:#B0EFF4;
+	/*background-color:#FAF8CC;*/
+}   
+
+.record_highlight {
+	background-color:#B0EFF4;
+	/*background-color:#2AB6C7;*/
+}   
+
+fieldset {
+	border:1px solid #B9BBE2;
+	padding:3px;
+}
+
+module_content,td.row1,.row1 {
+	background:url(eTapp_SabahSarawak/background.jpg);
+	/*background-color:#EDFACC;  <---background color */
+}
+td.row2,td.selected,.row2 {
+	background-color:#B0B3DD;
+}
+            
+</style>
+
+<script type="text/javascript">
+
+calndr.showNavigationDropdowns();
+
+var isNN = (navigator.appName.indexOf("Netscape")!=-1);
+function at(input, e) {
+  var keyCode = (isNN) ? e.which : e.keyCode; 
+  if ( keyCode == 13 ) {
+    input.form[(getIndex(input)+1) % input.form.length].focus();
+  }
+}
+
+function getIndex(input) {
+    var index = -1, i = 0, found = false;
+    while (i < input.form.length && index == -1) {
+    	if (input.form[i] == input)index = i;
+    	else i++;
+    }
+    return index;
+}
+
+
+##CALENDAR SCRIPT
+    function openCalendar(e, f) {
+       if ( e.style.visibility=='hidden' ) { 
+           e.style.visibility='visible'; 
+           e.style.width='150px';
+           e.style.height='150px';
+           doDivAjaxCall3$formname(e,'get_calendar','element_id=' + f.id + '&div_id=' + e.id);
+       } else { 
+           e.style.visibility='hidden';
+       }
+    }
+    
+    
+    function openCalendarY1(e, f) {
+       if ( e.style.visibility=='hidden' ) { 
+           e.style.visibility='visible'; 
+           e.style.width='150px';
+           e.style.height='150px';
+           doDivAjaxCall3$formname(e,'get_calendar','element_id=' + f.id + '&div_id=' + e.id + '&year_range=before');
+       } else { 
+           e.style.visibility='hidden';
+       }
+    }
+    
+    function openCalendarY2(e, f) {
+       if ( e.style.visibility=='hidden' ) { 
+           e.style.visibility='visible'; 
+           e.style.width='150px';
+           e.style.height='150px';
+           doDivAjaxCall3$formname(e,'get_calendar','element_id=' + f.id + '&div_id=' + e.id + '&year_range=after');
+       } else { 
+           e.style.visibility='hidden';
+       }
+    }
+    
+#parse("$viewPath/script.vm")
+
+</script>
+
+#parse("$viewPath/top.vm")
+
+
+
+##<table border="0" width="1200px" style="background-color:#fff">
+<table border="0" width="100%">
+<tr><td valign="top">
+
+<div id="div_main">
+#parse("$templateDir/entry.vm")
+</div>
+
+</td></tr>
+</table>

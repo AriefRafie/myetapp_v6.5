@@ -7,5 +7,5 @@
     <updateXml>true</updateXml>
     <warLocation></warLocation>
     <extraInfo></extraInfo>
-    <webPath>/myetappgit_01</webPath>
+    <webPath>/myetappv7</webPath>
 </tomcatProjectProperties>

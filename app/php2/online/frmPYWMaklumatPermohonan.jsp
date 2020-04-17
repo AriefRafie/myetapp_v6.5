@@ -25,9 +25,8 @@
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
-  <input name="kategori" type="hidden" id="kategori" value="$!pemohon.get("kategoriPemohon")"/>
+  <input name="jenis" type="hidden" id="jenis" value="$jenis"/>
   <input name="actionPenyewaan" type="hidden" id="actionPenyewaan" value="$actionPenyewaan"/>
-  <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
 </p>
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -50,9 +49,6 @@
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENYEWAAN</li>
-          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
-          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">
@@ -289,9 +285,8 @@
                   #if ($mode == 'view')
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
                   <input type="button" name="cmdBackList2" id="cmdBackList2" value="Kembali" onClick="doBacklist()"/>
-                  <!-- butang hantar & email / butang hapus dipindah ke tab pengesahan -->
-                  <!-- <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
-                  <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>-->
+                  <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
+                  <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
                   #end
                   #if ($mode == 'update')
                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPenyewaan('$idLuas')"/>
@@ -302,40 +297,9 @@
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
                   #end </td>
               </tr>
-              #end              
+              #end
             </table>
           </div>
-          <div class="TabbedPanelsContent">
-           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
-           	<tr>
-  				<td> #parse("app/php2/online/frmPYWDaftarManualSenaraiSemakOnline.jsp") </td>
-              </tr>
-           	</table>
-           	
-         </div>
-         <div class="TabbedPanelsContent">
-         <table width="100%" border="0" cellspacing="2" cellpadding="2">
-           	<tr>
-           	<td>#parse("app/php2/online/frmPYWMaklumatLampiranOnline.jsp")</td>
-           	</tr>
-           	</table>
-         </div>
-         <div class="TabbedPanelsContent">
-           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
-           	<td valign="top">
-           	#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
-           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
-           	<td>Saya, $!pemohon.get("namaPemohon"), dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
-           	<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</td> 
-           	<tr>
-           	<td colspan=2 align="center">
-           	#if ($idStatus == '')
-            	<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
-            	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-            #end</td>
-           	</tr>          	
-           	</table>
-         </div>
         </div>
       </div></td>
   </tr>
@@ -948,10 +912,6 @@ function popupMsg(){
 	document.${formName}.txtSaham.value = "";
 }
 function doHantarEmel(){
-	if(pengesahan.checked != true){
-		alert('Sila tanda pada checkbox untuk teruskan permohonan. ');
-		return; 
-	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
@@ -973,7 +933,6 @@ function doHapus(){
 	document.${formName}.submit();
 }
 </script>
-
 <script>
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
@@ -998,31 +957,5 @@ function cetakPengesahanPermohonan(idPermohonan) {
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
-}
-</script>
-
-<script>
-<!-- MAKLUMAT LAMPIRAN -->
-function daftarLampiran() {
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView";
-	document.${formName}.method="POST";
-	document.${formName}.actionPenyewaan = "paparMaklumatPenyewaan";
-	document.${formName}.mode.value = "view";	
-	document.${formName}.flagPopup.value = "openPopupLampiran";
-	document.${formName}.modePopup.value = "new";
-	document.${formName}.submit();
-}
-
-<!-- SENARAI SEMAK -->
-function doSimpanKemaskiniSenaraiSemak() {
-	
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		document.${formName}.mode.value = "update";
-		return;
-	}
-	
-	document.${formName}.mode.value = "view";
-	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
-	document.${formName}.submit();
 }
 </script>
