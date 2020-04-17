@@ -148,7 +148,8 @@
 					</tr>
 					<tr>
 						<td>
-						<a href="javascript:goTo('PHPAPB')" class="help" title="Permohonan Urusan Akta Pelantar Benua">
+
+						<a href="javascript:goTo('PHPAPB')" class="help" title="Permohonan Akta Pelantar Benua">
 							<font color="blue"><li>Permohonan Akta Pelantar Benua</li></font>
 						</a>
 						</td>

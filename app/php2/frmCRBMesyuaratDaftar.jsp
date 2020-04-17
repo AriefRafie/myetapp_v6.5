@@ -37,7 +37,7 @@
           <td>&nbsp;</td>
           <td>Bil. Mesyuarat</td>
           <td>:</td>
-          <td><input name="txtBilMesyuarat" type="text" class="$inputTextClass" id="txtBilMesyuarat" size="9" maxlength="12" onBlur="this.value=this.value.toUpperCase();"/>
+          <td><input name="txtBilMesyuarat" type="text" class="$inputTextClass" value="$beanMaklumatMesyuarat.bilMesyuarat" id="txtBilMesyuarat" size="9" maxlength="12" onBlur="this.value=this.value.toUpperCase();"/>
           </td>
         </tr>
         <tr>
@@ -65,6 +65,10 @@
           <td valign="top">Tajuk Mesyuarat</td>
           <td valign="top">:</td>
           <td valign="top"><textarea name="txtTujuanMesyuarat" id="txtTujuanMesyuarat" rows="5" cols="50" class="$inputTextClass" onBlur="this.value=this.value.toUpperCase();"></textarea>
+          #if($actionCRB == 'daftarBaru') #if($bilMesyuarat != '')
+          <input type="button" name="cmdDaftarBaru2"
+							id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk()" />
+		  #end #end
           </td>
         </tr>
         <tr>

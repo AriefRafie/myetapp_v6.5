@@ -221,6 +221,12 @@ public class FrmCRBMesyuaratView extends AjaxBasedModule {
 			this.context.put("readonly", "");
 			this.context.put("inputTextClass", "");
 			this.context.put("disabled", "");
+			
+			beanMaklumatMesyuarat = new Vector();
+			logic.setMaklumatMesyuarat(idMesyuarat);
+			beanMaklumatMesyuarat = logic.getBeanMaklumatMesyuarat();
+			this.context.put("BeanMaklumatMesyuarat",
+					beanMaklumatMesyuarat);
 
 			this.context.put("selectJamDari", HTML.SelectJam("socJamDari",
 					Long.parseLong(idJamDari), "", ""));
