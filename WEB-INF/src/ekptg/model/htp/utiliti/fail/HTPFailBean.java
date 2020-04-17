@@ -1310,11 +1310,12 @@ public class HTPFailBean implements IHTPFail{
 	  }	
 	
 	@Override
-	public Vector<Hashtable<String, String>> getSenaraiFailMengikutUrusans(String idUser,String nofail,String tajukfail
-		,String id_kementerian,String id_agensi
-		,String id_negeri,String id_daerah,String id_mukim
-		,String id_urusan,String tarikhTerima,String tarikhBukaFail
-		,String status,boolean isSearch, String nofaillain) throws Exception {
+	public  Vector<Hashtable<String, String>> getSenaraiFailMengikutUrusans(
+			String idUser,String nofail,String tajukfail
+			,String id_kementerian,String id_agensi
+			,String id_negeri,String id_daerah,String id_mukim
+			,String id_urusan,String tarikhTerima,String tarikhBukaFail
+			,String status,boolean isSearch, String nofaillain)throws Exception {
 	    Db db = null;
 	    Vector<Hashtable<String, String>> list = null;
 	    //boolean isSearch = false;
@@ -1346,13 +1347,9 @@ public class HTPFailBean implements IHTPFail{
 	      if (nofail != null && !"".equals(nofail)) {
 	    	  sql = sql + " AND lower(f.no_Fail) like '%"+nofail.toLowerCase()+"%' ";
 	    	  isSearch = true;
-	      }
+	      }      
 	      if (nofaillain != null && !"".equals(nofaillain)) {
-	    	  sql = sql + " AND (" +
-	    			 "lower(PP.NO_RUJUKAN_KJP) like '%"+nofaillain.toLowerCase()+"%' " +
-	    			 " OR lower(PP.NO_RUJUKAN_LAIN) like '%"+nofaillain.toLowerCase()+"%' " +
-	    			 " OR lower(PP.NO_RUJUKAN_UPT) like '%"+nofaillain.toLowerCase()+"%' " +
-	    	  		 " )";
+	    	  sql = sql + " AND lower(PP.no_rujukan_upt) like '%"+nofaillain.toLowerCase()+"%' ";
 	    	  isSearch = true;
 	      }      
 	      if (id_urusan != null && !"-1".equals(id_urusan) && !"".equals(id_urusan)) {

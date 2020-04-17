@@ -1426,13 +1426,14 @@ public class HakmilikBean implements HakmilikInterface {
 	}	
 	
 	@Override
-	public Vector<Hashtable<String,String>> getSenaraiHakmilikSambungan(String noHakmilikAsal
-		,String idNegeri,String idDaerah,String idMukim) throws Exception {
+	public Vector getSenaraiHakmilikSambungan(String noHakmilikAsal,String idNegeri
+			,String idDaerah,String idMukim) throws Exception {
 		Db db = null;
 		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
-			Vector<Hashtable<String,String>> listSenaraiFail = new Vector<Hashtable<String,String>>();
+			Vector listSenaraiFail = new Vector();
 			Statement stmt = db.getStatement();			
 			sql = "SELECT TPH.ID_HAKMILIK,RJH.KOD_JENIS_HAKMILIK, TPH.NO_HAKMILIK, "+
 				  "	(SELECT ID_HAKMILIK " +
@@ -1454,12 +1455,12 @@ public class HakmilikBean implements HakmilikInterface {
 				  " AND TPH.HAKMILIK_ASAL LIKE '%"+noHakmilikAsal+"%' ";					
 			myLog.info("getSenaraiHakmilikSambungan :sql=" +sql);
 			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable<String,String> h;
+			Hashtable h;
 		    int bil = 1;
-		    //int count = 0;
+		    int count = 0;
 			
 		    while (rs.next()) {
-				h = new Hashtable<String,String> ();
+				h = new Hashtable();
 				h.put("bil", bil+".");
 				h.put("idHakmilikAsal", rs.getString("ID_HAKMILIK_ASAL")==null ? "" :rs.getString("ID_HAKMILIK_ASAL"));
 				h.put("idHakmilikBaru", rs.getString("ID_HAKMILIK")==null ? "" :rs.getString("ID_HAKMILIK"));
@@ -1468,7 +1469,7 @@ public class HakmilikBean implements HakmilikInterface {
 				h.put("statusSah", rs.getString("STATUS_SAH")==null ? "" :rs.getString("STATUS_SAH"));			
 				listSenaraiFail.addElement(h);
 		    	bil++;
-		    	//count++;
+		    	count++;
 			
 		    } 		
 		    /*
@@ -1885,39 +1886,55 @@ public class HakmilikBean implements HakmilikInterface {
 		
 	public String getSQLHakmilik(String idHakmilik){
 		String sql = "";
-		sql = "SELECT F.NO_FAIL "+
-		" ,TPH.ID_HAKMILIK " +
-		" ,NVL(RL.KETERANGAN,'0') KOD_LOT "+
-		" ,TPH.ID_LOT,TPH.NO_LOT "+
-		" ,TPH.ID_NEGERI,TPH.ID_DAERAH,TPH.ID_MUKIM "+
-		" ,RN.NAMA_NEGERI, RD.NAMA_DAERAH, RM.NAMA_MUKIM "+
-		" ,TPH.LOKASI "+
-		" ,TPH.CATATAN ,TPH.KEGUNAAN_TANAH "+
-		" ,TPH.ID_KATEGORI,TPH.SYARAT,TPH.SEKATAN "+
-		" ,TPH.NO_PELAN,TPH.NO_SYIT,TPH.NO_PU "+
+		sql = "SELECT TPH.TARIKH_RIZAB, F.NO_FAIL "+
+		" ,TPH.ID_HAKMILIK "+
 		" ,TPH.NO_FAIL_PTG,TPH.NO_FAIL_PTD,TPH.NO_FAIL_KJP "+
-		" ,TPH.ID_LUAS,NVL(TPH.LUAS,0) LUAS,TPH.ID_LUAS_BERSAMAAN,NVL(TPH.LUAS_BERSAMAAN,0) LUAS_BERSAMAAN "+
-		" ,TO_CHAR(TPH.TARIKH_TERIMA,'DD/MM/YYYY') TARIKH_TERIMA "+
-		" ,TPH.NO_WARTA,TO_CHAR(TPH.TARIKH_WARTA,'DD/MM/YYYY') TARIKH_WARTA "+
-		" ,TPH.ID_JENISHAKMILIK,UPPER(TPH.NO_HAKMILIK) NO_HAKMILIK "+
+		" ,UPPER(TPH.NO_HAKMILIK) NO_HAKMILIK,TPH.NO_WARTA "+
 		" ,TPH.NO_BANGUNAN,TPH.NO_TINGKAT,TPH.NO_PETAK "+
-		" ,RJH.KETERANGAN,RJH.KOD_JENIS_HAKMILIK KOD_KETERANGAN "+
+		" ,TPH.ID_LOT,TPH.NO_LOT "+
+		" ,TPH.HAKMILIK_ASAL,TPH.CATATAN "+
+		" ,TPH.KEGUNAAN_TANAH "+
+		" ,TPH.ID_RIZAB "+
+		" ,TPH.ID_NEGERI,TPH.ID_DAERAH,TPH.ID_MUKIM,TPH.ID_JENISHAKMILIK "+
+		" ,RN.NAMA_NEGERI, RD.NAMA_DAERAH, RM.NAMA_MUKIM "+
+		" ,TO_CHAR(TPH.TARIKH_TERIMA,'DD/MM/YYYY') TARIKH_TERIMA "+
 		" ,TO_CHAR(TPH.TARIKH_DAFTAR,'DD/MM/YYYY') TARIKH_DAFTAR "+
-		" ,TPH.HAKMILIK_ASAL "+
 		" ,TPH.TARAF_HAKMILIK,TPH.TEMPOH "+
 		" ,TO_CHAR(TPH.TARIKH_LUPUT,'DD/MM/YYYY') TARIKH_LUPUT "+
 		" ,NVL(TPH.CUKAI,0) CUKAI "+
-		" ,TPH.ID_RIZAB,TPH.STATUS_RIZAB,TPH.NO_RIZAB,TPH.KAWASAN_RIZAB, TPH.TARIKH_RIZAB "+
+		" ,TPH.LOKASI  "+
+		" ,TPH.ID_LUAS,NVL(TPH.LUAS,0) LUAS,TPH.ID_LUAS_BERSAMAAN,NVL(TPH.LUAS_BERSAMAAN,0) LUAS_BERSAMAAN  "+
+		" ,TPH.STATUS_RIZAB,TPH.NO_RIZAB "+
+		" ,TO_CHAR(TPH.TARIKH_WARTA,'DD/MM/YYYY') TARIKH_WARTA,TPH.KAWASAN_RIZAB "+
+		" ,TPH.ID_KATEGORI,TPH.SYARAT,TPH.SEKATAN "+
+		" ,TPH.NO_PELAN,TPH.NO_SYIT,TPH.NO_PU "+
 		" ,TPH.TARIKH_KEMASKINI "+
 		" ,(SELECT USER_NAME FROM USERS WHERE USER_ID=TPH.ID_KEMASKINI) PEGAWAI_AKHIR "+
+//		" ,P.TUJUAN "+
 		" ,CASE "+
-		"	WHEN P.TUJUAN IS NULL THEN F.TAJUK_FAIL "+
-		" 	WHEN P.TUJUAN IS NOT NULL THEN P.TUJUAN "+
-		" 	ELSE '' "+
+		" WHEN P.TUJUAN IS NULL THEN F.TAJUK_FAIL "+
+		" WHEN P.TUJUAN IS NOT NULL THEN P.TUJUAN "+
+		" ELSE '' "+
 		" END TUJUAN "+
-		" ,RU.NAMA_URUSAN "+
+		" ,(    " +
+		"	SELECT RJHI.KETERANGAN FROM TBLRUJJENISHAKMILIK RJHI  "+
+		"   WHERE RJHI.ID_JENISHAKMILIK = TPH.ID_JENISHAKMILIK "+
+		" ) KETERANGAN "+
+		" ,(    " +
+		"	SELECT RJHI.KOD_JENIS_HAKMILIK FROM TBLRUJJENISHAKMILIK RJHI  "+
+		"   WHERE RJHI.ID_JENISHAKMILIK = TPH.ID_JENISHAKMILIK "+
+		" ) KOD_KETERANGAN "+
+		" ,( " +
+		"	SELECT RUI.NAMA_URUSAN  "+
+		"	FROM TBLRUJURUSAN RUI,TBLPFDFAIL FI "+
+		"   WHERE FI.ID_URUSAN = RUI.ID_URUSAN "+
+		"	AND FI.ID_FAIL = F.ID_FAIL "+
+		" ) NAMA_URUSAN "+
+		" ,NVL((" +
+		"	SELECT KETERANGAN FROM TBLRUJLOT WHERE ID_LOT=TPH.ID_LOT)" +
+		" ,'0') KOD_LOT "+
 		" ,RK.NAMA_KEMENTERIAN,RA.NAMA_AGENSI "+
-		" ,NVL(TPH.ID_KEMENTERIAN,0) ID_KEMENTERIAN,TPH.ID_AGENSI " +
+		" ,NVL(TPH.ID_KEMENTERIAN,0) ID_KEMENTERIAN,TPH.ID_AGENSI" +
 		" ,P.ID_PERMOHONAN, F.ID_FAIL "+
 //		" -- "+
 		" FROM "+
@@ -1930,10 +1947,7 @@ public class HakmilikBean implements HakmilikInterface {
 		" ,TBLPFDFAIL F "+
 		" ,TBLHTPHAKMILIKAGENSI TPHA,TBLRUJKEMENTERIANMAPPING RKME "+
 //		" --,TBLRUJAGENSIMAPPING RAME "+
-		" ,TBLRUJKEMENTERIAN RK,TBLRUJAGENSI RA " +
-		" ,TBLRUJLOT RL " +
-		" ,TBLRUJJENISHAKMILIK RJH " +
-		" ,TBLRUJURUSAN RU "+
+		" ,TBLRUJKEMENTERIAN RK,TBLRUJAGENSI RA "+
 //		" -- "+
 		" WHERE P.ID_PERMOHONAN = TPH.ID_PERMOHONAN "+
 		" AND P.ID_FAIL = F.ID_FAIL "+
@@ -1945,11 +1959,9 @@ public class HakmilikBean implements HakmilikInterface {
 		" AND TPHA.ID_KEMENTERIAN = RKME.ID_KEMENTERIANLAMA AND RKME.STATUS = 'A' "+
 		" AND TPH.ID_KEMENTERIAN = RK.ID_KEMENTERIAN "+
 		" AND TPHA.ID_AGENSI = RA.ID_AGENSI "+
-		" AND TPH.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK "+
-		" AND TPH.ID_LOT = RL.ID_LOT " +
-		" AND F.ID_URUSAN = RU.ID_URUSAN "+
-		" AND TPH.ID_HAKMILIK ='"+ idHakmilik +"'" +
-		"";
+//		" --AND TPHA.ID_AGENSI = RAME.ID_AGENSILAMA AND RAME.STATUS = 'A' "+
+//		" --AND RAME.ID_AGENSIBARU = RA.ID_AGENSI "+
+		" AND TPH.ID_HAKMILIK ='"+ idHakmilik +"'";
 		return sql;  
 		
 	}
@@ -2084,7 +2096,6 @@ public class HakmilikBean implements HakmilikInterface {
 
 		    	//fix bug.21112014. syaz
 		    	h.put("tarikh_rizab", rs.getDate("TARIKH_RIZAB")==null?"":Format.format(rs.getDate("TARIKH_RIZAB")));  	    	  
-		    	h.put("idPermohonan", rs.getString("ID_PERMOHONAN"));  	    	  
 				listMaklumatFail.addElement(h);
 
 			}
