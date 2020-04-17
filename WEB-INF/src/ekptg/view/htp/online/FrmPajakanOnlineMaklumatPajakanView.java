@@ -94,7 +94,7 @@ public class FrmPajakanOnlineMaklumatPajakanView extends AjaxBasedModule {
 		
         //HEADER
         beanHeader = new Vector();
-        logicHeader.setMaklumatPermohonan(idFail, getParam("initiateFlagBuka"), session);
+        logicHeader.setMaklumatPermohonan(idFail);
         beanHeader = logicHeader.getBeanMaklumatPermohonan();
 		this.context.put("BeanHeader", beanHeader);
 		
