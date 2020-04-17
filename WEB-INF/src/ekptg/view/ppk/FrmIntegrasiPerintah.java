@@ -3,9 +3,7 @@ package ekptg.view.ppk;
 import integrasi.utils.IntLogManager;
 import integrasi.ws.mt.MTManager;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,7 +21,6 @@ import lebah.portal.velocity.VTemplate;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 
-import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 
 public class FrmIntegrasiPerintah extends VTemplate {
@@ -33,9 +30,7 @@ public class FrmIntegrasiPerintah extends VTemplate {
 	private static final long serialVersionUID = 1L;
 	static Logger myLogger = Logger.getLogger(FrmIntegrasiPerintah.class);
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	private Db db = null;
-	private String sql = "";
-	
+
 	@Override
 	public Template doTemplate() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -43,12 +38,14 @@ public class FrmIntegrasiPerintah extends VTemplate {
 		String vm = "";
 		String submit = request.getParameter("command");
 		String idFail = request.getParameter("idfail");
-		myLogger.info("Command = " + submit);
+
+		System.out.println("Command : " + submit);
 
 		if ("borangPerintah".equals(submit)) {
 			Hashtable get_checkNoFail = null;
 			get_checkNoFail = checkNoFail(idFail);
-			String jumlahPerintah = (String) get_checkNoFail.get("JUMLAH_PERINTAH");
+			String jumlahPerintah = (String) get_checkNoFail
+					.get("JUMLAH_PERINTAH");
 
 			if ("0".equals(jumlahPerintah)) {
 				context.put("semakPerintah", "tiada");
@@ -58,21 +55,28 @@ public class FrmIntegrasiPerintah extends VTemplate {
 		
 			Hashtable get_bluecardId = null;
 			get_bluecardId = getBlueCardId(idFail);
-			String blueCardId = (String) get_bluecardId.get("IDKADBIRU");
+			String blueCardId = (String) get_bluecardId
+					.get("IDKADBIRU");
 					
 			Hashtable get_perintahMT = null;
 			get_perintahMT = perintahMT(idFail);
 			String noFail = (String) get_perintahMT.get("NO_FAIL");
 			String namaSimati = (String) get_perintahMT.get("NAMA_SIMATI");
-			String namaSimatiLain = (String) get_perintahMT.get("NAMA_LAIN_SIMATI");
+			String namaSimatiLain = (String) get_perintahMT
+					.get("NAMA_LAIN_SIMATI");
 			String noKPSimatiBaru = (String) get_perintahMT.get("NO_KP_BARU");
 			String noKPSimatiLama = (String) get_perintahMT.get("NO_KP_LAMA");
 			String noKPSimatiLain = (String) get_perintahMT.get("NO_KP_LAIN");
 			String tarikhMati = (String) get_perintahMT.get("TARIKH_MATI");
-			String tarikhPerintah = (String) get_perintahMT.get("TARIKH_PERINTAH");
+			String tarikhPerintah = (String) get_perintahMT
+					.get("TARIKH_PERINTAH");
 			String idPerintah = (String) get_perintahMT.get("ID_PERINTAH");
-			String namaOBHAPerintah = (String) get_perintahMT.get("NAMA_OB_HA_PERINTAH");
-			String jenisPerintah = (String) get_perintahMT.get("JENIS_PERINTAH");
+			String namaOBHAPerintah = (String) get_perintahMT
+					.get("NAMA_OB_HA_PERINTAH");
+			String jenisPerintah = (String) get_perintahMT
+					.get("JENIS_PERINTAH");
+			
+
 			
 			noKPSimatiBaru = noKPSimatiBaru.replace("-","");
 
@@ -130,24 +134,26 @@ public class FrmIntegrasiPerintah extends VTemplate {
 			context.put("dateFormat", new SimpleDateFormat("dd/MM/yyyy"));
 			context.put("blueCardId", blueCardId);
 			context.put("kodPejabat", kodPejabat);
-			context.put("namaPejabat", namaPejabat);		
-			context.put("idPermohonan", String.valueOf(get_perintahMT.get("idPermohonan")));		
+			context.put("namaPejabat", namaPejabat);
+			
 
 			vm = "app/ppk/integrasi/MahkamahTinggiPerintah.jsp";
+		} else if ("hantarPerintah".equals(submit)) {
 			
-		} else if ("hantarPerintah".equals(submit)) {			
 			String transactionID = "";
 			Calendar cal = new GregorianCalendar();
 			cal.setTime(new Date());
 			transactionID = Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.YEAR)), 4) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MONTH) + 1), 2)
 					+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.DATE)), 2) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)), 2)
 					+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MINUTE)), 2) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.SECOND)), 2);
+
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
 			
 			String reportDate = dateFormat.format(date);
 			String dateHantarNotisPerintah = reportDate.substring(0,10)+"T"+reportDate.substring(11)+".00";
+			
 			
 			String tarikhMati = request.getParameter("tarikhMati");
 			String cutDate = tarikhMati.substring(0,10);
@@ -159,6 +165,7 @@ public class FrmIntegrasiPerintah extends VTemplate {
 			String part3 = parts[2]; 
 			
 			String DDate = part3+"/"+part2+"/"+part1;
+			
 			
 			String tarikhPerintah = request.getParameter("tarikhPerintah");
 			String cutDatePerintah = tarikhPerintah.substring(0,10);
@@ -172,6 +179,7 @@ public class FrmIntegrasiPerintah extends VTemplate {
 			String PDate = partP3+"/"+partP2+"/"+partP1;			
 			String blueCardId = request.getParameter("blueCardId");
 			
+			
 			Db db = null;
 			String sql = "";
 
@@ -181,22 +189,19 @@ public class FrmIntegrasiPerintah extends VTemplate {
 			SQLRenderer r = new SQLRenderer();
 					
 			String noFail = request.getParameter("noFail");
-			String namaSimati = request.getParameter("namaSimati");
-			String namaSimatiLain = request.getParameter("namaSimatiLain");
-			String noKPSimatiBaru = request.getParameter("noKPSimatiBaru");
-			String noKPSimatiLama = request.getParameter("noKPSimatiLama");
-			String noKPSimatiLain = request.getParameter("noKPSimatiLain");
-			
-			r.add("NOFAIL", noFail);
-			r.add("NAMASIMATI", namaSimati);
-			r.add("NAMALAINSIMATI", namaSimatiLain);
+			r.add("NOFAIL", request.getParameter("noFail"));
+			r.add("NAMASIMATI", request.getParameter("namaSimati"));
+			r.add("NAMALAINSIMATI", request.getParameter("namaSimatiLain"));
 			r.add("NOKPSIMATIBARU", request.getParameter("noKPSimatiBaru"));
 			r.add("NOKPSIMATILAMA", request.getParameter("noKPSimatiLama"));
 			r.add("NOKPSIMATILAIN", request.getParameter("noKPSimatiLain"));
 			r.add("TARIKHMATI",
-					r.unquote("to_date('" + DDate+ "','dd/MM/yyyy')"));
+					r.unquote("to_date('" + DDate
+							+ "','dd/MM/yyyy')"));
 			r.add("TARIKHPERINTAH",
-					r.unquote("to_date('"+ PDate+ "','dd/MM/yyyy')"));
+					r.unquote("to_date('"
+							+ PDate
+							+ "','dd/MM/yyyy')"));
 			r.add("WARISPEMBAHAGIAN", request.getParameter("namaOBHAPerintah"));
 			r.add("IDPERINTAH", request.getParameter("idPerintah"));
 			r.add("JENISPERINTAH", request.getParameter("jenisPerintah"));
@@ -205,17 +210,22 @@ public class FrmIntegrasiPerintah extends VTemplate {
 
 			context.put("noFail", request.getParameter("noFail"));
 			context.put("namaSimati", request.getParameter("namaSimati"));
-			context.put("namaLainSimati",request.getParameter("namaSimatiLain"));
+			context.put("namaLainSimati",
+					request.getParameter("namaSimatiLain"));
 			context.put("MyIDSimati", request.getParameter("noKPSimatiBaru"));
 			context.put("ICLamaSimati", request.getParameter("noKPSimatiLama"));
 			context.put("ICLainSimati", request.getParameter("noKPSimatiLain"));
 			context.put("tarikhMati", request.getParameter("tarikhMati"));
-			context.put("tarikhPerintah",request.getParameter("tarikhPerintah"));
-			context.put("namaOBHAPerintah",request.getParameter("namaOBHAPerintah"));
+			context.put("tarikhPerintah",
+					request.getParameter("tarikhPerintah"));
+			context.put("namaOBHAPerintah",
+					request.getParameter("namaOBHAPerintah"));
 			context.put("idPerintah", request.getParameter("idPerintah"));
 			context.put("jenisPerintah", request.getParameter("jenisPerintah"));
 			
+			
 			//aishah start integration ecourt
+			
 			MTManager manager = new MTManager();
 			
 			String returnMessage = "";
@@ -242,55 +252,40 @@ public class FrmIntegrasiPerintah extends VTemplate {
 			//System.out.println("returnMessage==="+returnMessage);
 			
 			if(!returnMessage.equals("") || !returnMessage.contains("null")){
+			
 				String code = returnMessage.substring(0,1);
 				String details =  returnMessage.substring(2);
 				
-				if (code.equals("0")){				
+				//System.out.println("code==="+code);
+				//System.out.println("details==="+details);
+				
+				if (code.equals("0")){
+				
 					sql = r.getSQLInsert("TBLINTMTPERINTAH");
+					
+	
 					myLogger.info("SQL INSERT TBLINTMTPERINTAH : " + sql);
 					stmt.executeUpdate(sql);
-					
-					if(isPetitionExist(noFail)==false) {
-						sql = getSQLPermohonan(noFail
-								,namaSimati,namaSimatiLain
-								,noKPSimatiBaru,noKPSimatiLama,noKPSimatiLain
-								,DDate
-								,transactionID);
-						myLogger.info("TBLINTMTPERMOHONAN:sql="+sql);
-						stmt.executeUpdate(sql);
-
-						// TBLPPKKEPUTUSANPERMOHONAN
-						//long idKeputusanPermohonan = DB.getNextID("TBLPPKKEPUTUSANPERMOHONAN_SEQ");
-						//kptsn.add("ID_KEPUTUSANPERMOHONAN", idKeputusanPermohonan);
-						SQLRenderer kptsn = new SQLRenderer();
-						kptsn.add("ID_PERMOHONAN", request.getParameter("idpermohonan"));
-						//kptsn.add("TARIKH_HANTAR_BORANGB", r.unquote("SYSDATE"));
-						sql = kptsn.getSQLInsert("TBLPPKKEPUTUSANPERMOHONAN");
-						stmt.executeUpdate(sql);
-						stmt.executeUpdate(sql);
-						myLogger.info("TBLPPKKEPUTUSANPERMOHONAN:sql="+sql);
-
-
-					}
 					
 					vm = "app/ppk/integrasi/MahkamahTinggiPerintahSuccess.jsp";
 					
 					IntLogManager.recordLogMT(noFail, "G", "O", "Y", "SUCCESS");
 					
-				}else{		
+				}else{
+					
 					context.put("details", details);
 					vm = "app/ppk/integrasi/MahkamahTinggiPerintahFailed.jsp";
 					
 					IntLogManager.recordLogMT(noFail, "G", "O", "T", details);
-			
 				}
 				
-			}else{		
+			}else{
+				
+				System.out.println("33333333333");
 				context.put("details", returnMessage);
 				vm = "app/ppk/integrasi/MahkamahTinggiFailed.jsp";
 				
 				IntLogManager.recordLogMT(noFail, "G", "O", "T", returnMessage);
-			
 			}
 
 			//vm = "app/ppk/integrasi/MahkamahTinggiPerintahSuccess.jsp";
@@ -298,7 +293,6 @@ public class FrmIntegrasiPerintah extends VTemplate {
 
 		Template template = this.engine.getTemplate(vm);
 		return template;
-		
 	}
 
 	public Hashtable checkNoFail(String id_fail) throws Exception {
@@ -334,14 +328,14 @@ public class FrmIntegrasiPerintah extends VTemplate {
 		}
 	}
 
-	public Hashtable<String,String> perintahMT(String id_fail) throws Exception {
+	public Hashtable perintahMT(String id_fail) throws Exception {
 		Db db = null;
 		String sql = "";
 
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			//SQLRenderer r = new SQLRenderer();
+			SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT DISTINCT a.no_fail, UPPER (g.nama_simati) AS nama_simati,"
 					+ " NVL (g.nama_lain, '') AS nama_lain_simati,"
@@ -406,7 +400,6 @@ public class FrmIntegrasiPerintah extends VTemplate {
 					  " AND RP.ID_SEKSYEN = 2 " +
 					  " and RPU.ID_DAERAHURUS = B.ID_DAERAHMHN " +
 					  ") AS kodPejabat"
-					+ ",b.id_permohonan"  
 					+ " FROM tblpfdfail a,"
 					+ " tblppkpermohonan b,"
 					+ " tblppkkeputusanpermohonan c,"
@@ -431,21 +424,24 @@ public class FrmIntegrasiPerintah extends VTemplate {
 					+ " AND h.id_perintahhtaobmst = k.id_perintahhtaobmst(+)"
 					+ " AND i.id_perintahhaobmst = l.id_perintahhaobmst(+)"
 					+ " AND e.flag_jenis_keputusan = 0"
-					+ " AND a.id_fail = '"+ id_fail + "'" +
-					"";
+					+ " AND a.id_fail = '"
+					+ id_fail + "'";
 
 			myLogger.info("SQL STATEMENT - PERINTAH MT : " + sql.toUpperCase());
+
 			ResultSet rs = stmt.executeQuery(sql);
 
-			Hashtable<String,String> h;
-			h = new Hashtable<String,String>();
+			Hashtable h;
+			h = new Hashtable();
 			while (rs.next()) {
-				h.put("NO_FAIL",rs.getString("NO_FAIL") == null ? "" 
-						: rs.getString("NO_FAIL"));
+				h.put("NO_FAIL",
+						rs.getString("NO_FAIL") == null ? "" : rs
+								.getString("NO_FAIL"));
 				h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI") == null ? ""
 						: rs.getString("NAMA_SIMATI"));
-				h.put("NAMA_LAIN_SIMATI",rs.getString("NAMA_LAIN_SIMATI") == null ? "" 
-						: rs.getString("NAMA_LAIN_SIMATI"));
+				h.put("NAMA_LAIN_SIMATI",
+						rs.getString("NAMA_LAIN_SIMATI") == null ? "" : rs
+								.getString("NAMA_LAIN_SIMATI"));
 				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
 						: rs.getString("NO_KP_BARU"));
 				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
@@ -454,30 +450,35 @@ public class FrmIntegrasiPerintah extends VTemplate {
 						: rs.getString("NO_KP_LAIN"));
 				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
 						: rs.getString("TARIKH_MATI"));
-				h.put("TARIKH_PERINTAH",rs.getString("TARIKH_PERINTAH") == null ? "" 
-						: rs.getString("TARIKH_PERINTAH"));
+				h.put("TARIKH_PERINTAH",
+						rs.getString("TARIKH_PERINTAH") == null ? "" : rs
+								.getString("TARIKH_PERINTAH"));
 				h.put("ID_PERINTAH", rs.getString("ID_PERINTAH") == null ? ""
 						: rs.getString("ID_PERINTAH"));
-				h.put("NAMA_OB_HA_PERINTAH",rs.getString("NAMA_OB_HA_PERINTAH") == null ? "" 
-						: rs.getString("NAMA_OB_HA_PERINTAH"));
-				h.put("JENIS_PERINTAH",rs.getString("JENIS_PERINTAH") == null ? "" 
-						: rs.getString("JENIS_PERINTAH"));				
-				h.put("WAKTU_KEMATIAN",rs.getString("WAKTU_KEMATIAN") == null ? "" 
-						: rs.getString("WAKTU_KEMATIAN"));
-				h.put("JENIS_WAKTU_MATI",rs.getString("JENIS_WAKTU_MATI") == null ? "" 
-						: rs.getString("JENIS_WAKTU_MATI"));
-				h.put("kodPejabat",rs.getString("kodPejabat") == null ? "" 
-						: rs.getString("kodPejabat"));
-				h.put("idPermohonan",rs.getString("ID_PERMOHONAN"));
+				h.put("NAMA_OB_HA_PERINTAH",
+						rs.getString("NAMA_OB_HA_PERINTAH") == null ? "" : rs
+								.getString("NAMA_OB_HA_PERINTAH"));
+				h.put("JENIS_PERINTAH",
+						rs.getString("JENIS_PERINTAH") == null ? "" : rs
+								.getString("JENIS_PERINTAH"));
 				
+				h.put("WAKTU_KEMATIAN",
+						rs.getString("WAKTU_KEMATIAN") == null ? "" : rs
+								.getString("WAKTU_KEMATIAN"));
+				
+				h.put("JENIS_WAKTU_MATI",
+						rs.getString("JENIS_WAKTU_MATI") == null ? "" : rs
+								.getString("JENIS_WAKTU_MATI"));
+				h.put(
+						"kodPejabat",
+						rs.getString("kodPejabat") == null ? "" : rs
+								.getString("kodPejabat"));
 			}
 			return h;
-		
 		} finally {
 			if (db != null)
 				db.close();
 		}
-	
 	}
 	
 	//ecah
@@ -488,30 +489,33 @@ public class FrmIntegrasiPerintah extends VTemplate {
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			//SQLRenderer r = new SQLRenderer();
+			SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT MTM.IDKADBIRU " +
-				" FROM  TBLPFDFAIL PFD, TBLINTMTKEPUTUSAN MTK, TBLINTMTPERMOHONAN MTM " +
-				" WHERE MTM.PETISYENNO = PFD.NO_FAIL " +
-				" AND MTM.IDKADBIRU = MTK.IDKADBIRU " +
-				" AND PFD.ID_FAIL ="+id_fail;
+					" FROM  TBLPFDFAIL PFD, TBLINTMTKEPUTUSAN MTK, TBLINTMTPERMOHONAN MTM " +
+					" WHERE MTM.PETISYENNO = PFD.NO_FAIL " +
+					" AND MTM.IDKADBIRU = MTK.IDKADBIRU " +
+					"  AND PFD.ID_FAIL ="+id_fail;
 
 			myLogger.info("SQL STATEMENT - BLUECARDID MT : " + sql);
+
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
 			h = new Hashtable();
 			while (rs.next()) {
-				h.put("IDKADBIRU",rs.getString("IDKADBIRU") == null ? "" : rs.getString("IDKADBIRU"));				
-				System.out.println("IDKADBIRU==="+rs.getString("IDKADBIRU"));			
+				h.put("IDKADBIRU",
+						rs.getString("IDKADBIRU") == null ? "" : rs
+								.getString("IDKADBIRU"));
+				
+				
+				System.out.println("IDKADBIRU==="+rs.getString("IDKADBIRU"));
 			}
 			return h;
-			
 		} finally {
 			if (db != null)
 				db.close();
 		}
-		
 	}
 	
 	public String getPejabatJKPTGByKodPejabat(String kodPejabat) {
@@ -540,60 +544,4 @@ public class FrmIntegrasiPerintah extends VTemplate {
 		}
 		return namaPejabat;
 	}
-	
-	public String getSQLPermohonan(String noPetisyen
-		,String namaSimati
-		,String namaSimatiLain
-		,String noKPSimatiBaru,String noKPSimatiLama,String noKPSimatiLain
-		,String DDate
-		,String transactionID){
-
-		SQLRenderer r = new SQLRenderer();
-		r.add("PETISYENNO", noPetisyen);
-		r.add("NAMASIMATI", namaSimati);
-		r.add("NAMASIMATILAIN", namaSimatiLain);
-		r.add("NOKPBARUSIMATI", noKPSimatiBaru);
-		r.add("NOKPLAMASIMATI", noKPSimatiLama);
-		r.add("NOKPLAINSIMATI", noKPSimatiLain);
-		r.add("TARIKHMATI", r.unquote("to_date('" + DDate + "','DD/MM/YYYY')"));
-		//r.add("NAMAPEMOHON", request.getParameter("namaPemohon"));
-		//r.add("TARIKHJANABRGB", r.unquote("to_date('" + BDate + "','DD/MM/YYYY')"));
-		//r.add("NOKPBARUPEMOHON", request.getParameter("noKPPemohon"));
-		//r.add("HUBUNGAN", request.getParameter("hubSimatiPemohon"));
-		//r.add("KODPEJABAT", request.getParameter("kodPejabat"));
-		//r.add("JENISTRANSAKSI", request.getParameter("applicationType"));
-		//r.add("FLAG_REP", "0");
-		//r.add("FLAG_NEGERI", request.getParameter("idnegeri"));// ecah
-		//r.add("JENISKP", request.getParameter("jeniskp"));
-		//r.add("TARIKH_HANTAR", r.unquote("to_date('" + sdf.format(cal.getTime()) + "','DD/MM/YYYY')"));
-		r.add("ID_TRANSAKSI", transactionID);
-	
-		return r.getSQLInsert("TBLINTMTPERMOHONAN");
-	
-	}
-	
-	public boolean isPetitionExist(String petitionNo) {
-		boolean isExist = false;
-		Db db = null;
-		String sql = "";
-		sql = "SELECT 1 FROM TBLINTMTPERMOHONAN WHERE PETISYENNO = '"+ petitionNo + "'";
-
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				isExist = true;
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			if (db != null)
-				db.close();
-		}
-		return isExist;
-		
-	}
-	
-	
 }

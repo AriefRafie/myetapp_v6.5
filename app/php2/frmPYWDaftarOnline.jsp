@@ -21,70 +21,6 @@
 </p>
 <table width="100%" border="0">
   <tr>
-    <td><fieldset>
-      <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
-      <table width="100%" border="0">
-        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td width="28%">No Fail</td>
-          <td width="1%">:</td>
-          <td width="70%"><strong>$beanMaklumatPermohonan.noFail </strong></td>
-        </tr>
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Permohonan</td>
-          <td width="1%" >:</td>
-          <td width="70%">$beanMaklumatPermohonan.noPermohonan </td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Urusan</td>
-          <td>:</td>
-          <td>$selectUrusan</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Suburusan</td>
-          <td>:</td>
-          <td>$selectSuburusan</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td valign="top">Tarikh Terima</td>
-          <td>:</td>
-          <td><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" readonly="readonly" class="disabled" size="11">
-          </td>
-        </tr>
-        <tr>
-          <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Perkara</td>
-          <td valign="top">:</td>
-          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" onBlur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.perkara</textarea>
-            #if ($mode == 'new')
-            <input type="button" name="cmdDaftarBaru2" id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk()"/>
-            #end </td>
-        </tr>
-        #if ($mode != 'view')
-        <tr>
-          <td valign="top">&nbsp;</td>
-          <td valign="top">&nbsp;</td>
-          <td valign="top">&nbsp;</td>
-          <td>Baki Aksara :&nbsp;
-            <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizPerkara" /></td>
-        </tr>
-        #end
-        <tr>
-          <td valign="top">&nbsp;</td>
-          <td valign="top">Catatan</td>
-          <td valign="top">:</td>
-          <td><textarea name="txtCatatan" id="txtCatatan" rows="5" cols="50" $readonly class="$inputTextClass" onBlur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.catatan</textarea></td>
-        </tr>
-        #end
-      </table>
-      </fieldset></td>
-  </tr>
-  <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PEMOHON</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -249,6 +185,71 @@
       </table>
       </fieldset></td>
   </tr>
+  <tr>
+    <td><fieldset>
+      <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
+      <table width="100%" border="0">
+        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%">No Fail</td>
+          <td width="1%">:</td>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noFail </strong></td>
+        </tr>
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%" valign="top">No. Permohonan</td>
+          <td width="1%" >:</td>
+          <td width="70%">$beanMaklumatPermohonan.noPermohonan </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Urusan</td>
+          <td>:</td>
+          <td>$selectUrusan</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Suburusan</td>
+          <td>:</td>
+          <td>$selectSuburusan</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td valign="top">Tarikh Terima</td>
+          <td>:</td>
+          <td><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" readonly="readonly" class="disabled" size="11">
+          </td>
+        </tr>
+        <tr>
+          <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td valign="top">Perkara</td>
+          <td valign="top">:</td>
+          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" onBlur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.perkara</textarea>
+            #if ($mode == 'new')
+            <input type="button" name="cmdDaftarBaru2" id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk()"/>
+            #end </td>
+        </tr>
+        #if ($mode != 'view')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td>Baki Aksara :&nbsp;
+            <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizPerkara" /></td>
+        </tr>
+        #end
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">Catatan</td>
+          <td valign="top">:</td>
+          <td><textarea name="txtCatatan" id="txtCatatan" rows="5" cols="50" $readonly class="$inputTextClass" onBlur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.catatan</textarea></td>
+        </tr>
+        #end
+      </table>
+      </fieldset></td>
+  </tr>
+  
   #if ($mode == 'new')
   <tr>
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i> </td>

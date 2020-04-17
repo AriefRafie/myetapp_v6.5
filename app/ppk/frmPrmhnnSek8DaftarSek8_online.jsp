@@ -92,6 +92,7 @@
 #set ($taraf_penting = "")
 #set ($no_tel = "")
 #set ($nama_pelbagainegara = "")
+#set ($jenisWarga = "")
 #set ($no_hp = "")
 #set ($emel = "")
 #set ($jenis_pemohon = "2")
@@ -132,6 +133,7 @@
 #set ($taraf_penting = $taraf_penting)
 #set ($no_tel = $no_tel)
 #set ($nama_pelbagainegara = $nama_pelbagainegara)
+#set ($jenisWarga = $jenisWarga)
 #set ($no_hp = $no_hp)
 #set ($emel = $emel)
 #set ($jenis_pemohon = $jenis_pemohon)
@@ -214,6 +216,7 @@
         #set ($taraf_penting = $View.taraf_penting)
         #set ($no_tel = $View.no_tel)
         #set ($nama_pelbagainegara = $View.nama_pelbagainegara)
+        #set ($jenisWarga = $View.jenisWarga)
         #set ($no_hp = $View.no_hp)
         #set ($jenis_pemohon = $View.jenis_pemohon)
         #set ($alamat1 = $View.alamat1)
@@ -909,11 +912,83 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             </td>
           </tr>
           
+<tr id="individu_warga">
+  <td valign="top">&nbsp;</td>
+  <td valign="top"><div align="right" class="style38">
+  <div align="left"><span class="style38">Warganegara</span></div>
+  </div></td>
+  <td width="1%" class="style36" valign="top"><div align="right"><span class="style38">:</span></div></td>
+  <td class="style36" valign="top">#if($readmode=="disabled")
+                                          
+     #if($jenisWarga == "1")
+     #set($wrp = "Warganegara")
+     #elseif($jenisWarga == "2")
+     #set($wrp = "Bukan Warganegara")
+     #else
+     #set($wrp="")
+     #end
+                          
+                       
+     #if($wrp=="")
+     <input name="socWarganegaraPe" type="text" id="textfield"  style="text-transform:uppercase;" onblur="uppercase()" size="34" $readmodeR class="$readmode" />
+     #else
+     <input name="socWarganegaraPe" type="text" id="textfield" value="$wrp" style="text-transform:uppercase;" onblur="uppercase()" size="34" $readmodeR class="$readmode" />
+     #end
+     <input name="socWarganegaraPemohon" type="hidden" id="textfield" style="text-transform:uppercase;" onblur="uppercase()" value="$jenisWarga"  size="30" $readmodeR class="$readmode" />
+     #else
+     <select name="socWarganegaraPemohon" id="select4" class="autoselect" style="text-transform:uppercase;" 
+      onchange="alamatwarga(this.value,'alamatwarga','tr_pelbagainegara','$nama_pelbagainegara')" onblur="uppercase();alamatwarga(this.value,'alamatwarga','tr_nama_warga','$nama_pelbagainegara')">
+     #if($jenisWarga=="1")
+	   <option value="1" style="text-transform:uppercase;" onblur="uppercase()">Warganegara</option>
+     <option value="2" style="text-transform:uppercase;" onblur="uppercase()">Bukan Warganegara</option>
+                                                 
+     #elseif($jenisWarga=="2")
+	                               
+     <option value="2" style="text-transform:uppercase;" onblur="uppercase()">Bukan Warganegara</option>
+     <option value="1" style="text-transform:uppercase;" onblur="uppercase()">Warganegara</option>
+     
+    #else
+     <option value="1" style="text-transform:uppercase;" onblur="uppercase()">Warganegara</option>
+     <option value="2" style="text-transform:uppercase;" onblur="uppercase()">Bukan Warganegara</option>
+   #end
+   </select>
+   <div id="alamatwarga"></div>
+   #end                                          
+   </td>
+   </tr>
+        
+        
+        <tr id="tr_mesej_pelbagainegara">
+          <td valign="top">
+        </td>
+        <td valign="top">
+        </td>
+        <td valign="top">
+        </td>
+        <td valign="top"  >
+        <div id="div_mesejpelbagagainegara"></div>
+        </td>        
+        </tr> 
+        
+        
+        <tr id="tr_pelbagainegara">
+        	<td valign="top" ></td>
+        	<td>Negara</td>
+        	<td >:</td>
+        	<td >
+        	<input type = 'text' id = 'nama_pelbagainegara' name = 'nama_pelbagainegara' size='30' maxlength='200' class="$setmode" $readmodeR list = 'datalist'  value="$nama_pelbagainegara"    />
+        	<datalist id = 'datalist'>
+        	#foreach($ja in $kenegaraan)
+        	<option label='$!ja.NAMA_WARGA' value = '$!ja.NAMA_WARGA'></option>
+       	 	#end </datalist>
+        	</td>
+        </tr>
           
           <tr id="kp1" >
           <td valign="top" width="2%">#if($setmode != "disabled")
              <span class="style1">*</span>
               #end</td>
+              
           <td  >MyID Baru</td>
           <td  >:</td>
           <td  scope="col"> #if ($idAlert == "1" || $idAlert == "2")
@@ -1302,35 +1377,8 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             #end
             
             #end </td>
-        </tr>
-        
-        <tr id="tr_mesej_pelbagainegara">
-          <td valign="top">
-        </td>
-        <td valign="top">
-        </td>
-        <td valign="top">
-        </td>
-        <td valign="top"  >
-        <div id="div_mesejpelbagagainegara"></div>
-        </td>        
-        </tr>  
-        
-        <tr id="tr_pelbagainegara">
-                                    <td valign="top" ></td>
-                                    <td>Negara</td>
-                                    <td >:</td>
-                                    <td >
-                                    <input type = 'text' id = 'nama_pelbagainegara' name = 'nama_pelbagainegara' size='30' maxlength='200' $setmodeR class="$setmode" list = 'datalist'  value="$nama_pelbagainegara"    />
-                                    <datalist id = 'datalist'>
-                                    #foreach($ja in $kenegaraan)
-                                    <option label='$!ja.NAMA_WARGA' value = '$!ja.NAMA_WARGA'></option>
-                                    #end </datalist>
-                                    </td>
-        </tr>
-          
-          
-       
+        </tr>        
+                
         <tr>
           <td valign="top">#if($setmode != "disabled") <span class="style1">*</span> #end</td>
           <td class="style38" ><div align="left">#if($setmode != "disabled") Bandar #else
@@ -2044,6 +2092,10 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 </body>
 
 <script>
+selectPelbagaiNegara(document.f1.socNegeri_1a.value,'tr_mesej_pelbagainegara','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');
+selectPelbagaiNegara(document.f1.socNegeri_2a.value,'listnegpomo','listnegeri','nama_negeri');
+alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_pelbagainegara','$nama_pelbagainegara');
+
   function paparLampiran(id_){
   	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
       var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
@@ -2102,6 +2154,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 	}
 
 //selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');
+
   function Batal() {
     input_box = confirm("Adakah anda pasti?");
     if (input_box == true) {
@@ -3051,6 +3104,7 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 
       if(document.f1.taraf_penting.value != "1"){
             document.getElementById("hubungan").style.display="none";
+            document.getElementById('individu_warga').style.display="none";
       
             if(document.f1.baca.value != "disabled"){
             document.f1.socSaudaraWaris.value = ""; 
@@ -3058,6 +3112,7 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
         
           }else{
           document.getElementById("hubungan").style.display="";
+          document.getElementById('individu_warga').style.display="";
           //document.f1.socSaudaraWaris.value = ""; 
       } 
 

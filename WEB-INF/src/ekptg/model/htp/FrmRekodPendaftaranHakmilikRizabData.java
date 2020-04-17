@@ -380,12 +380,12 @@ public class FrmRekodPendaftaranHakmilikRizabData {
 		       	  ",A.ID_DAERAH, (SELECT NAMA_DAERAH FROM TBLRUJDAERAH WHERE ID_DAERAH=A.ID_DAERAH) NAMA_DAERAH" +
 		       	  ",A.ID_MUKIM, (SELECT NAMA_MUKIM FROM TBLRUJMUKIM WHERE ID_MUKIM=A.ID_MUKIM) NAMA_MUKIM" +
 		       	  ",A.ID_JENISHAKMILIK, NVL((SELECT KOD_JENIS_HAKMILIK FROM TBLRUJJENISHAKMILIK WHERE ID_JENISHAKMILIK=A.ID_JENISHAKMILIK),'') KOD_JENISHAKMILIK" +
-		       	  ",NVL((SELECT KETERANGAN FROM TBLRUJJENISHAKMILIK WHERE ID_JENISHAKMILIK=A.ID_JENISHAKMILIK),'') NAMA_JENISHAKMILIK" +
-		       	  ",A.CUKAI, "+
+		       	  ", NVL((SELECT KETERANGAN FROM TBLRUJJENISHAKMILIK WHERE ID_JENISHAKMILIK=A.ID_JENISHAKMILIK),'') NAMA_JENISHAKMILIK" +
+		       	  ", A.CUKAI, "+
 		       	  "A.LOKASI,A.ID_LUAS,A.LUAS,A.ID_LUAS_BERSAMAAN,A.LUAS_BERSAMAAN LUASBERSAMAAN" +
 		       	  ",A.NO_PELAN, A.ID_LOT,NVL((SELECT KETERANGAN FROM TBLRUJLOT WHERE ID_LOT=A.ID_LOT),'') NAMA_LOT" +
-		       	  ",A.ID_RIZAB,NVL(RR.KETERANGAN,'') JENIS_RIZAB " +
-		       	  ",A.ID_KATEGORI,NVL((SELECT KETERANGAN FROM TBLRUJKATEGORI WHERE ID_KATEGORI=A.ID_KATEGORI AND ROWNUM <= 1),'') KATEGORI, "+
+		       	  ", A.ID_RIZAB,NVL(RR.KETERANGAN,'') JENIS_RIZAB " +
+		       	  ", A.ID_KATEGORI,NVL((SELECT KETERANGAN FROM TBLRUJKATEGORI WHERE ID_KATEGORI=A.ID_KATEGORI AND ROWNUM <= 1),'') KATEGORI, "+
 		       	  "A.TEMPOH, A.SYARAT, A.HAKMILIK_ASAL, A.NO_FAIL_JOPA, A.TARAF_HAKMILIK, "+
 		       	  "A.TARIKH_LUPUT, A.CUKAI_TERKINI, A.KEGUNAAN_TANAH, A.NO_PU, "+
 		       	  "A.TARIKH_WARTA, A.KAWASAN_RIZAB, A.NO_SYIT, A.NO_RIZAB NO_WARTA, A.SEKATAN, "+	
@@ -414,21 +414,16 @@ public class FrmRekodPendaftaranHakmilikRizabData {
 		             "ELSE 'TIADA' "+
 		             "END AS STATUS_TANAH " +
 		             ",NVL( (SELECT RJH.KOD_JENIS_HAKMILIK FROM TBLRUJJENISHAKMILIK RJH "+
-		             " 	WHERE RJH.ID_JENISHAKMILIK=A.ID_JENISHAKMILIK)" +
-		             ",'00') KOD_JENIS_HAKMILIK "+
+		             " WHERE RJH.ID_JENISHAKMILIK=A.ID_JENISHAKMILIK),'00') KOD_JENIS_HAKMILIK "+
 		             //"FROM TBLHTPHAKMILIK A, TBLHTPHAKMILIKPERIHAL B,USERS S "+
-				  " ,A.ID_PERMOHONAN " +
-				  " FROM TBLHTPHAKMILIK A,TBLHTPHAKMILIKCUKAI B,USERS S,TBLRUJJENISRIZAB RR " +
-//				  ",TBLRUJJENISHAKMILIK RJH "+
-				  " WHERE " +
-				  " A.ID_HAKMILIK = B.ID_HAKMILIK(+) " +
-				  " AND A.ID_RIZAB = RR.ID_JENISRIZAB(+) " +
-				  " AND A.ID_KEMASKINI = S.USER_ID(+) " +
-				  " AND B.STATUS='S' "+
-				  " AND A.ID_HAKMILIK = '"+id +"' " +
-				  "";			
-			myLog.info("getPaparHakmilikRizabById:sql="+sql);
+				  "FROM TBLHTPHAKMILIK A, TBLHTPHAKMILIKCUKAI B,USERS S,TBLRUJJENISRIZAB RR "+
+				  "WHERE A.ID_HAKMILIK = '"+id +"' " +
+				  "AND A.ID_KEMASKINI = S.USER_ID(+) " +
+				  "AND B.STATUS='S' "+
+				  "AND A.ID_HAKMILIK = B.ID_HAKMILIK(+) " +
+				  "AND RR.ID_JENISRIZAB(+) =A.ID_RIZAB";			
 			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("getPaparHakmilikRizabById:sql="+sql);
 			Hashtable<String,String> h;
 
 			while (rs.next()) {
@@ -481,13 +476,21 @@ public class FrmRekodPendaftaranHakmilikRizabData {
 				h.put("socStatusTanah", rs.getString("STATUS_TANAH")==null ? "":rs.getString("STATUS_TANAH"));
 				h.put("tarikhKemaskini", rs.getString("TARIKH_KEMASKINI")==null ? "":sdf.format(rs.getDate("TARIKH_KEMASKINI")));
 				h.put("socRizab", rs.getString("STATUS_RIZAB")==null ? "":rs.getString("STATUS_RIZAB"));
+		    	/*  if(rs.getString("NO_HAKMILIK")!= null){
+		    		  h.put("socRizab","M");
+		    	  }else{
+		    		  h.put("socRizab","R");
+		    	  }
+		    	  if(rs.getString("NO_HAKMILIK")!= null && rs.getString("NO_WARTA")!= null){
+		    		  h.put("socRizab","X");
+		    	  }*/
 				h.put("userName", rs.getString("USER_NAME")==null ? "":rs.getString("USER_NAME"));
 				h.put("noHakmilikAsal", rs.getString("HAKMILIK_ASAL")==null ? "":rs.getString("HAKMILIK_ASAL"));
 				h.put("catatan", rs.getString("CATATAN")==null ? "":rs.getString("CATATAN"));
 				h.put("idHakmilikCukai", rs.getString("ID_HAKMILIKCUKAI")==null ? "0":rs.getString("ID_HAKMILIKCUKAI"));
 				h.put("kodJenisHakmilik", rs.getString("KOD_JENIS_HAKMILIK")==null ? "00":rs.getString("KOD_JENIS_HAKMILIK"));						
+				//BUG FIX!. syaz. add no_hakmilik. 11/11/2014
 				h.put("NO_HAKMILIK", rs.getString("NO_HAKMILIK")==null ? "":rs.getString("NO_HAKMILIK"));
-				h.put("idPermohonan", rs.getString("ID_PERMOHONAN"));
 				listHakmilik.addElement(h);
 				
 			}
@@ -690,15 +693,14 @@ public class FrmRekodPendaftaranHakmilikRizabData {
 					 	"THEN 'BATAL (PERLETAKHAKAN)' "+		         						  	
 		             "ELSE 'TIADA' "+
 		             "END AS STATUS_TANAH " +
-		          ",NVL( (SELECT RJH.KOD_JENIS_HAKMILIK FROM TBLRUJJENISHAKMILIK RJH "+
-		          " WHERE RJH.ID_JENISHAKMILIK=A.ID_JENISHAKMILIK),'00') KOD_JENIS_HAKMILIK " +
-		          " ,A.ID_PERMOHONAN "+
-				  " FROM TBLHTPHAKMILIK A, USERS S,TBLRUJJENISRIZAB RR "+
-				  " WHERE A.ID_RIZAB = RR.ID_JENISRIZAB(+) " +
-				  " AND A.ID_KEMASKINI = S.USER_ID(+) " +
-				  " AND A.ID_HAKMILIK = '"+id +"'";			
-			myLog.info("getPaparHakmilikRizabById:sql="+sql);
+		             ",NVL( (SELECT RJH.KOD_JENIS_HAKMILIK FROM TBLRUJJENISHAKMILIK RJH "+
+		             " WHERE RJH.ID_JENISHAKMILIK=A.ID_JENISHAKMILIK),'00') KOD_JENIS_HAKMILIK "+
+				  "FROM TBLHTPHAKMILIK A, USERS S,TBLRUJJENISRIZAB RR "+
+				  "WHERE A.ID_HAKMILIK = '"+id +"' " +
+				  "AND A.ID_KEMASKINI = S.USER_ID(+) " +
+				  "AND RR.ID_JENISRIZAB(+) = A.ID_RIZAB";			
 			ResultSet rs = stmt.executeQuery(sql);
+			//log.info("getPaparHakmilikRizabById:sql="+sql);
 			Hashtable<String,String> h;
 
 			while (rs.next()) {
@@ -765,7 +767,6 @@ public class FrmRekodPendaftaranHakmilikRizabData {
 				h.put("catatan", rs.getString("CATATAN")==null ? "":rs.getString("CATATAN"));
 				h.put("idHakmilikCukai", "00");
 				h.put("kodJenisHakmilik", rs.getString("KOD_JENIS_HAKMILIK")==null ? "00":rs.getString("KOD_JENIS_HAKMILIK"));				
-				h.put("idPermohonan", rs.getString("ID_PERMOHONAN"));
 				listHakmilik.addElement(h);
 				
 			}

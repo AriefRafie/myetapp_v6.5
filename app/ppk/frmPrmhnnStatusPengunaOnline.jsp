@@ -182,7 +182,36 @@
    $!senarai.nokplainsimati.toUpperCase()
   #end</td>-->
   <td class="$row" align="center">$senarai.seksyen</td>
-  <td class="$row">$senarai.status</td>
+  <td class="$row"><strong>$senarai.status</strong>
+  #if($senarai.id_status == '18')
+  	<table align="left" width="100%" cellspacing="2" cellpadding="1" border="0">
+  	<tr>
+  		<td width='10%'>Tarikh Bicara</td>
+  		<td> : </td>
+  		<td><b>$senarai.tarikh_bicara</b></td>
+  	</tr>
+  	<tr>
+  		<td>Masa Bicara</td>
+  		<td> : </td>
+  		<td><b>$senarai.masa_bicara</b></td>
+  	</tr>
+  	<tr>
+	  	<td>Tempat Bicara</td>
+	  	<td> : </td>
+	  	<td><b>$senarai.tempat_bicara
+	  	<br>
+	  	$senarai.alamat1,
+	  	<br>
+	  	$senarai.alamat2,
+	  	$senarai.alamat3,
+	  	<br>
+	  	$senarai.poskod, $senarai.bandar,
+	  	<br>
+	  	$senarai.nama_negeri</b></td>
+  	</tr>
+	</table>
+  	#end
+  </td>
   #if($!skrin_deraf =="yes")
   	<td class="$row" align="center">
   		<a href="#" class="style2" onClick="javascript:doHapus('$!senarai.idFail','$!senarai.id_Permohonan')"><img border="0" src="../img/hapus.gif"/></a>
