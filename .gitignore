@@ -1,13 +1,13 @@
 # ignore all logs
 velocity.log
-velocity.log*.1
+velocity.log.1
 
 # ignore all class
 *.class
 
 # ignore all properties
 *.properties
-WEB-INF/src/META-INF/*.properties
+WEB-INF/src/*.properties
 
 WEB-INF/src/META-INF/persistence.xml
 

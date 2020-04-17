@@ -1,6 +1,6 @@
 package integrasi.ws.mt.reg;
 
-import integrasi.IntegrasiManager;
+//import integrasi.IntegrasiManager;
 
 public class MTRegManagerTest {
 	static MTRegManager im = null;
