@@ -8,6 +8,7 @@ velocity.log.1
 # ignore all properties
 *.properties
 WEB-INF/src/*.properties
+WEB-INF/src/dbconnection.properties
 
 WEB-INF/src/META-INF/persistence.xml
 

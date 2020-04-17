@@ -1,4 +1,4 @@
-package ekptg.model.ppk.util;
+package ekptg.model.ppk.online;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +22,8 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.Utils;
 
-public class LampiranBean {
-	private static Logger myLog = Logger.getLogger(ekptg.model.ppk.util.LampiranBean.class);
+public class LampiranBeanOnline {
+	private static Logger myLog = Logger.getLogger(ekptg.model.ppk.online.LampiranBeanOnline.class);
 	Connection conn = null;
 	
 	public String getLampiransHA(String idHarta) throws Exception {
