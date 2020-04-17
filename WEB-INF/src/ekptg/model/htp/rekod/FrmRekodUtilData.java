@@ -362,85 +362,20 @@ public class FrmRekodUtilData {
 		    } finally {
 		      if (db != null) db.close();
 		    }
-		  }	
-	  
-		/* Created by : Mohamad Rosli 2020/04/01
-	   * Tujuan	  : Data dari tblhtphakmilikurusan
-	   * Pra syarat : Static untuk urusan Permohonan-1,Rizab-10,Pembelian-2,Perletakhakan-5
-	   * Tambah parameter idNegeri
-	   */
-	public Vector<Hashtable<String, String>> getHakmilikUrusanMengikutUrusan(String idUrusan,String idNegeri) 
-		throws Exception {
-		Db db = null;
-		String sql = "";
-		Hashtable<String, String> h = null;
-		Vector<Hashtable<String, String>> list = null;
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-		 
-			r.add("P.ID_PERMOHONAN");
-		    r.add("RN.ID_NEGERI");	      
-		    r.add("RN.NAMA_NEGERI");
-		    r.add("F.NO_FAIL");
-		    r.add("F.TAJUK_FAIL");
-		    r.add("PP.NO_RUJUKAN_PTG");
-		    r.add("PP.NO_RUJUKAN_PTD");
-		    r.add("F.ID_URUSAN");
-		    r.add("F.ID_FAIL");
-
-		    r.add("RN.ID_NEGERI",r.unquote("F.ID_NEGERI"));
-		    r.add("P.ID_FAIL",r.unquote("F.ID_FAIL"));
-		    r.add("P.ID_PERMOHONAN",r.unquote("PP.ID_PERMOHONAN"));
-		    r.add("F.ID_NEGERI",r.unquote(idNegeri));
-		      
-		    sql = r.getSQLSelect("TBLPFDFAIL F,TBLPERMOHONAN P,TBLHTPPERMOHONAN PP " +",TBLRUJNEGERI RN ");
-		    sql +=" AND F.ID_URUSAN IN ("+idUrusan+") AND ROWNUM <= 50 ";
-		    sql +=" ORDER BY F.TARIKH_MASUK";
-		    //mylog.info("getHakmilikUrusanMengikutSubUrusan("+idUrusan+") ::"+sql);
-		    ResultSet rs = stmt.executeQuery(sql);
-		    list = new Vector<Hashtable<String, String>>();
-		    while (rs.next()) {
-		    	h = new Hashtable<String, String>();
-				h.put("IdNegeri",rs.getString("ID_NEGERI") == null ? "0" : rs.getString("ID_NEGERI"));
-				h.put("labelNegeri",rs.getString("Id_Negeri") + " - "+ rs.getString("NAMA_NEGERI"));
-				h.put("id", rs.getString("ID_FAIL"));
-				h.put("no", Utils.isNull(rs.getString("NO_FAIL")));
-				h.put("negeri", Utils.isNull(rs.getString("NAMA_NEGERI")));
-				h.put("tajuk", Utils.isNull(rs.getString("TAJUK_FAIL")));
-				//h.put("tujuan", Utils.isNull(rs.getString("TUJUAN")));
-				// h.put("keterangan",
-				// Utils.isNull(rs.getString("KETERANGAN")));
-				h.put("ptg", Utils.isNull(rs.getString("NO_RUJUKAN_PTG")));
-				h.put("ptd", Utils.isNull(rs.getString("NO_RUJUKAN_PTD")));
-				h.put("flagTanah", Utils.isNull(rs.getString("ID_URUSAN")));
-				h.put("idpermohonan",rs.getString("ID_PERMOHONAN") == null ? "0" : rs.getString("ID_PERMOHONAN"));
-				list.addElement(h);
-				
-			}
-			return list;
-			
-		} finally {
-			if (db != null)
-				db.close();
-		}
-		
-	}
-
-	public Vector<Hashtable<String, String>> senaraiFailMengikutCarian(String idUser
-		,String nofail,String tajukfail
-		,String id_kementerian,String id_agensi
-		,String id_negeri,String id_daerah,String id_mukim,String id_urusan)throws Exception {
-		Db db = null;
-		String sql = "";
-	    Vector<Hashtable<String, String>> list = null;
-	    boolean isSearch = false;
-		    
-	    try {
-	    	db = new Db();
-	    	Statement stmt = db.getStatement();
-	    	sql = " SELECT f.id_masuk,p.id_Fail, f.no_Fail, f.tajuk_Fail " +
+		  }			  
+	  public  Vector<Hashtable<String, String>> senaraiFailMengikutCarian(String idUser,
+				String nofail,String tajukfail,String id_kementerian,
+				//AZAM ADD ID_AGENSI
+				String id_agensi,
+				String id_negeri,String id_daerah,String id_mukim,String id_urusan)throws Exception {
+		    Db db = null;
+		    String sql = "";
+		    Vector<Hashtable<String, String>> list = null;
+		    boolean isSearch = false;
+		    try {
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      sql = " SELECT f.id_masuk,p.id_Fail, f.no_Fail, f.tajuk_Fail " +
 		      		" ,(select nama_negeri from tblrujnegeri where id_negeri = f.id_negeri) negeri "+
 		      		" ,s.keterangan, p.tujuan,PP.NO_RUJUKAN_PTD,F.ID_URUSAN,PP.NO_RUJUKAN_PTG" +
 		      		" ,P.ID_PERMOHONAN "+
@@ -505,34 +440,33 @@ public class FrmRekodUtilData {
 		    	  sql = sql + "AND ROWNUM <= 50 ";
 		      }
 		      
-		  sql = sql + "ORDER BY  f.tarikh_kemaskini ";
+		      sql = sql + "ORDER BY  f.tarikh_kemaskini ";
 		      //mylog.info("senaraiFailMengikutCarian() ::"+sql);
-		  ResultSet rs = stmt.executeQuery(sql);
-		  list = new Vector<Hashtable<String, String>>();
-		  Hashtable<String, String> h;
+		      ResultSet rs = stmt.executeQuery(sql);
+		      list = new Vector<Hashtable<String, String>>();
+		      Hashtable<String, String> h;
 
-		  while (rs.next()) {
-			  h = new Hashtable<String, String>();
-			  h.put("id", rs.getString("ID_FAIL"));
-			  h.put("no", Utils.isNull(rs.getString("NO_FAIL")));
-			  h.put("negeri", Utils.isNull(rs.getString("NEGERI")));
-			  h.put("tajuk", Utils.isNull(rs.getString("TAJUK_FAIL")));
-			  h.put("tujuan", Utils.isNull(rs.getString("TUJUAN")));
-			  h.put("keterangan", Utils.isNull(rs.getString("KETERANGAN")));
-		   	  h.put("ptg", Utils.isNull(rs.getString("NO_RUJUKAN_PTG")));
-		   	  h.put("ptd", Utils.isNull(rs.getString("NO_RUJUKAN_PTD")));
-		      h.put("flagTanah", Utils.isNull(rs.getString("ID_URUSAN")));
-		   	  h.put("idpermohonan", rs.getString("ID_PERMOHONAN")==null ? "0" :rs.getString("ID_PERMOHONAN"));
-		   	  list.addElement(h);
-		    	  
+		      while (rs.next()) {
+		    	  h = new Hashtable<String, String>();
+		    	  h.put("id", rs.getString("ID_FAIL"));
+		    	  h.put("no", Utils.isNull(rs.getString("NO_FAIL")));
+		    	  h.put("negeri", Utils.isNull(rs.getString("NEGERI")));
+		    	  h.put("tajuk", Utils.isNull(rs.getString("TAJUK_FAIL")));
+		    	  h.put("tujuan", Utils.isNull(rs.getString("TUJUAN")));
+		    	  h.put("keterangan", Utils.isNull(rs.getString("KETERANGAN")));
+		     	  h.put("ptg", Utils.isNull(rs.getString("NO_RUJUKAN_PTG")));
+		    	  h.put("ptd", Utils.isNull(rs.getString("NO_RUJUKAN_PTD")));
+		    	  h.put("flagTanah", Utils.isNull(rs.getString("ID_URUSAN")));
+		    	  h.put("idpermohonan", rs.getString("ID_PERMOHONAN")==null ? "0" :rs.getString("ID_PERMOHONAN"));
+
+
+		    	  list.addElement(h);
+		      }
+		      return list;
+		    } finally {
+		      if (db != null) db.close();
+		    }
 		  }
-		  return list;
-		    
-	    } finally {
-	    	if (db != null) db.close();
-	    }
-		  
-	}
 	
 		 @SuppressWarnings("unchecked")
 		 public Hashtable<String, Comparable> getPermohonanInfoV1(String idpermohonan)throws Exception {
@@ -935,17 +869,19 @@ public class FrmRekodUtilData {
 			      return h;
 			  }
 
-		// INSER TBLHTPHAKMILIK
-		public String insertHTPRizab(Db db,Hashtable<String,String> data) throws Exception {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			Date date = new Date(); 
-			String currentDate = sdf.format(date);
-			String sql = "";
-			String idHakmilik = "";
+			// INSER TBLHTPHAKMILIK
+			public String insertHTPRizab(Db db,Hashtable data) throws Exception {
+			    //Db db = null;
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				Date date = new Date(); 
+				String currentDate = sdf.format(date);
+			    String sql = "";
+			    String idHakmilik = "";
 
-			try{
-				idHakmilik = String.valueOf(DB.getNextID(db,"TBLHTPHAKMILIK_SEQ"));
-				Statement stmt = db.getStatement();
+			    try{
+			    	  idHakmilik = String.valueOf(DB.getNextID(db,"TBLHTPHAKMILIK_SEQ"));
+					  //db = new Db();
+					  Statement stmt = db.getStatement();
 					  SQLRenderer r = new SQLRenderer();
 			    	  r.add("ID_HAKMILIK", r.unquote(idHakmilik));
 			    	  r.add("ID_PERMOHONAN", data.get("idPermohonan"));
@@ -1023,9 +959,8 @@ public class FrmRekodUtilData {
 //			
 //				    Db db2 = null;
 //				    String sql2 = "";
-				return idHakmilik;
-		   
-		}
+				    return idHakmilik;
+		    }
 
 			/* Created by : Mohamad Rosli 2010/05/06
 			   * Tujuan	  : Data dari tblhtphakmilik

@@ -920,7 +920,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			LampiranBean lBean = new LampiranBean();
 			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idSimati")), "99201"));				
+				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idsimati")), "99201"));				
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 		} else if ("Kemaskini_daftar_pemohon".equals(submit)) {
@@ -982,7 +982,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			
 			LampiranBean lBean = new LampiranBean();
 			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idSimati")), "99201"));				
+				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idsimati")), "99201"));				
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 		} else if ("getBandar".equals(submit)) {
@@ -1089,7 +1089,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			LampiranBean lBean = new LampiranBean();
 			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(kx.get("idSimati")), "99201"));				
+				, lBean.getLampiranSimatiPapari(String.valueOf(kx.get("idsimati")), "99201"));				
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 		} 
@@ -1150,7 +1150,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			
 			LampiranBean lBean = new LampiranBean();
 			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idSimati")), "99201"));				
+				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idsimati")), "99201"));				
 
 		}
 		else if ("Simpanx".equals(submit)) {
@@ -8805,6 +8805,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			if (n == 3) {
 				this.context.put("checked3", "checked");
 			}
+		
 			this.context.put("idSimati", getParam("idSimatiX"));
 			this.context.put("idDokumen", getParam("idDokumen"));//IL
 			this.context.put("namaPelan", getParam("txtNamaPelan"));//IL
@@ -8850,6 +8851,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("negeri", idnegeri);
 			this.context.put("daerah", iddaerah);
 			this.context.put("show_button", "yes");
+		
 		}
 		// DEFAULT,getHtaamX,
 		this.context.put("idhtaamX", idhtaamX);
@@ -8882,7 +8884,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		this.context.put("ViewFail", listFail);
 		context.put("DATEUTIL", new DateUtil());
 		page = "app/ppk/frmPrmhnnSek8HTATH.jsp";
-	//Akhir HTAAMX
+		//Akhir HTAAMX
 	
 	}
 

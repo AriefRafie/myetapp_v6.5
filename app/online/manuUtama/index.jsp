@@ -148,6 +148,7 @@
 					</tr>
 					<tr>
 						<td>
+
 						<a href="javascript:goTo('PHPAPB')" class="help" title="Permohonan Akta Pelantar Benua">
 							<font color="blue"><li>Permohonan Akta Pelantar Benua</li></font>
 						</a>
@@ -312,6 +313,56 @@
 		</table>
 	</td>
 	</tr>
+	
+	<tr>
+	<td valign="top" align="left">
+		<table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
+        <tr>
+		<td width="50%" valign="top">
+			<table width="100%" border="0" class="regular">
+			<tr>
+				<td width="15%" align="center" valign="top"><img src="../img/online/kwallet.png" align="center"/></td>
+				<td width="85%">
+					<table>
+					<tr>
+						<td><b>Harta Tanah Persekutuan</b></td>
+					</tr>
+					<tr>
+						<td>
+						<a href="javascript:goTo('HTP')" class="help" title="Daftar Permohonan Pajakan">
+							<font color="blue"><li>Permohonan Pajakan</li></font>
+						</a>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			</table>
+		</td>
+		<td width="50%" valign="top">
+			<table width="100%" border="0" class="regular">
+			<tr>
+				<td width="15%" align="center" valign="top"></td>
+				<td width="85%">
+					<table>
+					<tr>
+						<td><b></b></td>
+					</tr>
+					<tr>
+						<td>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			</table>
+		</td>
+        </tr>
+		</table>
+	</td>
+	</tr>
+	
+	
 	</table>
 </td>
 
@@ -500,6 +551,13 @@ else if(location=='HELP'){
         document.${formName}.namatab.value = "Panduan";
         document.${formName}.namamodul.value = "ekptg.view.FrmManualPengguna";
         document.${formName}.submit();
+}
+
+else if(location=='HTP'){
+    document.${formName}.action = "?myrole=htp-online-user";
+    document.${formName}.namatab.value = "Harta Tanah Persekutuan";
+    document.${formName}.namamodul.value = "ekptg.view.htp.online.FrmPajakanOnlineMaklumatPajakanView";
+    document.${formName}.submit();
 }
 }
 
