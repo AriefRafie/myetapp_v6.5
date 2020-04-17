@@ -274,15 +274,16 @@ public class BantahanAgensiDaftar extends EkptgCache implements Serializable {
 				return getTarikhPentingAP;					
 		 }	
  
-			@SuppressWarnings("unchecked")
-			public Vector getMaklumatBantahanAP(String id_permohonan, String id_hakmilik, String id_siasatan, String id_warta) throws Exception {		 							
-				 Db db = null;
-				 String sql = "";
-				try{
-						getMaklumatBantahanAP = new Vector();
-						db = new Db();
-						Statement stmt = db.getStatement();
-						SQLRenderer r = new SQLRenderer();				
+	@SuppressWarnings("unchecked")
+	public Vector getMaklumatBantahanAP(String id_permohonan, String id_hakmilik, String id_siasatan, String id_warta) throws Exception {		 							
+		Db db = null;
+		String sql = "";
+		
+		try{
+			getMaklumatBantahanAP = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();				
 					/*	sql =  " SELECT DISTINCT I.MAKLUMAT_BANTAHAN_TAMAT_TEMPOH,I.FLAG_SEMAKAN_ONLINE, E.ID_SIASATAN,I.ID_BANTAHAN,I.NO_BANTAHAN,I.JENIS_PEMBANTAH,I.TARIKH_TERIMA,I.TARIKH_BORANGN,I.ID_PIHAKBERKEPENTINGAN, "; 
 						sql += " I.STATUS_BANTAHAN_AP,I.ID_HAKMILIK,I.ALASAN,I.KEPENTINGANKEATAS,I.ID_KEMENTERIAN,J.NAMA_KEMENTERIAN,J.ALAMAT1,J.ALAMAT2,J.ALAMAT3,J.POSKOD, ";
 						sql += " J.ID_NEGERI,K.NAMA_NEGERI,B.NO_HAKMILIK,B.NO_LOT,B.NO_PT,I.FLAG_SYARAT,B.FLAG_BANTAHAN,I.FLAG_PENERIMA_PAMPASAN,I.FLAG_BAHAGIAN_PAMPASAN, ";
@@ -299,7 +300,7 @@ public class BantahanAgensiDaftar extends EkptgCache implements Serializable {
 						sql += " AND A.ID_PERMOHONAN = '"+id_permohonan+"' AND B.ID_HAKMILIK = '"+id_hakmilik+"' ";
 						sql += " AND E.ID_SIASATAN = '"+id_siasatan+"' AND L.ID_WARTA = '"+id_warta+"' ";	
 					*/
-						sql = "SELECT B.ID_HAKMILIK, B.ID_BANTAHAN, B.MAKLUMAT_BANTAHAN_TAMAT_TEMPOH, " +
+			sql = "SELECT B.ID_HAKMILIK, B.ID_BANTAHAN, B.MAKLUMAT_BANTAHAN_TAMAT_TEMPOH, " +
 								"B.FLAG_SEMAKAN_ONLINE, B.NO_BANTAHAN, B.JENIS_PEMBANTAH, B.TARIKH_TERIMA, B.TARIKH_BORANGN, " +
 								"B.ID_PIHAKBERKEPENTINGAN, B.STATUS_BANTAHAN_AP, B.ALASAN, B.KEPENTINGANKEATAS, K.NAMA_KEMENTERIAN, " +
 								"N.NAMA_NEGERI, K.ALAMAT1, K.ALAMAT2, K.ALAMAT3, K.POSKOD, " +
@@ -321,15 +322,15 @@ public class BantahanAgensiDaftar extends EkptgCache implements Serializable {
 								"AND S.ID_SIASATAN = AW.ID_SIASATAN(+) " +
 								"AND W.ID_WARTA = '"+id_warta+"' " +
 								"AND P.ID_PERMOHONAN = '"+id_permohonan+"' " +
-								"AND B.ID_HAKMILIK = '"+id_hakmilik+"' ";
-								
-						           
-						myLogger.info("test 123:: "+sql);
-						ResultSet rs = stmt.executeQuery(sql);
+								"AND B.ID_HAKMILIK = '"+id_hakmilik+"' " +
+					"";
+										           
+			myLogger.info("getMaklumatBantahanAP:sql="+sql);
+			ResultSet rs = stmt.executeQuery(sql);
 						
-						Hashtable h;			    
-				     while (rs.next()) {
-				    	h = new Hashtable();
+			Hashtable h;			    
+			while (rs.next()) {
+				h = new Hashtable();
 				    	h.put("maklumat_bantahan_tamat_tempoh", rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH")==null?"":rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH"));
 				    	h.put("FLAG_SEMAKAN_ONLINE", rs.getString("FLAG_SEMAKAN_ONLINE")==null?"":rs.getString("FLAG_SEMAKAN_ONLINE"));
 				    	h.put("id_siasatan", rs.getString("ID_SIASATAN")==null?"":rs.getString("ID_SIASATAN"));
@@ -372,13 +373,14 @@ public class BantahanAgensiDaftar extends EkptgCache implements Serializable {
 				    	h.put("flag_online", rs.getString("FLAG_ONLINE")==null?"":rs.getString("FLAG_ONLINE"));				    	
 				    	getMaklumatBantahanAP.addElement(h);		    	
 				   
-				      	}      
-					}
-						finally{
-							if(db != null)db.close();
-						}	
-					return getMaklumatBantahanAP;
-		}		 
+				}      
+			
+		}finally{
+			if(db != null)db.close();
+		}	
+		return getMaklumatBantahanAP;
+		
+	}		 
 
 			public Vector getMaklumatPampasanAP(String id_hakmilik) throws Exception {		 							
 				 Db db = null;
