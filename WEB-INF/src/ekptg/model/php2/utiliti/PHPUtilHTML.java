@@ -9,7 +9,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import ekptg.model.entities.Tblpfdfail;
-import ekptg.model.entities.Tblphprujjenistujuan;
+import ekptg.model.entities.Tblrujsubsuburusan;
 
 public class PHPUtilHTML {
 
@@ -18,11 +18,11 @@ public class PHPUtilHTML {
 	public static String SelectTujuanByIdSuburusan(String idSuburusan,
 			String selectName, Long selectedValue, String disability)
 			throws Exception {
-			return SelectTujuanByIdSuburusan(idSuburusan, selectName, selectedValue,
+			return SelectSubsuburusanByIdSuburusan(idSuburusan, selectName, selectedValue,
 					disability, null);
 		}
 	
-	public static String SelectTujuanByIdSuburusan(String idSuburusan, String selectName,
+	public static String SelectSubsuburusanByIdSuburusan(String idSuburusan, String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
 		StringBuffer sb = new StringBuffer("");
@@ -35,18 +35,18 @@ public class PHPUtilHTML {
 			sb.append(" > ");
 
 			sb.append("<option value=>SILA PILIH</option>\n");
-			Vector<Tblphprujjenistujuan> v = PHPUtilData.getTujuanBySubUrusan(idSuburusan);
-			Tblphprujjenistujuan jenistujuan = null;
+			Vector<Tblrujsubsuburusan> v = PHPUtilData.getSubsuburusanBySubUrusan(idSuburusan);
+			Tblrujsubsuburusan jenistujuan = null;
 			String tujuan = "";
 			for (int i = 0; i < v.size(); i++) {
-				jenistujuan = (Tblphprujjenistujuan) v.get(i);
-				if (jenistujuan.getIdJenistujuan().equals(selectedValue)) {
+				jenistujuan = (Tblrujsubsuburusan) v.get(i);
+				if (jenistujuan.getIdSubsuburusan().equals(selectedValue)) {
 					tujuan = "selected";
 				} else {
 					tujuan = "";
 				}
-				sb.append("<option " + tujuan + " value=" + jenistujuan.getIdJenistujuan() + ">"
-						+ jenistujuan.getKodJenistujuan() + " - " + jenistujuan.getKeterangan()
+				sb.append("<option " + tujuan + " value=" + jenistujuan.getIdSuburusan() + ">"
+						+ jenistujuan.getKodSubsuburusan() + " - " + jenistujuan.getNamaSubsuburusan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
