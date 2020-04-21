@@ -38,31 +38,31 @@
              <input type="hidden" name="idSubUrusan" id="idSubUrusan" value="57"/></td>
         </tr>
         <tr>
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td valign="top">Tarikh Terima</td>
           <td>:</td>
           <td><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" onblur="check_date(this);cekTarikhTerima(this)" size="11" $readonly class="$inputTextClass"/>
-            #if ($modePopup != 'view') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
+            #if ($mode == 'new') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
         </tr>
         <tr>
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td valign="top">Tarikh Surat</td>
           <td>:</td>
           <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="11" $readonly class="$inputTextClass"/>
-            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($modePopup != 'view')<img border="0" src="../img/calendar.gif"/>#end</td>
+            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode == 'new')<img border="0" src="../img/calendar.gif"/>#end</td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>No. Rujukan Surat</td>
           <td>:</td>
           <td><input type="text" name="txtNoRujukanSurat" id="txtNoRujukanSurat" value="$beanMaklumatPermohonan.noRujSurat" $readonly class="$inputTextClass" size="43" /></td>
         </tr>
         <tr>
-          <td width="1%" valign="top">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="1%" valign="top">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td valign="top">Perkara</td>
           <td valign="top">:</td>
           <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" >$beanMaklumatPermohonan.perkara</textarea>
-            #if ($modePopup != 'view')
+            #if ($mode == 'new')
             <input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/>
             #end</td>
         </tr>
@@ -76,50 +76,50 @@
       #foreach ($beanMaklumatPemohon in $BeanMaklumatPemohon)
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td width="28%">Kategori Pemohon</td>
           <td>:</td>
           <td width="70%">$selectKategoriPemohon</td>
         </tr>
         #if ($idKategoriPemohon == '1')
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Nama</td>
           <td>:</td>
           <td><input type="text" name="txtNama" id="txtNama" value="$beanMaklumatPemohon.nama" $readonly class="$inputTextClass" size="43" /></td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Jenis Pengenalan</td>
           <td>:</td>
           <td>$selectJenisPengenalanIndividu</td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>No. Pengenalan/<em>MyID</em></td>
           <td>:</td>
           <td><input type="text" name="txtNoPengenalan" id="txtNoPengenalan" maxlength="12" value="$beanMaklumatPemohon.noPengenalan"  $readonly class="$inputTextClass" /></td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Pekerjaan</td>
           <td>:</td>
           <td><input type="text" name="txtPekerjaan" id="txtPekerjaan" value="$beanMaklumatPemohon.pekerjaan"  $readonly class="$inputTextClass" size="43" /></td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Jantina</td>
           <td>:</td>
           <td>$selectJantina</td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Bangsa</td>
           <td>:</td>
           <td>$selectBangsa</td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Alamat</td>
           <td>:</td>
           <td><input type="text" name="txtAlamat1" id="txtAlamat1" value="$beanMaklumatPemohon.alamat1"  $readonly class="$inputTextClass" size="43" /></td>
@@ -137,19 +137,19 @@
           <td><input type="text" name="txtAlamat3" id="txtAlamat3" value="$beanMaklumatPemohon.alamat3"  $readonly class="$inputTextClass" size="43" /></td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Poskod</td>
           <td>:</td>
           <td><input type="text" name="txtPoskod" id="txtPoskod" size="4" onkeyup="validatePoskod(this,this.value);" maxlength="5" value="$beanMaklumatPemohon.poskod" $readonly class="$inputTextClass"/></td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Negeri</td>
           <td>:</td>
           <td>$selectNegeri</td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Bandar</td>
           <td>:</td>
           <td>$selectBandar</td>
@@ -180,14 +180,14 @@
         </tr>
         #elseif ($idKategoriPemohon == '2')
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>No. Pendaftaran Syarikat/<em>MyCoID</em></td>
           <td>:</td>
           <td><input type="text" name="txtNoPengenalanSykt" id="txtNoPengenalanSykt" maxlength="12" value="$beanMaklumatPemohon.noPengenalanSykt" onblur="this.value=this.value.toUpperCase();doChangeNoPendaftaran();" $readonly class="$inputTextClass"/>
           </td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Nama Syarikat</td>
           <td>:</td>
           <td><input type="text" name="txtNamaSykt" id="txtNamaSykt" value="$beanMaklumatPemohon.namaSykt" $readonly class="$inputTextClass"  size="43" /></td>
@@ -199,7 +199,7 @@
           <td valign="top"><textarea name="txtPekerjaanSykt" class="$inputTextClass" id="txtPekerjaanSykt" cols="50" rows="5"   $readonly="$readonly">$beanMaklumatPemohon.pekerjaanSykt</textarea></td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Alamat</td>
           <td>:</td>
           <td><input type="text" name="txtAlamat1Sykt" id="txtAlamat1Sykt" value="$beanMaklumatPemohon.alamat1Sykt"  $readonly class="$inputTextClass" size="43" /></td>
@@ -217,19 +217,19 @@
           <td><input type="text" name="txtAlamat3Sykt" id="txtAlamat3Sykt" value="$beanMaklumatPemohon.alamat3Sykt"  $readonly class="$inputTextClass" size="43" /></td>
         </tr>
         <tr>
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Poskod</td>
           <td>:</td>
           <td><input type="text" name="txtPoskodSykt" id="txtPoskodSykt" size="4" onkeyup="validatePoskod(this,this.value);" maxlength="5" value="$beanMaklumatPemohon.poskodSykt" $readonly class="$inputTextClass"/></td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Negeri</td>
           <td>:</td>
           <td>$selectNegeriSykt</td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Bandar</td>
           <td>:</td>
           <td>$selectBandarSykt</td>
@@ -264,12 +264,12 @@
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td width="28%">Luar Perairan Negeri</td>
           <td width="90%">: $selectFlagLuar</td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Negeri</td>
           <td>: 
             $selectNegeriPerairan
@@ -279,26 +279,29 @@
         #end
       </table>
       </fieldset>
+
+<div id="fileupload_progress"></div>
+<div id="progressBar" style="display: none;">
+<div id="progressBarBoxContent"></div>
+</div>
+#if ($completed)
+<script>
+parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"success\">Fail berjaya dimuatnaik.</div>";
+</script>
+#end  
        <tr>
     <td colspan="2"><fieldset>
       <legend><strong>DOKUMEN SOKONGAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
-        
         <tr> 
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td width="28%">Dokumen</td>
           <td>:</td>
           <td width="90%"><input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup2  class="$inputTextClassPopup" /></td>
         </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Saiz muat naik fail adalah tidak melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba dengan saiz fail yang lebih kecil.</span></span></td>
-        </tr>
-       </table></fieldset></td>
+        </table></fieldset></td>
   </tr>
-  #if ($modePopup != 'view')
+  #if ($mode == 'new')
   <tr>
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
   </tr>
@@ -329,6 +332,7 @@ function doChangeNoPendaftaran() {
 function doChangeNegeriPerairan() {
 	doAjaxCall${formName}("doChangeNegeriPerairan");
 }
+
 function daftarBaru() {
 	//CHECK DATE   
 	var str1  = document.${formName}.tarikhTerima.value;		   
@@ -481,7 +485,6 @@ function daftarBaru() {
   		document.${formName}.socNegeriPerairan.focus(); 
 		return; 
 	}
-	
 	if(document.${formName}.fileupload.value == ""){
 		alert('Sila pilih Fail yang Ingin Dimuatnaik.');
   		document.${formName}.fileupload.focus(); 
@@ -492,14 +495,26 @@ function daftarBaru() {
 		document.${formName}.actionOnline.value = "daftarBaru";
 		return;
 	}
-	
-	document.${formName}.actionOnline.value = "papar";
-	doAjaxCall${formName}("doDaftarBaru");
+	document.${formName}.actionOnline.value = "seterusnya";
+	document.${formName}.hitButton.value = "daftarBaru";
+	document.${formName}.mode.value = "view";
+	document.${formName}.submit();
 }
+
 function kembali() {	
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
 }
+
+function daftarDokumen() {
+	document.${formName}.action = "?_portal_module=ekptg.new.php2.online.frmAPBDaftarManual";
+	document.${formName}.method="POST";
+	document.${formName}.actionPelepasan.value = "papar";
+	document.${formName}.mode.value = "new";	
+	document.${formName}.flagPopup.value = "openPopupDokumen";
+	document.${formName}.submit();
+}
+
 function cekTarikhTerima(elmnt) {
 //CHECK DATE   
 	var str1  = document.${formName}.tarikhTerima.value;		   

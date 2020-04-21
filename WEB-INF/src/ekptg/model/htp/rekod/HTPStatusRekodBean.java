@@ -199,7 +199,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 		    	" AND SUSF.AKTIF = 1 "+
 		    	" AND SUS.LANGKAH = "+langkah+
 	    		" ";
-//	    	myLog.info("getInfoStatusPermohonanFail:"+sql);
+	    	myLog.info("getInfoStatusPermohonanFail:"+sql);
 	    	ResultSet rs = stmt.executeQuery(sql);	      	
 			 
 	    	while (rs.next()) {
@@ -1121,7 +1121,7 @@ public class HTPStatusRekodBean implements IHTPStatus {
 		,String idTanah
 		,String portal_role) throws Exception{
 		//lebah.portal.velocity.VTemplate context
-		String langkah = "";
+		String langkah = "0";
 		String statuSemasa = "0";
 		if(portal_role.contains("PenggunaNegeri")){
 			langkah = "1";

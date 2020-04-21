@@ -8,5 +8,5 @@
 package integrasi.ws.mt.reg;
 
 public interface CivilRegisterCase_PortType extends java.rmi.Remote {
-    public integrasi.ws.mt.reg.Civilregistercaseresponse civilRegisterCase(integrasi.ws.mt.reg.Civilregistercaserequest parameters) throws java.rmi.RemoteException;
+    public Civilregistercaseresponse civilRegisterCase(Civilregistercaserequest parameters) throws java.rmi.RemoteException;
 }
