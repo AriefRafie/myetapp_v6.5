@@ -52,7 +52,7 @@ public abstract class AjaxBasedModule extends VTemplate{
     public Template doTemplate() throws Exception {
         HttpSession session = request.getSession();
         String USER_ID_SYSTEM = (String)session.getAttribute("_ekptg_user_id");
-        myLog.info("USER_ID_SYSTEM ="+USER_ID_SYSTEM);
+//        myLog.info("USER_ID_SYSTEM ="+USER_ID_SYSTEM);
         Template template = null;
         /*
         if(USER_ID_SYSTEM == null)
