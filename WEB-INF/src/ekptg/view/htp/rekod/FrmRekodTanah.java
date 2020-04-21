@@ -1700,17 +1700,17 @@ public class FrmRekodTanah extends AjaxBasedModule {
 			if(portal_role.contains("HQPengguna")){
 	  			langkah = "6";
     			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"7");
-    			ef.emelByRole(userMail, portal_role, null, tajuk, kandungan);
+    			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
     					
     		}else if(portal_role.contains("HQPegawai")){
 	  			langkah = "7";
     			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"8");
-    			ef.emelByRole(userMail, portal_role, null, tajuk, kandungan);
+    			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
     			
     		}else if(portal_role.contains("HQPengarah")){
 	  			langkah = "8";
     			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"9");
-    			ef.emelByRole(userMail, portal_role, null, tajuk, kandungan);
+    			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
     		
     			getStatusRekod().kemaskiniStatusPermohonan(idTanah,"D","",userId);
     		

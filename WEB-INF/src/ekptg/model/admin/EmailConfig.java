@@ -22,7 +22,7 @@ public class EmailConfig {
 		mail = EmailSender.getInstance();
 	}
 	
-	public void emelByRole(String userMail
+	public void sendByRole(String userMail
 		,String role
 		,String idNegeri
 		,String tajuk
