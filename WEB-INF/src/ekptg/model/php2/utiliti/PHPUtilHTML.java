@@ -36,17 +36,17 @@ public class PHPUtilHTML {
 
 			sb.append("<option value=>SILA PILIH</option>\n");
 			Vector<Tblrujsubsuburusan> v = PHPUtilData.getSubsuburusanBySubUrusan(idSuburusan);
-			Tblrujsubsuburusan jenistujuan = null;
-			String tujuan = "";
+			Tblrujsubsuburusan t = null;
+			String ss = "";
 			for (int i = 0; i < v.size(); i++) {
-				jenistujuan = (Tblrujsubsuburusan) v.get(i);
-				if (jenistujuan.getIdSubsuburusan().equals(selectedValue)) {
-					tujuan = "selected";
+				t = (Tblrujsubsuburusan) v.get(i);
+				if (t.getIdSubsuburusan().equals(selectedValue)) {
+					ss = "selected";
 				} else {
-					tujuan = "";
+					ss = "";
 				}
-				sb.append("<option " + tujuan + " value=" + jenistujuan.getIdSuburusan() + ">"
-						+ jenistujuan.getKodSubsuburusan() + " - " + jenistujuan.getNamaSubsuburusan()
+				sb.append("<option " + ss + " value=" + t.getIdSubsuburusan() + ">"
+						+ t.getKodSubsuburusan() + " - " + t.getNamaSubsuburusan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");

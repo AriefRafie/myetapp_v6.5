@@ -2141,13 +2141,13 @@ public class FrmPYWOnlineSenaraiFailData {
 			sql = "SELECT A.ID_URUSAN, A.ID_SUBURUSAN, B.ID_PERMOHONAN, B.NO_PERMOHONAN"
 				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B WHERE A.ID_FAIL = B.ID_FAIL AND A.ID_FAIL = '" + idFail + "'";
 			*/
-			sql = " SELECT A.ID_URUSAN, A.ID_SUBURUSAN, A.NO_FAIL, A.ID_FAIL, B.ID_PERMOHONAN, B.NO_PERMOHONAN, " +
+			sql = " SELECT A.ID_URUSAN, A.ID_SUBURUSAN, A.ID_SUBSUBURUSAN, A.NO_FAIL, A.ID_FAIL, B.ID_PERMOHONAN, B.NO_PERMOHONAN, " +
 					" B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN AS TUJUAN_PERMOHONAN, " +
 					" B.ID_PEMOHON, A.ID_URUSAN, A.ID_SUBURUSAN, C.FLAG_PROSESFAIL, C.CATATAN, C.TUJUAN, B.ID_PERMOHONAN "+
 					" FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C "+  
 					" WHERE A.ID_FAIL = B.ID_FAIL "+ 
 					" AND B.ID_PERMOHONAN = C.ID_PERMOHONAN "+
-					" AND B.ID_PERMOHONAN = '" + idFail + "'";
+					" AND A.ID_FAIL = '" + idFail + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -2160,6 +2160,7 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
 				h.put("idUrusan", rs.getString("ID_URUSAN") == null ? "" : rs.getString("ID_URUSAN"));
 				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN"));
+				h.put("idSubsuburusan", rs.getString("ID_SUBSUBURUSAN") == null ? "" : rs.getString("ID_SUBSUBURUSAN"));
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? "" : sdf.format(rs.getDate("TARIKH_SURAT")));
 				h.put("perkara", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL"));
 				h.put("noRujukanSurat", rs.getString("NO_RUJ_SURAT") == null ? "" : rs.getString("NO_RUJ_SURAT"));
