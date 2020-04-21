@@ -25,8 +25,6 @@ import ekptg.model.ppt.PPTHeader;
  */
 
 
-
-
 public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 
 	private static final long serialVersionUID = 1L;
@@ -36,7 +34,6 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
 	PPTHeader header = new PPTHeader();
 	FrmSek8LaporanAwalTanahData modelLaporanAwal = new FrmSek8LaporanAwalTanahData();
-	
 	
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
@@ -50,7 +47,6 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			if (dbx != null)
 				dbx.close();
 		}
-		
 		
 		myLogger.info(".:FrmPopupPilihPegawaiReportView:.");
 		@SuppressWarnings("unused")
@@ -66,7 +62,6 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		Vector malaysianDateByDate = new Vector();
 		Vector dataMT = new Vector();
 		Vector checkBorangG = new Vector();
-		
 		
 		checkBorangG.clear();
 		dataMT.clear();
@@ -112,9 +107,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String id_buktipenyampaian = getParam("id_buktipenyampaian");
 		String id_borangh = getParam("id_borangh");
 					
-		
 		myLogger.info("--------- report :"+report);
-		
 		
 		String bydate = getParam("bydate");
 		
@@ -180,8 +173,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			context.put("selectPejabatJPPH",HTML.selectPejabatJPPHByNegeri(id_negeri,"socPejabatJPPH",null,"",""));
 		}else{
 			context.put("selectPejabatJPPH",HTML.selectPejabatJPPH("socPejabatJPPH",null,"",""));
-		}
-		
+		}		
 		
 		//pejabat arb
 		if(id_negeri!=""){
@@ -198,8 +190,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	    	Hashtable np = (Hashtable)dataNamaPengarah.get(0);
 	    	nama_pengarah = np.get("nama_pengarah").toString();
 	    }
-	    
-	    
+	    	    
 	    //GET TARIKH SIASATAN
 	    String lbltarikhSiastan = "";
 	    logic.setListTarikhSiastan(id_permohonan);
@@ -237,8 +228,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			totalLuasAmbil = (String)la.get("totalLuasAmbil");
 			totalLuasAmbil_nonformat = (String)la.get("totalLuasAmbil_nonformat");
 		}
-		
-		
+			
 		String namaBankMT = "";
 		String noAkaunMT = "";
 		String namaARB = "";
@@ -256,31 +246,19 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 					Hashtable mt = (Hashtable)dataMT.get(0);
 					namaMT = (String)mt.get("NAMA_PEJABAT");
 				}
-			    
-			    
-			   
-		
+			    		
 		//1-amanah raya
 		//2-mahkamah
 		
-		
-		/*		
-		if(id_negeri.equals("10")){
-			namaBankMT = "Affin Bank (Cawangan Shah Alam)";
-			noAkaunMT = "1059-9000-3766";
-			namaARB = "Amanah Raya Berhad Shah Alam";
-			namaBankARB = "Bank Muamalat Malaysia Berhad (Cawangan Shah Alam)";
-			noAkaunARB = "1202-0000301-71-2";
-		}else if(id_negeri.equals("8")){
-			namaBankMT = "Affin Bank Malaysia Berhad";
-			noAkaunMT = "106110003215";
-			namaARB = "Amanah Raya Berhad Ipoh";
-			namaBankARB = "Bank Muamalat Malaysia Berhad";
-			noAkaunARB = "0804-0000483-71-6";
-		}
-		*/
-		
-		
+				/*
+				 * if(id_negeri.equals("10")){ namaBankMT = "Affin Bank (Cawangan Shah Alam)";
+				 * noAkaunMT = "1059-9000-3766"; namaARB = "Amanah Raya Berhad Shah Alam";
+				 * namaBankARB = "Bank Muamalat Malaysia Berhad (Cawangan Shah Alam)";
+				 * noAkaunARB = "1202-0000301-71-2"; }else if(id_negeri.equals("8")){ namaBankMT
+				 * = "Affin Bank Malaysia Berhad"; noAkaunMT = "106110003215"; namaARB =
+				 * "Amanah Raya Berhad Ipoh"; namaBankARB = "Bank Muamalat Malaysia Berhad";
+				 * noAkaunARB = "0804-0000483-71-6"; }
+				 */
 		
 		//date in malay
 		String sysdateMalay = "";
@@ -296,7 +274,6 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	    String monthEng = lebah.util.Util.getDateTime(new Date(), "MMMM");
 	    String yearEng = lebah.util.Util.getDateTime(new Date(), "yyyy");
 	    String sysdateEng = dayEng+" day of "+monthEng+" "+yearEng;
-	    
 	    
 	    String showG_MT = "";
     	String showG_ARB = "";
@@ -330,47 +307,36 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	  		String submit = getParam("command");
 	      	myLogger.info("submit : " + submit);
 	    
-	    if ("simpanAcc".equals(submit)) 
-    	{    		
-    		if(showG_ARB.equals("yes"))
-    		{
-    			Hashtable getAccAmanah = getAccAmanahRaya(id_negeri,"1");
-    			if(getAccAmanah.get("CHECK_VAL").toString().equals("1"))
-    			{					
-    				updateTableAcc(id_negeri,getParam("txtNamaBankARB"),getParam("txtNamaAkaunARB"),getParam("txtNomborAkaunARB"),"1");
-    			}
-    			else
-    			{
-    				insertTableAcc(id_negeri,getParam("txtNamaBankARB"),getParam("txtNamaAkaunARB"),getParam("txtNomborAkaunARB"),"1");
-    			}
-    		}
-    		if(showG_MT.equals("yes"))
-    		{
-    			Hashtable getAccMahkamah = getAccAmanahRaya(id_negeri,"2");
-    			if(getAccMahkamah.get("CHECK_VAL").toString().equals("1"))
-    			{					
-    				updateTableAcc(id_negeri,getParam("txtNamaBankMT"),getParam("txtNamaAkaunMT"),getParam("txtNomborAkaunMT"),"2");
-    			}
-    			else
-    			{
-    				insertTableAcc(id_negeri,getParam("txtNamaBankMT"),getParam("txtNamaAkaunMT"),getParam("txtNomborAkaunMT"),"2");
-    			}
-    		}
-    		context.put("sorSelectNoFail", getParam("sorSelectNoFail"));
-    	}
+			if ("simpanAcc".equals(submit)) {
+				if (showG_ARB.equals("yes")) {
+					Hashtable getAccAmanah = getAccAmanahRaya(id_negeri, "1");
+					if (getAccAmanah.get("CHECK_VAL").toString().equals("1")) {
+						updateTableAcc(id_negeri, getParam("txtNamaBankARB"), getParam("txtNamaAkaunARB"),
+								getParam("txtNomborAkaunARB"), "1");
+					} else {
+						insertTableAcc(id_negeri, getParam("txtNamaBankARB"), getParam("txtNamaAkaunARB"),
+								getParam("txtNomborAkaunARB"), "1");
+					}
+				}
+				if (showG_MT.equals("yes")) {
+					Hashtable getAccMahkamah = getAccAmanahRaya(id_negeri, "2");
+					if (getAccMahkamah.get("CHECK_VAL").toString().equals("1")) {
+						updateTableAcc(id_negeri, getParam("txtNamaBankMT"), getParam("txtNamaAkaunMT"),
+								getParam("txtNomborAkaunMT"), "2");
+					} else {
+						insertTableAcc(id_negeri, getParam("txtNamaBankMT"), getParam("txtNamaAkaunMT"),
+								getParam("txtNomborAkaunMT"), "2");
+					}
+				}
+				context.put("sorSelectNoFail", getParam("sorSelectNoFail"));
+			}
 	    
-	    
-	    
- 		
-    	
-    	
-    	String nama_amanah = "";
+	  	String nama_amanah = "";
 		String namaBank_amanah= "";
 		String noAkaun_amanah = "";
 		Hashtable getAccAmanah = getAccAmanahRaya(id_negeri,"1");
 		myLogger.info("getAccAmanah :::"+getAccAmanah.get("CHECK_VAL").toString());
-		if(getAccAmanah.get("CHECK_VAL").toString().equals("1"))
-		{
+		if(getAccAmanah.get("CHECK_VAL").toString().equals("1")){
 			
 			nama_amanah = getAccAmanah.get("NAMA_AKAUN").toString();
 			namaBank_amanah = getAccAmanah.get("NAMA_BANK").toString();
@@ -379,28 +345,24 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			namaBankARB = namaBank_amanah;
 			namaARB = nama_amanah;
 			noAkaunARB = noAkaun_amanah;
-		}
-		else
-		{
-			if(id_negeri.equals("10")){				
+		} else {
+			if (id_negeri.equals("10")) {
 				namaARB = "Amanah Raya Berhad Shah Alam";
 				namaBankARB = "Bank Muamalat Malaysia Berhad (Cawangan Shah Alam)";
 				noAkaunARB = "1202-0000301-71-2";
-			}else if(id_negeri.equals("8")){
+			} else if (id_negeri.equals("8")) {
 				namaARB = "Amanah Raya Berhad Ipoh";
 				namaBankARB = "Bank Muamalat Malaysia Berhad";
 				noAkaunARB = "0804-0000483-71-6";
 			}
 		}
 		
-		
 		String nama_mahkamah = "";
 		String namaBank_mahkamah= "";
 		String noAkaun_mahkamah = "";
 		Hashtable getAccMahkamah = getAccAmanahRaya(id_negeri,"2");
 		myLogger.info("getAccMahkamah :::"+getAccMahkamah.get("CHECK_VAL").toString());
-		if(getAccMahkamah.get("CHECK_VAL").toString().equals("1"))
-		{
+		if(getAccMahkamah.get("CHECK_VAL").toString().equals("1")){
 			nama_mahkamah = getAccMahkamah.get("NAMA_AKAUN").toString();
 			namaBank_mahkamah = getAccMahkamah.get("NAMA_BANK").toString();
 			noAkaun_mahkamah = getAccMahkamah.get("NO_AKAUN").toString();
@@ -408,9 +370,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			namaBankMT = namaBank_mahkamah;
 			namaMT = nama_mahkamah;
 			noAkaunMT = noAkaun_mahkamah;
-		}
-		else
-		{
+		}else{
 			if(id_negeri.equals("10")){
 				namaBankMT = "Affin Bank (Cawangan Shah Alam)";
 				noAkaunMT = "1059-9000-3766";				
@@ -419,15 +379,13 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 				noAkaunMT = "106110003215";
 			}			
 		}
-    	
-    	
-    	 
+    	  	 
 		myLogger.info("nama_mahkamah :::"+nama_mahkamah);
 		myLogger.info("namaBank_mahkamah :::"+namaBank_mahkamah);
 		myLogger.info("noAkaun_mahkamah :::"+noAkaun_mahkamah);
-
     	
-    	 if ("doChangePegawai".equals(submit) || "doChangePegawai1".equals(submit) || "doChangePegawai2".equals(submit)) {
+		if ("doChangePegawai".equals(submit) || "doChangePegawai1".equals(submit) 
+			|| "doChangePegawai2".equals(submit)) {
     		
     		sysdateMalay = getParam("txtTarikhSuratCetak");
     		sysdateEng = getParam("txtTarikhSuratCetakBI");
@@ -455,7 +413,6 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
     			emel = (String)dp.get("emel");
     		}
     		
-
     		logic.setDetailPegawai(id_pegawai1);
     		detailPegawai = logic.getDetailPegawai();
     		if(detailPegawai.size()!=0){
@@ -477,9 +434,6 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
     		}
     		
     	}//close doChangePegawai2
-    	
-    	
-    	
 		
     	if(id_pegawai=="" || id_pegawai.isEmpty()){
     		id_pegawai = "0";
@@ -504,7 +458,6 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			context.put("selectPegawai2",HTML.SelectPegawaiPPT("socPegawai2", Long.parseLong(id_pegawai2),"","onChange=\"doChangePegawai2();\""));
 		}
     	
-
     	//dropdown pilihan pengarah dan bekas pengarah
 		context.put("selectPengarah",HTML.SelectPengarahDanBekasPengarah(id_negeri,"socPengarah",null,"","style=width:auto"));
 		context.put("selectPPengarah",HTML.SelectPenolongPengarahPPT(id_negeri,"socPPengarah",null,"","style=width:auto"));
@@ -525,22 +478,19 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		context.put("id_permohonan", id_permohonan);
 		context.put("report", report);
 		context.put("flagReport", flagReport);
-		context.put("bilDokumen", bilDokumen);
-		
+		context.put("bilDokumen", bilDokumen);	
 		
 		//date in malay dy date
-				String sysdateMalaytarikhBorangL = "";
+		String sysdateMalaytarikhBorangL = "";
 				
-				if(!tarikhBorangL.equals(""))
-				{
-				    logic.setMalayDateByDate(tarikhBorangL);
-				    malaysianDateByDate = logic.getMalayDateByDate();
-				    if(malaysianDateByDate.size()!=0){
-				    	Hashtable md = (Hashtable)malaysianDateByDate.get(0);
-				    	sysdateMalaytarikhBorangL = (String)md.get("sysdateMalayByDate");
-				    }
-				}
-		
+		if(!tarikhBorangL.equals("")){
+			logic.setMalayDateByDate(tarikhBorangL);
+		    malaysianDateByDate = logic.getMalayDateByDate();
+		    if(malaysianDateByDate.size()!=0){
+		    	Hashtable md = (Hashtable)malaysianDateByDate.get(0);
+		    	sysdateMalaytarikhBorangL = (String)md.get("sysdateMalayByDate");
+		    }
+		}
 		
 		context.put("tarikhBorangL", sysdateMalaytarikhBorangL);
 		context.put("tempohBL", tempohBL);
@@ -577,8 +527,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
     	context.put("noAkaunMT", noAkaunMT);
     	context.put("namaBankARB", namaBankARB);
     	context.put("noAkaunARB", noAkaunARB);
-    	context.put("namaARB", namaARB);
-    	
+    	context.put("namaARB", namaARB);	
     	
     	context.put("txtBilKertas", txtBilKertas);
     	context.put("txtBilSalinan", txtBilSalinan);
@@ -586,9 +535,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
     	context.put("txtNamaPentadbir", txtNamaPentadbir);
     	
     	context.put("id_buktipenyampaian", id_buktipenyampaian);
-    	context.put("id_borangh", id_borangh);
-    	
-    	
+    	context.put("id_borangh", id_borangh);	
     	
     	context.put("bydate", bydate);
     	
@@ -610,8 +557,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	}//close template
 	
 	
-	public void checkTableWujud(String table_name,Db db)  throws Exception {
-		  
+	public void checkTableWujud(String table_name,Db db)  throws Exception {		  
 	  	int total = 0;
 	  	String sql="";
 	  	ResultSet rs = null;
@@ -619,14 +565,13 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			sql = " SELECT COUNT(*) AS total FROM user_tables where table_name = '"+table_name+"' ";
 			//sql = " SELECT COUNT(*) as total FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '"+table_name+"' AND COLUMN_NAME = '"+column_name+"' ";	
 			rs = db.getStatement().executeQuery(sql); 
-		if ( rs.next() ) { 
-			total = rs.getInt("total"); 
-		} 
-		} finally { 					
-		} 
+			if ( rs.next() ) { 
+				total = rs.getInt("total"); 
+			} 
+			
+		} finally {	} 
 		
-		if(total==0)
-		{				
+		if(total==0){				
 			sql = "  CREATE TABLE TBLMAKLUMATACCAMANAHMAHKAMAH "+
 					" (  "+
 					" ID_NEGERI          NUMBER NOT NULL,  "+
@@ -639,28 +584,32 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			//ALTER TABLE supplier ADD supplier_name varchar2(50);				
 		}
 		
-  }
-	
-	
-	public void updateTableAcc(String id_negeri,String NAMA_BANK,String NAMA_AKAUN,String NO_AKAUN,String jenis) throws Exception {
-			Db db = null;
-			String sql = "";
-			try {
-				db = new Db();
-			
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();			
-				String sql1 = " UPDATE TBLMAKLUMATACCAMANAHMAHKAMAH SET NAMA_BANK = '"+NAMA_BANK+"', NAMA_AKAUN = '"+NAMA_AKAUN+"',NO_AKAUN = '"+NO_AKAUN+"' WHERE ID_NEGERI = '"+id_negeri+"' AND JENIS = '"+jenis+"' ";
-				myLogger.info("UPDATE TBLHAKMILIKMASALAH ID_PLA :"+sql1.toUpperCase());
-				stmt.executeUpdate(sql1);
-				//conn.commit();				
-			} finally {
-				if (db != null)
-					db.close();
-			}
 	}
 	
-	public void insertTableAcc(String id_negeri,String NAMA_BANK,String NAMA_AKAUN,String NO_AKAUN,String jenis) throws Exception {
+	public void updateTableAcc(String id_negeri,String NAMA_BANK,String NAMA_AKAUN,String NO_AKAUN,String jenis) 
+		throws Exception {
+		Db db = null;
+//		String sql = "";
+		try {
+			db = new Db();
+
+			Statement stmt = db.getStatement();
+//			SQLRenderer r = new SQLRenderer();
+			String sql1 = " UPDATE TBLMAKLUMATACCAMANAHMAHKAMAH SET NAMA_BANK = '" + NAMA_BANK + "', NAMA_AKAUN = '"
+					+ NAMA_AKAUN + "',NO_AKAUN = '" + NO_AKAUN + "' WHERE ID_NEGERI = '" + id_negeri + "' AND JENIS = '"
+					+ jenis + "' ";
+			myLogger.info("UPDATE TBLHAKMILIKMASALAH ID_PLA :" + sql1.toUpperCase());
+			stmt.executeUpdate(sql1);
+			// conn.commit();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
+	
+	public void insertTableAcc(String id_negeri,String NAMA_BANK,String NAMA_AKAUN,String NO_AKAUN,String jenis) 
+		throws Exception {
 		Db db = null;
 		String sql = "";
 		try {
@@ -682,74 +631,75 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			if (db != null)
 				db.close();
 		}
-}
+	
+	}
 		
 	public Vector listPenghantarNotis(String id_negeri) throws Exception {
 		Db db = null;
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			String sql = " 	SELECT DISTINCT U.USER_ID AS ID_PEGAWAI, U.USER_NAME AS NAMA_PEGAWAI FROM USERS U, USERS_INTERNAL UI "+
-					" 	WHERE U.USER_ID = UI.USER_ID  "+
-					//" 			AND UI.ID_SEKSYEN = '1' "+
-					//" 			AND ID_JAWATAN IN (26)  "+
-					"  AND U.USER_ROLE = '(PPT)PenghantarNotis'"+
-					" 			AND UI.ID_NEGERI = '"+id_negeri+"' "+
-					" 			ORDER BY LPAD(U.USER_NAME,10) ";		 					
-			myLogger.info("LIST PENGHANTAR NOTIS :"+sql.toUpperCase());
+			String sql = " 	SELECT DISTINCT U.USER_ID AS ID_PEGAWAI, U.USER_NAME AS NAMA_PEGAWAI FROM USERS U, USERS_INTERNAL UI "
+					+ " 	WHERE U.USER_ID = UI.USER_ID  " +
+					// " AND UI.ID_SEKSYEN = '1' "+
+					// " AND ID_JAWATAN IN (26) "+
+					"  AND U.USER_ROLE = '(PPT)PenghantarNotis'" + " 			AND UI.ID_NEGERI = '" + id_negeri + "' "
+					+ " 			ORDER BY LPAD(U.USER_NAME,10) ";
+			myLogger.info("LIST PENGHANTAR NOTIS :" + sql.toUpperCase());
 			stmt.executeUpdate(sql);
-			
-			 ResultSet rs = stmt.executeQuery(sql);
-		      Vector listPenghantarNotis = new Vector();
-		      
-		      Hashtable h = null;
 
-		      while (rs.next()) {
-		    	  h = new Hashtable();
-		    	  h.put("ID_PEGAWAI", rs.getString("ID_PEGAWAI")==null?"":rs.getString("ID_PEGAWAI"));
-		    	  h.put("NAMA_PEGAWAI", rs.getString("NAMA_PEGAWAI")==null?"":rs.getString("NAMA_PEGAWAI"));
-		    	  listPenghantarNotis.addElement(h);
-		      }
-		      return listPenghantarNotis;
-					
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Hashtable<String,String>>listPenghantarNotis = new Vector<Hashtable<String,String>>();
+
+			Hashtable<String,String> h = null;
+
+			while (rs.next()) {
+				h = new Hashtable<String,String>();
+				h.put("ID_PEGAWAI", rs.getString("ID_PEGAWAI") == null ? "" : rs.getString("ID_PEGAWAI"));
+				h.put("NAMA_PEGAWAI", rs.getString("NAMA_PEGAWAI") == null ? "" : rs.getString("NAMA_PEGAWAI"));
+				listPenghantarNotis.addElement(h);
+			}
+			return listPenghantarNotis;
+
 		} finally {
 			if (db != null)
-			db.close();
+				db.close();
 		}
+		
 	}
 	
-	
-	public  Hashtable getAccAmanahRaya(String id_negeri,String jenis_acc) throws Exception {
-	    
+	public  Hashtable<String,String> getAccAmanahRaya(String id_negeri,String jenis_acc) throws Exception {	    
 		Db db = null;
 		String sql = "";
 		  
 		try {		      	
-				db = new Db();
-				Statement stmt = db.getStatement();
+			db = new Db();
+			Statement stmt = db.getStatement();
 		     
-				sql = "SELECT ID_NEGERI,NAMA_BANK,NAMA_AKAUN,NO_AKAUN,JENIS FROM TBLMAKLUMATACCAMANAHMAHKAMAH WHERE ID_NEGERI = '"+id_negeri+"' AND JENIS='"+jenis_acc+"' AND ROWNUM < 2";
-				myLogger.info("GET ACC :"+sql);
-				ResultSet rs = stmt.executeQuery(sql);
-				Vector list = new Vector();
-		      
-				Hashtable h;
-				h = new Hashtable();
-				int c = 0;
-				while (rs.next()) {
-					//h = new Hashtable();
-					h.put("ID_NEGERI", rs.getString("ID_NEGERI")==null?"":rs.getString("ID_NEGERI"));
-					h.put("NAMA_BANK", rs.getString("NAMA_BANK")==null?"":rs.getString("NAMA_BANK"));
-					h.put("NAMA_AKAUN", rs.getString("NAMA_AKAUN")==null?"":rs.getString("NAMA_AKAUN"));
-					h.put("NO_AKAUN", rs.getString("NO_AKAUN")==null?"":rs.getString("NO_AKAUN"));
-					h.put("JENIS", rs.getString("JENIS")==null?"":rs.getString("JENIS"));
-					c =1;
+			sql = "SELECT ID_NEGERI,NAMA_BANK,NAMA_AKAUN,NO_AKAUN,JENIS FROM TBLMAKLUMATACCAMANAHMAHKAMAH WHERE ID_NEGERI = '"+id_negeri+"' AND JENIS='"+jenis_acc+"' AND ROWNUM < 2";
+			myLogger.info("GET ACC :"+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+//			Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();		      
+			Hashtable<String,String> h;
+			h = new Hashtable<String,String>();
+			int c = 0;
+			while (rs.next()) {
+				//h = new Hashtable();
+				h.put("ID_NEGERI", rs.getString("ID_NEGERI")==null?"":rs.getString("ID_NEGERI"));
+				h.put("NAMA_BANK", rs.getString("NAMA_BANK")==null?"":rs.getString("NAMA_BANK"));
+				h.put("NAMA_AKAUN", rs.getString("NAMA_AKAUN")==null?"":rs.getString("NAMA_AKAUN"));
+				h.put("NO_AKAUN", rs.getString("NO_AKAUN")==null?"":rs.getString("NO_AKAUN"));
+				h.put("JENIS", rs.getString("JENIS")==null?"":rs.getString("JENIS"));
+				c =1;
 					//list.addElement(h);
-				}
-				h.put("CHECK_VAL", ""+c);
-		      return h;
-		    } finally {
+			}
+			h.put("CHECK_VAL", ""+c);
+		     return h;
+	    } finally {
 		    if (db != null) db.close();
-		    }
-		  }//find alamat kementerian
+	    }
+		  
+	}//find alamat kementerian
+	
+	
 }//close class
