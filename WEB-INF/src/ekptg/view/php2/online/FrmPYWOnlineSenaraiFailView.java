@@ -106,6 +106,10 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		if (idSuburusan == null || idSuburusan.trim().length() == 0) {
 			idSuburusan = "99999";
 		}
+		String idSubsuburusan = getParam("socSubsuburusan");
+		if (idSubsuburusan == null || idSubsuburusan.trim().length() == 0) {
+			idSubsuburusan = "99999";
+		}
 		String idLuasKegunaan = getParam("socLuasKegunaan");
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
 			idLuasKegunaan = "99999";
@@ -125,10 +129,6 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		String idFailLama = getParam("socNoFailLama");
 		if (idFailLama == null || idFailLama.trim().length() == 0) {
 			idFailLama = "99999";
-		}
-		String idJenisTujuan = getParam("socJenisTujuan");
-		if (idJenisTujuan == null || idJenisTujuan.trim().length() == 0) {
-			idJenisTujuan = "99999";
 		}
 
 		this.context.put("errorPeganganHakmilik", "");
@@ -427,10 +427,12 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
 				idUrusan = (String) hashPermohonan.get("idUrusan");
 				idSuburusan = (String) hashPermohonan.get("idSuburusan");
+				idSubsuburusan = (String) hashPermohonan.get("idSubsuburusan");
 				idPermohonan= (String) hashPermohonan.get("idPermohonan");
 			}
 			this.context.put("selectUrusan",HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " class=\"disabled\""));
 			this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "disabled", " class=\"disabled\""));
+			this.context.put("selectSubSuburusan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socSubsuburusan", Long.parseLong(idSubsuburusan), "disabled", " class=\"disabled\""));
 
 			//MAKLUMAT TANAH
 			/*beanMaklumatTanah = new Vector();
@@ -511,12 +513,13 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			hashPermohonan.put("perkara", getParam("txtperkara") == null ? "": getParam("txtperkara"));
     			hashPermohonan.put("tarikhSurat", getParam("txttarikhSurat") == null ? "" : getParam("txttarikhSurat"));
     			hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
+    			hashPermohonan.put("idSubsuburusan",getParam("socSubsuburusan") == null ? "": getParam("socSubsuburusan"));
     			beanMaklumatPermohonan.addElement(hashPermohonan);
     			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);		
     			
     			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), ""," onChange=\"doChangeUrusan();\""));
     			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan,"socSuburusan", Long.parseLong(idSuburusan), ""," onChange=\"doChangeSuburusan();\""));
-    			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "", " onChange=\"doChangeTujuan();\""));
+    			this.context.put("selectSubSuburusan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socSubsuburusan", Long.parseLong(idSubsuburusan), "", " onChange=\"doChangeSubsuburusan();\""));
     				
         	} else if ("2".equals(idJenisPermohonan)){
         		Vector<Hashtable<String,String>> vec1 = header.setMaklumatPemohon(id_user);
@@ -647,7 +650,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idPHPBorangK", idPHPBorangK);
 		this.context.put("idDokumen", idDokumen);
 		this.context.put("idFailLama", idFailLama); 
-		this.context.put("idJenisTujuan", idJenisTujuan); 
+		this.context.put("idSubsuburusan", idSubsuburusan); 
 
 		return vm;
 	}
