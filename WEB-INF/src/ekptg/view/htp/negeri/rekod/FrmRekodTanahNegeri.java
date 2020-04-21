@@ -304,17 +304,17 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 			if(portal_role.contains("PenggunaNegeri")){
 	  			langkah = "1";
     			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"2");
-    			ef.emelByRole(userMail, portal_role, null, tajuk, kandungan);
+    			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
     					
     		}else if(portal_role.contains("PegawaiNegeri")){
 	  			langkah = "2";
     			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"3");
-    			ef.emelByRole(userMail, portal_role, null, tajuk, kandungan);
+    			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
     			
     		}else if(portal_role.contains("PengarahNegeri")){
 	  			langkah = "3";
     			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"4");
-    			ef.emelByRole(userMail, portal_role, null, tajuk, kandungan);
+    			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
     		
     		}
 			
