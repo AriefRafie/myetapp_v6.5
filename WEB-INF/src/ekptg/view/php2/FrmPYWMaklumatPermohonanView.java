@@ -297,8 +297,8 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
         		if(hashMaklumatSewa.get("tujuan") != null && hashMaklumatSewa.get("tujuan").toString().trim().length() != 0){
         			tujuan = (String) hashMaklumatSewa.get("tujuan");
         		} else {
-        			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "disabled", "class=\"disabled\""));
-    				this.context.put("selectJenisTujuan2", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan2", Long.parseLong(idJenisTujuan2), "disabled", "class=\"disabled\""));
+        			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "disabled", "class=\"disabled\""));
+    				this.context.put("selectJenisTujuan2", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan2", Long.parseLong(idJenisTujuan2), "disabled", "class=\"disabled\""));
         		}
     		}
 
@@ -409,7 +409,7 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 			if(hashMaklumatSewa.get("tujuan") != null && hashMaklumatSewa.get("tujuan").toString().trim().length() != 0){
     			tujuan = (String) hashMaklumatSewa.get("tujuan");
     		} else {
-    			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "", " onChange=\"doChangeTujuan();\""));
+    			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "", " onChange=\"doChangeTujuan();\""));
     		}
 			hashMaklumatSewa.put("catatan", getParam("txtCatatan"));
 			hashMaklumatSewa.put("luasAsal", hashMaklumatSewaDB.get("luasAsal"));
