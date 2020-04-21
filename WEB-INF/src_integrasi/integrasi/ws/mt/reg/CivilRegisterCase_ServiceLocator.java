@@ -7,8 +7,7 @@
 
 package integrasi.ws.mt.reg;
 
-public class CivilRegisterCase_ServiceLocator 
-	extends org.apache.axis.client.Service implements CivilRegisterCase_Service {
+public class CivilRegisterCase_ServiceLocator extends org.apache.axis.client.Service implements CivilRegisterCase_Service {
 
     public CivilRegisterCase_ServiceLocator() {
     }
@@ -23,7 +22,7 @@ public class CivilRegisterCase_ServiceLocator
     }
 
     // Use to get a proxy class for CivilRegisterCaseSOAP
-    private java.lang.String CivilRegisterCaseSOAP_address = "https://eip.kehakiman.gov.my/sit/etappCivilRegisterCase";
+    private java.lang.String CivilRegisterCaseSOAP_address = "http://sit-ws.kehakiman.gov.my/sit/etappCivilRegisterCase";
 
     public java.lang.String getCivilRegisterCaseSOAPAddress() {
         return CivilRegisterCaseSOAP_address;

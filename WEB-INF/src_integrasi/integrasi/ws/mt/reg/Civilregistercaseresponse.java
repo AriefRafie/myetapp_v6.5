@@ -23,7 +23,7 @@ public class Civilregistercaseresponse  implements java.io.Serializable {
            java.lang.String code,
            java.lang.String description,
            java.lang.String detail,
-           integrasi.ws.mt.reg.DataCreateRepType data) {
+           DataCreateRepType data) {
            this.code = code;
            this.description = description;
            this.detail = detail;

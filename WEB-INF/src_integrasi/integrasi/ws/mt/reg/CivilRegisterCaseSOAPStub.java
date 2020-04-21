@@ -25,7 +25,7 @@ public class CivilRegisterCaseSOAPStub extends org.apache.axis.client.Stub imple
         org.apache.axis.description.ParameterDesc param;
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("CivilRegisterCase");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", "civilregistercaserequest"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">civilregistercaserequest"),Civilregistercaserequest.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", "civilregistercaserequest"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">civilregistercaserequest"), Civilregistercaserequest.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">civilregistercaseresponse"));
         oper.setReturnClass(Civilregistercaseresponse.class);
