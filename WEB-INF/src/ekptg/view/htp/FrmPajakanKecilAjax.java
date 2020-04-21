@@ -1727,7 +1727,7 @@ public class FrmPajakanKecilAjax extends AjaxBasedModule{
 		  String flagFail = "1";
 		  int idStatus = 7;/**AKTIF*/
 		  String catatan = "TIADA";
-		  int idMasuk = 1;
+		  //int idMasuk = 1;
 		  Vector<?> vecFail = new Vector();
 		  
 		  idNegeri = Integer.parseInt(getParam("socNegeri"));
@@ -1746,7 +1746,7 @@ public class FrmPajakanKecilAjax extends AjaxBasedModule{
 			  fileSeq = File.getSeqNo(Integer.parseInt(getParam("socSeksyen")), Integer.parseInt(idUrusan), idKementerian, idNegeri);
 			  noFail += kodKementerianMampu+"/"+kodNegeriMampu+"-"+fileSeq;			  
 		  }
-		  int idmasuk = Integer.parseInt((String)session.getAttribute("_ekptg_user_id"));
+		  //int idmasuk = Integer.parseInt((String)session.getAttribute("_ekptg_user_id"));
 		  
 		  h.put("id_Fail", idfail);
 		  h.put("id_Tarafkeselamatan", idTarafkeselamatan);
@@ -1763,7 +1763,7 @@ public class FrmPajakanKecilAjax extends AjaxBasedModule{
 		  h.put("flag_Fail",flagFail);
 		  h.put("id_Status",idStatus);
 		  h.put("catatan",catatan);
-		  h.put("id_Masuk", idmasuk);
+		  h.put("id_Masuk", userID);
 		  h.put("id_Lokasi", idLokasi); 
 		  
 		  FrmUtilData.simpanFail(h);
