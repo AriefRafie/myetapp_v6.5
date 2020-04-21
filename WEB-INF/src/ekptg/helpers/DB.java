@@ -2361,6 +2361,7 @@ public class DB extends EkptgCache implements Serializable {
 			r.add("id_daerah", idDaerah);
 
 			sql = r.getSQLSelect("tblrujpejabatjkptg");
+			myLogger.info("getPejabatJKPTG:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Tblrujpejabatjkptg s = null;
@@ -2368,20 +2369,20 @@ public class DB extends EkptgCache implements Serializable {
 				s = new Tblrujpejabatjkptg();
 				s.setIdPejabatjkptg(rs.getLong("id_pejabatjkptg"));
 				s.setNamaPejabat(rs.getString("nama_pejabat"));
-				s.setAlamat1(rs.getString("Alamat1"));
-				if (rs.getString("Alamat2") != null) {
-					s.setAlamat2(rs.getString("Alamat2"));
+				s.setAlamat1(rs.getString("alamat1"));
+				if (rs.getString("alamat2") != null) {
+					s.setAlamat2(rs.getString("alamat2"));
 				} else {
 					s.setAlamat2("");
 				}
-				if (rs.getString("Alamat3") != null) {
-					s.setAlamat3(rs.getString("Alamat3"));
+				if (rs.getString("alamat3") != null) {
+					s.setAlamat3(rs.getString("alamat3"));
 				} else {
 					s.setAlamat3("");
 				}
-				s.setPoskod(rs.getString("Poskod"));
-				s.setIdNegeri(rs.getLong("Id_negeri"));
-				s.setIdNegeri(rs.getLong("Id_daerah"));
+				s.setPoskod(rs.getString("poskod"));
+				s.setIdNegeri(rs.getLong("id_negeri"));
+				s.setIdNegeri(rs.getLong("id_daerah"));
 
 				if (rs.getString("no_tel") != null) {
 					s.setNoTel(rs.getString("no_tel"));
