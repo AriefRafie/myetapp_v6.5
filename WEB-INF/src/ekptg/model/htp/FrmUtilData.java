@@ -40,8 +40,9 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 5355029536510446896L;
-	Date now = new Date();
 	static Logger myLog = Logger.getLogger(ekptg.model.htp.FrmUtilData.class);
+	private static IHtp iHTP = null;  
+	Date now = new Date();
 	Tblrujsuburusanstatusfail rsusf = null;
 	public String strNoFail = "";
 //	private static Connection conn = null;
@@ -53,7 +54,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 	//    return instance;
 	//}
 	public static Vector<Hashtable<String,String>> vec = null;
-	
+
 	public void kemaskiniStatusPermohonan(String idPermohonan,String idStatus) throws Exception {
 		Db db = null;
 		try{ 
@@ -72,6 +73,71 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		    }
 		  
 	}
+	 
+	public static void simpanFailPK(Hashtable<String,String> data) throws Exception{
+		 String sql = "";
+		 Db db = null;
+		 try{	 
+			 String catatan = String.valueOf(data.get("catatan"));		 
+			 String idFail = String.valueOf(data.get("id_Fail"));
+			 String idMasuk = data.get("id_Masuk");
+			 String faharasat = data.get("id_Faharasat");
+			 String flagFail = data.get("flag_Fail");		 
+			 String kementerian = data.get("id_Kementerian");
+			 String lokasi = data.get("id_Lokasi");			 
+			 String namaFail = data.get("tajuk_Fail");
+			 String negeri = data.get("id_Negeri");
+			 String noFail = data.get("no_Fail");
+			 String noFailroot = data.get("no_Failroot");
+			 String seksyen = data.get("id_Seksyen");
+			 String status = data.get("id_Status");
+			 String subUrusan = data.get("id_Suburusan");
+			 String tarafKeselamatan = data.get("id_Tarafkeselamatan");
+			 String tarikhBukafail = "to_date('" + data.get("tarikh_Bukafail") + "','dd/MM/yyyy')";
+			 String tarikhMasuk = "to_date('" + data.get("tarikh_Bukafail") + "','dd/MM/yyyy')";
+			 String urusan = data.get("id_Urusan");
+
+			 db = new Db();
+			 Statement stmt = db.getStatement();
+			 
+			 SQLRenderer r = new SQLRenderer();
+			 r.add("id_Fail",idFail); 
+			 r.add("id_Tarafkeselamatan", tarafKeselamatan);
+			 r.add("id_Seksyen", seksyen);
+			 r.add("id_Urusan", urusan);
+			 r.add("id_Suburusan", subUrusan);
+			 r.add("tarikh_Daftar_Fail",r.unquote(tarikhBukafail)); 
+			 r.add("tajuk_Fail", namaFail);
+			 r.add("no_Fail", noFail);
+			 r.add("no_fail_root", noFailroot);			      
+			 r.add("id_Lokasifail", lokasi);
+			 r.add("id_Negeri", negeri);
+			 r.add("id_Kementerian", kementerian);			      
+			 r.add("id_Faharasat", faharasat);
+			 r.add("flag_Fail", flagFail);
+			 r.add("id_Status", status);
+			 r.add("catatan",catatan);
+			 r.add("id_Masuk",idMasuk);				      
+			 r.add("tarikh_Masuk",r.unquote(tarikhMasuk)); 
+			 r.add("id_Kemaskini",idMasuk);				      
+			 r.add("tarikh_Kemaskini",r.unquote(tarikhMasuk)); 
+			 r.add("tarikh_Tukar_Taraf",r.unquote(tarikhMasuk)); 
+			 r.add("id_Db",r.unquote("99")); 
+			 r.add("no_perserahan","TIADA"); 
+			 r.add("Flag_jenis_fail","1");	//Fail Biasa =  1,Lama = 2,Kutipan Data = 3
+			 sql = r.getSQLInsert("tblpfdfail");
+			 myLog.info("simpanFail("+data+"):sql="+sql);
+			 stmt.executeUpdate(sql);
+			 
+		 } catch (Exception e) {
+				e.printStackTrace();
+				getIHTP().getErrorHTML(e.getMessage().toString());
+			
+		 } finally {
+			 if (db != null) db.close();
+		 }
+				      
+	 }
 	/* Created by : Mohamad Rosli 2009
 	 * Tujuan	  : Simpan data on TBLPFDFAIL 
 	 * return  
@@ -311,6 +377,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		    finally {
 		      if (db != null) db.close();
 		    }
+		 
 		  }
 
 	  //*** update data from database
@@ -359,114 +426,86 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		    }
 		  }
 	    
-	  /** Simpan permohonan -TBLPERMOHONAN,TBLHTPPERMOHONAN */
+	  /** 
+	   * Simpan permohonan -TBLPERMOHONAN,TBLHTPPERMOHONAN 
+	   */
 	  public static String simpanPermohonanHTP(Hashtable<?, ?> data) throws Exception {
-		    Db db = null;
-		    String sql = "";
-		    try{
-		    			/*ID_PERMOHONAN	1	1	N	NUMBER		Yes		
-		    			ID_FAIL	2		N	NUMBER		Yes		
-		    			ID_PEJABATJKPTG	3		N	NUMBER		Yes		
-		    			NO_PERMOHONAN	4		Y	VARCHAR2 (30 Byte)		Yes		
-		    			NO_PERSERAHAN	5		Y	VARCHAR2 (50 Byte)		Yes		
-		    			TARIKH_SURAT	6		Y	DATE		Yes		
-		    			TARIKH_TERIMA	7		Y	DATE		Yes		
-		    			TUJUAN	8		Y	VARCHAR2 (300 Byte)		Yes		
-		    			ID_MASUK	9		Y	NUMBER		Yes		
-		    			TARIKH_MASUK	10		Y	DATE		Yes		
-		    			ID_KEMASKINI	11		Y	NUMBER		Yes		
-		    			TARIKH_KEMASKINI	12		Y	DATE		Yes		
-		    			 */
-		    	Tblrujpejabatjkptg pejabat = null;
-		    	Hashtable<String, String> userInfo = null;
+		  Db db = null;
+		  String sql = "";
+		  
+		  try{
+			  Tblrujpejabatjkptg pejabat = null;
+			  Hashtable<String, String> userInfo = null;
 
-		    	long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
-		    	String idFail = (String)data.get("id_Fail");		    	
-			    String idMasuk = (String)data.get("id_Masuk");
-		    	userInfo = getUserInternalInfo(idMasuk);
-		    	pejabat = DB.getPejabatJKPTG(userInfo.get("IdSeksyen"),userInfo.get("IdNegeri"),userInfo.get("IdDaerah"));		      
-		    	Long idJKPTG = pejabat.getIdPejabatjkptg();
-		    	String noPermohonan = (String)data.get("no_Permohonan");
-		    	String noPerserahan = (String)data.get("no_Perserahan");    	
-		    	String tarikhSuratKJP = "to_date('" + (String)data.get("tarikh_SuratKJP") + "','dd/MM/yyyy')";
-		    	String tarikhTerima = "to_date('" + (String)data.get("tarikh_Terima") + "','dd/MM/yyyy')";
-	          	String tujuan = (String)data.get("tajuk");
-	          	//idMasuk dah declare di atas     	
-	          	String tarikhMasuk = "to_date('" + (String)data.get("tarikh_Masuk") + "','dd/MM/yyyy')";
-	          	
-	          	// TBLHTPPERMOHONAN
-	          	/*	ID_HTPPERMOHONAN	1	1	N	NUMBER		Yes		
-	          			ID_PERMOHONAN	2		Y	NUMBER		Yes		
-	          			ID_AGENSI	3		Y	NUMBER		Yes		
-	          			ID_JENISTANAH	4		Y	VARCHAR2 (1000 Byte)		Yes		
-	          			ID_PEGAWAI	5		N	NUMBER		Yes		
-	          			NO_RUJUKAN_KJP	6		Y	VARCHAR2 (50 Byte)		Yes		
-	          			NO_RUJUKAN_LAIN	7		Y	VARCHAR2 (50 Byte)		Yes		
-	          			TARIKH_AGIHAN	8		Y	DATE		Yes		
-	          			ID_MASUK	9		Y	NUMBER		Yes		
-	          			TARIKH_MASUK	10		Y	DATE		Yes		
-	          			ID_KEMASKINI	11		Y	NUMBER		Yes		
-	          			TARIKH_KEMASKINI	12		Y	DATE		Yes		
-	          	 */
-	          	long idHtppermohonan = DB.getNextID("TBLHTPPERMOHONAN_SEQ");
-	          	int idAgensi = (Integer)data.get("id_Agensi");
-	          	int idJenistanah = (Integer)data.get("id_Jenistanah");;
-	          	//int idPegawai = (Integer)data.get("id_Pegawai");
-	          
-	          	String noFailkjp = (String)data.get("no_Failkjp");
-	          	String noFaillain = (String)data.get("no_Faillain");
-	          	String tarikhAgihan = "to_date('" + (String)data.get("tarikh_Agihan") + "','dd/MM/yyyy')";
-	          	//id_masuk guna maklumat di atas
-	          	//tarikh_masuk guna maklumat di atas
-	          	//id_kemaskini guna maklumat di atas
-	          	//tarikh_kemaskini guna maklumat di atas
+			  int idAgensi = (Integer)data.get("id_Agensi");
+	          int idJenistanah = (Integer)data.get("id_Jenistanah");;
+			  
+	          long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
+			  long idHtppermohonan = DB.getNextID("TBLHTPPERMOHONAN_SEQ");
+			  
+			  
+			  String idFail = (String)data.get("id_Fail");		    	
+			  String idJKPTG = String.valueOf(data.get("idPejabat"));
+			  String idMasuk = (String)data.get("id_Masuk");
+			  //userInfo = getUserInternalInfo(idMasuk);
+			  //pejabat = DB.getPejabatJKPTG(userInfo.get("IdSeksyen"),userInfo.get("IdNegeri"),userInfo.get("IdDaerah"));		      zekptg_user_unit	
+			  //Long idJKPTG = pejabat.getIdPejabatjkptg();
+//	          String tarikhMasuk = "to_date('" + (String)data.get("tarikh_Masuk") + "','dd/MM/yyyy')";
+	          String noFailkjp = (String)data.get("no_Failkjp");
+	          String noFaillain = (String)data.get("no_Faillain");
+			  String noPermohonan = (String)data.get("no_Permohonan");
+			  String noPerserahan = (String)data.get("no_Perserahan");    	
+	          String tarikhAgihan = "to_date('" + (String)data.get("tarikh_Agihan") + "','dd/MM/yyyy')";
+			  String tarikhTerima = "to_date('" + (String)data.get("tarikh_Terima") + "','dd/MM/yyyy')";
+			  String tarikhSuratKJP = "to_date('" + (String)data.get("tarikh_SuratKJP") + "','dd/MM/yyyy')";
+	          String tujuan = (String)data.get("tajuk");
 
-	          	db = new Db();
-	          	Statement stmt = db.getStatement();
-	          	SQLRenderer r = new SQLRenderer();
-	          	r.add("id_Permohonan", r.unquote(""+idPermohonan));
-	          	r.add("id_Fail",idFail);
-	          	r.add("id_Jkptg",idJKPTG);
-	          	r.add("no_Permohonan",noPermohonan);
-	          	r.add("no_Perserahan",noPerserahan);
-	          	r.add("tarikh_Surat", r.unquote(tarikhSuratKJP));
+	          db = new Db();
+	          Statement stmt = db.getStatement();
+	          SQLRenderer r = new SQLRenderer();
+	          r.add("id_permohonan", r.unquote(""+idPermohonan));
+	          r.add("id_fail",idFail);
+	          r.add("id_jkptg",idJKPTG);
+	          r.add("no_permohonan",noPermohonan);
+	          r.add("no_perserahan",noPerserahan);
+	          r.add("tarikh_surat", r.unquote(tarikhSuratKJP));
 	          	//tarikh_Terima juga utk tarikh permohonan
-	          	r.add("tarikh_Terima", r.unquote(tarikhTerima));
-	          	r.add("tujuan",tujuan);
-	          	r.add("id_Masuk",idMasuk);
-	          	r.add("tarikh_Masuk",r.unquote("SYSDATE"));
-	          	r.add("id_Kemaskini",idMasuk);
-	          	r.add("tarikh_Kemaskini",r.unquote("SYSDATE"));
-	          	sql = r.getSQLInsert("Tblpermohonan");
-	          	myLog.info("FrmUtilData::simpanPermohonanHTP::TBLPERMOHONAN = "+sql);
-	          	stmt.executeUpdate(sql);
+	          r.add("tarikh_terima", r.unquote(tarikhTerima));
+	          r.add("tujuan",tujuan);
+	          r.add("id_masuk",idMasuk);
+	          r.add("tarikh_masuk",r.unquote("SYSDATE"));
+	          r.add("id_kemaskini",idMasuk);
+	          r.add("tarikh_kemaskini",r.unquote("SYSDATE"));
+	          sql = r.getSQLInsert("tblpermohonan");
+	          myLog.info("FrmUtilData::simpanPermohonanHTP:TBLPERMOHONAN = "+sql);
+	          stmt.executeUpdate(sql);
 		      
-	          	Statement stmtHtp = db.getStatement();
-	          	SQLRenderer rHtp = new SQLRenderer();
-	          	rHtp.add("id_Htppermohonan",idHtppermohonan);
-	          	rHtp.add("id_Permohonan", idPermohonan);
-	          	rHtp.add("id_Agensi", idAgensi);
-	          	rHtp.add("id_Jenistanah", idJenistanah);
-	          	rHtp.add("id_Pegawai", idMasuk);
-	          	rHtp.add("no_Rujukan_Kjp", noFailkjp);
-	          	rHtp.add("no_Rujukan_Lain", noFaillain);
-	          	rHtp.add("tarikh_Agihan", rHtp.unquote(tarikhAgihan));
-	          	rHtp.add("id_Masuk",idMasuk);
-	          	rHtp.add("tarikh_Masuk",rHtp.unquote("SYSDATE"));
-	          	rHtp.add("id_Kemaskini",idMasuk);
-	          	rHtp.add("tarikh_Kemaskini",rHtp.unquote("SYSDATE"));
-	          	sql = rHtp.getSQLInsert("Tblhtppermohonan");
-	          	myLog.info("FrmUtilData::simpanPermohonanHTP::TBLHTPPERMOHONAN = "+sql);
-	          	stmtHtp.executeUpdate(sql);
-		      
+	          Statement stmtHtp = db.getStatement();
+	          SQLRenderer rHtp = new SQLRenderer();
+	          rHtp.add("id_Htppermohonan",idHtppermohonan);
+	          rHtp.add("id_Permohonan", idPermohonan);
+	          rHtp.add("id_Agensi", idAgensi);
+	          rHtp.add("id_Jenistanah", idJenistanah);
+	          rHtp.add("id_Pegawai", idMasuk);
+	          rHtp.add("no_Rujukan_Kjp", noFailkjp);
+	          rHtp.add("no_Rujukan_Lain", noFaillain);
+	          rHtp.add("tarikh_Agihan", rHtp.unquote(tarikhAgihan));
+	          rHtp.add("id_Masuk",idMasuk);
+	          rHtp.add("tarikh_Masuk",rHtp.unquote("SYSDATE"));
+	          rHtp.add("id_Kemaskini",idMasuk);
+	          rHtp.add("tarikh_Kemaskini",rHtp.unquote("SYSDATE"));
+	          sql = rHtp.getSQLInsert("Tblhtppermohonan");
+	          myLog.info("FrmUtilData::simpanPermohonanHTP::TBLHTPPERMOHONAN = "+sql);
+	          stmtHtp.executeUpdate(sql);   
 		      //StatusChange_Action(idPermohonan, idSuburusan);
+		   
+		      return String.valueOf(idPermohonan);
 		      
-		      return ""+idPermohonan;
-		    }
-		    finally {
-		      if (db != null) db.close();
-		    }
+		  }finally {
+			  if (db != null) db.close();
 		  }
+		  
+	  }
 	  
 	  public static String simpanPermohonanOnline(Hashtable<?, ?> data) throws Exception {
 		    Db db = null;
@@ -682,7 +721,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		    		h = new Hashtable<String, String>();
 		    		h.put("IdSeksyen", rs.getString("id_Seksyen"));
 		    		h.put("IdNegeri", rs.getString("id_Negeri"));
-		    		h.put("IdDaerah", rs.getString("id_Daerah"));
+		    		h.put("IdDaerah", rs.getString("id_Daerah")==null?"0":rs.getString("id_Daerah"));
 		    	}
 		    	return h;
 		    } finally {
@@ -5165,5 +5204,11 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 			}
 		}
 		
+	private static IHtp getIHTP(){
+		if(iHTP== null)
+			iHTP = new HtpBean();
+		return iHTP;
+	}		  
+		  		
 	   
 }

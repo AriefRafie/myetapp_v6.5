@@ -113,7 +113,7 @@ public class FrmPajakanKecil extends AjaxBasedModule{
 		    String pageMode = getParam("pagemode");
 		    String langkah = getParam("langkah");
 		    String isCarian = "tidak";
-		    myLog.info("0.fir idKemaskiniPaging: " + idKemaskiniPaging+"1. equals-command("+submit+"):pageMode::"+pageMode);
+		    myLog.info("1. command("+submit+"),pageMode="+pageMode);
 		 	idNegeri = getParam("socNegeri");
 			txtTajukCarian = getParam("txtTajukFail");
 		 	idKementerian = getParam("socKementerian");
@@ -199,8 +199,8 @@ public class FrmPajakanKecil extends AjaxBasedModule{
 			    	this.context.put("idFail", idFail);	        	
 		    	
 			    }else if(submit.equals("pkfailbaru")){
+			    	myLog.info("submit="+submit+",pageMode="+pageMode);
 			    	template_name = PATH+"frmPajakanKecilPendaftaran.jsp";
-			    	myLog.info("equals("+submit+")::pkfailbaru"+",pageMode="+pageMode);
 			    	String strOperation = "";
 				    this.context.put("socSeksyen","3");
 			    	if(getParam("mode").equals("reset")){
@@ -208,7 +208,7 @@ public class FrmPajakanKecil extends AjaxBasedModule{
 			    	}
 
 				    if(pageMode.equals("0")){
-				    	myLog.info("pageMode::0"+pageMode);
+				    	//myLog.info("pageMode::0"+pageMode);
 					    this.context.put("socSeksyen","3");
 						socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong(idUrusan),disability);
 				    	this.context.put("socUrusan",socUrusan);
@@ -234,13 +234,14 @@ public class FrmPajakanKecil extends AjaxBasedModule{
 					    String idnegeri = getParam("socNegeri");
 					    String idagensi = getParam("socAgensi");
 			
-						long longIdFail = ekptg.helpers.DB.getNextID("TBLPFDFAIL_SEQ");
-						simpanFail(session,longIdFail);
+						idFail = String.valueOf(ekptg.helpers.DB.getNextID("TBLPFDFAIL_SEQ"));
+						simpanFail(idFail);
 						
-						String idPermohonan = simpanPermohonan(session,0,String.valueOf(longIdFail));					
+						String idPermohonan = simpanPermohonan(session,0,idFail);					
 					    this.context.put("idPermohonan",idPermohonan);
-					    idFailN = String.valueOf(longIdFail);					    
-					    simpanStatus(session,Long.parseLong(String.valueOf(idPermohonan)),longIdFail,"1");
+					    idFailN = idFail;		
+					    
+					    simpanStatus(session,Long.parseLong(String.valueOf(idPermohonan)),Long.parseLong(idFail),"1");
 			        	Hashtable hFail = getIHTPFail().getMaklumatPermohonan(idFailN);
 						AuditTrail.logActivity("1", "3", this, session, "INS", "FAIL PERMOHONAN ["+hFail.get("noFail")+"] DITAMBAH ");
 
@@ -1843,67 +1844,71 @@ public class FrmPajakanKecil extends AjaxBasedModule{
 		
 	}
 
-
-	private void simpanFail(HttpSession session, Long idfail) throws Exception {		  
-		Hashtable<String, Comparable> h = null;
-		h = new Hashtable();
+	private void simpanFail(String idfail) throws Exception {		  
+		Hashtable<String, String> h = null;
+		h = new Hashtable<String, String>();
+		int idFaharasat = 1;
+		int idKementerian = 0;
+		int idLokasi= 1;  
+		int idNegeri = 0;
+		int idSeksyen = 3;
+		int idStatus = 7;/**AKTIF*/
+		int idTarafkeselamatan = 1; /** TERBUKA*/
+		String catatan = "TIADA";
+		String flagFail = "1";
 		String kodKementerianMampu = "";
 		String kodNegeriMampu = "";
-		int idKementerian = 0;
-		int idNegeri = 0;
-		int idTarafkeselamatan = 1; /** TERBUKA*/
-		int idSeksyen = 3;
-		int idSuburusan = 0;
-		String txdBukafail = "";
-		String namaFail = "";
 		String noFailroot = "TIADA";
-		int idLokasi= 1;  
-		int idFaharasat = 1;
-		String flagFail = "1";
-		int idStatus = 7;/**AKTIF*/
-		String catatan = "TIADA";
-		int idMasuk = 1;
-		Vector<?> vecFail = new Vector();
+		String txdBukafail = "";
 		 
-		idNegeri = Integer.parseInt(getParam("socNegeri"));
-		idKementerian = Integer.parseInt(getParam("sockementerian"));
-		  
-		txdBukafail = getParam("txdTarikhBukaFail"); 
-		kodNegeriMampu = FrmSenaraiFailPajakanKecilData.getNegeriByMampu(idNegeri);
-		kodKementerianMampu = FrmSenaraiFailPajakanKecilData.getKementerianByMampu(idNegeri);
-		 
-		int fileSeq = 0;
-		  
-		String noFail = "JKPTG/101/847/";
-		if (!("".equals(getParam("txtNoFailSek")))) {
-			noFail = getParam("txtNoFailSek");
-		}else{
-			fileSeq = File.getSeqNo(Integer.parseInt(getParam("socSeksyen")), Integer.parseInt(idUrusan), idKementerian, idNegeri);
-			noFail += kodKementerianMampu+"/"+kodNegeriMampu+"-"+fileSeq;			  
+		try {			
 		
-		}
-		int idmasuk = Integer.parseInt((String)session.getAttribute("_ekptg_user_id"));
-		  
-		h.put("id_Fail", idfail);
-		h.put("id_Tarafkeselamatan", idTarafkeselamatan);
-		h.put("id_Seksyen", idSeksyen);
-		h.put("id_Urusan", Integer.parseInt(idUrusan));
-		h.put("id_Suburusan", Integer.parseInt(idSubUrusan));
-		h.put("tarikh_Bukafail",txdBukafail);		  
-		h.put("tajuk_Fail", getParam("txttajuk"));
-		h.put("no_Fail", noFail);
-		h.put("no_Failroot", noFailroot);
-		h.put("id_Negeri", idNegeri);
-		h.put("id_Kementerian",idKementerian);
-		h.put("id_Faharasat",idFaharasat);
-		h.put("flag_Fail",flagFail);
-		h.put("id_Status",idStatus);
-		h.put("catatan",catatan);
-		h.put("id_Masuk", idmasuk);
-		h.put("id_Lokasi", idLokasi); 
-		  
-		FrmUtilData.simpanFail(h);
-		  
+			idNegeri = Integer.parseInt(getParam("socNegeri"));
+			idKementerian = Integer.parseInt(getParam("sockementerian"));
+			  
+			txdBukafail = getParam("txdTarikhBukaFail"); 
+			kodNegeriMampu = FrmSenaraiFailPajakanKecilData.getNegeriByMampu(idNegeri);
+			kodKementerianMampu = FrmSenaraiFailPajakanKecilData.getKementerianByMampu(idNegeri);
+			 
+			int fileSeq = 0;
+			  
+			String noFail = "JKPTG/101/847/";
+			if (!("".equals(getParam("txtNoFailSek")))) {
+				noFail = getParam("txtNoFailSek");
+			}else{
+				fileSeq = File.getSeqNo(Integer.parseInt(getParam("socSeksyen"))
+									,Integer.parseInt(idUrusan)
+									,idKementerian
+									,idNegeri);
+				noFail += kodKementerianMampu+"/"+kodNegeriMampu+"-"+fileSeq;			  
+			
+			}
+			  
+			h.put("catatan",catatan);
+			h.put("flag_Fail",flagFail);
+			h.put("id_Faharasat",String.valueOf(idFaharasat));
+			h.put("id_Fail", String.valueOf(idfail));
+			h.put("id_Kementerian",String.valueOf(idKementerian));
+			h.put("id_Lokasi", String.valueOf(idLokasi)); 
+			h.put("id_Masuk", userId);
+			h.put("id_Negeri", String.valueOf(idNegeri));
+			h.put("id_Seksyen", String.valueOf(idSeksyen));
+			h.put("id_Status",String.valueOf(idStatus));
+			h.put("id_Suburusan", idSubUrusan);
+			h.put("id_Tarafkeselamatan", String.valueOf(idTarafkeselamatan));
+			h.put("id_Urusan", idUrusan);
+			h.put("no_Fail", noFail);
+			h.put("no_Failroot", noFailroot);
+			h.put("tajuk_Fail", getParam("txttajuk"));
+			h.put("tarikh_Bukafail",txdBukafail);		  
+			  
+			FrmUtilData.simpanFailPK(h);
+		
+		} catch (Exception e) {
+			//e.printStackTrace();
+			getIHTP().getErrorHTML(e.getMessage().toString());
+		}	
+		
 	}
 
 	private void updatePermohonan(HttpSession session)throws Exception{
@@ -1949,6 +1954,8 @@ public class FrmPajakanKecil extends AjaxBasedModule{
 	    data.put("tarikh_Agihan", getParam("txdTarikhBukaFail"));
 	    data.put("TarikhBukaFail", getParam("txdTarikhBukaFail"));
 	    data.put("id_Masuk", userId);
+	    data.put("idPejabat", String.valueOf(session.getAttribute("_ekptg_user_unit")));
+
 	    return FrmUtilData.simpanPermohonanHTP(data);
 	    	
 	} 
@@ -2414,12 +2421,12 @@ public class FrmPajakanKecil extends AjaxBasedModule{
 				return iHTPFail;
 			}
 			
-			private IHTPFail getIHTPPKFail(){
-				if (iHTPPKFail == null){
-					iHTPPKFail = new HTPPajakanKecilFailBean();
-				}
-				return iHTPPKFail;
-			}			
-
+	private IHTPFail getIHTPPKFail(){
+		if (iHTPPKFail == null){
+			iHTPPKFail = new HTPPajakanKecilFailBean();
+			}
+		return iHTPPKFail;
+	}			
+	
 
 }
