@@ -173,9 +173,9 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 			
 			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " class=\"disabled\""));
 			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "disabled", " class=\"disabled\""));
-			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "disabled", "class=\"disabled\""));
-			this.context.put("selectJenisTujuan2", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan2", Long.parseLong(idJenisTujuan2), "disabled", "class=\"disabled\""));
-			this.context.put("selectJenisTujuan3", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan3", Long.parseLong(idJenisTujuan3), "disabled", "class=\"disabled\""));
+			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "disabled", "class=\"disabled\""));
+			this.context.put("selectJenisTujuan2", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan2", Long.parseLong(idJenisTujuan2), "disabled", "class=\"disabled\""));
+			this.context.put("selectJenisTujuan3", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan3", Long.parseLong(idJenisTujuan3), "disabled", "class=\"disabled\""));
 			
 			// MAKLUMAT PEMOHON
 			logic.setMaklumatPemohon(idFail);
@@ -248,9 +248,9 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 			
 			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "", " onChange=\"doChangeUrusan();\""));
 			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "", " onChange=\"doChangeSuburusan();\""));
-			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "", " onChange=\"doChangeTujuan();\""));
-			this.context.put("selectJenisTujuan2", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan2", Long.parseLong(idJenisTujuan2), "", " onChange=\"doChangeTujuan();\""));
-			this.context.put("selectJenisTujuan3", PHPUtilHTML.SelectTujuanByIdSuburusan(idSuburusan, "socJenisTujuan3", Long.parseLong(idJenisTujuan3), "", " onChange=\"doChangeTujuan();\""));
+			this.context.put("selectJenisTujuan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan", Long.parseLong(idJenisTujuan), "", " onChange=\"doChangeTujuan();\""));
+			this.context.put("selectJenisTujuan2", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan2", Long.parseLong(idJenisTujuan2), "", " onChange=\"doChangeTujuan();\""));
+			this.context.put("selectJenisTujuan3", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socJenisTujuan3", Long.parseLong(idJenisTujuan3), "", " onChange=\"doChangeTujuan();\""));
 			
 			// MAKLUMAT PEMOHON			
 			beanMaklumatPemohon = new Vector();

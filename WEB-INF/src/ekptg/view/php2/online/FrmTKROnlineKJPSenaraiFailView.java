@@ -260,7 +260,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 			} else if ("daftarPermohonan".equals(command)) {
 
-				vm = "/tkrKJPdaftarPermohonan.jsp";
+				vm = "/tkrKJPdaftarPermohonan.jsp"; 
 
 				this.context.put("mode", "new");
 				this.context.put("readonly", "");
