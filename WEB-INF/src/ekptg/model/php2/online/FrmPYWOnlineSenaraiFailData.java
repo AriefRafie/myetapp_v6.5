@@ -25,11 +25,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
+import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
 import ekptg.intergration.XEkptgEmailSender;
+import ekptg.model.admin.EmailConfig;
 import ekptg.model.ppt.FrmSek8PampasanData;
 
 /**
@@ -2460,9 +2462,10 @@ public class FrmPYWOnlineSenaraiFailData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 						
-			sql = "SELECT B.ID_HAKMILIKPERMOHONAN, A.NO_PERMOHONAN, C.ID_SUBURUSAN " 
-				+ " FROM TBLPERMOHONAN A,TBLPHPHAKMILIKPERMOHONAN B, TBLPFDFAIL C WHERE "
-				+ " C.ID_FAIL = A.ID_FAIL AND A.ID_PERMOHONAN = B.ID_PERMOHONAN AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
+			sql = "SELECT B.ID_HAKMILIKPERMOHONAN, A.NO_PERMOHONAN, C.ID_SUBURUSAN, D.NAMA, D.EMEL " 
+				+ " FROM TBLPERMOHONAN A,TBLPHPHAKMILIKPERMOHONAN B, TBLPFDFAIL C,TBLPHPPEMOHON D "
+				+ " WHERE C.ID_FAIL = A.ID_FAIL AND A.ID_PERMOHONAN = B.ID_PERMOHONAN "
+				+ " AND A.ID_PEMOHON = D.ID_PEMOHON AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
 			
 			
 			ResultSet rsPermohonan = stmt.executeQuery(sql);
@@ -2470,6 +2473,8 @@ public class FrmPYWOnlineSenaraiFailData {
 				idhakmilikPermohonan = rsPermohonan.getString("ID_HAKMILIKPERMOHONAN");
 				noPermohonan = rsPermohonan.getString("NO_PERMOHONAN");
 				idSuburusan = rsPermohonan.getString("ID_SUBURUSAN");
+				namaUser = rsPermohonan.getString("NAMA");
+				emelUser = rsPermohonan.getString("EMEL");
 			}	
 			
 			//TBLPERMOHONAN
@@ -2529,17 +2534,15 @@ public class FrmPYWOnlineSenaraiFailData {
 
 			conn.commit();
 			
-
 			if (!"".equals(namaUser) && !"".equals(emelUser)){
-				XEkptgEmailSender email = XEkptgEmailSender.getInstance();
-				email.FROM = "etapp_webmaster@kptg.gov.my";
-				email.RECIEPIENT = emelUser;				
-				email.SUBJECT = "PERMOHONAN PENYEWAAN HARTA TANAH PERSEKUTUAN #" + noPermohonan;
-				email.MESSAGE = namaUser.toUpperCase() + "."
-								+ "<br><br>Permohonan anda telah diterima.Sila gunakan nombor permohonan diatas sebagai rujukan."
-								+ "Anda akan dimaklumkan setelah permohonan ini telah didaftarkan."
-								+ "<br><br>Terima Kasih.";
-				email.sendEmail();
+				EmailConfig ef = new EmailConfig();
+				
+				String subject = "PERMOHONAN PENYEWAAN HARTA TANAH PERSEKUTUAN #" + noPermohonan;
+				String kandungan = namaUser.toUpperCase() + "."
+						+ "<br><br>Permohonan anda telah diterima.Sila gunakan nombor permohonan diatas sebagai rujukan."
+						+ "Anda akan dimaklumkan setelah permohonan ini telah didaftarkan.";
+				
+				ef.sendByOnlineUser(emelUser, subject, kandungan);
 			}
 			
 		} catch (SQLException ex) { 

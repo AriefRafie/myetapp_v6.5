@@ -57,6 +57,21 @@ public class EmailConfig {
 		mail.sendEmail();	
 		
 	}
+	
+	public void sendByOnlineUser(String userMail
+		,String tajuk
+		,String kandungan) throws Exception {
+		
+		kandungan+= " <br><br>Sekian, terima kasih.<br><br><br>";			
+		kandungan+= " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+		
+		mail.SUBJECT = tajuk;
+		mail.MESSAGE = kandungan;		
+		mail.RECIEPIENT = userMail;
+//		mail.TO_CC = new String[1];		
+//		mail.TO_CC[0] = userMail;
+		mail.sendEmail();	
+	}
 		
 //	private IUserPegawai getUser(){
 //		if(iUser== null)
