@@ -126,10 +126,12 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         	if ("simpanMaklumatKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJP(idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logic.sendEmail(idPermohonan, idKementerianTanah, session);
     		}
         	if ("simpanMaklumatUlanganKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJP(idUlasanTeknikal, idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logic.sendEmail(idPermohonan, idKementerianTanah, session);
     		}
         	if ("simpanKemaskiniMaklumatKJP".equals(hitButton)){
         		logic.simpanKemaskiniMaklumatKJP(idUlasanTeknikal, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
