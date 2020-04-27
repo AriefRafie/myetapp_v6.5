@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
+import ekptg.model.admin.EmailConfig;
 import ekptg.model.php2.FrmPLPHeaderData;
 import ekptg.model.php2.FrmPLPJabatanTeknikalData;
 import ekptg.model.php2.online.FrmPLPOnlineKJPSenaraiFailData;
@@ -22,6 +23,7 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 	FrmPLPHeaderData logicHeader = new FrmPLPHeaderData();
 	FrmPLPJabatanTeknikalData logic = new FrmPLPJabatanTeknikalData();
 	FrmPLPOnlineKJPSenaraiFailData logicKJP = new FrmPLPOnlineKJPSenaraiFailData();
+	EmailConfig email = new EmailConfig();
 
 	@Override
 	public String doTemplate2() throws Exception {

@@ -2482,7 +2482,7 @@ public class FrmPLPJabatanTeknikalData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			sql = " SELECT B.EMEL, D.NO_FAIL, A.TARIKH_JANGKA_TERIMA "
+			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA "
 				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLPERMOHONAN C, TBLPFDFAIL D "
 				+ " WHERE A.ID_MENTERI = B.ID_KEMENTERIAN AND A.ID_PERMOHONAN = C.ID_PERMOHONAN "
 				+ " AND C.ID_FAIL = D.ID_FAIL AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
