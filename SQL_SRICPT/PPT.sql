@@ -1,8 +1,12 @@
 
+28042020--------------------------------------------------------------------------------
+
+ALTER TABLE TBLRUJJENISPB ADD FLAG_AKTIF VARCHAR(2);
+
 --02/03/2020
 02032020--------------------------------------------------------------------------------
 
-DROP TRIGGER PPTDOKUMENHAKMILIK_BI;
+--DROP TRIGGER PPTDOKUMENHAKMILIK_BI;
 
 CREATE OR REPLACE TRIGGER PPTDOKUMENHAKMILIK_BI    
 before insert on     TBLPPTDOKUMENHAKMILIK    for each row
@@ -12,7 +16,7 @@ begin    if :new.ID_DOKUMEN   is null    then SELECT (SELECT kod_negeri FROM tbl
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 --02/03/2020 
-DROP SEQUENCE PPTDOKUMENHAKMILIK_SEQ;
+--DROP SEQUENCE PPTDOKUMENHAKMILIK_SEQ;
 
 CREATE SEQUENCE PPTDOKUMENHAKMILIK_SEQ
   START WITH 1
