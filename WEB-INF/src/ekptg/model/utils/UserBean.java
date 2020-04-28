@@ -91,6 +91,45 @@ public class UserBean implements IUserPegawai {
 
 	}
 	
+	public List<Map<String,String>> getKementerianPenyedia(String idKementerian) throws Exception {
+		Db db = null;
+		ResultSet rs = null;
+		Statement stmt = null;
+		List<Map<String,String>> listKementerianPenyedia = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			stmt = db.getStatement();	
+		
+			sql = " SELECT UI.EMEL FROM USERS U, USERS_INTERNAL UI, USERS_KEMENTERIAN UK "
+				+ " WHERE U.USER_ID = UI.USER_ID AND U.USER_ID = UK.USER_ID "
+				+ " AND UI.ID_JAWATAN = '24' AND UI.FLAG_AKTIF = '1' AND UK.ID_KEMENTERIAN = "+idKementerian+"'";
+			
+			myLog.info(" SQL listKementerianPenyedia :"+ sql);			
+			rs = stmt.executeQuery(sql);
+			listKementerianPenyedia = Collections.synchronizedList(new ArrayList<Map<String,String>>());
+			Map<String,String> h = null;
+			int bil = 0;
+			while (rs.next()) {
+				h = Collections.synchronizedMap(new HashMap<String,String>());
+				bil++;
+				h.put("BIL",String.valueOf(bil));
+				h.put("EMEL",rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
+				listKementerianPenyedia.add(h);
+				
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+			if (db != null)
+				db.close();
+		}
+		return listKementerianPenyedia;
+	}
+	
 	public Vector<Hashtable<String, String>> getSenaraiPegawai(
 			int idNegeri,String idUnit,String tahun)	throws Exception{
 			Db db = null;
