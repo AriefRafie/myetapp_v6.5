@@ -1,7 +1,11 @@
 package ekptg.view.ppk;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +14,7 @@ import java.util.Vector;
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
+import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.commons.fileupload.FileItem;
@@ -21,6 +26,7 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.ppk.FrmHeaderPpk;
+import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8Notis;
 import ekptg.model.ppk.FrmRynSek8Rayuan;
 import ekptg.model.ppk.FrmRynSek8SemakPenerimaan;
@@ -40,13 +46,16 @@ public class FrmRynSemakPenerimaan extends AjaxBasedModule{
 	FrmRynSek8Rayuan model2 = new FrmRynSek8Rayuan();
 	FrmPrmhnnSek8Notis model3 = new FrmPrmhnnSek8Notis();
 	FrmHeaderPpk mainheader = new FrmHeaderPpk();
-
+	FrmPrmhnnSek8DaftarSek8InternalData logic_A = null;
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
 	public String doTemplate2() throws Exception{
 
 		HttpSession session = request.getSession();
-
+		
+		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
+		Vector listSupportingDoc = null;
+		String jenisDoc = "99207";
     	String vm = "";
 
     	String action = getParam("action");
@@ -152,6 +161,7 @@ public class FrmRynSemakPenerimaan extends AjaxBasedModule{
 
     	//command 1
     	String submit = getParam("command");
+    	String arahan1 = getParam("arahan");
     	myLogger.info("[submit] :: " +submit);
 
     	if ("semakKeputusanRayuan".equals(submit)){
@@ -767,7 +777,22 @@ public class FrmRynSemakPenerimaan extends AjaxBasedModule{
 
 
     	else if ("maklumatSerahanK1".equals(submit)){
-
+    		
+    		String id = getParam("id_permohonan");
+    		myLogger.info(":::::::::id" +id);
+    		
+			
+			Hashtable getidSimati = getidSimati(id);
+			String IdSimati = (String) getidSimati.get("idSimati");
+			
+			String submit21 = getParam("command2");
+    		if ("deleteSuppDoc".equals(submit21)){
+    			deleteSuppDoc(IdSimati, jenisDoc);
+    		}
+			context.put("idSimati",IdSimati);
+			logic_A.setSupportingDoc(id, jenisDoc);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);
     		String selectedTab = "";
 
     		selectedTab = getParam("tabId").toString();
@@ -1979,7 +2004,7 @@ public class FrmRynSemakPenerimaan extends AjaxBasedModule{
     	}//close onchangeBandarByNegeri
 
     	else if ("simpanMaklumatSerahanK1".equals(submit)){
-
+    		
     		String id_permohonan = "";
             int id_status = 0;
 
@@ -2293,6 +2318,43 @@ public class FrmRynSemakPenerimaan extends AjaxBasedModule{
 
 	  }//close updateKeputusanPegawai
 
+	public void deleteSuppDoc(String idSimati, String jenisDoc) throws Exception 
+	{
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " DELETE FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = '"+idSimati+"' AND ID_JENISDOKUMEN = '"+jenisDoc+"'";
+			myLogger.info("sql1 >>> "+sql);
+			stmt.executeUpdate(sql);
+			
+			
+			conn.commit();
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	
+	
+}
+	
 	//update Keputusan Mahkamah
 	private void updateKeputusanMahkamah(HttpSession session,String id_perintah) throws Exception{
 
@@ -2375,6 +2437,40 @@ public class FrmRynSemakPenerimaan extends AjaxBasedModule{
 
 	  }//close updateKeputusanMahkamah
 
+	public Hashtable<String,String> getidSimati(String idPermohonan) {
+		Db db = null;
+		String sql = "";
+		Hashtable<String,String> getidSimati = new Hashtable<String,String>();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = '"+idPermohonan+"'";
+			myLogger.info("SQL STATEMENT - getidSimati : " + sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				getidSimati.put(
+						"idSimati",
+						rs.getString("ID_SIMATI") == null ? "" : rs
+								.getString("ID_SIMATI"));
+				
+				
+				
+				
+				
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return getidSimati;
+	}
+	
 	
 	private void saveData(FileItem item, String id_rayuan) throws Exception {
 		Db db = null;
