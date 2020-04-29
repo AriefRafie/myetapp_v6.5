@@ -55,7 +55,10 @@
  	#set($namaSimati=$data.namaSimati)
  	#set($namaSipemohon=$data.namaPemohon)
 #end
-
+#set($namaDoC="")
+#foreach($listSupportingDoc in $ViewSupportingDoc)
+#set($namaDoC = $listSupportingDoc.NAMA_DOKUMEN)
+#end
 <input type="hidden" name="tarikhMohon" id="tarikhMohon" value="$tarikhMohon">
 
 #if($!headerppk.size()>0 )
@@ -727,7 +730,7 @@ document.getElementById("header_lama").style.display="block";
     			<td width="1%" valign="top">#if($editformSerahank1=="new" || $editformSerahank1=="yes")<font color="red">*</font>#else&nbsp;#end</td>
     			<td width="20%">Tarikh Serahan</td>
     			<td width="1%">:</td>
-    			<td width="79%"><input type="text" $Callmode $allmode name="txdTarikhSerahanMahkamah" id="txdTarikhSerahanMahkamah" value="$!tarikhM" size="11" maxlength="10" onblur="validateTarikh(this,this.value);check_date(this)" />
+    			<td width="78%"><input type="text" $Callmode $allmode name="txdTarikhSerahanMahkamah" id="txdTarikhSerahanMahkamah" value="$!tarikhM" size="11" maxlength="10" onblur="validateTarikh(this,this.value);check_date(this)" />
     			#if($editformSerahank1=="yes" || $editformSerahank1=="new")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhSerahanMahkamah',false,'dmy');">&nbsp;<font color="blue" style="font-size:10px"><i>dd/mm/yyyy</i></font>#end </td>
     		</tr>
     		<tr>
@@ -840,6 +843,43 @@ document.getElementById("header_lama").style.display="block";
     
      </fieldset>	
      
+    <!-- Dokumen Sokongan Mula -->
+    
+    <br/>
+    <fieldset>
+              <legend>DOKUMEN SOKONGAN</legend>
+              <table width="100%"  cellpadding="1" cellspacing="1" border="0">
+                #if ($Errormsg == "Error1")
+                <tr>
+                <td colspan="4" ><b><font color="red">Sila muatnaik dokumen sokongan terlebih dahulu.</font></b></td>
+                </tr>
+                #end
+                <tr>
+                  <td valign="top" width="1%">#if($editformSerahank1=="new" || $editformSerahank1=="yes")<font color="red">*</font>#else&nbsp;#end</td>
+                  <td width="20%">#if($Callmode!="class=disabled") Muatnaik Dokumen Sokongan #else
+                    Dokumen Sokongan
+                    #end </td>
+                  <td width="1%">:</td>
+                  <td width="78%"> 
+                  #if($Callmode!="class=disabled" &&  $namaDoC != "")
+                  <input type="text" disabled value=$!namaDoC> &nbsp;&nbsp; <input name="deleteSuppDoc1" type="button" value="Padam" onclick="deleteSuppDoc()" />
+                  #end
+                  #if($Callmode=="class=disabled" && $namaDoC != "")
+                  <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doDownload($idSimati)" />
+                  <!-- <input type="text" disabled value=$!namaDoC> -->	
+                  #end
+                  
+                  #if($Callmode!="class=disabled" && $namaDoC == "") 
+                  <input name="cetak" type="button" value="Tambah Dokumen Sokongan" onclick="uploadSuppDoc('$id_permohonan','$idSimati')" />
+                  <!-- <input id="fileupload" name="fileupload" type="file" size="40" onchange="uploadSuppDoc()">  -->
+                  
+                  #end
+                    </td>
+                </tr>
+                 </table>
+                 </fieldset>
+     <!-- Dokumen Sokongan Akhir -->
+     
      <!-- #if($id_status!="166" && $id_status!="167" && $id_status!="180")#end -->
  	#if($id_status!="169")
       <table width="100%"  cellpadding="1" cellspacing="1" border="0">
@@ -889,6 +929,9 @@ document.getElementById("header_lama").style.display="block";
       <tr>
         <td ><a href="#" class="style2" onClick="javascript:cetakBuktiPenyampaianMahkamah('$id_fail')"><font color="blue">Bukti Penyampaian (Mahkamah)</font></a></td>
       </tr>   
+      <tr>
+        <td ><a href="#" class="style2" onClick="javascript:semakMTPermohonan('$id_permohonan','$id_fail')"><font color="blue">Hantar Permohonan Rayuan ke Mahkamah Tinggi</font></a></td>
+      </tr>
      </table>   
 </fieldset> 
 
@@ -1111,6 +1154,7 @@ document.getElementById("header_lama").style.display="block";
 
 <input name="tabId" type="hidden" id="tabId" value="$selectedTab"/> 
 <!-- <input type="hidden" name="command" /> -->
+
 <input type="hidden" name="command2" />
 <input type="hidden" name="command3" />
 <input type="hidden" name="command4" />
@@ -1763,6 +1807,20 @@ function validateTarikh(elmnt,content) {
 		return;
 	}
 }
+
+function uploadSuppDoc(id,IdSimati)
+{
+	
+	var url = "../x/${securityToken}/ekptg.view.ppk.SkrinPopupUploadDokumen?&id_Permohonan="+id+"&IdSimati="+IdSimati+"&id_jenisDoc=99207";
+	var hWnd = window.open(url,'printuser','width=350,height=200, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	
+}
+
 function RemoveNonNumeric2( strString )
 {
       var strValidCharacters = "1234567890/";
@@ -1947,6 +2005,19 @@ function cetakBuktiPenyampaianMahkamah(idfail) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
+function semakMTPermohonan(id_permohonan,idfail) {
+	
+	//var id_permohonan  = $jquery('#id_permohonan').val();
+	
+
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiMT?idFail=$idFail&idPermohonan="+id_permohonan+"&command=hantarPermohonanRayuan&frmFrom=frmPrmhnnRayuan&idfail="+idfail;
+	var hWnd = window.open(url,'Cetak','width=625,height=450, resizable=no,scrollbars=no');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();	    
+}
+
 function changeGetAlamatPenasihat() {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmRynSemakPenerimaan";
 	document.${formName}.command.value = "maklumatSerahanK1";
@@ -1965,6 +2036,34 @@ function doOpen(id) {
     if ((document.window != null) && (!hWnd.opener))
     hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
+}
+
+function doDownload(id) {
+	//alert('id : '+id);
+    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id+"&jenisDoc=99207";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function deleteSuppDoc()
+{
+	input_box = confirm("Adakah anda pasti?");
+	if (input_box == true) {
+	document.${formName}.method = "POST";	
+	document.${formName}.command.value="maklumatSerahanK1";
+	document.${formName}.command2.value="deleteSuppDoc";
+	//document.${formName}.eventStatus.value="1";
+	document.${formName}.action = "";
+	document.${formName}.submit();
+	}
+	else
+		{
+		return
+		}
+	
+	
 }
 </script>
 
