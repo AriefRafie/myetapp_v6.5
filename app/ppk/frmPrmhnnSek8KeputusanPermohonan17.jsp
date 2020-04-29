@@ -80,7 +80,10 @@
  #set($daerahmahkamahX = "")
 
 #set ($tujuanPindah = "") <!-- razman add -->
-
+#set ($namaDoC = "")
+#foreach($listSupportingDoc in $ViewSupportingDoc)
+#set($namaDoC = $listSupportingDoc.NAMA_DOKUMEN)
+#end
 
 
 #foreach ($ListFail in $ViewFail)
@@ -397,7 +400,7 @@
     #set ($setMode = "")
     #set ($setMode1 = "")
     
-    #if($Overalldum >= 2000000)
+    #if($Overalldum > 2000000)
     #if($id_taraf_mohon == "6")
      #set ($setMode2 = "")
     #else
@@ -450,7 +453,7 @@
     
   
     
-    #if($Overalldum >= 2000000)
+    #if($Overalldum > 2000000)
     
     #if($id_taraf_mohon == "6")
     #set ($setMode2 = "")
@@ -511,7 +514,7 @@
    
 #elseif ($keputusan == "70")
 
-    #if($Overalldum >= 2000000)
+    #if($Overalldum > 2000000)
     
     #set ($check5 = "checked")
     #set ($check1 = "")
@@ -676,7 +679,7 @@
  #set ($EventStatus = 0)  
  #set($dum=$Overalldum)
 
-    #if($dum >= 2000000)   
+    #if($dum > 2000000)   
  
     #set ($check8 = "checked")
     #set  ($check3 = "") 
@@ -1237,7 +1240,7 @@ Pindah ke Mahkamah Tinggi</td>
        #set($setModeTujuan2 = "")
        
        
-       #if($Overalldum >= 2000000)        
+       #if($Overalldum > 2000000)        
     <!--   ----- kurang -->
         #set($setModeTujuan1 = "")
        	#set($setModeTujuan2 = "")      
@@ -1252,7 +1255,7 @@ Pindah ke Mahkamah Tinggi</td>
        	 #set($selectedTujuan1 = "")
        	 #set($selectedTujuan2 = "checked")
        #else
-       	 #if($Overalldum < 2000000)
+       	 #if($Overalldum <= 2000000)
              #set($selectedTujuan1 = "")
              #set($selectedTujuan2 = "checked")
          #else
@@ -1559,7 +1562,13 @@ Pindah ke Mahkamah Tinggi</td>
   <tr>
     <td><span class="style5"></span>
       </table>
-</fieldset>    </td>
+</fieldset>    
+
+
+
+
+
+</td>
   </tr>
 </table>
 </div> 
@@ -1880,6 +1889,46 @@ Batal Permohonan (Lain - lain kes)</td>
       </tr>
     </table>
     </fieldset>
+    
+     <fieldset>
+    <legend>DOKUMEN SOKONGAN</legend>
+    <table width="60%" border="0">
+    <tr>
+     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+        <td width="1%" scope="col">:</td>
+        <td width="74%" colspan="2" scope="col">
+         <input type="text" disabled value=$!namaDoC>&nbsp;
+         #if ($namaDoC != '')
+         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$idPermohonan','$idSimati')"/>&nbsp;
+         #else
+         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$idPermohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '')
+         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         #end
+         
+         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
+         
+        
+   		 
+   		 #if ($namaDoC != '')
+   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
+   		 
+   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 
+   		 
+       
+        </td>
+    </tr>
+    <tr>
+    
+    </tr>
+    
+    </table>
+    
+    </fieldset>
+    
     </td>
   </tr>
 </table>
@@ -1915,6 +1964,7 @@ Batal Permohonan (Lain - lain kes)</td>
                                 #end 
       
     #if($id_Status == "50")
+    <input type="button" name="cmdBorangI" id="cmdBorangI" value="Hantar ke Mahkamah Tinggi (Borang I)" onClick="semakMTBorangI()"/>
       <input type="button" name="button" id="button" value="Cetak" onClick="javascript:setTable('tableReport')" />
     #end
     
@@ -1962,11 +2012,12 @@ Batal Permohonan (Lain - lain kes)</td>
     
     <input type="hidden" name="id_permohonan"  value="$idPermohonan"/>   
 	<input name="id_status" type="hidden"  value="$id_Status"/>  
+	<input type="hidden" name="idSimati" value="$idSimati"/>
     
     
     #if ($EventStatus != 0)
     #if ($id_Status == 70)
-    <input type="button" name="cmdKembali" id="cmdKembali" value="Cetak" onClick="javascript:cetakSuratBatalPermohonan_LK('$noFail')"/>
+    <input type="button" name="cmdKembali" id="cmdKembali" value="Cetak" onClick="javascript:cetakSuratBatalPermohonan_LK('$noFail','$seksyen')"/>
     #end
     #end
     
@@ -1996,12 +2047,23 @@ Batal Permohonan (Lain - lain kes)</td>
         <td ><a href="#" class="style2" onClick="javascript:cetak('$noFail')">Kulit Fail</a></td>
       </tr>
       -->
+      
+      #if ($tujuanPindah == "2")
+      <tr>
+        <td ><a href="#" class="style2" onClick="javascript:cetakSuratPindahMT2('$noFail')">Surat Pindah Mahkamah Tinggi</a></td>
+      </tr>
+            <tr>
+        <td ><a href="#" class="style2" onClick="javascript:cetakBorangIWasiat('$noFail')">Borang I</a></td>
+      </tr>
+      #else
       <tr>
         <td ><a href="#" class="style2" onClick="javascript:cetakSuratPindahMT('$noFail')">Surat Pindah Mahkamah Tinggi</a></td>
       </tr>
       <tr>
         <td ><a href="#" class="style2" onClick="javascript:cetakBorangI('$noFail')">Borang I</a></td>
       </tr>
+      #end
+      
        <tr>
         <td ><a href="#" class="style2" onClick="javascript:buktiPenyampaian('$noFail','$idFail')">Bukti Penyampaian (Mahkamah Tinggi)</a></td>
       </tr>
@@ -2332,7 +2394,7 @@ function selectRadio1() {
 if(document.f1.sorPenentuanBidangKuasa[0].checked == true)
 {
 
-if(document.f1.jumlah.value >= 2000000)
+if(document.f1.jumlah.value > 2000000)
 {
 document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
 document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = true;
@@ -2473,7 +2535,7 @@ document.f1.tempatmohonawal.value = "";
 function putih(){
 
 
-if(document.f1.jumlah.value >= 2000000)
+if(document.f1.jumlah.value > 2000000)
 {
 document.f1.sorKeputusanBorangC[0].checked = true;
 document.f1.sorKeputusanBorangC[1].checked = false;
@@ -2552,7 +2614,7 @@ if(document.f1.id_taraf_mohon.value != "")
 else
 {idm="";}
 
-if(document.f1.jumlah.value >= 2000000)
+if(document.f1.jumlah.value > 2000000)
 {
 
 
@@ -2726,6 +2788,15 @@ function cetakSuratPindahMT(noFail) {
     if (hWnd.focus != null) hWnd.focus();
 }
 
+function cetakSuratPindahMT2(noFail) {
+	 //   var url = "../servlet/ekptg.report.ppk.SuratPindahMT?nofail="+noFail;
+	 var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratPindahMTII&flagReport=S";
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
+
 function cetakSuratBatalPermohonan(noFail) {
  //   var url = "../servlet/ekptg.report.ppk.SuratPindahMT?nofail="+noFail;
  var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratBatalPermohonan&flagReport=S";
@@ -2746,10 +2817,29 @@ function cetakBorangI(noFail) {
     if (hWnd.focus != null) hWnd.focus();
 }
 
+function cetakBorangIWasiat(noFail) {
+    //var url = "../servlet/ekptg.report.ppk.BorangI?nofail="+noFail;
+	
+	var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=BorangIWasiat&flagReport=B";
+	
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function semakMTBorangI() {
+    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiMT?idFail=$idFail&command=hantarBorangI";
+	var hWnd = window.open(url,'Cetak','width=625,height=480, resizable=yes,scrollbars=no');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
 function buktiPenyampaian(noFail,idfail)
 {
 
-    var url = "../servlet/ekptg.report.ppk.BuktiPenyampaianMT?nofail="+noFail+"&idfail="+idfail;  
+    var url = "../servlet/ekptg.report.ppk.BuktiPenyampaianMT?nofail="+noFail+"&idfail="+idfail+"&template=BuktiPenyampaianMT";  
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -2915,20 +3005,20 @@ else if(document.f1.sorKeputusanBorangC[0].checked == true && document.getElemen
 	   //razman add close
 	   
 	   
-	    if(document.f1.jumlah.value >= 2000000)
+	    if(document.f1.jumlah.value > 2000000)
 		{	
 		document.getElementById(idx).style.display="block";
 		document.getElementById(id).style.display="none";
 		}
 		
-		if(document.f1.jumlah.value < 2000000)
-		{
+		//if(document.f1.jumlah.value <= 2000000)
+		//{
 	
 		
 		//document.getElementById(idx).style.display="none"; //razman comment
 		//document.getElementById(id).style.display="none"; //razman comment
 		
-		}
+		//}
 		
 		
 }
@@ -2965,7 +3055,7 @@ else
 
 
 
-if(document.f1.jumlah.value >= 2000000)
+if(document.f1.jumlah.value > 2000000)
 {
 
 document.getElementById(idx).style.display="block";
@@ -3369,9 +3459,9 @@ function cetakSuratBatalPermohonanMT(noFail) {
     if (hWnd.focus != null) hWnd.focus();
 }
 
-function cetakSuratBatalPermohonan_LK(noFail) {
+function cetakSuratBatalPermohonan_LK(noFail,seksyen) {
  //   var url = "../servlet/ekptg.report.ppk.SuratPindahMT?nofail="+noFail;
- var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratBatalPermohonanLainKes&flagReport=S";
+ var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratBatalPermohonanLainKes&flagReport=S&seksyen="+seksyen;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -3391,6 +3481,47 @@ function cetakSuratBatalPermohonan_ARB(noFail) {
 function ForView(noFail) {
 	document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailSek8ForView&txtNoFail="+noFail;
 	document.f1.submit();
+}
+
+function uploadSuppDoc(id,IdSimati)
+{
+	
+	var url = "../x/${securityToken}/ekptg.view.ppk.SkrinPopupUploadDokumen?&id_Permohonan="+id+"&IdSimati="+IdSimati+"&id_jenisDoc=99205";
+	var hWnd = window.open(url,'printuser','width=350,height=200, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	
+}
+
+function doOpen(id) {
+	//alert('id : '+id);
+    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id+"&jenisDoc=99205";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function deleteSuppDoc()
+{
+	input_box = confirm("Adakah anda pasti?");
+	if (input_box == true) {
+	document.f1.method = "POST";
+	document.f1.command.value = "deleteSuppDocMode";
+	//document.f1.mode.value = "";
+	
+	document.f1.action="?_portal_module=FrmSenaraiFailKeputusanPermohonanInternal17";
+	document.f1.submit();
+	}
+	else
+		{
+		return
+		}
+	
+	
 }
 
 function keNilaian_Harta(jenis_permohonan,idPermohonan,idPemohon,idSimati,id_Permohonansimati)

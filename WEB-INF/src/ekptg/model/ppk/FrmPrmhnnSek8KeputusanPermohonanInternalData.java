@@ -38,6 +38,7 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 	private static Vector listMaklumatMahkamahM = new Vector();
 	private static Vector listMaklumatMahkamahMPindah = new Vector();
 	private static Vector listMaklumatMahkamahARB = new Vector();
+	private static Vector listMaklumatPentadbirTanah = new Vector();
 	private static Vector listMaklumatInsolvensi = new Vector();
 		
 	static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8KeputusanPermohonanInternalData.class);
@@ -87,7 +88,7 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 			
 			//sql = "SELECT kp.id_Permohonan, pej.nama_Pejabat  FROM Tblppkkeputusanpermohonan kp, Tblrujpejabat pej, Tblppkpermohonan p, Tblrujdaerah d WHERE kp.id_Permohonan = p.id_Permohonan  AND p.id_Permohonan = 323  AND pej.jenis_pejabat = '08'  AND kp.id_Daerah_Mahkamah = d.id_Daerah  AND d.id_Daerah = pej.id_Daerah";
 			//sql = "select '123' as id_Permohonan,'AJAE TEST' as nama_Pejabat from DUAL";
-			//System.out.println("MAHKLAMAH:"+sql);
+			System.out.println("MAHKLAMAH:"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next())	{
@@ -144,6 +145,10 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 	
 	public static Vector getMaklumatMahkamahARB(){
 		return listMaklumatMahkamahARB;
+	}
+	
+	public static Vector getMaklumatPentadbirTanah(){
+		return listMaklumatPentadbirTanah;
 	}
 	
 	public static Vector getMaklumatInsolvensi(){
@@ -239,6 +244,58 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 				h.put("idbandar", rs.getString("id_bandar")==null?"":rs.getString("id_bandar"));
 				h.put("namabandar", rs.getString("Keterangan")==null?"":rs.getString("Keterangan"));
 				listMaklumatMahkamahARB.addElement(h);
+			}}
+			
+			finally {
+				//if(db != null)db.close();			
+		}
+	}	
+	
+	public static void setMaklumatPentadbirTanah(Db db) throws Exception {
+		//Db db = null;
+		listMaklumatPentadbirTanah.clear();
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try{
+			//db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = "SELECT DISTINCT c.id_negeri, c.id_daerah, c.id_bandar, c.id_pejabat, c.kod_pejabat, c.nama_pejabat, " +
+                " c.id_jenispejabat, c.alamat1, c.alamat2, c.alamat3, c.poskod, " +
+                " c.no_tel, c.no_fax, d.nama_daerah,  N.NAMA_NEGERI, e.keterangan " +
+                " FROM tblrujpejabatjkptg a, tblrujpejabaturusan b, tblrujpejabat c, tblrujdaerah d, tblrujnegeri n, TBLRUJBANDAR E " +
+                " WHERE b.id_seksyen = '2' " +
+                " AND b.id_jenispejabat = a.id_jenispejabat " +
+                " AND b.id_jenispejabat IN ('21', '22', '24') " +
+                " AND c.id_jenispejabat = '2' " +
+                " AND c.id_pejabat <> '0' " +
+                " AND b.id_pejabatjkptg = '45' " +
+                " and D.ID_DAERAH = c.ID_DAERAH  AND N.ID_NEGERI = c.ID_NEGERI  AND c.ID_BANDAR = E.ID_BANDAR(+) " +
+                " ORDER BY NAMA_NEGERI ";
+			
+		myLogger.info("SQL setMaklumatPentadbirTanah :"+sql.toUpperCase());
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next())	{
+				Hashtable h = new Hashtable();				
+				h.put("nama_pejabat", rs.getString("nama_pejabat")==null?"":rs.getString("nama_pejabat"));
+				h.put("id_Pejabat", rs.getString("id_pejabat")==null?"":rs.getString("id_pejabat"));
+				h.put("alamat1", rs.getString("alamat1")==null?"":rs.getString("alamat1"));
+				h.put("alamat2", rs.getString("alamat2")==null?"":rs.getString("alamat2"));
+				h.put("alamat3", rs.getString("alamat3")==null?"":rs.getString("alamat3"));				
+				h.put("poskod", rs.getString("poskod")==null?"":rs.getString("poskod"));				
+				h.put("no_tel", rs.getString("no_tel")==null?"":rs.getString("no_tel"));
+				h.put("no_fax", rs.getString("no_fax")==null?"":rs.getString("no_fax"));				
+				h.put("daerah", rs.getString("nama_daerah")==null?"":rs.getString("nama_daerah"));
+				h.put("negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));				
+				h.put("iddaerah", rs.getString("id_daerah")==null?"":rs.getString("id_daerah"));
+				h.put("idnegeri", rs.getString("id_negeri")==null?"":rs.getString("id_negeri"));	
+				h.put("jenispejabat", rs.getString("id_jenispejabat")==null?"":rs.getString("id_jenispejabat"));
+				h.put("kodpejabat", rs.getString("kod_pejabat")==null?"":rs.getString("kod_pejabat"));				
+				h.put("idbandar", rs.getString("id_bandar")==null?"":rs.getString("id_bandar"));
+				h.put("namabandar", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
+				listMaklumatPentadbirTanah.addElement(h);
 			}}
 			
 			finally {
@@ -1542,6 +1599,7 @@ private static Vector semakMahkamah = new Vector();
 		    	String tarikhTerimaNilaian=(String)data.get("tarikhTerimaNilaian");
 		    	String keputusanBorangC=(String)data.get("keputusanBorangC");
 		    	String penentuanBidangKuasa=(String)data.get("penentuanBidangKuasa");
+		    	String tarikhTerimaSuratAkuan = (String)data.get("tarikhTerimaSuratAkuan");
 		    	//String penentuanBidangKuasaTeruskan=(String)data.get("penentuanBidangKuasaTeruskan");
 		    	String catatan=(String)data.get("catatan");
 		    	String IdPermohonan=(String)data.get("IdPermohonan");
@@ -1580,12 +1638,13 @@ private static Vector semakMahkamah = new Vector();
 				 String nofailawal=(String)data.get("nofailawal");
 				 String namapemohonawal=(String)data.get("namapemohonawal");
 				 String tempatmohonawal=(String)data.get("tempatmohonawal");
-		    	
+		    	 
 				 String idDaerah=(String)data.get("idDaerah");
 			     String idNegeri=(String)data.get("idNegeri");
 			     String tujuanPindah=(String)data.get("tujuanPindah");//razman add
 			     
 			     String salinan_arahan = (String) data.get("salinan_arahan");
+			     String ntarikhTerimaSuratAkuan = "to_date('" + tarikhTerimaSuratAkuan + "','dd/MM/yyyy')";
 			     myLogger.info("salinan_arahan-->"+salinan_arahan);
 			     
 				db = new Db();
@@ -1638,12 +1697,14 @@ private static Vector semakMahkamah = new Vector();
 
 				
 					
-					
+					System.out.println("penentuanBidangKuasa = "+penentuanBidangKuasa);
+					System.out.println("jenis_pej = "+jenis_pej);
 					 if((penentuanBidangKuasa.equals("151") || penentuanBidangKuasa.equals("152")) && !jenis_pej.equals("99"))
 						{
 						  r1.add("id_Pejawal", tempatmohonawal);
 						  r1.add("no_Fail_Awal",nofailawal);
-						  r1.add("nama_Pemohon_Awal", namapemohonawal);				
+						  r1.add("nama_Pemohon_Awal", namapemohonawal);	
+						  r1.add("tarikh_terima_surat_akuan",r.unquote(ntarikhTerimaSuratAkuan));
 						}
 					  else
 					  {
@@ -1662,6 +1723,7 @@ private static Vector semakMahkamah = new Vector();
 				 r1.add("id_Permohonan",IdPermohonan);
 			    
 			      String sql1 = r1.getSQLUpdate("tblppkpermohonan");
+			      System.out.println("sql update permohonan>"+sql1);
 			      stmt1.executeUpdate(sql1);
 				
 				
@@ -1905,13 +1967,13 @@ private static Vector semakMahkamah = new Vector();
 					
 					r.add("FLAG_SEBABPINDAHMAHKAMAH",tujuanPindah);//razman add
 		      
-				r.add("flag_salinan_arahan",salinan_arahan);
+				r.add("FLAG_SALINAN_ARAHAN",salinan_arahan);
 		        r.add("id_Kemaskini", id_Kemaskini);
 				r.add("tarikh_Kemaskini",r.unquote("sysdate"));	
 		    	
 				r.add("catatan", catatan);
 				sql = r.getSQLUpdate("tblppkkeputusanpermohonan");
-			//	//System.out.println("sql update-->"+sql);
+			System.out.println("sql update-->"+sql);
 				stmt.executeUpdate(sql);
 				
 				//System.out.println("masuk ker--->"+penentuanBidangKuasa);
@@ -2348,6 +2410,89 @@ private static Vector semakMahkamah = new Vector();
 		    	}
 		  	}
 		*/
+		private Vector listFail = new Vector();
+		
+		public Vector getCheckHartaDiselesaikanARB() {
+			return listFail;
+		}
+		
+		
+		private Vector listKaveatPeguam = new Vector();
+		
+		public Vector getListKaveatPeguam() {
+			return listKaveatPeguam;
+		}
+		
+		public void setCheckHartaDiselesaikanARB(String id_Permohonansimati) throws Exception{
+			System.out.println("String id_Permohonansimati1 = " + id_Permohonansimati);
+			Db db = null;
+			listFail.clear();
+			String sql = "";
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			System.out.println("String id_Permohonansimati2 = " + id_Permohonansimati);
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				sql = "SELECT * FROM TBLPPKHA WHERE ID_JENISHA = '98' AND ID_PERMOHONANSIMATI = '" + id_Permohonansimati + "'" + "";
+
+				System.out.println("setCheckHartaDiselesaikanARB = " + sql);
+
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h;
+
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("id_ha", rs.getString("id_ha")==null?"":rs.getString("id_ha"));
+					listFail.addElement(h);
+			}
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+		
+		public void setListKaveatPeguam(String id_Permohonansimati) throws Exception{
+			System.out.println("String id_Permohonansimati1 = " + id_Permohonansimati);
+			Db db = null;
+			listKaveatPeguam.clear();
+			String sql = "";
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				sql = "SELECT * FROM TBLPPKKAVEATPEGUAM WHERE ID_PERMOHONAN in (SELECT ID_PERMOHONAN FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONANSIMATI = '"+id_Permohonansimati+"'" + ")";
+
+				System.out.println("setListKaveatPeguam = " + sql);
+
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h;
+
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("ID_KAVEATPEGUAM", rs.getString("ID_KAVEATPEGUAM")==null?"":rs.getString("ID_KAVEATPEGUAM"));
+					h.put("NAMA_KAVEAT", rs.getString("NAMA_KAVEAT")==null?"":rs.getString("NAMA_KAVEAT"));
+					h.put("NO_KAVEAT", rs.getString("NO_KAVEAT")==null?"":rs.getString("NO_KAVEAT"));
+					h.put("NAMA_FIRMA", rs.getString("NAMA_FIRMA")==null?"":rs.getString("NAMA_FIRMA"));
+					h.put("ALAMAT1", rs.getString("ALAMAT1")==null?"":rs.getString("ALAMAT1"));
+					h.put("ALAMAT2", rs.getString("ALAMAT2")==null?"":rs.getString("ALAMAT2"));
+					h.put("ALAMAT3", rs.getString("ALAMAT3")==null?"":rs.getString("ALAMAT3"));
+					h.put("POSKOD", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
+					h.put("ID_NEGERI", rs.getString("ID_NEGERI")==null?"":rs.getString("ID_NEGERI"));
+					h.put("BANDAR", rs.getString("BANDAR")==null?"":rs.getString("BANDAR"));
+					h.put("NO_TEL", rs.getString("NO_TEL")==null?"":rs.getString("NO_TEL"));
+					h.put("TARIKH_KAVEAT", rs.getString("TARIKH_KAVEAT")==null?"":sdf.format(rs.getDate("TARIKH_KAVEAT")));
+					listKaveatPeguam.addElement(h);
+			}
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
 		
 		public void updatePenting(Hashtable data) throws Exception {
 			Connection conn = null;
