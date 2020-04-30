@@ -81,15 +81,15 @@
           <td width="25%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
-        #if ($SenaraiFail.size() > 0)
-        #foreach ($list in $SenaraiFail)
-        #if ($list.bil == '')
-        #set( $row = "row1" )
-        #elseif (($list.bil % 2) != 0)
-        #set( $row = "row1" )
-        #else 
-        #set( $row = "row2" )
-        #end
+   	#if ($SenaraiFail.size() > 0)
+  		#foreach ($list in $SenaraiFail)
+		  	#set( $i = $velocityCount )
+		    #if ( ($i % 2) != 1 )
+		    	#set( $row = "row2" )
+		    #else
+		    	#set( $row = "row1" )
+		    #end
+    
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a>
@@ -100,8 +100,9 @@
           <td class="$row" align="center">$list.tarikhTerima</td>
           <td class="$row">$list.status</td>
         </tr>
-        #end
-        #else
+   		#end
+ 	
+ 	#else
         <tr>
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">Tiada Rekod</td>
@@ -110,7 +111,7 @@
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">&nbsp;</td>
         </tr>
-        #end
+ 	#end
       </table>
       </fieldset></td>
   </tr>
