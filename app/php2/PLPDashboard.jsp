@@ -188,6 +188,99 @@ a.nav:visited {
               </tr>
             </table></td>
         </tr>
+        #if ($role == '(PHP)PYWPenolongPegawaiTanahNegeri')
+        <tr>
+          <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
+              <tr>
+                <td width="50%" valign="top"><table width="100%" >
+                    <tr>
+                      <td width="15%" align="center" valign="top"><img  width="30" height="30" src="../img/new_application.png" align="center"/></td>
+                      <td width="85%"><table width="100%">
+                          <tr>
+                            <td><b>Daftar Permohonan</b></td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoPelepasan()" class="help" title="Permohonan Baru Pelepasan"> <font color="blue">
+                              <li>&nbsp;Pelepasan</li>
+                              </font> </a> </td>
+                          </tr>
+     
+                        </table></td>
+                    </tr>
+                  </table></td>
+                <td width="50%" valign="top"><table width="100%" >
+                    <tr>
+                      <td width="15%" align="center" valign="top"><img width="30" height="30" src="../img/utiliti.png" align="center"/></td>
+                      <td width="85%"><table width="100%">
+                          <tr>
+                            <td><b>Utiliti</b> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoKutipanPLP()" class="help" title="Kutipan Data Pelepasan"> <font color="blue">
+                              <li>&nbsp;Kutipan Data Pelepasan</li>
+                              </font> </a> </td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                  </table></td>
+              </tr>
+            </table></td>
+        </tr>
+        #end
+        #if ($role == '(PHP)PYWPenolongPegawaiTanahHQ' || $role == '(PHP)PYWPenolongPengarahHQ' || $role == '(PHP)PYWPengarahHQ')
+        <tr>
+          <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
+              <tr>
+                <td width="50%" valign="top"><table width="100%" >
+                    <tr>
+                      <td width="15%" align="center" valign="top"><img  width="30" height="30" src="../img/new_application.png" align="center"/></td>
+                      <td width="85%"><table width="100%">
+                          <tr>
+                            <td><b>Daftar Permohonan</b></td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoPenawaran()" class="help" title="Permohonan Baru Penawaran"> <font color="blue">
+                              <li>&nbsp;Penawaran</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoTukarguna()" class="help" title="Permohonan Baru Tukarguna"> <font color="blue">
+                              <li>&nbsp;Tukarguna</li>
+                              </font> </a> </td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                  </table></td>
+                <td width="50%" valign="top"><table width="100%" >
+                    <tr>
+                      <td width="15%" align="center" valign="top"><img width="30" height="30" src="../img/utiliti.png" align="center"/></td>
+                      <td width="85%"><table width="100%">
+                          <tr>
+                            <td><b>Utiliti</b> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoKutipanPLP()" class="help" title="Kutipan Data Pelepasan"> <font color="blue">
+                              <li>&nbsp;Kutipan Data Pelepasan</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoKutipanPNW()" class="help" title="Kutipan Data Penawaran"> <font color="blue">
+                              <li>&nbsp;Kutipan Data Penawaran</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoKutipanTKR()" class="help" title="Kutipan Data Tukarguna"> <font color="blue">
+                              <li>&nbsp;Kutipan Data Tukarguna</li>
+                              </font> </a> </td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                  </table></td>
+              </tr>
+            </table></td>
+        </tr>
+        #end
+        #if ($role == '(PHP)UserPelepasan')
         <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
@@ -244,6 +337,7 @@ a.nav:visited {
               </tr>
             </table></td>
         </tr>
+        #end
         <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
