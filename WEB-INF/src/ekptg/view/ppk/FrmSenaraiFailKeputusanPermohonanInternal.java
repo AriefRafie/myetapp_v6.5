@@ -3,6 +3,9 @@
  */
 package ekptg.view.ppk;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,6 +14,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
 import lebah.portal.velocity.VTemplate;
 
 import org.apache.log4j.Logger;
@@ -43,6 +48,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 	FrmPrmhnnSek8SenaraiSemakInternalData logic_C = null;
 	FrmSenaraiFailInternalCarianData logic_D = null;
 	FrmSenaraiFailInternalData logic_E = null;
+	FrmPrmhnnSek8KeputusanPermohonanInternalData logic_F = null;
 	FrmHeaderPpk mainheader = null;
 	
 	
@@ -60,20 +66,23 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		logic_C = new FrmPrmhnnSek8SenaraiSemakInternalData();
 		logic_D = new FrmSenaraiFailInternalCarianData();
 		logic_E = new FrmSenaraiFailInternalData();
+		logic_F = new FrmPrmhnnSek8KeputusanPermohonanInternalData();
 		mainheader = new FrmHeaderPpk();
 		this.context.put("seksyen_kp", "8");
+		Vector listSupportingDoc = null;
 
 		HttpSession session = this.request.getSession();
 		String submit = "";
 		submit = getParam("command");
-
+		String jenisDoc = "99205";
 		myLogger.info(":::::::::::::::::::::::::::::" + submit);
 
 		String bolehsimpan = "";
-		String doPost = (String) session.getAttribute("doPost");
+		String doPost = "true";//(String) session.getAttribute("doPost");
 		if (doPost.equals("true")) {
 			// System.out.println("browser refresh **********");
 			bolehsimpan = "yes";
+			System.out.println("bolehsimpan = "+bolehsimpan);
 			// do what ever approriate action
 		}
 
@@ -94,7 +103,6 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 		Vector listKeputusan = new Vector();
 		Vector listFail = new Vector();
-		Vector flag5juta =  new Vector();
 
 		listFail.clear();
 
@@ -178,9 +186,39 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 		if ("paparKeputusan".equals(submit)) {
 			System.out.println("~~~~~~~~ paparKeputusan ~~~~~~~~~~~~~~~~~~~");
+			String idPermohonan = getParam("idPermohonan");
+			logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+			listSupportingDoc = logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			Vector listNegeriByPpkUnit = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getListNegeriByhta(getParam("idpermohonansimati"));
 			this.context.put("ListNegeriPindah", listNegeriByPpkUnit);
+			System.out.println("idpermohonansimati = "+getParam("idpermohonansimati"));
+			Vector listHartaARB = new Vector();
+			listHartaARB.clear();
+			Vector listKaveatPeguam = new Vector();
+			listKaveatPeguam.clear();
+			
+			System.out.println("Read here1 ");
+			//check sama ada dah isi atau belum harta yang diselesaikan oleh ARB
+			logic_F.setCheckHartaDiselesaikanARB(getParam("idpermohonansimati"));
+			System.out.println("Read here2 ");
+			logic_F.setListKaveatPeguam(getParam("idpermohonansimati"));
+			listKaveatPeguam = logic_F.getListKaveatPeguam();
+			this.context.put("listKaveatPeguam", listKaveatPeguam);
+			listHartaARB = logic_F.getCheckHartaDiselesaikanARB();
+			int countListARB = listHartaARB.size();
+			System.out.println("countListARB = "+countListARB);
+			this.context.put("flagUntukEdit", "");
+			this.context.put("nowb", "");
+			if (countListARB > 0)
+			{
+				this.context.put("ViewHartaARB", "1");}
+				else
+				{	this.context.put("ViewHartaARB", "0");
+			}
+			//System.out.println(listHartaARB);
+			//this.context.put("ViewHartaARB", listHartaARB);
 
 			String t_mohon = getParam("tarikh_mohon");
 
@@ -302,14 +340,6 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					listFail = logic_A.getDataFail();
 					this.context.put("ViewFail", listFail);
 
-					//check 5 juta
-					logic_A.checkFlag5Juta(id);
-					flag5juta = logic_A.getFlag5Juta();
-					
-					
-					//this.context.put("ViewFail", listFail);
-					this.context.put("flag5juta", flag5juta);
-					
 					FrmPrmhnnSek8KeputusanPermohonanInternalData
 							.setMaklumatMahkamah(id);
 					Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
@@ -449,6 +479,304 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 			}
 
+		}
+		
+		else if ("deleteSuppDocMode".equals(submit)) {
+			System.out.println("~~~~~~~~ deleteSuppDocMode ~~~~~~~~~~~~~~~~~~~");
+			String idSimati = getParam("idSimati");
+			deleteSuppDoc(idSimati, jenisDoc);
+			String idPermohonan = getParam("idPermohonan");
+			logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+			listSupportingDoc = logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			Vector listNegeriByPpkUnit = FrmPrmhnnSek8KeputusanPermohonanInternalData
+					.getListNegeriByhta(getParam("idpermohonansimati"));
+			this.context.put("ListNegeriPindah", listNegeriByPpkUnit);
+			System.out.println("idpermohonansimati = "+getParam("idpermohonansimati"));
+			Vector listHartaARB = new Vector();
+			listHartaARB.clear();
+			Vector listKaveatPeguam = new Vector();
+			listKaveatPeguam.clear();
+			
+			System.out.println("Read here1 ");
+			//check sama ada dah isi atau belum harta yang diselesaikan oleh ARB
+			logic_F.setCheckHartaDiselesaikanARB(getParam("idpermohonansimati"));
+			System.out.println("Read here2 ");
+			logic_F.setListKaveatPeguam(getParam("idpermohonansimati"));
+			listKaveatPeguam = logic_F.getListKaveatPeguam();
+			this.context.put("listKaveatPeguam", listKaveatPeguam);
+			listHartaARB = logic_F.getCheckHartaDiselesaikanARB();
+			int countListARB = listHartaARB.size();
+			System.out.println("countListARB = "+countListARB);
+			this.context.put("flagUntukEdit", "");
+			this.context.put("nowb", "");
+			if (countListARB > 0)
+			{
+				this.context.put("ViewHartaARB", "1");}
+				else
+				{	this.context.put("ViewHartaARB", "0");
+			}
+			//System.out.println(listHartaARB);
+			//this.context.put("ViewHartaARB", listHartaARB);
+
+			String t_mohon = getParam("tarikh_mohon");
+
+			if (!t_mohon.equals("")) {
+				String september_mohon = "01/09/2009";
+				// /System.out.println("[check]1: " +t_mohon );
+
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				Date tar_mohon = df.parse(t_mohon);
+				Date sep_mohon = df.parse(september_mohon);
+
+				if (tar_mohon.before(sep_mohon)) {
+					// System.out.print(" is before ");
+					view_mode(session);
+					int eventStatus = 1;
+					this.context.put("EventStatus", eventStatus);
+					String id = getParam("idPermohonan");
+					FrmSenaraiFailKeputusanPermohonanInternalData.setData(id,
+							(String) session.getAttribute("_ekptg_user_id"));
+					headerppk_baru(session, id, "Y", "", "T");
+
+					Vector list = FrmSenaraiFailKeputusanPermohonanInternalData
+							.getData();
+					this.context.put("ViewPemohon", list);
+
+					// Vector listDaerahByPpkUnit =
+					// FrmPrmhnnSek8KeputusanPermohonanInternalData.getListDaerahByPpkUnit(Integer.parseInt(h.get("negeritertinggi").toString()));
+					this.context.put("ListDaerahPindah",
+							logic_A.getListDaerahPindah());
+
+					Hashtable h1 = (Hashtable) list.get(0);
+					if (h1.get("socNegeriPeguam").toString() != ""
+							&& h1.get("idnegeri").toString() != "0") {
+						Vector s3 = logic_A
+								.getListBandarByNegeri(Integer.parseInt(h1.get(
+										"socNegeriPeguam").toString()));
+						this.context.put("listBandarTetapbyNegeri", s3);
+					} else {
+						this.context.put("listBandarTetapbyNegeri", "");
+					}
+
+					logic_A.setDataFail(id);
+					listFail = logic_A.getDataFail();
+					this.context.put("ViewFail", listFail);
+
+					FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.setMaklumatMahkamah(id);
+					Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.getMaklumatMahkamah();
+					// System.out.println("listMaklumatMahkamah **::"+listMaklumatMahkamah);
+					this.context.put("listMaklumatMahkamah",
+							listMaklumatMahkamah);
+
+					FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.setMaklumatMahkamahM();
+					Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.getMaklumatMahkamahM();
+					this.context.put("listMaklumatMahkamahJ",
+							listMaklumatMahkamahM);
+
+					this.context.put("eve", "");
+
+					this.context.put("setMode1", "");
+					this.context.put("setMode2", "");
+					this.context.put("setMode3", "");
+					this.context.put("setMode4", "");
+					this.context.put("setMode5", "");
+					this.context.put("setMode6", "");
+
+					this.context.put("checkJ1", "");
+					this.context.put("checkJ2", "");
+					this.context.put("checkJ3", "");
+					this.context.put("checkJ4", "");
+
+					this.context.put("viewcheckJ1", "");
+					this.context.put("viewcheckJ2", "");
+					this.context.put("viewcheckJ3", "");
+					this.context.put("viewcheckJ4", "");
+
+					this.context.put("jenis_pej", "");
+					this.context.put("jenis_pej_id", "");
+
+					this.context.put("mahkamah_kosong", "yes");
+					this.context.put("infoMahkamah", "");
+
+					FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.setMaklumatMahkamahMPindah();
+					Vector listMaklumatMahkamahMKPindah = FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.getMaklumatMahkamahMPindah();
+					this.context.put("listMaklumatMahkamahJPindah",
+							listMaklumatMahkamahMKPindah);
+
+					Hashtable h2 = (Hashtable) list.get(0);
+					if (h2.get("socNegeriPeguam").toString() != ""
+							&& h2.get("idnegeri").toString() != "0") {
+						Vector s3 = logic_A
+								.getListBandarByNegeri(Integer.parseInt(h2.get(
+										"socNegeriPeguam").toString()));
+						this.context.put("listBandarTetapbyNegeri", s3);
+					} else {
+						this.context.put("listBandarTetapbyNegeri", "");
+					}
+
+					vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonanLama.jsp";
+				}
+				if (tar_mohon.after(sep_mohon) || tar_mohon.equals(sep_mohon)) {
+					// System.out.print(" is after ");
+					view_mode(session);
+					int eventStatus = 1;
+					this.context.put("EventStatus", eventStatus);
+					String id = getParam("idPermohonan");
+					FrmSenaraiFailKeputusanPermohonanInternalData.setData(id,
+							(String) session.getAttribute("_ekptg_user_id"));
+					headerppk_baru(session, id, "Y", "", "T");
+					Vector list = FrmSenaraiFailKeputusanPermohonanInternalData
+							.getData();
+					this.context.put("ViewPemohon", list);
+					logic_A.setDataFail(id);
+					listFail = logic_A.getDataFail();
+					this.context.put("ViewFail", listFail);
+
+					FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.setMaklumatMahkamah(id);
+					Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.getMaklumatMahkamah();
+					// System.out.println("listMaklumatMahkamah **::"+listMaklumatMahkamah);
+					this.context.put("listMaklumatMahkamah",
+							listMaklumatMahkamah);
+
+					FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.setMaklumatMahkamahM();
+					Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.getMaklumatMahkamahM();
+					this.context.put("listMaklumatMahkamahJ",
+							listMaklumatMahkamahM);
+
+					this.context.put("eve", "");
+
+					this.context.put("setMode1", "");
+					this.context.put("setMode2", "");
+					this.context.put("setMode3", "");
+					this.context.put("setMode4", "");
+					this.context.put("setMode5", "");
+					this.context.put("setMode6", "");
+
+					this.context.put("checkJ1", "");
+					this.context.put("checkJ2", "");
+					this.context.put("checkJ3", "");
+					this.context.put("checkJ4", "");
+
+					this.context.put("viewcheckJ1", "");
+					this.context.put("viewcheckJ2", "");
+					this.context.put("viewcheckJ3", "");
+					this.context.put("viewcheckJ4", "");
+
+					this.context.put("jenis_pej", "");
+					this.context.put("jenis_pej_id", "");
+
+					this.context.put("mahkamah_kosong", "yes");
+					this.context.put("infoMahkamah", "");
+
+					Hashtable h3 = (Hashtable) list.get(0);
+					if (h3.get("socNegeriPeguam").toString() != ""
+							&& h3.get("idnegeri").toString() != "0") {
+						Vector s3 = logic_A
+								.getListBandarByNegeri(Integer.parseInt(h3.get(
+										"socNegeriPeguam").toString()));
+						this.context.put("listBandarTetapbyNegeri", s3);
+					} else {
+						this.context.put("listBandarTetapbyNegeri", "");
+					}
+
+					// headerppk_baru(session,id,"Y","","T");
+					vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
+				}
+
+				// System.out.println("TARIKH MOHON:"+tar_mohon);
+			} else {
+				// System.out.print(" is before ");
+				view_mode(session);
+				int eventStatus = 1;
+				this.context.put("EventStatus", eventStatus);
+				String id = getParam("idPermohonan");
+				FrmSenaraiFailKeputusanPermohonanInternalData.setData(id,
+						(String) session.getAttribute("_ekptg_user_id"));
+				headerppk_baru(session, id, "Y", "", "T");
+				Vector list = FrmSenaraiFailKeputusanPermohonanInternalData
+						.getData();
+				this.context.put("ViewPemohon", list);
+
+				// Vector listDaerahByPpkUnit =
+				// FrmPrmhnnSek8KeputusanPermohonanInternalData.getListDaerahByPpkUnit(Integer.parseInt(h.get("negeritertinggi").toString()));
+				this.context.put("ListDaerahPindah",
+						logic_A.getListDaerahPindah());
+
+				logic_A.setDataFail(id);
+				listFail = logic_A.getDataFail();
+				this.context.put("ViewFail", listFail);
+
+				FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.setMaklumatMahkamah(id);
+				Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getMaklumatMahkamah();
+				// System.out.println("listMaklumatMahkamah **::"+listMaklumatMahkamah);
+				this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+
+				FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.setMaklumatMahkamahM();
+				Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getMaklumatMahkamahM();
+				this.context
+						.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
+
+				this.context.put("eve", "");
+
+				this.context.put("setMode1", "");
+				this.context.put("setMode2", "");
+				this.context.put("setMode3", "");
+				this.context.put("setMode4", "");
+				this.context.put("setMode5", "");
+				this.context.put("setMode6", "");
+
+				this.context.put("checkJ1", "");
+				this.context.put("checkJ2", "");
+				this.context.put("checkJ3", "");
+				this.context.put("checkJ4", "");
+
+				this.context.put("viewcheckJ1", "");
+				this.context.put("viewcheckJ2", "");
+				this.context.put("viewcheckJ3", "");
+				this.context.put("viewcheckJ4", "");
+
+				this.context.put("jenis_pej", "");
+				this.context.put("jenis_pej_id", "");
+
+				this.context.put("mahkamah_kosong", "yes");
+				this.context.put("infoMahkamah", "");
+
+				FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.setMaklumatMahkamahMPindah();
+				Vector listMaklumatMahkamahMKPindah = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getMaklumatMahkamahMPindah();
+				this.context.put("listMaklumatMahkamahJPindah",
+						listMaklumatMahkamahMKPindah);
+
+				Hashtable h4 = (Hashtable) list.get(0);
+				if (h4.get("socNegeriPeguam").toString() != ""
+						&& h4.get("idnegeri").toString() != "0") {
+					Vector s3 = logic_A.getListBandarByNegeri(Integer
+							.parseInt(h4.get("socNegeriPeguam").toString()));
+					this.context.put("listBandarTetapbyNegeri", s3);
+				} else {
+					this.context.put("listBandarTetapbyNegeri", "");
+				}
+
+				headerppk_baru(session, id, "Y", "", "T");
+				vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonanLama.jsp";
+
+			}	
 		}
 
 		else if ("get_alamatPejabat".equals(submit)) {
@@ -937,7 +1265,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			h.put("txtPoskodPeguam", getParam("txtPoskodPeguam"));
 			h.put("socNegeriPeguam", getParam("socNegeriPeguam"));
 
-			myLogger.info("socNegeriPeguam:" + getParam("socNegeriPeguam"));
+			
 
 			h.put("txtBandarPeguam", "");
 			h.put("txtNomborTelefonPeguam", getParam("txtNomborTelefonPeguam"));
@@ -1021,6 +1349,165 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					&& getParam("socNegeriPeguam") != "0") {
 				Vector s3 = logic_A.getListBandarByNegeri(Integer
 						.parseInt(getParam("socNegeriPeguam")));
+				this.context.put("listBandarTetapbyNegeri", s3);
+			} else {
+				this.context.put("listBandarTetapbyNegeri", "");
+			}
+
+			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
+		}
+		
+		else if ("get_BandarbaruEdit".equals(submit)) {
+			Vector listNegeriByPpkUnit = FrmPrmhnnSek8KeputusanPermohonanInternalData
+					.getListNegeriByhta(getParam("idpermohonansimati"));
+			this.context.put("ListNegeriPindah", listNegeriByPpkUnit);
+
+			String j_p = getParam("jenis_pej");
+
+			// System.out.println()
+
+			FrmPrmhnnSek8KeputusanPermohonanInternalData
+					.setMaklumatMahkamahJ(j_p);
+			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
+					.getMaklumatMahkamahJ();
+			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
+
+			Hashtable h = null;
+			h = new Hashtable();
+			Vector vv = new Vector();
+
+			h.put("idFail", getParam("idFail"));
+			h.put("noFail", getParam("noFail"));
+			h.put("idDaerah", getParam("idDaerah"));
+			h.put("idPermohonan", getParam("idPermohonan"));
+			h.put("tarikhMohon", getParam("tarikhMohon"));
+			h.put("idnegeri", getParam("idnegeri"));
+			h.put("namanegeri", getParam("namanegeri"));
+			h.put("namadaerah", getParam("namadaerah"));
+			h.put("seksyen", getParam("seksyen"));
+			h.put("keterangan", getParam("keterangan"));
+			h.put("id_Status", getParam("id_Status"));
+			h.put("namaPejabat", getParam("namaPejabat"));
+
+			h.put("jumHtaTarikhMohon", getParam("jumHtaTarikhMohon"));
+			h.put("jumHtaTarikhMati", getParam("jumHtaTarikhMati"));
+			h.put("jumHaTarikhMohon", getParam("jumHaTarikhMohon"));
+			h.put("jumHaTarikhMati", getParam("jumHaTarikhMati"));
+			h.put("jumHartaTarikhMohon", getParam("jumHartaTarikhMohon"));
+			h.put("jumHartaTarikhMati", getParam("jumHartaTarikhMati"));
+
+			h.put("tarikhborangB", getParam("txdTarikhHantarBorangB"));
+			h.put("tarikhborangC", getParam("txdTarikhTerimaBorangC"));
+			h.put("kep_BrgC", getParam("kep_brgC"));
+			h.put("res_BrgC", getParam("res_brgC"));
+			h.put("sCL", getParam("sec_codeLink"));
+
+			h.put("tarikhhantarnilaian", getParam("txdTarikhHantarNilaian"));
+			h.put("tarikhterimanilaian", getParam("txdTarikhTerimaNilaian"));
+
+			h.put("keputusanpermohonan", getParam("keputusanpermohonan"));
+			h.put("catatan", getParam("txtCatatan"));
+
+			h.put("namaSimati", getParam("namaSimati"));
+			h.put("namaPemohon", getParam("namaPemohon"));
+
+			h.put("jenisborangC", getParam("sorKeputusanBorangC"));
+			String check = getParam("sorPenentuanBidangKuasa");
+			String checkterus = getParam("sorPenentuanBidangKuasaTeruskan");
+
+			h.put("txtNamaKaveat", getParam("txtNamaKaveat"));
+			h.put("txtNoKaveat", getParam("txtNoKaveat"));
+			h.put("txtNamaFirma", getParam("txtNamaFirma"));
+			h.put("txtAlamat1Peguam", getParam("txtAlamat1Peguam"));
+			h.put("txtAlamat2Peguam", getParam("txtAlamat2Peguam"));
+			h.put("txtAlamat3Peguam", getParam("txtAlamat3Peguam"));
+			h.put("txtPoskodPeguam", getParam("txtPoskodPeguam"));
+			h.put("socNegeriPeguam", getParam("socNegeriPeguamBodos"));
+
+			//myLogger.info("socNegeriPeguam:" + getParam("socNegeriPeguamBodos"));
+
+			h.put("txtBandarPeguam", "");
+			h.put("txtNomborTelefonPeguam", getParam("txtNomborTelefonPeguam"));
+
+			String ex = "";
+			if (checkterus != "")// ((check=="53" || check=="50" ||
+									// check=="63"))
+			{
+				ex = checkterus;
+			} else // if((check=="1") && (checkterus=="151" ||
+					// checkterus=="152"))
+			{
+				ex = check;
+			}
+			h.put("keputusanpermohonan", ex);
+
+			h.put("jenis_pej", getParam("jenis_pej"));
+			h.put("nofailawal", getParam("nofailawal"));
+			h.put("pemohonawal", getParam("namapemohonawal"));
+			// h.put("pejabatawal",getParam("tempatmohonawal"));
+
+			h.put("pejabatawal", "");
+
+			// System.out.println("MMM EX"+ex);
+
+			// h.put("negeritertinggi",getParam("id_negeripindah"));
+			// h.put("daerahtertinggi",getParam("id_daerahpindah"));
+			h.put("daerahmhn", getParam("id_daerahmohon"));
+			h.put("negerimahkamah", getParam("negerimahkamah"));
+			h.put("daerahmahkamah", getParam("daerahmahkamah"));
+
+			h.put("id_taraf_mohon", getParam("id_taraf_mohon"));
+			h.put("taraf_pemohon", getParam("taraf_pemohon"));
+
+			vv.addElement(h);
+
+			// System.out.println("PPP VV:"+vv);
+
+			this.context.put("jumHta", getParam("txtNilaianHTA"));
+			this.context.put("jumHa", getParam("txtNilaianHA"));
+			this.context.put("Overall", getParam("txtJumKeseluruhan"));
+			// System.out.println("jumHta"+getParam("txtNilaianHTA"));
+
+			this.context.put("setMode1", getParam("setMode1"));
+			this.context.put("setMode2", getParam("setMode2"));
+
+			// this.context.put("setMode2","disabled");
+			this.context.put("setMode3", getParam("setMode3"));
+			this.context.put("setMode4", getParam("setMode4"));
+			this.context.put("setMode5", getParam("setMode5"));
+			this.context.put("setMode6", getParam("setMode6"));
+
+			this.context.put("checkJ1", getParam("checkJ1"));
+			this.context.put("checkJ2", getParam("checkJ2"));
+			this.context.put("checkJ3", getParam("checkJ3"));
+			this.context.put("checkJ4", getParam("checkJ4"));
+
+			this.context.put("viewcheckJ1", getParam("viewcheckJ1"));
+			this.context.put("viewcheckJ2", getParam("viewcheckJ2"));
+			this.context.put("viewcheckJ3", getParam("viewcheckJ3"));
+			this.context.put("viewcheckJ4", getParam("viewcheckJ4"));
+
+			h.put("id_Permohonansimati", getParam("idpermohonansimati"));
+
+			this.context.put("ViewPemohon", vv);
+			this.context.put("listMaklumatMahkamahJ_ID", "");
+			// this.context.put("jenis_pej_id", "");
+			// this.context.put("jenis_pej", j_p);
+			logic_A.setDataFail(getParam("idPermohonan"));
+			listFail = logic_A.getDataFail();
+			this.context.put("ViewFail", listFail);
+			headerppk_baru(session, getParam("idPermohonan"), "Y", "", "T");
+
+			this.context.put("eve", 8);
+			this.context.put("eve_mah", "");
+			this.context.put("EventStatus", "");
+			this.context.put("jenis_pej_id", "");
+
+			Hashtable h3 = (Hashtable) vv.get(0);
+			if (getParam("socNegeriPeguamBodos") != ""
+					&& getParam("socNegeriPeguamBodos") != "0") {
+				Vector s3 = logic_A.getListBandarByNegeri(Integer
+						.parseInt(getParam("socNegeriPeguamBodos")));
 				this.context.put("listBandarTetapbyNegeri", s3);
 			} else {
 				this.context.put("listBandarTetapbyNegeri", "");
@@ -1319,14 +1806,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			// this.context.put("jenis_pej", j_p);
 			logic_A.setDataFail(getParam("idPermohonan"));
 			listFail = logic_A.getDataFail();
-			
-			//check 5 juta
-			logic_A.checkFlag5Juta(id);
-			flag5juta = logic_A.getFlag5Juta();
-			
-			
 			this.context.put("ViewFail", listFail);
-			this.context.put("flag5juta", flag5juta);
 			headerppk_baru(session, getParam("idPermohonan"), "Y", "", "T");
 
 			this.context.put("eve", 8);
@@ -1786,10 +2266,14 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 		else if ("getKemaskini_keputusan".equals(submit)) {
 			System.out.print(" *******************getKemaskini_keputusan************** ");
+			Vector listKaveatPeguam = new Vector();
+			listKaveatPeguam.clear();
 			Vector listNegeriByPpkUnit = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getListNegeriByhta(getParam("idpermohonansimati"));
 			this.context.put("ListNegeriPindah", listNegeriByPpkUnit);
-
+			logic_F.setListKaveatPeguam(getParam("idpermohonansimati"));
+			listKaveatPeguam = logic_F.getListKaveatPeguam();
+			this.context.put("listKaveatPeguam", listKaveatPeguam);
 			String t_mohon = getParam("tarikh_mohon");
 			String september_mohon = "01/09/2009";
 			System.out.println("[check]1: " + t_mohon);
@@ -1813,6 +2297,9 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 				logic_A.setDataFail(id);
 				listFail = logic_A.getDataFail();
 				this.context.put("ViewFail", listFail);
+				this.context.put("checkKaveat", getParam("checkKaveat"));
+				this.context.put("flagUntukEdit", getParam("flagUntukEdit"));
+				this.context.put("nowb", getParam("nowb"));
 
 				FrmPrmhnnSek8KeputusanPermohonanInternalData
 						.setMaklumatMahkamah(id);
@@ -4059,7 +4546,8 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		h.put("nofailawal", getParam("nofailawal"));
 		h.put("namapemohonawal", getParam("namapemohonawal"));
 		h.put("tempatmohonawal", getParam("tempatmohonawal"));
-
+		h.put("tarikhTerimaSuratAkuan", getParam("salinanArahan2"));
+myLogger.info("Salinan arahan = " + getParam("salinanArahan2"));
 		// id_sta 50
 		h.put("idDaerah", getParam("socDaerah"));
 		h.put("idNegeri", getParam("socNegeri"));
@@ -4285,6 +4773,43 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 	}
 
+	public void deleteSuppDoc(String idSimati, String jenisDoc) throws Exception 
+	{
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " DELETE FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = '"+idSimati+"' AND ID_JENISDOKUMEN = '"+jenisDoc+"'";
+			myLogger.info("sql1 >>> "+sql);
+			stmt.executeUpdate(sql);
+			
+			
+			conn.commit();
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	
+	
+}
+	
 	private void headerppk_baru(HttpSession session, String id_permohonan,
 			String flag_permohonan, String id_fail, String flag_fail)
 			throws Exception {

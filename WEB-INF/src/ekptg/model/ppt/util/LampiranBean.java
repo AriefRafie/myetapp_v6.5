@@ -1,5 +1,7 @@
 package ekptg.model.ppt.util;
 
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,12 +20,17 @@ import lebah.db.SQLRenderer;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+
+import com.Ostermiller.util.Base64;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
+import ekptg.model.entities.Tblrujdokumen;
+import ekptg.model.utils.ILampiran;
 
-public class LampiranBean {
+public class LampiranBean implements ILampiran{
 	private static Logger myLog = Logger.getLogger(ekptg.model.ppt.util.LampiranBean.class);
 	Connection conn = null;
 	
@@ -131,6 +138,110 @@ public class LampiranBean {
 		return sb.toString();
 		
 	}
+	
+	public void simpanDokumenInt(Tblrujdokumen data) throws Exception {		
+		Db db = null;
+		String sql="";
+		try {
+				db = new Db();
+				sql = "INSERT INTO TBLINTMTPENDAFTARANDOK "
+						+ " (ID_RUJUKAN,ID_DOKUMEN,ID_MASUK,TARIKH_MASUK) " 
+						+ "VALUES(?,?,?,SYSDATE)";
+				Connection con = db.getConnection();
+				con.setAutoCommit(false);
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setString(1, data.getDokumen());
+				ps.setString(2, data.getIdDokumen());
+				ps.setLong(3, data.getIdMasuk());
+				//myLog.info("saveData:sql="+ps.toString());
+				ps.executeUpdate();
+
+				con.commit();
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+				
+	}
+	
+	@Override
+	public Tblrujdokumen getLampiran(String iDokumen) throws Exception {
+		return getLampiran(iDokumen
+				,null,null,null
+				,null);
+	}
+	
+	@Override
+	public Tblrujdokumen getLampiran(String iDokumen
+			,String colNama,String colJenis,String colCon
+			,String table) 
+			throws Exception {
+			Db db = null;
+			String sql = "";
+			Tblrujdokumen dokumen = null;
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+				r.add("ID_DOKUMEN");
+				if(colNama==null)
+					r.add("NAMA_FAIL");
+				else
+					r.add(colNama);
+				if(colJenis==null)
+					r.add("JENIS_MIME");
+				else
+					r.add(colJenis);
+				if(colCon==null)
+					r.add("CONTENT");
+				else
+					r.add(colCon);
+				r.add("ID_DOKUMEN",iDokumen);
+				
+				if(table==null)
+					sql = r.getSQLSelect("TBLPPTDOKUMEN");
+				else
+					sql = r.getSQLSelect(table);
+
+				//myLog.info(sql);
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					dokumen = new Tblrujdokumen();
+					dokumen.setIdDokumen(iDokumen);
+					if(colNama==null)
+						dokumen.setNamaDokumen(rs.getString("NAMA_FAIL"));
+					else
+						dokumen.setNamaDokumen(rs.getString(colNama));
+					if(colJenis==null)
+						dokumen.setNamaDokumen(rs.getString("JENIS_MIME"));
+					else
+						dokumen.setNamaDokumen(rs.getString(colJenis));
+					
+					Blob  b = null;
+					if(colCon==null){
+						b = rs.getBlob("CONTENT");
+						InputStream is = b.getBinaryStream();
+						byte [] b2 = IOUtils.toByteArray(is);
+						dokumen.setKandungan(Base64.encodeToString(b2));
+						
+					}else{
+						b = rs.getBlob(colCon);
+						InputStream is = b.getBinaryStream();
+						byte [] b2 = IOUtils.toByteArray(is);
+						dokumen.setKandungan(Base64.encodeToString(b2));
+					
+					}
+			      
+				}
+
+			} finally {
+				if (db != null) db.close();
+			}
+			return dokumen;
+			    
+		 }	 
+
 	public String getLampirans(String idHarta) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		Vector<Hashtable<String, String>> dokumens = lampiranMengikutHarta(idHarta, null,false);

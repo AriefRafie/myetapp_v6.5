@@ -245,7 +245,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		int flagno = 0;
 		int idFlag = 0;
 		int flag_no = 0;
-
+		String jenisDoc = "99201";
 		readability1 = "";
 		clearContext();
 		
@@ -854,8 +854,8 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			logic_internal.setDataPemohonOB(idpp);
 			listPemohonOB = logic_internal.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-			logic_A.setSupportingDoc(id);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			logic_A.setSupportingDoc(id, jenisDoc);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			//20200415 Lampiran
 			LampiranBean lBean = new LampiranBean();
@@ -916,7 +916,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			logic_internal.setDataPemohonOB(ido);
 			listPemohonOB = logic_internal.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			LampiranBean lBean = new LampiranBean();
 			this.context.put("lampirans"
@@ -977,7 +977,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			logic_internal.setDataPemohonOB(id);
 			listPemohonOB = logic_internal.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			
 			LampiranBean lBean = new LampiranBean();
@@ -1085,7 +1085,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			logic_internal.setDataPemohonOB(ido);
 			listPemohonOB = logic_internal.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			LampiranBean lBean = new LampiranBean();
 			this.context.put("lampirans"
@@ -1145,7 +1145,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			logic_internal.setDataPemohonOB(ido);
 			listPemohonOB = logic_internal.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			
 			LampiranBean lBean = new LampiranBean();
@@ -1231,7 +1231,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 					logic_internal.setDataPemohonOB(id);
 					listPemohonOB = logic_internal.getDataPemohonOB();
 					this.context.put("listPemohonOB", listPemohonOB);
-					listSupportingDoc = logic_A.setSupportingDoc(id);
+					listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 					this.context.put("ViewSupportingDoc", listSupportingDoc);
 					
 //					LampiranBean lBean = new LampiranBean();
@@ -1388,7 +1388,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 					logic_internal.setDataPemohonOB(ido);
 					listPemohonOB = logic_internal.getDataPemohonOB();
 					this.context.put("listPemohonOB", listPemohonOB);
-					listSupportingDoc = logic_A.setSupportingDoc(id);
+					listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 					this.context.put("ViewSupportingDoc", listSupportingDoc);
 					
 
@@ -1484,7 +1484,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			
 			String id = getParam("idPermohonan");
 			logic_internal.setDataSimati(id);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			listSimati = logic_internal.getDataSimati();
 			this.context.put("listSimati", listSimati);
@@ -1507,7 +1507,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			if ("Simatiview".equals(mode)) {
 				this.context.put("readmode", disability1);
 				this.context.put("setmode", "disabled");
-				listSupportingDoc = logic_A.setSupportingDoc(id);
+				listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 				this.context.put("ViewSupportingDoc", listSupportingDoc);
 				this.context.put("show_kemaskini_button", "yes");
 			} else if ("batal_simati".equals(mode)) {
@@ -1528,7 +1528,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 				logic_internal.setDataSimati(id);
 				listSimati = logic_internal.getDataSimati();
 				this.context.put("listSimati", listSimati);
-				listSupportingDoc = logic_A.setSupportingDoc(id);
+				listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 				this.context.put("ViewSupportingDoc", listSupportingDoc);
 				Hashtable h2 = (Hashtable) listSimati.get(0);
 				if (h2.get("idnegeri").toString() != "" && h2.get("idnegeri").toString() != "0") {
@@ -3000,7 +3000,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			list = logic_A.setData(id, (String) session.getAttribute("_ekptg_user_id"));
 			// /list = logic_A.getData();
 			this.context.put("View", list);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			headerppk_baru(session, id, "Y", "", "T");
 
@@ -3296,7 +3296,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			String id = getParam("idPermohonan");		
 			list = logic_A.setData(id, (String) session.getAttribute("_ekptg_user_id"));
 			this.context.put("View", list);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			headerppk_baru(session, id, "Y", "", "T");
 		}
@@ -3984,7 +3984,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			String id = getParam("idPermohonan");
 			list = logic_A.setData(id, (String) session.getAttribute("_ekptg_user_id"));
 			this.context.put("View", list);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			//IL start
 			String selectedHartaTakAlih = getParam("selectedHartaTakAlih");
@@ -4029,7 +4029,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			logic_A.setDataFail(id);
 			listFail = logic_A.getDataFail();
 			this.context.put("ViewFail", listFail);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			//String mati = getParam("id_Permohonansimati");comment by aishahlatip
 			logic_A.updateDataNilai(id, mati, (String) session.getAttribute("_ekptg_user_id"));
@@ -4799,7 +4799,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 	
 			list = logic_A.setData(id, (String) session.getAttribute("_ekptg_user_id"));
 			this.context.put("View", list);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 
 		//IL start			
@@ -5118,7 +5118,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			String id = getParam("idPermohonan");
 			list = logic_A.setData(id, (String) session.getAttribute("_ekptg_user_id"));
 			this.context.put("View", list);
-			listSupportingDoc = logic_A.setSupportingDoc(id);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			headerppk_baru(session, id, "Y", "", "T");
 			context.put("DATEUTIL", new DateUtil());

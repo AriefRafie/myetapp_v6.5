@@ -1948,28 +1948,27 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 
 			this.context.put("view_pb", "");
 			this.context.put("tambah_kehadiran_negeri", "");
+			
+			// dropdown (new)
+			//context.put("selectJenisNoPB", HTML.SelectJenisNoPb("socJenisNoPB",null, "style=width:auto"));
+			this.context.put("list_jenisnopb", logic.list_jenisnopb());
+			
 			if ("View".equals(subminor_command)) {
 				getTotalSyer_Temp(idHakmilik, "");
 
-			}
-
-			else if ("Papar".equals(subminor_command)) {
+			}else if ("Papar".equals(subminor_command)) {
 				this.context.put("view_pb", "yes");
 				this.context.put("readmode", "view");
-				maklumat_kehadiran = logic
-						.maklumat_PB(getParam("id_hakmilikpb"));
+				maklumat_kehadiran = logic.maklumat_PB(getParam("id_hakmilikpb"));
 				this.context.put("maklumat_kehadiran", maklumat_kehadiran);
 				this.context.put("tajuk_header", "MAKLUMAT KEHADIRAN SIASATAN");
 				Hashtable h = (Hashtable) maklumat_kehadiran.get(0);
 				if (!h.get("ID_NEGERI").toString().equals("")) {
-					list_bandar = logic.getListBandarByNegeri(h
-							.get("ID_NEGERI").toString());
+					list_bandar = logic.getListBandarByNegeri(h.get("ID_NEGERI").toString());
 					this.context.put("list_bandar", list_bandar);
 				}
 
-			}
-
-			else if ("tambah".equals(subminor_command)) {
+			}else if ("tambah".equals(subminor_command)) {
 				this.context.put("tambah_kehadiran", "yes");
 				this.context.put("tambah_kehadiran_negeri", "yes");
 				this.context.put("tambah_kehadiran_wakil", "");
@@ -1978,9 +1977,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 				this.context.put("readmode", "edit");
 				getTotalSyer_Temp(idHakmilik, "");
 
-			}
-
-			else if ("tambah_wakil".equals(subminor_command)) {
+			}else if ("tambah_wakil".equals(subminor_command)) {
 				this.context.put("tambah_kehadiran_wakil", "yes");
 				this.context.put("tambah_kehadiran_negeri_wakil", "yes");
 				this.context.put("tambah_kehadiran", "");
@@ -2014,9 +2011,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 				this.context.put("readmode", "edit");
 				getTotalSyer_Temp(idHakmilik, "");
 
-			}
-
-			else if ("Simpan".equals(subminor_command)) {
+			}else if ("Simpan".equals(subminor_command)) {
 
 				if (!getParam("id_hakmilikpb").equals("")) {
 					String BC = this.request.getParameter("boxBorangC");
@@ -2029,8 +2024,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 					String FG = "";
 					String FK = "";
 
-					myLogger.info("BC:" + BC + "BE:" + BE + "BG:" + BG + "BK:"
-							+ BK);
+					myLogger.info("BC:" + BC + "BE:" + BE + "BG:" + BG + "BK:"+ BK);
 
 					if (BC != null) {
 						FC = "1";
@@ -2091,8 +2085,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 						String FG = "";
 						String FK = "";
 
-						myLogger.info("BC:" + BC + "BE:" + BE + "BG:" + BG
-								+ "BK:" + BK);
+						myLogger.info("BC:" + BC + "BE:" + BE + "BG:" + BG+ "BK:" + BK);
 
 						if (BC != null) {
 							FC = "1";
@@ -2148,6 +2141,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 
 				}
 				getTotalSyer(idHakmilik, "");
+			
 			} else if ("DeleteTurutHadir".equals(subminor_command)) {
 				this.context.put("view_pb", "");
 				this.context.put("readmode", "");
@@ -2179,37 +2173,33 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 
 				logic.deleteMaklumatPB(getParam("id_pb"));
 				logic.deleteHakmilikPB(getParam("id_hakmilikpb"));
+			
 			} else if ("Kemaskini".equals(subminor_command)) {
 				this.context.put("view_pb", "yes");
 				this.context.put("readmode", "edit");
-				maklumat_kehadiran = logic
-						.maklumat_PB(getParam("id_hakmilikpb"));
+				maklumat_kehadiran = logic.maklumat_PB(getParam("id_hakmilikpb"));
 				this.context.put("maklumat_kehadiran", maklumat_kehadiran);
 				Hashtable h = (Hashtable) maklumat_kehadiran.get(0);
 				if (!h.get("ID_NEGERI").toString().equals("")) {
-					list_bandar = logic.getListBandarByNegeri(h
-							.get("ID_NEGERI").toString());
+					list_bandar = logic.getListBandarByNegeri(h.get("ID_NEGERI").toString());
 					this.context.put("list_bandar", list_bandar);
 				}
+				
 			} else if ("batal".equals(subminor_command)) {
 				this.context.put("view_pb", "yes");
 				this.context.put("readmode", "edit");
 				if (getParam("id_hakmilikpb") != ""
 						&& getParam("id_hakmilikpb") != null) {
-					maklumat_kehadiran = logic
-							.maklumat_PB(getParam("id_hakmilikpb"));
+					maklumat_kehadiran = logic.maklumat_PB(getParam("id_hakmilikpb"));
 					this.context.put("maklumat_kehadiran", maklumat_kehadiran);
 					Hashtable h = (Hashtable) maklumat_kehadiran.get(0);
 					if (!h.get("ID_NEGERI").toString().equals("")) {
-						list_bandar = logic.getListBandarByNegeri(h.get(
-								"ID_NEGERI").toString());
+						list_bandar = logic.getListBandarByNegeri(h.get("ID_NEGERI").toString());
 						this.context.put("list_bandar", list_bandar);
 					}
 				}
 
-			}
-
-			else if ("getBandar".equals(subminor_command)) {
+			}else if ("getBandar".equals(subminor_command)) {
 				String key = "";
 				String value = "";
 				Enumeration allparam = request.getParameterNames();
@@ -2221,8 +2211,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 				this.context.put("readmode", "edit");
 				this.context.put("view_pb", "yes");
 				if (!getParam("socNegeri").equals("")) {
-					list_bandar = logic
-							.getListBandarByNegeri(getParam("socNegeri"));
+					list_bandar = logic.getListBandarByNegeri(getParam("socNegeri"));
 					this.context.put("list_bandar", list_bandar);
 				}
 				this.context.put("socBandar", "");
@@ -2258,9 +2247,8 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 				this.context.put("boxBorangE", FE);
 				this.context.put("boxBorangG", FG);
 				this.context.put("boxBorangK", FK);
-			}
-
-			else if ("Simpan_Borang".equals(subminor_command)) {
+			
+			}else if ("Simpan_Borang".equals(subminor_command)) {
 
 				String[] ids1 = this.request.getParameterValues("ids1");
 				String[] idPB = this.request.getParameterValues("idPB");
@@ -2369,6 +2357,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 			this.context.put("tajuk_header", "MAKLUMAT PIHAK BERKEPENTINGAN");
 			// vm = "app/ppt/frmSek8InfoBicaraPB.jsp";
 			vm = screenPB;
+		
 		}
 
 		else if ("hantar".equals(submit)) {
@@ -4809,9 +4798,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 	}// close getTotalSyer
 
 	@SuppressWarnings({ "unchecked", "static-access" })
-	private void getTotalSyer_Temp(String idHakmilik, String idpb)
-			throws Exception {
-
+	private void getTotalSyer_Temp(String idHakmilik, String idpb) throws Exception {
 		Vector totalSyer = new Vector();
 		totalSyer.clear();
 

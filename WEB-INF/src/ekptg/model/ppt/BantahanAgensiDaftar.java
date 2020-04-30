@@ -309,20 +309,20 @@ public class BantahanAgensiDaftar extends EkptgCache implements Serializable {
 								"A.NAMA_AGENSI, ST.KETERANGAN AS DESC_STATUS_BANTAHAN_AP," +
 								"S.ID_SIASATAN, S.NO_SIASATAN, W.ID_WARTA, "  +
 								"B.ID_KEMENTERIAN, B.ID_NEGERI, B.FLAG_BAHAGIAN_PAMPASAN" +
-								" FROM TBLPPTPERMOHONAN P, TBLPPTHAKMILIK HM, TBLPPTBANTAHAN B, TBLRUJKEMENTERIAN K, TBLRUJNEGERI N, " +
-								"TBLRUJAGENSI A, TBLRUJSTATUS ST, TBLPPTSIASATAN S," +
-								"TBLPPTAWARD AW, TBLPPTWARTA W " +
-								"WHERE P.ID_PERMOHONAN=HM.ID_PERMOHONAN " +
-								"AND HM.ID_HAKMILIK= B.ID_HAKMILIK " +
-								"AND B.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
-								"AND B.ID_NEGERI = N.ID_NEGERI " +
-								"AND B.ID_AGENSI = A.ID_AGENSI(+)" +
-								"AND B.STATUS_BANTAHAN_AP = ST.ID_STATUS " +
-								"AND HM.ID_HAKMILIK = S.ID_HAKMILIK(+) " +
-								"AND S.ID_SIASATAN = AW.ID_SIASATAN(+) " +
-								"AND W.ID_WARTA = '"+id_warta+"' " +
-								"AND P.ID_PERMOHONAN = '"+id_permohonan+"' " +
-								"AND B.ID_HAKMILIK = '"+id_hakmilik+"' " +
+					" FROM TBLPPTPERMOHONAN P, TBLPPTHAKMILIK HM, TBLPPTBANTAHAN B, TBLRUJKEMENTERIAN K, TBLRUJNEGERI N, " +
+					"TBLRUJAGENSI A, TBLRUJSTATUS ST, TBLPPTSIASATAN S," +
+					"TBLPPTAWARD AW, TBLPPTWARTA W " +
+					"WHERE P.ID_PERMOHONAN=HM.ID_PERMOHONAN " +
+					"AND HM.ID_HAKMILIK= B.ID_HAKMILIK " +
+					"AND B.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
+					"AND B.ID_NEGERI = N.ID_NEGERI " +
+					"AND B.ID_AGENSI = A.ID_AGENSI(+)" +
+					"AND B.STATUS_BANTAHAN_AP = ST.ID_STATUS " +
+					"AND HM.ID_HAKMILIK = S.ID_HAKMILIK(+) " +
+					"AND S.ID_SIASATAN = AW.ID_SIASATAN(+) " +
+					"AND W.ID_WARTA = '"+id_warta+"' " +
+					"AND P.ID_PERMOHONAN = '"+id_permohonan+"' " +
+					"AND B.ID_HAKMILIK = '"+id_hakmilik+"' " +
 					"";
 										           
 			myLogger.info("getMaklumatBantahanAP:sql="+sql);
@@ -331,6 +331,10 @@ public class BantahanAgensiDaftar extends EkptgCache implements Serializable {
 			Hashtable h;			    
 			while (rs.next()) {
 				h = new Hashtable();
+				    	//Bantahan MT
+				    	h.put("nama", rs.getString("NAMA_KEMENTERIAN")==null?"":rs.getString("NAMA_KEMENTERIAN"));
+				    	h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
+				    	
 				    	h.put("maklumat_bantahan_tamat_tempoh", rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH")==null?"":rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH"));
 				    	h.put("FLAG_SEMAKAN_ONLINE", rs.getString("FLAG_SEMAKAN_ONLINE")==null?"":rs.getString("FLAG_SEMAKAN_ONLINE"));
 				    	h.put("id_siasatan", rs.getString("ID_SIASATAN")==null?"":rs.getString("ID_SIASATAN"));
@@ -352,7 +356,6 @@ public class BantahanAgensiDaftar extends EkptgCache implements Serializable {
 				    	h.put("alamat3", rs.getString("ALAMAT3")==null?"":rs.getString("ALAMAT3"));
 				    	h.put("poskod", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
 				    	h.put("id_negeri", rs.getString("ID_NEGERI")==null?"":rs.getString("ID_NEGERI"));
-				    	h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
 				    	h.put("no_hakmilik", rs.getString("NO_HAKMILIK")==null?"":rs.getString("NO_HAKMILIK"));
 				    	h.put("no_pt", rs.getString("NO_PT")==null?"":rs.getString("NO_PT"));
 				    	h.put("no_lot", rs.getString("NO_LOT")==null?"":rs.getString("NO_LOT"));
