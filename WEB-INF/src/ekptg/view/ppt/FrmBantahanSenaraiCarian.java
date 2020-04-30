@@ -34,6 +34,11 @@ import ekptg.model.ppt.FrmUPTSek8BorangFData;
 import ekptg.model.ppt.PPTHeader;
 
 public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3587088402775617834L;
+
 	static Logger myLogger = Logger.getLogger(FrmBantahanSenaraiCarian.class);
 	
 	BantahanDaftar model = new BantahanDaftar();	
@@ -3647,5 +3652,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		}
 		return total;
 	}
+	
 			
 }
