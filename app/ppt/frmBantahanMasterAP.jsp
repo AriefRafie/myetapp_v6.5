@@ -559,7 +559,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
       
       	  #if($button=="view")
           <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniBantahan()" /> 
-          <input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Hantar ke MT" onclick="javascript:hantarBantahan()" /> 
+          <input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
           <!--<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> -->
           #end
           
@@ -619,9 +619,16 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 	Fungsi hantar maklumat bantahan ke MT
 	*/
 	function hantarBantahan() {	
-		var id_permohonan  = $jquery('#id_permohonan').val();	
-		var url = "../x/${securityToken}/ekptg.view.ppt.bantahan.IntegrasiMT?idFail=$idFail&idPermohonan="+id_permohonan+"&command=borangPermohonan&frmFrom=frmPrmhnnSek8DaftarSek8";
-		var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
+		var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
+		var idFail = "&idfail=$!id_fail";
+		var idHarta  = "&idharta="+$jquery('#id_hakmilik').val();
+		var idPermohonan  = "&idpermohonan="+$jquery('#id_permohonan').val();
+		var idSiasatan  = "&idsiasatan="+$jquery('#id_siasatan').val();
+		var idWarta  = "&idwarta=$!idWarta";
+		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
+		//alert(param);
+		var url = "../x/${securityToken}/ekptg.view.ppt.bantahan.IntegrasiMT?"+param+"&command=bantahanap&frmFrom=frmPrmhnnSek8DaftarSek8";
+		var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=no,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();	

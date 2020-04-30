@@ -1,4 +1,6 @@
 <script type="text/javascript" src="../../library/js/CalendarPopup.js" ></script>
+<script type="text/javascript" src="../../library/js/jquery-1.7.2.min.js"></script>
+<!-- <script type="text/javascript" src="../../library/js/jquery.pstrength-min.1.2.js"></script> -->
 <link rel="stylesheet" type="text/css" href="../../library/js/jquery.timepickr.css" />
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPT.css" />
  
@@ -7,7 +9,7 @@
 #set($jenisPengenalan = "")
 
 #foreach ( $senarai in $getMaklumatBantahan )
-	#set ($txtNamaPembantah=$senarai.nama_kementerian)
+	#set ($txtNamaPembantah=$senarai.nama)
    	#set ($txtNamaAgensi=$senarai.nama_agensi)
     #set ($txtAlamat1=$senarai.alamat1)
    	#set ($txtAlamat2=$senarai.alamat2)
@@ -16,7 +18,8 @@
    	#set ($id_negeri=$senarai.id_negeri)
     #set ($txtNamaNegeri=$senarai.nama_negeri)
 
-        #set ($id_bantahan=$senarai.id_bantahan)
+ 	#set ($id_bantahan=$senarai.id_bantahan)
+        
         #set ($txtNoBantahan=$senarai.no_bantahan)
         #set ($jenis_pembantah=$senarai.jenis_pembantah)
         #set ($txdTkhTerimaBrgN=$senarai.tarikh_terima)
@@ -46,9 +49,20 @@
     #end
 
 <body>
-	<form name="f1">
+	<!-- <form name="f1"> -->
 		<fieldset><legend><font style="font-family:Verdana; font-size:8pt;	font-weight:bold;">BUTIRAN TERPERINCI PERMOHONAN</font></legend>			
 			<table border="0" cellpadding="1" cellspacing="1" align="center">
+				#if($!noKes != '')
+				<tr>
+					<td align="center"><font size="2"><b>Permohonan telah dihantar</b></font></td>
+				</tr>
+			 	#end
+			 	<tr>
+					<td align="left">No. Petisyen : $!noPetisyen </td>
+				</tr>
+				<tr>
+					<td align="left">No. Kes : $!noKes </td>
+				</tr>
 				<tr>
 					<td colspan="">
 					<fieldset>
@@ -56,17 +70,17 @@
 					    <table width="100%" border="0"> 
 					        <tr>
 					          <td width="1%"></td>
-					          <td width="29%">Nama Kementerian</td>
+					          <td width="29%">Nama</td>
 					          <td>:</td>
 					          <td colspan="2"><input type="text" name="txtNamaPembantah" id="txtNamaPembantah" value="$!txtNamaPembantah" size="70" class="disabled" tabindex="12" />
 					          <input type="hidden" name="txtIdKementerian" id="txtIdKementerian" value="$!txtIdKementerian" /></td>
 					        </tr>
-					        <tr>
+<!-- 					        <tr>
 					          <td width="1%"></td>
 					          <td>Nama Agensi</td>
 					          <td>&nbsp;</td>
 					          <td colspan="2"><input type="text" name="txtNamaAgensi" id="txtNamaAgensi" value="$!txtNamaAgensi" size="70" tabindex="12" class="disabled" readonly /></td>
-					        </tr>
+					        </tr> -->
 					        <tr>
 					          <td width="1%"></td>
 					          <td>Alamat</td>
@@ -96,7 +110,7 @@
 					          <td>Negeri</td>
 					          <td>:</td>
 					          <td colspan="2"><input type="text" name="txtNamaNegeri" id="txtNamaNegeri" value="$!txtNamaNegeri" size="50" onblur="this.value=this.value.toUpperCase();" style="text-transform:uppercase;" class="disabled" readonly="readonly" tabindex="14" />
-					          <input type="hidden" name="txtIdNegeri" id="txtIdNegeri" value="$!txtIdNegeri" /></td>
+					          <input type="hidden" name="txtIdNegeri" id="txtIdNegeri" value="$!id_negeri" /></td>
 					        </tr>
         				</table>
 					</fieldset>				
@@ -115,18 +129,18 @@
 					    <td width="30%">Nama Dokumen</td>
 					    <td width="30%">Keterangan</td>
 					    <td width="30%">Dokumen Sokongan</td>
+ 					      <td width="5%">					     
 					     #if($listDokumen_size > 0)
-<!-- 					      <td width="5%">					     
-					      <div align="center">
+<!--					      <div align="center">
 					      <input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
 					      </div>
-					      
-					      </td> -->
+					      -->
 					      #end
+					      </td> 
 					  </tr>
 					 					  
-					 #if($listDokumen_size > 0)
-					  #foreach($list1 in $listDokumen)        
+					#if($listDokumen_size > 0)
+						#foreach($list1 in $listDokumen)        
 					           
 					             #set( $i = $velocityCount )
 					         		#if ( ($i % 2) != 1 )
@@ -139,13 +153,19 @@
 					    <td class="$row" >$list1.TAJUK</td>
 					    <td class="$row" >$list1.KETERANGAN</td>
 					    <td class="$row" >$list1.NAMA_FAIL</td>   
+					    <td class="$row" >
+					    	<div align="center">
+				       			<input type="checkbox" name="cb" id="ids1" onclick="" value="$list1.ID_DOKUMEN" >
+				     		</div>
+				     	</td>
 					  </tr>
-					  #end
-					  #else
+					  	#end
+					  	
+					#else
 					  <tr>  
 					    <td colspan="4">Tiada Rekod</td>    
 					  </tr>
-					  #end
+					#end
 						</table>
 					  
 					</fieldset>				
@@ -158,14 +178,25 @@
 				
 				<tr>
 					<td>
-					<fieldset><legend>MAKLUMAT MAHKAMAH</legend>
+					<fieldset><legend>Maklumat Mahkhamah</legend>
 						<table width="100%" border="0">
     						<tr>
       							<td width="1%"></td>
-					          	<td width="29%">Nama Mahkhamah</td>
+					          	<td width="29%">Nama Mahkamah</td>
 					          	<td>:</td>
-					          	<td>$!socmt</td>
+					          	<td>$!socMT</td>
+							</tr>				<div id="div_viewPerbicaraan"></div>
+							
+							<tr>
+							<div id="divmahkhamah">
+      							<td width="1%"></td>
+					          	<td width="29%">Kod Mahkamah</td>
+					          	<td>:</td>
+					          	<td><input type="text" name="kodmt" id="kodmt" value="$!kodmt" class="disabled" readonly></td>
+							</div>
 							</tr>
+							    	
+							
 						</table>
 					</fieldset>
 					</td>
@@ -205,40 +236,15 @@
 				</tr> -->
 				<tr>
 					<td align="center">
-						<input type="button" name="cetak" id="cetak" value="Hantar" align="center" onClick="javascript:hantarPermohonan('$idFail','$kodPejabat')" />
-						<input type="button" name="tutup" id="tutup" value="Tutup" align="center" onClick="tutupTetingkap()" />
+					##if($!noKes == '')
+						<input type="button" name="cetak" id="cetak" value="Hantar" onClick="javascript:hantarPermohonan()" />
+					##end	
+						<input type="button" name="tutup" id="tutup" value="Tutup" onClick="tutupTetingkap()" />
 					</td>
 				</tr>		
 
 			</table>
 		</fieldset>
-<!-- 		<table border="0" cellpadding="1" cellspacing="1" width="100%">
-			
-			<tr>
-				<td align="center">
-				<input type="button" name="cetak" id="cetak" value="Cetak Maklumat Borang B" align="center" onClick="javascript:cetakPPKBorangB('$idFail','$kodPejabat')" />
-				<input type="button" name="tutup" id="tutup" value="Tutup" align="center" onClick="tutupTetingkap()" />
-				#set($applicatiType = "")
-					#if ($!sendI == 'ada' && $!semakPermohonan == 'tiada' && $!Errormsg != 'Error1')
-						<input type="button" name="hantar2" id="hantar2" value="Hantar" align="left" onClick="javascript:hantarPermohonan()" />
-		      			#set($applicatiType = "I")
-					#elseif ( $!semakPermohonan == 'ada' )
-						#if ( $!sendI == 'tiada' ) 
-							<input type="button" name="hantar" id="hantar" value="Hantar" align="left" onClick="javascript:hantarPermohonanPetioner()" />
-							#set($applicatiType = "P")
-						#end
-					#end
-					#if ($Errormsg == 'Error1')
-					
-					<input type="button" name="hantar2" id="hantar2" disabled value="Hantar" align="left" onClick="javascript:hantarPermohonan()" />
-					<p align="center">
-					<b><font color="red">Permohonan tidak boleh dihantar. Sila muatnaik dokumen sokongan terlebih dahulu.</font></b></p>
-					#end
-					<input type="hidden" name="applicationType" id="applicationType" value="$applicatiType">
-					
-					</td>
-			</tr>
-		</table> -->
 		
     	<input type="hidden" name="namaPejabat" id="namaPejabat" value="$!nP">
 		<input type="hidden" name="jenisKepentingan" id="jenisKepentingan" value="$!jenisKepentingan">
@@ -248,56 +254,93 @@
         <input type="hidden" name="idPermohonan" id="idPermohonan" value="$!idPermohonan">
 		<input type="hidden" name="userid" id="userid" value='$!{session.getAttribute("_ekptg_user_id")}'/> 
 		
-	</form>
+	<!-- </form> -->
 </body>
 <script>
-function hantarPermohonan() {
 	
-	var tarikhMati = document.f1.tarikhMati.value;
-	
+	var idBantahan = "&idbantahan=$!idBantahan";
+	var idFail = "&idfail=$!idFail";
+	var idHarta  = "&idharta=$!idHarta";
+	var idPermohonan  = "&idpermohonan=$!idPermohonan";
+	var idSiasatan  = "&idsiasatan=$!idSiasatan";
+	var idWarta  = "&idwarta=$!idWarta";
+	var params = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
 
-	if(document.f1.noPetisyen.value==""){
-		alert('Sila pastikan No. Petisyen telah diisi');
-		return;
-	} else if(document.f1.namaSimati.value==""){
-		alert('Sila pastikan Nama Simati telah diisi');
-		return;
-	} //else if(document.f1.noKPSimatiBaru.value==""){
-		//alert('Sila pastikan MyId Simati telah diisi');
-		//return;
-	//} 
-	else if(document.f1.tarikhMati.value==""){
-		alert('Sila pastikan Tarikh Mati telah diisi');
-		return;
-	} else if(document.f1.namaPemohon.value==""){
-		alert('Sila pastikan Nama Pemohon telah diisi');
-		return;
-	} else if(document.f1.noKPPemohon.value==""){
-		alert('Sila pastikan Nama Pengenalan Pemohon telah diisi');
-		return;
-	} else if(document.f1.kodPejabat.value==""){
-		alert('Kod Pejabat tiada data. Sila pastikan unit pejabat anda ditetapkan dengan betul supaya maklumat dihantar adalah tepat');
-		return;
-	} else {
-		input_box = confirm("Sila pastikan butiran yang dihantar adalah tepat!");
-		if (input_box == true) {
-			var data = "&tarikhMati="+document.f1.tarikhMati.value+"&tarikhJanaBorangB="+document.f1.tarikhJanaBorangB.value+"&noPetisyen="+document.f1.noPetisyen.value;
-			data = data+"&namaSimati="+document.f1.namaSimati.value+"&namaSimatiLain="+document.f1.namaSimatiLain.value;
-			data = data+"&noKPSimatiBaru="+document.f1.noKPSimatiBaru.value+"&noKPSimatiLama="+document.f1.noKPSimatiLama.value;
-			data = data+"&noKPSimatiLain="+document.f1.noKPSimatiLain.value+"&namaPemohon="+document.f1.namaPemohon.value;
-			data = data+"&noKPPemohon="+document.f1.noKPPemohon.value+"&hubSimatiPemohon="+document.f1.hubSimatiPemohon.value;
-			data = data+"&kodPejabat="+document.f1.kodPejabat.value+"&applicationType="+applicationType;
-			data = data+"&idnegeri="+document.f1.idnegeri.value+"&jeniskp="+document.f1.jeniskp.value;
-			data = data+"&idFail="+document.f1.idFail.value;
-			//data = data+"&docContent="+document.f1.docContent.value;
-			//alert("data ="+data);
-			document.f1.method="post";
-			document.f1.action="ekptg.view.ppk.FrmIntegrasiMT?command=hantarPermohonan";
-			
-			document.f1.submit();			
-		}
+
+	function pilihMT(){
+		//alert('pilihMT='+param);
+
+		document.${formName}.method="post";
+		document.${formName}.action="?"+params+"&mode=getmahkamah";	
+		//document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian";
+		//
+		document.${formName}.command.value = "getmahkamah";	
+		//
+		document.${formName}.submit();
+		//doDivAjaxCall${formName}('getmahkamah','divmahkhamah','mode=terimapohoncarian');		
+		
 	}
-}
+
+	function hantarPermohonan() {	
+		var bilangan = 0; 
+		
+		if(document.${formName}.cb.length > 0){
+			bilangan = document.${formName}.cb.length;
+		}else{
+			if(document.${formName}.cb.checked==true){
+				bilangan = 1; 
+			}
+		}
+		//alert(bilangan);
+		if(document.${formName}.txtAlamat1.value == ""){
+			alert('Sila pastikan maklumat Alamat diisi.');
+	  		document.${formName}.txtAlamat1.focus(); 
+			return; 
+		}else if(document.${formName}.txtAlamat2.value == ""){
+			alert('Sila pastikan maklumat Alamat diisi.');
+	  		document.${formName}.txtAlamat2.focus(); 
+			return; 
+		}else if(document.${formName}.txtPoskod.value == ""){
+			alert('Sila pastikan maklumat Poskod diisi.');
+	  		document.${formName}.txtPoskod.focus(); 
+			return; 
+		}else if(document.${formName}.txtNamaNegeri.value == ""){
+			alert('Sila pastikan maklumat Negeri diisi.');
+	  		document.${formName}.socNegeri.focus(); 
+			return; 
+		}else if(document.${formName}.kodmt.value == ""){
+			alert('Sila pastikan Maklumat Mahkamah telah dipilih.');
+			return;
+		
+		} else if(bilangan == 0){
+			alert('Sila pilih Lampiran terlebih dahulu.');
+			return; 
+		
+		} else {
+
+			input_box = confirm("Sila pastikan maklumat yang dihantar adalah tepat!");
+			if (input_box == true) {
+/* 				var data = "&tarikhMati="+document.f1.tarikhMati.value+"&tarikhJanaBorangB="+document.f1.tarikhJanaBorangB.value+"&noPetisyen="+document.f1.noPetisyen.value;
+				data = data+"&namaSimati="+document.f1.namaSimati.value+"&namaSimatiLain="+document.f1.namaSimatiLain.value;
+				data = data+"&noKPSimatiBaru="+document.f1.noKPSimatiBaru.value+"&noKPSimatiLama="+document.f1.noKPSimatiLama.value;
+				data = data+"&noKPSimatiLain="+document.f1.noKPSimatiLain.value+"&namaPemohon="+document.f1.namaPemohon.value;
+				data = data+"&noKPPemohon="+document.f1.noKPPemohon.value+"&hubSimatiPemohon="+document.f1.hubSimatiPemohon.value;
+				data = data+"&kodPejabat="+document.f1.kodPejabat.value+"&applicationType="+applicationType;
+				data = data+"&idnegeri="+document.f1.idnegeri.value+"&jeniskp="+document.f1.jeniskp.value;
+				data = data+"&idFail="+document.f1.idFail.value; */
+				//data = data+"&docContent="+document.f1.docContent.value;
+				//alert("data ="+data);
+				document.${formName}.method="post";
+				//document.${formName}.action="ekptg.view.ppk.FrmIntegrasiMT?command=hantarPermohonan";
+				document.${formName}.command.value = "hantarpermohonan";	
+				document.${formName}.action="?"+params+"&mode=getmahkamah";	
+				document.${formName}.submit();			
+				
+			}
+			
+		}
+	
+	}
 
 function hantarPermohonanPetioner() {
 	if(document.f1.noPetisyen.value==""){
