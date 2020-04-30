@@ -44,6 +44,7 @@ public class FrmPYWDashboard extends AjaxBasedModule {
 		
 		context.put("checkNotifikasiOnline", getNotifikasiOnline());
 		context.put("failPenyewaan", getFailPenyewaan());
+		context.put("failPelepasan", getFailPelepasan());
 		context.put("perjanjianAktif", getPerjanjianAktif());
 		context.put("failBelumSelesai", getFailBelumSelesai());
 		context.put("failSelesai", getFailSelesai());
@@ -102,6 +103,32 @@ public class FrmPYWDashboard extends AjaxBasedModule {
 				+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
 				+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND B.FLAG_AKTIF = 'Y' AND A.NO_FAIL IS NOT NULL"
 				+ " AND A.ID_MASUK = H.USER_ID(+) AND E.FLAG_HAKMILIK = 'U'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			return rs.getInt("BIL");
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Integer getFailPelepasan() throws Exception {
+
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT COUNT(*) AS BIL"
+				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, USERS H"
+				+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_SUBURUSAN = '34' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS"
+				+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
+				+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL"
+				+ " AND A.ID_MASUK = H.USER_ID(+)";
 			
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();

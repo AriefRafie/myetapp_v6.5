@@ -169,12 +169,21 @@ a.nav:visited {
                             <td><b>Senarai Tugasan</b> </td>
                           </tr>
                           <tr>
-                            <td><a href="javascript:gotoSenaraiTugasan()" class="help" title="Fail Tugasan"> <font color="blue">
+                            <td><a href="javascript:gotoSenaraiTugasanPenyewaan()" class="help" title="Fail Tugasan"> <font color="blue">
                               <li> #if($!check_notifikasi_tugasan > 0)
                                 <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_tugasan</blink></font></b> </label>
                                 &nbsp;
                                 #end                                
-                                Carian</li>
+                                Penyewaan</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoSenaraiTugasanPelepasan()" class="help" title="Fail Tugasan"> <font color="blue">
+                              <li> #if($!check_notifikasi_tugasan > 0)
+                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_tugasan</blink></font></b> </label>
+                                &nbsp;
+                                #end                                
+                                Pelepasan</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -210,6 +219,11 @@ a.nav:visited {
                           <tr>
                             <td><a href="javascript:gotoPenyewaan()" class="help" title="Permohonan Baru Penyewaan"> <font color="blue">
                               <li>&nbsp;Penyewaan</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoPelepasan()" class="help" title="Permohonan Baru Pelepasan"> <font color="blue">
+                              <li>&nbsp;Pelepasan</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -444,8 +458,12 @@ function gotoInbox() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.utils.FrmInboxUsers";
 	document.${formName}.submit();
 }
-function gotoSenaraiTugasan() {
+function gotoSenaraiTugasanPenyewaan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailView";
+	document.${formName}.submit();
+}
+function gotoSenaraiTugasanPelepasan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailView";
 	document.${formName}.submit();
 }
 function gotoOnline() {
@@ -454,6 +472,10 @@ function gotoOnline() {
 }
 function gotoPenyewaan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailView&actionPenyewaan=daftarBaru";
+	document.${formName}.submit();
+}
+function gotoPelepasan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailView&actionPelepasan=daftarBaru";
 	document.${formName}.submit();
 }
 function gotoKutipanPYW() {

@@ -24,6 +24,8 @@
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
   <input name="checkTanah" type="hidden" id="checkTanah" value= "$checkTanah"/>
+  <input name="flagFrom" type="hidden" id="flagFrom"/>
+  <input name="initiateFlagBuka" type="hidden" id="initiateFlagBuka"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -42,6 +44,10 @@
         <tr>
           <td width="30%" height="24" scope="row" align="right">Tajuk Fail : </td>
           <td width="70%"><input name="txtTajukFail" id="txtTajukFail" type="text" value="$!txtTajukFail" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+        </tr>
+        <tr>
+          <td width="30%" height="24" scope="row" align="right">No Fail Negeri : </td>
+          <td width="70%"><input name="txtNoFailNegeri" id="txtNoFailNegeri" type="text" value="$txtNoFailNegeri" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
         </tr>
         <tr style="display:none">
           <td width="30%" height="24" scope="row" align="right">Nama Pemohon : </td>
@@ -149,8 +155,11 @@
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
         <tr>
-          <td colspan="6" scope="row"><input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/>
+          <td colspan="6" scope="row">
+          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
+          	<input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/>
             &nbsp;
+            #end
             <input name="cmdSemakanTanah" type="button" value="Semakan Maklumat Tanah" onclick="javascript:semakanMaklumatTanah()"/>
             &nbsp;
             <input name="cmdSemakanBorangK" type="button" value="Semakan Maklumat Borang K" onclick="javascript:semakanMaklumatBorangK()"/></td>
@@ -158,6 +167,7 @@
         <tr class="table_header" align="center">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="15%"><strong>No Fail</strong></td>
+          <td width="20%"><strong>No Fail Negeri</strong></td>
           <td width="35%"><strong>Tajuk Fail</strong></td>
           <td width="10%"><strong>Negeri</strong></td>
           <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
@@ -183,6 +193,7 @@
           <span class="style3 blink"><i><strong>Ulasan KJP telah dibuat</strong></i></span>
           #end
           </td>
+          <td class="$row">$list.noFailNegeri</td>
           <td class="$row">$list.tajukFail</td>
           <td class="$row">$list.namaNegeri</td>
           <td class="$row" align="center">$list.tarikhTerima</td>
@@ -230,6 +241,7 @@ function tutupCarian(){
 	document.${formName}.flagDetail.value = "";
 	document.${formName}.actionPelepasan.value = "";
 	document.${formName}.txtNoFail.value = "";
+	document.${formName}.txtNoFailNegeri.value = "";
 	document.${formName}.txtTajukFail.value = "";
 	document.${formName}.socTanah.value = "";		
 	document.${formName}.socStatusC.value = "";
@@ -251,6 +263,7 @@ function carian(){
 function kosongkan(flagDetail) {
 	document.${formName}.reset();
 	document.${formName}.txtNoFail.value = "";
+	document.${formName}.txtNoFailNegeri.value = "";
 	document.${formName}.txtTajukFail.value = "";
 	document.${formName}.socTanah.value = "";
 	document.${formName}.socStatusC.value = "";
@@ -271,6 +284,8 @@ function kosongkan(flagDetail) {
 function papar(idFail,idStatus) {
 
 	document.${formName}.idFail.value = idFail;
+	document.${formName}.initiateFlagBuka.value = "Y";
+	document.${formName}.flagFrom.value = "failTugasan";
 
 	if (idStatus == '1610198'){
 		document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPMaklumatPermohonanView";

@@ -38,12 +38,14 @@ public class FrmPLPSenaraiFailData {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-	public void carianFail(String noFail, String tajukFail, String namaPemohon,
-			String noPengenalan, String tarikhTerima, String idNegeri,
-			String idDaerah, String idMukim, String idJenisHakmilik,
-			String noHakmilik, String noWarta, String idLot, String noLot,
-			String noPegangan, String idStatus, String idKementerian,
-			String idAgensi, String checkTanah) throws Exception {
+	public void carianFail(String noFail, String noFailNegeri,
+			String tajukFail, String namaPemohon, String noPengenalan,
+			String tarikhTerima, String idNegeri, String idDaerah,
+			String idMukim, String idJenisHakmilik, String noHakmilik,
+			String noWarta, String idLot, String noLot, String noPegangan,
+			String idStatus, String idKementerian, String idAgensi,
+			String checkTanah, String userId, String idNegeriUser,
+			String userRole) throws Exception {
 
 		Db db = null;
 		Db db1 = null;
@@ -56,8 +58,8 @@ public class FrmPLPSenaraiFailData {
 			db1 = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.TARIKH_TERIMA, A.TARIKH_DAFTAR_FAIL, C.NAMA, D.KETERANGAN, B.ID_STATUS, H.USER_NAME, RUJNEGERI.NAMA_NEGERI"
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, USERS H, TBLRUJNEGERI RUJNEGERI"
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.NO_FAIL_NEGERI, A.TAJUK_FAIL, B.TARIKH_TERIMA, A.TARIKH_DAFTAR_FAIL, C.NAMA, D.KETERANGAN, B.ID_STATUS, H.USER_NAME, RUJNEGERI.NAMA_NEGERI"
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, USERS H, TBLRUJNEGERI RUJNEGERI, TBLPHPLOGTUGASAN G"
 					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_SUBURUSAN = '34' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS"
 					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
 					+ " AND F.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) "
@@ -65,11 +67,32 @@ public class FrmPLPSenaraiFailData {
 					+ " AND A.ID_MASUK = H.USER_ID(+)"
 					+ " AND B.ID_STATUS != '999'";
 
+			//Senarai Tugasan
+			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole)
+					|| "(PHP)PYWPenolongPegawaiTanahHQ".equals(userRole)) {
+				sql = sql + " AND G.ID_PEGAWAI = '" + userId
+						+ "' AND G.ID_NEGERI = '" + idNegeriUser + "'"
+						+ " AND G.ROLE = '" + userRole
+						+ "' AND G.ID_FAIL = A.ID_FAIL AND G.FLAG_AKTIF = 'Y'";
+			} else {
+				sql = sql + " AND G.ID_NEGERI = '" + idNegeriUser + "'"
+						+ " AND G.ROLE = '" + userRole
+						+ "' AND G.ID_FAIL = A.ID_FAIL AND G.FLAG_AKTIF = 'Y'";
+			}
+			
 			// noFail
 			if (noFail != null) {
 				if (!noFail.trim().equals("")) {
 					sql = sql + " AND UPPER(A.NO_FAIL) LIKE '%' ||'"
 							+ noFail.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			
+			// noFailNegeri
+			if (noFailNegeri != null) {
+				if (!noFailNegeri.trim().equals("")) {
+					sql = sql + " AND UPPER(A.NO_FAIL_NEGERI) LIKE '%' ||'"
+							+ noFailNegeri.trim().toUpperCase() + "'|| '%'";
 				}
 			}
 
@@ -230,6 +253,9 @@ public class FrmPLPSenaraiFailData {
 				h.put("idPermohonan", idPermohonan);
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
 						.getString("NO_FAIL").toUpperCase());
+				h.put("noFailNegeri",
+						rs.getString("NO_FAIL_NEGERI") == null ? "" : rs
+								.getString("NO_FAIL_NEGERI").toUpperCase());
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tarikhBukaFail",
@@ -981,16 +1007,20 @@ public class FrmPLPSenaraiFailData {
 			String idHakmilikUrusan, String idPHPBorangK,
 			String idKementerianPemohon, String idAgensiPemohon,
 			String idPejabat, String idLuasKegunaan, String txtTujuanKegunaan,
-			String idKementerianTanah, String idNegeriTanah,
+			String idKementerianTanah, String idNegeriTanah, String noFailNegeri,
 			String idLuasTanah, String luasTanah, String idHakmilikSementara,
 			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
 		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String idNegeriUser = (String) session
+				.getAttribute("_ekptg_user_negeri");
+		String userRole = (String) session.getAttribute("myrole");
 		String sql = "";
 		String idFailString = "";
 		String noFail = "";
+		String idStatus = "";
 
 		try {
 			db = new Db();
@@ -1021,10 +1051,12 @@ public class FrmPLPSenaraiFailData {
 					getKodNegeri(idNegeriTanah), idNegeriTanah);
 			r.add("NO_FAIL", noFail);
 			r.add("NO_FAIL_ROOT", noFail);
+			r.add("NO_FAIL_NEGERI", noFailNegeri);
 			r.add("ID_LOKASIFAIL", "2"); // UNIT PHP DI TINGKAT 2
 			r.add("FLAG_JENIS_FAIL", "1"); // DATA BARU ETAPP
 			r.add("ID_NEGERI", idNegeriTanah);
 			r.add("ID_KEMENTERIAN", idKementerianTanah);
+			r.add("ID_NEGERI_BUKAFAIL", getIDDBNegeri());
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -1309,6 +1341,11 @@ public class FrmPLPSenaraiFailData {
 				r.add("ID_UNITLUASBAKI", idLuasTanah);
 				r.add("LUAS_BAKI", 0);
 			}
+			if ("14".equals(idNegeriTanah)) {
+				r.add("FLAG_PERMOHONANDARI", "0");
+			} else {
+				r.add("FLAG_PERMOHONANDARI", "1");
+			}
 			r.add("NAMA_PROJEK", txtTujuanKegunaan);
 
 			r.add("ID_MASUK", userId);
@@ -1395,6 +1432,21 @@ public class FrmPLPSenaraiFailData {
 
 			sql = r.getSQLInsert("TBLPHPKERTASKERJAPELEPASAN");
 			stmt.executeUpdate(sql);
+			
+			//TBLPHPLOGTUGASAN - INSERT LOG TUGASAN
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_PEGAWAI", userId);
+			r.add("ID_NEGERI", idNegeriUser);
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("ROLE", userRole);
+			r.add("FLAG_BUKA", "Y");
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
 
 			conn.commit();
 			
@@ -1422,7 +1474,7 @@ public class FrmPLPSenaraiFailData {
 			String idKementerian, String kodNegeri, String idNegeri)
 			throws Exception {
 		String noFail = "";
-		noFail = "JKPTG/SPHP/"
+		noFail = "JKPTG/BPHP/"
 				+ kodUrusan
 				+ "/"
 				+ kodKementerian
@@ -1569,7 +1621,7 @@ public class FrmPLPSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.NAMA_PROJEK"
+			sql = "SELECT A.ID_FAIL, A.NO_FAIL, A.NO_FAIL_NEGERI, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.NAMA_PROJEK"
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANPELEPASAN C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -1584,6 +1636,9 @@ public class FrmPLPSenaraiFailData {
 								.getString("ID_FAIL"));
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
 						.getString("NO_FAIL").toUpperCase());
+				h.put("noFailNegeri",
+						rs.getString("NO_FAIL_NEGERI") == null ? "" : rs
+								.getString("NO_FAIL_NEGERI").toUpperCase());
 				h.put("idPermohonan",
 						rs.getString("ID_PERMOHONAN") == null ? "" : rs
 								.getString("ID_PERMOHONAN"));
@@ -2064,6 +2119,30 @@ public class FrmPLPSenaraiFailData {
 
 			if (rs.next()) {
 				return (String) rs.getString("ID_HAKMILIKPERMOHONAN");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getIDDBNegeri() throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT TBLRUJNEGERI.ID_NEGERI FROM TBLLOOKUPSTATE, TBLRUJNEGERI WHERE TBLLOOKUPSTATE.KOD_NEGERI = TBLRUJNEGERI.KOD_NEGERI";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("ID_NEGERI");
 			} else {
 				return "";
 			}
