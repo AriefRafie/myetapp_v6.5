@@ -934,16 +934,23 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 					sql += " E.ALAMAT1,E.ALAMAT2,E.ALAMAT3,E.POSKOD,E.ID_NEGERI,E.ID_BANDAR,C.NO_HAKMILIK,C.NO_PT,C.NO_LOT,A.FLAG_SYARAT, ";
 					sql += " E.NO_TEL_RUMAH,E.NO_HANDPHONE,E.NO_FAX,E.FLAG_BANTAHAN,A.FLAG_PENERIMA_PAMPASAN,A.FLAG_BAHAGIAN_PAMPASAN, ";
 					sql += " A.FLAG_UKUR_LUAS,A.FLAG_PAMPASAN,A.TARIKH_TERIMA_AWARD,S.NO_SIASATAN,A.AMAUN_TUNTUTAN,S.ID_SIASATAN,F.ID_WARTA,G.KETERANGAN AS DESC_STATUS_BANTAHAN, A.FLAG_ONLINE, G.ID_STATUS ";
-					sql += " FROM TBLPPTBANTAHAN A,TBLPPTPIHAKBERKEPENTINGAN B,TBLPPTHAKMILIK C,TBLRUJJENISPB D,TBLPPTHAKMILIKPB E, " +
+					sql += " ,RN.NAMA_NEGERI";
+					sql += " FROM TBLPPTBANTAHAN A"
+							+ ",TBLPPTPIHAKBERKEPENTINGAN B"
+							+ ",TBLPPTHAKMILIK C"
+							+ ",TBLRUJJENISPB D"
+							+ ",TBLPPTHAKMILIKPB E, " +
 							" TBLPPTSIASATAN S, " +
 							//" (SELECT * FROM (SELECT JMAX.*, MAX(JMAX.TARIKH_SIASATAN) OVER (PARTITION BY JMAX.ID_HAKMILIK) MAX_ID FROM TBLPPTSIASATAN JMAX) WHERE TARIKH_SIASATAN = MAX_ID) S, "+
 							" TBLPPTWARTA F, " +
 							//" (SELECT * FROM (SELECT JMAX.*, MAX(JMAX.TARIKH_WARTA) OVER (PARTITION BY JMAX.ID_PERMOHONAN) MAX_ID FROM TBLPPTWARTA JMAX) WHERE TARIKH_WARTA = MAX_ID) F,  "+
-							" TBLRUJSTATUS G ";	
+							" TBLRUJSTATUS G "
+							+ ",TBLRUJNEGERI RN";	
 					sql += " WHERE E.ID_JENISPB=D.ID_JENISPB(+) AND E.ID_PIHAKBERKEPENTINGAN=B.ID_PIHAKBERKEPENTINGAN ";	
 					sql += " AND E.ID_HAKMILIK=C.ID_HAKMILIK AND E.ID_HAKMILIKPB=A.ID_HAKMILIKPB AND S.ID_HAKMILIK = C.ID_HAKMILIK ";
-					sql += " AND C.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.STATUS_BANTAHAN = G.ID_STATUS(+) AND A.ID_HAKMILIKPB = '"+id_hakmilikpb+"' " +
-							"AND S.ID_SIASATAN = '"+_MaxIdSiasatan+"' AND F.ID_WARTA = '"+id_warta+"' " +
+					sql += " AND C.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.STATUS_BANTAHAN = G.ID_STATUS(+) "
+							+ " AND E.ID_NEGERI = RN.ID_NEGERI(+) "
+							+ " AND A.ID_HAKMILIKPB = '"+id_hakmilikpb+"' " + "AND S.ID_SIASATAN = '"+_MaxIdSiasatan+"' AND F.ID_WARTA = '"+id_warta+"' " +
 									" ";	
 					myLogger.info("SQL GETMAKLUMATBANTAHAN :: "+sql);
 					ResultSet rs = stmt.executeQuery(sql);
@@ -951,6 +958,10 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 					Hashtable h;			    
 			     while (rs.next()) {
 			    	h = new Hashtable();
+			    	//Bantahan MT
+			    	h.put("nama", rs.getString("NAMA_PB")==null?"":rs.getString("NAMA_PB"));
+			    	h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
+			    	
 			    	h.put("maklumat_bantahan_tamat_tempoh", rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH")==null?"":rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH"));
 			    	h.put("id_status_bantahan", rs.getString("ID_STATUS")==null?"":rs.getString("ID_STATUS"));
 			    	h.put("id_bantahan", rs.getString("ID_BANTAHAN")==null?"":rs.getString("ID_BANTAHAN"));

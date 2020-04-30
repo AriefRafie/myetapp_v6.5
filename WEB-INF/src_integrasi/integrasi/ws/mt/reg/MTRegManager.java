@@ -75,6 +75,7 @@ public class MTRegManager {
 		
         CauseofactionType[] causeofaction = new CauseofactionType[1];
         causeofaction[0] = cof;
+        
         DocumentType dt = new DocumentType();
         dt.setDocContent(docContent);	//64bit
         dt.setDocID(docID);
@@ -110,7 +111,7 @@ public class MTRegManager {
 			data.setCauseofaction(causeofaction);
 			//untuk case_code 31NCVC
 			//DeceaseInfoType deceaseInfo = new DeceaseInfoType();
-			data.setDeceaseInfo(deceaseInfo);
+			//data.setDeceaseInfo(deceaseInfo);
 			
 			//DocumentType document = new DocumentType();
 			data.setDocument(document);
@@ -130,8 +131,8 @@ public class MTRegManager {
 			if (response != null) {
 				msg = response.getCode() + "," + response.getDescription() + " , " + response.getDetail();
 				if (response.getData() != null) {
-					response.getData().getSourceReferenceNo();
-					if (response.getData().getSourceReferenceNo() != null) {
+					//response.getData().getCaseNo()getSourceReferenceNo();
+					if (response.getData().getCaseNo() != null) {
 						referenceNo = response.getData().getSourceReferenceNo();
 					}
 				}

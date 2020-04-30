@@ -31,6 +31,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 
 #if ($flag=="semak")
     #foreach ( $senarai in $getMaklumatBantahan )
+    	#set ($id_siasatan=$senarai.id_siasatan) 
+    
         #set ($id_bantahan=$senarai.id_bantahan)
         #set ($txtNoBantahan=$senarai.no_bantahan)
         #set ($jenis_pembantah=$senarai.jenis_pembantah)
@@ -627,20 +629,21 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 </fieldset> 
 
         <div align="center"> 
-          #if ($button=="view")  
+   	#if ($button=="view")  
           
-          #if($flag_online=="2" && $id_status_bantahan=="181")
+    	#if($flag_online=="2" && $id_status_bantahan=="181")
           <input type="button" name="cmdTolakPermohonan" id="cmdTolakPermohonan" value="Tolak Permohonan" onclick="javascript:tolakPermohonan()" />     
-          #end
+      	#end
           
           <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniBantahan()" /> 
+          <input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
          <!-- <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> -->
-          #end
+   	#end
           
-          #if ($button=="edit")
+  	#if ($button=="edit")
           <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanBantahan()" /> 
           <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:batal_bantahan()" /> 
-          #end          
+  	#end          
           
           <input type="button" name="cmdkembali" id="cmdkembali" value="Kembali" onclick="javascript:kembaliList()" />
               
@@ -684,14 +687,29 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type="hidden" name="id_hakmilik" id="id_hakmilik" value="$id_hakmilik" />
 <input type="hidden" name="status_bantahan" id="status_bantahan" value="$status_bantahan" />
 <input type="hidden" name="readmode" id="readmode"  value="$!readmode"/>
+<input type="hidden" name="id_siasatan" id="id_siasatan" value="$!id_siasatan" />
 
 <script type="text/javascript">
 
-/*
-alert("Tarikh Borang H :"+document.${formName}.txdTkhBrgH.value);
-alert("Tarikh Award :"+document.${formName}.txdTkhAward.value);
-alert("Kehadiran :"+document.${formName}.txtHadirBicara.value);
-*/
+	/**
+	Fungsi hantar maklumat bantahan ke MT
+	*/
+	function hantarBantahan() {	
+		var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
+		var idFail = "&idfail=$!id_fail";
+		var idHarta  = "&idharta="+$jquery('#id_hakmilikpb').val();
+		var idPermohonan  = "&idpermohonan="+$jquery('#id_permohonan').val();
+		var idSiasatan  = "&idsiasatan="+$jquery('#id_siasatan').val();
+		var idWarta  = "&idwarta=$!idWarta";
+		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
+		//alert(param);
+		var url = "../x/${securityToken}/ekptg.view.ppt.bantahan.IntegrasiMT?"+param+"&command=bantahanpb&frmFrom=frmPrmhnnSek8DaftarSek8";
+		var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=no,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();	
+	
+	}
 
 
 $jquery("#alert_bantahan1").html($jquery("#alert_bantahan1").text()).removeClass("blink");

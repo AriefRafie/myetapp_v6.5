@@ -9,6 +9,7 @@ public interface ILampiran {
 	public Tblrujdokumen getLampiran(String iDokumen
 		,String colNama,String colJenis,String colCont
 		,String namaTab) throws Exception;
+	public void simpanDokumenInt(Tblrujdokumen data) throws Exception;		
 
 	
 }
