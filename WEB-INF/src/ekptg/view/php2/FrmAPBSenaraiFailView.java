@@ -8,6 +8,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
@@ -20,7 +22,8 @@ import ekptg.model.php2.FrmAPBSenaraiFailData;
 public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
-	
+	static Logger myLog = Logger.getLogger(FrmAPBSenaraiFailView.class);
+
 	FrmAPBSenaraiFailData logic = new FrmAPBSenaraiFailData();
 
 	@Override
@@ -45,7 +48,7 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
         String idStatus = getParam("idStatus");
         
         //VECTOR
-        Vector list = null;
+        Vector<Hashtable<String,String>> list = null;
         
         Vector beanMaklumatPermohonan = null;
         Vector beanMaklumatPemohon = null;
@@ -264,10 +267,11 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
         	//GO TO LIST FAIL LESEN        	
         	vm = "app/php2/frmAPBSenaraiFail.jsp";        	
         	
-        	logic.carianFail(getParam("txtNoFail"),getParam("txtPemohon"), getParam("txtNoPengenalan"), getParam("txdTarikhTerima"),getParam("txtNoLesen"), idStatusC);
-			list = new Vector();
-			list = logic.getSenaraiFail();
-			this.context.put("SenaraiFail", list);
+			list = new Vector<Hashtable<String,String>>();
+         	list = logic.getCarianFail(getParam("txtNoFail"),getParam("txtPemohon"), getParam("txtNoPengenalan"), getParam("txdTarikhTerima"),getParam("txtNoLesen"), idStatusC);
+         	//logic.carianFail(getParam("txtNoFail"),getParam("txtPemohon"), getParam("txtNoPengenalan"), getParam("txdTarikhTerima"),getParam("txtNoLesen"), idStatusC);
+			//list = logic.getSenaraiFail();
+			this.context.put("SenaraiFail", list);			
 			
 			this.context.put("txtNoFail", getParam("txtNoFail"));
 			this.context.put("txtPemohon", getParam("txtPemohon"));
@@ -293,7 +297,7 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 	private String daftarBaru(HttpSession session) throws Exception {
 		String idFail = "";
 		
-		Hashtable hash = new Hashtable();
+		Hashtable<String,String> hash = new Hashtable<String,String>();
 
 		hash.put("tarikhTerima", getParam("tarikhTerima"));
 		hash.put("tarikhSurat", getParam("tarikhSurat"));
@@ -339,44 +343,46 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 		return idFail;
 	}
 
-	public void setupPage(HttpSession session,String action,Vector list) {
-		
-		try {
-		
-			this.context.put("totalRecords",list.size());
-			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
-			
-			int itemsPerPage;
-			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
-				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
-			} else {
-				itemsPerPage = (Integer)this.context.get("itemsPerPage");
-			}
-		    
-		    if ("getNext".equals(action)) {
-		    	page++;
-		    } else if ("getPrevious".equals(action)) {
-		    	page--;
-		    } else if ("getPage".equals(action)) {
-		    	page = getParamAsInteger("value");
-		    } else if ("doChangeItemPerPage".equals(action)) {
-		       itemsPerPage = getParamAsInteger("itemsPerPage");
-		    }
-		    	
-		    Paging paging = new Paging(session,list,itemsPerPage);
-			
-			if (page > paging.getTotalPages()) page = 1; //reset page number
-				this.context.put("SenaraiFail",paging.getPage(page));
-			    this.context.put("page", new Integer(page));
-			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
-			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
-			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
-			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
-			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
-	        
-		} catch (Exception e) {
-			e.printStackTrace();
-			this.context.put("error",e.getMessage());
-		}	
-	}
+//	public void setupPage(HttpSession session,String action,Vector list) {
+//		
+//		try {
+//		
+//			this.context.put("totalRecords",list.size());
+//			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
+//			
+//			int itemsPerPage;
+//			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+//				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
+//			} else {
+//				itemsPerPage = (Integer)this.context.get("itemsPerPage");
+//			}
+//		    
+//		    if ("getNext".equals(action)) {
+//		    	page++;
+//		    } else if ("getPrevious".equals(action)) {
+//		    	page--;
+//		    } else if ("getPage".equals(action)) {
+//		    	page = getParamAsInteger("value");
+//		    } else if ("doChangeItemPerPage".equals(action)) {
+//		       itemsPerPage = getParamAsInteger("itemsPerPage");
+//		    }
+//		    	
+//		    Paging paging = new Paging(session,list,itemsPerPage);
+//			
+//			if (page > paging.getTotalPages()) page = 1; //reset page number
+//				this.context.put("SenaraiFail",paging.getPage(page));
+//			    this.context.put("page", new Integer(page));
+//			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
+//			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
+//			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
+//			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
+//			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+//	        
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			this.context.put("error",e.getMessage());
+//		}	
+//	}
+	
+	
 }
