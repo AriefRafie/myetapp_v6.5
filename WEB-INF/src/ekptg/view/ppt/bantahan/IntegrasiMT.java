@@ -1,9 +1,9 @@
 package ekptg.view.ppt.bantahan;
 
 import integrasi.utils.IntLogManager;
-//import integrasi.ws.mt.MTManager;
-
-import my.gov.kehakiman.eip.services.MTManager;
+import integrasi.ws.mt.reg.DeceaseInfoType;
+import integrasi.ws.mt.reg.MTRegManager;
+import integrasi.ws.mt.reg.PartyType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -23,11 +23,9 @@ import javax.servlet.http.HttpSession;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
-import lebah.portal.velocity.VTemplate;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.apache.velocity.Template;
 
 //import sun.misc.BASE64Encoder;
 
@@ -35,11 +33,14 @@ import org.apache.velocity.Template;
 
 import com.Ostermiller.util.Base64;
 
-import ekptg.helpers.DB;
-import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
+import ekptg.model.utils.ILampiran;
+import ekptg.model.utils.IUtilHTMLPilihan;
+import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.ppt.BantahanAgensiDaftar;
 import ekptg.model.ppt.BantahanDaftar;
+import ekptg.model.ppt.util.LampiranBean;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanMT;
 
 
 public class IntegrasiMT extends AjaxBasedModule{
@@ -47,6 +48,10 @@ public class IntegrasiMT extends AjaxBasedModule{
 	private static final long serialVersionUID = 1L;
 	static Logger myLog = Logger.getLogger(ekptg.view.ppt.bantahan.IntegrasiMT.class);
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	SimpleDateFormat sdfNaming = new SimpleDateFormat("yymmdd");
+ 	private IUtilHTMLPilihan iUtilPilihan = null;
+ 	private ILampiran iLampiran = null;
+	private String sql = "";
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -59,19 +64,40 @@ public class IntegrasiMT extends AjaxBasedModule{
 		String vm = "app/integrasi/PendaftaranMT.jsp";
 		String submit = request.getParameter("command");
 		
+		String idBantahan = getParam("idbantahan");
+		String idFail = getParam("idfail");
 		String idHarta = getParam("idharta");
 		String idPermohonan = getParam("idpermohonan");
 		String idSiasatan = getParam("idsiasatan");
 		String idWarta = getParam("idwarta");
 		
+		String transactionID = "";
+		String kodmt ="";
 		String jenisPembantah =""; //1, 2
-		myLog.info("submit = "+submit);
+		MTRegManager im = null;
+
+		PartyType[] party = null;
+		PartyType pt = null;
+		myLog.info("submit = "+submit+",mode="+ ("mode"));
 
 		String socmt =""; 
 
+		context.put("idBantahan", idBantahan);
+		context.put("idFail", idFail);
+		context.put("idHarta", idHarta);
+		context.put("idPermohonan", idPermohonan);
+		context.put("idSiasatan", idSiasatan);
+		context.put("idWarta", idWarta);
+
 		BantahanAgensiDaftar model = new BantahanAgensiDaftar();	
 		BantahanDaftar modelBantahanPB = new BantahanDaftar();	
-		Vector<Hashtable<String,String>> list = model.getMaklumatBantahanAP(idPermohonan,idHarta,idSiasatan,idWarta);
+		Vector<Hashtable<String,String>> list = null;
+		if (submit.equals("bantahanap")) 
+			list = model.getMaklumatBantahanAP(idPermohonan,idHarta,idSiasatan,idWarta);
+		else
+			list = modelBantahanPB.getMaklumatBantahan(idHarta,idSiasatan,idWarta);
+	
+			
 		context.put("getMaklumatBantahan", list);
 			
 		if(list.size()!=0){
@@ -88,55 +114,40 @@ public class IntegrasiMT extends AjaxBasedModule{
 				context.put("listDokumen", "");
 				context.put("listDokumen_size", 0);
 			}
-			socmt = HTML.SelectMahkamah("socmt");
-
+			socmt = getPilihan().Pilihan("socmt", "onchange = \'pilihMT()\'");
+					
 		}
 
-		if ("borangPermohonan".equals(submit)) {
+		if (submit.equals("bantahanap")) {
+			myLog.info("bantahanap");
+			String noKes = getNoKes(idBantahan);
+			if(!noKes.equals("")){
+				context.put("noKes", noKes);
+			}
 		
-		}else if ("hantarPermohonan".equals(submit)) {
-			String idFail = request.getParameter("idFail");
-			Hashtable permohonanMT = getPermohonanMT(user, idFail);
-			String docContent = (String) permohonanMT.get("docContent");//(String) permohonanMT.get("docContent");
+		}else if (submit.equals("bantahanpb")) {
+			myLog.info("bantahanpb");
+			String noKes_ = "";
+			String noKes = getNoKes(idBantahan);
+			myLog.info("bantahanpb="+noKes);
+			if(!noKes.equals("")){
+				noKes_ = noKes;
+			}
+			context.put("noKes", noKes_);
 
-			String transactionID = "";
+		}else if ("hantarpermohonan".equals(submit)) {
+			Tblrujdokumen doc = null;
+			//Hashtable permohonanMT = getPermohonanMT(user, idFail);
+			//String docContent = (String) permohonanMT.get("docContent");//(String) permohonanMT.get("docContent");
+
 			Calendar cal = new GregorianCalendar();
 			cal.setTime(new Date());
 			transactionID = Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.YEAR)), 4) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MONTH) + 1), 2)
 					+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.DATE)), 2) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)), 2)
 					+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MINUTE)), 2) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.SECOND)), 2);
-			String tarikhJanaBorangB = request.getParameter("tarikhJanaBorangB");			
-			String tarikhMati = request.getParameter("tarikhMati");
-			String DDate = tarikhMati.substring(0, 10);
-
-			String[] parts = DDate.split("-");
-			String part1 = parts[0];
-			String part2 = parts[1];
-			String part3 = parts[2];
-			DDate = part3 + "/" + part2 + "/" + part1;
-
 			
-//			String BDate = tarikhJanaBorangB.substring(0, 10);
-//			
-//						String[] Bparts = BDate.split("-");
-//						String Bpart1 = Bparts[0];
-//						String Bpart2 = Bparts[1];
-//						String Bpart3 = Bparts[2];
-//						BDate = Bpart3 + "/" + Bpart2 + "/" + Bpart1;
-						
-			String BDate = "";
-			if(tarikhJanaBorangB != ""){
-			BDate = tarikhJanaBorangB.substring(0, 10);
-
-			String[] Bparts = BDate.split("-");
-			String Bpart1 = Bparts[0];
-			String Bpart2 = Bparts[1];
-			String Bpart3 = Bparts[2];
-			BDate = Bpart3 + "/" + Bpart2 + "/" + Bpart1;
-			}
-
 			Db db = null;
-			String sql = "";
+			//String sql = "";
 			String sql2 = "";
 
 			db = new Db();
@@ -144,128 +155,172 @@ public class IntegrasiMT extends AjaxBasedModule{
 			SQLRenderer r = new SQLRenderer();
 			Statement stmt2 = db.getStatement();
 			SQLRenderer kptsn = new SQLRenderer();
-			String noFail = request.getParameter("noPetisyen");
-			r.add("PETISYENNO", request.getParameter("noPetisyen"));
-			r.add("NAMASIMATI", request.getParameter("namaSimati"));
-			r.add("NAMASIMATILAIN", request.getParameter("namaSimatiLain"));
-			r.add("NOKPBARUSIMATI", request.getParameter("noKPSimatiBaru"));
-			r.add("NOKPLAMASIMATI", request.getParameter("noKPSimatiLama"));
-			r.add("NOKPLAINSIMATI", request.getParameter("noKPSimatiLain"));
-			r.add("TARIKHMATI", r.unquote("to_date('" + DDate + "','DD/MM/YYYY')"));
-			r.add("NAMAPEMOHON", request.getParameter("namaPemohon"));
-			r.add("TARIKHJANABRGB", r.unquote("to_date('" + BDate + "','DD/MM/YYYY')"));
-			r.add("NOKPBARUPEMOHON", request.getParameter("noKPPemohon"));
-			r.add("HUBUNGAN", request.getParameter("hubSimatiPemohon"));
-			r.add("KODPEJABAT", request.getParameter("kodPejabat"));
-			r.add("JENISTRANSAKSI", request.getParameter("applicationType"));
-			r.add("FLAG_REP", "0");
-			r.add("FLAG_NEGERI", request.getParameter("idnegeri"));// ecah
-			r.add("JENISKP", request.getParameter("jeniskp"));
+			
+//			context.put("idnegeri", request.getParameter("idnegeri"));
+//			context.put("jeniskp", request.getParameter("jeniskp"));
+//			context.put("docContent", docContent);
+			String idPejabat = getParam("socmt");
+
+			String name	= getParam("txtNamaPembantah");
+			String add = getParam("txtAlamat1");
+			String add2 = getParam("txtAlamat2");
+			String add3 = getParam("txtAlamat3");
+			String postcode = getParam("txtPoskod");
+			String stateCode = getStateCode(Integer.parseInt(getParam("txtIdNegeri")));
+			String city = "Putrajaya";
+			myLog.info("stateCode="+stateCode);
+
+			String kodMT = getParam("kodmt");
+			
+			String[] cbsemaks = this.request.getParameterValues("cb");
+			String renameDoc = "";
+			//myLog.info(cbsemaks.length);
+			if(cbsemaks.length ==1){
+				doc = getDoc().getLampiran(cbsemaks[0]);
+				doc.setDokumen(idBantahan);
+				doc.setIdMasuk(Long.parseLong(idUser));
+				//<source>_<sourceReferenceNo>_<currentdate>_docID>.pdf
+				String renameDate = Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.YEAR)), 4) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MONTH) + 1), 2)
+									+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.DATE)), 2);
+				renameDoc = "ETP_"+idBantahan+"_"+sdfNaming.format(new Date())+"_"+doc.getIdDokumen()+".pdf";
+				myLog.info("renameDoc="+renameDoc);
+				getDoc().simpanDokumenInt(doc);
+				
+			}else{
+				if (cbsemaks != null) {
+					for (int i = 0; i < cbsemaks.length; i++) {
+						//myLog.info(i+"."+cbsemaks[i]);
+					}
+				}
+			}
+			//myLog.info("doc: content="+doc.getKandungan());
+
+			r.add("ID_FAIL", idFail);
+			r.add("ID_RUJUKAN", idBantahan);
+			r.add("KOD_MT", kodMT);
+						
+			r.add("JENIS_TRANSAKSI","15");
 			r.add("TARIKH_HANTAR", r.unquote("to_date('" + sdf.format(cal.getTime()) + "','DD/MM/YYYY')"));
+			
+			r.add("ID_MASUK", idUser);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			r.add("ID_TRANSAKSI", transactionID);
-			
-			context.put("noPetisyen", request.getParameter("noPetisyen"));
-			context.put("namaSimati", request.getParameter("namaSimati"));
-			context.put("namaLainSimati", request.getParameter("namaSimatiLain"));
-			context.put("MyIDSimati", request.getParameter("noKPSimatiBaru"));
-			context.put("ICLamaSimati", request.getParameter("noKPSimatiLama"));
-			context.put("ICLainSimati", request.getParameter("noKPSimatiLain"));
-			context.put("tarikhMati", request.getParameter("tarikhMati"));
-			context.put("namaPemohon", request.getParameter("namaPemohon"));
-			context.put("MyIDPemohon", request.getParameter("noKPPemohon"));
-			context.put("hubungan", request.getParameter("hubSimatiPemohon"));
-			context.put("tarikhJanaBorangB", request.getParameter("tarikhJanaBorangB"));
-			context.put("tarikhHantarBorangB", request.getParameter("tarikhHantarBorangB"));
-			context.put("kodPejabat", request.getParameter("kodPejabat"));
-			context.put("namaPejabat", request.getParameter("namaPejabat"));
-			context.put("idnegeri", request.getParameter("idnegeri"));
-			context.put("jeniskp", request.getParameter("jeniskp"));
-			context.put("docContent", docContent);
-			
-//			if (!"".equals(fFrom)) {
-//				context.put("fFrom", "ya");
-//			} else {
-//				context.put("fFrom", "tidak");
-//			}
+			sql = r.getSQLInsert("TBLINTMTPENDAFTARAN");
+			myLog.info("sql="+sql);
+			stmt.executeUpdate(sql);
 
-			// aishah start integration ecourt
-			MTManager manager = new MTManager();
+			im = new MTRegManager("MTREG");
+	        //MTRegManager manager = new MTRegManager("15");
+			pt = MTRegManager.getParty15(transactionID //id rujukan party
+					,name
+					,add,add2,add3,postcode,stateCode,city);
+	        party = new PartyType[1];
+	        party[0] = pt;
 
-			String returnMessage = "";
-			returnMessage = manager.sendMaklumat2Court(
-					request.getParameter("noPetisyen"),
-					request.getParameter("namaSimati"),
-					request.getParameter("namaSimatiLain"),
-					request.getParameter("noKPSimatiBaru"),
-					request.getParameter("noKPSimatiLama"),
-					request.getParameter("noKPSimatiLain"),
-					request.getParameter("tarikhMati"),
-					request.getParameter("namaPemohon"),
-					request.getParameter("noKPPemohon"),
-					request.getParameter("hubSimatiPemohon"),
-					request.getParameter("tarikhJanaBorangB"),
-					request.getParameter("tarikhHantarBorangB"),
-					request.getParameter("kodPejabat"),
-					getPejabatJKPTGByKodPejabat(request.getParameter("kodPejabat")),
-					request.getParameter("idnegeri"),
-					request.getParameter("jeniskp"),
-					docContent,
-					request.getParameter("applicationType"), transactionID);
+	        DeceaseInfoType deceaseInfo = new DeceaseInfoType();
+	        deceaseInfo.setDeceaseInfoName(name);
+	        deceaseInfo.setDeceaseInfoType("1");
+	        deceaseInfo.setDeceaseInfoIDType1("IC");
+	        deceaseInfo.setDeceaseInfoIDType1No("251202095009");
+	        deceaseInfo.setDeceaseInfoIDType2("OC");
+	        deceaseInfo.setDeceaseInfoIDType2No("12345");
+	        deceaseInfo.setDeathCertNo("12345");
+	        deceaseInfo.setDeceaseInfoGender("M");
+	        deceaseInfo.setDeceaseInfoAge("98");
+	        deceaseInfo.setDateOfDeath("2020-03-01T00:00:00");
+	        deceaseInfo.setDeceaseInfoAddr1(add);
+	        deceaseInfo.setDeceaseInfoAddr1(add2);
+	        deceaseInfo.setDeceaseInfoAddr1(add3);
+	        deceaseInfo.setDeceaseInfoPostcode("44000");
+	        deceaseInfo.setDeceaseInfoCity("KUALA LUMPUR");
+	        deceaseInfo.setDeceaseInfoState(stateCode);
+	        deceaseInfo.setDeceaseInfoCountry("MYS");
+//	        <DeceaseInfoName>IJOK ANAK EDIN KONG</DeceaseInfoName>
+//			<DeceaseInfoType>1</DeceaseInfoType>
+//			<DeceaseInfoIDType1>IC</DeceaseInfoIDType1>
+//			<DeceaseInfoIDType1No>251202095009</DeceaseInfoIDType1No>
+//			<DeceaseInfoIDType2>OC</DeceaseInfoIDType2>
+//			<DeceaseInfoIDType2No>12345</DeceaseInfoIDType2No>
+//			<DeathCertNo>12345</DeathCertNo>
+//			<DeceaseInfoGender>M</DeceaseInfoGender>
+//			<DeceaseInfoAge>99</DeceaseInfoAge>
+//			<DateOfDeath>2020-03-01T00:00:00</DateOfDeath>
+//			<DeceaseInfoAddr1>DECEASED INFO ADD 1</DeceaseInfoAddr1>
+//			<DeceaseInfoAddr2>DECEASED INFO ADD 2</DeceaseInfoAddr2>
+//			<DeceaseInfoAddr3>DECEASED INFO ADD 3</DeceaseInfoAddr3>
+//			<DeceaseInfoPostcode>44000</DeceaseInfoPostcode>
+//			<DeceaseInfoCity>KUALA LUMPUR</DeceaseInfoCity>
+//			<DeceaseInfoState>14</DeceaseInfoState>
+//			<DeceaseInfoCountry>MYS</DeceaseInfoCountry>
+			String returnMessage = "1 Tidak Berjaya Dihantar";
+	        returnMessage = MTRegManager. PendaftaranBaharu("15"
+	        					,doc.getIdDokumen(),renameDoc,doc.getKandungan()
+	        					,party
+	        					,deceaseInfo
+	        					, kodMT 	//MT Kangar
+	        					, "3"	//Civil
+	        					, "2"	//High Court
+	        					, idBantahan	// Rujukan Permohonan (id bantahan)
+	        					, "0.00"
+	        					, transactionID);
 			
-
 			if (!returnMessage.equals("")) {
-
 				String code = returnMessage.substring(0, 1);
 				String details = returnMessage.substring(2);
 
 				if (code.equals("0")) {
-					if (manager.getIdKadBiru() != null) {
-						r.add("IDKADBIRU", manager.getIdKadBiru());
-						//r.add("IDKADBIRU", "00001");
+					r = new SQLRenderer();
+					r.setUpdate("ID_TRANSAKSI", transactionID);
+					if (MTRegManager.getReferenceNo() != null) {
+						r.add("NO_KES", MTRegManager.getReferenceNo());
 					}
-					sql = r.getSQLInsert("TBLINTMTPERMOHONAN");
+					r.add("CATATAN",returnMessage);
+					sql = r.getSQLUpdate("TBLINTMTPENDAFTARAN");
 					stmt.executeUpdate(sql);
-					myLog.info("getSQLInsert:::: "+sql);
+					myLog.info("getSQLUpdate:sql="+sql);
 
-					// TODO - update tarikh hantar borang B di
-					// TBLPPKKEPUTUSANPERMOHONAN
-					long idKeputusanPermohonan = DB.getNextID("TBLPPKKEPUTUSANPERMOHONAN_SEQ");
-					kptsn.add("ID_KEPUTUSANPERMOHONAN", idKeputusanPermohonan);
-					kptsn.add("ID_PERMOHONAN", idPermohonan);
-					kptsn.add("TARIKH_HANTAR_BORANGB", r.unquote("SYSDATE"));
-					sql2 = kptsn.getSQLInsert("TBLPPKKEPUTUSANPERMOHONAN");
-					stmt2.executeUpdate(sql2);
-
-					vm = "app/ppk/integrasi/MahkamahTinggiSuccess.jsp";
-					
-					IntLogManager.recordLogMT(noFail, "I", "O", "Y", "SUCCESS");
+					vm = "app/integrasi/MahkamahTinggiSuccess.jsp";
+					//IntLogManager.recordLogMT(noFail, "I", "O", "Y", "SUCCESS");
 				
 				} else {
-					context.put("details", details);
-					vm = "app/ppk/integrasi/MahkamahTinggiFailed.jsp";
-
-					IntLogManager.recordLogMT(noFail, "I", "O", "T", details);
+					returnMessage = details;
+					//context.put("details", details);
+					vm = "app/integrasi/MahkamahTinggiFailed.jsp";
+					//IntLogManager.recordLogMT(noFail, "I", "O", "T", details);
 				
 				}
 
 			} else {
-				context.put("details", returnMessage);
-				vm = "app/ppk/integrasi/MahkamahTinggiFailed.jsp";
-				
-				IntLogManager.recordLogMT(noFail, "I", "O", "T", returnMessage);
-			}		
+				returnMessage = "Tidak Berjaya Hantar";
+				//context.put("details", returnMessage);
+				vm = "app/integrasi/MahkamahTinggiFailed.jsp";
+				//IntLogManager.recordLogMT(noFail, "I", "O", "T", returnMessage);
+			}
+			context.put("details", returnMessage);
+			socmt = getPilihan().Pilihan("socmt",idPejabat,"onchange = \'pilihMT()\'");
+			kodmt = kodMT;
+			myLog.info("returnMessage="+returnMessage);
+			
+		}else if(submit.equals("getmahkamah")){
+			String idPejabat = getParam("socmt");
+			im = new MTRegManager("MTREG");
+			
+			socmt = getPilihan().Pilihan("socmt",idPejabat,"onchange = \'pilihMT()\'");
+			kodmt = im.getKodMT(idPejabat);
+
 		}else{
 			
 		}
-		context.put("socmt",socmt);
+		context.put("kodmt",kodmt);
+		context.put("socMT",socmt);
 
 
 		return vm;
 		
 	}
 
-	private boolean existPermohonan(String idFail) {
-		boolean existPermohonan = false;
+	private String getNoKes(String idBantahan) {
+		String noKes = "";
 		Db db = null;
 		String sql = "";
 
@@ -273,14 +328,13 @@ public class IntegrasiMT extends AjaxBasedModule{
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT PFD.ID_FAIL PERMOHONAN FROM TBLINTMTPERMOHONAN MTP, TBLPFDFAIL PFD"
-					+ " WHERE MTP.PETISYENNO = PFD.NO_FAIL AND PFD.ID_FAIL = '"
-					+ idFail + "'";
+			sql = "SELECT NO_KES FROM TBLINTMTPENDAFTARAN "
+				+ " WHERE ID_RUJUKAN = '"+ idBantahan + "'"
+				+ " AND NO_KES IS NOT NULL";
 
 			ResultSet rs = stmt.executeQuery(sql);
-			myLog.info("existPermohonan::::: "+sql);
 			if (rs.next()) {
-				existPermohonan = true;
+				noKes = rs.getString("NO_KES");
 			}
 
 		} catch (Exception ex) {
@@ -290,7 +344,8 @@ public class IntegrasiMT extends AjaxBasedModule{
 				db.close();
 		}
 
-		return existPermohonan;
+		return noKes;
+		
 	}
 
 	private boolean existPetioner(String idFail) {
@@ -678,6 +733,54 @@ public class IntegrasiMT extends AjaxBasedModule{
 		}
 		return TarikhHantarMT;
 	}
+
+	private IUtilHTMLPilihan getPilihan(){
+		if(iUtilPilihan == null){
+			iUtilPilihan = new UtilHTMLPilihanMT();
+		}
+		return iUtilPilihan;
+			
+	}
 	
+	private ILampiran getDoc(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+			
+	}
+
+	private String getStateCode(int x){
+		String abbrev = "0";
+		switch (x) {
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+			abbrev += String.valueOf(x);
+			break;
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+		case 14:
+		case 15:
+		case 16:
+		case 17:
+			abbrev = String.valueOf(x);
+			break;
+		default:
+			break;
+		}
+		//myLog.info("getStateCode:abbrev="+abbrev);
+		return abbrev;
+
+	}
+
 	
 }

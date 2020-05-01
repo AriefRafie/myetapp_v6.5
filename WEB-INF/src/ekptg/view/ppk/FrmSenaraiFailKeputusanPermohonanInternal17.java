@@ -3,6 +3,9 @@
  */
 package ekptg.view.ppk;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,8 +14,11 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
 import lebah.portal.velocity.VTemplate;
 
+import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 
 import ekptg.helpers.HTML;
@@ -32,7 +38,7 @@ import ekptg.model.ppk.FrmSenaraiFailKeputusanPermohonanInternalData;
 
 public class FrmSenaraiFailKeputusanPermohonanInternal17 extends VTemplate {
 	private static final long serialVersionUID = 1L;
-
+	static Logger myLogger = Logger.getLogger(PendaftaranCheck.class);
 	FrmPrmhnnSek8KeputusanPermohonanInternalData logicKeputusanPrmhnn = null;
 	FrmSenaraiFailKeputusanPermohonanInternalData logicKeputusan = null;
 
@@ -51,7 +57,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal17 extends VTemplate {
 
 		logicKeputusanPrmhnn = new FrmPrmhnnSek8KeputusanPermohonanInternalData();
 		logicKeputusan = new FrmSenaraiFailKeputusanPermohonanInternalData();
-
+		Vector listSupportingDoc = null;
 		logic = new FrmPrmhnnSek8InternalData();
 		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 		logic_B = new FrmPrmhnnSek8SenaraiHTATHInternalData();
@@ -60,16 +66,17 @@ public class FrmSenaraiFailKeputusanPermohonanInternal17 extends VTemplate {
 		logic_E = new FrmSenaraiFailInternalData();
 		mainheader = new FrmHeaderPpk();
 		this.context.put("seksyen_kp","17");
-		
+		String jenisDoc = "99205";
 
 		HttpSession session = this.request.getSession();
 		String submit = "";
 		submit = getParam("command");
+		System.out.println("submit ********** =" +submit);
 		
 		headerppk_baru_default();
 
 		String bolehsimpan = "";
-		String doPost = (String) session.getAttribute("doPost");
+		String doPost = "true";//(String) session.getAttribute("doPost");
 		if (doPost.equals("true")) {
 			//System.out.println("browser refresh **********");
 			bolehsimpan = "yes";
@@ -151,7 +158,186 @@ public class FrmSenaraiFailKeputusanPermohonanInternal17 extends VTemplate {
 
 
 		if ("paparKeputusan".equals(submit)) {
+			String idPermohonan = getParam("id_permohonan");
+			logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+			listSupportingDoc = logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			Vector listNegeriByPpkUnit = FrmPrmhnnSek8KeputusanPermohonanInternalData.getListNegeriByhta(getParam("idpermohonansimati"));
+			this.context.put("ListNegeriPindah", listNegeriByPpkUnit);
 
+			String t_mohon = getParam("tarikh_mohon");
+			String september_mohon = "01/09/2009";
+			//System.out.println("[check]1: " + t_mohon);
+
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			Date tar_mohon = df.parse(t_mohon);
+			Date sep_mohon = df.parse(september_mohon);
+
+			if (tar_mohon.before(sep_mohon)) {
+				//System.out.print(" is before ");
+				view_mode(session);
+				int eventStatus = 1;
+				this.context.put("EventStatus", eventStatus);
+				String id = getParam("idPermohonan");
+				FrmSenaraiFailKeputusanPermohonanInternalData.setData(id,
+						(String) session.getAttribute("_ekptg_user_id"));
+				headerppk_baru(session,id,"Y","","T");
+
+				Vector list = FrmSenaraiFailKeputusanPermohonanInternalData
+						.getData();
+				this.context.put("ViewPemohon", list);
+
+				// Vector listDaerahByPpkUnit =
+				// FrmPrmhnnSek8KeputusanPermohonanInternalData.getListDaerahByPpkUnit(Integer.parseInt(h.get("negeritertinggi").toString()));
+				this.context.put("ListDaerahPindah", logic_A
+						.getListDaerahPindah());
+
+				logic_A.setDataFail(id);
+				listFail = logic_A.getDataFail();
+				this.context.put("ViewFail", listFail);
+
+				FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.setMaklumatMahkamah(id);
+				Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getMaklumatMahkamah();
+				//System.out.println("listMaklumatMahkamah **::"
+					//	+ listMaklumatMahkamah);
+				this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+
+				FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.setMaklumatMahkamahM();
+				Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getMaklumatMahkamahM();
+				this.context
+						.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
+
+				this.context.put("eve", "");
+
+				this.context.put("setMode1", "");
+				this.context.put("setMode2", "");
+				this.context.put("setMode3", "");
+				this.context.put("setMode4", "");
+				this.context.put("setMode5", "");
+				this.context.put("setMode6", "");
+
+				this.context.put("checkJ1", "");
+				this.context.put("checkJ2", "");
+				this.context.put("checkJ3", "");
+
+				this.context.put("viewcheckJ1", "");
+				this.context.put("viewcheckJ2", "");
+				this.context.put("viewcheckJ3", "");
+
+				this.context.put("jenis_pej", "");
+				this.context.put("jenis_pej_id", "");
+
+				this.context.put("mahkamah_kosong", "yes");
+				this.context.put("infoMahkamah", "");
+
+				FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.setMaklumatMahkamahMPindah();
+				Vector listMaklumatMahkamahMKPindah = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getMaklumatMahkamahMPindah();
+				this.context.put("listMaklumatMahkamahJPindah",
+						listMaklumatMahkamahMKPindah);
+
+				vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonanLama17.jsp";
+			}
+			if (tar_mohon.after(sep_mohon) || tar_mohon.equals(sep_mohon)) {
+			//	Sy//System.out.pri(" is after ");
+				view_mode(session);
+				int eventStatus = 1;
+				this.context.put("EventStatus", eventStatus);
+				String id = getParam("idPermohonan");
+				FrmSenaraiFailKeputusanPermohonanInternalData.setData(id,
+						(String) session.getAttribute("_ekptg_user_id"));
+				headerppk_baru(session,id,"Y","","T");
+				Vector list = FrmSenaraiFailKeputusanPermohonanInternalData
+						.getData();
+				this.context.put("ViewPemohon", list);
+				logic_A.setDataFail(id);
+				listFail = logic_A.getDataFail();
+				this.context.put("ViewFail", listFail);
+
+				FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.setMaklumatMahkamah(id);
+				Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getMaklumatMahkamah();
+				//System.out.println("listMaklumatMahkamah **::"
+					//	+ listMaklumatMahkamah);
+				this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+
+				FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.setMaklumatMahkamahM();
+				Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getMaklumatMahkamahM();
+				this.context
+						.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
+
+				this.context.put("eve", "");
+
+				this.context.put("setMode1", "");
+				this.context.put("setMode2", "");
+				this.context.put("setMode3", "");
+				this.context.put("setMode4", "");
+				this.context.put("setMode5", "");
+				this.context.put("setMode6", "");
+
+				this.context.put("checkJ1", "");
+				this.context.put("checkJ2", "");
+				this.context.put("checkJ3", "");
+
+				this.context.put("viewcheckJ1", "");
+				this.context.put("viewcheckJ2", "");
+				this.context.put("viewcheckJ3", "");
+
+				this.context.put("jenis_pej", "");
+				this.context.put("jenis_pej_id", "");
+
+				this.context.put("mahkamah_kosong", "yes");
+				this.context.put("infoMahkamah", "");
+
+				vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan17.jsp";
+			}
+
+			//System.out.println("TARIKH MOHON:" + tar_mohon);
+
+			String mati = getParam("idpermohonansimati");
+
+			logic.setDataHTAX(mati);
+			listHTAX = logic.getDataHTAX();
+			this.context.put("listHTAX", listHTAX);
+
+			logic.setDataHTAXdulu(mati);
+			listHTAXdulu = logic.getDataHTAXdulu();
+			this.context.put("listHTAXdulu", listHTAXdulu);
+
+			logic.setDataHTA(mati);
+			listHTA = logic.getDataHTA();
+			this.context.put("listHTA", listHTA);
+
+			logic.setDataHTAdulu_KP(mati);
+			listHTAdulu = logic.getDataHTAdulu_KP();
+			this.context.put("listHTAdulu", listHTAdulu);
+
+			logic_A.setDataHa(mati);
+			listppkha = logic_A.getDataHa();
+			this.context.put("listHa", listppkha);
+
+			logic_A.setDataHaDulu(mati);
+			listppkhadulu = logic_A.getDataHaDulu();
+			this.context.put("listHadulu", listppkhadulu);
+
+		}
+		
+		else if ("deleteSuppDocMode".equals(submit)) {
+			System.out.println("~~~~~~~~ deleteSuppDocMode ~~~~~~~~~~~~~~~~~~~");
+			String idSimati = getParam("idSimati");
+			deleteSuppDoc(idSimati, jenisDoc);
+			String idPermohonan = getParam("idPermohonan");
+			logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+			listSupportingDoc = logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			Vector listNegeriByPpkUnit = FrmPrmhnnSek8KeputusanPermohonanInternalData.getListNegeriByhta(getParam("idpermohonansimati"));
 			this.context.put("ListNegeriPindah", listNegeriByPpkUnit);
 
@@ -3707,7 +3893,8 @@ private void insertBorangLama(HttpSession session) throws Exception {
 		    	  h.put("txtBandarPeguam", getParam("txtBandarPeguam"));
 		    	  h.put("txtNomborTelefonPeguam", getParam("txtNomborTelefonPeguam"));
 
-		     }else{
+		     }else
+		     {
 		    	  h.put("txtNamaKaveat", "");
 		    	  h.put("txtNoKaveat", "");
 		    	  h.put("txtNamaFirma", "");
@@ -3720,17 +3907,24 @@ private void insertBorangLama(HttpSession session) throws Exception {
 		    	  h.put("txtNomborTelefonPeguam", "");
 		     }
 
+
+
+
+
 		//System.out.println("daerah :"+getParam("socDaerah")+"negeri :"+getParam("socNegeri"));
+
 	    h.put("userId", (String)session.getAttribute("_ekptg_user_id"));
         h.put("id_Suburusanstatus",getParam("id_Suburusanstatus"));
         h.put("id_Suburusanstatusfail", getParam("id_Suburusanstatusfail"));
         h.put("id_Fail", getParam("id_Fail"));
         h.put("id_Kemaskini", (String)session.getAttribute("_ekptg_user_id"));
-        h.put("salinan_arahan", "1");
        
+
+
+
 	    FrmPrmhnnSek8KeputusanPermohonanInternalData.updateBorangLama(session,h,"17");
-	    
 	}
+
 
 	private void prepareItemForDisplay(HttpSession session, Vector objVector, int cntItemPage, String command) {
 		int x;
@@ -3796,9 +3990,47 @@ private void insertBorangLama(HttpSession session) throws Exception {
 
 		startno = i;
 
-		session.setAttribute("_portal_startnoInternalFail",new Integer(startno));
+		session.setAttribute("_portal_startnoInternalFail",
+				new Integer(startno));
 
 	}
+	
+	public void deleteSuppDoc(String idSimati, String jenisDoc) throws Exception 
+	{
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " DELETE FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = '"+idSimati+"' AND ID_JENISDOKUMEN = '"+jenisDoc+"'";
+			myLogger.info("sql deleteSuppDoc >>> "+sql);
+			stmt.executeUpdate(sql);
+			
+			
+			conn.commit();
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	
+	
+}
 	
 	private void headerppk_baru(HttpSession session,String id_permohonan,String flag_permohonan,String id_fail,String flag_fail) throws Exception {
 		//hashtable maklumat header
@@ -3808,7 +4040,8 @@ private void insertBorangLama(HttpSession session) throws Exception {
 		this.context.put("list_sub_header",list_sub);
 		this.context.put("flag_jenis_vm","vtemplate");
 	}
-	private void headerppk_baru_default(){
+	private void headerppk_baru_default()
+	{
 		Hashtable headerppk = null;
 		this.context.put("headerppk","");
 		this.context.put("list_sub_header","");

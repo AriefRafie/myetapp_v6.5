@@ -1,10 +1,11 @@
 
 --------------------------------20200206------------------------------------------------
 
-15042020--------------------------------------------------------------------------------
+28042020--------------------------------------------------------------------------------
+--ALTER TABLE TBLPPKDOKUMENSIMATI RENAME COLUMN ID_RUJUKAN TO NO_RUJUKAN;
 
-ALTER TABLE TBLPPKDOKUMENSIMATI
-ADD (ID_RUJUKAN VARCHAR2(30));
+15042020--------------------------------------------------------------------------------
+--ALTER TABLE TBLPPKDOKUMENSIMATI ADD (NO_RUJUKAN VARCHAR2(30));
 
 06022020--------------------------------------------------------------------------------
 
@@ -31,7 +32,6 @@ CREATE SEQUENCE PPKDOKUMENSIMATI_SEQ
   
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  
---ALTER TABLE TBLPPKDOKUMENSIMATI ADD ID_RUJUKAN VARCHAR2(30);
 -- 2020/04/13 (ekptghqfat)
 ALTER TABLE TBLPPKDOKUMENSIMATI ADD CONSTRAINT PPKDOKUMENSIMATI_PK PRIMARY KEY (ID_DOKUMEN) ENABLE;
 

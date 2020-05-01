@@ -843,7 +843,7 @@ public Vector setDataNoKP(String idpp) throws Exception {
 	}
 }
 
-public Vector setSupportingDoc(String id) throws Exception {
+public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 	myLogger.info("******** setSupportingDoc ");
 	Db db = null;
 	listSupportingDoc.clear();
@@ -855,7 +855,7 @@ public Vector setSupportingDoc(String id) throws Exception {
 		Statement stmt = db.getStatement();
 		SQLRenderer r = new SQLRenderer();
 		
-		sql = "SELECT NAMA_DOKUMEN FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = (SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = '" + id + "') ";
+		sql = "SELECT NAMA_DOKUMEN FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = (SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = '" + id + "') AND ID_JENISDOKUMEN = '"+jenisDoc+"'";
 
 		//myLogger.info("SQL FAR" + sql);
 

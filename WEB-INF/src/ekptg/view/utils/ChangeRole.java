@@ -154,13 +154,19 @@ public class ChangeRole implements IServlet2 {
 		}*/
 		else if(submit.equals("doCheckExpired")){
 			try {
+				int HARI =0;
+				int BAKI = 0;
+				String LAST_CHANGEPASSWORD = "";
+				String EXP_DATE = "";
 				//String LAST_CHANGEPASSWORD = checkPasswordExpiry(USER_ID_SYSTEM,90);	
 				Hashtable<String,String> hariTukarPass = checkPassExpByDay(USER_ID_SYSTEM,90);
-				String LAST_CHANGEPASSWORD = (String) hariTukarPass.get("LAST_CHANGEPASSWORD");
-				String EXP_DATE = (String) hariTukarPass.get("EXP_DATE");
-				int HARI = Integer.parseInt(String.valueOf(hariTukarPass.get("HARI")));
-				int BAKI = Integer.parseInt(String.valueOf(hariTukarPass.get("BAKI")));
+				if(hariTukarPass !=null){
+					LAST_CHANGEPASSWORD = (String) hariTukarPass.get("LAST_CHANGEPASSWORD");
+					EXP_DATE = (String) hariTukarPass.get("EXP_DATE");
+					HARI = Integer.parseInt(String.valueOf(hariTukarPass.get("HARI")));
+					BAKI = Integer.parseInt(String.valueOf(hariTukarPass.get("BAKI")));
 				
+				}
 				String mesej = "";
 				String println = "";
 				String style = "<style> .container  table{ display:none;} .navigation_menu  td{ display:none;} .apps-body  div{ display:none;} .page_footer_body  div{display:none;} .apps-body .welcome:first-of-type{display : block;} .apps-body .welcome .table_tukar_password:first-of-type{display : block;}  .apps-body .welcome .table_tukar_password .pstrength-bar:first-of-type{display : block;} </style> ";
@@ -217,11 +223,19 @@ public class ChangeRole implements IServlet2 {
 			try {
 				kumpulan_role = getKumpulanROLE(role);
 				checkKeaftifanByRole = checkKeaftifanByRole(USER_ID_SYSTEM);
-								
-				Integer check_user_internal = (Integer)checkKeaftifanByRole.get("CHECK_USERS_INTERNAL");
-                Integer check_user_online = (Integer)checkKeaftifanByRole.get("CHECK_USERS_ONLINE");
-                Integer check_user_kjp = (Integer)checkKeaftifanByRole.get("CHECK_USERS_KJP");
-                Integer check_user_int = (Integer)checkKeaftifanByRole.get("CHECK_USERS_INT");				
+					
+				Integer check_user_int = 9;
+				Integer check_user_internal = 9;
+				Integer check_user_kjp = 9;
+				Integer check_user_online = 9;
+				
+				if(checkKeaftifanByRole ==null) {
+					check_user_internal = (Integer)checkKeaftifanByRole.get("CHECK_USERS_INTERNAL");
+					check_user_online = (Integer)checkKeaftifanByRole.get("CHECK_USERS_ONLINE");
+					check_user_kjp = (Integer)checkKeaftifanByRole.get("CHECK_USERS_KJP");
+                	check_user_int = (Integer)checkKeaftifanByRole.get("CHECK_USERS_INT");				
+				
+				}
 				
 				if(kumpulan_role.equals("online")){
 					if(check_user_online==0){

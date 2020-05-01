@@ -34,6 +34,11 @@ import ekptg.model.ppt.FrmUPTSek8BorangFData;
 import ekptg.model.ppt.PPTHeader;
 
 public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3587088402775617834L;
+
 	static Logger myLogger = Logger.getLogger(FrmBantahanSenaraiCarian.class);
 	
 	BantahanDaftar model = new BantahanDaftar();	
@@ -644,8 +649,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			
 			selectedtab = "0";
 			context.put("selectedtab", selectedtab);
-			
-			
+			context.put("idWarta", id_warta);
+
 			myLogger.info("check error 1 [id hakmilikpb] :: "+id_hakmilikpb);
 			
 			//CHECKING JUMLAH PAMPASAN SEKSYEN 8
@@ -657,8 +662,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			}
 			
 			myLogger.info("check error 2 [amaun bayaran] :: "+amaun_bayaran);
-			
-			myLogger.info("AMAUN BAYARAN >>> "+amaun_bayaran);
+//			myLogger.info("AMAUN BAYARAN >>> "+amaun_bayaran);
 			//PAMPASAN <= 3000.00 : ALASAN 3 DAN 4 
 			if(amaun_bayaran <= 3000.00){
 				context.put("syarat","bawah");
@@ -760,8 +764,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 					//flag and id untuk permohonan online
 					context.put("flag_online",flag_online);
 					context.put("id_status_bantahan",id_status_bantahan);
-					context.put("id_bantahan",id_bantahan);
-					
+					context.put("id_bantahan",id_bantahan);					
 					
 					//GET TARIKH AWARD & TARIKH BORANG H
 					listF = model.getTarikhPenting(id_hakmilikpb);
@@ -3649,5 +3652,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		}
 		return total;
 	}
+	
 			
 }

@@ -220,7 +220,7 @@ public class LampiranBean {
 		try {
 			db = new Db();
 			sql = "INSERT INTO "+namaTable
-					+ " (ID_RUJUKAN,ID_JENISDOKUMEN,NAMA_DOKUMEN,FORMAT,SAIZ,KANDUNGAN,ID_MASUK,TARIKH_MASUK) " 
+					+ " (NO_RUJUKAN,ID_JENISDOKUMEN,NAMA_DOKUMEN,FORMAT,SAIZ,KANDUNGAN,ID_MASUK,TARIKH_MASUK) " 
 					+ "VALUES(?,"+jenisDok+",?,?,?,?,?,SYSDATE)";
 			Connection con = db.getConnection();
 			con.setAutoCommit(false);
@@ -255,8 +255,7 @@ public class LampiranBean {
 			r.add("D.ID_DOKUMEN");
 			r.add("D.NAMA_DOKUMEN");
 			r.add("D.FORMAT");
-			r.add("D.ID_RUJUKAN");
-			r.add("D.ID_RUJUKAN",id);
+			r.add("D.NO_RUJUKAN",id);
 			r.add("D.ID_JENISDOKUMEN",jenisDokumen);
 			if(iDokumen != null){
 				r.add("D.ID_DOKUMEN",iDokumen);
@@ -296,7 +295,7 @@ public class LampiranBean {
 				r.add("D.ID_DOKUMEN");
 				r.add("D.NAMA_DOKUMEN");
 				r.add("D.FORMAT");
-				r.add("D.ID_RUJUKAN");
+				r.add("D.NO_RUJUKAN");
 				r.add("D.ID_SIMATI",idSimati);
 				r.add("D.ID_JENISDOKUMEN",jenisDokumen);
 				if(iDokumen != null){

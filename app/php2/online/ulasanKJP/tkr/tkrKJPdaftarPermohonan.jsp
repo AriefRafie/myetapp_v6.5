@@ -22,6 +22,70 @@
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
+   <td colspan="2"><fieldset>
+      <legend><strong>MAKLUMAT PEMOHON</strong></legend>
+      <table width="100%" border="0" cellspacing="2" cellpadding="2">
+        <tr>
+          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td width="28%">Kategori Pemohon</td>
+          <td>:</td>
+          <td width="70%">$selectKategoriPemohon</td>
+        </tr>
+        <tr>
+          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td>Kementerian</td>
+          <td>:</td>
+          <td>$selectKementerian</td>
+        </tr>
+        <tr>
+          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td>Agensi</td>
+          <td>:</td>
+          <td>$selectAgensi</td>
+        </tr>
+        #foreach ($beanMaklumatAgensi in $BeanMaklumatAgensi)
+        <tr>
+          <td>&nbsp;</td>
+          <td>Nama</td>
+          <td>:</td>
+          <td>$beanMaklumatAgensi.namaAgensi</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Alamat</td>
+          <td>:</td>
+          <td>$beanMaklumatAgensi.alamat1</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>:</td>
+          <td>$beanMaklumatAgensi.alamat2</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>:</td>
+          <td>$beanMaklumatAgensi.alamat3</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Poskod</td>
+          <td>:</td>
+          <td>$beanMaklumatAgensi.poskod</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Negeri</td>
+          <td>:</td>
+          <td>$beanMaklumatAgensi.negeri</td>
+        </tr>
+        #end      
+      </table>
+      </fieldset></td>
+  </tr>
+  
+  <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -89,220 +153,7 @@
       </table>
       </fieldset></td>
   </tr>
-   <td colspan="2"><fieldset>
-      <legend><strong>MAKLUMAT PEMOHON</strong></legend>
-      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-        <tr>
-          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td width="28%">Kategori Pemohon</td>
-          <td>:</td>
-          <td width="70%">$selectKategoriPemohon</td>
-        </tr>
-        #if($idKategoriPemohon == '3')
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Kementerian</td>
-          <td>:</td>
-          <td>$selectKementerian</td>
-        </tr>
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Agensi</td>
-          <td>:</td>
-          <td>$selectAgensi</td>
-        </tr>
-        #foreach ($beanMaklumatAgensi in $BeanMaklumatAgensi)
-        <tr>
-          <td>&nbsp;</td>
-          <td>Nama</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.namaAgensi</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Alamat</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.alamat1</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.alamat2</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.alamat3</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Poskod</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.poskod</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Negeri</td>
-          <td>:</td>
-          <td>$beanMaklumatAgensi.negeri</td>
-        </tr>
-        #end        
-        #end        
-        #if($idKategoriPemohon == '1' || $idKategoriPemohon == '2' || $idKategoriPemohon == '6' || $idKategoriPemohon == '7')
-        #foreach ($beanMaklumatPemohon in $BeanMaklumatPemohon)
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Nama</td>
-          <td>:</td>
-          <td><input name="txtNama" type="text" class="$inputTextClass" id="txtNama" value="$beanMaklumatPemohon.nama" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/>
-          </td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          #if($idKategoriPemohon == '1')
-          <td>No. Kad Pengenalan/<em>MyID</em></td>
-          #else
-          <td>No. Pendaftaran Syarikat/<em>MyCoid</em></td>
-          #end
-          <td>:</td>
-          <td><input name="txtNoPendaftaran" type="text" class="$inputTextClass" id="txtNoPendaftaran" value="$beanMaklumatPemohon.noPendaftaran" maxlength="12" $readonly onblur="this.value=this.value.toUpperCase();"/>
-          </td>
-        </tr>
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Alamat</td>
-          <td>:</td>
-          <td><input name="txtAlamat1" type="text" class="$inputTextClass" id="txtAlamat1" value="$beanMaklumatPemohon.alamat1" size="43" maxlength="80" $readonly />
-          </td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td><input name="txtAlamat2" type="text" class="$inputTextClass" id="txtAlamat2" value="$beanMaklumatPemohon.alamat2" size="43" maxlength="80" $readonly /></td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td><input name="txtAlamat3" type="text" class="$inputTextClass" id="txtAlamat3" value="$beanMaklumatPemohon.alamat3" size="43" maxlength="80" $readonly /></td>
-        </tr>
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Poskod</td>
-          <td>:</td>
-          <td><input name="txtPoskod" type="text" class="$inputTextClass" id="txtPoskod" value="$beanMaklumatPemohon.poskod" size="5" maxlength="5" $readonly onblur="validateLength(this.value);"/>
-          </td>
-        </tr>
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Negeri</td>
-          <td>:</td>
-          <td>$selectNegeri</td>
-        </tr>
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Bandar</td>
-          <td>:</td>
-          <td>$selectBandar</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>E-mel</td>
-          <td>:</td>
-          <td><input name="txtEmel" type="text" class="$inputTextClass" id="txtEmel" value="$beanMaklumatPemohon.emel" maxlength="50" $readonly/>
-          </td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>No. Tel</td>
-          <td>:</td>
-          <td><input name="txtNoTel" type="text" class="$inputTextClass" id="txtNoTel" onkeyup="validateNumber(this,this.value);" value="$beanMaklumatPemohon.noTel" maxlength="12" $readonly/></td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>No. Faks</td>
-          <td>:</td>
-          <td><input name="txtNoFaks" type="text" class="$inputTextClass" id="txtNoFaks" onkeyup="validateNumber(this,this.value);" value="$beanMaklumatPemohon.noFaks" maxlength="12" $readonly/>
-          </td>
-        </tr>
-        #end
-        #end
-        #if($idKategoriPemohon == '4' || $idKategoriPemohon == '5' || $idKategoriPemohon == '8')
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Negeri</td>
-          <td>:</td>
-          <td>$selectNegeri </td>
-        </tr>
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Pejabat</td>
-          <td>:</td>
-          <td>$selectPejabat</td>
-        </tr>
-        #foreach ($beanMaklumatPejabat in $BeanMaklumatPejabat)
-        <tr>
-          <td>&nbsp;</td>
-          <td>Nama Pejabat</td>
-          <td>:</td>
-          <td>$beanMaklumatPejabat.namaPejabat</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Alamat</td>
-          <td>:</td>
-          <td>$beanMaklumatPejabat.alamat1</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>:</td>
-          <td>$beanMaklumatPejabat.alamat2</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>:</td>
-          <td>$beanMaklumatPejabat.alamat3</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Poskod</td>
-          <td>:</td>
-          <td>$beanMaklumatPejabat.poskod</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Bandar</td>
-          <td>:</td>
-          <td>$beanMaklumatPejabat.bandar</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Negeri</td>
-          <td>:</td>
-          <td>$beanMaklumatPejabat.negeri</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>No. Telefon</td>
-          <td>:</td>
-          <td>$beanMaklumatPejabat.noTel</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>No. Fax</td>
-          <td>:</td>
-          <td>$beanMaklumatPejabat.noFax</td>
-        </tr>
-        #end
-        #end
-      </table>
-      </fieldset></td>
-  </tr>
+  
   <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT TANAH</strong></legend>

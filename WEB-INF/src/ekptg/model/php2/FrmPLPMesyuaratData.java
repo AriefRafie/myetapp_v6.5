@@ -5,16 +5,33 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
+import javax.mail.Address;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
+
+import com.sun.star.mail.MailMessage;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import lebah.util.Mailer;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.EmailProperty;
+import lebah.mail.*;
 
 public class FrmPLPMesyuaratData {
 
@@ -22,6 +39,9 @@ public class FrmPLPMesyuaratData {
 	private Vector beanMaklumatMesyuarat = null;
 	private Vector beanMaklumatPampasan = null;
 	private Vector beanMaklumatDokumen = null;
+	private Vector beanMaklumatPejabat = null;
+	private Vector listNotifikasi = null;
+	
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -84,6 +104,7 @@ public class FrmPLPMesyuaratData {
 		}
 	}
 
+	
 	public String simpanMesyuarat(String idPermohonan,
 			String txtTajukMesyuarat, String txtBilMesyuarat,
 			String txtTarikhMesyuarat, String idJamDari, String idMinitDari,
@@ -628,9 +649,15 @@ public class FrmPLPMesyuaratData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TAJUK, BIL_MESYUARAT, TARIKH_MESYUARAT, JAM_DARI, MINIT_DARI, JAM_HINGGA, MINIT_HINGGA, ID_LOKASI, CATATAN, FLAG_SYOR,"
-					+ " ULASAN_PEMOHON, FLAG_KEPUTUSAN_PEMOHON"
-					+ " FROM TBLPHPMESYUARAT WHERE ID_MESYUARAT = '" + idMesyuarat + "'";
+			//sql = "SELECT TAJUK, BIL_MESYUARAT, TARIKH_MESYUARAT, JAM_DARI, MINIT_DARI, JAM_HINGGA, MINIT_HINGGA, ID_LOKASI, CATATAN, FLAG_SYOR,"
+			//		+ " ULASAN_PEMOHON, FLAG_KEPUTUSAN_PEMOHON"
+			//		+ " FROM TBLPHPMESYUARAT WHERE ID_MESYUARAT = '" + idMesyuarat + "'";
+
+			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, A.CATATAN, A.FLAG_SYOR,"
+				   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+				   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
+				   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND ID_MESYUARAT = '" + idMesyuarat + "'";
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -648,6 +675,8 @@ public class FrmPLPMesyuaratData {
 								.format(rs.getDate("TARIKH_MESYUARAT")));
 				h.put("idLokasi", rs.getString("ID_LOKASI") == null ? "99999"
 						: rs.getString("ID_LOKASI"));
+				h.put("lokasiMesyuarat", rs.getString("LOKASI") == null ? "99999"
+						: rs.getString("LOKASI"));
 				h.put("idJamDari", rs.getString("JAM_DARI") == null ? "99999"
 						: rs.getString("JAM_DARI"));
 				h.put("idMinitDari",
@@ -877,6 +906,332 @@ public class FrmPLPMesyuaratData {
 
 	public void setBeanMaklumatDokumen(Vector beanMaklumatDokumen) {
 		this.beanMaklumatDokumen = beanMaklumatDokumen;
+	}
+	
+	//06042020- END TAMBAH NOTIFIKASI EMAIL//
+	
+	  public void sendEmail(String mailTo, String tajuk,String tarikh, String masa, String lokasi) throws MessagingException {
+		  	final String username = "roslizakariasip@gmail.com";
+		    final String password = "m.rosligmail";   
+		    Properties props = new Properties();
+		    props.put("mail.smtp.auth", "true");
+		    props.put("mail.smtp.starttls.enable", "true");
+		    props.put("mail.smtp.host", "smtp.gmail.com");
+		    props.put("mail.smtp.port", "587");
+		    Session session = Session.getInstance(props, 
+		        new Authenticator() {
+		          protected PasswordAuthentication getPasswordAuthentication() {
+		            return new PasswordAuthentication(username, password);
+		          }
+		        });
+		    
+			String body = "<table width='75%' border='0' cellspacing='0' cellpadding='5'>"
+			+ "<tr><td>Assalamualaikum/ Salam Sejahtera.</td></tr>"
+			+ "<tr><td>&nbsp;</td></tr>"
+			+ "<tr><td>PERKARA : <u style='font-weight: bold'>NOTIS PANGGILAN MESYUARAT</u></td></tr>"
+			+ "<tr><td>&nbsp;</td></tr>"
+			+ "<tr><td>Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
+			+ "<tr><td>&nbsp;</td></tr>"
+			+ "<tr><td>Dimaklumkan bahawa tuan/puan dijemput menghadiri mesyuarat seperti dibawah:-"
+			+ "<tr><td>&nbsp;</td></tr>"
+			+ "<tr><td>&nbsp;</td></tr>"
+			+ "<tr><td>Tajuk Mesyuarat: "+tajuk+"</td></tr>"
+			+ "<tr><td>Tarikh: "+tarikh+"</td></tr>"
+			+ "<tr><td>Masa  : "+masa+"</td></tr>"
+			+ "<tr><td>Lokasi: "+lokasi+"</td></tr>"
+			+ "<tr><td>&nbsp;</td></tr>"
+			+ "<tr><td>Harap maklum dan terima kasih.</i></td></tr>"
+			+ "<tr><td>&nbsp;</td></tr>"
+			+ "<tr><td>&nbsp;</td></tr>" + "</table>";
+			
+		    MimeMessage mimeMessage = new MimeMessage(session);
+		    mimeMessage.setFrom((Address)new InternetAddress("rozai@yopmail.com"));
+		    mimeMessage.setRecipients(Message.RecipientType.TO, (Address[])InternetAddress.parse(mailTo));
+		    mimeMessage.setSubject("NOTIS PANGGILAN MESYUARAT");
+		    mimeMessage.setContent(body, "text/html");
+		    Transport.send((Message)mimeMessage);
+		  }
+	  
+
+	//06042020- END TAMBAH NOTIFIKASI EMAIL//
+
+	public void setMaklumatPejabat(String idPejabat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPejabat = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.NAMA_PEJABAT, A.ALAMAT1, A.ALAMAT2, A.ALAMAT3, A.POSKOD, A.ID_NEGERI, B.NAMA_NEGERI, C.KETERANGAN AS NAMA_BANDAR, A.NO_TEL, A.NO_FAX, A.ID_PEJABAT"
+					+ " FROM TBLRUJPEJABAT A, TBLRUJNEGERI B, TBLRUJBANDAR C WHERE A.ID_NEGERI = B.ID_NEGERI(+) AND A.ID_BANDAR = C.ID_BANDAR(+) AND A.ID_PEJABAT = '"
+					+ idPejabat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idPejabat", rs.getString("ID_PEJABAT") == null ? ""
+						: rs.getString("ID_PEJABAT"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs
+						.getString("ALAMAT1").toUpperCase());
+				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs
+						.getString("ALAMAT2").toUpperCase());
+				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs
+						.getString("ALAMAT3").toUpperCase());
+				h.put("poskod",
+						rs.getString("POSKOD") == null ? "" : rs
+								.getString("POSKOD"));
+				h.put("bandar", rs.getString("NAMA_BANDAR") == null ? "" : rs
+						.getString("NAMA_BANDAR").toUpperCase());
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs
+						.getString("NAMA_NEGERI").toUpperCase());
+				h.put("idNegeri", rs.getString("ID_NEGERI") == null ? "" : rs
+						.getString("ID_NEGERI").toUpperCase());
+				h.put("noTel", rs.getString("NO_TEL") == null ? "" : rs
+						.getString("NO_TEL").toUpperCase());
+				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs
+						.getString("NO_FAX").toUpperCase());
+				beanMaklumatPejabat.addElement(h);
+				bil++;
+			}
+
+			if (bil == 1) {
+				h = new Hashtable();
+				h.put("idPejabat", "");
+				h.put("namaPejabat", "");
+				h.put("alamat1", "");
+				h.put("alamat2", "");
+				h.put("alamat3", "");
+				h.put("poskod", "");
+				h.put("bandar", "");
+				h.put("negeri", "");
+				h.put("idNegeri", "");
+				h.put("noTel", "");
+				h.put("noFax", "");
+				beanMaklumatPejabat.addElement(h);
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Vector getBeanMaklumatPejabat() {
+		return beanMaklumatPejabat;
+	}
+	
+	public void setMaklumatPejabatJKPTG(String idPejabat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPejabat = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.NAMA_PEJABAT, A.ALAMAT1, A.ALAMAT2, A.ALAMAT3, A.POSKOD, A.ID_NEGERI, B.NAMA_NEGERI, C.KETERANGAN AS NAMA_BANDAR, A.NO_TEL, A.NO_FAX, A.ID_PEJABATJKPTG"
+					+ " FROM TBLRUJPEJABATJKPTG A, TBLRUJNEGERI B, TBLRUJBANDAR C WHERE A.ID_NEGERI = B.ID_NEGERI(+) AND A.ID_BANDAR = C.ID_BANDAR(+) AND A.ID_PEJABATJKPTG = '"
+					+ idPejabat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idPejabat", rs.getString("ID_PEJABATJKPTG") == null ? ""
+						: rs.getString("ID_PEJABATJKPTG"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs
+						.getString("ALAMAT1").toUpperCase());
+				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs
+						.getString("ALAMAT2").toUpperCase());
+				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs
+						.getString("ALAMAT3").toUpperCase());
+				h.put("poskod",
+						rs.getString("POSKOD") == null ? "" : rs
+								.getString("POSKOD"));
+				h.put("bandar", rs.getString("NAMA_BANDAR") == null ? "" : rs
+						.getString("NAMA_BANDAR").toUpperCase());
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs
+						.getString("NAMA_NEGERI").toUpperCase());
+				h.put("idNegeri", rs.getString("ID_NEGERI") == null ? "" : rs
+						.getString("ID_NEGERI").toUpperCase());
+				h.put("noTel", rs.getString("NO_TEL") == null ? "" : rs
+						.getString("NO_TEL").toUpperCase());
+				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs
+						.getString("NO_FAX").toUpperCase());
+				beanMaklumatPejabat.addElement(h);
+				bil++;
+			}
+
+			if (bil == 1) {
+				h = new Hashtable();
+				h.put("idPejabat", "");
+				h.put("namaPejabat", "");
+				h.put("alamat1", "");
+				h.put("alamat2", "");
+				h.put("alamat3", "");
+				h.put("poskod", "");
+				h.put("bandar", "");
+				h.put("negeri", "");
+				h.put("idNegeri", "");
+				h.put("noTel", "");
+				h.put("noFax", "");
+				beanMaklumatPejabat.addElement(h);
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String simpanRekodNotifikasiEmail(String idPermohonan, String idPejabat,
+			String idNegeri, String txtTarikhHantar, String txtJangkaMasa,
+			String txtTarikhJangkaTerima, String idSuratKe,
+			String idKementerianTanah, String idAgensiTanah, String namaPegawai, 
+			String noTelefon, String emel, String idMesyuarat, HttpSession session)
+					throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+		
+		try {
+		db = new Db();
+		conn = db.getConnection();
+		conn.setAutoCommit(false);
+		Statement stmt = db.getStatement();
+		SQLRenderer r = new SQLRenderer();
+		
+		// TBLPHPULASANTEKNIKAL
+		long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+		idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+		
+		r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
+		r.add("ID_PERMOHONAN", idPermohonan);
+		r.add("FLAG_KJP", idSuratKe);
+		r.add("ID_NEGERI", idNegeri);
+		r.add("ID_PEJABAT", idPejabat);
+		r.add("FLAG_STATUS", "1");
+		r.add("FLAG_AKTIF", "Y");
+		r.add("BIL_ULANGAN", "0");
+		r.add("ID_MASUK", userId);
+		r.add("NAMA_PEGAWAI", namaPegawai);
+		r.add("NO_TELEFON", noTelefon);
+		r.add("ID_MESYUARAT", idMesyuarat);
+		r.add("EMEL_PEGAWAI", emel);
+		r.add("MAKLUMAT_TAMBAHAN", "NOTIFIKASI EMEL PANGGILAN MESYUARAT");
+		r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+		r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+		
+		sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+		stmt.executeQuery(sql);
+		
+		conn.commit();
+		
+		AuditTrail.logActivity("1610217", "4", null, session, "INS",
+				"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+						+ "] DIDAFTARKAN");
+	
+		} catch (SQLException ex) {
+		try {
+			conn.rollback();
+		} catch (SQLException e) {
+			throw new Exception("Rollback error : " + e.getMessage());
+		}
+		throw new Exception("Ralat : Masalah penyimpanan data "
+				+ ex.getMessage());
+	
+		} finally {
+		if (db != null)
+			db.close();
+		}
+		return idUlasanTeknikalString;
+	}
+	
+	public void setSenaraiNotifikasi(String idMesyuarat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+			
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai",
+						rs.getString("NAMA_PEGAWAI") == null ? "" : rs
+								.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Vector getListNotifikasi() {
+		return listNotifikasi;
 	}
 
 }

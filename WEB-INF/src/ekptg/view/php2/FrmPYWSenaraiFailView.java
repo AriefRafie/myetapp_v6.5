@@ -48,7 +48,6 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 		this.context.put("userId", userId);
 		this.context.put("userRole", userRole);
 		this.context.put("idNegeriUser", idNegeriUser);
-		
 
 		// GET DEFAULT PARAM
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
@@ -398,7 +397,6 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 			this.context.put("txtPemohon", getParam("txtPemohon"));
 			this.context.put("txtNoPengenalan", getParam("txtNoPengenalan"));
 			this.context.put("txdTarikhTerima", getParam("txdTarikhTerima"));
-			
 			this.context.put("txtNoPegangan", getParam("txtNoPegangan"));
 			this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilikC", Long.parseLong(idJenisHakmilikC), ""));
 			this.context.put("txtNoHakmilik", getParam("txtNoHakmilik"));
@@ -409,7 +407,6 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 			this.context.put("selectDaerah", HTML.SelectDaerahByNegeri(idNegeriC, "socDaerahC", Long.parseLong(idDaerahC), ""," onChange=\"doChangeDaerah();\""));
 			this.context.put("selectMukim", HTML.SelectMukimByDaerah(idDaerahC, "socMukimC", Long.parseLong(idMukimC), ""));
 			this.context.put("selectStatus", HTML.SelectStatusPenyewaan("socStatusC", Long.parseLong(idStatusC), "", ""));
-
 			this.context.put("flagDetail", flagDetail);
 			setupPage(session, action, list);
 		}
@@ -441,7 +438,9 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 			session.removeAttribute("MSG");
 		} else {
 			this.context.put("errMsg", "");
-		}		
+		}
+		
+		System.out.println("keluarkan value : " +session.getAttribute("MSG"));
 		
 		return vm;
 	}

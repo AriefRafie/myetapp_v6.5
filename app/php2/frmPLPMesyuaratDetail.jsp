@@ -159,12 +159,15 @@
             </fieldset></td>
         </tr>
         #end
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
+ 
+        #if ($flagNotifikasi == 'openNotifikasi')
+		  <tr>
+		    <td> #parse("app/php2/frmPLPNotifikasiEmailBaru.jsp") </td>
+		  </tr>
+		  <tr>
+		    <td>&nbsp;</td>
+		  </tr>
+  		#end
         #if ($modePopup != 'view')
         <tr>
           <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font>: Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
@@ -198,3 +201,4 @@
       </fieldset></td>
   </tr>
 </table>
+#parse("app/php2/frmPLPNotifikasiEmail.jsp")

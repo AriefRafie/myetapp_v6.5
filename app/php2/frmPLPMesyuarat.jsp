@@ -19,6 +19,7 @@
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idMesyuarat" type="hidden" id="idMesyuarat" value="$idMesyuarat"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
+  <input name="flagNotifikasi" type="hidden" id="flagNotifikasi" value="$flagNotifikasi"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="hitButton" type="hidden" id="hitButton"/>  
   <input name="step" type="hidden" id="step" value="$step"/>
@@ -135,6 +136,15 @@
 function doChangeLokasiMesyuarat() {
 	doAjaxCall${formName}("doChangeLokasiMesyuarat");
 }
+function doChangeSuratKe() {
+	doAjaxCall${formName}("doChangeSuratKe");
+}
+function doChangeNegeri() {
+	doAjaxCall${formName}("doChangeNegeri");
+}
+function doChangePejabat() {
+	doAjaxCall${formName}("doChangePejabat");
+}
 function seterusnya(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
@@ -157,6 +167,12 @@ function paparMesyuarat(id){
 function daftarMesyuarat(){
 	document.${formName}.flagPopup.value = "openMesyuarat";
 	document.${formName}.modePopup.value = "new";
+	doAjaxCall${formName}("");
+}
+function daftarNotifikasi(){
+	document.${formName}.flagPopup.value = "openMesyuarat";
+	document.${formName}.flagNotifikasi.value = "openNotifikasi";
+	document.${formName}.modePopup.value = "view";
 	doAjaxCall${formName}("");
 }
 function simpanMesyuarat(){
@@ -298,7 +314,7 @@ function onChangeValue(str){
 }
 function kemaskiniPampasan() {
 	document.${formName}.mode.value = "update";
-	doAjaxCall${formName}("");	
+	doAjaxCall${formName}("");
 }
 function batalPampasan() {
 	document.${formName}.mode.value = "view";
@@ -362,5 +378,32 @@ function cetakPLPSuratTolak(idFail) {
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
+}
+
+function doSimpanRekodNotifikasiEmail(){
+	
+	if(document.${formName}.idSuratKe.value == ""){
+		alert('Sila pilih Surat ke .');
+  		document.${formName}.idSuratKe.focus(); 
+		return; 
+	}
+	if(document.${formName}.socNegeri.value == ""){
+		alert('Sila pilih Negeri.');
+		document.${formName}.socNegeri.focus(); 
+		return; 
+	}
+	if(document.${formName}.socPejabat.value == ""){
+		alert('Sila pilih Pejabat.');
+		document.${formName}.socPejabat.focus(); 
+		return; 
+	}
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.flagPopup.value = "openMesyuarat";
+	document.${formName}.modePopup.value = "view";
+	document.${formName}.hitButton.value = "simpanRekodNotifikasiEmail";
+	doAjaxCall${formName}("");
 }
 </script>

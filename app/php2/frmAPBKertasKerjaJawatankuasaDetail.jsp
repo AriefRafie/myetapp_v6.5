@@ -129,6 +129,11 @@
           <td valign="top">Jabatan Ukur dan Pemetaan Malaysia (JUPEM)</td>
           <td valign="top">:</td>
           <td><textarea name="txtUlasanJUPEM" id="txtUlasanJUPEM" rows="5" cols="100" $readonly class="$inputTextClass" onkeyup="textCounter(this.form.txtUlasanJUPEM,this.form.remLen7,$!saizTxtUlasanJUPEM);" onkeydown="textCounter(this.form.txtUlasanJUPEM,this.form.remLen7,$!saizTxtUlasanJUPEM);"  >$beanMaklumatKertasRingkas.ulasanJUPEM</textarea></td>
+          #foreach ($beanMaklumatDokumenJUPEM in $BeanMaklumatDokumenJUPEM)
+                  	#set($idDokumen = $beanMaklumatDokumenJUPEM.idDokumen)
+    				#set($namaFail = $beanMaklumatDokumenJUPEM.namaFail)
+          <td valign="top">Lampiran:<br>#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+          #end
         </tr>
         #if ($mode != 'view')
         <tr>
@@ -144,6 +149,11 @@
           <td valign="top">Jabatan Pengairan dan Saliran (JPS)</td>
           <td valign="top">:</td>
           <td valign="top"><textarea name="txtUlasanJPS" id="txtUlasanJPS" rows="5" cols="100" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtUlasanJPS,this.form.remLen2,$!saizTxtUlasanJPS);" onKeyDown="textCounter(this.form.txtUlasanJPS,this.form.remLen2,$!saizTxtUlasanJPS);" >$beanMaklumatKertasRingkas.ulasanJPS</textarea></td>
+          #foreach ($beanMaklumatDokumenJPS in $BeanMaklumatDokumenJPS)
+                  	#set($idDokumen = $beanMaklumatDokumenJPS.idDokumen)
+    				#set($namaFail = $beanMaklumatDokumenJPS.namaFail)
+          <td valign="top">Lampiran:<br>#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+          #end
         </tr>
         #if ($mode != 'view')
         <tr>
@@ -159,6 +169,11 @@
           <td valign="top">Jabatan Mineral dan Geosains Malaysia (JMG)</td>
           <td valign="top">:</td>
           <td valign="top"><textarea name="txtUlasanJabGeoSains" id="txtUlasanJabGeoSains" rows="5" cols="100" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtUlasanJabGeoSains,this.form.remLen3,$!saizTxtJabGeoSains);" onKeyDown="textCounter(this.form.txtUlasanJabGeoSains,this.form.remLen3,$!saizTxtJabGeoSains);" >$beanMaklumatKertasRingkas.ulasanJabGeoSains</textarea></td>
+          #foreach ($beanMaklumatDokumenJMG in $BeanMaklumatDokumenJMG)
+                  	#set($idDokumen = $beanMaklumatDokumenJMG.idDokumen)
+    				#set($namaFail = $beanMaklumatDokumenJMG.namaFail)
+          <td valign="top">Lampiran:<br>#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+          #end
         </tr>
         #if ($mode != 'view')
         <tr>
@@ -174,6 +189,11 @@
           <td valign="top">Pusat Hidrografi Nasional (PHN)</td>
           <td valign="top">:</td>
           <td valign="top"><textarea name="txtUlasanPusatHidrografi" id="txtUlasanPusatHidrografi" rows="5" cols="100" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtUlasanPusatHidrografi,this.form.remLen5,$!saizTxtUlasanPusatHidrografi);" onKeyDown="textCounter(this.form.txtUlasanPusatHidrografi,this.form.remLen5,$!saizTxtUlasanPusatHidrografi);"  >$beanMaklumatKertasRingkas.ulasanPusatHidrografi</textarea></td>
+          #foreach ($beanMaklumatDokumenPHN in $BeanMaklumatDokumenPHN)
+                  	#set($idDokumen = $beanMaklumatDokumenPHN.idDokumen)
+    				#set($namaFail = $beanMaklumatDokumenPHN.namaFail)
+          <td valign="top">Lampiran:<br>#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+          #end
         </tr>
         #if ($mode != 'view')
         <tr>
@@ -189,6 +209,12 @@
           <td valign="top">Jabatan Perikanan Malaysia (DOF)</td>
           <td valign="top">:</td>
           <td valign="top"><textarea name="txtUlasanJabPerikanan" id="txtUlasanJabPerikanan" rows="5" cols="100" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtUlasanJabPerikanan,this.form.remLen4,$!saizTxtUlasanJabPerikanan);" onKeyDown="textCounter(this.form.txtUlasanJabPerikanan,this.form.remLen4,$!saizTxtUlasanJabPerikanan);" >$beanMaklumatKertasRingkas.ulasanJabPerikanan</textarea></td>
+          #foreach ($beanMaklumatDokumenDOF in $BeanMaklumatDokumenDOF)
+                  	#set($idDokumen = $beanMaklumatDokumenDOF.idDokumen)
+    				#set($namaFail = $beanMaklumatDokumenDOF.namaFail)
+    	  
+          <td valign="top">Lampiran:<br>#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+          #end
         </tr>
         #if ($mode != 'view')
         <tr>
@@ -204,6 +230,11 @@
           <td width="28%" valign="top">Jabatan Laut Semenanjung Malaysia (JLM)</td>
           <td width="1%" valign="top">:</td>
           <td width="70%" valign="top"><textarea name="txtJabLaut" id="txtJabLaut" rows="5" cols="100" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtJabLaut,this.form.remLen1,$!saizTxtJabLaut);" onKeyDown="textCounter(this.form.txtJabLaut,this.form.remLen1,$!saizTxtJabLaut);" >$beanMaklumatKertasRingkas.ulasanJabLaut</textarea></td>
+          #foreach ($beanMaklumatDokumenJLM in $BeanMaklumatDokumenJLM)
+                  	#set($idDokumen = $beanMaklumatDokumenJLM.idDokumen)
+    				#set($namaFail = $beanMaklumatDokumenJLM.namaFail)
+          <td valign="top">Lampiran:<br>#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+          #end
         </tr>
         #if ($mode != 'view')
         <tr>
@@ -219,6 +250,11 @@
           <td valign="top">Jabatan Alam Sekitar (JAS)</td>
           <td valign="top">:</td>
           <td valign="top"><textarea name="txtUlasanJabatanAlamSekitar" id="txtUlasanJabatanAlamSekitar" rows="5" cols="100" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtUlasanJabatanAlamSekitar,this.form.remLen9,$!saizTxtUlasanJabatanAlamSekitar);" onKeyDown="textCounter(this.form.txtUlasanJabatanAlamSekitar,this.form.remLen9,$!saizTxtUlasanJabatanAlamSekitar);"  >$beanMaklumatKertasRingkas.ulasanJAS</textarea></td>
+          #foreach ($beanMaklumatDokumenJAS in $BeanMaklumatDokumenJAS)
+                  	#set($idDokumen = $beanMaklumatDokumenJAS.idDokumen)
+    				#set($namaFail = $beanMaklumatDokumenJAS.namaFail)
+          <td valign="top">Lampiran:<br>#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+          #end
         </tr>
         #if ($mode != 'view')
         <tr>
@@ -234,6 +270,11 @@
           <td valign="top">Ulasan Pengarah Tanah dan Galian (PTG)</td>
           <td valign="top">:</td>
           <td><textarea name="txtUlasanPTG" id="txtUlasanPTG" rows="5" cols="100" $readonly class="$inputTextClass" onkeyup="textCounter(this.form.txtUlasanPTG,this.form.remLen8,$!saizTxtUlasanPTG);" onkeydown="textCounter(this.form.txtUlasanPTG,this.form.remLen8,$!saizTxtUlasanPTG);"  >$beanMaklumatKertasRingkas.ulasanPTG</textarea></td>
+          #foreach ($beanMaklumatDokumenPTG in $BeanMaklumatDokumenPTG)
+                  	#set($idDokumen = $beanMaklumatDokumenPTG.idDokumen)
+    				#set($namaFail = $beanMaklumatDokumenPTG.namaFail)
+          <td valign="top">Lampiran:<br>#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+          #end
         </tr>
         #if ($mode != 'view')
         <tr>
@@ -285,3 +326,13 @@
   </tr>
   #end
 </table>
+
+<script>
+function cetakDokumen(id){
+	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+</script>

@@ -558,7 +558,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			//System.out.println("1234");
     			selectedtab = "0";
     			context.put("selectedtab", selectedtab);
-				
+    			context.put("idWarta", id_warta);
+
     			//CHECKING JUMLAH PAMPASAN SEKSYEN 8
     			listA = model.getMaklumatPampasanAP(id_hakmilik);
     			if(listA.size()!=0){

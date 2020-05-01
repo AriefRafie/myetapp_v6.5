@@ -281,6 +281,7 @@ public class MTManager {
 			
 		SubmitApplicationRequestSource source1 = new SubmitApplicationRequestSource(source);
 		request.setSource(source1);
+		System.out.println("transactionID = "+transactionID);
 		request.setTransactionID(transactionID);
 		request.setUsername(userName);
 		request.setPassword(password);

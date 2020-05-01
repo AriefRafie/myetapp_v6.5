@@ -20,6 +20,10 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
 
 	FrmPLPSenaraiFailData logic = new FrmPLPSenaraiFailData();
+	
+	String userId = null;
+	String userRole = null;
+	String idNegeriUser = null;
 
 	public String doTemplate2() throws Exception {
 
@@ -30,6 +34,14 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 		if (doPost.equals("true")) {
 			postDB = true;
 		}
+		
+		userId = (String)session.getAttribute("_ekptg_user_id");
+		userRole = (String)session.getAttribute("myrole");
+		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
+		
+		this.context.put("userId", userId);
+		this.context.put("userRole", userRole);
+		this.context.put("idNegeriUser", idNegeriUser);
 
 		// GET DEFAULT PARAM
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
@@ -98,17 +110,23 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 		//HITBUTTON
 		if (postDB) {
 			if ("daftarBaru".equals(hitButton)) {
-				idFail = logic.daftarBaru(idJenisTanah, getParam("tarikhTerima"),
-						getParam("tarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtPerkara"),
+				idFail = logic.daftarBaru(idJenisTanah,
+						getParam("tarikhTerima"), getParam("tarikhSurat"),
+						getParam("txtNoRujukanSurat"), getParam("txtPerkara"),
 						idKategoriPemohon, getParam("txtNama"),
-						getParam("txtNoPendaftaran"),getParam("txtAlamat1"),
+						getParam("txtNoPendaftaran"), getParam("txtAlamat1"),
 						getParam("txtAlamat2"), getParam("txtAlamat3"),
 						getParam("txtPoskod"), idBandar, idNegeri,
-						getParam("txtEmel"), getParam("txtNoTel"), getParam("txtNoFaks"),							
-						idHakmilikAgensi, idPPTBorangK, idHakmilikUrusan, idPHPBorangK, idKementerian, idAgensi, idPejabat,
-						idLuasKegunaan, getParam("txtTujuanKegunaan"), 
-						getParam("idKementerianTanah"), getParam("idNegeriTanah"), getParam("idLuasTanah"), getParam("luasTanah"),
+						getParam("txtEmel"), getParam("txtNoTel"),
+						getParam("txtNoFaks"), idHakmilikAgensi, idPPTBorangK,
+						idHakmilikUrusan, idPHPBorangK, idKementerian,
+						idAgensi, idPejabat, idLuasKegunaan,
+						getParam("txtTujuanKegunaan"),
+						getParam("idKementerianTanah"),
+						getParam("idNegeriTanah"), getParam("noFailNegeri"),
+						getParam("idLuasTanah"), getParam("luasTanah"),
 						idHakmilikSementara, session);
+
 			}
 		}
 
@@ -264,6 +282,7 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 			beanMaklumatPermohonan = new Vector();
 			Hashtable hashPermohonan = new Hashtable();
 			hashPermohonan.put("noFail", "");
+			hashPermohonan.put("noFailNegeri", getParam("txtNoFailNegeri") == null ? "": getParam("txtNoFailNegeri"));
 			hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
 			hashPermohonan.put("tarikhSurat",getParam("tarikhSurat") == null ? "": getParam("tarikhSurat"));
 			hashPermohonan.put("noRujukanSurat",getParam("txtNoRujukanSurat") == null ? "": getParam("txtNoRujukanSurat"));
@@ -438,17 +457,22 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 			// GO TO LIST FAIL PELEPASAN
 			vm = "app/php2/frmPLPSenaraiFail.jsp";
 
-			logic.carianFail(getParam("txtNoFail"), getParam("txtTajukFail"), getParam("txtPemohon"), getParam("txtNoPengenalan"),
+			logic.carianFail(getParam("txtNoFail"),
+					getParam("txtNoFailNegeri"), getParam("txtTajukFail"),
+					getParam("txtPemohon"), getParam("txtNoPengenalan"),
 					getParam("txdTarikhTerima"), idNegeriC, idDaerahC,
 					idMukimC, idJenisHakmilikC, getParam("txtNoHakmilik"),
 					getParam("txtNoWarta"), idLotC, getParam("txtNoLot"),
-					getParam("txtNoPegangan"), idStatusC, idKementerianC, idAgensiC, getParam("checkTanah"));
+					getParam("txtNoPegangan"), idStatusC, idKementerianC,
+					idAgensiC, getParam("checkTanah"), userId, idNegeriUser,
+					userRole);
 			
 			list = new Vector();
 			list = logic.getSenaraiFail();
 			this.context.put("SenaraiFail", list);
 
 			this.context.put("txtNoFail", getParam("txtNoFail"));
+			this.context.put("txtNoFailNegeri", getParam("txtNoFailNegeri"));
 			this.context.put("txtTajukFail", getParam("txtTajukFail"));
 			this.context.put("txtPemohon", getParam("txtPemohon"));
 			this.context.put("txtNoPengenalan", getParam("txtNoPengenalan"));
