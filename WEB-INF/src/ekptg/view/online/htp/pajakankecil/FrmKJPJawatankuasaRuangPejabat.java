@@ -1968,7 +1968,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 	   
 		  if(i == 0){
 			  //fail baru
-				h.put("idPermohonan", Integer.parseInt(getParam("id_kemaskini")));
+				h.put("idPermohonan", getParam("id_kemaskini"));
 				h.put("idNegeri", getParam("idnegeri"));
 				h.put("socNegeri1", getParam("socNegeri1"));
 				h.put("socDaerah", getParam("socDaerah1"));
