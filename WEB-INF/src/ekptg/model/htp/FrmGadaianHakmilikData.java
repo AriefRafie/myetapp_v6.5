@@ -668,6 +668,390 @@ public class FrmGadaianHakmilikData {
 		  
 	  }
 	  
+	  public static String Simpan16A(Hashtable<String,String> hash)throws Exception{	  
+		  String idHtppermohonan = "0";
+		  String idPermohonan = null;
+		  String sql = null;
+		  String catatan = null;
+		  String userID = null;
+		  String idHtpMaklumatGadaian = "0";
+		  
+		  try{
+			  idPermohonan = String.valueOf(hash.get("idPermohonan"));			  
+			  db = new Db();
+			  conn = db.getConnection();
+			  conn.setAutoCommit(false);		  
+			  Statement stmt = db.getStatement();		  
+			  sql = "SELECT A.ID_HTPPERMOHONAN ";
+			  sql += "FROM TBLHTPPERMOHONAN A ";
+			  sql += "WHERE A.ID_PERMOHONAN = '" + idPermohonan + "'";
+			  myLog.info("Simpan16A::"+sql);
+			  ResultSet rs = stmt.executeQuery(sql);		  
+			  while(rs.next()){
+				  idHtppermohonan = rs.getString("ID_HTPPERMOHONAN");
+			  }
+
+			  //TBLHTPSIMPANGERAN
+			  idHtpMaklumatGadaian = String.valueOf(DB.getNextID("TBLHTPSIMPANGERAN_SEQ"));			  
+			  catatan = hash.get("keterangan").toString();
+			  userID = hash.get("userID").toString();		  
+			  
+			  SQLRenderer r = new SQLRenderer();
+			  r.add("ID_HTPMAKLUMATGADAIAN",idHtpMaklumatGadaian);
+			  r.add("ID_HTPPERMOHONAN",idHtppermohonan);
+			  
+			  if (!"".equals(hash.get("TarikhTerima"))){
+					r.add("TARIKH_TERIMA", r.unquote("to_date('" + hash.get("TarikhTerima") + "','dd/MM/yyyy')"));
+			  }
+			  
+			  r.add("CATATAN",catatan);
+			  r.add("ID_MASUK",userID);
+			  r.add("TARIKH_MASUK",r.unquote("SYSDATE"));
+			  
+			  sql = r.getSQLInsert("TBLHTPSIMPANGERAN");
+			  //log.info("sql TBLHTPSIMPANGERAN : " + sql);
+			  stmt.executeUpdate(sql);
+			  conn.commit();
+			  
+		  }catch(Exception e){
+			  conn.rollback();
+			  e.printStackTrace();
+		  
+		  }
+		  return String.valueOf(idHtpMaklumatGadaian);
+	  
+	  }
+	  
+	  
+	  public static void SimpanUpdate16A(Hashtable<String,String> hash)throws Exception{		  
+		  String idHTPGadaian = null;
+		  //String idPermohonan = null;
+		  String sql = null;
+		  String catatan = null;
+		  String userID = null;
+		  
+		  try{
+			  //idPermohonan = hash.get("idPermohonan").toString();
+			  idHTPGadaian = hash.get("idHTPGadaian").toString();
+			  catatan = hash.get("keterangan").toString();
+			  userID = hash.get("userID").toString();
+			  
+			  db = new Db();
+			  conn = db.getConnection();
+			  conn.setAutoCommit(false);
+			  
+			  Statement stmt = db.getStatement();		  
+			  //TBLHTPSIMPANGERAN	  
+			  SQLRenderer r = new SQLRenderer();
+			  //r.update("ID_HTPMAKLUMATGADAIAN", idHTPGadaian);			  
+			  r.update("ID_HTPPERMOHONAN", idHTPGadaian);			  
+			  if (!"".equals(hash.get("TarikhTerima"))){
+					r.add("TARIKH_TERIMA", r.unquote("to_date('" + hash.get("TarikhTerima") + "','dd/MM/yyyy')"));
+			  }			  
+			  r.add("CATATAN",catatan);
+			  r.add("ID_KEMASKINI",userID);
+			  r.add("TARIKH_KEMASKINI",r.unquote("SYSDATE"));		  
+			  sql = r.getSQLUpdate("TBLHTPSIMPANGERAN");		  
+			  //log.info("sql UPDATE TBLHTPSIMPANGERAN : " + sql);			  
+			  stmt.executeUpdate(sql);		  
+			  conn.commit();
+			  
+		  }catch(Exception e){
+			  conn.rollback();
+			  e.printStackTrace();
+		  
+		  }
+		  	
+	  }
+	  
+	  public static Vector<Hashtable<String,String>> setInfo16A(String idHtpMaklumatGadaian)throws Exception{  
+		  String sql = null;
+		  Vector<Hashtable<String,String>> list16A = null;
+		  Hashtable<String,String> hash16A = null;	  
+		  try{
+			  list16A = new Vector<Hashtable<String,String>>();		  
+			  db = new Db();
+			  Statement stmt = db.getStatement();
+			  
+			  sql = "SELECT A.ID_HTPMAKLUMATGADAIAN, A.ID_HTPPERMOHONAN, A.TARIKH_TERIMA, A.CATATAN ";
+			  sql += "FROM TBLHTPSIMPANGERAN A ";
+			  sql += "WHERE A.ID_HTPPERMOHONAN = '" + idHtpMaklumatGadaian + "'";		
+			  //sql += "WHERE A.ID_HTPMAKLUMATGADAIAN = '" + idHtpMaklumatGadaian + "'";		
+			  myLog.info("16A :: " +sql);
+			  ResultSet rs = stmt.executeQuery(sql);			  
+			  while(rs.next()){
+				  hash16A = new Hashtable<String,String>();
+				  hash16A.put("idHakmilikgadaian", rs.getString("ID_HTPMAKLUMATGADAIAN") == null ? "" : rs.getString("ID_HTPMAKLUMATGADAIAN"));
+				  hash16A.put("idHtppermohonan", rs.getString("ID_HTPMAKLUMATGADAIAN") == null ? "" : rs.getString("ID_HTPMAKLUMATGADAIAN"));
+				  hash16A.put("TarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : Format.format(rs.getDate("TARIKH_TERIMA")));
+				  hash16A.put("keterangan", rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
+				  list16A.addElement(hash16A);
+				  
+			  }
+			  
+		  }catch(Exception e){
+			  e.printStackTrace();			  
+		  }
+		  return list16A;
+		  
+	  }
+	  
+	  public static String Simpan16N(Hashtable<String,String> hash)throws Exception{	  
+		  String idHtppermohonan = "0";
+		  String idPermohonan = null;
+		  String sql = null;
+		  String catatan = null;
+		  String userID = null;
+		  String idHtpMaklumatGadaian = "0";
+		  
+		  try{
+			  idPermohonan = String.valueOf(hash.get("idPermohonan"));			  
+			  db = new Db();
+			  conn = db.getConnection();
+			  conn.setAutoCommit(false);		  
+			  Statement stmt = db.getStatement();		  
+			  sql = "SELECT A.ID_HTPPERMOHONAN ";
+			  sql += "FROM TBLHTPPERMOHONAN A ";
+			  sql += "WHERE A.ID_PERMOHONAN = '" + idPermohonan + "'";
+			  myLog.info("Simpan16A::"+sql);
+			  ResultSet rs = stmt.executeQuery(sql);		  
+			  while(rs.next()){
+				  idHtppermohonan = rs.getString("ID_HTPPERMOHONAN");
+			  }
+
+			  //TBLHTPSIMPANGERAN
+			  idHtpMaklumatGadaian = String.valueOf(DB.getNextID("TBLHTPSIMPANGERAN_SEQ"));			  
+			  catatan = hash.get("keterangan").toString();
+			  userID = hash.get("userID").toString();		  
+			  
+			  SQLRenderer r = new SQLRenderer();
+			  r.add("ID_HTPMAKLUMATGADAIAN",idHtpMaklumatGadaian);
+			  r.add("ID_HTPPERMOHONAN",idHtppermohonan);
+			  
+			  if (!"".equals(hash.get("TarikhTerima"))){
+					r.add("TARIKH_TERIMA", r.unquote("to_date('" + hash.get("TarikhTerima") + "','dd/MM/yyyy')"));
+			  }
+			  
+			  r.add("CATATAN",catatan);
+			  r.add("ID_MASUK",userID);
+			  r.add("TARIKH_MASUK",r.unquote("SYSDATE"));
+			  
+			  sql = r.getSQLInsert("TBLHTPSIMPANGERAN");
+			  //log.info("sql TBLHTPSIMPANGERAN : " + sql);
+			  stmt.executeUpdate(sql);
+			  conn.commit();
+			  
+		  }catch(Exception e){
+			  conn.rollback();
+			  e.printStackTrace();
+		  
+		  }
+		  return String.valueOf(idHtpMaklumatGadaian);
+	  
+	  }
+	  
+	  
+	  public static void SimpanUpdate16N(Hashtable<String,String> hash)throws Exception{		  
+		  String idHTPGadaian = null;
+		  //String idPermohonan = null;
+		  String sql = null;
+		  String catatan = null;
+		  String userID = null;
+		  
+		  try{
+			  //idPermohonan = hash.get("idPermohonan").toString();
+			  idHTPGadaian = hash.get("idHTPGadaian").toString();
+			  catatan = hash.get("keterangan").toString();
+			  userID = hash.get("userID").toString();
+			  
+			  db = new Db();
+			  conn = db.getConnection();
+			  conn.setAutoCommit(false);
+			  
+			  Statement stmt = db.getStatement();		  
+			  //TBLHTPSIMPANGERAN	  
+			  SQLRenderer r = new SQLRenderer();
+			  //r.update("ID_HTPMAKLUMATGADAIAN", idHTPGadaian);			  
+			  r.update("ID_HTPPERMOHONAN", idHTPGadaian);			  
+			  if (!"".equals(hash.get("TarikhTerima"))){
+					r.add("TARIKH_TERIMA", r.unquote("to_date('" + hash.get("TarikhTerima") + "','dd/MM/yyyy')"));
+			  }			  
+			  r.add("CATATAN",catatan);
+			  r.add("ID_KEMASKINI",userID);
+			  r.add("TARIKH_KEMASKINI",r.unquote("SYSDATE"));		  
+			  sql = r.getSQLUpdate("TBLHTPSIMPANGERAN");		  
+			  //log.info("sql UPDATE TBLHTPSIMPANGERAN : " + sql);			  
+			  stmt.executeUpdate(sql);		  
+			  conn.commit();
+			  
+		  }catch(Exception e){
+			  conn.rollback();
+			  e.printStackTrace();
+		  
+		  }
+		  	
+	  }
+	  
+	  public static Vector<Hashtable<String,String>> setInfo16N(String idHtpMaklumatGadaian)throws Exception{  
+		  String sql = null;
+		  Vector<Hashtable<String,String>> list16N = null;
+		  Hashtable<String,String> hash16N = null;	  
+		  try{
+			  list16N = new Vector<Hashtable<String,String>>();		  
+			  db = new Db();
+			  Statement stmt = db.getStatement();
+			  
+			  sql = "SELECT A.ID_HTPMAKLUMATGADAIAN, A.ID_HTPPERMOHONAN, A.TARIKH_TERIMA, A.CATATAN ";
+			  sql += "FROM TBLHTPSIMPANGERAN A ";
+			  sql += "WHERE A.ID_HTPPERMOHONAN = '" + idHtpMaklumatGadaian + "'";		
+			  //sql += "WHERE A.ID_HTPMAKLUMATGADAIAN = '" + idHtpMaklumatGadaian + "'";		
+			  myLog.info("16N :: " +sql);
+			  ResultSet rs = stmt.executeQuery(sql);			  
+			  while(rs.next()){
+				  hash16N = new Hashtable<String,String>();
+				  hash16N.put("idHakmilikgadaian", rs.getString("ID_HTPMAKLUMATGADAIAN") == null ? "" : rs.getString("ID_HTPMAKLUMATGADAIAN"));
+				  hash16N.put("idHtppermohonan", rs.getString("ID_HTPMAKLUMATGADAIAN") == null ? "" : rs.getString("ID_HTPMAKLUMATGADAIAN"));
+				  hash16N.put("TarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : Format.format(rs.getDate("TARIKH_TERIMA")));
+				  hash16N.put("keterangan", rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
+				  list16N.addElement(hash16N);
+				  
+			  }
+			  
+		  }catch(Exception e){
+			  e.printStackTrace();			  
+		  }
+		  return list16N;
+		  
+	  }
+	  
+	  public static String SimpanBorangD(Hashtable<String,String> hash)throws Exception{	  
+		  String idHtppermohonan = "0";
+		  String idPermohonan = null;
+		  String sql = null;
+		  String catatan = null;
+		  String userID = null;
+		  String idHtpMaklumatGadaian = "0";
+		  
+		  try{
+			  idPermohonan = String.valueOf(hash.get("idPermohonan"));			  
+			  db = new Db();
+			  conn = db.getConnection();
+			  conn.setAutoCommit(false);		  
+			  Statement stmt = db.getStatement();		  
+			  sql = "SELECT A.ID_HTPPERMOHONAN ";
+			  sql += "FROM TBLHTPPERMOHONAN A ";
+			  sql += "WHERE A.ID_PERMOHONAN = '" + idPermohonan + "'";
+			  myLog.info("Simpan16A::"+sql);
+			  ResultSet rs = stmt.executeQuery(sql);		  
+			  while(rs.next()){
+				  idHtppermohonan = rs.getString("ID_HTPPERMOHONAN");
+			  }
+
+			  //TBLHTPSIMPANGERAN
+			  idHtpMaklumatGadaian = String.valueOf(DB.getNextID("TBLHTPSIMPANGERAN_SEQ"));			  
+			  catatan = hash.get("keterangan").toString();
+			  userID = hash.get("userID").toString();		  
+			  
+			  SQLRenderer r = new SQLRenderer();
+			  r.add("ID_HTPMAKLUMATGADAIAN",idHtpMaklumatGadaian);
+			  r.add("ID_HTPPERMOHONAN",idHtppermohonan);
+			  
+			  if (!"".equals(hash.get("TarikhTerima"))){
+					r.add("TARIKH_TERIMA", r.unquote("to_date('" + hash.get("TarikhTerima") + "','dd/MM/yyyy')"));
+			  }
+			  
+			  r.add("CATATAN",catatan);
+			  r.add("ID_MASUK",userID);
+			  r.add("TARIKH_MASUK",r.unquote("SYSDATE"));
+			  
+			  sql = r.getSQLInsert("TBLHTPSIMPANGERAN");
+			  //log.info("sql TBLHTPSIMPANGERAN : " + sql);
+			  stmt.executeUpdate(sql);
+			  conn.commit();
+			  
+		  }catch(Exception e){
+			  conn.rollback();
+			  e.printStackTrace();
+		  
+		  }
+		  return String.valueOf(idHtpMaklumatGadaian);
+	  
+	  }
+	  
+	  
+	  public static void SimpanUpdateBorangD(Hashtable<String,String> hash)throws Exception{		  
+		  String idHTPGadaian = null;
+		  //String idPermohonan = null;
+		  String sql = null;
+		  String catatan = null;
+		  String userID = null;
+		  
+		  try{
+			  //idPermohonan = hash.get("idPermohonan").toString();
+			  idHTPGadaian = hash.get("idHTPGadaian").toString();
+			  catatan = hash.get("keterangan").toString();
+			  userID = hash.get("userID").toString();
+			  
+			  db = new Db();
+			  conn = db.getConnection();
+			  conn.setAutoCommit(false);
+			  
+			  Statement stmt = db.getStatement();		  
+			  //TBLHTPSIMPANGERAN	  
+			  SQLRenderer r = new SQLRenderer();
+			  //r.update("ID_HTPMAKLUMATGADAIAN", idHTPGadaian);			  
+			  r.update("ID_HTPPERMOHONAN", idHTPGadaian);			  
+			  if (!"".equals(hash.get("TarikhTerima"))){
+					r.add("TARIKH_TERIMA", r.unquote("to_date('" + hash.get("TarikhTerima") + "','dd/MM/yyyy')"));
+			  }			  
+			  r.add("CATATAN",catatan);
+			  r.add("ID_KEMASKINI",userID);
+			  r.add("TARIKH_KEMASKINI",r.unquote("SYSDATE"));		  
+			  sql = r.getSQLUpdate("TBLHTPSIMPANGERAN");		  
+			  //log.info("sql UPDATE TBLHTPSIMPANGERAN : " + sql);			  
+			  stmt.executeUpdate(sql);		  
+			  conn.commit();
+			  
+		  }catch(Exception e){
+			  conn.rollback();
+			  e.printStackTrace();
+		  
+		  }
+		  	
+	  }
+	  
+	  public static Vector<Hashtable<String,String>> setBorangDInfo (String idHtpMaklumatGadaian)throws Exception{  
+		  String sql = null;
+		  Vector<Hashtable<String,String>> borangDlist = null;
+		  Hashtable<String,String> hashBorangD = null;	  
+		  try{
+			  borangDlist = new Vector<Hashtable<String,String>>();		  
+			  db = new Db();
+			  Statement stmt = db.getStatement();
+			  
+			  sql = "SELECT A.ID_HTPMAKLUMATGADAIAN, A.ID_HTPPERMOHONAN, A.TARIKH_TERIMA, A.CATATAN ";
+			  sql += "FROM TBLHTPSIMPANGERAN A ";
+			  sql += "WHERE A.ID_HTPPERMOHONAN = '" + idHtpMaklumatGadaian + "'";		
+			  //sql += "WHERE A.ID_HTPMAKLUMATGADAIAN = '" + idHtpMaklumatGadaian + "'";		
+			  myLog.info("16A :: " +sql);
+			  ResultSet rs = stmt.executeQuery(sql);			  
+			  while(rs.next()){
+				  hashBorangD = new Hashtable<String,String>();
+				  hashBorangD.put("idHakmilikgadaian", rs.getString("ID_HTPMAKLUMATGADAIAN") == null ? "" : rs.getString("ID_HTPMAKLUMATGADAIAN"));
+				  hashBorangD.put("idHtppermohonan", rs.getString("ID_HTPMAKLUMATGADAIAN") == null ? "" : rs.getString("ID_HTPMAKLUMATGADAIAN"));
+				  hashBorangD.put("TarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : Format.format(rs.getDate("TARIKH_TERIMA")));
+				  hashBorangD.put("keterangan", rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
+				  borangDlist.addElement(hashBorangD);
+				  
+			  }
+			  
+		  }catch(Exception e){
+			  e.printStackTrace();			  
+		  }
+		  return borangDlist;
+		  
+	  }
+	  
 		public static String getDaerahMengikutBandar(String idBandar) throws Exception {
 			Db db = null;
 			String sql = "";

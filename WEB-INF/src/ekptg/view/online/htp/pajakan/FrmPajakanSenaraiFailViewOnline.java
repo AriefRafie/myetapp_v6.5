@@ -65,6 +65,7 @@ public class FrmPajakanSenaraiFailViewOnline extends AjaxBasedModule {
         String idStatus = getParam("idStatus");
         String subUrusan = getParam("subUrusan");
         String idHakmilikUrusan = getParam("idHakmilikUrusan");
+        String idUser = (String) session.getAttribute("_ekptg_user_id");
         
         //VECTOR
         Vector beanHeader = null;
@@ -79,7 +80,7 @@ public class FrmPajakanSenaraiFailViewOnline extends AjaxBasedModule {
 		}
 		String idKementerian = getParam("socKementerian");
 		if (idKementerian == null || idKementerian.trim().length() == 0){
-			idKementerian = "";
+			idKementerian = "99999";
 		}
 		String idAgensi = getParam("socAgensi");
 		if (idAgensi == null || idAgensi.trim().length() == 0){
@@ -102,7 +103,7 @@ public class FrmPajakanSenaraiFailViewOnline extends AjaxBasedModule {
 		if (postDB){
     		if ("simpan".equals(hitButton)){
     			log.info("simpan");
-         		idFail = logic.simpan(idNegeri, idKementerian, idAgensi, idSuburusan, idStatusTanah, idJenisFail, getParam("txtNoFailKJP"), 
+         		idFail = logic.simpanOnline(idNegeri, idKementerian, idAgensi, idSuburusan, idStatusTanah, idJenisFail, getParam("txtNoFailKJP"), 
          					getParam("tarikhSuratKJP"), getParam("txtNoFailLain"), getParam("tarikhAgihan"), getParam("txtTajuk"),getParam("tarikhSuratPemohon"), session);
          		session.setAttribute("idFail", idFail);
         	}
@@ -139,7 +140,7 @@ public class FrmPajakanSenaraiFailViewOnline extends AjaxBasedModule {
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
 			
 			this.context.put("selectNegeri",HTML.SelectNegeriByMahkamah("socNegeri", Long.parseLong(idNegeri), "", ""));
-			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian",Long.parseLong(getParam("socKementerian")),"", " onChange=\"doChangeKementerian();\""));
+			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian",Long.parseLong(idKementerian),"", " onChange=\"doChangeKementerian();\""));
 			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian ,Long.parseLong(idAgensi), "", ""));
 			this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan("3", "socSuburusan" ,Long.parseLong(idSuburusan), "", ""));
 			this.context.put("selectStatusTanah",HTML.SelectJenisTanah("socStatusTanah" ,Long.parseLong(idStatusTanah), "", ""));
@@ -185,7 +186,7 @@ public class FrmPajakanSenaraiFailViewOnline extends AjaxBasedModule {
         	//GO TO LIST FAIL PAJAKAN        	
         	vm = "app/htp/pajakan/frmPajakanPenerimaanPermohonanSenaraiFail2.jsp";
         	log.info("Else :: "+vm);
-        	logic.carianFailOnline2(getParam("txtNoFail"), getParam("txdTarikhTerima"),getParam("txtTajukFail"),getParam("txtNamaPemohon"),idKementerian);
+        	logic.carianFailOnline2(getParam("txtNoFail"), getParam("txdTarikhTerima"),getParam("txtTajukFail"),getParam("txtNamaPemohon"),idKementerian, idUser);
 			list = new Vector();
 			list = logic.getSenaraiFail();
 			this.context.put("SenaraiFail", list);

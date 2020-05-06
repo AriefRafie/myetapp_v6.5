@@ -20,6 +20,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
+import ekptg.model.entities.Tblpfdrujlokasimesyuarat;
 import ekptg.model.php2.FrmPLPHeaderData;
 import ekptg.model.php2.FrmPLPMesyuaratData;
 
@@ -47,6 +48,7 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
         String hitButton = getParam("hitButton");
 
         String flagPopup = getParam("flagPopup");
+        String flagNotifikasi = getParam("flagNotifikasi");
 		String modePopup = getParam("modePopup");
 		String selectedTabUpper = (String)getParam("selectedTabUpper");
 		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
@@ -63,6 +65,9 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
         String idPermohonan = getParam("idPermohonan");
         String idStatus = getParam("idStatus");
         String idMesyuarat = getParam("idMesyuarat");
+        String idKementerianTanah = getParam("idKementerianTanah");
+		String idAgensiTanah = getParam("idAgensiTanah");
+		String idUlasanTeknikal = getParam("idUlasanTeknikal");
         String checkPampasan = getParam("checkPampasan");
         if (checkPampasan == null || "".equals(checkPampasan) ) {
         	checkPampasan = "0";
@@ -78,8 +83,11 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
         Vector beanMaklumatMesyuarat = null;
         Vector beanMaklumatPampasan = null;
         Vector beanMinitMesyuarat = null; //12092017
+        Vector beanMaklumatPejabat = null;//29042020
+        Vector senaraiNotifikasi = null;
 
         //GET DROPDOWN PARAM
+        
         String idLokasi = getParam("socLokasi");
 		if (idLokasi == null || idLokasi.trim().length() == 0){
 			idLokasi = "99999";
@@ -101,6 +109,44 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
 			idMinitHingga = "99999";
 		}
 		
+		String idKementerian = getParam("socKementerian");
+		if (idKementerian == null || idKementerian.trim().length() == 0) {
+			idKementerian = "99999";
+		}
+		String idAgensi = getParam("socAgensi");
+		if (idAgensi == null || idAgensi.trim().length() == 0) {
+			idAgensi = "99999";
+		}
+		String idNegeri = getParam("socNegeri");
+		if (idNegeri == null || idNegeri.trim().length() == 0) {
+			idNegeri = "99999";
+		}
+		String idPejabat = getParam("socPejabat");
+		if (idPejabat == null || idPejabat.trim().length() == 0) {
+			idPejabat = "99999";
+		}
+        String idSuratKe = getParam("idSuratKe");
+		if (idSuratKe == null || idSuratKe.trim().length() == 0){
+			idSuratKe = "99999";
+		}
+		String tajukMesyuarat = "";
+		if (tajukMesyuarat == null || tajukMesyuarat.trim().length() == 0){
+			tajukMesyuarat = "99999";
+		}
+		String tarikhMesyuarat = "";
+		if (tarikhMesyuarat == null || tarikhMesyuarat.trim().length() == 0){
+			tarikhMesyuarat = "99999";
+		}
+		String lokasiMesyuarat = "";
+		if (lokasiMesyuarat == null || lokasiMesyuarat.trim().length() == 0){
+			lokasiMesyuarat = "99999";
+		}
+		
+		String masaMesyuarat = "";
+		if (masaMesyuarat == null || masaMesyuarat.trim().length() == 0){
+			masaMesyuarat = "99999";
+		}
+		
 		String step = getParam("step");
 		
         vm = "app/php2/frmPLPMesyuarat.jsp";
@@ -109,8 +155,8 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
         if (postDB) {
         	if ("simpanMesyuarat".equals(hitButton)){
     			idMesyuarat = logic.simpanMesyuarat(idPermohonan, getParam("txtTajukMesyuarat"), getParam("txtBilMesyuarat"), getParam("txtTarikhMesyuarat"),
-    					idJamDari, idMinitDari, idJamHingga, idMinitHingga, idLokasi, getParam("socSyor"), getParam("txtCatatan"), session);
-    		}
+    					idJamDari, idMinitDari, idJamHingga, idMinitHingga, idLokasi, getParam("socSyor"), getParam("txtCatatan"), session);		
+        	}
         	if ("simpanKemaskiniMesyuarat".equals(hitButton)){
     			logic.simpanKemaskiniMesyuarat(idMesyuarat, getParam("txtTajukMesyuarat"), getParam("txtBilMesyuarat"), getParam("txtTarikhMesyuarat"),
     					idJamDari, idMinitDari, idJamHingga, idMinitHingga, idLokasi, getParam("socSyor"), getParam("txtCatatan"), 
@@ -132,6 +178,36 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
         	if ("simpanDokumenMM".equals(hitButton)) {
         		logic.hapusDokumen(idMesyuarat, session);
 				uploadFiles(idMesyuarat, idPermohonan, session);
+			}
+        	
+			if ("simpanRekodNotifikasiEmail".equals(hitButton)) {
+				idUlasanTeknikal = logic.simpanRekodNotifikasiEmail(
+						idPermohonan, idPejabat, idNegeri,
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"),
+						getParam("txtTarikhJangkaTerima"),
+						getParam("idSuratKe"), idKementerianTanah,
+						idAgensiTanah, getParam("txtNamaPegawai"), 
+						getParam("txtNoTelefon"), getParam("txtEmel"),idMesyuarat,session);
+
+    			beanMaklumatMesyuarat = new Vector();
+	   			logic.setMaklumatMesyuarat(idMesyuarat);
+	   			beanMaklumatMesyuarat = logic.getBeanMaklumatMesyuarat();
+	   			this.context.put("BeanMaklumatMesyuarat", beanMaklumatMesyuarat);
+	   			
+	   			if (beanMaklumatMesyuarat.size() != 0){
+					Hashtable hashMesyuarat = (Hashtable) logic.getBeanMaklumatMesyuarat().get(0);
+					idLokasi = (String)(hashMesyuarat.get("idLokasi"));
+					idJamDari = (String)(hashMesyuarat.get("idJamDari"));
+					idMinitDari = (String)(hashMesyuarat.get("idMinitDari"));
+					idJamHingga = (String)(hashMesyuarat.get("idJamHingga"));
+					idMinitHingga = (String)(hashMesyuarat.get("idMinitHingga"));
+					tajukMesyuarat= (String)(hashMesyuarat.get("tajukMesyuarat"));
+					tarikhMesyuarat= (String)(hashMesyuarat.get("tarikhMesyuarat"));
+					lokasiMesyuarat= (String)(hashMesyuarat.get("lokasiMesyuarat"));
+					masaMesyuarat=convertClockTime(idJamDari,idMinitDari,idJamHingga,idMinitHingga);
+	   			}
+	   			
+				logic.sendEmail(getParam("txtEmel"),tajukMesyuarat,tarikhMesyuarat,masaMesyuarat,lokasiMesyuarat);
 			}
         }
 
@@ -162,6 +238,78 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
 		//OPEN POPUP DAFTAR BARU MESYUARAT
 		if ("openMesyuarat".equals(flagPopup)){
 			
+			this.context.put("idSuratKe", idSuratKe);
+			this.context.put("selectNegeri", HTML.SelectNegeri(
+					"socNegeri", Long.parseLong(idNegeri), "",
+					" onChange=\"doChangeNegeri();\""));
+			this.context.put("selectPejabat", HTML
+					.SelectPejabatByIdNegeriAndJenisPejabat(
+							"socPejabat", Long.parseLong(idPejabat),
+							"", " onChange=\"doChangePejabat();\"",
+							idNegeri, "2"));
+			
+			if ("PTD".equals(idSuratKe)) {
+				this.context.put("selectNegeri", HTML.SelectNegeri(
+						"socNegeri", Long.parseLong(idNegeri), "",
+						" onChange=\"doChangeNegeri();\""));
+				this.context.put("selectPejabat", HTML
+						.SelectPejabatByIdNegeriAndJenisPejabat(
+								"socPejabat",
+								Long.parseLong(idPejabat), "",
+								" onChange=\"doChangePejabat();\"",
+								idNegeri, "2"));
+				beanMaklumatPejabat = new Vector();
+				logic.setMaklumatPejabat(idPejabat);
+				beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
+				this.context.put("BeanMaklumatPejabat",
+						beanMaklumatPejabat);
+			} else if ("PTG".equals(idSuratKe)) {
+				this.context.put("selectNegeri", HTML.SelectNegeri(
+						"socNegeri", Long.parseLong(idNegeri), "",
+						" onChange=\"doChangeNegeri();\""));
+				this.context.put("selectPejabat", HTML
+						.SelectPejabatByIdNegeriAndJenisPejabat(
+								"socPejabat",
+								Long.parseLong(idPejabat), "",
+								" onChange=\"doChangePejabat();\"",
+								idNegeri, "2"));
+				beanMaklumatPejabat = new Vector();
+				logic.setMaklumatPejabat(idPejabat);
+				beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
+				this.context.put("BeanMaklumatPejabat",
+						beanMaklumatPejabat);
+			} else if ("KJP".equals(idSuratKe)) {
+				this.context.put("selectNegeri", HTML.SelectNegeri(
+						"socNegeri", Long.parseLong(idNegeri), "",
+						" onChange=\"doChangeNegeri();\""));
+				this.context.put("selectPejabat", HTML
+						.SelectPejabatByIdNegeriAndJenisPejabat(
+								"socPejabat",
+								Long.parseLong(idPejabat), "",
+								" onChange=\"doChangePejabat();\"",
+								idNegeri, "2"));
+				beanMaklumatPejabat = new Vector();
+				logic.setMaklumatPejabat(idPejabat);
+				beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
+				this.context.put("BeanMaklumatPejabat",
+						beanMaklumatPejabat);
+			} else if ("JKPTG".equals(idSuratKe)) {
+				this.context.put("selectNegeri", HTML.SelectNegeri(
+						"socNegeri", Long.parseLong(idNegeri), "",
+						" onChange=\"doChangeNegeri();\""));
+				this.context.put("selectPejabat", HTML
+						.SelectPejabatKPTGByIdNegeriIdSeksyen(
+								"socPejabat", Long.parseLong(idPejabat),
+								""," onChange=\"doChangePejabat();\"",
+								idNegeri, "4"));
+
+				beanMaklumatPejabat = new Vector();
+				logic.setMaklumatPejabatJKPTG(idPejabat);
+				beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
+				this.context.put("BeanMaklumatPejabat",
+						beanMaklumatPejabat);
+			}
+			
 			//MODE NEW
         	if ("new".equals(modePopup)){
     				
@@ -180,6 +328,7 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
         		beanMaklumatMesyuarat.addElement(hashMesyuarat);
     			this.context.put("BeanMaklumatMesyuarat",beanMaklumatMesyuarat);
     			
+    			this.context.put("idSuratKe", idSuratKe);
     			this.context.put("selectLokasi", HTML.SelectLokasiMesyuarat("socLokasi", Long.parseLong(idLokasi), ""));
     			this.context.put("selectJamDari", HTML.SelectJam("socJamDari", Long.parseLong(idJamDari), "",""));
     			this.context.put("selectMinitDari", HTML.SelectMinit("socMinitDari", Long.parseLong(idMinitDari), "",""));
@@ -217,6 +366,12 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
     			beanMinitMesyuarat = logic.getBeanMaklumatDokumen();
     			this.context.put("BeanMinitMesyuarat",beanMinitMesyuarat);
     			
+    			// SENARAI NOTIFIKASI
+				senaraiNotifikasi = new Vector();
+				logic.setSenaraiNotifikasi(idMesyuarat);
+				senaraiNotifikasi = logic.getListNotifikasi();
+				this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
+				
         	} else if ("update".equals(modePopup)){
     				
     			this.context.put("readonlyPopup", "");
@@ -271,6 +426,7 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
 		
 		//SET DEFAULT PARAM
 		this.context.put("flagPopup", flagPopup);
+		this.context.put("flagNotifikasi", flagNotifikasi);
 		this.context.put("modePopup", modePopup);
 		this.context.put("mode", mode);
 		this.context.put("selectedTabUpper", selectedTabUpper);
@@ -284,6 +440,10 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
 	    this.context.put("checkSyor", checkSyor);
 	        
 	    this.context.put("step",step);
+	    
+	    //if ("openNotifikasi".equals(flagNotifikasi)){
+        //	vm = "app/php2/frmPLPMesyuaratDetail.jsp";
+        //}
 	    
 		return vm;
 	}
@@ -346,5 +506,31 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
 				db.close();
 		}
 		this.context.put("completed", true);
+	}
+	private String convertClockTime(String idJamDari, String idMinitDari, String idJamHingga, String idMinitHingga) throws Exception {
+		String masa="";
+		
+		if (idJamDari.length()<2){
+			idJamDari="0"+idJamDari;
+		} 	
+		if (idJamHingga.length()<2){
+			idJamHingga="0"+idJamHingga;
+		}
+		int intMinitDari=Integer.parseInt(idMinitDari); 
+		int intMinitHingga=Integer.parseInt(idMinitHingga); 
+		
+		intMinitDari=intMinitDari*5;	
+		intMinitHingga=intMinitHingga*5;
+		
+		idMinitDari=Integer.toString(intMinitDari);
+		if (idMinitDari.length()<2){
+			idMinitDari="0"+idMinitDari;
+		} 	
+		idMinitHingga=Integer.toString(intMinitHingga);
+		if (idMinitHingga.length()<2){
+			idMinitHingga="0"+idMinitHingga;
+		}
+		masa=idJamDari+":"+idMinitDari+" - "+idJamHingga+":"+idMinitHingga;
+		return masa;
 	}
 }
