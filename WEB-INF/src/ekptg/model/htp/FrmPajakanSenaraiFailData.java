@@ -207,11 +207,12 @@ public class FrmPajakanSenaraiFailData {
 		}
 	}	
 	
-	public void carianFailOnline2(String noFail, String tarikhTerima,String tajukFail, String namaPemohon,String idKementerian) throws Exception {
+	/*public void carianFailOnline2(String noFail, String tarikhTerima,String tajukFail, String namaPemohon,String idKementerian, String idUser) throws Exception {
 		
 		Db db = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String sql = "";
+		//String userId = (String)session.getAttribute("_ekptg_user_id");
 
 		try {
 			senaraiFail = new Vector();
@@ -224,10 +225,16 @@ public class FrmPajakanSenaraiFailData {
 			//			"AND A.ID_SEKSYEN = '3' AND A.ID_URUSAN = '3' AND A.ID_SUBURUSAN IN (7, 17, 18)";
 
 			// By Rosli, 05/05/2010
-			sql = "SELECT A.TAJUK_FAIL,A.ID_FAIL, B.ID_PERMOHONAN, B.ID_STATUS, A.NO_FAIL, B.TARIKH_TERIMA, C.KETERANGAN,RN.NAMA_NEGERI"
+			/*sql = "SELECT A.TAJUK_FAIL,A.ID_FAIL, B.ID_PERMOHONAN, B.ID_STATUS, A.NO_FAIL, B.TARIKH_TERIMA, C.KETERANGAN,RN.NAMA_NEGERI"
 				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLRUJSTATUS C, TBLHTPPEMOHON D,TBLRUJNEGERI RN "
 				+ " WHERE B.ID_FAIL = A.ID_FAIL AND B.ID_STATUS = C.ID_STATUS AND B.ID_PERMOHONAN = D.ID_PERMOHONAN(+) " +
-						" AND A.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '3' ";
+						" AND A.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '3' ";*/
+			
+		/*	sql = "SELECT A.TAJUK_FAIL,A.ID_FAIL, B.ID_PERMOHONAN, B.ID_STATUS, A.NO_FAIL, B.TARIKH_TERIMA, C.KETERANGAN," +
+					" RN.NAMA_NEGERI " +
+					" FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLRUJSTATUS C, TBLHTPPEMOHON D,TBLRUJNEGERI RN, USERS " +
+					" WHERE B.ID_FAIL = A.ID_FAIL AND B.ID_STATUS = C.ID_STATUS AND B.ID_PERMOHONAN = D.ID_PERMOHONAN(+)" +
+					" AND A.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '3' AND USERS.USER_ID = B.ID_MASUK AND A.ID_MASUK = '" +idUser+ "'";
 			//Tajuk Fail
 			if (tajukFail != null) {
 				if (!tajukFail.trim().equals("")) {
@@ -292,7 +299,7 @@ public class FrmPajakanSenaraiFailData {
 			if (db != null)
 				db.close();
 		}
-	}	
+	}*/	
 	
 	public void carianFailOnline(String noFail, String tarikhTerima,String tajukFail, String namaPemohon,String idKementerian) throws Exception {
 		
