@@ -789,7 +789,7 @@ Maklumat Permohonan telah berjaya disimpan.
       <ul class="TabbedPanelsTabGroup">
         <li class="TabbedPanelsTab" onClick="javascript:setSelected(0);" tabindex="1">MAKLUMAT TANAH</li>
         <li class="TabbedPanelsTab" onClick="javascript:setSelected(1);" tabindex="1">MUATNAIK DOKUMEN</li>
-        <!-- <li class="TabbedPanelsTab" onClick="javascript:setSelected(2);" tabindex="1">Senarai Semakan</li> -->
+        <li class="TabbedPanelsTab" onClick="javascript:setSelected(2);" tabindex="1">SENARAI SEMAKAN</li>
       </ul>
       
       <div class="TabbedPanelsContentGroup">
@@ -924,7 +924,7 @@ Maklumat Permohonan telah berjaya disimpan.
         
         <!-- END TAB 1 -->
         
-        
+        <!-- START TAB 2 -->
         <div class="TabbedPanelsContent">
         	<fieldset>
         		<legend><strong>&nbsp;Senarai Dokumen yang Disertakan</strong></legend>
@@ -1013,9 +1013,10 @@ Maklumat Permohonan telah berjaya disimpan.
 			#end
 			
         </div>
+      	<!-- END TAB 2 -->
       	
-      	
- 		<!-- <div class="TabbedPanelsContent">
+      	<!-- START TAB 3 -->
+ 		<div class="TabbedPanelsContent">
     	
     	#set ($checked1 = "")
 		#set ($checked2 = "")
@@ -1036,6 +1037,7 @@ Maklumat Permohonan telah berjaya disimpan.
 		#if ($List.semak7 == "1")#set ($checked7 = "checked")#end
     	#end
     	
+    	
 		<fieldset>
 		<legend><strong>Senarai Semakan</strong></legend>
 	
@@ -1053,48 +1055,34 @@ Maklumat Permohonan telah berjaya disimpan.
     			<td>&nbsp;</td>
     		 	<td><font color="red">$!M</font></td>
     			<td><input type="checkbox" name="cbsemaks2" $disability1 value="1" id="cbsemaks2" $checked2 >
-     		 		2. Sijil Carian Rasmi/ Persendirian yang terkini.</td>
-  			</tr>
-  
-  			<tr>
-    			<td>&nbsp;</td>
-    			<td>&nbsp;</td>
-    			<td><input type="checkbox" name="cbsemaks3" $disability1 value="1" id="cbsemaks3" $checked3 >
-      				3. Ulasan dari Jabatan-Jabatan Teknikal. </td>
-  			</tr>
- 
-  			<tr>
-    			<td>&nbsp;</td>
-    			<td>&nbsp;</td>
-    			<td><input type="checkbox" name="cbsemaks4" $disability1 value="1" id="cbsemaks4" $checked4 >
-      				4. Ulasan dari Jabatan Alam Sekitar.</td>
-  			</tr>
-  
-  			<tr>
-    			<td>&nbsp;</td>
-    			<td>&nbsp;</td>
-    			<td><input type="checkbox" name="cbsemaks5" $disability1 value="1" id="cbsemaks5" $checked5 >
-      				5. Persetujuan Jawatankuasa Pembangunan Daerah atau Jawatankuasa seumpamanya. </td>
-  			</tr>
-  
-  			<tr>
-    			<td>&nbsp;</td>
-    			<td><font color="red">$!M</font></td>
-    			<td><input type="checkbox" name="cbsemaks6" $disability1 value="1" id="cbsemaks6" $checked6 >
-      				6. Pengesahan peruntukan yang mencukupi termasuk kos penandaan dan lain-lain kos.</td>
-  			</tr>
-  
-  			<tr>
-    			<td>&nbsp;</td>
-    			<td>&nbsp;</td>
-   				<td><input type="checkbox" name="cbsemaks7" $disability1 value="1" id="cbsemaks7" $checked7 >
-      				7. Surat Perakuan segera (Borang I)</td>
+     		 		2. Pengesahan peruntukan yang mencukupi untuk membiayai kos pampasan kerosakan akibat kerja-kerja ukur dan kajian tanah.</td>
   			</tr>
     	</table>
     
 		</fieldset>
-    
-        </div> -->
+				#if($!id_status=="8")
+				<table width="100%" border="0">
+					<tr>
+						<td width="9%"><font color=red style="font-size: 10px">Perhatian
+								:</font></td>
+						<td width="91%">$!perhatian11</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>$!perhatian8</td>
+					</tr>
+					#if(($txtJumHM == $saiz_listTanah) && ($id_suburusan=="51" ||
+					$id_suburusan=="52")) #if($id_jawatan_user == $layer3 &&
+					$flag_semakan_online=="3")
+					<tr>
+						<td>&nbsp;</td>
+						<td>$!perhatian10</td>
+					</tr>
+					#end #end
+				</table>
+				#end
+			</div> 
+        <!-- END TAB 3 -->
         
       	
   </div> 
