@@ -694,7 +694,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 	/**
 	Fungsi hantar maklumat bantahan ke MT
 	*/
-	function hantarBantahan() {	
+/* 	function hantarBantahan() {	
 		var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
 		var idFail = "&idfail=$!id_fail";
 		var idHarta  = "&idharta="+$jquery('#id_hakmilikpb').val();
@@ -709,7 +709,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 		hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();	
 	
-	}
+	} */
 
 
 $jquery("#alert_bantahan1").html($jquery("#alert_bantahan1").text()).removeClass("blink");
