@@ -302,7 +302,7 @@ public class MTRegManager {
 	}
 	
 	public static PartyType getPartyPerayu(String idRuj
-		,String name,String umur,String gen,String noRef
+		,String name,String umur,String gen,String noRef,String refType
 		,String add,String add2,String add3,String postcode,String stateCode,String city){
 	    PartyType pt = new PartyType();
 	    pt.setPartyID(idRuj);
@@ -316,7 +316,14 @@ public class MTRegManager {
 	    pt.setPartyNationality("MYS"); //tiada rujukan| MYS
 	    pt.setPartyCountry("MYS");
 	    pt.setPartyGender(gen); //M,F, U-UNDEFIND
-	    pt.setPartyIDType("IC");	//IC = NRIC,GA = Government Agency
+	    /** 1)	IC = NRIC
+	    	     * 2)	PO = Police
+	    	     * 3)	PP = Passport
+	    	     * 4)	SO = Army
+	    	     * 5)	GA = Government Agency
+	    	     * 6)	OC = Old Identity Card
+	    	     * 7)	OT = Others */
+	    pt.setPartyIDType(refType);	//IC = NRIC (Remove dash -)
 	    //pt.setPartyIDNo1("760908035336");	//Identity No of Party If PartyIDType !=IC
 	    //NO IC
 	    pt.setPartyIDNo2(noRef);	    
@@ -390,9 +397,12 @@ public class MTRegManager {
 	  		while (rs.next()) {
 	  			//code = rs.getString("LOCATION");
 	  		    pt.setPartyID(rs.getString("ID_PEJABAT"));
+			    //pt.setPartyAddr1(rs.getString("NAMA_PEJABAT"));
+			    //pt.setPartyAddr2(rs.getString("ALAMAT1"));
+			    //pt.setPartyAddr3(rs.getString("ALAMAT2")+"\n"+rs.getString("ALAMAT3"));
 			    pt.setPartyAddr1(rs.getString("ALAMAT1"));
 			    pt.setPartyAddr2(rs.getString("ALAMAT2"));
-			    pt.setPartyAddr3(rs.getString("ALAMAT3"));
+			    pt.setPartyAddr3(rs.getString("ALAMAT2"));
 			    pt.setPartyPostcode(rs.getString("POSKOD"));
 			    pt.setPartyCity(rs.getString("BANDAR")); //tiada rujukan - Nama Bandar
 			    pt.setPartyState(getStateCode(rs.getInt("ID_NEGERI")));

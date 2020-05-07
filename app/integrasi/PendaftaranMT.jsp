@@ -9,6 +9,10 @@
 #set($jenisPengenalan = "")
 
 #foreach ( $senarai in $getMaklumatBantahan )
+
+	#set ($labelNoRef=$senarai.jenisPB)
+	#set ($noRef=$senarai.noPB)
+	#set ($jenisRef=$senarai.idJenisNoPB)
 	#set ($txtNamaPembantah=$senarai.nama)
    	#set ($txtNamaAgensi=$senarai.nama_agensi)
     #set ($txtAlamat1=$senarai.alamat1)
@@ -35,18 +39,14 @@
         #set ($no_hakmilik=$senarai.no_hakmilik)
         #set ($txtNoPt=$senarai.no_pt)
         #set ($no_lot=$senarai.no_lot)
-        #set ($flag_syarat=$senarai.flag_syarat)
-        #set ($ukuran_luas=$senarai.flag_penerima_pampasan)
-        #set ($amaun_pampasan=$senarai.flag_bahagian_pampasan)
-        #set ($terima_pampasan=$senarai.flag_ukur_luas)
-        #set ($umpuk_pampasan=$senarai.flag_pampasan)
         #set ($txdTkhAward=$senarai.tarikh_terima_award)
         #set ($txtPengambilanNo=$senarai.no_siasatan)
         #set ($txtAmaunTuntutan=$senarai.amaun_tuntutan)
         #set ($id_siasatan=$senarai.id_siasatan) 
-        #set ($desc_status_bantahan_ap=$senarai.desc_status_bantahan_ap)    
-        #set ($txtMaklumatBantahanTamat=$senarai.maklumat_bantahan_tamat_tempoh) 
     #end
+    
+#set($labelPem = "Pembantah")
+#set($labelResp = "Responden")
 
 <body>
 	<!-- <form name="f1"> -->
@@ -66,21 +66,50 @@
 				<tr>
 					<td colspan="">
 					<fieldset>
-					<legend>Maklumat Pembantah</legend>
+					<legend>Maklumat $!labelPem</legend>
 					    <table width="100%" border="0"> 
 					        <tr>
 					          <td width="1%"></td>
 					          <td width="29%">Nama</td>
 					          <td>:</td>
-					          <td colspan="2"><input type="text" name="txtNamaPembantah" id="txtNamaPembantah" value="$!txtNamaPembantah" size="70" class="disabled" tabindex="12" />
+					          <td colspan="2"><input type="text" name="txtNamaPembantah" id="txtNamaPembantah" value="$!txtNamaPembantah" size="50" class="disabled" tabindex="12" />
 					          <input type="hidden" name="txtIdKementerian" id="txtIdKementerian" value="$!txtIdKementerian" /></td>
 					        </tr>
-<!-- 					        <tr>
+ 					        
+ 					        <tr>
 					          <td width="1%"></td>
-					          <td>Nama Agensi</td>
+					          <td>$!labelNoRef</td>
 					          <td>&nbsp;</td>
-					          <td colspan="2"><input type="text" name="txtNamaAgensi" id="txtNamaAgensi" value="$!txtNamaAgensi" size="70" tabindex="12" class="disabled" readonly /></td>
-					        </tr> -->
+					          <td colspan="2"><input type="text" name="noRef" id="noRef" value="$!noRef" size="20" tabindex="12" class="disabled" readonly /></td>
+					        </tr> 
+					#if($jenisRef.equals("1") 
+						|| $jenisRef.equals("11")
+						|| $jenisRef.equals("3")
+						|| $jenisRef.equals("4")
+						|| $jenisRef.equals("5")
+						|| $jenisRef.equals("6")) 
+		       			 <tr>
+					          <td width="1%"></td>
+					          <td>Jantina</td>
+					          <td>:</td>
+					          <td colspan="2">
+					          	<select name="jantina" id="jantina" class="mediumselect" style="text-transform:uppercase;" onblur="uppercase()">
+                               		<option value="U" style="text-transform:uppercase;" onblur="uppercase()">Sila Pilih Jantina</option>
+                                   	<option value="M" style="text-transform:uppercase;" onblur="uppercase()">Lelaki</option>
+                                 	<option value="F" style="text-transform:uppercase;" onblur="uppercase()">Perempuan</option>
+                                </select>
+					          </td>
+					        </tr>  
+		       			 	<tr>
+					          <td width="1%"></td>
+					          <td>Umur</td>
+					          <td>:</td>
+					          <td colspan="2">
+					          	<input type="number" name="umur" id="umur" value="$!txtUmur" size="3" maxlength="2" tabindex="12" />
+					          </td>
+					        </tr>         		
+			 		#end
+					        
 					        <tr>
 					          <td width="1%"></td>
 					          <td>Alamat</td>
@@ -99,6 +128,12 @@
 					            <td></td>
 					            <td colspan="2"><input type="text" name="txtAlamat3" id="txtAlamat3" value="$!txtAlamat3" size="70" class="disabled" readonly tabindex="14" /></td>
 					        </tr> 
+					 <!--        <tr>
+					            <td width="1%"></td>
+					            <td>&nbsp;</td>
+					            <td></td>
+					            <td colspan="2"><input type="text" name="txtBandar" id="txtBandar" value="$!txtAlamat3" size="70" class="disabled" readonly tabindex="14" /></td>
+					        </tr> --> 
 					        <tr>
 					          <td width="1%"></td>
 					          <td>Poskod</td>
@@ -118,7 +153,65 @@
 				</tr>
 				<tr>
 					<td></td>
+				</tr>
+				<tr>
+					<td colspan="">
+					<fieldset>
+					<legend>Maklumat $!labelResp</legend>
+					    <table width="100%" border="0"> 
+
+					        <tr>
+					          <td width="1%"></td>
+					          <td width="29%">Nama</td>
+					          <td>:</td>
+					          <td colspan="2"><input type="text" name="txtNamaResp" id="txtNamaPembantah" value="$!txtNamaResp" size="50" class="disabled" tabindex="12" />
+					          <input type="hidden" name="txtIdResp" id="txtIdResp" value="$!txtIdResp" /></td>
+					        </tr>
+					        <tr>
+      							<td width="1%"></td>
+					          	<td width="29%">PTG/PTD</td>
+					          	<td>:</td>
+					          	<td>$!socPejabat</td>
+							</tr>					        
+							<tr>
+					          <td width="1%"></td>
+					          <td>Alamat</td>
+					          <td>:</td>
+					          <td colspan="2"><input type="text" name="txtAlamatResp1" id="txtAlamatResp1" value="$!txtAlamatResp1" size="70" class="disabled" readonly tabindex="12" /></td>
+					        </tr>  
+					        <tr>
+					            <td width="1%"></td>
+					            <td>&nbsp;</td>
+					            <td></td>
+					            <td colspan="2"><input type="text" name="txtAlamatResp2" id="txtAlamatResp2" value="$!txtAlamatResp2" size="70" class="disabled" readonly tabindex="13" /></td>
+					        </tr> 
+					        <tr>
+					            <td width="1%"></td>
+					            <td>&nbsp;</td>
+					            <td></td>
+					            <td colspan="2"><input type="text" name="txtAlamatResp3" id="txtAlamatResp3" value="$!txtAlamat3Resp" size="70" class="disabled" readonly tabindex="14" /></td>
+					        </tr> 
+					        <tr>
+					          <td width="1%"></td>
+					          <td>Poskod</td>
+					          <td>:</td>
+					          <td colspan="2"><input type="text" name="txtPoskodResp" id="txtPoskodResp" value="$!txtPoskodResp" maxlength="5" size="5" onkeyup="validateNumber(this,this.value);" class="disabled" readonly tabindex="15" /></td>
+					        </tr>
+					        <tr>
+					          <td width="1%"></td>
+					          <td>Negeri</td>
+					          <td>:</td>
+					          <td colspan="2"><input type="text" name="txtNamaNegeriResp" id="txtNamaNegeriResp" value="$!txtNamaNegeriResp" size="50" onblur="this.value=this.value.toUpperCase();" style="text-transform:uppercase;" class="disabled" readonly="readonly" tabindex="14" />
+					          <input type="hidden" name="txtIdNegeriResp" id="txtIdNegeriResp" value="$!id_negeriResp" /></td>
+					        </tr>
+        				</table>
+					</fieldset>				
+					</td>
+				</tr>
+				<tr>
+					<td></td>
 				</tr>	
+					
 				<tr>
 					<td colspan="">				
 					<fieldset id="senarai_dokumen" >
@@ -185,7 +278,8 @@
 					          	<td width="29%">Nama Mahkamah</td>
 					          	<td>:</td>
 					          	<td>$!socMT</td>
-							</tr>				<div id="div_viewPerbicaraan"></div>
+							</tr>				
+							<div id="div_viewPerbicaraan"></div>
 							
 							<tr>
 							<div id="divmahkhamah">
@@ -249,7 +343,7 @@
     	<input type="hidden" name="namaPejabat" id="namaPejabat" value="$!nP">
 		<input type="hidden" name="jenisKepentingan" id="jenisKepentingan" value="$!jenisKepentingan">
 		<input type="hidden" name="idnegeri" id="idnegeri" value="$!idnegeri">
-		<input type="hidden" name="jeniskp" id="jeniskp" value="$!jeniskp">
+		<input type="text" name="jeniskp" id="jeniskp" value="$!jenisRef">
 		<input type="hidden" name="successSend" id="successSend" value="$!successSend">
         <input type="hidden" name="idPermohonan" id="idPermohonan" value="$!idPermohonan">
 		<input type="hidden" name="userid" id="userid" value='$!{session.getAttribute("_ekptg_user_id")}'/> 
@@ -269,7 +363,6 @@
 
 	function pilihMT(){
 		//alert('pilihMT='+param);
-
 		document.${formName}.method="post";
 		document.${formName}.action="?"+params+"&mode=getmahkamah";	
 		//document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian";
@@ -278,6 +371,15 @@
 		//
 		document.${formName}.submit();
 		//doDivAjaxCall${formName}('getmahkamah','divmahkhamah','mode=terimapohoncarian');		
+		
+	}
+
+	function pilihPejabat(){
+		//alert('pilihMT='+param);
+		document.${formName}.method="post";
+		document.${formName}.action="?"+params+"&mode=getpejabat";	
+		document.${formName}.command.value = "getpejabat";	
+		document.${formName}.submit();
 		
 	}
 
@@ -292,22 +394,68 @@
 			}
 		}
 		//alert(bilangan);
+		if(document.${formName}.jeniskp.value == ""){
+			alert('Sila pastikan maklumat Pembantah diisi.');
+	  		//document.${formName}.umur.focus(); 
+			return;	
+			
+		}
+		
+		if('$jenisRef' == '1' 
+			||'$jenisRef' == '3' 
+			||'$jenisRef' == '4' 
+			||'$jenisRef' == '5' 
+			||'$jenisRef' == '6' 
+			||'$jenisRef' == '11' ){
+			if(document.${formName}.jantina.value == "U"){
+				alert('Sila pastikan maklumat Jantina $!labelPem telah dipilih.');
+		  		document.${formName}.jantina.focus(); 
+				return;			
+			}else if(document.${formName}.umur.value == ""){
+				alert('Sila pastikan maklumat Umur $!labelPem diisi.');
+		  		document.${formName}.umur.focus(); 
+				return;			
+			}
+			
+		}
+		
 		if(document.${formName}.txtAlamat1.value == ""){
-			alert('Sila pastikan maklumat Alamat diisi.');
+			alert('Sila pastikan maklumat Alamat $!labelPem diisi.');
 	  		document.${formName}.txtAlamat1.focus(); 
 			return; 
 		}else if(document.${formName}.txtAlamat2.value == ""){
-			alert('Sila pastikan maklumat Alamat diisi.');
+			alert('Sila pastikan maklumat Alamat $!labelPem  diisi.');
 	  		document.${formName}.txtAlamat2.focus(); 
 			return; 
 		}else if(document.${formName}.txtPoskod.value == ""){
-			alert('Sila pastikan maklumat Poskod diisi.');
+			alert('Sila pastikan maklumat Poskod $!labelPem diisi.');
 	  		document.${formName}.txtPoskod.focus(); 
 			return; 
 		}else if(document.${formName}.txtNamaNegeri.value == ""){
-			alert('Sila pastikan maklumat Negeri diisi.');
+			alert('Sila pastikan maklumat Negeri $!labelPem diisi.');
 	  		document.${formName}.socNegeri.focus(); 
 			return; 
+		
+		}else if(document.${formName}.txtAlamatResp1.value == ""){
+			alert('Sila pastikan maklumat Alamat $!labelResp diisi.');
+	  		document.${formName}.txtAlamatResp1.focus(); 
+	  		return; 
+		
+		}else if(document.${formName}.txtAlamatResp2.value == ""){
+			alert('Sila pastikan maklumat Alamat $!labelResp diisi.');
+	  		document.${formName}.txtAlamatResp2.focus(); 
+			return; 
+
+		}else if(document.${formName}.txtPoskodResp.value == ""){
+			alert('Sila pastikan maklumat Poskod $!labelResp diisi.');
+	  		document.${formName}.txtPoskodResp.focus(); 
+			return; 
+		
+		}else if(document.${formName}.txtNamaNegeriResp.value == ""){
+			alert('Sila pastikan maklumat Negeri $!labelResp diisi.');
+	  		document.${formName}.socNegeriResp.focus(); 
+	  		return;			
+		
 		}else if(document.${formName}.kodmt.value == ""){
 			alert('Sila pastikan Maklumat Mahkamah telah dipilih.');
 			return;
@@ -341,73 +489,9 @@
 		}
 	
 	}
-
-function hantarPermohonanPetioner() {
-	if(document.f1.noPetisyen.value==""){
-		alert('Sila pastikan No. Petisyen telah diisi');
-		return;
-	} else if(document.f1.namaSimati.value==""){
-		alert('Sila pastikan Nama Simati telah diisi');
-		return;
-	} else if(document.f1.noKPSimatiBaru.value==""){
-		alert('Sila pastikan MyId Simati telah diisi');
-		return;
-	} else if(document.f1.tarikhMati.value==""){
-		alert('Sila pastikan Tarikh Mati telah diisi');
-		return;
-	} else if(document.f1.namaPemohon.value==""){
-		alert('Sila pastikan Nama Pemohon telah diisi');
-		return;
-	} else if(document.f1.noKPPemohon.value==""){
-		alert('Sila pastikan No. Pengenalan Pemohon telah diisi');
-		return;
-	} else if(document.f1.hubSimatiPemohon.value==""){
-		alert('Sila pastikan Hubungan Pemohon dengan Simati telah diisi');
-		return;
-	} else if(document.f1.kodPejabat.value==""){
-		alert('Kod Pejabat tiada data. Sila pastikan unit pejabat anda ditetapkan dengan betul supaya maklumat dihantar adalah tepat');
-		return;
-	} else {
-		input_box = confirm("Sila pastikan butiran yang dihantar adalah tepat!");
-		if (input_box == true) {
-			document.f1.method="post";
-			document.f1.action="ekptg.view.ppk.FrmIntegrasiMT?command=hantarPermohonanPetioner";
-			document.f1.submit();			
-		}
-	}
-}
-
-function cetakPPKBorangB(idfail,kodPejabat) {
 	
-
-	var hantar = "0";
-	
-	if(document.f1.successSend.value=="ya"){
-		hantar = "0";
-	
-	}else{
-		hantar = "1";
+	function tutupTetingkap() {
+		window.close();
 	}
 	
-	   var param = "?template=PPKBorangB&hantar="+hantar+"&idfail="+idfail+"&kodpejabat="+kodPejabat+"&userlogin="+$!{session.getAttribute("_ekptg_user_id")};
-		//var url = "../x/${securityToken}/ekptg.report.ppk.PPKBorangB?idfail="+idfail+"&kodPejabat="+kodPejabat;   
-	    var url = "../../servlet/ekptg.report.ppk.PPKBorangB"+param; 
-	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-	    if ((document.window != null) && (!hWnd.opener))
-	    hWnd.opener = document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-	    
-	}
-	function cetakBorangB2_A4(idFail) {
-	    var url = "../../servlet/ekptg.report.ppk.PPKBorangB?template=BorangB2_A4&idfail="+idFail;  
-	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-    	if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener = document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-		
-	}
-	
-function tutupTetingkap() {
-	window.close();
-}
 </script>

@@ -628,7 +628,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
 		//alert(param);
 		var url = "../x/${securityToken}/ekptg.view.ppt.bantahan.IntegrasiMT?"+param+"&command=bantahanap&frmFrom=frmPrmhnnSek8DaftarSek8";
-		var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=no,scrollbars=yes');
+		var hWnd = window.open(url,'Cetak','width=625,height=575, resizable=no,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();	

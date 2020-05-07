@@ -3,7 +3,6 @@ package ekptg.model.utils.rujukan;
 //import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
 import java.util.Vector;
 
 import lebah.db.Db;
@@ -16,9 +15,7 @@ import org.apache.log4j.Logger;
 //import ekptg.helpers.EkptgCache;
 //import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujjenishakmilik;
-//import ekptg.model.htp.UtilHTML;
-//import ekptg.model.ppk.PPKUtilData;
-//import ekptg.model.ppk.PPKUtilHTML;
+import ekptg.model.entities.Tblrujpejabat;
 
 
 public class DBPPT extends ekptg.helpers.DB{
@@ -76,5 +73,43 @@ public class DBPPT extends ekptg.helpers.DB{
 		
 	}	
 	
+	public static Vector<Tblrujpejabat> getMTByPermohonan(String idPermohonan) throws Exception {
+		String key = "DBPPT.getMTByPermohonan";
+		Element cachedObject = myCache.get(key);
+		if (cachedObject != null) {
+			return (Vector<Tblrujpejabat>) cachedObject.getObjectValue();
+		} else {
+			Db db = null;
+			String sql = "";
+			Vector<Tblrujpejabat> v = null;
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+				r.add("id_pejabat");
+				r.add("nama_pejabat");
+				r.add("id_permohonan",idPermohonan);
+				sql = r.getSQLSelect("VPPT_PTGPTD");
+//				myLog.info("sql="+sql);
+				ResultSet rs = stmt.executeQuery(sql);
+				v = new Vector<Tblrujpejabat>();
+				Tblrujpejabat j = null;
+				while (rs.next()) {
+					j = new Tblrujpejabat();
+					j.setIdPejabat(rs.getLong("id_pejabat"));
+					j.setNamaPejabat(rs.getString("nama_pejabat"));
+					v.addElement(j);
+					
+				}
+				myCache.put(new Element(key, v));
+				return v;
+				
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+		
+	}	
 	
 }
