@@ -717,7 +717,7 @@ public class FrmTKRSenaraiFailData {
 
 			String kodUrusan = "879";
 
-			noFail = generateNoFail(kodUrusan,
+			noFail = generateNoFail(session, kodUrusan,
 					getKodKementerian(idKementerianTanah), idKementerianTanah,
 					getKodNegeri(idNegeriTanah), idNegeriTanah);
 			r.add("NO_FAIL", noFail);
@@ -1017,7 +1017,7 @@ public class FrmTKRSenaraiFailData {
 		return idFailString;
 	}
 
-	public String generateNoFail(String kodUrusan, String kodKementerian,
+	public String generateNoFail(HttpSession session, String kodUrusan, String kodKementerian,
 			String idKementerian, String kodNegeri, String idNegeri)
 			throws Exception {
 		String noFail = "";
@@ -1028,7 +1028,7 @@ public class FrmTKRSenaraiFailData {
 				+ "/"
 				+ kodNegeri
 				+ "-"
-				+ File.getSeqNo(4, 6, Integer.parseInt(idKementerian),
+				+ File.getSeqNo(session, 4, 6, Integer.parseInt(idKementerian),
 						Integer.parseInt(idNegeri));
 
 		return noFail;

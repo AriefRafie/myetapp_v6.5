@@ -426,7 +426,7 @@ public class FrmAPBSenaraiFailData {
 			r.add("TAJUK_FAIL", hash.get("perkara"));
 
 			String noFail = "";
-			noFail = generateNoFail();
+			noFail = generateNoFail(session);
 			r.add("NO_FAIL", noFail);
 			r.add("NO_FAIL_ROOT", noFail);
 
@@ -581,9 +581,9 @@ public class FrmAPBSenaraiFailData {
 		return idFailString;
 	}
 
-	public String generateNoFail() throws Exception {
+	public String generateNoFail(HttpSession session) throws Exception {
 		String noFail = "";
-		noFail = "JKPTG(S)/BPHP/8-2 SK " + File.getSeqNo(4, 9);
+		noFail = "JKPTG(S)/BPHP/8-2 SK " + File.getSeqNo(session, 4, 9);
 
 		return noFail;
 	}

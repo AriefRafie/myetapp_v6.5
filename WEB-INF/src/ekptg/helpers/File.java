@@ -19,12 +19,12 @@ public class File implements Serializable  {
 	public static final String SEQ_TABLE = "TBLRUJSEQFAIL";
 	static Logger myLogger = Logger.getLogger(ekptg.helpers.File.class);
 
-	public static void main (String args[]) {
+	public static void main (String args[], HttpSession session) {
 		try {
 			// Sample
-			System.out.println("SeqNo1:"+File.getSeqNoByYearMonth(5,1,2008,7));
-			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(5,1,2009,8));
-			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(5,1,2008,6));
+			System.out.println("SeqNo1:"+File.getSeqNoByYearMonth(session, 5,1,2008,7));
+			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(session, 5,1,2009,8));
+			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(session, 5,1,2008,6));
 			
 			/*System.out.println("Jilid SeqNo2:"+File.getSeqNoJilid(5,1,1,1));
 			System.out.println("Subjaket SeqNo2:"+File.getSeqNoSubjaket(5,1,1,1));
@@ -50,13 +50,13 @@ public class File implements Serializable  {
 	}
 	/********   NO_TURUTAN_SUBJAKET   **********/
 	
-	public static synchronized int getSeqNoSubjaket(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri) throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri,0,false,true);
+	public static synchronized int getSeqNoSubjaket(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri) throws DbException {
+		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,0,false,true);
 	}
 	
-	public static synchronized int getSeqNoSubjaket(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
+	public static synchronized int getSeqNoSubjaket(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
 			   int id_daerah) throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,false,true);
+		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,false,true);
 	}
 	
 	public static synchronized int getSeqNoSubjaket(int id_fail) throws DbException {
@@ -65,73 +65,73 @@ public class File implements Serializable  {
 	
 	/********   NO_TURUTAN_JILID   **********/
 	
-	public static synchronized int getSeqNoJilid(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri) throws DbException {
-		return getSeqNoJilid(id_seksyen,id_urusan,id_kementerian,id_negeri,0, true,false);
+	public static synchronized int getSeqNoJilid(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri) throws DbException {
+		return getSeqNoJilid(session, id_seksyen,id_urusan,id_kementerian,id_negeri,0, true,false);
 	}
 	
-	public static synchronized int getSeqNoJilid(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
+	public static synchronized int getSeqNoJilid(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
 			   int id_daerah) throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,true,false);
+		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,true,false);
 	}
 	
 	/********   NO_TURUTAN   **********/
 	
-	public static synchronized int getSeqNoFailPenguatkuasaan(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri, int tahun) throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri, 0, false, false, tahun);
+	public static synchronized int getSeqNoFailPenguatkuasaan(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri, int tahun) throws DbException {
+		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri, 0, false, false, tahun);
 	}
 	
-	public static synchronized int getSeqNo(int id_seksyen,int id_urusan) throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, 0, 0,0,false,false);
+	public static synchronized int getSeqNo(HttpSession session, int id_seksyen,int id_urusan) throws DbException {
+		return getSeqNo(session, id_seksyen, id_urusan, 0, 0,0,false,false);
 	}
 	
-	public static synchronized int getSeqNo(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri) throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri,0,false,false);
+	public static synchronized int getSeqNo(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri) throws DbException {
+		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,0,false,false);
 	}
 	
-	public static synchronized int getSeqNo(int id_seksyen,int id_urusan,int id_kementerian
+	public static synchronized int getSeqNo(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian
 		,int id_negeri,int id_daerah) throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,false,false);
+		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,false,false);
 	}
 	
-	public static synchronized int getSeqNoByYear(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,int tahun) 
+	public static synchronized int getSeqNoByYear(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,int tahun) 
 		throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri,0,false,false);
+		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,0,false,false);
 	}
 	//25022012 - syah
-	public static synchronized int getSeqNoByYearPPT(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,int tahun) 
+	public static synchronized int getSeqNoByYearPPT(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,int tahun) 
 		throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri,tahun,false,false);
+		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,tahun,false,false);
 	}
 	
-	public static synchronized int getSeqNoByYearMonth(int id_seksyen,int id_urusan,int tahun,int bulan) 
+	public static synchronized int getSeqNoByYearMonth(HttpSession session, int id_seksyen,int id_urusan,int tahun,int bulan) 
 		throws DbException {
-		return getSeqNo(id_seksyen, id_urusan,0,0,0,false,false,tahun,bulan);
+		return getSeqNo(session, id_seksyen, id_urusan,0,0,0,false,false,tahun,bulan);
 	}
 	
-	public static synchronized int getSeqNo(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
+	public static synchronized int getSeqNo(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
 		int id_daerah,boolean getNoJilid,boolean getNoSubjaket) throws DbException {
-		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,getNoJilid,getNoSubjaket,0,0);
+		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,getNoJilid,getNoSubjaket,0,0);
 	}	
 	
-	public static synchronized int getSeqNoJilid(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
+	public static synchronized int getSeqNoJilid(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
 		int id_daerah,boolean getNoJilid,boolean getNoSubjaket) throws DbException {
-		return getSeqNoJilid(id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,0);
+		return getSeqNoJilid(session, id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,0);
 	}
 	
-	public static synchronized int getSeqNo(int id_seksyen,int id_urusan,int id_kementerian
+	public static synchronized int getSeqNo(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian
 		,int id_negeri,int id_daerah
 		,boolean getNoJilid,boolean getNoSubjaket,int tahun) throws DbException  {
-		return getSeqNo(id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,tahun,0);
+		return getSeqNo(session, id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,tahun,0);
 
 	}
 	
-	public static synchronized int getSeqNo(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
+	public static synchronized int getSeqNo(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
 		int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan) throws DbException  {
-		return getSeqNo(new Db(),id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,tahun,bulan);
+		return getSeqNo(session, new Db(),id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,tahun,bulan);
 
 	}
 	
-	public static synchronized int getSeqNo(Db db,int id_seksyen,int id_urusan,int id_kementerian
+	public static synchronized int getSeqNo(HttpSession session, Db db,int id_seksyen,int id_urusan,int id_kementerian
 		,int id_negeri,int id_daerah
 		,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan) 
 		throws DbException  {		
@@ -164,7 +164,7 @@ public class File implements Serializable  {
 	          
 	          if (rs.next()) found = true;
 	          if (found) {
-	        	  f.increaseSeq(db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,getNoJilid,getNoSubjaket,bulan,tahun);     
+	        	  f.increaseSeq(session, db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,getNoJilid,getNoSubjaket,bulan,tahun);     
 	          } else {
 	        	  f.addNew(db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,tahun,bulan);	        	  
 	          }
@@ -268,7 +268,7 @@ public class File implements Serializable  {
 }
 
 
-	public static synchronized int getSeqNoJilid(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
+	public static synchronized int getSeqNoJilid(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
 			   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun) throws DbException  {
 		Db db = null;
 		Connection conn = null;
@@ -296,7 +296,7 @@ public class File implements Serializable  {
 	          if (rs.next()) found = true;
 	          if (found) {
 	        	  if (rs.getInt("NO_TURUTAN_JILID") != 0){
-	        		  f.increaseSeq(db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,getNoJilid,getNoSubjaket,0,0);
+	        		  f.increaseSeq(session, db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,getNoJilid,getNoSubjaket,0,0);
 	        	  }else {
 	        		  f.addNewSeqJilid(db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,getNoJilid,getNoSubjaket);	        	  
 	        	  }
@@ -645,7 +645,7 @@ public class File implements Serializable  {
 		}
 	}
 	
-	public void increaseSeq(Db db,int id_seksyen,int id_urusan,int id_kementerian
+	public void increaseSeq(HttpSession session, Db db,int id_seksyen,int id_urusan,int id_kementerian
 		,int id_negeri,int id_daerah
 		,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan) throws DbException  {
 		//Db db = null;
@@ -671,7 +671,7 @@ public class File implements Serializable  {
 				db.getStatement().executeUpdate(sb.toString());
 			
 				AuditTrail at = new AuditTrail();
-				at.logActivity(id_urusan+"","","2",null,null,"","increaseSeq CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ");
+				at.logActivity(id_urusan+"","","2",null,session,"","increaseSeq CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ");
 			
 			} catch (SQLException x) {x.printStackTrace();}
 		
