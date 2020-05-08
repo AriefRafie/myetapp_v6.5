@@ -13,6 +13,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import ekptg.helpers.AuditTrail;
@@ -33,8 +35,8 @@ public class FrmPLPSenaraiFailData {
 	private Vector beanMaklumatBorangK = null;
 	private Vector beanMaklumatPermohonan = null;
 	private Vector beanMaklumatPemohon = null;
-
 	private Vector beanMaklumatHakmilik = null;
+	static Logger myLogger = Logger.getLogger(ekptg.model.php2.FrmPLPSenaraiFailData.class);
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -239,7 +241,9 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			sql = sql + " ORDER BY B.TARIKH_TERIMA DESC NULLS LAST ";
+			myLogger.debug("File sql: "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
+			
 
 			Hashtable h;
 			int bil = 1;
