@@ -1,7 +1,22 @@
 
 28042020--------------------------------------------------------------------------------
+--2020/04/29 Run Staging
+ALTER TABLE TBLRUJJENISPB ADD FLAG_AKTIF VARCHAR(2) DEFAULT 'Y';
 
-ALTER TABLE TBLRUJJENISPB ADD FLAG_AKTIF VARCHAR(2);
+UPDATE TBLRUJJENISPB 
+SET FLAG_AKTIF='Y'
+
+26/04/2020 Dari Rozi --------------------------------------------------------------------------------
+BLPPTHAKMILIKSTRATA 
+TBLRUJJENISHAKMILIK (LIST > Tambah TT - STRATA)
+
+PPT 41
+DATABASE : tblpptpermohonan
+TAMBAH COLUMN 
+TARIKH_PENDUDUKAN_MULA (DATE) 
+TARIKH_PENDUDUKAN_AKHIR (DATE) 
+TEMPOH_PENDUDUKAN (VARCHAR 5)
+
 
 --02/03/2020
 02032020--------------------------------------------------------------------------------

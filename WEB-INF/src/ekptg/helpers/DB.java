@@ -4638,22 +4638,22 @@ public class DB extends EkptgCache implements Serializable {
 		}
 	}
 
-	public static Vector<Hashtable<String, Comparable>> getMahkamahByNegeri(Long idnegeri) throws Exception {
+	public static Vector<Hashtable<String, Object>> getMahkamahByNegeri(Long idnegeri) throws Exception {
 		Db db = null;
 		String sql = "";
 		sql = "Select pj.id_pejabat,pj.kod_pejabat,pj.nama_pejabat,pj.alamat1,pj.alamat2,pj.alamat3,pj.poskod,pj.no_tel,pj.no_fax, da.nama_daerah from tblrujpejabat pj, tblrujdaerah da "
 				+ " where pj.id_jenispejabat = 8 and pj.id_daerah = da.id_daerah and pj.id_negeri="
 				+ idnegeri
 				+ " ORDER BY lpad(id_pejabat,10)";
-		myLogger.info("ALAMAT MAHKAMAH :: " + sql);
+//		myLogger.info("ALAMAT MAHKAMAH :: " + sql);
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			Vector<Hashtable<String, Comparable>> v = new Vector<Hashtable<String, Comparable>>();
-			Hashtable<String, Comparable> h;
+			Vector<Hashtable<String, Object>> v = new Vector<Hashtable<String, Object>>();
+			Hashtable<String, Object> h;
 			while (rs.next()) {
-				h = new Hashtable<String, Comparable>();
+				h = new Hashtable<String, Object>();
 				h.put("id", rs.getLong("id_pejabat"));
 				h.put("kod_pejabat", rs.getString("kod_pejabat") == null ? "" : rs.getString("kod_pejabat"));
 				h.put("namaPejabat", rs.getString("nama_pejabat") == null ? "" : rs.getString("nama_pejabat"));

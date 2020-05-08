@@ -25,6 +25,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
     #set ($keterangan=$senarai.keterangan) 
     #set ($nama_agensi=$senarai.nama_agensi)
     #set ($tarikh_permohonan=$senarai.tarikh_permohonan)   
+    
 #end 
 
 #set ( $id_status = $statusFail.get("id_status") )
@@ -694,7 +695,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 	/**
 	Fungsi hantar maklumat bantahan ke MT
 	*/
-/* 	function hantarBantahan() {	
+ 	function hantarBantahan() {	
 		var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
 		var idFail = "&idfail=$!id_fail";
 		var idHarta  = "&idharta="+$jquery('#id_hakmilikpb').val();
@@ -704,12 +705,12 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
 		//alert(param);
 		var url = "../x/${securityToken}/ekptg.view.ppt.bantahan.IntegrasiMT?"+param+"&command=bantahanpb&frmFrom=frmPrmhnnSek8DaftarSek8";
-		var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=no,scrollbars=yes');
+		var hWnd = window.open(url,'Cetak','width=625,height=575, resizable=no,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();	
 	
-	} */
+	} 
 
 
 $jquery("#alert_bantahan1").html($jquery("#alert_bantahan1").text()).removeClass("blink");
