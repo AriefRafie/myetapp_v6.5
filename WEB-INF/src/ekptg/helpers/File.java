@@ -9,22 +9,24 @@ import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.DbException;
-import lebah.portal.velocity.VTemplate;
 
 import org.apache.log4j.Logger;
 
 
-public class File implements Serializable  {
-	
+public class File implements Serializable  {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7670816347687837477L;
 	public static final String SEQ_TABLE = "TBLRUJSEQFAIL";
-	static Logger myLogger = Logger.getLogger(ekptg.helpers.File.class);
+	static Logger myLog = Logger.getLogger(ekptg.helpers.File.class);
 
 	public static void main (String args[], HttpSession session) {
 		try {
 			// Sample
-			System.out.println("SeqNo1:"+File.getSeqNoByYearMonth(session, 5,1,2008,7));
-			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(session, 5,1,2009,8));
-			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(session, 5,1,2008,6));
+//			System.out.println("SeqNo1:"+File.getSeqNoByYearMonth(session, 5,1,2008,7));
+//			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(session, 5,1,2009,8));
+//			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(session, 5,1,2008,6));
 			
 			/*System.out.println("Jilid SeqNo2:"+File.getSeqNoJilid(5,1,1,1));
 			System.out.println("Subjaket SeqNo2:"+File.getSeqNoSubjaket(5,1,1,1));
@@ -35,20 +37,20 @@ public class File implements Serializable  {
 			ex.printStackTrace();
 		}
 	}
-	/******** NO_TURUTAN_ADUAN *****************/
+	/** NO_TURUTAN_ADUAN */
 	public static synchronized int getSeqNoAduanOnline(int id_jenisaduan) throws DbException {
 		return getSeqNoAduan(id_jenisaduan);
 	}
 	
-	/******** NO_TURUTAN_FPX********************/
+	/** NO_TURUTAN_FPX */
 	public static synchronized int getSeqNoFPXOnline(int id_Jenisbayaran) throws DbException {
 		return getSeqNoFPX(id_Jenisbayaran);
 	}
-	/******** NO_TURUTAN_INTERNET_BANKING ********************/
+	/** NO_TURUTAN_INTERNET_BANKING  */
 	public static synchronized int getSeqNoInternetBankOnline(int id_Jenisbayaran) throws DbException {
 		return getSeqNoInternetBank(id_Jenisbayaran);
 	}
-	/********   NO_TURUTAN_SUBJAKET   **********/
+	/**   NO_TURUTAN_SUBJAKET */
 	
 	public static synchronized int getSeqNoSubjaket(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri) throws DbException {
 		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,0,false,true);
@@ -63,8 +65,7 @@ public class File implements Serializable  {
 		return getSeqSubjaket(id_fail,true);
 	}
 	
-	/********   NO_TURUTAN_JILID   **********/
-	
+	/**   NO_TURUTAN_JILID  */
 	public static synchronized int getSeqNoJilid(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri) throws DbException {
 		return getSeqNoJilid(session, id_seksyen,id_urusan,id_kementerian,id_negeri,0, true,false);
 	}
@@ -74,8 +75,7 @@ public class File implements Serializable  {
 		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,true,false);
 	}
 	
-	/********   NO_TURUTAN   **********/
-	
+	/**   NO_TURUTAN */	
 	public static synchronized int getSeqNoFailPenguatkuasaan(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri, int tahun) throws DbException {
 		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri, 0, false, false, tahun);
 	}
@@ -135,7 +135,7 @@ public class File implements Serializable  {
 		,int id_negeri,int id_daerah
 		,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan) 
 		throws DbException  {		
-		myLogger.debug("File SEQNO:"+id_seksyen+"-"+id_urusan);
+		myLog.debug("File SEQNO:"+id_seksyen+"-"+id_urusan);
 		
 		//Db db = null;
 		//Connection conn = null;
@@ -199,23 +199,22 @@ public class File implements Serializable  {
 	}
 	
 	public static synchronized int getSeqNoPPK(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
-			   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun) throws DbException  {
+		int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun) throws DbException  {
 		return getSeqNoPPK(session,id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,tahun,0);
 
 	}
 	
 	public static synchronized int getSeqNoPPK(HttpSession session,int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
-			   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan) throws DbException  {
+	   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan) throws DbException  {
 		return getSeqNoPPK(session,new Db(),id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,getNoJilid,getNoSubjaket,tahun,bulan);
 
 	}
 	
 	//razman add	
 	public static synchronized int getSeqNoPPK(HttpSession session,Db db,int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
-			   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan ) 
-			throws DbException  {
-			
-			myLogger.debug("File getSeqNoPPK SEQNO:"+id_seksyen+"-"+id_urusan);
+		int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun,int bulan ) 
+		throws DbException  {
+		myLog.debug("File getSeqNoPPK SEQNO:"+id_seksyen+"-"+id_urusan);
 			
 			//Db db = null;
 			//Connection conn = null;
@@ -239,7 +238,7 @@ public class File implements Serializable  {
 			if (tahun > 0) sb.append(" AND tahun=" +tahun);
 			if (bulan > 0) sb.append(" AND bulan=" +bulan);
 			
-			myLogger.info(">>>>>>>>>> getSeqNoPPK :: "+sb.toString());
+			myLog.info(">>>>>>>>>> getSeqNoPPK :: "+sb.toString());
 			ResultSet rs = db.getStatement().executeQuery(sb.toString()); 
 			
 			if (rs.next()) found = true;
@@ -265,11 +264,11 @@ public class File implements Serializable  {
 			}
 			
 			return seqno;
-}
-
+	
+	}
 
 	public static synchronized int getSeqNoJilid(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
-			   int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun) throws DbException  {
+		int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun) throws DbException  {
 		Db db = null;
 		Connection conn = null;
 		File f = null;
@@ -328,6 +327,7 @@ public class File implements Serializable  {
 		
 		return seqno;
 	}
+	
 	public static synchronized int getSeqSubjaket(int id_fail,boolean getNoSubjaket ) throws DbException  {
 		Db db = null;
 		Connection conn = null;
@@ -372,8 +372,8 @@ public class File implements Serializable  {
 	    }    
 		return seqno;
 	}
+	
 	public static synchronized int getSeqNoAduan(int id_jenisaduan) throws DbException  {
-
 		Db db = null;
 		Connection conn = null;
 		File f = null;
@@ -400,9 +400,8 @@ public class File implements Serializable  {
 			f.addNewAduan(id_jenisaduan);	        	  
 		}
 		ResultSet rs2 = db.getStatement().executeQuery(sb.toString());
-        if ( rs2.next() ) {
-      	  
-      		  seqno = rs2.getInt("NO_TURUTAN");
+        if ( rs2.next() ) {     	  
+        	seqno = rs2.getInt("NO_TURUTAN");
       	  
         }
 		conn.commit();
@@ -418,7 +417,9 @@ public class File implements Serializable  {
 		}
 		
 		return seqno;
-		}
+		
+	}
+	
 	public static synchronized int getSeqNoFPX(int id_Jenisbayaran) throws DbException  {
 
 		Db db = null;
@@ -467,6 +468,7 @@ public class File implements Serializable  {
 		System.out.println("Seq No FPX:" +seqno);
 		return seqno;
 		}
+	
 	public static synchronized int getSeqNoInternetBank(int id_Jenisbayaran) throws DbException  {
 
 		Db db = null;
@@ -518,8 +520,7 @@ public class File implements Serializable  {
 	
 	//Db parameter added
 	public void addNew(Db db,int id_seksyen,int id_urusan,int id_kementerian,
-							   int id_negeri,int id_daerah,int tahun,int bulan) throws DbException {
-		
+							   int id_negeri,int id_daerah,int tahun,int bulan) throws DbException {		
 		//Db db = null;
 		StringBuffer sb = new StringBuffer();
 		sb.append("INSERT INTO "+SEQ_TABLE+" (id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,");
@@ -537,6 +538,7 @@ public class File implements Serializable  {
 //		      if (db != null) db.close();
 //		}
 	}
+	
 	public void addNewSeqSubjaket(int id_fail) throws DbException {
 		Db db = null;
 		StringBuffer sb = new StringBuffer();
@@ -555,11 +557,10 @@ public class File implements Serializable  {
 		      if (db != null) db.close();
 		}
 	}
+	
 	public void addNewSeqJilid(Db db,int id_seksyen,int id_urusan,int id_kementerian,
-			   int id_negeri,int id_daerah,boolean getNoJilid,boolean getNoSubjaket ) throws DbException {
-		
+		int id_negeri,int id_daerah,boolean getNoJilid,boolean getNoSubjaket ) throws DbException {
 		//Db db = null;
-		
 		StringBuffer sb = new StringBuffer();
 		sb.append("UPDATE "+SEQ_TABLE+"  SET "); 
 		if (getNoJilid) {
@@ -587,8 +588,8 @@ public class File implements Serializable  {
 //		if (db != null) db.close();
 //		}
 	}
+	
 	public void addNewAduan(int id_jenisaduan) throws DbException {
-
 		Db db = null;
 		StringBuffer sb = new StringBuffer();
 		sb.append("INSERT INTO TBLRUJSEQADUAN (ID_JENISADUAN,NO_TURUTAN)");
@@ -606,8 +607,8 @@ public class File implements Serializable  {
 		if (db != null) db.close();
 		}
 	}
+	
 	public void addNewFPX(int id_Jenisbayaran) throws DbException {
-
 		Db db = null;
 		StringBuffer sb = new StringBuffer();
 		sb.append("INSERT INTO TBLRUJSEQPEMBAYARANONLINE (ID_JENISBAYARAN,NO_TURUTAN_FPX)");
@@ -625,8 +626,8 @@ public class File implements Serializable  {
 		if (db != null) db.close();
 		}
 	}
+	
 	public void addNewInternetBank(int id_Jenisbayaran) throws DbException {
-
 		Db db = null;
 		StringBuffer sb = new StringBuffer();
 		sb.append("INSERT INTO TBLRUJSEQPEMBAYARANONLINE (ID_JENISBAYARAN,NO_TURUTAN_INTERNETBANK)");
@@ -713,7 +714,7 @@ public class File implements Serializable  {
 		try {
 			//db = new Db();
 			try{
-			myLogger.info("UPDATE SEQ BARU >>>>>>>>>>>>>>>>>>>>>>>> "+sb.toString());
+			myLog.info("UPDATE SEQ BARU >>>>>>>>>>>>>>>>>>>>>>>> "+sb.toString());
 			db.getStatement().executeUpdate(sb.toString());
 						
 			//at.logActivity("","2",null,null,"","increaseSeqPPK CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ",db);
@@ -731,13 +732,8 @@ public class File implements Serializable  {
 //		}
 	}
 	
-	
-	
-	public void increaseSeqJilid(Db db,int id_fail,boolean getNoJilid) throws DbException  {
-		
-
+	public void increaseSeqJilid(Db db,int id_fail,boolean getNoJilid) throws DbException  {	
 		//Db db = null;
-	
 		StringBuffer sb = new StringBuffer();
 		sb.append("UPDATE TBLRUJSEQJILIDSUBJAKET  SET "); 
 		if (getNoJilid) {
@@ -757,11 +753,9 @@ public class File implements Serializable  {
 //		if (db != null) db.close();
 //		}
 	}
-	public void increaseSeqSubjaket(int id_fail,boolean getNoSubjaket) throws DbException  {
-		
-
-		Db db = null;
 	
+	public void increaseSeqSubjaket(int id_fail,boolean getNoSubjaket) throws DbException  {
+		Db db = null;
 		StringBuffer sb = new StringBuffer();
 		sb.append("UPDATE TBLRUJSEQJILIDSUBJAKET  SET "); 
 		if (getNoSubjaket) {
@@ -781,10 +775,9 @@ public class File implements Serializable  {
 		if (db != null) db.close();
 		}
 	}
-	public void increaseSeqAduan(int id_jenisaduan) throws DbException  {
-
-		Db db = null;
 	
+	public void increaseSeqAduan(int id_jenisaduan) throws DbException  {
+		Db db = null;
 		StringBuffer sb = new StringBuffer();
 		sb.append("UPDATE TBLRUJSEQADUAN  SET "); 
 		sb.append("no_turutan = no_turutan + 1 ");
@@ -803,10 +796,9 @@ public class File implements Serializable  {
 		if (db != null) db.close();
 		}
 	}
-	public void increaseSeqFPX(int id_jenisbayaran) throws DbException  {
-
-		Db db = null;
 	
+	public void increaseSeqFPX(int id_jenisbayaran) throws DbException  {
+		Db db = null;
 		StringBuffer sb = new StringBuffer();
 		sb.append("UPDATE TBLRUJSEQPEMBAYARANONLINE SET "); 
 		sb.append("no_turutan_fpx =no_turutan_fpx + 1 ");
@@ -825,10 +817,9 @@ public class File implements Serializable  {
 		if (db != null) db.close();
 		}
 	}
-	public void increaseSeqInternetBank(int id_jenisbayaran) throws DbException  {
-
-		Db db = null;
 	
+	public void increaseSeqInternetBank(int id_jenisbayaran) throws DbException  {
+		Db db = null;
 		StringBuffer sb = new StringBuffer();
 		sb.append("UPDATE TBLRUJSEQPEMBAYARANONLINE  SET "); 
 		sb.append("no_turutan_internetbank =no_turutan_internetbank + 1 ");
@@ -847,6 +838,7 @@ public class File implements Serializable  {
 		if (db != null) db.close();
 		}
 	}
+	
 	public static synchronized String getIDFailByPermohonan(String idPermohonan) throws DbException  {
 		Db db = null;
 		Connection conn = null;
@@ -859,7 +851,7 @@ public class File implements Serializable  {
 			sb.append("SELECT F.ID_FAIL ");
 			sb.append("FROM TBLPFDFAIL F, TBLPERMOHONAN P WHERE ");
 			sb.append("P.ID_FAIL=F.ID_FAIL AND P.ID_PERMOHONAN = " +idPermohonan);	
-			myLogger.info("getIDFailByPermohonan:sql="+sb.toString());
+			myLog.info("getIDFailByPermohonan:sql="+sb.toString());
 			ResultSet rs = db.getStatement().executeQuery(sb.toString()); 
 			
 			if ( rs.next() ) {
@@ -879,5 +871,4 @@ public class File implements Serializable  {
 	}
 	
 	
-
 }
