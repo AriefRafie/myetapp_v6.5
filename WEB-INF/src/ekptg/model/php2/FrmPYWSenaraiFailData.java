@@ -1266,7 +1266,7 @@ public class FrmPYWSenaraiFailData {
 
 			String kodUrusan = getKodUrusan(idUrusan);
 
-			noFail = generateNoFail(idUrusan, kodUrusan,
+			noFail = generateNoFail(session, idUrusan, kodUrusan,
 					getKodKementerian(idKementerianTanah), idKementerianTanah,
 					getKodNegeri(idNegeriTanah), idNegeriTanah, idSuburusan);
 
@@ -1795,7 +1795,7 @@ public class FrmPYWSenaraiFailData {
 		}
 	}
 
-	public String generateNoFail(String idUrusan, String kodUrusan,
+	public String generateNoFail(HttpSession session, String idUrusan, String kodUrusan,
 			String kodKementerian, String idKementerian, String kodNegeri,
 			String idNegeri, String idSuburusan) throws Exception {
 		String noFail = "";
@@ -1816,7 +1816,7 @@ public class FrmPYWSenaraiFailData {
 				+ "/"
 				+ kodTanah
 				+ "-"
-				+ File.getSeqNo(4, Integer.parseInt(idUrusan),
+				+ File.getSeqNo(session, 4, Integer.parseInt(idUrusan),
 						Integer.parseInt(idKementerian),
 						Integer.parseInt(idNegeri));
 

@@ -700,7 +700,7 @@ public class FrmCRBSenaraiFailData {
 			Calendar curDate = new GregorianCalendar();
 			Date dateCurrent = new Date();
 			curDate.setTime(dateCurrent);
-			noFail = generateNoFail(kodUrusan,
+			noFail = generateNoFail(session, kodUrusan,
 					getKodKementerianByIdKementerian(idKementerianTanah),
 					idKementerianTanah, getKodNegeriByIdNegeri(idNegeriTanah),
 					idNegeriTanah, curDate.get(Calendar.YEAR), db, userId);
@@ -1044,7 +1044,7 @@ public class FrmCRBSenaraiFailData {
 		return idFailString;
 	}
 
-	public String generateNoFail(String kodUrusan, String kodKementerian,
+	public String generateNoFail(HttpSession session, String kodUrusan, String kodKementerian,
 			String idKementerian, String kodNegeri, String idNegeri, int tahun,
 			Db db, String userId) throws Exception {
 		String noFail = "";
@@ -1056,7 +1056,7 @@ public class FrmCRBSenaraiFailData {
 				+ kodNegeri
 				+ "/"
 				+ Utils.digitLastFormatted(String.valueOf(File
-						.getSeqNoFailPenguatkuasaan(4, 8,
+						.getSeqNoFailPenguatkuasaan(session, 4, 8,
 								Integer.parseInt(idKementerian),
 								Integer.parseInt(idNegeri), tahun)), 2) + "-"
 				+ tahun;
