@@ -46,7 +46,6 @@ import ekptg.model.ppk.FrmSenaraiFailInternalCarianData;
 import ekptg.model.ppk.FrmSenaraiFailInternalData;
 import ekptg.model.ppk.harta.HTABean;
 import ekptg.model.ppk.harta.IMaklumatHarta;
-import ekptg.model.ppk.util.LampiranBean;
 import ekptg.ws.arb.AmanahRayaManager;
 import ekptg.ws.bursa.BursaManager;
 import ekptg.ws.identity.IdentityManager;
@@ -245,15 +244,14 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		int flagno = 0;
 		int idFlag = 0;
 		int flag_no = 0;
-		String jenisDoc = "99201";
+
 		readability1 = "";
 		clearContext();
-		
+		String jenisDoc = "99201";
 		context.put("DATEUTIL", new DateUtil());
 		this.context.put("Util", new lebah.util.Util());
 		this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
 		String v_tab = getParam("v_tab");
-		myLogger.info("doTemplate:v_tab="+v_tab);
 		this.context.put("val_tab", v_tab);		
 		// Vector getMTKeputusan = null;
 		// getMTKeputusan = FrmMTBorangC.MTKeputusanPenuh();
@@ -857,15 +855,9 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			logic_A.setSupportingDoc(id, jenisDoc);
 			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
-			//20200415 Lampiran
-			LampiranBean lBean = new LampiranBean();
-			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(h.get("idSimati")), "99201"));				
-
 			this.context.put("senaraisemak", "");
 			this.context.put("Errormsg", "");
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
-			
 		} else if ("kembali_simati".equals(submit)) {			
 			String id = getParam("idPermohonan");
 			/*view1 = logic_A.getJenisKp();
@@ -918,10 +910,6 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("listPemohonOB", listPemohonOB);
 			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
-			LampiranBean lBean = new LampiranBean();
-			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idsimati")), "99201"));				
-
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 		} else if ("Kemaskini_daftar_pemohon".equals(submit)) {
 			this.context.put("ViewFail", "");
@@ -979,11 +967,6 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("listPemohonOB", listPemohonOB);
 			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
-			
-			LampiranBean lBean = new LampiranBean();
-			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idsimati")), "99201"));				
-
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 		} else if ("getBandar".equals(submit)) {
 			String IdPermohonan = getParam("idPermohonan");
@@ -1087,15 +1070,11 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("listPemohonOB", listPemohonOB);
 			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
-			LampiranBean lBean = new LampiranBean();
-			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(kx.get("idsimati")), "99201"));				
-
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 		} 
 		else if ("deleteSuppDoc".equals(submit)) {
 			String idSimati = getParam("idSimati");
-			deleteSuppDoc(idSimati);
+			deleteSuppDoc(idSimati, jenisDoc);
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 			
 			idFlag = 2;
@@ -1147,11 +1126,6 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("listPemohonOB", listPemohonOB);
 			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
-			
-			LampiranBean lBean = new LampiranBean();
-			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(k.get("idsimati")), "99201"));				
-
 		}
 		else if ("Simpanx".equals(submit)) {
 			myLogger.info("Simpanx");
@@ -1233,11 +1207,6 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 					this.context.put("listPemohonOB", listPemohonOB);
 					listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 					this.context.put("ViewSupportingDoc", listSupportingDoc);
-					
-//					LampiranBean lBean = new LampiranBean();
-//					this.context.put("lampirans"
-//						, lBean.getLampiranSimatiPapar(String.valueOf(h.get("idSimati")), "99201"));				
-
 					this.context.put("Errormsg", "Error1");
 				}
 				else
@@ -1390,8 +1359,6 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 					this.context.put("listPemohonOB", listPemohonOB);
 					listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
 					this.context.put("ViewSupportingDoc", listSupportingDoc);
-					
-
 					this.context.put("Errormsg", "");
 				}
 			}
@@ -1500,10 +1467,6 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			String noKpBaru = h1.get("noKpBaru1").toString()+"-"+h1.get("noKpBaru2").toString()+"-"+h1.get("noKpBaru3").toString();
 			this.context.put("noPengenalan", noKpBaru);
 			//IL end
-			LampiranBean lBean = new LampiranBean();
-			this.context.put("lampirans"
-				, lBean.getLampiranSimatiPapari(String.valueOf(h1.get("idSimati")), "99201"));
-			
 			if ("Simatiview".equals(mode)) {
 				this.context.put("readmode", disability1);
 				this.context.put("setmode", "disabled");
@@ -1519,7 +1482,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			} else if ("deleteSuppDocMode".equals(mode)) {
 				myLogger.info("deleteSuppDocMode");
 				String idSimati = getParam("idSimati");
-				deleteSuppDoc(idSimati);
+				deleteSuppDoc(idSimati, jenisDoc);
 				disability1 = "disabled";
 				this.context.put("readmode", disability1);
 				this.context.put("setmode", "disabled");
@@ -5461,7 +5424,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		
 	}
 	
-	public void deleteSuppDoc(String idSimati) throws Exception 
+	public void deleteSuppDoc(String idSimati, String jenisDoc) throws Exception 
 		{
 			Db db = null;
 			Connection conn = null;
@@ -5474,7 +5437,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
 				
-				sql = " DELETE FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = '"+idSimati+"'";
+				sql = " DELETE FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = '"+idSimati+"' AND ID_JENISDOKUMEN = '"+jenisDoc+"'";
 				myLogger.info("sql1 >>> "+sql);
 				stmt.executeUpdate(sql);
 				
@@ -8805,7 +8768,6 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			if (n == 3) {
 				this.context.put("checked3", "checked");
 			}
-		
 			this.context.put("idSimati", getParam("idSimatiX"));
 			this.context.put("idDokumen", getParam("idDokumen"));//IL
 			this.context.put("namaPelan", getParam("txtNamaPelan"));//IL
@@ -8851,7 +8813,6 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("negeri", idnegeri);
 			this.context.put("daerah", iddaerah);
 			this.context.put("show_button", "yes");
-		
 		}
 		// DEFAULT,getHtaamX,
 		this.context.put("idhtaamX", idhtaamX);
@@ -8884,7 +8845,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		this.context.put("ViewFail", listFail);
 		context.put("DATEUTIL", new DateUtil());
 		page = "app/ppk/frmPrmhnnSek8HTATH.jsp";
-		//Akhir HTAAMX
+	//Akhir HTAAMX
 	
 	}
 

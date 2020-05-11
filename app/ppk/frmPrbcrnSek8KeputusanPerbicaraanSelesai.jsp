@@ -3,6 +3,28 @@
 #set($perhatian="<i><font color=red >Perhatian</font><font >: Sila pastikan label bertanda</font>&nbsp;<font color=red >*</font>&nbsp;<font >diisi.</font></i>")
 
 
+
+#if($size_M!=0)
+	#foreach($m in $listMahkamah)
+		#set($alamatM1=$m.alamat1)
+		#set($alamatM2=$m.alamat2)
+		#set($alamatM3=$m.alamat3)
+		#set($poskodM=$m.poskod)
+		#set($bandarM=$m.bandar)
+	#end    
+#else
+		
+		#set($alamatM1="")
+		#set($alamatM2="")
+		#set($alamatM3="")
+		#set($poskodM="")
+		#set($bandarM="")
+#end	
+
+#foreach ($ListData in $ViewPemohon)
+	#set ($idSimati = $ListData.idSimati)
+#end
+
 #foreach($list in $listSemak)
  	#set($noFail=$list.noFail)
  	#set($negeri=$list.pmNama_negeri)
@@ -18,7 +40,15 @@
     #set($id_permohonan=$list.idPermohonan)
 <!-- case utk butang Seterusnya ke Notis -->
 <input type="hidden" name="id_permohonan" value="$id_permohonan">
+<input type="hidden" name="id_negeri" value="$id_negeri">
+<input type="hidden" name="command2" />
+<input type="hidden" name="idSimati" value="$idSimati"/>
 <!--<input type="text" name="id_status" id="id_status" value="$idstatus"> -->
+#end
+
+#set($namaDoC="")
+#foreach($listSupportingDoc in $ViewSupportingDoc)
+#set($namaDoC = $listSupportingDoc.NAMA_DOKUMEN)
 #end
 
 #set ( $idpermohonan = $dataPerbicaraan.get("idPermohonan") )
@@ -135,6 +165,12 @@ document.getElementById("header_lama").style.display="block";
   <td><fieldset>
     <legend><strong>MAKLUMAT PERBICARAAN</strong></legend>
     <table width="100%"  cellspacing="1" cellpadding="1" border="0">
+    <tr>
+    	<td><input type ="hidden" name="id_perintah" id="id_perintah" value="$id_perintah"/></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    </tr>
       <tr>
         <td><font color="red">*</font>&nbsp;Pegawai Pengendali</td>
         <td width="33%">:&nbsp;$selectEditPegawai</td>
@@ -155,7 +191,7 @@ document.getElementById("header_lama").style.display="block";
         <td width="16%"><font color="red">*</font>&nbsp;Keputusan Perbicaraan</td>
         <td colspan="5">:
         
-         #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N")
+         #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($listPenerimaNotis_size1 > 0))
         	&nbsp;
           <input name="flag_jenis_keputusan" type="radio" value="0" $TEMPcheckedSelesai onclick="tab_selesai()" />
           Selesai
@@ -163,6 +199,19 @@ document.getElementById("header_lama").style.display="block";
           Tangguh
           <input name="flag_jenis_keputusan" type="radio" value="2" $TEMPcheckedBatal onclick="tab_batal()" />
           Batal</td>
+          #end
+          
+          #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($listPenerimaNotis_size1 < 1))
+        	&nbsp;
+          <input name="flag_jenis_keputusan" type="radio" value="0" $TEMPcheckedSelesai onclick="tab_selesai()" disabled/>
+          Selesai
+          <input name="flag_jenis_keputusan" type="radio" value="1" $TEMPcheckedTangguh onclick="tab_tangguh()" disabled/>
+          Tangguh
+          <input name="flag_jenis_keputusan" type="radio" value="2" $TEMPcheckedBatal onclick="tab_batal()" disabled/>
+          Batal</td>
+          <tr>
+          <td colspan="3"><font color="red"><b>Sila lengkapkan Laporan Penghantaran Notis dahulu.</b></font></td>
+          </tr>
           #end
       </tr>
       <!--By Mohamad Rosli 21/02/2011-->
@@ -174,9 +223,9 @@ document.getElementById("header_lama").style.display="block";
        <legend>Maklumat KIV (Jika Ada)</legend>       
        <table width="100%" border="0">
        <tr>
-        <td width="29%">Status KIV</td>
+        <td width="20%">Status KIV</td>
         <td width="1%">:</td>
-        <td width="70%">
+        <td width="79%">
         #if($!check_kiv == "1")
         #set($check_kiv_mode = "checked")
          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" checked/>KIV
@@ -289,7 +338,7 @@ document.getElementById("header_lama").style.display="block";
   #end
   <table width="100%" border="0">
         <tr>
-      <td width="50%" valign="top"><fieldset>
+      <td width="33%" valign="top"><fieldset>
         <legend>Bayaran Perintah</legend>
         <table width="100%">
           <tr>
@@ -299,15 +348,6 @@ document.getElementById("header_lama").style.display="block";
               <input type="text" size="15" name="txtJumHarta" onblur="this.value=this.value.toUpperCase();" id="txtJumHarta" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumHarta)" />
               </label></td>
           </tr>
-          <!-- arief add Procedur Denda Lewat Permohonan OPEN -->
-          <tr>
-            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Permohonan&nbsp;&nbsp;(RM)</div></td>
-            <td width="2%"><div align="right">:</div></td>
-            <td width="51%"><label>
-              <input type="text" size="15" name="txtJumNilaianDendaLewat" onblur="this.value=this.value.toUpperCase();" id="txtJumNilaianDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumNilaianDendaLewat)" />
-              </label></td>
-          </tr>
-          <!-- arief add CLOSE -->
           <tr>
             <td><div align="left"><font color="red">*</font>&nbsp;Jumlah &nbsp;&nbsp;&nbsp;Bayaran(RM)</div></td>
             <td><div align="right">:</div></td>
@@ -494,7 +534,7 @@ document.getElementById("header_lama").style.display="block";
         <tr>
       <td colspan="3" width="100%" ><div align="center">
       
-      #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N")
+      #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!DoNotSave != "1"))
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Selesai('$idpermohonan','$id_perbicaraan');" />
       #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -600,7 +640,9 @@ document.getElementById("header_lama").style.display="block";
     </tr>
         <tr>
       <td colspan="2" width="100%" ><div align="center">
+       #if($!DoNotSave != "1")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Tangguh('$idpermohonan','$id_perbicaraan');" />
+       #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');"/>
         </div></td>
     </tr>
@@ -630,27 +672,172 @@ document.getElementById("header_lama").style.display="block";
     </tr>
     <tr align="center">
       <td >&nbsp;</td>
-      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="1" onclick="MahkamahTinggi('$idpermohonan','$id_perbicaraan')" $TEMPcheckedMahkamahTinggiWasiat>
+      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="1"  onclick="DocSupportAppear();MahkamahAppear();MahkamahDisappear2()" $TEMPcheckedMahkamahTinggiWasiat> <!-- onclick="MahkamahTinggi('$idpermohonan','$id_perbicaraan')" -->
         Pindah ke Mahkamah Tinggi kerana ada wasiat </td>
     </tr>
     <tr align="center">
       <td >&nbsp;</td>
-      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="2" $TEMPcheckedTidakHadir3Kali >
+      <td align="left">
+      <div id="MahkamahAppear"  style="display:none;"  > 
+      <table width="50%">
+      <tr>
+    <td>
+   
+    <fieldset><legend>MAKLUMAT MAHKAMAH</legend>
+	<table width="100%">
+		<tr>
+			<td><font color="red">* </font></td>
+			<td>Mahkamah</td>
+			<td>:</td>
+			<td><select id="socMahkamah" name="socMahkamah" onchange="changeGetAlamatMahkamah()" style="width:300">	
+						
+						#foreach($listMK in $listMahkamah)
+                    		<option value="$listMK.id_pejabat">$listMK.nama_pejabat.toUpperCase()</option>
+                        #end
+			
+			</select>
+			</td>
+		</tr>
+		<tr>
+    			<td>&nbsp;</td>
+    			<td>Alamat</td>
+    			<td>:</td>
+    			<td><input type="text"  disabled name="txtAlamatMahkamah1" id="txtAlamatMahkamah1" value="$!alamatM1" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td><input type="text"  disabled name="txtAlamatMahkamah2" id="txtAlamatMahkamah2" value="$!alamatM2" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td><input type="text"  disabled name="txtAlamatMahkamah3" id="txtAlamatMahkamah3" value="$!alamatM3" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Poskod</td>
+    			<td>:</td>
+    			<td><input type="text"  disabled name="txtPoskodMahkamah" id="txtPoskodMahkamah" value="$!poskodM" size="6" maxlength="5" onblur="validateNumber(this,this.value);" onkeyup="validateNumber(this,this.value);" /></td>
+    		</tr>
+    		<!-- 
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Negeri</td>
+    			<td>:</td>
+    			<td>$!selectNegeriMahkamah</td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Bandar</td>
+    			<td>:</td>
+    			<td>$!selectBandarMahkamah</td>
+    		</tr>
+    		 -->
+    	
+	</table>
+	</fieldset>
+	</td>
+	</tr>
+	</table>
+
+   	 </div>
+     </td>
+     </tr>
+    
+    <tr align="center">
+      <td >&nbsp;</td>
+      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="2" $TEMPcheckedTidakHadir3Kali onclick="DocSupportDisappear();MahkamahDisappear();MahkamahDisappear2()" >
         Tidak hadir setelah dipanggil 3 kali </td>
     </tr>
     <tr align="center">
       <td >&nbsp;</td>
-      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="3" $TEMPcheckedPermintaanPemohon >
+      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="3" $TEMPcheckedPermintaanPemohon onclick="DocSupportDisappear();MahkamahDisappear();MahkamahDisappear2()" >
         Atas Permintaan Pemohon </td>
     </tr>
     <tr align="center">
       <td >&nbsp;</td>
-      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta >
+      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta onclick="DocSupportAppear();MahkamahAppear2();MahkamahDisappear()" >
         Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta </td>
     </tr>
+    
     <tr align="center">
       <td >&nbsp;</td>
-      <td align="left"><input name="flag_batal" id="flag_batal" type="radio" value="5" $TEMPcheckedSebabLainBatal>
+      <td align="left">
+      <div id="MahkamahAppear2"  style="display:none;"  > 
+      <table width="50%">
+      <tr>
+    <td>
+   
+    <fieldset><legend>MAKLUMAT MAHKAMAH</legend>
+	<table width="100%">
+		<tr>
+			<td><font color="red">* </font></td>
+			<td>Mahkamah</td>
+			<td>:</td>
+			<td><select id="socMahkamah" name="socMahkamah" onchange="changeGetAlamatMahkamah()" style="width:300">	
+						
+						#foreach($listMK in $listMahkamah)
+                    		<option value="$listMK.id_pejabat">$listMK.nama_pejabat.toUpperCase()</option>
+                        #end
+			
+			</select>
+			</td>
+		</tr>
+		<tr>
+    			<td>&nbsp;</td>
+    			<td>Alamat</td>
+    			<td>:</td>
+    			<td><input type="text"  disabled name="txtAlamatMahkamah1" id="txtAlamatMahkamah1" value="$!alamatM1" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td><input type="text" disabled  name="txtAlamatMahkamah2" id="txtAlamatMahkamah2" value="$!alamatM2" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td><input type="text" disabled  name="txtAlamatMahkamah3" id="txtAlamatMahkamah3" value="$!alamatM3" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Poskod</td>
+    			<td>:</td>
+    			<td><input type="text" disabled  name="txtPoskodMahkamah" id="txtPoskodMahkamah" value="$!poskodM" size="6" maxlength="5" onblur="validateNumber(this,this.value);" onkeyup="validateNumber(this,this.value);" /></td>
+    		</tr>
+    		<!-- 
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Negeri</td>
+    			<td>:</td>
+    			<td>$!selectNegeriMahkamah</td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Bandar</td>
+    			<td>:</td>
+    			<td>$!selectBandarMahkamah</td>
+    		</tr>
+    		 -->
+    		
+    	
+	</table>
+	</fieldset>
+	</td>
+	</tr>
+	</table>
+
+   	 </div>
+     </td>
+     </tr>
+    <tr align="center">
+      <td >&nbsp;</td>
+      <td align="left"><input name="flag_batal" id="flag_batal" type="radio" value="5" $TEMPcheckedSebabLainBatal onclick="DocSupportDisappear();MahkamahDisappear();MahkamahDisappear2()">
         Sebab-sebab lain </td>
     </tr>
     <tr align="center">
@@ -686,14 +873,71 @@ document.getElementById("header_lama").style.display="block";
     <tr>
       <td colspan="2" width="100%" >&nbsp;</td>
     </tr>
+    
+    <tr>
+    <td colspan="2" width="100%">
+    
+    <div id="dokumensokongan"  style="display:none;"  > 
+    <table width="100%">
+  <tr>
+    <td>
+    <fieldset>
+    <legend>Dokumen Sokongan</legend>
+    <table width="60%" border="0">
+    <tr>
+     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+        <td width="1%" scope="col">:</td>
+        <td width="74%" colspan="2" scope="col">
+         <input type="text" disabled value=$!namaDoC>&nbsp;
+         #if ($namaDoC != '')
+         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #else
+         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '')
+         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         #end
+         
+         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
+         
+        
+   		 
+   		 #if ($namaDoC != '')
+   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
+   		 
+   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 
+   		 
+       
+        </td>
+    </tr>
+    <tr>
+    
+    </tr>
+    
+    </table>
+    
+    </fieldset> 
+     </td>
+  </tr>
+</table>
+    </div>  
+    </td>
+    </tr>    
+    
     <tr>
       <td colspan="2" width="100%" ><div align="center">
+      #if($!DoNotSave != "1")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Batal('$idpermohonan','$id_perbicaraan');" />
-          <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
+      #end
+      	  <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
         </div></td>
     </tr>
   </table>
     </fieldset>
+    
+ 
 
 
   #end
@@ -746,7 +990,8 @@ document.getElementById("header_lama").style.display="block";
     #set ($check_kiv = $dataPerintah1.check_kiv)
     #set ($date_kiv = $dataPerintah1.date_kiv)
     #set ($catatan_kiv = $dataPerintah1.catatan_kiv)
-      
+    #set ($justifikasi_pegawai = $dataPerintah1.justifikasi_pegawai)
+    
     
 #end
   
@@ -787,7 +1032,7 @@ document.getElementById("header_lama").style.display="block";
 #if ( $mode == "view" )
 
 <!-- abc -->
-<input type ="hidden" name="id_perintah" id="id_perintah" value="$id_perintah"/>
+<input type ="text" name="id_perintah" id="id_perintah" value="$id_perintah"/>
 <input type="hidden" name="id_perbicaraan" id="id_perbicaraan" value="$id_perbicaraan"/>
 <input type="hidden" name="id_bayaran_perintah" id="id_bayaran_perintah" value="$id_bayaran_perintah"/>
 <input type="hidden" name="id_bayaran_pusaka" id="id_bayaran_pusaka" value="$id_bayaran_pusaka"/>
@@ -822,6 +1067,7 @@ document.getElementById("header_lama").style.display="block";
           <input name="flag_jenis_keputusan" type="radio" value="2" $TEMPcheckedBatal disabled onclick="tab_batal()" />
           Batal</td>
       </tr>
+      <!-- Skrin yang membenarkan VIEW sahaja (START)  -->
       #if ( $flag == "selesai" )
        <tr>
        <td></td>
@@ -830,23 +1076,31 @@ document.getElementById("header_lama").style.display="block";
        <legend>Maklumat KIV (Jika Ada</legend>       
        <table width="100%" border="0">
        <tr>
-        <td width="29%">Status KIV</td>
+        <td width="20%">Status KIV</td>
         <td width="1%">:</td>
-        <td width="70%">
+        <td width="79%">
 
         #if($!check_kiv == "1")
         #set($check_kiv_mode = "checked")
           <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" disabled checked />KIV
 		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen telah dikemukakan
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen gagal dikemukakan
 		#elseif($!check_kiv == "0")
         #set($check_kiv_mode = "checked")
           <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" disabled  />KIV
 		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled checked />Dokumen telah dikemukakan
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen gagal dikemukakan
+        #elseif($!check_kiv == "3")
+        #set($check_kiv_mode = "checked")
+          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" disabled  />KIV
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled  />Dokumen telah dikemukakan
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled checked/>Dokumen gagal dikemukakan
         #else
         #set($check_kiv_mode = "")
         
          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" disabled/>KIV
 		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen telah dikemukakan
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen gagal dikemukakan
         #end
         <!-- <input   type="checkbox" name="check_kiv" id="check_kiv" $check_kiv_mode disabled value="1"   onclick="" /> -->
         
@@ -868,6 +1122,15 @@ document.getElementById("header_lama").style.display="block";
         <textarea name="catatan_kiv"  readonly class="disabled" cols="35" rows="3" id="catatan_kiv"  >$!catatan_kiv</textarea>
         </td>
         </tr>
+        #if($!check_kiv == "3")
+         <tr>
+        <td valign="top">Justifikasi Pegawai</td>
+        <td valign="top">:</td>
+        <td valign="top">
+        <textarea name="justifikasi_pegawai" readonly class="disabled" cols="35" rows="3" id="justifikasi_pegawai"  >$!justifikasi_pegawai</textarea>
+        </td>
+        </tr>
+        #end
         
         
         <tr>
@@ -887,6 +1150,7 @@ document.getElementById("header_lama").style.display="block";
         </td>
       </tr>
       #end
+      <!-- Skrin yang membenarkan VIEW sahaja (END)  -->
     </table>
     </fieldset></td>
 </tr>
@@ -945,17 +1209,8 @@ document.getElementById("header_lama").style.display="block";
             <input type="text" size="15" name="txtJumHarta" onblur="this.value=this.value.toUpperCase();" id="txtJumHarta" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumHarta)" />
             </label></td>
         </tr>
-        <!-- arief add Procedur Denda Lewat Permohonan OPEN -->
-          <tr>
-            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Permohonan&nbsp;&nbsp;(RM)</div></td>
-            <td width="2%"><div align="right">:</div></td>
-            <td width="51%"><label>
-              <input type="text" size="15" name="txtJumNilaianDendaLewat" onblur="this.value=this.value.toUpperCase();" id="txtJumNilaianDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumNilaianDendaLewat)" />
-              </label></td>
-          </tr>
-          <!-- arief add CLOSE -->
         <tr>
-          <td><div align="left">Jumlah Bayaran&nbsp;&nbsp;(RM)</div></td>
+          <td><div align="left">Jumlah Bayaran&nbsp;&nbsp;(RM )</div></td>
           <td><div align="right">:</div></td>
           <td><label>
             <input type="text" size="15" name="txtJumBayaran" id="txtJumBayaran" readonly class="disabled" value="$!Util.formatDecimal($!bayaran_perintah)" />
@@ -1325,9 +1580,23 @@ document.getElementById("header_lama").style.display="block";
           <input type="button" name="cmdNotis" value="Seterusnya" onClick="goNotis('$id_permohonan','$idstatus')" />
           #end          
           #end
-          
+      
           #if ($flagFromSenaraiPermohonanSek8 == 'yes')
-          <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="javascript:kembaliSenaraiPermohonan('$noFail')"/>
+         
+           #if ( $idstatus == "174" )
+           
+           <fieldset id="tableReport1" >
+			<legend><strong>Senarai Laporan</strong></legend>
+				<table width="100%" border="0" cellspacing="2" cellpadding="2">
+			       <tr>
+			        <td><a href="#" class="style2" onClick="javascript:cetakBorangJ('$nofail','$idFail','$id_perbicaraan')"><font color="blue"> Borang J </font></a></td>
+			      </tr>           
+			    </table>
+			</fieldset> 
+           #end
+           
+            <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="javascript:kembaliSenaraiPermohonan('$noFail')"/>
+            
           #if ( $idstatus == "44" || $idstatus == "173" || $idstatus == "175" || $idstatus == "177" )
           <input type="button" name="cmdTeruskan" value="Seterusnya" onClick="goNotis('$id_permohonan','$idstatus')" />
           #end
@@ -1367,8 +1636,9 @@ document.getElementById("header_lama").style.display="block";
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" $ type="radio" value="1" $TEMPcheckedMahkamahTinggiWasiat  disabled>
-        Pindah ke Mahkamah Tinggi kerana ada wasiat </td>
-    </tr>
+        Pindah ke Mahkamah Tinggi kerana ada wasiat  #if($batalWasiat == '1')($namaMahkamah)#end </td>
+    
+    					
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="2" $TEMPcheckedTidakHadir3Kali disabled>
@@ -1382,7 +1652,7 @@ document.getElementById("header_lama").style.display="block";
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta disabled>
-        Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta </td>
+        Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta #if($batal2juta == '1')($namaMahkamah)#end</td>
     </tr>
     <tr align="center">
       <td >&nbsp;</td>
@@ -1429,6 +1699,7 @@ document.getElementById("header_lama").style.display="block";
     <tr>
       <td colspan="2" width="100%" >&nbsp;</td>
     </tr>
+    #if($namaMahkamah == '')
     <tr>
       <td colspan="2" width="100%" ><div align="center"> #if ( $flagFromSenaraiFailSek8 == '' && $flagFromSenaraiPermohonanSek8 == '' && $flagForView == '' )
           <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_KemaskiniBatal('$idpermohonan','$id_perbicaraan');" />
@@ -1457,9 +1728,82 @@ document.getElementById("header_lama").style.display="block";
           <input type="button" name="button" id="button" value="Cetak" onClick="javascript:setTable('tableReport1')" />
         </div></td>
     </tr>
-     
+    #end
+         
   </table>
   </fieldset>
+  
+  <fieldset>
+    <legend>Dokumen Sokongan</legend>
+    <table width="60%" border="0">
+    <tr>
+     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+        <td width="1%" scope="col">:</td>
+        <td width="74%" colspan="2" scope="col">
+         <input type="text" disabled value=$!namaDoC>&nbsp;
+         #if ($namaDoC != '')
+         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #else
+         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '')
+         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         #end
+         
+         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
+         
+        
+   		 
+   		 #if ($namaDoC != '')
+   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
+   		 
+   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 
+   		 
+       
+        </td>
+    </tr>
+
+    
+    </table>
+    
+    </fieldset>  
+    
+     #if($namaMahkamah != '') 
+    <table width="100%" border="0">
+    <tr>
+      <td colspan="2" width="100%" ><div align="center"> #if ( $flagFromSenaraiFailSek8 == '' && $flagFromSenaraiPermohonanSek8 == '' && $flagForView == '' )
+          <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_KemaskiniBatal('$idpermohonan','$id_perbicaraan');" />
+           #if($flag_kemaskini_selesai != "yes")
+			<script>
+            document.getElementById('Kemaskini').style.display = "none";
+            </script>
+            #end    
+          
+          
+          <input type="button" name="cmdBorangI" id="cmdBorangI" value="Hantar ke Mahkamah Tinggi (Borang I)" onClick="semakMTBorangI('$id_perbicaraan')"/>
+          <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
+          #end
+          
+          #if ( $flagFromSenaraiFailSek8 == 'yes' )
+          <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembaliSenaraiFail('$noFail');"/>
+          #end
+          
+          #if ($flagFromSenaraiPermohonanSek8 == 'yes')
+          <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="javascript:kembaliSenaraiPermohonan('$noFail')"/>
+          #end        
+          
+          #if ( $flagForView == 'yes' )
+          
+          <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="javascript:ForView('$noFail')"/>
+          #end
+          <input type="button" name="button" id="button" value="Cetak" onClick="javascript:setTable('tableReport1')" />
+        </div></td>
+    </tr>
+    
+    </table>
+    #end
   #end
  
   
@@ -1484,7 +1828,7 @@ document.getElementById("header_lama").style.display="block";
 <!--------------------------------------------------- END VIEW MODE ---------------------------------------------->
 <!--------------------------------------------------- EDIT MODE ---------------------------------------------->
 #if( $mode == "edit" )
-<input type="hidden" name="id_perintah" id="id_perintah" value="$id_perintah"/>
+<input type="text" name="id_perintah" id="id_perintah" value="$id_perintah"/>
 <input type="hidden" name="id_perbicaraan" id="id_perbicaraan" value="$id_perbicaraan"/>
 <input type="hidden" name="id_bayaran_perintah" id="id_bayaran_perintah" value="$id_bayaran_perintah"/>
 <input type="hidden" name="id_bayaran_pusaka" id="id_bayaran_pusaka" value="$id_bayaran_pusaka"/>
@@ -1506,6 +1850,7 @@ document.getElementById("header_lama").style.display="block";
             #set ($check_kiv = $dataPerintah1.check_kiv)
             #set ($date_kiv = $dataPerintah1.date_kiv)
             #set ($catatan_kiv = $dataPerintah1.catatan_kiv)
+            #set ($justifikasi_pegawai = $dataPerintah1.justifikasi_pegawai)
 		#end
 <tr>
   <td><fieldset>
@@ -1538,7 +1883,7 @@ document.getElementById("header_lama").style.display="block";
           Batal</td>
       </tr>
       <!--By Mohamad Rosli 21/02/2011-->
-      
+      <!-- Skrin yang membenarkan edit (START)  -->
       #if ( $flag == "selesai" )
        <tr>
        <td></td>
@@ -1547,21 +1892,28 @@ document.getElementById("header_lama").style.display="block";
        <legend>Maklumat KIV (Jika Ada)</legend>       
        <table width="100%" border="0">
        <tr>
-        <td width="29%"><font color="red">*</font>Status KIV</td>
+        <td width="20%"><font color="red">*</font>Status KIV</td>
         <td width="1%">:</td>
-        <td width="70%">
+        <td width="79%">
        
         #if($!check_kiv == "1")
         #set($check_kiv_mode = "checked")
-        <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" checked/>KIV
-        <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" >Dokumen telah dikemukakan
+        <input type="radio" name="check_kiv" id="check_kiv" value="1" onClick="javascript:buttonDisAppearJustifikasiPegawai(this)" checked/>KIV
+        <input type="radio" name="check_kiv" id="check_doc" value="0" onClick="javascript:buttonDisAppearJustifikasiPegawai(this)" />Dokumen telah dikemukakan
+        <input type="radio" name="check_kiv" id="check_doc" value="3" onClick="javascript:buttonAppearJustifikasiPegawai(this);" />Dokumen gagal dikemukakan
         #elseif($!check_kiv == "0")
-         <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" />KIV
-         <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" checked/>Dokumen telah dikemukakan
+         <input type="radio" name="check_kiv" id="check_kiv" value="1" onClick="javascript:buttonDisAppearJustifikasiPegawai(this)" />KIV
+         <input type="radio" name="check_kiv" id="check_doc" value="0" onClick="javascript:buttonDisAppearJustifikasiPegawai(this)" checked/>Dokumen telah dikemukakan
+         <input type="radio" name="check_kiv" id="check_doc" value="3" onClick="javascript:buttonAppearJustifikasiPegawai(this);" />Dokumen gagal dikemukakan
         #set($check_kiv_mode = "")
+         #elseif($!check_kiv == "3")
+         <input type="radio" name="check_kiv" id="check_kiv" value="1" onClick="javascript:buttonDisAppearJustifikasiPegawai(this)" />KIV
+         <input type="radio" name="check_kiv" id="check_doc" value="0" onClick="javascript:buttonDisAppearJustifikasiPegawai(this)" />Dokumen telah dikemukakan
+         <input type="radio" name="check_kiv" id="check_doc" value="3" onClick="javascript:buttonAppearJustifikasiPegawai(this);" checked/>Dokumen gagal dikemukakan
         #else
-         <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" />KIV
-         <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" />Dokumen telah dikemukakan
+         <input type="radio" name="check_kiv" id="check_kiv" value="1" onClick="javascript:buttonDisAppearJustifikasiPegawai(this)" />KIV
+         <input type="radio" name="check_kiv" id="check_doc" value="0" onClick="javascript:buttonDisAppearJustifikasiPegawai(this)" />Dokumen telah dikemukakan
+         <input type="radio" name="check_kiv" id="check_doc" value="3" onClick="javascript:buttonAppearJustifikasiPegawai(this);" />Dokumen gagal dikemukakan
         #set($check_kiv_mode = "")
         #end
         <!-- <input type="checkbox" name="check_kiv" id="check_kiv" $check_kiv_mode value="1"  onclick="" /> -->
@@ -1584,6 +1936,22 @@ document.getElementById("header_lama").style.display="block";
         <textarea name="catatan_kiv" cols="35" rows="3" id="catatan_kiv"  >$!catatan_kiv</textarea>
         </td>
         </tr>
+        #if($!check_kiv == "3")
+        <tr>
+        <td valign="top"><div id="divbuttonGagalKemukakanDoc1" style="display: block" >Justifikasi Pegawai</div></td>
+        <td valign="top"><div id="divbuttonGagalKemukakanDoc2" style="display: block" >:</div></td>
+        <td valign="top">
+        <div id="divbuttonGagalKemukakanDoc3" style="display: block" ><textarea name="justifikasi_pegawai" cols="35" rows="3" id="justifikasi_pegawai"  >$!justifikasi_pegawai</textarea></div>
+        </td>
+        </tr>
+        #end
+        <tr>
+        <td valign="top"><div id="divbuttonGagalKemukakanDoc1" style="display: none" >Justifikasi Pegawai</div></td>
+        <td valign="top"><div id="divbuttonGagalKemukakanDoc2" style="display: none" >:</div></td>
+        <td valign="top">
+        <div id="divbuttonGagalKemukakanDoc3" style="display: none" ><textarea name="justifikasi_pegawai" cols="35" rows="3" id="justifikasi_pegawai"  >$!justifikasi_pegawai</textarea></div>
+        </td>
+        </tr>
         </table>
         </fieldset>
         </td>
@@ -1591,7 +1959,7 @@ document.getElementById("header_lama").style.display="block";
         </td>
       </tr>
       #end
-
+		<!-- Skrin yang membenarkan edit (END)  -->
       
       
       <tr>
@@ -1667,15 +2035,6 @@ document.getElementById("header_lama").style.display="block";
               <input type="text" size="15" name="txtJumHartaEDIT" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaEDIT" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($!txtJumHarta)" />
               </label></td>
           </tr>
-          <!-- arief add Procedur Denda Lewat Permohonan OPEN -->
-          <tr>
-            <td width="47%" ><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Bayaran Denda Lewat Permohonan&nbsp;&nbsp;(RM)</div></td>
-            <td width="2%"><div align="right">:</div></td>
-            <td width="51%"><label>
-              <input type="text" size="15" name="txtJumNilaianDendaLewatEdit" onblur="this.value=this.value.toUpperCase();" id="txtJumNilaianDendaLewatEdit" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumNilaianDendaLewatEdit)" />
-              </label></td>
-          </tr>
-          <!-- arief add CLOSE -->
           <tr>
             <td><div align="left">Jumlah Bayaran&nbsp;&nbsp;(RM)</div></td>
             <td><div align="right">:</div></td>
@@ -2073,6 +2432,45 @@ document.getElementById("header_lama").style.display="block";
     
     </table>
     </fieldset>
+    
+    <fieldset>
+    <legend>Dokumen Sokongan</legend>
+    <table width="60%" border="0">
+    <tr>
+     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+        <td width="1%" scope="col">:</td>
+        <td width="74%" colspan="2" scope="col">
+         <input type="text" disabled value=$!namaDoC>&nbsp;
+         #if ($namaDoC != '')
+         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #else
+         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '')
+         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         #end
+         
+         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
+         
+        
+   		 
+   		 #if ($namaDoC != '')
+   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
+   		 
+   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 
+   		 
+       
+        </td>
+    </tr>
+    <tr>
+    
+    </tr>
+    
+    </table>
+    
+    </fieldset>   
     #end
 
     </td>
@@ -2135,8 +2533,19 @@ document.getElementById("header_lama").style.display="block";
 
 
 	function cetakSuratPindahMT(noFail) {
+	
+
+	var flag_batal = $jquery("input[name='flag_batal']:checked").val();
+	var namalaporan = "";
+	if(flag_batal=="1"){
+		namalaporan = "SuratPindahMTII";
+	}else{
+		namalaporan = "SuratPindahMTPerbicaraan";
+	}
+
+	
 		//var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratPindahMT&flagReport=S";
-		var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratPindahMTPerbicaraan&flagReport=S";
+		var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report="+namalaporan+"&flagReport=S";
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -2162,7 +2571,131 @@ document.getElementById("header_lama").style.display="block";
 	    if (hWnd.focus != null) hWnd.focus();
 	
 	}
- 
+	
+	function changeGetAlamatMahkamah() {
+		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmSenaraiFailKeputusanPerbicaraan";
+		document.${formName}.command.value = "tab_batal";
+		document.${formName}.command2.value = "changeGetAlamatMahkamah";
+		document.${formName}.submit();
+	}
+
+function DocSupportAppear(){
+	
+	
+
+		if((document.${formName}.flag_batal[0].checked == true) || (document.${formName}.flag_batal[3].checked == true))
+		{
+			
+			document.getElementById('dokumensokongan').style.display="block";
+		}
+		
+}
+
+function MahkamahAppear(){
+	
+	
+
+	if((document.${formName}.flag_batal[0].checked == true) || (document.${formName}.flag_batal[3].checked == true))
+	{
+		
+		document.getElementById('MahkamahAppear').style.display="block";
+		document.getElementById('MahkamahAppear2').style.display="none";
+	}
+	
+}
+
+function MahkamahAppear2(){
+	
+	
+
+	if((document.${formName}.flag_batal[0].checked == true) || (document.${formName}.flag_batal[3].checked == true))
+	{
+		
+		document.getElementById('MahkamahAppear2').style.display="block";
+		document.getElementById('MahkamahAppear').style.display="none";
+	}
+	
+}
+
+function DocSupportDisappear(){
+	
+	
+
+	if((document.${formName}.flag_batal[1].checked == true) || (document.${formName}.flag_batal[2].checked == true) || (document.${formName}.flag_batal[4].checked == true) )
+	{
+		
+		document.getElementById('dokumensokongan').style.display="none";
+	}
+	
+}
+
+function MahkamahDisappear(){
+	
+	
+
+	if((document.${formName}.flag_batal[1].checked == true) || (document.${formName}.flag_batal[2].checked == true) || (document.${formName}.flag_batal[4].checked == true) )
+	{
+		
+		document.getElementById('MahkamahAppear').style.display="none";
+		
+	}
+	
+}
+
+function MahkamahDisappear2(){
+	
+	
+
+	if((document.${formName}.flag_batal[1].checked == true) || (document.${formName}.flag_batal[2].checked == true) || (document.${formName}.flag_batal[4].checked == true) )
+	{
+		
+		
+		document.getElementById('MahkamahAppear2').style.display="none";
+	}
+	
+}
+
+function uploadSuppDoc(id,IdSimati)
+{
+	
+	var url = "../x/${securityToken}/ekptg.view.ppk.SkrinPopupUploadDokumen?&id_Permohonan="+id+"&IdSimati="+IdSimati+"&id_jenisDoc=99205";
+	var hWnd = window.open(url,'printuser','width=350,height=200, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	
+}
+
+function doOpen(id) {
+	//alert('id : '+id);
+    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id+"&jenisDoc=99205";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function deleteSuppDoc()
+{
+	input_box = confirm("Adakah anda pasti?");
+	if (input_box == true) {
+	document.${formName}.method = "POST";
+	document.${formName}.command2.value = "deleteSuppDocMode";
+	alert("test");
+	document.${formName}.command.value = "tab_batal";
+	document.${formName}.action="?_portal_module=ekptg.view.ppk.FrmSenaraiFailKeputusanPerbicaraan";
+	document.${formName}.submit();
+	}
+	else
+		{
+		return
+		}
+	
+	
+}
+
 
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
@@ -2245,10 +2778,10 @@ function SenaraiBicara(idpermohonan,command) {
 function Simpan_Selesai(idpermohonan,id_perbicaraan){   
 	
 	var txtCatatanSelesai = null; 
-	var oEditor = FCKeditorAPI.GetInstance('message') ;	
+	/*var oEditor =FCKeditorAPI.GetInstance('txtCatatanSelesai'); 
 	if(oEditor) { 	
 		txtCatatanSelesai = oEditor.GetXHTML(true); 		
-	}
+	} */
 	 	
 	var currentTime = new Date()
 	var str1  = document.getElementById("txdTarikhBayaranPerintah").value;   
@@ -2358,16 +2891,16 @@ function Simpan_Selesai(idpermohonan,id_perbicaraan){
 function Simpan_Tangguh(idpermohonan,id_perbicaraan)	{
 
 	var txtCatatanTangguh = null; 
-	var oEditor = FCKeditorAPI.GetInstance('message') ;	
+	/* var oEditor = FCKeditorAPI.GetInstance('message') ;	
 	if(oEditor) { 	
 		txtCatatanTangguh = oEditor.GetXHTML(true); 		
-	}
+	} */
 	
 	var txtPendapatTangguh = null; 
-	var oEditor = FCKeditorAPI.GetInstance('message') ;	
+	/* var oEditor = FCKeditorAPI.GetInstance('message') ;	
 	if(oEditor) { 	
 		txtPendapatTangguh = oEditor.GetXHTML(true); 		
-	}
+	} */
 	
 	var radioSelected = false;	
 	for (i = 0;  i < ${formName}.flag_tangguh.length;  i++){
@@ -2399,6 +2932,32 @@ function Skrin_Kemaskini(idpermohonan,id_perbicaraan,id_bayaran_perintah) {
 	document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailKeputusanPerbicaraan";
 	document.${formName}.command.value = "Skrin_Kemaskini";
 	document.${formName}.submit();	
+}
+
+function buttonAppearJustifikasiPegawai(justifikasiPegawai)
+{
+		
+		var dvPassport1 = document.getElementById("divbuttonGagalKemukakanDoc1");
+		var dvPassport2 = document.getElementById("divbuttonGagalKemukakanDoc2");
+		var dvPassport3 = document.getElementById("divbuttonGagalKemukakanDoc3");
+        dvPassport1.style.display = justifikasiPegawai.checked ? "block" : "none";
+        dvPassport2.style.display = justifikasiPegawai.checked ? "block" : "none";
+        dvPassport3.style.display = justifikasiPegawai.checked ? "block" : "none";
+
+        
+}
+
+function buttonDisAppearJustifikasiPegawai(justifikasiPegawai)
+{
+		
+		var dvPassport1 = document.getElementById("divbuttonGagalKemukakanDoc1");
+		var dvPassport2 = document.getElementById("divbuttonGagalKemukakanDoc2");
+		var dvPassport3 = document.getElementById("divbuttonGagalKemukakanDoc3");
+        dvPassport1.style.display = justifikasiPegawai.checked ? "none" : "block";
+        dvPassport2.style.display = justifikasiPegawai.checked ? "none" : "block";
+        dvPassport3.style.display = justifikasiPegawai.checked ? "none" : "block";
+
+        
 }
 
 function Skrin_KemaskiniTangguh(idpermohonan,id_perbicaraan) {
@@ -2441,6 +3000,12 @@ function kemaskini_selesai(idpermohonan,id_perbicaraan,id_perintah) {
    	var mon4  = parseInt(str4.substring(3,5),10);
    	var yr4   = parseInt(str4.substring(6,10),10);	
 	var trMOHON = new Date(yr4, mon4, dt4);
+	var justifikasi_pegawai	 = document.getElementById("justifikasi_pegawai").value; 
+	
+	if(document.${formName}.check_kiv.value != "3"){
+		document.getElementById("justifikasi_pegawai").value = ""; 
+	}
+		
 
 	if(document.${formName}.check_kiv.value == ""){
 		if(document.${formName}.txtNomborResitPerintahEDIT.value == ""){
@@ -2596,10 +3161,10 @@ function kembali_list(idpermohonan,id_perbicaraan) {
 function Simpan_Batal(idpermohonan,id_perbicaraan){   
 	// Dikemaskini oleh Rosli pada 29/03/2011, tukar kepada FCK Editor 
 	var txtCatatanBatal = null; 
-	var oEditor = FCKeditorAPI.GetInstance('message') ;	
+	/* var oEditor = FCKeditorAPI.GetInstance('message') ;	
 	if(oEditor) { 	
 		txtCatatanBatal = oEditor.GetXHTML(true); 		
-	}
+	} */
 	// end
 	
 	if(document.${formName}.EDITsocPegawaiPengendali.value == ""){
@@ -2761,6 +3326,14 @@ function validateModal(elmnt,content,content2) {
 }
 // End -->
 
+function semakMTBorangI(id_perbicaraan) {
+    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiMT?idFail=$idFail&command=hantarBorangI&dari=KeputusanPerbicaraan&idPerbicaraan="+id_perbicaraan;
+	var hWnd = window.open(url,'Cetak','width=625,height=480, resizable=yes,scrollbars=no');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
 
 function FCKeditor_OnComplete( editorInstance ){
 
@@ -2910,7 +3483,13 @@ function fckeditor_word_count7() {
  		$jquery('#valueKIV').val(inputA);
  	}
 
-
+ 	function cetakBorangJ(nofail,idFail,id_perbicaraan) {
+ 		var url = "../servlet/ekptg.report.ppk.BorangJ?noFail="+nofail+"&idfail="+idFail+"&idperbicaraan="+id_perbicaraan;
+ 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+ 	    if ((document.window != null) && (!hWnd.opener))
+ 		hWnd.opener = document.window;
+ 	    if (hWnd.focus != null) hWnd.focus();	
+ 	}
 
 
 </script>

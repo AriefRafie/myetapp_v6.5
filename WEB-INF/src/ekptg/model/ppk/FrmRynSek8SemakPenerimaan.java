@@ -8,6 +8,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import ekptg.helpers.DB;
@@ -15,11 +17,12 @@ import ekptg.helpers.DB;
  * @author
  * Muhamad Syazreen bin Yahaya
  */
+import ekptg.view.ppk.FrmRynSemakPenerimaan;
 
 public class FrmRynSek8SemakPenerimaan {
 
 	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");
-	
+	static Logger myLogger = Logger.getLogger(FrmRynSemakPenerimaan.class);
 	//seksyen 8 (termasuk dengan seksyen 17)
 	private static Vector listDefault = new Vector();
 	private static Vector listCarian = new Vector();
@@ -857,7 +860,7 @@ public class FrmRynSek8SemakPenerimaan {
 	    		sql += "WHERE ry.id_rayuan = '"+id_rayuan+"'";
 	    		sql += " AND ry.id_rayuan = r.id_rayuan";
 	    		sql += " AND ry.flag_serahan = 3 ";
-	      
+	    		myLogger.info("setMaklumatSerahanMahkamah = "+sql);
 	    		ResultSet rs = stmt.executeQuery(sql);
 	      
 	    		Hashtable h;
@@ -901,6 +904,7 @@ public class FrmRynSek8SemakPenerimaan {
 		    		sql += " and a.id_daerah = b.id_daerah ";
 		    		sql += " and a.id_negeri = '"+id_negeri+"'";
 		      
+		    		myLogger.info("getListMahkamah = "+sql);
 		    		ResultSet rs = stmt.executeQuery(sql);
 		    		Vector list = new Vector();
 		      
@@ -948,6 +952,7 @@ public class FrmRynSek8SemakPenerimaan {
 		    		sql += " and a.id_daerah = c.id_daerah";
 		    		sql += " and id_pejabat = '"+id_pejabat+"'";
 		      
+		    		myLogger.info("getDetailMahkamah = "+sql);
 		    		ResultSet rs = stmt.executeQuery(sql);
 		    		Vector list = new Vector();
 		      
