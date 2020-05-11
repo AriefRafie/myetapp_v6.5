@@ -69,41 +69,51 @@ resetOnBlur:false
 
 
 <table width="100%" border="0">
-	<input type="hidden" name="command" value="">
- 	<input type="hidden" name="mode" value="">
+
+
+ <input type="hidden" name="command" value="">
+ <input type="hidden" name="mode" value="">
  
- 	<input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
- 	<input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$selectedTabtengah"/>
- 	<input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
- 	<input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
+ <input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
+ <input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$selectedTabtengah"/>
+ <input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
+ <input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
 
 #foreach($list in $View)
     #set ($id = $list.idPermohonan)
     #set ($idPemohon = $list.idPemohon)
     #set ($idSimati = $list.idSimati)
     #set($id_Status = $list.id_Status)
-   	<input name="idPermohonanp" type="hidden"  value="$list.idPermohonan"/>
-   	<input name="idpermohonan" type="hidden"  value="$id"/>
-    <input type="hidden" name="idPermohonan" value="$id"/>
-  	<input name="idPemohon" type="hidden"  value="$idPemohon"/>
-   	<input name="idSimati" type="hidden"  value="$idSimati"/>
-   	<input name="idtemp" type="hidden"  value="$id"/>    
-	<input name="id_Suburusanstatus" type="hidden"  value="$list.id_Suburusanstatus"/>
-	<input name="id_Suburusanstatusfail" type="hidden"  value="$list.id_Suburusanstatusfail"/>
-	<input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
-	#set($listnoFail = $list.noFail)
-	#set($listidnegeri = $list.idnegeri)
-	#set($listnamadaerah = $list.namadaerah)
-	#set($listnamaPejabat = $list.namaPejabat)
-	#set($listketerangan = $list.keterangan)
-	#set($listseksyen = $list.seksyen)
-	#set($listtarikhMohon = $list.tarikhMohon)
-	#set($listnamaSimati = $list.namaSimati )
-	#set($listnamaPemohon = $list.namaPemohon)
-	#set($listtarikhMohon = $list.tarikhMohon)
-	#set($listidSimati = $list.idSimati)
+    
+    <input name="idPermohonanp" type="hidden"  value="$list.idPermohonan"/>
+     <input name="idpermohonan" type="hidden"  value="$id"/>
+    
+    <input name="idPermohonan" type="hidden"  value="$id"/>
+     <input name="idPemohon" type="hidden"  value="$idPemohon"/>
+      <input name="idSimati" type="hidden"  value="$idSimati"/>
+       <input name="idtemp" type="hidden"  value="$id"/>
+       
+        
+<input name="id_Suburusanstatus" type="hidden"  value="$list.id_Suburusanstatus"/>
+<input name="id_Suburusanstatusfail" type="hidden"  value="$list.id_Suburusanstatusfail"/>
+<input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
+
+
+
+#set($listnoFail = $list.noFail)
+#set($listidnegeri = $list.idnegeri)
+#set($listnamadaerah = $list.namadaerah)
+#set($listnamaPejabat = $list.namaPejabat)
+#set($listketerangan = $list.keterangan)
+#set($listseksyen = $list.seksyen)
+#set($listtarikhMohon = $list.tarikhMohon)
+#set($listnamaSimati = $list.namaSimati )
+#set($listnamaPemohon = $list.namaPemohon)
+#set($listtarikhMohon = $list.tarikhMohon)
+#set($listidSimati = $list.idSimati)
  
 #end
+
 
 <tr>
 <td>
@@ -1332,10 +1342,8 @@ resetOnBlur:false
                   <input type="text" disabled value=$!namaDoC> &nbsp;&nbsp; <input name="deleteSuppDoc1" type="button" value="Padam" onclick="deleteSuppDoc()" />
                   #end
                   #if($readmode=="disabled" && $namaDoC != "")
-                   <!-- <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />
-                 	<input type="text" disabled value=$!namaDoC> -->	
-                  	$!lampirans
-                  
+                  <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />
+                  <!-- <input type="text" disabled value=$!namaDoC> -->	
                   #end
                   
                   #if($readmode!="disabled" && $namaDoC == "") 
@@ -1446,9 +1454,10 @@ resetOnBlur:false
   </tr>
 </table>
 #foreach($list in $View)
-	#set($noFail = $list.noFail)
-	#set($idPemohon = $list.idPemohon)
+#set($noFail = $list.noFail)
+#set($idPemohon = $list.idPemohon)
 #end
+
 
 #parse("app/ppk/paging_sek8.jsp") 
 #parse("app/ppk/headerppk_script.jsp")
@@ -1457,27 +1466,34 @@ resetOnBlur:false
 
 <script>
 
+
 selectPelbagaiNegara(document.f1.socNegeriSimati.value,'div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');
 <!-- TAB -->
 
-	function testing(){
-		alert('$!skrin_online');
-	}
+function testing()
+{
+alert('$!skrin_online');
+}
 
-	function HtaamViewX() {
-		if('$!skrin_online' == 'yes'){
-			document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
-		}else{
-		document.f1.action = "";
-		}
-	
-		document.f1.mode.value = "HtaamviewX";
-		document.f1.command.value = "HtaamX";
-		document.f1.submit();
-	
-	}
 
-	function HtaamView() {
+
+function HtaamViewX() {
+
+if('$!skrin_online' == 'yes')
+{
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
+}
+else
+{
+document.f1.action = "";
+}
+
+	
+	document.f1.mode.value = "HtaamviewX";
+	document.f1.command.value = "HtaamX";
+	document.f1.submit();
+}
+function HtaamView() {
 	if('$!skrin_online' == 'yes')
 {
 document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
@@ -2475,17 +2491,9 @@ function uploadSuppDoc(id,IdSimati)
 	
 }
 
-function paparLampiran(id_){
-	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
-    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener=document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}
-
 function doOpen(id) {
 	//alert('id : '+id);
-    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id;
+    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id+"&jenisDoc=99201";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
     hWnd.opener = document.window;
