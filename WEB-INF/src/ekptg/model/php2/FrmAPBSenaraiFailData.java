@@ -583,7 +583,7 @@ public class FrmAPBSenaraiFailData {
 
 	public String generateNoFail(HttpSession session) throws Exception {
 		String noFail = "";
-		noFail = "JKPTG(S)/BPHP/8-2 SK " + File.getSeqNo(session, 4, 9);
+		noFail = "JKPTG(S)/BPHP/8-2 SK " + File.getSeqNoP(session, 4, 9);
 
 		return noFail;
 	}

@@ -1816,7 +1816,7 @@ public class FrmPYWSenaraiFailData {
 				+ "/"
 				+ kodTanah
 				+ "-"
-				+ File.getSeqNo(session, 4, Integer.parseInt(idUrusan),
+				+ File.getSeqNoP(session, 4, Integer.parseInt(idUrusan),
 						Integer.parseInt(idKementerian),
 						Integer.parseInt(idNegeri));
 
