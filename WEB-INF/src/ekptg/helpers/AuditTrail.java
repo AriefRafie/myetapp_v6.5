@@ -11,11 +11,9 @@ import lebah.portal.velocity.VTemplate;
 import org.apache.log4j.Logger;
 
 public class AuditTrail {
-	static Logger myLogger = Logger.getLogger(AuditTrail.class);
+	static Logger myLogger = Logger.getLogger(ekptg.helpers.AuditTrail.class);
 	
-	public AuditTrail() {
-		
-	}
+	public AuditTrail() {	}
 	
 	public static void logActivity(String jenis_aktiviti,String keterangan) 
 	throws Exception {
@@ -34,9 +32,10 @@ public class AuditTrail {
 		logActivity("","","",module,session,jenis_aktiviti,keterangan,db);
 	}
 	
-	public static void logActivity(String id_status,String id_seksyen,VTemplate module,HttpSession session,
-			String jenis_aktiviti,String keterangan) 
-	throws Exception {
+	public static void logActivity(String id_status
+		,String id_seksyen
+		,VTemplate module,HttpSession session
+		,String jenis_aktiviti,String keterangan) throws Exception {
 		logActivity("",id_status,id_seksyen,module,session,jenis_aktiviti,keterangan,null);
 	}
 	
@@ -47,9 +46,14 @@ public class AuditTrail {
 				jenis_aktiviti,keterangan,null);
 	}
 	
-	public static void logActivity(String id_suburusan,String id_status,String id_seksyen,VTemplate module,HttpSession session,
-		String jenis_aktiviti,String keterangan,Db db) 
-		throws Exception {
+	public static void logActivity(String id_suburusan
+		,String id_status
+		,String id_seksyen
+		,VTemplate module
+		,HttpSession session
+		,String jenis_aktiviti
+		,String keterangan
+		,Db db) throws Exception {
 		String module_session = session.getAttribute("_portal_module").toString();
 		//System.out.println(" module_session :::::::::::: "+module_session);
 		
@@ -125,6 +129,8 @@ public class AuditTrail {
 		}
 	
 	}
+	
+	
 
 	
 }

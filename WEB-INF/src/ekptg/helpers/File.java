@@ -876,9 +876,7 @@ public class File implements Serializable  {
 				//db = new Db();
 			try{
 				db.getStatement().executeUpdate(sb.toString());
-				
-				AuditTrail at = new AuditTrail();
-				//at.logActivity(id_urusan+"","","2",null,"","increaseSeq CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ");
+				AuditTrail.logActivity(id_urusan+"","","2",null,null,"","increaseSeq CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ");
 				
 			} catch (SQLException x) {x.printStackTrace();}
 			
