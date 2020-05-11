@@ -1485,7 +1485,7 @@ public class FrmPLPSenaraiFailData {
 				+ "/"
 				+ kodNegeri
 				+ "-"
-				+ File.getSeqNo(session, 4, 6, Integer.parseInt(idKementerian),
+				+ File.getSeqNoP(session, 4, 6, Integer.parseInt(idKementerian),
 						Integer.parseInt(idNegeri));
 
 		return noFail;

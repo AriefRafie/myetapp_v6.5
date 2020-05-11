@@ -118,7 +118,8 @@ public class FrmSenaraiFailOnlineCarianData {
 				}  
 			
 			 sql = sql + " ORDER BY STA.ID_SUBURUSANSTATUSFAIL DESC";
-			 ////System.out.println("sql online--->>>>>"+sql);
+			 ////
+			 System.out.println("sql online--->>>>>"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h; 
 			int bil = 0;
