@@ -152,6 +152,13 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatPelepasan in $BeanMaklumatPelepasan)
               <tr>
+                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+                <td valign="top">Tarikh Surat</td>
+                <td>:</td>
+                <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPelepasan.tarikhSurat" onBlur="check_date(this);cekTarikhSurat(this)" size="9" $readonly class="$inputTextClass"/>
+                  #if ($mode == 'update')<a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end</td>
+              </tr>
+              <tr>
                 <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
                 <td valign="top" width="28%">Tarikh Terima</td>
                 <td width="1%">:</td>
@@ -159,11 +166,16 @@
                   #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end</td>
               </tr>
               <tr>
-                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td valign="top">Tarikh Surat</td>
+                <td width="1%">&nbsp;</td>
+                <td valign="top">No. Rujukan Surat</td>
                 <td>:</td>
-                <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPelepasan.tarikhSurat" onBlur="check_date(this);cekTarikhSurat(this)" size="9" $readonly class="$inputTextClass"/>
-                  #if ($mode == 'update')<a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end</td>
+                <td><input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat" value="$beanMaklumatPelepasan.noRujukanSurat" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50"/></td>
+              </tr>
+              <tr>
+                <td width="1%">&nbsp;</td>
+                <td valign="top">No. Fail Negeri</td>
+                <td>:</td>
+                <td><input name="txtNoFailNegeri" type="text" class="$inputTextClass" id="txtNoFailNegeri" value="$beanMaklumatPelepasan.noFailNegeri" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50"/></td>
               </tr>
               <tr>
                 <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
