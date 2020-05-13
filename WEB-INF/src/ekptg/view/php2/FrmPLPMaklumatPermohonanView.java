@@ -179,8 +179,8 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
     		}
     		if ("doSimpanKemaskiniMaklumatPelepasan".equals(hitButton)) {
 				logic.updatePermohonanPelepasan(idFail, idPermohonan,
-						getParam("tarikhTerima"), getParam("tarikhSurat"),
-						getParam("txtPerkara"), idPermohonanPelepasan,
+						getParam("tarikhTerima"), getParam("tarikhSurat"), getParam("txtNoRujukanSurat"),
+						getParam("txtNoFailNegeri"), getParam("txtPerkara"), idPermohonanPelepasan,
 						idJenisProjek, getParam("txtNamaProjek"),
 						idLuasKegunaan,
 						idLuas, getParam("txtLuasMohon1"),
@@ -232,9 +232,6 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 			if ("doHapusTanahGanti".equals(hitButton)){
 				logic.hapusTanahGanti(idTanahGanti, session);
 			}
-        	if ("doSeterusnya".equals(hitButton)){
-    			logic.updateStatus(idFail, idPermohonan, session);
-    		} 
         	if ("doBatalPermohonan".equals(hitButton)){
     			logic.doBatalPermohonan(idFail, idPermohonan, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
@@ -257,6 +254,9 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 			if ("hapusPelan".equals(hitButton)) {
 				logic.hapusPelan(idDokumen, session);
 			}
+        	if ("doSeterusnya".equals(hitButton)){
+    			logic.updateStatus(idFail, idPermohonan, session);
+    		} 
     	}
     	
         //HEADER
@@ -625,6 +625,8 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 			Hashtable hashMaklumatPelepasan = new Hashtable();
 			hashMaklumatPelepasan.put("tarikhTerima", getParam("tarikhTerima"));
 			hashMaklumatPelepasan.put("tarikhSurat", getParam("tarikhSurat"));
+			hashMaklumatPelepasan.put("noRujukanSurat", getParam("txtNoRujukanSurat"));
+			hashMaklumatPelepasan.put("noFailNegeri", getParam("txtNoFailNegeri"));
 			hashMaklumatPelepasan.put("perkara", getParam("txtPerkara"));
 			hashMaklumatPelepasan.put("namaProjek", getParam("txtNamaProjek"));
 			hashMaklumatPelepasan.put("cadanganKegunaan", getParam("txtCadanganKegunaan"));

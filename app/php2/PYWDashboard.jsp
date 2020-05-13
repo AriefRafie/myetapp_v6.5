@@ -357,6 +357,26 @@ a.nav:visited {
                         </table></td>
                     </tr>
                   </table></td>
+                  <td width="50%" valign="top"><table width="100%" >
+                    <tr>
+                      <td width="15%" align="center" valign="top"><img width="30" height="30" src="../image/folder.png"/></td>
+                      <td width="85%"><table width="100%">
+                          <tr>
+                            <td><b>Panduan/ Rujukan</td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoPanduanPengguna()" class="help" title="Panduan Pengguna"> <font color="blue">
+                              <li>&nbsp;Panduan Pengguna</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoPekeliling()" class="help" title="Senarai Pekeliling"> <font color="blue">
+                              <li>&nbsp;Senarai Pekeliling</li>
+                              </font> </a> </td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                  </table></td>
                 <td width="50%" valign="top"><table width="100%" >
                   </table></td>
               </tr>
@@ -502,6 +522,11 @@ function gotoFLMSstat() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan&command=paparLaporan";
 	document.${formName}.submit();
 }
+function gotoPanduanPengguna() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Panduan/ Rujukan",$portal_role)?_portal_module=ekptg.view.FrmManualPenggunaAll";
+	document.${formName}.submit();
+}
+ekptg.view.FrmManualPenggunaAll
 </script>
 <script type="text/javascript" charset="utf-8">
 		$$("a.help").each( function(input) {

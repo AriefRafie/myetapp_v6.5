@@ -1541,7 +1541,7 @@ public class FrmPLPLawatanTapakData {
 
 			// TBLPERMOHONAN
 			r.update("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_STATUS", "1610201"); // MESYUARAT
+			r.add("ID_STATUS", "1610199"); // JABATAN TEKNIKAL
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
@@ -1567,7 +1567,7 @@ public class FrmPLPLawatanTapakData {
 					.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("34", "1610201")); // MESYUARAT
+			r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("34", "1610199")); // JABATAN TEKNIKAL
 			r.add("AKTIF", "1");
 			r.add("ID_FAIL", idFail);
 
@@ -1581,7 +1581,7 @@ public class FrmPLPLawatanTapakData {
 
 			conn.commit();
 			
-			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
+			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] PROSES SETERUSNYA");
 

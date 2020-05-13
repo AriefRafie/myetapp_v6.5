@@ -1453,130 +1453,14 @@ public class FrmPLPJabatanTeknikalData {
 
 			// TBLPERMOHONAN
 			r.update("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_STATUS", "1610200");
+			r.add("ID_STATUS", "1610201"); // MESYUARAT
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 			sql = r.getSQLUpdate("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
-
-			// PREPARE DATA FOR LAPORAN TANAH ASAL
-			String flagGuna = "";
-			String lot = "";
-			String noHak = "";
-			String mukimTanah = "";
-			String daerahTanah = "";
-			String negeriTanah = "";
-			String namaProjek = "";
-			String pemohon = "";
-			String jenisTanah = "";
-
-			sql = "SELECT "
-					+ "TBLPFDFAIL.ID_FAIL, "
-					+ "CASE "
-					+ "WHEN TBLPHPPERMOHONANPELEPASAN.FLAG_GUNA = '1' THEN 'keseluruhan' "
-					+ "WHEN TBLPHPPERMOHONANPELEPASAN.FLAG_GUNA = '2' THEN 'sebahagian' "
-					+ "END AS FLAG_GUNA, "
-					+ "TBLPHPPERMOHONANPELEPASAN.NAMA_PROJEK, "
-					+ "INITCAP(TBLPHPPEMOHON.NAMA) AS NAMA_PEMOHON, "
-					+ "REPLACE(INITCAP(REPLACE(TRIM(DAERAHHAKMILIK.NAMA_DAERAH),'&','&#38;')),',')  AS DAERAH_HAKMILIK, "
-					+ "REPLACE(REPLACE(INITCAP(REPLACE(TRIM(NEGERIHAKMILIK.NAMA_NEGERI),'&','&#38;')),','),'Negeri','') AS NEGERI_HAKMILIK, "
-					+ "REPLACE(INITCAP(REPLACE(TRIM(TBLRUJMUKIM.NAMA_MUKIM),'&','&#38;')),',')  AS MUKIM_HAKMILIK, "
-					+ "CASE  "
-					+ "WHEN SUBSTR(ROUND(TBLPHPPERMOHONANPELEPASAN.LUAS_MHNBERSAMAAN,4),1,1) = '.' THEN '0'|| ROUND(TBLPHPPERMOHONANPELEPASAN.LUAS_MHNBERSAMAAN,4) "
-					+ "WHEN SUBSTR(ROUND(TBLPHPPERMOHONANPELEPASAN.LUAS_MHNBERSAMAAN,4),1,1) != '.' THEN '' || ROUND(TBLPHPPERMOHONANPELEPASAN.LUAS_MHNBERSAMAAN,4) "
-					+ "END AS LUAS_MHN, "
-					+ "INITCAP(TBLRUJLOT.KETERANGAN) || ' '||  TBLHTPHAKMILIK.NO_LOT AS LOT, "
-					+ "CASE "
-					+ "WHEN TBLHTPHAKMILIK.NO_WARTA IS NULL THEN TBLRUJJENISHAKMILIK.KOD_JENIS_HAKMILIK ||' '||TBLHTPHAKMILIK.NO_HAKMILIK  "
-					+ "WHEN TBLHTPHAKMILIK.NO_HAKMILIK IS NULL THEN TBLHTPHAKMILIK.NO_WARTA  "
-					+ "END AS NO_HAK, "
-					+ "CASE "
-					+ "WHEN TBLHTPHAKMILIK.NO_HAKMILIK IS NOT NULL AND TBLHTPHAKMILIK.NO_WARTA IS NULL THEN 'milik' "
-					+ "WHEN TBLHTPHAKMILIK.NO_HAKMILIK IS NULL AND TBLHTPHAKMILIK.NO_WARTA IS NOT NULL THEN 'rizab' "
-					+ "END AS JENIS_TANAH "
-					+ "FROM "
-					+ "TBLPFDFAIL, "
-					+ "TBLPERMOHONAN, "
-					+ "TBLPHPPEMOHON, "
-					+ "TBLPHPHAKMILIKPERMOHONAN, "
-					+ "TBLPHPPERMOHONANPELEPASAN, "
-					+ "TBLHTPHAKMILIKAGENSI, "
-					+ "TBLHTPHAKMILIK, "
-					+ "TBLRUJDAERAH DAERAHHAKMILIK, "
-					+ "TBLRUJNEGERI NEGERIHAKMILIK, "
-					+ "TBLRUJKEMENTERIAN, "
-					+ "TBLRUJMUKIM, "
-					+ "TBLRUJLOT, "
-					+ "TBLRUJJENISHAKMILIK "
-					+ "WHERE TBLPFDFAIL.ID_FAIL = TBLPERMOHONAN.ID_FAIL "
-					+ "AND TBLPERMOHONAN.ID_PERMOHONAN = TBLPHPHAKMILIKPERMOHONAN.ID_PERMOHONAN "
-					+ "AND TBLPERMOHONAN.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON "
-					+ "AND TBLPHPHAKMILIKPERMOHONAN.ID_HAKMILIKAGENSI = TBLHTPHAKMILIKAGENSI.ID_HAKMILIKAGENSI "
-					+ "AND TBLHTPHAKMILIKAGENSI.ID_HAKMILIK = TBLHTPHAKMILIK.ID_HAKMILIK "
-					+ "AND TBLHTPHAKMILIKAGENSI.ID_KEMENTERIAN = TBLRUJKEMENTERIAN.ID_KEMENTERIAN "
-					+ "AND TBLHTPHAKMILIK.ID_DAERAH = DAERAHHAKMILIK.ID_DAERAH(+) "
-					+ "AND TBLHTPHAKMILIK.ID_NEGERI = NEGERIHAKMILIK.ID_NEGERI(+)  "
-					+ "AND TBLHTPHAKMILIK.ID_MUKIM = TBLRUJMUKIM.ID_MUKIM(+) "
-					+ "AND TBLHTPHAKMILIK.ID_LOT = TBLRUJLOT.ID_LOT(+) "
-					+ "AND TBLHTPHAKMILIK.ID_JENISHAKMILIK = TBLRUJJENISHAKMILIK.ID_JENISHAKMILIK(+) "
-					+ "AND TBLPERMOHONAN.ID_PERMOHONAN = TBLPHPPERMOHONANPELEPASAN.ID_PERMOHONAN "
-					+ "AND TBLPERMOHONAN.ID_PERMOHONAN = '" + idPermohonan
-					+ "'";
-
-			ResultSet rsLawatan = stmt.executeQuery(sql);
-			if (rsLawatan.next()) {
-				flagGuna = rsLawatan.getString("FLAG_GUNA") == null ? ""
-						: rsLawatan.getString("FLAG_GUNA");
-				lot = rsLawatan.getString("LOT") == null ? "" : rsLawatan
-						.getString("LOT");
-				noHak = rsLawatan.getString("NO_HAK") == null ? "" : rsLawatan
-						.getString("NO_HAK");
-				mukimTanah = rsLawatan.getString("MUKIM_HAKMILIK") == null ? ""
-						: rsLawatan.getString("MUKIM_HAKMILIK");
-				daerahTanah = rsLawatan.getString("DAERAH_HAKMILIK") == null ? ""
-						: rsLawatan.getString("DAERAH_HAKMILIK");
-				negeriTanah = rsLawatan.getString("NEGERI_HAKMILIK") == null ? ""
-						: rsLawatan.getString("NEGERI_HAKMILIK");
-				namaProjek = rsLawatan.getString("NAMA_PROJEK") == null ? ""
-						: rsLawatan.getString("NAMA_PROJEK");
-				pemohon = rsLawatan.getString("NAMA_PEMOHON") == null ? ""
-						: rsLawatan.getString("NAMA_PEMOHON");
-				jenisTanah = rsLawatan.getString("JENIS_TANAH") == null ? ""
-						: rsLawatan.getString("JENIS_TANAH");
-			}
-			String tujuan = "Laporan ini disediakan berhubung dengan permohonan menyerahkan balik "
-					+ flagGuna
-					+ " tanah "
-					+ jenisTanah
-					+ " persekutuan "
-					+ lot
-					+ ", "
-					+ noHak
-					+ ", "
-					+ mukimTanah
-					+ ", Daerah "
-					+ daerahTanah
-					+ ", Negeri "
-					+ negeriTanah
-					+ " untuk dilepaskan kepada "
-					+ pemohon
-					+ " bagi tujuan "
-					+ namaProjek;
-
-			// TBLPHPLAPORANTANAH
-			r = new SQLRenderer();
-			r.update("ID_PERMOHONAN", idPermohonan);
-			r.update("FLAG_JENISTANAH", "P");
-			r.add("TUJUAN_LAPORAN", tujuan);
-
-			r.add("ID_KEMASKINI", userId);
-			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-			sql = r.getSQLUpdate("TBLPHPLAPORANTANAH");
-			stmt.executeUpdate(sql);
-
+			
 			// TBLRUJSUBURUSANSTATUSFAIL
 			r = new SQLRenderer();
 			r.update("ID_PERMOHONAN", idPermohonan);
@@ -1595,8 +1479,7 @@ public class FrmPLPJabatanTeknikalData {
 					.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("34", "1610200")); // LAWATAN
-																				// TAPAK
+			r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("34", "1610201")); // MESYUARAT
 			r.add("AKTIF", "1");
 			r.add("ID_FAIL", idFail);
 			r.add("ID_MASUK", userId);
@@ -1609,7 +1492,7 @@ public class FrmPLPJabatanTeknikalData {
 
 			conn.commit();
 			
-			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
+			AuditTrail.logActivity("1610201", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] PROSES SETERUSNYA");
 
