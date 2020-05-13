@@ -1,300 +1,286 @@
-#parse("app/ppt/Sek8Paging.jsp")
+#parse("app/ppt/Sek8Paging.jsp") #set($frmtdate = "&nbsp;
+<i><font color='blue' style='font-size: 10px'>dd/mm/yyyy</font></i>
+") #if($mode=="new") #if($saiz_listHakmilikBorangEInBulk != 0) #set($M =
+"*") #set($disability = "") #set($disabilityx = "") #set($disability1 =
+"") #else #set($M = "") #set($disability = "readonly") #set($disabilityx
+= "class=disabled") #set($disability1 = "disabled") #end #else
 
-#set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
+#if($isEdit=="yes") #set($M = "*") #set($disability = "")
+#set($disabilityx = "") #set($disability1 = "") #else #set($M = "")
+#set($disability = "readonly") #set($disabilityx = "class=disabled")
+#set($disability1 = "disabled") #end #if($onchangeEdit=="no")
+#foreach($data in $dataBorangEInBulk)
+#set($txdTarikhBorangF=$data.tarikh_borangf)
+#set($txdTarikhBorangE=$data.tarikh_borange)
+#set($txdTarikhSiasatan=$data.tarikh_siasatan)
+#set($txtMasaSiasatan=$data.masa_siasatan)
+#set($socJenisWaktu=$data.jenis_waktu) #set($txtAlamat1=$data.alamat1)
+#set($txtAlamat2=$data.alamat2) #set($txtAlamat3=$data.alamat3)
+#set($txtPoskod=$data.poskod) #set($tarikh_cetak=$data.tarikh_cetak)
+#set($txdTarikhTampal=$data.tarikh_akhir_tampal) #end #end #end
 
-	#if($mode=="new")
-		
-		#if($saiz_listHakmilikBorangEInBulk != 0)
-			#set($M = "*")
-			#set($disability = "")
-			#set($disabilityx = "")
-			#set($disability1 = "")	
-		#else
-			#set($M = "")
-			#set($disability = "readonly")
-			#set($disabilityx = "class=disabled")
-			#set($disability1 = "disabled")
-		#end
-	
-		
-		
-		
-	#else
-		
-		#if($isEdit=="yes")
-			#set($M = "*")
-			#set($disability = "")
-			#set($disabilityx = "")
-			#set($disability1 = "")	
-		#else
-			#set($M = "")
-			#set($disability = "readonly")
-			#set($disabilityx = "class=disabled")
-			#set($disability1 = "disabled")
-		#end	
-		
-		#if($onchangeEdit=="no")
-			#foreach($data in $dataBorangEInBulk)
-				#set($txdTarikhBorangF=$data.tarikh_borangf)
-				#set($txdTarikhBorangE=$data.tarikh_borange)
-				#set($txdTarikhSiasatan=$data.tarikh_siasatan)
-				#set($txtMasaSiasatan=$data.masa_siasatan)
-				#set($socJenisWaktu=$data.jenis_waktu)
-				#set($txtAlamat1=$data.alamat1)
-				#set($txtAlamat2=$data.alamat2)
-				#set($txtAlamat3=$data.alamat3)
-				#set($txtPoskod=$data.poskod)
-				#set($tarikh_cetak=$data.tarikh_cetak)
-				#set($txdTarikhTampal=$data.tarikh_akhir_tampal)				
-			#end
-		#end
-		
-	#end
-	
-	<center>
+<center>
 
-	<br/>
-			
+	<br />
+
 	<fieldset id="top">
-	<legend>Maklumat Borang E </legend>
-	
-			<table width="100%" border="0">  
-				<tr>
-					<td width="1%"><font color="red">*</font></td>
-					<td width="18%">Tarikh Borang E</td>
-					<td width="1%">:</td>
-					<td width="80%"><input $disability $disabilityx name="txdTarikhBorangE" id="txdTarikhBorangE" size="11" type="text" value="$!txdTarikhBorangE" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-            		#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) || ($mode=="view" && $isEdit=="yes"))
-            		<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhBorangE',false,'dmy');">&nbsp;$!frmtdate
-            		#end
-            		</td>
-				</tr>
-			
-				<tr>
-                	<td>&nbsp;</td>
-                	<td>Tarikh Borang F</td>
-                	<td>:</td>
-                	<td><input $disability $disabilityx name="txdTarikhBorangF" id="txdTarikhBorangF" size="11" type="text" value="$!txdTarikhBorangF" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-            		#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) || ($mode=="view" && $isEdit=="yes"))
-            		<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhBorangF',false,'dmy');">&nbsp;$!frmtdate
-            		#end
-            		</td>
-    			</tr>
-			
-				<tr>
-					<td>&nbsp;</td>
-					<td>Tarikh Akhir Tampal</td>
-					<td>:</td>
-					<td><input $disability $disabilityx name="txdTarikhTampal" id="txdTarikhTampal" size="11" type="text" value="$!txdTarikhTampal" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this);getTarikhSiasatan()" >
-            		#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) || ($mode=="view" && $isEdit=="yes"))
-            		<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhTampal',false,'dmy');">&nbsp;$!frmtdate
-            		#end
-            		</td>
-				</tr>
-				
-				<tr>
-					<td>&nbsp;</td>
-					<td>Tarikh Siasatan</td>
-					<td>:</td>
-					<td><input $disability $disabilityx name="txdTarikhSiasatan" id="txdTarikhSiasatan" size="11" type="text" value="$!txdTarikhSiasatan" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-            		#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) || ($mode=="view" && $isEdit=="yes"))
-            		<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhSiasatan',false,'dmy');">&nbsp;$!frmtdate
-            		#end
-            		</td>
-				</tr>
-			
-				<tr>
-					<td>&nbsp;</td>
-					<td>Masa Siasatan</td>
-					<td>:</td>
-					<td><input $disability $disabilityx type="text" name="txtMasaSiasatan" id="txtMasaSiasatan" value="$!txtMasaSiasatan" onblur="validateNumber(this,this.value);checkDigit()" onkeyup="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" maxlength="4" size="4" />
-						<select $disability1 $disabilityx name="socJenisWaktu" id="socJenisWaktu" style="width:105px">
-						
-						<option value="0" #if($socJenisWaktu=="" || $socJenisWaktu=="0" ) selected=selected #end >SILA PILIH</option>
-                    	<option value="1" #if($socJenisWaktu=='1') selected=selected #end >PAGI</option>
-                    	<option value="2" #if($socJenisWaktu=='2') selected=selected #end >TENGAH HARI</option>
-                    	<option value="3" #if($socJenisWaktu=='3') selected=selected #end >PETANG</option>
-					
-                		</select>&nbsp;#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) || ($mode=="view" && $isEdit=="yes"))
-                		<font color="blue" style="font-size:10px"><i>format 12 jam (HHMM)</i></font>#end</td>
-				</tr>
-			
-				<tr>
-					<td>&nbsp;</td>
-					<td>Alamat</td>
-					<td>:</td>
-					<td><input $disability $disabilityx type="text" name="txtAlamat1" id="txtAlamat1" value="$!txtAlamat1" size="45" maxlength="80" ></td>
-				</tr>
-			
-				<tr>
-					<td colspan="3">&nbsp;</td>
-					<td><input $disability $disabilityx type="text" name="txtAlamat2" id="txtAlamat2" value="$!txtAlamat2" size="45" maxlength="80" ></td>
-				</tr>
-			
-				<tr>
-					<td colspan="3">&nbsp;</td>
-					<td><input $disability $disabilityx type="text" name="txtAlamat3" id="txtAlamat3" value="$!txtAlamat3" size="45" maxlength="80" ></td>
-				</tr>
-			
-				<tr>
-					<td>&nbsp;</td>
-					<td>Poskod</td>
-					<td>:</td>
-					<td><input $disability $disabilityx type="text" name="txtPoskod" id="txtPoskod" value="$!txtPoskod" size="5" maxlength="5" onkeyup="validateNumber(this,this.value)" onblur="validateNumber(this,this.value)" ></td>
-				</tr>
-			
-				<tr>
-					<td>&nbsp;</td>
-					<td>Negeri</td>
-					<td>:</td>
-					<td>$!selectNegeri</td>
-				</tr>
-			
-				<tr>
-					<td>&nbsp;</td>
-					<td>Bandar</td>
-					<td>:</td>
-					<td>$!selectBandar</td>
-				</tr>
-			</table>
-			
-			<br/>
-			
-	<fieldset id="center">
-	<legend><strong><font color="red">$M</font> Senarai Pilihan Hakmilik</strong></legend>
-    
-    
-    #if($saiz_listHakmilikBorangEInBulk > 10)
-                <div style="width:100%;height:285;overflow:auto"> 
-            #end	
+		<legend>Maklumat Borang E</legend>
 
-	<table width="100%"  cellpadding="0" cellspacing="2" border="0">
-		
-		<tr class="table_header">
-			#if($saiz_listHakmilikBorangEInBulk != 0)
-        	<td align="center" width="5%"><b><input $disability1 type="checkbox" title="Sila Semak Untuk Pilih Semua" name="checkall" id="checkall" onclick="checkALL()" ></b></td>
-        	#end
-       		<td align="center" width="15%"><b>No (Tarikh Borang E)</b></td>
-            <td width="20%"><b>No.Hakmilik</b></td>
-           	<td width="15%"><b>No.LOT/No.PT</b></td>              
-            <td width="40%"><b>Mukim/Pekan/Bandar</b></td>
-            #if($!flag_subjaket!="")<td width="5%"><b>No.Subjaket</b></td>#end
-        </tr>
-             
-   		#if($saiz_listHakmilikBorangEInBulk!=0)
-   			
-      		#foreach($listTanah in $listHakmilikBorangEInBulk)
-            #set( $i = $velocityCount )
-         	#if ( ($i % 2) != 1 )
-           		#set( $row = "row2" )
-	        #else
-	            #set( $row = "row1" )
-	       	#end
-        
-	        #if($listTanah.selectedcb > 0)
-	        	#set($checkCB = "checked")
-	        #else
-	        	#set($checkCB = "")
-	        #end
-        	
-        	#set($checkedCB = "")
-        	#if($mode=="new")
-	        	#foreach ($foo in $selectedItem)
-				  #if($foo == $!listTanah.id_hakmilik)
-				  	#set($checkedCB = "checked")
-				  #end
-				#end
-            #else
-            	#if($onchangeEdit=="no")
-		            #if($listTanah.selectedcb > 0)
-		        	#set($checkedCB = "checked")
-			        #else
-			        	#set($checkedCB = "")
-			        #end
-		        #else
-		        	#foreach ($foo in $selectedItem)
-					  #if($foo == $!listTanah.id_hakmilik)
-					  	#set($checkedCB = "checked")
-					  #end
-					#end
-		        #end
-            #end
-            
-       	<tr>
-       		#if($saiz_listHakmilikBorangEInBulk != 0)
-            <td class="$row" align="center"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="doUpdateCheckAll()" value="$!listTanah.id_hakmilik"></td>
-            #end
-           	<td class="$row" align="center"><b>$!listTanah.bil</b>  #if($!listTanah.TARIKH_BORANGE != "") &nbsp;($!listTanah.TARIKH_BORANGE) #end</td>
-            <td class="$row">$!listTanah.kod_jenis_hakmilik $!listTanah.no_hakmilik</td>
-			<td class="$row">$!listTanah.no_lotpt</td>     
-            <td class="$row">$!listTanah.nama_mukim #if($listTanah.seksyen!="")<font style=font-size:10px>Seksyen $listTanah.seksyen</font>#end</td>
-       		#if($!flag_subjaket!="")<td class="$row">Sj.$!listTanah.no_subjaket</td>#end
-        </tr>
-        	#end
-        #else
-        <tr>
-           	<td colspan="2">Tiada rekod</td>
-       	</tr>
-        #end  
-        
-    </table>	
-    
-    #if($saiz_listHakmilikBorangEInBulk > 10)
-                </div> 
-            #end	
-                
-	</fieldset>
-			
-	</fieldset>
-		
-		
 		<table width="100%" border="0">
-			<tr align="center">
-				<td>
-                
-				#if($saiz_listHakmilikBorangEInBulk != 0)
-				#if($mode=="new")
-				<input type="button" name="cmdSimpan" value ="Simpan" onClick="javascript:simpanBorangEInBulk('$!id_permohonan','$!saiz_listHakmilikBorangEInBulk','$!mode','$!id_borange')">
-				#end
-					
-				#if($mode=="view")
-					#if($isEdit=="no")
-					<input type="button" name="cmdKemaskini" value ="Kemaskini" onClick="javascript:kemaskiniBorangEInBulk('$!id_borange')">
-					<input type="button" name="button" id="button" value="Cetak" onClick="javascript:setTable('tableReport1')" />
-					#else
-					<input type="button" name="cmdUpdate" value ="Simpan" onClick="javascript:simpanBorangEInBulk('$!id_permohonan','$!saiz_listHakmilikBorangEInBulk','$!mode','$!id_borange')">
-					<input type="button" name="cmdBatal" value ="Batal" onClick="javascript:viewBorangEInBulk('$!id_borange','batal')">
-					#end
-				#end
-				#end
-				<input type="button" name="cmdKembali" value="Kembali" onClick="javascript:viewListHM('$!id_permohonan');">
-					
-				</td>
+			<tr>
+				<td width="1%"><font color="red">*</font></td>
+				<td width="18%">Tarikh Borang E</td>
+				<td width="1%">:</td>
+				<td width="80%"><input $disability $disabilityx
+					name="txdTarikhBorangE" id="txdTarikhBorangE" size="11" type="text"
+					value="$!txdTarikhBorangE"
+					onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)">
+					#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) ||
+					($mode=="view" && $isEdit=="yes")) <img src="../img/calendar.gif"
+					onclick="displayDatePicker('txdTarikhBorangE',false,'dmy');">&nbsp;$!frmtdate
+					#end</td>
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+				<td>Tarikh Borang F</td>
+				<td>:</td>
+				<td><input $disability $disabilityx name="txdTarikhBorangF"
+					id="txdTarikhBorangF" size="11" type="text"
+					value="$!txdTarikhBorangF"
+					onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)">
+					#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) ||
+					($mode=="view" && $isEdit=="yes")) <img src="../img/calendar.gif"
+					onclick="displayDatePicker('txdTarikhBorangF',false,'dmy');">&nbsp;$!frmtdate
+					#end</td>
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+				<td>Tarikh Akhir Tampal</td>
+				<td>:</td>
+				<td><input $disability $disabilityx name="txdTarikhTampal"
+					id="txdTarikhTampal" size="11" type="text"
+					value="$!txdTarikhTampal" onkeyup="validateTarikh(this,this.value)"
+					onblur="check_date(this);getTarikhSiasatan()">
+					#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) ||
+					($mode=="view" && $isEdit=="yes")) <img src="../img/calendar.gif"
+					onclick="displayDatePicker('txdTarikhTampal',false,'dmy');">&nbsp;$!frmtdate
+					#end</td>
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+				<td>Tarikh Siasatan</td>
+				<td>:</td>
+				<td><input $disability $disabilityx name="txdTarikhSiasatan"
+					id="txdTarikhSiasatan" size="11" type="text"
+					value="$!txdTarikhSiasatan"
+					onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)">
+					#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) ||
+					($mode=="view" && $isEdit=="yes")) <img src="../img/calendar.gif"
+					onclick="displayDatePicker('txdTarikhSiasatan',false,'dmy');">&nbsp;$!frmtdate
+					#end</td>
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+				<td>Masa Siasatan</td>
+				<td>:</td>
+				<td><input $disability $disabilityx type="text"
+					name="txtMasaSiasatan" id="txtMasaSiasatan"
+					value="$!txtMasaSiasatan"
+					onblur="validateNumber(this,this.value);checkDigit()"
+					onkeyup="validateNumber(this,this.value);validateJenisWaktu(this,this.value)"
+					maxlength="4" size="4" /> <select $disability1 $disabilityx
+					name="socJenisWaktu" id="socJenisWaktu" style="width: 105px">
+
+						<option value="0" #if($socJenisWaktu== "" || $socJenisWaktu==
+							"0" ) selected=selected #end>SILA PILIH</option>
+						<option value="1" #if($socJenisWaktu== '1') selected=selected #end>PAGI</option>
+						<option value="2" #if($socJenisWaktu== '2') selected=selected #end>TENGAH
+							HARI</option>
+						<option value="3" #if($socJenisWaktu== '3') selected=selected #end>PETANG</option>
+
+				</select>&nbsp;#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) ||
+					($mode=="view" && $isEdit=="yes")) <font color="blue"
+					style="font-size: 10px"><i>format 12 jam (HHMM)</i></font>#end</td>
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+				<td>Alamat</td>
+				<td>:</td>
+				<td><input $disability $disabilityx type="text"
+					name="txtAlamat1" id="txtAlamat1" value="$!txtAlamat1" size="45"
+					maxlength="80"></td>
+			</tr>
+
+			<tr>
+				<td colspan="3">&nbsp;</td>
+				<td><input $disability $disabilityx type="text"
+					name="txtAlamat2" id="txtAlamat2" value="$!txtAlamat2" size="45"
+					maxlength="80"></td>
+			</tr>
+
+			<tr>
+				<td colspan="3">&nbsp;</td>
+				<td><input $disability $disabilityx type="text"
+					name="txtAlamat3" id="txtAlamat3" value="$!txtAlamat3" size="45"
+					maxlength="80"></td>
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+				<td>Poskod</td>
+				<td>:</td>
+				<td><input $disability $disabilityx type="text"
+					name="txtPoskod" id="txtPoskod" value="$!txtPoskod" size="5"
+					maxlength="5" onkeyup="validateNumber(this,this.value)"
+					onblur="validateNumber(this,this.value)"></td>
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+				<td>Negeri</td>
+				<td>:</td>
+				<td>$!selectNegeri</td>
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+				<td>Bandar</td>
+				<td>:</td>
+				<td>$!selectBandar</td>
 			</tr>
 		</table>
-    	
-    	
-    <br/>
-    
-    <fieldset>
-	<legend><strong>Senarai Rekod Maklumat Borang E</strong> #if($mode=="view")<input type="button" name="cmdMainscreen" value="Kemasukan Maklumat Borang E" onClick="javascript:daftarMaklumatBorangEInBulk();">#end </legend>
-	
-    <table width="100%" border="0"> 
-    <tr >
-    <td align="left">
-    <a href="javascript:popupCarianHakmilik('$id_permohonan','senarai_borangE_inbulk')"><font color="blue">>> SKRIN CAPAIAN MAKLUMAT BORANG E</font></a>
-    </td>
-    </tr>
-    </table>
-      <!--
-    
-    
+
+		<br />
+
+		<fieldset id="center">
+			<legend>
+				<strong><font color="red">$M</font> Senarai Pilihan
+					Hakmilik</strong>
+			</legend>
+
+			#if($saiz_listHakmilikBorangEInBulk > 10)
+			<div style="width: 100%; height: 285; overflow: auto">
+				#end
+
+				<table width="100%" cellpadding="0" cellspacing="2" border="0">
+
+					<tr class="table_header">
+						#if($saiz_listHakmilikBorangEInBulk != 0)
+						<td align="center" width="5%"><b><input $disability1
+								type="checkbox" title="Sila Semak Untuk Pilih Semua"
+								name="checkall" id="checkall" onclick="checkALL()"></b></td> #end
+						<td align="center" width="15%"><b>No (Tarikh Borang E)</b></td>
+						<td width="20%"><b>No.Hakmilik</b></td>
+						<td width="15%"><b>No.LOT/No.PT</b></td>
+						<td width="25%"><b>Mukim/Pekan/Bandar</b></td>
+						#if($!flag_subjaket!="")
+						<td width="10%"><b>No.Subjaket</b></td>#end
+						<!-- td width="15%"><b>Masa</b></td-->
+						<!-- PPT-06 -->
+					</tr>
+
+					#if($saiz_listHakmilikBorangEInBulk!=0) #foreach($listTanah in
+					$listHakmilikBorangEInBulk) #set( $i = $velocityCount ) #if ( ($i %
+					2) != 1 ) #set( $row = "row2" ) #else #set( $row = "row1" ) #end
+
+					#if($listTanah.selectedcb > 0) #set($checkCB = "checked") #else
+					#set($checkCB = "") #end #set($checkedCB = "") #if($mode=="new")
+					#foreach ($foo in $selectedItem) #if($foo ==
+					$!listTanah.id_hakmilik) #set($checkedCB = "checked") #end #end
+					#else #if($onchangeEdit=="no") #if($listTanah.selectedcb > 0)
+					#set($checkedCB = "checked") #else #set($checkedCB = "") #end #else
+					#foreach ($foo in $selectedItem) #if($foo ==
+					$!listTanah.id_hakmilik) #set($checkedCB = "checked") #end #end
+					#end #end
+
+					<tr>
+						#if($saiz_listHakmilikBorangEInBulk != 0)
+						<td class="$row" align="center"><input type="checkbox"
+							$disability1 $checkedCB name="cbsemaks" id="cbsemaks"
+							onclick="doUpdateCheckAll()" value="$!listTanah.id_hakmilik"></td>
+						#end
+						<td class="$row" align="center"><b>$!listTanah.bil</b>
+							#if($!listTanah.TARIKH_BORANGE != "")
+							&nbsp;($!listTanah.TARIKH_BORANGE) #end</td>
+						<td class="$row">$!listTanah.kod_jenis_hakmilik
+							$!listTanah.no_hakmilik</td>
+						<td class="$row">$!listTanah.no_lotpt</td>
+						<td class="$row">$!listTanah.nama_mukim
+							#if($listTanah.seksyen!="")<font style="font-size: 10px">Seksyen
+								$listTanah.seksyen</font>#end
+						</td> #if($!flag_subjaket!="")
+						<td class="$row">Sj.$!listTanah.no_subjaket</td>#end
+						<!-- PPT-06 -->
+						<!-- td class="$row">
+				<input $disability $disabilityx type="text" name="txtMasaSiasatan" id="txtMasaSiasatan" value="$!txtMasaSiasatan" onblur="validateNumber(this,this.value);checkDigit()" onkeyup="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" maxlength="4" size="4" />
+			</td-->
+					</tr>
+					#end #else
+					<tr>
+						<td colspan="2">Tiada rekod</td>
+					</tr>
+					#end
+
+				</table>
+
+				#if($saiz_listHakmilikBorangEInBulk > 10)
+			</div>
+			#end
+
+		</fieldset>
+
+	</fieldset>
+
+
+	<table width="100%" border="0">
+		<tr align="center">
+			<td>#if($saiz_listHakmilikBorangEInBulk != 0) #if($mode=="new")
+				<input type="button" name="cmdSimpan" value="Simpan"
+				onClick="javascript:simpanBorangEInBulk('$!id_permohonan','$!saiz_listHakmilikBorangEInBulk','$!mode','$!id_borange')">
+				#end #if($mode=="view") #if($isEdit=="no") <input type="button"
+				name="cmdKemaskini" value="Kemaskini"
+				onClick="javascript:kemaskiniBorangEInBulk('$!id_borange')">
+				<input type="button" name="button" id="button" value="Cetak"
+				onClick="javascript:setTable('tableReport1')" /> #else <input
+				type="button" name="cmdUpdate" value="Simpan"
+				onClick="javascript:simpanBorangEInBulk('$!id_permohonan','$!saiz_listHakmilikBorangEInBulk','$!mode','$!id_borange')">
+				<input type="button" name="cmdBatal" value="Batal"
+				onClick="javascript:viewBorangEInBulk('$!id_borange','batal')">
+				#end #end #end
+
+				<input type="button" name="cmdKembali"
+				value="Kembali" onClick="javascript:viewListHM('$!id_permohonan');">
+
+			</td>
+		</tr>
+	</table>
+
+
+	<br />
+
+	<fieldset>
+		<legend>
+			<strong>Senarai Rekod Maklumat Borang E</strong> #if($mode=="view")<input
+				type="button" name="cmdMainscreen"
+				value="Kemasukan Maklumat Borang E"
+				onClick="javascript:daftarMaklumatBorangEInBulk();">#end
+		</legend>
+
+		<table width="100%" border="0">
+			<tr>
+				<td align="left"><a
+					href="javascript:popupCarianHakmilik('$id_permohonan','senarai_borangE_inbulk')"><font
+						color="blue">>> SKRIN CAPAIAN MAKLUMAT BORANG E</font></a></td>
+			</tr>
+		</table>
+		<!--
+
     <table width="100%" border="0">
-    
-    
-    
- 
-		
 		#if($mode=="view")
 		<tr align="left">
 			<td colspan="3">
@@ -351,48 +337,68 @@
         #end 
 		
 	</table>
-    -->	
+    -->
 	</fieldset>
-	
-	</center>
 
-<br/>
+</center>
 
-<fieldset id="tableReport1" style="display:none;">
-<legend><strong>SENARAI LAPORAN</strong></legend>
+<br />
+
+
+
+<fieldset id="tableReport1" style="display: none;">
+	<legend>
+		<strong>SENARAI LAPORAN</strong>
+	</legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
-      <tr>
-		<td><a href="#" onClick="javascript:cetakBorangE('$!id_permohonan','$!id_borange','$!tarikh_cetak')"><font color="blue">Borang E</font></a></td>
-	  </tr>
-	  <tr>
-    	 <td><a href="#" onClick="javascript:cetakSiasatanJPPH('$!id_permohonan','$!id_borange')"><font color="blue">Surat Kepada JPPH Jemputan Hadir Siasatan</font></a></td>
-      </tr>	
-	  <tr>
-    	 <td><a href="#" onClick="javascript:cetakSiasatanAP('$!id_permohonan','$!id_borange','projek')"><font color="blue">Surat Kepada AP Supaya Hadir Untuk Siasatan (1 Projek)</font></a></td>
-      </tr>
-      <tr>
-    	 <td><a href="#" onClick="javascript:cetakSiasatanAP('$!id_permohonan','$!id_borange','lot')"><font color="blue">Surat Kepada AP Supaya Hadir Untuk Siasatan (Mengikut Rekod)</font></a></td>
-      </tr>
-      
-      #if($userIdNeg=='10')
-      <tr>
-      	<td><a href="#" onClick="javascript:cetakBuktiPenyampaian('$!id_permohonan','$!id_hakmilik','$!id_borange')"><font color="blue">Bukti Penyampaian Borang E dan F</font></a></td>
-	  </tr>
-      #else
-      <tr>
-      	<td><a href="#" onClick="javascript:cetakBuktiPenyampaian('$!id_permohonan','$!id_hakmilik','$!id_borange')"><font color="blue">Bukti Penyampaian Borang E dan F - I</font></a></td>
-	  </tr>
-      
-      
-	  <tr>
-      	<td><a href="#" onClick="javascript:cetakBuktiPenyampaianRamai('$!id_permohonan','$!id_hakmilik','$!id_borange')"><font color="blue">Bukti Penyampaian Borang E dan F - II</font></a></td>
-	  </tr>
-      
-      
-      #end
-        
-    </table>
-</fieldset>	
+		<tr>
+			<td><a href="#"
+				onClick="javascript:cetakBorangE('$!id_permohonan','$!id_borange','$!tarikh_cetak')"><font
+					color="blue">Borang E</font></a></td>
+		</tr>
+		<tr>
+			<td><a href="#"
+				onClick="javascript:cetakSiasatanJPPH('$!id_permohonan','$!id_borange')"><font
+					color="blue">Surat Kepada JPPH Jemputan Hadir Siasatan</font></a></td>
+		</tr>
+		<tr>
+			<td><a href="#"
+				onClick="javascript:cetakSiasatanAP('$!id_permohonan','$!id_borange','projek')"><font
+					color="blue">Surat Kepada AP Supaya Hadir Untuk Siasatan (1
+						Projek)</font></a></td>
+		</tr>
+		<tr>
+			<td><a href="#"
+				onClick="javascript:cetakSiasatanAP('$!id_permohonan','$!id_borange','lot')"><font
+					color="blue">Surat Kepada AP Supaya Hadir Untuk Siasatan
+						(Mengikut Rekod)</font></a></td>
+		</tr>
+
+		#if($userIdNeg=='10')
+		<tr>
+			<td><a href="#"
+				onClick="javascript:cetakBuktiPenyampaian('$!id_permohonan','$!id_hakmilik','$!id_borange')"><font
+					color="blue">Bukti Penyampaian Borang E dan F</font></a></td>
+		</tr>
+		#else
+		<tr>
+			<td><a href="#"
+				onClick="javascript:cetakBuktiPenyampaian('$!id_permohonan','$!id_hakmilik','$!id_borange')"><font
+					color="blue">Bukti Penyampaian Borang E dan F - I</font></a></td>
+		</tr>
+
+
+		<tr>
+			<td><a href="#"
+				onClick="javascript:cetakBuktiPenyampaianRamai('$!id_permohonan','$!id_hakmilik','$!id_borange')"><font
+					color="blue">Bukti Penyampaian Borang E dan F - II</font></a></td>
+		</tr>
+
+
+		#end
+
+	</table>
+</fieldset>
 
 <input type="hidden" name="id_permohonan" value="$!id_permohonan">
 <input type="hidden" name="id_status" value="$!id_status">
@@ -408,7 +414,8 @@
 <input type="hidden" name="CursorPoint" value="$!CursorPoint">
 
 <!-- do post -->
-<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+<input type="hidden" name="form_token"
+	value='$!{session.getAttribute("form_token")}'>
 
 
 
@@ -425,7 +432,6 @@ function popupCarianHakmilik(id_permohonan,flag_skrin)
 	
 }
 
-
 function cariLOT(idpermohonan,id_borange) {
 	
 	document.${formName}.id_permohonan.value = idpermohonan;
@@ -435,6 +441,7 @@ function cariLOT(idpermohonan,id_borange) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmUPTSek8BorangF";
 	document.${formName}.submit();
 }
+
 function kosongkanLOT(idpermohonan,id_borange) {
 	document.${formName}.carianLotHakmilik.value = "";
 	document.${formName}.id_permohonan.value = idpermohonan;
@@ -475,7 +482,6 @@ function kemaskiniBorangEInBulk(id_borange){
 	document.${formName}.submit();
 }
 function viewBorangEInBulk(id_borange,mode){	
-
 	if(mode=="batal"){if ( !window.confirm("Adakah Anda Pasti?") ) return;}
 	document.${formName}.ScreenLocation.value = "top";
 	document.${formName}.id_borange.value = id_borange;
@@ -591,6 +597,7 @@ function viewListHM(id_permohonan) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmUPTSek8BorangF";
 	document.${formName}.submit();
 }
+
 function simpanBorangEInBulk(id_permohonan,size,mode,id_borange){
 
 	var checkSelected=false;

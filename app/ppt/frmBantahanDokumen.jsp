@@ -105,16 +105,9 @@
     #end
 
 		<!-- :::upload -->
-		<input type="hidden" name="nama_skrin" id="nama_skrin" value="$!nama_skrin"  />
-        
-        #if($!nama_skrin == "main")
-      <input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
-      #end
-      
-      #if($!nama_skrin == "perintah")
-       <input type="button" name="cmdKembali1" id="cmdKembali1"  value="Kembali" onclick="KembaliPerintah('')">
-      #end
-     
+	   <input type="hidden" name="nama_skrin" id="nama_skrin" value="$!nama_skrin"  />
+	   <input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
+       
    
       </label></td>
   </tr>
@@ -152,6 +145,7 @@
  
   
  #if($listDokumen_size > 0)
+  #set ($cnt=0)
   #foreach($list1 in $listDokumen)        
            
              #set( $i = $velocityCount )
@@ -160,16 +154,25 @@
          		#else
                		 #set( $row = "row1" )
          		#end
-  <tr>  
-    <td class="$row" >$list1.BIL</td>
-    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
-    <td class="$row" >$list1.KETERANGAN</td>
-    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
-    <td class="$row" ><div align="center">
-       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
-     </div></td>
-  </tr>
-  #end
+         		
+      #if($list1.JENIS_DOKUMEN == $nama_skrin)   <!-- PPT-38 -->	
+      #set ($cnt=1)	
+	  <tr>  
+	    <td class="$row" >$list1.BIL</td>
+	    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
+	    <td class="$row" >$list1.KETERANGAN</td>
+	    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
+	    <td class="$row" ><div align="center">
+	       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
+	     </div></td>
+	  </tr>
+	  #end
+  	#end
+	  #if($cnt==0)
+	  <tr>  
+	    <td colspan="5">Tiada Rekod</td>    
+	  </tr>
+	  #end
   #else
   <tr>  
     <td colspan="5">Tiada Rekod</td>    
@@ -298,35 +301,36 @@ function Upload(){
 	var allBlank = true;
 
 	var c = 0;
-
-if(document.${formName}.validation_field != null  )
-{
-
-   if (document.${formName}.validation_field.length == null)
-   {	
-    
-   if(document.${formName}.validation_field.value == "invalid")
-   {  
-   
-   c++;	
-   } 
-   	
-   } 
-   
-   else 
-   {
-   
-        for (i = 0; i < document.${formName}.validation_field.length; i++)
-		{
 	
-			if(document.${formName}.validation_field[i].value == "invalid")
+	
+	if(document.${formName}.validation_field != null  )
+	{
+	
+	   if (document.${formName}.validation_field.length == null)
+	   {	
+	    
+	   if(document.${formName}.validation_field.value == "invalid")
+	   {  
+	   
+	   c++;	
+	   } 
+	   	
+	   } 
+	   
+	   else 
+	   {
+	   
+	        for (i = 0; i < document.${formName}.validation_field.length; i++)
 			{
-			
-               c++;	 
-			}  	
-        }
-    }	
-}
+		
+				if(document.${formName}.validation_field[i].value == "invalid")
+				{
+				
+	               c++;	 
+				}  	
+	        }
+	    }	
+	}
 
 
 if(c>0){
@@ -336,16 +340,16 @@ return;
 	else
 	{
 	input_box = confirm("Adakah anda pasti?");
-	if (input_box == true) {	
-	document.${formName}.command.value = "upload_dokumen";
-	document.${formName}.location.value = "senarai_dokumen";
-	document.${formName}.point.value = "senarai_dokumen";
-	document.${formName}.enctype = "multipart/form-data";
-	document.${formName}.encoding = "multipart/form-data";
-	//:::upload
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=upload_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&txtnamadokumen="+txtnamadokumen+"&location=senarai_dokumen&point=senarai_dokumen&txtketerangandokumen="+txtketerangandokumen+"&location="+location+"&point="+point+"&id_dokumen="+id_dokumen+"&nama_skrin="+nama_skrin;
-	document.${formName}.submit();	
-	}	
+		if (input_box == true) {	
+		document.${formName}.command.value = "upload_dokumen";
+		document.${formName}.location.value = "senarai_dokumen";
+		document.${formName}.point.value = "senarai_dokumen";
+		document.${formName}.enctype = "multipart/form-data";
+		document.${formName}.encoding = "multipart/form-data";
+		//:::upload
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=upload_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&txtnamadokumen="+txtnamadokumen+"&location=senarai_dokumen&point=senarai_dokumen&txtketerangandokumen="+txtketerangandokumen+"&location="+location+"&point="+point+"&id_dokumen="+id_dokumen+"&nama_skrin="+nama_skrin;
+		document.${formName}.submit();	
+		}	
 	
 	}
 	
@@ -362,27 +366,18 @@ input_box = confirm("Adakah anda pasti?");
 	}
 }
 
+//PPT-36 && PPT-39 (ii) && Integrasi
+//ubah dalamProsess ke BorangO
 function Kembali()
 {
+	var nama_skrin = document.${formName}.nama_skrin.value ;
+	//alert(nama_skrin);
 	var id_bantahan = document.${formName}.id_bantahan.value ;
 	var id_permohonan = document.${formName}.id_permohonan.value ;	
 	var senarai_dokumen = document.${formName}.senarai_dokumen.value ;
-	
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=dalamProses&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command="+nama_skrin+"&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
 	document.${formName}.submit();
 }
-
-//:::upload
-function KembaliPerintah(r){
-
-	var id_bantahan = document.${formName}.id_bantahan.value ;
-	var id_permohonan = document.${formName}.id_permohonan.value ;		
-	var senarai_dokumen = document.${formName}.senarai_dokumen.value ;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=susulanBantahan&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
-	document.${formName}.submit();
-	
-}
-
 
 function doCheckAll1(){    
     if (document.${formName}.all1.checked == true){
@@ -527,7 +522,7 @@ return (badName || allBlank) ? false : true;
 
 <script>
 function checking_validation(field,point,mandatory,value_field,jenis_field){	
-   // 	alert("dssd");
+  
 	var lepas_or_xlepas = 1;	
  
 	

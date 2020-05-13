@@ -137,6 +137,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 				<input type="button" name="cmdUpdate" value ="Simpan" onClick="javascript:simpanBorangL('$!id_permohonan','$flag_skrin')">
 				<input type="button" name="cmdBatal" value ="Batal" onClick="javascript:batalKemaskini('$!id_permohonan','$flag_skrin')">
 				#end
+			
         #end        
         
         
@@ -144,7 +145,8 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
       
         
         <tr class="table_header">
-        
+        				<!-- PPT-11 -->
+        				<td align="center" ><b><input type="checkbox" title="Sila Semak Untuk Pilih Semua" name="checkall" id="checkall" onclick="checkALL()" ></b></td>
                   		<td align="center" ><b><font color="white">NO</font></b></td>
                   		<td  ><b><font color="white">NO HAKMILIK</font></b></td>
                         #if($flag_skrin != "hakmilik_borangL")
@@ -209,6 +211,8 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                     
                     
                       <tr>
+                        <!-- PPT-11 -->
+                        <td class="$rowx" align="center"><input type="checkbox" $checkedCB name="cbsemaks" id="cbsemaks" onclick="doUpdateCheckAll()" value="$!listTanah.id_hakmilik"></td>
                 		<td class="$rowx" align="center">$!listTanah.rn</td>
                         <!--
                 		#if($showLinkHM=="yes" || ($ModuleName=="ekptg.view.ppt.FrmSek8PermintaanUkur" && $listTanah.flagPU == "yes"))
@@ -440,6 +444,17 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
           
           #end            
           </table>
+          
+<!-- PPT - 11 -->
+		<table width="100%" border="0">
+			<tr align="center">
+				<td>
+
+				<input type="button" name="cmdCetak" value="Cetak" onClick="javascript:cetakSuratIringan('$!id_permohonan');">
+					
+				</td>
+			</tr>
+		</table>          
       
       
       </fieldset>
@@ -447,6 +462,8 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
       </td>
   </tr>
 </table>
+
+
 
 
 
@@ -950,6 +967,40 @@ function kembaliKeSkrinUtama(id_permohonan) {
 	document.${formName}.cmdKembaliSkrinUtama.value = "Sila Tunggu....";		
 }
 
+<!-- PPT-11 -->
+function checkALL() {
+
+	 if (document.${formName}.checkall.checked == true){
+	        if (document.${formName}.cbsemaks.length == null){
+	            document.${formName}.cbsemaks.checked = true;
+	        } else {
+	            for (i = 0; i < document.${formName}.cbsemaks.length; i++){
+	                document.${formName}.cbsemaks[i].checked = true;
+	            }
+	        }
+	    } else {
+	        if (document.${formName}.cbsemaks.length == null){
+	            document.${formName}.cbsemaks.checked = false;
+	        } else {
+	            for (i = 0; i < document.${formName}.cbsemaks.length; i++){
+	                document.${formName}.cbsemaks[i].checked = false;	                
+	            }
+	            
+	        }
+	    }
+}
+
+//surat iringan belum ada 260220
+function cetakSuratIringan(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempohBL) {
+	
+	//alert("tarikhBorangL : "+tarikhBorangL);
+
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&report=BorangL&selectNoFail=yes&tarikhBorangL="+tarikhBorangL+"&tempohBL="+tempohBL;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
 </script>
 
 

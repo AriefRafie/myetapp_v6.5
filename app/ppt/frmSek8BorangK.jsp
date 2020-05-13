@@ -140,6 +140,8 @@
 			#set($disability1 = "")
 		#end
 		
+<!-- PPT-30 (i) -->	
+	
 		<fieldset style="width:60%">
 		<legend><strong>Maklumat Borang K</strong></legend>
 		
@@ -350,7 +352,14 @@
 		 <td><a href="#" onClick="javascript:cetakBorangK('$!id_permohonan','$!id_hakmilik')"><font color="blue">Borang K</font></a></td>
 	  </tr>
 	  #end
-	  
+	  <!-- PPT 30 (i) -->
+	  <tr>
+      	<td><a href="#" onClick="javascript:cetakSuratPengosonganTanah('$!id_permohonan','$!id_hakmilik')"><font color="blue">Surat Pemberitahuan Pengosongan Tanah</font></a></td>
+	  </tr>
+	  <tr>
+      	<td><a href="#" onClick="javascript:cetakBuktiPenyampaianBrgL('$!id_permohonan','$!id_hakmilik')"><font color="blue">Bukti Penyampaian Borang L</font></a></td>
+	  </tr>	  
+	  <!-- PPT 30 (i) -->
 	  #if($userIdNeg=='10')
 	  <tr>
       	<td><a href="#" onClick="javascript:cetakBuktiPenyampaian('$!id_permohonan','$!id_hakmilik')"><font color="blue">Bukti Penyampaian Borang K</font></a></td>
@@ -460,8 +469,26 @@ function cetakBuktiPenyampaianRamai(idpermohonan,idhakmilik) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-
-
+//PPT-30(i)
+function cetakBuktiPenyampaianBrgL(idpermohonan,idhakmilik) {
+	
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&flagJenisSuratCara=L&report=BuktiPenyampaianL&selectNoFail=yes";
+	//var url = "../servlet/ekptg.report.ppt.BuktiPenyampaian?idHakmilik="+idhakmilik+"&flagJenisSuratCara=E";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+function cetakSuratPengosonganTanah(idpermohonan,idhakmilik) {
+	
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratPengosonganTanah&selectNoFail=yes";
+	//var url = "../servlet/ekptg.report.ppt.BuktiPenyampaian?idHakmilik="+idhakmilik+"&flagJenisSuratCara=E";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+//PPT-30(i)
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
 		document.getElementById(id).style.display="block";

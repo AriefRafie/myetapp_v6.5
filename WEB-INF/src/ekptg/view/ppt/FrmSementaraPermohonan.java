@@ -301,7 +301,7 @@ public class FrmSementaraPermohonan extends AjaxBasedModule {
         		
         	}//close onchangeJenisKodDaerah
         	
-        	else if("simpanPendaftaran".equals(submit2)){
+        	else if("simpanPendaftaran".equals(submit2)){ //PPT-41
         		
         		String result = "";
             	if (doPost.equals("true")) {
@@ -2476,6 +2476,11 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 	    	h.put("projek_negeri", userIdNeg);	   
 	    	h.put("txdTarikhPermohonan", getParam("txdTarikhPermohonan"));	    	
 	    	h.put("id_user", session.getAttribute("_ekptg_user_id"));
+	    	
+	    	//PPT-41
+	    	h.put("tarikh_pendudukan_mula", getParam("txdTarikhPendudukanMula"));
+	    	h.put("tarikh_pendudukan_akhir", getParam("txdTarikhPendudukanAkhir"));
+	    	h.put("tempoh_pendudukan", getParam("txtTempohPendudukan"));
 
 	    	h.put("sorJenisKodDaerah", getParam("sorJenisKodDaerah"));
 	    	
@@ -2526,6 +2531,11 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 	    	h.put("sorJenisKodDaerah", getParam("sorJenisKodDaerah"));
 	    	
 	    	h.put("id_user", session.getAttribute("_ekptg_user_id"));
+	    	
+	    	//PPT-41
+	    	h.put("tarikh_pendudukan_mula", getParam("txdTarikhPendudukanMula"));
+	    	h.put("tarikh_pendudukan_akhir", getParam("txdTarikhPendudukanAkhir"));
+	    	h.put("tempoh_pendudukan", getParam("txtTempohPendudukan"));
 	    	
 	    	SementaraDaftarOperations.updateSementara(h);
 	    
