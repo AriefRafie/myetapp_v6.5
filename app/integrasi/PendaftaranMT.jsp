@@ -21,11 +21,12 @@
    	#set ($txtPoskod=$senarai.poskod)
    	#set ($id_negeri=$senarai.id_negeri)
     #set ($txtNamaNegeri=$senarai.nama_negeri)
+    #set ($txtUmur=$senarai.umur)
+    #set ($jenis_pembantah=$senarai.jenis_pembantah)
 
  	#set ($id_bantahan=$senarai.id_bantahan)
         
         #set ($txtNoBantahan=$senarai.no_bantahan)
-        #set ($jenis_pembantah=$senarai.jenis_pembantah)
         #set ($txdTkhTerimaBrgN=$senarai.tarikh_terima)
         #set ($txdBrgN=$senarai.tarikh_borangn)
         #set ($id_pihakberkepentingan=$senarai.id_pihakberkepentingan)
@@ -45,7 +46,7 @@
         #set ($id_siasatan=$senarai.id_siasatan) 
     #end
     
-#set($labelPem = "Pembantah")
+#set($labelPem = "Perayu")
 #set($labelResp = "Responden")
 
 <body>
@@ -75,28 +76,42 @@
 					          <td colspan="2"><input type="text" name="txtNamaPembantah" id="txtNamaPembantah" value="$!txtNamaPembantah" size="50" class="disabled" tabindex="12" />
 					          <input type="hidden" name="txtIdKementerian" id="txtIdKementerian" value="$!txtIdKementerian" /></td>
 					        </tr>
- 					        
+ 					#if($!jenis_pembantah.equals("0"))		        
  					        <tr>
 					          <td width="1%"></td>
 					          <td>$!labelNoRef</td>
-					          <td>&nbsp;</td>
+					          <td>&nbsp;:</td>
 					          <td colspan="2"><input type="text" name="noRef" id="noRef" value="$!noRef" size="20" tabindex="12" class="disabled" readonly /></td>
 					        </tr> 
+					#end
+					
 					#if($jenisRef.equals("1") 
 						|| $jenisRef.equals("11")
 						|| $jenisRef.equals("3")
 						|| $jenisRef.equals("4")
 						|| $jenisRef.equals("5")
 						|| $jenisRef.equals("6")) 
+						
+						#set ($janLaki = "")
+						#set($janPer = "")
+						#if($!jantina.equals("M")) 
+							#set($janPer = "")
+							#set($janLaki = "selected")
+							
+						##else if($jantina.equals("F"))
+							##set($janLaki = "")
+							##set($janPer = "selected")
+							
+						#end
 		       			 <tr>
 					          <td width="1%"></td>
 					          <td>Jantina</td>
 					          <td>:</td>
 					          <td colspan="2">
-					          	<select name="jantina" id="jantina" class="mediumselect" style="text-transform:uppercase;" onblur="uppercase()">
+					          	<select name="jantina" id="jantina" class="mediumselect" style="text-transform:uppercase;" onblur="uppercase()" $!classRead>
                                		<option value="U" style="text-transform:uppercase;" onblur="uppercase()">Sila Pilih Jantina</option>
-                                   	<option value="M" style="text-transform:uppercase;" onblur="uppercase()">Lelaki</option>
-                                 	<option value="F" style="text-transform:uppercase;" onblur="uppercase()">Perempuan</option>
+                                   	<option value="M" $!janLaki style="text-transform:uppercase;" onblur="uppercase()">Lelaki</option>
+                                 	<option value="F" $!janPer style="text-transform:uppercase;" onblur="uppercase()">Perempuan</option>
                                 </select>
 					          </td>
 					        </tr>  
@@ -105,7 +120,7 @@
 					          <td>Umur</td>
 					          <td>:</td>
 					          <td colspan="2">
-					          	<input type="number" name="umur" id="umur" value="$!txtUmur" size="3" maxlength="2" tabindex="12" />
+					          	<input type="number" name="umur" id="umur" value="$!txtUmur" size="3" maxlength="2" tabindex="12" class="disabled" readonly/>
 					          </td>
 					        </tr>         		
 			 		#end
@@ -154,7 +169,7 @@
 				<tr>
 					<td></td>
 				</tr>
-				<tr>
+<!-- 				<tr>
 					<td colspan="">
 					<fieldset>
 					<legend>Maklumat $!labelResp</legend>
@@ -210,7 +225,7 @@
 				</tr>
 				<tr>
 					<td></td>
-				</tr>	
+				</tr> -->	
 					
 				<tr>
 					<td colspan="">				
@@ -294,40 +309,8 @@
 						</table>
 					</fieldset>
 					</td>
-				</tr>
-				
-<!-- 				<tr>
-					<td align="right">No. Petisyen</td>
-					<td>:</td>
-					<td colspan="2">
-						<input type="hidden" name="idFail" value="$idFail">
-						<input type="text" name="noPetisyen" value="$!noPetisyen" readonly="readonly" size="40" style="text-transform:uppercase;" />
-						#if($!semakPermohonan=='ada')
-							<br /><font color="#FF0000" size="1"><i>Permohonan semakan telah dihantar.</font>
-						#end
-					</td>
-				</tr>
-				
-				<tr>
-					<td align="right">Dokumen Sokongan</td>
-					<td>:</td>
-					
-					
-                    <td colspan="2"><input type="text" name="namaDokumen" value="$!namaDokumen" size="25" readonly="readonly" /></td>
-					
-					
-					
-				</tr>
+				</tr>				
 
-				
-				<tr>
-					<td align="right">Tarikh Jana Borang B</td>
-					<td>:</td>
-					<td><input type="text" name="tarikhJanaBorangB" value="$!tarikhJanaBorangB" size="19" maxlength="10" readonly="readonly" /></td>
-					<td align="left">
-						<img border="0" width="16" height="18" src="../../img/calendar.gif" />
-					</td>
-				</tr> -->
 				<tr>
 					<td align="center">
 					##if($!noKes == '')
@@ -343,7 +326,7 @@
     	<input type="hidden" name="namaPejabat" id="namaPejabat" value="$!nP">
 		<input type="hidden" name="jenisKepentingan" id="jenisKepentingan" value="$!jenisKepentingan">
 		<input type="hidden" name="idnegeri" id="idnegeri" value="$!idnegeri">
-		<input type="text" name="jeniskp" id="jeniskp" value="$!jenisRef">
+		<input type="hidden" name="jeniskp" id="jeniskp" value="$!jenisRef">
 		<input type="hidden" name="successSend" id="successSend" value="$!successSend">
         <input type="hidden" name="idPermohonan" id="idPermohonan" value="$!idPermohonan">
 		<input type="hidden" name="userid" id="userid" value='$!{session.getAttribute("_ekptg_user_id")}'/> 
@@ -386,16 +369,10 @@
 	function hantarPermohonan() {	
 		var bilangan = 0; 
 		
-		if(document.${formName}.cb.length > 0){
-			bilangan = document.${formName}.cb.length;
-		}else{
-			if(document.${formName}.cb.checked==true){
-				bilangan = 1; 
-			}
-		}
 		//alert(bilangan);
-		if(document.${formName}.jeniskp.value == ""){
-			alert('Sila pastikan maklumat Pembantah diisi.');
+		
+		if(document.${formName}.jeniskp.value == "" && "$!jenis_pembantah" == "0"){
+			alert('Sila pastikan maklumat Perayu diisi.');
 	  		//document.${formName}.umur.focus(); 
 			return;	
 			
@@ -411,10 +388,11 @@
 				alert('Sila pastikan maklumat Jantina $!labelPem telah dipilih.');
 		  		document.${formName}.jantina.focus(); 
 				return;			
-			}else if(document.${formName}.umur.value == ""){
+			/* }else if(document.${formName}.umur.value == ""){
 				alert('Sila pastikan maklumat Umur $!labelPem diisi.');
 		  		document.${formName}.umur.focus(); 
-				return;			
+			 	return;			
+			*/
 			}
 			
 		}
@@ -436,7 +414,7 @@
 	  		document.${formName}.socNegeri.focus(); 
 			return; 
 		
-		}else if(document.${formName}.txtAlamatResp1.value == ""){
+/* 		}else if(document.${formName}.txtAlamatResp1.value == ""){
 			alert('Sila pastikan maklumat Alamat $!labelResp diisi.');
 	  		document.${formName}.txtAlamatResp1.focus(); 
 	  		return; 
@@ -455,31 +433,39 @@
 			alert('Sila pastikan maklumat Negeri $!labelResp diisi.');
 	  		document.${formName}.socNegeriResp.focus(); 
 	  		return;			
+ */		
+		}
 		
-		}else if(document.${formName}.kodmt.value == ""){
-			alert('Sila pastikan Maklumat Mahkamah telah dipilih.');
-			return;
+		if($!listDokumen_size == 0){
+			alert('Sila pastikan maklumat Lampiran disediakan terlebih dahulu.');
+	  		//document.${formName}.umur.focus(); 
+			return;	
+			
+		}
+		if(document.${formName}.cb.length > 0){
+			bilangan = document.${formName}.cb.length;
+		}else{
+			if(document.${formName}.cb.checked==true){
+				bilangan = 1; 
+			}
+		}
 		
-		} else if(bilangan == 0){
+		if(bilangan == 0){
 			alert('Sila pilih Lampiran terlebih dahulu.');
 			return; 
+		
+		}
+		
+		if(document.${formName}.kodmt.value == ""){
+			alert('Sila pastikan Maklumat Mahkamah telah dipilih.');
+			return;
 		
 		} else {
 
 			input_box = confirm("Sila pastikan maklumat yang dihantar adalah tepat!");
 			if (input_box == true) {
-/* 				var data = "&tarikhMati="+document.f1.tarikhMati.value+"&tarikhJanaBorangB="+document.f1.tarikhJanaBorangB.value+"&noPetisyen="+document.f1.noPetisyen.value;
-				data = data+"&namaSimati="+document.f1.namaSimati.value+"&namaSimatiLain="+document.f1.namaSimatiLain.value;
-				data = data+"&noKPSimatiBaru="+document.f1.noKPSimatiBaru.value+"&noKPSimatiLama="+document.f1.noKPSimatiLama.value;
-				data = data+"&noKPSimatiLain="+document.f1.noKPSimatiLain.value+"&namaPemohon="+document.f1.namaPemohon.value;
-				data = data+"&noKPPemohon="+document.f1.noKPPemohon.value+"&hubSimatiPemohon="+document.f1.hubSimatiPemohon.value;
-				data = data+"&kodPejabat="+document.f1.kodPejabat.value+"&applicationType="+applicationType;
-				data = data+"&idnegeri="+document.f1.idnegeri.value+"&jeniskp="+document.f1.jeniskp.value;
-				data = data+"&idFail="+document.f1.idFail.value; */
-				//data = data+"&docContent="+document.f1.docContent.value;
 				//alert("data ="+data);
 				document.${formName}.method="post";
-				//document.${formName}.action="ekptg.view.ppk.FrmIntegrasiMT?command=hantarPermohonan";
 				document.${formName}.command.value = "hantarpermohonan";	
 				document.${formName}.action="?"+params+"&mode=getmahkamah";	
 				document.${formName}.submit();			

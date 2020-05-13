@@ -926,8 +926,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			
 			vm = skrinBantahanMaster;	
 			
-		}else if ("simpanBantahan".equals(submit)){
-			
+		}else if ("simpanBantahan".equals(submit)){			
 			selectedtab = "0";
 			context.put("selectedtab", selectedtab);
 			
@@ -938,22 +937,21 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			try{				
 				list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);				
 				Hashtable b = (Hashtable) list.get(0);	
-				String id_bantahan = b.get("id_bantahan").toString();
-				
+				String id_bantahan = b.get("id_bantahan").toString();			
 					
 				db = new Db();
 				Statement stmt = db.getStatement();
 				String sql = " SELECT NO_BANTAHAN,TRIM(TO_CHAR(AMAUN_TUNTUTAN,'999,999,990.99')) AS AMAUN_TUNTUTAN FROM TBLPPTBANTAHAN" +
-						"" +
 						" WHERE ID_BANTAHAN = '"+id_bantahan+"'";			
-				ResultSet rs = stmt.executeQuery(sql);	
 				myLogger.info("SQL  :"+sql);
+				ResultSet rs = stmt.executeQuery(sql);	
+				
 				while (rs.next()){				
 					NO_BANTAHAN_temp = rs.getString("NO_BANTAHAN");	
 					AMAUN_TUNTUTAN_temp = rs.getString("AMAUN_TUNTUTAN");
 			    }
-			    AuditTrail at = new AuditTrail();
-				at.logActivity("","1",null,session,"UPD","BANTAHAN PIHAK BERKEPENTINGAN [BIL. BANTAHAN : "+NO_BANTAHAN_temp+", AMAUN TUNTUTAN : RM "+AMAUN_TUNTUTAN_temp+"] KEMASKINI");
+			    //AuditTrail at = new AuditTrail();
+			    AuditTrail.logActivity("","1",null,session,"UPD","BANTAHAN PIHAK BERKEPENTINGAN [BIL. BANTAHAN : "+NO_BANTAHAN_temp+", AMAUN TUNTUTAN : RM "+AMAUN_TUNTUTAN_temp+"] KEMASKINI");
 				
 				updateBantahan(usid,id_bantahan,id_kementerian);	
 									
@@ -985,8 +983,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			} catch (Exception e) {				
 				throw new Exception("PENGEMASKINIAN FAIL TIDAK DAPAT DITERUSKAN.SILA CUBA LAGI. :" +e.getMessage());
 			
-			}			
-			 finally {
+			}finally {
 				if (db != null)
 					db.close();
 			}	
@@ -3246,9 +3243,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	    		txtKptgnAtasTnh,txtAlasanBantahan,socPihakPembantah,usid,idKementerian,idAgensi,id_hakmilik,
 	    		id_pihakberkepentingan,jenis_pembantah,flag_syarat,ukuran_luas,amaun_pampasan,
 	    		terima_pampasan,umpuk_pampasan,id_hakmilikpb,txtAmaunTuntutan,id_permohonan,txtMaklumatBantahanTamat);    
-	
-	   
-	
 	
 	}
 

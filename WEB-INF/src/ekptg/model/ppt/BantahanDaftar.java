@@ -932,7 +932,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 					sql =  " SELECT A.MAKLUMAT_BANTAHAN_TAMAT_TEMPOH,A.ID_BANTAHAN,A.NO_BANTAHAN,A.JENIS_PEMBANTAH,A.TARIKH_TERIMA,A.TARIKH_BORANGN,A.ID_PIHAKBERKEPENTINGAN, "+
 							"A.FLAG_PENERIMA_PAMPASAN,A.FLAG_BAHAGIAN_PAMPASAN,A.STATUS_BANTAHAN,A.ALASAN,A.KEPENTINGANKEATAS,A.FLAG_ONLINE, "+
 							"A.FLAG_UKUR_LUAS,A.FLAG_PAMPASAN,A.TARIKH_TERIMA_AWARD,S.NO_SIASATAN,A.AMAUN_TUNTUTAN,A.FLAG_SYARAT,"; 
-					sql += " NVL(B.ID_PIHAKBERKEPENTINGAN,0) ID_PIHAKBERKEPENTINGAN,B.ID_JENISPB,B.NAMA_PB,B.NO_PB,"+
+					sql += " NVL(B.ID_PIHAKBERKEPENTINGAN,0) ID_PIHAKBERKEPENTINGAN,B.ID_JENISPB,B.NAMA_PB,B.NO_PB,B.UMUR,"+
 							"C.NO_HAKMILIK,C.NO_PT,C.NO_LOT, "+
 							"D.KETERANGAN,";
 					sql += " E.ID_HAKMILIK,E.ALAMAT1,E.ALAMAT2,E.ALAMAT3,E.POSKOD,NVL(E.ID_NEGERI,0) ID_NEGERI,E.ID_BANDAR,"+
@@ -947,9 +947,9 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 							",TBLPPTHAKMILIK C"+
 							",TBLRUJJENISPB D"+
 							",TBLPPTHAKMILIKPB E " +
-							",TBLPPTSIASATAN S " +
 							",TBLPPTWARTA F " +
 							",TBLRUJSTATUS G "+
+							",TBLPPTSIASATAN S " +
 							",TBLRUJNEGERI RN,TBLRUJJENISNOPB NOPB ";	
 					sql +=	" WHERE E.ID_JENISPB=D.ID_JENISPB(+) "+
 							" AND E.ID_PIHAKBERKEPENTINGAN=B.ID_PIHAKBERKEPENTINGAN ";	
@@ -972,8 +972,9 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			    	h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
 			    	h.put("noPB", rs.getString("NO_PB")==null?"":rs.getString("NO_PB"));
 			    	h.put("idRujukanPB", rs.getString("ID_PIHAKBERKEPENTINGAN"));
-			    	h.put("jenisPB", rs.getString("JENISNOPB"));
-			    	h.put("idJenisNoPB", rs.getString("ID_JENISNOPB"));
+			    	h.put("jenisPB", rs.getString("JENISNOPB")==null?"":rs.getString("JENISNOPB"));
+			    	h.put("idJenisNoPB", rs.getString("ID_JENISNOPB")==null?"":rs.getString("ID_JENISNOPB"));
+			    	h.put("umur", rs.getString("UMUR")==null?"":rs.getString("UMUR"));
 	
 			    	h.put("maklumat_bantahan_tamat_tempoh", rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH")==null?"":rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH"));
 			    	h.put("id_status_bantahan", rs.getString("ID_STATUS")==null?"":rs.getString("ID_STATUS"));

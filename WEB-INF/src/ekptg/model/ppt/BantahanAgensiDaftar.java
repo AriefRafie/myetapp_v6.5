@@ -296,7 +296,7 @@ public class BantahanAgensiDaftar extends EkptgCache implements Serializable {
 					" S.ID_SIASATAN, S.NO_SIASATAN,  "  +
 					" ST.KETERANGAN AS DESC_STATUS_BANTAHAN_AP," +
 					" W.ID_WARTA " +
-					" "+
+					" ,A.NAMA_AGENSI"+
 					" FROM TBLPPTPERMOHONAN P, TBLPPTHAKMILIK HM, TBLPPTBANTAHAN B, TBLRUJKEMENTERIAN K, TBLRUJNEGERI N, " +
 					"TBLRUJAGENSI A, TBLRUJSTATUS ST, TBLPPTSIASATAN S," +
 					"TBLPPTAWARD AW, TBLPPTWARTA W " +
@@ -320,11 +320,12 @@ public class BantahanAgensiDaftar extends EkptgCache implements Serializable {
 			while (rs.next()) {
 				h = new Hashtable();
 				    	//Bantahan MT
-				    	h.put("nama", rs.getString("NAMA_KEMENTERIAN")==null?"":rs.getString("NAMA_KEMENTERIAN"));
+				    	h.put("nama", rs.getString("NAMA_AGENSI")==null?rs.getString("NAMA_KEMENTERIAN"):rs.getString("NAMA_AGENSI"));
 				    	h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
 				    	h.put("noPB", "");
 				    	h.put("idJenisNoPB", "");
 				    	h.put("idRujukanPB", rs.getString("ID_AGENSI"));
+				    	h.put("umur", "0");
 
 				    	h.put("maklumat_bantahan_tamat_tempoh", rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH")==null?"":rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH"));
 				    	h.put("FLAG_SEMAKAN_ONLINE", rs.getString("FLAG_SEMAKAN_ONLINE")==null?"":rs.getString("FLAG_SEMAKAN_ONLINE"));
