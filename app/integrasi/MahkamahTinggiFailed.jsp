@@ -104,7 +104,7 @@
 		    <td colspan="3" align="center">
 		     
 		    <input type="button" name="tutup" id="tutup" value="Tutup" onClick="tutupTetingkap()" />
-		     <input type="button" id="cmdCetakRole" name="cmdCetakRole" value="Cetak" onClick="printDiv('div_PrintMT');" >
+		     <!-- <input type="button" id="cmdCetakRole" name="cmdCetakRole" value="Cetak" onClick="printDiv('div_PrintMT');" > -->
 		    </td>
 		</tr>
 	</table>
