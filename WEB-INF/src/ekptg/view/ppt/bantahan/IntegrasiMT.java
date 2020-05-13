@@ -5,12 +5,8 @@ import integrasi.ws.mt.reg.DeceaseInfoType;
 import integrasi.ws.mt.reg.MTRegManager;
 import integrasi.ws.mt.reg.PartyType;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,15 +20,12 @@ import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 //import sun.misc.BASE64Encoder;
 
 //import com.sun.xml.internal.messaging.saaj.util.Base64;
 
-import com.Ostermiller.util.Base64;
-import com.mysql.jdbc.Util;
 
 import ekptg.helpers.Utils;
 import ekptg.model.utils.FrmNegeriData;
@@ -58,7 +51,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 	SimpleDateFormat sdfNaming = new SimpleDateFormat("yymmdd");
  	private IUtilHTMLPilihan iUtilPilihan = null;
  	private IUtilHTMLPilihan iPilihan = null;
-private ILampiran iLampiran = null;
+ 	private ILampiran iLampiran = null;
 	private String sql = "";
 
 	@Override
@@ -132,7 +125,7 @@ private ILampiran iLampiran = null;
 			
 			Vector<Hashtable<String, Object>> vecMT 
 				= ekptg.helpers.DB.getMahkamahByNegeri(Long.parseLong(idNegeriPer));
-			if(vecMT.isEmpty() || vecMT.size() > 1) {
+//			if(vecMT.isEmpty() || vecMT.size() > 1) {
 					socmt = getPilihan().Pilihan("socmt", "onchange = \'pilihMT()\'");
 		
 //			Tujuan Pengujian
@@ -140,20 +133,18 @@ private ILampiran iLampiran = null;
 //				im = new MTRegManager();
 //				socmt = String.valueOf(vecMT.get(0).get("namaPejabat"));
 //				kodmt = im.getKodMT(String.valueOf(vecMT.get(0).get("id")));
-			}
+//			}
 			
-			Vector<Tblrujpejabat> vecPejabat = DBPPT.getMTByPermohonan(idPermohonan);
-			if(vecPejabat.size() > 1) {
-				socPejabat = getPTGD().Pilihan("socPejabat", "",idPermohonan,"onchange = \'pilihPejabat()\'");
-
-			}else {
-				socPejabat = getPTGD().Pilihan("socPejabat",String.valueOf(vecPejabat.get(0).getIdPejabat()),idPermohonan,"onchange = \'pilihPejabat()\'");
-				
-				PartyType partyType = MTRegManager.getPartyResponden(String.valueOf(vecPejabat.get(0).getIdPejabat()));
-
-				setContextPejabat(partyType);
-			
-			}
+//			Vector<Tblrujpejabat> vecPejabat = DBPPT.getMTByPermohonan(idPermohonan);
+//			if(vecPejabat.size() > 1) {
+//				socPejabat = getPTGD().Pilihan("socPejabat", "",idPermohonan,"onchange = \'pilihPejabat()\'");
+//
+//			}else {
+//				socPejabat = getPTGD().Pilihan("socPejabat",String.valueOf(vecPejabat.get(0).getIdPejabat()),idPermohonan,"onchange = \'pilihPejabat()\'");				
+//				PartyType partyType = MTRegManager.getPartyResponden(String.valueOf(vecPejabat.get(0).getIdPejabat()));
+//				setContextPejabat(partyType);
+//			
+//			}
 
 					
 		}
@@ -164,16 +155,38 @@ private ILampiran iLampiran = null;
 			if(!noKes.equals("")){
 				context.put("noKes", noKes);
 			}
+			
+			String DISABILITY = "";
+			Hashtable pendaftaran = getPendaftaran(idBantahan);
+			if(pendaftaran != null) {
+				DISABILITY = " disabled class=\"disabled\" ";
+				socmt = getPilihan().Pilihan("socmt",String.valueOf(pendaftaran.get("idPejabat")),"onchange = \'pilihMT()\' "+DISABILITY);
+				kodmt = String.valueOf(pendaftaran.get("kod"));
+			
+			}
 		
 		}else if (submit.equals("bantahanpb")) {
 			myLog.info("bantahanpb");
 			String noKes_ = "";
 			String noKes = getNoKes(idBantahan);
-			myLog.info("bantahanpb="+noKes);
+//			myLog.info("bantahanpb="+noKes);
 			if(!noKes.equals("")){
 				noKes_ = noKes;
 			}
 			context.put("noKes", noKes_);
+			
+			String DISABILITY = "";
+			Hashtable pendaftaran = getPendaftaran(idBantahan);
+			if(pendaftaran != null) {
+				DISABILITY = " disabled class=\"disabled\" ";
+				
+				context.put("jantina", pendaftaran.get("jantina"));
+				socmt = getPilihan().Pilihan("socmt",String.valueOf(pendaftaran.get("idPejabat")),"onchange = \'pilihMT()\' "+DISABILITY);
+				kodmt = String.valueOf(pendaftaran.get("kod"));
+			
+			}
+
+			context.put("classRead", DISABILITY);
 
 		}else if ("hantarpermohonan".equals(submit)) {
 			Tblrujdokumen doc = null;
@@ -193,14 +206,9 @@ private ILampiran iLampiran = null;
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			//Statement stmt2 = db.getStatement();
-			//SQLRenderer kptsn = new SQLRenderer();
 			
-//			context.put("idnegeri", request.getParameter("idnegeri"));
-//			context.put("jeniskp", request.getParameter("jeniskp"));
-//			context.put("docContent", docContent);
 			String idPejabat = getParam("socmt");
-			String idPejabatPTGD = getParam("socPejabat");
+			//String idPejabatPTGD = getParam("socPejabat");
 			
 			String name	= getParam("txtNamaPembantah");
 			String add = getParam("txtAlamat1");
@@ -234,7 +242,7 @@ private ILampiran iLampiran = null;
 					}
 				}
 			}
-			//myLog.info("doc: content="+doc.getKandungan());
+			myLog.info("jenisRef="+jenisRef);
 			//Perayu PB (Individu|Syarikat)
 			String gen = "U";
 			String noRef = getParam("noRef");
@@ -242,7 +250,12 @@ private ILampiran iLampiran = null;
 			String refType = "OT";
 			//String refType = getParam("noRef");
 			
-			if(jenisRef.equals("1")) {
+			if(jenisRef.equals("1")
+				|| jenisRef.equals("3")
+				|| jenisRef.equals("4")
+				|| jenisRef.equals("5")
+				|| jenisRef.equals("6")
+				|| jenisRef.equals("11")) {
 				gen = getParam("jantina");
 				noRef = Utils.RemoveDash(noRef);
 				refType = "IC";
@@ -274,22 +287,20 @@ private ILampiran iLampiran = null;
 	        //MTRegManager manager = new MTRegManager("15");
 			myLog.info("sql="+sql);
 			if(jenisPembantah.equals("1")){
-			pt = MTRegManager.getPartyPerayuGov(idRujukanPB //id rujukan party
+				pt = MTRegManager.getPartyPerayuGov(idRujukanPB //id rujukan party
 					,name
 					,add,add2,add3,postcode,stateCode,city);
 			}else {
-
 				//,String name,String umur,String gen,String noRef
 				pt = MTRegManager.getPartyPerayu(idRujukanPB //id rujukan party
 						,name, String.valueOf(umur), gen, noRef,refType
 						,add,add2,add3,postcode,stateCode,city);
 			}
-			PartyType pt02 = MTRegManager.getPartyResponden(idPejabatPTGD);
+			//PartyType pt02 = MTRegManager.getPartyResponden(idPejabatPTGD);
 			
-			
-	        party = new PartyType[2];
+	        party = new PartyType[1];
 	        party[0] = pt;
-	        party[1] = pt02;
+	        //party[1] = pt02;
 
 	        DeceaseInfoType deceaseInfo = new DeceaseInfoType();
 	        deceaseInfo.setDeceaseInfoName(name);
@@ -309,24 +320,8 @@ private ILampiran iLampiran = null;
 	        deceaseInfo.setDeceaseInfoCity("KUALA LUMPUR");
 	        deceaseInfo.setDeceaseInfoState(stateCode);
 	        deceaseInfo.setDeceaseInfoCountry("MYS");
-//	        <DeceaseInfoName>IJOK ANAK EDIN KONG</DeceaseInfoName>
-//			<DeceaseInfoType>1</DeceaseInfoType>
-//			<DeceaseInfoIDType1>IC</DeceaseInfoIDType1>
-//			<DeceaseInfoIDType1No>251202095009</DeceaseInfoIDType1No>
-//			<DeceaseInfoIDType2>OC</DeceaseInfoIDType2>
-//			<DeceaseInfoIDType2No>12345</DeceaseInfoIDType2No>
-//			<DeathCertNo>12345</DeathCertNo>
-//			<DeceaseInfoGender>M</DeceaseInfoGender>
-//			<DeceaseInfoAge>99</DeceaseInfoAge>
-//			<DateOfDeath>2020-03-01T00:00:00</DateOfDeath>
-//			<DeceaseInfoAddr1>DECEASED INFO ADD 1</DeceaseInfoAddr1>
-//			<DeceaseInfoAddr2>DECEASED INFO ADD 2</DeceaseInfoAddr2>
-//			<DeceaseInfoAddr3>DECEASED INFO ADD 3</DeceaseInfoAddr3>
-//			<DeceaseInfoPostcode>44000</DeceaseInfoPostcode>
-//			<DeceaseInfoCity>KUALA LUMPUR</DeceaseInfoCity>
-//			<DeceaseInfoState>14</DeceaseInfoState>
-//			<DeceaseInfoCountry>MYS</DeceaseInfoCountry>
-			String returnMessage = "1 Tidak Berjaya Dihantar";
+
+	        String returnMessage = "1 Tidak Berjaya Dihantar";
 	        returnMessage = MTRegManager. PendaftaranBaharu("15"
 	        					,doc.getIdDokumen(),renameDoc,doc.getKandungan()
 	        					,party
@@ -344,14 +339,16 @@ private ILampiran iLampiran = null;
 
 				if (code.equals("0")) {
 					r = new SQLRenderer();
-					r.setUpdate("ID_TRANSAKSI", transactionID);
+					//r.setUpdate("ID_TRANSAKSI", transactionID);
+					r.update("ID_RUJUKAN", idBantahan);
+			
 					if (MTRegManager.getReferenceNo() != null) {
 						r.add("NO_KES", MTRegManager.getReferenceNo());
 					}
 					r.add("CATATAN",returnMessage);
 					sql = r.getSQLUpdate("TBLINTMTPENDAFTARAN");
-					stmt.executeUpdate(sql);
 					myLog.info("getSQLUpdate:sql="+sql);
+					stmt.executeUpdate(sql);
 
 					vm = "app/integrasi/MahkamahTinggiSuccess.jsp";
 					//IntLogManager.recordLogMT(noFail, "I", "O", "Y", "SUCCESS");
@@ -374,7 +371,7 @@ private ILampiran iLampiran = null;
 			socmt = getPilihan().Pilihan("socmt",idPejabat,"onchange = \'pilihMT()\'");
 			kodmt = kodMT;
 		
-			socPejabat = getPTGD().Pilihan("socPejabat", idPejabat,idPermohonan,"onchange = \'pilihPejabat()\'");
+//			socPejabat = getPTGD().Pilihan("socPejabat", idPejabat,idPermohonan,"onchange = \'pilihPejabat()\'");
 			myLog.info("returnMessage="+returnMessage);
 			
 		}else if(submit.equals("getmahkamah")){
@@ -383,6 +380,9 @@ private ILampiran iLampiran = null;
 			
 			socmt = getPilihan().Pilihan("socmt",idPejabat,"onchange = \'pilihMT()\'");
 			kodmt = im.getKodMT(idPejabat);
+			
+			context.put("jantina", getParam("jantina"));
+
 
 		}else if(submit.equals("getpejabat")){
 			String idPejabat = getParam("socPejabat");
@@ -398,7 +398,7 @@ private ILampiran iLampiran = null;
 		context.put("jenisRef",jenisRef);
 		context.put("kodmt",kodmt);
 		context.put("socMT",socmt);
-		context.put("socPejabat",socPejabat);
+//		context.put("socPejabat",socPejabat);
 
 
 		return vm;
@@ -431,6 +431,44 @@ private ILampiran iLampiran = null;
 		}
 
 		return noKes;
+		
+	}
+	
+	private Hashtable<String,String> getPendaftaran(String idBantahan) {
+		Hashtable<String,String> pendaftaran= null;
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT P.JANTINA,LM.ID_PEJABAT,P.KOD_MT FROM TBLINTMTPENDAFTARAN P"
+				+ " ,TBLINTMTLOCATION L,TBLINTMTLOCATIONMAP LM "
+				+ " WHERE "
+				+ " TO_NUMBER(P.KOD_MT) = L.LOCATION "
+				+ " AND L.ID_LOCATION=LM.ID_LOCATION "
+				+ " AND P.ID_RUJUKAN = '"+ idBantahan + "'"
+				+ " AND P.NO_KES IS NOT NULL";
+						
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				pendaftaran = new Hashtable<String,String>();
+				pendaftaran.put("jantina", Utils.isNull(rs.getString("JANTINA")));
+				//pendaftaran.put("umur", rs.getString("UMUR"));
+				pendaftaran.put("idPejabat", rs.getString("ID_PEJABAT"));
+				pendaftaran.put("kod", rs.getString("KOD_MT"));
+
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+		return pendaftaran;
 		
 	}
 	

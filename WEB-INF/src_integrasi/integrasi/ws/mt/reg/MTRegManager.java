@@ -32,7 +32,8 @@ public class MTRegManager {
 	private static String msg = "";
 	private static String msgDaftar = "";
 	private static String referenceNo ="";
-	
+	private static String caseNo ="";
+
 	public MTRegManager() throws Exception{	}
 	
 	public MTRegManager(String kod) throws Exception{
@@ -145,7 +146,7 @@ public class MTRegManager {
 				if (response.getData() != null) {
 					//response.getData().getCaseNo()getSourceReferenceNo();
 					if (response.getData().getCaseNo() != null) {
-						referenceNo = response.getData().getSourceReferenceNo();
+						caseNo = response.getData().getCaseNo();
 					}
 				}
 			}				
@@ -450,11 +451,11 @@ public class MTRegManager {
 	}
 	
 	public static String getReferenceNo() {
-		return referenceNo;
+		return caseNo;
 	}
 
-	public static void setReferenceNo(String referenceNo) {
-		MTRegManager.referenceNo = referenceNo;
+	public static void setReferenceNo(String caseNo) {
+		MTRegManager.caseNo = caseNo;
 	}
 	
 	public static String getStateCode(int x){
