@@ -8,6 +8,7 @@
 	#set($disOtherId1="")
 	#set($disOtherIdx="")
 #else
+
 	<!-- set($editable="no")
 	set($disOtherId="readonly")
 	set($disOtherId1="disabled")
@@ -103,6 +104,14 @@
 	
 	#set($txtJenisPisah=$data.pecah_pisah)
 	
+	<!-- SWASTA --><!-- PPT-42 -->
+	#set($socUnitHargaNS=$data.unit_harga_ns)
+	#set($txtHargaSeunitNS=$data.harga_seunit_ns)
+	#set($txtHargaPasaranNS=$data.harga_pasaran_ns)
+	#set($txtPenjejasanNS=$data.bayar_penjejasan_ns)
+	#set($txtPecahNS=$data.bayar_pecah_ns)
+	#set($txtKenaikanNS=$data.bayar_naik_nilai_ns)
+	
 	<!-- TAB 5 -->
 	#set($txdTarikhUlasan=$data.tarikh_ulasan)
 	#set($txtUlasanPegawai=$data.ulasan_pegawai)
@@ -124,7 +133,6 @@
 	#end
 
 <fieldset id="top">
-<center>
 
 	#parse("app/ppt/frmPPTHeaderHM.jsp")
 
@@ -1502,8 +1510,177 @@
     		</tr>
     		</table>
     		#end
+
+<!-- PPT-42V -->    		
+    		<br/>
+    		
+    		<fieldset>
+    		<legend><strong>Nilaian Swasta</strong></legend>
+    			
+    			#if($mode=="new")
+    			<table width="100%" border="0">
+    				<tr>
+	    				<td width="1%">&nbsp;</td>
+	    				<td width="16%">Unit Harga</td>
+	    				<td width="1%">:</td>
+	    				<td width="70%"><select $disOtherId1 $disOtherIdx name="socUnitHargaNS" style="width:150px">
+	      		
+	      					<option value="">SILA PILIH</option>    			
+	      					<option value="1">METER PERSEGI</option>		
+	      					<option value="2">HEKTAR</option>		
+	      						
+						</select></td>
+	    			</tr>
+	    			
+	    			#if($txtHargaSeunitNS=="")
+	           			#set($HSeunitNS="")
+	        		#else
+	           			#set($HSeunitNS=$txtHargaSeunitNS)
+	       			#end
+	    			<tr>
+	    				<td>&nbsp;</td>
+	    				<td>Harga Seunit</td>
+	    				<td>:</td>
+	    				<td><input type="text" $disOtherId $disOtherIdx name="txtHargaSeunitNS" id="txtHargaSeunitNS" value="$!HSeunitNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!HSeunitNS')"></td>
+	    			</tr>
+	    			
+	    			#if($txtHargaPasaranNS=="")
+	           			#set($HPasaranNS="")
+	        		#else
+	           			#set($HPasaranNS=$txtHargaPasaranNS)
+	       			#end
+	    			<tr>
+	    				<td>&nbsp;</td>
+	    				<td>Harga Pasaran</td>
+	    				<td>:</td>
+	    				<td><input type="text" $disOtherId $disOtherIdx name="txtHargaPasaranNS" id="txtHargaPasaranNS" value="$!HPasaranNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!HPasaranNS')"></td>
+	    			</tr>
+	    			
+	    			#if($txtPenjejasanNS=="")
+	           			#set($HPenjejasanNS="")
+	        		#else
+	           			#set($HPenjejasanNS=$txtPenjejasanNS)
+	       			#end
+	    			<tr>
+	    				<td>&nbsp;</td>
+	    				<td>Penjejasan Terbabit</td>
+	    				<td>:</td>
+	    				<td><input type="text" $disOtherId $disOtherIdx name="txtPenjejasanNS" id="txtPenjejasanNS" value="$!HPenjejasanNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!HPenjejasanNS')"></td>
+	    			</tr>
+	    			
+	    			#if($txtPecahNS=="")
+	           			#set($HPecahNS="")
+	        		#else
+	           			#set($HPecahNS=$txtPecahNS)
+	       			#end
+	    			<tr>
+	    				<td>&nbsp;</td>
+	    				<td>Pecah Pisah</td>
+	    				<td>:</td>
+	    				<td><input type="text" $disOtherId $disOtherIdx name="txtPecahNS" id="txtPecahNS" value="$!HPecahNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!HPecahNS')"></td>
+	    			</tr>
+	    			
+	    			#if($txtKenaikanNS=="")
+	           			#set($HKenaikanNS="")
+	        		#else
+	           			#set($HKenaikanNS=$txtKenaikanNS)
+	       			#end
+	    			<tr>
+	    				<td>&nbsp;</td>
+	    				<td>Kenaikan Nilai</td>
+	    				<td>:</td>
+	    				<td><input type="text" $disOtherId $disOtherIdx name="txtKenaikanNS" id="txtKenaikanNS" value="$!HKenaikanNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!HKenaikanNS')"></td>
+	    			</tr>
+    				
+    			</table>
+    			#end
+    			
+    			#if($mode=="view")
+    			<table width="100%" border="0">
+		   			<tr>
+		    				<td width="1%">&nbsp;</td>
+		    				<td width="16%">Unit Harga</td>
+		    				<td width="1%">:</td>
+		    				<td width="70%"><select name="socUnitHargaNS" $disability1 $disabilityx style="width:150px">
+		      		
+		      					#if($socUnitHargaNS=="1")
+		      					<option value="1">METER PERSEGI</option>		  				
+		      					<option value="2">HEKTAR</option>	
+		      					<option value="">SILA PILIH</option>    	
+		      					#elseif($socUnitHargaNS=="2")	
+		      					<option value="2">HEKTAR</option>	
+		      					<option value="1">METER PERSEGI</option>	
+		      					<option value="">SILA PILIH</option>   			
+		      					#else
+		      					<option value="">SILA PILIH</option>    			
+		      					<option value="1">METER PERSEGI</option>
+		      					<option value="2">HEKTAR</option>	
+		      					#end		
+		      						
+							</select></td>
+		    			</tr>
+		    			
+		    			<tr>
+		    				<td>&nbsp;</td>
+		    				<td>Harga Seunit</td>
+		    				<td>:</td>
+		    				#if($isEdit=="no")
+		    				<td><input type="text" $disability $disabilityx name="txtHargaSeunitNS" id="txtHargaSeunitNS" value="$!Utils.format2Decimal($txtHargaSeunitNS)" size="10" maxlength="11" style="text-align:right" ></td>
+		    				#else
+		    				<td><input type="text" $disability $disabilityx name="txtHargaSeunitNS" id="txtHargaSeunitNS" value="$!txtHargaSeunitNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtHargaSeunitNS')"></td>
+		    				#end
+		    			</tr>
+		    			
+		    			<tr>
+		    				<td>&nbsp;</td>
+		    				<td>Harga Pasaran</td>
+		    				<td>:</td>
+		    				#if($isEdit=="no")
+		    				<td><input type="text" $disability $disabilityx name="txtHargaPasaranNS" id="txtHargaPasaranNS" value="$!Utils.format2Decimal($txtHargaPasaranNS)" size="10" maxlength="11" style="text-align:right" ></td>
+		    				#else
+		    				<td><input type="text" $disability $disabilityx name="txtHargaPasaranNS" id="txtHargaPasaranNS" value="$!txtHargaPasaranNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtHargaPasaranNS')"></td>
+		    				#end
+		    			</tr>
+		    			
+		    			<tr>
+		    				<td>&nbsp;</td>
+		    				<td>Penjejasan Terbabit</td>
+		    				<td>:</td>
+		    				#if($isEdit=="no")
+		    				<td><input type="text" $disability $disabilityx name="txtPenjejasanNS" id="txtPenjejasanNS" value="$!Utils.format2Decimal($txtPenjejasanNS)" size="10" maxlength="11" style="text-align:right" ></td>
+		    				#else
+		    				<td><input type="text" $disability $disabilityx name="txtPenjejasanNS" id="txtPenjejasanNS" value="$!txtPenjejasanNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtPenjejasanNS')"></td>
+		    				#end
+		    			</tr>
+		    			
+		    			<tr>
+		    				<td>&nbsp;</td>
+		    				<td>Pecah Pisah</td>
+		    				<td>:</td>
+		    				#if($isEdit=="no")
+		    				<td><input type="text" $disability $disabilityx name="txtPecahNS" id="txtPecahNS" value="$!Utils.format2Decimal($txtPecahNS)" size="10" maxlength="11" style="text-align:right" ></td>
+		    				#else
+		    				<td><input type="text" $disability $disabilityx name="txtPecahNS" id="txtPecahNS" value="$!txtPecahNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtPecahNS')"></td>
+		    				#end
+		    			</tr>
+		    			
+		    			<tr>
+		    				<td>&nbsp;</td>
+		    				<td>Kenaikan Nilai</td>
+		    				<td>:</td>
+		    				#if($isEdit=="no")
+		    				<td><input type="text" $disability $disabilityx name="txtKenaikanNS" id="txtKenaikanNS" value="$!Utils.format2Decimal($txtKenaikanNS)" size="10" maxlength="11" style="text-align:right" ></td>
+		    				#else
+		    				<td><input type="text" $disability $disabilityx name="txtKenaikanNS" id="txtKenaikanNS" value="$!txtKenaikanNS" size="10" maxlength="11" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtKenaikanNS')"></td>
+		    				#end
+		    			</tr>
+    			</table>
+    			#end
+    			
+    		</fieldset>	    		
     		
     		
+<!-- END PPT-42 -->   		
     		<br/>
     		
     		<fieldset>
@@ -2168,7 +2345,8 @@ function simpanTab3(idHakmilik,idTanah,mode) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSementaraTerperinciTanah";
 	document.${formName}.submit();
 }
-function simpanTab4(idHakmilik,idTanah,mode) {
+//PPT-42
+function simpanTab4(idHakmilik,idTanah,mode) {  
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
 	document.${formName}.ScreenLocation.value = "TabbedPanels1";
 	document.${formName}.id_hakmilik.value = idHakmilik;

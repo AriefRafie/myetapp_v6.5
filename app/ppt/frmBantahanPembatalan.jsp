@@ -104,7 +104,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 ##end
 
 <fieldset>
-<legend>Maklumat Pembatalan Bantahan</legend>
+<legend>Maklumat Pembatalan Bantahan</legend>  
 	<table width="100%" border="0">
     	<tr>
             <td width="1%"></td>
@@ -147,13 +147,15 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
             </td>  
         </tr>
         <tr>
+            <!-- PPT-39 (i) -->
+        	<!--  td colspan="3"><span class="style1">DEPOSIT : TIDAK DIKEMBALIKAN
+            </span></td-->
+            
+			<!-- PPT-39 (ii) --> <!-- TEMP
             <td width="1%"></td>
-        	<td colspan="3"><span class="style1">DEPOSIT : TIDAK DIKEMBALIKAN
-            </span></td>
-          <td>
-            </td>
-            <td>
-            </td>
+            <td>Surat Pembatalan Bantahan</td>
+            <td>:</td>
+            <td><input $disOtherId1 $disOtherIdx id="fileupload" name="fileupload" type="file" size="60" /></td>-->
         </tr>
     	<tr>
           <td width="1%"></td>
@@ -200,7 +202,74 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 </div>
 <input type=hidden name=selectedtab />
 <!--------------------------------------- END TAB BANTAHAN ------------------------------------------->
-</fieldset>
+
+<!-- PPT-39(i) -->
+<!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
+
+<!-- :::upload -->
+<input type="hidden" name="nama_skrin" id="nama_skrin" value="batalBantahan"  />
+<fieldset id="senarai_dokumen" >
+<legend>Senarai Dokumen Yang Disertakan</legend>
+    
+    <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
+    #if($listDokumen_size > 0)
+     <input name="cmdHapusDokumen" type="button" value="Hapus" onClick="hapusDokumenMaster('$!readmode')" title="Sila tick untuk hapus dokumen" >
+    #end
+    <table width="100%">
+  <tr class="table_header">
+    <td width="5%">Bil</td>
+    <td width="30%">Nama Dokumen</td>
+    <td width="30%">Keterangan</td>
+    <td width="30%">Dokumen Sokongan (Papar)</td>
+     #if($listDokumen_size > 0)
+      <td width="5%">
+     
+      <div align="center">
+      <input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
+      </div>
+      
+      </td>
+      #end
+  </tr>
+ 
+  
+ #if($listDokumen_size > 0)
+  #set ($cnt=0)
+  #foreach($list1 in $listDokumen)        
+           
+             #set( $i = $velocityCount )
+         		#if ( ($i % 2) != 1 )
+              		 #set( $row = "row2" )
+         		#else
+               		 #set( $row = "row1" )
+         		#end
+	   #if($list1.JENIS_DOKUMEN == "pembatalan")   <!-- PPT-38 -->  
+	   #set ($cnt=1)      		
+	  <tr>  
+	    <td class="$row" >$list1.BIL</td>
+	    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
+	    <td class="$row" >$list1.KETERANGAN</td>
+	    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
+	    <td class="$row" ><div align="center">
+	       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
+	     </div></td>
+	  </tr>
+	  #end
+ 	 #end
+ 	 #if($cnt==0)
+	  <tr>  
+	    <td colspan="5">Tiada Rekod</td>    
+	  </tr>
+	  #end
+  #else
+  <tr>  
+    <td colspan="5">Tiada Rekod</td>    
+  </tr>
+  #end
+</table>
+  
+</fieldset> 
+<!-- END PPT-39(ii) -->
 
 <!------------------------------------------ OUTPUT LAPORAN/SURAT ----------------------------------------------->
 <br/>
@@ -214,6 +283,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 </fieldset>
 <!------------------------------------------ END OUTPUT LAPORAN/SURAT ------------------------------------------>
 
+</fieldset>
+
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 <input type="hidden" name="id_permohonan" id="id_permohonan" value="$id_permohonan" />
 <input type="hidden" name="id_fail" id="id_fail" value="$id_fail" />
@@ -222,6 +293,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type="hidden" name="id_pihakberkepentingan" id="id_pihakberkepentingan" value="$id_pihakberkepentingan" />
 <input type="hidden" name="status_bantahan" id="status_bantahan" value="$status_bantahan" />
 <input type="hidden" name="id_bantahan" id="id_bantahan" value="$id_bantahan" />
+
+<input type="hidden" name="txtTajuk" id="txtTajuk" value="Surat Pembatalan Bantahan" />
+<input type="hidden" name="txtKeterangan" id="txtKeterangan" value="Surat Pembatalan Bantahan" />
 
 <script type="text/javascript">
 
@@ -246,14 +320,17 @@ function setSelectedTab(tabid) {
 }
 function bantahan(){
 	document.${formName}.command.value = "bantahan";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
 	document.${formName}.submit();
 }
 function deposit(){
 	document.${formName}.command.value = "deposit";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
 	document.${formName}.submit();
 }
 function borangO(){
 	document.${formName}.command.value = "borangO";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
 	document.${formName}.submit();
 }
 function lanjutanTempoh(){
@@ -263,14 +340,17 @@ function lanjutanTempoh(){
 }
 function susulanBantahan(){
 	document.${formName}.command.value = "susulanBantahan";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
 	document.${formName}.submit();
 }
 function pemulanganDeposit(){
 	document.${formName}.command.value = "pemulanganDeposit";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
 	document.${formName}.submit();
 }
 function tarikBalikBantahan(){
 	document.${formName}.command.value = "tarikBalikBantahan";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
 	document.${formName}.submit();
 }
 function batalBantahan(){
@@ -278,7 +358,8 @@ function batalBantahan(){
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
 	document.${formName}.submit();
 }
-function simpan_batalMahkamah(){
+
+ function simpan_batalMahkamah(){
 	if(document.${formName}.txtNoRujSurat.value == ""){
 		alert("Sila masukkan \"No Ruj. Surat\" terlebih dahulu.");
   		document.${formName}.txtNoRujSurat.focus(); 
@@ -335,6 +416,101 @@ function RemoveNonNumeric( strString )
       }
       return strReturn;
 }
+
+//PPT-39 (ii)
+//:::upload
+function tambahDokumen() {
+	var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;	
+	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
+	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
+	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen";	
+	document.${formName}.submit();
+}
+//:::upload
+function view_Lampiran(id_dokumen) {
+    var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;		
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=view_Dokumen_Details&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=maklumat_dokumen&point=maklumat_dokumen&id_dokumen="+id_dokumen;		
+	document.${formName}.submit();
+}
+//:::upload
+function papar_Lampiran(id_dokumen) {
+    var url = "../servlet/ekptg.view.ppt.DisplayBlob?id="+id_dokumen;
+    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+//:::upload
+function hapusDokumenMaster(r){
+input_box = confirm("Adakah anda pasti?");
+	if (input_box == true) {
+	var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;		
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=hapusDokumenMasterPembatalan&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point=senarai_dokumen&readmode="+r;	
+	document.${formName}.submit();
+	}
+}
+
+function doCheckAll1(){    
+    if (document.${formName}.all1.checked == true){
+        if (document.${formName}.ids1.length == null){
+            document.${formName}.ids1.checked = true;
+        } else {
+            for (i = 0; i < document.${formName}.ids1.length; i++){
+                document.${formName}.ids1[i].checked = true;
+            }
+        }
+    } else {
+        if (document.${formName}.ids1.length == null){
+            document.${formName}.ids1.checked = false;
+        } else {
+            for (i = 0; i < document.${formName}.ids1.length; i++){
+                document.${formName}.ids1[i].checked = false;
+            }
+        }
+    }
+}
+
+function doUpdateCheckAll1(){  
+	var c = 0;
+	if(document.${formName}.ids1.length > 1)
+	{     
+		  for (i = 0; i < document.${formName}.ids1.length; i++)
+		  {
+	      if (document.${formName}.ids1[i].checked == false)
+		  {	 
+		  c++
+	      }
+		  }  
+	}
+	else
+	{
+
+	if (document.${formName}.ids1.checked == false)
+	{	 
+	c++;
+	}	 	
+	}	 
+	 
+		
+		
+		
+		  if(c>0)
+		  {	  
+		  document.${formName}.all1.checked = false;
+		  }
+		  else
+		  {
+		  document.${formName}.all1.checked = true;
+		  }
+		  
+		  
+	       
+	}
+
 <!--UTK DEFAULTKAN TAB KEPADA TAB BANTAHAN
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});
 //-->

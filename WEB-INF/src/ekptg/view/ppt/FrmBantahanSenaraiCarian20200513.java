@@ -27,16 +27,18 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
-import ekptg.model.htp.FrmSemakan;
 import ekptg.model.ppt.BantahanDaftar;
 import ekptg.model.ppt.BantahanDaftarOperations;
 import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.ppt.FrmUPTSek8BorangFData;
 import ekptg.model.ppt.PPTHeader;
 
-public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
-
+public class FrmBantahanSenaraiCarian20200513 extends AjaxBasedModule {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 3587088402775617834L;
+
 	static Logger myLogger = Logger.getLogger(FrmBantahanSenaraiCarian.class);
 	
 	BantahanDaftar model = new BantahanDaftar();	
@@ -59,7 +61,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	String checkedStatusPemulangan4 = "";
 	
 	@SuppressWarnings("unchecked")
-	public String doTemplate2() throws Exception{
+	public String doTemplate2() throws Exception
+    {
 		HttpSession session = this.request.getSession(); 		
 		
     	//get user login detail
@@ -96,9 +99,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
     	Vector getIdSuburusanstatusfail = new Vector();
     	Vector dataSuburusanHakmilik = new Vector();
     	
-		//PPT-35(i) 
-		Vector semakanSenarai = new Vector();
-    	
     	dataNamaPengarah.clear();
     	listMaklumatTanah.clear();
     	
@@ -109,16 +109,22 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
     	String doPost = (String)session.getAttribute("doPost");
     	String action = getParam("action"); // ACTION UTK SETUP PAGING SHJ
     	String submit = getParam("command");
-    	myLogger.info("SUBMIT :: "+submit+",ACTION PAGING :: "+action);
-    	this.context.put("Util",new lebah.util.Util());	// UNTUK FORMAT UTIL.DECIMAL (EX: 12,000.00)   		
+    	myLogger.info("SUBMIT :: "+submit);
+    	myLogger.info("ACTION PAGING :: "+action);
+    	this.context.put("Util",new lebah.util.Util());	// UNTUK FORMAT UTIL.DECIMAL (EX: 12,000.00)
+   		
     	
     	String location = getParam("location");
     	context.put("location",location);   
     	
     	String point = getParam("point");
     	context.put("point",point);  
-    	
-    	String id_permohonan = getParam("id_permohonan");
+    	/*
+    	String id_fail = getParam("id_fail");	
+   		context.put("id_fail", id_fail);
+   		System.out.println("id_fail--"+id_fail);
+   		*/
+   		String id_permohonan = getParam("id_permohonan");
    		context.put("id_permohonan", id_permohonan);
    		myLogger.info("id_permohonan : "+id_permohonan);
    		String negeriMMK = "";
@@ -127,7 +133,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		String idNegeriMhn = "";
 		Vector dataHeader = null;
 		String statusFail = "";
-   		if(!id_permohonan.equals("")){
+   		if(!id_permohonan.equals(""))
+   		{
 	   		// HEADER
 			myLogger.info("call header");
 	    	header.setDataHeader(id_permohonan);
@@ -140,18 +147,39 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				statusFail = (String)dh.get("id_status");	
 				id_kementerian = (String)dh.get("id_kementerian");	
 				idNegeriMhn = (String)dh.get("id_projekNegeri");	
-			
 			}
    		}
    		context.put("dataHeader", dataHeader);
    		myLogger.info("id_kementerian : "+id_kementerian);
 		
-   		if(!id_permohonan.equals("")){
-   			Vector list_sub = null;
-   			list_sub = header.listPerjalananFail(id_permohonan);
-   			this.context.put("list_sub_header", list_sub);
    		
+   		if(!id_permohonan.equals(""))
+   		{
+   		Vector list_sub = null;
+		list_sub = header.listPerjalananFail(id_permohonan);
+		this.context.put("list_sub_header", list_sub);
    		}
+   		/*
+   		Db dbx = null;
+		try {
+			dbx = new Db();
+			
+			if (checkRegPopup("ekptg.view.ppt.SkrinPopupCarianHakmilik", dbx) == 0) {
+				// reg class
+				insertPopupReg("ekptg.view.ppt.SkrinPopupCarianHakmilik",
+						"Skrin Capaian Hakmilik", "EKPTG - PPT", dbx);
+			}
+			if (checkRegPopup("ekptg.view.ppt.SkrinPopupCarianPB", dbx) == 0) {
+				// reg class
+				insertPopupReg("ekptg.view.ppt.SkrinPopupCarianPB",
+						"Skrin Capaian PB", "EKPTG - PPT", dbx);
+			}
+			
+		} finally {
+			if (dbx != null)
+				dbx.close();
+		}
+		*/
    		
    		String id_hakmilik = getParam("id_hakmilik");
    		context.put("id_hakmilik", id_hakmilik);
@@ -165,22 +193,36 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
    		String status_bantahan = getParam("status_bantahan");
    		context.put("status_bantahan", status_bantahan);
    		
-//   	myLogger.info("id_permohonan :: "+id_permohonan);
-//   	myLogger.info("id_hakmilik :: "+id_hakmilik);
-//   	myLogger.info("id_pihakberkepentingan :: "+id_pihakberkepentingan);
-//   	myLogger.info("id_hakmilikpb :: "+id_hakmilikpb);
-//   	myLogger.info("status_bantahan :: "+status_bantahan);
+//   		myLogger.info("id_permohonan :: "+id_permohonan);
+//   		myLogger.info("id_hakmilik :: "+id_hakmilik);
+//   		myLogger.info("id_pihakberkepentingan :: "+id_pihakberkepentingan);
+//   		myLogger.info("id_hakmilikpb :: "+id_hakmilikpb);
+//   		myLogger.info("status_bantahan :: "+status_bantahan);
    		context.put("selectKementerian",HTML.SelectKementerian("socKementerian",null,"style=width:470px"));
    		
+   		/*
+		listHeader = model.getHeader(id_fail,id_permohonan); 
+		context.put("Header", listHeader);
+		String idNegeriMhn = "";
+		if (listHeader.size()!=0){
+			Hashtable h = (Hashtable) listHeader.get(0);
+			idNegeriMhn = h.get("id_negeri").toString();
+			context.put("idNegeriMhn", idNegeriMhn);
+		}
+		*/
    		context.put("Header", dataHeader);
-				
+		
+		
 		//:::upload
-		//myLogger.info(" idNegeriMhn :"+idNegeriMhn);		
+		//myLogger.info(" idNegeriMhn :"+idNegeriMhn);
+		
    		String _MaxIdSiasatan = "";
    		String id_warta = "";
    		
-		//GET MAX NO SIASATAN   		
-   		if(!id_permohonan.equals("") && !id_hakmilik.equals("")){
+		//GET MAX NO SIASATAN
+   		
+   		if(!id_permohonan.equals("") && !id_hakmilik.equals(""))
+	    {
 			listH = model.getNoSiasatan(id_permohonan,id_hakmilik);
 			context.put("getNoSiasatan", listH);
 			
@@ -189,18 +231,23 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				_MaxIdSiasatan = (String)b.get("id_siasatan");	
 			}
 	    }
-		//END		
+		//END
+		
+		
 		//GET MAX NO WARTA
-   		if(!id_permohonan.equals("")){
-   			listJ = model.getNoWarta(id_permohonan);
-   			context.put("getNoSiasatan", listJ);
-   			if(listJ.size()!=0){
-   				Hashtable e = (Hashtable) listJ.get(0);
-   				id_warta = e.get("id_warta").toString();	
-   			}	
-	    
-   		}
-		//END	
+   		
+   		if(!id_permohonan.equals(""))
+	    {
+		listJ = model.getNoWarta(id_permohonan);
+		context.put("getNoSiasatan", listJ);
+		if(listJ.size()!=0){
+			Hashtable e = (Hashtable) listJ.get(0);
+			id_warta = e.get("id_warta").toString();	
+		}	
+	    }
+		//END
+		
+	
 	
 		//Hashtable statusFail = model.getStatusFail(id_permohonan);	
 		this.context.put("statusFail", statusFail);
@@ -216,55 +263,76 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		String value = "";
 		Enumeration allparam = request.getParameterNames();
 		for (; allparam.hasMoreElements();) {
-			key = (String) allparam.nextElement();
-			value = request.getParameter(key);
-			this.context.put(key, value);
+		key = (String) allparam.nextElement();
+		value = request.getParameter(key);
+		this.context.put(key, value);
 		}
 		//END
+		
+		//XXX
 		// GET NAMA PENGARAH
 	    String nama_pengarah = "";
-	    if(!id_permohonan.equals("")){
-		    modelUPT.setNamaPengarah(negeriMMK);
-		    dataNamaPengarah = modelUPT.getNamaPengarah();
-		    if(dataNamaPengarah.size()!=0){
-		    	Hashtable np = (Hashtable)dataNamaPengarah.get(0);
-		    	nama_pengarah = np.get("nama_pengarah").toString();
-		    }	
+	    if(!id_permohonan.equals(""))
+	    {
+	    modelUPT.setNamaPengarah(negeriMMK);
+	    dataNamaPengarah = modelUPT.getNamaPengarah();
+	    if(dataNamaPengarah.size()!=0){
+	    	Hashtable np = (Hashtable)dataNamaPengarah.get(0);
+	    	nama_pengarah = np.get("nama_pengarah").toString();
+	    }	
 	    }
 	    context.put("nama_pengarah",nama_pengarah);
 	    
     	// GET TOTAL HAKMILIK
-	    if(!id_permohonan.equals("")){
-			modelUPT.setListMaklumatTanah(id_permohonan,"","");
-	 		listMaklumatTanah = modelUPT.getListMaklumatTanah();
-	 		context.put("saiz_listTanah", listMaklumatTanah.size());
+	    if(!id_permohonan.equals(""))
+	    {
+		modelUPT.setListMaklumatTanah(id_permohonan,"","");
+ 		listMaklumatTanah = modelUPT.getListMaklumatTanah();
+ 		context.put("saiz_listTanah", listMaklumatTanah.size());
 	    }
  		
 		// get size suburusanhakmilik
 		String id_suburusanstatushakmilik = "";
-		if(!id_hakmilik.equals("")){
-			modelUPT.setDataSuburusanHakmilik(id_hakmilik);
-			dataSuburusanHakmilik = modelUPT.getDataSuburusanHakmilik();
-			if(dataSuburusanHakmilik.size()!=0){
-				Hashtable dsh = (Hashtable)dataSuburusanHakmilik.get(0);
-				id_suburusanstatushakmilik = (String)dsh.get("id_suburusanstatushakmilik");
-			} 	
+		if(!id_hakmilik.equals(""))
+	    {
+		modelUPT.setDataSuburusanHakmilik(id_hakmilik);
+		dataSuburusanHakmilik = modelUPT.getDataSuburusanHakmilik();
+		if(dataSuburusanHakmilik.size()!=0){
+			Hashtable dsh = (Hashtable)dataSuburusanHakmilik.get(0);
+			id_suburusanstatushakmilik = (String)dsh.get("id_suburusanstatushakmilik");
+		} 	
 	    }
 		
 		//get current idsuburusanstatusfail
 		String id_suburusanstatusfailppt = "";
-		if(!id_permohonan.equals("")){
-			modelUPT.setGetIdSuburusanstatusfail(id_permohonan);
-			getIdSuburusanstatusfail = modelUPT.getGetIdSuburusanstatusfail();
-			if(getIdSuburusanstatusfail.size()!=0){
-				Hashtable idsb = (Hashtable)getIdSuburusanstatusfail.get(0);
-				id_suburusanstatusfailppt = (String)idsb.get("id_suburusanstatusfailppt");
-			}	
+		if(!id_permohonan.equals(""))
+	    {
+		modelUPT.setGetIdSuburusanstatusfail(id_permohonan);
+		getIdSuburusanstatusfail = modelUPT.getGetIdSuburusanstatusfail();
+		if(getIdSuburusanstatusfail.size()!=0){
+			Hashtable idsb = (Hashtable)getIdSuburusanstatusfail.get(0);
+			id_suburusanstatusfailppt = (String)idsb.get("id_suburusanstatusfailppt");
+		}	
 	    }
 	    
 		String skrinBantahanMaster = "app/ppt/frmBantahanMaster.jsp";
 		
-    	if("DaftarBantahan".equals(submit)){     		
+		System.out.println("submit[bantahan]: "+submit);
+		//--DAYAH BELAJAR JQUERY NGAN MAN--
+		/*if("testing".equals(submit)){
+			return "app/ppt/testing.jsp";	
+		}*/
+		
+		
+		
+		
+		
+    	if("DaftarBantahan".equals(submit)){ 
+    		
+//    	try{
+    		
+    		//listE = model.getSenaraiPB(id_permohonan);
+    		//context.put("getSenaraiPB", listE);
     		
     		if (model.getSenaraiPB_count(id_permohonan)!=0){
     			context.put("selectHakmilik",HTML.SelectHakmilik(id_hakmilik,id_pihakberkepentingan,"socHakmilik","style=width:auto tabindex=5 onChange=\"doChangeNoLot();\" disabled "));
@@ -278,6 +346,15 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
         		context.put("selectPihakBantah", HTML.SelectPihakBantahByIdPihakBerkepentingan(id_pihakberkepentingan, "socPihakBantah", Utils.parseLong(id_pihakberkepentingan), "style=width:auto disabled"));
     		}  		
     		
+    		/*
+    		context.put("selectHakmilik",HTML.SelectHakmilik(id_hakmilik,id_pihakberkepentingan,"socHakmilik","style=width:auto tabindex=5 onChange=\"doChangeNoLot();\" disabled "));
+			context.put("selectNoLot",HTML.SelectNoLotByHakmilik(id_hakmilik,"socNoLot","style=width:auto tabindex=7 disabled "));
+			context.put("selectNamaPembantah", HTML.SelectNamaPembantahByIdPihakBerkepentingan(id_hakmilikpb, "socNamaPembantah", null, "style=width:auto tabindex=11 disabled", null));
+			context.put("selectPihakBantah", HTML.SelectPihakBantahByIdPihakBerkepentingan(id_pihakberkepentingan, "socPihakBantah", Utils.parseLong(id_pihakberkepentingan), "style=width:auto disabled "));
+			*/
+			
+			
+   		
     		//GET ALAMAT NAMA PEMBANTAH
 			listC = model.getAlamatPembantah(id_pihakberkepentingan);
 			context.put("getAlamatPembantah", listC);
@@ -418,10 +495,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			context.put("flag", "semak");
 			context.put("clearForm", "yes");
 			context.put("clear", "");
-			
-			//PPT-35 (i)
-			semakanSenarai = FrmSemakan.getSenaraiSemakan("bantahan");
-		    this.context.put("senaraiSemakan",semakanSenarai);
     		
     		vm = "app/ppt/frmBantahanDaftar.jsp"; 
     		
@@ -460,21 +533,38 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
     		context.put("selectNamaPembantah", HTML.SelectNamaPembantahByIdPihakBerkepentingan(id_hakmilikpb, "socNamaPembantah", null, "style=width:auto disabled tabindex=11", null));    
     		context.put("selectPihakBantah", HTML.SelectPihakBantahByIdPihakBerkepentingan(id_pihakberkepentingan, "socPihakBantah", Utils.parseLong(id_pihakberkepentingan), "style=width:auto disabled"));
 		
+    		//listE = model.getSenaraiPB(id_permohonan);
+    		//context.put("getSenaraiPB", listE);
+    		//context.put("list_size", listE.size());
+    		//setupPagePB(session,action,listE);
+    		
     		context.put("list_size",model.getSenaraiPB_count(id_permohonan));
     		
     		vm = "app/ppt/frmBantahanPapar.jsp";
     		
-    	}else if("cariNamaPB".equals(submit)){   		
+    	}else if("cariNamaPB".equals(submit)){
+    		
     		String carianNamaPB = getParam("carianNamaPB");
     		context.put("carianNamaPB", carianNamaPB.trim());
     		
     		String carianNoLot = getParam("carianNoLot");
     		context.put("carianNoLot", carianNoLot.trim());
+    		
+    		//listE = model.setCarianPB(id_permohonan,carianNamaPB,carianNoLot);    		
+     		//context.put("getSenaraiPB", listE);
+     		//context.put("list_size", listE.size());
+     		//setupPagePB(session,action,listE);
+ 
      		context.put("clearForm", "");
     		
      		vm = "app/ppt/frmBantahanSenaraiPB.jsp";
     	
     	}else if("papar_pb".equals(submit)){
+    		
+    		//listE = model.getSenaraiPB(id_permohonan);
+    		//context.put("getSenaraiPB", listE);
+    		//context.put("list_size", listE.size());
+    		//setupPagePB(session,action,listE);   				
     		context.put("list_size",model.getSenaraiPB_count(id_permohonan));
     		context.put("clearForm", "yes");
     		myLogger.info(":::::::::::PAPAR PB");
@@ -495,7 +585,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				
 				// UPDATE TBLPPTSUBURUSANSTATUSFAILPPT
 				updateSuburusanStatusFailPPT(session,id_permohonan,id_fail,id_suburusanstatusfailppt);
-				
 			}
 			
 			list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);
@@ -556,9 +645,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			
 			vm = skrinBantahanMaster; 
 		
-		}else if(("dalamProses".equals(submit)) || ("bantahan".equals(submit))){				
+		}else if(("dalamProses".equals(submit)) || ("bantahan".equals(submit))){	
+			
 			selectedtab = "0";
-			context.put("selectedtab", selectedtab);			
+			context.put("selectedtab", selectedtab);
 			context.put("idWarta", id_warta);
 
 			myLogger.info("check error 1 [id hakmilikpb] :: "+id_hakmilikpb);
@@ -569,9 +659,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			if(listA.size()!=0){
 				Hashtable d = (Hashtable) listA.get(0);
 				amaun_bayaran = Double.parseDouble(d.get("amaun_bayaran").toString());	
-			}			
-			myLogger.info("check error 2 [amaun bayaran] :: "+amaun_bayaran);
+			}
 			
+			myLogger.info("check error 2 [amaun bayaran] :: "+amaun_bayaran);
+//			myLogger.info("AMAUN BAYARAN >>> "+amaun_bayaran);
 			//PAMPASAN <= 3000.00 : ALASAN 3 DAN 4 
 			if(amaun_bayaran <= 3000.00){
 				context.put("syarat","bawah");
@@ -613,7 +704,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 					//END					
 				}			
 
-			myLogger.info("check error 3 [id siasatan] :: "+_MaxIdSiasatan+",[id warta] :: "+id_warta);
+			myLogger.info("check error 3 [id siasatan] :: "+_MaxIdSiasatan);
+			myLogger.info("check error 4 [id warta] :: "+id_warta);
 			
 			list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);
 			context.put("getMaklumatBantahan", list);
@@ -650,7 +742,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 						setValueJenisPembantah("1","");
 					}else{
 						setValueJenisPembantah("","2");
-					}	
+					}
+					
 					if (flag_penerima_pampasan.equals("Y")){
 						setValueBantahanTerhadap("checked","","","");
 						context.put("TEMPchecked1", checkedsbcBantahan1);
@@ -671,8 +764,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 					//flag and id untuk permohonan online
 					context.put("flag_online",flag_online);
 					context.put("id_status_bantahan",id_status_bantahan);
-					context.put("id_bantahan",id_bantahan);
-					
+					context.put("id_bantahan",id_bantahan);					
 					
 					//GET TARIKH AWARD & TARIKH BORANG H
 					listF = model.getTarikhPenting(id_hakmilikpb);
@@ -692,15 +784,15 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				}										
 			}else{
 				context.put("status",true);
-			}		
-			
-			//PPT-35 (i)
-			semakanSenarai = FrmSemakan.getSenaraiSemakan("bantahan");
-		    this.context.put("senaraiSemakan",semakanSenarai);		    
-		    
-		    vm = skrinBantahanMaster;
+			}			
+
+			vm = skrinBantahanMaster;
 				
-		}else if ("tolakPermohonan".equals(submit)){	//tolak permohonan
+		}
+		
+		else if ("tolakPermohonan".equals(submit)){
+			
+			//tolak permohonan
 			tolakPermohonan(session,getParam("id_bantahan"));
 			
 			selectedtab = "0";
@@ -746,8 +838,11 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			context.put("clearForm","");	
 			
 			vm = skrinBantahanMaster;
-		//close tolakPermohonan
-    	}else if ("kemaskiniBantahan".equals(submit)){	
+		
+    	}//close tolakPermohonan
+		
+		else if ("kemaskiniBantahan".equals(submit)){
+			
 			selectedtab = "0";
 			context.put("selectedtab", selectedtab);
 			
@@ -831,8 +926,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			
 			vm = skrinBantahanMaster;	
 			
-		}else if ("simpanBantahan".equals(submit)){
-			
+		}else if ("simpanBantahan".equals(submit)){			
 			selectedtab = "0";
 			context.put("selectedtab", selectedtab);
 			
@@ -843,22 +937,21 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			try{				
 				list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);				
 				Hashtable b = (Hashtable) list.get(0);	
-				String id_bantahan = b.get("id_bantahan").toString();
-				
+				String id_bantahan = b.get("id_bantahan").toString();			
 					
 				db = new Db();
 				Statement stmt = db.getStatement();
 				String sql = " SELECT NO_BANTAHAN,TRIM(TO_CHAR(AMAUN_TUNTUTAN,'999,999,990.99')) AS AMAUN_TUNTUTAN FROM TBLPPTBANTAHAN" +
-						"" +
 						" WHERE ID_BANTAHAN = '"+id_bantahan+"'";			
-				ResultSet rs = stmt.executeQuery(sql);	
 				myLogger.info("SQL  :"+sql);
+				ResultSet rs = stmt.executeQuery(sql);	
+				
 				while (rs.next()){				
 					NO_BANTAHAN_temp = rs.getString("NO_BANTAHAN");	
 					AMAUN_TUNTUTAN_temp = rs.getString("AMAUN_TUNTUTAN");
 			    }
-			    AuditTrail at = new AuditTrail();
-				at.logActivity("","1",null,session,"UPD","BANTAHAN PIHAK BERKEPENTINGAN [BIL. BANTAHAN : "+NO_BANTAHAN_temp+", AMAUN TUNTUTAN : RM "+AMAUN_TUNTUTAN_temp+"] KEMASKINI");
+			    //AuditTrail at = new AuditTrail();
+			    AuditTrail.logActivity("","1",null,session,"UPD","BANTAHAN PIHAK BERKEPENTINGAN [BIL. BANTAHAN : "+NO_BANTAHAN_temp+", AMAUN TUNTUTAN : RM "+AMAUN_TUNTUTAN_temp+"] KEMASKINI");
 				
 				updateBantahan(usid,id_bantahan,id_kementerian);	
 									
@@ -890,8 +983,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			} catch (Exception e) {				
 				throw new Exception("PENGEMASKINIAN FAIL TIDAK DAPAT DITERUSKAN.SILA CUBA LAGI. :" +e.getMessage());
 			
-			}			
-			 finally {
+			}finally {
 				if (db != null)
 					db.close();
 			}	
@@ -1237,6 +1329,18 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				String idBorangO = getIdBorangO.get("id_borango").toString();
 				
 				update_deposit(usid,id_bantahan,idBorangO);		
+				/*
+				listA = model.getMaklumatPampasan(id_hakmilikpb);
+				context.put("getMaklumatPampasan", listA);	
+				if (listA.size()!=0){
+					Hashtable b =(Hashtable) listA.get(0);
+					String cara_bayarPampasan = (String) b.get("cara_bayar").toString();
+//					String id_bankPampasan = (String) b.get("id_bank").toString();
+					//context.put("selectCaraBayarPampasan", HTML.selectCaraBayar("socCaraBayarPampasan", Utils.parseLong(cara_bayarPampasan), "style=width:auto tabindex=5 disabled "));
+					context.put("selectCaraBayarPampasan", HTML.selectCaraBayar("socCaraBayarPampasan", Utils.parseLong(cara_bayarPampasan), "style=width:auto disabled ", null));
+//					context.put("selectBankPampasan", HTML.selectBank("socBankPampasan", Utils.parseLong(id_bankPampasan), "style=width:auto tabindex=7 disabled "));
+				}
+				*/
 				
 				listA = model.getMaklumatPampasan(id_hakmilikpb);
 				context.put("getMaklumatPampasan", listA);
@@ -1276,6 +1380,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			
 	    	id_fail = getParam("id_fail");	
 	   		context.put("id_fail", id_fail);
+			
+
 			
 			list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);
 			context.put("getMaklumatBantahan", list);
@@ -1355,9 +1461,11 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	
 			}			
 		
-			vm = "app/ppt/frmBantahanBorangO.jsp";	
+			vm = "app/ppt/frmBantahanBorangO.jsp";
 			
-		}else if("doChangeNegeriMahkamah".equals(submit)){		
+			
+		}else if("doChangeNegeriMahkamah".equals(submit)){
+			
 			selectedtab = "2";
 			context.put("selectedtab", selectedtab);
 			
@@ -1514,6 +1622,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			String id_mahkamah = (String)b.get("id_mahkamah");
 			String id_bandar = (String)b.get("id_bandar");
 			String id_negeri = (String)b.get("id_negeri");
+//			context.put("selectMahkamahTinggi", HTML.SelectMahkamahByNegeri(Utils.parseLong(idNegeriMhn), "socMahkamahTinggi", Utils.parseLong(id_mahkamah), "style=width:auto onChange=\"doChangeAlamatMahkamah();\" "));
+//			context.put("selectBandarMahkamah", HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar), "style=width:auto disabled "));
+//			context.put("selectNegeriMahkamah", HTML.SelectNegeri("socNegeri", Utils.parseLong(id_negeri), "style=width:auto disabled "));			
 			
 			if(!idNegeriMhn.equals("16")){
 				context.put("selectMahkamahTinggi", HTML.SelectMahkamahByNegeri(Utils.parseLong(idNegeriMhn), "socMahkamahTinggi", Utils.parseLong(id_mahkamah), "style=width:auto onChange=\"doChangeAlamatMahkamah();\" "));
@@ -1548,7 +1659,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				Hashtable a = (Hashtable) list.get(0);
 				String id_bantahan = a.get("id_bantahan").toString();
 				context.put("id_bantahan", id_bantahan);
-//				myLogger.info("id bantahan >>> "+id_bantahan);				
+//				myLogger.info("id bantahan >>> "+id_bantahan);
+				
+
+				
 				
 				listA = model.getMaklumatSusulan(id_bantahan);
 				listK = model.getTarikhBorangG(_MaxIdSiasatan);				
@@ -1574,13 +1688,16 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 						// CONVERT STRING TO INT
 						int LanjutanOBDateDiffInt = Integer.parseInt(checkingDateTarikhLanjutanOB);						
 						myLogger.info("LanjutanOBDateDiffInt >> "+LanjutanOBDateDiffInt);
-						if(LanjutanOBDateDiffInt >=42){							
+						if(LanjutanOBDateDiffInt >=42){
+							
 							context.put("getMaklumatSusulan", listA);
 							context.put("clearForm", "yes");
     						context.put("mode", "");
     						context.put("flag", "");
     						context.put("button", "edit");
-						}else{						
+						}else{
+							
+							
 							context.put("flag", "semakOb");
     						context.put("mode","disabledOb");
     						context.put("clearForm","");
@@ -1588,7 +1705,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
     						context.put("button", "edit");
 						}	
 					
-					}else if((!tarikh_borangg.equals("") && b.get("tarikh_lanjutan_mahkamah_pt").equals(""))){						
+					}else if((!tarikh_borangg.equals("") && b.get("tarikh_lanjutan_mahkamah_pt").equals(""))){
+						
+						
 						String checkingDateTarikhLanjutanPT =  model.checkingDateDiffBG(tarikh_borangg);							
 						// CONVERT STRING TO INT
 						int LanjutanPTDateDiffInt = Integer.parseInt(checkingDateTarikhLanjutanPT);						
@@ -1608,15 +1727,26 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
     						context.put("clearForm","");
     						//context.put("button", "view");	
 						}	
-					}else if ((!tarikh_borangg.equals("") && (!b.get("tarikh_lanjutan_mahkamah_ob").equals("") && (!b.get("tarikh_lanjutan_mahkamah_pt").equals(""))))){	    
-						context.put("getMaklumatSusulan", listA);
-					    context.put("flag", "semakBoth");
-						context.put("mode","disabledBoth");
-						context.put("clearForm","");
-						context.put("button", "view");	
+					}else if ((!tarikh_borangg.equals("") && (!b.get("tarikh_lanjutan_mahkamah_ob").equals("") && (!b.get("tarikh_lanjutan_mahkamah_pt").equals(""))))){
+						    
+						
+							context.put("getMaklumatSusulan", listA);
+						    context.put("flag", "semakBoth");
+							context.put("mode","disabledBoth");
+							context.put("clearForm","");
+							context.put("button", "view");	
 					}
-
-				}else{					
+//					else if ((!tarikh_borangg.equals("") && (!b.get("tarikh_lanjutan_mahkamah_pt").equals("")))){
+//						context.put("getMaklumatSusulan", listA);
+//						context.put("flag", "semakPT");
+//						context.put("mode","disabledPT");
+//						context.put("clearForm","");
+//						context.put("button", "view");	
+//				}
+				}else{
+					
+					
+					
 					context.put("flag", "semak");
 					context.put("mode","disabledBoth");
 					context.put("clearForm","");
@@ -1626,6 +1756,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			}else{				
 				context.put("status", true);
 			}
+
 
 			vm = "app/ppt/frmBantahanLanjutanTempoh.jsp";	
 			
@@ -1683,7 +1814,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				desc_status_bantahan_ap = (String)a.get("desc_status_bantahan_ap");
 			}else{
 				context.put("status", true);
-			}			
+			}
+			
 			
 			Hashtable getIdBorangO = model.getIdBorangO(id_hakmilikpb,id_bantahan);	
 			String idBorangO = getIdBorangO.get("id_borango").toString();
@@ -1697,6 +1829,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			
 			listA = model.getMaklumatSusulan(id_bantahan);
 			context.put("getMaklumatSusulan",listA);
+			
 		
 			context.put("flag", "semak");
 			context.put("mode","disabledBoth");
@@ -1705,8 +1838,12 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 
 			vm = "app/ppt/frmBantahanLanjutanTempoh.jsp";
-					
-		}else if("susulanBantahan".equals(submit)){		
+			
+		
+		}
+		
+		else if("susulanBantahan".equals(submit)){	
+			
 			selectedtab = "4";
 			context.put("selectedtab",selectedtab);
 			
@@ -1723,6 +1860,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				String id_bantahan = a.get("id_bantahan").toString();
 				context.put("id_bantahan", id_bantahan);
 //				myLogger.info("id bantahan >>> "+id_bantahan);
+				
+
+				
+				
 				//:::upload
 				if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
 		     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
@@ -1734,6 +1875,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				}
 				//:::upload 
 				myLogger.info(" :::upload listDokumen :"+listDokumen);
+				
+				
 
 				Hashtable getKeteranganPampasan = model.getKeteranganPampasan(id_hakmilikpb);
 				String keterangan_pampasan = "";
@@ -1748,7 +1891,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 					Hashtable b = (Hashtable) listA.get(0);
 					String keputusan_mahkamah = b.get("keputusan_mahkamah").toString();
 					String no_rujukan_tanah = b.get("no_rujukan_tanah").toString();
-								
+					
+				
+					
 //					myLogger.info("NO RUJUKAN TANAH >> "+no_rujukan_tanah);				
 					if (!no_rujukan_tanah.equals("")){
 						String tarikh_terimaPerintah = lebah.util.Util.getDateTime((Date)b.get("tarikhTerimaPerintah_convert"), "dd/MM/yyyy");
@@ -1826,7 +1971,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				context.put("TEMPchecked1", checkedsorKeputusanMahkamah1);
 				context.put("TEMPchecked2", checkedsorKeputusanMahkamah2);
 				context.put("TEMPchecked3", checkedsorKeputusanMahkamah3);
-				context.put("TEMPchecked4", checkedsorKeputusanMahkamah4);		
+				context.put("TEMPchecked4", checkedsorKeputusanMahkamah4);
+				
+			
 				
 				context.put("flag","semak");
 				context.put("mode", "");
@@ -1900,7 +2047,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanSusulan.jsp";
 			
 		
-		}else if("pemulanganDeposit".equals(submit)){
+		}
+		else if("pemulanganDeposit".equals(submit)){
+		
 			selectedtab = "5";
 			context.put("selectedtab",selectedtab);
 			
@@ -2000,6 +2149,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				context.put("getMaklumatSusulan",listA);				
 				Hashtable b = (Hashtable) listA.get(0);
 				String flag_pulang_deposit = b.get("flag_pulang_deposit").toString();	
+				
+	
 			
 				if (flag_pulang_deposit.equals("1")){
 					setValueStatusPemulanganDeposit("checked","","","");
@@ -2028,7 +2179,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			vm = "app/ppt/frmBantahanPemulanganDeposit.jsp";
 		
-		}else if("simpanPemulanganDeposit".equals(submit)){					
+		}else if("simpanPemulanganDeposit".equals(submit)){			
+			
 			selectedtab = "5";
 			context.put("selectedtab", selectedtab);
 			
@@ -2088,12 +2240,24 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			context.put("clearForm","");
 			context.put("button", "view");
 
-			vm = "app/ppt/frmBantahanPemulanganDeposit.jsp";			
+			vm = "app/ppt/frmBantahanPemulanganDeposit.jsp";
+			
 		
-		}else if("tarikBalikBantahan".equals(submit)){	
+		}
+		
+		else if("tarikBalikBantahan".equals(submit)){
+			
 			selectedtab = "6";
 			context.put("selectedtab", selectedtab);
-							
+			
+//			if ( (status_bantahan.equals("184")) || (status_bantahan.equals("220")) ){
+//				myLogger.info("TAK BOLEH BT TARIK BALIK!");
+//				context.put("button", "");
+//				context.put("clearForm", "yes");
+//				context.put("mode", "disabled");
+//				context.put("flag","");
+//			}else{
+				
 //				myLogger.info("SELAIN STATUS 184");				
 				list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);	
 				String id_bantahan = "";
@@ -2209,11 +2373,20 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			
 			vm = "app/ppt/frmBantahanTarikBalik.jsp";
 			
-		}else if("batalBantahan".equals(submit)){			
+		}else if("batalBantahan".equals(submit)){
+			
 			selectedtab = "7";
 			context.put("selectedtab", selectedtab);
 			
-			list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);
+//			if (status_bantahan.equals("184")){				
+//				myLogger.info("TAK BOLEH BT BATAL MAHKAMAH!");
+//				context.put("button", "");
+//				context.put("clearForm", "yes");
+//				context.put("mode", "disabled");
+//				context.put("flag","");
+//			}else{				
+//				myLogger.info("SELAIN STATUS 184");	
+				list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);
 				String id_bantahan = "";
 				String desc_status_bantahan = "";
 				if(list.size()!=0){
@@ -2256,7 +2429,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			vm = "app/ppt/frmBantahanPembatalan.jsp";
 			
-		}else if("simpan_batalMahkamah".equals(submit)){			
+		}else if("simpan_batalMahkamah".equals(submit)){
+			
 			selectedtab = "7";
 			context.put("selectedtab", selectedtab);
 			
@@ -2299,7 +2473,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			context.put("clearForm", "");
 			context.put("button", "view");
 			context.put("mode","disabled");
-						
+			
 			vm = "app/ppt/frmBantahanPembatalan.jsp";
 			
 		}else if("kemaskiniBatalBantahan".equals(submit)){
@@ -2326,7 +2500,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			
 			vm = "app/ppt/frmBantahanPembatalan.jsp";
 		
-		}else if("upload_dokumen".equals(submit)){  //upload document function
+		}else if("upload_dokumen".equals(submit)){
 
 			list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);
 			String id_bantahan = "";
@@ -2364,7 +2538,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
     		
     		//:::upload
     		context.put("nama_skrin",getParam("nama_skrin"));
-    		myLogger.info("----------------->>  NAMA SKRIN "+getParam("nama_skrin"));
+    		myLogger.info("-----------------NAMA SKRIN"+getParam("nama_skrin"));
     		//context.put("nama_skrin","XXX");
     
 			vm = "app/ppt/frmBantahanDokumen.jsp";
@@ -2540,48 +2714,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		
 			
 		}
-    	//:::upload PPT-39(ii)
-		else if("hapusDokumenMasterPembatalan".equals(submit)){
-			
-			selectedtab = "7";
-			context.put("selectedtab", selectedtab);
-			
-			list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);			
-			String id_bantahan = "";
-			if(list.size()!=0){
-				Hashtable a = (Hashtable) list.get(0);
-				id_bantahan = (String)a.get("id_bantahan");
-			}else{
-				context.put("status", true);
-			}
-			
-			String[] ids1 = this.request.getParameterValues("ids1");
-			if (ids1 != null) {
-				for (int i = 0; i < ids1.length; i++) {						
-						if (doPost.equals("true")) {
-							modelOperations.deleteDokumen(ids1[i]);
-						}
-					}
-				}
-			this.context.put("readmode", getParam("readmode"));	
-	
-            if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
-	    		context.put("listDokumen", listDokumen);
-	    		context.put("listDokumen_size", listDokumen.size());	    		
-			}else{				
-				context.put("listDokumen", "");
-				context.put("listDokumen_size", 0);
-			}
-            
-            vm = "app/ppt/frmBantahanPembatalan.jsp";
-			
 		
-			
-		}
 		else if("hapusDokumenMaster".equals(submit)){
 			
-			selectedtab = "2"; //asal 0
+			selectedtab = "0";
 			context.put("selectedtab", selectedtab);
 			
 			list = model.getMaklumatBantahan(id_hakmilikpb,_MaxIdSiasatan,id_warta);			
@@ -2612,8 +2748,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				context.put("listDokumen_size", 0);
 			}
             
-			//vm = skrinBantahanMaster;	
-            vm = "app/ppt/frmBantahanBorangO.jsp";	
+			vm = skrinBantahanMaster;	
 			
 		
 			
@@ -2840,14 +2975,19 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
     	
     }
 
-	// METHOD
-	private void tolakPermohonan(HttpSession session,String id_bantahan) throws Exception{	
+	
+	// MWTHOD
+	
+	
+	private void tolakPermohonan(HttpSession session,String id_bantahan) throws Exception{
+		
 		modelOperations.tolakPermohonanOnline(id_bantahan,session.getAttribute("_ekptg_user_id").toString());
 		
 	}//close tolakPermohonan
 	
 	@SuppressWarnings("unchecked")
-	private String userData(String id_user) throws Exception{		
+	private String userData(String id_user) throws Exception{
+		
 		Vector listUserid = new Vector();
 		listUserid.clear();
 		
@@ -2862,7 +3002,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	    return userIdNeg;
 	}
 	
-	private void updateSuburusanHakmilik_deposit(HttpSession session,String id_permohonan,String id_fail,String id_hakmilik,String id_suburusanstatushakmilik) throws Exception{   
+	
+	private void updateSuburusanHakmilik_deposit(HttpSession session,String id_permohonan,String id_fail,String id_hakmilik,String id_suburusanstatushakmilik) throws Exception{
+	    
 		Hashtable h = new Hashtable();
 		
 		h.put("id_permohonan", id_permohonan);
@@ -2874,7 +3016,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	
 	}//close addSuburusanHakmilik_deposit
 	
-	private void updateSuburusanStatusFailPPT_deposit(HttpSession session,String id_permohonan,String id_fail,String id_suburusanstatusfailppt) throws Exception{   	
+	private void updateSuburusanStatusFailPPT_deposit(HttpSession session,String id_permohonan,String id_fail,String id_suburusanstatusfailppt) throws Exception{
+    	
 		Hashtable h = new Hashtable();
 	
 		h.put("id_permohonan", id_permohonan);
@@ -2887,6 +3030,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	}//close updateSuburusanStatusFailPPT	
 	
 	private void updateSuburusanStatusFailPPT(HttpSession session,String id_permohonan,String id_fail,String id_suburusanstatusfailppt) throws Exception{
+    	
 		Hashtable h = new Hashtable();
 	
 		h.put("id_permohonan", id_permohonan);
@@ -2900,6 +3044,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 	@SuppressWarnings({ "unchecked", "static-access" })
 	private void updateSuburusanHakmilik(HttpSession session,String id_permohonan,String id_fail,String id_hakmilik,String id_suburusanstatushakmilik) throws Exception{
+    
 		Hashtable h = new Hashtable();
 		
 		h.put("id_permohonan", id_permohonan);
@@ -2912,27 +3057,28 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	}//close addSuburusanHakmilik
 
 	private void carianBantahan(String usid, String userIdNeg) throws Exception {
+		
 		String txtNoFail = getParam("txtNoFail");
 		String idKementerian = getParam("socKementerian");
 		model.setCarianFail(usid,txtNoFail,idKementerian,userIdNeg);	
 		
 	}
-	
-	@SuppressWarnings("unchecked")  
+
+	@SuppressWarnings("unchecked")
 	private void uploadFiles() throws Exception {
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-	    ServletFileUpload upload = new ServletFileUpload(factory);
-	    List items = upload.parseRequest(request);
-	    Iterator itr = items.iterator();
-	    while (itr.hasNext()) {
-	    	FileItem item = (FileItem)itr.next();
-	    	if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-		   	  saveData(item);
-	    	}
-	    }	
-	}
+		    DiskFileItemFactory factory = new DiskFileItemFactory();
+		    ServletFileUpload upload = new ServletFileUpload(factory);
+		    List items = upload.parseRequest(request);
+		    Iterator itr = items.iterator();
+		    while (itr.hasNext()) {
+		      FileItem item = (FileItem)itr.next();
+		      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+		    	  saveData(item);
+		      }
+		    }
+		  }
 	
-	private void saveData(FileItem item) throws Exception {
+	 private void saveData(FileItem item) throws Exception {
 		 	HttpSession session = request.getSession();		
 	  		Db db = null;
 	        try {
@@ -2945,8 +3091,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	        	con.setAutoCommit(false);
 	        	SQLRenderer r = new SQLRenderer();
 	        	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
-	        			"(id_Dokumen,id_bantahan,nama_Fail,jenis_Mime,content,tajuk,keterangan,id_masuk,id_kemaskini,jenis_dokumen) " +
-	        			"values(?,?,?,?,?,?,?,?,?,?)"); //PPT-38
+	        			"(id_Dokumen,id_bantahan,nama_Fail,jenis_Mime,content,tajuk,keterangan,id_masuk,id_kemaskini) " +
+	        			"values(?,?,?,?,?,?,?,?,?)");
 	        	ps.setLong(1, id_Dokumen);
 	        	ps.setString(2, getParam("id_bantahan"));
 	        	ps.setString(3,item.getName());
@@ -2955,8 +3101,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	        	ps.setString(6, getParam("txtnamadokumen"));
 	        	ps.setString(7, getParam("txtketerangandokumen"));	        	
 	        	ps.setString(8, userId);	        	      	
-	        	ps.setString(9, userId);   
-	        	ps.setString(10, getParam("nama_skrin"));
+	        	ps.setString(9, userId);      	
 	        	ps.executeUpdate();
 	            con.commit();
 
@@ -3010,7 +3155,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("error",e.getMessage());
 		}	
 	}	
-	
 	public void setupPagePB(HttpSession session,String action,Vector listE) {
 		try {		
 		this.context.put("totalRecords",listE.size());
@@ -3051,19 +3195,16 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		this.checkedsbcBantahan3 = checkedsbcBantahan3;		
 		this.checkedsbcBantahan4 = checkedsbcBantahan4;
 	}
-	
 	public void setValueJenisPembantah(String PB,String AP){		
 		context.put("jenis_pembantah", PB);
 		context.put("jenis_pembantah", AP);
-	}
-	
+	}	
 	public void setValueStatusPemulanganDeposit(String checkedStatusPemulangan1,String checkedStatusPemulangan2,String checkedStatusPemulangan3,String checkedStatusPemulangan4 ) {		
 		this.checkedStatusPemulangan1 = checkedStatusPemulangan1;
 		this.checkedStatusPemulangan2 = checkedStatusPemulangan2;
 		this.checkedStatusPemulangan3 = checkedStatusPemulangan3;		
 		this.checkedStatusPemulangan4 = checkedStatusPemulangan4;
-	}
-	
+	}	
 	public void daftarBantahan(String usid,String id_kementerian) throws Exception{
 	    String txtNoBantahan = getParam("txtNoBantahan");		
 	    String txdTkhMasuk = getParam("txdTkhMasuk");
@@ -3103,53 +3244,23 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	    		id_pihakberkepentingan,jenis_pembantah,flag_syarat,ukuran_luas,amaun_pampasan,
 	    		terima_pampasan,umpuk_pampasan,id_hakmilikpb,txtAmaunTuntutan,id_permohonan,txtMaklumatBantahanTamat);    
 	
-	   //PPT-35(i)
-	    Vector semakanSenarai = new Vector();
-	    FrmSemakan frmSemak = new FrmSemakan();
-		String[] cbsemaks = this.request.getParameterValues("cbsemaks");
-		
-	   	semakanSenarai = FrmSemakan.getSenaraiSemakan("bantahan");
-    	Hashtable hash = null;
-		int i=0;
-		
-		for (int ii = 0; ii < semakanSenarai.size(); ii++) {
-	    	  	hash = (Hashtable)semakanSenarai.get(ii);
-			if(frmSemak.isSemakan(txtNoBantahan, (String)hash.get("id"))){
-				i = i+1;	
-			}
-		}
-	    if (i!=0) {
-	    	frmSemak.semakanHapusByPermohonan(txtNoBantahan);
-	    }
-					
-		if(cbsemaks!=null){
-			for (int iii = 0; iii < cbsemaks.length; iii++) { 
-				frmSemak = new FrmSemakan();
-				frmSemak.semakanTambah(cbsemaks[iii], txtNoBantahan);           
-			}
-		} 	
-		semakanSenarai = FrmSemakan.getSenaraiSemakan("bantahan");	
-		//--------END
 	}
 
 	public void updateStatusDalamProses(String id_permohonan, String usid) throws Exception {
 		modelOperations.updateStatusDalamProses(id_permohonan,usid);
 	}
-	
 	public void setValueBantahanTerhadap(String checkedsbcBantahan1, String checkedsbcBantahan2,String checkedsbcBantahan3, String checkedsbcBantahan4) {
 		this.checkedsbcBantahan1 = checkedsbcBantahan1;
 		this.checkedsbcBantahan2 = checkedsbcBantahan2;
 		this.checkedsbcBantahan3 = checkedsbcBantahan3;
 		this.checkedsbcBantahan4 = checkedsbcBantahan4;
 	}
-	
 	public void setValueKeputusanMahkamah(String checkedsorKeputusanMahkamah1, String checkedsorKeputusanMahkamah2,String checkedsorKeputusanMahkamah3, String checkedsorKeputusanMahkamah4) {
 		this.checkedsorKeputusanMahkamah1 = checkedsorKeputusanMahkamah1;
 		this.checkedsorKeputusanMahkamah2 = checkedsorKeputusanMahkamah2;
 		this.checkedsorKeputusanMahkamah3 = checkedsorKeputusanMahkamah3;
 		this.checkedsorKeputusanMahkamah4 = checkedsorKeputusanMahkamah4;
 	}	
-	
 	private void add_deposit(String usid,String id_bantahan) throws Exception {
 		String txdTkhTerimaResit = getParam("txdTkhTerimaResit");
 		String txdTkhResit = getParam("txdTkhResit");
@@ -3194,11 +3305,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		}
 		
 	}
-	
 	private void updateStatusUrusanDeposit(String id_permohonan, String usid) throws Exception {
 		modelOperations.updateStatusUrusanDeposit(id_permohonan, usid);
 	}
-	
 	private void daftarBorangO(String usid,String idBorangO,String id_bantahan) throws Exception {
 		String txdTkhBrgO = getParam("txdTkhBrgO");
 		String idPejabatMahkamah = getParam("idPejabatMahkamah");
@@ -3208,7 +3317,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		modelOperations.daftarBorangO(usid,idBorangO,id_bantahan,txdTkhBrgO,idPejabatMahkamah,
 				txdTkhHantarBorangO,txtNamaPenghantarBorangO,txtNamaPenerimaBorangO);
 	}
-	
 	private void updateBantahan(String usid, String id_bantahan,String id_kementerian) throws Exception {
 	    String txtNoBantahan = getParam("txtNoBantahan");		
 	    String txdTkhMasuk = getParam("txdTkhMasuk");
@@ -3245,43 +3353,14 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	    		txtPoskod,txtKptgnAtasTnh,txtAlasanBantahan,sbcBantahan,socPihakPembantah,usid,idKementerian,idAgensi,
 	    		id_hakmilik,id_pihakberkepentingan,jenis_pembantah,flag_syarat,ukuran_luas,amaun_pampasan,
 	    		terima_pampasan,umpuk_pampasan,txtAmaunTuntutan,txtMaklumatBantahanTamat); 
-	    
-		//PPT-35(i)
-	    Vector semakanSenarai = new Vector();
-	    FrmSemakan frmSemak = new FrmSemakan();
-		String[] cbsemaks = this.request.getParameterValues("cbsemaks");
-		
-	   	semakanSenarai = FrmSemakan.getSenaraiSemakan("bantahan");
-    	Hashtable hash = null;
-		int i=0;
-		
-		for (int ii = 0; ii < semakanSenarai.size(); ii++) {
-	    	  	hash = (Hashtable)semakanSenarai.get(ii);
-			if(frmSemak.isSemakan(txtNoBantahan, (String)hash.get("id"))){
-				i = i+1;	
-			}
-		}
-	    if (i!=0) {
-	    	frmSemak.semakanHapusByPermohonan(txtNoBantahan);
-	    }
-					
-		if(cbsemaks!=null){
-			for (int iii = 0; iii < cbsemaks.length; iii++) { 
-				frmSemak = new FrmSemakan();
-				frmSemak.semakanTambah(cbsemaks[iii], txtNoBantahan);           
-			}
-		} 	
-		semakanSenarai = FrmSemakan.getSenaraiSemakan("bantahan");	
-		//--------END
-	    
 	}
-	
-	private void simpanLanjutan(String usid,String idBorangO) throws Exception {		
+	private void simpanLanjutan(String usid,String idBorangO) throws Exception {
+		
 		String txdTarikhLanjutanOB = getParam("txdTarikhLanjutanOB");
-		String txdTarikhLanjutanPT = getParam("txdTarikhLanjutanPT");	
+		String txdTarikhLanjutanPT = getParam("txdTarikhLanjutanPT");
+		
 		modelOperations.simpanLanjutan(usid,idBorangO,txdTarikhLanjutanOB,txdTarikhLanjutanPT);
 	}
-	
 	private void simpanSusulan(String usid,String idBorangO,String id_bantahan,String id_hakmilikpb) throws Exception {
 		String txtNoProsiding = getParam("txtNoProsiding");
 		String sorKeputusanMahkamah = getParam("sorKeputusanMahkamah");
@@ -3310,16 +3389,14 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				txtKeteranganPampasan,txtNoRujukanMahkamah,txtKosJPPH,txtNamaJPPH,
 				txtKosSwasta,txtNamaSwasta,txtNamaSyarikat);
 	}
-	
-	private void simpanPemulanganDeposit(String usid,String idBorangO,String id_bantahan,String id_hakmilikpb) throws Exception {		
+	private void simpanPemulanganDeposit(String usid,String idBorangO,String id_bantahan,String id_hakmilikpb) throws Exception {
+		
 		String sorStatusPulangDep = getParam("sorStatusPulangDep");
 		modelOperations.simpanPemulanganDeposit(usid,idBorangO,id_bantahan,id_hakmilikpb,sorStatusPulangDep);
 	}
-	
 	private void updateStatusUrusanMahkamah(String id_permohonan, String usid) throws Exception {
 		modelOperations.updateStatusUrusanMahkamah(id_permohonan,usid);		
 	}	
-	
 	private void update_deposit(String usid, String id_bantahan, String idBorangO) throws Exception {
 		String txdTkhTerimaResit = getParam("txdTkhTerimaResit");
 		String txdTkhResit = getParam("txdTkhResit");
@@ -3363,18 +3440,15 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				db.close();
 		}
 	}	
-	
 	private void simpanTarikBalik(String usid, String id_bantahan) throws Exception {
 		String txdTkhTerimaSurat = getParam("txdTkhTerimaSurat");
 		String txdTkhSurat = getParam("txdTkhSurat");
 		String txtNoRujSurat = getParam("txtNoRujSurat");
 		modelOperations.simpanTarikBalik(usid,id_bantahan,txdTkhTerimaSurat,txdTkhSurat,txtNoRujSurat);
 	}	
-	
 	private void updateStatusTarikBalik(String id_permohonan, String usid) throws Exception {
 		modelOperations.updateStatusTarikBalik(id_permohonan, usid);		
 	}		
-	
 	private void simpanBatalMahkamah(String usid, String id_bantahan) throws Exception {
 		String txdTkhTerimaSurat = getParam("txdTkhTerimaSurat");
 		String txdTkhSurat = getParam("txdTkhSurat");
@@ -3383,24 +3457,22 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		modelOperations.simpanBatalMahkamah(usid,id_bantahan,txdTkhTerimaSurat,txdTkhSurat,txtNoRujSurat,
 				txtCatatanBatalMahkamah);
 	}	
-	
 	private void deposit_tblrujsuburusanstatusbantahan(String usid,String id_bantahan,String id_permohonan,String id_hakmilik,String id_fail) throws Exception {
 		modelOperations.deposit_tblrujsuburusanstatusbantahan(usid,id_bantahan,id_permohonan,id_hakmilik,id_fail);	
 	}
-	
 	private void urusanMahkamah_tblrujsuburusanstatusbantahan(String usid,String id_bantahan,String id_permohonan,String id_hakmilik,String id_fail) throws Exception {
 		modelOperations.urusanMahkamah_tblrujsuburusanstatusbantahan(usid,id_bantahan,id_permohonan,id_hakmilik,id_fail);	
 	}	
-	
 	private void tarikBalik_tblrujsuburusanstatusbantahan(String usid,String id_bantahan,String id_permohonan,String id_hakmilik,String id_fail) throws Exception {
 		modelOperations.tarikBalik_tblrujsuburusanstatusbantahan(usid,id_bantahan,id_permohonan,id_hakmilik,id_fail);	
 	}	
-	
 	private void pembatalanOlehMT_tblrujsuburusanstatusbantahan(String usid,String id_bantahan,String id_permohonan,String id_hakmilik,String id_fail) throws Exception {
 		modelOperations.pembatalanOlehMT_tblrujsuburusanstatusbantahan(usid,id_bantahan,id_permohonan,id_hakmilik,id_fail);	
-	}	
+	}
+	
 	// UPDATE STATUS URUSAN DEPOSIT
-	private void updateStatus(HttpSession session) throws Exception{    	
+	private void updateStatus(HttpSession session) throws Exception{
+    	
 		String id_permohonan = getParam("id_permohonan");
     	String idUser = (String) session.getAttribute("_ekptg_user_id");
     	
@@ -3410,8 +3482,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		modelOperations.updateStatus(id_permohonan,idUser,idstatus);
       
 	}//close update status URUSAN DEPOSIT
+	
 	// URUSAN MAHKAMAH
 	private void updateStatus_borangO(HttpSession session) throws Exception{
+
 		String id_permohonan = getParam("id_permohonan");
 		String idUser = (String) session.getAttribute("_ekptg_user_id");
 
@@ -3421,8 +3495,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		modelOperations.updateStatus_borangO(id_permohonan,idUser,idstatus);
 
 	}//close update status borang O					
-										
+					
+					
 	private void updateSuburusanStatusFailPPT_borangO(HttpSession session,String id_permohonan,String id_fail,String id_suburusanstatusfailppt) throws Exception{
+
 		Hashtable h = new Hashtable();
 
 		h.put("id_permohonan", id_permohonan);
@@ -3434,7 +3510,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 	}//close updateSuburusanStatusFailPPT borang O
 
+
+
 	private void updateSuburusanHakmilik_borangO(HttpSession session,String id_permohonan,String id_fail,String id_hakmilik,String id_suburusanstatushakmilik) throws Exception{
+
 		Hashtable h = new Hashtable();
 
 		h.put("id_permohonan", id_permohonan);
@@ -3445,8 +3524,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		modelOperations.updateSuburusanHakmilik_borangO(h,id_suburusanstatushakmilik,"16103947");
 
 	}//close addSuburusanHakmilik borang O
-		
+	
+	
 	private void updateSuburusanStatusFailPPT_tarikbalik(HttpSession session,String id_permohonan,String id_fail,String id_suburusanstatusfailppt) throws Exception{
+
 		Hashtable h = new Hashtable();
 
 		h.put("id_permohonan", id_permohonan);
@@ -3459,6 +3540,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	}//close updateSuburusanStatusFailPPT_tarikbalik
 
 	private void updateSuburusanHakmilik_tarikbalik(HttpSession session,String id_permohonan,String id_fail,String id_hakmilik,String id_suburusanstatushakmilik) throws Exception{
+
 		Hashtable h = new Hashtable();
 
 		h.put("id_permohonan", id_permohonan);
@@ -3472,6 +3554,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	
 	
 	private void updateStatus_pembatalanOlehMT(HttpSession session) throws Exception{
+
 		String id_permohonan = getParam("id_permohonan");
 		String idUser = (String) session.getAttribute("_ekptg_user_id");
 
@@ -3480,10 +3563,14 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 		modelOperations.updateStatus_pembatalanOlehMT(id_permohonan,idUser,idstatus);
 
-	}//close update status					
+	}//close update status
+					
+					
 					
 	private void updateSuburusanStatusFailPPT_pembatalanOlehMT(HttpSession session,String id_permohonan,String id_fail,String id_suburusanstatusfailppt) throws Exception{
+
 		Hashtable h = new Hashtable();
+
 		h.put("id_permohonan", id_permohonan);
 		h.put("id_fail", id_fail);
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
@@ -3493,8 +3580,12 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 	}//close updateSuburusanStatusFailPPT_updateStatus_pembatalanOlehMT
 
+
+
 	private void updateSuburusanHakmilik_pembatalanOlehMT(HttpSession session,String id_permohonan,String id_fail,String id_hakmilik,String id_suburusanstatushakmilik) throws Exception{
+
 		Hashtable h = new Hashtable();
+
 		h.put("id_permohonan", id_permohonan);
 		h.put("id_fail", id_fail);
 		h.put("id_hakmilik", id_hakmilik);
@@ -3503,9 +3594,11 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		modelOperations.updateSuburusanHakmilik_pembatalanOlehMT(h,id_suburusanstatushakmilik,"16102121");
 
 	}//close addSuburusanHakmilik
+
+
 	
 	public void insertPopupReg(String nama_class, String tajuk_class,
-		String group, Db db) throws Exception {
+			String group, Db db) throws Exception {
 		// Db db = null;
 		try {
 			// db = new Db();
@@ -3530,10 +3623,11 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			// if (db != null)
 			// db.close();
 		}
-		
 	}
 
 	public int checkRegPopup(String class_name, Db db) throws Exception {
+
+		// Db db = null;
 		int total = 0;
 		String sql = "";
 		ResultSet rs = null;
@@ -3551,8 +3645,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			// if (rs != null) rs.close();
 		}
 		return total;
-		
 	}
-		
 	
+			
 }

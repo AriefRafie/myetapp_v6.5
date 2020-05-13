@@ -53,6 +53,14 @@
 #set($sorTukarSyarat = $list_siasatan.FLAG_TUKAR_SYARAT)
 #set($txdTukarSyarat = $list_siasatan.TARIKH_TUKAR_SYARAT)
 #end
+
+#if($readmode == "view")
+	#set ($selectstyle = "disabled class=disabled" )
+	#set( $row = "row2" )
+#else
+	#set ($selectstyle = "" )
+	#set( $row = "row1" )
+#end
   
    <tr>
 <td>#parse("app/ppt/header_1_ppt.jsp") </td>
@@ -66,7 +74,10 @@
 <tr>
 <td><div id="TabbedPanels1" class="TabbedPanels">
   <ul class="TabbedPanelsTabGroup">
-    <li class="TabbedPanelsTab" tabindex="0"  onClick="screen5('$id_permohonan')">Kembali</li>
+    <!--  <li class="TabbedPanelsTab" tabindex="0"  onClick="screen5('$id_permohonan')">Kembali</li>  -->
+ 	<!-- PPT-19 --> 
+     <li class="TabbedPanelsTab" tabindex="0"  onClick="popupCarianHakmilik('$id_permohonan','senarai_siasatan')">Kembali</li>
+     
     <li class="TabbedPanelsTab" tabindex="0" onClick="tuantanah('$id_siasatan')" >Keterangan Tuan Tanah</li>
      <li class="TabbedPanelsTab" tabindex="0" onClick="agensi('$id_siasatan')" >Agensi / Jurunilai</li>
     <li class="TabbedPanelsTab" tabindex="0" onClick="tuntutan('$id_siasatan')">Tuntutan</li>
@@ -151,10 +162,54 @@
         onkeyup="checking_validation(this,'txtBebananTanah_check','no','bebanan tanah','normal')" >
         <span id="txtBebananTanah_check" class = "alert_msg"></span> </td>
       </tr>
+      
+     
+      <tr>
+        <td>&nbsp;</td>
+        <td>Keterangan Tuan Tanah / Wakil</td>
+        <td>:</td>
+        <td>
+        	<table><tr>
+        		 <!-- PPT-25 ii -->
+				#set ( $checked = "" )
+			    #foreach ($semak in $senaraiSemakan)
+				    	<td class="$row" width="10">
+	                   
+				          #if ( $semakclass.isSemakan("$id_siasatan", "$semak.id" ))
+				        	#set ( $checked = "checked" )
+				        #else
+				        	#set ( $checked = "" )
+				    	#end
+				    	#set ( $checked = "" )
+				        	 <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked $selectstyle>
+				       	</td>
+				        <td class="$row">
+				        	$semak.keterangan <!-- $semak.id -->
+				        </td>
+				      
+			    #end	
+			    </tr>
+				<!-- xxx -->    
+			
+				
+	        	<!-- tr>
+					<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Pembelian</td>
+					<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Pusaka</td>
+					<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Perletakhakan Mahkamah</td>
+					<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Pemberimilikan</td>
+					<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Lain-lain</td>
+				</tr-->
+				<!-- PPT-25 (ii) -->
+			
+			</table>
+		</td>
+      </tr>
+      
+      
       <tr>
         <td valign="top">&nbsp;</td>
-        <td valign="top">Keterangan Tuan Tanah / Wakil</td>
-        <td valign="top">:</td>
+        <td valign="top">&nbsp;</td>
+        <td valign="top">&nbsp;</td>
         <td>
 
          
@@ -173,7 +228,7 @@
          #end
   <div id="txtKeteranganTuanTanah_check" class="alert_msg" ></div>               </td>
       </tr>
-  
+  <!-- 
       <tr>
         <td width="1%">&nbsp;</td>
         <td width="28%">Jenis Tanaman</td>
@@ -182,6 +237,50 @@
         onkeyup="checking_validation(this,'txtJenisTanaman_check','no','jenis tanaman','normal')" >
         <span id="txtJenisTanaman_check" class = "alert_msg" ></span> </td>
       </tr>
+   -->
+   
+      <!-- PPT-25 ii -->
+      <tr>
+        <td>&nbsp;</td>
+        <td>Jenis Tanaman</td>
+        <td>:</td>
+        <td>
+        	<table>
+        	<tr>
+
+        	
+        		 <!-- PPT-25 iii -->
+				#set ( $checked = "" )
+			    #foreach ($semak in $senaraiSemakan2)
+				    	<td class="$row" width="10">
+	                   
+				          #if ( $semakclass.isSemakan("$id_siasatan", "$semak.id" ))
+				        	#set ( $checked = "checked" )
+				        #else
+				        	#set ( $checked = "" )
+				    	#end
+				    	#set ( $checked = "" )
+				        	 <input class="cb" type="checkbox" name="cbsemaks2" value="$semak.id" $checked $selectstyle >
+				       	</td>
+				        <td class="$row">
+				        	$semak.keterangan <!-- $semak.id -->
+				        </td>
+				      
+			    #end	
+			    </tr>
+				<!-- xxx -->    
+        	<!-- input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 /
+				<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Getah</td>
+				<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Sawit</td>
+				<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Padi</td>
+				<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Tanaman Kontan</td>
+				<td align="left"><input type="checkbox" $disability1 $checkedCB name="cbsemaks" id="cbsemaks" onclick="" value="$!listTanah.id_hakmilik">Lain-lain</td>
+			</tr-->
+			</table>
+		</td>
+      </tr>
+      <!-- PPT-25 ii -->
+      
      <!--  <tr>
         <td>&nbsp;</td>
         <td>Jenis Bangunan</td>
@@ -240,13 +339,14 @@
               #set($check2 = "")
               
               #end 
-<input type="radio" name="sorPecahSempadan" id="sorPecahSempadan" value="1" $check1 onClick="checking_validation(this,'sorPecahSempadan_check','no','status pecah sempadan','radio');">Dipohon</td>
-<td width="85%"><input type="radio" name="sorPecahSempadan" id="sorPecahSempadan" value="2" $check2 onClick="checking_validation(this,'sorPecahSempadan_check','no','status pecah sempadan','radio');">Tidak Dipohon   &nbsp; &nbsp;    <span id="sorPecahSempadan_check" class = "alert_msg"></span> </td>  
+<input type="radio" name="sorPecahSempadan" id="sorPecahSempadan" value="1" $check1 onClick="checking_validation(this,'sorPecahSempadan_check','no','status pecah sempadan','radio'); showRow('trPecahSempadan');">Dipohon</td>
+<td width="85%"><input type="radio" name="sorPecahSempadan" id="sorPecahSempadan" value="2" $check2 onClick="checking_validation(this,'sorPecahSempadan_check','no','status pecah sempadan','radio'); hideRow('trPecahSempadan');">Tidak Dipohon   &nbsp; &nbsp;    <span id="sorPecahSempadan_check" class = "alert_msg"></span> </td>  
                 </tr>
                 </table>
           #end                   </td>
   </tr>
-      <tr>
+<!-- //PPT-25(iv) -->
+      <tr id="trPecahSempadan">
         <td>&nbsp;</td>
         <td>Tarikh Pecah Sempadan</td>
         <td>:</td>
@@ -258,6 +358,7 @@
       #end
        <span id="txdPecahSempadan_check" class = "alert_msg" ></span>        </td>
       </tr>
+   
       <tr>
         <td>&nbsp;</td>
         <td>Status Tukar Syarat</td>
@@ -290,13 +391,14 @@
               #set($check2 = "")
               
               #end 
-<input type="radio" name="sorTukarSyarat" id="sorTukarSyarat" value="1" $check1 onClick="checking_validation(this,'sorTukarSyarat_check','no','status tukar syarat','radio');">Dipohon</td>
-<td width="85%"><input type="radio" name="sorTukarSyarat" id="sorTukarSyarat" value="2" $check2 onClick="checking_validation(this,'sorTukarSyarat_check','no','status tukar syarat','radio');">Tidak Dipohon  &nbsp; &nbsp;   <span id="sorTukarSyarat_check" class = "alert_msg" ></span> </td>  
+<input type="radio" name="sorTukarSyarat" id="sorTukarSyarat" value="1" $check1 onClick="checking_validation(this,'sorTukarSyarat_check','no','status tukar syarat','radio'); showRow('trTukarSyarat');">Dipohon</td>
+<td width="85%"><input type="radio" name="sorTukarSyarat" id="sorTukarSyarat" value="2" $check2 onClick="checking_validation(this,'sorTukarSyarat_check','no','status tukar syarat','radio'); hideRow('trTukarSyarat');">Tidak Dipohon  &nbsp; &nbsp;   <span id="sorTukarSyarat_check" class = "alert_msg" ></span> </td>  
                 </tr>
                 </table>
           #end   </td>
   </tr>
-      <tr>
+  <!-- //PPT-25(iv) -->
+      <tr id="trTukarSyarat">
         <td>&nbsp;</td>
         <td>Tarikh Tukar Syarat</td>
         <td>:</td>
@@ -371,6 +473,34 @@
        
     </table>
 </fieldset>
+
+<!-- PPT-24 -->
+<fieldset>
+	<legend>SIASATAN</legend>
+	 <table width="100%" border="0"> 
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:papar('$id_siasatan','$id_hakmilik')" title="Memaparkan secara lengkap maklumat set siasatan"><font color="blue">MAKLUMAT SIASATAN</font></a></div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:kehadiran('$id_siasatan')" title="Memaparkan secara lengkap maklumat kehadiran"><font color="blue">MAKLUMAT KEHADIRAN</font></a></div>
+			</td>
+		</tr> 
+
+		<!-- tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:maklumatsiasatan('$id_siasatan')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">NOTA SIASATAN </font></a></div>
+			</td>
+		</tr-->
+	</table>
+</fieldset>
+<!-- PPT-24 END -->
 
 <input type="hidden" name="sub_command" id="sub_command" />
   <input type="hidden" name="subminor_command" id="subminor_command" />
@@ -1148,7 +1278,7 @@ input_box = confirm("Adakah anda pasti?");
 	document.${formName}.id_siasatan.value = id_siasatan;		
 	document.${formName}.location.value = "tuan_tanah";
 	document.${formName}.point.value = "tuan_tanah";	
-	document.${formName}.submit();
+	document.${formName}.submit(); 
 	}
 }
 }
@@ -1546,6 +1676,64 @@ function PB(id_siasatan)
 	document.${formName}.point.value = "maklumat_siasatan";
 	document.${formName}.submit();
 
+}
+
+
+function popupCarianHakmilik(id_permohonan,flag_skrin) 
+{   //PPT-19
+	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupCarianHakmilik?&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
+	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	//screen5(id_permohonan);
+	
+}
+
+
+function maklumatsiasatan(id_siasatan)
+{ //PPT-24
+
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "TuanTanah";
+	document.${formName}.subminor_command.value = "View";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;	
+	document.${formName}.location.value = "maklumat_siasatan";
+	document.${formName}.point.value = "maklumat_siasatan";
+	document.${formName}.submit();
+
+}
+
+function kehadiran(id_siasatan)
+{	//PPT-24 
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "Kehadiran";
+	document.${formName}.subminor_command.value = "View";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;	
+	document.${formName}.location.value = "senarai_siasatan";
+	document.${formName}.point.value = "senarai_siasatan";
+	document.${formName}.submit();
+}
+
+function hideRow(rowId)
+{ //PPT-25(iv)
+	 document.getElementById(rowId).style.display = "none";
+	 
+	 if(rowId == "trPecahSempadan"){  
+		 document.getElementById('txdPecahSempadan').value =''; 
+	 }
+	 if(rowId == "trTukarSyarat"){
+		 document.getElementById('txdTukarSyarat').value =''; 
+	 }
+}
+
+function showRow(rowId) 
+{  //PPT-25(iv)
+    document.getElementById(rowId).style.display = "";
 }
 
 </script>

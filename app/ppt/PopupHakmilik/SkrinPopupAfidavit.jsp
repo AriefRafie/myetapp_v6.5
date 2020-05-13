@@ -5,6 +5,7 @@
 <script>var $jquery = jQuery.noConflict();</script>
 <link rel="stylesheet" type="text/css" href="../../css/SpryTabbedPanels.css">
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPT.css">
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td>
@@ -12,13 +13,7 @@
 <legend>MAKLUMAT AFIDAVIT
 </legend>
 
-				
-  				
-  				
-  				
-  				
-  				
-  			
+
   				
   				<table width="100%" border="0">
   				
@@ -79,13 +74,8 @@
   						<td valign="top">Perkara Rujukan</td>
   						<td valign="top">:</td>
   						<td><textarea  name="txtPerkara" id="txtPerkara" rows="4" cols="40%"  onKeyUp="textCounter(this.form.txtPerkara,this.form.remLenP,1500);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLenP,1500);" >$!txtPerkara</textarea></td>
-  					</tr>
-  					
+  					</tr>	
   				</table>	
-  			
-                
-                
-  				
   			</fieldset>	
   			
   				<table width="100%" border="0">
@@ -102,33 +92,62 @@
 						</td>
 					</tr>
 				</table> 
+				
+  					
+ <!-- PPT-26 (i) -->   		
+#if($!id_permohonan != "") 
+    <fieldset id="bottom">
+	<legend><strong>&nbsp;Senarai Dokumen yang disertakan</strong></legend>
+	    <table width="100%" border="0"> 
+		    <tr >
+			    <td align="left">
+			     	<a href="javascript:popupCarianDokumen('$id_permohonan','$flag_skrin','$id_award')"><font color="blue">>> SKRIN SENARAI DOKUMEN</font></a>
+			    </td>
+		    </tr>
+	    </table>
+	</fieldset>	
+#end
+<br/>
+ <!-- END PPT-26 (i) -->   
                 
                 
-                <fieldset id="tableReport3" style="display:none;">
+<fieldset id="tableReport3" style="display:none;">
 <legend><strong>SENARAI LAPORAN AFIDAVIT</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+      <tr>
+    	 <td><a href="#" onClick="javascript:cetakAfidavit('$!id_permohonan','$!id_hakmilikpb')"><font color="blue">Afidavit</font></a></td>
+      </tr> 
+      <tr>
+    	 <td><a href="#" onClick="javascript:cetakAfidavitSijilPerakuan('$!id_permohonan','$!id_hakmilikpb')"><font color="blue">Sijil Perakuan</font></a></td>
+      </tr>  
       <tr>
     	 <td><a href="#" onClick="javascript:cetakAfidavitPerintah('$!id_permohonan','$!id_hakmilikpb')"><font color="blue">Perintah</font></a></td>
       </tr>   
       <tr>
     	 <td><a href="#" onClick="javascript:cetakAfidavitExParte('$!id_permohonan','$!id_hakmilikpb')"><font color="blue">Saman Pemula Ex-Parte</font></a></td>
       </tr>  
+ <!-- PPT-26(ii) -->
       <tr>
-    	 <td><a href="#" onClick="javascript:cetakAfidavit('$!id_permohonan','$!id_hakmilikpb')"><font color="blue">Afidavit</font></a></td>
+    	 <td><a href="#" onClick="javascript:cetakSuratIringanAfidavit('$!id_permohonan','$!id_hakmilikpb')"><font color="blue">Surat Iringan Ke Mahkamah Tinggi (Afidavit)</font></a></td>
       </tr>  
       <tr>
-    	 <td><a href="#" onClick="javascript:cetakAfidavitSijilPerakuan('$!id_permohonan','$!id_hakmilikpb')"><font color="blue">Sijil Perakuan</font></a></td>
-      </tr>  
+    	 <td><a href="#" onClick="javascript:cetakSuratIringanMohonBayaran('$!id_permohonan','$!id_hakmilikpb')"><font color="blue">Surat Iringan Mohon Bayaran</font></a></td>
+      </tr> 
+      <tr>
+    	 <td><a href="#" onClick="javascript:cetakSuratIringanPembayaran('$!id_permohonan','$!id_hakmilikpb')"><font color="blue">Surat Iringan Ke Mahkamah Tinggi (Pembayaran)</font></a></td>
+      </tr>
     </table>
 </fieldset>
-                
+   
                 
                 <div style="display:none">
                 id_permohonan : <input type="text" name="id_permohonan" value="$!id_permohonan"></br>
                 id_hakmilikpb : <input type="text" name="id_hakmilikpb" value="$!id_hakmilikpb"></br>
                 id_award : <input type="text" name="id_award" value="$!id_award"></br>
                 id_afidavit : <input type="text" name="id_afidavit" value="$!id_afidavit"></br>
+                $flag_skrin : <input type="text" name="flag_skrin" value="$!flag_skrin"></br>
                 </div>
+                
                 <script>
 				
 				function doChangeMahkamah(id_permohonan) {
@@ -147,11 +166,11 @@
 				
 				
 				function simpanAfidevit(id_hakmilikpb,id_afidavit) 
-				{
+				{ 
 					if(document.${formName}.socMahkamah.value == "")
 					{
 						alert("Sila pilih \"Mahkamah\" terlebih dahulu.");
-						document.${formName}.socMahkamah.focus();
+						document.${formName}.socMahkamah.focus(); 
 						return;
 					}	
 					else
@@ -166,17 +185,17 @@
 				}		
 				
 				function setTable(id){
-				if(document.getElementById(id).style.display=="none"){
-					document.getElementById(id).style.display="block";
-				}
-				else if(document.getElementById(id).style.display=="block"){
-					document.getElementById(id).style.display="none";
-				}
+					if(document.getElementById(id).style.display=="none"){
+						document.getElementById(id).style.display="block";
+					}
+					else if(document.getElementById(id).style.display=="block"){
+						document.getElementById(id).style.display="none";
+					}
 				}	
 				
 				
 				
-				function cetakAfidavitPerintah(idpermohonan,id_hakmilikpb) {
+function cetakAfidavitPerintah(idpermohonan,id_hakmilikpb) {
 
 	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilikpb="+id_hakmilikpb+"&report=Afidavit_Perintah&selectNoFail=yes";
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
@@ -208,5 +227,50 @@ function cetakAfidavitSijilPerakuan(idpermohonan,id_hakmilikpb) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-				</script>			
+
+//PPT-26(ii)
+
+function cetakSuratIringanAfidavit(idpermohonan,id_hakmilikpb) {
+
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilikpb="+id_hakmilikpb+"&report=Surat_Iringan_Afidavit&selectNoFail=yes";
+	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function cetakSuratIringanMohonBayaran(idpermohonan,id_hakmilikpb) {
+
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilikpb="+id_hakmilikpb+"&report=Surat_Iringan_Mohon_Bayaran&selectNoFail=yes";
+	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function cetakSuratIringanPembayaran(idpermohonan,id_hakmilikpb) {
+
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilikpb="+id_hakmilikpb+"&report=Surat_Iringan_Pembayaran&selectNoFail=yes";
+	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function popupCarianDokumen(id_permohonan,flag_skrin,id_award)
+{ 
+	//alert(flag_skrin);
+	
+	var url = "../${securityToken}/ekptg.view.ppt.SkrinPopupUploadDokumen?&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin+"&id_award="+id_award;
+	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();		
+	
+}
+
+</script>	
+
+
   			

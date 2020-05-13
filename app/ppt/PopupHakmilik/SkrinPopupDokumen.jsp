@@ -51,10 +51,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
               <input type="text" name="NAMA_DOKUMEN_ADD" value="" size="80" id="NAMA_DOKUMEN_ADD"  />
               #end
               
-           
-              
-              
-              
+
               </td>
           	</tr>
             
@@ -273,15 +270,12 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
   </tr>
 </table>
 
-
-
-
-
-
-
-
-
-
+<!-- PPT-26(i) -->
+#if($flag_skrin=="siasatan_afidavit")
+<div>
+	<input type="button" name="cmdKembali" value ="Kembali" onClick="popupCarianAfidavit('$id_permohonan','$id_hakmilikpb','$!id_siasatan','$id_award','siasatan_afidavit')">
+</div>
+#end
 
 
 
@@ -428,6 +422,20 @@ function kembaliKeSkrinUtama(id_permohonan) {
     window.close();
     return false;
 	document.${formName}.cmdKembaliSkrinUtama.value = "Sila Tunggu....";		
+}
+
+//PPT-26(i)
+function popupCarianAfidavit(id_permohonan,id_hakmilikpb,id_siasatan,id_award,flag_skrin)
+{
+	
+	//alert(id_permohonan);
+	
+	var url = "ekptg.view.ppt.SkrinPopupAfidavit?&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&flag_skrin="+flag_skrin+"&id_siasatan="+id_siasatan+"&id_award="+id_award;
+	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();		
 }
 
 </script>

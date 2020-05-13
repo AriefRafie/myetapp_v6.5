@@ -30,7 +30,6 @@ public class SkrinPopupCarianHakmilik_BorangE_F extends AjaxBasedModule {
 	String action = null;
 	
 	
-
 	public String doTemplate2() throws Exception {
 		session = request.getSession();
 		action = getParam("action");
@@ -345,11 +344,16 @@ public class SkrinPopupCarianHakmilik_BorangE_F extends AjaxBasedModule {
 	private void displayHakmilik(String id_permohonan, String flag_skrin,
 			String action, String no_lot, String nama_pb, String no_pb, Db db,
 			String id_pegawai) throws Exception {
+		
 		List<Hashtable> list = null;
 		list = getHakmilik(id_permohonan, flag_skrin, no_lot, nama_pb, no_pb,
 				db, id_pegawai);
 		context.put("SenaraiFail", list);
 		//setupPage(session, action, list);
+		
+		List<Hashtable> senarai = null;
+		senarai = getRingkasanSiasatan(id_permohonan, db);
+		context.put("SenaraiRingkasan", senarai);
 	}
 
 	/*
@@ -758,5 +762,107 @@ public class SkrinPopupCarianHakmilik_BorangE_F extends AjaxBasedModule {
 			// db.close();
 		}
 	}
+	
+	
+	// PPT-07 >>>>>>>>>>>>>>>>
+	
+	Vector list_ringkasan_siasatan  = null;
+
+	public Vector getRingkasanSiasatan(String id_permohonan,  Db db)
+			throws Exception {
+
+		list_ringkasan_siasatan = new Vector();
+		list_ringkasan_siasatan.clear();
+
+		String sql = "";
+		
+		try {
+
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = " SELECT DISTINCT M.ID_HAKMILIK, M.SEKSYEN,  JH.KOD_JENIS_HAKMILIK, ";
+    		sql += " M.NO_HAKMILIK, MK.NAMA_MUKIM, ";  
+    		sql += " CASE  WHEN M.NO_LOT IS NOT NULL AND M.NO_PT IS NULL THEN M.NO_LOT  WHEN M.NO_LOT IS NULL AND ";  
+    		sql += " M.NO_PT IS NOT NULL THEN  LT.KETERANGAN || M.NO_PT   WHEN M.NO_LOT IS NOT NULL AND M.NO_PT IS NOT NULL THEN LT.KETERANGAN || ";  
+    		sql += " M.NO_PT || CHR(32) || CHR(40) || M.NO_LOT || CHR(41) ";  
+    		sql += " ELSE '' END AS NO_LOTPT, M.NO_SUBJAKET, NVL(TO_NUMBER(M.NO_SUBJAKET),0) AS NO_SUBJAKET_NUM"; 
+    		  		
+    		sql += " ,(SELECT A1.ID_BORANGE FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
+    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
+    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
+    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ) AS ID_BORANGE "; 
+    		
+    		sql += " ,(SELECT TO_CHAR(B1.TARIKH_SIASATAN,'DD/MM/YYYY') AS TARIKH_SIASATAN FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
+    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
+    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
+    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ) AS TARIKH_SIASATAN "; 
+    		    		
+    		sql += " ,(SELECT B1.MASA_SIASATAN FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
+    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
+    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
+    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ) AS MASA_SIASATAN "; 
+    		
+    		sql += " ,(SELECT B1.JENIS_WAKTU FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
+    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
+    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
+    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ) AS JENIS_WAKTU "; 
+    		
+    		sql += " ,(SELECT DISTINCT TO_CHAR(B1.TARIKH_BORANGE,'DD/MM/YYYY') AS TARIKH_BORANGE FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
+    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
+    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
+    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";  
+    		sql += "  )AS TARIKH_BORANGE "; 
+    		
+    		sql += " FROM TBLPPTPERMOHONAN P, TBLRUJLOT LT, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLRUJJENISHAKMILIK JH ";  
+    		sql += " WHERE M.ID_PERMOHONAN = P.ID_PERMOHONAN(+) ";   
+    		sql += " AND M.ID_NEGERI = N.ID_NEGERI ";  
+    		sql += " AND M.ID_JENISHAKMILIK = JH.ID_JENISHAKMILIK(+) ";
+    		sql += " AND M.ID_LOT = LT.ID_LOT(+) "; 
+    		sql += " AND M.ID_MUKIM = MK.ID_MUKIM(+) ";   
+    			
+    		sql += " AND NVL(M.FLAG_PEMBATALAN_KESELURUHAN,0) <> 'Y' "; 
+    		sql += " AND NVL(M.FLAG_PENARIKAN_KESELURUHAN,0) <> 'Y' ";
+    		sql += " AND P.ID_PERMOHONAN = '"+id_permohonan+"' ";
+    		
+    		sql += " ORDER BY NO_SUBJAKET_NUM ASC";
+    		
+			
+			myLogger.info("LIST HAKMILIK (Ringkasan):" + sql.toUpperCase());
+			
+    		ResultSet rs = stmt.executeQuery(sql);
+   	     
+    		Hashtable h;
+    		int bil = 1;
+    		
+    		while (rs.next()) {	    	  
+    			h = new Hashtable();
+    			h.put("bil", bil);
+    			h.put("id_borange", rs.getString("ID_BORANGE")== null?"":rs.getString("ID_BORANGE"));
+    			h.put("id_hakmilik", rs.getString("ID_HAKMILIK")== null?"":rs.getString("ID_HAKMILIK"));
+    			h.put("kod_jenis_hakmilik", rs.getString("KOD_JENIS_HAKMILIK")== null?"":rs.getString("KOD_JENIS_HAKMILIK"));
+    			h.put("no_hakmilik", rs.getString("NO_HAKMILIK")== null?"":rs.getString("NO_HAKMILIK"));
+    			h.put("no_lotpt", rs.getString("NO_LOTPT")== null?"":rs.getString("NO_LOTPT"));
+    			h.put("nama_mukim", rs.getString("NAMA_MUKIM")== null?"":rs.getString("NAMA_MUKIM"));
+    			h.put("tarikh_siasatan", rs.getString("TARIKH_SIASATAN")== null?"":rs.getString("TARIKH_SIASATAN"));
+    			h.put("masa_siasatan", rs.getString("MASA_SIASATAN")== null?"":rs.getString("MASA_SIASATAN"));
+    			h.put("jenis_waktu", rs.getString("JENIS_WAKTU")== null?"":rs.getString("JENIS_WAKTU"));
+    			h.put("seksyen", rs.getString("SEKSYEN")== null?"":rs.getString("SEKSYEN"));
+    			h.put("no_subjaket", rs.getString("NO_SUBJAKET")== null?"":rs.getString("NO_SUBJAKET"));
+    			h.put("TARIKH_BORANGE", rs.getString("TARIKH_BORANGE")== null?"":rs.getString("TARIKH_BORANGE"));
+    			list_ringkasan_siasatan.addElement(h);
+    			bil++;
+    	}	
+    		
+		return list_ringkasan_siasatan;
+			
+		} finally {
+			// if (db != null)
+			// db.close();
+		}
+	}
+	
+
+
 
 }

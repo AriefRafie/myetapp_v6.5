@@ -374,11 +374,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
     </table>
 </fieldset>
 
-
+<!-- PPT-38 -->
 <!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
 
 <!-- :::upload -->
-<input type="hidden" name="nama_skrin" id="nama_skrin" value="perintah"  />
+<input type="hidden" name="nama_skrin" id="nama_skrin" value="susulanBantahan"  />
 <fieldset id="senarai_dokumen" >
 <legend>Senarai Dokumen Yang Disertakan</legend>
     
@@ -405,6 +405,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
  
   
  #if($listDokumen_size > 0)
+  #set ($cnt=0)
   #foreach($list1 in $listDokumen)        
            
              #set( $i = $velocityCount )
@@ -413,16 +414,24 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          		#else
                		 #set( $row = "row1" )
          		#end
-  <tr>  
-    <td class="$row" >$list1.BIL</td>
-    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
-    <td class="$row" >$list1.KETERANGAN</td>
-    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
-    <td class="$row" ><div align="center">
-       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
-     </div></td>
-  </tr>
-  #end
+	   #if($list1.JENIS_DOKUMEN == "perintah")   <!-- PPT-38 -->  
+	   #set ($cnt=1)      		
+	  <tr>  
+	    <td class="$row" >$list1.BIL</td>
+	    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
+	    <td class="$row" >$list1.KETERANGAN</td>
+	    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
+	    <td class="$row" ><div align="center">
+	       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
+	     </div></td>
+	  </tr>
+	  #end
+ 	 #end
+ 	 #if($cnt==0)
+	  <tr>  
+	    <td colspan="5">Tiada Rekod</td>    
+	  </tr>
+	  #end
   #else
   <tr>  
     <td colspan="5">Tiada Rekod</td>    
@@ -434,9 +443,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 
 
 <!--------------------------------------- END PERINTAH MAHKAMAH ------------------------------------------>
+
         <div align="center">
           #if ($button=="view")
           <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniSusulan()" />
+          <!-- PPT-38 (iii) -->
           <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> 
           #end
           
@@ -444,8 +455,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanSusulan()" /> 
           <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="" /> 
           #end
-          
-          
+
           <input type="button" name="cmdkembali" id="cmdkembali" value="Kembali" onclick="javascript:kembaliList()" />
               
         </div>     
@@ -465,6 +475,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 
 
 <!------------------------------------------ OUTPUT LAPORAN/SURAT ----------------------------------------------->
+<!-- PPT-38(iii) -->
 <br/>
 <fieldset id="tableReport1" style="display:none;">
 <legend><strong>Senarai Laporan</strong></legend>
@@ -741,6 +752,66 @@ function RemoveNonNumericDate( strString )
       }
       return strReturn;
 }
+
+//PPT-38
+function doCheckAll1(){    
+    if (document.${formName}.all1.checked == true){
+        if (document.${formName}.ids1.length == null){
+            document.${formName}.ids1.checked = true;
+        } else {
+            for (i = 0; i < document.${formName}.ids1.length; i++){
+                document.${formName}.ids1[i].checked = true;
+            }
+        }
+    } else {
+        if (document.${formName}.ids1.length == null){
+            document.${formName}.ids1.checked = false;
+        } else {
+            for (i = 0; i < document.${formName}.ids1.length; i++){
+                document.${formName}.ids1[i].checked = false;
+            }
+        }
+    }
+}
+
+function doUpdateCheckAll1(){  
+	var c = 0;
+	if(document.${formName}.ids1.length > 1)
+	{     
+		  for (i = 0; i < document.${formName}.ids1.length; i++)
+		  {
+	      if (document.${formName}.ids1[i].checked == false)
+		  {	 
+		  c++
+	      }
+		  }  
+	}
+	else
+	{
+
+	if (document.${formName}.ids1.checked == false)
+	{	 
+	c++;
+	}	 	
+	}	 
+	 
+		
+		
+		
+		  if(c>0)
+		  {	  
+		  document.${formName}.all1.checked = false;
+		  }
+		  else
+		  {
+		  document.${formName}.all1.checked = true;
+		  }
+		  
+		  
+	       
+	}
+
+
 <!--UTK DEFAULTKAN TAB KEPADA TAB BANTAHAN
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});
 //-->

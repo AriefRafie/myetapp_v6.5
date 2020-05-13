@@ -103,12 +103,12 @@ public class SkrinPopupAfidavit extends AjaxBasedModule {
 	    }
 		else if("simpanAfidavit".equals(command)){	
 			if(getParam("id_afidavit").equals(""))
-			{
+			{		
 				simpanAfidevitAdd(session,db);
 				dataAfidevit(id_award,id_negeriProjek,"enabled",db,id_permohonan);	
 			}
 			else
-			{
+			{	
 				simpanAfidevitUpdate(session,db,getParam("id_afidavit"));
 				dataAfidevit(id_award,id_negeriProjek,"enabled",db,id_permohonan);	
 			}
@@ -366,10 +366,13 @@ public class SkrinPopupAfidavit extends AjaxBasedModule {
 				    
 		}//close setSizeExistPB
 		
-		
+	
 		@SuppressWarnings({ "unchecked" })
 		private void simpanAfidevitAdd(HttpSession session,Db db) throws Exception{
-			Hashtable h = new Hashtable();		
+			
+			myLogger.info("simpanAfidevitAdd >>>>>>>>>>DB>>>>>>>>>");
+			
+			/*Hashtable h = new Hashtable();		
 			//id
 			h.put("id_award", getParam("id_award"));
 			h.put("id_hakmilikpb", getParam("id_hakmilikpb"));		
@@ -377,7 +380,7 @@ public class SkrinPopupAfidavit extends AjaxBasedModule {
 			h.put("txtPerkara", getParam("txtPerkara"));
 			h.put("socMahkamah", getParam("socMahkamah"));		
 			h.put("id_user", session.getAttribute("_ekptg_user_id"));		
-			simpanAfidevit(h,db);  
+			simpanAfidevit(h,db);  */
 		}//close simpanAfidevit
 		
 		private void simpanAfidevitUpdate(HttpSession session,Db db,String id_afidavit) throws Exception{
@@ -416,8 +419,8 @@ public class SkrinPopupAfidavit extends AjaxBasedModule {
 		    		r.add("id_mahkamah", socMahkamah);	
 		    		r.add("tarikh_masuk",r.unquote("sysdate"));
 		    		r.add("id_masuk",id_user);    		
-		    		sql = r.getSQLInsert("TBLPPTAFIDAVIT");
-		    		stmt.executeUpdate(sql);	    		
+		    		////sql = r.getSQLInsert("TBLPPTAFIDAVIT");
+		    		////stmt.executeUpdate(sql);	    		
 		    }//close try 
 		    finally {
 		     // if (db != null) db.close();
@@ -457,7 +460,7 @@ public class SkrinPopupAfidavit extends AjaxBasedModule {
 		    }//close finally
 		   
 		}//close simpanAfidevit
-		
+	
 		
 		
 }

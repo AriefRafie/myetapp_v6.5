@@ -7,7 +7,7 @@
 
 
 
-#if($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP" )
+#if($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP" ) 
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_KJP.css">
 #else
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPT.css">
@@ -146,20 +146,18 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
       
         
         <tr class="table_header">
-        
+        				<!-- PPT-30(ii) -->
+        				<td align="center" ><b><input type="checkbox" title="Sila Semak Untuk Pilih Semua" name="checkall" id="checkall" onclick="checkALL()" ></b></td>
                   		<td align="center" ><b><font color="white">NO</font></b></td>
-                  		<td align="center"><b><font color="white">NO HAKMILIK</font></b></td>
+                  		<td  ><b><font color="white">NO HAKMILIK</font></b></td>
                         #if($flag_skrin != "hakmilik_borangL")
                   		<td  align="center"><b><font color="white">JUMLAH PB</font></b></td>
                         #end
-                  		<td  align="center"><b><font color="white">NO. LOT/NO. PT</font></b></td>    
+                  		<td  ><b><font color="white">NO. LOT/NO. PT</font></b></td>    
                         #if($flag_skrin != "hakmilik_borangL")          
-                  		<td  align="center"><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>
+                  		<td  ><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>
                         #end
-                  		<td  align="center"><b><font color="white">LUAS DIAMBIL</font></b></td>
-                  		<td  align="center"><b><font color="white">TARIKH H</font></b></td>
-                  		<td  align="center"><b><font color="white">TARIKH K</font></b></td>
-                  		<td  align="center"><b><font color="white">CETAK</font></b></td>
+                  		<td   ><b><font color="white">LUAS DIAMBIL</font></b></td>
                         
                         #if($flag_skrin == "daftar_sek8_online")  
                         
@@ -214,6 +212,8 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                     
                     
                       <tr>
+                        <!-- PPT-30 -->
+                        <td class="$rowx" align="center"><input type="checkbox" $checkedCB name="cbsemaks" id="cbsemaks" onclick="doUpdateCheckAll()" value="$!listTanah.id_hakmilik"></td>
                 		<td class="$rowx" align="center">$!listTanah.rn</td>
                         <!--
                 		#if($showLinkHM=="yes" || ($ModuleName=="ekptg.view.ppt.FrmSek8PermintaanUkur" && $listTanah.flagPU == "yes"))
@@ -283,13 +283,6 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         </td>
                         #end
                 		<td  class="$rowx" >$!listTanah.luas_ambil&nbsp;$!listTanah.unitByKategori</td>
-                		<td  class="$rowx" >$!listTanah.tarikh_borangh</td>
-                		<td  class="$rowx" >$!listTanah.tarikh_borangk</td>
-                		<td  align="center" class="$rowx" >$!listTanah.cetak
-                		 <input a href="#" type="button" value="Cetak" onClick="javascript:cetakBorangK('$!id_permohonan','$listTanah.id_hakmilik')"><font color="blue"></font></a>
-                                             
-                        </td>
-                		
                 		
                         
                         #if($flag_skrin == "daftar_sek8_online") 
@@ -298,7 +291,6 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         <td class="$rowx">
                           #if ( ($listTanah.flag_online == '1') || ($listTanah.flag_online == '2') )
                           <font color="red">$listTanah.keteranganStatusBantahan (Permohonan Online)</font>
-                          
                           #else
                           $listTanah.keteranganStatusBantahan
                           #end
@@ -454,14 +446,43 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
           #end            
           </table>
       
-      
+<!-- PPT - 30(ii) -->
+		<table width="100%" border="0">
+			<tr align="center">
+				<td>
+
+				<input type="button" name="cmdCetak" value="Cetak" onClick="javascript:cetakHakmilik('$!id_permohonan');">
+					
+				</td>
+			</tr>
+		</table>   
+		
       </fieldset>
       
       </td>
   </tr>
 </table>
 
-
+<!-- PPT-30 (ii) -->
+#if($flag_skrin == "hakmilik_borangk")
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td>
+		<fieldset>
+		<legend><b>SENARAI SURAT</b></legend>  
+			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+			  <tr>
+		      	<td><a href="#" onClick="javascript:cetakSuratEndorsanBorangK('$!id_permohonan','$!id_hakmilik')"><font color="blue">Surat Endorsan Borang K</font></a></td>
+			  </tr>
+			  <tr>
+		      	<td><a href="#" onClick="javascript:cetakSuratIringanAgensiPemohon('$!id_permohonan','$!id_hakmilik')"><font color="blue">Surat Iringan Kepada Agensi Pemohon</font></a></td>
+			  </tr>	  
+		    </table>
+		</fieldset>	
+      </td>
+  </tr>
+</table>
+ #end
 
 #foreach ( $listTanah in $SenaraiFail )
 #set($input_sj_js = $!listTanah.id_hakmilik + "txtSj")
@@ -572,15 +593,9 @@ function checkDuplicated(value,div_id,bil,div_alert)
 
 
 
-function cetakBorangK(idpermohonan,idhakmilik) {
 
-	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=BorangK&selectNoFail=yes";
-	//var url = "../servlet/ekptg.report.ppt.BorangK?id_hakmilik="+idhakmilik+"&id_Fail="+idfail+"&namaPegawai="+namaPengarah;
-    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}
+
+
 
 function paparByAgensi(id_hakmilik,status_bantahan_ap,id_permohonan,flag_skrin)
 {
@@ -680,9 +695,8 @@ function kehadiran(id_siasatan,flag_skrin)
 
 function maklumatsiasatan(id_siasatan,flag_skrin)
 {
-
 	try {	    
-        window.opener.maklumatsiasatan(id_siasatan,flag_skrin);		
+        window.opener.maklumatsiasatan(id_siasatan,flag_skrin);	
 	}
 	catch (err) {}
    	window.close();	
@@ -966,6 +980,64 @@ function kembaliKeSkrinUtama(id_permohonan) {
     return false;
 	document.${formName}.cmdKembaliSkrinUtama.value = "Sila Tunggu....";		
 }
+
+
+//PPT-30(ii)
+function checkALL() {
+
+	 if (document.${formName}.checkall.checked == true){
+	        if (document.${formName}.cbsemaks.length == null){
+	            document.${formName}.cbsemaks.checked = true;
+	        } else {
+	            for (i = 0; i < document.${formName}.cbsemaks.length; i++){
+	                document.${formName}.cbsemaks[i].checked = true;
+	            }
+	        }
+	    } else {
+	        if (document.${formName}.cbsemaks.length == null){
+	            document.${formName}.cbsemaks.checked = false;
+	        } else {
+	            for (i = 0; i < document.${formName}.cbsemaks.length; i++){
+	                document.${formName}.cbsemaks[i].checked = false;	                
+	            }
+	            
+	        }
+	    }
+}
+
+//pilihan cetak surat hakmilik belum ada 260220
+function cetakSuratIringan(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempohBL) {
+	
+	//alert("tarikhBorangL : "+tarikhBorangL);
+
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&report=BorangL&selectNoFail=yes&tarikhBorangL="+tarikhBorangL+"&tempohBL="+tempohBL;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function cetakSuratEndorsanBorangK(idpermohonan,idhakmilik) {
+	
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratEndorsanBorangK&selectNoFail=yes";
+	//var url = "../servlet/ekptg.report.ppt.BuktiPenyampaian?idHakmilik="+idhakmilik+"&flagJenisSuratCara=E";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+function cetakSuratIringanAgensiPemohon(idpermohonan,idhakmilik) {
+	
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratIringanAgensiPemohon&selectNoFail=yes";
+	//var url = "../servlet/ekptg.report.ppt.BuktiPenyampaian?idHakmilik="+idhakmilik+"&flagJenisSuratCara=E";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+
+//PPT-30(ii)
 
 </script>
 

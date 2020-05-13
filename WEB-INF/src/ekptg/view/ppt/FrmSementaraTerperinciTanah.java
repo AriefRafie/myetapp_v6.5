@@ -191,7 +191,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
     	}//close 
     	
     	else 
-        if("maklumatTanah".equals(submit)){
+        if("maklumatTanah".equals(submit)){  //PPT-42 Start
             
         	//reset value
         	resetValue();
@@ -271,7 +271,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
         			
         		}//close onchangeUnitAsal
 
-        		else if("simpanTanahTerperinci".equals(submit2)){
+        		else if("simpanTanahTerperinci".equals(submit2)){  //PPT-42 Simpan
             		
             		if (doPost.equals("true")) {
             			//simpan data
@@ -308,7 +308,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
         		//data tblppttanah dan tblppthakmilik
         		DataTanahTerperinci(session,idHakmilik,"disabled");
         		
-        		if("kemaskiniTanahTerperinci".equals(submit2)){
+        		if("kemaskiniTanahTerperinci".equals(submit2)){  //PPT-42 One
         			
         			//form validation
             		context.put("mode","view");
@@ -346,7 +346,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
             			
             		}//close onchangeUnitAmbilUpdate
                 	
-                	else if("updateTanahTerperinci".equals(submit3)){
+                	else if("updateTanahTerperinci".equals(submit3)){ //PPt-42 Two
                 		
                 		updateTanahTerperinci(session);
                 		
@@ -689,6 +689,13 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 		h.put("txtPelapor",getParam("txtPelapor"));
 		h.put("txdTarikhUlasan",getParam("txdTarikhUlasan"));
 		h.put("txtPendahuluan", getParam("txtPendahuluan"));
+		//PPT-42
+		h.put("socUnitHargaNS",getParam("socUnitHargaNS"));
+		h.put("txtHargaSeunitNS",getParam("txtHargaSeunitNS"));
+		h.put("txtHargaPasaranNS",getParam("txtHargaPasaranNS"));
+		h.put("txtPenjejasanNS",getParam("txtPenjejasanNS"));
+		h.put("txtPecahNS",getParam("txtPecahNS"));
+		h.put("txtKenaikanNS",getParam("txtKenaikanNS"));
 		
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 		
@@ -725,7 +732,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 	}//close simpanTanahTerperinci
 	
 	@SuppressWarnings("unchecked")
-	private void updateTanahTerperinci(HttpSession session) throws Exception{
+	private void updateTanahTerperinci(HttpSession session) throws Exception{  //PPT-42 THREE
     	
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 	    ServletFileUpload upload = new ServletFileUpload(factory);
@@ -810,6 +817,13 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 		h.put("txtPelapor",getParam("txtPelapor"));
 		h.put("txdTarikhUlasan",getParam("txdTarikhUlasan"));
 		h.put("txtPendahuluan",getParam("txtPendahuluan"));
+		//PPT-42
+		h.put("socUnitHargaNS",getParam("socUnitHargaNS"));
+		h.put("txtHargaSeunitNS",getParam("txtHargaSeunitNS"));
+		h.put("txtHargaPasaranNS",getParam("txtHargaPasaranNS"));
+		h.put("txtPenjejasanNS",getParam("txtPenjejasanNS"));
+		h.put("txtPecahNS",getParam("txtPecahNS"));
+		h.put("txtKenaikanNS",getParam("txtKenaikanNS"));
 		
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 		
@@ -834,7 +848,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 				}
 			}
 		}else{
-			
+			//PPT-42 FOUR
 			//update into tblppthakmilik
 			FrmUPTSek8InfoTanahTerperinciTanahData.updateHMtanah(h);
 			
