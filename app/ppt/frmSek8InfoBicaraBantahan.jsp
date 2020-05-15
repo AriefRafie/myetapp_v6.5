@@ -39,7 +39,10 @@
 <tr>
 <td><div id="TabbedPanels1" class="TabbedPanels">
   <ul class="TabbedPanelsTabGroup">
-    <li class="TabbedPanelsTab" tabindex="0"  onClick="screen5('$id_permohonan')">Kembali</li>
+    <!--  <li class="TabbedPanelsTab" tabindex="0"  onClick="screen5('$id_permohonan')">Kembali</li> -->
+ 	<!-- PPT-19 --> 
+     <li class="TabbedPanelsTab" tabindex="0"  onClick="popupCarianHakmilik('$id_permohonan','senarai_siasatan')">Kembali</li>
+    
     <li class="TabbedPanelsTab" tabindex="0" onClick="tuantanah('$id_siasatan')" id="tuan_tanah" >Keterangan Tuan Tanah</li>
      <li class="TabbedPanelsTab" tabindex="0" onClick="agensi('$id_siasatan')"  id="Agensi" >Agensi / Jurunilai</li>
     <li class="TabbedPanelsTab" tabindex="0" onClick="tuntutan('$id_siasatan')">Tuntutan</li>
@@ -212,6 +215,36 @@
        
     </table>
 </fieldset>
+
+<!-- PPT-24 -->
+<fieldset>
+	<legend>SIASATAN</legend>
+	 <table width="100%" border="0"> 
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:papar('$id_siasatan','$id_hakmilik')" title="Memaparkan secara lengkap maklumat set siasatan"><font color="blue">MAKLUMAT SIASATAN</font></a></div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:kehadiran('$id_siasatan')" title="Memaparkan secara lengkap maklumat kehadiran"><font color="blue">MAKLUMAT KEHADIRAN</font></a></div>
+			</td>
+		</tr>
+
+		<!-- tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:maklumatsiasatan('$id_siasatan')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">NOTA SIASATAN </font></a></div>
+			</td>
+		</tr-->
+	</table>
+</fieldset>
+<!-- PPT-24 END -->
+
+
 <input type="hidden" name="sub_command" id="sub_command" />
   <input type="hidden" name="subminor_command" id="subminor_command" />
   <input type="hidden" name="location" id="location" />
@@ -615,6 +648,58 @@ function PB(id_siasatan)
 	document.${formName}.point.value = "maklumat_siasatan";
 	document.${formName}.submit();
 
+}
+
+function popupCarianHakmilik(id_permohonan,flag_skrin)
+{  //PPT-19
+	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupCarianHakmilik?&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
+	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	screen5(id_permohonan);
+	
+}
+
+function maklumatsiasatan(id_siasatan)
+{ //PPT-24
+
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "TuanTanah";
+	document.${formName}.subminor_command.value = "View";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;	
+	document.${formName}.location.value = "maklumat_siasatan";
+	document.${formName}.point.value = "maklumat_siasatan";
+	document.${formName}.submit();
+
+}
+
+function kehadiran(id_siasatan)
+{	//PPT-24 
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "Kehadiran";
+	document.${formName}.subminor_command.value = "View";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;	
+	document.${formName}.location.value = "senarai_siasatan";
+	document.${formName}.point.value = "senarai_siasatan";
+	document.${formName}.submit();
+}
+
+function papar(id_siasatan)
+{ //PPT-24 
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "RecordSiasatan";
+	document.${formName}.subminor_command.value = "Papar";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;
+	document.${formName}.location.value = "maklumat_siasatan";
+	document.${formName}.point.value = "maklumat_siasatan";
+	document.${formName}.submit();
+	
 }
 
 </script>

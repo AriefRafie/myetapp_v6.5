@@ -57,9 +57,10 @@ SENARAI HAKMILIK
    <tr class="table_header">
           
               <td scope="row" width="5%" align="center">BIL</td>
-              <td width="30%">NO HAKMILIK</td> 
-              <td width="30%">NO FAIL JKPTG</td>             
-              <td width="45%">KEMENTERIAN DAN PROJEK</td>
+              <td width="22%">NO HAKMILIK</td> 
+              <td width="23%">NO FAIL JKPTG</td>             
+              <td width="40%">KEMENTERIAN DAN PROJEK</td>
+              <td width="20%">STATUS</td> <!-- PPT-31 -->
               
                            
      
@@ -135,6 +136,7 @@ SENARAI HAKMILIK
             $list.TUJUAN.toUpperCase()
             </span>
             </td>
+            <td> ---</td>
            
             
             </tr>            

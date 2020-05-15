@@ -10,9 +10,12 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
 </script>
 #end  
 
+
 #set($socPegawaiSiasatan = "")
 #set($socStatusSiasatan = "")
 #set($txtUlasanPerintah = "")
+
+<!--  #set($txtUlasanPerintah = "")-->
 #set($socAwardKepada = "")
 #set($nilai_seunit = "")
 #set($socUnit = "")
@@ -25,9 +28,6 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
 #set($txdTarikhPerintah = "")
 #set($txtUlasanCatatanPerintah = "")
 #set($txtPeratusJejas = "")
-
-
-
 
 
 #if($readmode == "edit")
@@ -67,6 +67,7 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
 
 #if($listSiasatan.LUAS_MUKTAMAD != "")
 #set($txtLuasMuktamad = $listSiasatan.LUAS_MUKTAMAD)
+ 
 #set($sorDropdownUnitMuktamad = $listSiasatan.ID_UNIT_LUAS_MUKTAMAD)
 #end
 
@@ -75,11 +76,16 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
 
 #end
 
+
+
   </tr>
 <tr>
 <td><div id="TabbedPanels1" class="TabbedPanels">
   <ul class="TabbedPanelsTabGroup">
-    <li class="TabbedPanelsTab" tabindex="0"  onClick="screen5('$id_permohonan')">Kembali</li>
+    <!-- <li class="TabbedPanelsTab" tabindex="0"  onClick="screen5('$id_permohonan')">Kembali</li>  -->
+ 	<!-- PPT-19 --> 
+     <li class="TabbedPanelsTab" tabindex="0"  onClick="popupCarianHakmilik('$id_permohonan','senarai_siasatan')">Kembali</li>
+     
     <li class="TabbedPanelsTab" tabindex="0" onClick="tuantanah('$id_siasatan')" id="tuan_tanah" >Keterangan Tuan Tanah</li>
      <li class="TabbedPanelsTab" tabindex="0" onClick="agensi('$id_siasatan')"  id="Agensi">Agensi / Jurunilai</li>
     <li class="TabbedPanelsTab" tabindex="0" onClick="tuntutan('$id_siasatan')">Tuntutan</li>
@@ -293,8 +299,7 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
     
      <span id="socStatusSiasatan_check" class="alert_msg" ></span>              </td>
       </tr>
-      
-      
+     
       <tr>
         <td>#parse("app/ppt/mandatory_pembatalan.jsp")</td>
         <td>Tarikh Perintah</td>
@@ -308,16 +313,18 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
       <span id="txdTarikhPerintah_check" class="alert_msg" ></span>      </td>
       </tr>
       
-      
+
+   
       <tr>
         <td width="1%" valign="top">&nbsp;</td>
-        <td width="28%" valign="top">Ulasan Keseluruhan Perintah Siasatan</td>
+        <td width="28%" valign="top">Ulasan Keseluruhan Perintah Siasatan </td>
         <td width="1%" valign="top">:</td>
         <td width="70%">
         <!--
         <textarea name="txtUlasanSiasatan" id="txtUlasanSiasatan" cols="50"  rows="6" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();checking_validation(this,'txtUlasanSiasatan_check','yes','ulasan siasatan','normal')"  onKeyUp="checking_validation(this,'txtUlasanSiasatan_check','yes','ulasan siasatan','normal');this.value=this.value.toUpperCase();" $readonlymode class = "$disabledmode" >$txtUlasanSiasatan</textarea>     
          <div id="txtUlasanSiasatan_check" style="color:red" > </div> 
          -->
+       
             <textarea name="txtUlasanPerintah" id="txtUlasanPerintah" cols="70"   rows="10"          
          onBlur="check_length(this,'10000','txtUlasanPerintah_check','txtUlasanPerintah_num','normal','no','ulasan perintah');"  
          onKeyup="check_length(this,'10000','txtUlasanPerintah_check','txtUlasanPerintah_num','normal','no','ulasan perintah');" 
@@ -420,7 +427,7 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
 	    <td width="1%">&nbsp;</td>
 	    <td  width="28%">Keluasan Muktamad</td>
 	    <td width="1%"><div align="center">:</div></td>
-	    <td  width="70%"><input type="text" $readonlymode="$readonlymode" class="$disabledmode" name="txtLuasMuktamad" id="txtLuasMuktamad" size="15" value="$!txtLuasMuktamad" maxlength="20"  
+	    <td  width="70%"><input type="text" $readonlymode="$readonlymode" class="$disabledmode" name="txtLuasMuktamad" id="txtLuasMuktamad" size="15" value="$!txtLuasMuktamad" maxlength="20"  style="text-align:right"
         onblur="validateNilai(this,this.value);textarea_kerosakan('tambahtolak','umum','');hidden_convert('$senarai_perintah_award.size()');textarea_kerosakan1()" onkeyup="validateNilai(this,this.value);textarea_kerosakan('tambahtolak','umum','');hidden_convert('$senarai_perintah_award.size()');textarea_kerosakan1()" 
         />
 	    			
@@ -459,6 +466,8 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
     <input type="hidden" id="id_bahagianpb" name="id_bahagianpb" value="$id_bahagianpb"  />
     <input type="hidden" id="syer_atas" name="syer_atas" value="$syer_atas"  />
     <input type="hidden" id="syer_bawah" name="syer_bawah" value="$syer_bawah"  />
+    <input type="hidden" id="id_jenispb" name="id_jenispb" value="$id_jenispb"  />
+    
 
 
 
@@ -863,11 +872,13 @@ Lain - Lain Kos</td>
     </table>
     </fieldset>   
     
-    
+    <!--  PPT-21  -->
+   <span id="Penilai" style="display: none"></span>           
+   <div id="Penilai_temp" style="display: none"></div>
+
     <!-- open yati -->
-    <!-- close Fi Penilai -->
- 
-  	<!-- <fieldset>
+ 	<!--  PPT-21 
+  	<fieldset>
     <legend>FI PENILAI</legend>
     <table width="100%" cellspacing = "0">
     <tr class="row2">
@@ -895,22 +906,21 @@ Lain - Lain Kos</td>
     #else
     #set($txtPenilaiCek = $list.JUMLAH_SUBAWARD) 
     #end
-    
-     
+
     <input type="hidden" name="Penilai_temp2"  id="Penilai_temp2" value="$txtPenilaiCek" >
     #end
     #end
     #end
-            
+          
    <span id="Penilai" style="display: none"></span>           
    <div id="Penilai_temp" style="display: none"></div></td>
 
   </tr>
   </div>
-    </table>
+</table>
 
-        </fieldset>
-        -->
+  </fieldset> -->
+         
     <!-- close yati -->
     
      </td>
@@ -1208,6 +1218,34 @@ Lain - Lain Kos</td>
       
     </table>
 </fieldset>
+
+<!-- PPT-24 -->
+<fieldset>
+	<legend>SIASATAN</legend>
+	 <table width="100%" border="0"> 
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:papar('$id_siasatan','$id_hakmilik')" title="Memaparkan secara lengkap maklumat set siasatan"><font color="blue">MAKLUMAT SIASATAN</font></a></div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:kehadiran('$id_siasatan')" title="Memaparkan secara lengkap maklumat kehadiran"><font color="blue">MAKLUMAT KEHADIRAN</font></a></div>
+			</td>
+		</tr>
+
+		<!-- tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:maklumatsiasatan('$id_siasatan')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">NOTA SIASATAN </font></a></div>
+			</td>
+		</tr-->
+	</table>
+</fieldset>
+<!-- END PPT-24 -->
   
   <input type="hidden" name="sub_command" id="sub_command" />
   <input type="hidden" name="subminor_command" id="subminor_command" />
@@ -2675,12 +2713,7 @@ function hidden_convert_updated(list)
 		 var id_convert = id_conver_muktamad;
 		 var luas_convert = luas_muktamad;
 	}
-	
-	
-	
-	
-	
-	
+
 	var id_bahagianpb = document.${formName}.id_bahagianpb.value;
 	var syer_atas = document.${formName}.syer_atas.value;
 	var syer_bawah = document.${formName}.syer_bawah.value;
@@ -2695,10 +2728,24 @@ function hidden_convert_updated(list)
 	
 	temp_value = 'Tanah';
 	
+	if(syer_atas == ''){
+		//alert("1");
+		syer_atas = "1";
+	}
+	if(syer_bawah == ''){
+		//alert("masuk sini");
+		syer_bawah = "1";
+	
+	}
+	
 	if(i==0)
 	{
-	if(id_convert != "" && socUnit != "" && luas_convert != "" && syer_atas != "" && syer_bawah!= "" && nilai_seunit!="")
+		//alert(syer_bawah);
+		//alert("masuk 1");
+	if(id_convert != "" && socUnit != "" && luas_convert != "" && syer_atas != "" && syer_bawah != "" && nilai_seunit !="")
+		//if(syer_bawah != '')
 	{	
+		//alert("masuk la");
 		if(id_convert == "1")//hektar
 		{
 		
@@ -4684,16 +4731,15 @@ ttPenilai = ttPenilai + parseInt(tambahtolak);
 
 
 function validateModal_X(elmnt,content) {
- 
 	//alert("xx");
 	if(content != "")
-	{
-	var num = content * 1;
-	elmnt.value = num.toFixed(2);
+	{  
+	var num = content * 1; 
+		elmnt.value = num.toFixed(2);
 	return;
 	}
 	else
-	{
+	{ 
 	elmnt.value ="";
 	return;
 	}
@@ -5538,11 +5584,12 @@ function status_penerima()
 			{
                if(document.${formName}.id_hakmilik_pb[i].value == document.${formName}.id_siasatan_hakmilikpb.value)
 				{
-				//alert("lalalalla");
+				//("lalalalla");
 				document.${formName}.id_status_penerima[i].value  = document.${formName}.socAwardKepada.value;				
 				document.${formName}.temp_xhadir[i].value  = document.${formName}.txtUlasanTidakHadir.value;
 				document.${formName}.temp_perintah[i].value  = document.${formName}.txtUlasanCatatanPerintah.value;	
 				document.${formName}.temp_nilai[i].value  = document.${formName}.txtPeratusJejas.value;
+				//document.${formName}.temp_id_jenispb[i].value  = document.${formName}.id_jenispb.value;
 				}
             }
         }
@@ -5596,7 +5643,7 @@ function kira(nilai_seunit){
 	
 	//alert("masuk nilai_seunit");
 	a = document.${formName}.txtUlasanpenjejasanAward.value;
-	//alert(a);
+	
 	status_penerima();
 	document.${formName}.txtUlasanpenjejasanAward.value = "";
 	//alert(txtUlasanpenjejasanAward.value);
@@ -5605,10 +5652,12 @@ function kira(nilai_seunit){
 	
 	//KALAU ARRAY LIST LEBIH DARI 1 ROW
 	if($senarai_pihak_penting_pampasan_perintah.size()>1){
-		//alert("masukkk");
+		//alert("masukkk yyy");
 		pampasan = document.${formName}.pampasan[c];
 		pampasan2 = document.${formName}.pampasan[c].value;
+		//idjenispb1 = document.${formName}.id_jenispb[c].value;
 		//alert("pampasan berapa -- "+pampasan2);
+		//alert(idjenispb1);
 	}
 	else{
 		//alert("else");
@@ -5618,9 +5667,14 @@ function kira(nilai_seunit){
 	
 
 	hasil = (pampasan2 - a);
-
+//alert("hasil"+hasil);
 	nilai_seunit = document.${formName}.nilai_seunit.value;
 	//alert("nilai_seunit"+nilai_seunit);
+	a1 = document.${formName}.socUnit.value;
+	//alert(a1);
+	
+	
+	//alert("nilai baru-- "+nilai_baru);
 	peratusJejas = document.${formName}.txtPeratusJejas.value;
 	//alert("peratusJejas"+peratusJejas);
 	luasLot = document.${formName}.lblLuasLot.value;
@@ -5629,15 +5683,38 @@ function kira(nilai_seunit){
 	//alert("luasambil"+luasAmbil);
 	luasBaki = document.${formName}.lblLuasBaki.value;
 	//alert("luasBaki--"+luasBaki);
+	
+	if (a1 == '4'){
+		//alert('hai1');
+		luasbakiconv = luasBaki * 10.76387;
+		}
+	if (a1 == '3'){
+		//alert('hai2');
+		luasbakiconv = luasBaki * 4046.8564;
+	}
+	if (a1 == '1'){
+		//alert('hai3');
+		luasbakiconv = luasBaki * 10000;
+	}
+	if (a1 == '2'){
+		//alert('hai4');
+		luasbakiconv = luasBaki * 1;
+	}
+	//alert(luasbakiconv);
 	b = (nilai_seunit * peratusJejas) / 100;
 	//alert("nilai_seunit--"+b);
-	jumlah = (nilai_seunit * luasBaki) - ((nilai_seunit - b)) * luasBaki ;
+	jumlah = (nilai_seunit * luasbakiconv) - ((nilai_seunit - b)) * luasbakiconv ;
+	
+	jumlah = jumlah.toFixed(2);  //PPT-33(ii)
+	
 	//alert(jumlah);
 	//document.${formName}.txtUlasanpenjejasanAward.value = jumlah;
 	
 	var idjenispb1 
 	idjenispb1 = document.getElementById("id_jenispb").value;
 	
+	//idjenispb1 = document.${formName}.temp_id_jenispb[c].value;
+	//alert(idjenispb1);
 	
 	if($senarai_pihak_penting_pampasan_perintah.size() > 1 && idjenispb1 == '1' )
 		{
@@ -5656,21 +5733,77 @@ function kira(nilai_seunit){
 		document.${formName}.txtUlasanpenjejasanAward.value = jumlahAll;
 		
 		var jumlaHantar = jumlahAll + (parseFloat(hasil));
+		//alert(jumlaHantar);
 		
 		}
 	
 	else {
-		alert("masuk sinii");
+		//alert("masuk sinii");
+		
 		document.${formName}.txtUlasanpenjejasanAward.value = jumlah;
-		//alert(jumlah);
+		
+		
 		var jumlaHantar = jumlah + (parseFloat(hasil));
 		
 	}
 
+	jumlaHantar = jumlaHantar.toFixed(2); //PPT-33(ii)
 	
     validateModal_X(pampasan,jumlaHantar);
   
 
+}
+
+function popupCarianHakmilik(id_permohonan,flag_skrin)
+{ //PPT-19
+	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupCarianHakmilik?&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
+	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	screen5(id_permohonan);
+	
+}
+
+function maklumatsiasatan(id_siasatan)
+{ //PPT-24
+
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "TuanTanah";
+	document.${formName}.subminor_command.value = "View";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;	
+	document.${formName}.location.value = "maklumat_siasatan";
+	document.${formName}.point.value = "maklumat_siasatan";
+	document.${formName}.submit();
+
+}
+
+function kehadiran(id_siasatan)
+{	//PPT-24 
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "Kehadiran";
+	document.${formName}.subminor_command.value = "View";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;	
+	document.${formName}.location.value = "senarai_siasatan";
+	document.${formName}.point.value = "senarai_siasatan";
+	document.${formName}.submit();
+}
+
+function papar(id_siasatan)
+{ //PPT-24 
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "RecordSiasatan";
+	document.${formName}.subminor_command.value = "Papar";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;
+	document.${formName}.location.value = "maklumat_siasatan";
+	document.${formName}.point.value = "maklumat_siasatan";
+	document.${formName}.submit();
+	
 }
 
 

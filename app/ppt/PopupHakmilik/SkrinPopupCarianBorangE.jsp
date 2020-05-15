@@ -13,17 +13,12 @@ id_permohonan : $id_permohonan
 -->
 
 
-
-
 <div style="display:none">
 id_mohon_selected : <input type="text" id="id_mohon_selected" name="id_mohon_selected" value="$id_mohon_selected">
 <br />
 id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value="$id_permohonan">
  <input type="text" id="id_borange" name="id_borange" value="$id_borange">
 </div>
-
-
-
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -85,15 +80,256 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 </table>
 
 
+<!-- PPT-07 -->
 
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
+<div id="TabbedPanels1" class="TabbedPanels" style="padding : 0 5px">
+	<ul class="TabbedPanelsTabGroup">
+ 		<li class="TabbedPanelsTab" onClick="javascript:setSelected(0);" tabindex="0">SENARAI BORANG E</li>
+		<li class="TabbedPanelsTab" onClick="javascript:setSelected(1);" tabindex="1">RINGKASAN SIASATAN</li>
+		<li class="TabbedPanelsTab" onClick="javascript:setSelected(2);" tabindex="2">KEMASKINI</li>
+	</ul>
+  		
+  	<div class="TabbedPanelsContentGroup">
+  	
+  		<!-- TAB 1 -->
+    	<div class="TabbedPanelsContent">
+			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+			  <tr>
+			    <td><fieldset>
+			      <legend><b>SENARAI BORANG E</b></legend>          
+					<!-- #parse("app/utils/record_pagingPopup.jsp") -->
+			
+			        #set ($count = 0) 
+			       
+			        <table align="center" width="100%" cellspacing="1" cellpadding="0">
+			    
+			        
+			        <tr class="table_header">
+			        
+			                  		<td align="center" ><b><font color="white">NO</font></b></td>
+			                  		<td  ><b><font color="white">SENARAI REKOD/TARIKH DAFTAR</font></b></td>
+			                  		<td  align="center"><b><font color="white">TARIKH BORANG E</font></b></td>            
+			                  		<td  align="center"><b><font color="white">SENARAI LOT</font></b></td>
+			                  		<td  align="center" ><b><font color="white"></font></b></td>
+			                                 
+			           		 	</tr>
+			        
+			        
+			        #if($SenaraiFail.size()>0)
+			
+			                    #foreach ( $listN in $SenaraiFail )
+			                    #set ($count = $count+1)
+			                    #set( $i = $velocityCount )
+			                    #if ( ($i % 2) != 1 )
+			                    #set( $rowx = "row2" )
+			                    #else
+			                    #set( $rowx = "row1" )
+			                    #end
+			                     <tr>
+			           	<td class="$rowx" align="center">$!listN.bil</td>
+			            <td class="$rowx">
+			            <a href="javascript:viewBorangEInBulk('$!listN.ID_BORANGE','$flag_skrin')"><font color="blue">Rekod $!listN.bil - $!listN.TARIKH_MASUK</font></a></td>
+						<td class="$rowx" align="center">$!listN.TARIKH_BORANGE</td>  
+						<td align="center" class="$rowx"><a href="javascript:viewPopupLot('$!listN.ID_BORANGE','$!id_permohonan','papar_lot_borangE')"><font color="blue"><b>$!listN.TOTALHM</b></font></a></td>   
+			        	<td align="center" class="$rowx"><input type="button" name="cmdBorangF" value="Kemasukan Maklumat Borang F" onClick="javascript:kemasukanF('$!listN.ID_BORANGE','$!id_permohonan','kemasukan_borangF');">
+			            <input type="button" name="cmdHaspusBorangE" value="Hapus Borang E" onClick="javascript:hapusBorangE('$!listN.ID_BORANGE','$!id_permohonan','$flag_skrin');">
+			            </td>
+			        </tr>
+			                      #end
+			                      
+			                     
+			          #else
+			          <tr>  
+			            <td colspan="8"><font color="red">TIADA REKOD</font></td>    
+			          </tr>
+			          
+			          #end            
+			          </table>
+
+			      </fieldset>
+			      
+			      </td>
+			  </tr>
+			</table>
+   		</div>
+    	<!-- END TAB 1 -->
+    	
+    	
+    	<!-- TAB 2 -->
+    	<div class="TabbedPanelsContent">
+			<!-- PPT-07 -->   
+				<table width="100%" border="0" cellspacing="2" cellpadding="2">
+				  <tr>
+				    <td><fieldset id="tableSiasatan">
+				      <legend><b>JADUAL RINGKASAN SIASATAN</b></legend>    
+							
+								#if($SenaraiRingkasan.size()>10)
+								<div style="width: 100%; height: 285; overflow: auto">
+								#end
+							
+									<table width="100%" cellpadding="0" cellspacing="2" border="0">
+													
+				        				<tr class="table_header">
+					                  		<td align="center" ><b><font color="white">TARIKH BORANG E</font></b></td>        
+					                  		<td align="center"><b><font color="white">NO. HAKMILIK</font></b></td>
+					                  		<td align="center" ><b><font color="white">NO. LOT/NO. PT</font></b></td>
+				                            <td align="center" ><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>  
+				                            #if($!flag_subjaket!="")
+				                            	<td align="center" ><b><font color="white">NO. SUBJAKET</font></b></td> 
+				                            #end 
+				                            <td align="center"><b><font color="white">TARIKH SIASATAN</font></b></td>
+					                  		<td align="center"><b><font color="white">MASA SIASATAN</font></b></td>    
+				           		 		</tr>
+						
+							         	#if($SenaraiRingkasan.size()>0)
+								           	#foreach ($listR in $SenaraiRingkasan )
+												<tr>
+													<td class="$row" align="center"><b>$!listR.bil</b>
+														#if($!listR.TARIKH_BORANGE != "")
+															&nbsp;($!listR.TARIKH_BORANGE) 
+														#end
+													</td>
+													<td class="$row">$!listR.kod_jenis_hakmilik $!listR.no_hakmilik</td>
+													<td class="$row">$!listR.no_lotpt</td>
+													<td class="$row">$!listR.nama_mukim
+														#if($listR.seksyen!="")
+															<font style="font-size: 10px">Seksyen $listR.seksyen</font>
+															
+														#end
+													</td> 
+													#if($!flag_subjaket!="")
+														<td class="$row">Sj.$!listR.no_subjaket</td>
+													#end
+													<td class="$row">$!listR.tarikh_siasatan</td>
+													<td class="$row">$!listR.masa_siasatan
+														#if($!listR.jenis_waktu== '1') PAGI  #end
+														#if($!listR.jenis_waktu== '2') TENGAH HARI  #end
+														#if($!listR.jenis_waktu== '3') PETANG  #end
+													</td>
+												</tr>
+								           	#end
+										#else
+										<tr>
+											<td colspan="2">Tiada rekod</td>
+										</tr>
+										#end
+							
+									</table>
+							
+									#if($saiz_listHakmilikBorangEInBulk > 10)
+								</div>
+								#end 
+				      </fieldset>
+				      
+				      </td>
+				  </tr>
+				</table> 
+			<!-- PPT-07 END -->
+    	</div>
+    	<!-- END TAB 2 -->
+    	
+    	<!-- TAB 3 -->
+    	<div class="TabbedPanelsContent">
+			<!-- PPT-08 -->   
+				<table width="100%" border="0" cellspacing="2" cellpadding="2">
+				  <tr>
+				    <td><fieldset id="tableSiasatan">
+				      <legend><b>JADUAL RINGKASAN SIASATAN</b></legend>    
+							
+								#if($SenaraiRingkasan.size()>10)
+								<div style="width: 100%; height: 285; overflow: auto">
+								#end
+							
+									<table width="100%" cellpadding="0" cellspacing="2" border="0">
+													
+				        				<tr class="table_header">
+					                  		<td align="center" ><b><font color="white">TARIKH BORANG E</font></b></td>        
+					                  		<td align="center"><b><font color="white">NO. HAKMILIK</font></b></td>
+					                  		<td align="center" ><b><font color="white">NO. LOT/NO. PT</font></b></td>
+				                            <td align="center" ><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>  
+				                            #if($!flag_subjaket!="")
+				                            	<td align="center" ><b><font color="white">NO. SUBJAKET</font></b></td> 
+				                            #end 
+				                            <td align="center"><b><font color="white">TARIKH SIASATAN</font></b></td>
+					                  		<td align="center"><b><font color="white">MASA SIASATAN</font></b></td>    
+				           		 		</tr>
+						
+							         	#if($SenaraiRingkasan.size()>0)
+								           	#foreach ($listR in $SenaraiRingkasan )
+												<tr>
+													<td class="$row" align="center"><b>$!listR.bil</b>
+														#if($!listR.TARIKH_BORANGE != "")
+															&nbsp;($!listR.TARIKH_BORANGE) 
+														#end
+													</td>
+													<td class="$row">$!listR.kod_jenis_hakmilik $!listR.no_hakmilik</td>
+													<td class="$row">$!listR.no_lotpt</td>
+													<td class="$row">$!listR.nama_mukim
+														#if($listR.seksyen!="")
+															<font style="font-size: 10px">Seksyen $listR.seksyen</font>
+															
+														#end
+													</td> 
+													#if($!flag_subjaket!="")
+														<td class="$row">Sj.$!listR.no_subjaket</td>
+													#end
+													<td class="$row">
+														<input type="text" name="txtTarikhSiasatan" id="txtTarikhSiasatan" value="$!listR.tarikh_siasatan" onblur="validateNumber(this,this.value);checkDigit()" maxlength="12" size="12" />
+													</td>
+													<td class="$row">
+														<input type="text" name="txtMasaSiasatan" id="txtMasaSiasatan" value="$!listR.masa_siasatan" onblur="validateNumber(this,this.value);checkDigit()" onkeyup="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" maxlength="4" size="4" />
+													
+														<select name="socJenisWaktu" id="socJenisWaktu" style="width: 105px">
+																	<option value="0" #if($!listR.jenis_waktu== "" || $!listR.jenis_waktu==
+																		"0" ) selected=selected #end>SILA PILIH</option>
+																	<option value="1" #if($!listR.jenis_waktu== '1') selected=selected #end>PAGI</option>
+																	<option value="2" #if($!listR.jenis_waktu== '2') selected=selected #end>TENGAH
+																		HARI</option>
+																	<option value="3" #if($!listR.jenis_waktu== '3') selected=selected #end>PETANG</option>
+											
+														</select>
+													</td>
+												</tr>
+								           	#end
+										#else
+										<tr>
+											<td colspan="2">Tiada rekod</td>
+										</tr>
+										#end
+							
+									</table>
+							
+									#if($saiz_listHakmilikBorangEInBulk > 10)
+								</div>
+								#end 
+				      </fieldset>
+				      
+				      </td>
+				  </tr>
+				</table> 
+			<!-- PPT-08 END -->
+   		</div>
+    	<!-- END TAB 3 -->
+    	
+    	
+
+    	
+   </div> 
+   <!-- TabbedPanelsContentGroup -->
+   
+</div>
+<!-- PPT-07 -->
+		
+
+
+<!-- table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>
-      <legend><b>SENARAI BORANG E</b></legend>          
+      <legend><b>SENARAI BORANG E</b></legend-->          
 		<!-- #parse("app/utils/record_pagingPopup.jsp") -->
+<!-- 
         #set ($count = 0) 
        
-      
         <table align="center" width="100%" cellspacing="1" cellpadding="0">
     
         
@@ -138,20 +374,14 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
           
           #end            
           </table>
-      
+
       
       </fieldset>
       
       </td>
   </tr>
 </table>
-
-
-
-
-
-
-
+-->
 
  
 #if($refreshHakmilik == "yes")
@@ -166,6 +396,14 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 #end
 
 <script>
+
+//PPT-07
+function setSelected(tabId) {
+	document.${formName}.tabId.value = tabId;	
+}
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$!selectedTab});
+// PPT-07
+
 
 function hapusBorangE(id_borange,id_permohonan,flag_skrin) {	
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
@@ -312,7 +550,6 @@ function paparHakmilik(id_hakmilik,id_permohonan,flag_skrin){
 function viewBorangEInBulk(id_borangE,flag_skrin)
 {
 	try {
-		
 			window.opener.viewBorangEInBulk(id_borangE);
 		
 	}
@@ -347,6 +584,7 @@ function kembaliKeSkrinUtama(id_permohonan) {
     return false;
 	document.${formName}.cmdKembaliSkrinUtama.value = "Sila Tunggu....";		
 }
+
 
 </script>
 

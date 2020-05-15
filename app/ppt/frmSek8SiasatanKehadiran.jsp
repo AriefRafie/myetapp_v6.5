@@ -229,7 +229,7 @@ MAKLUMAT ORANG BERKEPENTINGAN
     #end 
    
     #foreach($ln in $list_jenispb)
-    #if($socJenisPB!=$ln.ID_JENISPB && ($ln.ID_JENISPB=="42" || $ln.ID_JENISPB=="40" || $ln.ID_JENISPB=="41" || $ln.ID_JENISPB=="27"))
+    #if($socJenisPB!=$ln.ID_JENISPB && ($ln.ID_JENISPB=="42" || $ln.ID_JENISPB=="40" || $ln.ID_JENISPB=="41" || $ln.ID_JENISPB=="27" || $ln.ID_JENISPB=="46" || $ln.ID_JENISPB=="47" || $ln.ID_JENISPB=="9"))
     <option value="$ln.ID_JENISPB">$ln.KOD_JENIS_PB - $ln.KETERANGAN</option>                                     
     #end      
     #end
@@ -239,7 +239,7 @@ MAKLUMAT ORANG BERKEPENTINGAN
    
     <option value="">SILA PILIH JENIS TURUT HADIR</option>        
     #foreach($ln in $list_jenispb)  
-    #if($ln.ID_JENISPB=="42" || $ln.ID_JENISPB=="40" || $ln.ID_JENISPB=="41" || $ln.ID_JENISPB=="27")
+    #if($ln.ID_JENISPB=="42" || $ln.ID_JENISPB=="40" || $ln.ID_JENISPB=="41" || $ln.ID_JENISPB=="27" || $ln.ID_JENISPB=="46" || $ln.ID_JENISPB=="47" || $ln.ID_JENISPB=="9")
     <option value="$ln.ID_JENISPB">$ln.KOD_JENIS_PB - $ln.KETERANGAN</option>                                     
     #end    
     
@@ -843,10 +843,10 @@ Tidak Hadir &nbsp; &nbsp;<span id="txtPBhadir_check" class = "alert_msg" >      
         
          #if($readmode == "view")
          $txtNoAkaun
-        <input name="txtNoAkaun" type="hidden" class = "$disabledmode" id="txtNoAkaun" onBlur="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" onKeyUp="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" value="$txtNoAkaun" size="50" maxlength="20"  $readonlymode>
+        <input name="txtNoAkaun" type="hidden" class = "$disabledmode" id="txtNoAkaun" onBlur="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" onKeyUp="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" value="$txtNoAkaun" size="50" maxlength="21"  $readonlymode>
     <span id="txtNoAkaun_check" class = "alert_msg" ></span>
         #else
-         <input name="txtNoAkaun" type="text" class = "$disabledmode" id="txtNoAkaun" onBlur="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" onKeyUp="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" value="$txtNoAkaun" size="50" maxlength="20"  $readonlymode>
+         <input name="txtNoAkaun" type="text" class = "$disabledmode" id="txtNoAkaun" onBlur="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" onKeyUp="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" value="$txtNoAkaun" size="50" maxlength="21"  $readonlymode>
     <span id="txtNoAkaun_check" class = "alert_msg" ></span>
         #end
         </td>
@@ -862,10 +862,10 @@ Tidak Hadir &nbsp; &nbsp;<span id="txtPBhadir_check" class = "alert_msg" >      
         
          #if($readmode == "view")
          $txtNoAkaun
-        <input name="txtNoAkaun" type="hidden" class = "$disabledmode" id="txtNoAkaun" onBlur="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" onKeyUp="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" value="$txtNoAkaun" size="50" maxlength="20"  $readonlymode>
+        <input name="txtNoAkaun" type="hidden" class = "$disabledmode" id="txtNoAkaun" onBlur="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" onKeyUp="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" value="$txtNoAkaun" size="50" maxlength="21"  $readonlymode>
     <span id="txtNoAkaun_check" class = "alert_msg" ></span>
         #else
-         <input name="txtNoAkaun" type="text" class = "$disabledmode" id="txtNoAkaun" onBlur="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" onKeyUp="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" value="$txtNoAkaun" size="50" maxlength="20"  $readonlymode>
+         <input name="txtNoAkaun" type="text" class = "$disabledmode" id="txtNoAkaun" onBlur="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" onKeyUp="checking_validation(this,'txtNoAkaun_check','no','no akaun','normal')" value="$txtNoAkaun" size="50" maxlength="21"  $readonlymode>
     <span id="txtNoAkaun_check" class = "alert_msg" ></span>
         #end
         </td>
@@ -1160,10 +1160,16 @@ Tidak Hadir &nbsp; &nbsp;<span id="txtPBhadir_check" class = "alert_msg" >      
               
               
 
-<input type="button" value="Kembali" onClick="screen5('$!id_permohonan','$!id_siasatan')">
+<!--  <input type="button" value="Kembali" onClick="screen5('$!id_permohonan','$!id_siasatan')"> -->
+
+<!-- PPT-19 -->
+<input type="button" value="Kembali" onClick="popupCarianHakmilik('$id_permohonan','senarai_siasatan')">
+     
 <input type="button" value="Simpan Kehadiran" onClick="Update_kehadiran()">
 <input type="button" value="Tambah Kehadiran (Wakil)" onClick="tambahWakil()">
-<input type="button" value="Cetak Senarai Kehadiran" onClick="cetakSenarai('$!id_permohonan')">
+<input type="button" value="Cetak Senarai Kehadiran" onClick="cetakSenarai('$!id_permohonan','$!id_hakmilik')">
+<!-- PPT-27 -->
+<input type="button" value="Cetak Senarai Kehadiran (kosong)" onClick="cetakSenaraiKosong('$!id_permohonan','$!id_hakmilik')">
 
 #if($list_kehadiran.size()!=0)
 <!-- <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> -->  
@@ -1664,6 +1670,36 @@ Tidak Hadir &nbsp; &nbsp;<span id="txtPBhadir_check" class = "alert_msg" >      
     </table>
 </fieldset>
 
+
+<!-- PPT-23 -->
+<fieldset>
+	<legend>SIASATAN</legend>
+	 <table width="100%" border="0"> 
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:papar('$id_siasatan','$id_hakmilik')" title="Memaparkan secara lengkap maklumat set siasatan"><font color="blue">MAKLUMAT SIASATAN</font></a></div>
+			</td>
+		</tr>
+		
+		<!-- tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:kehadiran('$id_siasatan')" title="Memaparkan secara lengkap maklumat kehadiran"><font color="blue">MAKLUMAT KEHADIRAN</font></a></div>
+			</td>
+		</tr-->
+
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:maklumatsiasatan('$id_siasatan')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">NOTA SIASATAN </font></a></div>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+
+<!-- --------------- -->
+
   <input type="hidden" name="sub_command" id="sub_command" />
   <input type="hidden" name="subminor_command" id="subminor_command" />
   <input type="hidden" name="location" id="location" />
@@ -1676,19 +1712,30 @@ Tidak Hadir &nbsp; &nbsp;<span id="txtPBhadir_check" class = "alert_msg" >      
   <input type="hidden" name="jumlah_semua" id="jumlah_semua" />
   <input type="hidden" name="id_hakmilik" id="id_hakmilik" value="$!id_hakmilik" />
   <input type="hidden" name="id_tanahumum" id="id_tanahumum" value="$!id_tanahumum" />
-  <input type="text" name="id_siasatan" id="id_siasatan" value="$!id_siasatan" />
+  <input type="hidden" name="id_siasatan" id="id_siasatan" value="$!id_siasatan" />
   <input type="hidden" name="id_hakmilikpb" id="id_hakmilikpb" value="$!id_hakmilikpb" />
   <input type="hidden" name="id_pb" id="id_pb" value="$!id_pb" />
   <input type="hidden" name="id_kehadiran" id="id_kehadiran" value="$!id_kehadiran" />
   
 <script>
-function cetakSenarai(idpermohonan) {
-	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=senaraiKehadiran&selectNoFail=yes";
+function cetakSenarai(idpermohonan,id_hakmilik) {
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+id_hakmilik+"&report=senaraiKehadiran&selectNoFail=yes";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
+// PPT-27
+function cetakSenaraiKosong(idpermohonan,id_hakmilik) {
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+id_hakmilik+"&report=senaraiKehadiranKosong&selectNoFail=yes";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+
 </script>
   
      
@@ -2167,19 +2214,17 @@ function checking_validation(field,point,mandatory,value_field,jenis_field){
 	   doAjaxUpdater(document.${formName}, url, target, actionName);*/
         $jquery("#"+point).html("<input type='hidden' id='validation_field' name='validation_field' value='valid' >");	
 	   }
-	   else
+	/*   else
 	   {
-	  
-	   /*
-	   document.${formName}.alert_message.value  = "Sila pastikan tarikh "+value_field+" tidak melebihi dari tarikh hari ini";	  
+	  document.${formName}.alert_message.value  = "Sila pastikan tarikh "+value_field+" tidak melebihi dari tarikh hari ini";	  
 	   url = "../servlet/ekptg.view.ppt.PenarikanBalikCheck";
 	   actionName = "checking_validation";
 	   target = point;
 	   doAjaxUpdater(document.${formName}, url, target, actionName);
-       */
+       
         $jquery("#"+point).html("<input type='hidden' id='validation_field' name='validation_field' value='invalid' > Sila pastikan tarikh "+value_field+" tidak melebihi dari tarikh hari ini");
 	   }
-	   
+	   */
 	   
 	   }
 	   
@@ -2408,13 +2453,13 @@ var tt = field.value.charAt(4)+""+field.value.charAt(5)+"/"+field.value.charAt(2
        
         $jquery("#"+point).html("<input type='hidden' id='validation_field' name='validation_field' value='valid' >");	
 	   }
-	   else
+	   /*else
 	   {	  
 	  
         $jquery("#"+point).html("<input type='hidden' id='validation_field' name='validation_field' value='invalid' > Sila pastikan tarikh lahir "+value_field+" tidak melebihi dari tarikh hari ini");
 	   }
 	   
-	   
+	   */
 	   }   
 	   else if(lepas_or_xlepas == "3")
 	   {    
@@ -2592,11 +2637,11 @@ var tt = document.${formName}.txtNoPB.value.charAt(4)+""+document.${formName}.tx
        
         $jquery("#txtNoPB_check").html("<input type='hidden' id='validation_field' name='validation_field' value='valid' >");	
 	   }
-	   else
+	/*   else
 	   {	  
 	  
       $jquery("#txtNoPB_check").html("<input type='hidden' id='validation_field' name='validation_field' value='invalid' > Sila pastikan tarikh lahir "+value_field+" tidak melebihi dari tarikh hari ini");
-	   }          
+	   }  */       
 	   } 
         else if(lepas_or_xlepas == "3")
 	   {    
@@ -3704,6 +3749,43 @@ function onchangeSiasatan(id_siasatan) {
 	document.${formName}.submit();
 	
 	
+}
+
+function popupCarianHakmilik(id_permohonan,flag_skrin)
+{  //PPT-19
+	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupCarianHakmilik?&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
+	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	//screen5(id_permohonan);
+	
+}
+
+function maklumatsiasatan(id_siasatan)
+{	//PPT-23
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "TuanTanah";
+	document.${formName}.subminor_command.value = "View";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;	
+	document.${formName}.location.value = "maklumat_siasatan";
+	document.${formName}.point.value = "maklumat_siasatan";
+	document.${formName}.submit();
+}
+
+function kehadiran(id_siasatan)
+{	//PPT-23
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "Kehadiran";
+	document.${formName}.subminor_command.value = "View";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;	
+	document.${formName}.location.value = "senarai_siasatan";
+	document.${formName}.point.value = "senarai_siasatan";
+	document.${formName}.submit();
 }
 
 
