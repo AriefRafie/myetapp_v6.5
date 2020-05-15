@@ -18,6 +18,7 @@
 </style>
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+  <input name="idNegeriUser" type="hidden" id="idNegeriUser" value="$idNegeriUser"/>
   <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
   <input name="flagFrom" type="hidden" id="flagFrom"/>
  
@@ -147,8 +148,11 @@
           <td class="$row" align="center">$list.tarikhBukaFail</td>
           <td class="$row">$list.status</td>
           <td class="$row">$list.userLogin</td>
-          <td class="$row">
-          </td>
+          #if($list.idStatus == '1610213' || $list.idStatus == '1610201' || $list.idStatus == '1610206' || $list.idStatus == '1610214')
+          <td class="$row" align="center">HQ</td>
+          #else
+          <td class="$row" align="center">Negeri</td>
+          #end
         </tr>
         #end
         #else

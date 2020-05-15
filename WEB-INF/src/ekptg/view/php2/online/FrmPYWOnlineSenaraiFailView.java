@@ -141,7 +141,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		//SAVE TO DB
 		if (postDB) {
 			if ("doDaftarBaru".equals(hitButton)) {
-				idFail = logic.daftarBaru(idUrusan, idSuburusan, idHakmilikAgensi, getParam("txtperkara"), 
+				idFail = logic.daftarBaru(idUrusan, idSuburusan, idSubsuburusan, idHakmilikAgensi, getParam("txtperkara"), 
 				getParam("txtNoRujukanSurat"), getParam("txttarikhSurat"), idJenisTanah, idPHPBorangK, idPPTBorangK,
 				getParam("idKementerianTanah"), getParam("idNegeriTanah"), idHakmilikUrusan, getParam("tarikhTerima"),
 				idJenisPermohonan,session);

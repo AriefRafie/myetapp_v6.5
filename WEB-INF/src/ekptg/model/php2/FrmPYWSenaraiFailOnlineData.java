@@ -136,7 +136,7 @@ public class FrmPYWSenaraiFailOnlineData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN,B.TARIKH_TERIMA, A.TAJUK_FAIL, B.ID_PEMOHON, B.NO_PERMOHONAN, A.ID_URUSAN, A.ID_SUBURUSAN, C.CATATAN "
+			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN,B.TARIKH_TERIMA, A.TAJUK_FAIL, B.ID_PEMOHON, B.NO_PERMOHONAN, A.ID_URUSAN, A.ID_SUBURUSAN, A.ID_SUBSUBURUSAN, C.CATATAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -169,6 +169,8 @@ public class FrmPYWSenaraiFailOnlineData {
 								.getString("ID_URUSAN"));
 				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? ""
 						: rs.getString("ID_SUBURUSAN"));
+				h.put("idSubsuburusan", rs.getString("ID_SUBSUBURUSAN") == null ? "" 
+						: rs.getString("ID_SUBSUBURUSAN"));
 				beanMaklumatPermohonan.addElement(h);
 				bil++;
 			}
