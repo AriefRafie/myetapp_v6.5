@@ -34,9 +34,9 @@ public class BorangO extends EkptgReportServlet{
 		
 		if(id_negeri.equals("10")){
 			super.setReportName("BorangO");
-		}else if(id_negeri.equals("8")){
+		}/*else if(id_negeri.equals("8")){
 			super.setReportName("BorangO(PERAK)");
-		}else{
+		}*/else{
 			 super.setReportName("BorangO");
 		}
 		super.setFolderName("ppt");
