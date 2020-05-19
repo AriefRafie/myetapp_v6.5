@@ -493,7 +493,8 @@ public class FrmREVMemantauBayaranSewaData {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("bil", bil);
-				h.put("idAkaun", idAkaun);
+				h.put("idAkaun", rs.getString("ID_AKAUN") == null ? "" : rs
+						.getString("ID_AKAUN"));
 				h.put("idJenisTransaksi",
 						rs.getString("ID_JENISTRANSAKSI") == null ? "" : rs
 								.getString("ID_JENISTRANSAKSI"));
