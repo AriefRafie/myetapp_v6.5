@@ -148,7 +148,7 @@
           <td class="$row" align="center">$list.tarikhBukaFail</td>
           <td class="$row">$list.status</td>
           <td class="$row">$list.userLogin</td>
-          #if($list.idStatus == '1610213' || $list.idStatus == '1610201' || $list.idStatus == '1610206' || $list.idStatus == '1610214')
+          #if ($list.userRole == '(PHP)PYWPenolongPegawaiTanahNegeri' || $list.userRole == '(PHP)PYWPenolongPengarahNegeri' || $list.userRole == '(PHP)PYWPengarahNegeri')
           <td class="$row" align="center">HQ</td>
           #else
           <td class="$row" align="center">Negeri</td>
