@@ -1123,19 +1123,19 @@ public class HTPStatusRekodBean implements IHTPStatus {
 		//lebah.portal.velocity.VTemplate context
 		String langkah = "0";
 		String statuSemasa = "0";
-		if(portal_role.contains("PenggunaNegeri")){
+		if(portal_role.equals("PenggunaNegeri")){
 			langkah = "1";
-		}else if(portal_role.contains("PegawaiNegeri")){
+		}else if(portal_role.equals("PegawaiNegeri")){
 			langkah = "3";
-		}else if(portal_role.contains("PengarahNegeri")){
+		}else if(portal_role.equals("PengarahNegeri")){
 			langkah = "4";	    		
 		}else if(portal_role.equals("HQPengguna")){
 			langkah = "5";	    		
-		}else if(portal_role.contains("HQPenggunaRekod")){
+		}else if(portal_role.equals("HQPenggunaRekod")){
 			langkah = "6";	    		
-		}else if(portal_role.contains("(HTP)HQPegawai")){
+		}else if(portal_role.equals("HQPegawai")){
 			langkah = "7";	    		
-		}else if(portal_role.contains("(HTP)HQPengarah")){
+		}else if(portal_role.equals("HQPengarah")){
 			langkah = "8";	    		
 		}
 		

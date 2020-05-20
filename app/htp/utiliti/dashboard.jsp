@@ -246,6 +246,39 @@ bagi modul yang ada tugas spesifik untuk penguna yang login
 									</tr>
 									#end 
 									
+									##if($!listKemaskiniCukai.size() != '0')  
+									<tr>
+										<td>
+											<a href="javascript:doGetListCukai()" class="help" title="Senarai Fail">
+												<font color="blue"><li>
+												#if($!perBayaranPaj != "")                         
+													<label style="background-color:blue"  align="center" valign="top" > 
+													<b><font color="WHITE"><blink>$!perBayaranPaj.get("bilPerBayaran")</blink></font></b>
+													</label>&nbsp;
+												#end Peringatan Bayaran Pajakan											
+													</li>
+												</font>						
+											</a>
+											<div  id="div_senaraiPeringatan"  style="width:40"></div>
+										</td>
+									</tr>
+														<tr>
+										<td>
+											<a href="javascript:doGetListCukai()" class="help" title="Senarai Fail">
+												<font color="blue"><li>
+												#if($!perBayaranPaj != "")                         
+													<label style="background-color:blue"  align="center" valign="top" > 
+													<b><font color="WHITE"><blink>$!perBayaranPaj.get("bilPerBayaranLewat")</blink></font></b>
+													</label>&nbsp;
+												#end Peringatan Bayaran Pajakan	(Lewat)										
+													</li>
+												</font>						
+											</a>
+											<div  id="div_senaraiPeringatan"  style="width:40"></div>
+										</td>
+									</tr>
+									##end 
+									
 								</table>
 								
 								
