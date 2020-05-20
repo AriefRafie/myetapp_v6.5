@@ -34,7 +34,7 @@ public class BorangC extends EkptgReportServlet {
 		}	
 		
 		
-		if(id_negeri.equals("11"))
+		/*if(id_negeri.equals("11"))
 		{
 			super.setReportName("Borang C_lebihDrpdSatuHakmilik_TGANU_new");
 		}
@@ -47,9 +47,9 @@ public class BorangC extends EkptgReportServlet {
 			super.setReportName("Borang C_Kedah");
 		}
 		else
-		{
+		{*/
 			super.setReportName("Borang C");
-		}
+		//}
 		
        	
         

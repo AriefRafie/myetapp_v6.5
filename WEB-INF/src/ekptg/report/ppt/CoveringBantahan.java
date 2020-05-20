@@ -10,7 +10,8 @@ import ekptg.report.EkptgReportServlet;
 
 public class CoveringBantahan  extends EkptgReportServlet {
 	public CoveringBantahan() {
-		super.setReportName("CoveringBantahanPTG");
+		super.setReportName("CoveringBantahan2020");
+		//super.setReportName("CoveringBantahanPTG");
 		super.setFolderName("ppt");
 	}
 

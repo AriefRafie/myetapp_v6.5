@@ -66,11 +66,12 @@ public class BorangF extends EkptgReportServlet {
 		
 		if(id_negeri.equals("5"))
 		{
-			super.setReportName("Borang F_N9");
+			/*super.setReportName("Borang F_N9");
 		}
 		else if(id_negeri.equals("7"))
-		{
+		{*/
 			super.setReportName("Borang F");
+			
 		}
 		else
 		{

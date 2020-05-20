@@ -40,14 +40,14 @@ public class BorangDLebih extends EkptgReportServlet {
 		{
 			super.setReportName("Borang D_lebihDrpdSatuHakmilik");
 		}
-		else if(id_negeri.equals("11"))
+		/*else if(id_negeri.equals("11"))
 		{
 			super.setReportName("Borang D_PTG_TGANU_v6");
 		}
 		else if(id_negeri.equals("7"))
 		{
 			super.setReportName("Borang D_lebihDrpdSatuHakmilik_PTG Penang");
-		}
+		}*/
 		else
 		{
 			 super.setReportName("Borang D_lebihDrpdSatuHakmilik_PTG");
