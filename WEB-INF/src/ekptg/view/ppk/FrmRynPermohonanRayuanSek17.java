@@ -127,8 +127,8 @@ public class FrmRynPermohonanRayuanSek17 extends AjaxBasedModule{
 
 		Vector listdepan = new Vector();
    		listdepan.clear();
-   		model2.setListDefaultSek17(usid);
-		listdepan = model2.getListDefaultSek17();
+   		//model2.setListDefaultSek17(usid);
+		//listdepan = model2.getListDefaultSek17();
 
     	String flagFromSenaraiFailSek8 = getParam("flagFromSenaraiFailSek8");
     	String flagFromSenaraiPermohonanSek8 = getParam("flagFromSenaraiPermohonanSek8");
@@ -5754,7 +5754,7 @@ public class FrmRynPermohonanRayuanSek17 extends AjaxBasedModule{
 			//data & size list carian
 			context.put("listRayuan", listdepan);
     		context.put("list_size", listdepan.size());
-
+    		setupPage(session,action,listdepan);
     		vm = screensenarai;
 
     	}//close cari
@@ -5768,6 +5768,7 @@ public class FrmRynPermohonanRayuanSek17 extends AjaxBasedModule{
     		//data & size default list
     		context.put("listRayuan", listdepan);
     		context.put("list_size", listdepan.size());
+    		setupPage(session,action,listdepan);
 
     		vm = screensenarai;
 
@@ -5781,7 +5782,7 @@ public class FrmRynPermohonanRayuanSek17 extends AjaxBasedModule{
        //Template template = engine.getTemplate(vm);
        //return template;
 
-       setupPage(session,action,listdepan);
+      
 
        return vm;
 
@@ -6062,7 +6063,8 @@ public class FrmRynPermohonanRayuanSek17 extends AjaxBasedModule{
 
     	h.put("tarikh_rayuan",tarikh_rayuan);
 
-	    	model2.simpanMaklumatPPSek17(h);
+	    	//model2.simpanMaklumatPPSek17(h);
+	    	model2.simpanMaklumatPP(h);
 
 	  }//close simpan Maklumat PP
 
@@ -6608,6 +6610,7 @@ public class FrmRynPermohonanRayuanSek17 extends AjaxBasedModule{
     	h.put("nota_bicara",nota_bicara);
     	h.put("id_rayuan",id_rayuan);
     	h.put("id_kemaskini", session.getAttribute("_ekptg_user_id"));
+    	h.put("dariseksyen", "17");
 
     	//delect checkbox
     	model2.cbObDelete(id_rayuan);

@@ -2,6 +2,26 @@
 #set ( $idFail = $data.get("id_fail") )
 #set($perhatian="<i><font color=red >Perhatian</font><font >: Sila pastikan label bertanda</font>&nbsp;<font color=red >*</font>&nbsp;<font >diisi.</font></i>")
 
+#if($size_M!=0)
+	#foreach($m in $listMahkamah)
+		#set($alamatM1=$m.alamat1)
+		#set($alamatM2=$m.alamat2)
+		#set($alamatM3=$m.alamat3)
+		#set($poskodM=$m.poskod)
+		#set($bandarM=$m.bandar)
+	#end    
+#else
+		
+		#set($alamatM1="")
+		#set($alamatM2="")
+		#set($alamatM3="")
+		#set($poskodM="")
+		#set($bandarM="")
+#end	
+
+#foreach ($ListData in $ViewPemohon)
+	#set ($idSimati = $ListData.idSimati)
+#end
 
 #foreach($list in $listSemak)
  	#set($noFail=$list.noFail)
@@ -24,6 +44,9 @@
     
     <!-- case utk butang Seterusnya ke Notis -->
 	<input type="hidden" name="id_permohonan" value="$id_permohonan"> 
+	<input type="hidden" name="id_negeri" value="$id_negeri">
+	<input type="hidden" name="command2" />
+	<input type="hidden" name="idSimati" value="$idSimati"/>
 	<!--<input type="hidden" name="id_status" value="$idstatus">   -->  
 #end
 
@@ -31,6 +54,11 @@
 #set ( $idPemohon = $dataPerbicaraan.get("idPemohon") )
 #set ( $idBicara = $dataPerbicaraan.get("id_perbicaraan") )
 #set ( $namaPegawai = $dataPerbicaraan.get("nama_pegawai") )
+
+#set($namaDoC="")
+#foreach($listSupportingDoc in $ViewSupportingDoc)
+#set($namaDoC = $listSupportingDoc.NAMA_DOKUMEN)
+#end
 
 <!-- case utk butang Seterusnya ke Perintah -->
 <input type="hidden" name="actionPerintah">
@@ -629,25 +657,171 @@ Sebab-sebab Lain</td>
                     </tr>                                  
                     <tr align="center">
                       <td align="left">
-                      <input name="flag_batal" id="flag_batal" type="radio"  value="1" onclick="MahkamahTinggi('$idpermohonan','$id_perbicaraan')" $TEMPcheckedMahkamahTinggiWasiat>                      
+                      <input name="flag_batal" id="flag_batal" type="radio"  value="1" onclick="DocSupportAppear();MahkamahAppear();MahkamahDisappear2()" $TEMPcheckedMahkamahTinggiWasiat> <!-- onclick="MahkamahTinggi('$idpermohonan','$id_perbicaraan')" -->                      
                       Pindah ke Mahkamah Tinggi kerana ada wasiat 
                       </td>
-                    </tr>   
+                    </tr>  
+                    
+                        <tr align="center">
+     
+      <td align="left">
+      <div id="MahkamahAppear"  style="display:none;"  > 
+      <table width="50%">
+      <tr>
+    <td>
+   
+    <fieldset><legend>MAKLUMAT MAHKAMAH</legend>
+	<table width="100%">
+		<tr>
+			<td><font color="red">* </font></td>
+			<td>Mahkamah</td>
+			<td>:</td>
+			<td><select id="socMahkamah" name="socMahkamah" onchange="changeGetAlamatMahkamah()" style="width:300">	
+						
+						#foreach($listMK in $listMahkamah)
+                    		<option value="$listMK.id_pejabat">$listMK.nama_pejabat.toUpperCase()</option>
+                        #end
+			
+			</select>
+			</td>
+		</tr>
+		<tr>
+    			<td>&nbsp;</td>
+    			<td>Alamat</td>
+    			<td>:</td>
+    			<td><input type="text"  disabled name="txtAlamatMahkamah1" id="txtAlamatMahkamah1" value="$!alamatM1" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td><input type="text"  disabled name="txtAlamatMahkamah2" id="txtAlamatMahkamah2" value="$!alamatM2" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td><input type="text"  disabled name="txtAlamatMahkamah3" id="txtAlamatMahkamah3" value="$!alamatM3" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Poskod</td>
+    			<td>:</td>
+    			<td><input type="text"  disabled name="txtPoskodMahkamah" id="txtPoskodMahkamah" value="$!poskodM" size="6" maxlength="5" onblur="validateNumber(this,this.value);" onkeyup="validateNumber(this,this.value);" /></td>
+    		</tr>
+    		<!-- 
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Negeri</td>
+    			<td>:</td>
+    			<td>$!selectNegeriMahkamah</td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Bandar</td>
+    			<td>:</td>
+    			<td>$!selectBandarMahkamah</td>
+    		</tr>
+    		 -->
+    	
+	</table>
+	</fieldset>
+	</td>
+	</tr>
+	</table>
+
+   	 </div>
+     </td>
+     </tr>
+      
                     <tr align="center">
-                      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="2" $TEMPcheckedTidakHadir3Kali >
+                      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="2" $TEMPcheckedTidakHadir3Kali onclick="DocSupportDisappear();MahkamahDisappear();MahkamahDisappear2()" > 
                       Tidak hadir setelah dipanggil 3 kali
                       </td>
                     </tr> 
                     <tr align="center">
-                      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="3" $TEMPcheckedPermintaanPemohon >
+                      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="3" $TEMPcheckedPermintaanPemohon onclick="DocSupportDisappear();MahkamahDisappear();MahkamahDisappear2()" > 
                       Atas Permintaan Pemohon
                       </td>
                     </tr>  
                     <tr align="center">
-                      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta >
-                      Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta
-                      </td>
-                    </tr>
+      
+      <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta onclick="DocSupportAppear();MahkamahAppear2();MahkamahDisappear()" >
+        Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta </td>
+    </tr>
+    
+    <tr align="center">
+      
+      <td align="left">
+      <div id="MahkamahAppear2"  style="display:none;"  > 
+      <table width="50%">
+      <tr>
+    <td>
+   
+    <fieldset><legend>MAKLUMAT MAHKAMAH</legend>
+	<table width="100%">
+		<tr>
+			<td><font color="red">* </font></td>
+			<td>Mahkamah</td>
+			<td>:</td>
+			<td><select id="socMahkamah" name="socMahkamah" onchange="changeGetAlamatMahkamah()" style="width:300">	
+						
+						#foreach($listMK in $listMahkamah)
+                    		<option value="$listMK.id_pejabat">$listMK.nama_pejabat.toUpperCase()</option>
+                        #end
+			
+			</select>
+			</td>
+		</tr>
+		<tr>
+    			<td>&nbsp;</td>
+    			<td>Alamat</td>
+    			<td>:</td>
+    			<td><input type="text"  disabled name="txtAlamatMahkamah1" id="txtAlamatMahkamah1" value="$!alamatM1" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td><input type="text" disabled  name="txtAlamatMahkamah2" id="txtAlamatMahkamah2" value="$!alamatM2" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td>&nbsp;</td>
+    			<td><input type="text" disabled  name="txtAlamatMahkamah3" id="txtAlamatMahkamah3" value="$!alamatM3" size="50" maxlength="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Poskod</td>
+    			<td>:</td>
+    			<td><input type="text" disabled  name="txtPoskodMahkamah" id="txtPoskodMahkamah" value="$!poskodM" size="6" maxlength="5" onblur="validateNumber(this,this.value);" onkeyup="validateNumber(this,this.value);" /></td>
+    		</tr>
+    		<!-- 
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Negeri</td>
+    			<td>:</td>
+    			<td>$!selectNegeriMahkamah</td>
+    		</tr>
+    		<tr>
+    			<td>&nbsp;</td>
+    			<td>Bandar</td>
+    			<td>:</td>
+    			<td>$!selectBandarMahkamah</td>
+    		</tr>
+    		 -->
+    		
+    	
+	</table>
+	</fieldset>
+	</td>
+	</tr>
+	</table>
+
+   	 </div>
+     </td>
+     </tr>
                     <tr align="center">
                       <td align="left"><input name="flag_batal" id="flag_batal" type="radio" value="5" $TEMPcheckedSebabLainBatal>                      Sebab-sebab lain
                       </td>
@@ -674,10 +848,67 @@ Sebab-sebab Lain</td>
       <div align="left">           
       $!perhatian
       </div>
-      <div align="center">           
-      <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Batal('$idpermohonan','$id_perbicaraan');" />
-      <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
-      </div>                           
+      
+          <tr>
+    <td colspan="2" width="100%">
+    
+    <div id="dokumensokongan"  style="display:none;"  > 
+    <table width="100%">
+  <tr>
+    <td>
+    <fieldset>
+    <legend>Dokumen Sokongan</legend>
+    <table width="60%" border="0">
+    <tr>
+     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+        <td width="1%" scope="col">:</td>
+        <td width="74%" colspan="2" scope="col">
+         <input type="text" disabled value=$!namaDoC>&nbsp;
+         #if ($namaDoC != '')
+         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #else
+         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '')
+         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         #end
+         
+         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
+         
+        
+   		 
+   		 #if ($namaDoC != '')
+   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
+   		 
+   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 
+   		 
+       
+        </td>
+    </tr>
+    <tr>
+    
+    </tr>
+    
+    </table>
+    
+    </fieldset> 
+     </td>
+  </tr>
+</table>
+    </div>  
+    </td>
+    </tr>  
+    
+      <tr>
+      <td colspan="2" width="100%" ><div align="center">
+      #if($!DoNotSave != "1")
+          <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Batal('$idpermohonan','$id_perbicaraan');" />
+      #end
+      	  <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
+        </div></td>
+    </tr>                         
                 </table>
                                     
          </fieldset>  
@@ -1232,7 +1463,7 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
                 <table width="100%"  cellpadding="0" cellspacing="2" border="0">                     
                     <tr align="center">
                       <td align="left"><input name="flag_batal" id="flag_batal" $ type="radio" value="1" $TEMPcheckedMahkamahTinggiWasiat disabled>
-                      Pindah ke Mahkamah Tinggi kerana ada wasiat 
+                      Pindah ke Mahkamah Tinggi kerana ada wasiat  #if($batalWasiat == '1')($namaMahkamah)#end 
                       </td>
                     </tr>   
                     <tr align="center">
@@ -1247,7 +1478,7 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
                     </tr>  
                     <tr align="center">
                       <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta disabled>
-                      Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta
+                      Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta #if($batal2juta == '1')($namaMahkamah)#end
                       </td>
                     </tr>  
                     <tr align="center">
@@ -1279,6 +1510,9 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
                                                          
                   </table>
       <div align="center"> 
+       #if($namaMahkamah != '') 
+       <input type="button" name="cmdBorangI" id="cmdBorangI" value="Hantar ke Mahkamah Tinggi (Borang I)" onClick="semakMTBorangI('$id_perbicaraan')"/>
+       #end
        
        #if ( $flagFromSenaraiFailSek8 == '' )             
       <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_KemaskiniBatal('$idpermohonan','$id_perbicaraan');" />
@@ -1841,6 +2075,58 @@ Sebab-sebab Lain </td>
       <div align="left">           
       $!perhatian
       </div>
+      
+          <tr>
+    <td colspan="2" width="100%">
+    
+    <div id="dokumensokongan"  style="display:none;"  > 
+    <table width="100%">
+  <tr>
+    <td>
+    <fieldset>
+    <legend>Dokumen Sokongan2</legend>
+    <table width="60%" border="0">
+    <tr>
+     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+        <td width="1%" scope="col">:</td>
+        <td width="74%" colspan="2" scope="col">
+         <input type="text" disabled value=$!namaDoC>&nbsp;
+         #if ($namaDoC != '')
+         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #else
+         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '')
+         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         #end
+         
+         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
+         
+        
+   		 
+   		 #if ($namaDoC != '')
+   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
+   		 
+   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 
+   		 
+       
+        </td>
+    </tr>
+    <tr>
+    
+    </tr>
+    
+    </table>
+    
+    </fieldset> 
+     </td>
+  </tr>
+</table>
+    </div>  
+    </td>
+    </tr>  
                   <div align="center">           
                   <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: Simpan_Edit_Batal('$idpermohonan','$id_perbicaraan');" />
                   <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -1880,18 +2166,52 @@ Sebab-sebab Lain </td>
 	function cetakSuratPindahMT(noFail) {
 		// Kemaskini pada 22/08/2013 Oleh Mohamad Rosli, kemaskini value bagi SuratPindahMTPerbicaraan (asal SuratPindahMT) 
 	 	//var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratPindahMT&flagReport=S";
-		var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratPindahMTPerbicaraan&flagReport=S";
+	 	
+	 	
+		var batal = $jquery('input[name=flag_batal]:checked').val();
+		var namaReport = "";
+		
+		if(batal == "1"){
+			namaReport = "SuratPindahMTII";
+		}else if(batal == "3"){
+			namaReport = "SuratPindahMT";
+		}else{
+			namaReport = "SuratPindahMTPerbicaraan";
+		}
+	 	
+		var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report="+namaReport+"&flagReport=S";
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();
 	    
 	}
+	
+	function semakMTBorangI(id_perbicaraan) {
+	    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiMT?idFail=$idFail&command=hantarBorangI&dari=KeputusanPerbicaraan&idPerbicaraan="+id_perbicaraan;
+		var hWnd = window.open(url,'Cetak','width=625,height=480, resizable=yes,scrollbars=no');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
 
 	function cetakBorangI(noFail) {
 		// Kemaskini pada 22/08/2013 Oleh Mohamad Rosli, kemaskini value bagi BorangIPerbicaraan (asal BorangI) 
 		//var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=BorangI&flagReport=B";
-		var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=BorangIPerbicaraan&flagReport=B";	
+		
+		///var batal = $jquery('#flag_batal').val();
+		var batal = $jquery('input[name=flag_batal]:checked').val();
+		var namaReport = "";
+
+		if(batal == "1"){
+			namaReport = "BorangIWasiat";
+		}else if(batal == "3"){
+				namaReport = "BorangI";
+		}else{
+			namaReport = "BorangIPerbicaraan";
+		}
+		
+		var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report="+namaReport+"&flagReport=B";	
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -1902,13 +2222,140 @@ Sebab-sebab Lain </td>
 	function buktiPenyampaian(noFail,idfail){	
 		// Kemaskini pada 22/08/2013 Oleh Mohamad Rosli, tambah parameter (template)
 	    //var url = "../servlet/ekptg.report.ppk.BuktiPenyampaianMT?nofail="+noFail+"&idfail="+idfail;  
-	    var url = "../servlet/ekptg.report.ppk.BuktiPenyampaianMT?nofail="+noFail+"&idfail="+idfail+"&template=BuktiPenyampaianMTPerbicaraan";  
+		var batal = $jquery('input[name=flag_batal]:checked').val();
+
+		var namaReport = "";
+		if(batal == "4"){
+			namaReport = "BuktiPenyampaianMT";
+		}else{
+			namaReport = "BuktiPenyampaianMTPerbicaraan";
+		}
+		
+	    var url = "../servlet/ekptg.report.ppk.BuktiPenyampaianMT?nofail="+noFail+"&idfail="+idfail+"&template="+namaReport;  
 	   	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();
 	
 	}
+	
+	function DocSupportAppear(){
+		
+		
+
+		if((document.${formName}.flag_batal[0].checked == true) || (document.${formName}.flag_batal[3].checked == true))
+		{
+			
+			document.getElementById('dokumensokongan').style.display="block";
+		}
+		
+}
+
+function MahkamahAppear(){
+	
+	
+
+	if((document.${formName}.flag_batal[0].checked == true) || (document.${formName}.flag_batal[3].checked == true))
+	{
+		
+		document.getElementById('MahkamahAppear').style.display="block";
+		document.getElementById('MahkamahAppear2').style.display="none";
+	}
+	
+}
+
+function MahkamahAppear2(){
+	
+	
+
+	if((document.${formName}.flag_batal[0].checked == true) || (document.${formName}.flag_batal[3].checked == true))
+	{
+		
+		document.getElementById('MahkamahAppear2').style.display="block";
+		document.getElementById('MahkamahAppear').style.display="none";
+	}
+	
+}
+
+function DocSupportDisappear(){
+	
+	
+
+	if((document.${formName}.flag_batal[1].checked == true) || (document.${formName}.flag_batal[2].checked == true) || (document.${formName}.flag_batal[4].checked == true) )
+	{
+		
+		document.getElementById('dokumensokongan').style.display="none";
+	}
+	
+}
+
+function MahkamahDisappear(){
+	
+	
+
+	if((document.${formName}.flag_batal[1].checked == true) || (document.${formName}.flag_batal[2].checked == true) || (document.${formName}.flag_batal[4].checked == true) )
+	{
+		
+		document.getElementById('MahkamahAppear').style.display="none";
+		
+	}
+	
+}
+
+function MahkamahDisappear2(){
+	
+	
+
+	if((document.${formName}.flag_batal[1].checked == true) || (document.${formName}.flag_batal[2].checked == true) || (document.${formName}.flag_batal[4].checked == true) )
+	{
+		
+		
+		document.getElementById('MahkamahAppear2').style.display="none";
+	}
+	
+}
+
+function uploadSuppDoc(id,IdSimati)
+{
+	
+	var url = "../x/${securityToken}/ekptg.view.ppk.SkrinPopupUploadDokumen?&id_Permohonan="+id+"&IdSimati="+IdSimati+"&id_jenisDoc=99205";
+	var hWnd = window.open(url,'printuser','width=350,height=200, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	
+}
+
+function doOpen(id) {
+	//alert('id : '+id);
+    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id+"&jenisDoc=99205";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function deleteSuppDoc()
+{
+	input_box = confirm("Adakah anda pasti?");
+	if (input_box == true) {
+	document.${formName}.method = "POST";
+	document.${formName}.command2.value = "deleteSuppDocMode";
+	alert("test");
+	document.${formName}.command.value = "tab_batal";
+	document.${formName}.action="?_portal_module=ekptg.view.ppk.FrmSenaraiFailKeputusanPerbicaraan";
+	document.${formName}.submit();
+	}
+	else
+		{
+		return
+		}
+	
+	
+}
+
 
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
