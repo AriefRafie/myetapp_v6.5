@@ -1,5 +1,8 @@
 package ekptg.view.ppk;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,6 +11,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
@@ -20,6 +25,8 @@ import ekptg.model.ppk.FrmPrmhnnSek8BicaraData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8KptsanBicaraData;
 import ekptg.model.ppk.FrmPrmhnnSek8Notis;
+import ekptg.model.ppk.FrmRynSek8SemakPenerimaan;
+import ekptg.model.ppk.FrmSenaraiFailKeputusanPermohonanInternalData;
 import ekptg.model.ppk.FrmSenaraiFailKptsPerbcrnData;
 //import lebah.portal.velocity.VTemplate;
 //import org.apache.velocity.Template;
@@ -32,6 +39,8 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	FrmPrmhnnSek8Notis logic5 = new FrmPrmhnnSek8Notis();
 	FrmPrmhnnSek8DaftarSek8InternalData logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 	FrmHeaderPpk mainheader = new FrmHeaderPpk();
+	FrmPrmhnnSek8Notis modelNotis = new FrmPrmhnnSek8Notis();
+	FrmRynSek8SemakPenerimaan model = new FrmRynSek8SemakPenerimaan();
 	
 
  	String checkedTidakHadir = "";
@@ -96,6 +105,8 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     	Vector getMaklumatPermohonan17 = new Vector();
     	Vector checkingNilaianAmanahRaya = new Vector();
     	Vector getExistDataBayaran = new Vector();
+    	Vector listSupportingDoc = null;
+    	Vector dataPemohon = new Vector();
 
     	list.clear();
     	listPemohon.clear();
@@ -120,11 +131,12 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 
     	String action = getParam("action"); //* action ni hanya utk setup paging sahaja
     	String submit = getParam("command");
-    	myLogger.info("SUBMIT :: "+submit);
+    	System.out.println("SUBMIT :: "+submit);
     	this.context.put("Util",new lebah.util.Util());
     	String flagFromSenaraiFailSek8 = getParam("flagFromSenaraiFailSek8");
     	String flagFromSenaraiPermohonanSek8 = getParam("flagFromSenaraiPermohonanSek8");
     	String flagForView = getParam("flagForView");
+    	String jenisDoc = "99205";
 
 		String usid="";
    		usid=(String)session.getAttribute("_ekptg_user_id");
@@ -191,6 +203,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     		long idUnitPsk = 0;
     		String tarikh_bicara = "";
     		String id_perbicaraan = "";
+    		String id = getParam("id_permohonan");
     		if(dataNotis.size()!=0){
     			Hashtable idn = (Hashtable) dataNotis.get(0);
         		idUnitPsk = Long.parseLong(idn.get("id_unitpsk").toString());
@@ -207,6 +220,23 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     		context.put("flag", "");
     		context.put("button", "kembali");
     		context.put("tarikh", "perintah");
+    		
+    		//get info pemohon
+    		modelNotis.setListSemak(id,usid);
+    		dataPemohon = modelNotis.getListSemak();
+    		//headerppk_baru(session,id_permohonan,"Y","","T");
+
+    		String id_fail2 = "";
+    		String id_pemohon = "";
+    		String id_negeri = "";
+    		
+    		if(dataPemohon.size()!=0){
+    			Hashtable x2 = (Hashtable) dataPemohon.get(0);
+    			id_pemohon = x2.get("idPemohon").toString();
+    			id_fail2 = x2.get("idFail").toString();
+    			id_negeri = x2.get("pmidnegeri").toString();
+    		}
+    		context.put("id_negeri", id_negeri);
 
     		vm = "app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp";
 
@@ -267,7 +297,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
   				double nilai_ha_tarikhmohon;
   				if(checkingNilaianAmanahRaya.size()!=0){
 
-  					myLogger.info("ADA NILAIAN HARTA AMANAH RAYA");
+  					System.out.println("ADA NILAIAN HARTA AMANAH RAYA");
   					Hashtable nilaian = (Hashtable) checkingNilaianAmanahRaya.get(0);
   					nilai_ha_tarikhmohon = Double.parseDouble(nilaian.get("nilai_ha_tarikhmohon").toString());
 
@@ -297,26 +327,6 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    					//ADD BY PEJE
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 	    				}
-	    				/** 
-	    				 * 8/1/2020: arief 
-	    				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
-	    				 * 
-	    				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
-	    					if ( jumlah_harta17_tarikhmohon <= 1000 ) {
-	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-	    						if (bayaranYuranPerintah17 < 10) {
-	    							bayaranYuranPerintah17 = 10.00 ;
-	    						}							
-	    					} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
-	    						bayaranYuranPerintah17 = 30.00 ;
-	    					} else {
-	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-	    						bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    					}
-	    				}else{
-	    					bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				}**/
 	    				double j = 0;
 	    					if (batal_kuasa_pentadbir.equals("Y")) {
 	    						j += 30.00 ;
@@ -326,22 +336,22 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    					}
 	    				double total = (j + bayaranYuranPerintah17);
 	    				this.context.put("txtJumBayaranTerkini", total);
-	//    				myLogger.info("BAYARAN YURAN PERINTAH 17 :: "+bayaranYuranPerintah17);
-	//    				myLogger.info("BAYARAN J :: "+j);
-	//    				myLogger.info("TOTAL BAYARAN KESELURUHAN :: "+total);
+	//    				System.out.println("BAYARAN YURAN PERINTAH 17 :: "+bayaranYuranPerintah17);
+	//    				System.out.println("BAYARAN J :: "+j);
+	//    				System.out.println("TOTAL BAYARAN KESELURUHAN :: "+total);
 	    			}
 	    				context.put("dataJumlahBayaran", getJumlahBayaran17);
 
   				}else{
 
-  					myLogger.info("TIADA NILAIAN HARTA AMANAH RAYA");
+  					System.out.println("TIADA NILAIAN HARTA AMANAH RAYA");
   					if(getJumlahBayaran17.size()!=0){
   						Hashtable a = (Hashtable) getJumlahBayaran17.get(0);
   				   		double jumlah_harta17_tarikhmohon;
   			    		//double bayaranYuran;
   				   		jumlah_harta17_tarikhmohon = Double.parseDouble(a.get("sumharta").toString());
   						this.context.put("txtJumHarta", jumlah_harta17_tarikhmohon);
-  						myLogger.info("JUMLAH HARTA :: "+jumlah_harta17_tarikhmohon);
+  						System.out.println("JUMLAH HARTA :: "+jumlah_harta17_tarikhmohon);
   					}
   				}
   				//*end
@@ -357,7 +367,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
         			Hashtable d = (Hashtable) getrecord_perintah.get(0);
            			String flag_jenis_keputusan = d.get("flag_jenis_keputusan").toString();
            			idUnitPsk = d.get("id_unitpsk").toString();
-           			myLogger.info("IDUNITPSK SEKSYEN17 :: "+idUnitPsk);
+           			System.out.println("IDUNITPSK SEKSYEN17 :: "+idUnitPsk);
            			if ( idUnitPsk != ""){
            				context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",Utils.parseLong(idUnitPsk),"disabled"));
            			}else{
@@ -429,7 +439,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 		    		id_perintah = (String)d.get("id_perintah");
 		    		flag_jenis_keputusan = (String)d.get("flag_jenis_keputusan");
 					flag_tangguh = (String)d.get("flag_tangguh");
-					myLogger.info("ID PERINTAH 11111 :: "+id_perintah);
+					System.out.println("ID PERINTAH 11111 :: "+id_perintah);
 					if (d.get("flag_jenis_keputusan").equals("1")){
 						setValueFlagJenisKeputusan("","checked","");
 					}
@@ -1204,7 +1214,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     		vm = "app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp";
 
     	}else if("Skrin_Kemaskini".equals(submit)){	//* -- utk selesai kemaskini
-
+    		System.out.println("Skrin_Kemaskini");
 		    FrmPrmhnnSek8KptsanBicaraData.setInfoPerintahList(idpermohonan);
 		    getrecord_perintah = FrmPrmhnnSek8KptsanBicaraData.getDataPerintahViewList();
 		    long idUnitPskView = 0;
@@ -1247,21 +1257,29 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 		    	//get jumlah_harta_tarikhmohon
     			FrmPrmhnnSek8KptsanBicaraData.setJumlahBayaran17(id_permohonansimati);
     			getJumlahBayaran17 = FrmPrmhnnSek8KptsanBicaraData.getJumlahBayaran17();
+    			
+    			FrmPrmhnnSek8KptsanBicaraData.setMaklumatPermohonan17(idpermohonan);
+    			getMaklumatPermohonan17 = FrmPrmhnnSek8KptsanBicaraData.getMaklumatPermohonan17();
 
 	   			//checking TBLPPKHA for NilaianAmanahRaya
   				checkingNilaianAmanahRaya = logic2.checkingNilaianAmanahRaya(id_permohonansimati);
   				double nilai_ha_tarikhmohon;
   				if(checkingNilaianAmanahRaya.size()!=0){
 
-  					myLogger.info("ADA NILAIAN HARTA AMANAH RAYA");
+  					System.out.println("ADA NILAIAN HARTA AMANAH RAYA");
   					Hashtable nilaian = (Hashtable) checkingNilaianAmanahRaya.get(0);
+  					System.out.println("ADA NILAIAN HARTA AMANAH RAYA1");
   					nilai_ha_tarikhmohon = Double.parseDouble(nilaian.get("nilai_ha_tarikhmohon").toString());
+  					System.out.println("ADA NILAIAN HARTA AMANAH RAYA1A");
 	    			if(getJumlahBayaran17.size()!=0){
+	    				System.out.println("ADA NILAIAN HARTA AMANAH RAYA1B");
 	    				Hashtable a = (Hashtable) getJumlahBayaran17.get(0);
-	    				Hashtable z = (Hashtable) getMaklumatPermohonan17.get(0);
+	    				System.out.println("ADA NILAIAN HARTA AMANAH RAYA1C");
+	    				Hashtable z = (Hashtable) getMaklumatPermohonan17.get(0); //check sini
+	    				System.out.println("ADA NILAIAN HARTA AMANAH RAYA1D");
 	    		   		double jumlah_harta17_tarikhmohon;
 	    	    		double bayaranYuranPerintah17;
-
+	    	    		System.out.println("ADA NILAIAN HARTA AMANAH RAYA2");
 	    	    		jumlah_harta17_tarikhmohon = Double.parseDouble(a.get("sumharta").toString());
 	    	    		String batal_kuasa_pentadbir = z.get("batal_kuasa_pentadbir").toString();
 	    	    		String batal_p_amanah = z.get("batal_p_amanah").toString();
@@ -1272,36 +1290,19 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 	    					//ADD BY PEJE
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA3");
 	    				} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
 	    					//bayaranYuranPerintah17 = 30.00 ;
 	    					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 	    					//ADD BY PEJE
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA4");
 	    				} else {
 	    					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 	    					//ADD BY PEJE
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA5");
 	    				}
-	    				/** 
-	    				 * 8/1/2020: arief 
-	    				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
-	    				 * 
-	    				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
-	    					if ( jumlah_harta17_tarikhmohon <= 1000 ) {
-	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-	    						if (bayaranYuranPerintah17 < 10) {
-	    							bayaranYuranPerintah17 = 10.00 ;
-	    						}							
-	    					} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
-	    						bayaranYuranPerintah17 = 30.00 ;
-	    					} else {
-	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-	    						bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    					}
-	    				}else{
-	    					bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				}**/
 	    				double j = 0;
 	    					if (batal_kuasa_pentadbir.equals("Y")) {
 	    						j += 30.00 ;
@@ -1310,13 +1311,14 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    						j += 30.00 ;
 	    					}
 	    				double total = (j + bayaranYuranPerintah17);
+	    				System.out.println("ADA NILAIAN HARTA AMANAH RAYA6");
 	    				this.context.put("txtJumBayaranTerkini", total);
 	    				this.context.put("txtJumHarta", jumlah_harta17_tarikhmohon);
 	    			}
 	    				context.put("dataJumlahBayaran", getJumlahBayaran17);
 
   				}else{
-  					myLogger.info("TIADA NILAIAN HARTA AMANAH RAYA");
+  					System.out.println("TIADA NILAIAN HARTA AMANAH RAYA");
   					if(getJumlahBayaran17.size()!=0){
   						Hashtable a = (Hashtable) getJumlahBayaran17.get(0);
   				   		double jumlah_harta17_tarikhmohon;
@@ -1446,7 +1448,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 
 			//if ( getParam("id_bayaran_pusaka") == "0" ){
 			if ( getParam("id_bayaran_pusaka").equals("0") ){
-				myLogger.info("BAYARAN PUSAKA :: "+getParam("id_bayaran_pusaka"));
+				System.out.println("BAYARAN PUSAKA :: "+getParam("id_bayaran_pusaka"));
 				String id_bayaran_pusaka = getParam("id_bayaran_pusaka");
 			    context.put("id_bayaran_pusaka",id_bayaran_pusaka);
 			    if (doPost.equals("true")){
@@ -1456,7 +1458,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 
 			//if ( getParam("id_bayaran_baitulmal") == "0" ){
 			if ( getParam("id_bayaran_baitulmal").equals("0") ){
-				myLogger.info("BAYARAN BAITULMAL :: "+getParam("id_bayaran_baitulmal"));
+				System.out.println("BAYARAN BAITULMAL :: "+getParam("id_bayaran_baitulmal"));
 				String id_bayaran_baitulmal = getParam("id_bayaran_baitulmal");
 			    this.context.put("id_bayaran_baitulmal",id_bayaran_baitulmal);
 			    if (doPost.equals("true")){
@@ -1511,18 +1513,21 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 		    	//get jumlah_harta_tarikhmohon
     			FrmPrmhnnSek8KptsanBicaraData.setJumlahBayaran17(id_permohonansimati);
     			getJumlahBayaran17 = FrmPrmhnnSek8KptsanBicaraData.getJumlahBayaran17();
+    			
+    			FrmPrmhnnSek8KptsanBicaraData.setMaklumatPermohonan17(idpermohonan);
+    			getMaklumatPermohonan17 = FrmPrmhnnSek8KptsanBicaraData.getMaklumatPermohonan17();
 
 	   			//checking TBLPPKHA for NilaianAmanahRaya
   				checkingNilaianAmanahRaya = logic2.checkingNilaianAmanahRaya(id_permohonansimati);
   				double nilai_ha_tarikhmohon;
   				if(checkingNilaianAmanahRaya.size()!=0){
 
-  					myLogger.info("ADA NILAIAN HARTA AMANAH RAYA");
+  					System.out.println("ADA NILAIAN HARTA AMANAH RAYA");
   					Hashtable nilaian = (Hashtable) checkingNilaianAmanahRaya.get(0);
   					nilai_ha_tarikhmohon = Double.parseDouble(nilaian.get("nilai_ha_tarikhmohon").toString());
 	    			if(getJumlahBayaran17.size()!=0){
 	    				Hashtable a = (Hashtable) getJumlahBayaran17.get(0);
-	    				Hashtable z = (Hashtable) getMaklumatPermohonan17.get(0);
+	    				Hashtable z = (Hashtable) getMaklumatPermohonan17.get(0); //sini
 	    		   		double jumlah_harta17_tarikhmohon;
 	    	    		double bayaranYuranPerintah17;
 
@@ -1546,26 +1551,6 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    					//ADD BY PEJE
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 	    				}
-	    				/** 
-	    				 * 8/1/2020: arief 
-	    				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
-	    				 * 
-	    				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
-	    					if ( jumlah_harta17_tarikhmohon <= 1000 ) {
-	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-	    						if (bayaranYuranPerintah17 < 10) {
-	    							bayaranYuranPerintah17 = 10.00 ;
-	    						}							
-	    					} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
-	    						bayaranYuranPerintah17 = 30.00 ;
-	    					} else {
-	    						bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-	    						bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    					}
-	    				}else{
-	    					bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				}**/
 	    				double j = 0;
 	    					if (batal_kuasa_pentadbir.equals("Y")) {
 	    						j += 30.00 ;
@@ -1580,7 +1565,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    				context.put("dataJumlahBayaran", getJumlahBayaran17);
 
   				}else{
-  					myLogger.info("TIADA NILAIAN HARTA AMANAH RAYA");
+  					System.out.println("TIADA NILAIAN HARTA AMANAH RAYA");
   					if(getJumlahBayaran17.size()!=0){
   						Hashtable a = (Hashtable) getJumlahBayaran17.get(0);
   				   		double jumlah_harta17_tarikhmohon;
@@ -1704,7 +1689,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 		if( getIdPerintah.size() != 0 ){
 			Hashtable e = (Hashtable) getIdPerintah.get(0);
 			id_perintah = (String)e.get("id_perintah");
-			myLogger.info("IDPERINTAH Simpan_Edit_Tangguh :: "+id_perintah);
+			System.out.println("IDPERINTAH Simpan_Edit_Tangguh :: "+id_perintah);
 		 	EDITsocPegawaiPengendali = getParam("EDITsocPegawaiPengendali");
 		    txdTarikhPerintahEDIT = getParam("txdTarikhPerintahEDIT");
 		    flag_tangguh = getParam("flag_tangguh");
@@ -1803,6 +1788,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     	}else if("Simpan_Batal".equals(submit)){
 
     		String id_perbicaraan = getParam("id_perbicaraan");
+			myLogger.info("id_perbicaraan = "+id_perbicaraan);
 			context.put("id_perbicaraan", getParam("id_perbicaraan"));
 
 			//* GET INFO PERBICARAAN
@@ -1812,7 +1798,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 				Hashtable h = (Hashtable) getrecord_infoperbicaraan.get(0);
 				id_fail = h.get("id_fail").toString();
 
-				 if (doPost.equals("true")) {
+				// if (doPost.equals("true")) {
 					add_MaklumatBatal(usid,idpermohonan,id_perbicaraan);
 
 				   // edit_status_batal(idpermohonan,usid);
@@ -1823,9 +1809,16 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 				    //ID_STATUS : 47
 				    //ID_SUBURUSAN : 425
 					logic_A.kemaskiniSubUrusanStatusFail(session,idpermohonan,usid,"47","425",idFail);
-				 }
+				// }
 			}
 				context.put("dataPerbicaraan", getrecord_infoperbicaraan);
+				String id_pejabat = getParam("socTempatBicara");
+	    		String id_perintah = getParam("id_perintah");
+	    		String socMahkamah = getParam("socMahkamah");
+	    		String txtAlamatMahkamah1 = getParam("txtAlamatMahkamah1");
+	    		String txtAlamatMahkamah2 = getParam("txtAlamatMahkamah2");
+	    		String txtAlamatMahkamah3 = getParam("txtAlamatMahkamah3");
+	    		String txtPoskodMahkamah = getParam("txtPoskodMahkamah");
 
 			getrecord_perintah = FrmPrmhnnSek8KptsanBicaraData.setInfoPerintah(idpermohonan,id_perbicaraan);
 			String flag_batal = "";
@@ -1833,6 +1826,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 			if ( getrecord_perintah.size() != 0 ){
 				Hashtable d = (Hashtable) getrecord_perintah.get(0);
 				flag_batal = d.get("flag_batal").toString();
+				id_perintah = d.get("id_perintah").toString();
 				idUnitPskView = Long.parseLong(d.get("id_unitpsk").toString());
 
 				setValueFlagJenisKeputusan("","","checked");
@@ -1842,12 +1836,78 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 
        			if (d.get("flag_batal").equals("1")){
        				setValueFlagBatal("checked","","","","");
-    			} else if (d.get("flag_batal").equals("2")){
-    				setValueFlagBatal("","checked","","","");
-    			} else if (d.get("flag_batal").equals("3")){
-    				setValueFlagBatal("","","checked","","");
-    			} else if (d.get("flag_batal").equals("4")){
-    				setValueFlagBatal("","","","checked","");
+       				detailMahkamah = model.getDetailMahkamah(socMahkamah);
+
+            		if(detailMahkamah.size()!=0){
+
+            			//MAHKAMAH
+
+            	    	
+            	    	String bandarM = "";
+                		String alamatM1 = "";
+            	    	String alamatM2 = "";
+            	    	String alamatM3 = "";
+            	    	String poskodM = "";
+            	    	String idnegeriM = "";
+            	    	String idbandarM = "";
+            	    	String nama_pejabat = "";
+
+            			Hashtable onc = (Hashtable) detailMahkamah.get(0);
+
+            			nama_pejabat = onc.get("nama_pejabat").toString();
+            			alamatM1 = onc.get("alamat1").toString();
+            			alamatM2 = onc.get("alamat2").toString();
+            			alamatM3 = onc.get("alamat3").toString();
+            			poskodM = onc.get("poskod").toString();
+
+
+					context.put("namaMahkamah",nama_pejabat);
+					context.put("alamat1Mahkamah", alamatM1);
+					context.put("alamat2Mahkamah", alamatM2);
+					context.put("alamat3Mahkamah", alamatM3);
+					context.put("txtPoskodMahkamah", poskodM);
+					context.put("batalWasiat", "1");
+					context.put("batal2juta", "");
+				}
+				} else if (d.get("flag_batal").equals("2")){
+					setValueFlagBatal("","checked","","","");
+				} else if (d.get("flag_batal").equals("3")){
+					setValueFlagBatal("","","checked","","");
+				} else if (d.get("flag_batal").equals("4")){
+					setValueFlagBatal("","","","checked","");
+					detailMahkamah = model.getDetailMahkamah(socMahkamah);
+
+            		if(detailMahkamah.size()!=0){
+
+            			//MAHKAMAH
+
+            	    	
+            	    	String bandarM = "";
+                		String alamatM1 = "";
+            	    	String alamatM2 = "";
+            	    	String alamatM3 = "";
+            	    	String poskodM = "";
+            	    	String idnegeriM = "";
+            	    	String idbandarM = "";
+            	    	String nama_pejabat = "";
+
+            			Hashtable onc = (Hashtable) detailMahkamah.get(0);
+
+            			nama_pejabat = onc.get("nama_pejabat").toString();
+            			alamatM1 = onc.get("alamat1").toString();
+            			alamatM2 = onc.get("alamat2").toString();
+            			alamatM3 = onc.get("alamat3").toString();
+            			poskodM = onc.get("poskod").toString();
+
+
+					context.put("namaMahkamah",nama_pejabat);
+					context.put("alamat1Mahkamah", alamatM1);
+					context.put("alamat2Mahkamah", alamatM2);
+					context.put("alamat3Mahkamah", alamatM3);
+					context.put("txtPoskodMahkamah", poskodM);
+					context.put("batal2juta", "1");
+					context.put("batalWasiat", "");
+				}
     			} else if (d.get("flag_batal").equals("5")){
     				setValueFlagBatal("","","","","checked");
     			}
@@ -1876,6 +1936,15 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     		context.put("button", "");
     		context.put("tarikh", "perintah");
     		context.put("listSemak", list);
+    		
+    		myLogger.info("flag_batal = "+flag_batal);
+    		myLogger.info("id_perintah = "+id_perintah);
+    		myLogger.info("socMahkamah = "+socMahkamah);
+    		if ((flag_batal.equals("1")) || (flag_batal.equals("4")))  {
+    			myLogger.info("flag_batal = "+flag_batal);
+    			updateMahkamah(usid,id_perintah,id_perbicaraan);
+    			
+    		}
 
 			vm = "app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp";
 
@@ -3722,10 +3791,10 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	        Date sep_mohon = df.parse(september_mohon);
 
 	        if (tar_mohon.before(sep_mohon) || t_mohon.equals("")) {
-    			myLogger.info("TARIKH MOHON SEBELUM SEPTEMBER");
+    			System.out.println("TARIKH MOHON SEBELUM SEPTEMBER");
     			context.put("FlagtarikhMohon", 1);
     		}else{
-    			myLogger.info("TARIKH MOHON SELEPAS SEPTEMBER");
+    			System.out.println("TARIKH MOHON SELEPAS SEPTEMBER");
     			context.put("FlagtarikhMohon", 0);
     		}
     		//CLOSE
@@ -3751,7 +3820,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 			double nilai_ha_tarikhmohon;
 			if(checkingNilaianAmanahRaya.size()!=0){
 
-				myLogger.info("ADA NILAIAN HARTA AMANAH RAYA");
+				System.out.println("ADA NILAIAN HARTA AMANAH RAYA");
 				Hashtable nilaian = (Hashtable) checkingNilaianAmanahRaya.get(0);
 				nilai_ha_tarikhmohon = Double.parseDouble(nilaian.get("nilai_ha_tarikhmohon").toString());
 
@@ -3765,8 +3834,8 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 
 		    		jumlah_harta17_tarikhmohon = Double.parseDouble(a.get("sumharta").toString());
 		    		jumlahHartaDeductNilaianAmanahRaya = jumlah_harta17_tarikhmohon - nilai_ha_tarikhmohon;
-		    		myLogger.info("jumlah_harta17_tarikhmohon = "+jumlah_harta17_tarikhmohon);
-		    		myLogger.info("jumlahHartaDeductNilaianAmanahRaya = "+jumlahHartaDeductNilaianAmanahRaya);
+		    		System.out.println("jumlah_harta17_tarikhmohon = "+jumlah_harta17_tarikhmohon);
+		    		System.out.println("jumlahHartaDeductNilaianAmanahRaya = "+jumlahHartaDeductNilaianAmanahRaya);
 
 		    		String batal_kuasa_pentadbir = z.get("batal_kuasa_pentadbir").toString();
 		    		String batal_p_amanah = z.get("batal_p_amanah").toString();
@@ -3786,26 +3855,6 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 						//ADD BY PEJE
     					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 					}
-					/** 
-    				 * 8/1/2020: arief 
-    				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
-    				 * 
-    				if ((jumlahHartaDeductNilaianAmanahRaya > 0) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000)){
-	    				if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
-	    					bayaranYuranPerintah17 = 0.002 * jumlahHartaDeductNilaianAmanahRaya ;
-	    					if (bayaranYuranPerintah17 < 10) {
-	    						bayaranYuranPerintah17 = 10.00 ;
-	    					}							
-	    				} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
-	    					bayaranYuranPerintah17 = 30.00 ;
-	    				} else {
-	    					bayaranYuranPerintah17 = 0.002 * jumlahHartaDeductNilaianAmanahRaya ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				}
-	    			}else{
-	    				bayaranYuranPerintah17 = 0.005 * jumlahHartaDeductNilaianAmanahRaya ;
-	    				bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    			}**/
 
 					double j = 0;
 						if (batal_kuasa_pentadbir.equals("Y")) {
@@ -3828,7 +3877,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 
 			}else{
 
-				myLogger.info("TIADA NILAIAN HARTA AMANAH RAYA");
+				System.out.println("TIADA NILAIAN HARTA AMANAH RAYA");
 				if(getJumlahBayaran17.size()!=0){
 
 					Hashtable a = (Hashtable) getJumlahBayaran17.get(0);
@@ -3857,26 +3906,6 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 						//ADD BY PEJE
     					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 					}
-					/** 
-    				 * 8/1/2020: arief 
-    				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen
-    				 * 
-    				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
-	    				if ( jumlah_harta17_tarikhmohon <= 1000 ) {
-	    					bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-	    					if (bayaranYuranPerintah17 < 10) {
-	    						bayaranYuranPerintah17 = 10.00 ;
-	    					}							
-	    				} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
-	    					bayaranYuranPerintah17 = 30.00 ;
-	    				} else {
-	    					bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				}
-	    			}else{
-	    				bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
-	    				bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    			}**/
 
 					double j = 0;
 						if (batal_kuasa_pentadbir.equals("Y")) {
@@ -3947,6 +3976,87 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 
     	}else if("tab_batal".equals(submit)){
 
+    		String submit2 = getParam("command2");
+        	myLogger.info("[submit2] :: " +submit2);
+    		if ("changeGetAlamatMahkamah".equals(submit2)){
+    			
+    			//onchange id
+        		String id_namaM = getParam("socMahkamah");
+        		
+    	    	//MAHKAMAH
+
+    	    	
+    	    	String bandarM = "";
+        		String alamatM1 = "";
+    	    	String alamatM2 = "";
+    	    	String alamatM3 = "";
+    	    	String poskodM = "";
+    	    	String idnegeriM = "";
+    	    	String idbandarM = "";
+    	    	
+    	    	
+    	    	if(id_namaM!=""){
+
+        	    	String id_pejabat = "";
+
+            		detailMahkamah = model.getDetailMahkamah(id_namaM);
+
+            		if(detailMahkamah.size()!=0){
+
+            			String C_namaM = "";
+
+            			Hashtable onc = (Hashtable) detailMahkamah.get(0);
+
+            			id_pejabat = onc.get("id_pejabat").toString();
+            			alamatM1 = onc.get("alamat1").toString();
+            			alamatM2 = onc.get("alamat2").toString();
+            			alamatM3 = onc.get("alamat3").toString();
+            			poskodM = onc.get("poskod").toString();
+            			idnegeriM = onc.get("id_negeri").toString();
+            			idbandarM = onc.get("id_bandar").toString();
+            			C_namaM = onc.get("nama_pejabat").toString();
+
+            			context.put("id_pejabatCH", id_pejabat);
+            	    	context.put("C_namaM", C_namaM);
+
+            		}//close if(detailMahkamah.size()!=0)
+
+
+            	}//close if get namaM != ""
+
+        	    	context.put("alamatM1", alamatM1);
+        	    	context.put("alamatM2", alamatM2);
+        	    	context.put("alamatM3", alamatM3);
+        	    	context.put("poskodM", poskodM);
+
+        	    	if(idnegeriM!=""){
+            			context.put("selectNegeriMahkamah",HTML.SelectNegeri("socNegeriMahkamah",Utils.parseLong(idnegeriM),null,"style=width:300px onchange=onchangeBandarByNegeri()"));
+            			if(idbandarM!=""){
+            				context.put("selectBandarMahkamah",HTML.SelectBandarByNegeri(idnegeriM,"socBandarMahkamah",Utils.parseLong(idbandarM),"style=width:300px"));
+            			}else{
+            				context.put("selectBandarMahkamah",HTML.SelectBandarByNegeri(idnegeriM,"socBandarMahkamah",null,"style=width:300px"));
+                		}
+            		}else{
+            			context.put("selectNegeriMahkamah",HTML.SelectNegeri("socNegeriMahkamah",null,null,"style=width:300px onchange=onchangeBandarByNegeri()"));
+            			if(idbandarM!=""){
+            				context.put("selectBandarMahkamah",HTML.SelectBandar("socBandarMahkamah",Utils.parseLong(idbandarM),"style=width:300px"));
+            			}else{
+            				context.put("selectBandarMahkamah",HTML.SelectBandar("socBandarMahkamah",null,"style=width:300px"));
+                		}
+            		}
+
+            	
+    		}
+    		if ("deleteSuppDocMode".equals(submit2))
+    		{
+    			//String idSimati = getParam("idSimati");
+    			deleteSuppDoc(idSimati, jenisDoc);
+    			/*String idPermohonan = getParam("idPermohonan");
+    			logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+    			listSupportingDoc = logic_A.setSupportingDoc(idPermohonan, jenisDoc);
+    			this.context.put("ViewSupportingDoc", listSupportingDoc);*/
+    		}
+    		
 			//clear field
     		context.put("TEMPcheckedMahkamahTinggiWasiat", "");
     		context.put("TEMPcheckedTidakHadir3Kali", "");
@@ -3978,6 +4088,27 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     		context.put("flag", "batal");
     		context.put("tarikh", "perintah");
     		context.put("button", "");
+    		
+    		String id_negeri = getParam("id_negeri");
+    		
+    		//get list mahkamah
+    		listMahkamah = model.getListMahkamah(id_negeri);
+
+    		//size mahkamah (if=0 gune textfield)
+    		context.put("saiz_listM", listMahkamah.size());
+    		context.put("listMahkamah", listMahkamah);
+    		
+    		String id = getParam("id_permohonan");
+			FrmSenaraiFailKeputusanPermohonanInternalData.setData(id,
+					(String) session.getAttribute("_ekptg_user_id"));
+			
+			Vector listPemohon2 = FrmSenaraiFailKeputusanPermohonanInternalData
+					.getData();
+			this.context.put("ViewPemohon", listPemohon2);
+			
+			logic_A.setSupportingDoc(id, jenisDoc);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);
 
             vm = "app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp";
 
@@ -5077,7 +5208,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 			if (getDataKeputusan.size()!=0){
 				Hashtable c = (Hashtable) getDataKeputusan.get(0);
 				idBayaran = (String)c.get("id_bayaran");
-				myLogger.info("ID BAYARAN"+idBayaran);
+				System.out.println("ID BAYARAN"+idBayaran);
 			}
 			context.put("dataKeputusan", getDataKeputusan);
 
@@ -5272,7 +5403,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 				if (getDataKeputusan.size()!=0){
 					Hashtable c = (Hashtable) getDataKeputusan.get(0);
 					idBayaran = c.get("id_bayaran").toString();
-					myLogger.info("ID BAYARAN"+idBayaran);
+					System.out.println("ID BAYARAN"+idBayaran);
 				}
 				context.put("dataKeputusan", getDataKeputusan);
 
@@ -5344,6 +5475,14 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 		            	context.put("selectBicara",HTML.SelectTempatBicaraByPejabatJKPTG(idPejabatJKPTG,"socTempatBicara",null,null,"style=width:340 onChange=\"doChangeidTempatBicaraUpdate();\" "));
 		            	context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"socPegawai",null,"style=width:305"));
 		            }
+					
+		    		//if(idNegeriMhn!=""){
+		    		//	context.put("selectBicara",HTML.SelectTempatBicaraByPejabatJKPTG(idPejabatJKPTG,"socTempatBicara",id_pejabatmahkamah,null,"style=width:340 onChange=\"doChangeidTempatBicaraUpdate();\" "));
+		    		//	context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"socPegawai",idUnitPsk,"style=width:305"));
+		            //}else{
+		            //	context.put("selectBicara",HTML.SelectTempatBicaraByPejabatJKPTG(idPejabatJKPTG,"socTempatBicara",null,null,"style=width:340 onChange=\"doChangeidTempatBicaraUpdate();\" "));
+		            //	context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"socPegawai",null,"style=width:305"));
+		           // }
 		    			context.put("selectNegeri",HTML.SelectNegeri("socNegeri",id_negeri," disabled "));
 	    		}
 	    			context.put("dataPerintahKolateral", getrecord_perintahKolateral);
@@ -5587,7 +5726,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 				    		jenis_rujukan = b.get("jenis_rujukan").toString();
 				    		idNegeriMahkamah = b.get("id_negerimahkamah").toString();
 				    		idMahkamah = b.get("id_mahkamah").toString();
-				    		myLogger.info("JENIS RUJUKAN :: "+jenis_rujukan);
+				    		System.out.println("JENIS RUJUKAN :: "+jenis_rujukan);
 
 				    		if (b.get("jenis_rujukan").equals("1")){
 								checkedMahkamahTinggiROTS = "checked";
@@ -5646,7 +5785,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 							Hashtable b = (Hashtable) PerintahTangguhROTS.get(0);
 							if (b.get("jenis_rujukan").equals("1")){	//----> MAHKAMAH TINGGI
 							    // CALL FLAG
-								myLogger.info(">>>> JENIS RUJUKAN 1");
+								System.out.println(">>>> JENIS RUJUKAN 1");
 								context.put("viewMode", "no");
 					    		context.put("addMode", "no");
 					    		context.put("editMode", "no");
@@ -5660,7 +5799,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 							}else{
 
 					    		if(b.get("flag_rujukan").equals("1")){	//---> MAHKAMAH SYARIAH
-					    			myLogger.info(">>>> FLAG RUJUKAN 1");
+					    			System.out.println(">>>> FLAG RUJUKAN 1");
 
 					    			context.put("viewMode", "no");
 						    		context.put("addMode", "no");
@@ -5674,7 +5813,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 					    		}
 					    		if(b.get("flag_rujukan").equals("2")){
 					    			//---> PEJABAT MUFTI
-					    			myLogger.info(">>>> FLAG RUJUKAN 2");
+					    			System.out.println(">>>> FLAG RUJUKAN 2");
 					    			context.put("viewMode", "no");
 						    		context.put("addMode", "no");
 						    		context.put("editMode", "no");
@@ -5981,6 +6120,13 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     			context.put("selectBicara",HTML.SelectTempatBicara("socTempatBicara",null,null,"style=width:340 onChange=\"doChangeidTempatBicara();\" "));
     			context.put("selectPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"socPegawaiPengendali",null,"style=width:305"));
             }
+    		//if(idPejabatJKPTG!=""){
+    		//	context.put("selectBicara",HTML.SelectTempatBicaraByPejabatJKPTG(idPejabatJKPTG,"socTempatBicara",null,null,"style=width:340 onChange=\"doChangeidTempatBicara();\" "));
+    		//	context.put("selectPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"socPegawaiPengendali",null,"style=width:305"));
+            //}else{
+    		//	context.put("selectBicara",HTML.SelectTempatBicara("socTempatBicara",null,null,"style=width:340 onChange=\"doChangeidTempatBicara();\" "));
+    		//	context.put("selectPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"socPegawaiPengendali",null,"style=width:305"));
+           // }
     		context.put("selectNegeri",HTML.SelectNegeri("socNegeri",null,"class=disabled disabled style=width:305"));
 
 			//* GET SENARAI WARIS
@@ -6894,8 +7040,8 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    		jumlah_harta17_tarikhmohon = Double.parseDouble(a.get("sumharta").toString());
 	    		String batal_kuasa_pentadbir = z.get("batal_kuasa_pentadbir").toString();
 	    		String batal_p_amanah = z.get("batal_p_amanah").toString();
-//				myLogger.info("BATAL KUASA TADBIR :: "+batal_kuasa_pentadbir);
-//				myLogger.info("BATAL P.AMANAH :: "+batal_p_amanah);
+//				System.out.println("BATAL KUASA TADBIR :: "+batal_kuasa_pentadbir);
+//				System.out.println("BATAL P.AMANAH :: "+batal_p_amanah);
 
 				//Azam Add on 20/4/2011 , jumlah_harta17_tarikhmohon >= 1
 				if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
@@ -6913,27 +7059,6 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 					//ADD BY PEJE
 					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 				}
-				/** 
-				 * 7/1/2020: arief 
-				 * berkuatkuasa selepas Akta diluluskan dalam Parlimen baru boleh guna
-				 * 				
-				if ((jumlah_harta17_tarikhmohon > 0) && (jumlah_harta17_tarikhmohon <= 5000000)){
-						if ( jumlah_harta17_tarikhmohon <= 1000 ) {
-							bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-							if (bayaranYuranPerintah17 < 10) {
-								bayaranYuranPerintah17 = 10.00 ;
-							}							
-						} else if ( (jumlah_harta17_tarikhmohon >= 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
-							bayaranYuranPerintah17 = 30.00 ;
-						} else {
-							bayaranYuranPerintah17 = 0.002 * jumlah_harta17_tarikhmohon ;
-							bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-						}
-				}else{
-					bayaranYuranPerintah17 = 0.005 * jumlah_harta17_tarikhmohon ;
-					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-				}**/
-
 				double j = 0;
 					if (batal_kuasa_pentadbir.equals("Y")) {
 						j += 30.00 ;
@@ -6943,9 +7068,9 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 					}
 				double total = (j + bayaranYuranPerintah17);
 				this.context.put("txtJumBayaranTerkini", total);
-//				myLogger.info("BAYARAN YURAN PERINTAH 17 :: "+bayaranYuranPerintah17);
-//				myLogger.info("BAYARAN J :: "+j);
-//				myLogger.info("TOTAL BAYARAN KESELURUHAN :: "+total);
+//				System.out.println("BAYARAN YURAN PERINTAH 17 :: "+bayaranYuranPerintah17);
+//				System.out.println("BAYARAN J :: "+j);
+//				System.out.println("TOTAL BAYARAN KESELURUHAN :: "+total);
 			}
 				context.put("dataJumlahBayaran", getJumlahBayaran17);
 
@@ -7311,7 +7436,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 			if (getDataKeputusan.size()!=0){
 				Hashtable c = (Hashtable) getDataKeputusan.get(0);
 				String idBayaran = c.get("id_bayaran").toString();
-				myLogger.info("ID BAYARAN :: "+idBayaran);
+				System.out.println("ID BAYARAN :: "+idBayaran);
 			}
 			context.put("dataKeputusan", getDataKeputusan);
 
@@ -7755,15 +7880,56 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	}
 
 	private void updateMahkamah(String usid,String id_perintah,String id_perbicaraan) throws Exception {
+		
+		String jenisPerintah = getParam("jenisPerintah");
+    	String txdTarikhPerintahEdit = getParam("txdTarikhPerintah");
+    	//String id_pejabat = getParam("socTempatBicara");
+    	String id_pejabat = getParam("socMahkamah");
+    	myLogger.info("id_pejabat = "+id_pejabat);
+    	String id_unitpsk = getParam("EDITsocPegawaiPengendali");
 
-    	String jenisPerintah = getParam("jenisPerintah");
-    	String txdTarikhPerintahEdit = getParam("txdTarikhPerintahEdit");
-    	String id_pejabat = getParam("socTempatBicara");
-    	String id_unitpsk = getParam("socPegawai");
+
 
 	    FrmPrmhnnSek8KptsanBicaraData.updateDataMahkamah(usid,id_perintah,id_perbicaraan,
 	    		jenisPerintah,txdTarikhPerintahEdit,id_pejabat,id_unitpsk);
 	}
+	
+	public void deleteSuppDoc(String idSimati, String jenisDoc) throws Exception 
+	{
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " DELETE FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = '"+idSimati+"' AND ID_JENISDOKUMEN = '"+jenisDoc+"'";
+			myLogger.info("sql1 >>> "+sql);
+			stmt.executeUpdate(sql);
+			
+			
+			conn.commit();
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	
+	
+}
 
 	//*Menunggu Keputusan Rujukan Mahkamah Tinggi
 	private void insertMahkamah(String usid,String id_perbicaraan) throws Exception {

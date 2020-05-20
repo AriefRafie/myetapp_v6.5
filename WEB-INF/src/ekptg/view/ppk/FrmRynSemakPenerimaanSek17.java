@@ -1,10 +1,17 @@
 package ekptg.view.ppk;
 
+import java.io.ByteArrayOutputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
@@ -13,6 +20,7 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.ppk.FrmHeaderPpk;
+import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8Notis;
 import ekptg.model.ppk.FrmRynSek8Rayuan;
 import ekptg.model.ppk.FrmRynSek8SemakPenerimaan;
@@ -32,13 +40,13 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
 	FrmRynSek8Rayuan model2 = new FrmRynSek8Rayuan();
 	FrmRynSek8SemakPenerimaan model3 = new FrmRynSek8SemakPenerimaan();
 	FrmHeaderPpk mainheader = new FrmHeaderPpk();
-
+	FrmPrmhnnSek8DaftarSek8InternalData logic_A = null;
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
 	public String doTemplate2() throws Exception{
 
 		HttpSession session = request.getSession();
-
+		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
     	String vm = "";
 
     	String action = getParam("action");
@@ -46,7 +54,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
 
     	String screenlist = "app/ppk/frmRynSenaraiSemakSek17.jsp";
     	String screen = "app/ppk/frmRynKeputusanRayuanSemakPenerimaanSek17.jsp";
-
+    	Vector listSupportingDoc = null;
+    	String jenisDoc = "99207";
     	String doPost = (String) session.getAttribute("doPost");
 
     	//vector
@@ -189,7 +198,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
     		if(maklumatRayuan.size()!=0){
     			Hashtable mr = (Hashtable) maklumatRayuan.get(0);
     			id_rayuan = mr.get("id_rayuan").toString();
-    			ARayu = mr.get("alasan_rayuan").toString();
+    			ARayu = mr.get("alasan_rayuan_memorandum").toString();
+    			myLogger.info("ARayu2 = "+ARayu);
         		PRayu = mr.get("perkara_rayu_memorandum").toString();
     		}
 
@@ -348,7 +358,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
         		if(maklumatRayuan.size()!=0){
         			Hashtable mr2 = (Hashtable) maklumatRayuan.get(0);
         			id_rayuan2 = mr2.get("id_rayuan").toString();
-        			ARayu = mr2.get("alasan_rayuan").toString();
+        			ARayu = mr2.get("alasan_rayuan_memorandum").toString();
+        			myLogger.info("ARayu2 = "+ARayu);
             		PRayu = mr2.get("perkara_rayu_memorandum").toString();
         		}
 
@@ -547,7 +558,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
     		if(maklumatRayuan.size()!=0){
     			Hashtable mr = (Hashtable) maklumatRayuan.get(0);
     			id_rayuan = mr.get("id_rayuan").toString();
-    			ARayu = mr.get("alasan_rayuan").toString();
+    			ARayu = mr.get("alasan_rayuan_memorandum").toString();
+    			myLogger.info("ARayu3 = "+ARayu);
         		PRayu = mr.get("perkara_rayu_memorandum").toString();
     		}
 
@@ -739,6 +751,22 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
 
     	else if ("maklumatSerahanK1".equals(submit)){
 
+    		String id = getParam("id_permohonan");
+    		myLogger.info(":::::::::id" +id);
+    		
+			
+			Hashtable getidSimati = getidSimati(id);
+			String IdSimati = (String) getidSimati.get("idSimati");
+			
+			String submit21 = getParam("command2");
+    		if ("deleteSuppDoc".equals(submit21)){
+    			deleteSuppDoc(IdSimati, jenisDoc);
+    		}
+			context.put("idSimati",IdSimati);
+			logic_A.setSupportingDoc(id, jenisDoc);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			
     		String selectedTab = "";
 
     		selectedTab = getParam("tabId").toString();
@@ -784,7 +812,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
     		if(maklumatRayuan.size()!=0){
     			Hashtable mr = (Hashtable) maklumatRayuan.get(0);
     			id_rayuan = mr.get("id_rayuan").toString();
-    			ARayu = mr.get("alasan_rayuan").toString();
+    			ARayu = mr.get("alasan_rayuan_memorandum").toString();
+    			myLogger.info("ARayu4 = "+ARayu);
         		PRayu = mr.get("perkara_rayu_memorandum").toString();
     		}
 
@@ -1070,7 +1099,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
                 		if(maklumatRayuan.size()!=0){
                 			Hashtable mr2 = (Hashtable) maklumatRayuan.get(0);
                 			id_rayuan = mr2.get("id_rayuan").toString();
-                			ARayu = mr2.get("alasan_rayuan").toString();
+                			ARayu = mr2.get("alasan_rayuan_memorandum").toString();
+                			myLogger.info("ARayu5 = "+ARayu);
                     		PRayu = mr2.get("perkara_rayu_memorandum").toString();
                 		}
 
@@ -1552,7 +1582,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
     		if(maklumatRayuan.size()!=0){
     			Hashtable mr = (Hashtable) maklumatRayuan.get(0);
     			id_rayuan = mr.get("id_rayuan").toString();
-    			ARayu = mr.get("alasan_rayuan").toString();
+    			ARayu = mr.get("alasan_rayuan_memorandum").toString();
+    			myLogger.info("ARayu6 = "+ARayu);
         		PRayu = mr.get("perkara_rayu_memorandum").toString();
     		}
 
@@ -1619,7 +1650,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
     			if(maklumatRayuan.size()!=0){
     				Hashtable mr = (Hashtable) maklumatRayuan.get(0);
     				perkara_rayu_memo = mr.get("perkara_rayu_memorandum").toString();
-    				ARayu = mr.get("alasan_rayuan").toString();
+    				ARayu = mr.get("alasan_rayuan_memorandum").toString();
+        			myLogger.info("ARayu7 = "+ARayu);
     			}
     			if(perkara_rayu_memo!=""){
     				totalWordPerkaraRayuMemo = Utils.wordcount(perkara_rayu_memo);
@@ -1668,7 +1700,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
         		if(maklumatRayuan.size()!=0){
         			Hashtable mr = (Hashtable) maklumatRayuan.get(0);
         			id_rayuan = mr.get("id_rayuan").toString();
-        			ARayu = mr.get("alasan_rayuan").toString();
+        			ARayu = mr.get("alasan_rayuan_memorandum").toString();
+        			myLogger.info("ARayu8 = "+ARayu);
             		PRayu = mr.get("perkara_rayu_memorandum").toString();
         		}
 
@@ -1761,7 +1794,8 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
     		if(maklumatRayuan.size()!=0){
     			Hashtable mr = (Hashtable) maklumatRayuan.get(0);
     			id_rayuan = mr.get("id_rayuan").toString();
-    			ARayu = mr.get("alasan_rayuan").toString();
+    			ARayu = mr.get("alasan_rayuan_memorandum").toString();
+    			myLogger.info("ARayu9 = "+ARayu);
         		PRayu = mr.get("perkara_rayu_memorandum").toString();
     		}
 
@@ -1978,7 +2012,7 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
     		if(maklumatRayuan.size()!=0){
     			Hashtable mr = (Hashtable) maklumatRayuan.get(0);
     			id_rayuan = mr.get("id_rayuan").toString();
-    			ARayu = mr.get("alasan_rayuan").toString();
+    			ARayu = mr.get("alasan_rayuan_memorandum").toString();
         		PRayu = mr.get("perkara_rayu_memorandum").toString();
     		}
 
@@ -2514,6 +2548,78 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
 	    model3.updateMaklumatSerahan(h);
 
 	  }//close update serahan k1
+	
+	public Hashtable<String,String> getidSimati(String idPermohonan) {
+		Db db = null;
+		String sql = "";
+		Hashtable<String,String> getidSimati = new Hashtable<String,String>();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = '"+idPermohonan+"'";
+			myLogger.info("SQL STATEMENT - getidSimati : " + sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				getidSimati.put(
+						"idSimati",
+						rs.getString("ID_SIMATI") == null ? "" : rs
+								.getString("ID_SIMATI"));
+				
+				
+				
+				
+				
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return getidSimati;
+	}
+	
+	
+	public void deleteSuppDoc(String idSimati, String jenisDoc) throws Exception 
+	{
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " DELETE FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = '"+idSimati+"' AND ID_JENISDOKUMEN = '"+jenisDoc+"'";
+			myLogger.info("sql1 >>> "+sql);
+			stmt.executeUpdate(sql);
+			
+			
+			conn.commit();
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	
+	
+}
 
 	//update memorandum
 	private void updateMemorandum(HttpSession session) throws Exception{
