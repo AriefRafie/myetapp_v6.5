@@ -1776,7 +1776,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		}
 	}
 	
-	public String daftarBaru(String idUrusan, String idSuburusan, String idHakmilikAgensi, String perkara, 
+	public String daftarBaru(String idUrusan, String idSuburusan, String idSubsuburusan, String idHakmilikAgensi, String perkara, 
 			String noRujukanSurat, String tarikhSurat, String idJenisTanah, String idPHPBorangK, String idPPTBorangK, 
 			String idHakmilikUrusan, String idKementerianTanah, String idNegeriTanah, String tarikhTerima, 
 			String idJenisPermohonan, HttpSession session) throws Exception {
@@ -1822,6 +1822,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("ID_FAIL", idFail);
 			r.add("ID_URUSAN", idUrusan);
 			r.add("ID_SUBURUSAN", idSuburusan);
+			r.add("ID_SUBURUSAN", idSubsuburusan);
 			r.add("ID_TARAFKESELAMATAN", "1");
 			r.add("ID_SEKSYEN", "4");
 			r.add("FLAG_FAIL", "1");

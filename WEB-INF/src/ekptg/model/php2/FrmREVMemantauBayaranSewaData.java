@@ -68,8 +68,8 @@ public class FrmREVMemantauBayaranSewaData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TBLPFDFAIL.NO_FAIL, TBLPHPPEMOHON.NAMA, TBLPHPBAYARANPERLUDIBAYAR.NO_RUJUKAN,"
-					+ " TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT,"
+			sql = "SELECT TBLPFDFAIL.NO_FAIL, TBLPHPPEMOHON.NAMA, TBLPHPBAYARANPERLUDIBAYAR.NO_RUJUKAN, TBLPHPBAYARANPERLUDIBAYAR.BAYARAN,"
+					+ " TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT, TBLPHPHASIL.MAKLUMAT_LOT,"
 					+ " TBLPHPHASIL.ID_HASIL, TBLPFDFAIL.ID_FAIL, TBLPFDFAIL.ID_SUBURUSAN, TBLPHPHASIL.FLAG_TUNGGAKAN, TBLPHPHASIL.FLAG_TUNGGAKAND,"
 					+ " TBLPHPBAYARANPERLUDIBAYAR.STATUS AS STATUS_PERJANJIAN, TBLPHPHASIL.NILAI_TUNGGAKAN"
 					
@@ -326,7 +326,11 @@ public class FrmREVMemantauBayaranSewaData {
 					} else {
 						h.put("tunggakan", "(" + Util.formatDecimal(rs.getDouble("NILAI_TUNGGAKAN")) + ")");
 					}
-				}		
+				}	
+				h.put("kadarSewa", Util.formatDecimal(rs.getDouble("BAYARAN")));
+				h.put("maklumatLot",
+						rs.getString("MAKLUMAT_LOT") == null ? "" : rs
+								.getString("MAKLUMAT_LOT"));
 				
 				senaraiFail.addElement(h);
 
@@ -489,7 +493,8 @@ public class FrmREVMemantauBayaranSewaData {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("bil", bil);
-				h.put("idAkaun", idAkaun);
+				h.put("idAkaun", rs.getString("ID_AKAUN") == null ? "" : rs
+						.getString("ID_AKAUN"));
 				h.put("idJenisTransaksi",
 						rs.getString("ID_JENISTRANSAKSI") == null ? "" : rs
 								.getString("ID_JENISTRANSAKSI"));

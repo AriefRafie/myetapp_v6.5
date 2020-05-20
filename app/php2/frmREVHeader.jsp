@@ -12,6 +12,8 @@
     #set($sewa = $beanHeader.sewa)
     
     #set($namaPemohon = $beanHeader.namaPemohon)
+    #set($noRujukanPenyewa = $beanHeader.noRujukanPenyewa)
+    #set($noPengenalan = $beanHeader.noPengenalan) 
     #set($alamat1 = $beanHeader.alamat1)             
     #set($alamat2 = $beanHeader.alamat2)
     #set($alamat3 = $beanHeader.alamat3)
@@ -20,7 +22,6 @@
     #set($negeri = $beanHeader.negeri)
     #set($noTel = $beanHeader.noTel)
     #set($noFax = $beanHeader.noFax)
-    #set($noRujukanPenyewa = $beanHeader.noRujukanPenyewa)
     #end
     <td width="50%" valign="top"><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
@@ -85,8 +86,16 @@
       <legend><strong>MAKLUMAT PENYEWA</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr valign="top">
-          <td width="37%" align="right" valign="top">NAMA PENYEWA :</td>
+          <td width="37%" align="right" valign="top">NAMA PENYEWA/ NAMA SYARIKAT :</td>
           <td width="63%"><font color="blue" valign="top">$namaPemohon</font></td>
+        </tr>
+        <tr>
+          <td align="right">NO. PENGENALAN/ PENDAFTARAN :</td>
+          <td><font color="blue">$noPengenalan</font></td>
+        </tr>
+        <tr>
+          <td align="right">NO RUJUKAN PENYEWA :</td>
+          <td><font color="blue">$noRujukanPenyewa</font></td>
         </tr>
         <tr>
           <td align="right" valign="top">ALAMAT :</td>
@@ -119,10 +128,6 @@
         <tr>
           <td align="right">NO. FAX :</td>
           <td><font color="blue">$noFax</font></td>
-        </tr>
-        <tr>
-          <td align="right">NO RUJUKAN PENYEWA:</td>
-          <td><font color="blue">$noRujukanPenyewa</font></td>
         </tr>
         <tr>
           <td align="right">&nbsp;</td>

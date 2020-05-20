@@ -13,7 +13,7 @@
       <table align="center" width="100%">
         #if ($mode == 'view')
         <tr >
-          <td colspan="8"><input name="cmdBayaran" type="button" value="Pembayaran" onClick="pemBayaranLL()">          </td>
+          <td colspan="8"><input name="cmdBayaran" type="button" value="Pembayaran" onClick="pemBayaranLL()"></td>
         </tr>
         #end
         <tr class="table_header">

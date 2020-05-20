@@ -140,13 +140,15 @@
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>No Fail</strong></td>
-          <td width="10%" align="center"><strong>Jenis Penyewaan</strong></td>
-          <td width="25%"><strong>Nama Penyewa</strong></td>          
-          <td width="8%" align="center"><strong>Tarikh Mula</strong></td>
-          <td width="8%" align="center"><strong>Tarikh Tamat</strong></td>
-          <td width="12%" align="center"><strong>Tunggakan (RM)</strong></td>
-          <td width="12%" align="center"><strong>Status Perjanjian</strong></td>
+          <td width="20%" align="center"><strong>No Fail</strong></td>
+          <td width="6%" align="center"><strong>Jenis Penyewaan</strong></td>
+          <td width="20%" align="center"><strong>Nama Penyewa</strong></td>
+          <td width="18%" align="center"><strong>Maklumat Lot</strong></td>         
+          <td width="5%" align="center"><strong>Tarikh Mula</strong></td>
+          <td width="5%" align="center"><strong>Tarikh Tamat</strong></td>
+          <td width="8%" align="center"><strong>Kadar Sewa (RM)</strong></td>
+          <td width="8%" align="center"><strong>Tunggakan (RM)</strong></td>
+          <td width="10%" align="center"><strong>Status Perjanjian</strong></td>
         </tr>
         #set ($list = "")
         #if ($SenaraiFail.size() > 0)
@@ -167,10 +169,12 @@
             #end
             #if ($!list.statusDeposit != "") <font class="blink" ><span class="style2">$!list.statusDeposit</span></font> <br />
             #end </td>
-          <td class="$row">$list.jenisPenyewaan</td>
-          <td class="$row">$list.namaPemohon</td>          
+          <td class="$row" align="center">$list.jenisPenyewaan</td>
+          <td class="$row">$list.namaPemohon</td>
+          <td class="$row">$list.maklumatLot</td>           
           <td class="$row" align="center">$list.tarikhMula</td>
           <td class="$row" align="center">$list.tarikhTamat</td>
+          <td class="$row" align="right">$!list.kadarSewa</td>
           <td class="$row" align="right">$!list.tunggakan</td>          
           #if ($!list.flagStatusPerjanjian == '1')
           <td align="center" class="$row"><strong><span class="style1">$list.statusPerjanjian</span></strong></td>

@@ -9,6 +9,7 @@ import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmPYWSenaraiFailOnlineData;
+import ekptg.model.php2.utiliti.PHPUtilHTML;
 
 public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
 
@@ -41,6 +42,7 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
         String hitButton = getParam("hitButton");
         String idHakmilikAgensi = getParam("idHakmilikAgensi");
         String idSuburusan = getParam("idSuburusan");
+        String idSubsuburusan = getParam("idSuburusan");
 		        
         //VECTOR
         Vector list = null;
@@ -86,10 +88,12 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
        		if (logic.getBeanMaklumatPermohonan().size() != 0){
 				Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
 				idSuburusan = (String) hashPermohonan.get("idSuburusan");
+				idSubsuburusan = (String) hashPermohonan.get("idSubsuburusan");
 			}
 	
          	this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled"," class=\"disabled\""));
 			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan),"disabled", " class=\"disabled\""));
+			this.context.put("selectSubSuburusan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socSubsuburusan", Long.parseLong(idSubsuburusan), "disabled", " class=\"disabled\""));
 
 			// MAKLUMAT PEMOHON
 			logic.setMaklumatPemohon(idFail);
@@ -131,10 +135,12 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
        		if (logic.getBeanMaklumatPermohonan().size() != 0){
 				Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
 				idSuburusan = (String) hashPermohonan.get("idSuburusan");
+				idSubsuburusan = (String) hashPermohonan.get("idSubsuburusan");
 			}
 
    			this.context.put("selectUrusan",HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " class=\"disabled\""));
    			this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "disabled", " class=\"disabled\""));
+			this.context.put("selectSubSuburusan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socSubsuburusan", Long.parseLong(idSubsuburusan), "disabled", " class=\"disabled\""));
     			
    			// MAKLUMAT PEMOHON
 			logic.setMaklumatPemohon(idFail);
@@ -185,7 +191,7 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
 	    this.context.put("idHakmilikAgensi", idHakmilikAgensi);
 	    this.context.put("idUrusan", idUrusan);
 	    this.context.put("idSuburusan", idSuburusan);
-	    
+	    this.context.put("idSubsuburusan", idSubsuburusan);
 		return vm;
 	}
 	
