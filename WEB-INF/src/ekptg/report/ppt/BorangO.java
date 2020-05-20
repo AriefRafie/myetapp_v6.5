@@ -30,7 +30,7 @@ public class BorangO extends EkptgReportServlet{
 			id_negeri = (String)h.get("ID_NEGERI");
 		
 		}	
-		//System.out.println("id_negeri report :"+id_negeri);
+		System.out.println("id_negeri report :"+id_negeri);
 		
 		if(id_negeri.equals("10")){
 			super.setReportName("BorangO");
