@@ -422,8 +422,8 @@ public class FrmRekodPendaftaranHakmilikRizabData {
 				  "AND B.STATUS='S' "+
 				  "AND A.ID_HAKMILIK = B.ID_HAKMILIK(+) " +
 				  "AND RR.ID_JENISRIZAB(+) =A.ID_RIZAB";			
-			ResultSet rs = stmt.executeQuery(sql);
 			myLog.info("getPaparHakmilikRizabById:sql="+sql);
+			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String,String> h;
 
 			while (rs.next()) {
