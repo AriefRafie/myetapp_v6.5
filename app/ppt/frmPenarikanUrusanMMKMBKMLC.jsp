@@ -378,12 +378,14 @@
       
         <a href="javascript:mmkSelangor3('$id_pembatalan','$nama_pengarah')" class="style2" ><font color="blue">Jadual Penarikan Balik Lot
  </font></a></td>
+ <tr>
+        <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
       </tr> 
         
-        
-        
-        
-      
+
     </table>
 </fieldset>
 
@@ -1551,7 +1553,21 @@ function mmkSelangor3(id_penarikan,nama_pengarah)
 
 }
 
+function mmkSelangor4(id_fail)
+{
+	var currentTime = new Date();
+	   var month = currentTime.getMonth() + 1;
+	   var day = currentTime.getDate();
+	   var year = currentTime.getFullYear();
+	   var currentDate = day + "/" + month + "/" + year;
+	
+	var url = "../servlet/ekptg.report.ppt.BorangLA?id_Fail="+id_fail;
+	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
 
+}
 
 
 

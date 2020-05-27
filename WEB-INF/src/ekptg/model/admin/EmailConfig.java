@@ -22,6 +22,18 @@ public class EmailConfig {
 		mail = EmailSender.getInstance();
 	}
 	
+	public void sendTo(String userMail
+			,String tajuk
+			,String kandungan) throws Exception {
+		
+		mail.SUBJECT = tajuk;
+		mail.MESSAGE = kandungan + getFooter();		
+		mail.RECIEPIENT = userMail;
+//		mail.TO_CC = new String[1];		
+		mail.sendEmail();
+		
+	}
+	
 	public void sendByRole(String userMail
 		,String role
 		,String idNegeri
@@ -96,6 +108,11 @@ public class EmailConfig {
 //		return iUser;
 //
 //	}	
-	
+	public String getFooter() {
+		String kandungan= " <br><br>Sekian, terima kasih.<br><br><br>";			
+		kandungan+= " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+		return kandungan;
+		
+	}
 	
 }

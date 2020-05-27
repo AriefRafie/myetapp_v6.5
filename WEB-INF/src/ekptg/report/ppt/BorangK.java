@@ -36,7 +36,7 @@ public class BorangK extends EkptgReportServlet {
 		
 		System.out.println("id_negeri report :"+id_negeri);
 		
-		if(id_negeri.equals("5"))
+		/*if(id_negeri.equals("5"))
 		{
 			super.setReportName("Borang K_N9");
 		}
@@ -45,9 +45,9 @@ public class BorangK extends EkptgReportServlet {
 			super.setReportName("Borang K_Penang");
 		}
 		else
-		{
+		{*/
 			super.setReportName("Borang K");
-		}
+		//}
 		
        	
         

@@ -35,7 +35,6 @@ public class FrmRynSek8SemakPenerimaan {
 	private static Vector listDefaultSek17 = new Vector();
 	private static Vector listCarianSek17 = new Vector();
 	
-	
 	//seksyen 8 (termasuk dengan seksyen 17)
 	public static Vector getListDefault(){
 		return listDefault;
@@ -56,7 +55,6 @@ public class FrmRynSek8SemakPenerimaan {
 		return listDataMaklumatSerahanMahkamah;
 	}
 	
-	
 	//Seksyen 17
 	public static Vector getListDefaultSek17(){
 		return listDefaultSek17;
@@ -64,8 +62,6 @@ public class FrmRynSek8SemakPenerimaan {
 	public static Vector getListCarianSemakPenerimaanSek17(){
 		return listCarianSek17;
 	}
-	
-	
 	
 	//list default Seksyen 8
 	public static void setListDefault(String usid)throws Exception {

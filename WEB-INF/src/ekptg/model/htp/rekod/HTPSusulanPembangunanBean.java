@@ -252,7 +252,7 @@ public class HTPSusulanPembangunanBean implements IHTPSusulan{
 			listMaklumatFail = new Vector<Hashtable<String,String>>();
 			Statement stmt = db.getStatement();				
 		    sql = getSQL(idHakmilik,langkah)+ " ORDER BY A.TARIKH_BINAAN DESC";
-			//myLog.info("Vector getMaklumatMengikutLangkah = "+sql);
+			myLog.info("Vector getMaklumatMengikutLangkah :sql= "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String,String> h;
 			int bil = 1;

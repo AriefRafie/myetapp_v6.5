@@ -41,6 +41,8 @@ public class SuratIringanMMK extends EkptgReportServlet {
 			super.setReportName("SuratIringanDerafMMK(PENANG)");
 		}else if(id_negeri.equals("8")){
 			super.setReportName("SuratIringanDerafMMK(PERAK)");
+		}else if(id_negeri.equals("6")){
+			super.setReportName("Surat iringan Deraf MMK_v6_Pahang");
 		}else{
 			super.setReportName("Surat iringan Deraf MMK_v6");
 		}
