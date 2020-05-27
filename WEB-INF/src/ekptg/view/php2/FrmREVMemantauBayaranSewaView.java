@@ -1174,8 +1174,8 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
     		
     		list = new Vector();
     		
-        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC, getParam("txtNoCek"), idJenisFailC, idStatusPerjanjianC, getParam("txtNoResit"),
-        			idNegeriC, idDaerahC, idMukimC, jenisHakmilik, getParam("txtNoHakmilik"), getParam("txtNoWarta"), jenisLot,getParam("txtNoLot"),
+        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC, getParam("txtNoCek"), getParam("txtNoResit"), idJenisFailC, idStatusPerjanjianC, 
+        			getParam("txtTujuan"), idNegeriC, idDaerahC, idMukimC, jenisHakmilik, getParam("txtNoHakmilik"), getParam("txtNoWarta"), jenisLot,getParam("txtNoLot"),
         			getParam("txtNoPegangan"), idKementerianC, idAgensiC);
 		
     		list = logic.getSenaraiFail();
@@ -1185,10 +1185,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			this.context.put("txtNamaPemohon", getParam("txtNamaPemohon"));
 			this.context.put("txtNoRujukan", getParam("txtNoRujukan"));			
 			this.context.put("txtNoCek", getParam("txtNoCek"));
+			this.context.put("txtNoResit", getParam("txtNoResit"));
 			this.context.put("selectBankC", HTML.selectBank("socBankC", Long.parseLong(idBankC), "", ""));			
 			this.context.put("socJenisFail", getParam("socJenisFail"));
-			this.context.put("txtNoResit", getParam("txtNoResit"));
-			
+			this.context.put("txtTujuan", getParam("txtTujuan"));
 			this.context.put("txtNoPegangan", getParam("txtNoPegangan"));
         	this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(jenisHakmilik), ""));
         	this.context.put("txtNoHakmilik", getParam("txtNoHakmilik"));
