@@ -60,7 +60,7 @@
         <tr>
           <td class="$row" align="center">$senaraiMesyuarat.bil</td>
           <td class="$row" align="center"><a href="javascript:paparMesyuarat('$senaraiMesyuarat.idMesyuarat')" class="style2">$senaraiMesyuarat.tarikhMesyuarat</a></td>
-          <td class="$row">$senaraiMesyuarat.tajukMesyuarat</td>
+          <td class="$row">($senaraiMesyuarat.bilMesyuarat)$senaraiMesyuarat.tajukMesyuarat</td>
           <td class="$row">$senaraiMesyuarat.tindakanMesyuarat</td>
           <td class="$row" align="center"><input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusMesyuarat('$senaraiMesyuarat.idMesyuarat')"/></td>
         </tr>
