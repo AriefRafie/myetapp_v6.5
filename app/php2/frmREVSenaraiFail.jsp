@@ -30,7 +30,12 @@
         <tr>
           <td width="30%" height="24" scope="row" align="right">No Fail : </td>
           <td width="70%"><input name="txtNoFail" id="txtNoFail" type="text" value="$txtNoFail" size="50" maxlength="50" style="text-transform:uppercase;">
-            #if($flagDetail == '') <a href="javascript:bukaCarian();" class="style1">Buka Carian Terperinci </a> #else <a href="javascript:tutupCarian();" class="style1">Tutup Carian Terperinci </a> #end </td>
+            #if($flagDetail == '') 
+            <a href="javascript:bukaCarian();" class="style1">Buka Carian Terperinci </a> 
+            #else 
+            <a href="javascript:tutupCarian();" class="style1">Tutup Carian Terperinci </a> 
+            #end 
+          </td>
         </tr>
         <tr>
           <td width="30%" height="24" scope="row" align="right">Nama Penyewa : </td>
@@ -52,6 +57,10 @@
           </td>
         </tr>
         <tr>
+          <td scope="row" align="right">No. Resit :</td>
+          <td><input name="txtNoResit" id="txtNoResit" type="text" value="$!txtNoResit" size="30" maxlength="50"/></td>
+        </tr>
+        <tr>
           <td scope="row" align="right"> Jenis Fail :</td>
           <td><select name="socJenisFailC" id="socJenisFailC" style="width:260px;">
               <option $selected value="">SILA PILIH</option>
@@ -64,8 +73,12 @@
           <td>$selectStatusPerjanjian</td>
         </tr>
         <tr>
-          <td scope="row" align="right">No. Resit :</td>
-          <td><input name="txtNoResit" id="txtNoResit" type="text" value="$!txtNoResit" size="30" maxlength="50"/></td>
+          <td scope="row" align="right" valign="top"> Tujuan Penyewaan :</td>
+          <td>
+		  	<textarea name="txtTujuan" id="txtTujuan" rows="5" cols="50" onBlur="this.value=this.value.toUpperCase();" 
+		  		onKeyUp="textCounter(this.form.txtTujuan,this.form.remLen,$!saizTxtTujuan);" 
+		  		onKeyDown="textCounter(this.form.txtTujuan,this.form.remLen,$!saizTxtTujuan);" >$!txtTujuan</textarea>
+		  </td>
         </tr>
         #if($flagDetail == 'buka')
         <tr>
@@ -146,8 +159,8 @@
           <td width="18%" align="center"><strong>Maklumat Lot</strong></td>         
           <td width="5%" align="center"><strong>Tarikh Mula</strong></td>
           <td width="5%" align="center"><strong>Tarikh Tamat</strong></td>
-          <td width="8%" align="center"><strong>Kadar Sewa (RM)</strong></td>
-          <td width="8%" align="center"><strong>Tunggakan (RM)</strong></td>
+          <td width="7%" align="center"><strong>Kadar Sewa (RM)</strong></td>
+          <td width="7%" align="center"><strong>Tunggakan (RM)</strong></td>
           <td width="10%" align="center"><strong>Status Perjanjian</strong></td>
         </tr>
         #set ($list = "")
@@ -214,9 +227,10 @@ function kosongkan(flagDetail) {
 	document.${formName}.txtNoRujukan.value = "";
 	document.${formName}.socBankC.value = "";
 	document.${formName}.txtNoCek.value = "";
+	document.${formName}.txtNoResit.value = "";	
 	document.${formName}.socJenisFailC.value = "";	
 	document.${formName}.socStatusPerjanjianC.value = "";	
-	document.${formName}.txtNoResit.value = "";	
+	document.${formName}.txtTujuan.value = "";	
 	if (flagDetail == 'buka'){
 		document.${formName}.txtNoPegangan.value = "";
 		document.${formName}.socJenisHakmilik.value = "";
@@ -238,7 +252,6 @@ function papar(idHasil) {
 	document.${formName}.idHasil.value = idHasil;
 	document.${formName}.submit();
 }
-
 function bukaCarian(){
 	document.${formName}.flagDetail.value = "buka";
 	document.${formName}.actionHasil.value = "";
@@ -252,9 +265,10 @@ function tutupCarian(){
 	document.${formName}.txtNoRujukan.value = "";
 	document.${formName}.socBankC.value = "";
 	document.${formName}.txtNoCek.value = "";
-	document.${formName}.socJenisFail.value = "";	
-	document.${formName}.socStatusPerjanjian.value = "";	
 	document.${formName}.txtNoResit.value = "";	
+	document.${formName}.socJenisFailC.value = "";	
+	document.${formName}.socStatusPerjanjianC.value = "";	
+	document.${formName}.txtTujuan.value = "";	
 	document.${formName}.txtNoPegangan.value = "";
 	document.${formName}.socJenisHakmilik.value = "";
 	document.${formName}.txtNoHakmilik.value = "";	
@@ -263,7 +277,9 @@ function tutupCarian(){
 	document.${formName}.txtNoLot.value = "";		
 	document.${formName}.socNegeriC.value = "";
 	document.${formName}.socDaerahC.value = "";
-	document.${formName}.socMukimC.value = "";		
+	document.${formName}.socMukimC.value = "";	
+	document.${formName}.socKementerianC.value = "";
+	document.${formName}.socAgensiC.value = "";	
 	doAjaxCall${formName}("");
 }
 

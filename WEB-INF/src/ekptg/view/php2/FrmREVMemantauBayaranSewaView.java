@@ -3,20 +3,39 @@
  */
 package ekptg.view.php2;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import lebah.db.Db;
+import lebah.db.DbException;
 import lebah.portal.AjaxBasedModule;
 import lebah.util.Util;
+import ekptg.engine.EmailProperty;
+import ekptg.engine.EmailSender;
+import ekptg.engine.GetAttachment;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
+import ekptg.model.admin.EmailConfig;
 import ekptg.model.php2.FrmREVHeaderData;
 import ekptg.model.php2.FrmREVMemantauBayaranSewaData;
+import ekptg.model.php2.utiliti.PHPUtilHTML;
 import ekptg.ws.gfmas.GfmasMemantauBayaranSewaManager;
 
 /**
@@ -24,15 +43,15 @@ import ekptg.ws.gfmas.GfmasMemantauBayaranSewaManager;
  *
  */
 public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
-	
-	GfmasMemantauBayaranSewaManager gfmas = new GfmasMemantauBayaranSewaManager();
-
+		
 	private static final long serialVersionUID = 1L;
 	
 	FrmREVMemantauBayaranSewaData logic = new FrmREVMemantauBayaranSewaData();
 	FrmREVHeaderData logicHeader = new FrmREVHeaderData();
+	GfmasMemantauBayaranSewaManager gfmas = new GfmasMemantauBayaranSewaManager();
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	static Logger myLogger = Logger.getLogger(FrmREVMemantauBayaranSewaView.class);
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -106,7 +125,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		if (idModBayaran == null || idModBayaran.trim().length() == 0){
 			idModBayaran = "99999";
 		}
-		
+		String idKategoriBayaran = getParam("socKategoriBayaran");
+		if (idKategoriBayaran == null || idKategoriBayaran.trim().length() == 0){
+			idKategoriBayaran = "99999";
+		}
         String idCaraBayaran = getParam("socCaraBayaran");
 		if (idCaraBayaran == null || idCaraBayaran.trim().length() == 0){
 			idCaraBayaran = "99999";
@@ -173,11 +195,11 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	}   
     		if ("simpanBayaranLL".equals(hitButton)){
          		idAkaun = logic.simpanBayaranLL(idHasil, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"), 
-         				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"), getParam("txtNoMel"), idModBayaran, session);
+         				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"), getParam("txtNoMel"), idModBayaran, idKategoriBayaran, session);
         	}
     		if ("simpanKemaskiniBayaranLL".equals(hitButton)){
     			logic.simpanKemaskiniBayaranLL(idHasil, idAkaun, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"), 
-     				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"), getParam("txtNoMel"), idModBayaran, session);
+     				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"), getParam("txtNoMel"), idModBayaran, idKategoriBayaran, session);
     		}
     		if ("hapusBayaranLL".equals(hitButton)){
          		logic.hapusBayaranLL(idHasil, idAkaun, session);
@@ -213,6 +235,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
     		if ("hapusNotis".equals(hitButton)){
          		logic.hapusNotis(idNotis, session);
         	}
+    		if ("sendNotidByEmail".equals(hitButton)){
+    			//ada attachment dlm emel
+    			hantarInvoisByEmel(session, idAkaun, idFail, servletContext, request, response);
+    		}
     	}
         
         if ("papar".equals(actionHasil)){
@@ -856,6 +882,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
                 	this.context.put("selectCaraBayaran",HTML.selectCaraBayaran("socCaraBayaran", Long.parseLong(idCaraBayaran), "", "onChange=\"doChangeCaraBayar();\""));
                 	this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
                 	this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", "onChange=\"doChangeModBayaran();\""));
+                	this.context.put("selectKategoriBayaran",HTML.SelectSuburusanByIdUrusan("12", "socKategoriBayaran", Long.parseLong(idKategoriBayaran), "", "onChange=\"doChangeModBayaran();\""));
                 	
         		} else if ("capaianGfmasBayaran".equals(mode)) {
         			
@@ -900,6 +927,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
             			this.context.put("selectCaraBayaran",HTML.selectCaraBayaran("socCaraBayaran", Long.parseLong(idCaraBayaran), "disabled", " class=\"disabled\""));
             			this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "disabled", " class=\"disabled\""));
             			this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "disabled", " class=\"disabled\""));
+                    	this.context.put("selectKategoriBayaran",HTML.SelectSuburusanByIdUrusan("12", "socKategoriBayaran", Long.parseLong(idKategoriBayaran), "disabled", "class=\"disabled\""));
             		}
         			
         		} else if ("updateBayaranLL".equals(mode)){
@@ -924,6 +952,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
             		this.context.put("selectCaraBayaran",HTML.selectCaraBayaran("socCaraBayaran", Long.parseLong(idCaraBayaran), "", "onChange=\"doChangeCaraBayar();\""));
             		this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
             		this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", "onChange=\"doChangeModBayaran();\""));
+                	this.context.put("selectKategoriBayaran",HTML.SelectSuburusanByIdUrusan("12", "socKategoriBayaran", Long.parseLong(idKategoriBayaran), "", "onChange=\"doChangeModBayaran();\""));
 
         		} 
 
@@ -1174,8 +1203,8 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
     		
     		list = new Vector();
     		
-        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC, getParam("txtNoCek"), idJenisFailC, idStatusPerjanjianC, getParam("txtNoResit"),
-        			idNegeriC, idDaerahC, idMukimC, jenisHakmilik, getParam("txtNoHakmilik"), getParam("txtNoWarta"), jenisLot,getParam("txtNoLot"),
+        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC, getParam("txtNoCek"), getParam("txtNoResit"), idJenisFailC, idStatusPerjanjianC, 
+        			getParam("txtTujuan"), idNegeriC, idDaerahC, idMukimC, jenisHakmilik, getParam("txtNoHakmilik"), getParam("txtNoWarta"), jenisLot,getParam("txtNoLot"),
         			getParam("txtNoPegangan"), idKementerianC, idAgensiC);
 		
     		list = logic.getSenaraiFail();
@@ -1185,10 +1214,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			this.context.put("txtNamaPemohon", getParam("txtNamaPemohon"));
 			this.context.put("txtNoRujukan", getParam("txtNoRujukan"));			
 			this.context.put("txtNoCek", getParam("txtNoCek"));
+			this.context.put("txtNoResit", getParam("txtNoResit"));
 			this.context.put("selectBankC", HTML.selectBank("socBankC", Long.parseLong(idBankC), "", ""));			
 			this.context.put("socJenisFail", getParam("socJenisFail"));
-			this.context.put("txtNoResit", getParam("txtNoResit"));
-			
+			this.context.put("txtTujuan", getParam("txtTujuan"));
 			this.context.put("txtNoPegangan", getParam("txtNoPegangan"));
         	this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(jenisHakmilik), ""));
         	this.context.put("txtNoHakmilik", getParam("txtNoHakmilik"));
@@ -1218,6 +1247,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		this.context.put("idNotis", idNotis);
 		this.context.put("idCaraBayaran", idCaraBayaran);
 		this.context.put("idModBayaran", idModBayaran);
+		this.context.put("idKategoriBayaran", idKategoriBayaran);
 		this.context.put("idNegeri", idNegeri);
 		this.context.put("idBandar", idBandar);
 		this.context.put("idLuas", idLuas);
@@ -1437,4 +1467,95 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			this.context.put("error",e.getMessage());
 		}	
 	}
+	
+	public static void hantarInvoisByEmel(HttpSession session, String idAkaun,
+			String idFail, ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+		myLogger.info("MASUK FUNCTION EMEL--------------------");
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+		String noFail = "";
+		String namaUser = "";
+		String emelUser = "";
+		String subject = "";
+		String content = "";
+		
+		EmailSender email = EmailSender.getInstance();
+		EmailProperty pro = EmailProperty.getInstance();
+		
+		try{
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT A.NO_FAIL, C.NAMA, C.EMEL " 
+					+ " FROM TBLPFDFAIL A, TBLPHPHASIL B, TBLPHPPEMOHON C "
+					+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON "
+					+ " AND A.ID_FAIL = '" + idFail + "'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("MASUK "+sql);
+			while (rs.next()) {
+				noFail = rs.getString("NO_FAIL");
+				namaUser = rs.getString("NAMA");
+				emelUser = rs.getString("EMEL");
+			}
+			
+			if (!"".equals(namaUser) && !"".equals(emelUser)){
+				
+				subject = "INVOIS " + noFail;
+				content = namaUser.toUpperCase() + "."
+						+ "<br><br>Permohonan anda telah diterima.Sila gunakan nombor permohonan diatas sebagai rujukan."
+						+ "Anda akan dimaklumkan setelah permohonan ini telah didaftarkan.";
+				
+				//To send attachments
+				GetAttachment report = new GetAttachment();
+				//ServletContext application = getServletContext();
+				final Map<String, Object> myMap = new HashMap<String,Object>();
+		    	String path ="";
+		    	String folderName = "php2/REV";
+		    	String fileName = "REVInvoisSewa";
+		    	
+		    	if (folderName != null) {
+					// path = "/reports/" + folderName + "/" + fileName ;
+					path = File.separator + "reports" + File.separator + folderName + File.separator + fileName;
+				} else {
+					// path = "/reports/" + fileName ;
+					path = File.separator + "reports" + File.separator + fileName;
+				}
+		    	
+		    	myMap.put("idfail", idFail);
+		    	myMap.put("flagVersion", "no");
+		    	myMap.put("ReportDir", path);
+		    	myMap.put("os", "1");
+		    	
+		    	//parameter utk panggil report, boleh multiple    	
+		    	byte[] bytes1 = report.getReportBytes("php2/REV","REVInvoisSewa",request, response, null, myMap);
+		    	
+		    	//open razman add new feature : attachment in bytes
+				email.ATTACHMENT_BYTES = new String[1];
+				email.ATTACHMENT_BYTES[0] = new String(bytes1, "ISO-8859-1");;
+				email.ATTACHMENT_BYTES_NAME = new String[1]; //kena sama dengan jumlah attachment
+				email.ATTACHMENT_BYTES_NAME[0] = "Invois Sewa";//letak nama file bersesuaian
+				//close razman add new feature : attachment in bytes
+				
+				email.SUBJECT = subject;
+				email.MESSAGE = content;
+				email.RECIEPIENT = emelUser;
+				email.sendEmail();
+			}
+		} catch (DbException e) {
+			myLogger.error(e);
+		} catch (Exception er) {
+			myLogger.error(er);
+			throw er;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
 }
