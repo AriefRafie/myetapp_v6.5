@@ -277,9 +277,15 @@
 <fieldset id="tableReportKertasRingkasan" style="display:none;"-->
 <legend><strong>SENARAI LAPORAN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
+#if ($idNegeriUser == '')
   <tr>
-    <td ><a href="#" class="style2" onClick="javascript:cetakPYWKertasRingkasan('$idFail')">Kertas Ringkasan</a></td>
+    <td ><a href="#" class="style2" onClick="javascript:cetakPYWKertasRingkasanNegeri('$idFail')">Kertas Ringkasan1</a></td>
   </tr>
+#else  
+  <tr>
+    <td ><a href="#" class="style2" onClick="javascript:cetakPYWKertasRingkasan('$idFail')">Kertas Ringkasan2</a></td>
+  </tr>
+#end  
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakPYWLampiranA('$idLaporanTanah')"> Lampiran A </a></td>
   </tr>
@@ -333,6 +339,16 @@ function cetakPYWKertasRingkasan(idFail) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+
+function cetakPYWKertasRingkasanNegeri(idFail) {
+	var url = "../servlet/ekptg.report.php2.PYWKertasRingkasan?ID_FAIL="+idFail;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+
 function cetakPYWLampiranA(idLaporanTanah) {
 	var url = "../servlet/ekptg.report.php2.PYWLampiranA?ID_LAPORANTANAH="+idLaporanTanah;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');

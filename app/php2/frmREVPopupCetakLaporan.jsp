@@ -35,6 +35,8 @@
       CETAKAN SURAT RAMPASAN DEPOSIT
       #elseif($!report == 'suratIringanResit')
       CETAKAN SURAT IRINGAN RESIT
+      #elseif($!report == 'suratTuntutanDeposit')
+      CETAKAN SURAT TUNTUTAN DEPOSIT
       #elseif($!report == 'BorangDaftarMelSewa')
       CETAKAN DAFTAR MEL
       #elseif($!report == 'BorangDaftarMelAPB')
@@ -73,7 +75,7 @@
             <a href="javascript:displayDatePicker('txtRujTarikh',false,'dmy');"><img border="0" src="../../img/calendar.gif"/></a></td>
         </tr>
         #end-->
-        #if($!report == 'SuratPemulanganSemula' || $!report == 'SuratTuntutanTunggakanSewa' || $!report == 'SuratRampasanDeposit' || $!report == 'suratIringanResit')
+        #if($!report == 'SuratPemulanganSemula' || $!report == 'SuratTuntutanTunggakanSewa' || $!report == 'SuratRampasanDeposit' || $!report == 'suratIringanResit' || $!report == 'suratTuntutanDeposit')
         <tr>
           <td ><span class="style1">*</span></td>
           <td >Nama Pegawai yang Menandatangani</td>
@@ -125,6 +127,14 @@
           <td ><input type="text" name="noMel" id="noMel" onblur="this.value=this.value.toUpperCase();" style="width:300px"/></td>
         </tr>
         #end
+        #if( $!report == 'suratTuntutanDeposit')
+        <tr>
+          <td >&nbsp;</td>
+          <td >Baki Lebihan</td>
+          <td >:</td>
+          <td ><input type="text" name="bakiLebihan" id="bakiLebihan" onblur="this.value=this.value.toUpperCase();" style="width:300px"/></td>
+        </tr>
+        #end
         <tr>
           <td >&nbsp;</td>
           <td >&nbsp;</td>
@@ -158,6 +168,8 @@
             <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:cetakBorangPenyerahanAPBPelesen()">
             #elseif( $report == 'BorangDaftarMelAPB')
             <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:cetakBorangDaftarMelAPB()">
+            #elseif( $report == 'suratTuntutanDeposit')
+            <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:cetakSuratTuntutanDeposit()">
             #end
             <!-- END CETAK --></td>
         </tr>
@@ -439,6 +451,20 @@ function cetakSuratIringanResit() {
 		return; 
 	}	
 	var url = "../../servlet/ekptg.report.php2.REVSuratIringanResit?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_HASIL="+document.${formName}.idHasil.value;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakSuratTuntutanDeposit() {
+
+	if(document.${formName}.socPegawai.value == ""){
+		alert('Sila pilih pegawai.');
+  		document.${formName}.socPegawai.focus(); 
+		return; 
+	}
+	var url = "../../servlet/ekptg.report.php2.REVSuratTuntutanDeposit?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_HASIL="+document.${formName}.idHasil.value+"&BAKI_LEBIHAN="+document.${formName}.bakiLebihan.value;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

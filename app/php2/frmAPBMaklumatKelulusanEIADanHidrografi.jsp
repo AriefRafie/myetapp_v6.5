@@ -35,12 +35,18 @@
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">LAPORAN KELULUSAN EIA</li>
           <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">LAPORAN KELULUSAN HIDROGRAFI</li>
+          <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">LAPORAN KELULUSAN KAJIAN PASIR</li>
+          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">LAPORAN KELULUSAN KAJIAN HIDRAULIK</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> <br>
             #parse("app/php2/frmAPBLaporanKelulusanEIA.jsp") </div>
           <div class="TabbedPanelsContent"> <br>
             #parse("app/php2/frmAPBLaporanKelulusanHidrografi.jsp") </div>
+          <div class="TabbedPanelsContent"> <br>
+            #parse("app/php2/frmAPBLaporanKelulusanKajianPasir.jsp") </div>
+          <div class="TabbedPanelsContent"> <br>
+            #parse("app/php2/frmAPBLaporanKelulusanKajianHidraulik.jsp") </div>
         </div>
       </div></td>
   </tr>
