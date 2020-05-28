@@ -93,6 +93,9 @@ function doChangeModBayaran() {
 function doChangeCaraBayar() {
 	doAjaxCall${formName}("doChangeCaraBayar");
 }
+function doChangeKategoriBayaran() {
+	doAjaxCall${formName}("doChangeKategoriBayaran");
+}
 function janaPenyataAkaun(idHasil) {
 				
 	var url = "../servlet/ekptg.report.php2.REVPenyataAkaun?ID_HASIL="+idHasil;
@@ -285,6 +288,12 @@ function simpanBayaranD(){
 	
 	document.${formName}.mode.value = "viewBayaranD";
 	document.${formName}.hitButton.value = "simpanBayaranD";
+	doAjaxCall${formName}("");
+}
+
+function sendNotidByEmail(idAkaun){
+	document.${formName}.idNotis.value = idNotis;
+	document.${formName}.hitButton.value = "sendNotidByEmail";
 	doAjaxCall${formName}("");
 }
 function paparBayaranD(idAkaun){

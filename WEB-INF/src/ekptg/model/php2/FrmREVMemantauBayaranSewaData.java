@@ -936,7 +936,7 @@ public class FrmREVMemantauBayaranSewaData {
 	public String simpanBayaranLL(String idHasil, String tarikh,
 			String idCaraBayaran, String idBank, String noRujukan,
 			String tarikhCek, String amaun, String noResit, String tarikhResit,
-			String butiran, String noMel, String modBayaran, HttpSession session)
+			String butiran, String noMel, String modBayaran, String idKategoriBayaran, HttpSession session)
 			throws Exception {
 
 		Db db = null;
@@ -972,6 +972,7 @@ public class FrmREVMemantauBayaranSewaData {
 			r.add("NO_RESIT", noResit);
 			r.add("NO_DAFTAR_MEL", noMel);
 			r.add("ID_MOD_BAYARAN", modBayaran);
+			r.add("ID_KATEGORI_BAYARAN", idKategoriBayaran);
 			if (!"".equals(tarikhResit)) {
 				r.add("TARIKH_RESIT", r.unquote("to_date('" + tarikhResit
 						+ "','dd/MM/yyyy')"));
@@ -1084,7 +1085,7 @@ public class FrmREVMemantauBayaranSewaData {
 			String tarikh, String idCaraBayaran, String idBank,
 			String noRujukan, String tarikhCek, String amaun, String noResit,
 			String tarikhResit, String butiran, String noMel,
-			String modBayaran, HttpSession session) throws Exception {
+			String modBayaran, String idKategoriBayaran, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -1122,6 +1123,7 @@ public class FrmREVMemantauBayaranSewaData {
 			}
 			r.add("NO_DAFTAR_MEL", noMel);
 			r.add("ID_MOD_BAYARAN", modBayaran);
+			r.add("ID_KATEGORI_BAYARAN", idKategoriBayaran);
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
