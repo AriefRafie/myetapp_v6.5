@@ -7,13 +7,21 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 import ekptg.view.admin.Pengumuman;
+import ekptg.view.admin.UserListModuleV3;
 
 public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
+	/**
+	 * 
+	 */
+	static Logger myLog = Logger.getLogger(FrmOnlineMenuUtamaKJP.class);
+	private static final long serialVersionUID = -4427185828234591107L;
 	private static final String PATH = "app/online/manuUtama/";
 	private String vm = PATH + "frmMenuUtamaKJP.jsp";
 
@@ -311,7 +319,8 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				   + " AND users.user_id = '" + userID + "') AS jumlahpermohonan "
 				  + " FROM DUAL ";
 			
-			// myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
+			// 
+			myLog.info("notifikasi_pelepasan :sql="+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;

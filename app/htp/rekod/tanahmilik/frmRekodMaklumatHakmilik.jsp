@@ -1154,25 +1154,25 @@
 		    #if($!statusBatal == '')
 		    	#set($labelPengesahan = '')
 		    	
-		    	#if ($statuSemasa =='1' && ($portal_role_ =='(HTP)PenggunaNegeri' || $portal_role_ =='(HTP)PenggunaNegeriSS'))
+		    	#if ($statuSemasa =='1' && ($portal_role_ =='PenggunaNegeri' || $portal_role_ =='(HTP)PenggunaNegeriSS'))
 		    		#set($labelPengesahan = 'Hantar Semakan')		
 		    		    	
-		    	#elseif($statuSemasa =='3' && ($portal_role_ =='(HTP)PegawaiNegeri' || $portal_role_ =='(HTP)PegawaiNegeriSS'))
+		    	#elseif($statuSemasa =='3' && ($portal_role_ =='PegawaiNegeri' || $portal_role_ =='(HTP)PegawaiNegeriSS'))
 		    		#set($labelPengesahan = 'Hantar Pengesahan')
 		    	
-		    	#elseif($statuSemasa =='4' && ($portal_role_ =='(HTP)PengarahNegeri' || $portal_role_ =='(HTP)PengarahNegeriSS'))		     
+		    	#elseif($statuSemasa =='4' && ($portal_role_ =='PengarahNegeri' || $portal_role_ =='(HTP)PengarahNegeriSS'))		     
 		    		#set($labelPengesahan = 'Hantar Ke HQ')
 
-		  		#elseif($statuSemasa =='5' && $portal_role_ =='(HTP)HQPengguna')
+		  		#elseif($statuSemasa =='5' && $portal_role_ =='HQPengguna')
 		  			#set($labelPengesahan = 'Hantar Ke Unit Rekod')
 		  		
-		  		#elseif($statuSemasa =='6' && $portal_role_ =='(HTP)HQPenggunaRekod')
+		  		#elseif($statuSemasa =='6' && $portal_role_ =='HQPenggunaRekod')
 		  			#set($labelPengesahan = 'Hantar Semakan')
 
-		  		#elseif($statuSemasa =='7' && ($portal_role_ =='(HTP)HQPegawai1' || $portal_role_ =='(HTP)HQPegawai'))
+		  		#elseif($statuSemasa =='7' && ($portal_role_ =='HQPegawai1' || $portal_role_ =='HQPegawai'))
 		  			#set($labelPengesahan = 'Hantar Pengesahan')
 
-		  		#elseif($statuSemasa =='8' && $portal_role_ =='(HTP)HQPengarah')
+		  		#elseif($statuSemasa =='8' && $portal_role_ =='HQPengarah')
 		  			#set($labelPengesahan = 'Sahkan Maklumat Tanah')
 		  		
 		  		#end

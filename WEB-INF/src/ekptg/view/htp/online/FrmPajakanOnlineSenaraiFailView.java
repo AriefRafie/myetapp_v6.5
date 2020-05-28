@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package ekptg.view.htp.online;
 
 import java.sql.Connection;
@@ -35,10 +33,7 @@ import ekptg.model.htp.online.IOnline;
 import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
-/**
- * 
- *
- */
+
 public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 
 	private final String PATH="app/htp/online/";
@@ -48,7 +43,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 	FrmOnlinePajakanSenaraiFailData logic = new FrmOnlinePajakanSenaraiFailData();
 	FrmOnlineMaklumatPajakanData logicMaklumat = new FrmOnlineMaklumatPajakanData();
 	
-	private static Logger log = Logger.getLogger(ekptg.view.online.htp.pajakan.FrmPajakanSenaraiFailViewOnline.class);
+	private static Logger log = Logger.getLogger(ekptg.view.htp.online.FrmPajakanOnlineSenaraiFailView.class);
 	
 	private PfdFail fail = null;
 	private Permohonan permohonan = null;

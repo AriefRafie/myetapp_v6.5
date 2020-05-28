@@ -1152,7 +1152,7 @@ public class FrmKPIData {
 				SQLRenderer r = new SQLRenderer();
 				r.add("u.id_urusan");
 				r.add("u.kod_urusan");
-				r.add("nama_urusan");
+				r.add("u.nama_urusan");
 				  
 				r.add("s.id_urusan", r.unquote("u.id_urusan"));
 				if(idSeksyen != null)

@@ -84,7 +84,36 @@
 				</td>
 			
 			</tr>
-		
+			 	<tr>
+    
+		    	<td align="center" colspan="">
+		   
+		   		#if($!isTanah)
+		    		
+		    		#set($labelPengesahan = '')
+		    	
+		    	#if($statuSemasa =='1' && $portal_role_ =='HQPengguna')
+		  			#set($labelPengesahan = 'Hantar Semakan')
+
+		  		#elseif($statuSemasa =='4' && ($portal_role_ =='HQPegawai1' || $portal_role_ =='HQPegawai'))
+		  			#set($labelPengesahan = 'Sahkan Perakuan')
+
+		  		#elseif($statuSemasa =='5' && $portal_role_ =='HQPengarah')
+		  			#set($labelPengesahan = 'Luluskan Perakuan')
+		  		
+		  		#end
+		    		
+		  			#if($!labelPengesahan != '')	
+		    		
+		    		<input type="button" class="stylobutton100_" name="cmdsemak" id="cmdsemak" value="$!labelPengesahan" onclick="doAjaxCall${formName}('simpanpengesahan')" />
+		    		#end
+		    		
+		    	#end
+		    		
+		    	
+		    	</td>
+		    
+	 </tr>
 		</table>
 	
 	

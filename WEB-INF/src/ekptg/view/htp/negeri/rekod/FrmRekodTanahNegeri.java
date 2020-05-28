@@ -114,7 +114,9 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	        postDB = true;
 	    }
 		userId = (String)session.getAttribute("_ekptg_user_id");
-		String portal_role = (String)session.getAttribute("myrole");
+		String portal_role = String.valueOf(session.getAttribute("myrole")).substring(5,String.valueOf(session.getAttribute("myrole")).length());
+		//String portal_role = (String)session.getAttribute("myrole");
+
 		context.put("portal_role_",portal_role);
 		String firstAction = getParam("firstAction");
 		this.context.put("firstAction",firstAction);
@@ -301,17 +303,17 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		
 			}
 			
-			if(portal_role.contains("PenggunaNegeri")){
+			if(portal_role.equals("PenggunaNegeri")){
 	  			langkah = "1";
     			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"2");
     			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
     					
-    		}else if(portal_role.contains("PegawaiNegeri")){
+    		}else if(portal_role.equals("PegawaiNegeri")){
 	  			langkah = "2";
     			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"3");
     			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
     			
-    		}else if(portal_role.contains("PengarahNegeri")){
+    		}else if(portal_role.equals("PengarahNegeri")){
 	  			langkah = "3";
     			kemaskiniSimpanStatusSelesai(idTanah,idPermohonan,IDSUBURUSAN,"4");
     			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
@@ -554,18 +556,23 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 			   }
 				this.context.put("jenisAkses", JENISAKSES);
 				String statuSemasa = "0";
-	    		if(portal_role.contains("PenggunaNegeri")){
+				myLog.info("portal_role="+portal_role.substring(5,portal_role.length()));
+				idPermohonan = "161099815";
+				
+	    		if(portal_role.equals("PenggunaNegeri")){
 		  			langkah = "1";
-	    		}else if(portal_role.contains("PegawaiNegeri")){
+	    		}else if(portal_role.equals("PegawaiNegeri")){
 		  			langkah = "2";
-	    		}else if(portal_role.contains("PengarahNegeri")){
+	    		}else if(portal_role.equals("PengarahNegeri")){
 		  			langkah = "3";	    		
 	    		}
+				myLog.info("langkah="+langkah);
 				Hashtable<String,String> hashStatus = getStatusRekod().getInfoStatusPermohonanFail(idTanah, idPermohonan,langkah);
 				if(hashStatus != null)
 					statuSemasa = hashStatus.get("langkah");
 					
-				//myLog.info("statuSemasa="+statuSemasa);
+				//
+				myLog.info("statuSemasa="+statuSemasa);
 				//this.context.put("idFail", idFail);
 				this.context.put("statuSemasa", statuSemasa);
 
@@ -584,11 +591,11 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 				
 				this.context.put("jenisAkses", JENISAKSES);
 				String statuSemasa = "0";
-	    		if(portal_role.contains("PenggunaNegeri")){
+	    		if(portal_role.equals("PenggunaNegeri")){
 		  			langkah = "1";
-	    		}else if(portal_role.contains("PegawaiNegeri")){
+	    		}else if(portal_role.equals("PegawaiNegeri")){
 		  			langkah = "2";
-	    		}else if(portal_role.contains("PengarahNegeri")){
+	    		}else if(portal_role.equals("PengarahNegeri")){
 		  			langkah = "3";	    		
 	    		}
 				Hashtable<String,String> hashStatus = getStatusRekod().getInfoStatusPermohonanFail(idTanah, idPermohonan,langkah);
@@ -1921,6 +1928,7 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
 		
+		idPermohonan =String.valueOf(hMaklumatFail.get("idPermohonan"));
 		this.context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
 		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
 		this.context.put("txtTajuk",(String)hMaklumatFail.get("tajukFail"));
@@ -1951,6 +1959,10 @@ public class FrmRekodTanahNegeri extends AjaxBasedModule {
 		//list = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
 		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
+
+		idPermohonan =String.valueOf(hMaklumatFail.get("idPermohonan"));
+		myLog.info("viewMaklumatFailMengikutHakmilik:idPermohonan="+idPermohonan);
+
 		this.context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
 		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
 		this.context.put("txtTajuk",(String)hMaklumatFail.get("tajukFail"));

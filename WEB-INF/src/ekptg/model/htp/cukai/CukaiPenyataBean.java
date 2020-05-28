@@ -195,7 +195,8 @@ public class CukaiPenyataBean implements ICukaiPenyata {
 				" AND f.id_Negeri IN (" + idNegeris +")";
 			sql += " ORDER BY n.kod_Mampu";	
 			ResultSet rs = stmt.executeQuery(sql);
-			//myLog.info("getList:sql="+sql);
+			//
+			myLog.info("getSenaraiFailXPenyata:sql="+sql);
 			Vector list = new Vector();
 			Hashtable h;
 			int bil = 1;

@@ -14,6 +14,7 @@ import lebah.db.SQLRenderer;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
+import ekptg.helpers.File;
 
 public class FrmGadaianSemakan1Data {
 	private static Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
@@ -253,12 +254,12 @@ public class FrmGadaianSemakan1Data {
 			   	  namaNegeri = rsnegeri.getString("nama_negeri");
 			  }
 		      
-//		      String noFail = kodJabatan+"/101/"+kodUrusan+"/"+idKementerian+"/"+kodMampu+"-"+File.getSeqNo(idSeksyen, idUrusan, idKementerian, idNegeri);
+		      String noFail = kodJabatan+"/101/"+kodUrusan+"/"+idKementerian+"/"+kodMampu+"-"+File.getSeqNo(idSeksyen, idUrusan, idKementerian, idNegeri);
 			  
 			  tujuan += "BAGI NEGERI ";
 			  tujuan += namaNegeri;		  
 			  
-			  String noFail = (String)data.get("noFailSek");
+//			  String noFail = (String)data.get("noFailSek");
 		      log.info("nofail = "+noFail);
 		      String noFailRoot = "TIADA";
 		      //rosli
