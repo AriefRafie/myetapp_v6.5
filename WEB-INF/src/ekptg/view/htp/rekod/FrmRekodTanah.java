@@ -135,6 +135,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 			postDB = true;
 		}
 		userId = (String) session.getAttribute("_ekptg_user_id");
+		
 		String firstAction = getParam("firstAction");
 		this.context.put("firstAction", firstAction);
 		String nextAction = getParam("nextAction");
@@ -264,7 +265,8 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		// context.remove("totalRecords");
 		// log.debug("idJenisTanah:"+idJenisTanah);
 		myLog.info("idStatus:" + idStatus);
-		String portal_role = (String) session.getAttribute("myrole");
+		String portal_role = String.valueOf(session.getAttribute("myrole")).substring(5,String.valueOf(session.getAttribute("myrole")).length());
+		//String portal_role = (String) session.getAttribute("myrole");
 		context.put("portal_role_", portal_role);
 
 		idPermohonan = getParam("id_permohonan");

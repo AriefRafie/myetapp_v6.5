@@ -60,14 +60,12 @@ public class Portal implements IServlet2 {
 				out.println("error :" + e.getMessage());
 			}
 		} else if ("doCheckUsername".equals(submit)) {
-			FrmKemaskiniPenggunaData userdata = FrmKemaskiniPenggunaData
-					.getInstance();
+			FrmKemaskiniPenggunaData userdata = FrmKemaskiniPenggunaData.getInstance();
 			if (userdata.isUserNamePenggunaExist(username)) {
 				out.println("Maaf, ID \"" + username + "\" sudah wujud!");
 			}
 		} else if ("doCheckNoKp".equals(submit)) {
-			FrmKemaskiniPenggunaData userdata = FrmKemaskiniPenggunaData
-					.getInstance();
+			FrmKemaskiniPenggunaData userdata = FrmKemaskiniPenggunaData.getInstance();
 			if (userdata.isNoKPPenggunaExist(NoKPBaru)) {
 				out.println("Maaf, No.KP \"" + NoKPBaru + "\" sudah wujud!");
 				session.setAttribute("doCheckNoKp", context);
@@ -77,19 +75,27 @@ public class Portal implements IServlet2 {
 			String attempt = request.getParameter("txtCaptChar");
 			// myLogger.info("doRegister");
 			if (code.equals(attempt)) {
-				FrmKemaskiniPenggunaData userdata = FrmKemaskiniPenggunaData
-						.getInstance();
+				FrmKemaskiniPenggunaData userdata = FrmKemaskiniPenggunaData.getInstance();
 				// myLogger.info("code match");
 				try {
-					userdata.addBasicPengguna(nama, username, password,
+					String xIndividu = request.getParameter("idsyarikat");
+					myLogger.info("xIndividu="+xIndividu);
+					if(xIndividu.equals("")){
+						userdata.addBasicPengguna(nama, username, password,
 							NoKPBaru, id_negeri, emel, idKategori, alamat1, alamat2, alamat3, poskod);
-					out.println("Pendaftaran berjaya,sila tunggu...");
+					}else {
+						userdata.addBasicPengguna(nama, username, password,
+								NoKPBaru, id_negeri, emel, idKategori, alamat1, alamat2, alamat3, poskod,xIndividu);						
+					}
+					out.println("Pendaftaran berjaya, sila tunggu...");
 					out.println("<script>doEffect();</script>");
 					out.println("<script>doHide();</script>");
 					doUserLogin(username, password, session, out);
+					
 				} catch (Exception e) {
 					out.println("Pendaftaran tidak berjaya:" + e.getMessage());
 				}
+				
 			} else {
 				// myLogger.info("code pengesahan:"+code);
 				// myLogger.info("attempt:"+attempt);

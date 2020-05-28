@@ -1408,6 +1408,9 @@
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&idHakmilik="+id_+"&statusSah="+status);
 	}
 
+	function rizabDetail(id_,status){
+		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&idHakmilik="+id_+"&statusSah="+status);
+	}
 	function rizab_detail(id_,status){
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&idHakmilik="+id_+"&statusSah="+status);
 	}
@@ -1578,12 +1581,12 @@
 
 <script>
 function viewDetailSewa(){
-	alert('frmRekodSenaraiHakmilikRizabIndexV03');
+	//alert('frmRekodSenaraiHakmilikRizabIndexV03');
 	doDivAjaxCall$formname('div_maklumatPenyewaan','doViewDetailSewa','');
 }
 
 function terperinciPajakan(idPer,idTanah){
-	alert('frmRekodSenaraiHakmilikRizabIndexV03:terperinciPajakan');
+	//alert('frmRekodSenaraiHakmilikRizabIndexV03:terperinciPajakan');
 	doDivAjaxCall$formname('divmaklumatpajakan','pajakanterperinci','');
 }
 </script>

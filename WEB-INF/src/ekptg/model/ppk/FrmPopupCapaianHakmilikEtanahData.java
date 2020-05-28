@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package ekptg.model.ppk;
 
 import java.sql.Connection;
@@ -20,7 +18,6 @@ import ekptg.helpers.Utils;
 
 /**
  * @author mohd faizal
- *
  */
 public class FrmPopupCapaianHakmilikEtanahData {
 	

@@ -353,6 +353,7 @@ public class File implements Serializable  {
 //			finally {
 //		      if (db != null) db.close();
 //		    }
+			myLog.debug("seqno="+seqno);			
 			
 			return seqno;
 		

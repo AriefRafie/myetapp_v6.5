@@ -19,7 +19,11 @@ public interface IOnline {
 	public Vector<HtpPermohonan> findFail(String carian, String noFail, String idNegeri);	
 	public Vector<HtpPermohonan> findFailOnline(String carian, String noFail, String idNegeri,String idKementerian);
 	public Vector<HtpPermohonan> findFailOnlineAktif(String carian, String noFail, String idNegeri,String idKementerian);
-
+	public Vector<HtpPermohonan> findFailOnlineUrusan(String carian
+		,String noFail
+		,String idNegeri
+		,String idKementerian
+		,String idUrusan);
 	public HakmilikUrusan simpanHakmilik(HakmilikUrusan urusan);
 	public HakmilikUrusan simpanHakmilikOnline(HakmilikUrusan urusan);
 	public HakmilikUrusan updateHakmilik(HakmilikUrusan urusan);

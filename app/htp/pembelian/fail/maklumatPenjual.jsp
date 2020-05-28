@@ -13,7 +13,7 @@
                      	#end
                      	
                      	</select>
-                     	<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Proses.." onclick="penjualPembeli()" $enable>
+                     	<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Salin Maklumat" onclick="penjualPembeli()" $enable>
                       ##<input name="PenjualSama" type="checkbox" id="PenjualSama" onclick="javascript:penjualPembeli()" #if($!pemohon.flagPemilik == "Y") checked #end $enable />
 ##Penjual Adalah Sama Dengan Pemilik </td>
  </tr>
@@ -90,12 +90,12 @@
                                   <tr>
                                   		<td colspan="4" align="center">
 				                         #if($penjualMode == "new")
-				  							<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanPenjual()">
+				  							<input type="button" class="stylobutton_" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanPenjual()">
 				  							
 				  						#elseif($penjualMode == "update")
-				  							<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:updatePenjual()">
+				  							<input type="button" class="stylobutton_" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:updatePenjual()">
 				  						#else
-				  							<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="javascript:kemaskiniPenjual()">
+				  							<input type="button" class="stylobutton_" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="javascript:kemaskiniPenjual()">
 				  						#end
 				  						<!-- <input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kembali" onclick=""> -->
                                   	</td>

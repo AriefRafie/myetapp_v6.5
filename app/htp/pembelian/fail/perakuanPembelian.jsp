@@ -107,12 +107,12 @@
 		    	<td align="center" colspan="4">
 		   
 		    		#if($semakMode == "update")
-		    		<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="doAjaxCall${formName}('simpanPerakuan')" />
-                	<input type="button" class="stylobutton" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembaliDraft()" />
+		    		<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="doAjaxCall${formName}('simpanPerakuan')" />
+                	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembaliDraft()" />
 		    		#else
-		    		<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="doAjaxCall${formName}('kemaskiniPerakuan')" />
-                    <input type="button" class="stylobutton" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:senaraiDokumenSurat('tablesuratakuan');" />
-               		<input type="button" class="stylobutton" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembaliDraft()" />
+		    		<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="doAjaxCall${formName}('kemaskiniPerakuan')" />
+                    <input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:senaraiDokumenSurat('tablesuratakuan');" />
+               		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembaliDraft()" />
 		    		#end
 		    		
 		    	
