@@ -31,6 +31,9 @@
         <tr>
           <td><a href="#" class="style2" onclick="javascript:janaSuratIringanResit('$idHasil')"> Surat Iringan Resit</a></td>
         </tr>
+        <tr>
+          <td><a href="#" class="style2" onclick="javascript:janaSuratTuntutanDeposit('$idHasil')"> Surat Tuntutan Deposit </a></td>
+        </tr>
       </table>
       </fieldset></td>
   </tr>
