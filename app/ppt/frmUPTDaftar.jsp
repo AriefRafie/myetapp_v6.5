@@ -719,7 +719,11 @@ background: #E0F2F7;
       <div class="TabbedPanelsContentGroup">
         <div class="TabbedPanelsContent">
         	<fieldset>
-        	<legend><strong>Maklumat Tanah Terlibat</strong> <input type="button" name="cmdTambah" value ="Tambah" onClick="javascript:tambah();">
+        	<legend><strong>Maklumat Tanah Terlibat</strong>
+        	#if($!negeriIntegrasi == "4")
+        		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('ppt','$id_permohonan')">
+          	#end        	
+        		<input type="button" name="cmdTambah" value ="Tambah Hakmilik" onClick="javascript:tambah();"> 
             
             #if($!no_jkptg == "")
              <input  name="cmdPupupHakmilik" id="cmdPupupHakmilik" onClick="popupGetHakmilik('$id_permohonan','4')" type="button" value="POPUP SALIN HAKMILIK SEKSYEN 8" />
@@ -1016,6 +1020,17 @@ background: #E0F2F7;
 
 <script>
 window.onload = submitForm;
+
+//Skrin Maklumat Tanah
+function semakanHakmilikeTanah(modul,idPermohonan) {
+	var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul="+modul+"&idPermohonan="+idPermohonan;
+    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+
+}
 
 function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
 	var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
