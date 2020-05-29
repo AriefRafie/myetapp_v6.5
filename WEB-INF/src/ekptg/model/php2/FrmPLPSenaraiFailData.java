@@ -67,7 +67,7 @@ public class FrmPLPSenaraiFailData {
 					+ " AND F.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) "
 					+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL"
 					+ " AND A.ID_MASUK = H.USER_ID(+)"
-					+ " AND B.ID_STATUS != '999'";
+					+ " AND B.ID_STATUS != '999' AND E.FLAG_HAKMILIK = 'U'";
 
 			//Senarai Tugasan
 			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole)
