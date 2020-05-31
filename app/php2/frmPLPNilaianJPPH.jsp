@@ -127,8 +127,10 @@
     <td align="center"> #if ($mode == 'view')
       <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskiniNilaian()"/>
       #if ($idStatus == '1610199')
-      <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
-      <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+      #if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
+      <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar ke Ibu Pejabat" onClick="hantarkeHQ()"/>
+<!--       <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/> -->
+	  #end
       #end
       #end
       #if ($mode == 'update')

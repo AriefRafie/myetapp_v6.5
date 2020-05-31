@@ -150,7 +150,7 @@
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($modePopup == 'new')
-      <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatJPPH()" value="Simpan">
+      <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatJPPH()" value="Hantar">
       <input name="cmdBatal" type="button" onClick="doBatalMaklumatJPPH()" value="Batal">
       #end
       #if ($modePopup == 'newUlangan')

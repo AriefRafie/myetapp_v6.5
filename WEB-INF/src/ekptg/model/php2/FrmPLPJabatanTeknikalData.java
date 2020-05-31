@@ -1510,6 +1510,201 @@ public class FrmPLPJabatanTeknikalData {
 				db.close();
 		}
 	}
+	
+	public void gotoHantarHQ(String idFail, String idNegeriUser,
+			String idPermohonan, HttpSession session) throws Exception{
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPLOGTUGASAN
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("FLAG_AKTIF", "Y");
+
+			r.add("FLAG_AKTIF", "T");
+
+			sql = r.getSQLUpdate("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_NEGERI", "16"); // HQ
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("ROLE", "(PHP)PYWPengarahHQ");
+			r.add("FLAG_BUKA", "T");
+
+			r.add("ID_PEGAWAI_SEBELUM", userId);
+			r.add("ID_NEGERI_SEBELUM", idNegeriUser);
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+			
+			// TBLPERMOHONAN
+			r = new SQLRenderer();
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.add("TARIKH_HANTAR_HQ", r.unquote("SYSDATE"));
+			
+			sql = r.getSQLUpdate("TBLPERMOHONAN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610213", "4", null, session, "INS",
+					"FAIL [" + idFail
+							+ "] DIHANTAR KEPADA HQ");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void gotoHantarTugasanPP(String idFail, String idNegeriUser,
+			HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPLOGTUGASAN
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("FLAG_AKTIF", "Y");
+
+			r.add("FLAG_AKTIF", "T");
+
+			sql = r.getSQLUpdate("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_NEGERI", "16"); // HQ
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("ROLE", "(PHP)PYWPenolongPengarahHQ");
+			r.add("FLAG_BUKA", "T");
+
+			r.add("ID_PEGAWAI_SEBELUM", userId);
+			r.add("ID_NEGERI_SEBELUM", idNegeriUser);
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610213", "4", null, session, "UPD",
+					"FAIL [" + idFail
+							+ "] DIHANTAR KEPADA PP HQ");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void doSimpanAgihanTugas(String idFail, String idPegawai,
+			String catatan, String idNegeriUser, HttpSession session)
+			throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPLOGTUGASAN
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("FLAG_AKTIF", "Y");
+
+			r.add("FLAG_AKTIF", "T");
+
+			sql = r.getSQLUpdate("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_PEGAWAI", idPegawai);
+			r.add("ID_NEGERI", "16"); // HQ
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("ROLE", "(PHP)PYWPenolongPegawaiTanahHQ");
+			r.add("CATATAN", catatan);
+			r.add("FLAG_BUKA", "T");
+
+			r.add("ID_PEGAWAI_SEBELUM", userId);
+			r.add("ID_NEGERI_SEBELUM", idNegeriUser);
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610213", "4", null, session, "INS",
+					"FAIL [" + idFail
+							+ "] TELAH DITUGASKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 
 	public void doBatalPermohonan(String idFail, String idPermohonan,
 			String tarikhBatal, String txtSebab, HttpSession session)
@@ -2348,13 +2543,14 @@ public class FrmPLPJabatanTeknikalData {
 		return beanMaklumatLampiran;
 	}
 	
-	public void sendEmail(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
+	public void sendEmailtoKJP(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		Vector beanMaklumatEmail = null;
 		EmailSender email = EmailSender.getInstance();
 		String sql = "";
-		String emelUser = "";
+		String emelUser = "nurulain.siprotech@gmail.com"; //untuk sementara
+		String tempoh = "";
 		String noFail = "";
 		String tarikhAkhir = "";
 		
@@ -2365,7 +2561,7 @@ public class FrmPLPJabatanTeknikalData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA "
+			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA"
 				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLPERMOHONAN C, TBLPFDFAIL D "
 				+ " WHERE A.ID_MENTERI = B.ID_KEMENTERIAN AND A.ID_PERMOHONAN = C.ID_PERMOHONAN "
 				+ " AND C.ID_FAIL = D.ID_FAIL AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
@@ -2374,7 +2570,7 @@ public class FrmPLPJabatanTeknikalData {
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				noFail = rsEmel.getString("NO_FAIL");
-				emelUser = rsEmel.getString("EMEL");
+				tempoh = rsEmel.getString("JANGKAMASA");
 				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
 			}	
 			
@@ -2385,6 +2581,90 @@ public class FrmPLPJabatanTeknikalData {
 							 + "sebelum " + tarikhAkhir + " amatlah dihargai."
 							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
 							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			email.sendEmail();
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void sendEmailtoJPPH(String idPermohonan, String idPejabatJPPH, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		Vector beanMaklumatEmail = null;
+		EmailSender email = EmailSender.getInstance();
+		String sql = "";
+		String emelUser = "nurulain.siprotech@gmail.com"; //untuk sementara
+		String tempoh = "";
+		String noFail = "";
+		String tarikhAkhir = "";
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " SELECT A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA, D.NO_FAIL"
+				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABAT B, TBLPERMOHONAN C, TBLPFDFAIL D"
+				+ " WHERE A.ID_PEJABAT = B.ID_PEJABAT AND A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL"
+				+ " AND A.FLAG_KJP = 'JPPH' AND A.ID_PERMOHONAN = '"+idPermohonan+"'";
+			
+			ResultSet rsEmel = stmt.executeQuery(sql);
+			if (rsEmel.next()){
+				noFail = rsEmel.getString("NO_FAIL");
+				tempoh = rsEmel.getString("JANGKAMASA");
+				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
+			}	
+						
+			email.RECIEPIENT = emelUser;
+			email.SUBJECT = "PERMOHONAN ULASAN NILAIAN HARTA URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
+			email.MESSAGE = "Mohon pihak tuan memberikan ulasan dan keputusan nilaian bagi permohonan tersebut<br><br>"
+							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
+							 + "sebelum " + tarikhAkhir + " (" + tempoh + " hari) amatlah dihargai."
+							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
+							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			email.sendEmail();
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void sendEmailtoUserJKPTGN(String idPermohonan, String idNegeriUser, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		Vector beanMaklumatEmail = null;
+		EmailSender email = EmailSender.getInstance();
+		String sql = "";
+		String noFail = "";
+		String emelUser = "";
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " SELECT A.NO_FAIL, A.ID_MASUK, C.USER_NAME, D.EMEL FROM TBLPFDFAIL A, TBLPERMOHONAN B, USERS C, USERS_INTERNAL D "
+				+ " WHERE A.ID_FAIL = B.ID_FAIL AND A.ID_MASUK = C.USER_ID "
+				+ " AND C.USER_ID = D.USER_ID AND B.ID_PERMOHONAN = '"+idPermohonan+"'";
+			
+			ResultSet rsEmel = stmt.executeQuery(sql);
+			if (rsEmel.next()){
+				emelUser = rsEmel.getString("EMEL");
+				noFail = rsEmel.getString("NO_FAIL");
+			}	
+						
+			email.RECIEPIENT = emelUser;
+			email.SUBJECT = "KEPUTUSAN NILAIAN HARTA URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
+			email.MESSAGE = "Keputusan nilaian bagi permohonan tersebut telah dibuat<br><br>"
+							 + "Mohon semakan daripada pihak tuan "
+							 + " <br><br>Sekian, terima kasih.<br>";
 			email.sendEmail();
 			
 		} finally {

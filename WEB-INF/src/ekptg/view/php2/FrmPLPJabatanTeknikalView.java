@@ -24,6 +24,10 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 	FrmPLPJabatanTeknikalData logic = new FrmPLPJabatanTeknikalData();
 	FrmPLPOnlineKJPSenaraiFailData logicKJP = new FrmPLPOnlineKJPSenaraiFailData();
 	EmailConfig email = new EmailConfig();
+	
+	String userId = null;
+	String userRole = null;
+	String idNegeriUser = null;
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -35,6 +39,15 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 	    if (doPost.equals("true")) {
 	        postDB = true;
 	    }
+	    
+	    userId = (String)session.getAttribute("_ekptg_user_id");
+		userRole = (String)session.getAttribute("myrole");
+		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
+		
+        //SET VALUE USER
+        this.context.put("userId", userId);
+  	  	this.context.put("userRole", userRole);
+  	  	this.context.put("idNegeriUser", idNegeriUser);
 	    
 	    //GET DEFAULT PARAM
 	    String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
@@ -92,6 +105,10 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 		if (idPejabatJPPH == null || idPejabatJPPH.trim().length() == 0){
 			idPejabatJPPH = "99999";
 		}
+		String idPegawai = getParam("socPegawai");
+		if (idPegawai == null || idPegawai.trim().length() == 0) {
+			idPegawai = "99999";
+		}
 		
         //VECTOR
         Vector beanHeader = null;
@@ -109,6 +126,8 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         this.context.put("BeanMaklumatLampiran",beanMaklumatLampiran);
         
         vm = "app/php2/frmPLPJabatanTeknikal.jsp";
+        
+        this.context.put("onload", "");
         
         //SEND TO MODEL
         if (postDB) {
@@ -128,12 +147,12 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         	if ("simpanMaklumatKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJP(idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		logic.sendEmail(idPermohonan, idKementerianTanah, session);
+        		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
     		}
         	if ("simpanMaklumatUlanganKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJP(idUlasanTeknikal, idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		logic.sendEmail(idPermohonan, idKementerianTanah, session);
+        		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
     		}
         	if ("simpanKemaskiniMaklumatKJP".equals(hitButton)){
         		logic.simpanKemaskiniMaklumatKJP(idUlasanTeknikal, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
@@ -153,10 +172,13 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 			}
         	if ("doSimpanKemaskiniMaklumatNilaian".equals(hitButton)){
         		simpanKemaskiniMaklumatNilaian(idPermohonan, session);
+          		logic.sendEmailtoUserJKPTGN(idPermohonan, idNegeriUser, session);
 			}
         	if ("simpanMaklumatJPPH".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatJPPH(idPermohonan, idPejabatJPPH, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logic.sendEmailtoJPPH(idPermohonan, idPejabatJPPH, session);
+        		
     		}
         	if ("simpanMaklumatUlanganJPPH".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganJPPH(idUlasanTeknikal, idPermohonan, idPejabatJPPH, getParam("txtTarikhHantar"), 
@@ -173,9 +195,34 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         	if ("doSeterusnya".equals(hitButton)){
         		logic.updateStatus(idFail, idPermohonan, session);
         	}
+        	if ("gotoIbuPejabat".equals(hitButton)){
+        		logic.gotoHantarHQ(idFail, idNegeriUser, idPermohonan, session);
+        		session.removeAttribute("ID_FAIL");
+				session.setAttribute("MSG", "FAIL TELAH DIHANTAR KE IBUPEJABAT");
+	    		this.context.put("onload", "gotoSenaraiFail();");
+        	}
+        	if ("gotoHantarTugasanPP".equals(hitButton)){
+	    		logic.gotoHantarTugasanPP(idFail, idNegeriUser, session);
+	    		session.removeAttribute("ID_FAIL");
+				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PENOLONG PENGARAH");
+	    		this.context.put("onload", "gotoSenaraiFail();");
+			}
+        	if ("doSimpanAgihanTugas".equals(hitButton)){
+	    		logic.doSimpanAgihanTugas(idFail, idPegawai, getParam("txtCatatan"), idNegeriUser, session);
+	    		session.removeAttribute("ID_FAIL");
+				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PEGAWAI");
+	    		this.context.put("onload", "gotoSenaraiFail();");
+			}
         	if ("doBatalPermohonan".equals(hitButton)){
     			logic.doBatalPermohonan(idFail, idPermohonan, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
+    			
+    		} else if ("gotoHantarTugasanPPT".equals(step)){
+    			
+    			this.context.put("selectPegawai", HTML.SelectPYWPenolongPegawaiTanahHQ("socPegawai", Long.parseLong(idPegawai), "", ""));
+    			
+    			vm = "app/php2/frmPYWAgihanTugas.jsp";
+            
     		}
         }
 
@@ -695,8 +742,11 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         
         this.context.put("flagStatus", flagStatus);
         this.context.put("flagAktif", flagAktif);
-
         this.context.put("step",step);
+  	  	
+  	  	if (!"".equals(getParam("flagFrom"))){
+        	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+        }
         
 		return vm;
 	}

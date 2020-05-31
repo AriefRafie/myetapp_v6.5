@@ -8941,6 +8941,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				+ " AND A.USER_ROLE IN ('(PHP)PYWPenolongPegawaiTanahHQ')"
 				+ " AND B.FLAG_AKTIF = '1'"
 				+ " AND B.ID_NEGERI = '16'"
+				+ " AND B.ID_SEKSYEN = '4'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -8950,6 +8951,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				+ " AND D.ROLE_ID IN ('(PHP)PYWPenolongPegawaiTanahHQ')"
 				+ " AND B.FLAG_AKTIF = '1'"
 				+ " AND B.ID_NEGERI = '16'"
+				+ " AND B.ID_SEKSYEN = '4'"
 				+ " ORDER BY USER_NAME ASC";
 
 		try {
@@ -8957,6 +8959,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 			db = new Db();
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println("keluarlaaaa "+sql);
 			Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
 
 			Hashtable<String, String> h;

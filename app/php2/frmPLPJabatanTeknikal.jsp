@@ -40,6 +40,7 @@
   <input name="flagAktif" type="hidden" id="flagAktif" value="$flagAktif"/>  
   <input name="step" type="hidden" id="step" value="$step"/>
 </p>
+<body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
   <tr>
@@ -56,18 +57,18 @@
   <tr>
     <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
-          <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">ULASAN JABATAN PENGGUNA (KJP)</li>
-          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">ULASAN JPPH</li>
-          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">NILAIAN</li>             
+          <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">ULASAN JPPH</li>
+          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">NILAIAN</li>             
+          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">ULASAN JABATAN PENGGUNA (KJP)</li>
           <!-- <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">KERTAS CADANGAN</li>  -->         
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">
-            #parse("app/php2/frmPLPDokumenKJP.jsp") </div>
-          <div class="TabbedPanelsContent">
            #parse("app/php2/frmPLPUlasanJPPH.jsp") </div>
           <div class="TabbedPanelsContent">
            #parse("app/php2/frmPLPNilaianJPPH.jsp") </div>
+           <div class="TabbedPanelsContent">
+            #parse("app/php2/frmPLPDokumenKJP.jsp") </div>
            <div class="TabbedPanelsContent">
            #parse("app/php2/frmPLPKertasCadangan.jsp") </div>
         </div>
@@ -97,6 +98,31 @@ function doSeterusnya(){
 	}
 
 	document.${formName}.hitButton.value = "doSeterusnya";
+	document.${formName}.submit();
+}
+function hantarkeHQ(){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+
+	document.${formName}.hitButton.value = "gotoIbuPejabat";
+	document.${formName}.submit();
+}
+function gotoHantarTugasanPP(){
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.hitButton.value = "gotoHantarTugasanPP";
+	document.${formName}.submit();
+}
+function gotoHantarTugasanPPT(){	
+	document.${formName}.step.value = "gotoHantarTugasanPPT";
+	document.${formName}.submit();
+}
+function gotoSenaraiFail(){
+	document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailView";
 	document.${formName}.submit();
 }
 function gotoBatalPermohonan(){	
