@@ -73,6 +73,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 		HttpSession session = request.getSession();
 		String doPost = (String)session.getAttribute("doPost");
     	String vm = "";
+    	String userRole = String.valueOf(session.getAttribute("myrole"));
     	headerppk_baru_default();
 
     	Vector list = new Vector();
@@ -7481,6 +7482,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     	this.context.put("flagForView", flagForView);
         //Template template = this.engine.getTemplate(vm);
         //return template;
+    	this.context.put("userRole", userRole);
         return vm;
 
     }//close public template

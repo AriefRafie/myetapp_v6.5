@@ -74,6 +74,9 @@ public class FrmPerintahSek8Data {
 	private Vector senaraiHTATH = new Vector();
 	private Vector beanMaklumatHTATH = new Vector();
 	private Vector senaraiHA = new Vector();
+	private Vector senaraiHAARB = new Vector();
+	private Vector senaraiOBARB = new Vector();	
+	private Vector senaraiPerintahHAARB = new Vector();		
 	private Vector senaraiHAPopup = new Vector();
 	private Vector beanMaklumatHA = new Vector();
 	
@@ -695,6 +698,7 @@ System.out.println("sini======="+sql);
 				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 				sqlInsert = r.getSQLInsert("TBLPPKPERINTAHHTAOBMST");
+				myLogger.info("sqlInsert = "+sqlInsert);
 				stmt.executeUpdate(sqlInsert);
 				
 				//INSERT PENTADBIR
@@ -1121,6 +1125,7 @@ System.out.println("sini======="+sql);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPPKPERINTAHHTAOBMST");
+			myLogger.info("saveHTAsql = " + sql);
 			stmt.executeUpdate(sql);
 			
 			Fraction fracSimati = getFractionSimatiHTA(idHTA,idPermohonanSimati);
@@ -1793,6 +1798,7 @@ System.out.println("sini======="+sql);
 			r.add("B.ID_PERMOHONANSIMATI",id_permohonansimati);
 
 			sql = r.getSQLSelect("TBLPPKPERINTAHHAOBMST A, TBLPPKHA B1,TBLPPKHAPERMOHONAN B, TBLPPKRUJJENISHA C, TBLPPKRUJJENISPERINTAH D","B.ID_JENISHA ASC");
+			myLogger.info("sql setDataSenaraiHA  = " + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -1874,6 +1880,127 @@ System.out.println("sini======="+sql);
 		}
 	}
 	
+	/*public void setDataSenaraiHAARB(String idPerintah,String id_permohonansimati) throws Exception {
+		Db db = null;
+		senaraiHAARB.clear();
+		String sql = "";
+		String idJenisHA = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			r.add("C.KETERANGAN AS JENIS_HARTA_ALIH");
+			r.add("D.KETERANGAN AS JENIS_PERINTAH");
+			r.add("A.CATATAN");
+			r.add("A.ID_PERINTAHHAOBMST");
+			r.add("B.ID_SIMATI");
+			r.add("B.BA_SIMATI");
+			r.add("B.BB_SIMATI");
+			r.add("B.NILAI_HA_TARIKHMOHON");
+			
+			r.add("B.ID_JENISHA");
+			
+			r.add("B.NAMA_SAHAM");
+			r.add("B.JENAMA");
+			r.add("B.BUTIRAN");
+			r.add("B.NILAI_HA_TARIKHMOHON");
+
+			
+			r.add("C.ID_JENISHA",r.unquote("B.ID_JENISHA"));
+			r.add("D.ID_JENISPERINTAH",r.unquote("A.ID_JENISPERINTAH"));
+			
+			r.add("A.ID_PERINTAH", idPerintah);
+			
+			
+			r.add("B1.ID_HA",r.unquote("A.ID_HA"));
+			r.add("B1.ID_HA",r.unquote("B.ID_HA"));
+			r.add("B.ID_PERMOHONANSIMATI",id_permohonansimati);
+
+			sql = r.getSQLSelect("TBLPPKPERINTAHHAOBMST A, TBLPPKHA B1,TBLPPKHAPERMOHONAN B, TBLPPKRUJJENISHA C, TBLPPKRUJJENISPERINTAH D","B.ID_JENISHA ASC");
+			myLogger.info("sql setDataSenaraiHAARB  = " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			Integer count = 0;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				
+				h.put("bil", bil);
+				h.put("idSimati",rs.getString("ID_SIMATI"));
+				h.put("jenisHarta",rs.getString("JENIS_HARTA_ALIH") == null ? "" : rs.getString("JENIS_HARTA_ALIH"));
+				h.put("jenisPerintah",rs.getString("JENIS_PERINTAH") == null ? "" : rs.getString("JENIS_PERINTAH"));
+				h.put("catatan",rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
+				h.put("idPerintahHAOBMST",rs.getString("ID_PERINTAHHAOBMST") == null ? "" : rs.getString("ID_PERINTAHHAOBMST"));
+				h.put("bahagianSimati",rs.getString("BA_SIMATI") == null || rs.getString("BB_SIMATI") == null? "" : rs.getString("BA_SIMATI") + " / " + rs.getString("BB_SIMATI"));
+				h.put("nilaiTarikhMohon",rs.getString("NILAI_HA_TARIKHMOHON") == null ? "0.00" : Util.formatDecimal(Double.parseDouble(rs.getString("NILAI_HA_TARIKHMOHON"))));
+				
+				if (rs.getString("ID_JENISHA") != null && rs.getString("ID_JENISHA").trim().length() != 0){
+					idJenisHA = rs.getString("ID_JENISHA");
+					
+					if ("1".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("NAMA_SAHAM") == null ? "" : " - " + rs.getString("NAMA_SAHAM").toUpperCase());
+					} else if ("2".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("JENAMA") == null ? "" : " - " + rs.getString("JENAMA").toUpperCase());
+					} else if ("3".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("JENAMA") == null ? "" : " - " + rs.getString("JENAMA").toUpperCase());
+					} else if ("4".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("JENAMA") == null ? "" : " - " + rs.getString("JENAMA").toUpperCase());
+					} else if ("5".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("JENAMA") == null ? "" : " - " + rs.getString("JENAMA").toUpperCase());
+					} else if ("6".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("JENAMA") == null ? "" : " - " + rs.getString("JENAMA").toUpperCase());
+					} else if ("7".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("BUTIRAN") == null ? "" : " - " + rs.getString("BUTIRAN").toUpperCase());
+					} else if ("8".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("BUTIRAN") == null ? "" : " - " + rs.getString("BUTIRAN").toUpperCase());
+					} else if ("9".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("BUTIRAN") == null ? "" : " - " + rs.getString("BUTIRAN").toUpperCase());
+					} else if ("10".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("BUTIRAN") == null ? "" : " - " + rs.getString("BUTIRAN").toUpperCase());
+					} else if ("11".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("BUTIRAN") == null ? "" : " - " + rs.getString("BUTIRAN").toUpperCase());
+					} else if ("12".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("BUTIRAN") == null ? "" : " - " + rs.getString("BUTIRAN").toUpperCase());
+					} else if ("98".equals(idJenisHA)){
+						h.put("keterangan", rs.getString("NILAI_HA_TARIKHMOHON") == null ? "" : " - RM" + Util.formatDecimal(Double.valueOf(rs.getString("NILAI_HA_TARIKHMOHON"))));
+					} else {
+						h.put("keterangan", "");
+					}
+					
+				} else {
+					h.put("keterangan", "");
+				}
+				
+				senaraiHAARB.addElement(h);
+				bil++;
+				count++;
+			}
+			
+			if (count == 0) {
+				h = new Hashtable();
+
+		    	h.put("bil","");
+		    	h.put("idSimati", "");
+		    	h.put("jenisHarta", "Tiada Rekod");
+		    	h.put("jenisPerintah","");
+		    	h.put("catatan","");
+		    	h.put("idPerintahHAOBMST","");
+		    	h.put("bahagianSimati","");
+		    	h.put("nilaiTarikhMohon","");
+		    	h.put("keterangan", "");
+		    	senaraiHAARB.addElement(h);
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	*/
 	@SuppressWarnings("unchecked")
 	public void setDataSenaraiHAPopup(String idPermohonanSimati, String idPerintah) throws Exception {
 		Db db = null;
@@ -2055,6 +2182,7 @@ System.out.println("sini======="+sql);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPPKPERINTAHHAOBMST");
+			myLogger.info("sqlInsertHA = "+sql);
 			stmt.executeUpdate(sql);
 			
 			Fraction fracSimati = getFractionSimatiHA(idHA);
@@ -2657,6 +2785,8 @@ System.out.println("sini======="+sql);
 						h.put("jenisTanah","TANAH ADAT");
 					} else if ("3".equals(rs.getString("JENIS_TNH"))){
 						h.put("jenisTanah","TANAH GSA");
+					} else if ("4".equals(rs.getString("JENIS_TNH"))){
+						h.put("jenisTanah","BUKAN TANAH GSA");
 					} else {
 						h.put("jenisTanah","TIDAK DINYATAKAN");
 					}
@@ -4340,7 +4470,7 @@ System.out.println("sini======="+sql);
 			
 			//HA PERINTAH KUASA TADBIR
 			sqlCheckPerintahKuasaTadbirHA = "SELECT ID_PERINTAHHAOBMST FROM TBLPPKPERINTAHHAOBMST WHERE ID_JENISPERINTAH = 2 AND ID_PERINTAH = '" + idPerintah + "'";
-			
+			myLogger.info("sql sqlCheckPerintahKuasaTadbirHA =" +sqlCheckPerintahKuasaTadbirHA );
 			ResultSet rsKTHA = stmt.executeQuery(sqlCheckPerintahKuasaTadbirHA);
 			
 			while (rsKTHA.next()){
@@ -4586,7 +4716,7 @@ System.out.println("sini======="+sql);
 						" AND OB.ID_SIMATI = '" + idSimati + "' " +
 						" AND OB1.ID_PERMOHONANSIMATI IN (" + getSenaraiIdPermohonanSimati(idSimati, idPermohonanSimati) + ") " +
 								" AND OB.ID_TARAFKPTG NOT IN (0,1,14) ORDER BY UMUR DESC NULLS LAST";
-			myLogger.info("###setDataSenaraiHTAPTDTL( :"+sql);
+			System.out.println("###setDataSenaraiHTAPTDTL( :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -4964,6 +5094,7 @@ System.out.println("sini======="+sql);
 			SQLRenderer r = new SQLRenderer();
 			
 			sql = "SELECT ID_HA FROM TBLPPKPERINTAHHAOBMST WHERE ID_PERINTAHHAOBMST = '" + idPerintahHAOBMST + "'";
+			myLogger.info("sqlxxxx ="+sql);
 			ResultSet rsHA = stmt.executeQuery(sql);
 			
 			Fraction fracSimati = new Fraction(1,1);
@@ -4979,9 +5110,11 @@ System.out.println("sini======="+sql);
 			
 			//GET ROW OB
 			sql = "SELECT ID_PERINTAHHAOBDTL FROM TBLPPKPERINTAHHAOBDTL WHERE ID_OB = '" + idOB + "' AND ID_PERINTAHHAOBMST = '" + idPerintahHAOBMST + "'";
+			myLogger.info("sqlyyyy ="+sql);
 			ResultSet rsRowOB = stmt.executeQuery(sql);
 			
 			if (rsRowOB.next()){
+				myLogger.info("aaaaaaaa");
 				//UPDATE TBLPPKPERINTAHHAOBDTL		
 				r.update("ID_PERINTAHHAOBDTL", rsRowOB.getString("ID_PERINTAHHAOBDTL"));
 				
@@ -5018,9 +5151,11 @@ System.out.println("sini======="+sql);
 				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 				sql = r.getSQLUpdate("TBLPPKPERINTAHHAOBDTL");
+				myLogger.info("sqlzzzz ="+sql);
 				stmt.executeUpdate(sql);
 				
 			} else {
+				myLogger.info("elsexxxx");
 				//NEW TBLPPKPERINTAHHAOBDTL				
 				long idPerintahHAOBDTL = DB.getNextID("TBLPPKPERINTAHHAOBDTL_SEQ");
 				r.add("ID_PERINTAHHAOBDTL", idPerintahHAOBDTL);
@@ -5193,7 +5328,7 @@ System.out.println("sini======="+sql);
 
 			updateHTAAfterSelesai(idPerintah, session,id_permohonansimati);
 			updateHAAfterSelesai(idPerintah, session,id_permohonansimati);
-			myLogger.info("*************READ HERE******************");
+			System.out.println("*************READ HERE selesai******************");
 			updateTablePermohonanSelesai(id_permohonansimati);
 			
 			FrmPrmhnnSek8DaftarSek8InternalData logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
@@ -5804,6 +5939,128 @@ System.out.println("sini======="+sql);
 		}
 	}
 	
+	//find id perintahhaobmst
+	public void findIDPerintahHAOBMST(String id_HAARB) throws Exception{
+		Db db = null;
+		String sql = "";
+		Hashtable h = null;
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+		
+			sql = " SELECT ID_PERINTAHHAOBMST FROM TBLPPKPERINTAHHAOBMST WHERE ID_HA = "+id_HAARB;
+	
+			myLogger.info("findIDPerintahHAOBMST = "+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()){
+				h = new Hashtable();
+		    	h.put("ID_PERINTAHHAOBMST", rs.getString("ID_PERINTAHHAOBMST") == null ? "" : rs.getString("ID_PERINTAHHAOBMST"));
+		    	
+		    	senaraiPerintahHAARB.addElement(h);
+			
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	//findIdObARB
+	public void findIdObARB(String id_permohonansimati) throws Exception{
+		Db db = null;
+		String sql = "";
+		Hashtable h = null;
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+		
+			sql = "SELECT ID_OB FROM TBLPPKOB WHERE ID_SIMATI in " +
+			      "(SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONANSIMATI = '"+id_permohonansimati+"') " +
+				  "AND NAMA_OB LIKE '%AMANAH RAYA%'";
+			
+			myLogger.info("findIdObARB = "+sql);
+	
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()){
+				h = new Hashtable();
+		    	h.put("ID_OB", rs.getString("ID_OB") == null ? "" : rs.getString("ID_OB"));
+		    	
+		    	senaraiOBARB.addElement(h);
+			
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	//
+	
+	public void setDataSenaraiHAARB(String idPerintah,String id_permohonansimati) throws Exception{
+		Db db = null;
+		String sql = "";
+		Hashtable h = null;
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+		
+			sql = "SELECT A1.ID_HA FROM TBLPPKHA A1,TBLPPKHAPERMOHONAN A " +
+					" WHERE A.ID_HA = A1.ID_HA AND  A.ID_PERMOHONANSIMATI = A1.ID_PERMOHONANSIMATI " +
+					" AND A1.ID_PERMOHONANSIMATI = '" + id_permohonansimati + "' AND A1.ID_HA NOT IN " +
+					"(SELECT ID_HA FROM TBLPPKPERINTAHHAOBMST WHERE ID_PERINTAH = '" + idPerintah + "')";
+	
+			myLogger.info("sql xxxxx = "+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()){
+				h = new Hashtable();
+		    	h.put("ID_HA", rs.getString("ID_HA") == null ? "" : rs.getString("ID_HA"));
+		    	
+		    	senaraiHAARB.addElement(h);
+			
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	
+	//
+	
+	public boolean checkHAYangDiselesaikanARBBelumDibahagikan(String idPermohonanSimati, String idPerintah) throws Exception{
+		Db db = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+		
+			sql = "SELECT A1.ID_HA FROM TBLPPKHA A1,TBLPPKHAPERMOHONAN A " +
+					" WHERE A.ID_HA = A1.ID_HA AND  A.ID_PERMOHONANSIMATI = A1.ID_PERMOHONANSIMATI " +
+					" AND A1.ID_PERMOHONANSIMATI = '" + idPermohonanSimati + "' AND a1.id_jenisha = '98' AND A1.ID_HA NOT IN " +
+					"(SELECT ID_HA FROM TBLPPKPERINTAHHAOBMST WHERE ID_PERINTAH = '" + idPerintah + "')";
+	
+			myLogger.info("sql checkHAYangDiselesaikanARBBelumDibahagikan = "+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()){
+				return true;
+			} else {
+				return false;
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public boolean checkPembahagianHTAPTLengkap(String idPerintah) throws Exception{
 		Db db = null;
 		String sql = "";
@@ -5912,7 +6169,7 @@ System.out.println("sini======="+sql);
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT BA, BB FROM TBLPPKPERINTAHHAOBDTL WHERE ID_PERINTAHHAOBMST = '" + idPerintahHAOBMST + "'";
-
+			myLogger.info("sql calculateTotalPecahanHAPT = "+ sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while (rs.next()) {
@@ -6058,6 +6315,7 @@ System.out.println("sini======="+sql);
 			sql = "SELECT A.ID_PERINTAHHTAOBDTL FROM TBLPPKPERINTAHHTAOBDTL A, TBLPPKPERINTAHHTAOBMST B WHERE A.ID_PERINTAHHTAOBMST = B.ID_PERINTAHHTAOBMST AND B.ID_JENISPERINTAH = 1"
 					+ " AND A.STATUS_TADBIR = 'T' AND ID_PA1 IS NULL AND A.BA > 0 AND B.ID_PERINTAH = '" + idPerintah + "'";
 			
+			myLogger.info("sql checkWarisYangPerluAdaPAHTAPT = " + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if (rs.next()){
@@ -7088,9 +7346,34 @@ System.out.println("sini======="+sql);
 	public Vector<Hashtable<String,String>> getSenaraiHA() {
 		return senaraiHA;
 	}
+	
+	public Vector<Hashtable<String,String>> getSenaraiHAARB() {
+		return senaraiHAARB;
+	}
+	
+	public Vector<Hashtable<String,String>> getSenaraiOBARB() {
+		return senaraiOBARB;
+	}
+	
+	public Vector<Hashtable<String,String>> getSenaraiPerintahHAARB() {
+		return senaraiPerintahHAARB;
+	}
+	
 
 	public void setSenaraiHA(Vector senaraiHA) {
 		this.senaraiHA = senaraiHA;
+	}
+	
+	public void setSenaraiHAARB(Vector senaraiARB) {
+		this.senaraiHAARB = senaraiHAARB;
+	}
+	
+	public void setSenaraiOBARB(Vector senaraiOBARB) {
+		this.senaraiOBARB = senaraiOBARB;
+	}
+	
+	public void setSenaraiPerintahHAARB(Vector senaraiPerintahHAARB) {
+		this.senaraiPerintahHAARB = senaraiPerintahHAARB;
 	}
 
 	public Vector<Hashtable<String,String>> getSenaraiHAPopup() {

@@ -216,7 +216,8 @@ public class CarianNotisPerbicaraan extends AjaxBasedModule {
 				" WHERE P.ID_FAIL = F.ID_FAIL AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN " +
 				" AND KP.ID_KEPUTUSANPERMOHONAN = B.ID_KEPUTUSANPERMOHONAN " +
 				" AND PSM.ID_PERMOHONAN = P.ID_PERMOHONAN AND PSM.ID_SIMATI = SM.ID_SIMATI " +
-				" AND P.ID_STATUS IN (18,44) AND P.ID_STATUS = S.ID_STATUS ";
+				//ini yang asal ada status tangguh permohonan " AND P.ID_STATUS IN (18,44) AND P.ID_STATUS = S.ID_STATUS ";
+				" AND P.ID_STATUS IN (18) AND P.ID_STATUS = S.ID_STATUS ";
 
 		return sql;
 	}

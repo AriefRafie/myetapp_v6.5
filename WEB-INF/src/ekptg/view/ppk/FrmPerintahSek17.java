@@ -103,6 +103,7 @@ public class FrmPerintahSek17 extends AjaxBasedModule {
         String idPermohonan = getParam("idPermohonan");
         String idFail = getParam("idFail");
         String idPerintah = getParam("idPerintah");
+        String idTarikhPerintah = "";
         String idPerbicaraan = getParam("idPerbicaraan");
         String idSimati = getParam("idSimati");
         String idStatus = getParam("idStatus");
@@ -365,7 +366,17 @@ public class FrmPerintahSek17 extends AjaxBasedModule {
 			//String idPerintah = getParam("idPerintah");
 			simpanStatus = 2;
 			System.out.println("-------txtCatatan------" +txtCatatan);
-			saveData(noFail,txtCatatan,txtTarikh,txtNamaPenerima,kpbaru,kplama,kplain,radioJenis,txtNamaPenghantarNotis,idPerintah);
+			
+			//checking samaada sudah ada penghantaran laporan perintah
+			boolean isExistLaporanPerintah = false;
+			
+			isExistLaporanPerintah = getLaporanPerintah(idPerintah);
+			
+			if(isExistLaporanPerintah){
+				updateData(noFail,txtCatatan,txtTarikh,txtNamaPenerima,kpbaru,kplama,kplain,radioJenis,txtNamaPenghantarNotis,idPerintah);
+			}else{
+				saveData(noFail,txtCatatan,txtTarikh,txtNamaPenerima,kpbaru,kplama,kplain,radioJenis,txtNamaPenghantarNotis,idPerintah);
+			}
 			vm = "app/ppk/frmPerintahMaklumatPerintahSek17.jsp";
 			
 			
@@ -766,7 +777,7 @@ public class FrmPerintahSek17 extends AjaxBasedModule {
 				context.put("penerima", penerima);
 				context.put("selectionBox",selectionBox);
 				}
-				
+				context.put("userRole", role); 
 				vm = "app/ppk/frmPerintahMaklumatPerintahSek17.jsp";
 				return vm;
 	 
@@ -1687,7 +1698,9 @@ public class FrmPerintahSek17 extends AjaxBasedModule {
 			if (idPerintah.isEmpty()){
 				idPerintah =  logic.getIdPerintah(idPermohonan);
 			}
+			idTarikhPerintah =  logic.getTarikhPerintah(idPerintah);
 			this.context.put("idPerintah", idPerintah);
+			this.context.put("TarikhPerintah", idTarikhPerintah);
 			
 			//setCatatanPerintah
 			if (hitButt.equals("kemaskiniCatatan")){
@@ -2079,7 +2092,7 @@ public class FrmPerintahSek17 extends AjaxBasedModule {
         	this.context.put("onload", " \"javascript:goToAnchor('" + anchor + "')\"");
         }
 	    
-        
+        context.put("userRole", role); 
         System.out.println("VM :::"+ vm);
 		return vm;
 	}
@@ -3109,6 +3122,7 @@ public class FrmPerintahSek17 extends AjaxBasedModule {
 			Db db2 = null;
 			String sqlPaparTblLaporanHantarPerintah = "";
 			String sqlPaparNamaPenghantarNotis = "";
+			String TARIKH_SERAHAN = "";
 			System.out.println("paparLaporanSerahan");	
 			try {
 		    	db = new Db();
@@ -3141,9 +3155,15 @@ public class FrmPerintahSek17 extends AjaxBasedModule {
 				{	
 					System.out.println("read here-----");
 					this.context.put("JENIS_PENGHANTARAN", rs.getString("JENIS_PENGHANTARAN"));
+					
+				
+					
 					Date TARIKH_SERAHAN1 = rs.getDate("TARIKH_SERAHAN");
 					String nama_penyerah = rs.getString("NAMA_PENYERAH");
-					String TARIKH_SERAHAN = dateFormat.format(TARIKH_SERAHAN1);
+					
+					if(TARIKH_SERAHAN1!=null){
+					 TARIKH_SERAHAN = dateFormat.format(TARIKH_SERAHAN1);
+					}
 					/*
 					if (id_penghantar_notis != null)
 					{
@@ -3275,8 +3295,95 @@ public class FrmPerintahSek17 extends AjaxBasedModule {
 		      if (db != null) db.close();
 	    }
 		}
-
+	
 //Salnizam ends
+	
+	//aishah add 
+
+	public static boolean getLaporanPerintah(String idperintah) throws Exception {
+
+		Db db = null;
+
+		String sql = "";
+		boolean flag = false;
+		try {
+
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "select ID_PERINTAH from TBLPPKHANTARPERINTAH a where ID_PERINTAH = '" + idperintah + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector list = new Vector();
+
+			while (rs.next()) {
+				flag = true;
+			}
+			
+			return flag;
+		} catch (Exception er) {
+			myLogger.error(er);
+			return false;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	//aishah add 28082018
+	
+	private void updateData(String noFail,String txtCatatan, String txtTarikh, String txtNamaPenerima,String txtNoKpBaru,String txtNoKpLama,String txtNoKpLain,String radioJenis, String txtNamaPenghantarNotis, String idPerintah) throws Exception {
+		Db db = null;
+		String sqlInsertTblLaporanHantarPerintah = "";
+		System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	//SQLRenderer r_get = new SQLRenderer();
+		    	//long id_penghantaran =  DB.getNextID(db,"TblPPKHantarPerintah_SEQ");
+		    	String txtNamaPenerima1 = txtNamaPenerima;
+		    	String txtTarikh1 = "to_date('" + txtTarikh + "','dd/MM/yyyy')";
+		    	String txtNoKpBaru1 = txtNoKpBaru;
+		    	String txtNoKpLama1 = txtNoKpLama;
+		    	String txtNoKpLain1 = txtNoKpLain;
+		    	String radioJenis1 = radioJenis; 
+		    	String txtCatatan1 = txtCatatan;
+		    	String noFail1 = noFail;
+		    	//String jenisKP1 = jenisKP;
+		    	String idperintah = idPerintah;
+		    	
+		    	SQLRenderer r = new SQLRenderer();
+		    	
+		    	r.update("ID_PERINTAH", idperintah);
+		    	r.add("NO_FAIL", noFail1);
+		    	r.add("CATATAN", txtCatatan1);
+		    	r.add("TARIKH_SERAHAN", r.unquote(txtTarikh1));
+		    	r.add("JENIS_PENGHANTARAN", radioJenis1);
+		    	r.add("NAMA_PENERIMA", txtNamaPenerima1);
+		    	r.add("NO_KP_BARU", txtNoKpBaru1);
+		    	r.add("NO_KP_LAMA", txtNoKpLama1);
+		    	r.add("NO_KP_LAIN", txtNoKpLain1);
+		    	r.add("NAMA_PENYERAH", txtNamaPenghantarNotis);
+
+		    	sqlInsertTblLaporanHantarPerintah = r.getSQLUpdate("TBLPPKHANTARPERINTAH");
+		    	System.out.println("sqlInsertTblLaporanHantarPerintah = " + sqlInsertTblLaporanHantarPerintah);
+				stmt.executeUpdate(sqlInsertTblLaporanHantarPerintah);
+				
+				
+		    
+		    	con.commit();
+		    	return;
+		    }
+		    finally {
+			      if (db != null) db.close();
+		    }
+			}
+	
+	
+	
+	
 	
 	private void headerppk_baru(HttpSession session,String id_permohonan,String flag_permohonan,String id_fail,String flag_fail) throws Exception {
 		//hashtable maklumat header

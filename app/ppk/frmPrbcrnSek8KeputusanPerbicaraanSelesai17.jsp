@@ -532,8 +532,10 @@ document.getElementById("header_lama").style.display="block";
       <div align="left">           
       $!perhatian
       </div>          
-          <div align="center">           
+          <div align="center"> 
+          #if($userRole != "user_ppk")          
       <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Selesai('$idpermohonan','$id_perbicaraan');" />
+      #end
       <input name="cmdBatal" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
       </div>                                        
         </div>
@@ -638,8 +640,10 @@ Sebab-sebab Lain</td>
       <div align="left">           
       $!perhatian
       </div> 
-          <div align="center">           
+          <div align="center"> 
+          #if($userRole != "user_ppk")          
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Tangguh('$idpermohonan','$id_perbicaraan');" />
+          #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');"/>
           </div>                            
                 </table>                       	
@@ -903,7 +907,7 @@ Sebab-sebab Lain</td>
     
       <tr>
       <td colspan="2" width="100%" ><div align="center">
-      #if($!DoNotSave != "1")
+      #if($!DoNotSave != "1" && $userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Batal('$idpermohonan','$id_perbicaraan');" />
       #end
       	  <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -1313,7 +1317,7 @@ Sebab-sebab Lain</td>
           
           	  ## 21 = Selesai, 25 = Permohonan Selesai, 41 = Selesai Perbicaraan
 		  #if ( $idstatus == "41" || $idstatus == "25" )
-		  	#if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N")
+		  	#if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk" )
 	            <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_Kemaskini('$idpermohonan','$id_perbicaraan','$id_bayaran_perintah');" />          
 	     	    <input type="button" name="cmdTeruskan" value="Seterusnya" onClick="seterusnya('$idPermohonanSimati','$idpermohonan','$idstatus')" />             
 		  	#end
@@ -1327,7 +1331,7 @@ Sebab-sebab Lain</td>
 		   #end
 		  
           
-            #if($idstatus == "21" )                  
+            #if($idstatus == "21" && $userRole != "user_ppk")                  
            <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_Kemaskini('$idpermohonan','$id_perbicaraan','$id_bayaran_perintah');" />          
      	    <input type="button" name="cmdTeruskan" value="Seterusnya" onClick="seterusnya('$idPermohonanSimati','$idpermohonan','$idstatus')" />
            #if($flag_kemaskini_selesai != "yes")
@@ -1424,7 +1428,7 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
             </tr>                                           
                   </table>
           <div align="center">   
-       #if ( $flagFromSenaraiFailSek8 == '' )              
+       #if ( $flagFromSenaraiFailSek8 == '' && $userRole != "user_ppk")              
           <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_KemaskiniTangguh('$idpermohonan','$id_perbicaraan');" />
            #if($flag_kemaskini_selesai != "yes")
 			<script>
@@ -1514,7 +1518,7 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
        <input type="button" name="cmdBorangI" id="cmdBorangI" value="Hantar ke Mahkamah Tinggi (Borang I)" onClick="semakMTBorangI('$id_perbicaraan')"/>
        #end
        
-       #if ( $flagFromSenaraiFailSek8 == '' )             
+       #if ( $flagFromSenaraiFailSek8 == '' && $userRole != "user_ppk")             
       <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_KemaskiniBatal('$idpermohonan','$id_perbicaraan');" />
        #if($flag_kemaskini_selesai != "yes")
 			<script>
@@ -1894,8 +1898,10 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
       <div align="left">           
       $!perhatian
       </div>
-          <div align="center">           
+          <div align="center">  
+          #if($userRole != "user_ppk")         
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: kemaskini_selesai('$idpermohonan','$id_perbicaraan','$id_perintah');" />
+          #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
           </div>                                                        
         </div>
@@ -2003,8 +2009,10 @@ Sebab-sebab Lain </td>
       <div align="left">           
       $!perhatian
       </div>
-          <div align="center">           
+          <div align="center">    
+          #if($userRole != "user_ppk")       
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: Simpan_Edit_Tangguh('$idpermohonan','$id_perbicaraan');" />
+          #end
           <input name="cmdBatal" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');"/>
           </div>                            
                 </table>                       	
@@ -2127,8 +2135,10 @@ Sebab-sebab Lain </td>
     </div>  
     </td>
     </tr>  
-                  <div align="center">           
+                  <div align="center">  
+                  #if($userRole != "user_ppk")         
                   <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: Simpan_Edit_Batal('$idpermohonan','$id_perbicaraan');" />
+                  #end
                   <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
                   </div>                           
                 </table>

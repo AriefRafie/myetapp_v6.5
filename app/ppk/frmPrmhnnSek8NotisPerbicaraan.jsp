@@ -180,7 +180,7 @@ document.getElementById("header_lama").style.display="block";
                    <!--  <input type="text" size="11" name="txdTarikhNotis" maxlength="10" id="txdTarikhNotis" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);checkEventDate('notisNew','new');" /> -->
                     <input type="text" size="11" name="txdTarikhNotis" class="disabled" maxlength="10" id="txdTarikhNotis" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);" />
                     <!-- <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhNotis',false,'dmy');">&nbsp; -->&nbsp;&nbsp;&nbsp;&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i></td>
-            		 <input type="hidden" name="edityes" value=$edit>
+            		 <input type="text" name="edityes" value=$edit>
             </tr>
                 <tr>
               <td valign="top"><font color="red">*</font></td>
@@ -592,7 +592,7 @@ document.getElementById("header_lama").style.display="block";
                    <!--  <input type="text" size="11" name="txdTarikhNotis" id="txdTarikhNotis" maxlength="10" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);checkEventDate('notisNew','new');" /> -->
                     <input type="text" size="11" name="txdTarikhNotis" class="disabled" id="txdTarikhNotis" maxlength="10" value="$txdTarikhNotis" onblur="validateTarikh(this,this.value);check_date(this);" />
                     <!-- <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhNotis',false,'dmy');">&nbsp; -->&nbsp;&nbsp;&nbsp;&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i></td>
-            	 <input type="hidden" name="edityes" value=$edit>
+            	 <input type="text" name="edityes" value=$edit>
             </tr>
                 <tr>
               <td valign="top"><font color="red">*</font></td>
@@ -1050,6 +1050,9 @@ document.getElementById("header_lama").style.display="block";
       #set($poskodb = $data.poskod)
       #set($pegawaiPengendali = $data.peg_pengendali)
       #set($jenisWaktu = $data.jenis_masa_bicara)
+      #set($tarikh_bicara_dahulu = $data.tarikh_bicara_dahulu)
+      #set($sebab_pinda_tarikh = $data.sebab_pinda_tarikh)
+      
       #end  
       #end
       <div class="TabbedPanelsContent"> <br/>
@@ -1071,8 +1074,11 @@ document.getElementById("header_lama").style.display="block";
               <td>Tarikh Bicara</td>
               <td>:&nbsp;
                   <!--   <input type="text" name="editTarikhBicara" id="editTarikhBicara" maxlength="10" value="$!tarikhBicara" size="11" $disabilityCSS $disability  onblur="check_date(this);getTarikhNotisUPDATE();validateTarikh(this,this.value);checkEventDate('bicaraEdit','edit');" /> -->
-                    <input type="text" name="editTarikhBicara" id="editTarikhBicara" maxlength="10" value="$!tarikhBicara" size="11" $disabilityCSS $disability  onblur="check_date(this);getTarikhNotisUPDATE();validateTarikh(this,this.value);checkCutiAm(this.value);" />
-                    #if($edit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('editTarikhBicara',false,'dmy');">&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i>#end </td>
+                    <input type="text" name="editTarikhBicara" id="editTarikhBicara" maxlength="10" value="$!tarikhBicara" size="11" $disabilityCSS $disability  onblur="check_date(this);getTarikhNotisUPDATE();validateTarikh(this,this.value);checkCutiAm(this.value);checkTarikhPinda();" />
+                    #if($edit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('editTarikhBicara',false,'dmy');">&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i>#end 
+                    <input type="hidden" name="editTarikhBicaraHidden" id="editTarikhBicaraHidden" maxlength="10" value="$!tarikhBicara" size="11" />
+                     <input type="hidden" name="tarikh_bicara_dahulu" id="tarikh_bicara_dahulu" maxlength="10"  size="11" />
+                    </td>
             </tr>
                         
                         
@@ -1288,7 +1294,41 @@ document.getElementById("header_lama").style.display="block";
               <td valign="top">#if($edit=="yes")<font color="red">*</font>#else&nbsp;#end</td>
               <td>Pegawai Pengendali</td>
               <td>:&nbsp;$!SELECTPegawai</td>
+            
+            
+            
+            
+            
+            
+            
+            
             </tr>
+            #if($tarikh_bicara_dahulu != "")
+            <tr>
+              <td valign="top">#if($edit=="yes")<font color="red">*</font>#else&nbsp;#end</td>
+              <td>Tarikh Bicara Terdahulu (Sebelum Pindaan)</td>
+              <td>:&nbsp;<input type="text" id="tarikh_bicara_dahuluAppear" class="disabled" name="tarikh_bicara_dahuluAppear" value="$!tarikh_bicara_dahulu" /></td>
+            </tr>
+            #end
+            #if($edit=="yes")
+            <tr>
+              <td valign="top"><font color="red">*</font></td>
+              <td>Alasan Pindaan Tarikh</td>
+              <td>:&nbsp;<textarea id="sebab_pinda_tarikh" $disability1 name="sebab_pinda_tarikh">$!sebab_pinda_tarikh</textarea></td>
+            </tr>
+            #elseif($sebab_pinda_tarikh != "")
+            <tr>
+              <td valign="top"></td>
+              <td>Alasan Pindaan Tarikh</td>
+              <td>:&nbsp;<textarea id="sebab_pinda_tarikh" class="disabled" name="sebab_pinda_tarikh">$!sebab_pinda_tarikh</textarea></td>
+            </tr>
+            #end
+            
+            
+            
+            
+            
+            
               </table>
           <br/>
           <br/>
@@ -2778,9 +2818,11 @@ document.getElementById("header_lama").style.display="block";
     <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangD_2('$NO_FAIL','$id_perbicaraan','$id_fail')"> <font color="blue">Borang D (Serahan Emel)</font> </a></td>
     </tr> -->
+    #if($CHECK_SIGNED_TEXT != '')
     <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorandDByJenisSerahan('$NO_FAIL','$id_perbicaraan','$id_fail')"> <font color="blue">Borang D (BARU)</font> </a></td>
     </tr>
+    #end
         <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangDD('$NO_FAIL','$id_perbicaraan','$idpermohonansimati','$id_simati')"><font color="blue">Borang DD</font></a></td>
     </tr>
@@ -2917,6 +2959,7 @@ function seterusnya(id_permohonan,id_status,id_simati)
 		document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailKeputusanPerbicaraan&command=papar_selesai_rujukanROTS";
 	}else{
 		//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailKeputusanPerbicaraan&command=papar_selesai";
+		//alert ("id_status = "+id_status);
 		alert("Status permohonan tidak sah untuk keputusan perbicaraan");
 		return;
 	}	
@@ -3267,7 +3310,11 @@ function simpan() {
 	 	document.${formName}.txdTarikhNotis.focus();
 	 	return;
 	}  
-	
+	else if(date2 < currentTime){
+		alert("Sila pastikan tarikh notis tidak kurang dari tarikh hari ini.");
+		document.${formName}.txdTarikhBicara.focus();
+		return;
+	}
 	else if(date2 > dateHidden){
    		alert("Sila pastikan tarikh notis tidak boleh dalam lingkungan 7 hari sebelum tarikh bicara.");
 	 	document.${formName}.txdTarikhNotis.focus();
@@ -3937,6 +3984,7 @@ function updateNotis() {
   		document.${formName}.editTarikhBicara.focus(); 
 		return;
 	}
+	
 	else if(date1 < trMOHON){
    		alert("Sila pastikan tarikh bicara tidak kurang dari tarikh mohon.");
 	 	document.${formName}.editTarikhBicara.focus();
@@ -3952,12 +4000,12 @@ function updateNotis() {
 	 	document.${formName}.editTarikhNotis.focus();
 	 	return;
 	} 
-	else if (document.${formName}.edityes.value == "no"){
-		if(date2 < currentTime){
+	else if (document.${formName}.edityes.value == "yes" && date2 < currentTime){
+		
 	   	alert("Sila pastikan tarikh notis tidak kurang dari tarikh hari ini.");
 		document.${formName}.txdTarikhNotis.focus();
 		return;
-	}
+	
 	}
 	else if(date2 > dateHidden){
 		alert("Sila pastikan tarikh notis tidak boleh dalam lingkungan 7 hari sebelum tarikh bicara.");
@@ -3969,6 +4017,11 @@ function updateNotis() {
 	 	document.${formName}.editTarikhNotis.focus();
 	 	return;
 	} 
+	else if(document.${formName}.editTarikhBicara.value != document.${formName}.editTarikhBicaraHidden.value && document.${formName}.sebab_pinda_tarikh.value == ""){
+		alert("Sila masukkan alasan pindaan tarikh perbicaraan.");
+		document.${formName}.sebab_pinda_tarikh.focus();
+		return
+	}
 	else if (dat1.value!="" && isDate(dat1.value)==false)
 	{
 		dat1.focus()
@@ -5123,6 +5176,15 @@ function validateTarikh(elmnt,content) {
 		return;
 	}
 }
+
+function checkTarikhPinda() {	
+	if (document.${formName}.editTarikhBicara.value != document.${formName}.editTarikhBicaraHidden.value)
+		{
+		document.${formName}.tarikh_bicara_dahulu.value = document.${formName}.editTarikhBicaraHidden.value;
+		}
+		
+	
+}
 function checkEventDate(dateEvent,types){
 // 	var dat1=document.${formName}.txdTarikhBicara
 // 	var dat2=document.${formName}.txdTarikhNotis
@@ -5726,7 +5788,7 @@ function checkCutiAm(datePick){
 
 function sendDGcert(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
 		
-	    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert";
+	    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=sendDGCert";
 	    /* var url = "../servlet/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert"; */
 		var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
@@ -5735,7 +5797,7 @@ function sendDGcert(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansima
 }
 
 function verifyDGcert(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
-	    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=verify";
+	    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=verify";
 	    /* var url = "../servlet/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert"; */
 		var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))

@@ -177,14 +177,14 @@ document.getElementById("header_lama").style.display="block";
         #if ( $tarikh == "perintah" )
         <td width="11%"><font color="red">*</font>&nbsp;Tarikh Perintah</td>
         <td width="13%">:&nbsp;
-          <input name="txdTarikhPerintah" value="$!tarikh_bicara" size="10" id="txdTarikhPerintah" type="text" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" />
+          <input name="txdTarikhPerintah" disabled value="$!tarikh_bicara" size="10" id="txdTarikhPerintah" type="text" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" />
           <img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTarikhPerintah',false,'dmy');" /></td>
         #end
         
         #if ( $tarikh == "bicara" )
         <td width="14%"><font color="red">*</font>&nbsp;Tarikh Perbicaraan &nbsp;&nbsp;&nbsp;Terakhir</td>
         <td width="13%">:&nbsp;
-          <input name="txdTarikhPerintah" value="$!tarikh_bicara" size="10" id="txdTarikhPerintah" type="text" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" />
+          <input name="txdTarikhPerintah" disabled value="$!tarikh_bicara" size="10" id="txdTarikhPerintah" type="text" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" />
           <img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTarikhPerintah',false,'dmy');" /></td>
         #end </tr>
       <tr>
@@ -193,21 +193,21 @@ document.getElementById("header_lama").style.display="block";
         
          #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($listPenerimaNotis_size1 > 0))
         	&nbsp;
-          <input name="flag_jenis_keputusan" type="radio" value="0" $TEMPcheckedSelesai onclick="tab_selesai()" />
+          <input name="flag_jenis_keputusan" disabled type="radio" value="0" $TEMPcheckedSelesai onclick="tab_selesai()" />
           Selesai
-          <input name="flag_jenis_keputusan" type="radio" value="1" $TEMPcheckedTangguh onclick="tab_tangguh()" />
+          <input name="flag_jenis_keputusan" disabled type="radio" value="1" $TEMPcheckedTangguh onclick="tab_tangguh()" />
           Tangguh
-          <input name="flag_jenis_keputusan" type="radio" value="2" $TEMPcheckedBatal onclick="tab_batal()" />
+          <input name="flag_jenis_keputusan" disabled type="radio" value="2" $TEMPcheckedBatal onclick="tab_batal()" />
           Batal</td>
           #end
           
           #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($listPenerimaNotis_size1 < 1))
         	&nbsp;
-          <input name="flag_jenis_keputusan" type="radio" value="0" $TEMPcheckedSelesai onclick="tab_selesai()" disabled/>
+          <input name="flag_jenis_keputusan" disabled type="radio" value="0" $TEMPcheckedSelesai onclick="tab_selesai()" disabled/>
           Selesai
-          <input name="flag_jenis_keputusan" type="radio" value="1" $TEMPcheckedTangguh onclick="tab_tangguh()" disabled/>
+          <input name="flag_jenis_keputusan" disabled type="radio" value="1" $TEMPcheckedTangguh onclick="tab_tangguh()" disabled/>
           Tangguh
-          <input name="flag_jenis_keputusan" type="radio" value="2" $TEMPcheckedBatal onclick="tab_batal()" disabled/>
+          <input name="flag_jenis_keputusan" disabled type="radio" value="2" $TEMPcheckedBatal onclick="tab_batal()" disabled/>
           Batal</td>
           <tr>
           <td colspan="3"><font color="red"><b>Sila lengkapkan Laporan Penghantaran Notis dahulu.</b></font></td>
@@ -350,7 +350,7 @@ document.getElementById("header_lama").style.display="block";
           </tr>
           <tr>
             <td><div align="left"><font color="red">*</font>&nbsp;Jumlah &nbsp;&nbsp;&nbsp;Bayaran(RM)</div></td>
-            <td><div align="right">:</div></td>
+            <td><div align="right">: </div></td>
             <td> #if ( $FlagtarikhMohon == 0 )
               <input type="text" size="15" name="txtJumBayaran1" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaran1" style="text-transform:uppercase;" value="$Util.formatDecimal($txtJumBayaran)" />
               <input type="hidden" size="12" name="txtJumBayaran" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaran" style="text-transform:uppercase;" readonly class="disabled" value="$txtJumBayaran" />
@@ -534,7 +534,7 @@ document.getElementById("header_lama").style.display="block";
         <tr>
       <td colspan="3" width="100%" ><div align="center">
       
-      #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!DoNotSave != "1"))
+      #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!DoNotSave != "1") && ($userRole != "user_ppk"))
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Selesai('$idpermohonan','$id_perbicaraan');" />
       #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -640,7 +640,7 @@ document.getElementById("header_lama").style.display="block";
     </tr>
         <tr>
       <td colspan="2" width="100%" ><div align="center">
-       #if($!DoNotSave != "1")
+       #if($!DoNotSave != "1" && $userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Tangguh('$idpermohonan','$id_perbicaraan');" />
        #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');"/>
@@ -928,7 +928,7 @@ document.getElementById("header_lama").style.display="block";
     
     <tr>
       <td colspan="2" width="100%" ><div align="center">
-      #if($!DoNotSave != "1")
+      #if($!DoNotSave != "1" && $userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Batal('$idpermohonan','$id_perbicaraan');" />
       #end
       	  <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -1032,7 +1032,7 @@ document.getElementById("header_lama").style.display="block";
 #if ( $mode == "view" )
 
 <!-- abc -->
-<input type ="text" name="id_perintah" id="id_perintah" value="$id_perintah"/>
+<input type ="hidden" name="id_perintah" id="id_perintah" value="$id_perintah"/>
 <input type="hidden" name="id_perbicaraan" id="id_perbicaraan" value="$id_perbicaraan"/>
 <input type="hidden" name="id_bayaran_perintah" id="id_bayaran_perintah" value="$id_bayaran_perintah"/>
 <input type="hidden" name="id_bayaran_pusaka" id="id_bayaran_pusaka" value="$id_bayaran_pusaka"/>
@@ -1047,24 +1047,24 @@ document.getElementById("header_lama").style.display="block";
         #if ( $tarikh == "perintah" )
         <td width="11%">Tarikh Perintah</td>
         <td width="9%">:&nbsp;
-          <input name="txdTarikhPerintah" value="$!tarikh_perintah" size="11" id="txdTarikhPerintah" type="text" readonly class="disabled" />
+          <input name="txdTarikhPerintah" disabled value="$!tarikh_perintah" size="11" id="txdTarikhPerintah" type="text" readonly class="disabled" />
         </td>
         #end
         
         #if ( $tarikh == "bicara" )
         <td width="18%">Tarikh Perbicaraan Terakhir</td>
         <td width="10%">:&nbsp;
-          <input name="txdTarikhPerintah" value="$!tarikh_bicara" size="11" id="txdTarikhPerintah" type="text" readonly class="disabled" />
+          <input name="txdTarikhPerintah" disabled value="$!tarikh_bicara" size="11" id="txdTarikhPerintah" type="text" readonly class="disabled" />
         </td>
         #end </tr>
       <tr>
         <td width="18%">Keputusan Perbicaraan</td>
         <td colspan="5">:&nbsp;
-          <input name="flag_jenis_keputusan" type="radio" value="0" $TEMPcheckedSelesai disabled onclick="tab_selesai()" />
+          <input name="flag_jenis_keputusan" disabled type="radio" value="0" $TEMPcheckedSelesai disabled onclick="tab_selesai()" />
           Selesai
-          <input name="flag_jenis_keputusan" type="radio" value="1" $TEMPcheckedTangguh disabled onclick="tab_tangguh()" />
+          <input name="flag_jenis_keputusan" disabled type="radio" value="1" $TEMPcheckedTangguh disabled onclick="tab_tangguh()" />
           Tangguh
-          <input name="flag_jenis_keputusan" type="radio" value="2" $TEMPcheckedBatal disabled onclick="tab_batal()" />
+          <input name="flag_jenis_keputusan" disabled type="radio" value="2" $TEMPcheckedBatal disabled onclick="tab_batal()" />
           Batal</td>
       </tr>
       <!-- Skrin yang membenarkan VIEW sahaja (START)  -->
@@ -1210,7 +1210,7 @@ document.getElementById("header_lama").style.display="block";
             </label></td>
         </tr>
         <tr>
-          <td><div align="left">Jumlah Bayaran&nbsp;&nbsp;(RM )</div></td>
+          <td><div align="left">Jumlah Bayaran&nbsp;&nbsp;(RM ) </div></td>
           <td><div align="right">:</div></td>
           <td><label>
             <input type="text" size="15" name="txtJumBayaran" id="txtJumBayaran" readonly class="disabled" value="$!Util.formatDecimal($!bayaran_perintah)" />
@@ -1427,7 +1427,7 @@ document.getElementById("header_lama").style.display="block";
           #if($idstatus == "41" || $idstatus == "25" )
             
             
-            #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N")
+            #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk")
             <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_Kemaskini('$idpermohonan','$id_perbicaraan','$id_bayaran_perintah');" />
           	#end
           
@@ -1436,12 +1436,12 @@ document.getElementById("header_lama").style.display="block";
           	#end
           #end 
           
-          #if($idstatus == "21" && $check_kiv == "1")
+          #if($idstatus == "21" && $check_kiv == "1" && $userRole != "user_ppk")
             <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_Kemaskini('$idpermohonan','$id_perbicaraan','$id_bayaran_perintah');" />
          #end 
           
           
-          #if($idstatus == "21" )
+          #if($idstatus == "21" && $userRole != "user_ppk")
                   
             <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_Kemaskini('$idpermohonan','$id_perbicaraan','$id_bayaran_perintah');" />
           <input type="button" name="cmdTeruskan" id="cmdTeruskan" value="Seterusnya" onClick="seterusnya('$idPermohonanSimati','$idpermohonan','$idstatus')" />
@@ -1828,7 +1828,7 @@ document.getElementById("header_lama").style.display="block";
 <!--------------------------------------------------- END VIEW MODE ---------------------------------------------->
 <!--------------------------------------------------- EDIT MODE ---------------------------------------------->
 #if( $mode == "edit" )
-<input type="text" name="id_perintah" id="id_perintah" value="$id_perintah"/>
+<input type="hidden" name="id_perintah" id="id_perintah" value="$id_perintah"/>
 <input type="hidden" name="id_perbicaraan" id="id_perbicaraan" value="$id_perbicaraan"/>
 <input type="hidden" name="id_bayaran_perintah" id="id_bayaran_perintah" value="$id_bayaran_perintah"/>
 <input type="hidden" name="id_bayaran_pusaka" id="id_bayaran_pusaka" value="$id_bayaran_pusaka"/>
@@ -1858,28 +1858,28 @@ document.getElementById("header_lama").style.display="block";
     <table width="100%"  cellspacing="1" cellpadding="1" border="0">
       <tr>
         <td><font color="red">*</font>&nbsp;Pegawai Pengendali</td>
-        <td width="28%">:&nbsp;$selectEditPegawai</td>
+        <td width="28%">:&nbsp;$!selectViewPegawai</td>
         #if ($tarikh == "perintah" )
         <td width="12%"><font color="red">*</font>&nbsp;Tarikh Perintah</td>
         <td width="12%">:&nbsp;
-          <input name="txdTarikhPerintahEDIT" value="$!tarikh_bicara" size="10" id="txdTarikhPerintahEDIT" type="text" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" />
+          <input name="txdTarikhPerintahEDIT" disabled value="$!tarikh_bicara" size="10" id="txdTarikhPerintahEDIT" type="text" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" />
           <img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTarikhPerintahEDIT',false,'dmy');" /></td>
         #end
         
         #if ($tarikh == "bicara" )
         <td width="18%"><font color="red">*</font>&nbsp;Tarikh Perbicaraan &nbsp;&nbsp;&nbsp;Terakhir</td>
         <td width="13%">:&nbsp;
-          <input name="txdTarikhPerintahEDIT" value="$!tarikh_bicara" size="10" id="txdTarikhPerintahEDIT" type="text" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" />
+          <input name="txdTarikhPerintahEDIT" disabled value="$!tarikh_bicara" size="10" id="txdTarikhPerintahEDIT" type="text" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" />
           <img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTarikhPerintahEDIT',false,'dmy');" /> </td>
         #end </tr>
       <tr>
         <td width="17%"><font color="red">*</font>&nbsp;Keputusan Perbicaraan</td>
         <td colspan="5">:&nbsp;
-          <input name="flag_jenis_keputusan" type="radio" disabled value="0" $TEMPcheckedSelesai onclick="tab_selesai()" />
+          <input name="flag_jenis_keputusan" disabled type="radio" disabled value="0" $TEMPcheckedSelesai onclick="tab_selesai()" />
           Selesai
-          <input name="flag_jenis_keputusan" type="radio" disabled value="1" $TEMPcheckedTangguh onclick="tab_tangguh()" />
+          <input name="flag_jenis_keputusan" disabled type="radio" disabled value="1" $TEMPcheckedTangguh onclick="tab_tangguh()" />
           Tangguh
-          <input name="flag_jenis_keputusan" type="radio" disabled value="2" $TEMPcheckedBatal onclick="tab_batal()" />
+          <input name="flag_jenis_keputusan" disabled type="radio" disabled value="2" $TEMPcheckedBatal onclick="tab_batal()" />
           Batal</td>
       </tr>
       <!--By Mohamad Rosli 21/02/2011-->
@@ -2226,7 +2226,9 @@ document.getElementById("header_lama").style.display="block";
       </tr>
       <tr>
         <td colspan="3" width="100%" ><div align="center">
+        #if($userRole != "user_ppk")
             <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: kemaskini_selesai('$idpermohonan','$id_perbicaraan','$id_perintah');" />
+        #end 
             <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
           </div></td>
       </tr>
@@ -2333,7 +2335,9 @@ document.getElementById("header_lama").style.display="block";
       </tr>
       <tr>
         <td colspan="2" width="100%" ><div align="center">
+        #if($userRole != "user_ppk")
             <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: Simpan_Edit_Tangguh('$idpermohonan','$id_perbicaraan');" />
+        #end
             <input name="cmdBatal" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');"/>
           </div></td>
       </tr>
@@ -2423,7 +2427,9 @@ document.getElementById("header_lama").style.display="block";
       </tr>
       <tr>
         <td colspan="2" width="100%" ><div align="center">
+        #if($userRole != "user_ppk")
             <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: Simpan_Edit_Batal('$idpermohonan','$id_perbicaraan');" />
+        #end
             <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
           </div></td>
       </tr>
@@ -3328,7 +3334,7 @@ function validateModal(elmnt,content,content2) {
 
 function semakMTBorangI(id_perbicaraan) {
     var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiMT?idFail=$idFail&command=hantarBorangI&dari=KeputusanPerbicaraan&idPerbicaraan="+id_perbicaraan;
-	var hWnd = window.open(url,'Cetak','width=625,height=480, resizable=yes,scrollbars=no');
+	var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=yes,scrollbars=no');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();

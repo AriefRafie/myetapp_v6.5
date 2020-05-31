@@ -94,7 +94,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 
 		String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
         
-        //GET VALUE PARAM
+        //GET VALUE PARAM 
 		String idPermohonanSimati = getParam("idPermohonanSimati");
         String idPermohonan = getParam("idPermohonan");
         String idPerintah = getParam("idPerintah");
@@ -124,6 +124,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		
 		String flagSelesaiHTA = getParam("flagSelesaiHTA");
 		String flagSelesaiHA = getParam("flagSelesaiHA");
+		String flagSelesaiHAARB = getParam("flagSelesaiHAARB");
 		
 		String flagSelesaiPembahagian = "Y";
 		this.context.put("systemMsg", "");
@@ -143,6 +144,9 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         Vector listHTATH = new Vector();
         Vector beanMaklumatHTATH = new Vector();
         Vector listHA = new Vector();
+        Vector listHAARB = new Vector();
+        Vector listIdPerintahhaobmst = new Vector();
+        Vector listOBARB = new Vector();        
         Vector beanMaklumatHA = new Vector();
         Vector listHAPopup = new Vector();
         
@@ -160,6 +164,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		penghantarNotisByJkptg.clear();
 		
 		listHTA.clear();
+		listHAARB.clear();
         beanMaklumatHTA.clear();
         listHTAPopup.clear();
         listHTATH.clear();
@@ -699,12 +704,12 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 
 			if (hitButt.equals("selesai")){		
 				
-				
+				System.out.println("READ HERE-----SELESAI");
 				//all validation pass - proceed to selesai permohonan
 				
 				if (postDB){
 					if (idStatus.equals("25")){
-						
+						System.out.println("idStatus = 25");
 
 						//CHECK ALL HTA YANG BELUM DIDAFTARKAN
 						if (logic.checkHTAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
@@ -827,7 +832,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						Push.genMsgPush(getParam("idFail"), "perintah");
 						
 					} else {
-						
+						System.out.println("idStatus = ELSE");
                         if (getParam("printOption").equals("potrait")) {
                             this.context.put("onload"," \"javascript:generateNotisKeluarGeranPot('" + getParam("idFail") + "')\"");
                         } else if (getParam("printOption").equals("landskap")) {
@@ -836,6 +841,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
                         } else {
                             this.context.put("onload"," \"javascript:generateNotisKeluarGeran('" + getParam("idFail") + "')\"");
                         }
+                        
 					}
 				}
 				
@@ -843,6 +849,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			}
 			
 			if (hitButt.equals("janaPerintah")){
+				System.out.println("masuk1");
 				if (!logic.checkGeneratedPerintah(logic.getNoFailByIdFail(getParam("idFail")))){
 					logic.janaPerintah(getParam("idFail"), idPermohonan, idPermohonanSimati, idPerbicaraan, idPerintah);
 				}
@@ -1707,10 +1714,56 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				this.context.put("SenaraiHA", listHA);
 				
 				//CHECK ALL HA YANG BELUM DIDAFTARKAN
-				if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
+				if (logic.checkHAYangDiselesaikanARBBelumDibahagikan(idPermohonanSimati, idPerintah)){
 					flagSelesaiHA = "";
 				} else {
 					flagSelesaiHA = "Y";
+				}
+				
+				//CHECK HA YANG DISELESAIKAN OLEH ARB TETAPI BELUM DIDAFTARKAN 
+				if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
+					flagSelesaiHAARB = "";
+					myLogger.info("checkHAYangBelumDibahagikanARB");
+					logic.setDataSenaraiHAARB(idPerintah,idPermohonanSimati);
+					listHAARB = logic.getSenaraiHAARB();
+					String id_HAARB = "";
+					String id_OBARB = "";
+					String id_perintahhaobmst = "";
+					
+					if (listHAARB.size() != 0) {
+     	     			Hashtable lsHAARB = (Hashtable) listHAARB.get(0);
+     	     			id_HAARB = lsHAARB.get("ID_HA").toString();
+					}
+					
+					myLogger.info("Sini1");
+					logic.saveHA("1", "", id_HAARB, idPerintah, idPermohonan, idSimati, idPermohonanSimati, session);
+					myLogger.info("Sini2");
+					
+					//cari perintahhaobmst
+					logic.findIDPerintahHAOBMST(id_HAARB);
+					listIdPerintahhaobmst = logic.getSenaraiPerintahHAARB();
+					if (listIdPerintahhaobmst.size() != 0) {
+     	     			Hashtable lslistIdPerintahhaobmst = (Hashtable) listIdPerintahhaobmst.get(0);
+     	     			id_perintahhaobmst = lslistIdPerintahhaobmst.get("ID_PERINTAHHAOBMST").toString();
+					}
+					
+					//cari idOB Amanah Raya Berhad
+					logic.findIdObARB(idPermohonanSimati);
+					listOBARB = logic.getSenaraiOBARB();
+					//SELECT ID_OB FROM TBLPPKOB WHERE ID_SIMATI in (SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONANSIMATI = '99191149646') AND NAMA_OB LIKE '%AMANAH RAYA%'
+					if (listOBARB.size() != 0) {
+						Hashtable lsOBARB = (Hashtable) listOBARB.get(0);
+						id_OBARB = lsOBARB.get("ID_OB").toString();
+						//logic.updateHAPT(idHA, ids[i], status[i], BA[i], BB[i], idPerintah, session);
+						logic.updateHAPT(id_perintahhaobmst, id_OBARB, id_HAARB, "1", "1", idPerintah, session);
+					}
+				
+					
+						idJenisPerintahHA = "0";
+					
+				}
+				else {
+					flagSelesaiHAARB = "Y";
 				}
 			}
 			
