@@ -2,8 +2,11 @@
 <legend>MAKLUMAT TANAH</legend>
 <table width="100%">
 	<tr>
-	  <td colspan="2">
-	    <input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Tambah" onclick="doAjaxCall${formName}('tambahTanah')">      </td>
+	  <td colspan="8">
+	    <input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('htp','$!htpPermohonan.permohonan.getIdPermohonan()')"/>
+	    <input type="button" class="stylobutton100_" name="cmdSimpan" id="cmdSimpan" value="Tambah" onclick="doAjaxCall${formName}('tambahTanah')">      
+	  
+	  </td>
 	</tr>
 	<tr class="table_header">
 		<td scope="col" width="3%">Bil.</td>

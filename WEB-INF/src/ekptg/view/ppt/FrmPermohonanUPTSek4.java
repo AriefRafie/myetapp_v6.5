@@ -2583,7 +2583,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 			Hashtable i = (Hashtable) listPohon2.get(0);
 			id_projekNegeri = i.get("idProjekNegeri").toString();
 		}
-		
+		context.put("negeriIntegrasi",id_projekNegeri);
 		//validation jajahan
 		if(id_projekNegeri.equals("3")){
 			context.put("showJajahan","yes");

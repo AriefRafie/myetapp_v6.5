@@ -114,6 +114,15 @@ function janaSuratIringanResit(idHasil) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+function janaSuratTuntutanDeposit(idHasil) {
+				
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idHasil="+idHasil+"&report=suratTuntutanDeposit";
+    var hWnd = window.open(url,'printuser','width=1000,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
 function validateCurrency(elmnt,content,content2) {
 	content = content.replace(/,/g,'');
 	content2 = content2.replace(/,/g,'');

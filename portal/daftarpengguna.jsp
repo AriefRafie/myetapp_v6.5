@@ -89,8 +89,8 @@
 		               <option value="Syarikat">Syarikat</option>
 		            </select> -->
 		            <div>
-		          		<input type='radio' id='individuwarga' name="idwarga" value='warga' ><span class="style1">Warganegara</span>
-		          		<input type='radio' id='individux' name="idwarga" value='wargax' onClick="toggleDisplay('individux')"><span class="style1">Bukan Warganegara</span>
+		          		<input type='radio' id='individuwarga' name="idsyarikat" value='warga' ><span class="style1">Warganegara</span>
+		          		<input type='radio' id='individux' name="idsyarikat" value='wargax' onClick="toggleDisplay('individux')"><span class="style1">Bukan Warganegara</span>
 
 					</div>
 	            </td>
@@ -100,7 +100,7 @@
 		        <td><span class="style1">:</span></td>
 	    		<td>
 	    			  <select id="xsyarikatsub" name="idsyarikat" style="width:100%" onchange="toggleDisplay('xsyarikatsub')">
-		              	<option value="-1" selected>Sila Pilih</option>
+		              	<option value="XDA" selected>Sila Pilih</option>
 		               	<option value="MAMP">Badan Berkanun</option>
 		               	<option value="ROS">Badan Bukan Kerajaan</option>
 		                <option value="PBN">Kerajaan Negeri/ Wilayah Persekutuan</option>
@@ -116,7 +116,7 @@
 		        <td><span class="style1">:</span></td>
                 <td>
 		        	<input autocomplete="off" TABINDEX="1" name="txtNoKPBaru" id="txtNoKPBaru" value="" maxlength="12" type="hidden" />      
-                	<input name="txtNoKPBaru1" id="txtNoKPBaru1" style="width: 50px;" type="text" value="" size="20" maxlength="15"/>               
+                	<input name="txtNoKPBaru1" id="txtNoKPBaru12" style="width: 50px;" type="text" value="" size="20" maxlength="15" onKeyUp="setxmyid(this)"/>               
                 <!--  <span class="style1">                
                 <font color="blue">(cth:76111-03-5512)</font> </span>
 		          <div id="checknokp_result2" style="color:red"></div> --></td>
@@ -125,7 +125,7 @@
 		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> MyID</span></td>
 		        <td><span class="style1">:</span></td>
                 <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtNoKPBaru" id="txtNoKPBaru" value="" maxlength="12" type="hidden" />
+		        <input autocomplete="off" TABINDEX="1" name="txtNoKPBaru" id="txtNoKPBaru_" value="" maxlength="12" type="hidden" />
                 
                 <input name="txtNoKPBaru1" id="txtNoKPBaru1" style="width: 50px;" type="text" value="" size="7" maxlength="6" onKeyUp="validateXIC(event,this,this.value,'txtNoKPBaru2')"   />               
                 -
@@ -141,7 +141,7 @@
 		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> MyCOID</span></td>
 		        <td><span class="style1">:</span></td>
                 <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO" id="txtNoKPCO" value="" maxlength="10" type="text" />
+		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO_" id="txtNoKPCO_" value="" maxlength="10" type="text" onKeyUp="setxmyid(this)" />
                 <span class="style1"> 
                 <font color="blue">(cth:123456A)</font> </span>
 		        </td>
@@ -150,7 +150,7 @@
 		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
 		        <td><span class="style1">:</span></td>
                 <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO" id="txtNoKPCO" value="" maxlength="10" type="text" />
+		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO_" id="txtNoKPCO2_" value="" maxlength="10" type="text" />
                 <span class="style1"> 
                 <font color="blue">(cth:123456A)</font> </span>
 		        </td>
@@ -159,7 +159,7 @@
 		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
 		        <td><span class="style1">:</span></td>
                 <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO" id="txtNoKPCO" value="" maxlength="10" type="text" />
+		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO_" id="txtNoKPCO3_" value="" maxlength="10" type="text" />
                 <span class="style1"> 
                 <font color="blue">(cth:123456A)</font> </span>
 		        </td>
@@ -168,7 +168,7 @@
 		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
 		        <td><span class="style1">:</span></td>
                 <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO" id="txtNoKPCO" value="" maxlength="10" type="text" />
+		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO_" id="txtNoKPCO4_" value="" maxlength="10" type="text" />
                 <span class="style1"> 
                 <font color="blue">(cth:123456A)</font> </span>
 		        </td>
@@ -177,7 +177,7 @@
 		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">Bil. Daftar</span></td>
 		        <td><span class="style1">:</span></td>
                 <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO" id="txtNoKPCO" value="" maxlength="10" type="text" />
+		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO_" id="txtNoKPCO5_" value="" maxlength="10" type="text" />
                 <span class="style1"> 
                 <font color="blue">(cth:B-6-XXXX)</font> </span>
 		        </td>
@@ -186,7 +186,7 @@
 		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
 		        <td><span class="style1">:</span></td>
                 <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO" id="txtNoKPCO" value="" maxlength="10" type="text" />
+		        <input autocomplete="off" TABINDEX="1" name="txtNoKPCO_" id="txtNoKPCO6_" value="" maxlength="10" type="text" />
                 <span class="style1"> 
                 <font color="blue">(cth:MDK-43522206-K)</font> </span>
 		        </td>
@@ -878,6 +878,7 @@
 	</tr>
 </table>
 
+<input type="hidden" name="txtNoKPCO" value="">
 <input type="hidden" name="command" value="">
 </form>
 </div>
@@ -910,7 +911,7 @@
 	//		 if (imageY=='minus') {document.getElementById('pengumumanImage').src='1_files/list-add.png';imageY='plus';}
 	//		 else {document.getElementById('pengumumanImage').src='1_files/list-remove.png';imageY='minus';}		
  		}else if(e=="individux"){
-			alert('bukan warga');
+			//alert('bukan warga');
 			//if (element.value=='Individu') {
 				document.getElementById('individux_').style.display='';
 				document.getElementById('Individu').style.display='none';
@@ -1035,122 +1036,141 @@
 			
 		});
 	}
-
+	/* function setxmyid(param){
+ 		alert('txtNoKPCO='+param.value);
+		document.f1.txtNoKPCO.value = param.value;
+	 }*/
+	setxmyid = function(param){
+		document.f1.txtNoKPCO.value = param.value;
+	}
+	
 	daftar = function() {
 		var dob_code = "";
  		var tt = "";
-
+ 		//alert('txtNoKPCO='+document.f1.txtNoKPCO.value +",");
+ 		//
+ 		alert('idsyarikat='+document.f1.idsyarikat.value +",");
 	 	if (document.f1.idKategori.value == "Individu") { 
-			if (document.f1.txtNoKPBaru1.value == "") { 
-				alert('Sila pastikan MyID dimasukkan dengan lengkap');
-				document.f1.txtNoKPBaru1.focus();
+
+	 		if(document.f1.idsyarikat.value == "wargax") {
+		 		if (document.f1.txtNoKPCO.value == "") { 
+					alert('Sila pastikan Rujukan dimasukkan dengan lengkap');
+					document.f1.txtNoKPCO.focus();
+					doRefreshCaptcha();
+					return;
+				}
+	 		
+	 		}else{}	
+				if (document.f1.txtNoKPBaru1.value == "") { 
+					alert('Sila pastikan MyID dimasukkan dengan lengkap');
+					document.f1.txtNoKPBaru1.focus();
+					doRefreshCaptcha();
+					return;
+				}
+			
+				if (document.f1.txtNoKPBaru2.value == "") { 
+					alert('Sila pastikan MyID dimasukkan dengan lengkap');
+					document.f1.txtNoKPBaru2.focus();
+					doRefreshCaptcha();
+					return;
+				}
+			
+				if (document.f1.txtNoKPBaru3.value == "") { 
+					alert('Sila pastikan MyID dimasukkan dengan lengkap');
+					document.f1.txtNoKPBaru3.focus();
+					doRefreshCaptcha();
+					return;
+				}
+	 		
+	 		}
+ 
+	 	} else {
+			if (document.f1.txtNoKPCO.value == "") { 
+				alert('Sila pastikan MyCOID dimasukkan dengan lengkap');
+				document.f1.txtNoKPCO.focus();
 				doRefreshCaptcha();
 				return;
 			}
+ 		
+	 	} 
 		
-		if (document.f1.txtNoKPBaru2.value == "") { 
-			alert('Sila pastikan MyID dimasukkan dengan lengkap');
-			document.f1.txtNoKPBaru2.focus();
-			doRefreshCaptcha();
-			return;
+		var dob_code = document.f1.txtNoKPBaru1.value;
+		if(dob_code.charAt(0)<3){
+	 		var dum = "20";
+		}else{
+			var dum = "19";
 		}
 		
-		if (document.f1.txtNoKPBaru3.value == "") { 
-			alert('Sila pastikan MyID dimasukkan dengan lengkap');
-			document.f1.txtNoKPBaru3.focus();
-			doRefreshCaptcha();
-			return;
-		}
- } else {
-		if (document.f1.txtNoKPCO.value == "") { 
-			alert('Sila pastikan MyCOID dimasukkan dengan lengkap');
-			document.f1.txtNoKPCO.focus();
-			doRefreshCaptcha();
-			return;
-		}
- } 
-		
-	var dob_code = document.f1.txtNoKPBaru1.value;
-if(dob_code.charAt(0)<3)
-	{
-	 var dum = "20";
-	}
-	else
-	{
-	var dum = "19";
-	}
-var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""	+dob_code.charAt(3)+"/"+dum+dob_code.charAt(0)+""+dob_code.charAt(1);
+		var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""	+dob_code.charAt(3)+"/"+dum+dob_code.charAt(0)+""+dob_code.charAt(1);
 
-	//alert("xx"+dob_code);
-	
-	if (document.f1.txtNoKPBaru1.value != "" && isIc(tt)==false){
-		document.f1.txtNoKPBaru1.focus()
-		return;
-	}
+		//alert("xx"+dob_code);
+		if (document.f1.txtNoKPBaru1.value != "" && isIc(tt)==false){
+			document.f1.txtNoKPBaru1.focus()
+			return;
+		}
 		
-	if (document.f1.nama.value == "") { 
+		if (document.f1.nama.value == "") { 
 			alert('Sila pastikan nama dimasukkan');
 			document.f1.nama.focus();
 			return;
-	}
+		}
 	
-	if (document.f1.alamat1.value == "") { 
+		if (document.f1.alamat1.value == "") { 
 			alert('Sila pastikan alamat dimasukkan');
 			document.f1.alamat1.focus();
 			return;
-	}
+		}
 	
-	if (document.f1.poskod.value == "") { 
+		if (document.f1.poskod.value == "") { 
 			alert('Sila pastikan poskod dimasukkan');
 			document.f1.poskod.focus();
 			return;
-	}
+		}
 	
-	if (!emailCheck(document.f1.emel.value)) {
-		alert('Sila periksa alamat email anda');
-		document.f1.emel.focus();
-		return;
-	}
-	
-	if (document.f1.id_negeri.value == "") { 
-			alert('Sila pastikan pilih negeri');
-			document.f1.id_negeri.focus();
+		if (!emailCheck(document.f1.emel.value)) {
+			alert('Sila periksa alamat email anda');
+			document.f1.emel.focus();
 			return;
-	}
+		}
+		
+		if (document.f1.id_negeri.value == "") { 
+				alert('Sila pastikan pilih negeri');
+				document.f1.id_negeri.focus();
+				return;
+		}
+		
+		/* remove this validation.
+		if (document.f1.txtNoKPBaru1.value.length < 12) {
+			alert('Sila masukkan " No KP " yang betul.');
+			document.f1.txtNoKPBaru1.focus();
+			return;	
+		}
+		*/
+		var string = document.f1.password.value; 
+		
+		if (string.length < 6 ) { 
+			alert('Sila pastikan kata laluan anda dimasukkan dengan betul');
+			document.f1.password.focus();
+			doRefreshCaptcha();
+			return;
+		}	
+		if (document.f1.password.value != document.f1.password2.value) {
+			alert('Sila pastikan kata laluan adalah sama');
+			document.f1.password2.focus();
+			doRefreshCaptcha();
+			return;
+		}
+		/*if (document.f1.txtNoKPBaru.value == ""){
+			alert('Sila masukkan " MyID " terlebih dahulu.');
+			document.f1.txtNoKPBaru.focus();
+			return;
+		} */
 	
-	
-	/* remove this validation.
-	if (document.f1.txtNoKPBaru1.value.length < 12) {
-		alert('Sila masukkan " No KP " yang betul.');
-		document.f1.txtNoKPBaru1.focus();
-		return;	
-	}
-	*/
-	var string = document.f1.password.value; 
-	
-	if (string.length < 6 ) { 
-		alert('Sila pastikan kata laluan anda dimasukkan dengan betul');
-		document.f1.password.focus();
-		doRefreshCaptcha();
-		return;
-	}	
-	if (document.f1.password.value != document.f1.password2.value) {
-		alert('Sila pastikan kata laluan adalah sama');
-		document.f1.password2.focus();
-		doRefreshCaptcha();
-		return;
-	}
-	/*if (document.f1.txtNoKPBaru.value == ""){
-		alert('Sila masukkan " MyID " terlebih dahulu.');
-		document.f1.txtNoKPBaru.focus();
-		return;
-	} */
-
-	if (document.f1.idKategori.value == "Individu") {
-		document.f1.txtNoKPBaru.value = document.f1.txtNoKPBaru1.value+""+ document.f1.txtNoKPBaru2.value+""+document.f1.txtNoKPBaru3.value;
-	} else {
-		document.f1.txtNoKPBaru.value = document.f1.txtNoKPCO.value
-	}
+		if (document.f1.idKategori.value == "Individu") {
+			document.f1.txtNoKPBaru.value = document.f1.txtNoKPBaru1.value+""+ document.f1.txtNoKPBaru2.value+""+document.f1.txtNoKPBaru3.value;
+		} else {
+			document.f1.txtNoKPBaru.value = document.f1.txtNoKPCO.value
+		}
       
 		url = "../servlet/ekptg.view.online.Portal";
 		actionName = "doRegister";
@@ -1454,5 +1474,7 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""	+dob
 	      }
 	      return strReturn;
 	}
+	
+	
 	
 </script>

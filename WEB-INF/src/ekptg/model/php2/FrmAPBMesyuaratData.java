@@ -405,6 +405,7 @@ public class FrmAPBMesyuaratData {
 
 			r.add("ID_MESYUARAT");
 			r.add("TAJUK");
+			r.add("BIL_MESYUARAT");
 			r.add("TARIKH_MESYUARAT");
 			r.add("TINDAKAN_MESYUARAT");
 			r.add("ID_PERMOHONAN", idPermohonan);
@@ -428,6 +429,9 @@ public class FrmAPBMesyuaratData {
 				h.put("tindakanMesyuarat",
 						rs.getString("TINDAKAN_MESYUARAT") == null ? "" : rs
 								.getString("TINDAKAN_MESYUARAT"));
+				h.put("bilMesyuarat",
+						rs.getString("BIL_MESYUARAT") == null ? "" : rs
+								.getString("BIL_MESYUARAT"));
 				listMesyuarat.addElement(h);
 				bil++;
 			}

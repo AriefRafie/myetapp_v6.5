@@ -372,7 +372,7 @@ public class PembelianBean implements IPembelian {
 												sql += " AND B.ID_HTPPERMOHONAN = '"+ idHtpPermohonan +"'";
 											}
 											sql +=" ORDER BY A.id_Permohonan desc";
-											//myLog.info("Permohonan:::findPermohonan::sql::"+sql);
+											myLog.info("Permohonan:::findPermohonan::sql="+sql);
 											
 											 Statement stmt = db.getStatement();
 										     ResultSet rs = stmt.executeQuery(sql);		

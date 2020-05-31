@@ -1312,7 +1312,8 @@
 			<table width="100%" border="0">   
                 	<tr>
                 		#if($mode=="view")
-                    	<td width="30%" align="left"><input type="button" name="cmdTambah" value="Tambah Hakmilik" onClick="javascript:tambahHM('$!flag_subjaket');"></td>
+                    	<td width="30%" align="left">
+                    		<input type="button" name="cmdTambah" value="Tambah Hakmilik" onClick="javascript:tambahHM('$!flag_subjaket');"></td>
     					#else
     					<td width="30%">&nbsp;</td>
     					#end

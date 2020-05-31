@@ -154,12 +154,10 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		String flagSegera = "";
 		String id_fail = "";
 		String no_fail = "";
-		
-		
+				
 		Vector dataHeader = null;
 		String idpermohonan = getParam("id_permohonan");
-		if(!idpermohonan.equals(""))
-		{
+		if(!idpermohonan.equals("")){
 			header.setDataHeader(idpermohonan);
 			dataHeader = header.getDataHeader();
 			context.put("dataHeader", dataHeader);
@@ -181,8 +179,10 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 				this.context.put("list_sub_header", list_sub);
 	
 			}
-		}
 		
+		}
+		context.put("negeriIntegrasi",id_projekNegeri);
+
 		//razman komen dlu, nampak tiada keperluan
 		//paparData(getParam("id_fail"));
 		
@@ -474,18 +474,14 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		}
 
 		if ("semakHM".equals(submit)) {
-
 			noLOT = getParam("carianNoLot");
 			context.put("carianNoLot", noLOT.trim());
 			
 			//if flag hantar emel
-			if(!flag_email.equals("Y"))
-			{
-				flag_email = "";
-				
+			if(!flag_email.equals("Y")){
+				flag_email = "";			
 			}		
-			this.context.put("flag_email",flag_email);
-			
+			this.context.put("flag_email",flag_email);		
 
 			// data & list maklumat tanah
 			// modelUPT.setListMaklumatTanahAcceptPenarikan_listHakmilik(idpermohonan,noLOT,idpegawai);
@@ -493,8 +489,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 			// modelUPT.getListMaklumatTanahAcceptPenarikan();
 			// context.put("listMaklumatTanah",
 			// listMaklumatTanahAcceptPenarikan);
-			context.put("saiz_listTanah", modelUPT.setListMaklumatTanah_count(
-					idpermohonan, noLOT, idpegawai));
+			context.put("saiz_listTanah", modelUPT.setListMaklumatTanah_count(idpermohonan, noLOT, idpegawai));
 
 			// list for create subjaket
 			modelUPT.setListSeqSubjaket(idpermohonan);
@@ -505,7 +500,6 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 			myLogger.info("submit[2]: " + submit2);
 
 			if ("janaSubjaketManual".equals(submit2)) {
-
 				// validation sj
 				context.put("showSJ", "yes");
 

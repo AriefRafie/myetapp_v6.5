@@ -71,7 +71,7 @@
 <table width="100%">
 		<TR>
 			<TD colspan="4">
-				 <input class="stylobutton" type="button" name="cmdSimpan" id="cmdSimpan" value="Tambah" onclick="doAjaxCall${formName}('tambahPemilik')">
+				 <input class="stylobutton_" type="button" name="cmdSimpan" id="cmdSimpan" value="Tambah" onclick="doAjaxCall${formName}('tambahPemilik')">
             </TD>
         </TR>
           <tr class="table_header">

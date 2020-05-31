@@ -15,7 +15,11 @@ alert("Sila Teruskan 'Paging' No.4 Sekiranya Hakmilik Telah Diagihkan Oleh Penga
 <br/>
 
 	<fieldset id="bottom">
-	<legend><strong>Senarai Maklumat Lot <input type="button" name="cmdTambah" value ="Tambah Hakmilik" onClick="javascript:tambahHakmilik('$!flag_subjaket');">
+	<legend><strong>Senarai Maklumat Lot 
+	    #if($!negeriIntegrasi == "4")
+       		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('ppt','$id_permohonan')">
+      	#end 
+		<input type="button" name="cmdTambah" value ="Tambah Hakmilik" onClick="javascript:tambahHakmilik('$!flag_subjaket');">
     <input type="button" name="janaSJ" value ="Jana Subjaket" onClick="javascript:popupCarianHakmilikJanaSubjaket('$id_permohonan','skrin_list_hakmilik_pb_sek8');">
     </strong></legend>
 		<a href="javascript:popupCarianHakmilik('$id_permohonan','skrin_list_hakmilik_pb_sek8')"><font color="blue">>> SKRIN CAPAIAN HAKMILIK</font></a>	
@@ -169,30 +173,26 @@ alert("Sila Teruskan 'Paging' No.4 Sekiranya Hakmilik Telah Diagihkan Oleh Penga
 
 
 <script>
+	window.onload = submitForm;
 
-
-
-
-window.onload = submitForm;
-
-
-
-function refreshHakmilik(idpermohonan) {
+	//Skrin Maklumat Tanah
+	function semakanHakmilikeTanah(modul,idPermohonan) {
+		var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul="+modul+"&idPermohonan="+idPermohonan;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
 	
+	}
+
+function refreshHakmilik(idpermohonan) {	
 	document.${formName}.ScreenLocation.value = "bottom";
 	document.${formName}.id_permohonan.value = idpermohonan;
 	document.${formName}.command.value = "semakHM";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmUPTSek8Hakmilik";
 	document.${formName}.submit();
 }
-
-
-
-
-
-
-
-
 
 function popupCarianHakmilik(id_permohonan,flag_skrin)
 {

@@ -205,7 +205,7 @@ public class MTRegManager {
 				if (response.getData() != null) {
 					//response.getData().getCaseNo()getSourceReferenceNo();
 					if (response.getData().getCaseNo() != null) {
-						referenceNo = response.getData().getSourceReferenceNo();
+						caseNo = response.getData().getCaseNo();
 					}
 				}
 			}				
@@ -254,7 +254,7 @@ public class MTRegManager {
 				if (response.getData() != null) {
 					//response.getData().getCaseNo()getSourceReferenceNo();
 					if (response.getData().getCaseNo() != null) {
-						referenceNo = response.getData().getSourceReferenceNo();
+						caseNo = response.getData().getCaseNo();
 					}
 				}
 			}

@@ -149,6 +149,8 @@ public class ETanahPPTManager {
 			stub.setPassword(password);
 		
 			hf = stub.hakmilikDetailByCarianResit(noResit, idHakmilik);
+			
+			
 
 //		EtappPesakaServiceStub stub = new EtappPesakaServiceStub(url);
 //		GetHakmilikByCarianRasmi request = new GetHakmilikByCarianRasmi();
