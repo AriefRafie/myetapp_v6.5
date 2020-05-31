@@ -132,7 +132,111 @@ public class IntegrasiManager {
 	    }
 	    
 	}
+	
+	public static String getIdJenisHakmilik(String kodJenisHakmilik) throws Exception {
+		Db db = null;
+		String sql = "";
 
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT ID_JENISHAKMILIK FROM TBLRUJJENISHAKMILIK WHERE KOD_JENIS_HAKMILIK = '" + kodJenisHakmilik + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()){
+				return rs.getString("ID_JENISHAKMILIK");
+			} else {
+				return "";
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static String getIdNegeri(String kodNegeri) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT ID_NEGERI FROM TBLRUJNEGERI WHERE KOD_NEGERI = '" + kodNegeri + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()){
+				return rs.getString("ID_NEGERI");
+			} else {
+				return "";
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static String getIdDaerah(String kodNegeri, String kodDaerah) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT ID_DAERAH FROM TBLRUJDAERAH WHERE ID_NEGERI = '" + getIdNegeri(kodNegeri) + "' AND KOD_DAERAH = '" + kodDaerah + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()){
+				return rs.getString("ID_DAERAH");
+			} else {
+				return "";
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static String getIdMukim(String kodNegeri, String kodDaerah, String kodMukim) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT ID_MUKIM FROM TBLRUJMUKIM WHERE ID_DAERAH = '" + getIdDaerah(kodNegeri, kodDaerah) + "' AND KOD_MUKIM = '" + kodMukim + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()){
+				return rs.getString("ID_MUKIM");
+			} else {
+				return "";
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static String cleanDataString(String input) {
+		String temp = input;
+		if (input == null) {
+			temp = "";
+		} else if ("null".equalsIgnoreCase(input.trim())) {
+			temp = input.trim().replaceAll("null", "");
+			temp = temp.toUpperCase();
+		} else {
+			temp = input.trim().toUpperCase();
+		}
+		return temp;
+	}
 	
 		  
 }

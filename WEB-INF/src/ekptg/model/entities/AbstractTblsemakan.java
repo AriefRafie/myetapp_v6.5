@@ -1,5 +1,6 @@
 package ekptg.model.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +21,8 @@ public abstract class AbstractTblsemakan implements java.io.Serializable {
 	private String kodSemak;
 	private String perihal;
 	private String lainLain;
+	private String tarikhMasukf;
+	private String tarikhKemaskinif;
 	private Long idMasuk;
 	private Date tarikhMasuk;
 	private Long idKemaskini;
@@ -112,6 +115,14 @@ public abstract class AbstractTblsemakan implements java.io.Serializable {
 		this.tarikhMasuk = tarikhMasuk;
 	}
 
+	public void setTarikhMasukf(String tarikhMasuk) {
+		this.tarikhMasukf = tarikhMasuk;
+	}
+	
+	public String getTarikhMasukf() {
+		return this.tarikhMasukf;
+	}
+
 	public Long getIdKemaskini() {
 		return this.idKemaskini;
 	}
@@ -123,11 +134,19 @@ public abstract class AbstractTblsemakan implements java.io.Serializable {
 	public Date getTarikhKemaskini() {
 		return this.tarikhKemaskini;
 	}
-
+	
 	public void setTarikhKemaskini(Date tarikhKemaskini) {
 		this.tarikhKemaskini = tarikhKemaskini;
 	}
-
+	
+	public void setTarikhKemaskinif(String tarikhKemaskini) {
+		this.tarikhKemaskinif = tarikhKemaskini;
+	}
+	
+	public String getTarikhKemaskinif() {
+		return tarikhKemaskinif;
+	}
+	
 	public Set getTblsemakansenarais() {
 		return this.tblsemakansenarais;
 	}

@@ -12,7 +12,9 @@
       <legend><b>SENARAI DOKUMEN</b></legend>
       <table align="center" width="100%">
         <tr>
+        #if ($userRole == '(PHP)PYWPengarahHQ' || $userRole == '(PHP)PYWPenolongPengarahHQ' || $userRole == '(PHP)PYWPenolongPegawaiTanahHQ')
           <td colspan="9" scope="row"><input name="cmdTambah" type="button" value="Tambah" onclick="javascript:doDaftarMaklumatKJP()"/></td>
+        #end
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
@@ -65,10 +67,22 @@
       </fieldset></td>
   </tr>
   <tr>
-    <td align="center"> #if ($idStatus == '1610199')
-      <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+    <td align="center"> 
+    #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+    #if ($idStatus == '1610199')
+      #if ($userRole == '(PHP)PYWPengarahHQ')
+      	<input type="button" name="cmdHantarTugasan2" id="cmdHantarTugasan2" value="Hantar Kepada Penolong Pengarah" onClick="gotoHantarTugasanPP()"/>
+      #end
+	  #if ($userRole == '(PHP)PYWPenolongPengarahHQ')
+         <input type="button" name="cmdHantarTugasan" id="cmdHantarTugasan" value="Agihan Kepada Pen. Pegawai Tanah" onClick="gotoHantarTugasanPPT()"/>
+      #end
+      #if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ')      
+      	<input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+      #end
       <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-      #end</td>
+    #end
+    #end
+    </td>
   </tr>
 </table>
 <script>

@@ -30,7 +30,7 @@ public class FrmIntegrasiDGCert extends VTemplate {
 		HttpSession session = this.request.getSession();
 		Date now = new Date();
 		String vm = "";
-		String submit = request.getParameter("command");
+		String submit = request.getParameter("commandw") != null ? (String) request.getParameter("commandw") : (String) request.getParameter("command");
 		String fFrom = request.getParameter("frmFrom") != null ? (String) request
 				.getParameter("frmFrom") : "";
 				

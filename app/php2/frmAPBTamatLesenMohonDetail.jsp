@@ -36,13 +36,16 @@
     <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN PENAMATAN LESEN</li>
-          <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">ULASAN JKPTG</li>
-          <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">MESYUARAT</li>
-          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
+          <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT NOTIS / SURAT</li>
+          <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">ULASAN JKPTG</li>
+          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">MESYUARAT</li>
+          <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> <br>
             #parse("app/php2/frmAPBPTamatLesenView.jsp") </div>
+          <div class="TabbedPanelsContent"> <br>
+            #parse("app/php2/frmAPBPTamatLesenMaklumatNotis.jsp") </div>
           <div class="TabbedPanelsContent"> <br>
             #parse("app/php2/frmAPBPTamatLesenUlasanJKPTG.jsp") </div>
   		  <div class="TabbedPanelsContent"> <br>
@@ -65,6 +68,7 @@ function doChangeTab(tabId) {
 	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBTamatLesen";
 	document.${formName}.method="POST";
+	document.${formName}.flagPopup.value = "";
 	document.${formName}.submit();
 }
 function doKemaskiniTamatLesen(){
@@ -446,5 +450,63 @@ function cetakSuratPenamatan(idFail) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+function doDaftarMaklumatNotis(){
 
+	document.${formName}.actionTamat.value = "papar";
+	document.${formName}.flagPopup.value = "openMaklumatNotis";
+	document.${formName}.modePopup.value = "new";
+	document.${formName}.mode.value = "add";
+	document.${formName}.selectedTabUpper.value = 1;		
+	document.${formName}.submit();
+}
+
+function doBatalMaklumatNotis(){
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.selectedTabUpper.value = 1;		
+	document.${formName}.submit();
+}
+
+function doChangeNegeri() {
+	doAjaxCall${formName}("doChangeNegeri");
+}
+function doChangePejabat() {
+	doAjaxCall${formName}("doChangePejabat");
+}
+function doChangeJenisDokumen() {
+	doAjaxCall${formName}("doChangeJenisDokumen");
+}
+function doChangeSuratKe() {
+	doAjaxCall${formName}("doChangeSuratKe");
+}
+function doSimpanMaklumatNotis(){
+	if(document.${formName}.jenisDokumen.value == ""){
+		alert('Sila pilih Jenis Dokumen.');
+  		document.${formName}.jenisDokumen.focus(); 
+		return; 
+	}
+	if(document.${formName}.idSuratKe.value == ""){
+		alert('Sila pilih Surat ke .');
+  		document.${formName}.idSuratKe.focus(); 
+		return; 
+	}
+	if(document.${formName}.socNegeri.value == ""){
+		alert('Sila pilih Negeri.');
+		document.${formName}.socNegeri.focus(); 
+		return; 
+	}
+	if(document.${formName}.socPejabat.value == ""){
+		alert('Sila pilih Pejabat.');
+		document.${formName}.socPejabat.focus(); 
+		return; 
+	}
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.flagPopup.value = "openMaklumatNotis";
+	document.${formName}.modePopup.value = "view";
+	document.${formName}.hitButton.value = "simpanMaklumatNotis";
+	doAjaxCall${formName}("");
+}
 </script>

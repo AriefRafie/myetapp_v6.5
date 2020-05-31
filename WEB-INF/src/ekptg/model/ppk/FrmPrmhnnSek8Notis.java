@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,10 +18,14 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
@@ -38,6 +43,7 @@ import ekptg.engine.GetAttachment;
 import ekptg.helpers.DB;
 //hide attachment
 //import ekptg.intergration.EkptgEmailSender;
+import ekptg.report.ppk.FrmPopupPilihPegawaiReportData;
 
 /*import lebah.pm.entity.ActivityEvent;
  import lebah.pm.entity.UserActivityEvent;
@@ -368,7 +374,7 @@ public class FrmPrmhnnSek8Notis {
 					// " AND (P.FLAG_PERMOHONAN <> '1' OR P.FLAG_PERMOHONAN IS NULL)"
 					+ " AND F.NO_FAIL IS NOT NULL ORDER BY STA.ID_SUBURUSANSTATUSFAIL desc, p.tarikh_kemaskini desc  ";
 					
-					myLogger.info(" LIST NOTIS SEK 8 : "+sql);
+					System.out.println(" LIST NOTIS SEK 8 : "+sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -535,7 +541,7 @@ public class FrmPrmhnnSek8Notis {
 			Statement stmt = db.getStatement();
 
 			// SYARAT
-			sql = "SELECT PP.NAMA_PEMOHON, MS.ID_PERMOHONANSIMATI, F.ID_FAIL, F.NO_FAIL, P.ID_PERMOHONAN, P.TARIKH_MOHON, KP.ID_KEPUTUSANPERMOHONAN,KP.KEPUTUSAN_PERMOHONAN, "
+			sql = "SELECT DISTINCT PP.NAMA_PEMOHON, MS.ID_PERMOHONANSIMATI, F.ID_FAIL, F.NO_FAIL, P.ID_PERMOHONAN, P.TARIKH_MOHON, KP.ID_KEPUTUSANPERMOHONAN,KP.KEPUTUSAN_PERMOHONAN, "
 					+ " P.ID_STATUS, S.KETERANGAN, P.TARIKH_MASUK, P.TARIKH_KEMASKINI, F.TARIKH_DAFTAR_FAIL, M.ID_SIMATI, (SELECT SS.KETERANGAN FROM TBLRUJSTATUS SS "
 					+ " WHERE SS.ID_STATUS = KP.KEPUTUSAN_PERMOHONAN) AS STATUS_KEPUTUSAN,M.NAMA_SIMATI "
 					+ " FROM TBLPPKPERMOHONAN P, TBLPFDFAIL F, TBLPPKKEPUTUSANPERMOHONAN KP, TBLRUJSTATUS S, TBLRUJDAERAH D, "
@@ -563,7 +569,7 @@ public class FrmPrmhnnSek8Notis {
 					+ " AND P.ID_PEMOHON = PP.ID_PEMOHON ";
 					//+ " AND (P.ID_STATUS=151 OR P.ID_STATUS=53 OR P.ID_STATUS=18 OR P.ID_STATUS=44 OR P.ID_STATUS=173 OR P.ID_STATUS=175 OR P.ID_STATUS=177 OR P.ID_STATUS=166) "
 					if (statusFail.equals("3")) {
-						sql = sql + "AND P.ID_STATUS IN (151) ";
+						sql = sql + "AND P.ID_STATUS IN (151,53) ";
 					}
 					else
 					{
@@ -631,7 +637,7 @@ public class FrmPrmhnnSek8Notis {
 						sql = sql + " AND KP.KEPUTUSAN_PERMOHONAN LIKE '53'";
 					}
 					else if (statusFail.equals("3") ){
-						sql = sql + " AND KP.KEPUTUSAN_PERMOHONAN = '151' " ;
+						sql = sql + " AND KP.KEPUTUSAN_PERMOHONAN in ('151','53') " ;
 					}
 				}
 				
@@ -640,8 +646,10 @@ public class FrmPrmhnnSek8Notis {
 			// sorting
 			// sql +=
 			// " AND F.NO_FAIL IS NOT NULL ORDER BY P.TARIKH_KEMASKINI desc, STA.ID_SUBURUSANSTATUSFAIL DESC ";
-			sql += " AND F.NO_FAIL IS NOT NULL ORDER BY STA.ID_SUBURUSANSTATUSFAIL desc, p.tarikh_kemaskini desc  ";
-			myLogger.info("SQL ********* :: "+sql);
+			//sql += " AND F.NO_FAIL IS NOT NULL ORDER BY STA.ID_SUBURUSANSTATUSFAIL desc, p.tarikh_kemaskini desc  ";
+			sql += " AND F.NO_FAIL IS NOT NULL ORDER BY f.id_fail desc, p.tarikh_kemaskini desc  ";
+			
+			System.out.println("SQL setCarianFail :: "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -1265,7 +1273,7 @@ public class FrmPrmhnnSek8Notis {
 		Db db = null;
 		String sql = "";
 		String sql5 = "";
-		String sql6 = "";
+		String sql6 = ""; 
 
 		long id_perbicaraan = DB.getNextID("TBLPPKPERBICARAAN_SEQ");
 		try {
@@ -1411,7 +1419,7 @@ public class FrmPrmhnnSek8Notis {
 			stmt.executeUpdate(sql);
 			
 			//aishahlatip tutup sebab penambahan baru untuk pilihan penyampai laporan 01082017
-		/*	// create table notisobmst
+			// create table notisobmst
 			SQLRenderer rMST = new SQLRenderer();
 			rMST.add("id_notisobmst", id_notisobmst);
 			rMST.add("id_masuk", id_masuk);
@@ -1428,7 +1436,7 @@ public class FrmPrmhnnSek8Notis {
 			r1.add("tarikh_masuk", r1.unquote("sysdate"));
 			sql = r1.getSQLInsert("Tblppknotisperbicaraan");
 			stmt.executeUpdate(sql);
-*/
+
 			// tukar status permohonan diteruskan => notis perbicaraan
 			int status_notisperbicaraan = 18;
 
@@ -1540,6 +1548,20 @@ public class FrmPrmhnnSek8Notis {
 				
 				//aishah edit 26072017
 				System.out.println("userLoginPegawai========"+userLoginPegawai);
+				myLogger.info("save event  >>>>>> userLoginPegawai : "+userLoginPegawai);
+				myLogger.info("save event  >>>>>> id_perbicaraan : "+id_perbicaraan);
+				myLogger.info("save event  >>>>>> event_text : "+event_text);
+				myLogger.info("save event  >>>>>> event_location : "+event_location);
+				myLogger.info("save event  >>>>>> tarikh_bicara : "+tarikh_bicara);
+				myLogger.info("save event  >>>>>> masa_bicara : "+masa_bicara);
+				myLogger.info("save event  >>>>>> socJenisWaktu : "+socJenisWaktu);
+				
+				
+
+				
+				
+				
+				
 				saveActivityEvent(userLoginPegawai, id_perbicaraan, event_text, event_location, tarikh_bicara, masa_bicara, socJenisWaktu);
 				
 				}
@@ -1559,16 +1581,18 @@ public class FrmPrmhnnSek8Notis {
 			logic_A.kemaskiniSubUrusanStatusFail(session, id_permohonan,
 					id_masuk, status_notisperbicaraan + "", "354", id_fail);
 			
-			
-			//###############add send email#########################
-			//hantarEmel(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
-			
-			//hantarEmelTTPegawai(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
-			
-			
-			
-			
-			
+
+			 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+			 Date date = new Date();  
+			 myLogger.info("sysdate ==== "+formatter.format(date));  
+			 if ((tarikh_bicara.compareTo(formatter.format(date)) > 0 ) || (tarikh_bicara.compareTo(formatter.format(date)) == 0 ) ){
+				 myLogger.info("send email  >>>>>> tarikh_bicara : ");
+				 hantarEmelTTPegawai(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+				 
+				//###############add send email#########################
+				//hantarEmel(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+			 }
+		
 
 		} catch (SQLException se) {
 			try {
@@ -1615,34 +1639,44 @@ public class FrmPrmhnnSek8Notis {
 			db.persist(userActivityEvent);
 			db.commit();
 		}		
-		//System.out.println("----------------------1------------------");
+		System.out.println("----------------------1------------------");
 		String displayColor = "#FFCCCC";
 				
 		String jamBicara  = "";
 		String minitBicara = "";
 		String startTime = "";
 		String endTime = "";
-		//System.out.println("----------------------2------------------");
+		System.out.println("----------------------2------------------");
 		if (!"".equals(masa_bicara)){
 			
 			jamBicara = masa_bicara.substring(0, 2);
 			minitBicara = masa_bicara.substring(2, 4);
 			System.out.println("----------------------3------------------");
-			if (Integer.valueOf(minitBicara) < 15){
+			/*if (Integer.valueOf(minitBicara) < 10){
+				System.out.println("----------------------3A------------------");
 				minitBicara = "00";
-			} else if (Integer.valueOf(minitBicara) >= 15 && Integer.valueOf(minitBicara) < 30){
-				minitBicara = "15";
-			} else if (Integer.valueOf(minitBicara) >= 30 && Integer.valueOf(minitBicara) < 45){
+			} else if (Integer.valueOf(minitBicara) >= 10 && Integer.valueOf(minitBicara) < 20){
+				System.out.println("----------------------3B------------------");
+				minitBicara = "10";
+			} else if (Integer.valueOf(minitBicara) >= 20 && Integer.valueOf(minitBicara) < 30){
+				System.out.println("----------------------3C------------------");
+				minitBicara = "20";
+			} else if (Integer.valueOf(minitBicara) >= 30 && Integer.valueOf(minitBicara) < 40){
+				System.out.println("----------------------3D------------------");
 				minitBicara = "30";
-			} else if (Integer.valueOf(minitBicara) >= 45 && Integer.valueOf(minitBicara) < 60){
-				minitBicara = "45";
-			}
-			//System.out.println("----------------------4------------------");
+			} else if (Integer.valueOf(minitBicara) >= 40 && Integer.valueOf(minitBicara) < 50){
+				System.out.println("----------------------3E------------------");
+				minitBicara = "40";
+			} else if (Integer.valueOf(minitBicara) >= 50 && Integer.valueOf(minitBicara) < 60){
+				System.out.println("----------------------3F------------------");
+				minitBicara = "50";
+			}*/
+			System.out.println("----------------------4------------------");
 			int jamTamat = Integer.valueOf(jamBicara);
 			jamTamat = jamTamat + 1;
-			//System.out.println("----------------------5------------------");
+			System.out.println("----------------------5------------------");
 			int minitTamat = Integer.valueOf(minitBicara);
-			//System.out.println("----------------------6------------------");
+			System.out.println("----------------------6------------------");
 			startTime = jamBicara + ":" + minitBicara;
 			if ("1".equals(jenisWaktu)){
 				startTime = startTime + " AM";
@@ -1693,15 +1727,15 @@ public class FrmPrmhnnSek8Notis {
 				}
 			}			
 		}		
-		//System.out.println("----------------------7------------------");
+		System.out.println("----------------------7------------------");
 		Date startDateTime = parseDateTime(tarikhMula + " " + startTime);
-		//System.out.println("----------------------8------------------");
+		System.out.println("----------------------8------------------");
 		String eventDateEnd_ = tarikhMula;
 		Date endDateTime = parseDateTime(eventDateEnd_ + " " + endTime);	
-		//System.out.println("----------------------9------------------");
+		System.out.println("----------------------9------------------");
 		db.begin();
 		ActivityEvent activityEvent = (ActivityEvent) db.get("select a from ActivityEvent a where a.idPerbicaraan = '" + Long.valueOf(idPerbicaraan) + "'");
-		//System.out.println("----------------------10------------------");
+		System.out.println("----------------------10------------------");
 		if ( activityEvent == null ) {
 			activityEvent = new ActivityEvent();
 			activityEvent.setDescription(description);
@@ -1732,6 +1766,7 @@ public class FrmPrmhnnSek8Notis {
 		try {
 			db.commit();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -1747,6 +1782,7 @@ public class FrmPrmhnnSek8Notis {
 			Statement stmt = db.getStatement();
 			
 			sql = "DELETE FROM TBLACTIVITYEVENT WHERE ID_PERBICARAAN = '" + idPerbicaraan + "'";
+			System.out.println("sql deleteUserActivityEvent= "+sql);
 			stmt.execute(sql);
 			
 		} finally {
@@ -1757,7 +1793,7 @@ public class FrmPrmhnnSek8Notis {
 
 	// Update notis
 	public static void updateNotis(HttpSession session, Hashtable data) throws Exception {
-
+		System.out.println("updateNotis");
 		Db db = null;
 		String sql = "";
 
@@ -1790,15 +1826,21 @@ public class FrmPrmhnnSek8Notis {
 
 			// -- 09122009
 			String socJenisWaktu = (String) data.get("socJenisWaktu");
-
+			String sebab_pinda_tarikh = (String) data.get("sebab_pinda_tarikh");
+			String tarikh_bicara_dahulu = (String) data.get("tarikh_bicara_dahulu");
+			
 			String nama_pegawai = "";
 			String nama_pejabat = "";
 			String id_pejabat = "";
 			String tablePejabat = "";
-
+			String TBD = "";
 			String TB = "to_date('" + tarikh_bicara + "','dd/MM/yyyy')";
 			String TN = "to_date('" + tarikh_notis + "','dd/MM/yyyy')";
-
+			if (tarikh_bicara_dahulu != "") {
+				TBD = "to_date('" + tarikh_bicara_dahulu + "','dd/MM/yyyy')";
+			}
+			
+			
 			// get nama pegawai
 			SQLRenderer rMT = new SQLRenderer();
 			rMT.add("id_unitpsk");
@@ -1873,7 +1915,11 @@ public class FrmPrmhnnSek8Notis {
 			r.add("tarikh_kemaskini", r.unquote("sysdate"));
 			r.add("id_negeribicara", negeri);
 			r.add("id_kemaskini", id_kemaskini);
-
+			r.add("sebab_pinda_tarikh", sebab_pinda_tarikh);
+			if (tarikh_bicara_dahulu != "") {
+				r.add("tarikh_bicara_dahulu", r.unquote(TBD));
+			}
+			
 			// -- 09122009
 			r.add("jenis_masa_bicara", socJenisWaktu);
 
@@ -1891,6 +1937,7 @@ public class FrmPrmhnnSek8Notis {
 
 			r.add("id_jenispejabat", jenispejabat);
 			sql = r.getSQLUpdate("Tblppkperbicaraan");
+			System.out.println("sql updateNotis = "+sql);
 			stmt.executeUpdate(sql);
 
 			Statement stmtfail = db.getStatement();
@@ -1939,7 +1986,7 @@ public class FrmPrmhnnSek8Notis {
 			Statement stmtPegawai = db.getStatement();
 			
 			String sqlPegawai = "SELECT * FROM TBLPPKRUJUNIT, USERS WHERE UPPER(TBLPPKRUJUNIT.NAMA_PEGAWAI) = UPPER(USERS.USER_NAME) AND"
-				+ " USERS.USER_TYPE = 'internal' AND TBLPPKRUJUNIT.ID_UNITPSK = '" + id_ppkrujunit + "'";
+				+ " USERS.USER_TYPE = 'internal' AND TBLPPKRUJUNIT.ID_UNITPSK = '" + id_ppkrujunit + "' order by USER_LOGIN asc";
 			
 			
 			System.out.println("sqlPegawai1=="+sqlPegawai);
@@ -1950,16 +1997,24 @@ public class FrmPrmhnnSek8Notis {
 					System.out.println("userLoginPegawai=="+userLoginPegawai);
 					//aishah edit 26072017
 					System.out.println("id_perbicaraan=="+id_perbicaraan);
+					System.out.println("masa_bicara=="+masa_bicara);
 					saveActivityEvent(userLoginPegawai, Long.valueOf(id_perbicaraan), event_text, event_location, tarikh_bicara, masa_bicara, socJenisWaktu);
 					/** END ADD BY PEJE - REGISTER EVENT TO MYCALENDAR TABLE **/
 				}
 			}
 			
 			
-			//###############add send email#########################
-			//hantarEmel(session,id_perbicaraan,no_fail,nama_simati);
-			System.out.println("id_perbicaraan=="+id_perbicaraan);
-			//hantarEmelTTPegawai(session,id_perbicaraan,no_fail,nama_simati);
+			
+			 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+			 Date date = new Date();  
+			 myLogger.info("sysdate ==== "+formatter.format(date));  
+			 if ((tarikh_bicara.compareTo(formatter.format(date)) > 0 ) || (tarikh_bicara.compareTo(formatter.format(date)) == 0 ) ){
+				 myLogger.info("send email  >>>>>> tarikh_bicara : ");
+				 hantarEmelTTPegawai(session,id_perbicaraan,no_fail,nama_simati);
+				 
+				//###############add send email#########################
+				//hantarEmel(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+			 }
 			
 		}// close try
 
@@ -2034,9 +2089,13 @@ public class FrmPrmhnnSek8Notis {
 
 			r.add("pb.id_pejabat");
 			r.add("pb.id_jenispejabat");
-
+			r.add("pb.SIGNED_TEXT");//aishahlatip add 16/07/2018
+			r.add("pb.tarikh_bicara_dahulu");
+			r.add("pb.sebab_pinda_tarikh");
+			
 			r.add("pb.id_keputusanpermohonan", id_keputusanpermohonan);
 			r.add("pb.id_perbicaraan", id_perbicaraan);
+
 			sql2 = r.getSQLSelect("Tblppkperbicaraan pb");
 			System.out.println("setListSemakWithDataB :"+sql2);
 			ResultSet rs = stmt.executeQuery(sql2);
@@ -2086,9 +2145,14 @@ public class FrmPrmhnnSek8Notis {
 								.getString("id_jenispejabat"));
 
 				// -- 09122009
-				h.put("jenis_masa_bicara",
-						rs.getString("jenis_masa_bicara") == null ? "" : rs
-								.getString("jenis_masa_bicara"));
+				h.put("jenis_masa_bicara",rs.getString("jenis_masa_bicara") == null ? "" : rs.getString("jenis_masa_bicara"));
+				
+				//16/7/2018 aishahlatip
+				h.put("SIGNED_TEXT",rs.getString("SIGNED_TEXT") == null ? "" : rs.getString("SIGNED_TEXT"));
+				h.put("tarikh_bicara_dahulu", rs.getDate("tarikh_bicara_dahulu") == null ? ""
+						: Format.format(rs.getDate("tarikh_bicara_dahulu")));
+				h.put("sebab_pinda_tarikh",rs.getString("sebab_pinda_tarikh") == null ? "" : rs.getString("sebab_pinda_tarikh"));
+				
 
 				listSemakWithData.addElement(h);
 			}
@@ -2287,11 +2351,14 @@ public class FrmPrmhnnSek8Notis {
 			 * " AND ob.id_permohonansimati <= '" + id_permohonansimati + "'";
 			 * sql += " ORDER BY ob.umur desc,ob.nama_ob asc ";
 			 */
+			
+			/*
+			
 			sql = "SELECT ob.id_ob, ob.id_simati, ob.nama_ob, ob.no_kp_baru, ob.no_kp_lama, ";
 			sql += "ob.status_hidup, ob.jenis_kp, ob.no_kp_lain, ob.no_surat_beranak, ";
 			sql += "ob.tarikh_lahir, ob.jantina, ob.id_tarafkptg, ob.umur, tr.keterangan, ob.status_ob, ob.emel ";
 			
-			/** ADD BY PEJE - TO GET SELECTED FLAG **/
+			
 			if (idperbicaraan != null && idperbicaraan.length() > 0){
 				sql += ", CASE WHEN ob.id_ob IN (SELECT id_ob from tblppknotisob where id_perbicaraan = '" + idperbicaraan + "') THEN 'Y' END AS flag ";
 			}
@@ -2306,7 +2373,7 @@ public class FrmPrmhnnSek8Notis {
 			sql += " AND p.id_status <> '169' ";
 			sql += " AND ob.id_simati = '" + id_simati + "' ";
 
-			/** ADD BY PEJE - KELUARKAN SENARAI PEMIUTANG & SAKSI**/
+			
 			sql += " AND ob.id_tarafkptg NOT IN (2,14) ";
 
 			if (!seksyen.equals("8")) {
@@ -2317,12 +2384,12 @@ public class FrmPrmhnnSek8Notis {
 			
 			sql += "UNION ";
 			
-			/** ADD BY PEJE - UNION SQL GET SAKSI **/
+			
 			sql += "SELECT ob.id_ob, ob.id_simati, ob.nama_ob, ob.no_kp_baru, ob.no_kp_lama, ";
 			sql += "ob.status_hidup, ob.jenis_kp, ob.no_kp_lain, ob.no_surat_beranak, ";
 			sql += "ob.tarikh_lahir, ob.jantina, ob.id_tarafkptg, ob.umur, tr.keterangan, ob.status_ob,ob.emel ";
 			
-			/** ADD BY PEJE - TO GET SELECTED FLAG **/
+			
 			if (idperbicaraan != null && idperbicaraan.length() > 0){
 				sql += ", CASE WHEN ob.id_ob IN (SELECT id_ob from tblppknotisob where id_perbicaraan = '" + idperbicaraan + "') THEN 'Y' END AS flag ";
 			}
@@ -2339,7 +2406,49 @@ public class FrmPrmhnnSek8Notis {
 			sql += " AND ob.id_tarafkptg = 14 ";
 
 			sql += " ORDER BY umur DESC, nama_ob ASC ";
+			*/
+			
+			
+			//RAZMAN UBAH, QUERY ASAL ADA SELECT DALAM SELECT!!!!!!!! 
+			
+			if (idperbicaraan == null)
+			{
+				idperbicaraan = "";
+			}
+			sql += " SELECT OB.ID_OB, OB.ID_SIMATI, OB.NAMA_OB, OB.NO_KP_BARU, OB.NO_KP_LAMA, OB.STATUS_HIDUP, OB.JENIS_KP, OB.NO_KP_LAIN, OB.NO_SURAT_BERANAK, " +
+					" OB.TARIKH_LAHIR, OB.JANTINA, OB.ID_TARAFKPTG,  " +
+					 " OB.UMUR, TR.KETERANGAN, OB.STATUS_OB, OB.EMEL " +
+					 " ,CASE WHEN NOTIS_OB.ID_OB IS NOT NULL THEN 'Y' END AS FLAG  " +
+					 " FROM TBLPPKOBPERMOHONAN OB,TBLPPKOB OB1, TBLPPKPERMOHONANSIMATI SM, TBLPPKRUJTARAFKPTG TR, TBLPPKPERMOHONAN P  " +
+					 " ,(SELECT ID_OB FROM TBLPPKNOTISOB WHERE ID_PERBICARAAN = '" + idperbicaraan + "') NOTIS_OB " +
+					 " WHERE OB1.ID_PERMOHONANSIMATI = SM.ID_PERMOHONANSIMATI  " +
+					 " AND OB.ID_OB = NOTIS_OB.ID_OB (+) " +
+					 " AND OB.ID_OB = OB1.ID_OB AND OB.ID_PERMOHONANSIMATI = '" + id_permohonansimati + "'  " +
+					 " AND OB.ID_TARAFKPTG = TR.ID_TARAFKPTG AND SM.ID_PERMOHONAN = P.ID_PERMOHONAN  AND NVL(OB.STATUS_HIDUP,0) = 0   " +
+					 " AND P.ID_STATUS <> '169'  AND OB.ID_SIMATI = '" + id_simati + "'   AND OB.ID_TARAFKPTG NOT IN (2,14)  ";
+					 
+						if (!seksyen.equals("8")) {
+							sql += " AND NVL(p.no_subjaket,0) <= '"
+									+ getNoSubjaketByIdPermohonan(getIdPermohonanByIdPermohonanSimati(id_permohonansimati))
+									+ "'";
+						}
+					 
+					 sql += " UNION   " +
+					 " SELECT OB.ID_OB, OB.ID_SIMATI, OB.NAMA_OB, OB.NO_KP_BARU, OB.NO_KP_LAMA, OB.STATUS_HIDUP, OB.JENIS_KP, OB.NO_KP_LAIN, " +
+					 " OB.NO_SURAT_BERANAK, OB.TARIKH_LAHIR, OB.JANTINA, OB.ID_TARAFKPTG,   " +
+					 " OB.UMUR, TR.KETERANGAN, OB.STATUS_OB,OB.EMEL   " +
+					 " ,CASE WHEN NOTIS_OB.ID_OB IS NOT NULL THEN 'Y' END AS FLAG  " +
+					 
+					 " FROM TBLPPKOBPERMOHONAN OB,TBLPPKOB OB1, TBLPPKPERMOHONANSIMATI SM, TBLPPKRUJTARAFKPTG TR, TBLPPKPERMOHONAN P  " +
+					 " ,(SELECT ID_OB FROM TBLPPKNOTISOB WHERE ID_PERBICARAAN = '" + idperbicaraan + "') NOTIS_OB   " +
+					 " WHERE OB1.ID_PERMOHONANSIMATI = SM.ID_PERMOHONANSIMATI    " +
+					 " AND OB.ID_OB = NOTIS_OB.ID_OB (+) " +
+					 " AND OB.ID_OB = OB1.ID_OB AND OB.ID_PERMOHONANSIMATI = '" + id_permohonansimati + "'   " +
+					 " AND OB1.ID_PERMOHONANSIMATI =  '" + id_permohonansimati + "' AND OB.ID_TARAFKPTG = TR.ID_TARAFKPTG AND SM.ID_PERMOHONAN = P.ID_PERMOHONAN    " +
+					 " AND NVL(OB.STATUS_HIDUP,0) = 0  AND P.ID_STATUS <> '169'  AND OB.ID_SIMATI = '" + id_simati + "'  AND OB.ID_TARAFKPTG = 14    " +
+					 " ORDER BY UMUR DESC, NAMA_OB ASC   ";
 
+			
 			myLogger.info("NOTIS LIST OB : " + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -3859,13 +3968,19 @@ public class FrmPrmhnnSek8Notis {
 			listSerahanNotis.clear();
 			String sql = "";
 			String idOB = "";
-
+			boolean statusHantarPNB = false;
+			
 			try {
 
 				db = new Db();
 
 				Statement stmtN = db.getStatement();
 				SQLRenderer rN = new SQLRenderer();
+				
+				
+				statusHantarPNB = getPNBValidation(id_perbicaraan);
+				
+			/*	if(statusHantarPNB){
 
 				sql = " SELECT n.id_notisobdtl, n.id_notisobmst, pb.id_perbicaraan, npb.id_notisperbicaraan, n.nama_penerima, ob.nama_ob, ob.id_ob,mst.JENIS_SERAH ";
 				sql += " FROM Tblppknotisobdtl n, Tblppkob ob1,Tblppkobpermohonan ob,Tblppknotisobmst mst, Tblppknotisperbicaraan npb, Tblppkperbicaraan pb ";
@@ -3879,6 +3994,23 @@ public class FrmPrmhnnSek8Notis {
 				sql += " AND pb.id_perbicaraan = '" + id_perbicaraan + "'";
 				sql += " AND mst.jenis_serah IS NOT NULL ";
 				sql += " ORDER BY ob.nama_ob ";
+				
+				}else{*/
+					
+					sql = " SELECT n.id_notisobdtl, n.id_notisobmst, pb.id_perbicaraan, npb.id_notisperbicaraan, n.nama_penerima, ob.nama_ob, ob.id_ob,mst.JENIS_SERAH ";
+					sql += " FROM Tblppknotisobdtl_temp n, Tblppkob ob1,Tblppkobpermohonan ob,Tblppknotisobmst_temp mst, Tblppknotisperbicaraan_temp npb, Tblppkperbicaraan pb ";
+					sql += " WHERE ob1.id_ob = ob.id_ob and n.id_ob = ob1.id_ob "
+							+ " and ob.id_permohonansimati = '" + id_permohonansimati
+							+ "' ";
+					sql += " AND n.id_notisobmst = mst.id_notisobmst ";
+					sql += " AND npb.id_notisobmst = mst.id_notisobmst ";
+					sql += " AND npb.id_perbicaraan = pb.id_perbicaraan ";
+					sql += " AND NVL(npb.flag_jenis_notis,0) = '0' ";
+					sql += " AND pb.id_perbicaraan = '" + id_perbicaraan + "'";
+					sql += " AND mst.jenis_serah IS NOT NULL ";
+					sql += " ORDER BY ob.nama_ob ";
+					
+			//	}
 				
 				myLogger.info("sqlsetListSerahanNotis = "+sql);
 				ResultSet rx = stmtN.executeQuery(sql);
@@ -4233,7 +4365,9 @@ public class FrmPrmhnnSek8Notis {
 									: rs.getString("no_kp_lain"));
 							
 							
-							//myLogger.info("id_ob :::: : " + id_ob);
+							myLogger.info("id_ob :::: : " + rs.getString("id_ob"));
+							myLogger.info("nama_ob :::: : " + rs.getString("nama_ob"));
+							myLogger.info("no_kp_baru :::: : " + rs.getString("no_kp_baru"));
 							
 							listOBhidden.addElement(h);
 							bil++;
@@ -4510,7 +4644,7 @@ public class FrmPrmhnnSek8Notis {
 			sql = "SELECT N.ID_NOTISOBDTL, N.ID_NOTISOBMST, N.ID_OB, N.NAMA_PENERIMA, N.NO_KP_BARU, "
 					+ " N.NO_KP_LAMA, N.NO_KP_LAIN, OB.NAMA_OB, MST.NAMA_PENGHANTAR_NOTIS, "
 					+ " MST.TARIKH_SERAHAN, MST.CATATAN, MST.STATUS_SERAH, MST.JENIS_SERAH, "
-					+ " MST.NO_SURAT_DAFTAR, PN.KOD_PENGHANTAR_NOTIS, MST.ID_PENGHANTARNOTIS , MST.NAMA_PENGHANTAR_LAIN "
+					+ " MST.NO_SURAT_DAFTAR, PN.KOD_PENGHANTAR_NOTIS, MST.ID_PENGHANTARNOTIS , MST.NAMA_PENGHANTAR_LAIN , MST.EMEL, MST.TARIKH_EMEL "
 					+ " FROM TBLPPKNOTISOBDTL N, TBLPPKOB OB1,TBLPPKOBPERMOHONAN OB,TBLPPKNOTISOBMST MST, "
 					+ " TBLPPKRUJPENGHANTARNOTIS PN "
 					+ " WHERE OB.ID_PERMOHONANSIMATI = '"
@@ -4518,7 +4652,7 @@ public class FrmPrmhnnSek8Notis {
 					+ "' AND OB1.ID_OB = OB.ID_OB "
 					+ " AND N.ID_OB = OB1.ID_OB  "
 					+ " AND N.ID_NOTISOBMST = MST.ID_NOTISOBMST  "
-					+ " AND MST.ID_PENGHANTARNOTIS = PN.ID_PENGHANTARNOTIS  "
+					+ " AND MST.ID_PENGHANTARNOTIS = PN.ID_PENGHANTARNOTIS(+)  "
 					+ " AND N.ID_NOTISOBDTL = '" + id_obdtl + "' ";
 			myLogger.info("-----------NOTIS setDataOBNotis("
 					+ sql.toUpperCase());
@@ -4577,6 +4711,9 @@ public class FrmPrmhnnSek8Notis {
 				
 				h.put("nama_penghantar_lain", rx.getString("NAMA_PENGHANTAR_LAIN") == null ? ""
 						: rx.getString("NAMA_PENGHANTAR_LAIN"));
+				
+				h.put("alamatEmel", rx.getString("emel") == null ? "" : rx.getString("emel"));
+				h.put("tarikhHantar", rx.getDate("tarikh_emel") == null ? "" : Format.format(rx.getDate("tarikh_emel")));
 				
 				listDataOBNotis.addElement(h);
 			}
@@ -5018,9 +5155,16 @@ public class FrmPrmhnnSek8Notis {
 
 			//aishah add 26072017
 			//###############add send email#########################
-			//hantarEmel(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
-			//aishah tutup sekejap sbb pnmb kena tutup sat
-			//hantarEmelTTPegawai(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+			 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+			 Date date = new Date();  
+			 myLogger.info("sysdate ==== "+formatter.format(date));  
+			 if ((tarikh_bicara.compareTo(formatter.format(date)) > 0 ) || (tarikh_bicara.compareTo(formatter.format(date)) == 0 ) ){
+				 myLogger.info("send email  >>>>>> tarikh_bicara : ");
+				 hantarEmelTTPegawai(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+				 
+				//###############add send email#########################
+				//hantarEmel(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+			 }
 			
 //			addCalendarNotis(session, event_id, event_text, tarikh_bicara,id_ppkrujunit, id_perbicaraan + "");
 
@@ -5489,7 +5633,7 @@ public class FrmPrmhnnSek8Notis {
 			sql += " AND NVL(ob.status_hidup,0) = 0 ";
 			sql += " AND NVL(ob.umur,18)  >= 18 ";
 			sql += " ORDER BY ob.nama_ob asc";
-
+			myLogger.info("setListOBatas18"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 			int bil = 1;
@@ -6711,7 +6855,7 @@ public class FrmPrmhnnSek8Notis {
 	}// close carian
 
 	// Simpan notis SEKSYEN 17
-	public static void addNotisSek17(HttpSession session, Hashtable data)
+	public static String addNotisSek17(HttpSession session, Hashtable data)
 			throws Exception {
 
 		Connection conn = null;
@@ -6719,7 +6863,8 @@ public class FrmPrmhnnSek8Notis {
 		String sql = "";
 		String sql5 = "";
 		String sql6 = "";
-
+		
+		long id_perbicaraan = DB.getNextID("TBLPPKPERBICARAAN_SEQ");
 		try {
 
 			db = new Db();
@@ -6730,7 +6875,7 @@ public class FrmPrmhnnSek8Notis {
 			// generate other table id
 			long id_notisobmst = DB.getNextID("TBLPPKNOTISOBMST_SEQ");
 			// long id_perbicaraan = DB.getNextID("TBLPPKPERBICARAAN_SEQ");
-			String id_perbicaraan = (String) data.get("id_perbicaraan");
+			idPerbicaraan = String.valueOf(id_perbicaraan);
 
 			String id_permohonan = (String) data.get("id_permohonan");
 			String id_fail = (String) data.get("id_fail");
@@ -6862,6 +7007,7 @@ public class FrmPrmhnnSek8Notis {
 			sql = r.getSQLInsert("Tblppkperbicaraan");
 			stmt.executeUpdate(sql);
 
+			
 			// create table notisobmst
 			SQLRenderer rMST = new SQLRenderer();
 			rMST.add("id_notisobmst", id_notisobmst);
@@ -6919,17 +7065,26 @@ public class FrmPrmhnnSek8Notis {
 			
 			Statement stmtfail = db.getStatement();
 			SQLRenderer rfail = new SQLRenderer();
-			String sql_fail = "SELECT F.NO_FAIL FROM  TBLPPKPERBICARAAN B,"
-					+ " TBLPPKKEPUTUSANPERMOHONAN KP,TBLPPKPERMOHONAN P,TBLPFDFAIL F "
-					+ " WHERE B.ID_KEPUTUSANPERMOHONAN = KP.ID_KEPUTUSANPERMOHONAN "
-					+ " AND KP.ID_PERMOHONAN = P.ID_PERMOHONAN "
-					+ " AND P.ID_FAIL = F.ID_FAIL AND B.ID_PERBICARAAN = '"
-					+ id_perbicaraan + "'";
+			
+			String sql_fail = "SELECT F.NO_FAIL, S.NAMA_SIMATI  FROM  TBLPPKPERBICARAAN B, " +
+					" TBLPPKKEPUTUSANPERMOHONAN KP,TBLPPKPERMOHONAN P,TBLPFDFAIL F , TBLPPKSIMATI S, TBLPPKPERMOHONANSIMATI M " +
+					" WHERE B.ID_KEPUTUSANPERMOHONAN = KP.ID_KEPUTUSANPERMOHONAN " +
+					" AND KP.ID_PERMOHONAN = P.ID_PERMOHONAN " +
+					" AND P.ID_FAIL = F.ID_FAIL " +
+					" AND S.ID_SIMATI = M.ID_SIMATI " +
+					" AND M.ID_PERMOHONAN = KP.ID_PERMOHONAN " +
+					" AND B.ID_PERBICARAAN = '"+ id_perbicaraan + "'";
 			ResultSet rsfail = stmtfail.executeQuery(sql_fail);
 			String no_fail = "";
+			String nama_simati= "";
 			while (rsfail.next()) {
+				
 				if (rsfail.getString("NO_FAIL") != null) {
 					no_fail = rsfail.getString("NO_FAIL");
+				}
+				
+				if (rsfail.getString("NAMA_SIMATI") != null) {
+					nama_simati = rsfail.getString("NAMA_SIMATI");
 				}
 			}
 			
@@ -6972,6 +7127,19 @@ public class FrmPrmhnnSek8Notis {
 			FrmPrmhnnSek8DaftarSek8InternalData logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 			logic_A.kemaskiniSubUrusanStatusFail(session, id_permohonan,
 					id_masuk, status_notisperbicaraan + "", "341", id_fail);
+			
+			
+			//###############add send email#########################			
+			 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+			 Date date = new Date();  
+			 myLogger.info("sysdate ==== "+formatter.format(date));  
+			 if ((tarikh_bicara.compareTo(formatter.format(date)) > 0 ) || (tarikh_bicara.compareTo(formatter.format(date)) == 0 ) ){
+				 myLogger.info("send email  >>>>>> tarikh_bicara : ");
+				 hantarEmelTTPegawai(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+				 
+				//###############add send email#########################
+				//hantarEmel(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+			 }
 
 		} catch (SQLException se) {
 			try {
@@ -6985,6 +7153,8 @@ public class FrmPrmhnnSek8Notis {
 			if (db != null)
 				db.close();
 		}
+		
+		return idPerbicaraan;
 
 	}// close addNotis
 
@@ -7592,7 +7762,7 @@ public class FrmPrmhnnSek8Notis {
 	
 public static void hantarEmelTTPegawai(HttpSession session,String id_perbicaraan, String no_fail, String nama_simati) throws Exception {
 		
-		System.out.println("MASUK FUNCTION EMEL1");	
+		//System.out.println("MASUK FUNCTION EMEL1");	
 		
 		EmailProperty pro = EmailProperty.getInstance();
 		EmailSender email = EmailSender.getInstance();
@@ -7601,7 +7771,7 @@ public static void hantarEmelTTPegawai(HttpSession session,String id_perbicaraan
 		String subject = "";
 		
 		String content = "";
-		myLogger.info("hantarEmelTTPegawai");
+
 		/*h.put("ID_PERBICARAAN","");
 		h.put("ID_KEPUTUSANPERMOHONAN","");
 		h.put("TARIKH_NOTIS","");
@@ -7621,7 +7791,7 @@ public static void hantarEmelTTPegawai(HttpSession session,String id_perbicaraan
 		h.put("jenisMasaBicara","");*/
 		
 		Hashtable viewData = viewPerbicaraan(session,id_perbicaraan);
-		myLogger.info("hantarEmelTTPegawai2");
+		//myLogger.info("hantarEmelTTPegawai2");
 		String ID_PERBICARAAN = (String)viewData.get("ID_PERBICARAAN");
 		String ID_KEPUTUSANPERMOHONAN = (String)viewData.get("ID_KEPUTUSANPERMOHONAN");
 		String TARIKH_NOTIS = (String)viewData.get("TARIKH_NOTIS");
@@ -7646,7 +7816,7 @@ public static void hantarEmelTTPegawai(HttpSession session,String id_perbicaraan
 
 			
 			content = "<html><table>" +
-					"<tr><td colspan=3> EMAIL INI DIJANA BERTUJUAN UNTUK PENGUJIAN SISTEM MYETTAP. SILA ABAIKAN EMAIL INI. TERIMA KASIH. </td></tr>" +
+					//"<tr><td colspan=3> EMAIL INI DIJANA BERTUJUAN UNTUK PENGUJIAN SISTEM MYETTAP. SILA ABAIKAN EMAIL INI. TERIMA KASIH. </td></tr>" +
 					"<tr><td colspan=3>&nbsp;</td></tr>" +
 					"<tr><td colspan=3>Untuk kelulusan,sila login ke MyEtapp :: Modul Pembahagian Pusaka >> Menu Notis Perbicaraan >> Pilih No Fail >> Tab Tindakan Pegawai </td></tr>" +
 					"<tr><td colspan=3>&nbsp;</td></tr>" +
@@ -8140,21 +8310,23 @@ public static void setValidPegawaiPengendali(String userId,String idPerbicaraan,
 	}
 }
 
-public boolean getPNBValidation(String idPerbicaraan) throws Exception {
+public static boolean getPNBValidation(String idPerbicaraan) throws Exception {
 
 	Db db = null;
 
 	String sql = "";
-
+	String SIGNED_TEXT = "";
 	try {
 
 		db = new Db();
 
 		Statement stmt = db.getStatement();
 
-		sql = "SELECT A.ID_BORANGPNB " +
+		/*sql = "SELECT A.ID_BORANGPNB " +
 				" FROM TBLPPKBORANGPNB A " +
-				" WHERE A.ID_PERBICARAAN= '" + idPerbicaraan + "'";
+				" WHERE A.ID_PERBICARAAN= '" + idPerbicaraan + "'";*/
+		
+		sql = "SELECT SIGNED_TEXT FROM TBLPPKPERBICARAAN WHERE ID_PERBICARAAN = '" + idPerbicaraan + "'";
 
 		ResultSet rs = stmt.executeQuery(sql);
 		Vector list = new Vector();
@@ -8163,7 +8335,13 @@ public boolean getPNBValidation(String idPerbicaraan) throws Exception {
 		boolean flag = false;
 
 		while (rs.next()) {
-			flag = true;
+			h = new Hashtable();
+			//SIGNED_TEXT = rs.getString("SIGNED_TEXT") == null ? "" : rs.getString("SIGNED_TEXT");
+			SIGNED_TEXT = rs.getString("SIGNED_TEXT");
+			System.out.println("SIGNED_TEXT==="+SIGNED_TEXT);
+			if(  SIGNED_TEXT.equals("") || SIGNED_TEXT!=null){
+				flag = true;
+			}
 
 		}
 		return flag;
@@ -8250,11 +8428,108 @@ public String getNamaPengendali( String idpsk) throws Exception {
 	}
 }
 
-//hide attachment
-//public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id_perbicaraan,HttpSession session,ServletContext application,
-//		HttpServletRequest request,HttpServletResponse response) throws Exception {
 
-public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id_perbicaraan) throws Exception {
+//hide attachment
+public static void addHantarLaporanNotisTemp(Hashtable data, String id_ob, String id_perbicaraan,HttpSession session,ServletContext application,
+		HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+//public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id_perbicaraan) throws Exception {
+
+	Db db = null;
+
+	String sql = "";
+
+	try {
+		db = new Db();
+		Statement stmt = db.getStatement();
+
+		long id_notisobmst = DB.getNextID("TBLPPKNOTISOBMST_SEQ");
+		String id_masuk = (String) data.get("id_masuk");
+		
+		/*System.out.println("id_masuk==="+id_masuk);
+		System.out.println("id_perbicaraan==="+id_perbicaraan);
+		System.out.println("id_notisobmst==="+id_notisobmst);*/
+		
+		SQLRenderer r = new SQLRenderer();
+		 
+		
+		
+		r.add("id_notisobmst", id_notisobmst);
+		r.add("tarikh_serahan", r.unquote("sysdate"));
+		r.add("status_serah", data.get("status_serah"));
+		r.add("jenis_serah", data.get("jenis_serah"));
+		r.add("catatan", "");
+		r.add("nama_penghantar_notis", data.get("nama_penghantar_notis"));
+		r.add("id_penghantarnotis", data.get("id_penghantarnotis"));
+		r.add("id_masuk", id_masuk);
+		r.add("tarikh_masuk", r.unquote("sysdate"));
+		r.add("id_kemaskini", id_masuk);
+		r.add("tarikh_kemaskini", r.unquote("sysdate"));
+		
+			if(data.get("jenis_serah").equals("3")){
+				r.add("tarikh_emel", r.unquote("sysdate"));
+				r.add("emel", data.get("alamatEmel"));
+			}
+		
+		r.add("NAMA_PENGHANTAR_LAIN", data.get("NAMA_PENGHANTAR_LAIN"));
+		sql = r.getSQLInsert("TBLPPKNOTISOBMST_TEMP");
+		
+		//System.out.println(":::::::::::::;sql TBLPPKNOTISOBMST ===="+sql);
+		stmt.executeUpdate(sql);
+		
+		/*System.out.println("id_perbicaraan==="+id_perbicaraan);
+		System.out.println("id_notisobmst==="+id_notisobmst);
+		System.out.println("id_masuk==="+id_masuk);*/
+
+		// create Tblppknotisperbicaraan
+		SQLRenderer r1 = new SQLRenderer();
+		r1.add("id_perbicaraan", id_perbicaraan);
+		r1.add("id_notisobmst", id_notisobmst);
+		r1.add("flag_jenis_notis", 0);
+		r1.add("id_masuk", id_masuk);
+		r1.add("tarikh_masuk", r1.unquote("sysdate"));
+		sql = r1.getSQLInsert("Tblppknotisperbicaraan_temp");
+		stmt.executeUpdate(sql);
+		
+		//create TBLPPKNOTISOBDTL
+		SQLRenderer rDTL = new SQLRenderer();
+		rDTL.add("id_ob", id_ob);
+		rDTL.add("id_notisobmst", id_notisobmst);
+		rDTL.add("nama_penerima",data.get("nama_ob") );
+		rDTL.add("no_kp_baru", data.get("no_kp_baru"));
+		rDTL.add("no_kp_lama", data.get("no_kp_lama"));
+		rDTL.add("no_kp_lain", data.get("no_kp_lain"));
+		rDTL.add("id_masuk", id_masuk);
+		rDTL.add("tarikh_masuk", rDTL.unquote("sysdate"));
+
+		//System.out.println("data.get(nama_obs) ==="+data.get("nama_obs") );
+		sql = rDTL.getSQLInsert("TBLPPKNOTISOBDTL_TEMP");
+		stmt.executeUpdate(sql);
+		
+		//email
+		//akan shoot email selepas tindakn pegawai berjaya
+		if(data.get("jenis_serah").equals("3")){
+			//hantar emel
+			//hantarNotisByEmel((String) data.get("id_fail"),id_ob);
+			
+			//ada attachment dlm emel
+			//hantarNotisByEmel(session,(String) data.get("id_fail"),id_ob,application,request,response);
+		}
+		
+
+	}// close try
+	finally {
+		if (db != null)
+			db.close();
+	}// close finally
+
+}// close simpanSemakanK2
+
+//hide attachment
+public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id_perbicaraan,HttpSession session,ServletContext application,
+		HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+//public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id_perbicaraan) throws Exception {
 
 	Db db = null;
 
@@ -8310,21 +8585,121 @@ public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id
 		r1.add("id_masuk", id_masuk);
 		r1.add("tarikh_masuk", r1.unquote("sysdate"));
 		sql = r1.getSQLInsert("Tblppknotisperbicaraan");
+		System.out.println("sql Tblppknotisperbicaraan==="+sql );
+		stmt.executeUpdate(sql);
+		
+		//create TBLPPKNOTISOBDTL
+				SQLRenderer rDTL = new SQLRenderer();
+				rDTL.add("id_ob", id_ob);
+				rDTL.add("id_notisobmst", id_notisobmst);
+		/*		rDTL.add("nama_penerima",data.get("nama_obs") );
+				rDTL.add("no_kp_baru", data.get("no_kp_baru"));
+				rDTL.add("no_kp_lama", data.get("no_kp_lama"));
+				rDTL.add("no_kp_lain", data.get("no_kp_lain"));*/
+				rDTL.add("id_masuk", id_masuk);
+				rDTL.add("tarikh_masuk", rDTL.unquote("sysdate"));
+
+				System.out.println("data.get(nama_obs) ==="+data.get("nama_obs") );
+				System.out.println("sql TBLPPKNOTISOBDTL==="+sql );
+				sql = rDTL.getSQLInsert("TBLPPKNOTISOBDTL");
+				stmt.executeUpdate(sql);
+		
+		//email
+		if(data.get("jenis_serah").equals("3")){
+			//hantar emel
+			//hantarNotisByEmel((String) data.get("id_fail"),id_ob);
+			
+			//ada attachment dlm emel
+			hantarNotisByEmel(session,(String) data.get("id_fail"),id_ob,application,request,response);
+		}
+		
+
+	}// close try
+	finally {
+		if (db != null)
+			db.close();
+	}// close finally
+
+}// close simpanSemakanK2
+
+
+//hide attachment
+public static void addHantarLaporanNotis_temp(Hashtable data, String id_ob, String id_perbicaraan,HttpSession session,ServletContext application,
+		HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+//public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id_perbicaraan) throws Exception {
+
+	Db db = null;
+
+	String sql = "";
+
+	try {
+		db = new Db();
+		Statement stmt = db.getStatement();
+
+		long id_notisobmst = DB.getNextID("TBLPPKNOTISOBMST_SEQ");
+		String id_masuk = (String) data.get("id_masuk");
+		
+		System.out.println("id_masuk==="+id_masuk);
+		System.out.println("id_perbicaraan==="+id_perbicaraan);
+		System.out.println("id_notisobmst==="+id_notisobmst);
+		
+		SQLRenderer r = new SQLRenderer();
+		 
+		
+		
+		r.add("id_notisobmst", id_notisobmst);
+		r.add("tarikh_serahan", r.unquote("sysdate"));
+		r.add("status_serah", data.get("status_serah"));
+		r.add("jenis_serah", data.get("jenis_serah"));
+		r.add("catatan", "");
+		r.add("nama_penghantar_notis", data.get("nama_penghantar_notis"));
+		r.add("id_penghantarnotis", data.get("id_penghantarnotis"));
+		r.add("id_masuk", id_masuk);
+		r.add("tarikh_masuk", r.unquote("sysdate"));
+		r.add("id_kemaskini", id_masuk);
+		r.add("tarikh_kemaskini", r.unquote("sysdate"));
+		
+			if(data.get("jenis_serah").equals("3")){
+				r.add("tarikh_emel", r.unquote("sysdate"));
+				r.add("emel", data.get("alamatEmel"));
+			}
+		
+		r.add("NAMA_PENGHANTAR_LAIN", data.get("NAMA_PENGHANTAR_LAIN"));
+		sql = r.getSQLInsert("TBLPPKNOTISOBMST_TEMP");
+		
+		System.out.println(":::::::::::::;sql TBLPPKNOTISOBMST ===="+sql);
+		stmt.executeUpdate(sql);
+		
+		/*System.out.println("id_perbicaraan==="+id_perbicaraan);
+		System.out.println("id_notisobmst==="+id_notisobmst);
+		System.out.println("id_masuk==="+id_masuk);*/
+
+		// create Tblppknotisperbicaraan
+		SQLRenderer r1 = new SQLRenderer();
+		r1.add("id_perbicaraan", id_perbicaraan);
+		r1.add("id_notisobmst", id_notisobmst);
+		r1.add("flag_jenis_notis", 0);
+		r1.add("id_masuk", id_masuk);
+		r1.add("tarikh_masuk", r1.unquote("sysdate"));
+		sql = r1.getSQLInsert("Tblppknotisperbicaraan_temp");
+		System.out.println("sql Tblppknotisperbicaraan==="+sql );
 		stmt.executeUpdate(sql);
 		
 		//create TBLPPKNOTISOBDTL
 		SQLRenderer rDTL = new SQLRenderer();
 		rDTL.add("id_ob", id_ob);
 		rDTL.add("id_notisobmst", id_notisobmst);
-/*		rDTL.add("nama_penerima",data.get("nama_obs") );
+		rDTL.add("nama_penerima",data.get("nama_ob") );
 		rDTL.add("no_kp_baru", data.get("no_kp_baru"));
 		rDTL.add("no_kp_lama", data.get("no_kp_lama"));
-		rDTL.add("no_kp_lain", data.get("no_kp_lain"));*/
+		rDTL.add("no_kp_lain", data.get("no_kp_lain"));
 		rDTL.add("id_masuk", id_masuk);
 		rDTL.add("tarikh_masuk", rDTL.unquote("sysdate"));
 
-		System.out.println("data.get(nama_obs) ==="+data.get("nama_obs") );
-		sql = rDTL.getSQLInsert("TBLPPKNOTISOBDTL");
+		System.out.println("data.get(nama_obs) ==="+data.get("nama_ob") );
+		System.out.println("sql TBLPPKNOTISOBDTL==="+sql );
+		sql = rDTL.getSQLInsert("TBLPPKNOTISOBDTL_TEMP");
 		stmt.executeUpdate(sql);
 		
 		//email
@@ -8347,31 +8722,40 @@ public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id
 
 
 //aishahlatip
-public static String getID_NOTISOBMST(String id_ob)
-		throws Exception {
+static Vector listidnotisobmst = new Vector();
+public static Vector<Hashtable<String,String>> getID_NOTISOBMST(String id_ob, boolean statusHantarPNB) throws Exception {
+		Db db = null;
+		listidnotisobmst.clear();
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
 
-	Db db = null;
-	String sql = "";
-	try {
-		db = new Db();
-		Statement stmt = db.getStatement();
-		SQLRenderer r = new SQLRenderer();
-		r.add("ID_NOTISOBMST");
-		r.add("ID_OB", id_ob);
-		sql = r.getSQLSelect("TBLPPKNOTISOBDTL");
-		ResultSet rs = stmt.executeQuery(sql);
-		if (rs.next()) {
-			return rs.getString("ID_NOTISOBMST");
-		} else {
-			return "";
+			sql = " SELECT ID_NOTISOBMST FROM TBLPPKNOTISOBDTL_TEMP WHERE ID_OB = '" + id_ob + "'";
+
+			myLogger.info("listidnotisobmst :" + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int bil = 1;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("ID_NOTISOBMST",rs.getString("ID_NOTISOBMST") == null ? "" : rs.getString("ID_NOTISOBMST"));	
+				listidnotisobmst.addElement(h);
+		
+			}
+			 return listidnotisobmst;
+		} finally {
+			if (db != null)
+				db.close();
 		}
-	} finally {
-		if (db != null)
-			db.close();
 	}
-}
 
-public static void deleteTBLPPKNOTISOBDTL(String ID_NOTISOBMST) throws Exception {
+
+public static void deleteTBLPPKNOTISOBDTL(String ID_NOTISOBMST, String id_perbicaraan) throws Exception {
 
 	Db db = null;
 	String sql = "";
@@ -8380,10 +8764,18 @@ public static void deleteTBLPPKNOTISOBDTL(String ID_NOTISOBMST) throws Exception
 
 		db = new Db();
 		Statement stmt = db.getStatement();
-
-		sql = "DELETE FROM TBLPPKNOTISOBDTL WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		
+		/*if(statusHantarPNB){
+			sql = "DELETE FROM TBLPPKNOTISOBDTL WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		}else{*/
+			//sql = "DELETE FROM TBLPPKNOTISOBDTL_TEMP WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		//}
+		
+		sql = "DELETE from TBLPPKNOTISOBDTL_TEMP where id_notisobmst in (select id_notisobmst from tblppknotisperbicaraan_temp where id_perbicaraan = "+id_perbicaraan+")";
 
 		stmt.executeUpdate(sql);
+		
+		System.out.println("deleteTBLPPKNOTISOBDTL "+sql);
 
 	} finally {
 		if (db != null)
@@ -8392,7 +8784,7 @@ public static void deleteTBLPPKNOTISOBDTL(String ID_NOTISOBMST) throws Exception
 
 }// delete TBLPPKNOTISOBDTL
 
-public static void deleteTBLPPKNOTISPERBICARAAN(String ID_NOTISOBMST) throws Exception {
+public static void deleteTBLPPKNOTISPERBICARAAN(String ID_NOTISOBMST, String id_perbicaraan) throws Exception {
 
 	Db db = null;
 	String sql = "";
@@ -8402,9 +8794,17 @@ public static void deleteTBLPPKNOTISPERBICARAAN(String ID_NOTISOBMST) throws Exc
 		db = new Db();
 		Statement stmt = db.getStatement();
 
-		sql = "DELETE FROM TBLPPKNOTISPERBICARAAN WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		/*if(statusHantarPNB){
+			sql = "DELETE FROM TBLPPKNOTISPERBICARAAN WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		}else{*/
+			//sql = "DELETE FROM TBLPPKNOTISPERBICARAAN_TEMP WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		//}
+			
+			sql = "DELETE from TBLPPKNOTISPERBICARAAN_TEMP where id_perbicaraan = "+id_perbicaraan+"";
 
 		stmt.executeUpdate(sql);
+		
+		System.out.println("deleteTBLPPKNOTISPERBICARAAN "+sql);
 
 	} finally {
 		if (db != null)
@@ -8413,7 +8813,7 @@ public static void deleteTBLPPKNOTISPERBICARAAN(String ID_NOTISOBMST) throws Exc
 
 }// delete TBLPPKNOTISPERBICARAAN
 
-public static void deleteTBLPPKNOTISOBMST(String ID_NOTISOBMST) throws Exception {
+public static void deleteTBLPPKNOTISOBMST(String ID_NOTISOBMST, String id_perbicaraan) throws Exception {
 
 	Db db = null;
 	String sql = "";
@@ -8423,9 +8823,17 @@ public static void deleteTBLPPKNOTISOBMST(String ID_NOTISOBMST) throws Exception
 		db = new Db();
 		Statement stmt = db.getStatement();
 
-		sql = "DELETE FROM TBLPPKNOTISOBMST WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		/*if(statusHantarPNB){
+			sql = "DELETE FROM TBLPPKNOTISOBMST WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		}else{*/
+			//sql = "DELETE FROM TBLPPKNOTISOBMST_TEMP WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		//}
+		
+		sql = "delete from TBLPPKNOTISOBMST_TEMP where id_notisobmst in (select id_notisobmst from tblppknotisperbicaraan_temp where id_perbicaraan = "+id_perbicaraan+")";
 
 		stmt.executeUpdate(sql);
+		
+		System.out.println("deleteTBLPPKNOTISOBMST "+sql);
 
 	} finally {
 		if (db != null)
@@ -8434,124 +8842,231 @@ public static void deleteTBLPPKNOTISOBMST(String ID_NOTISOBMST) throws Exception
 
 }// delete TBLPPKNOTISOBMST
 
-	//hide attachment
-	//public static void hantarNotisByEmel(HttpSession session,String idFail, String id_OB, ServletContext application,HttpServletRequest request,HttpServletResponse response) throws Exception {
-	public static void hantarNotisByEmel(String idFail, String id_OB) throws Exception {
-		myLogger.info("MASUK FUNCTION EMEL--------------------");
-		Db db = null;
-		try{
-			db = new Db();
-			Statement stmt = db.getStatement();
-			Statement stmtNotis = db.getStatement();
-			ResultSet rs = null;
-			ResultSet rsNotis = null;
-			String sql = "";
-			String status = "";
-	
-			EmailProperty pro = EmailProperty.getInstance();
-			EmailSender email = EmailSender.getInstance();
-			email.FROM = pro.getFrom();
-			email.MULTIPLE_RECIEPIENT = new String[1];
-			
-			String subject = "";
-			String content = "";
-			StringBuffer bff = new StringBuffer();
-			String tujuan = "";
-	
-			subject = "NOTIS PETISYEN DAN PENDENGARAN (Seksyen 9)";
-			tujuan = " Pemakluman Notis Perbicaraan yang memerlukan tindakan Tuan/Puan. Sila semak permohonan ini di MyeTaPP.";
+//add utk delete real notis perbicaraan
 
-			String ID_PERBICARAAN="", ID_FAIL="", NO_FAIL="", NAMA_PEMOHON = "", NO_KP_BARU = "", NO_KP_BARU_LAMA = "", ALAMAT_1 = "", ALAMAT_2 = "",ALAMAT_3 = "", POSKOD = "",NAMA_BANDAR_PEMOHON = "",NAMA_NEGERI_PEMOHON = "",NAMA_SIMATI = "",ALAMAT_SIMATI1 = "",
+public static void deleteTBLPPKNOTISOBDTL_ORI(String ID_NOTISOBMST, String id_perbicaraan) throws Exception {
+
+	Db db = null;
+	String sql = "";
+
+	try {
+
+		db = new Db();
+		Statement stmt = db.getStatement();
+		
+		/*if(statusHantarPNB){
+			sql = "DELETE FROM TBLPPKNOTISOBDTL WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		}else{*/
+			//sql = "DELETE FROM TBLPPKNOTISOBDTL_TEMP WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		//}
+		
+		sql = "DELETE from TBLPPKNOTISOBDTL where id_notisobmst in (select id_notisobmst from tblppknotisperbicaraan where id_perbicaraan = "+id_perbicaraan+")";
+
+		stmt.executeUpdate(sql);
+		
+		System.out.println("deleteTBLPPKNOTISOBDTL "+sql);
+
+	} finally {
+		if (db != null)
+			db.close();
+	}
+
+}// delete TBLPPKNOTISOBDTL
+
+public static void deleteTBLPPKNOTISPERBICARAAN_ORI(String ID_NOTISOBMST, String id_perbicaraan) throws Exception {
+
+	Db db = null;
+	String sql = "";
+
+	try {
+
+		db = new Db();
+		Statement stmt = db.getStatement();
+
+		/*if(statusHantarPNB){
+			sql = "DELETE FROM TBLPPKNOTISPERBICARAAN WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		}else{*/
+			//sql = "DELETE FROM TBLPPKNOTISPERBICARAAN_TEMP WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		//}
+			
+			sql = "DELETE from TBLPPKNOTISPERBICARAAN where id_perbicaraan = "+id_perbicaraan+"";
+
+		stmt.executeUpdate(sql);
+		
+		System.out.println("deleteTBLPPKNOTISPERBICARAAN "+sql);
+
+	} finally {
+		if (db != null)
+			db.close();
+	}
+
+}// delete TBLPPKNOTISPERBICARAAN
+
+public static void deleteTBLPPKNOTISOBMST_ORI(String ID_NOTISOBMST, String id_perbicaraan) throws Exception {
+
+	Db db = null;
+	String sql = "";
+
+	try {
+
+		db = new Db();
+		Statement stmt = db.getStatement();
+
+		/*if(statusHantarPNB){
+			sql = "DELETE FROM TBLPPKNOTISOBMST WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		}else{*/
+			//sql = "DELETE FROM TBLPPKNOTISOBMST_TEMP WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+		//}
+		
+		sql = "DELETE FROM TBLPPKNOTISOBMST WHERE ID_NOTISOBMST = '"+ ID_NOTISOBMST + "'";
+
+		stmt.executeUpdate(sql);
+		
+		System.out.println("deleteTBLPPKNOTISOBMST "+sql);
+
+	} finally {
+		if (db != null)
+			db.close();
+	}
+
+}// delete TBLPPKNOTISOBMST
+
+//hide attachment
+public static void hantarNotisByEmel(HttpSession session,String idFail, String id_OB, ServletContext application,HttpServletRequest request,HttpServletResponse response) throws Exception {
+//public static void hantarNotisByEmel(String idFail, String id_OB) throws Exception {
+	FrmPopupPilihPegawaiReportData logic = new FrmPopupPilihPegawaiReportData();
+	myLogger.info("MASUK FUNCTION EMEL--------------------"+id_OB);
+	
+	Db db = null;
+	try{
+	db = new Db();
+	Statement stmt = db.getStatement();
+	Statement stmtNotis = db.getStatement();
+	ResultSet rs = null;
+	ResultSet rsNotis = null;
+	String sql = "";
+	String status = "";
+	String seksyen = "";
+	
+	
+	EmailProperty pro = EmailProperty.getInstance();
+	EmailSender email = EmailSender.getInstance();
+	email.FROM = pro.getFrom();
+	email.MULTIPLE_RECIEPIENT = new String[1];
+	String subject = "";
+	
+	String content = "";
+	
+	
+	StringBuffer bff = new StringBuffer();
+	String tujuan = "";
+	
+		
+		tujuan = " Pemakluman Notis Perbicaraan yang memerlukan tindakan Tuan/Puan. Sila semak permohonan ini di MyeTaPP.";
+
+		String ID_PERBICARAAN="", ID_FAIL="", NO_FAIL="", NAMA_PEMOHON = "", NO_KP_BARU = "", NO_KP_BARU_LAMA = "", ALAMAT_1 = "", ALAMAT_2 = "",ALAMAT_3 = "", POSKOD = "",NAMA_BANDAR_PEMOHON = "",NAMA_NEGERI_PEMOHON = "",NAMA_SIMATI = "",ALAMAT_SIMATI1 = "",
 				ALAMAT_SIMATI2 = "",ALAMAT_SIMATI3 = "",POSKOD_SIMATI = "",NAMA_BANDAR_SIMATI = "",NAMA_NEGERI_SIMATI = "",
 				BIL_BICARA = "",TARIKH_BICARA = "",TEMPAT_BICARA = "",ALAMAT_BICARA1 = "",ALAMAT_BICARA2 = "",ALAMAT_BICARA3 = "",NAMA_BANDAR_BICARA = "",NAMA_NEGERI_BICARA = "",
-				PEG_PENGENDALI  = "",MASA_BICARA="", JENIS_MASA="";
+				PEG_PENGENDALI  = "",MASA_BICARA="", JENIS_MASA="", ID_SIMATI = "", ID_PERMOHONANSIMATI="";
 		
-			String jenisMasa = "";
+		String jenisMasa = "";
 		
-			sql = "SELECT F.NO_FAIL, PE.NAMA_PEMOHON, PE.NO_KP_BARU, PE.NO_KP_BARU_LAMA, PE.ALAMAT_1, PE.ALAMAT_2,PE.ALAMAT_3, PE.POSKOD,Initcap(BANPEMOHON.KETERANGAN) AS NAMA_BANDAR_PEMOHON," +
-					"Initcap(NEGPEMOHON.NAMA_NEGERI) AS NAMA_NEGERI_PEMOHON,SIMATI.NAMA_SIMATI,SIMATI.ALAMAT_1 AS ALAMAT_SIMATI1,SIMATI.ALAMAT_2 AS ALAMAT_SIMATI2,SIMATI.ALAMAT_3 AS ALAMAT_SIMATI3," +
-					"SIMATI.POSKOD AS POSKOD_SIMATI,Initcap(BANSIMATI.KETERANGAN) AS NAMA_BANDAR_SIMATI,Initcap(NEGSIMATI.NAMA_NEGERI) AS NAMA_NEGERI_SIMATI, BIC.BIL_BICARA,TO_CHAR(BIC.TARIKH_BICARA,'DD/MM/YYYY') AS TARIKH_BICARA," +
-					"Initcap(BIC.TEMPAT_BICARA)AS TEMPAT_BICARA, Initcap(BIC.ALAMAT_BICARA1) AS ALAMAT_BICARA1,Initcap(BIC.ALAMAT_BICARA2) AS ALAMAT_BICARA2," +
-					"Initcap(BIC.ALAMAT_BICARA3) AS ALAMAT_BICARA3,Initcap(BIC.BANDAR) AS NAMA_BANDAR_BICARA,Initcap(NEGBICARA.NAMA_NEGERI) AS NAMA_NEGERI_BICARA," +
-					"Initcap(BIC.PEG_PENGENDALI) AS PEG_PENGENDALI ,BIC.MASA_BICARA,BIC.JENIS_MASA_BICARA,BIC.ID_PERBICARAAN,F.ID_FAIL " +
-					" FROM TBLPPKPERMOHONAN P,TBLPPKPERMOHONANSIMATI SI,TBLPPKSIMATI SIMATI,TBLPPKPEMOHON PE, " +
-					"TBLPFDFAIL F,TBLPPKKEPUTUSANPERMOHONAN KP, TBLPPKPERBICARAAN BIC,TBLRUJBANDAR BANPEMOHON,TBLRUJBANDAR BANSIMATI,TBLRUJNEGERI NEGPEMOHON," +
-					" TBLRUJNEGERI NEGBICARA,TBLRUJNEGERI NEGSIMATI WHERE P.ID_FAIL = F.ID_FAIL AND PE.ID_BANDAR = BANPEMOHON.ID_BANDAR(+) AND SIMATI.ID_BANDAR = BANSIMATI.ID_BANDAR(+) " +
-					"AND BIC.ID_NEGERIBICARA = NEGBICARA.ID_NEGERI(+) AND SIMATI.ID_NEGERI = NEGSIMATI.ID_NEGERI(+) AND PE.ID_NEGERI = NEGPEMOHON.ID_NEGERI(+) " +
-					"AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN(+) AND KP.ID_KEPUTUSANPERMOHONAN = BIC.ID_KEPUTUSANPERMOHONAN(+) AND P.ID_PEMOHON = PE.ID_PEMOHON(+) AND P.ID_PERMOHONAN = SI.ID_PERMOHONAN(+) " +
-					"AND SI.ID_SIMATI = SIMATI.ID_SIMATI(+) AND F.ID_FAIL =" + idFail + " AND BIC.BIL_BICARA = (SELECT MAX(BIC.BIL_BICARA) AS BIL_BICARA FROM TBLPPKPERMOHONAN P " +
-					",TBLPFDFAIL F,TBLPPKKEPUTUSANPERMOHONAN KP,TBLPPKPERBICARAAN BIC, TBLRUJNEGERI NEG WHERE P.ID_FAIL = F.ID_FAIL AND BIC.ID_NEGERIBICARA = NEG.ID_NEGERI(+) " +
-					"AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN(+) AND KP.ID_KEPUTUSANPERMOHONAN = BIC.ID_KEPUTUSANPERMOHONAN(+) " +
-					"AND F.ID_FAIL =" + idFail + ")";
+		sql = "SELECT F.NO_FAIL, PE.NAMA_PEMOHON, PE.NO_KP_BARU, PE.NO_KP_BARU_LAMA, PE.ALAMAT_1, PE.ALAMAT_2,PE.ALAMAT_3, PE.POSKOD,Initcap(BANPEMOHON.KETERANGAN) AS NAMA_BANDAR_PEMOHON," +
+				"Initcap(NEGPEMOHON.NAMA_NEGERI) AS NAMA_NEGERI_PEMOHON,SIMATI.NAMA_SIMATI,SIMATI.ALAMAT_1 AS ALAMAT_SIMATI1,SIMATI.ALAMAT_2 AS ALAMAT_SIMATI2,SIMATI.ALAMAT_3 AS ALAMAT_SIMATI3," +
+				"SIMATI.POSKOD AS POSKOD_SIMATI,Initcap(BANSIMATI.KETERANGAN) AS NAMA_BANDAR_SIMATI,Initcap(NEGSIMATI.NAMA_NEGERI) AS NAMA_NEGERI_SIMATI, BIC.BIL_BICARA,TO_CHAR(BIC.TARIKH_BICARA,'DD/MM/YYYY') AS TARIKH_BICARA," +
+				"Initcap(BIC.TEMPAT_BICARA)AS TEMPAT_BICARA, Initcap(BIC.ALAMAT_BICARA1) AS ALAMAT_BICARA1,Initcap(BIC.ALAMAT_BICARA2) AS ALAMAT_BICARA2," +
+				"Initcap(BIC.ALAMAT_BICARA3) AS ALAMAT_BICARA3,Initcap(BIC.BANDAR) AS NAMA_BANDAR_BICARA,Initcap(NEGBICARA.NAMA_NEGERI) AS NAMA_NEGERI_BICARA," +
+				"Initcap(BIC.PEG_PENGENDALI) AS PEG_PENGENDALI ,BIC.MASA_BICARA,BIC.JENIS_MASA_BICARA,BIC.ID_PERBICARAAN,F.ID_FAIL,P.SEKSYEN ,SIMATI.ID_SIMATI, SI.ID_PERMOHONANSIMATI " +
+				" FROM TBLPPKPERMOHONAN P,TBLPPKPERMOHONANSIMATI SI,TBLPPKSIMATI SIMATI,TBLPPKPEMOHON PE, " +
+				"TBLPFDFAIL F,TBLPPKKEPUTUSANPERMOHONAN KP, TBLPPKPERBICARAAN BIC,TBLRUJBANDAR BANPEMOHON,TBLRUJBANDAR BANSIMATI,TBLRUJNEGERI NEGPEMOHON," +
+				" TBLRUJNEGERI NEGBICARA,TBLRUJNEGERI NEGSIMATI WHERE P.ID_FAIL = F.ID_FAIL AND PE.ID_BANDAR = BANPEMOHON.ID_BANDAR(+) AND SIMATI.ID_BANDAR = BANSIMATI.ID_BANDAR(+) " +
+				"AND BIC.ID_NEGERIBICARA = NEGBICARA.ID_NEGERI(+) AND SIMATI.ID_NEGERI = NEGSIMATI.ID_NEGERI(+) AND PE.ID_NEGERI = NEGPEMOHON.ID_NEGERI(+) " +
+				"AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN(+) AND KP.ID_KEPUTUSANPERMOHONAN = BIC.ID_KEPUTUSANPERMOHONAN(+) AND P.ID_PEMOHON = PE.ID_PEMOHON(+) AND P.ID_PERMOHONAN = SI.ID_PERMOHONAN(+) " +
+				"AND SI.ID_SIMATI = SIMATI.ID_SIMATI(+) AND F.ID_FAIL =" + idFail + " AND BIC.BIL_BICARA = (SELECT MAX(BIC.BIL_BICARA) AS BIL_BICARA FROM TBLPPKPERMOHONAN P " +
+				",TBLPFDFAIL F,TBLPPKKEPUTUSANPERMOHONAN KP,TBLPPKPERBICARAAN BIC, TBLRUJNEGERI NEG WHERE P.ID_FAIL = F.ID_FAIL AND BIC.ID_NEGERIBICARA = NEG.ID_NEGERI(+) " +
+				"AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN(+) AND KP.ID_KEPUTUSANPERMOHONAN = BIC.ID_KEPUTUSANPERMOHONAN(+) " +
+				"AND F.ID_FAIL =" + idFail + ")";
 
-			rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				NO_FAIL= rs.getString(1) == null ? "" : rs.getString(1);
-				NAMA_PEMOHON = rs.getString(2) == null ? "" : rs.getString(2);
-				NO_KP_BARU = rs.getString(3) == null ? "" : rs.getString(3);
-				NO_KP_BARU_LAMA = rs.getString(4) == null ? "" : rs.getString(4);
-				ALAMAT_1 = rs.getString(5) == null ? "" : rs.getString(5);
-				ALAMAT_2 = rs.getString(6) == null ? "" : rs.getString(6);
-				ALAMAT_3 = rs.getString(7) == null ? "" : rs.getString(7); 
-				POSKOD = rs.getString(8) == null ? "" : rs.getString(8);
-				NAMA_BANDAR_PEMOHON = rs.getString(9) == null ? "" : rs.getString(9);
-				NAMA_NEGERI_PEMOHON = rs.getString(10) == null ? "" : rs.getString(10);
-				NAMA_SIMATI = rs.getString(11) == null ? "" : rs.getString(11);
-				ALAMAT_SIMATI1 = rs.getString(12) == null ? "" : rs.getString(12);
-				ALAMAT_SIMATI2 = rs.getString(13) == null ? "" : rs.getString(13);
-				ALAMAT_SIMATI3 = rs.getString(14) == null ? "" : rs.getString(14);
-				POSKOD_SIMATI = rs.getString(15) == null ? "" : rs.getString(15);
-				NAMA_BANDAR_SIMATI = rs.getString(16) == null ? "" : rs.getString(16);
-				NAMA_NEGERI_SIMATI = rs.getString(17) == null ? "" : rs.getString(17);
-				BIL_BICARA = rs.getString(18) == null ? "" : rs.getString(18);
-				TARIKH_BICARA = rs.getString(19) == null ? "" : rs.getString(19);
-				TEMPAT_BICARA = rs.getString(20) == null ? "" : rs.getString(20);
-				ALAMAT_BICARA1 = rs.getString(21) == null ? "" : rs.getString(21);
-				ALAMAT_BICARA2 = rs.getString(22) == null ? "" : rs.getString(22);
-				ALAMAT_BICARA3 = rs.getString(23) == null ? "" : rs.getString(23);
-				NAMA_BANDAR_BICARA = rs.getString(24) == null ? "" : rs.getString(24);
-				NAMA_NEGERI_BICARA = rs.getString(25) == null ? "" : rs.getString(25);
-				PEG_PENGENDALI  = rs.getString(26) == null ? "" : rs.getString(26);
-				MASA_BICARA= rs.getString(27) == null ? "" : rs.getString(27);
-				JENIS_MASA= rs.getString(28) == null ? "" : rs.getString(28);
-				
-				ID_PERBICARAAN = rs.getString("ID_PERBICARAAN") == null ? "" : rs.getString("ID_PERBICARAAN");
-				ID_FAIL = rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL");
-				
-				jenisMasa = "";
-				if (JENIS_MASA != null && !"".equals(JENIS_MASA)) {
-					if("1".equals(JENIS_MASA)){
-						jenisMasa = "pagi";		
-					}else if("2".equals(JENIS_MASA)){
-						jenisMasa = "tengahari";
-					}else if("3".equals(JENIS_MASA)){
-						jenisMasa = "petang";
-					}
-				}
-				
-			}
-		
-			// header email
-			bff.append("Salam Sejahtera Tuan/Puan,");
-			bff.append("<br/>");
-			bff.append("<br/>");
-			bff.append("Untuk makluman Permohonan Pembahagian Pusaka Kecil ");
-			bff.append("telah dibuat oleh ");
-			bff.append(NAMA_PEMOHON);
-			bff.append(" , No. KP:");
-			bff.append(NO_KP_BARU);
+		rs = stmt.executeQuery(sql);
+		while (rs.next()) {
+			NO_FAIL= rs.getString(1) == null ? "" : rs.getString(1);
+			NAMA_PEMOHON = rs.getString(2) == null ? "" : rs.getString(2);
+			NO_KP_BARU = rs.getString(3) == null ? "" : rs.getString(3);
+			NO_KP_BARU_LAMA = rs.getString(4) == null ? "" : rs.getString(4);
+			ALAMAT_1 = rs.getString(5) == null ? "" : rs.getString(5);
+			ALAMAT_2 = rs.getString(6) == null ? "" : rs.getString(6);
+			ALAMAT_3 = rs.getString(7) == null ? "" : rs.getString(7); 
+			POSKOD = rs.getString(8) == null ? "" : rs.getString(8);
+			NAMA_BANDAR_PEMOHON = rs.getString(9) == null ? "" : rs.getString(9);
+			NAMA_NEGERI_PEMOHON = rs.getString(10) == null ? "" : rs.getString(10);
+			NAMA_SIMATI = rs.getString(11) == null ? "" : rs.getString(11);
+			ALAMAT_SIMATI1 = rs.getString(12) == null ? "" : rs.getString(12);
+			ALAMAT_SIMATI2 = rs.getString(13) == null ? "" : rs.getString(13);
+			ALAMAT_SIMATI3 = rs.getString(14) == null ? "" : rs.getString(14);
+			POSKOD_SIMATI = rs.getString(15) == null ? "" : rs.getString(15);
+			NAMA_BANDAR_SIMATI = rs.getString(16) == null ? "" : rs.getString(16);
+			NAMA_NEGERI_SIMATI = rs.getString(17) == null ? "" : rs.getString(17);
+			BIL_BICARA = rs.getString(18) == null ? "" : rs.getString(18);
+			TARIKH_BICARA = rs.getString(19) == null ? "" : rs.getString(19);
+			TEMPAT_BICARA = rs.getString(20) == null ? "" : rs.getString(20);
+			ALAMAT_BICARA1 = rs.getString(21) == null ? "" : rs.getString(21);
+			ALAMAT_BICARA2 = rs.getString(22) == null ? "" : rs.getString(22);
+			ALAMAT_BICARA3 = rs.getString(23) == null ? "" : rs.getString(23);
+			NAMA_BANDAR_BICARA = rs.getString(24) == null ? "" : rs.getString(24);
+			NAMA_NEGERI_BICARA = rs.getString(25) == null ? "" : rs.getString(25);
+			PEG_PENGENDALI  = rs.getString(26) == null ? "" : rs.getString(26);
+			MASA_BICARA= rs.getString(27) == null ? "" : rs.getString(27);
+			JENIS_MASA= rs.getString(28) == null ? "" : rs.getString(28);
 			
-			if (NO_KP_BARU_LAMA != null && !"".equals(NO_KP_BARU_LAMA)) {
-				bff.append("("+NO_KP_BARU_LAMA+")");
+			ID_PERBICARAAN = rs.getString("ID_PERBICARAAN") == null ? "" : rs.getString("ID_PERBICARAAN");
+			ID_FAIL = rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL");
+			
+			jenisMasa = "";
+			if (JENIS_MASA != null && !"".equals(JENIS_MASA)) {
+				if("1".equals(JENIS_MASA)){
+					jenisMasa = "pagi";		
+				}else if("2".equals(JENIS_MASA)){
+					jenisMasa = "tengahari";
+				}else if("3".equals(JENIS_MASA)){
+					jenisMasa = "petang";
+				}
 			}
+			
+			
+			seksyen = rs.getString("SEKSYEN") == null ? "" : rs.getString("SEKSYEN");
+			ID_SIMATI = rs.getString("ID_SIMATI") == null ? "" : rs.getString("ID_SIMATI");
+			ID_PERMOHONANSIMATI = rs.getString("ID_PERMOHONANSIMATI") == null ? "" : rs.getString("ID_PERMOHONANSIMATI");
+		}
 		
-			bff.append(" yang beralamat di ");
-			bff.append(ALAMAT_1+","+ ALAMAT_2+" "+ ALAMAT_3+" "+ POSKOD+","+ NAMA_BANDAR_PEMOHON+","+NAMA_NEGERI_PEMOHON);
-			bff.append(" bagi pembahagian harta pusaka dan barang kepunyaan ");
-			bff.append(NAMA_SIMATI);
-			bff.append(" si mati, ");				
-			bff.append("akan didengar mengikut ketetapan berikut: ");
-			bff.append("<html><table>" +				
+		
+		if(seksyen.equals("8")){
+			subject = "NOTIS PETISYEN DAN PENDENGARAN (Seksyen 9)";
+		}else{
+			subject = "NOTIS PENDENGARAN PERMOHONAN BERIKUTNYA (Seksyen 17)";
+
+		}
+		
+		// header email
+		bff.append("Salam Sejahtera Tuan/Puan,");
+		bff.append("<br/>");
+		bff.append("<br/>");
+		bff.append("Untuk makluman Permohonan Pembahagian Pusaka Kecil ");
+		bff.append("telah dibuat oleh ");
+		bff.append(NAMA_PEMOHON);
+		bff.append(" , No. KP:");
+		bff.append(NO_KP_BARU);
+		
+		if (NO_KP_BARU_LAMA != null && !"".equals(NO_KP_BARU_LAMA)) {
+			bff.append("("+NO_KP_BARU_LAMA+")");
+		}
+		
+		bff.append(" yang beralamat di ");
+		bff.append(ALAMAT_1+","+ ALAMAT_2+" "+ ALAMAT_3+" "+ POSKOD+","+ NAMA_BANDAR_PEMOHON+","+NAMA_NEGERI_PEMOHON);
+		bff.append(" bagi pembahagian harta pusaka dan barang kepunyaan ");
+		bff.append(NAMA_SIMATI);
+		bff.append(" si mati, ");				
+		bff.append("akan didengar mengikut ketetapan berikut: ");
+		bff.append("<html><table>" +				
 				"<tr><td>No.Fail</td><td>:</td><td>"+NO_FAIL+"</td></tr>" +
 				"<tr><td>Nama Si Mati</td><td>:</td><td>"+NAMA_SIMATI+"</td></tr>" +
 				"<tr><td>Bil Bicara</td><td>:</td><td>"+BIL_BICARA+"</td></tr>" +	
@@ -8569,7 +9084,8 @@ public static void deleteTBLPPKNOTISOBMST(String ID_NOTISOBMST) throws Exception
 				"<tr><td colspan=3>&nbsp;</td></tr>" +
 				"<tr><td colspan=3><em>Emel ini dijana oleh sistem MyeTaPP dan tidak perlu dibalas.</em></td></tr>" +
 				"</table></html>" );	
-				
+		
+		
 		/*bff.append("<br/>");
 		bff.append("No Fail : ");
 		bff.append(NO_FAIL);
@@ -8587,69 +9103,100 @@ public static void deleteTBLPPKNOTISOBMST(String ID_NOTISOBMST) throws Exception
 		content = bff.toString();
 		
 		GetAttachment report = new GetAttachment(); //hide email attachment
-		//ServletContext application=getServletContext(); 
     	final Map<String, Object> myMap = new HashMap<String,Object>();
     	//hide email attachment
     	myLogger.info("ID_FAIL : "+ID_FAIL+" ID_PERBICARAAN : "+ID_PERBICARAAN);
     	String path ="";
     	String folderName = "ppk";
-    	String fileName = "BorangD_2";
+    	String fileName ="";
+    	String namaAttached = "";
     	
-    	if (folderName != null) {
-			// path = "/reports/" + folderName + "/" + fileName ;
-			path = File.separator + "reports" + File.separator + folderName + File.separator + fileName;
-		} else {
-			// path = "/reports/" + fileName ;
-			path = File.separator + "reports" + File.separator + fileName;
-		}
+    	if(seksyen.equals("8")){
+    		fileName = "BorangD_email";
+    		namaAttached =  "Borang D";
+    	}else{
+    		fileName = "BorangS_email";
+    		namaAttached =  "Borang S";
+    	}
     	
-    	//myMap.put("idfail", ID_FAIL);
-    	//myMap.put("flagVersion", "no");
-    	//myMap.put("idperbicaraan", ID_PERBICARAAN);
-    	//myMap.put("ReportDir", path);
-    	//myMap.put("os", "1");
+		ResourceBundle rb = ResourceBundle.getBundle("file");
+		String appContext = rb.getString("context_name");
+		String pathAttach = application.getRealPath(File.separator + "reports" + File.separator).replace(appContext + File.separator, "");
     	
-    	//parameter utk panggil report, boleh multiple    	
-    	//byte[] bytes1 = report.getReportBytes("ppk","BorangD_2",request, response, application, myMap);
+    	myMap.put("idfail", ID_FAIL);
+    	myMap.put("flagVersion", "no");
+    	myMap.put("idperbicaraan", ID_PERBICARAAN);
+    	myMap.put("ReportDir", pathAttach);
+    	myMap.put("signedData", "");
+    	myMap.put("os", "1");
+    	myMap.put("jenisSerahan", "3");
+    	myMap.put("idob", id_OB);
     	
-    	
-    	myMap.put("idfail", ID_FAIL);//parameter utk panggil report, boleh multiple    	
-    	//byte[] bytes1 = report.getReportBytes("ppk","BORANGD_ORI",request, response, application, myMap);
-    	
-    //	myLogger.info("bytes1 ::::: "+bytes1);
-    ////open razman add new feature : attachment in bytes
-		/*email.ATTACHMENT_BYTES = new String[1];
-		email.ATTACHMENT_BYTES[0] = new String(bytes1, "ISO-8859-1");;
-		email.ATTACHMENT_BYTES_NAME = new String[1]; //kena sama dengan jumlah attachment
-		email.ATTACHMENT_BYTES_NAME[0] = "Borang D";//letak nama file bersesuaian
-		//close razman add new feature : attachment in bytes		
-*/	
-			List listEmailAdd = getOBEmailAddress(id_OB);
-			email.MULTIPLE_RECIEPIENT = new String[listEmailAdd.size()];
-			for(int i = 0; i < listEmailAdd.size();i++){
-				Map m = (Map) listEmailAdd.get(i);
-				String EMEL = (String) m.get("EMEL");
-				//int COUNT_EMEL = (int)maklumatTindakan.get("COUNT_EMEL");
-				email.MULTIPLE_RECIEPIENT[i] = EMEL;	
+    	if(seksyen.equals("17")){
+	    	myMap.put("idsimati", ID_SIMATI);
+	    	
+	    	logic.getPemohonTerdahulu(ID_FAIL);
+			Vector pemohon = new Vector(); 
+			pemohon = logic.getBeanPemohonTerdahulu();	
+			Hashtable h = new Hashtable();
+			if(pemohon.size() != 0){
+				
+				h = (Hashtable)pemohon.get(0);
+				myMap.put("namaPemohon",h.get("namaPemohon"));
+				myMap.put("alamatPemohon",h.get("alamatPemohon"));
+				myMap.put("kpPemohon", h.get("kpPemohon"));
+				myMap.put("sebab", "");
 				
 			}
+    	}
+    	
+    	
+    	//parameter utk panggil report, boleh multiple    	
+    	//byte[] bytes1 = report.getReportBytes("ppk","KulitFail",request, response, application, myMap);
+    	   	
+    	byte[] bytes1 = report.getReportBytes("ppk",fileName,request, response, application, myMap);
+
+    	myLogger.info("bytes1 ::::: "+bytes1);
+    ////open razman add new feature : attachment in bytes
+		email.ATTACHMENT_BYTES = new String[1];
+		email.ATTACHMENT_BYTES[0] = new String(bytes1, "ISO-8859-1");;
+		email.ATTACHMENT_BYTES_NAME = new String[1]; //kena sama dengan jumlah attachment
+		email.ATTACHMENT_BYTES_NAME[0] = namaAttached;//letak nama file bersesuaian
 		
+		//close razman add new feature : attachment in bytes		
+	
+		List listEmailAdd = getOBEmailAddressNotis(id_OB,ID_PERMOHONANSIMATI);
+		
+		if( listEmailAdd.size()> 0){
+				email.MULTIPLE_RECIEPIENT = new String[listEmailAdd.size()];
+				for(int i = 0; i < listEmailAdd.size();i++)
+				{
+					Map m = (Map) listEmailAdd.get(i);
+					String EMEL = (String) m.get("EMEL");
+					myLogger.info("::::::::::::::::::::::::::::: EMAIL ::::::::::::::::::::::::::: "+EMEL);
+					//int COUNT_EMEL = (int)maklumatTindakan.get("COUNT_EMEL");
+					email.MULTIPLE_RECIEPIENT[i] = EMEL;						
+				}
+			
 			email.SUBJECT = subject;
 			email.MESSAGE = content;		
 			email.sendEmail();		
-	
-		} catch (DbException e) {
-			myLogger.error(e);
-			//return "fail";
-		} catch (Exception er) {
-			myLogger.error(er);
-			throw er;
-		} finally {
-			if (db != null)
-				db.close();
+		}else{
+			myLogger.info("::::::::::::::::::::::::::::: EMAIL NULL ::::::::::::::::::::::::::: ");
 		}
-		
+	
+	} catch (DbException e) {
+		myLogger.error(e);
+		//return "fail";
+	} catch (Exception er) {
+		myLogger.error(er);
+		throw er;
+	} finally {
+		if (db != null)
+			db.close();
 	}
+	
+ }
 
 
 //aishahlatip
@@ -8686,6 +9233,370 @@ public static List getOBEmailAddress(String id_ob)throws Exception {
 	}
 	return listEmelPelulus;
 }
+
+//aishahlatip
+public static List getOBEmailAddressNotis(String id_ob, String id_permohonansimati)throws Exception {
+	Db db = null;
+	ResultSet rs = null;
+	Statement stmt = null;
+	List listEmelPelulus = null;
+	String sql = "";
+	try {
+		db = new Db();
+		stmt = db.getStatement();
+		
+		sql = " SELECT E.EMEL FROM TBLPPKOBPERMOHONAN E WHERE E.ID_OB IN (" + id_ob + ") AND E.ID_PERMOHONANSIMATI = "+id_permohonansimati;
+		
+		myLogger.info(" SQL : emel ob :"+ sql);			
+		rs = stmt.executeQuery(sql);
+		listEmelPelulus = Collections.synchronizedList(new ArrayList());
+		Map h = null;
+		int bil = 0;
+		while (rs.next()) {
+			h = Collections.synchronizedMap(new HashMap());
+			h.put("EMEL",rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));	
+			listEmelPelulus.add(h);
+		}
+
+	} finally {
+		if (rs != null)
+			rs.close();
+		if (stmt != null)
+			stmt.close();
+		if (db != null)
+			db.close();
+	}
+	return listEmelPelulus;
+}
+
+public String getSignedData(String idPerbicaraan) {
+	String signedData = "";
+	Db db = null;
+	ResultSet rs = null;
+	Statement stmt = null;
+	try {
+		db = new Db();
+		stmt = db.getStatement();
+		
+		String sql = " SELECT SIGNED_TEXT FROM TBLPPKPERBICARAAN WHERE ID_PERBICARAAN = '" + idPerbicaraan + "'";
+		rs = stmt.executeQuery(sql);
+		System.out.println("data dah signed "+sql);
+		if (rs.next()) {
+			signedData = rs.getString("SIGNED_TEXT");
+		}
+	} catch (Exception ex) {
+		ex.printStackTrace();
+	}
+	return signedData;
+}
+
+
+//aishah add 06062018
+
+//get semua id_notisobmst
+//lembu
+
+static Vector listobmst = new Vector();
+public static Vector<Hashtable<String,String>> getID_NOTISPERBICAAAN(String id_perbicaraan) throws Exception {
+		Db db = null;
+		listobmst.clear();
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+
+			sql = " SELECT ID_NOTISOBMST FROM TBLPPKNOTISPERBICARAAN WHERE ID_PERBICARAAN = '" + id_perbicaraan + "'";
+
+			//myLogger.info("getID_NOTISPERBICAAAN:" + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int bil = 1;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("ID_NOTISOBMST",rs.getString("ID_NOTISOBMST") == null ? "" : rs.getString("ID_NOTISOBMST"));	
+				listobmst.addElement(h);
+		
+			}
+			 return listobmst;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+static Vector listobmsttemp = new Vector();
+public static Vector<Hashtable<String,String>> getID_NOTISPERBICAAAN_TEMP(String id_perbicaraan, String serahan) throws Exception {
+		Db db = null;
+		listobmsttemp.clear();
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+
+			sql = " SELECT A.ID_NOTISOBMST , B.JENIS_SERAH, C.ID_OB FROM TBLPPKNOTISPERBICARAAN_TEMP A, TBLPPKNOTISOBMST_TEMP B, TBLPPKNOTISOBDTL_TEMP C" +
+					" WHERE A.ID_NOTISOBMST = B.ID_NOTISOBMST " +
+					" AND B.ID_NOTISOBMST = C.ID_NOTISOBMST ";
+					if(serahan.equals("specific")){
+						sql = sql + " AND B.JENIS_SERAH in (3,5) " ;
+					}
+					if(serahan.equals("byhand")){
+						sql = sql + " AND B.JENIS_SERAH in (1) " ;
+					}
+					
+		   sql = sql + " AND A.ID_PERBICARAAN = '" + id_perbicaraan + "' order by A.ID_NOTISOBMST asc ";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			myLogger.info("get sql TBLPPKNOTISOBMST_TEMP === " +sql);
+			Hashtable h;
+			int bil = 1;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("ID_NOTISOBMST",rs.getString("ID_NOTISOBMST") == null ? "" : rs.getString("ID_NOTISOBMST"));	
+				h.put("JENIS_SERAH",rs.getString("JENIS_SERAH") == null ? "" : rs.getString("JENIS_SERAH"));	
+				h.put("ID_OB",rs.getString("ID_OB") == null ? "" : rs.getString("ID_OB"));	
+				listobmsttemp.addElement(h);
+				
+				
+				myLogger.info("ID_NOTISOBMST====" +rs.getString("ID_NOTISOBMST"));
+		
+			}
+			 return listobmsttemp;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+
+static Vector listobmstori = new Vector();
+public static Vector<Hashtable<String,String>> getID_NOTISPERBICAAAN_ORI(String id_perbicaraan) throws Exception {
+		Db db = null;
+		listobmstori.clear();
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+
+			sql = " SELECT ID_NOTISOBMST FROM TBLPPKNOTISPERBICARAAN WHERE ID_PERBICARAAN = '" + id_perbicaraan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int bil = 1;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("ID_NOTISOBMST",rs.getString("ID_NOTISOBMST") == null ? "" : rs.getString("ID_NOTISOBMST"));	
+				listobmstori.addElement(h);
+		
+			}
+			 return listobmstori;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+//lembu
+// insert data from Tblppknotisperbicaraan_temp, tblppknotisobmst_temp, tblppknotisobdtl_temp into Tblppknotisperbicaraan, tblppknotisobmst, tblppknotisobdtl	
+public static void insertPenghantaranNotisReal(String id_perbicaraan,String idfail,HttpSession session,ServletContext application,HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+	Db db = null;
+	
+	String sql = "";
+	String sql3 = "";
+	String sql4 = "";
+	String id_notisobmst = "";
+	String id_notisobmsttemp = "";
+	String id_notisobmstoritemp = "";
+	String JENIS_SERAH = "";
+	String ID_OB = "";
+	
+	Hashtable h;
+	try {
+		db = new Db();
+
+		Statement stmt = db.getStatement();
+		
+		
+		Vector<Hashtable<String,String>> listnotisobmstAlltemp = getID_NOTISPERBICAAAN_TEMP(id_perbicaraan,"all");
+		
+		Vector<Hashtable<String,String>> listnotisobmstori = getID_NOTISPERBICAAAN_ORI(id_perbicaraan);
+		
+		myLogger.info("listnotisobmstAlltemp===="+listnotisobmstAlltemp.size());
+		
+		if(listnotisobmstAlltemp.size()>0){
+			for(int i=0; i < listnotisobmstori.size(); i++)
+			{
+					Hashtable<String,String> h1 = (Hashtable<String,String>) listnotisobmstori.get(i);
+					id_notisobmstoritemp = h1.get("ID_NOTISOBMST").toString();		
+					
+					//delete table real
+					deleteTBLPPKNOTISOBDTL_ORI("",id_perbicaraan);	//delete TBLPPKNOTISOBDTL	
+					deleteTBLPPKNOTISPERBICARAAN_ORI("",id_perbicaraan);	//delete TBLPPKNOTISPERBICARAAN	
+					deleteTBLPPKNOTISOBMST_ORI(id_notisobmstoritemp,id_perbicaraan);	//delete TBLPPKNOTISOBMST	
+				
+			
+			}
+		}
+		
+		Vector<Hashtable<String,String>> listnotisobmsttemp = getID_NOTISPERBICAAAN_TEMP(id_perbicaraan,"specific");
+		//clear rekod HA balik
+		if(listnotisobmstAlltemp.size()>0){
+			for(int i=0; i < listnotisobmsttemp.size(); i++)
+			{
+					Hashtable<String,String> h1 = (Hashtable<String,String>) listnotisobmsttemp.get(i);
+					id_notisobmsttemp = h1.get("ID_NOTISOBMST").toString();			
+					JENIS_SERAH =  h1.get("JENIS_SERAH").toString();	
+					ID_OB =  h1.get("ID_OB").toString();	
+				    //copy from temp then insert data into Tblppknotisobmst, 	Tblppknotisobdtl, Tblppknotisperbicaraan
+					Tblppknotisobmst_insert( id_perbicaraan, id_notisobmsttemp,"emailpnmb");
+					
+					if(JENIS_SERAH.equals("3")){
+						hantarNotisByEmel(session,idfail,ID_OB,application,request,response);
+					}
+				
+			}
+		}else{//hanya serahan tangan shj ambil1 row shj
+			
+			
+			Vector<Hashtable<String,String>> listnotisobmsttempSerahanTGN = getID_NOTISPERBICAAAN_TEMP(id_perbicaraan,"byhand");
+			if(listnotisobmsttempSerahanTGN.size()>0)
+			{
+				myLogger.info("listnotisobmsttempSerahanTGN===="+listnotisobmsttempSerahanTGN.size());
+				for(int i=0; i < 1; i++)
+				{
+					myLogger.info("============masuk====");
+					Hashtable<String,String> h1 = (Hashtable<String,String>) listnotisobmsttempSerahanTGN.get(i);
+					id_notisobmsttemp = h1.get("ID_NOTISOBMST").toString();			
+					JENIS_SERAH =  h1.get("JENIS_SERAH").toString();	
+					ID_OB =  h1.get("ID_OB").toString();	
+					Tblppknotisobmst_insert( id_perbicaraan, id_notisobmsttemp,"byhand");
+					
+				}
+			}
+			
+		}
+
+	}// close try
+	finally {
+		if (db != null)
+			db.close();
+		
+		
+	}// close finally
+
+}// close 
+
+public static void deleteNOTISPERBICARAAN(String ID_PERBICARAAN) throws Exception {
+
+	Db db = null;
+	String sql = "";
+
+	try {
+
+		db = new Db();
+		Statement stmt = db.getStatement();
+		
+		sql = "DELETE FROM TBLPPKNOTISPERBICARAAN WHERE ID_PERBICARAAN = '"+ ID_PERBICARAAN + "'";
+		stmt.executeUpdate(sql);
+		
+
+	} finally {
+		if (db != null)
+			db.close();
+	}
+
+}
+
+
+public static void Tblppknotisobmst_insert(String id_perbicaraan,String id_notisobmsttemp, String jenisSerah) throws Exception {
+	Db db = null;
+	//String userId = session.getAttribute("_ekptg_user_id").toString();
+	String sql = "";
+	
+	String sql3 = "";
+	String sql4 = "";
+	String id_notisobmst = "";
+
+	try {
+		
+		db = new Db();
+		Statement stmt = db.getStatement();
+		Statement stmtA = db.getStatement();
+		Statement stmtS = db.getStatement();
+		Statement stmtB = db.getStatement();
+		SQLRenderer r = new SQLRenderer();
+		
+		sql = "INSERT INTO TBLPPKNOTISOBMST (ID_NOTISOBMST,  BIL,  TARIKH_SERAHAN,  STATUS_SERAH   , " +
+				 " JENIS_SERAH ,  STATUS_AKUAN_SUMPAH,  CATATAN,  NAMA_PENGHANTAR_NOTIS ,  NO_SURAT_DAFTAR     , ID_MASUK   , " +
+				 " TARIKH_MASUK  ,  ID_KEMASKINI ,  TARIKH_KEMASKINI,  ID_DB ,  ID_NOTISOBMSTLAMA , ID_PENGHANTARNOTIS  ,TARIKH_EMEL  , " +
+				 " EMEL , NAMA_PENGHANTAR_LAIN   )" +
+				 " SELECT ID_NOTISOBMST  ,BIL       , TARIKH_SERAHAN    ,  STATUS_SERAH   , JENIS_SERAH , STATUS_AKUAN_SUMPAH   , " +
+				 " CATATAN      , NAMA_PENGHANTAR_NOTIS , NO_SURAT_DAFTAR  , ID_MASUK   , TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI , ID_DB                  , " +
+				 " ID_NOTISOBMSTLAMA , ID_PENGHANTARNOTIS     , TARIKH_EMEL , EMEL ,  NAMA_PENGHANTAR_LAIN " +
+				" FROM TBLPPKNOTISOBMST_TEMP" +
+				" WHERE ID_NOTISOBMST = "+id_notisobmsttemp;
+		System.out.println("Tblppknotisobmst "+sql);
+		stmtA.executeUpdate(sql);
+		System.out.println("Tblppknotisobmst "+sql);
+		
+		
+		// insert data into TBLPPKNOTISPERBICARAAN	
+		
+		sql3 = "INSERT INTO TBLPPKNOTISPERBICARAAN (ID_NOTISPERBICARAAN  ," +
+				" ID_PERBICARAAN  , ID_NOTISOBMST , ID_MASUK , TARIKH_MASUK , ID_KEMASKINI , TARIKH_KEMASKINI,  ID_DB , FLAG_JENIS_NOTIS)" +
+				" SELECT ID_NOTISPERBICARAAN  , ID_PERBICARAAN  , ID_NOTISOBMST , ID_MASUK , TARIKH_MASUK , ID_KEMASKINI , TARIKH_KEMASKINI , ID_DB , FLAG_JENIS_NOTIS" +
+				" FROM TBLPPKNOTISPERBICARAAN_TEMP" +
+				" WHERE ID_NOTISOBMST = "+id_notisobmsttemp;
+		System.out.println("TBLPPKNOTISPERBICARAAN 1 "+sql3);
+		stmtS.executeUpdate(sql3);
+		System.out.println("TBLPPKNOTISPERBICARAAN 2 "+sql3);
+	
+		
+		// insert data into TBLPPKNOTISOBDTL	
+		
+		if(jenisSerah.equals("byhand"))
+		{
+		sql4 = "INSERT INTO TBLPPKNOTISOBDTL (ID_NOTISOBDTL ,ID_NOTISOBMST ,ID_OB ,NAMA_PENERIMA , NO_KP_BARU  ,ID_MASUK ,TARIKH_MASUK ," +
+				"ID_KEMASKINI, TARIKH_KEMASKINI , ID_DB, NO_KP_LAMA, NO_KP_LAIN)" +
+				" SELECT ID_NOTISOBDTL ,ID_NOTISOBMST ,ID_OB ,NAMA_PENERIMA , NO_KP_BARU  ,ID_MASUK ,TARIKH_MASUK ," +
+				" ID_KEMASKINI, TARIKH_KEMASKINI , ID_DB, NO_KP_LAMA, NO_KP_LAIN" +
+				" FROM TBLPPKNOTISOBDTL_TEMP" +
+				" WHERE ID_NOTISOBMST = "+id_notisobmsttemp;
+			System.out.println("TBLPPKNOTISOBDTL 1 "+sql4);
+			stmtB.executeUpdate(sql4);
+			System.out.println("TBLPPKNOTISOBDTL 1 "+sql4);
+		}
+	
+		if(jenisSerah.equals("byhand"))
+		{
+			stmtB.close();
+		}
+		stmtS.close();
+		stmtA.close();
+		stmt.close();
+		
+	} finally {
+		
+		
+		
+		if (db != null)
+			db.close();
+	}
+}
+
 
 }// close class
 

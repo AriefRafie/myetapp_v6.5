@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -38,11 +39,165 @@ public class FrmPLPMaklumatPermohonanData {
 	private Vector listTanahBerkaitan = null;
 	private Vector beanMaklumatPelan = null;
 	private Vector listPelan = null;
+	private Vector beanMaklumatLampiran = null;
+	private Vector listLampiran = null;
 	private static final Log log = LogFactory.getLog(FrmPLPMaklumatPermohonanData.class);
 
 	FrmPNWPopupSenaraiTanahData logicTanah = new FrmPNWPopupSenaraiTanahData();
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	
+	public void setMaklumatLampiran(String idDokumen) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			beanMaklumatLampiran = new Vector();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, JENIS_MIME FROM TBLPHPDOKUMEN WHERE ID_DOKUMEN = '"
+					+ idDokumen + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+				h.put("namaLampiran", rs.getString("NAMA_DOKUMEN") == null ? ""
+						: rs.getString("NAMA_DOKUMEN").toUpperCase());
+				h.put("catatanLampiran",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				h.put("jenisMime",
+						rs.getString("JENIS_MIME") == null ? "" : StringUtils.substringBefore(rs.getString("JENIS_MIME"), "/"));
+				beanMaklumatLampiran.addElement(h);
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void setSenaraiLampiran(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		try {
+			db = new Db();
+			listLampiran = new Vector();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN"
+					+ " WHERE ID_PERMOHONAN = '" + idPermohonan + "' AND FLAG_DOKUMEN = 'L'"
+					+ " AND ID_ULASANTEKNIKAL IS NULL AND ID_MESYUARAT IS NULL AND ID_PHPHAKMILIK IS NULL AND ID_PENAWARANKJP IS NULL";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int bil = 1;
+			int count = 0;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
+						: rs.getString("NAMA_DOKUMEN"));
+				h.put("catatan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				listLampiran.addElement(h);
+				bil++;
+				count++;
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void simpanKemaskiniLampiran(String idDokumen, String txtNamaLampiran,
+			String txtCatatan, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPDOKUMEN
+			r.update("ID_DOKUMEN", idDokumen);
+			r.add("NAMA_DOKUMEN", txtNamaLampiran);
+			r.add("CATATAN", txtCatatan);
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPDOKUMEN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
+					"FAIL [" + idDokumen + "] DIKEMASKINI");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void hapusLampiran(String idDokumen, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+
+			// TBLPHPDOKUMEN
+			SQLRenderer r = new SQLRenderer();
+			r.add("ID_DOKUMEN", idDokumen);
+
+			sql = r.getSQLDelete("TBLPHPDOKUMEN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610198", "4", null, session, "DEL",
+					"FAIL [" + idDokumen + "] DIHAPUSKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	
 	public void setMaklumatPelan(String idDokumen) throws Exception {
 		Db db = null;
@@ -2105,6 +2260,81 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
+	
+	public Vector getSenaraiSemak(String idPermohonan) throws Exception {
+
+		Db db = null;
+		String sql = "";
+		Vector senaraiSemak = new Vector();
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_RUJSENARAISEMAK, KETERANGAN,"
+					+ " CASE WHEN ID_RUJSENARAISEMAK IN (SELECT ID_RUJSENARAISEMAK FROM TBLPHPSENARAISEMAK WHERE ID_PERMOHONAN = '" + idPermohonan + "')"
+					+ " THEN 'Y' END AS FLAG"
+					+ " FROM TBLPHPRUJSENARAISEMAK"
+					+ " WHERE FLAG_AKTIF = 'Y' AND ID_URUSAN = 6";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idSenaraiSemak", rs.getString("ID_RUJSENARAISEMAK") == null ? "" : rs.getString("ID_RUJSENARAISEMAK"));
+				h.put("keterangan", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				h.put("flag", rs.getString("FLAG") == null ? "" : rs.getString("FLAG"));
+				senaraiSemak.addElement(h);
+			}
+
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+			} finally {
+			if (db != null)
+				db.close();
+		}
+	
+		return senaraiSemak;
+	}
+	
+	public void updateSenaraiSemak(String idPermohonan, String[] semaks, HttpSession session) throws Exception {
+		
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		Db db = new Db();
+		String sql = "";		
+		
+		try {
+			Connection conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r = new SQLRenderer();
+			
+			r.add("ID_PERMOHONAN", idPermohonan);
+			sql = r.getSQLDelete("TBLPHPSENARAISEMAK");
+			stmt.executeUpdate(sql);
+			
+			for (int i = 0; i < semaks.length; i++) {
+			 	r = new SQLRenderer();
+				long ID_SENARAISEMAK = DB.getNextID("TBLPHPSENARAISEMAK_SEQ");
+				r.add("ID_SENARAISEMAK", ID_SENARAISEMAK);
+				r.add("ID_PERMOHONAN", idPermohonan);
+				r.add("ID_RUJSENARAISEMAK", semaks[i]);
+				r.add("ID_MASUK", userId);
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+				sql = r.getSQLInsert("TBLPHPSENARAISEMAK");
+				stmt.executeUpdate(sql);
+			}
+			conn.commit();
+			
+			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
+					"FAIL PELEPASAN [" + idPermohonan + "] DIKEMASKINI");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void doHapus(String idPermohonan, String idHakmilikPermohonan, HttpSession session)
 			throws Exception {
@@ -2148,75 +2378,7 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-
-	public Vector getBeanMaklumatPelepasan() {
-		return beanMaklumatPelepasan;
-	}
-
-	public void setBeanMaklumatPelepasan(Vector beanMaklumatPelepasan) {
-		this.beanMaklumatPelepasan = beanMaklumatPelepasan;
-	}
-
-	public Vector getBeanMaklumatPemohon() {
-		return beanMaklumatPemohon;
-	}
-
-	public void setBeanMaklumatPemohon(Vector beanMaklumatPemohon) {
-		this.beanMaklumatPemohon = beanMaklumatPemohon;
-	}
-
-	public Vector getBeanMaklumatPejabat() {
-		return beanMaklumatPejabat;
-	}
-
-	public Vector getBeanMaklumatAgensi() {
-		return beanMaklumatAgensi;
-	}
-
-	public void setBeanMaklumatPejabat(Vector beanMaklumatPejabat) {
-		this.beanMaklumatPejabat = beanMaklumatPejabat;
-	}
-
-	public Vector getListTanahGanti() {
-		return listTanahGanti;
-	}
-
-	public void setListTanahGanti(Vector listTanahGanti) {
-		this.listTanahGanti = listTanahGanti;
-	}
-
-	public Vector getBeanMaklumatTanahGanti() {
-		return beanMaklumatTanahGanti;
-	}
-
-	public void setBeanMaklumatTanahGanti(Vector beanMaklumatTanahGanti) {
-		this.beanMaklumatTanahGanti = beanMaklumatTanahGanti;
-	}
-
-	public Vector getListTanahBerkaitan() {
-		return listTanahBerkaitan;
-	}
-
-	public void setListTanahBerkaitan(Vector listTanahBerkaitan) {
-		this.listTanahBerkaitan = listTanahBerkaitan;
-	}
-
-	public Vector getBeanMaklumatPelan() {
-		return beanMaklumatPelan;
-	}
-
-	public void setBeanMaklumatPelan(Vector beanMaklumatPelan) {
-		this.beanMaklumatPelan = beanMaklumatPelan;
-	}
-
-	public Vector getListPelan() {
-		return listPelan;
-	}
-
-	public void setListPelan(Vector listPelan) {
-		this.listPelan = listPelan;
-	}
-
+	
 	public void simpanDaftarHakmilikBaru(String idPermohonan,
 			String idHakmilikAgensi, String idHakmilikSementara,
 			HttpSession session) throws Exception {
@@ -2321,4 +2483,89 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
+
+	public Vector getBeanMaklumatPelepasan() {
+		return beanMaklumatPelepasan;
+	}
+
+	public void setBeanMaklumatPelepasan(Vector beanMaklumatPelepasan) {
+		this.beanMaklumatPelepasan = beanMaklumatPelepasan;
+	}
+
+	public Vector getBeanMaklumatPemohon() {
+		return beanMaklumatPemohon;
+	}
+
+	public void setBeanMaklumatPemohon(Vector beanMaklumatPemohon) {
+		this.beanMaklumatPemohon = beanMaklumatPemohon;
+	}
+
+	public Vector getBeanMaklumatPejabat() {
+		return beanMaklumatPejabat;
+	}
+
+	public Vector getBeanMaklumatAgensi() {
+		return beanMaklumatAgensi;
+	}
+
+	public void setBeanMaklumatPejabat(Vector beanMaklumatPejabat) {
+		this.beanMaklumatPejabat = beanMaklumatPejabat;
+	}
+
+	public Vector getListTanahGanti() {
+		return listTanahGanti;
+	}
+
+	public void setListTanahGanti(Vector listTanahGanti) {
+		this.listTanahGanti = listTanahGanti;
+	}
+
+	public Vector getBeanMaklumatTanahGanti() {
+		return beanMaklumatTanahGanti;
+	}
+
+	public void setBeanMaklumatTanahGanti(Vector beanMaklumatTanahGanti) {
+		this.beanMaklumatTanahGanti = beanMaklumatTanahGanti;
+	}
+
+	public Vector getListTanahBerkaitan() {
+		return listTanahBerkaitan;
+	}
+
+	public void setListTanahBerkaitan(Vector listTanahBerkaitan) {
+		this.listTanahBerkaitan = listTanahBerkaitan;
+	}
+
+	public Vector getBeanMaklumatPelan() {
+		return beanMaklumatPelan;
+	}
+
+	public void setBeanMaklumatPelan(Vector beanMaklumatPelan) {
+		this.beanMaklumatPelan = beanMaklumatPelan;
+	}
+
+	public Vector getListPelan() {
+		return listPelan;
+	}
+
+	public void setListPelan(Vector listPelan) {
+		this.listPelan = listPelan;
+	}
+	
+	public Vector getListLampiran() {
+		return listLampiran;
+	}
+
+	public void setListLampiran(Vector listLampiran) {
+		this.listLampiran = listLampiran;
+	}
+
+	public Vector getBeanMaklumatLampiran() {
+		return beanMaklumatLampiran;
+	}
+
+	public void setBeanMaklumatLampiran(Vector beanMaklumatLampiran) {
+		this.beanMaklumatLampiran = beanMaklumatLampiran;
+	}
+
 }

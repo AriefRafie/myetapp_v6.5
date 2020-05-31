@@ -1,4 +1,5 @@
 <!-- ::::: $!headerppk -->
+
 <style type="text/css">
 
 
@@ -157,11 +158,11 @@ $!headerppk.message
           
     -->      
             </td>
-            <!-- arief add button LOG TUGASAN FAIL 8/4/2020 OPEN -->
+            <!-- arief add button LOG TUGASAN FAIL 8/4/2020 OPEN 
             <td>
             <input name="cmdLogTugasanFail" id="cmdLogTugasanFail" value="LOG TUGASAN FAIL" type="button" onClick="javascript:viewLogTugasanFail()">
             </td>
-            <!-- arief add button LOG TUGASAN FAIL 8/4/2020 CLOSE -->
+            arief add button LOG TUGASAN FAIL 8/4/2020 CLOSE -->
         </tr>
         <tr> 
           <td  style="text-transform:uppercase;" valign="top"><div align="right">Negeri</div></td>
@@ -249,8 +250,9 @@ $!headerppk.message
           <td width="1%" style="text-transform:uppercase;" valign="top" >:</td>
           <td width="79%" style="text-transform:uppercase;" valign="top" ><font color="blue">$!headerppk.NAMA_STATUS</font>
           <input type="hidden" name="id_status_semasa" id="id_status_semasa"  value="$!headerppk.ID_STATUS"/>
-          <!-- open razman add untuk bicara online -->
+           <!-- open razman add untuk bicara online -->
           #if($!headerppk.ID_STATUS == "21" ||
+          $!headerppk.ID_STATUS == "18" ||
           $!headerppk.ID_STATUS == "41" ||
           $!headerppk.ID_STATUS == "25" ||
           $!headerppk.ID_STATUS == "64" ||
@@ -273,8 +275,8 @@ $!headerppk.message
         <!--
 fail2 yang sepatutnya tidak boleh kemaskini
 SELECT * FROM TBLRUJSTATUS WHERE ID_STATUS IN ('47','70','169','50','21','999')
--->
-        
+
+       headerppk.ID_STATUS =  $!headerppk.ID_STATUS -->
         #if($!headerppk.ID_STATUS == "21" || $!headerppk.ID_STATUS == "47"  || $!headerppk.ID_STATUS == "70" || $!headerppk.ID_STATUS == "169" || $!headerppk.ID_STATUS == "50" || $!headerppk.ID_STATUS == "21" || $!headerppk.ID_STATUS == "999")
         	
             #if($!headerppk.FLAG_KEBENARAN_EDIT == "1") 
@@ -304,13 +306,13 @@ SELECT * FROM TBLRUJSTATUS WHERE ID_STATUS IN ('47','70','169','50','21','999')
             #set($flag_kemaskini_selesai = "no")
             
             #end
-     
+    
      
        #if($!headerppk.ID_STATUS == "21" || $!headerppk.ID_STATUS == "47" || $!headerppk.ID_STATUS == "70" || $!headerppk.ID_STATUS == "169" || $!headerppk.ID_STATUS == "50" || $!headerppk.ID_STATUS == "999")
        <tr>
           <td  style="text-transform:uppercase;" valign="top" ><div align="right">Status Pengemaskinian Fail</div></td>
           <td style="text-transform:uppercase;" valign="top" >:</td>
-          <td  valign="top" >          
+          <td  valign="top" >   
            #if($!role == "userSemakanPerintah") 
            <font color="red"><b>Tidak Dibenarkan</b></font> 
            #else
@@ -399,7 +401,7 @@ SELECT * FROM TBLRUJSTATUS WHERE ID_STATUS IN ('47','70','169','50','21','999')
           <td  valign="top" >
           <font style="text-transform:uppercase;" color="blue">$!headerppk.NAMA_PEMOHON</font>
            <br />
-           #if (($hurufH != "H") && ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && $!headerppk.ID_STATUS != "152")
+           #if (($hurufH != "H") && ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!headerppk.ID_STATUS != "152")&& ($!headerppk.ID_STATUS != "21")&& ($!headerppk.ID_STATUS != "175")&& ($!headerppk.ID_STATUS != "177"))
           	
           
            Penggantian pemohon boleh dibuat  
@@ -502,7 +504,7 @@ SELECT * FROM TBLRUJSTATUS WHERE ID_STATUS IN ('47','70','169','50','21','999')
 <!-- getflag  -->
 
 <br>
-
+<!--headerppk.CAPAIAN_FAIL_UNIT_LUAR = $!headerppk.CAPAIAN_FAIL_UNIT_LUAR -->
 #if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "Y")
 	
 	#set($flag_kemaskini_selesai = "no")
@@ -521,8 +523,8 @@ SELECT * FROM TBLRUJSTATUS WHERE ID_STATUS IN ('47','70','169','50','21','999')
 
 
 
-<!--
-:::::::::::::::: $!flag_kemaskini_selesai
+
+<!--:::::::::::::::: $!flag_kemaskini_selesai
 <br />
 :::::::::::::::: $!headerppk.STATUS_EDIT_USER.CHECK_EDIT
 -->
@@ -638,6 +640,12 @@ document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_port
 //document.${formName}.txtNoFailSub.value = txtNoFailSub;
 document.${formName}.submit();
 }
+
+
+
+
+
+
 </script>
 
 #end
@@ -663,16 +671,22 @@ var dateKPISek8 = new Date('2017', '7', '1');
 		var d1 = parseInt(temp_tarikh.substring(0,2),10);
 		var m1 = parseInt(temp_tarikh.substring(3,5),10)-1;
 		var y1 = parseInt(temp_tarikh.substring(6,10),10);
-		var myDate1 = new Date(y1, m1, d1);
+		var myDate1 = new Date(y1, m1, d1, 23, 59, 59);
 		var tahum_semasa = myDate1.getFullYear();
 		if(parseInt(tahum_semasa)>=2013)
 		{
 		flag_kpi_baru = "yes";	
 		}	
 		var waktusemasa = new Date();
+		var daySemasa = waktusemasa.getDate();
+		var monthSemasa = waktusemasa.getMonth();
+		var yearSemasa = waktusemasa.getFullYear();
+		waktusemasa = new Date(yearSemasa, monthSemasa, daySemasa , 23, 59, 59);
+		//alert("waktusemasa = "+waktusemasa);
 		var ONE_DAY = 1000 * 60 * 60 * 24;
 		var difference_ms = Math.abs(waktusemasa - myDate1);
 		beze_hari = Math.round(difference_ms/ONE_DAY);
+		//alert("beze_hari2 = "+beze_hari);
 	}
 	
 	if (temp_tarikh2 != "" )
@@ -681,13 +695,17 @@ var dateKPISek8 = new Date('2017', '7', '1');
 		var d2 = parseInt(temp_tarikh2.substring(0,2),10);
 		var m2 = parseInt(temp_tarikh2.substring(3,5),10)-1;
 		var y2 = parseInt(temp_tarikh2.substring(6,10),10);
-		var myDate2 = new Date(y2, m2, d2);
+		var myDate2 = new Date(y2, m2, d2, 23, 59, 59);
 		var tahum_semasa = myDate2.getFullYear();
 		if(parseInt(tahum_semasa)>=2013)
 		{
 		flag_kpi_baru = "yes";	
 		}	
 		var waktusemasa = new Date();
+		var daySemasa = waktusemasa.getDate();
+		var monthSemasa = waktusemasa.getMonth();
+		var yearSemasa = waktusemasa.getFullYear();
+		waktusemasa = new Date(yearSemasa, monthSemasa, daySemasa , 23, 59, 59);
 		var ONE_DAY = 1000 * 60 * 60 * 24;
 		var difference_ms = Math.abs(waktusemasa - myDate2);
 		beze_hari = Math.round(difference_ms/ONE_DAY);
@@ -719,15 +737,7 @@ if('$!headerppk.SEKSYEN' == '8')
 		var days = 165;
 		}
 	
-	
-	//if(flag_kpi_baru == "yes")
-	//{
-	//	var days = 135;
-	//}
-	//else
-	//{
-	//	var days = 165;
-	//}
+
 }
 if('$!headerppk.SEKSYEN' == '17')
 {
@@ -768,7 +778,7 @@ var currentHari = currentTime.getDate();
 var currentBulan = currentTime.getMonth()+1;
 var currentTahun = currentTime.getFullYear();
 //alert ("currentTime = "+currentTime);
-var myDate = new Date(yr1, mon1, dt1);
+var myDate = new Date(yr1, mon1, dt1, 23, 59, 59);
 var day = myDate.getDate();
 var month = myDate.getMonth()+1;
 var year = myDate.getFullYear();
@@ -799,7 +809,7 @@ if (day2 >0)
 {
 if(currentTime>myDate2)
 {	 
-	beze_hari = beze_hari-1;
+	beze_hari = beze_hari-0;
 	var days3 = days-beze_hari;
 	if((id_status_semasa=='21' || id_status_semasa=='152' || id_status_semasa=='47' || id_status_semasa=='70') && (days3 == '0'))
 	{
@@ -839,10 +849,15 @@ else
 }
 }
 else
-	{
+	{  
+	beze_hari = beze_hari-0;
+	//alert("currentTime = "+currentTime);
+	//alert("myDate = "+myDate);
+	var days3 = days-beze_hari;
 		if(currentTime>myDate)
-		{   beze_hari = beze_hari-1;
-			var days3 = days-beze_hari;
+			
+		{   
+			
 			
 			if((id_status_semasa=='21' || id_status_semasa=='152' || id_status_semasa=='47' || id_status_semasa=='70') && (days3 == '0'))
 			{
@@ -859,17 +874,25 @@ else
 				}
 			else
 			{
-				//alert("id_status2 = " + id_status_semasa );
+				//alert("Read here" );
+				//alert("beze_hari = " + beze_hari );
+				
 			$jquery("#headerppk_kpi_ppk").html("<span  style='color:red'><blink><b>"+tarikhJangkaTerima+" <br>"+((days-beze_hari)*-1)+" hari lewat </b></blink></span>");	
 			}
 		}
 		else
 		{
+			//alert ("else");
 			if(id_status_semasa=='21' || id_status_semasa=='152' || id_status_semasa=='47' || id_status_semasa=='70')
 			{
 				//alert("id_status3 = " + id_status_semasa );
 			$jquery("#headerppk_kpi_ppk").html("<span  style='color:blue'><b>"+tarikhJangkaTerima+"</b></span>");
-			}else
+			}
+			else if (days3 == '0')
+			{
+			$jquery("#headerppk_kpi_ppk").html("<span  style='color:blue'><b>"+tarikhJangkaTerima+"</b></span>");
+			}
+			else
 			{
 				//alert("id_status4 = " + id_status_semasa );
 			$jquery("#headerppk_kpi_ppk").html("<span  style='color:blue'><b>"+tarikhJangkaTerima+" <br>"+(days-beze_hari)+" hari lagi</b></span>");	
@@ -908,13 +931,17 @@ var dateKPISek8 = new Date('2017', '7', '1');
 		var d1 = parseInt(temp_tarikh.substring(0,2),10);
 		var m1 = parseInt(temp_tarikh.substring(3,5),10)-1;
 		var y1 = parseInt(temp_tarikh.substring(6,10),10);
-			var myDate1 = new Date(y1, m1, d1);
+		var myDate1 = new Date(y1, m1, d1, 23, 59, 59);
 			var tahum_semasa = myDate1.getFullYear();
 			if(parseInt(tahum_semasa)>=2013)
 			{
 				flag_kpi_baru = "yes";	
 			}	
 			var waktusemasa = new Date();
+			var daySemasa = waktusemasa.getDate();
+			var monthSemasa = waktusemasa.getMonth();
+			var yearSemasa = waktusemasa.getFullYear();
+			waktusemasa = new Date(yearSemasa, monthSemasa, daySemasa , 23, 59, 59);
 			var ONE_DAY = 1000 * 60 * 60 * 24;
 			var difference_ms = Math.abs(waktusemasa - myDate1);
 			beze_hari = Math.round(difference_ms/ONE_DAY);
@@ -925,14 +952,18 @@ var dateKPISek8 = new Date('2017', '7', '1');
 		var d2 = parseInt(temp_tarikh2.substring(0,2),10);
 		var m2 = parseInt(temp_tarikh2.substring(3,5),10)-1;
 		var y2 = parseInt(temp_tarikh2.substring(6,10),10);
-		
-			var myDate2 = new Date(y2, m2, d2);
+		var myDate2 = new Date(y2, m2, d2, 23, 59, 59);
+			//var myDate2 = new Date(y2, m2, d2);
 			var tahum_semasa = myDate2.getFullYear();
 			if(parseInt(tahum_semasa)>=2013)
 			{
 				flag_kpi_baru = "yes";	
 			}	
 			var waktusemasa = new Date();
+			var daySemasa = waktusemasa.getDate();
+			var monthSemasa = waktusemasa.getMonth();
+			var yearSemasa = waktusemasa.getFullYear();
+			waktusemasa = new Date(yearSemasa, monthSemasa, daySemasa , 23, 59, 59);
 			var ONE_DAY = 1000 * 60 * 60 * 24;
 			var difference_ms = Math.abs(waktusemasa - myDate2);
 			beze_hari = Math.round(difference_ms/ONE_DAY);
@@ -1041,7 +1072,7 @@ if (day2 >0)
 {
 if(currentTime>myDate2)
 {
-	beze_hari = beze_hari-1;
+	beze_hari = beze_hari-0;
 	var days3 = days-beze_hari;
 	if((id_status_semasa=='21' || id_status_semasa=='152' || id_status_semasa=='47' || id_status_semasa=='70') && (days3 == '0'))
 	{
@@ -1077,12 +1108,12 @@ else
 }
 else
 	{
-
+	beze_hari = beze_hari-0;
+	var days3 = days-beze_hari;
 
 		if(currentTime>myDate)
 		{
-			beze_hari = beze_hari-1;
-			var days3 = days-beze_hari;
+			
 			//alert("id_status6b = " + id_status_semasa );
 			//alert("days3 = " + days3 );
 			if((id_status_semasa=='21' || id_status_semasa=='152' || id_status_semasa=='47' || id_status_semasa=='70') && (days3 == '0'))
@@ -1158,19 +1189,64 @@ function arkibWindow(noFail){
 	//razman add
 	$jquery(document).ready(function () {
 		
-		//alert("x");		
-		if ($jquery('#idPerbicaraan').length == 0) {
+		//alert("idPerbicaraan : "+ $jquery('input[name="idPerbicaraan"]').length+" id_perbicaraan : "+$jquery('input[name="id_perbicaraan"]').length);
+		
+				
+		if ($jquery('input[name="idPerbicaraan"]').length == 0 && $jquery('input[name="id_perbicaraan"]').length == 0) {
 		   // alert("xada");			
 			document.getElementById('linkBicaraOnline').style.display = "none";
 		}
 		else
 		{
-			//alert("ada");
-			document.getElementById('linkBicaraOnline').style.display = "";
+			//alert("ada : "+'$!headerppk.USER_ROLE');
+			if('$!headerppk.USER_ROLE' == "adminppk")
+			{
+				
+				
+				var id_perbicaraan = "";
+				
+				if('$!flag_jenis_vm' == "vtemplate")
+				{
+					if ($jquery('input[name="idPerbicaraan"]').length > 0)
+					{
+						id_perbicaraan = document.f1.idPerbicaraan.value;
+					}
+					else if ($jquery('input[name="id_perbicaraan"]').length > 0)
+					{
+						id_perbicaraan = document.f1.id_perbicaraan.value;
+					}
+				}
+				else
+				{
+					if ($jquery('input[name="idPerbicaraan"]').length > 0)
+					{
+						id_perbicaraan = document.${formName}.idPerbicaraan.value;
+					}
+					else if ($jquery('input[name="id_perbicaraan"]').length > 0)
+					{
+						id_perbicaraan = document.${formName}.id_perbicaraan.value;
+					}
+				}	
+				
+				//alert("id_perbicaraan :::: "+id_perbicaraan);		
+				if(id_perbicaraan != "")
+				{
+					document.getElementById('linkBicaraOnline').style.display = "";
+				}
+				else
+				{
+					document.getElementById('linkBicaraOnline').style.display = "none";
+				}
+			}
+			else
+			{
+				document.getElementById('linkBicaraOnline').style.display = "none";
+			}
 		}
 	});
 	
 </script>
+
 <!--  arief add VIEW LOG TUGASAN FAIL OPEN-->
 <script>
 function viewLogTugasanFail()
@@ -1184,3 +1260,5 @@ function viewLogTugasanFail()
 }
 </script>
 <!--  arief add VIEW LOG TUGASAN FAIL CLOSE-->
+
+

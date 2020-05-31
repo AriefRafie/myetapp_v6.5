@@ -469,7 +469,7 @@ public class HTPStatusBean implements IHTPStatus {
 	    	//sql += " AND stf.aktif = 1 ";
 	    	sql += " AND STF.ID_PERMOHONAN = '" + idPermohonan + "'";
 	    	sql += " AND STF.ID_FAIL = '" + idFail + "'";
-	    	//myLog.info("getInfoSelesaiPermohonan 2:sql="+sql);
+	    	myLog.info("getInfoStatusPermohonanFail 2:sql="+sql);
 	    	ResultSet rs = stmt.executeQuery(sql);	      	
 			 
 	    	while (rs.next()) {
@@ -483,7 +483,7 @@ public class HTPStatusBean implements IHTPStatus {
 	    		h.put("no_fail", rs.getString("no_fail")==null?"":rs.getString("no_fail"));
 	    		h.put("catatan", Utils.isNull(rs.getString("CATATAN")));
 	    		h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
-	    		h.put("tarikhSelesai", rs.getString("TARIKH_SELESAI").equals("01/01/1900")?"":Utils.isNull(rs.getString("TARIKH_SELESAI")));
+	    		//h.put("tarikhSelesai", rs.getString("TARIKH_SELESAI").equals("01/01/1900")?"":Utils.isNull(rs.getString("TARIKH_SELESAI")));
 
 	    	}	    	  
 	    	return h;
@@ -755,7 +755,7 @@ public class HTPStatusBean implements IHTPStatus {
 			r.add("id_kemaskini", sBaru.getIdKemaskini());
 			r.add("tarikh_kemaskini", r.unquote("sysdate")); 
 			sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
-			//myLog.info(sql);
+			myLog.info(sql);
 			stmt.executeUpdate(sql);
 			
 //			IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");		  
@@ -826,7 +826,7 @@ public class HTPStatusBean implements IHTPStatus {
 			r.add("id_kemaskini", String.valueOf(susf.getIdMasuk()));
 			r.add("tarikh_kemaskini", r.unquote(susf.getTarikhKemaskiniStr()));
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
-			//myLog.info(sql);
+			myLog.info(sql);
 		    stmt.executeUpdate(sql);
 		    conn.commit();
 	
@@ -847,7 +847,7 @@ public class HTPStatusBean implements IHTPStatus {
 		
 		}finally{
 			if (db != null) db.close();
-			if (conn != null) conn.close();
+//			if (conn != null) conn.close();
 	
 		}		
 		return idSuburusanstatusfail;

@@ -75,7 +75,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		HttpSession session = request.getSession();
 		String doPost = (String)session.getAttribute("doPost");
     	String vm = "";
-    	
+    	String userRole = String.valueOf(session.getAttribute("myrole"));
     	headerppk_baru_default();
 
     	Vector list = new Vector();
@@ -1198,8 +1198,8 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 				//idUnitPsk = Long.parseLong(h.get("id_unitpsk").toString());
 			}
 			context.put("dataPerbicaraan", h);
-			context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",idUnitPsk,null));
-
+			//context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",idUnitPsk,null));
+			context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",idUnitPsk,"disabled"));
 		    //get info via id_perbicaraan
     		FrmPrmhnnSek8KptsanBicaraData.setViewTangguhList(idpermohonan, id_perbicaraan);
 		    getrecord_perintah = FrmPrmhnnSek8KptsanBicaraData.getViewTangguh();
@@ -7420,8 +7420,10 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     	this.context.put("flagFromSenaraiFailSek8", flagFromSenaraiFailSek8);
     	this.context.put("flagFromSenaraiPermohonanSek8", flagFromSenaraiPermohonanSek8);
     	this.context.put("flagForView", flagForView);
-        //Template template = this.engine.getTemplate(vm);
+        
+		//Template template = this.engine.getTemplate(vm);
         //return template;
+    	this.context.put("userRole", userRole);
     	System.out.println("skrin vm : "+vm);
     	return vm;
 

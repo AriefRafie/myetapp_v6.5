@@ -930,11 +930,11 @@
 	<table width="100%" border="0">
         <tr align="center">
           <td>
-            #if($mode=="view")
+            ##if($mode=="view")
             <input type="button" name="cmdCapaianETanah" value ="Capaian Maklumat Hakmilik" onClick="javascript:viewEtanah('$!id_hakmilik')">
             <input type="button" name="cmdETanah" value ="Semakan Maklumat Hakmilik" onClick="javascript:checkWSHM('$!id_hakmilik')">
             <input type="button" name="cmdSPTB" value ="Semakan Maklumat Geran" onClick="javascript:viewSPTB('$!id_fail','$!id_hakmilik','1')">
-			#end
+			##end
           </td>
         </tr>
 		<tr align="center">
@@ -1486,7 +1486,7 @@
 <table width="100%" border="0"><tr><td>&nbsp;</td></tr></table>  
  
 	<fieldset id="bottom">
-	<legend><strong>Senarai Maklumat Lot  
+	<legend><strong>Senarai Maklumat Lot
     #if($mode=="view")
     <input type="button" name="cmdTambah" value="Tambah Hakmilik" onClick="javascript:tambahHM('$!flag_subjaket');">    
     #end
@@ -1552,20 +1552,22 @@
 
 <!-- do post -->
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-
-
-
-
-
-
-
-
 <input type="hidden" name="subminor_command" id="subminor_command" />
-  <input type="hidden" name="location" id="location" />
-  <input type="hidden" name="point" id="point" />
-   <input type="hidden" name="id_hakmilikpb" id="id_hakmilikpb" value="$!id_hakmilikpb" />
+<input type="hidden" name="location" id="location" />
+<input type="hidden" name="point" id="point" />
+<input type="hidden" name="id_hakmilikpb" id="id_hakmilikpb" value="$!id_hakmilikpb" />
 
 <script>
+	//Skrin Maklumat Tanah
+	function semakanHakmilikeTanah(modul,idPermohonan) {
+		var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul="+modul+"&idPermohonan="+idPermohonan;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	
+	}
 
 function viewEtanah(id_hakmilik) {
 // 	document.${formName}.ScreenLocation.value = "maklumat_pb";

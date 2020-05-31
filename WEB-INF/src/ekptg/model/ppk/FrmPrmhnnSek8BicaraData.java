@@ -1095,7 +1095,7 @@ public class FrmPrmhnnSek8BicaraData {
 					//sql += "AND sstf.aktif = 1 ";
 					sql += "AND p.id_Permohonan = '" +idpermohonan+ "' " ;					
 					
-					//System.out.println("[CHECKLIST HEADER]:"+sql);
+					System.out.println("[CHECKLIST HEADER]:"+sql);
 					ResultSet rs = stmt.executeQuery(sql);
 				    Hashtable h;
 					
@@ -1138,10 +1138,15 @@ public class FrmPrmhnnSek8BicaraData {
 				    	}else{
 				    		h.put("pmNama_negeri",rs.getString(3));
 				    	}
-			    	  if(rs.getString(2) == null || rs.getString(2) ==""){
+			    	  /*if(rs.getString(2) == null || rs.getString(2) ==""){
 				    		h.put("pmidnegeri","0");
 				    	}else{
 				    		h.put("pmidnegeri",rs.getString(2));
+				    	}*/
+			    	  if(rs.getString(42) == null || rs.getString(42) ==""){
+				    		h.put("pmidnegeri","0");
+				    	}else{
+				    		h.put("pmidnegeri",rs.getString(42));
 				    	}
 			    	  h.put("id_permohonansimati", rs.getString("id_permohonansimati")==null?"":rs.getString("id_permohonansimati"));
 			    	  

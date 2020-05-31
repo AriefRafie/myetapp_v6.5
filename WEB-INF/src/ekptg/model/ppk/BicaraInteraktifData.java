@@ -57,12 +57,8 @@ public class BicaraInteraktifData {
       return this.object;
     }
 
-	public String queryPerbicaraan(HttpSession session
-		,String id_permohonan
-		,String user_id
-		,String id_jawatan
-		,String id_negeri
-		,String flagCari,Db db) throws Exception{
+	public String queryPerbicaraan(HttpSession session, String id_permohonan,String user_id, String id_jawatan, String id_negeri, String flagCari,Db db) throws Exception
+	{
 		//PEGAWAI BICARA
 		//GET ID_PEGAWAI BY LOGIN
 		user_id = (String)session.getAttribute("_ekptg_user_id");
@@ -230,7 +226,8 @@ public class BicaraInteraktifData {
 										" ) ";
 						}						
 					}
-					else{
+					else
+					{
 						//sql += daerahJagaan;
 						//comment sementara
 						sql += " AND ( " +
@@ -245,11 +242,13 @@ public class BicaraInteraktifData {
 				//check kkp
 				
 				}
-							
+				
+				
+				
 		return sql;
-	
 	}
-		
+	
+	
 	@SuppressWarnings("unchecked")
 	public String jenisTransaction(HttpSession session, String NAMA_TABLE, String NAMA_FIELD_PK, 
 			String SKRIN_NAME, String VALUE_FIELD_PK, String ID_PERMOHONANSIMATI, String ID_PERBICARAAN, Db db)throws Exception {
@@ -346,16 +345,6 @@ public class BicaraInteraktifData {
 				db1 = new Db();
 			}
 			stmt = db1.getStatement();			
-			if(username.substring(1, 7).contentEquals("upport")){
-				sql += " SELECT "+ 
-				"(rtrim (xmlagg (xmlelement (e, RU.ID_UNITPSK || ','  )).extract ('//text()')) || 0) AS LIST_ID_UNITPSK "+
-				"FROM TBLPPKRUJUNIT RU, USERS_INTERNAL UI "+
-				"WHERE "+
-				"RU.ID_JKPTG=UI.ID_PEJABATJKPTG "+
-				"AND UI.USER_ID= "+USER_ID_SYSTEM +" "+
-				"GROUP BY UI.ID_PEJABATJKPTG";
-	
-			}else{
 			sql += " SELECT LIST_ID_UNITPSK || (SELECT ',' || (rtrim (xmlagg (xmlelement (e, ID_UNITPSK || ','  )).extract ('//text()'))|| 0) FROM TBLPPKRUJUNIT  WHERE USER_ID = '"+USER_ID_SYSTEM+"'  GROUP BY USER_ID) AS LIST_ID_UNITPSK FROM ( " +
 					" SELECT (rtrim (xmlagg (xmlelement (e, ID_UNITPSK || ','  )).extract ('//text()')) || 0) " +
 				  // " || (SELECT ',' || (rtrim (xmlagg (xmlelement (e, ID_UNITPSK || ','  )).extract ('//text()'))|| 0) FROM TBLPPKRUJUNIT " +
@@ -364,7 +353,6 @@ public class BicaraInteraktifData {
 				   " AS LIST_ID_UNITPSK FROM ( "+
 				   " SELECT ID_UNITPSK,NAMA_PEGAWAI, UTL_MATCH.edit_distance(UPPER(NAMA_PEGAWAI),UPPER('"+username+"')) TOT_BEZA "+
 				   " FROM TBLPPKRUJUNIT ) WHERE  TOT_BEZA < 4 ) ";			
-			}
 			myLogger.info(" BICARA INTERAKTIF : SQL getDetailPegawaiList :"+ sql);			
 			rs = stmt.executeQuery(sql);
 			
@@ -5000,7 +4988,7 @@ public class BicaraInteraktifData {
 			String return_id_bikehadiran = "";
 			long id_utama = DB.getNextID(db1, "TBLPPKBORANGJDTL_SEQ");
 			r.add("ID_BORANGJDTL", id_utama);
-			r.add("ID_BORANGJ", id_perbicaraan);
+			r.add("ID_BORANGJ", ID_BORANGJ);
 			r.add("ID_OB", ID_OB);
 			r.add("ID_MASUK", USER_ID_SYSTEM);
 			r.add("TARIKH_MASUK", r.unquote("sysdate"));
@@ -7802,8 +7790,8 @@ public class BicaraInteraktifData {
 			        			(NAMA_OB != null ? NAMA_OB:"TIADA")
 			        			+ (JENIS_WARGA.equals("1") || JENIS_WARGA.equals("3")?(NO_KP_BARU!= null || NO_KP_LAMA != null 
 			        			|| NO_KP_LAIN != null?"<br>No. KP: "+ NO_KP :" "):"<br>No. Pasport: "+NO_KP):NAMA_OB)+
-			        			(ID_TARAFKPTG.equals("6")?"":"<br>Warganegara :"+WARGANEGARA)+
-			        			(STATUS_TADBIR.equals("Y")?"<br>adalah wakil kepada:":"<br>adalah pemegang amanah kepada:");
+			        			(ID_TARAFKPTG.equals("6")?"":"<br>Warganegara :-"+WARGANEGARA)+
+			        			(STATUS_TADBIR.equals("Y")?"<br>adalah wakil kepada:":"<br>s-");
 		        	}
 		        	else
 		        	{

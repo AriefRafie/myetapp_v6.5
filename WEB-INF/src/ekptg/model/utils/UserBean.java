@@ -104,7 +104,7 @@ public class UserBean implements IUserPegawai {
 		
 			sql = " SELECT UI.EMEL FROM USERS U, USERS_INTERNAL UI, USERS_KEMENTERIAN UK "
 				+ " WHERE U.USER_ID = UI.USER_ID AND U.USER_ID = UK.USER_ID "
-				+ " AND UI.ID_JAWATAN = '24' AND UI.FLAG_AKTIF = '1' AND UK.ID_KEMENTERIAN = "+idKementerian+"'";
+				+ " AND UI.ID_JAWATAN = '24' AND UI.FLAG_AKTIF = '1' AND UK.ID_KEMENTERIAN = '"+idKementerian+"'";
 			
 			myLog.info(" SQL listKementerianPenyedia :"+ sql);			
 			rs = stmt.executeQuery(sql);

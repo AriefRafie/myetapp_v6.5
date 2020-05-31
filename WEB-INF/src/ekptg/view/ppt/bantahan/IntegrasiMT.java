@@ -50,7 +50,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat sdfNaming = new SimpleDateFormat("yymmdd");
  	private IUtilHTMLPilihan iUtilPilihan = null;
- 	private IUtilHTMLPilihan iPilihan = null;
+// 	private IUtilHTMLPilihan iPilihan = null;
  	private ILampiran iLampiran = null;
 	private String sql = "";
 
@@ -84,7 +84,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 		myLog.info("submit = "+submit+",mode="+ ("mode"));
 
 		String socmt =""; 
-		String socPejabat =""; 
+//		String socPejabat =""; 
 
 		context.put("idBantahan", idBantahan);
 		context.put("idFail", idFail);
@@ -108,6 +108,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			bdata = (Hashtable<String,String>) list.get(0);
 			
 			jenisPembantah = String.valueOf(bdata.get("jenis_pembantah"));
+			myLog.info("Pembantah:"+jenisPembantah);
 			String id_bantahan = String.valueOf(bdata.get("id_bantahan"));
 			String idNegeriPer = String.valueOf(bdata.get("id_negeri"));
 			jenisRef = String.valueOf(bdata.get("id_jenispb")); //2=Syarikat, 10-Pertubuhan
@@ -123,8 +124,8 @@ public class IntegrasiMT extends AjaxBasedModule{
 				context.put("listDokumen_size", 0);
 			}
 			
-			Vector<Hashtable<String, Object>> vecMT 
-				= ekptg.helpers.DB.getMahkamahByNegeri(Long.parseLong(idNegeriPer));
+//			Vector<Hashtable<String, Object>> vecMT 
+//				= ekptg.helpers.DB.getMahkamahByNegeri(Long.parseLong(idNegeriPer));
 //			if(vecMT.isEmpty() || vecMT.size() > 1) {
 					socmt = getPilihan().Pilihan("socmt", "onchange = \'pilihMT()\'");
 		
@@ -387,7 +388,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 		}else if(submit.equals("getpejabat")){
 			String idPejabat = getParam("socPejabat");
 			
-			socPejabat = getPTGD().Pilihan("socPejabat", idPejabat,idPermohonan,"onchange = \'pilihPejabat()\'");
+//			socPejabat = getPTGD().Pilihan("socPejabat", idPejabat,idPermohonan,"onchange = \'pilihPejabat()\'");
 			PartyType partyType = MTRegManager.getPartyResponden(idPejabat);
 
 			setContextPejabat(partyType);
@@ -471,31 +472,6 @@ public class IntegrasiMT extends AjaxBasedModule{
 		return pendaftaran;
 		
 	}
-	
-	private IUtilHTMLPilihan getPilihan(){
-		if(iUtilPilihan == null){
-			iUtilPilihan = new UtilHTMLPilihanMT();
-		}
-		return iUtilPilihan;
-			
-	}
-	
-	private IUtilHTMLPilihan getPTGD(){
-		if(iPilihan == null){
-			iPilihan = new UtilHTMLPilihanPTGD();
-		}
-		return iPilihan;
-			
-	}
-	
-	private ILampiran getDoc(){
-		if(iLampiran == null){
-			iLampiran = new LampiranBean();
-		}
-		return iLampiran;
-			
-	}
-
 	private String getStateCode(int x){
 		String abbrev = "0";
 		switch (x) {
@@ -542,5 +518,30 @@ public class IntegrasiMT extends AjaxBasedModule{
 
 	}
 	
+	private IUtilHTMLPilihan getPilihan(){
+		if(iUtilPilihan == null){
+			iUtilPilihan = new UtilHTMLPilihanMT();
+		}
+		return iUtilPilihan;
+			
+	}
+//	
+//	private IUtilHTMLPilihan getPTGD(){
+//		if(iPilihan == null){
+//			iPilihan = new UtilHTMLPilihanPTGD();
+//		}
+//		return iPilihan;
+//			
+//	}
+	
+	private ILampiran getDoc(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+			
+	}
+
+
 	
 }

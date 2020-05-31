@@ -52,7 +52,13 @@ Semak Maklumat Pemohon</b></legend>
                 
                           
     		</tr>
+    		
             #if($list_fail.size() > 0)
+            
+    		#foreach($list3 in $list_fail)
+    			#set( $id_status = $list3.ID_STATUS )
+    			
+    		#end
     		
     		#foreach($list in $list_fail)
     		 #set( $i = $velocityCount )
@@ -101,7 +107,7 @@ Semak Maklumat Pemohon</b></legend>
                 </td>
                 
                 <td  >
-               $list.NAMA_SIMATI
+               $list.NAMA_SIMATI 
                 </td>
                 
                 <td >
@@ -392,16 +398,26 @@ Semak Maklumat Pemohon</b></legend>
      </tr>
      <tr>
      <td></td>
-     <td>MUATNAIK DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" size="40"></td>
+     <td>MUATNAIK DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" size="40"> </td>
      <td>
       </td>
       </tr>
+      #if($id_status != "21")
       <tr align="center">
 <td></td>
-<td>
+<td>  
       <input name="cmdSimpanKPOb" id="cmdSimpanKPOb" value="Simpan" type="button" onClick="javascript:simpanSub('$id_fail_carian','cmdSimpanKPOb')">
 </td>
      </tr>
+     #else
+     <tr align="center">
+<td></td>
+<td>  
+      <font color="red"><b>Fail ini berstatus selesai. Pertukaran pemohon tidak dibenarkan.</b></font>
+</td>
+     </tr>
+     
+     #end
      </table>
           </fieldset> 
      #end

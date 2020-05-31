@@ -54,8 +54,9 @@ public class AuditTrail {
 		,String jenis_aktiviti
 		,String keterangan
 		,Db db) throws Exception {
-		String module_session = session.getAttribute("_portal_module").toString();
-		//System.out.println(" module_session :::::::::::: "+module_session);
+		
+		String module_session = "-";
+		myLogger.info(" module_session ::session= "+session);
 		
 		String module_name = module_session;
 		if (module != null) { 
@@ -66,6 +67,7 @@ public class AuditTrail {
 		if (session != null) {
 			user_id = (String)session.getAttribute("_ekptg_user_id");
 			ip_address = (String)session.getAttribute("ip_address");
+			module_session = session.getAttribute("_portal_module").toString();
 		}
 		 
 		String sql = "";

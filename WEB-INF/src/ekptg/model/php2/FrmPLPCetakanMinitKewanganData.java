@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
+import ekptg.model.admin.EmailConfig;
 
 public class FrmPLPCetakanMinitKewanganData {
 
@@ -206,6 +208,55 @@ public class FrmPLPCetakanMinitKewanganData {
 			throw new Exception("Ralat : Masalah penyimpanan data "
 					+ ex.getMessage());
 
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void sendEmailtoKJP(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		Vector beanMaklumatEmail = null;
+		EmailSender email = EmailSender.getInstance();
+		EmailConfig conf = new EmailConfig();
+		
+		String sql = "";
+		String emelUser = "nurulain.siprotech@gmail.com"; //untuk sementara
+		String tempoh = "";
+		String noFail = "";
+		String tarikhAkhir = "";
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA"
+				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLPERMOHONAN C, TBLPFDFAIL D "
+				+ " WHERE A.ID_MENTERI = B.ID_KEMENTERIAN AND A.ID_PERMOHONAN = C.ID_PERMOHONAN "
+				+ " AND C.ID_FAIL = D.ID_FAIL AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
+				+ " AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
+			
+			ResultSet rsEmel = stmt.executeQuery(sql);
+			if (rsEmel.next()){
+				noFail = rsEmel.getString("NO_FAIL");
+				tempoh = rsEmel.getString("JANGKAMASA");
+				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
+			}	
+			
+			String tajuk = "PERMOHONAN ULASAN URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
+			String kandungan = "Mohon pihak tuan memberikan ulasan dan keputusan bagi permohonan tersebut<br><br>"
+							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
+							 + "sebelum " + tarikhAkhir + " amatlah dihargai."
+							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
+							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			
+			conf.sendByKJPPenyedia(idKementerian, emelUser, tajuk, kandungan);
+			//email.sendEmail();
+			
 		} finally {
 			if (db != null)
 				db.close();

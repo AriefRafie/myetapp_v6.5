@@ -6,7 +6,7 @@ import ekptg.model.htp.entity.HtpPermohonan;
 
 public interface IHtpPeringatan {	
 
-	public Vector getSenaraiPeringatanBayaran(String search,String idUrusan,String tahunBayaran)throws Exception ;
+	public Vector<HtpPermohonan> getSenaraiPeringatanBayaran(String search,String idUrusan,String tahunBayaran)throws Exception ;
 	public Vector getSenaraiPeringatanBayaranPer(String search,String idUrusan,String tahunBayaran)throws Exception ;
 	public Vector getPeringatanJenisBayaran(String search,String idUrusan,String tahunBayaran, String jenisBayaran)
 		throws Exception ;

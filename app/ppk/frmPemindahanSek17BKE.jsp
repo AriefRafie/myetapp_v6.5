@@ -163,7 +163,7 @@
           <li class="TabbedPanelsTab" tabindex="0" onClick="KeputusanView('1','0','0','0')">KEBENARAN</li>
           #end
           #if ($keputusanpegawai == "L")
-          <li class="TabbedPanelsTab" tabindex="0" onClick="KptgView('2','0','0','0')">KEPUTUSAN KPTG/PTG</li>
+          <li class="TabbedPanelsTab" tabindex="0" onClick="KptgView('2','0','0','0')">KEPUTUSAN PPP</li> <!-- arief ubah label KPTG/PTG kepada PPP-->
           #end
           </ul>
           <div class="TabbedPanelsContentGroup">
