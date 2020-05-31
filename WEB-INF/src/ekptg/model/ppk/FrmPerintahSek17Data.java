@@ -158,7 +158,7 @@ public class FrmPerintahSek17Data {
 
 		 sql += " ORDER BY H.ID_HTA DESC";
 		 
-		 myLogger.info("DET HARTA XALIH PERINTAH :"+sql.toUpperCase());
+		 System.out.println("DET HARTA XALIH PERINTAH :"+sql.toUpperCase());
          ResultSet rs = stmt.executeQuery(sql);
 		
 			Hashtable h;
@@ -1276,6 +1276,7 @@ public class FrmPerintahSek17Data {
 			r.add("C.FLAG_JENIS_KEPUTUSAN", "0");
 
 			sql = r.getSQLSelect("TBLPPKKEPUTUSANPERMOHONAN A, TBLPPKPERBICARAAN B, TBLPPKPERINTAH C");
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 
@@ -1289,6 +1290,38 @@ public class FrmPerintahSek17Data {
 			if (db != null)
 				db.close();
 		}
+	}
+	
+	public String getTarikhPerintah(String idPerintah) throws Exception {
+		Db db = null;
+		String a = "";
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT COUNT(TARIKH_PERINTAH) AS BIL FROM TBLPPKPERINTAH WHERE ID_PERINTAH = "+idPerintah + " AND TARIKH_PERINTAH > TO_DATE('09/10/2017','dd/mm/yyyy')";
+			myLogger.info("sql = "+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next())
+				{				
+					if (rs.getInt("BIL") > 0) {
+						a = "T";
+					}
+
+				}
+
+			
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return a;
 	}
 	
 	public String getIdPerbicaraan(String idPerintah) throws Exception {
