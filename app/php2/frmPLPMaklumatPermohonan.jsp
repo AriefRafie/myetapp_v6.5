@@ -31,7 +31,6 @@
   <input name="idTanahGanti" type="hidden" id="idTanahGanti" value="$idTanahGanti"/>
   <input name="idHakmilikPermohonan" type="hidden" id="idHakmilikPermohonan"/>
   <input name="step" type="hidden" id="step" value="$step"/>
-  <input name="flagFrom" type="hidden" id="flagFrom" value="$flagFrom"/>
   <input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi" />
   <input type="hidden" name="idHakmilikSementara" id="idHakmilikSementara" value="$idHakmilikSementara" />
   <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
@@ -55,9 +54,9 @@
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH BERKAITAN</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PELEPASAN</li>
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
-          <!-- <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">PERIHAL KEMAJUAN TANAH</li> -->
           <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">TANAH GANTI</li>
-          <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PELAN</li>
+          <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>          
+          <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">  
@@ -148,6 +147,7 @@
             </table>
           </div>
           <!-- END MAKLUMAT TANAH BERKAITAN -->
+          <!-- MAKLUMAT PELEPASAN -->
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatPelepasan in $BeanMaklumatPelepasan)
@@ -296,6 +296,7 @@
               #end
             </table>
           </div>
+          <!-- MAKLUMAT PEMOHON -->
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
@@ -569,6 +570,7 @@
               #end
             </table>
           </div> -->
+          <!-- MAKLUMAT TANAH GANTI -->
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #if ($flagPopup == 'openPopupTanahGanti')
@@ -644,12 +646,19 @@
               </tr>
             </table>
           </div>
-          
-         <div class="TabbedPanelsContent"  style="display:none;"> 
-         	<br>
-            #parse("app/php2/frmPLPPelan.jsp") 
-         </div>
-            
+          <!-- SENARAI SEMAK -->
+          <div class="TabbedPanelsContent">
+            <table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td> #parse("app/php2/frmPLPSenaraiSemak.jsp") </td>
+              </tr>
+            </table>
+          </div>
+          <!-- LAMPIRAN -->
+          <div class="TabbedPanelsContent"  style="display:none;"> 
+            <br>
+           	#parse("app/php2/frmPLPPelan.jsp") 
+          </div>
         </div>
       </div></td>
   </tr>
@@ -1482,5 +1491,18 @@ function cetakMaklumatHakmilik(idhakmilik){
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;
 	if (hWnd.focus != null) hWnd.focus();
+}
+</script>
+<script>
+function doSimpanKemaskiniSenaraiSemak() {
+	
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "update";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
+	document.${formName}.submit();
 }
 </script>
