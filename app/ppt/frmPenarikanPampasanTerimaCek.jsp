@@ -540,6 +540,10 @@
             <tr>
         <td><a href="#" class="style2" onClick="PangilTerimaPampasanPB_PB('$id_fail','$id_pembatalan','$id_bayaran','')"><font color="blue">Surat Makluman Kepada Pihak Berkepentingan untuk hadir menerima cek pampasan</font></a></td>
       </tr>     
+      
+      <tr>
+      	<td><a href="#" class="style2" onClick="CetakBorangLC('$id_hakmilik')"><font color="blue">Borang LC</font></a></td>
+      </tr>
     </table>
 </fieldset>
 
@@ -1979,4 +1983,13 @@ var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPenarikanBalik?id_fail
 
 }
 
+function CetakBorangLC(id_hakmilik)
+{
+   
+	var url = "../servlet/ekptg.report.ppt.BorangLC?id_hakmilik="+id_hakmilik;  
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
   </script>
