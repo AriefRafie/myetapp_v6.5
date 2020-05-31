@@ -149,7 +149,7 @@
 					<tr>
 						<td>
 						<a href="javascript:goTo('PHPAPB')" class="help" title="Permohonan Urusan Akta Pelantar Benua">
-							<font color="blue"><li>Permohonan Akta Pelantar Benua</li></font>
+							<font color="blue"><li>Permohonan Urusan Akta Pelantar Benua</li></font>
 						</a>
 						</td>
 					</tr>
@@ -248,8 +248,8 @@
 					</tr>
 						<tr>
 						<td>
-						<a href="javascript:goTo('NOTIS')" class="help" title="Semakan Notis Perbicaraan Pembahagian Pusaka">
-							<font color="blue"><li>Notis Perbicaraan Pembahagian Pusaka</li></font>
+						<a href="javascript:goTo('SENARAI')" class="help" title="Senarai Notis Perbicaraan Pembahagian Pusaka">
+							<font color="blue"><li>Senarai Notis Perbicaraan Pembahagian Pusaka</li></font>
 						</a>
 						</td>
 					</tr>
@@ -467,10 +467,10 @@ else if(location=='DERAFPPK'){
         document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
         document.${formName}.submit();
 }
-else if(location=='NOTIS'){
+else if(location=='SENARAI'){
     document.${formName}.action = "?myrole=ppk-online-user";
     document.${formName}.namatab.value = "Pusaka Kecil";
-    document.${formName}.namamodul.value = "ekptg.view.ppk.CarianNotisPerbicaraan";
+    document.${formName}.namamodul.value = "ekptg.view.ppk.CarianNotisPerbicaraanOnline";
     document.${formName}.submit();
 }
 else if(location=='PPT'){
@@ -555,7 +555,7 @@ else if(location=='HELP'){
 else if(location=='HTP'){
     document.${formName}.action = "?myrole=htp-online-user";
     document.${formName}.namatab.value = "Harta Tanah Persekutuan";
-    document.${formName}.namamodul.value = "ekptg.view.htp.online.FrmPajakanOnlineMaklumatPajakanView";
+    document.${formName}.namamodul.value = "ekptg.view.htp.online.FrmPajakanOnlineSenaraiFailView";
     document.${formName}.submit();
 }
 }
