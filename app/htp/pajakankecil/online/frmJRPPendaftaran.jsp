@@ -1,4 +1,4 @@
-<!--frmPajakanKecilPendaftaran.jsp-->	
+<!--frmJRPPendaftaran.jsp-->	
 <style type="text/css">
 <!--
 	.pautanms {color: #0000FF}

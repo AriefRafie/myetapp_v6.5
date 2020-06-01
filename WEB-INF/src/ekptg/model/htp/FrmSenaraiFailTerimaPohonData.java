@@ -222,6 +222,7 @@ public class FrmSenaraiFailTerimaPohonData {
 	}
 	
 	public String simpanPermohonanOnline(Hashtable<String, String> data,String idUser) throws Exception {
+		myLog.debug("simpanPermohonanOnline");
 		 Db db = null;
 		 Connection conn = null;
 		 long idFail = 0L;
@@ -254,11 +255,13 @@ public class FrmSenaraiFailTerimaPohonData {
 			//String lokasi = (String) data.get("id_Lokasifail");
 			//String faharasat = (String) data.get("id_Faharasat");
 			
-	        //PFDFAIL	          
+	        //PFDFAIL	  
+			myLog.debug("simpanPermohonanOnline1");
 			idFail = DB.getNextID(db,"TBLPFDFAIL_SEQ");
+			myLog.debug("simpanPermohonanOnline2");
 			int fileSeq = 0;
 			fileSeq = File.getSeqNo(3,idurusan,idkementerian,idnegeri);//Integer.parseInt(getParam("socSeksyen"))
-
+			myLog.debug("fileSeq = "+fileSeq);
 			kodNegeriMampu = getNegeriByMampu(idnegeri);
 			kodKementerianMampu = getKementerianByMampu(idkementerian);
 			kod_urusan = getKodUrusan(idurusan);
@@ -1752,6 +1755,7 @@ public class FrmSenaraiFailTerimaPohonData {
 			if (db != null) db.close();
 		}	
 	}
+	
 	
 	public Hashtable<String, String> UpdateLokasiTanah(Hashtable<String, String> data)throws Exception {	
 		Db db = null;
