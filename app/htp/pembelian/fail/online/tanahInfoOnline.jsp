@@ -58,7 +58,7 @@
 		            <td><div align="right"><font color="#FF0000">*</font>No. Lot</div>
 		          	 </td>
 		          	<td>
-                  		<input type="text" name="txtNoLot" id="txtKodLot" maxlength="20" size="20" onkeyup="this.value=this.value.toUpperCase();" value="$!urusan.getNolot()" $mode $classDis>
+                  		<input type="number" name="txtNoLot" id="txtKodLot" maxlength="20" size="20" onkeyup="this.value=this.value.toUpperCase();" value="$!urusan.getNolot()" $mode $classDis>
                 	</td>
              		          
 		          </tr>
