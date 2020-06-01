@@ -81,7 +81,8 @@
 					        		<td width="68%">
 					        			<!-- <input type="text" name="txtNoFailSek" size="28" value="$!htpPermohonan.permohonan.pfdFail.noFail" readonly="readonly" $inputstyleread>
 					        		-->
-					        		<input type="text" name="txtNoFailSek" size="28" value="$!htpPermohonan.permohonan.getNoPermohonan()" $inputstyleread readonly>
+					        		<input type="text" name="txtNoFailSek" size="28" value="$!htpPermohonan.permohonan.getNoPermohonan()" $inputstyleread readonly class="disabled">
+					        		
 					        		</td>					
 			              		</tr>
 			              		<tr>
