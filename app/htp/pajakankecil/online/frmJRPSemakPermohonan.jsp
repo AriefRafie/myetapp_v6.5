@@ -187,41 +187,7 @@
 	</td>
 </tr>
 
-<tr>
-	<td>	
-		<fieldset><legend><strong>SENARAI SEMAKAN</strong></legend>
-			<!-- <table width="100%" >
-				<tr>
-				  	<td width="100%"> -->
-			 <!-- $!permohonanInfo.idnegeri -->
-			<table width="100%" >
-				#set ( $checked = "" )
-			    #foreach ( $semak in $senaraiSemakan )
-			    #set( $i = $velocityCount )
-			    #if ( ($i % 2) == 0 )
-			    	#set( $row = "row2" )
-			    #else
-			    	#set( $row = "row1" )
-			   	#end
-				<tr>
-			    	<td class="$row" width="10">
-                   
-			        #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semak.id" ))
-			        	#set ( $checked = "checked" )
-			        #else
-			        	#set ( $checked = "" )
-			    	#end
-			        	 <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked $selectstyle>
-			       	</td>
-			        <td class="$row">
-			        	$semak.keterangan <!-- $semak.id -->
-			        </td>
-			
-			 	</tr>       
-			    #end			  	
-			</table>
-		</fieldset>			
-	</td>
+
 </tr>
 			
 
@@ -234,9 +200,9 @@
 									<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="senaraiPermohonan('$permohonanInfo.idfail','$permohonanInfo.idpermohonan')"> 
 									
 									#if (!$!jenisAkses.equals('Readonly'))
-									<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Kemaskini " onclick="semakanPermohonanTambah('$permohonanInfo.idpermohonan')">
+									<!-- <input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Kemaskini " onclick="semakanPermohonanTambah('$permohonanInfo.idpermohonan')"> -->
    									#end	
-   									<input type="button" class="stylobutton100" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:senaraiSuratSkrinSemakan('tablesuratp');" />
+   									<!--<input type="button" class="stylobutton100" name="Cetak" id="Cetak" value="Cetak" onclick="javascript:senaraiSuratSkrinSemakan('tablesuratp');" /> -->
 									<input type="button" class="stylobutton100" name="cmdSeterusnya" id="cmdsblm" value="Seterusnya" onclick="skrinSenaraiHakmilikPemilik('$permohonanInfo.idpermohonan')">
 								#else
 									<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="semakanPermohonanTambah1('$permohonanInfo.idpermohonan','simpan')">	

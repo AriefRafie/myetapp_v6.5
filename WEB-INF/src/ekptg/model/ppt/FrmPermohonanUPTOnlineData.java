@@ -1519,6 +1519,7 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 		
 	    Db db = null;
 	    String sql = "";
+	    long id_senaraisemak = 0;
 	   
 	    try{
 	      
@@ -1552,7 +1553,6 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 	    		String semak_5 = (String)data.get("semak5"); 
 	    		String semak_6 = (String)data.get("semak6"); 
 	    		String semak_7 = (String)data.get("semak7"); 
-	    		String semak_8 = (String)data.get("semak8"); 
 	      
 	    		//checkbox seksyen 4
 	    		String semak_10 = (String)data.get("semak10"); 
@@ -1628,6 +1628,96 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 	   	      	rF.add("id_kemaskini",id_user);
 	    		sql = rF.getSQLUpdate("tblpfdfail");
 	    		stmt.executeUpdate(sql);
+	    		
+	    		//checkbutton seksyen 8
+	    		
+	    			if(id_check.equals(""))
+					{
+		    			id_senaraisemak = DB.getNextID(db, "TBLPPTSENARAISEMAK_SEQ");
+					}
+					else
+					{
+						id_senaraisemak = Long.parseLong(id_check);
+					}
+	    			
+	    			SQLRenderer rCK = new SQLRenderer();
+	    			
+	    			if(id_check.equals(""))
+					{
+						rCK.add("i.id_senaraisemak", id_check);
+					}
+					else
+					{
+						rCK.update("i.id_senaraisemak", id_check);
+					}
+
+	    			//rCK.add("i.id_senaraisemak",id_senaraisemak);
+	    			rCK.add("i.id_permohonan", id_permohonan);
+	    			rCK.add("i.semak1", semak_1);
+	    			rCK.add("i.semak2", semak_2);
+	    			rCK.add("i.semak3", semak_3);
+	    			rCK.add("i.semak4", semak_4);
+	    			rCK.add("i.semak5", semak_5);
+	    			rCK.add("i.semak6", semak_6);
+	    			rCK.add("i.semak7", semak_7);
+	    			//checkbutton seksyen 4
+	    			rCK.add("i.semak10", semak_10);
+	    			rCK.add("i.semak20", semak_20);
+	    			rCK.add("tarikh_kemaskini",rCK.unquote("sysdate"));
+	    		    rCK.add("id_kemaskini",id_user);
+	    		    if(id_check.equals(""))
+					{    		    	
+					sql = rCK.getSQLInsert("tblpptsenaraisemak i");
+					stmt.executeUpdate(sql);
+					}
+	    			else {
+	    			
+	    				sql = rCK.getSQLUpdate("tblpptsenaraisemak i");
+	    				stmt.executeUpdate(sql);
+	    			}   		   
+	    		
+	    		      
+	    		
+	    		 
+	    		
+//	    		if(id_check.equals(""))
+//				{
+//	    			id_senaraisemak = DB.getNextID(db, "TBLPPTSENARAISEMAK_SEQ");
+//				}
+//				else
+//				{
+//					id_senaraisemak = Long.parseLong(id_check);
+//				}
+//	    		
+//	    			SQLRenderer rCK4 = new SQLRenderer();
+//	    			
+//	    			if(id_check.equals(""))
+//					{
+//						rCK4.add("j.id_senaraisemak", id_senaraisemak);
+//					}
+//					else
+//					{
+//						rCK4.update("j.id_senaraisemak", id_senaraisemak);
+//					}
+//
+//	    			//rCK4.add("j.id_senaraisemak",id_senaraisemak);
+//	    	
+//	    			rCK4.add("j.id_permohonan", id_permohonan);
+//	    			rCK4.add("j.semak1", semak_10);
+//	    			rCK4.add("j.semak2", semak_20);
+//	    			rCK4.add("tarikh_kemaskini",rCK4.unquote("sysdate"));
+//	    		    rCK4.add("id_kemaskini",id_user);
+//	    		    if(id_check.equals(""))
+//					{
+//					sql = rCK4.getSQLInsert("tblpptsenaraisemak j");
+//					stmt.executeUpdate(sql);
+//					}
+//	    			else {
+//	    				
+//	    				sql = rCK4.getSQLUpdate("tblpptsenaraisemak j");
+//	    				stmt.executeUpdate(sql);
+//	    			}
+	    		
 	      
 	    		
 	    } catch (Exception re) {

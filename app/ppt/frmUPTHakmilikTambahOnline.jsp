@@ -441,7 +441,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 	<table width="100%" border="0">
 		<tr>
 			<td width="1%"></td>
-			<td valign="top" width="23%">Tarikh Pembayaran</td>
+			<td valign="top" width="23%">Tarikh Pembayaran </td>
 			<td valign="top" width="1%">:</td>
 			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran"
 				size="12" type="text" value="$!txdTarikhPembayaran"
