@@ -380,6 +380,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 						// senarai semak
 						ListCheckBox(idpermohonan);
+//						senaraiSemak = model.getSenaraiSemakan(idpermohonan);
+//		        		context.put("senaraiSemakan", senaraiSemak);
 
 						// data pendaftaran
 						DataPermohonan(idpermohonan, "disabled");
@@ -475,6 +477,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user,
 								"hantarLulus");
 					}
+					//senarai semak
+		    		senaraiSemak = model.getSenaraiSemakan(idpermohonan);
+				    context.put("senaraiSemakan", senaraiSemak);
 
 					header.setDataHeader(idpermohonan);
 					dataHeader = header.getDataHeader();
@@ -583,6 +588,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 						// get and set data
 						getAndSetDataOnchangeNegeri(id_negeriprojek, id_urusan, "view", userIdKementerian);
+						
+						//senarai semak
+			    		senaraiSemak = model.getSenaraiSemakan(idpermohonan);
+					    context.put("senaraiSemakan", senaraiSemak);
 
 					} // close doChangeProjekNegeriUpdate
 
@@ -4190,6 +4199,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 	}// close DataPermohonan
 
+	//senarai semak
 	@SuppressWarnings({ "unchecked", "static-access" })
 	private void ListCheckBox(String idpermohonan) throws Exception {
 
@@ -4256,8 +4266,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("id_fail", getParam("id_fail"));
 
 		// checkbutton seksyen 4
-		h.put("semak10", "");
-		h.put("semak20", "");
+		//h.put("semak10", "");
+		//h.put("semak20", "");
+		if(getParam("cbsemaks10")==null){h.put("semak10", "0");}else{h.put("semak10", getParam("cbsemaks10"));}
+    	if(getParam("cbsemaks20")==null){h.put("semak20", "0");}else{h.put("semak20", getParam("cbsemaks20"));}
 
 		// checkbutton seksyen 8
 		if (getParam("cbsemaks1") == null) {
@@ -4295,7 +4307,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		} else {
 			h.put("semak7", getParam("cbsemaks7"));
 		}
-		if (getParam("txdPermohonanLengkap") == null) {
+    	if (getParam("txdPermohonanLengkap") == null) {
 			h.put("txdPermohonanLengkap", getParam("txdPermohonanLengkap"));
 		}
 
@@ -4320,8 +4332,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("jenis_projek", getParam("sorJenisProjek"));
 
 		h.put("jumlahHakmilik", getParam("txtJumHM"));
+		h.put("sorJenisKodDaerah", getParam("sorJenisKodDaerah"));
 
-		h.put("sorJenisKodDaerah", "");
+		//h.put("sorJenisKodDaerah", "");
 
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 
@@ -4333,7 +4346,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		}
 
 		// onchange validation
-		if (id_urusan.equals("52")) {
+		if (id_urusan.equals("51")) {
 			context.put("showSegera", "yes");
 		} else {
 			context.put("showSegera", "no");
