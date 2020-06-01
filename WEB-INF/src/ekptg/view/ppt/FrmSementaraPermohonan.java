@@ -2582,7 +2582,10 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		context.put("txtRujukanKementerian", getParam("txtRujukanKementerian"));
 		context.put("txdTarikhSurat", getParam("txdTarikhSurat"));
 		context.put("txdTarikhKehendaki", getParam("txdTarikhKehendaki"));
-		context.put("sorFlagPeruntukan", getParam("sorFlagPeruntukan"));		
+		context.put("sorFlagPeruntukan", getParam("sorFlagPeruntukan"));
+		context.put("txdTarikhPendudukanMula", getParam("txdTarikhPendudukanMula"));
+		context.put("txdTarikhPendudukanAkhir", getParam("txdTarikhPendudukanAkhir"));
+		context.put("txtTempohPendudukan", getParam("txtTempohPendudukan"));
 		
 		String sorJenisKodDaerah = getParam("sorJenisKodDaerah");
 		context.put("sorJenisKodDaerah", getParam("sorJenisKodDaerah"));
@@ -2656,6 +2659,9 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		context.put("txdTarikhSurat", getParam("txdTarikhSurat"));
 		context.put("txdTarikhKehendaki", getParam("txdTarikhKehendaki"));
 		context.put("sorFlagPeruntukan", getParam("sorFlagPeruntukan"));
+		context.put("txdTarikhPendudukanMula", getParam("txdTarikhPendudukanMula"));
+		context.put("txdTarikhPendudukanAkhir", getParam("txdTarikhPendudukanAkhir"));
+		context.put("txtTempohPendudukan", getParam("txtTempohPendudukan"));
 //		context.put("sorFlagSegera", getParam("sorFlagSegera"));
 		
 		String sorJenisKodDaerah = getParam("sorJenisKodDaerah");
@@ -2703,6 +2709,7 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		context.put("sorFlagPeruntukan", "");
 		context.put("sorFlagSegera", "");
 		context.put("sorJenisProjek", "");
+		context.put("txdTarikhPendudukanMula", getParam("txdTarikhPendudukanMula"));
 		
 		context.put("sorJenisKodDaerah", "");
 		
