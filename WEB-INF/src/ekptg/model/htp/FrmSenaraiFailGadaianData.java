@@ -50,17 +50,11 @@ public class FrmSenaraiFailGadaianData {
 	    	  sql +="AND F.ID_NEGERI = "+idNegeri;
 	      sql +=" ORDER BY F.TARIKH_KEMASKINI";*/
 	      
-	      sql =   " SELECT F.ID_FAIL, F.NO_FAIL, PB.NAMA TAJUK_FAIL, S.KETERANGAN, N.NAMA_NEGERI, N.KOD_MAMPU "+  
+	      sql =   " SELECT F.ID_FAIL, F.NO_FAIL, F.TAJUK_FAIL, S.KETERANGAN, N.NAMA_NEGERI, N.KOD_MAMPU "+  
 	    		  " FROM TBLPFDFAIL F, TBLRUJSTATUS S, TBLRUJNEGERI n "+ 
-	    		  " ,TBLPERMOHONAN P"+ 
-	    		  " ,TBLHTPHAKMILIKURUSAN U"+ 
-	    		  " ,TBLHTPPIHAKBERKEPENTINGAN PB"+ 
 	    		  " WHERE F.ID_STATUS=S.ID_STATUS "+
 	    		  " AND F.ID_URUSAN = 108 "+ 
 	    		  " AND N.ID_NEGERI = F.ID_NEGERI "+  
-	    		  "AND P.ID_PERMOHONAN = U.ID_PERMOHONAN (+)"+  
-	    		  "AND U.ID_HAKMILIKURUSAN = PB.ID_HAKMILIKURUSAN (+)"+  
-	    		  
 	    		  " AND F.ID_STATUS <> 999 "+
 	    		  " AND F.TAJUK_FAIL LIKE '%"+carian+"%' "+  
 	    		  " AND F.NO_FAIL LIKE '%"+noFail+"%' ";
