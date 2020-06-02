@@ -381,7 +381,7 @@
  <tr>
         <td>  
       
-        <a href="javascript:mmkSelangor4('$id_fail')" class="style2" ><font color="blue">Borang LA
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
  </font></a></td>
       </tr> 
         
@@ -410,6 +410,12 @@
         <a href="javascript:mmkKL2('$id_pembatalan')" class="style2" ><font color="blue">Jadual Penarikan Balik Lot
  </font></a></td>
       </tr> 
+      
+      <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>
         
         
         
@@ -429,7 +435,11 @@
         <td>  
         <a href="javascript:mmkMelaka('$id_mmk','$!id_fail','$!no_fail')" class="style2" ><font color="blue">Kertas MMK/KM/MB/LC (Melaka)</font></a></td>
       </tr> 
+       <td>  
       
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>
      
   
       
@@ -455,7 +465,11 @@
  </font></a></td>
       </tr> 
         
-        
+         <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>
         
         
       
@@ -473,7 +487,11 @@
         <a href="javascript:mmkKedah('$id_mmk','$!id_fail','$!no_fail')" class="style2" ><font color="blue">Kertas MMK/KM/MB/LC (Kedah)</font></a></td>
       </tr> 
          
-        
+         <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>
         
       
     </table>
@@ -491,7 +509,12 @@
       
       <tr>
 		 <td><a href="javascript:cetakBorangAkta486('$!id_permohonan','$!id_mmk')"><font color="blue">Borang Akta 486</font></a></td>
-	  </tr>   
+	  </tr>  
+	   <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr> 
       
     </table>
 </fieldset>
@@ -505,7 +528,11 @@
         <td>  
         <a href="javascript:mmkPerlis('$id_mmk','$!id_fail','$!no_fail')" class="style2" ><font color="blue">Kertas MMK/KM/MB/LC (Perlis)</font></a></td>
       </tr> 
-         
+          <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>
       
     </table>
 </fieldset>
@@ -519,7 +546,11 @@
         <td>  
         <a href="javascript:mmkPenang('$id_mmk','$!id_fail','$!no_fail')" class="style2" ><font color="blue">Kertas MMK/KM/MB/LC (Pulau Pinang)</font></a></td>
       </tr> 
-         
+       <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>   
       
     </table>
 </fieldset>
@@ -534,7 +565,11 @@
         <a href="javascript:mmkPahang('$id_mmk','$!id_fail','$!no_fail')" class="style2" ><font color="blue">Kertas MMK/KM/MB/LC (Pahang)</font></a></td>
       </tr> 
          
+       <td>  
       
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>
     </table>
 </fieldset>
 
@@ -547,7 +582,11 @@
         <td>  
         <a href="javascript:mmkKelantan('$id_mmk','$!id_fail','$!no_fail')" class="style2" ><font color="blue">Kertas MMK/KM/MB/LC (Kelantan)</font></a></td>
       </tr> 
-         
+        <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>  
       
     </table>
 </fieldset>
@@ -561,7 +600,11 @@
         <td>  
         <a href="javascript:mmkTerengganu('$id_mmk','$!id_fail','$!no_fail')" class="style2" ><font color="blue">Kertas MMK/KM/MB/LC (Terengganu)</font></a></td>
       </tr> 
-         
+       <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>   
       
     </table>
 </fieldset>
@@ -576,7 +619,11 @@
         <td>  
         <a href="javascript:mmkJohor('$id_mmk','$!id_fail','$!no_fail')" class="style2" ><font color="blue">Kertas MMK/KM/MB/LC (Johor)</font></a></td>
       </tr> 
-         
+       <td>  
+      
+        <a href="javascript:mmkSelangor4('$id_pembatalan','$id_fail')" class="style2" ><font color="blue">Borang LA
+ </font></a></td>
+      </tr>   
       
     </table>
 </fieldset>
@@ -585,7 +632,8 @@
   <input type="hidden" name="subminor_command" id="subminor_command" />
   <input type="hidden" name="location" id="location" />
   <input type="hidden" name="point" id="point" />
-  <input type="hidden" name="id_pembatalan" id="id_pembatalan" value="$id_pembatalan" />
+  <input type="text" name="id_pembatalan" id="id_pembatalan" value="$id_pembatalan" />
+  <input type="text" name="id_fail" id="id_fail" value="$id_fail" />
   <input type="hidden" name="screen_name" id="screen_name" value="s2" />
   <input type="hidden" name="readmode" id="readmode"  value="$!readmode"/>
   <input type="hidden" name="alert_message" id="alert_message" />
@@ -1553,7 +1601,8 @@ function mmkSelangor3(id_penarikan,nama_pengarah)
 
 }
 
-function mmkSelangor4(id_fail)
+//TAMBAH FUNCTION CETAKAN BORANG LA
+function mmkSelangor4(id_pembatalan, id_fail)
 {
 	var currentTime = new Date();
 	   var month = currentTime.getMonth() + 1;
@@ -1561,7 +1610,7 @@ function mmkSelangor4(id_fail)
 	   var year = currentTime.getFullYear();
 	   var currentDate = day + "/" + month + "/" + year;
 	
-	var url = "../servlet/ekptg.report.ppt.BorangLA?id_Fail="+id_fail;
+	var url = "../servlet/ekptg.report.ppt.BorangLA?id_Fail="+id_fail+"&id_pembatalan="+id_pembatalan;
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
