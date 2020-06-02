@@ -300,9 +300,9 @@ function simpanBayaranD(){
 	doAjaxCall${formName}("");
 }
 
-function sendNotidByEmail(idAkaun){
-	document.${formName}.idNotis.value = idNotis;
-	document.${formName}.hitButton.value = "sendNotidByEmail";
+function sendNotisByEmail(idAkaun){
+	document.${formName}.idAkaun.value = idAkaun;
+	document.${formName}.hitButton.value = "sendNotisByEmail";
 	doAjaxCall${formName}("");
 }
 function paparBayaranD(idAkaun){

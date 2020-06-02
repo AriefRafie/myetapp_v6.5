@@ -1374,7 +1374,7 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 					sql += " AND (TO_DATE(sysdate) - TO_DATE(pbk.tarikh_masuk))+1  >= 14  ";
 					sql += " AND f.id_negeri = '"+id_negeri+"'"; 
 					sql += " ORDER by bilHari desc ";
-
+					//myLogger.info("getListPenarikanExpiredUnit:sql"+sql);
 		    		ResultSet rs = stmt.executeQuery(sql);
 		    		Vector listpbk = new Vector();
 		      
@@ -1456,7 +1456,8 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 					sql += " AND f.id_negeri = '"+id_negeri+"'"; 
 					sql += " ORDER by bilHari desc ";
 
-		    		ResultSet rs = stmt.executeQuery(sql);
+					//myLogger.info("getListPembatalanExpiredUnit:sql="+sql);
+					ResultSet rs = stmt.executeQuery(sql);
 		    		Vector listpbk = new Vector();
 		      
 		    		Hashtable h = null;
