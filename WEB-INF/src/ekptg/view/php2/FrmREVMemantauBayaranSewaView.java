@@ -235,7 +235,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
     		if ("hapusNotis".equals(hitButton)){
          		logic.hapusNotis(idNotis, session);
         	}
-    		if ("sendNotidByEmail".equals(hitButton)){
+    		if ("sendNotisByEmail".equals(hitButton)){
     			//ada attachment dlm emel
     			hantarInvoisByEmel(session, idAkaun, idFail, servletContext, request, response);
     		}
@@ -1513,10 +1513,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 				
 				//To send attachments
 				GetAttachment report = new GetAttachment();
-				//ServletContext application = getServletContext();
+				//ServletContext context = getServletContext();
 				final Map<String, Object> myMap = new HashMap<String,Object>();
 		    	String path ="";
-		    	String folderName = "php2/REV";
+		    	String folderName = "php2\\REV";
 		    	String fileName = "REVInvoisSewa";
 		    	
 		    	if (folderName != null) {
@@ -1530,10 +1530,11 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		    	myMap.put("idfail", idFail);
 		    	myMap.put("flagVersion", "no");
 		    	myMap.put("ReportDir", path);
+		    	myLogger.info("path "+path);
 		    	myMap.put("os", "1");
 		    	
 		    	//parameter utk panggil report, boleh multiple    	
-		    	byte[] bytes1 = report.getReportBytes("php2/REV","REVInvoisSewa",request, response, null, myMap);
+		    	byte[] bytes1 = report.getReportBytes("php2\\REV", "REVInvoisSewa", request, response, servletContext, myMap);
 		    	
 		    	//open razman add new feature : attachment in bytes
 				email.ATTACHMENT_BYTES = new String[1];
