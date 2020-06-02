@@ -18,6 +18,7 @@
 
 #set($id_tanahumum = "")
 #set($txtKerosakanTanah = "")
+#set($txtKeteranganKerosakan = "")
 #set($txtKerosakanTanaman = "")
 #set($txtKerosakanBangunan = "")
 #set($txtKosDitanggung = "")
@@ -42,6 +43,7 @@
 
 #foreach($maklumatam in $maklumat_am_tanah_permohonan)
 #set($txtKerosakanTanah = $maklumatam.KEROSAKAN_TANAH)
+#set($txtKeteranganKerosakan = $maklumatam.KETERANGAN_KEROSAKAN)
 #set($txtKerosakanTanaman = $maklumatam.KEROSAKAN_TANAMAN)
 #set($txtKerosakanBangunan = $maklumatam.KEROSAKAN_BANGUNAN)
 #set($txtKosDitanggung = $maklumatam.KOS_DITANGGUNG)
@@ -52,6 +54,7 @@
 #foreach($maklumatam in $maklumat_am_tanah)
 #set($id_tanahumum = $maklumatam.ID_TANAHUMUM)
 #set($txtKerosakanTanah = $maklumatam.KEROSAKAN_TANAH)
+#set($txtKeteranganKerosakan = $maklumatam.KETERANGAN_KEROSAKAN)
 #set($txtKerosakanTanaman = $maklumatam.KEROSAKAN_TANAMAN)
 #set($txtKerosakanBangunan = $maklumatam.KEROSAKAN_BANGUNAN)
 #set($txtKosDitanggung = $maklumatam.KOS_DITANGGUNG)
@@ -148,9 +151,9 @@
          -->
          
            <textarea name="txtKerosakanTanah" id="txtKerosakanTanah" cols="80"   rows="6"         
-         onBlur="check_length(this,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','yes','lokasi tanah');"  
-         onKeyup="check_length(this,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','yes','lokasi tanah');" 
-         onKeydown="check_length(this,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','yes','lokasi tanah');"                    
+         onBlur="check_length(this,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','no','lokasi tanah');"  
+         onKeyup="check_length(this,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','no','lokasi tanah');" 
+         onKeydown="check_length(this,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','no','lokasi tanah');"                    
           $readonlymode class = "$disabledmode" 
         >$txtKerosakanTanah</textarea>
        #if($readmode == "edit")           
@@ -160,6 +163,32 @@
          #end
   		<div id="txtKerosakanTanah_check" class="alert_msg" ></div>                 </td>
             </tr>
+          
+          <!-- TAMBAH MEDAN KETERANGAN KEROSAKAN --> 
+          <tr>
+              <td width="1%" valign="top">&nbsp;</td>
+              <td width="28%" valign="top">Keterangan Kerosakan</td>
+              <td width="1%" valign="top">:</td>
+              <td width="70%">   
+              <!--           
+               <textarea name="txtKeteranganKerosakan" id="txtKeteranganKerosakan" cols="80"  rows="6" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();checking_validation(this,'txtKeteranganKerosakan_check','yes','Keterangan Kerosakan','normal')"  onKeyUp="checking_validation(this,'txtKeteranganKerosakan_check','yes','lokasi tanah','normal')" $readonlymode class = "$disabledmode" >$txtKeteranganKerosakan</textarea>     
+         <div id="txtKerosakanTanah_check" style="color:red" ></div>     
+         -->
+         
+           <textarea name="txtKeteranganKerosakan" id="txtKeteranganKerosakan" cols="80"   rows="6"         
+         onBlur="check_length(this,'4000','txtKeteranganKerosakan_check','txtKeteranganKerosakan_num','normal','no','Keterangan Kerosakan');"  
+         onKeyup="check_length(this,'4000','txtKeteranganKerosakan_check','txtKeteranganKerosakan_num','normal','no','Keterangan Kerosakan');" 
+         onKeydown="check_length(this,'4000','txtKeteranganKerosakan_check','txtKeteranganKerosakan_num','normal','no','Keterangan Kerosakan');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKeteranganKerosakan</textarea>
+       #if($readmode == "edit")           
+        <div><span id="txtKeteranganKerosakan_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKeteranganKerosakan_num" id="txtKeteranganKerosakan_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  		<div id="txtKeteranganKerosakan_check" class="alert_msg" ></div>                 </td>
+            </tr>
+                       
             <tr>
               <td width="1%" valign="top">&nbsp;</td>
               <td width="28%" valign="top">Kerosakan Tanaman</td>
@@ -171,9 +200,9 @@
          -->
          
             <textarea name="txtKerosakanTanaman" id="txtKerosakanTanaman" cols="80"   rows="6"         
-         onBlur="check_length(this,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','yes','keadaan lot');"  
-         onKeyup="check_length(this,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','yes','keadaan lot');" 
-         onKeydown="check_length(this,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','yes','keadaan lot');"                    
+         onBlur="check_length(this,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','no','keadaan lot');"  
+         onKeyup="check_length(this,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','no','keadaan lot');" 
+         onKeydown="check_length(this,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','no','keadaan lot');"                    
           $readonlymode class = "$disabledmode" 
         >$txtKerosakanTanaman</textarea>
        #if($readmode == "edit")           
@@ -346,8 +375,9 @@ window.location.hash='paging';
 goTo('paging');
 }
 
-check_length(document.${formName}.txtKerosakanTanah,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','yes','lokasi tanah');
-check_length(document.${formName}.txtKerosakanTanaman,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','yes','keadaan lot');
+check_length(document.${formName}.txtKerosakanTanah,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','no','lokasi tanah');
+check_length(document.${formName}.txtKeteranganKerosakan,'4000','txtKeteranganKerosakan_check','txtKeteranganKerosakan_num','normal','no','keterangan kerosakan');
+check_length(document.${formName}.txtKerosakanTanaman,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','no','keadaan lot');
 check_length(document.${formName}.txtKerosakanBangunan,'4000','txtKerosakanBangunan_check','txtKerosakanBangunan_num','normal','no','jenis tanaman');
 check_length(document.${formName}.txtKosDitanggung,'4000','txtKosDitanggung_check','txtKosDitanggung_num','normal','no','maklumat berhampiran');
 
