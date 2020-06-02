@@ -315,7 +315,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 		}else if(command.equals("maklumatanahonline")){
 			getValues();
 			getPermohonanInfo();
-
+			myLog.info("Read Here");
 			Vector<HakmilikUrusan> m = getIPembelian().getHakmilikList(getParam("txtidPermohonan"));
 			context.put("mt", m);
 			context.put("selectedTab", 0);
@@ -380,14 +380,23 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			vm = PATH+"tanahInfoOnline.jsp";
 			myLog.info("detailTanah Online::"+vm);	
 			
-		}else if(command.equalsIgnoreCase("kemaskiniMaklumatTanah")){			
+		}else if(command.equalsIgnoreCase("kemaskiniMaklumatTanah")){	
+			myLog.info("kemaskiniMaklumatTanah1::"+vm);
 			getValuesMaklumatTanah();
+			myLog.info("kemaskiniMaklumatTanah2::"+vm);
 			tambahTanahDetail2();
-			urusan = getIPembelian().updateHakmilik(urusan);		
+			myLog.info("kemaskiniMaklumatTanah3::"+vm);
+			urusan = getIPembelian().updateHakmilik(urusan);	
+			myLog.info("kemaskiniMaklumatTanah4::"+vm);
 			context.put("urusan", urusan);
-
+			myLog.info("kemaskiniMaklumatTanah5::"+vm);
 			vm = PATH+"tanahInfoOnline.jsp";
 			myLog.info("kemaskiniMaklumatTanah online ::"+vm);
+			context.put("buttonMode", 2);
+			context.put("mode", 0);
+			context.put("pemilik", pemilik);
+			//context.put("mt", m);
+			//context.put("pp", p);
 			
 		}else if(command.equals("deleteMaklumatTanah")){
 			myLog.info("deleteMaklumatTanah ::"+vm);

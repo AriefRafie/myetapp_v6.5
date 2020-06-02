@@ -35,7 +35,7 @@
 				      <td><div align="right"><font color="#FF0000">*</font>Daerah :</div></td>
 				      <td>$socDaerah</td>
 				      <td><div align="right"><font color="#FF0000">*</font>No. Hakmilik :</div></td>
-				      <td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik" maxlength="21" onkeyup="this.value=this.value.toUpperCase();" value="$!urusan.getNohakmilik()" $mode $classdis /></td>
+				      <td><input type="number" name="txtNoHakmilik" id="txtNoHakmilik" maxlength="21" onkeyup="this.value=this.value.toUpperCase();" value="$!urusan.getNohakmilik()" $mode $classdis /></td>
 			        </tr>
 		         	<tr>
 		         	  <td><div align="right"><font color="#FF0000">*</font>Bandar/Pekan/Mukim :</div></td>
