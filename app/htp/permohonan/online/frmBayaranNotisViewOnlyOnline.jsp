@@ -523,7 +523,7 @@
 			<td width="18%">Tarikh Resit</td>
 			<td width="20%">Jumlah Baucer</td>
 		</tr>
-
+BuktiBayaranInfo2 = $BuktiBayaranInfo2
 		#set ( $cnt1 = 0 ) 
 		#foreach ( $Bukti in $BuktiBayaranInfo2 ) 
 		#set ($cnt1 = $cnt1 + 1 ) 
