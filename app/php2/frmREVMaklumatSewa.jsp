@@ -110,7 +110,10 @@
           <td class="$row" align="right">$list.kredit</td>
           <td class="$row" align="right">$list.baki</td>
           #if ($!list.idJenisTransaksi == '1')
-          <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:cetakInvois('$list.idAkaun')"><img border="0" src="../img/print.gif"/></a></td>
+          <td class="$row" align="center">
+          	<a href="#" class="style2" onClick="javascript:cetakInvois('$list.idAkaun')"><img border="0" src="../img/print.gif"/></a>
+          	<a class="style2" href="javascript:sendNotisByEmail('$list.idAkaun')">Hantar</a>
+          </td>
           #else
           <td class="$row">&nbsp;</td>
           #end

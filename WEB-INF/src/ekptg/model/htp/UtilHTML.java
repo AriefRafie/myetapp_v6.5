@@ -1171,7 +1171,7 @@ public class UtilHTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdSuburusan() + ">"
-						+ f.getKodSuburusan() + " - " + f.getNamaSuburusan()
+						+ f.getNamaSuburusan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");

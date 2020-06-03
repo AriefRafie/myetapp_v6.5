@@ -273,29 +273,43 @@ function toggle_div(id) {
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:senaraiPemberimilikan()" class="help" title="Senarai Tugasan">
+																<a href="javascript:senaraiPemberimilikan()" class="help" title="Pemberimilikan / Perizaban">
 																	<font color="blue"><li>Pemberimilikan / Perizaban</li></font>						
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:pembelian()" class="help" title="Pendaftaran permohonan lesen pasir">
+																<a href="javascript:pembelian()" class="help" title="Pembelian">
 																	<font color="blue"><li>Pembelian</li></font>						
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:rekod()" class="help" title="Pendaftaran permohonan lesen pasir">
+																<a href="javascript:rekod()" class="help" title="Rekod Hakmilik / Rizab">
 																	<font color="blue"><li>Rekod Hakmilik / Rizab</li></font>						
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:laporanHakmilik()" class="help" title="Pendaftaran permohonan lesen pasir">
+																<a href="javascript:laporanHakmilik()" class="help" title="Laporan Hakmilik / Rizab">
 																	<font color="blue"><li>Laporan Hakmilik / Rizab</li></font>						
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:gadaian()" class="help" title="Gadaian">
+																	<font color="blue"><li>Gadaian</li></font>						
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:jawatankuasaRuangPejabat()" class="help" title="Jawatankuasa Ruang Pejabat">
+																	<font color="blue"><li>Jawatankuasa Ruang Pejabat</li></font>						
 																</a>
 															</td>
 														</tr>
@@ -585,6 +599,14 @@ function pembelian(){
 }
 function permohonanPembelian(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.pembelian.FrmPermohonanPembelian";
+	document.${formName}.submit();
+}
+function gadaian(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.gadaian.FrmKJPGadaianA";
+	document.${formName}.submit();
+}
+function jawatankuasaRuangPejabat(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.pajakankecil.FrmKJPJawatankuasaRuangPejabat";
 	document.${formName}.submit();
 }
 

@@ -17,6 +17,7 @@
         		<tr class="table_header">
         			<td align="center"><b>Bil.</b></td>
         			<td><b>Tarikh Borang K</b></td>
+        			<td><b>Negeri</b></td>
         			<td><b>Tarikh Endorsan Borang K</b></td>
 	       			<td><b>No.Lot</b></td> 
         			
@@ -36,6 +37,7 @@
                <tr>
                    <td class="$row" align="center">$!cnt.</td>
                    <td class="$row">$!listK.tarikhBorangK</td>
+                   <td class="$row">$!listK.idNegeri</td>
                    <td class="$row">$!listK.tarikhEndosan</td>
                    <td class="$row">$!listK.noLot</td>
                 

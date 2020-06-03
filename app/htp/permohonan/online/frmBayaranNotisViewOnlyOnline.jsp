@@ -523,7 +523,7 @@
 			<td width="18%">Tarikh Resit</td>
 			<td width="20%">Jumlah Baucer</td>
 		</tr>
-
+BuktiBayaranInfo2 = $BuktiBayaranInfo2
 		#set ( $cnt1 = 0 ) 
 		#foreach ( $Bukti in $BuktiBayaranInfo2 ) 
 		#set ($cnt1 = $cnt1 + 1 ) 
@@ -535,11 +535,11 @@
 		#end
 		<tr>
 			<td class="$row">$cnt1.</td>
-			<td class="$row">$!Bukti.nobaucer</td>
-			<td class="$row">$!Bukti.noresit</td>
-			<td class="$row">$!Bukti.tarikhbaucer</td>
-			<td class="$row">$!Bukti.tarikhresit</td>
-			<td class="$row">$!Bukti.jumlahbayaran</td>
+			<td class="$row">$Bukti.noBaucer</td>
+			<td class="$row">$Bukti.noResit</td>
+			<td class="$row">$Bukti.tarikhBaucer</td>
+			<td class="$row">$Bukti.tarikhResit</td>
+			<td class="$row">$Bukti.jumlahBaucer</td>
 		</tr>
 		#end #if ($cnt == 0)
 		<tr>
