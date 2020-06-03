@@ -54,6 +54,7 @@ public class FrmPLPCetakanMinitCeraianView extends AjaxBasedModule {
 		if (postDB) {
 			if ("doSeterusnya".equals(hitButton)) {
 				logic.updateStatus(idFail, idPermohonan, session);
+				logic.sendEmailtoKJP(idPermohonan, "18", session);
 			}
 			if ("doBatalPermohonan".equals(hitButton)) {
 				logic.doBatalPermohonan(idFail, idPermohonan,

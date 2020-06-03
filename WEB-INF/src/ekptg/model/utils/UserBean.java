@@ -91,7 +91,7 @@ public class UserBean implements IUserPegawai {
 
 	}
 	
-	public List<Map<String,String>> getKementerianPenyedia(String idKementerian) throws Exception {
+	public List<Map<String,String>> getKementerianPenyedia(String idKementerian, String idAgensi) throws Exception {
 		Db db = null;
 		ResultSet rs = null;
 		Statement stmt = null;
@@ -104,7 +104,8 @@ public class UserBean implements IUserPegawai {
 		
 			sql = " SELECT UI.EMEL FROM USERS U, USERS_INTERNAL UI, USERS_KEMENTERIAN UK "
 				+ " WHERE U.USER_ID = UI.USER_ID AND U.USER_ID = UK.USER_ID "
-				+ " AND UI.ID_JAWATAN = '24' AND UI.FLAG_AKTIF = '1' AND UK.ID_KEMENTERIAN = '"+idKementerian+"'";
+				+ " AND UI.ID_JAWATAN = '24' AND UI.FLAG_AKTIF = '1' " 
+				+ " AND UK.ID_KEMENTERIAN = '"+idKementerian+"' AND UK.ID_AGENSI = '"+idAgensi+"'";
 			
 			myLog.info(" SQL listKementerianPenyedia :"+ sql);			
 			rs = stmt.executeQuery(sql);

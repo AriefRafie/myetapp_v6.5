@@ -247,14 +247,14 @@ public class FrmPLPCetakanMinitKewanganData {
 				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
 			}	
 			
-			String tajuk = "PERMOHONAN ULASAN URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
+			String tajuk = "PERMOHONAN ULASAN KERTAS CADANGAN URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
 			String kandungan = "Mohon pihak tuan memberikan ulasan dan keputusan bagi permohonan tersebut<br><br>"
 							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
 							 + "sebelum " + tarikhAkhir + " amatlah dihargai."
 							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
 							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
 			
-			conf.sendByKJPPenyedia(idKementerian, emelUser, tajuk, kandungan);
+			conf.sendByKJPPenyedia(idKementerian, "", emelUser, tajuk, kandungan);
 			//email.sendEmail();
 			
 		} finally {

@@ -84,11 +84,11 @@ public class EmailConfig {
 		mail.sendEmail();	
 	}
 	
-	public void sendByKJPPenyedia(String idKementerian, String userMail, String tajuk,
+	public void sendByKJPPenyedia(String idKementerian, String idAgensi, String userMail, String tajuk,
 			String kandungan) throws Exception {
 		
 		UserBean ub = new UserBean();
-		List<Map<String,String>> senaraiKJPPenyedia = ub.getKementerianPenyedia(idKementerian);
+		List<Map<String,String>> senaraiKJPPenyedia = ub.getKementerianPenyedia(idKementerian, idAgensi);
 		myLog.info("senarai size="+senaraiKJPPenyedia.size());
 		
 		kandungan+= " <br><br>Sekian, terima kasih.<br><br><br>";			
