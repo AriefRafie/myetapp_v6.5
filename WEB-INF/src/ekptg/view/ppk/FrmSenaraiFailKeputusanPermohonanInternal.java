@@ -221,7 +221,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			//this.context.put("ViewHartaARB", listHartaARB);
 
 			String t_mohon = getParam("tarikh_mohon");
-
+			//System.out.println("t_mohon : " +t_mohon );
 			if (!t_mohon.equals("")) {
 				String september_mohon = "01/09/2009";
 				// /System.out.println("[check]1: " +t_mohon );
@@ -229,9 +229,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 				Date tar_mohon = df.parse(t_mohon);
 				Date sep_mohon = df.parse(september_mohon);
-
+				//System.out.print(" tar_mohon =  "+tar_mohon);
+				//System.out.print(" sep_mohon =  "+sep_mohon);
 				if (tar_mohon.before(sep_mohon)) {
-					// System.out.print(" is before ");
+
+					//System.out.print(" is before1 ");
 					view_mode(session);
 					int eventStatus = 1;
 					this.context.put("EventStatus", eventStatus);
@@ -354,7 +356,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 							.getMaklumatMahkamahM();
 					this.context.put("listMaklumatMahkamahJ",
 							listMaklumatMahkamahM);
-
+					
 					this.context.put("eve", "");
 
 					this.context.put("setMode1", "");
@@ -390,14 +392,18 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					} else {
 						this.context.put("listBandarTetapbyNegeri", "");
 					}
-
+					//arief add Summary DIstribution Open
+					FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
+					Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
+					this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
+					//arief add Summary DIstribution Close
 					// headerppk_baru(session,id,"Y","","T");
 					vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 				}
 
 				// System.out.println("TARIKH MOHON:"+tar_mohon);
 			} else {
-				// System.out.print(" is before ");
+				//System.out.print(" is before2 ");
 				view_mode(session);
 				int eventStatus = 1;
 				this.context.put("EventStatus", eventStatus);
@@ -431,7 +437,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 						.getMaklumatMahkamahM();
 				this.context
 						.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
-
+				
 				this.context.put("eve", "");
 
 				this.context.put("setMode1", "");
@@ -800,7 +806,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-
+			
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -909,7 +915,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 			this.context.put("eve", 8);
 			this.context.put("eve_mah", "");
-
+			//arief add Summary DIstribution Open
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
+			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
+			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
+			//arief add Summary DIstribution Close
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
@@ -933,7 +943,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-
+			
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -1066,7 +1076,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-
+			
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -1194,7 +1204,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("jenis_pej_id", "");
 
 			headerppk_baru(session, getParam("idPermohonan"), "Y", "", "T");
-
+			//arief add Summary DIstribution Open
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
+			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
+			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
+			//arief add Summary DIstribution Close
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
@@ -1212,7 +1226,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-
+			
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -1353,7 +1367,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			} else {
 				this.context.put("listBandarTetapbyNegeri", "");
 			}
-
+			//arief add Summary DIstribution Open
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
+			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
+			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
+			//arief add Summary DIstribution Close
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 		
@@ -1530,7 +1548,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-
+			
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -1817,7 +1835,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("socNegeriWarisSurat",
 					getParam("socNegeriWarisSurat"));
 			this.context.put("pilih_negeri_ptd", getParam("pilih_negeri_ptd"));
-
+			//arief add Summary DIstribution Open
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
+			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
+			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
+			//arief add Summary DIstribution Close
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
@@ -2758,6 +2780,13 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
 
 			// vm = "app/ppk/frmPrmhnnSek8RujMahkamah.jsp";
+			
+			//arief add Summary DIstribution Open
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
+			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
+			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
+			//arief add Summary DIstribution Close
+			
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		} else if ("getMahkamah".equals(submit)) {
 
@@ -2916,6 +2945,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("eve_mah", "");
 
 			// vm = "app/ppk/frmPrmhnnSek8RujMahkamah.jsp";
+			//arief add Summary DIstribution Open
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
+			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
+			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
+			//arief add Summary DIstribution Close
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
@@ -3450,6 +3484,12 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("eve_mah", "");
 			// vm = "app/ppk/frmPrmhnnSek8RujMahkamah.jsp";
 
+			//arief add Summary DIstribution Open
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
+			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
+			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
+			//arief add Summary DIstribution Close
+			
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
