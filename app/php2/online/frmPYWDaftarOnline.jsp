@@ -356,13 +356,13 @@
           	<td>:</td>
           	<td>$selectSuburusan</td>
         </tr>
-        <tr>
+        <!--  <tr>
 			<td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
 			<td>Tujuan</td>
 			<td>:</td>
 			<td>$selectSubSuburusan</td>
 			
-		</tr>
+		</tr>-->
         <tr>
         	<td></td>
         	<td>Tarikh Surat/Borang</td>
@@ -572,7 +572,7 @@ function pilihBorangK() {
 
 
 function janaTajuk() {
-	alert("1");
+	//alert("1");
 	
 	if(document.${formName}.socUrusan.value == ""){
 		alert('Sila pilih Urusan Sebelum Menjana Tajuk.');
@@ -584,11 +584,11 @@ function janaTajuk() {
 			document.${formName}.socSuburusan.focus(); 
 		return; 
 	}
-	if(document.${formName}.socSubsuburusan.value == ""){
+	/*if(document.${formName}.socSubsuburusan.value == ""){
 		alert('Sila pilih Tujuan Sebelum Menjana Tajuk.');
 			document.${formName}.socSubsuburusan.focus(); 
 		return; 
-	}
+	}*/
 	if(document.${formName}.idHakmilikAgensi.value == "" && document.${formName}.idHakmilikSementara.value == ""){
 		alert('Sila pilih Pegangan Hakmilik Sebelum Menjana Tajuk.');
 		document.${formName}.idHakmilikAgensi.focus(); 
