@@ -22,15 +22,22 @@ public class EmailConfig {
 		mail = EmailSender.getInstance();
 	}
 	
-	public void sendTo(String userMail
+	public boolean sendTo(String userMail
 			,String tajuk
 			,String kandungan) throws Exception {
-		
+		boolean returnVal = false; 
 		mail.SUBJECT = tajuk;
 		mail.MESSAGE = kandungan + getFooter();		
 		mail.RECIEPIENT = userMail;
 //		mail.TO_CC = new String[1];		
-		mail.sendEmail();
+		try {
+			mail.sendEmail();
+			returnVal = true;
+			
+		} catch (Exception e) {
+			myLog.info(e.getMessage());
+		}		
+		return returnVal;
 		
 	}
 	
@@ -109,8 +116,8 @@ public class EmailConfig {
 //
 //	}	
 	public String getFooter() {
-		String kandungan= " <br><br>Sekian, terima kasih.<br><br><br>";			
-		kandungan+= " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+		String kandungan= "\n\n Sekian, terima kasih.\n\n\n";			
+		kandungan+= " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. \n";
 		return kandungan;
 		
 	}
