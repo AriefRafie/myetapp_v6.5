@@ -1017,7 +1017,7 @@ function daftarLampiran() {
 function doSimpanKemaskiniSenaraiSemak() {
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		document.${formName}.mode.value = "update";
+		document.${formName}.mode.value = "view";
 		return;
 	}
 	

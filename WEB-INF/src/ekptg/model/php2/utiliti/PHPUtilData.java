@@ -59,6 +59,7 @@ public class PHPUtilData {
 				   	+ " AND A.ID_SEKSYEN = 4 AND A.ID_URUSAN = 7 "
 				   	+ " AND A.FLAG_FAIL = 1 AND A.ID_MASUK = '" + userId + "'";
 		
+		myLogger.info("Tblpfdfail :" +sql);
 		try {
 
 			db = new Db();
@@ -68,7 +69,6 @@ public class PHPUtilData {
 			r.add("no_fail");
 			r.add("id_masuk", Integer.parseInt(userId));
 			v = new Vector<Tblpfdfail>();
-			myLogger.info("Tblpfdfail :" +sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			Tblpfdfail t = null;
