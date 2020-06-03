@@ -179,7 +179,7 @@ a.nav:visited {
                           </tr>
                           <tr>
                             <td><a href="javascript:gotoSenaraiTugasanPelepasan()" class="help" title="Fail Tugasan"> <font color="blue">
-                              <li>Pelepasan</li>
+                              <li> Pelepasan</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
