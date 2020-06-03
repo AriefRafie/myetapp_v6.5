@@ -311,6 +311,7 @@ function deleteTanah(idhtp,id){
 	  		document.${formName}.socKategori.focus(); 
 			return; 
 		}	
+		
 		doAjaxCall${formName}("kemaskiniMaklumatTanah");
 	
 	}	

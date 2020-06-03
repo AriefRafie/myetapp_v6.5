@@ -66,7 +66,7 @@
 		                <td width="2%">:</td>
 		                <td width="64%">
 		                 #if ($idFail == "")
-		                <input type="text" name="txtNoFailSek" size="40" maxlength="400" class="" value="" onkeyup="this.value=this.value.toUpperCase();">
+		                <input type="text" name="txtNoFailSek" size="40" maxlength="400" class="disabled" value="" onkeyup="this.value=this.value.toUpperCase();" disabled>
 		                #else
 		                
 		                $noFail
