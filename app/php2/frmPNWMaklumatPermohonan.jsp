@@ -52,7 +52,8 @@
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH BERKAITAN</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
-          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PELAN</li>
+          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
+          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAMPIRAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">#if ($flagBorangK == 'Y') #parse("app/php2/frmPLPMaklumatBorangK.jsp") #else #parse("app/php2/frmPLPMaklumatTanah.jsp") #end</div>
@@ -66,8 +67,8 @@
                   <table align="center" width="100%">
                     <tr>
                       <td colspan="8" scope="row">
-                      	<input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                        <input name="cmdDaftar" type="button" value="Daftar Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
+                      	<input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
+                        <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
                       </td>
                     </tr>
                     <tr class="table_header">
@@ -140,6 +141,11 @@
           <div class="TabbedPanelsContent">
          	<br>
             #parse("app/php2/frmPNWMaklumatPermohonanPermohonan.jsp") 
+          </div>
+          
+          <div class="TabbedPanelsContent">
+         	<br>
+            #parse("app/php2/frmTKRSenaraiSemak.jsp")
           </div>
           
           <div class="TabbedPanelsContent"> 
@@ -648,5 +654,15 @@ function doHapus(idHakmilikPermohonan) {
 	document.${formName}.hitButton.value = "doHapus";
 	doAjaxCall${formName}("");
 }
-
+function doSimpanKemaskiniSenaraiSemak() {
+	
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "update";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
+	document.${formName}.submit();
+}
 </script>

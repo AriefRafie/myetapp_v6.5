@@ -22,11 +22,11 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
     <td><fieldset>
       <legend><strong>SENARAI IMEJ</strong></legend>
       <table align="center" width="100%">
-        <!-- kmie, 20100812 (MacGDI) -->
+        <!-- kmie, 20100812 (MacGDI)
         <tr>
           <td colspan="2" scope="row"><a href="http://g4nre.mygeoportal.gov.my" target="_blank" style="color:#0000FF">MacGDI</a></td>
         </tr>
-        <!-- end edit (kmie) -->
+         end edit (kmie) -->
         <tr>
           <td colspan="2" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarDokumen()"/></td>
         </tr>
