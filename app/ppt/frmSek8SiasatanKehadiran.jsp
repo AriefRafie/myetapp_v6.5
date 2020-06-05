@@ -1167,9 +1167,9 @@ Tidak Hadir &nbsp; &nbsp;<span id="txtPBhadir_check" class = "alert_msg" >      
      
 <input type="button" value="Simpan Kehadiran" onClick="Update_kehadiran()">
 <input type="button" value="Tambah Kehadiran (Wakil)" onClick="tambahWakil()">
-<input type="button" value="Cetak Senarai Kehadiran" onClick="cetakSenarai('$!id_permohonan','$!id_hakmilik')">
+<input type="button" value="Cetak Senarai Kehadiran" onClick="cetakSenarai('$id_permohonan','$id_hakmilik')">
 <!-- PPT-27 -->
-<input type="button" value="Cetak Senarai Kehadiran (kosong)" onClick="cetakSenaraiKosong('$!id_permohonan','$!id_hakmilik')">
+<input type="button" value="Cetak Senarai Kehadiran (kosong)" onClick="cetakSenaraiKosong('$id_permohonan','$id_hakmilik','$no_fail')">
 
 #if($list_kehadiran.size()!=0)
 <!-- <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> -->  
@@ -1719,16 +1719,18 @@ Tidak Hadir &nbsp; &nbsp;<span id="txtPBhadir_check" class = "alert_msg" >      
   
 <script>
 function cetakSenarai(idpermohonan,id_hakmilik) {
-	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+id_hakmilik+"&report=senaraiKehadiran&selectNoFail=yes";
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_permohonan="+idpermohonan+"&report=senaraiKehadiran&selectNoFail=yes";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
 
+
 // PPT-27
-function cetakSenaraiKosong(idpermohonan,id_hakmilik) {
-	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+id_hakmilik+"&report=senaraiKehadiranKosong&selectNoFail=yes";
+function cetakSenaraiKosong(id_permohonan,id_hakmilik,no_fail) {
+	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_permohonan="+id_permohonan+"&report=senaraiKehadiranKosong&selectNoFail=yes";
+	var url = "../servlet/ekptg.report.ppt.senaraiKehadiranKosong?id_hakmilik="+id_hakmilik+"&id_permohonan="+id_permohonan+"&no_fail="+no_fail;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
