@@ -334,6 +334,9 @@ function toggle_div(id) {
 																<a href="javascript:aduan()" class="help" title="Pengurusan Log Aduan">
 																	<font color="blue"><li>&nbsp;Hantar Aduan & Cadangan</li></font>	
 																</a>
+																<a href="javascript:permhonanDikembalikan()" class="help" title="Permohonan Dikembalik">
+																	<font color="blue"><li>&nbsp;Permohonan Dikembalikan</li></font>	
+																</a>
 															</td>
 														</tr>
 														<!-- <tr>
@@ -617,6 +620,10 @@ function jawatankuasaRuangPejabat(){
 
 function aduan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Aduan / Cadangan",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
+	document.${formName}.submit();
+}
+function permohonanDikembalikan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Permohonan Dikembalikan",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
 	document.${formName}.submit();
 }
 
