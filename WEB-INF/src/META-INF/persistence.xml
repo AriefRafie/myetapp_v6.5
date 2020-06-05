@@ -145,26 +145,31 @@
     <class>ekptg.view.ppk.MTFailAwal</class>
 	  
 	<properties>
-	<!-- DB LOCAL  -->
-<!-- 	<property name="javax.persistence.jdbc.user" value="ekptghqlive"/> -->
-<!-- 	<property name="javax.persistence.jdbc.password" value="ekptghqv6live"/>	 -->
-<!-- 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/myetapp"/> -->
+	<!-- DB LOCAL  
+	<property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
+	<property name="javax.persistence.jdbc.password" value="ekptghqlive"/>
+ 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/orcl"/> -->
+ 	
+ 	<!--  DB UAT  -->
+ 	<property name="javax.persistence.jdbc.user" value="ekptghquat"/>
+	<property name="javax.persistence.jdbc.password" value="ekptghquat"/>
+ 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/>
 	
 	<!-- DB POC  -->
-	<!--  <property name="javax.persistence.jdbc.user" value="ekptghq"/>
+	<!--  <property name="javax.persistence.jdbc.user" value="ekptghq"/> -->
 
-	<!-- DB POC  -->
+	<!-- DB POC 
 	<property name="javax.persistence.jdbc.user" value="ekptghq"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghq"/>	
-	 <!--<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.1.102:1521/orclocal"/> -->
-	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.8.112:1521/orclocal"/> <!---->
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.1.102:1521/orclocal"/>
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.8.112:1521/orclocal"/> -->
 
 	<!-- DB LOCAL DELL -->
 	<!--<property name="javax.persistence.jdbc.user" value="ekptghq"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghq"/>	 	 
 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.8.112:1521/orclocal"/>
 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.1.102:1521/orclocal"/>
-	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.43.128:1521/orclocal"/>
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.43.128:1521/orclocal"/> -->
 	
 	<!-- DB LIVE 
 	<property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
