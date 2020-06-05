@@ -246,10 +246,24 @@
 						</a>
 						</td>
 					</tr>
-						<tr>
+					<tr>
 						<td>
-						<a href="javascript:goTo('NOTIS')" class="help" title="Semakan Notis Perbicaraan Pembahagian Pusaka">
-							<font color="blue"><li>Notis Perbicaraan Pembahagian Pusaka</li></font>
+						<a href="javascript:goTo('SEMAKAN')" class="help" title="Semakan Notis Perbicaraan Pembahagian Pusaka">
+							<font color="blue"><li>Semakan Notis Perbicaraan Pembahagian Pusaka</li></font>
+						</a>
+						</td>
+					</tr>
+					<!-- <tr>
+						<td>
+						<a href="javascript:goTo('TUKARPEMOHON')" class="help" title="Permohonan Pengganti Pempetisyen">
+							<font color="blue"><li>Permohonan Pengganti Pempetisyen</li></font>
+						</a>
+						</td>
+					</tr> -->
+					<tr>
+						<td>
+						<a href="javascript:goTo('KEMBALI')" class="help" title="Permohonan Dikembalikan">
+							<font color="blue"><li>Permohonan Dikembalikan</li></font>
 						</a>
 						</td>
 					</tr>
@@ -467,10 +481,16 @@ else if(location=='DERAFPPK'){
         document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
         document.${formName}.submit();
 }
-else if(location=='NOTIS'){
+else if(location=='SEMAKAN'){
     document.${formName}.action = "?myrole=ppk-online-user";
     document.${formName}.namatab.value = "Pusaka Kecil";
-    document.${formName}.namamodul.value = "ekptg.view.ppk.CarianNotisPerbicaraan";
+    document.${formName}.namamodul.value = "ekptg.view.online.CarianNotisPerbicaraan";
+    document.${formName}.submit();
+}
+else if(location=='TUKARPEMOHON'){
+    document.${formName}.action = "?myrole=ppk-online-user";
+    document.${formName}.namatab.value = "Pusaka Kecil";
+    document.${formName}.namamodul.value = "ekptg.view.online.FrmTukarPemohon";
     document.${formName}.submit();
 }
 else if(location=='PPT'){
