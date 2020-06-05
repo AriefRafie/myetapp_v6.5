@@ -623,7 +623,7 @@ function aduan() {
 	document.${formName}.submit();
 }
 function permohonanDikembalikan() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Permohonan Dikembalikan",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
+	document.${formName}.action = "$EkptgUtil.getTabID("Permohonan Dikembalikan ",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
 	document.${formName}.submit();
 }
 
