@@ -1,6 +1,6 @@
 <br>
 <table width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
-#if($USER_ROLE=="adminppk" || $USER_ROLE=="user_ppk")	
+
 	<tr>
 	<td>	
 		<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
@@ -44,7 +44,7 @@
 		</div>		
 	</td>
 	</tr>
-#end
+
 
 	
 </table>

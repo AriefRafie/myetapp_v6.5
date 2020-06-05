@@ -79,7 +79,7 @@
           <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td width="28%">Kategori Pemohon</td>
           <td>:</td>
-          <td width="70%">$selectKategoriPemohon</td>
+          <td width="70%">1</td>
         </tr>
         #if ($idKategoriPemohon == '1')
         <tr>

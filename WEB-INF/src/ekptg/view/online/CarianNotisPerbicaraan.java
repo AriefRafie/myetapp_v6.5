@@ -23,8 +23,7 @@ import ekptg.model.ppk.FrmPrmhnnSek8Notis;
 
 public class CarianNotisPerbicaraan extends AjaxBasedModule {
 	static Logger myLogger = Logger.getLogger(CarianNotisPerbicaraan.class);
-	String skrin_name = "app/online/manuUtama/index.jsp";
-	
+	String skrin_name = "app/ppk/online/NPindex.jsp";
 	
 	// model
 	FrmPrmhnnSek8Notis modelNotis = new FrmPrmhnnSek8Notis();
@@ -57,17 +56,10 @@ public class CarianNotisPerbicaraan extends AjaxBasedModule {
 		String checkSyntaxQuery = "";
 		Vector list = new Vector();
 
-		
-		
 		HttpSession session = this.request.getSession();
 		
-		list.clear();
-
-
-		
-		
+		list.clear();		
 		defaultPut();
-		
 		
 		String command = getParam("command");
 		myLogger.info("OT command : "+command);
@@ -90,14 +82,14 @@ public class CarianNotisPerbicaraan extends AjaxBasedModule {
 		{			
 			listNP = listNP(session);
 			this.context.put("listNP",listNP);
-			this.context.put("listNP_forPrint",listNP);		
+			this.context.put("listNP_forPrint",listNP);
 			
 			String action = getParam("action");
 			setupPage(session,action,list);
 			 
 			 //vm = "app/ppk/printKIV.jsp";
 			
-			skrin_name = "app/ppk/notisP/NPSenaraiNP_Print.jsp";
+			skrin_name = "app/ppk/online/NPSenaraiNP_Print.jsp";
 		}
 		else if(command.equals("showSenaraiNP"))
 		{			
@@ -109,7 +101,7 @@ public class CarianNotisPerbicaraan extends AjaxBasedModule {
 			listNP = listNP(session);
 			setupPageList(session, action, listNP, "listNP",command,"div_SenaraiNP");
 			
-			skrin_name = "app/ppk/notisP/NPSenaraiNP.jsp";
+			skrin_name = "app/ppk/online/NPSenaraiNP.jsp";
 		}
 		else if(command.equals("showCARIAN_NP"))
 		{
@@ -117,7 +109,7 @@ public class CarianNotisPerbicaraan extends AjaxBasedModule {
 			this.context.put("FLAG_NP_CARIAN", getParam("FLAG_NP_CARIAN"));
 			this.context.put("NP_OPENCLOSE_CARIAN",getParam("NP_OPENCLOSE_CARIAN"));
 		
-			skrin_name = "app/ppk/notisP/NPskrinCarianNP.jsp";
+			skrin_name = "app/ppk/online/NPskrinCarianNP.jsp";
 		}
 		
 		
@@ -166,10 +158,6 @@ public class CarianNotisPerbicaraan extends AjaxBasedModule {
 		this.context.put("listNP_forPrint", "");
 		
 	}
-	
-	
-	
-	
 	
 	public String getUserFullName(HttpSession session, String USER_ID) throws Exception {
 		Db db = null;
@@ -414,17 +402,11 @@ public class CarianNotisPerbicaraan extends AjaxBasedModule {
 			this.context.put("startNumber", new Integer(paging.getTopNumber()));
 			this.context.put("isFirstPage", new Boolean(paging.isFirstPage()));
 			this.context.put("isLastPage", new Boolean(paging.isLastPage()));
-
-			
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.context.put("error", e.getMessage());
 		}
 	}
-		
-	
-		 
 		 
 }
