@@ -1,119 +1,207 @@
-2020-05-28 12:59:09,981 - RHS of #set statement is null. Context will not be modified. app/ppt/Sek8Paging.jsp[line 105, column 1]
-2020-05-28 12:59:09,982 - RHS of #set statement is null. Context will not be modified. app/ppt/Sek8Paging.jsp[line 120, column 1]
-2020-05-28 12:59:09,983 - Left side ($flag_semakan_online) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/frmPPTHeader.jsp[line 221, column 36]
-2020-05-28 12:59:09,983 - Left side ($flag_semakan_online) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/frmPPTHeader.jsp[line 221, column 65]
-2020-05-28 12:59:10,062 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-05-28 12:59:10,062 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-05-28 12:59:10,062 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-05-28 12:59:10,062 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-05-28 12:59:10,062 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-05-28 12:59:10,062 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-05-28 12:59:10,062 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-05-28 13:03:49,715 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-05-28 13:03:49,718 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-05-28 13:03:49,718 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-05-28 13:03:49,718 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-05-28 13:03:49,719 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-05-28 13:03:49,720 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-05-28 13:03:49,720 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-05-28 13:03:49,720 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-05-28 13:03:49,720 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-05-28 13:03:49,720 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-05-28 13:03:49,720 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-05-28 13:03:49,720 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-05-28 13:03:49,827 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-05-28 13:03:50,872 - ResourceManager : found app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-05-28 13:03:50,878 - Left side ($maklumat_Hakmilik_Salin.size()) of '>' operation has null value at app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp[line 11, column 41]
-2020-05-28 13:03:50,900 - ResourceManager : found app/ppt/frmSeksyen8ListHM.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2146, column 11] : $list_kehadiran_size cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2149, column 20] : $list_kehadiran_size cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2150, column 26] : $list_kehadiran_size cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2151, column 26] : $list_kehadiran_size cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2152, column 26] : $list_kehadiran_size cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2680, column 8] : $jquery cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2732, column 8] : $jquery cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2776, column 8] : $jquery cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2816, column 8] : $jquery cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2854, column 8] : $jquery cannot be resolved.
-2020-05-28 13:03:50,901 - Null reference [template 'app/ppt/HMdanPB/frmUPTSek8Hakmilik.jsp', line 2894, column 8] : $jquery cannot be resolved.
-2020-05-28 13:03:50,912 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-05-28 13:03:50,912 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-05-28 13:03:50,912 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-05-28 13:03:50,912 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-05-28 13:03:50,912 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-05-28 13:03:50,912 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-05-28 13:03:50,912 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-05-28 13:05:49,976 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-05-28 13:05:49,977 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-05-28 13:05:49,977 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-05-28 13:05:49,977 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:49,978 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-05-28 13:05:49,979 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-05-28 13:05:49,979 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-05-28 13:05:49,979 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-05-28 13:05:49,979 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-05-28 13:05:49,979 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-05-28 13:05:49,979 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-05-28 13:05:49,979 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-05-28 13:05:50,107 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-05-28 13:05:50,290 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-05-28 13:05:50,290 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-05-28 13:05:50,290 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-05-28 13:05:50,290 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-05-28 13:05:50,290 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-05-28 13:05:50,290 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-05-28 13:05:50,290 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-05-28 13:05:52,302 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-05-28 13:05:52,302 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-05-28 13:05:52,302 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-05-28 13:05:52,302 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-05-28 13:05:52,303 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-05-28 13:05:52,401 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-05-28 13:05:52,860 - RHS of #set statement is null. Context will not be modified. app/ppt/Sek8Paging.jsp[line 105, column 1]
-2020-05-28 13:05:52,860 - RHS of #set statement is null. Context will not be modified. app/ppt/Sek8Paging.jsp[line 120, column 1]
-2020-05-28 13:05:52,862 - Left side ($flag_semakan_online) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/frmPPTHeader.jsp[line 221, column 36]
-2020-05-28 13:05:52,862 - Left side ($flag_semakan_online) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/frmPPTHeader.jsp[line 221, column 65]
-2020-05-28 13:05:52,982 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-05-28 13:05:52,982 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-05-28 13:05:52,982 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-05-28 13:05:52,982 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-05-28 13:05:52,982 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-05-28 13:05:52,982 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-05-28 13:05:52,982 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-06-06 20:15:27,262 - Left side ($flagJPPH) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/header_siasatan.jsp[line 239, column 17]
+2020-06-06 20:15:27,263 - ResourceManager : found app/ppt/infoblink_biru.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 196, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 196, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 197, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 197, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 198, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 198, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 199, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 199, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 200, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,280 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 200, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,287 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 269, column 110] : $TEMPchecked2 cannot be resolved.
+2020-06-06 20:15:27,287 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 270, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,287 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 270, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,287 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 271, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,287 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 271, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,287 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 272, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 272, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 273, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 273, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 274, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 274, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 321, column 136] : $check1 cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 373, column 130] : $check1 cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 720, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 731, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 747, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 758, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 785, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 796, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 841, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 853, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:27,288 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 900, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 910, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 920, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 951, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 960, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 970, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1602, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1608, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1614, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1622, column 1] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-06-06 20:15:27,289 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-06-06 20:15:27,289 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-06-06 20:15:27,289 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-06-06 20:15:27,289 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-06-06 20:15:27,289 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-06-06 20:15:27,289 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-06-06 20:15:27,300 - ResourceManager : found vtl/main/footer.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-06-06 20:15:32,846 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-06-06 20:15:32,848 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-06-06 20:15:32,848 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-06-06 20:15:32,849 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-06-06 20:15:32,850 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-06-06 20:15:32,851 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-06-06 20:15:32,851 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-06-06 20:15:32,851 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-06-06 20:15:32,851 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-06-06 20:15:32,851 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-06-06 20:15:32,851 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-06-06 20:15:32,942 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-06-06 20:15:33,206 - Left side ($flagJPPH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/header_siasatan.jsp[line 110, column 17]
+2020-06-06 20:15:33,206 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 232, column 1]
+2020-06-06 20:15:33,206 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 233, column 1]
+2020-06-06 20:15:33,206 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 234, column 1]
+2020-06-06 20:15:33,207 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 235, column 1]
+2020-06-06 20:15:33,207 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 236, column 1]
+2020-06-06 20:15:33,207 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 237, column 1]
+2020-06-06 20:15:33,207 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 238, column 1]
+2020-06-06 20:15:33,207 - Left side ($flagJPPH) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/header_siasatan.jsp[line 239, column 17]
+2020-06-06 20:15:33,215 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 196, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,215 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 196, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,216 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 197, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,216 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 197, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,216 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 198, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,216 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 198, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,216 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 199, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,216 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 199, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,216 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 200, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,216 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 200, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,223 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 269, column 110] : $TEMPchecked2 cannot be resolved.
+2020-06-06 20:15:33,223 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 270, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,223 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 270, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,223 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 271, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,223 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 271, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,223 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 272, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,223 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 272, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 273, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 273, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 274, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 274, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 720, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 731, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 747, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 758, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 785, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 796, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 841, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 853, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 900, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 910, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 920, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 951, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 960, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 970, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1602, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1608, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1614, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1622, column 1] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-06-06 20:15:33,224 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-06-06 20:15:33,224 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-06-06 20:15:33,224 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-06-06 20:15:33,225 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-06-06 20:15:33,225 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-06-06 20:15:33,225 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-06-06 20:15:47,784 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-06-06 20:15:47,784 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-06-06 20:15:47,784 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-06-06 20:15:47,784 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-06-06 20:15:47,786 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-06-06 20:15:47,786 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:47,786 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:47,786 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-06-06 20:15:47,786 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-06-06 20:15:47,786 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:47,786 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:47,786 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-06-06 20:15:47,787 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-06-06 20:15:47,882 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-06-06 20:15:48,243 - Left side ($flagJPPH) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/header_siasatan.jsp[line 110, column 17]
+2020-06-06 20:15:48,243 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 232, column 1]
+2020-06-06 20:15:48,243 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 233, column 1]
+2020-06-06 20:15:48,243 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 234, column 1]
+2020-06-06 20:15:48,243 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 235, column 1]
+2020-06-06 20:15:48,243 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 236, column 1]
+2020-06-06 20:15:48,243 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 237, column 1]
+2020-06-06 20:15:48,243 - RHS of #set statement is null. Context will not be modified. app/ppt/header_siasatan.jsp[line 238, column 1]
+2020-06-06 20:15:48,243 - Left side ($flagJPPH) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/header_siasatan.jsp[line 239, column 17]
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 196, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 196, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 197, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 197, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 198, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 198, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 199, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 199, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 200, column 81] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,253 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 200, column 94] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 269, column 110] : $TEMPchecked2 cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 270, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 270, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 271, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 271, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 272, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 272, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 273, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 273, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 274, column 73] : $disability1 cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 274, column 86] : $checkedCB cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 720, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 731, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 747, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 758, column 9] : $jquery cannot be resolved.
+2020-06-06 20:15:48,260 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 785, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 796, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 841, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 853, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 900, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 910, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 920, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 951, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 960, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 970, column 13] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1602, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1608, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1614, column 12] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'app/ppt/frmSek8InfoBicaraTuanTanah.jsp', line 1622, column 1] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-06-06 20:15:48,261 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-06-06 20:15:48,261 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-06-06 20:15:48,261 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-06-06 20:15:48,261 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-06-06 20:15:48,261 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-06-06 20:15:48,261 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
