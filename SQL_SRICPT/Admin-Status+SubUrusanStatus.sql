@@ -1,4 +1,14 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--HTP
 
+SELECT * FROM TBLRUJSUBURUSAN
+WHERE 
+--
+ID_URUSAN  IN (1,10) 
+--ID_URUSAN  IN (2) 
+--ID_URUSAN  IN (3) 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --PENGAMBILAN
 
 INSERT INTO TBLRUJSUBURUSANSTATUS
@@ -22,6 +32,27 @@ WHERE ID_URUSAN = 17
 SELECT * FROM TBLRUJURUSAN
 WHERE 
 NAMA_URUSAN LIKE '%PENGAMBILAN%'
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--PHP
+
+SELECT * FROM TBLRUJSUBURUSAN
+WHERE 
+ID_URUSAN  IN (7,8,9)
+
+SELECT * FROM TBLRUJURUSAN
+WHERE 
+--NAMA_URUSAN LIKE '%PENYEWAAN%'
+--NAMA_URUSAN LIKE '%AKTA%'
+--NAMA_URUSAN LIKE '%PELEPASAN%'
+--NAMA_URUSAN LIKE '%TUKAR%'
+--NAMA_URUSAN LIKE '%KUASA%'
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--PPK
+
+SELECT * FROM TBLRUJSUBURUSAN
+WHERE ID_URUSAN  IN (382)
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --GUNA ID 158 (TINDAKAN TELAH DIAMBIL)
