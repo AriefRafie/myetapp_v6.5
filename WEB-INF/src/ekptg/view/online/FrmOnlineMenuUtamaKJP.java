@@ -388,6 +388,17 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		return returnVal ;
 		
 	}
+	
+	public Vector<Hashtable<String, String>> dikembalikanByUrusan(String idUrusan) throws Exception {
+		Vector<Hashtable<String, String>> returnVal = null;
+		try {
+			returnVal = getStatus().getInfoStatusPermohonan(idUrusan,"","50");
+		}catch(Exception e){
+			throw new Exception(getErr().getErrorHTML("inquery:"+idUrusan+"::"+e.getMessage()));
+		}
+		return returnVal ;
+		
+	}
 	//return Permohonan 2
 	private IStatus getStatus(){
 		if (iStatus==null){

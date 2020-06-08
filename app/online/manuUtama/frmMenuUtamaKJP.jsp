@@ -181,7 +181,21 @@ function toggle_div(id) {
 																	<font color="blue"><li>&nbsp;Bantahan</li></font>						
 																</a>
 															</td>
-														</tr>														
+														</tr>	
+														
+														<tr>
+															<td>
+																<a href="javascript:penyewaan()" class="help" title="Penyewaan">
+																	<font color="blue"><li>
+																	##if($jumlah_notifikasi_penyewaan > 0)
+																	<label style="background-color:blue" align="center" valign="top" > 
+																		<b><font color="WHITE"><blink>$!bilPPTDikembali</blink></font></b>
+																	</label>&nbsp;
+																	##end
+																	Permohonan Dikembalikan</li></font>					
+																</a>
+															</td>
+														</tr>													
 													</table>
 												</td>
 											</tr>
@@ -329,16 +343,7 @@ function toggle_div(id) {
 														<tr>
 															<td><b>Aduan / Cadangan</b></td>
 														</tr>
-														<tr>
-															<td>
-																<a href="javascript:aduan()" class="help" title="Pengurusan Log Aduan">
-																	<font color="blue"><li>&nbsp;Hantar Aduan & Cadangan</li></font>	
-																</a>
-																<a href="javascript:permhonanDikembalikan()" class="help" title="Permohonan Dikembalik">
-																	<font color="blue"><li>&nbsp;Permohonan Dikembalikan</li></font>	
-																</a>
-															</td>
-														</tr>
+									
 														<!-- <tr>
 															<td>
 																<a href="javascript:statusAduan()" class="help" title="Pengurusan Log Aduan">
