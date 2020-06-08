@@ -19,6 +19,7 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.ppt.FrmSek8SiasatanData;
 import ekptg.model.ppt.FrmUPTSek8BorangFData;
@@ -445,6 +446,12 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
         		String socJenisBangunan = getParam("id_bangunan");
         		String socBangunan = getParam("socBangunan");   //penambahan yati
         		context.put("id_bangunan", socBangunan);
+        		
+        		Vector semakList = FrmSemakan.getSenaraiSemakan("pptjenistanaman");
+        		context.put("senaraiSemakan", semakList);
+        		
+        		Vector semakList2 = FrmSemakan.getSenaraiSemakan("pptjenistanaman");
+        		context.put("senaraiSemakan2", semakList2);
         		
         		maklumat_siasatan = logic.maklumat_siasatan(getParam("id_siasatan"));
         		if ("View".equals(subminor_command))
