@@ -446,6 +446,16 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
         		String socJenisBangunan = getParam("id_bangunan");
         		String socBangunan = getParam("socBangunan");   //penambahan yati
         		context.put("id_bangunan", socBangunan);
+
+        		// Checkbox PPT-25 (ii) Jenis Pemilikan pull from db view to BicaraTuanTanah.jsp
+        		Vector semakanList = FrmSemakan.getSenaraiSemakan("jenispemilikan");  //, "pptjenistanaman"
+        		context.put("senaraiSemak", semakanList); 
+        		context.put("semakclass", new FrmSemakan()); 
+        		
+        		// Checkbox PPT-25 (iii) Jenis Tanaman
+        		Vector semakList = FrmSemakan.getSenaraiSemakan("pptjenistanaman"); // "jenispemilikan", 
+        		context.put("senaraiSemakan", semakList); 
+        		context.put("semakclass", new FrmSemakan()); 
         		
         		Vector semakList = FrmSemakan.getSenaraiSemakan("pptjenistanaman");
         		context.put("senaraiSemakan", semakList);
@@ -498,6 +508,28 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
    				}        		
         		else if ("Simpan".equals(subminor_command))
    				{
+        			// Checkbox PPT-25 (ii) Jenis Pemilikan (Store to DB)
+        			FrmSemakan frmSemaks = new FrmSemakan();
+        			String[] jenispemilikan = this.request.getParameterValues("jenispemilikan");
+        			myLogger.info("Simpan=" + getParam("id_siasatan"));
+        			frmSemaks.semakanHapusByPermohonan(getParam("id_siasatan"));
+        			if (jenispemilikan != null) {
+        				for (int i = 0; i < jenispemilikan.length; i++) {
+        					frmSemaks = new FrmSemakan();
+        					frmSemaks.semakanTambah(jenispemilikan[i], getParam("id_siasatan"));
+        				}
+        			}
+        			
+        			// Checkbox PPT-25 (iii) Jenis Tanaman
+        			String[] cbsemaks = this.request.getParameterValues("checkbox2");
+        			FrmSemakan frmSemak = new FrmSemakan();
+        			frmSemak.semakanHapusByPermohonan(getParam("id_siasatan"));
+        			if (cbsemaks != null) {
+        				for (int i = 0; i < cbsemaks.length; i++) {
+        					frmSemak = new FrmSemakan();
+        					frmSemak.semakanTambah(cbsemaks[i], getParam("id_siasatan"));
+        				}
+        			}
         			
         	    updateTuanTanah(session);
         		this.context.put("readmode", "view"); 
