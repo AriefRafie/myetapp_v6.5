@@ -457,6 +457,12 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
         		context.put("senaraiSemakan", semakList); 
         		context.put("semakclass", new FrmSemakan()); 
         		
+        		Vector semakList = FrmSemakan.getSenaraiSemakan("pptjenistanaman");
+        		context.put("senaraiSemakan", semakList);
+        		
+        		Vector semakList2 = FrmSemakan.getSenaraiSemakan("pptjenistanaman");
+        		context.put("senaraiSemakan2", semakList2);
+        		
         		maklumat_siasatan = logic.maklumat_siasatan(getParam("id_siasatan"));
         		if ("View".equals(subminor_command))
    				{      			
