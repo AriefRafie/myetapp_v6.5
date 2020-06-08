@@ -254,12 +254,18 @@
 						</td>
 					</tr>
 					<tr>
-					<td>
-					<a href="javascript:permhonanDikembalikan()" class="help" title="Permohonan Dikembalikan">
-						<font color="blue"><li>&nbsp;Permohonan Dikembalikan</li></font>	
-						</a>
-					</td>
-					</tr>
+						<td>
+							<a href="javascript:penyewaan()" class="help" title="Penyewaan">
+								<font color="blue"><li>
+									##if($jumlah_notifikasi_penyewaan > 0)
+								<label style="background-color:blue" align="center" valign="top" > 
+								<b><font color="WHITE"><blink>$!bilPPKkembali</blink></font></b>
+								</label>&nbsp;
+									##end
+								Permohonan Dikembalikan</li></font>					
+								</a>
+							</td>
+						</tr>
 					</table>
 				</td>
 			</tr>
