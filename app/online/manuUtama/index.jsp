@@ -61,7 +61,7 @@
 				<td width="85%">
 					<table>
 					<tr>
-						<td><b>My Profile</b></td>
+						<td><b>Profil</b></td>
 					</tr>
 					<tr>
 						<td>
@@ -253,6 +253,13 @@
 						</a>
 						</td>
 					</tr>
+					<tr>
+					<td>
+					<a href="javascript:permhonanDikembalikan()" class="help" title="Permohonan Dikembalikan">
+						<font color="blue"><li>&nbsp;Permohonan Dikembalikan</li></font>	
+						</a>
+					</td>
+					</tr>
 					</table>
 				</td>
 			</tr>
@@ -332,6 +339,13 @@
 							<font color="blue"><li>Permohonan Pajakan</li></font>
 						</a>
 						</td>
+					</tr>
+					<tr>
+					<td>
+					<a href="javascript:permhonanDikembalikan()" class="help" title="Permohonan Dikembalikan">
+						<font color="blue"><li>&nbsp;Permohonan Dikembalikan</li></font>	
+						</a>
+					</td>
 					</tr>
 					</table>
 				</td>
