@@ -169,25 +169,25 @@
         <td>Keterangan Tuan Tanah / Wakil</td>
         <td>:</td>
         <td>
-        	<table><tr>
-        		 <!-- PPT-25 ii -->
-				#set ( $checked = "" )
-			    #foreach ($semak in $senaraiSemakan)
+        	<table>
+        	<tr>
+        		 <!-- PPT-25 (ii) Jenis Pemilikan-->
+				    #foreach ($semakan in $senaraiSemak)
 				    	<td class="$row" width="10">
-	                   
-				          #if ( $semakclass.isSemakan("$id_siasatan", "$semak.id" ))
-				        	#set ( $checked = "checked" )
-				        #else
-				        	#set ( $checked = "" )
-				    	#end
+                   
+					#if ( $semakclass.isSemakan("$id_siasatan", "$semakan.id" )) 
+				  		#set ( $checked = "checked" )
+				  	#else
 				    	#set ( $checked = "" )
-				        	 <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked $selectstyle>
-				       	</td>
-				        <td class="$row">
-				        	$semak.keterangan <!-- $semak.id -->
-				        </td>
-				      
-			    #end	
+				  	#end
+				        	 <input type="checkbox" name="jenispemilikan" id="jenispemilikan" value="$semakan.id"  $checked $selectstyle>
+				         
+				  		</td>
+			    		<td class="$row">
+				        	$semakan.keterangan
+				        </td> 
+			    	#end   
+				 
 			    </tr>
 				<!-- xxx -->    
 			
@@ -247,26 +247,23 @@
         <td>
         	<table>
         	<tr>
-
-        	
-        		 <!-- PPT-25 iii -->
-				#set ( $checked = "" )
-			    #foreach ($semak in $senaraiSemakan2)
+        		 <!-- PPT-25 (iii) Checkbox Jenis tanaman -->
+				    #foreach ($semak in $senaraiSemakan)
 				    	<td class="$row" width="10">
-	                   
-				          #if ( $semakclass.isSemakan("$id_siasatan", "$semak.id" ))
-				        	#set ( $checked = "checked" )
-				        #else
-				        	#set ( $checked = "" )
-				    	#end
-				    	#set ( $checked = "" )
-				        	 <input class="cb" type="checkbox" name="cbsemaks2" value="$semak.id" $checked $selectstyle >
-				       	</td>
-				        <td class="$row">
-				        	$semak.keterangan <!-- $semak.id -->
+                   
+					#if ( $semakclass.isSemakan("$id_siasatan", "$semak.id" ))
+				  		#set ( $checked_ = "checked" )
+				  	#else
+				    	#set ( $checked_ = "" )
+				  	#end
+				        	 <input type="checkbox" name="checkbox2" id="checkbox2" value="$semak.id"  $checked_ $selectstyle>
+				        	 
+				  		</td>
+			    		<td class="$row">
+				        	$semak.keterangan
 				        </td>
-				      
-			    #end	
+			    	#end
+				 
 			    </tr>
 				<!-- xxx -->    
         	<!-- input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 /
