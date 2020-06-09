@@ -171,22 +171,22 @@
         <td>
         	<table>
         	<tr>
-        		 <!-- PPT-25 (ii) Jenis Pemilikan-->
-				    #foreach ($semakan in $senaraiSemak)
+        		 <!-- PPT-25 (iii) Jenis Pemilikan -->
+				    #foreach ($semak in $senaraiSemakan)
 				    	<td class="$row" width="10">
                    
-					#if ( $semakclass.isSemakan("$id_siasatan", "$semakan.id" )) 
-				  		#set ( $checked = "checked" )
+					#if ($semakclass.isSemakan("$id_siasatan", "$semak.id" ))
+				  		#set ( $checked = "checked" ) 
 				  	#else
 				    	#set ( $checked = "" )
 				  	#end
-				        	 <input type="checkbox" name="jenispemilikan" id="jenispemilikan" value="$semakan.id"  $checked $selectstyle>
-				         
+				        	 <input type="checkbox" name="jenispemilikan" id="checkbox" value="$semak.id"  $checked $selectstyle>
+				        	 
 				  		</td>
 			    		<td class="$row">
-				        	$semakan.keterangan
-				        </td> 
-			    	#end   
+				        	$semak.keterangan
+				        </td>
+			    	#end
 				 
 			    </tr>
 				<!-- xxx -->    
@@ -245,25 +245,24 @@
         <td>Jenis Tanaman</td>
         <td>:</td>
         <td>
-        	<table>
+        	<table id="jenistanaman">
         	<tr>
-        		 <!-- PPT-25 (iii) Checkbox Jenis tanaman -->
-				    #foreach ($semak in $senaraiSemakan)
+        		 <!-- PPT-25 (iii) Jenis Tanaman -->
+				    #foreach ($semakan in $senaraiSemakan2)
 				    	<td class="$row" width="10">
                    
-					#if ( $semakclass.isSemakan("$id_siasatan", "$semak.id" ))
-				  		#set ( $checked_ = "checked" )
+					#if ($semakanclass.isSemakan("$id_siasatan", "$semakan.id" ))
+				  		#set ( $checked_ = "checked" ) 
 				  	#else
 				    	#set ( $checked_ = "" )
 				  	#end
-				        	 <input type="checkbox" name="checkbox2" id="checkbox2" value="$semak.id"  $checked_ $selectstyle>
+				        	 <input type="checkbox" name="jenistanaman" id="checkbox2" value="$semakan.id"  $checked_ $selectstyle>
 				        	 
 				  		</td>
 			    		<td class="$row">
-				        	$semak.keterangan
+				        	$semakan.keterangan
 				        </td>
 			    	#end
-				 
 			    </tr>
 				<!-- xxx -->    
         	<!-- input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 /
@@ -730,8 +729,6 @@ function checking_validation(field,point,mandatory,value_field,jenis_field){
 	   doAjaxUpdater(document.${formName}, url, target, actionName);*/
 	    $jquery("#"+point).html("<input type='hidden' id='validation_field' name='validation_field' value='invalid' > Sila pastikan tarikh "+value_field+" tidak melebihi dari tarikh hari ini");
 	   }
-	   
-	   
 	   }
 	   
 	   
@@ -1227,45 +1224,30 @@ function tambah(id_hakmilik,id_pembatalan)
 }
 
 
-function simpan(id_siasatan)
-{
-var c = 0;
-
-if(document.${formName}.validation_field != null  )
-{
-
-   if (document.${formName}.validation_field.length == null)
-   {	
-    
-   if(document.${formName}.validation_field.value == "invalid")
-   {  
-   
-   c++;	
-   } 
-   	
-   } 
-   
-   else 
-   {
-   
-        for (i = 0; i < document.${formName}.validation_field.length; i++)
-		{		
-			if(document.${formName}.validation_field[i].value == "invalid")
-			{
-			
+function simpan(id_siasatan)	{
+	semakCheckbox();
+	var c = 0;
+	
+	
+if(document.${formName}.validation_field != null)	{
+   if (document.${formName}.validation_field.length == null)  {
+		if(document.${formName}.validation_field.value == "invalid")  {
+				c++;
+		}
+   }	else 	{
+   for (i = 0; i < document.${formName}.validation_field.length; i++)	{		
+			if(document.${formName}.validation_field[i].value == "invalid")	{
                c++;	 
-			}  	
+			}	
         }
-    }	
+    }
 }
 
 
-if(c>0){
-alert("Sila pastikan maklumat yang diisi adalah lengkap dan sah");
-return;
-}
-else
-{
+if(c>0)	{
+	alert("Sila pastikan maklumat yang diisi adalah lengkap dan sah");
+	return;
+}	else	{
 input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
 	document.${formName}.command.value = "Siasatan";
@@ -1583,49 +1565,33 @@ function setTable(id){
 }
 
 
-function check_length(my_form,maxLen,alert_field,text_num,jenis_field,mandatory,value_field)
-{
+function check_length(my_form,maxLen,alert_field,text_num,jenis_field,mandatory,value_field)	{
+	var lepas_or_xlepas = 1;
+       if(jenis_field == "normal")	{ 
+       		if(my_form.value == "" && mandatory == "yes")	{
+       			lepas_or_xlepas = 2;
+       			}
+       		if(my_form.value == "")	{
+	   			document.getElementById(text_num).value = maxLen;
+	   			}   
+	   		if(lepas_or_xlepas == "2")	{
+	   			$jquery("#"+alert_field).html("<input type='hidden' id='validation_field' name='validation_field' value='invalid' > Sila masukkan "+value_field+"");
+	   			}	else	{
+	   				if (my_form.value.length >= maxLen) {
+	   					$jquery("#"+alert_field).html("<input type='hidden' id='validation_field' name='validation_field' value='invalid' >  Jumlah aksara telah melebihi had yang ditetapkan");
+	   					my_form.value = my_form.value.substring(0, maxLen);
+	   					maxLen = 0;
+	   					}	else	{
+	   						$jquery("#"+alert_field).html("<input type='hidden' id='validation_field' name='validation_field' value='valid' > ");
+	   						maxLen = maxLen - my_form.value.length;
+	   						}
+	   					}
+	   				}
+	   					$jquery("#"+text_num).html(maxLen+"");
+	   					}
 
-	   var lepas_or_xlepas = 1;
-       if(jenis_field == "normal")
-	   { 
-	   if(my_form.value == "" && mandatory == "yes")
-	   {
-	   lepas_or_xlepas = 2;
-	   }	   
-	   if(my_form.value == "")
-	   {
-	   document.getElementById(text_num).value = maxLen;
-	   }   
-	   if(lepas_or_xlepas == "2")
-	   {	   
-	   $jquery("#"+alert_field).html("<input type='hidden' id='validation_field' name='validation_field' value='invalid' > Sila masukkan "+value_field+"");
-	   }
-	   else
-	   {	  
-	   if (my_form.value.length >= maxLen) 
-	   {
-	   $jquery("#"+alert_field).html("<input type='hidden' id='validation_field' name='validation_field' value='invalid' >  Jumlah aksara telah melebihi had yang ditetapkan");
-my_form.value = my_form.value.substring(0, maxLen);
-       maxLen = 0;
-	   }
-	   else
-	   {
-	   $jquery("#"+alert_field).html("<input type='hidden' id='validation_field' name='validation_field' value='valid' > ");
-	   maxLen = maxLen - my_form.value.length;
-       }		
-	   }
-	   
-	   	   
-	   }
 
-$jquery("#"+text_num).html(maxLen+"");
-}
-
-function status(id_siasatan)
-{
-
-	
+function status(id_siasatan)	{
 	document.${formName}.command.value = "Siasatan";
 	document.${formName}.sub_command.value = "Status_Siasatan";
 	document.${formName}.subminor_command.value = "View";	
@@ -1733,5 +1699,21 @@ function showRow(rowId)
     document.getElementById(rowId).style.display = "";
 }
 
+
+ function semakCheckbox() {
+    var flag = 0;
+    for (var i = 0; i < 5; i++) {
+      if(document.${formName}["jenistanaman"][i].checked && document.${formName}["jenistanaman"][i].checked){ // Tukar kepada Jenis Pemilikan selepas selesai
+        flag ++;
+      }
+    }
+    
+    if (flag == 0) {
+      alert ("Pastikan Jenis Tanaman serta Pemilikan dipilih");
+      return c++;
+    }
+    return true;
+  }
+  
 </script>
   
