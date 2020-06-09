@@ -51,10 +51,10 @@ public class FrmAPBSenaraiFailData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN,"
-					+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN"
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E"
+					+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI"
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F"
 					+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PEMOHON = C.ID_PEMOHON "
-					+ " AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NOT NULL ";
+					+ " AND C.ID_NEGERITETAP = F.ID_NEGERI AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NOT NULL ";
 			
 			// noFail
 			if (noFail != null) {
@@ -128,6 +128,7 @@ public class FrmAPBSenaraiFailData {
 				h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
 				h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 				h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));				
 
 				String statusLesen = "";
 				int bilHari = 0;
