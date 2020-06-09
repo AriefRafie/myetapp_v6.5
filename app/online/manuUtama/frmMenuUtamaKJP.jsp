@@ -181,7 +181,21 @@ function toggle_div(id) {
 																	<font color="blue"><li>&nbsp;Bantahan</li></font>						
 																</a>
 															</td>
-														</tr>														
+														</tr>	
+														
+														<tr>
+															<td>
+																<a href="javascript:penyewaan()" class="help" title="Penyewaan">
+																	<font color="blue"><li>
+																	##if($jumlah_notifikasi_penyewaan > 0)
+																	<label style="background-color:blue" align="center" valign="top" > 
+																		<b><font color="WHITE"><blink>$!bilPPTDikembali</blink></font></b>
+																	</label>&nbsp;
+																	##end
+																	Permohonan Dikembalikan</li></font>					
+																</a>
+															</td>
+														</tr>													
 													</table>
 												</td>
 											</tr>
@@ -329,13 +343,7 @@ function toggle_div(id) {
 														<tr>
 															<td><b>Aduan / Cadangan</b></td>
 														</tr>
-														<tr>
-															<td>
-																<a href="javascript:aduan()" class="help" title="Pengurusan Log Aduan">
-																	<font color="blue"><li>&nbsp;Hantar Aduan & Cadangan</li></font>	
-																</a>
-															</td>
-														</tr>
+									
 														<!-- <tr>
 															<td>
 																<a href="javascript:statusAduan()" class="help" title="Pengurusan Log Aduan">
@@ -617,6 +625,10 @@ function jawatankuasaRuangPejabat(){
 
 function aduan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Aduan / Cadangan",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
+	document.${formName}.submit();
+}
+function permohonanDikembalikan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Permohonan Dikembalikan ",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
 	document.${formName}.submit();
 }
 

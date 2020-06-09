@@ -141,16 +141,10 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		//SAVE TO DB
 		if (postDB) {
 			if ("doDaftarBaru".equals(hitButton)) {
-				
-				idFail = logic.daftarBaru2(idUrusan, idSuburusan, idHakmilikAgensi, getParam("txtperkara"), 
-						getParam("txtNoRujukanSurat"), getParam("txttarikhSurat"), idJenisTanah, idPHPBorangK, idPPTBorangK,
-						getParam("idKementerianTanah"), getParam("idNegeriTanah"), idHakmilikUrusan, getParam("tarikhTerima"),
-						idJenisPermohonan,session);
-				/* TUTUP SEBENTAR
-				 * idFail = logic.daftarBaru(idUrusan, idSuburusan, idSubsuburusan, idHakmilikAgensi, getParam("txtperkara"), 
+				idFail = logic.daftarBaru(idUrusan, idSuburusan, idHakmilikAgensi, getParam("txtperkara"), 
 				getParam("txtNoRujukanSurat"), getParam("txttarikhSurat"), idJenisTanah, idPHPBorangK, idPPTBorangK,
 				getParam("idKementerianTanah"), getParam("idNegeriTanah"), idHakmilikUrusan, getParam("tarikhTerima"),
-				idJenisPermohonan,session);*/
+				idJenisPermohonan,session);
 			}
 			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
         		logic.updateTanah(idPermohonan,idHakmilikAgensi,session);	
@@ -295,7 +289,6 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     	        			
     	        			this.context.put("readonlyPopup", "");
     		    			this.context.put("inputTextClassPopup", "");
-    		    			this.context.put("disabled", "");
     		    			
     		    			beanMaklumatLampiran = new Vector();    			
     		    			Hashtable hashMaklumatLampiran = new Hashtable();
@@ -503,9 +496,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				this.context.put("selected_3", "");
 				this.context.put("idJenisPermohonan", "0"); 
         	}
-        	if(!"99999".equals(idFailLama))  {
-    			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\""));  
-        	}
+			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\""));  
         	
         	//MAKLUMAT PEMOHON
 			Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);

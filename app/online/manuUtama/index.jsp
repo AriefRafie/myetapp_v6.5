@@ -61,7 +61,7 @@
 				<td width="85%">
 					<table>
 					<tr>
-						<td><b>My Profile</b></td>
+						<td><b>Profil</b></td>
 					</tr>
 					<tr>
 						<td>
@@ -253,6 +253,19 @@
 						</a>
 						</td>
 					</tr>
+					<tr>
+						<td>
+							<a href="javascript:penyewaan()" class="help" title="Penyewaan">
+								<font color="blue"><li>
+									##if($jumlah_notifikasi_penyewaan > 0)
+								<label style="background-color:blue" align="center" valign="top" > 
+								<b><font color="WHITE"><blink>$!bilPPKkembali</blink></font></b>
+								</label>&nbsp;
+									##end
+								Permohonan Dikembalikan</li></font>					
+								</a>
+							</td>
+						</tr>
 					</table>
 				</td>
 			</tr>
@@ -332,6 +345,13 @@
 							<font color="blue"><li>Permohonan Pajakan</li></font>
 						</a>
 						</td>
+					</tr>
+					<tr>
+					<td>
+					<a href="javascript:permhonanDikembalikan()" class="help" title="Permohonan Dikembalikan">
+						<font color="blue"><li>&nbsp;Permohonan Dikembalikan</li></font>	
+						</a>
+					</td>
 					</tr>
 					</table>
 				</td>
