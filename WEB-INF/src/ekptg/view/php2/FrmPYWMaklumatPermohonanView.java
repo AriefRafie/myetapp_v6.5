@@ -519,59 +519,59 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 	}
 	
 	// UPLOAD FILE
-		private void uploadLampiran(String idPermohonan, HttpSession session) throws Exception {
-			DiskFileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload upload = new ServletFileUpload(factory);
-			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-			if (isMultipart != false) {
-				List items = upload.parseRequest(request);
-				Iterator itr = items.iterator();
-				while (itr.hasNext()) {
-					FileItem item = (FileItem) itr.next();
-					if ((!(item.isFormField())) && (item.getName() != null)
-							&& (!("".equals(item.getName())))) {
-						saveLampiran(item, idPermohonan, session);
-					}
+	private void uploadLampiran(String idPermohonan, HttpSession session) throws Exception {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (isMultipart != false) {
+			List items = upload.parseRequest(request);
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if ((!(item.isFormField())) && (item.getName() != null)
+						&& (!("".equals(item.getName())))) {
+					saveLampiran(item, idPermohonan, session);
 				}
 			}
 		}
+	}
 		
-		private void saveLampiran(FileItem item, String idPermohonan, HttpSession session) throws Exception {
+	private void saveLampiran(FileItem item, String idPermohonan, HttpSession session) throws Exception {
 
-			Db db = null;
-			String userId = (String) session.getAttribute("_ekptg_user_id");
+		Db db = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		
+		try {
+			db = new Db();
+
+			// TBLPHPDOKUMEN
+			long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
+			Connection con = db.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement ps = con
+					.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
+							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,FLAG_DOKUMEN,ID_PERMOHONAN) "
+							+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?)");
+			ps.setLong(1, idDokumen);
+			ps.setString(2, getParam("namaLampiran"));
+			ps.setString(3, getParam("catatanLampiran"));
+			ps.setString(4, userId);
+			ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
+			ps.setString(6, item.getContentType());
+			ps.setString(7, item.getName());
+			ps.setString(8, "L");
+			ps.setString(9, idPermohonan);
+			ps.executeUpdate();
+
+			con.commit();
 			
-			try {
-				db = new Db();
-
-				// TBLPHPDOKUMEN
-				long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
-				Connection con = db.getConnection();
-				con.setAutoCommit(false);
-				PreparedStatement ps = con
-						.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
-								+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,FLAG_DOKUMEN,ID_PERMOHONAN) "
-								+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?)");
-				ps.setLong(1, idDokumen);
-				ps.setString(2, getParam("namaLampiran"));
-				ps.setString(3, getParam("catatanLampiran"));
-				ps.setString(4, userId);
-				ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
-				ps.setString(6, item.getContentType());
-				ps.setString(7, item.getName());
-				ps.setString(8, "L");
-				ps.setString(9, idPermohonan);
-				ps.executeUpdate();
-
-				con.commit();
-				
-				AuditTrail.logActivity("1610198", "4", null, session, "INS",
-						"FAIL [" + idPermohonan + "] DIDAFTARKAN");
-				
-			} finally {
-				if (db != null)
-					db.close();
-			}
-			this.context.put("completed", true);
+			AuditTrail.logActivity("1610198", "4", null, session, "INS",
+					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
+			
+		} finally {
+			if (db != null)
+				db.close();
 		}
+		this.context.put("completed", true);
+	}
 }
