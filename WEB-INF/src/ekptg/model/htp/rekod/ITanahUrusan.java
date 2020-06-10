@@ -4,6 +4,6 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 
-public interface IHakmilikUrusan{
+public interface ITanahUrusan{
 	public Vector<Hashtable<String,String>> getMaklumat(String idHakmilik)throws Exception ;
 }	

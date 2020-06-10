@@ -970,8 +970,7 @@ public class HTPStatusBean implements IHTPStatus {
 	@Override
 	public Vector<Hashtable<String, String>> getInfoStatusPermohonan(String idUrusan,String idSubUrusan,String langkah)
 		throws Exception{
-	    Hashtable<String, String> h = null;
-		Vector<Hashtable<String, String>> senaraiMaklumat = null;
+		Vector<Hashtable<String, String>> senaraiMaklumat = new Vector<Hashtable<String, String>>();
 	    try {	    	
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();	    		
@@ -984,7 +983,8 @@ public class HTPStatusBean implements IHTPStatus {
 	    		" ,STF.ID_PERMOHONAN,STF.ID_FAIL " +
 	    	    " FROM " +
 //	    	    " Tblpermohonan a, Tblpfdfail f,  ";
-	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLHTPRUJSUBURUSANSTATUSFAIL STF "+
+//	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLHTPRUJSUBURUSANSTATUSFAIL STF "+
+	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLRUJSUBURUSANSTATUSFAIL STF "+
 	    		" WHERE "+
 	    		//sql += " a.id_fail = f.id_fail ";
 	    		" ST.ID_STATUS = S.ID_STATUS "+
@@ -1007,7 +1007,8 @@ public class HTPStatusBean implements IHTPStatus {
 	    		myLog.info("getInfoStatusPermohonan 2:sql="+sql);
 	    		ResultSet rs = stmt.executeQuery(sql);	      			  
 				int bil = 1;
-	    		while (rs.next()) {
+			    Hashtable<String,String> h = null;
+			    while (rs.next()) {
 	        			h = new Hashtable<String, String>();  
 	    				//h.put("level",rs.getString("ID_MASUK"));	 
 	    	    		h.put("bil", String.valueOf(bil));

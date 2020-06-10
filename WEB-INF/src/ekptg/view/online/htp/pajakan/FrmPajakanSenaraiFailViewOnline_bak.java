@@ -26,14 +26,14 @@ import ekptg.model.htp.pembelian.PembelianBean;
  * 
  *
  */
-public class FrmPajakanSenaraiFailViewOnline extends AjaxBasedModule {
+public class FrmPajakanSenaraiFailViewOnline_bak extends AjaxBasedModule {
 
 	private final String PATH="app/htp/pajakan/";
 	private static final long serialVersionUID = 1L;
 	
 	FrmPajakanHeaderData logicHeader = new FrmPajakanHeaderData();
 	FrmPajakanSenaraiFailData logic = new FrmPajakanSenaraiFailData();
-	private static Logger log = Logger.getLogger(ekptg.view.online.htp.pajakan.FrmPajakanSenaraiFailViewOnline.class);
+	private static Logger log = Logger.getLogger(ekptg.view.online.htp.pajakan.FrmPajakanSenaraiFailViewOnline_bak.class);
 	private PfdFail fail = null;
 	private Permohonan permohonan = null;
 	private HakmilikUrusan urusan = null;
@@ -186,7 +186,7 @@ public class FrmPajakanSenaraiFailViewOnline extends AjaxBasedModule {
         	//GO TO LIST FAIL PAJAKAN        	
         	vm = "app/htp/pajakan/frmPajakanPenerimaanPermohonanSenaraiFail2.jsp";
         	log.info("Else :: "+vm);
-        	logic.carianFailOnline2(getParam("txtNoFail"), getParam("txdTarikhTerima"),getParam("txtTajukFail"),getParam("txtNamaPemohon"),idKementerian, idUser);
+        	logic.carianFailOnline(getParam("txtNoFail"), getParam("txdTarikhTerima"),getParam("txtTajukFail"),getParam("txtNamaPemohon"),idKementerian);
 			list = new Vector();
 			list = logic.getSenaraiFail();
 			this.context.put("SenaraiFail", list);

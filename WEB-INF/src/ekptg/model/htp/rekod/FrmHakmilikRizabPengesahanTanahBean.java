@@ -22,9 +22,10 @@ import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
-public class FrmHakmilikRizabPengesahanTanahBean implements IHakmilikRizabPengesahanTanah {
+public class FrmHakmilikRizabPengesahanTanahBean implements ITanahDaftar {
+//public class FrmHakmilikRizabPengesahanTanahBean implements IHakmilikRizabPengesahanTanah {
 	
-	private HakmilikInterface iHakmilik = null;
+	private ITanah iHakmilik = null;
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.FrmHakmilikRizabPengesahanTanahBean.class);
 	private static Vector listCarianHakmilikDanRizab = null;
 	private HakMilik hakmilik = null;
@@ -40,7 +41,8 @@ public class FrmHakmilikRizabPengesahanTanahBean implements IHakmilikRizabPenges
 
 	//PAPAR CARIAN HAKMILIK DAN RIZAB
 	@Override
-	 public Hashtable<String, Comparable> getPerolehanInfo(String idHakmilik)throws Exception {
+	 public Hashtable<String, String> getMaklumat(String idHakmilik)throws Exception {
+//	 public Hashtable<String, Comparable> getPerolehanInfo(String idHakmilik)throws Exception {
 		 Db db = null;
 		 String sql = "";
 		 try {
@@ -128,7 +130,7 @@ public class FrmHakmilikRizabPengesahanTanahBean implements IHakmilikRizabPenges
 	 }
 
 	//PAPAR CARIAN HAKMILIK DAN RIZAB
-	@Override
+//	@Override
 	 public Hashtable<String, Comparable> getPerolehanInfo(String idHakmilik,String idHakmilik1)throws Exception {
 		 Db db = null;
 		 String sql = "";
@@ -257,7 +259,7 @@ public class FrmHakmilikRizabPengesahanTanahBean implements IHakmilikRizabPenges
 		
 	}
 	
-	@Override
+//	@Override
 	public HtpPermohonan findPermohonan(String idPermohonan) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -286,7 +288,8 @@ public class FrmHakmilikRizabPengesahanTanahBean implements IHakmilikRizabPenges
 		return htpPermohonan;
 	}
 	
-	  public String simpanPermohonanHTP(Hashtable<?, ?> data) throws Exception {
+	  public String simpan(Hashtable<String, String> data) throws Exception {
+//	  public String simpanPermohonanHTP(Hashtable<?, ?> data) throws Exception {
 		    Db db = null;
 		    String sql = "";
 		    try{
@@ -335,8 +338,8 @@ public class FrmHakmilikRizabPengesahanTanahBean implements IHakmilikRizabPenges
 	          			TARIKH_KEMASKINI	12		Y	DATE		Yes		
 	          	 */
 	          	long idHtppermohonan = DB.getNextID("TBLHTPPERMOHONAN_SEQ");
-	          	int idAgensi = (Integer)data.get("id_Agensi");
-	          	int idJenistanah = (Integer)data.get("id_Jenistanah");;
+	          	int idAgensi = Integer.parseInt(String.valueOf(data.get("id_Agensi")));
+	          	int idJenistanah = Integer.parseInt(String.valueOf(data.get("id_Jenistanah")));
 	          	//int idPegawai = (Integer)data.get("id_Pegawai");
 	          
 	          	String noFailkjp = (String)data.get("no_Failkjp");
@@ -394,26 +397,27 @@ public class FrmHakmilikRizabPengesahanTanahBean implements IHakmilikRizabPenges
 		    }
 		  }
 	
+	  public Vector <Hashtable<String,String>> getSenaraiMaklumat(String idRujukan) throws Exception{
+		Vector vec = null;
+		return 	vec;
+
+	}
+	
+	public void hapus(String idRujukan) throws Exception{}
+		public void kemaskini(Hashtable<String, String> data) throws Exception{}
+	  
 	private IHtp getIHTP(){
 		if(iHTP== null)
 			iHTP = new HtpBean();
 		return iHTP;
 	}
 	
-	private HakmilikInterface getIHakmilik(){
+	private ITanah getIHakmilik(){
 		if (iHakmilik==null){
-			iHakmilik=new HakmilikBean();
+			iHakmilik=new TanahBean();
 		}
 		return iHakmilik;
-	}		
-	
-	private IHakmilikRizab getIHakmilikRizabPengesahan(){
-		if (iHakmilikRizabPengesahan == null){
-			iHakmilikRizabPengesahan = new FrmHakmilikRizabPengesahanBean();
-		}
-		return iHakmilikRizabPengesahan;
-	}
-	
+	}			
 
 	
 }

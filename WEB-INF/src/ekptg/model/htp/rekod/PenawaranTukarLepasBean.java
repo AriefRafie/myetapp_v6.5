@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Hashtable;
 import java.util.Vector;
 
 import lebah.db.Db;
@@ -17,7 +18,7 @@ import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
-public class PenawaranTukarLepasBean implements IPenawaranTukarLepas {
+public class PenawaranTukarLepasBean implements ITanahCarian {
 	private static final String KOD_JABATAN ="JKPTG";
 	private static String KODKEMENTERIAN ="00";
 	private static final long IDTARAFKESELAMTAN = 1;
@@ -29,9 +30,28 @@ public class PenawaranTukarLepasBean implements IPenawaranTukarLepas {
 	private FrmSenaraiFailTerimaPohonData senaraiFail = null;
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.PenawaranTukarLepasBean.class);
 
+	//13 parameter
 	@Override
-	public Vector findFail(String IdUrusan,String noFail,String tajukFail,String pemohon,String idNegeri
-			,String idDaerah,String idMukim,String idKementerian,String idAgensi
+	public Vector getCarianSenaraiHakmilikRizab(String IdUrusan,String noFail,String tajukFail,String pemohon
+			,String idNegeri,String idDaerah,String idMukim
+			,String idKementerian,String idAgensi
+			,String tarikhPohon,String tarikhBukaFail,String tarikhBukaFailHingga,String str) {
+		Vector vec =null;
+		return vec;
+	}
+	// 14 parameter
+	public Vector getCarianSenaraiHakmilikRizab(String IdUrusan,String noFail,String tajukFail,String pemohon
+			,String idNegeri,String idDaerah,String idMukim
+			,String idKementerian,String idAgensi
+			,String tarikhPohon,String tarikhBukaFail,String tarikhBukaFailHingga,String str,String str2) {
+		Vector vec =null;
+		return vec;
+	}
+	// 12
+	@Override
+	public Vector getCarianSenaraiHakmilikRizab(String IdUrusan,String noFail,String tajukFail,String pemohon
+			,String idNegeri,String idDaerah,String idMukim
+			,String idKementerian,String idAgensi
 			,String tarikhPohon,String tarikhBukaFail,String tarikhBukaFailHingga) {
 		
 		Db db = null;
@@ -39,67 +59,72 @@ public class PenawaranTukarLepasBean implements IPenawaranTukarLepas {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
 		try{
-			db = new Db();
-			Statement stmt = db.getStatement();
-
-
-			String sql = "SELECT distinct P.TUJUAN, f.id_Fail, p.id_Permohonan, f.no_Fail, f.tajuk_Fail, s.keterangan, n.nama_Negeri, n.kod_Mampu,n.id_Negeri, PP.id_htppermohonan ";
-			sql +="FROM Tblpfdfail F, Tblpermohonan P, Tblrujsuburusanstatusfail sf, Tblrujsuburusanstatus ss, Tblrujstatus s, Tblrujnegeri n, tblhtppermohonan PP ";
-			sql +="WHERE f.id_Fail = p.id_Fail AND p.id_Permohonan = sf.id_Permohonan AND n.id_Negeri = f.id_Negeri AND PP.ID_PERMOHONAN = P.ID_PERMOHONAN  ";
-			sql +="AND sf.id_Suburusanstatus = ss.id_Suburusanstatus AND ss.id_Status = s.id_Status ";
-			sql +="AND sf.aktif = '1' AND F.id_Urusan = '"+IdUrusan+"' AND f.tajuk_Fail LIKE '%"+tajukFail+"%' ";
-			sql +="AND f.ID_STATUS <> 999 ";
-			//Nama Permohon
-			if (pemohon != null) {
-				if (!pemohon.trim().equals("")) {
-					sql = "SELECT F.TAJUK_FAIL,F.ID_FAIL,F.NO_FAIL,P.TUJUAN, P.ID_PERMOHONAN, P.ID_STATUS,P.TARIKH_TERIMA, RS.KETERANGAN,RN.NAMA_NEGERI"
-						+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P, TBLRUJSTATUS RS, TBLHTPPEMOHON TPP,TBLRUJNEGERI RN "
-						+ " WHERE P.ID_FAIL = F.ID_FAIL AND P.ID_STATUS = RS.ID_STATUS AND P.ID_PERMOHONAN = PP.ID_PERMOHONAN(+) " 
-						+ " AND F.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '"+IdUrusan+"' AND f.tajuk_Fail LIKE '%"+tajukFail+"%' ";
-
-					sql += " AND UPPER(D.NAMA_PEMOHON) LIKE '%' ||'"
-							+ pemohon.trim().toUpperCase() + "'|| '%'";
-				}
-			}
-			sql +=" AND F.NO_FAIL LIKE '%"+noFail+"%' ";
-			if(idNegeri != null && !idNegeri.equals("") && !idNegeri.equals("0")){
-	    	  sql +=" AND F.ID_NEGERI = "+idNegeri;
-			}
-			if(idKementerian != null && !idKementerian.equals("") && !idKementerian.equals("0")){
-		    	  sql +=" AND F.ID_KEMENTERIAN = "+idKementerian;
-			}
-			if (idAgensi!= null && !"-1".equals(idAgensi) && !"".equals(idAgensi)) {
-		    	  sql = sql + " AND PP.id_agensi = '"+idAgensi+"' ";
-		    }
-			//tarikhTerima
-			if (tarikhPohon != null) {
-				if (!tarikhPohon.toString().trim().equals("")) {
-					sql = sql + " AND TO_CHAR(P.TARIKH_TERIMA,'dd-MON-YY') = '" + sdf1.format(sdf.parse(tarikhPohon)).toUpperCase() +"'";
-				}
-			}
+			carianFail(noFail,tajukFail
+				,tarikhPohon, pemohon
+				,idNegeri
+				,idKementerian,idAgensi);
 			
-			sql +=" ORDER BY P.ID_PERMOHONAN desc";
-			
-			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()){
-				permohonan = new Permohonan();
-				fail = new PfdFail();
-				htpPermohonan = new HtpPermohonan();
-				
-				fail.setIdFail(rs.getLong("id_Fail"));
-				permohonan.setNamaNegeri(rs.getString("nama_Negeri"));
-				permohonan.setIdPermohonan(rs.getLong("id_Permohonan"));
-				fail.setNoFail(rs.getString("no_Fail"));
-				permohonan.setTujuan(rs.getString("TUJUAN"));
-				//permohonan.setTujuan(rs.getString("tajuk_Fail"));
-				htpPermohonan.setIdHtpPermohonan(rs.getString("id_htppermohonan"));
-				htpPermohonan.setPermohonan(permohonan);
-				htpPermohonan.setStatusPermohonan(rs.getString("keterangan"));
-				permohonan.setPfdFail(fail);
-				htpPermohonan.setPermohonan(permohonan);
-				
-				v.addElement(htpPermohonan);
-			}
+//			db = new Db();
+//			Statement stmt = db.getStatement();
+//
+//
+//			String sql = "SELECT distinct P.TUJUAN, f.id_Fail, p.id_Permohonan, f.no_Fail, f.tajuk_Fail, s.keterangan, n.nama_Negeri, n.kod_Mampu,n.id_Negeri, PP.id_htppermohonan ";
+//			sql +="FROM Tblpfdfail F, Tblpermohonan P, Tblrujsuburusanstatusfail sf, Tblrujsuburusanstatus ss, Tblrujstatus s, Tblrujnegeri n, tblhtppermohonan PP ";
+//			sql +="WHERE f.id_Fail = p.id_Fail AND p.id_Permohonan = sf.id_Permohonan AND n.id_Negeri = f.id_Negeri AND PP.ID_PERMOHONAN = P.ID_PERMOHONAN  ";
+//			sql +="AND sf.id_Suburusanstatus = ss.id_Suburusanstatus AND ss.id_Status = s.id_Status ";
+//			sql +="AND sf.aktif = '1' AND F.id_Urusan = '"+IdUrusan+"' AND f.tajuk_Fail LIKE '%"+tajukFail+"%' ";
+//			sql +="AND f.ID_STATUS <> 999 ";
+//			//Nama Permohon
+//			if (pemohon != null) {
+//				if (!pemohon.trim().equals("")) {
+//					sql = "SELECT F.TAJUK_FAIL,F.ID_FAIL,F.NO_FAIL,P.TUJUAN, P.ID_PERMOHONAN, P.ID_STATUS,P.TARIKH_TERIMA, RS.KETERANGAN,RN.NAMA_NEGERI"
+//						+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P, TBLRUJSTATUS RS, TBLHTPPEMOHON TPP,TBLRUJNEGERI RN "
+//						+ " WHERE P.ID_FAIL = F.ID_FAIL AND P.ID_STATUS = RS.ID_STATUS AND P.ID_PERMOHONAN = PP.ID_PERMOHONAN(+) " 
+//						+ " AND F.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '"+IdUrusan+"' AND f.tajuk_Fail LIKE '%"+tajukFail+"%' ";
+//
+//					sql += " AND UPPER(D.NAMA_PEMOHON) LIKE '%' ||'"
+//							+ pemohon.trim().toUpperCase() + "'|| '%'";
+//				}
+//			}
+//			sql +=" AND F.NO_FAIL LIKE '%"+noFail+"%' ";
+//			if(idNegeri != null && !idNegeri.equals("") && !idNegeri.equals("0")){
+//	    	  sql +=" AND F.ID_NEGERI = "+idNegeri;
+//			}
+//			if(idKementerian != null && !idKementerian.equals("") && !idKementerian.equals("0")){
+//		    	  sql +=" AND F.ID_KEMENTERIAN = "+idKementerian;
+//			}
+//			if (idAgensi!= null && !"-1".equals(idAgensi) && !"".equals(idAgensi)) {
+//		    	  sql = sql + " AND PP.id_agensi = '"+idAgensi+"' ";
+//		    }
+//			//tarikhTerima
+//			if (tarikhPohon != null) {
+//				if (!tarikhPohon.toString().trim().equals("")) {
+//					sql = sql + " AND TO_CHAR(P.TARIKH_TERIMA,'dd-MON-YY') = '" + sdf1.format(sdf.parse(tarikhPohon)).toUpperCase() +"'";
+//				}
+//			}
+//			
+//			sql +=" ORDER BY P.ID_PERMOHONAN desc";
+//			
+//			ResultSet rs = stmt.executeQuery(sql);
+//			while(rs.next()){
+//				permohonan = new Permohonan();
+//				fail = new PfdFail();
+//				htpPermohonan = new HtpPermohonan();
+//				
+//				fail.setIdFail(rs.getLong("id_Fail"));
+//				permohonan.setNamaNegeri(rs.getString("nama_Negeri"));
+//				permohonan.setIdPermohonan(rs.getLong("id_Permohonan"));
+//				fail.setNoFail(rs.getString("no_Fail"));
+//				permohonan.setTujuan(rs.getString("TUJUAN"));
+//				//permohonan.setTujuan(rs.getString("tajuk_Fail"));
+//				htpPermohonan.setIdHtpPermohonan(rs.getString("id_htppermohonan"));
+//				htpPermohonan.setPermohonan(permohonan);
+//				htpPermohonan.setStatusPermohonan(rs.getString("keterangan"));
+//				permohonan.setPfdFail(fail);
+//				htpPermohonan.setPermohonan(permohonan);
+//				
+//				v.addElement(htpPermohonan);
+//			}
 			
 		}
 		catch(Exception e){
@@ -156,7 +181,10 @@ public class PenawaranTukarLepasBean implements IPenawaranTukarLepas {
 		return borang;
 	}
 	
-	public Vector carianFail(String noFail, String tajukFail,String tarikhTerima, String namaPemohon,String idNegeri,String idKementerian,String idAgensi) throws Exception {		
+	public Vector carianFail(String noFail, String tajukFail
+		,String tarikhTerima, String namaPemohon
+		,String idNegeri
+		,String idKementerian,String idAgensi) throws Exception {		
 		Db db = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String sql = "";
@@ -261,7 +289,6 @@ public class PenawaranTukarLepasBean implements IPenawaranTukarLepas {
 		return senaraiFail;
 	}
 	
-	@Override
 	public HtpPermohonan kemaskiniPermohonan(HtpPermohonan htpPermohonan,String idPermohonan,String idhtpPermohonan)throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -352,5 +379,10 @@ public class PenawaranTukarLepasBean implements IPenawaranTukarLepas {
 				db.close();
 		}
 	}
+	public Hashtable<String, String> getCarianHakmilikRizab(String idHakmilik) throws Exception{
+		Hashtable hash = null;
+		return hash;
+	}
 	
+
 }

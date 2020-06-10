@@ -201,7 +201,7 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
     		IDURUSAN = "14"; 
     	}else if(isTab(portal_role,"Pajakan")){
     		IDURUSAN = "3";
-    	}else if(isTab(portal_role,"Perakuan Pembelian")){
+    	}else if(isTab(portal_role,"Perakuan Pembelian") || isTab(portal_role,"Pembelian")){
     		IDURUSAN = "2";    		
     	}else if(isTab(portal_role,"Permohonan")){
     		IDURUSAN = "1,10";
@@ -412,7 +412,9 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			context.put("page","1");
 			Vector dokumens = getIOnline().getLampiranByPermohonan(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
 			context.put("senaraidokumen", dokumens);
-			//getSenaraiSemakFail();
+			
+			getSemakanPerakuanPembelian();
+
 			   		
 		}else if ("pembelianditolak".equals(submit)) {
 			//idFail = getParam("idfail");
@@ -938,7 +940,11 @@ public void doSimpanMaklumatAsasTanah() throws Exception {
 		return returnValue;
 		
 	}
-
+	private void getSemakanPerakuanPembelian()throws Exception{
+		context.put("semakclass", new FrmSemakan());
+		Vector semakList = FrmSemakan.getSenaraiSemakan("frmPajakanSemakan");
+		context.put("perakuanPembelian", semakList);
+	}
 		private IHtp getHTP(){
 			if(iHtp == null)
 				iHtp = new HtpBean();

@@ -18,9 +18,9 @@ import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.htp.entity.HakmilikAgensi;
 
-public class FrmTanahKementerianBean implements ITanahKementerian{
+public class TanahKementerianBean implements ITanahDaftar{
 	
-	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.FrmTanahKementerianBean.class);
+	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.TanahKementerianBean.class);
 	private Db db = null;
 	private String sql = "";
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -63,8 +63,8 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 		}
 		
 	}
-
-	public void kemaskiniTanahAgensi(HakmilikAgensi ha) throws Exception{
+	@Override
+	public void kemaskini(Hashtable<String, String> ha) throws Exception{
 		Connection conn = null;
 		//hakmilikAgensi = new HakmilikAgensi();
 		try{
@@ -75,18 +75,21 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
-			r.update("ID_HAKMILIK",String.valueOf(ha.getIdHakmilik()));
+			r.update("ID_HAKMILIK",String.valueOf(ha.get("idHakmilik")));
 			r.update("STATUS","Y");
-			r.add("ID_LUAS",ha.getIdLuas());
-			r.add("LUAS",ha.getLuas());			 
-			r.add("LUAS_BERSAMAAN", ha.getLuasBersamaan());
+			r.add("ID_LUAS",ha.get("socLuas"));
+			r.add("LUAS",ha.get("txtLuasLama"));			 
+			r.add("LUAS_BERSAMAAN", ha.get("txtLuasBersamaan"));
+			 
+			r.add("ID_AGENSI",String.valueOf(ha.get("idAgensi")));
+			r.add("ID_KEMENTERIAN",String.valueOf(ha.get("idKementerian")));
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));			  
-			r.add("ID_KEMASKINI", r.unquote(String.valueOf(ha.getIdKemaskini())));			  
-			sql = r.getSQLUpdate("TBLHTPHAKMILIKAGENSI");
-			  
-			myLog.info("kemaskiniTanahAgensi:sql="+sql);
-			stmt.executeUpdate(sql);			 
-			conn.commit();
+			r.add("ID_KEMASKINI", r.unquote(String.valueOf(ha.get("idKemaskini"))));			  
+				  
+			 sql = r.getSQLUpdate("TBLHTPHAKMILIKAGENSI");
+			 myLog.info("kemaskiniTanahAgensi:sql="+sql);
+			 stmt.executeUpdate(sql);			 
+			 conn.commit();
 			
 		}catch(Exception e){
 			try{
@@ -106,7 +109,7 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 		
 	}	
 	// INSERT TBLHTPHAKMILIKAGENSI
-	
+	@Override
 	public String simpan(Hashtable<String,String> data) throws Exception {
 //	public String simpan(Db db,Hashtable<String,String> data,String idhakmilik) throws Exception {
 		String currentDate = sdf.format(date);
@@ -142,6 +145,7 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 		return idAgensi;			    
 	}
 
+	@Override
 	public Vector<Hashtable<String,String>> getSenaraiMaklumat(String idHakmilik) throws Exception {
 		Vector<Hashtable<String,String>> listMaklumatFail = null;
 		try {
@@ -251,7 +255,16 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 		return sql;
 		
 	}
-
+	
+	@Override
+	public Hashtable<String,String> getMaklumat(String idRujukan) throws Exception{
+		Hashtable<String,String> h =null;
+		return h;
+	}
+		
+	@Override
+	public void hapus(String idRujukan) throws Exception{
+	}
 	
  }
 

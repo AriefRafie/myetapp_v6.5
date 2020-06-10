@@ -25,8 +25,12 @@ import ekptg.model.ppk.online.IStatusPermohonan;
 import ekptg.model.ppk.online.StatusPermohonanFacade;
 
 public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
-	static Logger myLogger = Logger
-			.getLogger(FrmPrmhnnStatusPengunaOnline.class);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4843489266845962934L;
+
+	static Logger myLogger = Logger.getLogger(FrmPrmhnnStatusPengunaOnline.class);
 
 	FrmPrmhnnSek8SecaraOnlineData logiconline = new FrmPrmhnnSek8SecaraOnlineData();
 	FrmBorangPSek17OnlineData logic = new FrmBorangPSek17OnlineData();
@@ -40,16 +44,11 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 		String vm = "app/ppk/frmPrmhnnStatusPengunaOnline.jsp";
 		// String submit = getParam("hitButt");
 		String mode = getParam("mode");
-
 		String submit = getParam("command"); // First Level - default by
 												// AjaxBasedModule Call
-		System.out.println("submit command : "+submit);
 		String action = getParam("action"); // Second Level
-		System.out.println("action : "+action);
-
-		// System.out.println("SUBMIT :: "+submit);
-		// System.out.println("MODE :: "+mode);
-
+		myLogger.info("submit command : "+submit+",action : "+action);;
+	
 		String disability1 = "";
 		String disability2 = "";
 		String readability1 = "";
@@ -104,7 +103,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 			FrmTukaranStatus.hapusfail(fifah);
 			
 //			AuditTrail.logActivity("999","2",this,session,"DEL","NO PERMOHONAN ["+NoFail+"] DIHAPUSKAN");
-
 						
 		}
 		// daftar dan kemaskini seksyen17
@@ -4314,16 +4312,17 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 		senaraiFail = FrmPrmhnnStatusPengunaOnlineData.getSenaraiTugasanDraf("",
 				(String) session.getAttribute("_ekptg_user_id"),
 				(String) session.getAttribute("_portal_role"),
-				getParam("kppemohon"), getParam("kpsimati"), "yes");
-		// context.put("senaraiFail",senaraiFail);
+				getParam("kppemohon"), 
+				getParam("kpsimati"), 
+				"yes");
+		// context.put("senaraiFail",senaraiFail);             
 		setupPage(session, action, senaraiFail);
 
 		this.context.put("kppemohon", getParam("kppemohon"));
 		this.context.put("kpsimati", getParam("kpsimati"));
 
+		myLogger.info("vm:" + vm);
 		Template template = this.engine.getTemplate(vm);
-		myLogger.debug("vm:" + vm);
-		System.out.println("vm :" + vm);
 		return vm;
 
 	}

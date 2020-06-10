@@ -320,7 +320,7 @@ public class PermohonanPerizapanBean implements IPermohonanPerizapan {
 	      }	      
 	      //sql = sql + "ORDER BY  f.id_kemaskini DESC";
 	      //sql = sql + "ORDER BY F.TARIKH_DAFTAR_FAIL DESC";
-	      sql = sql + "ORDER BY P.ID_FAIL DESC" +
+	      sql = sql + " ORDER BY P.ID_FAIL DESC" +
 	      "" ;
 	      //
 	      myLog.info("TerimaPohongetList::sql="+sql);

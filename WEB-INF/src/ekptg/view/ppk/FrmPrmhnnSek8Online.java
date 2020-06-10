@@ -38,6 +38,10 @@ import ekptg.model.ppk.FrmSenaraiFailOnlineData;
 //import ekptg.model.ppk.FrmSenaraiFailInternalData;
 
 public class FrmPrmhnnSek8Online extends VTemplate {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6113281434052842359L;
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
 	String currentDate = dateFormat.format(date);
@@ -55,6 +59,7 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 	FrmSenaraiFailInternalData logic_F = new FrmSenaraiFailInternalData();
 	FrmHeaderPpk mainheader = new FrmHeaderPpk();
 	private String onlineLebih = "";
+	private String idUser = "";
 
 	public Template doTemplate() throws Exception {
 		String flagFromSenaraiFailSek8 = getParam("flagFromSenaraiFailSek8");
@@ -76,7 +81,8 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		String bolehsimpan = "";
 		HttpSession session = this.request.getSession();
 		String doPost = (String) session.getAttribute("doPost");
-
+		idUser = String.valueOf(session.getAttribute("_ekptg_user_id"));
+		
 		Calendar cal = Calendar.getInstance();
 		Calendar currentcal = Calendar.getInstance();
 		cal.set(2009, Calendar.SEPTEMBER, 1);
@@ -103,10 +109,9 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		String submit = getParam("command");
 		String mode = getParam("mode");
 		String idAlert = getParam("idAlert");
+		String action = getParam("action");
 
-		System.out.println("submit:" + submit);
-		System.out.println("mode:" + mode);
-
+		myLogger.info("submit:" + submit+",mode:" + mode);
 		// int simpanStatus = 2;
 		// int eventStatus = 0;
 		// int backstatus = 1;
@@ -187,19 +192,6 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		Vector listSemakO = null;
 		Vector v = null;
 
-		/*
-		 * listPemohonOB.clear();
-		 * 
-		 * listWarisLapisanIdMatiDelete.clear(); listPentingbyIDOB.clear();
-		 * listWarisLapisanIdMati.clear(); listHTAXid.clear(); list.clear();
-		 * listFail.clear(); listCheckPeguam.clear(); listPenting.clear();
-		 * listHTA.clear(); listHTAX.clear(); listHTAid.clear();
-		 * listSaksi.clear(); listPenghutang.clear(); listPemiutang.clear();
-		 * listPemohon.clear(); listSimati.clear(); listPeguam.clear();
-		 * listKeputusan.clear(); listWarisLapisan.clear(); listWarisOB.clear();
-		 * listWarisParent.clear(); listWarisUpdate.clear(); listHta.clear();
-		 * listHtath.clear(); listHa.clear();
-		 */
 		int flagno = 0;
 		int idFlag = 0;
 		int flag_no = 0;
@@ -6653,13 +6645,13 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			this.context.put("Senaraifail", list);
 			this.context.put("CountList", countList);
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
-			prepareItemForDisplay(session, list, 25, "first");
+			setupPage(session,action,list);
+			//prepareItemForDisplay(session, list, 25, "first");
 			vm = "app/ppk/frmSenaraiPermohonanOnline.jsp";
 
 		}
 		
-		System.out.println("vm FrmPrmhnnSek8Online >>> "+vm);
-
+//		System.out.println("vm FrmPrmhnnSek8Online >>> "+vm);
 		this.context.put("DATEUTIL", new DateUtil());
 
 		Db db = null;
@@ -6688,8 +6680,7 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			this.context.put("listluas", listluas);
 
 			String statuspemilik = "Y";
-			Vector listpemilikan = logic_A.getListStatusPemilikDb(
-					statuspemilik, db);
+			Vector listpemilikan = logic_A.getListStatusPemilikDb(statuspemilik, db);
 			this.context.put("listpemilikan", listpemilikan);
 
 			Vector listtanah = logic_A.getListJenisTanahDb(db);
@@ -6699,27 +6690,22 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			this.context.put("listmukim", listmukim);
 
 			String statushak = "Y";
-			Vector listjenishakmilik = logic_A.getListJenisHakMilikDb(
-					statushak, db);
+			Vector listjenishakmilik = logic_A.getListJenisHakMilikDb(statushak, db);
 			this.context.put("listJenisHakMilik", listjenishakmilik);
 
 			Vector listkategori = logic_A.getListKategoriDb(db);
 			this.context.put("listkategori", listkategori);
 
-			this.context
-					.put("flagFromSenaraiFailSek8", flagFromSenaraiFailSek8);
+			this.context.put("flagFromSenaraiFailSek8", flagFromSenaraiFailSek8);
 			this.context.put("flagForView", flagForView);
-			this.context.put("flagFromSenaraiPermohonanSek8",
-					flagFromSenaraiPermohonanSek8);
+			this.context.put("flagFromSenaraiPermohonanSek8",flagFromSenaraiPermohonanSek8);
 
 			Vector kenegaraan = null;
 			kenegaraan = mainheader.kenegaraanDb(db);
 			this.context.put("kenegaraan", kenegaraan);
 
-			FrmPrmhnnSek8KeputusanPermohonanInternalData
-					.setMaklumatMahkamahARBDb(db);
-			Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
-					.getMaklumatMahkamahARB();
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamahARBDb(db);
+			Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData.getMaklumatMahkamahARB();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
 			// Kemaskini oleh Mohamad Rosli pada 11/11/2013, senarai permohonan
 			// lebih 21 hari

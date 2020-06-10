@@ -725,8 +725,8 @@ public class SenaraiFailModule extends AjaxModule {
 				context.put("selectedTab", 2);
 			}
 			vm = PATH+"tanah.jsp";
-		}
-		else if(command.equalsIgnoreCase("perakuanPembelian")){
+		
+		}else if(command.equalsIgnoreCase("perakuanPembelian")){
 			getPermohonanInfo();
 			context.put("page","3");
 			pemohon = getIPembelian().findByPermohonan(getParam("txtidPermohonan"));
@@ -747,8 +747,8 @@ public class SenaraiFailModule extends AjaxModule {
 				context.put("page","2");
 				context.put("pemohon", null);
 				vm = PATH+"tanah.jsp";
-			}
-			else{
+			
+			}else{
 				
 				getPermohonanInfo();
 				getSemakanPerakuanPembelian();
@@ -756,9 +756,10 @@ public class SenaraiFailModule extends AjaxModule {
 				context.put("page","3");
 				context.put("semakMode", "");
 				context.put("mode", " disabled");
+			
 			}
-		}
-		else if(command.equalsIgnoreCase("kemaskiniPerakuan")){
+			
+		}else if(command.equalsIgnoreCase("kemaskiniPerakuan")){
 			
 			getSemakanPerakuanPembelian();
 			vm = PATH+"perakuanPembelian.jsp";
