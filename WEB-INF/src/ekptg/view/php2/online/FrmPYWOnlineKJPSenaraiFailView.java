@@ -29,10 +29,10 @@ import ekptg.model.php2.online.FrmPYWOnlineSenaraiFailData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
 import ekptg.view.ppt.FrmBantahanSenaraiOnline;
 
-public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
+public class FrmPYWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
-	static Logger myLogger = Logger.getLogger(FrmPYWOnlineSenaraiFailView.class);
+	static Logger myLogger = Logger.getLogger(FrmPYWOnlineKJPSenaraiFailView.class);
 
 	@Override
 	public String doTemplate2() throws Exception {
