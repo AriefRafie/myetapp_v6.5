@@ -259,10 +259,10 @@ public class FrmSemakan {
 	    	}
 	  }
 	 
-	 public void semakanHapusByPermohonan(String idpermohonan,String idsemakansenarai) throws Exception {
+	 public void semakanHapusByPermohonan(String idPermohonan,String idSemakanSenarai) throws Exception {
 		    Db db = null;
-		    int idPermohonan = Integer.parseInt(idpermohonan);
-		    int idSemakanSenarai = Integer.parseInt(idsemakansenarai);
+		    //int idPermohonan = Integer.parseInt(idpermohonan);
+		    //int idSemakanSenarai = Integer.parseInt(idsemakansenarai);
 		    String sql = "";
 		    try {
 		      db = new Db();
