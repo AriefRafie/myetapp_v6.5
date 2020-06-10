@@ -298,9 +298,7 @@ $listFail.id_Suburusanstatus
 
 <fieldset id="tab_Daftar">
 
-
-
-            
+  
 <p></p>
 <p>
   <input name="mode1" type="hidden" value="$mode1" />
@@ -595,7 +593,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             
             <tr style="display:none" >
               <td valign="top"></td>
-              <td><p>Sasaran Tempoh KPI</p>                </td>
+              <td><p>Sasaran Tempoh KPI</p>  </td>
               <td>:</td>
               <td>
             <div id="kpi_ppk" ></div>
@@ -630,146 +628,120 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
      <input nama="tp" id="tp" type="hidden" value="$taraf_penting" />
       <table width="100%" border="0">
      
-        <tr >
-   
-            <td valign="top" width="2%" >#if($setmode != "disabled") <span class="style1">*</span> #end</td>
-                                        <td width="28%"><div align="right" class="style38">
-                                          <div align="left">Taraf Kepentingan</div>
-                                        </div></td>
-                  <td width="1%">:</td>
-                                        <td width="69%">
+       <tr >
+            <input nama="tp" id="tp" type="hidden" value="$taraf_penting" />
+            <td valign="top">#if($setmode != "disabled") <span class="style1">*</span> #end</td>
+            <td><div align="right" class="style38">
+                <div align="left"> Taraf Kepentingan </div>
+              </div></td>
+            <td class="style36"><span class="style38">:</span></td>
+            <td> #if($taraf_penting=="")                                          
+              #set($taraf_penting="")                                                          
+              
+              #set($tarafkePemohonan="")
+              #set($tarafkePemohonanid="")
+              #else
+              #foreach($listtar in $listtaraf)
+              
+              #if($taraf_penting==$listtar.id_Tarafkptg)
+              
+              #set($tarafkePemohonan="$listtar.kod - $listtar.keterangan")
+              #set($tarafkePemohonanid="$listtar.id_Tarafkptg")
+              
+              #end  
+              
+              #end
+              #end
+              
+              #if($taraf_penting!="" && $taraf_penting!=0 && $taraf_penting!="null" )
+              #set($dahada="ada")
+              #else
+              #set($dahada="Xada")
+              #end
+              <!--::::::: ID TARAF :$listpemohon.idTarafkptg   
+                  ::::::: ADA TARAF-->
                   
-                   #if($taraf_penting=="")                                          
-                                          #set($taraf_penting="")                                                          
-                                          
-                                           #set($tarafkePemohonan="")
-                                          #set($tarafkePemohonanid="")
-                                          #else
-                                          #foreach($listtar in $listtaraf)
-                                          
-                                          #if($taraf_penting==$listtar.id_Tarafkptg)
-                                          
-                                          #set($tarafkePemohonan="$listtar.kod - $listtar.keterangan")
-                                          #set($tarafkePemohonanid="$listtar.id_Tarafkptg")
-                                          
-                                          
-                                          
-                                          #end  
-                                          
-                                          
-                                          
-                                          #end
-                                          #end
-                                          
-                                          #if($taraf_penting!="" && $taraf_penting!=0 && $taraf_penting!="null" )
-                                          #set($dahada="ada")
-                                          #else
-                                          #set($dahada="Xada")
-                                          #end
-                                          
-                                          <!--
-                                          ::::::: ID TARAF :$listpemohon.idTarafkptg   
-                                          ::::::: ADA TARAF
-                                          -->
-                                          
-                                        <!--  listPemohonOB size:::: $listPemohonOB.size() -->
-                                 
-                                          #if( $listPemohonOB.size()>0)
-                                          #set($tmpp="ada")
-                                          #else
-                                          #set($tmpp="Xada")
-                                          #end
-                                        <!-- listPemohonOB size:::: --> 
-                                      
-                                        <input name="adaob" type="hidden"  value="$!tmpp" />                                  
-                                          
-                                          <input name="adataraf" type="hidden"  value="$dahada" />                                         #if($setmode=="disabled")
-                                          <input name="textfield2" type="text" id="textfield3" style="text-transform:uppercase;" onBlur="uppercase()" value="$tarafkePemohonan"  size="34" $readmodeR class="$setmode" />
-                                      <input name="taraf_penting" id="taraf_penting" type="hidden" style="text-transform:uppercase;"  onblur="uppercase()" value="$taraf_penting"  size="34" readonly="$readmodeR" class="$setmode" />
-                                          #else
-                                          
-                                          #if($taraf_penting!="")
-                                          <input type="hidden" name="socTarafKePemohonanpp2" value="$taraf_penting" />
-                                              <select name="taraf_penting" id="taraf_penting" class="largeselect;disabled" style="text-transform:uppercase;"  onblur="uppercase()" onChange="pilih_taraf();pilih_amanah();default_amanah()" >
-                                                <option value="$taraf_penting" style="text-transform:uppercase;"  onblur="uppercase()">$tarafkePemohonan</option>
-                                                                                       
+              <!--  listPemohonOB size:::: $listPemohonOB.size() -->
+              #if( $listPemohonOB.size()>0)
+              #set($tmpp="ada")
+              #else
+              #set($tmpp="Xada")
+              #end
+              <!-- listPemohonOB size:::: -->
+              <input name="adaob" type="hidden"  value="$!tmpp" />
+              <input name="adataraf" type="hidden"  value="$dahada" />
+              #if($setmode=="disabled")
+              <input name="textfield2" type="text" id="textfield3" style="text-transform:uppercase;" onBlur="uppercase()" value="$tarafkePemohonan"  size="34" $readmodeR class="$setmode" />
+              <input name="taraf_penting" id="taraf_penting" type="hidden" style="text-transform:uppercase;"  onblur="uppercase()" value="$taraf_penting"  size="34" readonly="$readmodeR" class="$setmode" />
+              #else
+              
+              #if($taraf_penting!="")
+              <input type="hidden" name="socTarafKePemohonanpp2" value="$taraf_penting" />
+              <select name="taraf_penting" id="taraf_penting" class="largeselect;disabled" style="text-transform:uppercase;"  onblur="uppercase()" onChange="pilih_taraf();pilih_amanah();default_amanah()" >
+                <option value="$taraf_penting" style="text-transform:uppercase;"  onblur="uppercase()">$tarafkePemohonan</option>
+                                                                         
                                           #foreach($listtar in $listtaraf)
                                             #if($taraf_penting!=$listtar.id_Tarafkptg)
-                                                <option value="$listtar.id_Tarafkptg" style="text-transform:uppercase;" onBlur="uppercase()">$listtar.kod - $listtar.keterangan</option>
-                                          #end      
-                                          #end  
-                                          
-                                              </select>
-                                          #else
-                                          #foreach($listtar in $listtaraf)                                         
-                                          #if($listtar.id_Tarafkptg == "1")                                          
-                                          #set($taraf="$listtar.kod - $listtar.keterangan")
-                                          #set($tarafid="$listtar.id_Tarafkptg")
-                                          #end 
-                                          #end
-                                          
-                                          
-                                          
-                                          
-                                          <select name="taraf_penting" class="largeselect" style="text-transform:uppercase;" onBlur="uppercase()" onChange="pilih_taraf();pilih_amanah();default_amanah()" >
-                                            <option value="$tarafid" style="text-transform:uppercase;" onBlur="uppercase()">$taraf</option>
-                                            
-                                            
+                
+                <option value="$listtar.id_Tarafkptg" style="text-transform:uppercase;" onBlur="uppercase()">$listtar.kod - $listtar.keterangan</option>
+                   #end      
+                   #end  
+                   
+              </select>
+              #else
+              #foreach($listtar in $listtaraf)                                         
+              #if($listtar.id_Tarafkptg == "1")                                          
+              #set($taraf="$listtar.kod - $listtar.keterangan")
+              #set($tarafid="$listtar.id_Tarafkptg")
+              #end 
+              #end
+              <select name="taraf_penting" class="largeselect" style="text-transform:uppercase;" onBlur="uppercase()" onChange="pilih_taraf();pilih_amanah();default_amanah();pilih_majlisagama()" >
+                <option value="$tarafid" style="text-transform:uppercase;" onBlur="uppercase()">$taraf</option>
+                            
                                         #foreach($listtar in $listtaraf)
                                         
                                         #if($listtar.id_Tarafkptg != $tarafid) 
-                                            <option value="$listtar.id_Tarafkptg" style="text-transform:uppercase;" onBlur="uppercase()">$listtar.kod - $listtar.keterangan</option>
-                                        #end    
-                                        #end
-                                       
-                                          </select>
-                                          #end
-                                          
-                                          #end                                               </td>
-                                          
-                                      
+         
+                <option value="$listtar.id_Tarafkptg" style="text-transform:uppercase;" onBlur="uppercase()">$listtar.kod - $listtar.keterangan</option>
+                #end
+                #end
+              </select>
+              #end
+              #end </td>
           </tr>
           
        <input name="jenis_pej" id="jenis_pej" type="hidden"  value="$!jenis_pej" />
-       
-       
        <tr id="hubungan" >
-                                          <td  valign="top"> #if($setmode != "disabled") <span class="style1">*</span> #end</td>
-                                          <td><div align="left" class="style75">Hubungan Dengan Simati</div></td>
-                  <td>:</td>
-                                          <td>
+        <td  valign="top"> #if($setmode != "disabled") <span class="style1">*</span> #end</td>
+        <td><div align="left" class="style75">Hubungan Dengan Simati</div></td>
+        <td>:</td>
+        <td>
+         #if($setmode == "disabled")                                          
+         #foreach($listsau in $listsaudara)                                          
+         #if($socSaudaraWaris==$listsau.id_Saudara)                                          
+         #set($kodsaudaraketerangan=$listsau.keterangan)                                          
+         #end    
+         #end
                                           
+         #if($socSaudaraWaris!="" && $socSaudaraWaris!="0")
+         <input  name="sau" id"sau" value="$kodsaudaraketerangan"   size="50" style="text-transform:uppercase;" $setmodeR class="$setmode" />
+         #else
+         <input  name="sau" id"sau" value="" style="text-transform:uppercase;" size="15" $setmodeR class="$setmode" />
+         #end
+         
+         #else
                                           
+         #foreach($listsau in $listsaudara)
                                           
-                                          #if($setmode == "disabled")                                          
-                                          #foreach($listsau in $listsaudara)                                          
-                                          #if($socSaudaraWaris==$listsau.id_Saudara)                                          
-                                          #set($kodsaudaraketerangan=$listsau.keterangan)                                          
-                                          #end    
-                                          #end
+         #if($socSaudaraWaris==$listsau.id_Saudara)
                                           
-                                           #if($socSaudaraWaris!="" && $socSaudaraWaris!="0")
-                                           <input  name="sau" id"sau" value="$kodsaudaraketerangan"   size="50" style="text-transform:uppercase;" $setmodeR class="$setmode" />
-                                          #else
-                                           <input  name="sau" id"sau" value="" style="text-transform:uppercase;" size="15" $setmodeR class="$setmode" />
-                                          #end
+         #set($kodsaudara=$listsau.kod)
+         #set($kodsaudaraketerangan=$listsau.keterangan)
                                           
-                                          
-                                          #else
-                                          
-                                          #foreach($listsau in $listsaudara)
-                                          
-                                          #if($socSaudaraWaris==$listsau.id_Saudara)
-                                          
-                                          #set($kodsaudara=$listsau.kod)
-                                          #set($kodsaudaraketerangan=$listsau.keterangan)
-                                          
-                                          
-                                          
-                                          #end    
-                                          #end
-                                           #if($socSaudaraWaris!="")
-                     <select name="socSaudaraWaris" id="socSaudaraWaris" class="largeselect" $readmode style="text-transform:uppercase;" onBlur="text-transform:uppercase;" >
+         #end    
+         #end
+         #if($socSaudaraWaris!="")
+         <select name="socSaudaraWaris" id="socSaudaraWaris" class="largeselect" $readmode style="text-transform:uppercase;" onBlur="text-transform:uppercase;" >
                      <option value="$socSaudaraWaris" style="text-transform:uppercase;" onBlur="text-transform:uppercase;">$kodsaudara - $kodsaudaraketerangan</option>                     #foreach($listsau in $listsaudara)                                 
                      #if($socSaudaraWaris!=$listsau.id_Saudara) 
                      <option value="$listsau.id_Saudara" style="text-transform:uppercase;" onBlur="text-transform:uppercase;">$listsau.kod - $listsau.keterangan</option>
@@ -786,19 +758,17 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                      </td>
                      #end </tr>
        
-         
-          <tr id="amanah" >
-    
-        
-          <td >&nbsp;</td>
-          <td >Amanah raya</td>
-          <td >:</td>
-          <td >      
-     
-          <select name="jenis_pej1" id="jenis_pej1" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >         
-          #if($jenis_pej == "" || $jenis_pej == "0") 
-          <option value="">SILA PILIH </option>   
-                 
+         <tr id="amanah" >
+            <td >&nbsp;</td>
+            <td >Amanah raya</td>
+            <td >:</td>
+            <td ><select name="jenis_pej1" id="jenis_pej1" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >
+                
+                          
+          #if($!jenis_pej == "" || $!jenis_pej == "0") 
+          
+                <option value="">SILA PILIH </option>
+                
            #else
            #foreach($listJ in $listMaklumatMahkamahJ)
            #if( $listJ.id_Pejabat == $jenis_pej )              
@@ -808,34 +778,35 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
            #set($nama_bandar = $listJ.namabandar)         
            #end
            #end
-           <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>           
+                       
+                <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>
+                               
            #end        
                                   #foreach($listJ in $listMaklumatMahkamahJ)
                                   #if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '9' )
-	                              <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
+	                                   
+                <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
+                
                                   #end 
                                   #end 
-                                   #if($jenis_pej != "" || $jenis_pej != "0")     
-                                  <option value="">SILA PILIH </option>
+                                   #if($!jenis_pej != "" || $!jenis_pej != "0")     
+                  
+                <option value="">SILA PILIH </option>
+           
                                   #end                                       
-          </select>          </td>
-        </tr>     
+              </select></td>
+          </tr>
  
- 
- 
- 
- <tr id="baitulmal" >
-    
-        
-          <td >&nbsp;</td>
-          <td >Baitulmal</td>
-          <td >:</td>
-          <td >      
-     
-          <select name="jenis_pej2" id="jenis_pej2" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >         
+ 			<tr id="baitulmal" >
+            <td >&nbsp;</td>
+            <td >Baitulmal</td>
+            <td >:</td>
+            <td ><select name="jenis_pej2" id="jenis_pej2" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >
+                         
           #if($!jenis_pej == "" || $!jenis_pej == "0") 
-          <option value="">SILA PILIH </option>   
-                 
+          
+                <option value="">SILA PILIH </option>
+                
            #else
            #foreach($listJ in $listMaklumatMahkamahJ)
            #if( $listJ.id_Pejabat == $jenis_pej )              
@@ -845,21 +816,23 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
            #set($nama_bandar = $listJ.namabandar)         
            #end
            #end
-           <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>           
+           
+                <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>
+                            
            #end        
-                                
-                                
-                                
                                   #foreach($listJ in $listMaklumatMahkamahJ)
                                   #if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '61' )
-	                              <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
-                                  #end 
+	                          
+                <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
+                  #end 
                                   #end 
                                    #if($!jenis_pej != "" || $!jenis_pej != "0")     
-                                  <option value="">SILA PILIH </option>
-                                  #end                                       
-          </select>          </td>
-        </tr>
+                         
+                <option value="">SILA PILIH </option>
+                
+                                  #end  
+              </select></td>
+          </tr>
  
  
           <tr id="j_pemohon"  >
@@ -885,11 +858,8 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
            
           <input type="hidden" name="jenis_pemohon"  id="jenis_pemohon" value="$jenis_pemohon" size = "34" >    
           #else
-            
-            
             <span id="jenis_pemohon_drop"  >
            
-            
 			<select name="jenis_pemohon"  class="autoselect" $readmode id="jenis_pemohon" style="text-transform:uppercase;" onBlur="uppercase()" onChange="pilih_taraf()" >        
 			#if($jenis_pemohon=="1")  
                  <option value="1">01-Agensi</option>
@@ -901,10 +871,8 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                    <option value="2">02-Individu</option>
                    <option value="1">01-Agensi</option>
            #end  
-           
            </select>
-                    </span>
-                                    
+                    </span>               
            <span id="jenis_pemohon_dis">
            <input type="text" name="jenis_pemohon_display"  id="jenis_pemohon_display" readonly class="disabled" >    
            </span>                
@@ -912,12 +880,48 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             </td>
           </tr>
           
+          <tr id="majlisagama" >
+            <td >&nbsp; </td>
+            <td >Majlis Agama Islam Negeri</td>
+            <td >:</td>
+            <td ><select name="jenis_pej3" id="jenis_pej3" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >
+                
+          #if($!jenis_pej == "" || $!jenis_pej == "0") 
+          
+                <option value="">SILA PILIH </option>
+                
+           #else
+           #foreach($listJ in $listMaklumatMahkamahJ)
+           #if( $listJ.id_Pejabat == $jenis_pej )              
+           #set($listJid_Pejabat = $listJ.id_Pejabat)
+           #set($listJnama_pejabat=$listJ.nama_pejabat)
+           #set($listJdaerah = $listJ.daerah)  
+           #set($nama_bandar = $listJ.namabandar)         
+           #end
+           #end
+           
+                <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>
+                            
+           #end        
+                                  #foreach($listJ in $listMaklumatMahkamahJ)
+                                  #if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '62' )
+	                          
+                <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
+                  #end 
+                  #end 
+                  
+                  #if($!jenis_pej != "" || $!jenis_pej != "0"))
+                <option value="">SILA PILIH </option>
+                 #end                            
+              </select></td>
+          </tr>
+          
 <tr id="individu_warga">
   <td valign="top">&nbsp;</td>
   <td valign="top"><div align="right" class="style38">
   <div align="left"><span class="style38">Warganegara</span></div>
   </div></td>
-  <td width="1%" class="style36" valign="top"><div align="right"><span class="style38">:</span></div></td>
+  <td width="1%" class="style36" valign="top"><span class="style38">:</span></td>
   <td class="style36" valign="top">#if($readmode=="disabled")
                                           
      #if($jenisWarga == "1")
@@ -1947,9 +1951,6 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             </tr>
             <tr>
 		            	<td valign="top" width="2%">
-		            #if($setmode != "disabled")
-		             		<span class="style1">*</span>
-		            #end
 		              	</td>
 		             	<td width="28%"> Muatnaik MyID </td>
 		             	<td width="1%">:</td> 
@@ -1962,9 +1963,6 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 					
 					<tr>            
 				    	<td valign="top" width="2%">
-				    	#if($setmode != "disabled")
-				       		<span class="style1">*</span>
-				      	#end
 				      	</td>
 				     	<td width="28%"> Muatnaik Sijil Mati </td>
 				     	<td width="1%">:</td> 
@@ -2231,6 +2229,10 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_pelbagaine
       alert("Sila pilih Baitulmal");
       document.f1.jenis_pej2.focus();
     }
+    else if (document.f1.taraf_penting.value == "20" && document.f1.jenis_pej3.value == "") {
+        alert("Sila pilih Majlis Agama Islam");
+        document.f1.jenis_pej3.focus();
+      }
     else if (document.f1.taraf_penting.value == "1" && document.f1.socSaudaraWaris.value == "") {
       alert("Sila pilih Talian Persaudaraan Dengan Simati");
       document.f1.socSaudaraWaris.focus();
@@ -2243,41 +2245,41 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_pelbagaine
       alert("Sila masukkan MyID Lain Pemohon");
       document.f1.txtNoKPLainPemohon.focus();
     }
-    else if (document.f1.txtNamaPemohon[0] != 'null' && document.f1.txtNamaPemohon[0].value=="" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") ) {
+    else if (document.f1.txtNamaPemohon[0] != 'null' && document.f1.txtNamaPemohon[0].value=="" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20") ) {
       alert("Sila masukkan nama pemohon.");
       document.f1.txtNamaPemohon[0].focus();
     }
-    else if (document.f1.txtAlamat1[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
+    else if (document.f1.txtAlamat1[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
       alert("Sila masukkan alamat tetap");
       document.f1.txtAlamat1.focus();
     }
-    else if (document.f1.txtPoskod[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
+    else if (document.f1.txtPoskod[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
       alert("Sila masukkan poskod");
       document.f1.txtPoskod.focus();
     }
-    else if (document.f1.socNegeri[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
+    else if (document.f1.socNegeri[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
       alert("Sila pilih negeri");
       document.f1.socNegeri.focus();
     }
-    else if (document.f1.socBandar[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8")){
+    else if (document.f1.socBandar[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
       alert("Sila pilih bandar");
       document.f1.socBandar.focus();
     }
-    else if (document.f1.txtPoskod[0] != 'null' && document.f1.txtPoskod[0].value != "" && document.f1.txtPoskod[0].value.length < 5 && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") ) {
+    else if (document.f1.txtPoskod[0] != 'null' && document.f1.txtPoskod[0].value != "" && document.f1.txtPoskod[0].value.length < 5 && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20") ) {
       alert("Sila masukkan nombor poskod dengan lengkapnya");
       document.f1.txtPoskod[0].focus();
     }
-    else if (document.f1.txtPoskod[1] != 'null' && document.f1.txtPoskod[1].value != "" && document.f1.txtPoskod[1].value.length < 5 && (document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == "8") ) {
+    else if (document.f1.txtPoskod[1] != 'null' && document.f1.txtPoskod[1].value != "" && document.f1.txtPoskod[1].value.length < 5 && (document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == "8" && document.f1.taraf_penting.value != "20") ) {
       alert("Sila masukkan nombor poskod dengan lengkapnya");
       document.f1.txtPoskod[1].focus();
     }
     
-    else if (document.f1.no_hp[0].value == "" && (document.f1.no_hp.value != "6" && document.f1.taraf_penting.value != "8")){
+    else if (document.f1.no_hp[0].value == "" && (document.f1.no_hp.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
       alert("Sila masukkan No. Tel (HP)");
       document.f1.no_hp.focus();
     }
     
-    else if (document.f1.txtEmelPemohon[0].value == "" && (document.f1.txtEmelPemohon.value != "6" && document.f1.taraf_penting.value != "8")){
+    else if (document.f1.txtEmelPemohon[0].value == "" && (document.f1.txtEmelPemohon.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
       alert("Sila masukkan Email");
       document.f1.txtEmelPemohon.focus();
     }
@@ -2380,8 +2382,7 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_pelbagaine
     }else if (date1 > currentTime){
       alert("Sila pastikan tarikh mati tidak melebihi dari tarikh hari ini.");
       document.f1.txtTarikhMati.focus();
-      
-      
+ 
     //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
      // alert('Sila muatnaik MyID simati.');
       //document.f1.fileupload.focus(); 
@@ -2389,6 +2390,7 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_pelbagaine
     //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
     //  alert('Sila muatnaik Sijil Mati.');
   //  document.f1.fileupload.focus(); 
+  
     }else{
       input_box = confirm("Adakah anda pasti?");
       if (input_box == true) {
@@ -2955,7 +2957,7 @@ var dtCh= "/";
   function pilih_amanah()
 {
 
-if(document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == "8"){
+if(document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == "8" || document.f1.taraf_penting.value == "20"){
     
     document.f1.txtNamaPemohon[1].value = "";   
     document.f1.txtAlamat1[1].value = "";
@@ -2985,6 +2987,10 @@ if(document.f1.taraf_penting.value == '8')
 {
 document.f1.jenis_pej.value = document.f1.jenis_pej2.value;
 }
+if(document.f1.taraf_penting.value == '20')
+{
+document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
+}
 
 
 if('$!skrin_online_popup' == "yes")
@@ -3004,6 +3010,7 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
   function default_amanah(){
     document.f1.jenis_pej1.value = "";
     document.f1.jenis_pej2.value = "";
+    document.f1.jenis_pej3.value = "";
     document.f1.jenis_pej.value = "";
   
   }
@@ -3100,7 +3107,7 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
   }
 
     function pilih_taraf(){
-      if(document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "2" && document.f1.taraf_penting.value != "4"){
+      if(document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20" && document.f1.taraf_penting.value != "2" && document.f1.taraf_penting.value != "4"){
 
       if(document.f1.taraf_penting.value != "1"){
             document.getElementById("hubungan").style.display="none";
@@ -3121,11 +3128,13 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
         document.getElementById("kp3").style.display="";  
         document.getElementById('amanah').style.display="none";
         document.getElementById('baitulmal').style.display="none";
+        document.getElementById('majlisagama').style.display="none";
           
         document.f1.jenis_pemohon.value = "2"
       
       if(document.getElementById('jenis_pemohon_drop') != null){
             document.getElementById("jenis_pemohon_drop").style.display="none";
+            document.getElementById("individu_warga").style.display="";
         }
       
       if(document.getElementById('jenis_pemohon_dis') != null){
@@ -3134,7 +3143,7 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
       
       if(document.f1.jenis_pemohon_display != null){ 
             document.f1.jenis_pemohon_display.value = "02-INDIVIDU";
-        }
+        } 
       
       if(document.getElementById('txtNamaPemohon_1a') != null){
           document.getElementById('txtNamaPemohon_1a').style.display="";
@@ -3232,21 +3241,25 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
       document.getElementById('tr_hp').style.display="";
       document.getElementById('tr_pelbagainegara').style.display="";
       document.getElementById('tr_mesej_pelbagainegara').style.display="";
+      document.getElementById("individu_warga").style.display="";
+      
 
       }else if(document.f1.taraf_penting.value == "8"){
     
       if(document.f1.baca.value == "disabled"){
         document.getElementById('amanah').style.display="none";
         document.getElementById('baitulmal').style.display="none";
+        document.getElementById('majlisagama').style.display="none";
       }else{
         document.getElementById('amanah').style.display="none";
         document.getElementById('baitulmal').style.display="";
+        document.getElementById('majlisagama').style.display="none";
       }
         
       document.getElementById("kp1").style.display="none";  
       document.getElementById("kp2").style.display="none";  
       document.getElementById("kp3").style.display="none";
-      
+      document.getElementById("individu_warga").style.display="none";
       document.getElementById("hubungan").style.display="none";
 
       if(document.f1.baca.value != "disabled"){
@@ -3352,6 +3365,7 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
       document.getElementById('tr_pelbagainegara').style.display="none";
       document.getElementById('tr_mesej_pelbagainegara').style.display="none";
       document.getElementById('nama_pelbagainegara').value = "";
+    	document.getElementById("individu_warga").style.display="none"; 
       
       if(document.getElementById('no_hp_1a') != null)
       {
@@ -3364,7 +3378,144 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
           document.getElementById('emel_1b').style.display="none";
         } 
 
-      }else if(document.f1.taraf_penting.value == "2" || document.f1.taraf_penting.value == "4"){
+      }
+      
+      else if(document.f1.taraf_penting.value == "20"){
+    	    
+          if(document.f1.baca.value == "disabled"){
+            document.getElementById('amanah').style.display="none";
+            document.getElementById('baitulmal').style.display="none";
+            document.getElementById('majlisagama').style.display="none";
+          }else{
+            document.getElementById('amanah').style.display="none";
+            document.getElementById('baitulmal').style.display="none";
+            document.getElementById('majlisagama').style.display="";
+          }
+            
+          document.getElementById("kp1").style.display="none";  
+          document.getElementById("kp2").style.display="none";  
+          document.getElementById("kp3").style.display="none";
+          document.getElementById("individu_warga").style.display="none";
+          document.getElementById("hubungan").style.display="none";
+
+          if(document.f1.baca.value != "disabled"){
+            document.f1.socSaudaraWaris.value = ""; 
+          }   
+      
+          document.f1.jenis_pemohon.value = "1"
+          
+          if(document.getElementById('jenis_pemohon_drop') != null)
+          {document.getElementById("jenis_pemohon_drop").style.display="none";}
+          if(document.getElementById('jenis_pemohon_dis') != null)
+          {document.getElementById("jenis_pemohon_dis").style.display="";}
+          
+          if(document.f1.jenis_pemohon_display != null)
+          {document.f1.jenis_pemohon_display.value = "01-AGENSI"}
+          
+          if(document.getElementById('txtNamaPemohon_1a') != null)
+          {document.getElementById('txtNamaPemohon_1a').style.display="none";   
+          document.getElementById('txtNamaPemohon_1b').style.display="";}
+          if(document.getElementById('txtNamaPemohon_2a') != null)
+          {document.getElementById('txtNamaPemohon_2a').style.display="none";   
+          document.getElementById('txtNamaPemohon_2b').style.display="";
+            }
+        
+          if(document.getElementById('txtAlamat1_1a') != null)
+          {
+          document.getElementById('txtAlamat1_1a').style.display="none";
+          document.getElementById('txtAlamat1_1b').style.display="";
+          }   
+          if(document.getElementById('txtAlamat1_2a') != null)
+          {
+          document.getElementById('txtAlamat1_2a').style.display="none";
+          document.getElementById('txtAlamat1_2b').style.display="";
+            }
+          
+          if(document.getElementById('txtAlamat2_1a') != null)
+          {
+          document.getElementById('txtAlamat2_1a').style.display="none";
+          document.getElementById('txtAlamat2_1b').style.display="";
+          }   
+          if(document.getElementById('txtAlamat2_2a') != null)
+          {
+          document.getElementById('txtAlamat2_2a').style.display="none";
+          document.getElementById('txtAlamat2_2b').style.display="";
+            }
+          
+          if(document.getElementById('txtAlamat3_1a') != null)
+          {
+          document.getElementById('txtAlamat3_1a').style.display="none";
+          document.getElementById('txtAlamat3_1b').style.display="";
+          }   
+          if(document.getElementById('txtAlamat3_2a') != null)
+          {
+          document.getElementById('txtAlamat3_2a').style.display="none";
+          document.getElementById('txtAlamat3_2b').style.display="";
+            }
+          
+          if(document.getElementById('txtPoskod_1a') != null)
+          {
+          document.getElementById('txtPoskod_1a').style.display="none";
+          document.getElementById('txtPoskod_1b').style.display="";
+          }   
+          if(document.getElementById('txtPoskod_2a') != null)
+          {
+          document.getElementById('txtPoskod_2a').style.display="none";
+          document.getElementById('txtPoskod_2b').style.display="";
+            }
+          
+          if(document.getElementById('socNegeri_1a') != null)
+          {
+          document.getElementById('socNegeri_1a').style.display="none";
+          document.getElementById('socNegeri_1b').style.display="";
+          }   
+          if(document.getElementById('socNegeri_2a') != null)
+          {
+          document.getElementById('socNegeri_2a').style.display="none";
+          document.getElementById('socNegeri_2b').style.display="";
+            } 
+        
+          if(document.getElementById('socBandar_1a') != null)
+          {
+          document.getElementById('socBandar_1a').style.display="none";
+          document.getElementById('socBandar_1b').style.display="";
+          document.f1.socBandar[0].disabled=true;
+          }   
+          if(document.getElementById('socBandar_2a') != null)
+          {
+          document.getElementById('socBandar_2a').style.display="none";
+          document.getElementById('socBandar_2b').style.display="";
+          document.f1.socBandar[0].disabled=true;
+            }
+        
+          // amanah raya 
+          if(document.getElementById('no_tel_1a') != null)
+          {
+          document.getElementById('no_tel_1a').style.display="none";
+          document.getElementById('no_tel_1b').style.display="";
+          } 
+          
+          
+          document.getElementById('tr_hp').style.display="none";
+          
+          document.getElementById('tr_pelbagainegara').style.display="none";
+          document.getElementById('tr_mesej_pelbagainegara').style.display="none";
+          document.getElementById('nama_pelbagainegara').value = "";
+          
+          if(document.getElementById('no_hp_1a') != null)
+          {
+          document.getElementById('no_hp_1a').style.display="none";
+          document.getElementById('no_hp_1b').style.display="none";
+          } 
+          
+            if(document.getElementById('emel_1a') != null){
+              document.getElementById('emel_1a').style.display="none";
+              document.getElementById('emel_1b').style.display="none";
+            } 
+
+          }  
+      
+    else if(document.f1.taraf_penting.value == "2" || document.f1.taraf_penting.value == "4"){
         document.getElementById("hubungan").style.display="none";
 
     if(document.f1.baca.value != "disabled")
@@ -3381,6 +3532,7 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
     {   
     document.getElementById('amanah').style.display="none";
     document.getElementById('baitulmal').style.display="none";
+    document.getElementById('majlisagama').style.display="none";
     document.getElementById("kp1").style.display="";  
     document.getElementById("kp2").style.display="";  
     document.getElementById("kp3").style.display="";
@@ -3394,11 +3546,13 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
     
     document.getElementById('tr_pelbagainegara').style.display="";
     document.getElementById('tr_mesej_pelbagainegara').style.display="";
+    document.getElementById("individu_warga").style.display="";
     
     }
     else{
     document.getElementById('amanah').style.display="none";
     document.getElementById('baitulmal').style.display="none";
+    document.getElementById('majlisagama').style.display="none";
     document.getElementById("kp1").style.display="none";  
     document.getElementById("kp2").style.display="none";  
     document.getElementById("kp3").style.display="none";
@@ -3412,7 +3566,8 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
     
     document.getElementById('tr_pelbagainegara').style.display="none";
     document.getElementById('tr_mesej_pelbagainegara').style.display="none";
-    document.getElementById('nama_pelbagainegara').value = "";    
+    document.getElementById('nama_pelbagainegara').value = ""; 
+    document.getElementById("individu_warga").style.display="none";
     } 
   
     if(document.getElementById('txtNamaPemohon_1a') != null)
@@ -3522,19 +3677,21 @@ if(document.f1.baca.value == "disabled")
 {
     document.getElementById('amanah').style.display="none";
     document.getElementById('baitulmal').style.display="none";
+    document.getElementById('majlisagama').style.display="none";
 }
 else
 {
 
 document.getElementById('amanah').style.display="";
 document.getElementById('baitulmal').style.display="none";
+document.getElementById('majlisagama').style.display="none";
 }
 
 
     document.getElementById("kp1").style.display="none";  
     document.getElementById("kp2").style.display="none";  
     document.getElementById("kp3").style.display="none";    
-  
+    document.getElementById("individu_warga").style.display="none";
     document.f1.jenis_pemohon.value = "1"
     
     if(document.getElementById('jenis_pemohon_drop') != null)
@@ -3546,7 +3703,9 @@ document.getElementById('baitulmal').style.display="none";
     {document.f1.jenis_pemohon_display.value = "01-AGENSI"}
     
     
-    
+    if(document.getElementById('individu_warga') != null){
+    	document.getElementById('individu_warga').style.display="none";
+    }
     
     if(document.getElementById('txtNamaPemohon_1a') != null)
     {document.getElementById('txtNamaPemohon_1a').style.display="none";   
