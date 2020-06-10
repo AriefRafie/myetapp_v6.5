@@ -16,61 +16,6 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2"><fieldset>
-      <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
-      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Fail</td>
-          <td width="1%" >:</td>
-          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong>
-            <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
-            <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" />
-        </td>
-        </tr>
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td valign="top">Urusan</td>
-          <td>:</td>
-          <td>AKTA PELANTAR BENUA
-            <input type="hidden" name="idUrusan" id="idUrusan" value="9"/>
-            <input type="hidden" name="idSubUrusan" id="idSubUrusan" value="57"/></td>
-        </tr>
-        <tr>
-          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Tarikh Terima</td>
-          <td>:</td>
-          <td><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" onblur="check_date(this);cekTarikhTerima(this)" size="11" $readonly class="$inputTextClass"/>
-            #if ($mode != 'view') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
-        </tr>
-        <tr>
-          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Tarikh Surat</td>
-          <td>:</td>
-          <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="11" $readonly class="$inputTextClass"/>
-            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</td>
-        </tr>
-        <tr>
-          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>No. Rujukan Surat</td>
-          <td>:</td>
-          <td><input type="text" name="txtNoRujukanSurat" id="txtNoRujukanSurat" value="$beanMaklumatPermohonan.noRujSurat" $readonly class="$inputTextClass" size="43" /></td>
-        </tr>
-        <tr>
-          <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Perkara</td>
-          <td valign="top">:</td>
-          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" >$beanMaklumatPermohonan.perkara</textarea>
-            #if ($mode != 'view')
-            <input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/>
-            #end</td>
-        </tr>
-        #end
-      </table>
-      </fieldset></td>
-  </tr>
-  <tr>
-    <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PEMOHON </strong></legend>
       #foreach ($beanMaklumatPemohon in $BeanMaklumatPemohon)
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -256,7 +201,6 @@
       #end
       </fieldset></td>
   </tr>
-  
   <tr>
     <td colspan="2"><fieldset>
       <legend><strong>KAWASAN PERMOHONAN</strong></legend>
@@ -264,16 +208,72 @@
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td width="29%">Luar Perairan Negeri</td>
-          <td width="70%">: $selectFlagLuar</td>
+          <td width="28%">Luar Perairan Negeri</td>
+          <td>:</td>
+          <td width="70%">$selectFlagLuar</td>
+        </tr>
+        <tr>
+          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td width="28%">Negeri</td>
+          <td>:</td>
+          <td width="70%">$selectNegeriPerairan
+            <input type="hidden" name="namaNegeriPerairan" id="namaNegeriPerairan" value="$namaNegeriPerairan" />
+          </td>
+        </tr>
+        #end
+      </table>
+      </fieldset></td>
+  </tr>
+  <tr>
+    <td colspan="2"><fieldset>
+      <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
+      <table width="100%" border="0" cellspacing="2" cellpadding="2">
+        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%" valign="top">No. Fail</td>
+          <td width="1%" >:</td>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong>
+            <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
+            <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" />
+        </td>
+        </tr>
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td valign="top">Urusan</td>
+          <td>:</td>
+          <td>AKTA PELANTAR BENUA
+            <input type="hidden" name="idUrusan" id="idUrusan" value="9"/>
+            <input type="hidden" name="idSubUrusan" id="idSubUrusan" value="57"/></td>
+        </tr>
+        <tr>
+          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td valign="top">Tarikh Terima</td>
+          <td>:</td>
+          <td><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" onblur="check_date(this);cekTarikhTerima(this)" size="11" $readonly class="$inputTextClass"/>
+            #if ($mode != 'view') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
+        </tr>
+        <tr>
+          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td valign="top">Tarikh Surat</td>
+          <td>:</td>
+          <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="11" $readonly class="$inputTextClass"/>
+            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</td>
         </tr>
         <tr>
           <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td>Negeri</td>
-          <td>: 
-            $selectNegeriPerairan
-            <input type="hidden" name="namaNegeriPerairan" id="namaNegeriPerairan" value="$namaNegeriPerairan" />
-          </td>
+          <td>No. Rujukan Surat</td>
+          <td>:</td>
+          <td><input type="text" name="txtNoRujukanSurat" id="txtNoRujukanSurat" value="$beanMaklumatPermohonan.noRujSurat" $readonly class="$inputTextClass" size="43" /></td>
+        </tr>
+        <tr>
+          <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+          <td valign="top">Perkara</td>
+          <td valign="top">:</td>
+          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" >$beanMaklumatPermohonan.perkara</textarea>
+            #if ($mode != 'view')
+            <input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/>
+            #end</td>
         </tr>
         #end
       </table>
@@ -287,7 +287,7 @@
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'new')
-      <input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/>
+	  <!--       <input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/> -->
       <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar" onclick="daftarBaru()"/>
       <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
       #end

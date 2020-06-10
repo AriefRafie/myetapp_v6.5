@@ -126,10 +126,24 @@ private static final long serialVersionUID = 1L;
         	if ("simpanMaklumatKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJP(idPermohonan, idDokumen, idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		
+        		if("1".equals(idDokumen) && !"".equals(idDokumen)){
+            		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+            		
+        		} else if("4".equals(idDokumen) && !"".equals(idDokumen)){
+        			logic.sendEmailtoPejabatJKPTG(idPermohonan, idPejabat, session);
+        		}
     		}
         	if ("simpanMaklumatUlanganKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJP(idUlasanTeknikal, idPermohonan, idDokumen, idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		
+        		if("1".equals(idDokumen) && !"".equals(idDokumen)){
+            		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+            		
+        		} else if("4".equals(idDokumen) && !"".equals(idDokumen)){
+        			logic.sendEmailtoPejabatJKPTG(idPermohonan, idPejabat, session);
+        		}
     		}
         	if ("simpanKemaskiniMaklumatKJP".equals(hitButton)){
         		logic.simpanKemaskiniMaklumatKJP(idUlasanTeknikal, idDokumen, idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
@@ -241,7 +255,7 @@ private static final long serialVersionUID = 1L;
 						idNegeri = idNegeriTanah;
 					}
 					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), ""," onChange=\"doChangeNegeri();\""));
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri, "4"));
 					
 					beanMaklumatPejabat = new Vector();
 					logic.setMaklumatPejabatJKPTG(idPejabat);
@@ -283,7 +297,7 @@ private static final long serialVersionUID = 1L;
 						idNegeri = idNegeriTanah;
 					}
 					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 					
 					beanMaklumatPejabat = new Vector();
 					logic.setMaklumatPejabatJKPTG(idPejabat);
@@ -314,7 +328,7 @@ private static final long serialVersionUID = 1L;
 	    			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian), "disabled", " class=\"disabled\""));
 					this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Utils.parseLong(idAgensi), "disabled", " class=\"disabled\""));
 					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled", " class=\"disabled\"", idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 					
 	    			beanMaklumatPejabat = new Vector();
 					logic.setMaklumatPejabatJKPTG(idPejabat);
@@ -346,7 +360,7 @@ private static final long serialVersionUID = 1L;
 							idNegeri = idNegeriTanah;
 						}
 						this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), ""," onChange=\"doChangeNegeri();\""));
-						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri));
+						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri, "4"));
 					} else {
 						this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "disabled", " class=\"disabled\""));
 		    			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian), "disabled", " class=\"disabled\""));
@@ -355,7 +369,7 @@ private static final long serialVersionUID = 1L;
 							idNegeri = idNegeriTanah;
 						}
 						this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
-						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri));
+						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 					}					
 					
 					beanMaklumatPejabat = new Vector();
@@ -415,7 +429,7 @@ private static final long serialVersionUID = 1L;
 						idNegeri = idNegeriTanah;
 					}
 					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), ""," onChange=\"doChangeNegeri();\""));
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri, "4"));
 					
 					beanMaklumatPejabat = new Vector();
 					logic.setMaklumatPejabatJKPTG(idPejabat);
@@ -462,7 +476,7 @@ private static final long serialVersionUID = 1L;
 						idNegeri = idNegeriTanah;
 					}
 					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 					
 					beanMaklumatPejabat = new Vector();
 					logic.setMaklumatPejabatJKPTG(idPejabat);
@@ -497,7 +511,7 @@ private static final long serialVersionUID = 1L;
 	    			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian), "disabled", " class=\"disabled\""));
 					this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Utils.parseLong(idAgensi), "disabled", " class=\"disabled\""));
 					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled", " class=\"disabled\"", idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 					
 	    			beanMaklumatPejabat = new Vector();
 					logic.setMaklumatPejabatJKPTG(idPejabat);
@@ -532,7 +546,7 @@ private static final long serialVersionUID = 1L;
 							idNegeri = idNegeriTanah;
 						}
 						this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), ""," onChange=\"doChangeNegeri();\""));
-						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri));
+						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri, "4"));
 					} else {
 						this.context.put("selectDokumen", HTML.SelectPHPRujDokumen("socDokumen", Utils.parseLong(idDokumen), "disabled", " class=\"disabled\""));
 		    			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian), "disabled", " class=\"disabled\""));
@@ -541,7 +555,7 @@ private static final long serialVersionUID = 1L;
 							idNegeri = idNegeriTanah;
 						}
 						this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
-						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri));
+						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 					}					
 					
 					beanMaklumatPejabat = new Vector();

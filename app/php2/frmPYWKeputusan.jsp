@@ -194,7 +194,13 @@
                 <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
                 <td>Cagaran (RM)</td>
                 <td>:</td>
-                <td><input name="txtCagaran" type="text" value="$beanMaklumatPerjanjian.cagaran" $readonly class="$inputTextClass" onblur="validateCurrency(this,this.value,'$beanMaklumatPerjanjian.cagaran');" /></td>
+                <td>
+                	<input name="txtCagaran" type="text" value="$beanMaklumatPerjanjian.cagaran" $readonly class="$inputTextClass" 
+                		onblur="validateCurrency(this,this.value,'$beanMaklumatPerjanjian.cagaran');" />
+                	#if ($mode == 'view')
+                	<input type="button" name="cmdKeHasil" id="cmdKeHasil" value="Hantar Ke Hasil" onClick="gotoFailHasil()"/>
+                	#end
+                </td>
               </tr>
             </table>
             #end
@@ -503,6 +509,16 @@ function doHantarProses(){
 	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHantarProses";
+	document.${formName}.submit();
+}
+function gotoFailHasil(){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "view";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "gotoFailHasil";
 	document.${formName}.submit();
 }
 function gotoBatalPermohonan(){	

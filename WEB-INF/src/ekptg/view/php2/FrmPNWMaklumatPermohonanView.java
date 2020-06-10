@@ -99,6 +99,7 @@ public class FrmPNWMaklumatPermohonanView extends AjaxBasedModule {
         Vector senaraiTanahBerkaitan = null;
         Vector beanMaklumatPelan = null;
         Vector senaraiPelan = null;
+        Vector senaraiSemak = null;
         
 		this.context.put("completed", false);
 		this.context.put("limitExceed", false);
@@ -133,6 +134,10 @@ public class FrmPNWMaklumatPermohonanView extends AjaxBasedModule {
     			logic.doBatalPermohonan(idFail, idPermohonan, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
     		}
+        	if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
+        		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
+    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
+        	}
         	if ("simpanDokumen".equals(hitButton)) {
 				uploadFiles(idFail,idPermohonan, session);
 			}
@@ -200,11 +205,15 @@ public class FrmPNWMaklumatPermohonanView extends AjaxBasedModule {
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 		}		
        	
-      //SENARAI TANAH BERKAITAN
+		//SENARAI TANAH BERKAITAN
 		senaraiTanahBerkaitan = new Vector();
 		logic.setSenaraiTanahBerkaitan(idPermohonan);
 		senaraiTanahBerkaitan = logic.getListTanahBerkaitan();
 		this.context.put("SenaraiTanahBerkaitan", senaraiTanahBerkaitan);
+		
+		//SENARAI SEMAK
+		senaraiSemak = logic.getSenaraiSemak(idPermohonan);
+		this.context.put("SenaraiSemak", senaraiSemak);
 		
         //VIEW MODE
         if ("view".equals(mode)){
@@ -212,7 +221,7 @@ public class FrmPNWMaklumatPermohonanView extends AjaxBasedModule {
 			this.context.put("inputTextClass", "disabled");
 			this.context.put("disabled", "disabled");
 			
-			if ("3".equals(selectedTabUpper)){
+			if ("4".equals(selectedTabUpper)){
 				//OPEN POPUP DOKUMEN
 	        	if ("openPopupDokumen".equals(flagPopup)){
 	        		

@@ -761,7 +761,7 @@ public class FrmPYWKeputusanData {
 				}
 
 				// GET MAKLUMAT PERJANJIAN
-				sqlSelect = "SELECT NO_SIRI, TARIKH_MULA_PERJANJIAN, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, CAGARAN FROM TBLPHPPERJANJIAN WHERE FLAG_PERJANJIAN = 'U' AND ID_PERMOHONAN = '"
+				sqlSelect = "SELECT NO_SIRI, TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, CAGARAN FROM TBLPHPPERJANJIAN WHERE FLAG_PERJANJIAN = 'U' AND ID_PERMOHONAN = '"
 						+ idPermohonan + "'";
 				ResultSet rsPerjanjian = stmt.executeQuery(sqlSelect);
 
@@ -769,6 +769,7 @@ public class FrmPYWKeputusanData {
 					String noSiri = rsPerjanjian.getString("NO_SIRI");
 					String bayaran = rsPerjanjian.getString("KADAR_SEWA");
 					String deposit = rsPerjanjian.getString("CAGARAN");
+					String tempoh = rsPerjanjian.getString("TEMPOH");
 					Date tarikhMula = new Date();
 					Date tarikhTamat = new Date();
 					tarikhMula = rsPerjanjian.getDate("TARIKH_MULA_PERJANJIAN");
@@ -806,7 +807,7 @@ public class FrmPYWKeputusanData {
 								r.unquote("to_date('" + sdf.format(tarikhTamat)
 										+ "','dd/MM/yyyy')"));
 					}
-
+					r.add("TEMPOH", Integer.parseInt(tempoh));
 					r.add("BAYARAN", bayaran);
 					r.add("DEPOSIT", deposit);
 					r.add("FLAG_AKTIF", "Y");
