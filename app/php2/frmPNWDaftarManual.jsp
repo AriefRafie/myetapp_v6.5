@@ -197,7 +197,7 @@
         #end
       </table>
       </fieldset></td>
-  </tr>
+ </tr>
 <!--   MAKLUMAT PERMOHONAN -->
  <tr>
     <td colspan="2"><fieldset>

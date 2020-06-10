@@ -135,35 +135,17 @@ function doDaftarMaklumatKJT(){
 	doAjaxCall${formName}("");
 }
 function doSimpanMaklumatKJT(){
-	if(document.${formName}.socDokumen.value == ""){
-		alert('Sila pilih Nama Dokumen.');
-  		document.${formName}.socDokumen.focus(); 
+	if(document.${formName}.socNegeri.value == ""){
+		alert('Sila pilih Negeri.');
+		document.${formName}.socNegeri.focus(); 
 		return; 
 	}
-	if(document.${formName}.socDokumen.value == "1") {
-		if(document.${formName}.socKementerian.value == ""){
-			alert('Sila pilih Kementerian.');
-			document.${formName}.socKementerian.focus(); 
-			return; 
-		}
-		if(document.${formName}.socAgensi.value == ""){
-			alert('Sila pilih Agensi.');
-			document.${formName}.socAgensi.focus(); 
-			return; 
-		}
-	} else if(document.${formName}.socDokumen.value == "4") {
-		if(document.${formName}.socNegeri.value == ""){
-			alert('Sila pilih Negeri.');
-			document.${formName}.socNegeri.focus(); 
-			return; 
-		}
-		if(document.${formName}.socPejabat.value == ""){
-			alert('Sila pilih Pejabat.');
-			document.${formName}.socPejabat.focus(); 
-			return; 
-		}
+	if(document.${formName}.socPejabat.value == ""){
+		alert('Sila pilih Pejabat.');
+		document.${formName}.socPejabat.focus(); 
+		return; 
 	}
-	
+		
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}

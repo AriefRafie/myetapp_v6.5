@@ -230,134 +230,38 @@
           <td>&nbsp;</td>
           <td valign="top">Syor</td>
           <td valign="top">:</td>
-          <td valign="top"><select name="socSyor" id="socSyor" style="width:200px;" $readonly class="$inputTextClass" $inputTextClass>
-              
-              
-              
-              
-                
-                
-        
-          
-	#if($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'L')
-	
-        
-        
-                
-                
-              
-              
-              
+          <td valign="top"><select name="socSyor" id="socSyor" style="width:200px;" $readonly class="$inputTextClass" $inputTextClass> 
+			#if($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'L')
               <option value="">SILA PILIH</option>
               <option value="L" selected="selected">LULUS</option>
               <option value="D">LULUS SECARA DASAR</option>
               <option value="T">TOLAK</option>
               <option value="G">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-    #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'D')
-    
-        
-        
-                
-                
-              
-              
-              
+             #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'D')
               <option value="">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="D" selected="selected">LULUS SECARA DASAR</option>
               <option value="T">TOLAK</option>
               <option value="G">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-    #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'T')
-	
-        
-        
-                
-                
-              
-              
-              
+            #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'T')
               <option value="">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="D">LULUS SECARA DASAR</option>
               <option value="T" selected="selected">TOLAK</option>
               <option value="G">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-	#elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'G')
-	
-        
-        
-                
-                
-              
-              
-              
+            #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'G')
               <option value="">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="D">LULUS SECARA DASAR</option>
               <option value="T">TOLAK</option>
               <option value="G" selected="selected">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-	#else
-	
-        
-        
-                
-                
-              
-              
-              
+            #else
               <option value="" selected="selected">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="D">LULUS SECARA DASAR</option>
               <option value="T">TOLAK</option>
               <option value="G">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-	#end
-	
-      
-      
-              
-              
-            
-            
-            
+            #end
             </select></td>
         </tr>
       </table>
@@ -415,7 +319,7 @@
   #end
 </table>
 <fieldset id="tableReport" style="display:none;"-->
-<legend><strong>SENARAI LAPORAN</strong></legend>
+<legend><strong>SENARAI DOKUMEN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakMinitBebas('$idFail')"> Memo </a></td>

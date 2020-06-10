@@ -105,89 +105,89 @@
   </tr>
 </table>
 
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-              <tr>
-                <td><fieldset>
-                  <legend><b>SENARAI TANAH</b></legend>
-                  <table align="center" width="100%">
-                    <tr>
-                      <td colspan="8" scope="row">
-                      <input name="cmdDaftar" type="button" value="Tambah Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                        <input name="cmdDaftar" type="button" value="Tambah Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/></td>
-                    </tr>
-                    <tr class="table_header">
-                      <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-                      <td width="15%"><strong>Pegangan Hakmilik</strong></td>
-                      <td width="10%"><strong>Lot</strong></td>
-                      <td width="10%"><strong>No. Hakmilik</strong></td>
-                      <td width="10%"><strong>No. Warta</strong></td>
-                      <td width="15%"><strong>Mukim</strong></td>
-                      <td width="15%"><strong>Daerah</strong></td>
-                      <td width="15%"><strong>Negeri</strong></td>
-                     ## <td width="5%"><strong></strong></td>
-                    </tr>
-                    ##set ($beanMaklumatTanah = "")
-                    #if ($beanMaklumatTanah.size() > 0)
-                    #foreach ($beanMaklumatTanah in $SenaraiTanahBerkaitan)
-                    #if ($beanMaklumatTanah.bil == '')
-                    #set( $row = "row1" )
-                    #elseif (($beanMaklumatTanah.bil % 2) != 0)
-                    #set( $row = "row1" )
-                    #else 
-                    #set( $row = "row2" )
-                    #end                    
+<!-- <table width="100%" border="0" cellspacing="2" cellpadding="2"> -->
+<!--               <tr> -->
+<!--                 <td><fieldset> -->
+<!--                   <legend><b>SENARAI TANAH</b></legend> -->
+<!--                   <table align="center" width="100%"> -->
+<!--                     <tr> -->
+<!--                       <td colspan="8" scope="row"> -->
+<!--                       <input name="cmdDaftar" type="button" value="Tambah Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/> -->
+<!--                         <input name="cmdDaftar" type="button" value="Tambah Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/></td> -->
+<!--                     </tr> -->
+<!--                     <tr class="table_header"> -->
+<!--                       <td scope="row" width="5%" align="center"><strong>Bil</strong></td> -->
+<!--                       <td width="15%"><strong>Pegangan Hakmilik</strong></td> -->
+<!--                       <td width="10%"><strong>Lot</strong></td> -->
+<!--                       <td width="10%"><strong>No. Hakmilik</strong></td> -->
+<!--                       <td width="10%"><strong>No. Warta</strong></td> -->
+<!--                       <td width="15%"><strong>Mukim</strong></td> -->
+<!--                       <td width="15%"><strong>Daerah</strong></td> -->
+<!--                       <td width="15%"><strong>Negeri</strong></td> -->
+<!--                      ## <td width="5%"><strong></strong></td> -->
+<!--                     </tr> -->
+<!--                     ##set ($beanMaklumatTanah = "") -->
+<!--                     #if ($beanMaklumatTanah.size() > 0) -->
+<!--                     #foreach ($beanMaklumatTanah in $SenaraiTanahBerkaitan) -->
+<!--                     #if ($beanMaklumatTanah.bil == '') -->
+<!--                     #set( $row = "row1" ) -->
+<!--                     #elseif (($beanMaklumatTanah.bil % 2) != 0) -->
+<!--                     #set( $row = "row1" ) -->
+<!--                     #else  -->
+<!--                     #set( $row = "row2" ) -->
+<!--                     #end                     -->
                     
-##                    #set ($beanMaklumatTanah = "")
-##                    #if ($beanMaklumatTanah.size() > 0)
-##                   #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
-##                    #if ($beanMaklumatTanah.bil == '')
-##                    #set( $row = "row1" )
-##                    #elseif (($beanMaklumatTanah.bil % 2) != 0)
-##                    #set( $row = "row1" )
-##                    #else 
-##                    #set( $row = "row2" )
-##                   #end
-                    <tr>
-                      <td class="$row" align="center">$beanMaklumatTanah.bil</td>
-                      <td class="$row">$beanMaklumatTanah.peganganHakmilik</td>
-                      <td class="$row">$beanMaklumatTanah.noLot</td>
-                      <td class="$row">$beanMaklumatTanah.noHakmilik</td>
-                      <td class="$row">$beanMaklumatTanah.noWarta</td>
-                      <td class="$row">$beanMaklumatTanah.mukim</td>
-                      <td class="$row">$beanMaklumatTanah.daerah</td>
-                      <td class="$row">$beanMaklumatTanah.negeri</td>
-##                      <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doHapus('$beanMaklumatTanah.idHakmilikPermohonan')"><img border="0" src="../img/hapus.gif"/></a></td>
-                    </tr>
-                    #end
-                    #else
-                    <tr>
-                      <td class="row1" align="center">&nbsp;</td>
-                      <td class="row1">Tiada Rekod</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                    ##  <td class="row1">&nbsp;</td>
-                    </tr>
-                    #end
-                    <tr>
-                      <td colspan="8">&nbsp;</td>
-                    </tr>
-                    ##if ($flagPopup == '')
-                    ##<tr>
-                    ##  <td colspan="8" align="center">
-                    ##    #if($idStatus == '1610198')
-                    ##    <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
-                    ##    <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-                    ##    #end
-                    ##    <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                    ##    </td>
-                    ##</tr>
-                    ##end
-                  </table>
-                  </fieldset></td>
-              </tr>
-            </table>
+<!-- ##                    #set ($beanMaklumatTanah = "") -->
+<!-- ##                    #if ($beanMaklumatTanah.size() > 0) -->
+<!-- ##                   #foreach ($beanMaklumatTanah in $BeanMaklumatTanah) -->
+<!-- ##                    #if ($beanMaklumatTanah.bil == '') -->
+<!-- ##                    #set( $row = "row1" ) -->
+<!-- ##                    #elseif (($beanMaklumatTanah.bil % 2) != 0) -->
+<!-- ##                    #set( $row = "row1" ) -->
+<!-- ##                    #else  -->
+<!-- ##                    #set( $row = "row2" ) -->
+<!-- ##                   #end -->
+<!--                     <tr> -->
+<!--                       <td class="$row" align="center">$beanMaklumatTanah.bil</td> -->
+<!--                       <td class="$row">$beanMaklumatTanah.peganganHakmilik</td> -->
+<!--                       <td class="$row">$beanMaklumatTanah.noLot</td> -->
+<!--                       <td class="$row">$beanMaklumatTanah.noHakmilik</td> -->
+<!--                       <td class="$row">$beanMaklumatTanah.noWarta</td> -->
+<!--                       <td class="$row">$beanMaklumatTanah.mukim</td> -->
+<!--                       <td class="$row">$beanMaklumatTanah.daerah</td> -->
+<!--                       <td class="$row">$beanMaklumatTanah.negeri</td> -->
+<!-- ##                      <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doHapus('$beanMaklumatTanah.idHakmilikPermohonan')"><img border="0" src="../img/hapus.gif"/></a></td> -->
+<!--                     </tr> -->
+<!--                     #end -->
+<!--                     #else -->
+<!--                     <tr> -->
+<!--                       <td class="row1" align="center">&nbsp;</td> -->
+<!--                       <td class="row1">Tiada Rekod</td> -->
+<!--                       <td class="row1">&nbsp;</td> -->
+<!--                       <td class="row1">&nbsp;</td> -->
+<!--                       <td class="row1">&nbsp;</td> -->
+<!--                       <td class="row1">&nbsp;</td> -->
+<!--                       <td class="row1">&nbsp;</td> -->
+<!--                       <td class="row1">&nbsp;</td> -->
+<!--                     ##  <td class="row1">&nbsp;</td> -->
+<!--                     </tr> -->
+<!--                     #end -->
+<!--                     <tr> -->
+<!--                       <td colspan="8">&nbsp;</td> -->
+<!--                     </tr> -->
+<!--                     ##if ($flagPopup == '') -->
+<!--                     ##<tr> -->
+<!--                     ##  <td colspan="8" align="center"> -->
+<!--                     ##    #if($idStatus == '1610198') -->
+<!--                     ##    <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/> -->
+<!--                     ##    <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/> -->
+<!--                     ##    #end -->
+<!--                     ##    <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/> -->
+<!--                     ##    </td> -->
+<!--                     ##</tr> -->
+<!--                     ##end -->
+<!--                   </table> -->
+<!--                   </fieldset></td> -->
+<!--               </tr> -->
+<!--             </table> -->
 #end

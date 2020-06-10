@@ -112,8 +112,7 @@
       <tr>
           <td colspan="6" scope="row">
 <!--           <input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:daftarHakmilik()"/> -->
-          <input name="cmdPilih" type="button" value="Pilih Hakmilik" onClick="javascript:pilihHakmilik()"/>
-          </td>
+             </td>
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>

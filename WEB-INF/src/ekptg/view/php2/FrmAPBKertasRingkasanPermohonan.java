@@ -41,6 +41,7 @@ public class FrmAPBKertasRingkasanPermohonan extends AjaxBasedModule {
 		String idPemohon = getParam("idPemohon");
 		String idStatus = getParam("idStatus");
 		String idKertasKerjaApb = getParam("idKertasKerjaApb");
+		String socSyor = getParam("socSyor");
 
 		// VECTOR
 		Vector beanHeader = null;
@@ -133,6 +134,7 @@ public class FrmAPBKertasRingkasanPermohonan extends AjaxBasedModule {
 		this.context.put("idPemohon", idPemohon);
 		this.context.put("idStatus", idStatus);
 		this.context.put("idKertasKerjaApb", idKertasKerjaApb);
+		this.context.put("socSyor", socSyor);
 
 		return vm;
 	}

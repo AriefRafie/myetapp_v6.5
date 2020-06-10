@@ -15,6 +15,7 @@ import lebah.db.SQLRenderer;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
+import ekptg.model.admin.EmailConfig;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
 
@@ -362,6 +363,63 @@ public class FrmTKRKeputusanData {
 				db.close();
 		}
 	}
+	
+	public void sendEmailtoPemohon(String idPermohonan, String idKeputusan, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String namaUser = "";
+		String emelUser = "";
+		String idhakmilikPermohonan = "";
+		String noPermohonan = "";
+		String idSuburusan = "";
+		String keputusan = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+						
+			sql = "SELECT B.ID_HAKMILIKPERMOHONAN, A.NO_PERMOHONAN, C.ID_SUBURUSAN, D.NAMA, D.EMEL " 
+				+ " FROM TBLPERMOHONAN A,TBLPHPHAKMILIKPERMOHONAN B, TBLPFDFAIL C,TBLPHPPEMOHON D "
+				+ " WHERE C.ID_FAIL = A.ID_FAIL AND A.ID_PERMOHONAN = B.ID_PERMOHONAN "
+				+ " AND A.ID_PEMOHON = D.ID_PEMOHON AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
+			
+			
+			ResultSet rsPermohonan = stmt.executeQuery(sql);
+			if (rsPermohonan.next()){
+				idhakmilikPermohonan = rsPermohonan.getString("ID_HAKMILIKPERMOHONAN");
+				noPermohonan = rsPermohonan.getString("NO_PERMOHONAN");
+				idSuburusan = rsPermohonan.getString("ID_SUBURUSAN");
+				namaUser = rsPermohonan.getString("NAMA");
+				emelUser = rsPermohonan.getString("EMEL");
+			}	
+			
+			if ("L".equals(idKeputusan)) {
+				keputusan = "LULUS";
+			} else if ("B".equals(idKeputusan)) {
+				keputusan = "LULUS BERSYARAT";
+			} else if ("T".equals(idKeputusan)) {
+				keputusan = "TOLAK";
+			}
+			
+			if (!"".equals(namaUser) && !"".equals(emelUser)){
+				EmailConfig ef = new EmailConfig();
+				
+				String subject = "PERMOHONAN TUKARGUNA " + noPermohonan;
+				String kandungan = namaUser.toUpperCase() + "."
+						+ "<br><br>Permohonan anda telah "+ keputusan +".Sila gunakan nombor permohonan diatas sebagai rujukan.";
+				
+				ef.sendByOnlineUser(emelUser, subject, kandungan);
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	} 
 
 	private boolean getFlagBorangK(String idFail) throws Exception {
 		Db db = null;

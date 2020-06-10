@@ -58,7 +58,8 @@
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TUKARGUNA</li>
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
           <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">TANAH GANTI</li>
-          <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PELAN</li>
+          <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
+          <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAMPIRAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> #if ($flagBorangK == 'Y') 
@@ -77,8 +78,8 @@
                     <table align="center" width="100%">
                       <tr>
                         <td colspan="8" scope="row">
-                          <input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                          <input name="cmdDaftar" type="button" value="Daftar Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/></td>
+                          <input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
+                          <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/></td>
                       </tr>
                       <tr class="table_header">
                         <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
@@ -343,9 +344,13 @@
               </table>
             </div>
           </div>
-          <div class="TabbedPanelsContent"> #if($selectedTabUpper==3)
-            #parse("app/php2/frmTKRMaklumatPemohon.jsp")
-            #end </div>
+          
+          <div class="TabbedPanelsContent"> 
+          	#if($selectedTabUpper==3)
+            	#parse("app/php2/frmTKRMaklumatPemohon.jsp")
+            #end 
+          </div>
+          
           #if($selectedTabUpper!=3)
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -362,8 +367,10 @@
                     <legend><b>SENARAI TANAH GANTI</b></legend>
                     <table align="center" width="100%">
                       <tr>
-                        <!-- <td colspan="8" scope="row"><input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:doDaftarHakmilik2('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/> -->
-                        <!-- <input name="cmdDaftar" type="button" value="Daftar Baru" onClick="javascript:doDaftarBaruTanahGanti()"/> --></td>
+                        <td colspan="8" scope="row">
+                        	<input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik2('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
+							<!--<input name="cmdDaftar" type="button" value="Daftar Baru" onClick="javascript:doDaftarBaruTanahGanti()"/> -->
+                        </td>
                       </tr>
                       <tr class="table_header">
                         <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
@@ -416,11 +423,13 @@
                       </tr>
                       #if ($flagPopup == '')
                       <tr>
-                        <td colspan="7" align="center"> #if($idStatus == '1610198')
+                        <td colspan="7" align="center"> 
+                          #if($idStatus == '1610198')
                           <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
                           <input type="button" name="cmdBatalPermohonan2" id="cmdBatalPermohonan2" value="Batal Permohonan" onClick="doBatalPermohonan()"/>
                           #end
-                          <input type="button" name="cdmCetak4" id="cdmCetak4" value="Cetak" onClick="javascript:setTable('tableReport')"/></td>
+                          <input type="button" name="cdmCetak4" id="cdmCetak4" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+                        </td>
                       </tr>
                       #end
                     </table>
@@ -429,10 +438,19 @@
             </table>
           </div>
           #end
+          
           <div class="TabbedPanelsContent"> <br>
             #if($selectedTabUpper==5)
-            #parse("app/php2/frmTKRPelan.jsp")
-            #end </div>
+            	#parse("app/php2/frmTKRSenaraiSemak.jsp")
+            #end 
+          </div>
+          
+          <div class="TabbedPanelsContent"> <br>
+            #if($selectedTabUpper==6)
+            	#parse("app/php2/frmTKRPelan.jsp")
+            #end 
+          </div>
+          
         </div>
       </div></td>
   </tr>
@@ -1559,7 +1577,7 @@ function simpanDokumenP(idPermohonan) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmTKRMaklumatPermohonanView&hitButton=simpanDokumen&namaPelan="+namaPelan+"&catatanPelan="+catatanPelan+"&selectedTabUpper=5"+dopost+"&mode=view&flagPopup=openPopupDokumen&modePopup=new&idPermohonan="+idPermohonan;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmTKRMaklumatPermohonanView&hitButton=simpanDokumen&namaPelan="+namaPelan+"&catatanPelan="+catatanPelan+"&selectedTabUpper=6"+dopost+"&mode=view&flagPopup=openPopupDokumen&modePopup=new&idPermohonan="+idPermohonan;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";
@@ -1633,3 +1651,16 @@ function doHapus2(idHakmilikPermohonan) {
 	doAjaxCall${formName}("");
 }
 </script> 
+<script>
+function doSimpanKemaskiniSenaraiSemak() {
+	
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "update";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
+	document.${formName}.submit();
+}
+</script>

@@ -242,6 +242,80 @@ public class FrmTKRMaklumatPermohonanData {
 		}
 	}
 	
+	public Vector getSenaraiSemak(String idPermohonan) throws Exception {
+
+		Db db = null;
+		String sql = "";
+		Vector senaraiSemak = new Vector();
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_RUJSENARAISEMAK, KETERANGAN,"
+					+ " CASE WHEN ID_RUJSENARAISEMAK IN (SELECT ID_RUJSENARAISEMAK FROM TBLPHPSENARAISEMAK WHERE ID_PERMOHONAN = '" + idPermohonan + "')"
+					+ " THEN 'Y' END AS FLAG FROM TBLPHPRUJSENARAISEMAK"
+					+ " WHERE FLAG_AKTIF = 'Y' AND ID_URUSAN = 6 AND ID_SUBURUSAN = 33";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idSenaraiSemak", rs.getString("ID_RUJSENARAISEMAK") == null ? "" : rs.getString("ID_RUJSENARAISEMAK"));
+				h.put("keterangan", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				h.put("flag", rs.getString("FLAG") == null ? "" : rs.getString("FLAG"));
+				senaraiSemak.addElement(h);
+			}
+
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+			} finally {
+			if (db != null)
+				db.close();
+		}
+	
+		return senaraiSemak;
+	}
+	
+	public void updateSenaraiSemak(String idPermohonan, String[] semaks, HttpSession session) throws Exception {
+		
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		Db db = new Db();
+		String sql = "";		
+		
+		try {
+			Connection conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r = new SQLRenderer();
+			
+			r.add("ID_PERMOHONAN", idPermohonan);
+			sql = r.getSQLDelete("TBLPHPSENARAISEMAK");
+			stmt.executeUpdate(sql);
+			
+			for (int i = 0; i < semaks.length; i++) {
+			 	r = new SQLRenderer();
+				long ID_SENARAISEMAK = DB.getNextID("TBLPHPSENARAISEMAK_SEQ");
+				r.add("ID_SENARAISEMAK", ID_SENARAISEMAK);
+				r.add("ID_PERMOHONAN", idPermohonan);
+				r.add("ID_RUJSENARAISEMAK", semaks[i]);
+				r.add("ID_MASUK", userId);
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+				sql = r.getSQLInsert("TBLPHPSENARAISEMAK");
+				stmt.executeUpdate(sql);
+			}
+			conn.commit();
+			
+			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
+					"FAIL PELEPASAN [" + idPermohonan + "] DIKEMASKINI");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void setMaklumatPelan(String idDokumen) throws Exception {
 		Db db = null;
 		String sql = "";
