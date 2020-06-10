@@ -68,24 +68,6 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String sql = "";
 			list_getListEmptyField_simati = new Vector();
 
-			/*
-			 * sql =
-			 * "SELECT C.ID_BUKTIMATI,C.TARIKH_MATI,C.SEBAB_MATI,D.ALAMAT_1,D.ALAMAT1_SURAT,D.POSKOD,"
-			 * +
-			 * "	D.POSKOD_SURAT,D.ID_NEGERI,D.ID_NEGERISURAT,nvl(E.ID_HTA,'0') AS ID_HTA"
-			 * +
-			 * 
-			 * 
-			 * "	FROM TBLPPKPERMOHONAN A,"+ "	TBLPPKPERMOHONANSIMATI B,"+
-			 * "	TBLPPKSIMATI C,"+ "	TBLPPKPEMOHON D,"+ "	TBLPPKHTA E"+
-			 * 
-			 * "	WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN"+
-			 * "	AND B.ID_SIMATI = C.ID_SIMATI"+
-			 * "	AND A.ID_PEMOHON = D.ID_PEMOHON"+
-			 * "	AND C.ID_SIMATI = E.ID_SIMATI(+)"+
-			 * "	AND A.ID_PERMOHONAN = '"+idpermohonan+"'";
-			 */
-
 			sql = "SELECT C.ID_BUKTIMATI,C.TARIKH_MATI,C.SEBAB_MATI "
 					+ "	FROM TBLPPKPERMOHONAN A,"
 					+ "	TBLPPKPERMOHONANSIMATI B," + "	TBLPPKSIMATI C,"
@@ -109,24 +91,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 						: rs.getString("TARIKH_MATI"));
 				h.put("SEBAB_MATI", rs.getString("SEBAB_MATI") == null ? ""
 						: rs.getString("SEBAB_MATI"));
-				/*
-				 * h.put("ALAMAT_1",
-				 * rs.getString("ALAMAT_1")==null?"":rs.getString("ALAMAT_1"));
-				 * h
-				 * .put("ALAMAT1_SURAT",rs.getString("ALAMAT1_SURAT")==null?"":rs
-				 * .getString("ALAMAT1_SURAT")); h.put("POSKOD",
-				 * rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
-				 * h.put
-				 * ("POSKOD_SURAT",rs.getString("POSKOD_SURAT")==null?"":rs.
-				 * getString("POSKOD_SURAT"));
-				 * h.put("ID_NEGERI",rs.getString("ID_NEGERI"
-				 * )==null?"":rs.getString("ID_NEGERI"));
-				 * h.put("ID_NEGERISURAT",
-				 * rs.getString("ID_NEGERISURAT")==null?""
-				 * :rs.getString("ID_NEGERISURAT"));
-				 * h.put("ID_HTA",rs.getString(
-				 * "ID_HTA")==null?"":rs.getString("ID_HTA"));
-				 */
+				
 				list_getListEmptyField_simati.addElement(h);
 			}
 

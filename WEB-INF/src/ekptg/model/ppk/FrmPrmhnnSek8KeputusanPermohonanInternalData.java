@@ -219,10 +219,10 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 					" PEJ.NO_TEL, PEJ.NO_FAX, PEJ.ID_JENISPEJABAT, PEJ.ID_BANDAR, D.NAMA_DAERAH, "+
 					" N.NAMA_NEGERI, B.KETERANGAN  FROM TBLRUJPEJABAT PEJ, TBLRUJDAERAH D, TBLRUJNEGERI N, TBLRUJBANDAR B  "+
 					" WHERE D.ID_DAERAH = PEJ.ID_DAERAH  AND N.ID_NEGERI = PEJ.ID_NEGERI  AND PEJ.ID_BANDAR = B.ID_BANDAR(+)  "+
-					" AND ID_JENISPEJABAT IN (9,61) "+
+					" AND ID_JENISPEJABAT IN (9,61,62) "+
 					" ORDER BY NAMA_NEGERI ";
 			
-		//	myLogger.info("SQL listMaklumatMahkamahARB :"+sql.toUpperCase());
+		myLogger.info("SQL listMaklumatMahkamahARB :"+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next())	{
