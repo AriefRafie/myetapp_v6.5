@@ -37,12 +37,15 @@ import ekptg.model.htp.entity.HakMilik;
 import ekptg.model.htp.rekod.FrmRekodUtilData;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.TanahBean;
 
 public class FrmRekodPendaftaranTanahAgensi extends AjaxBasedModule {
 	private boolean isSambungan = false;
 	private FrmRekodUtilData frmRekodUtilData = null;
 	private final String PATH="app/htp/";
 	private HakmilikInterface hakmilikInterface = null;
+	private ITanah iTanah = null;
 	private HakMilik hakmilik = null;
 	private HakMilik hakmilikExt = null;
  	private IHtp iHTP = null;  
@@ -945,7 +948,7 @@ public class FrmRekodPendaftaranTanahAgensi extends AjaxBasedModule {
 		Vector list =null;
 
 		//list = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
-		list = getHakmilikBean().getPaparMaklumatFailById(idHakmilik);
+		list = geTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
 		
 		this.context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
@@ -1698,12 +1701,21 @@ public class FrmRekodPendaftaranTanahAgensi extends AjaxBasedModule {
 
 		}		
 			
-		private HakmilikInterface getHakmilikBean(){
-			if(hakmilikInterface == null){
-				hakmilikInterface = new HakmilikBean();
-			}
-			return hakmilikInterface;
-		
+	private HakmilikInterface getHakmilikBean(){
+		if(hakmilikInterface == null){
+			hakmilikInterface = new HakmilikBean();
 		}
+		return hakmilikInterface;
+		
+	}
+		
+	private ITanah geTanah(){
+		if(iTanah == null){
+			iTanah = new TanahBean();
+		}
+		return iTanah;
+		
+	}
 
+	
 }	

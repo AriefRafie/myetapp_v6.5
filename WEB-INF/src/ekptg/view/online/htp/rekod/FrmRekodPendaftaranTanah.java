@@ -29,7 +29,7 @@ import ekptg.model.htp.rekod.FrmRekodUtilData;
 import ekptg.model.htp.rekod.HTPSusulanPembangunanBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
-import ekptg.model.htp.rekod.IHakmilikRizab;
+import ekptg.model.htp.rekod.ITanahCarian;
 import ekptg.model.htp.utiliti.IHTPSusulan;
 
 
@@ -40,7 +40,7 @@ public class FrmRekodPendaftaranTanah extends AjaxBasedModule {
 	private HakmilikInterface hakmilikInterface = null;
 	private HakMilik hakmilik = null;
 	private HakMilik hakmilikExt = null;
-	private IHakmilikRizab iHakmilikRizab = null;
+	private ITanahCarian iHakmilikRizab = null;
  	private IHtp iHTP = null;  
 	private IPenggunaKementerian iPengguna = null;
 	private UserKementerian uk = null;
@@ -1202,7 +1202,7 @@ public class FrmRekodPendaftaranTanah extends AjaxBasedModule {
 		}
 		
 		
-		private IHakmilikRizab getIHakmilikRizab(){
+		private ITanahCarian getIHakmilikRizab(){
 			if (iHakmilikRizab == null){
 				iHakmilikRizab = new FrmHakmilikRizabBean();
 			}

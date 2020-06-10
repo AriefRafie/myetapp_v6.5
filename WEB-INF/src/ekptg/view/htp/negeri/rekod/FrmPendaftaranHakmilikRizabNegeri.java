@@ -37,9 +37,12 @@ import ekptg.model.htp.rekod.FrmTanahDaftarRizabBean;
 import ekptg.model.htp.rekod.FrmTanahKementerianBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
+import ekptg.model.htp.rekod.ITanah;
 import ekptg.model.htp.rekod.HTPStatusRekodBean;
 import ekptg.model.htp.rekod.ITanahDaftar;
 import ekptg.model.htp.rekod.ITanahKementerian;
+import ekptg.model.htp.rekod.TanahBean;
+import ekptg.model.htp.rekod.TanahKementerianBean;
 import ekptg.model.htp.utiliti.IKod;
 import ekptg.model.htp.utiliti.KodLotBean;
 import ekptg.model.htp.utiliti.fail.HTPFailBean;
@@ -51,6 +54,7 @@ public class FrmPendaftaranHakmilikRizabNegeri extends AjaxBasedModule {
 	private final String IDSUBURUSAN = "61";
 	private final String JENISAKSES = "readonly";
 	private HakmilikInterface iHakmilik = null;
+	private ITanah iTanah = null;
 	private HakMilik hakmilik = null;
 	private HakmilikAgensi hakmilikAgensi = null;
 	private HtpPermohonan htpPermohonan = null;
@@ -315,7 +319,7 @@ public class FrmPendaftaranHakmilikRizabNegeri extends AjaxBasedModule {
 				 // 2017/11/16
 				 //frmRekodUtilData.kemaskiniRizabMengikutId(rizab);
 				 getIDaftaRizab().kemaskini(rizab);
-				 
+				  
 				 hakmilikAgensi = new HakmilikAgensi();
 				 hakmilikAgensi.setIdHakmilik(Long.parseLong(idHakmilik));
 				 hakmilikAgensi.setIdLuas(getParamAsInteger("socLuas"));
@@ -324,8 +328,8 @@ public class FrmPendaftaranHakmilikRizabNegeri extends AjaxBasedModule {
 				 hakmilikAgensi.setIdHakmilikAgensi(Long.parseLong(idAgensiKemasukan));
 				 hakmilikAgensi.setIdKementerian(Long.parseLong(idKementerianKemasukan));
 				 hakmilikAgensi.setIdKemaskini(Long.parseLong(userId));				 
-				 // 2017/11/16
-				 //hakmilikAgensi = getIHakmilik().kemaskiniHakmilikAgensi(hakmilikAgensi);
+			
+
 				 getTanahKem().kemaskiniTanahAgensi(hakmilikAgensi);
 				 AuditTrail.logActivity("1", idSeksyen, this, session, "UPD", "HAKMILIK/RIZAB  ["+noTanah+"] DIKEMASKINI ");
 
@@ -1321,175 +1325,6 @@ public class FrmPendaftaranHakmilikRizabNegeri extends AjaxBasedModule {
 		
 	}	
 
-	// VIEW MAKLUMAT FAIL BY ID (MASTER)
-	private void XXview_modeMaklumatFail(HttpSession session) throws Exception {
-		String idHakmilik = getParam("idHakmilik");
-		Vector list =null;
-		//list = FrmRekodPendaftaranHakmilikSementaraData.getPaparMaklumatFailById(idHakmilik);
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
-		Hashtable hMaklumatFail = (Hashtable) list.get(0);
-		
-		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
-		this.context.put("txtTajuk",(String)hMaklumatFail.get("tajukFail"));
-		this.context.put("txtNamaKementerian", (String)hMaklumatFail.get("namaKementerian"));
-		this.context.put("txtNoFailSeksyen", (String)hMaklumatFail.get("noFailSeksyen"));
-		this.context.put("txtNamaNegeri", (String)hMaklumatFail.get("namaNegeri"));
-		this.context.put("txtNamaDaerah", (String)hMaklumatFail.get("namaDaerah"));
-		this.context.put("txtNamaMukim", (String)hMaklumatFail.get("namaMukim"));
-		this.context.put("txtNamaAgensi", (String)hMaklumatFail.get("namaAgensi"));
-		this.context.put("txtJenisHakmilik", (String)hMaklumatFail.get("jenisHakmilik"));
-		this.context.put("txtFailKJP", (String)hMaklumatFail.get("noFailKjp"));
-		this.context.put("txtNoWarta", (String)hMaklumatFail.get("noWarta"));
-		this.context.put("txtNoHakmilik",(String) hMaklumatFail.get("noHakmilik"));
-		this.context.put("txtNoLot", (String)hMaklumatFail.get("noLot"));	
-		this.context.put("caraPerolehan", (String)hMaklumatFail.get("caraPerolehan"));
-	}
-
-	// VIEW MAKLUMAT FAIL BY ID (MASTER)
-	private void view_modeMaklumatFail(String idHakmilik) throws Exception {
-		Vector list =null;
-		// Dikemaskini 09/04/2012
-		//list = FrmRekodPendaftaranHakmilikSementaraData.getPaparMaklumatFailById(idHakmilik);
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
-		Hashtable hMaklumatFail = (Hashtable) list.get(0);
-		
-		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
-		this.context.put("txtTajuk",(String)hMaklumatFail.get("tajukFail"));
-		this.context.put("txtNamaKementerian", (String)hMaklumatFail.get("namaKementerian"));
-		this.context.put("txtNoFailSeksyen", (String)hMaklumatFail.get("noFailSeksyen"));
-		this.context.put("txtNamaNegeri", (String)hMaklumatFail.get("namaNegeri"));
-		this.context.put("txtNamaDaerah", (String)hMaklumatFail.get("namaDaerah"));
-		this.context.put("txtNamaMukim", (String)hMaklumatFail.get("namaMukim"));
-		this.context.put("txtNamaAgensi", (String)hMaklumatFail.get("namaAgensi"));
-		this.context.put("txtJenisHakmilik", (String)hMaklumatFail.get("jenisHakmilik"));
-		this.context.put("txtFailKJP", (String)hMaklumatFail.get("noFailKjp"));
-		this.context.put("txtNoWarta", (String)hMaklumatFail.get("noWarta"));
-		this.context.put("txtNoHakmilik",(String) hMaklumatFail.get("noHakmilik"));
-		this.context.put("txtNoLot", (String)hMaklumatFail.get("noLot"));	
-		this.context.put("caraPerolehan", (String)hMaklumatFail.get("caraPerolehan"));
-		
-	}	
-	//****************SECOND PAGE METHOD/FUCTION **************************
-	// VIEW HEADER BY ID
-	private void XviewModeMaklumatFail(HttpSession session,String idHakmilik) throws Exception {
-		Vector list =null;
-		//list = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
-		Hashtable hMaklumatFail = (Hashtable) list.get(0);
-		
-		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
-		this.context.put("txtTajuk",(String)hMaklumatFail.get("tajukFail"));
-		this.context.put("txtNamaKementerian", (String)hMaklumatFail.get("namaKementerian"));
-		this.context.put("txtNoFailSeksyen", (String)hMaklumatFail.get("noFailSeksyen"));
-		this.context.put("txtNamaNegeri", (String)hMaklumatFail.get("namaNegeri"));
-		this.context.put("txtNamaDaerah", (String)hMaklumatFail.get("namaDaerah"));
-		this.context.put("txtNamaMukim", (String)hMaklumatFail.get("namaMukim"));
-		this.context.put("txtNamaAgensi", (String)hMaklumatFail.get("namaAgensi"));
-		this.context.put("txtJenisHakmilik", (String)hMaklumatFail.get("jenisHakmilik"));
-		this.context.put("txtFailKJP", (String)hMaklumatFail.get("noFailKjp"));
-		this.context.put("txtNoWarta", (String)hMaklumatFail.get("noWarta"));
-		this.context.put("txtNoHakmilik",(String) hMaklumatFail.get("noHakmilik"));
-		this.context.put("txtNoLot", (String)hMaklumatFail.get("noLot"));	
-		this.context.put("caraPerolehan", (String)hMaklumatFail.get("caraPerolehan"));
-		
-	}
-    
-	// VIEW MAKLUMAT HAKMILIK BY ID -(AKTIF)
-	private void viewModeHakmilikRizab(String idHakmilik,HttpSession session,String nextAction,String lastAction,String idNegeriHR, String idDaerahHR, String idMukimHR,String idJenisHakmilikHR, String idCaraBayar) throws Exception {
-		//int id = Integer.parseInt(idHakmilik);
-		Vector list =null;
-		list = FrmRekodPendaftaranHakmilikRizabData.getPaparHakmilikRizabById(idHakmilik);
-		Hashtable hHakmilik = (Hashtable) list.get(0);
-		
-		this.context.put("idHakmilik", (String)hHakmilik.get("idHakmilik"));
-		this.context.put("statusBatal", (String)hHakmilik.get("socStatus"));
-    	this.context.put("txdTarikhDaftar",getParam("txdTarikhDaftar") == "" ?  (String)hHakmilik.get("tarikhDaftar"):getParam("txdTarikhDaftar"));
-    	this.context.put("txtCukaiTahun",getParam("txtCukaiTahun") == "" ? (String)hHakmilik.get("cukai"):getParam("txtCukaiTahun"));
-		this.context.put("txtLokasi",getParam("txtLokasi") == "" ? (String)hHakmilik.get("lokasi"):getParam("txtLokasi"));
-		this.context.put("txdTarikhTerima",getParam("txdTarikhTerima") == "" ? (String)hHakmilik.get("tarikhTerima"):getParam("txdTarikhTerima"));	
-		if(nextAction.equals("kemaskiniDetailHakmilik")||nextAction.equals("kemaskiniDetailRizab")){
-			this.context.put("selectCaraBayar", HTML.selectCaraBayar("socCaraBayar", Utils.parseLong(idCaraBayar), ""," style=\"width:200px\"")); 
-			this.context.put("selectNegeriHR", HTML.SelectNegeri("socNegeriHR",Utils.parseLong((String)hHakmilik.get("idNegeriHR")), " style=\"width:200px\" onChange=\"doChangeStateHR();\""));
-	    	this.context.put("selectDaerahHR", HTML.SelectDaerahByNegeri((String)hHakmilik.get("idNegeriHR"),"socDaerahHR", Utils.parseLong((String)hHakmilik.get("idDaerahHR")),""," style=\"width:200px\" onChange=\"doChangeDaerahHR();\""));
-	    	this.context.put("selectMukimHR", HTML.SelectMukimByDaerah((String)hHakmilik.get("idDaerahHR"),"socMukimHR", Utils.parseLong((String)hHakmilik.get("idMukimHR"))," style=\"width:200px\""));		
-	    	this.context.put("selectJenisHakmilikHR", HTML.SelectJenisHakmilik("socJenisHakmilikHR",Utils.parseLong((String)hHakmilik.get("idJenisHakmilikHR")), " style=\"width:200px\""));
-	    	this.context.put("selectJenisLotHR", HTML.SelectLot("socLotHR",Utils.parseLong((String)hHakmilik.get("idLot")), " style=\"width:200px\""));
-	    	//this.context.put("selectLuasLama", HTML.SelectLuas("socLuas",Utils.parseLong((String)hHakmilik.get("idLuas")), " style=\"width:200px\""));
-		    this.context.put("selectLuasLama", HTML.SelectLuas("socLuas",Utils.parseLong((String)hHakmilik.get("idLuasLama")), "disabled"," style=\"width:200px\" class=\"disabled\""));
-			this.context.put("selectKategori", HTML.SelectKategori("socKategori",Utils.parseLong((String)hHakmilik.get("idKategori")), " style='width:200px;'"));
-			this.context.put("selectRizab", HTML.SelectRizab("socJenisRizab",Utils.parseLong((String)hHakmilik.get("idJenisRizab")), " style='width:200px;'"));
-			if ("doChangeStateHR".equals(lastAction)) {
-				this.context.put("selectNegeriHR", HTML.SelectNegeri("socNegeriHR",Utils.parseLong(idNegeriHR), " onChange=\"doChangeStateHR();\" style=\"width:200px\""));
-				this.context.put("selectDaerahHR", HTML.SelectDaerahByNegeri(idNegeriHR, "socDaerahHR", Utils.parseLong(idDaerahHR),""," onChange=\"doChangeDaerahHR();\" style=\"width:200px\""));	
-				this.context.put("selectMukimHR", HTML.SelectMukimByDaerah(idDaerahHR, "socMukimHR", Utils.parseLong(idMukimHR),"","style=\"width:200px\""));
-			}
-			if ("doChangeDaerahHR".equals(lastAction)) {
-				this.context.put("selectNegeriHR", HTML.SelectNegeri("socNegeriHR",Utils.parseLong(idNegeriHR), " onChange=\"doChangeStateHR();\"  style=\"width:200px\""));
-				this.context.put("selectDaerahHR", HTML.SelectDaerahByNegeri(idNegeriHR, "socDaerahHR", Utils.parseLong(idDaerahHR),""," onChange=\"doChangeDaerahHR();\"  style=\"width:200px\""));
-				this.context.put("selectMukimHR", HTML.SelectMukimByDaerah(idDaerahHR, "socMukimHR", Utils.parseLong(idMukimHR),"","style=\"width:200px\""));
-			}
-		}
-		else
-		if(nextAction.equals("updateDetailHakmilik")|| nextAction.equals("updateDetailRizab")||nextAction.equals("paparDetailHakmilik")||nextAction.equals("paparDetailRizab")){
-			this.context.put("selectCaraBayar", HTML.selectCaraBayar("socCaraBayar", Utils.parseLong(idCaraBayar), "disabled"," style=\"width:200px\" class=\"disabled\""));
-			this.context.put("selectNegeriHR", HTML.SelectNegeri("socNegeriHR",Utils.parseLong((String)hHakmilik.get("idNegeriHR")),"disabled", " style=\"width:200px\" onChange=\"doChangeStateHR();\" class=\"disabled\""));
-		    this.context.put("selectDaerahHR", HTML.SelectDaerahByNegeri((String)hHakmilik.get("idNegeriHR"),"socDaerahHR", Utils.parseLong((String)hHakmilik.get("idDaerahHR")),"disabled"," style=\"width:200px\" onChange=\"doChangeDaerahHR();\" class=\"disabled\""));
-		    this.context.put("selectMukimHR", HTML.SelectMukimByDaerah((String)hHakmilik.get("idDaerahHR"),"socMukimHR", Utils.parseLong((String)hHakmilik.get("idMukimHR")),"disabled"," style=\"width:200px\" class=\"disabled\""));
-		    this.context.put("selectJenisLotHR", HTML.SelectLot("socLotHR",Utils.parseLong((String)hHakmilik.get("idLot")),"disabled", " style=\"width:200px\" class=\"disabled\""));
-		    this.context.put("selectJenisHakmilikHR", HTML.SelectJenisHakmilik("socJenisHakmilikHR",Utils.parseLong((String)hHakmilik.get("idJenisHakmilikHR")),"disabled", " style=\"width:200px\" class=\"disabled\""));		    
-		    //this.context.put("selectLuasLama", HTML.SelectLuas("socLuas",Utils.parseLong((String)hHakmilik.get("idLuas")), "disabled"," style=\"width:200px\" class=\"disabled\""));
-		    this.context.put("selectLuasLama", HTML.SelectLuas("socLuas",Utils.parseLong((String)hHakmilik.get("idLuasLama")), "disabled"," style=\"width:200px\" class=\"disabled\""));
-			this.context.put("selectKategori", HTML.SelectKategori("socKategori",Utils.parseLong((String)hHakmilik.get("idKategori")), "disabled"," style=\"width:200px\" class=\"disabled\""));
-			this.context.put("selectRizab", HTML.SelectRizab("socJenisRizab",Utils.parseLong((String)hHakmilik.get("idJenisRizab")), "disabled", " style=\"width:200px\" class=\"disabled\""));
-		}	
-		this.context.put("txtNoBangunan",getParam("txtNoBangunan") == "" ? (String)hHakmilik.get("noBangunan"):getParam("txtNoBangunan"));
-		this.context.put("txtNoTingkat",getParam("txtNoTingkat") == "" ? (String)hHakmilik.get("noTingkat"):getParam("txtNoTingkat"));
-		this.context.put("txtNoPetak",getParam("txtNoPetak") == "" ? (String)hHakmilik.get("noPetak"):getParam("txtNoPetak"));
-		this.context.put("txtNoPelan",getParam("txtNoPelan") == "" ? (String)hHakmilik.get("noPelan"):getParam("txtNoPelan"));
-		this.context.put("txtTempoh",getParam("txtTempoh") == "" ? (String)hHakmilik.get("tempoh"):getParam("txtTempoh"));
-		this.context.put("txtSyarat",getParam("txtSyarat") == "" ? (String)hHakmilik.get("syarat"):getParam("txtSyarat"));
-		this.context.put("txtHakmilikAsal",getParam("txtHakmilikAsal") == "" ? (String)hHakmilik.get("hakmilikAsal"):getParam("txtHakmilikAsal"));
-		this.context.put("txtNoFailJopa",getParam("txtNoFailJopa") == "" ? (String)hHakmilik.get("noFailJopa"):getParam("txtNoFailJopa"));
-		this.context.put("txtTarafHakmilik",getParam("txtTarafHakmilik") == "" ? (String)hHakmilik.get("tarafHakmilik"):getParam("txtTarafHakmilik"));
-		this.context.put("txdTarikhLuput",getParam("txdTarikhLuput") == "" ? (String)hHakmilik.get("tarikhLuput"):getParam("txdTarikhLuput"));
-		this.context.put("txtCukaiTerkini",getParam("txtCukaiTerkini") == "" ? (String)hHakmilik.get("cukaiTerkini"):getParam("txtCukaiTerkini"));
-		this.context.put("txtKegunaanTanah",getParam("txtKegunaanTanah") == "" ? (String)hHakmilik.get("kegunaanTanah"):getParam("txtKegunaanTanah"));
-		this.context.put("txtLuas",getParam("txtLuas") == "" ? (String)hHakmilik.get("luas"):getParam("txtLuas"));
-		this.context.put("txtNoPu",getParam("txtNoPu") == "" ? (String)hHakmilik.get("noPu"):getParam("txtNoPu"));
-		this.context.put("txdTarikhWarta",getParam("txdTarikhWarta") == "" ? (String)hHakmilik.get("tarikhWarta"):getParam("txdTarikhWarta"));
-		this.context.put("txtNoWarta",getParam("txtNoWarta") == "" ? (String)hHakmilik.get("noWarta"):getParam("txtNoWarta"));
-		this.context.put("txtNoRizab",getParam("txtNoRizab") == "" ? (String)hHakmilik.get("noRizab"):getParam("txtNoRizab"));
-		this.context.put("txdTarikhRizab",getParam("txdTarikhRizab") == "" ? (String)hHakmilik.get("tarikhRizab"):getParam("txdTarikhRizab"));
-		this.context.put("txtKawasanRizab",getParam("txtKawasanRizab") == "" ? (String)hHakmilik.get("kawasanRizab"):getParam("txtKawasanRizab"));
-		this.context.put("txtNoSyit",getParam("txtNoSyit") == "" ? (String)hHakmilik.get("noSyit"):getParam("txtNoSyit"));
-		this.context.put("txtSekatan",getParam("txtSekatan") == "" ? (String)hHakmilik.get("sekatan"):getParam("txtSekatan"));
-		this.context.put("txtHakmilikBerikut",getParam("txtHakmilikBerikut") == "" ? (String)hHakmilik.get("hakmilikBerikut"):getParam("txtHakmilikBerikut"));
-		this.context.put("socStatus",getParam("socStatus") == "" ? (String)hHakmilik.get("socStatus"):getParam("socStatus"));
-		this.context.put("socTaraf", getParam("socTaraf") == "" ? (String)hHakmilik.get("socTaraf"):getParam("socTaraf"));
-		this.context.put("socRizab", getParam("socRizab") == "" ? (String)hHakmilik.get("socRizab"):getParam("socRizab"));
-		this.context.put("statusRizab", (String)hHakmilik.get("statusRizab"));
-		this.context.put("txdTarikhKemaskini", (String)hHakmilik.get("tarikhKemaskini"));
-		this.context.put("txtPegawaiAkhir", (String)hHakmilik.get("userName"));
-		this.context.put("socLuas", getParam("socLuas") == "" ? (String)hHakmilik.get("idLuasLama"):getParam("socLuas"));
-		this.context.put("txtLuasLama",getParam("txtLuasLama") == "" ? (String)hHakmilik.get("luasLama"):getParam("txtLuasLama"));
-		this.context.put("txtLuas",getParam("txtLuas") == "" ? (String)hHakmilik.get("luasConvert"):getParam("txtLuas"));
-		this.context.put("txtNoLot",getParam("txtNoLot") == "" ? (String)hHakmilik.get("noLot"):getParam("txtNoLot"));
-		this.context.put("txtNoHakmilikAsal",getParam("txtNoHakmilikAsal") == "" ? (String)hHakmilik.get("noHakmilikAsal"):getParam("txtNoHakmilikAsal"));
-		this.context.put("txtKemAgenTerkini",getParam("txtKemAgenTerkini") == "" ? (String)hHakmilik.get("catatan"):getParam("txtKemAgenTerkini"));
-
-	}	
-
-	//AZAM
-	public void doXX() throws Exception {
-		try {
-			
-		} catch (Exception e) {
-			//throw new Exception("Ralat:"+e.getMessage());
-			throw new Exception(getIHTP().getErrorHTML("RALAT:"+e.getMessage()));
-		 
-		}
-	}
-	
 	public void emptyContext() throws Exception {
 		this.context.put("readOnly", "");
 		this.context.put("disabled", "");	
@@ -1778,7 +1613,6 @@ public class FrmPendaftaranHakmilikRizabNegeri extends AjaxBasedModule {
 				this.context.put("idHakmilik",idHakmilik);
 				 
 			} else if ("updateHakmilik".equals(mode)) { 
-				//myLog.debug(" **updateHakmilik**");
 				this.context.put("page2",false);
 				this.context.put("page3",true);
 				this.context.put("readOnly", "");
@@ -2008,7 +1842,8 @@ public class FrmPendaftaranHakmilikRizabNegeri extends AjaxBasedModule {
 				 hakmilikAgensi.setIdHakmilikAgensi(Long.parseLong(idAgensiKemasukan));
 				 hakmilikAgensi.setIdKementerian(Long.parseLong(idKementerianKemasukan));
 
-				 hakmilikAgensi = getIHakmilik().kemaskiniHakmilikAgensi(hakmilikAgensi);
+				 //hakmilikAgensi = 
+				getTanahKem().kemaskiniTanahAgensi(hakmilikAgensi);
 
 				 /*
 				 Hashtable hHakmilikPerihal = new Hashtable();
@@ -2112,6 +1947,30 @@ public class FrmPendaftaranHakmilikRizabNegeri extends AjaxBasedModule {
 		}
 		
 	}
+	// VIEW MAKLUMAT FAIL BY ID (MASTER)
+		private void view_modeMaklumatFail(String idHakmilik) throws Exception {
+			Vector list =null;
+			// Dikemaskini 09/04/2012
+			//list = FrmRekodPendaftaranHakmilikSementaraData.getPaparMaklumatFailById(idHakmilik);
+			list = getTanah().getPaparMaklumatFailById(idHakmilik);
+			Hashtable hMaklumatFail = (Hashtable) list.get(0);
+			
+			this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
+			this.context.put("txtTajuk",(String)hMaklumatFail.get("tajukFail"));
+			this.context.put("txtNamaKementerian", (String)hMaklumatFail.get("namaKementerian"));
+			this.context.put("txtNoFailSeksyen", (String)hMaklumatFail.get("noFailSeksyen"));
+			this.context.put("txtNamaNegeri", (String)hMaklumatFail.get("namaNegeri"));
+			this.context.put("txtNamaDaerah", (String)hMaklumatFail.get("namaDaerah"));
+			this.context.put("txtNamaMukim", (String)hMaklumatFail.get("namaMukim"));
+			this.context.put("txtNamaAgensi", (String)hMaklumatFail.get("namaAgensi"));
+			this.context.put("txtJenisHakmilik", (String)hMaklumatFail.get("jenisHakmilik"));
+			this.context.put("txtFailKJP", (String)hMaklumatFail.get("noFailKjp"));
+			this.context.put("txtNoWarta", (String)hMaklumatFail.get("noWarta"));
+			this.context.put("txtNoHakmilik",(String) hMaklumatFail.get("noHakmilik"));
+			this.context.put("txtNoLot", (String)hMaklumatFail.get("noLot"));	
+			this.context.put("caraPerolehan", (String)hMaklumatFail.get("caraPerolehan"));
+			
+		}	
 	/**
 	 03/04/2020
 	 Simpan maklumat status pengurusan rekod tanah
@@ -2149,6 +2008,14 @@ public class FrmPendaftaranHakmilikRizabNegeri extends AjaxBasedModule {
 			iHTPFail = new HTPFailBean();
 		}
 		return iHTPFail;
+	}
+	
+	private ITanah getTanah(){
+		if(iTanah == null){
+			iTanah = new TanahBean();
+		}
+		return iTanah;
+			
 	}
 
 	private ITanahDaftar getIDaftaRizab(){

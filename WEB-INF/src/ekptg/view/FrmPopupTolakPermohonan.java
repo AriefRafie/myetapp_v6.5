@@ -1,4 +1,4 @@
-package ekptg.view.ppt;
+package ekptg.view;
 
 import java.util.Hashtable;
 import java.util.Vector;
@@ -10,12 +10,8 @@ import org.apache.log4j.Logger;
 
 import ekptg.model.IStatus;
 import ekptg.model.StatusBean;
-import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.ppt.FrmPermohonanUPTData;
-/*
- * @author 
- * Muhamad Syazreen bin Yahaya
- */
+
 
 public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
@@ -34,15 +30,16 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
     	context.put("jenisTolak",jenisTolak);
     	String id_permohonan = getParam("id_permohonan");
     	String formnew = getParam("formnew");
-    	//myLogger.info("jenisTolak ::::::::::: "+jenisTolak+"formnew ::::::::::: "+formnew);
+    	myLogger.info("jenisTolak ::::::::::: "+jenisTolak+"formnew ::::::::::: "+formnew);
     	
     	//default
 		context.put("mode","");
 		context.put("isEdit","");	
     	String submit = getParam("command");
-//    	myLogger.info("formnew :"+formnew+",submit : " + submit);
+    	myLogger.info("formnew :"+formnew+",submit : " + submit);
 		String userId = (String)session.getAttribute("_ekptg_user_id");
-    	   	
+    	String modul = getParam("modul");
+
     	//NEW FORM
     	if(formnew.equals("yes")){    		
     		//screen validation
@@ -51,10 +48,15 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
     		if("simpanCatatanTolak".equals(submit)){       		
 //    	    	myLogger.info("jenisTolak : " + jenisTolak);
     			if(jenisTolak.equals("internal")){
-    				simpanCatatanTolak(session,id_permohonan);
+    				//simpanCatatanTolak(session,id_permohonan);
     				
     				FrmPermohonanUPTData dt = new FrmPermohonanUPTData();
-    				Hashtable<String,String> hash  = dt.getPermohonan(id_permohonan);
+    				Hashtable<String,String> hash  = null;
+    				if(modul.equals("ppk"))
+    					hash = dt.getPermohonanPPK(id_permohonan);
+    				else
+    					hash = dt.getPermohonan(id_permohonan);
+    				
     				hash.put("catatan", getParam("txtCatatan"));
     				hash.put("idUser", userId);
     				hash.put("langkah", "50");
