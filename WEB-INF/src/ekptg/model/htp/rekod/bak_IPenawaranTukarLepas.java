@@ -5,8 +5,8 @@ import java.util.Vector;
 import ekptg.intergration.entity.BorangK;
 import ekptg.model.htp.entity.HtpPermohonan;
 
-public interface IPenawaranTukarLepas {	
-	public Vector findFail(String idUrusan,String noFail,String tajukFail,String pemohon,String idNegeri
+public interface bak_IPenawaranTukarLepas {	
+	public Vector findFail_(String idUrusan,String noFail,String tajukFail,String pemohon,String idNegeri
 			,String idDaerah,String idMukim,String idKementerian,String idAgensi
 			,String tarikhPohon,String tarikhBukaFail,String tarikhBukaFailHingga);
 	

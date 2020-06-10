@@ -23,7 +23,7 @@ public class FrmRekodUtilData {
 	//private static Vector listHakmilik = null;
 	//private static Vector listMaklumatFail = null;
 	//private static Vector listSenaraiFail = null;		
-	private HakmilikInterface iHakmilik = null;
+	private ITanah iHakmilik = null;
 	private static Vector<Hashtable<String, String>> listCarianHakmilikDanRizab = null;
 	//private static Connection conn = null;
 	private static FrmRekodUtilData instance = null;
@@ -1598,9 +1598,9 @@ public class FrmRekodUtilData {
 				//	}
 		}		
 				
-		private HakmilikInterface getIHakmilik(){
+		private ITanah getIHakmilik(){
 			if (iHakmilik==null){
-				iHakmilik=new HakmilikBean();
+				iHakmilik=new TanahBean();
 			}
 			return iHakmilik;
 		}	

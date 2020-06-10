@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
 
-public class FrmHakmilikUrusanPenswastaanBean implements IHakmilikUrusan {
+public class FrmHakmilikUrusanPenswastaanBean implements ITanahUrusan {
 	
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.FrmHakmilikUrusanPenswastaanBean.class);
 	private static Vector<Hashtable<String,String>> listCarianHakmilikDanRizab = null;

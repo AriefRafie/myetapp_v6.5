@@ -328,9 +328,9 @@ public class FrmTukaranStatusData {
 	    		String chkDataFail = noFail.trim();
 	      
 	    		//SYARAT
-	    		sql = "SELECT distinct f.id_fail, f.no_fail, a.id_permohonan, ";
+	    		sql = "SELECT distinct f.id_fail, f.no_fail, f.tajuk_fail, a.id_permohonan, ";
 	    		sql += " a.id_status, s.keterangan, stf.id_suburusanstatusfail, stf.aktif,f.id_suburusan ";
-	    		sql += " ,F.ID_MASUK,ST.ID_SUBURUSANSTATUS " +
+	    		sql += " ,f.id_masuk,st.id_suburusanstatus " +
 	    				"FROM Tblpermohonan a, Tblpfdfail f, Tblrujstatus s, ";
 	    		sql += " tblrujsuburusanstatus st, tblrujsuburusanstatusfail stf  ";
 	    		sql += " WHERE " ;
@@ -340,7 +340,7 @@ public class FrmTukaranStatusData {
 	    		sql += " AND stf.id_suburusanstatus = st.id_suburusanstatus ";
 	    		sql += " AND stf.id_permohonan = a.id_permohonan ";
 	    		sql += " AND stf.ID_FAIL = A.ID_FAIL ";
-	    		sql += " AND F.id_status <> '999' ";
+	    		sql += " AND f.id_status <> '999' ";
 	    		//sql += " AND a.id_status <> '56' ";
 	    		//sql += " AND a.seksyen in (8,17) ";
 	    		sql += " AND stf.aktif = 1 ";
@@ -369,7 +369,7 @@ public class FrmTukaranStatusData {
 	    				//h.put("list_keterangan","SELESAI");
 	    				//h.put("keterangan", hStatus.get("keterangan")==null?"":hStatus.get("keterangan"));
 	    				h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
-	    				//h.put("seksyen", rs.getString("seksyen")==null?"":rs.getString("seksyen"));
+	    				h.put("tajuk", rs.getString("tajuk_fail")==null?"":rs.getString("tajuk_fail"));
 	    				//vecList.addElement(h);	    		
 	        		//}
 
