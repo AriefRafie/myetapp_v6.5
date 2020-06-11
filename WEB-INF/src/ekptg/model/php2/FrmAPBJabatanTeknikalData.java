@@ -12,12 +12,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
+import java.util.Properties;
 import java.util.Vector;
 
+import javax.mail.Address;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 
@@ -26,7 +37,7 @@ import ekptg.helpers.DB;
  * 
  */
 public class FrmAPBJabatanTeknikalData {
-	
+
 	private Vector listJUPEM = null;
 	private Vector listJAS = null;
 	private Vector listJMG = null;
@@ -37,12 +48,15 @@ public class FrmAPBJabatanTeknikalData {
 	private Vector listPTG = null;
 	private Vector listPertindihan = null;
 	private Vector beanMaklumatPertindihan = null;
-	
+
 	private Vector beanMaklumatKJT = null;
 	private Vector beanMaklumatDokumen = null;
 
+	private Vector beanMaklumatPejabat = null;
+	private Vector listNotifikasi = null;
+
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	public void setMaklumatKJT(String idUlasanTeknikal) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -55,7 +69,8 @@ public class FrmAPBJabatanTeknikalData {
 			sql = "SELECT A.ID_ULASANTEKNIKAL, A.TARIKH_HANTAR, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA, A.FLAG_STATUS, A.FLAG_AKTIF, B.NAMA_KEMENTERIAN, C.NAMA_AGENSI,"
 					+ " A.TARIKH_TERIMA, A.TARIKH_SURAT, A.NO_RUJUKAN, A.ULASAN, A.NAMA_PEGAWAI, A.NO_TELEFON, UPPER(D.NAMA_PEJABAT) AS NAMA_PEJABAT"
 					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C, TBLRUJPEJABAT D WHERE A.ID_MENTERI = B.ID_KEMENTERIAN"
-					+ " AND A.ID_AGENSI = C.ID_AGENSI(+) AND A.ID_PEJABAT = D.ID_PEJABAT(+) AND ID_ULASANTEKNIKAL = '" + idUlasanTeknikal + "'";
+					+ " AND A.ID_AGENSI = C.ID_AGENSI(+) AND A.ID_PEJABAT = D.ID_PEJABAT(+) AND ID_ULASANTEKNIKAL = '"
+					+ idUlasanTeknikal + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -97,12 +112,10 @@ public class FrmAPBJabatanTeknikalData {
 				h.put("ulasan",
 						rs.getString("ULASAN") == null ? "" : rs
 								.getString("ULASAN"));
-				h.put("namaPengulas",
-						rs.getString("NAMA_PEGAWAI") == null ? "" : rs
-								.getString("NAMA_PEGAWAI"));
-				h.put("noTelPengulas",
-						rs.getString("NO_TELEFON") == null ? "" : rs
-								.getString("NO_TELEFON"));
+				h.put("namaPengulas", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("noTelPengulas", rs.getString("NO_TELEFON") == null ? ""
+						: rs.getString("NO_TELEFON"));
 				beanMaklumatKJT.addElement(h);
 				bil++;
 			}
@@ -112,7 +125,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void setSenaraiJUPEM(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -207,14 +220,15 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	private int daysBetween(Date date1, Date date2) {
 		return (int) ((date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24));
 	}
-	
-	public String simpanMaklumatJUPEM(String idPermohonan, String idKementerian,
-			String idAgensi, String txtTarikhHantar, String txtJangkaMasa,
-			String txtTarikhJangkaTerima, HttpSession session) throws Exception {
+
+	public String simpanMaklumatJUPEM(String idPermohonan,
+			String idKementerian, String idAgensi, String txtTarikhHantar,
+			String txtJangkaMasa, String txtTarikhJangkaTerima,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -260,7 +274,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -351,7 +365,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -372,11 +386,11 @@ public class FrmAPBJabatanTeknikalData {
 	}
 
 	public void simpanKemaskiniMaklumatKJT(String idUlasanTeknikal,
-			String txtTarikhHantar,
-			String txtJangkaMasa, String txtTarikhJangkaTerima,
-			String flagStatus, String txtTarikhTerima, String txtTarikhSurat,
-			String txtNoRujukanSurat, String txtUlasan, String txtNamaPengulas, String txtNoTelPengulas,
-			HttpSession session) throws Exception {
+			String txtTarikhHantar, String txtJangkaMasa,
+			String txtTarikhJangkaTerima, String flagStatus,
+			String txtTarikhTerima, String txtTarikhSurat,
+			String txtNoRujukanSurat, String txtUlasan, String txtNamaPengulas,
+			String txtNoTelPengulas, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -426,7 +440,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL [" + idUlasanTeknikal + "] DIKEMASKINI");
 
@@ -444,8 +458,9 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void hapusDokumen(String idUlasanTeknikal, HttpSession session) throws Exception {
+
+	public void hapusDokumen(String idUlasanTeknikal, HttpSession session)
+			throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String sql = "";
@@ -464,7 +479,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "DEL",
 					"FAIL [" + idUlasanTeknikal + "] DIHAPUSKAN");
 
@@ -482,7 +497,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void setMaklumatDokumen(String idUlasanTeknikal) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -500,8 +515,9 @@ public class FrmAPBJabatanTeknikalData {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
-				h.put("namaFail", rs.getString("NAMA_FAIL") == null ? ""
-						: rs.getString("NAMA_FAIL"));
+				h.put("namaFail",
+						rs.getString("NAMA_FAIL") == null ? "" : rs
+								.getString("NAMA_FAIL"));
 				h.put("namaImej", rs.getString("NAMA_DOKUMEN") == null ? ""
 						: rs.getString("NAMA_DOKUMEN").toUpperCase());
 				h.put("catatanImej",
@@ -514,7 +530,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void updateStatus(String idFail, String idPermohonan,
 			HttpSession session) throws Exception {
 		Db db = null;
@@ -531,7 +547,7 @@ public class FrmAPBJabatanTeknikalData {
 
 			// TBLPERMOHONAN
 			r.update("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_STATUS", "1610235"); //CETAKAN KERTAS KERJA JAWATANKUASA
+			r.add("ID_STATUS", "1610235"); // CETAKAN KERTAS KERJA JAWATANKUASA
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
@@ -557,7 +573,10 @@ public class FrmAPBJabatanTeknikalData {
 					.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("57", "1610235")); //CETAKAN KERTAS KERJA JAWATANKUASA
+			r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("57", "1610235")); // CETAKAN
+																				// KERTAS
+																				// KERJA
+																				// JAWATANKUASA
 			r.add("AKTIF", "1");
 			r.add("ID_FAIL", idFail);
 
@@ -570,7 +589,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610235", "4", null, session, "UPD",
 					"FAIL [" + idPermohonan + "] PROSES SETERUSNYA");
 
@@ -614,7 +633,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String getKementerianByIdKementerian(String idKementerian)
 			throws Exception {
 		Db db = null;
@@ -665,10 +684,9 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	//UNTUK ULASAN PTG 
-	public String getIdNegeriPerairan(String idPermohonan)
-			throws Exception {
+
+	// UNTUK ULASAN PTG
+	public String getIdNegeriPerairan(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -692,7 +710,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String getPejabatByIdPejabat(String idPejabat) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -717,7 +735,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String getIdPejabatPTGByNegeri(String idNegeri) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -726,7 +744,8 @@ public class FrmAPBJabatanTeknikalData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_PEJABAT FROM TBLRUJPEJABAT WHERE ID_JENISPEJABAT = 1 AND ID_NEGERI = '" + idNegeri + "'";
+			sql = "SELECT ID_PEJABAT FROM TBLRUJPEJABAT WHERE ID_JENISPEJABAT = 1 AND ID_NEGERI = '"
+					+ idNegeri + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -741,7 +760,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String getIdPejabatJASByNegeri(String idNegeri) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -750,7 +769,8 @@ public class FrmAPBJabatanTeknikalData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_PEJABAT FROM TBLRUJPEJABAT WHERE ID_JENISPEJABAT = 26 AND ID_NEGERI = '" + idNegeri + "'";
+			sql = "SELECT ID_PEJABAT FROM TBLRUJPEJABAT WHERE ID_JENISPEJABAT = 26 AND ID_NEGERI = '"
+					+ idNegeri + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -765,8 +785,9 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void hapusMaklumatUlasan(String idUlasanTeknikal, HttpSession session) throws Exception {
+
+	public void hapusMaklumatUlasan(String idUlasanTeknikal, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -779,7 +800,7 @@ public class FrmAPBJabatanTeknikalData {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			// TBLPHPDOKUMEN
 			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
 			sql = r.getSQLDelete("TBLPHPDOKUMEN");
@@ -811,7 +832,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "DEL",
 					"FAIL [" + idUlasanTeknikal + "] DIHAPUSKAN");
 
@@ -829,7 +850,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String simpanMaklumatJAS(String idPermohonan, String idKementerian,
 			String idPejabat, String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, HttpSession session) throws Exception {
@@ -879,7 +900,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -971,7 +992,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -990,7 +1011,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 		return idUlasanTeknikalString;
 	}
-	
+
 	public void setSenaraiJAS(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -1022,8 +1043,8 @@ public class FrmAPBJabatanTeknikalData {
 						: rs.getString("NAMA_DOKUMEN"));
 				h.put("pejabat", rs.getString("NAMA_PEJABAT") == null ? "" : rs
 						.getString("NAMA_PEJABAT").toUpperCase());
-				h.put("negeriPejabat", rs.getString("NAMA_NEGERI") == null ? "" : rs
-						.getString("NAMA_NEGERI").toUpperCase());
+				h.put("negeriPejabat", rs.getString("NAMA_NEGERI") == null ? ""
+						: rs.getString("NAMA_NEGERI").toUpperCase());
 				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_HANTAR")));
 				h.put("tarikhJangkaTerima",
@@ -1087,7 +1108,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String simpanMaklumatJMG(String idPermohonan, String idKementerian,
 			String idAgensi, String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, HttpSession session) throws Exception {
@@ -1136,7 +1157,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -1227,7 +1248,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -1246,7 +1267,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 		return idUlasanTeknikalString;
 	}
-	
+
 	public void setSenaraiJMG(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -1341,7 +1362,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String simpanMaklumatJP(String idPermohonan, String idKementerian,
 			String idAgensi, String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, HttpSession session) throws Exception {
@@ -1390,7 +1411,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -1481,7 +1502,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -1500,7 +1521,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 		return idUlasanTeknikalString;
 	}
-	
+
 	public void setSenaraiJP(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -1595,7 +1616,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String simpanMaklumatJLM(String idPermohonan, String idKementerian,
 			String idAgensi, String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, HttpSession session) throws Exception {
@@ -1644,7 +1665,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -1735,7 +1756,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -1754,7 +1775,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 		return idUlasanTeknikalString;
 	}
-	
+
 	public void setSenaraiJLM(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -1849,7 +1870,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String simpanMaklumatPHM(String idPermohonan, String idKementerian,
 			String idAgensi, String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, HttpSession session) throws Exception {
@@ -1898,7 +1919,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -1989,7 +2010,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -2008,7 +2029,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 		return idUlasanTeknikalString;
 	}
-	
+
 	public void setSenaraiPHM(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -2103,7 +2124,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String simpanMaklumatJPS(String idPermohonan, String idKementerian,
 			String idAgensi, String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, HttpSession session) throws Exception {
@@ -2152,7 +2173,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -2243,7 +2264,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -2262,7 +2283,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 		return idUlasanTeknikalString;
 	}
-	
+
 	public void setSenaraiJPS(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -2357,8 +2378,10 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanJUPEM(String idPermohonan, String noRujukan, String tarikhTerima, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanJUPEM(String idPermohonan, String noRujukan,
+			String tarikhTerima, String ulasan, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2390,7 +2413,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610235", "4", null, session, "UPD",
 					"FAIL [" + idPermohonan + "] DIKEMASKINI");
 
@@ -2408,8 +2431,10 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanJAS(String idPermohonan, String noRujukan, String tarikhTerima, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanJAS(String idPermohonan, String noRujukan,
+			String tarikhTerima, String ulasan, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2456,8 +2481,10 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanJMG(String idPermohonan, String noRujukan, String tarikhTerima, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanJMG(String idPermohonan, String noRujukan,
+			String tarikhTerima, String ulasan, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2489,7 +2516,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610235", "4", null, session, "UPD",
 					"FAIL [" + idPermohonan + "] DIKEMASKINI");
 
@@ -2507,8 +2534,10 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanJP(String idPermohonan, String noRujukan, String tarikhTerima, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanJP(String idPermohonan, String noRujukan,
+			String tarikhTerima, String ulasan, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2540,7 +2569,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610235", "4", null, session, "UPD",
 					"FAIL [" + idPermohonan + "] DIKEMASKINI");
 
@@ -2558,8 +2587,10 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanJLM(String idPermohonan, String noRujukan, String tarikhTerima, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanJLM(String idPermohonan, String noRujukan,
+			String tarikhTerima, String ulasan, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2591,7 +2622,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610235", "4", null, session, "UPD",
 					"FAIL [" + idPermohonan + "] DIKEMASKINI");
 
@@ -2609,8 +2640,10 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanPHM(String idPermohonan, String noRujukan, String tarikhTerima, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanPHM(String idPermohonan, String noRujukan,
+			String tarikhTerima, String ulasan, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2642,7 +2675,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL [" + idPermohonan + "] DIKEMASKINI");
 
@@ -2660,8 +2693,10 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanJPS(String idPermohonan, String noRujukan, String tarikhTerima, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanJPS(String idPermohonan, String noRujukan,
+			String tarikhTerima, String ulasan, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2693,7 +2728,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610235", "4", null, session, "UPD",
 					"FAIL [" + idPermohonan + "] KEMASKINI");
 
@@ -2711,8 +2746,10 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void updateUlasanPTG(String idPermohonan, String noRujukan, String tarikhTerima, String ulasan, HttpSession session) throws Exception {
+
+	public void updateUlasanPTG(String idPermohonan, String noRujukan,
+			String tarikhTerima, String ulasan, HttpSession session)
+			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2744,7 +2781,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610235", "4", null, session, "UPD",
 					"FAIL [" + idPermohonan + "] DIKEMASKINI");
 
@@ -2762,7 +2799,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void setSenaraiPertindihan(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -2779,7 +2816,8 @@ public class FrmAPBJabatanTeknikalData {
 			r.add("A.FLAG_JENIS_PERTINDIHAN");
 			r.add("A.ID_PERMOHONAN", idPermohonan);
 
-			sql = r.getSQLSelect("TBLPHPFAILAPBBERTINDIH A ", "A.ID_FAILAPBBERTINDIH ASC");
+			sql = r.getSQLSelect("TBLPHPFAILAPBBERTINDIH A ",
+					"A.ID_FAILAPBBERTINDIH ASC");
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -2810,7 +2848,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void setMaklumatPertindihan(String idPertindihan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -2861,9 +2899,11 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public String simpanMaklumatPertindihan(String idPermohonan, String txtNoFailTindih, String txtNamaSyarikat, String socJenisTindih, String socStatusTindih, String txtLain, HttpSession session)
-			throws Exception {
+
+	public String simpanMaklumatPertindihan(String idPermohonan,
+			String txtNoFailTindih, String txtNamaSyarikat,
+			String socJenisTindih, String socStatusTindih, String txtLain,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2896,7 +2936,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -2915,9 +2955,11 @@ public class FrmAPBJabatanTeknikalData {
 		}
 		return idPertindihanString;
 	}
-	
-	public void simpanKemaskiniMaklumatPertindihan(String idPertindihan, String txtNoFailTindih, String txtNamaSyarikat, String socJenisTindih, String socStatusTindih, String txtLain, HttpSession session)
-			throws Exception {
+
+	public void simpanKemaskiniMaklumatPertindihan(String idPertindihan,
+			String txtNoFailTindih, String txtNamaSyarikat,
+			String socJenisTindih, String socStatusTindih, String txtLain,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2947,7 +2989,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL [" + idPertindihan + "] DIKEMASKINI");
 
@@ -2965,8 +3007,9 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
-	public void hapusMaklumatPertindihan(String idPertindihan, HttpSession session) throws Exception {
+
+	public void hapusMaklumatPertindihan(String idPertindihan,
+			HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String sql = "";
@@ -2985,7 +3028,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "DEL",
 					"FAIL [" + idPertindihan + "] DIHAPUSKAN");
 
@@ -3003,7 +3046,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public String simpanMaklumatPTG(String idPermohonan, String idKementerian,
 			String idPejabat, String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, HttpSession session) throws Exception {
@@ -3053,7 +3096,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -3072,7 +3115,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 		return idUlasanTeknikalString;
 	}
-	
+
 	public String simpanMaklumatUlanganPTG(String idUlasanTeknikalLama,
 			String idPermohonan, String idKementerian, String idPejabat,
 			String txtTarikhHantar, String txtJangkaMasa,
@@ -3145,7 +3188,7 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
 
@@ -3164,7 +3207,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 		return idUlasanTeknikalString;
 	}
-	
+
 	public void setSenaraiPTG(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -3196,8 +3239,8 @@ public class FrmAPBJabatanTeknikalData {
 						: rs.getString("NAMA_DOKUMEN"));
 				h.put("pejabat", rs.getString("NAMA_PEJABAT") == null ? "" : rs
 						.getString("NAMA_PEJABAT").toUpperCase());
-				h.put("negeriPejabat", rs.getString("NAMA_NEGERI") == null ? "" : rs
-						.getString("NAMA_NEGERI").toUpperCase());
+				h.put("negeriPejabat", rs.getString("NAMA_NEGERI") == null ? ""
+						: rs.getString("NAMA_NEGERI").toUpperCase());
 				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_HANTAR")));
 				h.put("tarikhJangkaTerima",
@@ -3349,12 +3392,426 @@ public class FrmAPBJabatanTeknikalData {
 	public void setBeanMaklumatPertindihan(Vector beanMaklumatPertindihan) {
 		this.beanMaklumatPertindihan = beanMaklumatPertindihan;
 	}
-	
+
 	public Vector getListPTG() {
 		return listPTG;
 	}
 
 	public void setListPTG(Vector listPTG) {
 		this.listPTG = listPTG;
+	}
+
+	// 10/6/2020
+
+	// START TAMBAH NOTIFIKASI EMAIL//
+
+	public void sendEmail(String mailTo, String tajuk, String tarikh,
+			String masa, String lokasi) throws MessagingException {
+		final String username = "roslizakariasip@gmail.com";
+		final String password = "m.rosligmail";
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		Session session = Session.getInstance(props, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+
+		String body = "<table width='75%' border='0' cellspacing='0' cellpadding='5'>"
+				+ "<tr><td>Assalamualaikum/ Salam Sejahtera.</td></tr>"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "<tr><td>PERKARA : <u style='font-weight: bold'>NOTIS PANGGILAN MESYUARAT</u></td></tr>"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "<tr><td>Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "<tr><td>Dimaklumkan bahawa tuan/puan dijemput menghadiri mesyuarat seperti dibawah:-"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "<tr><td>Tajuk Mesyuarat: "
+				+ tajuk
+				+ "</td></tr>"
+				+ "<tr><td>Tarikh: "
+				+ tarikh
+				+ "</td></tr>"
+				+ "<tr><td>Masa  : "
+				+ masa
+				+ "</td></tr>"
+				+ "<tr><td>Lokasi: "
+				+ lokasi
+				+ "</td></tr>"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "<tr><td>Harap maklum dan terima kasih.</i></td></tr>"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "</table>";
+
+		MimeMessage mimeMessage = new MimeMessage(session);
+		mimeMessage.setFrom((Address) new InternetAddress("rozai@yopmail.com"));
+		mimeMessage.setRecipients(Message.RecipientType.TO,
+				(Address[]) InternetAddress.parse(mailTo));
+		mimeMessage.setSubject("NOTIS PANGGILAN MESYUARAT");
+		mimeMessage.setContent(body, "text/html");
+		Transport.send((Message) mimeMessage);
+	}
+
+	// 06042020- END TAMBAH NOTIFIKASI EMAIL//
+
+	public void setMaklumatPejabat(String idPejabat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPejabat = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.NAMA_PEJABAT, A.ALAMAT1, A.ALAMAT2, A.ALAMAT3, A.POSKOD, A.ID_NEGERI, B.NAMA_NEGERI, C.KETERANGAN AS NAMA_BANDAR, A.NO_TEL, A.NO_FAX, A.ID_PEJABAT"
+					+ " FROM TBLRUJPEJABAT A, TBLRUJNEGERI B, TBLRUJBANDAR C WHERE A.ID_NEGERI = B.ID_NEGERI(+) AND A.ID_BANDAR = C.ID_BANDAR(+) AND A.ID_PEJABAT = '"
+					+ idPejabat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idPejabat",
+						rs.getString("ID_PEJABAT") == null ? "" : rs
+								.getString("ID_PEJABAT"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs
+						.getString("ALAMAT1").toUpperCase());
+				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs
+						.getString("ALAMAT2").toUpperCase());
+				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs
+						.getString("ALAMAT3").toUpperCase());
+				h.put("poskod",
+						rs.getString("POSKOD") == null ? "" : rs
+								.getString("POSKOD"));
+				h.put("bandar", rs.getString("NAMA_BANDAR") == null ? "" : rs
+						.getString("NAMA_BANDAR").toUpperCase());
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs
+						.getString("NAMA_NEGERI").toUpperCase());
+				h.put("idNegeri", rs.getString("ID_NEGERI") == null ? "" : rs
+						.getString("ID_NEGERI").toUpperCase());
+				h.put("noTel", rs.getString("NO_TEL") == null ? "" : rs
+						.getString("NO_TEL").toUpperCase());
+				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs
+						.getString("NO_FAX").toUpperCase());
+				beanMaklumatPejabat.addElement(h);
+				bil++;
+			}
+
+			if (bil == 1) {
+				h = new Hashtable();
+				h.put("idPejabat", "");
+				h.put("namaPejabat", "");
+				h.put("alamat1", "");
+				h.put("alamat2", "");
+				h.put("alamat3", "");
+				h.put("poskod", "");
+				h.put("bandar", "");
+				h.put("negeri", "");
+				h.put("idNegeri", "");
+				h.put("noTel", "");
+				h.put("noFax", "");
+				beanMaklumatPejabat.addElement(h);
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public Vector getBeanMaklumatPejabat() {
+		return beanMaklumatPejabat;
+	}
+
+	public void setMaklumatPejabatJKPTG(String idPejabat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPejabat = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.NAMA_PEJABAT, A.ALAMAT1, A.ALAMAT2, A.ALAMAT3, A.POSKOD, A.ID_NEGERI, B.NAMA_NEGERI, C.KETERANGAN AS NAMA_BANDAR, A.NO_TEL, A.NO_FAX, A.ID_PEJABATJKPTG"
+					+ " FROM TBLRUJPEJABATJKPTG A, TBLRUJNEGERI B, TBLRUJBANDAR C WHERE A.ID_NEGERI = B.ID_NEGERI(+) AND A.ID_BANDAR = C.ID_BANDAR(+) AND A.ID_PEJABATJKPTG = '"
+					+ idPejabat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idPejabat", rs.getString("ID_PEJABATJKPTG") == null ? ""
+						: rs.getString("ID_PEJABATJKPTG"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs
+						.getString("ALAMAT1").toUpperCase());
+				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs
+						.getString("ALAMAT2").toUpperCase());
+				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs
+						.getString("ALAMAT3").toUpperCase());
+				h.put("poskod",
+						rs.getString("POSKOD") == null ? "" : rs
+								.getString("POSKOD"));
+				h.put("bandar", rs.getString("NAMA_BANDAR") == null ? "" : rs
+						.getString("NAMA_BANDAR").toUpperCase());
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs
+						.getString("NAMA_NEGERI").toUpperCase());
+				h.put("idNegeri", rs.getString("ID_NEGERI") == null ? "" : rs
+						.getString("ID_NEGERI").toUpperCase());
+				h.put("noTel", rs.getString("NO_TEL") == null ? "" : rs
+						.getString("NO_TEL").toUpperCase());
+				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs
+						.getString("NO_FAX").toUpperCase());
+				beanMaklumatPejabat.addElement(h);
+				bil++;
+			}
+
+			if (bil == 1) {
+				h = new Hashtable();
+				h.put("idPejabat", "");
+				h.put("namaPejabat", "");
+				h.put("alamat1", "");
+				h.put("alamat2", "");
+				h.put("alamat3", "");
+				h.put("poskod", "");
+				h.put("bandar", "");
+				h.put("negeri", "");
+				h.put("idNegeri", "");
+				h.put("noTel", "");
+				h.put("noFax", "");
+				beanMaklumatPejabat.addElement(h);
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public String simpanRekodEmailJUPEM(String idUlasanTeknikalLama,String idPermohonan,
+			String idPejabat, String idNegeri, String txtTarikhHantar,
+			String txtJangkaMasa, String txtTarikhJangkaTerima,
+			String idSuratKe, String idKementerianTanah, String idAgensiTanah,
+			String namaPegawai, String jawatan, String emel, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPULASANTEKNIKAL
+			long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikalString);
+			r.add("ID_PERMOHONAN", idUlasanTeknikalLama);
+			r.add("FLAG_KJP", "JUPEM");
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_PEJABAT", idPejabat);
+			r.add("FLAG_STATUS", "1");
+			r.add("FLAG_AKTIF", "Y");
+			r.add("BIL_ULANGAN", "0");
+			r.add("ID_MASUK", userId);
+			r.add("NAMA_PEGAWAI", namaPegawai);
+			r.add("NAMA_JAWATAN", jawatan);
+			// r.add("ID_MESYUARAT", idMesyuarat);
+			r.add("EMEL_PEGAWAI", emel);
+			r.add("MAKLUMAT_TAMBAHAN", "NOTIFIKASI EMEL JABATAN TEKNIKAL");
+			r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+			r.add("TARIKH_JANGKA_TERIMA", r.unquote("SYSDATE"));
+			r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+			stmt.executeQuery(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610217", "4", null, session, "INS",
+					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idUlasanTeknikalString;
+	}
+
+	public void setSenaraiNotifikasiJUPEM(String idUlasanTeknikalLama) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NAMA_JAWATAN,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_PERMOHONAN = '"
+					+ idUlasanTeknikalLama
+					+ "' AND A.FLAG_KJP = 'JUPEM'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("jawatan",
+						rs.getString("NAMA_JAWATAN") == null ? "" : rs
+								.getString("NAMA_JAWATAN"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public Vector getListNotifikasi() {
+		return listNotifikasi;
+	}
+
+	public String getNoFailByIdPermohonan(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT TBLPFDFAIL.NO_FAIL FROM TBLPFDFAIL, TBLPERMOHONAN"
+					+ " WHERE TBLPFDFAIL.ID_FAIL = TBLPERMOHONAN.ID_FAIL"
+					+ " AND TBLPERMOHONAN.ID_PERMOHONAN = '" + idPermohonan
+					+ "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("NO_FAIL");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	public void sendEmail(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		Vector beanMaklumatEmail = null;
+		EmailSender email = EmailSender.getInstance();
+		String sql = "";
+		String emelUser = "";
+		String noFail = "";
+		String tarikhAkhir = "";
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA "
+				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLPERMOHONAN C, TBLPFDFAIL D "
+				+ " WHERE A.ID_MENTERI = B.ID_KEMENTERIAN AND A.ID_PERMOHONAN = C.ID_PERMOHONAN "
+				+ " AND C.ID_FAIL = D.ID_FAIL AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
+				+ " AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
+			
+			ResultSet rsEmel = stmt.executeQuery(sql);
+			if (rsEmel.next()){
+				noFail = rsEmel.getString("NO_FAIL");
+				emelUser = rsEmel.getString("EMEL");
+				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
+			}	
+			
+			email.RECIEPIENT = emelUser;
+			email.SUBJECT = "PERMOHONAN ULASAN JABATAN TEKNIKAL BAGI NO. FAIL " + noFail;
+			email.MESSAGE = "Mohon pihak tuan memberikan ulasan dan keputusan bagi permohonan tersebut<br><br>"
+							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
+							 + "sebelum " + tarikhAkhir + " amatlah dihargai."
+							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
+							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			email.sendEmail();
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 }

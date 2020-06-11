@@ -17,6 +17,7 @@
   <input name="idPertindihan" type="hidden" id="idPertindihan" value="$idPertindihan"/>
   <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
+  <input name="flagNotifikasi" type="hidden" id="flagNotifikasi" value="$flagNotifikasi"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
   <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
