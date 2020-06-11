@@ -22,8 +22,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
+import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
+import ekptg.model.admin.EmailConfig;
 import ekptg.model.php2.FrmAPBHeaderData;
 import ekptg.model.php2.FrmAPBJabatanTeknikalData;
 
@@ -38,6 +40,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 	FrmAPBHeaderData logicHeader = new FrmAPBHeaderData();
 	FrmAPBJabatanTeknikalData logic = new FrmAPBJabatanTeknikalData();
 	Utils utils = new Utils();
+	EmailConfig email = new EmailConfig();
 	
 	//KEMENTERIAN DI HQ
 	String idKementerianJUPEM = "18";
@@ -83,7 +86,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 		String hitButton = getParam("hitButton");
 		String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
-
+		
 		// GET ID PARAM
 		String idFail = getParam("idFail");
 		String idPermohonan = getParam("idPermohonan");
@@ -93,7 +96,9 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 		
 		String flagStatus = getParam("flagStatus");
         String flagAktif = getParam("flagAktif");
-
+        String flagNotifikasi = getParam("flagNotifikasi");
+        String idKementerianTanah = getParam("idKementerianTanah");
+        String idAgensiTanah = getParam("idAgensiTanah");
 		// GET DROPDOWN PARAM
 
 		// VECTOR
@@ -124,6 +129,20 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 		Vector senaraiPTG = null;
 		Vector beanMaklumatPTG = null;
 		Vector beanMaklumatDokumenPTG = null;
+		Vector senaraiNotifikasi = null;
+
+		String idNegeri = getParam("socNegeri");
+		if (idNegeri == null || idNegeri.trim().length() == 0) {
+			idNegeri = "99999";
+		}
+		String idPejabat = getParam("socPejabat");
+		if (idPejabat == null || idPejabat.trim().length() == 0) {
+			idPejabat = "99999";
+		}
+        String idSuratKe = getParam("idSuratKe");
+		if (idSuratKe == null || idSuratKe.trim().length() == 0){
+			idSuratKe = "99999";
+		}
 		
 		String step = getParam("step");	
 
@@ -376,6 +395,17 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 				logicHeader.doBatalPermohonan(idFail, idPermohonan, idStatus, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
     		}
+			//rozai add 10/6/2020
+			if ("simpanRekodEmailJUPEM".equals(hitButton)) {
+				idUlasanTeknikal = logic.simpanRekodEmailJUPEM(
+						idUlasanTeknikal,idPermohonan, idPejabat, idNegeri,
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"),
+						getParam("txtTarikhJangkaTerima"),
+						getParam("idSuratKe"), idKementerianTanah,
+						idAgensiTanah, getParam("txtNamaPegawai"), 
+						getParam("txtJawatan"), getParam("txtEmel"),session);
+				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+			}
 		}
 
 		// HEADER
@@ -403,6 +433,15 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 		if ("0".equals(selectedTabUpper)){
 			//OPEN POPUP DETAIL MAKLUMAT JUPEM
 			if ("openJUPEM".equals(flagPopup)){
+				this.context.put("idSuratKe", idSuratKe);
+				this.context.put("selectNegeri", HTML.SelectNegeri(
+						"socNegeri", Long.parseLong(idNegeri), "",
+						" onChange=\"doChangeNegeri();\""));
+				this.context.put("selectPejabat", HTML
+						.SelectPejabatByIdNegeriAndJenisPejabat(
+								"socPejabat", Long.parseLong(idPejabat),
+								"", " onChange=\"doChangePejabat();\"",
+								idNegeri, "2"));
 				
 				if ("new".equals(modePopup)){
 					this.context.put("readonlyPopup", "");
@@ -491,6 +530,11 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						beanMaklumatDokumenJUPEM = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJUPEM",beanMaklumatDokumenJUPEM);
 					}
+					// SENARAI NOTIFIKASI
+					senaraiNotifikasi = new Vector();
+					logic.setSenaraiNotifikasiJUPEM(idUlasanTeknikal);
+					senaraiNotifikasi = logic.getListNotifikasi();
+					this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
 					
 				} else if ("update".equals(modePopup)){					
 					this.context.put("readonlyPopup", "");
@@ -1454,7 +1498,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 		
 		this.context.put("flagStatus", flagStatus);
         this.context.put("flagAktif", flagAktif);
-
+        this.context.put("flagNotifikasi", flagNotifikasi);
 		return vm;
 	}
 
