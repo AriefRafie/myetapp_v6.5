@@ -60,8 +60,7 @@ public class FrmPermohonanTanahMengikutNegeri extends AjaxBasedModule {
 	private String DISABILITYNUM = " disabled class=\"inputnumberdisabled\" ";
 	private String inputStyle = DISABILITY;
 	private String inputStyleNum = DISABILITYNUM;
-	private static Logger myLog = Logger
-			.getLogger(ekptg.view.htp.negeri.permohonan.FrmPermohonanTanahMengikutNegeri.class);
+	private static Logger myLog = Logger.getLogger(ekptg.view.htp.negeri.permohonan.FrmPermohonanTanahMengikutNegeri.class);
 	private final String PATH = "app/htp/permohonan/";
 	private final String PATHVER = PATH + "v02/";
 	private final String JENISTANAH = "1,2,3,6";

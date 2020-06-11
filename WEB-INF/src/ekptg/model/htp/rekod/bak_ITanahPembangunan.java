@@ -2,7 +2,7 @@ package ekptg.model.htp.rekod;
 
 import java.util.Hashtable;
 
-public interface ITanahPembangunan{
-	public void simpan(String langkah,Hashtable pembangunan)throws Exception ;
+public interface bak_ITanahPembangunan{
+	public void simpan_(String langkah,Hashtable pembangunan)throws Exception ;
 	
 }	

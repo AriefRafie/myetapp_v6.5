@@ -41,6 +41,8 @@ public class HakmilikBean implements HakmilikInterface {
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.HakmilikBean.class);
 	private HakMilik hakmilik = null;
  	private IHtp iHTP = null;  
+  	private IHTPUtilitiRekod iUtilRekod = null;
+  	private ITanah iTanah = null;  
  	private PfdFail pfdFail = null;
  	private Permohonan permohonan = null;
  	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");
@@ -125,95 +127,7 @@ public class HakmilikBean implements HakmilikInterface {
 		return hakmilik;
 	}
 
-	@Override
-	//public HakMilik getHakmilikUrusan(String idHakmilik);
-	public Hashtable<String,String> getHakmilikUrusan(String idHakmilik,boolean isPB) {
-		Db db = null;
-		//HakMilik hakmilik = new HakMilik();
-		Hashtable<String,String> h = null;
-		try{
-			db = new Db();
-			FrmRekodUtilData frmRekodUtilData = FrmRekodUtilData.getInstance();
-			Statement stmt = db.getStatement();
-			String sql ="SELECT " +
-					" RN.NAMA_NEGERI, RD.NAMA_DAERAH, RM.NAMA_MUKIM " +					
-					" ,NVL(LOT.KETERANGAN,'0') KOD_LOT,MT.NO_LOT" +
-					" ,RJH.KOD_JENIS_HAKMILIK,MT.NO_HAKMILIK" +
-					" ,MT.NO_BANGUNAN,MT.NO_TINGKAT,MT.NO_PETAK" +
-					" ,MT.NO_WARTA" +
-					"";
-				if(isPB){
-					sql +=",PB.NAMA ";
-				}
-				sql +="" +
-					//" ,MT.ID_LUAS,MT.PEGANGAN_HAKMILIK,MT.ID_SUBKATEGORI,MT.ID_AGENSI,M.CUKAI_TERKINI " +
-					//" ,B.NO_RUJUKAN_KJP,B.NO_RUJUKAN_PTG,B.NO_RUJUKAN_PTD,F.NO_FAIL,F.ID_FAIL,F.ID_KEMENTERIAN " +
-					" FROM " +
-						getTableTanahTemp();
-				if(isPB){
-					sql +=",TBLHTPPIHAKBERKEPENTINGAN PB";
-				}
-										
-				sql +=" WHERE" +
-						getTableTanahKondisi();
-				if(isPB){
-					sql +=" AND MT.ID_HAKMILIKURUSAN = PB.ID_HAKMILIKURUSAN ";
-				}
-				sql +=" AND MT.ID_HAKMILIKURUSAN ="+idHakmilik +
-					"";
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			while(rs.next()){
-				h = new Hashtable<String,String>();			
-				h.put("idHakmilik", idHakmilik);
-				h.put("namaNegeri", rs.getString("NAMA_NEGERI")==null ? "" :rs.getString("NAMA_NEGERI"));
-				h.put("namaDaerah", rs.getString("NAMA_DAERAH")==null ? "" :rs.getString("NAMA_DAERAH"));
-				h.put("namaMukim", rs.getString("NAMA_MUKIM")==null ? "" :rs.getString("NAMA_MUKIM"));	
-				h.put("kodLot", rs.getString("KOD_LOT")==null ? "" :rs.getString("KOD_LOT"));
-				h.put("noLot", rs.getString("NO_LOT")==null ? "" :rs.getString("NO_LOT"));
-				h.put("kodJenisHakmilik", rs.getString("KOD_JENIS_HAKMILIK")==null ? "" :rs.getString("KOD_JENIS_HAKMILIK").toUpperCase());
-				h.put("noHakmilik", rs.getString("NO_HAKMILIK")==null ? "" :rs.getString("NO_HAKMILIK"));			
-				h.put("noBangunan", rs.getString("NO_BANGUNAN")==null ? "TIADA" :rs.getString("NO_BANGUNAN"));
-				h.put("noTingkat", rs.getString("NO_TINGKAT")==null ? "TIADA" :rs.getString("NO_TINGKAT"));
-				h.put("noPetak", rs.getString("NO_PETAK")==null ? "TIADA" :rs.getString("NO_PETAK"));
-				h.put("noWarta", rs.getString("NO_WARTA")==null ? "" :rs.getString("NO_WARTA"));
-				if(rs.getString("NO_HAKMILIK")!= null){
-					h.put("jenisTanah","M");
-				}else{
-		    		  h.put("jenisTanah","R");
-				}
-				if(rs.getString("NO_HAKMILIK")!= null && rs.getString("NO_WARTA")!= null){
-					h.put("jenisTanah","X");
-				}
-				if(isPB)
-					h.put("nama", rs.getString("NAMA")==null ? "" :rs.getString("NAMA"));
-
-//				h.put("noFailSeksyen", rs.getString("NO_FAIL")==null ? "" :rs.getString("NO_FAIL"));
-//				h.put("noFailPtg", rs.getString("NO_FAIL_PTG")==null ? "TIADA" :rs.getString("NO_FAIL_PTG"));
-//				h.put("noFailPtd", rs.getString("NO_FAIL_PTD")==null ? "TIADA" :rs.getString("NO_FAIL_PTD"));
-//				h.put("tajukFail", rs.getString("TUJUAN")==null ? "" :rs.getString("TUJUAN"));
-//				h.put("namaAgensi", rs.getString("NAMA_AGENSI")==null ? "" :rs.getString("NAMA_AGENSI"));
-//				h.put("noFailKjp", rs.getString("NO_FAIL_KJP")==null ? "TIADA":rs.getString("NO_FAIL_KJP"));
-//				h.put("caraPerolehan", rs.getString("NAMA_URUSAN")==null ? "" :rs.getString("NAMA_URUSAN"));
-//				h.put("idKementerian", rs.getString("ID_KEMENTERIAN")==null ? "" :rs.getString("ID_KEMENTERIAN"));
-//				h.put("catatan", rs.getString("CATATAN")==null ? "":rs.getString("CATATAN"));
-//				h.put("pegawaiAkhir",Utils.isNull(rs.getString("PEGAWAI_AKHIR")));
-//				h.put("kegunaanTanah",Utils.isNull(rs.getString("KEGUNAAN_TANAH")));
-//				h.put("idJenisRizab",Utils.isNull(rs.getString("ID_RIZAB")));
-//		    	h.put("tarikh_rizab", rs.getDate("TARIKH_RIZAB")==null?"":Format.format(rs.getDate("TARIKH_RIZAB")));  
-		    					
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			db.close();
-		}
-		return h;
-		
-	}
-	
-	public HakMilik getHakmilik(String idHakmilik){
+		public HakMilik getHakmilik(String idHakmilik){
 		Connection conn = null;
 		Db db = null;
 		HakMilik hakmilik = new HakMilik();
@@ -1023,7 +937,7 @@ public class HakmilikBean implements HakmilikInterface {
 
 	
 	//Add by rosli 18/08/2010	
-	@Override
+	//@Override
 	public HakmilikAgensi kemaskiniHakmilikAgensi(HakmilikAgensi ha) throws Exception{
 		Db db = null;
 		Connection conn = null;
@@ -1066,7 +980,7 @@ public class HakmilikBean implements HakmilikInterface {
 		return hakmilikAgensi;
 	}
 	
-	@Override
+	//@Override
 	public void kemaskiniHakmilikTambahSambungan(Hashtable data) throws Exception {
 		Connection conn = null;
 	    Db db = null;
@@ -1137,7 +1051,7 @@ public class HakmilikBean implements HakmilikInterface {
 	    	  r.add("NO_RIZAB", data.get("txtNoWarta"));
 	    	  r.add("SEKATAN", data.get("txtSekatan"));	  
 	    	  r.add("SYARAT", data.get("txtSyarat"));	  
-	    	  r.add("HAKMILIK_BERIKUT", getKodJenisHakmilik(String.valueOf(data.get("socJenisHakmilikBaru")))+ data.get("txtHakmilikBerikut"));
+	    	  r.add("HAKMILIK_BERIKUT", geTanah().getKodJenisHakmilik(String.valueOf(data.get("socJenisHakmilikBaru")))+ data.get("txtHakmilikBerikut"));
 	    	  r.add("STATUS_SAH", data.get("socStatus"));
 	    	  //convert date before add
 			  String tarikhKemaskini = currentDate;
@@ -1404,7 +1318,7 @@ public class HakmilikBean implements HakmilikInterface {
 	// String getKodJenisHakmilik(String)
 	// Dibuat pada 20/10/2010 Oleh Mohamad Rosli
 	// Bertujuan mendapatkan kod bagi jenis hakmilik melalui id_jenishakmilik
-	public String getKodJenisHakmilik(String idJenisHakmilik) throws Exception {
+	public String getKodJenisHakmilik_(String idJenisHakmilik) throws Exception {
 		String returnValue = "00";
 		Db db = null;
 		String sql = "";
@@ -1425,206 +1339,6 @@ public class HakmilikBean implements HakmilikInterface {
 		return returnValue;
 	}	
 	
-	@Override
-	public Vector<Hashtable<String,String>> getSenaraiHakmilikSambungan(String noHakmilikAsal
-		,String idNegeri,String idDaerah,String idMukim) throws Exception {
-		Db db = null;
-		String sql = "";
-		try {
-			db = new Db();
-			Vector<Hashtable<String,String>> listSenaraiFail = new Vector<Hashtable<String,String>>();
-			Statement stmt = db.getStatement();			
-			sql = "SELECT TPH.ID_HAKMILIK,RJH.KOD_JENIS_HAKMILIK, TPH.NO_HAKMILIK, "+
-				  "	(SELECT ID_HAKMILIK " +
-				  " FROM TBLHTPHAKMILIK " +
-				  "	WHERE LTRIM(NO_HAKMILIK,0) LIKE '%"+noHakmilikAsal+"%'" +
-				  "	  AND ID_NEGERI =  TPH.ID_NEGERI "+ 
-				  "	  AND ID_DAERAH =  TPH.ID_DAERAH "+     
-				  "	  AND ID_MUKIM = TPH.ID_MUKIM "+ 
-				  "	  AND ID_JENISHAKMILIK = TPH.ID_JENISHAKMILIK "+
-				  " ) AS ID_HAKMILIK_ASAL "+
-				  " ,NVL(( SELECT KETERANGAN FROM TBLHTPRUJSTATUSAH WHERE STATUS_SAH = TPH.STATUS_SAH "+
-				  " ),'TIADA MAKLUMAT') STATUS_SAH "+
-				  "	FROM TBLHTPHAKMILIK TPH,TBLRUJJENISHAKMILIK RJH"+
-				  " WHERE " +
-				  "	TPH.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK " +
-				  " AND TPH.ID_NEGERI= '"+idNegeri+"'"+
-				  " AND TPH.ID_DAERAH= '"+idDaerah+"'"+			  
-				  " AND TPH.ID_MUKIM= '"+idMukim+"'"+
-				  " AND TPH.HAKMILIK_ASAL LIKE '%"+noHakmilikAsal+"%' ";					
-			myLog.info("getSenaraiHakmilikSambungan :sql=" +sql);
-			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable<String,String> h;
-		    int bil = 1;
-		    //int count = 0;
-			
-		    while (rs.next()) {
-				h = new Hashtable<String,String> ();
-				h.put("bil", bil+".");
-				h.put("idHakmilikAsal", rs.getString("ID_HAKMILIK_ASAL")==null ? "" :rs.getString("ID_HAKMILIK_ASAL"));
-				h.put("idHakmilikBaru", rs.getString("ID_HAKMILIK")==null ? "" :rs.getString("ID_HAKMILIK"));
-				h.put("kodJenisBaru", rs.getString("KOD_JENIS_HAKMILIK")==null ? "" :rs.getString("KOD_JENIS_HAKMILIK"));
-				h.put("noHakmilikBaru", rs.getString("NO_HAKMILIK")==null ? "" :rs.getString("NO_HAKMILIK"));			
-				h.put("statusSah", rs.getString("STATUS_SAH")==null ? "" :rs.getString("STATUS_SAH"));			
-				listSenaraiFail.addElement(h);
-		    	bil++;
-		    	//count++;
-			
-		    } 		
-		    /*
-			if(count==0){
-				stmt = db.getStatement();			
-				sql = "SELECT TPH.ID_HAKMILIK,RJH.KOD_JENIS_HAKMILIK, TPH.NO_HAKMILIK, "+
-					  "	(SELECT ID_HAKMILIK " +
-					  "	FROM TBLHTPHAKMILIK " +
-					  "	WHERE LTRIM(NO_HAKMILIK,0) LIKE '%"+noHakmilikAsal+"%'" +
-					  "	  AND ID_NEGERI =  TPH.ID_NEGERI "+ 
-					  "	  AND ID_DAERAH =  TPH.ID_DAERAH "+     
-					 // "	  --AND ID_MUKIM = TPH.ID_MUKIM "+ 
-					  "	  AND ID_JENISHAKMILIK = TPH.ID_JENISHAKMILIK "+
-					  " ) AS ID_HAKMILIK_ASAL "+
-					  " ,NVL(( SELECT KETERANGAN FROM TBLHTPRUJSTATUSAH WHERE STATUS_SAH = TPH.STATUS_SAH "+
-					  " ),'TIADA MAKLUMAT') STATUS_SAH "+
-					  "	FROM TBLHTPHAKMILIK TPH,TBLRUJJENISHAKMILIK RJH "+
-					  " WHERE " +
-					  "	TPH.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK " +
-					  " AND TPH.ID_NEGERI= '"+idNegeri+"'"+
-					  " AND TPH.ID_DAERAH= '"+idDaerah+"'"+			  
-					  //" AND TPH.ID_MUKIM= '"+idMukim+"'"+
-					  " AND TPH.HAKMILIK_ASAL LIKE '%"+noHakmilikAsal+"%' ";					
-				myLog.info("getSenaraiHakmilikSambungan (Gagal): sql" +sql);
-				rs = stmt.executeQuery(sql);
-			    while (rs.next()) {
-					h = new Hashtable();
-					h.put("bil", bil+".");
-					h.put("idHakmilikAsal", rs.getString("ID_HAKMILIK_ASAL")==null ? "" :rs.getString("ID_HAKMILIK_ASAL"));
-					h.put("idHakmilikBaru", rs.getString("ID_HAKMILIK")==null ? "" :rs.getString("ID_HAKMILIK"));
-					h.put("kodJenisBaru", rs.getString("KOD_JENIS_HAKMILIK")==null ? "" :rs.getString("KOD_JENIS_HAKMILIK"));
-					h.put("noHakmilikBaru", rs.getString("NO_HAKMILIK")==null ? "" :rs.getString("NO_HAKMILIK"));			
-					h.put("statusSah", rs.getString("STATUS_SAH")==null ? "" :rs.getString("STATUS_SAH"));			
-					listSenaraiFail.addElement(h);
-			    	bil++;
-			    	count++;
-				
-			    } 		
-			
-			}*/
-			return listSenaraiFail;
-		
-		} finally {
-			if (db != null)
-			db.close();
-		}
-		
-	}	
-	//HAPUS HAKMILIK
-	@Override
-	public void hapusHakmilikById(String idHakmilik) throws Exception {
-		Db db = null;
-		Connection conn = null;
-		String sql = "";
-		//boolean isDataHakmilik = false;
-		try {
-			db = new Db();
-			conn = db.getConnection();
-	    	conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();	
-			
-			// Semak data hakmilik 
-			//TBLHTPHAKMILIKPERIHALHAPUS
-			r.add("ID_HAKMILIK");
-			r.add("ID_HAKMILIK",idHakmilik);
-			sql = r.getSQLSelect("TBLHTPHAKMILIKPERIHAL");
-			myLog.info("1:"+sql);
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				sql = "INSERT INTO TBLHTPHAKMILIKPERIHALHAPUS" +
-				" SELECT * from TBLHTPHAKMILIKPERIHAL WHERE ID_HAKMILIK = "+idHakmilik;				
-			    stmt.executeUpdate(sql);
-			}
-
-			//TBLHTPHAKMILIKCUKAIHAPUS
-			r = new SQLRenderer();
-			r.add("ID_HAKMILIK");
-			r.add("ID_HAKMILIK",idHakmilik);
-			sql = r.getSQLSelect("TBLHTPHAKMILIKCUKAI");
-			myLog.info("2:"+sql);
-			rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				sql = "INSERT INTO TBLHTPHAKMILIKCUKAIHAPUS" +
-				" SELECT * from TBLHTPHAKMILIKCUKAI WHERE ID_HAKMILIK = "+idHakmilik;				
-			    stmt.executeUpdate(sql);
-			}			
-
-			//TBLHTPHAKMILIKCUKAIHAPUS
-			r = new SQLRenderer();
-			r.add("ID_HAKMILIK");
-			r.add("ID_HAKMILIK",idHakmilik);
-			sql = r.getSQLSelect("TBLHTPHAKMILIKAGENSI");
-			myLog.info("3:"+sql);
-			rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				sql = "INSERT INTO TBLHTPHAKMILIKAGENSIHAPUS" +
-				" SELECT * from TBLHTPHAKMILIKAGENSI WHERE ID_HAKMILIK = "+idHakmilik;				
-			    stmt.executeUpdate(sql);
-			}
-
-			//TBLHTPHAKMILIKCUKAIHAPUS
-			r = new SQLRenderer();
-			r.add("ID_HAKMILIK");
-			r.add("ID_HAKMILIK",idHakmilik);
-			sql = r.getSQLSelect("TBLHTPHAKMILIK");
-			myLog.info("4:"+sql);
-			rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				sql = "INSERT INTO TBLHTPHAKMILIKHAPUS" +
-				" SELECT * from TBLHTPHAKMILIK WHERE ID_HAKMILIK = "+idHakmilik;				
-			    stmt.executeUpdate(sql);
-			}
-			
-			//TBLHTPHAKMILIKPERIHAL
-			r = new SQLRenderer();
-			r.add("ID_HAKMILIK", idHakmilik);
-			sql = r.getSQLDelete("TBLHTPHAKMILIKPERIHAL");
-			stmt.executeUpdate(sql);
-						
-			//TBLHTPHAKMILIKCUKAI
-			r = new SQLRenderer();
-			r.add("ID_HAKMILIK", idHakmilik);
-			sql = r.getSQLDelete("TBLHTPHAKMILIKCUKAI");
-			stmt.executeUpdate(sql);
-			
-			//TBLHTPHAKMILIKAGENSI
-			r = new SQLRenderer();
-			r.add("ID_HAKMILIK", idHakmilik);
-			sql = r.getSQLDelete("TBLHTPHAKMILIKAGENSI");
-			stmt.executeUpdate(sql);
-			
-			//TBLHTPHAKMILIK
-			r = new SQLRenderer();
-			r.add("ID_HAKMILIK", idHakmilik);
-			sql = r.getSQLDelete("TBLHTPHAKMILIK");
-			stmt.executeUpdate(sql);
-			
-			conn.commit();
-			
-		} catch (SQLException ex) { 
-	    	try {
-	    		conn.rollback();
-	    	} catch (SQLException e) {
-	    		//throw new Exception("Rollback error : " + e.getMessage());
-				throw new Exception(getIHTP().getErrorHTML("Rollback error : "+e.toString()));
-	    	}
-			throw new Exception(getIHTP().getErrorHTML("Ralat : Masalah menghapus data"+ex.toString()));
-	    	//throw new Exception("Ralat : Masalah menghapus data " + ex.getMessage());
-	    	
-	    } finally {
-			if (db != null)
-				db.close();
-		}	
-		
-	}
 	
 	public Vector getMaklumatImejByIdHakmilikDist(String id) throws Exception {
 		Db db = null;
@@ -1697,49 +1411,7 @@ public class HakmilikBean implements HakmilikInterface {
 	
 	}
 	
-	public boolean isHakmilik(String idNegeri, String idDaerah,String idMukim
-		,String idJenisHakmilik, String noHakmilik) throws Exception {
-		myLog.info("isHakmilikWarta:"+idNegeri+","+ idDaerah+","+ idMukim
-		+","+idJenisHakmilik+","+ noHakmilik);
-		Connection conn = null;
-		Db db = null;
-		boolean returnValue = false;
-		SQLRenderer r = null;
- 	    try {
-			String sql = null;
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			ResultSet rs = null;
-			r = new SQLRenderer();
-			r.add("TPH.ID_HAKMILIK");
-			//r.add("TPH.ID_HAKMILIK",r.unquote("TPA.ID_HAKMILIK"));
-			r.add("TPH.ID_NEGERI",idNegeri);
-			r.add("TPH.ID_DAERAH",idDaerah);
-			r.add("TPH.ID_MUKIM",idMukim);
-			r.add("ID_JENISHAKMILIK",idJenisHakmilik);
-			r.add("LTRIM(TPH.NO_HAKMILIK,0)",noHakmilik);
-			sql = r.getSQLSelect("TBLHTPHAKMILIK TPH " +
-				"");
-			myLog.info("isHakmilikWarta:sql="+sql);
-			rs = stmt.executeQuery(sql);
-			while(rs.next()){
-				returnValue = true;				
-			}
-			
-		}catch(Exception e){
-			throw new Exception(getIHTP().getErrorHTML(e.toString()));
-			
-	 	} finally {
-	 		if (db != null) db.close();
-
-	 	}
-		return returnValue;
-	
-	}
-	
-	public boolean isHakmilik(String idNegeri, String idDaerah,String idMukim
+		public boolean isHakmilik(String idNegeri, String idDaerah,String idMukim
 			,String idJenisHakmilik, String noHakmilik
 			,String bang, String ting, String petak
 			) throws Exception {
@@ -1839,48 +1511,6 @@ public class HakmilikBean implements HakmilikInterface {
 	 	}
 		return returnValue;
 	
-	}
-
-	public boolean isWarta(String idNegeri, String idDaerah,String idMukim
-			,String noWarta, String idLot, String noLot) throws Exception {
-		myLog.info("isHakmilikWarta:"+idNegeri+","+ idDaerah+","+ idMukim
-		+","+noWarta+","+ idLot+","+noLot);
-		Connection conn = null;
-		Db db = null;
-		boolean returnValue = false;
-		SQLRenderer r = null;
- 	    try {
-			String sql = null;
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			ResultSet rs = null;
-			r = new SQLRenderer();
-			r.add("TPH.ID_HAKMILIK");
-			//r.add("TPH.ID_HAKMILIK",r.unquote("TPA.ID_HAKMILIK"));
-			r.add("TPH.ID_NEGERI",idNegeri);
-			r.add("TPH.ID_DAERAH",idDaerah);
-			r.add("TPH.ID_MUKIM",idMukim);
-			r.add("LTRIM(TPH.NO_WARTA,0)",noWarta);
-			//r.add("TPH.ID_LOT",idLot);
-			r.add("LTRIM(TPH.NO_LOT,0)",noLot);	
-			sql = r.getSQLSelect("TBLHTPHAKMILIK TPH " +
-				"");
-			myLog.info("isHakmilikWarta:sql="+sql);
-			rs = stmt.executeQuery(sql);
-			while(rs.next()){
-				returnValue = true;				
-			}
-			
-		}catch(Exception e){
-			throw new Exception(getIHTP().getErrorHTML(e.toString()));
-			
-	 	} finally {
-	 		if (db != null) db.close();
-
-	 	}
-		return returnValue;
 	}
 		
 	public String getSQLHakmilik(String idHakmilik){
@@ -2027,97 +1657,90 @@ public class HakmilikBean implements HakmilikInterface {
 		return sql;
 		
 	}
-	/** PAPAR MAKLUMAT FAIL (MASTER) BY ID
-	* Dibuat oleh rosli (06/04/2012), tambah field ID_KEMENTERIAN
-	* Diambil fungsi dari ekptg.model.htp.FrmRekodPendaftaranHakmilikRizabData 
-	*/
-	public Vector<Hashtable<String,String>> getPaparMaklumatFailById(String idHakmilik) throws Exception {
-		Db db = null;
-		String sql = "";
-		Vector<Hashtable<String,String>> listMaklumatFail = null;
-		try {
-			db = new Db();
-			listMaklumatFail = new Vector<Hashtable<String,String>>();
-			Statement stmt = db.getStatement();			   					
-		    sql = getSQLHakmilik(idHakmilik);
-			myLog.info("getPaparMaklumatFailById:sql= "+sql);
-			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable<String,String> h;
+	
 
-			while (rs.next()) {
-				h = new Hashtable<String,String>();
-				h.put("idHakmilik", rs.getString("ID_HAKMILIK")==null ? "" :rs.getString("ID_HAKMILIK"));
-				h.put("namaKementerian", rs.getString("NAMA_KEMENTERIAN")==null ? "" :rs.getString("NAMA_KEMENTERIAN"));
-				h.put("noFailSeksyen", rs.getString("NO_FAIL")==null ? "" :rs.getString("NO_FAIL"));
-				h.put("noFailPtg", rs.getString("NO_FAIL_PTG")==null ? "TIADA" :rs.getString("NO_FAIL_PTG"));
-				h.put("noFailPtd", rs.getString("NO_FAIL_PTD")==null ? "TIADA" :rs.getString("NO_FAIL_PTD"));
-				h.put("tajukFail", rs.getString("TUJUAN")==null ? "" :rs.getString("TUJUAN"));
-				h.put("namaNegeri", rs.getString("NAMA_NEGERI")==null ? "" :rs.getString("NAMA_NEGERI"));
-				h.put("namaDaerah", rs.getString("NAMA_DAERAH")==null ? "" :rs.getString("NAMA_DAERAH"));
-				h.put("jenisHakmilik", rs.getString("KETERANGAN")==null ? "" :rs.getString("KETERANGAN").toUpperCase());
-				h.put("kodJenisHakmilik", rs.getString("KOD_KETERANGAN")==null ? "" :rs.getString("KOD_KETERANGAN").toUpperCase());
-				h.put("namaMukim", rs.getString("NAMA_MUKIM")==null ? "" :rs.getString("NAMA_MUKIM"));	
-				h.put("namaAgensi", rs.getString("NAMA_AGENSI")==null ? "" :rs.getString("NAMA_AGENSI"));
-				h.put("noFailKjp", rs.getString("NO_FAIL_KJP")==null ? "TIADA":rs.getString("NO_FAIL_KJP"));
-				h.put("noHakmilik", rs.getString("NO_HAKMILIK")==null ? "" :rs.getString("NO_HAKMILIK"));
-				h.put("noBangunan", rs.getString("NO_BANGUNAN")==null ? "TIADA" :rs.getString("NO_BANGUNAN"));
-				h.put("noTingkat", rs.getString("NO_TINGKAT")==null ? "TIADA" :rs.getString("NO_TINGKAT"));
-				h.put("noPetak", rs.getString("NO_PETAK")==null ? "TIADA" :rs.getString("NO_PETAK"));
-				h.put("kodLot", rs.getString("KOD_LOT")==null ? "" :rs.getString("KOD_LOT"));
-				h.put("noLot", rs.getString("NO_LOT")==null ? "" :rs.getString("NO_LOT"));
-				h.put("noWarta", rs.getString("NO_WARTA")==null ? "" :rs.getString("NO_WARTA"));
-				h.put("caraPerolehan", rs.getString("NAMA_URUSAN")==null ? "" :rs.getString("NAMA_URUSAN"));
-				h.put("idKementerian", rs.getString("ID_KEMENTERIAN")==null ? "" :rs.getString("ID_KEMENTERIAN"));
-				h.put("hakmilikAsal", rs.getString("HAKMILIK_ASAL")==null ? "":rs.getString("HAKMILIK_ASAL"));
-				h.put("catatan", rs.getString("CATATAN")==null ? "":rs.getString("CATATAN"));
-				h.put("pegawaiAkhir",Utils.isNull(rs.getString("PEGAWAI_AKHIR")));
-				h.put("kegunaanTanah",Utils.isNull(rs.getString("KEGUNAAN_TANAH")));
-				h.put("idJenisRizab",Utils.isNull(rs.getString("ID_RIZAB")));
-		    	  if(rs.getString("NO_HAKMILIK")!= null){
-		    		  h.put("jenisTanah","M");
-		    	  }else{
-		    		  h.put("jenisTanah","R");
-		    	  }
-		    	  if(rs.getString("NO_HAKMILIK")!= null && rs.getString("NO_WARTA")!= null){
-		    		  h.put("jenisTanah","X");
-		    	  }
+	public HakMilik kemaskini(HakMilik hakmilikBaru) throws Exception {
+	    Db dbHakmilik = null;
+	    String sql = "";
+	    try {
+	    	  dbHakmilik = new Db();
+			  Statement stmtHakmilik = dbHakmilik.getStatement();
+			  SQLRenderer rHakmilik = new SQLRenderer();
+			  rHakmilik.update("ID_HAKMILIK",hakmilikBaru.getIdHakmilik());
+	    	  //convert date before add
+			  String tarikhTerima = hakmilikBaru.getTarikhTerimaStr();
+			  String txdTarikhTerima = "to_date('" + tarikhTerima + "','dd/MM/yyyy')";
+			  rHakmilik.add("TARIKH_TERIMA",rHakmilik.unquote(txdTarikhTerima));
+			  String tarikhWarta= hakmilikBaru.getTarikhWartaStr();
+			  String txdTarikhWarta = "to_date('" + tarikhWarta + "','dd/MM/yyyy')";
+			  rHakmilik.add("TARIKH_WARTA",rHakmilik.unquote(txdTarikhWarta));
+			  rHakmilik.add("NO_WARTA",hakmilikBaru.getNoWarta());
+			  rHakmilik.add("ID_LOT", "1");
+			  rHakmilik.add("NO_LOT", hakmilikBaru.getNoLot());
+			  rHakmilik.add("ID_LUAS", hakmilikBaru.getIdLuas());
+			  rHakmilik.add("LUAS", hakmilikBaru.getLuasString());
 
-		    	//fix bug.21112014. syaz
-		    	h.put("tarikh_rizab", rs.getDate("TARIKH_RIZAB")==null?"":Format.format(rs.getDate("TARIKH_RIZAB")));  	    	  
-		    	h.put("idPermohonan", rs.getString("ID_PERMOHONAN"));  	    	  
-				listMaklumatFail.addElement(h);
+			  rHakmilik.add("ID_LUAS_BERSAMAAN","2");
+			  rHakmilik.add("LUAS_BERSAMAAN", hakmilikBaru.getLuasBersamaan());
 
-			}
-			
-		} finally {
-			if (db != null)
-			db.close();
-			
+			  rHakmilik.add("NO_PELAN", hakmilikBaru.getNoPelan());
+			  rHakmilik.add("NO_PU", hakmilikBaru.getNoPU());
+			  rHakmilik.add("NO_SYIT", hakmilikBaru.getNoSyit());
+			  rHakmilik.add("LOKASI", hakmilikBaru.getLokasi());
+			  rHakmilik.add("NO_FAIL_JOPA", hakmilikBaru.getNoFailJOPA());
+			  rHakmilik.add("STATUS_SAH", hakmilikBaru.getStatusSah());
+			  rHakmilik.add("KEGUNAAN_TANAH", hakmilikBaru.getKegunaan());
+			  rHakmilik.add("CATATAN", hakmilikBaru.getCatatan());
+			  if (hakmilikBaru.getTarikhKemaskiniStr().equals(""))
+				  rHakmilik.add("TARIKH_KEMASKINI", rHakmilik.unquote("sysdate"));
+			  else
+				  rHakmilik.add("TARIKH_KEMASKINI",hakmilikBaru.getTarikhKemaskiniStr());
+			  
+	    	  //convert date before add	  
+			  rHakmilik.add("ID_KEMASKINI", hakmilikBaru.getIdMasuk());
+			  sql = rHakmilik.getSQLUpdate("TBLHTPHAKMILIK");
+			  myLog.info(sql);
+			  stmtHakmilik.executeUpdate(sql);
+
+	    }finally {
+		    if (dbHakmilik != null) dbHakmilik.close();
+	    }
+		Db dbHakmilikPerihal = new Db();
+		String sqlHakmilikPerihal = "";
+		try{
+		     Statement stmtHakmilikPerihal = dbHakmilikPerihal.getStatement();
+			 SQLRenderer rHakmilikPerihal = new SQLRenderer();
+			 rHakmilikPerihal.update("ID_HAKMILIK", hakmilikBaru.getIdHakmilik());
+			 rHakmilikPerihal.add("KEGUNAAN_TANAH", hakmilikBaru.getKegunaan());
+			 sqlHakmilikPerihal = rHakmilikPerihal.getSQLUpdate("TBLHTPHAKMILIKPERIHAL");
+			 stmtHakmilikPerihal.executeUpdate(sqlHakmilikPerihal);
+
+		}finally {
+			if (dbHakmilikPerihal != null)dbHakmilikPerihal.close();
 		}
-		return listMaklumatFail;
-		
+		return getIUtilRekod().getTanah(String.valueOf(hakmilikBaru.getIdHakmilik()));
+
 	}
-	  
+	
+	private ITanah geTanah(){
+		if(iTanah== null)
+			iTanah = new TanahBean();
+		return iTanah;
+	}
+	
 	private IHtp getIHTP(){
 		if(iHTP== null)
 			iHTP = new HtpBean();
 		return iHTP;
 	}
 	
-	public String getTableTanahTemp(){
-		return "TBLHTPHAKMILIKURUSAN MT" +
-				",TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM" +
-				",TBLRUJLOT LOT,TBLRUJJENISHAKMILIK RJH"+
-				" ";
+	private IHTPUtilitiRekod getIUtilRekod(){
+	if (iUtilRekod == null){
+		iUtilRekod = new HTPUtilitiRekodBean();
 	}
-	public String getTableTanahKondisi(){
-		return " MT.ID_NEGERI=RN.ID_NEGERI " +
-				" AND MT.ID_DAERAH = RD.ID_DAERAH " +
-				" AND MT.ID_MUKIM  = RM.ID_MUKIM " +
-				" AND MT.ID_LOT = LOT.ID_LOT " +
-				" AND MT.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK " +
-				"";
-	}
+	return iUtilRekod;
 	
+
+}	
 
 }

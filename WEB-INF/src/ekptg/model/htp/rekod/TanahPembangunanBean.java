@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.servlet.http.HttpSession;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
@@ -17,16 +19,147 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.model.htp.FrmUtilData;
 
-public class bak_FrmTanahPembangunanBean{
-	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.bak_FrmTanahPembangunanBean.class);
+public class TanahPembangunanBean implements ITanahDaftar{
+	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.TanahPembangunanBean.class);
 
 	private static Vector listPerihalById = null;
 	private static Vector listPerihalByIdHakmilik = null;
 	private static Vector listLuasTerkumpul = null;
-	
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private Db db = null;
+
+	//UPDATE PEMBANGUNAN BY ID HAKMILIK PERIHAL
+	public void kemaskini(Hashtable<String,String> data) throws Exception {
+		Date date = new Date(); 
+//		String currentDate = sdf.format(date);
+	    String sql = "";
+	    Connection conn = null;
+	    String stateNegeri = String.valueOf(data.get("stateNegeri"));
+	    try{	    	 
+	    	db = new Db();
+	    	  
+	    	conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+		    	
+	    	Statement stmtHakmilik = db.getStatement();
+	    	sql =	" SELECT FLAG_KEMASKINI_STATE FROM TBLHTPHAKMILIKPERIHAL WHERE ID_HAKMILIKPERIHAL ="+data.get("idHakmilikPerihal");			
+	    	ResultSet rs = stmtHakmilik.executeQuery(sql);
+			
+	    	String flagKemaskiniState = "";
+	    	while (rs.next()) {
+	    		flagKemaskiniState = rs.getString("FLAG_KEMASKINI_STATE")==null ? "" :rs.getString("FLAG_KEMASKINI_STATE");
+	    	}			  
+			  
+	    	SQLRenderer rHakmilikPerihal = new SQLRenderer();
+	    	rHakmilikPerihal.update("ID_HAKMILIKPERIHAL", data.get("idHakmilikPerihal"));
+			  
+	    	//PENAMBAHBAIKAN. SYAZ. STATE KEMASKINI N APPROVE BY PENGARAH STATE AND HQ
+	    	//IF EDIT BY STATE ONLY.
+	    	//AND IF HAVE CHANGES.  
+			  //AND IF BELUM DI APPROVE OLEH HQ
+			  /** E = EDIT
+			   *  H = HANTAR PENGESAHAN
+			   *  PS = PENGESAHAN PENGARAH STATE
+			   *  PH = PENGESAHAN HQ
+			  **/  
+	    	if(!stateNegeri.equalsIgnoreCase("16") && 
+	    		(flagKemaskiniState.equalsIgnoreCase("E") || flagKemaskiniState.equalsIgnoreCase("PH") || flagKemaskiniState == null || flagKemaskiniState == "")){
+//	    		System.out.println("passed update flag");
+	    		rHakmilikPerihal.add("FLAG_KEMASKINI_STATE","E"); 
+	    	}  
+			  
+	    	String tarikhBinaan = "to_date('"+ data.get("txdTarikhBina") + "','dd/MM/yyyy')";			  
+			  //hanya hq leh update direct.
+			  //state akan simpan maklumat dalam tbl temp
+	    	if(stateNegeri.equalsIgnoreCase("16")){
+	    		rHakmilikPerihal.add("JENIS_BINAAN",data.get("socJenisBinaan"));
+	    		rHakmilikPerihal.add("NO_RUJUKAN_JKR",data.get("txtNoJKR"));
+	    		rHakmilikPerihal.add("TARIKH_BINAAN",rHakmilikPerihal.unquote(tarikhBinaan));
+				  
+	    		rHakmilikPerihal.add("HARGA_BINAAN",data.get("txtHarga"));
+				  //rHakmilikPerihal.add("UNIT_LUAS",data.get("socLuasBangunan"));
+	    		rHakmilikPerihal.add("ID_LUAS",data.get("socLuasBangunan"));
+				  //rHakmilikPerihal.add("LUAS_HEKTAR",data.get("txtLuasH"));
+	    		rHakmilikPerihal.add("LUAS",data.get("txtLuasH"));
+	    		rHakmilikPerihal.add("ID_LUAS_BERSAMAAN","2");
+	    		rHakmilikPerihal.add("CATATAN",data.get("txtCatatan"));
+	    		rHakmilikPerihal.add("ID_KEMASKINI",data.get("idMasuk"));
+	    		rHakmilikPerihal.add("TARIKH_KEMASKINI", rHakmilikPerihal.unquote("sysdate"));
+						    
+	    		if(data.get("socJenisBinaan").equals("B"))
+	    			rHakmilikPerihal.add("LUAS_BANGUNAN",data.get("txtLuas"));
+	    		else if(data.get("socJenisBinaan").equals("P"))
+	    			rHakmilikPerihal.add("LUAS_PADANG",data.get("txtLuas"));
+	    		else if(data.get("socJenisBinaan").equals("PR"))
+	    			rHakmilikPerihal.add("LUAS_PARKING",data.get("txtLuas"));		 
+	    		else if(data.get("socJenisBinaan").equals("J"))
+	    			rHakmilikPerihal.add("LUAS_JALAN",data.get("txtLuas"));
+	    		else if(data.get("socJenisBinaan").equals("L"))
+	    			rHakmilikPerihal.add("LUAS_LAIN",data.get("txtLuas"));
+			  }
+			  
+			  sql = rHakmilikPerihal.getSQLUpdate("TBLHTPHAKMILIKPERIHAL");
+			  stmtHakmilik.executeUpdate(sql);			  
+			  
+			  /**IF KEMASKINI BY  STATE, CREATE TEMP TABLE FOR RECORD DATA
+			  *INSERT...
+			  *SLAGI HQ X APPROVE / SELAGI X HANTAR PENGESAHAN, STATE XLEH BUAT KEMASKINI LAGI
+			  */
+			  if(!stateNegeri.equalsIgnoreCase("16") && (flagKemaskiniState.equalsIgnoreCase("E") || flagKemaskiniState.equalsIgnoreCase("PH") || flagKemaskiniState == null || flagKemaskiniState == "")){
+//				  System.out.println("passed replicate temp");
+				  Statement stmt = db.getStatement();
+				  SQLRenderer r = new SQLRenderer();
+					
+				  long idHakmilikPerihaltemp = DB.getNextID("TBLHTPHAKMILIKPERIHALTEMP_SEQ"); 
+				  r.add("ID_HAKMILIKPERIHALTEMP",idHakmilikPerihaltemp);
+				  r.add("ID_HAKMILIKPERIHAL",data.get("idHakmilikPerihal"));
+				  r.add("JENIS_BINAAN",data.get("socJenisBinaan"));
+				  r.add("NO_RUJUKAN_JKR",data.get("txtNoJKR"));
+				  r.add("TARIKH_BINAAN",r.unquote(tarikhBinaan));
+				  r.add("HARGA_BINAAN",data.get("txtHarga"));
+				  r.add("ID_LUAS_BERSAMAAN",2);
+				  r.add("ID_LUAS",data.get("socLuasBangunan"));
+				  r.add("LUAS",data.get("txtLuasH"));
+				  r.add("CATATAN",data.get("txtCatatan"));
+				  r.add("ID_MASUK",data.get("idMasuk"));
+				  r.add("TARIKH_MASUK",r.unquote("sysdate"));
+				  r.add("ID_KEMASKINI",data.get("idMasuk"));
+				  r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
+					
+				  if(data.get("socJenisBinaan").equals("B"))
+					  r.add("LUAS_BANGUNAN",data.get("txtLuas"));
+				  else if(data.get("socJenisBinaan").equals("P"))
+				      r.add("LUAS_PADANG",data.get("txtLuas"));
+				  else if(data.get("socJenisBinaan").equals("PR"))
+					  r.add("LUAS_PARKING",data.get("txtLuas"));		 
+				  else if(data.get("socJenisBinaan").equals("J"))
+					  r.add("LUAS_JALAN",data.get("txtLuas"));
+				  else if(data.get("socJenisBinaan").equals("L"))
+					  r.add("LUAS_LAIN",data.get("txtLuas"));
+			  
+				  sql = r.getSQLInsert("TBLHTPHAKMILIKPERIHALTEMP");
+				  myLog.info("sql insert to table temp "+sql);
+				  stmt.executeUpdate(sql);
+			  
+			  }
+			  conn.commit();
+			  
+	    }catch (SQLException ex) { 
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+	    	
+	    }finally {
+		    if (db != null) db.close();
+		}
+		 
+	}
 	// TAMBAH MAKLUMAT PEMBANGUNAN 
-	public String simpanPembangunan(String langkah,Hashtable data) throws Exception {
-		Db db = null;
+	@Override
+	public String simpan(Hashtable<String,String> data) throws Exception {
 		Connection conn = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date(); 
@@ -72,7 +205,8 @@ public class bak_FrmTanahPembangunanBean{
 		    myLog.info("sql insert baru :sql="+sql);
 		    
 			Long setIdSuburusanstatus = 0L;
-			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah,"61","=");
+			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(
+									String.valueOf(data.get("langkah")),"61","=");
 
 		    
 			stmt.executeUpdate(sql);
@@ -96,13 +230,14 @@ public class bak_FrmTanahPembangunanBean{
 	}
 	
 	// PAPAR MAKLUMAT PERGERAKAN BY ID
-	public static Vector getMaklumatPerihalById(String idHakmilikPerihal) throws Exception {
+	public Hashtable getMaklumat(String idHakmilikPerihal) throws Exception {
 		Db db = null;
 		String sql = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		listPerihalById = new Vector();
+		Hashtable h = null;
 		try {
 			db = new Db();
-			listPerihalById = new Vector();
 			Statement stmt = db.getStatement();
 			
 			sql =	"SELECT A.ID_HAKMILIKPERIHAL, A.ID_HAKMILIK, A.JENIS_BINAAN,A.NO_RUJUKAN_JKR," +
@@ -116,7 +251,6 @@ public class bak_FrmTanahPembangunanBean{
 			myLog.info("papar detail perihal "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			Hashtable h;
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("idHakmilikPerihal", rs.getString("ID_HAKMILIKPERIHAL"));
@@ -139,10 +273,12 @@ public class bak_FrmTanahPembangunanBean{
 			if (db != null)
 				db.close();
 		}
-		return listPerihalById;
+		//return listPerihalById;
+		return h;
+		
 	}
 	// SENARAI PEMBANGUNAN BY ID HAKMILIK
-	public static Vector getMaklumatPembangunanByIdHakmilik(String id) throws Exception {
+	public Vector <Hashtable<String,String>> getSenaraiMaklumat(String id) throws Exception {
 		Db db = null;
 		String sql = "";
 		try {
@@ -330,10 +466,10 @@ public class bak_FrmTanahPembangunanBean{
 				db.close();
 		}
 		 
-	}
-	
+	}	
 	//HAPUS PEMBANGUNAN BY ID
-	public static void hapusPembangunanById(String idHakmilikPerihal) throws Exception {
+	@Override
+	public void hapus(String idHakmilikPerihal) throws Exception {
 
 		Db db = null;
 		Connection conn = null;

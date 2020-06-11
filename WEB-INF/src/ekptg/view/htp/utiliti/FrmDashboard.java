@@ -156,11 +156,52 @@ public class FrmDashboard extends AjaxBasedModule {
     		vecSenaraiOnline = getIOnline().findFailOnlineAktif(getParam("txtTajukFail"), getParam("txtNoFail"), "", "");
     		if(vecSenaraiOnline != null)
     			bilPermohonanOnline = vecSenaraiOnline.size();
-    			
-    		context.put("senaraionline", vecSenaraiOnline);  
+    			    		
+    	}
+     	context.put("senaraionline", vecSenaraiOnline);  
+   	
+    	Vector<HtpPermohonan> onlinePermohonan = null; 
+		if(isTab(portal_role,"Permohonan")){
+    		context.remove("onlinePermohonan");
+    		onlinePermohonan = getIOnline().findFailOnlineUrusan("","","","","1,10");
+    		if(onlinePermohonan != null)
+    			bilPermohonanOnline += onlinePermohonan.size();    			
     		
     	}
-    	context.put("bilPermohonanOnline", bilPermohonanOnline);  
+    	context.put("onlinePermohonan", onlinePermohonan);  
+    	
+    	Vector<HtpPermohonan> onlinePembelian = null; 
+		if(isTab(portal_role,"Pembelian")){
+    		context.remove("onlinePembelian");
+    		onlinePembelian = getIOnline().findFailOnlineUrusan("","","","","2");
+    		if(onlinePembelian != null)
+    			bilPermohonanOnline += onlinePembelian.size();    			
+    		
+    	}
+    	context.put("onlinePembelian", onlinePembelian);
+    	
+    	Vector<HtpPermohonan> onlineGadaian = null; 
+		if(isTab(portal_role,"Gadaian")){
+    		context.remove("onlineGadaian");
+    		onlineGadaian = getIOnline().findFailOnlineUrusan("","","","","108");
+    		if(onlineGadaian != null)
+    			bilPermohonanOnline += onlineGadaian.size();    			
+    		
+    	}
+    	context.put("onlineGadaian", onlineGadaian);
+
+    	Vector<HtpPermohonan> onlineJRP = null; 
+		if(isTab(portal_role,"JRP")){
+    		context.remove("onlineJRP");
+    		onlineJRP = getIOnline().findFailOnlineUrusan("","","","","14");
+    		if(onlineJRP != null)
+    			bilPermohonanOnline += onlineJRP.size();    			
+    		
+    	}
+    	context.put("onlineJRP", onlineJRP);
+    	
+    	context.put("bilPermohonanOnline", bilPermohonanOnline); 
+    	
 //		check_notifikasi_online8 =  getListNotifikasi_online8(userId,"8");
 //		context.put("check_notifikasi_online8",check_notifikasi_online8);		
 //		check_notifikasi_online17 =  getListNotifikasi_online8(userId,"17");
@@ -240,6 +281,14 @@ public class FrmDashboard extends AjaxBasedModule {
   			bilPajakanKecil = String.valueOf(vecPajakanKecil.size());
   		
 		context.put("bilPajakanKecil",bilPajakanKecil);
+		
+		//Rekod - Pembangunan 
+		Vector vecMulaPembangunan = null;
+		String langkahPembangunan = "20"; 
+
+		vecMulaPembangunan = getStatusRekod().getInfoStatusPermohonan("", IDSUBURUSANREKOD, langkahPembangunan);
+		context.put("bilPrePembangunan",vecMulaPembangunan);
+
 		
 		int bilTugasanRekod = 0; 
 		Vector vecMaklumatPembangunan = null;

@@ -15,10 +15,12 @@ import org.apache.log4j.Logger;
 
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.TanahBean;
 
 public class FrmHTPSemakan implements IServlet2 {
 
-	private HakmilikInterface iHakmilik = null;
+	private ITanah iHakmilik = null;
 	//private static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 	static Logger myLog = Logger.getLogger(ekptg.view.htp.FrmHTPSemakan.class);
 
@@ -47,10 +49,13 @@ public class FrmHTPSemakan implements IServlet2 {
 			 String idLot = request.getParameter("noLot");
 			 
 			 try {
+				 HakmilikBean hb = new HakmilikBean();
 				 //out.println("semakanhakmilikrizab");
 				 String semakan = "";
-				 if(getIHakmilik().isHakmilik(idNegeri, idDaerah, idMukim, idJenisHakmilik, noHakmilik
-						 ,noBangunan,noTingkat,noPetak,idLot,noLot)){
+				 if(hb.isHakmilik(idNegeri, idDaerah, idMukim
+						 ,idJenisHakmilik, noHakmilik
+						 ,noBangunan,noTingkat,noPetak
+						 ,idLot,noLot)){
 					 out.println("" +
 						"  <script type='text/javascript'> " +
 					 		" alert('Maklumat Hakmilik/Warta telah wujud!'); " +
@@ -155,11 +160,10 @@ public class FrmHTPSemakan implements IServlet2 {
 		 }
 
 	  }
-
 		
-	private HakmilikInterface getIHakmilik(){
+	private ITanah getIHakmilik(){
 		if (iHakmilik==null){
-			iHakmilik=new HakmilikBean();
+			iHakmilik=new TanahBean();
 		}
 		return iHakmilik;
 	}

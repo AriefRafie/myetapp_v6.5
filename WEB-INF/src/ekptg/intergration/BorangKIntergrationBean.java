@@ -17,10 +17,10 @@ import ekptg.helpers.Utils;
 import ekptg.intergration.entity.BorangK;
 import ekptg.intergration.entity.HTPBorangK;
 import ekptg.model.htp.rekod.FrmHakmilikRizabBorangKBean;
-import ekptg.model.htp.rekod.IHakmilikRizab;
+import ekptg.model.htp.rekod.ITanahCarian;
 
 public class BorangKIntergrationBean implements IBorangKIntergration {
-	private IHakmilikRizab iHakmilikRizab = null;
+	private ITanahCarian iHakmilikRizab = null;
 	private static Logger myLog = Logger.getLogger(ekptg.intergration.BorangKIntergrationBean.class);
 	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");
 	private Db db = null;
@@ -403,15 +403,7 @@ public class BorangKIntergrationBean implements IBorangKIntergration {
 			}
 			return v;
 		}	
-	
-	 
-	private IHakmilikRizab getIHakmilikRizab(){
-		if (iHakmilikRizab == null){
-			iHakmilikRizab = new FrmHakmilikRizabBorangKBean();
-		}
-		return iHakmilikRizab;
-	}
-	
+
 	private String getNoLot(String str){
 		String kod = "";
 		if(str.contains("LOT")){
@@ -470,6 +462,13 @@ public class BorangKIntergrationBean implements IBorangKIntergration {
 				db.close();
 		}
 		return v;
+	}
+	 
+	private ITanahCarian getIHakmilikRizab(){
+		if (iHakmilikRizab == null){
+			iHakmilikRizab = new FrmHakmilikRizabBorangKBean();
+		}
+		return iHakmilikRizab;
 	}
 	
 	

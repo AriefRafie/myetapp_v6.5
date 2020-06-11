@@ -43,17 +43,20 @@ import ekptg.model.htp.rekod.FrmHakmilikUrusanPenyewaanBean;
 import ekptg.model.htp.rekod.FrmRekodUtilData;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
-import ekptg.model.htp.rekod.IHakmilikRizab;
-import ekptg.model.htp.rekod.IHakmilikUrusan;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.ITanahCarian;
+import ekptg.model.htp.rekod.ITanahUrusan;
+import ekptg.model.htp.rekod.TanahBean;
 
 public class FrmRekodPendaftaranTanah extends AjaxBasedModule {
 	private boolean isSambungan = false;
 	private final String PATH="app/htp/rekod/";
-	private HakmilikInterface iHakmilik = null;
-	private IHakmilikUrusan iHakmilikStatus = null;
-	private IHakmilikUrusan iHakmilikStatusP = null;
+	private HakmilikInterface iHakmilik_ = null;
+	private ITanah iHakmilik = null;
+	private ITanahUrusan iHakmilikStatus = null;
+	private ITanahUrusan iHakmilikStatusP = null;
 	private Hashtable hastableHakmilik = null;
-	private IHakmilikRizab iHakmilikRizab = null;
+	private ITanahCarian iHakmilikRizab = null;
  	private IHtp iHTP = null;  
 	private static final long serialVersionUID = 1L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.FrmRekodPendaftaranTanah.class);
@@ -2337,7 +2340,7 @@ public class FrmRekodPendaftaranTanah extends AjaxBasedModule {
 			this.context.put("txtNoHakmilikAsal",getParam("txtNoHakmilikAsal") == "" ? (String)hHakmilik.get("hakmilikAsal"):getParam("txtNoHakmilikAsal"));
 			this.context.put("txtKemAgenTerkini",getParam("txtKemAgenTerkini") == "" ? (String)hHakmilik.get("catatan"):getParam("txtKemAgenTerkini"));
 			
-			hakmilik = getIHakmilik().getHakmilik(idHakmilik);
+			hakmilik = getHakmilik().getHakmilik(idHakmilik);
 
 			return (String)hHakmilik.get("kodJenisHakmilik")+hHakmilik.get("noHakmilik");
 		}	
@@ -2400,13 +2403,6 @@ public class FrmRekodPendaftaranTanah extends AjaxBasedModule {
 		private Vector viewModeSenaraiHakmilikSambungan(HttpSession session,String noHakmilikAsal) throws Exception {
 			return FrmRekodPendaftaranHakmilikSementaraData.getSenaraiHakmilikSambungan(noHakmilikAsal);	
 			
-		}
-
-		private HakmilikInterface getIHakmilik(){
-			if (iHakmilik==null){
-				iHakmilik=new HakmilikBean();
-			}
-			return iHakmilik;
 		}
 		
 		//Tambah oleh Rosli pada 01/03/2011, terus papar mode kemaskini maklumat hakmilik
@@ -2562,7 +2558,7 @@ public class FrmRekodPendaftaranTanah extends AjaxBasedModule {
 			
 		}		
 		
-		private IHakmilikRizab getIHakmilikRizab(){
+		private ITanahCarian getIHakmilikRizab(){
 			if (iHakmilikRizab == null){
 				iHakmilikRizab = new FrmHakmilikRizabBean();
 			}
@@ -2574,13 +2570,27 @@ public class FrmRekodPendaftaranTanah extends AjaxBasedModule {
 				iHTP = new HtpBean();
 			return iHTP;
 		}	
+
+		private ITanah getIHakmilik(){
+			if (iHakmilik==null){
+				iHakmilik=new TanahBean();
+			}
+			return iHakmilik;
+		}
 		
-		private IHakmilikUrusan getHakmilikPenyewaan(){
+		private HakmilikInterface getHakmilik(){
+			if (iHakmilik_==null){
+				iHakmilik_=new HakmilikBean();
+			}
+			return iHakmilik_;
+		}
+		
+		private ITanahUrusan getHakmilikPenyewaan(){
 			if(iHakmilikStatus== null)
 				iHakmilikStatus = new FrmHakmilikUrusanPenyewaanBean();
 			return iHakmilikStatus;
 		}
-		private IHakmilikUrusan getHakmilikPajakan(){
+		private ITanahUrusan getHakmilikPajakan(){
 			if(iHakmilikStatusP== null)
 				iHakmilikStatusP = new FrmHakmilikUrusanPajakanBean();
 			return iHakmilikStatusP;

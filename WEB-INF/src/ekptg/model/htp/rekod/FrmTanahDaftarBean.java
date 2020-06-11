@@ -1,9 +1,11 @@
 package ekptg.model.htp.rekod;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
@@ -20,7 +22,7 @@ public class FrmTanahDaftarBean implements ITanahDaftar{
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.FrmTanahDaftarBean.class);	
 	private Connection conn = null;
 	private IHtp iHTP = null;  
-	private ITanahKementerian iTanahKem = null;  
+	private ITanahDaftar iTanahKem = null;  
 	private String sql = "";
 	private SQLRenderer r = new SQLRenderer();
 
@@ -40,8 +42,8 @@ public class FrmTanahDaftarBean implements ITanahDaftar{
 	    	rHakmilik.update("ID_HAKMILIK", data.get("idHakmilik"));
 	    	
 	    	//2018/01/23:Kemaskini kementerian dan agensi
-	    	rHakmilik.add("ID_KEMENTERIAN", data.get("socIdKementerian"));   			  
 	    	rHakmilik.add("ID_AGENSI", data.get("socIdAgensi"));   			  
+	    	rHakmilik.add("ID_KEMENTERIAN", data.get("socIdKementerian"));   			  
 	    	//rHakmilik.add("NO_FAIL_PTG", data.get(("txtNoFailPTG")); 
 	    	//rHakmilik.add("NO_FAIL_PTD", data.get(("txtNoFailPTD")); 
 	    	
@@ -174,7 +176,7 @@ public class FrmTanahDaftarBean implements ITanahDaftar{
 	}
 
 	@Override
-	public String simpanTransaction(Hashtable<String,String> hashData) throws Exception {
+	public String simpan(Hashtable<String,String> hashData) throws Exception {
 		String idHakmilik = "";
 		try {
 			db = new Db();
@@ -186,9 +188,10 @@ public class FrmTanahDaftarBean implements ITanahDaftar{
 					,String.valueOf(hashData.get("idMasuk"))
 					,idHakmilik);
 	
+			hashData.put("idhakmilik",idHakmilik);
 			//FrmUtilData.insertHakmilikAgensi(db,hashData,idHakmilik);
 			// 2017/11/15
-			getTanahKem().insertTanahAgensi(db,hashData,idHakmilik);
+			getTanahKem().simpan(hashData);
 			conn.commit();
 
 	    }catch (SQLException se) {
@@ -323,15 +326,137 @@ public class FrmTanahDaftarBean implements ITanahDaftar{
     
 	}
 	
+	@Override
+	public Hashtable<String,String> getMaklumat(String idRujukan) throws Exception{
+		Hashtable<String,String> h =null;
+		return h;
+	}
+	
+	@Override
+	public Vector <Hashtable<String,String>> getSenaraiMaklumat(String idRujukan) throws Exception{
+		Vector <Hashtable<String,String>> vec =null;
+		return vec;
+	}
+	
+	//HAPUS HAKMILIK
+	@Override
+	public void hapus(String idHakmilik) throws Exception {
+			Db db = null;
+			Connection conn = null;
+			String sql = "";
+			//boolean isDataHakmilik = false;
+			try {
+				db = new Db();
+				conn = db.getConnection();
+		    	conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();	
+				
+				// Semak data hakmilik 
+				//TBLHTPHAKMILIKPERIHALHAPUS
+				r.add("ID_HAKMILIK");
+				r.add("ID_HAKMILIK",idHakmilik);
+				sql = r.getSQLSelect("TBLHTPHAKMILIKPERIHAL");
+				myLog.info("1:"+sql);
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					sql = "INSERT INTO TBLHTPHAKMILIKPERIHALHAPUS" +
+					" SELECT * from TBLHTPHAKMILIKPERIHAL WHERE ID_HAKMILIK = "+idHakmilik;				
+				    stmt.executeUpdate(sql);
+				}
+
+				//TBLHTPHAKMILIKCUKAIHAPUS
+				r = new SQLRenderer();
+				r.add("ID_HAKMILIK");
+				r.add("ID_HAKMILIK",idHakmilik);
+				sql = r.getSQLSelect("TBLHTPHAKMILIKCUKAI");
+				myLog.info("2:"+sql);
+				rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					sql = "INSERT INTO TBLHTPHAKMILIKCUKAIHAPUS" +
+					" SELECT * from TBLHTPHAKMILIKCUKAI WHERE ID_HAKMILIK = "+idHakmilik;				
+				    stmt.executeUpdate(sql);
+				}			
+
+				//TBLHTPHAKMILIKCUKAIHAPUS
+				r = new SQLRenderer();
+				r.add("ID_HAKMILIK");
+				r.add("ID_HAKMILIK",idHakmilik);
+				sql = r.getSQLSelect("TBLHTPHAKMILIKAGENSI");
+				myLog.info("3:"+sql);
+				rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					sql = "INSERT INTO TBLHTPHAKMILIKAGENSIHAPUS" +
+					" SELECT * from TBLHTPHAKMILIKAGENSI WHERE ID_HAKMILIK = "+idHakmilik;				
+				    stmt.executeUpdate(sql);
+				}
+
+				//TBLHTPHAKMILIKCUKAIHAPUS
+				r = new SQLRenderer();
+				r.add("ID_HAKMILIK");
+				r.add("ID_HAKMILIK",idHakmilik);
+				sql = r.getSQLSelect("TBLHTPHAKMILIK");
+				myLog.info("4:"+sql);
+				rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					sql = "INSERT INTO TBLHTPHAKMILIKHAPUS" +
+					" SELECT * from TBLHTPHAKMILIK WHERE ID_HAKMILIK = "+idHakmilik;				
+				    stmt.executeUpdate(sql);
+				}
+				
+				//TBLHTPHAKMILIKPERIHAL
+				r = new SQLRenderer();
+				r.add("ID_HAKMILIK", idHakmilik);
+				sql = r.getSQLDelete("TBLHTPHAKMILIKPERIHAL");
+				stmt.executeUpdate(sql);
+							
+				//TBLHTPHAKMILIKCUKAI
+				r = new SQLRenderer();
+				r.add("ID_HAKMILIK", idHakmilik);
+				sql = r.getSQLDelete("TBLHTPHAKMILIKCUKAI");
+				stmt.executeUpdate(sql);
+				
+				//TBLHTPHAKMILIKAGENSI
+				r = new SQLRenderer();
+				r.add("ID_HAKMILIK", idHakmilik);
+				sql = r.getSQLDelete("TBLHTPHAKMILIKAGENSI");
+				stmt.executeUpdate(sql);
+				
+				//TBLHTPHAKMILIK
+				r = new SQLRenderer();
+				r.add("ID_HAKMILIK", idHakmilik);
+				sql = r.getSQLDelete("TBLHTPHAKMILIK");
+				stmt.executeUpdate(sql);
+				
+				conn.commit();
+				
+			} catch (SQLException ex) { 
+		    	try {
+		    		conn.rollback();
+		    	} catch (SQLException e) {
+		    		//throw new Exception("Rollback error : " + e.getMessage());
+					throw new Exception(getIHTP().getErrorHTML("Rollback error : "+e.toString()));
+		    	}
+				throw new Exception(getIHTP().getErrorHTML("Ralat : Masalah menghapus data"+ex.toString()));
+		    	//throw new Exception("Ralat : Masalah menghapus data " + ex.getMessage());
+		    	
+		    } finally {
+				if (db != null)
+					db.close();
+			}	
+			
+		}	
+	
 	private IHtp getIHTP(){
 		if(iHTP== null)
 			iHTP = new HtpBean();
 		return iHTP;
 	}		  
-	private ITanahKementerian getTanahKem(){
+	private ITanahDaftar getTanahKem(){
 		if(iTanahKem== null)
-			iTanahKem = new FrmTanahKementerianBean();
+			iTanahKem = new TanahKementerianBean();
 		return iTanahKem;
 	}	
+	
 	
 }

@@ -11,13 +11,8 @@ import lebah.db.Db;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.Utils;
-//import ekptg.model.htp.HtpBean;
-//import ekptg.model.htp.IHtp;
-//import ekptg.model.htp.entity.HakMilik;
-//import ekptg.model.htp.entity.Permohonan;
-//import ekptg.model.htp.entity.PfdFail;
 
-public class FrmHakmilikRizabBean implements IHakmilikRizab {
+public class FrmHakmilikRizabBean implements ITanahCarian {
 	
 	//private HakmilikInterface iHakmilik = null;
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.FrmHakmilikRizabBean.class);

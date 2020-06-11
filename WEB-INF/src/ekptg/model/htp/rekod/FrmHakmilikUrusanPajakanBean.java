@@ -17,7 +17,7 @@ import ekptg.model.htp.entity.Pemohon;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
-public class FrmHakmilikUrusanPajakanBean implements IHakmilikUrusan {
+public class FrmHakmilikUrusanPajakanBean implements ITanahUrusan {
 	
 	//private HakmilikInterface iHakmilik = null;
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.FrmHakmilikUrusanPajakanBean.class);

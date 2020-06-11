@@ -38,16 +38,17 @@ public class FrmSemakan {
 		      if(idSemakan !=null)
 		    	  r.add("s.id_semakan",idSemakan);
 		      if(semakan != null)
-		    	  r.add("s.perihal"," like ","%"+idSemakan+"%");
+		    	  r.add("s.perihal","%"+semakan+"%","like ");
 
 		    	  
 		      sql = r.getSQLSelect("tblsemakan s"," s.perihal ");
-	          myLog.info("getSemakan : sql=" + sql);
+//	          myLog.info("getSemakan : sql=" + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Tblsemakan h;
-
+		      int bil = 1;
 		      while (rs.next()) {
 		    	  h = new Tblsemakan();
+		    	  h.setBil(bil++);
 		    	  h.setIdSemakan(rs.getLong("id_semakan"));
 		    	  h.setPerihal(rs.getString("perihal"));
 		    	  h.setTarikhMasukf(rs.getString(3));
