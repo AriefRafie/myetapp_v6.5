@@ -144,10 +144,20 @@
 					<div class="TabbedPanelsContent"> 
 					#if($selectedTab == '5')
 		               	#if($tabmode == '0')
-		               		<!-- jika click tab akan hantar tabmode 0 dan pergi ke senarai notis --> 
-			               	#parse ("app/htp/permohonan/online/frmNotisSenaraiOnline.jsp") 
+		               	<!-- jika click tab akan hantar tabmode 0 dan pergi ke senarai notis -->
+		               		#if($!bilNotis > 0) 
+		               			#parse ("app/htp/permohonan/online/frmNotisSenaraiOnline.jsp")
+		               		#else
+		               		#parse ("app/htp/permohonan/online/frmBayaranNotisViewOnlyTambah.jsp")
+			                #end
 	              		#elseif($tabmode == 1)
+	              		
+	              		#if($butang3 == '8')
+	              			<!-- Bila Click Tambah notis akan hantar tabmode 1 butang 8 pada function Notis5AView file indexOnline.jsp -->
+								#parse("app/htp/permohonan/online/v02/notis/frmBayaranNotis.jsp")
+								
 	              			<!-- Bila Click View pada senarai notis akan hantar tabmode 1 pada function Notis5AView file indexOnline.jsp -->
+	              			#else
 	               			#if($!idNegeriNotis=="13") 
 	               				<!-- Jika id negeri sama dengan 13 adalah serawak, paparkan maklumat L & S 80 -->
 	                			#parse("app/htp/permohonan/online/frmBayaranNotisViewOnlyOnline13.jsp")
@@ -155,8 +165,10 @@
 		      					<!-- Jika id negeri sama dengan 12 adalah Sabah, paparkan maklumat SURAT TAWARAN KELULUSAN -->
 	                			#parse("app/htp/permohonan/online/frmBayaranNotisViewOnlyOnline12.jsp")
 	                		#else	
-	                			<!-- Jika id negeri selain 12 dan 13 adalah semenanjung, paparkan maklumat NOTIS 5A KTN -->
+	                			<!-- Jika id negeri selain 12 dan 13 adalah semenanjung, paparkan MAKLUMAT NOTIS 5A KTN -->
 	                   			#parse("app/htp/permohonan/online/frmBayaranNotisViewOnlyOnline.jsp")
+	                   				
+	                   			#end
 	                   		#end
 		  	            #end
 		            #end
