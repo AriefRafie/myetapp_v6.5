@@ -136,7 +136,7 @@ public class FrmPYWSenaraiFailOnlineData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN,B.TARIKH_TERIMA, A.TAJUK_FAIL, B.ID_PEMOHON, B.NO_PERMOHONAN, A.ID_URUSAN, A.ID_SUBURUSAN, C.CATATAN "
+			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN,B.TARIKH_TERIMA, A.TAJUK_FAIL, B.ID_PEMOHON, B.NO_PERMOHONAN, A.ID_URUSAN, A.ID_SUBURUSAN, A.ID_SUBSUBURUSAN, C.CATATAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -169,6 +169,8 @@ public class FrmPYWSenaraiFailOnlineData {
 								.getString("ID_URUSAN"));
 				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? ""
 						: rs.getString("ID_SUBURUSAN"));
+				h.put("idSubsuburusan", rs.getString("ID_SUBSUBURUSAN") == null ? "" 
+						: rs.getString("ID_SUBSUBURUSAN"));
 				beanMaklumatPermohonan.addElement(h);
 				bil++;
 			}
@@ -214,7 +216,7 @@ public class FrmPYWSenaraiFailOnlineData {
 			r.update("ID_FAIL", idFail);
 			String noFail = "";
 			String kodUrusan = getKodUrusan(idUrusan);
-			noFail = generateNoFail(idUrusan, kodUrusan,
+			noFail = generateNoFail(session, idUrusan, kodUrusan,
 					getKodKementerianByIdKementerian(idKementerian),
 					idKementerian, getKodNegeriByIdNegeri(idNegeriHakmilik),
 					idNegeriHakmilik, idSuburusan);
@@ -572,7 +574,7 @@ public class FrmPYWSenaraiFailOnlineData {
 		}
 	}
 
-	public String generateNoFail(String idUrusan, String kodUrusan,
+	public String generateNoFail(HttpSession session, String idUrusan, String kodUrusan,
 			String kodKementerian, String idKementerian, String kodNegeri,
 			String idNegeri, String idSuburusan) throws Exception {
 		String noFail = "";
@@ -593,7 +595,7 @@ public class FrmPYWSenaraiFailOnlineData {
 				+ "/"
 				+ kodTanah
 				+ "-"
-				+ File.getSeqNo(4, Integer.parseInt(idUrusan),
+				+ File.getSeqNoP(session, 4, Integer.parseInt(idUrusan),
 						Integer.parseInt(idKementerian),
 						Integer.parseInt(idNegeri));
 

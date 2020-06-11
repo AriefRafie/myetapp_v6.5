@@ -178,6 +178,7 @@ public class FrmHakmilikSementaraSenaraiPermohonanUPTData {
 				    	h.put("nama_suburusan", rs.getString("nama_suburusan")== null?"":rs.getString("nama_suburusan"));
 				    	h.put("nama_kementerian", rs.getString("nama_kementerian")== null?"":rs.getString("nama_kementerian"));
 				    	h.put("tarikh_permohonan", rs.getDate("tarikh_permohonan")==null?"":Format.format(rs.getDate("tarikh_permohonan")));
+
 				    	
 				    	if(rs.getString("flag_semak") != null && rs.getString("flag_semak") != ""){
 		    				
@@ -324,7 +325,8 @@ public class FrmHakmilikSementaraSenaraiPermohonanUPTData {
 					sql += " s.keterangan, d.nama_daerah, d.id_daerah, p.tarikh_kehendaki,  p.tarikh_surat, p.id_agensi, "; 
 					sql += " p.no_rujukan_surat, p.flag_peruntukan, p.id_mukim, p.no_permohonan_online, "; 
 					sql += " us.nama_suburusan, us.id_suburusan, p.no_rujukan_ptg, p.no_rujukan_ptd, flag_jenis_kod_daerah, ";
-					sql += " k.alamat1, k.alamat2, k.alamat3, k.poskod, k.id_negeri, p.flag_semak, n2.id_negeri as idProjekNegeri, n2.nama_negeri as nama_negeriprojek ";
+					sql += " k.alamat1, k.alamat2, k.alamat3, k.poskod, k.id_negeri, p.flag_semak, n2.id_negeri as idProjekNegeri, n2.nama_negeri as nama_negeriprojek, ";
+				    sql += " p.tarikh_pendudukan_mula, p.tarikh_pendudukan_akhir, p.tempoh_pendudukan "; //PPT-41
 					sql += " FROM Tblrujsuburusan us, Tblpfdfail f, Tblrujdaerah d, Tblrujnegeri n, ";
 					sql += " Tblrujkementerian k, Tblrujstatus s,  Tblpptpermohonan p, Tblrujnegeri n2 ";  
 					sql += " WHERE f.id_fail(+) = p.id_fail "; 
@@ -379,6 +381,10 @@ public class FrmHakmilikSementaraSenaraiPermohonanUPTData {
 						h.put("nama_suburusan", rs.getString("nama_suburusan")==null?"":rs.getString("nama_suburusan"));
 						h.put("no_rujukan_ptg", rs.getString("no_rujukan_ptg")==null?"":rs.getString("no_rujukan_ptg"));
 						h.put("no_rujukan_ptd", rs.getString("no_rujukan_ptd")==null?"":rs.getString("no_rujukan_ptd"));
+				    	h.put("tarikh_pendudukan_mula", rs.getDate("tarikh_pendudukan_mula")==null?"":Format.format(rs.getDate("tarikh_pendudukan_mula"))); //PPT-41
+				    	h.put("tarikh_pendudukan_akhir", rs.getDate("tarikh_pendudukan_akhir")==null?"":Format.format(rs.getDate("tarikh_pendudukan_akhir"))); //PPT-41
+				    	h.put("tempoh_pendudukan", rs.getString("tempoh_pendudukan")==null?"":rs.getString("tempoh_pendudukan")); //PPT-41
+				    	
 						if(rs.getLong("flag_jenispermohonan") == 1){
 							h.put("flag_jenispermohonan","PERMOHONAN ONLINE");
 						}

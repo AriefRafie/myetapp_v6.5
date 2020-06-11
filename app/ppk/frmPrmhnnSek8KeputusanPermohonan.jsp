@@ -76,6 +76,7 @@
 #set ($check3 = "")
 #set ($check4 = "")
 #set ($check5 = "")
+#set ($check6 = "") <!-- arief add -->
 #set ($check8 = "")
 #set ($check9 = "")
 
@@ -110,6 +111,7 @@
 #set ($txtBandarPeguam = "")
 #set ($txtNomborTelefonPeguam = "")
 #set ($txtTarikhKaveat = "")
+
 
 
 #set ($tujuanPindah = "") <!-- razman add -->
@@ -199,6 +201,8 @@
     
 	
 		#set ($jumHa = $Util.formatDecimal($ListData.jumHaTarikhMohon))
+		#set ($jumHa2 = $ListData.jumHaTarikhMohon)
+		#set ($maxHa = 600000)
          #set ($jumHaX = $ListData.jumHaTarikhMohon)
         #set ($jumHaX1 = $Util.formatDecimal($jumHaX))
         
@@ -424,8 +428,11 @@
 #elseif ($keputusan == "50")
  
  #set ($check4 = "checked")  
-     
-   
+ 
+ <!-- arief add SUmmary Distribution -->    
+  #elseif ($keputusan == "115")
+	#set ($check6 = "checked")
+	#set ($setMode7 = "checked")
  
  #elseif ($keputusan == "53")
  
@@ -482,8 +489,6 @@
     #set ($setMode4 = "")
     #set ($setMode5 = "")<!-- razman remove disable -->
     #set ($setMode6 = "")
-    
-    
     
     #elseif ($keputusan == "151")
 	#set ($check0 = "checked")
@@ -792,7 +797,20 @@
 #set($checkJ4="")
 
 #end
-   
+<!-- arief add Summary Distribution-->
+#elseif ($keputusan == "115") 
+    #set ($check6 = "checked")
+    #set ($check1 = "disabled")
+    #set ($check2 = "disabled")
+    #set ($check3 = "disabled")
+    #set ($setMode = "disabled")
+    #set ($setMode1 = "disabled")
+    #set ($setMode2 = "disabled")
+    #set ($setMode3 = "disabled")
+    #set ($setMode4 = "disabled")
+    #set ($setMode5 = "disabled")
+    #set ($setMode6 = "disabled")
+    #set ($setMode7 = "checked")  
    
 #elseif ($keputusan == "50")
 	#set ($check4 = "checked")
@@ -1983,6 +2001,19 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
         #set($checkJ4="checked")  
         #end
       </tr>
+     
+      
+      <!-- arief add Summary Distribution OPEN -->
+      #if ($jumHa2 < $maxHa)
+      <tr>
+        <td scope="row">&nbsp;</td>
+        <td scope="row">&nbsp;</td>
+        <td colspan="2"><label>
+          <input type="radio" name="sorPenentuanBidangKuasa" id="sorPenentuanBidangKuasa" value="115" $check6 $setMode7 onClick="selectRadio7()" />
+          <input name="setMode7" id="setMode7" type="hidden" value="$setMode7" >Summary Distribution</label></td>
+      </tr>
+	  #end
+      <!-- arief add Summary Distribution CLOSE -->
       <tr>
         <td scope="row">&nbsp;</td>
         <td scope="row">&nbsp;</td>
@@ -2558,16 +2589,18 @@ Batal Permohonan (Lain - lain kes)</td>
     #end
 	
 	<!-- Sebelum ini sekiranya id_Status = 151, button seterusnya tiada. Sekarang ini diadakan button tersebut sebagaimana kehendak user -->
-    #if ($EventStatus != 0 && ($id_Status == "151" || $id_Status == "44" || $id_Status == "173" || $id_Status == "175" || $id_Status == "177" || $id_Status != "151" || $id_Status == "18"))        
+    #if ($EventStatus != 0 && ($id_Status == "151" || $id_Status == "44" || $id_Status == "173" || $id_Status == "175" || $id_Status == "177" || $id_Status != "151" || $id_Status == "18" ))        
     	
     	#if ($mohonawal != "")
     		
     		#if (($salinan_arahan=="1") && ($jenisborangC=="K"))
-    			<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onClick="kenotis('$seksyen','$id_Status')"/>
+    			
+    				<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onClick="kenotis('$seksyen','$id_Status')"/>
+    			
     		#end
     	#else
     		#if( $id_Status != "50")
-    		<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onClick="kenotis('$seksyen','$id_Status')"/>
+    				<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onClick="kenotis('$seksyen','$id_Status')"/>
     		#end
     	#end
     #end
@@ -2595,7 +2628,7 @@ Batal Permohonan (Lain - lain kes)</td>
 	document.f1.idSimati.value = idSimati;
 	document.f1.id_Permohonansimati.value = id_Permohonansimati;
 	-->
-	<input type="hidden" name="idKeputusanPermohonan" />
+	<!--  <input type="hidden" name="idKeputusanPermohonan" />-->
 </table>
 </fieldset>
 
@@ -3137,6 +3170,7 @@ document.f1.sorPenentuanBidangKuasa[1].checked = false;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
+document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
 
 document.getElementById('tableReportX').style.display="none";//razman add
 }
@@ -3177,6 +3211,7 @@ document.f1.sorPenentuanBidangKuasa[0].checked = true;
 document.f1.sorPenentuanBidangKuasa[1].checked = false;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
+document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
 document.getElementById('tableReportX').style.display="none"; //razman add
 document.getElementById('kv1').style.display="block";
 document.getElementById('kv2').style.display="block";
@@ -3215,6 +3250,8 @@ document.f1.sorPenentuanBidangKuasa[0].checked = false;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
+
+document.f1.sorPenentuanBidangKuasa[4].checked == false; //arief add
 document.getElementById('tableReportX').style.display="none"; //razman add
 }
 
@@ -3230,6 +3267,7 @@ function selectRadio5() {
 		document.f1.sorPenentuanBidangKuasa[0].checked = false;
 		document.f1.sorPenentuanBidangKuasa[1].checked = false;
 		document.f1.sorPenentuanBidangKuasa[3].checked = false;
+		document.f1.sorPenentuanBidangKuasa[4].checked == false; //arief add
 		document.getElementById('tableReportX').style.display="block"; //razman edit add block
 		//alert("1");
 	}
@@ -3249,6 +3287,8 @@ document.f1.sorPenentuanBidangKuasa[1].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
+document.f1.sorPenentuanBidangKuasa[4].checked == false; //arief add
+
 document.getElementById('tableReportX').style.display="none";//razman add
 }
 
@@ -3262,6 +3302,19 @@ document.f1.tempatmohonawal.value = "";
 
 
 }
+
+//arief add SD OPEN
+function selectRadio7(){
+	if(document.f1.sorPenentuanBidangKuasa[4].checked == true){
+		document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
+		document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = false;
+		document.f1.sorPenentuanBidangKuasa[0].checked = false;
+		document.f1.sorPenentuanBidangKuasa[2].checked = false;
+		document.f1.sorPenentuanBidangKuasa[3].checked = false;
+		document.getElementById('tableReportX').style.display="none";
+	}
+}
+//arief add SD CLOSE
 
 function putih(){
 
@@ -3291,7 +3344,7 @@ document.f1.setMode3.value = "disabled";
 document.f1.setMode4.value = "disabled";
 document.f1.setMode5.value = "";
 document.f1.setMode6.value = "";
-
+document.f1.setMode7.value = ""; //arief add
 
 }
 else
@@ -3319,6 +3372,7 @@ document.f1.setMode3.value = "disabled";
 document.f1.setMode4.value = "disabled";
 document.f1.setMode5.value = "disabled";
 document.f1.setMode6.value = "";
+document.f1.setMode7.value = ""; //arief add
 }
 else
 {
@@ -3342,6 +3396,7 @@ document.f1.setMode3.value = "disabled";
 document.f1.setMode4.value = "";
 document.f1.setMode5.value = "";  // razman buang disable
 document.f1.setMode6.value = "";
+document.f1.setMode7.value = ""; //arief add
 }
 
 
@@ -3419,6 +3474,7 @@ document.f1.setMode3.value = "";
 document.f1.setMode4.value = "disabled";
 document.f1.setMode5.value = "disabled";
 document.f1.setMode6.value = "";
+document.f1.setMode7.value = ""; //arief add
 
 
 document.f1.txtCatatan.value = "";
@@ -3460,6 +3516,7 @@ document.f1.setMode3.value = "";
 document.f1.setMode4.value = "disabled";
 document.f1.setMode5.value = "disabled";
 document.f1.setMode6.value = "";
+document.f1.setMode7.value = ""; //arief add
 
 //document.f1.txtCatatan.value = "";
 
@@ -4412,6 +4469,11 @@ if (seksyen == '8'){
 }
 	
 
+}
+
+//arief add untuk SD
+function keperintah(seksyen,idStatus){
+	document.f1.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=ekptg.view.ppk.FrmPerintahSek8&command=semakNoData&tabId=0";	
 }
 
 function cetakSuratBatalPermohonanMT(noFail) {

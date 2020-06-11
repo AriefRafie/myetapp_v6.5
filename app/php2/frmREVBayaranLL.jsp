@@ -25,8 +25,14 @@
 		 <td width="70%">$selectModBayaran</td>
         </tr>
         <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%">Kategori Bayaran</td>
+          <td width="1%">:</td>
+          <td width="70%">$selectKategoriBayaran</td>
+        </tr>
+        <tr>
           <td width="1%">#if ($mode != 'viewBayaranLL')<span class="style1">*</span>#end</td>
-          <td width="28%">Cara Bayar</td>
+          <td width="28%">Cara Bayaran</td>
           <td width="1%">:</td>
           <td width="70%">$selectCaraBayaran</td>
         </tr>

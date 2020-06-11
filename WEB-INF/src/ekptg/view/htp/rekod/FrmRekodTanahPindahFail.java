@@ -47,8 +47,10 @@ import ekptg.model.htp.rekod.HTPUtilitiRekodBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
 import ekptg.model.htp.rekod.IHTPUtilitiRekod;
-import ekptg.model.htp.rekod.IHakmilikRizab;
-import ekptg.model.htp.rekod.IHakmilikUrusan;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.ITanahCarian;
+import ekptg.model.htp.rekod.ITanahUrusan;
+import ekptg.model.htp.rekod.TanahBean;
 import ekptg.model.htp.utiliti.HTPSusulanBean;
 import ekptg.model.htp.utiliti.IHTPSusulan;
 import ekptg.model.htp.utiliti.fail.HTPFailBean;
@@ -61,11 +63,12 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
 	private final String IDSEKSYEN = "3";
 	private final String PATH="app/htp/rekod/";
 	private HakmilikInterface iHakmilik = null;
+	private ITanah iTanah = null;
 	private Hashtable hastableHakmilik = null;
-	private IHakmilikUrusan iHakmilikStatus = null;
-	private IHakmilikUrusan iHakmilikStatusP = null; 
-	private IHakmilikUrusan iHakmilikStatusS = null; 
-	private IHakmilikRizab iHakmilikRizab = null;
+	private ITanahUrusan iHakmilikStatus = null;
+	private ITanahUrusan iHakmilikStatusP = null; 
+	private ITanahUrusan iHakmilikStatusS = null; 
+	private ITanahCarian iHakmilikRizab = null;
  	private IHtp iHTP = null;  
 	private IHTPSusulan iSusulan = null;
 	private IHTPSusulan iSusulanPembangunan = null;
@@ -1478,7 +1481,7 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
 
 		// Kemaskini 2012 04 06
 		//list = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+		list = getTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
 		
 		this.context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
@@ -1509,7 +1512,7 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
 		Vector list =null;
 		// Kemaskini 2012 04 06
 		//list = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+		list = getTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
 		this.context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
 		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
@@ -1539,7 +1542,7 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
 		String idHakmilik = getParam("idHakmilik");	
 		myLog.info("idHakmilik:"+idHakmilik);
 		Vector list =null;
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+		list = getTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
 		
 		this.context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
@@ -1568,7 +1571,7 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
 		vector = new Vector();
 		// Kemaskini 2012 04 06
 		//vector = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
-		vector = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+		vector = getTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) vector.get(0);	
 		this.context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
 		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
@@ -2991,6 +2994,13 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
 			return iHakmilik;
 		}
 		
+		private ITanah getTanah(){
+			if (iTanah==null){
+				iTanah=new TanahBean();
+			}
+			return iTanah;
+		}
+		
 		//Tambah oleh Rosli pada 01/03/2011, terus papar mode kemaskini maklumat hakmilik
 		//paparan maklumat hakmilik dan bersedia untuk dikemaskini
 		private void kemaskiniMaklumatHakmilik(String idHakmilik) throws Exception {
@@ -3258,7 +3268,7 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
 		 */
 		private String maklumatFailPindah(String idHakmilik) throws Exception {
 			Vector list =null;
-			list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+			list = getTanah().getPaparMaklumatFailById(idHakmilik);
 			Hashtable hMaklumatFail = (Hashtable) list.get(0);
 			
 			context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
@@ -3286,7 +3296,7 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
 			
 		}
 		
-		private IHakmilikRizab getIHakmilikRizab(){
+		private ITanahCarian getIHakmilikRizab(){
 			if (iHakmilikRizab == null){
 				iHakmilikRizab = new FrmHakmilikRizabBean();
 			}
@@ -3299,19 +3309,19 @@ public class FrmRekodTanahPindahFail extends AjaxBasedModule {
 			return iHTP;
 		}	
 		
-		private IHakmilikUrusan getHakmilikPenyewaan(){
+		private ITanahUrusan getHakmilikPenyewaan(){
 			if(iHakmilikStatus== null)
 				iHakmilikStatus = new FrmHakmilikUrusanPenyewaanBean();
 			return iHakmilikStatus;
 		}
 		
-		private IHakmilikUrusan getHakmilikPajakan(){
+		private ITanahUrusan getHakmilikPajakan(){
 			if(iHakmilikStatusP== null)
 				iHakmilikStatusP = new FrmHakmilikUrusanPajakanBean();
 			return iHakmilikStatusP;
 		}
 		
-		private IHakmilikUrusan getHakmilikPenswastaan(){
+		private ITanahUrusan getHakmilikPenswastaan(){
 			if(iHakmilikStatusS== null)
 				iHakmilikStatusS = new FrmHakmilikUrusanPenswastaanBean();
 			return iHakmilikStatusS;

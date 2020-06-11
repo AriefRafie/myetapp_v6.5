@@ -679,7 +679,7 @@ public class FrmTKRSenaraiFailData {
 	public String daftarBaru(String idJenisTanah, String tarikhTerima,
 			String tarikhSurat, String noRujukanSurat, String perkara,
 			String idKategoriPemohon, String idKementerian, String idAgensi,
-			String idPejabat, String idHakmilikAgensi, String idPPTBorangK,
+			String idHakmilikAgensi, String idPPTBorangK,
 			String idHakmilikUrusan, String idPHPBorangK,
 			String idLuasKegunaan, String txtTujuanKegunaan,
 			String idKementerianTanah, String idNegeriTanah,
@@ -717,7 +717,7 @@ public class FrmTKRSenaraiFailData {
 
 			String kodUrusan = "879";
 
-			noFail = generateNoFail(kodUrusan,
+			noFail = generateNoFail(session, kodUrusan,
 					getKodKementerian(idKementerianTanah), idKementerianTanah,
 					getKodNegeri(idNegeriTanah), idNegeriTanah);
 			r.add("NO_FAIL", noFail);
@@ -762,7 +762,7 @@ public class FrmTKRSenaraiFailData {
 									.getString("ID_NEGERI").toUpperCase());
 				}
 
-			} else if ("8".equals(idKategoriPemohon)) {
+			} /*else if ("8".equals(idKategoriPemohon)) {
 				r.add("ID_PEJABAT", idPejabat);
 				sql = "SELECT * FROM TBLRUJPEJABATJKPTG WHERE ID_PEJABATJKPTG = '"
 						+ idPejabat + "'";
@@ -792,7 +792,7 @@ public class FrmTKRSenaraiFailData {
 							rs.getString("NO_FAX") == null ? "" : rs
 									.getString("NO_FAX"));
 				}
-			}
+			}*/
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
@@ -1017,7 +1017,7 @@ public class FrmTKRSenaraiFailData {
 		return idFailString;
 	}
 
-	public String generateNoFail(String kodUrusan, String kodKementerian,
+	public String generateNoFail(HttpSession session, String kodUrusan, String kodKementerian,
 			String idKementerian, String kodNegeri, String idNegeri)
 			throws Exception {
 		String noFail = "";
@@ -1028,7 +1028,7 @@ public class FrmTKRSenaraiFailData {
 				+ "/"
 				+ kodNegeri
 				+ "-"
-				+ File.getSeqNo(4, 6, Integer.parseInt(idKementerian),
+				+ File.getSeqNoP(session, 4, 6, Integer.parseInt(idKementerian),
 						Integer.parseInt(idNegeri));
 
 		return noFail;
@@ -1704,6 +1704,31 @@ public class FrmTKRSenaraiFailData {
 				return "";
 			}
 
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getKategoriPemohonTukarguna() throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT ID_KATEGORIPEMOHON, KOD_KATEGORIPEMOHON, KETERANGAN FROM TBLRUJKATEGORIPEMOHON"
+					+ " WHERE ID_KATEGORIPEMOHON IN (3) ORDER BY KOD_KATEGORIPEMOHON ASC";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()) {
+				return (String) rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase();
+			} else {
+				return "";
+			}
+			
 		} finally {
 			if (db != null)
 				db.close();

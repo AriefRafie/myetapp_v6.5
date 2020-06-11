@@ -319,7 +319,8 @@ public class UserPegawaiBean implements IUserPegawai {
 				sql +=" AND RP.ID_PEGAWAI = "+idPegawai;
 			
 			sql += " ORDER BY U.USER_NAME ASC";
-			//mylog.info(sql);
+			//
+			myLog.info(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String, String> h;			
 			while (rs.next()) {

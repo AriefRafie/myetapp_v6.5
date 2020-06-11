@@ -30,7 +30,13 @@ public class FrmMTBorangC extends VTemplate {
 	public Template doTemplate() throws Exception {
 		String vm = "";
 		String submit = request.getParameter("command");
+		String submit2 = request.getParameter("commandw");
 		String noFail = request.getParameter("noFail");
+		
+		if (submit2 != "") 
+		{
+			submit = submit2;
+		}
 
 		myLogger.info("COMMAND SUBMIT FORM BORANG C" + submit);
 
@@ -105,7 +111,7 @@ public class FrmMTBorangC extends VTemplate {
 					
 					
 
-			myLogger.info("SQL STATEMENT - KEPUTUSAN MT : " + sql);
+			myLogger.info("SQL STATEMENT - KEPUTUSAN MT2 : " + sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -132,7 +138,7 @@ public class FrmMTBorangC extends VTemplate {
 					+ " M.PETISYENNO AS PETISYEN_NO"
 					+ " FROM TBLINTMTKEPUTUSAN K, TBLINTMTPERMOHONAN M, TBLPFDFAIL F, TBLPPKPERMOHONAN P WHERE M.FLAG_REP = '3'"
 					+ " AND K.IDKADBIRU = M.IDKADBIRU  AND M.PETISYENNO = F.NO_FAIL  AND F.ID_FAIL = P.ID_FAIL"
-					+ " and K.FLAG_AKTIF ='Y' and M.FLAG_AKTIF='Y' " 
+					+ " and K.FLAG_AKTIF ='Y' and M.FLAG_AKTIF='Y' AND k.flag_buka = 'T' " 
 					+ " AND  P.ID_STATUS IN (8,9,14,170) AND P.ID_DAERAHMHN in "
 					+ " ( select distinct u.id_daerahurus from TBLRUJPEJABATURUSAN u, users_internal ur"
 					+ " where u.id_pejabatjkptg=ur.id_pejabatjkptg and ur.user_id='"
@@ -419,7 +425,7 @@ public class FrmMTBorangC extends VTemplate {
 					.add("M.PETISYENNO", noPetisyen)
 					.add("K.CATATAN")
 					.relate("K.IDKADBIRU", "M.IDKADBIRU")
-					.relate("KV.IDKEPUTUSAN", "K.IDKEPUTUSAN")
+					.relate("KV.IDKADBIRU", "K.IDKADBIRU")
 					
 					.getSQLSelect(
 							"TBLINTMTPERMOHONAN M, TBLINTMTKEPUTUSAN K, TBLINTMTBRGCKAVEAT KV");

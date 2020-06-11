@@ -53,6 +53,7 @@ public class FrmPLPCetakanMinitKewanganView extends AjaxBasedModule {
 		if (postDB) {
 			if ("doSeterusnya".equals(hitButton)) {
 				logic.updateStatus(idFail, idPermohonan, session);
+				logic.sendEmailtoKJP(idPermohonan, "13", session);
 			}
 			if ("doBatalPermohonan".equals(hitButton)) {
 				logic.doBatalPermohonan(idFail, idPermohonan,

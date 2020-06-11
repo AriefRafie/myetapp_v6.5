@@ -8,7 +8,7 @@
 }
 -->
 </style>
-
+#set ($PPT = "")
 <p>
   <input type="hidden" name="jeniskp" value="$jeniskp">
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
@@ -40,6 +40,8 @@
   <input name="flagAdaHAPF" type="hidden" id="flagAdaHAPF" value="$flagAdaHAPF"/>
   <input name="flagSelesaiHTA" type="hidden" id="flagSelesaiHTA" value="$flagSelesaiHTA"/>
   <input name="flagSelesaiHA" type="hidden" id="flagSelesaiHA" value="$flagSelesaiHA"/>
+  <input name="flagSelesaiHAARB" type="hidden" id="flagSelesaiHAARB" value="$flagSelesaiHAARB"/>
+  
   <input name="idHTA" type="hidden" id="idHTA" value="$idHTA"/>
   <input name="idHA" type="hidden" id="idHA" value="$idHA"/>
   <input name="idJenisHA" type="hidden" id="idJenisHA" value="$idJenisHA"/>
@@ -325,7 +327,7 @@ document.getElementById("header_lama").style.display="block";
                             <td colspan="4"> #if ($mode == 'update')
                               #if ($flagPopup == '')
                             
-                              #if ($flagSelesaiHTA == '' )
+                              #if ($flagSelesaiHTA == '' && $userRole != "user_ppk")
                               <input name="cmdTambahHTA" id="cmdTambahHTA" value="Daftar Perintah" type="button" onClick="javascript:tambahHTA()"/>
                               #end
                               #end
@@ -341,7 +343,7 @@ document.getElementById("header_lama").style.display="block";
                           #set ($PKP = "")
                          
                           #set ($listHTA = "")
-                          #set ($PPT = "")
+                          
                           
                           #set ($idPerintahHTAOBMST="")
                           
@@ -366,9 +368,10 @@ document.getElementById("header_lama").style.display="block";
                             #end
                             <td class="$row">$listHTA.jenisPerintah
 
-                            #if ($listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS")
+                            #if ($listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS" || $listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS  (FARAID)")
                             	
                             	#set ($PPT = "Ada")
+                            	
                             	
                             #end
                             
@@ -509,7 +512,7 @@ document.getElementById("header_lama").style.display="block";
                           <td class="$row"><a href="javascript:paparHTATH($listHTATH.idPerintahHTAOBMST)"><font color="#0000FF">$listHTATH.keteranganHakmilik</font><font color="#000000">$listHTATH.keterangan</font></a></td>
                           #end
                           <td class="$row">$listHTATH.jenisPerintah</td>
-                          #if ($listHTATH.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS")
+                          #if ($listHTATH.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS" || $listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS  (FARAID)")
                             	
                             	#set ($PPT = "Ada")
                             	
@@ -663,7 +666,7 @@ document.getElementById("header_lama").style.display="block";
                           <tr>
                             <td colspan="5"> #if ($mode == 'update')
                               #if ($flagPopup == '')
-                               #if ($flagSelesaiHA == '')
+                               #if ($flagSelesaiHA == '' && $userRole != "user_ppk")
                               <input name="cmdTambahHA" id="cmdTambahHA" value="Daftar Perintah" type="button" onClick="javascript:tambahHA()">
                               #end
                               #end
@@ -694,7 +697,8 @@ document.getElementById("header_lama").style.display="block";
                             #end
                             <td class="$row">$listHA.jenisPerintah
                             
-                            #if ($listHA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS")
+                            #if ($listHA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS" || $listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS  (FARAID)")
+                            	
                             	#set ($PPT = "Ada")
                             	
                             #end
@@ -983,11 +987,11 @@ document.getElementById("header_lama").style.display="block";
                       <tr><td width="100%"><div align="center">
                       
                       #if ($SimpanStatus == '2')
-                      		<input type="button" name="cmdPrint" id="cmdPrint" value="Cetak Laporan Serahan" onClick="PrintLaporan('$NAMA_PENYERAH','$Jenis_Penghantaran','$Tarikh_serahan','$Nama_Penerima','$No_Kp_Penerima','$Catatan','$noFail')"/>
+                      		<input type="button" name="cmdPrint" id="cmdPrint" value="Cetak Laporan Serahan" onClick="PrintLaporan('$NAMA_PENYERAH','$Jenis_Penghantaran','$Tarikh_serahan',document.getElementById('namaPenerima').value,'$No_Kp_Penerima','$Catatan','$noFail')"/>
                        		<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="Kemaskini()"/>
                        		
                        #else
-                       		<input type="button" name="cmdPrint" id="cmdPrint" disabled value="Cetak Laporan Serahan" onClick="PrintLaporan('$namaPenghantar','$Jenis_Penghantaran','$Tarikh_serahan','$Nama_Penerima','$No_Kp_Penerima','$Catatan','$noFail')"/>
+                       		<input type="button" name="cmdPrint" id="cmdPrint" disabled value="Cetak Laporan Serahan" onClick="PrintLaporan('$namaPenghantar','$Jenis_Penghantaran','$Tarikh_serahan',document.getElementById('namaPenerima').value,'$No_Kp_Penerima','$Catatan','$noFail')"/>
                        		<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onClick="Batal()"/>
                        	<!-- 	<input type="button" name="cmdKemaskini" disabled id="cmdKemaskini" value="Kemaskini" onClick="Kemaskini()"/> -->
                         	
@@ -2472,7 +2476,7 @@ document.getElementById("header_lama").style.display="block";
   
     <td align="center"> #if ($flagPopup == '')
       #if ($flagFromSenaraiFailSek8 == '' && $flagFromSenaraiPermohonanSek8 == '')
-       #if ($idStatus == '41' )
+       #if ($idStatus == '41' && $userRole != "user_ppk")
       <input type="button" name="cmdHantar" id="cmdHantar" value="Selesai Permohonan" onClick="javascript:selesaiPermohonan('$flagFromSenaraiFailSek8','$flagFromSenaraiPermohonanSek8','$noFail')"/>
       #end
       #if ($flagSelesaiPembahagian == 'Y')
@@ -2487,7 +2491,7 @@ document.getElementById("header_lama").style.display="block";
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="javascript:kembaliSenaraiFail('$noFail')"/>
       #end 
       #if ($flagFromSenaraiPermohonanSek8 == 'yes')
-      #if ($idStatus == '41'  )
+      #if ($idStatus == '41' && $userRole != "user_ppk" )
       <input type="button" name="cmdHantar" id="cmdHantar" value="Selesai Permohonan" onClick="javascript:selesaiPermohonan('$flagFromSenaraiFailSek8','$flagFromSenaraiPermohonanSek8','$noFail')"/>
       #end
       #if ($flagSelesaiPembahagian == 'Y' )
@@ -2514,7 +2518,7 @@ document.getElementById("header_lama").style.display="block";
 <fieldset id="tableReport" style="display:none;"-->
   <legend><strong>SENARAI LAPORAN</strong></legend>
   <table width="100%" border="0" cellspacing="2" cellpadding="2">
-	
+
   #if ($PPT == "Ada" || $flagAdaHTAPT == 1)
     <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangE('$idFail','$idPermohonanSimati','$idSimati','$idPerintahHTAOBMST')"> Borang E </a></td>
@@ -2527,7 +2531,7 @@ document.getElementById("header_lama").style.display="block";
     <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangF('$idFail')"> Borang F </a></td>
     </tr>
-    #end 
+    #end  
     <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangH('$idFail')"><font color="blue"> Borang H </font></a></td>
     </tr>
@@ -2594,7 +2598,7 @@ document.getElementById("header_lama").style.display="block";
 function cetakBorangH(idFail) {
 	//var url = "../servlet/ekptg.report.ppk.BorangH_Perintah?idfail="+idFail; 
 	
-	var url = "../servlet/ekptg.report.ppk.BorangH?idfail="+idFail+"&idobminor=";
+	var url = "../servlet/ekptg.report.ppk.BorangH?idfail="+idFail+"&idobminor="+"&BorangH_Notis=T";;
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -3561,7 +3565,7 @@ function updatePAPTHAPF(idOB,idPermohonanSimati,idSimati,statusWaris,idPerintah,
 <script>
 
 function validateGSA()
-{
+{ //alert ("validateGSA");
 	var check_GSA = true;
 	var idJenisTanah = document.${formName}.idJenisTanah.value * 1;
 	
@@ -3576,7 +3580,7 @@ function validateGSA()
 	var checklist_field_BB = document.getElementsByName("txtBB");
 	var checklist_length = document.getElementsByName("txtBA").length;
 	var bahagian = (bahagianSimatiAtas*1) / (bahagianSimatiBawah*1);
-	//alert(bahagianSimatiAtas + 'a'+bahagian);
+	//alert("bahagian " +bahagian);
 	
 	//var on_key_up_index = null;
 	
@@ -3602,7 +3606,7 @@ function validateGSA()
 	
 	//index simpan dalam array dlu
 	
-	
+	//alert("count_total_ob = "+count_total_ob)
 	if(bahagian == 1 && count_total_ob > 2)
 	{
 		alert("Bagi tanah GSA bahagian simati adalah 1/1, Sila pastikan pembahagian diberikan kepada 2 orang waris sahaja!");
@@ -4013,20 +4017,20 @@ function popupIntergrasiPerintahEtanah(idFail, idPerintah) {
 	hWnd.focus();
 }
 
-//arief add NOTIFIKASI EMAIL open
-function emailPerintah() {
-	document.${formName}.hitButt.value = "emailPerintah";
-	document.${formName}.actionEmailPerintah.value = "papar";
-	document.${formName}.submit();
-}
-function popupEmailPerintah(idFail, idPerintah) {
-	var url = ""+idPerintah+"&idFail="+idFail;
-	
-    var hWnd = window.open(url,'printuser','width=1000,height=350, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
-}
+//arief add NOTIFIKASI EMAIL open	
+function emailPerintah() {	
+	document.${formName}.hitButt.value = "emailPerintah";	
+	document.${formName}.actionEmailPerintah.value = "papar";	
+	document.${formName}.submit();	
+}	
+function popupEmailPerintah(idFail, idPerintah) {	
+	var url = ""+idPerintah+"&idFail="+idFail;	
+		
+    var hWnd = window.open(url,'printuser','width=1000,height=350, resizable=yes,scrollbars=yes');	
+    if ((document.window != null) && (!hWnd.opener))	
+       hWnd.opener = document.window;	
+    if (hWnd.focus != null) hWnd.focus();	
+	hWnd.focus();	
+}	
 //arief add NOTIFIKASI EMAIL close
 </script>

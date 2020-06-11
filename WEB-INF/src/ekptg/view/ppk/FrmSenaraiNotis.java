@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import lebah.portal.AjaxBasedModule;
@@ -158,8 +159,9 @@ public class FrmSenaraiNotis extends AjaxBasedModule {
 		Vector tarikdariHeader = new Vector();
 		tarikdariHeader.clear();
 		
-		modelNotis.setListDefault(usid);
-		listdepan = modelNotis.getListDefault();
+		//Razman comment, apa tujuan??
+		//modelNotis.setListDefault(usid);
+		//listdepan = modelNotis.getListDefault();
 		
 		
 		String emailAddress = getParam("txtAlamatEmel");
@@ -1482,6 +1484,8 @@ System.out.println("flag===="+flag);
 			String idpejabat = "";
 			String idjenispejabat = "";
 			String tempatBicara = "";
+			String  SIGNED_TEXT = "";
+			String  tarikh_bicara_dahulu = "";
 
 			Hashtable idn = new Hashtable();
 
@@ -1494,8 +1498,10 @@ System.out.println("flag===="+flag);
 				idpejabat = idn.get("id_pejabat").toString();
 				tempatBicara = idn.get("tempat_bicara").toString();
 				idjenispejabat = idn.get("id_jenispejabat").toString();
+				SIGNED_TEXT = idn.get("SIGNED_TEXT").toString();
+				
 			}
-
+			context.put("CHECK_SIGNED_TEXT", SIGNED_TEXT);
 			// get selected ob
 			modelNotis.setSelectedOB(idperbicaraan, id_permohonansimati,
 					idSimati);
@@ -1591,6 +1597,7 @@ System.out.println("flag===="+flag);
 			context.put("id_status", idStatus);
 			context.put("id_fail", idFail);
 			context.put("idpejabatjkptg", idPejabatJKPTG);
+			context.put("SIGNED_TEXT", SIGNED_TEXT);
 			myLogger.info("idPejabatJKPTG="+idPejabatJKPTG);
 
 			// list & data
@@ -2055,7 +2062,7 @@ System.out.println("idPegawai==="+idPegawai);
 				idPejabatJKPTG = ls.get("id_pejabatjkptg").toString();
 				id_negeri = ls.get("pmidnegeri").toString();
 			}
-			//System.out.println("id negeri :::"+id_negeri);
+			myLogger.info("id negeri :::"+id_negeri);
 			// data notis
 			modelNotis.setListSemakWithData(idkp);
 			dataNotis = modelNotis.getListSemakWithData();
@@ -2238,23 +2245,29 @@ System.out.println("idPegawai==="+idPegawai);
 			}
 
 			if (id_negeri != "") {
+				myLogger.info("Read Here1");
 				if (idpsk != "") {
+					myLogger.info("Read Here2");
 					context.put("SELECTPegawai", HTML
 							.SelectPegawaiPengendaliByNegeri(id_negeri,
 									"editPegawai", Utils.parseLong(idpsk),
 									"style=width:305"));
 				} else {
+					myLogger.info("Read Here3");
 					context.put("SELECTPegawai", HTML
 							.SelectPegawaiPengendaliByNegeri(id_negeri,
 									"editPegawai", null, "style=width:305"));
 				}
 
 			} else {
+				myLogger.info("Read Here4");
 				if (idpsk != "") {
+					myLogger.info("Read Here5");
 					context.put("SELECTPegawai", HTML.SelectPegawaiPengendali(
 							"editPegawai", Utils.parseLong(idpsk),
 							"style=width:305"));
 				} else {
+					myLogger.info("Read Here6");
 					context.put("SELECTPegawai", HTML.SelectPegawaiPengendali(
 							"editPegawai", null, "style=width:305"));
 				}
@@ -2267,8 +2280,24 @@ System.out.println("idPegawai==="+idPegawai);
 			}
 			
 			context.put("flag_cuti", flag_cuti);
-
+			
+			
+			// get senarai penerima notis
+			modelNotis.setListPenerimaNotis(idb,
+					getParam("id_permohonansimati_atheader"));
+			listPenerimaNotis = modelNotis.getListPenerimaNotis();
+			context.put("listPenerimaNotis", listPenerimaNotis);
 			// screen
+			
+			
+			boolean statusHantarPNB = false;
+			// validate status hantar PNB
+			statusHantarPNB = modelNotis.getPNBValidation(idb);//tutup jap
+			if (statusHantarPNB) {
+				context.put("statusPNB", "yes");
+			} else {
+				context.put("statusPNB", "no");
+			}
 			vm = screen1;
 
 		}// close kemaskini
@@ -3079,6 +3108,50 @@ System.out.println("idPegawai==="+idPegawai);
 			// list maklumat penjaga
 			modelNotis.setMaklumatPenjaga(id_permohonansimati, idSimati);
 			listMaklumatPenjaga = modelNotis.getMaklumatPenjaga();
+			
+			
+			
+			// get senarai penerima notis
+			modelNotis.setListPenerimaNotis(idperbicaraan,id_permohonansimati);
+			listPenerimaNotis = modelNotis.getListPenerimaNotis();
+			context.put("listPenerimaNotis", listPenerimaNotis);
+		
+			modelNotis.setListSerahanNotis(idperbicaraan, id_permohonansimati);
+			listSerahanNotis = modelNotis.getListSerahanNotis();
+			context.put("listSerahanNotis", listSerahanNotis);
+	
+			
+			//aishahlatip
+			//get count ob
+			modelNotis.setCountSemuaOB(id_permohonansimati, idSimati, "8", idperbicaraan);
+			listCountOB = modelNotis.getCountSemuaOB();
+			String countOB = "";
+			if (listCountOB.size() != 0) {
+				Hashtable ls = (Hashtable) listCountOB.get(0);
+				countOB = ls.get("countAllOB").toString() ;
+			}
+			
+			//aishahlatip
+			//get count penerima notis
+			modelNotis.setCountPenerimaNotis(idperbicaraan, id_permohonansimati);
+			listCountPenerimaNotis = modelNotis.getCountPenerimaNotis();
+			String countPenerimaNotis = "";
+			if (listCountPenerimaNotis.size() != 0) {
+				Hashtable ls = (Hashtable) listCountPenerimaNotis.get(0);
+				countPenerimaNotis = ls.get("countPenerimaNotis").toString() ;
+			}
+			
+			String isAllSendNotis = "";
+			if(!countOB.equals("0")){
+				if(countOB.equals(countPenerimaNotis)){
+					isAllSendNotis = "yes";
+				}else{
+					isAllSendNotis = "no";
+				}
+			}
+			context.put("isAllSendNotis", isAllSendNotis);
+
+			
 
 			// id
 			context.put("id_permohonan", id);
@@ -3130,6 +3203,8 @@ System.out.println("idPegawai==="+idPegawai);
 			if (doPost.equals("true")) {
 				//SIMPAN NOTIS BARU
 				simpanNotis(session);
+				//simpanNotis_temp(session);
+				
 			}
 
 			id = getParam("id_permohonan");
@@ -3215,6 +3290,7 @@ System.out.println("idPegawai==="+idPegawai);
 			modelNotis.setListSerahanNotis(idperbicaraan, id_permohonansimati);
 			listSerahanNotis = modelNotis.getListSerahanNotis();
 			context.put("listSerahanNotis", listSerahanNotis);
+	
 			
 			//aishahlatip
 			//get count ob
@@ -4904,14 +4980,14 @@ System.out.println("idPegawai==="+idPegawai);
 			
 			boolean statusHantarPNB = false;
 			// validate status hantar PNB
-			statusHantarPNB = modelNotis.getPNBValidation(idpbrn);
+			statusHantarPNB = modelNotis.getPNBValidation(idpbrn);//tutup jap
+			
 			if (statusHantarPNB) {
 				context.put("statusPNB", "yes");
 			} else {
 				context.put("statusPNB", "no");
 			}
-			
-			
+			myLogger.info("statusHantarPNB==="+statusHantarPNB);
 
 			// get list ob
 			modelNotis.setListSemuaOB(id_permohonansimati, idSimati, "8",null);
@@ -4995,6 +5071,8 @@ System.out.println("idPegawai==="+idPegawai);
 			context.put("lain2PeghantarNotis", lain2PeghantarNotis);
 			
 			System.out.println("selectedTab3==="+selectedTab);
+			
+			String signedData = getParam("signedData");
 			String open_pupop = getParam("open_pupop");
 			if(open_pupop.equals("Y"))
 			{
@@ -5002,7 +5080,8 @@ System.out.println("idPegawai==="+idPegawai);
 				context.put("open_pupop",open_pupop);
 				context.put("NO_FAIL", getParam("NO_FAIL"));
 				context.put("id_perbicaraan", getParam("id_perbicaraan"));
-				context.put("idfail", getParam("idfail"));				
+				context.put("idfail", getParam("idfail"));	
+				context.put("signedData", getParam("signedData"));				
 			}
 			else
 			{
@@ -5010,8 +5089,9 @@ System.out.println("idPegawai==="+idPegawai);
 			}
 			
 
-
-			
+			//GET SIGNEDDATA
+			String dataDahSign = modelNotis.getSignedData(getParam("id_perbicaraan"));
+			context.put("dataDahSign", dataDahSign);
 
 			vm = screen1;
 
@@ -6402,7 +6482,10 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 
 			
 			//System.out.println("id_OB====="+id_OB);
-			/*String[] id_ob_hidden = request.getParameterValues("idob_hidden");
+		
+		   ServletContext application=getServletContext();  //email attachment
+		
+			String[] id_ob_hidden = request.getParameterValues("idob_hidden");
 			System.out.println("radioJenisSerah.length"+id_ob_hidden.length);
 			String pilihanradio = "";
 			if(id_ob_hidden!=null){
@@ -6473,9 +6556,6 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 					}
 					//end
 					
-					
-					
-					
 					h.put("jenis_serah", "1");
 					h.put("status_serah", "1");
 					h.put("nama_penghantar_notis", "");
@@ -6487,9 +6567,9 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 					h.put("jenis_serah", "3");
 					h.put("status_serah", "");
 					h.put("nama_penghantar_notis", "");
-					h.put("id_penghantarnotis", "");
+					h.put("id_penghantarnotis", "99999");
 					h.put("alamatEmel", "");//nanti buat
-					h.put("NAMA_PENGHANTAR_LAIN", "");
+					h.put("NAMA_PENGHANTAR_LAIN", "EMEL");
 					
 					
 				}else if( pilihanradio.equals("5")){//send PNMB
@@ -6497,29 +6577,38 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 					h.put("jenis_serah", "5");
 					h.put("status_serah", "");
 					h.put("nama_penghantar_notis", "");
-					h.put("id_penghantarnotis", "");
+					h.put("id_penghantarnotis", "99999");
 					h.put("alamatEmel", "");
-					h.put("NAMA_PENGHANTAR_LAIN", "");
+					h.put("NAMA_PENGHANTAR_LAIN", "PNMB");
 					
 				}
-				}else{
+				
+				
+				h.put("id_masuk", usid);
+				modelNotis.addHantarLaporanNotisTemp(h,id_ob_hidden[i],idPerbicaraan,session,application,request, response); //hide attachment
+				}
+				/*}else{
 					h.put("jenis_serah", "");
 					h.put("status_serah", "");
 					h.put("nama_penghantar_notis", "");
 					h.put("id_penghantarnotis", "");
 					h.put("alamatEmel", "");
 					h.put("NAMA_PENGHANTAR_LAIN", "");
-				}
+					
+					
+					ServletContext application=getServletContext(); 
+					h.put("id_masuk", usid);
+					modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],idPerbicaraan,session,application,request, response); //hide attachment
+					
+				}*/
 				
 				//Simpan Tblppknotisobmst
-				//ServletContext application=getServletContext(); 
-				h.put("id_masuk", usid);
+				
 				//modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],idPerbicaraan,session,application,request, response); //hide attachment
-				modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],idPerbicaraan);
 	    	
 			}
 			 
-		}*/
+		}
 			
 			//mobile notification 06092017
 			Push.genMsgPush(id_fail, "bicara");
@@ -6527,6 +6616,258 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 
 	}// close addnotis
 
+	// Simpan notis
+		private void simpanNotis_temp(HttpSession session) throws Exception {
+
+			Hashtable h = new Hashtable();
+
+			String id_permohonansimati = getParam("idpermohonansimati");
+			String idSimati = getParam("id_simati");
+			
+			
+			String id_permohonan = getParam("id_permohonan");
+			String id_fail = getParam("id_fail");
+			String id_suburusanstatusfail = getParam("id_suburusanstatusfail");
+
+			String id_keputusanpermohonan = getParam("id_keputusanpermohonan");
+
+			String tarikh_bicara = getParam("txdTarikhBicara");
+			String masa_bicara = getParam("txtMasaBicara");
+			String tempat_bicara = getParam("socTempatBicara");
+			String alamat_bicara1 = getParam("txtAlamatBicara1");
+			String alamat_bicara2 = getParam("txtAlamatBicara2");
+			String alamat_bicara3 = getParam("txtAlamatBicara3");
+			String poskod = getParam("txtPoskod");
+			String pegawai = getParam("socPegawai");
+			String tarikh_notis = getParam("txdTarikhNotis");
+
+			// -- 09122009
+			String socJenisWaktu = getParam("socJenisWaktu");
+			h.put("socJenisWaktu", socJenisWaktu);
+
+			String jenispejabat = getParam("jenisPejabat");
+
+			String negeri = "";
+
+			if (!jenispejabat.equals("0")) {
+				negeri = getParam("idnegeri");
+			} else {
+				negeri = getParam("socNegeri");
+			}
+
+			h.put("id_permohonan", id_permohonan);
+			h.put("id_fail", id_fail);
+			h.put("id_suburusanstatusfail", id_suburusanstatusfail);
+			h.put("id_keputusanpermohonan", id_keputusanpermohonan);
+			h.put("tarikh_bicara", tarikh_bicara);
+			h.put("masa_bicara", masa_bicara);
+			h.put("tempat_bicara", tempat_bicara);
+			h.put("alamat_bicara1", alamat_bicara1);
+			h.put("alamat_bicara2", alamat_bicara2);
+			h.put("alamat_bicara3", alamat_bicara3);
+			h.put("poskod", poskod);
+			h.put("negeri", negeri);
+			h.put("pegawai", pegawai);
+			h.put("tarikh_notis", tarikh_notis);
+			h.put("id_masuk", session.getAttribute("_ekptg_user_id"));
+
+			if (jenispejabat.equals("1")) {
+				h.put("jenispejabat", "22");
+			} else if (jenispejabat.equals("2")) {
+				h.put("jenispejabat", "2");
+			} else if (jenispejabat.equals("0")) {
+				h.put("jenispejabat", "0");
+			} else {
+				h.put("jenispejabat", "22");
+			}
+			
+			//ADD NOTIS BARU
+			String idPerbicaraan = modelNotis.addNotis(session, h);
+			System.out.println("idPerbicaraan===="+idPerbicaraan);
+			
+			String[] idsOB = request.getParameterValues("idsOB");
+			
+			System.out.println("idsOB.length===="+idsOB.length);
+			if(idsOB!=null){
+				for (int x = 0; x < idsOB.length; x++) {
+	    			modelNotis.addListOb(h,idsOB[x]);
+	    		}
+			}
+			
+			String[] idsPemiutang = request.getParameterValues("idsPemiutang");
+			if(idsPemiutang!=null){
+				for (int i = 0; i < idsPemiutang.length; i++) {
+	    			modelNotis.addListOb(h,idsPemiutang[i]);
+	    		}
+			}
+			
+		
+			//aishahlatip
+			Vector listCanSendOB = new Vector();
+			modelNotis.setSemuaOB4HantarNotis(id_permohonansimati, idSimati, "8", idPerbicaraan);
+			listCanSendOB = modelNotis.getListCanSendOB();
+			
+			String usid = (String) session.getAttribute("_ekptg_user_id");
+
+			Vector penghantarNotisByJkptg = new Vector();
+			Vector penghantarNotis = new Vector();
+			Vector list = new Vector();
+			
+			modelNotis.setListSemak(id_permohonan, usid);
+			list = modelNotis.getListSemak();
+			
+			
+			String id_OB = "";
+			String nama_ob = "";
+			String no_kp_baru = "";
+			String no_kp_lama = "";
+			String no_kp_lain = "";
+	/*		
+			if (listCanSendOB.size() != 0) {
+				Hashtable ls = (Hashtable) listCanSendOB.get(0);
+				id_OB = ls.get("id_ob_can").toString() ;
+				nama_ob = ls.get("nama_ob_can").toString() ;
+				no_kp_baru = ls.get("no_kp_baru").toString() ;
+				no_kp_lama = ls.get("no_kp_lama").toString() ;
+				no_kp_lain = ls.get("no_kp_lain").toString() ;
+			
+				
+				h.put("id_OB", id_OB);
+				h.put("nama_ob", nama_ob);
+				h.put("no_kp_baru", no_kp_baru);
+				h.put("no_kp_lama", no_kp_lama);
+				h.put("no_kp_lain", no_kp_lain);
+				*/
+
+				
+				//System.out.println("id_OB====="+id_OB);
+				String[] id_ob_hidden = request.getParameterValues("idob_hidden");
+				System.out.println("radioJenisSerah.length"+id_ob_hidden.length);
+				String pilihanradio = "";
+				if(id_ob_hidden!=null){
+					for (int i = 0; i < id_ob_hidden.length; i++) {
+						
+						
+						//aishahlatip
+						Vector listOBhidden = new Vector();
+						modelNotis.setMaklumatOBhidden(id_permohonansimati, idSimati, "8", idPerbicaraan,id_ob_hidden[i]);
+						listOBhidden = modelNotis.getListOBhidden();
+						
+						if (listOBhidden.size() != 0) {
+							Hashtable hs = (Hashtable) listOBhidden.get(0);
+							id_OB = hs.get("id_ob_can").toString() ;
+							nama_ob = hs.get("nama_ob_can").toString() ;
+							no_kp_baru = hs.get("no_kp_baru").toString() ;
+							no_kp_lama = hs.get("no_kp_lama").toString() ;
+							no_kp_lain = hs.get("no_kp_lain").toString() ;
+							
+							
+							h.put("id_OB", id_OB);
+							h.put("nama_ob", nama_ob);
+							h.put("no_kp_baru", no_kp_baru);
+							h.put("no_kp_lama", no_kp_lama);
+							h.put("no_kp_lain", no_kp_lain);
+						
+						}
+						
+						System.out.println("id_ob_hidden[i]==="+id_ob_hidden[i]);
+				
+					pilihanradio = request.getParameter("radioJenisSerah"+id_ob_hidden[i]);
+					System.out.println("pilihanradio==="+pilihanradio);
+			
+					if(pilihanradio!=null){
+					if(pilihanradio.equals("1")){//serahan Tangan
+						
+						//dapatkan maklumat penghantar notis
+						String idStatus = "";
+						String idPejabatJKPTG = "";
+						String id_penghantarnotis = "";
+						String nama_penghantar_notis = "";
+
+						if (list.size() != 0) {
+							Hashtable ls2 = (Hashtable) list.get(0);
+							
+							idPejabatJKPTG = ls2.get("id_pejabatjkptg").toString();
+						}
+
+						modelNotis.setPenghantarNotisByJkptg(idPejabatJKPTG);
+						penghantarNotisByJkptg = modelNotis.getPenghantarNotisByJkptg();
+						// and
+						modelNotis.setPenghantarNotis();
+						penghantarNotis = modelNotis.getPenghantarNotis();
+						
+						if (penghantarNotisByJkptg.size() != 0) {
+					
+								Hashtable ls3 = (Hashtable) penghantarNotisByJkptg.get(0);
+								
+								id_penghantarnotis = ls3.get("id_penghantarnotis").toString();
+								nama_penghantar_notis = ls3.get("nama").toString();
+								
+								h.put("nama_penghantar_notis", nama_penghantar_notis);
+								h.put("id_penghantarnotis", id_penghantarnotis);
+							
+						} else {
+							h.put("nama_penghantar_notis", nama_penghantar_notis);
+							h.put("id_penghantarnotis", id_penghantarnotis);
+						}
+						//end
+						
+						
+						
+						
+						h.put("jenis_serah", "1");
+						h.put("status_serah", "1");
+						h.put("nama_penghantar_notis", "");
+						h.put("id_penghantarnotis", "");
+						h.put("alamatEmel", "");//nanti buat
+						h.put("NAMA_PENGHANTAR_LAIN", "");
+						
+					}else if(pilihanradio.equals("3")){//send email
+						h.put("jenis_serah", "3");
+						h.put("status_serah", "");
+						h.put("nama_penghantar_notis", "");
+						h.put("id_penghantarnotis", "99999");
+						h.put("alamatEmel", "");//nanti buat
+						h.put("NAMA_PENGHANTAR_LAIN", "EMEL");
+						
+						
+					}else if( pilihanradio.equals("5")){//send PNMB
+						
+						h.put("jenis_serah", "5");
+						h.put("status_serah", "");
+						h.put("nama_penghantar_notis", "");
+						h.put("id_penghantarnotis", "99999");
+						h.put("alamatEmel", "");
+						h.put("NAMA_PENGHANTAR_LAIN", "PNMB");
+						
+					}
+					}else{
+						h.put("jenis_serah", "");
+						h.put("status_serah", "");
+						h.put("nama_penghantar_notis", "");
+						h.put("id_penghantarnotis", "");
+						h.put("alamatEmel", "");
+						h.put("NAMA_PENGHANTAR_LAIN", "");
+					}
+					
+					//Simpan Tblppknotisobmst
+					ServletContext application=getServletContext(); 
+					h.put("id_masuk", usid);
+					modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],idPerbicaraan,session,application,request, response); //hide attachment
+					modelNotis.addHantarLaporanNotisTemp(h,id_ob_hidden[i],idPerbicaraan,session,application,request, response); //hide attachment
+					//modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],idPerbicaraan);
+		    	
+				}
+				 
+			}
+				
+				//mobile notification 06092017
+				Push.genMsgPush(id_fail, "bicara");
+			
+
+		}// close addnotis
+
+	
 	// Simpan notis tambah
 	private void simpanNotisTambah(HttpSession session) throws Exception {
 
@@ -6621,6 +6962,152 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 		Vector listCanSendOB = new Vector();
 		modelNotis.setSemuaOB4HantarNotis(id_permohonansimati, idSimati, "8", idPerbicaraan);
 		listCanSendOB = modelNotis.getListCanSendOB();
+		
+		
+		String usid = (String) session.getAttribute("_ekptg_user_id");
+
+		Vector penghantarNotisByJkptg = new Vector();
+		Vector penghantarNotis = new Vector();
+		Vector list = new Vector();
+		
+		modelNotis.setListSemak(id_permohonan, usid);
+		list = modelNotis.getListSemak();
+		
+		String id_OB = "";
+		String nama_ob = "";
+		String no_kp_baru = "";
+		String no_kp_lama = "";
+		String no_kp_lain = "";
+		
+		
+		 ServletContext application=getServletContext();  //email attachment
+			
+			String[] id_ob_hidden = request.getParameterValues("idob_hidden");
+			System.out.println("radioJenisSerah.length"+id_ob_hidden.length);
+			String pilihanradio = "";
+			if(id_ob_hidden!=null){
+				for (int i = 0; i < id_ob_hidden.length; i++) {
+					
+					
+					//aishahlatip
+					Vector listOBhidden = new Vector();
+					modelNotis.setMaklumatOBhidden(id_permohonansimati, idSimati, "8", idPerbicaraan,id_ob_hidden[i]);
+					listOBhidden = modelNotis.getListOBhidden();
+					
+					if (listOBhidden.size() != 0) {
+						Hashtable hs = (Hashtable) listOBhidden.get(0);
+						id_OB = hs.get("id_ob_can").toString() ;
+						nama_ob = hs.get("nama_ob_can").toString() ;
+						no_kp_baru = hs.get("no_kp_baru").toString() ;
+						no_kp_lama = hs.get("no_kp_lama").toString() ;
+						no_kp_lain = hs.get("no_kp_lain").toString() ;
+						
+						
+						h.put("id_OB", id_OB);
+						h.put("nama_ob", nama_ob);
+						h.put("no_kp_baru", no_kp_baru);
+						h.put("no_kp_lama", no_kp_lama);
+						h.put("no_kp_lain", no_kp_lain);
+					
+					}
+					
+					System.out.println("id_ob_hidden[i]==="+id_ob_hidden[i]);
+			
+				pilihanradio = request.getParameter("radioJenisSerah"+id_ob_hidden[i]);
+				System.out.println("pilihanradio==="+pilihanradio);
+		
+				if(pilihanradio!=null){
+				if(pilihanradio.equals("1")){//serahan Tangan
+					
+					//dapatkan maklumat penghantar notis
+					String idStatus = "";
+					String idPejabatJKPTG = "";
+					String id_penghantarnotis = "";
+					String nama_penghantar_notis = "";
+
+					if (list.size() != 0) {
+						Hashtable ls2 = (Hashtable) list.get(0);
+						
+						idPejabatJKPTG = ls2.get("id_pejabatjkptg").toString();
+					}
+
+					modelNotis.setPenghantarNotisByJkptg(idPejabatJKPTG);
+					penghantarNotisByJkptg = modelNotis.getPenghantarNotisByJkptg();
+					// and
+					modelNotis.setPenghantarNotis();
+					penghantarNotis = modelNotis.getPenghantarNotis();
+					
+					if (penghantarNotisByJkptg.size() != 0) {
+				
+							Hashtable ls3 = (Hashtable) penghantarNotisByJkptg.get(0);
+							
+							id_penghantarnotis = ls3.get("id_penghantarnotis").toString();
+							nama_penghantar_notis = ls3.get("nama").toString();
+							
+							h.put("nama_penghantar_notis", nama_penghantar_notis);
+							h.put("id_penghantarnotis", id_penghantarnotis);
+						
+					} else {
+						h.put("nama_penghantar_notis", nama_penghantar_notis);
+						h.put("id_penghantarnotis", id_penghantarnotis);
+					}
+					//end
+					
+					h.put("jenis_serah", "1");
+					h.put("status_serah", "1");
+					h.put("nama_penghantar_notis", "");
+					h.put("id_penghantarnotis", "");
+					h.put("alamatEmel", "");//nanti buat
+					h.put("NAMA_PENGHANTAR_LAIN", "");
+					
+				}else if(pilihanradio.equals("3")){//send email
+					h.put("jenis_serah", "3");
+					h.put("status_serah", "");
+					h.put("nama_penghantar_notis", "");
+					h.put("id_penghantarnotis", "99999");
+					h.put("alamatEmel", "");//nanti buat
+					h.put("NAMA_PENGHANTAR_LAIN", "EMEL");
+					
+					
+				}else if( pilihanradio.equals("5")){//send PNMB
+					
+					h.put("jenis_serah", "5");
+					h.put("status_serah", "");
+					h.put("nama_penghantar_notis", "");
+					h.put("id_penghantarnotis", "99999");
+					h.put("alamatEmel", "");
+					h.put("NAMA_PENGHANTAR_LAIN", "PNMB");
+					
+				}
+				
+				
+				h.put("id_masuk", usid);
+				modelNotis.addHantarLaporanNotisTemp(h,id_ob_hidden[i],idPerbicaraan,session,application,request, response); //hide attachment
+				}
+				/*}else{
+					h.put("jenis_serah", "");
+					h.put("status_serah", "");
+					h.put("nama_penghantar_notis", "");
+					h.put("id_penghantarnotis", "");
+					h.put("alamatEmel", "");
+					h.put("NAMA_PENGHANTAR_LAIN", "");
+					
+					
+					ServletContext application=getServletContext(); 
+					h.put("id_masuk", usid);
+					modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],idPerbicaraan,session,application,request, response); //hide attachment
+					
+				}*/
+				
+				//Simpan Tblppknotisobmst
+				
+				//modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],idPerbicaraan,session,application,request, response); //hide attachment
+	    	
+			}
+			 
+		}
+		
+		
 
 	}// close addnotis tambah
 
@@ -6655,7 +7142,9 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 		String id_fail = getParam("id_fail_atheader");
 
 		String negeri = "";
-
+		String sebab_pinda_tarikh = getParam("sebab_pinda_tarikh");
+		String tarikh_bicara_dahulu = getParam("tarikh_bicara_dahulu");
+		
 		if (!jenispejabat.equals("0")) {
 			negeri = getParam("idnegeri");
 		} else {
@@ -6665,7 +7154,10 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 		h.put("id_fail", id_fail);
 		h.put("id_perbicaraan", id_perbicaraan);
 		h.put("id_keputusanpermohonan", id_keputusanpermohonan);
-
+		h.put("sebab_pinda_tarikh", sebab_pinda_tarikh);
+		h.put("tarikh_bicara_dahulu", tarikh_bicara_dahulu);
+		
+		
 		// -- 09122009
 		String socJenisWaktu = getParam("socJenisWaktu");
 		h.put("socJenisWaktu", socJenisWaktu);
@@ -6713,21 +7205,10 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
     		}
 		}
 		
-		
-		//aishahlatip
-		//delete all table involved
-		/*String[] id_obx = request.getParameterValues("idob_hidden");
-		if(id_obx!=null){
-			for (int i = 0; i < id_obx.length; i++) {
-				
-			String ID_NOTISOBMST = modelNotis.getID_NOTISOBMST(id_obx[i]);
-			
-			modelNotis.deleteTBLPPKNOTISOBDTL(ID_NOTISOBMST);	//delete TBLPPKNOTISOBDTL	
-			modelNotis.deleteTBLPPKNOTISPERBICARAAN(ID_NOTISOBMST);	//delete TBLPPKNOTISPERBICARAAN	
-			modelNotis.deleteTBLPPKNOTISOBMST(ID_NOTISOBMST);	//delete TBLPPKNOTISOBMST	
-			
-			}
-		}*/
+			//aishahlatip
+			boolean statusHantarPNB = false;
+			// validate status hantar PNB
+			statusHantarPNB = modelNotis.getPNBValidation(id_perbicaraan);//tutup jap
 		
 				Vector listCanSendOB = new Vector();
 				modelNotis.setSemuaOB4HantarNotis(id_permohonansimati, idSimati, "8", id_perbicaraan);
@@ -6742,19 +7223,46 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 				modelNotis.setListSemak(id_permohonan, usid);
 				list = modelNotis.getListSemak();
 				
-				
 				String id_OB = "";
 				String nama_obs = "";
 				String no_kp_baru = "";
 				String no_kp_lama = "";
 				String no_kp_lain = "";
 
-					
 					//System.out.println("id_OB====="+id_OB);
 					String[] id_ob_hidden = request.getParameterValues("idob_hidden");
-					System.out.println("radioJenisSerah.length"+id_ob_hidden.length);
+					System.out.println("id_ob_hidden.length"+id_ob_hidden.length);
 					String pilihanradio = "";
 					if(id_ob_hidden!=null){
+						
+						String[] id_obx = request.getParameterValues("idob_hidden");
+						if(id_obx!=null){
+							
+							//System.out.println(" id_obx.length==="+ id_obx.length);
+							for (int w = 0; w < id_obx.length; w++) {
+							
+							Vector<Hashtable<String,String>> ID_NOTISOBMST = modelNotis.getID_NOTISOBMST(id_obx[w],statusHantarPNB);
+							//clear rekod HA balik
+							for(int x=0; x < ID_NOTISOBMST.size(); x++)
+							{
+									Hashtable<String,String> h2 = (Hashtable<String,String>) ID_NOTISOBMST.get(x);
+													
+									myLogger.info("---ID_NOTISOBMST :"+h2.get("ID_NOTISOBMST").toString());
+									//delete all table temp involved
+									if(statusHantarPNB==false){
+										if(pilihanradio!=null){
+												modelNotis.deleteTBLPPKNOTISOBDTL(h2.get("ID_NOTISOBMST").toString(),id_perbicaraan);	//delete TBLPPKNOTISOBDTL	
+												modelNotis.deleteTBLPPKNOTISPERBICARAAN(h2.get("ID_NOTISOBMST").toString(),id_perbicaraan);	//delete TBLPPKNOTISPERBICARAAN	
+												modelNotis.deleteTBLPPKNOTISOBMST(h2.get("ID_NOTISOBMST").toString(),id_perbicaraan);	//delete TBLPPKNOTISOBMST	
+										}
+									}
+									
+							 }
+							
+							}
+						}
+						
+						
 						for (int i = 0; i < id_ob_hidden.length; i++) {
 					
 							
@@ -6773,20 +7281,20 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 								
 								
 								h.put("id_OB", id_OB);
-								h.put("nama_obs", nama_obs);
+								h.put("nama_ob", nama_obs);
 								h.put("no_kp_baru", no_kp_baru);
 								h.put("no_kp_lama", no_kp_lama);
 								h.put("no_kp_lain", no_kp_lain);
-							//	System.out.println("nama_obs==="+nama_obs);
+								System.out.println("nama_obs==="+nama_obs);
 							}
 					
 						pilihanradio = request.getParameter("radioJenisSerah"+id_ob_hidden[i]);
-						//System.out.println("pilihanradio==="+pilihanradio);
+						System.out.println("pilihanradio==="+pilihanradio);
 						
 						if(pilihanradio!=null){
 						if(pilihanradio.equals("1")){//serahan Tangan
 							
-							/*//dapatkan maklumat penghantar notis
+							//dapatkan maklumat penghantar notis
 							String idStatus = "";
 							String idPejabatJKPTG = "";
 							String id_penghantarnotis = "";
@@ -6823,11 +7331,10 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 							}
 							//end
 							
-							h.put("jenis_serah", "1");
+							/*h.put("jenis_serah", "1");
 							h.put("status_serah", "1");
 							h.put("alamatEmel", "");
-							h.put("NAMA_PENGHANTAR_LAIN", "");
-							*/
+							h.put("NAMA_PENGHANTAR_LAIN", "");*/
 							
 							h.put("jenis_serah", "1");
 							h.put("status_serah", "1");
@@ -6840,9 +7347,9 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 							h.put("jenis_serah", "3");
 							h.put("status_serah", "");
 							h.put("nama_penghantar_notis", "");
-							h.put("id_penghantarnotis", "");
+							h.put("id_penghantarnotis", "99999");
 							h.put("alamatEmel", "");//nanti buat
-							h.put("NAMA_PENGHANTAR_LAIN", "");
+							h.put("NAMA_PENGHANTAR_LAIN", "EMEL");
 							
 							
 							
@@ -6852,25 +7359,24 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 							h.put("jenis_serah", "5");
 							h.put("status_serah", "");
 							h.put("nama_penghantar_notis", "");
-							h.put("id_penghantarnotis", "");
+							h.put("id_penghantarnotis", "99999");
 							h.put("alamatEmel", "");
-							h.put("NAMA_PENGHANTAR_LAIN", "");
+							h.put("NAMA_PENGHANTAR_LAIN", "PNMB");
 							
 							
 						}
+						
 						h.put("id_masuk", usid);
-						//Simpan Tblppknotisobmst
+						//modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],id_perbicaraan);
+						
 						//utk ada attachment dlm email -- En man
-					//	ServletContext application=getServletContext(); //hide attachment
-						modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],id_perbicaraan);
-						//modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],id_perbicaraan,session,application,request, response);//hide attachment
+						ServletContext application=getServletContext(); //hide attachment
+						modelNotis.addHantarLaporanNotisTemp(h,id_ob_hidden[i],id_perbicaraan,session,application,request, response);//hide attachment
+						
+							
 						}
-						
-						
-						
-						
-				}
-			}
+						}//tutup for
+					}
 					
 					//mobile notification 06092017
 					Push.genMsgPush(id_fail, "bicara");

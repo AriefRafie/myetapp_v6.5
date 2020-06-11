@@ -338,7 +338,7 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	}//close 
 	//penambahan yati
 	@SuppressWarnings("unchecked")
-	public void setMaklumatTanahTerperinci(String idHakmilik) throws Exception {
+	public void setMaklumatTanahTerperinci(String idHakmilik) throws Exception { //PPT-42
 		
 		maklumatTanahTerperinci = new Vector();
 		
@@ -361,7 +361,9 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 				sql += " a.jarak_bandar,a.id_pelapor,a.ulasan_pegawai,a.harga_seunit_akhir,a.unit_harga_akhir,a.naik_nilai_jpph, ";
 				sql += " a.amaun_pecahpisah_jpph,a.amaun_penjejasan_jpph,a.id_unitluasterkini,a.id_unitluasambil, ";
 				sql += " a.lokasi_tanah,a.nama_pelapor, b.id_pegawai, a.status_tanah, a.pendahuluan, ";
-				sql += " a.jalan_utama, a.jalan_masuk, a.perumahan, a.industri, a.nama_tempat, a.flag_saliran, d.user_name, a.pecah_pisah";
+				sql += " a.jalan_utama, a.jalan_masuk, a.perumahan, a.industri, a.nama_tempat, a.flag_saliran, d.user_name, a.pecah_pisah, ";
+				//PPT-42
+				sql += " a.unit_harga_ns,a.harga_seunit_ns,a.harga_pasaran_ns,a.bayar_penjejasan_ns,a.bayar_pecah_ns,a.bayar_naik_nilai_ns ";
 				sql += " FROM TBLPPTTANAH a, TBLPPTHAKMILIK b, TBLPPTPERMOHONAN c, USERS d";
 				sql += " WHERE b.id_permohonan = c.id_permohonan ";
 				sql += " AND a.id_pelapor = d.user_id(+)";
@@ -453,6 +455,14 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 					h.put("harga_seunit_so", rs.getString("harga_seunit_so")==null?"":rs.getDouble("harga_seunit_so"));	
 					h.put("harga_pasaran", rs.getString("harga_pasaran")==null?"":rs.getDouble("harga_pasaran"));
 					h.put("harga_seunit_jpph", rs.getString("harga_seunit_jpph")==null?"":rs.getDouble("harga_seunit_jpph"));
+					
+					//PPT-42
+					h.put("unit_harga_ns", rs.getString("unit_harga_ns")==null?"":rs.getString("unit_harga_ns"));
+					h.put("harga_seunit_ns", rs.getString("harga_seunit_ns")==null?"":rs.getDouble("harga_seunit_ns"));	
+					h.put("harga_pasaran_ns", rs.getString("harga_pasaran_ns")==null?"":rs.getDouble("harga_pasaran_ns"));
+					h.put("bayar_penjejasan_ns", rs.getString("bayar_penjejasan_ns")==null?"":rs.getDouble("bayar_penjejasan_ns"));
+					h.put("bayar_pecah_ns", rs.getString("bayar_pecah_ns")==null?"":rs.getDouble("bayar_pecah_ns"));
+					h.put("bayar_naik_nilai_ns", rs.getString("bayar_naik_nilai_ns")==null?"":rs.getDouble("bayar_naik_nilai_ns"));
 					
 					
 					//flag checkbox
@@ -608,7 +618,7 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	    		String txtPenjejasanSO = (String)data.get("txtPenjejasanSO");
 	    		String txtHargaPasaranSO = (String)data.get("txtHargaPasaranSO");
 	    		String txtHargaSeunitSO = (String)data.get("txtHargaSeunitSO");
-	    		String socUnitHargaSO = (String)data.get("socUnitHargaSO");
+	    		String socUnitHargaSO = (String)data.get("socUnitHargaSO");	    		
 	    		String txtSempadanBarat = (String)data.get("txtSempadanBarat");
 	    		String txtSempadanTimur = (String)data.get("txtSempadanTimur");
 	    		String txtSempadanSelatan = (String)data.get("txtSempadanSelatan");
@@ -635,11 +645,17 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	    		String txtNamaPBT = (String)data.get("txtNamaPBT");
 	    		String sorPBT = (String)data.get("sorPBT");
 	    		
+	    		//PPT-42
+	    		String socUnitHargaNS = (String)data.get("socUnitHargaNS");
+	    		String txtHargaSeunitNS = (String)data.get("txtHargaSeunitNS");
+	    		String txtHargaPasaranNS = (String)data.get("txtHargaPasaranNS");
+	    		String txtPenjejasanNS = (String)data.get("txtPenjejasanNS");
+	    		String txtPecahNS = (String)data.get("txtPecahNS");
+	    		String txtKenaikanNS = (String)data.get("txtKenaikanNS");
+	    		
 	    		String txtStrukturBangunanSO = (String)data.get("txtStrukturBangunanSO");
 	    		String txtStrukturBangunan = (String)data.get("txtStrukturBangunan");
-	    		
-	    		
-	    		
+
 	    		String socPegawai = (String)data.get("socPegawai");
 	    		
 	    		
@@ -712,7 +728,14 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	    		r.add("tarikh_mula_lawat",r.unquote(TLM));
 	    		r.add("tarikh_akhir_lawat",r.unquote(TLA));	    		
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
-	    		r.add("id_masuk",id_user);    		
+	    		r.add("id_masuk",id_user);    	
+	    		//PPT-42
+	    		r.add("unit_harga_ns",socUnitHargaNS);
+	    		r.add("harga_seunit_ns",txtHargaSeunitNS);
+	    		r.add("harga_pasaran_ns",txtHargaPasaranNS);
+	    		r.add("bayar_penjejasan_ns",txtPenjejasanNS);
+	    		r.add("bayar_pecahpisah_ns",txtPecahNS);
+	    		r.add("bayar_naik_nilai_ns",txtKenaikanNS);
 	    		
 	    		if(txtStrukturBangunanSO!=null)
 	    		{
@@ -784,7 +807,7 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	   
 	}//close updateHMtanah
 	
-	
+	//PPT-42
 	@SuppressWarnings("unchecked")
 	public static void updateTanahTerperinci(Hashtable data) throws Exception
 	  {
@@ -863,6 +886,14 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	    		String txtNamaPBT = (String)data.get("txtNamaPBT");
 	    		String sorPBT = (String)data.get("sorPBT");
 	    		
+	    		//PPT-42
+	    		String socUnitHargaNS = (String)data.get("socUnitHargaNS");
+	    		String txtHargaSeunitNS = (String)data.get("txtHargaSeunitNS");
+	    		String txtHargaPasaranNS = (String)data.get("txtHargaPasaranNS");
+	    		String txtPenjejasanNS = (String)data.get("txtPenjejasanNS");
+	    		String txtPecahNS = (String)data.get("txtPecahNS");
+	    		String txtKenaikanNS = (String)data.get("txtKenaikanNS");
+	    		
 	    		String txtStrukturBangunanSO = (String)data.get("txtStrukturBangunanSO");
 	    		String txtStrukturBangunan = (String)data.get("txtStrukturBangunan");
 	    		
@@ -937,6 +968,13 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	    		r.add("tarikh_kemaskini",r.unquote("sysdate"));
 	    		r.add("id_kemaskini",id_user);    	
 	    		
+	    		//PPT-42
+	    		r.add("unit_harga_ns",socUnitHargaNS);
+	    		r.add("harga_seunit_ns",txtHargaSeunitNS);
+	    		r.add("harga_pasaran_ns",txtHargaPasaranNS);
+	    		r.add("bayar_penjejasan_ns",txtPenjejasanNS);
+	    		r.add("bayar_pecahpisah_ns",txtPecahNS);
+	    		r.add("bayar_naik_nilai_ns",txtKenaikanNS);
 	    		
 	    		r.add("struktur_bangunan_so",txtStrukturBangunanSO);
 	    		r.add("struktur_bangunan",txtStrukturBangunan);	

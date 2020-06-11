@@ -2560,6 +2560,8 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 				      r.add("PP.ID_PERMOHONAN",r.unquote("P.ID_PERMOHONAN")); 
 				      r.add("F.ID_KEMENTERIAN",r.unquote("RK.ID_KEMENTERIAN"));
 				      r.add("PP.ID_AGENSI",r.unquote("RA.ID_AGENSI"));
+				      r.add("p.ID_PERMOHONAN",r.unquote("u.Id_Permohonan"));
+				      
 //				      r.add("(u.No_Bangunan","'%TIADA%')","LIKE '%TIADA%' OR u.No_Tingkat LIKE '%TIADA%' OR u.No_Petak LIKE");
 //				      r.add("u.No_Bangunan","%TIADA%","LIKE");
 //				      r.add("u.No_Tingkat","%TIADA%","LIKE");

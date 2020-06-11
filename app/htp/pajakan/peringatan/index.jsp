@@ -47,6 +47,13 @@
   	<a alt="Cetak" href = "javascript:cetakSuratBayaran('$!senarai.permohonan.getIdPermohonan()');">
 		<img border="0" src="../img/print.gif" />
 	</a>
+	<!-- --> <br>
+	  <a href = "javascript:emelPeringatan('$!senarai.permohonan.getIdPermohonan()');">Peringatan
+		<img border="0" src="../img/emel.gif" />
+	</a>
+	<a href = "javascript:emeLewat('$!senarai.permohonan.getIdPermohonan()');"><font color="red">Lewat</font>
+		<img border="0" src="../img/emel.gif" />
+	</a>
   </td>
   </tr>
   
@@ -70,6 +77,28 @@
 </table>
 
 <script>
+	function emelPeringatan(id_) {
+		input_box = confirm("Emel Peringatan Bayaran Akan Dihantar Kepada Pemajak");
+		if (input_box == true) {
+			document.${formName}.command.value = "emelperingatan";
+			document.${formName}.fail.value = id_;
+			document.${formName}.action = "";
+			document.${formName}.submit();
+		}
+		
+	}
+	
+	function emeLewat(id_) {
+		input_box = confirm("Emel Peringatan Bayaran Lewat Akan Dihantar Kepada Pemajak");
+		if (input_box == true) {
+			document.${formName}.command.value = "emelewat";
+			document.${formName}.fail.value = id_;
+			document.${formName}.action = "";
+			document.${formName}.submit();
+		}
+			
+	}
+	
 	function cetakSuratBayaran(idp){
 		cetakSuratExt(idp, "HTPajakanSuratBayaran");
 	}

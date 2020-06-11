@@ -7662,7 +7662,7 @@ try {
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			sql = " SELECT TU.KEROSAKAN_TANAH,TU.KEROSAKAN_TANAMAN,TU.KEROSAKAN_BANGUNAN,TU.KOS_DITANGGUNG,TU.LOT_KWSN_TERLIBAT,HM.ID_HAKMILIK,HM.ID_PENARIKANBALIK,TU.ID_TANAHUMUM,HM.NO_HAKMILIK,N.NAMA_NEGERI,D.NAMA_DAERAH,M.NAMA_MUKIM,"
+			sql = " SELECT TU.KEROSAKAN_TANAH,TU.KETERANGAN_KEROSAKAN,TU.KEROSAKAN_TANAMAN,TU.KEROSAKAN_BANGUNAN,TU.KOS_DITANGGUNG,TU.LOT_KWSN_TERLIBAT,HM.ID_HAKMILIK,HM.ID_PENARIKANBALIK,TU.ID_TANAHUMUM,HM.NO_HAKMILIK,N.NAMA_NEGERI,D.NAMA_DAERAH,M.NAMA_MUKIM,"
 					+ " TU.TARIKH_KEMASUKAN,TU.PERIHAL_SYIT,TU.TARIKH_PEMERIKSAAN, "
 					+ " TU.FLAG_DLM_MAJLIS,TU.FLAG_LUAR_MAJLIS,TU.FLAG_DLM_SIMPANAN,TU.FLAG_LUAR_SIMPANAN,"
 					+ " TU.FLAG_JENIS_TANAH,TU.NO_GAZET, "
@@ -7780,6 +7780,10 @@ try {
 				h.put("KEROSAKAN_TANAH",
 						rs.getString("KEROSAKAN_TANAH") == null ? "" : rs
 								.getString("KEROSAKAN_TANAH"));
+				
+				h.put("KETERANGAN_KEROSAKAN",
+						rs.getString("KETERANGAN_KEROSAKAN") == null ? "" : rs
+								.getString("KETERANGAN_KEROSAKAN"));
 				
 				h.put("KEROSAKAN_TANAMAN",
 						rs.getString("KEROSAKAN_TANAMAN") == null ? "" : rs
@@ -14035,6 +14039,7 @@ public void addMaklumatKerosakan(Hashtable data) throws Exception {
 	String sql = "";
 
 	String txtKerosakanTanah = (String) data.get("txtKerosakanTanah");
+	String txtKeteranganKerosakan = (String) data.get("txtKeteranganKerosakan");
 	String txtKerosakanTanaman = (String) data.get("txtKerosakanTanaman");
 	String txtKerosakanBangunan = (String) data.get("txtKerosakanBangunan");
 	String txtKosDitanggung = (String) data.get("txtKosDitanggung");
@@ -14050,6 +14055,7 @@ public void addMaklumatKerosakan(Hashtable data) throws Exception {
 		SQLRenderer r = new SQLRenderer();
 
 		r.add("KEROSAKAN_TANAH", txtKerosakanTanah);
+		r.add("KETERANGAN_KEROSAKAN", txtKeteranganKerosakan);
 		r.add("KEROSAKAN_TANAMAN", txtKerosakanTanaman);
 		r.add("KEROSAKAN_BANGUNAN", txtKerosakanBangunan);
 		r.add("KOS_DITANGGUNG", txtKosDitanggung);
@@ -14078,6 +14084,7 @@ public void updateMaklumatKerosakan(Hashtable data) throws Exception {
 	String sql = "";
 
 	String txtKerosakanTanah = (String) data.get("txtKerosakanTanah");
+	String txtKeteranganKerosakan = (String) data.get("txtKeteranganKerosakan");
 	String txtKerosakanTanaman = (String) data.get("txtKerosakanTanaman");
 	String txtKerosakanBangunan = (String) data.get("txtKerosakanBangunan");
 	String txtKosDitanggung = (String) data.get("txtKosDitanggung");
@@ -14096,9 +14103,11 @@ public void updateMaklumatKerosakan(Hashtable data) throws Exception {
 		r.update("ID_TANAHUMUM", id_tanahumum);
 		
 		r.add("KEROSAKAN_TANAH", txtKerosakanTanah);
+		r.add("KETERANGAN_KEROSAKAN", txtKeteranganKerosakan);
 		r.add("KEROSAKAN_TANAMAN", txtKerosakanTanaman);
 		r.add("KEROSAKAN_BANGUNAN", txtKerosakanBangunan);
 		r.add("KOS_DITANGGUNG", txtKosDitanggung);
+		
 	
 		r.add("ID_HAKMILIK", id_hakmilik);
 		

@@ -7,6 +7,10 @@ import javax.servlet.http.HttpSession;
 
 import lebah.portal.AjaxBasedModule;
 import org.apache.log4j.Logger;
+
+import ekptg.model.IStatus;
+import ekptg.model.StatusBean;
+import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.ppt.FrmPermohonanUPTData;
 /*
  * @author 
@@ -18,7 +22,8 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 	static Logger myLogger = Logger.getLogger(FrmPopupTolakPermohonan.class);	
 	//model
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
-	
+	private IStatus iStatus = null;
+
 	@Override
 	public String doTemplate2() throws Exception{		
 		HttpSession session = request.getSession();
@@ -36,6 +41,7 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 		context.put("isEdit","");	
     	String submit = getParam("command");
 //    	myLogger.info("formnew :"+formnew+",submit : " + submit);
+		String userId = (String)session.getAttribute("_ekptg_user_id");
     	   	
     	//NEW FORM
     	if(formnew.equals("yes")){    		
@@ -46,6 +52,26 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 //    	    	myLogger.info("jenisTolak : " + jenisTolak);
     			if(jenisTolak.equals("internal")){
     				simpanCatatanTolak(session,id_permohonan);
+    				
+    				FrmPermohonanUPTData dt = new FrmPermohonanUPTData();
+    				Hashtable<String,String> hash  = dt.getPermohonan(id_permohonan);
+    				hash.put("catatan", getParam("txtCatatan"));
+    				hash.put("idUser", userId);
+    				hash.put("langkah", "50");
+
+//    				String idSuburusanStatus = getStatus().getIdSuburusanStatusByLangkah("50",String.valueOf(hash.get("idSuburusan")), "=");   				
+//    				Tblrujsuburusanstatusfail susf = new Tblrujsuburusanstatusfail();
+//    				susf.setIdFail(Long.parseLong(String.valueOf(hash.get("idFail"))));
+//    				susf.setIdPermohonan(Long.parseLong(id_permohonan));
+//    				susf.setIdSuburusanstatus(Long.parseLong(idSuburusanStatus));
+//    				susf.setUrl(getParam("txtCatatan"));
+//    				susf.setAktif("1");
+//    				susf.setIdMasuk(Long.parseLong(userId));
+//    				susf.setTarikhMasuk("sysdate");
+//    				susf.setIdKemaskini(Long.parseLong(userId));
+//    				susf.setTarikhKemaskini("sysdate");
+    				getStatus().simpan(hash);
+    				
     			}else if(jenisTolak.equals("pelulus") || jenisTolak.equals("penyemak")){
     					//simpanCatatanTolak(session,id_permohonan);
     				modelUPT.simpanCatatanTolakKJP((String)session.getAttribute("_ekptg_user_id"),id_permohonan,jenisTolak, getParam("txtCatatan").toUpperCase());
@@ -155,6 +181,13 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 		FrmPermohonanUPTData.simpanCatatanTolak(h);
 		
 	}//close simpanCatatanTolak
+	
+	private IStatus getStatus(){
+		if (iStatus==null){
+			iStatus=new StatusBean();
+		}
+		return iStatus;
+	}
 	
 	
 }//close class

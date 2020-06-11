@@ -256,7 +256,7 @@
   #end
 </table>
 <fieldset id="tableReport" style="display:none;"-->
-<legend><strong>SENARAI LAPORAN</strong></legend>
+<legend><strong>SENARAI DOKUMEN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakSuratKelulusanDasar('$idFail','$idPermohonan')"> Surat Kelulusan Dasar </a></td>

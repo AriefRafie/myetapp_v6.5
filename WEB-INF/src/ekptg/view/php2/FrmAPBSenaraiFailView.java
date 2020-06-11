@@ -46,14 +46,23 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
         //GET ID PARAM
         String idFail = getParam("idFail");
         String idStatus = getParam("idStatus");
+        String idPermohonan = "";
+        String idPemohon = "";
+        String idFailLama = "";
         
         //VECTOR
         Vector<Hashtable<String,String>> list = null;
         
         Vector beanMaklumatPermohonan = null;
         Vector beanMaklumatPemohon = null;
+        Vector beanMaklumatKawasanMohon = null;
         
         //GET DROPDOWN PARAM
+
+		String idKategoriIndividu = getParam("socIndividuBukanIndividu");
+		if (idKategoriIndividu == null || idKategoriIndividu.trim().length() == 0){
+			idKategoriIndividu = "99999";
+		}
         String idKategoriPemohon = getParam("socKategoriPemohon");
 		if (idKategoriPemohon == null || idKategoriPemohon.trim().length() == 0){
 			idKategoriPemohon = "99999";
@@ -94,6 +103,14 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 		if (idNegeriPerairan == null || idNegeriPerairan.trim().length() == 0){
 			idNegeriPerairan = "99999";
 		}
+		String idJenisPermohonan = getParam("socJenisPermohonan");
+		if (idJenisPermohonan == null || idJenisPermohonan.trim().length() == 0){
+			idJenisPermohonan = "99999";
+		}
+		String idJenisLesen = getParam("socJenisLesen");
+		if (idJenisLesen == null || idJenisLesen.trim().length() == 0){
+			idJenisLesen = "99999";
+		}
 		
 		//ACTION BUTTON
 		if (postDB){
@@ -117,6 +134,12 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 			beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
 			
+			//JENIS PERMOHONAN
+			this.context.put("selectJenisPermohonan", HTML.SelectJenisPermohonanAPB("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "disabled", " class=\"disabled\""));
+			
+			//JENIS LESEN
+			this.context.put("selectJenisLesen", HTML.SelectJenisLesen("socJenisLesen", Long.parseLong(idJenisLesen), "disabled", "class=\"disabled\""));
+			
 			//MAKLUMAT PEMOHON
 			logic.setMaklumatPemohon(idFail);
 			beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
@@ -125,6 +148,11 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 			if (logic.getBeanMaklumatPemohon().size() != 0){
 				Hashtable hashPemohon = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
 				
+				if(!"".equals(hashPemohon.get("idKategoriIndividu")) && "1".equals(hashPemohon.get("idKategoriIndividu"))){
+					idKategoriIndividu = "1";
+				} else {
+					idKategoriIndividu = "11";
+				}
 				idKategoriPemohon = (String) hashPemohon.get("idKategoriPemohon");
 				idJenisPengenalanIndividu = (String) hashPemohon.get("idJenisPengenalan");
 				idJantina = (String) hashPemohon.get("idJantina");
@@ -134,8 +162,10 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 				idNegeriSykt = (String) hashPemohon.get("idNegeriSykt");
 				idBandarSykt = (String) hashPemohon.get("idBandarSykt");
 			}
-			
+			this.context.put("selectIndividuBukanIndividu",HTML.SelectKategoriIndividuBukanIndividu("socIndividuBukanIndividu", Long.parseLong(idKategoriIndividu), "disabled", " class=\"disabled\""));
 			this.context.put("selectKategoriPemohon",HTML.SelectKategoriPemohonIndividuAndSyarikat("socKategoriPemohon", Long.parseLong(idKategoriPemohon), "disabled", " class=\"disabled\""));
+			this.context.put("selectKategoriPemohon2",HTML.SelectKategoriPemohonOrganisasiAndSyarikat("socKategoriPemohon", Long.parseLong(idKategoriPemohon), "disabled", " class=\"disabled\""));
+
 			//INDIVIDU
 			this.context.put("selectJenisPengenalanIndividu",HTML.SelectJenisNoPbIndividu("socJenisPengenalanIndividu", Long.parseLong(idJenisPengenalanIndividu), "disabled", " class=\"disabled\""));
 			this.context.put("selectJantina",HTML.SelectJantina("socJantina", Long.parseLong(idJantina), "disabled", " class=\"disabled\""));
@@ -143,13 +173,14 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 			this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri),"disabled", " class=\"disabled\""));
 			this.context.put("selectBandar",HTML.SelectBandarByNegeri(idNegeri, "socBandar", Long.parseLong(idBandar), "disabled", " class=\"disabled\""));
 			
-			//SYARIKAT
+			//SYARIKAT ATAU ORGANISASI ATAU LAIN-LAIN
 			this.context.put("selectNegeriSykt",HTML.SelectNegeri("socNegeriSykt",Long.parseLong(idNegeriSykt),"disabled", " class=\"disabled\""));
 			this.context.put("selectBandarSykt",HTML.SelectBandarByNegeri(idNegeriSykt, "socBandarSykt", Long.parseLong(idBandarSykt), "disabled", " class=\"disabled\""));
 			
+			//KAWASAN PERMOHONAN
 			this.context.put("selectFlagLuar",HTML.SelectFlagYaTidak("socFlagLuar", Long.parseLong(idFlagLuar),"disabled", " class=\"disabled\""));
 			this.context.put("selectNegeriPerairan",HTML.SelectNegeri("socNegeriPerairan",Long.parseLong(idNegeriPerairan),"disabled", " class=\"disabled\""));
-		
+					
 		} else if ("daftarBaru".equals(actionLesen)){
         	
         	//GO TO DAFTAR BARU LESEN        	
@@ -159,105 +190,178 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
         	this.context.put("readonly", "");
         	this.context.put("inputTextClass", "");
         	
-        	//MAKLUMAT PERMOHONAN
-        	beanMaklumatPermohonan = new Vector();
-			Hashtable hashPermohonan = new Hashtable();
-			hashPermohonan.put("noFail", "");
-			hashPermohonan.put("tarikhTerima", getParam("tarikhTerima") );
-			hashPermohonan.put("tarikhSurat", getParam("tarikhSurat") );
-			hashPermohonan.put("noRujSurat", getParam("txtNoRujukanSurat"));
-			hashPermohonan.put("perkara", getParam("txtPerkara"));
-			beanMaklumatPermohonan.addElement(hashPermohonan);
-			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+        	//JENIS PERMOHONAN
+			this.context.put("selectJenisPermohonan", HTML.SelectJenisPermohonanAPB("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "", " onChange=\"doChangeJenisPermohonan();\""));
 			
-			//MAKLUMAT PEMOHON
-			this.context.put("selectKategoriPemohon",HTML.SelectKategoriPemohonIndividuAndSyarikat("socKategoriPemohon", Long.parseLong(idKategoriPemohon), "", " onChange=\"doChangeKategoriPemohon();\""));
-			
-			beanMaklumatPemohon = new Vector();
-			Hashtable hashPemohon = new Hashtable();
-			//INDIVIDU
-			hashPemohon.put("nama", getParam("txtNama"));
-			hashPemohon.put("noPengenalan", getParam("txtNoPengenalan"));
-			hashPemohon.put("pekerjaan", getParam("txtPekerjaan"));			
-			hashPemohon.put("alamat1", getParam("txtAlamat1"));
-			hashPemohon.put("alamat2", getParam("txtAlamat2"));
-			hashPemohon.put("alamat3", getParam("txtAlamat3"));
-			hashPemohon.put("poskod", getParam("txtPoskod"));
-			hashPemohon.put("noTel", getParam("txtNoTel"));
-			hashPemohon.put("noTelBim", getParam("txtNoTelBimbit"));
-			hashPemohon.put("noFax", getParam("txtNoFax"));
-			hashPemohon.put("emel", getParam("txtEmel"));
-			
-			//SYARIKAT
-			hashPemohon.put("namaSykt", getParam("txtNamaSykt"));
-			hashPemohon.put("noPengenalanSykt", getParam("txtNoPengenalanSykt"));
-			hashPemohon.put("pekerjaanSykt", getParam("txtPekerjaanSykt"));			
-			hashPemohon.put("alamat1Sykt", getParam("txtAlamat1Sykt"));
-			hashPemohon.put("alamat2Sykt", getParam("txtAlamat2Sykt"));
-			hashPemohon.put("alamat3Sykt", getParam("txtAlamat3Sykt"));
-			hashPemohon.put("poskodSykt", getParam("txtPoskodSykt"));
-			hashPemohon.put("noTelSykt", getParam("txtNoTelSykt"));
-			hashPemohon.put("noFaxSykt", getParam("txtNoFaxSykt"));
-			hashPemohon.put("emelSykt", getParam("txtEmelSykt"));
-			
-			beanMaklumatPemohon.addElement(hashPemohon);
-			this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);
-			
-			//INDIVIDU
-			this.context.put("selectJenisPengenalanIndividu",HTML.SelectJenisNoPbIndividu("socJenisPengenalanIndividu", Long.parseLong(idJenisPengenalanIndividu), ""));
-			this.context.put("selectJantina",HTML.SelectJantina("socJantina", Long.parseLong(idJantina), ""));
-			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), ""));
-			this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri),"","onChange=\"doChangeNegeri();\""));
-			this.context.put("selectBandar",HTML.SelectBandarByNegeri(idNegeri, "socBandar", Long.parseLong(idBandar), ""));
-			
-			//SYARIKAT
-			this.context.put("selectNegeriSykt",HTML.SelectNegeri("socNegeriSykt",Long.parseLong(idNegeriSykt),"","onChange=\"doChangeNegeri();\""));
-			this.context.put("selectBandarSykt",HTML.SelectBandarByNegeri(idNegeriSykt, "socBandarSykt", Long.parseLong(idBandarSykt), ""));
-			
-			this.context.put("selectFlagLuar",HTML.SelectFlagYaTidak("socFlagLuar", Long.parseLong(idFlagLuar),"", " style=\"width:100px\""));
-			this.context.put("selectNegeriPerairan",HTML.SelectNegeri("socNegeriPerairan", Long.parseLong(idNegeriPerairan), " onChange=\"doChangeNegeriPerairan();\""));
-			if ("doChangeNegeriPerairan".equals(submit)){
-				context.put("namaNegeriPerairan", logic.getNamaNegeriByIdNegeri(idNegeriPerairan).replace("NEGERI", "").trim());
-			}
-			
-			if ("doChangeNoPendaftaran".equals(submit)){
-				beanMaklumatPemohon = new Vector();
-				String idFailLama = logic.getNoFailByNoPendaftaran(getParam("txtNoPengenalanSykt"));
-				logic.setMaklumatPemohon(idFailLama);
-				beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
-				this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);
-				if (logic.getBeanMaklumatPemohon().size() != 0){
-					Hashtable hashPemohonDB = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
-					idNegeriSykt = (String) hashPemohonDB.get("idNegeriSykt");
-					idBandarSykt = (String) hashPemohonDB.get("idBandarSykt");
-				}
-				this.context.put("selectNegeriSykt",HTML.SelectNegeri("socNegeriSykt",Long.parseLong(idNegeriSykt),"", "onChange=\"doChangeNegeri();\""));
-				this.context.put("selectBandarSykt",HTML.SelectBandarByNegeri(idNegeriSykt, "socBandarSykt", Long.parseLong(idBandarSykt), "", ""));
-				
-				if (idFailLama.isEmpty()){
-					
-					beanMaklumatPemohon = new Vector();
-					Hashtable hashP = new Hashtable();
-					hashP.put("namaSykt", getParam("txtNamaSykt"));
-					hashP.put("noPengenalanSykt", getParam("txtNoPengenalanSykt"));
-					hashP.put("pekerjaanSykt", "");			
-					hashP.put("alamat1Sykt", "");
-					hashP.put("alamat2Sykt", "");
-					hashP.put("alamat3Sykt", "");
-					hashP.put("poskodSykt", "");
-					hashP.put("noTelSykt", "");
-					hashP.put("noFaxSykt", "");
-					hashP.put("emelSykt", "");
-					beanMaklumatPemohon.addElement(hashP);
-					this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);
-					idNegeriSykt = "99999";
-					idNegeriSykt = "99999";
-					this.context.put("selectNegeriSykt",HTML.SelectNegeri("socNegeriSykt",Long.parseLong(idNegeriSykt),"","onChange=\"doChangeNegeri();\""));
-					this.context.put("selectBandarSykt",HTML.SelectBandarByNegeri(idNegeriSykt, "socBandarSykt", Long.parseLong(idBandarSykt), ""));
-				}				
-			}
-        	
-        } else {
+        	if(!"".equals(idJenisPermohonan) && "2".equals(idJenisPermohonan)) {
+        		
+        		String noFailLama = getParam("txtNoFailLama");
+        		beanMaklumatPermohonan = new Vector();
+        		idFailLama = logic.getIdFailByNoFail(noFailLama);
+        		
+        		if ("doChangeNoFailAPB".equals(submit)){
+        			
+    				beanMaklumatPermohonan = new Vector();   				
+    				logic.setMaklumatPermohonan(idFailLama);
+    				beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
+    				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+    				
+    				beanMaklumatKawasanMohon = new Vector();
+    				logic.setBeanMaklumatKawasanMohon(idFailLama);
+    				beanMaklumatKawasanMohon = logic.getBeanMaklumatKawasanMohon();
+    				this.context.put("BeanMaklumatKawasanMohon", beanMaklumatKawasanMohon);
+    				if(logic.getBeanMaklumatKawasanMohon().size() != 0){
+    					Hashtable hashKwsnMhn = (Hashtable) logic.getBeanMaklumatKawasanMohon().get(0);
+    					idFlagLuar = (String) hashKwsnMhn.get("idFlagLuar");
+    					idNegeriPerairan = (String) hashKwsnMhn.get("idNegeriPerairan");
+    					idJenisLesen = (String) hashKwsnMhn.get("idJenisLesen");
+    				}
+    				this.context.put("selectFlagLuar",HTML.SelectFlagYaTidak("socFlagLuar", Long.parseLong(idFlagLuar),"disabled", " class=\"disabled\""));
+    				this.context.put("selectNegeriPerairan",HTML.SelectNegeri("socNegeriPerairan",Long.parseLong(idNegeriPerairan),"disabled", " class=\"disabled\""));
+    				this.context.put("selectJenisLesen", HTML.SelectJenisLesen("socJenisLesen", Long.parseLong(idJenisLesen), "disabled", " class=\"disabled\""));
+    				
+    				beanMaklumatPemohon = new Vector();
+    				logic.setMaklumatPemohon(idFailLama);
+    				beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
+    				this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);
+    				if (logic.getBeanMaklumatPemohon().size() != 0){
+    					Hashtable hashPemohon = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
+    					if(!"".equals(hashPemohon.get("idKategoriIndividu")) && "1".equals(hashPemohon.get("idKategoriIndividu"))){
+    						idKategoriIndividu = "1";
+    					} else {
+    						idKategoriIndividu = "11";
+    					}
+    					idKategoriPemohon = (String) hashPemohon.get("idKategoriPemohon");
+    					idJenisPengenalanIndividu = (String) hashPemohon.get("idJenisPengenalan");
+    					idJantina = (String) hashPemohon.get("idJantina");
+    					idBangsa = (String) hashPemohon.get("idBangsa");
+    					idNegeri = (String) hashPemohon.get("idNegeri");
+    					idBandar = (String) hashPemohon.get("idBandar");
+    					idNegeriSykt = (String) hashPemohon.get("idNegeriSykt");
+    					idBandarSykt = (String) hashPemohon.get("idBandarSykt");
+    				}
+    				this.context.put("selectIndividuBukanIndividu",HTML.SelectKategoriIndividuBukanIndividu("socIndividuBukanIndividu", Long.parseLong(idKategoriIndividu), "disabled", " class=\"disabled\""));
+    				this.context.put("selectKategoriPemohon",HTML.SelectKategoriPemohonIndividuAndSyarikat("socKategoriPemohon", Long.parseLong(idKategoriPemohon), "disabled", " class=\"disabled\""));
+    				this.context.put("selectKategoriPemohon2",HTML.SelectKategoriPemohonOrganisasiAndSyarikat("socKategoriPemohon", Long.parseLong(idKategoriPemohon), "disabled", " class=\"disabled\""));
+
+    				this.context.put("selectJenisPengenalanIndividu",HTML.SelectJenisNoPbIndividu("socJenisPengenalanIndividu", Long.parseLong(idJenisPengenalanIndividu), "disabled", " class=\"disabled\""));
+    				this.context.put("selectJantina",HTML.SelectJantina("socJantina", Long.parseLong(idJantina), "disabled", " class=\"disabled\""));
+    				this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), "disabled", " class=\"disabled\""));
+    				this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri),"disabled", " class=\"disabled\""));
+    				this.context.put("selectBandar",HTML.SelectBandarByNegeri(idNegeri, "socBandar", Long.parseLong(idBandar), "disabled", " class=\"disabled\""));
+    				
+    				this.context.put("selectNegeriSykt",HTML.SelectNegeri("socNegeriSykt",Long.parseLong(idNegeriSykt),"disabled", " class=\"disabled\""));
+    				this.context.put("selectBandarSykt",HTML.SelectBandarByNegeri(idNegeriSykt, "socBandarSykt", Long.parseLong(idBandarSykt), "disabled", " class=\"disabled\""));
+    				
+    			}
+        	} else {
+        		//MAKLUMAT PERMOHONAN
+            	beanMaklumatPermohonan = new Vector();
+    			Hashtable hashPermohonan = new Hashtable();
+    			hashPermohonan.put("noFail", "");
+    			hashPermohonan.put("tarikhTerima", getParam("tarikhTerima") );
+    			hashPermohonan.put("tarikhSurat", getParam("tarikhSurat") );
+    			hashPermohonan.put("noRujSurat", getParam("txtNoRujukanSurat"));
+    			hashPermohonan.put("perkara", getParam("txtPerkara"));
+    			beanMaklumatPermohonan.addElement(hashPermohonan);
+    			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+    			
+    			//JENIS LESEN
+    			this.context.put("selectJenisLesen", HTML.SelectJenisLesen("socJenisLesen", Long.parseLong(idJenisLesen), "", "onChange=\"doChangeJenisLesen();\""));
+    			
+    			//MAKLUMAT PEMOHON
+    			this.context.put("selectIndividuBukanIndividu",HTML.SelectKategoriIndividuBukanIndividu("socIndividuBukanIndividu", Long.parseLong(idKategoriIndividu), "", " onChange=\"doChangeIndividuBknIndividu();\""));
+    			this.context.put("selectKategoriPemohon",HTML.SelectKategoriPemohonIndividu("socKategoriPemohon", Long.parseLong(idKategoriPemohon), "", " onChange=\"doChangeKategoriPemohon();\""));
+    			this.context.put("selectKategoriPemohon2",HTML.SelectKategoriPemohonOrganisasiAndSyarikat("socKategoriPemohon", Long.parseLong(idKategoriPemohon), "", " onChange=\"doChangeKategoriPemohon2();\""));
+
+    			beanMaklumatPemohon = new Vector();
+    			Hashtable hashPemohon = new Hashtable();
+    			
+    			//INDIVIDU
+    			hashPemohon.put("nama", getParam("txtNama"));
+    			hashPemohon.put("noPengenalan", getParam("txtNoPengenalan"));
+    			hashPemohon.put("pekerjaan", getParam("txtPekerjaan"));			
+    			hashPemohon.put("alamat1", getParam("txtAlamat1"));
+    			hashPemohon.put("alamat2", getParam("txtAlamat2"));
+    			hashPemohon.put("alamat3", getParam("txtAlamat3"));
+    			hashPemohon.put("poskod", getParam("txtPoskod"));
+    			hashPemohon.put("noTel", getParam("txtNoTel"));
+    			hashPemohon.put("noTelBim", getParam("txtNoTelBimbit"));
+    			hashPemohon.put("noFax", getParam("txtNoFax"));
+    			hashPemohon.put("emel", getParam("txtEmel"));
+    			
+    			//BUKAN INDIVIDU
+    			hashPemohon.put("namaSykt", getParam("txtNamaSykt"));
+    			hashPemohon.put("noPengenalanSykt", getParam("txtNoPengenalanSykt"));
+    			hashPemohon.put("pekerjaanSykt", getParam("txtPekerjaanSykt"));			
+    			hashPemohon.put("alamat1Sykt", getParam("txtAlamat1Sykt"));
+    			hashPemohon.put("alamat2Sykt", getParam("txtAlamat2Sykt"));
+    			hashPemohon.put("alamat3Sykt", getParam("txtAlamat3Sykt"));
+    			hashPemohon.put("poskodSykt", getParam("txtPoskodSykt"));
+    			hashPemohon.put("noTelSykt", getParam("txtNoTelSykt"));
+    			hashPemohon.put("noFaxSykt", getParam("txtNoFaxSykt"));
+    			hashPemohon.put("emelSykt", getParam("txtEmelSykt"));
+    			
+    			beanMaklumatPemohon.addElement(hashPemohon);
+    			this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);
+    			
+    			//INDIVIDU
+    			this.context.put("selectJenisPengenalanIndividu",HTML.SelectJenisNoPbIndividu("socJenisPengenalanIndividu", Long.parseLong(idJenisPengenalanIndividu), ""));
+    			this.context.put("selectJantina",HTML.SelectJantina("socJantina", Long.parseLong(idJantina), ""));
+    			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), ""));
+    			this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri),"","onChange=\"doChangeNegeri();\""));
+    			this.context.put("selectBandar",HTML.SelectBandarByNegeri(idNegeri, "socBandar", Long.parseLong(idBandar), ""));
+    			
+    			//BUKAN INDIVIDU
+    			this.context.put("selectNegeriSykt",HTML.SelectNegeri("socNegeriSykt",Long.parseLong(idNegeriSykt),"","onChange=\"doChangeNegeri();\""));
+    			this.context.put("selectBandarSykt",HTML.SelectBandarByNegeri(idNegeriSykt, "socBandarSykt", Long.parseLong(idBandarSykt), ""));
+    			
+    			//KAWASAN PERMOHONAN
+    			this.context.put("selectFlagLuar",HTML.SelectFlagYaTidak("socFlagLuar", Long.parseLong(idFlagLuar),"", " style=\"width:100px\""));
+    			this.context.put("selectNegeriPerairan",HTML.SelectNegeri("socNegeriPerairan", Long.parseLong(idNegeriPerairan), " onChange=\"doChangeNegeriPerairan();\""));
+    			if ("doChangeNegeriPerairan".equals(submit)){
+    				context.put("namaNegeriPerairan", logic.getNamaNegeriByIdNegeri(idNegeriPerairan).replace("NEGERI", "").trim());
+    			}
+    			
+    			if ("doChangeNoPendaftaran".equals(submit)){
+    				beanMaklumatPemohon = new Vector();
+    				idFailLama = logic.getNoFailByNoPendaftaran(getParam("txtNoPengenalanSykt"));
+    				logic.setMaklumatPemohon(idFailLama);
+    				beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
+    				this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);
+    				if (logic.getBeanMaklumatPemohon().size() != 0){
+    					Hashtable hashPemohonDB = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
+    					idNegeriSykt = (String) hashPemohonDB.get("idNegeriSykt");
+    					idBandarSykt = (String) hashPemohonDB.get("idBandarSykt");
+    				}
+    				this.context.put("selectNegeriSykt",HTML.SelectNegeri("socNegeriSykt",Long.parseLong(idNegeriSykt),"", "onChange=\"doChangeNegeri();\""));
+    				this.context.put("selectBandarSykt",HTML.SelectBandarByNegeri(idNegeriSykt, "socBandarSykt", Long.parseLong(idBandarSykt), "", ""));
+    				
+    				if (idFailLama.isEmpty()){
+    					
+    					beanMaklumatPemohon = new Vector();
+    					Hashtable hashP = new Hashtable();
+    					hashP.put("namaSykt", getParam("txtNamaSykt"));
+    					hashP.put("noPengenalanSykt", getParam("txtNoPengenalanSykt"));
+    					hashP.put("pekerjaanSykt", "");			
+    					hashP.put("alamat1Sykt", "");
+    					hashP.put("alamat2Sykt", "");
+    					hashP.put("alamat3Sykt", "");
+    					hashP.put("poskodSykt", "");
+    					hashP.put("noTelSykt", "");
+    					hashP.put("noFaxSykt", "");
+    					hashP.put("emelSykt", "");
+    					beanMaklumatPemohon.addElement(hashP);
+    					this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);
+    					idNegeriSykt = "99999";
+    					idNegeriSykt = "99999";
+    					this.context.put("selectNegeriSykt",HTML.SelectNegeri("socNegeriSykt",Long.parseLong(idNegeriSykt),"","onChange=\"doChangeNegeri();\""));
+    					this.context.put("selectBandarSykt",HTML.SelectBandarByNegeri(idNegeriSykt, "socBandarSykt", Long.parseLong(idBandarSykt), ""));
+    				}				
+    			}
+        	}
+
+		} else {
         	
         	String idStatusC = getParam("socStatusC");
 			if (idStatusC == null || idStatusC.trim().length() == 0) {
@@ -289,7 +393,9 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 		//SET DEFAULT ID PARAM
 		this.context.put("idFail", idFail);
 		this.context.put("idStatus", idStatus);
+		this.context.put("idKategoriIndividu", idKategoriIndividu);
 		this.context.put("idKategoriPemohon", idKategoriPemohon);
+		this.context.put("idJenisPermohonan", idJenisPermohonan);
         
 		return vm;
 	}
@@ -299,10 +405,15 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 		
 		Hashtable<String,String> hash = new Hashtable<String,String>();
 
+		hash.put("idJenisPermohonan", getParam("socJenisPermohonan")); 
+		hash.put("idJenisLesen", getParam("socJenisLesen")); 
+		
 		hash.put("tarikhTerima", getParam("tarikhTerima"));
 		hash.put("tarikhSurat", getParam("tarikhSurat"));
 		hash.put("noRujSurat", getParam("txtNoRujukanSurat"));
 		hash.put("perkara", getParam("txtPerkara"));
+		hash.put("perkara2", getParam("txtPerkara2"));
+		hash.put("idKategoriIndividu", getParam("socIndividuBukanIndividu"));
 		hash.put("idKategoriPemohon", getParam("socKategoriPemohon"));
 		
 		hash.put("nama", getParam("txtNama"));
@@ -338,11 +449,12 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
 		hash.put("idFlagLuar", getParam("socFlagLuar"));
 		hash.put("idNegeriPerairan", getParam("socNegeriPerairan"));
 		
+		hash.put("idFailLama", getParam("idFailLama"));
+		
 		idFail = logic.daftarBaru(hash, session);
 		
 		return idFail;
 	}
-
 //	public void setupPage(HttpSession session,String action,Vector list) {
 //		
 //		try {

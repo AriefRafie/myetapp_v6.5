@@ -497,10 +497,8 @@ import ekptg.view.admin.utils.UsersListConnectionToDB;
 				this.context.put("list_TBLRUJBANDAR",list_TBLRUJBANDAR);
 				
 				skrin_name = "app/admin/Utilities/showListBandar.jsp";
-			}
 			
-			else if(command.equals("savePejabat"))
-			{
+			}else if(command.equals("savePejabat")){
 				String mode = getParam("mode");
 				this.context.put("mode",mode);
 				
@@ -510,31 +508,26 @@ import ekptg.view.admin.utils.UsersListConnectionToDB;
 				String JENISPEJ = "";
 						
 				if (ID_PEJABAT.equals("")){
-				 JENISPEJ = getParam("JENISPEJ");
-				 this.context.put("JENISPEJ", JENISPEJ);
+					JENISPEJ = getParam("JENISPEJ");
+					this.context.put("JENISPEJ", JENISPEJ);
 				 
-				}
-				else{
-				
+				}else{
 					JENISPEJ = getParam("jenisPejabatIns_"+ID_PEJABAT);
 					this.context.put("JENISPEJ", JENISPEJ);
+				
 				}
-				
-				
-				System.out.println("JENISPEJ? -- "+JENISPEJ);
+				myLog.info("JENISPEJ="+JENISPEJ);
 				//System.out.println("ID_PEJABAT? -- "+ID_PEJABAT);
 				
 				if(ID_PEJABAT==null || ID_PEJABAT.equals("") || ID_PEJABAT.equals("null")){
-				System.out.println("ID_PEJABAT insert? -- "+ID_PEJABAT);
+//					System.out.println("ID_PEJABAT insert? -- "+ID_PEJABAT);
+					ID_PEJABAT = insertDataPejabat(session, ID_PEJABAT,JENISPEJ);
+//					System.out.println("ID_PEJABAT after insert? -- "+ID_PEJABAT);
 				
-				ID_PEJABAT = insertDataPejabat(session, ID_PEJABAT,JENISPEJ);
-				System.out.println("ID_PEJABAT after insert? -- "+ID_PEJABAT);
-				
-				} else{
-					
-				System.out.println("ID_PEJABAT update? -- "+ID_PEJABAT);
-				ID_PEJABAT = saveDataPejabat(session, ID_PEJABAT,JENISPEJ);
-				System.out.println("ID_PEJABAT after update? -- "+ID_PEJABAT);
+				} else{					
+//					System.out.println("ID_PEJABAT update? -- "+ID_PEJABAT);
+					ID_PEJABAT = saveDataPejabat(session, ID_PEJABAT,JENISPEJ);
+//					System.out.println("ID_PEJABAT after update? -- "+ID_PEJABAT);
 
 				}
 				System.out.println("JENISPEJ? -- "+JENISPEJ);
@@ -2170,33 +2163,28 @@ import ekptg.view.admin.utils.UsersListConnectionToDB;
 				String FLAG_AKTIF = getParam("FLAG_AKTIF_"+ID_PEJABAT);
 				String ID_BANDAR = getParam("ID_BANDAR_"+ID_PEJABAT);
 				String ID_DAERAH = getParam("ID_DAERAH_"+ID_PEJABAT);
-				String ID_JENISPEJABAT = getParam("JENIS_PEJABAT_URUSAN_"+ID_PEJABAT);
-				
+				String ID_JENISPEJABAT = getParam("JENIS_PEJABAT_URUSAN_"+ID_PEJABAT);				
 				//for id jenis pejabat pusaka
 				/*if (ID_SEKSYEN.equals("2")){
 					ID_JENISPEJABAT = "22";
-				}*/
-				
-				String FLAG_INT = getParam("FLAG_INT_"+ID_PEJABAT);
-				
-				String EMEL = getParam("EMEL_"+ID_PEJABAT);
-				
+				}*/				
+				String FLAG_INT = getParam("FLAG_INT_"+ID_PEJABAT);				
+				String EMEL = getParam("EMEL_"+ID_PEJABAT);				
 				
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
 	
 				//UPDATE
 				if(JENISPEJ.equals("1")){
-				r.update("ID_PEJABATJKPTG", ID_PEJABAT);
+					r.update("ID_PEJABATJKPTG", ID_PEJABAT);
 				} else if(JENISPEJ.equals("2")){
-				r.update("ID_PEJABAT", ID_PEJABAT);	
+					r.update("ID_PEJABAT", ID_PEJABAT);	
 				}
 				r.add("ID_SEKSYEN", ID_SEKSYEN);
 				r.add("ID_NEGERI", ID_NEGERI);
 				r.add("ID_DAERAH", ID_DAERAH);
 				r.add("ID_BANDAR", ID_BANDAR);
-				r.add("ID_JENISPEJABAT", ID_JENISPEJABAT);
-				
+				r.add("ID_JENISPEJABAT", ID_JENISPEJABAT);				
 				r.add("NAMA_PEJABAT", NAMA_PEJABAT);
 				r.add("ALAMAT1", ALAMAT1);
 				r.add("ALAMAT2", ALAMAT2);
@@ -2205,39 +2193,36 @@ import ekptg.view.admin.utils.UsersListConnectionToDB;
 				r.add("FLAG_AKTIF", FLAG_AKTIF);
 				r.add("NO_FAX", NO_FAX);
 				r.add("NO_TEL",NO_TEL);
-				r.add("FLAG_INT",FLAG_INT);
-				
+				r.add("FLAG_INT",FLAG_INT);				
 				r.add("EMEL",EMEL);
+				r.add("ID_KEMASKINI",USER_ID_SYSTEM);
+				r.add("TARIKH_KEMASKINI",r.unquote("sysdate"));
 				
 				if(JENISPEJ.equals("1")){
-				sql = r.getSQLUpdate("TBLRUJPEJABATJKPTG");	
+					sql = r.getSQLUpdate("TBLRUJPEJABATJKPTG");	
 				} else if(JENISPEJ.equals("2")){
-				sql = r.getSQLUpdate("TBLRUJPEJABAT");	
-				}
-					
-				myLog.info("UPDATE TBLRUJPEJABAT : "+sql);
-				
+					sql = r.getSQLUpdate("TBLRUJPEJABAT");	
+				}					
+				myLog.info("UPDATE TBLRUJPEJABAT : "+sql);			
 				stmt.executeUpdate(sql);
 				conn.commit();
 				
 				myLog.info("FLAG_INT :: "+FLAG_INT);
-				
 				if (FLAG_INT.equals("1")){
 					//insert tbltujintegrasi
 					saveDetailIntegrasi(session, "1", ID_PEJABAT, false);
 				}
 				
-			} 
-			catch (SQLException se) { 
+			} catch (SQLException se) { 
 				myLog.error(se);
 		    	try {
 		    		conn.rollback();
 		    	} catch (SQLException se2) {
 		    		throw new Exception("Rollback error:"+se2.getMessage());
 		    	}
-		    	throw new Exception("Ralat Pendaftaran Maklumat Bantahan:"+se.getMessage());
-			}
-			catch (Exception re) {
+		    	throw new Exception("Ralat Pendaftaran Maklumat Pejabat:"+se.getMessage());
+			
+			}catch (Exception re) {
 				throw re;
 			}finally {
 				if (db != null)

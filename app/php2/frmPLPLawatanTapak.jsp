@@ -147,7 +147,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td> #parse("app/php2/frmPLPLawatanTapakDokumen.jsp") </td>
+	<!--     <td>("app/php2/frmPLPLawatanTapakDokumen.jsp") </td> -->
   </tr>  
   <tr>
     <td align="center">

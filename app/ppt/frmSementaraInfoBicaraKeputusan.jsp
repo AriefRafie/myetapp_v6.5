@@ -919,8 +919,7 @@ Lain - Lain Kos</td>
         <td><a href="#" onClick="javascript:cetakSuratKpdAPRundingan('$id_fail','$id_hakmilik','$id_permohonan')"><font color="blue"> Surat Makluman Kepada Agensi Pemohon / Pihak Berkepentingan - Rundingan </font></a></td>
       </tr> 
       <tr>
-        <td><a href="#" onClick="javascript:cetakSuratKepadaJPPHSupayaMenghadiriPerundingan('$id_fail','$id_permohonan')"><font color="blue"> Surat Kepada JPPH - Makluman Perundingan
- </font></a></td>
+        <td><a href="#" onClick="javascript:cetakSuratKepadaJPPHSupayaMenghadiriPerundingan('$id_fail','$id_permohonan')"><font color="blue"> Surat Kepada JPPH - Makluman Perundingan</font></a></td>
       </tr>  
       <tr>
       
@@ -939,7 +938,14 @@ Lain - Lain Kos</td>
     	<td><a href="#" onClick="javascript:cetakSiasatanAPPBUlang('$!id_fail')"><font color="blue">Surat Kepada AP/PB Supaya Hadir Untuk Ulang Siasatan</font></a></td>
       </tr>-->
       
-      
+      <!-- PPT-43 (i) -->
+      <tr>  
+      	 <td><a href="#" onClick="javascript:cetakSuratMohonBayaranAgensi('$id_siasatan')"><font color="blue">Surat Mohon Bayaran Agensi</font></a></td>
+      </tr> 
+      <!-- PPT-43 (iv) -->
+      <tr>  
+      	 <td><a href="#" onClick="javascript:cetakBorangR('$id_siasatan')"><font color="blue">Borang R</font></a></td>
+      </tr> 
     </table>
 </fieldset>
   
@@ -4059,6 +4065,24 @@ function cetakSiasatanAPPBUlang(idfail) {
 function cetakNotaRundingan(id_siasatan) {
 	
     var url = "../servlet/ekptg.report.ppt.NotaRundinganSementara?id_siasatan="+id_siasatan;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+//PPT-43(i)
+function cetakSuratMohonBayaranAgensi(id_siasatan) {
+	
+    var url = "../servlet/ekptg.report.ppt.SuratMohonBayaranAgensi?id_siasatan="+id_siasatan;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+//PPT-43(iv)
+function cetakBorangR(id_siasatan) {
+	
+    var url = "../servlet/ekptg.report.ppt.BorangR?id_siasatan="+id_siasatan;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

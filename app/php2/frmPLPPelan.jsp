@@ -10,7 +10,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
 #end
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($flagPopup == 'openPopupPelan')
+  #if ($flagPopup == 'openPopupLampiran')
   <tr>
     <td> #parse("app/php2/frmPLPPelanDetail.jsp") </td>
   </tr>
@@ -20,28 +20,28 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
   #end
   <tr>
     <td><fieldset>
-      <legend><strong>SENARAI PELAN</strong></legend>
+      <legend><strong>SENARAI Lampiran</strong></legend>
       <table align="center" width="100%">
         <tr>
-          <td colspan="2" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarPelan()"/></td>
+          <td colspan="2" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarLampiran()"/></td>
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td><strong>Nama Pelan</strong></td>
+          <td><strong>Nama Lampiran</strong></td>
         </tr>
-        #set ($senaraiPelan = "")
-        #if ($SenaraiPelan.size() > 0)
-        #foreach ($senaraiPelan in $SenaraiPelan)
-        #if ($senaraiPelan.bil == '')
+        #set ($senaraiLampiran = "")
+        #if ($SenaraiLampiran.size() > 0)
+        #foreach ($senaraiLampiran in $SenaraiLampiran)
+        #if ($senaraiLampiran.bil == '')
         #set( $row = "row1" )
-        #elseif (($senaraiPelan.bil % 2) != 0)
+        #elseif (($senaraiLampiran.bil % 2) != 0)
         #set( $row = "row1" )
         #else 
         #set( $row = "row2" )
         #end
         <tr>
-          <td class="$row" align="center">$senaraiPelan.bil</td>
-          <td class="$row"><a href="javascript:paparPelan($senaraiPelan.idDokumen)" class="style2">$senaraiPelan.namaDokumen</a></td>
+          <td class="$row" align="center">$senaraiLampiran.bil</td>
+          <td class="$row"><a href="javascript:paparLampiran($senaraiLampiran.idDokumen)" class="style2">$senaraiLampiran.namaDokumen</a></td>
         </tr>
         #end
         #else
@@ -56,23 +56,23 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
 </table>
 
 <script>
-function daftarPelan() {
+function daftarLampiran() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPMaklumatPermohonanView";
 	document.${formName}.method="POST";
 	document.${formName}.mode.value = "view";	
-	document.${formName}.flagPopup.value = "openPopupPelan";
+	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.submit();
 }
-function simpanPelan(idPermohonan) {
+function simpanLampiran(idPermohonan) {
 	
-	if(document.${formName}.txtNamaPelan.value == ""){
-		alert('Sila masukkan Nama Pelan.');
-  		document.${formName}.txtNamaPelan.focus(); 
+	if(document.${formName}.txtNamaLampiran.value == ""){
+		alert('Sila masukkan Nama Lampiran.');
+  		document.${formName}.txtNamaLampiran.focus(); 
 		return; 
 	}
 	if(document.${formName}.fileupload.value == ""){
-		alert('Sila pilih Pelan yang Ingin Dimuatnaik.');
+		alert('Sila pilih Lampiran yang Ingin Dimuatnaik.');
   		document.${formName}.fileupload.focus(); 
 		return; 
 	}
@@ -81,32 +81,32 @@ function simpanPelan(idPermohonan) {
 		return;
 	}
 	
-	var namaPelan = document.${formName}.txtNamaPelan.value;
- 	var catatanPelan = document.${formName}.txtCatatanPelan.value;
+	var namaLampiran = document.${formName}.txtNamaLampiran.value;
+ 	var catatanLampiran = document.${formName}.txtCatatanLampiran.value;
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPMaklumatPermohonanView&hitButton=simpanPelan&namaPelan="+namaPelan+"&catatanPelan="+catatanPelan+"&selectedTabUpper=5"+dopost+"&mode=view&flagPopup=openPopupPelan&modePopup=new&idPermohonan="+idPermohonan;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPMaklumatPermohonanView&hitButton=simpanLampiran&namaLampiran="+namaLampiran+"&catatanLampiran="+catatanLampiran+"&selectedTabUpper=6"+dopost+"&mode=view&flagPopup=openPopupLampiran&modePopup=new&idPermohonan="+idPermohonan;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";
 	document.${formName}.submit();
 }
-function batalPelan(){
+function batalLampiran(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
 	doAjaxCall${formName}("");
 }
-function kemaskiniPelan(){
-	document.${formName}.flagPopup.value = "openPopupPelan";
+function kemaskiniLampiran(){
+	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "update";
 	doAjaxCall${formName}("");
 }
-function simpanKemaskiniPelan() {
+function simpanKemaskiniLampiran() {
 
-	if(document.${formName}.txtNamaPelan.value == ""){
-		alert('Sila masukkan Nama Pelan.');
-  		document.${formName}.txtNamaPelan.focus(); 
+	if(document.${formName}.txtNamaLampiran.value == ""){
+		alert('Sila masukkan Nama Lampiran.');
+  		document.${formName}.txtNamaLampiran.focus(); 
 		return; 
 	}
 	
@@ -114,30 +114,30 @@ function simpanKemaskiniPelan() {
 		return;
 	}
 
-	document.${formName}.flagPopup.value = "openPopupPelan";
+	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "view";
-	document.${formName}.hitButton.value = "simpanKemaskiniPelan";
+	document.${formName}.hitButton.value = "simpanKemaskiniLampiran";
 	doAjaxCall${formName}("");
 }
-function paparPelan(idDokumen){
+function paparLampiran(idDokumen){
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPMaklumatPermohonanView";
 	document.${formName}.method="POST";
 	document.${formName}.idDokumen.value = idDokumen;
-	document.${formName}.flagPopup.value = "openPopupPelan";
+	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.submit();
 }
-function hapusPelan(){	
+function hapusLampiran(){	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}	
 	
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	document.${formName}.hitButton.value = "hapusPelan";
+	document.${formName}.hitButton.value = "hapusLampiran";
 	document.${formName}.submit();
 }
-function cetakPelan(id){
+function cetakLampiran(id){
 	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
     var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
     if ((document.window != null) && (!hWnd.opener))
@@ -145,7 +145,7 @@ function cetakPelan(id){
     if (hWnd.focus != null) hWnd.focus();
 }
 
-function batalKemaskiniPelan(){
+function batalKemaskiniLampiran(){
 	document.${formName}.modePopup.value = "view";
 	doAjaxCall${formName}("");
 }

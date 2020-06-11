@@ -53,10 +53,8 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 	private final String PATH = PATHVER+"online/";
 //	private final String PATHPERMOHONAN="app/htp/permohonan/";	
 	
-	
-
 	FrmPerletakhakanPendaftaranData logic = new FrmPerletakhakanPendaftaranData(); //data tuk view
-	private final String IDURUSAN = "5";
+	private String IDURUSAN = "";
 	private String noFail = "";
 	private String tajukFail = "";
     String isCarian = "tidak";
@@ -116,6 +114,9 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 		if (doPost.equals("true")) {
 			postDB = true;
 		}
+		String portal_role = String.valueOf(session.getAttribute("myrole"));
+		String portalRoleNew = portal_role.substring(5,portal_role.length());
+		myLog.info("portal_role="+portal_role+",portalRoleNew="+portalRoleNew);
 		userId = (String)session.getAttribute("_ekptg_user_id");
 		idUser = userId;
 		String vm="";
@@ -134,8 +135,7 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 		String idSuburusanStatusFail = getParam("idSuburusanStatusFail");
 		String actionPerletakhakan = getParam("actionPerletakhakan");
 		
-		if (selectedTab == null || "".equals(selectedTab) ) 
-		{
+		if (selectedTab == null || "".equals(selectedTab) ) {
     		selectedTab="0";
     		tabmode = "0";
     	}
@@ -195,19 +195,35 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			idSuburusan = "99999";
 		}
 		
+    	if(isTab(portal_role,"Gadaian")){
+    		IDURUSAN = "108";   
+    	}else if(isTab(portal_role,"JRP")){
+    		IDURUSAN = "14"; 
+    	}else if(isTab(portal_role,"Pajakan")){
+    		IDURUSAN = "3";
+    	}else if(isTab(portal_role,"Perakuan Pembelian") || isTab(portal_role,"Pembelian")){
+    		IDURUSAN = "2";    		
+    	}else if(isTab(portal_role,"Permohonan")){
+    		IDURUSAN = "1,10";
+    	}else{
+    		IDURUSAN = "1,2,3,10,14,108";    		
+    	}
+		myLog.info("IDURUSAN="+IDURUSAN);
+		myLog.info("command="+submit+",mode="+mode);
+
 		Vector<?> list = null;
-		//SENARAI PENDAFTARAN PERLETAHAKAN
 		vm = PATH+"index.jsp";
 		if("".equals(submit)){
-			vm = PATH+"index.jsp";
-	   	   
+			vm = PATH+"index.jsp";	   	   
+			list = getIOnline().findFailOnlineUrusan(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC,IDURUSAN);
 			//logic.getSenaraiFailOnline(getParam("txtNoFail"), getParam("txtTajukFail"), idkementerianC, idAgensiC, idNegeriC, idDaerahC, idMukimC,(String)session.getAttribute("_ekptg_user_id"));
 			//15/09/2010
-			list = getIOnline().findFailOnline(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC);
+//			list = getIOnline().findFailOnline(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC);
 			isCarian = getParam("txtcarian");
 			myLog.info("isCarian::"+isCarian);
 			if(isCarian.equals("ya")){
-				list = getIOnline().findFailOnline(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC);
+				list = getIOnline().findFailOnlineUrusan(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC,IDURUSAN);
+				//list = getIOnline().findFailOnline(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC);
 				isCarian = "ya";		
 	
 			}
@@ -396,7 +412,9 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			context.put("page","1");
 			Vector dokumens = getIOnline().getLampiranByPermohonan(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
 			context.put("senaraidokumen", dokumens);
-			//getSenaraiSemakFail();
+			
+			getSemakanPerakuanPembelian();
+
 			   		
 		}else if ("pembelianditolak".equals(submit)) {
 			//idFail = getParam("idfail");
@@ -912,7 +930,21 @@ public void doSimpanMaklumatAsasTanah() throws Exception {
 	    		e.printStackTrace();
 	    	}
 	    }
-
+	  
+	private boolean isTab(String role, String tab) throws Exception {
+		boolean returnValue = false;
+		Utils utils = new Utils();
+		if(!utils.getTabID(tab,role).equals(""))
+			returnValue = true;
+			//myLog.info(utils.getTabID(tab,role));
+		return returnValue;
+		
+	}
+	private void getSemakanPerakuanPembelian()throws Exception{
+		context.put("semakclass", new FrmSemakan());
+		Vector semakList = FrmSemakan.getSenaraiSemakan("frmPajakanSemakan");
+		context.put("perakuanPembelian", semakList);
+	}
 		private IHtp getHTP(){
 			if(iHtp == null)
 				iHtp = new HtpBean();

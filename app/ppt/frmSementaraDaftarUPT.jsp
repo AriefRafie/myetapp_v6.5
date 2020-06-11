@@ -160,6 +160,28 @@ background: #E0F2F7;
             </tr>
      		#end
      		
+     		<!-- PPT-41 -->
+            <tr>
+            	<td><font color="red">*</font></td>
+            	<td>Tarikh Pendudukan Mula</td>
+            	<td>:</td>
+                <td><input name="txdTarikhPendudukanMula" value="$!txdTarikhPendudukanMula" size="11" id="txdTarikhPendudukanMula" type="text"  onblur="monthsDiff(); check_date(this);" />
+       		 	<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhPendudukanMula',false,'dmy');">$!frmtdate</td>
+            </tr>
+            <tr>
+            	<td><font color="red">*</font></td>
+            	<td>Tarikh Pendudukan Akhir</td>
+            	<td>:</td>
+                <td><input name="txdTarikhPendudukanAkhir" value="$!txdTarikhPendudukanAkhir" size="11" id="txdTarikhPendudukanAkhir" type="text"  onblur="monthsDiff(); check_date(this);" />
+       		 	<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhPendudukanAkhir',false,'dmy');">$!frmtdate</td>
+            </tr>
+           	<tr>
+           		<td>&nbsp;</td>
+            	<td>Tempoh Pendudukan (Bulan)</td>
+            	<td>:</td>
+            	<td><input type="text" name="txtTempohPendudukan" value="" size="15" class="disabled" readonly></td>
+            </tr>
+     		<!-- END PPT-41 -->
         </table> 
       
     </fieldset>
@@ -321,6 +343,10 @@ background: #E0F2F7;
    			#set($txdTarikhSurat=$data.tarikh_surat)
    			#set($flagPermohonan=$data.flag_jenispermohonan)
    			#set($lblNoOnline=$data.no_permohonan_online)
+   			<!-- PPT-41 -->
+   			#set($txdTarikhPendudukanMula=$data.tarikh_pendudukan_mula)
+   			#set($txdTarikhPendudukanAkhir=$data.tarikh_pendudukan_akhir)
+   			#set($txtTempohPendudukan=$data.tempoh_pendudukan)
    			
    			#set($sorJenisKodDaerah=$data.flag_jenis_kod_daerah)
   
@@ -473,6 +499,29 @@ background: #E0F2F7;
                 </td> 
             </tr>
      		#end
+
+     		<!-- PPT-41 -->
+            <tr>
+            	<td><font color="red">*</font></td>
+            	<td>Tarikh Pendudukan Mula</td>
+            	<td>:</td>
+                <td><input name="txdTarikhPendudukanMula" $disability $disabilityx  value="$!txdTarikhPendudukanMula" size="11" id="txdTarikhPendudukanMula" type="text" onblur="check_date(this);monthsDiff();" />
+       		 	#if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhPendudukanMula',false,'dmy');">$!frmtdate#end</td>
+            </tr>
+            <tr>
+            	<td><font color="red">*</font></td>
+            	<td>Tarikh Pendudukan Akhir</td>
+            	<td>:</td>
+                <td><input name="txdTarikhPendudukanAkhir" $disability $disabilityx  value="$!txdTarikhPendudukanAkhir" size="11" id="txdTarikhPendudukanAkhir" type="text" onblur="check_date(this); monthsDiff();" />
+       		 	#if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhPendudukanAkhir',false,'dmy');">$!frmtdate#end</td>
+            </tr>
+           	<tr>
+           		<td>&nbsp;</td>
+            	<td>Tempoh Pendudukan (Bulan)</td>
+            	<td>:</td>
+            	<td><input type="text" name="txtTempohPendudukan" value="$!txtTempohPendudukan" size="15" class="disabled" readonly></td>
+            </tr>
+     		<!-- END PPT-41 -->
      		
         </table> 
       
@@ -1045,6 +1094,7 @@ function batalKemaskini(idpermohonan) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSementaraPermohonan";
 	document.${formName}.submit();
 }
+//PPT-41
 function kemaskiniPendaftaran(idpermohonan) {
 	document.${formName}.ScreenLocation.value = "top";
 	document.${formName}.CursorPoint.value = "txtNoRujukanPTG";
@@ -1059,6 +1109,9 @@ function simpanPendaftaran(idpermohonan,mode) {
 	var dat1=document.${formName}.txdTarikhSurat;
 	var dat2=document.${formName}.txdTarikhKehendaki;
 	var dat3=document.${formName}.txdTarikhPermohonan;
+	//PPT-41
+	var dat4=document.${formName}.txdTarikhPendudukanMula;
+	var dat5=document.${formName}.txdTarikhPendudukanAkhir;
 
 	var radioSelected = false;
 	for (i = 0;  i < ${formName}.sorFlagPeruntukan.length;  i++){
@@ -1079,10 +1132,33 @@ function simpanPendaftaran(idpermohonan,mode) {
    	var mon2  = parseInt(Khndk.substring(3,5),10);
    	var yr2   = parseInt(Khndk.substring(6,10),10);
    	var dateKehendaki = new Date(yr2, mon2, dt2);
-
+   	
+   	//tarikh pendudukan mula PPT-41
+   	var Mula  = document.getElementById("txdTarikhPendudukanMula").value;
+	var dt3   = parseInt(Mula.substring(0,2),10);
+   	var mon3  = parseInt(Mula.substring(3,5),10);
+   	var yr3   = parseInt(Mula.substring(6,10),10);
+   	var datePendudukanMula = new Date(yr3, mon3, dt3);
+	
+    //tarikh pendudukan akhir PPT-41
+   	var Akhir  = document.getElementById("txdTarikhPendudukanAkhir").value;
+	var dt4   = parseInt(Mula.substring(0,2),10);
+   	var mon4  = parseInt(Mula.substring(3,5),10);
+   	var yr4   = parseInt(Mula.substring(6,10),10);
+   	var datePendudukanAkhir = new Date(yr4, mon4, dt4);
    	
    	if(document.${formName}.txdTarikhPermohonan.value == ""){
 		alert("Sila masukkan \"Tarikh Permohonan\" terlebih dahulu.");
+  		document.${formName}.txdTarikhPermohonan.focus(); 
+		return;
+	}
+   	else if(document.${formName}.txdTarikhPendudukanMula.value == ""){ //PPT-41
+		alert("Sila masukkan \"Tarikh Pendudukan Mula\" terlebih dahulu.");
+  		document.${formName}.txdTarikhPermohonan.focus(); 
+		return;
+	}
+   	else if(document.${formName}.txdTarikhPendudukanAkhir.value == ""){ //PPT-41
+		alert("Sila masukkan \"Tarikh Pendudukan Akhir\" terlebih dahulu.");
   		document.${formName}.txdTarikhPermohonan.focus(); 
 		return;
 	}
@@ -1130,6 +1206,16 @@ function simpanPendaftaran(idpermohonan,mode) {
 		dat2.focus()
 		return;
 	}
+	else if (dat4.value!="" && isDate(dat4.value)==false)
+	{ //PPT-41
+		dat4.focus()
+		return;
+	}
+	else if (dat5.value!="" && isDate(dat5.value)==false)
+	{ //PPT-41
+		dat5.focus()
+		return;
+	}
 	else {
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
 		document.${formName}.ScreenLocation.value = "top";
@@ -1143,6 +1229,7 @@ function simpanPendaftaran(idpermohonan,mode) {
 			document.${formName}.command.value = "semakPendaftaran";
 			document.${formName}.command2.value = "kemaskiniPendaftaran";
 			document.${formName}.command3.value = "updatePendaftaran";
+			//alert(idpermohonan);
 		}
 		
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSementaraPermohonan";
@@ -1325,6 +1412,34 @@ function isDate(dtStr){
 	}
 return true
 }
+
+
+//PPT-41
+function monthsDiff() {  
+
+	var date1=document.${formName}.txdTarikhPendudukanMula.value;
+	var date2=document.${formName}.txdTarikhPendudukanAkhir.value;
+	
+	var datearray1 = date1.split("/");
+	var date1 = datearray1[1] + '/' + datearray1[0] + '/' + datearray1[2];
+	var datearray2 = date2.split("/");
+	var date2 = datearray2[1] + '/' + datearray2[0] + '/' + datearray2[2];
+	
+	var d1 = new Date(date1);
+	var d2 = new Date(date2);
+		
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth();
+    months += d2.getMonth();
+
+    if(months > -1){
+		document.${formName}.txtTempohPendudukan.value = months;
+    }
+
+}
+
+
 </script>
 
 <script type="text/javascript">

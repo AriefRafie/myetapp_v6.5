@@ -16,7 +16,8 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 
-public class HakmilikPergerakanGadaianBean implements IHakmilikPergerakan{
+public class HakmilikPergerakanGadaianBean implements ITanahDaftar{
+//public class HakmilikPergerakanGadaianBean implements IHakmilikPergerakan{
 	
 	private static Logger myLog = Logger.getLogger(HakmilikPergerakanGadaianBean.class);
 	private static Vector<Hashtable<String,String>> senaraiPergerakanHakmilik = null;
@@ -26,7 +27,7 @@ public class HakmilikPergerakanGadaianBean implements IHakmilikPergerakan{
 	
 	// PAPAR PERGERAKAN HAKMILIK BY ID
 	@Override
-	public Vector<Hashtable<String,String>> getSenaraiPergerakanHakmilik(String id) throws Exception {
+	public Vector<Hashtable<String,String>> getSenaraiMaklumat(String id) throws Exception {
 
 		try {
 			db = new Db();
@@ -88,7 +89,7 @@ public class HakmilikPergerakanGadaianBean implements IHakmilikPergerakan{
 	}
 	// ADD PERGERAKAN
 	@Override
-	public String addPergerakan(Hashtable<String,String> data) throws Exception {
+	public String simpan(Hashtable<String,String> data) throws Exception {
 		Connection conn = null;
 		//Date date = new Date(); 
 		//String currentDate = sdf.format(date);
@@ -147,7 +148,7 @@ public class HakmilikPergerakanGadaianBean implements IHakmilikPergerakan{
 	}
 	// UPDATE PERGERAKAN
 	@Override
-	public void updatePergerakan(Hashtable<String,String> data) throws Exception {
+	public void kemaskini(Hashtable<String,String> data) throws Exception {
 		Connection conn = null;
 		try {
 			db = new Db();
@@ -205,8 +206,8 @@ public class HakmilikPergerakanGadaianBean implements IHakmilikPergerakan{
 
 	}
 	// PAPAR MAKLUMAT PERGERAKAN BY ID
-	@Override
-	public Hashtable<String,String> getMaklumatPergerakan(String id) throws Exception {
+//	@Override
+	public Hashtable<String,String> getMaklumat(String id) throws Exception {
 		Hashtable<String,String> h = null;
 		try {
 			db = new Db();
@@ -245,7 +246,7 @@ public class HakmilikPergerakanGadaianBean implements IHakmilikPergerakan{
 		return h;
 		
 	}	
-	@Override
+//	@Override
 	public void hapus(String id) throws Exception {
 		try {
 			db = new Db();

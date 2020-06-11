@@ -165,14 +165,14 @@
             <input name="cmdSemakanBorangK" type="button" value="Semakan Maklumat Borang K" onclick="javascript:semakanMaklumatBorangK()"/></td>
         </tr>
         <tr class="table_header" align="center">
-          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="15%"><strong>No Fail</strong></td>
-          <td width="20%"><strong>No Fail Negeri</strong></td>
-          <td width="35%"><strong>Tajuk Fail</strong></td>
-          <td width="10%"><strong>Negeri</strong></td>
-          <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
-          <td width="8%" align="center"><strong>Tarikh Buka Fail</strong></td>
-          <td width="10%"><strong>Status</strong></td>
+          <td scope="row" width="4%" align="center"><strong>Bil</strong></td>
+          <td width="12%"><strong>No Fail</strong></td>
+          <td width="12%"><strong>No Fail Negeri</strong></td>
+          <td width="30%"><strong>Tajuk Fail</strong></td>
+          <td width="8%"><strong>Negeri</strong></td>
+          <td width="6%" align="center"><strong>Tarikh Terima</strong></td>
+          <td width="6%" align="center"><strong>Tarikh Buka Fail</strong></td>
+          <td width="8%"><strong>Status</strong></td>
           <td width="10%"><strong>Daftar Oleh</strong></td>
         </tr>
         #set ($list = "")

@@ -4014,7 +4014,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		     db = new Db();
 		      Statement stmt = db.getStatement();
 		      
-		      sql = " SELECT DISTINCT ID_SENARAISEMAK,SEMAK1,SEMAK2,SEMAK3,SEMAK4,SEMAK5,SEMAK6,SEMAK7,SEMAK8" +
+		      sql = " SELECT DISTINCT ID_SENARAISEMAK,SEMAK1,SEMAK2,SEMAK3,SEMAK4,SEMAK5,SEMAK6,SEMAK7,SEMAK10,SEMAK20	" +
 		      		" FROM TBLPPTSENARAISEMAK WHERE ID_PERMOHONAN = '"+idpermohonan+"'";
 
 		      ResultSet rs = stmt.executeQuery(sql);
@@ -4032,7 +4032,10 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		    	  h.put("semak5", rs.getString("SEMAK5")==null?"0":rs.getString("SEMAK5"));
 		    	  h.put("semak6", rs.getString("SEMAK6")==null?"0":rs.getString("SEMAK6"));
 		    	  h.put("semak7", rs.getString("SEMAK7")==null?"0":rs.getString("SEMAK7"));
-		    	  h.put("semak8", rs.getString("SEMAK8")==null?"0":rs.getString("SEMAK8"));
+		    	 
+		    	  
+		    	  h.put("semak10", rs.getString("SEMAK10")==null?"0":rs.getString("SEMAK10"));
+		    	  h.put("semak20", rs.getString("SEMAK20")==null?"0":rs.getString("SEMAK20"));
 		    	  list.addElement(h);
 		      }
 		      return list;
@@ -6482,5 +6485,82 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	    }//close finally
 	   
 	  }//close updateStatus
+	
+	public Hashtable<String,String> getPermohonanPPK(String id) throws Exception {
+		Hashtable<String,String> hash = null;
+		Db db = null;
+		String sql = "";
+		
+		try{
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+		
+				r.add("p.id_permohonan");
+				r.add("p.id_fail");
+				r.add("f.id_suburusan");		
+				r.add("f.id_fail",r.unquote("p.id_fail"));
+				//r.add("n.id_negeri",r.unquote("f.id_negeri"));
+				r.add("p.id_Permohonan",id);
+		
+				sql = r.getSQLSelect("tblpfdfail f,tblpptpermohonan p");
+		
+				ResultSet rs = stmt.executeQuery(sql);
+		
+				while(rs.next()) {
+					hash = new Hashtable();
+					hash.put("idPermohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));
+					hash.put("idFail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
+					hash.put("idSuburusan", rs.getString("id_suburusan")==null?"":rs.getString("id_suburusan"));
+	
+				}
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		}finally {
+			if(db != null) db.close();
+		}
+		return hash;
+		
+	}//close list pohon2
+	
+	public Hashtable<String,String> getPermohonan(String id) throws Exception {
+		Hashtable<String,String> hash = null;
+		Db db = null;
+		String sql = "";
+		
+		try{
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+		
+				r.add("p.id_permohonan");
+				r.add("p.id_fail");
+				r.add("f.id_suburusan");		
+				r.add("f.id_fail",r.unquote("p.id_fail"));
+				//r.add("n.id_negeri",r.unquote("f.id_negeri"));
+				r.add("p.id_Permohonan",id);
+		
+				sql = r.getSQLSelect("tblpfdfail f,tblppkpermohonan p");
+		
+				ResultSet rs = stmt.executeQuery(sql);
+		
+				while(rs.next()) {
+					hash = new Hashtable();
+					hash.put("idPermohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));
+					hash.put("idFail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
+					hash.put("idSuburusan", rs.getString("id_suburusan")==null?"":rs.getString("id_suburusan"));
+	
+				}
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		}finally {
+			if(db != null) db.close();
+		}
+		return hash;
+		
+	}//close list pohon2
+	
 	
 }//close class

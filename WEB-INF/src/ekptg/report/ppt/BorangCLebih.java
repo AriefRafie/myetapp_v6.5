@@ -30,7 +30,7 @@ public class BorangCLebih extends EkptgReportServlet {
 			id_negeri = (String)h.get("ID_NEGERI");
 		}	
 		
-		if(id_negeri.equals("11")){
+		/*if(id_negeri.equals("11")){
 			super.setReportName("Borang C_lebihDrpdSatuHakmilik_TGANU_baru");
 			//super.setReportName("Borang C_lebihDrpdSatuHakmilik_jadual_TGANU_new");
 			//super.setReportName("Borang C_N9");
@@ -43,9 +43,9 @@ public class BorangCLebih extends EkptgReportServlet {
 			super.setReportName("Borang C_Kedah");
 		}else if(id_negeri.equals("7")){
 			super.setReportName("BorangCLebihDrpdSatuHakmilik(PENANG)");
-		}else{
+		}else{*/
 			super.setReportName("Borang C_lebihDrpdSatuHakmilik");
-		}      	   
+	//}      	   
 		super.setFolderName("ppt");
 	
 	}

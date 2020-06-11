@@ -8083,16 +8083,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		if(haBean==null){
 			haBean = new HABean();
 		}
-		return haBean;
-				
+		return haBean;			
 	}	
 	
 	private IUtilHTMLPilihanExt getPilihanPB(){
 		if(jenisPB==null){
 			jenisPB = new UtilHTMLPilihanJenisPBPPK();
 		}
-		return jenisPB;
-				
-	}
-	
+		return jenisPB;			
+	}	
 }

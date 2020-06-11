@@ -1,8 +1,8 @@
 <div id="checking_progress"></div>
 #if ($completed)
-<script>
+<!-- script>
 parent.document.getElementById("checking_progress").innerHTML="<div class=\"status\">TIADA MAKLUMAT BORANG O DIDAFTARKAN.</div>";
-</script>
+</script-->
 #end
 
 <!-- #if ($statusBorangO == "true")
@@ -274,6 +274,75 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!--------------------------------------- END TAB BANTAHAN ------------------------------------------->
 </fieldset>
 
+<!-- PPT-35 (ii) -->
+<!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
+
+<!-- :::upload -->
+<input type="hidden" name="nama_skrin" id="nama_skrin" value="borangO"  />
+<fieldset id="senarai_dokumen" >
+<legend>Senarai Dokumen Yang Disertakan</legend>
+    
+    <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
+    #if($listDokumen_size > 0)
+     <input name="cmdHapusDokumen" type="button" value="Hapus" onClick="hapusDokumenMaster('$!readmode')" title="Sila tick untuk hapus dokumen" >
+    #end
+    <table width="100%">
+  <tr class="table_header">
+    <td width="5%">Bil</td>
+    <td width="30%">Nama Dokumen</td>
+    <td width="30%">Keterangan</td>
+    <td width="30%">Dokumen Sokongan (Papar)</td>
+     #if($listDokumen_size > 0)
+      <td width="5%">
+     
+      <div align="center">
+      <input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
+      </div>
+      
+      </td>
+      #end
+  </tr>
+ 
+  
+ #if($listDokumen_size > 0)
+  #set ($cnt=0)
+  #foreach($list1 in $listDokumen)        
+           
+             #set( $i = $velocityCount )
+         		#if ( ($i % 2) != 1 )
+              		 #set( $row = "row2" )
+         		#else
+               		 #set( $row = "row1" )
+         		#end
+	  #if($list1.JENIS_DOKUMEN == "borangO")   <!-- PPT-35 (ii) -->  
+	  #set ($cnt=1)       		
+	  <tr>  
+	    <td class="$row" >$list1.BIL</td>
+	    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
+	    <td class="$row" >$list1.KETERANGAN</td>
+	    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
+	    <td class="$row" ><div align="center">
+	       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
+	     </div></td>
+	  </tr>
+	  #end
+  	#end
+	  #if($cnt==0)
+	  <tr>  
+	    <td colspan="5">Tiada Rekod</td>    
+	  </tr>
+	  #end
+  #else
+  <tr>  
+    <td colspan="5">Tiada Rekod</td>    
+  </tr>
+  #end
+</table>
+</fieldset>
+<!-- PPT-35 (ii) -->
+
+
+
 <!------------------------------------------ OUTPUT LAPORAN/SURAT ----------------------------------------------->
 <br/>
 <fieldset id="tableReport1" style="display:none;">
@@ -333,7 +402,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
       <tr>
         <td><a href="#" class="style2" onClick="javascript:cetakNotaSiasatan('$!id_siasatan','$!id_permohonan')"><font color="blue"> Nota Perbicaraan </font></a>
         </td>
-      </tr>                                         
+      </tr>                                     
     </table>
 </fieldset>
 <!------------------------------------------ END OUTPUT LAPORAN/SURAT ------------------------------------------>
@@ -579,4 +648,84 @@ function RemoveNonNumeric( strString )
 <!--UTK DEFAULTKAN TAB KEPADA TAB BANTAHAN
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});
 //-->
+
+<!-- PPT-35 (ii) -->
+function tambahDokumen() {
+	var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;	
+	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
+	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
+	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen";	
+	document.${formName}.submit();
+}
+
+function hapusDokumenMaster(r){
+	input_box = confirm("Adakah anda pasti?");
+		if (input_box == true) {
+		var id_bantahan = document.${formName}.id_bantahan.value ;
+		var id_permohonan = document.${formName}.id_permohonan.value ;		
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=hapusDokumenMaster&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point=senarai_dokumen&readmode="+r;	
+		document.${formName}.submit();
+		}
+	}
+	
+//PPT-35(ii)	
+function doCheckAll1(){    
+    if (document.${formName}.all1.checked == true){
+        if (document.${formName}.ids1.length == null){
+            document.${formName}.ids1.checked = true;
+        } else {
+            for (i = 0; i < document.${formName}.ids1.length; i++){
+                document.${formName}.ids1[i].checked = true;
+            }
+        }
+    } else {
+        if (document.${formName}.ids1.length == null){
+            document.${formName}.ids1.checked = false;
+        } else {
+            for (i = 0; i < document.${formName}.ids1.length; i++){
+                document.${formName}.ids1[i].checked = false;
+            }
+        }
+    }
+}
+
+function doUpdateCheckAll1(){  
+	var c = 0;
+	if(document.${formName}.ids1.length > 1)
+	{     
+		  for (i = 0; i < document.${formName}.ids1.length; i++)
+		  {
+	      if (document.${formName}.ids1[i].checked == false)
+		  {	 
+		  c++
+	      }
+		  }  
+	}
+	else
+	{
+
+	if (document.${formName}.ids1.checked == false)
+	{	 
+	c++;
+	}	 	
+	}	 
+	 
+		
+		
+		
+		  if(c>0)
+		  {	  
+		  document.${formName}.all1.checked = false;
+		  }
+		  else
+		  {
+		  document.${formName}.all1.checked = true;
+		  }
+		  
+		  
+	       
+	}
+
 </script>

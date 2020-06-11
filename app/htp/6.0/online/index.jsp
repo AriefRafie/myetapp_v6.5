@@ -286,15 +286,20 @@
 	
 	//PEMBELIAN
 	function pembelianSimpanPengesahan(idA,idB,idC){
+		document.${formName}.command.value = 'pembelianviewmaklumat';
+		document.${formName}.action = "$EkptgUtil.getTabID('Perakuan Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idB+"&idHtpPermohonan="+idC;
+		document.${formName}.submit();
+		
 		//var mode = 'viewMaklumatPermohonan';
 		//doAjaxCall${formName}("perletakhakanviewmaklumat","mode="+mode+"&idfail="+id+"&pagemode=0");
-		doAjaxCall${formName}("pembelianviewmaklumat","idfail="+idA+"&txtidPermohonan="+idB+"&idPermohonan="+idB+"&idHtpPermohonan="+idC);
+		//doAjaxCall${formName}("pembelianviewmaklumat","idfail="+idA+"&txtidPermohonan="+idB+"&idPermohonan="+idB+"&idHtpPermohonan="+idC);
 	}
 	
 	function pembelianViewMaklumatOnline(idPermohonan,idHtp){
 		//doAjaxCall${formName}("detail",'idPermohonan='+id+'&idHtpPermohonan='+idhtp);
 		document.${formName}.command.value = 'detail';
-		document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idPermohonan+"&idHtpPermohonan="+idHtp;
+		document.${formName}.action = "$EkptgUtil.getTabID('Perakuan Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idPermohonan+"&idHtpPermohonan="+idHtp;
+		//document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idPermohonan+"&idHtpPermohonan="+idHtp;
 		document.${formName}.submit();
 	}
 	

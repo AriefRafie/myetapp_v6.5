@@ -8,12 +8,12 @@ import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
-import ekptg.model.htp.rekod.FrmTanahKementerianBean;
-import ekptg.model.htp.rekod.ITanahKementerian;
+import ekptg.model.htp.rekod.ITanahDaftar;
+import ekptg.model.htp.rekod.TanahKementerianBean;
 
 public class FrmRekodTransaksiHakmilikAgensi extends AjaxBasedModule {
 
-	private ITanahKementerian iHakmilikKementerian = null; 
+	private ITanahDaftar iHakmilikKementerian = null; 
 	private static final long serialVersionUID = 1L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.rekod.FrmRekodTransaksiHakmilikAgensi.class);
 
@@ -31,13 +31,13 @@ public class FrmRekodTransaksiHakmilikAgensi extends AjaxBasedModule {
 	// VIEW TRANSAKSI CUKAI BY ID
 	private void viewTransaksi(String idHakmilik) throws Exception {
 		Vector list =null;
-		list = getHakmilik().getMaklumat(idHakmilik);
+		list = getHakmilik().getSenaraiMaklumat(idHakmilik);
 		this.context.put("SenaraiTransaksi",list);
 	}
 	
-	private ITanahKementerian getHakmilik(){
+	private ITanahDaftar getHakmilik(){
 		if(iHakmilikKementerian== null)
-			iHakmilikKementerian = new FrmTanahKementerianBean();
+			iHakmilikKementerian = new TanahKementerianBean();
 		return iHakmilikKementerian;
 	}
 	

@@ -1391,11 +1391,9 @@ $listFail.id_Suburusanstatus
                   <input type="text" disabled value=$!namaDoC> &nbsp;&nbsp; <input name="deleteSuppDoc1" type="button" value="Padam" onclick="deleteSuppDoc()" />
                   #end
                   #if($setmode=="disabled" && $namaDoC != "")
-                  <!--  <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />
-                  <input type="text" disabled value=$!namaDoC> -->	
-                  	$!lampirans
+                  <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />
+                  <!-- <input type="text" disabled value=$!namaDoC> -->	
                   #end
-                  
                   
                   #if($setmode!="disabled" && $namaDoC == "") 
                   <input name="cetak" type="button" value="Tambah Dokumen Sokongan" onclick="uploadSuppDoc('$IdPermohonan','$idSimati')" />
@@ -5589,17 +5587,9 @@ $jquery("#kpi_ppk").html("<span  style='color:red'></span>");
 		//	}
 	}
 	
-	function paparLampiran(id_){
-		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
-	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
-	    if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener=document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-	}
-	
 	function doOpen(id) {
 		//alert('id : '+id);
-	    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id;
+	    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id+"&jenisDoc=99201";
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	    hWnd.opener = document.window;

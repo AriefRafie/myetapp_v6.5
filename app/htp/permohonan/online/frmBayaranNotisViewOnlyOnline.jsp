@@ -14,7 +14,7 @@
 
 
 <!-- ****************** START UNTUK MAKLUMAT NOTIS 5A KTN ************************* -->
-## #parse("app/htp/permohonan/notis/frmBayaranNotis.jsp") <!--path file asal sebelum diubah kepada view sahaja.-->
+##parse("app/htp/permohonan/online/v02/notis/frmBayaranNotis.jsp") <!--path file asal sebelum diubah kepada view sahaja.-->
 ##<br/><br/><br/><br/>
 <fieldset>
 	<legend>MAKLUMAT 
@@ -535,11 +535,11 @@
 		#end
 		<tr>
 			<td class="$row">$cnt1.</td>
-			<td class="$row">$!Bukti.nobaucer</td>
-			<td class="$row">$!Bukti.noresit</td>
-			<td class="$row">$!Bukti.tarikhbaucer</td>
-			<td class="$row">$!Bukti.tarikhresit</td>
-			<td class="$row">$!Bukti.jumlahbayaran</td>
+			<td class="$row">$Bukti.noBaucer</td>
+			<td class="$row">$Bukti.noResit</td>
+			<td class="$row">$Bukti.tarikhbaucer</td>
+			<td class="$row">$Bukti.tarikhresit</td>
+			<td class="$row">$Bukti.jumlahBaucer</td>
 		</tr>
 		#end #if ($cnt == 0)
 		<tr>
@@ -551,6 +551,9 @@
 	</table>
 </fieldset>
 <!-- ****************** END UNTUK Senarai Bukti Pembayaran ************************* -->
+
+
+
 
 <script>
 </script>

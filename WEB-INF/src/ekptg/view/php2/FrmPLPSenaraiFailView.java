@@ -123,7 +123,7 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 						idAgensi, idPejabat, idLuasKegunaan,
 						getParam("txtTujuanKegunaan"),
 						getParam("idKementerianTanah"),
-						getParam("idNegeriTanah"), getParam("noFailNegeri"),
+						getParam("idNegeriTanah"), getParam("txtNoFailNegeri"),
 						getParam("idLuasTanah"), getParam("luasTanah"),
 						idHakmilikSementara, session);
 

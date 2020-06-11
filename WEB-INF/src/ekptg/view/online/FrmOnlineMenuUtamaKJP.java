@@ -7,15 +7,29 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
+import ekptg.model.IStatus;
+import ekptg.model.StatusBean;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHtp;
 import ekptg.view.admin.Pengumuman;
 
 public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
+	/**
+	 * 
+	 */
+	static Logger myLog = Logger.getLogger(FrmOnlineMenuUtamaKJP.class);
+	private static final long serialVersionUID = -4427185828234591107L;
 	private static final String PATH = "app/online/manuUtama/";
 	private String vm = PATH + "frmMenuUtamaKJP.jsp";
+	private IHtp iErr = null;  
+	//return Permohonan 1
+	private IStatus iStatus = null;
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -64,8 +78,14 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 context.put("jumlah_notifikasi_penyewaan", Long.parseLong(jumlah_notifikasi_penyewaan));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
 		 
-		// TODO Auto-generated method stub
+		 //return Permohonan 4
+		 //PPT
+		 context.put("bilPPTDikembali", dikembalikan("51").size() + dikembalikan("52").size());
+//		 context.put("vecPPT4", dikembalikan("51"));
+//		 context.put("vecPPT8", dikembalikan("52"));
+ 
 		return vm;
+		
 	}
 
 	public Hashtable notifikasi_permohonan(String userID, long jawatan)
@@ -311,7 +331,8 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				   + " AND users.user_id = '" + userID + "') AS jumlahpermohonan "
 				  + " FROM DUAL ";
 			
-			// myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
+			// 
+			myLog.info("notifikasi_pelepasan :sql="+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -327,7 +348,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				db.close();
 		}
 	}
-
+	
 	public Hashtable get_jawatan(String login) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -355,4 +376,41 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				db.close();
 		}
 	}
+	
+	//return Permohonan 3
+	public Vector<Hashtable<String, String>> dikembalikan(String idSubUrusan) throws Exception {
+		Vector<Hashtable<String, String>> returnVal = null;
+		try {
+			returnVal = getStatus().getInfoStatusPermohonan("",idSubUrusan,"50");
+		}catch(Exception e){
+			throw new Exception(getErr().getErrorHTML("inquery:"+idSubUrusan+"::"+e.getMessage()));
+		}
+		return returnVal ;
+		
+	}
+	
+	public Vector<Hashtable<String, String>> dikembalikanByUrusan(String idUrusan) throws Exception {
+		Vector<Hashtable<String, String>> returnVal = null;
+		try {
+			returnVal = getStatus().getInfoStatusPermohonan(idUrusan,"","50");
+		}catch(Exception e){
+			throw new Exception(getErr().getErrorHTML("inquery:"+idUrusan+"::"+e.getMessage()));
+		}
+		return returnVal ;
+		
+	}
+	//return Permohonan 2
+	private IStatus getStatus(){
+		if (iStatus==null){
+			iStatus=new StatusBean();
+		}
+		return iStatus;
+	}
+		
+	private IHtp getErr(){
+		if(iErr== null)
+			iErr = new HtpBean();
+		return iErr;
+	}	
+
 }

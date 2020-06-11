@@ -2,6 +2,7 @@ package ekptg.view.online.htp.permohonan;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -133,6 +134,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	
 	//----- Start addby zul 27/7/2017 -----
 	private Hashtable<String, String> hashTerimaPohonInfo = null; 
+	private Vector<Hashtable<String, String>> list = null;
 	HTPPermohonanTanahBean tanahBean =null;
 	private String DISABILITY = " disabled class=\"disabled\" ";
   	private String inputStyle = DISABILITY;
@@ -196,6 +198,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 			getIHTP().getErrorHTML("[HTP PERMOHONAN] SILA LOGIN SEMULA");
 		}
 		//Parameters
+		String butang3 = getParam("butang3");
 		String submit = getParam("command");
 		String action = getParam("action");
 		String mode = getParam("mode");
@@ -203,6 +206,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		String doChange = getParam("doChange");
 		String pagemode = getParam("pagemode");
 		String button = getParam("button");
+		myLog.info("button = "+button);
 		String idNotis = getParam("idNotis");
 		tabmode = getParam("tabmode");
 		idpermohonan = getParam("idpermohonan");
@@ -377,11 +381,13 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    } else if ("kemaskinipermohonan".equals(submit)) {
 		    	myLog.debug("kemaskinipermohonan="+submit);
 				this.context.put("readOnly", "readonly");
+				this.context.put("butang3", butang3);
 				this.context.put("disabled", "disabled");	
 				setPaging(false,false,true,false,false);
 		    	template_name = PATH+"frmTerimaPohonMaklumatTABBOnline.jsp";		    	
 		    	//HEADER
 		    	Hashtable TerimaPohonInfo = null;
+		    	Hashtable TerimaPohonInfo1 = null;
 	    		String hittButton = getParam("hittButton");
 	    		String pageMode = "";
 	    		
@@ -539,7 +545,6 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	    				style = "";
 	    			
 	    			}else if("hantarPengesahan".equals(hittButton)){
-//		    			System.out.println("ZUL TEST MASUK");
 	    				myLog.debug("HANTAR PENGESAHAN");
 		    			
 		    			getPermohonanInfo();
@@ -734,18 +739,22 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 				 * ADDBY zulfazdliabuas@gmail.com
 				 */
 		    	} else if ("Notis5A".equals(mode)) { //NOTIS 5 A
-		    		
+		    		myLog.debug("Notis5A: ");
 		    		idNotis = getParam("idNotis");
 		    		this.context.put("idNotis", idNotis);
 		    		TerimaPohonInfo = fData.getTerimaPohonInfo(idfail);
+		    		Vector notis5A = fData.getSenaraiNotis5A(idpermohonan);
 					idpermohonan = (String)TerimaPohonInfo.get("lblIdPermohonan");
+					
 		    		myLog.debug("idNotis:"+idNotis);
 		    		myLog.debug("idpermohonan:"+idpermohonan);
 		    		this.context.put("idpermohonan", idpermohonan);
+		    		this.context.put("bilNotis", notis5A.size());
 		    		
 		    		if("TambahNotis".equals(button)){
 		    			//View Form Untuk Tambah Notis 5A
 		    		} else if("SimpanNotis".equals(button)){ 
+		    			myLog.debug("SimpanNotis: ");
 		    			Notis5A("insert",null);
 		    			senaraiNotis5A();
 		    		} else if ("ViewNotis".equals(button)) {
@@ -760,7 +769,12 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    		} else if ("BuktiBayaranNotis".equals(button)) {
 		    			SimpanBuktiBayaranNotis();
 		    			viewBuktiBayaranNotis();
+		    			
 		    		}
+		    		else if ("BuktiBayaranInfo2".equals(button)) {
+						viewBuktiBayaranNotis2();
+						
+					}
 		    		else {
 		    			//SENARAI NOTIS
 		    			senaraiNotis5A();
@@ -789,10 +803,12 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 				String jumlahBaucer = getParam("txtJumlahBaucer");
 		
 				saveData(noBaucer,noResit,tarikhBaucer,tarikhResit,jumlahBaucer);
+				viewBuktiBayaranNotis2();
 				template_name = PATH + "indexOnline.jsp";
 				
 				
-			} else if ("uploadDoc".equals(submit)) {
+				
+			}  else if ("uploadDoc".equals(submit)) {
 				myLog.debug("uploadDoc=" + submit);
 
 				String id_permohonan = getParam("id_permohonan");
@@ -819,7 +835,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	   				
 					template_name = PATH + "frmMaklumatPermohonanView.jsp";
 					setPaging(false,true,true,false,false);
-		    		
+					myLog.info("READ HERE");
 					String idFailBaru = doSimpanMaklumatPermohonanOnline();
 		    		AuditTrail.logActivity("1", getParam("socSeksyen"), this, session, "INS", "FAIL PERMOHONAN ["+fData.strNoFail+"] DITAMBAH ");
 		    		//x perlu ada integrasi GIS untuk online 
@@ -827,7 +843,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 
 		    		hashTerimaPohonInfo = FrmSenaraiFailTerimaPohonData.getTerimaPohonInfo(idFailBaru);
 		    		idfail = idFailBaru;
-					
+		    		myLog.info("idfail = "+idfail);
 		    		idpermohonan = String.valueOf(hashTerimaPohonInfo.get("lblIdPermohonan"));
 		   			setMaklumatPermohonan(hashTerimaPohonInfo);		
 					/*tanahBean = new HTPPermohonanTanahBean();
@@ -1034,6 +1050,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	    
 		socUrusan = UtilHTML.SelectUrusan("socUrusan",Utils.parseLong(idurusan),null);//disabled class=disabled
 		socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian), "disabled class=disabled","onChange=\"doChangeKementerianX()\" style=\"width:400\"");
+		myLog.info("socAgensi");
 		socAgensi = HTML.SelectAgensiByKementerian("socAgensi", id_kementerian, Utils.parseLong(id_agensi), ""," style=\"width:400\"");
 		socNegeri = HTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri),null,"onChange=doChangeNegeriX();");
 		socDaerah = HTML.SelectDaerahByNegeri(idnegeri, "socDaerah",Utils.parseLong(iddaerah),null, "onChange=\"doChangeDaerahX()\"");
@@ -1186,7 +1203,8 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 			context.put("txtTajuk",getParam("txtTajuk"));
 			context.put("noFail","");
 			context.put("noP","");
-			context.put("txtnoFailKJP","");
+			context.put("txtnoFailKJP",getParam("txtnoFailKJP"));
+			context.put("txtnofailptg",getParam("txtnofailptg"));
 			context.put("txtnoFailUPT","");
 			context.put("txdTarikhSuratKJP",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
 			context.put("txtTarikhPermohonan",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
@@ -1200,7 +1218,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 			context.put("txtTajuk","");
 			context.put("noFail","");
 			context.put("noP","");
-			context.put("txtnoFailKJP","");
+			context.put("txtnoFailKJP",getParam("txtnoFailKJP"));
 			context.put("txtnoFailUPT","");
 			context.put("txdTarikhSuratKJP",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
 			context.put("txtTarikhPermohonan",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
@@ -1228,7 +1246,8 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hashData.put("TarikhSurKJP", getParam("txdTarikhSuratKJP"));
 		hashData.put("TarikhPermohonan", getParam("txdTarikhSuratKJP"));  
 		hashData.put("noFailUPT", getParam("txtnoFailUPT"));  
-		hashData.put("noFailKJP", getParam("txtnoFailKJP"));  
+		hashData.put("noFailKJP", getParam("txtnoFailKJP"));
+		hashData.put("noFailPTG", getParam("txtnofailptg"));
 		hashData.put("StatusTanah", getParam("socStatustanah"));  
 //		return fData.simpanPermohonan(h,idUser);
 		return fData.simpanPermohonanOnline(hashData,idUser);
@@ -1861,6 +1880,8 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		this.context.put("dat", Notis5A);
 		this.context.put("viewNotis", 0);
 		viewBuktiBayaranNotis();
+		viewBuktiBayaranNotis2();
+		myLog.debug("selesai di viewNotis5A ");
 	}
 	
 	public void Notis5A(String mode,String idNotis) throws Exception {
@@ -1878,6 +1899,12 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hNotis.put("RayuanPremium",Utils.isNull(getParam("txtRayuanPremium")));
 		hNotis.put("RayuanLain",Utils.isNull(getParam("txtRayuanLain")));
 		hNotis.put("PerihalRayuan",Utils.isNull(getParam("txtPerihalRayuan")));
+		hNotis.put("TarikhRayuan",Utils.isNull(getParam("txtTarikhRayuan")));
+		hNotis.put("TempohRayuan",Utils.isNull(getParam("txtTempohRayuan")));
+		
+		
+		
+		
 		hNotis.put("TarikhTerimaNotis5A",Utils.isNull(getParam("txtTarikhTerimaNotis5A")));
 		hNotis.put("TarikhLuputNotisKedua",Utils.isNull(getParam("txtTarikhLuputNotisKedua")));
 		hNotis.put("TarikhLuputNotisKetiga",Utils.isNull(getParam("txtTarikhLuputNotisKetiga")));
@@ -1913,6 +1940,58 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		Vector BuktiBayaranInfo = fData.getBuktiBayaranNotis5A(idpermohonan);
 		this.context.put("BuktiBayaranInfo", BuktiBayaranInfo);
 	}
+	private void viewBuktiBayaranNotis2() throws Exception {
+		myLog.debug("viewBuktiBayaranNotis2");
+		Vector BuktiBayaranInfo2 = fData.getBuktiBayaranNotis5A2(idpermohonan);
+		this.context.put("BuktiBayaranInfo2", BuktiBayaranInfo2);
+		myLog.debug("selesai viewBuktiBayaranNotis2");
+	}
+	public Vector<Hashtable<String, String>> getBuktiBayaranNotis5A2(String idpermohonan)throws Exception {	
+		Db db = null;
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		myLog.debug("Idpermohonan model"+idpermohonan);
+		myLog.info("getBuktiBayaran sql::"+sql);
+		try{
+			list = new Vector<Hashtable<String, String>>();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			//SQLRenderer r = new SQLRenderer();
+			//long idBayaran =  DB.getNextID(db,"TBLHTPBAYARAN_SEQ");
+		
+			sql =  "SELECT id_bayaran,no_baucer,no_resit,tarikh_baucer,tarikh_resit,jumlah_baucer " +
+	  			" from tblhtpbayaran where id_permohonan = '"+idpermohonan+"'";
+
+			myLog.info("getPelanLakaranInfo: sql::"+sql);
+	  	  	ResultSet rs1 = stmt.executeQuery(sql);
+	  	  	Hashtable<String, String> h;
+	  	  	SQLRenderer rh = new SQLRenderer();
+	  	  	int bil = 1;
+	  	  	while(rs1.next()){
+	  	  		h = new Hashtable<String, String>();		  
+	  	  		h.put("bil", String.valueOf(bil));
+	  	  		h.put("idBayaran", Utils.isNull(rs1.getString("id_bayaran"))); 
+	  	  		
+				h.put("noBaucer", rs1.getString("no_baucer") == null ? "" : rs1.getString("no_baucer"));
+				h.put("noResit", rs1.getString("no_resit") == null ? "" : rs1.getString("no_resit"));
+				h.put("tarikhBaucer",  sdf.format(rs1.getDate("tarikh_baucer") == null ? "" : rs1.getDate("tarikh_resit")));
+				h.put("tarikhResit",  sdf.format(rs1.getDate("tarikh_resit") == null ? "" : rs1.getDate("tarikh_resit")));
+				h.put("jumlahBaucer", Utils.format2Decimal(rs1.getDouble("jumlah_baucer")) == null ? "" : rs1.getString("jumlah_baucer"));
+				
+				sql = rh.getSQLSelect("TBLHTPBAYARAN");
+		    	System.out.println("sqlInsertTblhtpbayaran = " + sql);
+				stmt.executeUpdate(sql);
+				
+	  	  		bil++;
+	  	  		list.addElement(h);
+	  	  	}
+	  	  	return list;
+		
+		}finally{
+			if (db != null) db.close();
+		}	
+	}
+	
 	public void setPaging(boolean page1,boolean page2,boolean page3,boolean page4,boolean page5) {
 		this.context.put("page1",page1);
 		this.context.put("page2",page2);
@@ -2037,11 +2116,12 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hashData.put("TarikhPermohonan", getParam("txtTarikhPermohonan")); 
 //		hashData.put("noFailUPT", getParam("txtnoFailUPT"));  
 		hashData.put("noFailUPT", "");
-//		hashData.put("noFailKJP", getParam("txtnoFailKJP"));
-		hashData.put("noFailKJP", "");
-//		hashData.put("StatusTanah", getParam("socStatustanah")); zulfazdli disable ganti code bawah Hardcode terus status tanah kepada sulit
+		hashData.put("noFailKJP", getParam("txtnoFailKJP"));
+		hashData.put("noFailPTG", getParam("txtnofailptg"));
+//		hashData.put("StatusTanah", getParam("socStatustanah"));
 		hashData.put("StatusTanah", "3"); //Status Tanah 3 = SULIT
 //		return fData.simpanPermohonan(h,idUser);
+		myLog.info("doSimpanMaklumatPermohonanOnline");
 		return fData.simpanPermohonanOnline(hashData,idUser);
 	}
 	

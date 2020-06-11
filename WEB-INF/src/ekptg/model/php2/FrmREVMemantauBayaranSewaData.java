@@ -54,8 +54,8 @@ public class FrmREVMemantauBayaranSewaData {
 
 	@SuppressWarnings("unchecked")
 	public void carianFail(String noFail, String namaPemohon, String noRujukan,
-			String idBank, String noCek, String idJenisFail, String idStatusPerjanjian, String noResit, String idNegeri,
-			String idDaerah, String idMukim, String idJenisHakmilik,
+			String idBank, String noCek, String noResit, String idJenisFail, String idStatusPerjanjian, String tujuan, 
+			String idNegeri, String idDaerah, String idMukim, String idJenisHakmilik,
 			String noHakmilik, String noWarta, String idLot, String noLot,
 			String peganganHakmilik, String idKementerian, String idAgensi)
 			throws Exception {
@@ -68,10 +68,10 @@ public class FrmREVMemantauBayaranSewaData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TBLPFDFAIL.NO_FAIL, TBLPHPPEMOHON.NAMA, TBLPHPBAYARANPERLUDIBAYAR.NO_RUJUKAN,"
-					+ " TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT,"
+			sql = "SELECT TBLPFDFAIL.NO_FAIL, TBLPHPPEMOHON.NAMA, TBLPHPBAYARANPERLUDIBAYAR.NO_RUJUKAN, TBLPHPBAYARANPERLUDIBAYAR.BAYARAN,"
+					+ " TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT, TBLPHPHASIL.MAKLUMAT_LOT,"
 					+ " TBLPHPHASIL.ID_HASIL, TBLPFDFAIL.ID_FAIL, TBLPFDFAIL.ID_SUBURUSAN, TBLPHPHASIL.FLAG_TUNGGAKAN, TBLPHPHASIL.FLAG_TUNGGAKAND,"
-					+ " TBLPHPBAYARANPERLUDIBAYAR.STATUS AS STATUS_PERJANJIAN, TBLPHPHASIL.NILAI_TUNGGAKAN"
+					+ " TBLPHPBAYARANPERLUDIBAYAR.STATUS AS STATUS_PERJANJIAN, TBLPHPHASIL.NILAI_TUNGGAKAN, TBLPHPHASIL.TUJUAN"
 					
 					+ " FROM TBLPHPHASIL, TBLPFDFAIL, TBLPHPPEMOHON, TBLPFDFAIL TBLPFDFAILPERMOHONAN, TBLPERMOHONAN, TBLPHPHAKMILIKPERMOHONAN,"
 					+ " TBLPHPHAKMILIK, TBLPHPBAYARANPERLUDIBAYAR"
@@ -238,6 +238,14 @@ public class FrmREVMemantauBayaranSewaData {
 							+ peganganHakmilik.trim().toUpperCase() + "'|| '%'";
 				}
 			}
+			
+			//tujuanPenyewaan
+			if (tujuan != null) {
+				if (!tujuan.trim().equals("")) {
+					sql = sql + " AND UPPER(TBLPHPHASIL.TUJUAN) LIKE '%' ||'"
+							+ tujuan.trim().toUpperCase() + "'|| '%'";
+				}
+			}
 
 			sql = sql + " ORDER BY TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA DESC NULLS LAST";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -326,7 +334,14 @@ public class FrmREVMemantauBayaranSewaData {
 					} else {
 						h.put("tunggakan", "(" + Util.formatDecimal(rs.getDouble("NILAI_TUNGGAKAN")) + ")");
 					}
-				}		
+				}	
+				h.put("kadarSewa", Util.formatDecimal(rs.getDouble("BAYARAN")));
+				h.put("maklumatLot",
+						rs.getString("MAKLUMAT_LOT") == null ? "" : rs
+								.getString("MAKLUMAT_LOT"));
+				h.put("tujuan",
+						rs.getString("TUJUAN") == null ? "" : rs
+								.getString("TUJUAN"));
 				
 				senaraiFail.addElement(h);
 
@@ -489,7 +504,8 @@ public class FrmREVMemantauBayaranSewaData {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("bil", bil);
-				h.put("idAkaun", idAkaun);
+				h.put("idAkaun", rs.getString("ID_AKAUN") == null ? "" : rs
+						.getString("ID_AKAUN"));
 				h.put("idJenisTransaksi",
 						rs.getString("ID_JENISTRANSAKSI") == null ? "" : rs
 								.getString("ID_JENISTRANSAKSI"));
@@ -920,7 +936,7 @@ public class FrmREVMemantauBayaranSewaData {
 	public String simpanBayaranLL(String idHasil, String tarikh,
 			String idCaraBayaran, String idBank, String noRujukan,
 			String tarikhCek, String amaun, String noResit, String tarikhResit,
-			String butiran, String noMel, String modBayaran, HttpSession session)
+			String butiran, String noMel, String modBayaran, String idKategoriBayaran, HttpSession session)
 			throws Exception {
 
 		Db db = null;
@@ -956,6 +972,7 @@ public class FrmREVMemantauBayaranSewaData {
 			r.add("NO_RESIT", noResit);
 			r.add("NO_DAFTAR_MEL", noMel);
 			r.add("ID_MOD_BAYARAN", modBayaran);
+			r.add("ID_KATEGORI_BAYARAN", idKategoriBayaran);
 			if (!"".equals(tarikhResit)) {
 				r.add("TARIKH_RESIT", r.unquote("to_date('" + tarikhResit
 						+ "','dd/MM/yyyy')"));
@@ -1068,7 +1085,7 @@ public class FrmREVMemantauBayaranSewaData {
 			String tarikh, String idCaraBayaran, String idBank,
 			String noRujukan, String tarikhCek, String amaun, String noResit,
 			String tarikhResit, String butiran, String noMel,
-			String modBayaran, HttpSession session) throws Exception {
+			String modBayaran, String idKategoriBayaran, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -1106,6 +1123,7 @@ public class FrmREVMemantauBayaranSewaData {
 			}
 			r.add("NO_DAFTAR_MEL", noMel);
 			r.add("ID_MOD_BAYARAN", modBayaran);
+			r.add("ID_KATEGORI_BAYARAN", idKategoriBayaran);
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 

@@ -929,30 +929,39 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 					db = new Db();
 					Statement stmt = db.getStatement();
 					SQLRenderer r = new SQLRenderer();				
-					sql =  " SELECT A.MAKLUMAT_BANTAHAN_TAMAT_TEMPOH,A.ID_BANTAHAN,A.NO_BANTAHAN,A.JENIS_PEMBANTAH,A.TARIKH_TERIMA,A.TARIKH_BORANGN,A.ID_PIHAKBERKEPENTINGAN, "; 
-					sql += " A.STATUS_BANTAHAN,E.ID_HAKMILIK,A.ALASAN,A.KEPENTINGANKEATAS,B.ID_JENISPB,D.KETERANGAN,B.NAMA_PB, ";
-					sql += " E.ALAMAT1,E.ALAMAT2,E.ALAMAT3,E.POSKOD,E.ID_NEGERI,E.ID_BANDAR,C.NO_HAKMILIK,C.NO_PT,C.NO_LOT,A.FLAG_SYARAT, ";
-					sql += " E.NO_TEL_RUMAH,E.NO_HANDPHONE,E.NO_FAX,E.FLAG_BANTAHAN,A.FLAG_PENERIMA_PAMPASAN,A.FLAG_BAHAGIAN_PAMPASAN, ";
-					sql += " A.FLAG_UKUR_LUAS,A.FLAG_PAMPASAN,A.TARIKH_TERIMA_AWARD,S.NO_SIASATAN,A.AMAUN_TUNTUTAN,S.ID_SIASATAN,F.ID_WARTA,G.KETERANGAN AS DESC_STATUS_BANTAHAN, A.FLAG_ONLINE, G.ID_STATUS ";
-					sql += " ,RN.NAMA_NEGERI";
-					sql += " FROM TBLPPTBANTAHAN A"
-							+ ",TBLPPTPIHAKBERKEPENTINGAN B"
-							+ ",TBLPPTHAKMILIK C"
-							+ ",TBLRUJJENISPB D"
-							+ ",TBLPPTHAKMILIKPB E, " +
-							" TBLPPTSIASATAN S, " +
-							//" (SELECT * FROM (SELECT JMAX.*, MAX(JMAX.TARIKH_SIASATAN) OVER (PARTITION BY JMAX.ID_HAKMILIK) MAX_ID FROM TBLPPTSIASATAN JMAX) WHERE TARIKH_SIASATAN = MAX_ID) S, "+
-							" TBLPPTWARTA F, " +
-							//" (SELECT * FROM (SELECT JMAX.*, MAX(JMAX.TARIKH_WARTA) OVER (PARTITION BY JMAX.ID_PERMOHONAN) MAX_ID FROM TBLPPTWARTA JMAX) WHERE TARIKH_WARTA = MAX_ID) F,  "+
-							" TBLRUJSTATUS G "
-							+ ",TBLRUJNEGERI RN";	
-					sql += " WHERE E.ID_JENISPB=D.ID_JENISPB(+) AND E.ID_PIHAKBERKEPENTINGAN=B.ID_PIHAKBERKEPENTINGAN ";	
-					sql += " AND E.ID_HAKMILIK=C.ID_HAKMILIK AND E.ID_HAKMILIKPB=A.ID_HAKMILIKPB AND S.ID_HAKMILIK = C.ID_HAKMILIK ";
-					sql += " AND C.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.STATUS_BANTAHAN = G.ID_STATUS(+) "
-							+ " AND E.ID_NEGERI = RN.ID_NEGERI(+) "
-							+ " AND A.ID_HAKMILIKPB = '"+id_hakmilikpb+"' " + "AND S.ID_SIASATAN = '"+_MaxIdSiasatan+"' AND F.ID_WARTA = '"+id_warta+"' " +
-									" ";	
-					myLogger.info("SQL GETMAKLUMATBANTAHAN :: "+sql);
+					sql =  " SELECT A.MAKLUMAT_BANTAHAN_TAMAT_TEMPOH,A.ID_BANTAHAN,A.NO_BANTAHAN,A.JENIS_PEMBANTAH,A.TARIKH_TERIMA,A.TARIKH_BORANGN,A.ID_PIHAKBERKEPENTINGAN, "+
+							"A.FLAG_PENERIMA_PAMPASAN,A.FLAG_BAHAGIAN_PAMPASAN,A.STATUS_BANTAHAN,A.ALASAN,A.KEPENTINGANKEATAS,A.FLAG_ONLINE, "+
+							"A.FLAG_UKUR_LUAS,A.FLAG_PAMPASAN,A.TARIKH_TERIMA_AWARD,S.NO_SIASATAN,A.AMAUN_TUNTUTAN,A.FLAG_SYARAT,"; 
+					sql += " NVL(B.ID_PIHAKBERKEPENTINGAN,0) ID_PIHAKBERKEPENTINGAN,B.ID_JENISPB,B.NAMA_PB,B.NO_PB,B.UMUR,"+
+							"C.NO_HAKMILIK,C.NO_PT,C.NO_LOT, "+
+							"D.KETERANGAN,";
+					sql += " E.ID_HAKMILIK,E.ALAMAT1,E.ALAMAT2,E.ALAMAT3,E.POSKOD,NVL(E.ID_NEGERI,0) ID_NEGERI,E.ID_BANDAR,"+
+							"E.NO_TEL_RUMAH,E.NO_HANDPHONE,E.NO_FAX,E.FLAG_BANTAHAN,"+
+							"F.ID_WARTA,";
+					sql += " G.KETERANGAN AS DESC_STATUS_BANTAHAN, G.ID_STATUS, ";
+					sql += " S.ID_SIASATAN, ";
+					sql += " RN.NAMA_NEGERI"+
+							",NVL(NOPB.ID_JENISNOPB,'') ID_JENISNOPB,NVL(NOPB.KETERANGAN,'') JENISNOPB ";
+					sql += " FROM TBLPPTBANTAHAN A"+
+							",TBLPPTPIHAKBERKEPENTINGAN B"+
+							",TBLPPTHAKMILIK C"+
+							",TBLRUJJENISPB D"+
+							",TBLPPTHAKMILIKPB E " +
+							",TBLPPTWARTA F " +
+							",TBLRUJSTATUS G "+
+							",TBLPPTSIASATAN S " +
+							",TBLRUJNEGERI RN,TBLRUJJENISNOPB NOPB ";	
+					sql +=	" WHERE E.ID_JENISPB=D.ID_JENISPB(+) "+
+							" AND E.ID_PIHAKBERKEPENTINGAN=B.ID_PIHAKBERKEPENTINGAN ";	
+					sql += 	" AND E.ID_HAKMILIK=C.ID_HAKMILIK "+
+							" AND E.ID_HAKMILIKPB=A.ID_HAKMILIKPB AND S.ID_HAKMILIK = C.ID_HAKMILIK ";
+					sql += 	" AND C.ID_PERMOHONAN = F.ID_PERMOHONAN "+
+							" AND A.STATUS_BANTAHAN = G.ID_STATUS(+) "+
+							" AND E.ID_NEGERI = RN.ID_NEGERI(+) "+
+							" AND B.ID_JENISNOPB = NOPB.ID_JENISNOPB(+) "+
+							" AND A.ID_HAKMILIKPB = '"+id_hakmilikpb+"' " + "AND S.ID_SIASATAN = '"+_MaxIdSiasatan+"' AND F.ID_WARTA = '"+id_warta+"' " +
+							" ";	
+					//myLogger.info("SQL GETMAKLUMATBANTAHAN :: "+sql);
 					ResultSet rs = stmt.executeQuery(sql);
 					
 					Hashtable h;			    
@@ -961,7 +970,12 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			    	//Bantahan MT
 			    	h.put("nama", rs.getString("NAMA_PB")==null?"":rs.getString("NAMA_PB"));
 			    	h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
-			    	
+			    	h.put("noPB", rs.getString("NO_PB")==null?"":rs.getString("NO_PB"));
+			    	h.put("idRujukanPB", rs.getString("ID_PIHAKBERKEPENTINGAN"));
+			    	h.put("jenisPB", rs.getString("JENISNOPB")==null?"":rs.getString("JENISNOPB"));
+			    	h.put("idJenisNoPB", rs.getString("ID_JENISNOPB")==null?"":rs.getString("ID_JENISNOPB"));
+			    	h.put("umur", rs.getString("UMUR")==null?"":rs.getString("UMUR"));
+	
 			    	h.put("maklumat_bantahan_tamat_tempoh", rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH")==null?"":rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH"));
 			    	h.put("id_status_bantahan", rs.getString("ID_STATUS")==null?"":rs.getString("ID_STATUS"));
 			    	h.put("id_bantahan", rs.getString("ID_BANTAHAN")==null?"":rs.getString("ID_BANTAHAN"));
@@ -1003,12 +1017,15 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			    	h.put("desc_status_bantahan", rs.getString("DESC_STATUS_BANTAHAN")==null?"":rs.getString("DESC_STATUS_BANTAHAN"));
 			    	h.put("flag_online", rs.getString("FLAG_ONLINE")==null?"":rs.getString("FLAG_ONLINE"));
 			    	getMaklumatBantahan.addElement(h);
-			      	}      
-				}
-					finally{
-						if(db != null)db.close();
-					}	
-				return getMaklumatBantahan;
+			      	
+			     }      
+				
+			}finally{
+				if(db != null)db.close();
+				
+			}	
+			return getMaklumatBantahan;
+				
 	}
 
 	@SuppressWarnings("unchecked")

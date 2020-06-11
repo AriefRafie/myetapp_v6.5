@@ -18,7 +18,9 @@ import ekptg.model.htp.gadaian.HTPHakmilikUrusanGadaianBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
 import ekptg.model.htp.rekod.HakmilikPergerakanGadaianBean;
-import ekptg.model.htp.rekod.IHakmilikPergerakan;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.ITanahDaftar;
+import ekptg.model.htp.rekod.TanahBean;
 
 public class FrmGadaianPergerakanHakmilik extends AjaxBasedModule {
 	/**
@@ -26,9 +28,9 @@ public class FrmGadaianPergerakanHakmilik extends AjaxBasedModule {
 	 */
 	private static final long serialVersionUID = 478357183096758258L;
 	private final String PATH="app/htp/gadaian/pergerakan/";
-	private HakmilikInterface iHakmilik = null;
+	private ITanah iHakmilik = null;
  	private IHTPHakmilikUrusan iHakmilikUrusan = null;  
- 	private IHakmilikPergerakan iHakmilikGadaian = null;  
+ 	private ITanahDaftar iHakmilikGadaian = null;  
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.gadaian.FrmGadaianPergerakanHakmilik.class);
 
 	public String doTemplate2() throws Exception {
@@ -230,7 +232,7 @@ public class FrmGadaianPergerakanHakmilik extends AjaxBasedModule {
 			hPergerakanAdd.put("failRujukanPer", getParam("txtfailrujukanper"));
 			hPergerakanAdd.put("txTajukPer", getParam("txtajukper"));
 			//String idPergerakanBaru = FrmRekodPergerakanHakmilikData.addPergerakan(hPergerakanAdd);
-			String idPergerakanBaru = getIPergerakan().addPergerakan(hPergerakanAdd);
+			String idPergerakanBaru = getIPergerakan().simpan(hPergerakanAdd);
 			// view balik lepas insert
 			this.context.put("readonly", "readonly=\"readonly\"");
 			this.context.put("disabled", "disabled");
@@ -266,7 +268,7 @@ public class FrmGadaianPergerakanHakmilik extends AjaxBasedModule {
 			myLog.info(getParam("txtfailrujukanper"));
 			hPergerakanUpdate.put("failRujukanPer", getParam("txtfailrujukanper"));
 			hPergerakanUpdate.put("txTajukPer", getParam("txtajukper"));
-			getIPergerakan().updatePergerakan(hPergerakanUpdate);
+			getIPergerakan().kemaskini(hPergerakanUpdate);
 			
 			// view balik lepas insert
 			this.context.put("readonly", "readonly=\"readonly\"");
@@ -326,12 +328,12 @@ public class FrmGadaianPergerakanHakmilik extends AjaxBasedModule {
 	}
 	// VIEW SENARAI FAIL PERGERAKAN BY ID_HAKMILIK
 	private Vector<Hashtable<String,String>> view_modeSenaraiPergerakanFail() throws Exception {
-		return  getIPergerakan().getSenaraiPergerakanHakmilik(getParam("idHakmilik"));
+		return  getIPergerakan().getSenaraiMaklumat(getParam("idHakmilik"));
 	}
 	private void view_modePergerakanByIdPergerakan(HttpSession session,String idPergerakan) throws Exception {
 		//Vector list =null;
 		//list = FrmRekodPergerakanHakmilikData.getMaklumatPergerakanById(idPergerakan);
-		Hashtable<String,String> hPergerakanById = getIPergerakan().getMaklumatPergerakan(idPergerakan);
+		Hashtable<String,String> hPergerakanById = getIPergerakan().getMaklumat(idPergerakan);
 		this.context.put("idPergerakan",getParam("idPergerakan") == "" ? (String)hPergerakanById.get("idPergerakan"):getParam("idPergerakan"));
 		this.context.put("txtKeterangan",getParam("txtKeterangan") == "" ? (String)hPergerakanById.get("keterangan"):getParam("txtKeterangan"));
 		this.context.put("txtKepada", getParam("txtKepada") == "" ? (String)hPergerakanById.get("kepada"):getParam("txtKepada"));
@@ -350,7 +352,7 @@ public class FrmGadaianPergerakanHakmilik extends AjaxBasedModule {
 //		Vector list =null;
 //		list = FrmRekodPergerakanHakmilikData.getMaklumatPergerakanById(idPergerakan);
 //		Hashtable hPergerakanById = (Hashtable) list.get(0);
-		Hashtable<String,String> hPergerakanById = getIPergerakan().getMaklumatPergerakan(idPergerakan);
+		Hashtable<String,String> hPergerakanById = getIPergerakan().getMaklumat(idPergerakan);
 
 		this.context.put("idPergerakan",(String)hPergerakanById.get("idPergerakan"));
 		this.context.put("txtKeterangan",(String)hPergerakanById.get("keterangan"));
@@ -497,10 +499,9 @@ public class FrmGadaianPergerakanHakmilik extends AjaxBasedModule {
 		
 	}
 	
-	// Dibuat pada  2012/09/29
-	private HakmilikInterface getIHakmilik(){
+	private ITanah getIHakmilik(){
 		if (iHakmilik == null){
-			iHakmilik = new HakmilikBean();
+			iHakmilik = new TanahBean();
 		}
 		return iHakmilik;
 	}
@@ -511,7 +512,7 @@ public class FrmGadaianPergerakanHakmilik extends AjaxBasedModule {
 		return iHakmilikUrusan;
 	}
 	
-	private IHakmilikPergerakan getIPergerakan(){
+	private ITanahDaftar getIPergerakan(){
 		if(iHakmilikGadaian== null)
 			iHakmilikGadaian = new HakmilikPergerakanGadaianBean();
 		return iHakmilikGadaian;

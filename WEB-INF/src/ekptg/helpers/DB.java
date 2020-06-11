@@ -3030,6 +3030,84 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
+	
+	public static Vector<Tblrujkategoripemohon> getKategoriPemohonOrganisasiAndSyarikat() throws Exception {
+		Db db = null;
+		String sql = "";
+		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
+				+ " where id_Kategoripemohon in (10,2,9) order by keterangan desc";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujkategoripemohon> v = new Vector<Tblrujkategoripemohon>();
+			Tblrujkategoripemohon s = null;
+			while (rs.next()) {
+				s = new Tblrujkategoripemohon();
+				s.setIdKategoripemohon(rs.getLong(1));
+				s.setKodKategoripemohon(rs.getString(2));
+				s.setKeterangan(rs.getString(3));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static Vector<Tblrujkategoripemohon> getKategoriIndividu() throws Exception {
+		Db db = null;
+		String sql = "";
+		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
+				+ " where id_Kategoripemohon = 1";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujkategoripemohon> v = new Vector<Tblrujkategoripemohon>();
+			Tblrujkategoripemohon s = null;
+			while (rs.next()) {
+				s = new Tblrujkategoripemohon();
+				s.setIdKategoripemohon(rs.getLong(1));
+				s.setKodKategoripemohon(rs.getString(2));
+				s.setKeterangan(rs.getString(3));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static Vector<Tblrujkategoripemohon> getKategoriIndividuBukanIndividu() throws Exception {
+		Db db = null;
+		String sql = "";
+		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
+				+ " where id_Kategoripemohon in (1,11)";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujkategoripemohon> v = new Vector<Tblrujkategoripemohon>();
+			Tblrujkategoripemohon s = null;
+			while (rs.next()) {
+				s = new Tblrujkategoripemohon();
+				s.setIdKategoripemohon(rs.getLong(1));
+				s.setKodKategoripemohon(rs.getString(2));
+				s.setKeterangan(rs.getString(3));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 
 	public static Vector<Tblrujkategoripemohon> getKategoriPenawaran() throws Exception {
 		Db db = null;
@@ -4638,22 +4716,22 @@ public class DB extends EkptgCache implements Serializable {
 		}
 	}
 
-	public static Vector<Hashtable<String, Comparable>> getMahkamahByNegeri(Long idnegeri) throws Exception {
+	public static Vector<Hashtable<String, Object>> getMahkamahByNegeri(Long idnegeri) throws Exception {
 		Db db = null;
 		String sql = "";
 		sql = "Select pj.id_pejabat,pj.kod_pejabat,pj.nama_pejabat,pj.alamat1,pj.alamat2,pj.alamat3,pj.poskod,pj.no_tel,pj.no_fax, da.nama_daerah from tblrujpejabat pj, tblrujdaerah da "
 				+ " where pj.id_jenispejabat = 8 and pj.id_daerah = da.id_daerah and pj.id_negeri="
 				+ idnegeri
 				+ " ORDER BY lpad(id_pejabat,10)";
-		myLogger.info("ALAMAT MAHKAMAH :: " + sql);
+//		myLogger.info("ALAMAT MAHKAMAH :: " + sql);
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			Vector<Hashtable<String, Comparable>> v = new Vector<Hashtable<String, Comparable>>();
-			Hashtable<String, Comparable> h;
+			Vector<Hashtable<String, Object>> v = new Vector<Hashtable<String, Object>>();
+			Hashtable<String, Object> h;
 			while (rs.next()) {
-				h = new Hashtable<String, Comparable>();
+				h = new Hashtable<String, Object>();
 				h.put("id", rs.getLong("id_pejabat"));
 				h.put("kod_pejabat", rs.getString("kod_pejabat") == null ? "" : rs.getString("kod_pejabat"));
 				h.put("namaPejabat", rs.getString("nama_pejabat") == null ? "" : rs.getString("nama_pejabat"));
@@ -7795,6 +7873,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 				+ " AND A.USER_ROLE IN ('(PHP)UserPelepasan')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_NEGERI = '16'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -7803,8 +7883,10 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND A.USER_LOGIN = D.USER_ID"
 				+ " AND D.ROLE_ID IN ('(PHP)UserPelepasan')"
 				+ " AND B.FLAG_AKTIF = '1'"
-				+ " ORDER BY USER_NAME ASC";	
-		
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_NEGERI = '16'"
+				+ " ORDER BY USER_NAME ASC";
+				
 		try {
 	
 			db = new Db();
@@ -7835,6 +7917,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 				+ " AND A.USER_ROLE IN ('(PHP)UserHasil')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -7843,6 +7927,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND A.USER_LOGIN = D.USER_ID"
 				+ " AND D.ROLE_ID IN ('(PHP)UserHasil')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " ORDER BY USER_NAME ASC";
 		
 		try {
@@ -7875,6 +7961,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 				+ " AND A.USER_ROLE IN ('(PHP)UserPenguatkuasaan')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -7883,8 +7971,10 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND A.USER_LOGIN = D.USER_ID"
 				+ " AND D.ROLE_ID IN ('(PHP)UserPenguatkuasaan')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
+				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " ORDER BY USER_NAME ASC";
-		
+				
 		try {
 	
 			db = new Db();
@@ -7915,6 +8005,7 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 				+ " AND A.USER_ROLE IN ('(PHP)UserAPB')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -7923,8 +8014,9 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND A.USER_LOGIN = D.USER_ID"
 				+ " AND D.ROLE_ID IN ('(PHP)UserAPB')"
 				+ " AND B.FLAG_AKTIF = '1'"
+				+ " AND B.ID_SEKSYEN = '4'"
 				+ " ORDER BY USER_NAME ASC";
-		
+				
 		try {
 	
 			db = new Db();
@@ -7958,6 +8050,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " '(PHP)PYWPenolongPengarahNegeri', '(PHP)PYWPenolongPegawaiTanahNegeri')"
 			    + " AND B.FLAG_AKTIF = '1'"
 			    + " AND B.ID_NEGERI = '" + idNegeri + "'"
+			    + " AND B.ID_SEKSYEN = '4'"
+			    + " AND C.ID_JAWATAN IN (4, 5, 9, 161738)"
 			    + " UNION"
 			    + " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 			    + " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -7969,6 +8063,8 @@ public class DB extends EkptgCache implements Serializable {
 				+ " '(PHP)PYWPenolongPengarahNegeri', '(PHP)PYWPenolongPegawaiTanahNegeri')"
 			    + " AND B.FLAG_AKTIF = '1'"
 			    + " AND B.ID_NEGERI = '" + idNegeri + "'"
+			    + " AND B.ID_SEKSYEN = '4'"
+			    + " AND C.ID_JAWATAN IN (4, 5, 9, 161738)"
 			    + " ORDER BY USER_NAME ASC";	
 
 		try {
@@ -8923,6 +9019,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				+ " AND A.USER_ROLE IN ('(PHP)PYWPenolongPegawaiTanahHQ')"
 				+ " AND B.FLAG_AKTIF = '1'"
 				+ " AND B.ID_NEGERI = '16'"
+				+ " AND B.ID_SEKSYEN = '4'"
 				+ " UNION"
 				+ " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C, USER_ROLE D"
@@ -8932,6 +9029,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				+ " AND D.ROLE_ID IN ('(PHP)PYWPenolongPegawaiTanahHQ')"
 				+ " AND B.FLAG_AKTIF = '1'"
 				+ " AND B.ID_NEGERI = '16'"
+				+ " AND B.ID_SEKSYEN = '4'"
 				+ " ORDER BY USER_NAME ASC";
 
 		try {
@@ -8939,6 +9037,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 			db = new Db();
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println("keluarlaaaa "+sql);
 			Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
 
 			Hashtable<String, String> h;

@@ -2586,7 +2586,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 					}
 					else if(internalType.equals("Online"))
 					{
-						sql += " AND R.NAME IN ('online','ppt-online-user','php-online-user','ppk-online-user')";
+						sql += " AND R.NAME IN ('online','ppt-online-user','php-online-user','ppk-online-user','htp-online-user')";
 					}
 					else if(internalType.equals("KJP"))
 					{
@@ -2600,7 +2600,7 @@ public class UserListModuleV3 extends AjaxBasedModule {
 					}
 					else if(internalType.equals("Online"))
 					{
-						sql += " AND R3.NAME IN ('online','ppt-online-user','php-online-user','ppk-online-user')";
+						sql += " AND R3.NAME IN ('online','ppt-online-user','php-online-user','ppk-online-user','htp-online-user')";
 					}
 					else if(internalType.equals("KJP"))
 					{

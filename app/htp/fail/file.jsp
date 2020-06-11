@@ -364,6 +364,10 @@ function validateNumber(elmnt,content) {
 		doAjaxCall${formName}("detailPemilik",'Idpihakberkepentingan='+id);
 	}
 	
+	function doChangeDaerah() {
+		doAjaxCall${formName}("doChangeDaerah");
+	}
+	
 	function doChangeDaerah2() {
 		doAjaxCall${formName}("doChangeDaerah2");
 	}

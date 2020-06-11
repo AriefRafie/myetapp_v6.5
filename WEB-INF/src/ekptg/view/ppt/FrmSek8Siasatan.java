@@ -19,6 +19,7 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.ppt.FrmSek8SiasatanData;
 import ekptg.model.ppt.FrmUPTSek8BorangFData;
@@ -445,6 +446,16 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
         		String socJenisBangunan = getParam("id_bangunan");
         		String socBangunan = getParam("socBangunan");   //penambahan yati
         		context.put("id_bangunan", socBangunan);
+
+        		// Checkbox PPT-25 (ii) Jenis Pemilikan
+        		Vector semakanList = FrmSemakan.getSenaraiSemakan("pptjenispemilikan");  //, "pptjenistanaman"
+        		context.put("senaraiSemakan", semakanList); 
+        		context.put("semakclass", new FrmSemakan()); 
+        		
+        		// Checkbox PPT-25 (iii) Jenis Tanaman
+        		Vector semakList = FrmSemakan.getSenaraiSemakan("pptjenistanaman"); // "jenispemilikan", 
+        		context.put("senaraiSemakan2", semakList); 
+        		context.put("semakanclass", new FrmSemakan());
         		
         		maklumat_siasatan = logic.maklumat_siasatan(getParam("id_siasatan"));
         		if ("View".equals(subminor_command))
@@ -491,6 +502,29 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
    				}        		
         		else if ("Simpan".equals(subminor_command))
    				{
+        			// Checkbox PPT-25 (ii) Jenis Pemilikan
+        			String[] cbsemak = this.request.getParameterValues("jenispemilikan");
+        			FrmSemakan frmSemak = new FrmSemakan();
+        			myLogger.info("Simpan pushdb = " + getParam("id_siasatan")); // debugger at log copy
+        			frmSemak.semakanHapusByPermohonan(getParam("id_siasatan"));
+        			if (cbsemak != null) {
+        				for (int i = 0; i < cbsemak.length; i++) {
+        					frmSemak = new FrmSemakan();
+        					frmSemak.semakanTambah(cbsemak[i], getParam("id_siasatan"));
+        				}
+        			}
+        			
+
+        			// Checkbox PPT-25 (iii) Jenis Tanaman
+        			String[] cbsemaks = this.request.getParameterValues("jenistanaman");
+        			FrmSemakan frmSemaks = new FrmSemakan();
+        			frmSemaks.semakanHapusByPermohonan(getParam("id_siasatan"));
+        			if (cbsemaks != null) {
+        				for (int i = 0; i < cbsemaks.length; i++) {
+        					frmSemaks = new FrmSemakan();
+        					frmSemaks.semakanTambah(cbsemaks[i], getParam("id_siasatan"));
+        				}
+        			}
         			
         	    updateTuanTanah(session);
         		this.context.put("readmode", "view"); 

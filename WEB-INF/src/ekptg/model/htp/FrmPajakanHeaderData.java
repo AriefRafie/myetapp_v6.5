@@ -48,7 +48,8 @@ public class FrmPajakanHeaderData {
 				+" AND C.ID_JENISTANAH = H.ID_JENISTANAH(+) AND A.ID_TARAFKESELAMATAN = I.ID_TARAFKESELAMATAN(+) "
 				+" AND B.ID_STATUS = J.ID_STATUS AND A.ID_FAIL = '" + idFail + "'"
 				+" ";		
-			//myLog.info("setMaklumatPermohonan : " + sql);
+			//
+			myLog.info("setMaklumatPermohonan : " + sql);
 			ResultSet rs = stmt.executeQuery(sql);	
 			while (rs.next()) {
 				h = new Hashtable<String, String>();

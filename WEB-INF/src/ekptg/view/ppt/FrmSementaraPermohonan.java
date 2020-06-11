@@ -301,7 +301,7 @@ public class FrmSementaraPermohonan extends AjaxBasedModule {
         		
         	}//close onchangeJenisKodDaerah
         	
-        	else if("simpanPendaftaran".equals(submit2)){
+        	else if("simpanPendaftaran".equals(submit2)){ //PPT-41
         		
         		String result = "";
             	if (doPost.equals("true")) {
@@ -2476,6 +2476,11 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 	    	h.put("projek_negeri", userIdNeg);	   
 	    	h.put("txdTarikhPermohonan", getParam("txdTarikhPermohonan"));	    	
 	    	h.put("id_user", session.getAttribute("_ekptg_user_id"));
+	    	
+	    	//PPT-41
+	    	h.put("tarikh_pendudukan_mula", getParam("txdTarikhPendudukanMula"));
+	    	h.put("tarikh_pendudukan_akhir", getParam("txdTarikhPendudukanAkhir"));
+	    	h.put("tempoh_pendudukan", getParam("txtTempohPendudukan"));
 
 	    	h.put("sorJenisKodDaerah", getParam("sorJenisKodDaerah"));
 	    	
@@ -2527,6 +2532,11 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 	    	
 	    	h.put("id_user", session.getAttribute("_ekptg_user_id"));
 	    	
+	    	//PPT-41
+	    	h.put("tarikh_pendudukan_mula", getParam("txdTarikhPendudukanMula"));
+	    	h.put("tarikh_pendudukan_akhir", getParam("txdTarikhPendudukanAkhir"));
+	    	h.put("tempoh_pendudukan", getParam("txtTempohPendudukan"));
+	    	
 	    	SementaraDaftarOperations.updateSementara(h);
 	    
 	}//close updatePendaftaran
@@ -2572,7 +2582,10 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		context.put("txtRujukanKementerian", getParam("txtRujukanKementerian"));
 		context.put("txdTarikhSurat", getParam("txdTarikhSurat"));
 		context.put("txdTarikhKehendaki", getParam("txdTarikhKehendaki"));
-		context.put("sorFlagPeruntukan", getParam("sorFlagPeruntukan"));		
+		context.put("sorFlagPeruntukan", getParam("sorFlagPeruntukan"));
+		context.put("txdTarikhPendudukanMula", getParam("txdTarikhPendudukanMula"));
+		context.put("txdTarikhPendudukanAkhir", getParam("txdTarikhPendudukanAkhir"));
+		context.put("txtTempohPendudukan", getParam("txtTempohPendudukan"));
 		
 		String sorJenisKodDaerah = getParam("sorJenisKodDaerah");
 		context.put("sorJenisKodDaerah", getParam("sorJenisKodDaerah"));
@@ -2646,6 +2659,9 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		context.put("txdTarikhSurat", getParam("txdTarikhSurat"));
 		context.put("txdTarikhKehendaki", getParam("txdTarikhKehendaki"));
 		context.put("sorFlagPeruntukan", getParam("sorFlagPeruntukan"));
+		context.put("txdTarikhPendudukanMula", getParam("txdTarikhPendudukanMula"));
+		context.put("txdTarikhPendudukanAkhir", getParam("txdTarikhPendudukanAkhir"));
+		context.put("txtTempohPendudukan", getParam("txtTempohPendudukan"));
 //		context.put("sorFlagSegera", getParam("sorFlagSegera"));
 		
 		String sorJenisKodDaerah = getParam("sorJenisKodDaerah");
@@ -2693,6 +2709,7 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		context.put("sorFlagPeruntukan", "");
 		context.put("sorFlagSegera", "");
 		context.put("sorJenisProjek", "");
+		context.put("txdTarikhPendudukanMula", getParam("txdTarikhPendudukanMula"));
 		
 		context.put("sorJenisKodDaerah", "");
 		

@@ -15,7 +15,7 @@ import ekptg.helpers.Utils;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
 
-public class FrmHakmilikUrusanPenyewaanBean implements IHakmilikUrusan {
+public class FrmHakmilikUrusanPenyewaanBean implements ITanahUrusan {
 	
 	//private HakmilikInterface iHakmilik = null;
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.FrmHakmilikUrusanPenyewaanBean.class);

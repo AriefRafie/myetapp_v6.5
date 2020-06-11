@@ -60,7 +60,7 @@
   </tr>
 </table>
 <fieldset id="tableReport" style="display:none;"-->
-<legend><strong>SENARAI LAPORAN</strong></legend>
+<legend><strong>SENARAI DOKUMEN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakKulitFail('$idFail')"> Kulit Fail </a></td>

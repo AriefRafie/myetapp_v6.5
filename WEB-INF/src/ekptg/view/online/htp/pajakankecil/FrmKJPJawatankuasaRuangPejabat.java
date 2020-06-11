@@ -18,6 +18,7 @@ import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblhtphakmilikbangunan;
 import ekptg.model.entities.Tblhtppihakberkepentingan;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
+import ekptg.model.entities.UserKementerian;
 import ekptg.model.htp.FrmGadaianHakmilikData;
 import ekptg.model.htp.FrmGadaianPenHamilikData;
 import ekptg.model.htp.FrmPajakanKecilHakmilikData;
@@ -33,6 +34,8 @@ import ekptg.model.htp.HakmilikUrusan;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHTPStatus;
 import ekptg.model.htp.IHtp;
+import ekptg.model.htp.IPenggunaKementerian;
+import ekptg.model.htp.PenggunaKementerianBean;
 import ekptg.model.htp.PihakBerkepentingan;
 import ekptg.model.htp.UtilHTML;
 import ekptg.model.htp.pajakankecil.HTPPajakanKecilFailBean;
@@ -49,6 +52,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 	 */
 	private static final long serialVersionUID = -609204869152059236L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.pkecil.FrmJawatankuasaRuangPejabat.class);
+	private ekptg.model.htp.IHtp iHtp = null;
 	private final String PATH = "app/htp/pajakankecil/online/";
 	//private final String PATHPK="app/htp/";
  	private IHTPFail iHTPFail = null;  
@@ -82,6 +86,8 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
  	String idAgensi = "";
  	String noFail = "";
  	private IHtp iHTP = null;  
+ 	private UserKementerian uk = null;
+ 	private IPenggunaKementerian iPengguna = null;
 
 	@SuppressWarnings("unchecked")
 	public String doTemplate2()throws Exception {
@@ -113,7 +119,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		    String pageMode = getParam("pagemode");
 		    String langkah = getParam("langkah");
 		    String isCarian = "tidak";
-		    myLog.info("0.fir idKemaskiniPaging: " + idKemaskiniPaging+"1. equals-command("+submit+"):pageMode::"+pageMode);
+		    myLog.info("1. command("+submit+"),pageMode="+pageMode);
 		 	idNegeri = getParam("socNegeri");
 			txtTajukCarian = getParam("txtTajukFail");
 		 	idKementerian = getParam("socKementerian");
@@ -122,7 +128,19 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		    //myLog.info("1. idKementerian::"+idKementerian+"1. idAgensi::"+idAgensi);
 			String intPB = "0";
 	
-		    if (!("".equals(submit))) {
+			if (id_kementerian == null || id_kementerian.trim().length() == 0){
+				uk = getIPengguna().getKementerian(userId);
+				if(uk == null){
+					//throw new Exception("[ONLINE-HTP REKOD] KEMENTERIAN TIDAK DIJUMPAI");
+					throw new Exception(getHTP().getErrorHTML("[ONLINE-HTP PERMOHONAN] KEMENTERIAN TIDAK DIJUMPAI"));
+				}
+			
+				myLog.info("id_kementerian="+uk.getAgensi().getKementerian().getIdKementerian());
+				id_kementerian = String.valueOf(uk.getAgensi().getKementerian().getIdKementerian());
+				//System.out.println("+++++"+id_kementerian);
+			}
+			if (!("".equals(submit))) {
+				
 		    	this.context.put("idsuburusan",idSubUrusan);
 		    	this.context.put("idurusan",idUrusan);		    	
 		    	// PAGE 1
@@ -133,6 +151,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		    		noFail = getParam("txtNoFail");
 				 	idDaerah = getParam("socDaerah");
 				 	idMukim = getParam("socMukim");
+				 	
 				 	maklumatCarian();
 		    		socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian),"onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
 				    this.context.put("socKementerian",socKementerian);
@@ -199,8 +218,8 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	this.context.put("idFail", idFail);	        	
 		    	
 			    }else if(submit.equals("pkfailbaru")){
+			    	myLog.info("submit="+submit+",pageMode="+pageMode);
 			    	template_name = PATH+"frmJRPPendaftaran.jsp";
-			    	myLog.info("equals("+submit+")::pkfailbaru"+",pageMode="+pageMode);
 			    	String strOperation = "";
 				    this.context.put("socSeksyen","3");
 			    	if(getParam("mode").equals("reset")){
@@ -208,7 +227,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	}
 
 				    if(pageMode.equals("0")){
-				    	myLog.info("pageMode::0"+pageMode);
+				    	//myLog.info("pageMode::0"+pageMode);
 					    this.context.put("socSeksyen","3");
 						socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong(idUrusan),disability);
 				    	this.context.put("socUrusan",socUrusan);
@@ -220,10 +239,8 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    	this.context.put("sekarang",strdate);
 					    this.context.put("pageMode", "0");  
 					    this.context.put("nofail", "");  
-	
-					    socKementerian = HTML.SelectKementerian("sockementerian", (id_kementerian == "") ? null : Long.parseLong(id_kementerian), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
-					    socAgensi = HTML.SelectAgensiByKementerian("socAgensi","",Long.parseLong("1")," style=\"width:400\"");
-				    
+					    socKementerian = HTML.SelectKementerian("sockementerian", (id_kementerian == "") ? null : Long.parseLong(id_kementerian), "disabled class=disabled", "onChange=\"doChangeKementerian()\" style=\"width:400\"");
+					    socAgensi = HTML.SelectAgensiByKementerian("socAgensi",id_kementerian,Long.parseLong("1")," style=\"width:400\"");
 					    this.context.put("socNegeri",socNegeri);
 					    this.context.put("socKementerian",socKementerian);
 					    this.context.put("socAgensi",socAgensi);
@@ -234,13 +251,14 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					    String idnegeri = getParam("socNegeri");
 					    String idagensi = getParam("socAgensi");
 			
-						long longIdFail = ekptg.helpers.DB.getNextID("TBLPFDFAIL_SEQ");
-						simpanFail(session,longIdFail);
+						idFail = String.valueOf(ekptg.helpers.DB.getNextID("TBLPFDFAIL_SEQ"));
+						simpanFail(idFail);
 						
-						String idPermohonan = simpanPermohonan(session,0,String.valueOf(longIdFail));					
+						String idPermohonan = simpanPermohonan(session,0,idFail);					
 					    this.context.put("idPermohonan",idPermohonan);
-					    idFailN = String.valueOf(longIdFail);					    
-					    simpanStatus(session,Long.parseLong(String.valueOf(idPermohonan)),longIdFail,"1");
+					    idFailN = idFail;		
+					    
+					    simpanStatus(session,Long.parseLong(String.valueOf(idPermohonan)),Long.parseLong(idFail),"1");
 			        	Hashtable hFail = getIHTPFail().getMaklumatPermohonan(idFailN);
 						AuditTrail.logActivity("1", "3", this, session, "INS", "FAIL PERMOHONAN ["+hFail.get("noFail")+"] DITAMBAH ");
 
@@ -421,7 +439,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	context.put("tarikhdaftar",h.get("tarikhDaftar"));
 					pageMode = "4";
 					
-		    	}else if (submit.equals("pkpermohonankemaskini")) {	//frmJRPSemakPermohonan
+		    	}else if (submit.equals("pkpermohonankemaskini")) {	//frmPajakanKecilSemakPermohonan
 			    	template_name = PATH+"frmJRPSemakPermohonan.jsp";	
 		    		skrin = "1";
 		    		//1 //2 //3
@@ -611,7 +629,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					myLog.info("pkpemilikkemaskini 2"+getParam("id_kemaskini"));
 					    
 					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(idPermohonan);
-					Hashtable<?, ?> infohakmilik = FrmUtilData.getHakmilikUrusan("0",vid); 
+					Hashtable<?, ?> infohakmilik = FrmUtilData.getHakmilikUrusan(idPermohonan,vid); 
 					ekptg.model.entities.Tblhtphakmilikurusan hakmilik = null;
 					hakmilik = FrmPajakanKecilHakmilikData.getHakmilikInfo(Long.parseLong(vid));
 				    this.context.put("hakmilik", hakmilik);		    
@@ -766,7 +784,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 						//fir implement 
 						viewHakmilikPermilik(senaraiHakmilik);
 						
-	//			    	template_name = "app/htp/frmPajakanKecilSenaraiHakmilikPemilik.jsp";
+	//			    	template_name = "app/htp/frmJRPSenaraiHakmilikPemilik.jsp";
 						socDaerah = HTML.SelectDaerahByNegeri((String)permohonan.get("idnegeri"),"socDaerah",pihak.getIdDaerah(),disability);				    	    
 			    	    pageMode = "2";
 			    	    
@@ -776,7 +794,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	this.context.put("socNegeri",socNegeri);
 
 			    }else if (submit.equalsIgnoreCase("viewhakmilik")){	
-					template_name = PATH+"frmPajakanKecilUpdateHakmilik.jsp";
+					template_name = PATH+"frmJRPUpdateHakmilik.jsp";
 					//skrin = "1";
 		    		skrin = "2";
 			    	String id = getParam("id_permohonan");
@@ -817,7 +835,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					this.context.put("socNegeri", socNegeri);
 		    	
 			    }else if(submit.equalsIgnoreCase("kemaskinihakmilik")){
-					template_name = PATH+"frmPajakanKecilUpdateHakmilik.jsp";
+					template_name = PATH+"frmJRPUpdateHakmilik.jsp";
 					myLog.info("kemaskinihakmilik"+template_name);
 					//skrin = "1";		    	
 		    		skrin = "2";
@@ -864,7 +882,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					this.context.put("socNegeri", socNegeri);
 			    
 			    }else if(submit.equalsIgnoreCase("viewpemilik")){
-			    	template_name = PATH+"frmPajakanKecilUpdatePihakKepentingan.jsp";
+			    	template_name = PATH+"frmJRPUpdatePihakKepentingan.jsp";
 			    	myLog.info("viewpemilik");
 			    	//skrin = "1";
 		    		skrin = "2";
@@ -892,7 +910,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    this.context.put("socNegeri", socNegeri);
    
 			    }else if(submit.equalsIgnoreCase("pkkemaskinipemilik")){
-			    	template_name = PATH+"frmPajakanKecilUpdatePihakKepentingan.jsp";
+			    	template_name = PATH+"frmJRPUpdatePihakKepentingan.jsp";
 			    	myLog.info("pkkemaskinipemilik ::");
 			    	//skrin = "1";
 		    		skrin = "2";
@@ -1185,7 +1203,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    //String socNegeri = "";
 				    socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
 					if(pageMode.equals("0")){
-						//template_name = "app/htp/frmJRPMaklumat.jsp";
+						//template_name = "app/htp/frmPajakanKecilMaklumat.jsp";
 						int month = 0;
 						int year = 0;
 						String  strmonth  = getParam("txtbulan");
@@ -1700,6 +1718,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		    	myLog.info("1st else: Langkah::"+langkah);
 			 	idDaerah = getParam("socDaerah");
 			 	idMukim = getParam("socMukim");
+			 	myLog.info("id_kementerian = "+id_kementerian);
 			 	maklumatCarian();
 			    if(langkah.equals("0->0")){ //carian
 			    	template_name = PATH+"frmJRPSenaraiFail.jsp";
@@ -1736,9 +1755,12 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					this.context.put("pageMode", 0);  
 		
 			    }else{
+			    	myLog.info("else");	 
 			    	template_name = PATH+"frmJRPSenaraiFail.jsp";
 			    	senaraiFail = FrmSenaraiFailPajakanKecilData.getList("",userId,"");
 					this.context.put("SenaraiFail", senaraiFail);
+					socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),"disabled class=disabled","onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
+					this.context.put("socKementerian",socKementerian);
 					setupPage(session,action,senaraiFail);
 		
 			    }
@@ -1759,8 +1781,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			
 		}catch(Exception e){
 			e.printStackTrace();
-			getIHTP().getErrorHTML(e.toString());
-			throw new Exception("[HTP JAWATANKUASA RUANG PEJABAT] SILA LOGIN SEMULA");
+			throw new Exception("[KJP JAWATANKUASA RUANG PEJABAT] SILA LOGIN SEMULA");
 			
 		}			
 				
@@ -1844,69 +1865,71 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		
 	}
 
-
-	private void simpanFail(HttpSession session, Long idfail) throws Exception {		  
-		Hashtable<String, Comparable> h = null;
-		h = new Hashtable();
+	private void simpanFail(String idfail) throws Exception {		  
+		Hashtable<String, String> h = null;
+		h = new Hashtable<String, String>();
+		int idFaharasat = 1;
+		int idKementerian = 0;
+		int idLokasi= 1;  
+		int idNegeri = 0;
+		int idSeksyen = 3;
+		int idStatus = 7;/**AKTIF*/
+		int idTarafkeselamatan = 1; /** TERBUKA*/
+		String catatan = "TIADA";
+		String flagFail = "1";
 		String kodKementerianMampu = "";
 		String kodNegeriMampu = "";
-		int idKementerian = 0;
-		int idNegeri = 0;
-		int idTarafkeselamatan = 1; /** TERBUKA*/
-		int idSeksyen = 3;
-		int idSuburusan = 0;
-		String txdBukafail = "";
-		String namaFail = "";
 		String noFailroot = "TIADA";
-		int idLokasi= 1;  
-		int idFaharasat = 1;
-		String flagFail = "1";
-		int idStatus = 7;/**AKTIF*/
-		String catatan = "TIADA";
-		int idMasuk = 1;
-		Vector<?> vecFail = new Vector();
+		String txdBukafail = "";
 		 
-		idNegeri = Integer.parseInt(getParam("socNegeri"));
-		idKementerian = Integer.parseInt(getParam("sockementerian"));
-		  
-		txdBukafail = getParam("txdTarikhBukaFail"); 
-		kodNegeriMampu = FrmSenaraiFailPajakanKecilData.getNegeriByMampu(idNegeri);
-		kodKementerianMampu = FrmSenaraiFailPajakanKecilData.getKementerianByMampu(idNegeri);
-		 
-		int fileSeq = 0;
-		  
-		String noFail = "JKPTG/101/847/";
-		if (!("".equals(getParam("txtNoFailSek")))) {
-			noFail = getParam("txtNoFailSek");
-		}else{
-			fileSeq = File.getSeqNo(Integer.parseInt(getParam("socSeksyen")), Integer.parseInt(idUrusan), idKementerian, idNegeri);
-			noFail += kodKementerianMampu+"/"+kodNegeriMampu+"-"+fileSeq;			  
+		try {			
 		
-		}
-		//int idmasuk = Integer.parseInt((String)session.getAttribute("_ekptg_user_id"));
-		String idmasuk = (String) session.getAttribute("_ekptg_user_id");
-		  
-		h.put("id_Fail", idfail);
-		h.put("id_Tarafkeselamatan", idTarafkeselamatan);
-		h.put("id_Seksyen", idSeksyen);
-		h.put("id_Urusan", Integer.parseInt(idUrusan));
-		h.put("id_Suburusan", Integer.parseInt(idSubUrusan));
-		h.put("tarikh_Bukafail",txdBukafail);		  
-		h.put("tajuk_Fail", getParam("txttajuk"));
-		h.put("no_Fail", noFail);
-		h.put("no_Failroot", noFailroot);
-		h.put("id_Negeri", idNegeri);
-		h.put("id_Kementerian",idKementerian);
-		h.put("id_Faharasat",idFaharasat);
-		h.put("flag_Fail",flagFail);
-		h.put("id_Status",idStatus);
-		h.put("catatan",catatan);
-		h.put("id_Masuk", idmasuk);
-		h.put("id_Lokasi", idLokasi); 
-		h.put("noFailNegeri", "TIADA"); 
-		  
-		FrmUtilData.simpanFail(h);
-		  
+			idNegeri = Integer.parseInt(getParam("socNegeri"));
+			idKementerian = Integer.parseInt(getParam("sockementerian"));
+			  
+			txdBukafail = getParam("txdTarikhBukaFail"); 
+			kodNegeriMampu = FrmSenaraiFailPajakanKecilData.getNegeriByMampu(idNegeri);
+			kodKementerianMampu = FrmSenaraiFailPajakanKecilData.getKementerianByMampu(idNegeri);
+			 
+			int fileSeq = 0;
+			  
+			String noFail = "JKPTG/101/847/";
+			if (!("".equals(getParam("txtNoFailSek")))) {
+				noFail = getParam("txtNoFailSek");
+			}else{
+				fileSeq = File.getSeqNo(Integer.parseInt(getParam("socSeksyen"))
+									,Integer.parseInt(idUrusan)
+									,idKementerian
+									,idNegeri);
+				noFail += kodKementerianMampu+"/"+kodNegeriMampu+"-"+fileSeq;			  
+			
+			}
+			  
+			h.put("catatan",catatan);
+			h.put("flag_Fail",flagFail);
+			h.put("id_Faharasat",String.valueOf(idFaharasat));
+			h.put("id_Fail", String.valueOf(idfail));
+			h.put("id_Kementerian",String.valueOf(idKementerian));
+			h.put("id_Lokasi", String.valueOf(idLokasi)); 
+			h.put("id_Masuk", userId);
+			h.put("id_Negeri", String.valueOf(idNegeri));
+			h.put("id_Seksyen", String.valueOf(idSeksyen));
+			h.put("id_Status",String.valueOf(idStatus));
+			h.put("id_Suburusan", idSubUrusan);
+			h.put("id_Tarafkeselamatan", String.valueOf(idTarafkeselamatan));
+			h.put("id_Urusan", idUrusan);
+			h.put("no_Fail", noFail);
+			h.put("no_Failroot", noFailroot);
+			h.put("tajuk_Fail", getParam("txttajuk"));
+			h.put("tarikh_Bukafail",txdBukafail);		  
+			  
+			FrmUtilData.simpanFailPK(h);
+		
+		} catch (Exception e) {
+			//e.printStackTrace();
+			getIHTP().getErrorHTML(e.getMessage().toString());
+		}	
+		
 	}
 
 	private void updatePermohonan(HttpSession session)throws Exception{
@@ -1952,7 +1975,8 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 	    data.put("tarikh_Agihan", getParam("txdTarikhBukaFail"));
 	    data.put("TarikhBukaFail", getParam("txdTarikhBukaFail"));
 	    data.put("id_Masuk", userId);
-	    data.put("no_FailNegeri", "TIADA");
+	    data.put("idPejabat", String.valueOf(session.getAttribute("_ekptg_user_unit")));
+
 	    return FrmUtilData.simpanPermohonanHTP(data);
 	    	
 	} 
@@ -1965,7 +1989,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 	   
 		  if(i == 0){
 			  //fail baru
-				h.put("idPermohonan", Integer.parseInt(getParam("id_kemaskini")));
+				h.put("idPermohonan", getParam("id_kemaskini"));
 				h.put("idNegeri", getParam("idnegeri"));
 				h.put("socNegeri1", getParam("socNegeri1"));
 				h.put("socDaerah", getParam("socDaerah1"));
@@ -2147,7 +2171,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			String labelAgensi = (String)permohonan.get("agensi");
 			String labelTajuk = (String)permohonan.get("tujuan");
 			String labelNoFail = (String)permohonan.get("fail");
-			String labelNoFailLain = (String)permohonan.get("rujukankjp");
+			String labelNoFailLain = (String)permohonan.get("rujukanlain");
 			String labelTarikhSuratKJP = (String)permohonan.get("rtterima");
 			String labelTarikhBukaFail = (String)permohonan.get("tdaftar");
 
@@ -2219,7 +2243,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		  	String state = getParam("socNegeri");
 		  
 		  	Hashtable h= new Hashtable();
-		  	h.put("idHakmilikurusan", Integer.parseInt(idHakmilik.trim()));
+		  	h.put("idHakmilikurusan", idHakmilik);
 			h.put("noRujukan", noRujukan);
 			h.put("nama", name);
 			h.put("alamat1", alamat1);
@@ -2388,6 +2412,13 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			  return iPemilik;
 				
 		  }
+		  private IPenggunaKementerian getIPengguna(){
+				if(iPengguna==null){
+					iPengguna = new PenggunaKementerianBean();
+				}
+				return iPengguna;
+				
+			}
 		  
 			private IHtp getIHTP(){
 				if(iHTP== null)
@@ -2410,6 +2441,11 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				return iStatus;
 						
 			}
+			private IHtp getHTP(){
+				if(iHtp == null)
+					iHtp = new HtpBean();
+				return iHtp;
+			}
 			
 			private IHTPFail getIHTPFail(){
 				if (iHTPFail==null){
@@ -2418,12 +2454,12 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				return iHTPFail;
 			}
 			
-			private IHTPFail getIHTPPKFail(){
-				if (iHTPPKFail == null){
-					iHTPPKFail = new HTPPajakanKecilFailBean();
-				}
-				return iHTPPKFail;
-			}			
-
+	private IHTPFail getIHTPPKFail(){
+		if (iHTPPKFail == null){
+			iHTPPKFail = new HTPPajakanKecilFailBean();
+			}
+		return iHTPPKFail;
+	}			
+	
 
 }

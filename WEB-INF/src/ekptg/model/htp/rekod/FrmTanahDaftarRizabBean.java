@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
@@ -40,6 +41,8 @@ public class FrmTanahDaftarRizabBean implements ITanahDaftar{
 	    	Statement stmtHakmilik = db.getStatement();
 			  SQLRenderer rHakmilik = new SQLRenderer();
 			  rHakmilik.update("ID_HAKMILIK", data.get("idHakmilik"));
+			  
+			  
 	    	  //convert date before add
 			  String tarikhTerima = data.get("txdTarikhTerima").toString();
 			  String txdTarikhTerima = "to_date('" + tarikhTerima + "','dd/MM/yyyy')";	    	  
@@ -124,7 +127,7 @@ public class FrmTanahDaftarRizabBean implements ITanahDaftar{
 	@Override
 	//ekptg.model.htp.FrmUtilData
 	//public static String insertHTPRizabTransaction(Hashtable data,String userId) throws Exception {
-	public String simpanTransaction(Hashtable<String, String> hashData) throws Exception {
+	public String simpan(Hashtable<String, String> hashData) throws Exception {
 		String idHakmilik = "";
 		//FrmRekodUtilData frmRekodUtilData = null;
 		try {
@@ -234,7 +237,22 @@ public class FrmTanahDaftarRizabBean implements ITanahDaftar{
 	    return idHakmilik;
     
 	}
-
+	
+	@Override
+	public Hashtable<String,String> getMaklumat(String idRujukan) throws Exception{
+		Hashtable<String,String> h =null;
+		return h;
+	}
+	
+	@Override
+	public Vector <Hashtable<String,String>> getSenaraiMaklumat(String idRujukan) throws Exception{
+		Vector <Hashtable<String,String>> vec =null;
+		return vec;
+	}
+	
+	@Override
+	public void hapus(String idRujukan) throws Exception{
+	}
 	
 	private IHtp getIHTP(){
 		if(iHTP== null)

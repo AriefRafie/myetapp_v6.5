@@ -28,8 +28,10 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.Utils;
 import ekptg.model.htp.HTPPermohonanBean;
+import ekptg.model.htp.HtpPeringatanBean;
 import ekptg.model.htp.IHTPPermohonan;
 import ekptg.model.htp.IHTPStatus;
+import ekptg.model.htp.IHtpPeringatan;
 import ekptg.model.htp.cukai.CukaiBean;
 import ekptg.model.htp.cukai.CukaiPenyataBean;
 import ekptg.model.htp.cukai.ICukai;
@@ -54,6 +56,7 @@ public class FrmDashboard extends AjaxBasedModule {
 	String role = null;
 	String user_negeri_login = null;
 	Pengumuman logic = new Pengumuman();	
+	private Hashtable<String,String> mBayaran = null;
 	private ICukai iCukai = null;
 	private ICukaiPenyata iCukaiPenyata = null;
 	private IHTPPermohonan iHTPPermohonan = null;
@@ -63,11 +66,15 @@ public class FrmDashboard extends AjaxBasedModule {
 	private Db db = null;
 	private Connection conn = null;
 	private String sql = "";
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");;
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	List listFail = null;
 	List listHakmilik = null;
 	List listKemaskiniCukai = null;
 	List listCukai = null;
+	
+	private IHtpPeringatan iHTPP = null;  
+	SimpleDateFormat sdfTahun = new SimpleDateFormat("yyyy");
+	SimpleDateFormat sdfBulan = new SimpleDateFormat("MM");
 
 	@Override
 	public String doTemplate2() throws Exception {	
@@ -149,11 +156,52 @@ public class FrmDashboard extends AjaxBasedModule {
     		vecSenaraiOnline = getIOnline().findFailOnlineAktif(getParam("txtTajukFail"), getParam("txtNoFail"), "", "");
     		if(vecSenaraiOnline != null)
     			bilPermohonanOnline = vecSenaraiOnline.size();
-    			
-    		context.put("senaraionline", vecSenaraiOnline);  
+    			    		
+    	}
+     	context.put("senaraionline", vecSenaraiOnline);  
+   	
+    	Vector<HtpPermohonan> onlinePermohonan = null; 
+		if(isTab(portal_role,"Permohonan")){
+    		context.remove("onlinePermohonan");
+    		onlinePermohonan = getIOnline().findFailOnlineUrusan("","","","","1,10");
+    		if(onlinePermohonan != null)
+    			bilPermohonanOnline += onlinePermohonan.size();    			
     		
     	}
-    	context.put("bilPermohonanOnline", bilPermohonanOnline);  
+    	context.put("onlinePermohonan", onlinePermohonan);  
+    	
+    	Vector<HtpPermohonan> onlinePembelian = null; 
+		if(isTab(portal_role,"Pembelian")){
+    		context.remove("onlinePembelian");
+    		onlinePembelian = getIOnline().findFailOnlineUrusan("","","","","2");
+    		if(onlinePembelian != null)
+    			bilPermohonanOnline += onlinePembelian.size();    			
+    		
+    	}
+    	context.put("onlinePembelian", onlinePembelian);
+    	
+    	Vector<HtpPermohonan> onlineGadaian = null; 
+		if(isTab(portal_role,"Gadaian")){
+    		context.remove("onlineGadaian");
+    		onlineGadaian = getIOnline().findFailOnlineUrusan("","","","","108");
+    		if(onlineGadaian != null)
+    			bilPermohonanOnline += onlineGadaian.size();    			
+    		
+    	}
+    	context.put("onlineGadaian", onlineGadaian);
+
+    	Vector<HtpPermohonan> onlineJRP = null; 
+		if(isTab(portal_role,"JRP")){
+    		context.remove("onlineJRP");
+    		onlineJRP = getIOnline().findFailOnlineUrusan("","","","","14");
+    		if(onlineJRP != null)
+    			bilPermohonanOnline += onlineJRP.size();    			
+    		
+    	}
+    	context.put("onlineJRP", onlineJRP);
+    	
+    	context.put("bilPermohonanOnline", bilPermohonanOnline); 
+    	
 //		check_notifikasi_online8 =  getListNotifikasi_online8(userId,"8");
 //		context.put("check_notifikasi_online8",check_notifikasi_online8);		
 //		check_notifikasi_online17 =  getListNotifikasi_online8(userId,"17");
@@ -234,6 +282,14 @@ public class FrmDashboard extends AjaxBasedModule {
   		
 		context.put("bilPajakanKecil",bilPajakanKecil);
 		
+		//Rekod - Pembangunan 
+		Vector vecMulaPembangunan = null;
+		String langkahPembangunan = "20"; 
+
+		vecMulaPembangunan = getStatusRekod().getInfoStatusPermohonan("", IDSUBURUSANREKOD, langkahPembangunan);
+		context.put("bilPrePembangunan",vecMulaPembangunan);
+
+		
 		int bilTugasanRekod = 0; 
 		Vector vecMaklumatPembangunan = null;
   		if(portal_role.contains("HQPengguna")){
@@ -289,6 +345,11 @@ public class FrmDashboard extends AjaxBasedModule {
 			session.setAttribute("rbFile", rb);
 		
 		}
+		//Vector peringatanBayaran = getIHTPP().getSenaraiPeringatanBayaran("", "3",sdfTahun.format(new Date()));
+		myLog.info("getBayaran()= "+getBayaran());
+
+		this.context.put("perBayaranPaj",getBayaran());
+
 		String vm = PATH+"dashboard.jsp";
 		return vm;
 		
@@ -565,7 +626,8 @@ public class FrmDashboard extends AjaxBasedModule {
 			sql += " AND X.FLAG_READ = '"+notread+"'";
 			}
 			
-			//myLog.info("LIST NOTIFICATION DASHBOARD LIST"+sql.toUpperCase());
+			//
+			myLog.info("LIST NOTIFICATION DASHBOARD LIST:sql="+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 			
@@ -1034,7 +1096,7 @@ public class FrmDashboard extends AjaxBasedModule {
 		return senaraiKemaskini;
 	}
 	
-	public void updateRead(HttpSession session,String id_cukaitemp)throws Exception {
+	public void updateRead(HttpSession session,String id_cukaitemp) throws Exception {
 		Statement stmt = null;		
 		try{
 	      
@@ -1062,6 +1124,24 @@ public class FrmDashboard extends AjaxBasedModule {
 	    }//close finally
 		  
 	}
+	
+	private Hashtable<String,String> getBayaran() throws Exception {
+		mBayaran = new Hashtable<String,String>();
+		
+		Vector peringatanBayaran = getIHTPP().getSenaraiPeringatanBayaran("", "3",sdfBulan.format(new Date()));
+		Vector peringatanLewat = getIHTPP().getSenaraiPeringatanBayaran("", "3",sdfTahun.format(new Date()));
+		mBayaran.put("bilPerBayaran", String.valueOf(peringatanBayaran.size()));
+		mBayaran.put("bilPerBayaranLewat", String.valueOf(peringatanLewat.size()));
+		return mBayaran;
+		
+	}
+	
+	private IHtpPeringatan getIHTPP(){
+		if(iHTPP== null)
+			iHTPP = new HtpPeringatanBean();
+		return iHTPP;
+	}
+	
 	
 }
 

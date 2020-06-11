@@ -128,6 +128,7 @@ public class FrmSenaraiFailTerimaPohonData {
 		      String noFailUPT = (String)data.get("noFailUPT");
 		      String tujuan = (String)data.get("tajuk_Fail"); 
 	    	  String noFailKJP = (String)data.get("noFailKJP");
+	    	  String noFailPTG = (String)data.get("noFailPTG");
 		      String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";
 		      String idJenistanah = (String)data.get("StatusTanah");
 		      //String NoFailLain = (String)data.get("NoFailLain");
@@ -222,6 +223,7 @@ public class FrmSenaraiFailTerimaPohonData {
 	}
 	
 	public String simpanPermohonanOnline(Hashtable<String, String> data,String idUser) throws Exception {
+		myLog.debug("simpanPermohonanOnline");
 		 Db db = null;
 		 Connection conn = null;
 		 long idFail = 0L;
@@ -254,11 +256,13 @@ public class FrmSenaraiFailTerimaPohonData {
 			//String lokasi = (String) data.get("id_Lokasifail");
 			//String faharasat = (String) data.get("id_Faharasat");
 			
-	        //PFDFAIL	          
+	        //PFDFAIL	  
+			myLog.debug("simpanPermohonanOnline1");
 			idFail = DB.getNextID(db,"TBLPFDFAIL_SEQ");
+			myLog.debug("simpanPermohonanOnline2");
 			int fileSeq = 0;
 			fileSeq = File.getSeqNo(3,idurusan,idkementerian,idnegeri);//Integer.parseInt(getParam("socSeksyen"))
-
+			myLog.debug("fileSeq = "+fileSeq);
 			kodNegeriMampu = getNegeriByMampu(idnegeri);
 			kodKementerianMampu = getKementerianByMampu(idkementerian);
 			kod_urusan = getKodUrusan(idurusan);
@@ -325,6 +329,7 @@ public class FrmSenaraiFailTerimaPohonData {
 		      String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";
 		      String tujuan = (String)data.get("tajuk_Fail"); 
 		      String noFailKJP = (String)data.get("noFailKJP");
+		      String noFailPTG = (String)data.get("noFailPTG");
 		      String idJenistanah = (String)data.get("StatusTanah");
 		      //String NoFailLain = (String)data.get("NoFailLain");
 		      String TarikhPermohonan = (String)data.get("TarikhPermohonan");
@@ -359,7 +364,8 @@ public class FrmSenaraiFailTerimaPohonData {
 			  r.add("id_Agensi", idagensi);
 			  r.add("id_Jenistanah", idJenistanah);
 			  r.add("id_Pegawai", idUser);
-			  r.add("NO_RUJUKAN_KJP",noFailKJP);
+			  r.add("no_rujukan_kjp",noFailKJP);
+			  r.add("no_rujukan_ptg",noFailPTG);
 			  r.add("no_Rujukan_Lain", noFailUPT);
 			  r.add("tarikh_Agihan", r.unquote("sysdate"));
 			  r.add("id_Masuk",idUser);
@@ -1648,7 +1654,7 @@ public class FrmSenaraiFailTerimaPohonData {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		myLog.debug("Idpermohonan model"+idpermohonan);
 		try{
-			list = new Vector<Hashtable<String, String>>();
+			list = new Vector<Hashtable<String, String>>(); 
 			db = new Db();
 			Statement stmt = db.getStatement();
 		
@@ -1752,6 +1758,70 @@ public class FrmSenaraiFailTerimaPohonData {
 			if (db != null) db.close();
 		}	
 	}
+	
+	public Vector<Hashtable<String, String>> getBuktiBayaranNotis5A2(String idpermohonan)throws Exception {	
+		Db db = null;
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		myLog.debug("Idpermohonan model"+idpermohonan);
+		try{
+			list = new Vector<Hashtable<String, String>>();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			//SQLRenderer r = new SQLRenderer();
+		
+			sql =  "SELECT id_bayaran,no_baucer,no_resit,tarikh_baucer,tarikh_resit,jumlah_baucer " +
+		  			" from tblhtpbayaran where id_permohonan = '"+idpermohonan+"'";
+
+			myLog.info("getPelanLakaranInfo22: sql::"+sql);
+	  	  	ResultSet rs1 = stmt.executeQuery(sql);
+	  	  	Hashtable<String, String> h;
+	  	  	int bil = 1;
+	  	  	while(rs1.next()){
+	  	  		myLog.info("bil = "+bil);
+	  	  		h = new Hashtable<String, String>();	
+	  	  		//myLog.info("getPelanLakaranInfo##1: sql::");
+	  	  		h.put("bil", String.valueOf(bil));
+	  	  		//myLog.info("getPelanLakaranInfo##2: sql::");
+	  	  		h.put("idBayaran", Utils.isNull(rs1.getString("ID_BAYARAN"))); 
+	  	  		//myLog.info("getPelanLakaranInfo##3: sql::");
+	  	  		h.put("noBaucer", rs1.getString("no_baucer") == null ? "" : rs1.getString("no_baucer"));
+	  	  		//myLog.info("getPelanLakaranInfo##4: sql::");
+	  	  		h.put("noResit", rs1.getString("no_resit") == null ? "" : rs1.getString("no_resit"));
+	  	  		//myLog.info("getPelanLakaranInfo##5: sql::");
+	  	  		if(rs1.getDate("tarikh_baucer")==null){
+	  	  			h.put("tarikhbaucer", "");
+	  	  		}else{
+	  	  			h.put("tarikhbaucer",  sdf.format(rs1.getDate("tarikh_baucer"))); 
+	  	  		}
+	  	  		//h.put("tarikhBaucer",  sdf.format(rs1.getDate("tarikh_baucer") == null ? "" : rs1.getDate("tarikh_baucer")));
+	  	  		myLog.info("getPelanLakaranInfo##6: sql::");
+	  	  		if(rs1.getDate("tarikh_resit")==null){
+	  	  			h.put("tarikhresit", "");
+	  	  		}else{
+	  	  			h.put("tarikhresit",  sdf.format(rs1.getDate("tarikh_resit"))); 
+	  	  		}
+	  	  		//h.put("tarikhResit",  sdf.format(rs1.getDate("tarikh_resit") == null ? "" : rs1.getDate("tarikh_resit")));
+	  	  		myLog.info("getPelanLakaranInfo##7: sql::");
+	  	  		if(rs1.getString("jumlah_baucer")==null){
+	  	  			h.put("jumlahBaucer", "0.00");
+	  	  		}else{
+	  	  			h.put("jumlahBaucer", Utils.format2Decimal(rs1.getDouble("jumlah_baucer"))); 
+	  	  		}
+	  	  		//h.put("jumlahBaucer", Utils.format2Decimal(rs1.getDouble("jumlah_baucer")) == null ? "" : rs1.getString("jumlah_baucer"));
+	  	  		myLog.info("getPelanLakaranInfo##8: sql::");
+	  	  		bil++;
+	  	  		list.addElement(h);
+	  	  		myLog.info("getPelanLakaranInfo##9: sql::");
+	  	  	}
+	  	  	return list;
+	  	  
+		}finally{
+			myLog.info("getPelanLakaranInfo#10: sql::");
+			if (db != null) db.close();
+		}	
+	}
+	
 	
 	public Hashtable<String, String> UpdateLokasiTanah(Hashtable<String, String> data)throws Exception {	
 		Db db = null;

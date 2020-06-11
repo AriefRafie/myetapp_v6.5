@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package ekptg.view.ppk;
 
 import integrasi.rest.etanah.wpkl.ppk.EtanahWPKLPPKManager;
@@ -16,7 +14,6 @@ import ekptg.model.ppk.FrmPopupCapaianHakmilikEtanahData;
 
 /**
  * @author mohd faizal
- *
  */
 public class FrmPopupCapaianHakmilikEtanahView extends AjaxBasedModule {
 
@@ -28,7 +25,7 @@ public class FrmPopupCapaianHakmilikEtanahView extends AjaxBasedModule {
 	public String doTemplate2() throws Exception {
 		
 		HttpSession session = this.request.getSession();
-		 String idPengguna = (String)session.getAttribute("_ekptg_user_id");
+		String idPengguna = (String)session.getAttribute("_ekptg_user_id");
 
 		// GET DEFAULT PARAM
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
@@ -62,7 +59,8 @@ public class FrmPopupCapaianHakmilikEtanahView extends AjaxBasedModule {
 				this.context.put("flagMsg", manager.getFlagMsg());
 				this.context.put("outputMsg", manager.getOutputMsg());
 			}			
-		}		
+		}	
+		
 		if (hitButt.equals("daftar")){
 			logic.daftarHakmilik(getParam("idPPKHTA"), getParam("noResit"), getParam("idHakmilik"), idPermohonanSimati, session);
 		}

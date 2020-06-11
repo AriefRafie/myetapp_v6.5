@@ -61,7 +61,7 @@
 				<td width="85%">
 					<table>
 					<tr>
-						<td><b>My Profile</b></td>
+						<td><b>Profil</b></td>
 					</tr>
 					<tr>
 						<td>
@@ -149,7 +149,7 @@
 					<tr>
 						<td>
 						<a href="javascript:goTo('PHPAPB')" class="help" title="Permohonan Urusan Akta Pelantar Benua">
-							<font color="blue"><li>Permohonan Akta Pelantar Benua</li></font>
+							<font color="blue"><li>Permohonan Urusan Akta Pelantar Benua</li></font>
 						</a>
 						</td>
 					</tr>
@@ -248,11 +248,24 @@
 					</tr>
 						<tr>
 						<td>
-						<a href="javascript:goTo('NOTIS')" class="help" title="Semakan Notis Perbicaraan Pembahagian Pusaka">
-							<font color="blue"><li>Notis Perbicaraan Pembahagian Pusaka</li></font>
+						<a href="javascript:goTo('SENARAI')" class="help" title="Senarai Notis Perbicaraan Pembahagian Pusaka">
+							<font color="blue"><li>Senarai Notis Perbicaraan Pembahagian Pusaka</li></font>
 						</a>
 						</td>
 					</tr>
+					<tr>
+						<td>
+							<a href="javascript:penyewaan()" class="help" title="Penyewaan">
+								<font color="blue"><li>
+									##if($jumlah_notifikasi_penyewaan > 0)
+								<label style="background-color:blue" align="center" valign="top" > 
+								<b><font color="WHITE"><blink>$!bilPPKkembali</blink></font></b>
+								</label>&nbsp;
+									##end
+								Permohonan Dikembalikan</li></font>					
+								</a>
+							</td>
+						</tr>
 					</table>
 				</td>
 			</tr>
@@ -332,6 +345,13 @@
 							<font color="blue"><li>Permohonan Pajakan</li></font>
 						</a>
 						</td>
+					</tr>
+					<tr>
+					<td>
+					<a href="javascript:permhonanDikembalikan()" class="help" title="Permohonan Dikembalikan">
+						<font color="blue"><li>&nbsp;Permohonan Dikembalikan</li></font>	
+						</a>
+					</td>
 					</tr>
 					</table>
 				</td>
@@ -467,10 +487,10 @@ else if(location=='DERAFPPK'){
         document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
         document.${formName}.submit();
 }
-else if(location=='NOTIS'){
+else if(location=='SENARAI'){
     document.${formName}.action = "?myrole=ppk-online-user";
     document.${formName}.namatab.value = "Pusaka Kecil";
-    document.${formName}.namamodul.value = "ekptg.view.ppk.CarianNotisPerbicaraan";
+    document.${formName}.namamodul.value = "ekptg.view.ppk.CarianNotisPerbicaraanOnline";
     document.${formName}.submit();
 }
 else if(location=='PPT'){
@@ -555,7 +575,7 @@ else if(location=='HELP'){
 else if(location=='HTP'){
     document.${formName}.action = "?myrole=htp-online-user";
     document.${formName}.namatab.value = "Harta Tanah Persekutuan";
-    document.${formName}.namamodul.value = "ekptg.view.htp.online.FrmPajakanOnlineMaklumatPajakanView";
+    document.${formName}.namamodul.value = "ekptg.view.htp.online.FrmPajakanOnlineSenaraiFailView";
     document.${formName}.submit();
 }
 }

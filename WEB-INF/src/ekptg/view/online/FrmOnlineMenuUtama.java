@@ -18,6 +18,10 @@ import org.apache.log4j.Logger;
 import ekptg.engine.IPortalUtility;
 import ekptg.engine.OnlineUser;
 import ekptg.engine.PortalUtility;
+import ekptg.model.IStatus;
+import ekptg.model.StatusBean;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHtp;
 import ekptg.view.admin.Pengumuman;
 
 public class FrmOnlineMenuUtama extends AjaxBasedModule {
@@ -35,6 +39,10 @@ public class FrmOnlineMenuUtama extends AjaxBasedModule {
 	private static final String PATH="app/online/manuUtama/";
 	private String vm = PATH+"index.jsp";
 	private IPortalUtility portalUtility;
+	private IHtp iErr = null;  
+	//return Permohonan 1
+	private IStatus iStatus = null;
+
 	
 	@Override
 	public String doTemplate2() throws Exception {
@@ -88,7 +96,8 @@ public class FrmOnlineMenuUtama extends AjaxBasedModule {
 			context.put("notifikasi_inbox",notifikasi_inbox);			
 			context.put("notifikasiDeraf", notifikasiDeraf(userId));
 		
-		
+			context.put("bilPPKkembali", dikembalikanByUrusan("382").size());
+	
 		return vm;
 		
 	}
@@ -245,4 +254,40 @@ public class FrmOnlineMenuUtama extends AjaxBasedModule {
 		}
 		
 	}
+	//return Permohonan 3
+	public Vector<Hashtable<String, String>> dikembalikan(String idSubUrusan) throws Exception {
+		Vector<Hashtable<String, String>> returnVal = null;
+		try {
+			returnVal = getStatus().getInfoStatusPermohonan("",idSubUrusan,"50");
+		}catch(Exception e){
+			throw new Exception(getErr().getErrorHTML("inquery:"+idSubUrusan+"::"+e.getMessage()));
+		}
+		return returnVal ;
+		
+	}
+	
+	public Vector<Hashtable<String, String>> dikembalikanByUrusan(String idUrusan) throws Exception {
+		Vector<Hashtable<String, String>> returnVal = null;
+		try {
+			returnVal = getStatus().getInfoStatusPermohonan(idUrusan,"","50");
+		}catch(Exception e){
+			throw new Exception(getErr().getErrorHTML("inquery:"+idUrusan+"::"+e.getMessage()));
+		}
+		return returnVal ;
+		
+	}
+	//return Permohonan 2
+	private IStatus getStatus(){
+		if (iStatus==null){
+			iStatus=new StatusBean();
+		}
+		return iStatus;
+	}
+		
+	private IHtp getErr(){
+		if(iErr== null)
+			iErr = new HtpBean();
+		return iErr;
+	}
+	
 }

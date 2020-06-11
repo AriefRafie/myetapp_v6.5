@@ -8,14 +8,17 @@ import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
-import ekptg.model.htp.rekod.IPenawaranTukarLepas;
+import ekptg.model.htp.rekod.ITanahCarian;
 import ekptg.model.htp.rekod.PenawaranTukarLepasBean;
 
 public class FrmRekodTukargunaPenawaranPelepasan extends AjaxBasedModule {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2848587214174652673L;
 	private final String PATH="app/htp/rekod/";
 	private static Logger log = Logger.getLogger(ekptg.view.htp.rekod.FrmRekodTukargunaPenawaranPelepasan.class);
-	private IPenawaranTukarLepas iPenawaran = null;
+	private ITanahCarian iPenawaran = null;
 	Vector<?> senaraiFail = null;
 
 	@Override
@@ -38,11 +41,20 @@ public class FrmRekodTukargunaPenawaranPelepasan extends AjaxBasedModule {
 		vm = PATH+"frmRekodSenaraiTukargunaPenawaranPelepasan.jsp";
 		
 		if("".equals(command)){
-			senaraiFail = getIPenawaran().carianFail(noFail,"","","","","","");		
+			senaraiFail = getIPenawaran().getCarianSenaraiHakmilikRizab("",noFail,"",""
+					,"","",""
+					,"","",""
+					,"","","");
+
+			//senaraiFail = getIPenawaran().carianFail(noFail,"","","","","","");		
 			setupPage(session,action,senaraiFail);
 			
 		}else{
-			senaraiFail = getIPenawaran().carianFail(noFail,"","","","","","");		
+			senaraiFail = getIPenawaran().getCarianSenaraiHakmilikRizab("",noFail,"",""
+					,"","",""
+					,"","",""
+					,"","","");
+			//senaraiFail = getIPenawaran().carianFail(noFail,"","","","","","");		
 			setupPage(session,action,senaraiFail);		
 			
 		}
@@ -52,7 +64,7 @@ public class FrmRekodTukargunaPenawaranPelepasan extends AjaxBasedModule {
 		return vm;
 	}
 		
-		private IPenawaranTukarLepas getIPenawaran(){
+		private ITanahCarian getIPenawaran(){
 			if(iPenawaran==null){
 				iPenawaran = new PenawaranTukarLepasBean();
 			}

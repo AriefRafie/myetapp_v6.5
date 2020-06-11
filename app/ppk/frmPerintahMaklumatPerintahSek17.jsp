@@ -1,4 +1,4 @@
-TARIKH_MOHON = $TARIKH_MOHON
+
 <style type="text/css">
 <!--
 .style1 {
@@ -338,7 +338,7 @@ document.getElementById("header_lama").style.display="block";
                             <td colspan="4"> #if ($mode == 'update')
                               #if ($flagPopup == '')
                               #if ($flagSelesaiHTA == '')
-                              	#if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N")
+                              	#if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk")
                               	<input name="cmdTambahHTA" id="cmdTambahHTA" value="Daftar Perintah" type="button" onClick="javascript:tambahHTA()"/>
                               	#end
                               #end
@@ -507,7 +507,7 @@ document.getElementById("header_lama").style.display="block";
                         <tr>
                           <td colspan="4"> #if ($mode == 'update')
                             #if ($flagPopup == '')
-                            #if ($flagSelesaiHTATH == '')
+                            #if ($flagSelesaiHTATH == '' && $userRole != "user_ppk")
                             <input name="cmdTambahHTATH" id="cmdTambahHTATH" value="Daftar Perintah" type="button" onClick="javascript:tambahHTATH()"/>
                             #end
                             #end
@@ -674,7 +674,7 @@ document.getElementById("header_lama").style.display="block";
                           <tr>
                             <td colspan="5"> #if ($mode == 'update')
                               #if ($flagPopup == '')
-                              #if ($flagSelesaiHA == '')
+                              #if ($flagSelesaiHA == '' && $userRole != "user_ppk")
                               <input name="cmdTambahHA" id="cmdTambahHA" value="Daftar Perintah" type="button" onClick="javascript:tambahHA()">
                               #end
                               #end
@@ -2871,7 +2871,7 @@ document.getElementById("header_lama").style.display="block";
     <td align="center"> #if ($flagPopup == '')
       #if ($flagFromSenaraiFailSek8 == '' && $flagFromSenaraiPermohonanSek8 == '')
       #if ($idStatus == '41')
-      	#if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N")
+      	#if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk")
       		<input type="button" name="cmdHantar" id="cmdHantar" value="Selesai Permohonan" onClick="javascript:selesaiPermohonan('$flagFromSenaraiFailSek8','$flagFromSenaraiPermohonanSek8','$noFail')"/>
       	#end
       #end
@@ -2887,7 +2887,7 @@ document.getElementById("header_lama").style.display="block";
       #end 
       #if ($flagFromSenaraiPermohonanSek8 == 'yes')
       #if ($idStatus == '41')
-      	#if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N")
+      	#if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk")
       		<input type="button" name="cmdHantar" id="cmdHantar" value="Selesai Permohonan" onClick="javascript:selesaiPermohonan('$flagFromSenaraiFailSek8','$flagFromSenaraiPermohonanSek8','$noFail')"/>
       	#end
       #end
@@ -2914,17 +2914,31 @@ document.getElementById("header_lama").style.display="block";
 <fieldset id="tableReport" style="display:none;"-->
   <legend><strong>SENARAI LAPORAN</strong></legend>
   <table width="100%" border="0" cellspacing="2" cellpadding="2">
+    #if ($TarikhPerintah == 'T' )
     <tr>
+      <td ><a href="#" class="style2" onClick="javascript:cetakBorangT1('$idFail')"> Borang T1</a></td>
+    </tr>
+<!-- 
+    <tr>
+      <td ><a href="#" class="style2" onClick="javascript:cetakBorangT2('$idFail')"> Borang T2</a></td>
+    </tr>
+     -->
+        <tr>
+      <td ><a href="#" class="style2" onClick="javascript:cetakBorangT3('$idFail')"> Borang T2</a></td>
+    </tr>
+      #else
+    
+ <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangT1('$idFail')"> Borang T1</a></td>
     </tr>
 
     <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangT2('$idFail')"> Borang T2</a></td>
     </tr>
-
-    <tr>
+        <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangT3('$idFail')"> Borang T3</a></td>
     </tr>
+   #end 
     
     <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangEE('$idFail')"> Borang EE </a></td>
@@ -3381,6 +3395,12 @@ function DoTheCheck() {
     if (document.${formName}.txtNamaPenerima.value == "")
 	{
 		alert("Sila masukkan Nama Penerima");
+		return;
+	}
+    
+    if (document.${formName}.txtTarikh.value == "")
+	{
+		alert("Sila pilih Tarikh Serahan");
 		return;
 	}
     

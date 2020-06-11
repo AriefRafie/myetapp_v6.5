@@ -173,45 +173,23 @@ public class FrmPermohonanUPTOnlineData {
 		}//close finally
 		    	
 	}//close getListPemohon
-	
-	
-public static Vector getListPemohon(String userId,String portal_role,String flag_noti)throws Exception {	 
 		
+	public static Vector getListPemohon(String userId,String portal_role,String flag_noti)throws Exception {	 		
 		Db db = null;
 		String sql = "";
 		try{
 			db = new Db();
-			Statement stmt = db.getStatement();
+			Statement stmt = db.getStatement();			
 			
-			
-			
-	    		sql = " SELECT UI.ID_JAWATAN FROM USERS U, USERS_INTERNAL UI WHERE U.USER_ID = UI.USER_ID AND U.USER_ID = '"+userId+"' ";
-	    		System.out.println("*** PRINTLN JAWATAN = "+sql);
-				ResultSet rs1 = stmt.executeQuery(sql);
+			sql = " SELECT UI.ID_JAWATAN FROM USERS U, USERS_INTERNAL UI WHERE U.USER_ID = UI.USER_ID AND U.USER_ID = '"+userId+"' ";
+			//System.out.println("*** PRINTLN JAWATAN = "+sql);
+			ResultSet rs1 = stmt.executeQuery(sql);
 				
-	    		String id_jawatan = "";
-	    		while (rs1.next()) {
-	    			id_jawatan = rs1.getString("ID_JAWATAN")== null?"":rs1.getString("ID_JAWATAN");	    			
-				}
-			
-			
-		    /*	sql = "SELECT distinct p.id_status, p.id_permohonan, p.no_permohonan, f.id_fail, f.no_fail, p.tarikh_permohonan, su.nama_suburusan, k.nama_kementerian, s.keterangan, p.tarikh_masuk, p.flag_semak, ";
-		    		sql +="p.no_rujukan_ptg, p.no_rujukan_ptd, f.id_suburusan, p.tarikh_kemaskini, p.no_rujukan_upt, p.flag_status_online, ";
-		    		sql +="p.no_permohonan_online ";
-		    		sql +="FROM Tblpptpermohonan p, Tblpfdfail f,Tblrujsuburusan su,Tblrujstatus s, Tblrujkementerian k, ";
-		    		sql +="Users u, Users_kementerian uk ";
-		    		sql +="WHERE f.id_fail = p.id_fail ";
-		    		sql +="AND f.id_suburusan = su.id_suburusan " ;
-		    		sql +="AND f.id_kementerian = k.id_kementerian ";
-		    		sql +="AND u.user_id = uk.user_id ";
-		    		sql +="AND p.id_status = s.id_status ";
-		    		sql +="AND u.user_id = p.id_masuk ";
-		    		sql +="AND f.id_suburusan in ('51','52','53') ";
-		    		sql +="AND NVL(p.flag_jenispermohonan,0) = '1' ";
-		    		sql += "AND u.user_id ='"+userId+"' ";
-		    		sql +="ORDER by p.tarikh_masuk desc, p.tarikh_kemaskini desc "; */
-		    		
-		    		//modified 21112011 : Papar senarai kesemua fail by kementerian
+			String id_jawatan = "";
+			while (rs1.next()) {
+	    		id_jawatan = rs1.getString("ID_JAWATAN")== null?"":rs1.getString("ID_JAWATAN");	    			
+			}
+			//modified 21112011 : Papar senarai kesemua fail by kementerian
 		    sql = "SELECT distinct UPPER(p.tujuan) tujuan, p.id_status, p.flag_jenispermohonan, p.id_permohonan, p.no_permohonan" +
 		    	" , f.id_fail, f.no_fail, p.tarikh_permohonan_kjp, p.tarikh_permohonan, su.nama_suburusan, k.nama_kementerian" +
 		    	" , s.keterangan, p.tarikh_masuk, p.flag_semak, p.flag_semakan_online, "; 
@@ -234,9 +212,7 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 		    }
 		    
 		    myLogger.info(" -------- FLAG NOTI : "+flag_noti);
-		    if(flag_noti.equals("Y"))
-		    {
-		    	
+		    if(flag_noti.equals("Y")){
 		    	sql += " and f.id_fail in (";
 		    	if (id_jawatan.equals("24")) {
 					sql += " SELECT F.ID_FAIL " +
@@ -253,7 +229,8 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 							" AND U.USER_ID = UK.USER_ID AND P.ID_STATUS = S.ID_STATUS AND UK.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
 							" AND F.ID_SUBURUSAN IN ('51', '52', '53') AND U.USER_ID = '" + userId + "' " +
 							" AND P.FLAG_SEMAKAN_ONLINE = 4 ";
-				} else if (id_jawatan.equals("9")) {
+				
+		    	} else if (id_jawatan.equals("9")) {
 					sql += " SELECT f.ID_FAIL "
 					        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
 					        +" users u, users_kementerian uk "
@@ -261,7 +238,8 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 					        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
 					        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userId + "' "
 					        +" AND p.flag_semakan_online = 1 ";
-				} else if (id_jawatan.equals("4")) {
+				
+		    	} else if (id_jawatan.equals("4")) {
 					sql += " SELECT f.ID_FAIL "
 					        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
 					        +" users u, users_kementerian uk "
@@ -279,12 +257,9 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 					        +" AND p.flag_semakan_online = 2 "; 
 				}
 		    	sql += ") ";
-		    }
+		    }		    
 		    
-		    
-		    
-		    sql +="ORDER by ";
-		    
+		    sql +="ORDER by ";		    
 		    myLogger.info(":::: id_jawatan : " + id_jawatan);
 		    /*
 		    if(id_jawatan.equals("24"))
@@ -297,7 +272,7 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 		    }*/
 		    sql += "p.tarikh_permohonan DESC, p.tarikh_masuk DESC, p.tarikh_kemaskini DESC ";
 		    //nvl(p.flag_status_online,0) desc, nvl(p.flag_semakan_online,0) desc, 
-		    myLogger.info("LIST PERMOHONAN x : " + sql);
+		    myLogger.info("getListPemohon:sql=" + sql);
 		    ResultSet rs = stmt.executeQuery(sql);
 		    Vector list = new Vector();
 		    Hashtable h = null;
@@ -1374,7 +1349,7 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 					sql += " AND (TO_DATE(sysdate) - TO_DATE(pbk.tarikh_masuk))+1  >= 14  ";
 					sql += " AND f.id_negeri = '"+id_negeri+"'"; 
 					sql += " ORDER by bilHari desc ";
-
+					//myLogger.info("getListPenarikanExpiredUnit:sql"+sql);
 		    		ResultSet rs = stmt.executeQuery(sql);
 		    		Vector listpbk = new Vector();
 		      
@@ -1456,7 +1431,8 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 					sql += " AND f.id_negeri = '"+id_negeri+"'"; 
 					sql += " ORDER by bilHari desc ";
 
-		    		ResultSet rs = stmt.executeQuery(sql);
+					//myLogger.info("getListPembatalanExpiredUnit:sql="+sql);
+					ResultSet rs = stmt.executeQuery(sql);
 		    		Vector listpbk = new Vector();
 		      
 		    		Hashtable h = null;
@@ -1519,6 +1495,7 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 		
 	    Db db = null;
 	    String sql = "";
+	    long id_senaraisemak = 0;
 	   
 	    try{
 	      
@@ -1552,7 +1529,6 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 	    		String semak_5 = (String)data.get("semak5"); 
 	    		String semak_6 = (String)data.get("semak6"); 
 	    		String semak_7 = (String)data.get("semak7"); 
-	    		String semak_8 = (String)data.get("semak8"); 
 	      
 	    		//checkbox seksyen 4
 	    		String semak_10 = (String)data.get("semak10"); 
@@ -1628,6 +1604,96 @@ public static Vector getListPemohon(String userId,String portal_role,String flag
 	   	      	rF.add("id_kemaskini",id_user);
 	    		sql = rF.getSQLUpdate("tblpfdfail");
 	    		stmt.executeUpdate(sql);
+	    		
+	    		//checkbutton seksyen 8
+	    		
+	    			if(id_check.equals(""))
+					{
+		    			id_senaraisemak = DB.getNextID(db, "TBLPPTSENARAISEMAK_SEQ");
+					}
+					else
+					{
+						id_senaraisemak = Long.parseLong(id_check);
+					}
+	    			
+	    			SQLRenderer rCK = new SQLRenderer();
+	    			
+	    			if(id_check.equals(""))
+					{
+						rCK.add("i.id_senaraisemak", id_check);
+					}
+					else
+					{
+						rCK.update("i.id_senaraisemak", id_check);
+					}
+
+	    			//rCK.add("i.id_senaraisemak",id_senaraisemak);
+	    			rCK.add("i.id_permohonan", id_permohonan);
+	    			rCK.add("i.semak1", semak_1);
+	    			rCK.add("i.semak2", semak_2);
+	    			rCK.add("i.semak3", semak_3);
+	    			rCK.add("i.semak4", semak_4);
+	    			rCK.add("i.semak5", semak_5);
+	    			rCK.add("i.semak6", semak_6);
+	    			rCK.add("i.semak7", semak_7);
+	    			//checkbutton seksyen 4
+	    			rCK.add("i.semak10", semak_10);
+	    			rCK.add("i.semak20", semak_20);
+	    			rCK.add("tarikh_kemaskini",rCK.unquote("sysdate"));
+	    		    rCK.add("id_kemaskini",id_user);
+	    		    if(id_check.equals(""))
+					{    		    	
+					sql = rCK.getSQLInsert("tblpptsenaraisemak i");
+					stmt.executeUpdate(sql);
+					}
+	    			else {
+	    			
+	    				sql = rCK.getSQLUpdate("tblpptsenaraisemak i");
+	    				stmt.executeUpdate(sql);
+	    			}   		   
+	    		
+	    		      
+	    		
+	    		 
+	    		
+//	    		if(id_check.equals(""))
+//				{
+//	    			id_senaraisemak = DB.getNextID(db, "TBLPPTSENARAISEMAK_SEQ");
+//				}
+//				else
+//				{
+//					id_senaraisemak = Long.parseLong(id_check);
+//				}
+//	    		
+//	    			SQLRenderer rCK4 = new SQLRenderer();
+//	    			
+//	    			if(id_check.equals(""))
+//					{
+//						rCK4.add("j.id_senaraisemak", id_senaraisemak);
+//					}
+//					else
+//					{
+//						rCK4.update("j.id_senaraisemak", id_senaraisemak);
+//					}
+//
+//	    			//rCK4.add("j.id_senaraisemak",id_senaraisemak);
+//	    	
+//	    			rCK4.add("j.id_permohonan", id_permohonan);
+//	    			rCK4.add("j.semak1", semak_10);
+//	    			rCK4.add("j.semak2", semak_20);
+//	    			rCK4.add("tarikh_kemaskini",rCK4.unquote("sysdate"));
+//	    		    rCK4.add("id_kemaskini",id_user);
+//	    		    if(id_check.equals(""))
+//					{
+//					sql = rCK4.getSQLInsert("tblpptsenaraisemak j");
+//					stmt.executeUpdate(sql);
+//					}
+//	    			else {
+//	    				
+//	    				sql = rCK4.getSQLUpdate("tblpptsenaraisemak j");
+//	    				stmt.executeUpdate(sql);
+//	    			}
+	    		
 	      
 	    		
 	    } catch (Exception re) {

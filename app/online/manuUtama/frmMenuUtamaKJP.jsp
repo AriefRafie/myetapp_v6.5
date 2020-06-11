@@ -181,7 +181,21 @@ function toggle_div(id) {
 																	<font color="blue"><li>&nbsp;Bantahan</li></font>						
 																</a>
 															</td>
-														</tr>														
+														</tr>	
+														
+														<tr>
+															<td>
+																<a href="javascript:penyewaan()" class="help" title="Penyewaan">
+																	<font color="blue"><li>
+																	##if($jumlah_notifikasi_penyewaan > 0)
+																	<label style="background-color:blue" align="center" valign="top" > 
+																		<b><font color="WHITE"><blink>$!bilPPTDikembali</blink></font></b>
+																	</label>&nbsp;
+																	##end
+																	Permohonan Dikembalikan</li></font>					
+																</a>
+															</td>
+														</tr>													
 													</table>
 												</td>
 											</tr>
@@ -273,29 +287,43 @@ function toggle_div(id) {
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:senaraiPemberimilikan()" class="help" title="Senarai Tugasan">
+																<a href="javascript:senaraiPemberimilikan()" class="help" title="Pemberimilikan / Perizaban">
 																	<font color="blue"><li>Pemberimilikan / Perizaban</li></font>						
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:pembelian()" class="help" title="Pendaftaran permohonan lesen pasir">
+																<a href="javascript:pembelian()" class="help" title="Pembelian">
 																	<font color="blue"><li>Pembelian</li></font>						
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:rekod()" class="help" title="Pendaftaran permohonan lesen pasir">
+																<a href="javascript:rekod()" class="help" title="Rekod Hakmilik / Rizab">
 																	<font color="blue"><li>Rekod Hakmilik / Rizab</li></font>						
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:laporanHakmilik()" class="help" title="Pendaftaran permohonan lesen pasir">
+																<a href="javascript:laporanHakmilik()" class="help" title="Laporan Hakmilik / Rizab">
 																	<font color="blue"><li>Laporan Hakmilik / Rizab</li></font>						
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:gadaian()" class="help" title="Gadaian">
+																	<font color="blue"><li>Gadaian</li></font>						
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:jawatankuasaRuangPejabat()" class="help" title="Jawatankuasa Ruang Pejabat">
+																	<font color="blue"><li>Jawatankuasa Ruang Pejabat</li></font>						
 																</a>
 															</td>
 														</tr>
@@ -315,13 +343,7 @@ function toggle_div(id) {
 														<tr>
 															<td><b>Aduan / Cadangan</b></td>
 														</tr>
-														<tr>
-															<td>
-																<a href="javascript:aduan()" class="help" title="Pengurusan Log Aduan">
-																	<font color="blue"><li>&nbsp;Hantar Aduan & Cadangan</li></font>	
-																</a>
-															</td>
-														</tr>
+									
 														<!-- <tr>
 															<td>
 																<a href="javascript:statusAduan()" class="help" title="Pengurusan Log Aduan">
@@ -587,6 +609,14 @@ function permohonanPembelian(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.pembelian.FrmPermohonanPembelian";
 	document.${formName}.submit();
 }
+function gadaian(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.gadaian.FrmKJPGadaianA";
+	document.${formName}.submit();
+}
+function jawatankuasaRuangPejabat(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.pajakankecil.FrmKJPJawatankuasaRuangPejabat";
+	document.${formName}.submit();
+}
 
 /* function aduan(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Aduan / Cadangan',$portalRole)?_portal_module=ekptg.view.online.aduan.ComplaintSenderModule";
@@ -595,6 +625,10 @@ function permohonanPembelian(){
 
 function aduan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Aduan / Cadangan",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
+	document.${formName}.submit();
+}
+function permohonanDikembalikan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Permohonan Dikembalikan ",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
 	document.${formName}.submit();
 }
 

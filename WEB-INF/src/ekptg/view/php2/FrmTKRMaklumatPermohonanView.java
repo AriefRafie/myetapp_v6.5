@@ -180,6 +180,7 @@ private static final long serialVersionUID = 1L;
     	Vector beanListMaklumatPemohon = null;
         Vector senaraiPelan = null;
         Vector beanMaklumatPelan = null;
+        Vector senaraiSemak = null;
         
         Vector senaraiTanahBerkaitan = new Vector();
         
@@ -234,6 +235,10 @@ private static final long serialVersionUID = 1L;
     			logic.doBatalPermohonan(idFail, idPermohonan, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
     		}
+        	if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
+        		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
+    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
+        	}
         	//NEW METHOD FOR HAPUS
         	if ("doHapusFail".equals(hitButton)){
     			logic.doHapusFail(idFail, idPermohonan, getParam("tarikhHapus"), getParam("txtSebab"), session);
@@ -351,8 +356,8 @@ private static final long serialVersionUID = 1L;
 		this.context.put("flagPopup", "");
 		this.context.put("modePopup", "");
 		
+		//SENARAI TANAH BERKAITAN
 		if(selectedTabUpper.equals("1")){
-			//SENARAI TANAH BERKAITAN
 			senaraiTanahBerkaitan = new Vector();
 			logicPYWData.setSenaraiTanahBerkaitan(idPermohonan);
 			senaraiTanahBerkaitan = logicPYWData.getListTanahBerkaitan();
@@ -386,7 +391,13 @@ private static final long serialVersionUID = 1L;
 			
 		}
 		
-		if ("5".equals(selectedTabUpper)){
+		//SENARAI SEMAK
+		if("5".equals(selectedTabUpper)){
+			senaraiSemak = logic.getSenaraiSemak(idPermohonan);
+			this.context.put("SenaraiSemak", senaraiSemak);
+		}
+		
+		if("6".equals(selectedTabUpper)){
     		
 			//OPEN POPUP DOKUMEN
         	if ("openPopupDokumen".equals(flagPopup)){
@@ -427,7 +438,7 @@ private static final long serialVersionUID = 1L;
         		}
         	} 
         	
-        	//SENARAI IMEJAN
+        	//SENARAI PELAN
 			senaraiPelan = new Vector();
 			logic.setSenaraiPelan(idPermohonan);
 			senaraiPelan = logic.getlistPelan();
@@ -497,7 +508,6 @@ private static final long serialVersionUID = 1L;
             			hashTanahGanti.put("sekatan", getParam("txtSekatanTG"));
             			hashTanahGanti.put("kegunaanTanah", getParam("txtKegunaanTanahTG"));
         			}
-        			
         			
         			beanMaklumatTanahGanti.addElement(hashTanahGanti);
     				this.context.put("BeanMaklumatTanahGanti", beanMaklumatTanahGanti);
@@ -683,9 +693,10 @@ private static final long serialVersionUID = 1L;
 			beanMaklumatTukarguna.addElement(hashMaklumatTukarguna);
            	this.context.put("BeanMaklumatTukarguna", beanMaklumatTukarguna);
         	
-        
     		this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " onChange=\"doChangeLuasKegunaan()\" style=\"width:auto\""));
-
+    		
+    		senaraiSemak = logic.getSenaraiSemak(idPermohonan);
+			this.context.put("SenaraiSemak", senaraiSemak);
         }
         
         if ("batalPermohonan".equals(step)){

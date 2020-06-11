@@ -635,7 +635,10 @@
 
 
 
-<input type="button" value="Kembali" onClick="screen5('$id_permohonan')">
+<!--  <input type="button" value="Kembali" onClick="screen5('$id_permohonan')"> -->
+
+<!-- PPT-19 -->
+<input type="button" value="Kembali" onClick="popupCarianHakmilik('$id_permohonan','senarai_siasatan')">
 
 #if($flag_stop_siasatan!="Y")
 	#if($list_siasatan.size() == 0 && $record_siasatan != "yes")
@@ -692,7 +695,7 @@
  
  <tr >
  <td colspan="8">
- 
+<!-- PPT-22  -->
 <fieldset id="$list.BILTEMP" class="$row" style="visibility:collapse; display:none;">
 <table width="100%" >
 <tr>
@@ -716,6 +719,7 @@
  <div align="left"><a href="javascript:maklumatsiasatan('$list.ID_SIASATAN')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">NOTA SIASATAN </font></a></div>
 </td>
 </tr>
+<!-- PPT-22  END-->
 <tr>
     <td width="1%"></td>
     <td width="28%">No. Kes</td>
@@ -973,6 +977,37 @@ $list.TARIKH_AKHIR_TAMPAL
 </td>
 </tr>
 </table>
+
+<!-- PPT-24 
+<fieldset>
+	<legend>SIASATAN</legend>
+	 <table width="100%" border="0"> 
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:papar('$id_siasatan','$id_hakmilik')" title="Memaparkan secara lengkap maklumat set siasatan"><font color="blue">MAKLUMAT SIASATAN</font></a></div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:kehadiran('$id_siasatan')" title="Memaparkan secara lengkap maklumat kehadiran"><font color="blue">MAKLUMAT KEHADIRAN</font></a></div>
+			</td>
+		</tr> 
+
+		<tr>
+			<td width="1%"></td>
+			<td colspan="3">
+				<div align="left"><a href="javascript:maklumatsiasatan('$id_siasatan')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">NOTA SIASATAN </font></a></div>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+-->
+
+
+
   <input type="hidden" name="sub_command" id="sub_command" />
   <input type="hidden" name="subminor_command" id="subminor_command" />
   <input type="hidden" name="location" id="location" />
@@ -2127,8 +2162,6 @@ my_form.value = my_form.value.substring(0, maxLen);
 $jquery("#"+text_num).html(maxLen+"");
 }
 
-
-
 function screen5(id_permohonan)
 {
     document.${formName}.command.value = "Siasatan";
@@ -2140,5 +2173,19 @@ function screen5(id_permohonan)
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
 	document.${formName}.submit();
 }
+
+
+function popupCarianHakmilik(id_permohonan,flag_skrin)
+{	//PPT-19
+	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupCarianHakmilik?&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
+	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();		
+	
+	//screen5(id_permohonan);
+}
+
 </script>
-  
+

@@ -18,7 +18,7 @@ import ekptg.helpers.File;
 public class SementaraDaftarOperations {
 	static Logger myLogger = Logger.getLogger(SementaraDaftarOperations.class);
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") //PPT-41 NEW
 	public static String addSementara(Hashtable data) throws Exception
 	  {
 		
@@ -49,6 +49,11 @@ public class SementaraDaftarOperations {
 	    	String rujukan_surat = (String)data.get("rujukan_kementerian");	      
 	    	String id_agensi = (String)data.get("agensi");  
 	    	String id_daerah = (String)data.get("daerah");
+	    	
+	    	//PPT-41
+	    	String tarikh_pendudukan_mula = (String)data.get("tarikh_pendudukan_mula");
+	    	String tarikh_pendudukan_akhir = (String)data.get("tarikh_pendudukan_akhir");
+	    	String tempoh_pendudukan = (String)data.get("tempoh_pendudukan");
 	  
 	    	String sorJenisKodDaerah = (String)data.get("sorJenisKodDaerah");
 	    	
@@ -61,8 +66,10 @@ public class SementaraDaftarOperations {
 	    	String TP = "to_date('" + txdTarikhPermohonan + "','dd/MM/yyyy')";
 	    	String TK = "to_date('" + tarikh_kehendaki + "','dd/MM/yyyy')";
 	    	String TS = "to_date('" + tarikh_surat + "','dd/MM/yyyy')";
+	    	//PPT-41
+	    	String TPM = "to_date('" + tarikh_pendudukan_mula + "','dd/MM/yyyy')";
+	    	String TPA = "to_date('" + tarikh_pendudukan_akhir + "','dd/MM/yyyy')";
 	      
-	    	
 	    	//status "PERMOHONAN CAWANGAN"
 	    	int status = 11;
 	    	
@@ -108,6 +115,11 @@ public class SementaraDaftarOperations {
 	     	rPH.add("no_rujukan_ptg",no_rujukan_ptg);
 	     	rPH.add("no_rujukan_ptd",no_rujukan_ptd);
 	     	
+	     	//PPT-41
+	     	rPH.add("tarikh_pendudukan_mula", rPH.unquote(TPM));
+	     	rPH.add("tarikh_pendudukan_akhir", rPH.unquote(TPA));
+	     	rPH.add("tempoh_pendudukan", tempoh_pendudukan);
+	     	
 	     	rPH.add("flag_jenis_kod_daerah",sorJenisKodDaerah);
 	     	
 	     	rPH.add("tarikh_masuk",rPH.unquote("sysdate"));
@@ -115,6 +127,7 @@ public class SementaraDaftarOperations {
 	     	sql = rPH.getSQLInsert("tblpptpermohonan");
 	     	stmt.executeUpdate(sql);
 	     	
+	     	myLogger.info("SQL Sementara PPT-41:: "+sql);
 	     	
 	    	//id suburusanstatusfail
 	     	String id_suburusanstatus = "";
@@ -481,7 +494,7 @@ public class SementaraDaftarOperations {
 	  }//close updateHM
 	
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") //PPT-41 UPDATTE
 	public static void updateSementara(Hashtable data) throws Exception {
 		
 	    Db db = null;
@@ -534,10 +547,19 @@ public class SementaraDaftarOperations {
 	    		String tarikh_surat = (String)data.get("tarikh_surat");
 	    		String flagPeruntukan = (String)data.get("flag_peruntukan");
 //	    		String flagSegera = (String)data.get("flag_segera");
+	    		
+		    	//PPT-41 
+		    	String tarikh_pendudukan_mula = (String)data.get("tarikh_pendudukan_mula");
+		    	String tarikh_pendudukan_akhir = (String)data.get("tarikh_pendudukan_akhir");
+		    	String tempoh_pendudukan = (String)data.get("tempoh_pendudukan");
 		  		  
 	    		String TP = "to_date('" + txdTarikhPermohonan + "','dd/MM/yyyy')";
 	    		String TH = "to_date('" + tarikh_hendak + "','dd/MM/yyyy')";
 	    		String TS = "to_date('" + tarikh_surat + "','dd/MM/yyyy')";
+	    		
+		    	//PPT-41
+		    	String TPM = "to_date('" + tarikh_pendudukan_mula + "','dd/MM/yyyy')";
+		    	String TPA = "to_date('" + tarikh_pendudukan_akhir + "','dd/MM/yyyy')";
 		  
 	    		SQLRenderer r = new SQLRenderer();
 	    		r.update("id_permohonan", id_permohonan);
@@ -552,6 +574,11 @@ public class SementaraDaftarOperations {
 	    		r.add("flag_peruntukan", flagPeruntukan);
 //	    		r.add("flag_segera", flagSegera);
 	    		r.add("no_rujukan_ptg",no_rujukan_ptg);
+	    		
+		     	//PPT-41
+		     	r.add("tarikh_pendudukan_mula", r.unquote(TPM));
+		     	r.add("tarikh_pendudukan_akhir", r.unquote(TPA));
+		     	r.add("tempoh_pendudukan", tempoh_pendudukan);
 	    		
 	    		r.add("flag_jenis_kod_daerah",sorJenisKodDaerah);
 	    		

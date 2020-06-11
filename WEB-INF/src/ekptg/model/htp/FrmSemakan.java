@@ -2,6 +2,7 @@ package ekptg.model.htp;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -12,15 +13,66 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
+import ekptg.model.entities.Tblsemakan;
 
 public class FrmSemakan {
 	
-	private static Logger log = Logger.getLogger(ekptg.model.htp.FrmSemakan.class);
+	private static Logger myLog = Logger.getLogger(ekptg.model.htp.FrmSemakan.class);
 
-	 public static Vector getSenaraiSemakan(String kodForm)throws Exception {
+	public static Vector<Tblsemakan> getSemakan(String idSemakan,String semakan) throws Exception {
+		Db db = null;
+		String sql = "";
+		Vector<Tblsemakan> list = new Vector<Tblsemakan>();
+		    
+		try {
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      SQLRenderer r = new SQLRenderer();
+		      
+		      r.add("s.id_semakan");
+		      r.add("s.perihal");
+		      r.add("NVL(to_char(s.tarikh_masuk,'dd/mm/yyyy'),'TIADA') tarikh_masuk");
+		      r.add("NVL(to_char(s.tarikh_kemaskini,'dd/mm/yyyy'),'TIADA') tarikh_kemaskini");
+		
+		      //r.add("i.id_semakan",r.unquote("s.id_semakan"));
+		      if(idSemakan !=null)
+		    	  r.add("s.id_semakan",idSemakan);
+		      if(semakan != null)
+		    	  r.add("s.perihal","%"+semakan+"%","like ");
+
+		    	  
+		      sql = r.getSQLSelect("tblsemakan s"," s.perihal ");
+//	          myLog.info("getSemakan : sql=" + sql);
+		      ResultSet rs = stmt.executeQuery(sql);
+		      Tblsemakan h;
+		      int bil = 1;
+		      while (rs.next()) {
+		    	  h = new Tblsemakan();
+		    	  h.setBil(bil++);
+		    	  h.setIdSemakan(rs.getLong("id_semakan"));
+		    	  h.setPerihal(rs.getString("perihal"));
+		    	  h.setTarikhMasukf(rs.getString(3));
+		    	  h.setTarikhKemaskinif(rs.getString(4));
+		    	  list.addElement(h);
+		    	  
+		      }
+		      
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }finally {
+		      if (db != null){
+		    	  db.close();
+		      }
+		    }
+		    
+		return list;
+		  
+	}
+
+	 public static Vector<Hashtable<String,String>> getSenaraiSemakan(String kodForm) throws Exception {
 	    Db db = null;
 	    String sql = "";
-	    Vector list = new Vector();
+	    Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
 	    
 	    try {
 	      db = new Db();
@@ -28,37 +80,37 @@ public class FrmSemakan {
 	      SQLRenderer r = new SQLRenderer();
 	      
 	      r.add("i.id_semakansenarai");
-	      r.add("I.ATURAN");
+	      r.add("i.aturan");
 	      r.add("s.perihal");
 	
 	      r.add("i.id_semakan",r.unquote("s.id_semakan"));
-	
-	      r.add("i.kod_form",kodForm);
-	      sql = r.getSQLSelect("tblsemakan s,tblsemakansenarai i"," I.ATURAN");
-          log.info("Semakan : " + sql);
+	      if(!kodForm.equals("0"))
+	    	  r.add("i.kod_form",kodForm);
+	      
+	      sql = r.getSQLSelect("tblsemakan s,tblsemakansenarai i","i.kod_form,i.aturan");
+          myLog.info("Semakan : " + sql);
 	      ResultSet rs = stmt.executeQuery(sql);
-	      Hashtable h;
+	      Hashtable<String,String> h;
 
 	      while (rs.next()) {
-	    	  h = new Hashtable();
+	    	  h = new Hashtable<String,String>();
 	    	  h.put("id", rs.getString("id_semakansenarai"));
-	    	  h.put("aturan", Utils.isNull(rs.getString("ATURAN")));
+	    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
 	    	  h.put("keterangan", rs.getString("perihal"));
 	    	  list.addElement(h);
+	    	  
 	      }
 	      
-	    }
-	    catch(Exception e){
+	    }catch(Exception e){
 	    	e.printStackTrace();
-	    }
-	    finally {
+	    }finally {
 	      if (db != null){
 	    	  db.close();
 	      }
-	    }
-	    
+	    }	    
 	    return list;
-	  }
+	  
+	 }
 
 	 public static Vector getSenaraiSemakan(String kodForm,String aktif)throws Exception {
 		    Db db = null;
@@ -247,7 +299,7 @@ public class FrmSemakan {
 		      r.add("id_permohonan", idPermohonan);
 		      r.add("id_semakansenarai", idSemakan);
 		      sql = r.getSQLInsert("Tblsemakanhantar");
-		      log.info("semakanTambah : "+sql);
+		      myLog.info("semakanTambah : "+sql);
 		      stmt.executeUpdate(sql);
 		    }
 		    catch(Exception e){
