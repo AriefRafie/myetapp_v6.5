@@ -3030,6 +3030,84 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
+	
+	public static Vector<Tblrujkategoripemohon> getKategoriPemohonOrganisasiAndSyarikat() throws Exception {
+		Db db = null;
+		String sql = "";
+		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
+				+ " where id_Kategoripemohon in (10,2,9) order by keterangan desc";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujkategoripemohon> v = new Vector<Tblrujkategoripemohon>();
+			Tblrujkategoripemohon s = null;
+			while (rs.next()) {
+				s = new Tblrujkategoripemohon();
+				s.setIdKategoripemohon(rs.getLong(1));
+				s.setKodKategoripemohon(rs.getString(2));
+				s.setKeterangan(rs.getString(3));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static Vector<Tblrujkategoripemohon> getKategoriIndividu() throws Exception {
+		Db db = null;
+		String sql = "";
+		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
+				+ " where id_Kategoripemohon = 1";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujkategoripemohon> v = new Vector<Tblrujkategoripemohon>();
+			Tblrujkategoripemohon s = null;
+			while (rs.next()) {
+				s = new Tblrujkategoripemohon();
+				s.setIdKategoripemohon(rs.getLong(1));
+				s.setKodKategoripemohon(rs.getString(2));
+				s.setKeterangan(rs.getString(3));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static Vector<Tblrujkategoripemohon> getKategoriIndividuBukanIndividu() throws Exception {
+		Db db = null;
+		String sql = "";
+		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
+				+ " where id_Kategoripemohon in (1,11)";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujkategoripemohon> v = new Vector<Tblrujkategoripemohon>();
+			Tblrujkategoripemohon s = null;
+			while (rs.next()) {
+				s = new Tblrujkategoripemohon();
+				s.setIdKategoripemohon(rs.getLong(1));
+				s.setKodKategoripemohon(rs.getString(2));
+				s.setKeterangan(rs.getString(3));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 
 	public static Vector<Tblrujkategoripemohon> getKategoriPenawaran() throws Exception {
 		Db db = null;
