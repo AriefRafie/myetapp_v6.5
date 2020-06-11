@@ -206,7 +206,29 @@
 	
 	}
 	
-	//########## Start Addby zulfazdliabuas@gmail.com ########## 
+	/* function ini adalah apabila tekan button TAMBAH pada tab Senarai Notis*/
+	function TambahSenaraiNotis(tabId,tabmode,command,mode){
+		
+		var command = 'kemaskinipermohonan';
+		var mode = 'Notis5A';
+		var button = "SimpanNotis";
+		var tabId = 5;
+		var butang3 = '8';
+		var tabmode = 1;
+		
+		doAjaxCall${formName}(command,'mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode+'&butang3='+butang3);
+	}
+	function SimpanNotis(){
+		var command = 'kemaskinipermohonan';
+		var mode = 'Notis5A';
+		var button = "SimpanNotis";
+		var tabId = 5;
+		var tabmode = 1;
+		
+		doAjaxCall${formName}(command,'mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode+'&button='+button);
+	}
+	
+	/* ini adalah apabila tekan button simpan Senarai Notis */
 	
 	//--- Start for view sahaja Maklumat Notis untuk user online ---
 	function Notis5AView(id){
@@ -219,6 +241,7 @@
 		doAjaxCall${formName}(command,'&mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode+'&button='+button+'&idNotis='+id);
 	}
 	//--- end ---
+	
 	
 	//apabila click button tambah
 	function tambahPermohonan(){
@@ -421,6 +444,7 @@
 		doAjaxCall${formName}(command,'mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode);
 	}
 	/* ini adalah apabila tekan button simpan maklumat asas tanah */
+	
 	function SimpanMaklumatAsasTanah(){
 		
 		if ( document.${formName}.socdaerah2.value == "" ) { 
