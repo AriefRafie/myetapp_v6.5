@@ -1203,7 +1203,8 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 			context.put("txtTajuk",getParam("txtTajuk"));
 			context.put("noFail","");
 			context.put("noP","");
-			context.put("txtnoFailKJP","");
+			context.put("txtnoFailKJP",getParam("txtnoFailKJP"));
+			context.put("txtnofailptg",getParam("txtnofailptg"));
 			context.put("txtnoFailUPT","");
 			context.put("txdTarikhSuratKJP",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
 			context.put("txtTarikhPermohonan",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
@@ -1217,7 +1218,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 			context.put("txtTajuk","");
 			context.put("noFail","");
 			context.put("noP","");
-			context.put("txtnoFailKJP","");
+			context.put("txtnoFailKJP",getParam("txtnoFailKJP"));
 			context.put("txtnoFailUPT","");
 			context.put("txdTarikhSuratKJP",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
 			context.put("txtTarikhPermohonan",lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy"));
@@ -1245,7 +1246,8 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hashData.put("TarikhSurKJP", getParam("txdTarikhSuratKJP"));
 		hashData.put("TarikhPermohonan", getParam("txdTarikhSuratKJP"));  
 		hashData.put("noFailUPT", getParam("txtnoFailUPT"));  
-		hashData.put("noFailKJP", getParam("txtnoFailKJP"));  
+		hashData.put("noFailKJP", getParam("txtnoFailKJP"));
+		hashData.put("noFailPTG", getParam("txtnofailptg"));
 		hashData.put("StatusTanah", getParam("socStatustanah"));  
 //		return fData.simpanPermohonan(h,idUser);
 		return fData.simpanPermohonanOnline(hashData,idUser);
@@ -2114,9 +2116,9 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hashData.put("TarikhPermohonan", getParam("txtTarikhPermohonan")); 
 //		hashData.put("noFailUPT", getParam("txtnoFailUPT"));  
 		hashData.put("noFailUPT", "");
-//		hashData.put("noFailKJP", getParam("txtnoFailKJP"));
-		hashData.put("noFailKJP", "");
-//		hashData.put("StatusTanah", getParam("socStatustanah")); zulfazdli disable ganti code bawah Hardcode terus status tanah kepada sulit
+		hashData.put("noFailKJP", getParam("txtnoFailKJP"));
+		hashData.put("noFailPTG", getParam("txtnofailptg"));
+//		hashData.put("StatusTanah", getParam("socStatustanah"));
 		hashData.put("StatusTanah", "3"); //Status Tanah 3 = SULIT
 //		return fData.simpanPermohonan(h,idUser);
 		myLog.info("doSimpanMaklumatPermohonanOnline");
