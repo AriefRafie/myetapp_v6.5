@@ -358,7 +358,6 @@ public class StatusBean implements IStatus {
 		return idSuburusanstatusfail;
 		
 	}
-	
 	/**
 	 Sebagai jumlah bilangan tugasan dan senarai fail/ maklumat yang berkaitan
 	 dengan tugasan yang perlu dibuat.
@@ -428,8 +427,78 @@ public class StatusBean implements IStatus {
 	    }	    
 	     return senaraiMaklumat;
 	     
-	  }//close list	
+	}//close list	
 	
+	/**
+	 Sebagai jumlah bilangan tugasan dan senarai fail/ maklumat yang berkaitan
+	 dengan tugasan yang perlu dibuat.
+	 */
+	@Override
+	public Vector<Hashtable<String, String>> getStatusPermohonanByIndividu(String idUrusan,String idUser,String langkah)
+		throws Exception{
+		Vector<Hashtable<String, String>> senaraiMaklumat = new Vector<Hashtable<String, String>>();
+	    try {	    	
+	    		db = new Db();
+	    		Statement stmt = db.getStatement();	    		
+	    		sql = "SELECT " +
+	    		//	"distinct f.no_fail,F.ID_MASUK, a.id_status,  ";
+	    		" S.KETERANGAN,ST.ID_SUBURUSANSTATUS "+
+	    		" ,STF.ID_SUBURUSANSTATUSFAIL, STF.AKTIF,ST.ID_SUBURUSAN,STF.URL CATATAN" +
+	    		" ,TO_CHAR(STF.TARIKH_MASUK,'dd/mm/yyyy') TARIKH_MASUK " +
+	    		" ,TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI" +
+	    		" ,STF.ID_PERMOHONAN,STF.ID_FAIL " +
+	    	    " FROM " +
+//	    	    " TBLPPK a, Tblpfdfail f,  ";
+//	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLHTPRUJSUBURUSANSTATUSFAIL STF "+
+	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLRUJSUBURUSANSTATUSFAIL STF "+
+	    		" WHERE "+
+	    		//sql += " a.id_fail = f.id_fail ";
+	    		" ST.ID_STATUS = S.ID_STATUS "+
+	    		" AND STF.ID_SUBURUSANSTATUS = ST.ID_SUBURUSANSTATUS "+
+	    		//" AND stf.id_permohonan = a.id_permohonan ";
+	    		//sql += " AND stf.ID_FAIL = A.ID_FAIL ";
+	    		//sql += " AND F.id_status <> '999' ";
+	    		" AND ST.LANGKAH = '"+langkah+"'"+
+	    		" AND STF.aktif = 1 "+
+	    		//" AND STF.ID_FAIL = '" + idHakmilik + "'" +
+	    				"";
+	    		if(!idUrusan.equals("")){
+	    			sql+=" AND ST.ID_SUBURUSAN IN " +
+	    					"(SELECT ID_SUBURUSAN FROM TBLRUJSUBURUSAN " +
+	    					" WHERE ID_URUSAN ='"+idUrusan+"')";
+	    		}
+	    		if(!idUser.equals("")){
+	    			sql+=" AND F.ID_MASUK = "+idUser;	    		
+	    		}
+	    		myLog.info("getStatusPermohonanByIndividu:sql="+sql);
+	    		ResultSet rs = stmt.executeQuery(sql);	      			  
+				int bil = 1;
+			    Hashtable<String,String> h = null;
+			    while (rs.next()) {
+	        			h = new Hashtable<String, String>();  
+	    				//h.put("level",rs.getString("ID_MASUK"));	 
+	    	    		h.put("bil", String.valueOf(bil));
+	    				h.put("id_permohonan", rs.getString("id_permohonan"));
+	    				h.put("id_suburusan", rs.getString("id_suburusan"));
+	    				h.put("id_suburusanstatusfail", rs.getString("id_suburusanstatusfail"));
+	    				h.put("id_suburusanstatus", rs.getString("id_suburusanstatus"));
+	    				//h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
+	    				//h.put("no_fail", rs.getString("no_fail")==null?"":rs.getString("no_fail"));
+	    				h.put("catatan", Utils.isNull(rs.getString("CATATAN")));
+	    				h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
+	    				h.put("tarikhSelesai", Utils.isNull(rs.getString("TARIKH_SELESAI")));
+	    				senaraiMaklumat.addElement(h);
+	    				bil++;
+
+	    		}
+	    		
+	      //return h;
+	    } finally {
+	      if (db != null) db.close();
+	    }	    
+	     return senaraiMaklumat;
+	     
+	  }//close list	
 	
 	public void kemaskiniStatusPermohonan(String idPermohonan,String idStatus,String userId) throws Exception {
 		try{
