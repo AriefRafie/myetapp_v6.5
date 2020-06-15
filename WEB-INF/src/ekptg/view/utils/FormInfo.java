@@ -24,7 +24,7 @@ public class FormInfo extends AjaxBasedModule {
 		myLog.info("jenisInfo="+jenisInfo);
 		
 		if (jenisInfo.equals("tanah")){
-			namaImej = "geran_mukim.jpg";
+			namaImej = "geran_mukim8.jpg";
 		}
 		this.context.put("namaInfo", namaImej);
 	   	return vm;
