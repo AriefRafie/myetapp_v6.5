@@ -63,7 +63,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 	private Long idHakmilikUrusan = 0L;
 	private PihakBerkepentingan pemilik = null;
 	private String idUrusan = "14";
-	private String idSubUrusan = "44";
+	private String idSubUrusan = "9920122";
 	private String idFailN = null;
 	private String jenisAkses="Readonly";
 	private String userId = null;
@@ -89,7 +89,6 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
  	private UserKementerian uk = null;
  	private IPenggunaKementerian iPengguna = null;
 
-	@SuppressWarnings("unchecked")
 	public String doTemplate2()throws Exception {
 		 
 		try{
@@ -131,8 +130,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			if (id_kementerian == null || id_kementerian.trim().length() == 0){
 				uk = getIPengguna().getKementerian(userId);
 				if(uk == null){
-					//throw new Exception("[ONLINE-HTP REKOD] KEMENTERIAN TIDAK DIJUMPAI");
-					throw new Exception(getHTP().getErrorHTML("[ONLINE-HTP PERMOHONAN] KEMENTERIAN TIDAK DIJUMPAI"));
+					throw new Exception(getHTP().getErrorHTML("[ONLINE-HTP JRP] KEMENTERIAN TIDAK DIJUMPAI"));
 				}
 			
 				myLog.info("id_kementerian="+uk.getAgensi().getKementerian().getIdKementerian());
@@ -229,7 +227,8 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    if(pageMode.equals("0")){
 				    	//myLog.info("pageMode::0"+pageMode);
 					    this.context.put("socSeksyen","3");
-						socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong(idUrusan),disability);
+					    socUrusan = HTML.SelectSuburusan("socUrusan",Long.parseLong(idSubUrusan),disability);
+					    //socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong(idUrusan),disability);
 				    	this.context.put("socUrusan",socUrusan);
 				    	//perjanjian 44
 				    	this.context.put("idsuburusan",idSubUrusan);
