@@ -33,11 +33,12 @@ public class HTPFailBean implements IHTPFail{
 	HtpPermohonan htpPermohonan = null;
 
 	@Override
-	public  Vector<Hashtable<String, String>> getSenaraiFail(
-			String idUser,String nofail,String tajukfail
-			,String id_kementerian,String id_agensi
-			,String id_negeri,String id_daerah,String id_mukim
-			,String id_urusan,String tarikhBukaFail)throws Exception {
+	public  Vector<Hashtable<String, String>> getSenaraiFail(String idUser
+		,String nofail,String tajukfail
+		,String id_kementerian,String id_agensi
+		,String id_negeri,String id_daerah,String id_mukim
+		,String id_urusan
+		,String tarikhBukaFail) throws Exception {
 	    Db db = null;
 	    String sql = "";
 	    Vector<Hashtable<String, String>> list = null;
@@ -50,18 +51,21 @@ public class HTPFailBean implements IHTPFail{
 	      		" ,P.NO_PERMOHONAN, P.TUJUAN, " +
 	      		" (select nama_negeri from tblrujnegeri where id_negeri = f.id_negeri) negeri,"+
 	      		" S.KETERANGAN "+
-	      		" FROM Tblpermohonan P,TblHTPPermohonan PP, "+
-			    " Tblpfdfail F,Tblrujsuburusanstatusfail SF," +
+	      		" FROM tblpermohonan P,tblhtppermohonan PP, "+
+			    " tblpfdfail F,tblrujsuburusanstatusfail SF," +
 			    //"Tblhtphakmilikurusan THMU," +
-			    " Tblrujsuburusanstatus US,Tblrujstatus S "+
+			    " tblrujsuburusanstatus US,tblrujstatus S,tblrujnegeri rn "+
 			    " WHERE P.id_Fail = F.id_Fail  " +
-			    " AND ( F.ID_STATUS <> '999' OR F.ID_STATUS is null) " +
-			    " AND P.id_Permohonan = PP.id_Permohonan "+
-			    " AND P.id_Permohonan = SF.id_Permohonan  "+
+			    " AND F.id_negeri=rn.id_negeri " +
+			    " AND ( F.id_status <> '999' OR F.id_status is null) " +
+			    " AND P.id_permohonan = PP.id_permohonan "+
+			    " AND P.id_permohonan = SF.id_permohonan  "+
 			    //" AND P.id_Permohonan = THMU.id_Permohonan(+)  "+
-			    " AND SF.id_Suburusanstatus = US.id_Suburusanstatus  "+
-			    " AND SF.ID_FAIL = F.ID_FAIL "+
-			    " AND US.id_Status = S.id_Status  AND F.id_Urusan IN (1,10)  AND sf.aktif = '1'  ";
+			    " AND SF.id_suburusanstatus = US.id_suburusanstatus  "+
+			    " AND SF.id_fail = F.id_fail "+
+			    " AND US.id_status = S.id_status  " +
+			    //"AND F.id_Urusan IN (1,10)  "
+			    "AND sf.aktif = '1'  ";
 	      
 	      if (idUser != null) {
 	    	  sql = sql + " AND f.id_masuk='"+idUser+"'";
@@ -76,9 +80,9 @@ public class HTPFailBean implements IHTPFail{
 	    	  sql = sql + "AND f.id_urusan = "+id_urusan+" ";
 	      }
 	      
-	      //if (tajukfail != null && !"".equals(tajukfail)) {
+	      if (tajukfail != null && !"".equals(tajukfail)) {
 	    	  sql = sql + " AND lower(f.tajuk_Fail) like '%"+tajukfail.toLowerCase()+"%' ";
-	      //}
+	      }
 	      
 	      if (id_kementerian != null && !"-1".equals(id_kementerian) && !"".equals(id_kementerian)) {
 	    	  sql = sql + "AND f.id_kementerian = '"+id_kementerian+"' ";
@@ -115,7 +119,7 @@ public class HTPFailBean implements IHTPFail{
 	      "" ;
 	     // 		"--,TARIKH_DAFTAR DESC";
 
-	      myLog.info("TerimaPohongetList::sql:::"+sql);
+	      myLog.info("getSenaraiFail:sql="+sql);
 	      ResultSet rs = stmt.executeQuery(sql);
 	      list = new Vector<Hashtable<String, String>>();
 	      int bil = 1;
