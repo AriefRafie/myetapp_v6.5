@@ -46,18 +46,17 @@ public class HTPFailBean implements IHTPFail{
 	    try {
 	    	db = new Db();
 	    	Statement stmt = db.getStatement();
-	    	sql = "SELECT f.id_masuk,p.id_Fail, f.no_Fail, f.tajuk_Fail,F.TARIKH_DAFTAR_FAIL" +
-	      		" ,TO_CHAR(F.TARIKH_DAFTAR_FAIL,'dd/MM/yyyy') TARIKH_DAFTAR,f.id_kemaskini,F.TARIKH_MASUK  " +
-	      		" ,P.NO_PERMOHONAN, P.TUJUAN, " +
-	      		" (select nama_negeri from tblrujnegeri where id_negeri = f.id_negeri) negeri,"+
-	      		" S.KETERANGAN "+
+	    	sql = "SELECT f.id_masuk,p.id_Fail, f.no_Fail, f.tajuk_Fail,F.tarikh_daftar_fail" +
+	      		" ,TO_CHAR(F.tarikh_daftar_fail,'dd/MM/yyyy') tarikh_daftar,f.id_kemaskini,F.tarikh_masuk  " +
+	      		" ,P.id_permohonan,P.no_permohonan, P.tujuan " +
+	      		" ,rn.nama_negeri negeri"+
+	      		" ,S.keterangan "+
 	      		" FROM tblpermohonan P,tblhtppermohonan PP, "+
 			    " tblpfdfail F,tblrujsuburusanstatusfail SF," +
 			    //"Tblhtphakmilikurusan THMU," +
 			    " tblrujsuburusanstatus US,tblrujstatus S,tblrujnegeri rn "+
 			    " WHERE P.id_Fail = F.id_Fail  " +
 			    " AND F.id_negeri=rn.id_negeri " +
-			    " AND ( F.id_status <> '999' OR F.id_status is null) " +
 			    " AND P.id_permohonan = PP.id_permohonan "+
 			    " AND P.id_permohonan = SF.id_permohonan  "+
 			    //" AND P.id_Permohonan = THMU.id_Permohonan(+)  "+
@@ -65,6 +64,7 @@ public class HTPFailBean implements IHTPFail{
 			    " AND SF.id_fail = F.id_fail "+
 			    " AND US.id_status = S.id_status  " +
 			    //"AND F.id_Urusan IN (1,10)  "
+			    " AND ( F.id_status <> '999' OR F.id_status is null) " +
 			    "AND sf.aktif = '1'  ";
 	      
 	      if (idUser != null) {
@@ -128,14 +128,15 @@ public class HTPFailBean implements IHTPFail{
 	      while (rs.next()) {
 	    	  h = new Hashtable<String, String>();
 	    	  h.put("bil", String.valueOf(bil));
-	    	  h.put("id", rs.getString("id_Fail"));
-	    	  h.put("no", Utils.isNull(rs.getString("no_Fail")));
-	    	  h.put("noP", Utils.isNull(rs.getString("NO_PERMOHONAN")));
+	    	  h.put("id", rs.getString("id_fail"));
+	    	  h.put("no", Utils.isNull(rs.getString("no_fail")));
+	    	  h.put("noP", Utils.isNull(rs.getString("no_permohonan")));
+	    	  h.put("idPermohonan", Utils.isNull(rs.getString("id_permohonan")));
 	    	  h.put("negeri", Utils.isNull(rs.getString("negeri")));
 	    	  h.put("tajuk", Utils.isNull(rs.getString("tajuk_Fail")));
 	    	  h.put("tujuan", Utils.isNull(rs.getString("tujuan")));
 	    	  h.put("keterangan", Utils.isNull(rs.getString("keterangan")));
-	    	  h.put("tarikhDaftar", Utils.isNull(rs.getString("TARIKH_DAFTAR")));
+	    	  h.put("tarikhDaftar", Utils.isNull(rs.getString("tarikh_daftar")));
 	    	  list.addElement(h);
 	    	  bil++;
 	    	  
