@@ -1061,5 +1061,4 @@ public class FrmAPBRayuanPenolakanData {
 	public Vector getBeanMaklumatRayuan() {
 		return beanMaklumatRayuan;
 	}
-
 }

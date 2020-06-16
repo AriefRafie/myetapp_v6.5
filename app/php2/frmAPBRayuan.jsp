@@ -44,7 +44,8 @@
   <tr>
     <td><fieldset>
       <legend>MAKLUMAT PENDAFTARAN RAYUAN</legend>
-      #foreach($beanMaklumatPermohonanRayuan in $BeanMaklumatPermohonanRayuan)
+      ##foreach($beanMaklumatPermohonanRayuan in $BeanMaklumatPermohonanRayuan)
+      #foreach($beanMaklumatPermohonanRayuan in $BeanHeader)
       <table align="center" width="100%">
         <tr>
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
@@ -90,7 +91,11 @@
               <option value="" selected="selected">SILA PILIH</option>
               <option value="1">1 - YA</option>
               <option value="2">2 - TIDAK</option>
-                                          
+            #else
+            
+            <option value="" selected="selected">SILA PILIH</option>
+              <option value="1">1 - YA</option>
+              <option value="2">2 - TIDAK</option>                              
             #end
             </select>
           
@@ -107,8 +112,12 @@
           <td></td>
           <td></td>
           <td> #if ($mode == 'new')
-            <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar" onClick="doProsesRayuan()"/>
-            #end </td>
+            	<input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar" onClick="doProsesRayuan()"/>
+               #end
+               #if ($mode == 'view')
+            	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskiniRayuan()"/>
+               #end
+           </td>
         </tr>
         #end
         #end
@@ -117,6 +126,7 @@
     <td>&nbsp;</td>
   </tr>
   #end
+  
   #if ($flagAktif =='0')
   <tr>
     <td><fieldset>
@@ -232,12 +242,12 @@ function doHantarProses(){
 	document.${formName}.hitButton.value = "doHantarProses";
 	document.${formName}.submit();
 }
-function kemasKini() {
+function doKemaskiniRayuan() {
 	document.${formName}.mode.value = "update";
-	document.${formName}.hitButton.value = "doKemaskiniPendaftaranRayuan";
+	document.${formName}.hitButton.value = "doKemaskiniRayuan";
 	document.${formName}.submit();
 }
-function batalKemaskini() {
+function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }

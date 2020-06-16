@@ -104,7 +104,7 @@ public class FrmAPBKertasRingkasanPermohonanData {
 
 	public void updateMaklumatKertasRingkasPermohonan(String idPermohonan, String tarikhKertas, String namaPTP, String namaKSU, String namaMenteri, 			
 			String JUPEM, String JPS, String JMG, String PHN, String DOF, String JLM, 
-			String JAS, String PTG, String txtUlasanJabatan, String syor, String bilMesyuarat, String tarikhMesyuarat, HttpSession session) throws Exception {
+			String JAS, String PTG, String txtUlasanJabatan,String txtUlasanLulusBersyarat, String syor, String bilMesyuarat, String tarikhMesyuarat, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -129,6 +129,7 @@ public class FrmAPBKertasRingkasanPermohonanData {
 			r.add("NAMA_MENTERI", namaMenteri);
 			
 			r.add("ULASAN_JABATAN", txtUlasanJabatan);
+			r.add("CATATAN_BERSYARAT_JABATAN", txtUlasanLulusBersyarat);
 			r.add("SYOR_JABATAN", syor);
 			r.add("SYOR_PTP", syor);
 			r.add("SYOR_JKPTG", syor);

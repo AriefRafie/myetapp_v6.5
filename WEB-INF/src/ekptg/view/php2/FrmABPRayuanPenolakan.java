@@ -46,7 +46,12 @@ public class FrmABPRayuanPenolakan extends  AjaxBasedModule {
         String idPemohon = getParam("idPemohon");
         String idStatus = getParam("idStatus");
         String flagAktif = getParam("flagAktif");
-        String noRayuan = getParam("noRayuan");
+        String noRayuan = getParam("noRayuan");    
+       
+        String tarikhSurat="";
+        String tarikhTerima="";
+        String perkara="";
+        
         
       //RAYUAN TUKARGUNA
         String idFailRayuan = getParam("idFailRayuan");
@@ -60,6 +65,20 @@ public class FrmABPRayuanPenolakan extends  AjaxBasedModule {
 		
 		if(postDB){
 			if("doSimpan".equals(hitButton)){
+	    		
+				//create fail rayuan
+				listRayuan = logic.simpanRayuan(idFail,idPemohon,idPermohonan,getParam("tarikhTerima"), 
+    					getParam("tarikhSurat"), getParam("perkara"),getParam("socTukarKoordinat"),noRayuan, session);
+    		
+				if(!listRayuan.isEmpty() && listRayuan.size()> 0) {
+	        		Hashtable hashRayuanDB = (Hashtable) listRayuan.get(0);
+	        		idFail = hashRayuanDB.get("idFailRayuan").toString();
+	        		idPermohonan= hashRayuanDB.get("idPermohonanRayuan").toString();  
+	        		
+	        	}
+			}
+			
+			if("doKemaskiniRayuan".equals(hitButton)){
 	    		
 				//create fail rayuan
 				listRayuan = logic.simpanRayuan(idFail,idPemohon,idPermohonan,getParam("tarikhTerima"), 
@@ -97,6 +116,9 @@ public class FrmABPRayuanPenolakan extends  AjaxBasedModule {
 			idStatus = hashHeader.get("idStatus").toString();
 			flagAktif = (String)hashHeader.get("flagAktif");
 			noRayuan = (String)hashHeader.get("noRayuan");
+			tarikhSurat=(String)hashHeader.get("tarikhSurat");
+			tarikhTerima=(String)hashHeader.get("tarikhTerima");
+			perkara=(String)hashHeader.get("perkara");
 		}
 		
 		//MODE
@@ -115,8 +137,7 @@ public class FrmABPRayuanPenolakan extends  AjaxBasedModule {
 		} else {
 		    masterMode = "view";
 		}
-			
-        
+		
         vm = "app/php2/frmAPBRayuan.jsp";
     	
         if("view".equals(mode)){
