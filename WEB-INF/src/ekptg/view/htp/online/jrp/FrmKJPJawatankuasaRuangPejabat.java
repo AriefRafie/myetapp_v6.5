@@ -24,7 +24,7 @@ import ekptg.model.htp.FrmGadaianPenHamilikData;
 import ekptg.model.htp.FrmPajakanKecilHakmilikData;
 import ekptg.model.htp.FrmPajakanKecilMaklumatData;
 import ekptg.model.htp.FrmPajakanKecilPendaftaranData;
-import ekptg.model.htp.FrmPajakanKecilSenaraiPermohonanData;
+import ekptg.model.htp.FrmJRPSenaraiPermohonanData;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmSenaraiFailPajakanKecilData;
 import ekptg.model.htp.FrmSewaanDerafData;
@@ -105,8 +105,9 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			Vector semakanSenarai = new Vector();
 
 		    this.context.put("util", new lebah.util.Util());
-		    Vector senaraiFail = null;	    
-		    socNegeri = FrmPajakanKecilPendaftaranData.SelectNegeri("socNegeri");	    
+		    Vector senaraiFail = null;
+		    socNegeri = HTML.SelectNegeriA("socNegeri");
+		    //socNegeri = FrmPajakanKecilPendaftaranData.SelectNegeri("socNegeri");	    
 	        String id_kementerian = getParam("sockementerian");
 			String action = getParam("action"); //untuk setup paging je
 		    String submit = getParam("command");
@@ -154,13 +155,21 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		    		socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian),"onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
 				    this.context.put("socKementerian",socKementerian);
 		    		//senaraiFail = FrmSenaraiFailPajakanKecilData.getList(nofail.trim(),txtTajukCarian,idNegeri,idKementerian,idAgensi,"");      			    		
-				    senaraiFail =  getIHTPPKFail().getSenaraiFail(
-				    		null, noFail.trim(), txtTajukCarian
-				    		, idKementerian, idAgensi
-				    		, idNegeri, idDaerah, idMukim
-				    		, idUrusan, "", ""
-				    		, "", "", false );
-		
+//				    senaraiFail =  getIHTPPKFail().getSenaraiFail(
+//				    		null, noFail.trim(), txtTajukCarian
+//				    		, idKementerian, idAgensi
+//				    		, idNegeri, idDaerah, idMukim
+//				    		, idUrusan, "", ""
+//				    		, "", "", false );
+				    
+				    myLog.info("else");	 
+			    	
+					    senaraiFail = getIHTPFail().getSenaraiFail(null
+			    			, null, null
+			    			, id_kementerian, null
+			    			, null, null, null
+			    			, idUrusan
+			    			,null);
 				    noFail = getParam("txtNoFail");
 		    		this.context.put("txtTajukCarian", txtTajukCarian);	    		
 		    		isCarian = "ya";		
@@ -177,7 +186,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    		lanjutan= "ya";
 				    this.context.put("lanjutan", lanjutan);	    
 
-			    	senaraiPermohonan = FrmPajakanKecilSenaraiPermohonanData.getList(idFail);
+			    	senaraiPermohonan = FrmJRPSenaraiPermohonanData.getList(idFail);
 			    	this.context.put("senaraiList", senaraiPermohonan);	    	
 			    	this.context.put("idFail", idFail);	    
 		        	Hashtable hFail = getIHTPFail().getMaklumatPermohonan(idFail);
@@ -186,7 +195,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		    	}else if(submit.equals("tajukpermohonan")){
 			    	template_name = PATH+"frmJRPTajuk.jsp";
 			    	idFail = getParam("fail");
-			    	Hashtable permohonan = FrmPajakanKecilSenaraiPermohonanData.getFailInfo(idFail);
+			    	Hashtable permohonan = FrmJRPSenaraiPermohonanData.getFailInfo(idFail);
 		    		myLog.info("equals(submit)::tajukpermohonan");
 			    	this.context.put("permohonan", permohonan);	 
 			    	this.context.put("dis", 1);
@@ -195,7 +204,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    }else if(submit.equals("kemaskinitajukpermohonan")){
 			    	template_name = PATH+"frmJRPTajuk.jsp";
 			    	idFail = getParam("fail");
-			    	Hashtable permohonan = FrmPajakanKecilSenaraiPermohonanData.getFailInfo(idFail);
+			    	Hashtable permohonan = FrmJRPSenaraiPermohonanData.getFailInfo(idFail);
 		    		myLog.info("equals(submit)::tajukpermohonan");
 		    		this.context.put("dis", 0);
 			    	this.context.put("permohonan", permohonan);	    	
@@ -205,13 +214,13 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	template_name = PATH+"frmJRPSenaraiPermohonan.jsp";	
 			    	idFail = getParam("fail");
 			    	simpanTajuk(idFail);
-			    	Hashtable permohonan = FrmPajakanKecilSenaraiPermohonanData.getFailInfo(idFail);
+			    	Hashtable permohonan = FrmJRPSenaraiPermohonanData.getFailInfo(idFail);
 		    		myLog.info("equals(submit)::tajukpermohonan");
 		    		this.context.put("dis", 1);
 			    	this.context.put("permohonan", permohonan);	    	
 			    	idFail = getParam("fail");
 			    	Vector senaraiPermohonan = null;
-			    	senaraiPermohonan = FrmPajakanKecilSenaraiPermohonanData.getList(idFail);
+			    	senaraiPermohonan = FrmJRPSenaraiPermohonanData.getList(idFail);
 			    	this.context.put("senaraiList", senaraiPermohonan);	    	
 			    	this.context.put("idFail", idFail);	        	
 		    	
@@ -271,7 +280,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			        		}
 			        	}
 			        	//after saved
-			        	Hashtable permohonan = FrmPajakanKecilSenaraiPermohonanData.getFailInfo(idFailN);		        	
+			        	Hashtable permohonan = FrmJRPSenaraiPermohonanData.getFailInfo(idFailN);		        	
 						myLog.info("fir hash after saved : " + permohonan);				
 						this.context.put("permohonanInfo", permohonan);
 					    this.context.put("semakclass", new ekptg.model.htp.FrmSemakan());				    
@@ -290,7 +299,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    	myLog.info("pageMode=3, id=" + id);
 				    	String id = getParam("id_kemaskini");
 	
-				    	Hashtable permohonan = FrmPajakanKecilSenaraiPermohonanData.getFailInfo(idFailN);		    	
+				    	Hashtable permohonan = FrmJRPSenaraiPermohonanData.getFailInfo(idFailN);		    	
 					    this.context.put("permohonanInfo", permohonan);
 					    this.context.put("semakclass", new ekptg.model.htp.FrmSemakan());			    
 					    socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),"disabled class=disabled");
@@ -312,7 +321,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 
 				    	String id = getParam("id_kemaskini");
 				    	//System.out.println("FrmPajakanKecilA: equals(submit)::pkfailbaru:::else|id"+id);
-				    	Hashtable permohonan = FrmPajakanKecilSenaraiPermohonanData.getFailInfo(idFailN);		    	
+				    	Hashtable permohonan = FrmJRPSenaraiPermohonanData.getFailInfo(idFailN);		    	
 					    this.context.put("permohonanInfo", permohonan);
 					    Hashtable h = new Hashtable();
 	//					h.put("id_Fail", Long.parseLong((String)permohonan.get("idpermohonan")));
@@ -325,7 +334,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					    
 					    myLog.info("fir hash kemaskini : " + h);
 					    FrmSenaraiFailPajakanKecilData.kemaskiniFail(h);				    
-					    permohonan = FrmPajakanKecilSenaraiPermohonanData.getFailInfo(idFailN);		    	
+					    permohonan = FrmJRPSenaraiPermohonanData.getFailInfo(idFailN);		    	
 					    this.context.put("permohonanInfo", permohonan);
 					    this.context.put("semakclass", new ekptg.model.htp.FrmSemakan());				    
 					    
@@ -384,7 +393,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    disability = "disabled";
 			    	Hashtable hakmilikbangunan = null;
 			    	String id = getParam("id_kemaskini");
-					Hashtable permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+					Hashtable permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
 				    //this.context.put("socNegeri",socNegeri);
@@ -423,7 +432,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	String noFail = (String)h.get("noFail");
 				    this.context.put("nofail", noFail);  
 				    idFail =(String) h.get("idFail");
-				    Vector<?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanHTP(id_);
+				    Vector<?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanHTP(id_);
 		        	Hashtable<?, ?> hpermohonan = (Hashtable<?, ?>) permohonan.get(0);
 			    	//socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(hpermohonan.get("idagensi").toString()),disability);
 			    	socAgensi = HTML.SelectAgensiByKementerian("socAgensi"
@@ -445,7 +454,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	//myLog.info("pkpermohonankemaskini:"+pageMode);
 					String id_ = getParam("id_kemaskini");
 			    	myLog.info("pkpermohonankemaskini:pageMode="+pageMode+",id="+id_);
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id_);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id_);
 		        	FrmSemakan frmSemak = new FrmSemakan();
 	
 				    if(pageMode.equals("4")){
@@ -473,7 +482,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				        	} 
 						    
 						    this.context.put("semakclass", new ekptg.model.htp.FrmSemakan());					    
-				    		permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id_);
+				    		permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id_);
 					    	pageMode = "2";
 	
 				    	}
@@ -562,7 +571,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	Hashtable<?, ?> hakmilikbangunan = null;
 			    	String id_ = getParam("id_kemaskini");
 			    	String idPermohonan = getParam("id_kemaskini");
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(idPermohonan);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(idPermohonan);
 					
 					label(permohonan);
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
@@ -583,7 +592,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 	
 			    	Hashtable<?, ?> hakmilikbangunan = null;
 			    	String id_ = getParam("id_permohonan");
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id_);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id_);
 					
 					label(permohonan);
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
@@ -604,7 +613,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 	
 			    	Hashtable<?, ?> hakmilikbangunan = null;
 			    	String id_ = getParam("id_permohonan");
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id_);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id_);
 					
 					label(permohonan);
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
@@ -627,7 +636,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					String idPermohonan = getParam("id_kemaskini");
 					myLog.info("pkpemilikkemaskini 2"+getParam("id_kemaskini"));
 					    
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(idPermohonan);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(idPermohonan);
 					Hashtable<?, ?> infohakmilik = FrmUtilData.getHakmilikUrusan(idPermohonan,vid); 
 					ekptg.model.entities.Tblhtphakmilikurusan hakmilik = null;
 					hakmilik = FrmPajakanKecilHakmilikData.getHakmilikInfo(Long.parseLong(vid));
@@ -681,7 +690,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 	
 	                senaraiHakmilik = FrmPajakanKecilHakmilikData.getSenaraiHakmilik(Long.parseLong(id_));
 	                this.context.put("senaraihakmilik", senaraiHakmilik);
-	                Hashtable<?, ?> permohonan1 = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id_);
+	                Hashtable<?, ?> permohonan1 = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id_);
 	                this.context.put("permohonanInfo", permohonan1);
 	                //this.context.put("socHakmilik",HTML.SelectJenisHakmilik("socHakmilik"));
 					this.context.put("socHakmilik",UtilHTML.SelectJenisHakmilikMengikutNegeri("socHakmilik",(String)permohonan1.get("idnegeri")));
@@ -713,7 +722,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    String socMukim = "";
 				    String socLuas = "";
 					
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(idPermohonan);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(idPermohonan);
 					label(permohonan);
 					
 					//Maklumat Hakmilik
@@ -805,7 +814,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    String socMukim = "";
 				    String socLuas = "";
 					
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					label(permohonan);
 					
 					//hakmilik details
@@ -856,7 +865,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    		disability = "disabled class=disabled";
 			    	}
 					
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					label(permohonan);
 					
 					//hakmilik details
@@ -890,7 +899,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	this.context.put("classDis", disability);
 			    	PihakBerkepentingan pihak = FrmSenaraiFailPajakanKecilData.getPemilik(idPihakBerkepentingan);
 			    	this.context.put("pihak",pihak);
-			    	Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					label(permohonan);
 					//hakmilik details
 					Hashtable hakmilikinfo = FrmPajakanKecilHakmilikData.getHakmilikDetails(id);
@@ -931,7 +940,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	}
 			    	PihakBerkepentingan pihak = FrmSenaraiFailPajakanKecilData.getPemilik(idPihakBerkepentingan);
 			    	this.context.put("pihak",pihak);
-			    	Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					label(permohonan);
 					//hakmilik details
 					Hashtable hakmilikinfo = FrmPajakanKecilHakmilikData.getHakmilikDetails(id);
@@ -972,7 +981,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    String idHakmilik = "";
 					String id = getParam("id_kemaskini");
 					idHakmilik = getParam("fail");
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					socDaerah = HTML.SelectDaerahByNegeri((String)permohonan.get("idnegeri"),"socDaerah");
 					socMukim = HTML.SelectMukimByNegeri((String)permohonan.get("idnegeri"), "socMukim");
 					this.context.put("socMukim", socMukim);
@@ -1065,7 +1074,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    String socDaerah = "";
 				    String socLuas = "";				    
 					String id = getParam("id_kemaskini");
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);		    	
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);		    	
 					hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(id);
 					this.context.put("hakmilikbangunaninfo", hakmilikbangunan);
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
@@ -1105,7 +1114,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					skrin = "2";	    	
 			    	String permohonanId = getParam("id_kemaskini");
 			    	String hakMilikBangunanId = getParam("idHakmilikBangunan");
-			    	Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(permohonanId);
+			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(permohonanId);
 			    	Hashtable hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(permohonanId);
 			    	disability = "";
 					String socLuas = HTML.SelectLuas("socLuas",Long.parseLong(hakmilikbangunan.get("idluas").toString()),disability);
@@ -1125,7 +1134,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	skrin = "2";
 			    	String permohonanId = getParam("id_kemaskini");
 			    	String hakMilikBangunanId = getParam("idHakmilikBangunan");
-			    	Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(permohonanId);
+			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(permohonanId);
 			    	Hashtable hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(permohonanId);
 			    	disability = "";
 					String socLuas = HTML.SelectLuas("socLuas",Long.parseLong(hakmilikbangunan.get("idluas").toString()),disability);
@@ -1144,7 +1153,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	skrin = "2";	
 			    	String permohonanId = getParam("id_kemaskini");
 			    	String hakMilikBangunanId = getParam("idHakmilikBangunan");
-			    	Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(permohonanId);
+			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(permohonanId);
 			    	int month = 0;
 					int year = 0;
 					String  strmonth  = getParam("txtbulan");
@@ -1196,7 +1205,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    disability = "disabled class=disabled";
 				    String socDaerah = "";				
 				    Hashtable<?, ?> hakmilikbangunan = null;
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 				    socDaerah = HTML.SelectDaerahByNegeri((String)permohonan.get("idnegeri"),"socDaerah");
 				    this.context.put("socDaerah",socDaerah);
 				    //String socNegeri = "";
@@ -1309,7 +1318,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	disability = "disabled class=disabled";
 	
 					String id = getParam("id_kemaskini");
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
 					socKementerian = HTML.SelectKementerian("socKementerian",Long.parseLong(permohonan.get("idkementerian").toString()),disability);
@@ -1323,7 +1332,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	skrin = "4";
 		    	    myLog.info("semakanPKP:id::"+id +",idpermohonan:"+getParam("idpermohonan")+",pageMode:"+pageMode);			    	
 					String id = getParam("id_kemaskini");
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
 					socKementerian = HTML.SelectKementerian("socKementerian",Long.parseLong(permohonan.get("idkementerian").toString()),disability);
 			    	socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(permohonan.get("idagensi").toString()),disability);
@@ -1392,7 +1401,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	Vector<?> senarais = null;
 			    	String id = getParam("id_kemaskini");
 			    	senarais = FrmSewaanDerafData.getSenarai(id);
-					Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
 					socKementerian = HTML.SelectKementerian("socKementerian",Long.parseLong(permohonan.get("idkementerian").toString()),disability);
 			    	socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(permohonan.get("idagensi").toString()),disability);
@@ -1428,7 +1437,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		        		}
 		        	}
 		        	//after saved
-					Hashtable permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(String.valueOf(idPermohonan));
+					Hashtable permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(String.valueOf(idPermohonan));
 				    this.context.put("permohonanInfo", permohonan);
 				    this.context.put("semakclass", new ekptg.model.htp.FrmSemakan());
 				    
@@ -1460,7 +1469,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		    		String idPermohonan = getParam("id_permohonan");
 		    		String idPemilik = getParam("id_pemilik");
 		    		disability = "disabled class=disabled";
-		    		Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(idPermohonan);
+		    		Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(idPermohonan);
 		    		if(permohonan.isEmpty())
 		    			throw new Exception("[PASSING DATA ERROR] Data PERMOHONAN not Found");
 		    		
@@ -1512,7 +1521,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				   	String id = getParam("id_kemaskini");
 			    	String idPermohonan = getParam("id_kemaskini");
 			
-			    	Hashtable<?, ?> permohonan = FrmPajakanKecilSenaraiPermohonanData.getPermohonanInfo(id);
+			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 			    	idFail = String.valueOf(permohonan.get("idfail"));
 			    	myLog.info("fail="+permohonan.get("idfail"));
 //			    	senaraiTindakan = getISusulan().getMaklumat(idPermohonan);
@@ -1762,6 +1771,12 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    			, null, null, null
 			    			, idUrusan
 			    			,null);
+//					    senaraiFail =  getIHTPPKFail().getSenaraiFail(
+//					    		null, noFail.trim(), txtTajukCarian
+//					    		, idKementerian, idAgensi
+//					    		, idNegeri, idDaerah, idMukim
+//					    		, idUrusan, "", ""
+//					    		, "", "", false );
 			    	//senaraiFail = FrmSenaraiFailPajakanKecilData.getList("",userId,"");
 					this.context.put("SenaraiFail", senaraiFail);
 					socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),"disabled class=disabled","onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
