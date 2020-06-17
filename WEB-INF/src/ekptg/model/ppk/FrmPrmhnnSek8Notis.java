@@ -8622,6 +8622,81 @@ public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id
 
 }// close simpanSemakanK2
 
+	public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id_perbicaraan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			long id_notisobmst = DB.getNextID("TBLPPKNOTISOBMST_SEQ");
+			String id_masuk = (String) data.get("id_masuk");
+		
+			SQLRenderer r = new SQLRenderer();
+			r.add("id_notisobmst", id_notisobmst);
+			r.add("tarikh_serahan", r.unquote("sysdate"));
+			r.add("status_serah", data.get("status_serah"));
+			r.add("jenis_serah", data.get("jenis_serah"));
+			r.add("catatan", "");
+			r.add("nama_penghantar_notis", data.get("nama_penghantar_notis"));
+			r.add("id_penghantarnotis", data.get("id_penghantarnotis"));
+			r.add("id_masuk", id_masuk);
+			r.add("tarikh_masuk", r.unquote("sysdate"));
+			r.add("id_kemaskini", id_masuk);
+			r.add("tarikh_kemaskini", r.unquote("sysdate"));
+		
+			if(data.get("jenis_serah").equals("3")){
+				r.add("tarikh_emel", r.unquote("sysdate"));
+				r.add("emel", data.get("alamatEmel"));
+			}
+		
+			r.add("NAMA_PENGHANTAR_LAIN", data.get("NAMA_PENGHANTAR_LAIN"));
+			sql = r.getSQLInsert("TBLPPKNOTISOBMST");
+		
+			stmt.executeUpdate(sql);
+		
+			// create Tblppknotisperbicaraan
+			SQLRenderer r1 = new SQLRenderer();
+			r1.add("id_perbicaraan", id_perbicaraan);
+			r1.add("id_notisobmst", id_notisobmst);
+			r1.add("flag_jenis_notis", 0);
+			r1.add("id_masuk", id_masuk);
+			r1.add("tarikh_masuk", r1.unquote("sysdate"));
+			sql = r1.getSQLInsert("Tblppknotisperbicaraan");
+			stmt.executeUpdate(sql);
+		
+			//create TBLPPKNOTISOBDTL
+			SQLRenderer rDTL = new SQLRenderer();
+			rDTL.add("id_ob", id_ob);
+			rDTL.add("id_notisobmst", id_notisobmst);
+		/*		rDTL.add("nama_penerima",data.get("nama_obs") );
+				rDTL.add("no_kp_baru", data.get("no_kp_baru"));
+				rDTL.add("no_kp_lama", data.get("no_kp_lama"));
+				rDTL.add("no_kp_lain", data.get("no_kp_lain"));*/
+			rDTL.add("id_masuk", id_masuk);
+			rDTL.add("tarikh_masuk", rDTL.unquote("sysdate"));
+
+			sql = rDTL.getSQLInsert("TBLPPKNOTISOBDTL");
+			stmt.executeUpdate(sql);
+		
+		//email
+		if(data.get("jenis_serah").equals("3")){
+			//hantar emel
+			//hantarNotisByEmel((String) data.get("id_fail"),id_ob);
+			//ada attachment dlm emel
+			//hantarNotisByEmel(session,(String) data.get("id_fail"),id_ob,application,request,response);
+		}
+		
+
+		}// close try
+		finally {
+		if (db != null)
+			db.close();
+		}// close finally
+
+	}// close simpanSemakanK2
+
 
 //hide attachment
 public static void addHantarLaporanNotis_temp(Hashtable data, String id_ob, String id_perbicaraan,HttpSession session,ServletContext application,
