@@ -4958,6 +4958,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		myLog.info("generateNoOnline:"+noFail);
 		return noFail;
 		
+		
 	}
 	
 	// Add by rosli on 16/08/2010
