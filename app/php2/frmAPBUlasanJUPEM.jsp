@@ -322,7 +322,6 @@ function doSimpanRekodEmailJUPEM(){
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView";
 	document.${formName}.method="POST";
 	document.${formName}.submit();
-
 }
 function doChangeSuratKe() {
 	doAjaxCall${formName}("doChangeSuratKe");

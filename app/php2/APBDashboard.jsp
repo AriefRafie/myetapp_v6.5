@@ -163,29 +163,12 @@ a.nav:visited {
                           </tr>
                         </table></td>
                     </tr>
-                  </table></td>
-                <td width="50%" valign="top"><table width="100%" >
-                    <!-- tr>
-                      <td width="15%" align="center" valign="top"><img width="30" height="30" src="../img/applyonline.png" align="center"/></td>
-                      <td width="85%"><table width="100%">
-                          <tr>
-                            <td><b>Capaian Pantas Permohonan <i>Online</i></b> </td>
-                          </tr>
-                          <tr>
-                            <td><a href="javascript:gotoOnline()" class="help" title="Senarai Penerimaan Permohonan Online"> <font color="blue">
-                              <li> #if($!checkNotifikasiOnline > 0)
-                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!checkNotifikasiOnline</blink></font></b> </label>
-                                &nbsp;
-                                #end                                
-                                Permohonan <em>Online</em></li>
-                              </font> </a> </td>
-                          </tr>
-                        </table></td>
-                    </tr -->
-                  </table></td>
+                  </table></td> 
+                  <td width="50%" valign="top"><table width="100%" >
+                  </table></td>           
               </tr>
             </table></td>
-        </tr>
+        </tr> 
         <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
@@ -233,15 +216,33 @@ a.nav:visited {
                             <td><b>Senarai Pelesen</b> </td>
                           </tr>
                           <tr>
-                            <td><a href="javascript:gotoLaporanTanah()" class="help" title="Senarai Pelsen"> <font color="blue">
+                            <td><a href="javascript:gotoLaporanTanah()" class="help" title="Senarai Pelesen"> <font color="blue">
                               <li>&nbsp;Pelesen</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
                     </tr>
                   </table></td>
+                  <!--start rozai tambah 15/6/2020-->
                 <td width="50%" valign="top"><table width="100%" >
+                    <tr>
+                      <td width="15%" align="center" valign="top"><img width="30" height="30" src="../img/new_application.png" align="center"/></td>
+                      <td width="85%"><table width="100%">
+                          <tr>
+                            <td><b>Jabatan Teknikal</b> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoAPBRecord()" class="help"  title="Ulasan Jabatan Teknikal"> <font color="blue">
+                              <li>#if($!check_notifikasi_aduan > 0)
+                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>5</blink></font></b> </label>
+                                &nbsp;
+                                #end&nbsp;Ulasan</li>
+                              </font> </a> </td>
+                          </tr>
+                        </table></td>
+                    </tr>
                   </table></td>
+                  <!--tamat rozai tambah 15/6/2020-->
               </tr>
             </table></td>
         </tr>
@@ -274,7 +275,42 @@ a.nav:visited {
                   </table>
                   <br />
                   <br />
+                   ##START dokumen rujukan
                 </td>
+                                <td width="50%" valign="top"><table width="100%" >
+                    <tr>
+                      <td width="15%" align="center" valign="top"><img width="30" height="30" src="../img/main.png"/></td>
+                      <td width="85%"><table >
+                          <tr>
+                            <td><b>Dokumen Rujukan</b></td>
+                          </tr>
+                          <tr>
+                            <td><a href="" class="help" title="Senarai Rujukan SOP"> <font color="blue">
+                              <li>&nbsp;Senarai Rujukan SOP</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="" class="help" title="Pekeliling"> <font color="blue">
+                              <li>&nbsp;Pekeliling</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="" class="help" title="Warta"> <font color="blue">
+                              <li>&nbsp;Warta</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="" class="help" title="Akta"> <font color="blue">
+                              <li>&nbsp;Akta</li>
+                              </font> </a> </td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                  </table>
+                  <br />
+                  <br />
+                </td>
+                ##end dokumen rujukan
                 <td width="50%" valign="top"><table width="100%" >
                   </table>
                   <!--<table width="100%" border="0">
@@ -403,6 +439,10 @@ function gotoOnline() {
 }
 function gotoAPB() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Akta Pelantar Benua",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBSenaraiFailView&actionLesen=daftarBaru";
+	document.${formName}.submit();
+}
+function gotoAPBRecord() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Akta Pelantar Benua",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBSenaraiFailView";
 	document.${formName}.submit();
 }
 function gotoKutipanAPB() {
