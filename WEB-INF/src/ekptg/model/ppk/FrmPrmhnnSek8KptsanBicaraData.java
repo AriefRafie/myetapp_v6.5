@@ -1061,7 +1061,8 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 					String T_date_kiv = "to_date('" + date_kiv + "','dd/MM/yyyy')";
 					
 					myLogger.info(":::::::::: BUKA INSERT PERINTAH");
-					long id_perintah = DB.getNextID("TBLPPKPERINTAH_SEQ");					
+					long id_perintah = DB.getNextID("TBLPPKPERINTAH_SEQ");	
+					myLogger.info(":::::::::: id_perintah = "+id_perintah);
 					PreparedStatement ps = conn.prepareStatement("insert into TBLPPKPERINTAH " +
 		                    "(id_perintah,id_perbicaraan,id_unitpsk,flag_jenis_keputusan,catatan," +
 		                    "ID_MASUK,ID_KEMASKINI,TARIKH_MASUK,TARIKH_KEMASKINI,tarikh_perintah," +
@@ -1905,7 +1906,10 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      if (db != null) db.close();
 		    }
 		  }//close updateMaklumatPermohonan	
+		  
+		  
 */		
+		
 		public static void updateMaklumatSelesai(String usid,String idpermohonan,String id_perintah,String id_perbicaraan,
 	    		String id_bayaran_perintah,String id_bayaran_pusaka,String id_bayaran_baitulmal,String EDITflag_jenis_keputusan,String txtJumBayaranEDIT,
 	    		String txtNomborResitPerintahEDIT,String txdTarikhBayaranPerintahEDIT,String txtJumBayaranPusakaEDIT,String txtNomborResitPusakaEDIT,
