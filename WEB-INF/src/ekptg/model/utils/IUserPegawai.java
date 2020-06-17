@@ -6,19 +6,21 @@ import java.util.Map;
 import java.util.Vector;
 
 public interface IUserPegawai {
-	//public List<Map<String,String>> penggunaMengikutRole(String ROLE_ID,String ID_NEGERI) throws Exception;
 	public boolean delete(String id);
-	public Vector<Hashtable<String, String>> getSenaraiPegawai(String idSeksyen,String idSuburusan,String idNegeri) throws Exception ;	
+	public boolean insert(Hashtable<?, ?> parameters,String uid);
+	public boolean update(Hashtable<?, ?> parameters,String id);
+
 	public Hashtable<String, String> getSenaraiPegawai(String idPegawai) throws Exception;
+	public Hashtable<String, String> getPengguna(String idPengguna) throws Exception;
+	
+	public List<Map<String,String>> getPenggunaMengikutRole(String role,String idRujukan) throws Exception;
+
+	public Vector<Hashtable<String, String>> getSenaraiPegawai(String idSeksyen,String idSuburusan,String idNegeri) 
+		throws Exception ;	
+	public Vector<Hashtable<String, String>> getSenaraiPegawai(int idNegeri
+		,String idUnit,String tahun)	throws Exception;
 	public Vector<Hashtable<String, String>> getSenaraiPegawaiMapping(String idNegeri) throws Exception;
 	public Vector<Hashtable<String, String>> getSenaraiUsersByNegeri(String idNegeri) throws Exception;
-	public boolean insert(Hashtable<?, ?> parameters,String uid);
-	
-	public boolean update(Hashtable<?, ?> parameters,String id);
-	public Hashtable<String, String> getPengguna(String idPengguna) throws Exception;
-
-	public Vector<Hashtable<String, String>> getSenaraiPegawai(
-			int idNegeri,String idUnit,String tahun)	throws Exception;
 	
 	//public HakmilikUrusan simpanHakmilik(HakmilikUrusan urusan);
 	//public HakmilikUrusan updateHakmilik(HakmilikUrusan urusan);
