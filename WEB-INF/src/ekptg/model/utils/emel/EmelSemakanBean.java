@@ -1,4 +1,4 @@
-package ekptg.model.utils;
+package ekptg.model.utils.emel;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -10,8 +10,6 @@ import lebah.db.Db;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.Utils;
-import ekptg.model.admin.EmailConfig;
-import ekptg.model.admin.IEmel;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
 
@@ -19,9 +17,9 @@ import ekptg.model.htp.IHtp;
 public class EmelSemakanBean implements IEmel {
 	
  	private IHtp iHTP = null;  
-	private static Logger myLog = Logger.getLogger(ekptg.model.utils.EmelSemakanBean.class);
+	private static Logger myLog = Logger.getLogger(ekptg.model.utils.emel.EmelSemakanBean.class);
 	private Vector checkEmail = null;
-	private String tajukDefault = "MyeTaPP : Semakan/ Pengesahan Permohonan ";
+	private String tajukDefault = "Pengujian MyeTaPP : Semakan/ Pengesahan Permohonan ";
 
 	
 	@Override

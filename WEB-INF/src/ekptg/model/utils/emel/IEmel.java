@@ -1,4 +1,4 @@
-package ekptg.model.admin;
+package ekptg.model.utils.emel;
 
 
 public interface IEmel {	
