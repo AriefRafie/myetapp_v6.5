@@ -230,7 +230,6 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		if (id_kementerian == null || id_kementerian.trim().length() == 0){
 			uk = getIPengguna().getKementerian(idUser);
 			if(uk == null){
-				//throw new Exception("[ONLINE-HTP REKOD] KEMENTERIAN TIDAK DIJUMPAI");
 				throw new Exception(getHTP().getErrorHTML("[ONLINE-HTP PERMOHONAN] KEMENTERIAN TIDAK DIJUMPAI"));
 			}
 		
@@ -759,6 +758,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    			senaraiNotis5A();
 		    		} else if ("ViewNotis".equals(button)) {
 		    			viewNotis5A(idNotis);
+		    			viewUploadMD();
 		    		} else if ("KemaskiniNotis".equals(button)) {
 		    			tabmode="2";
 		    			Notis5A("update",idNotis);
@@ -2247,6 +2247,12 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		if(iHTPEmel == null)
 			iHTPEmel = new HTPEmelSemakBean();
 		return iHTPEmel;
+	}
+	private void viewUploadMD() throws Exception {
+		myLog.debug("viewUploadMD");
+		Vector MaklumatDokumen = fData.getUploadMD(idpermohonan);
+		this.context.put("ViewUploadMD", MaklumatDokumen);
+		myLog.debug("selesai viewUploadMD");
 	}
 	private void uploadFiles(String id_permohonan, String keterangan,
 			String namaDokumen, HttpSession session) throws FileUploadException {

@@ -199,9 +199,9 @@
 						</td>				      	
 						<td valign="top" width="1%">:</td>				        
 						<td width="68%">
-							#foreach( $i in [1..$num_files] )							
+							##foreach( $i in [1..$num_files] )							
 							<input id="fileupload" name="fileupload" type="file" size="54" $readOnly  class="$disabled" /></br>
-							#end
+							##end
 							#if ($mode == 'view' || $mode == 'kemaskini')
 								$!namafail
 							#end
