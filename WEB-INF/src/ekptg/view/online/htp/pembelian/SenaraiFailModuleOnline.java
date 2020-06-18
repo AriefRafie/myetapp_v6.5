@@ -997,7 +997,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 //			Vector buildings = getIOnline().getDataDokumen(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
 //			context.put("senaraidokumen", buildings);
 //			context.put("selectedTab", 3);
-			this.context.put("num_files",1);
+			this.context.put("num_files","");
 //			RO_General = "readonly=\"readonly\"";
 			if ("changeLampiran".equals(actionI)) {
 //				RO_General = "";
@@ -1014,7 +1014,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			String mode="";
 			context.put("mode", mode);
 			context.put("pageMode", "edit");
-			this.context.put("num_files",1);
+			this.context.put("num_files","");
 //			RO_General = "readonly=\"readonly\"";
 			if ("changeLampiran".equals(actionI)) {
 //				RO_General = "";
@@ -1152,6 +1152,8 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			String emelSubjek = "MyeTaPP: Semakan/ Pengesahan Permohonan Perakuan Pembelian";
 			String kandungan = "";
 			if(idJawatan.equals("20")||idJawatan.equals("24")){
+				myLog.info("BACA SINIIIII============");
+				
 				langkah = "-3";
 				
 				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hUser.get("nama")));
@@ -1213,7 +1215,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 				if(!getEmelSemak().checkEmail(userID).equals(""))
 					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 				//(HTP)HQPengguna 
-				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPengguna", emelSubjek, kandungan);
+				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
 				
 //				email.SUBJECT="PERMOHONAN PERAKUAN PEMBELIAN";
 //				email.MESSAGE = getHTPEmel().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
@@ -1248,6 +1250,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			}else{
 				semakMode = "update";
 			}
+			myLog.info("selectedTab=======");
 			context.put("semakMode", semakMode);
 			context.put("selectedTab", 4);
 			vm = PATH+"perakuanPembelianOnline.jsp";	
