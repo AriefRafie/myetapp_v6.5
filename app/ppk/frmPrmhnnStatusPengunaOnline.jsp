@@ -63,7 +63,7 @@
     	#if($!skrin_deraf == "yes")
     		Tarikh Kemasukkan Maklumat Permohonan
     	#else
-    		Tarikh Hantar Permohonan ke Unit Pusaka
+    		Tarikh Mohon
     	#end
     </td>	
 	<td width="14%" align="center">
@@ -82,9 +82,9 @@
     
     </td>
 	<td width="4%" align="center">Seksyen</td>
-  	<td width="15%">Status Pergerakan Fail</td>
+  	<td width="18%" align="center">Status Permohonan</td>
   	#if($!skrin_deraf == "yes")
-  	<td width="5%" align="center">Tindakan</td>
+  	<td width="5%" align="center">Hapus</td>
   	#end
   	<!-- Tambah column Maklumat unit Pusaka 25/2/2020 -->
   		#if($!skrin_deraf != "yes")
@@ -100,139 +100,118 @@
 		#set( $row = "row1" )
 	#end
   <tr>
-  <td class="$row" align="center">
-  #set ($cnt = ($page - 1) * $itemsPerPage + $counter )
-  $!cnt</td>
-  <td class="$row" align="center">
-  
-  <!-- #if( $!senarai.id_pemohon != "" )
-  <a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1">
-	  #if($!skrin_deraf == "yes")
-	  $!senarai.tarikhmasuk 
-	  #else
-	  $!senarai.tarikh_mohon_online
-	  #end</a>
-  #else
-      #if($!skrin_deraf == "yes")
-	  $!senarai.tarikhmasuk 
-	  #else
-	  $!senarai.tarikh_mohon_online
+	  <td class="$row" align="center">
+		  #set ($cnt = ($page - 1) * $itemsPerPage + $counter )
+		  $!cnt
+	  </td>
+	  
+	  <td class="$row" align="center">
+		  <!-- #if( $!senarai.id_pemohon != "" )
+		  <a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1">
+			  #if($!skrin_deraf == "yes")
+			  $!senarai.tarikhmasuk 
+			  #else
+			  $!senarai.tarikh_mohon_online
+			  #end</a>
+		  #else
+		      #if($!skrin_deraf == "yes")
+			  $!senarai.tarikhmasuk 
+			  #else
+			  $!senarai.tarikh_mohon_online
+			  #end
+		  #end -->
+		  #if($!skrin_deraf == "yes")
+		  	<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><b>$!senarai.tarikhmasuk</b></a>
+		  #else
+		  	#if($!senarai.id_pemohon != "")
+		  	<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><b>$!senarai.tarikh_mohon_online</b></a>
+		  	#else
+		  	$!senarai.tarikh_mohon_online
+		  	#end
+		  #end
+	  </td>
+	  
+	  <!--<td class="$row" align="center"><a href="javascript:edit_item('$!senarai.no')" class="style1">$!senarai.no.toUpperCase()</a></td>-->
+	  <td class="$row" align="center">
+		   #if($!skrin_deraf == "yes")
+		   	$!senarai.nama_simati.toUpperCase()
+		   #else
+		   	$!senarai.no.toUpperCase()
+		   #end
+	  </td>
+	  
+	  <td class="$row" align="center">
+		  <!-- #if($!skrin_deraf == "yes")
+		   $!senarai.nama_pemohon.toUpperCase()
+		    #else
+		    #if ($senarai.nofail!="")
+		    #if( $!id_pemohon != "" )
+				    <a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1">
+				  <font color="blue"><b>$!senarai.nofail.toUpperCase()</b> </font>
+				    </a>
+		    #else
+		    	<font color="blue"><b>$!senarai.nofail.toUpperCase()</b> </font>
+		    #end
+		  #else
+		  	-
+		  #end  
+		    #end -->
+		  
+		  #if($!skrin_deraf == "yes")
+		  	$!senarai.nama_pemohon.toUpperCase()
+		  #else
+		  	#if ($senarai.nofail!="")
+			  	#if($!senarai.id_pemohon != "")
+			  		<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><font color="blue"><b>$!senarai.nofail.toUpperCase()</b></font>
+			  	#else
+			  		$!senarai.nofail.toUpperCase()
+			  	#end
+			#else
+				-
+			#end
+		  #end
+	  </td>
+	  
+	  <!--<td class="$row">$!senarai.nokpbarupemohon.toUpperCase()</td>
+	  <td class="$row">
+	  #if ($senarai.nokpbarusimati != "")
+	  	$!senarai.nokpbarusimati.toUpperCase()
+	  #elseif ($senarai.nokpbarusimati == "" && $senarai.nokplamasimati != "")
+	  	$!senarai.nokplamasimati.toUpperCase()
+	  #elseif ($senarai.nokpbarusimati == "" && $senarai.nokplamasimati == "" && $senarai.nokplainsimati != "")
+	   $!senarai.nokplainsimati.toUpperCase()
+	  #end</td>-->
+	  
+	  <td class="$row" align="center">$senarai.seksyen</td>
+	  
+	  <td class="$row" align="center">
+	  		#if($senarai.id_status == '18')
+	  			<a href="#" title="Papar Maklumat Notis Perbicaraan" onClick="javascript:paparMaklumatNotis('$!senarai.tarikh_notis','$!senarai.tarikh_bicara','$!senarai.masa_bicara','$!senarai.tempat_bicara','$!senarai.alamat1','$!senarai.alamat2','$!senarai.alamat3','$!senarai.poskod','$!senarai.bandar','$!senarai.nama_negeri','$!senarai.seksyen','$!senarai.nofail.toUpperCase()','$!senarai.idPerbicaraan','$!senarai.idFail','$!senarai.icSimati','$!senarai.id_Permohonan')"><strong>$senarai.status</strong></a>
+<!-- 				<br> -->
+<!-- 				  	#if($senarai.seksyen == "17") -->
+<!-- 						<a href="#" onClick="javascript:paparBorangS('$!senarai.nofail.toUpperCase()','$!senarai.idPerbicaraan','$!senarai.idFail','$!senarai.icSimati','$!senarai.id_Permohonan')"> -->
+<!-- 			               	<font color="blue">Borang S</font> -->
+<!-- 			            </a> -->
+<!-- 			        #else    -->
+<!-- 			        	<a href="#" onClick="javascript:paparBorangD('$!senarai.nofail.toUpperCase()','$!senarai.idPerbicaraan','$!senarai.idFail')"> -->
+<!-- 			        		<font color="blue">Borang D</font> -->
+<!-- 			        	</a>    			 -->
+<!-- 			      	#end -->
+			      <br>
+			      <br>
+			      <font color="red">SILA PASTIKAN NOTIS PERBICARAAN DISAMPAIKAN KEPADA SETIAP WARIS BERKAITAN </font>
+			#else
+	  			<strong>$senarai.status</strong>
+		  	#end
+	  </td>
+	  #if($!skrin_deraf =="yes")
+	  <td class="$row" align="center">
+	  		<a href="#" class="style2" onClick="javascript:doHapus('$!senarai.idFail','$!senarai.id_Permohonan')"><img border="0" src="../img/hapus.gif"/></a>
+	  </td>
 	  #end
-  #end -->
-  #if($!skrin_deraf == "yes")
-  	<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><b>$!senarai.tarikhmasuk</b></a>
-  #else
-  	#if($!senarai.id_pemohon != "")
-  	<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><b>$!senarai.tarikh_mohon_online</b></a>
-  	#else
-  	$!senarai.tarikh_mohon_online
-  	#end
-  #end
-  
-  </td>
-  <!--<td class="$row" align="center"><a href="javascript:edit_item('$!senarai.no')" class="style1">$!senarai.no.toUpperCase()</a></td>-->
-  <td class="$row" align="center">
-   #if($!skrin_deraf == "yes")
-   $!senarai.nama_simati.toUpperCase()
-    #else
-    $!senarai.no.toUpperCase()
-    #end
- </td>
-  
-  <td class="$row" align="center">
- 
-  <!-- #if($!skrin_deraf == "yes")
-   $!senarai.nama_pemohon.toUpperCase()
-    #else
-    #if ($senarai.nofail!="")
-    #if( $!id_pemohon != "" )
-		    <a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1">
-		  <font color="blue"><b>$!senarai.nofail.toUpperCase()</b> </font>
-		    </a>
-    #else
-    	<font color="blue"><b>$!senarai.nofail.toUpperCase()</b> </font>
-    #end
-  #else
-  	-
-  #end  
-    #end -->
-  
-  #if($!skrin_deraf == "yes")
-  	$!senarai.nama_pemohon.toUpperCase()
-  #else
-  	#if ($senarai.nofail!="")
-	  	#if($!senarai.id_pemohon != "")
-	  		<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><font color="blue"><b>$!senarai.nofail.toUpperCase()</b></font>
-	  	#else
-	  		$!senarai.nofail.toUpperCase()
-	  	#end
-	#else
-		-
-	#end
-  #end
-  
-  </td>
-  <!--<td class="$row">$!senarai.nokpbarupemohon.toUpperCase()</td>
-  <td class="$row">
-  #if ($senarai.nokpbarusimati != "")
-  	$!senarai.nokpbarusimati.toUpperCase()
-  #elseif ($senarai.nokpbarusimati == "" && $senarai.nokplamasimati != "")
-  	$!senarai.nokplamasimati.toUpperCase()
-  #elseif ($senarai.nokpbarusimati == "" && $senarai.nokplamasimati == "" && $senarai.nokplainsimati != "")
-   $!senarai.nokplainsimati.toUpperCase()
-  #end</td>-->
-  <td class="$row" align="center">$senarai.seksyen</td>
-  <td class="$row"><strong>$senarai.status</strong>
-  #if($senarai.id_status == '18')
-  	<table align="left" width="100%" cellspacing="2" cellpadding="1" border="0">
-  	<tr>
-  		<td width='10%'>Tarikh Bicara</td>
-  		<td> : </td>
-  		<td><b>$senarai.tarikh_bicara</b></td>
-  	</tr>
-  	<tr>
-  		<td>Masa Bicara</td>
-  		<td> : </td>
-  		<td><b>$senarai.masa_bicara</b></td>
-  	</tr>
-  	<tr>
-	  	<td>Tempat Bicara</td>
-	  	<td> : </td>
-	  	<td><b>$senarai.tempat_bicara
-	  	<br>
-	  	$senarai.alamat1,
-	  	<br>
-	  	$senarai.alamat2,
-	  	$senarai.alamat3,
-	  	<br>
-	  	$senarai.poskod, $senarai.bandar,
-	  	<br>
-	  	$senarai.nama_negeri</b>
-	  	<br>
-	  	#if($senarai.seksyen== "17")
-			<a href="#" onClick="javascript:paparBorangS('$!senarai.nofail.toUpperCase()','$!senarai.idPerbicaraan','$!senarai.idFail','$!senarai.icSimati','$!senarai.id_Permohonan')">
-               	<font color="blue">Borang S</font>
-            </a>
-<!--              <a href="#" class="style2" onClick="javascript:cetakBorandSByJenisSerahan('$NO_FAIL','$id_perbicaraan','$id_fail','$id_simati','$id_pemohonSek8')">  -->
-<!--              	<font color="blue">Borang S (BARU)</font></a> -->
-        #else   
-        	<a href="#" onClick="javascript:paparBorangD('$!senarai.nofail.toUpperCase()','$!senarai.idPerbicaraan','$!senarai.idFail')">
-        		<font color="blue">Borang D</font>
-        	</a>    			
-      	#end
-	  	</td>
-  	</tr>
-	</table>
-  	#end
-  </td>
-  #if($!skrin_deraf =="yes")
-  	<td class="$row" align="center">
-  		<a href="#" class="style2" onClick="javascript:doHapus('$!senarai.idFail','$!senarai.id_Permohonan')"><img border="0" src="../img/hapus.gif"/></a>
-  	</td>
-  #end
-  #if($!skrin_deraf !="yes")
-  <td class="$row">$senarai.nama_pejabat</td>
-  #end
+	  #if($!skrin_deraf !="yes")
+	  <td class="$row">$senarai.nama_pejabat</td>
+	  #end
   
   </tr>
   #end
@@ -242,6 +221,7 @@
 		</tr>
 		#end
   </table>
+  
     <input type="hidden" name="hitButt" >
    	<input type="hidden" name="idkemaskini" >
    	<input type="hidden" name="fail" >
@@ -264,23 +244,33 @@
     <input type="hidden" name="id_Permohonansimati" id="id_Permohonansimati" value="$!id_Permohonansimati" >
     
      <input name="tabIdatas" type="hidden" id="tabIdatas" value="$!selectedTabatas"/>
- <input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$!selectedTabtengah"/>
- <input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$!selectedTabbawah"/>
- <input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$!selectedTabtepi"/>
+	 <input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$!selectedTabtengah"/>
+	 <input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$!selectedTabbawah"/>
+	 <input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$!selectedTabtepi"/>
  
-  <input name="no_subjaket" type="hidden" id="no_subjaket" value="$!no_subjaket"/>
+ 	 <input name="no_subjaket" type="hidden" id="no_subjaket" value="$!no_subjaket"/>
     
-  <input type="hidden" name="idFail">  
-    
+  	 <input type="hidden" name="idFail"> 
     
 </fieldset>
 
 </body>
 
 <script>
+	function paparMaklumatNotis(tarikh_notis,tarikh_bicara,masa_bicara,tempat_bicara,alamat1,alamat2,alamat3,poskod,bandar,nama_negeri,seksyen,noFail,idPerbicaraan,idFail,icSimati,id_Permohonan){
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupNotisPerbicaraan?tarikh_notis="+tarikh_notis+"&tarikh_bicara="+tarikh_bicara+"&masa_bicara="+masa_bicara+"&tempat_bicara="+tempat_bicara+"&alamat1="+alamat1+"&alamat2="+alamat2+"&alamat3="+alamat3+"&poskod="+poskod+"&bandar="+bandar+"&nama_negeri="+nama_negeri+"&seksyen="+seksyen+"&noFail="+noFail+"&idPerbicaraan="+idPerbicaraan+"&idFail="+idFail+"&icSimati="+icSimati+"&id_Permohonan="+id_Permohonan;
+		
+		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		       hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();
+	}
+	
 	function paparBorangD(NO_FAIL,id_perbicaraan,id_fail){
 		
 		var url = "../x/${securityToken}/ekptg.report.ppk.FrmOnlinePopupBorangDBySerahan?noFail="+NO_FAIL+"&id_fail="+id_fail+"&id_perbicaraan="+id_perbicaraan;
+		// var url = "../../servlet/ekptg.report.ppk.BorangD_ORI?nofail="+NO_FAIL+"&idfail="+id_fail+"&jenisSerahan=0"&idperbicaraan="+id_perbicaraan;
 		
 		var hWnd = window.open(url,'printuser','width=700,height=200, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
@@ -304,79 +294,77 @@
 	}
 
 function submitForm() {    
-//alert('$val_tab')
-if('$!val_tab' != "" && '$!val_tab' != null)
-{
-   window.location.hash='$!val_tab';
-   goTo('$!val_tab');
-   }
-   else
-{
-window.location.hash='header_carian';
-goTo('header_carian');
-}
-	
+	//alert('$val_tab')
+	if('$!val_tab' != "" && '$!val_tab' != null) {
+	   window.location.hash='$!val_tab';
+	   goTo('$!val_tab');
+	}
+	else {
+		   window.location.hash='header_carian';
+		   goTo('header_carian');
+	}
 } 
 
-function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {
-
-			
-if (seksyen == '8'){
-//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=FrmPrmhnnSek8Internal&command=papar";
-document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil',$myrole)?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon&command=Simati&mode=Simatiview";
-}else
-{
-//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 17",$portal_role)?_portal_module=FrmPrmhnnSek17Senarai&command=papar";
-//document.${formName}.action = "?_portal_module=FrmPrmhnnSek17Senarai&command=tab";
-document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil',$myrole)?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online&command=Simati&mode=Simatiview";
-
-}
-				document.${formName}.idpermohonan.value = idPermohonan;
-				document.${formName}.idPermohonan.value = idPermohonan;
-				document.${formName}.idPemohon.value = idpemohon;
-				document.${formName}.idSimati.value = idSimati;
-				document.${formName}.no_subjaket.value = parseInt(no_subjaket) - 1;
-				
+function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {		
+	if (seksyen == '8') {
+		//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=FrmPrmhnnSek8Internal&command=papar";
+		document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil',$myrole)?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon&command=Simati&mode=Simatiview";
+	}
+	else {
+		//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 17",$portal_role)?_portal_module=FrmPrmhnnSek17Senarai&command=papar";
+		//document.${formName}.action = "?_portal_module=FrmPrmhnnSek17Senarai&command=tab";
+		document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil',$myrole)?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online&command=Simati&mode=Simatiview";
+		
+		}
+	
+		document.${formName}.idpermohonan.value = idPermohonan;
+		document.${formName}.idPermohonan.value = idPermohonan;
+		document.${formName}.idPemohon.value = idpemohon;
+		document.${formName}.idSimati.value = idSimati;
+		document.${formName}.no_subjaket.value = parseInt(no_subjaket) - 1;
+		
 				/*
 				
-				document.f1.command.value = "papar";
-	document.f1.action = "";
-	document.f1.idpermohonan.value = id;
-	document.f1.idSimati.value = id2;
-	document.f1.no_subjaket.value = ns;
-	document.f1.submit();
-				*/
+		document.f1.command.value = "papar";
+		document.f1.action = "";
+		document.f1.idpermohonan.value = id;
+		document.f1.idSimati.value = id2;
+		document.f1.no_subjaket.value = ns;
+		document.f1.submit();
+			*/
+		
+		
+	   /* document.${formName}.tabIdatas.value = 0;
+		document.${formName}.tabIdtengah.value = 0;
+		document.${formName}.tabIdbawah.value = 0;	
+		document.${formName}.tabIdtepi.value = 0;*/
 				
-				
-			   /* document.${formName}.tabIdatas.value = 0;
-				document.${formName}.tabIdtengah.value = 0;
-				document.${formName}.tabIdbawah.value = 0;	
-				document.${formName}.tabIdtepi.value = 0;*/
-				
-				document.${formName}.method="POST";
-		        document.${formName}.submit();
+		document.${formName}.method="POST";
+        document.${formName}.submit();
 }
 
 function edit_item(id) {
-		var typeid = id.substring(9,11);
-		if (typeid == "02"){
+	var typeid = id.substring(9,11);
+	if (typeid == "02"){
 		document.${formname}.method="post";
 		document.${formname}.nopermohonan.value=id;
 		document.${formname}.typez.value="online";		
 		//doAjaxCall${formName}("check_kp17","typez=online&nopermohonan="+id);
 		doAjaxCall${formName}("check_kp17");
 		document.${formname}.submit();
-		}else if (typeid == "01"){
-			document.${formname}.method="post";
-			document.${formname}.nopermohonan.value=id;
-			document.${formname}.typez.value="online";
-			document.${formname}.action="$EkptgUtil.getTabID('Panduan','online')?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAKemaskini";
-			//document.${formname}.action="$EkptgUtil.getTabID('Panduan','online')?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
-			//doAjaxCall${formName}("check_kp","typez=online&nopermohonan="+id);
-			doAjaxCall${formName}("check_kp");
-			document.${formname}.submit();
-		}
+	}
+	else if (typeid == "01"){
+		document.${formname}.method="post";
+		document.${formname}.nopermohonan.value=id;
+		document.${formname}.typez.value="online";
+		document.${formname}.action="$EkptgUtil.getTabID('Panduan','online')?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAKemaskini";
+		//document.${formname}.action="$EkptgUtil.getTabID('Panduan','online')?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
+		//doAjaxCall${formName}("check_kp","typez=online&nopermohonan="+id);
+		doAjaxCall${formName}("check_kp");
+		document.${formname}.submit();
+	}
 }
+
 function searchbyIc(){
 	document.${formname}.command.value="searchByIc";
 	
@@ -399,7 +387,7 @@ function doChanges() {
 	doAjaxCall${formName}("doChanges");
 }
 function doHapus(idFail,idPermohonan) {
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
+	if ( !window.confirm("Adakah anda pasti untuk hapus?") ){
 		return;
 	}
 	document.${formname}.idPermohonan.value=idPermohonan;
