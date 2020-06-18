@@ -35,11 +35,7 @@
   <tr>
     <td> #parse("app/php2/online/frmPYWHeader.jsp") </td>
   </tr>
-  #else
-  <tr>
-    <td>&nbsp;
-      <div class="warning">SILA PILIH FAIL DI SENARAI PERMOHONAN TERLEBIH DAHULU</div></td>
-  </tr>
+  
   #end
   <tr>
     <td>&nbsp;</td>

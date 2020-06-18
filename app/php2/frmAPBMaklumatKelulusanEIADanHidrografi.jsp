@@ -74,6 +74,82 @@ function doKemaskiniMaklumatHIDRO(){
 	document.${formName}.mode.value = "update";
 	doAjaxCall${formName}("");
 }
+function doKemaskiniMaklumatPasir(){
+	document.${formName}.mode.value = "update";
+	doAjaxCall${formName}("");
+}
+function doKemaskiniMaklumatJPS(){
+	document.${formName}.mode.value = "update";
+	doAjaxCall${formName}("");
+}
+function doSimpanKemaskiniMaklumatJPS(){
+	if(document.${formName}.txtNoRujJPS.value == ""){
+		alert('Sila masukkan No. Ruj JPS.');
+  		document.${formName}.txtNoRujJPS.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTarikhSuratLulusJPS.value == ""){
+		alert('Sila masukkan Tarikh Surat Kelulusan.');
+  		document.${formName}.txtTarikhSuratLulusJPS.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTarikhTerimaJPS.value == ""){
+		alert('Sila masukkan Tarikh Terima.');
+  		document.${formName}.txtTarikhTerimaJPS.focus(); 
+		return; 
+	}
+	if(document.${formName}.socKeputusanJPS.value == ""){
+		alert('Sila pilih Keputusan.');
+  		document.${formName}.socKeputusanJPS.focus(); 
+		return; 
+	}	
+	if(document.${formName}.txtTarikhLulusJPS.value == ""){
+		alert('Sila masukkan Tarikh Diluluskan.');
+  		document.${formName}.txtTarikhLulusJPS.focus(); 
+		return; 
+	}
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "update";
+		return;
+	}			
+	document.${formName}.hitButton.value = "doSimpanKemaskiniJPS";
+	document.${formName}.mode.value = "view";
+	document.${formName}.submit();
+}
+function doSimpanKemaskiniMaklumatPasir(){
+	if(document.${formName}.txtNoRujPasir.value == ""){
+		alert('Sila masukkan No. Ruj Pusat Kajian Pasir.');
+  		document.${formName}.txtNoRujPasir.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTarikhSuratLulusPasir.value == ""){
+		alert('Sila masukkan Tarikh Surat Kelulusan.');
+  		document.${formName}.txtTarikhSuratLulusPasir.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTarikhTerimaPasir.value == ""){
+		alert('Sila masukkan Tarikh Terima.');
+  		document.${formName}.txtTarikhTerimaPasir.focus(); 
+		return; 
+	}
+	if(document.${formName}.socKeputusanPasir.value == ""){
+		alert('Sila pilih Keputusan.');
+  		document.${formName}.socKeputusanPasir.focus(); 
+		return; 
+	}	
+	if(document.${formName}.txtTarikhLulusPasir.value == ""){
+		alert('Sila masukkan Tarikh Diluluskan.');
+  		document.${formName}.txtTarikhLulusPasir.focus(); 
+		return; 
+	}
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "update";
+		return;
+	}			
+	document.${formName}.hitButton.value = "doSimpanKemaskiniPasir";
+	document.${formName}.mode.value = "view";
+	document.${formName}.submit();
+}
 function doSimpanKemaskiniMaklumatHIDRO(){
 	if(document.${formName}.txtNoRujHidro.value == ""){
 		alert('Sila masukkan No. Ruj Pusat Hidrografi Nasional.');
@@ -160,7 +236,15 @@ function doBatalMaklumatHIDRO(){
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
+function doBatalMaklumatPasir(){
+	document.${formName}.mode.value = "view";
+	doAjaxCall${formName}("");
+}
 function doBatalMaklumatJAS(){
+	document.${formName}.mode.value = "view";
+	doAjaxCall${formName}("");
+}
+function doBatalMaklumatJPS(){
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }

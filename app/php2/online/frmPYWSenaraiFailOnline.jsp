@@ -55,8 +55,8 @@
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="20%"><strong>No Permohonan</strong></td>
-          <td width="10%" align="center"><strong>Tarikh Terima</strong></td>
-          <td width="30%" align="center"><strong>Perkara</strong></td>
+          <td width="10%" align="center"><strong>Tarikh Permohonan</strong></td>
+<!--           <td width="30%" align="center"><strong>Perkara</strong></td> -->
           <td width="10%"><strong>Status</strong></td>
         </tr>
         
@@ -80,7 +80,7 @@
           
           </td>
           <td class="$row" align="center">$list.TARIKH_TERIMA</td>
-          <td class="$row">$list.PERKARA</td>
+<!--           <td class="$row">$list.PERKARA</td> -->
           <td class="$row">$list.STATUS</td>
         </tr>
         

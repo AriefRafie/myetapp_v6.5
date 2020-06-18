@@ -13,6 +13,9 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import ekptg.helpers.AuditTrail;
@@ -33,6 +36,7 @@ public class FrmPYWSenaraiFailData {
 	private Vector senaraiFailPYW = null;
 	private Vector beanMaklumatBorangK = null;
 	private Vector beanMaklumatHakmilik = null;
+	private static final Log myLog = LogFactory.getLog(FrmCRBSenaraiFailData.class);
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -46,7 +50,7 @@ public class FrmPYWSenaraiFailData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT A.ID_FAIL, A.NO_FAIL, A.NO_FAIL_NEGERI, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN AS TUJUAN_PERMOHONAN,"
-					+ " B.ID_PEMOHON, A.ID_URUSAN, A.ID_SUBURUSAN, C.FLAG_PROSESFAIL, C.CATATAN, C.TUJUAN"
+					+ " B.ID_PEMOHON, A.ID_URUSAN, A.ID_SUBURUSAN, A.ID_SUBSUBURUSAN, C.FLAG_PROSESFAIL, C.CATATAN, C.TUJUAN"
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B,"
 					+ " TBLPHPPERMOHONANSEWA C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN"
 					+ " AND A.ID_FAIL = '"
@@ -90,6 +94,8 @@ public class FrmPYWSenaraiFailData {
 								.getString("ID_URUSAN"));
 				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? ""
 						: rs.getString("ID_SUBURUSAN"));
+				h.put("idJenisTujuan", rs.getString("ID_SUBSUBURUSAN") == null ? ""
+						: rs.getString("ID_SUBSUBURUSAN"));
 				h.put("flagProsesFail",
 						rs.getString("FLAG_PROSESFAIL") == null ? "" : rs
 								.getString("FLAG_PROSESFAIL"));
@@ -245,7 +251,9 @@ public class FrmPYWSenaraiFailData {
 					+ " AND HMS.ID_AGENSI = RUJAGENSI.ID_AGENSI(+) AND RUJAGENSI.ID_KEMENTERIAN = RUJKEMENTERIAN.ID_KEMENTERIAN(+)"
 					+ " AND HMS.ID_HAKMILIKSEMENTARA = '" + idHakmilikSementara
 					+ "'";
+			myLog.info("keluarkan : " +sql);
 			ResultSet rs = stmt.executeQuery(sql);
+			
 
 			Hashtable h;
 			if (rs.next()) {
@@ -1215,12 +1223,10 @@ public class FrmPYWSenaraiFailData {
 			String noPendaftaran, String pekerjaan, String alamat1,
 			String alamat2, String alamat3, String poskod, String idBandar,
 			String idNegeri, String emel, String noTel, String noFaks,
-			String idHakmilikAgensi, String idPPTBorangK,
-			String idHakmilikUrusan, String idPHPBorangK, String idJenisTujuan,
-			String idJenisTujuan2, String idJenisTujuan3,
-			String idKementerianTanah, String idNegeriTanah,
-			String idLuasTanah, String luasTanah, String idUrusan,
-			String idSuburusan, String socFlagProsesFail, String catatan,
+			String idHakmilikAgensi, String idPPTBorangK, String idHakmilikUrusan, 
+			String idPHPBorangK, String idKementerianTanah, String idNegeriTanah,
+			String idLuasTanah, String luasTanah, String idUrusan, String idSuburusan, 
+			String idJenisTujuan, String socFlagProsesFail, String catatan,
 			String idHakmilikSementara, String noFailNegeri,
 			String idLuasKegunaan, HttpSession session) throws Exception {
 
@@ -1234,7 +1240,6 @@ public class FrmPYWSenaraiFailData {
 		String idFailString = "";
 		String noFail = "";
 		String idStatus = "";
-		String idTujuan = "";
 
 		try {
 			db = new Db();
@@ -1455,6 +1460,7 @@ public class FrmPYWSenaraiFailData {
 			}
 
 			// TBLPHPPERMOHONANSEWA
+			String namaTujuan = getNamaTujuan(idJenisTujuan);
 			r = new SQLRenderer();
 			long idPHPPermohonanSewa = DB.getNextID("TBLPHPPERMOHONANSEWA_SEQ");
 			r.add("ID_PHPPERMOHONANSEWA", idPHPPermohonanSewa);
@@ -1467,14 +1473,7 @@ public class FrmPYWSenaraiFailData {
 			} else {
 				r.add("FLAG_PERMOHONANDARI", "1");
 			}
-			// if ("12".equals(idUrusan)) {
-			// r.add("TUJUAN", "Mengeluarkan hasil "
-			// + getNamaSuburusan(idSuburusan));
-			// } else if ("7".equals(idUrusan)) {
-			// r.add("TUJUAN", txtTujuan);
-			// } else if ("13".equals(idUrusan)) {
-			// r.add("TUJUAN", "Mengeluarkan " + getNamaSuburusan(idSuburusan));
-			// }
+			r.add("TUJUAN", namaTujuan);
 			r.add("FLAG_PROSESFAIL", socFlagProsesFail);
 			if ("L".equals(socFlagProsesFail)) {
 				r.add("KEPUTUSAN", "L");
@@ -1488,16 +1487,15 @@ public class FrmPYWSenaraiFailData {
 			sql = r.getSQLInsert("TBLPHPPERMOHONANSEWA");
 			stmt.executeUpdate(sql);
 			
-			// INSERT JENIS TUJUAN ON TBLPHPPERMOHONANTUJUAN
-			if(!"".equals(idJenisTujuan)){
-				insertTujuan(idPHPPermohonanSewa, idJenisTujuan, userId, db);
-			}
-			if(!"".equals(idJenisTujuan2)){
-				insertTujuan(idPHPPermohonanSewa, idJenisTujuan2, userId, db);
-			}
-			if(!"".equals(idJenisTujuan3)){
-				insertTujuan(idPHPPermohonanSewa, idJenisTujuan3, userId, db);
-			}
+			//TBLPHPPERMOHONANTUJUAN
+			r = new SQLRenderer();
+			long idPHPPermohonanTujuan = DB.getNextID("TBLPHPPERMOHONANSEWA_SEQ");
+			r.add("ID_PHPPERMOHONANTUJUAN", idPHPPermohonanTujuan);
+			r.add("ID_PHPPERMOHONANSEWA", idPHPPermohonanSewa);
+			r.add("ID_JENISTUJUAN", idJenisTujuan);
+			
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			
 			// TBLRUJSUBURUSANSTATUSFAIL
 			r = new SQLRenderer();
@@ -1505,11 +1503,7 @@ public class FrmPYWSenaraiFailData {
 					.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_SUBURUSANSTATUS",
-					getIdSuburusanstatus(idSuburusan, idStatus)); // MAKLUMAT
-																	// PERMOHONAN
-																	// ||
-																	// PERJANJIAN
+			r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus(idSuburusan, idStatus)); // MAKLUMAT PERMOHONAN || PERJANJIAN
 			r.add("AKTIF", "1");
 			r.add("ID_FAIL", idFail);
 
@@ -1553,8 +1547,7 @@ public class FrmPYWSenaraiFailData {
 				insertPerjanjian(idPermohonan, db, userId);
 			}
 
-			// INSERT ON TUGASAN
-			// TBLPHPLOGTUGASAN
+			// INSERT ON TUGASAN TBLPHPLOGTUGASAN
 			r = new SQLRenderer();
 			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
 			r.add("ID_TUGASAN", idTugasan);
@@ -1778,7 +1771,7 @@ public class FrmPYWSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT KETERANGAN AS NAMA_TUJUAN FROM TBLPHPRUJJENISTUJUAN WHERE ID_JENISTUJUAN = '"
+			sql = "SELECT NAMA_SUBSUBURUSAN AS NAMA_TUJUAN FROM TBLRUJSUBSUBURUSAN WHERE ID_SUBSUBURUSAN = '"
 					+ idJenisTujuan + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);

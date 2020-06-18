@@ -150,8 +150,20 @@ a.nav:visited {
                       <td width="15%" align="center" valign="top"></td>
                       <td width="85%"><table width="100%">
                           <tr>
-                            <td><a href="https://www.gis.myetapp.gov.my/myetappgis/guest.php" target = "_blank" style="color:#0000FF">Maklumat GIS</a></td>
+                            <td><b>Lain - Lain</b></td>
                           </tr>
+                          <tr>
+                            <td><a href="https://www.gis.myetapp.gov.my/myetappgis/guest.php" target = "_blank" style="color:#0000FF">
+                            <li> Maklumat GIS</li>
+                            </a></td>
+                          </tr>
+                          #if ($role == '(PHP)PYWPenolongPegawaiTanahNegeri')
+                          <tr>
+                            <td><a href="javascript:gotoSenaraiAduanPenguatkuasaan()" class="help" title="Fail Aduan Penguatkuasaan">
+                            <font color="blue"><li> Aduan Urusan Penguatkuasaan</li></font>
+                            </a></td>
+                          </tr>
+                          #end
                         </table></td>
                     </tr>
                   </table></td>
@@ -486,6 +498,10 @@ function gotoInbox() {
 }
 function gotoSenaraiTugasanPenyewaan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailView";
+	document.${formName}.submit();
+}
+function gotoSenaraiAduanPenguatkuasaan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiAduanPenguatkuasaan";
 	document.${formName}.submit();
 }
 function gotoSenaraiTugasanPelepasan() {

@@ -23,6 +23,8 @@
 <!-- saiz text -->
 #set($saizTxtUlasanEIA="4000")
 #set($saizTxtUlasanHidro="4000")
+#set($saizTxtUlasanHidra="4000")
+#set($saizTxtUlasanPasir="4000")
 #set($saizTxtMaklumatTambahan="4000")
 #set($saizTxtSyaratKelulusan="4000")
 <table width="100%" border="0" cellpadding="2" cellspacing="2">
@@ -71,6 +73,36 @@
           <td valign="top">&nbsp;</td>
           <td valign="top">Baki Aksara :&nbsp;
             <input type="text" readonly="readonly" class="disabled" name="remLen2" size="3" maxlength="3" value="$!saizTxtUlasanHidro" /></td>
+        </tr>
+        #end
+        <tr>
+          <td valign="top">#if ($mode!= 'view')<span class="style1">*</span>#end</td>
+          <td valign="top">Ulasan Laporan Hidraulik</td>
+          <td valign="top">:</td>
+          <td valign="top"><textarea name="txtUlasanHidra" cols="50" rows="5" id="txtUlasanHidra" $readonly class="$inputTextClass"  onkeyup="textCounter(this.form.txtUlasanHidra,this.form.remLen2,$!saizTxtUlasanHidra);" onkeydown="textCounter(this.form.txtUlasanHidra,this.form.remLen2,$!saizTxtUlasanHidra);">$!beanMaklumatBayaranSblm.txtUlasanHidra</textarea></td>
+        </tr>
+        #if ($mode != 'view')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">Baki Aksara :&nbsp;
+            <input type="text" readonly="readonly" class="disabled" name="remLen2" size="3" maxlength="3" value="$!saizTxtUlasanHidra" /></td>
+        </tr>
+        #end
+        <tr>
+          <td valign="top">#if ($mode!= 'view')<span class="style1">*</span>#end</td>
+          <td valign="top">Ulasan Laporan Kajian Kuantiti dan Kualiti Sumber Pasir</td>
+          <td valign="top">:</td>
+          <td valign="top"><textarea name="txtUlasanPasir" cols="50" rows="5" id="txtUlasanPasir" $readonly class="$inputTextClass"  onkeyup="textCounter(this.form.txtUlasanPasir,this.form.remLen2,$!saizTxtUlasanPasir);" onkeydown="textCounter(this.form.txtUlasanPasir,this.form.remLen2,$!saizTxtUlasanPasir);">$!beanMaklumatBayaranSblm.txtUlasanPasir</textarea></td>
+        </tr>
+        #if ($mode != 'view')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">Baki Aksara :&nbsp;
+            <input type="text" readonly="readonly" class="disabled" name="remLen2" size="3" maxlength="3" value="$!saizTxtUlasanPasir" /></td>
         </tr>
         #end
         <tr>
@@ -215,7 +247,7 @@
   #end
 </table>
 <fieldset id="tableReport" style="display:none;">
-<legend><strong>SENARAI LAPORAN</strong></legend>
+<legend><strong>SENARAI DOKUMEN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakSuratBayaranFeeLesen('$idFail')"> Surat Mengemukakan Bayaran Fee Lesen </a></td>
@@ -241,6 +273,16 @@ function doSimpanKemaskiniBayaranSblm() {
 	if(document.${formName}.txtUlasanHidro.value == ""){
 		alert('Sila masukkan Ulasan Hidrografi.');
   		document.${formName}.txtUlasanHidro.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtUlasanHidra.value == ""){
+		alert('Sila masukkan Ulasan Hidraulik.');
+  		document.${formName}.txtUlasanHidra.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtUlasanPasir.value == ""){
+		alert('Sila masukkan Ulasan Kajian Kuantiti dan Kualiti Sumber Pasir.');
+  		document.${formName}.txtUlasanPasir.focus(); 
 		return; 
 	}
 	if(document.${formName}.txtLuasKawasan.value == ""){

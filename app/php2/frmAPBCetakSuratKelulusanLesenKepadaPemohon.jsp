@@ -49,8 +49,8 @@
     <td>
     <div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
-          <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENYEDIAAN LESEN</li>         
-          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PELAN</li>       
+          <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LESEN</li>         
+          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">LESEN DAN PELAN</li>       
         </ul>
       <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">
@@ -179,7 +179,7 @@
       	  </fieldset>
           <br>
       	  <fieldset id="tableReport" style="display:none;">
-		    <legend><strong>SENARAI LAPORAN</strong></legend>
+		    <legend><strong>SENARAI DOKUMEN</strong></legend>
 			<table width="100%" border="0" cellspacing="2" cellpadding="2">
 				<tr>
 				  <td ><a href="#" class="style2" onClick="javascript:cetakSuratHantarLesen('$idFail')"> Surat Hantar Lesen </a></td>
