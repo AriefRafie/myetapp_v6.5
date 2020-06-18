@@ -207,7 +207,20 @@
 	  	<br>
 	  	$senarai.poskod, $senarai.bandar,
 	  	<br>
-	  	$senarai.nama_negeri</b></td>
+	  	$senarai.nama_negeri</b>
+	  	<br>
+	  	#if($senarai.seksyen== "17")
+			<a href="#" onClick="javascript:paparBorangS('$!senarai.nofail.toUpperCase()','$!senarai.idPerbicaraan','$!senarai.idFail','$!senarai.icSimati','$!senarai.id_Permohonan')">
+               	<font color="blue">Borang S</font>
+            </a>
+<!--              <a href="#" class="style2" onClick="javascript:cetakBorandSByJenisSerahan('$NO_FAIL','$id_perbicaraan','$id_fail','$id_simati','$id_pemohonSek8')">  -->
+<!--              	<font color="blue">Borang S (BARU)</font></a> -->
+        #else   
+        	<a href="#" onClick="javascript:paparBorangD('$!senarai.nofail.toUpperCase()','$!senarai.idPerbicaraan','$!senarai.idFail')">
+        		<font color="blue">Borang D</font>
+        	</a>    			
+      	#end
+	  	</td>
   	</tr>
 	</table>
   	#end
@@ -265,6 +278,30 @@
 </body>
 
 <script>
+	function paparBorangD(NO_FAIL,id_perbicaraan,id_fail){
+		
+		var url = "../x/${securityToken}/ekptg.report.ppk.FrmOnlinePopupBorangDBySerahan?noFail="+NO_FAIL+"&id_fail="+id_fail+"&id_perbicaraan="+id_perbicaraan;
+		
+		var hWnd = window.open(url,'printuser','width=700,height=200, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		       hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();
+	}
+	
+	function paparBorangS(NO_FAIL,id_perbicaraan,idfail,idsimati,idpemohonSek8) {
+		 
+	 	var encodeNofail = escape(NO_FAIL); 
+	 	//alert('encodeNofail : '+encodeNofail);
+	
+	  var url = "../x/${securityToken}/ekptg.report.ppk.FrmOnlinePopupBorangSBySerahan?noFail="+encodeNofail+"&idfail="+idfail+"&id_perbicaraan="+id_perbicaraan+"&idsimati="+idsimati+"&idpemohonSek8="+idpemohonSek8; 
+		//var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupBorangSBySerahan?noFail='"+NO_FAIL+"'&idfail="+idfail+"&id_perbicaraan="+id_perbicaraan+"&idsimati="+idsimati+"&idpemohonSek8="+idpemohonSek8; 
+		var hWnd = window.open(url,'printuser','width=700,height=200, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		      hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();
+	}
 
 function submitForm() {    
 //alert('$val_tab')

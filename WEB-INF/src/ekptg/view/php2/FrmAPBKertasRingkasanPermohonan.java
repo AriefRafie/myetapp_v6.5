@@ -34,7 +34,8 @@ public class FrmAPBKertasRingkasanPermohonan extends AjaxBasedModule {
 		if (mode.isEmpty()) {
 			mode = "view";
 		}
-
+		String paparan=getParam("paparan");
+		
 		// GET ID PARAM
 		String idFail = getParam("idFail");
 		String idPermohonan = getParam("idPermohonan");
@@ -68,7 +69,7 @@ public class FrmAPBKertasRingkasanPermohonan extends AjaxBasedModule {
 						getParam("JLM"),
 						getParam("JAS"),
 						getParam("PTG"),
-						getParam("txtUlasanJabatan"), getParam("socSyor"),
+						getParam("txtUlasanJabatan"), getParam("txtUlasanLulusBersyarat"), getParam("socSyor"),
 						getParam("txtBilMesyuarat"), getParam("txtTarikhMesyuarat"),
 						session);
 			}
@@ -128,6 +129,8 @@ public class FrmAPBKertasRingkasanPermohonan extends AjaxBasedModule {
 		// SET DEFAULT PARAM
 		this.context.put("mode", mode);
 
+		this.context.put("paparan", paparan);
+		
 		// SET ID PARAM
 		this.context.put("idFail", idFail);
 		this.context.put("idPermohonan", idPermohonan);

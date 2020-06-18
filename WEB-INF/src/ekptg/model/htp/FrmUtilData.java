@@ -1764,9 +1764,9 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 			 * Parameter  : langkah, id_suburusan, operation sql untuk langkah(op) 
 			 * return  
 			*/
-			public static int getIdSuburusanstatusByLangkah
+			public static String getIdSuburusanstatusByLangkah
 				(String langkah, String idsuburusan, String op) throws Exception {
-				int returnValue = 0;
+				String returnValue = "0";
 				Db db = null;
 				String sql = "";
 				try {
@@ -1782,7 +1782,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 				    myLog.info("getIdSuburusanstatusByLangkah("+ langkah+","+idsuburusan+","+op+"):sql::"+sql);
 				    ResultSet rs = stmt.executeQuery(sql);
 				    while (rs.next()) {
-				    	  returnValue = rs.getInt("id_suburusanstatus");
+				    	  returnValue = rs.getString("id_suburusanstatus");
 				    }
 				    return returnValue;
 				} finally {
@@ -4848,21 +4848,23 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		    	v = new Vector<Tblrujsuburusan>();
 		    	Statement stmt = db.getStatement();
 		    	SQLRenderer r = new SQLRenderer();
-		    	r.add("id_Suburusan");
-		    	r.add("kod_Suburusan");
-		    	r.add("nama_Suburusan");
-		    	r.add("id_Urusan",Integer.parseInt(idUrusan));
-		    	sql = r.getSQLSelect("Tblrujsuburusan");
+		    	r.add("id_suburusan");
+		    	r.add("kod_suburusan");
+		    	r.add("nama_suburusan");
+		    	r.add("id_urusan",Integer.parseInt(idUrusan));
+		    	r.add("flag_aktif","1","=");
+		    	sql = r.getSQLSelect("tblrujsuburusan");
 		    	if(idSuburusan!=null)
 		    		sql += " AND ID_SUBURUSAN IN ("+idSuburusan+")";
 
+		    	myLog.info("getSubUrusanByUrusan:sql="+sql);
 		    	ResultSet rs = stmt.executeQuery(sql);			
 		    	Tblrujsuburusan s = null;
 		    	while (rs.next()) {
 		    		s = new Tblrujsuburusan();
-		    		s.setIdSuburusan(rs.getLong("id_Suburusan")); 
-		    		s.setKodSuburusan(rs.getString("kod_Suburusan")); 
-		    		s.setNamaSuburusan(rs.getString("nama_Suburusan"));
+		    		s.setIdSuburusan(rs.getLong("id_suburusan")); 
+		    		s.setKodSuburusan(rs.getString("kod_suburusan")); 
+		    		s.setNamaSuburusan(rs.getString("nama_suburusan"));
 		    		v.addElement(s);
 		    		
 		    	}
@@ -4952,7 +4954,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		String noFail = "";
 		String X = String.format("%04d",File.getSeqNo(3, idUrusan,Integer.parseInt(idKementerian), Integer.parseInt(idNegeri),getYear));
 
-		noFail += "JKPTG/SHTP/"+ kodKementerian + "/"+ kodNegeri + "/"+X+"/"+getYear;				
+		noFail += "JKPTG/BHTP/"+ kodKementerian + "/"+ kodNegeri + "/"+X+"/"+getYear;				
 		myLog.info("generateNoOnline:"+noFail);
 		return noFail;
 		

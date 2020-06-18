@@ -599,7 +599,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdSuburusan() + ">"
-						+ f.getKodSuburusan() + " - " + f.getNamaSuburusan()
+						+ f.getNamaSuburusan()
+//						+ f.getKodSuburusan() + " - " + f.getNamaSuburusan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -663,7 +664,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdSuburusan() + ">"
-						+ f.getKodSuburusan() + " - " + f.getNamaSuburusan()
+						+ f.getNamaSuburusan()
+						//+ f.getKodSuburusan() + " - " + f.getNamaSuburusan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -780,7 +782,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdUrusan() + ">"
-						+ f.getKodUrusan() + " - " + f.getNamaUrusan()
+						+ f.getNamaUrusan()
+//						+ f.getKodUrusan() + " - " + f.getNamaUrusan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -817,7 +820,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdUrusan() + ">"
-						+ f.getKodUrusan() + " - " + f.getNamaUrusan()
+						+ f.getNamaUrusan()
+//						+ f.getKodUrusan() + " - " + f.getNamaUrusan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");

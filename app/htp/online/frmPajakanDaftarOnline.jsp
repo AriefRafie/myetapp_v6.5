@@ -9,7 +9,7 @@
   	<input type="hidden" name="actionPajakan" id="actionPajakan" value="$actionPajakan"/>
   	<input type="hidden" name="mode" id="mode" value="$mode"/>
   	<input type="hidden" name="hitButton" id="hitButton" value="$hitButton"/>
-	<input type="hidden" name="idFail" id="idFail" value="$idFail"/>
+		<input type="hidden" name="idFail" id="idFail" value="$idFail"/>
   	<input type="hidden" name="idStatus" id="idStatus" value="$idStatus"/>
   	<input type="hidden" nama="idpemohon" id="idpemohon"/>
   	<input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
@@ -95,7 +95,7 @@
     
    			<table width="100%" border="0" cellspacing="2" cellpadding="2">
        		#foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-         	<tr>
+         	<!-- <tr>
           		<td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
             	<td width="28%">Negeri</td>
             	<td width="1%">:</td>
@@ -147,28 +147,28 @@
 	            <td><input type="text" size="11" maxlength="10" name="tarikhSuratKJP" id="tarikhSuratKJP" onblur="check_date(this)" $readonly class="$inputTextClass" value="$beanMaklumatPermohonan.tarikhSuratKJP"/>
     	        #if ($mode != 'view')
         	    <a href="javascript:displayDatePicker('tarikhSuratKJP',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
-            	#end            </td>
+            	#end</td>
          </tr>	
          <tr>
          <td style="visibility:hidden">#if ($mode != 'view')<span class="style1">*</span>#end </td>
          <td>No. Fail Lain /  Pemohon</td>
          <td>:</td>
          <td><input type="text" name="txtNoFailLain" id="txtNoFailLain" value="$beanMaklumatPermohonan.noFailLain" onblur="this.value=this.value.toUpperCase();"/></td>
-         </tr>
+         </tr> -->
          <tr>
           <td>
-            	<!--	#if ($mode != 'view')<span class="style1">*</span>#end --> 
-          	</td>
-        	<td>Tarikh Surat Pemohon</td>
-            <td>:</td>
-            <td>            	
-            	<input type="text" size="11" maxlength="10" name="tarikhSuratPemohon" class="$classDis" id="tarikhSuratPemohon" onblur="check_date(this)" value="$beanMaklumatPermohonan.tarikhSuratPemohon" readonly="readonly" $readOnly/>
+            #if ($mode != 'view')<span class="style1">*</span>#end 
+          </td>
+        	<td width="28%">Tarikh Surat Pemohon</td>
+          <td width="1%">:</td>
+          <td width="70%">            	
+            	<input type="text" size="11" maxlength="10" name="tarikhSuratPemohon" id="tarikhSuratPemohon" onblur="check_date(this)" value="$beanMaklumatPermohonan.tarikhSuratPemohon" readonly="readonly" $readOnly/>
 				#if ($mode != 'view') 
 					<a href="javascript:displayDatePicker('tarikhSuratPemohon',false,'dmy');"><img src="../img/calendar.gif" alt="Calendar" border="0"/> 
 				#end 
 			</td>         
          </tr>
-         <tr style="display:none">
+        <!--<tr style="display:none">
          	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
             <td valign="top">Tarikh Agihan</td>
             <td>:</td>
@@ -177,12 +177,13 @@
             <a href="javascript:displayDatePicker('tarikhAgihan',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
             #end            
             </td>
-         </tr>
+         </tr> -->
          <tr>
          	<td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-           <td valign="top">Tajuk</td>
+           <td valign="top">Tujuan Pajakan</td>
             <td valign="top">:</td>
-            <td valign="top"><textarea name="txtTajuk" id="txtTajuk" rows="5" cols="41" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tajuk</textarea></td>
+            <td valign="top"><textarea name="txtTajuk" id="txtTajuk" rows="5" cols="41" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tajuk</textarea>
+            </td>
          </tr>
          #end
         </table>
@@ -289,12 +290,12 @@
                         	<td valign="top">&nbsp;</td>
                            	<td colspan="2" valign="top">
                        		#if ($mode == 'view')
-                				<input class="stylobutton" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:KemaskiniTanah()"/>
-                				<input class="stylobutton" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="javascript:doBackList()"/>
+                				<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:KemaskiniTanah()"/>
+                				<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="javascript:doBackList()"/>
                				#elseif ($mode == 'update')
-                				<input class="stylobutton" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:SimpanKemaskiniTanah()"/>
-                				<input class="stylobutton" type="reset" name="cmdBatal" id="cmdBatal" value="Kosongkan" $hide/>
-                				<input class="stylobutton" type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:batalKemaskiniTanah()"/>
+                				<input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:SimpanKemaskiniTanah()"/>
+                				<input type="reset" name="cmdBatal" id="cmdBatal" value="Kosongkan" $hide/>
+                				<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:batalKemaskiniTanah()"/>
            				 	#end</td>
                         </tr>
 					</table>
@@ -312,14 +313,14 @@
   	#end
 	
 	<tr>
-    	<td width="30%">&nbsp;</td>
-    	<td width="70%">
+	<td align="center">
+    	<!-- <td width="30%">&nbsp;</td>
+    	<td width="70%"> -->
     	#if ($mode == 'new')
-    		<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpan()"/>
-    		<input type="button" class="stylobutton" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
+    		<input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpan()"/>
+    		<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
     	#end
     	#if($mode == 'view')
-    		<input type="button" class="stylobutton" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
     	#end
     	</td>
 	</tr>
@@ -334,13 +335,13 @@ function doChangeKementerian() {
 }
 
 function simpan() {
-	
+	/*
 	if(document.${formName}.socNegeri.value == ""){
 		alert('Sila pilih Negeri.');
   		document.${formName}.socNegeri.focus(); 
 		return; 
 	}
-	/*
+	
 	if(document.${formName}.socKementerian.value == ""){
 		alert('Sila pilih Kementerian.');
   		document.${formName}.socKementerian.focus(); 
@@ -356,7 +357,7 @@ function simpan() {
   		document.${formName}.socAgensi.focus(); 
 		return; 
 	}
-	*/
+	
 	if(document.${formName}.socStatusTanah.value == ""){
 		alert('Sila pilih Status Tanah.');
   		document.${formName}.socStatusTanah.focus(); 
@@ -366,9 +367,9 @@ function simpan() {
 		alert('Sila pilih Jenis Fail.');
   		document.${formName}.socJenisFail.focus(); 
 		return; 
-	}
+	}*/
 	if(document.${formName}.txtTajuk.value == ""){
-		alert('Sila masukkan Tajuk.');
+		alert('Sila masukkan Tujuan.');
   		document.${formName}.txtTajuk.focus(); 
 		return; 
 	}

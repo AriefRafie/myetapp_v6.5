@@ -1,4 +1,4 @@
-package ekptg.model;
+package ekptg.model.ppk.util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
+import ekptg.model.IStatus;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
@@ -21,8 +22,8 @@ import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
-public class StatusBean implements IStatus {
-	private static Logger myLog = Logger.getLogger(ekptg.model.StatusBean.class);
+public class StatusBeanPPK implements IStatus {
+	private static Logger myLog = Logger.getLogger(ekptg.model.ppk.util.StatusBeanPPK.class);
 	PfdFail fail = null;
 	Permohonan permohonan = null;
 	HtpPermohonan htpPermohonan = null;
@@ -448,12 +449,14 @@ public class StatusBean implements IStatus {
 	    		" ,TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI" +
 	    		" ,STF.ID_PERMOHONAN,STF.ID_FAIL " +
 	    	    " FROM " +
-//	    	    " TBLPPK a, Tblpfdfail f,  ";
+	    	    " TBLPPKPERMOHONAN P, TBLPFDFAIL F,  "+
 //	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLHTPRUJSUBURUSANSTATUSFAIL STF "+
 	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLRUJSUBURUSANSTATUSFAIL STF "+
 	    		" WHERE "+
-	    		//sql += " a.id_fail = f.id_fail ";
-	    		" ST.ID_STATUS = S.ID_STATUS "+
+	    		" F.ID_FAIL = P.ID_FAIL "+
+	    		" AND F.ID_FAIL = STF.ID_FAIL "+
+	    		" AND P.ID_PERMOHONAN = STF.ID_PERMOHONAN "+
+	    		" AND ST.ID_STATUS = S.ID_STATUS "+
 	    		" AND STF.ID_SUBURUSANSTATUS = ST.ID_SUBURUSANSTATUS "+
 	    		//" AND stf.id_permohonan = a.id_permohonan ";
 	    		//sql += " AND stf.ID_FAIL = A.ID_FAIL ";

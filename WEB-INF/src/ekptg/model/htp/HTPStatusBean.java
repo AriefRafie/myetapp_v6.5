@@ -755,24 +755,12 @@ public class HTPStatusBean implements IHTPStatus {
 			r.add("id_kemaskini", sBaru.getIdKemaskini());
 			r.add("tarikh_kemaskini", r.unquote("sysdate")); 
 			sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
-			myLog.info(sql);
+//			myLog.info(sql);
 			stmt.executeUpdate(sql);
 			
-//			IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");		  
-//			r = new SQLRenderer();		  
-//			r.add("Id_Suburusanstatusfail", IdSuburusanstatusfail);
-//			r.add("id_Permohonan", String.valueOf(s.getIdPermohonan()));
-//			r.add("Id_Suburusanstatus", r.unquote(String.valueOf(sBaru.getIdSuburusanstatus())));
-//			r.add("aktif",sBaru.getAktif());
-//			r.add("url",sBaru.getUrl());
-//			r.add("id_Masuk", String.valueOf(sBaru.getIdMasuk()));
-//			r.add("tarikh_Masuk", r.unquote("sysdate"));
-//			r.add("id_kemaskini", String.valueOf(sBaru.getIdMasuk()));
-//			r.add("tarikh_kemaskini", r.unquote("sysdate"));
-//			r.add("id_fail",r.unquote(String.valueOf(s.getIdFail())));
-//			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
-//			//myLog.info(sql);
-//		    stmt.executeUpdate(sql);
+			// id_suburusanstatus (dari sBaru)
+			// id_permohonan,id_fail,id_masuk,id_kemaskini (guna var s)
+			// aktif,tarikh_masuk,tarikh_masuk (default sebelum simpan)
 			sBaru.setIdPermohonan(s.getIdPermohonan());
 			sBaru.setIdFail(s.getIdFail());
 			sBaru.setTarikhMasuk("sysdate");

@@ -18,65 +18,49 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 
-public class UserPegawaiBean implements IUserPegawai {
+public class UserKJPBean implements IUserPegawai {
 
-	static Logger myLog = Logger.getLogger(ekptg.model.utils.UserPegawaiBean.class);
-	//public UserPegawaiBean() {	}
+	static Logger myLog = Logger.getLogger(ekptg.model.utils.UserKJPBean.class);
+	//public UserKJPBean() {	}
 	/**
-	 * Dibuat oleh Mohamad Rosli 
-	 * Senarai emel mengikut role 
-	 * Tidak diguna
+	 * 13/06/2020 Dibuat oleh Mohamad Rosli 
+	 * Senarai emel mengikut role KJP
+	 * 
 	 * */
-	public List<Map<String,String>> getPenggunaMengikutRole(String ROLE_ID,String ID_NEGERI) throws Exception {
+	public List<Map<String,String>> getPenggunaMengikutRole(String role,String idKementerian) throws Exception {
 		Db db = null;
 		ResultSet rs = null;
 		Statement stmt = null;
-		List<Map<String,String>> listPengunaByRoleNegeri = null;
+		List<Map<String,String>> listPengunaByRole = null;
 		String sql = "";
 		
 		try {
 			db = new Db();
 			stmt = db.getStatement();	
+			sql = " SELECT U.USER_NAME,NVL(UK.EMEL,UI.EMEL) EMEL FROM USERS U, USERS_INTERNAL UI, USERS_KEMENTERIAN UK "
+					+ " WHERE U.USER_ID = UI.USER_ID "
+					+ " AND U.USER_ID = UK.USER_ID "
+					+ " AND UI.ID_JAWATAN = '"+role+"' "
+					+ " AND UI.FLAG_AKTIF = '1' " 
+					+ "";
 			
-			sql = " SELECT USER_NAME,EMEL,USER_ROLE,ID_NEGERI FROM " +
-					" ( " +
-					" SELECT  " +
-					" U.USER_ID,U.USER_LOGIN, UI.ID_NEGERI " +
-					" ,U.USER_NAME,U.USER_ROLE,UI.EMEL " +
-					" FROM USERS U,USERS_INTERNAL UI " +
-					" WHERE U.USER_ID = UI.USER_ID AND UI.EMEL IS NOT NULL " +
-					" UNION " +
-					" SELECT  " +
-					" U.USER_ID,U.USER_LOGIN, UI.ID_NEGERI " +
-					" ,U.USER_NAME,UR.ROLE_ID USER_ROLE,UI.EMEL " +
-					" FROM USERS U,USERS_INTERNAL UI, USER_ROLE UR " +
-					" WHERE U.USER_ID = UI.USER_ID  " +
-					" AND U.USER_LOGIN = UR.USER_ID AND UI.EMEL IS NOT NULL " +
-					" ) UR " +
-					" WHERE  " +
-					//--USER_LOGIN='supportw'
-					" USER_ROLE='"+ROLE_ID+"' ";
-			
-		    if(ID_NEGERI!=null)
-		    	sql += " AND ID_NEGERI = '"+ID_NEGERI+"' ";
+		    if(idKementerian!=null)
+		    	sql += " AND UK.ID_KEMENTERIAN = '"+idKementerian+"' ";
 		    
-		    sql +=	" ORDER BY USER_NAME ";				
+		    sql +=	" ORDER BY U.USER_NAME ";				
 			
-			myLog.info(" SQL listPenggunaMengikutRole :"+ sql);			
+			myLog.info("getPenggunaMengikutRole :sql="+ sql);			
 			rs = stmt.executeQuery(sql);
-			listPengunaByRoleNegeri = Collections.synchronizedList(new ArrayList<Map<String,String>>());
+			listPengunaByRole = Collections.synchronizedList(new ArrayList<Map<String,String>>());
 			Map<String,String> h = null;
 			int bil = 0;
 			while (rs.next()) {
 				h = Collections.synchronizedMap(new HashMap<String,String>());
 				bil++;
-				h.put("BIL",String.valueOf(bil));
-//				h.put("USER_ID",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));	
-//				h.put("USER_LOGIN",rs.getString("USER_LOGIN") == null ? "" : rs.getString("USER_LOGIN"));
-				h.put("USER_NAME",rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
-				h.put("EMEL",rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
-//				h.put("ID_NEGERI",rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
-				listPengunaByRoleNegeri.add(h);
+				h.put("bil",String.valueOf(bil));
+				h.put("user",rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
+				h.put("emel",rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
+				listPengunaByRole.add(h);
 				
 			}
 
@@ -88,7 +72,7 @@ public class UserPegawaiBean implements IUserPegawai {
 			if (db != null)
 				db.close();
 		}
-		return listPengunaByRoleNegeri;
+		return listPengunaByRole;
 
 	}
 	

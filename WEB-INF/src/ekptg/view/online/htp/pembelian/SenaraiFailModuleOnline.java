@@ -25,12 +25,13 @@ import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.engine.EmailSender;
 import ekptg.engine.EmailProperty;
+import ekptg.model.admin.EmailConfig;
+import ekptg.model.admin.IEmel;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.entities.UserKementerian;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmSenaraiFailTerimaPohonData;
 import ekptg.model.htp.FrmUtilData;
-import ekptg.model.htp.HTPEmelPermohonanBean;
 import ekptg.model.htp.HTPEmelSemakBean;
 import ekptg.model.htp.HTPPermohonanBean;
 import ekptg.model.htp.HakmilikUrusan;
@@ -57,6 +58,8 @@ import ekptg.model.htp.pembelian.IPemilik;
 import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.htp.pembelian.PembelianOnlineBean;
 import ekptg.model.htp.pembelian.PemilikBean;
+import ekptg.model.htp.utiliti.HTPEmelPermohonanBean;
+import ekptg.model.htp.utiliti.HTPEmelSemakanBean;
 import ekptg.model.utils.IUserPegawai;
 import ekptg.model.utils.UserBean;
 
@@ -73,6 +76,8 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 	private IHTPPermohonan iHTPPermohonan = null;
 	private IHtp iHTP = null;  
 	private ekptg.model.htp.IHTPEmel iHTPEmel = null;
+	private ekptg.model.admin.IEmel emelSemak = null;
+
 	private IOnline iOnline = null;
 	private IPembelian iPembelian = null;
 	private IPembelianOnline iPembelianOnline = null;
@@ -316,6 +321,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			getValues();
 			getPermohonanInfo();
 			myLog.info("Read Here");
+			
 			Vector<HakmilikUrusan> m = getIPembelian().getHakmilikList(getParam("txtidPermohonan"));
 			context.put("mt", m);
 			context.put("selectedTab", 0);
@@ -1129,62 +1135,98 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			 * 1  untuk status - Penerimaan Permohonan
 			*/
 			String langkah = "-3";
-			EmailProperty pro = EmailProperty.getInstance();
-			String EMAIL_HOST= pro.getHost();
+			EmailConfig ec = new EmailConfig();
+
+//			EmailProperty pro = EmailProperty.getInstance();
+//			String EMAIL_HOST= pro.getHost();
 			//myLog.info("EMAIL_HOST="+EMAIL_HOST);
-			EmailSender email = EmailSender.getInstance();
-			email.FROM = pro.getFrom();		
+//			EmailSender email = EmailSender.getInstance();
+//			email.FROM = pro.getFrom();		
 			//if(EMAIL_HOST.equals("mail.hla-group.com")){
 //			if(EMAIL_HOST.equals("smtp.gmail.com")){			
 //				email.FROM = getHTPEmel().checkEmail(userID);
 //			}else{
 //				email.FROM = pro.getFrom();
 //			}
-			myLog.info("from="+email.FROM);
-
+			//myLog.info("from="+email.FROM);
+			String emelSubjek = "MyeTaPP: Semakan/ Pengesahan Permohonan Perakuan Pembelian";
+			String kandungan = "";
 			if(idJawatan.equals("20")||idJawatan.equals("24")){
 				langkah = "-3";
-				email.SUBJECT="SEMAKAN PERMOHONAN PERAKUAN PEMBELIAN";
-				email.MESSAGE = getHTPEmelSemak().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
-						,htpPermohonan.getPermohonan().getPfdFail().getTajukFail(),String.valueOf(hUser.get("nama")));
-				email.MULTIPLE_RECIEPIENT = new String[1];
-				//email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
-				email.MULTIPLE_RECIEPIENT[0] = getHTPEmel().checkEmail(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdMasuk()));
-				myLog.info("to="+email.MULTIPLE_RECIEPIENT[0]);
-				email.TO_CC = new String[1];
-				//email.TO_CC[0]  = "rosli@hla-group.com";
-				email.TO_CC[0] = getHTPEmel().checkEmail(userID);
-				email.sendEmail();				
+				
+				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hUser.get("nama")));
+    			
+				if(!getEmelSemak().checkEmail(userID).equals(""))
+					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+				ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
+						, "9"
+						, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+						, emelSubjek, kandungan);
+
+//				email.SUBJECT=emelSubjek;
+//				email.MESSAGE = getHTPEmelSemak().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
+//						,htpPermohonan.getPermohonan().getPfdFail().getTajukFail(),String.valueOf(hUser.get("nama")));
+//				email.MULTIPLE_RECIEPIENT = new String[1];
+//				//email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
+//				email.MULTIPLE_RECIEPIENT[0] = getHTPEmel().checkEmail(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdMasuk()));
+//				myLog.info("to="+email.MULTIPLE_RECIEPIENT[0]);
+//				email.TO_CC = new String[1];
+//				//email.TO_CC[0]  = "rosli@hla-group.com";
+//				email.TO_CC[0] = getHTPEmel().checkEmail(userID);
+//				email.sendEmail();	
+				
+				
 				
 			}else if (idJawatan.equals("9")){
 				langkah = "-2";				
 				
-				email.SUBJECT="PENGESAHAN PERMOHONAN PERAKUAN PEMBELIAN";
-				email.MESSAGE = getHTPEmelSemak().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
-						,htpPermohonan.getPermohonan().getPfdFail().getTajukFail(),String.valueOf(hUser.get("nama")));
-				email.MULTIPLE_RECIEPIENT = new String[1];
-				//email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
-				email.MULTIPLE_RECIEPIENT[0] = getHTPEmel().checkEmail(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdMasuk()));
-				myLog.info("to="+email.MULTIPLE_RECIEPIENT[0]);
-				email.TO_CC = new String[1];
-				//email.TO_CC[0]  = "rosli@hla-group.com";
-				email.TO_CC[0] = getHTPEmel().checkEmail(userID);
-				email.sendEmail(); 			
+				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hUser.get("nama")));
+    			
+				if(!getEmelSemak().checkEmail(userID).equals(""))
+					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+				ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
+						, "4"
+						, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+						, emelSubjek, kandungan);
+				
+//				email.SUBJECT=emelSubjek;
+//				email.MESSAGE = getHTPEmelSemak().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
+//						,htpPermohonan.getPermohonan().getPfdFail().getTajukFail(),String.valueOf(hUser.get("nama")));
+//				email.MULTIPLE_RECIEPIENT = new String[1];
+//				//email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
+//				email.MULTIPLE_RECIEPIENT[0] = getHTPEmel().checkEmail(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdMasuk()));
+//				myLog.info("to="+email.MULTIPLE_RECIEPIENT[0]);
+//				email.TO_CC = new String[1];
+//				//email.TO_CC[0]  = "rosli@hla-group.com";
+//				email.TO_CC[0] = getHTPEmel().checkEmail(userID);
+//				email.sendEmail(); 			
 			
 			}else if (idJawatan.equals("4")){
 				langkah = "-1";
 				
-				email.SUBJECT="PERMOHONAN PERAKUAN PEMBELIAN";
-				email.MESSAGE = getHTPEmel().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
-						,htpPermohonan.getPermohonan().getPfdFail().getTajukFail(),htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian());
-				email.MULTIPLE_RECIEPIENT = new String[1];
-				//email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
-				email.MULTIPLE_RECIEPIENT[0] = getHTPEmel().checkEmail(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdMasuk()));
-				myLog.info("to="+email.MULTIPLE_RECIEPIENT[0]);
-				email.TO_CC = new String[1];
-				//email.TO_CC[0]  = "rosli@hla-group.com";
-				email.TO_CC[0] = getHTPEmel().checkEmail(userID);
-				email.sendEmail(); 
+				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail()
+							,htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian()
+							,htpPermohonan.getPermohonan().getNoPermohonan());
+    			
+				if(!getEmelSemak().checkEmail(userID).equals(""))
+					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+				//(HTP)HQPengguna 
+				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPengguna", emelSubjek, kandungan);
+				
+//				email.SUBJECT="PERMOHONAN PERAKUAN PEMBELIAN";
+//				email.MESSAGE = getHTPEmel().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
+//						,htpPermohonan.getPermohonan().getPfdFail().getTajukFail(),htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian());
+//				email.MULTIPLE_RECIEPIENT = new String[1];
+//				//email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
+//				email.MULTIPLE_RECIEPIENT[0] = getHTPEmel().checkEmail(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdMasuk()));
+//				myLog.info("to="+email.MULTIPLE_RECIEPIENT[0]);
+//				email.TO_CC = new String[1];
+//				//email.TO_CC[0]  = "rosli@hla-group.com";
+//				email.TO_CC[0] = getHTPEmel().checkEmail(userID);
+//				email.sendEmail(); 
+				
 			}
 			Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
 			rsusf.setIdPermohonan(htpPermohonan.getPermohonan().getIdPermohonan());
@@ -1917,18 +1959,25 @@ public void setupPage(HttpSession session,String action,Vector list) {
 			
 	}
 	
+//	private IHTPEmel getHTPEmel(){
+//		if(iHTPEmel == null)
+//			iHTPEmel = new HTPEmelPermohonanBean();
+//		return iHTPEmel;
+//	}
 
-	private IHTPEmel getHTPEmel(){
-		if(iHTPEmel == null)
-			iHTPEmel = new HTPEmelPermohonanBean();
-		return iHTPEmel;
+//	private IHTPEmel getHTPEmelSemak(){
+//		if(iHTPEmel == null)
+//			iHTPEmel = new HTPEmelSemakBean();
+//		return iHTPEmel;
+//	}	
+	
+	private IEmel getEmelSemak(){
+		if(emelSemak == null)
+			emelSemak = new HTPEmelSemakanBean();
+		return emelSemak;
 	}
 
-	private IHTPEmel getHTPEmelSemak(){
-		if(iHTPEmel == null)
-			iHTPEmel = new HTPEmelSemakBean();
-		return iHTPEmel;
-	}	
+	
 }
 
 
