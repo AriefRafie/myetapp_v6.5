@@ -1,4 +1,4 @@
-package ekptg.model;
+package ekptg.model.utils.status;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,7 +22,7 @@ import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
 public class StatusBean implements IStatus {
-	private static Logger myLog = Logger.getLogger(ekptg.model.StatusBean.class);
+	private static Logger myLog = Logger.getLogger(ekptg.model.utils.status.StatusBean.class);
 	PfdFail fail = null;
 	Permohonan permohonan = null;
 	HtpPermohonan htpPermohonan = null;
