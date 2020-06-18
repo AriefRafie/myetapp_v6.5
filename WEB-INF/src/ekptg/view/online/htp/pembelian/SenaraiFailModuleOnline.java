@@ -1212,8 +1212,8 @@ public class SenaraiFailModuleOnline extends AjaxModule {
     			
 				if(!getEmelSemak().checkEmail(userID).equals(""))
 					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
-				//(HTP)HQPengguna 
-				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPengguna", emelSubjek, kandungan);
+				//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian
+				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
 				
 //				email.SUBJECT="PERMOHONAN PERAKUAN PEMBELIAN";
 //				email.MESSAGE = getHTPEmel().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
