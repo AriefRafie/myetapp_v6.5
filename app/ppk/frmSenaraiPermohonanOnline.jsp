@@ -72,7 +72,7 @@
 
 
 <table width="100%">
-<tr>
+<!-- <tr>
      		<td colspan="5" scope="row" align="right">
     			 #if ( $i >= $Senaraifail.size() && $i < $total )
       			 <input type="button" name="cmdPrevious" id="cmdPrevious" value=" &lt; Sebelumnya" onclick="sebelumnya()" align="right" />
@@ -87,7 +87,9 @@
                 
     		</td>
     	</tr>
-</table>
+</table> -->
+#parse("app/utils/record_paging.jsp")
+
 <table align="center" width="100%"> 
   	
   
@@ -116,12 +118,12 @@
    #set ($idFlag = 2)
     #set ($bil = "")
    
-                         #if($Senaraifail.size()==0)
+                         #if($SenaraiFail.size()==0)
                          <tr>
 				         <td  colspan="6" align="center"><div align="left">Tiada Rekod </div></td>
 				         </tr>
                          #else
-	                       #foreach($fail in $Senaraifail)
+	                       #foreach($fail in $SenaraiFail)
                           
                            #set ($bilno = $fail.bil)
                            
