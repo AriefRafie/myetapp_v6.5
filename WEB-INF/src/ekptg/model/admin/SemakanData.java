@@ -50,7 +50,7 @@ public class SemakanData {
 		    	  r.add("i.id_urusan",idUrusan);
 		      if(!idSuburusan.equals("0"))
 		    	  r.add("i.id_suburusan",idSuburusan);
-		      if(desc.length()!= 0)
+		      if(desc != null)
 		    	  r.add("s.perihal","%"+desc+"%","like");
 		      
 		      sql = r.getSQLSelect("tblsemakan s,tblsemakansenarai i,tblrujurusan ru,tblrujsuburusan rsu","i.kod_form,i.aturan");
