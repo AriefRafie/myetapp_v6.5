@@ -2,7 +2,7 @@
           <legend><strong>Pengesahan Pegawai Pengendali</strong></legend>
           <table width="100%"  cellpadding="1" cellspacing="1" border="0">
           
-          
+
           <input type="hidden" name="enabledPegawai" id="enabledPegawai" value="$enabledPegawai">
           
             <tr>
@@ -23,24 +23,30 @@
             <tr>
               <td width="10%" valign="top" colspan=4>&nbsp;</td>
             </tr>
-            <!-- arief add -->
-            <tr>
-      			<td colspan="3" width="100%"><div align="center">
-                #if($!id_perbicaraan!="")
-                	#if($!enabledPegawai=="yes" && $statusPNB!="yes")
-              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan Digital" onClick="sendDGcert('$!NO_FAIL','$!id_perbicaraan','$!id_fail','$id_permohonan','$idpermohonansimati')" />
-              		#else
-              		<input type="button" name="tandatanganDigital" id="tandatanganDigital" value="Pengesahan Tandatangan Digital" onclick="">
-              		#end
-                	#if($statusPNB=="yes")
-              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Semak Status PNB" onClick="cetakBorangS2('$!NO_FAIL','$!id_perbicaraan','$!id_fail')" />
-              		#end
-                	<input name="cmdKembali" type="button" value="Kembali" onclick="history.back();">
-       		 		</div>
-       		 	#end
-       		 	</td>
-    		</tr>
-    		<!-- arief close -->
+            
+             <tr>
+             <td width="10%" valign="top">&nbsp;</td>
+             <td colspan=3 align=left>
+            
+             #if($!id_perbicaraan!="")
+           
+             	#if($!enabledPegawai=="yes" && $statusPNB!="yes")
+              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcert('$!NO_FAIL','$!id_perbicaraan','$!id_fail','$id_permohonan','$idpermohonansimati')" />
+              	
+              	#end
+              	
+              	#if($statusPNB=="yes")
+              	
+              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Semak Status PNMB" onClick="cetakBorangD_PDF('$!NO_FAIL','$!id_perbicaraan','$!id_fail')" disabled/>
+                    <input type="button" name="verifyButton" id="verifyButton" value="Verifikasi Maklumat" onClick="verifyDGcert('$!NO_FAIL','$!id_perbicaraan','$!id_fail','$id_permohonan','$idpermohonansimati')" />
+              	#end
+             	<!--<span id="span_PNB" >
+               	<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Hantar PNB (Borang D)" onClick="cetakBorangD('$!NO_FAIL','$!id_perbicaraan','$!id_fail')" />
+              	</span> -->
+              
+              	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="history.back();" />
+              #end
+              </td></tr>
               
               <tr>
               <td width="10%" valign="top" colspan=4>&nbsp;</td>
@@ -51,3 +57,4 @@
             </tr>
            </table>
 </fieldset>
+
