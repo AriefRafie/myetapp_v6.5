@@ -45,7 +45,7 @@ public class FrmSemakan {
 	          myLog.info("getSemakan : sql=" + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Tblsemakan h;
-
+		      
 		      while (rs.next()) {
 		    	  h = new Tblsemakan();
 		    	  h.setIdSemakan(rs.getLong("id_semakan"));
@@ -106,9 +106,8 @@ public class FrmSemakan {
 	      if (db != null){
 	    	  db.close();
 	      }
-	    }	    
+	    }
 	    return list;
-	  
 	 }
 
 	 public static Vector getSenaraiSemakan(String kodForm,String aktif)throws Exception {
