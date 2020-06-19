@@ -113,7 +113,7 @@
 			        		<table width="100%" border="0">
 			              		<tr>
 						      		<td width="1%"></td>
-					        		<td width="30%"><div align="left">No. Fail Seksyen</div></td>
+					        		<td width="30%"><div align="left">No. Fail</div></td>
 					        		<td width="1%"><div align="center">:</div></td>
 					        		<td width="68%"><input type="text" name="txtNoFailSek" class="disabled" size="30" value="$nofailseksyen"  $inputstylerep onblur="this.value=this.value.toUpperCase();" disabled></td>							              			
 		              			</tr>		

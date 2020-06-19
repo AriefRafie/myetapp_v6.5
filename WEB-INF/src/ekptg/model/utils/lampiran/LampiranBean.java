@@ -1,4 +1,4 @@
-package ekptg.model.ppt.util;
+package ekptg.model.utils.lampiran;
 
 import java.io.InputStream;
 import java.sql.Blob;
@@ -28,10 +28,9 @@ import com.Ostermiller.util.Base64;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujdokumen;
-import ekptg.model.utils.lampiran.ILampiran;
 
 public class LampiranBean implements ILampiran{
-	private static Logger myLog = Logger.getLogger(ekptg.model.ppt.util.LampiranBean.class);
+	private static Logger myLog = Logger.getLogger(ekptg.model.utils.lampiran.LampiranBean.class);
 	Connection conn = null;
 	
 	public void uploadFiles(Hashtable<String,String> hash,HttpServletRequest request) throws Exception {		

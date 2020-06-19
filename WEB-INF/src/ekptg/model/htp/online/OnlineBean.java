@@ -56,7 +56,7 @@ public class OnlineBean implements IOnline {
 		String kodUrusan = null;
 		String kodMampu = null;
 		if(pfdFail == null)
-			throw new Exception("VALUE PfdFail TIDAK DIPEROLEHI SILA PERIKSA METHOD simpanPermohonan");
+			throw new Exception("VALUE TBLPFDFAIL TIDAK DIPEROLEHI SILA PERIKSA METHOD simpanPermohonan");
 		
 		 //Date now = new Date();
 		 //SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
@@ -639,8 +639,8 @@ public class OnlineBean implements IOnline {
 			sql +=" WHERE f.id_Fail = p.id_Fail AND p.id_Permohonan = sf.id_Permohonan AND n.id_Negeri = f.id_Negeri AND h.id_Permohonan = p.id_Permohonan  ";
 			sql +=" AND sf.id_Suburusanstatus = ss.id_Suburusanstatus AND ss.id_Status = s.id_Status ";
 			sql +=" AND sf.aktif = '1' AND f.tajuk_Fail LIKE '%"+carian+"%' ";
-			sql +=" AND ( F.ID_STATUS <> 999 OR F.ID_STATUS IS null) ";
-			sql +=" AND ( nvl(no_fail,' ') = ' ' OR F.NO_FAIL IS null ) ";
+			//sql +=" AND ( F.ID_STATUS <> 999 OR F.ID_STATUS IS null) ";
+			//sql +=" AND ( nvl(no_fail,' ') = ' ' OR F.NO_FAIL IS null ) ";
 			//sql +=" AND f.no_Fail LIKE '%"+noFail+"%' ";
 			if(idNegeri != null && !idNegeri.equals("") && !idNegeri.equals("0")&& !idNegeri.equals("99999"))
 	    	  sql +=" AND f.id_Negeri = "+idNegeri;
@@ -1528,7 +1528,7 @@ public class OnlineBean implements IOnline {
 		  
 	  }
 	
-	@Override
+	
 	public void kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail s,Tblrujsuburusanstatusfail sBaru) throws Exception {
 		Connection conn = null;
 		Db db = null;

@@ -1,4 +1,4 @@
-package ekptg.model.admin;
+package ekptg.model.utils.emel;
 
 import java.util.List;
 import java.util.Map;
@@ -12,9 +12,13 @@ import ekptg.model.utils.UserKJPBean;
 
 public class EmailConfig {
 	
-	static Logger myLog = Logger.getLogger(ekptg.model.admin.EmailConfig.class);
+	static Logger myLog = Logger.getLogger(ekptg.model.utils.emel.EmailConfig.class);
 	public EmailSender mail = null;
 	public String tajuk = "";
+	public String tajukSemakan = "Pengujian MyeTaPP: Semakan/ Kelulusan Permohonan ";
+	public String tajukHantarPermohonan = "Pengujian MyeTaPP: Permohonan Baru ";
+	public String tajukSemakanInt = "Pengujian MyeTaPP: Penerimaan/ Pengesahan Permohonan ";
+	public String tajukKelulusan = "Pengujian MyeTaPP: Kelulusan/ Perakui Permohonan ";
 	public String kandungan = "";
 	public IUserPegawai userKJP = null;
 	public IUserPegawai iUser = null;

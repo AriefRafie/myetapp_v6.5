@@ -1,4 +1,4 @@
-package ekptg.model;
+package ekptg.model.utils.status;
 
 import java.util.Hashtable;
 import java.util.Vector;
@@ -20,6 +20,8 @@ public interface IStatus {
 //		throws Exception;
 	public Vector<Hashtable<String,String>> getInfoStatusPermohonan(String idUrusan,String idSubUrusan,String langkah) 
 		throws Exception;
+	public Vector<Hashtable<String,String>> getStatusPermohonanByIndividu(String idUrusan,String idUser,String langkah) 
+			throws Exception;
 
 	
 }

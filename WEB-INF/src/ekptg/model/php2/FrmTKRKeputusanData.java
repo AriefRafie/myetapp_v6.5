@@ -15,9 +15,9 @@ import lebah.db.SQLRenderer;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
-import ekptg.model.admin.EmailConfig;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
+import ekptg.model.utils.emel.EmailConfig;
 
 public class FrmTKRKeputusanData {
 
