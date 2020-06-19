@@ -14,13 +14,13 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
-import ekptg.model.IStatus;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
+import ekptg.model.utils.status.IStatus;
 
 public class StatusBeanPPK implements IStatus {
 	private static Logger myLog = Logger.getLogger(ekptg.model.ppk.util.StatusBeanPPK.class);
