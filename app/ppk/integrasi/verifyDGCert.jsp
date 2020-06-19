@@ -31,13 +31,12 @@ input[readonly]{
 	<form name="f1">
 		<fieldset><legend><font style="font-family:Verdana; font-size:8pt;	font-weight:bold;">BUTIRAN TERPERINCI PERMOHONAN</font></legend>
 			<table border="0" cellpadding="1" cellspacing="1" align="center">
-						
+			
+			
 			<input type="hidden" name="NO_FAIL" id="NO_FAIL" value='$!NO_FAIL'/> 
 			<input type="hidden" name="id_perbicaraan" id="id_perbicaraan" value='$!id_perbicaraan'/> 
-			<input type="hidden" name="id_fail" id="id_fail" value='$!id_fail'/>
-			
-            <textarea id="signedText" maxlength="500" size="30" style="text-transform:uppercase;" name="signedText" value="$!signedText" hidden="hidden">
-            </textarea>
+			<input type="hidden" name="id_fail" id="id_fail" value='$!id_fail'/> 
+            <input type="hidden" name="dataDahSign" id="dataDahSign" value='$!dataDahSign'/>
 				 <tr>
             <td width="50%" valign="top"><table width="100%"  cellpadding="1" cellspacing="1" border="0">
                 <tr>
@@ -91,7 +90,8 @@ input[readonly]{
               </table></td>
           </tr>
     </table>
-     	
+    
+    	
 		</fieldset>
     
     <fieldset><legend><font style="font-family:Verdana; font-size:8pt;	font-weight:bold;">MAKLUMAT NOTIS PERBICARAAN</font></legend>
@@ -201,24 +201,23 @@ input[readonly]{
                <td width="1%" valign="top">:&nbsp;</td>
               <td width="78%">&nbsp;<b> $!username </b></td>
                    
-             <tr>
+            <tr>
               <td width="1%">&nbsp;</td>
               <td width="20%">No Kad Pengenalan</td>
                <td width="1%" valign="top">:&nbsp;</td>
-              <td width="78%">&nbsp;<b> $!userlogin </b><input name="noKP" type="hidden" maxlength="12" id="certID" value="$!userlogin" ></td>
-              </tr> 
-            <!-- <tr>
+              <td width="78%">&nbsp;<b> $!userlogin </b><input name="noKP" type="hidden" maxlength="12" id="noKP" value="$!userlogin" ></td>
+ <!--               <tr>
               <td valign="center"><font color="red">*</font></td>
               <td  valign="center">Id</td>
                <td valign="center">:&nbsp;</td>
               <td valign="center">&nbsp; <input type="text" name="certID" id="certID" value="$!certID"/></td>
-            </tr> -->
+            </tr> 
                 <tr>
               <td valign="center"><font color="red">*</font></td>
               <td  valign="center">Pin</td>
                <td valign="center">:&nbsp;</td>
               <td valign="center">&nbsp; <input type="password" name="pin" id="pin" size="10"/></td>
-            </tr>
+            </tr>-->
               </table>
 			</fieldset>	
 			
@@ -227,178 +226,140 @@ input[readonly]{
 			
 			<input name="textToSign" type="hidden" id="textToSign" value="$!textToSign" >
 			</table>
-							
-			<table width="100%"  cellpadding="1" cellspacing="1" border="0">
-			<tr><td align=center colspan=3><input type="button" name="signButton" id="signButton" value="Tandatangan Digital dan Hantar" align="left"/></td></tr>
-			<!--  <tr><td align=center colspan=3><input type="button" name="hantar" id="hantar" value="Tandatangan" align="left" onclick="sendToDigitalSign();" /></td></tr>  -->
 			
-			</table>	
-    	<div id="locationSaveData" ></div>   
+			
+			
+				
+			<table width="100%"  cellpadding="1" cellspacing="1" border="0">
+				<tr><td align=center colspan=3><input type="button" name="verifyButton" id="verifyButton" value="Verifikasi Maklumat" align="left"/></td></tr>
+		<!-- 	<tr><td align=center colspan=3><input type="button" name="hantar" id="hantar" value="Tandatangan" align="left" onclick="sendToDigitalSign();" /></td></tr> -->
+			
+			</table>
+		
+	 
 	</form>
 </body>
 
 <script type="text/javascript">
 
-	function openPopupPNB(NO_FAIL,id_perbicaraan,id_fail,signedData){
-		input_box = confirm("Sila pastikan butiran yang dihantar adalah tepat!");
-		
-		if (input_box == true) {
-			try {
-				window.opener.cetakBorangD_X(NO_FAIL,id_perbicaraan,id_fail,signedData);
-			}catch (err) {}
-		   	window.close();	
-		    return false;
-	    
-		}
-		
-	}
+var CERTIFICATE_TYPE = "token";
+var detachMode = "true";
 
-	function sendToDigitalSign() {
-		input_box = confirm("Sila pastikan butiran yang dihantar adalah tepat!");
-		if (input_box == true) {
-			document.f1.method="post";
-			document.f1.action="ekptg.view.ppk.FrmIntegrasiDGCert?command=sahTandatangan";
-			document.f1.submit();			
-		}
+
+$(document).ready(function(){
+	//alert('123');
 	
-	}
+	//alert('123');
+	//var plainText = encodeURIComponent(Gpki.hash($("#textToSign").val()));
+	$("#signButton").click(function(){
+		var dataToSign = $("#namaPemohon").val();
+		//alert("dataToSign "+dataToSign);
+		var plainText = encodeURIComponent(Gpki.hash(dataToSign));
+		var pin = $("#pin").val();
+		//alert("pin "+pin);
+		var id= $("#certID").val();
+		//alert("id "+id);
+		sign(CERTIFICATE_TYPE ,id,pin, plainText,detachMode);
+		//alert('masuk sini');
+		//Gpki.alert("plainText1: " +plainText);
+		//umpuk signData
+			//$("#signedText").val(plainText);
+		
+	});
+	
+});
 
-
-</script>
-
-#if($flagSimpan == "Y")
-<script>
-openPopupPNB('$NO_FAIL','$id_perbicaraan','$id_fail','');
-</script>
-#end
-
-<script type="text/javascript">
-
-	var CERTIFICATE_TYPE = "token";
-	var detachMode = "true";
-
+function parseSignResult(msg){
+	//alert("parseSignResult");
 	$(document).ready(function(){
-		//document.f1.signButton.value = "Please Wait!";
-		//document.f1.signButton.disabled = "disabled";
-	
-		//var plainText = encodeURIComponent(Gpki.hash($("#textToSign").val()));
-		$("#signButton").click(function(){
-			var data_tosign = $("#NO_FAIL").val() + $("#negeri").val()+ $("#daerah").val()+ $("#unit").val()+ $("#statusFail").val()+ $("#seksyen").val()+ $("#tarikhMohon").val()+ $("#namaPemohon").val()+ $("#namaSimati").val()+ $("#bil_bicara").val()+ $("#tarikh_bicara").val()+ $("#tarikh_notis").val()+ $("#masa_bicara").val()+ $("#jenisMasa").val()+ $("#pKptg").val()+ $("#pTanah").val()+ $("#pLain").val()+ $("#alamat1").val()+ $("#alamat2").val()+ $("#alamat3").val()+ $("#poskod").val()+ $("#peg_pengendali").val();
-			//alert("data_tosign:::: "+data_tosign);
-			var dataToSign = data_tosign;
-			//alert("dataToSign "+dataToSign);
-			var plainText = encodeURIComponent(Gpki.hash(dataToSign));
-			var pin = $("#pin").val();
-			//alert("pin "+pin);
-			var id= $("#certID").val();
-			//alert("id "+id);
-			sign(CERTIFICATE_TYPE ,id,pin, plainText,detachMode);
-			//alert('masuk sini');
-			//Gpki.alert("plainText1: " +plainText);
+		var obj = jQuery.parseJSON(msg);
+		var statusCode = obj.status_code;
+		var statusMsg = obj.status_message;
+		
+		//alert("statusCode : "+statusCode+" statusMsg : "+statusMsg);
+		
+		if (statusCode == "0") {
+			var signedData = obj.signed_data;
+			var startDate = obj.start_date;
+			var endDate = obj.end_date;
+			var subjectDN = obj.subject_dn;
+			var serialNo = obj.serial_no;
+					
 			//umpuk signData
-				//$("#signedText").val(plainText);
 			
-		});
-		
-	});
-
-	function parseSignResult(msg){
-		//alert("parseSignResult");
-		$(document).ready(function(){
-			var obj = jQuery.parseJSON(msg);
-			var statusCode = obj.status_code;
-			var statusMsg = obj.status_message;
-			
-			//alert("statusCode : "+statusCode+" statusMsg : "+statusMsg);		
-			if (statusCode == "0") {
-				var signedData = obj.signed_data;
-				var startDate = obj.start_date;
-				var endDate = obj.end_date;
-				var subjectDN = obj.subject_dn;
-				var serialNo = obj.serial_no;
+			signedData = encodeURIComponent(signedData);
+			//$("#signedText").val(signedData);
 						
-				//umpuk signData
-				
-				signedData = encodeURIComponent(signedData);
-				console.log("1st signedData:"+signedData);
-				//saveSignedData(signedData);
-				//doDivAjaxCall$formname('div_temp','saveSignedData','signedData='+signedData);
-				
-				//alert("signedData:"+signedData);
-				$("#signedText").val(signedData);
-						
-				var certinfo = "<br><br><h2 class='title'>Certificate Data<h2><ul class='listitems'><li>Start Date: "+startDate +"</li><li>End Date: "+endDate +"</li><li>Certificate's Subject DN: "+subjectDN+"</li><li>Serial No: "+serialNo+"</li></ul>";
+			var certinfo = "<br><br><h2 class='title'>Certificate Data<h2><ul class='listitems'><li>Start Date: "+startDate +"</li><li>End Date: "+endDate +"</li><li>Certificate's Subject DN: "+subjectDN+"</li><li>Serial No: "+serialNo+"</li></ul>";
 
-				$("#gpki-data").html(certinfo+'<textarea name="signedData" cols=""110" rows="15">' + signedData+ '</textarea>');
+			$("#gpki-data").html(certinfo+'<textarea name="signedData" cols=""110" rows="15">' + signedData+ '</textarea>');
 			
-				//var field = "<input type=\"text\" id=\"startDate\" name=\"startDate\" value=\""+startDate+"\" >"+			
-				//Gpki.alert("Successfully Signed the Data");
+			//var field = "<input type=\"text\" id=\"startDate\" name=\"startDate\" value=\""+startDate+"\" >"+
+			
+			Gpki.alert("Successfully Signed the Data");
 	
-				/* put your logic to handle the result here */
-				var NO_FAIL = $("#NO_FAIL").val();
-				var id_perbicaraan = $("#id_perbicaraan").val();
-				var id_fail = $("#id_fail").val();
-				//openPopupPNB(NO_FAIL,id_perbicaraan,id_fail,signedData);
-			
-				//saveSignedData(NO_FAIL,id_perbicaraan,id_fail,signedData);
-				simpan();
+			/* put your logic to handle the result here */
+			var NO_FAIL = $("#NO_FAIL").val();
+			var id_perbicaraan = $("#id_perbicaraan").val();
+			var id_fail = $("#id_fail").val();
+			openPopupPNB(NO_FAIL,id_perbicaraan,id_fail,signedData);
 
-			}else if(statusCode == "12"){
-				Gpki.alert("ID not found");
+		}else if(statusCode == "12"){
+		Gpki.alert("ID not found");
 
-			}else {
+		}else {
 			Gpki.alert(statusMsg);
-			}
-		});
-	}
-
-	$(document).ready(function(){
-		$("#verifyButton").click(function() {
-			var originalText = encodeURIComponent(Gpki.hash($("#textToSign").val()));			
-			//alert("signedText " + encodeURIComponent($("#signedText").val()));
-			var signedText = encodeURIComponent($("#signedText").val());
-			$("#originalText").val(signedText);
-			//alert("signedText " + signedText);
-			verify(originalText, signedText);
-		});
+		}
 	});
+}
 
-	function parseVerifyResult(msg){
-		$(document).ready(function(){
-			var obj = jQuery.parseJSON(msg);
-			var statusCode = obj.status_code;
-			//alert("statusCode " + statusCode);
-			var statusMsg = obj.status_message;
+
+$(document).ready(function(){
+	//alert("1");
+	$("#verifyButton").click(function() {
+		//alert("2");
+		var data_tosign = $("#NO_FAIL").val() + $("#negeri").val()+ $("#daerah").val()+ $("#unit").val()+ $("#statusFail").val()+ $("#seksyen").val()+ $("#tarikhMohon").val()+ $("#namaPemohon").val()+ $("#namaSimati").val()+ $("#bil_bicara").val()+ $("#tarikh_bicara").val()+ $("#tarikh_notis").val()+ $("#masa_bicara").val()+ $("#jenisMasa").val()+ $("#pKptg").val()+ $("#pTanah").val()+ $("#pLain").val()+ $("#alamat1").val()+ $("#alamat2").val()+ $("#alamat3").val()+ $("#poskod").val()+ $("#peg_pengendali").val();
+		var textToSign = data_tosign;
+		//alert("textToSign:"+textToSign);
+		var originalText = encodeURIComponent(Gpki.hash(textToSign));
+		//alert("originalText:"+originalText);
+		//var originalText = encodeURIComponent(Gpki.hash($("#textToSign").val()));
+		//alert("originalText " + originalText);
 		
-			$("#gpki-data").html(statusMsg);
-			if(statusCode == "0") {
-				var serialNo = obj.serial_no;
-				var validity = obj.cert_validity;
-				var subjectDn = obj.subject_dn;
-				var signedP = obj.signed_payload;
-				var plainP = obj.plain_payload;
-				
-				msg = "THIS signature is *VALID*" + "serialNo = " + serialNo + "\n" + "validity = " + validity + "\n" + "subjectDn = " + subjectDn;
-				Gpki.alert(msg);
-				
-			}else {
-				Gpki.alert("This signature is *INVALID* :" + statusMsg);
-			}
-		});
-	
-	}
+		//alert("signedText " + encodeURIComponent($("#signedText").val()));
+		var dataDahSign  = $("#dataDahSign").val();
+		//alert("dataDahSign:"+dataDahSign);
+		var signedText = encodeURIComponent(dataDahSign);
+		//alert("signedText:"+signedText);
+		//$("#originalText").val(signedText);
+		//alert("signedText " + signedText);
+		verify(originalText, signedText);});
+});
 
-	function simpan() {
-		var NO_FAIL = document.f1.NO_FAIL.value;
-		var id_perbicaraan = document.f1.id_perbicaraan.value;
-		var idfail = document.f1.id_fail.value;
-		var signedData = $("#signedText").val();
-	
-		document.f1.method="post";
-		document.f1.action="ekptg.view.ppk.FrmIntegrasiDGCert?command=simpanTemp";
-		//document.f1.command.value = "simpanTemp";
-		document.f1.submit();
-	
-	}
+
+function parseVerifyResult(msg){
+	$(document).ready(function(){
+		//alert("lalu sini");
+		var obj = jQuery.parseJSON(msg);
+		var statusCode = obj.status_code;
+		//alert("statusCode " + statusCode);
+		var statusMsg = obj.status_message;
+		$("#gpki-data").html(statusMsg);
+		if(statusCode == "0") {
+			var serialNo = obj.serial_no;
+			var validity = obj.cert_validity;
+			var subjectDn = obj.subject_dn;
+			var signedP = obj.signed_payload;
+			var plainP = obj.plain_payload;
+			
+			msg = "THIS signature is VALID";
+			//msg = "THIS signature is *VALID*" + "serialNo = " + serialNo + "\n" + "validity = " + validity + "\n" + "subjectDn = " + subjectDn;
+			Gpki.alert(msg);
+		}else {
+			
+			Gpki.alert("This signature is *INVALID* :" + statusMsg);
+		}
+	});
+}
 
 </script>
