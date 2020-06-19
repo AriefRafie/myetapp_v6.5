@@ -10,10 +10,10 @@ import lebah.db.Db;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.Utils;
-import ekptg.model.admin.EmailConfig;
-import ekptg.model.admin.IEmel;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
+import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.emel.IEmel;
 
 
 public class HTPEmelSemakanBean implements IEmel {
