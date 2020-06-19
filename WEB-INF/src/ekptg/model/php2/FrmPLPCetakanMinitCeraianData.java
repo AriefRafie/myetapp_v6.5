@@ -15,7 +15,7 @@ import lebah.db.SQLRenderer;
 import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
-import ekptg.model.admin.EmailConfig;
+import ekptg.model.utils.emel.EmailConfig;
 
 public class FrmPLPCetakanMinitCeraianData {
 

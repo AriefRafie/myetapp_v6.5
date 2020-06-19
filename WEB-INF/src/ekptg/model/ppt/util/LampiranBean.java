@@ -28,7 +28,7 @@ import com.Ostermiller.util.Base64;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujdokumen;
-import ekptg.model.utils.ILampiran;
+import ekptg.model.utils.lampiran.ILampiran;
 
 public class LampiranBean implements ILampiran{
 	private static Logger myLog = Logger.getLogger(ekptg.model.ppt.util.LampiranBean.class);

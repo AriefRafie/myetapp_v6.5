@@ -23,7 +23,7 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.NumberToWords;
 import ekptg.helpers.Utils;
-import ekptg.model.admin.EmailConfig;
+import ekptg.model.utils.emel.EmailConfig;
 
 /**
  * modified by hilda
