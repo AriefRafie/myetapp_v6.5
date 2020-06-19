@@ -32,10 +32,10 @@ import ekptg.engine.GetAttachment;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
-import ekptg.model.admin.EmailConfig;
 import ekptg.model.php2.FrmREVHeaderData;
 import ekptg.model.php2.FrmREVMemantauBayaranSewaData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
+import ekptg.model.utils.emel.EmailConfig;
 import ekptg.ws.gfmas.GfmasMemantauBayaranSewaManager;
 
 /**
