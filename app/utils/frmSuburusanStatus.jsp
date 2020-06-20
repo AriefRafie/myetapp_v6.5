@@ -127,10 +127,10 @@
 <input type=hidden name=page value=$page>	
 </table>
 <br>
-<input class="stylobutton100"  type="button" value="Tambah" onClick="javascript:doAjaxCall${formName}('addNewPejabat')">
 #else
 <div class="info">Tiada Rekod</div>
 #end
+<input class="stylobutton100"  type="button" value="Tambah" onClick="javascript:doAjaxCall${formName}('addNewPejabat')">
 
 <!-- End Senarai -->
 			</fieldset>		

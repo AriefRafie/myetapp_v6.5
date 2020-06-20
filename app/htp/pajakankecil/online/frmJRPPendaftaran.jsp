@@ -113,14 +113,14 @@
 			        		<table width="100%" border="0">
 			              		<tr>
 						      		<td width="1%"></td>
-					        		<td width="30%"><div align="left">No. Fail Seksyen</div></td>
+					        		<td width="30%"><div align="left">No. Fail</div></td>
 					        		<td width="1%"><div align="center">:</div></td>
-					        		<td width="68%"><input type="text" name="txtNoFailSek" size="30" value="$nofailseksyen"  $inputstylerep onblur="this.value=this.value.toUpperCase();" ></td>							              			
+					        		<td width="68%"><input type="text" name="txtNoFailSek" class="disabled" size="30" value="$nofailseksyen"  $inputstylerep onblur="this.value=this.value.toUpperCase();" disabled></td>							              			
 		              			</tr>		
 			              		<tr>
 						      		<td width="1%"><span class="labelmandatory">*</span></td>
 						      		<!-- <td width="1%"></td>  -->
-					        		<td width="30%"><div align="left">No. Fail Lain</div></td>
+					        		<td width="30%"><div align="left">No. Rujukan Kami</div></td>
 					        		<td width="1%"><div align="center">:</div></td>
 					        		<td width="68%"><input type="text" name="txtNoFailLain" size="30" value="$nofaillain" id="txtNoFailLain" onblur="this.value=this.value.toUpperCase();" $classDis></td>							              			
 		              			</tr>			              			        			

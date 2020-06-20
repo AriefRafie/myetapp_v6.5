@@ -232,14 +232,14 @@
       #end
       <!--
       #if ($modePopup == 'newUlangan')
-      <input name="cmdSimpanNotis" type="button" onClick="doSimpanMaklumatUlanganNotis425()" value="Simpan">
-      <input name="cmdBatalNotis" type="button" onClick="doBatalKemaskiniMaklumatNotis425()" value="Batal">
+      <input name="cmdSimpanNotis" type="button" onClick="doSimpanMaklumatUlanganNotis()" value="Simpan">
+      <input name="cmdBatalNotis" type="button" onClick="doBatalKemaskiniMaklumatNotis()" value="Batal">
       #end
       -->
       #if ($modePopup == 'view')
       #if ($flagAktif != 'T')
-      <input name="cmdKemaskiniNotis" type="button" onClick="doKemaskiniMaklumatNotis425()" value="Kemaskini">
-      <input name="cmdHapusNotis" type="button" onClick="doHapusMaklumatNotis425()" value="Hapus">
+      <input name="cmdKemaskiniNotis" type="button" onClick="doKemaskiniMaklumatNotis()" value="Kemaskini">
+      <input name="cmdHapusNotis" type="button" onClick="doHapusMaklumatNotis()" value="Hapus">
       <input name="cmdBatal1" type="button" value="Kembali" onClick="batalDokumen()" />
       <!--
       #if ($flagStatus == '1')
@@ -250,8 +250,8 @@
       #end
       #end
       #if ($modePopup == 'update')
-      <input name="cmdSimpanNotis" type="button" onClick="doSimpanKemaskiniMaklumatNotis425()" value="Simpan" />
-      <input name="cmdBatalNotis" type="button" onClick="doBatalKemaskiniMaklumatNotis425()" value="Batal">
+      <input name="cmdSimpanNotis" type="button" onClick="doSimpanKemaskiniMaklumatNotis()" value="Simpan" />
+      <input name="cmdBatalNotis" type="button" onClick="doBatalKemaskiniMaklumatNotis()" value="Batal">
       #end </td>
   </tr>
 </table>

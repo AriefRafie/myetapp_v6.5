@@ -14,6 +14,7 @@
   <input name="actionTamat" type="hidden" id="actionTamat" value="$actionTamat"/>
   <input name="idMohonTamat" type="hidden" id="idMohonTamat" value="$idMohonTamat"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+  <input name="idUlasanTeknikal" type="hidden" id="idUlasanTeknikal" value="$idUlasanTeknikal"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
@@ -508,5 +509,141 @@ function doSimpanMaklumatNotis(){
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanMaklumatNotis";
 	doAjaxCall${formName}("");
+}
+
+function calcDate(){
+	if (document.${formName}.txtTarikhHantar.value != "" && document.${formName}.txtJangkaMasa.value != ""){
+		
+		var tarikhHantar  = document.${formName}.txtTarikhHantar.value;
+		var days  = parseInt(document.${formName}.txtJangkaMasa.value);
+		
+		var dt1   = parseInt(tarikhHantar.substring(0,2),10) + days;
+		var mon1  = parseInt(tarikhHantar.substring(3,5),10)-1;
+		var yr1   = parseInt(tarikhHantar.substring(6,10),10);
+	 
+		var myDate = new Date(yr1, mon1, dt1);
+		
+		var day = myDate.getDate();
+		var month = myDate.getMonth()+1;
+		var year = myDate.getFullYear();
+		
+		var tarikhJangkaTerima = "";
+		if(month>=10){
+			if(day>=10){
+				tarikhJangkaTerima = day + "/" + month + "/" + year;	
+			} else {
+				tarikhJangkaTerima = "0"+ day + "/" + month + "/" + year;	
+			}				
+		} else {
+			if(day>=10){
+				tarikhJangkaTerima = day + "/0" + month + "/" + year;	
+			} else {
+				tarikhJangkaTerima = "0"+ day + "/0" + month + "/" + year;	
+			}
+		}
+		document.${formName}.txtTarikhJangkaTerima.value = tarikhJangkaTerima;
+	
+	} else {
+		document.${formName}.txtTarikhJangkaTerima.value = "";
+	}
+}
+
+function paparMaklumatNotis(idUlasanTeknikal){
+	document.${formName}.flagPopup.value = "openMaklumatNotis";
+	document.${formName}.modePopup.value = "view";
+	document.${formName}.idUlasanTeknikal.value = idUlasanTeknikal;
+	doAjaxCall${formName}("");
+}
+
+
+function doSimpanMaklumatUlanganNotis(){	
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.flagPopup.value = "openMaklumatNotis";
+	document.${formName}.modePopup.value = "view";
+	document.${formName}.hitButton.value = "simpanMaklumatUlanganNotis";
+	doAjaxCall${formName}("");
+}
+function doBatalMaklumatNotis(){
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	doAjaxCall${formName}("");
+}
+function doKemaskiniMaklumatNotis(){
+	document.${formName}.flagPopup.value = "openMaklumatNotis";
+	document.${formName}.modePopup.value = "update";
+	doAjaxCall${formName}("");
+}
+function doBatalKemaskiniMaklumatNotis(){
+	document.${formName}.flagPopup.value = "openMaklumatNotis";
+	document.${formName}.modePopup.value = "view";
+	doAjaxCall${formName}("");
+}
+function doSimpanKemaskiniMaklumatNotis(){
+	
+	if(document.${formName}.jenisDokumen.value == ""){
+		alert('Sila pilih Jenis Dokumen.');
+  		document.${formName}.jenisDokumen.focus(); 
+		return; 
+	}
+	
+	if(document.${formName}.idSuratKe.value == ""){
+		alert('Sila pilih Surat ke .');
+  		document.${formName}.idSuratKe.focus(); 
+		return; 
+	}
+	if(document.${formName}.socNegeri.value == ""){
+		alert('Sila pilih Negeri.');
+		document.${formName}.socNegeri.focus(); 
+		return; 
+	}
+	if(document.${formName}.socPejabat.value == ""){
+		alert('Sila pilih Pejabat.');
+		document.${formName}.socPejabat.focus(); 
+		return; 
+	}
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.flagPopup.value = "openMaklumatNotis";
+	document.${formName}.modePopup.value = "view";
+	document.${formName}.hitButton.value = "simpanKemaskiniMaklumatNotis";
+	doAjaxCall${formName}("");
+}
+function doHapusMaklumatNotis(){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.hitButton.value = "hapusMaklumatKJPKJT";
+	doAjaxCall${formName}("");
+}
+function doTerimaNotis(){
+	document.${formName}.flagPopup.value = "openMaklumatNotis";
+	document.${formName}.modePopup.value = "update";
+	document.${formName}.flagStatus.value = "2";
+	doAjaxCall${formName}("");
+}
+function doUlanganNotis(){
+	document.${formName}.flagPopup.value = "openMaklumatNotis";
+	document.${formName}.modePopup.value = "newUlangan";
+	document.${formName}.flagStatus.value = "1";
+	doAjaxCall${formName}("");
+}
+</script>
+<input name="step" type="hidden" id="step"/>
+<script>
+function gotoSelesaiPermohonan(){	
+	document.${formName}.step.value = "selesaiPermohonan";
+	document.${formName}.submit();
+}
+function gotoBatalPermohonan(){	
+	document.${formName}.step.value = "batalPermohonan";
+	document.${formName}.submit();
 }
 </script>

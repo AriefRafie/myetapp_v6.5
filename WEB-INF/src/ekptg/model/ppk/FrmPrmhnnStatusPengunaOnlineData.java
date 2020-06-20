@@ -328,7 +328,8 @@ public class FrmPrmhnnStatusPengunaOnlineData {
 	    		  " (CASE WHEN B.JENIS_MASA_BICARA = '1' THEN ' PAGI' WHEN B.JENIS_MASA_BICARA = '2' THEN ' TENGAH HARI' WHEN B.JENIS_MASA_BICARA = '3' THEN ' PETANG' ELSE '' END) AS MASA_BICARA, "+
 	    		  " B.TEMPAT_BICARA, UPPER (B.ALAMAT_BICARA1) AS ALAMAT_BICARA1, UPPER (B.ALAMAT_BICARA2) AS ALAMAT_BICARA2, UPPER (B.ALAMAT_BICARA3) AS ALAMAT_BICARA3, B.POSKOD, UPPER (B.BANDAR) AS BANDAR, B.ID_NEGERIBICARA, "+
 	    		  " UPPER (N.NAMA_NEGERI) AS NAMA_NEGERI, TO_CHAR (B.TARIKH_MASUK, 'DD/MM/YYYY') AS TARIKH_MASUK_BICARA, "+
-	    		  " PJ.NAMA_PEJABAT, TO_CHAR (B.TARIKH_NOTIS, 'DD/MM/YYYY') AS TARIKH_NOTIS " +
+	    		  " PJ.NAMA_PEJABAT, TO_CHAR (B.TARIKH_NOTIS, 'DD/MM/YYYY') AS TARIKH_NOTIS "
+	    		  + ",B.ID_PERBICARAAN " +
 	    		  " FROM TBLPPKPERMOHONAN P, TBLPPKOBPERMOHONAN OBP, TBLPPKPERMOHONANSIMATI PSM, TBLPFDFAIL F, USERS_ONLINE UO, TBLPPKSIMATI SM, TBLPPKPEMOHON PM,  "+
 	    		  " TBLPPKKEPUTUSANPERMOHONAN KP, TBLPPKPERBICARAAN B, TBLPPKPERINTAH PERINTAH, TBLRUJSTATUS S, TBLRUJDAERAH D, TBLRUJNEGERI N, "+
 	    		  " TBLRUJPEJABATJKPTG PJ, TBLRUJPEJABATURUSAN PU"+
@@ -391,7 +392,8 @@ public class FrmPrmhnnStatusPengunaOnlineData {
 	    	  h.put("poskod", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
 	    	  h.put("bandar", rs.getString("BANDAR")==null?"":rs.getString("BANDAR"));
 	    	  h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
-	    	  
+	    	  h.put("idPerbicaraan", rs.getString("id_perbicaraan")==null?"":rs.getString("id_perbicaraan"));
+
 	    	  /*
 	    	  h.put("id_permohonansimati", rs.getString("ID_PERMOHONANSIMATI")==null?"":rs.getString("ID_PERMOHONANSIMATI"));
 	    	  h.put("id_Permohonan", rs.getString("ID_PERMOHONAN")==null?"":rs.getString("ID_PERMOHONAN"));

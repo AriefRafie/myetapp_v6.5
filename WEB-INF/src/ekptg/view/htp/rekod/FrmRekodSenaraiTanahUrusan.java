@@ -33,16 +33,18 @@ import ekptg.model.htp.rekod.FrmHakmilikRizabUrusanBean;
 import ekptg.model.htp.rekod.FrmRekodUtilData;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
-import ekptg.model.htp.rekod.IHakmilikRizab;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.ITanahCarian;
+import ekptg.model.htp.rekod.TanahBean;
 
 public class FrmRekodSenaraiTanahUrusan extends AjaxBasedModule {
 	
 	private final String PATH="app/htp/rekod/";
-	private HakmilikInterface iHakmilik = null;
+	private ITanah iHakmilik = null;
 	private static final long serialVersionUID = 1L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.rekod.FrmRekodSenaraiTanahUrusan.class);
 	private InternalUser iu = null;
-	private IHakmilikRizab iHakmilikRizab = null;
+	private ITanahCarian iHakmilikRizab = null;
 	String userId = "";
 	boolean isSambungan = false;
 	FrmRekodUtilData frmRekodUtilData = null;
@@ -855,7 +857,7 @@ public class FrmRekodSenaraiTanahUrusan extends AjaxBasedModule {
 		Vector list =null;
 
 		//list = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+		list = geTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
 		
 		this.context.put("txtFailPTD",(String)hMaklumatFail.get("noFailPtd"));
@@ -1421,20 +1423,21 @@ public class FrmRekodSenaraiTanahUrusan extends AjaxBasedModule {
 			
 		}
 
-		 
-			private IHakmilikRizab getIHakmilikRizab(){
-				if (iHakmilikRizab == null){
-					iHakmilikRizab = new FrmHakmilikRizabUrusanBean();
-				}
-				return iHakmilikRizab;
+		private ITanahCarian getIHakmilikRizab(){
+			if (iHakmilikRizab == null){
+				iHakmilikRizab = new FrmHakmilikRizabUrusanBean();
 			}
+			return iHakmilikRizab;
+		
+		}
 			
-			private HakmilikInterface getIHakmilik(){
-				if (iHakmilik==null){
-					iHakmilik=new HakmilikBean();
-				}
-				return iHakmilik;
+		private ITanah geTanah(){
+			if (iHakmilik==null){
+				iHakmilik=new TanahBean();
 			}
+			return iHakmilik;
+			
+		}
 			
 			
 	}	

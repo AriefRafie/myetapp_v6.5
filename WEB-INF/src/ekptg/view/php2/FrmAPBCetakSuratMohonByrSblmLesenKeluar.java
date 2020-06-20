@@ -65,7 +65,7 @@ public class FrmAPBCetakSuratMohonByrSblmLesenKeluar extends AjaxBasedModule{
 		
 		if (postDB) {
 			if ("doSimpanKemaskiniBayaranSblm".equals(hitButton)){
-				logic.updateMaklumatBayaranSblm(idPermohonan,getParam("txtUlasanEIA"),getParam("txtUlasanHidro") ,getParam("txtLuasKawasan") ,idLuas,
+				logic.updateMaklumatBayaranSblm(idPermohonan, getParam("txtUlasanEIA"), getParam("txtUlasanHidro") , getParam("txtUlasanHidra"), getParam("txtUlasanPasir"), getParam("txtLuasKawasan") ,idLuas,
 						Utils.RemoveSymbol(getParam("txtFeeLesen")),Utils.RemoveSymbol(getParam("txtJumlahFeeLesen")),getParam("txtKmPersegi"),Utils.RemoveSymbol(getParam("txtWangCagaran")),Utils.RemoveSymbol(getParam("txtWangAmanah")), 
 						getParam("txtMaklumatTambahan"),getParam("txtIsipadu"),Utils.RemoveSymbol(getParam("txtKadarRoyaltiPasir")),
 						Utils.RemoveSymbol(getParam("txtJumlahRoyaltiSeluruh")),Utils.RemoveSymbol(getParam("txtJumDahuluRoyalti")),getParam("txtSyaratKelulusan"),session);

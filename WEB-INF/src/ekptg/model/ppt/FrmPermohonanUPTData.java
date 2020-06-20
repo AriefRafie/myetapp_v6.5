@@ -6486,4 +6486,81 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	   
 	  }//close updateStatus
 	
+	public Hashtable<String,String> getPermohonanPPK(String id) throws Exception {
+		Hashtable<String,String> hash = null;
+		Db db = null;
+		String sql = "";
+		
+		try{
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+		
+				r.add("p.id_permohonan");
+				r.add("p.id_fail");
+				r.add("f.id_suburusan");		
+				r.add("f.id_fail",r.unquote("p.id_fail"));
+				//r.add("n.id_negeri",r.unquote("f.id_negeri"));
+				r.add("p.id_Permohonan",id);
+		
+				sql = r.getSQLSelect("tblpfdfail f,tblpptpermohonan p");
+		
+				ResultSet rs = stmt.executeQuery(sql);
+		
+				while(rs.next()) {
+					hash = new Hashtable();
+					hash.put("idPermohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));
+					hash.put("idFail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
+					hash.put("idSuburusan", rs.getString("id_suburusan")==null?"":rs.getString("id_suburusan"));
+	
+				}
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		}finally {
+			if(db != null) db.close();
+		}
+		return hash;
+		
+	}//close list pohon2
+	
+	public Hashtable<String,String> getPermohonan(String id) throws Exception {
+		Hashtable<String,String> hash = null;
+		Db db = null;
+		String sql = "";
+		
+		try{
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+		
+				r.add("p.id_permohonan");
+				r.add("p.id_fail");
+				r.add("f.id_suburusan");		
+				r.add("f.id_fail",r.unquote("p.id_fail"));
+				//r.add("n.id_negeri",r.unquote("f.id_negeri"));
+				r.add("p.id_Permohonan",id);
+		
+				sql = r.getSQLSelect("tblpfdfail f,tblpermohonan p");
+		
+				ResultSet rs = stmt.executeQuery(sql);
+		
+				while(rs.next()) {
+					hash = new Hashtable();
+					hash.put("idPermohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));
+					hash.put("idFail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
+					hash.put("idSuburusan", rs.getString("id_suburusan")==null?"":rs.getString("id_suburusan"));
+	
+				}
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		}finally {
+			if(db != null) db.close();
+		}
+		return hash;
+		
+	}//close list pohon2
+	
+	
 }//close class

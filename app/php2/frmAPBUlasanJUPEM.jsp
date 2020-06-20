@@ -286,4 +286,50 @@ function cetakAPBSMUJUPEMUlangan(idFail,idUlasanTeknikal) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+function doDaftarNotifikasi(){
+	document.${formName}.flagPopup.value = "openJUPEM";
+	document.${formName}.modePopup.value = "view";
+	document.${formName}.flagNotifikasi.value = "openNotifikasi";
+	//document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView";
+	//document.${formName}.method="POST";
+	document.${formName}.submit();
+}
+function doSimpanRekodEmailJUPEM(){
+	
+	if(document.${formName}.namaPegawai.value == ""){
+		alert('Sila isikan nama .');
+  		document.${formName}.namaPegawai.focus(); 
+		return; 
+	}
+	if(document.${formName}.emel.value == ""){
+		alert('Sila isikan alamat emel .');
+  		document.${formName}.emel.focus(); 
+		return; 
+	}
+	if(document.${formName}.jawatan.value == ""){
+		alert('Sila isikan maklumat jawatan .');
+  		document.${formName}.jawatan.focus(); 
+		return; 
+	}
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.flagPopup.value = "openJUPEM";
+	document.${formName}.modePopup.value = "view";
+	document.${formName}.hitButton.value = "simpanRekodEmailJUPEM";
+	document.${formName}.flagNotifikasi.value = "";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView";
+	document.${formName}.method="POST";
+	document.${formName}.submit();
+}
+function doChangeSuratKe() {
+	doAjaxCall${formName}("doChangeSuratKe");
+}
+function doChangeNegeri() {
+	doAjaxCall${formName}("doChangeNegeri");
+}
+function doChangePejabat() {
+	doAjaxCall${formName}("doChangePejabat");
+}
 </script>

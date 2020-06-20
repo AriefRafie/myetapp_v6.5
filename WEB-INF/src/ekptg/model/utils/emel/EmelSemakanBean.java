@@ -1,4 +1,4 @@
-package ekptg.model.htp;
+package ekptg.model.utils.emel;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -9,16 +9,19 @@ import lebah.db.Db;
 
 import org.apache.log4j.Logger;
 
-import ekptg.helpers.EkptgCache;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHtp;
 
 
-public class HTPEmelPermohonanBean extends EkptgCache implements IHTPEmel {
+public class EmelSemakanBean implements IEmel {
 	
  	private IHtp iHTP = null;  
-	private static Logger myLog = Logger.getLogger(ekptg.model.htp.HTPEmelBean.class);
+	private static Logger myLog = Logger.getLogger(ekptg.model.utils.emel.EmelSemakanBean.class);
 	private Vector checkEmail = null;
+	private String tajukDefault = "Pengujian MyeTaPP : Semakan/ Pengesahan Permohonan ";
 
+	
 	@Override
 	public String checkEmail(String userId) throws Exception {
 		String returnValue = "";
@@ -81,7 +84,7 @@ public class HTPEmelPermohonanBean extends EkptgCache implements IHTPEmel {
 	}
 	
 	@Override
-	public String setEmailSign(String noRujukan,String tajuk,String namaKementerian){		
+	public String setEmailSign(String noFail,String tajuk, String dari){		
 		StringBuffer bff = new StringBuffer();
 		bff.append("<br/>");
 		bff.append("<br/>");
@@ -90,7 +93,7 @@ public class HTPEmelPermohonanBean extends EkptgCache implements IHTPEmel {
 		bff.append("<br/>");
 		bff.append("<br/>");		  
 	    bff.append("Minta Tuan/Puan  menyemak/mengesahkan permohonan " +
-	    		"<b>"+tajuk+"</b> daripada "+namaKementerian+" dan nombor rujukan adalah seperti berikut <b>"+noRujukan+"</b>.");
+	    		"<b>"+tajuk+"</b> daripada "+dari+" - <b>"+noFail+"</b>.");
 		bff.append("<br/>");
 		bff.append("<br/>");
 		bff.append("Sila <i>login</i> ke <a href=\"http://www.etapp.gov.my\" >www.etapp.gov.my</a> untuk semakan selanjutnya.");
@@ -107,14 +110,62 @@ public class HTPEmelPermohonanBean extends EkptgCache implements IHTPEmel {
 		return bff.toString();
 		
 	}
-
+	
+	@Override
+	public String setKandungan(String tajuk, String dari){	
+		String kandungan = getSignHeader();
 		
+		StringBuffer sb = new StringBuffer();
+	    //sb.append("Minta Tuan/Puan enyemak/mengesahkan permohonan " +
+	    sb.append("Mohon Tuan/Puan Menyemak/Meluluskan Permohonan " +
+	    		"<b>"+tajuk+"</b> daripada "+dari+".");
+
+		kandungan += sb.toString();
+		kandungan += getSignFooter();
+		
+		return kandungan;
+
+	}	
+	
+	@Override
+	public String setKandungan(String tajuk, String kementerian,String noRujukan){	
+		String kandungan = getSignHeader();
+		
+		StringBuffer sb = new StringBuffer();
+	    sb.append("Mohon Tuan/Puan Menerima/Mengesahkan Permohonan " +
+	    		"<b>"+tajuk+"</b> daripada <b>"+kementerian+"</b> dan nombor rujukan adalah seperti berikut <b>"+noRujukan+"</b>.");
+ 
+		kandungan += sb.toString();
+		kandungan += getSignFooter();
+		
+		return kandungan;
+
+	}
+	
+	public String getSignFooter() {
+		return EmailConfig.getFooter();
+		
+	}
+	
+	public String getSignHeader() {
+		return EmailConfig.getHeader();
+		
+	}
+	
+	@Override
+	public String seTajuk(String namaSubmodul) {
+		if(!namaSubmodul.equals(""))
+			tajukDefault += "("+namaSubmodul+")";
+			
+		return tajukDefault;
+		
+	}
+
 	private IHtp getIHTP(){
 		if(iHTP== null)
 			iHTP = new HtpBean();
 		return iHTP;
 	}
-	
 	
 	
 	

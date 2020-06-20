@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.model.htp.FrmUtilData;
 
-public class FrmTanahPembangunanBean{
-	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.FrmTanahPembangunanBean.class);
+public class bak_FrmTanahPembangunanBean{
+	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.bak_FrmTanahPembangunanBean.class);
 
 	private static Vector listPerihalById = null;
 	private static Vector listPerihalByIdHakmilik = null;

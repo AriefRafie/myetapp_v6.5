@@ -1376,10 +1376,15 @@ kod :: $listhath.kod_hakmilik
         #set ($noKpBaruPemohon2 = $View.noKpBaruPemohon2)
         #set ($noKpBaruPemohon3 = $View.noKpBaruPemohon3)
     #end
+    skrin_deraf= $skrin_deraf
     #if($!skrin_deraf == "yes")
 <tr><td>
     		<td width="1%" valign="top"></td>
-    		<td width="3%"><input type="checkbox" value="1" $disCheck $chkmode name='$!namecb1' id='$!namecb1' $checked10 ></td>
+    		#if ($idStatus == "150")
+    		<td width="3%"><input type="checkbox" name='namecb1' id='namecb1'></td>
+    		#else
+    		<td width="3%"><input type="checkbox" name='namecb1' id='namecb1' checked disabled></td>
+    		#end
       	<td width="89%">Saya $!namaPemohon no.k/p $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
 </td></tr>#end
   	
@@ -1406,13 +1411,13 @@ kod :: $listhath.kod_hakmilik
 #if ($idStatus == "150")
 
 #if($!namapejabat != "")
-<input type="button" name="cmdBorangADraf" value="Semak Draf Borang A" onClick="javascript:cetakBorangADraf()">
+<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()">
 <input type="button" name="cmdHantar" value="Hantar ke $!namapejabat" onClick="javascript:getUnitPPK('$id','$nopermohonanonline')">
 <!--<input type="button" name="cmdKosongkan" value="Kosongkan" onClick="PengesahanView('3','0','0','0')">-->
 
 
 #else
-<input type="button" name="cmdBorangADraf" value="Semak Draf Borang A" onClick="javascript:cetakBorangADraf()">
+<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()">
 
 #end
 
@@ -1512,7 +1517,6 @@ var nextFieldID = 'maklumat_pemohon';
 }
 	
 } 
-
 
 
 function HtaamView() {
@@ -1822,26 +1826,31 @@ function hantar_terus(seksyen,idPermohonan,idPermohonanSimati,tarikhMohon,idSima
 function getUnitPPK(idpermohonan,nopermohonanonline) {
 
     if (document.f1.socNegeriPengesahan.value=="0")
-	{
-		alert("Sila pilih Negeri");
-		socNegeriPengesahan.focus();
-	}
-	else if (document.f1.socDaerahPengesahan.value=="0")
-	{
-		alert("Sila pilih Daerah");
-		socDaerahPengesahan.focus();
-	}
-	else
-	{
-		input_box=confirm("Adakah anda pasti?");
-		if (input_box == true) 
 		{
-		document.f1.method="post";
-		document.f1.command.value="nilai_harta";
-		document.f1.mode.value="cetak_surat";
-		//doAjaxCall${formName}("cetak_surat");
-	    document.f1.submit();
+			alert("Sila pilih Negeri");
+			socNegeriPengesahan.focus();
 		}
+		else if (document.f1.socDaerahPengesahan.value=="0")
+		{
+			alert("Sila pilih Daerah");
+			socDaerahPengesahan.focus();
+		}
+		else if(namecb1.checked == false)
+ 		{
+    	alert('Sila tanda pada checkbox untuk teruskan permohonan');
+    	return;
+ 		}
+		else
+		{
+			input_box=confirm("Adakah anda pasti?");
+			if (input_box == true) 
+			{
+				document.f1.method="post";
+				document.f1.command.value="nilai_harta";
+				document.f1.mode.value="cetak_surat";
+				//doAjaxCall${formName}("cetak_surat");
+	    	document.f1.submit();
+			}
 	}
 }
 

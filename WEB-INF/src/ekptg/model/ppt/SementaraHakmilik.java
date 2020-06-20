@@ -40,17 +40,17 @@ public class SementaraHakmilik {
 	    		sql = "SELECT distinct p.id_status, p.id_permohonan, p.no_permohonan, f.id_fail, f.no_fail, p.tarikh_permohonan, su.nama_suburusan, k.nama_kementerian, s.keterangan, p.tarikh_masuk, p.flag_semak ";
 	    		sql +=", p.no_rujukan_ptg, p.no_rujukan_ptd, p.no_rujukan_upt, p.FLAG_STATUS_ONLINE ";
 	    		sql +=", p.no_rujukan_ptg, p.no_rujukan_ptd, p.no_rujukan_upt ";
-	    		sql +="FROM Tblpptpermohonan p, Tblpfdfail f,Tblrujsuburusan su,Tblrujstatus s, Tblrujkementerian k ";
-	    		sql +="WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian ";
-	    		sql +="AND p.id_status = s.id_status ";
-	    		sql +="AND f.id_suburusan = '53' ";
-	    		sql +="AND p.id_status IN (127,11,16,138)";	
+	    		sql +=" FROM Tblpptpermohonan p, Tblpfdfail f,Tblrujsuburusan su,Tblrujstatus s, Tblrujkementerian k ";
+	    		sql +=" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian ";
+	    		sql +=" AND p.id_status = s.id_status ";
+	    		sql +=" AND f.id_suburusan = '53' ";
+	    		sql +=" AND p.id_status IN (127,11,16,138)";	
 	    		
 	    		// ADDED BY ELLY 14 JUN 2010
 	    		if(!userIdNegeri.equals("16") && !userIdNegeri.isEmpty()){
-	    			sql += "AND f.id_negeri ='"+userIdNegeri+"'";
+	    			sql += " AND f.id_negeri ='"+userIdNegeri+"'";
 	    		}	    		
-	    		sql +="ORDER by p.tarikh_permohonan desc, f.no_fail desc ";
+	    		sql +=" ORDER by p.tarikh_permohonan desc, f.no_fail desc ";
 	    		
 	    		myLogger.info("DEFAULT :: "+sql);
 	    		ResultSet rs = stmt.executeQuery(sql);

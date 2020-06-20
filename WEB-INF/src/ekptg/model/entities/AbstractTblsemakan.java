@@ -28,6 +28,7 @@ public abstract class AbstractTblsemakan implements java.io.Serializable {
 	private Long idKemaskini;
 	private Date tarikhKemaskini;
 	private Set tblsemakansenarais = new HashSet(0);
+	private int bilangan;
 
 	// Constructors
 
@@ -58,7 +59,14 @@ public abstract class AbstractTblsemakan implements java.io.Serializable {
 	}
 
 	// Property accessors
+	public int getBil() {
+		return this.bilangan;
+	}
 
+	public void setBil(int bilangan) {
+		this.bilangan = bilangan;
+	}
+	
 	public Long getIdSemakan() {
 		return this.idSemakan;
 	}

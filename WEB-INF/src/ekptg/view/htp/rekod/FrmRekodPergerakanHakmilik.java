@@ -13,15 +13,15 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.htp.FrmRekodPergerakanHakmilikData;
-import ekptg.model.htp.rekod.HakmilikBean;
-import ekptg.model.htp.rekod.HakmilikInterface;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.TanahBean;
 
 public class FrmRekodPergerakanHakmilik extends AjaxBasedModule {
 	/**
 	 * 
 	 */
 	private final String PATH="app/htp/rekod/pergerakan/";
-	private HakmilikInterface iHakmilik = null;
+	private ITanah iHakmilik = null;
 	private static final long serialVersionUID = 2104047546676113876L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.rekod.FrmRekodPergerakanHakmilik.class);
 
@@ -474,9 +474,9 @@ public class FrmRekodPergerakanHakmilik extends AjaxBasedModule {
 	}
 	
 	// Dibuat pada  2012/09/29
-	private HakmilikInterface getIHakmilik(){
+	private ITanah getIHakmilik(){
 		if (iHakmilik == null){
-			iHakmilik = new HakmilikBean();
+			iHakmilik = new TanahBean();
 		}
 		return iHakmilik;
 	}

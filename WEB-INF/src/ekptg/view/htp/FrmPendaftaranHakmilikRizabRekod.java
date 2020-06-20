@@ -28,14 +28,20 @@ import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.htp.rekod.FrmRekodUtilData;
+import ekptg.model.htp.rekod.FrmTanahKementerianBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.ITanahKementerian;
+import ekptg.model.htp.rekod.TanahBean;
 
 public class FrmPendaftaranHakmilikRizabRekod extends AjaxBasedModule {
 
  	private IHtp iHTP = null;  
 	private IPembelian iPembelian = null;
+	private ITanahKementerian iTanahKem = null;  
 	private HakmilikInterface iHakmilik = null;
+	private ITanah iTanah = null;
 	private HakMilik hakmilik = null;
 	private HakmilikAgensi hakmilikAgensi = null;
 	private HtpPermohonan htpPermohonan = null;
@@ -284,7 +290,7 @@ public class FrmPendaftaranHakmilikRizabRekod extends AjaxBasedModule {
 				 hakmilikAgensi.setIdHakmilik(Long.parseLong(idHakmilik));
 				 hakmilikAgensi.setIdHakmilikAgensi(Long.parseLong(idAgensiKemasukan));
 				 hakmilikAgensi.setIdKementerian(Long.parseLong(idKementerianKemasukan));
-				 hakmilikAgensi = getIHakmilik().kemaskiniHakmilikAgensi(hakmilikAgensi);
+				 getTanahKem().kemaskiniTanahAgensi(hakmilikAgensi);
 				 
 			 }else{
 				 //AZAM CHANGE TO TRANSACTION
@@ -1269,7 +1275,7 @@ public class FrmPendaftaranHakmilikRizabRekod extends AjaxBasedModule {
 		String idHakmilik = getParam("idHakmilik");
 		Vector list =null;
 		//list = FrmRekodPendaftaranHakmilikSementaraData.getPaparMaklumatFailById(idHakmilik);
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+		list = geTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
 		
 		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
@@ -1293,7 +1299,7 @@ public class FrmPendaftaranHakmilikRizabRekod extends AjaxBasedModule {
 		Vector list =null;
 		// Dikemaskini 09/04/2012
 		//list = FrmRekodPendaftaranHakmilikSementaraData.getPaparMaklumatFailById(idHakmilik);
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+		list = geTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
 		
 		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
@@ -1317,7 +1323,7 @@ public class FrmPendaftaranHakmilikRizabRekod extends AjaxBasedModule {
 	private void XviewModeMaklumatFail(HttpSession session,String idHakmilik) throws Exception {
 		Vector list =null;
 		//list = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
-		list = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+		list = geTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable hMaklumatFail = (Hashtable) list.get(0);
 		
 		this.context.put("txtFailPTG",(String)hMaklumatFail.get("noFailPtg"));
@@ -1948,7 +1954,7 @@ public class FrmPendaftaranHakmilikRizabRekod extends AjaxBasedModule {
 				 hakmilikAgensi.setIdHakmilikAgensi(Long.parseLong(idAgensiKemasukan));
 				 hakmilikAgensi.setIdKementerian(Long.parseLong(idKementerianKemasukan));
 
-				 hakmilikAgensi = getIHakmilik().kemaskiniHakmilikAgensi(hakmilikAgensi);
+				 getTanahKem().kemaskiniTanahAgensi(hakmilikAgensi);
 
 				 /*
 				 Hashtable hHakmilikPerihal = new Hashtable();
@@ -2066,6 +2072,13 @@ public class FrmPendaftaranHakmilikRizabRekod extends AjaxBasedModule {
 		}
 		return iHakmilik;
 	}
+
+	private ITanah geTanah(){
+		if (iTanah==null){
+			iTanah=new TanahBean();
+		}
+		return iTanah;
+	}
 	
 	private IHtp getIHTP(){
 		if(iHTP== null)
@@ -2073,5 +2086,10 @@ public class FrmPendaftaranHakmilikRizabRekod extends AjaxBasedModule {
 		return iHTP;
 	}		  
 
+	private ITanahKementerian getTanahKem(){
+		if(iTanahKem== null)
+			iTanahKem = new FrmTanahKementerianBean();
+		return iTanahKem;
+	}
 
 }

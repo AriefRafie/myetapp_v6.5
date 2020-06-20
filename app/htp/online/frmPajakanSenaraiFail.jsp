@@ -3,12 +3,13 @@
 .style1 {color: #0033FF}
 -->
 </style>
+#set($hide='style="display:none"')
 <p>
 	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-	<input type="text" name="idFail" />
+	<input type="hidden" name="idFail" />
 	<input type="hidden" name="actionPajakan" />
 	<input type="hidden" name="mode" />
-	<input type="text" name="initiateFlagBuka" id="initiateFlagBuka"/>
+	<input type="hidden" name="initiateFlagBuka" id="initiateFlagBuka"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 
@@ -17,7 +18,7 @@
     		<fieldset><legend><b>CARIAN</b></legend>
 	        	<table width="100%" align="center" border="0">
 		            <tr>
-		              <td height="24" scope="row" align="right">Tajuk Fail :</td>
+		              <td height="24" scope="row" align="right">Tujuan Fail :</td>
 		              <td><input name="txtTajukFail" id="txtTajukFail" type="text" size="50" maxlength="50" style="text-transform:uppercase;" /></td>
 		            </tr>
 		            <tr>
@@ -25,7 +26,7 @@
 		              <td><input name="txtNamaPemohon" id="txtNamaPemohon" type="text" size="50" maxlength="50" style="text-transform:uppercase;" /></td>
 		            </tr>
 	            	<tr>
-		            	<td width="30%" height="24" scope="row" align="right">No Fail : </td>
+		            	<td width="30%" height="24" scope="row" align="right">No Fail Online : </td>
 		              	<td width="70%"><input name="txtNoFail" id="txtNoFail" type="text" value="$!txtNoFail" size="50" maxlength="50" style="text-transform:uppercase;" ></td> 
 		            </tr>
             		<tr>
@@ -67,11 +68,12 @@
 		            </tr>
 		            <tr class="table_header">
 				        <td width="3%"><b>Bil.</b></td>
-				        <td width="20%"><b>No Fail</b></td>
-				        <td width="37%"><b>Tajuk Fail</b></td>
+				        <td width="20%"><b>No Online</b></td>
+				        <td width="37%"><b>Tujuan Pajakan</b></td>
 				        <td width="17%"><b>Negeri</b></td>
 				        <td width="23%"><b>Status</b></td>
 		            </tr>
+		           
           			#set ($list = "")
           		#if ($senaraiFail.size() > 0)
           			#foreach ($list in $senaraiFail)
@@ -84,9 +86,8 @@
 			            #end
 		          	<tr>
 		            	<td class="$row" >$list.bil.</td>
-		            	<td class="$row"><a href="javascript:papar('$list.idFail')" class="style1">$list.noFail</a>
-		            	</td>
-		            	<td class="$row" >$list.tajuk</td>
+		            	<td class="$row">$list.noPermohonan</td>
+		            	<td class="$row" ><a href="javascript:papar('$list.idFail')" class="style1">$list.tajuk</a></td>
 		            	<td class="$row" >$list.negeri</td>
 		            	<!--<td class="$row" align="center">$list.tarikhTerima</td>-->
 		            	<td class="$row">$list.status</td>
@@ -127,7 +128,8 @@ function daftarBaru(){
 	document.${formName}.submit();
 }
 
-function papar(idFail,idStatus){
+function papar2(idFail,idStatus){
+	
 	url = "../servlet/ekptg.view.online.htp.pajakan.FrmPajakanServlet?command=papar&idFail="+idFail;
 	actionName = "setSessionIdFail";
 	target = "setSessionIdFail_result";
@@ -146,7 +148,7 @@ function papar(idFail,idStatus){
 		document.${formName}.action = "$EkptgUtil.getTabID('Pajakan',$portal_role)?_portal_module=ekptg.view.htp.FrmPajakanBayaranPajakanCukaiTanahView&actionPajakan";
 		
 	}
-
+	
 	document.${formName}.mode.value = "view";
 	//document.${formName}.actionPajakan.value = "papar";
 	document.${formName}.submit();
@@ -154,9 +156,10 @@ function papar(idFail,idStatus){
 
 function papar(idFail){
 	document.${formName}.idFail.value = idFail;
+	document.${formName}.mode.value = "view";
 	document.${formName}.initiateFlagBuka.value = "Y";
-	//document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
-	document.${formName}.action = "$EkptgUtil.getTabID("Harta Tanah Persekutuan",$portal_role)?_portal_module=ekptg.view.htp.online.FrmOnlineMaklumatPajakanView";
+	document.${formName}.actionPajakan.value = "paparMaklumatPajakan";
+	document.${formName}.action = "$EkptgUtil.getTabID("Harta Tanah Persekutuan",$portal_role)?_portal_module=ekptg.view.htp.online.FrmPajakanOnlineSenaraiFailView";
 	document.${formName}.submit();
 }
 

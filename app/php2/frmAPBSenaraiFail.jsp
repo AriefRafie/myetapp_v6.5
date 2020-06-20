@@ -75,10 +75,13 @@
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="25%"><strong>No Fail</strong></td>
-          <td width="35%"><strong>Nama Pemohon/Syarikat</strong></td>
-          <td width="10%" align="center"><strong>Tarikh Terima</strong></td>
-          <td width="25%"><strong>Status</strong></td>
+          <td width="20%"><strong>No Fail</strong></td>
+          <td width="30%"><strong>Nama Pemohon/Syarikat</strong></td>
+          <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
+          <td width="10%"><strong>Kawasan Dipohon</strong></td>
+          <td width="10%"><strong>Jenis Permohonan</strong></td>
+          <td width="8%"><strong>Jenis Lesen</strong></td>
+          <td width="10%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
    	#if ($SenaraiFail.size() > 0)
@@ -98,6 +101,9 @@
           <font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
           <td class="$row">$list.namaPemohon</td>
           <td class="$row" align="center">$list.tarikhTerima</td>
+          <td class="$row">$list.kawasanDipohon</td>
+          <td class="$row">PERMOHONAN BARU</td>
+          <td class="$row">LESEN PASIR DASAR LAUT</td>
           <td class="$row">$list.status</td>
         </tr>
    		#end

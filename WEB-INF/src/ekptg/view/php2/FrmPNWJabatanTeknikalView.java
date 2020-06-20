@@ -42,7 +42,7 @@ private static final long serialVersionUID = 1L;
         	mode = "view";
         }
 		
-      //GET ID PARAM
+        //GET ID PARAM
         String idFail = getParam("idFail");
         String idPermohonan = getParam("idPermohonan");
         String idStatus = getParam("idStatus");        

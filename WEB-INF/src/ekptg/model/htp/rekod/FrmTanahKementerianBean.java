@@ -27,7 +27,6 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 	private Date date = new Date(); 
 	private HakmilikAgensi hakmilikAgensi = null;
 
-	@Override
 	public void kemaskiniTanahAgensiLuas(HakmilikAgensi ha) throws Exception{
 		Connection conn = null;
 		try{
@@ -64,9 +63,8 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 		}
 		
 	}
-	@Override
+
 	public void kemaskiniTanahAgensi(HakmilikAgensi ha) throws Exception{
-	//public HakmilikAgensi kemaskiniHakmilikAgensi(HakmilikAgensi ha) throws Exception{
 		Connection conn = null;
 		//hakmilikAgensi = new HakmilikAgensi();
 		try{
@@ -77,21 +75,18 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
-			 r.update("ID_HAKMILIK",String.valueOf(ha.getIdHakmilik()));
-			 r.update("STATUS","Y");
-			 // 2017/11/16
-			 r.add("ID_LUAS",ha.getIdLuas());
-			 r.add("LUAS",ha.getLuas());			 
-			 r.add("LUAS_BERSAMAAN", ha.getLuasBersamaan()); // END 2017/11/16
-			 
-			 r.add("ID_AGENSI",String.valueOf(ha.getIdHakmilikAgensi()));
-			 r.add("ID_KEMENTERIAN",String.valueOf(ha.getIdKementerian()));
-			 r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));			  
-			 r.add("ID_KEMASKINI", r.unquote(String.valueOf(ha.getIdKemaskini())));			  
-			 sql = r.getSQLUpdate("TBLHTPHAKMILIKAGENSI");
-			 myLog.info("kemaskiniTanahAgensi:sql="+sql);
-			 stmt.executeUpdate(sql);			 
-			 conn.commit();
+			r.update("ID_HAKMILIK",String.valueOf(ha.getIdHakmilik()));
+			r.update("STATUS","Y");
+			r.add("ID_LUAS",ha.getIdLuas());
+			r.add("LUAS",ha.getLuas());			 
+			r.add("LUAS_BERSAMAAN", ha.getLuasBersamaan());
+			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));			  
+			r.add("ID_KEMASKINI", r.unquote(String.valueOf(ha.getIdKemaskini())));			  
+			sql = r.getSQLUpdate("TBLHTPHAKMILIKAGENSI");
+			  
+			myLog.info("kemaskiniTanahAgensi:sql="+sql);
+			stmt.executeUpdate(sql);			 
+			conn.commit();
 			
 		}catch(Exception e){
 			try{
@@ -111,12 +106,14 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 		
 	}	
 	// INSERT TBLHTPHAKMILIKAGENSI
-	@Override
-	public void insertTanahAgensi(Db db,Hashtable<String,String> data,String idhakmilik) throws Exception {
+	
+	public String simpan(Hashtable<String,String> data) throws Exception {
+//	public String simpan(Db db,Hashtable<String,String> data,String idhakmilik) throws Exception {
 		String currentDate = sdf.format(date);
 		String idAgensi = String.valueOf(DB.getNextID("TBLHTPHAKMILIKAGENSI_SEQ"));
-		
+		String idhakmilik = String.valueOf(data.get("idhakmilik"));
 		try{
+			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			//r.update("ID_HAKMILIK", data.get("idHakmilik"));
@@ -142,11 +139,10 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 		} catch (SQLException e) {
 			throw new SQLException(e);
 		}
-					    
+		return idAgensi;			    
 	}
 
-	@Override
-	public Vector<Hashtable<String,String>> getMaklumat(String idHakmilik) throws Exception {
+	public Vector<Hashtable<String,String>> getSenaraiMaklumat(String idHakmilik) throws Exception {
 		Vector<Hashtable<String,String>> listMaklumatFail = null;
 		try {
 			db = new Db();
@@ -255,6 +251,7 @@ public class FrmTanahKementerianBean implements ITanahKementerian{
 		return sql;
 		
 	}
+
 	
  }
 

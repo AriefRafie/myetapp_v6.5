@@ -162,7 +162,7 @@
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($modePopup == 'new')
-      <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatKJT()" value="Simpan">
+      <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatKJT()" value="Hantar">
       <input name="cmdBatal" type="button" onClick="doBatalMaklumatKJT()" value="Batal">
       #end
       #if ($modePopup == 'newUlangan')

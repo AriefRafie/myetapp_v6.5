@@ -25,6 +25,7 @@
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
+  <input name="paparan" type="hidden" id="paparan" value="$paparan"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
@@ -230,136 +231,64 @@
           <td>&nbsp;</td>
           <td valign="top">Syor</td>
           <td valign="top">:</td>
-          <td valign="top"><select name="socSyor" id="socSyor" style="width:200px;" $readonly class="$inputTextClass" $inputTextClass>
-              
-              
-              
-              
-                
-                
-        
-          
-	#if($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'L')
-	
-        
-        
-                
-                
-              
-              
-              
+          <td valign="top"><select name="socSyor" id="socSyor" style="width:200px;" $readonly class="$inputTextClass" onChange="doChangeSyor()" $inputTextClass> 
+			#if($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'L')
               <option value="">SILA PILIH</option>
               <option value="L" selected="selected">LULUS</option>
               <option value="D">LULUS SECARA DASAR</option>
+              <option value="LB">LULUS BERSYARAT</option>
               <option value="T">TOLAK</option>
               <option value="G">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-    #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'D')
-    
-        
-        
-                
-                
-              
-              
-              
+             #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'D')
               <option value="">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="D" selected="selected">LULUS SECARA DASAR</option>
+              <option value="LB">LULUS BERSYARAT</option>
               <option value="T">TOLAK</option>
               <option value="G">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-    #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'T')
-	
-        
-        
-                
-                
-              
-              
-              
+            #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'T')
               <option value="">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="D">LULUS SECARA DASAR</option>
+              <option value="LB">LULUS BERSYARAT</option>
               <option value="T" selected="selected">TOLAK</option>
               <option value="G">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-	#elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'G')
-	
-        
-        
-                
-                
-              
-              
-              
+            #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'G')
               <option value="">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="D">LULUS SECARA DASAR</option>
+              <option value="LB">LULUS BERSYARAT</option>
               <option value="T">TOLAK</option>
               <option value="G" selected="selected">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-	#else
-	
-        
-        
-                
-                
-              
-              
-              
+            #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'LB')
+              <option value="">SILA PILIH</option>
+              <option value="L">LULUS</option>
+              <option value="D">LULUS SECARA DASAR</option>
+              <option value="LB" selected="selected">LULUS BERSYARAT</option>
+              <option value="T">TOLAK</option>
+              <option value="G">TANGGUH</option>
+            #else
               <option value="" selected="selected">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="D">LULUS SECARA DASAR</option>
+              #if ($paparan == 'lulusbersyarat')
+              <option value="LB" selected="selected">LULUS BERSYARAT</option>
+              #else
+              <option value="LB">LULUS BERSYARAT</option>
+              #end
               <option value="T">TOLAK</option>
               <option value="G">TANGGUH</option>
-              
-              
-              
-              
-                
-                
-        
-        
-	#end
-	
-      
-      
-              
-              
-            
-            
-            
+            #end
             </select></td>
         </tr>
+        #if ($paparan == 'lulusbersyarat' || $beanMaklumatKertasRingkasPermohonan.syorJabatan == 'LB')
+        <tr>
+          <td width="1%" valign="top">&nbsp;</td>
+          <td width="28%" valign="top">Catatan Bersyarat</td>
+          <td width="1%" valign="top">:</td>
+          <td width="70%" valign="top"><textarea name="txtUlasanLulusBersyarat" id="txtUlasanLulusBersyarat" cols="100" rows="5" $readonly class="$inputTextClass">$beanMaklumatKertasRingkasPermohonan.catatanBersyarat</textarea></td>
+        </tr>
+        #end
       </table>
       </fieldset></td>
   </tr>
@@ -415,7 +344,7 @@
   #end
 </table>
 <fieldset id="tableReport" style="display:none;"-->
-<legend><strong>SENARAI LAPORAN</strong></legend>
+<legend><strong>SENARAI DOKUMEN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakMinitBebas('$idFail')"> Memo </a></td>
@@ -450,7 +379,6 @@ function doSeterusnya(){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-
 	document.${formName}.hitButton.value = "doSeterusnya";
 	document.${formName}.submit();
 }
@@ -508,6 +436,15 @@ function cetakKertasRingkasan(idFail) {
 <script>
 function gotoBatalPermohonan(){	
 	document.${formName}.step.value = "batalPermohonan";
+	document.${formName}.submit();
+}
+function doChangeSyor() {
+	document.${formName}.mode.value = "update";
+	if(document.${formName}.socSyor.value=="LB"){
+		document.${formName}.paparan.value = "lulusbersyarat";
+	}else{
+		document.${formName}.paparan.value = "";
+	}
 	document.${formName}.submit();
 }
 </script>
