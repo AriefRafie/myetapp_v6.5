@@ -19,9 +19,7 @@
 	<input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" /> 
 	<input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" /> 
 	<input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" /> 
-	<input type="hidden" name="namatujuan2" id="namatujuan2" value="$namatujuan2" /> 
-	<input type="hidden" name="namatujuan" id="namatujuan" value="$namatujuan" />
-	<input type="hidden" name="namatujuan3" id="namatujuan3" value="$namatujuan3" />
+	<input type="hidden" name="namatujuan" id="namatujuan" value="$namatujuan" /> 
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
@@ -205,8 +203,8 @@
 								<option $selected3 value="3">BORANG K</option>
 						</select></td>
 					</tr>
-					#if ($idJenisTanah == '1' || $idJenisTanah == '2') #foreach
-					($beanMaklumatTanah in $BeanMaklumatTanah)
+					#if ($idJenisTanah == '1' || $idJenisTanah == '2') 
+					#foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
 					<tr>
 						<td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end
 						</td>
@@ -319,7 +317,8 @@
 						<td>:</td>
 						<td>$selectLuasKegunaan</td>
 					</tr>
-					#end #end #if ($idJenisTanah == '3')
+					#end #end 
+					#if ($idJenisTanah == '3')
 					<tr>
 						<td colspan="4"><fieldset>
 								<legend>
@@ -463,8 +462,9 @@
 								</table>
 							</fieldset></td>
 					</tr>
-					#end #if ($idJenisTanah == '4') #foreach ($beanMaklumatTanah in
-					$BeanMaklumatTanah)
+					#end 
+					#if ($idJenisTanah == '4') 
+					#foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
 					<tr>
 						<td width="1%">&nbsp;</td>
 						<td width="28%">Status Tanah</td>
@@ -541,7 +541,9 @@
 						</td>
 						<td valign="top">Tujuan</td>
 						<td valign="top">:</td>
-						<td>$selectJenisTujuan</td>
+						<td>$selectJenisTujuan
+							<input type="text" name="namatujuan" id="namatujuan" value="$namatujuan" />
+						</td>
 					</tr>
 					#if($idJenisTujuan == '32' || $idJenisTujuan == '38' ||
 					$idJenisTujuan == '46' || $idJenisTujuan == '52')
@@ -639,10 +641,10 @@
 								onblur="this.value=this.value.toUpperCase();"
 								onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);"
 								onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);">$beanMaklumatPermohonan.perkara</textarea>
-							#if ($mode == 'new') #if ($idJenisTanah == '1' || $idJenisTanah
-							== '2') <input type="button" name="cmdDaftarBaru2"
-							id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk()" />
-							#end #end</td>
+							#if ($mode == 'new') #if ($idJenisTanah == '1' || $idJenisTanah == '2') 
+							<input type="button" name="cmdDaftarBaru2" id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk()" />
+							#end #end
+						</td>
 					</tr>
 					#if ($mode != 'view')
 					<tr>
@@ -929,39 +931,16 @@ function janaTajuk() {
 		}
 	
 	var strTajuk = " ";
-	var strTujuan = " ";
-	var strTujuan2 = " ";
-	var strTujuan3 = " ";
 	var milikOrRizab = " ";
 	var str1  = document.${formName}.noLotTanah.value;
 	var str2  = document.${formName}.noMilikTanah.value;
 	var str3  = document.${formName}.namaMukimTanah.value;
 	var str4  = document.${formName}.namaDerahTanah.value;	
 	var str5  = document.${formName}.namaNegeriTanah.value;	
-	var namaPemohon = document.${formName}.txtNama.value;
 	var str6 = document.${formName}.noWartaTanah.value;
+	var strTujuan = document.${formName}.namatujuan.value;
 	var statusRizabTnh = document.${formName}.statusRizab.value;
-	
-	if(document.${formName}.socJenisTujuan.value == '32' || document.${formName}.socJenisTujuan.value == '38' ||
-			document.${formName}.socJenisTujuan.value == '46' || document.${formName}.socJenisTujuan.value == '52'){
-		strTujuan = document.${formName}.txtTujuan.value;
-	} else {
-		strTujuan = document.${formName}.namatujuan.value;
-	}
-	
-	if(document.${formName}.socJenisTujuan2.value == '32' || document.${formName}.socJenisTujuan2.value == '38' ||
-			document.${formName}.socJenisTujuan2.value == '46' || document.${formName}.socJenisTujuan2.value == '52'){
-		strTujuan2 = document.${formName}.txtTujuan2.value;
-	} else {
-		strTujuan2 = document.${formName}.namatujuan2.value;
-	}
-	
-	if(document.${formName}.socJenisTujuan3.value == '32' || document.${formName}.socJenisTujuan3.value == '38' ||
-			document.${formName}.socJenisTujuan3.value == '46' || document.${formName}.socJenisTujuan3.value == '52'){
-		strTujuan3 = document.${formName}.txtTujuan3.value;
-	} else {
-		strTujuan3 = document.${formName}.namatujuan3.value;
-	}
+	var namaPemohon = document.${formName}.txtNama.value;
 	
 	if(statusRizabTnh == 'MILIK') {
 		milikOrRizab = str2;
@@ -971,41 +950,17 @@ function janaTajuk() {
 
 	if(document.${formName}.socUrusan.value == "7"){
 		if(document.${formName}.socSuburusan.value == "35"){
-			if (document.${formName}.socJenisTujuan3.value == "" && document.${formName}.socJenisTujuan2.value == "") {
-				strTajuk = "PERMOHONAN PENYEWAAN RUANG BANGUNAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
-			} else if (document.${formName}.socJenisTujuan3.value == "" && document.${formName}.socJenisTujuan2.value != ""){
-				strTajuk = "PERMOHONAN PENYEWAAN RUANG BANGUNAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan + " DAN " + strTujuan2;
-			} else {
-				strTajuk = "PERMOHONAN PENYEWAAN RUANG BANGUNAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan + ", " + strTujuan2 + " DAN " + strTujuan3;
-			}
+			strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + "UNTUK TUJUAN " + strTujuan ;
 		} else {
-			if (document.${formName}.socJenisTujuan3.value == "" && document.${formName}.socJenisTujuan2.value == "") {
-				strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
-			} else if (document.${formName}.socJenisTujuan3.value == "" && document.${formName}.socJenisTujuan2.value != ""){
-				strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan + " DAN " + strTujuan2;
-			} else {
-				strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan + ", " + strTujuan2 + " DAN " + strTujuan3;
-			}
+			strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
 		}
-	} else if(document.${formName}.socUrusan.value == "12"){
-		if (document.${formName}.socJenisTujuan3.value == "" && document.${formName}.socJenisTujuan2.value == "") {
-			strTajuk = "PERMOHONAN MENGELUARKAN HASIL " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
-		} else if (document.${formName}.socJenisTujuan3.value == "" && document.${formName}.socJenisTujuan2.value != ""){
-			strTajuk = "PERMOHONAN MENGELUARKAN HASIL " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan + " DAN " + strTujuan2;
-		} else {
-			strTajuk = "PERMOHONAN MENGELUARKAN HASIL " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan + ", " + strTujuan2 + " DAN " + strTujuan3;
-		}
+	} else if(document.${formName}.socUrusan.value == "12"){ 
+		strTajuk = "PERMOHONAN MENGELUARKAN HASIL " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
 	} else if(document.${formName}.socUrusan.value == "13"){
-		if (document.${formName}.socJenisTujuan3.value == "" && document.${formName}.socJenisTujuan2.value == "") {
-			strTajuk = "PERMOHONAN MENGELUARKAN " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
-		} else if (document.${formName}.socJenisTujuan3.value == "" && document.${formName}.socJenisTujuan2.value != ""){
-			strTajuk = "PERMOHONAN MENGELUARKAN " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan + " DAN " + strTujuan2;
-		} else {
-			strTajuk = "PERMOHONAN MENGELUARKAN " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan + ", " + strTujuan2 + " DAN " + strTujuan3;
-		}
-	 } else{
-		strTajuk;
-	 }
+		strTajuk = "PERMOHONAN MENGELUARKAN " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
+	} else {
+	    strTajuk;
+	}
 		
 	document.${formName}.txtPerkara.value = strTajuk;
 }

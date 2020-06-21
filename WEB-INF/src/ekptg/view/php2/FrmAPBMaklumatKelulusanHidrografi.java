@@ -64,9 +64,13 @@ public class FrmAPBMaklumatKelulusanHidrografi extends AjaxBasedModule{
 		Vector beanHeader= null;
 		Vector beanMaklumatJAS=null;
 		Vector beanMaklumatHIDRO = null;
-		Vector beanMaklumatDokumen = null;
+		Vector beanMaklumatPasir = null;
+		Vector beanMaklumatJPS = null;
 		Vector senaraiDokumenHidro = null;
 		Vector senaraiDokumenJAS = null;
+		Vector senaraiDokumenPasir = null;
+		Vector senaraiDokumenJPS = null;
+		Vector beanMaklumatDokumen = null;
 		
 		vm = "app/php2/frmAPBMaklumatKelulusanEIADanHidrografi.jsp"; 
 		
@@ -78,6 +82,14 @@ public class FrmAPBMaklumatKelulusanHidrografi extends AjaxBasedModule{
 			if ("doSimpanKemaskiniJAS".equals(hitButton)){
 				logic.updateMaklumatJAS(idPermohonan,getParam("txtNoRujJAS"),getParam("txtTarikhSuratLulusJAS") ,getParam("txtTarikhTerimaJAS"),
 						getParam("socKeputusanJAS"),getParam("txtTempohLulusJAS"),getParam("txtTarikhLulusJAS"),idNegeriJAS,idTempohJAS,session);
+			}
+			if ("doSimpanKemaskiniPasir".equals(hitButton)){
+				logic.updateMaklumatPasir(idPermohonan,getParam("txtNoRujPasir"),getParam("txtTarikhSuratLulusPasir") ,getParam("txtTarikhTerimaPasir"),
+						getParam("socKeputusanPasir"),getParam("txtTarikhLulusPasir"),session);
+			}
+			if ("doSimpanKemaskiniJPS".equals(hitButton)){
+				logic.updateMaklumatJPS(idPermohonan,getParam("txtNoRujJPS"),getParam("txtTarikhSuratLulusJPS") ,getParam("txtTarikhTerimaJPS"),
+						getParam("socKeputusanJPS"),getParam("txtTarikhLulusPasir"),session);
 			}
 			if ("doSeterusnya".equals(hitButton)){
 				logic.updateStatus(idFail, idPermohonan, session);            		
@@ -111,12 +123,6 @@ public class FrmAPBMaklumatKelulusanHidrografi extends AjaxBasedModule{
 			this.context.put("inputTextClass", "disabled");
 			this.context.put("disabled", "disabled");
         	
-	    	//MAKLUMAT KELULUSAN HIDROGRAFI
-			beanMaklumatHIDRO = new Vector();
-	    	logic.setMaklumatHIDRO(idPermohonan);
-	    	beanMaklumatHIDRO = logic.getBeanMaklumatHIDRO();
-	       	this.context.put("BeanMaklumatHIDRO", beanMaklumatHIDRO);       
-	       	
 	    	//MAKLUMAT KELULUSAN EIA/JAS
 			beanMaklumatJAS = new Vector();
 	    	logic.setMaklumatJAS(idPermohonan);
@@ -127,6 +133,25 @@ public class FrmAPBMaklumatKelulusanHidrografi extends AjaxBasedModule{
 				this.context.put("selectNegeri", HTML.SelectNegeri("socJAS", Long.parseLong((String) hashMaklumatJAS.get("socJAS")), "disabled", " style=\"width:300px\" class=\"disabled\""));
 				this.context.put("selectTempoh",HTML.SelectBulanTahun("socTempoh",Long.parseLong((String) hashMaklumatJAS.get("socTempoh")), "disabled", " style=\"width:100px\" class=\"disabled\""));
         	}
+			
+			//MAKLUMAT KELULUSAN HIDROGRAFI
+			beanMaklumatHIDRO = new Vector();
+	    	logic.setMaklumatHIDRO(idPermohonan);
+	    	beanMaklumatHIDRO = logic.getBeanMaklumatHIDRO();
+	       	this.context.put("BeanMaklumatHIDRO", beanMaklumatHIDRO);       
+        	
+        	//MAKLUMAT KELULUSAN KAJIAN PASIR
+           	beanMaklumatPasir = new Vector();
+        	logic.setMaklumatPasir(idPermohonan);
+        	beanMaklumatPasir = logic.getBeanMaklumatPasir();
+           	this.context.put("BeanMaklumatPasir", beanMaklumatPasir);
+           	
+           	//MAKLUMAT KELULUSAN JPS
+           	beanMaklumatJPS = new Vector();
+        	logic.setMaklumatJPS(idPermohonan);
+        	beanMaklumatJPS = logic.getBeanMaklumatJPS();
+           	this.context.put("BeanMaklumatJPS", beanMaklumatJPS);
+        	
 		// MODE UPDATE
 		} else if("update".equals(mode)){
 			
@@ -140,7 +165,6 @@ public class FrmAPBMaklumatKelulusanHidrografi extends AjaxBasedModule{
         	beanMaklumatHIDRO = logic.getBeanMaklumatHIDRO();
            	this.context.put("BeanMaklumatHIDRO", beanMaklumatHIDRO);   
         	
-       		
         	//MAKLUMAT KELULUSAN EIA/JAS
     		beanMaklumatJAS = new Vector();
         	logic.setMaklumatJAS(idPermohonan);
@@ -151,6 +175,18 @@ public class FrmAPBMaklumatKelulusanHidrografi extends AjaxBasedModule{
 				this.context.put("selectNegeri", HTML.SelectNegeri("socJAS", Long.parseLong((String) hashMaklumatJAS.get("socJAS")), "", " style=\"width:300px\""));
 				this.context.put("selectTempoh",HTML.SelectBulanTahun("socTempoh", Long.parseLong((String) hashMaklumatJAS.get("socTempoh")), "", " style=\"width:100px\""));
 			}
+        	
+        	//MAKLUMAT KELULUSAN KAJIAN PASIR
+           	beanMaklumatPasir = new Vector();
+        	logic.setMaklumatPasir(idPermohonan);
+        	beanMaklumatPasir = logic.getBeanMaklumatPasir();
+           	this.context.put("BeanMaklumatPasir", beanMaklumatPasir);
+           	
+           	//MAKLUMAT KELULUSAN JPS
+           	beanMaklumatJPS = new Vector();
+        	logic.setMaklumatJPS(idPermohonan);
+        	beanMaklumatJPS = logic.getBeanMaklumatJPS();
+           	this.context.put("BeanMaklumatJPS", beanMaklumatJPS);
 		}		
 
 		//SET DEFAULT PARAM

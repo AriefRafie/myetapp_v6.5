@@ -8,41 +8,41 @@
 </style>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #foreach ($beanMaklumatHIDRO in $BeanMaklumatHIDRO)
+  #foreach ($beanMaklumatPasir in $BeanMaklumatPasir)
   <tr>
     <td width="1%">&nbsp;</td>
     <td width="28%">Tarikh Tamat Kelulusan Dasar</td>
     <td width="1%">:</td>
-    <td width="70%"><strong>$beanMaklumatHIDRO.tarikhTamatKelulusanDasar</strong></td>
+    <td width="70%"><strong>$beanMaklumatPasir.tarikhTamatKelulusanDasar</strong></td>
   </tr>
   <tr>
     <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-    <td width="28%">No Ruj Pusat Hidrografi Nasional</td>
+    <td width="28%">No Ruj Pusat Kajian Pasir</td>
     <td width="1%">:</td>
-    <td width="70%"><input name="txtNoRujHidro" type="text" class="$inputTextClass" id="txtNoRujHidro" value="$beanMaklumatHIDRO.txtNoRujHidro" size="40" maxlength="400" $readonly /></td>
+    <td width="70%"><input name="txtNoRujPasir" type="text" class="$inputTextClass" id="txtNoRujPasir" value="$beanMaklumatPasir.txtNoRujPasir" size="40" maxlength="400" $readonly /></td>
   </tr>
   <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td>Tarikh Surat Kelulusan</td>
     <td>:</td>
-    <td><input name="txtTarikhSuratLulusHIDRO" type="text" class="$inputTextClass" id="txtTarikhSuratLulusHIDRO" onblur="check_date(this)" value="$beanMaklumatHIDRO.txtTarikhSuratHIDRO" size="9" maxlength="10" $readonly/>
-      #if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhSuratLulusHIDRO',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
+    <td><input name="txtTarikhSuratLulusPasir" type="text" class="$inputTextClass" id="txtTarikhSuratLulusPasir" onblur="check_date(this)" value="$beanMaklumatPasir.txtTarikhSuratPasir" size="9" maxlength="10" $readonly/>
+      #if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhSuratLulusPasir',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
   </tr>
   <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td>Tarikh Terima</td>
     <td>:</td>
-    <td><input name="txtTarikhTerimaHIDRO" type="text" class="$inputTextClass" id="txtTarikhTerimaHIDRO" onblur="check_date(this)" value="$beanMaklumatHIDRO.txtTarikhTerimaHIDRO" size="9" maxlength="10" $readonly/>
-      #if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhTerimaHIDRO',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
+    <td><input name="txtTarikhTerimaPasir" type="text" class="$inputTextClass" id="txtTarikhTerimaPasir" onblur="check_date(this)" value="$beanMaklumatPasir.txtTarikhTerimaPasir" size="9" maxlength="10" $readonly/>
+      #if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhTerimaPasir',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
   </tr>
   <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td>Keputusan</td>
     <td>:</td>
-    <td><select name="socKeputusanHIDRO" id="socKeputusanHIDRO" style="width:100px;"  $readonly class="$inputTextClass" $inputTextClass>
+    <td><select name="socKeputusanPasir" id="socKeputusanPasir" style="width:100px;"  $readonly class="$inputTextClass" $inputTextClass>
         
         
-	#if($beanMaklumatHIDRO.socKeputusanHIDRO == '1')               
+	#if($beanMaklumatPasir.socKeputusanPasir == '1')               
       
         
         <option value="">SILA PILIH</option>
@@ -50,7 +50,7 @@
         <option value="2">2 - TOLAK </option>
         
         
-    #elseif($beanMaklumatHIDRO.socKeputusanHIDRO == '2')              
+    #elseif($beanMaklumatPasir.socKeputusanPasir == '2')              
       
         
         <option value="">SILA PILIH</option>
@@ -58,7 +58,7 @@
         <option value="2" selected="selected">2 - TOLAK </option>
         
         
-    #elseif($beanMaklumatHIDRO.socKeputusanHIDRO == '')             
+    #elseif($beanMaklumatPasir.socKeputusanPasir == '')             
       
         
         <option value="" selected="selected">SILA PILIH</option>
@@ -76,8 +76,8 @@
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td>Tarikh Diluluskan</td>
     <td>:</td>
-    <td><input name="txtTarikhLulusHIDRO" type="text" class="$inputTextClass" id="txtTarikhLulusHIDRO" onblur="check_date(this)" value="$beanMaklumatHIDRO.txtTarikhLulusHIDRO" size="9" maxlength="10" $readonly/>
-      #if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhLulusHIDRO',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
+    <td><input name="txtTarikhLulusPasir" type="text" class="$inputTextClass" id="txtTarikhLulusPasir" onblur="check_date(this)" value="$beanMaklumatPasir.txtTarikhLulusPasir" size="9" maxlength="10" $readonly/>
+      #if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhLulusPasir',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
   </tr>
   #if ($mode == 'update')
   <tr>
@@ -89,14 +89,14 @@
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td> #if ($mode == 'view')
-      <input name="cmdKemaskini" type="button" onclick="doKemaskiniMaklumatHIDRO()" value="Kemaskini" />
+      <input name="cmdKemaskini" type="button" onclick="doKemaskiniMaklumatPasir()" value="Kemaskini" />
       #end
       #if ($mode == 'update')
-      <input name="cmdSimpan2" type="button" onclick="doSimpanKemaskiniMaklumatHIDRO()" value="Simpan" />
-      <input name="cmdBatal" type="button" onclick="doBatalMaklumatHIDRO()" value="Batal" />
+      <input name="cmdSimpan2" type="button" onclick="doSimpanKemaskiniMaklumatPasir()" value="Simpan" />
+      <input name="cmdBatal" type="button" onclick="doBatalMaklumatPasir()" value="Batal" />
       #end 
       #if ($mode == 'view' && $idStatus == '1610236')
-      <input name="cmdTambahHidro2" type="button" onclick="seterusnya()" value="Seterusnya" />
+      <input name="cmdTambahPasir2" type="button" onclick="seterusnya()" value="Seterusnya" />
       #end 
       </td>
   </tr>

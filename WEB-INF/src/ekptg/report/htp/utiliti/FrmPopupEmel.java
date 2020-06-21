@@ -14,7 +14,6 @@ import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
-import ekptg.model.admin.EmailConfig;
 import ekptg.model.entities.Tblhtppermohonan;
 import ekptg.model.htp.IUtilHTML;
 import ekptg.model.htp.UtilHTMLBean;
@@ -23,6 +22,7 @@ import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.utils.IUserPegawai;
 import ekptg.model.utils.UserPegawaiBean;
+import ekptg.model.utils.emel.EmailConfig;
 
 
 public class FrmPopupEmel extends AjaxBasedModule{
