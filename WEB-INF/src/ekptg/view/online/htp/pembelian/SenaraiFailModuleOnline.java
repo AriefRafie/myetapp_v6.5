@@ -1119,6 +1119,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("semakMode", semakMode);
 			myLog.info("statusSemasa:"+statusSemasa);
 			context.put("statussemasa", statusSemasa);
+			context.put("buttonSend", "disabled");
 
 			context.put("selectedTab", 4);
 			vm = PATH+"perakuanPembelianOnline.jsp";
