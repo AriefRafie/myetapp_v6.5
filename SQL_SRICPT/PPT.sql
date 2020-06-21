@@ -360,3 +360,9 @@ INSERT INTO EKPTGHQLIVE.TBLSEMAKANSENARAI
 VALUES(275, 193, 1, 'pptjenispemilikan', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// Tambah Column SEMAK10 dan SEMAK20
+ALTER TABLE TBLPPTSENARAISEMAK ADD (
+    SEMAK10 VARCHAR(1 byte),
+    SEMAK20 VARCHAR(1 byte)
+);
