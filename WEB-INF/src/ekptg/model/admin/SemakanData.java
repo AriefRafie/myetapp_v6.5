@@ -15,13 +15,14 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujurusan;
-import ekptg.model.entities.Tblsemakan;
 
 public class SemakanData {
 
 	static Logger myLog = Logger.getLogger(ekptg.model.admin.SemakanData.class);
+    Vector<Hashtable<String,String>> list = null;
 
-	public static Vector<Hashtable<String,String>> getSenaraiSemakan(String idUrusan,String idSuburusan,String kodForm) 
+	public static Vector<Hashtable<String,String>> getSenaraiSemakan(String idUrusan
+		,String idSuburusan,String kodForm,String desc) 
 		throws Exception {
 	    Db db = null;
 	    String sql = "";
@@ -30,15 +31,16 @@ public class SemakanData {
 		    try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
-		      SQLRenderer r = new SQLRenderer();
-		      
+		      SQLRenderer r = new SQLRenderer();		      
 		      r.add("i.id_semakansenarai");
+		      r.add("i.id_semakan");
 		      r.add("i.aturan");
 		      r.add("i.kod_form");
 		      r.add("s.perihal");
 		      r.add("ru.nama_urusan");
 		      r.add("rsu.nama_suburusan");
-
+		      r.add("i.id_urusan");
+		      r.add("i.id_suburusan");
 		      r.add("i.id_semakan",r.unquote("s.id_semakan"));
 		      r.add("i.id_urusan",r.unquote("ru.id_urusan"));
 		      r.add("i.id_suburusan",r.unquote("rsu.id_suburusan(+)"));
@@ -48,6 +50,8 @@ public class SemakanData {
 		    	  r.add("i.id_urusan",idUrusan);
 		      if(!idSuburusan.equals("0"))
 		    	  r.add("i.id_suburusan",idSuburusan);
+		      if(desc != null)
+		    	  r.add("s.perihal","%"+desc+"%","like");
 		      
 		      sql = r.getSQLSelect("tblsemakan s,tblsemakansenarai i,tblrujurusan ru,tblrujsuburusan rsu","i.kod_form,i.aturan");
 	          myLog.info("Semakan : sql=" + sql);
@@ -58,6 +62,9 @@ public class SemakanData {
 		    	  h = new Hashtable<String,String>();
 		    	  h.put("bil", String.valueOf(bil));
 		    	  h.put("id", rs.getString("id_semakansenarai"));
+		    	  h.put("idSemakan", rs.getString("id_semakan"));
+		    	  h.put("idUrusan", rs.getString("id_urusan"));
+		    	  h.put("idSubUrusan", rs.getString("id_suburusan"));
 		    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
 		    	  h.put("keterangan", rs.getString("perihal"));
 		    	  h.put("urusan", rs.getString("nama_urusan"));
@@ -146,94 +153,90 @@ public class SemakanData {
 		    }
 		  }
 	 
-	 public static Vector<Hashtable<String, Comparable>> getSenaraiKeteranganByStatusHTML(String idUrusan,String idSuburusan)throws Exception {
-		 Db db = null;
-		 String sql = "";
-		 String strDate = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");
-		 try {	
+	public static Vector<Hashtable<String, String>> getSenaraiJenisDokumen(
+		String idUrusan,String idSuburusan,String kodForm) throws Exception {
+		Db db = null;
+		String sql = "";
+		String strDate = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");
+//
+//SELECT S.PERIHAL
+//,SS.ATURAN
+//,NVL(SJD.ID_JENISDOKUMEN,0) JENIS_DOKUMEN
+//,NVL(JD.KETERANGAN,'TIADA') NAMA_DOKUMEN
+//--SS.*
+//FROM 
+//TBLSEMAKANSENARAI SS, TBLSEMAKAN S,TBLSEMAKANJENISDOKUMEN SJD,TBLRUJJENISDOKUMEN JD
+//WHERE SS.ID_SEMAKAN = S.ID_SEMAKAN
+//AND SS.ID_SEMAKAN  = SJD.ID_SEMAKAN(+)
+//AND SJD.ID_JENISDOKUMEN  = JD.ID_JENISDOKUMEN(+)
+//--AND SS.ATURAN IS NOT NULL
+//--
+//ORDER BY SS.ATURAN
+		try {	
 			db = new Db();
-		      Statement stmt = db.getStatement();
+			Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
-		      r.add("DISTINCT(kpu.id_kpiurusan)");
-		      r.add("kpk.keterangan");
-		      r.add("kpu.sasaran_masa");
-		      r.add("kpu.jenis_sasaran");		      
-		      r.add("kpu.id_masuk");
-		      r.add("kpu.tarikh_masuk");
-		      r.add("kpu.id_kemaskini");
-		      r.add("kpu.tarikh_kemaskini");
-		      //r.add("ru.nama_urusan");
-		      r.add("kpu.status_giliran");
-		      r.add("kpu.seq");
-		      r.add("rs.keterangan namastatus");
-		      r.add("kps.id_kpistatus");
-		      r.add("kps.ID_SUBURUSANSTATUS");
-   
-		      r.add("kpu.id_kpiketerangan",r.unquote("kpk.id_kpiketerangan"));
-		      //r.add("rsu.id_urusan",r.unquote("ru.id_urusan"));
-		      if(idSuburusan != ""){
-		    	  //r.add("rsu.id_suburusan",r.unquote(idSuburusan));
-		    	  r.add("kpu.id_suburusan",r.unquote(idSuburusan));
-		      }
-		      //r.add("ru.id_urusan",r.unquote(idUrusan));
-		      r.add("kpu.id_kpiurusan",r.unquote("kps.id_kpiurusan(+)"));
-		      r.add("kps.ID_SUBURUSANSTATUS",r.unquote("rsus.ID_SUBURUSANSTATUS(+)"));
-		      r.add("rsus.ID_STATUS",r.unquote("rs.ID_STATUS(+)"));
-				      
-		      //sql = r.getSQLSelect("tblkpiketerangan kpk ,tblkpiurusan kpu ,tblkpistatus kps,tblrujsuburusan rsu,tblrujurusan ru,tblrujsuburusanstatus rsus,tblrujstatus rs");
-		      sql = r.getSQLSelect("tblkpiketerangan kpk ,tblkpiurusan kpu ,tblkpistatus kps,tblrujsuburusanstatus rsus,tblrujstatus rs");
-		      sql += " ORDER BY kpu.seq";
-		      /*SELECT DISTINCT(kpu.id_kpiurusan),kpu.sasaran_masa, kpu.jenis_sasaran,kpu.id_masuk, kpu.tarikh_masuk, kpu.id_kemaskini, kpu.tarikh_kemaskini,kpu.status_giliran, kpu.seq  
-		      ,kps.id_kpistatus,kps.ID_SUBURUSANSTATUS,kpk.keterangan,rs.keterangan namastatus
-		      from tblkpiketerangan kpk,tblkpiurusan kpu,tblkpistatus kps
-		      ,tblrujsuburusanstatus rsus,tblrujstatus rs
-		      where kpu.id_kpiketerangan = kpk.id_kpiketerangan
-		      AND kpu.id_suburusan = 59
-		      AND kpu.id_kpiurusan = kps.id_kpiurusan(+)
-		      AND kps.ID_SUBURUSANSTATUS = rsus.ID_SUBURUSANSTATUS(+)
-		      AND rsus.ID_STATUS = rs.ID_STATUS(+)
-		      ORDER BY kpu.seq
-		      */
-		   	  System.out.println("FrmKPIData::getSenaraiKeteranganByStatusHTML::sql = "+sql);
+		      r.add("sjd.id_semakanjenisdokumen id_semakansenarai");
+		      r.add("i.id_semakan");
+		      r.add("i.aturan");
+		      r.add("i.kod_form");
+		      r.add("s.perihal");
+		      r.add("ru.nama_urusan");
+		      r.add("rsu.nama_suburusan");
+		      r.add("i.id_urusan");
+		      r.add("i.id_suburusan");
+		      r.add("NVL(JD.ID_JENISDOKUMEN,0) JENIS_DOKUMEN");
+		      r.add("NVL(JD.KETERANGAN,'TIADA') NAMA_DOKUMEN");
+		      r.add("i.id_semakan",r.unquote("s.id_semakan"));
+		      r.add("i.id_urusan",r.unquote("ru.id_urusan"));
+		      r.add("i.id_suburusan",r.unquote("rsu.id_suburusan(+)"));
+		      r.add("i.ID_SEMAKAN",r.unquote("SJD.ID_SEMAKAN(+)"));
+		      r.add("SJD.ID_JENISDOKUMEN",r.unquote("JD.ID_JENISDOKUMEN(+)"));
+		      if(!kodForm.equals(""))
+		    	  r.add("i.kod_form","%"+kodForm+"%","like");
+		      if(!idUrusan.equals("0"))
+		    	  r.add("i.id_urusan",idUrusan);
+		      if(!idSuburusan.equals("0"))
+		    	  r.add("i.id_suburusan",idSuburusan);
+		      
+		      sql = r.getSQLSelect("tblsemakan s"
+		      		+ ",tblsemakansenarai i"
+		      		+ ",tblrujurusan ru"
+		      		+ ",tblrujsuburusan rsu"
+		      		+ ",TBLSEMAKANJENISDOKUMEN SJD"
+		      		+ ",TBLRUJJENISDOKUMEN JD","i.kod_form,i.aturan");
+	      		
+		      //sql += " ORDER BY kpu.seq";
+		   	  System.out.println("getSenaraiJenisDokumen:sql = "+sql);
       
 		      ResultSet rs = stmt.executeQuery(sql);
-		      Vector<Hashtable<String, Comparable>> list = new Vector<Hashtable<String, Comparable>>();
+		      Vector<Hashtable<String, String>> list = new Vector<Hashtable<String, String>>();
+		      int bil=1;
 		      while (rs.next()) {
-		        Hashtable<String, Comparable> cb = new Hashtable<String, Comparable>();
-		        cb.put("idkpiurusan", rs.getLong("id_kpiurusan"));
-		        cb.put("keterangan",rs.getString("keterangan"));
-		        cb.put("sasaranmasa",rs.getString("sasaran_masa"));
-		        if(rs.getString("jenis_sasaran")=="1"){
-		        	cb.put("jenissasaran","JAM");		        
-		        	
-		        }else{
-		        	cb.put("jenissasaran","HARI");		        
-		        }
-		        cb.put("idmasuk",rs.getString("id_masuk")==null?"0":rs.getString("id_masuk"));
-		        cb.put("tarikhmasuk",rs.getDate("tarikh_masuk")==null?strDate:lebah.util.Util.getDateTime(rs.getDate("tarikh_masuk"), "dd/MM/yyyy"));
-		        cb.put("idkemaskini",rs.getString("id_kemaskini")==null?"0":rs.getString("id_kemaskini"));
-		        cb.put("tarikhkemaskini",rs.getDate("tarikh_kemaskini")==null?"0":lebah.util.Util.getDateTime(rs.getDate("tarikh_kemaskini"), "dd/MM/yyyy"));
-		        //cb.put("urusan",rs.getString("nama_urusan"));
-		        cb.put("giliran",rs.getInt("status_giliran"));
-		        if(rs.getString("namastatus")!=null){
-		        	cb.put("status",rs.getString("namastatus"));		        	        	
-		        }else{
-		        	cb.put("status","TIADA");		        
-		        }
-		        if(rs.getString("id_kpistatus")!=null){
-		        	cb.put("idkpistatus",rs.getString("id_kpistatus"));		        		        	
-		        }else{
-		        	cb.put("idkpistatus","0");		        
-		        }
-		        cb.put("idsuburusanstatus",rs.getInt("ID_SUBURUSANSTATUS"));
+		        Hashtable<String, String> h = new Hashtable<String, String>();
+		        h.put("bil", String.valueOf(bil));
+		    	  h.put("id", Utils.isNull(rs.getString("id_semakansenarai")));
+		    	  h.put("idSemakan", rs.getString("id_semakan"));
+		    	  h.put("idUrusan", rs.getString("id_urusan"));
+		    	  h.put("idSubUrusan", Utils.isNull(rs.getString("id_suburusan")));
+		    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
+		    	  h.put("keterangan", rs.getString("perihal"));
+		    	  h.put("urusan", rs.getString("nama_urusan"));
+		    	  h.put("kod", rs.getString("kod_form"));
+		    	  h.put("jenis", rs.getString("jenis_dokumen"));
+		    	  h.put("namaDok", rs.getString("nama_dokumen"));
+		    
 
-		        list.addElement(cb);
+		        list.addElement(h);
+		        bil++;
 		      }
 		      return list;
+		      
 		    } finally {
 		      if (db != null) db.close();
 		    }
-		  }
+		  
+	}
 	 
 
 	 
@@ -1009,30 +1012,30 @@ public class SemakanData {
 		  Db db = null;
 		  String sql = "";
 		  String strTarikhSemasa="";
-		  lebah.util.Util u = new lebah.util.Util();
-		  strTarikhSemasa = u.getDateTime(new Date(), "dd/MM/yyyy");
+		  strTarikhSemasa = Util.getDateTime(new Date(), "dd/MM/yyyy");
 
 		  String tarikhMasuk = "to_date('" + strTarikhSemasa + "','dd/MM/yyyy')";
-		  long Id_KPIUrusan= DB.getNextID("TBLKPIURUSAN_SEQ");
-
+		  long Id_KPIUrusan= DB.getNextID("TBLSEMAKANSENARAI_SEQ");
+		  
 		  try {
 			  db = new Db();
 			  Statement stmt = db.getStatement();
 			  SQLRenderer r = new SQLRenderer();
-			  r.add("Id_Kpiurusan", Id_KPIUrusan);
-			  r.add("Id_Kpiketerangan", r.unquote((String)h.get("idketerangan")));
-			  r.add("Id_SubUrusan", r.unquote((String)h.get("idurusan")));
+			  r.add("id_semakansenarai", Id_KPIUrusan);
+			  r.add("id_semakan", r.unquote((String)h.get("idKeterangan")));
+			  r.add("id_urusan", r.unquote((String)h.get("idUrusan")));
+			  if(!String.valueOf(h.get("idSubUrusan")).equals(""))
+				  r.add("id_suburusan", r.unquote((String)h.get("idSubUrusan")));
 			  
-			  r.add("Sasaran_Masa", h.get("sasaran"));
-			  r.add("Jenis_Sasaran", h.get("jenis"));
-			  r.add("Status_Giliran", h.get("giliran"));
+			  r.add("aturan", h.get("seq"));		  
+			  r.add("kod_form", h.get("txtSkrin"));
 			  
 			  r.add("id_masuk", h.get("idmasuk"));
 			  r.add("tarikh_masuk", r.unquote(tarikhMasuk));
 			  r.add("id_kemaskini", h.get("idmasuk"));
 			  r.add("tarikh_kemaskini", r.unquote(tarikhMasuk));
 
-			  sql = r.getSQLInsert("TBLKPIURUSAN");
+			  sql = r.getSQLInsert("TBLSEMAKANSENARAI");
 			  //System.out.println("FrmKPIData::simpanKeteranganVS::TBLKPIURUSAN = "+sql);
 			  stmt.executeUpdate(sql);
 		  } finally {
@@ -1040,109 +1043,107 @@ public class SemakanData {
 		  }
 	  }
 	  
-	  public static void updateKeteranganvs(Hashtable h) throws Exception {
+	  public static void updateKeteranganvs(Hashtable<String,String> h) throws Exception {
 		  Db db = null;
 		  String sql = "";
 		  String strTarikhSemasa="";
-		  lebah.util.Util u = new lebah.util.Util();
-		  strTarikhSemasa = u.getDateTime(new Date(), "dd/MM/yyyy");
+		  strTarikhSemasa = Util.getDateTime(new Date(), "dd/MM/yyyy");
 
 		  String tarikhMasuk = "to_date('" + strTarikhSemasa + "','dd/MM/yyyy')";
-		  long Id_KPIUrusan= Long.parseLong((String)h.get("idkpiurusan"));
-
+		  long Id_KPIUrusan= Long.parseLong((String)h.get("idSenarai"));
 		  try {
 			  db = new Db();
 			  Statement stmt = db.getStatement();
 			  SQLRenderer r = new SQLRenderer();
-			  r.update("Id_Kpiurusan", Id_KPIUrusan);
-			  r.add("Id_Kpiketerangan", r.unquote((String)h.get("idketerangan")));
-			  r.add("Id_SubUrusan", r.unquote((String)h.get("idurusan")));
+			  r.update("id_semakansenarai", Id_KPIUrusan);
+			  r.add("id_semakan", r.unquote((String)h.get("idKeterangan")));
+			  r.add("id_urusan", r.unquote((String)h.get("idUrusan")));
+			  if(!String.valueOf(h.get("idSubUrusan")).equals(""))
+				  r.add("id_suburusan", r.unquote((String)h.get("idSubUrusan")));
 			  
-			  r.add("Sasaran_Masa", h.get("sasaran"));
-			  r.add("Jenis_Sasaran", h.get("jenis"));
-			  r.add("Status_Giliran", h.get("giliran"));
-			  r.add("Seq", r.unquote((String)h.get("seq")));
-			  r.add("pilihan", h.get("pilih"));
-
-			  r.add("id_kemaskini", h.get("idkemaskini"));
+			  r.add("aturan", h.get("seq"));		  
+			  r.add("kod_form", h.get("txtSkrin"));
+			  r.add("id_kemaskini", h.get("idKemaskini"));
 			  r.add("tarikh_kemaskini", r.unquote(tarikhMasuk));
 
-			  sql = r.getSQLUpdate("TBLKPIURUSAN");
+			  sql = r.getSQLUpdate("TBLSEMAKANSENARAI");
 			  //System.out.println("FrmKPIData::upadateKeteranganvs::TBLKPIURUSAN = "+sql);
 			  stmt.executeUpdate(sql);
+			  
 		  } finally {
 			  if (db != null) db.close();
 		  }
 	  }
 	  
 	  public static void deleteVS(String idKpiketerangan)throws Exception {
-		    Db db = null;
-		    String sql = "";
-		    try {
-		      db = new Db();
-		      Statement stmt = db.getStatement();
-		      //boolean found = false;
-		      //sql = "select id_carabayar from faculty_subject where faculty_id = '" + id_carabayar + "'";
-		      //ResultSet rs = stmt.executeQuery(sql);
-		      //if (rs.next()) found = true;
-		      //if (found)
-		      sql = "delete from TBLKPIURUSAN where id_kpiurusan = " + idKpiketerangan;
-		      stmt.executeUpdate(sql);
-		    }finally {
-		      if (db != null) db.close();
-		    }
+		  Db db = null;
+		  String sql = "";
+		  
+		  try {
+			 db = new Db();
+			 Statement stmt = db.getStatement();
+			 sql = "delete from TBLSEMAKANSENARAI where id_semakansenarai = " + idKpiketerangan;
+			 stmt.executeUpdate(sql);
+		    
+		  }finally {
+			  if (db != null) db.close();
 		  }
 	  
-	  public static void simpanKeteranganStatus(Hashtable h) throws Exception {
+	  }
+	  
+	  public static void simpanJenisDokumen(Hashtable<String,String> h) throws Exception {
 		  Db db = null;
 		  String sql = "";
 		  String strTarikhSemasa="";
-		  lebah.util.Util u = new lebah.util.Util();
-		  strTarikhSemasa = u.getDateTime(new Date(), "dd/MM/yyyy");
+		  strTarikhSemasa = Util.getDateTime(new Date(), "dd/MM/yyyy");
 
 		  String tarikhMasuk = "to_date('" + strTarikhSemasa + "','dd/MM/yyyy')";
-		  long Id_KPIStatus= DB.getNextID("TBLKPISTATUS_SEQ");
+		  long Id_KPIStatus= DB.getNextID("TBLSEMAKANJENISDOKUMEN_SEQ");
 
 		  try {
 			  db = new Db();
 			  Statement stmt = db.getStatement();
 			  SQLRenderer r = new SQLRenderer();
-			  r.add("Id_Kpistatus", Id_KPIStatus);
-			  r.add("Id_Kpiurusan", r.unquote((String)h.get("idkpiurusan")));
-			  r.add("Id_Suburusanstatus", r.unquote((String)h.get("idsuburusanstatus")));
+			  r.add("id_semakanjenisdokumen", Id_KPIStatus);
+			  r.add("id_semakan", r.unquote((String)h.get("idSemakan")));
+			  r.add("id_jenisdokumen", r.unquote((String)h.get("idJenis")));
 			  	  
-			  r.add("id_masuk", h.get("idmasuk"));
+			  r.add("id_masuk", h.get("idMasuk"));
 			  r.add("tarikh_masuk", r.unquote(tarikhMasuk));
-			  r.add("id_kemaskini", h.get("idmasuk"));
+			  r.add("id_kemaskini", h.get("idMasuk"));
 			  r.add("tarikh_kemaskini", r.unquote(tarikhMasuk));
 
-			  sql = r.getSQLInsert("TBLKPISTATUS");
-			  myLog.info("FrmKPIData::simpanKeteranganStatus("+h+")::TBLKPISTATUS = "+sql);
+			  sql = r.getSQLInsert("TBLSEMAKANJENISDOKUMEN");
+			  myLog.info("simpanJenisDokumen("+h+"):sql = "+sql);
 			  stmt.executeUpdate(sql);
+			  
 		  } finally {
 			  if (db != null) db.close();
 		  }
 	  }
 	  
-	  public static void updateStatus(String idKpiketerangan, String idstatus, int idKemaskini) throws Exception {
+	  public static void updateJenisDokumen(String idKpiketerangan
+			 ,String idJenis
+			 ,String idSemakan
+			 ,String idKemaskini) throws Exception {
 		  Db db = null;
 		  String sql = "";
 		  String strTarikhSemasa="";
-		  lebah.util.Util u = new lebah.util.Util();
-		  strTarikhSemasa = u.getDateTime(new Date(), "dd/MM/yyyy");
+		  strTarikhSemasa = Util.getDateTime(new Date(), "dd/MM/yyyy");
 
 		  String tarikhKemaskini = "to_date('" + strTarikhSemasa + "','dd/MM/yyyy')";
-		
+		 
 		  try {
 			  db = new Db();
 			  Statement stmt = db.getStatement();
 			  SQLRenderer r = new SQLRenderer();
 			  r.clear();
-			  r.update("id_kpistatus", idKpiketerangan);
-			  r.add("id_suburusanstatus", idstatus);
+			  r.update("id_semakanjenisdokumen", idKpiketerangan);
+			  r.add("id_semakan", r.unquote(idSemakan));
+			  r.add("id_jenisdokumen", r.unquote(idJenis));
 			  r.add("id_kemaskini", idKemaskini);
 			  r.add("tarikh_kemaskini", r.unquote(tarikhKemaskini));
-			  sql = r.getSQLUpdate("TBLKPISTATUS");
+			  sql = r.getSQLUpdate("TBLSEMAKANJENISDOKUMEN");
 			  stmt.executeUpdate(sql);
 	    }finally {
 	      if (db != null) db.close();

@@ -14,7 +14,7 @@
 
 
 <!-- ****************** START UNTUK MAKLUMAT NOTIS 5A KTN ************************* -->
-## #parse("app/htp/permohonan/notis/frmBayaranNotis.jsp") <!--path file asal sebelum diubah kepada view sahaja.-->
+##parse("app/htp/permohonan/online/v02/notis/frmBayaranNotis.jsp") <!--path file asal sebelum diubah kepada view sahaja.-->
 ##<br/><br/><br/><br/>
 <fieldset>
 	<legend>MAKLUMAT 
@@ -523,7 +523,7 @@
 			<td width="18%">Tarikh Resit</td>
 			<td width="20%">Jumlah Baucer</td>
 		</tr>
-BuktiBayaranInfo2 = $BuktiBayaranInfo2
+
 		#set ( $cnt1 = 0 ) 
 		#foreach ( $Bukti in $BuktiBayaranInfo2 ) 
 		#set ($cnt1 = $cnt1 + 1 ) 
@@ -537,8 +537,8 @@ BuktiBayaranInfo2 = $BuktiBayaranInfo2
 			<td class="$row">$cnt1.</td>
 			<td class="$row">$Bukti.noBaucer</td>
 			<td class="$row">$Bukti.noResit</td>
-			<td class="$row">$Bukti.tarikhBaucer</td>
-			<td class="$row">$Bukti.tarikhResit</td>
+			<td class="$row">$Bukti.tarikhbaucer</td>
+			<td class="$row">$Bukti.tarikhresit</td>
 			<td class="$row">$Bukti.jumlahBaucer</td>
 		</tr>
 		#end #if ($cnt == 0)
@@ -551,6 +551,9 @@ BuktiBayaranInfo2 = $BuktiBayaranInfo2
 	</table>
 </fieldset>
 <!-- ****************** END UNTUK Senarai Bukti Pembayaran ************************* -->
+
+
+
 
 <script>
 </script>

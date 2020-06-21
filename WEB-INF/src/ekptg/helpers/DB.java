@@ -796,7 +796,10 @@ public class DB extends EkptgCache implements Serializable {
 		} else {
 			Vector<Tblrujurusan> v = null;
 			Db db = null;
-			String sql = "Select id_urusan,kod_urusan,nama_urusan from " + " tblrujurusan order by lpad(kod_urusan,10)";
+			String sql = "SELECT id_urusan,kod_urusan,nama_urusan FROM tblrujurusan ORDER BY "+
+					" nama_urusan ASC"+
+//					"lpad(kod_urusan,10)"+
+					"";
 			try {
 				db = new Db();
 				Statement stmt = db.getStatement();
@@ -1012,22 +1015,23 @@ public class DB extends EkptgCache implements Serializable {
 				db = new Db();
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
-				r.add("id_Suburusan");
-				r.add("kod_Suburusan");
-				r.add("nama_Suburusan");
+				r.add("id_suburusan");
+				r.add("kod_suburusan");
+				r.add("nama_suburusan");
 				//r.add("flag_aktif","1");
-				r.add("id_Urusan", Integer.parseInt(idUrusan));
+				r.add("id_urusan", Integer.parseInt(idUrusan));
 				v = new Vector<Tblrujsuburusan>();				
-				sql = r.getSQLSelect("Tblrujsuburusan", "lpad(kod_Suburusan,10)");
-				System.out.println(" sql TEST SUBURUSAN EMPTY : "+sql);
+				sql = r.getSQLSelect("tblrujsuburusan", "nama_suburusan ASC");
+//				sql = r.getSQLSelect("Tblrujsuburusan", "lpad(kod_Suburusan,10)");
+//				System.out.println(" sql TEST SUBURUSAN EMPTY : "+sql);
 				ResultSet rs = stmt.executeQuery(sql);
 
 				Tblrujsuburusan s = null;
 				while (rs.next()) {
 					s = new Tblrujsuburusan();
-					s.setIdSuburusan(rs.getLong("id_Suburusan"));
-					s.setKodSuburusan(rs.getString("kod_Suburusan"));
-					s.setNamaSuburusan(rs.getString("nama_Suburusan"));
+					s.setIdSuburusan(rs.getLong("id_suburusan"));
+					s.setKodSuburusan(rs.getString("kod_suburusan"));
+					s.setNamaSuburusan(rs.getString("nama_suburusan"));
 					v.addElement(s);
 					
 				}
@@ -1052,7 +1056,7 @@ public class DB extends EkptgCache implements Serializable {
 			return (Vector<Tblrujsuburusan>) cachedObject.getObjectValue();
 		} else {
 			Db db = null;
-			String sql = "Select id_Suburusan,kod_Suburusan,nama_Suburusan,id_Urusan"
+			String sql = "select id_Suburusan,kod_Suburusan,nama_Suburusan,id_Urusan"
 					+ " from tblrujsuburusan where id_Urusan = '6'" + " order by	kod_Suburusan ";
 
 			Vector<Tblrujsuburusan> v = null;
@@ -3010,6 +3014,84 @@ public class DB extends EkptgCache implements Serializable {
 		String sql = "";
 		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
 				+ " where id_Kategoripemohon in (1,2)";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujkategoripemohon> v = new Vector<Tblrujkategoripemohon>();
+			Tblrujkategoripemohon s = null;
+			while (rs.next()) {
+				s = new Tblrujkategoripemohon();
+				s.setIdKategoripemohon(rs.getLong(1));
+				s.setKodKategoripemohon(rs.getString(2));
+				s.setKeterangan(rs.getString(3));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static Vector<Tblrujkategoripemohon> getKategoriPemohonOrganisasiAndSyarikat() throws Exception {
+		Db db = null;
+		String sql = "";
+		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
+				+ " where id_Kategoripemohon in (10,2,9) order by keterangan desc";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujkategoripemohon> v = new Vector<Tblrujkategoripemohon>();
+			Tblrujkategoripemohon s = null;
+			while (rs.next()) {
+				s = new Tblrujkategoripemohon();
+				s.setIdKategoripemohon(rs.getLong(1));
+				s.setKodKategoripemohon(rs.getString(2));
+				s.setKeterangan(rs.getString(3));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static Vector<Tblrujkategoripemohon> getKategoriIndividu() throws Exception {
+		Db db = null;
+		String sql = "";
+		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
+				+ " where id_Kategoripemohon = 1";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujkategoripemohon> v = new Vector<Tblrujkategoripemohon>();
+			Tblrujkategoripemohon s = null;
+			while (rs.next()) {
+				s = new Tblrujkategoripemohon();
+				s.setIdKategoripemohon(rs.getLong(1));
+				s.setKodKategoripemohon(rs.getString(2));
+				s.setKeterangan(rs.getString(3));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static Vector<Tblrujkategoripemohon> getKategoriIndividuBukanIndividu() throws Exception {
+		Db db = null;
+		String sql = "";
+		sql = "Select id_Kategoripemohon, kod_Kategoripemohon, keterangan from tblrujkategoripemohon"
+				+ " where id_Kategoripemohon in (1,11)";
 
 		try {
 			db = new Db();

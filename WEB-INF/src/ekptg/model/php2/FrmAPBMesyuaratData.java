@@ -50,7 +50,7 @@ public class FrmAPBMesyuaratData {
 			idMesyuaratString = String.valueOf(idMesyuarat);
 			r.add("ID_MESYUARAT", idMesyuarat);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("TAJUK", tujuan);
+			r.add("TAJUK", tujuan+bilMesyuarat);
 			r.add("BIL_MESYUARAT", bilMesyuarat);
 			if (!"".equals(tarikhMesyuarat)) {
 				r.add("TARIKH_MESYUARAT",

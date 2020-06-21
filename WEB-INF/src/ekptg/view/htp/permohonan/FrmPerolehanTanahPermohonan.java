@@ -1715,8 +1715,15 @@ public class FrmPerolehanTanahPermohonan extends AjaxBasedModule{
 		socUrusan = UtilHTML.SelectUrusan("socUrusan",Utils.parseLong(idurusan),null);//disabled class=disabled
 		socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian), null,"onChange=\"doChangeKementerianX()\" style=\"width:400\"");
 		socAgensi = HTML.SelectAgensiByKementerian("socAgensi", id_kementerian, Utils.parseLong(id_agensi), ""," style=\"width:400\"");
-		//socNegeri = HTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri),null,"onChange=doChangeNegeriX();");
-		socNegeri = UtilHTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri),null,"onChange=doChangeNegeriX();");
+		//
+		socNegeri = HTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri),null,"onChange=doChangeNegeriX();");
+		myLog.info("doListing:idnegeri="+idnegeri.length());
+		
+//		if(idnegeri.length()==0)
+//			socNegeri = UtilHTML.SelectNegeri("socNegeri",null,null,"onChange=doChangeNegeriX();");
+//		else
+//			socNegeri = UtilHTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri.equals("")?"0":idnegeri),null,"onChange=doChangeNegeriX();");
+		
 		socDaerah = HTML.SelectDaerahByNegeri(idnegeri, "socDaerah",Utils.parseLong(iddaerah),null, "onChange=\"doChangeDaerahX()\"");
 		socMukim = HTML.SelectMukimByDaerah(iddaerah, "socMukim", Utils.parseLong(idmukim) , "");
 		this.context.put("socUrusan", socUrusan);

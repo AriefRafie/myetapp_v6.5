@@ -1,4 +1,4 @@
-package ekptg.model;
+package ekptg.model.ppk.util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,9 +20,10 @@ import ekptg.model.htp.IHtp;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
+import ekptg.model.utils.status.IStatus;
 
-public class StatusBean implements IStatus {
-	private static Logger myLog = Logger.getLogger(ekptg.model.StatusBean.class);
+public class StatusBeanPPK implements IStatus {
+	private static Logger myLog = Logger.getLogger(ekptg.model.ppk.util.StatusBeanPPK.class);
 	PfdFail fail = null;
 	Permohonan permohonan = null;
 	HtpPermohonan htpPermohonan = null;
@@ -308,6 +309,7 @@ public class StatusBean implements IStatus {
 		return idSuburusanstatusfail;
 		
 	}	
+	@Override
 	public String simpanStatusAktif(Tblrujsuburusanstatusfail susf) throws Exception {
 		String idSuburusanstatusfail = "0";
 		try{
@@ -357,7 +359,6 @@ public class StatusBean implements IStatus {
 		return idSuburusanstatusfail;
 		
 	}
-	
 	/**
 	 Sebagai jumlah bilangan tugasan dan senarai fail/ maklumat yang berkaitan
 	 dengan tugasan yang perlu dibuat.
@@ -427,8 +428,80 @@ public class StatusBean implements IStatus {
 	    }	    
 	     return senaraiMaklumat;
 	     
-	  }//close list	
+	}//close list	
 	
+	/**
+	 Sebagai jumlah bilangan tugasan dan senarai fail/ maklumat yang berkaitan
+	 dengan tugasan yang perlu dibuat.
+	 */
+	@Override
+	public Vector<Hashtable<String, String>> getStatusPermohonanByIndividu(String idUrusan,String idUser,String langkah)
+		throws Exception{
+		Vector<Hashtable<String, String>> senaraiMaklumat = new Vector<Hashtable<String, String>>();
+	    try {	    	
+	    		db = new Db();
+	    		Statement stmt = db.getStatement();	    		
+	    		sql = "SELECT " +
+	    		//	"distinct f.no_fail,F.ID_MASUK, a.id_status,  ";
+	    		" S.KETERANGAN,ST.ID_SUBURUSANSTATUS "+
+	    		" ,STF.ID_SUBURUSANSTATUSFAIL, STF.AKTIF,ST.ID_SUBURUSAN,STF.URL CATATAN" +
+	    		" ,TO_CHAR(STF.TARIKH_MASUK,'dd/mm/yyyy') TARIKH_MASUK " +
+	    		" ,TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI" +
+	    		" ,STF.ID_PERMOHONAN,STF.ID_FAIL " +
+	    	    " FROM " +
+	    	    " TBLPPKPERMOHONAN P, TBLPFDFAIL F,  "+
+//	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLHTPRUJSUBURUSANSTATUSFAIL STF "+
+	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLRUJSUBURUSANSTATUSFAIL STF "+
+	    		" WHERE "+
+	    		" F.ID_FAIL = P.ID_FAIL "+
+	    		" AND F.ID_FAIL = STF.ID_FAIL "+
+	    		" AND P.ID_PERMOHONAN = STF.ID_PERMOHONAN "+
+	    		" AND ST.ID_STATUS = S.ID_STATUS "+
+	    		" AND STF.ID_SUBURUSANSTATUS = ST.ID_SUBURUSANSTATUS "+
+	    		//" AND stf.id_permohonan = a.id_permohonan ";
+	    		//sql += " AND stf.ID_FAIL = A.ID_FAIL ";
+	    		//sql += " AND F.id_status <> '999' ";
+	    		" AND ST.LANGKAH = '"+langkah+"'"+
+	    		" AND STF.aktif = 1 "+
+	    		//" AND STF.ID_FAIL = '" + idHakmilik + "'" +
+	    				"";
+	    		if(!idUrusan.equals("")){
+	    			sql+=" AND ST.ID_SUBURUSAN IN " +
+	    					"(SELECT ID_SUBURUSAN FROM TBLRUJSUBURUSAN " +
+	    					" WHERE ID_URUSAN ='"+idUrusan+"')";
+	    		}
+	    		if(!idUser.equals("")){
+	    			sql+=" AND F.ID_MASUK = "+idUser;	    		
+	    		}
+	    		myLog.info("getStatusPermohonanByIndividu:sql="+sql);
+	    		ResultSet rs = stmt.executeQuery(sql);	      			  
+				int bil = 1;
+			    Hashtable<String,String> h = null;
+			    while (rs.next()) {
+	        			h = new Hashtable<String, String>();  
+	    				//h.put("level",rs.getString("ID_MASUK"));	 
+	    	    		h.put("bil", String.valueOf(bil));
+	    				h.put("id_permohonan", rs.getString("id_permohonan"));
+	    				h.put("id_suburusan", rs.getString("id_suburusan"));
+	    				h.put("id_suburusanstatusfail", rs.getString("id_suburusanstatusfail"));
+	    				h.put("id_suburusanstatus", rs.getString("id_suburusanstatus"));
+	    				//h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
+	    				//h.put("no_fail", rs.getString("no_fail")==null?"":rs.getString("no_fail"));
+	    				h.put("catatan", Utils.isNull(rs.getString("CATATAN")));
+	    				h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
+	    				h.put("tarikhSelesai", Utils.isNull(rs.getString("TARIKH_SELESAI")));
+	    				senaraiMaklumat.addElement(h);
+	    				bil++;
+
+	    		}
+	    		
+	      //return h;
+	    } finally {
+	      if (db != null) db.close();
+	    }	    
+	     return senaraiMaklumat;
+	     
+	  }//close list	
 	
 	public void kemaskiniStatusPermohonan(String idPermohonan,String idStatus,String userId) throws Exception {
 		try{
@@ -464,6 +537,25 @@ public class StatusBean implements IStatus {
 	
 		}		  
 		
+	}
+	
+	@Override
+	public String simpan(Hashtable<String,String> hash) throws Exception {
+		String idSuburusanStatus = getIdSuburusanStatusByLangkah(String.valueOf(hash.get("langkah"))
+									,String.valueOf(hash.get("idSuburusan")), "=");
+	
+		Tblrujsuburusanstatusfail susf = new Tblrujsuburusanstatusfail();
+		susf.setIdFail(Long.parseLong(String.valueOf(hash.get("idFail"))));
+		susf.setIdPermohonan(Long.parseLong(String.valueOf(hash.get("idPermohonan"))));
+		susf.setIdSuburusanstatus(Long.parseLong(idSuburusanStatus));
+		susf.setUrl(String.valueOf(hash.get("catatan")));
+		susf.setAktif("1");
+		susf.setIdMasuk(Long.parseLong(String.valueOf(hash.get("idUser"))));
+		susf.setTarikhMasuk("sysdate");
+		susf.setIdKemaskini(Long.parseLong(String.valueOf(hash.get("idUser"))));
+		susf.setTarikhKemaskini("sysdate");
+		return simpanStatusAktif(susf);
+	
 	}
 	
 	private IHtp getIHTP(){

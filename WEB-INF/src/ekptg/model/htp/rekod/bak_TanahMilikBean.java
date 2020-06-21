@@ -13,9 +13,9 @@ import ekptg.model.htp.entity.HakMilik;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
-public class TanahMilikBean implements ITanah{
+public class bak_TanahMilikBean implements bak_ITanah{
 
-	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.TanahMilikBean.class);
+	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.bak_TanahMilikBean.class);
 	private HakMilik hakmilik = null;
  	private IHtp iHTP = null;
   	private IHTPUtilitiRekod iUtilRekod = null;

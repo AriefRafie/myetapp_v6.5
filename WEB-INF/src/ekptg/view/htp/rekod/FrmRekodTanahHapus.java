@@ -30,13 +30,20 @@ import ekptg.model.htp.FrmRekodPendaftaranHakmilikRizabData;
 import ekptg.model.htp.FrmRekodPendaftaranHakmilikSementaraData;
 import ekptg.model.htp.entity.HakMilik;
 import ekptg.model.htp.rekod.FrmRekodUtilData;
+import ekptg.model.htp.rekod.FrmTanahDaftarBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.ITanahDaftar;
+import ekptg.model.htp.rekod.TanahBean;
 
 public class FrmRekodTanahHapus extends AjaxBasedModule {
 	private boolean isSambungan = false;
 	private final String PATH="app/htp/rekod/utiliti/";
+	private ITanah iTanah = null;
 	private HakmilikInterface iHakmilik = null;
+	private ITanahDaftar iTanahDaftar = null;
+
 	private Hashtable hastableHakmilik = null;
 
 	private static final long serialVersionUID = 1L;
@@ -356,7 +363,7 @@ public class FrmRekodTanahHapus extends AjaxBasedModule {
 					//listSambungan = viewModeSenaraiHakmilikSambungan(session,noHakmilikAsal);
 					
 					//28/01/2011
-					listSambungan = getIHakmilik().getSenaraiHakmilikSambungan(noHakmilikAsal
+					listSambungan = geTanah().getSenaraiHakmilikSambungan(noHakmilikAsal
 							, String.valueOf(hakmilik.getNegeri().getIdNegeri())
 							, String.valueOf(hakmilik.getDaerah().getIdDaerah())
 							, String.valueOf(hakmilik.getMukim().getIdMukim()));
@@ -521,7 +528,7 @@ public class FrmRekodTanahHapus extends AjaxBasedModule {
 				 //VIEW SEMULA HAKMILIK YANG DIUPDATE
 			 	 if(socStatusTemp.equals("S")){
 			 		 //FrmRekodPendaftaranHakmilikSementaraData.addHakmilikBaruById(hHakmilikUpdate);
-			 		 getIHakmilik().kemaskiniHakmilikTambahSambungan(hHakmilikUpdate);
+			 		 geTanah().kemaskiniHakmilikTambahSambungan(hHakmilikUpdate);
 			 		 this.context.put("mode", "update");
 					 
 			 		 noHakmilikAsal = viewModeHakmilikSambungan(session,submit);				 
@@ -530,7 +537,7 @@ public class FrmRekodTanahHapus extends AjaxBasedModule {
 			 		 //listSambungan = viewModeSenaraiHakmilikSambungan(session,noHakmilikAsal);
 			 		 
 			 		 //28/01/2011
-			 		 listSambungan = getIHakmilik().getSenaraiHakmilikSambungan(noHakmilikAsal
+			 		 listSambungan = geTanah().getSenaraiHakmilikSambungan(noHakmilikAsal
 								, String.valueOf(hakmilik.getNegeri().getIdNegeri())
 								, String.valueOf(hakmilik.getDaerah().getIdDaerah())
 								, String.valueOf(hakmilik.getMukim().getIdMukim()));
@@ -782,7 +789,7 @@ public class FrmRekodTanahHapus extends AjaxBasedModule {
 	    }else if("deletehakmilikrizab".equals(firstAction)){
 			vm = PATH+"frmRekodSenaraiHakmilikRizab.jsp";
 
-			getIHakmilik().hapusHakmilikById(getParam("idHakmilik"));
+			getDaftar().hapus(getParam("idHakmilik"));
 
 			
 			flagAdvSearch = "open";			
@@ -2146,7 +2153,7 @@ public class FrmRekodTanahHapus extends AjaxBasedModule {
 			this.context.put("txtNoHakmilikAsal",getParam("txtNoHakmilikAsal") == "" ? (String)hHakmilik.get("hakmilikAsal"):getParam("txtNoHakmilikAsal"));
 			this.context.put("txtKemAgenTerkini",getParam("txtKemAgenTerkini") == "" ? (String)hHakmilik.get("catatan"):getParam("txtKemAgenTerkini"));
 			
-			hakmilik = getIHakmilik().getHakmilik(idHakmilik);
+			hakmilik = getHakmilik().getHakmilik(idHakmilik);
 
 			return (String)hHakmilik.get("kodJenisHakmilik")+hHakmilik.get("noHakmilik");
 		}	
@@ -2210,14 +2217,6 @@ public class FrmRekodTanahHapus extends AjaxBasedModule {
 			return FrmRekodPendaftaranHakmilikSementaraData.getSenaraiHakmilikSambungan(noHakmilikAsal);	
 			
 		}
-
-		private HakmilikInterface getIHakmilik(){
-			if (iHakmilik==null){
-				iHakmilik=new HakmilikBean();
-			}
-			return iHakmilik;
-		}
-		
 		//Tambah oleh Rosli pada 01/03/2011, terus papar mode kemaskini maklumat hakmilik
 		//paparan maklumat hakmilik dan bersedia untuk dikemaskini
 		private void kemaskiniMaklumatHakmilik(String idHakmilik) throws Exception {
@@ -2370,4 +2369,27 @@ public class FrmRekodTanahHapus extends AjaxBasedModule {
 			
 		}		
 
+	private ITanahDaftar getDaftar(){
+		if(iTanahDaftar == null){
+			iTanahDaftar = new FrmTanahDaftarBean();
+		}
+		return iTanahDaftar;
+				
+	}
+
+	private HakmilikInterface getHakmilik(){
+		if (iHakmilik==null){
+			iHakmilik=new HakmilikBean();
+		}
+		return iHakmilik;
+	}
+	
+	private ITanah geTanah(){
+		if (iTanah==null){
+			iTanah=new TanahBean();
+		}
+		return iTanah;
+	}
+	
+	
 }	

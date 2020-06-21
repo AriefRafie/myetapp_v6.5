@@ -88,13 +88,12 @@ public class FrmTKRKeputusanView extends AjaxBasedModule {
 					Hashtable keputusan = (Hashtable) logic.getBeanMaklumatKeputusan().get(0);
 					//idStatus = (String) keputusan.get("idStatus");
 					k1 = (String) keputusan.get("keputusan");
-					
-					//System.out.println("keputusan = "+k1 + " status = " +idStatus);
 				}
 	    		//}
 			}
 	    	if ("doHantarProses".equals(hitButton)){
 	    		logic.updateStatus(idFail, idPermohonan, idKeputusan, session);
+	    		logic.sendEmailtoPemohon(idPermohonan, idKeputusan, session);
 	    	} 
 	    	if ("doBatalPermohonan".equals(hitButton)){
     			logic.doBatalPermohonan(idFail, idPermohonan, getParam("tarikhBatal"), getParam("txtSebab"), session);

@@ -34,16 +34,16 @@
 	        	#if($!id_jenistanah != "3")       		    
 			        <li class="TabbedPanelsTab" title="Maklumat Asas Tanah" tabindex="0" onclick="javascript:selectTab(0,'kemaskinipermohonan','MakAsasTanah',0,'$idpermohonanlokasi')" >MAKLUMAT ASAS TANAH</li>
 			    	
-			    	<!-- *******  Start Addby zulfazdli 11/5/2017- for view sahaja Maklumat Notis untuk user online ****** -->
+			    
 			    	#if($!idNegeriNotis=="13")
 			    		<!-- Jika id negeri sama dengan 13 adalah serawak, paparkan tab L & S 80 -->
-		        		<li class="TabbedPanelsTab" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" title="L & S 80" >L & S 80</li>
+		        		<li class="TabbedPanelsTab" title="L & S 80"  tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" >L & S 80</li>
 		      		#elseif($!idNegeriNotis=="12")
 		      			<!-- Jika id negeri sama dengan 12 adalah sabah, paparkan tab SURAT TAWARAN KELULUSAN -->
-			        	<li class="TabbedPanelsTab" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" title="Surat Tawaran Kelulusan " >SURAT TAWARAN KELULUSAN</li>
+			        	<li class="TabbedPanelsTab" title="Surat Tawaran Kelulusan " tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" >SURAT TAWARAN KELULUSAN</li>
 		      		#else
 		      			<!-- Jika id negeri selain 12 dan 13 adalah semenanjung, paparkan maklumat NOTIS 5A KTN -->
-			        	<li class="TabbedPanelsTab" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" title="Notis 5A" >NOTIS 5A KTN</li>
+			        	<li class="TabbedPanelsTab" title="Notis 5A" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" >NOTIS 5A KTN</li>
 					#end
 					<!-- *** End *** -->
 					
@@ -51,16 +51,15 @@
 			        <li class="TabbedPanelsTab" title="Maklumat Asas Tanah" tabindex="0" onclick="javascript:selectTab(0,'kemaskinipermohonan','MakAsasTanah',0,'$idpermohonanlokasi')" >MAKLUMAT ASAS TANAH</li>
 			        <li class="TabbedPanelsTab" title="Borang K" tabindex="0" onclick="javascript:selectTab(1,'kemaskinipermohonan','BorangK',0,'$idpermohonanlokasi')">BORANG K</li>
 					
-					<!-- ******* Start Addby zulfazdli 11/5/2017 - for view sahaja Maklumat Notis untuk user online ******* -->
 					#if($!idNegeriNotis=="13")
 						<!-- Jika id negeri sama dengan 13 adalah serawak, paparkan tab L & S 80 -->
-			        	<li class="TabbedPanelsTab" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" title="L & S 80" >L & S 80</li>
+			        	<li class="TabbedPanelsTab" title="L & S 80" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" >L & S 80</li>
 		      		#elseif($!idNegeriNotis=="12")
 		      			<!-- Jika id negeri sama dengan 12 adalah sabah, paparkan tab SURAT TAWARAN KELULUSAN -->
-			        	<li class="TabbedPanelsTab" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" title="Surat Tawaran Kelulusan " >SURAT TAWARAN KELULUSAN</li>
+			        	<li class="TabbedPanelsTab" title="Surat Tawaran Kelulusan" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" >SURAT TAWARAN KELULUSAN</li>
 		      		#else
 		      			<!-- Jika id negeri selain 12 dan 13 adalah semenanjung, paparkan maklumat NOTIS 5A KTN -->
-			        	<li class="TabbedPanelsTab" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" title="Notis 5A" >NOTIS 5A KTN</li>
+			        	<li class="TabbedPanelsTab" title="Notis 5A" tabindex="0" onclick="javascript:selectTab(5,'kemaskinipermohonan','Notis5A',0,'$idpermohonanlokasi')" >NOTIS 5A KTN</li>
 					#end
 					<!-- *** End *** -->
 					
@@ -144,10 +143,20 @@
 					<div class="TabbedPanelsContent"> 
 					#if($selectedTab == '5')
 		               	#if($tabmode == '0')
-		               		<!-- jika click tab akan hantar tabmode 0 dan pergi ke senarai notis --> 
-			               	#parse ("app/htp/permohonan/online/frmNotisSenaraiOnline.jsp") 
+		               	<!-- jika click tab akan hantar tabmode 0 dan pergi ke senarai notis -->
+		               		#if($!bilNotis > 0) 
+		               			#parse ("app/htp/permohonan/online/frmNotisSenaraiOnline.jsp")
+		               		#else
+		               		#parse ("app/htp/permohonan/online/frmBayaranNotisViewOnlyTambah.jsp")
+			                #end
 	              		#elseif($tabmode == 1)
+	              		
+	              		#if($butang3 == '8')
+	              			<!-- Bila Click Tambah notis akan hantar tabmode 1 butang 8 pada function Notis5AView file indexOnline.jsp -->
+								#parse("app/htp/permohonan/online/v02/notis/frmBayaranNotis.jsp")
+								
 	              			<!-- Bila Click View pada senarai notis akan hantar tabmode 1 pada function Notis5AView file indexOnline.jsp -->
+	              			#else
 	               			#if($!idNegeriNotis=="13") 
 	               				<!-- Jika id negeri sama dengan 13 adalah serawak, paparkan maklumat L & S 80 -->
 	                			#parse("app/htp/permohonan/online/frmBayaranNotisViewOnlyOnline13.jsp")
@@ -155,8 +164,10 @@
 		      					<!-- Jika id negeri sama dengan 12 adalah Sabah, paparkan maklumat SURAT TAWARAN KELULUSAN -->
 	                			#parse("app/htp/permohonan/online/frmBayaranNotisViewOnlyOnline12.jsp")
 	                		#else	
-	                			<!-- Jika id negeri selain 12 dan 13 adalah semenanjung, paparkan maklumat NOTIS 5A KTN -->
+	                			<!-- Jika id negeri selain 12 dan 13 adalah semenanjung, paparkan MAKLUMAT NOTIS 5A KTN -->
 	                   			#parse("app/htp/permohonan/online/frmBayaranNotisViewOnlyOnline.jsp")
+	                   				
+	                   			#end
 	                   		#end
 		  	            #end
 		            #end
@@ -182,16 +193,16 @@
 					<input class="stylobutton" type="button" onclick="hantarPengesahan('$idPermohonan')" value="Hantar Semakan" />
 					<!-- <input type="button" name="cmdSimpan" id="cmdSimpan" value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan')" />  -->
 				#elseif ($!idjawatan.equals("9") && $!statusSemasa.equals("-3"))
-			 		<input class="stylobutton" type="button" onclick="hantarPengesahan('$idPermohonan')" value="Hantar Kelulusan" />
+			 		<input class="stylobutton" type="button" onclick="hantarPengesahan('$idPermohonan')" value="Hantar Pengesahan" />
 					<!-- <input type="button" name="cmdSimpan" id="cmdSimpan" value="Hantar Kelulusan" onclick="doAjaxCall${formName}('simpanpengesahan')" /> -->
 				#elseif ($!idjawatan.equals("4") && $!statusSemasa.equals("-2"))
-					<input class="stylobutton" type="button" onclick="hantarPengesahan('$idPermohonan')" value="Lulus Permohonan" />
+					<input class="stylobutton" type="button" onclick="hantarPengesahan('$idPermohonan')" value="Hantar Permohonan" />
 					<!-- <input type="button" name="cmdSimpan" id="cmdSimpan" value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan')" /> -->
 			     #end
 			#else
 				<label>$!statusInfo</label>
 			#end
-			<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
+			<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Senarai Fail" onclick="kembali()"/>
 		</td>
 	</tr>
 	<!-- END BUTTON -->

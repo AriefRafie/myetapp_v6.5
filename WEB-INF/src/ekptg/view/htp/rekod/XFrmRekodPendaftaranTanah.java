@@ -49,8 +49,10 @@ import ekptg.model.htp.rekod.HTPStatusRekodBean;
 import ekptg.model.htp.rekod.HTPSusulanPembangunanBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
-import ekptg.model.htp.rekod.IHakmilikRizab;
-import ekptg.model.htp.rekod.IHakmilikUrusan;
+import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.ITanahCarian;
+import ekptg.model.htp.rekod.ITanahUrusan;
+import ekptg.model.htp.rekod.TanahBean;
 import ekptg.model.htp.utiliti.HTPSusulanBean;
 import ekptg.model.htp.utiliti.IHTPSusulan;
 
@@ -60,11 +62,12 @@ public class XFrmRekodPendaftaranTanah extends AjaxBasedModule {
 	private final String IDSUBURUSAN = "61";
 	private final String PATH="app/htp/rekod/";
 	private HakmilikInterface iHakmilik = null;
+	private ITanah iTanah = null;
 	private Hashtable hastableHakmilik = null;
-	private IHakmilikUrusan iHakmilikStatus = null;
-	private IHakmilikUrusan iHakmilikStatusP = null; 
-	private IHakmilikUrusan iHakmilikStatusS = null; 
-	private IHakmilikRizab iHakmilikRizab = null;
+	private ITanahUrusan iHakmilikStatus = null;
+	private ITanahUrusan iHakmilikStatusP = null; 
+	private ITanahUrusan iHakmilikStatusS = null; 
+	private ITanahCarian iHakmilikRizab = null;
  	private IHtp iHTP = null;  
 	private IHTPSusulan iSusulan = null;
 	private IHTPSusulan iSusulanPembangunan = null;
@@ -2887,7 +2890,7 @@ public class XFrmRekodPendaftaranTanah extends AjaxBasedModule {
 			this.context.put("txtNoHakmilikAsal",getParam("txtNoHakmilikAsal") == "" ? (String)hHakmilik.get("hakmilikAsal"):getParam("txtNoHakmilikAsal"));
 			this.context.put("txtKemAgenTerkini",getParam("txtKemAgenTerkini") == "" ? (String)hHakmilik.get("catatan"):getParam("txtKemAgenTerkini"));
 			
-			hakmilik = getIHakmilik().getHakmilik(idHakmilik);
+			hakmilik = getHakmilik().getHakmilik(idHakmilik);
 
 			return (String)hHakmilik.get("kodJenisHakmilik")+hHakmilik.get("noHakmilik");
 		}	
@@ -2952,13 +2955,6 @@ public class XFrmRekodPendaftaranTanah extends AjaxBasedModule {
 			
 		}
 
-		private HakmilikInterface getIHakmilik(){
-			if (iHakmilik==null){
-				iHakmilik=new HakmilikBean();
-			}
-			return iHakmilik;
-		}
-		
 		//Tambah oleh Rosli pada 01/03/2011, terus papar mode kemaskini maklumat hakmilik
 		//paparan maklumat hakmilik dan bersedia untuk dikemaskini
 		private void kemaskiniMaklumatHakmilik(String idHakmilik) throws Exception {
@@ -3196,7 +3192,7 @@ public class XFrmRekodPendaftaranTanah extends AjaxBasedModule {
 		
 		}		
 		
-		private IHakmilikRizab getIHakmilikRizab(){
+		private ITanahCarian getIHakmilikRizab(){
 			if (iHakmilikRizab == null){
 				iHakmilikRizab = new FrmHakmilikRizabBean();
 			}
@@ -3209,17 +3205,17 @@ public class XFrmRekodPendaftaranTanah extends AjaxBasedModule {
 			return iHTP;
 		}	
 		
-		private IHakmilikUrusan getHakmilikPenyewaan(){
+		private ITanahUrusan getHakmilikPenyewaan(){
 			if(iHakmilikStatus== null)
 				iHakmilikStatus = new FrmHakmilikUrusanPenyewaanBean();
 			return iHakmilikStatus;
 		}
-		private IHakmilikUrusan getHakmilikPajakan(){
+		private ITanahUrusan getHakmilikPajakan(){
 			if(iHakmilikStatusP== null)
 				iHakmilikStatusP = new FrmHakmilikUrusanPajakanBean();
 			return iHakmilikStatusP;
 		}
-		private IHakmilikUrusan getHakmilikPenswastaan(){
+		private ITanahUrusan getHakmilikPenswastaan(){
 			if(iHakmilikStatusS== null)
 				iHakmilikStatusS = new FrmHakmilikUrusanPenswastaanBean();
 			return iHakmilikStatusS;
@@ -3248,5 +3244,20 @@ public class XFrmRekodPendaftaranTanah extends AjaxBasedModule {
 				return iStatus;
 					
 		  }		
-		
+	private HakmilikInterface getHakmilik(){
+		if (iHakmilik==null){
+			iHakmilik=new HakmilikBean();
+		}
+		return iHakmilik;
+	
+	}
+	private ITanah getIHakmilik(){
+		if (iTanah==null){
+			iTanah=new TanahBean();
+		}
+		return iTanah;
+	
+	}			
+
+			
 }	

@@ -34,13 +34,15 @@ public class FrmAPBKertasRingkasanPermohonan extends AjaxBasedModule {
 		if (mode.isEmpty()) {
 			mode = "view";
 		}
-
+		String paparan=getParam("paparan");
+		
 		// GET ID PARAM
 		String idFail = getParam("idFail");
 		String idPermohonan = getParam("idPermohonan");
 		String idPemohon = getParam("idPemohon");
 		String idStatus = getParam("idStatus");
 		String idKertasKerjaApb = getParam("idKertasKerjaApb");
+		String socSyor = getParam("socSyor");
 
 		// VECTOR
 		Vector beanHeader = null;
@@ -67,7 +69,7 @@ public class FrmAPBKertasRingkasanPermohonan extends AjaxBasedModule {
 						getParam("JLM"),
 						getParam("JAS"),
 						getParam("PTG"),
-						getParam("txtUlasanJabatan"), getParam("socSyor"),
+						getParam("txtUlasanJabatan"), getParam("txtUlasanLulusBersyarat"), getParam("socSyor"),
 						getParam("txtBilMesyuarat"), getParam("txtTarikhMesyuarat"),
 						session);
 			}
@@ -127,12 +129,15 @@ public class FrmAPBKertasRingkasanPermohonan extends AjaxBasedModule {
 		// SET DEFAULT PARAM
 		this.context.put("mode", mode);
 
+		this.context.put("paparan", paparan);
+		
 		// SET ID PARAM
 		this.context.put("idFail", idFail);
 		this.context.put("idPermohonan", idPermohonan);
 		this.context.put("idPemohon", idPemohon);
 		this.context.put("idStatus", idStatus);
 		this.context.put("idKertasKerjaApb", idKertasKerjaApb);
+		this.context.put("socSyor", socSyor);
 
 		return vm;
 	}

@@ -219,7 +219,10 @@
 			<td>&nbsp;</td>
 			<td>Tujuan</td>
 			<td>:</td>
-			<td>$selectSubSuburusan</td>
+			<td>$selectSubSuburusan
+				<input type="hidden" name="namaTujuan" id="namaTujuan" value="$beanMaklumatPermohonan.namaTujuan"/>
+			</td>
+			
 		</tr>
         <tr>
           <td>&nbsp;</td>
@@ -306,47 +309,9 @@ function textCounter(field, countfield, maxlimit) {
 }
 function janaTajuk() {
 
-	var strTujuan = " ";
 	var strTajuk = " ";
 	var milikOrRizab = " ";
-	
-	if(document.${formName}.socUrusan.value == "12"){
-		
-		if(document.${formName}.socSuburusan.value == "26") {
-		   strTujuan = "KELAPA SAWIT DAN SUSU GETAH";
-		} else if(document.${formName}.socSuburusan.value == "27") {
-		   strTujuan = "BAHAN BATUAN / TANAH MERAH";
-		} else if(document.${formName}.socSuburusan.value == "28") {
-		   strTujuan = "KAYU BALAK";
-		} else if(document.${formName}.socSuburusan.value == "29") {
-		   strTujuan = "KELAPA SAWIT";
-		} else if(document.${formName}.socSuburusan.value == "30") {
-		   strTujuan = "KAYU GETAH"; 
-		} else if(document.${formName}.socSuburusan.value == "31") {
-		   strTujuan = "SUSU GETAH";
-		}
-	} else{
-		if(document.${formName}.socSubsuburusan.value == "99208") {
-			strTujuan = "TASKA"
-		} else if(document.${formName}.socSubsuburusan.value == "99209") {
-			strTujuan = "MESIN ATM"
-		} else if(document.${formName}.socSubsuburusan.value == "99210") {
-			strTujuan = "VENDING MESIN"
-		} else if(document.${formName}.socSubsuburusan.value == "99211") {
-			strTujuan = "KANTIN/ KAFETERIA"
-		} else if(document.${formName}.socSubsuburusan.value == "99212") {
-			strTujuan = "KIOSK"
-		} else if(document.${formName}.socSubsuburusan.value == "99213") {
-			strTujuan = "MESIN BASUH"
-		} else if(document.${formName}.socSubsuburusan.value == "99214") {
-			strTujuan = "ALAT PEMACAR TELEKOMUNIKASI"
-		} else if(document.${formName}.socSubsuburusan.value == "99215") {
-			strTujuan = "KEDIAMAN (KUARTERS PEKERJA)"
-		} else if(document.${formName}.socSubsuburusan.value == "99216") {
-			strTujuan = "LAIN-LAIN"
-		}
-	}
-	
+	var strTujuan = document.${formName}.namaTujuan.value;
 	var str1  = document.${formName}.noLotTanah.value;
 	var str2  = document.${formName}.noMilikTanah.value;
 	var str3  = document.${formName}.namaMukimTanah.value;
@@ -363,9 +328,15 @@ function janaTajuk() {
 	}
 
 	if(document.${formName}.socUrusan.value == "7"){
-		strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + "UNTUK TUJUAN " + strTujuan ;
-	} else if(document.${formName}.socUrusan.value == "12"){
-		strTajuk = "PERMOHONAN MENGELUARKAN HASIL " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon ;
+		if(document.${formName}.socSuburusan.value == "35"){
+			strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + "UNTUK TUJUAN " + strTujuan ;
+		} else {
+			strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
+		}
+	} else if(document.${formName}.socUrusan.value == "12"){ 
+		strTajuk = "PERMOHONAN MENGELUARKAN HASIL " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
+	} else if(document.${formName}.socUrusan.value == "13"){
+		strTajuk = "PERMOHONAN MENGELUARKAN " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
 	} else {
 	    strTajuk;
 	 }

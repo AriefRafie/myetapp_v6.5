@@ -30,12 +30,12 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
   #end
   <tr>
     <td><fieldset>
-      <legend><strong>SENARAI PELAN</strong></legend>
+      <legend><strong>SENARAI LAMPIRAN</strong></legend>
       <table align="center" width="100%">
         <!-- kmie, 20100812 (MacGDI) -->
-        <tr>
-          <td colspan="2" scope="row"><a href="http://g4nre.mygeoportal.gov.my" target="_blank" style="color:#0000FF">MacGDI</a></td>
-        </tr>
+<!--         <tr> -->
+<!--           <td colspan="2" scope="row"><a href="http://g4nre.mygeoportal.gov.my" target="_blank" style="color:#0000FF">MacGDI</a></td> -->
+<!--         </tr> -->
         <!-- end edit (kmie) -->
         <tr>
           <td colspan="2" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarDokumenP()"/></td>
@@ -66,6 +66,15 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
           <td class="row1">Tiada Rekod</td>
         </tr>
         #end
+        <tr>
+          <td colspan="7" align="center"> 
+         	#if($idStatus == '1610198')
+            <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+            <input type="button" name="cmdBatalPermohonan2" id="cmdBatalPermohonan2" value="Batal Permohonan" onClick="doBatalPermohonan()"/>
+            #end
+            <input type="button" name="cdmCetak4" id="cdmCetak4" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+          </td>            
+        </tr>
       </table>
       </fieldset></td>
   </tr>

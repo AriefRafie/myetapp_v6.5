@@ -60,15 +60,14 @@ import ekptg.model.htp.rekod.HTPStatusRekodBean;
 import ekptg.model.htp.rekod.HTPSusulanPembangunanBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
-import ekptg.model.htp.rekod.IHakmilikRizab;
-import ekptg.model.htp.rekod.IHakmilikUrusan;
+import ekptg.model.htp.rekod.ITanahUrusan;
+import ekptg.model.htp.rekod.TanahBean;
 import ekptg.model.htp.rekod.ITanah;
+import ekptg.model.htp.rekod.ITanahCarian;
 import ekptg.model.htp.rekod.ITanahDaftar;
 import ekptg.model.htp.rekod.ITanahKementerian;
-import ekptg.model.htp.rekod.TanahMilikBean;
 import ekptg.model.htp.utiliti.HTPSusulanBean;
 import ekptg.model.htp.utiliti.IHTPSusulan;
-import ekptg.view.admin.UpdateUserProfileModule;
 
 public class FrmRekodTanah extends AjaxBasedModule {
 
@@ -78,11 +77,11 @@ public class FrmRekodTanah extends AjaxBasedModule {
 	private HakmilikInterface iHakmilik = null;
 	private Hashtable<String, String> makTanah = null;
 	private Hashtable<String, String> makFail = null;
-	private IHakmilikUrusan iHakmilikStatus = null;
-	private IHakmilikUrusan iHakmilikStatusLain = null;
-	private IHakmilikUrusan iHakmilikStatusP = null;
-	private IHakmilikUrusan iHakmilikStatusS = null;
-	private IHakmilikRizab iHakmilikRizab = null;
+	private ITanahUrusan iHakmilikStatus = null;
+	private ITanahUrusan iHakmilikStatusLain = null;
+	private ITanahUrusan iHakmilikStatusP = null;
+	private ITanahUrusan iHakmilikStatusS = null;
+	private ITanahCarian iHakmilikRizab = null;
 	private IHtp iHTP = null;
 	private IHTPSusulan iSusulan = null;
 	private IHTPSusulan iSusulanPembangunan = null;
@@ -282,13 +281,14 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		lebah.portal.element.User user = up.getPenggunaInternal(userId);
 		
 		String userMail = (user==null?"roslizakariasip@gmail.com":user.getEmel());  				
-		myLog.info("emel="+user.getEmel());
+//		myLog.info("emel="+user.getEmel());
 	
 		/**FIRST PAGE PROCESS 
 		 VIEW SENARAI HAKMILIK DAN RIZAB 
 		 2020/04/12 ditukar frmRekodSenaraiHakmilikRizabIndexV03 -->frmRekodSenaraiHakmilikRizabIndex
 		 */
 		vm = PATH + "frmRekodSenaraiHakmilikRizabIndex.jsp";
+		myLog.info("firstAction="+firstAction+",nextAction="+nextAction);
 		if (firstAction.equals("")) {
 			myLog.info("firstAction : Kosong --");
 			if (nextAction.equals("reset")) {
@@ -442,7 +442,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 					noHakmilikAsal = viewModeHakmilikSambungan(submit);
 //					myLog.info("noHakmilikAsal 2 " + noHakmilikAsal);
 					// 28/01/2011
-					listSambungan = getIHakmilik().getSenaraiHakmilikSambungan(noHakmilikAsal
+					listSambungan = getTanah().getSenaraiHakmilikSambungan(noHakmilikAsal
 									,String.valueOf(hakmilik.getNegeri().getIdNegeri())
 									,String.valueOf(hakmilik.getDaerah().getIdDaerah())
 									,String.valueOf(hakmilik.getMukim().getIdMukim()));
@@ -629,7 +629,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 
 				// VIEW SEMULA HAKMILIK YANG DIUPDATE
 				if (socStatusTemp.equals("S")) {
-					getIHakmilik().kemaskiniHakmilikTambahSambungan(hHakmilikUpdate);
+					getTanah().kemaskiniHakmilikTambahSambungan(hHakmilikUpdate);
 					// this.context.put("mode", "update");
 					noHakmilikAsal = viewModeHakmilikSambungan(submit);
 					// LIST HAKMILIK SAMBUNGAN
@@ -638,7 +638,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 					// viewModeSenaraiHakmilikSambungan(session,noHakmilikAsal);
 
 					// 28/01/2011
-					listSambungan = getIHakmilik().getSenaraiHakmilikSambungan(noHakmilikAsal
+					listSambungan = getTanah().getSenaraiHakmilikSambungan(noHakmilikAsal
 									,String.valueOf(hakmilik.getNegeri().getIdNegeri())
 									,String.valueOf(hakmilik.getDaerah().getIdDaerah())
 									,String.valueOf(hakmilik.getMukim().getIdMukim()));
@@ -706,7 +706,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 				hakmilik.setTarikhKemaskiniStr("");
 				hakmilik.setCatatan(getParam("txtKemAgenTerkini"));
 				hakmilik.setIdMasuk(Long.parseLong(userId));
-				getTanah().kemaskini(hakmilik);
+				getIHakmilik().kemaskini(hakmilik);
 				
 				// 2017/11/17 KEMASKINI HAKMILIK AGENSI (tblhtphakmilikagensi)
 				hakmilikAgensi = new HakmilikAgensi();
@@ -1682,7 +1682,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 					vm = PATH+"tanahmilik/frmRekodPendaftaranHakmilikSambunganTab.jsp";	
 					noHakmilikAsal = viewModeHakmilikSambungan(submit);			
 					
-					listSambungan = getIHakmilik().getSenaraiHakmilikSambungan(noHakmilikAsal
+					listSambungan = getTanah().getSenaraiHakmilikSambungan(noHakmilikAsal
 									, String.valueOf(hakmilik.getNegeri().getIdNegeri())
 									, String.valueOf(hakmilik.getDaerah().getIdDaerah())
 									, String.valueOf(hakmilik.getMukim().getIdMukim()));
@@ -1779,7 +1779,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		Vector<Hashtable<String,String>> list = null;
 
 		// Kemaskini 2012 04 06
-		list = getIHakmilik().getPaparMaklumatFailById(idTanah);
+		list = getTanah().getPaparMaklumatFailById(idTanah);
 		Hashtable<String, String> maklumatFail = (Hashtable<String, String>) list.get(0);
 
 		idPermohonan = String.valueOf( maklumatFail.get("idPermohonan"));	//2020/04/07 - kegunaan status rekod
@@ -1822,7 +1822,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		Vector<Hashtable<String,String>> list = null;
 		// Kemaskini 2012 04 06
 		// list = FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
-		vector = getIHakmilik().getPaparMaklumatFailById(idTanah);
+		vector = getTanah().getPaparMaklumatFailById(idTanah);
 		if (vector.size() > 0) {
 			makFail = (Hashtable<String, String>) vector.get(0);
 		} else {
@@ -1891,7 +1891,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		// Kemaskini 2012 04 06
 		// vector =
 		// FrmRekodPendaftaranHakmilikRizabData.getPaparMaklumatFailById(idHakmilik);
-		vector = getIHakmilik().getPaparMaklumatFailById(idHakmilik);
+		vector = getTanah().getPaparMaklumatFailById(idHakmilik);
 		Hashtable<String, String> hMaklumatFail = (Hashtable<String, String>) vector
 				.get(0);
 		this.context.put("txtFailPTD", (String) hMaklumatFail.get("noFailPtd"));
@@ -4806,7 +4806,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		
 	}
 
-	private IHakmilikRizab getIHakmilikRizab() {
+	private ITanahCarian getIHakmilikRizab() {
 		if (iHakmilikRizab == null) {
 			iHakmilikRizab = new FrmHakmilikRizabBean();
 		}
@@ -4819,25 +4819,25 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		return iHTP;
 	}
 
-	private IHakmilikUrusan getHakmilikPajakan() {
+	private ITanahUrusan getHakmilikPajakan() {
 		if (iHakmilikStatusP == null)
 			iHakmilikStatusP = new FrmHakmilikUrusanPajakanBean();
 		return iHakmilikStatusP;
 	}
 
-	private IHakmilikUrusan getHakmilikPenswastaan() {
+	private ITanahUrusan getHakmilikPenswastaan() {
 		if (iHakmilikStatusS == null)
 			iHakmilikStatusS = new FrmHakmilikUrusanPenswastaanBean();
 		return iHakmilikStatusS;
 	}
 	
-	private IHakmilikUrusan getHakmilikPenyewaan() {
+	private ITanahUrusan getHakmilikPenyewaan() {
 		if (iHakmilikStatus == null)
 			iHakmilikStatus = new FrmHakmilikUrusanPenyewaanBean();
 		return iHakmilikStatus;
 	}
 
-	private IHakmilikUrusan getHakmilikUrusan() {
+	private ITanahUrusan getHakmilikUrusan() {
 		if (iHakmilikStatusLain == null)
 			iHakmilikStatusLain = new FrmHakmilikUrusanLainBean();
 		return iHakmilikStatusLain;
@@ -4869,7 +4869,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 
 	private ITanah getTanah() {
 		if (iTanah == null) {
-			iTanah = new TanahMilikBean();
+			iTanah = new TanahBean();
 		}
 		return iTanah;
 

@@ -34,7 +34,7 @@ public class FrmAPBKertasRingkasanPermohonanData {
 					+ " TBLPHPKERTASKERJAAPB.ULASAN_JUPEM, TBLPHPKERTASKERJAAPB.ULASAN_JPS, TBLPHPKERTASKERJAAPB.ULASAN_JAB_GEOSAINS, TBLPHPKERTASKERJAAPB.ULASAN_PUSAT_HIDROGRAFI,"
 					+ " TBLPHPKERTASKERJAAPB.ULASAN_JAB_PERIKANAN, TBLPHPKERTASKERJAAPB.ULASAN_JAB_LAUT, TBLPHPKERTASKERJAAPB.ULASAN_JAS, TBLPHPKERTASKERJAAPB.ULASAN_PTG,"
 					+ " TBLPHPKERTASKERJAAPB.ULASAN_JABATAN, TBLPHPKERTASKERJAAPB.SYOR_JABATAN, TBLPHPKERTASKERJAAPB.SYOR_PTP,"
-					+ " TBLPHPKERTASKERJAAPB.TARIKH_MESYUARAT, TBLPHPKERTASKERJAAPB.BIL_MESYUARAT"
+					+ " TBLPHPKERTASKERJAAPB.TARIKH_MESYUARAT, TBLPHPKERTASKERJAAPB.BIL_MESYUARAT, TBLPHPKERTASKERJAAPB.CATATAN_BERSYARAT_JABATAN"
 					
 					+ " FROM TBLPFDFAIL, TBLPERMOHONAN, TBLPHPKERTASKERJAAPB"
 					
@@ -85,6 +85,8 @@ public class FrmAPBKertasRingkasanPermohonanData {
 						: rs.getString("ULASAN_JABATAN")); 
 				h.put("syorJabatan", rs.getString("SYOR_JABATAN") == null ? ""
 						: rs.getString("SYOR_JABATAN")); 
+				h.put("catatanBersyarat", rs.getString("CATATAN_BERSYARAT_JABATAN") == null ? ""
+						: rs.getString("CATATAN_BERSYARAT_JABATAN")); 
 				h.put("tarikhMesyuarat", rs.getDate("TARIKH_MESYUARAT") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_MESYUARAT")));				
 				h.put("bilMesyuarat", rs.getString("BIL_MESYUARAT") == null ? ""
@@ -102,7 +104,7 @@ public class FrmAPBKertasRingkasanPermohonanData {
 
 	public void updateMaklumatKertasRingkasPermohonan(String idPermohonan, String tarikhKertas, String namaPTP, String namaKSU, String namaMenteri, 			
 			String JUPEM, String JPS, String JMG, String PHN, String DOF, String JLM, 
-			String JAS, String PTG, String txtUlasanJabatan, String syor, String bilMesyuarat, String tarikhMesyuarat, HttpSession session) throws Exception {
+			String JAS, String PTG, String txtUlasanJabatan,String txtUlasanLulusBersyarat, String syor, String bilMesyuarat, String tarikhMesyuarat, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -127,6 +129,7 @@ public class FrmAPBKertasRingkasanPermohonanData {
 			r.add("NAMA_MENTERI", namaMenteri);
 			
 			r.add("ULASAN_JABATAN", txtUlasanJabatan);
+			r.add("CATATAN_BERSYARAT_JABATAN", txtUlasanLulusBersyarat);
 			r.add("SYOR_JABATAN", syor);
 			r.add("SYOR_PTP", syor);
 			r.add("SYOR_JKPTG", syor);

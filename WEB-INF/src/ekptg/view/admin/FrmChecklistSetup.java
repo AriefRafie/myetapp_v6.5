@@ -17,6 +17,7 @@ import ekptg.model.htp.FrmSemakan;
 import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.kpi.FrmKPIData;
 import ekptg.model.kpi.FrmKPIHTML;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisDokumen;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanSemakan;
 
 public class FrmChecklistSetup extends AjaxBasedModule{	
@@ -28,7 +29,10 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 	static Logger mylog = Logger.getLogger(ekptg.view.admin.FrmChecklistSetup.class);
 	private String userId = "";
 	private IUtilHTMLPilihan iPilihan = null;
-	
+	private IUtilHTMLPilihan iPilihanj = null;
+	private Hashtable<String,String> h = null; 
+    private Vector<Hashtable<String,String>> senaraiDesc = null;
+
 	public String doTemplate2()throws Exception {
 		 
 	    HttpSession session = this.request.getSession();
@@ -63,7 +67,7 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 	    String semakan = null;
 
 	    Vector list = new Vector();
-    	mylog.info(this.className+":command="+submit+",pagemode="+pageMode);
+    	mylog.info("command="+submit+",pagemode="+pageMode);
     	template_name = "app/admin/checklist/index.jsp";	        
 	    
     	if ("tambahketerangan".equals(submit)) {
@@ -83,26 +87,25 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 		    this.context.put("socsuburusan",socSuburusan);
 		    
 		    String socDesc = PilihSemakan().Pilihan("socDesc");
-//		    String socDesc = FrmKPIHTML.SelectKeterangan("socDesc",null);
 	    	this.context.put("socdesc",socDesc);
-	    	Vector senaraiDesc = null;
 	    	
-	    	if ("view".equals(pageMode)) {
+	    	if (pageMode.equals("view")) {
 
-	    	}else if ("kemaskini".equals(pageMode)) {
-	    		updateKeteranganVS(session);
+	    	}else if (pageMode.equals("kemaskini")) {
+	    		updateKeteranganVS();
 
-	    	}else if ("bysuburusan".equals(pageMode)) {
+	    	}else if (pageMode.equals("bysuburusan")) {
 	    	
-	    	}else if("tambahketeranganvs".equals(pageMode)) {
-		      simpanKeteranganVS(session);
+	    	}else if(pageMode.equals("tambahketeranganvs")) {
+	    		simpanKeteranganVS();
 	    	
 	    	}else if ("delete".equals(pageMode)) {
-				deleteKeteranganVS(session);
+				deleteKeteranganVS();
 			}
 	    	
-	    	senaraiDesc = SemakanData.getSenaraiSemakan(idUrusan,idSubUrusan,skrin);
-//	    	senaraiDesc = FrmKPIData.getSenaraiKeterangan(idUrusan,idSubUrusan);
+			semakan = getParam("txtdesc").equals("")?null:getParam("txtdesc");
+	    	senaraiDesc = SemakanData.getSenaraiSemakan(idUrusan,idSubUrusan,skrin,semakan);
+	    	
 	    	this.context.put("senaraidesc", senaraiDesc);  
 	    	senaraiFail = senaraiDesc;	    	
 
@@ -121,11 +124,8 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 			String socDesc = FrmKPIHTML.SelectKeterangan("socDesc",null);
 			this.context.put("socdesc",socDesc);
 		
-		    Vector senaraiDesc = null;
-		    senaraiDesc = FrmKPIData.getSenaraiKeterangan((getParam("socUrusan")=="") ? "" : getParam("socUrusan"),"59");
-		    this.context.put("senaraidesc", senaraiDesc);  
-
-		      
+//		    senaraiDesc = FrmKPIData.getSenaraiKeterangan((getParam("socUrusan")=="") ? "" : getParam("socUrusan"),"59");
+//		    this.context.put("senaraidesc", senaraiDesc);  
 
 		}else if ("bystatus".equals(submit)) {
 			Long idStatus = getParam("socStatus")=="" ? 0L : Long.parseLong(("socStatus"));
@@ -137,19 +137,14 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 	    	String socSuburusan = HTML.SelectSuburusanByIdUrusan((getParam("socUrusanStatus")=="") ? "0" : getParam("socUrusanStatus"),"socSubUrusanStatus",(getParam("socSubUrusanStatus")=="") ? 0L : Long.parseLong(getParam("socSubUrusanStatus")), "onChange=\"javascript:doChangeSubUrusanStatus()\" ");
 	    	this.context.put("socsuburusanstatus",socSuburusan);
 
-	    	//String socDesc = FrmKPIHTML.SelectKeterangan("socDesc","onChange=\"doChangeDesc()\" ");
-	    	//String socDesc = FrmKPIHTML.SelectKeterangan("socDesc",null);
-	    	//this.context.put("socdesc",socDesc);
+	    	String socSeksyen = getParam("socseksyen")=="" ? "0" : getParam("socseksyen");
 	    	
-	    	//SelectStatusFailByUrusan(String selectName,Long selectedValue, 
-	    		//	String disability, String jsFunction,String idUrusan,String idSuburusan) throws Exception {
-			String senaraiStatus = FrmKPIHTML.SelectStatusFailByUrusan("idstatus",idStatus,"","",idUrusan,idSubUrusan);
-	    	
-	   	    //Vector senaraiDesc = null;
-    	    //senaraiDesc = FrmKPIData.getSenaraiKeteranganByStatusHTML(idUrusan,idSubUrusan);
+	    	String senaraiStatus = PilihJenis().Pilihan("idstatus", "", socSeksyen, "");
+    	    this.context.put("senaraistatus", senaraiStatus); 
+    	    
+    	    this.context.put("socSeksyen", HTML.SelectSeksyen("socseksyen", Long.parseLong(socSeksyen),"","onChange=\"javascript:doChangeUrusanStatus()\" ")); 
 
-	    	Vector senaraiDescs = null;
-			if ("viewbyurusanstatus".equals(pageMode)) {
+	   	 	if ("viewbyurusanstatus".equals(pageMode)) {
 	    	    //senaraiDesc = FrmKPIData.getSenaraiKeteranganByStatusHTML((getParam("socUrusanStatus")=="") ? "0" : getParam("socUrusanStatus"),"59");
 	    	    
 				//senaraiDesc = FrmKPIData.getSenaraiKeteranganByStatusHTML((getParam("socUrusanStatus")=="") ? "0" : getParam("socUrusanStatus"),"");
@@ -159,30 +154,31 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 	    	    //senaraiDesc = FrmKPIData.getSenaraiKeteranganByStatusHTML(idUrusan,idSubUrusan);
 
 	    	}else if ("tambahstatus".equals(pageMode)) {
-	    		simpanKeteranganStatus(session);
+	    		simpanKeteranganStatus();
 
-	    	}else if ("kemaskinistatus".equals(pageMode)) {
-				updateKeteranganStatus(session);
+	    	}else if (pageMode.equals("kemaskinistatus")) {
+				updateKeteranganStatus();
 
 	    	}else if ("delete".equals(pageMode)) {
 				deleteKeteranganStatus(session);	 		
 			}
 			
-    	    senaraiDescs = FrmKPIData.getSenaraiKeteranganByStatusHTML(idUrusan,idSubUrusan);
-    	    this.context.put("senaraidescstatus", senaraiDescs);  
+    	    senaraiDesc = SemakanData.getSenaraiJenisDokumen(idUrusan,idSubUrusan,"");
+    	    this.context.put("senaraidescstatus", senaraiDesc);  
+	    	senaraiFail = senaraiDesc;	    	
 			
-    	    this.context.put("senaraistatus", senaraiStatus);  
 
 		}else if("tambahtatus".equals(submit)){ 
-	      this.simpanKeteranganStatus(session);
+	      //this.simpanKeteranganStatus(session);
 			//template_name = "app/kpi/frmKPISetup.jsp";	        
 		}else{ 
 			mylog.info(this.className+"!=submit else:user_id=::"+session.getAttribute("_ekptg_user_id"));
 			//template_name = "app/kpi/frmKPISetup.jsp";	
+			semakan = getParam("txtdesc").equals("")?null:getParam("txtdesc");
 			if(selectedTab.equals("0"))
 				senaraiFail = FrmSemakan.getSemakan(idSemakan, semakan);
 			else if(selectedTab.equals("1"))
-				senaraiFail = SemakanData.getSenaraiSemakan(idUrusan,idSubUrusan,skrin);
+				senaraiFail = SemakanData.getSenaraiSemakan(idUrusan,idSubUrusan,skrin,semakan);
 
 		}
 		setupPage(session,action,senaraiFail);
@@ -214,139 +210,71 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 		  
 	  }
 	    
-	  private void simpanKeteranganVS(HttpSession session) throws Exception {
+	  private void simpanKeteranganVS() throws Exception {
 		    String idKeterangan = getParam("socDesc");
-		    String idUrusan = getParam("socSuburusan");
-		    String sasaran = getParam("socsasaran");
-		    String jenis = getParam("socjsasaran");
-		    String giliran = getParam("socgiliran");
+		    String idUrusan = getParam("socUrusan");
+		    String idSubUrusan = getParam("socSuburusan");
 		    String seq = getParam("socaturan");
-		    int id_masuk = Integer.parseInt((String)session.getAttribute("_ekptg_user_id"));
-		    Hashtable h = new Hashtable(); 
-		    h.put("idketerangan", idKeterangan);
-		    h.put("idurusan", idUrusan);
-		    h.put("sasaran", sasaran);
-		    h.put("jenis", jenis);
-		    h.put("giliran", giliran);
-		    h.put("idmasuk", id_masuk);
-		    FrmKPIData.simpanKeteranganVS(h);
-	  }
-	  
-	  private void updateKeteranganVS(HttpSession session) throws Exception {
-		    String idKpiurusan = getParam("idkpiketerangan");
-		    String idKeterangan = getParam("socDesc");
-		    String idUrusan = getParam("socSuburusan");
-		    String sasaran = getParam("socsasaran");
-		    String jenis = getParam("socjsasaran");
-		    String giliran = getParam("socgiliran");
-		    String seq = getParam("socaturan");
-		    int id_kemaskini = Integer.parseInt((String)session.getAttribute("_ekptg_user_id"));
-		    int pilih = getParamAsInteger("socpilihan");
-		    
-		    Hashtable h = new Hashtable(); 
-		    h.put("idkpiurusan", idKpiurusan);
-		    h.put("idketerangan", idKeterangan);
-		    h.put("idurusan", idUrusan);
-		    h.put("sasaran", sasaran);
-		    h.put("jenis", jenis);
-		    h.put("giliran", giliran);
+		    String txtSkrin = getParam("txtskrin");
+		    h = new Hashtable<String,String>(); 
+		    h.put("idKeterangan", idKeterangan);
+		    h.put("idUrusan", idUrusan);
+		    h.put("idSubUrusan", idSubUrusan);
 		    h.put("seq", seq);
-		    h.put("idkemaskini", id_kemaskini);
-		    h.put("pilih", pilih);
-		    FrmKPIData.updateKeteranganvs(h);
+		    h.put("txtSkrin", txtSkrin);
+		    h.put("idMasuk", userId);
+		    SemakanData.simpanKeteranganVS(h);
 	  }
 	  
-	  private void deleteKeteranganVS(HttpSession session) throws Exception {
-		  String idKpiketerangan = getParam("idkpiketerangan");
-		  FrmKPIData.deleteVS(idKpiketerangan);
-	  }
-	  
-	  private void simpanKeteranganStatus(HttpSession session) throws Exception {
-		    String idStatus = getParam("idstatus");
-		    String id_Kpi = getParam("idkpiketerangan");
-		    int id_masuk = Integer.parseInt((String)session.getAttribute("_ekptg_user_id"));
-		    Hashtable h = new Hashtable(); 
-		    h.put("idsuburusanstatus", idStatus);
-		    h.put("idkpiurusan", id_Kpi);
-		    h.put("idmasuk", id_masuk);
-		    //mylog.info(this.className+":"+h);
-		    FrmKPIData.simpanKeteranganStatus(h);
-	  }
-	  
-	  private void updateKeteranganStatus(HttpSession session)throws Exception{
-		    String idKpistatus = getParam("idkpiketerangan");
-		    String idStatus = getParam("idstatus");
-		    int idKemaskini = Integer.parseInt((String)session.getAttribute("_ekptg_user_id"));
-		    FrmKPIData.updateStatus(idKpistatus, idStatus, idKemaskini);
-	  }
-	  private void deleteKeteranganStatus(HttpSession session) throws Exception {
-		  String idKpiketerangan = getParam("idkpiketerangan");
-		  FrmKPIData.deleteStatus(idKpiketerangan);
-	  }
-
-	  private void DataPenyata(HttpSession session, int idNegeri, String disability, String readability, String style1, String style2) throws Exception
-		{
-		  	String negeri = "";
-			Vector list = new Vector();
-			list.clear();
-			try{
-				list = FrmCukaiPenyataData.getListPenyata(idNegeri);
-				mylog.info("CukaiProcess::DataPenyata::list.size():::"+list.size());
-				int idPermohonan = Integer.parseInt(getParam("idPermohonan"));
-			    mylog.info("penyataview::DataPenyata::idpermohonan:::"+idPermohonan);
-				negeri = getParam("Negeri");
-				mylog.info("CukaiProcess::DataPenyata::negeri:::"+negeri);
-				this.context.put("negeri", "");
-								
-				if(list.size() != 0){			    
-					mylog.info("CukaiProcess::DataPenyata::list::"+list);
-					this.context.put("Penyata", list);
-					this.context.put("idPermohonan", idPermohonan);
-				    this.context.put("Style1", style1);
-				    this.context.put("Style2", style2);
-				}else{
-					this.context.put("Penyata", "");
-				    style1 = "none";
-				    this.context.put("Style1", style1);
-				    this.context.put("Style2", "");
-				}
-				this.context.put("negeri", negeri);
-			}catch(Exception ex){
-				mylog.info("CukaiProcess::DataPenyata::Exception:: = "+ex);
-				ex.printStackTrace();
-			}
-		}	  	  
-
-//Baucer
-	  
-	  private void DataBaucer(HttpSession session, String disability, String readability, String style1, String style2) throws Exception
-		{
-		  	Vector list = new Vector();
-			list.clear();
-//			int idCukaiUtama = Integer.parseInt(getParam("idCukaiUtama"));
-//		    mylog.info("penyataview::DataBaucer::idCukaiUtama:::"+idCukaiUtama);
+	  private void updateKeteranganVS() throws Exception {
+		  String idSenarai = getParam("idkpiketerangan");
+		  String idKeterangan = getParam("socDesc");
+		  String idUrusan = getParam("socUrusan");
+		  String idSubUrusan = getParam("socSuburusan");		    
+		  String seq = getParam("socaturan");
+		  String txtSkrin = getParam("txtskrin");
+//		    int pilih = getParamAsInteger("socpilihan");
 		    
-			try{
-				//list = FrmCukaiBaucerData.getListBaucer();
-				mylog.info("CukaiProcess::DataBaucer::list.size():::"+list.size());
-								
-				if(list.size() != 0){			    
-					mylog.info("CukaiProcess::DataBaucer::list::"+list);
-					this.context.put("Baucer", list);
-					this.context.put("idCukaiUtama", list);
-				    this.context.put("Style1", style1);
-				    this.context.put("Style2", style2);
-				}else{
-					this.context.put("Baucer", "");
-				    style1 = "none";
-				    this.context.put("Style1", style1);
-				    this.context.put("Style2", "");
-				}
-			}catch(Exception ex){
-				mylog.info("CukaiProcess::DataBaucer::Exception:: = "+ex);
-				ex.printStackTrace();
-			}
-		}
+		  h = new Hashtable<String,String>(); 
+		  h.put("idKemaskini", userId);
+		  h.put("idSenarai", idSenarai);
+		  h.put("idKeterangan", idKeterangan);
+		  h.put("idUrusan", idUrusan);
+		  h.put("idSubUrusan", idSubUrusan);
+		  h.put("seq", seq);
+		  h.put("txtSkrin", txtSkrin);
+		  SemakanData.updateKeteranganvs(h);
+		    
+	  }
+	  
+	  private void deleteKeteranganVS() throws Exception {
+		  String idKpiketerangan = getParam("idkpiketerangan");
+		  SemakanData.deleteVS(idKpiketerangan);
+	  }
+	  
+	  private void simpanKeteranganStatus() throws Exception {
+		    String idStatus = getParam("idstatus");
+		    String idSemakan = getParam("idkpiketerangan");
+			  h = new Hashtable<String,String>(); 
+		    h.put("idJenis", idStatus);
+		    h.put("idSemakan", idSemakan);
+		    h.put("idMasuk", userId);
+		    //mylog.info(this.className+":"+h);
+		    SemakanData.simpanJenisDokumen(h);
+	  }
+	  
+	private void updateKeteranganStatus() throws Exception{
+		String idKpistatus = getParam("idkpiketerangan");
+	    String idStatus = getParam("idstatus");
+	    String idSemakan = getParam("idsemakan");
+	    SemakanData.updateJenisDokumen(idKpistatus, idStatus,idSemakan,userId);
+	    
+	}
+	
+	private void deleteKeteranganStatus(HttpSession session) throws Exception {
+		String idKpiketerangan = getParam("idkpiketerangan");
+		SemakanData.deleteStatus(idKpiketerangan);
+	}
 
 	public void setResult(String result) {
 		this.result = result;
@@ -361,6 +289,14 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 			iPilihan = new UtilHTMLPilihanSemakan();
 		}
 		return iPilihan;
+				
+	}
+	
+	private IUtilHTMLPilihan PilihJenis(){
+		if(iPilihanj==null){
+			iPilihanj = new UtilHTMLPilihanJenisDokumen();
+		}
+		return iPilihanj;
 				
 	}
 	

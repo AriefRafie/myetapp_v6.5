@@ -53,7 +53,8 @@ public class HtpPeringatanBean implements IHtpPeringatan {
 	      sql = r.getSQLSelect("TBLPERMOHONAN P, TBLPFDFAIL F");
 	      //sql +=" AND (FDMA.tarikh_arahan - sysdate)< 151 AND (FDMA.tarikh_arahan - sysdate)>0 ";
 		  sql += " AND P.ID_PERMOHONAN NOT IN (SELECT ID_PERMOHONAN FROM TBLHTPBAYARAN " +
-		  		"WHERE TO_CHAR(TARIKH_MULA,'yyyy')='"+tahunBayaran+"')";
+		  		"WHERE TO_CHAR(TARIKH_MULA,'yyyy')='"+tahunBayaran+"')"+
+		  		" AND F.ID_SUBURUSAN in (7,18)";
 	      myLog.info(sql);
 	      ResultSet rs = stmt.executeQuery(sql);
 	      Vector<HtpPermohonan> list = new Vector<HtpPermohonan>();

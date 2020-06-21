@@ -31,7 +31,7 @@ public class FrmAPBCetakSuratMohonByrSblmLesenKeluarData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_BYRNSYRTKLLSNLESENAPB, ULASAN_EIA, ULASAN_HIDROGRAFI, LUAS_KAWASAN, ID_LUAS, KADAR_FEELESEN,JUMLAH_FEELESEN, FEELESEN_BAG_SETIAP, "
+			sql = "SELECT ID_BYRNSYRTKLLSNLESENAPB, ULASAN_EIA, ULASAN_HIDROGRAFI, ULASAN_HIDRAULIK, ULASAN_PASIR, LUAS_KAWASAN, ID_LUAS, KADAR_FEELESEN,JUMLAH_FEELESEN, FEELESEN_BAG_SETIAP, "
 					+ " WANG_CAGARAN_PEMATUHAN,WANG_AMANAH_NELAYAN, MAKLUMAT_TAMBAHAN,ID_UNITISIPADU,ISIPADU,KADAR_ROYALTI_PASIR,"
 					+ " JUMLAH_ROYALTI_SELURUH, KADAR_DAHULU_ROYALTI,JUMLAH_DAHULU_ROYALTI, SYARAT_LULUS_LAMPIRAN "
 					+ " FROM TBLPHPBYRNSYRTKLLSNLESENAPB "
@@ -50,6 +50,11 @@ public class FrmAPBCetakSuratMohonByrSblmLesenKeluarData {
 				h.put("txtUlasanHidro",
 						rs.getString("ULASAN_HIDROGRAFI") == null ? "" : rs
 								.getString("ULASAN_HIDROGRAFI"));
+				h.put("txtUlasanPasir", rs.getString("ULASAN_PASIR") == null ? ""
+						: rs.getString("ULASAN_PASIR"));
+				h.put("txtUlasanHidra",
+						rs.getString("ULASAN_HIDRAULIK") == null ? "" : rs
+								.getString("ULASAN_HIDRAULIK"));
 				h.put("txtLuasKawasan",
 						rs.getString("LUAS_KAWASAN") == null ? "" : rs
 								.getString("LUAS_KAWASAN"));
@@ -114,7 +119,7 @@ public class FrmAPBCetakSuratMohonByrSblmLesenKeluarData {
 	}
 
 	public void updateMaklumatBayaranSblm(String idPermohonan,
-			String txtUlasanEIA, String txtUlasanHidro, String txtLuasKawasan,
+			String txtUlasanEIA, String txtUlasanHidro, String txtUlasanHidra, String txtUlasanPasir, String txtLuasKawasan,
 			String idLuas, String txtFeeLesen, String txtJumlahFeeLesen,
 			String txtKmPersegi, String txtWangCagaran, String txtWangAmanah,
 			String txtMaklumatTambahan, String txtIsipadu,
@@ -140,6 +145,8 @@ public class FrmAPBCetakSuratMohonByrSblmLesenKeluarData {
 			
 			r.add("ULASAN_EIA", txtUlasanEIA);
 			r.add("ULASAN_HIDROGRAFI", txtUlasanHidro);
+			r.add("ULASAN_HIDRAULIK", txtUlasanHidra);
+			r.add("ULASAN_PASIR", txtUlasanPasir);
 			r.add("LUAS_KAWASAN", txtLuasKawasan);
 			r.add("ID_LUAS", idLuas);
 			r.add("JUMLAH_FEELESEN", txtJumlahFeeLesen);

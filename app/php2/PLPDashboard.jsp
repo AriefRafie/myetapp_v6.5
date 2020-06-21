@@ -291,11 +291,11 @@ a.nav:visited {
                           <tr>
                             <td><b>Daftar Permohonan</b></td>
                           </tr>
-                          <tr>
-                            <td><a href="javascript:gotoPelepasan()" class="help" title="Permohonan Baru Pelepasan"> <font color="blue">
-                              <li>&nbsp;Pelepasan</li>
-                              </font> </a> </td>
-                          </tr>
+<!--                           <tr> -->
+<!--                             <td><a href="javascript:gotoPelepasan()" class="help" title="Permohonan Baru Pelepasan"> <font color="blue"> -->
+<!--                               <li>&nbsp;Pelepasan</li> -->
+<!--                               </font> </a> </td> -->
+<!--                           </tr> -->
                           <tr>
                             <td><a href="javascript:gotoPenawaran()" class="help" title="Permohonan Baru Penawaran"> <font color="blue">
                               <li>&nbsp;Penawaran</li>

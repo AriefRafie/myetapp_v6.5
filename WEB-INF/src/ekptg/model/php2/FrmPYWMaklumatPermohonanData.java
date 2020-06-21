@@ -308,43 +308,35 @@ public class FrmPYWMaklumatPermohonanData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT C.ID_PHPPERMOHONANSEWA, C.SEBAB_TOLAK_RINGKAS, C.TARIKH_SURAT_TOLAK_RINGKAS, C.CATATAN_TOLAK_RINGKAS"
-					+ " FROM TBLPHPPERMOHONANSEWA C"
-					+ " WHERE C.ID_PERMOHONAN = '"
-					+ idPermohonan + "'";
+				+ " FROM TBLPHPPERMOHONANSEWA C"
+				+ " WHERE C.ID_PERMOHONAN = '"+ idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
-			Hashtable h;
-			int bil = 1;
+			Hashtable<String,String> h;
+//			int bil = 1;
 			while (rs.next()) {
-				h = new Hashtable();
-				h.put("idPermohonanSewa",
-						rs.getString("ID_PHPPERMOHONANSEWA") == null ? "" : rs
-								.getString("ID_PHPPERMOHONANSEWA"));
+				h = new Hashtable<String,String>();
+				h.put("idPermohonanSewa",rs.getString("ID_PHPPERMOHONANSEWA") == null ? "" : rs.getString("ID_PHPPERMOHONANSEWA"));
 				//tarikhSuratTolakRingkas
-				h.put("tarikhSuratTolakRingkas", rs.getDate("TARIKH_SURAT_TOLAK_RINGKAS") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_SURAT_TOLAK_RINGKAS")));
+				h.put("tarikhSuratTolakRingkas", rs.getDate("TARIKH_SURAT_TOLAK_RINGKAS") == null ? "": sdf.format(rs.getDate("TARIKH_SURAT_TOLAK_RINGKAS")));
 				//sebabTolakRingkas
-				h.put("sebabTolakRingkas",							
-						rs.getString("SEBAB_TOLAK_RINGKAS") == null ? "" : rs
-								.getString("SEBAB_TOLAK_RINGKAS"));
-				h.put("catatanMaklumatTambahan",							
-						rs.getString("CATATAN_TOLAK_RINGKAS") == null ? "" : rs
-								.getString("CATATAN_TOLAK_RINGKAS"));
+				h.put("sebabTolakRingkas",rs.getString("SEBAB_TOLAK_RINGKAS") == null ? "" : rs.getString("SEBAB_TOLAK_RINGKAS"));
+				h.put("catatanMaklumatTambahan",rs.getString("CATATAN_TOLAK_RINGKAS") == null ? "" : rs.getString("CATATAN_TOLAK_RINGKAS"));
 				
 				//flag_mt
-				sql = "SELECT C.CATATAN, C.FLAG_MAKLUMAT_TAMBAHAN"
-						+ " FROM TBLPHPLOGTUGASAN C"
-						+ " WHERE C.ID_PEGAWAI = '" + userId + "'"
-						+ " AND C.ROLE = '(PHP)PYWPenolongPegawaiTanahHQ' ";
+				sql = "SELECT C.CATATAN, C.FLAG_PEMBETULAN"
+					+ " FROM TBLPHPLOGTUGASAN C"
+					+ " WHERE C.ID_PEGAWAI = '" + userId + "'"
+					+ " AND C.ROLE = '(PHP)PYWPenolongPegawaiTanahHQ' ";
 				rs = stmt.executeQuery(sql);
+				
 				while (rs.next()) {
-					h.put("flagMaklumatTambahan",							
-							rs.getString("FLAG_MAKLUMAT_TAMBAHAN") == null ? "" : rs
-									.getString("FLAG_MAKLUMAT_TAMBAHAN"));					
+					h.put("flagMaklumatTambahan",rs.getString("FLAG_PEMBETULAN") == null ? "" : rs.getString("FLAG_PEMBETULAN"));					
 				}
 				
 				beanSyorTolakRingkas.addElement(h);
-				bil++;
+//				bil++;
+				
 			}
 
 		} catch (Exception re) {
@@ -354,6 +346,7 @@ public class FrmPYWMaklumatPermohonanData {
 			if (db != null)
 				db.close();
 		}
+		
 	}
 
 	public void setMaklumatSewa(String idPermohonan) throws Exception {

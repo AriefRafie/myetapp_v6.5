@@ -1,4 +1,6 @@
-
+/**
+ * 
+ */
 package ekptg.view.htp.online;
 
 import java.sql.Connection;
@@ -33,7 +35,10 @@ import ekptg.model.htp.online.IOnline;
 import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
-
+/**
+ * 
+ *
+ */
 public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 
 	private final String PATH="app/htp/online/";
@@ -113,10 +118,8 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		if (idAgensi == null || idAgensi.trim().length() == 0){
 			idAgensi = "99999";
 		}
-		String idSuburusan = getParam("socSuburusan");
-		if (idSuburusan == null || idSuburusan.trim().length() == 0){
-			idSuburusan = "99999";
-		}
+		String idSuburusan = "7";
+		
 		String idStatusTanah = getParam("socStatusTanah");
 		if (idStatusTanah == null || idStatusTanah.trim().length() == 0){
 			idStatusTanah = "99999";
@@ -138,6 +141,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		if (postDB){
     		if ("simpan".equals(hitButton)){
     			log.info("simpan");
+    			idNegeri = getParam("idNegeriTanah");
          		idFail = logic.simpanOnline(idNegeri, idKementerian, idAgensi, idSuburusan, 
              			idStatusTanah, idJenisFail, getParam("txtNoFailKJP"), getParam("tarikhSuratKJP"), 
              			getParam("txtNoFailLain"), getParam("tarikhAgihan"), getParam("txtTajuk"), getParam("tarikhSuratPemohon"), 
@@ -160,6 +164,16 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
         	if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
         		logicMaklumat.updateTanah(idPermohonan,idHakmilik,session);	
             }
+        	if ("doHantar".equals(hitButton)){
+        		if (logic.checkMaklumatPajakanLengkap(idPermohonan)){
+    				this.context.put("onload", " \"alert('Masih terdapat maklumat penyewaan yang belum lengkap.')\"");	
+				} else {
+					logic.updatePengesahan(idFail,idPermohonan,session);
+				}				
+			}
+        	if ("doHapus".equals(hitButton)){
+				logic.hapusPermohonan(idFail);
+			}
     	}
 		
 		if ("paparMaklumatPajakan".equals(actionPajakan)){
@@ -182,8 +196,10 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				idStatus = hashHeader.get("idStatus").toString();
 				subUrusan = hashHeader.get("subUrusan").toString();
 			}
-			
+			log.info("mode = " + mode);
+
 			//MODE VIEW
+			log.info("mode = " + mode);
 			if ("view".equals(mode)){
 				
 				this.context.put("readOnly", "readOnly");
@@ -228,10 +244,10 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
         			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
     			}
         		
-        		beanMaklumatTanah = new Vector();
-    			logicMaklumat.setMaklumatTanah(idHakmilik);
-    			beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
-    			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
+        		senaraiHakmilik = new Vector();
+    			logicMaklumat.setListHakmilik(idPermohonan);
+    			beanMaklumatTanah = logicMaklumat.getSenaraiHakmilik();
+    			this.context.put("SenaraiHakmilik", senaraiHakmilik);
     			
     	        this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\" style=\"width:auto\""));
 	        	
@@ -302,6 +318,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
         	//GO TO LIST FAIL PAJAKAN        	
         	vm = "app/htp/online/frmPajakanSenaraiFail.jsp";
         	log.info("Else :: "+vm);
+        	//logic.carianFailOnline2(getParam("txtNoFail"), getParam("txdTarikhTerima"),getParam("txtTajukFail"),getParam("txtNamaPemohon"),idKementerian);
         	logic.carianFailOnline2(getParam("txtNoFail"), getParam("txdTarikhTerima"),getParam("txtTajukFail"),getParam("txtNamaPemohon"),idUser);
 			list = new Vector();
 			list = logic.getSenaraiFail();

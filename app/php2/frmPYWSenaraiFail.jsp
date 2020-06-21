@@ -142,31 +142,31 @@
           #if ($list.noSambungan != '' && $list.noSambungan != '0')
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a>&nbsp;(SAMBUNGAN)
           &nbsp;&nbsp;
-          #if($list.flagBuka == 'T')
-          #if($list.flagMT == 'Y')
-          <span class="style1"><blink><strong>MAKLUMAT TAMBAHAN</strong></blink></span>
-          #elseif($list.flagPindaan == 'Y')
-          <span class="style1"><blink><strong>PINDAAN MAKLUMAT</strong></blink></span>
-          #elseif($list.flagPembetulan == 'Y')
-          <span class="style1"><blink><strong>PEMBETULAN MAKLUMAT</strong></blink></span>
-          #else
-          <span class="style1"><blink><strong>BARU</strong></blink></span>
-          #end
+          #if($list.flagBuka == 'Y')
+          	#if($list.flagMT == 'Y')
+          	<span class="style1"><blink><strong>MAKLUMAT TAMBAHAN</strong></blink></span>
+          	#elseif($list.flagPindaan == 'Y')
+          	<span class="style1"><blink><strong>PINDAAN MAKLUMAT</strong></blink></span>
+          	#elseif($list.flagPembetulan == 'Y')
+          	<span class="style1"><blink><strong>PEMBETULAN MAKLUMAT</strong></blink></span>
+          	#else
+          	<span class="style1"><blink><strong>BARU</strong></blink></span>
+          	#end
           #end 
           </td>
           #else
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a>
           &nbsp;&nbsp;
-          #if($list.flagBuka == 'T')
-          #if($list.flagMT == 'Y')
-          <span class="style1"><blink><strong>MAKLUMAT TAMBAHAN</strong></blink></span>
-          #elseif($list.flagPindaan == 'Y')
-          <span class="style1"><blink><strong>PINDAAN MAKLUMAT</strong></blink></span>
-          #elseif($list.flagPembetulan == 'Y')
-          <span class="style1"><blink><strong>PEMBETULAN MAKLUMAT</strong></blink></span>
-          #else
-          <span class="style1"><blink><strong>BARU</strong></blink></span>
-          #end
+          #if($list.flagBuka == 'Y')
+          	#if($list.flagMT == 'Y')
+          	<span class="style1"><blink><strong>MAKLUMAT TAMBAHAN</strong></blink></span>
+          	#elseif($list.flagPindaan == 'Y')
+          	<span class="style1"><blink><strong>PINDAAN MAKLUMAT</strong></blink></span>
+          	#elseif($list.flagPembetulan == 'Y')
+          	<span class="style1"><blink><strong>PEMBETULAN MAKLUMAT</strong></blink></span>
+          	#else
+          	<span class="style1"><blink><strong>BARU</strong></blink></span>
+          	#end
           #end
           </td>
           #end

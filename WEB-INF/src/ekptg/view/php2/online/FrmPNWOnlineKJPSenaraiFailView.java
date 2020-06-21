@@ -27,10 +27,10 @@ import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.FrmPYWJabatanTeknikalData;
 import ekptg.model.php2.online.FrmPYWOnlineKJPSenaraiFailData;
 
-public class FrmPYWOnlineKJPSenaraiFailView extends AjaxBasedModule {
+public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
-    static Logger myLog = Logger.getLogger(FrmPYWOnlineKJPSenaraiFailView.class);
+    static Logger myLog = Logger.getLogger(FrmPNWOnlineKJPSenaraiFailView.class);
 
     FrmPYWHeaderData logicHeader = new FrmPYWHeaderData();
     FrmPYWJabatanTeknikalData logicJabatanTeknikal = new FrmPYWJabatanTeknikalData();

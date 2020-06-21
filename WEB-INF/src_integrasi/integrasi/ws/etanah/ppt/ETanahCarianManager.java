@@ -1,14 +1,11 @@
 package integrasi.ws.etanah.ppt;
 
 import integrasi.IntegrasiManager;
-//import integrasi.ws.etanah.melaka_ns.htp.EtanahHTPManager;
-//import integrasi.ws.etanah.melaka_ns.ppk.EtappPesakaServiceStub;
-//import integrasi.ws.etanah.melaka_ns.ppk.EtappPesakaServiceStub.GetHakmilikByCarianRasmi;
-//import integrasi.ws.etanah.melaka_ns.ppk.EtappPesakaServiceStub.GetHakmilikByCarianRasmiE;
-//import integrasi.ws.etanah.melaka_ns.ppk.EtappPesakaServiceStub.GetHakmilikByCarianRasmiResponse;
-//import integrasi.ws.etanah.melaka_ns.ppk.EtappPesakaServiceStub.Hakmilik;
-import integrasi.ws.etanah.melaka_ns.ppk.EtappPesakaServiceStub.Hakmilik;
-import integrasi.ws.etanah.melaka_ns.ppk.EtappPesakaServiceStub.Pemilik;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.HakmilikDetailByCarianResit;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.HakmilikDetailByCarianResitE;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.HakmilikDetailByCarianResitResponse;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.HakmilikForm;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.PemilikForm;
 import lebah.db.Db;
 
 import java.net.MalformedURLException;
@@ -16,15 +13,20 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-import ekptg.helpers.Utils;
+import org.apache.axis2.client.Options;
+import org.apache.axis2.addressing.EndpointReference;
+import org.apache.log4j.Logger;
+
 
 public class ETanahCarianManager {
 	
+	static Logger myLog = Logger.getLogger(integrasi.ws.etanah.ppt.ETanahCarianManager.class);	
 	private static IntegrasiManager im = null;
 	private static String userName = ""; 
 	private static String password = ""; 
-	//url sit/live 
 	private static String caseCode = "";
 	private static String url = "";
 	private static String source = "";
@@ -32,7 +34,7 @@ public class ETanahCarianManager {
 	private static URL objURL = null;
 	private static String msg = "";
 	private static String msgDaftar = "";
-	private static MyEtappPengambilanPortBindingStub stub = null;
+	private static MyEtappPengambilanServiceStub stub = null;
 	public static String flagMsg = null;
 	public static String outputMsg = null;
 
@@ -103,20 +105,21 @@ public class ETanahCarianManager {
 			
 			//noKPSimati = getNoKPSimati(idPermohonan);
 			
-			if (hakmilik.getListPemilik1() != null) {
-				PemilikForm[] pemilik = hakmilik.getListPemilik1();				
+			if (hakmilik.getListPemilik() != null) {
+				PemilikForm[] pemilik = hakmilik.getListPemilik();				
 				for (int i = 0; i < pemilik.length; i++){
 					pemilikHakmilik = true;
+					//pemilik.g
 
 				} 
 				
 //				if (pemilikHakmilik) {
 					sql = "INSERT INTO TBLINTMAKLUMATANAH (ID_PERMOHONAN, NO_RESIT, ID_HAKMILIK,"
 							+ " ID_JENISHM, NO_HAKMILIK, NO_PT,"
-							+ " ID_KATEGORI, ID_JENISPB, ID_NEGERI,"
+							+ " ID_KATEGORI, ID_NEGERI,"
 							+ " ID_DAERAH, ID_MUKIM, ID_LUAS,"
 							+ " LUAS, CATATAN, "
-							+ " STATUS_PEMILIKAN, JENIS_TNH,"
+							+ " STATUS_PEMILIKAN, JENIS_TANAH,"
 							+ " SYARAT_NYATA, SEKATAN,"							
 							+ " GADAIAN, NO_PERSERAHAN_GADAIAN,"
 							+ " PAJAKAN, NO_PERSERAHAN_PAJAKAN,"
@@ -124,7 +127,7 @@ public class ETanahCarianManager {
 							+ " TARIKH_TERIMA, FLAG_AKTIF, FLAG_TERIMA,TARIKH_MASUK)"
 							+ " VALUES ( '" + idPermohonan + "', '" + noResit + "', '" + hakmilik.getIdHakmilik() + "',"
 							+ " '" + IntegrasiManager.getIdJenisHakmilik(hakmilik.getIdJenisHakmilik()) + "', '" + hakmilik.getNoHakmilik() + "', '" + hakmilik.getNoPT()+ "',"
-							+ " '" + hakmilik.getIdKategori() + "', '" + IntegrasiManager.cleanDataString(hakmilik.getIdJenisPB()) + "', '" + IntegrasiManager.getIdNegeri(hakmilik.getIdNegeri()) + "',"
+							+ " '" + hakmilik.getIdKategori() + "', '" + IntegrasiManager.getIdNegeri(hakmilik.getIdNegeri()) + "',"
 							+ " '" + IntegrasiManager.getIdDaerah(hakmilik.getIdNegeri(), hakmilik.getIdDaerah()) + "', '" + IntegrasiManager.getIdMukim(hakmilik.getIdNegeri(), hakmilik.getIdDaerah(), hakmilik.getIdMukim()) + "', '" + hakmilik.getIdLuas() + "',"
 							+ " '" + hakmilik.getLuas() + "', '" + IntegrasiManager.cleanDataString(hakmilik.getCatatan()) + "',"
 							+ " '" + IntegrasiManager.cleanDataString(hakmilik.getStatusPemilikan()) + "', '" + IntegrasiManager.cleanDataString(hakmilik.getJenisTanah()) + "',"
@@ -163,30 +166,37 @@ public class ETanahCarianManager {
 		HakmilikForm hf = null;
 		flagMsg = "Y";
 		outputMsg = "MAKLUMAT BERJAYA DICAPAI";
-
 		try {			
-			if(im.isUrlValid(url)) {
-				objURL = new URL(url);
-			}
+//			if(im.isUrlValid(url)) {
+//				uel = new URL(url);
+//			}
 			
-			stub = new MyEtappPengambilanPortBindingStub(objURL,null);		
-			stub.setUsername(userName);
-			stub.setPassword(password);
-		
-			hf = stub.hakmilikDetailByCarianResit(noResit, idHakmilik);
+			stub = new MyEtappPengambilanServiceStub(url);	
 			
+			Options options1 = new Options();
 			
-
-//		EtappPesakaServiceStub stub = new EtappPesakaServiceStub(url);
-//		GetHakmilikByCarianRasmi request = new GetHakmilikByCarianRasmi();
-//		request.setNoResit(noResit);
-//		request.setIdHakmilik(idHakmilik);
-//
-//		GetHakmilikByCarianRasmiE temp = new GetHakmilikByCarianRasmiE();
-//		temp.setGetHakmilikByCarianRasmi(request);
-//
-//		GetHakmilikByCarianRasmiResponse response = stub.getHakmilikByCarianRasmi(temp).getGetHakmilikByCarianRasmiResponse();
-//		Hakmilik hakmilik = response.get_return();
+			org.apache.axis2.client.Options options = new org.apache.axis2.client.Options();
+			List<org.apache.axis2.context.NamedValue> namedValuePairs = new ArrayList<org.apache.axis2.context.NamedValue>();
+			namedValuePairs.add(new org.apache.axis2.context.NamedValue("SOAPAction", "myetapp"));
+			namedValuePairs.add(new org.apache.axis2.context.NamedValue("username", userName));
+			namedValuePairs.add(new org.apache.axis2.context.NamedValue("password", password));
+			namedValuePairs.add(new org.apache.axis2.context.NamedValue("Content-Type", "text/html"));
+			options.setProperty(org.apache.axis2.transport.http.HTTPConstants.HTTP_HEADERS, namedValuePairs);
+			stub._getServiceClient().setOptions(options);
+			
+			stub._getServiceClient().setTargetEPR(new EndpointReference(url));
+//			System.out.println(stub._getServiceClient().getTargetEPR());
+			
+			HakmilikDetailByCarianResit request = new HakmilikDetailByCarianResit();
+			request.setNoResit(noResit);
+			request.setIdHakmilik(idHakmilik);
+	//
+			HakmilikDetailByCarianResitE temp = new HakmilikDetailByCarianResitE();
+			temp.setHakmilikDetailByCarianResit(request);
+	//
+			HakmilikDetailByCarianResitResponse response = stub.hakmilikDetailByCarianResit(temp).getHakmilikDetailByCarianResitResponse();
+			hf = response.get_return();
+			
 		} catch (Exception e) {
 			//e.printStackTrace();
 			flagMsg = "N";

@@ -198,7 +198,7 @@
 										<input  type="text" name="txtnofailnegeri"  value="$!txtnoFailNegeri" size="43" $!disability onblur="this.value=this.value.toUpperCase();"/>
 					          		</td>					        								              			
 		              			</tr> -->		              			
-			              		<tr>
+			              		<!-- <tr>
 						      		 <td width="1%"></td>
 					        		<td width="30%" align="left">
 				 						#parse ("app/htp/permohonan/utiliti/frmPejabatTanahLabelScript.jsp")
@@ -207,7 +207,7 @@
 					        		<td width="68%">
 										<input  type="text" name="txtnofailptg"  value="$!txtnoFailPTG" size="43" $!disability onblur="this.value=this.value.toUpperCase();"/>
 					          		</td>					        								              			
-		              			</tr>		              					              			        			
+		              			</tr>		 -->              					              			        			
 								<!-- #if($!idNegeriNotis=="13" || $!idNegeriNotis=="12")
 								
 								#else

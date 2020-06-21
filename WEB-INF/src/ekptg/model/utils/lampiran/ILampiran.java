@@ -1,4 +1,4 @@
-package ekptg.model.utils;
+package ekptg.model.utils.lampiran;
 
 
 import ekptg.model.entities.Tblrujdokumen;

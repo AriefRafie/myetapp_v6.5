@@ -31,9 +31,9 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
     <td><fieldset>
       <legend><strong>SENARAI PELAN</strong></legend>
       <table align="center" width="100%">
-        <tr>
-          <td colspan="2" scope="row"><a href="http://g4nre.mygeoportal.gov.my" target="_blank" style="color:#0000FF">MacGDI</a></td>
-        </tr>
+<!--         <tr> -->
+<!--           <td colspan="2" scope="row"><a href="http://g4nre.mygeoportal.gov.my" target="_blank" style="color:#0000FF">MacGDI</a></td> -->
+<!--         </tr> -->
         <tr>
           <td colspan="2" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarPelan()"/></td>
         </tr>
@@ -104,7 +104,7 @@ function simpanPelan(idPermohonan) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPNWMaklumatPermohonanView&hitButton=simpanDokumen&namaPelan="+namaPelan+"&catatanPelan="+catatanPelan+"&selectedTabUpper=3"+dopost+"&mode=view&flagPopup=openPopupDokumen&modePopup=new&idPermohonan="+idPermohonan;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPNWMaklumatPermohonanView&hitButton=simpanDokumen&namaPelan="+namaPelan+"&catatanPelan="+catatanPelan+"&selectedTabUpper=4"+dopost+"&mode=view&flagPopup=openPopupDokumen&modePopup=new&idPermohonan="+idPermohonan;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";

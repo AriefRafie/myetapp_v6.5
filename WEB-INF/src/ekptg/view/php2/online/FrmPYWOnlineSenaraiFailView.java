@@ -141,7 +141,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		//SAVE TO DB
 		if (postDB) {
 			if ("doDaftarBaru".equals(hitButton)) {
-				idFail = logic.daftarBaru(idUrusan, idSuburusan, idHakmilikAgensi, getParam("txtperkara"), 
+				idFail = logic.daftarBaru(idUrusan, idSuburusan, idSubsuburusan, idHakmilikAgensi, 
 				getParam("txtNoRujukanSurat"), getParam("txttarikhSurat"), idJenisTanah, idPHPBorangK, idPPTBorangK,
 				getParam("idKementerianTanah"), getParam("idNegeriTanah"), idHakmilikUrusan, getParam("tarikhTerima"),
 				idJenisPermohonan,session);
@@ -208,7 +208,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			
         	//HEADER
             beanHeader = new Vector();
-            logic.setMaklumatHeader(idFail, getParam("initiateFlagBuka"), session);
+            logic.setMaklumatHeader(idFail, session);
             beanHeader = logic.getBeanMaklumatHeader();
     		this.context.put("BeanHeader", beanHeader);
     		
@@ -260,18 +260,6 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			
     			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\" style=\"width:auto\""));
         		
-    			if ("new".equals(modePopup)){
-        			
-        			this.context.put("readonlyPopup", "");
-	    			this.context.put("inputTextClassPopup", "");
-	    			
-	    			beanMaklumatLampiran = new Vector();    			
-	    			Hashtable hashMaklumatLampiran = new Hashtable();
-	    			hashMaklumatLampiran.put("namaLampiran", "");
-	    			hashMaklumatLampiran.put("catatanLampiran", "");
-	    			beanMaklumatLampiran.addElement(hashMaklumatLampiran);
-					this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-    			}
     			/*FrmPYWHeaderData header = new FrmPYWHeaderData();
     			Vector<Hashtable<String,String>> vec = header.setMaklumatPermohonan("1613133103");
     			//this.context.put("pemohon", vec.get(0));
@@ -403,6 +391,10 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
                	this.context.put("BeanMaklumatSewa", beanMaklumatSewa);
             
         		this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " onChange=\"doChangeLuasKegunaan()\" style=\"width:auto\""));        	       	
+        		
+        		senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+    			this.context.put("SenaraiSemak", senaraiSemak);
+    			
     		}
 			
     	  //PAPAR MAKLUMAT
@@ -651,6 +643,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idDokumen", idDokumen);
 		this.context.put("idFailLama", idFailLama); 
 		this.context.put("idSubsuburusan", idSubsuburusan); 
+		this.context.put("namatujuan", logic.getNamaTujuan(idSubsuburusan));
 
 		return vm;
 	}
