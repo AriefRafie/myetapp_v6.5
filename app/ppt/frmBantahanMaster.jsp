@@ -426,7 +426,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           #if ($mode=="disabled" )
           <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" disabled $TEMPchecked1  />
           #elseif ($mode!="disabled"  &&  $alasan1 == "1")
-          <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" disabled $TEMPchecked1  />
+          <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" $TEMPchecked1  />
           #else
           <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1  />
           #end          
@@ -452,71 +452,72 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           #if ($mode=="disabled")
           <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
           #elseif ($mode!="disabled"  &&  $alasan2 == "2")
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
+          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" $TEMPchecked2  />
           #else
           <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
           #end          
           
           </td>
-          
-          <td>Jumlah Pampasan;</td>
+          <td>Jumlah Pampasan; UI: frmBantahanMaster.jsp, Controller: FrmBantahanSenaraiCarian.java;</td>
         </tr>
-        
-        <!-- PPT-35 (i) -->
+		
         <tr>
           <td width="1%"></td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         	<td>
-	        	<table>
+	        	<table id="jenisbantahanpampasan">
 	        		<tr>
-	        		 <!-- PPT-35 i -->
+	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan-->
 					#set ( $checked = "" )
 				    #foreach ($semak in $senaraiSemakan)
-					    	<td width="10">
-		                   
-					          #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semak.id" ))
+					    	<td class="$row" width="10">
+		                   	
+					        #if ($semakanclass.isSemakan("$id_permohonan", "$semak.id" ))
 					        	#set ( $checked = "checked" )
 					        #else
 					        	#set ( $checked = "" )
 					    	#end
-					    	#set ( $checked = "" )
-					        	 <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked $selectstyle>
+					    	<!-- #set ( $checked = "" ) -->
+					    	#if ($mode=="disabled")
+					    		<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semak.id" onclick="checkJumlahPampasan(true)" disabled $checked>
+					    	#elseif ($mode!="disabled")
+					        	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semak.id" onclick="checkJumlahPampasan(true)" $checked>
+					        #end
 					       	</td>
-					        <td>
+					        <td class="$row">
 					        	$semak.keterangan <!-- $semak.id -->
 					        </td>
 					      
-				    #end	
+				    #end
 				    </tr>
 				</table>
-        	
         	
         	
 	            <!--  table>
 					<tr>
 		            	<td>
 			            #if ($alasan2=="2") 
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
 			            #else
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
 			            #end            
 			            </td>
-			            <td>Nilai Tanah</td>
+			            	<td>Nilai Tanah</td>
 			            <td>
 			            #if ($alasan2=="2") 
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
 			            #else
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
 			            #end            
 			            </td>
 			            <td>Bangunan</td>
 			            <td>
 			            #if ($alasan2=="2") 
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
 			            #else
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
 			            #end            
 			            </td>
 			            <td>Kecederaan</td>
@@ -540,11 +541,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           
         
           #if ($mode=="disabled")
-          <input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" disabled $TEMPchecked3 />
+          	<input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" disabled $TEMPchecked3 />
           #elseif ($mode!="disabled"  &&  $alasan3 == "3")
-          <input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" disabled $TEMPchecked3 />
+          	<input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" disabled $TEMPchecked3 />
           #else
-          <input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19"  $TEMPchecked3 />
+          	<input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19"  $TEMPchecked3 />
           #end          
           
           </td>
@@ -649,12 +650,17 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 
 <input type="hidden" name="nama_skrin" id="nama_skrin" value="bantahan"  />
 <fieldset id="senarai_dokumen" >
+<!-- jenis dokumen = '$jenisDoc' -->
+<!-- jenis skrin = '$nama_skrin' -->
+<!-- listDokumen =  $listDokumen -->
 <legend>Dokumen Integrasi Mahkamah</legend>
     
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
     #if($listDokumen_size > 0)
      <input name="cmdHapusDokumen" type="button" value="Hapus" onClick="hapusDokumenMaster('$!readmode')" title="Sila tick untuk hapus dokumen" >
     #end
+    
+    
     <table width="100%">
   <tr class="table_header">
     <td width="5%">Bil</td>
@@ -684,7 +690,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
                		 #set( $row = "row1" )
          		#end
 	  #if($list1.JENIS_DOKUMEN == "bantahan")   <!-- PPT-35 (ii) -->  
-	  #set ($cnt=1)       		
+	  #set ($cnt=1)
 	  <tr>  
 	    <td class="$row" >$list1.BIL</td>
 	    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
@@ -713,7 +719,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!-- PPT-35 (ii) -->
 <br />
         <div align="center"> 
-   	#if ($button=="view")  
+   	#if ($button=="view")
           
     	#if($flag_online=="2" && $id_status_bantahan=="181")
         	<input type="button" name="cmdTolakPermohonan" id="cmdTolakPermohonan" value="Tolak Permohonan" onclick="javascript:tolakPermohonan()" />     
@@ -731,7 +737,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           	<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:batal_bantahan()" /> 
    	#end          
           	<input type="button" name="cmdkembali" id="cmdkembali" value="Kembali" onclick="javascript:kembaliList()" /> 
-        </div>   
+        </div>
 
     </div>
    
@@ -1040,6 +1046,15 @@ function simpanBantahan() {
   		document.${formName}.ukuran_luas.focus(); 
 		return;	
 	}	
+	
+	if(document.${formName}.amaun_pampasan.checked == !false) {
+		error = 0;
+  		semakJenisBantahanPampasan();
+  		if (error >= 1) {
+  			document.${formName}.txtKptgnAtasTnh.focus();
+  			return false;
+  		}
+  	}
 	if(document.${formName}.txtAmaunTuntutan.value == ""){
 		alert("Sila masukkan \"Amaun Tuntutan\" terlebih dahulu.");
   		document.${formName}.txtAmaunTuntutan.focus(); 
@@ -1058,7 +1073,19 @@ function simpanBantahan() {
 	}
 }
 
+// panggil Skrin borang Bantahan
 function tambahDokumen() {
+	var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;	
+	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
+	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
+	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&jenisDoc=bantahan";	
+	document.${formName}.submit();
+}
+
+//Panggil Semua Dokumen
+function semuaDokumen() {
 	var id_bantahan = document.${formName}.id_bantahan.value ;
 	var id_permohonan = document.${formName}.id_permohonan.value ;	
 	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
@@ -1166,8 +1193,34 @@ function RemoveNonNumeric2( strString )
       return strReturn;
 }
 
+// PPT-35 (i) Jenis Bantahan Pampasan Jika Dipilih
+function semakJenisBantahanPampasan() {
+	var checked = 0;
+    for (var i = 0; i < 3; i++) {
+      if(document.${formName}["jenisbantahanpampasan"][i].checked == !false){
+      	checked++;
+      	return checked++;
+      }
+    }
+    
+    if (checked == 0) {
+		alert("Pastikan pilihan 'Jumlah Pampasan' dipilih");
+  		document.${formName}.txtKptgnAtasTnh.focus(); 
+		return error++;
+    }
+    return;
+}
+
+
+function checkJumlahPampasan(checked) {
+    var elm = document.${formName}.amaun_pampasan;
+    if (checked != elm.checked) {
+        elm.click();
+    }
+}
+
+
 <!--UTK DEFAULTKAN TAB KEPADA TAB BANTAHAN
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});
 //-->
-	
 </script>
