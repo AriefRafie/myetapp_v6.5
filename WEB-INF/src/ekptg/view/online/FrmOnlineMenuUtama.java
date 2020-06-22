@@ -18,8 +18,9 @@ import org.apache.log4j.Logger;
 import ekptg.engine.IPortalUtility;
 import ekptg.engine.OnlineUser;
 import ekptg.engine.PortalUtility;
-import ekptg.model.IStatus;
-import ekptg.model.StatusBean;
+import ekptg.model.ppk.util.StatusBeanPPK;
+import ekptg.model.utils.status.IStatus;
+import ekptg.model.utils.status.StatusBean;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
 import ekptg.view.admin.Pengumuman;
@@ -42,6 +43,7 @@ public class FrmOnlineMenuUtama extends AjaxBasedModule {
 	private IHtp iErr = null;  
 	//return Permohonan 1
 	private IStatus iStatus = null;
+	private IStatus iStatusPPK = null;
 
 	
 	@Override
@@ -96,7 +98,7 @@ public class FrmOnlineMenuUtama extends AjaxBasedModule {
 			context.put("notifikasi_inbox",notifikasi_inbox);			
 			context.put("notifikasiDeraf", notifikasiDeraf(userId));
 		
-			context.put("bilPPKkembali", dikembalikanByUrusan("382").size());
+			context.put("bilPPKkembali", dikembalikanByIndividu("382",userId).size());
 	
 		return vm;
 		
@@ -276,12 +278,30 @@ public class FrmOnlineMenuUtama extends AjaxBasedModule {
 		return returnVal ;
 		
 	}
+	
+	public Vector<Hashtable<String, String>> dikembalikanByIndividu(String idUrusan,String idUser) throws Exception {
+		Vector<Hashtable<String, String>> returnVal = null;
+		try {
+			returnVal = getStatusPPK().getStatusPermohonanByIndividu(idUrusan, idUser, "50");
+			
+		}catch(Exception e){
+			throw new Exception(getErr().getErrorHTML("inquery:"+idUrusan+"::"+e.getMessage()));
+		}
+		return returnVal ;
+		
+	}
 	//return Permohonan 2
 	private IStatus getStatus(){
 		if (iStatus==null){
 			iStatus=new StatusBean();
 		}
 		return iStatus;
+	}
+	private IStatus getStatusPPK(){
+		if (iStatusPPK==null){
+			iStatusPPK=new StatusBeanPPK();
+		}
+		return iStatusPPK;
 	}
 		
 	private IHtp getErr(){
