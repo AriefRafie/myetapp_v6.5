@@ -12,14 +12,13 @@ import org.apache.log4j.Logger;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
-import ekptg.model.IStatus;
-import ekptg.model.StatusBean;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
+import ekptg.model.utils.status.IStatus;
+import ekptg.model.utils.status.StatusBean;
 import ekptg.view.admin.Pengumuman;
 
 public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
-
 	/**
 	 * 
 	 */
