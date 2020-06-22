@@ -209,6 +209,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!-- :::upload -->
 <input type="hidden" name="nama_skrin" id="nama_skrin" value="batalBantahan"  />
 <fieldset id="senarai_dokumen" >
+<!-- jenis dokumen = '$jenisDoc' -->
+<!-- jenis skrin = '$nama_skrin' -->
+<!-- listDokumen =  $listDokumen -->
 <legend>Senarai Dokumen Yang Disertakan</legend>
     
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
@@ -243,8 +246,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          		#else
                		 #set( $row = "row1" )
          		#end
-	   #if($list1.JENIS_DOKUMEN == "pembatalan")   <!-- PPT-38 -->  
-	   #set ($cnt=1)      		
+	   #if($list1.JENIS_DOKUMEN == "batalBantahan")   <!-- PPT-38 -->  
+	   #set ($cnt=1)
 	  <tr>  
 	    <td class="$row" >$list1.BIL</td>
 	    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
@@ -398,19 +401,16 @@ function validateNumber(elmnt,content) {
 		return;
 	}
 }
-function RemoveNonNumeric( strString )
-{
+function RemoveNonNumeric( strString )	{
       var strValidCharacters = "1234567890";
       var strReturn = "";
       var strBuffer = "";
       var intIndex = 0;
       // Loop through the string
-      for( intIndex = 0; intIndex < strString.length; intIndex++ )
-      {
+      for( intIndex = 0; intIndex < strString.length; intIndex++ )	{
             strBuffer = strString.substr( intIndex, 1 );
             // Is this a number
-            if( strValidCharacters.indexOf( strBuffer ) > -1 )
-            {
+            if( strValidCharacters.indexOf( strBuffer ) > -1 ) {
                   strReturn += strBuffer;
             }
       }
@@ -425,9 +425,10 @@ function tambahDokumen() {
 	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
 	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
 	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&jenisDoc=batalBantahan";	
 	document.${formName}.submit();
 }
+
 //:::upload
 function view_Lampiran(id_dokumen) {
     var id_bantahan = document.${formName}.id_bantahan.value ;
@@ -435,6 +436,7 @@ function view_Lampiran(id_dokumen) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=view_Dokumen_Details&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=maklumat_dokumen&point=maklumat_dokumen&id_dokumen="+id_dokumen;		
 	document.${formName}.submit();
 }
+
 //:::upload
 function papar_Lampiran(id_dokumen) {
     var url = "../servlet/ekptg.view.ppt.DisplayBlob?id="+id_dokumen;
@@ -443,6 +445,7 @@ function papar_Lampiran(id_dokumen) {
     hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
 //:::upload
 function hapusDokumenMaster(r){
 input_box = confirm("Adakah anda pasti?");
@@ -454,6 +457,8 @@ input_box = confirm("Adakah anda pasti?");
 	}
 }
 
+
+// Checkbox Checkall
 function doCheckAll1(){    
     if (document.${formName}.all1.checked == true){
         if (document.${formName}.ids1.length == null){
@@ -476,40 +481,25 @@ function doCheckAll1(){
 
 function doUpdateCheckAll1(){  
 	var c = 0;
-	if(document.${formName}.ids1.length > 1)
-	{     
-		  for (i = 0; i < document.${formName}.ids1.length; i++)
-		  {
-	      if (document.${formName}.ids1[i].checked == false)
-		  {	 
-		  c++
+	if(document.${formName}.ids1.length > 1)	{     
+		for (i = 0; i < document.${formName}.ids1.length; i++)	{
+	      if (document.${formName}.ids1[i].checked == false)	{	 
+		  	c++
 	      }
-		  }  
-	}
-	else
-	{
-
-	if (document.${formName}.ids1.checked == false)
-	{	 
-	c++;
+		}  
+	}	else	{
+		if (document.${formName}.ids1.checked == false)	{	 
+			c++;
 	}	 	
-	}	 
+}	 
 	 
-		
-		
-		
-		  if(c>0)
-		  {	  
-		  document.${formName}.all1.checked = false;
-		  }
-		  else
-		  {
-		  document.${formName}.all1.checked = true;
-		  }
-		  
-		  
-	       
+
+if(c>0)	{	  
+	document.${formName}.all1.checked = false;
+		 }	else	{
+		 document.${formName}.all1.checked = true;
 	}
+}
 
 <!--UTK DEFAULTKAN TAB KEPADA TAB BANTAHAN
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});
