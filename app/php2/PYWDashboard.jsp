@@ -509,7 +509,7 @@ function gotoSenaraiTugasanPelepasan() {
 	document.${formName}.submit();
 }
 function gotoOnline() {
-	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailOnlineView";
+	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailOnlineView";
 	document.${formName}.submit();
 }
 function gotoPenyewaan() {
