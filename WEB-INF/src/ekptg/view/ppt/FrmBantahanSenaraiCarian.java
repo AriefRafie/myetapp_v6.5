@@ -119,7 +119,22 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		String jenisDoc = getParam("jenisDoc");
 		String id_permohonan = getParam("id_permohonan");
 		context.put("id_permohonan", id_permohonan);
-		myLogger.info("id_permohonan : " + id_permohonan);
+    	String doPost = (String)session.getAttribute("doPost");
+    	String action = getParam("action"); // ACTION UTK SETUP PAGING SHJ
+    	String submit = getParam("command");
+    	myLogger.info("SUBMIT :: "+submit+",ACTION PAGING :: "+action);
+    	this.context.put("Util",new lebah.util.Util());	// UNTUK FORMAT UTIL.DECIMAL (EX: 12,000.00)   		
+    	
+    	String location = getParam("location");
+    	context.put("location",location);   
+    	
+    	String point = getParam("point");
+    	context.put("point",point);  
+    	
+    	String id_permohonan = getParam("id_permohonan");
+   		context.put("id_permohonan", id_permohonan);
+   		myLogger.info("id_permohonan : "+id_permohonan);
+   		myLogger.info("id_permohonan + 1 : "+id_permohonan+"1");
 		String negeriMMK = "";
 		String id_kementerian = "";
 		String id_fail = "";
@@ -128,7 +143,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		String statusFail = "";
 		if (!id_permohonan.equals("")) {
 			// HEADER
-			myLogger.info("call header");
+//			myLogger.info("call header");
 			header.setDataHeader(id_permohonan);
 			dataHeader = header.getDataHeader();
 
