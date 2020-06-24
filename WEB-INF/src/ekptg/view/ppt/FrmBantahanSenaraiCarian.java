@@ -120,7 +120,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
     	
     	String id_permohonan = getParam("id_permohonan");
    		context.put("id_permohonan", id_permohonan);
-   		myLogger.info("id_permohonan : "+id_permohonan);
+//   		myLogger.info("id_permohonan : "+id_permohonan);
+   		myLogger.info("id_permohonan + 1 : "+id_permohonan+"1");
    		String negeriMMK = "";
 		String id_kementerian = "";
 		String id_fail = "";
@@ -129,7 +130,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		String statusFail = "";
    		if(!id_permohonan.equals("")){
 	   		// HEADER
-			myLogger.info("call header");
+//			myLogger.info("call header");
 	    	header.setDataHeader(id_permohonan);
 			dataHeader = header.getDataHeader();
 			
