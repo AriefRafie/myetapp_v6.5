@@ -69,10 +69,10 @@
 					          <td width="1%"></td>
 					          <td width="29%">Nama</td>
 					          <td>:</td>
-					          <td colspan="2"><input type="text" name="txtNamaPembantah" id="txtNamaPembantah" value="$!txtNamaPembantah" size="50" class="disabled" tabindex="12" />
+					          <td colspan="2"><input type="text" name="txtNamaPembantah" id="txtNamaPembantah" value="$!pembantah.get('nama')" size="50" class="disabled" tabindex="12" />
 					          <input type="hidden" name="txtIdKementerian" id="txtIdKementerian" value="$!txtIdKementerian" /></td>
 					        </tr>
- 					#if($!jenis_pembantah.equals("0"))		        
+ 					#if(!$!jenis_pembantah.equals("0"))		        
  					        <tr>
 					          <td width="1%"></td>
 					          <td>$!labelNoRef</td>
@@ -116,7 +116,11 @@
 					          <td>Umur</td>
 					          <td>:</td>
 					          <td colspan="2">
+					          #if($!txtUmur != "0")
 					          	<input type="number" name="umur" id="umur" value="$!txtUmur" size="3" maxlength="2" tabindex="12" class="disabled" readonly/>
+					          #else
+					       		<input type="number" name="umur" id="umur" value="$!txtUmur" size="3" maxlength="2" tabindex="12" />
+					          #end
 					          </td>
 					        </tr>         		
 			 		#end
@@ -438,6 +442,7 @@
 			return;	
 			
 		}
+		alert('2.'+document.${formName}.cb.length);
 		if(document.${formName}.cb.length > 0){
 			bilangan = document.${formName}.cb.length;
 		}else{
@@ -445,7 +450,8 @@
 				bilangan = 1; 
 			}
 		}
-		
+		//
+
 		if(bilangan == 0){
 			alert('Sila pilih Lampiran terlebih dahulu.');
 			return; 

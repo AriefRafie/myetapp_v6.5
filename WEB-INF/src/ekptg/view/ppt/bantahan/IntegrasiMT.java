@@ -29,8 +29,8 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.Utils;
 import ekptg.model.utils.FrmNegeriData;
-import ekptg.model.utils.ILampiran;
 import ekptg.model.utils.IUtilHTMLPilihan;
+import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.entities.Tblrujnegeri;
 import ekptg.model.entities.Tblrujpejabat;
@@ -106,6 +106,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			
 		if(list.size()!=0){
 			bdata = (Hashtable<String,String>) list.get(0);
+			context.put("pembantah", bdata);
 			
 			jenisPembantah = String.valueOf(bdata.get("jenis_pembantah"));
 			myLog.info("Pembantah:"+jenisPembantah);
@@ -116,7 +117,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 
 			
 			if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		Vector listDokumen = modelBantahanPB.senarai_dokumen_bantahan(id_bantahan);
+	     		Vector listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan,"bantahan");
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
