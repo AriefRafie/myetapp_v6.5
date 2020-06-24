@@ -280,6 +280,10 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!-- :::upload -->
 <input type="hidden" name="nama_skrin" id="nama_skrin" value="borangO"  />
 <fieldset id="senarai_dokumen" >
+<!-- jenis dokumen = '$jenisDoc' -->
+<!-- jenis skrin = '$nama_skrin' -->
+<!-- id bantahan = '$id_bantahan' -->
+<!-- listDokumen =  $listDokumen -->
 <legend>Senarai Dokumen Yang Disertakan</legend>
     
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
@@ -292,48 +296,45 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
     <td width="30%">Nama Dokumen</td>
     <td width="30%">Keterangan</td>
     <td width="30%">Dokumen Sokongan (Papar)</td>
-     #if($listDokumen_size > 0)
+	
+    #if($listDokumen_size > 0)
       <td width="5%">
-     
-      <div align="center">
-      <input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
+      	<div align="center">
+      	<input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
       </div>
-      
       </td>
       #end
   </tr>
- 
-  
- #if($listDokumen_size > 0)
-  #set ($cnt=0)
-  #foreach($list1 in $listDokumen)        
-           
-             #set( $i = $velocityCount )
-         		#if ( ($i % 2) != 1 )
-              		 #set( $row = "row2" )
-         		#else
-               		 #set( $row = "row1" )
-         		#end
-	  #if($list1.JENIS_DOKUMEN == "borangO")   <!-- PPT-35 (ii) -->  
-	  #set ($cnt=1)       		
-	  <tr>  
-	    <td class="$row" >$list1.BIL</td>
-	    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
+
+
+<!-- Start Fetch BorangO -->
+#if($listDokumen_size > 0)
+	#set ($cnt=0)
+	#foreach($list1 in $listDokumen)
+		#set( $i = $velocityCount )
+		#if ( ($i % 2) != 1 )
+			#set( $row = "row2" )
+		#else
+			#set( $row = "row1" )
+#end
+
+#if($list1.JENIS_DOKUMEN == 'borangO')   <!-- PPT-35 (ii) -->  
+	#set ($cnt = 1)
+<!-- Ending Fetch BorangO -->
+
+	<tr>  
+		<td class="$row" >$list1.BIL</td>
+		<td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
 	    <td class="$row" >$list1.KETERANGAN</td>
 	    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
 	    <td class="$row" ><div align="center">
 	       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
 	     </div></td>
 	  </tr>
-	  #end
-  	#end
-	  #if($cnt==0)
-	  <tr>  
-	    <td colspan="5">Tiada Rekod</td>    
-	  </tr>
-	  #end
+	#end
+  #end
   #else
-  <tr>  
+  <tr>
     <td colspan="5">Tiada Rekod</td>    
   </tr>
   #end
@@ -627,15 +628,13 @@ function validateNumber(elmnt,content) {
 		return;
 	}
 }
-function RemoveNonNumeric( strString )
-{
+function RemoveNonNumeric( strString )	{
       var strValidCharacters = "1234567890";
       var strReturn = "";
       var strBuffer = "";
       var intIndex = 0;
       // Loop through the string
-      for( intIndex = 0; intIndex < strString.length; intIndex++ )
-      {
+      for( intIndex = 0; intIndex < strString.length; intIndex++ )	{
             strBuffer = strString.substr( intIndex, 1 );
             // Is this a number
             if( strValidCharacters.indexOf( strBuffer ) > -1 )
@@ -649,14 +648,14 @@ function RemoveNonNumeric( strString )
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});
 //-->
 
-<!-- PPT-35 (ii) -->
+<!-- PPT-35 (ii) Senarai Dokumen Upload Window -->
 function tambahDokumen() {
 	var id_bantahan = document.${formName}.id_bantahan.value ;
 	var id_permohonan = document.${formName}.id_permohonan.value ;	
 	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
 	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
 	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&jenisDoc=borangO";
 	document.${formName}.submit();
 }
 
@@ -710,11 +709,7 @@ function doUpdateCheckAll1(){
 	{	 
 	c++;
 	}	 	
-	}	 
-	 
-		
-		
-		
+	}
 		  if(c>0)
 		  {	  
 		  document.${formName}.all1.checked = false;
@@ -722,10 +717,7 @@ function doUpdateCheckAll1(){
 		  else
 		  {
 		  document.${formName}.all1.checked = true;
-		  }
-		  
-		  
-	       
+		  }      
 	}
 
 </script>

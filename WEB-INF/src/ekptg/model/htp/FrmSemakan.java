@@ -45,7 +45,11 @@ public class FrmSemakan {
 //	          myLog.info("getSemakan : sql=" + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Tblsemakan h;
+<<<<<<< WEB-INF/src/ekptg/model/htp/FrmSemakan.java
+		      
+=======
 		      int bil = 1;
+>>>>>>> WEB-INF/src/ekptg/model/htp/FrmSemakan.java
 		      while (rs.next()) {
 		    	  h = new Tblsemakan();
 		    	  h.setBil(bil++);
@@ -107,9 +111,8 @@ public class FrmSemakan {
 	      if (db != null){
 	    	  db.close();
 	      }
-	    }	    
+	    }
 	    return list;
-	  
 	 }
 	 
 	 public static Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm) throws Exception {
@@ -310,10 +313,10 @@ public class FrmSemakan {
 	    	}
 	  }
 	 
-	 public void semakanHapusByPermohonan(String idpermohonan,String idsemakansenarai) throws Exception {
+	 public void semakanHapusByPermohonan(String idPermohonan,String idSemakanSenarai) throws Exception {
 		    Db db = null;
-		    int idPermohonan = Integer.parseInt(idpermohonan);
-		    int idSemakanSenarai = Integer.parseInt(idsemakansenarai);
+		    //int idPermohonan = Integer.parseInt(idpermohonan);
+		    //int idSemakanSenarai = Integer.parseInt(idsemakansenarai);
 		    String sql = "";
 		    try {
 		      db = new Db();
