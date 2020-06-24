@@ -1114,7 +1114,7 @@
                 	#end
                 	
                 	#if($report == 'Surat_Iringan_Pembayaran')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanPembayaran('$!id_hakmilikpb','$!id_fail','$!nama_pegawai','$!id_jawatan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanPembayaran('$!id_hakmilikpb','$!id_fail','$!nama_pegawai','$!id_jawatan','$!no_fail','$!id_negeri')">
                 	#end
                 	<!-- PPT-26 (ii) END-->
                 	
@@ -5767,23 +5767,6 @@ function cetakSuratIringanAfidavit(idhakmilikpb,id_negeri,id_fail,id_pegawai,no_
 }
 
 function cetakSuratIringanMohonBayaran(idhakmilikpb,id_negeri,id_fail,id_pegawai,no_fail,nama_pegawai) {
-
-	//alert(idhakmilikpb);
-	
-	/*if(document.${formName}.socPegawai.value == ""){
-		alert('Sila pilih nama pegawai terlebih dahulu.');
-  		document.${formName}.socPegawai.focus(); 
-		return; 
-	}else{
-
-		var id_pegawai = document.${formName}.socPegawai.value;
-	
-		var url = "../../servlet/ekptg.report.ppt.SuratMohonBayaran?id_hakmilikpb="+idhakmilikpb+"&id_jawatan="+id_pegawai;
-		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-		if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener = document.window;
-		if (hWnd.focus != null) hWnd.focus();
-	}*/
 	
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -5837,10 +5820,8 @@ function cetakSuratIringanMohonBayaran(idhakmilikpb,id_negeri,id_fail,id_pegawai
 }
 
 
-function cetakSuratIringanPembayaran(id_hakmilikpb,id_fail,nama_pegawai,id_jawatan) {
+function cetakSuratIringanPembayaran(idhakmilikpb,id_fail,nama_pegawai,id_jawatan,no_fail,id_negeri) {
 
-	//alert(idhakmilikpb);
-	
 	if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
@@ -5849,12 +5830,13 @@ function cetakSuratIringanPembayaran(id_hakmilikpb,id_fail,nama_pegawai,id_jawat
 
 		var id_pegawai = document.${formName}.socPegawai.value;
 	
-		var url = "../../servlet/ekptg.report.ppt.SuratPengosonganTanah?id_hakmilikpb="+id_hakmilikpb+"&id_jawatan="+id_pegawai+"&nama_pegawai="+nama_pegawai;
+		var url = "../../servlet/ekptg.report.ppt.SuratIringanPembayaran?id_hakmilikpb="+idhakmilikpb+"&id_jawatan="+id_pegawai+"&idFail="+id_fail+"&no_fail="+no_fail+"&namaPengarah="+nama_pegawai;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
 	}
+	
 }
 //PPT-26 (ii) END
 
