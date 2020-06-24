@@ -65,12 +65,12 @@
 	          <td width="1%">:</td>
 	          <td width="70%">PENGUATKUASAAN</td>
 	        </tr>
-	        <tr>
-	          <td width="1%">&nbsp;</td>
-	          <td width="28%" valign="top">Suburusan</td>
-	          <td width="1%">:</td>
-	          <td width="70%">PENGUATKUASAAN</td>
-	        </tr>
+<!-- 	        <tr> -->
+<!-- 	          <td width="1%">&nbsp;</td> -->
+<!-- 	          <td width="28%" valign="top">Suburusan</td> -->
+<!-- 	          <td width="1%">:</td> -->
+<!-- 	          <td width="70%">PENGUATKUASAAN</td> -->
+<!-- 	        </tr> -->
 	        #end
   		</table>
   	</fieldset></td>
@@ -451,40 +451,21 @@
         </tr>
         #end
         #end
-        
-        
         #if ($idJenisTanah == '4')
         #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
         <tr>
           <td>&nbsp;</td>
           <td>Pegangan Hakmilik</td>
           <td>:</td>
-          <td><input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik"/></td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>No. Lot</td>
-          <td>:</td>
-          <td>$beanMaklumatTanah.lot
-            <input type="text" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.noLot" />
-          </td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Luas Lot</td>
-          <td>:</td>
-          <td>
-            <input type="text" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luas"/>
-              Unit Luas : <input type="text" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luasBersamaan" />
-           </td>
+          <td><input type="text" class="$inputTextClass" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik1" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/></td>          
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>No. Hakmilik</td>
           <td>:</td>
-          <td>
-          	<input type="text" name="hakmilik" id="hakmilik" value="$beanMaklumatTanah.hakmilik" />
-            <input type="text" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.noHakmilik" />
+          <td>$selectJenisHakmilik
+          	<input type="hidden" name="idJenisHakmilik" id="idJenisHakmilik" value="$idJenisHakmilik"/>
+          	<input type="text" class="$inputTextClass" name="txtNoHakmilikTanah" id="txtNoHakmilikTanah" value="$beanMaklumatTanah.noHakmilik" size="43" maxlength="80" $readonly/>
           </td>
         </tr>
         <tr>
@@ -492,7 +473,7 @@
           <td>No. Warta</td>
           <td>:</td>
           <td>
-            <input type="text" name="noWartaTanah" id="noWartaTanah" value="$beanMaklumatTanah.noWarta">
+            <input type="text" class="$inputTextClass" name="noWarta" id="noWarta" value="$beanMaklumatTanah.noWarta" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/>
           </td>
         </tr>
         <tr>
@@ -500,34 +481,56 @@
           <td>Tarikh Warta</td>
           <td>:</td>
           <td>
-          	<input type="text" name="tarikhWarta" id="tarikhWarta" value="$beanMaklumatTanah.tarikhWarta">
+          	<input type="text" name="tarikhWarta" id="tarikhWarta" value="$beanMaklumatTanah.tarikhWarta" onBlur="check_date(this);cekTarikhWarta(this)" size="9" $readonly class="$inputTextClass"/>
+          		<a href="javascript:displayDatePicker('tarikhWarta',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</a>
           </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td>Mukim</td>
+          <td>No. Lot</td>
           <td>:</td>
-          <td>
-            <input type="text" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
+          <td>$selectJenisLot
+          	<input type="hidden" name="idJenisLot" id="idJenisLot" value="$idJenisLot" />
+          	<input type="text" class="$inputTextClass" name="txtNoLot" id="txtNoLot" value="$beanMaklumatTanah.noLot" size="43" maxlength="80" $readonly/>
+          </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td>Daerah</td>
+          <td>Luas Lot</td>
           <td>:</td>
           <td>
-            <input type="text" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" />
-          </td>
+            <input type="text" class="$inputTextClass" name="txtLuas" id="txtLuas" value="$beanMaklumatTanah.luas" size="43" maxlength="80" $readonly/>
+            #parse("app/php2/unit_luas.jsp")
+           </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>Negeri</td>
           <td>:</td>
           <td>
-            <input type="text" name="namaNegeriTanah" id="namaNegeriTanah" value="$beanMaklumatTanah.negeri" /></td>
+          	$selectNegeriTanah
+            <input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$beanMaklumatTanah.negeri" /></td>
+            <input type="hidden" name="idNegeri" id="idNegeri" value="$beanMaklumatTanah.idNegeri" /></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Daerah</td>
+          <td>:</td>
+          <td>$selectDaerahTanah
+            <input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" />
+            <input type="hidden" name="idDaerahTanah" id="idDaerahTanah" value="$beanMaklumatTanah.idDaerah" /></td>
+          </td>
+        </tr>        
+        <tr>
+          <td>&nbsp;</td>
+          <td>Mukim</td>
+          <td>:</td>
+          <td>$selectMukimTanah
+            <input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
+            <input type="hidden" name="idMukimTanah" id="idMukimTanah" value="$beanMaklumatTanah.idMukim" /></td>
         </tr>
         #end
         #end
-        
         #if ($idJenisTanah == '3')
         <tr>
           <td colspan="4"><fieldset>
@@ -734,6 +737,21 @@ function doChangeKementerian() {
 }
 function doChangeAgensi() {
 	doAjaxCall${formName}("doChangeAgensi");
+}
+function doChangeJenisHakmilik(){
+	doAjaxCall${formName}("doChangeJenisHakmilik");
+}
+function doChangeJenisLot(){
+	doAjaxCall${formName}("doChangeJenisLot");
+}
+function doChangeNegeriTanah(){
+	doAjaxCall${formName}("doChangeNegeriTanah");
+}
+function doChangeDaerahTanah(){
+	doAjaxCall${formName}("doChangeDaerahTanah");
+}
+function doChangeMukimTanah(){
+	doAjaxCall${formName}("doChangeMukimTanah");
 }
 /* function pilihTanah() {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmCRBPopupSenaraiTanahView";
@@ -980,9 +998,11 @@ function textCounter(field, countfield, maxlimit) {
 	 countfield.value = maxlimit - field.value.length;
 }
 function janaTajuk() {
-	if(document.${formName}.idHakmilikAgensi.value == "" && document.${formName}.idHakmilikSementara.value == ""){
-		alert('Sila pilih Pegangan Hakmilik Sebelum Menjana Tajuk.');
-		return; 
+	if(document.${formName}.idHakmilikAgensi.value != "4"){
+		if(document.${formName}.idHakmilikAgensi.value == "" && document.${formName}.idHakmilikSementara.value == ""){
+			alert('Sila pilih Pegangan Hakmilik Sebelum Menjana Tajuk.');
+			return;
+		}
 	}
 	
 	//var str1  = document.${formName}.keteranganLotTanah.value;
