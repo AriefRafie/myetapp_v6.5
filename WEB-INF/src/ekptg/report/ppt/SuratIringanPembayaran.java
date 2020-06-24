@@ -36,8 +36,9 @@ public class SuratIringanPembayaran extends EkptgReportServlet {
 			
 			if(id_negeri.equals("10")){
 				super.setReportName("SuratIringanMtBayaran_Kelantan");
-			}
-			else{
+			}else if(id_negeri.equals("4")){
+				super.setReportName("SuratIringanMTPembayaran_Melaka");
+			}else{
 				super.setReportName("SuratIringanMtBayaran_Kelantan");
 			}
 			super.setFolderName("ppt");
