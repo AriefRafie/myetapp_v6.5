@@ -20,19 +20,19 @@
   <input name="idPakar" type="hidden" id="idPakar" value="$idPakar"/>
   <input name="idKoordinat" type="hidden" id="idKoordinat" value="$idKoordinat"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
+  <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
+  <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
+  <input name="kategori" type="hidden" id="kategori" value="$!pemohon.get("kategoriPemohon")"/>
+  <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
 </p>
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
   <tr>
     <td> #parse("app/php2/online/frmAPBHeader.jsp") </td>
-  </tr>
-  #else
-  <tr>
-    <td><div class="warning">SILA PILIH FAIL DI SENARAI PERMOHONAN TERLEBIH DAHULU</div></td>
   </tr>
   #end
   #if ($idFail != '')
@@ -41,6 +41,9 @@
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
           <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMBELI PASIR</li>
+          <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
+          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
+          <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN PERMOHONAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
@@ -49,20 +52,52 @@
           <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
             #parse("app/php2/online/frmAPBMaklumatPermohonanPembeliPasir.jsp")
             #end </div>
-        </div>
-      </div></td>
+  				<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
+						#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") </td>
+						#end</div>
+					<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3')
+  					#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp")
+  					#end</div>
+					<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
+           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+           	<td valign="top">
+           	#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
+           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
+           	<td>Saya, $!pemohon.get("namaPemohon"), dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
+           	<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</td> 
+           	<tr>
+           	<td colspan=2 align="center">
+           	#if ($idStatus == '')
+           		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
+            	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
+            #else
+            #if ($idStatus !='')
+            	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            #end
+            #end
+            </td>
+           	</tr>          	        	
+           	</table>
+           	#end
+         </div>
+         </div></td>
+      </div>
   </tr>
   #end
-</table>
-<div id="calculateTotalPercentPengarah_result"></div>
-<fieldset id="tableReport" style="display:none;"-->
-<legend><strong>SENARAI LAPORAN</strong></legend>
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  </table>
+
+<!--<div id="calculateTotalPercentPengarah_result"></div>
+<fieldset id="tableReport" style="display:;"-->
+<!--<legend><strong>SENARAI LAPORAN</strong></legend>  -->
+<!--<table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"> Pengesahan Permohonan </a></td>
   </tr>
 </table>
-</fieldset>
+</fieldset>-->
+
 <script type="text/javascript">
 #if ($idFail != '')
 	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
@@ -720,6 +755,10 @@ function textCounter(field, countfield, maxlimit) {
 	 countfield.value = maxlimit - field.value.length;
 }
 function doHantarEmel(){
+	if(pengesahan.checked != true){
+		alert('Sila tanda pada checkbox untuk teruskan permohonan. ');
+		return; 
+	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
@@ -750,6 +789,16 @@ function setTable(id){
 		document.getElementById(id).style.display="none";
 	}
 }
+//Copy dari Sewa
+function cetakBorangPermohonan(idPermohonan) {
+	var url = "../servlet/ekptg.report.php2.online.PYWBorangPermohonan?ID_PERMOHONAN="+idPermohonan;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+//YG ASAL
 function cetakPengesahanPermohonan(idPermohonan) {
 	var url = "../servlet/ekptg.report.php2.online.APBPengesahanPermohonanOnline?ID_PERMOHONAN="+idPermohonan;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
@@ -757,5 +806,34 @@ function cetakPengesahanPermohonan(idPermohonan) {
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
+}
+</script>
+
+<script>
+<!-- MAKLUMAT LAMPIRAN -->
+function daftarLampiran() {
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
+	document.${formName}.method="POST";
+	document.${formName}.actionOnline = "seterusnya";
+	document.${formName}.mode.value = "view";	
+	document.${formName}.flagPopup.value = "openPopupLampiran";
+	document.${formName}.mode.value = "new";
+	document.${formName}.submit();
+}
+
+<!-- SENARAI SEMAK -->
+function doSimpanKemaskiniSenaraiSemak() {
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "view";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
+	document.${formName}.submit();
+}
+function doBatalKemaskini() {
+	document.${formName}.mode.value = "view";
+	doAjaxCall${formName}("");
 }
 </script>
