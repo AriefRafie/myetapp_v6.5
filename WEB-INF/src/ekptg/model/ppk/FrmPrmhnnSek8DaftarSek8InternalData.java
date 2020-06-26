@@ -1482,6 +1482,10 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				h.put("idPermohonan",
 						rs.getString("id_Permohonan") == null ? "" : rs
 								.getString("id_Permohonan"));
+				// syafiqah add 25/6/2020
+				h.put("noKpBaruAdd", rs.getString("no_Kp_Baru") == null ? "" : rs
+								.getString("no_Kp_Baru"));
+				
 				h.put("noKpBaru1", rs.getString("no_Kp_Baru") == null ? "" : rs
 						.getString("no_Kp_Baru").substring(0, 6));
 				h.put("noKpBaru2", rs.getString("no_Kp_Baru") == null ? "" : rs
