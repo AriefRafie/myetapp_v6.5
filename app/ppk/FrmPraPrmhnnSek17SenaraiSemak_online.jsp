@@ -127,6 +127,11 @@
 #set($noFail = $list.noFail)
 #set($idPemohon = $list.idPemohon)
 #set($id_Status = $list.id_Status)
+
+#set($noKpBaruAdd = $list.noKpBaruAdd)
+#set($noKpLama = $list.noKpLama)
+#set($jenisKp = $list.jenisKp)
+#set($noKpLain = $list.noKpLain)
 #end
 <form name="f1" method="post" action="" >
 
@@ -605,10 +610,28 @@ lain tujuan ::: $lt
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td  valign="top"></td>
-      <td ><input type="text" readonly class="disabled" name="remPerintahMinta" size="3" maxlength="4" value="2000"> Baki Aksara </td>
+      <td><input type="text" readonly class="disabled" name="remPerintahMinta" size="3" maxlength="4" value="2000">Baki Aksara</td>
     </tr>
         </table>
       </fieldset>
+      
+      <br>
+      
+      <!-- syafiqah add  -->
+      <fieldset>
+	      <table id="tblGeran" width="100%" border="0">
+		      <tr>
+		      	<td width="30%">Dokumen Sokongan</td>
+		      	<td width="2%">:</td>
+		      	<td><input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'cod')">
+					<br>
+					$!lampirans
+				</td>
+		      </tr>
+	      </table>
+      </fieldset>
+      <!-- syafiqah add ends -->
+      
       
       </td>
     </tr>
@@ -658,6 +681,12 @@ lain tujuan ::: $lt
 <input type="hidden" name="flagno"/>
 <input type="hidden" name="GetNewPemohon" value="$GetNewPemohon"/>
 <input type="hidden" name="command" />
+
+<input type="hidden" name="check_no_kp_baru_simati" value="$noKpBaruAdd"/>
+<input type="hidden" name="check_no_kp_lama_simati" value="$noKpLama"/>
+<input type="hidden" name="socJenisKPLainSimati" value="$jenisKp"/>
+<input type="hidden" name="check_no_kp_lain_simati" value="$noKpLain"/>
+
 #if ($SimpanStatus == "2")
 
     #if($id_Status != "169" && $id_Status != "21" && $id_Status != "64" && $id_Status != "163" && $id_Status != "164" && $id_Status != "165")
@@ -739,6 +768,87 @@ document.getElementById('frmsemakharta').style.display = "";
  
  </body>
 <script>
+
+function lampiran(rujukanSimati,isMyID) {
+	ic = document.f1.check_no_kp_baru_simati.value;
+	idlama = document.f1.check_no_kp_lama_simati.value;
+	jenis = document.f1.socJenisKPLainSimati.value;
+	lain = document.f1.check_no_kp_lain_simati.value;
+	rujukanSimati = getRujukan(ic,idlama,jenis,lain);
+	//alert("rujukanSimati 1="+returnSimati1);
+	//return;
+	
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
+   	if(isMyID == 'cod')
+   		url +="&jenisdokumen=cod";
+   	else
+   		url +="&jenisdokumen=myid";
+		
+	//
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Lampiran';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+
+}
+
+function getRujukan(ic,idlama,jenis,lain){
+	var rujukan ='';
+	rujukan = ic != ''?ic:'-';
+	rujukan += idlama != ''?idlama:'-';
+	rujukan += jenis != 0?jenis:'-';
+	rujukan += lain != ''?lain:'-';
+	return rujukan;
+	
+}
+
+// function lampiran(rujukanSimati,isMyID) {
+function lampiran_test(isMyID) {
+// 	ic = document.f1.check_no_kp_baru_simati.value;
+// 	idlama = document.f1.check_no_kp_lama_simati.value;
+// 	jenis = document.f1.socJenisKPLainSimati.value;
+// 	lain = document.f1.check_no_kp_lain_simati.value;
+// 	rujukanSimati = getRujukan(ic,idlama,jenis,lain);
+	//alert("rujukanSimati 1="+returnSimati1);
+	//return;
+	
+// 	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&flagOnline=$!flagOnline";
+   	if(isMyID == 'geran')
+   		url +="&jenisdokumen=cod";
+   	else
+   		url +="&jenisdokumen=myid";
+		
+	//
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Lampiran';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+
+}
+
+
+function addInput(){
+	var tbl = document.getElementById('tblGeran');
+	console.log(tbl);
+	// var table = $("#tblGeran");
+	tbl.append(tbl.find("tr:eq(2)").clone());
+	// $(tbl).append('<tr><td width="100%">Geran Tanah</td><td>:</td><td><input id="fileupload" name="fileupload" type="file" size="40"></td></tr>');
+}
+
+// $('#tblGeran tr:last').after('<tr><td>Geran Tanah</td><td>:</td><td><input id="fileupload" name="fileupload" type="file" size="40"></td></tr>');
 
 function submitForm() {    
 //alert('$val_tab')
@@ -1049,7 +1159,7 @@ function checkit19(){
 
 function DoTheCheck() {
 
-     var str1  = document.getElementById("txdTarikhByrn").value;   
+    var str1  = document.getElementById("txdTarikhByrn").value;   
     var dt1   = parseInt(str1.substring(0,2),10);
     var mon1  = parseInt(str1.substring(3,5),10)-1;
     var yr1   = parseInt(str1.substring(6,10),10);   
@@ -1062,6 +1172,19 @@ function DoTheCheck() {
 	var currentDate = day + "/" + month + "/" + year;
 	
 	var dm = document.f1.txdTarikhByrn;
+	
+	// var upfile = 
+	
+	if (document.f1.perintahminta.value == false ){
+		alert("Sila masukkan permohonan khusus yang dipohon");
+		  document.f1.perintahminta.focus();
+	}
+
+	else {
+	
+		Simpan();
+	}
+
 	
 	/* if (document.f1.cbsemaks[0].checked == false) {
 		alert("Sila masukkan maklumat Borang P yg telah lengkap diisi");
@@ -1119,17 +1242,8 @@ function DoTheCheck() {
 		return;
 	} */	
 	
-	if (document.f1.perintahminta.value == false ){
-		alert("Sila masukkan permohonan khusus yang dipohon");
-		  document.f1.perintahminta.focus();
-	}
-
-	else{
-	
-		Simpan();
-	}
-
 }
+
 function Simpan(){
 	input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
