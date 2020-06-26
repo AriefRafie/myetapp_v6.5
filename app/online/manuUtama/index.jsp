@@ -255,7 +255,7 @@
 					</tr>
 					<tr>
 						<td>
-							<a href="javascript:penyewaan()" class="help" title="Penyewaan">
+							<a href="javascript:goTo('dikembalikan')" class="help" title="Penyewaan">
 								<font color="blue"><li>
 									##if($jumlah_notifikasi_penyewaan > 0)
 								<label style="background-color:blue" align="center" valign="top" > 
@@ -434,6 +434,14 @@
 
 <input type="hidden" name="fromDashboard" id="fromDashboard" />
 <script>
+
+	function tindakanPPK(){
+		document.${formName}.action = "?myrole=ppk-online-user";
+		document.${formName}.namatab.value = "Pusaka Kecil";
+        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
+		document.${formName}.submit();
+		
+	}
 goMenuTab('$!nTab');
 
 function goMenuTab(tab){
@@ -445,20 +453,28 @@ document.${formName}.namamodul.value = "";
 document.${formName}.namatab.value = "";
 }
 
-
-
-
-
-function goTo(location){
-document.${formName}.namamodul.value = "";
-document.${formName}.namatab.value = "";
-if(location=='PPK'){
-        document.${formName}.action = "?myrole=ppk-online-user";
-        document.${formName}.namatab.value = "Pusaka Kecil";
-        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
-        document.${formName}.submit();
-}
-else if(location=='daftarAduan'){
+	function goTo(location){
+		document.${formName}.namamodul.value = "";
+		document.${formName}.namatab.value = "";
+		
+		if(location=='PPK'){
+			document.${formName}.action = "?myrole=ppk-online-user";
+		    document.${formName}.namatab.value = "Pusaka Kecil";
+		    document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
+		    document.${formName}.submit();
+		
+		}else if(location=='dikembalikan'){
+			actionParam = "&_portal_module=ekptg.view.ppk.FrmDraffPermohonanOnlinePPK&command="+location;
+			//1345099281439
+			//alert("$EkptgUtil.getTabID('Pusaka Kecil','ppk-online-user')");
+			document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil','ppk-online-user')?"+actionParam;
+			/* document.${formName}.action = "?myrole=ppk-online-user"+actionParam;
+		    document.${formName}.namatab.value = "Pusaka Kecil";
+		    document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
+    */
+			document.${formName}.submit();
+        
+		}else if(location=='daftarAduan'){
 	
 		document.${formName}.action = "$EkptgUtil.getTabID("Menu",online)?_portal_module=ekptg.view.online.FrmAduanPublic&fromDashboard=Y";
 		document.${formName}.submit();
@@ -573,8 +589,9 @@ else if(location=='HELP'){
 }
 
 else if(location=='HTP'){
-    document.${formName}.action = "?myrole=htp-online-user";
-    document.${formName}.namatab.value = "Harta Tanah Persekutuan";
+    document.${formName}.action = "?myrole=online";
+    //document.${formName}.action = "?myrole=htp-online-user";
+	document.${formName}.namatab.value = "Harta Tanah Persekutuan";
     document.${formName}.namamodul.value = "ekptg.view.htp.online.FrmPajakanOnlineSenaraiFailView";
     document.${formName}.submit();
 }
