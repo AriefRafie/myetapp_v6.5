@@ -212,6 +212,11 @@
 			#else
 	  			<strong>$senarai.status</strong>
 		  	#end
+		  	<br>
+		  		<label style="background-color:blue" align="center" valign="top" > 
+					<b><font color="WHITE" size="0.6em"><span class="blink">$!senarai.catatan</span></font></b>
+				</label>
+		  	
 	  </td>
 	  #if($!skrin_deraf =="yes")
 	  <td class="$row" align="center">
@@ -330,38 +335,34 @@ function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {
 	if (seksyen == '8') {
 		//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=FrmPrmhnnSek8Internal&command=papar";
 		document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil',$myrole)?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon&command=Simati&mode=Simatiview";
-	}
-	else {
+	}else {
 		//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 17",$portal_role)?_portal_module=FrmPrmhnnSek17Senarai&command=papar";
 		//document.${formName}.action = "?_portal_module=FrmPrmhnnSek17Senarai&command=tab";
 		document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil',$myrole)?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online&command=Simati&mode=Simatiview";
 		
-		}
+	}
 	
-		document.${formName}.idpermohonan.value = idPermohonan;
-		document.${formName}.idPermohonan.value = idPermohonan;
-		document.${formName}.idPemohon.value = idpemohon;
-		document.${formName}.idSimati.value = idSimati;
-		document.${formName}.no_subjaket.value = parseInt(no_subjaket) - 1;
+	document.${formName}.idpermohonan.value = idPermohonan;
+	document.${formName}.idPermohonan.value = idPermohonan;
+	document.${formName}.idPemohon.value = idpemohon;
+	document.${formName}.idSimati.value = idSimati;
+	document.${formName}.no_subjaket.value = parseInt(no_subjaket) - 1;
 		
-				/*
-				
+	/*				
 		document.f1.command.value = "papar";
 		document.f1.action = "";
 		document.f1.idpermohonan.value = id;
 		document.f1.idSimati.value = id2;
 		document.f1.no_subjaket.value = ns;
-		document.f1.submit();
-			*/
-		
-		
-	   /* document.${formName}.tabIdatas.value = 0;
+		document.f1.submit();	*/
+	/* document.${formName}.tabIdatas.value = 0;
 		document.${formName}.tabIdtengah.value = 0;
 		document.${formName}.tabIdbawah.value = 0;	
-		document.${formName}.tabIdtepi.value = 0;*/
+		document.${formName}.tabIdtepi.value = 0;	*/
 				
-		document.${formName}.method="POST";
-        document.${formName}.submit();
+	document.${formName}.method="POST";
+  	document.${formName}.submit();
+
 }
 
 function edit_item(id) {
