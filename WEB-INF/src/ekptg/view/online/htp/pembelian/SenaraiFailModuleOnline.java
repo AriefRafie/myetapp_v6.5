@@ -64,30 +64,37 @@ import ekptg.model.utils.emel.EmailConfig;
 import ekptg.model.utils.emel.IEmel;
 
 public class SenaraiFailModuleOnline extends AjaxModule {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6717995094916712274L;
+	private static final String PATH="app/htp/pembelian/fail/online/";
+	static Logger myLog = Logger.getLogger(ekptg.view.online.htp.pembelian.SenaraiFailModuleOnline.class);
 	private Bangunan bangunan = null;
 	private final String IDJENISTANAH = "4"; //TANAH MILIK - TM
 	private final String URUSAN_TANAH = "01";
 	private final String URUSAN_BANGUNAN = "03";
 	private final String ID_URUSANTANAH = "24";
 	private final String ID_URUSANTANAH1 = "25"; 	
+	private ekptg.model.htp.IHTPEmel iHTPEmel = null;
+	private ekptg.model.utils.emel.IEmel emelSemak = null;
 	private FrmSenaraiFailTerimaPohonData senaraiFail = null;
 	private HakmilikUrusan urusan = null;
 	private HtpPermohonan htpPermohonan = null;
 	private IHTPPermohonan iHTPPermohonan = null;
 	private IHtp iHTP = null;  
-	private ekptg.model.htp.IHTPEmel iHTPEmel = null;
-	private ekptg.model.utils.emel.IEmel emelSemak = null;
-
 	private IOnline iOnline = null;
 	private IPembelian iPembelian = null;
 	private IPembelianOnline iPembelianOnline = null;
 	private IPenggunaKementerian iPengguna = null;
 	private IPemilik iPemilik = null;
+	private IUserPegawai iUser = null;
+	private IUtilHTML iUtil = null;
+
 	private Pemohon pemohon;
 	private Permohonan permohonan = null;
 	private PfdFail fail = null;
 	private PihakBerkepentingan pemilik = null; 	
-	private static final String PATH="app/htp/pembelian/fail/online/";
 	private String vm = PATH+"index_.jsp";
 	private String userID = null;
 	private String readonly = "disabled class = \"disabled\"";
@@ -95,24 +102,17 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 	private String socAgensi = "";
 	private String socKementerian = "";
 	private String socNegeri = "";
-	//String socDaerah = "";
-	//String socMukim = "";
 	private String socStatus = "";
 	private String socSubUrusan = "";
-	
 	private String idAgensi = "";
- 	//String iddaerah = "";
- 	//String idmukim = "";
  	private String idStatus = "";
- 	private String idSubUrusan = "";
+// 	private String idSubUrusan = "";
  	private String idSuburusan = "";
  	private String IDSUBURUSANS = "23,25";
 
 	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
 	private UserKementerian uk = null;	
-	private IUtilHTML iUtil = null;
-	private IUserPegawai iUser = null;
-	static Logger myLog = Logger.getLogger(ekptg.view.online.htp.pembelian.SenaraiFailModuleOnline.class);
+
 	String actionI = "";
 	String id_kementerian = "";
 	String RO_General = "";
@@ -148,7 +148,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			id_kementerian = String.valueOf(uk.getAgensi().getKementerian().getIdKementerian());
 			//System.out.println("+++++"+id_kementerian);
 		}
-		Hashtable hUser = getIUser().getPengguna(userID);
+		Hashtable<String,String> hUser = getIUser().getPengguna(userID);
 		jawatan = String.valueOf(hUser.get("jawatan"));
 		idJawatan = String.valueOf(hUser.get("idjawatan"));
 		context.put("idjawatan", idJawatan);
@@ -1215,16 +1215,16 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			String idStatuss = "";
 			idNegeri = getParam("socNegeri") == "" ? "0" : getParam("socNegeri");
 			idAgensi = getParam("socAgensi") == "" ? "0" : getParam("socAgensi");
-			idSubUrusan = getParam("socSubUrusan") == "" ? "0" : getParam("socSubUrusan");
+			idSuburusan = getParam("socSubUrusan") == "" ? "0" : getParam("socSubUrusan");
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			myLog.info("idStatus="+idStatus);
 			//Vector<?> v = getIPembelian().findFailKJP(carian, noFail, idNegeri,id_kementerian);
-			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, idNegeri,id_kementerian,idAgensi,idSubUrusan,idStatus);
+			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
 			context.put("lists", v);
 			
 			socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri));
 			socAgensi = HTML.SelectAgensiByKementerian("socAgensi", id_kementerian, Utils.parseLong(idAgensi), ""," style=\"width:400\"");
-			socSubUrusan = UtilHTML.SelectSuburusanByIdUrusan("2","23,25", "socSubUrusan",Long.parseLong(idSubUrusan),"");
+			socSubUrusan = UtilHTML.SelectSuburusanByIdUrusan("2","23,25", "socSubUrusan",Long.parseLong(idSuburusan),"");
 			socStatus = getIUtil().SelectStatusPermohonan("socStatus",Long.parseLong(idStatus),"",IDSUBURUSANS);
 
 			this.context.put("carianNoFail", noFail);
@@ -1271,7 +1271,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			
 			//Vector<?> v = getIPembelian().findFailKJP(carian, noFail, idNegeri,id_kementerian);
-			Vector<?> v = getIPembelianOnline().findFailKJP(carian, noFail, idNegeri,id_kementerian,idAgensi,idSubUrusan,idStatus);
+			Vector<?> v = getIPembelianOnline().findFailKJP(carian, noFail, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
 			
 			context.put("lists", v);
 			socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri));
