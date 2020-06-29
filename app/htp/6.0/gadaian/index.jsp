@@ -102,7 +102,7 @@
       <tr>
         <td class="$row">$fail.bil.</td>
         <td class="$row"><a href="javascript:fSFGA_seterusnya('$fail.id', '$fail.no')" class="pautanms">$fail.no</a></td>
-        <td class="$row">$fail.tajuk</td>
+        <td class="$row">$fail.nama</td>
         <td class="$row">$fail.negeri</td>
         <td class="$row">$fail.keterangan</td>
       </tr>
