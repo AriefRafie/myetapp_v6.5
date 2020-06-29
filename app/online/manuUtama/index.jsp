@@ -153,13 +153,13 @@
 						</a>
 						</td>
 					</tr>
-					<tr>
-						<td>
-						<a href="javascript:goTo('')" class="help" title="Pengaduan Aktiviti Pencerobohan">
-							<font color="blue"><li>Permohonan Penguatkuasaan</li></font>
-						</a>
-						</td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<td> -->
+<!-- 						<a href="javascript:goTo('')" class="help" title="Pengaduan Aktiviti Pencerobohan"> -->
+<!-- 							<font color="blue"><li>Permohonan Penguatkuasaan</li></font> -->
+<!-- 						</a> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
 					<tr>
 						<td>
 						<a href="javascript:goTo('PermohonanSewa')" class="help" title="Permohonan Urusan Penyewaan">
@@ -246,13 +246,27 @@
 						</a>
 						</td>
 					</tr>
-						<tr>
+					<tr>
 						<td>
-						<a href="javascript:goTo('SENARAI')" class="help" title="Senarai Notis Perbicaraan Pembahagian Pusaka">
-							<font color="blue"><li>Senarai Notis Perbicaraan Pembahagian Pusaka</li></font>
-						</a>
+							<a href="javascript:goTo('PPKBANTAHAN')" class="help" title="Permohonan Bantahan">
+								<font color="blue"><li>Permohonan Bantahan</li></font>
+							</a>
 						</td>
 					</tr>
+<!-- 					<tr> -->
+<!-- 						<td> -->
+<!-- 						<a href="javascript:goTo('SENARAI')" class="help" title="Senarai Notis Perbicaraan Pembahagian Pusaka"> -->
+<!-- 							<font color="blue"><li>Senarai Notis Perbicaraan Pembahagian Pusaka</li></font> -->
+<!-- 						</a> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<td> -->
+<!-- 						<a href="javascript:goTo('PENGGANTI')" class="help" title="Permohonan Pengganti Pempetisyen"> -->
+<!-- 							<font color="blue"><li>Permohonan Pengganti Pempetisyen</li></font> -->
+<!-- 						</a> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
 					<tr>
 						<td>
 							<a href="javascript:penyewaan()" class="help" title="Penyewaan">
@@ -487,10 +501,22 @@ else if(location=='DERAFPPK'){
         document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
         document.${formName}.submit();
 }
+else if(location=='PPKBANTAHAN'){
+    document.${formName}.action = "?myrole=ppk-online-user";
+    document.${formName}.namatab.value = "Pusaka Kecil";
+    document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnBantahanOnline";
+    document.${formName}.submit();
+}
 else if(location=='SENARAI'){
     document.${formName}.action = "?myrole=ppk-online-user";
     document.${formName}.namatab.value = "Pusaka Kecil";
-    document.${formName}.namamodul.value = "ekptg.view.ppk.CarianNotisPerbicaraanOnline";
+    document.${formName}.namamodul.value = "ekptg.view.online.CarianNotisPerbicaraan";
+    document.${formName}.submit();
+}
+else if(location=='PENGGANTI'){
+    document.${formName}.action = "?myrole=ppk-online-user";
+    document.${formName}.namatab.value = "Pusaka Kecil";
+    document.${formName}.namamodul.value = "ekptg.view.online.FrmTukarPemohon";
     document.${formName}.submit();
 }
 else if(location=='PPT'){

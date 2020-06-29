@@ -2769,7 +2769,73 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	*/
 			vm = "app/ppk/frmPrmhnnSek8Waris.jsp";
 		
-		}else if ("Penting".equals(submit) || "Saksi".equals(submit)
+		} else if ("Tukarpemohon".equals(submit)) {
+
+			this.context.put("flag_dup", getParam("flag_dup"));
+			readability1 = "";
+			readability2 = "readonly";
+			disability1 = "disabled";
+			disability2 = "";
+			String check_copy = getParam("copyAlamat");
+			this.context.put("check_copy", check_copy);
+			String check_copyP = getParam("copyAlamatP");
+			this.context.put("check_copyP", check_copyP);
+
+			clearContext();
+
+			if ("TukarPemohonview".equals(mode)) {
+				this.context.put("show_senarai_lapis_pertama", "yes");
+//				this.context.put("show_lapisan_bawah", "yes");
+//				this.context.put("show_tambah_waris1", "yes");
+//				this.context.put("button_Kembali1", "yes");
+			}
+			
+			String id = getParam("idPermohonan");
+			String id_Permohonansimati = getParam("id_Permohonansimati");
+			
+			logic.setDataSimati(id);
+			listSimati = logic.getDataSimati();
+			this.context.put("listSimati", listSimati);
+			
+			logic.setDataWaris(id_Permohonansimati);
+			listWaris = logic.getDataWaris();
+			this.context.put("listWaris", listWaris);
+			
+			logic.setDataWarisLapisanIdMati(id_Permohonansimati);
+			listWarisLapisanIdMati = logic.getDataWarisLapisanIdMati();
+			this.context.put("listWarisLapisanIdMati", listWarisLapisanIdMati);
+			
+			logic.setDataWarisOB(id_Permohonansimati);
+			listWarisOB = logic.getDataWarisOB();
+			this.context.put("listWarisOB", listWarisOB);
+			
+			this.context.put("selectedTabatas", 0);
+			this.context.put("selectedTabtengah", 2);
+			this.context.put("selectedTabbawah", 0);
+			this.context.put("selectedTabtepi", 0);
+			context.put("DATEUTIL", new DateUtil());
+			// logic_A.setData_online(id,(String)
+			// session.getAttribute("_ekptg_user_id"));
+			// list = logic_A.getData();
+			
+			list = logic_A.setData_online(id, idUser);
+			this.context.put("View", list);
+			headerppk_baru(session, id, "Y", "", "T");
+
+//			hideTabPengesahan_simati = checkEmptyField_simati(getParam("idPermohonan"));
+//			context.put("hideTabPengesahan_simati", hideTabPengesahan_simati);
+//			hideTabPengesahan_pemohon = checkEmptyField_pemohon(getParam("idPermohonan"));
+//			context.put("hideTabPengesahan_pemohon", hideTabPengesahan_pemohon);
+//			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
+//			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
+
+			Vector list_getListOBUpdate = null;
+			list_getListOBUpdate = logic_A.getListOBUpdate(id_Permohonansimati);
+			this.context.put("list_getListOBUpdate", list_getListOBUpdate);
+			
+			vm = "app/ppk/frmTukarPemohonSek8.jsp";
+			
+		} else if ("Penting".equals(submit) || "Saksi".equals(submit)
 				|| "Pemiutang".equals(submit) || "Penghutang".equals(submit)) {
 			String check_copy = getParam("copyAlamat");
 			this.context.put("check_copy", check_copy);
@@ -3092,6 +3158,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("tambah_ob_button", "yes");
 
 			}
+			
 			String id_Permohonansimati = getParam("id_Permohonansimati");
 			logic.setDataPenting(id_Permohonansimati);
 			listPenting = logic.getDataPenting();
@@ -8083,13 +8150,16 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		if(haBean==null){
 			haBean = new HABean();
 		}
-		return haBean;			
+		return haBean;
+				
 	}	
 	
 	private IUtilHTMLPilihanExt getPilihanPB(){
 		if(jenisPB==null){
 			jenisPB = new UtilHTMLPilihanJenisPBPPK();
 		}
-		return jenisPB;			
-	}	
+		return jenisPB;
+				
+	}
+	
 }

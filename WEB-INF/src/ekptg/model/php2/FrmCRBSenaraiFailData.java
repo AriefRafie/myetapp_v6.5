@@ -16,8 +16,12 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import lebah.db.SQLRenderer.Unquote;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
@@ -32,8 +36,10 @@ public class FrmCRBSenaraiFailData {
 	private Vector beanMaklumatPermohonan = null;
 	private Vector beanMaklumatPemohon = null;
 	private Vector beanMaklumatHakmilik = null;
+	private static final Log myLog = LogFactory.getLog(FrmCRBSenaraiFailData.class);
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	
 
 	public void carianFail(String noFail, String namaPemohon,
 			String noPengenalan, String tarikhTerima, String idNegeri,
@@ -495,10 +501,7 @@ public class FrmCRBSenaraiFailData {
 					+ " AND HMS.ID_HAKMILIKSEMENTARA = '" + idHakmilikSementara
 					+ "'";
 
-			if ("".equals(idHakmilikAgensi) || "".equals(idHakmilikSementara)){
-				sql = " ";
-			}
-			
+			myLog.info("keluarkan : " +sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -513,6 +516,9 @@ public class FrmCRBSenaraiFailData {
 						rs.getString("ID_HAKMILIKSEMENTARA") == null ? "" : rs
 								.getString("ID_HAKMILIKSEMENTARA"));
 				h.put("peganganHakmilik",
+						rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs
+								.getString("PEGANGAN_HAKMILIK").toUpperCase());
+				h.put("peganganHakmilik1",
 						rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs
 								.getString("PEGANGAN_HAKMILIK").toUpperCase());
 				h.put("idJenisHakmilik",
@@ -617,6 +623,7 @@ public class FrmCRBSenaraiFailData {
 				h.put("idHakmilikAgensi", "");
 				h.put("idHakmilik", "");
 				h.put("peganganHakmilik", "");
+				h.put("peganganHakmilik1", "");
 				h.put("idJenisHakmilik", "");
 				h.put("noHakmilik", "");
 				h.put("hakmilik", "");
@@ -951,6 +958,20 @@ public class FrmCRBSenaraiFailData {
 				r.add("ID_HAKMILIK", idHakmilik);
 				r.add("ID_HAKMILIKPERMOHONAN", idhakmilikPermohonan);
 				r.add("PEGANGAN_HAKMILIK", txtPeganganHakmilik);
+				r.add("ID_JENISHAKMILIK", getParam("idJenisHakmilik"));
+				r.add("NO_HAKMILIK", getParam("txtNoHakmilikTanah"));
+				r.add("NO_WARTA", getParam("txtNoWartaTanah"));
+				r.add("TARIKH_WARTA",
+						r.unquote("to_date('"
+								+ getParam("tarikhWarta")
+								+ "','dd/MM/yyyy')"));
+				r.add("ID_LOT", getParam("idLot"));
+				r.add("NO_LOT", getParam("txtNoLot"));
+				r.add("ID_LUAS", getParam("idLuas"));
+				r.add("LUAS", getParam("txtLuas"));
+				r.add("ID_NEGERI", idNegeriTanah);
+				r.add("ID_DAERAH", getParam("idDaerahTanah"));
+				r.add("ID_MUKIM", getParam("idMukimTanah"));
 				
 				sql = r.getSQLInsert("TBLPHPHAKMILIK");
 				stmt.executeUpdate(sql);
@@ -1042,6 +1063,11 @@ public class FrmCRBSenaraiFailData {
 		}
 		session.setAttribute("ID_FAIL", idFailString);
 		return idFailString;
+	}
+
+	private Unquote getParam(String string) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public String generateNoFail(HttpSession session, String kodUrusan, String kodKementerian,

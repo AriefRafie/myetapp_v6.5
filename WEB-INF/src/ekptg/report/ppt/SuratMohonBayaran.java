@@ -14,7 +14,7 @@ import lebah.db.Db;
 
 import ekptg.report.EkptgReportServlet;
 
-public class SuratIringanAfidavit extends EkptgReportServlet {
+public class SuratMohonBayaran extends EkptgReportServlet {
 	
 	/*public SuratIringanAfidavit() {
 		super.setReportName("SuratIringanMahkamahTinggiAffidavit_Melaka");
@@ -36,20 +36,21 @@ public class SuratIringanAfidavit extends EkptgReportServlet {
 			id_negeri = (String)h.get("ID_NEGERI");
 		}	
 		
-		if(id_negeri.equals("2")){
+		/*if(id_negeri.equals("2")){
 			super.setReportName("SuratIringanMTAffidavit_Kedah");
 		}else if(id_negeri.equals("4")){
 			super.setReportName("SuratIringanMahkamahTinggiAffidavit_Melaka");
-		}else if(id_negeri.equals("")){
-			super.setReportName("SuratIringanMTAffidavit_Kelantan");
-		}else if(id_negeri.equals("9")){//9
-			super.setReportName("SuratIringanMahkamahTinggiAffidavit_Perlis");
-		}else if(id_negeri.equals("5")){
-			super.setReportName("SuratIringanMTAffidavit_n9");
-		}else if(id_negeri.equals("14")){
-			super.setReportName("SuratIringanMTAffidavit_KL");
 		}else{
 			super.setReportName("SuratIringanMTAffidavit_KL");
+		}*/
+		if(id_negeri.equals("4")){
+			super.setReportName("SuratMohonBayaran(Melaka)");
+		}else if(id_negeri.equals("9")){
+			super.setReportName("SuratMohonBayaran(Perlis)");
+		}else if(id_negeri.equals("6")){
+			super.setReportName("SuratMohonBayaran(Pahang)");
+		}else{
+			super.setReportName("SuratMohonBayaran(Pahang)");
 		}
 		
 		super.setFolderName("ppt");

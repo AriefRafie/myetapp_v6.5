@@ -145,6 +145,20 @@ public class FrmTukarPemohon extends AjaxBasedModule{
         	context.put("IDSimati",IDSimati); 
     		
     	}
+		// syafiqah add 24/6/2020
+		else if("onlineSub".equals(command)){
+			String id_permohonan ="";
+			
+			myLogger.info("Baca simpanSub3:----------------"); 
+			myLogger.info("id_permohonansimati_atheader = " + getParam("id_permohonansimati_atheader")); 
+			// genaratePemohonBaru(getParam("id_ob_pemohon"),getParam("id_permohonansimati_atheader"),id_permohonan,session,usid, getParam("idsimati"));
+			headerppk_baru(session, id_permohonan, "Y", "", "T");
+        	list_tukar_pemohon = null;        
+        	list_tukar_pemohon = model.list_tukar_pemohon(getParam("id_fail_carian"));
+        	context.put("list_tukar_pemohon",list_tukar_pemohon); 
+        	context.put("IDSimati",IDSimati);
+		}
+		// syafiqah add ends
 		else
 		{
 			default_data();	

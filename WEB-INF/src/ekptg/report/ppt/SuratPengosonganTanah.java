@@ -11,16 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lebah.db.Db;
-
 import ekptg.report.EkptgReportServlet;
 
-public class SuratIringanAfidavit extends EkptgReportServlet {
+public class SuratPengosonganTanah extends EkptgReportServlet {
 	
-	/*public SuratIringanAfidavit() {
-		super.setReportName("SuratIringanMahkamahTinggiAffidavit_Melaka");
-		super.setFolderName("ppt");
-	}*/
-
+	
+	@SuppressWarnings("unchecked")
 	public void doProcessing(HttpServletRequest request,
 			HttpServletResponse response, ServletContext context, Map parameters)
 			throws Exception {
@@ -29,32 +25,25 @@ public class SuratIringanAfidavit extends EkptgReportServlet {
 		String id_negeri = "";
 		Vector maklumat_negeri_fail_panggil = null;
 		
-		if (parameters.get("idFail") != null){
-			idfail = (String)parameters.get("idFail");			
+		if (parameters.get("id_fail") != null){
+			idfail = (String)parameters.get("id_fail");			
 			maklumat_negeri_fail_panggil = maklumat_negeri_fail(idfail);			
 			Hashtable h = (Hashtable) maklumat_negeri_fail_panggil.get(0);			
 			id_negeri = (String)h.get("ID_NEGERI");
 		}	
 		
-		if(id_negeri.equals("2")){
-			super.setReportName("SuratIringanMTAffidavit_Kedah");
+		if(id_negeri.equals("5")){
+			super.setReportName("SuratPemberitahuanPengosonganTanah_N9");
+		}else if(id_negeri.equals("3")){
+			super.setReportName("SuratPemberitahuanPengosonganTanah_Klntan");
 		}else if(id_negeri.equals("4")){
-			super.setReportName("SuratIringanMahkamahTinggiAffidavit_Melaka");
-		}else if(id_negeri.equals("")){
-			super.setReportName("SuratIringanMTAffidavit_Kelantan");
-		}else if(id_negeri.equals("9")){//9
-			super.setReportName("SuratIringanMahkamahTinggiAffidavit_Perlis");
-		}else if(id_negeri.equals("5")){
-			super.setReportName("SuratIringanMTAffidavit_n9");
-		}else if(id_negeri.equals("14")){
-			super.setReportName("SuratIringanMTAffidavit_KL");
+			super.setReportName("SuratPemberitahuanPengosonganTanah_Melaka");
 		}else{
-			super.setReportName("SuratIringanMTAffidavit_KL");
+			super.setReportName("SuratPemberitahuanPengosonganTanah_N9");
 		}
-		
 		super.setFolderName("ppt");
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	Vector maklumat_negeri_fail = null;
 	@SuppressWarnings("unchecked")
@@ -84,3 +73,7 @@ public class SuratIringanAfidavit extends EkptgReportServlet {
 		}
 	}
 }
+
+
+
+

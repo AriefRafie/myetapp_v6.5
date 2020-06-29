@@ -28,7 +28,7 @@ public class FrmPYWSenaraiFailOnlineData {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public void carianFail(String noPermohonan, String tarikhPermohonan,
-			String namaPemohon, String noPengenalan) throws Exception {
+			String namaPemohon, String noPengenalan, String idNegeri) throws Exception {
 
 		Db db = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -40,9 +40,9 @@ public class FrmPYWSenaraiFailOnlineData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, B.NO_PERMOHONAN, C.ID_PEMOHON, A.ID_SUBURUSAN,"
-					+ " A.ID_URUSAN,D.NAMA_URUSAN ,  E.NAMA_SUBURUSAN, E.ID_SUBURUSAN "
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C,  TBLRUJURUSAN D, TBLRUJSUBURUSAN E "
-					+ " WHERE A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U'"
+					+ " A.ID_URUSAN, D.NAMA_URUSAN ,  E.NAMA_SUBURUSAN, E.ID_SUBURUSAN "
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C,  TBLRUJURUSAN D, TBLRUJSUBURUSAN E, TBLPHPHAKMILIKPERMOHONAN F, TBLPHPHAKMILIK G "
+					+ " WHERE A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' AND B.ID_PERMOHONAN = F.ID_PERMOHONAN AND F.ID_HAKMILIKPERMOHONAN = G.ID_HAKMILIKPERMOHONAN(+)"
 					+ " AND A.FLAG_JENIS_FAIL = '4' AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND A.NO_FAIL IS NULL AND B.NO_PERMOHONAN IS NOT NULL"
 					+ " AND A.ID_SEKSYEN = '4' AND A.ID_URUSAN = D.ID_URUSAN AND A.ID_SUBURUSAN = E.ID_SUBURUSAN AND B.ID_STATUS IS NOT NULL";
 
@@ -78,6 +78,14 @@ public class FrmPYWSenaraiFailOnlineData {
 							+ " AND TO_CHAR(B.TARIKH_TERIMA,'dd-MON-YY') = '"
 							+ sdf1.format(sdf.parse(tarikhPermohonan))
 									.toUpperCase() + "'";
+				}
+			}
+			
+			//IdNegeri
+			if (idNegeri != null) {
+				if (!idNegeri.trim().equals("")
+						&& !idNegeri.trim().equals("99999")) {
+					sql = sql + " AND G.ID_NEGERI = '" + idNegeri.trim() + "'";
 				}
 			}
 
@@ -295,6 +303,7 @@ public class FrmPYWSenaraiFailOnlineData {
 				}
 			}
 
+			//TBLPHPLOGTUGASAN
 			r = new SQLRenderer();
 			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
 			r.add("ID_TUGASAN", idTugasan);

@@ -17,6 +17,9 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
 	
 	FrmPYWSenaraiFailOnlineData logic = new FrmPYWSenaraiFailOnlineData();
 	
+	String userId = null;
+	String idNegeriUser = null;
+	
 	@Override
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -26,6 +29,12 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
 	    if (doPost.equals("true")) {
 	        postDB = true;
 	    }
+	    
+	    userId = (String)session.getAttribute("_ekptg_user_id");
+		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
+		
+		this.context.put("userId", userId);
+		this.context.put("idNegeriUser", idNegeriUser);
 	   	    	    
 	    // DROP DOWN PENDAFTARAN
 	    String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
@@ -167,10 +176,17 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
    
         }
         else {
+        	
+        	//FILTER BY NEGERI
+			if (idNegeriUser != null && idNegeriUser.length() > 0){
+				idNegeri = idNegeriUser;
+			}
+        	
 	     	// GO TO LIST FAIL PYW
 			vm = "app/php2/frmPYWSenaraiFailOnline.jsp";
 	
-			logic.carianFail(getParam("txtNoPermohonan"),getParam("txdTarikhPermohonan"), getParam("txtPemohon"), getParam("txtNoPengenalan"));
+			logic.carianFail(getParam("txtNoPermohonan"),getParam("txdTarikhPermohonan"), getParam("txtPemohon"), 
+					getParam("txtNoPengenalan"), idNegeri);
 			list = new Vector();
 			list = logic.getSenaraiFail(); 
 			this.context.put("SenaraiFail", list);
