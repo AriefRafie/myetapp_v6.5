@@ -67,17 +67,24 @@
   	</tr>
   	<tr>
   		<td>
-			#if($seksyen == "17")
-			<a href="#" onClick="javascript:cetakBorangS('$!noFail.toUpperCase()','$!idFail','$!idPerbicaraan','$!id_Permohonan','$!icSimati','$signedData')">
-		       	<input type="button" value="Borang S">
+  			<a href="#" onClick="javascript:cetakSuratPanduanBicara('$!idFail','$!id_Permohonan')">
+		       	<input type="button" value="Panduan Perbicaraan">
 		    </a>
-			#else   
-			<a href="#" onClick="javascript:cetakBorangD('$!noFail.toUpperCase()','$!idFail','$!idPerbicaraan')">
-		 		<input type="button" value="Borang D">
-		 	</a>    			
-			#end
-		</td>
-	</tr>
+  		</td>
+  	</tr>
+<!--   	<tr> -->
+<!--   		<td> -->
+<!-- 			#if($seksyen == "17") -->
+<!-- 			<a href="#" onClick="javascript:cetakBorangS('$!noFail.toUpperCase()','$!idFail','$!idPerbicaraan','$!id_Permohonan','$!icSimati','$signedData')"> -->
+<!-- 		       	<input type="button" value="Borang S"> -->
+<!-- 		    </a> -->
+<!-- 			#else    -->
+<!-- 			<a href="#" onClick="javascript:cetakBorangD('$!noFail.toUpperCase()','$!idFail','$!idPerbicaraan')"> -->
+<!-- 		 		<input type="button" value="Borang D"> -->
+<!-- 		 	</a>    			 -->
+<!-- 			#end -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
   	<tr>
  		<td>&nbsp;</td>
   	</tr>
@@ -85,6 +92,14 @@
 
 
 <script>
+
+function cetakSuratPanduanBicara(idfail,idpermohonan) {
+    var url = "../../servlet/ekptg.report.ppk.SuratPanduanBicara?idpermohonan="+idpermohonan+"&idfail="+idfail;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
 
 function cetakBorangD(noFail,idfail,idPerbicaraan) {
 	var url = "../../servlet/ekptg.report.ppk.BorangD_ORI?nofail="+noFail+"&idfail="+idfail+"&idperbicaraan="+idPerbicaraan;

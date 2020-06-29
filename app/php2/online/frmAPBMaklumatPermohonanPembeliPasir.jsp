@@ -47,14 +47,18 @@
       </fieldset></td>
   </tr>
   <tr>
-    <td align="center"> #if ($idStatus == '')
+    <td align="center"> <!-- #if ($idStatus == '') -->
+    	<!-- Pindah ke tab pengesahan -->
+    	<!-- <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
       <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
-      <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
+      <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/> -->
       <input type="button" name="cmdBackList1" id="cmdBackList1" value="Kembali" onclick="doBacklist()"/>
-      #else
-      <input type="button" name="cmdBackList3" id="cmdBackList3" value="Kembali" onClick="doBacklist()"/>
-      <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onclick="javascript:setTable('tableReport')"/>
-      #end </td>
+      <!--#else
+      #if ($idStatus !='')
+      <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+      <input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+      #end
+      #end--> </td>
   </tr>
   <tr>
     <td align="center"></td>

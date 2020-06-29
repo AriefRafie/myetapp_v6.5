@@ -108,7 +108,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		String doPost = (String) session.getAttribute("doPost");
 		String action = getParam("action"); // ACTION UTK SETUP PAGING SHJ
 		String submit = getParam("command");
-		myLogger.info("SUBMIT :: " + submit + ",ACTION PAGING :: " + action);
+		myLogger.info("SUBMIT=" + submit + ",ACTION PAGING=" + action);
 		this.context.put("Util", new lebah.util.Util()); // UNTUK FORMAT UTIL.DECIMAL (EX: 12,000.00)
 
 		String location = getParam("location");
@@ -118,23 +118,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		context.put("point", point);
 		String jenisDoc = getParam("jenisDoc");
 		String id_permohonan = getParam("id_permohonan");
-		context.put("id_permohonan", id_permohonan);
-    	String doPost = (String)session.getAttribute("doPost");
-    	String action = getParam("action"); // ACTION UTK SETUP PAGING SHJ
-    	String submit = getParam("command");
-    	myLogger.info("SUBMIT :: "+submit+",ACTION PAGING :: "+action);
-    	this.context.put("Util",new lebah.util.Util());	// UNTUK FORMAT UTIL.DECIMAL (EX: 12,000.00)   		
-    	
-    	String location = getParam("location");
-    	context.put("location",location);   
-    	
-    	String point = getParam("point");
-    	context.put("point",point);  
-    	
-    	String id_permohonan = getParam("id_permohonan");
-   		context.put("id_permohonan", id_permohonan);
-   		myLogger.info("id_permohonan : "+id_permohonan);
-   		myLogger.info("id_permohonan + 1 : "+id_permohonan+"1");
+		context.put("id_permohonan", id_permohonan);    	
+   		myLogger.info("id_permohonan= "+id_permohonan);
+   		
 		String negeriMMK = "";
 		String id_kementerian = "";
 		String id_fail = "";
@@ -516,7 +502,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanSenaraiPB.jsp";
 
 		} else if ("add_bantahan".equals(submit)) {
-
 			// Checkbox PPT-35 (i) Jenis Bantahan Pampasan frmBantahanDaftar (PB) (SIMPAN KE DB)
 			String idPermohonan = getParam("id_permohonan"); // ASAL: getParam("id_permohonan" + 1)
 			String[] bantahanpampasan = this.request.getParameterValues("jenisbantahanpampasan"); // Nama checkbox dalam .jsp
@@ -524,8 +509,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			frmSemak.semakanHapusByPermohonan(idPermohonan);
 			if (bantahanpampasan != null) {
 				for (int i = 0; i < bantahanpampasan.length; i++) {
-					frmSemak = new FrmSemakan();
-					frmSemak.semakanTambah(bantahanpampasan[i], idPermohonan);
+//					frmSemak = new FrmSemakan();
+					FrmSemakan.semakanTambah(bantahanpampasan[i], idPermohonan);
 				}
 			}
 
@@ -615,7 +600,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			selectedtab = "0";
 			context.put("selectedtab", selectedtab);
 			context.put("idWarta", id_warta);
-
 			myLogger.info("check error 1 [id hakmilikpb] :: " + id_hakmilikpb);
 
 			// CHECKING JUMLAH PAMPASAN SEKSYEN 8
@@ -646,11 +630,14 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			// CHECKING SAMAADA PIHAK BERKEPENTINGAN SUDAH BUAT BANTAHAN ATAU TIDAK
 			Hashtable getFlagBantahan = model.getFlagBantahan(id_hakmilikpb);
 			String flag_bantahan = getFlagBantahan.get("flag_bantahan").toString();
+			myLogger.info("dalamProses:flag_bantahan=" + flag_bantahan);
+
 			// END
 			if (!flag_bantahan.equals("1")) {
 				// SYARAT BANTAHAN: CHECKING 42 HARI DRPD TARIKH AWARD & TARIKH TERIMA BORANG H
 				listI = model.getMaklumatChecking(id_permohonan, _MaxIdSiasatan, id_hakmilikpb);
 				context.put("getMaklumatChecking", listI);
+				
 				if (listI.size() != 0) {
 					Hashtable c = (Hashtable) listI.get(0);
 					String flag_hadir = c.get("flag_hadir").toString();
@@ -667,9 +654,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				}
 				// END
 			}
+			myLogger.info("check error 3 [id id_hakmilikpb]= " + id_hakmilikpb +",[id siasatan]=" + _MaxIdSiasatan + ",[id warta]=" + id_warta);
 
-			myLogger.info("check error 3 [id siasatan] :: " + _MaxIdSiasatan + ",[id warta] :: " + id_warta);
-
+			//listDokumen.clear();
 			list = model.getMaklumatBantahan(id_hakmilikpb, _MaxIdSiasatan, id_warta);
 			context.put("getMaklumatBantahan", list);
 			if (list.size() != 0) {
@@ -686,7 +673,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				String id_status_bantahan = (String) b.get("id_status_bantahan");
 
 				if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-					listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+					listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 					context.put("listDokumen", listDokumen);
 					context.put("listDokumen_size", listDokumen.size());
 				} else {
@@ -1419,7 +1406,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				id_bantahan = (String) a.get("id_bantahan");
 
 				// get JENIS_DOKUMEN
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				myLogger.info("ID Bantahan borangO >>> "+id_bantahan);
 				myLogger.info("Jenis Dokumen borangO >>> "+jenisDoc);// Logger sahaja
 				context.put("listDokumen", listDokumen);
@@ -1904,7 +1891,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 //				myLogger.info("id bantahan >>> "+id_bantahan);
 				// :::upload
 				if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-					listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+					listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 //					myLogger.info("Jenis Dokumen susulanBantahan >>> "+jenisDoc);
 					context.put("listDokumen", listDokumen);
 					context.put("listDokumen_size", listDokumen.size());
@@ -2393,7 +2380,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				id_bantahan = (String) a.get("id_bantahan");
 
 				// Get jenisDoc
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 //				myLogger.info("Jenis Dokumen batalBantahan MT >>> "+jenisDoc);
 //				myLogger.info("ID Bantahan batalBantahan MT >>> "+id_bantahan);
 				context.put("listDokumen", listDokumen);
@@ -2535,7 +2522,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			context.put("id_fail", id_fail);
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2580,7 +2567,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("display_error_message", "no");
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2608,7 +2595,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("display_error_message", "no");
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2635,7 +2622,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			}
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2667,7 +2654,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2704,7 +2691,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2741,7 +2728,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2776,7 +2763,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senarai_dokumen_bantahan(id_bantahan, jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
