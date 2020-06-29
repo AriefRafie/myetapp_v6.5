@@ -137,6 +137,13 @@
 		</td>
 	</tr>
 </table>
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+	<tr>
+		<td colspan="2" align="center">
+			<input type="button" class="stylobutton" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="javascript:fGPHA_seterusnyaHantar()">
+		</td>
+	</tr>
+</table>
 
 <script type="text/javascript" language="javascript">
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTab});
