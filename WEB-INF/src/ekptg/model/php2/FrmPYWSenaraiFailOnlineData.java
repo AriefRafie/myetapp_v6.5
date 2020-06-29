@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
@@ -27,7 +28,7 @@ public class FrmPYWSenaraiFailOnlineData {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public void carianFail(String noPermohonan, String tarikhPermohonan,
-			String namaPemohon, String noPengenalan) throws Exception {
+			String namaPemohon, String noPengenalan, String idNegeri) throws Exception {
 
 		Db db = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -39,9 +40,9 @@ public class FrmPYWSenaraiFailOnlineData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, B.NO_PERMOHONAN, C.ID_PEMOHON, A.ID_SUBURUSAN,"
-					+ " A.ID_URUSAN,D.NAMA_URUSAN ,  E.NAMA_SUBURUSAN, E.ID_SUBURUSAN "
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C,  TBLRUJURUSAN D, TBLRUJSUBURUSAN E "
-					+ " WHERE A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U'"
+					+ " A.ID_URUSAN, D.NAMA_URUSAN ,  E.NAMA_SUBURUSAN, E.ID_SUBURUSAN "
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C,  TBLRUJURUSAN D, TBLRUJSUBURUSAN E, TBLPHPHAKMILIKPERMOHONAN F, TBLPHPHAKMILIK G "
+					+ " WHERE A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' AND B.ID_PERMOHONAN = F.ID_PERMOHONAN AND F.ID_HAKMILIKPERMOHONAN = G.ID_HAKMILIKPERMOHONAN(+)"
 					+ " AND A.FLAG_JENIS_FAIL = '4' AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND A.NO_FAIL IS NULL AND B.NO_PERMOHONAN IS NOT NULL"
 					+ " AND A.ID_SEKSYEN = '4' AND A.ID_URUSAN = D.ID_URUSAN AND A.ID_SUBURUSAN = E.ID_SUBURUSAN AND B.ID_STATUS IS NOT NULL";
 
@@ -77,6 +78,14 @@ public class FrmPYWSenaraiFailOnlineData {
 							+ " AND TO_CHAR(B.TARIKH_TERIMA,'dd-MON-YY') = '"
 							+ sdf1.format(sdf.parse(tarikhPermohonan))
 									.toUpperCase() + "'";
+				}
+			}
+			
+			//IdNegeri
+			if (idNegeri != null) {
+				if (!idNegeri.trim().equals("")
+						&& !idNegeri.trim().equals("99999")) {
+					sql = sql + " AND G.ID_NEGERI = '" + idNegeri.trim() + "'";
 				}
 			}
 
@@ -136,7 +145,8 @@ public class FrmPYWSenaraiFailOnlineData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN,B.TARIKH_TERIMA, A.TAJUK_FAIL, B.ID_PEMOHON, B.NO_PERMOHONAN, A.ID_URUSAN, A.ID_SUBURUSAN, A.ID_SUBSUBURUSAN, C.CATATAN "
+			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN,B.TARIKH_TERIMA, A.TAJUK_FAIL, B.ID_PEMOHON, B.NO_PERMOHONAN, A.ID_URUSAN, A.ID_SUBURUSAN, " 
+					+ " A.ID_SUBSUBURUSAN, C.CATATAN, C.TUJUAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -171,6 +181,8 @@ public class FrmPYWSenaraiFailOnlineData {
 						: rs.getString("ID_SUBURUSAN"));
 				h.put("idSubsuburusan", rs.getString("ID_SUBSUBURUSAN") == null ? "" 
 						: rs.getString("ID_SUBSUBURUSAN"));
+				h.put("namaTujuan", rs.getString("TUJUAN") == null ? "" : rs
+						.getString("TUJUAN").toUpperCase());
 				beanMaklumatPermohonan.addElement(h);
 				bil++;
 			}
@@ -189,6 +201,9 @@ public class FrmPYWSenaraiFailOnlineData {
 		Db db = null;
 		Connection conn = null;
 		String userId = session.getAttribute("_ekptg_user_id").toString();
+		String idNegeriUser = (String) session
+				.getAttribute("_ekptg_user_negeri");
+		String userRole = (String) session.getAttribute("myrole");
 		String sql = "";
 		String idKementerian = "";
 		String idNegeriHakmilik = "";
@@ -288,6 +303,26 @@ public class FrmPYWSenaraiFailOnlineData {
 				}
 			}
 
+			//TBLPHPLOGTUGASAN
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_PEGAWAI", userId);
+			r.add("ID_NEGERI", idNegeriUser);
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("ROLE", userRole);
+			r.add("FLAG_BUKA", "Y");
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610198", "4", null, session, "INS",
+					"FAIL PENYEWAAN ONLINE [" + noFail + "] DIDAFTARKAN");
+			
 			conn.commit();
 
 		} catch (SQLException ex) {
@@ -586,7 +621,7 @@ public class FrmPYWSenaraiFailOnlineData {
 			kodTanah = "T";
 		}
 
-		noFail = "JKPTG/SPHP/"
+		noFail = "JKPTG/BPHP/"
 				+ kodUrusan
 				+ "/"
 				+ kodKementerian

@@ -36,7 +36,6 @@ import ekptg.model.entities.UserKementerian;
 import ekptg.model.htp.FrmSenaraiFailTerimaPohonData;
 import ekptg.model.htp.FrmTerimaPohonData;
 import ekptg.model.htp.FrmUtilData;
-import ekptg.model.htp.HTPEmelPermohonanBean;
 import ekptg.model.htp.HTPEmelSemakBean;
 import ekptg.model.htp.HTPPermohonanBean;
 import ekptg.model.htp.HTPPermohonanTanahBean;
@@ -66,6 +65,7 @@ import ekptg.model.htp.rekod.FrmRekodUtilData;
 import ekptg.model.htp.rekod.HTPSusulanPembangunanBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
+import ekptg.model.htp.utiliti.HTPEmelPermohonanBean;
 import ekptg.model.htp.utiliti.HTPSusulanBean;
 import ekptg.model.htp.utiliti.IHTPSusulan;
 import ekptg.model.utils.IUserPegawai;
@@ -230,7 +230,6 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		if (id_kementerian == null || id_kementerian.trim().length() == 0){
 			uk = getIPengguna().getKementerian(idUser);
 			if(uk == null){
-				//throw new Exception("[ONLINE-HTP REKOD] KEMENTERIAN TIDAK DIJUMPAI");
 				throw new Exception(getHTP().getErrorHTML("[ONLINE-HTP PERMOHONAN] KEMENTERIAN TIDAK DIJUMPAI"));
 			}
 		
@@ -759,6 +758,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    			senaraiNotis5A();
 		    		} else if ("ViewNotis".equals(button)) {
 		    			viewNotis5A(idNotis);
+		    			viewUploadMD();
 		    		} else if ("KemaskiniNotis".equals(button)) {
 		    			tabmode="2";
 		    			Notis5A("update",idNotis);
@@ -2247,6 +2247,12 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		if(iHTPEmel == null)
 			iHTPEmel = new HTPEmelSemakBean();
 		return iHTPEmel;
+	}
+	private void viewUploadMD() throws Exception {
+		myLog.debug("viewUploadMD");
+		Vector MaklumatDokumen = fData.getUploadMD(idpermohonan);
+		this.context.put("ViewUploadMD", MaklumatDokumen);
+		myLog.debug("selesai viewUploadMD");
 	}
 	private void uploadFiles(String id_permohonan, String keterangan,
 			String namaDokumen, HttpSession session) throws FileUploadException {

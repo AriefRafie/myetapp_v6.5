@@ -39,9 +39,9 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
 	FrmUPTSek8BorangFData modelBF = new FrmUPTSek8BorangFData();
 	FrmUPTSek8HakmilikData model = new FrmUPTSek8HakmilikData();
 	//FrmUPTSek8InfoTanahTerperinciBangunanData modelTanah = new FrmUPTSek8InfoTanahTerperinciBangunanData();
+	private FrmSemakan frmSemak = null;
+
 	
-	
-	@SuppressWarnings({ "static-access", "unchecked" })
 	@Override
 	public String doTemplate2() throws Exception{
 		
@@ -450,11 +450,10 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
         		// Checkbox PPT-25 (ii) Jenis Pemilikan
         		Vector semakanList = FrmSemakan.getSenaraiSemakan("pptjenispemilikan");  //, "pptjenistanaman"
         		context.put("senaraiSemakan", semakanList); 
-        		context.put("semakclass", new FrmSemakan()); 
         		
         		// Checkbox PPT-25 (iii) Jenis Tanaman
-        		Vector semakList = FrmSemakan.getSenaraiSemakan("pptjenistanaman"); // "jenispemilikan", 
-        		context.put("senaraiSemakan2", semakList); 
+        		Vector listTanaman = FrmSemakan.getSenaraiSemakan("pptjenistanaman"); // "jenispemilikan", 
+        		context.put("senaraiSemakan2", listTanaman); 
         		context.put("semakanclass", new FrmSemakan());
         		
         		maklumat_siasatan = logic.maklumat_siasatan(getParam("id_siasatan"));
@@ -500,29 +499,30 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
    				{   
         		this.context.put("readmode", "edit");        		
    				}        		
-        		else if ("Simpan".equals(subminor_command))
-   				{
+        		else if ("Simpan".equals(subminor_command)){
+        			String idSiasatan = getParam("id_siasatan");
         			// Checkbox PPT-25 (ii) Jenis Pemilikan
         			String[] cbsemak = this.request.getParameterValues("jenispemilikan");
-        			FrmSemakan frmSemak = new FrmSemakan();
-        			myLogger.info("Simpan pushdb = " + getParam("id_siasatan")); // debugger at log copy
-        			frmSemak.semakanHapusByPermohonan(getParam("id_siasatan"));
+        			frmSemak = new FrmSemakan();
+//        			myLogger.info("Simpan pushdb, idSiasatan= " +idSiasatan); // debugger at log copy
+        			frmSemak.semakanHapusByPermohonan(idSiasatan);
         			if (cbsemak != null) {
         				for (int i = 0; i < cbsemak.length; i++) {
         					frmSemak = new FrmSemakan();
-        					frmSemak.semakanTambah(cbsemak[i], getParam("id_siasatan"));
+        					frmSemak.semakanTambah(cbsemak[i], idSiasatan);
+        					
         				}
         			}
         			
 
         			// Checkbox PPT-25 (iii) Jenis Tanaman
         			String[] cbsemaks = this.request.getParameterValues("jenistanaman");
-        			FrmSemakan frmSemaks = new FrmSemakan();
-        			frmSemaks.semakanHapusByPermohonan(getParam("id_siasatan"));
+        			frmSemak = new FrmSemakan();
+        			//frmSemak.semakanHapusByPermohonan(idSiasatan);
         			if (cbsemaks != null) {
         				for (int i = 0; i < cbsemaks.length; i++) {
-        					frmSemaks = new FrmSemakan();
-        					frmSemaks.semakanTambah(cbsemaks[i], getParam("id_siasatan"));
+        					frmSemak = new FrmSemakan();
+        					frmSemak.semakanTambah(cbsemaks[i], idSiasatan);
         				}
         			}
         			

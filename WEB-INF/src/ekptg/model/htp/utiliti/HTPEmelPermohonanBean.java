@@ -1,4 +1,4 @@
-package ekptg.model.htp;
+package ekptg.model.htp.utiliti;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -11,6 +11,10 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.EkptgCache;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.HTPEmelBean;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHTPEmel;
+import ekptg.model.htp.IHtp;
 
 
 public class HTPEmelPermohonanBean extends EkptgCache implements IHTPEmel {

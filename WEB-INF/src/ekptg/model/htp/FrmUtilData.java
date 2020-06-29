@@ -4954,9 +4954,10 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		String noFail = "";
 		String X = String.format("%04d",File.getSeqNo(3, idUrusan,Integer.parseInt(idKementerian), Integer.parseInt(idNegeri),getYear));
 
-		noFail += "JKPTG/SHTP/"+ kodKementerian + "/"+ kodNegeri + "/"+X+"/"+getYear;				
+		noFail += "JKPTG/BHTP/"+ kodKementerian + "/"+ kodNegeri + "/"+X+"/"+getYear;				
 		myLog.info("generateNoOnline:"+noFail);
 		return noFail;
+		
 		
 	}
 	

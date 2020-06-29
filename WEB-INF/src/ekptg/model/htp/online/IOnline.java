@@ -47,7 +47,7 @@ public interface IOnline {
 	//Diguna
 	public void kemaskiniFail(HtpPermohonan htpPermohonan,String ipPermohonan,String idHtpPermohonan)throws Exception;
 
-	public void kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail s,Tblrujsuburusanstatusfail sBaru) throws Exception ;
+	//public void kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail s,Tblrujsuburusanstatusfail sBaru) throws Exception ;
 
 	public Vector<Hashtable<String,String>> senaraiFailPemajak(String idPemohon) throws Exception;
 	public String addMasuk(Hashtable<String,String> data)throws Exception;	

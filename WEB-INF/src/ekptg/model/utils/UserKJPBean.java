@@ -37,7 +37,7 @@ public class UserKJPBean implements IUserPegawai {
 		try {
 			db = new Db();
 			stmt = db.getStatement();	
-			sql = " SELECT U.USER_NAME,UK.EMEL FROM USERS U, USERS_INTERNAL UI, USERS_KEMENTERIAN UK "
+			sql = " SELECT U.USER_NAME,NVL(UK.EMEL,UI.EMEL) EMEL FROM USERS U, USERS_INTERNAL UI, USERS_KEMENTERIAN UK "
 					+ " WHERE U.USER_ID = UI.USER_ID "
 					+ " AND U.USER_ID = UK.USER_ID "
 					+ " AND UI.ID_JAWATAN = '"+role+"' "

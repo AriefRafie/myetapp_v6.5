@@ -6541,7 +6541,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 				//r.add("n.id_negeri",r.unquote("f.id_negeri"));
 				r.add("p.id_Permohonan",id);
 		
-				sql = r.getSQLSelect("tblpfdfail f,tblppkpermohonan p");
+				sql = r.getSQLSelect("tblpfdfail f,tblpermohonan p");
 		
 				ResultSet rs = stmt.executeQuery(sql);
 		
