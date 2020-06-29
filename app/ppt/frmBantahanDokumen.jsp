@@ -43,7 +43,7 @@
 
 <table width="100%">
   <tr>
-    <td><fieldset id="maklumat_dokumen"><legend>MAKLUMAT DOKUMEN; UI: frmBantahanDokumen.jsp, Controller FrmBantahanSenaraiCarian.java</legend>
+    <td><fieldset id="maklumat_dokumen"><legend>MAKLUMAT DOKUMEN<!-- ; UI: frmBantahanDokumen.jsp, Controller FrmBantahanSenaraiCarian.java --></legend>
     <table width="100%">
   <tr>
     <td width="1%"><span class="style1">*</span></td>
@@ -140,8 +140,7 @@
   <tr>
     <td colspan="4">
     <fieldset id="senarai_dokumen" >
-    jenis borang = '$jenisDoc';
-    <legend>SENARAI DOKUMEN YANG DISERTAKAN; UI: frmBantahanDokumen.jsp, Controller: FrmBantahanSenaraiCarian.java</legend>
+    <legend>SENARAI DOKUMEN YANG DISERTAKAN<!-- ; UI: frmBantahanDokumen.jsp, Controller: FrmBantahanSenaraiCarian.java --></legend>
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" hidden> 
     #if($listDokumen_size > 0)
      <input name="cmdHapusDokumen" type="button" value="Hapus" onClick="hapusDokumen('$!readmode')" title="Sila tick untuk hapus dokumen" >

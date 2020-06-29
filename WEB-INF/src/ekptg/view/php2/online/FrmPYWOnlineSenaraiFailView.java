@@ -406,8 +406,10 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
         	this.context.put("readonly", "disabled");
         	this.context.put("inputTextClass", "disabled");
         	
+        	if("2".equals(idJenisPermohonan)){
 			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
-        	
+        	}
+			
         	//MAKLUMAT PERMOHONAN
         	beanMaklumatPermohonan = new Vector();
 			logic.setMaklumatPermohonan(idFail);
@@ -479,7 +481,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				this.context.put("selected_1", "");
 				this.context.put("selected_2", "");
 				this.context.put("selected_3", "selected");
-				this.context.put("idJenisPermohonan", idJenisPermohonan);
+				this.context.put("idJenisPermohonan", idJenisPermohonan); //declaration baru
         	} else {
         		this.context.put("selected_0", "selected");
 				this.context.put("selected_1", "");
@@ -487,7 +489,10 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				this.context.put("selected_3", "");
 				this.context.put("idJenisPermohonan", "0"); 
         	}
-			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\""));  
+        	
+        	if("2".equals(idJenisPermohonan)){
+    			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\""));  
+        	}
         	
         	//MAKLUMAT PEMOHON
 			Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);
