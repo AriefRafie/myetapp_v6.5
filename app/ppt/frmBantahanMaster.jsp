@@ -31,6 +31,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 
 #if ($flag=="semak")
     #foreach ( $senarai in $getMaklumatBantahan )
+    	#set ($id_siasatan=$senarai.id_siasatan)
+    
         #set ($id_bantahan=$senarai.id_bantahan)
         #set ($txtNoBantahan=$senarai.no_bantahan)
         #set ($jenis_pembantah=$senarai.jenis_pembantah)
@@ -60,6 +62,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
         #set ($umpuk_pampasan=$senarai.flag_pampasan)
         #set ($txdTkhAward=$senarai.tarikh_terima_award)
         #set ($txtPengambilanNo=$senarai.no_siasatan)
+        #set ($txtAmaunTuntutanF=$senarai.amaunTuntutanf)  
         #set ($txtAmaunTuntutan=$senarai.amaun_tuntutan)  
         #set ($desc_status_bantahan=$senarai.desc_status_bantahan)  
         #set ($txtMaklumatBantahanTamat=$senarai.maklumat_bantahan_tamat_tempoh)  
@@ -458,7 +461,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           #end          
           
           </td>
-          <td>Jumlah Pampasan; UI: frmBantahanMaster.jsp, Controller: FrmBantahanSenaraiCarian.java;</td>
+          <td>Jumlah Pampasan
+          	<!-- ; UI: frmBantahanMaster.jsp, Controller: FrmBantahanSenaraiCarian.java; -->
+          </td>
         </tr>
 		
         <tr>
@@ -590,8 +595,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <td colspan="2">
           
           #if ($mode=="disabled")
-          <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!Util.formatDecimal($!txtAmaunTuntutan)" maxlength="12" class="disabled" readonly />
-          #else
+          <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!txtAmaunTuntutanF" maxlength="12" class="disabled" readonly />
+<!--           <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!Util.formatDecimal($!txtAmaunTuntutan)" maxlength="12" class="disabled" readonly />
+ -->          #else
           <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!txtAmaunTuntutan" maxlength="12" onblur="validateNumber(this,this.value);validateModal(this,this.value,'$txtAmaunTuntutan')" onkeyup="validateNumber(this,this.value);" />          
           #end 
                    
@@ -653,7 +659,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!-- jenis dokumen = '$jenisDoc' -->
 <!-- jenis skrin = '$nama_skrin' -->
 <!-- listDokumen =  $listDokumen -->
-<legend>Dokumen Integrasi Mahkamah</legend>
+<legend>Senarai Dokumen</legend>
     
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
     #if($listDokumen_size > 0)

@@ -369,7 +369,7 @@ TAHUN </td>
         #end
       </table></td>
   </tr>
-  <!--<tr>
+ <tr>
     <td colspan="2"><table width="100%" border="0" cellspacing="2" cellpadding="2">
         #if ($mode == 'newPengarah' || $mode == 'updatePengarah' || $mode == 'viewPengarah')
         <tr>
@@ -428,7 +428,7 @@ TAHUN </td>
         </tr>
         #end
       </table></td>
-  </tr>-->
+  </tr>
   #if ($mode == 'update')
   <tr>
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
