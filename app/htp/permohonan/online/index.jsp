@@ -776,11 +776,7 @@ function SimpanNotis(){
 	  		document.${formName}.txtTarikhNotis5A.focus(); 
 	  		return; 
 	  	}
-		if ( document.${formName}.txtPremium.value == "" ) { 
-			alert('Sila Masukan Jumlah Premium terlebih dahulu.');
-			document.${formName}.txtPremium.focus(); 
-			return; 
-		}
+		
 		if ( document.${formName}.txtBayaranNotisF.value == "" ) { 
 			alert('Sila Masukan  Bayaran Notis 5F terlebih dahulu.');
 			document.${formName}.txtBayaranNotisF.focus(); 
@@ -807,11 +803,7 @@ function SimpanNotis(){
 		  		document.${formName}.txtTarikhNotis5A.focus(); 
 		  		return; 
 		  	}
-			if ( document.${formName}.txtPremium.value == "" ) { 
-				alert('Sila Masukan Jumlah Premium terlebih dahulu.');
-				document.${formName}.txtPremium.focus(); 
-				return; 
-			}
+			
 			if ( document.${formName}.txtBayaranNotisF.value == "" ) { 
 				alert('Sila Masukan  Bayaran Notis 5F terlebih dahulu.');
 				document.${formName}.txtBayaranNotisF.focus(); 

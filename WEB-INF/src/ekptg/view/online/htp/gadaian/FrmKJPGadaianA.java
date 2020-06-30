@@ -43,8 +43,8 @@ import ekptg.model.htp.FrmGadaianSemakan1Data;
 import ekptg.model.htp.FrmGadaianSemakanData;
 import ekptg.model.htp.FrmGadaianSenaraiPermohonanData;
 import ekptg.model.htp.FrmJRPSenaraiPermohonanData;
+import ekptg.model.htp.FrmKJPSenaraiFailGadaianData;
 import ekptg.model.htp.FrmSemakan;
-import ekptg.model.htp.FrmSenaraiFailGadaianData;
 import ekptg.model.htp.FrmUtilData;
 import ekptg.model.htp.GadaianSubUrusanAgensi;
 import ekptg.model.htp.HTPPermohonanBean;
@@ -758,8 +758,11 @@ public class FrmKJPGadaianA extends AjaxBasedModule {
 				this.context.put("carianNoRujukan", keyNo_rujukan);
 				
 				Long idNegeri = Long.parseLong(Negeri);
-				list = ListFail(session, key_cari, keyNo_cari, idNegeri, keyNo_upt, keyNo_ptg, keyNo_ptd, keyNo_pemilik, keyNo_rujukan);
+				//list = ListFail(session, key_cari, keyNo_cari, idNegeri, keyNo_upt, keyNo_ptg, keyNo_ptd, keyNo_pemilik, keyNo_rujukan);
 		    	//list = FrmSenaraiFailGadaianData.getList();
+				list = FrmKJPSenaraiFailGadaianData.getSenarai(key_cari, keyNo_cari
+						, Negeri, keyNo_upt, keyNo_ptg, keyNo_ptd
+						, keyNo_pemilik, keyNo_rujukan);
 			    this.context.put("lists", list);
 				//doListing(session,action,"",mode,list);
 				setupPage(session,action,list);
@@ -1018,7 +1021,8 @@ public class FrmKJPGadaianA extends AjaxBasedModule {
 	public Vector<Hashtable<String,String>> ListFail(HttpSession session, String key_cari, String keyNo_cari, Long idNegeri, String keyNo_upt, 
 		String keyNo_ptg, String keyNo_ptd, String keyNo_pemilik, String keyNo_rujukan) throws Exception {
 		try{
-			senarai = FrmSenaraiFailGadaianData.setList(key_cari,keyNo_cari,idNegeri,keyNo_upt,keyNo_ptg,keyNo_ptd,keyNo_pemilik,keyNo_rujukan);
+			senarai = FrmKJPSenaraiFailGadaianData.setList(key_cari,keyNo_cari,idNegeri,keyNo_upt,keyNo_ptg,keyNo_ptd,keyNo_pemilik,keyNo_rujukan);
+			
 		}
 		catch(Exception e){
 			myLog.error("Error : " + e.getMessage());
