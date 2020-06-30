@@ -232,7 +232,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 		String skrinDaftarBantahanMasterAP = "app/ppt/frmBantahanMasterAP.jsp";
 		String skrinDepositAP = "app/ppt/frmBantahanDepositAP.jsp"; 
 				
-    	if("DaftarBantahanAP".equals(submit)){    		
+		if("DaftarBantahanAP".equals(submit)){    		
         	//try{        		
     		String status_bantahan = getParam("status_bantahan_ap");
         	System.out.println("status---"+status_bantahan);
@@ -385,35 +385,37 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
         	
         	//GET TARIKH AWARD & TARIKH BORANG H
     		listF = model.getTarikhPentingAP(id_permohonan,id_hakmilik,id_siasatan);
-    		context.put("getTarikhPenting",listF);
-    			
-        			
-          }else if("block_bantahan".equals(submit)){     		
-    	   		context.put("selectHakmilik",HTML.SelectHakmilikByAP(id_hakmilik,"socHakmilik","style=width:auto disabled tabindex=5 onChange=\"doChangeNoLot();\" "));
-        		context.put("selectNoLot",HTML.SelectNoLotByHakmilik(id_hakmilik,"socNoLot","style=width:auto disabled tabindex=7 "));
+    		context.put("getTarikhPenting",listF);    			
+   			if(status_bantahan.equals("220")){
+   				vm = "app/ppt/frmBantahanMasterAP.jsp";
+  			}else{
+  				vm = "app/ppt/frmBantahanDaftarByAgensiPemohon.jsp";
+  			}
+       			
+		}else if(submit.equals("block_bantahan")){     		
+			context.put("selectHakmilik",HTML.SelectHakmilikByAP(id_hakmilik,"socHakmilik","style=width:auto disabled tabindex=5 onChange=\"doChangeNoLot();\" "));
+			context.put("selectNoLot",HTML.SelectNoLotByHakmilik(id_hakmilik,"socNoLot","style=width:auto disabled tabindex=7 "));
 //        		context.put("selectNamaPembantah", HTML.SelectNamaPembantahByIdPihakBerkepentingan(id_hakmilikpb, "socNamaPembantah", null, "style=width:auto disabled tabindex=11", null));    
 //        		context.put("selectPihakBantah", HTML.SelectPihakBantahByIdPihakBerkepentingan(id_pihakberkepentingan, "socPihakBantah", Utils.parseLong(id_pihakberkepentingan), "style=width:auto disabled"));
     		
-        		vm = "app/ppt/frmBantahanPapar.jsp";      		
-
+			vm = "app/ppt/frmBantahanPapar.jsp";      		
         	
-          }else if("cariNoHakmilik".equals(submit)){      		
-        	  String carianNoHakmilik = getParam("carianNoHakmilik");
-        	  context.put("carianNoHakmilik", carianNoHakmilik.trim());
+		}else if("cariNoHakmilik".equals(submit)){      		
+			String carianNoHakmilik = getParam("carianNoHakmilik");
+			context.put("carianNoHakmilik", carianNoHakmilik.trim());
         		
-        	  String carianNoLot = getParam("carianNoLot");
-        	  context.put("carianNoLot", carianNoLot.trim());
+			String carianNoLot = getParam("carianNoLot");
+			context.put("carianNoLot", carianNoLot.trim());
         		
         		//listPageNoLot = model.setCarianNoHakmilik(id_permohonan,carianNoHakmilik,carianNoLot);    		
          		//context.put("getSenaraiNoLot", listPageNoLot);
          		//context.put("list_size", listPageNoLot.size());
      
-        	  context.put("clearForm", "");
-        		
-        	  vm = "app/ppt/frmBantahanAgensiSenaraiPB.jsp";
+			context.put("clearForm", "");
+			vm = "app/ppt/frmBantahanAgensiSenaraiPB.jsp";
         	
-          }else if("papar_pb".equals(submit)){       		
-        	  listPageNoLot = model.getSenaraiNoLot(id_permohonan);
+		}else if("papar_pb".equals(submit)){       		
+			listPageNoLot = model.getSenaraiNoLot(id_permohonan);
         		//context.put("getSenaraiNoLot", listPageNoLot);
         		//context.put("list_size", listPageNoLot.size());
         		//setupPageNoLot(session,action,listPageNoLot);
@@ -422,7 +424,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
         		
         	  vm = "app/ppt/frmBantahanAgensiSenaraiPB.jsp"; 
           		          		
-          }else if("add_bantahanAP".equals(submit)){	
+		}else if("add_bantahanAP".equals(submit)){	
     			
         	  if (doPost.equals("true")){				    				
     				// INSERT TBLPPTBANTAHAN & INSERT TBLPPTSUBURUSANSTATUSBANTAHAN & UPDATE TBLPPTHAKMILIK
