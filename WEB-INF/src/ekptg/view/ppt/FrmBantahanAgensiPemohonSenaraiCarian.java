@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -27,14 +30,26 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
+import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.ppt.BantahanAgensiDaftar;
 import ekptg.model.ppt.BantahanAgensiDaftarOperations;
 import ekptg.model.ppt.BantahanDaftar;
 import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.ppt.FrmUPTSek8BorangFData;
 import ekptg.model.ppt.PPTHeader;
+import ekptg.model.ppt.util.LampiranBean;
+import ekptg.model.utils.IUtilHTMLPilihan;
+import ekptg.model.utils.lampiran.ILampiran;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanMT;
+import integrasi.ws.mt.reg.DeceaseInfoType;
+import integrasi.ws.mt.reg.MTRegManager;
+import integrasi.ws.mt.reg.PartyType;
 
-public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
+public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7677331937089481538L;
 	static Logger myLogger = Logger.getLogger(FrmBantahanAgensiPemohonSenaraiCarian.class);
 	BantahanAgensiDaftar model = new BantahanAgensiDaftar();	
 	BantahanAgensiDaftarOperations modelOperations = new BantahanAgensiDaftarOperations();
@@ -42,6 +57,11 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 	FrmUPTSek8BorangFData modelBorangE = new FrmUPTSek8BorangFData();
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
 	PPTHeader header = new PPTHeader();
+	//Integrasi MT
+ 	private ILampiran iLampiran = null;
+ 	private IUtilHTMLPilihan iUtilPilihan = null;
+	SimpleDateFormat sdfNaming = new SimpleDateFormat("yymmdd");
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	String checkedsbcBantahan1 = "";
 	String checkedsbcBantahan2 = "";
@@ -115,9 +135,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     	String doPost = (String)session.getAttribute("doPost");
     	String action = getParam("action"); // ACTION UTK SETUP PAGING SHJ
     	String submit = getParam("command");
-    	myLogger.info("SUBMIT :: "+submit);
+    	myLogger.info("SUBMIT ="+submit);
     	this.context.put("Util",new lebah.util.Util());	// UNTUK FORMAT UTIL.DECIMAL (EX: 12,000.00)
-    	myLogger.info("Vm :: "+vm);
     	//get user login detail
 		String usid = "";  
    		usid = (String)session.getAttribute("_ekptg_user_id");  
@@ -126,16 +145,14 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
    		
    	   	String id_fail = getParam("id_fail");	
    		context.put("id_fail", id_fail);
-   		System.out.println("ID FAILLL :::"+id_fail);
    		
    		String id_permohonan = getParam("id_permohonan");
    		context.put("id_permohonan", id_permohonan);
    		
-   		if(id_permohonan!=null)
-   		{
-   		Vector list_sub = null;
-		list_sub = header.listPerjalananFail(id_permohonan);
-		this.context.put("list_sub_header", list_sub);
+   		if(id_permohonan!=null){
+	   		Vector list_sub = null;
+			list_sub = header.listPerjalananFail(id_permohonan);
+			this.context.put("list_sub_header", list_sub);
    		}
    		
    		String id_hakmilik = getParam("id_hakmilik");
@@ -241,99 +258,96 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 		String skrinListDepan = "app/ppt/frmBantahanAgensiPemohonSenaraiCarian.jsp";
 		String skrinDaftarBantahanMasterAP = "app/ppt/frmBantahanMasterAP.jsp";
 		String skrinDepositAP = "app/ppt/frmBantahanDepositAP.jsp"; 
-		
-		
-		
-    	if("DaftarBantahanAP".equals(submit)){ 
-    		
+				
+    	if("DaftarBantahanAP".equals(submit)){     		
         	//try{
         		
-        		String status_bantahan = getParam("status_bantahan_ap");
-        		System.out.println("status---"+status_bantahan);
-        		if(status_bantahan.equals("220")){
+    		String status_bantahan = getParam("status_bantahan_ap");
+    		myLogger.info("status_bantahan="+status_bantahan);
+        	if(status_bantahan.equals("220")){
+//        		System.out.println("masuk");
+//
+        		list = model.getMaklumatBantahanAP(id_permohonan,id_hakmilik,id_siasatan, id_warta);
+        		context.put("getMaklumatBantahan", list);
+        		if (list.size()!=0 ){
+        			myLogger.info("masuk---1");
+        			Hashtable a = (Hashtable) list.get(0);
+        			String idNegeri = (String)a.get("id_negeri");
+        			String idBandar = (String)a.get("id_bandar");
+        			String jenis_pembantah = (String)a.get("jenis_pembantah");
+        			String flag_penerima_pampasan = (String)a.get("flag_penerima_pampasan");
+        			String flag_bahagian_pampasan = (String)a.get("flag_bahagian_pampasan");
+        			String flag_ukur_luas = (String)a.get("flag_ukur_luas");
+        			String flag_pampasan = (String)a.get("flag_pampasan");
+        			String desc_status_bantahan_ap = (String)a.get("desc_status_bantahan_ap");
         			
-        			System.out.println("masuk");
-        			
-        		//
-        			list = model.getMaklumatBantahanAP(id_permohonan,id_hakmilik,id_siasatan, id_warta);
-        			context.put("getMaklumatBantahan", list);
-        			if (list.size()!=0 ){
-        				System.out.println("masuk---1");
-        				Hashtable a = (Hashtable) list.get(0);
-        				String idNegeri = (String)a.get("id_negeri");
-        				String idBandar = (String)a.get("id_bandar");
-        				String jenis_pembantah = (String)a.get("jenis_pembantah");
-        				String flag_penerima_pampasan = (String)a.get("flag_penerima_pampasan");
-        				String flag_bahagian_pampasan = (String)a.get("flag_bahagian_pampasan");
-        				String flag_ukur_luas = (String)a.get("flag_ukur_luas");
-        				String flag_pampasan = (String)a.get("flag_pampasan");
-        				String desc_status_bantahan_ap = (String)a.get("desc_status_bantahan_ap");
-        			
-        				context.put("desc_status_bantahan_ap", desc_status_bantahan_ap);
-        				context.put("selectHakmilik", HTML.SelectHakmilikByAP(id_hakmilik, "socHakmilik", Utils.parseLong(id_hakmilik), "style=width:auto disabled"));
-        				context.put("selectNoLot", HTML.SelectNoLotByHakmilik(id_hakmilik, "socNoLot", Utils.parseLong(id_hakmilik), "style=width:auto disabled"));
+        			context.put("desc_status_bantahan_ap", desc_status_bantahan_ap);
+        			context.put("selectHakmilik", HTML.SelectHakmilikByAP(id_hakmilik, "socHakmilik", Utils.parseLong(id_hakmilik), "style=width:auto disabled"));
+        			context.put("selectNoLot", HTML.SelectNoLotByHakmilik(id_hakmilik, "socNoLot", Utils.parseLong(id_hakmilik), "style=width:auto disabled"));
 //        				context.put("selectNamaPembantah", HTML.SelectNamaPembantahByIdPihakBerkepentingan(id_hakmilikpb, "socNamaPembantah",Utils.parseLong(id_pihakberkepentingan),"style=width:auto disabled"));				
-        				context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Utils.parseLong(idNegeri),"class=medium disabled"));
-        				context.put("selectBandar", HTML.SelectBandar("socBandar", Utils.parseLong(idBandar), "class=medium disabled"));
+        			context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Utils.parseLong(idNegeri),"class=medium disabled"));
+        			context.put("selectBandar", HTML.SelectBandar("socBandar", Utils.parseLong(idBandar), "class=medium disabled"));
 //        				context.put("selectPihakBantah", HTML.SelectPihakBantahByIdPihakBerkepentingan(id_pihakberkepentingan,"socPihakBantah", Utils.parseLong(id_pihakberkepentingan),"style=width:auto disabled"));								
-        				if (jenis_pembantah.equals("1")){
-        					System.out.println("masuk--2");
-        					setValueJenisPembantah("1","");
-        				}else{
-        					System.out.println("masuk--3");
-        					setValueJenisPembantah("","2");
-        				}
-        				
-        				if (flag_penerima_pampasan.equals("Y")){
-        					System.out.println("masuk--4");
-        					setValueBantahanTerhadap("checked","","","");
-        					context.put("TEMPchecked1", checkedsbcBantahan1);
-        				}
-        				if (flag_bahagian_pampasan.equals("Y")){
-        					System.out.println("masuk--5");
-        					setValueBantahanTerhadap("","checked","","");
-        					context.put("TEMPchecked2", checkedsbcBantahan2);
-        				}
-        				if (flag_ukur_luas.equals("Y")){
-        					System.out.println("masuk--6");
-        					setValueBantahanTerhadap("","","checked","");
-        					context.put("TEMPchecked3", checkedsbcBantahan3);
-        				}
-        				if (flag_pampasan.equals("Y")){
-        					System.out.println("masuk--7");
-        					setValueBantahanTerhadap("","","","checked");
-        					context.put("TEMPchecked4", checkedsbcBantahan4);
-        				}
-        				
-    					//GET PAMPASAN AMAUN YG DITAWARKAN
-        				listA = model.getMaklumatPampasanAP(id_hakmilik);
-    					context.put("getMaklumatPampasan", listA);
-    					//END
-        				
-        				//GET TARIKH AWARD & TARIKH BORANG H
-        				listF = model.getTarikhPentingAP(id_permohonan,id_hakmilik,id_siasatan);
-        				context.put("getTarikhPentingAP",listF);
-        				//END
-        				System.out.println("masuk--8");
-        				context.put("flag","semak");
-        				context.put("mode", "disabled");
-        				context.put("clearForm", "");
-        				context.put("button", "view");
-        				vm = skrinDaftarBantahanMasterAP; 
-        				System.out.println("vmmm::"+vm);
-        										
+        			if (jenis_pembantah.equals("1")){
+        				myLogger.info("masuk--2");
+        				setValueJenisPembantah("1","");
         			}else{
-        				context.put("status",true);
-        				System.out.println("masuk--9");
+        				myLogger.info("masuk--3");
+        				setValueJenisPembantah("","2");
         			}
-        			
+        				
+        			if (flag_penerima_pampasan.equals("Y")){
+        				myLogger.info("masuk--4");
+        				setValueBantahanTerhadap("checked","","","");
+        				context.put("TEMPchecked1", checkedsbcBantahan1);
+        
+        			}
+        			if (flag_bahagian_pampasan.equals("Y")){
+        				myLogger.info("masuk--5");
+        				setValueBantahanTerhadap("","checked","","");
+        				context.put("TEMPchecked2", checkedsbcBantahan2);
+        
+        			}
+        			if (flag_ukur_luas.equals("Y")){
+        				myLogger.info("masuk--6");
+        				setValueBantahanTerhadap("","","checked","");
+       					context.put("TEMPchecked3", checkedsbcBantahan3);
+       
+        			}
+        			if (flag_pampasan.equals("Y")){
+        				myLogger.info("masuk--7");
+        				setValueBantahanTerhadap("","","","checked");
+        				context.put("TEMPchecked4", checkedsbcBantahan4);
+        
+        			}
+        				
+        			//GET PAMPASAN AMAUN YG DITAWARKAN
+        			listA = model.getMaklumatPampasanAP(id_hakmilik);
+    				context.put("getMaklumatPampasan", listA);
+    				//END
+        				
+    				//GET TARIKH AWARD & TARIKH BORANG H
+    				listF = model.getTarikhPentingAP(id_permohonan,id_hakmilik,id_siasatan);
+        			context.put("getTarikhPentingAP",listF);
+        			//END
+        			myLogger.info("masuk--8");
+        			context.put("flag","semak");
+        			context.put("mode", "disabled");
+        			context.put("clearForm", "");
+        			context.put("button", "view");
         			vm = skrinDaftarBantahanMasterAP; 
+        			myLogger.info("vmmm::"+vm);
+        										
+        		}else{
+        			context.put("status",true);
+        			myLogger.info("masuk--9");
+        
+        		}
+        		vm = skrinDaftarBantahanMasterAP; 
         			
         		
-        		}
-        		else if(status_bantahan.equals(""))
-        		{
-        			System.out.println("masuk sini");
+        	}else if(status_bantahan.equals("")){
+        		myLogger.info("masuk sini");
     			context.put("selectHakmilik",HTML.SelectHakmilikByAP(id_hakmilik,"socHakmilik","style=width:auto tabindex=5 disabled "));
     			context.put("selectNoLot",HTML.SelectNoLotByHakmilik(id_hakmilik,"socNoLot","style=width:auto tabindex=7 disabled "));
     			
@@ -360,72 +374,67 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 				//GET MAKLUMAT PAMPASAN YG DITAWARKAN
 //    			listA = model.getMaklumatPampasanAP(id_hakmilik);
 //				context.put("getMaklumatPampasan", listA);
-    			
-    			
+    			    			
     			list = model.getMaklumatBantahanAP(id_permohonan,id_hakmilik,id_siasatan,id_warta);		
-    			if(list.size()>0)
-    			{
-    				System.out.println("masuk sini 1");
-				Hashtable b = (Hashtable) list.get(0);	
-				String id_bantahan = b.get("id_bantahan").toString();
+    			if(list.size()>0){
+    				myLogger.info("masuk sini 1");
+    				Hashtable b = (Hashtable) list.get(0);	
+    				String id_bantahan = b.get("id_bantahan").toString();
 				
-				//CHECKING JUMLAH PAMPASAN SEKSYEN 8
-    			listA = model.getMaklumatPampasanAP(id_hakmilik);
-				context.put("getMaklumatPampasan", listA);
-				if(listA.size()!=0){
-					System.out.println("masuk sini 2");
-					Hashtable d = (Hashtable) listA.get(0);
-					double amaun_bayaran = Double.parseDouble(d.get("amaun_bayaran").toString());
-					myLogger.info("amaun_bayaran >>> "+amaun_bayaran);
-					//PAMPASAN <= 15000.00 : ALASAN 3 DAN 4 
-					if(amaun_bayaran <= 15000.00){
-						context.put("syarat","bawah");
-						context.put("alasan1","1");
-						context.put("alasan2","2");
-						context.put("alasan3","");
-						context.put("alasan4","");
-					}else{
-						context.put("syarat","");
-						context.put("alasan1","");
-						context.put("alasan2","");
-						context.put("alasan3","");
-						context.put("alasan4","");					
-					}
-				}
+    				//CHECKING JUMLAH PAMPASAN SEKSYEN 8
+    				listA = model.getMaklumatPampasanAP(id_hakmilik);
+    				context.put("getMaklumatPampasan", listA);
+    				
+    				if(listA.size()!=0){
+    					myLogger.info("masuk sini 2");
+    					Hashtable d = (Hashtable) listA.get(0);
+    					double amaun_bayaran = Double.parseDouble(d.get("amaun_bayaran").toString());
+    					myLogger.info("amaun_bayaran >>> "+amaun_bayaran);
+    					
+    					//PAMPASAN <= 15000.00 : ALASAN 3 DAN 4 
+    					if(amaun_bayaran <= 15000.00){
+							context.put("syarat","bawah");
+							context.put("alasan1","1");
+							context.put("alasan2","2");
+							context.put("alasan3","");
+							context.put("alasan4","");
+						}else{
+							context.put("syarat","");
+							context.put("alasan1","");
+							context.put("alasan2","");
+							context.put("alasan3","");
+							context.put("alasan4","");					
+						}
+				
+    				}
 				//END	
     			}
     
+       		}else{
+       			context.put("syarat","");
+				context.put("alasan1","");
+				context.put("alasan2","");
+				context.put("alasan3","");
+				context.put("alasan4","");	
+
+       		}
+        	
+        	//GET TARIKH AWARD & TARIKH BORANG H
+    		listF = model.getTarikhPentingAP(id_permohonan,id_hakmilik,id_siasatan);
+    		context.put("getTarikhPenting",listF);
     			
-    	}
-    			else
-    			{
-    				context.put("syarat","");
-					context.put("alasan1","");
-					context.put("alasan2","");
-					context.put("alasan3","");
-					context.put("alasan4","");	
-    			}
-				
-				
-    			
-    			//GET TARIKH AWARD & TARIKH BORANG H
-    			listF = model.getTarikhPentingAP(id_permohonan,id_hakmilik,id_siasatan);
-    			context.put("getTarikhPenting",listF);
-    			
-    			if(status_bantahan.equals("220")){
-        		  vm = "app/ppt/frmBantahanMasterAP.jsp";
-    			}
-    			else
-    			{
+    		if(status_bantahan.equals("220")){
+        	  vm = "app/ppt/frmBantahanMasterAP.jsp";
+    		}else{
     			vm = "app/ppt/frmBantahanDaftarByAgensiPemohon.jsp";
-    			}
-    			
-    			/*
+    		}
+    		
+    		/*
     			} catch (Exception e) {
     				throw new Exception("HAKMILIK TIADA MAKLUMAT SIASATAN.PERMOHONAN BANTAHAN TIDAK BERJAYA.SILA HUBUNGI ADMIN.:" +e.getMessage());
     			}
         		*/
-        	}else if("block_bantahan".equals(submit)){
+        }else if("block_bantahan".equals(submit)){
         		
     	   		context.put("selectHakmilik",HTML.SelectHakmilikByAP(id_hakmilik,"socHakmilik","style=width:auto disabled tabindex=5 onChange=\"doChangeNoLot();\" "));
         		context.put("selectNoLot",HTML.SelectNoLotByHakmilik(id_hakmilik,"socNoLot","style=width:auto disabled tabindex=7 "));
@@ -462,14 +471,10 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
         		context.put("clearForm", "yes");
         		
         		vm = "app/ppt/frmBantahanAgensiSenaraiPB.jsp"; 
-          		
-    		
+          		    		
     		}else if("add_bantahanAP".equals(submit)){	
     			
-    			if (doPost.equals("true")){
-    				
-    				System.out.println("xxyy123");
-    				
+    			if (doPost.equals("true")){				    				
     				// INSERT TBLPPTBANTAHAN & INSERT TBLPPTSUBURUSANSTATUSBANTAHAN & UPDATE TBLPPTHAKMILIK
     				add_bantahanAP(usid);
     				
@@ -477,7 +482,6 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     				//context.put("mode", "disabled");
     				//context.put("clearForm", "");
     				context.put("button", "view");	
-    				System.out.println("button---");
     				
     				// UPDATE TBLPPTPERMOHONAN
     				updateStatusDalamProses(id_permohonan,usid);
@@ -553,15 +557,13 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			}
     			
     			vm = skrinDaftarBantahanMasterAP; 
-    			System.out.println("vmmmm:::"+vm);
-    			
-    		
-    		}else if(("dalamProses".equals(submit)) || ("bantahan".equals(submit))){	
-    			
+//    			System.out.println("vmmmm:::"+vm);
+     		}else if(("dalamProses".equals(submit)) || ("bantahan".equals(submit))){	   			
     			//System.out.println("1234");
     			selectedtab = "0";
     			context.put("selectedtab", selectedtab);
-				
+    			context.put("idWarta", id_warta);
+
     			//CHECKING JUMLAH PAMPASAN SEKSYEN 8
     			listA = model.getMaklumatPampasanAP(id_hakmilik);
     			if(listA.size()!=0){
@@ -599,7 +601,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     				String id_status_bantahan = (String)b.get("status_bantahan_ap");
     				
     				if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-    		     		listDokumen = modelBantahanPB.senarai_dokumen_bantahan(id_bantahan);
+    		     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan);
     		    		context.put("listDokumen", listDokumen);
     		    		context.put("listDokumen_size", listDokumen.size());	    		
     				}else{				
@@ -610,7 +612,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     				if(id_hakmilik!=""){    					
     					context.put("selectHakmilik", HTML.SelectHakmilikByAP(id_hakmilik,"socHakmilik", Utils.parseLong(id_hakmilik), "style=width:auto disabled"));
     					context.put("selectNoLot", HTML.SelectNoLotByHakmilik(id_hakmilik, "socNoLot", Utils.parseLong(id_hakmilik), "style=width:auto disabled"));
-   					if (jenis_pembantah.equals("1")){
+   					
+    					if (jenis_pembantah.equals("1")){
     						setValueJenisPembantah("1","");
     					}else{
     						setValueJenisPembantah("","2");
@@ -620,17 +623,21 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     						setValueBantahanTerhadap("checked","","","");
     						context.put("TEMPchecked1", checkedsbcBantahan1);
     					}
+    					
     					if (flag_bahagian_pampasan.equals("Y")){
     						setValueBantahanTerhadap("","checked","","");
     						context.put("TEMPchecked2", checkedsbcBantahan2);
     					}
+    					
     					if (flag_ukur_luas.equals("Y")){
     						setValueBantahanTerhadap("","","checked","");
     						context.put("TEMPchecked3", checkedsbcBantahan3);
     					}
+    					
     					if (flag_pampasan.equals("Y")){
     						setValueBantahanTerhadap("","","","checked");
     						context.put("TEMPchecked4", checkedsbcBantahan4);
+    					
     					}
     					
     					//flag and id untuk permohonan online
@@ -645,7 +652,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
         				if (listF.size()!=0 ){				
             				Hashtable a = (Hashtable) listF.get(0);
             				String txdTkhBrgH = (String)a.get("txdTkhBrgH");
-        				//System.out.println("tarikh penting---"+txdTkhBrgH);
+            				//System.out.println("tarikh penting---"+txdTkhBrgH);
         				}
     					//END
         				
@@ -656,11 +663,11 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     					
     				}else{
     					context.put("status",true);					
-    				}										
+    				}		
+    				
     			}else{
     				context.put("status",true);
     			}			
-        		
     			vm = skrinDaftarBantahanMasterAP;		
     			
     		}else if ("kemaskiniBantahan".equals(submit)){
@@ -815,8 +822,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     					NO_BANTAHAN_temp = rs.getString("NO_BANTAHAN");	
     					AMAUN_TUNTUTAN_temp = rs.getString("AMAUN_TUNTUTAN");
     			    }
-    			    AuditTrail at = new AuditTrail();
-    				at.logActivity("","1",null,session,"UPD","BANTAHAN AGENSI [BIL. BANTAHAN : "+NO_BANTAHAN_temp+", AMAUN TUNTUTAN : RM "+AMAUN_TUNTUTAN_temp+"] KEMASKINI");
+//    			    AuditTrail at = new AuditTrail();
+    			    AuditTrail.logActivity("","1",null,session,"UPD","BANTAHAN AGENSI [BIL. BANTAHAN : "+NO_BANTAHAN_temp+", AMAUN TUNTUTAN : RM "+AMAUN_TUNTUTAN_temp+"] KEMASKINI");
     				
     				if(id_bantahan != ""){
     					
@@ -2472,10 +2479,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			}
                 
                 vm = "app/ppt/frmBantahanAgensiDokumen.jsp";	
-      
-                
-    		}else if("tambah_dokumen".equals(submit)){
-    			
+                      
+    		}else if("tambah_dokumen".equals(submit)){ 			
     			list = model.getMaklumatBantahanAP(id_permohonan,id_hakmilik,id_siasatan,id_warta);
     			context.put("getMaklumatBantahan", list);
     			String id_bantahan = "";
@@ -2498,10 +2503,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			}else{				
     				context.put("listDokumen", "");
     				context.put("listDokumen_size", 0);
-    			}
-                
-               	vm = "app/ppt/frmBantahanAgensiDokumen.jsp";
-    		
+    			}                
+               	vm = "app/ppt/frmBantahanAgensiDokumen.jsp";    		
             
     		}else if("view_Dokumen_Details".equals(submit)){
     			
@@ -3486,4 +3489,123 @@ else if("hapusDokumenMasterPerintah".equals(submit)){
     		}
     		return total;
     	}
+    	//Integrasi MT
+    	
+    	private String getNoKes(String idBantahan) {
+    		String noKes = "";
+    		Db db = null;
+    		String sql = "";
+
+    		try {
+    			db = new Db();
+    			Statement stmt = db.getStatement();
+
+    			sql = "SELECT NO_KES FROM TBLINTMTPENDAFTARAN "
+    				+ " WHERE ID_RUJUKAN = '"+ idBantahan + "'"
+    				+ " AND NO_KES IS NOT NULL";
+
+    			ResultSet rs = stmt.executeQuery(sql);
+    			if (rs.next()) {
+    				noKes = rs.getString("NO_KES");
+    			}
+
+    		} catch (Exception ex) {
+    			ex.printStackTrace();
+    		} finally {
+    			if (db != null)
+    				db.close();
+    		}
+
+    		return noKes;
+    		
+    	}
+    	
+    	private Hashtable<String,String> getPendaftaran(String idBantahan) {
+    		Hashtable<String,String> pendaftaran= null;
+    		Db db = null;
+    		String sql = "";
+
+    		try {
+    			db = new Db();
+    			Statement stmt = db.getStatement();
+
+    			sql = "SELECT P.JANTINA,LM.ID_PEJABAT,P.KOD_MT FROM TBLINTMTPENDAFTARAN P"
+    				+ " ,TBLINTMTLOCATION L,TBLINTMTLOCATIONMAP LM "
+    				+ " WHERE "
+    				+ " TO_NUMBER(P.KOD_MT) = L.LOCATION "
+    				+ " AND L.ID_LOCATION=LM.ID_LOCATION "
+    				+ " AND P.ID_RUJUKAN = '"+ idBantahan + "'"
+    				+ " AND P.NO_KES IS NOT NULL";
+    						
+    			ResultSet rs = stmt.executeQuery(sql);
+    			if (rs.next()) {
+    				pendaftaran = new Hashtable<String,String>();
+    				pendaftaran.put("jantina", Utils.isNull(rs.getString("JANTINA")));
+    				//pendaftaran.put("umur", rs.getString("UMUR"));
+    				pendaftaran.put("idPejabat", rs.getString("ID_PEJABAT"));
+    				pendaftaran.put("kod", rs.getString("KOD_MT"));
+
+    			}
+
+    		} catch (Exception ex) {
+    			ex.printStackTrace();
+    		} finally {
+    			if (db != null)
+    				db.close();
+    		}
+
+    		return pendaftaran;
+    		
+    	}
+    	
+    	private String getStateCode(int x){
+    		String abbrev = "0";
+    		switch (x) {
+    		case 1:
+    		case 2:
+    		case 3:
+    		case 4:
+    		case 5:
+    		case 6:
+    		case 7:
+    		case 8:
+    		case 9:
+    			abbrev += String.valueOf(x);
+    			break;
+    		case 10:
+    		case 11:
+    		case 12:
+    		case 13:
+    		case 14:
+    		case 15:
+    		case 16:
+    		case 17:
+    			abbrev = String.valueOf(x);
+    			break;
+    		default:
+    			break;
+    		}
+    		//myLog.info("getStateCode:abbrev="+abbrev);
+    		return abbrev;
+
+    	}
+    	
+    	private IUtilHTMLPilihan getPilihan(){
+    		if(iUtilPilihan == null){
+    			iUtilPilihan = new UtilHTMLPilihanMT();
+    		}
+    		return iUtilPilihan;
+    			
+    	}
+    	
+    	private ILampiran getDoc(){
+    		if(iLampiran == null){
+    			iLampiran = new LampiranBean();
+    		}
+    		return iLampiran;
+    			
+    	}
+    	//end Integrasi MT
+    	
+    	
 }
