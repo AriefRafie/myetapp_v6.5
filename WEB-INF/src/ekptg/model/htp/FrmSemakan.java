@@ -45,11 +45,7 @@ public class FrmSemakan {
 //	          myLog.info("getSemakan : sql=" + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Tblsemakan h;
-<<<<<<< WEB-INF/src/ekptg/model/htp/FrmSemakan.java
-		      
-=======
 		      int bil = 1;
->>>>>>> WEB-INF/src/ekptg/model/htp/FrmSemakan.java
 		      while (rs.next()) {
 		    	  h = new Tblsemakan();
 		    	  h.setBil(bil++);
