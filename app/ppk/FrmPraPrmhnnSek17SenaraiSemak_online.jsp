@@ -4,9 +4,10 @@
 <!--
 .style1 {color: #FF0000}
 .style40 {color: #0000FF}
+.pautan {color: #0000FF}
 .style2 {
 	font-size: 9px;
-	font-style: italic;FrmBorangPSek17Online
+	font-style: italic;
 }
 .style3 {color: #0000FF}
 -->
@@ -623,7 +624,7 @@ lain tujuan ::: $lt
 		      <tr>
 		      	<td width="30%">Dokumen Sokongan</td>
 		      	<td width="2%">:</td>
-		      	<td><input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'cod')">
+		      	<td><input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran('$idpermohonan','borangP')">
 					<br>
 					$!lampirans
 				</td>
@@ -769,35 +770,33 @@ document.getElementById('frmsemakharta').style.display = "";
  </body>
 <script>
 
-function lampiran(rujukanSimati,isMyID) {
-	ic = document.f1.check_no_kp_baru_simati.value;
-	idlama = document.f1.check_no_kp_lama_simati.value;
-	jenis = document.f1.socJenisKPLainSimati.value;
-	lain = document.f1.check_no_kp_lain_simati.value;
-	rujukanSimati = getRujukan(ic,idlama,jenis,lain);
-	//alert("rujukanSimati 1="+returnSimati1);
-	//return;
+	function lampiran(idPermohonan,jenisUpload) {	
+		jenisUpload = "paparlampiran";
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=borangP&actionPopup="+jenisUpload+"&rujukan="+idPermohonan+"&flagOnline=$!flagOnline";
+	    url +="&jenisdokumen=99203";
+			
+		//
+	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus(); /**/
+	    //
+	    var title = 'Lampiran';
+		var w =1024;
+		var h = 800;
+	    var left = (screen.width/2)-(w/2);
 	
-	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&rujukan="+rujukanSimati+"&flagOnline=$!flagOnline";
-   	if(isMyID == 'cod')
-   		url +="&jenisdokumen=cod";
-   	else
-   		url +="&jenisdokumen=myid";
-		
-	//
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus(); /**/
-    //
-    var title = 'Lampiran';
-	var w =1024;
-	var h = 800;
-    var left = (screen.width/2)-(w/2);
-
-}
-
+	}
+	
+	function paparLampiran(id_){
+	  	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
+	      var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+	      if ((document.window != null) && (!hWnd.opener))
+	  	hWnd.opener=document.window;
+	      if (hWnd.focus != null) hWnd.focus();
+	}	
+  
 function getRujukan(ic,idlama,jenis,lain){
 	var rujukan ='';
 	rujukan = ic != ''?ic:'-';
@@ -1371,9 +1370,6 @@ function tab()
 
 }
 
-
-
-
 function tabS()
 {
     document.f1.command.value = "tab";
@@ -1562,7 +1558,6 @@ return;
 
 }
 
-
 function textCounter(field, countfield, maxlimit) {
 	if (field.value.length > maxlimit) // if too long...trim it!
 		field.value = field.value.substring(0, maxlimit);
@@ -1571,15 +1566,9 @@ function textCounter(field, countfield, maxlimit) {
 		countfield.value = maxlimit - field.value.length;
 }
 
-
 function ForView(noFail) {
 	document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailSek8ForView&txtNoFail="+noFail;
 	document.f1.submit();
 }
-
-
-
-
-
 
 </script>
