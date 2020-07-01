@@ -417,6 +417,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         #if($!listTanah.tarikh_borangl != "")
                         
                         <input type="button" name="cmdCetakBorangL" value ="Cetak" onClick="javascript:cetakBorangL($!listTanah.id_hakmilik,$!id_fail,$!id_permohonan,'$!listTanah.tarikh_borangl','$!listTanah.tempoh')">
+                        <input type="button" name="cmdCetakPenyampaianBorangL" value ="Penyampaian Borang L" onClick="javascript:cetakPenyampaianBorangL($!listTanah.id_hakmilik,$!id_fail,$!id_permohonan,'$!listTanah.tarikh_borangl','$!listTanah.tempoh')">
                         #end                        
                         </td>
                         #end
@@ -596,6 +597,17 @@ function cetakBorangL(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempohBL) 
 	//alert("tarikhBorangL : "+tarikhBorangL);
 
 	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&report=BorangL&selectNoFail=yes&tarikhBorangL="+tarikhBorangL+"&tempohBL="+tempohBL;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function cetakPenyampaianBorangL(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempohBL) {
+	
+	//alert("tarikhBorangL : "+tarikhBorangL);
+
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&report=BuktiPenyampaianL&selectNoFail=yes&tarikhBorangL="+tarikhBorangL+"&tempohBL="+tempohBL;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

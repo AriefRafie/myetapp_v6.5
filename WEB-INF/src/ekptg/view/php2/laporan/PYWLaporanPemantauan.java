@@ -1,4 +1,4 @@
-package ekptg.view.htp.laporan;
+package ekptg.view.php2.laporan;
 
 import java.util.Date;
 import java.util.Vector;
@@ -15,14 +15,14 @@ import ekptg.model.htp.IHtpLaporan;
 import ekptg.model.htp.UtilHTML;
 import ekptg.model.ppk.PPKUtilHTML;
 
-public class HTPajakanLaporanPemantauan extends AjaxBasedModule {
+public class PYWLaporanPemantauan extends AjaxBasedModule {
 	/**
 	 * 
 	 */
 	private IHtpLaporan iLaporan = null;
-	private final String PATH="app/htp/laporan/pajakan/";
+	private final String PATH="app/php2/laporan/pyw/";
 	private static final long serialVersionUID = 1L;
-	static Logger myLog = Logger.getLogger(ekptg.view.htp.laporan.HTPajakanLaporanPemantauan.class);
+	static Logger myLog = Logger.getLogger(ekptg.view.php2.laporan.PYWLaporanPemantauan.class);
 	String socNegeri = "";
 	String socUnit = "";
 	String socSuburusan = "";

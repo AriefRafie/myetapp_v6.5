@@ -351,17 +351,6 @@
 </fieldset>
 <!-- ****************** END UNTUK MAKLUMAT NOTIS 5A KTN ************************* -->
 <!-- ****************** START UNTUK BUKTI PEMBAYARAN ************************* -->
-#if($mode=="new") 
- #if($bukti_pembayaran_Salin.size()>0)
-
-#set($txtNoBaucer=$bukti_pembayaran_Salin.txtNoBaucer)
-#set($txtNoResit=$bukti_pembayaran_Salin.txtNoResit)
-#set($txdTarikhBaucer=$bukti_pembayaran_Salin.txdTarikhBaucer)
-#set($txdTarikhResit=$bukti_pembayaran_Salin.txdTarikhResit)
-#set($txtJumlahBaucer=$bukti_pembayaran_Salin.txtJumlahBaucer)
-
- #end
-#end
 <fieldset>
 	<table width="100%" border="0">
 		<legend>Bukti Pembayaran</legend>
@@ -443,14 +432,6 @@
 <!-- ****************** END UNTUK BUKTI PEMBAYARAN**************************** -->
 
 <!-- ****************** START UNTUK MAKLUMAT DOKUMEN ************************* -->
-#if($mode=="new") 
- #if($maklumat_Dokumen_Salin.size()>0)
-
-#set($txtNamaDokumen=$maklumat_Dokumen_Salin.txtNamaDokumen)
-#set($txtKeterangan=$maklumat_Dokumen_Salin.txtKeterangan)
-
- #end
-#end
 <fieldset>
 	<legend>Maklumat Dokumen</legend>
 	<table>
@@ -551,9 +532,53 @@
 	</table>
 </fieldset>
 <!-- ****************** END UNTUK Senarai Bukti Pembayaran ************************* -->
+<!-- ****************** START UNTUK Senarai Maklumat Dokumen ************************* -->
+<fieldset>
+	<legend>Senarai Maklumat Dokumen</legend>
+	
+	
+	<table width="100%" border="0">
+		<tr class="table_header">
+			<td width="3%">Bil.</td>
+			<td width="18%">Nama Dokumen</td>
+			<td width="18%">Katerangan</td>
+			<td width="20%">Lampiran</td>
+		</tr>
+
+		#set ( $cnt1 = 0 ) 
+		#foreach ( $md in $ViewUploadMD ) 
+		#set ($cnt1 = $cnt1 + 1 ) 
+		#set( $i = $velocityCount ) 
+		#if ( ($i % 2) == 0 )
+		#set( $row = "row2" ) 
+		#else 
+		#set( $row = "row1" ) 
+		#end
+		<tr>
+			<td class="$row">$cnt1.</td>
+			<td class="$row">$md.namaDokumen</td>
+			<td class="$row">$md.keterangan</td>
+			<td class="$row" align="center">
+			#if ($md.namaDokumen != '')
+         	<input name="cetak" type="button" value="Muat turun Dokumen" onclick="javascript:doOpen('$md.idDokumen')" />&nbsp;
+        	 #end
+			</td>
+		</tr>
+		#end #if ($cnt == 0)
+		<tr>
+			<td colspan="4" scope="row"><font color="#FF0000">Tiada
+					Rekod.</font></td>
+			<td colspan="3" scope="row"></td>
+		</tr>
+		#end
+	</table>
+</fieldset>
+<!-- ****************** END UNTUK Senarai Maklumat Dokumen ************************* -->
 
 
 
 
 <script>
+
+
 </script>

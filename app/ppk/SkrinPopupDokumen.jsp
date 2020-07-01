@@ -65,6 +65,7 @@
 <p align="center"><font color="red">Terdapat dokumen sokongan yang telah dimuatnaik.</font></p>
 #end
 <p align="center"><input name="buttonTutup" type="button" value="Tutup" onclick="tutupWindow()" /></p>
+<input type="hidden" name=command>
 </form>
 </body>
 
@@ -74,7 +75,9 @@
 
 function tutupWindow()
 {
+	
 	window.close();
+    
 }
 
 function uploadSuppDoc(IdSimati,id_Permohonan,id_jenisDoc)

@@ -112,6 +112,7 @@
 			<p align="center">
 				<div align="center">
         			<input class="stylobutton100" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="skrinKemaskiniPermohonan('$permohonanInfo.idpermohonan')">
+        			<input type="button" class="stylobutton100" name="cmdSeterusnya" id="cmdsblm" value="Seterusnya" onclick="skrinMaklumatSewaan('$permohonanInfo.idpermohonan')">
   				</div>
 			</p> 
 		   	<input type="hidden" name="id_kemaskini">
