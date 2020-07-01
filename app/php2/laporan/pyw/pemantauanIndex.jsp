@@ -24,7 +24,7 @@
 						<table border="0" align="center" width="60%">
 							<!-- Kemaskini by Mohamad Rosli 22/16/2020 -->
 							<tr>
-								<td scope="row" align="left">&nbsp;Jenis Pajakan</td>
+								<td scope="row" align="left">&nbsp;Jenis Penyewaan</td>
 								<td>:&nbsp;</td>
 								<td>$!selectSuburusan</td>
 							</tr>
@@ -95,27 +95,6 @@
 						 
 					 			</td>
 			      			</tr> 		      								
-				<!-- 			<tr> 
-						        <td scope="row" align="left">&nbsp;Tarikh Mula</td>
-						        <td>:&nbsp;</td>
-						        <td>
-						       		<label>
-						      			<input name="txdMula" type="text" id="txdMula" value="" size="10" onblur="check_date(this);semakTarikhHariIni(document.${formName}.txdMula);" />
-						        	</label>
-						        	<a href="javascript:displayDatePicker('txdMula',false,'dmy');">
-						        		<img border="0" src="../img/calendar.gif"/>
-								 		<span class="pautanms" class="stylefont">dd/mm/yyyy</span> 
-				      				</a>
-						        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehingga&nbsp;&nbsp;&nbsp;:&nbsp;
-						     		<label>
-						      			<input name="txdAkhir" type="text" id="txdAkhir" value="" size="10" onblur="check_date(this);semakTarikhHariIni(document.${formName}.txdAkhir);"/>
-						        	</label>
-						        	<a href="javascript:displayDatePicker('txdAkhir',false,'dmy');">
-						        		<img border="0" src="../img/calendar.gif"/>
-								 		<span class="pautanms">dd/mm/yyyy</span> 
-						        	</a>
-					 			</td>
-			      			</tr> --> 
 					#end
 						
 						</table>
@@ -158,7 +137,7 @@
 				
 				<tr> 
 			        <td align="center">	          			
-			        <input class="stylobutton100" name="cmdcetak" value="Cetak" id="cmdcetak" type="button" onClick="openLaporan('ekptg.report.htp.LaporanPermohonan','IDSUBURUSAN=0','lainpemantauan','HTPajakanLaporanPemantauan');">
+			        <input class="stylobutton100" name="cmdcetak" value="Cetak" id="cmdcetak" type="button" onClick="openLaporan('ekptg.report.LaporanPermohonan','IDSUBURUSAN=0','lainpemantauan','PYWLaporanPemantauan');">
 			      </td>
 			  	</tr>
 			</table>
@@ -224,6 +203,7 @@
 		var punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0"+"&bulan=1";
 		var jenisLaporan = document.${formName}.sorLaporan_.value;
 		var masa = document.${formName}.sorTempoh.value;
+		var folder = "&fol=php2/PYW/"
 		//alert(jenisLaporan+":"+laporan);
 
 		if(jenisLaporan==2){
@@ -591,109 +571,10 @@
 			  	}
 			  	
 			}
-			/*
-			akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
-	  		akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
-	  		akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
-			var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun; 
-	  		mula_bulan = document.${formName}.txdMula.value.substring(3,5);
-	 		mula_hari = document.${formName}.txdMula.value.substring(0,2);
-	  		mula_tahun = document.${formName}.txdMula.value.substring(6,10);
-			var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
-		
-			var mula = Date.parse(mulatemp);
-			var akhir = Date.parse(akhirtemp);
-			var tarikhsemasa = new Date();
-		  
-		  	if(akhir<mula){
-		    	alert("Sila pastikan Tarikh Akhir tidak melebihi dari Tarikh Mula.");
-		    	return;
-		  	}
-		  	if(akhir>tarikhsemasa){
-		    	alert("Sila pastikan Tarikh Akhir tidak melebihi dari Tarikh Semasa.");
-		    	return;
-		  	}
-		  	var temRange = "BlnThnRange";
-			ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
-			pbulanmula = "&BULANTAHUN="+mula_bulan+"/"+mula_tahun+"&bulan="+mula_bulan;
-			pbulantamat = "&BULANTAHUNTMT="+akhir_bulan+"/"+akhir_tahun+"&bulantamat="+akhir_bulan;
-		  	//if(laporan=="kementerian"){
-			if(jenisLaporan=="1"){
-				// 2017/03/30
-				ptem = '&template='+tem+'MengikutKementerian'+temRange;
-				var jenisPajakan = document.${formName}.socsuburusan.value;
-				if(unit=="-1"){
-					alert("Sila pilih \"Kementerian\" terlebih dahulu.");
-					document.${formName}.socUnit.focus(); 
-					return;
-				}	
-				punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0"+"&bulan=1";
-				// if(jenisPajakan != "-1"){
-				//	ptem = "&template=HTPPajakanSenaraiMengikutKementerianJenis";
-				//	param += "&IDSUBURUSAN1="+jenisPajakan;
-				//} 
-				if(mulatemp != "" && akhirtemp != ""){
-					//ptem = "&template=HTPPajakanSenaraiMengikutKementerianSelangTahun";
-					//ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
 
-				}
-				// if(mulatemp != "" && akhirtemp != "" && jenisPajakan != "-1"){
-				//	ptem = "&template=HTPPajakanSenaraiMengikutKementerianSelangTahunJenis";
-				//	ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
-				//	param += "&IDSUBURUSAN1="+jenisPajakan;
-
-				//} 
-				if(negeri != "-1"){
-					ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;				
-					pnegeri = "&ID_NEGERI="+negeri;
-					
-				}
-								
-		  	} //end kementerian with date
-		  	//else if(laporan=="negeri"){
-			else if(jenisLaporan=="2"){
-				if(negeri=="-1"){
-					alert("Sila pilih \"Negeri\" terlebih dahulu.");
-					document.${formName}.socNegeri.focus(); 
-					return;
-				
-				}else if(negeri=="0"){ 				
-				}else{
-					ptem = '&template='+tem+'MengikutNegeri'+temRange;
-					pnegeri = "&ID_KEMENTERIAN=0&ID_AGENSI=0&ID_NEGERI="+negeri+"&bulan=1";
- 					//if(jenisPajakan != "-1"){
-					//	ptem = "&template=HTPPajakanSenaraiMengikutNegeriJenis";
-					//	param += "&IDSUBURUSAN1="+jenisPajakan;
-					//}
-					if(mulatemp != "" && akhirtemp != ""){
-						//ptem = "&template=HTPPajakanSenaraiMengikutNegeriSelangTahun";
-						//ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
-
-					}
-					if(mulatemp != "" && akhirtemp != "" && jenisPajakan != "-1"){
-						//ptem = "&template=HTPPajakanSenaraiMengikutNegeriSelangTahunJenis";
-						//ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
-						param += "&IDSUBURUSAN1="+jenisPajakan;
-
-					}
-					if(unit != "-1"){
-						ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;				
-						punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0";
-						
-					}
-					
-				}
-				
-			}else{				
-				ptem = '&template='+tem+'MengikutTahun';
-				if(mulatemp != "" && akhirtemp != ""){
-					ptem = '&template='+tem+'MengikutTahunRange';
-				}
-			}
-				*/
 		} //else
 		//alert(ptem);
-		var url = "../servlet/"+urli+"?"+param+pnegeri+ptahun+ptem+pbulanmula+pbulantamat+punit+pdaerah;
+		var url = "../servlet/"+urli+"?"+param+pnegeri+ptahun+ptem+pbulanmula+pbulantamat+punit+pdaerah+folder;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
