@@ -4,11 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -30,7 +27,6 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
-import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.ppt.BantahanAgensiDaftar;
 import ekptg.model.ppt.BantahanAgensiDaftarOperations;
@@ -51,7 +47,9 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 	FrmUPTSek8BorangFData modelBorangE = new FrmUPTSek8BorangFData();
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
 	PPTHeader header = new PPTHeader();
-	
+	//Kegunaan Lampiran
+	private String jenisDokumen = "pptbantahan";
+
 	String checkedsbcBantahan1 = "";
 	String checkedsbcBantahan2 = "";
 	String checkedsbcBantahan3 = "";
@@ -1709,7 +1707,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 
     				//:::upload
     				if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-    		     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+    		     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan,jenisDokumen);
 //    		     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan,);
     		    		context.put("listDokumen", listDokumen);
     		    		context.put("listDokumen_size", listDokumen.size());	    		
@@ -2344,8 +2342,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			vm = "app/ppt/frmBantahanPembatalanAP.jsp";    		
     			
     		
-    		}else if("upload_dokumen".equals(submit)){
-
+    		}else if(submit.equals("upload_dokumen")){
     			list = model.getMaklumatBantahanAP(id_permohonan,id_hakmilik,id_siasatan,id_warta);
     			String id_bantahan = "";
     			if(list.size()!=0){
@@ -2360,18 +2357,20 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			if(id_dokumen == ""){	
     				uploadFiles();		
     			    this.context.put("readmode", "edit");	
+    			
     			}else {
     				updateFiles(usid);
     				view_details_dokumen = model.view_details_dokumen(id_dokumen);				
     				context.put("view_details_dokumen",view_details_dokumen);
     				this.context.put("readmode", "view");
+    			
     			}	
     			
     		    context.put("id_permohonan",id_permohonan);
         		context.put("id_bantahan",id_bantahan);
         		
         		if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-    	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+		     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan,jenisDokumen);
     	    		context.put("listDokumen", listDokumen);
     	    		context.put("listDokumen_size", listDokumen.size());	    		
     			}else{				
@@ -2415,7 +2414,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
                 this.context.put("display_error_message","no");	
                 
                 if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-    	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+		     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan,jenisDokumen);
     	    		context.put("listDokumen", listDokumen);
     	    		context.put("listDokumen_size", listDokumen.size());	    		
     			}else{				
@@ -2444,7 +2443,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
                 this.context.put("display_error_message","no");	
                	
                 if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-    	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+		     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan,jenisDokumen);
     	    		context.put("listDokumen", listDokumen);
     	    		context.put("listDokumen_size", listDokumen.size());	    		
     			}else{				
@@ -2470,7 +2469,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			}
     			
                if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-    	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+   	     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
     	    		context.put("listDokumen", listDokumen);
     	    		context.put("listDokumen_size", listDokumen.size());	    		
     			}else{				
@@ -2502,7 +2501,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			this.context.put("readmode", getParam("readmode"));	
     	
                 if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-    	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+       	     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
     	    		context.put("listDokumen", listDokumen);
     	    		context.put("listDokumen_size", listDokumen.size());	    		
     			}else{				
@@ -2536,7 +2535,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			this.context.put("readmode", getParam("readmode"));	
     	
                 if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-    	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+       	     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
     	    		context.put("listDokumen", listDokumen);
     	    		context.put("listDokumen_size", listDokumen.size());	    		
     			}else{				
@@ -2573,7 +2572,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			this.context.put("readmode", getParam("readmode"));	
     	
                 if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-    	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+       	     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
     	    		context.put("listDokumen", listDokumen);
     	    		context.put("listDokumen_size", listDokumen.size());	    		
     			}else{				
@@ -2789,34 +2788,49 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     		modelBantahanPB.setCarianFailAP(usid,txtNoFail,idKementerian,userIdNeg );		
     	}
 
-    	@SuppressWarnings("unchecked")
-    	private void uploadFiles() throws Exception {
-    		    DiskFileItemFactory factory = new DiskFileItemFactory();
-    		    ServletFileUpload upload = new ServletFileUpload(factory);
-    		    List items = upload.parseRequest(request);
-    		    Iterator itr = items.iterator();
-    		    while (itr.hasNext()) {
-    		      FileItem item = (FileItem)itr.next();
-    		      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-    		    	  saveData(item);
-    		      }
-    		    }
-    		  }
-    	//penambahbaikan yati
-    	 private void saveData(FileItem item) throws Exception {
-    		 	HttpSession session = request.getSession();		
-    	  		Db db = null;
-    	        try {
+    private void uploadFiles() throws Exception {
+    	DiskFileItemFactory factory = new DiskFileItemFactory();
+   	    ServletFileUpload upload = new ServletFileUpload(factory);
+   	    List items = upload.parseRequest(request);
+  	    Iterator itr = items.iterator();
+  	    while (itr.hasNext()) {
+  	    	FileItem item = (FileItem)itr.next();
+  	    	if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+  	    		saveData(item);
+  	    	}
+  	    }
+    		  
+    }
+    //
+    private void saveData(FileItem item) throws Exception {
+    	HttpSession session = request.getSession();		
+    	Db db = null;
+    	try {
     	        	
-    	        	String id_jenisDoc = "1530";
-    	        	long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");	        	
-    	        	db = new Db();			      
+    		String id_jenisDoc = "1530";
+    		long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");	        	
+    		db = new Db();			      
     			     
-    	        	Connection con = db.getConnection();
-    	        	con.setAutoCommit(false);
-    	        	SQLRenderer r = new SQLRenderer();
-    	        	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN (id_Dokumen,id_bantahan,nama_Fail,jenis_Mime,content,tajuk,keterangan,id_masuk,id_kemaskini,id_jenisdokumen,tarikh_masuk) " +
-    	        			"values(?,?,?,?,?,?,?,?,?,?,SYSDATE)");
+    		Connection con = db.getConnection();
+    		con.setAutoCommit(false);
+    		SQLRenderer r = new SQLRenderer();
+        	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN "
+        			+ "(id_dokumen,id_bantahan,nama_fail,jenis_mime,content,tajuk,keterangan,id_masuk"
+        			+ ",id_jenisdokumen,id_kemaskini,jenis_dokumen"
+        			+ ",tarikh_masuk,tarikh_kemaskini) " 
+        			+ "values(?"
+        			+ ",?"
+        			+ ",?"
+        			+ ",?"
+        			+ ",?"
+        			+ ",?"
+        			+ ",?"
+        			+ ",?"
+        			+ ",?"
+        			+ ",?"
+        			+ ",?"
+        			+ ",SYSDATE"
+        			+ ",SYSDATE)");
     	        	ps.setLong(1, id_Dokumen);
     	        	ps.setString(2, getParam("id_bantahan"));
     	        	ps.setString(3,item.getName());
@@ -2825,23 +2839,25 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     	        	ps.setString(6, getParam("txtnamadokumen"));
     	        	ps.setString(7, getParam("txtketerangandokumen"));	        	
     	        	ps.setString(8,(String) session.getAttribute("_ekptg_user_id"));	        	      	
-    	        	ps.setString(9,(String) session.getAttribute("_ekptg_user_id"));
-    	        	ps.setString(10, id_jenisDoc);  
-    	        	ps.executeUpdate();
+    	        	ps.setString(9, id_jenisDoc);  
+     	        	ps.setString(10,(String) session.getAttribute("_ekptg_user_id"));
+     	        	ps.setString(11,jenisDokumen);
+     	        	ps.executeUpdate();
     	            con.commit();
     	
-    		    } finally {
-    			      if (db != null) db.close();
-    		    }
-    	  }
+    	} finally {
+    		if (db != null) db.close();
+    	}
+    	
+    }
 
-    		private void updateFiles(String usid) throws Exception {			
-    			String id_dokumen = getParam("id_dokumen");
-    			String txtnamadokumen = getParam("txtnamadokumen");
-    			String txtketerangandokumen = getParam("txtketerangandokumen");
-
-    			modelOperations.updateFiles(usid,id_dokumen,txtnamadokumen,txtketerangandokumen);			
-    		}	 
+    	private void updateFiles(String usid) throws Exception {			
+    		String id_dokumen = getParam("id_dokumen");
+    		String txtnamadokumen = getParam("txtnamadokumen");
+    		String txtketerangandokumen = getParam("txtketerangandokumen");
+    		modelOperations.updateFiles(usid,id_dokumen,txtnamadokumen,txtketerangandokumen);			
+    		
+    	}	 
     	
 		public void setupPageDepan(HttpSession session,String action,Vector list) {
 			
