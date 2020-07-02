@@ -513,7 +513,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 							"" +
 							"P.SEKSYEN, "
 					+ " ST.KETERANGAN, P.ID_STATUS, " +
-						//	"U.NAMA_PEJABAT, " +
+						//	"U.NAMA_PEJABAT, " +    
 							" MOSI.ID_PERMOHONANSIMATI, "
 					+ " S.UMUR as umursimati, S.JANTINA as jantinasimati,  PM.UMUR as umurpemohon, PM.JANTINA as jantinapemohon," +
 							//"U.ID_PEJABATJKPTG, " +
