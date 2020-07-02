@@ -733,30 +733,32 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			// CLOSE				
 			
 	 @SuppressWarnings("unchecked")
-	public Vector getHeader(String id_fail,String id_permohonan)throws Exception {		 
-			Db db = null;
-			String sql = "";
-			try{
-				header = new Vector();
-				db = new Db();
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();				
-				sql =  " SELECT P.ID_PERMOHONAN, F.ID_NEGERI, P.ID_NEGERI, P.NO_PERMOHONAN, P.ID_FAIL, "; 
-				sql += " F.NO_FAIL, F.ID_SUBURUSAN, P.TARIKH_PERMOHONAN, P.ID_STATUS, ";
-				sql += " F.ID_KEMENTERIAN, P.ID_AGENSI, P.FLAG_PERUNTUKAN, P.FLAG_SEGERA, ";
-				sql += " P.ID_DAERAH, P.TUJUAN, P.NO_RUJUKAN_SURAT, P.TARIKH_KEHENDAKI, "; 
-				sql += " P.ALAMAT1, P.ALAMAT2, P.ALAMAT3, P.POSKOD, P.ID_MUKIM, ";
-				sql += " K.NAMA_KEMENTERIAN, B.NAMA_DAERAH, P.NO_RUJUKAN_PTD, P.NO_RUJUKAN_PTG, "; 
-				sql += " P.NO_RUJUKAN_UPT, SU.NAMA_SUBURUSAN, S.KETERANGAN, C.NAMA_NEGERI,P.TARIKH_TERIMA,AG.NAMA_AGENSI "; 
-				sql += " FROM TBLPFDFAIL F,TBLPPTPERMOHONAN P,TBLRUJKEMENTERIAN K,TBLRUJNEGERI C, "; 
-				sql += " TBLRUJDAERAH B,TBLRUJSUBURUSAN SU,TBLRUJSTATUS S, TBLRUJAGENSI AG "; 
-				sql += " WHERE F.ID_KEMENTERIAN = K.ID_KEMENTERIAN(+) AND F.ID_FAIL = P.ID_FAIL AND B.ID_DAERAH = P.ID_DAERAH(+) ";
-				sql += " AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN(+) AND P.ID_STATUS = S.ID_STATUS ";
-				sql += " AND P.ID_NEGERI = C.ID_NEGERI(+) AND P.ID_AGENSI = AG.ID_AGENSI(+) AND P.ID_FAIL = '"+ id_fail +"' AND P.ID_PERMOHONAN = '"+ id_permohonan +"' ";
+	public Vector getHeader(String id_fail,String id_permohonan) throws Exception {		 
+		Db db = null;
+		String sql = "";
+		try{
+			header = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+//			SQLRenderer r = new SQLRenderer();				
+			sql =  " SELECT P.ID_PERMOHONAN, F.ID_NEGERI, P.ID_NEGERI, P.NO_PERMOHONAN, P.ID_FAIL, "; 
+			sql += " F.NO_FAIL, F.ID_SUBURUSAN, P.TARIKH_PERMOHONAN, P.ID_STATUS, ";
+			sql += " F.ID_KEMENTERIAN, P.ID_AGENSI, P.FLAG_PERUNTUKAN, P.FLAG_SEGERA, ";
+			sql += " P.ID_DAERAH, P.TUJUAN, P.NO_RUJUKAN_SURAT, P.TARIKH_KEHENDAKI, "; 
+			sql += " P.ALAMAT1, P.ALAMAT2, P.ALAMAT3, P.POSKOD, P.ID_MUKIM, ";
+			sql += " K.NAMA_KEMENTERIAN, B.NAMA_DAERAH, P.NO_RUJUKAN_PTD, P.NO_RUJUKAN_PTG, "; 
+			sql += " P.NO_RUJUKAN_UPT, SU.NAMA_SUBURUSAN, S.KETERANGAN, C.NAMA_NEGERI,P.TARIKH_TERIMA,AG.NAMA_AGENSI "; 
+			sql += " FROM TBLPFDFAIL F,TBLPPTPERMOHONAN P,TBLRUJKEMENTERIAN K,TBLRUJNEGERI C, "; 
+			sql += " TBLRUJDAERAH B,TBLRUJSUBURUSAN SU,TBLRUJSTATUS S, TBLRUJAGENSI AG "; 
+			sql += " WHERE F.ID_KEMENTERIAN = K.ID_KEMENTERIAN(+) AND F.ID_FAIL = P.ID_FAIL AND B.ID_DAERAH = P.ID_DAERAH(+) ";
+			sql += " AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN(+) AND P.ID_STATUS = S.ID_STATUS ";
+			sql += " AND P.ID_NEGERI = C.ID_NEGERI(+) AND P.ID_AGENSI = AG.ID_AGENSI(+) AND P.ID_FAIL = '"+ id_fail +"' AND P.ID_PERMOHONAN = '"+ id_permohonan +"' ";
 //				myLogger.info("SQL getHeader :: "+sql);
-				ResultSet rs = stmt.executeQuery(sql);
-				Hashtable h;			    
-		     while (rs.next()) {
+			ResultSet rs = stmt.executeQuery(sql);
+				
+			Hashtable h;			    
+			while (rs.next()) {
 		    	h = new Hashtable();		    	 
 		        h.put("id_permohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));
 		    	h.put("no_permohonan", rs.getString("no_permohonan")==null?"":rs.getString("no_permohonan"));
@@ -820,12 +822,14 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 		    		h.put("id_mukim",rs.getString("id_mukim"));
 		    	}
 		    	header.addElement(h);
-		      	}      
-				}
-				finally{
-					if(db != null)db.close();
-				}
-				return header;
+		      	
+			}      
+				
+		}finally{
+			if(db != null)db.close();
+		}
+		return header;
+	 
 	 }
 	
 	 @SuppressWarnings("unchecked")
@@ -1561,7 +1565,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			return view_details_dokumen;			
 	}
 
-	public Vector senaraiDokumenBantahan(String id_bantahan, String jenisDoc) throws Exception {				
+	public Vector<Hashtable<String,String>> senaraiDokumenBantahan(String id_bantahan, String jenisDoc) throws Exception {				
 	    Db db = null;
 	    String sql = "";			  	    
 	    try {
@@ -1569,18 +1573,18 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 	      db = new Db();
 	      Statement stmt = db.getStatement();
 	      sql = " SELECT A.ID_BANTAHAN,A.ID_DOKUMEN, A.JENIS_DOKUMEN, A.NAMA_FAIL, A.JENIS_MIME, A.TAJUK, A.KETERANGAN,"+ 
-				" A.CONTENT  FROM TBLPPTDOKUMEN A,TBLPPTBANTAHAN P WHERE A.ID_BANTAHAN = '"+id_bantahan+"' "+
+				" A.CONTENT  FROM TBLPPTDOKUMEN A WHERE A.ID_BANTAHAN = '"+id_bantahan+"' "+
 	    		" AND A.JENIS_DOKUMEN = '"+jenisDoc+"' "+
-				" AND A.ID_BANTAHAN = P.ID_BANTAHAN";	      
-//	      myLogger.info("SQL DOKUMEN :"+sql);
+				" ";	      
+	      myLogger.info("senaraiDokumenBantahan:sql="+sql);
 	      ResultSet rs = stmt.executeQuery(sql);
-	      Hashtable h;
+	      Hashtable<String,String> h;
 	      int bil = 0;
 	    
 	      while (rs.next()) {    	
 	    	  bil = bil + 1;
-	    	  h = new Hashtable();			    	 
-	    	  h.put("BIL", bil);
+	    	  h = new Hashtable<String,String>();			    	 
+	    	  h.put("BIL", String.valueOf(bil));
 	    	  h.put("ID_BANTAHAN",rs.getString("ID_BANTAHAN")== null?"":rs.getString("ID_BANTAHAN"));
 	    	  h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN")== null?"":rs.getString("ID_DOKUMEN"));
 	    	  h.put("NAMA_FAIL", rs.getString("NAMA_FAIL")== null?"":rs.getString("NAMA_FAIL"));
@@ -1607,10 +1611,11 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 	      db = new Db();
 	      Statement stmt = db.getStatement();
 	      sql = " SELECT A.ID_BANTAHAN,A.ID_DOKUMEN, A.JENIS_DOKUMEN, A.NAMA_FAIL, A.JENIS_MIME, A.TAJUK, A.KETERANGAN,"+ 
-				" A.CONTENT  FROM TBLPPTDOKUMEN A,TBLPPTBANTAHAN P WHERE A.ID_BANTAHAN = '"+id_bantahan+"' "+
+				" A.CONTENT  FROM TBLPPTDOKUMEN A WHERE A.ID_BANTAHAN = '"+id_bantahan+"' "+
 //	    		" AND A.JENIS_DOKUMEN = '"+jenisDoc+"' "+
-				" AND A.ID_BANTAHAN = P.ID_BANTAHAN";
-//	      myLogger.info("SQL DOKUMEN :"+sql);
+//				" AND A.ID_BANTAHAN = P.ID_BANTAHAN
+				"";
+	      myLogger.info("SQL DOKUMEN :"+sql);
 	      ResultSet rs = stmt.executeQuery(sql);     
 	      Hashtable h;
 	      int bil = 0;
