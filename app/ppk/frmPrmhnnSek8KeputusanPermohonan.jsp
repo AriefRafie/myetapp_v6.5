@@ -76,7 +76,6 @@
 #set ($check3 = "")
 #set ($check4 = "")
 #set ($check5 = "")
-#set ($check6 = "") <!-- arief add -->
 #set ($check8 = "")
 #set ($check9 = "")
 
@@ -113,7 +112,6 @@
 #set ($txtTarikhKaveat = "")
 
 
-
 #set ($tujuanPindah = "") <!-- razman add -->
 
 #foreach ($ListFail in $ViewFail)
@@ -123,11 +121,8 @@
 
 
 
-<!--
-:::::::::: $ViewPemohon
--->
-
-
+#set ($catatan_sd = "")
+#set ($txtSuratAkuanARB ="")
 #foreach ($ListData in $ViewPemohon)
 
 #set ($jenis_permohonan = $ListData.jenispermohonan)
@@ -135,7 +130,8 @@
 #set ($idSimati = $ListData.idSimati)
 #set ($idpermohonan_simati = $ListData.id_Permohonansimati)
 #set ($salinan_arahan = $ListData.salinan_arahan)
-
+#set ($catatan_sd = $ListData.catatan_sd)
+#set ($txtSuratAkuanARB = $ListData.txtSuratAkuanARB)
 #set ($tujuanPindah = $ListData.tujuanPindah)<!-- razman add -->
 
 #set ($jenisborangC = $ListData.jenisborangC)
@@ -201,8 +197,6 @@
     
 	
 		#set ($jumHa = $Util.formatDecimal($ListData.jumHaTarikhMohon))
-		#set ($jumHa2 = $ListData.jumHaTarikhMohon)
-		#set ($maxHa = 600000)
          #set ($jumHaX = $ListData.jumHaTarikhMohon)
         #set ($jumHaX1 = $Util.formatDecimal($jumHaX))
         
@@ -428,11 +422,8 @@
 #elseif ($keputusan == "50")
  
  #set ($check4 = "checked")  
- 
- <!-- arief add SUmmary Distribution -->    
-  #elseif ($keputusan == "115")
-	#set ($check6 = "checked")
-	#set ($setMode7 = "checked")
+     
+   
  
  #elseif ($keputusan == "53")
  
@@ -490,6 +481,8 @@
     #set ($setMode5 = "")<!-- razman remove disable -->
     #set ($setMode6 = "")
     
+    
+    
     #elseif ($keputusan == "151")
 	#set ($check0 = "checked")
     #set ($check1 = "checked")
@@ -518,6 +511,7 @@
      #set($failawal = $no_failawal)
        #set($mohonawal = $pemohon_awal)
        #set($jenis_pej_id = $jenis_pej_idd)
+       
 
 
 #set($jenis_pej = $jenis_pejabat)
@@ -797,20 +791,7 @@
 #set($checkJ4="")
 
 #end
-<!-- arief add Summary Distribution-->
-#elseif ($keputusan == "115") 
-    #set ($check6 = "checked")
-    #set ($check1 = "disabled")
-    #set ($check2 = "disabled")
-    #set ($check3 = "disabled")
-    #set ($setMode = "disabled")
-    #set ($setMode1 = "disabled")
-    #set ($setMode2 = "disabled")
-    #set ($setMode3 = "disabled")
-    #set ($setMode4 = "disabled")
-    #set ($setMode5 = "disabled")
-    #set ($setMode6 = "disabled")
-    #set ($setMode7 = "checked")  
+   
    
 #elseif ($keputusan == "50")
 	#set ($check4 = "checked")
@@ -958,8 +939,12 @@
 
 #end
 
+#set($check107 = "")
 
-
+       #if ($keputusan == "107") <!-- SD -->
+       		
+       		#set ($check107 = "checked")
+       #end
 
 
 <input type="hidden" name="jumlah" id="jumlah" value="$Overalldum"  />
@@ -1709,19 +1694,35 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
         
         #if($salinan_arahan=="1") 
         
-        <td><input type="checkbox" name="salinanArahan" id="salinanArahan" $setMode  checked onClick="javascript:buttonkeHartaAlih(this);">Telah diterima
+        <td><input type="checkbox" name="salinanArahan" id="salinanArahan" $setMode  checked onClick="javascript:buttonkeHartaAlih(this);">Telah diterima pada <input type="text" name="tarikhsuratARB" id="tarikhsuratARB"  value=$txtSuratAkuanARB $setModeR class="$setMode"/>
+        &nbsp;#if($setMode != "disabled")<img src="../img/calendar.gif" alt="" onclick="displayDatePicker('tarikhsuratARB',false,'dmy');" />#end
+        
         <div id="divbuttonkeHartaAlih" style="display: block">
     <input type="button" id="butonkeHartaAlih" value="Ke skrin Harta Alih" onClick="javascript:jumptoHartaAlih('$jenis_permohonan','$idPermohonan','$idPemohon','$idSimati','$idpermohonan_simati','$al_negeri')"/></div></td>
         #else
-        <td><input type="checkbox" name="salinanArahan" id="salinanArahan" $setMode value="1" >Telah diterima</td>
+        <td><input type="checkbox" name="salinanArahan" id="salinanArahan" $setMode value="1" onclick="checkTarikh()">Telah diterima2</td>
         #end
       </tr>
+      
       <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      
+      <td colspan="4">
+      <div id="tarikhTerimaARB"  style="display:none;" >
+      <table>
+      <tr>
+      		<td><span class="style5"></span></td>
+            <td>&nbsp;Tarikh Terima Surat Akuan dari ARB</td>
+     		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+      		<td>&nbsp;<input type="text" name="tarikhsuratARB" id="tarikhsuratARB"  $setModeR class="$setMode"/>&nbsp;<img src="../img/calendar.gif" alt="" onclick="displayDatePicker('tarikhsuratARB',false,'dmy');" /></td>
       </tr>
+      </table>
+      </div>
+      </td>
+      
+
+      
+      </tr>
+      
       #end
     </table>    </td>
   </tr>
@@ -1734,8 +1735,40 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
 
 
  
- 
+
   <fieldset id="kaveat" style="display:none" >
+   <input type="button" name="buttonTambah1" id="buttonTambah1" value="Tambah" onclick="tambahKaveat('$idPermohonan')"/>
+    #set( $ii = 0 )
+   #foreach($listKaveatPeguam2 in $listKaveatPeguam)
+     #set($ii = $ii+1)
+   #end
+   
+   #if ($ii > 1)
+  <table width="100%">
+  <tr class="table_header">
+  <td>Bil</td>
+  <td>Nama Pengkaveat</td>
+  <td>No. Kaveat</td>
+  <td>Nama Firma</td>
+  </tr>
+  #foreach($listKaveatPeguam2 in $listKaveatPeguam)
+	  						#set( $i = $velocityCount )
+					    	#if ( ($i % 2) != 1 )
+					       		#set( $row = "row2" )
+					    	#else
+					       		#set( $row = "row1" )
+					    	#end      
+	                        <tr bgcolor="white" class="$row">
+
+  <td>$i</td>
+  <td>$!listKaveatPeguam2.NAMA_KAVEAT</td>
+  <td>$!listKaveatPeguam2.NO_KAVEAT</td>
+  <td>$!listKaveatPeguam2.NAMA_FIRMA</td>
+  </tr>
+  #end
+  </table>
+  #end
+  #if ($ii < 2)
   <table width="100%">
              <tr>
   <td width="1%" valign="top" ><span class="style7">#if($setMode != "disabled")* #end</span></td>
@@ -1820,6 +1853,7 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
             #set($negerikodpeguam="")
                                       
             #else
+            
             #foreach($listnegpeg in $listnegeri)           
             #if($socNegeriPeguam==$listnegpeg.id_Negeri)
             #set($negerikodpeguam="$listnegpeg.kod_Negeri - $listnegpeg.nama_Negeri")
@@ -1835,8 +1869,10 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
             #set($negerikodpeguam="")
                                       
             #else
+           
             #foreach($listnegpeg in $listnegeri)           
             #if($socNegeriPeguam==$listnegpeg.id_Negeri)
+           
             #set($negerikodpeguam="$listnegpeg.kod_Negeri - $listnegpeg.nama_Negeri")
             #end 
             
@@ -1888,7 +1924,7 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
             
             
             #end      
-            <input name="txtBandarPeguam" type="text" class="$setMode" id="txtBandarPeguam" style="text-transform:uppercase;" value="$bandarkodpeguam" size="50" $setModeR />
+            <input name="txtBandarPeguam" type="text" class="$setMode" id="txtBandarPeguam" style="text-transform:uppercase;" value="$!bandarkodpeguam" size="50" $setModeR />
             #else
             
               #foreach($listdaerah in $listBandarTetapbyNegeri)                                
@@ -1954,7 +1990,8 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
               </td>
             </tr>
         </table>
- 
+        #end
+       
     
     </fieldset>
     
@@ -2001,19 +2038,6 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
         #set($checkJ4="checked")  
         #end
       </tr>
-     
-      
-      <!-- arief add Summary Distribution OPEN -->
-      #if ($jumHa2 < $maxHa)
-      <tr>
-        <td scope="row">&nbsp;</td>
-        <td scope="row">&nbsp;</td>
-        <td colspan="2"><label>
-          <input type="radio" name="sorPenentuanBidangKuasa" id="sorPenentuanBidangKuasa" value="115" $check6 $setMode7 onClick="selectRadio7()" />
-          <input name="setMode7" id="setMode7" type="hidden" value="$setMode7" >Summary Distribution</label></td>
-      </tr>
-	  #end
-      <!-- arief add Summary Distribution CLOSE -->
       <tr>
         <td scope="row">&nbsp;</td>
         <td scope="row">&nbsp;</td>
@@ -2450,11 +2474,34 @@ Batal Permohonan (Lain - lain kes)</td>
     </table>
     </fieldset>
     
+    <!-- comment dulu untuk POC
+    <fieldset>
+    <legend>SUMMARY DISTRIBUTION </legend>
+    <table width="100%" border="0">
+    <tr>
+    <td width="15%" align ="right" scope="col"><b>Jenis Summary Distribution</b></td>
+        <td width="1%" scope="col">:</td>
+        <td width="84%" colspan="2" scope="col">
+        <input type="radio" name="sorPenentuanBidangKuasa" id="sorPenentuanBidangKuasa" value="107" $check107  $setMode4  />Nilai Harta Alih Bernilai RM 600,000 ke bawah
+        
+        </td>
+    </tr>
+    <tr>
+    <td width="15%" align ="right" scope="col"><b>Catatan</b></td>
+        <td width="1%" scope="col">:</td>
+        <td width="84%" colspan="2" scope="col">
+         <textarea name="txtCatatanSD" $setModeR class="$setMode" id="txtCatatanSD" cols="100" rows="5">$!catatan_sd.toUpperCase()</textarea>
+        
+        </td>
+    </tr>
+    </table>
+    </fieldset> -->
+    
     <fieldset>
     <legend>DOKUMEN SOKONGAN</legend>
     <table width="60%" border="0">
     <tr>
-     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+     <td width="25%" align ="right" scope="col"><b>Dokumen Sokongan</b></td>
         <td width="1%" scope="col">:</td>
         <td width="74%" colspan="2" scope="col">
          <input type="text" disabled value=$!namaDoC>&nbsp;
@@ -2508,7 +2555,7 @@ Batal Permohonan (Lain - lain kes)</td>
    
    
     <input type="button" name="cmdBorangI" id="cmdBorangI" value="Hantar ke Mahkamah Tinggi (Borang I)" onClick="semakMTBorangI()"/>
-    <input type="button" name="cmdSemakMT" id="cmdSemakMT" value="Hantar ke Mahkamah Tinggi (Borang B)" onClick="semakMTPermohonan()"/>
+    <!-- <input type="button" name="cmdSemakMT" id="cmdSemakMT" value="Hantar ke Mahkamah Tinggi (Borang B)" onClick="semakMTPermohonan()"/> -->
     #if ($EventStatus == 1 )    
     
 	    #if($id_Status != "169" && $id_Status != "21" && $id_Status != "64" && $id_Status != "163" && $id_Status != "164" && $id_Status != "165")
@@ -2589,18 +2636,18 @@ Batal Permohonan (Lain - lain kes)</td>
     #end
 	
 	<!-- Sebelum ini sekiranya id_Status = 151, button seterusnya tiada. Sekarang ini diadakan button tersebut sebagaimana kehendak user -->
-    #if ($EventStatus != 0 && ($id_Status == "151" || $id_Status == "44" || $id_Status == "173" || $id_Status == "175" || $id_Status == "177" || $id_Status != "151" || $id_Status == "18" ))        
+    #if ($EventStatus != 0 && ($id_Status == "151" || $id_Status == "44" || $id_Status == "173" || $id_Status == "175" || $id_Status == "177" || $id_Status != "151" || $id_Status == "18" || $id_Status == "107"))        
     	
     	#if ($mohonawal != "")
     		
     		#if (($salinan_arahan=="1") && ($jenisborangC=="K"))
-    			
-    				<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onClick="kenotis('$seksyen','$id_Status')"/>
-    			
+    			<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onClick="kenotis('$seksyen','$id_Status')"/>
     		#end
     	#else
-    		#if( $id_Status != "50")
-    				<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onClick="kenotis('$seksyen','$id_Status')"/>
+    		#if( ($id_Status != "50") && ($id_Status != "107"))
+    		
+    		<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onClick="kenotis('$seksyen','$id_Status')"/>
+    		
     		#end
     	#end
     #end
@@ -2628,7 +2675,7 @@ Batal Permohonan (Lain - lain kes)</td>
 	document.f1.idSimati.value = idSimati;
 	document.f1.id_Permohonansimati.value = id_Permohonansimati;
 	-->
-	<!--  <input type="hidden" name="idKeputusanPermohonan" />-->
+	<input type="hidden" name="idKeputusanPermohonan" />
 </table>
 </fieldset>
 
@@ -2850,9 +2897,18 @@ function semakMTPermohonan() {
     if (hWnd.focus != null) hWnd.focus();
 }
 
-function semakMTBorangI() {
-    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiMT?idFail=$idFail&command=hantarBorangI";
-	var hWnd = window.open(url,'Cetak','width=625,height=480, resizable=yes,scrollbars=no');
+function semakMTBorangI() { 
+    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiMT?idFail=$idFail&command=hantarBorangI&dari=keputusanpermohonan";
+	var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=yes,scrollbars=no');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function tambahKaveat(idPermohonan) {
+	
+    var url = "../x/${securityToken}/ekptg.view.ppk.FrmTambahKaveat?idFail=$idFail&command=tambahKaveat&dari=keputusanpermohonan&idpermohonan="+idPermohonan;
+	var hWnd = window.open(url,'Cetak','width=650,height=320, resizable=yes,scrollbars=no');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
@@ -2960,7 +3016,7 @@ var d4 = document.f1.txdTarikhTerimaNilaian;
    
 	//Tambah ARB sebagai OB. End.
 	
-       if(document.f1.sorPenentuanBidangKuasa[0].checked != true && document.f1.sorPenentuanBidangKuasa[1].checked != true && document.f1.sorPenentuanBidangKuasa[2].checked != true && document.f1.sorPenentuanBidangKuasa[3].checked != true)
+       if(document.f1.sorPenentuanBidangKuasa[0].checked != true && document.f1.sorPenentuanBidangKuasa[1].checked != true && document.f1.sorPenentuanBidangKuasa[2].checked != true && document.f1.sorPenentuanBidangKuasa[3].checked != true && document.f1.sorPenentuanBidangKuasa[4].checked != true )
 	   {
 	   alert("Sila pilih penentuan bidang kuasa");
 	   return
@@ -3170,7 +3226,6 @@ document.f1.sorPenentuanBidangKuasa[1].checked = false;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
 
 document.getElementById('tableReportX').style.display="none";//razman add
 }
@@ -3211,7 +3266,6 @@ document.f1.sorPenentuanBidangKuasa[0].checked = true;
 document.f1.sorPenentuanBidangKuasa[1].checked = false;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
 document.getElementById('tableReportX').style.display="none"; //razman add
 document.getElementById('kv1').style.display="block";
 document.getElementById('kv2').style.display="block";
@@ -3239,6 +3293,12 @@ document.getElementById('tableReportX').style.display="none";//razman add
 
 }
 
+function nktambah() {
+	document.getElementById('kaveattambah').style.display="block";
+	
+}
+
+
 function selectRadio4() {
 if(document.f1.sorPenentuanBidangKuasa[1].checked == true)
 {
@@ -3250,8 +3310,6 @@ document.f1.sorPenentuanBidangKuasa[0].checked = false;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
-
-document.f1.sorPenentuanBidangKuasa[4].checked == false; //arief add
 document.getElementById('tableReportX').style.display="none"; //razman add
 }
 
@@ -3267,7 +3325,6 @@ function selectRadio5() {
 		document.f1.sorPenentuanBidangKuasa[0].checked = false;
 		document.f1.sorPenentuanBidangKuasa[1].checked = false;
 		document.f1.sorPenentuanBidangKuasa[3].checked = false;
-		document.f1.sorPenentuanBidangKuasa[4].checked == false; //arief add
 		document.getElementById('tableReportX').style.display="block"; //razman edit add block
 		//alert("1");
 	}
@@ -3287,8 +3344,6 @@ document.f1.sorPenentuanBidangKuasa[1].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
-document.f1.sorPenentuanBidangKuasa[4].checked == false; //arief add
-
 document.getElementById('tableReportX').style.display="none";//razman add
 }
 
@@ -3302,19 +3357,6 @@ document.f1.tempatmohonawal.value = "";
 
 
 }
-
-//arief add SD OPEN
-function selectRadio7(){
-	if(document.f1.sorPenentuanBidangKuasa[4].checked == true){
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = false;
-		document.f1.sorPenentuanBidangKuasa[0].checked = false;
-		document.f1.sorPenentuanBidangKuasa[2].checked = false;
-		document.f1.sorPenentuanBidangKuasa[3].checked = false;
-		document.getElementById('tableReportX').style.display="none";
-	}
-}
-//arief add SD CLOSE
 
 function putih(){
 
@@ -3344,7 +3386,7 @@ document.f1.setMode3.value = "disabled";
 document.f1.setMode4.value = "disabled";
 document.f1.setMode5.value = "";
 document.f1.setMode6.value = "";
-document.f1.setMode7.value = ""; //arief add
+
 
 }
 else
@@ -3372,7 +3414,6 @@ document.f1.setMode3.value = "disabled";
 document.f1.setMode4.value = "disabled";
 document.f1.setMode5.value = "disabled";
 document.f1.setMode6.value = "";
-document.f1.setMode7.value = ""; //arief add
 }
 else
 {
@@ -3396,7 +3437,6 @@ document.f1.setMode3.value = "disabled";
 document.f1.setMode4.value = "";
 document.f1.setMode5.value = "";  // razman buang disable
 document.f1.setMode6.value = "";
-document.f1.setMode7.value = ""; //arief add
 }
 
 
@@ -3474,7 +3514,6 @@ document.f1.setMode3.value = "";
 document.f1.setMode4.value = "disabled";
 document.f1.setMode5.value = "disabled";
 document.f1.setMode6.value = "";
-document.f1.setMode7.value = ""; //arief add
 
 
 document.f1.txtCatatan.value = "";
@@ -3516,7 +3555,6 @@ document.f1.setMode3.value = "";
 document.f1.setMode4.value = "disabled";
 document.f1.setMode5.value = "disabled";
 document.f1.setMode6.value = "";
-document.f1.setMode7.value = ""; //arief add
 
 //document.f1.txtCatatan.value = "";
 
@@ -4471,11 +4509,6 @@ if (seksyen == '8'){
 
 }
 
-//arief add untuk SD
-function keperintah(seksyen,idStatus){
-	document.f1.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=ekptg.view.ppk.FrmPerintahSek8&command=semakNoData&tabId=0";	
-}
-
 function cetakSuratBatalPermohonanMT(noFail) {
  //   var url = "../servlet/ekptg.report.ppk.SuratPindahMT?nofail="+noFail;
  var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratBatalPermohonan_MT&flagReport=S";
@@ -4647,6 +4680,25 @@ document.f1.v_tab.value = tab;
 	
 }
 
+}
+
+function checkTarikh(){
+	
+	if(document.f1.salinanArahan.checked == true)
+		{
+		
+		document.getElementById('tarikhTerimaARB').style.display="block";
+		document.getElementById('tarikhTerimaARB2').style.display="block";
+		document.getElementById('tarikhTerimaARB3').style.display="block";
+		document.getElementById('tarikhTerimaARB4').style.display="block";
+		
+		}
+	else
+		document.getElementById('tarikhTerimaARB').style.display="none";	
+	document.getElementById('tarikhTerimaARB2').style.display="none";
+	document.getElementById('tarikhTerimaARB3').style.display="none";
+	document.getElementById('tarikhTerimaARB4').style.display="none";
+	
 }
 
 
