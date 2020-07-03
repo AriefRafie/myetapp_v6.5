@@ -70,7 +70,7 @@
 	    		<td>
 	    			<select id="kategori" name="idKategori" style="width:100%" onchange="toggleDisplay('kategori')">
 		                <option value="Individu" selected>Individu</option>
-		                <option value="Syarikat">Bukan Individu</option>
+		                <option value="Syarikat">Agensi/ Organisasi</option>
 		                <!-- <option value="Syarikat">Syarikat</option> -->
 		            </select> 
 		            <!-- <div>
