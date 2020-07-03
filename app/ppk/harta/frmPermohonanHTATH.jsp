@@ -377,7 +377,11 @@
 				                                        			<td><span class="style36">
 					                                              		<input name="radioHtaamViewX" id="radioHtaamViewX1" type="radio" onclick="setSelected(1,0,0,1);HtaamViewX1()"   $checked1 value="1" />
 					                                                   
-					                                                  Perjanjian Jual Beli</span></td>
+					                                                  Perjanjian Jual Beli</span>
+					                                                  <a href="javascript:info('perjanjian')" class="help" title="info">					
+									                															<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									           															  </a>
+					                                                  </td>
 					                                          	</tr>
 					                                   			<tr>
 					                                                <td><span class="style36">
@@ -1054,7 +1058,7 @@
 								   	<tr>                                  
 								       	<td>
 								     	<script>
-							 function check_jenis_hta1(){
+								 function check_jenis_hta1(){
 								 if(document.f1.radioJenisHTA_update[0].checked == true){
 									 document.f1.radioHtaamViewX_update[0].checked = false;
 									 document.f1.radioHtaamViewX_update[1].checked = false;
@@ -2050,6 +2054,24 @@
 </form>
 
 <script>
+function info(jenis) {
+	    //
+		var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
+	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=no,scrollbars=no');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus(); /**/
+	    //
+	    var title = 'Info';
+		var w =1024;
+		var h = 800;
+	    var left = (screen.width/2)-(w/2);
+	    //var top = (screen.height/2)-(h/2);
+	    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+
+	}
+
 <!-- TAB -->
 if(document.f1.selectedHartaTakAlih.value.length>0){
 	var selectHTAs = document.getElementsByName('selectHTATH');
