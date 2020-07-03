@@ -154,9 +154,8 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 						session);
 			}
 			if ("doSimpanKemaskiniMaklumatPenyewaan".equals(hitButton)){
-        		logic.updatePermohonanSewa(idPermohonanSewa,
-						getParam("txtTujuan"), getParam("socTempohSewa"), idLuasKegunaan,
-						idLuas, getParam("txtLuasMohon1"),
+        		logic.updatePermohonanSewa(idPermohonanSewa, getParam("socTempohSewa"), 
+        				idLuasKegunaan, idLuas, getParam("txtLuasMohon1"),
 						getParam("txtLuasMohon2"), getParam("txtLuasMohon3"),
 						getParam("txtLuasBersamaan"), getParam("txtBakiLuas"),
 						session);

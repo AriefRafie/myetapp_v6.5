@@ -2332,10 +2332,12 @@ public class FrmPYWOnlineSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT C.ID_PHPPERMOHONANSEWA, B.TARIKH_TERIMA, B.TARIKH_SURAT, B.NO_RUJ_SURAT, A.TAJUK_FAIL, C.TUJUAN, C.FLAG_TEMPOHSEWA, C.ID_LUASASAL, C.LUAS_ASAL,"
-				+ " D.KETERANGAN, C.FLAG_GUNA, C.ID_LUASMHN, C.LUAS_MHN1, C.LUAS_MHN2, C.LUAS_MHN3, C.ID_LUASMHNBERSAMAAN, C.LUAS_MHNBERSAMAAN, C.ID_LUASBAKI, C.LUAS_BAKI"
-				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C, TBLRUJLUAS D"
-				+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_LUASASAL = D.ID_LUAS(+) AND B.ID_PERMOHONAN = '" + idPermohonan + "'";
+			sql = "SELECT C.ID_PHPPERMOHONANSEWA, B.TARIKH_TERIMA, B.TARIKH_SURAT, B.NO_RUJ_SURAT, A.TAJUK_FAIL, C.TUJUAN, C.FLAG_TEMPOHSEWA, "
+				+ " D.KETERANGAN, C.FLAG_GUNA, C.ID_LUASMHN, C.LUAS_MHN1, C.LUAS_MHN2, C.LUAS_MHN3, C.ID_LUASMHNBERSAMAAN, A.ID_URUSAN, " 
+				+ " C.LUAS_MHNBERSAMAAN, C.ID_LUASBAKI, C.LUAS_BAKI, C.ID_LUASASAL, C.LUAS_ASAL, E.ID_PHPPERMOHONANTUJUAN, A.ID_SUBURUSAN "
+				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C, TBLRUJLUAS D, TBLPHPPERMOHONANTUJUAN E"
+				+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_PHPPERMOHONANSEWA = E.ID_PHPPERMOHONANSEWA" 
+				+ " AND C.ID_LUASASAL = D.ID_LUAS(+) AND B.ID_PERMOHONAN = '" + idPermohonan + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -2359,6 +2361,8 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("luas3", rs.getString("LUAS_MHN3") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHN3")));
 				h.put("luasBersamaan", rs.getString("LUAS_MHNBERSAMAAN") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHNBERSAMAAN")));
 				h.put("luasBaki", rs.getString("LUAS_BAKI") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_BAKI")));
+				h.put("idTujuan", rs.getString("ID_PHPPERMOHONANTUJUAN") == null ? "" : rs.getString("ID_PHPPERMOHONANTUJUAN"));
+				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN"));
 				beanMaklumatSewa.addElement(h);
 				bil++;
 			}
@@ -2508,7 +2512,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		}		
 	}
 	
-	public void updatePermohonanSewa(String idPermohonanSewa, String txtTujuan, String socTempohSewa, String idLuasKegunaan, String idLuas, String txtLuasMohon1, String txtLuasMohon2,
+	public void updatePermohonanSewa(String idPermohonanSewa, String socTempohSewa, String idLuasKegunaan, String idLuas, String txtLuasMohon1, String txtLuasMohon2,
 			String txtLuasMohon3, String txtLuasBersamaan, String txtBakiLuas, HttpSession session) throws Exception {
 		
 		Db db = null;
@@ -2525,7 +2529,6 @@ public class FrmPYWOnlineSenaraiFailData {
 					
 			//TBLPHPPERMOHONANSEWA
 			r.update("ID_PHPPERMOHONANSEWA", idPermohonanSewa);
-			r.add("TUJUAN", txtTujuan);
 			r.add("FLAG_GUNA",idLuasKegunaan);
 			r.add("ID_LUASMHN", idLuas);
 			r.add("LUAS_MHN1", txtLuasMohon1);
