@@ -2939,6 +2939,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String id_fail = (String) data.get("id_fail");
 			String no_fail = (String) data.get("no_fail");
 			String no_kp_baru = (String) data.get("no_kp_baru");
+			String tarikh_hantar = (String) data.get("tarikh_hantar");
 			
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -2958,6 +2959,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			r.add("ID_FAIL", id_fail);
 			r.add("NO_FAIL", no_fail);
 			r.add("NO_KP_BARU", no_kp_baru);
+			r.add("TARIKH_HANTAR", tarikh_hantar);
 			
 			
 			myLogger.info("Step 3 SYAFIQAH");
@@ -2966,7 +2968,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			stmt.executeUpdate(sql);
 			
 			String sql2 = "";
-			sql2 = "UPDATE TBLPPKPERBICARAAN SET FLAG_BANTAHAN = 'Y', KETERANGAN_BANTAHAN = '"+sebab+"' \r\n" + 
+			sql2 = "UPDATE TBLPPKPERBICARAAN SET FLAG_BANTAHAN = 'Y', KETERANGAN_BANTAHAN = '"+nama_pembantah+" yang bernombor KP "+no_kp_baru+" telah membuat bantahan berdasarkan "+sebab+"' \r\n" + 
 					"WHERE ID_PERBICARAAN = \r\n" + 
 					"(SELECT id_perbicaraan\r\n" + 
 					"  FROM tblppkperbicaraan\r\n" + 
@@ -3001,39 +3003,29 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		Db db = null;
 		String sql = "";
 		try {
-			String id_pembantah = (String) data.get("id_pembantah");
-			String nama_pembantah = (String) data.get("nama_pembantah");
-			String alamat1 = (String) data.get("alamat1");
-			String alamat2 = (String) data.get("alamat2");
-			String alamat3 = (String) data.get("alamat3");
-			String poskod = (String) data.get("poskod");
-			String bandar = (String) data.get("bandar");
-			String negeri = (String) data.get("negeri");
-			String emel = (String) data.get("emel");
-			String no_hp = (String) data.get("noTel");
-			String sebab = (String) data.get("sebab");
-			String id_fail = (String) data.get("id_fail");
+			String id_permohonan = (String) data.get("id_permohonan");
 			String no_fail = (String) data.get("no_fail");
-			String no_kp_baru = (String) data.get("no_kp_baru");
+			String id_simati = (String) data.get("id_simati");
+			String id_pemohonlama = (String) data.get("id_pemohonlama");
+			String id_pemohonbaru = (String) data.get("id_pemohonbaru");
+			String sebab_tukar = (String) data.get("sebab_tukar");
+			String id_permohonansimati = (String) data.get("id_permohonansimati");
+			String tarikhmati_pemohon = (String) data.get("tarikhmati_pemohon");
+			String tarikh_hantar = (String) data.get("tarikh_hantar");
 			
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			r.add("ID_PEMBANTAH", id_pembantah);
-			r.add("NAMA_PEMBANTAH", nama_pembantah);
-			r.add("ALAMAT1", alamat1);
-			r.add("ALAMAT2", alamat2);
-			r.add("ALAMAT3", alamat3);
-			r.add("POSKOD", poskod);
-			r.add("BANDAR", bandar);
-			r.add("NEGERI", negeri);
-			r.add("EMEL", emel);
-			r.add("NO_HP", no_hp);
-			r.add("SEBAB", sebab);
-			r.add("ID_FAIL", id_fail);
+			r.add("ID_PERMOHONAN", id_permohonan);
 			r.add("NO_FAIL", no_fail);
-			r.add("NO_KP_BARU", no_kp_baru);
+			r.add("ID_SIMATI", id_simati);
+			r.add("ID_PEMOHONLAMA", id_pemohonlama);
+			r.add("ID_PEMOHONBARU", id_pemohonbaru);
+			r.add("SEBAB_TUKAR", sebab_tukar);
+			r.add("ID_PERMOHONANSIMATI", id_permohonansimati);
+			r.add("TARIKH_MATI_P", tarikhmati_pemohon);
+			r.add("TARIKH_HANTAR", tarikh_hantar);
 			
 			
 			myLogger.info("Step 3 SYAFIQAH");
