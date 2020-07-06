@@ -2340,9 +2340,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			context.put("clearForm", "");
     			
     			vm = "app/ppt/frmBantahanPembatalanAP.jsp";    		
-    			
-    		
-    		}else if(submit.equals("upload_dokumen")){
+    	
+    	}else if(submit.equals("upload_dokumen")){
     			list = model.getMaklumatBantahanAP(id_permohonan,id_hakmilik,id_siasatan,id_warta);
     			String id_bantahan = "";
     			if(list.size()!=0){
@@ -2373,12 +2372,13 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 		     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan,jenisDokumen);
     	    		context.put("listDokumen", listDokumen);
     	    		context.put("listDokumen_size", listDokumen.size());	    		
-    			}else{				
+    	
+        		}else{				
     				context.put("listDokumen", "");
     				context.put("listDokumen_size", 0);
-    			}
-        
-        		//:::upload
+    			
+        		}      
+        		//upload
         		context.put("nama_skrin",getParam("nama_skrin"));
         		myLogger.info("-----------------NAMA SKRIN"+getParam("nama_skrin"));
         		

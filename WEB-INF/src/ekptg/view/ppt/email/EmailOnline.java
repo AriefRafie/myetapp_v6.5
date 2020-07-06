@@ -13,17 +13,26 @@ import ekptg.model.ppt.MyInfoPPTData;
 //import ekptg.model.htp.IHTPEmel;
 ////import ekptg.view.ppt.email.EkptgEmailSender;
 //import ekptg.intergration.EkptgEmailSender;
+import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.emel.EmelSemakanBean;
+import ekptg.model.utils.emel.IEmel;
 
 public class EmailOnline {
 	static Logger myLog = Logger.getLogger(ekptg.view.ppt.email.EmailOnline.class);
-	private ekptg.model.htp.IHTPEmel iEmel = null;
+	private ekptg.model.utils.emel.IEmel iEmel = null;
 
 	public static void main(String args []){
 		
 	}
 	
-	public void setEmail(String jenisSuburusan, String emailTO, String emailType, 
-								String nofail,String nama_projek,String tarikh_permohonan, String nama_kementerian, String userIdKementerian, String id_jawatan_user, String userID) throws Exception{	
+	public void setEmail_(String jenisSuburusan, String emailTO, String emailType, 
+								String nofail,String nama_projek,String tarikh_permohonan, String nama_kementerian, String userIdKementerian, String id_jawatan_user, String userID) 
+										throws Exception{	
+		EmailConfig ec = new EmailConfig();
+		String emelSubjek = ec.tajukSemakan +"Online Pengambilan Tanah";
+		//String kandungan = getEmelSemak().setKandungan(nama_projek,);
+		// = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hashUser.get("nama")));
+
 		String subject_emel = "";
 		if(emailType.equals("hantarSemakanPenarikan") || emailType.equals("hantarLulusPenarikan")){
 			subject_emel = "MyeTaPP : Pengesahan Permohonan Penarikan Balik Online ";
@@ -98,6 +107,60 @@ public class EmailOnline {
 		/*email.TO_CC = new String[1];		
 		email.TO_CC[0] = "nurul_aishah@si-protech.com.my";*/
 		email.sendEmail();
+	}
+	/**
+	 * 03/07/2020
+	 * @param jenisSuburusan
+	 * @param emailTO
+	 * @param emailType
+	 * @param nofail
+	 * @param nama_projek
+	 * @param tarikh_permohonan
+	 * @param nama_kementerian
+	 * @param idKementerian
+	 * @param idJawatan
+	 * @param userID
+	 * @param userName
+	 * @throws Exception
+	 * 
+	 */
+	public void setEmail(String jenisSuburusan, String emailTO, String emailType, String nofail,String nama_projek
+		,String tarikh_permohonan, String nama_kementerian, String idKementerian, String idJawatan, String userID
+		,String userName) throws Exception{	
+		EmailConfig ec = new EmailConfig();
+		String subject_emeld = ec.tajukSemakan;
+		String subject_emel = "";
+		String kandungan = getEmelSemak().setKandungan(nama_projek,userName);
+
+		if(emailType.equals("hantarSemakanPenarikan") || emailType.equals("hantarLulusPenarikan")){
+			subject_emel = "Penarikan Balik Online ";
+		}else if(emailType.equals("hantarSemakanPembatalan") || emailType.equals("hantarLulusPembatalan")){
+			subject_emel = "Pembatalan Online ";
+		}else if(emailType.equals("hantarSemakanBantahan") || emailType.equals("hantarLulusBantahan")){
+			subject_emel = "Bantahan Online ";
+		}else if(emailType.equals("mintaBayaranPampasan")){
+			subject_emel = "Supaya Menyediakan Bayaran Pampasan ";
+		}else{
+			subject_emel = "Online Pengambilan Tanah ";
+		}		
+		subject_emeld +=subject_emel;
+		//if(!getEmelSemak().checkEmail(userID).equals(""))
+		//	getIHTP().getErrorHTML("[ONLINE-HTP PERMOHONAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+		if(idJawatan.equals("20")||idJawatan.equals("24")){
+			ec.sendByRoleKJP(getEmelSemak().checkEmail(userID), "9", idKementerian, subject_emeld, kandungan);
+		}else if (idJawatan.equals("9")){
+			ec.sendByRoleKJP(getEmelSemak().checkEmail(userID), "4", idKementerian, subject_emeld, kandungan);
+		}else if (idJawatan.equals("4")){
+			subject_emel = ec.tajukHantarPermohonan + subject_emel;		
+			kandungan = getEmelSemak().setKandungan(nama_projek,nama_kementerian,nofail);
+			
+			//   (HTP)HQPenggunaPermohonan, (HTP)HQPengguna
+			//ec.hantarPermohonan(emailTO, "(HTP)HQPenggunaPermohonan", subject_emel, kandungan);
+			ec.sendByOnlineUser(emailTO, subject_emel, kandungan);
+			
+		}
+		
 	}
 	
 	public static String setMessageTable(String emailType,String nama_projek){
@@ -271,13 +334,13 @@ public class EmailOnline {
 		return bff.toString();
 		
 	}
-/*
-	private IHTPEmel getEmel(){
+
+	private IEmel getEmelSemak(){
 		if(iEmel == null)
-			iEmel = new HTPEmelPermohonanBean();
+			iEmel = new EmelSemakanBean();
 		return iEmel;
 
 	}
-*/
+
 	
 }
