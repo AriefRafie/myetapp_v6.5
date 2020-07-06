@@ -8,14 +8,14 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 import org.apache.log4j.Logger;
 
-import ekptg.model.IStatus;
-import ekptg.model.StatusBean;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.ppt.FrmPermohonanUPTData;
 /*
  * @author 
  * Muhamad Syazreen bin Yahaya
  */
+import ekptg.model.utils.status.IStatus;
+import ekptg.model.utils.status.StatusBean;
 
 public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
     				simpanCatatanTolak(session,id_permohonan);
     				
     				FrmPermohonanUPTData dt = new FrmPermohonanUPTData();
-    				Hashtable<String,String> hash  = dt.getPermohonan(id_permohonan);
+    				Hashtable<String,String> hash  = dt.getPermohonanPPT(id_permohonan);
     				hash.put("catatan", getParam("txtCatatan"));
     				hash.put("idUser", userId);
     				hash.put("langkah", "50");

@@ -1393,7 +1393,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanDeposit.jsp";
 
 		} else if ("borangO".equals(submit)) {
-			jenisDoc = "borangO";
 			selectedtab = "2";
 			context.put("selectedtab", selectedtab);
 
@@ -1408,13 +1407,13 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			if (list.size() != 0) {
 				Hashtable a = (Hashtable) list.get(0);
 				id_bantahan = (String) a.get("id_bantahan");
-
 				// get JENIS_DOKUMEN
 				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
 				myLogger.info("ID Bantahan borangO >>> "+id_bantahan);
 				myLogger.info("Jenis Dokumen borangO >>> "+jenisDoc);// Logger sahaja
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
+				
 			} else {
 				context.put("status", true);
 			}
@@ -1435,9 +1434,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 							"style=width:auto onChange=\"doChangeAlamatMahkamah();\" "));
 				}
 
-				context.put("selectBandarMahkamah",
-						HTML.SelectBandar("socBandarMahkamah", null, "style=width:auto disabled "));
-				context.put("selectNegeriMahkamah", HTML.SelectNegeri("socNegeri", null, "style=width:auto disabled "));
+				context.put("selectBandarMahkamah",HTML.SelectBandar("socBandarMahkamah", null, "style=width:auto disabled "));
+				context.put("selectNegeriMahkamah",HTML.SelectNegeri("socNegeri", null, "style=width:auto disabled "));
 
 				context.put("mode", "");
 				context.put("clearForm", "yes");
@@ -2500,7 +2498,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanPembatalan.jsp";
 
 		} else if ("upload_dokumen".equals(submit)) { // upload document function
-
 			list = model.getMaklumatBantahan(id_hakmilikpb, _MaxIdSiasatan, id_warta);
 			String id_bantahan = "";
 			if (list.size() != 0) {
@@ -2542,7 +2539,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanDokumen.jsp";
 
 		} else if ("kemaskini_dokumen".equals(submit)) {
-
 			String id_dokumen = getParam("id_dokumen");
 			view_details_dokumen = model.view_details_dokumen(id_dokumen);
 
@@ -2581,8 +2577,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			vm = "app/ppt/frmBantahanDokumen.jsp";
 
-		} else if ("tambah_dokumen".equals(submit)) {
-			System.out.println("jenisDoc = "+ jenisDoc);
+		} else if (submit.equals("tambah_dokumen")) {
 			list = model.getMaklumatBantahan(id_hakmilikpb, _MaxIdSiasatan, id_warta);
 			context.put("getMaklumatBantahan", list);
 			String id_bantahan = "";
@@ -2668,10 +2663,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			vm = "app/ppt/frmBantahanDokumen.jsp";
 
-		}
 		// :::upload
-		else if ("hapusDokumenMasterPerintah".equals(submit)) {
-
+		}else if ("hapusDokumenMasterPerintah".equals(submit)) {
 			selectedtab = "3";
 			context.put("selectedtab", selectedtab);
 
@@ -2705,10 +2698,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			vm = "app/ppt/frmBantahanSusulan.jsp";
 
-		}
 		// :::upload PPT-39(ii)
-		else if ("hapusDokumenMasterPembatalan".equals(submit)) {
-
+		}else if ("hapusDokumenMasterPembatalan".equals(submit)) {
 			selectedtab = "7";
 			context.put("selectedtab", selectedtab);
 
