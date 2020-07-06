@@ -202,6 +202,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		Vector listPenghutang = null;
 		Vector listPemiutang = null;
 		Vector listSaksi = null;
+		Vector listCheckPertukaran = null;
 		Vector listCheckPeguam = null;
 		Vector listPenghutangbyIDOB = null;
 		Vector listPentingbyIDOB = null;
@@ -315,7 +316,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			myLogger.info("Step 1 SYAFIQAH");
 			
 			String xxxxx = getParam("docSokongan");
-			addPertukaran(session);
+			// addPertukaran(session);
 			
 		} else if ("kembali_daftar_pemohon".equals(submit)) {
 			String tempid = getParam("idtemp");
@@ -2800,17 +2801,22 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("check_copyP", check_copyP);
 
 			clearContext();
-
-			if ("TukarPemohonview".equals(mode)) {
-				this.context.put("show_senarai_lapis_pertama", "yes");
-//				this.context.put("show_lapisan_bawah", "yes");
-//				this.context.put("show_tambah_waris1", "yes");
-//				this.context.put("button_Kembali1", "yes");
-			}
 			
 			String id = getParam("idPermohonan");
 			String id_Permohonansimati = getParam("id_Permohonansimati");
 			
+			logic.setCheckPertukaran(id);
+			listCheckPertukaran = logic.getCheckPertukaran();
+			this.context.put("listCheckPertukaran", listCheckPertukaran);
+			
+			myLogger.info("SYAFIQAH SEDIH: " + listCheckPertukaran.size()); 
+			
+			if(listCheckPertukaran.size() != 0) {
+				this.context.put("show_hantar_btn", "yes");
+			} else {
+				this.context.put("show_hantar_btn", "");
+			}
+
 			logic.setDataSimati(id);
 			listSimati = logic.getDataSimati();
 			this.context.put("listSimati", listSimati);
@@ -2850,6 +2856,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			Vector list_getListOBUpdate = null;
 			list_getListOBUpdate = logic_A.getListOBUpdate(id_Permohonansimati);
 			this.context.put("list_getListOBUpdate", list_getListOBUpdate);
+			
+			if ("TukarPemohonview".equals(mode)) {
+				this.context.put("show_senarai_lapis_pertama", "yes");
+//				this.context.put("show_lapisan_bawah", "yes");
+//				this.context.put("show_tambah_waris1", "yes");
+//				this.context.put("button_Kembali1", "yes");
+			}
+			else if ("hantarPertukaran".equals(mode)) {
+				String xxxxx = getParam("docSokongan");
+				addPertukaran(session);
+			}
 			
 			vm = "app/ppk/frmTukarPemohonSek8.jsp";
 			
@@ -5886,32 +5903,35 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 	
 	private void addPertukaran(HttpSession session) throws Exception {
-		String noFail = getParam("");
-		String id_simati = getParam("");
-		String nama_simati = getParam("");
-		String id_pemohonlama = getParam("");
-		String id_pemohonbaru = getParam("");
-		String sebab_tukar = getParam("");
-		String tarikh_mati = getParam("");
-		String nama_pemohonlama = getParam("");
-		String nama_pemohonbaru = getParam("");
-		String id_permohonansimati = getParam("");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		String currentDate = dateFormat.format(date);
+		
+		String idPermohonan = getParam("idPermohonan");
+		String noFail = getParam("noFail");
+		String id_simati = getParam("idSimati");
+		String id_pemohonlama = getParam("idPemohon");
+		String id_pemohonbaru = getParam("id_ob_pemohon");
+		String sebab_tukar = getParam("sebab");
+		String id_permohonansimati = getParam("idPermohonansimati");
+		String tarikhmati_pemohon = getParam("tarikh_mati");
 		
 		myLogger.info("Step 2 SYAFIQAH");
 		
 		Hashtable h = null;
 		h = new Hashtable();
 		
+		h.put("id_permohonan", idPermohonan);
+		h.put("no_fail", noFail);
 		h.put("id_simati", id_simati);
 		h.put("id_pemohonlama", id_pemohonlama);
 		h.put("id_pemohonbaru", id_pemohonbaru);
 		h.put("sebab_tukar", sebab_tukar);
-		h.put("tarikh_mati", tarikh_mati);
-		h.put("nama_pemohonlama", nama_pemohonlama);
-		h.put("nama_pemohonbaru", nama_pemohonbaru);
 		h.put("id_permohonansimati", id_permohonansimati);
+		h.put("tarikhmati_pemohon", tarikhmati_pemohon);
+		h.put("tarikh_hantar", currentDate);
 		
-		logiconline.insertPermohonanBantah(h);
+		logiconline.insertPertukaranPemohon(h);
 	}
 
 	private void updatePermohonan(HttpSession session) throws Exception {
