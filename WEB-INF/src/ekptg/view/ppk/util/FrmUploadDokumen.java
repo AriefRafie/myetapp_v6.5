@@ -127,6 +127,18 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			}			
 			dokumens = l.getLampiranSimati(idRujukan, null,getParam("jenisdokumen"));
 			// End
+	    }else if (actionPopup.equals("paparbantahan")){
+			disability = "";
+		   	readability = "";
+			//Lampiran
+			if (mode.equals("bilampiran")) {
+				RO_General = "";
+				jumLampiran = getParamAsInteger("jumlahlampiran");
+
+			}	
+			myLog.info("syafiqah lalu sini");
+			dokumens = l.getBantahanMaklumat(idRujukan, null,getParam("jenisdokumen"));
+			// End
 	    }else if (actionPopup.equals("paparHA")){
 			disability = "";
 		   	readability = "";
