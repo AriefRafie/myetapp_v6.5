@@ -516,6 +516,67 @@ public class FrmPrmhnnStatusPengunaOnlineData {
 	      if (db != null) db.close();
 	    }
 	}
+	
+	public static Vector getSenaraiBantahan(String search,String idMasuk,String role,String kppemohon,String kpsimati, String USER_LOGIN_SYSTEM, String flag_draff)throws Exception {
+		Db db = null;
+	    String sql = "";
+	    Format formatter = new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      
+	      sql = " SELECT DISTINCT B.ID_PEMBANTAH, B.NAMA_PEMBANTAH, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.BANDAR, B.NEGERI, "
+	      		+ "B.EMEL, B.NO_HP, B.SEBAB, B.ID_FAIL, TO_CHAR(B.NO_FAIL) AS NO_FAIL"+
+	    		  " FROM TBLPPKBANTAHANONLINE B"+
+	    		  " WHERE B.ID_PEMBANTAH = '"+idMasuk+"' ";
+	      
+	      // add pada id_status not in (21 - selesai, 169,47,70,152 - batal)
+	    
+	      if(!kpsimati.equals(""))
+    		{// CHECK KP SIMATI
+    		sql = sql + " AND MYID_SIMATI = '"+kpsimati+"' ";
+     		}
+    		
+    		if(!kppemohon.equals(""))
+    		{// CHECK KP PEMOHON
+    		sql = sql + " AND MYID_PEMOHON = '"+kppemohon+"' ";
+     		}
+		    
+		   // sql = sql + " ORDER BY TARIKH, P.TARIKH_MASUK DESC ";
+	
+	      myLogger.info("SQL LIST SYAFIQAH >> "+sql.toUpperCase());
+	      ResultSet rs = stmt.executeQuery(sql);
+	      Vector list = new Vector();
+	      Hashtable h;
+	      
+	      while (rs.next()) {
+	    	  h = new Hashtable();
+	    	  // h.put("namaP", rs.getString("TARIKH_MOHON")==null?"":rs.getString("TARIKH_MOHON"));
+	    	  // h.put("tarikh_mohon_online", rs.getString("TARIKH_MOHON_ONLINE")==null?"":rs.getString("TARIKH_MOHON_ONLINE")); 
+	    	  // h.put("tarikh", rs.getString("TARIKH")==null?"":rs.getString("TARIKH")); 
+	    	  
+	    	  
+	    	  h.put("id_pembantah", rs.getString("ID_PEMBANTAH")==null?"":rs.getString("ID_PEMBANTAH"));
+	    	  h.put("nama_pembantah", rs.getString("NAMA_PEMBANTAH")==null?"":rs.getString("NAMA_PEMBANTAH"));
+	    	  h.put("alamat1", rs.getString("ALAMAT1")==null?"":rs.getString("ALAMAT1"));
+	    	  h.put("alamat2", rs.getString("ALAMAT2")==null?"":rs.getString("ALAMAT2"));
+	    	  h.put("alamat3", rs.getString("ALAMAT3")==null?"":rs.getString("ALAMAT3"));
+	    	  h.put("poskod", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
+	    	  h.put("bandar", rs.getString("BANDAR")==null?"":rs.getString("BANDAR"));
+	    	  h.put("negeri", rs.getString("NEGERI")==null?"":rs.getString("NEGERI"));
+	    	  h.put("emel", rs.getString("EMEL")==null?"":rs.getString("EMEL"));
+	    	  h.put("no_hp", rs.getString("NO_HP")==null?"":rs.getString("NO_HP"));
+	    	  h.put("sebab", rs.getString("SEBAB")==null?"":rs.getString("SEBAB"));
+	    	  h.put("id_fail", rs.getString("ID_FAIL")==null?"":rs.getString("ID_FAIL"));
+	    	  h.put("no_fail", rs.getString("NO_FAIL")==null?"":rs.getString("NO_FAIL"));
+	    	  
+	    	  list.addElement(h);
+	      }
+	      return list;
+	    } finally {
+	      if (db != null) db.close();
+	    }
+	}
 	// syafiqah add ends
 	
 	//aishahidris tambah untuk list baru deraf 3rdOct2017

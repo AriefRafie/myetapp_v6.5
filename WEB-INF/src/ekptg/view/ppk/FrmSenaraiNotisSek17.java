@@ -6625,7 +6625,7 @@ System.out.println("vm syeksen 17==============="+vm);
 						h.put("id_masuk", usid);
 						//Simpan Tblppknotisobmst
 						//ServletContext application=getServletContext(); 
-						modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],id_perbicaraan);
+						modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],id_perbicaraan); 
 						//modelNotis.addHantarLaporanNotis(h,id_ob_hidden[i],id_perbicaraan, session, servletContext, request, response);
 						
 						}

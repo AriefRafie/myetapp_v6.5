@@ -290,6 +290,7 @@ public class BicaraInteraktifData {
 		return aktiviti;
 	}
 	
+		
 	
 	@SuppressWarnings("unchecked")
 	public Map viewPerbicaraan(HttpSession session, String id_perbicaraan, String id_permohonan, Db db)throws Exception {
@@ -6537,11 +6538,7 @@ public class BicaraInteraktifData {
 		
 		return html;		
 	}
-	
-	
-	
-	
-	
+		
 	public String htmlListPerubahan(HttpSession session,String formName,String ID_SIMATI,String ID_PERMOHONANSIMATI,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PEMOHON,String flagPrint,Db db) throws Exception {
 		String html = "";
 		if(flagPrint.equals("N"))
