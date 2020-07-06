@@ -1,507 +1,195 @@
-2020-06-08 06:16:47,587 - Left side ($listPembatalanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 130, column 36]
-2020-06-08 06:16:47,587 - Left side ($listPenarikanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 192, column 35]
-2020-06-08 06:16:47,587 - Left side ($listPembatalanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 192, column 101]
-2020-06-08 06:16:47,588 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 06:16:47,588 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 06:16:47,588 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 06:16:47,588 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 06:16:47,588 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 06:16:47,588 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 06:16:47,588 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-06-08 06:17:32,170 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 06:17:32,172 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 06:17:32,172 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 06:17:32,172 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 06:17:32,173 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 06:17:45,272 - ResourceManager : found app/online/manuUtama/frmMenuUtamaKJP.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 06:17:45,273 - Left side ($!notifikasi_inbox) of '>' operation has null value at app/online/manuUtama/frmMenuUtamaKJP.jsp[line 72, column 161]
-2020-06-08 06:17:55,606 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 06:17:55,606 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 06:17:55,607 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 06:17:55,607 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 06:17:55,607 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 06:17:55,607 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 06:17:55,607 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-06-08 06:19:25,031 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 06:19:25,031 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 06:19:25,031 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 06:19:25,031 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 06:19:25,031 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 06:19:25,031 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 06:19:25,031 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 06:19:25,032 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 06:19:25,540 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-06-08 06:19:31,828 - Left side ($listPenarikanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 68, column 35]
-2020-06-08 06:19:31,828 - Left side ($listPembatalanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 130, column 36]
-2020-06-08 06:19:31,828 - Left side ($listPenarikanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 192, column 35]
-2020-06-08 06:19:31,828 - Left side ($listPembatalanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 192, column 101]
-2020-06-08 06:19:31,828 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 06:19:31,828 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 06:19:31,828 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 06:19:31,828 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 06:19:31,828 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 06:19:31,828 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 06:19:31,828 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-06-08 06:19:44,288 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 06:19:44,288 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 06:19:44,288 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 06:19:44,288 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 06:19:44,288 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 06:19:44,288 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 06:19:44,288 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:44,288 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 06:19:44,288 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 06:19:44,289 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 06:19:44,402 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-06-08 06:19:46,292 - Left side ($listPenarikanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 68, column 35]
-2020-06-08 06:19:46,292 - Left side ($listPembatalanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 130, column 36]
-2020-06-08 06:19:46,292 - Left side ($listPenarikanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 192, column 35]
-2020-06-08 06:19:46,292 - Left side ($listPembatalanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 192, column 101]
-2020-06-08 06:19:46,293 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 06:19:46,293 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 06:19:46,293 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 06:19:46,293 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 06:19:46,293 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 06:19:46,293 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 06:19:46,293 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-06-08 06:20:49,914 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 06:20:49,915 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 06:20:49,915 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 06:20:49,915 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 06:20:49,916 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 06:20:50,088 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-06-08 06:20:50,090 - ResourceManager : found vtl/admin/errormessage.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 06:20:57,865 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 06:20:57,865 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 06:20:57,865 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 06:20:57,865 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:57,866 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 06:20:57,867 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 06:20:57,867 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 06:20:57,867 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 06:20:57,867 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 06:20:57,867 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 06:20:57,867 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 06:20:57,867 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 06:20:57,867 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 06:20:57,975 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-06-08 06:21:03,445 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 06:21:03,445 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 06:21:03,445 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 06:21:03,445 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 06:21:03,445 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 06:21:03,445 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 06:21:03,445 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 06:21:03,445 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 06:21:03,446 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 06:21:03,589 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-06-08 06:21:05,091 - Left side ($listPenarikanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 68, column 35]
-2020-06-08 06:21:05,091 - Left side ($listPembatalanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 130, column 36]
-2020-06-08 06:21:05,091 - Left side ($listPenarikanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 192, column 35]
-2020-06-08 06:21:05,091 - Left side ($listPembatalanExpired.size()) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppt/ListFailOnlineExpired.jsp[line 192, column 101]
-2020-06-08 06:21:05,092 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 06:21:05,092 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 06:21:05,092 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 06:21:05,092 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 06:21:05,092 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 06:21:05,092 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 06:21:05,092 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-06-08 19:38:42,801 - SimpleLog4JLogSystem initialized using logfile '/Users/mohamadrosli/Documents/workspace2019/myetapp/myetapp_v7/velocity.log'
-2020-06-08 19:38:42,802 - Initializing Velocity, Calling init()...
-2020-06-08 19:38:42,802 - *******************************************************************
-2020-06-08 19:38:42,802 - Starting Apache Velocity v1.7 (compiled: 2010-11-19 12:14:37)
-2020-06-08 19:38:42,802 - RuntimeInstance initializing.
-2020-06-08 19:38:42,802 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
-2020-06-08 19:38:42,802 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogSystem
-2020-06-08 19:38:42,802 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogSystem or necessary supporting classes in classpath.
-2020-06-08 19:38:42,808 - java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
-	at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Class.java:348)
-	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:73)
-	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:105)
-	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:154)
-	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:269)
-	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:871)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:262)
-	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:646)
-	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
-	at lebah.portal.velocity.VelocityEngineHolder.<init>(VelocityEngineHolder.java:26)
-	at lebah.portal.velocity.VelocityEngineHolder.getInstance(VelocityEngineHolder.java:34)
-	at lebah.portal.velocity.VServlet.initVelocity(VServlet.java:55)
-	at lebah.portal.DesktopController.doBody(DesktopController.java:135)
-	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
-	at lebah.portal.DesktopController.doGet(DesktopController.java:78)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:635)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:728)
-	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:467)
-	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:392)
-	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:311)
-	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
-	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:650)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
-	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1285)
-	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1119)
-	... 52 more
-
-2020-06-08 19:38:42,808 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
-2020-06-08 19:38:42,809 - LogSystem has been deprecated. Please use a LogChute implementation.
-2020-06-08 19:38:42,814 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-2020-06-08 19:38:42,833 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 19:38:42,835 - FileResourceLoader : initialization starting.
-2020-06-08 19:38:42,835 - Do unicode file recognition:  false
-2020-06-08 19:38:42,835 - FileResourceLoader : adding path '/Users/mohamadrosli/Documents/workspace2019/myetapp/myetapp_v7'
-2020-06-08 19:38:42,835 - FileResourceLoader : initialization complete.
-2020-06-08 19:38:42,884 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
-2020-06-08 19:38:42,884 - Default ResourceManager initialization complete.
-2020-06-08 19:38:42,890 - Loaded System Directive: org.apache.velocity.runtime.directive.Stop
-2020-06-08 19:38:42,897 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
-2020-06-08 19:38:42,898 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
-2020-06-08 19:38:42,901 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
-2020-06-08 19:38:42,902 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-2020-06-08 19:38:42,912 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-2020-06-08 19:38:42,914 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-2020-06-08 19:38:42,918 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
-2020-06-08 19:38:42,931 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-2020-06-08 19:38:43,030 - Created '20' parsers.
-2020-06-08 19:38:43,049 - Velocimacro : initialization starting.
-2020-06-08 19:38:43,050 - Velocimacro : adding VMs from VM library : VM_global_library.vm
-2020-06-08 19:38:43,136 - Velocimacro : added VM quietnull: source=VM_global_library.vm
-2020-06-08 19:38:43,144 - Velocimacro : added VM recurse: source=VM_global_library.vm
-2020-06-08 19:38:43,145 - Velocimacro : added VM callrecurse: source=VM_global_library.vm
-2020-06-08 19:38:43,145 - Velocimacro : added VM testbool: source=VM_global_library.vm
-2020-06-08 19:38:43,145 - ResourceManager : found VM_global_library.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 19:38:43,146 - Velocimacro : VM library registration complete.
-2020-06-08 19:38:43,146 - Velocimacro : allowInline = true : VMs can be defined inline in templates
-2020-06-08 19:38:43,146 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-2020-06-08 19:38:43,146 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-2020-06-08 19:38:43,146 - Velocimacro : autoload off : VM system will not automatically reload global library macros
-2020-06-08 19:38:43,146 - Velocimacro : Velocimacro : initialization complete.
-2020-06-08 19:38:43,146 - RuntimeInstance successfully initialized.
-2020-06-08 19:39:07,066 - ResourceManager : found vtl/main/header.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 19:39:07,102 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 19:39:07,103 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 19:39:07,103 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 19:39:07,103 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 19:39:07,108 - ResourceManager : found vtl/main/header_etapp.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 19:39:07,152 - ResourceManager : found vtl/main/greeting.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 19:39:07,157 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 19:39:07,166 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 19:39:07,166 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 19:39:07,167 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 19:39:07,167 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 19:39:07,167 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 19:39:07,167 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 19:39:07,167 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 19:39:07,396 - ResourceManager : found vtl/main/tabber.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 19:39:07,714 - ResourceManager : found vtl/main/moduler.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 19:39:08,157 - ResourceManager : found vtl/main/footer.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:00:00,305 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 21:00:00,306 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 21:00:00,306 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 21:00:00,307 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 21:00:00,308 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 21:00:00,308 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 21:00:00,308 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 21:00:00,309 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 21:00:00,309 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 21:00:00,309 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 21:00:00,309 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 21:00:00,309 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 21:00:00,309 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 21:00:00,309 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 21:00:00,309 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 21:00:00,310 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 21:00:00,310 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 21:00:00,310 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 21:00:00,310 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 21:00:00,310 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 21:00:00,310 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 21:00:00,311 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 21:00:01,125 - ResourceManager : found vtl/ajax/ajax_main.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:00:01,184 - ResourceManager : found app/online/manuUtama/frmMenuUtamaKJP.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:00:01,186 - Left side ($!notifikasi_inbox) of '>' operation has null value at app/online/manuUtama/frmMenuUtamaKJP.jsp[line 72, column 161]
-2020-06-08 21:00:01,349 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 21:00:01,350 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 21:00:01,350 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 21:00:01,350 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 21:00:01,350 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 21:00:01,350 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 21:00:01,350 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-06-08 21:28:34,806 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 21:28:34,810 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 21:28:34,810 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 21:28:34,810 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 21:28:34,814 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 21:28:34,814 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 21:28:34,814 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:34,816 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 21:28:34,816 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 21:28:34,816 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:34,816 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:34,816 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 21:28:34,816 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:34,816 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:34,816 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 21:28:34,817 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 21:28:34,818 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 21:28:34,818 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 21:28:34,818 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 21:28:34,818 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 21:28:34,818 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 21:28:34,818 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 21:28:39,529 - ResourceManager : found app/htp/utiliti/dashboard.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:28:39,533 - Left side ($!check_notifikasi_pindah) of '>' operation has null value at app/htp/utiliti/dashboard.jsp[line 619, column 61]
-2020-06-08 21:28:41,477 - ResourceManager : found app/integrasi/gis/javaScript.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:28:41,478 - Null reference [template 'app/integrasi/gis/javaScript.jsp', line 10, column 26] : $gisURL cannot be resolved.
-2020-06-08 21:28:41,478 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 21:28:41,478 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 21:28:41,478 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 21:28:41,478 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 21:28:41,478 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 21:28:41,478 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 21:28:41,478 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-06-08 21:28:44,025 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 21:28:44,025 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 21:28:44,025 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 21:28:44,025 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 21:28:44,026 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 21:28:44,026 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 21:28:44,027 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 21:28:44,028 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 21:28:44,028 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 21:28:44,028 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 21:28:44,028 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 21:28:44,029 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 21:28:44,029 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 21:28:45,829 - ResourceManager : found app/online/manuUtama/index.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:28:45,829 - Null reference [template 'app/online/manuUtama/index.jsp', line 299, column 49] : $jquery cannot be resolved.
-2020-06-08 21:28:46,048 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 21:28:46,048 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 21:28:46,048 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 21:28:46,048 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 21:28:46,048 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 21:28:46,048 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 21:28:46,048 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-06-08 21:34:42,396 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 21:34:42,398 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 21:34:42,398 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 21:34:42,399 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 21:34:42,401 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 21:34:42,402 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 21:34:42,403 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 21:34:42,404 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 21:34:42,404 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 21:34:42,404 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 21:34:42,404 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 21:34:42,404 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 21:34:42,404 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 21:34:44,050 - ResourceManager : found vtl/main/module_title.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:34:44,051 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
-2020-06-08 21:34:44,334 - Null reference [template 'app/online/manuUtama/index.jsp', line 299, column 49] : $jquery cannot be resolved.
-2020-06-08 21:34:44,432 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 21:34:44,433 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 21:34:44,433 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 21:34:44,433 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 21:34:44,433 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 21:34:44,433 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 21:34:44,433 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
-2020-06-08 21:35:41,181 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
-2020-06-08 21:35:41,183 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 21:35:41,183 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 21:35:41,183 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 21:35:41,184 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 21:35:41,185 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 21:36:59,181 - ResourceManager : found vtl/main/_portal.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:36:59,188 - ResourceManager : found portal/content.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:36:59,245 - ResourceManager : found portal/utama.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:36:59,245 - Null reference [template 'portal/utama.jsp', line 21, column 13] : $jquery cannot be resolved.
-2020-06-08 21:36:59,730 - Null reference [template 'portal/utama.jsp', line 21, column 13] : $jquery cannot be resolved.
-2020-06-08 21:37:05,865 - ResourceManager : found vtl/main/title.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
-2020-06-08 21:37:05,868 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
-2020-06-08 21:37:05,868 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
-2020-06-08 21:37:05,868 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
-2020-06-08 21:37:05,879 - Left side ($cnt_portal_username) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 40]
-2020-06-08 21:37:05,884 - Left side ($cnt_afterLogin) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 37, column 65]
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 101, column 39] : $cnt_afterLogin cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
-2020-06-08 21:37:05,884 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
-2020-06-08 21:37:05,885 - Left side (${session.getAttribute("rFormat")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/greeting.vm[line 423, column 60]
-2020-06-08 21:37:05,885 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
-2020-06-08 21:37:05,885 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
-2020-06-08 21:37:05,885 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
-2020-06-08 21:37:05,885 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
-2020-06-08 21:37:05,885 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
-2020-06-08 21:37:05,885 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
-2020-06-08 21:37:05,885 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
-2020-06-08 21:37:07,440 - Null reference [template 'app/online/manuUtama/index.jsp', line 299, column 49] : $jquery cannot be resolved.
-2020-06-08 21:37:07,471 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
-2020-06-08 21:37:07,471 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
-2020-06-08 21:37:07,471 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
-2020-06-08 21:37:07,471 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
-2020-06-08 21:37:07,471 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
-2020-06-08 21:37:07,471 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
-2020-06-08 21:37:07,471 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-07-03 17:13:53,620 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-07-03 17:13:53,620 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-07-03 17:13:53,620 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-07-03 17:13:53,620 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-07-03 17:13:53,621 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-07-03 17:13:53,621 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-07-03 17:13:53,633 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-07-03 17:13:53,633 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-07-03 17:13:53,633 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-07-03 17:13:53,633 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-07-03 17:13:53,633 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-07-03 17:13:53,644 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-07-03 17:13:53,987 - Left side ($size_M) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 5, column 14]
+2020-07-03 17:13:53,987 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 49, column 53] : $idSimati cannot be resolved.
+2020-07-03 17:13:53,987 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 49, column 53] : $idSimati cannot be resolved.
+2020-07-03 17:13:53,987 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 53, column 1]
+2020-07-03 17:13:53,987 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 54, column 1]
+2020-07-03 17:13:53,987 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 55, column 1]
+2020-07-03 17:13:53,987 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 56, column 1]
+2020-07-03 17:13:53,987 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 73, column 54] : $selectedTab cannot be resolved.
+2020-07-03 17:13:53,987 - Null reference [template 'app/ppk/headerppk.jsp', line 72, column 82] : $headerppk.id_permohonan_param cannot be resolved.
+2020-07-03 17:13:53,987 - RHS of #set statement is null. Context will not be modified. app/ppk/headerppk.jsp[line 78, column 1]
+2020-07-03 17:13:53,990 - Null reference [template 'app/ppk/headerppk.jsp', line 1085, column 9] : $jquery cannot be resolved.
+2020-07-03 17:13:53,990 - Null reference [template 'app/ppk/headerppk.jsp', line 1089, column 17] : $jquery cannot be resolved.
+2020-07-03 17:13:53,990 - Null reference [template 'app/ppk/headerppk.jsp', line 1093, column 9] : $jquery cannot be resolved.
+2020-07-03 17:13:53,990 - Null reference [template 'app/ppk/headerppk.jsp', line 1098, column 9] : $jquery cannot be resolved.
+2020-07-03 17:13:53,990 - Null reference [template 'app/ppk/headerppk.jsp', line 1106, column 9] : $jquery cannot be resolved.
+2020-07-03 17:13:53,990 - Null reference [template 'app/ppk/headerppk.jsp', line 1110, column 9] : $jquery cannot be resolved.
+2020-07-03 17:13:53,990 - Null reference [template 'app/ppk/headerppk.jsp', line 1127, column 25] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1131, column 33] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1135, column 25] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1140, column 25] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1148, column 25] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1152, column 25] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1160, column 9] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1195, column 9] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1197, column 45] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1197, column 112] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1200, column 21] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1200, column 75] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1215, column 45] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1219, column 50] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1226, column 45] : $jquery cannot be resolved.
+2020-07-03 17:13:53,991 - Null reference [template 'app/ppk/headerppk.jsp', line 1230, column 50] : $jquery cannot be resolved.
+2020-07-03 17:13:53,992 - ResourceManager : found app/ppk/ppk_calender.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-07-03 17:13:53,992 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 334, column 79] : $listob.idSimati cannot be resolved.
+2020-07-03 17:13:53,992 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 335, column 68] : $listob.idOb cannot be resolved.
+2020-07-03 17:13:53,997 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 396, column 231] : $txtJumBayaranPusaka cannot be resolved.
+2020-07-03 17:13:53,997 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 449, column 21] : $jquery cannot be resolved.
+2020-07-03 17:13:53,997 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 454, column 26] : $jquery cannot be resolved.
+2020-07-03 17:13:53,997 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 465, column 267] : $txtJumBayaranPusaka cannot be resolved.
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 941, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 942, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 943, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 944, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 945, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 946, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 947, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 948, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 949, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 950, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 951, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 952, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 953, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 941, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 942, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 943, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 944, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 945, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 946, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 947, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 948, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 949, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 950, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 951, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 952, column 1]
+2020-07-03 17:13:53,997 - RHS of #set statement is null. Context will not be modified. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 953, column 1]
+2020-07-03 17:13:53,997 - Left side ($id_bayaran_pusaka) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 972, column 27]
+2020-07-03 17:13:53,997 - Left side ($id_bayaran_baitulmal) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp[line 977, column 30]
+2020-07-03 17:13:53,998 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
+2020-07-03 17:13:53,998 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
+2020-07-03 17:13:53,998 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
+2020-07-03 17:13:53,998 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
+2020-07-03 17:13:53,998 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
+2020-07-03 17:13:53,998 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
+2020-07-03 17:13:53,998 - Null reference [template 'app/ppk/headerppk_script.jsp', line 683, column 1] : $jquery cannot be resolved.
+2020-07-03 17:13:54,013 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 2181, column 29] : $jquery cannot be resolved.
+2020-07-03 17:13:54,013 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 2212, column 32] : $jquery cannot be resolved.
+2020-07-03 17:13:54,013 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 2213, column 29] : $jquery cannot be resolved.
+2020-07-03 17:13:54,013 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 2235, column 29] : $jquery cannot be resolved.
+2020-07-03 17:13:54,034 - Null reference [template 'app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai17.jsp', line 3103, column 17] : $jquery cannot be resolved.
+2020-07-03 17:13:54,034 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-07-03 17:13:54,035 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-07-03 17:13:54,035 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-07-03 17:13:54,035 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-07-03 17:13:54,035 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-07-03 17:13:54,035 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-07-03 17:13:54,035 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-07-03 17:44:32,426 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-07-03 17:44:32,427 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-07-03 17:44:32,427 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-07-03 17:44:32,427 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-07-03 17:44:32,427 - Left side (${session.getAttribute("_portal_islogin")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/header.vm[line 42, column 52]
+2020-07-03 17:44:32,573 - Left side (${session.getAttribute("_portal_action")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/tabber.vm[line 17, column 98]
+2020-07-03 17:44:32,574 - Left side (${session.getAttribute("_portal_action")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/tabber.vm[line 17, column 98]
+2020-07-03 17:44:32,635 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-07-03 17:44:32,636 - ResourceManager : found app/utils/OnlineLogin.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-07-03 17:44:32,655 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-07-03 17:44:32,665 - ResourceManager : found app/blankSessionOut.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-07-03 17:44:40,004 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-07-03 17:44:40,004 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-07-03 17:44:40,004 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-07-03 17:44:40,004 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-07-03 17:44:40,005 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 85, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 211, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 221, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 231, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 252, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 262, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 431, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 442, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 548, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 564, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 617, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 699, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 753, column 39] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 754, column 40] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 759, column 40] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 763, column 39] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 764, column 40] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 769, column 40] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 773, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 774, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 779, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 785, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 786, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 791, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 797, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 798, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 803, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 809, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 810, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 815, column 20] : $row cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 873, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 1053, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,089 - Null reference [template 'app/ppk/dashboard.jsp', line 1061, column 55] : $queryString cannot be resolved.
+2020-07-03 17:44:40,134 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:40,134 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-07-03 17:44:40,134 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-07-03 17:44:40,134 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-07-03 17:44:40,134 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-07-03 17:44:40,134 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-07-03 17:44:40,134 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-07-03 17:44:40,578 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,582 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,598 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,628 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,634 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,638 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:40,681 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:44,391 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:44,932 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:47,498 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:47,824 - Null reference [template 'app/ppk/dashboard_mainstats.jsp', line 62, column 1] : $jquery cannot be resolved.
+2020-07-03 17:44:47,824 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:44:50,119 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:45:01,260 - Null reference [template 'app/ppk/dashboard_tab.jsp', line 63, column 9] : $jquery cannot be resolved.
+2020-07-03 17:45:01,261 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:45:09,525 - Null reference [template 'app/ppk/dashboard_showBorangB_stats.jsp', line 46, column 1] : $jquery cannot be resolved.
+2020-07-03 17:45:09,525 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:45:10,369 - Null reference [template 'app/ppk/dashboard_showCountTukarPegawai.jsp', line 12, column 1] : $jquery cannot be resolved.
+2020-07-03 17:45:10,369 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:45:15,558 - Null reference [template 'app/ppk/dashboard_showCountBicaraOnline.jsp', line 12, column 1] : $jquery cannot be resolved.
+2020-07-03 17:45:15,558 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:45:16,451 - Null reference [template 'app/ppk/dashboard_showCountHelpDesk.jsp', line 12, column 1] : $jquery cannot be resolved.
+2020-07-03 17:45:16,451 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-07-03 17:45:20,458 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
