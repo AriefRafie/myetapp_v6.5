@@ -68,6 +68,7 @@ public class FrmPrmhnnSek8InternalData {
 	private Vector listWarisOB = new Vector();
 	private Vector listWarisLapisanIdMati = new Vector();
 	private Vector listWarisLapisanIdMatiDelete = new Vector();
+	private Vector listCheckPertukaran = new Vector();
 	private Vector listCheckPeguam = new Vector();
 	private Vector listCheckPeguam_online = new Vector();
 	private Vector listPenghutangbyIDOB = new Vector();
@@ -95,6 +96,10 @@ public class FrmPrmhnnSek8InternalData {
 	// private Vector listcheckpemohonwaris = new Vector();
 	public Vector getCheckPeguam() {
 		return listCheckPeguam;
+	}
+	
+	public Vector getCheckPertukaran() {
+		return listCheckPertukaran;
 	}
 
 	public Vector getCheckPeguam_online() {
@@ -426,6 +431,41 @@ public Boolean sendNilaianHTA(String ID_PERMOHONAN, String ID_HTA, String JENIS_
 		}
 
 	}
+	
+	// syafiqah add
+	public void setCheckPertukaran(String id) throws Exception {
+		Db db = null;
+		listCheckPertukaran.clear();
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = "select pt.id_permohonan from tblppktukarpemohonline pt "
+					+ "where pt.id_permohonan = " + id;
+			System.out.println("syafiqah add :"+sql); 
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("id_permohonan", rs.getString("id_permohonan") == null ? "" : rs.getString("id_permohonan"));
+				listCheckPertukaran.addElement(h);
+			}
+
+		}catch (Exception re) {
+			myLogger.error("Error: ", re);
+			throw re;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
+	
+	// syafiqah add ends
 
 	public void setCheckPeguam_online(String id) throws Exception {
 		Db db = null;
@@ -8552,7 +8592,9 @@ System.out.println("TARIKH_SURAT_AKUAN=="+TARIKH_SURAT_AKUAN);
 			r.add("SYARAT_NYATA", syaratNyata);
 
 			sql = r.getSQLInsert("tblppkhtapermohonan");
+			myLogger.info("TEST : "+ sql);
 			stmt.executeUpdate(sql);
+			
 
 			conn.commit();
 
