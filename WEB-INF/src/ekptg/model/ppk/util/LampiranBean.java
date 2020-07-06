@@ -225,13 +225,18 @@ public class LampiranBean {
 			Connection con = db.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, idRujukan);
-			ps.setString(2, item.getName());
+			myLog.info("simpanLampiranSimati:sql="+ps.toString());
+		ps.setString(1, idRujukan);
+		myLog.info("simpanLampiranSimati2:sql="+ps.toString());
+		ps.setString(2, item.getName());
 			ps.setString(3, item.getContentType());
-			ps.setLong(4, item.getSize());
+			myLog.info("simpanLampiranSimati3:sql="+ps.toString());
+		ps.setLong(4, item.getSize());
 			ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
-			ps.setString(6, idUser);
-			//myLog.info("saveData:sql="+ps.toString());
+			myLog.info("simpanLampiranSimati4:sql="+ps.toString());
+	ps.setString(6, idUser);
+			//
+			myLog.info("simpanLampiranSimati5:sql="+ps.toString());
 			ps.executeUpdate();
 
 			con.commit();
@@ -372,7 +377,7 @@ public class LampiranBean {
 			sb.append(" onclick=\"paparLampiran("+mo.get("idDokumen")+"); return false;\"");
 			sb.append(" onkeypress=\"window.open(this.href); return false;\">"); 
 			//sb.append(" onclick=\"cetakImej("+mo.get("idDokumen")+"); return false;\""); 
-			sb.append(mo.get("namaFail"));
+			sb.append("<div class=\"pautan\">"+mo.get("namaFail")+"</div>");
 			if(dokumens.size()==1 || (i == (dokumens.size()-1) && dokumens.size() != 1) )
 				sb.append(" </a>");
 			else
