@@ -1,6 +1,7 @@
 package ekptg.view.ppk;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -10,6 +11,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +22,9 @@ import lebah.db.SQLRenderer;
 import lebah.portal.velocity.VTemplate;
 import lebah.util.DateUtil;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 
@@ -82,6 +88,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	
 	@Override
 	public Template doTemplate() throws Exception {
+		
+		String command = getParam("command");
 		
 		logic = new FrmPrmhnnSek8InternalData();
 		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
@@ -298,6 +306,16 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("daftar", "yes");
 			this.context.put("list2", list2);
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
+			
+		} else if ("onlineSub".equals(command)){
+			myLogger.info("syafiqah: TestSub");
+			vm = "app/ppk/frmTukarPemohonSek8.jsp";
+			
+		}else if("hantarPempetisyen".equals(command)) {
+			myLogger.info("Step 1 SYAFIQAH");
+			
+			String xxxxx = getParam("docSokongan");
+			addPertukaran(session);
 			
 		} else if ("kembali_daftar_pemohon".equals(submit)) {
 			String tempid = getParam("idtemp");
@@ -5521,8 +5539,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			} else {
 				this.context.put("listBandarTetapbyNegeri", "");
 			}
+			
+			myLogger.info("syafiqah id: "+ id);
 			//myLogger.info("mode-------------------------------------"+mode);
 			if ("Simatiview".equals(mode)) {
+				myLogger.info("syafiqah test"); 
 				/*
 				 * String id = getParam("idPermohonan"); String id2 =
 				 * getParam("idPemohon"); String id1 = getParam("idSimati");
@@ -5533,6 +5554,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				 */
 				this.context.put("readmode", disability1);
 				this.context.put("show_kemaskini_button", "yes");
+				
 
 			} else if ("batal_simati".equals(mode)) {
 				/*
@@ -5861,6 +5883,35 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		// FrmPrmhnnSek8SenaraiSemakInternalData frmonline = new
 		// FrmPrmhnnSek8SenaraiSemakInternalData();
 		logic_C.semakanDelete(idPermohonan);
+	}
+	
+	private void addPertukaran(HttpSession session) throws Exception {
+		String noFail = getParam("");
+		String id_simati = getParam("");
+		String nama_simati = getParam("");
+		String id_pemohonlama = getParam("");
+		String id_pemohonbaru = getParam("");
+		String sebab_tukar = getParam("");
+		String tarikh_mati = getParam("");
+		String nama_pemohonlama = getParam("");
+		String nama_pemohonbaru = getParam("");
+		String id_permohonansimati = getParam("");
+		
+		myLogger.info("Step 2 SYAFIQAH");
+		
+		Hashtable h = null;
+		h = new Hashtable();
+		
+		h.put("id_simati", id_simati);
+		h.put("id_pemohonlama", id_pemohonlama);
+		h.put("id_pemohonbaru", id_pemohonbaru);
+		h.put("sebab_tukar", sebab_tukar);
+		h.put("tarikh_mati", tarikh_mati);
+		h.put("nama_pemohonlama", nama_pemohonlama);
+		h.put("nama_pemohonbaru", nama_pemohonbaru);
+		h.put("id_permohonansimati", id_permohonansimati);
+		
+		logiconline.insertPermohonanBantah(h);
 	}
 
 	private void updatePermohonan(HttpSession session) throws Exception {
@@ -8116,6 +8167,53 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		}
 				
 	}
+	
+	private void uploadFiles(Db db,Connection conn, String nama_pemohon_lama) throws Exception {
+		myLogger.info("Baca uploadFiles:--------------"); 
+		String nama_pemohon_lama2 = nama_pemohon_lama;
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+	    ServletFileUpload upload = new ServletFileUpload(factory);
+	    List items = upload.parseRequest(this.request);
+	    Iterator itr = items.iterator();	   
+	    while (itr.hasNext()) {    	
+	      FileItem item = (FileItem)itr.next();
+	      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+	    	  System.out.println("item.getName = "+ item.getName());
+	    	  saveData(item,db,conn,nama_pemohon_lama2);
+	      }
+	    }
+	  }
+	
+	private void saveData(FileItem item,Db db,Connection conn, String nama_pemohon_lama2) throws Exception {
+		//Db db = null;
+	
+    try {
+    	db = new Db();
+
+    	Connection con = db.getConnection();
+    	con.setAutoCommit(false);
+    	String nama_pemohon_lama3 = nama_pemohon_lama2;
+    	String id_permohonansimati = getParam("id_permohonansimati_atheader");
+    	PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE (ID_PERMOHONANSIMATI = ? AND NAMA_PEMOHONLAMA = ?)");		
+    	System.out.println("+nama_pemohon_lama3+ " + nama_pemohon_lama3);
+    	System.out.println(con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE ID_PERMOHONANSIMATI = ?"));
+    	ps.setString(1,item.getName());
+    	ps.setBinaryStream(2,item.getInputStream(),(int)item.getSize());
+    	ps.setString(3,item.getContentType());
+    	//System.out.println("item.getInputStream = "+ item.getInputStream());
+    	//System.out.println("item.getSize = "+ item.getSize());
+    	//System.out.println("item.getContentType = "+ item.getContentType());
+    	ps.setString(4,id_permohonansimati);
+    	ps.setString(5,nama_pemohon_lama3);
+    	//ps.setString(4,getParam("id_permohonansimati_atheader"));
+    	myLogger.info("Baca SaveData:---------------"); 
+    	ps.executeUpdate();	
+    	myLogger.info("Baca SaveData 2:---------------"); 
+        con.commit();
+    } finally {
+	      if (db != null) db.close();
+    }
+}
 
 	private Hashtable<String,String> setParamValues(String negeri,String daerah,String mukim,String bandar
 			,String jenisHakmilik,String kat,String luas,String pemilikan){

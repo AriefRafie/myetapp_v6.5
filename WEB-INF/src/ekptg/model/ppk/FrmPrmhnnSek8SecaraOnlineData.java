@@ -472,7 +472,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 				db.close();
 		}
 	}
-
+	
 	public void insertOnlinePermohonan(Hashtable data) throws Exception {
 		// Azam add Transaction on 15.03.2010
 		Connection conn = null;
@@ -2918,6 +2918,136 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		}
 
 	}
+	
+	//syafiqah add 1/7/2020
+	public void insertPermohonanBantah(Hashtable data) throws Exception {
+		Db db = null;
+		Db db2 = null;
+		String sql = "";
+		try {
+			String id_pembantah = (String) data.get("id_pembantah");
+			String nama_pembantah = (String) data.get("nama_pembantah");
+			String alamat1 = (String) data.get("alamat1");
+			String alamat2 = (String) data.get("alamat2");
+			String alamat3 = (String) data.get("alamat3");
+			String poskod = (String) data.get("poskod");
+			String bandar = (String) data.get("bandar");
+			String negeri = (String) data.get("negeri");
+			String emel = (String) data.get("emel");
+			String no_hp = (String) data.get("noTel");
+			String sebab = (String) data.get("sebab");
+			String id_fail = (String) data.get("id_fail");
+			String no_fail = (String) data.get("no_fail");
+			String no_kp_baru = (String) data.get("no_kp_baru");
+			
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			r.add("ID_PEMBANTAH", id_pembantah);
+			r.add("NAMA_PEMBANTAH", nama_pembantah);
+			r.add("ALAMAT1", alamat1);
+			r.add("ALAMAT2", alamat2);
+			r.add("ALAMAT3", alamat3);
+			r.add("POSKOD", poskod);
+			r.add("BANDAR", bandar);
+			r.add("NEGERI", negeri);
+			r.add("EMEL", emel);
+			r.add("NO_HP", no_hp);
+			r.add("SEBAB", sebab);
+			r.add("ID_FAIL", id_fail);
+			r.add("NO_FAIL", no_fail);
+			r.add("NO_KP_BARU", no_kp_baru);
+			
+			
+			myLogger.info("Step 3 SYAFIQAH");
+			sql = r.getSQLInsert("TBLPPKBANTAHANONLINE");
+			System.out.println("TBLPPKBANTAHANONLINE-->>"+sql);
+			stmt.executeUpdate(sql);
+			
+			String sql2 = "";
+			sql2 = "UPDATE TBLPPKPERBICARAAN SET FLAG_BANTAHAN = 'Y', KETERANGAN_BANTAHAN = '"+sebab+"' \r\n" + 
+					"WHERE ID_PERBICARAAN = \r\n" + 
+					"(SELECT id_perbicaraan\r\n" + 
+					"  FROM tblppkperbicaraan\r\n" + 
+					" WHERE id_keputusanpermohonan IN (\r\n" + 
+					"          SELECT id_keputusanpermohonan\r\n" + 
+					"            FROM tblppkkeputusanpermohonan\r\n" + 
+					"           WHERE id_permohonan =\r\n" + 
+					"                    (SELECT id_permohonan\r\n" + 
+					"                       FROM tblppkpermohonan\r\n" + 
+					"                      WHERE id_fail =\r\n" + 
+					"                                 (SELECT id_fail\r\n" + 
+					"                                    FROM tblpfdfail\r\n" + 
+					"                                   WHERE no_fail = '"+no_fail+"'))) )";
+			
+			try {
+				db2 = new Db();
+				Statement stmt2  = db.getStatement();
+				ResultSet rs2 = stmt2.executeQuery(sql2);
+				
+			} finally {
+				if (db2 != null)
+					db2.close();
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+		
+	public void insertPertukaranPemohon(Hashtable data) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			String id_pembantah = (String) data.get("id_pembantah");
+			String nama_pembantah = (String) data.get("nama_pembantah");
+			String alamat1 = (String) data.get("alamat1");
+			String alamat2 = (String) data.get("alamat2");
+			String alamat3 = (String) data.get("alamat3");
+			String poskod = (String) data.get("poskod");
+			String bandar = (String) data.get("bandar");
+			String negeri = (String) data.get("negeri");
+			String emel = (String) data.get("emel");
+			String no_hp = (String) data.get("noTel");
+			String sebab = (String) data.get("sebab");
+			String id_fail = (String) data.get("id_fail");
+			String no_fail = (String) data.get("no_fail");
+			String no_kp_baru = (String) data.get("no_kp_baru");
+			
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			r.add("ID_PEMBANTAH", id_pembantah);
+			r.add("NAMA_PEMBANTAH", nama_pembantah);
+			r.add("ALAMAT1", alamat1);
+			r.add("ALAMAT2", alamat2);
+			r.add("ALAMAT3", alamat3);
+			r.add("POSKOD", poskod);
+			r.add("BANDAR", bandar);
+			r.add("NEGERI", negeri);
+			r.add("EMEL", emel);
+			r.add("NO_HP", no_hp);
+			r.add("SEBAB", sebab);
+			r.add("ID_FAIL", id_fail);
+			r.add("NO_FAIL", no_fail);
+			r.add("NO_KP_BARU", no_kp_baru);
+			
+			
+			myLogger.info("Step 3 SYAFIQAH");
+			sql = r.getSQLInsert("TBLPPKTUKARPEMOHONLINE");
+			System.out.println("TBLPPKTUKARPEMOHONLINE-->>"+sql);
+			stmt.executeUpdate(sql);
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// syafiqah add ends
 
 	public void kemaskiniHa(Hashtable data) throws Exception {
 		Db db = null;

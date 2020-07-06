@@ -136,15 +136,20 @@ padding:0 0.25em;
 	/* 	document.${formName}.actionPopup.value = "papar";
 		document.${formName}.hitButton.value = "hapus"; */
 		//document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=papar&hitButton=hapus&iDokumen="+iDokumen;
-		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){
+		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){ 
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;
-		}else{
-		if('paparHA'=='$!actionRefresh'){
-			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusHA&iDokumen="+iDokumen;
-		}else{
-			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=papar&hitButton=hapus&iDokumen="+iDokumen;
+		}else if('$!jenisdokumen' == '99203'){
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
+		}else if('$!jenisdokumen' == '99204'){
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
 		}
-	}
+		else{
+			if('paparHA'=='$!actionRefresh'){
+				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusHA&iDokumen="+iDokumen;
+			}else{
+				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=papar&hitButton=hapus&iDokumen="+iDokumen;
+			}
+		}
 		document.${formName}.enctype="multipart/form-data";
 	    document.${formName}.encoding="multipart/form-data";
 		document.${formName}.submit();
@@ -176,7 +181,13 @@ padding:0 0.25em;
 			actExt +="&actionPopup=$!actionPopup&hitButton=simpanlampiran&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
 
-		}else{
+		}else if('$!jenisdokumen' == '99204'){
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanlampiran&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
+
+		}
+		else{
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup="+document.${formName}.actionPopup.value
 									+"&hitButton="+document.${formName}.hitButton.value
 									+"&idHarta=$!idHarta"
