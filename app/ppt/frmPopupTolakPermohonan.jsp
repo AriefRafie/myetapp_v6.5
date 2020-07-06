@@ -120,7 +120,7 @@ function simpanCatatanTolak(id_permohonan,mode,jenisTolak) {
 			document.${formName}.command.value = "simpanCatatanTolak";
 			document.${formName}.formnew.value = "yes";
 		}
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupTolakPermohonan&jenisTolak="+jenisTolak;
+		document.${formName}.action = "?_portal_module=FrmPopupTolakPermohonan&jenisTolak="+jenisTolak+"&txtCatatan="+document.${formName}.txtCatatan.value;
 		document.${formName}.submit();
 		
 	}
