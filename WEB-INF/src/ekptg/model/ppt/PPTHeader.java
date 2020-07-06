@@ -1126,69 +1126,59 @@ public class PPTHeader {
 	}//close setDataHeader
 	
 	
-	public static void setDataHeaderLama(String id_permohonan)throws Exception {
-	    
-		dataHeader = new Vector();
-		
+	public static void setDataHeaderLama(String id_permohonan)throws Exception {	    
+		dataHeader = new Vector();		
 		Db db = null;
 	    dataHeader.clear();
 	    String sql = "";
 	    String flagLot = "";
 	    Hashtable getFlagLot = null;
-	   
-	   
-	    
-	    
+	   	    
 	    try{
-	    		db = new Db();
+	    	db = new Db();
 	    		
-	    		Statement stmt = db.getStatement();
-	    		if(!id_permohonan.equals(""))
-	    		{	    
+	    	Statement stmt = db.getStatement();
+	    	if(!id_permohonan.equals("")){	    
 	    	    myLogger.info("id_permohonan :::::::::"+id_permohonan);
 	    	    getFlagLot = getFlagLot(id_permohonan,db);		
 	    	    flagLot = getFlagLot.get("FLAG_REMOVE_LOG").toString();
 	    	    myLogger.info("getFlagLot ::::::::: "+getFlagLot.get("FLAG_REMOVE_LOG").toString());
-	    		}
+	    	}
 
-	    	    
-	    		if(!id_permohonan.equals(""))
-	    		{	    
+	    	if(!id_permohonan.equals("")){	    
 	    	    myLogger.info("id_permohonan :::::::::"+id_permohonan);
 	    	    getFlagLot = getFlagLot(id_permohonan,db);		
 	    	    flagLot = getFlagLot.get("FLAG_REMOVE_LOG").toString();
 	    	    myLogger.info("getFlagLot ::::::::: "+getFlagLot.get("FLAG_REMOVE_LOG").toString());
-	    		}
 	    		
-	    		if(flagLot.equals("") && !id_permohonan.equals(""))
-	    		{
+	    	}
+	    		
+	    	if(flagLot.equals("") && !id_permohonan.equals("")){
 	    		updateLOT(id_permohonan,db);
-	    		}
 	    		
+	    	}
 	    		
-	    		
-	      
-	    		sql = "SELECT DISTINCT (select count(a.id_borangk) from tblpptborangk a where a.id_permohonan = p.id_permohonan)as flag_status_borang_k, ";
-	    		sql += " (select count(b.id_permintaanukur) from tblpptpermintaanukur b, tblppthakmilik c where b.id_hakmilik(+) = c.id_hakmilik and c.id_permohonan(+) = p.id_permohonan)as flag_status_permintaanukur, ";
+	    	sql = "SELECT DISTINCT (select count(a.id_borangk) from tblpptborangk a where a.id_permohonan = p.id_permohonan)as flag_status_borang_k, ";
+	    	sql += " (select count(b.id_permintaanukur) from tblpptpermintaanukur b, tblppthakmilik c where b.id_hakmilik(+) = c.id_hakmilik and c.id_permohonan(+) = p.id_permohonan)as flag_status_permintaanukur, ";
 	    	
-	    		sql += " (select count(*) from Tblppthakmilik a ";
-	    		sql += " where nvl(a.flag_pembatalan_keseluruhan,0) <> 'Y' ";
-	    		sql += " and nvl(a.flag_penarikan_keseluruhan,0) <> 'Y' ";
-	    		sql += " and a.id_permohonan = p.id_permohonan)as totalHakmilik, ";
+	    	sql += " (select count(*) from Tblppthakmilik a ";
+	    	sql += " where nvl(a.flag_pembatalan_keseluruhan,0) <> 'Y' ";
+	    	sql += " and nvl(a.flag_penarikan_keseluruhan,0) <> 'Y' ";
+	    	sql += " and a.id_permohonan = p.id_permohonan)as totalHakmilik, ";
 	    		
-	    		sql += " (select count(*) from Tblppthakmilikborangk a, Tblppthakmilik b ";
-	    		sql += " where a.id_hakmilik = b.id_hakmilik ";
-	    		sql += " and nvl(b.flag_pembatalan_keseluruhan,0) <> 'Y' ";
-	    		sql += " and nvl(b.flag_penarikan_keseluruhan,0) <> 'Y' ";
-	    		sql += " and b.id_permohonan = p.id_permohonan ";
-	    		sql += " and b.flag_endosan_borangk is not null )as totalHakmilikBorangK, ";
+	    	sql += " (select count(*) from Tblppthakmilikborangk a, Tblppthakmilik b ";
+	   		sql += " where a.id_hakmilik = b.id_hakmilik ";
+	    	sql += " and nvl(b.flag_pembatalan_keseluruhan,0) <> 'Y' ";
+	    	sql += " and nvl(b.flag_penarikan_keseluruhan,0) <> 'Y' ";
+	    	sql += " and b.id_permohonan = p.id_permohonan ";
+	    	sql += " and b.flag_endosan_borangk is not null )as totalHakmilikBorangK, ";
 
-	    		sql += " (select count(c.id_award) "; 
-	    		sql += " from tblpptaward c, tblpptsiasatan d, tblppthakmilik e ";
-	    		sql += " where c.id_siasatan(+) = d.id_siasatan ";
-	    		sql += " and d.id_hakmilik(+) = e.id_hakmilik ";
-	    		sql += " and e.id_permohonan = p.id_permohonan ";
-	    		sql += " AND d.id_siasatan = (SELECT MAX(d1.id_siasatan) FROM TBLPPTSIASATAN d1 WHERE d1.ID_HAKMILIK = e.ID_HAKMILIK))as flag_status_pampasan, ";
+	    	sql += " (select count(c.id_award) "; 
+	    	sql += " from tblpptaward c, tblpptsiasatan d, tblppthakmilik e ";
+	    	sql += " where c.id_siasatan(+) = d.id_siasatan ";
+	    	sql += " and d.id_hakmilik(+) = e.id_hakmilik ";
+	    	sql += " and e.id_permohonan = p.id_permohonan ";
+	    	sql += " AND d.id_siasatan = (SELECT MAX(d1.id_siasatan) FROM TBLPPTSIASATAN d1 WHERE d1.ID_HAKMILIK = e.ID_HAKMILIK))as flag_status_pampasan, ";
 	    		
 	    		/**QUERY UNTUK PAGING*/
 	    		/**OPEN PAGING 2*/
@@ -1400,16 +1390,14 @@ public class PPTHeader {
 				sql += " AND p.id_endosan_borangk_ptd = rk2.id_pejabat(+) ";
 				sql += " AND p.id_permohonan = '"+id_permohonan+"'";
 	    	
-				myLogger.info(":::::::::::::::::::::::::::: MAIN HEADER:::::"+sql.toUpperCase());
-				
-	    		ResultSet rs = stmt.executeQuery(sql);
-	     
-	    		Hashtable h;
-
-	    		while (rs.next()) {
-	    	  
-	    			h = new Hashtable();
-	    			
+			myLogger.info(":::::::::::::::::::::::::::: MAIN HEADER:::::"+sql.toUpperCase());
+			ResultSet rs = stmt.executeQuery(sql);
+			//Hashtable<String,String> h;	
+			Hashtable h;	
+			while (rs.next()) {
+//				h = new Hashtable<String,String>();
+				h = new Hashtable();
+   			
 	    			//paging 2 - 13
 	    			h.put("flag_open_paging2", rs.getInt("flag_open_paging2")== 0?0:rs.getInt("flag_open_paging2"));
 	    			h.put("flag_open_paging3", rs.getInt("flag_open_paging3")== 0?0:rs.getInt("flag_open_paging3"));

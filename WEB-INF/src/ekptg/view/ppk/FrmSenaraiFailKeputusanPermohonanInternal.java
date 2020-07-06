@@ -26,6 +26,7 @@ import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8KeputusanPermohonanInternalData;
+import ekptg.model.ppk.FrmPrmhnnSek8KptsanBicaraData;
 import ekptg.model.ppk.FrmPrmhnnSek8SenaraiHTATHInternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8SenaraiSemakInternalData;
 import ekptg.model.ppk.FrmSenaraiFailInternalCarianData;
@@ -221,7 +222,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			//this.context.put("ViewHartaARB", listHartaARB);
 
 			String t_mohon = getParam("tarikh_mohon");
-			//System.out.println("t_mohon : " +t_mohon );
+
 			if (!t_mohon.equals("")) {
 				String september_mohon = "01/09/2009";
 				// /System.out.println("[check]1: " +t_mohon );
@@ -229,11 +230,9 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 				Date tar_mohon = df.parse(t_mohon);
 				Date sep_mohon = df.parse(september_mohon);
-				//System.out.print(" tar_mohon =  "+tar_mohon);
-				//System.out.print(" sep_mohon =  "+sep_mohon);
-				if (tar_mohon.before(sep_mohon)) {
 
-					//System.out.print(" is before1 ");
+				if (tar_mohon.before(sep_mohon)) {
+					// System.out.print(" is before ");
 					view_mode(session);
 					int eventStatus = 1;
 					this.context.put("EventStatus", eventStatus);
@@ -356,7 +355,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 							.getMaklumatMahkamahM();
 					this.context.put("listMaklumatMahkamahJ",
 							listMaklumatMahkamahM);
-					
+
 					this.context.put("eve", "");
 
 					this.context.put("setMode1", "");
@@ -392,18 +391,14 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					} else {
 						this.context.put("listBandarTetapbyNegeri", "");
 					}
-					//arief add Summary DIstribution Open
-					FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
-					Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
-					this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
-					//arief add Summary DIstribution Close
+
 					// headerppk_baru(session,id,"Y","","T");
 					vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 				}
 
 				// System.out.println("TARIKH MOHON:"+tar_mohon);
 			} else {
-				//System.out.print(" is before2 ");
+				// System.out.print(" is before ");
 				view_mode(session);
 				int eventStatus = 1;
 				this.context.put("EventStatus", eventStatus);
@@ -437,7 +432,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 						.getMaklumatMahkamahM();
 				this.context
 						.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
-				
+
 				this.context.put("eve", "");
 
 				this.context.put("setMode1", "");
@@ -806,7 +801,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-			
+
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -915,11 +910,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 			this.context.put("eve", 8);
 			this.context.put("eve_mah", "");
-			//arief add Summary DIstribution Open
-			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
-			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
-			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
-			//arief add Summary DIstribution Close
+
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
@@ -943,7 +934,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-			
+
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -1076,7 +1067,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-			
+
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -1204,11 +1195,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("jenis_pej_id", "");
 
 			headerppk_baru(session, getParam("idPermohonan"), "Y", "", "T");
-			//arief add Summary DIstribution Open
-			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
-			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
-			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
-			//arief add Summary DIstribution Close
+
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
@@ -1226,7 +1213,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-			
+
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -1367,11 +1354,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			} else {
 				this.context.put("listBandarTetapbyNegeri", "");
 			}
-			//arief add Summary DIstribution Open
-			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
-			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
-			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
-			//arief add Summary DIstribution Close
+
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 		
@@ -1548,7 +1531,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			Vector listMaklumatMahkamahJ = FrmPrmhnnSek8KeputusanPermohonanInternalData
 					.getMaklumatMahkamahJ();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahJ);
-			
+
 			Hashtable h = null;
 			h = new Hashtable();
 			Vector vv = new Vector();
@@ -1835,11 +1818,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("socNegeriWarisSurat",
 					getParam("socNegeriWarisSurat"));
 			this.context.put("pilih_negeri_ptd", getParam("pilih_negeri_ptd"));
-			//arief add Summary DIstribution Open
-			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
-			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
-			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
-			//arief add Summary DIstribution Close
+
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
@@ -2780,13 +2759,6 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
 
 			// vm = "app/ppk/frmPrmhnnSek8RujMahkamah.jsp";
-			
-			//arief add Summary DIstribution Open
-			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
-			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
-			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
-			//arief add Summary DIstribution Close
-			
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		} else if ("getMahkamah".equals(submit)) {
 
@@ -2945,11 +2917,6 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("eve_mah", "");
 
 			// vm = "app/ppk/frmPrmhnnSek8RujMahkamah.jsp";
-			//arief add Summary DIstribution Open
-			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
-			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
-			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
-			//arief add Summary DIstribution Close
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
@@ -3484,12 +3451,6 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			this.context.put("eve_mah", "");
 			// vm = "app/ppk/frmPrmhnnSek8RujMahkamah.jsp";
 
-			//arief add Summary DIstribution Open
-			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatSummaryDistribution(id);
-			Vector listMaklumatSummaryDistribution = FrmPrmhnnSek8KeputusanPermohonanInternalData.getDataSummaryDistribution();
-			this.context.put("listMaklumatSummaryDistribution",listMaklumatSummaryDistribution);
-			//arief add Summary DIstribution Close
-			
 			vm = "app/ppk/frmPrmhnnSek8KeputusanPermohonan.jsp";
 		}
 
@@ -3938,17 +3899,19 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			// System.out.println("cntid" + cntResult);
 			String ARB = getParam("ARB");
 			String id = getParam("idPermohonan");
+			
+			String checkSD = getParam("sorPenentuanBidangKuasa");
+			System.out.println("checkSD = "+checkSD);
 			if (bolehsimpan.equals("yes")) {
 				System.out.println("-------getSimpan_keputusan0----");
 				if (cntResult.equals("0")) {
 					System.out.println("-------getSimpan_keputusan1----");
 					System.out.println("-------ARB----"+ARB);
-					insertBorang(session);
-					//Vector checkARB = FrmPrmhnnSek8InternalData
-						//	.getSemakARB();
-					//Hashtable k = (Hashtable) checkARB.get(0);
-					//String checkARBResult = k.get("Amanah Raya Berhad").toString();
-					//if (checkARBResult.equals("0")) {
+					insertBorang(session,checkSD);
+					/*if((checkSD=="107")) {
+						insertSDTable(session);
+					}*/
+					
 					if (ARB == "YES")
 						{
 							checkdulusamadaARBtelahwujudataubelumInsert(session);
@@ -3956,9 +3919,29 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 						}
 					
 				} else {
+					/*if("107".equals(checkSD)) {
+						insertSDTable(session);
+					}
+					else
+					{*/
 					System.out.println("-------getSimpan_keputusan2----");
 					System.out.println("-------ARB----"+ARB);
-					updateBorang(session);
+					check_idkeputusan(session);
+					/*Vector checkIdKeputusan = FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.getSemakIdKeputusan();*/
+					/*Hashtable j = (Hashtable) checkIdKeputusan.get(0);*/
+					String idKeputusanPermohonan = j.get("cntid").toString();
+					System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
+					
+					check_tblppksd(idKeputusanPermohonan);
+					/*Vector checktblppksd = FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.getsemaktblppksd();*/
+					/*Hashtable k = (Hashtable) checktblppksd.get(0);*/
+					String cntResultppksd = k.get("cntid").toString();
+					
+					System.out.println("-------cntResultppksd----"+cntResultppksd);
+					
+					updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
 					if (ARB.equals("YES"))
 						{
 							System.out.println("-------ARB keputusan2----"+ARB);
@@ -3966,6 +3949,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 						}
 					//insertARB(session);
 					//updateARB(session);
+					//}
 				}
 			}
 			view_mode(session);
@@ -4145,6 +4129,19 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		String id = getParam("idPermohonan");
 		FrmPrmhnnSek8KeputusanPermohonanInternalData.semakId(id);
 	}
+	
+	
+	private void check_idkeputusan(HttpSession session) throws Exception {
+		String id = getParam("idPermohonan");
+		FrmPrmhnnSek8KeputusanPermohonanInternalData.semakIdKeputusan(id);
+	}
+	
+	private void check_tblppksd(String idKeputusanPermohonan) throws Exception {
+		
+		FrmPrmhnnSek8KeputusanPermohonanInternalData.semaktblppksd(idKeputusanPermohonan);
+	}
+	
+	
 
 	private void view_mahkamah(HttpSession session) throws Exception {
 		String idDaerah = getParam("socDaerah");
@@ -4173,11 +4170,28 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		h.put("id_Fail", getParam("id_Fail"));
 		FrmPrmhnnSek8KeputusanPermohonanInternalData.updateDataMahkamah(h);
 	}
+	
+	/*private void insertSDTable(HttpSession session) throws Exception {
 
-	private void insertBorang(HttpSession session) throws Exception {
+		
+		Hashtable h = null;
+		h = new Hashtable();
+		h.put("jenisSD", getParam("sorPenentuanBidangKuasa"));
+		h.put("txtCatatanSD", getParam("txtCatatanSD"));
+		h.put("IdPermohonan", getParam("idPermohonan"));
+		h.put("userId", session.getAttribute("_ekptg_user_id"));
+		h.put("id_Masuk", session.getAttribute("_ekptg_user_id"));
+		h.put("id_Fail", getParam("id_Fail"));
+		String uid = (String) session.getAttribute("_ekptg_user_id");
+		FrmPrmhnnSek8KeputusanPermohonanInternalData.insertSDTable(session, h,"8");
+		FrmPrmhnnSek8KptsanBicaraData.add_maklumatPerintah("99991111111",uid,"","","","","","","");
+	}*/
+
+	private void insertBorang(HttpSession session, String checkSD) throws Exception {
 
 		String check = getParam("sorPenentuanBidangKuasa");
 		String checkterus = getParam("sorPenentuanBidangKuasaTeruskan");
+		String tarikhsuratARB = getParam("tarikhsuratARB");
 		String ex = "";
 		if (checkterus != "")// ((check=="53" || check=="50" || check=="63"))
 		{
@@ -4195,17 +4209,19 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		h.put("tarikhTerimaNilaian", getParam("txdTarikhTerimaNilaian"));
 		h.put("keputusanBorangC", getParam("sorKeputusanBorangC"));
 		h.put("salinanArahan", getParam("salinanArahan"));
-		h.put("penentuanBidangKuasa", ex);
-		// h.put("penentuanBidangKuasaTeruskan",
-		// getParam("sorPenentuanBidangKuasaTeruskan"));
+		h.put("tarikhsuratARB", tarikhsuratARB);
+		if (checkSD == "107")
+		{
+			h.put("penentuanBidangKuasa", "107");
+		}
+		else
+		{
+			h.put("penentuanBidangKuasa", ex);
+		}
+
 		h.put("catatan", getParam("txtCatatan"));
 		h.put("IdPermohonan", getParam("idPermohonan"));
-
-		// System.out.println("nofailawal:"+getParam("nofailawal"));
-		// System.out.println("namapemohonawal:"+getParam("namapemohonawal"));
-		// System.out.println("tempatmohonawal:"+getParam("tempatmohonawal"));
-		// System.out.println("socDaerah:"+getParam("socDaerah"));
-		// System.out.println("socNegeri:"+getParam("socNegeri"));
+		h.put("txtCatatanSD", getParam("txtCatatanSD"));
 
 		// id_sta 151,152
 		h.put("nofailawal", getParam("nofailawal"));
@@ -4536,7 +4552,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 				h,"8");
 	}
 
-	private void updateBorang(HttpSession session) throws Exception {
+	private void updateBorang(HttpSession session, String checkSD, String idKeputusanPermohonan, String cntResultppksd) throws Exception {
 		// System.out.println("1111111 up:::"+getParam("sorPenentuanBidangKuasa"));
 		// System.out.println("2222222 up:::"+getParam("sorPenentuanBidangKuasaTeruskan"));
 
@@ -4550,6 +4566,8 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		String nf = "";
 		String pf = "";
 		String tf = "";
+		
+		
 
 		if (checkterus != "")// ((check=="53" || check=="50" || check=="63"))
 		{
@@ -4565,6 +4583,9 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 		Hashtable h = null;
 		h = new Hashtable();
+		
+    	myLogger.info("tarikhsuratARB = "+getParam("tarikhsuratARB"));
+    	h.put("tarikhsuratARB", getParam("tarikhsuratARB"));
 		h.put("tarikhHantarBorangB", getParam("txdTarikhHantarBorangB"));
 		h.put("tarikhTerimaBorangC", getParam("txdTarikhTerimaBorangC"));
 		h.put("tarikhHantarNilaian", getParam("txdTarikhHantarNilaian"));
@@ -4575,6 +4596,14 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		// getParam("sorPenentuanBidangKuasaTeruskan"));
 		h.put("catatan", getParam("txtCatatan"));
 		h.put("IdPermohonan", getParam("idPermohonan"));
+		if (checkSD == "107")
+		{
+			h.put("penentuanBidangKuasa", "107");
+		}
+		else
+		{
+			h.put("penentuanBidangKuasa", ex);
+		}
 
 		// System.out.println("nofailawal:"+getParam("nofailawal"));
 		// System.out.println("namapemohonawal:"+getParam("namapemohonawal"));
@@ -4587,10 +4616,13 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		h.put("namapemohonawal", getParam("namapemohonawal"));
 		h.put("tempatmohonawal", getParam("tempatmohonawal"));
 		h.put("tarikhTerimaSuratAkuan", getParam("salinanArahan2"));
-myLogger.info("Salinan arahan = " + getParam("salinanArahan2"));
+		myLogger.info("Salinan arahan = " + getParam("salinanArahan2"));
+		h.put("txtCatatanSD", getParam("txtCatatanSD"));
 		// id_sta 50
 		h.put("idDaerah", getParam("socDaerah"));
 		h.put("idNegeri", getParam("socNegeri"));
+		h.put("idKeputusanPermohonan", idKeputusanPermohonan);
+		h.put("cntResultppksd", cntResultppksd);
 		
 		h.put("tujuanPindah", getParam("tujuanPindah"));//razman add
 
