@@ -402,15 +402,15 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     	else 
     	if("addMaklumatTanah".equals(submit))
     	{
-    		//System.out.println("masukk");
+    		//myLogger.info("masukk");
     		//if (doPost.equals("true")) { //yati comment
-    			//System.out.println("axxxx");
+    			myLogger.info("addMaklumatTanah: ------");
     			//simpan data
         		add_maklumat_tanah(session);
      		//}
 
     		maklumatPageHakMilik(session,idpermohonan,noLOT);
-    		   
+    		
     		//form validation
     		context.put("semakTanah", "no");
     		
@@ -2113,7 +2113,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	private void add_maklumat_tanah(HttpSession session) throws Exception{
 	    
 			Hashtable h = new Hashtable();
-	    
+			
     		h.put("sorJenisRizab", "");
 	    	h.put("txtLain", "");
 	    	h.put("txtNoWartaRizab", "");	    	
@@ -2138,10 +2138,16 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	    	h.put("anggaran_luas", "");
 	    	h.put("socKategoriTanah", "");
 	    	
+//	    	PPT-03 Usop Tambah
+	    	myLogger.info("bangunan="+getParam("txtNoBangunan"));
+	    	h.put("txtNoBangunan", getParam("txtNoBangunan"));
+	    	h.put("txtNoTingkat", getParam("txtNoTingkat"));
+	    	h.put("txtNoPetak", getParam("txtNoPetak"));
+	    	
 	    	h.put("id_user", session.getAttribute("_ekptg_user_id"));
 	    	
 	    	FrmPermohonanUPTData.add_maklumat_tanah(h);
-	    	System.out.println("NO_LOT--"+h.put("txtnolot", getParam("txtnolot")));
+	    	myLogger.info("NO_LOT--"+h.put("txtnolot", getParam("txtnolot")));
 	    
 	   }//close add_maklumat_tanah
 	

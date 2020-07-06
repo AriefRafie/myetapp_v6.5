@@ -1111,7 +1111,7 @@ public class FrmPermohonanUPTData {
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();
 	    		String id_user = (String)data.get("id_user");
-	    	
+	    		
 	    		//seksyen 4 & 8
 	    		String id_permohonan = (String)data.get("id_permohonan");
 	    		String id_negeri = (String)data.get("negeri");
@@ -1128,7 +1128,7 @@ public class FrmPermohonanUPTData {
 	    		String txtLain = (String)data.get("txtLain");
 	    		String txtNoWartaRizab = (String)data.get("txtNoWartaRizab");
 	    		String txdTarikhWarta = (String)data.get("txdTarikhWarta");
-	  
+	    		
 	    		//seksyen 8
 	    		String id_jenishakmilik = (String)data.get("jenisHakMilik");	 
 	    		String no_hakmilik = (String)data.get("no_hakmilik");
@@ -1137,6 +1137,11 @@ public class FrmPermohonanUPTData {
 	    		String luas_lot = (String)data.get("luas_lot");
 	    		String luas_ambil = (String)data.get("anggaran_luas");	
 	    		String socKategoriTanah = (String)data.get("socKategoriTanah");
+	    		
+	    		//PPT-03 Usop tambah 
+	    		//String no_bangunan = (String)data.get("txtNoBangunan");
+//	    		String no_tingkat = (String)data.get("txtNoTingkat");
+//	    		String no_petak = (String)data.get("txtNoPetak");
 	    		
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 	    		
@@ -1164,11 +1169,16 @@ public class FrmPermohonanUPTData {
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);	 
 	    		
-	    		
-	    		
+//	    		PPT-03 Usop Tambah
+//	    		r.add("column_name", String.valueOf(data.get("")));
+	    		r.add("no_bangunan",String.valueOf(data.get("txtNoBangunan"))); 
+	    		r.add("no_tingkat", String.valueOf(data.get("txtNoTingkat")));
+	    		r.add("no_petak", String.valueOf(data.get("txtNoPetak")));
+//	    		r.add("no_tingkat",no_tingkat);
+//	    		r.add("no_petak",no_petak);
+	    		myLogger.info("Simpan maklumat no bangunan, tingkat dan petak");
 	    		
 	    		sql = r.getSQLInsert("tblppthakmilik");
-	    		
 	    		
 	    		myLogger.info("ADD HAKMILIK SEK 4 :"+sql.toUpperCase());
 	    		
