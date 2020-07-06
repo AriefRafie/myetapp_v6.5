@@ -286,7 +286,49 @@ public class LampiranBean {
 		}
 		return listLampiran;
 			    
-	}	
+	}
+	
+	// syafiqah add 2/7/2020
+	public Vector<Hashtable<String, String>> getBantahanMaklumat(String id, String iDokumen,String jenisDokumen) 
+			throws Exception {
+			Db db = null;
+			String sql = "";
+			Vector<Hashtable<String, String>> listLampiran = new Vector<Hashtable<String, String>>();
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+				r.add("D.ID_DOKUMEN");
+				r.add("D.NAMA_DOKUMEN");
+				r.add("D.FORMAT");
+				r.add("D.NO_RUJUKAN",id);
+				r.add("D.ID_JENISDOKUMEN",jenisDokumen);
+				if(iDokumen != null){
+					r.add("D.ID_DOKUMEN",iDokumen);
+				}
+				sql = r.getSQLSelect("TBLPPKDOKUMEN D");
+				myLog.info("syafiqah lalu sini pulak : "+sql);
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable<String, String> h;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable<String, String>();
+					h.put("bil",String.valueOf(bil));
+					h.put("idDokumen",rs.getString("id_dokumen"));
+					h.put("namaFail", Utils.isNull(rs.getString("nama_dokumen")));
+					h.put("jenisMime", Utils.isNull(rs.getString("format")));
+					listLampiran.addElement(h);
+					bil++;
+				      
+				}
+
+			} finally {
+				if (db != null) db.close();
+			}
+			return listLampiran;
+				    
+		}
+	
 	
 	public Vector<Hashtable<String, String>> getLampiranSimatii(String idSimati, String iDokumen,String jenisDokumen) 
 			throws Exception {

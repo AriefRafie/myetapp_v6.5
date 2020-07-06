@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
@@ -41,6 +44,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 	FrmHeaderPpk mainheader = new FrmHeaderPpk();
 	static Logger myLogger = Logger.getLogger(FrmPerintahSek8.class);
 	String userId = "";
+	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy");
 	
 	Utils utils = new Utils();
 	//String nofail = getParam("noFail3");
@@ -2318,4 +2322,5 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		this.context.put("list_sub_header","");
 		this.context.put("flag_jenis_vm","ajax");
 	}
+	
 }

@@ -29,6 +29,12 @@
 	#set($txtnopt=$maklumat_Hakmilik_Salin.no_pt)
 	#set($txtseksyen = $maklumat_Hakmilik_Salin.seksyen)
 	#set($txtCatatan=$maklumat_Hakmilik_Salin.catatan)	
+	
+	<!-- PPT-03 Baru -->
+	<!-- #set($txtNoBangunan=$maklumat_Hakmilik_Salin.no_bangunan)
+	#set($txtNoTingkat=$maklumat_Hakmilik_Salin.no_tingkat)
+	#set($txtNoPetak=$maklumat_Hakmilik_Salin.no_petak)-->
+
 #else
 	#set($txtNoHakmilik="")
 	#set($txtnolot="")
@@ -73,7 +79,7 @@
             #end
             
             <tr>
-            	<td><font color="red">*</font>Bandar/Pekan/Mukim</td>
+            	<td>Bandar/Pekan/Mukim <font color="red">*</font></td>
             	<td>:</td>
                 <td>$SelectMukim</td>
             </tr>
@@ -99,8 +105,23 @@
 				<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$txtNoHakmilik" size="12" maxlength="50"  ></td>
 			</tr>
 			
+			<!-- PPT-3 Baru -->
+			<tr>     
+                <td width="2%">
+                <div align="left">
+                	<span>No. Strata</span>
+                </div>
+                </td>
+                <td width="1%">:</td>
+                <td width="10%">
+                	<span>No.Bang</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Ting</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Petak</span>&nbsp;<input name="txtNoPetak" id="txtNoPetak" type="text" value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+  				</td>
+            </tr>
+			
             <tr>
-            	<td>No.PT</td>
+            	<td>No.PT <font color="red">*</font></td>
             	<td>:</td>
             	<td>$!SelectLot</td>
             </tr>
@@ -114,7 +135,7 @@
             
             
             <tr>
-            	<td>No.LOT</td>
+            	<td>No.LOT <font color="red">*</font></td>
             	<td>:</td>
                 <td>
                 <!-- defaultLOT() -->
@@ -269,7 +290,7 @@
             #end
             
             <tr>
-            	<td><font color="red">*</font>Bandar/Pekan/Mukim</td>
+            	<td>Bandar/Pekan/Mukim <font color="red">*</font></td>
             	<td>:</td>
                 <td>$selectMukim</td>
             </tr>
@@ -359,7 +380,7 @@
         	#end
         		
         		#if($semakTanah=="no")
-                <input name="cmdSimpan" type="button" value="Simpan" onClick="add_maklumat_tanah($id_permohonan)">
+                <input name="cmdSimpan" type="button" value="Simpan" onClick="add_maklumat_tanah('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!mode')">
            
                 #end
                 
@@ -502,7 +523,8 @@ function defaultLOT(){
 	}
 	
 }
-function add_maklumat_tanah(id_permohonan)
+
+function add_maklumat_tanah(id_permohonan,id_hakmilik,flagSubjaket,mode)
 {   
 	var alert_lot = "N";	
 	if (document.${formName}.check_lot == null || document.${formName}.check_lot == undefined) 
@@ -572,6 +594,7 @@ function add_maklumat_tanah(id_permohonan)
 	}
 	
 }
+
 function salin_hakmilik(id_permohonan,id_hakmilik_salin)
 {
 	document.${formName}.ScreenLocation.value = "top";
@@ -585,6 +608,7 @@ function salin_hakmilik(id_permohonan,id_hakmilik_salin)
 	//document.${formName}.id_hakmilikpb.value = "";	
 	document.${formName}.submit();	
 }
+
 function kemaskiniTanah() {
 
 	document.${formName}.ScreenLocation.value = "changeTanah";
