@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
+import ekptg.model.entities.Tblrujdaerah;
 
 //Updated on 17/8/2010
 public class FrmPrmhnnSek8SecaraOnlineData {
@@ -4491,11 +4492,12 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String sql2 = r5.getSQLInsert("tblrujsuburusanstatusfail");
 			stmtF.executeUpdate(sql2);
 
+
 			// db = new Db();
 			Statement stmtT = db.getStatement();
-			sql = "Update Tblppkpermohonan set NO_PERMOHONAN_ONLINE = '"
-					+ no_fail_online
-					+ "', TARIKH_MOHON_ONLINE = sysdate, id_status = 171, id_negerimhn = "
+			sql = "update tblppkpermohonan set "
+					+ "NO_PERMOHONAN_ONLINE = '"+ no_fail_online+"'"
+					+ ", TARIKH_MOHON_ONLINE = sysdate, id_status = 171, id_negerimhn = "
 					+ idnegeri + ",id_daerahmhn = " + iddaerah
 					+ ",ID_MASUK = '" + userid
 					+ "', TARIKH_MASUK = sysdate,  ID_KEMASKINI = '" + userid
@@ -4503,6 +4505,15 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 					+ idpermohonan + "'";
 			// System.out.println("sql-->>"+sql);
 			stmtT.executeUpdate(sql);
+			
+			Statement stmtFail = db.getStatement();
+			String noFail = getNoFail(db,String.valueOf(idnegeri),String.valueOf(iddaerah),X,getYear);
+			sql = "update tblpfdfail set "
+					+ "NO_FAIL = '"+ noFail+"'"
+					+ " where id_fail="+idFail
+					+ "";
+				stmtFail.executeUpdate(sql);
+
 
 		} finally {
 			if (db != null)
@@ -5304,4 +5315,31 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 				db.close();
 		}
 	}
+	
+	private String getNoFail(Db db,String idNegeri,String idDaerah,String XX,int getYear) throws Exception {
+		
+		String X = String.format("%04d",File.getSeqNo(db,2,382,0,Integer.parseInt(idNegeri),Integer.parseInt(idDaerah),false,false,getYear,0));
+		
+//		if (idDaerah.length() < 1){
+//			idDaerah = "0"+idDaerah;
+//		}else{
+//			idDaerah = idDaerah;
+//		}
+		Vector<Tblrujdaerah> vecDaerah = DB.getDaerahByIdDaerah(idDaerah);
+		Tblrujdaerah rd = vecDaerah.get(0);
+
+		if (idNegeri.length() < 1){
+			idNegeri = "0"+idNegeri;
+		}else{
+			idNegeri = idNegeri;
+		}
+//		if (negeri.equals("")){
+//			negeri = "0";
+//		}
+		String getFile = "JKPTG/PK/"+ idNegeri + "/"+ rd.getKodDaerah() + "/"+X+"/"+getYear;				
+		return getFile;
+		
+	}
+	
+	
 }
