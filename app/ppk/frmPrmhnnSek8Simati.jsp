@@ -44,15 +44,10 @@ resetOnBlur:false
 
 <body  onload="submitForm();jeniswaktu2();qryHowOld();calculateTarikhLahirSimati()" >
 <form name="f1" method="post" action=""  >
-
-<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-
- 
-<input type="hidden" name="v_tab" id="v_tab" value="" />
-<input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
- <input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
-
-
+	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+	<input type="hidden" name="v_tab" id="v_tab" value="" />
+	<input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
+ 	<input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
 
 #foreach($list in $View)
 #set($noFail = $list.noFail)
@@ -62,22 +57,17 @@ resetOnBlur:false
 
 #parse("app/ppk/paging_sek8.jsp")
 
-<input name="eventStatus" id="eventStatus" type="hidden" />
-
+	<input name="eventStatus" id="eventStatus" type="hidden" />
 
 #parse("app/ppk/bil_fail.jsp") 
 
-
-<table width="100%" border="0">
-
-
- <input type="hidden" name="command" value="">
- <input type="hidden" name="mode" value="">
- 
- <input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
- <input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$selectedTabtengah"/>
- <input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
- <input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
+	<table width="100%" border="0">
+		<input type="hidden" name="command" value="">
+	 	<input type="hidden" name="mode" value=""> 
+	 	<input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
+	 	<input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$selectedTabtengah"/>
+	 	<input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
+	 	<input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
 
 #foreach($list in $View)
     #set ($id = $list.idPermohonan)
@@ -85,20 +75,17 @@ resetOnBlur:false
     #set ($idSimati = $list.idSimati)
     #set($id_Status = $list.id_Status)
     
-    <input name="idPermohonanp" type="hidden"  value="$list.idPermohonan"/>
-     <input name="idpermohonan" type="hidden"  value="$id"/>
+    	<input name="idPermohonanp" type="hidden"  value="$list.idPermohonan"/>
+     	<input name="idpermohonan" type="hidden"  value="$id"/>
     
-    <input name="idPermohonan" type="hidden"  value="$id"/>
-     <input name="idPemohon" type="hidden"  value="$idPemohon"/>
-      <input name="idSimati" type="hidden"  value="$idSimati"/>
-       <input name="idtemp" type="hidden"  value="$id"/>
-       
-        
-<input name="id_Suburusanstatus" type="hidden"  value="$list.id_Suburusanstatus"/>
-<input name="id_Suburusanstatusfail" type="hidden"  value="$list.id_Suburusanstatusfail"/>
-<input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
-
-
+    	<input name="idPermohonan" type="hidden"  value="$id"/>
+     	<input name="idPemohon" type="hidden"  value="$idPemohon"/>
+      	<input name="idSimati" type="hidden"  value="$idSimati"/>
+       	<input name="idtemp" type="hidden"  value="$id"/>
+            
+		<input name="id_Suburusanstatus" type="hidden"  value="$list.id_Suburusanstatus"/>
+		<input name="id_Suburusanstatusfail" type="hidden"  value="$list.id_Suburusanstatusfail"/>
+		<input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
 
 #set($listnoFail = $list.noFail)
 #set($listidnegeri = $list.idnegeri)
@@ -114,11 +101,8 @@ resetOnBlur:false
  
 #end
 
-
-<tr>
-<td>
-
-
+		<tr>
+			<td>
 
 #parse("app/ppk/maklumat_sek8.jsp")
 
@@ -153,17 +137,25 @@ resetOnBlur:false
 
 
 #set($md=$listtarikhMohon)
-                    <input type="hidden" name="txdTarikhMohon" value="$listtarikhMohon" readonly="true"/>
-                     <input type="hidden" name="txtSeksyen" value="$listseksyen" readonly="true"/>
-                    <input type="hidden" name="txtNamaPemohon" value="$listnamaPemohon" readonly="true"/>
-            <input type="hidden" name="idSimati" value="$listidSimati" readonly="true"/>
+              	<input type="hidden" name="txdTarikhMohon" value="$listtarikhMohon" readonly="true"/>
+          	 	<input type="hidden" name="txtSeksyen" value="$listseksyen" readonly="true"/>
+             	<input type="hidden" name="txtNamaPemohon" value="$listnamaPemohon" readonly="true"/>
+            	<input type="hidden" name="idSimati" value="$listidSimati" readonly="true"/>
 
-</td>
-</tr>
+			</td>
+		</tr>
 
-  <tr>
-    <td>
-    <div id="TabbedPanels1" class="TabbedPanels">
+  		<tr>
+    		<td>
+    			<div id="div_warning" class="TabbedPanels_">
+    			
+				</div>
+			</td>	
+		</tr>		
+				
+  		<tr>
+    		<td>
+    			<div id="TabbedPanels1" class="TabbedPanels">
     <ul class="TabbedPanelsTabGroup">
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,0,0,0);SimatiView()" >PERMOHONAN</li>
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(1,0,0,0);HtaamView()">HARTA TAK ALIH</li>
