@@ -90,6 +90,64 @@ public class FrmTukaranStatus {
 		}
 	}
 	
+	public Vector tukarPemohonOnline(String id_permohonan) throws Exception {
+		list_sub = new Vector();
+		list_sub.clear();
+		Db db = null;
+		Hashtable sek = null;
+		String sql = "";
+		String seksyen = "";
+		String id_suburusan = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+	
+			sql = " SELECT * FROM TBLPPKTUKARPEMOHONLINE WHERE ID_PERMOHONAN = '"+id_permohonan+"'";
+			
+			myLogger.info("SENARAI TUKAR PEMOHON ONLINE :"+sql);
+			
+			
+			int bil = 0;
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				bil = bil + 1;
+				Hashtable h = new Hashtable();
+							
+				h.put("BIL", bil);
+				h.put("ADA", "ada");
+				if (rs.getString("ID_PEMOHONLAMA") == null) {
+					h.put("ID_PEMOHONLAMA", "");
+				} else {
+					h.put("ID_PEMOHONLAMA", rs.getString("ID_PEMOHONLAMA"));
+				}
+				
+				if (rs.getString("ID_PEMOHONBARU") == null) {
+					h.put("ID_PEMOHONBARU", "");
+				} else {
+					h.put("ID_PEMOHONBARU", rs.getString("ID_PEMOHONBARU"));
+				}
+				
+				if (rs.getString("SEBAB_TUKAR") == null) {
+					h.put("SEBAB_TUKAR", "");
+				} else {
+					h.put("SEBAB_TUKAR", rs.getString("SEBAB_TUKAR"));
+				}
+				
+					
+				list_sub.addElement(h);
+			}
+			return list_sub;
+		} catch (Exception er) {
+			myLogger.error(er);
+			throw er;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public void setMaklumatNota(String idDokumen) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -3930,6 +3988,46 @@ public Hashtable getMainFail_bicara_semula(String ID_FAIL) throws Exception {
 			} catch (Exception er) {
 				myLogger.error(er);
 				throw er;
+				} finally {
+					if (db != null)
+						db.close();
+				}
+			}
+			
+			public Hashtable IDpermohonanSimati2(String id_permohonan) throws Exception {
+				myLogger.info("IDpermohonanSimati");
+				list_IDpermohonanSimati = new Vector();
+				list_IDpermohonanSimati.clear();
+				Db db = null;
+				String sql = "";
+				Hashtable h = new Hashtable();
+			try {
+				 
+					db = new Db();
+					Statement stmt = db.getStatement();
+					SQLRenderer r = new SQLRenderer();
+					
+									
+					sql = " SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = "+id_permohonan;
+					
+					myLogger.info("SQL IDpermohonanSimati :"+sql);
+					
+				   
+					ResultSet rs = stmt.executeQuery(sql);
+					while (rs.next()) {
+						
+												
+						if (rs.getString("ID_SIMATI") == null) {
+							h.put("ID_SIMATI", "");
+						} else {
+							h.put("ID_SIMATI", rs.getString("ID_SIMATI"));
+						}
+						
+						
+						
+						//list_IDpermohonanSimati.addElement(h);
+					}
+					return h;
 				} finally {
 					if (db != null)
 						db.close();

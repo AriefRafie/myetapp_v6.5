@@ -5,8 +5,20 @@ tr.tr_class td {
 	color:white;
 }
 </style>
+#set($sebabTukar = "")
+#set($idPemohonBaharu = "")
 
+#set ($namaDoC = "")
+#foreach($listSupportingDoc in $ViewSupportingDoc)
+#set($namaDoC = $listSupportingDoc.NAMA_DOKUMEN)
+#end
 
+#if($ListTukarPemohonOnline.size() > 0)
+#foreach($ListTukarPemohonOnline in $ListTukarPemohonOnline)
+    		 #set( $idPemohonBaharu = $ListTukarPemohonOnline.ID_PEMOHONBARU )
+    		 #set( $sebabTukar = $ListTukarPemohonOnline.SEBAB_TUKAR )
+#end
+#end
 
 
 #foreach($listIDSimati in $IDSimati)
@@ -29,6 +41,16 @@ Semak Maklumat Pemohon</b></legend>
               
                 </td>
     		</tr>
+    		<!-- <tr>
+      			<td scope="row" align="right">Carian Fail Online : </td>
+      			<td width="70%"><select id="online" name="online" style="width:180px">
+  <option value="tidak">Tidak</option>
+  <option value="ya">Ya</option>
+ 
+</select>
+              
+                </td>
+    		</tr> -->
     		<tr>
       			<td scope="row"></td>
       			<td><input name="cmdSemakSub" id="cmdSemakSub" value="Semak" type="button" onClick="javascript:search_main_data_sub()">
@@ -360,7 +382,11 @@ Semak Maklumat Pemohon</b></legend>
          </td>
          
           <td valign="top"  align="center" >  
+          #if($list.ID_OB == $idPemohonBaharu)
+          <input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$list.ID_OB" checked>
+          #else
         <input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$list.ID_OB" >
+        #end
          </td>
           </tr>
        #end
@@ -381,7 +407,12 @@ Semak Maklumat Pemohon</b></legend>
      <table width="100%"  cellpadding="1" cellspacing="2" border="0">
      <tr>
      
-     <td><input type="radio" name="sebab" value="kematian">
+     <td>
+     #if($sebabTukar == "kematian")
+     	<input type="radio" name="sebab" value="kematian" checked>
+     #else
+     	<input type="radio" name="sebab" value="kematian">
+     #end
      <input type="hidden" name="id_permohonansimati" id="id_permohonansimati" value="$!getPemohonData2.ID_PERMOHONANSIMATI"/> 
      </td>
      <td> KEMATIAN </td>
@@ -389,14 +420,24 @@ Semak Maklumat Pemohon</b></legend>
      </tr>
      <tr>
      <td>
-     <input type="radio" name="sebab" value="kesihatan"> 
+     #if($sebabTukar == "kesihatan")
+     	<input type="radio" name="sebab" value="kesihatan" checked> 
+     #else
+     	<input type="radio" name="sebab" value="kesihatan"> 
+     #end
      </td>
      <td>MASALAH KESIHATAN</td>
      <td></td>
      </tr>
      <tr>
      <td></td>
+     #if ($namaDoC != '')
+     <td><input id="fileupload" name="fileupload" type="hidden" value="1"><input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($id_simati1)" />&nbsp;</td>
+     
+     #else
      <td>MUATNAIK DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" size="40"> </td>
+     #end
+         
      <td>
       </td>
       </tr>
@@ -459,7 +500,14 @@ check_format_kp_lama('simati','$!papar_list_simati.size()');
    
 <script >
 
-
+function doOpen(id) {
+	//alert('id : '+id);
+    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id+"&jenisDoc=99210";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
 	
 function search_main_data_sub()
 {
@@ -490,8 +538,8 @@ document.${formName}.command.value = "paparSub";
 }
 
 function simpanSub(id_fail,nama_butang)
-{
-	var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+{   //alert("simpanSub");
+	var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png", ".pdf"];
 	if(document.${formName}.fileupload.value == ""){
 		alert("Sila pilih \"Dokumen\" yang hendak dimuat naik terlebih dahulu.");
   		document.${formName}.fileupload.focus(); 
