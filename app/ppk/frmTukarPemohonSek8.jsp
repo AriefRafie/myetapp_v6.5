@@ -51,7 +51,7 @@
 <!--
 <body onload="submitForm();jeniswaktu2();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();check_pengenalan_simati_4_onload()" >
 -->
-<body onload="submitForm();calculateTarikhLahirWaris()" >
+<body onload="submitForm();" >
 <form id="form1" name="f1" method="post" action="">
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
@@ -139,14 +139,14 @@ Click me</a>
     <input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
     <input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
     #foreach($list in $View)
-    #set ($id = $list.idPermohonan)
+    #set ($idPermohonan = $list.idPermohonan)
     #set ($idPemohon = $list.idPemohon)
     #set ($idSimati = $list.idSimati)
     #set ($id_Status = $list.id_Status)
     #set ($id_fail_carian = $list.idFail)
     #set ($noFail = $list.noFail)
     <input name="idPermohonanp" type="hidden"  value="$list.idPermohonan"/>
-    <input name="idPermohonan" type="hidden"  value="$id"/>
+    <input name="idPermohonan" type="hidden"  value="$idPermohonan"/>
     <input name="idPemohon" type="hidden"  value="$idPemohon"/>
     <input name="idSimati" type="hidden"  value="$idSimati"/>
     #set($id_Simati=$idSimati)
@@ -414,28 +414,57 @@ Click me</a>
                       </tr>
                       
                       <!--  syafiqah add -->
+<!--                       <tr> -->
+<!--                       	<td> -->
+<!--                       		<fieldset> -->
+<!--                       			<legend>MAKLUMAT PENGGANTIAN</legend> -->
+<!--                       		</fieldset> -->
+<!--                       	</td> -->
+<!--                       </tr> -->
+                      
                       <tr>
                       	<td>
                       	<fieldset>
                       		<legend>SEBAB PENGGANTIAN</legend>
                       		 <table width="100%"  cellpadding="1" cellspacing="2" border="0">
+                      		 	<input type="hidden" name="noFail" id="noFail" value="$noFail"></input>
+                      		 	<input type="hidden" name="idSimati" id="idSimati" value="$idSimati"></input>
+                      		 	<input type="hidden" name="idPermohonansimati" id="idPermohonansimati" value="$id_Permohonansimati"></input>
+                      		 	<input name="idPermohonan" type="hidden"  value="$idPermohonan"/>
                       		 	<tr>
-     								<td><input type="radio" name="sebab" value="kematian"> 
-     								</td>
-     								<td>KEMATIAN </td>
+     								<td><input type="radio" name="sebab" id="kematian" value="kematian"></td>
+     								<td>KEMATIAN</td>
      								<td></td>
      							</tr>
      							<tr>
-	     							<td><input type="radio" name="sebab" value="kesihatan"></td>
+     								<td></td>
+     								<td><span class="style44">*</span> TARIKH KEMATIAN :&nbsp;<input type="text" name="tarikh_mati" id="tarikh_mati"> <a href="javascript:displayDatePicker('tarikh_mati',false,'dmy');">#parse("app/ppk/ppk_calender.jsp")</a></td>
+     								<td></td>
+     							</tr>
+     							<tr>
+	     							<td><input type="radio" name="sebab" id="kesihatan" value="kesihatan"></td>
 	     							<td>MASALAH KESIHATAN</td>
 	     							<td></td>
     							 </tr>
     							 <tr>
 								     <td></td>
-								     <td>MUATNAIK DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" size="40"> </td>
+								     <td>MUATNAIK DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')"> </td>
 								     <td></td>
       							</tr>
-							     #if($id_Status != "21")
+      							
+      						 #if($show_hantar_btn == "yes")
+      						 	<tr align="center">
+									<td></td>
+									<td>  
+									      <a href="#" onClick="javascript:cetakBorangAA('$!idPermohonan','$!id_fail_carian')">
+									       	<input type="button" value="Cetak Borang AA" />
+									    </a>
+<!-- 									      <font color="red"><b>Cetak Borang AA</b></font> -->
+									</td>
+     							</tr>
+     						#else
+     						
+     						 #if($id_Status != "21")
 							    <tr align="center">
 									<td></td>
 									<td>
@@ -450,6 +479,9 @@ Click me</a>
 									</td>
      							</tr>
      							#end
+     						
+     						#end	
+     							
      						</table>
           				</fieldset> 
                       	</td>
@@ -575,6 +607,8 @@ Click me</a>
 </form>
 </body>
 <script>
+
+
 
 function capaianIdentityWaris() {
 	document.f1.command.value = "capaianIdentityWaris";
@@ -4010,6 +4044,12 @@ tarikh_waris_saudara_negerisurat('txtUmurWaris','in')
 </script>
 <!-- ADD BY PEJE -->
 <script>
+function checkExist(){
+	var idSimati =  document.getElementById("idSimati").value;
+	alert(idSimati);
+}
+
+
 function calculateTarikhLahirWaris(){
 
 	if (document.f1.txtNoKPBaru1Waris.value != ""){
@@ -4069,6 +4109,40 @@ function defineStatusWarisByUmur(){
 	}
 }
 
+function checkMati() {
+	if(document.getElementById('kematian').checked) {
+		alert("mati");
+	}
+}
+
+function lampiran(idPermohonan,jenisUpload) {	
+	// console.log("syafiqah :"+idPermohonan);
+	jenisUpload = "paparlampiran";
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenSokongan&actionPopup="+jenisUpload+"&rujukan="+idPermohonan+"&flagOnline=$!flagOnline";
+    url +="&jenisdokumen=99210";
+		
+	//
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Lampiran';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+
+}
+
+function cetakBorangAA(idpermohonan,idfail) {
+    var url = "../servlet/ekptg.report.ppk.BorangAA?idPermohonan="+idpermohonan+"&idfail="+idfail;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
 function testSimpan(idSimati, id_permohonansimati, id_fail, no_fail, nama_butang) {
 	// console.log('id_ob: ', document.f1.id_ob_pemohon.value,' no fail: ',no_fail)
 	var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
@@ -4083,35 +4157,46 @@ function testSimpan(idSimati, id_permohonansimati, id_fail, no_fail, nama_butang
 		return;
 	}
 	
-	if(document.f1.fileupload.value == "") {
-		alert("Sila pilih \"Dokumen\" yang hendak dimuat naik terlebih dahulu.");
-		document.f1.fileupload.focus(); 
-		return;
-	}
+// 	if (document.f1.kematian.checked  && document.f1.tarikh_mati.value != "") {
+// 		alert("Sila masukkan Tarikh Mati terlebih dahulu."); 
+// 		return;
+// 	}
+	
+// 	if(document.f1.fileupload.value == "") {
+// 		alert("Sila pilih \"Dokumen\" yang hendak dimuat naik terlebih dahulu.");
+// 		document.f1.fileupload.focus(); 
+// 		return;
+// 	}
 	else {
 		input_box = confirm("Adakah anda pasti?");	
 		if (input_box == true) {
 			
-			var command = "&command=onlineSub"; 
-			var sebab2 = document.f1.sebab.value;
-			var id_ob_pemohon = document.f1.id_ob_pemohon.value;
-			var id_permohonansimati_atheader = id_permohonansimati;
-			var id_fail_carian = id_fail;
-			var txtNoFailSub = no_fail;
-			var data = "&id_fail_carian="+id_fail_carian+"&txtNoFailSub="+txtNoFailSub+"&id_ob_pemohon="+id_ob_pemohon+"&id_permohonansimati_atheader="+id_permohonansimati_atheader+"&sebab="+sebab2;
-			
-			// alert("Baca sini id_fail_carian --------" + id_fail_carian + "txtNoFailSub = "+txtNoFailSub+" id_ob_pemohon= "+id_ob_pemohon+" id_permohonansimati_atheader= "+id_permohonansimati_atheader+" sebab = "+sebab2);
-			
-			var actionItem = (command+data);
-	
-//			SaveScrollXY();        
-//			document.f1.id_fail_carian.value = id_fail;
-			document.f1.enctype = "multipart/form-data";
-			document.f1.encoding = "multipart/form-data";
-			document.f1.action = "?_portal_module=ekptg.view.ppk.FrmTukarPemohon"+actionItem;  
+			//baru 6/7/2020
+			document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon"; 
+			document.f1.method="POST";
+			document.f1.command.value="Tukarpemohon";
+			document.f1.mode.value="hantarPertukaran";
 			document.f1.submit();
-		
-			document.getElementById(nama_butang).value = "Sila Tunggu...";
+			
+			
+			//lama
+// 			var command = "&command=Tukarpemohon"; 
+// 			var sebab2 = document.f1.sebab.value;
+// 			var id_ob_pemohon = document.f1.id_ob_pemohon.value;
+// 			var id_permohonansimati_atheader = id_permohonansimati;
+// 			var id_fail_carian = id_fail;
+// 			var txtNoFailSub = no_fail;
+// 			var data = "&id_fail_carian="+id_fail_carian+"&txtNoFailSub="+txtNoFailSub+"&id_ob_pemohon="+id_ob_pemohon+"&id_permohonansimati_atheader="+id_permohonansimati_atheader+"&sebab="+sebab2;
+			
+// 			alert("Baca sini id_fail_carian --------" + id_fail_carian + "txtNoFailSub = "+txtNoFailSub+" id_ob_pemohon= "+id_ob_pemohon+" id_permohonansimati_atheader= "+id_permohonansimati_atheader+" sebab = "+sebab2);
+			
+//			var actionItem = (command+data);
+	
+// 			document.f1.enctype = "multipart/form-data";
+// 			document.f1.encoding = "multipart/form-data";
+// 			document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon"+actionItem;   
+// 			document.f1.submit();
+	
 		}
 		
 	}
