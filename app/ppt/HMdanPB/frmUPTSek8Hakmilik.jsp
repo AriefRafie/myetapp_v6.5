@@ -39,8 +39,8 @@
 		#set($txtSekatanKepentingan=$maklumat_Hakmilik_Salin.sekatan_kepentingan)
 		#set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)
 		
-		<!-- PPT-03 
-		#set($txtNoBangunan=$maklumat_Hakmilik_Salin.no_bangunan)
+		<!-- PPT-03  -->
+		<!-- #set($txtNoBangunan=$maklumat_Hakmilik_Salin.no_bangunan)
 		#set($txtNoTingkat=$maklumat_Hakmilik_Salin.no_tingkat)
 		#set($txtNoPetak=$maklumat_Hakmilik_Salin.no_petak)-->
         
@@ -142,12 +142,25 @@
 				<td width="1%">:</td>
 				<td width="75%">$!selectJenisHakmilik</td>
 			</tr>	
+			
 			<tr>
 				<td><font color="red">*</font></td>
-				<td>No. Hakmilik</td>
+				<td>No. Hakmilik </td>
 				<td>:</td>
 				<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50" ></td>
 			</tr>
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td> No. Strata</td>
+				<td>:</td>
+				<td>
+                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" class="$disabled" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" class="$disabled" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" class="$disabled" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+  				</td>
+			</tr>
+			
 			<tr>
 				<td>&nbsp;</td>
 				<td>Tarikh Daftar</td>
@@ -229,7 +242,7 @@
 			</tr>
             
             <tr>
-            	<td>&nbsp;</td>
+            	<td><font color="red">*</font></td>
             	<td>No.LOT</td>
             	<td>:</td>
                 <td>
@@ -362,8 +375,8 @@
 			</tr>
 			#end
 			
-			<!-- PPT-03-->
-			<tr>
+			<!-- PPT-03 Lama -->
+			<!-- tr>
 				<td>&nbsp;</td>
 				<td>No. Bangunan</td>
 				<td>:</td>
@@ -380,7 +393,25 @@
 				<td>No. Petak</td>
 				<td>:</td>
 				<td><input type="text" name="txtNoPetak" id="txtNoPetak" value="" size="12" maxlength=""100""   ></td>
-			</tr>
+			</tr -->
+			
+			<!-- PPT-3 sama macam atas tapi inline -->
+			<!-- tr>
+  				<td width="1%"  >
+				</td>				        
+                <td width="20%">
+                <div align="left">
+                	<span>No. Strata</span>
+                </div>
+                </td>
+                <td width="1%">:</td>
+                <td width="100%">
+                	<span>No.Bang</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Ting</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Petak</span>&nbsp;<input name="txtNoPetak" id="txtNoPetak" type="text" value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+  				</td>
+            </tr -->
+			
 			
         </table>
      </fieldset>	
@@ -812,7 +843,7 @@
 			#end
 			
 			 <!-- PPT-03  -->
-			<tr>
+			<!-- tr>
 				<td><font color="red">$!M</font></td>
 				<td>No. Bangunan</td>
 				<td>:</td>
@@ -829,6 +860,18 @@
 				<td>No. Petak</td>
 				<td>:</td>
 				<td><input $disability $disabilityx type="text" name="txtNoPetak" id="txtNoPetak" value="$!txtNoPetak" size="12" maxlength="50"   ></td>
+			</tr -->
+			
+			<!-- PPT-03 Usop tambah -->
+			<tr>
+				<td>&nbsp;</td>
+				<td> No. Strata</td>
+				<td>:</td>
+				<td>
+                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" $disability $disabilityx  id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" $disability $disabilityx  id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" $disability $disabilityx  id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+  				</td>
 			</tr>
 			
         </table>
@@ -1922,12 +1965,10 @@ function viewHM(idHakmilik,mode){
 function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,mode){
 	
 	var alert_lot = "N";	
-	if (document.${formName}.check_lot == null || document.${formName}.check_lot == undefined) 
-	{	
+	if (document.${formName}.check_lot == null || document.${formName}.check_lot == undefined) {	
 	alert_lot = "N";	
-	}else
-	{
-	alert_lot =	document.${formName}.check_lot.value;
+	}	else	{
+		alert_lot =	document.${formName}.check_lot.value;
 	}
 	
 	

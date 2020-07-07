@@ -1195,7 +1195,7 @@ public class UtilHTML {
 	 * @throws Exception
 	 */
 	public static String selectSuburusanLaporan(
-		String idUrusan,String selectName, Long selectedValue,String disability) 
+		String idUrusan,String selectName, String selectedValue,String disability) 
 		throws Exception {
 		return selectSuburusanLaporan(idUrusan, selectName, selectedValue,disability, null);
 	}
@@ -1213,7 +1213,7 @@ public class UtilHTML {
 	 * @throws Exception
 	 */
 	public static String selectSuburusanLaporan(
-		String idUrusan,String selectName, Long selectedValue,String disability,String jsFunction) 
+		String idUrusan,String selectName, String selectedValue,String disability,String jsFunction) 
 		throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		try {
@@ -1224,17 +1224,24 @@ public class UtilHTML {
 				sb.append(jsFunction);
 			sb.append(" > ");
 			String s_ = "";
-			if(String.valueOf(selectedValue).equals("0"))
-				s_ = "selected";
+			String optVal = "";
+			String optLabel ="";
+			
+			if(idUrusan.equals("3")) {
+				optVal = "7,17,18";
+				optLabel = "SEMUA PAJAKAN";
+				if(selectedValue.equals(optVal))
+					s_ = "selected";
+			}
 
 			sb.append("<option value=\"-1\">SILA PILIH</option>\n");
-			sb.append("<option " + s_ + "  value=\"0\">SEMUA PAJAKAN</option>\n");
+			sb.append("<option " + s_ + "  value=\""+optVal+"\">"+optLabel+"</option>\n");
 			Vector<?> v = DB.getSubUrusanByUrusan(idUrusan);
 			Tblrujsuburusan f = null;
 			String s = "";
 			for (int i = 0; i < v.size(); i++) {
 				f = (Tblrujsuburusan) v.get(i);
-				if (f.getIdSuburusan().equals(selectedValue)) {
+				if (String.valueOf(f.getIdSuburusan()).equals(selectedValue)) {
 					s = "selected";
 				} else {
 					s = "";
@@ -1381,7 +1388,7 @@ public class UtilHTML {
 	}
 	
 	public static String SelectAgensiLaporan(String selectName,
-			String idKementerian, Long selectedValue, String disability,
+			String idKementerian, String selectedValue, String disability,
 			String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		try {
@@ -1392,7 +1399,7 @@ public class UtilHTML {
 				sb.append(jsFunction);
 			sb.append(" > ");
 			String s_ = "";
-			if(String.valueOf(selectedValue).equals("0"))
+			if(selectedValue.equals("0"))
 				s_ = "selected";
 
 			sb.append("<option value=\"-1\">SILA PILIH</option>\n");

@@ -1,6 +1,7 @@
 package ekptg.view.ppk;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -10,6 +11,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +22,9 @@ import lebah.db.SQLRenderer;
 import lebah.portal.velocity.VTemplate;
 import lebah.util.DateUtil;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 
@@ -82,6 +88,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	
 	@Override
 	public Template doTemplate() throws Exception {
+		
+		String command = getParam("command");
 		
 		logic = new FrmPrmhnnSek8InternalData();
 		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
@@ -194,6 +202,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		Vector listPenghutang = null;
 		Vector listPemiutang = null;
 		Vector listSaksi = null;
+		Vector listCheckPertukaran = null;
 		Vector listCheckPeguam = null;
 		Vector listPenghutangbyIDOB = null;
 		Vector listPentingbyIDOB = null;
@@ -298,6 +307,16 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("daftar", "yes");
 			this.context.put("list2", list2);
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
+			
+		} else if ("onlineSub".equals(command)){
+			myLogger.info("syafiqah: TestSub");
+			vm = "app/ppk/frmTukarPemohonSek8.jsp";
+			
+		}else if("hantarPempetisyen".equals(command)) {
+			myLogger.info("Step 1 SYAFIQAH");
+			
+			String xxxxx = getParam("docSokongan");
+			// addPertukaran(session);
 			
 		} else if ("kembali_daftar_pemohon".equals(submit)) {
 			String tempid = getParam("idtemp");
@@ -2782,17 +2801,22 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("check_copyP", check_copyP);
 
 			clearContext();
-
-			if ("TukarPemohonview".equals(mode)) {
-				this.context.put("show_senarai_lapis_pertama", "yes");
-//				this.context.put("show_lapisan_bawah", "yes");
-//				this.context.put("show_tambah_waris1", "yes");
-//				this.context.put("button_Kembali1", "yes");
-			}
 			
 			String id = getParam("idPermohonan");
 			String id_Permohonansimati = getParam("id_Permohonansimati");
 			
+			logic.setCheckPertukaran(id);
+			listCheckPertukaran = logic.getCheckPertukaran();
+			this.context.put("listCheckPertukaran", listCheckPertukaran);
+			
+			myLogger.info("SYAFIQAH SEDIH: " + listCheckPertukaran.size()); 
+			
+			if(listCheckPertukaran.size() != 0) {
+				this.context.put("show_hantar_btn", "yes");
+			} else {
+				this.context.put("show_hantar_btn", "");
+			}
+
 			logic.setDataSimati(id);
 			listSimati = logic.getDataSimati();
 			this.context.put("listSimati", listSimati);
@@ -2832,6 +2856,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			Vector list_getListOBUpdate = null;
 			list_getListOBUpdate = logic_A.getListOBUpdate(id_Permohonansimati);
 			this.context.put("list_getListOBUpdate", list_getListOBUpdate);
+			
+			if ("TukarPemohonview".equals(mode)) {
+				this.context.put("show_senarai_lapis_pertama", "yes");
+//				this.context.put("show_lapisan_bawah", "yes");
+//				this.context.put("show_tambah_waris1", "yes");
+//				this.context.put("button_Kembali1", "yes");
+			}
+			else if ("hantarPertukaran".equals(mode)) {
+				String xxxxx = getParam("docSokongan");
+				addPertukaran(session);
+			}
 			
 			vm = "app/ppk/frmTukarPemohonSek8.jsp";
 			
@@ -3232,796 +3267,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			dataParam.put("bolehSimpan",bolehsimpan);
 			dataParam.put("idUser",idUser);
 			getHA().getHarta(mode, dataParam, logic, request, session, context);
-//			if ("view_harta_alih".equals(mode)) {
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				listppkhta = logic_B.getDataHta();
-//				logic_B.setDataHta(id);
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati, idUser);
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
-//
-//				this.context.put("showbuttonkembali", "yes");
-//				this.context.put("showbuttontambah", "yes");
-//				this.context.put("EventStatus", 1);
-//
-//			}else if ("tambah_harta".equals(mode)) {
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//				String eventstatus = getParam("eventStatus");
-//
-//				socJenisha = getParam("socJenisHartaAlih");
-//				this.context.put("socJenisHa", socJenisha);
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				// FrmPrmhnnSek8SenaraiHTATHInternalData
-//				// frmPrmhnnSek8SenaraiHTATHInternalData = new
-//				// FrmPrmhnnSek8SenaraiHTATHInternalData();
-//				listppkhta = logic_B.getDataHta();
-//				logic_B.setDataHta(id);
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati, idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				this.context.put("negeri", "");
-//				this.context.put("daerah", "");
-//				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
-//				this.context.put("norujukan", "");
-//				this.context.put("nosijil", "");
-//				this.context.put("bilunit", "");
-//				this.context.put("nilaiseunit", "");
-//				this.context.put("agensi", "");
-//				this.context.put("nama_saham", "");
-//				this.context.put("txtAlamat1", getParam("txtAlamat1"));
-//				this.context.put("txtAlamat2", getParam("txtAlamat2"));
-//				this.context.put("txtAlamat3", getParam("txtAlamat3"));
-//
-//				this.context.put("txtPoskod", getParam("txtPoskod"));
-//				this.context.put("negeri", getParam("socNegeriHtaam"));
-//				this.context.put("daerah", getParam("socDaerahHtaam"));
-//				this.context.put("bhgnmati1", getParam("txtBhgnSimati1"));
-//				this.context.put("bhgnmati2", getParam("txtBhgnSimati2"));
-//
-//				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-//
-//				this.context.put("nilaitarikhmati",getParam("txtNilaiTarikhMati"));
-//				this.context.put("nilaitarikhmohon",getParam("txtNilaiTarikhMohon"));
-//				this.context.put("catatan", getParam("txtCatatan"));
-//				this.context.put("butiran", getParam("butiran"));
-//				
-//				String jh = "0";
-//				jh = getParam("socJenisHartaAlih");
-//				int jj = 0;
-//				if (jh != null && jh != "" && jh != "0") {
-//					jj = Integer.parseInt(jh);
-//				} else {
-//					jj = 0;
-//				}
-//
-//				if (jj > 0) {
-//					this.context.put("showadd", "1");
-//				} else {
-//					this.context.put("showadd", "0");
-//
-//				}
-//
-//				int idne = 0;
-//				if (!"".equals(getParam("socNegeriHtaam"))
-//						&& !"0".equals(getParam("socNegeriHtaam"))) {
-//					idne = Integer.parseInt(getParam("socNegeriHtaam"));
-//
-//				} else {
-//					idne = 0;
-//
-//				}
-//
-//				if (jh != "0" && jh != "") {
-//					if (idne != 0) {
-//						listnegeribydaerah = logic_A.getListDaerahbyNegeri(idne);
-//						this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//					} else {
-//						this.context.put("readmodedaerah", "");
-//						this.context.put("listDaerahbyNegeri", "");
-//					}
-//
-//				}else {
-//
-//					this.context.put("readmodedaerah", "");
-//					this.context.put("listDaerahbyNegeri", "");
-//				}
-//				this.context.put("EventStatus", eventstatus);
-//			
-//			}else if ("tambah_harta_baru".equals(mode)) {
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//
-//				this.context.put("EventStatus", 0);
-//				this.context.put("barula", "yes");
-//				this.context.put("id", id);
-//				this.context.put("id1", id1);
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				logic_B.setDataHta(id);
-//				listppkhta = logic_B.getDataHta();
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati, idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				this.context.put("negeri", "");
-//				this.context.put("daerah", "");
-//				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
-//				this.context.put("norujukan", "");
-//				this.context.put("nosijil", "");
-//				this.context.put("bilunit", "");
-//				this.context.put("nilaiseunit", "");
-//				this.context.put("agensi", "");
-//				this.context.put("txtAlamat1", "");
-//				this.context.put("txtAlamat2", "");
-//				this.context.put("txtAlamat3", "");
-//
-//				this.context.put("txtPoskod", "");
-//				this.context.put("nama_saham", "");
-//				this.context.put("negeri", "");
-//				this.context.put("daerah", "");
-//				this.context.put("bhgnmati1", "");
-//				this.context.put("bhgnmati2", "");
-//				this.context.put("nilaitarikhmati", "");
-//				this.context.put("nilaitarikhmohon", "");
-//				this.context.put("catatan", "");
-//				this.context.put("butiran", "");
-//				this.context.put("readmodedaerah", "");
-//
-//				this.context.put("FLAG_DAFTAR", "");
-//
-//			}else if ("simpan_harta".equals(mode)) {
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//				String eventstatus = getParam("eventStatus");
-//				if (bolehsimpan.equals("yes")) {
-//					addHa(session);
-//					this.context.put("appear_skrin_info", "simpan");
-//				}
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				logic_B.setDataHta(id);
-//				listppkhta = logic_B.getDataHta();
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati,idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				this.context.put("showbuttonkembali", "yes");
-//				this.context.put("showbuttontambah", "yes");
-//				this.context.put("tutup", "yes");
-//				this.context.put("EventStatus", eventstatus);
-//				this.context.put("id", id);
-//				this.context.put("id1", id1);
-//				this.context.put("id2", id2);
-//
-//			} else if ("batal_harta".equals(mode)) {
-//
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//				String idha = getParam("idha");
-//				String eventstatus = getParam("eventStatus");
-//
-//				logic_A.setSelectedDataHa(mati, idha);
-//				selectedppkha = logic_A.getSelectedDataHa();
-//				this.context.put("DataHa", selectedppkha);
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				logic_B.setDataHta(id);
-//				listppkhta = logic_B.getDataHta();
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati, idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				this.context.put("showbuttontambah", "yes");
-//				this.context.put("showadd", "1");
-//				this.context.put("EventStatus", eventstatus);
-//				this.context.put("id", id);
-//				this.context.put("id1", id1);
-//				this.context.put("id2", id2);
-//
-//			} else if ("edit_harta".equals(mode)) {
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//				String eventstatus = getParam("eventStatus");
-//
-//				String idha = getParam("idha");
-//
-//				this.context.put("id", id);
-//				this.context.put("id1", id1);
-//				this.context.put("id2", id2);
-//				this.context.put("idha", idha);
-//
-//				logic_A.setSelectedDataHa(mati, idha);
-//				selectedppkha = logic_A.getSelectedDataHa();
-//				this.context.put("DataHa", selectedppkha);
-//
-//				Hashtable b = (Hashtable) selectedppkha.get(0);
-//				String nn = b.get("negeri").toString();
-//				if (nn != "" && nn != "0") {
-//					int idn = Integer.parseInt(nn);
-//
-//					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-//					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//				} else {
-//					this.context.put("readmodedaerah", "");
-//					this.context.put("listDaerahbyNegeri", "");
-//				}
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				logic_B.setDataHta(id);
-//				listppkhta = logic_B.getDataHta();
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati, idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				listdaerah = logic_A.getListDaerah();
-//				this.context.put("listDaerahbyNegeri", listdaerah);
-//
-//				this.context.put("showbuttontambah", "yes");
-//				this.context.put("showadd", "1");
-//				this.context.put("tutup", "yes");
-//				// this.context.put("EventStatus", eventstatus);
-//				this.context.put("EventStatus", 3);
-//
-//			} else if ("kemaskini_harta".equals(mode)) {
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//
-//				String idha = getParam("idha");
-//
-//				logic_A.setSelectedDataHa(mati, idha);
-//				selectedppkha = logic_A.getSelectedDataHa();
-//				this.context.put("DataHa", selectedppkha);
-//
-//				Hashtable b = (Hashtable) selectedppkha.get(0);
-//				String nn = b.get("negeri").toString();
-//				if (nn != "" && nn != "0") {
-//					int idn = Integer.parseInt(nn);
-//					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-//					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//				} else {
-//					this.context.put("readmodedaerah", "");
-//					this.context.put("listDaerahbyNegeri", "");
-//				}
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				logic_B.setDataHta(id);
-//				listppkhta = logic_B.getDataHta();
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati, idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				this.context.put("id", id);
-//				this.context.put("id2", id2);
-//				this.context.put("idha", idha);
-//				this.context.put("tutup", "yes");
-//				this.context.put("EventStatus", 3);
-//				this.context.put("id1", id1);
-//				this.context.put("showbuttontambah", "yes");
-//				this.context.put("showadd", "1");
-//
-//			} else if ("update_harta".equals(mode)) {
-//				if (bolehsimpan.equals("yes")) {
-//					updateHa(session);
-//					this.context.put("appear_skrin_info", "kemaskini");
-//				}
-//
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//				String eventstatus = getParam("eventStatus");
-//				String idha = getParam("idha");
-//
-//				logic_A.setSelectedDataHa(mati, idha);
-//				selectedppkha = logic_A.getSelectedDataHa();
-//				this.context.put("DataHa", selectedppkha);
-//
-//				Hashtable b = (Hashtable) selectedppkha.get(0);
-//
-//				String nn = b.get("negeri").toString();
-//
-//				if (nn != "" && nn != "0") {
-//					int idn = Integer.parseInt(nn);
-//
-//					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-//					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//				}
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				logic_B.setDataHta(id);
-//				listppkhta = logic_B.getDataHta();
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati, idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				this.context.put("id", id);
-//				this.context.put("id1", id1);
-//				this.context.put("id2", id2);
-//				this.context.put("idha", idha);
-//				this.context.put("tutup", "yes");
-//				// this.context.put("EventStatus", eventstatus);
-//				this.context.put("EventStatus", 3);
-//				this.context.put("showbuttontambah", "yes");
-//				this.context.put("showadd", "1");
-//
-//			} else if ("hapus_harta".equals(mode)) {
-//
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//				String eventstatus = getParam("eventStatus");
-//				String idha = getParam("idha");
-//				delete_mode_ppkha(session, mati, idha);
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				logic_B.setDataHta(id);
-//				listppkhta = logic_B.getDataHta();
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati, idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				this.context.put("showbuttonkembali", "yes");
-//				this.context.put("showbuttontambah", "yes");
-//				this.context.put("id", id);
-//				this.context.put("id1", id1);
-//				this.context.put("idha", idha);
-//				this.context.put("EventStatus", eventstatus);
-//
-//			} else if ("negerichange".equals(mode)) {
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//				String eventstatus = getParam("eventStatus");
-//
-//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
-//
-//				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-//				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//
-//				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
-//				this.context.put("norujukan", getParam("txtNoRujukan"));
-//				this.context.put("nosijil", getParam("txtNoSijil"));
-//				this.context.put("bilunit", getParam("txtBilUnit"));
-//				this.context.put("nilaiseunit", getParam("txtNilaiSeunit"));
-//				this.context.put("agensi", getParam("txtAgensi"));
-//				this.context.put("txtAlamat1", getParam("txtAlamat1"));
-//				this.context.put("txtAlamat2", getParam("txtAlamat2"));
-//				this.context.put("txtAlamat3", getParam("txtAlamat3"));
-//				this.context.put("txtPoskod", getParam("txtPoskod"));
-//				this.context.put("negeri", getParam("socNegeriHtaam"));
-//				this.context.put("daerah", getParam("socDaerahHtaam"));
-//				this.context.put("bhgnmati1", getParam("txtBhgnSimati1"));
-//				this.context.put("bhgnmati2", getParam("txtBhgnSimati2"));
-//				this.context.put("nilaitarikhmati",getParam("txtNilaiTarikhMati"));
-//				this.context.put("nilaitarikhmohon",getParam("txtNilaiTarikhMohon"));
-//				this.context.put("catatan", getParam("txtCatatan"));
-//				this.context.put("butiran", getParam("butiran"));
-//				this.context.put("nama_saham", getParam("nama_saham"));
-//				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-//
-//				this.context.put("EventStatus", 0);
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				logic_B.setDataHta(id);
-//				listppkhta = logic_B.getDataHta();
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati,idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				this.context.put("negeri", idnegeri);
-//				this.context.put("id", id);
-//				this.context.put("id1", id1);
-//				this.context.put("showadd", "1");
-//				
-//				if (getParam("socNegeriHtaam") != ""
-//						&& getParam("socNegeriHtaam") != "0") {
-//					Vector s3 = logic_A.getListBandarByNegeri(Integer
-//							.parseInt(getParam("socNegeriHtaam")));
-//					this.context.put("listBandarSuratbyNegeri", s3);
-//					//System.out.println("listBandarSuratbyNegeri30");
-//				} else {
-//					this.context.put("listBandarSuratbyNegeri", "");
-//					//System.out.println("listBandarSuratbyNegeri30a");
-//				}
-//
-//			}
-//
-//			else if ("negerichangeU".equals(mode)) {
-//
-//				listabc = new Vector();
-//
-//				String id = getParam("idPermohonan");
-//				String id2 = getParam("idPemohon");
-//				String id1 = getParam("idSimati");
-//				String mati = getParam("id_Permohonansimati");
-//				String eventstatus = getParam("eventStatus");
-//				this.context.put("socJenisHa", getParam("socJenisHartaAlih"));
-//
-//				int idnegeri = 0;
-//				if (!"".equals(getParam("socNegeriHtaam"))
-//						&& !"0".equals(getParam("socNegeriHtaam"))) {
-//					idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
-//				} else {
-//					idnegeri = 0;
-//				}
-//				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-//				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//
-//				Hashtable h;
-//				h = new Hashtable();
-//
-//				String idha = getParam("idha");
-//
-//				h.put("negeri", idnegeri);
-//				h.put("daerah", "");
-//				h.put("socJenisHa", getParam("socJenisHartaAlih"));
-//				h.put("norujukan", getParam("txtNoRujukan"));
-//				h.put("nosijil", getParam("txtNoSijil"));
-//				h.put("bilunit", getParam("txtBilUnit"));
-//				h.put("jenama", getParam("txtAgensi"));
-//
-//				h.put("nilaiseunit", getParam("txtNilaiSeunit"));
-//				h.put("agensi", getParam("txtAgensi"));
-//				h.put("alamat1", getParam("txtAlamat1"));
-//				h.put("alamat2", getParam("txtAlamat2"));
-//				h.put("alamat3", getParam("txtAlamat3"));
-//				h.put("poskod", getParam("txtPoskod"));
-//
-//				// h.put("negeri", idnegeri);
-//				// h.put("daerah", getParam("socDaerahHtaam"));
-//				h.put("basimati", getParam("txtBhgnSimati1"));
-//				h.put("bbsimati", getParam("txtBhgnSimati2"));
-//				h.put("nilaiha_tarikhmati", getParam("txtNilaiTarikhMati"));
-//				h.put("nilaiha_tarikhmohon", getParam("txtNilaiTarikhMohon"));
-//				h.put("catatan", getParam("txtCatatan"));
-//				h.put("nama_saham", getParam("nama_saham"));
-//				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-//				h.put("butiran", getParam("butiran"));
-//				listabc.addElement(h);
-//
-//				this.context.put("DataHa", listabc);
-//
-//				logic_A.setDataHa(mati);
-//				listppkha = logic_A.getDataHa();
-//				this.context.put("listHa", listppkha);
-//				int countList = listppkha.size();
-//				this.context.put("jumList", countList);
-//
-//				logic_A.setSumDataHa(mati);
-//				sumppkha = logic_A.getSumDataHa();
-//				this.context.put("jumppkha", sumppkha);
-//
-//				logic_B.setDataHta(id);
-//				listppkhta = logic_B.getDataHta();
-//				this.context.put("listhta2", listppkhta);
-//				int countListhta = listppkhta.size();
-//				this.context.put("jumListhta2", countList);
-//
-//				logic_B.setDataHa(id);
-//				listppkha2 = logic_B.getHa2();
-//				this.context.put("listHa2", listppkha2);
-//				int countListha2 = listppkha2.size();
-//				this.context.put("jumListHa2", countListha2);
-//
-//				logic_A.updateDataNilai(id, mati, idUser);
-//
-//				logic_A.setOverallSum(mati);
-//				overallnilai = logic_A.getOverallSum();
-//				this.context.put("overall", overallnilai);
-//
-//				logic_A.setOverallSumMati(mati);
-//				overallnilaimati = logic_A.getOverallSumMati();
-//				this.context.put("overallmati", overallnilaimati);
-//
-//				listJenisha = logic_A.getJenisHa();
-//				this.context.put("ViewJenisHa", listJenisha);
-//
-//				this.context.put("showbuttontambah", "yes");
-//				this.context.put("tutup", "yes");
-//				this.context.put("EventStatus", 3);
-//				this.context.put("id", id);
-//				this.context.put("id2", id2);
-//				this.context.put("idha", idha);
-//				this.context.put("id", id);
-//				this.context.put("id1", id1);
-//				this.context.put("showadd", "1");
-//			}
+
 			context.put("DATEUTIL", new DateUtil());
 			String id = getParam("idPermohonan");
 			this.context.put("selectedTabatas", 2);
@@ -4704,657 +3950,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			permohonanInternal = new FrmPermohonanHTAData();
 			String mati = getParam("id_Permohonansimati");				
 			
-//			if ("Htaamview".equals(mode)) {
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");	
-//				
-//				//System.out.println("mati======"+mati);
-//				///logic.setDataHTA(mati);
-//				//listHTA = logic.getDataHTA();
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
-//				this.context.put("listHTA", listHTA);
-//				this.context.put("tambahharta", "yes");
-//				this.context.put("kembaliharta", "yes");
-//
-//			}else if ("add_new".equals(mode)) {
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");
-//				Hashtable b = new Hashtable();
-//				b.put("negeri", "0");
-//				b.put("daerah", "0");
-//				b.put("mukim", "0");
-//				b.put("bandar", "0");
-//				b.put("kategori", "0");
-//				b.put("jenisluas", "0");
-//				b.put("pemilikan", "X");
-//
-//				setSocValues(b
-//						,"socNegeriHtaam","negerichange"
-//						,"socDaerahHtaam","daerahchange"
-//						,"socMukimHtaam"
-//						,"txtBandarHartaHtaamX2",""
-//						,"socJenisHakmilikHtaam","socKategoriTanahHtaam"
-//						,"socJenisLuasHtaam","socStatusPemilikanHtaam"
-//						);
-//
-//				this.context.put("readmodedaerah", "readmode");
-//				this.context.put("readmodemukim", "readmode");
-//				this.context.put("show_simpan_add_htaam", "yes");
-//				this.context.put("show_batal_add_htaam", "yes");
-//				this.context.put("show_button", "yes");
-//				this.context.put("show_htaa_add_table", "yes");
-//				this.context.put("add_new_harta", "yes");
-//				this.context.put("buttonhtaam", "Tambah");
-//
-//			}else if ("masukkan".equals(mode)) {				
-//				String id = getParam("idPermohonan");
-//				if (bolehsimpan.equals("yes")) {
-//					addHtaam(session);
-//					this.context.put("appear_skrin_info", "simpan");
-//				}
-//				logic_A.updateDataNilai(id, mati, idUser);
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
-//
-//				this.context.put("tambahharta", "yes");
-//				this.context.put("kembaliharta", "yes");
-//
-//			}else if ("negerichange".equals(mode)) {
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");	
-//				
-//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
-//				Hashtable b = setParamValues(String.valueOf(idnegeri),"0","0","0","0","0","0","X");
-//
-//				setSocValues(b
-//						,"socNegeriHtaam","negerichange"
-//						,"socDaerahHtaam","daerahchange"
-//						,"socMukimHtaam"
-//						,"txtBandarHartaHtaamX2",""
-//						,"socJenisHakmilikHtaam","socKategoriTanahHtaam"
-//						,"socJenisLuasHtaam","socStatusPemilikanHtaam"
-//						);
-//				
-//				//listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-//				//this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//				this.context.put("noHakmilik", getParam("txtNoHakmilikHtaam"));
-//				this.context.put("idSimati", getParam("idSimati"));
-//				this.context.put("nopt", getParam("txtNoPTHtaam"));
-//				this.context.put("nilai_Hta_memohon",getParam("txtNilaiTarikhMohonHtaa"));
-//				this.context.put("nilai_Hta_mati",getParam("txtNilaiTarikhMatiHtaam"));
-//				this.context.put("kategori", getParam("socKategoriTanahHtaam"));
-//				this.context.put("jenishakmilik",getParam("socJenisHakmilikHtaam"));
-//				this.context.put("pemilikan",getParam("socStatusPemilikanHtaam"));
-//				this.context.put("luashmp", getParam("txtLuasHMpHtaam"));
-//				this.context.put("luasasal", getParam("txtLuasAsalHtaam"));
-//				this.context.put("nopajakan", getParam("txtNoPajakan"));
-//				this.context.put("jenistanah", getParam("socJenisTanahHtaam"));
-//				this.context.put("basimati", getParam("txtBahagianSimati1"));
-//				this.context.put("bbsimati", getParam("txtBahagianSimati2"));
-//				this.context.put("tanggungan", getParam("txtTanggunganHtaam"));
-//				this.context.put("jenisluas", getParam("socJenisLuasHtaam"));
-//				this.context.put("catatan", getParam("txtCatatanHtaam"));
-//				this.context.put("noperserahan", getParam("txtNoPersHtaam"));
-//				this.context.put("negeri", idnegeri);
-//				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-//				
-//				this.context.put("show_simpan_add_htaam", "yes");
-//				this.context.put("show_batal_add_htaam", "yes");
-//				this.context.put("show_kembali_htaam", "yes");
-//				this.context.put("show_button", "yes");
-//				this.context.put("show_htaa_add_table", "yes");
-//				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
-//				this.context.put("sekatan", getParam("txtSekatan"));
-//				this.context.put("syaratNyata", getParam("txtSyaratNyata"));
-//				
-////				if (getParam("socNegeriHtaam") != ""
-////						&& getParam("socNegeriHtaam") != "0") {
-////					Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(getParam("socNegeriHtaam")));
-////					this.context.put("listBandarSuratbyNegeri", s3);
-////					//System.out.println("listBandarSuratbyNegeri30");
-////					
-////				} else {
-////					this.context.put("listBandarSuratbyNegeri", "");
-////					//System.out.println("listBandarSuratbyNegeri30a");
-////				}
-//				
-//			}else if ("daerahchange".equals(mode)) {
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");		
-//				
-//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
-//				int iddaerah = Integer.parseInt(getParam("socDaerahHtaam"));
-//				
-//				Hashtable b = setParamValues(String.valueOf(idnegeri),String.valueOf(iddaerah),"0","0","0","0","0","X");
-//
-//				setSocValues(b
-//						,"socNegeriHtaam","negerichange"
-//						,"socDaerahHtaam","daerahchange"
-//						,"socMukimHtaam"
-//						,"txtBandarHartaHtaamX2",""
-//						,"socJenisHakmilikHtaam","socKategoriTanahHtaam"
-//						,"socJenisLuasHtaam","socStatusPemilikanHtaam"
-//						);
-//						
-//
-////				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-////				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-////				listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-////				this.context.put("listMukimbyDaerah", listmukim);
-//
-//				this.context.put("noHakmilik", getParam("txtNoHakmilikHtaam"));
-//				this.context.put("idSimati", getParam("idSimati"));
-//				this.context.put("nopt", getParam("txtNoPTHtaam"));
-//				this.context.put("nilai_Hta_memohon",getParam("txtNilaiTarikhMohonHtaa"));
-//				this.context.put("nilai_Hta_mati",getParam("txtNilaiTarikhMatiHtaam"));
-//				this.context.put("kategori", getParam("socKategoriTanahHtaam"));
-//				this.context.put("jenishakmilik",getParam("socJenisHakmilikHtaam"));
-//				this.context.put("pemilikan",getParam("socStatusPemilikanHtaam"));
-//				this.context.put("luashmp", getParam("txtLuasHMpHtaam"));
-//				this.context.put("luasasal", getParam("txtLuasAsalHtaam"));
-//				this.context.put("nopajakan", getParam("txtNoPajakan"));
-//				this.context.put("jenistanah", getParam("socJenisTanahHtaam"));
-//				this.context.put("basimati", getParam("txtBahagianSimati1"));
-//				this.context.put("bbsimati", getParam("txtBahagianSimati2"));
-//				this.context.put("tanggungan", getParam("txtTanggunganHtaam"));
-//				this.context.put("jenisluas", getParam("socJenisLuasHtaam"));
-//				this.context.put("catatan", getParam("txtCatatanHtaam"));
-//				this.context.put("noperserahan", getParam("txtNoPersHtaam"));
-//				this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-//
-//				this.context.put("show_simpan_add_htaam", "yes");
-//				this.context.put("show_batal_add_htaam", "yes");
-//				this.context.put("show_button", "yes");
-//				this.context.put("show_kembali_htaam", "yes");
-//				this.context.put("negeri", idnegeri);
-//				this.context.put("daerah", iddaerah);
-//				this.context.put("show_htaa_add_table", "yes");
-//				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
-//				this.context.put("sekatan", getParam("txtSekatan"));
-//				this.context.put("syaratNyata", getParam("txtSyaratNyata"));
-//
-//			} else if ("checkWujudLot".equals(mode)) {
-//				Hashtable getLot = null;
-//				String idnegeri = getParam("socNegeriHtaam");
-//				String iddaerah = getParam("socDaerahHtaam");
-//				String idMukim = getParam("socMukimHtaam");
-//				String jenisHakmilik = getParam("socJenisHakmilikHtaam");
-//				Hashtable b = setParamValues(idnegeri,iddaerah,idMukim,"0",jenisHakmilik,"0","0","X");
-//
-//				setSocValues(b
-//						,"socNegeriHtaam","negerichange"
-//						,"socDaerahHtaam","daerahchange"
-//						,"socMukimHtaam"
-//						,"txtBandarHartaHtaamX2",""
-//						,"socJenisHakmilikHtaam","socKategoriTanahHtaam"
-//						,"socJenisLuasHtaam","socStatusPemilikanHtaam"
-//						);
-//										
-//				getLot = mainheader.getWujudLot(mati, getParam("txtNoPTHtaam")
-//						,idnegeri, iddaerah,idMukim
-//						,jenisHakmilik
-//						,getParam("txtNoHakmilikHtaam"),getParam("txtNoPTHtaam"));
-//				this.context.put("nopt", getParam("txtNoPTHtaam"));
-//				myLogger.info("---- hashtable get LOT :"+ (String) getLot.get("ID_HTA"));
-//
-//				if ((String) getLot.get("ID_HTA") != null) {
-//					this.context.put("noHakmilik", (String) getLot.get("NO_HAKMILIK"));
-//					this.context.put("idSimati", (String) getLot.get("ID_SIMATI"));
-//					this.context.put("nilai_Hta_memohon", (String) getLot.get("NILAI_HTA_TARIKHMOHON"));
-//					this.context.put("nilai_Hta_mati", (String) getLot.get("NILAI_HTA_TARIKHMATI"));
-//					this.context.put("kategori", (String) getLot.get("ID_KATEGORI"));
-//					this.context.put("jenishakmilik", (String) getLot.get("ID_JENISHM"));
-//					this.context.put("pemilikan", (String) getLot.get("STATUS_PEMILIKAN"));
-//					this.context.put("luashmp", (String) getLot.get("LUAS_HMP"));
-//					this.context.put("luasasal", (String) getLot.get("LUAS"));
-//					this.context.put("nopajakan", (String) getLot.get("NO_PAJAKAN"));
-//					this.context.put("jenistanah", (String) getLot.get("JENIS_TNH"));
-//					this.context.put("basimati", (String) getLot.get("BA_SIMATI"));
-//					this.context.put("bbsimati", (String) getLot.get("BB_SIMATI"));
-//					this.context.put("tanggungan", (String) getLot.get("TANGGUNGAN"));
-//					this.context.put("jenisluas", (String) getLot.get("ID_LUAS"));
-//					this.context.put("catatan", (String) getLot.get("CATATAN"));
-//					this.context.put("noperserahan", (String) getLot.get("NO_PERSERAHAN"));
-//					this.context.put("FLAG_DAFTAR", (String) getLot.get("FLAG_DAFTAR"));
-////					if (!((String) getLot.get("ID_NEGERI").toString()).equals("")) {
-////						int idnegeri = Integer.parseInt((String) getLot.get("ID_NEGERI"));
-////						listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-////						this.context.put("listDaerahbyNegeri",listnegeribydaerah);
-////						this.context.put("negeri", idnegeri);
-////						
-////					} else {
-////						this.context.put("listDaerahbyNegeri", "");
-////						this.context.put("negeri", "");
-////						
-////					}
-////					if (!((String) getLot.get("ID_DAERAH").toString()).equals("")) {
-////						int iddaerah = Integer.parseInt((String) getLot.get("ID_DAERAH"));
-////						listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-////						this.context.put("listMukimbyDaerah", listmukim);
-////						this.context.put("daerah", iddaerah);
-////						
-////					} else {
-////						this.context.put("listMukimbyDaerah", "");
-////						this.context.put("daerah", "");
-////					
-////					}
-////					if (!((String) getLot.get("ID_MUKIM").toString()).equals("")) {
-////						int idmukim = Integer.parseInt((String) getLot.get("ID_MUKIM"));
-////						this.context.put("mukim", idmukim);
-////						
-////					} else {
-////						this.context.put("mukim", "");
-////					}
-//					this.context.put("CheckWujudLot", "Y");
-//				
-//				} else {
-////					if (!getParam("socNegeriHtaam").equals("")) {
-////						int idnegeri = Integer.parseInt(getParam("socNegeriHtaam"));
-////						listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-////						this.context.put("listDaerahbyNegeri",listnegeribydaerah);
-////						this.context.put("negeri", idnegeri);
-////						
-////					} else {
-////						this.context.put("listDaerahbyNegeri", "");
-////						this.context.put("negeri", "");
-////					
-////					}
-////					if (!getParam("socDaerahHtaam").equals("")) {
-////						int iddaerah = Integer.parseInt(getParam("socDaerahHtaam"));
-////						listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-////						this.context.put("listMukimbyDaerah", listmukim);
-////						this.context.put("daerah", iddaerah);
-////						
-////					} else {
-////						this.context.put("listMukimbyDaerah", "");
-////						this.context.put("daerah", "");
-////					
-////					}
-////					if (!getParam("socMukimHtaam").equals("")) {
-////						int idmukim = Integer.parseInt(getParam("socMukimHtaam"));
-////						this.context.put("mukim", idmukim);
-////						
-////					} else {
-////						this.context.put("mukim", "");
-////					}
-//					this.context.put("noHakmilik",getParam("txtNoHakmilikHtaam"));
-//					this.context.put("idSimati", getParam("idSimati"));
-//					// this.context.put("nopt", getParam("txtNoPTHtaam"));
-//					this.context.put("nilai_Hta_memohon",getParam("txtNilaiTarikhMohonHtaa"));
-//					this.context.put("nilai_Hta_mati",getParam("txtNilaiTarikhMatiHtaam"));
-//					this.context.put("kategori",getParam("socKategoriTanahHtaam"));
-//					this.context.put("jenishakmilik",getParam("socJenisHakmilikHtaam"));
-//					this.context.put("pemilikan",getParam("socStatusPemilikanHtaam"));
-//					this.context.put("luashmp", getParam("txtLuasHMpHtaam"));
-//					this.context.put("luasasal", getParam("txtLuasAsalHtaam"));
-//					this.context.put("nopajakan", getParam("txtNoPajakan"));
-//					this.context.put("jenistanah",getParam("socJenisTanahHtaam"));
-//					this.context.put("basimati", getParam("txtBahagianSimati1"));
-//					this.context.put("bbsimati", getParam("txtBahagianSimati2"));
-//					this.context.put("tanggungan",getParam("txtTanggunganHtaam"));
-//					this.context.put("jenisluas", getParam("socJenisLuasHtaam"));
-//					this.context.put("catatan", getParam("txtCatatanHtaam"));
-//					this.context.put("noperserahan", getParam("txtNoPersHtaam"));
-//					this.context.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-//					this.context.put("CheckWujudLot", "T");
-//					
-//				}
-//
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
-//
-//				this.context.put("show_simpan_add_htaam", "yes");
-//				this.context.put("show_batal_add_htaam", "yes");
-//				this.context.put("show_button", "yes");
-//				this.context.put("show_kembali_htaam", "yes");
-//				this.context.put("show_htaa_add_table", "yes");
-//				
-//			} else if ("negerichangeup".equals(mode)) {
-//				v = new Vector();
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
-//
-//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaamUp"));
-//				this.context.put("negeriup", idnegeri);
-//				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-//				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//				if (!getParam("socNegeriHtaamUp").equals("")
-//					&& !getParam("socNegeriHtaamUp").equals("0")) {
-//					Vector s4 = logic_A.getListBandarByNegeri(Integer.parseInt(getParam("socNegeriHtaamUp")));
-//					this.context.put("listBandarSuratbyNegeri", s4);
-//					
-//				} else {
-//					this.context.put("listBandarSuratbyNegeri", "");
-//				}
-//
-//				Hashtable h = new Hashtable();
-//				// this.context.put("idhta", "");
-//				h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
-//				h.put("idSimati", getParam("idSimati"));
-//				h.put("idhta", getParam("id_htaam"));
-//				h.put("nopt", getParam("txtNoPTHtaamUp"));
-//				h.put("nilai_Hta_memohon", getParam("txtNilaiTarikhMohonHt"));
-//				h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamUpd"));
-//				h.put("kategori", getParam("socKategoriTanahHtaamUp"));
-//				h.put("jenishakmilik", getParam("socJenisHakmilikHtaamUp"));
-//				h.put("pemilikan", getParam("socStatusPemilikanHtaamUpd"));
-//				h.put("negeri", idnegeri);
-//				h.put("daerah", "");
-//				h.put("mukim", "");
-//				// this.context.put("mukim", getParam("socMukimHtaam"));
-//				h.put("luashmp", getParam("txtLuasHMpHtaamUpd"));
-//				h.put("luasasal", getParam("txtLuasAsalHtaamUpd"));
-//				// this.context.put("nocagaran", "");
-//				h.put("nopajakan", getParam("txtNoPajakanUp"));
-//				h.put("jenistanah", getParam("socJenisTanahHtaamUpd"));
-//				h.put("basimati", getParam("txtBahagianSimati1Up"));
-//				h.put("bbsimati", getParam("txtBahagianSimati2Up"));
-//				// this.context.put("jenishta","");
-//				h.put("tanggungan", getParam("txtTanggunganHtaamUp"));
-//				h.put("jenisluas", getParam("socJenisLuasHtaamUpd"));
-//				h.put("catatan", getParam("txtCatatanHt"));
-//				h.put("noperserahan", getParam("txtNoPersHtaamUp"));
-//				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-//				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
-//				h.put("sekatan", getParam("txtSekatan"));
-//				h.put("syaratNyata", getParam("txtSyaratNyata"));
-//
-//				v.addElement(h);
-//				this.context.put("listHTAid", v);
-//
-//				this.context.put("show_save_update_htaam", "yes");
-//				this.context.put("show_batal_update_htaam", "yes");
-//				this.context.put("show_hapus_htaam", "yes");
-//				this.context.put("show_kembali_htaam", "yes");
-//				this.context.put("show_htaa_update_table", "yes");
-//				this.context.put("show_button", "yes");
-//				this.context.put("tambahharta", "yes");
-//				this.context.put("negeriup", idnegeri);
-//
-//			} else if ("daerahchangeup".equals(mode)) {
-//				v = new Vector();
-//
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
-//
-//				int idnegeri = Integer.parseInt(getParam("socNegeriHtaamUp"));
-//				int iddaerah = Integer.parseInt(getParam("socDaerahHtaamUp"));
-//				listnegeribydaerah = logic_A.getListDaerahbyNegeri(idnegeri);
-//				this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//				listmukim = logic_A.getListMukimbyDaerah(iddaerah);
-//				this.context.put("listMukimbyDaerah", listmukim);
-//
-//				Hashtable h = new Hashtable();
-//				// this.context.put("idhta", "");
-//				h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
-//				h.put("idSimati", getParam("idSimati"));
-//				h.put("idhta", getParam("id_htaam"));
-//				h.put("nopt", getParam("txtNoPTHtaamUp"));
-//				h.put("nilai_Hta_memohon", getParam("txtNilaiTarikhMohonHt"));
-//				h.put("nilai_Hta_mati", getParam("txtNilaiTarikhMatiHtaamUpd"));
-//				h.put("kategori", getParam("socKategoriTanahHtaamUp"));
-//				h.put("jenishakmilik", getParam("socJenisHakmilikHtaamUp"));
-//				h.put("pemilikan", getParam("socStatusPemilikanHtaamUpd"));
-//				h.put("negeri", idnegeri);
-//				h.put("daerah", iddaerah);
-//				h.put("mukim", "");
-//				// this.context.put("mukim", getParam("socMukimHtaam"));
-//				h.put("luashmp", getParam("txtLuasHMpHtaamUpd"));
-//				h.put("luasasal", getParam("txtLuasAsalHtaamUpd"));
-//				// this.context.put("nocagaran", "");
-//				h.put("nopajakan", getParam("txtNoPajakanUp"));
-//				h.put("jenistanah", getParam("socJenisTanahHtaamUpd"));
-//				h.put("basimati", getParam("txtBahagianSimati1Up"));
-//				h.put("bbsimati", getParam("txtBahagianSimati2Up"));
-//				// this.context.put("jenishta","");
-//				h.put("tanggungan", getParam("txtTanggunganHtaamUp"));
-//				h.put("jenisluas", getParam("socJenisLuasHtaamUpd"));
-//				h.put("catatan", getParam("txtCatatanHt"));
-//				h.put("noperserahan", getParam("txtNoPersHtaamUp"));
-//				h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-//				// ADD BY PEJE - TAMBAH FIELD SEKATAN & SYARAT NYATA
-//				h.put("sekatan", getParam("txtSekatan"));
-//				h.put("syaratNyata", getParam("txtSyaratNyata"));
-//
-//				v.addElement(h);
-//				this.context.put("listHTAid", v);
-//
-//				this.context.put("show_save_update_htaam", "yes");
-//				this.context.put("show_batal_update_htaam", "yes");
-//				this.context.put("show_hapus_htaam", "yes");
-//				this.context.put("show_kembali_htaam", "yes");
-//				this.context.put("show_htaa_update_table", "yes");
-//				this.context.put("show_button", "yes");
-//				this.context.put("tambahharta", "yes");
-//
-//			}else if ("getHtaam".equals(mode)) {
-//				String idhtaam = getParam("idhtaam");
-//				Hashtable b = permohonanInternal.getDataHTAbyIdHtaam(idhtaam,mati);
-//				myLogger.info("getHtaam:b="+b);
-//
-//				String nn = String.valueOf(b.get("negeri"));
-//				String dd = String.valueOf(b.get("daerah"));				
-//				String idMukim = String.valueOf(b.get("mukim"));
-//				socNegeri = HTML.SelectNegeri("socNegeriHtaamUp", Long.valueOf(nn)
-//						," $readmodenegeri id=\"socNegeriHtaamUp\" onchange=\"negerichangeup('socDaerahHtaamUp')\" "+socStyle);
-//				socDaerah = HTML.SelectDaerahByNegeri(nn, "socDaerahHtaamUp", Utils.parseLong(dd)
-//						," $readmodedaerah id=\"socDaerahHtaamUp\" onchange=\"setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()\" "+socStyle);
-//				socMukim = HTML.SelectMukimByDaerah(dd, "socMukimHtaamUp", Utils.parseLong(idMukim)
-//						," $readmodemukim id=\"socMukimHtaamUp\" "+socStyle);
-//				
-////				if (nn != "" && nn != "0") {
-////					int idn = Integer.parseInt(nn);
-////					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-////					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-////
-////				}
-////				if (dd != "" && dd != "0") {
-////					int idd = Integer.parseInt(dd);
-////					listmukim = logic_A.getListMukimbyDaerah(idd);
-////					this.context.put("listMukimbyDaerah", listmukim);
-////									
-////				}								
-//				//myLogger.info("ID_NEGERI : "+nn);
-////				if (!nn.equals("")
-////					&& !nn.equals("0")) {
-////					Vector s4 = logic_A.getListBandarByNegeri(Integer.parseInt(nn));
-////					this.context.put("listBandarSuratbyNegeri", s4);
-////					
-////				} else {
-////					this.context.put("listBandarSuratbyNegeri", "");
-////				}
-//				String bandar = String.valueOf(b.get("bandar"));
-//				String socBandar = HTML.SelectBandarByNegeri(nn,"txtBandarHartaHtaamX2", Utils.parseLong(bandar)
-//						," id=\"txtBandarHartaHtaamX2\" onclick=\"CheckBandarSurat()\" "+socStyle);
-//				this.context.put("socBandar", socBandar);
-//				
-//				String jenisHakmilik = String.valueOf(b.get("jenishakmilik"));
-//				String socJenisHakmilik = HTML.SelectJenisHakmilik("socJenisHakmilikHtaamUp", Utils.parseLong(jenisHakmilik)
-//						," $socJenisHakmilikHtaam2 id=\"socJenisHakmilikHtaamUp\" "+socStyle);
-//				this.context.put("socJenisHakmilik", socJenisHakmilik);
-//				
-//				String kaTanah = String.valueOf(b.get("kategori"));
-//				String socKaTanah = HTML.SelectKategoriTanah("socKategoriTanahHtaamUp", Utils.parseLong(kaTanah),""
-//						," $!readmode id=\"socKategoriTanahHtaamUp\" "+socStyle);
-//				this.context.put("socKaTanah", socKaTanah);
-//
-//				String jenisLuas = String.valueOf(b.get("jenisluas"));
-//				String socLuas = HTML.SelectLuas("socJenisLuasHtaamUpd",Utils.parseLong(jenisLuas), ""
-//					," $!readmode id=\"socJenisLuasHtaamUpd\"" +
-//					"onchange=\"pilih_jenis_luas('socJenisLuasHtaamUpd','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')\" "+socStyle);
-//				this.context.put("socLuas", socLuas);
-//				
-//				String jenisPB = String.valueOf(b.get("pemilikan"));
-//				myLogger.info("jenisPB="+jenisPB);
-//				String socPB = UtilHTML.SelectJenisPB("socStatusPemilikanHtaamUpd",jenisPB,"",socStyle,null);
-//				this.context.put("socPB", socPB);
-//				
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
-//
-//				this.context.put("idhtaam", idhtaam);
-//				this.context.put("listHTAid", permohonanInternal.getDataHTA());
-//				this.context.put("htaHash", b);
-//
-//				this.context.put("show_kemaskini_htaam", "yes");
-//				this.context.put("show_hapus_htaam", "yes");
-//				this.context.put("show_kembali_htaam", "yes");
-//				this.context.put("show_button", "yes");
-//				this.context.put("show_htaa_update_table", "yes");
-//				this.context.put("tambahharta", "yes");
-//				this.context.put("readmodenegeri", "disabled");
-//				this.context.put("readmodedaerah", "disabled");
-//				this.context.put("readmodemukim", "disabled");
-//				this.context.put("readmode", "disabled");
-//
-//			}else if ("getHtaamStatus".equals(mode)) {
-//				String idhtaam = getParam("idhtaam");
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
-//
-//				this.context.put("tambahharta", "yes");
-//				this.context.put("kembaliharta", "yes");
-//
-//				String id = getParam("idPermohonan");
-//				String id_sub = getParam("id_Suburusanstatusfail");
-//				String id_Fail = getParam("id_Fail");
-//
-//				if (bolehsimpan.equals("yes")) {
-//					logic_A.htaamstatus(session, id, idUser, id_sub, id_Fail);
-//				}
-//
-//				this.context.put("idhtaamX", idhtaam);
-//				this.context.put("idhtaam", idhtaam);
-//				this.context.put("idhtaam", getParam("idhtaamid"));
-//				this.context.put("show_save_update_htaam", "yes");
-//				this.context.put("show_batal_update_htaam", "yes");
-//				this.context.put("show_hapus_htaam", "yes");
-//				this.context.put("show_kembali_htaam", "yes");
-//				this.context.put("show_htaa_update_table", "yes");
-//				this.context.put("tambahbutton", "yes");
-//				this.context.put("show_button", "yes");
-//
-//			} else if ("hapusHtaamX".equals(mode)) {
-//				String idhtaam = getParam("idhtaamXid");
-//				//String mati = getParam("id_Permohonansimati");
-//				String idhtaam_ = getParam("idhtaamXid");
-//				//String idDokumen = getParam("idDokumen");//IL
-//				logic.deleteHtaam(session, idhtaam, getParam("id_Permohonansimati"));
-//				logic.setDataHTAX(mati);
-//				listHTAX = logic.getDataHTAX();
-//				//logic_internal.deleteHtaamInternal(idDokumen, idhtaam_, getParam("id_Permohonansimati"));//IL
-//				//senaraiHTAX = permohonanInternal.getDataHTAX(mati);
-//				this.context.put("listHTAX", listHTAX);
-//
-//				this.context.put("tambahbutton", "yes");
-//				this.context.put("kembalibutton", "yes");
-//
-//				this.context.put("tambahharta", "yes");
-//				this.context.put("kembaliharta", "yes");
-//
-//			} else if ("kemaskiniHtaam".equals(mode)) {
-//				String flag_tukar_jenis_hta = getParam("flag_tukar_jenis_hta");
-//				if (flag_tukar_jenis_hta.equals("ADA")) {
-//					if (bolehsimpan.equals("yes")) {
-//
-//						if (getParam("nama_skrin").equals("tiadahakmilik")) {
-//							updateHtaamX(session);
-//						} else {
-//							updateHtaam(session);
-//						}
-//					}
-//					
-//				}
-//
-//				String idhtaam = getParam("idhtaamid");
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");				
-//
-//				Hashtable b = permohonanInternal.getDataHTAbyIdHtaam(idhtaam,mati);
-//				String nn = b.get("negeri").toString();
-//				String dd = b.get("daerah").toString();
-//
-//				if (nn != "" && nn != "0") {
-//					int idn = Integer.parseInt(nn);
-//					listnegeribydaerah = logic_A.getListDaerahbyNegeri(idn);
-//					this.context.put("listDaerahbyNegeri", listnegeribydaerah);
-//
-//				}
-//
-//				if (dd != "" && dd != "0") {
-//					int idd = Integer.parseInt(dd);
-//					listmukim = logic_A.getListMukimbyDaerah(idd);
-//					this.context.put("listMukimbyDaerah", listmukim);
-//
-//				}
-//				this.context.put("idhtaam", idhtaam);
-//				this.context.put("listHTAid", permohonanInternal.getDataHTA());
-//				this.context.put("show_save_update_htaam", "yes");
-//				this.context.put("show_batal_update_htaam", "yes");
-//				this.context.put("show_hapus_htaam", "yes");
-//				this.context.put("show_kembali_htaam", "yes");
-//				this.context.put("show_button", "yes");
-//				this.context.put("show_htaa_update_table", "yes");
-//				this.context.put("tambahharta", "yes");
-//			
-//			}else if ("simpanHtaam".equals(mode)) {			
-//				String idhtaam = getParam("idhtaamid");
-//				if (bolehsimpan.equals("yes")) {
-//					updateHtaam(session);
-//					//uploadFilesA(idhtaam,session);
-//					this.context.put("appear_skrin_info", "kemaskini");
-//				
-//				}
-//				
-//				Hashtable b = permohonanInternal.getDataHTAbyIdHtaam(idhtaam,mati);
-//				String nn = b.get("negeri").toString();
-//				String dd = b.get("daerah").toString();
-//				String idMukim = String.valueOf(b.get("mukim"));
-//				
-//				socNegeri = HTML.SelectNegeri("socNegeriHtaamUp", Long.valueOf(nn)
-//						," $readmodenegeri id=\"socNegeriHtaamUp\" onchange=\"negerichangeup('socDaerahHtaamUp')\" "+socStyle);
-//				socDaerah = HTML.SelectDaerahByNegeri(nn, "socDaerahHtaamUp", Utils.parseLong(dd)
-//						," $readmodedaerah id=\"socDaerahHtaamUp\" onchange=\"setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()\" "+socStyle);
-//				socMukim = HTML.SelectMukimByDaerah(dd, "socMukimHtaamUp", Utils.parseLong(idMukim)
-//						," $readmodemukim id=\"socMukimHtaamUp\" "+socStyle);
-//				
-//				String bandar = String.valueOf(b.get("bandar"));
-//				String socBandar = HTML.SelectBandarByNegeri(nn,"txtBandarHartaHtaamX2", Utils.parseLong(bandar)
-//						," id=\"txtBandarHartaHtaamX2\" onclick=\"CheckBandarSurat()\" "+socStyle);
-//				this.context.put("socBandar", socBandar);
-//				
-//				String jenisHakmilik = String.valueOf(b.get("jenishakmilik"));
-//				String socJenisHakmilik = HTML.SelectJenisHakmilik("socJenisHakmilikHtaamUp", Utils.parseLong(jenisHakmilik)
-//						," $socJenisHakmilikHtaam2 id=\"socJenisHakmilikHtaamUp\" "+socStyle);
-//				this.context.put("socJenisHakmilik", socJenisHakmilik);
-//				
-//				String kaTanah = String.valueOf(b.get("kategori"));
-//				String socKaTanah = HTML.SelectKategoriTanah("socKategoriTanahHtaamUp", Utils.parseLong(kaTanah),""
-//						," $!readmode id=\"socKategoriTanahHtaamUp\" "+socStyle);
-//				this.context.put("socKaTanah", socKaTanah);
-//
-//				String jenisLuas = String.valueOf(b.get("jenisluas"));
-//				String socLuas = HTML.SelectLuas("socJenisLuasHtaamUpd",Utils.parseLong(jenisLuas), ""
-//					," $!readmode id=\"socJenisLuasHtaamUpd\"" +
-//					" onchange=\"pilih_jenis_luas('socJenisLuasHtaamUpd','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')\" "+socStyle);
-//				this.context.put("socLuas", socLuas);
-//				
-//				String jenisPB = String.valueOf(b.get("jeniskepentingan"));
-//				String socPB = UtilHTML.SelectJenisPB("socStatusPemilikanHtaamUpd",jenisPB,"",socStyle,null);
-//				this.context.put("socPB", socPB);
-//
-//				this.context.put("idhtaam", idhtaam);
-//				this.context.put("listHTAid", permohonanInternal.getDataHTA());
-//				this.context.put("htaHash", b);
-//								
-//				listHTA = permohonanInternal.getDataHTA(mati,"Y");								
-//
-//				this.context.put("show_kemaskini_htaam", "yes");
-//				this.context.put("show_hapus_htaam", "yes");
-//				this.context.put("show_kembali_htaam", "yes");
-//				this.context.put("show_button", "yes");
-//				this.context.put("show_htaa_update_table", "yes");
-//				this.context.put("tambahharta", "yes");
-//				this.context.put("readmodedaerah", "disabled");
-//				this.context.put("readmodenegeri", "disabled");
-//				this.context.put("readmodemukim", "disabled");
-//				this.context.put("readmode", "disabled");
-//				
-//				String id = getParam("idpermohonan");
-//				logic_A.updateDataNilai(id, mati, idUser);
-//				
-//			}
-			
-			
 			//2018
 			String idPermohonan = getParam("idPermohonan");
 			
@@ -5521,8 +4116,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			} else {
 				this.context.put("listBandarTetapbyNegeri", "");
 			}
+			
+			myLogger.info("syafiqah id: "+ id);
 			//myLogger.info("mode-------------------------------------"+mode);
 			if ("Simatiview".equals(mode)) {
+				myLogger.info("syafiqah test"); 
 				/*
 				 * String id = getParam("idPermohonan"); String id2 =
 				 * getParam("idPemohon"); String id1 = getParam("idSimati");
@@ -5533,6 +4131,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				 */
 				this.context.put("readmode", disability1);
 				this.context.put("show_kemaskini_button", "yes");
+				
 
 			} else if ("batal_simati".equals(mode)) {
 				/*
@@ -5861,6 +4460,38 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		// FrmPrmhnnSek8SenaraiSemakInternalData frmonline = new
 		// FrmPrmhnnSek8SenaraiSemakInternalData();
 		logic_C.semakanDelete(idPermohonan);
+	}
+	
+	private void addPertukaran(HttpSession session) throws Exception {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		String currentDate = dateFormat.format(date);
+		
+		String idPermohonan = getParam("idPermohonan");
+		String noFail = getParam("noFail");
+		String id_simati = getParam("idSimati");
+		String id_pemohonlama = getParam("idPemohon");
+		String id_pemohonbaru = getParam("id_ob_pemohon");
+		String sebab_tukar = getParam("sebab");
+		String id_permohonansimati = getParam("idPermohonansimati");
+		String tarikhmati_pemohon = getParam("tarikh_mati");
+		
+		myLogger.info("Step 2 SYAFIQAH");
+		
+		Hashtable h = null;
+		h = new Hashtable();
+		
+		h.put("id_permohonan", idPermohonan);
+		h.put("no_fail", noFail);
+		h.put("id_simati", id_simati);
+		h.put("id_pemohonlama", id_pemohonlama);
+		h.put("id_pemohonbaru", id_pemohonbaru);
+		h.put("sebab_tukar", sebab_tukar);
+		h.put("id_permohonansimati", id_permohonansimati);
+		h.put("tarikhmati_pemohon", tarikhmati_pemohon);
+		h.put("tarikh_hantar", currentDate);
+		
+		logiconline.insertPertukaranPemohon(h);
 	}
 
 	private void updatePermohonan(HttpSession session) throws Exception {
@@ -8116,6 +6747,53 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		}
 				
 	}
+	
+	private void uploadFiles(Db db,Connection conn, String nama_pemohon_lama) throws Exception {
+		myLogger.info("Baca uploadFiles:--------------"); 
+		String nama_pemohon_lama2 = nama_pemohon_lama;
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+	    ServletFileUpload upload = new ServletFileUpload(factory);
+	    List items = upload.parseRequest(this.request);
+	    Iterator itr = items.iterator();	   
+	    while (itr.hasNext()) {    	
+	      FileItem item = (FileItem)itr.next();
+	      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+	    	  System.out.println("item.getName = "+ item.getName());
+	    	  saveData(item,db,conn,nama_pemohon_lama2);
+	      }
+	    }
+	  }
+	
+	private void saveData(FileItem item,Db db,Connection conn, String nama_pemohon_lama2) throws Exception {
+		//Db db = null;
+	
+    try {
+    	db = new Db();
+
+    	Connection con = db.getConnection();
+    	con.setAutoCommit(false);
+    	String nama_pemohon_lama3 = nama_pemohon_lama2;
+    	String id_permohonansimati = getParam("id_permohonansimati_atheader");
+    	PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE (ID_PERMOHONANSIMATI = ? AND NAMA_PEMOHONLAMA = ?)");		
+    	System.out.println("+nama_pemohon_lama3+ " + nama_pemohon_lama3);
+    	System.out.println(con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE ID_PERMOHONANSIMATI = ?"));
+    	ps.setString(1,item.getName());
+    	ps.setBinaryStream(2,item.getInputStream(),(int)item.getSize());
+    	ps.setString(3,item.getContentType());
+    	//System.out.println("item.getInputStream = "+ item.getInputStream());
+    	//System.out.println("item.getSize = "+ item.getSize());
+    	//System.out.println("item.getContentType = "+ item.getContentType());
+    	ps.setString(4,id_permohonansimati);
+    	ps.setString(5,nama_pemohon_lama3);
+    	//ps.setString(4,getParam("id_permohonansimati_atheader"));
+    	myLogger.info("Baca SaveData:---------------"); 
+    	ps.executeUpdate();	
+    	myLogger.info("Baca SaveData 2:---------------"); 
+        con.commit();
+    } finally {
+	      if (db != null) db.close();
+    }
+}
 
 	private Hashtable<String,String> setParamValues(String negeri,String daerah,String mukim,String bandar
 			,String jenisHakmilik,String kat,String luas,String pemilikan){
@@ -8161,5 +6839,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		return jenisPB;
 				
 	}
+	
 	
 }

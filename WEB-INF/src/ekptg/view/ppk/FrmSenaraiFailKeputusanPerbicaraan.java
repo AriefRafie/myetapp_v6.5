@@ -110,6 +110,8 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     	Vector listPenerimaNotis = new Vector();
     	Vector dataPemohon = new Vector();
     	Vector listSupportingDoc = null;
+    	Vector flag5juta =  new Vector(); //arief add 5 juta
+    	boolean f5juta = false; //arief add 5 juta
     	
     	list.clear();
     	listPemohon.clear();
@@ -166,6 +168,13 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		logic3.setListSemak(idpermohonan, usid);
 		//hashtable maklumat header
 		headerppk_baru(session,idpermohonan,"Y","","T");
+		
+		//arief add 5 juta
+		logic_A.checkFlag5Juta(id);
+		flag5juta = logic_A.getFlag5Juta();
+		this.context.put("flag5juta", flag5juta);
+		
+		
 		list = logic3.getListSemak();
 		String idSimati = "";
 		String idstatus = "";
@@ -356,8 +365,35 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       			    		//ini yang asal
       			    		//jumlahHartaDeductNilaianAmanahRaya = jumlah_harta_tarikhmohon - nilai_ha_tarikhmohon;
       			    		System.out.println("JUMLAH HARTA :: "+jumlahHartaDeductNilaianAmanahRaya);
-
-      			    			if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+      			    		
+      			    		//arief add 
+      			    		if (flag5juta != null){
+      			    			if (f5juta = true) {
+      			    				if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+          								bayaranYuran = 10.00 ;
+          							} else if ( (jumlahHartaDeductNilaianAmanahRaya > 1000) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+          								bayaranYuran = 30.00 ;
+          							} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 2000000) ) {
+          								bayaranYuran = (0.02) * jumlahHartaDeductNilaianAmanahRaya ;
+          								bayaranYuran = getBundaranBayaran(bayaranYuran);
+          							} else {
+          								bayaranYuran = (0.05) * jumlahHartaDeductNilaianAmanahRaya ;
+          								bayaranYuran = getBundaranBayaran(bayaranYuran);
+          							}
+      			    			}else {
+      			    				if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+          								bayaranYuran = 10.00 ;
+          							} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+          								bayaranYuran = 30.00 ;
+          							} else {
+          								bayaranYuran = (0.2/100) * jumlahHartaDeductNilaianAmanahRaya ;
+          								bayaranYuran = getBundaranBayaran(bayaranYuran);
+          							}
+      			    			}
+      			    		}
+      			    			/**yang asal
+      			    			 * 
+      			    			 * if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
       								bayaranYuran = 10.00 ;
       							} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
       								bayaranYuran = 30.00 ;
@@ -365,7 +401,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       								bayaranYuran = (0.2/100) * jumlahHartaDeductNilaianAmanahRaya ;
       								//ADD BY PEJE
       								bayaranYuran = getBundaranBayaran(bayaranYuran);
-      							}
+      							}**/
       							this.context.put("txtJumHarta", jumlahHartaDeductNilaianAmanahRaya);
       					}
 
@@ -377,7 +413,34 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       				   		double jumlah_harta_tarikhmohon;
       			    		double bayaranYuran;
       			    		jumlah_harta_tarikhmohon = Double.parseDouble(a.get("jumlah_harta_tarikhmohon").toString());
-      							if ( jumlah_harta_tarikhmohon <= 1000 ) {
+      			    		//arief add 
+      			    		if (flag5juta != null) {
+      			    			if (f5juta = true){
+      			    				if ( jumlah_harta_tarikhmohon <= 1000 ) {
+          								bayaranYuran = 10.00 ;
+          							} else if ( (jumlah_harta_tarikhmohon > 1000) && (jumlah_harta_tarikhmohon <= 50000) ){
+          								bayaranYuran = 30.00 ;
+          							} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 2000000) ) {
+          								bayaranYuran = (0.02) * jumlah_harta_tarikhmohon ;
+          								bayaranYuran = getBundaranBayaran(bayaranYuran);
+          							} else {
+          								bayaranYuran = (0.05) * jumlah_harta_tarikhmohon ;
+          								bayaranYuran = getBundaranBayaran(bayaranYuran);
+          							}
+      			    			}else {
+      			    				if ( jumlah_harta_tarikhmohon <= 1000 ) {
+          								bayaranYuran = 10.00 ;
+          							} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
+          								bayaranYuran = 30.00 ;
+          							} else {
+          								bayaranYuran = (0.02) * jumlah_harta_tarikhmohon ;
+          								bayaranYuran = getBundaranBayaran(bayaranYuran);
+          							}
+      			    			}
+      			    		}
+      			    			/**yang asal
+      			    			 * 
+      			    			 * if ( jumlah_harta_tarikhmohon <= 1000 ) {
       								bayaranYuran = 10.00 ;
       							} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
       								bayaranYuran = 30.00 ;
@@ -385,7 +448,9 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       								bayaranYuran = (0.2/100) * jumlah_harta_tarikhmohon ;
       								//ADD BY PEJE
       								bayaranYuran = getBundaranBayaran(bayaranYuran);
-      							}
+      							}**/
+      			    		
+      			    			
       							this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
       					}
       				}
@@ -3811,7 +3876,36 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		    		jumlah_harta_tarikhmohon = Double.parseDouble(a.get("jumlah_harta_tarikhmohon").toString());
 		    		//jumlahHartaDeductNilaianAmanahRaya = jumlah_harta_tarikhmohon;
 		    		jumlahHartaDeductNilaianAmanahRaya = jumlah_harta_tarikhmohon - nilai_ha_tarikhmohon;
-
+		    		
+		    		//arief add 
+			    		if (flag5juta != null) {
+			    			if (f5juta = true){
+			    				if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+  								bayaranYuran = 10.00 ;
+  							} else if ( (jumlahHartaDeductNilaianAmanahRaya > 1000) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+  								bayaranYuran = 30.00 ;
+  							} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 2000000) ) {
+  								bayaranYuran = (0.02) * jumlahHartaDeductNilaianAmanahRaya ;
+  								bayaranYuran = getBundaranBayaran(bayaranYuran);
+  							} else {
+  								bayaranYuran = (0.05) * jumlahHartaDeductNilaianAmanahRaya ;
+  								bayaranYuran = getBundaranBayaran(bayaranYuran);
+  								}
+			    			}else {
+			    				if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+  								bayaranYuran = 10.00 ;
+  							} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+  								bayaranYuran = 30.00 ;
+  							} else {
+  								bayaranYuran = (0.02) * jumlahHartaDeductNilaianAmanahRaya ;
+  								bayaranYuran = getBundaranBayaran(bayaranYuran);
+  								}
+			    			}
+			    			this.context.put("txtJumBayaran", bayaranYuran); //Yuran Perintah
+							this.context.put("txtJumHarta", jumlahHartaDeductNilaianAmanahRaya);
+			    		}
+			    		/** yang asal
+			    		 * 
 		    			if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
 							bayaranYuran = 10.00 ;
 						} else if ( (jumlahHartaDeductNilaianAmanahRaya >= 1001) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
@@ -3822,7 +3916,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 							bayaranYuran = getBundaranBayaran(bayaranYuran);
 						}
 						this.context.put("txtJumBayaran", bayaranYuran); //Yuran Perintah
-						this.context.put("txtJumHarta", jumlahHartaDeductNilaianAmanahRaya);
+						this.context.put("txtJumHarta", jumlahHartaDeductNilaianAmanahRaya);**/
 				}
 				context.put("dataJumlahBayaran", getJumlahBayaran);
 
@@ -3833,12 +3927,44 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 					Hashtable a = (Hashtable) getJumlahBayaran.get(0);
 			   		double jumlah_harta_tarikhmohon;
 		    		double bayaranYuran;
-
+		    		
 		    		if (a.get("jumlah_harta_tarikhmohon") == null || "".equals(a.get("jumlah_harta_tarikhmohon"))) {
 		    			jumlah_harta_tarikhmohon = 0.00;
 		    		} else {
 		    			jumlah_harta_tarikhmohon = Double.parseDouble(""+a.get("jumlah_harta_tarikhmohon"));
 		    		}
+		    		
+
+		    		//arief add
+		    		if (flag5juta != null){
+		    			if (f5juta = true){
+		    				if ( jumlah_harta_tarikhmohon <= 1000 ) {
+  								bayaranYuran = 10.00 ;
+  							} else if ( (jumlah_harta_tarikhmohon > 1000) && (jumlah_harta_tarikhmohon <= 50000) ){
+  								bayaranYuran = 30.00 ;
+  							} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 2000000) ) {
+  								bayaranYuran = (0.02) * jumlah_harta_tarikhmohon ;
+  								bayaranYuran = getBundaranBayaran(bayaranYuran);
+  							} else {
+  								bayaranYuran = (0.05) * jumlah_harta_tarikhmohon ;
+  								bayaranYuran = getBundaranBayaran(bayaranYuran);
+  								}
+		    			}else{
+		    				if( jumlah_harta_tarikhmohon <= 1000 ) {
+								bayaranYuran = 10.00 ;
+							} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
+								bayaranYuran = 30.00 ;
+							} else {
+								bayaranYuran = (0.2/100) * jumlah_harta_tarikhmohon ;
+								bayaranYuran = getBundaranBayaran(bayaranYuran);
+							}
+							this.context.put("txtJumBayaran", bayaranYuran);
+							this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
+		    				}
+		    			}
+		    		}
+		    		
+		    		/** yang asal
 		    		if ( jumlah_harta_tarikhmohon <= 1000 ) {
 							bayaranYuran = 10.00 ;
 						} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
@@ -3850,7 +3976,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 						}
 						this.context.put("txtJumBayaran", bayaranYuran);
 						this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
-				}
+				}**/
 					context.put("dataJumlahBayaran", getJumlahBayaran);
 
 			}

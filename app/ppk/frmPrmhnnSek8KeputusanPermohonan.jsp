@@ -2897,7 +2897,7 @@ function semakMTPermohonan() {
     if (hWnd.focus != null) hWnd.focus();
 }
 
-function semakMTBorangI() {
+function semakMTBorangI() { 
     var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiMT?idFail=$idFail&command=hantarBorangI&dari=keputusanpermohonan";
 	var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=yes,scrollbars=no');
     if ((document.window != null) && (!hWnd.opener))
