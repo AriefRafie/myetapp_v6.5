@@ -46,7 +46,7 @@
 -->
 </style>
 
-</head>
+</head> 
 <!-- onload="submitForm()" -->
 <!--
 <body onload="submitForm();jeniswaktu2();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();check_pengenalan_simati_4_onload()" >

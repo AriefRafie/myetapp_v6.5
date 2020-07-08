@@ -5096,7 +5096,7 @@ if(document.f1.upload.value=='simpanUpload'){
 	document.f1.mode.value = "HtaamviewX";
 	document.f1.command.value = "HtaamX";
 	document.f1.upload.value = "";
-	document.f1.action = "?_portal_module=FrmBorangPSek17Online";
+	document.f1.action = "?_portal_module=FrmPrmhnnBorangPOnline";
 	document.f1.submit();
 }
 
@@ -5489,7 +5489,7 @@ function save_HtaamX(id_PermohonanSimati,idhta,idSimati,idDokumen,paramAction){
 	  		 if('$skrin_online_17' != 'yes'){
 	  			 document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnSek17Senarai&"+x;
 			}else{
-				document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online&"+x;
+				document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline&"+x;
 			   
 			}
 			
