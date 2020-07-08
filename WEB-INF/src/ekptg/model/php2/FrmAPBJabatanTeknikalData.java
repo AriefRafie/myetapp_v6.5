@@ -3600,6 +3600,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 	}
 
+	//start JUPEM
 	public String simpanRekodEmailJUPEM(String idUlasanTeknikalLama,String idPermohonan,
 			String idPejabat, String idNegeri, String txtTarikhHantar,
 			String txtJangkaMasa, String txtTarikhJangkaTerima,
@@ -3739,7 +3740,995 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
+	//end JUPEM
 
+	//start JAS
+	public String simpanRekodEmailJAS(String idUlasanTeknikalLama,String idPermohonan,
+			String idPejabat, String idNegeri, String txtTarikhHantar,
+			String txtJangkaMasa, String txtTarikhJangkaTerima,
+			String idSuratKe, String idKementerianTanah, String idAgensiTanah,
+			String namaPegawai, String jawatan, String emel, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPULASANTEKNIKAL
+			long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikalString);
+			r.add("ID_PERMOHONAN", idUlasanTeknikalLama);
+			r.add("FLAG_KJP", "JAS");
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_PEJABAT", idPejabat);
+			r.add("FLAG_STATUS", "1");
+			r.add("FLAG_AKTIF", "Y");
+			r.add("BIL_ULANGAN", "0");
+			r.add("ID_MASUK", userId);
+			r.add("NAMA_PEGAWAI", namaPegawai);
+			r.add("NAMA_JAWATAN", jawatan);
+			r.add("EMEL_PEGAWAI", emel);
+			r.add("MAKLUMAT_TAMBAHAN", "NOTIFIKASI EMEL JABATAN TEKNIKAL");
+			r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+			r.add("TARIKH_JANGKA_TERIMA", r.unquote("SYSDATE"));
+			r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+			stmt.executeQuery(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610217", "4", null, session, "INS",
+					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idUlasanTeknikalString;
+	}
+
+	public void setSenaraiNotifikasiJAS(String idUlasanTeknikalLama) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NAMA_JAWATAN,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_PERMOHONAN = '"
+					+ idUlasanTeknikalLama
+					+ "' AND A.FLAG_KJP = 'JAS'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("jawatan",
+						rs.getString("NAMA_JAWATAN") == null ? "" : rs
+								.getString("NAMA_JAWATAN"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	//end JAS
+	
+	//start JMG
+	public String simpanRekodEmailJMG(String idUlasanTeknikalLama,String idPermohonan,
+			String idPejabat, String idNegeri, String txtTarikhHantar,
+			String txtJangkaMasa, String txtTarikhJangkaTerima,
+			String idSuratKe, String idKementerianTanah, String idAgensiTanah,
+			String namaPegawai, String jawatan, String emel, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPULASANTEKNIKAL
+			long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikalString);
+			r.add("ID_PERMOHONAN", idUlasanTeknikalLama);
+			r.add("FLAG_KJP", "JMG");
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_PEJABAT", idPejabat);
+			r.add("FLAG_STATUS", "1");
+			r.add("FLAG_AKTIF", "Y");
+			r.add("BIL_ULANGAN", "0");
+			r.add("ID_MASUK", userId);
+			r.add("NAMA_PEGAWAI", namaPegawai);
+			r.add("NAMA_JAWATAN", jawatan);
+			r.add("EMEL_PEGAWAI", emel);
+			r.add("MAKLUMAT_TAMBAHAN", "NOTIFIKASI EMEL JABATAN TEKNIKAL");
+			r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+			r.add("TARIKH_JANGKA_TERIMA", r.unquote("SYSDATE"));
+			r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+			stmt.executeQuery(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610217", "4", null, session, "INS",
+					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idUlasanTeknikalString;
+	}
+
+	public void setSenaraiNotifikasiJMG(String idUlasanTeknikalLama) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NAMA_JAWATAN,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_PERMOHONAN = '"
+					+ idUlasanTeknikalLama
+					+ "' AND A.FLAG_KJP = 'JMG'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("jawatan",
+						rs.getString("NAMA_JAWATAN") == null ? "" : rs
+								.getString("NAMA_JAWATAN"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	//end JMG
+	
+	//start JP
+	public String simpanRekodEmailJP(String idUlasanTeknikalLama,String idPermohonan,
+			String idPejabat, String idNegeri, String txtTarikhHantar,
+			String txtJangkaMasa, String txtTarikhJangkaTerima,
+			String idSuratKe, String idKementerianTanah, String idAgensiTanah,
+			String namaPegawai, String jawatan, String emel, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPULASANTEKNIKAL
+			long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikalString);
+			r.add("ID_PERMOHONAN", idUlasanTeknikalLama);
+			r.add("FLAG_KJP", "JP");
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_PEJABAT", idPejabat);
+			r.add("FLAG_STATUS", "1");
+			r.add("FLAG_AKTIF", "Y");
+			r.add("BIL_ULANGAN", "0");
+			r.add("ID_MASUK", userId);
+			r.add("NAMA_PEGAWAI", namaPegawai);
+			r.add("NAMA_JAWATAN", jawatan);
+			r.add("EMEL_PEGAWAI", emel);
+			r.add("MAKLUMAT_TAMBAHAN", "NOTIFIKASI EMEL JABATAN TEKNIKAL");
+			r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+			r.add("TARIKH_JANGKA_TERIMA", r.unquote("SYSDATE"));
+			r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+			stmt.executeQuery(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610217", "4", null, session, "INS",
+					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idUlasanTeknikalString;
+	}
+
+	public void setSenaraiNotifikasiJP(String idUlasanTeknikalLama) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NAMA_JAWATAN,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_PERMOHONAN = '"
+					+ idUlasanTeknikalLama
+					+ "' AND A.FLAG_KJP = 'JP'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("jawatan",
+						rs.getString("NAMA_JAWATAN") == null ? "" : rs
+								.getString("NAMA_JAWATAN"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	//end JP
+	
+	//start JLM
+	public String simpanRekodEmailJLM(String idUlasanTeknikalLama,String idPermohonan,
+			String idPejabat, String idNegeri, String txtTarikhHantar,
+			String txtJangkaMasa, String txtTarikhJangkaTerima,
+			String idSuratKe, String idKementerianTanah, String idAgensiTanah,
+			String namaPegawai, String jawatan, String emel, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPULASANTEKNIKAL
+			long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikalString);
+			r.add("ID_PERMOHONAN", idUlasanTeknikalLama);
+			r.add("FLAG_KJP", "JLM");
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_PEJABAT", idPejabat);
+			r.add("FLAG_STATUS", "1");
+			r.add("FLAG_AKTIF", "Y");
+			r.add("BIL_ULANGAN", "0");
+			r.add("ID_MASUK", userId);
+			r.add("NAMA_PEGAWAI", namaPegawai);
+			r.add("NAMA_JAWATAN", jawatan);
+			r.add("EMEL_PEGAWAI", emel);
+			r.add("MAKLUMAT_TAMBAHAN", "NOTIFIKASI EMEL JABATAN TEKNIKAL");
+			r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+			r.add("TARIKH_JANGKA_TERIMA", r.unquote("SYSDATE"));
+			r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+			stmt.executeQuery(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610217", "4", null, session, "INS",
+					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idUlasanTeknikalString;
+	}
+
+	public void setSenaraiNotifikasiJLM(String idUlasanTeknikalLama) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NAMA_JAWATAN,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_PERMOHONAN = '"
+					+ idUlasanTeknikalLama
+					+ "' AND A.FLAG_KJP = 'JLM'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("jawatan",
+						rs.getString("NAMA_JAWATAN") == null ? "" : rs
+								.getString("NAMA_JAWATAN"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	//end JLM
+	
+	//start PHN
+	public String simpanRekodEmailPHM(String idUlasanTeknikalLama,String idPermohonan,
+			String idPejabat, String idNegeri, String txtTarikhHantar,
+			String txtJangkaMasa, String txtTarikhJangkaTerima,
+			String idSuratKe, String idKementerianTanah, String idAgensiTanah,
+			String namaPegawai, String jawatan, String emel, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPULASANTEKNIKAL
+			long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikalString);
+			r.add("ID_PERMOHONAN", idUlasanTeknikalLama);
+			r.add("FLAG_KJP", "PHN");
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_PEJABAT", idPejabat);
+			r.add("FLAG_STATUS", "1");
+			r.add("FLAG_AKTIF", "Y");
+			r.add("BIL_ULANGAN", "0");
+			r.add("ID_MASUK", userId);
+			r.add("NAMA_PEGAWAI", namaPegawai);
+			r.add("NAMA_JAWATAN", jawatan);
+			r.add("EMEL_PEGAWAI", emel);
+			r.add("MAKLUMAT_TAMBAHAN", "NOTIFIKASI EMEL JABATAN TEKNIKAL");
+			r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+			r.add("TARIKH_JANGKA_TERIMA", r.unquote("SYSDATE"));
+			r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+			stmt.executeQuery(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610217", "4", null, session, "INS",
+					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idUlasanTeknikalString;
+	}
+
+	public void setSenaraiNotifikasiPHM(String idUlasanTeknikalLama) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NAMA_JAWATAN,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_PERMOHONAN = '"
+					+ idUlasanTeknikalLama
+					+ "' AND A.FLAG_KJP = 'PHN'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("jawatan",
+						rs.getString("NAMA_JAWATAN") == null ? "" : rs
+								.getString("NAMA_JAWATAN"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	//end PHN
+	
+	//start JPS
+	public String simpanRekodEmailJPS(String idUlasanTeknikalLama,String idPermohonan,
+			String idPejabat, String idNegeri, String txtTarikhHantar,
+			String txtJangkaMasa, String txtTarikhJangkaTerima,
+			String idSuratKe, String idKementerianTanah, String idAgensiTanah,
+			String namaPegawai, String jawatan, String emel, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPULASANTEKNIKAL
+			long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikalString);
+			r.add("ID_PERMOHONAN", idUlasanTeknikalLama);
+			r.add("FLAG_KJP", "JPS");
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_PEJABAT", idPejabat);
+			r.add("FLAG_STATUS", "1");
+			r.add("FLAG_AKTIF", "Y");
+			r.add("BIL_ULANGAN", "0");
+			r.add("ID_MASUK", userId);
+			r.add("NAMA_PEGAWAI", namaPegawai);
+			r.add("NAMA_JAWATAN", jawatan);
+			r.add("EMEL_PEGAWAI", emel);
+			r.add("MAKLUMAT_TAMBAHAN", "NOTIFIKASI EMEL JABATAN TEKNIKAL");
+			r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+			r.add("TARIKH_JANGKA_TERIMA", r.unquote("SYSDATE"));
+			r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+			stmt.executeQuery(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610217", "4", null, session, "INS",
+					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idUlasanTeknikalString;
+	}
+
+	public void setSenaraiNotifikasiJPS(String idUlasanTeknikalLama) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NAMA_JAWATAN,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_PERMOHONAN = '"
+					+ idUlasanTeknikalLama
+					+ "' AND A.FLAG_KJP = 'JPS'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("jawatan",
+						rs.getString("NAMA_JAWATAN") == null ? "" : rs
+								.getString("NAMA_JAWATAN"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	//end JPS
+	
+	//start PTG
+	public String simpanRekodEmailPTG(String idUlasanTeknikalLama,String idPermohonan,
+			String idPejabat, String idNegeri, String txtTarikhHantar,
+			String txtJangkaMasa, String txtTarikhJangkaTerima,
+			String idSuratKe, String idKementerianTanah, String idAgensiTanah,
+			String namaPegawai, String jawatan, String emel, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPULASANTEKNIKAL
+			long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikalString);
+			r.add("ID_PERMOHONAN", idUlasanTeknikalLama);
+			r.add("FLAG_KJP", "PTG");
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_PEJABAT", idPejabat);
+			r.add("FLAG_STATUS", "1");
+			r.add("FLAG_AKTIF", "Y");
+			r.add("BIL_ULANGAN", "0");
+			r.add("ID_MASUK", userId);
+			r.add("NAMA_PEGAWAI", namaPegawai);
+			r.add("NAMA_JAWATAN", jawatan);
+			r.add("EMEL_PEGAWAI", emel);
+			r.add("MAKLUMAT_TAMBAHAN", "NOTIFIKASI EMEL JABATAN TEKNIKAL");
+			r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+			r.add("TARIKH_JANGKA_TERIMA", r.unquote("SYSDATE"));
+			r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+			stmt.executeQuery(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610217", "4", null, session, "INS",
+					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idUlasanTeknikalString;
+	}
+
+	public void setSenaraiNotifikasiPTG(String idUlasanTeknikalLama) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NAMA_JAWATAN,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_PERMOHONAN = '"
+					+ idUlasanTeknikalLama
+					+ "' AND A.FLAG_KJP = 'PTG'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("jawatan",
+						rs.getString("NAMA_JAWATAN") == null ? "" : rs
+								.getString("NAMA_JAWATAN"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	//end PTG
+	
 	public Vector getListNotifikasi() {
 		return listNotifikasi;
 	}

@@ -406,6 +406,76 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("txtJawatan"), getParam("txtEmel"),session);
 				logic.sendEmail(idPermohonan, idKementerianTanah, session);
 			}
+			if ("simpanRekodEmailJAS".equals(hitButton)) {
+				idUlasanTeknikal = logic.simpanRekodEmailJAS(
+						idUlasanTeknikal,idPermohonan, idPejabat, idNegeri,
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"),
+						getParam("txtTarikhJangkaTerima"),
+						getParam("idSuratKe"), idKementerianTanah,
+						idAgensiTanah, getParam("txtNamaPegawai"), 
+						getParam("txtJawatan"), getParam("txtEmel"),session);
+				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+			}
+			if ("simpanRekodEmailJMG".equals(hitButton)) {
+				idUlasanTeknikal = logic.simpanRekodEmailJMG(
+						idUlasanTeknikal,idPermohonan, idPejabat, idNegeri,
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"),
+						getParam("txtTarikhJangkaTerima"),
+						getParam("idSuratKe"), idKementerianTanah,
+						idAgensiTanah, getParam("txtNamaPegawai"), 
+						getParam("txtJawatan"), getParam("txtEmel"),session);
+				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+			}
+			if ("simpanRekodEmailJP".equals(hitButton)) {
+				idUlasanTeknikal = logic.simpanRekodEmailJP(
+						idUlasanTeknikal,idPermohonan, idPejabat, idNegeri,
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"),
+						getParam("txtTarikhJangkaTerima"),
+						getParam("idSuratKe"), idKementerianTanah,
+						idAgensiTanah, getParam("txtNamaPegawai"), 
+						getParam("txtJawatan"), getParam("txtEmel"),session);
+				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+			}
+			if ("simpanRekodEmailJLM".equals(hitButton)) {
+				idUlasanTeknikal = logic.simpanRekodEmailJLM(
+						idUlasanTeknikal,idPermohonan, idPejabat, idNegeri,
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"),
+						getParam("txtTarikhJangkaTerima"),
+						getParam("idSuratKe"), idKementerianTanah,
+						idAgensiTanah, getParam("txtNamaPegawai"), 
+						getParam("txtJawatan"), getParam("txtEmel"),session);
+				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+			}
+			if ("simpanRekodEmailPHM".equals(hitButton)) {
+				idUlasanTeknikal = logic.simpanRekodEmailPHM(
+						idUlasanTeknikal,idPermohonan, idPejabat, idNegeri,
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"),
+						getParam("txtTarikhJangkaTerima"),
+						getParam("idSuratKe"), idKementerianTanah,
+						idAgensiTanah, getParam("txtNamaPegawai"), 
+						getParam("txtJawatan"), getParam("txtEmel"),session);
+				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+			}
+			if ("simpanRekodEmailJPS".equals(hitButton)) {
+				idUlasanTeknikal = logic.simpanRekodEmailJPS(
+						idUlasanTeknikal,idPermohonan, idPejabat, idNegeri,
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"),
+						getParam("txtTarikhJangkaTerima"),
+						getParam("idSuratKe"), idKementerianTanah,
+						idAgensiTanah, getParam("txtNamaPegawai"), 
+						getParam("txtJawatan"), getParam("txtEmel"),session);
+				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+			}
+			if ("simpanRekodEmailPTG".equals(hitButton)) {
+				idUlasanTeknikal = logic.simpanRekodEmailPTG(
+						idUlasanTeknikal,idPermohonan, idPejabat, idNegeri,
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"),
+						getParam("txtTarikhJangkaTerima"),
+						getParam("idSuratKe"), idKementerianTanah,
+						idAgensiTanah, getParam("txtNamaPegawai"), 
+						getParam("txtJawatan"), getParam("txtEmel"),session);
+				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+			}
 		}
 
 		// HEADER
@@ -652,6 +722,11 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						beanMaklumatDokumenJAS = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJAS",beanMaklumatDokumenJAS);
 					}
+					// SENARAI NOTIFIKASI
+					senaraiNotifikasi = new Vector();
+					logic.setSenaraiNotifikasiJAS(idUlasanTeknikal);
+					senaraiNotifikasi = logic.getListNotifikasi();
+					this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
 					
 				} else if ("update".equals(modePopup)){					
 					this.context.put("readonlyPopup", "");
@@ -769,6 +844,11 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						beanMaklumatDokumenJMG = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJMG",beanMaklumatDokumenJMG);
 					}
+					// SENARAI NOTIFIKASI
+					senaraiNotifikasi = new Vector();
+					logic.setSenaraiNotifikasiJMG(idUlasanTeknikal);
+					senaraiNotifikasi = logic.getListNotifikasi();
+					this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
 					
 				} else if ("update".equals(modePopup)){					
 					this.context.put("readonlyPopup", "");
@@ -886,6 +966,11 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						beanMaklumatDokumenJP = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJP",beanMaklumatDokumenJP);
 					}
+					// SENARAI NOTIFIKASI
+					senaraiNotifikasi = new Vector();
+					logic.setSenaraiNotifikasiJP(idUlasanTeknikal);
+					senaraiNotifikasi = logic.getListNotifikasi();
+					this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
 					
 				} else if ("update".equals(modePopup)){					
 					this.context.put("readonlyPopup", "");
@@ -1003,6 +1088,11 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						beanMaklumatDokumenJLM = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJLM",beanMaklumatDokumenJLM);
 					}
+					// SENARAI NOTIFIKASI
+					senaraiNotifikasi = new Vector();
+					logic.setSenaraiNotifikasiJLM(idUlasanTeknikal);
+					senaraiNotifikasi = logic.getListNotifikasi();
+					this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
 					
 				} else if ("update".equals(modePopup)){					
 					this.context.put("readonlyPopup", "");
@@ -1120,6 +1210,11 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						beanMaklumatDokumenPHM = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenPHM",beanMaklumatDokumenPHM);
 					}
+					// SENARAI NOTIFIKASI
+					senaraiNotifikasi = new Vector();
+					logic.setSenaraiNotifikasiPHM(idUlasanTeknikal);
+					senaraiNotifikasi = logic.getListNotifikasi();
+					this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
 					
 				} else if ("update".equals(modePopup)){					
 					this.context.put("readonlyPopup", "");
@@ -1238,6 +1333,12 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						this.context.put("BeanMaklumatDokumenJPS",beanMaklumatDokumenJPS);
 					}
 					
+					// SENARAI NOTIFIKASI
+					senaraiNotifikasi = new Vector();
+					logic.setSenaraiNotifikasiJPS(idUlasanTeknikal);
+					senaraiNotifikasi = logic.getListNotifikasi();
+					this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
+					
 				} else if ("update".equals(modePopup)){					
 					this.context.put("readonlyPopup", "");
 	    			this.context.put("inputTextClassPopup", "");
@@ -1354,6 +1455,12 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						beanMaklumatDokumenPTG = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenPTG",beanMaklumatDokumenPTG);
 					}
+					
+					// SENARAI NOTIFIKASI
+					senaraiNotifikasi = new Vector();
+					logic.setSenaraiNotifikasiPTG(idUlasanTeknikal);
+					senaraiNotifikasi = logic.getListNotifikasi();
+					this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
 					
 				} else if ("update".equals(modePopup)){					
 					this.context.put("readonlyPopup", "");

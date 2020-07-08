@@ -983,4 +983,99 @@ public class FrmAPBSenaraiFailData {
 	public void setBeanMaklumatPemohon(Vector beanMaklumatPemohon) {
 		this.beanMaklumatPemohon = beanMaklumatPemohon;
 	}
+	
+	public Vector<Hashtable<String,String>> getCarianFailSyarikat(String noFail,String noLesen) 
+			throws Exception {
+
+			Db db = null;
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			String sql = "";
+			senaraiFail = new Vector<Hashtable<String,String>>();
+
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN,"
+						+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI"
+						+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F"
+						+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PEMOHON = C.ID_PEMOHON "
+						+ " AND C.ID_NEGERITETAP = F.ID_NEGERI AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NOT NULL";
+				
+				// noFail
+				if (noFail != null) {
+					if (!noFail.trim().equals("")) {
+						sql = sql + " AND UPPER(A.NO_FAIL) LIKE '%' ||'"
+								+ noFail.trim().toUpperCase() + "'|| '%'";
+					}
+				}
+
+				// noLesen
+				if (noLesen != null) {
+					if (!noLesen.trim().equals("")) {
+						sql = sql + " AND UPPER(E.NO_LESEN) LIKE '%' ||'"
+								+ noLesen.trim().toUpperCase() + "'|| '%'";
+					}
+				}
+				
+				sql = sql + " ORDER BY B.TARIKH_TERIMA DESC NULLS LAST ";
+				myLog.info("sql="+sql);
+				ResultSet rs = stmt.executeQuery(sql);
+
+				Hashtable<String,String> h;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable<String,String>();
+					String idPermohonan = rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN");
+					String statusID = rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS");
+					
+					h.put("bil", String.valueOf(bil));
+					h.put("idFail",rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
+					h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
+					h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
+					h.put("noRayuan",rs.getString("NO_RAYUAN") == null ? "0" : rs.getString("NO_RAYUAN"));
+					h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
+					h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
+					h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
+					h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+					h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));
+					h.put("noLesen", rs.getString("NO_LESEN") == null ? "" : rs.getString("NO_LESEN").toUpperCase());
+
+					String statusLesen = "";
+					int bilHari = 0;
+					if (statusID != null && statusID.equals("1610207")) {
+						if (rs.getDate("TARIKH_TAMAT_LESEN") != null
+								&& rs.getDate("TARIKH_TAMAT_LESEN").toString().length() > 0) {
+							Calendar calCurrent = new GregorianCalendar();
+							Date dateCurrent = new Date();
+							calCurrent.setTime(dateCurrent);
+
+							Calendar calTamat = new GregorianCalendar();
+							Date dateTamat = sdf.parse(sdf.format(rs.getDate("TARIKH_TAMAT_LESEN")));
+							calTamat.setTime(dateTamat);
+
+							bilHari = daysBetween(calTamat.getTime(),calCurrent.getTime());
+
+							if (calCurrent.getTime().after(calTamat.getTime())) {
+								statusLesen = "LESEN TAMAT TEMPOH";
+							} else if (calCurrent.getTime().before(calTamat.getTime()) && bilHari <= 90) {
+								statusLesen = bilHari + " HARI LAGI";
+							}
+						}
+					}
+					h.put("statusLesen", statusLesen);
+					//CODING UNTUK CEK TARIKH TAMAT KELULUSAN DASAR
+					h.put("statusKelulusanDasar", getStatusKelulusanDasar(statusID, idPermohonan));
+					senaraiFail.addElement(h);
+					myLog.info("bil="+bil);
+					bil++;
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+			return senaraiFail;
+			
+		}
 }
