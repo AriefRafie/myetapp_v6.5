@@ -241,7 +241,7 @@ function simpan() {
 	else{
 		if ( !window.confirm("Adakah Anda Pasti?") ) return; 
 		document.f1.method="post";
-		document.f1.action="?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";	
+		document.f1.action="?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";	
 		doAjaxCallf1("SimpanSemak");
 		document.f1.submit();	
 	}
