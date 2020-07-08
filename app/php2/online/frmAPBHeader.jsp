@@ -7,32 +7,79 @@
     #set($tarikhTerima = $beanHeader.tarikhTerima)
     #set($idStatus = $beanHeader.idStatus) 
     #set($status = $beanHeader.status)    
-    #set($noFail = $beanHeader.noFail)  
+    #set($noFail = $beanHeader.noFail)
+    #set($tujuanPengambilan = $beanHeader.tujuanPengambilan)
     #end
     <td width="50%" valign="top" ><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
-          <td width="36%" align="right">No Permohonan </td>
+          <td width="30%">No Permohonan </td>
           <td width="1%">:</td>
-          <td width="63%"><font color="blue">$noPermohonan</font></td>
+          <td ><font color="blue">$noPermohonan</font></td>
         </tr>
         <tr>
-          <td width="36%" align="right">No Fail </td>
+          <td width="30%">No Fail </td>
           <td width="1%">:</td>
-          <td width="63%"><font color="blue">$noFail</font></td>
+          <td ><font color="blue">$noFail</font></td>
         </tr>
         <tr>
-          <td align="right">Tarikh Permohonan </td>
-          <td>:</td>
+          <td width="30%">Tarikh Permohonan </td>
+          <td width="1%">:</td>
           <td><font color="blue">$tarikhTerima</font></td>
         </tr>
         <tr>
-          <td align="right">Status Permohonan </td>
-          <td>:</td>
+        <td width="30%">Tujuan </td>
+        <td width="1%">:</td>
+        <td><font color="blue">$tujuanPengambilan</font></td>
+        </tr>
+        <tr>
+          <td width="30%">Status Permohonan </td>
+          <td width="1%">:</td>
           <td><font color="green">$status</font></td>
         </tr>
       </table>
       </fieldset></td>
+      
+    <td><fieldset>
+	  <legend><strong>MAKLUMAT PEMOHON</strong></legend>
+      <table width="100%" border="0" cellspacing="2" cellpadding="2">
+      <tr>
+      <td width="30%">Nama Pemohon</td>
+      <td width="1%">:</td>
+      <td >$!pemohon.get("namaPemohon")</td>
+      </tr>
+      <tr>
+  		<td>
+  		#if($!pemohon.get("kategoriPemohon") == "INDIVIDU") 
+  			No. Kad Pengenalan/MyID 
+  		#end
+  		#if($!pemohon.get("kategoriPemohon") != "INDIVIDU")
+  			No. Pendaftaran Syarikat/MyCoid
+  		#end
+  		</td>
+  		<td>:</td>
+  		<td>$!pemohon.get("noPengenalan")</td>
+  	</tr>
+      <tr>
+      <td width="30%" valign="top">Alamat</td>
+      <td width="1%" valign="top">:</td>
+      <td >$!pemohon.get("alamat1") $!pemohon.get("alamat2")<br>$!pemohon.get("alamat3")<br/>
+      $!pemohon.get("poskod") $!pemohon.get("bandar")<br/>$!pemohon.get("negeri")
+     </td>
+      </tr>  
+      <tr>
+      <td width="30%">No. Tel</td>
+      <td width="1%">:</td>
+      <td >$!pemohon.get("noTel")</td>
+      </tr>  
+      <tr>
+      <td width="30%">No. Faks</td>
+      <td width="1%">:</td>
+      <td >$!pemohon.get("noFax")</td>
+      </tr>
+      </table>
+      </fieldset>
+      </td>
   </tr>
 </table>

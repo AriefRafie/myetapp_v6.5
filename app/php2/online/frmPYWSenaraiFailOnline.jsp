@@ -53,11 +53,11 @@
       <table align="center" width="100%">
       <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/></td>
         <tr class="table_header">
-          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+          <td scope="row" width="2%" align="center"><strong>Bil</strong></td>
           <td width="20%"><strong>No Permohonan</strong></td>
-          <td width="10%" align="center"><strong>Tarikh Terima</strong></td>
-          <td width="30%" align="center"><strong>Perkara</strong></td>
-          <td width="10%"><strong>Status</strong></td>
+          <td width="8%" align="center"><strong>Tarikh Permohonan</strong></td>
+          <td width="30%" align="center"><strong>Tujuan</strong></td>
+          <td width="15%"><strong>Status</strong></td>
         </tr>
         
         #set ($list = "")

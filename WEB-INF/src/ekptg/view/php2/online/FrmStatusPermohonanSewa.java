@@ -188,7 +188,6 @@ public class FrmStatusPermohonanSewa extends AjaxBasedModule {
 		//this.context.put("idLuasKegunaan", idLuasKegunaan);
 	    //this.context.put("idLuas", idLuas);
 	    this.context.put("idPermohonanSewa", idPermohonanSewa);
-	   System.out.println(" VM : "+vm);
 		return vm;
 	}
 

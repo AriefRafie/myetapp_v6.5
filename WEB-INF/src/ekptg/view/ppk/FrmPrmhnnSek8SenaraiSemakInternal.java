@@ -419,6 +419,7 @@ Vector listabc = null;
 						
 						String txtbox = "";
 						String tarikhresit = "";
+						String tarikhperintah = "";
 						if (cbsemaks[i].equals("5")) {
 							txtbox = getParam("txtNomborSijil");
 						} else if (cbsemaks[i].equals("8")) {
@@ -435,8 +436,8 @@ Vector listabc = null;
 							txtbox = getParam("txtTahunKematian");
 						}
 						// if(bolehsimpan.equals("yes")){
-						logic_C.semakanAdd(cbsemaks[i], String.valueOf(idPermohonan), String.valueOf(txtbox),
-								String.valueOf(tarikhresit), buktimati, uu);
+//						logic_C.semakanAdd(cbsemaks[i], String.valueOf(idPermohonan), String.valueOf(txtbox),
+								String.valueOf(tarikhresit),String.valueOf(tarikhperintah), buktimati, uu);
 						// }
 
 					}

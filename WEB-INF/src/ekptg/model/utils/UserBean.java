@@ -26,7 +26,7 @@ public class UserBean implements IUserPegawai {
 	 * Dibuat oleh Mohamad Rosli 2020/04/02
 	 * Senarai emel mengikut role
 	 * */
-	public List<Map<String,String>> penggunaMengikutRole(String ROLE_ID,String ID_NEGERI) throws Exception {
+	public List<Map<String,String>> getPenggunaMengikutRole(String ROLE_ID,String ID_NEGERI) throws Exception {
 		Db db = null;
 		ResultSet rs = null;
 		Statement stmt = null;
@@ -54,14 +54,14 @@ public class UserBean implements IUserPegawai {
 					" ) UR " +
 					" WHERE  " +
 					//--USER_LOGIN='supportw'
-					" USER_ROLE='"+ROLE_ID+"' ";
+					" USER_ROLE LIKE '%"+ROLE_ID+"%' ";
 			
 		    if(ID_NEGERI!=null)
 		    	sql += " AND ID_NEGERI = '"+ID_NEGERI+"' ";
 		    
 		    sql +=	" ORDER BY USER_NAME ";				
 			
-			myLog.info(" SQL listPenggunaMengikutRole :"+ sql);			
+			myLog.info(" getPenggunaMengikutRole :sql="+ sql);			
 			rs = stmt.executeQuery(sql);
 			listPengunaByRoleNegeri = Collections.synchronizedList(new ArrayList<Map<String,String>>());
 			Map<String,String> h = null;
@@ -69,11 +69,11 @@ public class UserBean implements IUserPegawai {
 			while (rs.next()) {
 				h = Collections.synchronizedMap(new HashMap<String,String>());
 				bil++;
-				h.put("BIL",String.valueOf(bil));
+				h.put("bil",String.valueOf(bil));
 //				h.put("USER_ID",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));	
 //				h.put("USER_LOGIN",rs.getString("USER_LOGIN") == null ? "" : rs.getString("USER_LOGIN"));
-				h.put("USER_NAME",rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
-				h.put("EMEL",rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
+				h.put("user",rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
+				h.put("emel",rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
 //				h.put("ID_NEGERI",rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
 				listPengunaByRoleNegeri.add(h);
 				

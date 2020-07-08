@@ -927,7 +927,7 @@ public class FrmPYWLawatanTapakData {
 		Connection conn = null;
 		String userId = (String) session.getAttribute("_ekptg_user_id");
 		String sql = "";
-
+		
 		try {
 
 			db = new Db();
@@ -935,7 +935,17 @@ public class FrmPYWLawatanTapakData {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-
+			
+			String idPegawai = "";
+			String idNegeri = "";
+			sql = "SELECT * FROM TBLPHPLOGTUGASAN WHERE ROLE = '(PHP)PYWPenolongPegawaiTanahNegeri' AND ID_FAIL = '"
+					+ idFail + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				idPegawai = rs.getString("ID_PEGAWAI");
+				idNegeri = rs.getString("ID_NEGERI");
+			}
+			
 			// TBLPHPLOGTUGASAN
 			r = new SQLRenderer();
 			r.update("ID_FAIL", idFail);
@@ -949,7 +959,8 @@ public class FrmPYWLawatanTapakData {
 			r = new SQLRenderer();
 			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
 			r.add("ID_TUGASAN", idTugasan);
-			r.add("ID_NEGERI", idNegeriUser);
+			r.add("ID_PEGAWAI", idPegawai);
+			r.add("ID_NEGERI", idNegeri);
 			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
 			r.add("ID_FAIL", idFail);
 			r.add("FLAG_AKTIF", "Y");

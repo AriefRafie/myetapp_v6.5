@@ -2575,6 +2575,13 @@ document.getElementById("header_lama").style.display="block";
         <tr>
       <td><a href="#" class="style2" onClick="javascript:cetakSlipPendengaran('$id_fail','$NO_FAIL')"><font color="blue">Slip Pendengaran</font></a></td>
     </tr>
+    <!-- arief add Nota Keterangan PPK-33 OPEN -->
+    #if ($id_status == 21 || $id_status == 175 || $id_status == 41 || $id_status == 173)
+    <tr>
+      <td><a href="#" class="style2" onClick="javascript:cetakNotaPerbicaraan('$NO_FAIL','$id_perbicaraan','$id_fail','$id_simati')"><font color="blue">Nota Keterangan</font></a></td>
+    </tr>
+    #end
+    <!-- arief add Nota Keterangan PPK-33 CLOSE -->
       </table>
 </fieldset>
 

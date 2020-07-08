@@ -80,7 +80,7 @@ public class FrmPrmhnnSek8SenaraiSemakInternalData {
 	    }
 	  }
 	
-	public  void semakanAdd(String idsemakan, String idListSemakan, String txtbox, String tarikhresit, String buktimati, String uid) throws Exception {
+	public  void semakanAdd(String idsemakan, String idListSemakan, String txtbox, String tarikhresit, String tarikhperintah, String buktimati, String uid) throws Exception {
 	    Db db = null;
 	    long idSemakanhantar = DB.getNextID("TBLSEMAKANHANTAR_SEQ");
 	    /*
@@ -114,6 +114,10 @@ public class FrmPrmhnnSek8SenaraiSemakInternalData {
 	      if(!tarikhresit.equals("") && tarikhresit!=null)
 	      {
 	      r.add("tarikh_pelbagai", r.unquote("to_date('" + tarikhresit + "','dd/MM/yyyy')"));
+	      }
+	      if(!tarikhperintah.equals("") && tarikhperintah!=null)
+	      {
+	      r.add("tarikh_pelbagai", r.unquote("to_date('" + tarikhperintah + "','dd/MM/yyyy')"));
 	      }
 	      r.add("tarikh_masuk",r.unquote("sysdate"));
 	      r.add("id_masuk", uid);

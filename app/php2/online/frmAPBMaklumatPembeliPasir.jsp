@@ -52,7 +52,7 @@
           <td>#if ($mode == 'newPembeliPasir' ||  $mode == 'updatePembeliPasir')<span class="style1">*</span>#end</td>
           <td>No. Telefon</td>
           <td>:</td>
-          <td><input type="text" name="txtNoTelPembeliPasir" id="txtNoTelPembeliPasir" size="10" maxlength="10" value="$beanMaklumatPembeliPasir.noTel" $readonly class="$inputTextClass" onBlur="validatePoskod(this,this.value);"/></td>
+          <td><input type="text" name="txtNoTelPembeliPasir" id="txtNoTelPembeliPasir" size="15" maxlength="15" value="$beanMaklumatPembeliPasir.noTel" $readonly class="$inputTextClass" onBlur="validatePoskod(this,this.value);"/></td>
         </tr>
         <tr>
           <td>&nbsp;</td>

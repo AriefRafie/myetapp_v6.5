@@ -33,6 +33,10 @@ import ekptg.model.ppt.FrmUPTSek8BorangFData;
 import ekptg.model.ppt.PPTHeader;
 
 public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2315140119909997109L;
 	static Logger myLogger = Logger.getLogger(FrmBantahanSenaraiAPOnline.class);
 	
 	// MODEL
@@ -46,7 +50,6 @@ public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
 	// MODEL ONLINE PORTAL/INTERNAL SHARE MODEL TAU
 	BantahanAgensiDaftarOnline modelAPonline = new BantahanAgensiDaftarOnline();
 
-	
 	String checkedsbcBantahan1 = "";
 	String checkedsbcBantahan2 = "";
 	String checkedsbcBantahan3 = "";
@@ -771,7 +774,7 @@ public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
 				String flag_pampasan = (String)b.get("flag_pampasan");
 
 				if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-		     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+		     		listDokumen = modelBantahan.senaraiDokumenBantahan(id_bantahan);
 		    		context.put("listDokumen", listDokumen);
 		    		context.put("listDokumen_size", listDokumen.size());	    		
 				}else{				
@@ -2093,7 +2096,7 @@ public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
     		context.put("id_bantahan",id_bantahan);
     		
     		if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+	     		listDokumen = modelBantahan.senaraiDokumenBantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2133,7 +2136,7 @@ public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
             this.context.put("display_error_message","no");	
             
             if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+	     		listDokumen = modelBantahan.senaraiDokumenBantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2162,7 +2165,7 @@ public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
             this.context.put("display_error_message","no");	
            	
             if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+	     		listDokumen = modelBantahan.senaraiDokumenBantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2190,7 +2193,7 @@ public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
 			}
 			
            if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+	     		listDokumen = modelBantahan.senaraiDokumenBantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2222,7 +2225,7 @@ public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));	
 	
             if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+	     		listDokumen = modelBantahan.senaraiDokumenBantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2259,7 +2262,7 @@ public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));	
 	
             if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
+	     		listDokumen = modelBantahan.senaraiDokumenBantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2268,8 +2271,7 @@ public class FrmBantahanSenaraiAPOnline extends AjaxBasedModule {
 			}
             
 			vm = "app/ppt/frmBantahanMaster.jsp";	
-			
-		
+				
 			
 		}else if("batal_dokumen".equals(submit)){
 			

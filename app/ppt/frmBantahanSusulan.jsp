@@ -77,7 +77,6 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 #end
 
 #set ( $id_award = $id_award.get("id_award") )
-
 #set ( $txtKeteranganPampasan = $getKeteranganPampasan.get("keterangan_pampasan") )
 
 <fieldset>
@@ -168,9 +167,10 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
        	  <td width="1%">:</td>
        	  <td width="28%">
             #if ($mode=="disabled")
-            <input type="radio" name="sorKeputusanMahkamah" id="sorKeputusanMahkamah" value="1" disabled $TEMPchecked1 />Penambahan Pampasan
+            	<input type="radio" name="sorKeputusanMahkamah" id="sorKeputusanMahkamah" value="1" disabled $TEMPchecked1 />Penambahan Pampasan
             #else
-            <input type="radio" name="sorKeputusanMahkamah" id="sorKeputusanMahkamah" value="1" $TEMPchecked1 />Penambahan Pampasan            #end            
+            	<input type="radio" name="sorKeputusanMahkamah" id="sorKeputusanMahkamah" value="1" $TEMPchecked1 />Penambahan Pampasan
+            #end            
             </td>
           <td width="1%">#if ($mode=="")<font color="red">*</font>#end </td>
        	  <td width="22%">
@@ -380,6 +380,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!-- :::upload -->
 <input type="hidden" name="nama_skrin" id="nama_skrin" value="susulanBantahan"  />
 <fieldset id="senarai_dokumen" >
+<!-- jenis dokumen = '$jenisDoc' --> 
+<!-- jenis skrin = '$nama_skrin' -->
 <legend>Senarai Dokumen Yang Disertakan</legend>
     
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
@@ -403,7 +405,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
       #end
   </tr>
  
-  
+<!-- listDokumen =  $listDokumen -->
  #if($listDokumen_size > 0)
   #set ($cnt=0)
   #foreach($list1 in $listDokumen)        
@@ -414,8 +416,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          		#else
                		 #set( $row = "row1" )
          		#end
-	   #if($list1.JENIS_DOKUMEN == "perintah")   <!-- PPT-38 -->  
-	   #set ($cnt=1)      		
+	   #if($list1.JENIS_DOKUMEN == "susulanBantahan")   <!-- PPT-38 -->  
+	   #set ($cnt=1)
 	  <tr>  
 	    <td class="$row" >$list1.BIL</td>
 	    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
@@ -515,7 +517,7 @@ function tambahDokumen() {
 	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
 	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
 	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&jenisDoc=susulanBantahan";	
 	document.${formName}.submit();
 }
 //:::upload

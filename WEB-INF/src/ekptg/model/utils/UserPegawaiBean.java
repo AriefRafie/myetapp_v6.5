@@ -23,73 +23,74 @@ public class UserPegawaiBean implements IUserPegawai {
 	static Logger myLog = Logger.getLogger(ekptg.model.utils.UserPegawaiBean.class);
 	//public UserPegawaiBean() {	}
 	/**
-	 * Dibuat oleh Mohamad Rosli 2020/04/02
-	 * Senarai emel mengikut role
+	 * Dibuat oleh Mohamad Rosli 
+	 * Senarai emel mengikut role 
+	 * Tidak diguna
 	 * */
-//	public List<Map<String,String>> penggunaMengikutRole(String ROLE_ID,String ID_NEGERI) throws Exception {
-//		Db db = null;
-//		ResultSet rs = null;
-//		Statement stmt = null;
-//		List<Map<String,String>> listPengunaByRoleNegeri = null;
-//		String sql = "";
-//		
-//		try {
-//			db = new Db();
-//			stmt = db.getStatement();	
-//			
-//			sql = " SELECT USER_NAME,EMEL,USER_ROLE,ID_NEGERI FROM " +
-//					" ( " +
-//					" SELECT  " +
-//					" U.USER_ID,U.USER_LOGIN, UI.ID_NEGERI " +
-//					" ,U.USER_NAME,U.USER_ROLE,UI.EMEL " +
-//					" FROM USERS U,USERS_INTERNAL UI " +
-//					" WHERE U.USER_ID = UI.USER_ID AND UI.EMEL IS NOT NULL " +
-//					" UNION " +
-//					" SELECT  " +
-//					" U.USER_ID,U.USER_LOGIN, UI.ID_NEGERI " +
-//					" ,U.USER_NAME,UR.ROLE_ID USER_ROLE,UI.EMEL " +
-//					" FROM USERS U,USERS_INTERNAL UI, USER_ROLE UR " +
-//					" WHERE U.USER_ID = UI.USER_ID  " +
-//					" AND U.USER_LOGIN = UR.USER_ID AND UI.EMEL IS NOT NULL " +
-//					" ) UR " +
-//					" WHERE  " +
-//					//--USER_LOGIN='supportw'
-//					" USER_ROLE='"+ROLE_ID+"' ";
-//			
-//		    if(ID_NEGERI!=null)
-//		    	sql += " AND ID_NEGERI = '"+ID_NEGERI+"' ";
-//		    
-//		    sql +=	" ORDER BY USER_NAME ";				
-//			
-//			myLog.info(" SQL listPenggunaMengikutRole :"+ sql);			
-//			rs = stmt.executeQuery(sql);
-//			listPengunaByRoleNegeri = Collections.synchronizedList(new ArrayList<Map<String,String>>());
-//			Map<String,String> h = null;
-//			int bil = 0;
-//			while (rs.next()) {
-//				h = Collections.synchronizedMap(new HashMap<String,String>());
-//				bil++;
-//				h.put("BIL",String.valueOf(bil));
-////				h.put("USER_ID",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));	
-////				h.put("USER_LOGIN",rs.getString("USER_LOGIN") == null ? "" : rs.getString("USER_LOGIN"));
-//				h.put("USER_NAME",rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
-//				h.put("EMEL",rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
-////				h.put("ID_NEGERI",rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
-//				listPengunaByRoleNegeri.add(h);
-//				
-//			}
-//
-//		} finally {
-//			if (rs != null)
-//				rs.close();
-//			if (stmt != null)
-//				stmt.close();
-//			if (db != null)
-//				db.close();
-//		}
-//		return listPengunaByRoleNegeri;
-//
-//	}
+	public List<Map<String,String>> getPenggunaMengikutRole(String ROLE_ID,String ID_NEGERI) throws Exception {
+		Db db = null;
+		ResultSet rs = null;
+		Statement stmt = null;
+		List<Map<String,String>> listPengunaByRoleNegeri = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			stmt = db.getStatement();	
+			
+			sql = " SELECT USER_NAME,EMEL,USER_ROLE,ID_NEGERI FROM " +
+					" ( " +
+					" SELECT  " +
+					" U.USER_ID,U.USER_LOGIN, UI.ID_NEGERI " +
+					" ,U.USER_NAME,U.USER_ROLE,UI.EMEL " +
+					" FROM USERS U,USERS_INTERNAL UI " +
+					" WHERE U.USER_ID = UI.USER_ID AND UI.EMEL IS NOT NULL " +
+					" UNION " +
+					" SELECT  " +
+					" U.USER_ID,U.USER_LOGIN, UI.ID_NEGERI " +
+					" ,U.USER_NAME,UR.ROLE_ID USER_ROLE,UI.EMEL " +
+					" FROM USERS U,USERS_INTERNAL UI, USER_ROLE UR " +
+					" WHERE U.USER_ID = UI.USER_ID  " +
+					" AND U.USER_LOGIN = UR.USER_ID AND UI.EMEL IS NOT NULL " +
+					" ) UR " +
+					" WHERE  " +
+					//--USER_LOGIN='supportw'
+					" USER_ROLE='"+ROLE_ID+"' ";
+			
+		    if(ID_NEGERI!=null)
+		    	sql += " AND ID_NEGERI = '"+ID_NEGERI+"' ";
+		    
+		    sql +=	" ORDER BY USER_NAME ";				
+			
+			myLog.info(" SQL listPenggunaMengikutRole :"+ sql);			
+			rs = stmt.executeQuery(sql);
+			listPengunaByRoleNegeri = Collections.synchronizedList(new ArrayList<Map<String,String>>());
+			Map<String,String> h = null;
+			int bil = 0;
+			while (rs.next()) {
+				h = Collections.synchronizedMap(new HashMap<String,String>());
+				bil++;
+				h.put("BIL",String.valueOf(bil));
+//				h.put("USER_ID",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));	
+//				h.put("USER_LOGIN",rs.getString("USER_LOGIN") == null ? "" : rs.getString("USER_LOGIN"));
+				h.put("USER_NAME",rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
+				h.put("EMEL",rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
+//				h.put("ID_NEGERI",rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
+				listPengunaByRoleNegeri.add(h);
+				
+			}
+
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+			if (db != null)
+				db.close();
+		}
+		return listPengunaByRoleNegeri;
+
+	}
 	
 	public Vector<Hashtable<String, String>> getSenaraiPegawai(
 		int idNegeri,String idUnit,String tahun) throws Exception{

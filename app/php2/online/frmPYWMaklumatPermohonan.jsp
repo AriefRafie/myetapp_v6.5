@@ -35,11 +35,7 @@
   <tr>
     <td> #parse("app/php2/online/frmPYWHeader.jsp") </td>
   </tr>
-  #else
-  <tr>
-    <td>&nbsp;
-      <div class="warning">SILA PILIH FAIL DI SENARAI PERMOHONAN TERLEBIH DAHULU</div></td>
-  </tr>
+  
   #end
   <tr>
     <td>&nbsp;</td>
@@ -88,7 +84,7 @@
                 <td>:</td>
                 <td>$beanMaklumatTanah.noHakmilik</td>
               </tr>
-              <tr>
+             <!--  <tr>
                 <td>&nbsp;</td>
                 <td>No. Warta</td>
                 <td>:</td>
@@ -99,7 +95,7 @@
                 <td>Tarikh Warta</td>
                 <td>:</td>
                 <td>$beanMaklumatTanah.tarikhWarta</td>
-              </tr>
+              </tr> -->
               <tr>
                 <td>&nbsp;</td>
                 <td>Mukim</td>
@@ -305,14 +301,15 @@
               #end              
             </table>
           </div>
+          
           <div class="TabbedPanelsContent">
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<tr>
-  				<td> #parse("app/php2/online/frmPYWDaftarManualSenaraiSemakOnline.jsp") </td>
+  				<td> #parse("app/php2/online/frmPYWSenaraiSemakOnline.jsp") </td>
               </tr>
            	</table>
-           	
          </div>
+         
          <div class="TabbedPanelsContent">
          <table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<tr>
@@ -330,10 +327,17 @@
            	<tr>
            	<td colspan=2 align="center">
            	#if ($idStatus == '')
-            	<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
+           		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
             	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-            #end</td>
-           	</tr>          	
+            #else
+            #if ($idStatus !='')
+            	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            #end
+            #end
+            </td>
+           	</tr>          	        	
            	</table>
          </div>
         </div>
@@ -341,9 +345,9 @@
   </tr>
   #end
 </table>
-<div id="calculateTotalPercentPengarah_result"></div>
+<!-- <div id="calculateTotalPercentPengarah_result"></div>
 <fieldset id="tableReport" style="display:none;"-->
-<legend><strong>SENARAI LAPORAN</strong></legend>
+<!--<legend><strong>SENARAI LAPORAN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"> Borang Permohonan </a></td>
@@ -352,7 +356,7 @@
     <td ><a href="#" class="style2" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"> Pengesahan Permohonan </a></td>
   </tr>
 </table>
-</fieldset>
+</fieldset> -->
 <script type="text/javascript">
 #if ($idFail != '')
 	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});

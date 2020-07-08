@@ -696,7 +696,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 								sql = sql + " AND F.ID_KEMENTERIAN = " + socKementerian + "  ";
 							}
 						}
-			  
+						
 						//sorting
 						sql +=" ORDER BY P.ID_STATUS ASC ";
 //						myLogger.info("SQL PB ONLINE CARIAN :: "+sql);
@@ -733,30 +733,32 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			// CLOSE				
 			
 	 @SuppressWarnings("unchecked")
-	public Vector getHeader(String id_fail,String id_permohonan)throws Exception {		 
-			Db db = null;
-			String sql = "";
-			try{
-				header = new Vector();
-				db = new Db();
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();				
-				sql =  " SELECT P.ID_PERMOHONAN, F.ID_NEGERI, P.ID_NEGERI, P.NO_PERMOHONAN, P.ID_FAIL, "; 
-				sql += " F.NO_FAIL, F.ID_SUBURUSAN, P.TARIKH_PERMOHONAN, P.ID_STATUS, ";
-				sql += " F.ID_KEMENTERIAN, P.ID_AGENSI, P.FLAG_PERUNTUKAN, P.FLAG_SEGERA, ";
-				sql += " P.ID_DAERAH, P.TUJUAN, P.NO_RUJUKAN_SURAT, P.TARIKH_KEHENDAKI, "; 
-				sql += " P.ALAMAT1, P.ALAMAT2, P.ALAMAT3, P.POSKOD, P.ID_MUKIM, ";
-				sql += " K.NAMA_KEMENTERIAN, B.NAMA_DAERAH, P.NO_RUJUKAN_PTD, P.NO_RUJUKAN_PTG, "; 
-				sql += " P.NO_RUJUKAN_UPT, SU.NAMA_SUBURUSAN, S.KETERANGAN, C.NAMA_NEGERI,P.TARIKH_TERIMA,AG.NAMA_AGENSI "; 
-				sql += " FROM TBLPFDFAIL F,TBLPPTPERMOHONAN P,TBLRUJKEMENTERIAN K,TBLRUJNEGERI C, "; 
-				sql += " TBLRUJDAERAH B,TBLRUJSUBURUSAN SU,TBLRUJSTATUS S, TBLRUJAGENSI AG "; 
-				sql += " WHERE F.ID_KEMENTERIAN = K.ID_KEMENTERIAN(+) AND F.ID_FAIL = P.ID_FAIL AND B.ID_DAERAH = P.ID_DAERAH(+) ";
-				sql += " AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN(+) AND P.ID_STATUS = S.ID_STATUS ";
-				sql += " AND P.ID_NEGERI = C.ID_NEGERI(+) AND P.ID_AGENSI = AG.ID_AGENSI(+) AND P.ID_FAIL = '"+ id_fail +"' AND P.ID_PERMOHONAN = '"+ id_permohonan +"' ";
+	public Vector getHeader(String id_fail,String id_permohonan) throws Exception {		 
+		Db db = null;
+		String sql = "";
+		try{
+			header = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+//			SQLRenderer r = new SQLRenderer();				
+			sql =  " SELECT P.ID_PERMOHONAN, F.ID_NEGERI, P.ID_NEGERI, P.NO_PERMOHONAN, P.ID_FAIL, "; 
+			sql += " F.NO_FAIL, F.ID_SUBURUSAN, P.TARIKH_PERMOHONAN, P.ID_STATUS, ";
+			sql += " F.ID_KEMENTERIAN, P.ID_AGENSI, P.FLAG_PERUNTUKAN, P.FLAG_SEGERA, ";
+			sql += " P.ID_DAERAH, P.TUJUAN, P.NO_RUJUKAN_SURAT, P.TARIKH_KEHENDAKI, "; 
+			sql += " P.ALAMAT1, P.ALAMAT2, P.ALAMAT3, P.POSKOD, P.ID_MUKIM, ";
+			sql += " K.NAMA_KEMENTERIAN, B.NAMA_DAERAH, P.NO_RUJUKAN_PTD, P.NO_RUJUKAN_PTG, "; 
+			sql += " P.NO_RUJUKAN_UPT, SU.NAMA_SUBURUSAN, S.KETERANGAN, C.NAMA_NEGERI,P.TARIKH_TERIMA,AG.NAMA_AGENSI "; 
+			sql += " FROM TBLPFDFAIL F,TBLPPTPERMOHONAN P,TBLRUJKEMENTERIAN K,TBLRUJNEGERI C, "; 
+			sql += " TBLRUJDAERAH B,TBLRUJSUBURUSAN SU,TBLRUJSTATUS S, TBLRUJAGENSI AG "; 
+			sql += " WHERE F.ID_KEMENTERIAN = K.ID_KEMENTERIAN(+) AND F.ID_FAIL = P.ID_FAIL AND B.ID_DAERAH = P.ID_DAERAH(+) ";
+			sql += " AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN(+) AND P.ID_STATUS = S.ID_STATUS ";
+			sql += " AND P.ID_NEGERI = C.ID_NEGERI(+) AND P.ID_AGENSI = AG.ID_AGENSI(+) AND P.ID_FAIL = '"+ id_fail +"' AND P.ID_PERMOHONAN = '"+ id_permohonan +"' ";
 //				myLogger.info("SQL getHeader :: "+sql);
-				ResultSet rs = stmt.executeQuery(sql);
-				Hashtable h;			    
-		     while (rs.next()) {
+			ResultSet rs = stmt.executeQuery(sql);
+				
+			Hashtable h;			    
+			while (rs.next()) {
 		    	h = new Hashtable();		    	 
 		        h.put("id_permohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));
 		    	h.put("no_permohonan", rs.getString("no_permohonan")==null?"":rs.getString("no_permohonan"));
@@ -820,12 +822,14 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 		    		h.put("id_mukim",rs.getString("id_mukim"));
 		    	}
 		    	header.addElement(h);
-		      	}      
-				}
-				finally{
-					if(db != null)db.close();
-				}
-				return header;
+		      	
+			}      
+				
+		}finally{
+			if(db != null)db.close();
+		}
+		return header;
+	 
 	 }
 	
 	 @SuppressWarnings("unchecked")
@@ -920,29 +924,28 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 		}
 	 }
 
-	@SuppressWarnings("unchecked")
-	public Vector getMaklumatBantahan(String id_hakmilikpb, String _MaxIdSiasatan, String id_warta) throws Exception {		 							
-			 Db db = null;
-			 String sql = "";
-			try{
-					getMaklumatBantahan = new Vector();
-					db = new Db();
-					Statement stmt = db.getStatement();
-					SQLRenderer r = new SQLRenderer();				
-					sql =  " SELECT A.MAKLUMAT_BANTAHAN_TAMAT_TEMPOH,A.ID_BANTAHAN,A.NO_BANTAHAN,A.JENIS_PEMBANTAH,A.TARIKH_TERIMA,A.TARIKH_BORANGN,A.ID_PIHAKBERKEPENTINGAN, "+
-							"A.FLAG_PENERIMA_PAMPASAN,A.FLAG_BAHAGIAN_PAMPASAN,A.STATUS_BANTAHAN,A.ALASAN,A.KEPENTINGANKEATAS,A.FLAG_ONLINE, "+
-							"A.FLAG_UKUR_LUAS,A.FLAG_PAMPASAN,A.TARIKH_TERIMA_AWARD,S.NO_SIASATAN,A.AMAUN_TUNTUTAN,A.FLAG_SYARAT,"; 
-					sql += " NVL(B.ID_PIHAKBERKEPENTINGAN,0) ID_PIHAKBERKEPENTINGAN,B.ID_JENISPB,B.NAMA_PB,B.NO_PB,B.UMUR,"+
+	public Vector<Hashtable<String,String>> getMaklumatBantahan(String id_hakmilikpb, String _MaxIdSiasatan, String id_warta) throws Exception {							
+		Db db = null;
+		String sql = "";
+		try{
+			getMaklumatBantahan = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();				
+			sql =  " SELECT A.MAKLUMAT_BANTAHAN_TAMAT_TEMPOH, A.ID_BANTAHAN, A.NO_BANTAHAN, A.JENIS_PEMBANTAH, A.TARIKH_TERIMA, A.TARIKH_BORANGN, A.ID_PIHAKBERKEPENTINGAN, "+
+							"A.FLAG_PENERIMA_PAMPASAN, A.FLAG_BAHAGIAN_PAMPASAN, A.STATUS_BANTAHAN, A.ALASAN, A.KEPENTINGANKEATAS, A.FLAG_ONLINE, "+
+							"A.FLAG_UKUR_LUAS,A.FLAG_PAMPASAN, A.TARIKH_TERIMA_AWARD, S.NO_SIASATAN, A.AMAUN_TUNTUTAN,A.FLAG_SYARAT,"; 
+			sql += " NVL(B.ID_PIHAKBERKEPENTINGAN,0) ID_PIHAKBERKEPENTINGAN,B.ID_JENISPB,B.NAMA_PB,B.NO_PB,B.UMUR,"+
 							"C.NO_HAKMILIK,C.NO_PT,C.NO_LOT, "+
 							"D.KETERANGAN,";
-					sql += " E.ID_HAKMILIK,E.ALAMAT1,E.ALAMAT2,E.ALAMAT3,E.POSKOD,NVL(E.ID_NEGERI,0) ID_NEGERI,E.ID_BANDAR,"+
+			sql += " E.ID_HAKMILIK,E.ALAMAT1,E.ALAMAT2,E.ALAMAT3,E.POSKOD,NVL(E.ID_NEGERI,0) ID_NEGERI,E.ID_BANDAR,"+
 							"E.NO_TEL_RUMAH,E.NO_HANDPHONE,E.NO_FAX,E.FLAG_BANTAHAN,"+
 							"F.ID_WARTA,";
-					sql += " G.KETERANGAN AS DESC_STATUS_BANTAHAN, G.ID_STATUS, ";
-					sql += " S.ID_SIASATAN, ";
-					sql += " RN.NAMA_NEGERI"+
+			sql += " G.KETERANGAN AS DESC_STATUS_BANTAHAN, G.ID_STATUS, ";
+			sql += " S.ID_SIASATAN, ";
+			sql += " RN.NAMA_NEGERI"+
 							",NVL(NOPB.ID_JENISNOPB,'') ID_JENISNOPB,NVL(NOPB.KETERANGAN,'') JENISNOPB ";
-					sql += " FROM TBLPPTBANTAHAN A"+
+			sql += " FROM TBLPPTBANTAHAN A"+
 							",TBLPPTPIHAKBERKEPENTINGAN B"+
 							",TBLPPTHAKMILIK C"+
 							",TBLRUJJENISPB D"+
@@ -951,80 +954,84 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 							",TBLRUJSTATUS G "+
 							",TBLPPTSIASATAN S " +
 							",TBLRUJNEGERI RN,TBLRUJJENISNOPB NOPB ";	
-					sql +=	" WHERE E.ID_JENISPB=D.ID_JENISPB(+) "+
+			sql +=	" WHERE E.ID_JENISPB=D.ID_JENISPB(+) "+
 							" AND E.ID_PIHAKBERKEPENTINGAN=B.ID_PIHAKBERKEPENTINGAN ";	
-					sql += 	" AND E.ID_HAKMILIK=C.ID_HAKMILIK "+
+			sql += 	" AND E.ID_HAKMILIK=C.ID_HAKMILIK "+
 							" AND E.ID_HAKMILIKPB=A.ID_HAKMILIKPB AND S.ID_HAKMILIK = C.ID_HAKMILIK ";
-					sql += 	" AND C.ID_PERMOHONAN = F.ID_PERMOHONAN "+
+			sql += 	" AND C.ID_PERMOHONAN = F.ID_PERMOHONAN "+
 							" AND A.STATUS_BANTAHAN = G.ID_STATUS(+) "+
 							" AND E.ID_NEGERI = RN.ID_NEGERI(+) "+
 							" AND B.ID_JENISNOPB = NOPB.ID_JENISNOPB(+) "+
 							" AND A.ID_HAKMILIKPB = '"+id_hakmilikpb+"' " + "AND S.ID_SIASATAN = '"+_MaxIdSiasatan+"' AND F.ID_WARTA = '"+id_warta+"' " +
 							" ";	
-					//myLogger.info("SQL GETMAKLUMATBANTAHAN :: "+sql);
-					ResultSet rs = stmt.executeQuery(sql);
+			//
+			myLogger.info("SQL GETMAKLUMATBANTAHAN:sql= "+sql);
+			ResultSet rs = stmt.executeQuery(sql);
 					
-					Hashtable h;			    
-			     while (rs.next()) {
-			    	h = new Hashtable();
-			    	//Bantahan MT
-			    	h.put("nama", rs.getString("NAMA_PB")==null?"":rs.getString("NAMA_PB"));
-			    	h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
-			    	h.put("noPB", rs.getString("NO_PB")==null?"":rs.getString("NO_PB"));
-			    	h.put("idRujukanPB", rs.getString("ID_PIHAKBERKEPENTINGAN"));
-			    	h.put("jenisPB", rs.getString("JENISNOPB")==null?"":rs.getString("JENISNOPB"));
-			    	h.put("idJenisNoPB", rs.getString("ID_JENISNOPB")==null?"":rs.getString("ID_JENISNOPB"));
-			    	h.put("umur", rs.getString("UMUR")==null?"":rs.getString("UMUR"));
+			Hashtable<String,String> h;			    
+			while (rs.next()) {
+				h = new Hashtable<String,String>();
+			    //Bantahan MT
+				h.put("nama", rs.getString("NAMA_PB")==null?"":rs.getString("NAMA_PB"));
+			   	h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
+			   	h.put("noPB", rs.getString("NO_PB")==null?"":rs.getString("NO_PB"));
+			   	h.put("idRujukanPB", rs.getString("ID_PIHAKBERKEPENTINGAN"));
+			   	h.put("jenisPB", rs.getString("JENISNOPB")==null?"":rs.getString("JENISNOPB"));
+			   	h.put("idJenisNoPB", rs.getString("ID_JENISNOPB")==null?"":rs.getString("ID_JENISNOPB"));
+			   	h.put("umur", rs.getString("UMUR")==null?"0":rs.getString("UMUR"));
 	
-			    	h.put("maklumat_bantahan_tamat_tempoh", rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH")==null?"":rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH"));
-			    	h.put("id_status_bantahan", rs.getString("ID_STATUS")==null?"":rs.getString("ID_STATUS"));
-			    	h.put("id_bantahan", rs.getString("ID_BANTAHAN")==null?"":rs.getString("ID_BANTAHAN"));
-			    	h.put("no_bantahan", rs.getString("NO_BANTAHAN")==null?"":rs.getString("NO_BANTAHAN"));
-			    	h.put("jenis_pembantah", rs.getString("JENIS_PEMBANTAH")==null?"":rs.getString("JENIS_PEMBANTAH"));
-			    	h.put("tarikh_terima", rs.getString("TARIKH_TERIMA")==null?"":sdf.format(rs.getDate("TARIKH_TERIMA")));
-			    	h.put("tarikh_borangn", rs.getString("TARIKH_BORANGN")==null?"":sdf.format(rs.getDate("TARIKH_BORANGN")));
-			    	h.put("id_pihakberkepentingan", rs.getString("ID_PIHAKBERKEPENTINGAN")==null?"":rs.getString("ID_PIHAKBERKEPENTINGAN"));
-			    	h.put("status_bantahan", rs.getString("STATUS_BANTAHAN")==null?"":rs.getString("STATUS_BANTAHAN"));
-			    	h.put("id_hakmilik", rs.getString("ID_HAKMILIK")==null?"":rs.getString("ID_HAKMILIK"));
-			    	h.put("alasan", rs.getString("ALASAN")==null?"":rs.getString("ALASAN"));
-			    	h.put("kepentingankeatas", rs.getString("KEPENTINGANKEATAS")==null?"":rs.getString("KEPENTINGANKEATAS"));
-			    	h.put("id_jenispb", rs.getString("ID_JENISPB")==null?"":rs.getString("ID_JENISPB"));
-			    	h.put("keteranganjenispb", rs.getString("KETERANGAN")==null?"":rs.getString("KETERANGAN"));
-			    	h.put("nama_pb", rs.getString("NAMA_PB")==null?"":rs.getString("NAMA_PB"));
-			    	h.put("alamat1", rs.getString("ALAMAT1")==null?"":rs.getString("ALAMAT1"));
-			    	h.put("alamat2", rs.getString("ALAMAT2")==null?"":rs.getString("ALAMAT2"));
-			    	h.put("alamat3", rs.getString("ALAMAT3")==null?"":rs.getString("ALAMAT3"));
-			    	h.put("poskod", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
-			    	h.put("id_negeri", rs.getString("ID_NEGERI")==null?"":rs.getString("ID_NEGERI"));
-			    	h.put("id_bandar", rs.getString("ID_BANDAR")==null?"":rs.getString("ID_BANDAR"));
-			    	h.put("no_hakmilik", rs.getString("NO_HAKMILIK")==null?"":rs.getString("NO_HAKMILIK"));
-			    	h.put("no_pt", rs.getString("NO_PT")==null?"":rs.getString("NO_PT"));
-			    	h.put("no_lot", rs.getString("NO_LOT")==null?"":rs.getString("NO_LOT"));
-			    	h.put("flag_syarat", rs.getString("FLAG_SYARAT")==null?"":rs.getString("FLAG_SYARAT"));
-			    	h.put("no_tel_rumah", rs.getString("NO_TEL_RUMAH")==null?"":rs.getString("NO_TEL_RUMAH"));
-			    	h.put("no_hp", rs.getString("NO_HANDPHONE")==null?"":rs.getString("NO_HANDPHONE"));
-			    	h.put("no_fax", rs.getString("NO_FAX")==null?"":rs.getString("NO_FAX"));
-			    	h.put("flag_bantahan", rs.getString("FLAG_BANTAHAN")==null?"":rs.getString("FLAG_BANTAHAN"));
-			    	h.put("flag_penerima_pampasan", rs.getString("FLAG_PENERIMA_PAMPASAN")==null?"":rs.getString("FLAG_PENERIMA_PAMPASAN"));
-			    	h.put("flag_bahagian_pampasan", rs.getString("FLAG_BAHAGIAN_PAMPASAN")==null?"":rs.getString("FLAG_BAHAGIAN_PAMPASAN"));
-			    	h.put("flag_ukur_luas", rs.getString("FLAG_UKUR_LUAS")==null?"":rs.getString("FLAG_UKUR_LUAS"));
-			    	h.put("flag_pampasan", rs.getString("FLAG_PAMPASAN")==null?"":rs.getString("FLAG_PAMPASAN"));			    	
-			    	h.put("tarikh_terima_award", rs.getString("TARIKH_TERIMA_AWARD")==null?"":sdf.format(rs.getDate("TARIKH_TERIMA_AWARD")));
-			    	h.put("no_siasatan", rs.getString("NO_SIASATAN")==null?"":rs.getString("NO_SIASATAN"));
-			    	h.put("amaun_tuntutan", rs.getString("AMAUN_TUNTUTAN")==null?"":Double.parseDouble(rs.getString("AMAUN_TUNTUTAN")));
-			    	h.put("id_siasatan", rs.getString("ID_SIASATAN")==null?"":rs.getString("ID_SIASATAN"));
-			    	h.put("id_warta", rs.getString("ID_WARTA")==null?"":rs.getString("ID_WARTA"));
-			    	h.put("desc_status_bantahan", rs.getString("DESC_STATUS_BANTAHAN")==null?"":rs.getString("DESC_STATUS_BANTAHAN"));
-			    	h.put("flag_online", rs.getString("FLAG_ONLINE")==null?"":rs.getString("FLAG_ONLINE"));
-			    	getMaklumatBantahan.addElement(h);
+			   	h.put("maklumat_bantahan_tamat_tempoh", rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH")==null?"":rs.getString("MAKLUMAT_BANTAHAN_TAMAT_TEMPOH"));
+			    h.put("id_status_bantahan", rs.getString("ID_STATUS")==null?"":rs.getString("ID_STATUS"));
+			   	h.put("id_bantahan", rs.getString("ID_BANTAHAN")==null?"":rs.getString("ID_BANTAHAN"));
+			   	h.put("no_bantahan", rs.getString("NO_BANTAHAN")==null?"":rs.getString("NO_BANTAHAN"));
+			   	h.put("jenis_pembantah", rs.getString("JENIS_PEMBANTAH")==null?"":rs.getString("JENIS_PEMBANTAH"));
+			   	h.put("tarikh_terima", rs.getString("TARIKH_TERIMA")==null?"":sdf.format(rs.getDate("TARIKH_TERIMA")));
+			   	h.put("tarikh_borangn", rs.getString("TARIKH_BORANGN")==null?"":sdf.format(rs.getDate("TARIKH_BORANGN")));
+		    	h.put("id_pihakberkepentingan", rs.getString("ID_PIHAKBERKEPENTINGAN")==null?"":rs.getString("ID_PIHAKBERKEPENTINGAN"));
+		    	h.put("status_bantahan", rs.getString("STATUS_BANTAHAN")==null?"":rs.getString("STATUS_BANTAHAN"));
+		    	h.put("id_hakmilik", rs.getString("ID_HAKMILIK")==null?"":rs.getString("ID_HAKMILIK"));
+		    	h.put("alasan", rs.getString("ALASAN")==null?"":rs.getString("ALASAN"));
+			   	h.put("kepentingankeatas", rs.getString("KEPENTINGANKEATAS")==null?"":rs.getString("KEPENTINGANKEATAS"));
+			   	h.put("id_jenispb", rs.getString("ID_JENISPB")==null?"":rs.getString("ID_JENISPB"));
+			   	h.put("keteranganjenispb", rs.getString("KETERANGAN")==null?"":rs.getString("KETERANGAN"));
+			   	h.put("nama_pb", rs.getString("NAMA_PB")==null?"":rs.getString("NAMA_PB"));
+		    	h.put("alamat1", rs.getString("ALAMAT1")==null?"":rs.getString("ALAMAT1"));
+		    	h.put("alamat2", rs.getString("ALAMAT2")==null?"":rs.getString("ALAMAT2"));
+		    	h.put("alamat3", rs.getString("ALAMAT3")==null?"":rs.getString("ALAMAT3"));
+		    	h.put("poskod", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
+			   	h.put("id_negeri", rs.getString("ID_NEGERI")==null?"":rs.getString("ID_NEGERI"));
+			   	h.put("id_bandar", rs.getString("ID_BANDAR")==null?"":rs.getString("ID_BANDAR"));
+			   	h.put("no_hakmilik", rs.getString("NO_HAKMILIK")==null?"":rs.getString("NO_HAKMILIK"));
+		    	h.put("no_pt", rs.getString("NO_PT")==null?"":rs.getString("NO_PT"));
+		    	h.put("no_lot", rs.getString("NO_LOT")==null?"":rs.getString("NO_LOT"));
+			   	h.put("flag_syarat", rs.getString("FLAG_SYARAT")==null?"":rs.getString("FLAG_SYARAT"));
+			   	h.put("no_tel_rumah", rs.getString("NO_TEL_RUMAH")==null?"":rs.getString("NO_TEL_RUMAH"));
+			   	h.put("no_hp", rs.getString("NO_HANDPHONE")==null?"":rs.getString("NO_HANDPHONE"));
+			   	h.put("no_fax", rs.getString("NO_FAX")==null?"":rs.getString("NO_FAX"));
+			    h.put("flag_bantahan", rs.getString("FLAG_BANTAHAN")==null?"":rs.getString("FLAG_BANTAHAN"));
+		    	h.put("flag_penerima_pampasan", rs.getString("FLAG_PENERIMA_PAMPASAN")==null?"":rs.getString("FLAG_PENERIMA_PAMPASAN"));
+		    	h.put("flag_bahagian_pampasan", rs.getString("FLAG_BAHAGIAN_PAMPASAN")==null?"":rs.getString("FLAG_BAHAGIAN_PAMPASAN"));
+			   	h.put("flag_ukur_luas", rs.getString("FLAG_UKUR_LUAS")==null?"":rs.getString("FLAG_UKUR_LUAS"));
+			   	h.put("flag_pampasan", rs.getString("FLAG_PAMPASAN")==null?"":rs.getString("FLAG_PAMPASAN"));			    	
+			   	h.put("tarikh_terima_award", rs.getString("TARIKH_TERIMA_AWARD")==null?"":sdf.format(rs.getDate("TARIKH_TERIMA_AWARD")));
+			   	h.put("no_siasatan", rs.getString("NO_SIASATAN")==null?"":rs.getString("NO_SIASATAN"));
+			   	//Util.formatDecimal(
+			   	h.put("amaunTuntutanf", rs.getString("AMAUN_TUNTUTAN")==null?"":lebah.util.Util.formatDecimal(rs.getDouble("AMAUN_TUNTUTAN")));
+				h.put("amaun_tuntutan", rs.getString("AMAUN_TUNTUTAN")==null?"":rs.getString("AMAUN_TUNTUTAN"));
+			    //h.put("amaun_tuntutan", rs.getString("AMAUN_TUNTUTAN")==null?"":Double.parseDouble(rs.getString("AMAUN_TUNTUTAN")));
+			   	h.put("id_siasatan", rs.getString("ID_SIASATAN")==null?"":rs.getString("ID_SIASATAN"));
+			   	h.put("id_warta", rs.getString("ID_WARTA")==null?"":rs.getString("ID_WARTA"));
+			   	h.put("desc_status_bantahan", rs.getString("DESC_STATUS_BANTAHAN")==null?"":rs.getString("DESC_STATUS_BANTAHAN"));
+			    h.put("flag_online", rs.getString("FLAG_ONLINE")==null?"":rs.getString("FLAG_ONLINE"));
+			    getMaklumatBantahan.addElement(h);
 			      	
-			     }      
+			}      
 				
-			}finally{
-				if(db != null)db.close();
+		}finally{
+			if(db != null)db.close();
 				
-			}	
-			return getMaklumatBantahan;
+		}	
+		return getMaklumatBantahan;
 				
 	}
 
@@ -1367,6 +1374,51 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			return getTarikhBorangG;
 		 
 	}
+	public Vector getMaklumatSusulan(String id_bantahan,String docType) throws Exception {	 							
+		 Db db = null;
+		 String sql = "";
+		 try{
+			 	getMaklumatSusulan = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();				
+				sql =  " SELECT A.AMAUN_AWARD,A.TEMPOH_BAYAR,A.UNIT_TEMPOH , O.TARIKH_TERIMA_PERINTAH,O.TARIKH_PERINTAH, O.TARIKH_LANJUTAN_MAHKAMAH_OB, O.TARIKH_LANJUTAN_MAHKAMAH_PT, "; 
+				sql += " O.FLAG_PULANG_DEPOSIT,O.KEPUTUSAN_MAHKAMAH,O.KOS_PENGAPIT_HAKIM,O.NO_RUJUKAN_TANAH,O.NO_RUJUKAN_MAHKAMAH, ";
+				sql += " O.KOS_JPPH,O.NAMA_JPPH,O.KOS_SWASTA,O.NAMA_SWASTA,O.SYARIKAT_SWASTA";
+				sql += " FROM TBLPPTBANTAHAN A, TBLPPTBORANGO O ";
+				sql += " WHERE A.ID_BANTAHAN = O.ID_BANTAHAN AND A.ID_BANTAHAN = '"+ id_bantahan +"' ";
+				myLogger.info("SQL getMaklumatSusulan :: "+sql);
+				ResultSet rs = stmt.executeQuery(sql);					
+				Hashtable h;			    
+		     while (rs.next()) {
+		    	h = new Hashtable();
+		    	h.put("no_rujukan_mahkamah", rs.getString("NO_RUJUKAN_MAHKAMAH")==null?"":rs.getString("NO_RUJUKAN_MAHKAMAH"));
+		    	h.put("amaun_award", rs.getString("AMAUN_AWARD")==null?"":Double.parseDouble(rs.getString("AMAUN_AWARD")));
+		    	h.put("tempoh_bayar", rs.getString("TEMPOH_BAYAR")==null?"":rs.getString("TEMPOH_BAYAR"));			    	
+		    	h.put("unit_tempoh", rs.getString("UNIT_TEMPOH")==null?"":rs.getString("UNIT_TEMPOH"));
+		    	h.put("tarikh_terima_perintah", rs.getString("TARIKH_TERIMA_PERINTAH")==null?"":sdf.format(rs.getDate("TARIKH_TERIMA_PERINTAH")));
+		    	h.put("tarikh_lanjutan_mahkamah_ob", rs.getString("TARIKH_LANJUTAN_MAHKAMAH_OB")==null?"":sdf.format(rs.getDate("TARIKH_LANJUTAN_MAHKAMAH_OB")));
+		    	h.put("tarikh_lanjutan_mahkamah_pt", rs.getString("TARIKH_LANJUTAN_MAHKAMAH_PT")==null?"":sdf.format(rs.getDate("TARIKH_LANJUTAN_MAHKAMAH_PT")));
+		    	h.put("tarikhTerimaPerintah_convert", rs.getString("TARIKH_TERIMA_PERINTAH")==null?"":rs.getDate("TARIKH_TERIMA_PERINTAH"));
+//		    	h.put("tarikhTerimaPerintah_convert",rs.getDate("TARIKH_TERIMA_PERINTAH"));
+		    	h.put("tarikh_perintah", rs.getString("TARIKH_PERINTAH")==null?"":sdf.format(rs.getDate("TARIKH_PERINTAH")));
+		    	h.put("flag_pulang_deposit", rs.getString("FLAG_PULANG_DEPOSIT")==null?"":rs.getString("FLAG_PULANG_DEPOSIT"));
+		    	h.put("keputusan_mahkamah", rs.getString("KEPUTUSAN_MAHKAMAH")==null?"":rs.getString("KEPUTUSAN_MAHKAMAH"));
+		    	h.put("kos_pengapit_hakim", rs.getString("KOS_PENGAPIT_HAKIM")==null?"":Double.parseDouble(rs.getString("KOS_PENGAPIT_HAKIM")));
+		    	h.put("kos_jpph", rs.getString("KOS_JPPH")==null?"":Double.parseDouble(rs.getString("KOS_JPPH")));
+		    	h.put("nama_jpph", rs.getString("NAMA_JPPH")==null?"":rs.getString("NAMA_JPPH"));
+		    	h.put("kos_swasta", rs.getString("KOS_SWASTA")==null?"":Double.parseDouble(rs.getString("KOS_SWASTA")));
+		    	h.put("nama_swasta", rs.getString("NAMA_SWASTA")==null?"":rs.getString("NAMA_SWASTA"));
+		    	h.put("syarikat_swasta", rs.getString("SYARIKAT_SWASTA")==null?"":rs.getString("SYARIKAT_SWASTA"));
+		    	h.put("no_rujukan_tanah", rs.getString("NO_RUJUKAN_TANAH")==null?"":rs.getString("NO_RUJUKAN_TANAH"));
+		    	getMaklumatSusulan.addElement(h);
+		      	}      
+			}
+				finally{
+					if(db != null)db.close();
+				}	
+			return getMaklumatSusulan;
+	}
 	public Vector getMaklumatSusulan(String id_bantahan) throws Exception {	 							
 			 Db db = null;
 			 String sql = "";
@@ -1375,11 +1427,11 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 					db = new Db();
 					Statement stmt = db.getStatement();
 					SQLRenderer r = new SQLRenderer();				
-					sql =  " SELECT A.AMAUN_AWARD,A.TEMPOH_BAYAR,A.UNIT_TEMPOH,O.TARIKH_TERIMA_PERINTAH,O.TARIKH_PERINTAH, O.TARIKH_LANJUTAN_MAHKAMAH_OB, O.TARIKH_LANJUTAN_MAHKAMAH_PT, "; 
+					sql =  " SELECT A.AMAUN_AWARD,A.TEMPOH_BAYAR,A.UNIT_TEMPOH , O.TARIKH_TERIMA_PERINTAH,O.TARIKH_PERINTAH, O.TARIKH_LANJUTAN_MAHKAMAH_OB, O.TARIKH_LANJUTAN_MAHKAMAH_PT, "; 
 					sql += " O.FLAG_PULANG_DEPOSIT,O.KEPUTUSAN_MAHKAMAH,O.KOS_PENGAPIT_HAKIM,O.NO_RUJUKAN_TANAH,O.NO_RUJUKAN_MAHKAMAH, ";
 					sql += " O.KOS_JPPH,O.NAMA_JPPH,O.KOS_SWASTA,O.NAMA_SWASTA,O.SYARIKAT_SWASTA";
 					sql += " FROM TBLPPTBANTAHAN A, TBLPPTBORANGO O ";
-					sql += " WHERE A.ID_BANTAHAN = O.ID_BANTAHAN AND A.ID_BANTAHAN = '"+ id_bantahan +"' ";	
+					sql += " WHERE A.ID_BANTAHAN = O.ID_BANTAHAN AND A.ID_BANTAHAN = '"+ id_bantahan +"' ";
 					myLogger.info("SQL getMaklumatSusulan :: "+sql);
 					ResultSet rs = stmt.executeQuery(sql);					
 					Hashtable h;			    
@@ -1452,7 +1504,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			    getMaklumatBatalMahkamah = new Vector();
 				db = new Db();
 				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();				
+				SQLRenderer r = new SQLRenderer();
 				sql =  " SELECT A.NO_RUJUKAN_SURAT_BATALMAHKAMAH,A.TARIKH_TERIMA_BATALMAHKAMAH, "; 
 				sql += " A.TARIKH_SURAT_BATALMAHKAMAH,A.FLAG_BATAL_MAHKAMAH,A.CATATAN_BATAL_MAHKAMAH ";
 				sql += " FROM TBLPPTBANTAHAN A WHERE A.ID_BANTAHAN = '"+ id_bantahan +"' ";
@@ -1472,9 +1524,9 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			}
 				finally{
 					if(db != null)db.close();
-				}	
+				}
 			return getMaklumatBatalMahkamah;			
-}	
+}
 
 	@SuppressWarnings("unchecked")
 	public Vector view_details_dokumen(String id_dokumen) throws Exception {
@@ -1513,26 +1565,62 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			return view_details_dokumen;			
 	}
 
-	@SuppressWarnings("unchecked")
-	public Vector senarai_dokumen_bantahan(String id_bantahan) throws Exception {				
+	public Vector<Hashtable<String,String>> senaraiDokumenBantahan(String id_bantahan, String jenisDoc) throws Exception {				
 	    Db db = null;
 	    String sql = "";			  	    
 	    try {
-	      listDokumen_bantahan = new Vector();		
+	      listDokumen_bantahan = new Vector();
 	      db = new Db();
 	      Statement stmt = db.getStatement();
-	      sql = " SELECT A.ID_BANTAHAN,A.ID_DOKUMEN, A.NAMA_FAIL, A.JENIS_MIME, A.TAJUK, A.KETERANGAN,"+ 
-				" A.CONTENT  FROM TBLPPTDOKUMEN A,TBLPPTBANTAHAN P WHERE A.ID_BANTAHAN = '"+id_bantahan+"' "+
-				" AND A.ID_BANTAHAN = P.ID_BANTAHAN";
-	      
-//	      myLogger.info("SQL DOKUMEN :"+sql.toUpperCase());
+	      sql = " SELECT A.ID_BANTAHAN,A.ID_DOKUMEN, A.JENIS_DOKUMEN, A.NAMA_FAIL, A.JENIS_MIME, A.TAJUK, A.KETERANGAN,"+ 
+				" A.CONTENT  FROM TBLPPTDOKUMEN A WHERE A.ID_BANTAHAN = '"+id_bantahan+"' "+
+	    		" AND A.JENIS_DOKUMEN = '"+jenisDoc+"' "+
+				" ";	      
+	      myLogger.info("senaraiDokumenBantahan:sql="+sql);
 	      ResultSet rs = stmt.executeQuery(sql);
-	     
+	      Hashtable<String,String> h;
+	      int bil = 0;
+	    
+	      while (rs.next()) {    	
+	    	  bil = bil + 1;
+	    	  h = new Hashtable<String,String>();			    	 
+	    	  h.put("BIL", String.valueOf(bil));
+	    	  h.put("ID_BANTAHAN",rs.getString("ID_BANTAHAN")== null?"":rs.getString("ID_BANTAHAN"));
+	    	  h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN")== null?"":rs.getString("ID_DOKUMEN"));
+	    	  h.put("NAMA_FAIL", rs.getString("NAMA_FAIL")== null?"":rs.getString("NAMA_FAIL"));
+	    	  h.put("JENIS_MIME",rs.getString("JENIS_MIME")== null?"":rs.getString("JENIS_MIME"));
+	    	  h.put("TAJUK",rs.getString("TAJUK")== null?"":rs.getString("TAJUK"));
+	    	  h.put("KETERANGAN",rs.getString("KETERANGAN")== null?"":rs.getString("KETERANGAN"));
+	    	  h.put("JENIS_DOKUMEN",rs.getString("JENIS_DOKUMEN")== null?"":rs.getString("JENIS_DOKUMEN"));  
+	    	  listDokumen_bantahan.addElement(h);
+	      
+	      }		      
+	      
+	    } finally {
+	      if (db != null) db.close();
+	    }	
+	    return listDokumen_bantahan;
+	    
+	}
+	
+	public Vector senaraiDokumenBantahan(String id_bantahan) throws Exception {				
+	    Db db = null;
+	    String sql = "";			  	    
+	    try {
+	      listDokumen_bantahan = new Vector();
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      sql = " SELECT A.ID_BANTAHAN,A.ID_DOKUMEN, A.JENIS_DOKUMEN, A.NAMA_FAIL, A.JENIS_MIME, A.TAJUK, A.KETERANGAN,"+ 
+				" A.CONTENT  FROM TBLPPTDOKUMEN A WHERE A.ID_BANTAHAN = '"+id_bantahan+"' "+
+//	    		" AND A.JENIS_DOKUMEN = '"+jenisDoc+"' "+
+//				" AND A.ID_BANTAHAN = P.ID_BANTAHAN
+				"";
+	      myLogger.info("SQL DOKUMEN :"+sql);
+	      ResultSet rs = stmt.executeQuery(sql);     
 	      Hashtable h;
 	      int bil = 0;
 	    
-	      while (rs.next()) {
-	    	
+	      while (rs.next()) {    	
 	    	  bil = bil + 1;
 	    	  h = new Hashtable();			    	 
 	    	  h.put("BIL", bil);
@@ -1541,14 +1629,17 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 	    	  h.put("NAMA_FAIL", rs.getString("NAMA_FAIL")== null?"":rs.getString("NAMA_FAIL"));
 	    	  h.put("JENIS_MIME",rs.getString("JENIS_MIME")== null?"":rs.getString("JENIS_MIME"));
 	    	  h.put("TAJUK",rs.getString("TAJUK")== null?"":rs.getString("TAJUK"));
-	    	  h.put("KETERANGAN",rs.getString("KETERANGAN")== null?"":rs.getString("KETERANGAN"));          
+	    	  h.put("KETERANGAN",rs.getString("KETERANGAN")== null?"":rs.getString("KETERANGAN"));
+	    	  h.put("JENIS_DOKUMEN",rs.getString("JENIS_DOKUMEN")== null?"":rs.getString("JENIS_DOKUMEN"));  
 	    	  listDokumen_bantahan.addElement(h);
+	    	  
 	      }		      
-	      return listDokumen_bantahan;
 	      
 	    } finally {
 	      if (db != null) db.close();
 	    }	
+	    return listDokumen_bantahan;
+	    
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1894,7 +1985,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 				SQLRenderer r = new SQLRenderer();				
 				sql =  " SELECT A.BAYAR_PAMPASAN FROM TBLPPTAWARD A WHERE A.ID_HAKMILIKPB = '"+id_hakmilikpb+"' ";
 				ResultSet rs = stmt.executeQuery(sql);
-//				myLogger.info("SQL getCheckingBayaranPampasan :: "+sql);
+				myLogger.info("SQL getCheckingBayaranPampasan :: "+sql);
 				Hashtable h;			    
 		     while (rs.next()) {
 		    	h = new Hashtable();
@@ -2148,7 +2239,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 //				System.out.println("SQL MY INFO TOTAL FAIL (B) :: "+sql);
 			if ( rs.next() ) { 
 				total = rs.getInt(1); 
-			} 
+				} 
 			} finally { 
 			//Close the database connection 
 			if ( db != null ) db.close(); 
@@ -2156,9 +2247,4 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			} 
 			return total;
 	  }
-
-
-	
-	
-	
 }

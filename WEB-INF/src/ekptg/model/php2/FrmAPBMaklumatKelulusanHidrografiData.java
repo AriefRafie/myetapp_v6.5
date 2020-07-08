@@ -20,8 +20,12 @@ public class FrmAPBMaklumatKelulusanHidrografiData {
 
 	private Vector beanMaklumatJAS = null;
 	private Vector beanMaklumatHIDRO = null;
+	private Vector beanMaklumatPasir = null;
+	private Vector beanMaklumatJPS = null;
 	private Vector listDokumenHidro = null;
 	private Vector listDokumenJAS = null;
+	private Vector listDokumenPasir = null;
+	private Vector listDokumenJPS = null;
 	private Vector beanMaklumatDokumen = null;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	Date currentDate = new Date();
@@ -140,6 +144,112 @@ public class FrmAPBMaklumatKelulusanHidrografiData {
 				db.close();
 		}
 	}
+	
+	public void setMaklumatJPS(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatJPS = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_BYRNSYRTKLLSNLESENAPB, NO_FAIL_JPS, TARIKH_LULUS_JPS, TARIKH_SURAT_JPS, TARIKH_TERIMA_JPS, KEPUTUSAN_JPS, "
+					+ " TEMPOH_AKHIR_LULUS_JPS, TARIKH_TAMAT_KELULUSANDASAR"
+					+ " FROM TBLPHPBYRNSYRTKLLSNLESENAPB "
+					+ " WHERE FLAG_AKTIF = 'Y' AND ID_PERMOHONAN = '" + idPermohonan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idByrnsyrtkllsnlesenapb", rs
+						.getString("ID_BYRNSYRTKLLSNLESENAPB") == null ? ""
+						: rs.getString("ID_BYRNSYRTKLLSNLESENAPB"));
+				h.put("txtNoRujJPS", rs.getString("NO_FAIL_JPS") == null ? ""
+						: rs.getString("NO_FAIL_JPS"));
+				h.put("txtTarikhSuratJPS",
+						rs.getDate("TARIKH_SURAT_JPS") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_SURAT_JPS")));
+				h.put("txtTarikhTerimaJPS",
+						rs.getDate("TARIKH_TERIMA_JPS") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_TERIMA_JPS")));
+				h.put("socKeputusanJPS",
+						rs.getString("KEPUTUSAN_JPS") == null ? "" : rs
+								.getString("KEPUTUSAN_JPS"));
+				h.put("txtTarikhLulusJPS",
+						rs.getDate("TARIKH_LULUS_JPS") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_LULUS_JPS")));
+				h.put("txtTempohAkhirLulusJPS",
+						rs.getString("TEMPOH_AKHIR_LULUS_JPS") == null ? "" : rs
+								.getString("TEMPOH_AKHIR_LULUS_JPS"));
+				h.put("tarikhTamatKelulusanDasar", rs
+						.getDate("TARIKH_TAMAT_KELULUSANDASAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_TAMAT_KELULUSANDASAR")));
+				beanMaklumatJPS.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void setMaklumatPasir(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPasir = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_BYRNSYRTKLLSNLESENAPB, NO_FAIL_JMG, TARIKH_LULUS_JMG, TARIKH_SURAT_JMG, TARIKH_TERIMA_JMG, KEPUTUSAN_JMG, "
+					+ " TEMPOH_AKHIR_LULUS_JMG, TARIKH_TAMAT_KELULUSANDASAR"
+					+ " FROM TBLPHPBYRNSYRTKLLSNLESENAPB "
+					+ " WHERE FLAG_AKTIF = 'Y' AND ID_PERMOHONAN = '" + idPermohonan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idByrnsyrtkllsnlesenapb", rs
+						.getString("ID_BYRNSYRTKLLSNLESENAPB") == null ? ""
+						: rs.getString("ID_BYRNSYRTKLLSNLESENAPB"));
+				h.put("txtNoRujPasir", rs.getString("NO_FAIL_JMG") == null ? ""
+						: rs.getString("NO_FAIL_JMG"));
+				h.put("txtTarikhSuratPasir",
+						rs.getDate("TARIKH_SURAT_JMG") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_SURAT_JMG")));
+				h.put("txtTarikhTerimaPasir",
+						rs.getDate("TARIKH_TERIMA_JMG") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_TERIMA_JMG")));
+				h.put("socKeputusanPasir",
+						rs.getString("KEPUTUSAN_JMG") == null ? "" : rs
+								.getString("KEPUTUSAN_JMG"));
+				h.put("txtTarikhLulusPasir",
+						rs.getDate("TARIKH_LULUS_JMG") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_LULUS_JMG")));
+				h.put("txtTempohAkhirLulusPasir",
+						rs.getString("TEMPOH_AKHIR_LULUS_JMG") == null ? "" : rs
+								.getString("TEMPOH_AKHIR_LULUS_JMG"));
+				h.put("tarikhTamatKelulusanDasar", rs
+						.getDate("TARIKH_TAMAT_KELULUSANDASAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_TAMAT_KELULUSANDASAR")));
+				beanMaklumatPasir.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 
 	public void updateMaklumatHidro(String idPermohonan, String txtNoRujHidro,
 			String txtTarikhSuratLulusHIDRO, String txtTarikhTerimaHIDRO,
@@ -172,6 +282,122 @@ public class FrmAPBMaklumatKelulusanHidrografiData {
 			r.add("TARIKH_TERIMA_PHN", r.unquote(TT));
 			r.add("KEPUTUSAN_PHN", socKeputusanHIDRO);
 			r.add("TARIKH_LULUSPHN", r.unquote(TL));
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPBYRNSYRTKLLSNLESENAPB");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610236", "4", null, session, "UPD",
+					"FAIL [" + idPermohonan + "] DIKEMASKINI");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void updateMaklumatJPS(String idPermohonan, String txtNoRujPasir,
+			String txtTarikhSuratLulusPasir, String txtTarikhTerimaPasir,
+			String socKeputusanPasir, String txtTarikhLulusPasir,
+			HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			String TSL = "to_date('" + txtTarikhSuratLulusPasir
+					+ "','dd/MM/yyyy')";
+			String TT = "to_date('" + txtTarikhTerimaPasir + "','dd/MM/yyyy')";
+			String TL = "to_date('" + txtTarikhLulusPasir + "','dd/MM/yyyy')";
+
+			// TBLPHPBYRNSYRTKLLSNLESENAPB
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.update("FLAG_AKTIF", "Y");
+
+			r.add("NO_FAIL_JPS", txtNoRujPasir);
+			r.add("TARIKH_SURAT_JPS", r.unquote(TSL));
+			r.add("TARIKH_TERIMA_JPS", r.unquote(TT));
+			r.add("KEPUTUSAN_JPS", socKeputusanPasir);
+			r.add("TARIKH_LULUS_JPS", r.unquote(TL));
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPBYRNSYRTKLLSNLESENAPB");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610236", "4", null, session, "UPD",
+					"FAIL [" + idPermohonan + "] DIKEMASKINI");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void updateMaklumatPasir(String idPermohonan, String txtNoRujPasir,
+			String txtTarikhSuratLulusPasir, String txtTarikhTerimaPasir,
+			String socKeputusanPasir, String txtTarikhLulusPasir,
+			HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			String TSL = "to_date('" + txtTarikhSuratLulusPasir
+					+ "','dd/MM/yyyy')";
+			String TT = "to_date('" + txtTarikhTerimaPasir + "','dd/MM/yyyy')";
+			String TL = "to_date('" + txtTarikhLulusPasir + "','dd/MM/yyyy')";
+
+			// TBLPHPBYRNSYRTKLLSNLESENAPB
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.update("FLAG_AKTIF", "Y");
+
+			r.add("NO_FAIL_JMG", txtNoRujPasir);
+			r.add("TARIKH_SURAT_JMG", r.unquote(TSL));
+			r.add("TARIKH_TERIMA_JMG", r.unquote(TT));
+			r.add("KEPUTUSAN_JMG", socKeputusanPasir);
+			r.add("TARIKH_LULUS_JMG", r.unquote(TL));
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
@@ -367,5 +593,13 @@ public class FrmAPBMaklumatKelulusanHidrografiData {
 
 	public Vector getBeanMaklumatJAS() {
 		return beanMaklumatJAS;
+	}
+	
+	public Vector getBeanMaklumatPasir() {
+		return beanMaklumatPasir;
+	}
+	
+	public Vector getBeanMaklumatJPS() {
+		return beanMaklumatJPS;
 	}
 }

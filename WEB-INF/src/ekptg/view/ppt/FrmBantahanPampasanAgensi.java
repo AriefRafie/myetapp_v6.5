@@ -45,7 +45,6 @@ public class FrmBantahanPampasanAgensi extends AjaxBasedModule {
 	// MODEL BANTAHAN
 	BantahanPampasanAgensi modelBantahan = new BantahanPampasanAgensi();
 	
-	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
 	public String doTemplate2() throws Exception{
 		

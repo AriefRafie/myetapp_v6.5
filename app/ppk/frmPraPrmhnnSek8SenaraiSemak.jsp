@@ -649,9 +649,10 @@
 	
 	#end
 #else
-	<input name="cmdSimpan" type="button" id="cmdSimpan"  value="Simpan" onClick="DoTheCheck()"/>
-   
+	<input type="button" name="cmdTolakPermohonan" value="Kembalikan Permohonan" onClick="javascript:tolakPermohonanOnline('$!IdPermohonan','yes')">
+	<input name="cmdSimpan" type="button" id="cmdSimpan"  value="Simpan" onClick="DoTheCheck()"/>  
 	<input name="cmdBatal" type="reset"  id="cmdBatal" value="Batal"/>
+	
 #end</label>
 <!--
  <input name="cmdKembali" type="button"  id="cmdKembali" value="Kembali" onClick="Kembali()"/>
@@ -671,6 +672,20 @@
  
 </body>
 <script>
+	function tolakPermohonanOnline(id_permohonan,formnew) {	
+		var w = "400";
+		var h = "200";
+		var left = (screen.width/2)-(w/2);
+		var top = (screen.height/2)-(h/2);
+		var url = "../x/${securityToken}/FrmPopupTolakPermohonan?id_permohonan="+id_permohonan+"&formnew="+formnew+"&modul=ppk&jenisTolak=internal";
+		
+		var hWnd = window.open(url, "Permohonan Online Dikembalikan", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		
+	}
+	
 function checkit1(){
 	if (document.f1.cbsemaks[0].checked == true){
 	document.f1.cbsemaks[1].checked = true;

@@ -206,7 +206,29 @@
 	
 	}
 	
-	//########## Start Addby zulfazdliabuas@gmail.com ########## 
+	/* function ini adalah apabila tekan button TAMBAH pada tab Senarai Notis*/
+	function TambahSenaraiNotis(tabId,tabmode,command,mode){
+		
+		var command = 'kemaskinipermohonan';
+		var mode = 'Notis5A';
+		var button = 'SimpanNotis';
+		var tabId = 5;
+		var butang3 = '8';
+		var tabmode = 1;
+		
+		doAjaxCall${formName}(command,'mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode+'&butang3='+butang3);
+	}
+	function SimpanNotis(){
+		var command = 'kemaskinipermohonan';
+		var mode = 'Notis5A';
+		var button = "SimpanNotis";
+		var tabId = 5;
+		var tabmode = 1;
+		
+		doAjaxCall${formName}(command,'mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode+'&button='+button);
+	}
+	
+	/* ini adalah apabila tekan button simpan Senarai Notis */
 	
 	//--- Start for view sahaja Maklumat Notis untuk user online ---
 	function Notis5AView(id){
@@ -219,6 +241,7 @@
 		doAjaxCall${formName}(command,'&mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode+'&button='+button+'&idNotis='+id);
 	}
 	//--- end ---
+	
 	
 	//apabila click button tambah
 	function tambahPermohonan(){
@@ -381,6 +404,14 @@
 		
 		}
 	}
+	function doOpen(id) {
+		
+	    var url = "../servlet/ekptg.view.online.htp.permohonan.DisplayBayaranNotis?id="+id;
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	    hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
 	//simpan maklumat dokumen
 	function simpanMD(id_permohonan, mode){
 		
@@ -421,6 +452,7 @@
 		doAjaxCall${formName}(command,'mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode);
 	}
 	/* ini adalah apabila tekan button simpan maklumat asas tanah */
+	
 	function SimpanMaklumatAsasTanah(){
 		
 		if ( document.${formName}.socdaerah2.value == "" ) { 
@@ -509,6 +541,8 @@
 	function doChangeNegeriX() {
 	doAjaxCall${formName}("","mode=changeNegeri");
 	}
+	
+	
 	
 	function doChanges2(t) {
 		var command = 'kemaskinipermohonan';

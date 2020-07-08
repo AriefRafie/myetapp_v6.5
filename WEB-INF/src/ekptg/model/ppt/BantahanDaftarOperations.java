@@ -24,16 +24,16 @@ public class BantahanDaftarOperations {
 	private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void daftarBantahan (HttpSession session,String txtNoBantahan, String txdTkhMasuk,
-			String txdTkhTerimaBrgN, String txdBrgN, String txtNoLot,
-			String txtNoPt, String txdTkhBrgH, String txdTkhAward,
-			String txtNoHakmilik, String txtNama, String txtAlamat1,
-			String txtAlamat2, String txtAlamat3, String txtPoskod,
-			String txtKptgnAtasTnh, String txtAlasanBantahan,
-			String socPihakPembantah,String usid,
-			String idKementerian,String idAgensi,String id_hakmilik,
-			String id_pihakberkepentingan,String jenis_pembantah,String flag_syarat,
-			String ukuran_luas,String amaun_pampasan,String terima_pampasan,
-			String umpuk_pampasan,String id_hakmilikpb,String txtAmaunTuntutan,String id_permohonan,String txtMaklumatBantahanTamat) throws Exception {
+		String txdTkhTerimaBrgN, String txdBrgN, String txtNoLot,
+		String txtNoPt, String txdTkhBrgH, String txdTkhAward,
+		String txtNoHakmilik, String txtNama, String txtAlamat1,
+		String txtAlamat2, String txtAlamat3, String txtPoskod,
+		String txtKptgnAtasTnh, String txtAlasanBantahan,
+		String socPihakPembantah,String usid,
+		String idKementerian,String idAgensi,String id_hakmilik,
+		String id_pihakberkepentingan,String jenis_pembantah,String flag_syarat,
+		String ukuran_luas,String amaun_pampasan,String terima_pampasan,
+		String umpuk_pampasan,String id_hakmilikpb,String txtAmaunTuntutan,String id_permohonan,String txtMaklumatBantahanTamat) throws Exception {
 		
 	 	Db db = null;	 	
 	 	Connection conn = null;
@@ -41,12 +41,10 @@ public class BantahanDaftarOperations {
 	    Date now = new Date();
 	    
     	int id_stat = 80;		// ID_STATUS = 80 [BANTAHAN TAWARAN]
-    	String tahun = sdf.format(now);
-    	    
+    	String tahun = sdf.format(now);	    
 	    String no_bantahan = tahun+"-"+String.format("%06d",getSeqNoBantahan(id_stat));	
 	    
-	    try
-	    {				    	  
+	    try{				    	  
 	    	  long id_bantahan = DB.getNextID("TBLPPTBANTAHAN_SEQ");
 	    	  String TT = "to_date('" + txdTkhTerimaBrgN + "','dd/MM/yyyy')";
 	    	  String TBN = "to_date('" + txdBrgN + "','dd/MM/yyyy')";	
@@ -86,8 +84,7 @@ public class BantahanDaftarOperations {
 		      r.add("maklumat_bantahan_tamat_tempoh",txtMaklumatBantahanTamat);
 		      
 		      sql = r.getSQLInsert("Tblpptbantahan");
-		      myLogger.info("INSERT ::"+sql);
-		      System.out.println("[sql insert bantahan] : "+sql);
+		      myLogger.info("INSERT :sql="+sql);
 		      stmt.executeUpdate(sql);
 		      
 		      r.clear();
@@ -99,8 +96,7 @@ public class BantahanDaftarOperations {
 			  r.add("id_kemaskini",usid);
 			  r.add("tarikh_kemaskini",r.unquote("sysdate"));
 			  sql = r.getSQLUpdate("Tblppthakmilikpb");
-			  myLogger.info("UPDATE ::-> "+sql);
-			  System.out.println("[sql update hakmilikpb bantahan] : "+sql);
+			  myLogger.info("UPDATE ::sql= "+sql);
 			  stmt.executeUpdate(sql);	
 			  
 		      r.clear();
@@ -116,8 +112,7 @@ public class BantahanDaftarOperations {
 			  r.add("id_kemaskini",usid);
 			  r.add("tarikh_kemaskini",r.unquote("sysdate"));			  
 		      sql = r.getSQLInsert("Tblrujsuburusanstatusbantahan");
-		      myLogger.info("INSERT TBLRUJSUBURUSANSTATUSBANTAHAN ::"+sql);
-		      System.out.println("[sql update suburusanstatus bantahan] : "+sql);
+		      myLogger.info("INSERT TBLRUJSUBURUSANSTATUSBANTAHAN ::sql="+sql);
 		      stmt.executeUpdate(sql);
 			  
 		      conn.commit();	
@@ -137,8 +132,8 @@ public class BantahanDaftarOperations {
 					NO_BANTAHAN_temp = rs.getString("NO_BANTAHAN");	
 					AMAUN_TUNTUTAN_temp = rs.getString("AMAUN_TUNTUTAN");
 			    }			  		     	
-			    AuditTrail at = new AuditTrail();
-				at.logActivity("","1",null,session,"INS","BANTAHAN PIHAK BERKEPENTINGAN [BIL. BANTAHAN : "+NO_BANTAHAN_temp+", AMAUN TUNTUTAN : RM "+AMAUN_TUNTUTAN_temp+"] INSERT");
+//			    AuditTrail at = new AuditTrail();
+			    AuditTrail.logActivity("","1",null,session,"INS","BANTAHAN PIHAK BERKEPENTINGAN [BIL. BANTAHAN : "+NO_BANTAHAN_temp+", AMAUN TUNTUTAN : RM "+AMAUN_TUNTUTAN_temp+"] INSERT");
 				
 				
 	    } catch (SQLException se) { 
@@ -150,7 +145,8 @@ public class BantahanDaftarOperations {
 	    	throw new Exception("Ralat Pendaftaran Maklumat Bantahan:"+se.getMessage());
 	    } finally {
 	      if (db != null) db.close();
-	    }				
+	    }	
+	    
 	}	
 
 	 public boolean isNoBantahanExist(String no_bantahan) {

@@ -30,7 +30,6 @@ import ekptg.model.entities.UserKementerian;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmSenaraiFailTerimaPohonData;
 import ekptg.model.htp.FrmUtilData;
-import ekptg.model.htp.HTPEmelPermohonanBean;
 import ekptg.model.htp.HTPEmelSemakBean;
 import ekptg.model.htp.HTPPermohonanBean;
 import ekptg.model.htp.HakmilikUrusan;
@@ -57,32 +56,45 @@ import ekptg.model.htp.pembelian.IPemilik;
 import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.htp.pembelian.PembelianOnlineBean;
 import ekptg.model.htp.pembelian.PemilikBean;
+import ekptg.model.htp.utiliti.HTPEmelPermohonanBean;
+import ekptg.model.htp.utiliti.HTPEmelSemakanBean;
 import ekptg.model.utils.IUserPegawai;
 import ekptg.model.utils.UserBean;
+import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.emel.IEmel;
 
 public class SenaraiFailModuleOnline extends AjaxModule {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6717995094916712274L;
+	private static final String PATH="app/htp/pembelian/fail/online/";
+	static Logger myLog = Logger.getLogger(ekptg.view.online.htp.pembelian.SenaraiFailModuleOnline.class);
 	private Bangunan bangunan = null;
 	private final String IDJENISTANAH = "4"; //TANAH MILIK - TM
 	private final String URUSAN_TANAH = "01";
 	private final String URUSAN_BANGUNAN = "03";
 	private final String ID_URUSANTANAH = "24";
 	private final String ID_URUSANTANAH1 = "25"; 	
+	private ekptg.model.htp.IHTPEmel iHTPEmel = null;
+	private ekptg.model.utils.emel.IEmel emelSemak = null;
 	private FrmSenaraiFailTerimaPohonData senaraiFail = null;
 	private HakmilikUrusan urusan = null;
 	private HtpPermohonan htpPermohonan = null;
 	private IHTPPermohonan iHTPPermohonan = null;
 	private IHtp iHTP = null;  
-	private ekptg.model.htp.IHTPEmel iHTPEmel = null;
 	private IOnline iOnline = null;
 	private IPembelian iPembelian = null;
 	private IPembelianOnline iPembelianOnline = null;
 	private IPenggunaKementerian iPengguna = null;
 	private IPemilik iPemilik = null;
+	private IUserPegawai iUser = null;
+	private IUtilHTML iUtil = null;
+
 	private Pemohon pemohon;
 	private Permohonan permohonan = null;
 	private PfdFail fail = null;
 	private PihakBerkepentingan pemilik = null; 	
-	private static final String PATH="app/htp/pembelian/fail/online/";
 	private String vm = PATH+"index_.jsp";
 	private String userID = null;
 	private String readonly = "disabled class = \"disabled\"";
@@ -90,24 +102,17 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 	private String socAgensi = "";
 	private String socKementerian = "";
 	private String socNegeri = "";
-	//String socDaerah = "";
-	//String socMukim = "";
 	private String socStatus = "";
 	private String socSubUrusan = "";
-	
 	private String idAgensi = "";
- 	//String iddaerah = "";
- 	//String idmukim = "";
  	private String idStatus = "";
- 	private String idSubUrusan = "";
+// 	private String idSubUrusan = "";
  	private String idSuburusan = "";
  	private String IDSUBURUSANS = "23,25";
 
 	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
 	private UserKementerian uk = null;	
-	private IUtilHTML iUtil = null;
-	private IUserPegawai iUser = null;
-	static Logger myLog = Logger.getLogger(ekptg.view.online.htp.pembelian.SenaraiFailModuleOnline.class);
+
 	String actionI = "";
 	String id_kementerian = "";
 	String RO_General = "";
@@ -143,7 +148,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			id_kementerian = String.valueOf(uk.getAgensi().getKementerian().getIdKementerian());
 			//System.out.println("+++++"+id_kementerian);
 		}
-		Hashtable hUser = getIUser().getPengguna(userID);
+		Hashtable<String,String> hUser = getIUser().getPengguna(userID);
 		jawatan = String.valueOf(hUser.get("jawatan"));
 		idJawatan = String.valueOf(hUser.get("idjawatan"));
 		context.put("idjawatan", idJawatan);
@@ -316,6 +321,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			getValues();
 			getPermohonanInfo();
 			myLog.info("Read Here");
+			
 			Vector<HakmilikUrusan> m = getIPembelian().getHakmilikList(getParam("txtidPermohonan"));
 			context.put("mt", m);
 			context.put("selectedTab", 0);
@@ -991,7 +997,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 //			Vector buildings = getIOnline().getDataDokumen(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
 //			context.put("senaraidokumen", buildings);
 //			context.put("selectedTab", 3);
-			this.context.put("num_files",1);
+			this.context.put("num_files","");
 //			RO_General = "readonly=\"readonly\"";
 			if ("changeLampiran".equals(actionI)) {
 //				RO_General = "";
@@ -1008,7 +1014,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			String mode="";
 			context.put("mode", mode);
 			context.put("pageMode", "edit");
-			this.context.put("num_files",1);
+			this.context.put("num_files","");
 //			RO_General = "readonly=\"readonly\"";
 			if ("changeLampiran".equals(actionI)) {
 //				RO_General = "";
@@ -1113,6 +1119,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("semakMode", semakMode);
 			myLog.info("statusSemasa:"+statusSemasa);
 			context.put("statussemasa", statusSemasa);
+			context.put("buttonSend", "disabled");
 
 			context.put("selectedTab", 4);
 			vm = PATH+"perakuanPembelianOnline.jsp";
@@ -1129,62 +1136,53 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			 * 1  untuk status - Penerimaan Permohonan
 			*/
 			String langkah = "-3";
-			EmailProperty pro = EmailProperty.getInstance();
-			String EMAIL_HOST= pro.getHost();
-			//myLog.info("EMAIL_HOST="+EMAIL_HOST);
-			EmailSender email = EmailSender.getInstance();
-			email.FROM = pro.getFrom();		
-			//if(EMAIL_HOST.equals("mail.hla-group.com")){
-//			if(EMAIL_HOST.equals("smtp.gmail.com")){			
-//				email.FROM = getHTPEmel().checkEmail(userID);
-//			}else{
-//				email.FROM = pro.getFrom();
-//			}
-			myLog.info("from="+email.FROM);
+			EmailConfig ec = new EmailConfig();
 
+			//myLog.info("from="+email.FROM);
+			String emelSubjek = ec.tajukSemakan+"Perakuan Pembelian";
+			String kandungan = "";
 			if(idJawatan.equals("20")||idJawatan.equals("24")){
-				langkah = "-3";
-				email.SUBJECT="SEMAKAN PERMOHONAN PERAKUAN PEMBELIAN";
-				email.MESSAGE = getHTPEmelSemak().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
-						,htpPermohonan.getPermohonan().getPfdFail().getTajukFail(),String.valueOf(hUser.get("nama")));
-				email.MULTIPLE_RECIEPIENT = new String[1];
-				//email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
-				email.MULTIPLE_RECIEPIENT[0] = getHTPEmel().checkEmail(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdMasuk()));
-				myLog.info("to="+email.MULTIPLE_RECIEPIENT[0]);
-				email.TO_CC = new String[1];
-				//email.TO_CC[0]  = "rosli@hla-group.com";
-				email.TO_CC[0] = getHTPEmel().checkEmail(userID);
-				email.sendEmail();				
+				myLog.info("BACA SINIIIII============");
 				
+				langkah = "-3";
+				
+				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hUser.get("nama")));
+    			
+				if(!getEmelSemak().checkEmail(userID).equals(""))
+					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+				ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
+						, "9"
+						, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+						, emelSubjek, kandungan);
+
 			}else if (idJawatan.equals("9")){
 				langkah = "-2";				
 				
-				email.SUBJECT="PENGESAHAN PERMOHONAN PERAKUAN PEMBELIAN";
-				email.MESSAGE = getHTPEmelSemak().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
-						,htpPermohonan.getPermohonan().getPfdFail().getTajukFail(),String.valueOf(hUser.get("nama")));
-				email.MULTIPLE_RECIEPIENT = new String[1];
-				//email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
-				email.MULTIPLE_RECIEPIENT[0] = getHTPEmel().checkEmail(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdMasuk()));
-				myLog.info("to="+email.MULTIPLE_RECIEPIENT[0]);
-				email.TO_CC = new String[1];
-				//email.TO_CC[0]  = "rosli@hla-group.com";
-				email.TO_CC[0] = getHTPEmel().checkEmail(userID);
-				email.sendEmail(); 			
-			
+				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hUser.get("nama")));
+    			
+				if(!getEmelSemak().checkEmail(userID).equals(""))
+					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+				ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
+						, "4"
+						, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+						, emelSubjek, kandungan);
+							
 			}else if (idJawatan.equals("4")){
 				langkah = "-1";
-				
-				email.SUBJECT="PERMOHONAN PERAKUAN PEMBELIAN";
-				email.MESSAGE = getHTPEmel().setEmailSign(htpPermohonan.getPermohonan().getNoPermohonan()
-						,htpPermohonan.getPermohonan().getPfdFail().getTajukFail(),htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian());
-				email.MULTIPLE_RECIEPIENT = new String[1];
-				//email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
-				email.MULTIPLE_RECIEPIENT[0] = getHTPEmel().checkEmail(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdMasuk()));
-				myLog.info("to="+email.MULTIPLE_RECIEPIENT[0]);
-				email.TO_CC = new String[1];
-				//email.TO_CC[0]  = "rosli@hla-group.com";
-				email.TO_CC[0] = getHTPEmel().checkEmail(userID);
-				email.sendEmail(); 
+				emelSubjek = ec.tajukHantarPermohonan + "Perakuan Pembelian";
+						
+				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail()
+							,htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian()
+							,htpPermohonan.getPermohonan().getNoPermohonan());
+    			
+				if(!getEmelSemak().checkEmail(userID).equals(""))
+					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+				//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
+
+				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
+								
 			}
 			Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
 			rsusf.setIdPermohonan(htpPermohonan.getPermohonan().getIdPermohonan());
@@ -1206,6 +1204,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			}else{
 				semakMode = "update";
 			}
+			myLog.info("selectedTab=======");
 			context.put("semakMode", semakMode);
 			context.put("selectedTab", 4);
 			vm = PATH+"perakuanPembelianOnline.jsp";	
@@ -1217,16 +1216,16 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			String idStatuss = "";
 			idNegeri = getParam("socNegeri") == "" ? "0" : getParam("socNegeri");
 			idAgensi = getParam("socAgensi") == "" ? "0" : getParam("socAgensi");
-			idSubUrusan = getParam("socSubUrusan") == "" ? "0" : getParam("socSubUrusan");
+			idSuburusan = getParam("socSubUrusan") == "" ? "0" : getParam("socSubUrusan");
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			myLog.info("idStatus="+idStatus);
 			//Vector<?> v = getIPembelian().findFailKJP(carian, noFail, idNegeri,id_kementerian);
-			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, idNegeri,id_kementerian,idAgensi,idSubUrusan,idStatus);
+			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
 			context.put("lists", v);
 			
 			socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri));
 			socAgensi = HTML.SelectAgensiByKementerian("socAgensi", id_kementerian, Utils.parseLong(idAgensi), ""," style=\"width:400\"");
-			socSubUrusan = UtilHTML.SelectSuburusanByIdUrusan("2","23,25", "socSubUrusan",Long.parseLong(idSubUrusan),"");
+			socSubUrusan = UtilHTML.SelectSuburusanByIdUrusan("2","23,25", "socSubUrusan",Long.parseLong(idSuburusan),"");
 			socStatus = getIUtil().SelectStatusPermohonan("socStatus",Long.parseLong(idStatus),"",IDSUBURUSANS);
 
 			this.context.put("carianNoFail", noFail);
@@ -1273,7 +1272,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			
 			//Vector<?> v = getIPembelian().findFailKJP(carian, noFail, idNegeri,id_kementerian);
-			Vector<?> v = getIPembelianOnline().findFailKJP(carian, noFail, idNegeri,id_kementerian,idAgensi,idSubUrusan,idStatus);
+			Vector<?> v = getIPembelianOnline().findFailKJP(carian, noFail, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
 			
 			context.put("lists", v);
 			socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri));
@@ -1917,18 +1916,25 @@ public void setupPage(HttpSession session,String action,Vector list) {
 			
 	}
 	
+//	private IHTPEmel getHTPEmel(){
+//		if(iHTPEmel == null)
+//			iHTPEmel = new HTPEmelPermohonanBean();
+//		return iHTPEmel;
+//	}
 
-	private IHTPEmel getHTPEmel(){
-		if(iHTPEmel == null)
-			iHTPEmel = new HTPEmelPermohonanBean();
-		return iHTPEmel;
+//	private IHTPEmel getHTPEmelSemak(){
+//		if(iHTPEmel == null)
+//			iHTPEmel = new HTPEmelSemakBean();
+//		return iHTPEmel;
+//	}	
+	
+	private IEmel getEmelSemak(){
+		if(emelSemak == null)
+			emelSemak = new HTPEmelSemakanBean();
+		return emelSemak;
 	}
 
-	private IHTPEmel getHTPEmelSemak(){
-		if(iHTPEmel == null)
-			iHTPEmel = new HTPEmelSemakBean();
-		return iHTPEmel;
-	}	
+	
 }
 
 

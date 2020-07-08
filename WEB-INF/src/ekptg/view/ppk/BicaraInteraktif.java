@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,7 +29,9 @@ import ekptg.engine.CacheManager;
 import ekptg.engine.CachedObject;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
+import ekptg.helpers.HTML;
 import ekptg.helpers.Paging2;
+import ekptg.helpers.Utils;
 import ekptg.model.RazTemplete;
 import ekptg.model.ppk.BicaraInteraktifData;
 import ekptg.model.ppk.FrmHeaderPpk;
@@ -50,6 +54,9 @@ public class BicaraInteraktif extends AjaxBasedModule {
 	//private ResourceBundle rb = ResourceBundle.getBundle(BASENAME);
 	public String fontSize = rbCetakan.getString("fontSizeCetakan");
 	//public String fontSize = "font-size: 16px;";
+	String checkedSelesai = "";//arief add
+	String checkedTangguh = "";//arief add
+	String checkedBatal = "";//arief add
 	
 	//List listPerbicaraan = null;
 	@SuppressWarnings("unused")
@@ -67,7 +74,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		this.context.put("fromDashboard",fromDashboard);
 		myLogger.info("command : "+command+" action : "+action);
 		String USER_ID_SYSTEM = (String)session.getAttribute("_ekptg_user_id");
-		
+		Vector getrecord_perintah = new Vector(); //arief add
+		String idpermohonan = getParam("idpermohonan");//arief add
+		String idNegeriMhn = "";//arief add
+		Vector list = new Vector();//arief add
 		/*
 		if(USER_ID_SYSTEM == null)
 		{
@@ -1693,6 +1703,60 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		}
 		else if(command.equals("viewSuplimentPerintah"))
 		{
+			/**arief add bagi PPK-60 (a): Keputusan Perbicaraan di skrin Bicara Interaktif
+			 * 1. Menambah pilihan butang untuk “Dokumen Gagal Dikemukakan” dan perlu ada ruangan bagi ulasan dan justifikasi pegawai.
+			 * Menyediakan:
+			 * a.	Butang ‘Dokumen Gagal Dikemukakan’
+			 * b.	Ruangan ulasan/Justifikasi Pegawai
+			 * OPEN
+			 */
+			
+			//get data TBLPPKPERBICARAAN
+			Hashtable h = FrmPrmhnnSek8KptsanBicaraData.setInfoBicaraList(idpermohonan);
+			this.context.put("dataPerbicaraan", h);
+
+		    FrmPrmhnnSek8KptsanBicaraData.setInfoPerintahList(idpermohonan);
+		    getrecord_perintah = FrmPrmhnnSek8KptsanBicaraData.getDataPerintahViewList();
+		    String idUnitPsk = "";
+		    if ( getrecord_perintah.size() != 0 ){
+    			Hashtable d = (Hashtable) getrecord_perintah.get(0);
+       			String flag_jenis_keputusan = (String)d.get("flag_jenis_keputusan");
+       			idUnitPsk = d.get("id_unitpsk").toString();
+       			if ( idUnitPsk != ""){
+       				context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",Utils.parseLong(idUnitPsk),"disabled"));
+       			}else{
+       				context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",null,"disabled"));
+       			}
+
+    			if (d.get("flag_jenis_keputusan").equals("0")){
+    				setValueFlagJenisKeputusan("checked","","");
+    			}
+    			context.put("TEMPcheckedSelesai",checkedSelesai);
+    			context.put("TEMPcheckedTangguh",checkedTangguh);
+    			context.put("TEMPcheckedBatal",checkedBatal);
+
+		    }else{
+		    	setValueFlagJenisKeputusan("checked","","");
+		    	context.put("TEMPcheckedSelesai",checkedSelesai);
+		    	context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",null,"disabled"));
+		    }
+		    	this.context.put("dataPerintah", getrecord_perintah);
+
+    		//call flag
+    		context.put("mode", "view");
+    		context.put("flag", "selesai");
+    		context.put("button", "");
+    		context.put("tarikh", "perintah");
+    		context.put("listSemak", list);
+    		
+    		/**arief add bagi PPK-60 (a): Keputusan Perbicaraan di skrin Bicara Interaktif
+			 * 1. Menambah pilihan butang untuk “Dokumen Gagal Dikemukakan” dan perlu ada ruangan bagi ulasan dan justifikasi pegawai.
+			 * Menyediakan:
+			 * a.	Butang ‘Dokumen Gagal Dikemukakan’
+			 * b.	Ruangan ulasan/Justifikasi Pegawai
+			 * CLOSE
+			 */
+
 			String skrinName = getParam("skrinName");
 			this.context.put("skrinName", skrinName);
 			String ID_PERINTAH = getParam("ID_PERINTAH");			
@@ -7836,7 +7900,12 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		
 		return id_history_utama;
 	}
+	public void setValueFlagJenisKeputusan(String checkedSelesai,String checkedTangguh,String checkedBatal ) {
 
+		this.checkedSelesai = checkedSelesai;
+		this.checkedTangguh = checkedTangguh;
+		this.checkedBatal = checkedBatal;
+	}
 }
 
 

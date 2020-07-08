@@ -107,11 +107,60 @@ public class FrmSemakan {
 	      if (db != null){
 	    	  db.close();
 	      }
-	    }	    
+	    }
 	    return list;
-	  
 	 }
+	 
+	 public static Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm) throws Exception {
+		    Db db = null;
+		    String sql = "";
+		    Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
+		    
+		    try {
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      SQLRenderer r = new SQLRenderer();
+		      r.add("i.aturan");
+		      r.add("i.id_semakansenarai");
+		      r.add("s.perihal");
+		      r.add("NVL(SJD.ID_JENISDOKUMEN,0) jenis_dokumen");
+		      r.add("NVL(JD.KETERANGAN,'TIADA') nama_dokumen");
+		
+		      r.add("i.id_semakan",r.unquote("s.id_semakan"));
+		      r.add("i.id_semakan",r.unquote("sjd.id_semakan(+)"));
+		      r.add("sjd.id_jenisdokumen",r.unquote("jd.id_jenisdokumen(+)"));
+ 
+		      if(!kodForm.equals("0"))
+		    	  r.add("i.kod_form",kodForm);
+		      sql = " tblsemakan s,tblsemakansenarai i,TBLSEMAKANJENISDOKUMEN SJD,TBLRUJJENISDOKUMEN JD";
+		      sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
+	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
+		      ResultSet rs = stmt.executeQuery(sql);
+		      Hashtable<String,String> h;
 
+		      while (rs.next()) {
+		    	  h = new Hashtable<String,String>();
+		    	  h.put("id", rs.getString("id_semakansenarai"));
+		    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
+		    	  h.put("keterangan", rs.getString("perihal"));
+		    	  h.put("jenisDokumen", rs.getString("jenis_dokumen"));
+
+		    	  list.addElement(h);
+		    	  
+		      }
+		      
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }finally {
+		      if (db != null){
+		    	  db.close();
+		      }
+		    }	    
+		    return list;
+		  
+		 }
+		 
+	 
 	 public static Vector getSenaraiSemakan(String kodForm,String aktif)throws Exception {
 		    Db db = null;
 		    String sql = "";
@@ -260,10 +309,10 @@ public class FrmSemakan {
 	    	}
 	  }
 	 
-	 public void semakanHapusByPermohonan(String idpermohonan,String idsemakansenarai) throws Exception {
+	 public void semakanHapusByPermohonan(String idPermohonan,String idSemakanSenarai) throws Exception {
 		    Db db = null;
-		    int idPermohonan = Integer.parseInt(idpermohonan);
-		    int idSemakanSenarai = Integer.parseInt(idsemakansenarai);
+		    //int idPermohonan = Integer.parseInt(idpermohonan);
+		    //int idSemakanSenarai = Integer.parseInt(idsemakansenarai);
 		    String sql = "";
 		    try {
 		      db = new Db();

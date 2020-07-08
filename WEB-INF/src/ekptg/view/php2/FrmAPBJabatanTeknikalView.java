@@ -25,9 +25,9 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
-import ekptg.model.admin.EmailConfig;
 import ekptg.model.php2.FrmAPBHeaderData;
 import ekptg.model.php2.FrmAPBJabatanTeknikalData;
+import ekptg.model.utils.emel.EmailConfig;
 
 /**
  * @author hilda

@@ -224,7 +224,12 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
         			//+ " AND D.ID_DAERAH = P.ID_DAERAHMHN  "
 					//+ " AND U.ID_DAERAH = DX.ID_DAERAH(+) "
 					+ " AND P.ID_PERMOHONAN = '" + id + "' ";
-//			myLogger.info("******** SQL SET DATA ONLINE xxxxxxxxxxxx:" + sql.toUpperCase());
+			
+		
+         
+			//myLogger.info("SQL FAR" + sql);
+
+			myLogger.info("******** SQL SET DATA ONLINE xxxxxxxxxxxx:" + sql.toUpperCase());
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -508,7 +513,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 							"" +
 							"P.SEKSYEN, "
 					+ " ST.KETERANGAN, P.ID_STATUS, " +
-						//	"U.NAMA_PEJABAT, " +
+						//	"U.NAMA_PEJABAT, " +    
 							" MOSI.ID_PERMOHONANSIMATI, "
 					+ " S.UMUR as umursimati, S.JANTINA as jantinasimati,  PM.UMUR as umurpemohon, PM.JANTINA as jantinapemohon," +
 							//"U.ID_PEJABATJKPTG, " +
@@ -2107,7 +2112,6 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 	}
 
 	private Vector listFail = new Vector();
-	private Vector flag5juta = new Vector();
 
 	// private static SimpleDateFormat Format = new
 	// SimpleDateFormat("dd/MM/yyyy");
@@ -2117,10 +2121,6 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 	
 	public Vector getSupportingDoc() {
 		return listSupportingDoc;
-	}
-
-	public Vector getFlag5Juta() {
-		return flag5juta;
 	}
 
 	public void setDataFail(String id) throws Exception {
@@ -2161,41 +2161,6 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 
 				// myLogger.info("sql data-->" + h);
 				listFail.addElement(h);
-			}
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
-	public void checkFlag5Juta(String id) throws Exception {
-		Db db = null;
-		flag5juta.clear();
-		String sql = "";
-	
-
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-
-			sql = "SELECT FLAG_5JUTA FROM TBLPPKPERUBAHANAKTA ";
-
-			// System.out.println("SQLXXXXXX FAIL" + sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
-
-			while (rs.next()) {
-				h = new Hashtable();
-
-				h.put("flag_5juta",
-						rs.getString("flag_5juta") == null ? "" : rs
-								.getString("flag_5juta"));
-				
-
-				// System.out.println("sql data-->" + h);
-				flag5juta.addElement(h);
 			}
 		} finally {
 			if (db != null)
@@ -10932,6 +10897,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			r.add("keterangan");
 
 			sql = r.getSQLSelect("Tblppkrujtarafkptg", "kod");
+			System.out.println("sql getListtarafDb="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -11042,7 +11008,8 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 					+ " AND id_Saudara <> 30" + " AND id_Saudara <> 34"
 					+ " AND id_Saudara <> 35" + "ORDER BY kod";
 
-			//System.out.print("SQL 444" + sql.toUpperCase());
+			// myLogger.info("SAUDARA :" + sql);
+			myLogger.info("SQL 444" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
 			while (rs.next()) {
@@ -11679,7 +11646,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			r.add("kod_Daerah");
 			// r.add("id_Negeri");
 			sql = r.getSQLSelect("Tblrujdaerah", "kod_Daerah");
-
+			myLogger.info("SQL getListDaerah" + sql.toUpperCase());
 			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
@@ -11722,7 +11689,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			r.add("kod_Daerah");
 			// r.add("id_Negeri");
 			sql = r.getSQLSelect("Tblrujdaerah", "kod_Daerah");
-			myLogger.info("SQL" + sql.toUpperCase());
+			myLogger.info("SQL getListDaerahDb" + sql.toUpperCase());
 			// 
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector v = new Vector();
@@ -12542,9 +12509,10 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 					" tblRujDaerah where id_daerah in ( " +
 					" 	select distinct u.id_daerahurus from " +
 					" 	tblrujpejabaturusan u, users_internal ur where " +
-					"	u.id_pejabatjkptg = ur.id_pejabatjkptg" +
+					"u.id_negeri = ur.id_negeri "+
+					//"	u.id_pejabatjkptg = ur.id_pejabatjkptg" +
 					//" 	and u.id_jenispejabat != '3' " +
-					" 	and u.id_jenispejabat != '22' " +
+					//" 	and u.id_jenispejabat != '22' " +
 					"	and ur.user_id='"+ userid + "' ";
 				sql += " UNION "+                                                                            
 					" SELECT DISTINCT PBU_U.ID_DAERAHURUS FROM "+ 
@@ -12559,7 +12527,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 
 				+ " ORDER BY id_negeri,kod_daerah";
 
-		//myLogger.info("@@@@" + sql);
+		myLogger.info("getDaerahByNegeriUser = " + sql);
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -13081,7 +13049,8 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			location_id_status_KEPUTUSANPERMOHONAN.add("151"); 
 			location_id_status_KEPUTUSANPERMOHONAN.add("152");
 			location_id_status_KEPUTUSANPERMOHONAN.add("14");
-			location_id_status_KEPUTUSANPERMOHONAN.add("70");			
+			location_id_status_KEPUTUSANPERMOHONAN.add("70");	
+			location_id_status_KEPUTUSANPERMOHONAN.add("107");
 			if (location_id_status_KEPUTUSANPERMOHONAN.contains(current_status) == true)
 			{current_step = 2;}
 			if (location_id_status_KEPUTUSANPERMOHONAN.contains(id_status) == true)
@@ -13270,6 +13239,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			location_id_status_kp.add("50"); 
 			location_id_status_kp.add("70"); 
 			location_id_status_kp.add("56"); 
+			location_id_status_kp.add("107"); 
 			if (location_id_status_kp.contains(id_status) == true)
 			{jenis_patah_balik = "kp";}				
 			myLogger.info("location_id_status_kp(id_status) "+location_id_status_kp.contains(id_status));
@@ -14565,6 +14535,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			r.add("ID_KEMASKINI", user_id);
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 			sql = r.getSQLUpdate("tblrujsuburusanstatusfail");
+			myLogger.info("sql :"+sql);
 			stmt.executeUpdate(sql);		
 			
 			r.clear();
@@ -14573,7 +14544,8 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			r.add("AKTIF", 1);
 			r.add("ID_KEMASKINI", user_id);
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
-			sql1 = r.getSQLUpdate("tblrujsuburusanstatusfail");			
+			sql1 = r.getSQLUpdate("tblrujsuburusanstatusfail");	
+			myLogger.info("sql 1:"+sql1);
 			stmt.executeUpdate(sql1);
 			
 			r.clear();
@@ -14582,6 +14554,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			r.add("ID_KEMASKINI", user_id);
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 			sql2 = r.getSQLUpdate("tblppkpermohonan");
+			myLogger.info("sql 2:"+sql2);
 			stmt.executeUpdate(sql2);
 			
 			conn.commit();
@@ -14700,7 +14673,8 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			//r.add("AKTIF", 1);
 			r.add("ID_KEMASKINI", user_id);
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
-			sql = r.getSQLUpdate("tblrujsuburusanstatusfail");			
+			sql = r.getSQLUpdate("tblrujsuburusanstatusfail");		
+			myLogger.info("SST_update_kosong:"+sql);
 			stmt.executeUpdate(sql);
 			
 			conn.commit();

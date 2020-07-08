@@ -46,7 +46,8 @@ public class PHPUtilHTML {
 					ss = "";
 				}
 				sb.append("<option " + ss + " value=" + t.getIdSubsuburusan() + ">"
-						+ t.getKodSubsuburusan() + " - " + t.getNamaSubsuburusan()
+						+ t.getNamaSubsuburusan()
+//						+ t.getKodSubsuburusan() + " - " + t.getNamaSubsuburusan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");

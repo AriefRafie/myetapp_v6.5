@@ -97,7 +97,7 @@
   <div class="TabbedPanelsContentGroup">
     <div class="TabbedPanelsContent"></div>
     <div class="TabbedPanelsContent">
-   <fieldset>
+   <fieldset>	<legend>NOTA SIASATAN</legend>
    <table width="100%">
   
 
@@ -111,6 +111,7 @@
         <input name="txdMilikTanah" type="text" id="txdMilikTanah" size="5" maxlength="2"   value="$txdMilikTanah" onBlur="validateTarikh(this,this.value);checking_validation(this,'txdMilikTanah_check','no','tempoh milik tanah','normal')" onKeyUp="validateTarikh(this,this.value);" $readonlymode class = "$disabledmode" />
         <span id="txdMilikTanah_check" class = "alert_msg" ></span>        </td>
       </tr>
+      
       <tr>
         <td>&nbsp;</td>
         <td valign="top">Tempoh Dan Cara Milik Tanah</td>
@@ -166,21 +167,21 @@
      
       <tr>
         <td>&nbsp;</td>
-        <td>Keterangan Tuan Tanah / Wakil</td>
+        <td>Keterangan Tuan Tanah / Wakil <span style="font-size:9px;color:red">*wajib pilih</span> </td>
         <td>:</td>
         <td>
-        	<table>
+        	<table id="jenispemilikan">
         	<tr>
         		 <!-- PPT-25 (iii) Jenis Pemilikan -->
 				    #foreach ($semak in $senaraiSemakan)
 				    	<td class="$row" width="10">
                    
-					#if ($semakclass.isSemakan("$id_siasatan", "$semak.id" ))
+					#if ($semakanclass.isSemakan("$id_siasatan", "$semak.id" ))
 				  		#set ( $checked = "checked" ) 
 				  	#else
 				    	#set ( $checked = "" )
 				  	#end
-				        	 <input type="checkbox" name="jenispemilikan" id="checkbox" value="$semak.id"  $checked $selectstyle>
+				        	 <input type="checkbox" name="jenispemilikan" class="jenispemilikan" id="checkbox" value="$semak.id"  $checked $selectstyle>
 				        	 
 				  		</td>
 			    		<td class="$row">
@@ -231,7 +232,7 @@
   <!-- 
       <tr>
         <td width="1%">&nbsp;</td>
-        <td width="28%">Jenis Tanaman</td>
+        <td width="28%">Jenis Tanaman </td>
         <td width="1%">:</td>
         <td width="70%"><input name="txtJenisTanaman" type="text" id="txtJenisTanaman" size="50" maxlength="50" value="$txtJenisTanaman"  onBlur="checking_validation(this,'txtJenisTanaman_check','no','jenis tanaman','normal')" $readonlymode class = "$disabledmode" 
         onkeyup="checking_validation(this,'txtJenisTanaman_check','no','jenis tanaman','normal')" >
@@ -242,7 +243,7 @@
       <!-- PPT-25 ii -->
       <tr>
         <td>&nbsp;</td>
-        <td>Jenis Tanaman</td>
+        <td>Jenis Tanaman <span style="font-size:9px;color:red">*wajib pilih</span> </td>
         <td>:</td>
         <td>
         	<table id="jenistanaman">
@@ -256,7 +257,7 @@
 				  	#else
 				    	#set ( $checked_ = "" )
 				  	#end
-				        	 <input type="checkbox" name="jenistanaman" id="checkbox2" value="$semakan.id"  $checked_ $selectstyle>
+				        	 <input type="checkbox" name="jenistanaman" class="jenistanaman" id="checkbox2" value="$semakan.id"  $checked_ $selectstyle required="required">
 				        	 
 				  		</td>
 			    		<td class="$row">
@@ -1225,9 +1226,9 @@ function tambah(id_hakmilik,id_pembatalan)
 
 
 function simpan(id_siasatan)	{
-	semakCheckbox();
 	var c = 0;
-	
+	semakJenisTanaman();
+	semakJenisPemilikan();
 	
 if(document.${formName}.validation_field != null)	{
    if (document.${formName}.validation_field.length == null)  {
@@ -1700,20 +1701,36 @@ function showRow(rowId)
 }
 
 
- function semakCheckbox() {
+function semakJenisTanaman() {
     var flag = 0;
     for (var i = 0; i < 5; i++) {
-      if(document.${formName}["jenistanaman"][i].checked && document.${formName}["jenistanaman"][i].checked){ // Tukar kepada Jenis Pemilikan selepas selesai
-        flag ++;
+      if(document.${formName}["jenistanaman"][i].checked){
+      	flag++;
       }
     }
     
     if (flag == 0) {
-      alert ("Pastikan Jenis Tanaman serta Pemilikan dipilih");
+      alert ("Pastikan 'Jenis Tanaman' dipilih");
       return c++;
     }
     return true;
-  }
+}
+
+function semakJenisPemilikan() {
+    var flag = 0;
+    for (var i = 0; i < 5; i++) {
+      if(document.${formName}["jenispemilikan"][i].checked){
+      	flag++;
+      }
+    }
+    
+    if (flag == 0) {
+      alert ("Pastikan 'Keterangan Tuan Tanah / Wakil' dipilih");
+      return c++;
+    }
+    return true;
+}
+
   
+
 </script>
-  

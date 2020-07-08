@@ -34,8 +34,6 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	private static Vector listWaris17 = new Vector();
 	private static Vector listBayaran = new Vector();
 	private static Vector listBayaran17 = new Vector();
-	private static Vector listBayaranDendaLewatPendaftaran = new Vector(); // arief add
-	private static Vector maklumatBayaranDendaLewat = new Vector (); //arief add
 	private static Vector MaklumatPermohonan17 = new Vector();	
 	private static Vector MaklumatBayaran = new Vector();
 	private static Vector MaklumatPerintah = new Vector();
@@ -159,14 +157,7 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	 public static Vector getListSemakWithData(){
 		return listSemakWithData;
 	 }
-	 //arief add OPEN
-	 public static Vector getListBayaranDendaLewatPendaftaran() {
-		 return listBayaranDendaLewatPendaftaran;
-	 }
-	 public static Vector getMaklumatBayaranDendaLewat() {
-		 return maklumatBayaranDendaLewat;
-	 }
-	 //arief add CLOSE
+
 	 
 	 
 	public static void setData(String id) throws Exception{
@@ -846,42 +837,6 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      if (db != null) db.close();
 		    }
 		}
-/** 13/1/2020: arief add bagi lewat pendaftaran	(function ini akan beroperasi selepas 1 tahun daripada tarikh Akta dikuatkuasakan)**/	
-		public static Vector listBayaranDendaLewatPendaftaran (String tarikhmohon) throws Exception
-		{
-			Db db = null;
-		    listBayaranDendaLewatPendaftaran.clear();
-		    String sql = "";
-		    try {
-		      Vector localVector1;
-		      db = new Db();
-		      Statement stmt = db.getStatement();
-		      SQLRenderer r = new SQLRenderer();
-		      
-		      r.add("jumlahBayaranDendaLewatPendaftaran");		      
-		      r.add("tarikh_mohon", tarikhmohon);
-
-		      sql = r.getSQLSelect("Tblppkpermohonan");
-		      myLogger.info("TARIKH PERMOHONAN ::"+sql);
-		      ResultSet rs = stmt.executeQuery(sql);
-		   
-		      Hashtable h;
-		      int bilDendaLewat = 1;
-		      
-		      
-		      while (rs.next()) {
-		    	 h = new Hashtable();
-		    	 h.put("tarikh_mohon", rs.getString("tarikh_mohon")==null?"":Integer.parseInt(rs.getString("tarikh_mohon")));
-		    	 
-		    	 listBayaranDendaLewatPendaftaran.addElement(h);
-		    	 bilDendaLewat++;
-		      }
-		      return listBayaranDendaLewatPendaftaran;
-		    }
-		    finally {
-		      if (db != null) db.close();
-		    }
-		}
 
 		public static Vector setJumlahBayaran(String idpermohonan) throws Exception {
 			
@@ -1061,7 +1016,8 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 					String T_date_kiv = "to_date('" + date_kiv + "','dd/MM/yyyy')";
 					
 					myLogger.info(":::::::::: BUKA INSERT PERINTAH");
-					long id_perintah = DB.getNextID("TBLPPKPERINTAH_SEQ");					
+					long id_perintah = DB.getNextID("TBLPPKPERINTAH_SEQ");	
+					myLogger.info(":::::::::: id_perintah = "+id_perintah);
 					PreparedStatement ps = conn.prepareStatement("insert into TBLPPKPERINTAH " +
 		                    "(id_perintah,id_perbicaraan,id_unitpsk,flag_jenis_keputusan,catatan," +
 		                    "ID_MASUK,ID_KEMASKINI,TARIKH_MASUK,TARIKH_KEMASKINI,tarikh_perintah," +
@@ -1905,7 +1861,10 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      if (db != null) db.close();
 		    }
 		  }//close updateMaklumatPermohonan	
+		  
+		  
 */		
+		
 		public static void updateMaklumatSelesai(String usid,String idpermohonan,String id_perintah,String id_perbicaraan,
 	    		String id_bayaran_perintah,String id_bayaran_pusaka,String id_bayaran_baitulmal,String EDITflag_jenis_keputusan,String txtJumBayaranEDIT,
 	    		String txtNomborResitPerintahEDIT,String txdTarikhBayaranPerintahEDIT,String txtJumBayaranPusakaEDIT,String txtNomborResitPusakaEDIT,
@@ -2073,6 +2032,120 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      if (db != null) db.close();
 		    }
 		  }//close updateMaklumatPermohonan	
+		
+		public static void updateMaklumatSelesai(String usid,String idpermohonan,String id_perintah,String id_perbicaraan,
+	    	String id_bayaran_perintah,String id_bayaran_pusaka,String id_bayaran_baitulmal,String EDITflag_jenis_keputusan,String txtJumBayaranEDIT,
+	    	String txtNomborResitPerintahEDIT,String txdTarikhBayaranPerintahEDIT,String txtJumBayaranPusakaEDIT,String txtNomborResitPusakaEDIT,
+	   		String txdTarikhBayaranPusakaEDIT,String txtJumBayaranBaitulmalEDIT,String txtNomborResitBaitulmalEDIT,String txdTarikhBayaranBaitulmalEDIT,
+	   		String txtCatatanSelesaiEDIT,String EDITsocPegawaiPengendali,String txdTarikhPerintahEDIT,String check_kiv,String date_kiv,String catatan_kiv
+	   		) throws Exception {
+		    
+			Db db = null;
+		    String sql = "";
+		    String sql2 = "";
+		    String sql3 = "";
+		    try{ 
+			  String TPERINTAH = "to_date('" + txdTarikhBayaranPerintahEDIT + "','dd/MM/yyyy')";
+			  String TPUSAKA = "to_date('" + txdTarikhBayaranPusakaEDIT + "','dd/MM/yyyy')";
+			  String TBAITULMAL = "to_date('" + txdTarikhBayaranBaitulmalEDIT + "','dd/MM/yyyy')";
+			  String TPERINTAHBICARA = "to_date('" + txdTarikhPerintahEDIT + "','dd/MM/yyyy')";	
+			  String T_date_kiv = "to_date('" + date_kiv + "','dd/MM/yyyy')";
+		    
+		      db = new Db();	
+		      
+		      Statement stmt2 = db.getStatement();
+				  SQLRenderer r2 = new SQLRenderer();
+				  r2.update("id_perintah", id_perintah);
+				  r2.update("id_perbicaraan", id_perbicaraan);			  
+				  r2.add("tarikh_perintah", r2.unquote(TPERINTAHBICARA));	
+				  r2.add("date_kiv", r2.unquote(T_date_kiv));
+				  r2.add("check_kiv", check_kiv);
+				  r2.add("catatan_kiv", catatan_kiv);
+				  r2.add("flag_jenis_keputusan", "0");	
+				  r2.add("catatan", txtCatatanSelesaiEDIT);	
+				  r2.add("id_kemaskini", usid);	
+				  r2.add("tarikh_kemaskini",r2.unquote("sysdate"));	
+				  r2.add("ID_UNITPSK", EDITsocPegawaiPengendali);
+				  sql2 = r2.getSQLUpdate("Tblppkperintah");
+			      stmt2.executeUpdate(sql2);
+		       
+		    /* id_bayaran_perintah */
+		    if ( id_bayaran_perintah != "0" ){	  
+				  Statement stmt = db.getStatement();
+				  SQLRenderer r = new SQLRenderer();
+				  r.update("id_permohonan", idpermohonan);
+				  r.update("id_bayaran", id_bayaran_perintah);
+				  
+				  r.add("jumlah_bayaran", Utils.RemoveComma(txtJumBayaranEDIT));
+				  r.add("no_resit", txtNomborResitPerintahEDIT);
+				  r.add("tarikh_bayaran", r.unquote(TPERINTAH));	
+				  r.add("id_kemaskini", usid);	
+				  r.add("tarikh_kemaskini",r.unquote("sysdate"));
+				  
+				  sql = r.getSQLUpdate("Tblppkbayaran")
+				  +"and id_bayaran in (SELECT id_bayaran FROM (SELECT * FROM TBLPPKBAYARAN " +
+				  		"WHERE ID_JENISBAYARAN = 24 AND ID_PERMOHONAN = '"+idpermohonan+"' ORDER BY TARIKH_BAYARAN,ID_BAYARAN ASC ) " +
+				  		"WHERE ROWNUM = 1 )";
+				  System.out.println("ID BAYARAN PERINTAH == "+sql);
+			      stmt.executeUpdate(sql);		  
+		    }
+		    
+		    /* id_bayaran_pusaka */
+		    if ( id_bayaran_pusaka != "0" ){
+		    			  
+				  Statement stmt = db.getStatement();
+				  SQLRenderer r = new SQLRenderer();
+				  r.update("id_permohonan", idpermohonan);
+				  r.update("id_bayaran", id_bayaran_pusaka);
+				  
+				  r.add("jumlah_bayaran", Utils.RemoveComma(txtJumBayaranPusakaEDIT));
+				  r.add("no_resit", txtNomborResitPusakaEDIT);
+				  r.add("tarikh_bayaran", r.unquote(TPUSAKA));
+				  r.add("id_kemaskini", usid);	
+				  r.add("tarikh_kemaskini",r.unquote("sysdate"));
+				  
+				  sql = r.getSQLUpdate("Tblppkbayaran") + "and id_bayaran in (SELECT id_bayaran FROM (SELECT * FROM TBLPPKBAYARAN " +
+			  		"WHERE ID_JENISBAYARAN = 26 AND ID_PERMOHONAN = '"+idpermohonan+"' ORDER BY TARIKH_BAYARAN,ID_BAYARAN ASC ) " +
+			  		"WHERE ROWNUM = 1 )";
+//				  System.out.println("ID BAYARAN PUSAKA == "+sql);
+			      stmt.executeUpdate(sql);	  
+		    }
+		    
+		    /* id_bayaran_baitulmal */
+		    if ( id_bayaran_baitulmal != "0" ){
+		    			  
+				  Statement stmt = db.getStatement();
+				  SQLRenderer r = new SQLRenderer();
+				  r.update("id_permohonan", idpermohonan);
+				  r.update("id_bayaran", id_bayaran_baitulmal);
+				  
+				  r.add("jumlah_bayaran", Utils.RemoveComma(txtJumBayaranBaitulmalEDIT));
+				  r.add("no_resit", txtNomborResitBaitulmalEDIT);
+				  r.add("tarikh_bayaran", r.unquote(TBAITULMAL));
+				  r.add("id_kemaskini", usid);	
+				  r.add("tarikh_kemaskini",r.unquote("sysdate"));
+				  
+				  sql = r.getSQLUpdate("Tblppkbayaran") + "and id_bayaran in (SELECT id_bayaran FROM (SELECT * FROM TBLPPKBAYARAN " +
+			  		"WHERE ID_JENISBAYARAN = 29 AND ID_PERMOHONAN = '"+idpermohonan+"' ORDER BY TARIKH_BAYARAN,ID_BAYARAN ASC ) " +
+			  		"WHERE ROWNUM = 1 )";
+					  
+			      stmt.executeUpdate(sql);	  
+		    }	
+		    
+		    if(check_kiv.equals("1")){//aishahlatip simpan history KIV
+		    	int idKIVhistory  = checkExistKIV( id_perintah ,id_perbicaraan);
+		    	
+		    	if(idKIVhistory == 0){
+		    		add_kivHistory( Long.parseLong(id_perintah), id_perbicaraan, usid,check_kiv, date_kiv, catatan_kiv);
+		    	}
+		    	
+		    }
+
+		    }finally {
+		      if (db != null) db.close();
+		    }
+		  
+		}//close updateMaklumatPermohonan	
 		
 		public static void updateMaklumatSelesai17(String usid,String idpermohonan,String id_perintah,String id_perbicaraan,
 				String id_bayaran_perintah,String id_bayaran_pusaka,String id_bayaran_baitulmal,String EDITflag_jenis_keputusan,String txtJumBayaranEDIT,

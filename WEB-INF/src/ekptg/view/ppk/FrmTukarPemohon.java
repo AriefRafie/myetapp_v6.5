@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.model.ppk.FrmHeaderPpk;
+import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmTukaranStatus;
 /*
  * @author
@@ -39,12 +40,13 @@ public class FrmTukarPemohon extends AjaxBasedModule{
 	String action = null;
 	private final String PATH="app/ppk/";
 	private String vm = PATH +"frmTukarPemohon.jsp";
-
+	FrmPrmhnnSek8DaftarSek8InternalData logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 	 
 	
 	public String doTemplate2()  throws Exception{
 		session = request.getSession();
 		String command = getParam("command");
+		Vector listSupportingDoc = null;
 		String idatheader = getParam("id_permohonansimati_atheader");
 		//String sebab = getParam("sebab");
 		action = getParam("action");
@@ -59,23 +61,29 @@ public class FrmTukarPemohon extends AjaxBasedModule{
 		
 		Vector list_tukar_pemohon = null;
     	Vector IDSimati = null;
+    	Vector list = null;
     	this.context.put("alert_baru_simati_value","");
     	this.context.put("alert_lama_simati_value","");
     	this.context.put("alert_lain_simati_value","");
     	
     	myLogger.info("idatheader :"+idatheader);  
     	default_data();
+    	String id_simati1 ="";
     	myLogger.info("idatheader4 :"+idatheader);  
     	if (!"".equals(idatheader))
     	{
     		IDSimati = model.IDpermohonanSimati(getParam("id_permohonansimati_atheader"));
+    		
     	}
     	
 		if ("cariMainSub".equals(command)){
+			String carianOnline = getParam("online");
+			myLogger.info("carianOnline :"+carianOnline);  
     		String txtNoFailSub = getParam("txtNoFailSub");    		
-    		context.put("txtNoFailSub", txtNoFailSub.trim());     		
-    		context.put("list_fail",model.search_nofail(txtNoFailSub.trim(),usid,"","","")); 
+    		context.put("txtNoFailSub", txtNoFailSub.trim());   
+    		context.put("list_fail",model.search_nofail(txtNoFailSub.trim(),usid,"","",""));
     		context.put("view_list_fail","yes");
+    		context.put("ListTukarPemohonOnline","");
     		}
 		else if ("paparSub".equals(command)){
     		context.put("id_fail_carian",getParam("id_fail_carian"));
@@ -94,7 +102,26 @@ public class FrmTukarPemohon extends AjaxBasedModule{
     		{
     			id_permohonan = model.getMainFail(getParam("id_fail_carian")).get("ID_PERMOHONAN")+"";
     		}
-    		
+    		//check table tukar pemohon online
+    		model.tukarPemohonOnline(id_permohonan);
+    		list = model.getListSub();
+			int countList = list.size();
+			if(countList > 0)
+			
+			{
+				context.put("ListTukarPemohonOnline",list);
+			
+				myLogger.info("countList = "+countList);
+				id_simati1 = model.IDpermohonanSimati2(id_permohonan).get("ID_SIMATI")+"";
+				myLogger.info("id_simati1 = "+id_simati1);
+			
+				//check supporting document di tblppkdokumensimati
+				logic_A.setSupportingDoc(id_permohonan, "99210");
+				listSupportingDoc = logic_A.setSupportingDoc(id_permohonan, "99210");
+				this.context.put("ViewSupportingDoc", listSupportingDoc);
+				this.context.put("id_simati1", id_simati1);
+			}			
+				//selesai check table tukar pemohon online
     		headerppk_baru(session, id_permohonan, "Y", "", "T");
     		
     		model.setListSub(getParam("id_fail_carian"));    		
@@ -108,15 +135,11 @@ public class FrmTukarPemohon extends AjaxBasedModule{
     		
     	}
 		else if ("simpanSub".equals(command)){
-			myLogger.info("Baca simpanSub0:----------------" + (getParam("id_fail_carian")));
+			
     		context.put("id_fail_carian",getParam("id_fail_carian"));
-    		myLogger.info("Baca simpanSub0aaaa:----------------");
     		String txtNoFailSub = getParam("txtNoFailSub");
-    		myLogger.info("Baca simpanSub0bbbb:----------------");
     		context.put("txtNoFailSub", txtNoFailSub.trim());    		
-    		myLogger.info("Baca simpanSub0cccc:----------------");
     		model.setListSub(getParam("id_fail_carian"));    		
-    		myLogger.info("Baca simpanSub0dddd:----------------");
     		context.put("list_fail",model.search_nofail(txtNoFailSub.trim(),usid,"","",""));
     		context.put("view_list_fail","yes");
     		context.put("view_list_myid","yes");  
@@ -145,6 +168,20 @@ public class FrmTukarPemohon extends AjaxBasedModule{
         	context.put("IDSimati",IDSimati); 
     		
     	}
+		// syafiqah add 24/6/2020
+		else if("onlineSub".equals(command)){
+			String id_permohonan ="";
+			
+			myLogger.info("Baca simpanSub3:----------------"); 
+			myLogger.info("id_permohonansimati_atheader = " + getParam("id_permohonansimati_atheader")); 
+			// genaratePemohonBaru(getParam("id_ob_pemohon"),getParam("id_permohonansimati_atheader"),id_permohonan,session,usid, getParam("idsimati"));
+			headerppk_baru(session, id_permohonan, "Y", "", "T");
+        	list_tukar_pemohon = null;        
+        	list_tukar_pemohon = model.list_tukar_pemohon(getParam("id_fail_carian"));
+        	context.put("list_tukar_pemohon",list_tukar_pemohon); 
+        	context.put("IDSimati",IDSimati);
+		}
+		// syafiqah add ends
 		else
 		{
 			default_data();	

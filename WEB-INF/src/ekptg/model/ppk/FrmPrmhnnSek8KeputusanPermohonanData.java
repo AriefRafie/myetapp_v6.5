@@ -297,7 +297,7 @@ private static Vector semakMahkamah = new Vector();
 				System.out.println("sql update-->"+sql);
 				stmt.executeUpdate(sql);
 		    	} finally {
-		    		if (db != null) db.close();
+		    		if (db != null) db.close();  
 		    	}
 		  	}
 	

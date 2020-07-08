@@ -1111,7 +1111,7 @@ public class FrmPermohonanUPTData {
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();
 	    		String id_user = (String)data.get("id_user");
-	    	
+	    		
 	    		//seksyen 4 & 8
 	    		String id_permohonan = (String)data.get("id_permohonan");
 	    		String id_negeri = (String)data.get("negeri");
@@ -1128,7 +1128,7 @@ public class FrmPermohonanUPTData {
 	    		String txtLain = (String)data.get("txtLain");
 	    		String txtNoWartaRizab = (String)data.get("txtNoWartaRizab");
 	    		String txdTarikhWarta = (String)data.get("txdTarikhWarta");
-	  
+	    		
 	    		//seksyen 8
 	    		String id_jenishakmilik = (String)data.get("jenisHakMilik");	 
 	    		String no_hakmilik = (String)data.get("no_hakmilik");
@@ -1137,6 +1137,11 @@ public class FrmPermohonanUPTData {
 	    		String luas_lot = (String)data.get("luas_lot");
 	    		String luas_ambil = (String)data.get("anggaran_luas");	
 	    		String socKategoriTanah = (String)data.get("socKategoriTanah");
+	    		
+	    		//PPT-03 Usop tambah 
+	    		//String no_bangunan = (String)data.get("txtNoBangunan");
+//	    		String no_tingkat = (String)data.get("txtNoTingkat");
+//	    		String no_petak = (String)data.get("txtNoPetak");
 	    		
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 	    		
@@ -1164,11 +1169,16 @@ public class FrmPermohonanUPTData {
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);	 
 	    		
-	    		
-	    		
+//	    		PPT-03 Usop Tambah
+//	    		r.add("column_name", String.valueOf(data.get("")));
+	    		r.add("no_bangunan",String.valueOf(data.get("txtNoBangunan"))); 
+	    		r.add("no_tingkat", String.valueOf(data.get("txtNoTingkat")));
+	    		r.add("no_petak", String.valueOf(data.get("txtNoPetak")));
+//	    		r.add("no_tingkat",no_tingkat);
+//	    		r.add("no_petak",no_petak);
+	    		myLogger.info("Simpan maklumat no bangunan, tingkat dan petak");
 	    		
 	    		sql = r.getSQLInsert("tblppthakmilik");
-	    		
 	    		
 	    		myLogger.info("ADD HAKMILIK SEK 4 :"+sql.toUpperCase());
 	    		
@@ -6486,7 +6496,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	   
 	  }//close updateStatus
 	
-	public Hashtable<String,String> getPermohonanPPK(String id) throws Exception {
+	public Hashtable<String,String> getPermohonanPPT(String id) throws Exception {
 		Hashtable<String,String> hash = null;
 		Db db = null;
 		String sql = "";
@@ -6522,9 +6532,9 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		}
 		return hash;
 		
-	}//close list pohon2
+	}//close list PPT
 	
-	public Hashtable<String,String> getPermohonan(String id) throws Exception {
+	public Hashtable<String,String> getPermohonanPPK(String id) throws Exception {
 		Hashtable<String,String> hash = null;
 		Db db = null;
 		String sql = "";
@@ -6545,6 +6555,42 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		
 				ResultSet rs = stmt.executeQuery(sql);
 		
+				while(rs.next()) {
+					hash = new Hashtable();
+					hash.put("idPermohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));
+					hash.put("idFail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
+					hash.put("idSuburusan", rs.getString("id_suburusan")==null?"":rs.getString("id_suburusan"));
+	
+				}
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		}finally {
+			if(db != null) db.close();
+		}
+		return hash;
+		
+	}//close list pohon2
+	
+	public Hashtable<String,String> getPermohonan(String id) throws Exception {
+		Hashtable<String,String> hash = null;
+		Db db = null;
+		String sql = "";
+		
+		try{
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+		
+				r.add("f.id_suburusan");		
+				r.add("p.id_permohonan");
+				r.add("p.id_fail");
+				r.add("f.id_fail",r.unquote("p.id_fail"));
+				//r.add("n.id_negeri",r.unquote("f.id_negeri"));
+				r.add("p.id_permohonan",id);	
+				sql = r.getSQLSelect("tblpfdfail f,tblpermohonan p");		
+				
+				ResultSet rs = stmt.executeQuery(sql);
 				while(rs.next()) {
 					hash = new Hashtable();
 					hash.put("idPermohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));

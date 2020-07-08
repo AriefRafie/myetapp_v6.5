@@ -18,53 +18,51 @@
 		<tr>
 			<td colspan="3">&nbsp;</td>
 		</tr>
+		
 	    <tr>
 	   		<td colspan="3" class="success">
-		   		<p><span>Tandatangan Berjaya dikenalpasti</span></p>
+		   		<p><span>Tandatangan Berjaya Dikenalpasti</span></p>
 		   		<p><span>Sila tekan butang Hantar PNB (Borang D) untuk ke proses seterusnya. </span></p>
 	   		</td>
 	    </tr>
    		
 	    <tr>
-	    	<td align=center>
-	    	
+	    	<td align=center>	    	
 	    	#if($!id_perbicaraan!="")
-		              <span id="span_PNB" >
-		              <input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Hantar PNB (Borang D)" onClick="openPopupPNB('$!NO_FAIL','$!id_perbicaraan','$!id_fail')" />
-		              </span>
-		    #end
-		    
-		    
-	    	<input type="button" name="tutup" id="tutup" value="Tutup" onclick="tutupTetingkap()" /></td>
+		    	<span id="span_PNB" >
+		       	<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Hantar PNB (Borang D)" onClick="openPopupPNB('$!NO_FAIL','$!id_perbicaraan','$!id_fail')" />
+		        </span>
+		    #end		    		    
+	    		<input type="button" name="tutup" id="tutup" value="Tutup" onclick="tutupTetingkap()" />
+	    	</td>
 		</tr>
+		
 	</table>
 </body>
 
 <script>
 
-
-function openPopupPNB(NO_FAIL,id_perbicaraan,idfail){
-	try {
-	
-		window.opener.cetakBorangD_X(NO_FAIL,id_perbicaraan,idfail);
+	function openPopupPNB(NO_FAIL,id_perbicaraan,idfail){
+		try {	
+			window.opener.cetakBorangD_X(NO_FAIL,id_perbicaraan,idfail);
+		}
+		catch (err) {}
+	   	window.close();	
+	    return false;
 	}
-	catch (err) {}
-   	window.close();	
-    return false;
-}
 
-function tutupTetingkap() {
+	function tutupTetingkap() {		
+		window.close();
+	}
+
+	function cetakBorangD(NO_FAIL,id_perbicaraan,idfail) {	
+		var url = "../x/${securityToken}/ekptg.report.ppk.BorangD?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&flagVersion=popupPNB";
+	    //var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+NO_FAIL+"&idperbicaraan="+id_perbicaraan+"&report=BorangD&flagReport=B";
+		var hWnd = window.open(url,'Cetak','width=1200,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	    
+	}
 	
-	window.close();
-}
-
-function cetakBorangD(NO_FAIL,id_perbicaraan,idfail) {
-
-	var url = "../x/${securityToken}/ekptg.report.ppk.BorangD?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&flagVersion=popupPNB";
-    //var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+NO_FAIL+"&idperbicaraan="+id_perbicaraan+"&report=BorangD&flagReport=B";
-	var hWnd = window.open(url,'Cetak','width=1200,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}
 </script>

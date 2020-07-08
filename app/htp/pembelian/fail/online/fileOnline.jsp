@@ -2,6 +2,7 @@
 #set($frmtdate = "&nbsp;<i><font color=blue style='font-size:10px'>dd/mm/yyyy</font></i>")
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
+			
 
 	#if($pageMode!="edit")	
 	<tr>
@@ -68,9 +69,16 @@
 					        		<td width="68%">
 										<textarea name="txtTajuk" id="txtTajuk" cols="40" rows="5" onkeyup="this.value=this.value.toUpperCase();"  $inputstyleread >$!htpPermohonan.permohonan.getTujuan()</textarea>					        		
 					        		</td>					
-			              		</tr>		
+			              		</tr>
+								<tr>
+									<td colspan="5"><span class="labelwar"><em><b><span
+												 class="labelmandatory blink">Perhatian</span></b> : Sila pastikan
+												label bertanda <span class="labelmandatory">*</span> diisi.</em></span>
 
-				       		</table>		
+									</td>
+								</tr>
+
+							</table>		
 						</td>
         				<td width="50%" align="center" valign="top">
         					<table width="100%" border="0">
@@ -161,11 +169,52 @@
 
     
 			#if($pageMode!="update")
-			  <tr>
-			    <td colspan="2">
-		        			<span class="labelwar"><em><span class="labelmandatory">Perhatian</span> : Sila pastikan label bertanda <span class="labelmandatory">*</span> diisi.</em></span>
-			    	</td>
-			  </tr>
+			  	  
+	 <tr>
+		<td>
+			<fieldset><legend>SENARAI SEMAK</legend>
+				<table width="100%">
+					<tr>
+						<td width="1%">&nbsp;</td>
+						<td width="98%">Sila Muat Naik Dokumen berikut di skrin seterusnya:</td>
+					</tr>
+					<tr></tr>
+					
+					<tr>
+		            	<td width="1%">&nbsp;</td>
+		    			<td width="98%">&nbsp;&nbsp;&nbsp;
+		    				1. Salinan Hakmilik yang lengkap.</td>
+	  				</tr>
+					<tr>
+		            	<td width="1%">&nbsp;</td>
+		    			<td width="98%">&nbsp;&nbsp;&nbsp;
+		    				2. Sijil carian rasmi yang lengkap.</td>
+	  				</tr>
+					<tr>
+		            	<td width="1%">&nbsp;</td>
+		    			<td width="98%">&nbsp;&nbsp;&nbsp;
+		    				3. Salinan KP Pemilik dan Penjual</td>
+	  				</tr>
+	  				<tr>
+		            	<td width="1%">&nbsp;</td>
+		    			<td width="98%">&nbsp;&nbsp;&nbsp;
+		    				4. Salinan pelan</td>
+	  				</tr>    
+	  				<tr>
+		            	<td width="1%">&nbsp;</td>
+		    			<td width="98%">&nbsp;&nbsp;&nbsp;
+		    				5. Penerangan tentang tujuan pembelian.</td>
+	  				</tr>           	
+ 
+
+	            	
+ </table>
+ 			</fieldset>
+ 			
+ 		</td>
+
+	</tr>
+			  
 			 #end
 	<tr>
 		<td align=center>
