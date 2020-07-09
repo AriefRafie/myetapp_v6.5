@@ -493,7 +493,7 @@ public class FrmSenaraiFailInternalCarianData {
 			      sql = sql + " AND f.no_fail is not null ORDER BY F.ID_FAIL DESC";
 
 			      
-			      myLogger.info("SQL CHECK KP XXXXXXXXXXXXXX :: "+sql);
+			      myLogger.info("SQL cCHECK KP xXXXXXXXXXXXXXX :: "+sql);
 			      ResultSet rs = stmt.executeQuery(sql);
 			      Hashtable h;
 			      int bil = 1;
