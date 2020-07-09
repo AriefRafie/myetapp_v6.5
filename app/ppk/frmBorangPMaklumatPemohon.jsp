@@ -55,7 +55,7 @@ id_status_daftar ::	$!id_status_daftar <br>
 		alert("Permohonan untuk simati "+simati+" telah wujud dengan No. fail Permohonan "+nofail+". Permohonan telah dibuat di "+pejabat+"("+daerah+"). Tuan/Puan tidak dapat meneruskan Permohonan Seksyen 17 Online kerana fail awal belum selesai sepenuhnya. Sila berhubung dengan Pejabat Pusaka berkenaan.");
 		}		
 		else if((nofail != "" || nofail != null) && selesai == "yes"){		
-		alert("Permohonan untuk simati "+simati+" telah wujud dengan No. fail Permohonan "+nofail+". Permohonan telah dibuat di "+pejabat+"("+daerah+").  Tuan/Puan tidak dapat meneruskan Permohonan Seksyen 17 Online kerana status masih belum selesai. Sila berhubung dengan Pejabat Pusaka berkenaan.");
+		alert("Permohonan untuk simati  "+simati+" telah wujud dengan No. fail Permohonan "+nofail+". Permohonan telah dibuat di "+pejabat+"("+daerah+").  Tuan/Puan tidak dapat meneruskan Permohonan Seksyen 17 Online kerana status masih belum selesai. Sila berhubung dengan Pejabat Pusaka berkenaan.");
 		}
 		else if(id_status_daftar == "171"){
 		alert("Permohonan untuk simati "+simati+" telah wujud dengan No. Rujukan Online "+nofailonline+". Permohonan telah dihantar ke "+pejabat+"("+daerah+").  Tuan/Puan tidak dapat meneruskan Permohonan Seksyen 17 Online. Sila berhubung dengan Pejabat Pusaka berkenaan.");		
