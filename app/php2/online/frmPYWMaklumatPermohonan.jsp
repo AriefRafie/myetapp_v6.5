@@ -84,7 +84,7 @@
                 <td>:</td>
                 <td>$beanMaklumatTanah.noHakmilik</td>
               </tr>
-             <!--  <tr>
+             <tr>
                 <td>&nbsp;</td>
                 <td>No. Warta</td>
                 <td>:</td>
@@ -95,7 +95,7 @@
                 <td>Tarikh Warta</td>
                 <td>:</td>
                 <td>$beanMaklumatTanah.tarikhWarta</td>
-              </tr> -->
+              </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td>Mukim</td>
@@ -173,44 +173,49 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatSewa in $BeanMaklumatSewa)
               <tr>
+				<td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
+				<td>Tujuan</td>
+				<td>:</td>
+				<td>$selectSubSuburusan</td>
+				<input type="hidden" name="namatujuan" id="namatujuan" value="$beanMaklumatSewa.tujuan" />
+			  </tr>
+              <tr>
                 <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
                 <td valign="top" width="28%">Tempoh Sewa</td>
                 <td width="1%">:</td>
-                <td width="70%"><select name="socTempohSewa" id="socTempohSewa" style="width:140px;" $readonly class="$disabled" $disabled>
-            #if ($beanMaklumatSewa.flagTempohSewa == 'B')
+                <td width="70%">
+                  <select name="socTempohSewa" id="socTempohSewa" style="width:140px;" $readonly class="$disabled" $disabled>
+            		#if ($beanMaklumatSewa.flagTempohSewa == 'B')
                     <option>SILA PILIH</option>
                     <option value="B" selected>BULAN KE BULAN</option>
                     <option value="1T">1 TAHUN</option>
                     <option value="2T">2 TAHUN</option>
                     <option value="3T">3 TAHUN</option>
-            #elseif ($beanMaklumatSewa.flagTempohSewa == '1T')
+            		#elseif ($beanMaklumatSewa.flagTempohSewa == '1T')
                 	<option>SILA PILIH</option>
                     <option value="B">BULAN KE BULAN</option>
                     <option value="1T" selected>1 TAHUN</option>
                     <option value="2T">2 TAHUN</option>
                     <option value="3T">3 TAHUN</option>
-            #elseif ($beanMaklumatSewa.flagTempohSewa == '2T')
+            		#elseif ($beanMaklumatSewa.flagTempohSewa == '2T')
                 	<option>SILA PILIH</option>
                     <option value="B">BULAN KE BULAN</option>
                     <option value="1T">1 TAHUN</option>
                     <option value="2T"  selected>2 TAHUN</option>
                     <option value="3T">3 TAHUN</option>
-            #elseif ($beanMaklumatSewa.flagTempohSewa == '3T')
+            		#elseif ($beanMaklumatSewa.flagTempohSewa == '3T')
                 	<option>SILA PILIH</option>
                     <option value="B">BULAN KE BULAN</option>
                     <option value="1T">1 TAHUN</option>
                     <option value="2T">2 TAHUN</option>
                     <option value="3T"  selected>3 TAHUN</option>
-            #else
+            		#else
                     <option>SILA PILIH</option>
                     <option value="B">BULAN KE BULAN</option>
                     <option value="1T">1 TAHUN</option>
                     <option value="2T">2 TAHUN</option>
                     <option value="3T">3 TAHUN</option>
-            #end
-            
-            
-                  
+            		#end
                   </select>
                 </td>
               </tr>
@@ -301,7 +306,6 @@
               #end              
             </table>
           </div>
-          
           <div class="TabbedPanelsContent">
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<tr>
@@ -371,6 +375,15 @@ function doChangeTabUpper(tabId) {
 	document.${formName}.modePopup.value = "";
 	doAjaxCall${formName}("");
 }
+function doChangeSubsuburusan() {
+	doAjaxCall${formName}("doChangeSubsuburusan");
+}
+function doChangePeganganHakmilik1() {
+	doAjaxCall${formName}("doChangePeganganHakmilik1");
+}
+function doChangeNegeri() {
+	doAjaxCall${formName}("doChangeNegeri");
+}
 function pilihTanahPYW() {
 	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmPYWOnlinePopupSenaraiTanahView";
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
@@ -399,9 +412,6 @@ function doSimpanKemaskiniMaklumatTnh() {
 	document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatTnh";
 	document.${formName}.submit();
-}
-function doChangePeganganHakmilik1() {
-	doAjaxCall${formName}("doChangePeganganHakmilik1");
 }
 function doBacklist() {
 	document.${formName}.actionPenyewaan.value = "";
@@ -521,9 +531,6 @@ function doSimpanKemaskiniMaklumatPenyewaan(idLuas) {
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPenyewaan";
 	document.${formName}.submit();
-}
-function doChangeNegeri() {
-	doAjaxCall${formName}("doChangeNegeri");
 }
 function doSimpanKemaskiniMaklumatPemohon(type) {
 	if(type == "syarikat"){

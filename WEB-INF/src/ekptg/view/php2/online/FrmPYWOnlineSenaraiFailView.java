@@ -256,6 +256,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
             			idLuas = "99999";
             		}
         		}
+    			this.context.put("selectSubSuburusan", PHPUtilHTML.SelectSubsuburusanByIdSuburusan(idSuburusan, "socSubsuburusan", Long.parseLong(idSubsuburusan), "disabled", " class=\"disabled\""));
     			
     			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\" style=\"width:auto\""));
         		
@@ -609,23 +610,8 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			// screen
 			vm = "app/php2/online/frmPYWSenaraiFailOnline.jsp";
 
-		}// close cari
+		}
 		
-		/*else {
-			
-			Vector status_PermohonanSewa = logic.statusPermohonanSewa(null, null, null, id_user);
-			this.context.put("status_PermohonanSewa", status_PermohonanSewa);
-			setupPage(session, action, status_PermohonanSewa);
-			
-			context.remove("findNoFail");	
-			context.remove("findNamaProjek");
-			context.remove("findNoSiasatan");
-			
-			vm = "app/php2/online/frmPYWSenaraiFailOnline.jsp";
-		}*/
-		
-//		System.out.println("vm FrmPYWOnlineSenaraiFailView : "+vm);
-
 		// SET DEFAULT PARAM
 		this.context.put("actionPenyewaan", actionPenyewaan);
 		this.context.put("mode", mode);

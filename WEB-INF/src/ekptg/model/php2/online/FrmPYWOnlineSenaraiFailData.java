@@ -1788,8 +1788,8 @@ public class FrmPYWOnlineSenaraiFailData {
 			sql = r.getSQLInsert("TBLPFDFAIL");
 			stmt.executeUpdate(sql);
 						
-			sql = "SELECT A.USER_NAME, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_NEGERI,B.NO_FAX, B.NO_HP,"
-				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL "
+			sql = "SELECT A.USER_ID, A.USER_NAME, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_NEGERI,B.NO_FAX, B.NO_HP,"
+				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.KATEGORI"
 				+ " FROM USERS A, USERS_ONLINE B"
 				+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
 			
@@ -1800,7 +1800,13 @@ public class FrmPYWOnlineSenaraiFailData {
 			r = new SQLRenderer();
 			long idPemohon = DB.getNextID("TBLPHPPEMOHON_SEQ");
 			r.add("ID_PEMOHON", idPemohon);
-			r.add("ID_KATEGORIPEMOHON", "2");
+			if(rsUser.getString("KATEGORI") != null && rsUser.getString("KATEGORI") == "Individu"){
+				r.add("ID_KATEGORIPEMOHON", "1");
+				
+			} else {
+				r.add("ID_KATEGORIPEMOHON", "2");
+			}
+			
 			if (rsUser.next()){
 				if (rsUser.getString("USER_NAME") != null){
 					namaUser = rsUser.getString("USER_NAME");
@@ -1827,12 +1833,22 @@ public class FrmPYWOnlineSenaraiFailData {
 			sql = r.getSQLInsert("TBLPHPPEMOHON");
 			stmt.executeUpdate(sql);
 			
+			String idPejabatJKPTG = "";
+			sql = "SELECT ID_PEJABATJKPTG, ID_NEGERI FROM TBLRUJPEJABATJKPTG "
+					+ " WHERE ID_NEGERI = '" + idNegeriHakmilik + "'";
+				
+			ResultSet rsJKPTG = stmt.executeQuery(sql);
+			log.info("Pejabat JKPTG" +sql);
+			if (rsJKPTG.next()){
+				idPejabatJKPTG = rsJKPTG.getString("ID_PEJABATJKPTG");
+			}
+		
 			//TBLPERMOHONAN
 			r = new SQLRenderer();
 			long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
 			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("ID_PEMOHON", idPemohon);
-			r.add("ID_JKPTG", "1");
+			r.add("ID_JKPTG", idPejabatJKPTG);
 			r.add("ID_FAIL", idFail);
 			r.add("ID_STATUS", "");
 			r.add("NO_RUJ_SURAT",noRujukanSurat);
