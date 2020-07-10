@@ -113,6 +113,35 @@ public class EmailConfig {
 			
 	}
 	
+	public void sendByEmailcb(String userMail
+			,List<Map<String,String>> senaraiPengguna,String tajuk
+			,String kandungan) throws Exception {
+//			List<Map<String,String>> senaraiPengguna = getUserKJP().getPenggunaMengikutRole(role, idKementerian);
+			//myLog.info("senarai size="+senaraiPengguna.size());	
+			mail.SUBJECT = tajuk;
+			mail.MESSAGE = kandungan;		
+				
+			//GET EMEL MENGIKUT ROLE
+			mail.MULTIPLE_RECIEPIENT = new String[senaraiPengguna.size()];
+			//mail.MULTIPLE_RECIEPIENT = new String[1];
+			for(int i = 0; i < senaraiPengguna.size();i++){			   
+				Map<String,String> m = (Map<String,String>) senaraiPengguna.get(i);
+				myLog.info(" EMEL PENGGUNA :"+(String) m.get("emel"));
+				//EMEL UNTUK PENGGUNA
+				mail.MULTIPLE_RECIEPIENT[i] = (String) m.get("emel");		
+				//"simple1001plan@gmail.com";//	  
+				   
+			}
+			//mail.MULTIPLE_RECIEPIENT[0] = userMail;
+			mail.TO_CC = new String[1];	
+			if(!userMail.equals(""))
+				mail.TO_CC[0] = userMail;
+			
+			mail.sendEmail();	
+				
+		}
+		
+	
 	public void hantarPermohonan(String userMail
 		,String role
 		,String tajuk
