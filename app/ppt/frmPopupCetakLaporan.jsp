@@ -191,10 +191,11 @@
               && $report != 'NotaSiasatanSek8' && $report != 'borangAkta486' && $report != 'KertasMinitMB' && $report != 'BuktiPenyampaianRamai' && $report != 'BuktiPenyampaianRamaiH' && $report != 'BuktiPenyampaianRamaiK' 
               && $report != 'BorangL' && $report != 'SuratAkuanPenerimaanCekLainKos' && $report != 'borangAkta486Penarikan' 
               && $report != 'coveringPU' && $report != 'coveringPU_SA' && $report != 'borangPU' && $report != 'lampiranAPU' && $report != 'lampiranBPU'
-              && $report != 'BuktiPenyampaianL' || $report == 'SuratPengosonganTanah' && $report != 'SuratEndorsanBorangK' && $report != 'SuratIringanAgensiPemohon' 
+              && $report != 'BorangL' && $report != 'SuratEndorsanBorangK' && $report != 'SuratIringanAgensiPemohon' 
               && $report != 'coveringSijilPU' && $report != 'minitSijilPU' && $report != 'cetakNotis' && $report != 'senaraiKehadiran' 
               && $report != 'senaraiKehadiranKosong' && $report != 'BayaranLainKos_Nofail' && $report != 'sabpn_notis_awam_sek4' && $report != 'sabpn_notis_awam_sek8'  && $report != 'sabpn_notis_borange'  
-              && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh')
+              && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh' && $report != 'SuratMohonBayaranAgensi')
+<!--               || $report == 'SuratPengosonganTanah' || -->
               <!-- PPT-27 & PPT-30-->
               <tr>
                 <td><font color="red">*</font></td>
@@ -1442,6 +1443,10 @@
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangM('$!id_fail','$!id_hakmilikpb')">
                 	#end                                       
                     
+                    <!-- PPT 43i-->
+                    #if($report == 'SuratMohonBayaranAgensi')
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMohonBayaranAgensi('$!id_hakmilik','$!nama_pegawai','$!id_jawatan','$!nama2Mukim')">
+                	#end
                     
                     <!-- END REPORT SEMENTARA ------------->
                     
@@ -5662,6 +5667,67 @@ function cetakSementaraMMKKL(idfail,nama_pengarah,no_fail,id_negeri) {
 	if (hWnd.focus != null) hWnd.focus();
 }
 
+//PPT-43(i)
+function cetakMohonBayaranAgensi(idhakmilik,nama_pegawai,id_jawatan,mukim) {
+		//alert("debug");
+		if (document.${formName}.sorSelectNoFail.value == ""){
+			alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
+			document.${formName}.sorSelectNoFail.focus(); 
+			return;
+		}
+		//alert("debug1");
+		else if(document.${formName}.socPegawai.value == ""){
+			alert('Sila pilih nama pegawai terlebih dahulu.');
+	  		document.${formName}.socPegawai.focus(); 
+			return; 
+		}
+		//alert("debug2");
+		else{
+
+			var idJawatan = 0;
+			if(id_jawatan!=""){
+				idJawatan = id_jawatan;
+			}
+
+			var valType = document.${formName}.sorSelectNoFail.value;
+			var nofail = "";
+			
+			if(valType=="1"){
+				nofail = document.${formName}.no_fail.value;
+			}else if(valType=="2"){
+				nofail = document.${formName}.no_rujukan_ptg.value;
+			}else if(valType=="3"){
+				nofail = document.${formName}.no_rujukan_ptd.value;
+			}else if(valType=="4"){
+				nofail = document.${formName}.no_rujukan_upt.value;
+			}else{
+				nofail = document.${formName}.no_fail.value;
+			}
+
+			var bankMT = document.${formName}.txtNamaBankMT.value;
+			var noMT = document.${formName}.txtNomborAkaunMT.value;
+			var akaunMT = document.${formName}.txtNamaAkaunMT.value;
+			var bankARB = document.${formName}.txtNamaBankARB.value;
+			var noARB = document.${formName}.txtNomborAkaunARB.value;
+			var akaunARB = document.${formName}.txtNamaAkaunARB.value;
+			var noTel = document.${formName}.txtNotel.value;
+			var emel = document.${formName}.txtEmel.value;
+			
+			var emelEFT = document.${formName}.txtEmelEFT.value;
+			var sysdate = document.${formName}.txtTarikhSuratCetak.value;
+
+			var item1 = "id_hakmilik="+idhakmilik+"&namaPegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'";
+			var item2 = "&mukim="+mukim+"&no_fail="+nofail+"&emel_eft="+emelEFT+"&sysdate="+sysdate; 
+			var item3 = "&emel="+emel+"&no_tel="+noTel+"&bankMT="+bankMT+"&noMT="+noMT+"&akaunMT="+akaunMT
+						+"&bankARB="+bankARB+"&noARB="+noARB+"&akaunARB="+akaunARB;
+			
+			var url = "../../servlet/ekptg.report.ppt.SuratMohonBayaranAgensi?"+item1+item2+item3;
+			var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+			if ((document.window != null) && (!hWnd.opener))
+			hWnd.opener = document.window;
+			if (hWnd.focus != null) hWnd.focus();
+		}
+}
 
 <!-- END REPORT SEMENTARA -->
 
