@@ -460,7 +460,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		String flag_email = getParam("flag_email");
 		String submit = getParam("command");
 		String subminor_command = getParam("subminor_command");
-		myLogger.info("submit : " + submit);
+		myLogger.info("submit / command: " + submit);
 		myLogger.info("subminor_command minor : " + subminor_command);
 
 		context.put("DATEUTIL", new DateUtil());
@@ -621,7 +621,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		}// close tambahHM
 
 		else if ("tambahHM".equals(submit)) {
-
+			myLogger.info("tambahHM: Seksyen 8 ------");
 			// form validation
 			context.put("mode", "new");
 
@@ -638,7 +638,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 			newDataSetting(idpermohonan);
 
 			String submit2 = getParam("command2");
-			myLogger.info("submit[2]: " + submit2);
+			myLogger.info("Submit[2] / Command2: " + submit2);
 
 			if ("doOnchange".equals(submit2)) {
 				
@@ -3988,7 +3988,7 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 
 	@SuppressWarnings("unchecked")
 	private void simpanHM(HttpSession session) throws Exception {
-
+		myLogger.info("simpanHM: yang Kedua  ------");
 		Hashtable h = new Hashtable();
 
 		String flagSubjaket = getParam("flag_subjaket");

@@ -21,11 +21,7 @@ import ekptg.helpers.Utils;
 import ekptg.model.ppt.PPTHeader;
 
 public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7789359329852177168L;
-	static Logger myLogger = Logger.getLogger(ekptg.view.ppt.SkrinPopupCarianHakmilik.class);
+	static Logger myLogger = Logger.getLogger(SkrinPopupCarianHakmilik.class);
 	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy");
 	private final String PATH = "app/ppt/PopupHakmilik/";
 	private String vm = PATH + "SkrinPopupCarianHakmilik.jsp";
@@ -99,7 +95,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				simpanBorangL(session, id_permohonan, db);
 			}
 
-			PPTHeader.setDataHeader(id_permohonan);
+			header.setDataHeader(id_permohonan);
 			Vector dataHeader = header.getDataHeader();
 			if (dataHeader.size() != 0) {
 				Hashtable dh = (Hashtable) dataHeader.get(0);
@@ -113,7 +109,8 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			displayHakmilik(id_permohonan, flag_skrin, action,
 					getParam("NO_LOT"), getParam("NAMA_PB"), getParam("NO_PB"),
 					db, id_pegawai, id_borange);
-			context.put("saiz_listTanah",getTanah_count(id_permohonan, "", "", db));
+			context.put("saiz_listTanah",
+					getTanah_count(id_permohonan, "", "", db));
 			
 			myLogger.info("vm SkrinPopupCarianHakmilik >>> "+vm);
 
@@ -1447,6 +1444,5 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			// db.close();
 		}
 	}
-	
 
 }

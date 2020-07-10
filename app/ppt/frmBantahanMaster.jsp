@@ -649,16 +649,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!------------------------------------------------------ END MAKLUMAT PEMBANTAH ---------------------------------------->  
 
 
-<!-- PPT-35 (ii) && Integrasi Mahkamah -->
 <!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
-
-<!-- :::upload -->
-
-<input type="hidden" name="nama_skrin" id="nama_skrin" value="bantahan"  />
+<!--  3/7/2020 Pindah ke Skrin Borang O -->
+<!-- PPT-35 (ii) && Integrasi Mahkamah -->
+<!--
 <fieldset id="senarai_dokumen" >
-<!-- jenis dokumen = '$jenisDoc' -->
-<!-- jenis skrin = '$nama_skrin' -->
-<!-- listDokumen =  $listDokumen -->
 <legend>Senarai Dokumen</legend>
     
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
@@ -695,7 +690,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          		#else
                		 #set( $row = "row1" )
          		#end
-	  #if($list1.JENIS_DOKUMEN == "bantahan")   <!-- PPT-35 (ii) -->  
+	  ##if($list1.JENIS_DOKUMEN == "bantahan")   
+	  ## PPT-35 (ii) 
 	  #set ($cnt=1)
 	  <tr>  
 	    <td class="$row" >$list1.BIL</td>
@@ -706,7 +702,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 	       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
 	     </div></td>
 	  </tr>
-	  #end
+	  ##end
   	#end
 	  #if($cnt==0)
 	  <tr>  
@@ -721,7 +717,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 </table>
  
 </fieldset> 
-
+-->
 <!-- PPT-35 (ii) -->
 <br />
         <div align="center"> 
@@ -733,9 +729,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           
           	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniBantahan()" /> 
          	<!-- <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> -->
-       	<!-- INTEGRASI MAHKAMAH TINGGI-->
-          	<input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
-     	<!-- END INTERGRASI MAHKAMAH -->          
+       	<!-- INTEGRASI MAHKAMAH TINGGI -->
+<!--           	<input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
+ -->     	<!-- END INTERGRASI MAHKAMAH -->          
   	#end
           
   	#if ($button=="edit")
@@ -790,6 +786,21 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 /**
 * Fungsi hantar maklumat bantahan ke MT
 */
+function hantarBantahan2() {
+	var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
+	var idFail = "&idfail=$!id_fail";
+	var idHarta  = "&idharta="+$jquery('#id_hakmilikpb').val();
+	var idPermohonan  = "&idpermohonan="+$jquery('#id_permohonan').val();
+	var idSiasatan  = "&idsiasatan="+$jquery('#id_siasatan').val();
+	var idWarta  = "&idwarta=$!idWarta";
+	var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
+	
+	document.${formName}.command.value = "bantahanpb";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian"+param;
+	document.${formName}.submit();	
+	
+}
+
 function hantarBantahan() {	
 	var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
 	var idFail = "&idfail=$!id_fail";

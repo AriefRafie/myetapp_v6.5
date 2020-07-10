@@ -25,12 +25,10 @@ import ekptg.model.php2.online.FrmPNWOnlineSenaraiFailData;
 public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 	
 	private static final long serialVersionUID = 1L;
-	
 	FrmPNWOnlineSenaraiFailData logic = new FrmPNWOnlineSenaraiFailData();
 
 	@Override
 	public String doTemplate2() throws Exception {
-
 		HttpSession session = this.request.getSession();
 		
 		Boolean postDB = false;
@@ -119,8 +117,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("userRole", userRole);
 		this.context.put("userJawatan", userJawatan);
 		this.context.put("layerKJP", layerKJP);
-		
-		
+			
 		listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
 		
 		if(!listDetailKJP.isEmpty() && listDetailKJP.size()> 0) {
@@ -129,7 +126,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
     		idKementerianPmhn= hashRayuanDB.get("idKementerian").toString();
     		idAgensiPmhn= hashRayuanDB.get("idAgensi").toString();
     		
-    	  }
+		}
 		
 		this.context.put("idNegeriPemohon", idNegeriPemohon);
 		this.context.put("idKementerianPmhn", idKementerianPmhn);
@@ -153,14 +150,14 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 						getParam("txtLuasBersamaan"), getParam("txtBakiLuas"),
 						session);
         	}
-			if ("doHantarSemakan".equals(hitButton)){
-				
+			if ("doHantarSemakan".equals(hitButton)){				
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
 					logic.updatePermohonanSemakan(idPermohonan, idKementerianPmhn, session);
 				}				
 			}
+			
 			if ("doHantarKelulusan".equals(hitButton)){
 				
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
@@ -168,32 +165,27 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 				} else {
 					logic.updatePermohonanKelulusan(idPermohonan, idKementerianPmhn, session);
 				}				
-			}
-			if ("doHantarEmel".equals(hitButton)){
+			}else if ("doHantarEmel".equals(hitButton)){
 				
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
 					logic.updatePermohonanEmel(idFail,idPermohonan,session);
-				}				
-			}
-			if ("doHapus".equals(hitButton)){
+				}		
+				
+			}else if ("doHapus".equals(hitButton)){
 				logic.hapusPermohonan(idFail);
-			}
-			
-			if ("simpanDokumen".equals(hitButton)) {
+			}else if ("simpanDokumen".equals(hitButton)) {
 				uploadFiles(idPermohonan, session);
-			}
-			if ("simpanKemaskiniDokumen".equals(hitButton)) {
+			}else if ("simpanKemaskiniDokumen".equals(hitButton)) {
 				logic.simpanKemaskiniDokumen(idDokumen, getParam("txtNamaImej"), getParam("txtCatatanImej"), session);
-			}
-			if ("hapusDokumen".equals(hitButton)) {
+			}else if ("hapusDokumen".equals(hitButton)) {
 				logic.hapusDokumen(idDokumen);
 			}
+			
 		}
 		
 		if ("papar".equals(actionOnline)) {
-
 			// GO TO VIEW PENAWARAN
 		    vm = "app/php2/online/frmPNWDaftarManual.jsp";
 		    
@@ -214,7 +206,6 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 
 		} else if ("daftarBaru".equals(actionOnline)) {
-
 			// GO TO DAFTAR BARU PENAWARAN
 			vm = "app/php2/online/frmPNWDaftarManual.jsp";
 		
@@ -243,8 +234,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 			beanMaklumatTanah = logic.getBeanMaklumatTanah();
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 
-		} else if ("seterusnya".equals(actionOnline)){
-        	
+		} else if ("seterusnya".equals(actionOnline)){        	
         	// GO TO MAKLUMAT PERMOHONAN  
 			vm = "app/php2/online/frmPNWMaklumatPermohonan.jsp";
 			
@@ -354,8 +344,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 	        			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 	    			}
         		
-        		} else if ("1".equals(selectedTabUpper)){
-	        		
+        		} else if ("1".equals(selectedTabUpper)){	        		
         			//MAKLUMAT PENAWARAN
 	            	beanMaklumatPenawaran = new Vector();
 	        		logic.setMaklumatPenawaran(idPermohonan);
@@ -411,8 +400,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 	        		this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " onChange=\"doChangeLuasKegunaan()\" style=\"width:auto\""));
 	    		
         		} 
-    		}
-    		
+    		}    		
    			
     		//OPEN POPUP DOKUMEN
 	        if ("openPopupDokumen".equals(flagPopup)){
@@ -635,4 +623,6 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		}
 		this.context.put("completed", true);
 	}
+	
+	
 }

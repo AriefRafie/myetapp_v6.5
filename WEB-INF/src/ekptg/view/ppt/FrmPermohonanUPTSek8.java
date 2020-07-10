@@ -2250,6 +2250,11 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	//pengambilan segera
     	h.put("socPSegera", getParam("socPSegera"));
     	
+//    	PPT-03 Usop tambah
+    	h.put("txtNoBangunan", getParam("txtNoBangunan"));
+    	h.put("txtNoTingkat", getParam("txtNoTingkat"));
+    	h.put("txtNoPetak", getParam("txtNoPetak"));
+    	
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 		
 		FrmUPTSek8HakmilikData.simpanHM(h,flagSubjaket);

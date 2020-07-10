@@ -501,7 +501,7 @@ else if(location=='senaraiAduan'){
 else if(location=='PPKSEK17'){
         document.${formName}.action = "?myrole=ppk-online-user";
         document.${formName}.namatab.value = "Pusaka Kecil";
-        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmBorangPSek17Online";
+        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnBorangPOnline"; 
         document.${formName}.submit();
 }
 else if(location=='PPKSTATUS'){

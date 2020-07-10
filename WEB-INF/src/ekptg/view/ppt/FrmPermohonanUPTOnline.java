@@ -40,6 +40,9 @@ import ekptg.model.ppt.MyInfoPPTData;
 import ekptg.model.ppt.PPTHeader;
 import ekptg.model.ppt.PPTPermohonanBean;
 import ekptg.model.utils.IUtilHTMLPilihan;
+import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.emel.EmelSemakanBean;
+import ekptg.model.utils.emel.IEmel;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisHakmilik;
 import ekptg.view.ppt.email.EmailOnline;
 
@@ -60,6 +63,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	MyInfoPPTData myInfo = new MyInfoPPTData();
 	private IPermohonan iPermohonan = null;
 	private IUtilHTMLPilihan iPilihanJH = null;
+	private ekptg.model.utils.emel.IEmel iEmel = null;
 
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
@@ -456,7 +460,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 					if (doPost.equals("true")) {
 						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user,
-								"hantarSemakan");
+								"hantarSemakan",session);
 					}
 
 					header.setDataHeader(idpermohonan);
@@ -475,7 +479,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 					if (doPost.equals("true")) {
 						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user,
-								"hantarLulus");
+								"hantarLulus",session);
 					}
 					//senarai semak
 		    		senaraiSemak = model.getSenaraiSemakan(idpermohonan);
@@ -490,13 +494,13 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					}
 
 				} else if ("lulusPermohonan".equals(submit2)) {
-
 					// update flag
 
 					updateFlag(session, "3");
 
 					if (doPost.equals("true")) {
-						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user, "lulus");
+						sendEmail(namaProjek, TarikhPermohonan, userIdKementerian, id_jawatan_user, id_user
+							, "lulus",session);
 					}
 
 					header.setDataHeader(idpermohonan);
@@ -529,11 +533,11 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					if (doPost.equals("true")) {
 						hantarPermohonan(session, idpermohonan, flagStatusOnline);
 						Permohonan permohonan = getPermohonan().getMaklumatPermohonan(idpermohonan);
-						EmailOnline emel = new EmailOnline();
-						String kementerian = permohonan.getNamaAgensi() + ", "
-								+ permohonan.getPfdFail().getNamaKementerian();
-						String rujukanOnline = permohonan.getNoPermohonan();
-						emel.hantarEmel("", "", "", rujukanOnline, namaProjek, TarikhPermohonan, kementerian, id_user);
+//						EmailOnline_bak20200613 emel = new EmailOnline_bak20200613();
+//						String kementerian = permohonan.getNamaAgensi() + ", "
+//								+ permohonan.getPfdFail().getNamaKementerian();
+//						String rujukanOnline = permohonan.getNoPermohonan();
+//						emel.hantarEmel("", "", "", rujukanOnline, namaProjek, TarikhPermohonan, kementerian, id_user);
 					}
 					// update status
 					dataHeader(idpermohonan);
@@ -1845,14 +1849,13 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		}
 	}
 
-	@SuppressWarnings({ "static-access" })
 	private void sendEmail(String nama_projek, String tarikh_permohonan, String userIdKementerian,
-			String id_jawatan_user, String id_user, String purpose) throws Exception {
-
+		String id_jawatan_user, String id_user, String purpose,HttpSession session) throws Exception {
+		//hantarSemakan,hantarLulus,lulus
 		EmailOnline et = new EmailOnline();
-		et.setEmail("", "", purpose, "", nama_projek, tarikh_permohonan, "", userIdKementerian, id_jawatan_user,
-				id_user);
-		System.out.println("*** sendEmail : " + nama_projek + " " + tarikh_permohonan);
+		et.setEmail("", "", purpose, "", nama_projek, tarikh_permohonan, "", userIdKementerian, id_jawatan_user,id_user
+				,String.valueOf(session.getAttribute("portal_username")));
+//		System.out.println("*** sendEmail : " + nama_projek + " " + tarikh_permohonan);
 
 	}// close sendEmail
 
@@ -4856,6 +4859,13 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		if (iPilihanJH == null)
 			iPilihanJH = new UtilHTMLPilihanJenisHakmilik();
 		return iPilihanJH;
+	}
+	
+	
+	private IEmel getEmelSemak(){
+		if(iEmel == null)
+			iEmel = new EmelSemakanBean();
+		return iEmel;
 	}
 
 }// close class

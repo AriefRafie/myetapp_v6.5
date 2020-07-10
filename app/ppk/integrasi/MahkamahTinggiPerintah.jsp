@@ -25,9 +25,9 @@ input[readonly]{
 					<td>:</td>
 					<td colspan="2">
 						<input type="text" name="noFail" value="$!noFail" readonly="readonly" size="40" style="text-transform:uppercase;"/>
-						#if($!semakPerintah=='ada')
+						<!--  #if($!semakPerintah=='ada')
 							<br /><font color="#FF0000" size="1"><i>Butiran perintah telah dihantar.</font>
-						#end
+						#end-->
 					</td>
 				</tr>
 				<tr>
@@ -105,9 +105,9 @@ input[readonly]{
 			<tr>
 				<td align="center">
 					<input style="cursor: pointer" type="button" name="tutup" id="tutup" value="Tutup" align="center" onClick="tutupTetingkap()" />
-					#if ($!semakPerintah == 'tiada')
+					<!--  #if ($!semakPerintah == 'tiada')-->
 						<input style="cursor: pointer" type="button" name="hantar" id="hantar" value="Hantar" align="left" onClick="javascript:hantarPermohonan()" />
-					#end
+					<!-- #end  -->
 				</td>
 			</tr>
 		</table>

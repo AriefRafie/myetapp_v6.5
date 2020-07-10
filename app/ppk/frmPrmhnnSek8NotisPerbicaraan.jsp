@@ -5788,8 +5788,8 @@ function checkCutiAm(datePick){
 
 	function sendDGcert(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){		
 		//commandw kegunaan dashboard
-		//var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=sendDGCert";
-		var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert";
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=sendDGCert";
+		//var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert";
 	    /* var url = "../servlet/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert"; */
 		var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
@@ -5800,8 +5800,8 @@ function checkCutiAm(datePick){
 
 	function verifyDGcert(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
 		//commandw kegunaan dashboard
-	    //var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=verify";
-	    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=verify";
+	    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=verify";
+	    //var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=verify";
 	    /* var url = "../servlet/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert"; */
 		var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))

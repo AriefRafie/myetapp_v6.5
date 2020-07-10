@@ -872,7 +872,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                    <option value="1">01-Agensi</option>
            #end  
            </select>
-                    </span>               
+         		</span>               
            <span id="jenis_pemohon_dis">
            <input type="text" name="jenis_pemohon_display"  id="jenis_pemohon_display" readonly class="disabled" >    
            </span>                
@@ -1974,20 +1974,31 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 		             	<td width="28%"> Muatnaik MyID </td>
 		             	<td width="1%">:</td> 
 		             	<td width="9%">
-							<input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'MyID')">
+							<input type="button" id="uploadmyid" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'MyID')" />
 							<br>
+							#if($lampirans != "")
+								<input type="hidden" name="namaDoc1" value="1" />
+							#else
+								<input type="hidden" name="namaDoc1" value="0" />
+							#end
 							$!lampirans
 						</td>
              		</tr>
 					
 					<tr>            
 				    	<td valign="top" width="2%">
+				    	<span class="style1">*</span>
 				      	</td>
 				     	<td width="28%"> Muatnaik Sijil Mati </td>
 				     	<td width="1%">:</td> 
 				     	<td width="9%">
-							<input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'cod')">
+							<input type="button" id="fileupload" name="fileupload" value="Lampiran" onClick="lampiran(this.value,'cod')">
 							<br>
+							#if($lampiranSijil != "")
+								<input type = "hidden" name="namaDoc2" id="namaDoc2" value="1" />
+							#else
+								<input type = "hidden" name="namaDoc2" id="namaDoc2" value="0" />
+							#end
 							$!lampiranSijil     
 						</td>
       				</tr>            
@@ -2404,15 +2415,15 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
       alert("Sila pastikan tarikh mati tidak melebihi dari tarikh hari ini.");
       document.f1.txtTarikhMati.focus();
     }
- 
-    else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
-     alert('Sila muatnaik MyID simati.');
-     document.f1.fileupload.focus(); 
+
+    else if(document.f1.namaDoc1.value == "0" && document.f1.namaDoc2.value =="1"){
+    	alert('Sila muatnaik MyID simati.');
+     	document.f1.uploadmyid.focus(); 
     }
-    //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
-    //  alert('Sila muatnaik Sijil Mati.');
-  //  document.f1.fileupload.focus(); 
-    //}
+    else if(document.f1.namaDoc2.value == "0" && document.f1.namaDoc1.value =="1"){
+      alert('Sila muatnaik Sijil Mati.');
+    document.f1.fileupload.focus(); 
+   	}
     else{
       input_box = confirm("Adakah anda pasti?");
       if (input_box == true) {

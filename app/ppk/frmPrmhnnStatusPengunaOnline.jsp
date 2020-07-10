@@ -204,18 +204,29 @@
 			      <font color="red">SILA PASTIKAN NOTIS PERBICARAAN DISAMPAIKAN KEPADA SETIAP WARIS BERKAITAN </font>
 			      
 			#elseif(($senarai.id_status == '70') || ($senarai.id_status == '47') || ($senarai.id_status == '169')) 
-				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$senarai.catatan')"><font color="blue"><strong>$senarai.status</strong></font></a>
-<!-- 				<br><font color="red">$senarai.catatan</font> -->
+				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','$!senarai.catatan')"><font color="blue"><strong>$senarai.status</strong></font></a>
 				
 			#elseif($senarai.id_status == '152')
-				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('TELAH ADA PERMOHONAN AWAL.')"><font color="blue"><strong>$senarai.status</strong></font></a>
+				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','TELAH ADA PERMOHONAN AWAL.')"><font color="blue"><strong>$senarai.status</strong></font></a>
+			
+			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
+				<strong>$senarai.status</strong>
+				<br>
+				<a href="#" onClick="javascript:cetakBorangF('$!senarai.idFail')"><font color="blue"> Borang F </font></a>
+				
+			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
+				<strong>$senarai.status</strong>
+				<br>
+				<a href="#" onClick="javascript:cetakBorangE('$!senarai.idFail','$!senarai.id_Permohonan','$!senarai.id_simati','$idPerintahHTAOBMST')"><font color="blue"> Borang E </font></a>
+		
+			
 			#else
 	  			<strong>$senarai.status</strong>
 		  	#end
-		  	<br>
-		  		<label style="background-color:blue" align="center" valign="top" > 
-					<b><font color="WHITE" size="0.6em"><span class="blink">$!senarai.catatan</span></font></b>
-				</label>
+<!-- 		  	<br> -->
+<!-- 		  		<label style="background-color:blue" align="center" valign="top" >  -->
+<!-- 					<b><font color="WHITE" size="0.6em"><span class="blink">$!senarai.catatan</span></font></b> -->
+<!-- 				</label> -->
 		  	
 	  </td>
 	  #if($!skrin_deraf =="yes")
@@ -271,12 +282,12 @@
 </body>
 
 <script>
-	function maklumatBatal(catatan){
+	function maklumatBatal(nofail,nama,status,catatan){
 		console.log(catatan);
 		
-		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupMaklumatBatal?catatan="+catatan;
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupMaklumatBatal?noFail="+nofail+"&namaS="+nama+"&status="+status+"&catatan="+catatan;
 		
-		var hWnd = window.open(url,'printuser','width=600,height=100, resizable=yes,scrollbars=yes');
+		var hWnd = window.open(url,'printuser','width=580,height=220, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		       hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
@@ -331,6 +342,24 @@ function submitForm() {
 	}
 } 
 
+function cetakBorangE(idFail,idPermohonanSimati,idSimati,idPerintahHTAOBMST) {
+	var url = "../servlet/ekptg.report.ppk.BorangE?idfail="+idFail+"&idPermohonanSimati="+idPermohonanSimati+"&idSimati="+idSimati+"&idPerintahHTAOBMST="+idPerintahHTAOBMST;
+    var hWnd = window.open(url,'printuser','width=700,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+
+function cetakBorangF(idFail) {
+	var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
+    var hWnd = window.open(url,'printuser','width=700,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+
 function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {		
 	if (seksyen == '8') {
 		//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=FrmPrmhnnSek8Internal&command=papar";
@@ -338,9 +367,9 @@ function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {
 	}else {
 		//document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 17",$portal_role)?_portal_module=FrmPrmhnnSek17Senarai&command=papar";
 		//document.${formName}.action = "?_portal_module=FrmPrmhnnSek17Senarai&command=tab";
-		document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil',$myrole)?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online&command=Simati&mode=Simatiview";
+		document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil',$myrole)?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online&command=Simati&mode=Simatiview"; 
 		
-	}
+	} 
 	
 	document.${formName}.idpermohonan.value = idPermohonan;
 	document.${formName}.idPermohonan.value = idPermohonan;
