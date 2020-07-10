@@ -31,6 +31,7 @@ import org.apache.velocity.Template;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8InternalData;
@@ -3596,7 +3597,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				//myLogger.info("part 3");
 				initInputPpkPengesahan();
 			}
-
+			
+			//Senarai semak
+			getSenaraiSemak(id1,id);
+			
 			if ("pengesahan_permohonan".equals(mode)) {
 				initTabData();
 
@@ -4127,8 +4131,24 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			
 			myLogger.info("syafiqah id: "+ id);
 			//myLogger.info("mode-------------------------------------"+mode);
-			if ("Simatiview".equals(mode)) {
-				myLogger.info("syafiqah test"); 
+			if (mode.equals("Simatiview")) {
+				String idRujukan ="";
+				String check_no_kp_baru_simati = String.valueOf(h1.get("noKpBaru"));
+				String check_no_kp_lama_simati = String.valueOf(h1.get("noKpLama"));
+				String socJenisKPLainSimati = String.valueOf(h1.get("jenisKp"));
+				String check_no_kp_lain_simati = String.valueOf(h1.get("noKpLain"));
+				
+				idRujukan = check_no_kp_baru_simati.equals("")?"-":check_no_kp_baru_simati;
+				idRujukan += check_no_kp_lama_simati.equals("")?"-":check_no_kp_lama_simati;
+				idRujukan += socJenisKPLainSimati.equals("0")?"-":socJenisKPLainSimati;
+				idRujukan += check_no_kp_lain_simati.equals("")?"-":check_no_kp_lain_simati;
+				myLogger.info("noRujukan="+idRujukan);
+				LampiranBean lb = new LampiranBean();
+				myLogger.info("Lampiran="+lb.getLampiranSimati(idRujukan, null, "99202").size());
+				if(lb.getLampiranSimati(idRujukan, null, "99202").size() > -1)
+					lb.kemaskiniLampiranSimati(idRujukan,"99202",String.valueOf(h1.get("idSimati")));
+				
+
 				/*
 				 * String id = getParam("idPermohonan"); String id2 =
 				 * getParam("idPemohon"); String id1 = getParam("idSimati");
@@ -6819,6 +6839,29 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		
 	}
 
+	private void getSenaraiSemak(String idSimati,String idPermohonan) throws Exception{
+		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("4,11",idSimati,idPermohonan);
+		// 4 Bukti kematian
+		// 11 Dokumen hakmilik semua harta yang dituntut
+		context.put("senaraiSemakan", sm);
+		context.put("semakclass", new FrmSemakan());
+		
+		for (int i = 0; i < sm.size(); i++) {
+			Hashtable hash = sm.elementAt(i);
+			String idsemakansenarai = String.valueOf(hash.get("id"));
+			
+			if(idsemakansenarai.equals("4")) {
+				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
+					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
+		
+			} else if (hash.get("id").equals("11")) {
+				
+			} else {
+			}
+		}
+		
+	}
+	
 	private IMaklumatHarta getHTA(){
 		if(htaBean==null){
 			htaBean = new HTABean();
