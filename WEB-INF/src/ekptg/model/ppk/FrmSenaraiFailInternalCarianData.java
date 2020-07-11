@@ -7,15 +7,14 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import lebah.db.Db;
-import lebah.db.DbException;
 
 import org.apache.log4j.Logger;
 
 
 public class FrmSenaraiFailInternalCarianData {
-	private static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8SecaraOnlineData.class);
-	
+	private static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8SecaraOnlineData.class);	
 	private  Vector list = new Vector();
+	
 	public  void  setCarianFail(String usid,String noFail, String namaPemohon, String namaSimati, String icSimati, String JenisIc)throws Exception {
 	    Db db = null;
 	    list.clear();
@@ -493,7 +492,7 @@ public class FrmSenaraiFailInternalCarianData {
 			      sql = sql + " AND f.no_fail is not null ORDER BY F.ID_FAIL DESC";
 
 			      
-			      myLogger.info("SQL CHECK KP XXXXXXXXXXXXXX :: "+sql);
+			      myLogger.info("SQL cCHECK KP xXXXXXXXXXXXXXX :: "+sql);
 			      ResultSet rs = stmt.executeQuery(sql);
 			      Hashtable h;
 			      int bil = 1;
@@ -698,8 +697,7 @@ sql += "                   ) A, "+
 		      sql += "               ORDER BY A.ID_FAIL DESC "+
 		    		  "               ) ";
 
-		      System.out.println(" SENARAI S17 : "+sql);
-		      //System.out.println("sql--->>>>>"+sql);
+		      myLogger.info(" SENARAI S17 : sql="+sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable h;
 		      int bil = 1;
