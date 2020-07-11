@@ -77,6 +77,12 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 context.put("jumlah_notifikasi_penyewaan", Long.parseLong(jumlah_notifikasi_penyewaan));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
 		 
+		 Hashtable get_notifikasi_penawaran = null; 
+		 get_notifikasi_penawaran = (Hashtable) notifikasi_penawaran(user_id);
+		 String jumlah_notifikasi_penawaran = (String)get_notifikasi_penawaran.get("JUMLAHPERMOHONAN");
+		 context.put("jumlah_notifikasi_penawaran", Long.parseLong(jumlah_notifikasi_penawaran));
+		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
+		 
 		 //return Permohonan 4
 		 //PPT
 		 context.put("bilPPTDikembali", dikembalikan("51").size() + dikembalikan("52").size());
@@ -201,6 +207,52 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			 * } else { Hashtable h; h = new Hashtable();
 			 * h.put("jumlah_Permohonan", "0"); return h; }
 			 */
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	public Hashtable notifikasi_penawaran(String userID)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = " SELECT (SELECT COUNT (*) "
+				  + " FROM tblphpulasanteknikal, tblpermohonan, tblphppemohon, tblpfdfail, tblphphakmilikpermohonan, "
+				       + " tblphphakmilik, users, users_kementerian "
+				 + " WHERE tblphpulasanteknikal.flag_status = 1 "
+				   + " AND tblphpulasanteknikal.flag_aktif = 'Y' "
+				   + " AND tblphpulasanteknikal.id_permohonan = tblpermohonan.id_permohonan "
+				   + " AND tblpermohonan.id_pemohon = tblphppemohon.id_pemohon "
+				   + " AND tblpermohonan.id_fail = tblpfdfail.id_fail "
+				   + " AND tblpermohonan.id_permohonan = tblphphakmilikpermohonan.id_permohonan "
+				   + " AND tblphphakmilikpermohonan.id_hakmilikpermohonan = tblphphakmilik.id_hakmilikpermohonan "
+				   + " AND tblpfdfail.id_seksyen = 4 "
+				   + " AND tblpfdfail.id_urusan = '6' "
+				   + " AND tblpfdfail.id_suburusan = '32' "
+				   + " AND tblphphakmilikpermohonan.flag_hakmilik = 'U' "
+				   + " AND tblpermohonan.id_status NOT IN (1610212, 1610207, 1610208) "
+				   + " AND users.user_id = users_kementerian.user_id "
+				   + " AND users_kementerian.id_agensi = tblphpulasanteknikal.id_agensi "
+				   + " AND users.user_id = '" + userID + "') AS jumlahpermohonan "
+				  + " FROM DUAL ";
+			
+			myLog.info("JUMLAH DOKUMEN PENAWARAN:"+sql.toUpperCase());
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			h = new Hashtable();
+			while (rs.next()) {
+				h.put("JUMLAHPERMOHONAN",
+						rs.getString("JUMLAHPERMOHONAN"));
+			}
+			return h;
+
 		} finally {
 			if (db != null)
 				db.close();
