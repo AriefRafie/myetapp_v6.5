@@ -1651,10 +1651,11 @@ function DoTheCheck() {
 		dm.focus()
 		return false
 	}
-	
-	/* else if (document.f1.cbsemaks[23].checked == false) {
-		alert("Sila masukkan Memiliki Harta Tak Alih");
-	} */
+	//arief add ::--  && document.f1.cbsemaks[25].checked == false
+	else if (document.f1.cbsemaks[23].checked == false && document.f1.cbsemaks[16].checked == false ) { 
+		alert("Sila masukkan Memiliki Harta Tidak Alih ATAU Harta Alih");
+		
+	}
 	else if ( date1 > currentTime ){
 	
 		alert("Sila pastikan tarikh bayaran tidak melebihi dari tarikh hari ini");
