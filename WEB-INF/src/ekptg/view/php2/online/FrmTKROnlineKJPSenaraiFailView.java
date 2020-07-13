@@ -507,45 +507,10 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}else if ("seterusnya".equals(submit)) {
 				myLog.info("seterusnya");
 				
-				/*//String userId = (String) session.getAttribute("_ekptg_user_id");
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
-				this.context.put("SenaraiFail", listFail);
-				setupPage(session, action, listFail);
+				// GO TO MAKLUMAT PERMOHONAN
+				vm = "/frmTKRKJPMaklumatPermohonan.jsp";
 
-				context.remove("findNoFail");
-				context.remove("findTajukFail");
-				context.remove("findPemohon");
-				context.remove("findNoPengenalan");
-				context.remove("findTarikhTerima");
-				context.remove("findNoHakmilik");
-				context.remove("findNoWarta");
-				context.remove("findNoPegangan");;
-				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong("9999"), "", ""));
-				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong("9999"), "", ""));
-				context.remove("findNoLot");
-				context.put("selectNegeri", HTML.SelectNegeri("findNegeri",Long.parseLong("9999"), ""," onChange=\"doChangeNegeri();\""));
-				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri("9999", "findDaerah", Long.parseLong("9999"), ""," onChange=\"doChangeDaerah();\""));
-				context.put("selectMukim", HTML.SelectMukimByDaerah("9999", "findMukim", Long.parseLong("9999"), "",""));
 				
-				context.put("namaJenisTanah", namaJenisTanah);
-				context.put("idJenisTanah", idJenisTanah);
-				
-				// SET DEFAULT ID PARAM
-				this.context.put("idFail", idFail);
-				this.context.put("idStatus", idStatus);
-				this.context.put("idKategoriPemohon", idKategoriPemohon);
-				this.context.put("idAgensi", idAgensi);
-				//this.context.put("actionTukarguna", actionTukarguna);
-				
-
-				//this.context.put("idPPTBorangK", idPPTBorangK);
-				//this.context.put("idHakmilikUrusan", idHakmilikUrusan);
-				//this.context.put("idPHPBorangK", idPHPBorangK);
-				*/
-
-				//vm = "/start.jsp";
-				vm2 = "ekptg/view/php2/FrmTKRMaklumatPermohonanView.java";
-				return vm2;
 				
 
 			} else {

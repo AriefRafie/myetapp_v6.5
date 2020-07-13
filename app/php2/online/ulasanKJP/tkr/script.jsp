@@ -178,7 +178,7 @@ function daftarBaru() {
 	}
 	
 	document.${formName}.submit2.value = "papar";
-	alert("test = "+document.${formName}.submit.value);
+	alert("test = "+document.${formName}.submit2.value);
 	document.${formName}.hitButton.value = "daftarBaru";
 	doAjaxCall${formName}("");
 }
@@ -267,18 +267,17 @@ function janaTajuk(idKategoriPemohon) {
 	document.${formName}.txtPerkara.value = strTajuk;
 }
 function kembali() {
-	alert('baca kembali');
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.onlne.FrmTKROnlineKJPSenaraiFailView";
-	//document.${formName}.method="POST";	
-	document.${formName}.submit2.value = "kembali";
-	doAjaxCall${formName}("");
-	//document.${formName}.submit();
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
+	document.${formName}.method="POST";	
+	document.${formName}.submit2.value = "";
+	document.${formName}.submit();
 }
 function seterusnya(){
-	alert('baca siniiiii');
-	document.${formName}.action = "$EkptgUtil.getTabID("Tukar Guna",$portal_role)?_portal_module=ekptg.view.php2.FrmTKRMaklumatPermohonanView";
+	alert('BACA SETERUSNYAAA');
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
+	document.${formName}.method="POST";	
 	document.${formName}.submit2.value = "seterusnya";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 
 </script>
