@@ -238,7 +238,11 @@
 						                                      		</div>
 						                                      	</td>
                                     							<td width="1%"><div align="right">:</div></td>
-                                    							<td width="70%">$!socNegeri</td>
+                                    							<td width="70%">$!socNegeri
+                                    							<a href="javascript:info('maklumat_tanah')" class="help" title="info">					
+									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									                            			</a>                                    							
+                                    							</td>
                          									</tr>
 						                                  	
 						                                  	<tr>
@@ -270,7 +274,11 @@
 						                                        <div align="left">Jenis Hakmilik</div>
 						                                      	</div></td>
 						                                    	<td><div align="right">:</div></td>
-						                                    	<td>$!socJenisHakmilik</td>
+						                                    	<td>$!socJenisHakmilik
+						                                    	<a href="javascript:info('tanah')" class="help" title="info">
+						                                    	<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+						                                    	</a>
+						                                    	</td>
 						                                  	</tr>
 						                                  
 						                                  	<tr>
@@ -282,9 +290,9 @@
 						                                    	<td><label>
 						                                      		<input name="txtNoHakmilikHtaam" type="text" id="txtNoHakmilikHtaam" value="$!noHakmilik"  size="30" maxlength="50" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"/>
 						                                      	</label>
-						                                      	<a href="javascript:info('tanah')" class="help" title="info">							
-									                            <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                            </a>
+						                                      	<a href="javascript:info('hakmilik')" class="help" title="info">					
+									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									                            			</a>
 						                                      	</td>
 						                                  	</tr>
 						                                  
@@ -300,7 +308,10 @@
 						                                      #if($!skrin_online != "yes")
 						                                      		<input type="button" name="checkLotWujud" id="checkLotWujud" value="Semak" onclick="setSelected(1,0,0,0);checkWujudLot('txtNoPTHtaam');"/>
 						                                      		<font  color="blue"  onMouseOver="this.style.cursor='help'" onClick="open_new_window('1','');" ><img src="../img/info.png"  align="center" /></font> #end
-						                                      
+						                                      	
+						                                      	<a href="javascript:info('lot')" class="help" title="info">					
+									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									                            			</a>
 						                                      #if($CheckWujudLot != "")
 						                                      #if($CheckWujudLot == "Y") <br />
 						                                      		<span id="CheckWujudLot" style="color:blue" >Maklumat Hakmilik telah disalin</span> #end
@@ -308,7 +319,8 @@
 						                                      		<span id="CheckWujudLot" style="color:red" >Hakmilik ini tidak pernah wujud didalam pengkalan data!</span> #end
 						                                      #end <br />
 						                                      	<span id="checklot" style="color:red" >
-						                                      	</span> </td>
+						                                      	</span>
+						                                      	</td>
 						                                  	</tr>                                  
                                    <!-- Salnizam edit starts --> 
       						                             	<tr>
@@ -383,6 +395,9 @@
 								                                    <td><input name="txtBahagianSimati1" type="text" id="txtBahagianSimati1" onKeyUp="javascript:validateIC(event,this,this.value,'txtBahagianSimati1')" style="text-align:right;text-transform:uppercase;" value="$basimati" size="14" maxlength="14" onblur="bahagiansimati()"/>
 								                                      /
 								                                      <input name="txtBahagianSimati2" type="text" id="txtBahagianSimati2" onKeyUp="javascript:validateIC(event,this,this.value,'txtBahagianSimati2')" style="text-align:left;text-transform:uppercase;" value="$bbsimati" size="14" maxlength="14" onblur="bahagiansimati()"/>
+								                                    <a href="javascript:info('bahagian')" class="help" title="info">					
+									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									                            				</a>
 								                                    </td>
 							                                  	</tr>
 							                                  

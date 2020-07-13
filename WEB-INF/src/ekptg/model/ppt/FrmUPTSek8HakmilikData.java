@@ -298,9 +298,9 @@ public class FrmUPTSek8HakmilikData {
 		
 	    Db db = null;
 	    String sql = "";
-	    
+	    myLogger.info("simpanHM: yang Pertama (nak yang ni) ----- ");
 	    try{
-	      
+	    	
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();
 	    		
@@ -355,10 +355,10 @@ public class FrmUPTSek8HakmilikData {
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
 	    		
-	    		//PPT-03  
-	    		String no_bangunan = (String)data.get("txtNoBangunan");
-	    		String no_tingkat = (String)data.get("txtNoTingkat");
-	    		String no_petak = (String)data.get("txtNoPetak");
+	    		//PPT-03  Usop tambah
+	    		String txtNoBangunan = (String)data.get("txtNoBangunan");
+	    		String txtNoTingkat = (String)data.get("txtNoTingkat");
+	    		String txtNoPetak = (String)data.get("txtNoPetak");
 
 	    		
 	    		String flagSebahagian = "0";
@@ -423,9 +423,10 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("sekatan_hak",sekatanHak);
 	    		r.add("no_syit",noSyit);
 
-	    		r.add("no_bangunan",no_bangunan); //PPT-03 
-	    		r.add("no_tingkat",no_tingkat); //PPT-03 
-	    		r.add("no_petak",no_petak); //PPT-03 
+	    		// PPT-03 Baru
+	    		r.add("no_bangunan",txtNoBangunan); //PPT-03 
+	    		r.add("no_tingkat",txtNoTingkat); //PPT-03 
+	    		r.add("no_petak",txtNoPetak); //PPT-03 
 
 	    		//new
 	    		r.add("id_unitluasambil", id_luasambil);
@@ -546,9 +547,9 @@ public class FrmUPTSek8HakmilikData {
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 
 	    		//PPT-03  
-	    		String no_bangunan = (String)data.get("txtNoBangunan");
-	    		String no_tingkat = (String)data.get("txtNoTingkat");
-	    		String no_petak = (String)data.get("txtNoPetak");
+	    		String txtNoBangunan = (String)data.get("txtNoBangunan");
+	    		String txtNoTingkat = (String)data.get("txtNoTingkat");
+	    		String txtNoPetak =  (String)data.get("txtNoPetak");
 	    		
 	    		String flagSebahagian = "0";
 	    		
@@ -608,9 +609,9 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("sekatan_hak",sekatanHak);
 	    		r.add("no_syit",noSyit);
 
-	    		r.add("no_bangunan",no_bangunan); //PPT-03 
-	    		r.add("no_tingkat",no_tingkat); //PPT-03 
-	    		r.add("no_petak",no_petak); //PPT-03 
+	    		r.add("no_bangunan",txtNoBangunan); //PPT-03 
+	    		r.add("no_tingkat",txtNoTingkat); //PPT-03 
+	    		r.add("no_petak",txtNoPetak); //PPT-03 
 	    		
 	    		//new
 	    		r.add("id_unitluasambil", id_luasambil);
@@ -2287,7 +2288,7 @@ public class FrmUPTSek8HakmilikData {
 						sql = " SELECT ID_SIASATAN, BIL_SIASATAN FROM TBLPPTSIASATAN " +
 								" WHERE ID_PERMOHONAN = "+id_permohonan+" AND ID_HAKMILIK IN (SELECT ID_HAKMILIK FROM TBLPPTSIASATAN WHERE ID_SIASATAN = '"+id_siasatan+"') ";
 						sql += "ORDER BY BIL_SIASATAN ASC";
-						System.out.println(" SQL SIASATAN LIST FROM MODEL :"+sql);
+						myLogger.info(" SQL SIASATAN LIST FROM MODEL :"+sql);
 						ResultSet rs = stmt.executeQuery(sql);
 						Hashtable h;
 						while (rs.next()) {
@@ -2297,7 +2298,7 @@ public class FrmUPTSek8HakmilikData {
 							senarai_siasatan.addElement(h);	
 							
 						}
-						System.out.println(" SENARAI SIASATAN FROM MODEL :"+senarai_siasatan);
+						myLogger.info(" SENARAI SIASATAN FROM MODEL :"+senarai_siasatan);
 						return senarai_siasatan;
 					}catch (Exception re) {
 						throw re;
@@ -2318,7 +2319,7 @@ public class FrmUPTSek8HakmilikData {
 					Statement stmt = db.getStatement();
 					sql = " SELECT ID_SIASATAN, BIL_SIASATAN FROM TBLPPTSIASATAN WHERE ID_PERMOHONAN = "+id_permohonan+" ";
 					sql += "ORDER BY BIL_SIASATAN ASC";
-					System.out.println(" SQL SIASATAN LIST FROM MODEL :"+sql);
+					myLogger.info(" SQL SIASATAN LIST FROM MODEL :"+sql);
 					ResultSet rs = stmt.executeQuery(sql);
 					Hashtable h;
 					while (rs.next()) {
@@ -2328,7 +2329,7 @@ public class FrmUPTSek8HakmilikData {
 						senarai_siasatan.addElement(h);	
 						
 					}
-					System.out.println(" SENARAI SIASATAN FROM MODEL :"+senarai_siasatan);
+					myLogger.info(" SENARAI SIASATAN FROM MODEL :"+senarai_siasatan);
 					return senarai_siasatan;
 				}catch (Exception re) {
 					throw re;

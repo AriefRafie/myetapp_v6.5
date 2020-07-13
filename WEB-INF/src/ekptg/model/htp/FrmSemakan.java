@@ -45,11 +45,7 @@ public class FrmSemakan {
 //	          myLog.info("getSemakan : sql=" + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Tblsemakan h;
-<<<<<<< WEB-INF/src/ekptg/model/htp/FrmSemakan.java
-		      
-=======
 		      int bil = 1;
->>>>>>> WEB-INF/src/ekptg/model/htp/FrmSemakan.java
 		      while (rs.next()) {
 		    	  h = new Tblsemakan();
 		    	  h.setBil(bil++);
@@ -115,6 +111,72 @@ public class FrmSemakan {
 	    return list;
 	 }
 	 
+	 public static Vector<Hashtable<String,String>> getSenaraiSemakanByIDAttach(String idSenarai
+		,String idSimati,String idPermohonanSimati) throws Exception {
+	    Db db = null;
+	    String sql = "";
+	    Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
+		    
+		    try {
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      SQLRenderer r = new SQLRenderer();
+		      r.add("i.aturan");
+		      r.add("i.id_semakansenarai");
+		      r.add("s.perihal");
+		      r.add("NVL(SJD.ID_JENISDOKUMEN,0) jenis_dokumen");
+		      r.add("NVL(JD.KETERANGAN,'TIADA') nama_dokumen");
+		
+		      r.add("i.id_semakan",r.unquote("s.id_semakan"));
+		      r.add("i.id_semakan",r.unquote("sjd.id_semakan(+)"));
+		      r.add("sjd.id_jenisdokumen",r.unquote("jd.id_jenisdokumen(+)"));
+
+//		    	  r.add("i.id_semakansenarai",("+idSenarai+"),"in");
+		      sql = " tblsemakan s,tblsemakansenarai i,TBLSEMAKANJENISDOKUMEN SJD,TBLRUJJENISDOKUMEN JD";
+		    	  
+		      sql = r.getSQLSelect(sql);
+		      //sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
+		      if(!idSenarai.equals("0"))
+		    	  sql += " and i.id_semakansenarai in ("+idSenarai+")";
+		      
+	          myLog.info("getSenaraiSemakanByIDAttach :sql= " + sql);
+		      ResultSet rs = stmt.executeQuery(sql);
+		      Hashtable<String,String> h;
+		      ekptg.model.ppk.util.LampiranBean lb = new ekptg.model.ppk.util.LampiranBean();
+		      while (rs.next()) {
+		    	  String lampiran = "lampiran";
+		    	  h = new Hashtable<String,String>();
+		    	  String jenis =rs.getString("jenis_dokumen");
+		    	  h.put("id", rs.getString("id_semakansenarai"));
+		    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
+		    	  h.put("keterangan", rs.getString("perihal"));
+		    	  h.put("jenisDokumen", jenis);
+		    	  
+//		    	  if(jenis.equals("99201")) {
+		    		  lampiran = lb.getLampiranSimatiPapari(idSimati,jenis);
+			    	  h.put("lampirans", lampiran);
+//		    	  }else if(jenis.equals("99202")){
+//		    		  lampiran = lb.getLampiranSimatiPapari(idSimati,jenis);
+//		    		  h.put("lampirans", lampiran);
+//
+//		    	  }
+		    	  myLog.info("getSenaraiSemakanByIDAttach:jenis="+jenis+","+lampiran);
+
+		    	  list.addElement(h);
+		    	  
+		      }
+		      
+		    }catch(Exception e){
+		    	e.printStackTrace();
+		    }finally {
+		      if (db != null){
+		    	  db.close();
+		      }
+		    }	    
+		    return list;
+		  
+		 }
+ 
 	 public static Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm) throws Exception {
 		    Db db = null;
 		    String sql = "";
@@ -348,10 +410,10 @@ public class FrmSemakan {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
-		      r.add("id_Semakanhantar", idSemakanhantar);
+		      r.add("id_semakanhantar", idSemakanhantar);
 		      r.add("id_permohonan", idPermohonan);
 		      r.add("id_semakansenarai", idSemakan);
-		      sql = r.getSQLInsert("Tblsemakanhantar");
+		      sql = r.getSQLInsert("tblsemakanhantar");
 		      myLog.info("semakanTambah : "+sql);
 		      stmt.executeUpdate(sql);
 		    }

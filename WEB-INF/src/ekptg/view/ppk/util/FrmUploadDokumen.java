@@ -37,19 +37,17 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 	    String hitButton = getParam("hitButton");	    
 	    String idHarta = getParam("idHarta");
 	    String flagOnline = getParam("flagOnline");
-	    //lampiran simati
+	    //lampiran simati/permohonan
 	    idRujukan = getParam("rujukan");
 	    
 	    //VECTOR
 		Vector<Hashtable<String, String>> dokumens = null;
-        //Vector<Hashtable<String,String>> senarai = null;      
-        //Vector<Hashtable<String,String>> beanMaklumatTanah = null;
 		idUser = (String) session.getAttribute("_ekptg_user_id");
 		ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
 
 		myLog.info("actionPopup="+actionPopup);
 		myLog.info("hitButton="+hitButton);
-//		myLog.info("idHarta="+idHarta);
+		myLog.info("idRujukan="+idRujukan);
 		
 		if ("simpanHakmilik".equals(hitButton)){
 
@@ -90,6 +88,12 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			l.lampiranSimati(request,idRujukan,"99202",idUser);
 			hitButton = "";
 			//this.context.put("num_files", jumLampiran);
+		
+		}else if(hitButton.equals("simpanlampiran")){ //30/06/2020
+			//99203 (S17)
+			l.lampiranSimati(request,idRujukan,getParam("jenisdokumen"),idUser);
+			hitButton = "";
+			//this.context.put("num_files", jumLampiran);
 	
 		}
 
@@ -112,7 +116,29 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			}
 			dokumens = l.lampiranMengikutHarta(idHarta, null,false);
 			// end Lampiran
+	    }else if (actionPopup.equals("paparlampiran")){
+			disability = "";
+		   	readability = "";
+			//Lampiran
+			if (mode.equals("bilampiran")) {
+				RO_General = "";
+				jumLampiran = getParamAsInteger("jumlahlampiran");
 
+			}			
+			dokumens = l.getLampiranSimati(idRujukan, null,getParam("jenisdokumen"));
+			// End
+	    }else if (actionPopup.equals("paparbantahan")){
+			disability = "";
+		   	readability = "";
+			//Lampiran
+			if (mode.equals("bilampiran")) {
+				RO_General = "";
+				jumLampiran = getParamAsInteger("jumlahlampiran");
+
+			}	
+			myLog.info("syafiqah lalu sini");
+			dokumens = l.getBantahanMaklumat(idRujukan, null,getParam("jenisdokumen"));
+			// End
 	    }else if (actionPopup.equals("paparHA")){
 			disability = "";
 		   	readability = "";

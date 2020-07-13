@@ -12,7 +12,119 @@ import org.apache.log4j.Logger;
 
 public class FrmPrmhnnStatusPengunaOnlineData {
 	static Logger myLogger = Logger.getLogger(FrmPrmhnnStatusPengunaOnlineData.class);	
-	public static Vector getSenaraiTugasan(String search,String idMasuk,String role,String kppemohon,String kpsimati, String USER_LOGIN_SYSTEM, String flag_draff)throws Exception {
+	
+	//YATI TAMBAH NEW
+public static Vector getSenaraiTugasan(String search,String idMasuk,String role,String kppemohon,String kpsimati, String USER_LOGIN_SYSTEM, String flag_draff)throws Exception {
+		
+		
+	    Db db = null;
+	    String sql = "";
+	    Format formatter = new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      
+	      sql = " SELECT P.ID_PERMOHONAN, F.ID_FAIL,F.NO_FAIL, P.SEKSYEN, P.ID_STATUS, PJ.NAMA_PEJABAT, SM.NAMA_SIMATI, P.TARIKH_MOHON,	" 
+		      		+ "TO_CHAR (P.TARIKH_MOHON_ONLINE, 'DD/MM/YYYY') AS TARIKH_MOHON_ONLINE, "
+	    		  	+ "CASE WHEN P.NO_PERMOHONAN_ONLINE IS NOT NULL THEN P.NO_PERMOHONAN_ONLINE "
+		            + "ELSE CASE WHEN P.ID_STATUS IN (150, 160) THEN 'DERAF' ELSE '' END "
+		            + "END NO_PERMOHONAN_ONLINE, "
+		            + "CASE WHEN P.NO_PERMOHONAN_ONLINE IS NOT NULL "
+		            + "THEN TO_CHAR (P.TARIKH_MOHON_ONLINE, 'DD/MM/YYYY') "
+		            + "ELSE TO_CHAR (P.TARIKH_MOHON, 'DD/MM/YYYY') END AS TARIKH, "
+		            + "CASE WHEN P.ID_STATUS = '171' THEN UPPER (S.KETERANGAN) || ' DI ' || UPPER (D.NAMA_DAERAH) "
+		            + "WHEN P.ID_STATUS IN ('21', '8', '18', '44') THEN UPPER (S.KETERANGAN) "
+		            + "WHEN P.ID_STATUS IN ('37', '47', '70', '152', '169') THEN 'BATAL' "
+		            + "ELSE 'DALAM PROSES' END AS STATUS, "
+		            + "UPPER (PM.NAMA_PEMOHON) AS NAMA_PEMOHON, "
+		            + "UPPER(CASE WHEN SM.NO_KP_BARU IS NOT NULL THEN SM.NO_KP_BARU ELSE " 
+		            + "CASE WHEN SM.NO_KP_LAMA IS NOT NULL THEN SM.NO_KP_LAMA ELSE "
+		            + "CASE WHEN SM.NO_KP_LAIN IS NOT NULL THEN " 
+		            + "(CASE WHEN SM.JENIS_KP = '5' THEN 'TENTERA : ' WHEN SM.JENIS_KP = '6' THEN 'POLIS : ' WHEN " 
+		            + "SM.JENIS_KP = '4' THEN 'PASSPORT : ' WHEN SM.JENIS_KP = '7' THEN 'LAIN-LAIN : ' ELSE '' END) "
+		            + "|| SM.NO_KP_LAIN ELSE '' END END END) AS MYID_SIMATI, "
+		            + "UPPER(CASE WHEN PM.NO_KP_BARU IS NOT NULL THEN PM.NO_KP_BARU ELSE " 
+		            + "CASE WHEN PM.NO_KP_LAMA IS NOT NULL THEN PM.NO_KP_LAMA ELSE "
+		            + "CASE WHEN PM.NO_KP_LAIN IS NOT NULL THEN (CASE WHEN PM.JENIS_KP = '5' THEN 'TENTERA : ' " 
+		            + "WHEN PM.JENIS_KP = '6' THEN 'POLIS : ' WHEN PM.JENIS_KP = '4' THEN 'PASSPORT : ' " 
+		            + "WHEN PM.JENIS_KP = '7' THEN 'LAIN-LAIN : ' ELSE '' END) || PM.NO_KP_LAIN " 
+		            + "ELSE '' END END END) AS MYID_PEMOHON, "	
+		            + "F.ID_MASUK "
+		            + "FROM TBLPFDFAIL F, TBLPPKPERMOHONAN P, TBLRUJSTATUS S, TBLRUJDAERAH D, TBLRUJNEGERI N, TBLPPKPEMOHON PM, "
+		            + "TBLPPKSIMATI SM,TBLPPKPERMOHONANSIMATI PSM, TBLRUJPEJABATJKPTG PJ, TBLRUJPEJABATURUSAN PU "
+		            + "WHERE F.ID_MASUK = '"+idMasuk+"' "
+		            + "AND F.ID_FAIL = P.ID_FAIL "
+		            + "AND PM.ID_PEMOHON = P.ID_PEMOHON "
+		            + "AND P.ID_PERMOHONAN = PSM.ID_PERMOHONAN "
+		            + "AND PSM.ID_SIMATI = SM.ID_SIMATI "
+		            + "AND P.ID_STATUS = S.ID_STATUS "
+		            + "AND P.ID_DAERAHMHN = D.ID_DAERAH(+) "
+		            + "AND P.ID_NEGERIMHN = N.ID_NEGERI " 
+		            + "AND PU.ID_DAERAHURUS = P.ID_DAERAHMHN(+) "
+		            + "AND PU.ID_JENISPEJABAT = 22 "
+		            + "AND PJ.ID_PEJABATJKPTG = PU.ID_PEJABATJKPTG(+) "
+		            + "AND PJ.ID_SEKSYEN = 2 "
+		            + "AND F.ID_SUBURUSAN IN (59, 60)"	;
+		      
+			    if(!kpsimati.equals(""))
+	      		{// CHECK KP SIMATI
+	      		sql = sql + " AND MYID_SIMATI = '"+kpsimati+"' ";
+	       		}
+	      		
+	      		if(!kppemohon.equals(""))
+	      		{// CHECK KP PEMOHON
+	      		sql = sql + " AND MYID_PEMOHON = '"+kppemohon+"' ";
+	       		}
+			    
+			    	sql = sql + " ORDER BY TARIKH, P.TARIKH_MASUK DESC ";
+		
+		      myLogger.info("SQL LIST ONLINE BARU >> "+sql.toUpperCase());
+		      ResultSet rs = stmt.executeQuery(sql);
+		      Vector list = new Vector();
+		      Hashtable h;
+		      
+		      while (rs.next()) {
+		    	  h = new Hashtable();
+		    	  h.put("tarikhMohon", rs.getString("TARIKH_MOHON")==null?"":rs.getString("TARIKH_MOHON"));
+		    	  h.put("tarikh_mohon_online", rs.getString("TARIKH_MOHON_ONLINE")==null?"":rs.getString("TARIKH_MOHON_ONLINE")); 
+		    	  h.put("tarikh", rs.getString("TARIKH")==null?"":rs.getString("TARIKH")); 
+		    	  //h.put("tarikhmasuk", rs.getString("TARIKH_MASUK")==null?"":rs.getString("TARIKH_MASUK"));
+		    	  h.put("idFail", rs.getString("ID_FAIL")==null?"":rs.getString("ID_FAIL"));
+		    	  h.put("nofail", rs.getString("NO_FAIL")==null?"":rs.getString("NO_FAIL"));
+		    	  h.put("no", rs.getString("NO_PERMOHONAN_ONLINE")==null?"":rs.getString("NO_PERMOHONAN_ONLINE"));
+		    	  h.put("id_Permohonan", rs.getString("ID_PERMOHONAN")==null?"":rs.getString("ID_PERMOHONAN"));
+		    	  h.put("nama_simati", rs.getString("NAMA_SIMATI")==null?"":rs.getString("NAMA_SIMATI"));
+		    	  h.put("icSimati", rs.getString("MYID_SIMATI")==null?"":rs.getString("MYID_SIMATI"));
+		    	  h.put("nama_pemohon", rs.getString("NAMA_PEMOHON")==null?"":rs.getString("NAMA_PEMOHON"));
+		    	  h.put("icPemohon", rs.getString("MYID_PEMOHON")==null?"":rs.getString("MYID_PEMOHON"));
+		    	  //h.put("id_pemohon", rs.getString("ID_PEMOHON")==null?"":rs.getString("ID_PEMOHON"));
+		    	  h.put("id_status", rs.getString("ID_STATUS")==null?"":rs.getString("ID_STATUS"));
+		    	  h.put("status", rs.getString("STATUS")==null?"":rs.getString("STATUS"));
+		    	  h.put("seksyen", rs.getString("SEKSYEN")==null?"":rs.getString("SEKSYEN"));
+		    	  //h.put("no_subjaket", rs.getString("NO_SUBJAKET")==null?"":rs.getString("NO_SUBJAKET"));
+		    	  h.put("nama_pejabat", rs.getString("NAMA_PEJABAT")==null?"":rs.getString("NAMA_PEJABAT"));
+		    	  //h.put("tarikh_bicara", rs.getString("TARIKH_BICARA")==null?"":rs.getString("TARIKH_BICARA"));
+		    	  //h.put("tarikh_notis", rs.getString("TARIKH_NOTIS")==null?"":rs.getString("TARIKH_NOTIS"));
+		    	  //h.put("masa_bicara", rs.getString("MASA_BICARA")==null?"":rs.getString("MASA_BICARA"));
+		    	 // h.put("tempat_bicara", rs.getString("TEMPAT_BICARA")==null?"":rs.getString("TEMPAT_BICARA"));
+		    	  //h.put("alamat1", rs.getString("ALAMAT_BICARA1")==null?"":rs.getString("ALAMAT_BICARA1"));
+		    	  //h.put("alamat2", rs.getString("ALAMAT_BICARA2")==null?"":rs.getString("ALAMAT_BICARA2"));
+		    	  //h.put("alamat3", rs.getString("ALAMAT_BICARA3")==null?"":rs.getString("ALAMAT_BICARA3"));
+		    	 // h.put("poskod", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
+		    	  //h.put("bandar", rs.getString("BANDAR")==null?"":rs.getString("BANDAR"));
+		    	 // h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
+		    	  //h.put("idPerbicaraan", rs.getString("id_perbicaraan")==null?"":rs.getString("id_perbicaraan"));
+		    	  //h.put("catatan", rs.getString("catatan")==null?"":rs.getString("catatan"));
+		    	  
+		    	  list.addElement(h);
+		      }
+		      return list;
+		    } finally {
+		      if (db != null) db.close();
+		    }
+		  }
+	
+	public static Vector getSenaraiTugasanOld(String search,String idMasuk,String role,String kppemohon,String kpsimati, String USER_LOGIN_SYSTEM, String flag_draff)throws Exception {
 		
 		
 	    Db db = null;
@@ -301,8 +413,7 @@ public class FrmPrmhnnStatusPengunaOnlineData {
 	  	      " AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN(+) AND B.ID_KEPUTUSANPERMOHONAN(+) = KP.ID_KEPUTUSANPERMOHONAN AND N.ID_NEGERI(+) = B.ID_NEGERIBICARA " +
 	  	      " AND PERINTAH.ID_PERBICARAAN(+) = B.ID_PERBICARAAN AND P.ID_STATUS NOT IN ('150', '160') AND UO.USER_ID = '"+idMasuk+"' ";*/
 	      
-	      
-	      
+	       
 	      sql = " SELECT DISTINCT F.ID_FAIL, TO_CHAR(F.NO_FAIL) AS NO_FAIL, P.ID_PERMOHONAN, P.SEKSYEN, "+
 	    		  " CASE WHEN P.NO_PERMOHONAN_ONLINE IS NOT NULL THEN P.NO_PERMOHONAN_ONLINE ELSE CASE WHEN P.ID_STATUS IN (150,160) THEN 'DERAF' ELSE '' END END NO_PERMOHONAN_ONLINE, "+
 	    		  " CASE WHEN P.NO_PERMOHONAN_ONLINE IS NOT NULL THEN TO_CHAR (P.TARIKH_MOHON_ONLINE,'DD/MM/YYYY') ELSE TO_CHAR (P.TARIKH_MOHON, 'DD/MM/YYYY') END AS TARIKH, P.TARIKH_MASUK, "+
@@ -343,8 +454,42 @@ public class FrmPrmhnnStatusPengunaOnlineData {
 	    		  " AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN(+) AND KP.ID_KEPUTUSANPERMOHONAN = B.ID_KEPUTUSANPERMOHONAN(+) "+
 	    		  " AND B.ID_PERBICARAAN = PERINTAH.ID_PERBICARAAN(+) AND P.ID_STATUS NOT IN ('150', '160') AND UO.USER_ID = '"+idMasuk+"' ";
 	      
-	      
-	      
+	      /*sql = " SELECT P.ID_PERMOHONAN, F.NO_FAIL, P.SEKSYEN, " 
+	      		+ "CASE WHEN P.NO_PERMOHONAN_ONLINE IS NOT NULL THEN P.NO_PERMOHONAN_ONLINE "
+	            + "ELSE CASE WHEN P.ID_STATUS IN (150, 160) THEN 'DERAF' ELSE '' END "
+	            + "END NO_PERMOHONAN_ONLINE, "
+	            + "CASE WHEN P.NO_PERMOHONAN_ONLINE IS NOT NULL "
+	            + "THEN TO_CHAR (P.TARIKH_MOHON_ONLINE, 'DD/MM/YYYY') "
+	            + "ELSE TO_CHAR (P.TARIKH_MOHON, 'DD/MM/YYYY') END AS TARIKH, "
+	            + "CASE WHEN P.ID_STATUS = '171' THEN UPPER (S.KETERANGAN) || ' DI ' || UPPER (D.NAMA_DAERAH) "
+	            + "WHEN P.ID_STATUS IN ('21', '8', '18', '44') THEN UPPER (S.KETERANGAN) "
+	            + "WHEN P.ID_STATUS IN ('37', '47', '70', '152', '169') THEN 'BATAL' "
+	            + "ELSE 'DALAM PROSES' END AS STATUS, "
+	            + "UPPER (PM.NAMA_PEMOHON) AS NAMA_PEMOHON, "
+	            + "UPPER(CASE WHEN SM.NO_KP_BARU IS NOT NULL THEN SM.NO_KP_BARU ELSE " 
+	            + "CASE WHEN SM.NO_KP_LAMA IS NOT NULL THEN SM.NO_KP_LAMA ELSE "
+	            + "CASE WHEN SM.NO_KP_LAIN IS NOT NULL THEN " 
+	            + "(CASE WHEN SM.JENIS_KP = '5' THEN 'TENTERA : ' WHEN SM.JENIS_KP = '6' THEN 'POLIS : ' WHEN " 
+	            + "SM.JENIS_KP = '4' THEN 'PASSPORT : ' WHEN SM.JENIS_KP = '7' THEN 'LAIN-LAIN : ' ELSE '' END) "
+	            + "|| SM.NO_KP_LAIN ELSE '' END END END) AS MYID_SIMATI, "
+	            + "UPPER(CASE WHEN PM.NO_KP_BARU IS NOT NULL THEN PM.NO_KP_BARU ELSE " 
+	            + "CASE WHEN PM.NO_KP_LAMA IS NOT NULL THEN PM.NO_KP_LAMA ELSE "
+	            + "CASE WHEN PM.NO_KP_LAIN IS NOT NULL THEN (CASE WHEN PM.JENIS_KP = '5' THEN 'TENTERA : ' " 
+	            + "WHEN PM.JENIS_KP = '6' THEN 'POLIS : ' WHEN PM.JENIS_KP = '4' THEN 'PASSPORT : ' " 
+	            + "WHEN PM.JENIS_KP = '7' THEN 'LAIN-LAIN : ' ELSE '' END) || PM.NO_KP_LAIN " 
+	            + "ELSE '' END END END) AS MYID_PEMOHON, "	
+	            + "F.ID_MASUK "
+	            + "FROM TBLPFDFAIL F, TBLPPKPERMOHONAN P, TBLRUJSTATUS S, TBLRUJDAERAH D, TBLRUJNEGERI N, TBLPPKPEMOHON PM, "
+	            + "TBLPPKSIMATI SM,TBLPPKPERMOHONANSIMATI PSM "
+	            + "WHERE F.ID_MASUK = '"+idMasuk+"' "
+	            + "AND F.ID_FAIL = P.ID_FAIL "
+	            + "AND PM.ID_PEMOHON = P.ID_PEMOHON "
+	            + "AND P.ID_PERMOHONAN = PSM.ID_PERMOHONAN "
+	            + "AND PSM.ID_SIMATI = SM.ID_SIMATI "
+	            + "AND P.ID_STATUS = S.ID_STATUS "
+	            + "AND P.ID_DAERAHMHN = D.ID_DAERAH(+) "
+	            + "AND P.ID_NEGERIMHN = N.ID_NEGERI ";
+	      */
 		    if(!kpsimati.equals(""))
       		{// CHECK KP SIMATI
       		sql = sql + " AND MYID_SIMATI = '"+kpsimati+"' ";
@@ -508,6 +653,67 @@ public class FrmPrmhnnStatusPengunaOnlineData {
 	    	  h.put("bandar", rs.getString("BANDAR")==null?"":rs.getString("BANDAR"));
 	    	  h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
 	    	  h.put("idPerbicaraan", rs.getString("id_perbicaraan")==null?"":rs.getString("id_perbicaraan"));
+	    	  
+	    	  list.addElement(h);
+	      }
+	      return list;
+	    } finally {
+	      if (db != null) db.close();
+	    }
+	}
+	
+	public static Vector getSenaraiBantahan(String search,String idMasuk,String role,String kppemohon,String kpsimati, String USER_LOGIN_SYSTEM, String flag_draff)throws Exception {
+		Db db = null;
+	    String sql = "";
+	    Format formatter = new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      
+	      sql = " SELECT DISTINCT B.ID_PEMBANTAH, B.NAMA_PEMBANTAH, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.BANDAR, B.NEGERI, "
+	      		+ "B.EMEL, B.NO_HP, B.SEBAB, B.ID_FAIL, TO_CHAR(B.NO_FAIL) AS NO_FAIL"+
+	    		  " FROM TBLPPKBANTAHANONLINE B"+
+	    		  " WHERE B.ID_PEMBANTAH = '"+idMasuk+"' ";
+	      
+	      // add pada id_status not in (21 - selesai, 169,47,70,152 - batal)
+	    
+	      if(!kpsimati.equals(""))
+    		{// CHECK KP SIMATI
+    		sql = sql + " AND MYID_SIMATI = '"+kpsimati+"' ";
+     		}
+    		
+    		if(!kppemohon.equals(""))
+    		{// CHECK KP PEMOHON
+    		sql = sql + " AND MYID_PEMOHON = '"+kppemohon+"' ";
+     		}
+		    
+		   // sql = sql + " ORDER BY TARIKH, P.TARIKH_MASUK DESC ";
+	
+	      myLogger.info("SQL LIST SYAFIQAH >> "+sql.toUpperCase());
+	      ResultSet rs = stmt.executeQuery(sql);
+	      Vector list = new Vector();
+	      Hashtable h;
+	      
+	      while (rs.next()) {
+	    	  h = new Hashtable();
+	    	  // h.put("namaP", rs.getString("TARIKH_MOHON")==null?"":rs.getString("TARIKH_MOHON"));
+	    	  // h.put("tarikh_mohon_online", rs.getString("TARIKH_MOHON_ONLINE")==null?"":rs.getString("TARIKH_MOHON_ONLINE")); 
+	    	  // h.put("tarikh", rs.getString("TARIKH")==null?"":rs.getString("TARIKH")); 
+	    	  
+	    	  
+	    	  h.put("id_pembantah", rs.getString("ID_PEMBANTAH")==null?"":rs.getString("ID_PEMBANTAH"));
+	    	  h.put("nama_pembantah", rs.getString("NAMA_PEMBANTAH")==null?"":rs.getString("NAMA_PEMBANTAH"));
+	    	  h.put("alamat1", rs.getString("ALAMAT1")==null?"":rs.getString("ALAMAT1"));
+	    	  h.put("alamat2", rs.getString("ALAMAT2")==null?"":rs.getString("ALAMAT2"));
+	    	  h.put("alamat3", rs.getString("ALAMAT3")==null?"":rs.getString("ALAMAT3"));
+	    	  h.put("poskod", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
+	    	  h.put("bandar", rs.getString("BANDAR")==null?"":rs.getString("BANDAR"));
+	    	  h.put("negeri", rs.getString("NEGERI")==null?"":rs.getString("NEGERI"));
+	    	  h.put("emel", rs.getString("EMEL")==null?"":rs.getString("EMEL"));
+	    	  h.put("no_hp", rs.getString("NO_HP")==null?"":rs.getString("NO_HP"));
+	    	  h.put("sebab", rs.getString("SEBAB")==null?"":rs.getString("SEBAB"));
+	    	  h.put("id_fail", rs.getString("ID_FAIL")==null?"":rs.getString("ID_FAIL"));
+	    	  h.put("no_fail", rs.getString("NO_FAIL")==null?"":rs.getString("NO_FAIL"));
 	    	  
 	    	  list.addElement(h);
 	      }

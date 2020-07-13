@@ -35,8 +35,9 @@ import ekptg.model.ppk.FrmSenaraiFailInternalData;
 import ekptg.model.ppk.PendaftaranCheckModel;
 import ekptg.model.ppk.online.IStatusPermohonan;
 import ekptg.model.ppk.online.StatusPermohonanFacade;
+import ekptg.model.ppk.util.LampiranBean;
 
-public class FrmBorangPSek17Online extends VTemplate {
+public class FrmPrmhnnBorangPOnline extends VTemplate {
 
 	private static final long serialVersionUID = 1L;
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -52,8 +53,17 @@ public class FrmBorangPSek17Online extends VTemplate {
 	FrmBorangPSek17OnlineData logic_17 = null;
 	FrmHeaderPpk mainheader = null;
 	FrmSemakHartaSek17 FrmSemakHartaSek17 = null;
+	
+	private int simpanStatus = 0;
+	private int eventStatus = 0;
+	private int backstatus = 0;
 
-	static Logger myLogger = Logger.getLogger(FrmBorangPSek17OnlineData.class);
+//	private int flagno = 0;
+	private int idFlag = 0;
+	private int flag_no = 0;
+	private String userId = null;
+
+	static Logger myLogger = Logger.getLogger(FrmPrmhnnBorangPOnline.class);
 
 	public Template doTemplate() throws Exception {
 
@@ -71,9 +81,7 @@ public class FrmBorangPSek17Online extends VTemplate {
 		headerppk_baru_default();
 		setDefaultSek17();
 
-		int simpanStatus = 0;
-		int eventStatus = 0;
-		int backstatus = 0;
+		
 		String selectedTabatas = "";
 		String selectedTabtengah = "";
 		String selectedTabbawah = "";
@@ -162,9 +170,6 @@ public class FrmBorangPSek17Online extends VTemplate {
 		Vector listOBHAdulu = null;
 		this.context.put("listOBHAdulu", "");
 
-		int flagno = 0;
-		int idFlag = 0;
-		int flag_no = 0;
 		readability1 = "";
 
 		String flagFromSenaraiFailSek8 = getParam("flagFromSenaraiFailSek8");
@@ -224,9 +229,7 @@ public class FrmBorangPSek17Online extends VTemplate {
 		String submit = getParam("command");
 		String mode = getParam("mode");
 		String idAlert = getParam("idAlert");
-
-		myLogger.info("------------------command :" + submit);
-		myLogger.info("------------------mode :" + mode);
+		myLogger.info("------------------command=" + submit+",mode=" + mode);
 
 		context.put("DATEUTIL", new DateUtil());
 		this.context.put("Util", new lebah.util.Util());
@@ -235,7 +238,8 @@ public class FrmBorangPSek17Online extends VTemplate {
 		String v_tab = getParam("v_tab");
 		this.context.put("val_tab", v_tab);
 		this.context.put("paramOnline", "seksyen17online");
-
+		userId = String.valueOf(session.getAttribute("_ekptg_user_id"));
+		
 		if ("tab".equals(submit)) {
 			readability1 = " ";
 			readability2 = "readonly";
@@ -257,8 +261,6 @@ public class FrmBorangPSek17Online extends VTemplate {
 			} else {
 				this.context.put("listBandarTetapbyNegeri", "");
 			}
-
-			// int s1 = Integer.parseInt(getParam("no_subjaket"));
 
 			int no_sj = 0;
 			if (!"".equals(getParam("no_subjaket"))) {
@@ -1804,6 +1806,7 @@ public class FrmBorangPSek17Online extends VTemplate {
 			updateFlagHarta(session);
 
 			vm = "app/ppk/FrmPraPrmhnnSek17SenaraiSemak_online.jsp";
+			
 		} else if ("seterusnya".equals(submit)) {
 			readability1 = " ";
 			readability2 = "readonly";
@@ -6250,180 +6253,11 @@ public class FrmBorangPSek17Online extends VTemplate {
 			this.context.put("CountList", countList);
 			vm = "app/ppk/frmSenaraiFailPusakaKecilSek17.jsp";
 
-		}
+		}else if ("check_kp".equals(submit)) {
+			vm = semaKP(session);
+	
 
-		else if ("check_kp".equals(submit)) {
-			String typez = getParam("typez");
-			String NoKPBaru = "";
-			String NoKPLama = "";
-			String NoKPLain = "";
-			String NoPermohonan = "";
-			String NoFail = "";
-
-			NoFail = getParam("txtNoPermohonan");
-			NoKPBaru = getParam("txtNoKPBaru1a") + getParam("txtNoKPBaru2a") + getParam("txtNoKPBaru3a");
-			NoKPLama = getParam("txtNoKPLamaa");
-			NoKPLain = getParam("txtNoKPLaina");
-
-			String usid = (String) session.getAttribute("_ekptg_user_id");
-			logic_D.setCarianFail17_online(NoFail, NoKPBaru, NoKPLama, NoKPLain);
-			list1 = logic_D.getList17_online();
-
-			if (list1.size() == 1) {
-
-				this.context.put("bolehProceed", "true");
-
-				String getNoFail17 = logic_17.getNoFail(NoKPBaru, NoKPLama, NoKPLain, (String) session.getAttribute("_ekptg_user_id"),
-						NoFail);
-
-				String id_permohonan_dulu = logic_17.get_id_permohonan(NoKPBaru, NoKPLama, NoKPLain,
-						(String) session.getAttribute("_ekptg_user_id"), NoFail);
-
-				// tarik dan paparkan data pemohon
-				Vector detailPermohonan = FrmBorangPSek17OnlineData.getDetailsPemohonRecordLama_guna_idpermohonanbaru(NoKPBaru, NoKPLama,
-						NoKPLain, id_permohonan_dulu);
-				this.context.put("DetailPemohon", detailPermohonan);
-				Hashtable k = (Hashtable) detailPermohonan.get(0);
-				String idPermohonan = k.get("idPermohonan").toString();
-
-				this.context.put("idPermohonan", idPermohonan);
-				this.context.put("nosubjaket", k.get("nosubjaket").toString());
-				this.context.put("no_subjaket", k.get("nosubjaket").toString());
-				this.context.put("idSimati", k.get("idSimati").toString());
-				if (k.get("idstatus") == "")
-					k.put("idstatus", "0");
-				this.context.put("idstatus", k.get("idstatus").toString());
-
-				initSenaraiSemakP(k.get("namaPemohon").toString(), k.get("noPermohonan").toString(), k.get("nofaillama").toString(),
-						k.get("namadaerah").toString(), k.get("namanegeri").toString(), k.get("hartatinggal").toString(),
-						k.get("batalamanah").toString(), k.get("lantikamanah").toString(), k.get("lantikpentadbir").toString(),
-						k.get("batalpentadbir").toString(), k.get("perintah_lama").toString(), k.get("perintah_baru").toString());
-
-				list2 = logic_A.setData17_online(id_permohonan_dulu, (String) session.getAttribute("_ekptg_user_id"));
-				this.context.put("View", list2);
-				String idPermohonanSimati = k.get("idPermohonanSimati").toString();
-				this.context.put("idpermohonansimati", idPermohonanSimati);
-
-				this.context.put("btnKemaskini", "");
-				this.context.put("btnSimpan", "yes");
-				this.context.put("btnSeterusnya", "");
-				this.context.put("btnBatal", "");
-				this.context.put("btnKembali", "yes");
-
-				String idSimati = k.get("idSimati").toString();
-				simpanStatus = 0;
-				this.context.put("SimpanStatus", simpanStatus);
-				eventStatus = 0;
-				backstatus = 0;
-				this.context.put("EventStatus", eventStatus);
-				this.context.put("backStatus", backstatus);
-				String NegId = "1";
-				String IDPermohonan = "0";
-				this.context.put("IdPermohonan", idPermohonan);
-				this.context.put("NegId", NegId);
-				this.context.put("idFlag", idFlag);
-				this.context.put("idSimati", idSimati);
-				String idp = idPermohonan;
-				this.context.put("idpermohonan", idPermohonan);
-				list2 = logic_A.setData17_online(idp, (String) session.getAttribute("_ekptg_user_id"));
-				headerppk_baru(session, idp, "Y", "", "T");
-				this.context.put("listb", "");
-				this.context.put("ViewLamaSub", list2);
-
-				this.context.put("dah_daftar_ke", "belum");
-				if (cal.before(currentcal)) {
-					this.context.put("lepassatusept", "no");
-				} else if (cal.after(currentcal)) {
-					this.context.put("lepassatusept", "yes");
-				} else {
-					this.context.put("lepassatusept", "yes");
-				}
-				listsemakhta = logic.setTujuanSemak_hta(idPermohonan);
-				this.context.put("listsemakhta", listsemakhta);
-				listsemakha = logic.setTujuanSemak_ha(idPermohonan);
-				this.context.put("listsemakha", listsemakha);
-				vm = "app/ppk/FrmPraPrmhnnSek17SenaraiSemak_online.jsp";
-
-			}
-
-			else {
-
-				this.context.put("duplicate", "yes");
-
-				String full_kp_no = "";
-
-				if (!getParam("txtNoKPBaru1a").equals("") && !getParam("txtNoKPBaru1a").equals("") && !getParam("txtNoKPBaru1a").equals("")) {
-					full_kp_no = getParam("txtNoKPBaru1a").trim() + getParam("txtNoKPBaru2a").trim() + getParam("txtNoKPBaru3a").trim();
-				}
-
-				logic.setDataSimati_check(full_kp_no, getParam("txtNoKPLamaa").trim(), getParam("txtNoKPLaina").trim(),
-						getParam("txtNoPermohonan").trim());
-				listSimati_check = logic.getDataSimati_check();
-				// this.context.put("listSimati_check", listSimati_check);
-
-				if (listSimati_check.size() == 0) {
-					this.context.put("error_level", "1");
-				} else {
-					this.context.put("error_level", "2");
-
-					String nama_simati = "";
-					String no_fail = "";
-					String nama_pejabat = "";
-					String daerah_mohon = "";
-					String no_rujukan_online = "";
-					String id_status_daftar = "";
-
-					Vector maklumatSimati = new Vector();
-					Vector maklumatSimati_WithoutNoFail = new Vector();
-					maklumatSimati_WithoutNoFail.clear();
-					maklumatSimati.clear();
-
-					PendaftaranCheckModel.setmaklumatSimati_17(full_kp_no, getParam("txtNoKPLamaa").trim(),
-							getParam("txtNoKPLaina").trim(), getParam("txtNoPermohonan").trim());
-					maklumatSimati = PendaftaranCheckModel.getmaklumatSimati_17();
-
-					PendaftaranCheckModel.setmaklumatSimati_WithoutNoFail_17(full_kp_no, getParam("txtNoKPLamaa").trim(),
-							getParam("txtNoKPLaina").trim(), getParam("txtNoPermohonan").trim());
-					maklumatSimati_WithoutNoFail = PendaftaranCheckModel.getmaklumatSimati_WithoutNoFail_17();
-
-					if (maklumatSimati.size() != 0) {
-						Hashtable mt = (Hashtable) maklumatSimati.get(0);
-						nama_simati = mt.get("NAMA_SIMATI").toString();
-						no_fail = mt.get("NO_FAIL").toString();
-						nama_pejabat = mt.get("NAMA_PEJABAT").toString();
-						daerah_mohon = mt.get("NAMA_DAERAH").toString();
-						no_rujukan_online = mt.get("NO_PERMOHONAN_ONLINE").toString();
-						id_status_daftar = mt.get("ID_STATUS").toString();
-					} else if (maklumatSimati_WithoutNoFail.size() != 0) {
-						Hashtable mz = (Hashtable) maklumatSimati_WithoutNoFail.get(0);
-						nama_simati = mz.get("NAMA_SIMATI").toString();
-						no_rujukan_online = mz.get("NO_PERMOHONAN_ONLINE").toString();
-						id_status_daftar = mz.get("ID_STATUS").toString();
-					}
-					context.put("POPSimati", nama_simati.toUpperCase());
-					context.put("POPNofail", no_fail);
-					context.put("POPNamaPejabat", nama_pejabat.toUpperCase());
-					context.put("POPDaerahMohon", daerah_mohon.toUpperCase());
-					context.put("POPNoOnline", no_rujukan_online);
-					context.put("id_status_daftar", id_status_daftar);
-
-				}
-
-				this.context.put("txtNoKPBaru1a", getParam("txtNoKPBaru1a"));
-				this.context.put("txtNoKPBaru2a", getParam("txtNoKPBaru2a"));
-				this.context.put("txtNoKPBaru3a", getParam("txtNoKPBaru3a"));
-				this.context.put("noKpLama", getParam("txtNoKPLamaa"));
-				this.context.put("JenisKpLain", getParam("socJenisKPLaina"));
-				this.context.put("noKpLain", getParam("txtNoKPLaina"));
-				this.context.put("noPermohonan", getParam("txtNoPermohonan"));
-				vm = "app/ppk/frmBorangPMaklumatPemohon.jsp";
-
-			}
-
-		}
-
-		else {
-
+		}else {
 			view1 = FrmPrmhnnSek8DaftarSek8Data.getJenisKp();
 			this.context.put("listkp", view1);
 
@@ -9539,5 +9373,183 @@ public class FrmBorangPSek17Online extends VTemplate {
 		this.context.put("nowpast", "past");
 		this.context.put("appear_skrin_info", "simpan_pilihan");
 	}
+	
+	private String semaKP(HttpSession session) throws Exception {
+		String vm="";
+		String typez = getParam("typez");
+		String NoKPBaru = "";
+		String NoKPLama = "";
+		String NoKPLain = "";
+		String NoPermohonan = "";
+		String NoFail = "";
+
+		NoFail = getParam("txtNoPermohonan");
+		NoKPBaru = getParam("txtNoKPBaru1a") + getParam("txtNoKPBaru2a") + getParam("txtNoKPBaru3a");
+		NoKPLama = getParam("txtNoKPLamaa");
+		NoKPLain = getParam("txtNoKPLaina");
+
+		//String usid = (String) session.getAttribute("_ekptg_user_id");
+		logic_D.setCarianFail17_online(NoFail, NoKPBaru, NoKPLama, NoKPLain);
+		Vector list1 = logic_D.getList17_online();
+		
+		Calendar cal = Calendar.getInstance();
+		Calendar currentcal = Calendar.getInstance();
+		cal.set(2009, Calendar.SEPTEMBER, 1);
+		currentcal.set(currentcal.get(Calendar.YEAR), currentcal.get(Calendar.MONTH), currentcal.get(Calendar.DAY_OF_MONTH));
+		
+		if (list1.size() == 1) {
+			this.context.put("bolehProceed", "true");
+
+			String getNoFail17 = logic_17.getNoFail(NoKPBaru, NoKPLama, NoKPLain,userId,NoFail);
+			String id_permohonan_dulu = logic_17.get_id_permohonan(NoKPBaru, NoKPLama, NoKPLain,userId, NoFail);
+
+			// tarik dan paparkan data pemohon
+			Vector detailPermohonan = FrmBorangPSek17OnlineData.getDetailsPemohonRecordLama_guna_idpermohonanbaru(NoKPBaru
+									, NoKPLama,NoKPLain, id_permohonan_dulu);
+			this.context.put("DetailPemohon", detailPermohonan);
+			Hashtable k = (Hashtable) detailPermohonan.get(0);
+			String idPermohonan = k.get("idPermohonan").toString();
+
+			this.context.put("idPermohonan", idPermohonan);
+			this.context.put("nosubjaket", k.get("nosubjaket").toString());
+			this.context.put("no_subjaket", k.get("nosubjaket").toString());
+			this.context.put("idSimati", k.get("idSimati").toString());
+			if (k.get("idstatus") == "")
+				k.put("idstatus", "0");
+			this.context.put("idstatus", k.get("idstatus").toString());
+
+			initSenaraiSemakP(k.get("namaPemohon").toString(), k.get("noPermohonan").toString(), k.get("nofaillama").toString(),
+					k.get("namadaerah").toString(), k.get("namanegeri").toString(), k.get("hartatinggal").toString(),
+					k.get("batalamanah").toString(), k.get("lantikamanah").toString(), k.get("lantikpentadbir").toString(),
+					k.get("batalpentadbir").toString(), k.get("perintah_lama").toString(), k.get("perintah_baru").toString());
+
+			Vector list2 = logic_A.setData17_online(id_permohonan_dulu,userId);
+			this.context.put("View", list2);
+			String idPermohonanSimati = k.get("idPermohonanSimati").toString();
+			this.context.put("idpermohonansimati", idPermohonanSimati);
+
+			this.context.put("btnKemaskini", "");
+			this.context.put("btnSimpan", "yes");
+			this.context.put("btnSeterusnya", "");
+			this.context.put("btnBatal", "");
+			this.context.put("btnKembali", "yes");
+
+			String idSimati = k.get("idSimati").toString();
+			simpanStatus = 0;
+			this.context.put("SimpanStatus", simpanStatus);
+			eventStatus = 0;
+			backstatus = 0;
+			this.context.put("EventStatus", eventStatus);
+			this.context.put("backStatus", backstatus);
+			String NegId = "1";
+			String IDPermohonan = "0";
+			this.context.put("IdPermohonan", idPermohonan);
+			this.context.put("NegId", NegId);
+			this.context.put("idFlag", idFlag);
+			this.context.put("idSimati", idSimati);
+			String idp = idPermohonan;
+			this.context.put("idpermohonan", idPermohonan);
+			list2 = logic_A.setData17_online(idp,userId);
+			headerppk_baru(session, idp, "Y", "", "T");
+			this.context.put("listb", "");
+			this.context.put("ViewLamaSub", list2);
+
+			this.context.put("dah_daftar_ke", "belum");
+			if (cal.before(currentcal)) {
+				this.context.put("lepassatusept", "no");
+			} else if (cal.after(currentcal)) {
+				this.context.put("lepassatusept", "yes");
+			} else {
+				this.context.put("lepassatusept", "yes");
+			}
+			Vector listsemakhta = logic.setTujuanSemak_hta(idPermohonan);
+			this.context.put("listsemakhta", listsemakhta);
+			Vector listsemakha = logic.setTujuanSemak_ha(idPermohonan);
+			this.context.put("listsemakha", listsemakha);
+		
+			//Lampiran
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans", lBean.getLampiranSimatiPapar(idPermohonan, "99203"));	// sebab permohonan S17			
+
+			vm = "app/ppk/FrmPraPrmhnnSek17SenaraiSemak_online.jsp";
+
+		}else {
+			this.context.put("duplicate", "yes");
+
+			String full_kp_no = "";
+
+			if (!getParam("txtNoKPBaru1a").equals("") && !getParam("txtNoKPBaru1a").equals("") && !getParam("txtNoKPBaru1a").equals("")) {
+				full_kp_no = getParam("txtNoKPBaru1a").trim() + getParam("txtNoKPBaru2a").trim() + getParam("txtNoKPBaru3a").trim();
+			}
+
+			logic.setDataSimati_check(full_kp_no, getParam("txtNoKPLamaa").trim(), getParam("txtNoKPLaina").trim(),
+					getParam("txtNoPermohonan").trim());
+			Vector listSimati_check = logic.getDataSimati_check();
+			// this.context.put("listSimati_check", listSimati_check);
+
+			if (listSimati_check.size() == 0) {
+				this.context.put("error_level", "1");
+			} else {
+				this.context.put("error_level", "2");
+
+				String nama_simati = "";
+				String no_fail = "";
+				String nama_pejabat = "";
+				String daerah_mohon = "";
+				String no_rujukan_online = "";
+				String id_status_daftar = "";
+
+				Vector maklumatSimati = new Vector();
+				Vector maklumatSimati_WithoutNoFail = new Vector();
+				maklumatSimati_WithoutNoFail.clear();
+				maklumatSimati.clear();
+
+				PendaftaranCheckModel.setmaklumatSimati_17(full_kp_no, getParam("txtNoKPLamaa").trim(),
+						getParam("txtNoKPLaina").trim(), getParam("txtNoPermohonan").trim());
+				maklumatSimati = PendaftaranCheckModel.getmaklumatSimati_17();
+
+				PendaftaranCheckModel.setmaklumatSimati_WithoutNoFail_17(full_kp_no, getParam("txtNoKPLamaa").trim(),
+						getParam("txtNoKPLaina").trim(), getParam("txtNoPermohonan").trim());
+				maklumatSimati_WithoutNoFail = PendaftaranCheckModel.getmaklumatSimati_WithoutNoFail_17();
+
+				if (maklumatSimati.size() != 0) {
+					Hashtable mt = (Hashtable) maklumatSimati.get(0);
+					nama_simati = mt.get("NAMA_SIMATI").toString();
+					no_fail = mt.get("NO_FAIL").toString();
+					nama_pejabat = mt.get("NAMA_PEJABAT").toString();
+					daerah_mohon = mt.get("NAMA_DAERAH").toString();
+					no_rujukan_online = mt.get("NO_PERMOHONAN_ONLINE").toString();
+					id_status_daftar = mt.get("ID_STATUS").toString();
+				} else if (maklumatSimati_WithoutNoFail.size() != 0) {
+					Hashtable mz = (Hashtable) maklumatSimati_WithoutNoFail.get(0);
+					nama_simati = mz.get("NAMA_SIMATI").toString();
+					no_rujukan_online = mz.get("NO_PERMOHONAN_ONLINE").toString();
+					id_status_daftar = mz.get("ID_STATUS").toString();
+				}
+				context.put("POPSimati", nama_simati.toUpperCase());
+				context.put("POPNofail", no_fail);
+				context.put("POPNamaPejabat", nama_pejabat.toUpperCase());
+				context.put("POPDaerahMohon", daerah_mohon.toUpperCase());
+				context.put("POPNoOnline", no_rujukan_online);
+				context.put("id_status_daftar", id_status_daftar);
+
+			}
+			
+			this.context.put("txtNoKPBaru1a", getParam("txtNoKPBaru1a"));
+			this.context.put("txtNoKPBaru2a", getParam("txtNoKPBaru2a"));
+			this.context.put("txtNoKPBaru3a", getParam("txtNoKPBaru3a"));
+			this.context.put("noKpLama", getParam("txtNoKPLamaa"));
+			this.context.put("JenisKpLain", getParam("socJenisKPLaina"));
+			this.context.put("noKpLain", getParam("txtNoKPLaina"));
+			this.context.put("noPermohonan", getParam("txtNoPermohonan"));
+			vm = "app/ppk/frmBorangPMaklumatPemohon.jsp";
+
+		}
+		return vm;
+		
+	}
+
+	
+	
 
 }

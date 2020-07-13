@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
+import ekptg.model.entities.Tblrujdaerah;
 
 //Updated on 17/8/2010
 public class FrmPrmhnnSek8SecaraOnlineData {
@@ -472,7 +473,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 				db.close();
 		}
 	}
-
+	
 	public void insertOnlinePermohonan(Hashtable data) throws Exception {
 		// Azam add Transaction on 15.03.2010
 		Connection conn = null;
@@ -2918,6 +2919,130 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		}
 
 	}
+	
+	//syafiqah add 1/7/2020
+	public void insertPermohonanBantah(Hashtable data) throws Exception {
+		Db db = null;
+		Db db2 = null;
+		String sql = "";
+		try {
+			String id_pembantah = (String) data.get("id_pembantah");
+			String nama_pembantah = (String) data.get("nama_pembantah");
+			String alamat1 = (String) data.get("alamat1");
+			String alamat2 = (String) data.get("alamat2");
+			String alamat3 = (String) data.get("alamat3");
+			String poskod = (String) data.get("poskod");
+			String bandar = (String) data.get("bandar");
+			String negeri = (String) data.get("negeri");
+			String emel = (String) data.get("emel");
+			String no_hp = (String) data.get("noTel");
+			String sebab = (String) data.get("sebab");
+			String id_fail = (String) data.get("id_fail");
+			String no_fail = (String) data.get("no_fail");
+			String no_kp_baru = (String) data.get("no_kp_baru");
+			String tarikh_hantar = (String) data.get("tarikh_hantar");
+			
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			r.add("ID_PEMBANTAH", id_pembantah);
+			r.add("NAMA_PEMBANTAH", nama_pembantah);
+			r.add("ALAMAT1", alamat1);
+			r.add("ALAMAT2", alamat2);
+			r.add("ALAMAT3", alamat3);
+			r.add("POSKOD", poskod);
+			r.add("BANDAR", bandar);
+			r.add("NEGERI", negeri);
+			r.add("EMEL", emel);
+			r.add("NO_HP", no_hp);
+			r.add("SEBAB", sebab);
+			r.add("ID_FAIL", id_fail);
+			r.add("NO_FAIL", no_fail);
+			r.add("NO_KP_BARU", no_kp_baru);
+			r.add("TARIKH_HANTAR", tarikh_hantar);
+			
+			
+			myLogger.info("Step 3 SYAFIQAH");
+			sql = r.getSQLInsert("TBLPPKBANTAHANONLINE");
+			System.out.println("TBLPPKBANTAHANONLINE-->>"+sql);
+			stmt.executeUpdate(sql);
+			
+			String sql2 = "";
+			sql2 = "UPDATE TBLPPKPERBICARAAN SET FLAG_BANTAHAN = 'Y', KETERANGAN_BANTAHAN = '"+nama_pembantah+" yang bernombor KP "+no_kp_baru+" telah membuat bantahan berdasarkan "+sebab+"' \r\n" + 
+					"WHERE ID_PERBICARAAN = \r\n" + 
+					"(SELECT id_perbicaraan\r\n" + 
+					"  FROM tblppkperbicaraan\r\n" + 
+					" WHERE id_keputusanpermohonan IN (\r\n" + 
+					"          SELECT id_keputusanpermohonan\r\n" + 
+					"            FROM tblppkkeputusanpermohonan\r\n" + 
+					"           WHERE id_permohonan =\r\n" + 
+					"                    (SELECT id_permohonan\r\n" + 
+					"                       FROM tblppkpermohonan\r\n" + 
+					"                      WHERE id_fail =\r\n" + 
+					"                                 (SELECT id_fail\r\n" + 
+					"                                    FROM tblpfdfail\r\n" + 
+					"                                   WHERE no_fail = '"+no_fail+"'))) )";
+			
+			try {
+				db2 = new Db();
+				Statement stmt2  = db.getStatement();
+				ResultSet rs2 = stmt2.executeQuery(sql2);
+				
+			} finally {
+				if (db2 != null)
+					db2.close();
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+		
+	public void insertPertukaranPemohon(Hashtable data) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			String id_permohonan = (String) data.get("id_permohonan");
+			String no_fail = (String) data.get("no_fail");
+			String id_simati = (String) data.get("id_simati");
+			String id_pemohonlama = (String) data.get("id_pemohonlama");
+			String id_pemohonbaru = (String) data.get("id_pemohonbaru");
+			String sebab_tukar = (String) data.get("sebab_tukar");
+			String id_permohonansimati = (String) data.get("id_permohonansimati");
+			String tarikhmati_pemohon = (String) data.get("tarikhmati_pemohon");
+			String tarikh_hantar = (String) data.get("tarikh_hantar");
+			String id_masuk = (String) data.get("id_masuk");
+			
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			//r.add("ID_PERMOHONAN", id_permohonan);
+			//r.add("NO_FAIL", no_fail);
+			r.add("ID_SIMATI", id_simati);
+			r.add("ID_PEMOHONLAMA", id_pemohonlama);
+			r.add("ID_PEMOHONBARU", id_pemohonbaru);
+			r.add("SEBAB_TUKAR", sebab_tukar);
+			r.add("ID_PERMOHONANSIMATI", id_permohonansimati);
+			//r.add("TARIKH_MATI_P", tarikhmati_pemohon);
+			r.add("TARIKH_MASUK", tarikh_hantar);
+			r.add("ID_MASUK", id_masuk);
+			
+			
+			myLogger.info("Step 3 SYAFIQAH");
+			sql = r.getSQLInsert("TBLPPKTUKARPEMOHON");
+			System.out.println("TBLPPKTUKARPEMOHONLINE-->>"+sql);
+			stmt.executeUpdate(sql);
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// syafiqah add ends
 
 	public void kemaskiniHa(Hashtable data) throws Exception {
 		Db db = null;
@@ -4361,11 +4486,12 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String sql2 = r5.getSQLInsert("tblrujsuburusanstatusfail");
 			stmtF.executeUpdate(sql2);
 
+
 			// db = new Db();
 			Statement stmtT = db.getStatement();
-			sql = "Update Tblppkpermohonan set NO_PERMOHONAN_ONLINE = '"
-					+ no_fail_online
-					+ "', TARIKH_MOHON_ONLINE = sysdate, id_status = 171, id_negerimhn = "
+			sql = "update tblppkpermohonan set "
+					+ "NO_PERMOHONAN_ONLINE = '"+ no_fail_online+"'"
+					+ ", TARIKH_MOHON_ONLINE = sysdate, id_status = 171, id_negerimhn = "
 					+ idnegeri + ",id_daerahmhn = " + iddaerah
 					+ ",ID_MASUK = '" + userid
 					+ "', TARIKH_MASUK = sysdate,  ID_KEMASKINI = '" + userid
@@ -4373,6 +4499,15 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 					+ idpermohonan + "'";
 			// System.out.println("sql-->>"+sql);
 			stmtT.executeUpdate(sql);
+			
+			Statement stmtFail = db.getStatement();
+			String noFail = getNoFail(db,String.valueOf(idnegeri),String.valueOf(iddaerah),X,getYear);
+			sql = "update tblpfdfail set "
+					+ "NO_FAIL = '"+ noFail+"'"
+					+ " where id_fail="+idFail
+					+ "";
+				stmtFail.executeUpdate(sql);
+
 
 		} finally {
 			if (db != null)
@@ -5174,4 +5309,31 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 				db.close();
 		}
 	}
+	
+	private String getNoFail(Db db,String idNegeri,String idDaerah,String XX,int getYear) throws Exception {
+		
+		String X = String.format("%04d",File.getSeqNo(db,2,382,0,Integer.parseInt(idNegeri),Integer.parseInt(idDaerah),false,false,getYear,0));
+		
+//		if (idDaerah.length() < 1){
+//			idDaerah = "0"+idDaerah;
+//		}else{
+//			idDaerah = idDaerah;
+//		}
+		Vector<Tblrujdaerah> vecDaerah = DB.getDaerahByIdDaerah(idDaerah);
+		Tblrujdaerah rd = vecDaerah.get(0);
+
+		if (idNegeri.length() < 1){
+			idNegeri = "0"+idNegeri;
+		}else{
+			idNegeri = idNegeri;
+		}
+//		if (negeri.equals("")){
+//			negeri = "0";
+//		}
+		String getFile = "JKPTG/PK/"+ idNegeri + "/"+ rd.getKodDaerah() + "/"+X+"/"+getYear;				
+		return getFile;
+		
+	}
+	
+	
 }
