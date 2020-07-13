@@ -128,6 +128,9 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		if (idJenisTanah == null || idJenisTanah.trim().length() == 0){
 			idJenisTanah = "99999";
 		}*/
+
+		this.context.put("command", submit);
+		this.context.put("templateDir", templateDir);
 		
 		this.context.put("errorPeganganHakmilik", "");
 
