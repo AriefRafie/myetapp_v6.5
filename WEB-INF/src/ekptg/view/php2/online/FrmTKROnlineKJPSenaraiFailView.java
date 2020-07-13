@@ -39,7 +39,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	FrmTKRJabatanTeknikalData logicJabatanTeknikal = new FrmTKRJabatanTeknikalData();
 	FrmTKROnlineKJPSenaraiFailData logic = new FrmTKROnlineKJPSenaraiFailData();
 	private String templateDir = "app/php2/online/ulasanKJP/tkr";
-	private String templateDir2 = "app/php2/online/ulasanKJP/tkr";
 
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -129,9 +128,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		if (idJenisTanah == null || idJenisTanah.trim().length() == 0){
 			idJenisTanah = "99999";
 		}*/
-
-		context.put("command", submit);
-		context.put("templateDir", templateDir);
 		
 		this.context.put("errorPeganganHakmilik", "");
 
@@ -353,6 +349,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				// MAKLUMAT PERMOHONAN
 				beanMaklumatPermohonan = new Vector();
 				Hashtable hashPermohonan = new Hashtable();
+				hashPermohonan.put("noPermohonan", "");
 				hashPermohonan.put("noFail", "");
 				hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
 				hashPermohonan.put("tarikhSurat",getParam("tarikhSurat") == null ? "": getParam("tarikhSurat"));
@@ -384,12 +381,11 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				//MAKLUMAT HAKMILIK
 				if ("doChangePeganganHakmilik".equals(submit)) {
 					idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(getParam("txtPeganganHakmilik"), "3", idAgensi);
-					if (idHakmilikAgensi.isEmpty()) {
-						idHakmilikAgensi = logic.getIdHakmilikSementaraByPeganganHakmilik(getParam("txtPeganganHakmilik"), "3", idAgensi);
+					
 						if (idHakmilikAgensi.isEmpty()) {
 						this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
 						}
-					}
+					
 				}
 				
 				beanMaklumatTanah = new Vector();
@@ -545,7 +541,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				*/
 
 				//vm = "/start.jsp";
-				vm2 = "/ekptg/view/php2/FrmTKRMaklumatPermohonanView";
+				vm2 = "ekptg/view/php2/FrmTKRMaklumatPermohonanView.java";
+				return vm2;
 				
 
 			} else {
