@@ -1,3 +1,4 @@
+
 <!--<% //@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %> -->
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <style type="text/css">
@@ -51,7 +52,6 @@
 #set ($checked23 = "")
 #set ($checked24 = "")
 #set ($checked25 = "")
- <!--#set ($checked26 = "") arief add -->
 #set ($txtchecked23 = "")
 #set ($txtchecked24 = "")
 #set ($chkmode = "")
@@ -145,9 +145,6 @@
 		#end
 		#if ($List.idsemakansenarai == "24")
 			#set ($checked24 = "checked")
-		<!-- #if ($List.idsemakansenarai == "26") arief add 
-			#set ($checked26 = "checked")
-		#end-->
 		#end	
 	#end
 #end
@@ -164,7 +161,13 @@
 
 <div align="right">
 #if ($flagFromSenaraiFailSek8 == '' && $flagFromSenaraiPermohonanSek8 == '' && $flagForView  == '' )
-<a href="javascript:javascript:Kembali()" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if ($flagFromSenaraiFailSek8 == 'yes')<a href="javascript:javascript:kembaliSenaraiFail('$noFail')" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if ($flagFromSenaraiPermohonanSek8 == 'yes')<a href="javascript:kembaliSenaraiPermohonan('$noFail')" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if($flagForView  == 'yes')<a href="javascript:ForView('$noFail')" class="style40"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan"/></a>#end<img src="../img/arrowgaris.png" alt="" border="0"/><img src="../img/2current.png" alt="" border="0" title="Senarai Semak" /><img src="../img/arrowgaris.png" alt="" border="0"/><a href="javascript:Seterusnya()" class="style6" ><img src="../img/3enable.png" alt="" border="0" title="Pendaftaran Permohonan" /></a><img src="../img/arrowgaris.png" alt="" border="0"/><a href="javascript:tab()" class="style6"   ><img src="../img/4enable2.png" alt="" border="0"/title="Maklumat Permohonan" ></a></div>
+<a href="javascript:javascript:Kembali()" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if ($flagFromSenaraiFailSek8 == 'yes')<a href="javascript:javascript:kembaliSenaraiFail('$noFail')" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if ($flagFromSenaraiPermohonanSek8 == 'yes')<a href="javascript:kembaliSenaraiPermohonan('$noFail')" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if($flagForView  == 'yes')<a href="javascript:ForView('$noFail')" class="style40"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan"/></a>#end<img src="../img/arrowgaris.png" alt="" border="0"/><img src="../img/2current.png" alt="" border="0" title="Senarai Semak" /><img src="../img/arrowgaris.png" alt="" border="0"/><a href="javascript:Seterusnya()" class="style6" ><img src="../img/3enable.png" alt="" border="0" title="Pendaftaran Permohonan" /></a><img src="../img/arrowgaris.png" alt="" border="0"/>
+#if (($duplicate != "yes") && ($id_Status != "152"))
+	<a href="javascript:tab()" class="style6"   ><img src="../img/4enable2.png" alt="" border="0"/title="Maklumat Permohonan" ></a></div>
+#else
+	<img src="../img/4disable2.png" alt="" border="0" title="Maklumat Permohonan"/>
+#end 
+
 </td>
 </tr>
 </table>
@@ -603,21 +606,12 @@
         <td><table width="100%" border="0">
           <tr>
             <td width="10%" >&nbsp;</td>
-            <td width="1%" valign="top" ><#if($chkmode != "disabled")<span class="style2"></span> #end</td>
+            <td width="1%" valign="top" ></td>
             <td width="3%" ><input type="checkbox" name="cbsemaks" id="cbsemaks19" $chkmode value="24" $checked24 onClick="ReadOnlyCheckBox(this);checkit_harta_cancel()" />            </td>
-            <td width="86%">#if($chkmode != "disabled") Memiliki Harta Tak Alih #else
+            <td width="86%"> #if($chkmode != "disabled") Memiliki Harta Tak Alih #else
               Memiliki Harta Tak Alih
-            #end</td>
-          </tr>
-          <!-- arief add Memiliki Harta Alih 
-          <tr>
-            <td width="10%" >&nbsp;</td>
-             <td width="1%" valign="top" >#if($chkmode != "disabled")<span class="style2"></span> #end</td>
-            <td width="3%" ><input type="checkbox" name="cbsemaks" id="cbsemaks21" $chkmode value="26" $checked26 onClick="ReadOnlyCheckBox(this);checkit_ha_cancel()" />            </td>
-            <td width="86%"> #if($chkmode != "disabled") Memiliki Harta Alih #else
-              Memiliki Harta Alih
               #end </td>
-          </tr>-->
+          </tr>
         </table></td>
       </tr>
       <tr>
@@ -689,7 +683,12 @@
 #if($boleh_kemaskini == "yes")
 #end
 
+#if($id_Status != "152")
+#if ($duplicate != "yes")
 <input type="button" name="cmdKemaskini" id="cmdKemaskini1" value="Kemaskini" onClick="Kemaskini()"/>
+#end
+#end
+
 #if($flag_kemaskini_selesai != "yes")
     <script>
 	document.getElementById('cmdKemaskini1').style.display = "none";
@@ -736,7 +735,12 @@
 
 <div align="right">
 #if ($flagFromSenaraiFailSek8 == '' && $flagFromSenaraiPermohonanSek8 == '' && $flagForView  == '' )
-<a href="javascript:javascript:Kembali()" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if ($flagFromSenaraiFailSek8 == 'yes')<a href="javascript:javascript:kembaliSenaraiFail('$noFail')" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if ($flagFromSenaraiPermohonanSek8 == 'yes')<a href="javascript:kembaliSenaraiPermohonan('$noFail')" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if($flagForView  == 'yes')<a href="javascript:ForView('$noFail')" class="style40"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan"/></a>#end<img src="../img/arrowgaris.png" alt="" border="0"/><img src="../img/2current.png" alt="" border="0" title="Senarai Semak" /><img src="../img/arrowgaris.png" alt="" border="0"/><a href="javascript:Seterusnya()" class="style6" ><img src="../img/3enable.png" alt="" border="0" title="Pendaftaran Permohonan" /></a><img src="../img/arrowgaris.png" alt="" border="0"/><a href="javascript:tab()" class="style6"   ><img src="../img/4enable2.png" alt="" border="0"/title="Maklumat Permohonan" ></a></div>
+<a href="javascript:javascript:Kembali()" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if ($flagFromSenaraiFailSek8 == 'yes')<a href="javascript:javascript:kembaliSenaraiFail('$noFail')" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if ($flagFromSenaraiPermohonanSek8 == 'yes')<a href="javascript:kembaliSenaraiPermohonan('$noFail')" class="style6"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan" /></a>#end#if($flagForView  == 'yes')<a href="javascript:ForView('$noFail')" class="style40"><img src="../img/1enable.png" alt="" border="0" title="Senarai Permohonan"/></a>#end<img src="../img/arrowgaris.png" alt="" border="0"/><img src="../img/2current.png" alt="" border="0" title="Senarai Semak" /><img src="../img/arrowgaris.png" alt="" border="0"/><a href="javascript:Seterusnya()" class="style6" ><img src="../img/3enable.png" alt="" border="0" title="Pendaftaran Permohonan" /></a><img src="../img/arrowgaris.png" alt="" border="0"/>
+#if (($duplicate != "yes") && ($id_Status != "152"))
+	<a href="javascript:tab()" class="style6"   ><img src="../img/4enable2.png" alt="" border="0"/title="Maklumat Permohonan" ></a></div>
+#else
+	<img src="../img/4disable2.png" alt="" border="0" title="Maklumat Permohonan"/>
+#end 
 </td>
 </tr>
 </table>
@@ -1325,7 +1329,6 @@ function checkit16()
 	{	
 	document.f1.cbsemaks[17].checked = true;
 	document.f1.cbsemaks[18].checked = true;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[16].checked == false)
@@ -1336,7 +1339,6 @@ function checkit16()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
-	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}	
 
@@ -1350,7 +1352,6 @@ function checkit17()
 	{	
 	document.f1.cbsemaks[16].checked = true;
 	document.f1.cbsemaks[18].checked = true;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[17].checked == false)
@@ -1360,14 +1361,12 @@ function checkit17()
 	{	
 	document.f1.cbsemaks[19].checked = false;
 	document.f1.cbsemaks[18].checked = false;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}
 	else if (document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false && document.f1.cbsemaks[21].checked == false)
 	{	
 	document.f1.cbsemaks[19].checked = false;
 	document.f1.cbsemaks[18].checked = false;	
-	document.f1.cbsemaks[16].checked = false;
-	//document.f1.cbsemaks[25].checked = false;//arief add
+	document.f1.cbsemaks[16].checked = false;	
 	document.f1.txtLainLainTujuan.value="";
 	}
 	
@@ -1383,7 +1382,6 @@ function checkit18()
 	{	
 	document.f1.cbsemaks[16].checked = true;
 	document.f1.cbsemaks[17].checked = true;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[18].checked == false)
@@ -1394,7 +1392,6 @@ function checkit18()
 	document.f1.cbsemaks[19].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[17].checked = false;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}
 	else if (document.f1.cbsemaks[19].checked == false && document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false && document.f1.cbsemaks[21].checked == false)
 	{	
@@ -1405,7 +1402,6 @@ function checkit18()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
-	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	
@@ -1423,7 +1419,6 @@ function checkit19()
 	{	
 	document.f1.cbsemaks[16].checked = true;
 	document.f1.cbsemaks[17].checked = true;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[19].checked == false)
@@ -1434,7 +1429,6 @@ function checkit19()
 	document.f1.cbsemaks[19].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[17].checked = false;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}
 	else if (document.f1.cbsemaks[18].checked == false && document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false && document.f1.cbsemaks[21].checked == false)
 	{	
@@ -1445,7 +1439,6 @@ function checkit19()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
-	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	
@@ -1460,7 +1453,6 @@ function checkit25()
  if (document.f1.cbsemaks[20].checked == true)
 	{	
 	document.f1.cbsemaks[16].checked = true;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[20].checked == false)
@@ -1474,7 +1466,6 @@ function checkit25()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
-	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	}
@@ -1486,7 +1477,6 @@ function checkit21()
  if (document.f1.cbsemaks[21].checked == true)
 	{	
 	document.f1.cbsemaks[16].checked = true;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[21].checked == false)
@@ -1500,7 +1490,6 @@ function checkit21()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
-	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	}
@@ -1513,7 +1502,6 @@ function checkit22()
  if (document.f1.cbsemaks[22].checked == true)
 	{	
 	document.f1.cbsemaks[16].checked = true;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	document.f1.txtLainLain.focus();	
 	}	
 	
@@ -1529,7 +1517,6 @@ function checkit22()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
-	//document.f1.cbsemaks[25].checked = false;//arief add
 	}
 	}
 }
@@ -1540,7 +1527,6 @@ function checkit20()
  if (document.f1.cbsemaks[20].checked == true)
 	{	
 	document.f1.cbsemaks[20].checked = true;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	document.f1.txtLainLainTujuan.focus();	
 	}	
 	
@@ -1556,7 +1542,6 @@ function checkit20()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
-	//document.f1.cbsemaks[25].checked = false;//arief add
 	}
 	}
 }
@@ -1568,7 +1553,6 @@ function checkitD()
 	{	
 	document.f1.cbsemaks[16].checked = true;
 	document.f1.cbsemaks[22].checked = true;
-	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
  if (document.f1.txtLainLainTujuan.value == "")
@@ -1583,7 +1567,6 @@ if (document.f1.cbsemaks[19].checked == false && document.f1.cbsemaks[20].checke
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
-	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	else
@@ -1667,10 +1650,10 @@ function DoTheCheck() {
 		dm.focus()
 		return false
 	}
-	//arief add ::--  && document.f1.cbsemaks[16].checked == false
-	else if (document.f1.cbsemaks[23].checked == false && document.f1.cbsemaks[16].checked == false ) { 
-		alert("Sila masukkan Memiliki Harta Tidak Alih ATAU Harta Alih"); {
-	}
+	
+	/* else if (document.f1.cbsemaks[23].checked == false) {
+		alert("Sila masukkan Memiliki Harta Tak Alih");
+	} */
 	else if ( date1 > currentTime ){
 	
 		alert("Sila pastikan tarikh bayaran tidak melebihi dari tarikh hari ini");

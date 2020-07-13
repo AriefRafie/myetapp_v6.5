@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,7 +9,7 @@
 <link href="SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css" />
 -->
 <style type="text/css">
-<!--gf
+<!--
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -39,6 +40,16 @@
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 
  <input type="hidden" name="v_tab" id="v_tab" value="" />
+ 
+#foreach($listUbah in $listUbah)
+#set($flagEmail = $listUbah.flag_email_pemohon)
+#set($flagNoTelefonBimbit = $listUbah.flag_notelefonbimbit_pemohon)
+#end
+
+
+<input type="hidden" name="flagEmail" value="$flagEmail">
+<input type="hidden" name="flagNoTelefonBimbit" value="$flagNoTelefonBimbit">
+
 
  #foreach($list in $View)
 #set($noFail = $list.noFail)
@@ -181,6 +192,11 @@
                    #end
                 </ul>
                 <div class="TabbedPanelsContentGroup">
+                
+                
+                
+                
+                
                 
                   <div class="TabbedPanelsContent" >  
                   #parse("app/ppk/info_berjaya_disimpan.jsp")   
@@ -1262,24 +1278,49 @@
                                             
                                             
                                             <option value="$listneg.id_Negeri">$listneg.kod_Negeri - $listneg.nama_Negeri</option>
-                                #end    
+                                            
+                                            
+                                            
+                                     
+                                  #end    
 	                              #end
+                                        
+                                          
+                                          
                                           </select>
                                           #else
                                           <select name="socNegeriPemohonSurat" id="socNegeriPemohonSurat" class="autoselect" onchange="getBandarSurat('txtBandarPemohonSurat')" >
                                             <option value="0" >SILA PILIH NEGERI</option>
+                                            
+                                            
+                                            
                                   #foreach($listneg in $listnegeri)
                    
+                                            
+                                            
                                             <option value="$listneg.id_Negeri" style="text-transform:uppercase;" onblur="uppercase()">$listneg.kod_Negeri - $listneg.nama_Negeri</option>
+                                            
+                                            
+                                            
+                                    
+	                               #end
+                                        
                                           
-	                               #end                                          
+                                          
                                           </select>
                                           #end   
                                           
                                           #end </td>
                                       </tr>
-                                                                           
-        <tr id="tr_mesej_pelbagainegara_surat">
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      <tr id="tr_mesej_pelbagainegara_surat">
         <td valign="top">
         </td>
         <td valign="top">
@@ -1303,6 +1344,13 @@
                                     #end </datalist>
                                     </td>
         </tr>
+        
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
                                       <tr>
                                         <td class="style38" valign="top">#if($readmode != "disabled" )  #end</td>
                                         <td class="style38"><div align="left">#if($readmode != "disabled" ) </div>
@@ -1359,22 +1407,88 @@
             #end
             #if($bandarsurat!="" && $bandarsurat!="0" )
             <select name="txtBandarPemohonSurat" id="txtBandarPemohonSurat" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
-              <option value="$bandarsurat">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>   
+              <option value="$bandarsurat">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
+              
+              
+              
+                      
+                                                  
+                                            
+                                              
                                   #foreach($listdaerah in $listBandarSuratbyNegeri)
                                  
                                   #if($bandarsurat!=$listdaerah.id)
+                                    
+	                               
+                                              
+                                            
+                                                  
+                      
+              
+              
               <option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
+              
+              
+              
+                      
+                                                  
+                                            
+                                              
+                                   
                                   #end    
 	                               #end
+                                  
+                                  
+                                  
+                                  
+                                            
+                                          
+                                                
+                    
+            
+            
             </select>
 #else
 <select name="txtBandarPemohonSurat" id="txtBandarPemohonSurat" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
   <option value="">Sila Pilih Bandar</option>
-            
+  
+  
+              
+    
+    
+  
+                                              
                                   #foreach($listDaerah in $listBandarSuratbyNegeri)
                                  
+                                
+	                               
+                                              
+  
+    
+    
+              
+  
   <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
+  
+  
+              
+    
+    
+  
+                                              
+                                   
+                                 
 	                               #end
+                                  
+                                  
+                                  
+                                  
+                                            
+
+  
+  
+            
+
 </select>
 #end 
 #end
@@ -1396,8 +1510,9 @@
                                         </tr>
                                         #end
                                         <tr id="no_hp">
-                                          <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
-                                          #end</td>
+                                          <td class="style38" >#if($readmode != "disabled" && $flagNoTelefonBimbit != "F") <span class="style38 style44">*</span>
+                                            #end</td>
+                                       
                                           <td class="style38" ><div align="left">No Telefon Bimbit</div></td>
                                            <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>
                                           <td><input name="txtNoTelefonBimbitPemohon" onkeyup="javascript:validateIC(event,this,this.value,'txtNoTelefonBimbitPemohon')" type="text" id="txtNoTelefonBimbitPemohon" style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.noHp" size="14" maxlength="14" $readmodeR class="$readmode" /></td>
@@ -1417,13 +1532,13 @@
                                           <td><input name="txtNoFaksPemohon" type="text" id="txtNoFaksPemohon" style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.noFax" size="14" maxlength="12" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtNoFaksPemohon')" /></td>
                                         </tr>
                                         <tr>
-                                         <td valign="top">#if($readmode != "disabled" ) <span class="style38 style44">*</span>
-                                          #end</td>
-                                          <td class="style38" ><div align="left">Email</div></td>
+                                          <td class="style38" >#if($readmode != "disabled" && $flagEmail != "F" ) <span class="style38 style44">*</span>
+                                            #end</td>
+                                          <td class="style38" ><div align="left">Emel</div></td>
                                           <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>                                        
                                           <td>
                                             
-                                        <input name="txtEmelPemohon" type="text" id="txtEmelPemohon"  style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.emel"  size="45" maxlength="100" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtEmelPemohon')" /></td>
+                                        <input name="txtEmelPemohon" type="text" id="txtEmelPemohon"  value="$listpemohon.emel" size="45" maxlength="100" $readmodeR class="$readmode" />                                        </td>
                                           </tr>
                                         #if($readmode != "disabled" )
                                         <tr>
@@ -1730,6 +1845,8 @@ function Simpan_Pemohon(){
 	var negeri_code = document.f1.txtnoKpBaru2Pemohon.value;
 	var dob_code = document.f1.txtnoKpBaru1Pemohon.value;
 	
+
+	
 if(dob_code.charAt(0)<3)
 	{
 	 var dum = "20";
@@ -1747,9 +1864,20 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""+dob_
 	 var date_dob = new Date(yr_dob, mon_dob, dt_dob);
 	
 	
-//	alert(document.f1.status_pemohon.value)
-	
-	
+
+if ((document.f1.flagNoTelefonBimbit.value!="F") && (document.f1.txtNoTelefonBimbitPemohon.value=="")) {
+	alert("Sila masukkan nombor telefon bimbit pemohon.");
+	document.f1.txtNoTelefonBimbitPemohon.focus();
+	return; 
+}
+
+if ((document.f1.flagEmail.value!="F") && (document.f1.txtEmelPemohon.value=="")) {
+	alert("Sila masukkan emel pemohon");
+	document.f1.txtEmelPemohon.focus();
+	return; 
+}
+
+//alert(document.f1.status_pemohon.value)	
 if (document.f1.txtNamaPemohonPemohon.value=="") {
 		alert("Sila masukkan nama pemohon.");
 		document.f1.txtNamaPemohonPemohon.focus();
@@ -1839,7 +1967,7 @@ if (document.f1.txtNamaPemohonPemohon.value=="") {
 	
 	else if(!em.match(emailExp) && em!=""){
 		
-		alert("Alamat email tidak sah!");		
+		alert("Alamat emel tidak sah!");		
 		document.f1.txtEmelPemohon.focus();
 		return;
 	}
@@ -1905,7 +2033,13 @@ else if (document.f1.status_pemohon.value == "2" && document.f1.txtnoKpBaru2Pemo
 	}
 	*/
 	
-	else{
+	
+		
+	
+
+		
+		
+			else{
 		input_box = confirm("Adakah anda pasti?");		
 		if (input_box == true)
 		 {
@@ -2349,6 +2483,12 @@ document.f1.socNegeriPemohonSurat.value = "0";
 
 }
 
+
+
+
+
+
+
 }
 
 function kembalix() {
@@ -2359,7 +2499,7 @@ function kembalix() {
 }
 function kembalidaftar()
 {
-    document.f1.command.value="kembali_daftar_pemohon";
+        document.f1.command.value="kembali_daftar_pemohon";
 		document.f1.eventStatus.value="1";
 		document.f1.action = "";
 		document.f1.submit();
