@@ -9,21 +9,22 @@
 #set($saizTxtPerkara="1000")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="actionTukarguna" type="hidden" id="actionTukarguna" value="$actionTukarguna"/>
+ 
   <input name="command" type="hidden" id="command" value="$command"/>
-  <input name="submit" type="text" id="command" value="$command"/>
-  <input name="submit2" type="text" id="submit2" />
+  <!-- <input name="submit" type="hidden" id="command" value="$command"/> -->
+ <input name="submit2" type="hidden" id="submit2" />
   
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
-  <input type="text" name="idHakmilikSementara" id="idHakmilikSementara" value="$!idHakmilikSementara" />
-  <input type="text" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$!idHakmilikAgensi" />
+  <input type="hidden" name="idHakmilikSementara" id="idHakmilikSementara" value="$!idHakmilikSementara" />
+  <input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$!idHakmilikAgensi" />
   <input type="hidden" name="idPHPBorangK" id="idPHPBorangK" value="$idPHPBorangK" />
   <input type="hidden" name="idPPTBorangK" id="idPPTBorangK" value="$idPPTBorangK" />
   <input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
 </p>
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2"><fieldset>
@@ -314,7 +315,7 @@
 
 
 
-/* function daftarBaru() {
+function daftarBaru() {
 	//CHECK DATE   
 	var str1  = document.${formName}.tarikhTerima.value;		   
 	var dt1   = parseInt(str1.substring(0,2),10);
@@ -421,7 +422,7 @@ function cekTarikhTerima(elmnt) {
 		document.${formName}.tarikhTerima.focus(); 
 		return;
 	}
-} */
+}
 function cekTarikhSurat(elmnt) {  
 	//CHECK DATE   
 	var str1  = document.${formName}.tarikhTerima.value;		   
@@ -465,7 +466,10 @@ function textCounter(field, countfield, maxlimit) {
 	else
 	 countfield.value = maxlimit - field.value.length;
 }
-
+function seterusnya(){
+	document.${formName}.action = "$EkptgUtil.getTabID("Tukar Guna",$portal_role)?_portal_module=ekptg.view.php2.FrmTKRMaklumatPermohonanView";
+	document.${formName}.submit();
+}
 function pilihBorangK(idKategoriPemohon,idAgensiPemohon,idNegeriJKPTG) {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmTKRPopupSenaraiBorangKView?idKategoriPemohon="+idKategoriPemohon+"&idAgensiPemohon="+idAgensiPemohon+"&idNegeriJKPTG="+idNegeriJKPTG;
     var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');

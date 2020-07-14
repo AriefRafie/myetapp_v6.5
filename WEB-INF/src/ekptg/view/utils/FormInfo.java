@@ -24,22 +24,25 @@ public class FormInfo extends AjaxBasedModule {
 		myLog.info("jenisInfo="+jenisInfo);
 		
 		if (jenisInfo.equals("tanah")){
-			namaImej = "Jenis Hakmilik.jpg";
+			namaImej = "Jenis_Hakmilik.jpg";
 		}
 		if (jenisInfo.equals("hakmilik")){
 			namaImej = "No.Hakmilik.jpg";
+		}
+		if (jenisInfo.equals("syarat")){
+			namaImej = "Syarat.jpg";
 		}
 		if (jenisInfo.equals("lot")){
 			namaImej = "No.Lot.jpg";
 		}
 		if (jenisInfo.equals("bahagian")){
-			namaImej = "Bahagian Simati.jpg";
+			namaImej = "Bahagian_Simati.jpg";
 		}
 		if (jenisInfo.equals("maklumat_tanah")) {
-			namaImej = "Maklumat tanah.jpg";
+			namaImej = "Maklumat_tanah.jpg";
 		}
 		if (jenisInfo.equals("geran_kereta")) {
-			namaImej = "Geran Kereta.jpg";
+			namaImej = "Geran_Kereta.jpg";
 		}
 		if (jenisInfo.equals("daftar")) {
 			namaImej = "No.Daftar.jpg";
@@ -57,16 +60,19 @@ public class FormInfo extends AjaxBasedModule {
 			namaImej = "tarikh_masa.jpg";
 		}
 		if (jenisInfo.equals("tempat")) {
-			namaImej = "Tempat kematian.jpg";
+			namaImej = "Tempat_kematian.jpg";
 		}
 		if (jenisInfo.equals("sebab")) {
-			namaImej = "Sebab Kematian.jpg";
+			namaImej = "Sebab_Kematian.jpg";
 		}
 		if (jenisInfo.equals("alamat")) {
-			namaImej = "alamat terakhir.jpg";
+			namaImej = "alamat_terakhir.jpg";
 		}
 		if (jenisInfo.equals("perjanjian")) {
 			namaImej = "Perjanjian.jpg";
+		}
+		if (jenisInfo.equals("Tanah_gsa")) {
+			namaImej = "Tanah_gsa.jpg";
 		}
 		this.context.put("namaInfo", namaImej);
 	   	return vm;
