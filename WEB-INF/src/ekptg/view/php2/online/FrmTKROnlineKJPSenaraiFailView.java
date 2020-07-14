@@ -33,9 +33,9 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	private String readonly = "disabled class = \"disabled\"";
-	static Logger myLog = Logger.getLogger(FrmPLPOnlineKJPSenaraiFailView.class);
+	static Logger myLog = Logger.getLogger(FrmTKROnlineKJPSenaraiFailView.class);
 
-	FrmTKRHeaderData logicHeader = new FrmTKRHeaderData();
+	FrmTKRHeaderDat logicHeader = new FrmTKRHeaderData();
 	FrmTKRJabatanTeknikalData logicJabatanTeknikal = new FrmTKRJabatanTeknikalData();
 	FrmTKROnlineKJPSenaraiFailData logic = new FrmTKROnlineKJPSenaraiFailData();
 	private String templateDir = "app/php2/online/ulasanKJP/tkr";
@@ -202,7 +202,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 		
 		//myLog.info("actionTukarguna="+actionTukarguna);
-		//myLog.info("submit2="+submit2);
+		myLog.info("submit="+submit);
 		myLog.info("hitButton="+hitButton);
 		this.context.put("errorPeganganHakmilik", "");
 		
@@ -398,7 +398,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				//vm = "/start.jsp";
 
 			} else if ("carian".equals(submit)) {
-
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				String findNoFail = getParam("findNoFail");
 				String findTajukFail = getParam("findTajukFail");				
@@ -437,7 +436,9 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				}
 
 				Vector listFail = logic.getSenaraiFail(findNoFail, findTajukFail, findPemohon, findNoPengenalan, findTarikhTerima, 
-						findNoHakmilik, findNoWarta, findNoPegangan, findJenisHakmilik, findJenisLot, findNoLot, findNegeri, findDaerah, findMukim, userId);
+						findNoHakmilik, findNoWarta, findNoPegangan, findJenisHakmilik, findJenisLot, findNoLot
+						, findNegeri, findDaerah, findMukim
+						, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
@@ -498,6 +499,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				vm = "/start.jsp";
 
+<<<<<<< HEAD
 			}else if ("seterusnya".equals(submit2)) {
 				myLog.info("seterusnya");
 				myLog.info("idFail========="+idFail);
@@ -549,8 +551,14 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				this.context.put("idFail", idFail);
 				
 	    		
-			} else {
+=======
+			}else if ("seterusnya".equals(submit)) {
+				myLog.info("seterusnya");				
+				// GO TO MAKLUMAT PERMOHONAN
+				vm = "/frmTKRKJPMaklumatPermohonan.jsp";			
 
+>>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
+			} else {
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);

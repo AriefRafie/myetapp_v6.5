@@ -83,11 +83,19 @@
         <table align="center" width="100%">
          <td><input name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar Permohonan Baru" type="button" onclick="doDivAjaxCall$formname('divMainForm','daftarBaru','');">
           <tr class="table_header">
+<<<<<<< HEAD
             <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
            <td width="15%"><strong>No. Rujukan <i>Online</i></strong></td>
             <td width="35%"><strong>Tajuk Fail</strong></td>
             <td width="10%" align="center"><strong>Tarikh Ulasan</strong></td>
             <td width="8%" align="center"><strong>Tarikh Akhir Maklumbalas</strong></td>
+=======
+            <td scope="row" width="3%" align="center"><strong>Bil</strong></td>
+            <td width="20%"><strong>No. Fail</strong></td>
+            <td width="56%"><strong>Tajuk Fail</strong></td>
+            <td width="10%" align="center"><strong>Tarikh Daftar</strong></td>
+            <td width="11%" align="center"><strong>Status</strong></td>
+>>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
           </tr>
           #set ($list = "")
         #set ( $count = $startNumber )
@@ -105,8 +113,8 @@
             <td class="$row" align="center">$count</td>
             <td class="$row"><a href="javascript:paparFail('$!list.ID_FAIL', '$!list.ID_ULASANTEKNIKAL')" class="style2">$list.NO_FAIL</a></td>
             <td class="$row">$list.TAJUK_FAIL</td>
-            <td class="$row" align="center">$list.TARIKH_HANTAR</td>
-            <td class="$row" align="center">$list.TARIKH_JANGKA_TERIMA</td>
+            <td class="$row" align="center">$list.TARIKH_TERIMA</td>
+            <td class="$row" align="center">$list.STATUS</td>
           </tr>
           #end
           #else

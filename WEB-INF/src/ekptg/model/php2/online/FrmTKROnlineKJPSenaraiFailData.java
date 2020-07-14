@@ -258,9 +258,13 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				db1.close();
 		}
 	}
-	public Vector<Hashtable<String, Object>> getSenaraiFail(String findNoFail, String findTajukFail, String findPemohon, String findNoPengenalan, 
-			String findTarikhTerima, String findNoHakmilik, String findNoWarta, String findNoPegangan, String findJenisHakmilik, 
-			String findJenisLot, String findNoLot, String findNegeri, String findDaerah, String findMukim, String userId) {
+	
+	public Vector<Hashtable<String, Object>> getSenaraiFail(String findNoFail, String findTajukFail
+		, String findPemohon, String findNoPengenalan
+		, String findTarikhTerima
+		, String findNoHakmilik, String findNoWarta, String findNoPegangan, String findJenisHakmilik, String findJenisLot, String findNoLot
+		, String findNegeri, String findDaerah, String findMukim
+		, String userId) {
 
 		String sql = "";
 		Vector<Hashtable<String, Object>> listFail = null;
@@ -272,140 +276,151 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL, TBLPFDFAIL.ID_FAIL, TBLPFDFAIL.NO_FAIL, TBLPFDFAIL.TAJUK_FAIL, TBLPHPULASANTEKNIKAL.TARIKH_HANTAR, TBLPHPULASANTEKNIKAL.TARIKH_JANGKA_TERIMA"
+			sql = "SELECT "
+//					+ "TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL"
+					+ " F.ID_FAIL, F.NO_FAIL, F.TAJUK_FAIL"
+					+ " ,RS.KETERANGAN STATUS, P.TARIKH_TERIMA"
+//					+ ", TBLPHPULASANTEKNIKAL.TARIKH_HANTAR, TBLPHPULASANTEKNIKAL.TARIKH_JANGKA_TERIMA"
+					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
+					+ " ,USERS_KEMENTERIAN UK"
+					+ " ,TBLRUJSTATUS RS"
+//					+ ",TBLPHPULASANTEKNIKAL"
+//					+ ", TBLPHPPEMOHON , TBLPHPHAKMILIKPERMOHONAN, TBLPHPHAKMILIK, USERS"
 
-					+ " FROM TBLPHPULASANTEKNIKAL, TBLPERMOHONAN, TBLPHPPEMOHON, TBLPFDFAIL, TBLPHPHAKMILIKPERMOHONAN, TBLPHPHAKMILIK, USERS, USERS_KEMENTERIAN"
-
-					+ " WHERE TBLPHPULASANTEKNIKAL.FLAG_STATUS = 1 AND TBLPHPULASANTEKNIKAL.FLAG_AKTIF = 'Y'"
-					+ " AND TBLPHPULASANTEKNIKAL.ID_PERMOHONAN = TBLPERMOHONAN.ID_PERMOHONAN"
-					+ " AND TBLPERMOHONAN.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON"
-					+ " AND TBLPERMOHONAN.ID_FAIL = TBLPFDFAIL.ID_FAIL"
-					+ " AND TBLPERMOHONAN.ID_PERMOHONAN = TBLPHPHAKMILIKPERMOHONAN.ID_PERMOHONAN"
-					+ " AND TBLPHPHAKMILIKPERMOHONAN.ID_HAKMILIKPERMOHONAN = TBLPHPHAKMILIK.ID_HAKMILIKPERMOHONAN"
-					+ " AND TBLPFDFAIL.ID_SEKSYEN = 4 AND TBLPFDFAIL.ID_URUSAN = '6' AND TBLPFDFAIL.ID_SUBURUSAN = '33'"
-					+ " AND TBLPHPHAKMILIKPERMOHONAN.FLAG_HAKMILIK = 'U'"
-					+ " AND TBLPERMOHONAN.ID_STATUS NOT IN (1610212, 1610207, 1610208)"
-					+ " AND USERS.USER_ID = USERS_KEMENTERIAN.USER_ID AND USERS_KEMENTERIAN.ID_AGENSI = TBLPHPULASANTEKNIKAL.ID_AGENSI"
-					+ " AND USERS.USER_ID = '" + userId + "'";
+					+ " WHERE F.ID_FAIL = P.ID_FAIL"
+					+ " AND F.ID_SUBURUSAN = '33'"
+					+ " AND P.ID_STATUS = RS.ID_STATUS "
+//					+ " TBLPHPULASANTEKNIKAL.FLAG_STATUS = 1 AND TBLPHPULASANTEKNIKAL.FLAG_AKTIF = 'Y'"
+//					+ " AND TBLPHPULASANTEKNIKAL.ID_PERMOHONAN = TBLPERMOHONAN.ID_PERMOHONAN"
+//					+ " AND TBLPERMOHONAN.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON"
+//					+ " AND TBLPERMOHONAN.ID_PERMOHONAN = TBLPHPHAKMILIKPERMOHONAN.ID_PERMOHONAN"
+//					+ " AND TBLPHPHAKMILIKPERMOHONAN.ID_HAKMILIKPERMOHONAN = TBLPHPHAKMILIK.ID_HAKMILIKPERMOHONAN"
+//					+ " AND TBLPFDFAIL.ID_SEKSYEN = 4 AND TBLPFDFAIL.ID_URUSAN = '6' "
+//					+ " AND TBLPHPHAKMILIKPERMOHONAN.FLAG_HAKMILIK = 'U'"
+//					+ " AND TBLPERMOHONAN.ID_STATUS NOT IN (1610212, 1610207, 1610208)"
+//					+ " AND USERS.USER_ID = USERS_KEMENTERIAN.USER_ID "
+//					+ " AND USERS_KEMENTERIAN.ID_AGENSI = TBLPHPULASANTEKNIKAL.ID_AGENSI"
+					+ " AND F.ID_KEMENTERIAN = UK.ID_KEMENTERIAN "
+					+ " AND UK.USER_ID = '" + userId + "'";
 			//noFail
 			if (findNoFail != null) {
 				if (!findNoFail.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLPFDFAIL.NO_FAIL) LIKE '%' ||'"
+					sql = sql + " AND UPPER(F.NO_FAIL) LIKE '%' ||'"
 							+ findNoFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
 			//tajukFail
 			if (findTajukFail != null) {
 				if (!findTajukFail.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLPFDFAIL.TAJUK_FAIL) LIKE '%' ||'"
+					sql = sql + " AND UPPER(F.TAJUK_FAIL) LIKE '%' ||'"
 							+ findTajukFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
 			//nama
-			if (findPemohon != null) {
-				if (!findPemohon.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLPHPPEMOHON.NAMA) LIKE '%' ||'"
-							+ findPemohon.trim().toUpperCase() + "'|| '%'";
-				}
-			}
+//			if (findPemohon != null) {
+//				if (!findPemohon.trim().equals("")) {
+//					sql = sql + " AND UPPER(TBLPHPPEMOHON.NAMA) LIKE '%' ||'"
+//							+ findPemohon.trim().toUpperCase() + "'|| '%'";
+//				}
+//			}
 			//noPengenalan
-			if (findNoPengenalan != null) {
-				if (!findNoPengenalan.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLPHPPEMOHON.NO_PENGENALAN) LIKE '%' ||'"
-							+ findNoPengenalan.trim().toUpperCase() + "'|| '%'";
-				}
-			}
+//			if (findNoPengenalan != null) {
+//				if (!findNoPengenalan.trim().equals("")) {
+//					sql = sql + " AND UPPER(TBLPHPPEMOHON.NO_PENGENALAN) LIKE '%' ||'"
+//							+ findNoPengenalan.trim().toUpperCase() + "'|| '%'";
+//				}
+//			}
 			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
 
 			// tarikhTerima
-			if (findTarikhTerima != null) {
-				if (!findTarikhTerima.toString().trim().equals("")) {
-					sql = sql
-							+ " AND TO_CHAR(TBLPHPULASANTEKNIKAL.TARIKH_TERIMA,'dd-MON-YY') = '"
-							+ sdf1.format(sdf.parse(findTarikhTerima))
-							.toUpperCase() + "'";
-				}
-			}
+//			if (findTarikhTerima != null) {
+//				if (!findTarikhTerima.toString().trim().equals("")) {
+//					sql = sql
+//							+ " AND TO_CHAR(TBLPHPULASANTEKNIKAL.TARIKH_TERIMA,'dd-MON-YY') = '"
+//							+ sdf1.format(sdf.parse(findTarikhTerima))
+//							.toUpperCase() + "'";
+//				}
+//			}
 			//noHakmilik
-			if (findNoHakmilik != null) {
-				if (!findNoHakmilik.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_HAKMILIK) LIKE '%' ||'"
-							+ findNoHakmilik.trim().toUpperCase() + "'|| '%'";
-				}
-			}
+//			if (findNoHakmilik != null) {
+//				if (!findNoHakmilik.trim().equals("")) {
+//					sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_HAKMILIK) LIKE '%' ||'"
+//							+ findNoHakmilik.trim().toUpperCase() + "'|| '%'";
+//				}
+//			}
 			//noWarta
-			if (findNoWarta != null) {
-				if (!findNoWarta.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_WARTA) LIKE '%' ||'"
-							+ findNoWarta.trim().toUpperCase() + "'|| '%'";
-				}
-			}
+//			if (findNoWarta != null) {
+//				if (!findNoWarta.trim().equals("")) {
+//					sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_WARTA) LIKE '%' ||'"
+//							+ findNoWarta.trim().toUpperCase() + "'|| '%'";
+//				}
+//			}
 			//peganganHakmilik
-			if (findNoPegangan != null) {
-				if (!findNoPegangan.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLPHPHAKMILIK.PEGANGAN_HAKMILIK) LIKE '%' ||'"
-							+ findNoPegangan.trim().toUpperCase() + "'|| '%'";
-				}
-			}
+//			if (findNoPegangan != null) {
+//				if (!findNoPegangan.trim().equals("")) {
+//					sql = sql + " AND UPPER(TBLPHPHAKMILIK.PEGANGAN_HAKMILIK) LIKE '%' ||'"
+//							+ findNoPegangan.trim().toUpperCase() + "'|| '%'";
+//				}
+//			}
 			//idJenisHakmilik
-			if (findJenisHakmilik != null) {
-				if (!findJenisHakmilik.trim().equals("")
-						&& !findJenisHakmilik.trim().equals("9999")) {
-					sql = sql + " AND TBLPHPHAKMILIK.ID_JENISHAKMILIK = '" + findJenisHakmilik.trim() + "'";
-				}
-			}
+//			if (findJenisHakmilik != null) {
+//				if (!findJenisHakmilik.trim().equals("")
+//						&& !findJenisHakmilik.trim().equals("9999")) {
+//					sql = sql + " AND TBLPHPHAKMILIK.ID_JENISHAKMILIK = '" + findJenisHakmilik.trim() + "'";
+//				}
+//			}
 			//idLot
-			if (findJenisLot != null) {
-				if (!findJenisLot.trim().equals("")
-						&& !findJenisLot.trim().equals("9999")) {
-					sql = sql + " AND TBLPHPHAKMILIK.ID_LOT = '" + findJenisLot.trim() + "'";
-				}
-			}
+//			if (findJenisLot != null) {
+//				if (!findJenisLot.trim().equals("")
+//						&& !findJenisLot.trim().equals("9999")) {
+//					sql = sql + " AND TBLPHPHAKMILIK.ID_LOT = '" + findJenisLot.trim() + "'";
+//				}
+//			}
 			//noLot
-			if (findNoLot != null) {
-				if (!findNoLot.trim().equals("")) {
-					sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_LOT) LIKE '%' ||'"
-							+ findNoLot.trim().toUpperCase() + "'|| '%'";
-				}
-			}
+//			if (findNoLot != null) {
+//				if (!findNoLot.trim().equals("")) {
+//					sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_LOT) LIKE '%' ||'"
+//							+ findNoLot.trim().toUpperCase() + "'|| '%'";
+//				}
+//			}
 			//idNegeri
-			if (findNegeri != null) {
-				if (!findNegeri.trim().equals("")
-						&& !findNegeri.trim().equals("9999")) {
-					sql = sql + " AND TBLPHPHAKMILIK.ID_NEGERI = '" + findNegeri.trim() + "'";
-				}
-			}
+//			if (findNegeri != null) {
+//				if (!findNegeri.trim().equals("")
+//						&& !findNegeri.trim().equals("9999")) {
+//					sql = sql + " AND TBLPHPHAKMILIK.ID_NEGERI = '" + findNegeri.trim() + "'";
+//				}
+//			}
 			//idDaerah
-			if (findDaerah != null) {
-				if (!findDaerah.trim().equals("")
-						&& !findDaerah.trim().equals("9999")) {
-					sql = sql + " AND TBLPHPHAKMILIK.ID_DAERAH = '" + findDaerah.trim() + "'";
-				}
-			}
+//			if (findDaerah != null) {
+//				if (!findDaerah.trim().equals("")
+//						&& !findDaerah.trim().equals("9999")) {
+//					sql = sql + " AND TBLPHPHAKMILIK.ID_DAERAH = '" + findDaerah.trim() + "'";
+//				}
+//			}
 			//idMukim
-			if (findMukim != null) {
-				if (!findMukim.trim().equals("")
-						&& !findMukim.trim().equals("9999")) {
-					sql = sql + " AND TBLPHPHAKMILIK.ID_MUKIM = '" + findMukim.trim() + "'";
-				}
-			}
+//			if (findMukim != null) {
+//				if (!findMukim.trim().equals("")
+//						&& !findMukim.trim().equals("9999")) {
+//					sql = sql + " AND TBLPHPHAKMILIK.ID_MUKIM = '" + findMukim.trim() + "'";
+//				}
+//			}
 
-			sql = sql + " ORDER BY TBLPHPULASANTEKNIKAL.TARIKH_HANTAR DESC ";
+//			sql = sql + " ORDER BY TBLPHPULASANTEKNIKAL.TARIKH_HANTAR DESC ";
+			sql = sql + " ORDER BY F.TARIKH_MASUK DESC ";
 
+			myLogger.info("FrmTKROnlineKJPSenaraiFailView :::: sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-
-			System.out.println("sql FrmTKROnlineKJPSenaraiFailView :::: "+sql);
-
 			while (rs.next()) {
 				h = new Hashtable<String, Object>();
-				h.put("ID_ULASANTEKNIKAL", rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs.getString("ID_ULASANTEKNIKAL"));
+				//h.put("ID_ULASANTEKNIKAL", rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs.getString("ID_ULASANTEKNIKAL"));
 				h.put("ID_FAIL", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
 				h.put("TAJUK_FAIL", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL"));
-				h.put("TARIKH_HANTAR", rs.getDate("TARIKH_HANTAR") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTAR")));
-				h.put("TARIKH_JANGKA_TERIMA", rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
-
+				h.put("STATUS", rs.getString("STATUS") == null ? "" : rs.getString("STATUS"));
+				h.put("TARIKH_TERIMA", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
+				//h.put("TARIKH_JANGKA_TERIMA", rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
 				listFail.addElement(h);
+				
 			}
 
 		} catch (Exception ex) {
@@ -415,6 +430,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 		}
 
 		return listFail;
+		
 	}
 	public String getUserRole(String userId) throws Exception {
 		Db db = null;
