@@ -59,10 +59,11 @@
 			    #end
 	        <tr>
 	          <td class="$row" align="center">$list.bil</td>
-	          <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a>
-	          <br />
-	          <font class="blink" ><span class="style2">$!list.statusLesen</span></font>
-	          <font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
+	          ##<td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a>
+	          ##<br />
+	          ##<font class="blink" ><span class="style2">$!list.statusLesen</span></font>
+	          ##<font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
+	          <td class="$row">$list.noFail</td>
 	          <td class="$row">$list.namaPemohon</td>
 	          <td class="$row">$list.noLesen</td>
 	          <td class="$row">$list.kawasanDipohon</td>

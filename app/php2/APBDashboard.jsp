@@ -285,23 +285,23 @@ a.nav:visited {
                             <td><b>Dokumen Rujukan</b></td>
                           </tr>
                           <tr>
-                            <td><a href="" class="help" title="Senarai Rujukan SOP"> <font color="blue">
+                            <td><a href="javascript:gotoDokumenRujukan()" class="help" title="Senarai Rujukan SOP"> <font color="blue">
                               <li>&nbsp;Senarai Rujukan SOP</li>
                               </font> </a> </td>
                           </tr>
                           <tr>
-                            <td><a href="" class="help" title="Pekeliling"> <font color="blue">
+                            <td><a href="javascript:gotoDokumenRujukan()" class="help" title="Pekeliling"> <font color="blue">
                               <li>&nbsp;Pekeliling</li>
                               </font> </a> </td>
                           </tr>
                           <tr>
-                            <td><a href="" class="help" title="Warta"> <font color="blue">
+                            <td><a href="javascript:gotoDokumenRujukan()" class="help" title="Warta"> <font color="blue">
                               <li>&nbsp;Warta</li>
                               </font> </a> </td>
                           </tr>
                           <tr>
-                            <td><a href="" class="help" title="Akta"> <font color="blue">
-                              <li>&nbsp;Akta</li>
+                            <td><a href="javascript:gotoDokumenRujukan()" class="help" title="Akta"> <font color="blue">
+                              <li>&nbsp;Akta dan Lain-lain</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -463,6 +463,10 @@ function gotoFLMSstat() {
 }
 function gotoInbox() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.utils.FrmInboxUsers";
+	document.${formName}.submit();
+}
+function gotoDokumenRujukan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Panduan Pengguna",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBKemasukanDokumen";
 	document.${formName}.submit();
 }
 </script>

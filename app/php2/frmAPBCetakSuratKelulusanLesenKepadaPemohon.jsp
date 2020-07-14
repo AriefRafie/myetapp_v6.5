@@ -49,13 +49,8 @@
     <td>
     <div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
-<<<<<<< HEAD
-          <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENYEDIAAN LESEN</li>         
-          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PELAN</li>        
-=======
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LESEN</li>         
-          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">LESEN DAN PELAN</li>       
->>>>>>> 0cf46fa5503964e9bdbf573caa489fd01eda2afa
+          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">LESEN DAN PELAN</li>
         </ul>
       <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">
