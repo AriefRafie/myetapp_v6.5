@@ -65,7 +65,9 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		String userRole = "";
 		String userJawatan = "";
 		String layerKJP = "";
-		String idNegeriPemohon = "", idAgensiPmhn = "", idKementerianPmhn = "";
+		String idNegeriPemohon = ""; 
+		String idAgensi = ""; 
+		String idKementerian = "";
 		String idPermohonan = getParam("idPermohonan");
 		String idPermohonanPelepasan = getParam("idPermohonanPelepasan");
 		String idTanahGanti = getParam("idTanahGanti");
@@ -123,14 +125,14 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		if(!listDetailKJP.isEmpty() && listDetailKJP.size()> 0) {
     		Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
     		idNegeriPemohon = hashRayuanDB.get("idNegeri").toString();
-    		idKementerianPmhn= hashRayuanDB.get("idKementerian").toString();
-    		idAgensiPmhn= hashRayuanDB.get("idAgensi").toString();
+    		idKementerian= hashRayuanDB.get("idKementerian").toString();
+    		idAgensi= hashRayuanDB.get("idAgensi").toString();
     		
 		}
 		
 		this.context.put("idNegeriPemohon", idNegeriPemohon);
-		this.context.put("idKementerianPmhn", idKementerianPmhn);
-		this.context.put("idAgensiPmhn", idAgensiPmhn);	
+		this.context.put("idKementerian", idKementerian);
+		this.context.put("idAgensi", idAgensi);	
 		this.context.put("onload", "");
 		this.context.put("completed", false);
 		
@@ -138,7 +140,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		if (postDB) {
 			if ("doDaftarBaru".equals(hitButton)){
 
-           		idFail = logic.daftarBaru(userRole,idKementerianPmhn,idAgensiPmhn, getParam("idHakmilikAgensi"), session);
+           		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
         	}
 			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
         		logic.updateTanah(idPermohonan,idHakmilikAgensi,session);	
@@ -154,7 +156,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
-					logic.updatePermohonanSemakan(idPermohonan, idKementerianPmhn, session);
+					logic.updatePermohonanSemakan(idPermohonan, idKementerian, session);
 				}				
 			}
 			
@@ -163,7 +165,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
-					logic.updatePermohonanKelulusan(idPermohonan, idKementerianPmhn, session);
+					logic.updatePermohonanKelulusan(idPermohonan, idKementerian, session);
 				}				
 			}else if ("doHantarEmel".equals(hitButton)){
 				
@@ -223,7 +225,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 			
 			//MAKLUMAT HAKMILIK
 			if ("doChangePeganganHakmilik".equals(submit)) {
-				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerianPmhn, idAgensiPmhn, getParam("txtPeganganHakmilik"));
+				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerian, idAgensi, getParam("txtPeganganHakmilik"));
 				if (idHakmilikAgensi.isEmpty()) {
 					this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
 				}
@@ -324,7 +326,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
         		 
 	        		if ("doChangePeganganHakmilik1".equals(submit)){
 	    				beanMaklumatTanah = new Vector();
-	    				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerianPmhn, idAgensiPmhn, getParam("txtPeganganHakmilik1"));
+	    				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerian, idAgensi, getParam("txtPeganganHakmilik1"));
 	    				logic.setMaklumatTanah(idHakmilikAgensi);
 	    				beanMaklumatTanah = logic.getBeanMaklumatTanah();
 	    				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);

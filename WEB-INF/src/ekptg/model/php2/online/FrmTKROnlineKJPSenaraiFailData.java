@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -764,7 +766,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
-	public String daftarBaru(String idJenisTanah, String tarikhTerima,
+	public String daftarBaru(String idUrusan, String idSuburusan, String idSubsuburusan,String idJenisTanah, String tarikhTerima,
 			String tarikhSurat, String noRujukanSurat, String perkara,
 			String idKategoriPemohon, String idKementerian, String idAgensi,
 			String idHakmilikAgensi, 
@@ -778,7 +780,8 @@ public class FrmTKROnlineKJPSenaraiFailData {
 		String userId = (String) session.getAttribute("_ekptg_user_id");
 		String sql = "";
 		String idFailString = "";
-		String noFail = "";
+		String noRujukanOnline = "";
+		idUrusan = "6";
 
 		try {
 			db = new Db();
@@ -801,14 +804,6 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			r.add("FLAG_FAIL", "1");
 			r.add("TARIKH_DAFTAR_FAIL", r.unquote("SYSDATE"));
 			r.add("TAJUK_FAIL", perkara);
-
-			String kodUrusan = "879";
-
-			noFail = generateNoFail(session, kodUrusan,
-					getKodKementerian(idKementerianTanah), idKementerianTanah,
-					getKodNegeri(idNegeriTanah), idNegeriTanah);
-			r.add("NO_FAIL", noFail);
-			r.add("NO_FAIL_ROOT", noFail);
 			r.add("ID_LOKASIFAIL", "2"); // UNIT PHP DI TINGKAT 2
 			r.add("FLAG_JENIS_FAIL", "1"); // DATA BARU ETAPP
 			r.add("ID_NEGERI", idNegeriTanah);
@@ -902,12 +897,23 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			r.add("TARIKH_TERIMA", r.unquote(TT));
 			r.add("NO_RUJ_SURAT", noRujukanSurat);
 			r.add("FLAG_AKTIF", "Y");
+			
+			String kodUrusan = "879";
+			Calendar currentDate = new GregorianCalendar();
+
+			noRujukanOnline = "JKPTG/BPHP/04/" + kodUrusan + "/" + currentDate.get(Calendar.YEAR) + "/" + File.getSeqNo(db, 4, 6, 0, 0, 0, false, false, currentDate.get(Calendar.YEAR), 0);
+//					generateNoFail(session, kodUrusan,
+//					getKodKementerian(idKementerianTanah), idKementerianTanah,
+//					getKodNegeri(idNegeriTanah), idNegeriTanah);
+			
+			r.add("NO_PERMOHONAN",noRujukanOnline);
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
-			myLogger.info("sql 3: "+sql);
+			
 			sql = r.getSQLInsert("TBLPERMOHONAN");
+			myLogger.info("sql 3: "+sql);
 			stmt.executeUpdate(sql);
 
 			// TBLPHPHAKMILIKPERMOHONAN
@@ -1120,21 +1126,49 @@ public class FrmTKROnlineKJPSenaraiFailData {
 		session.setAttribute("ID_FAIL", idFailString);
 		return idFailString;
 	}
+	public String getKodUrusanByIdUrusan(String idUrusan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT KOD_URUSAN FROM TBLRUJURUSAN WHERE ID_URUSAN = '" + idUrusan + "'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()){
+				return (String)rs.getString("KOD_URUSAN");
+			} else {
+				return "";
+			}
+			
+		}  catch (Exception re) {
+			myLogger.error("Error: ", re);
+			throw re;
+			}	finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	public String generateNoFail(HttpSession session, String kodUrusan, String kodKementerian,
 			String idKementerian, String kodNegeri, String idNegeri)
 			throws Exception {
-		String noFail = "";
-		noFail = "JKPTG/SPHP/"
+		Calendar currentDate = new GregorianCalendar();
+		String noRujukanOnline = "";
+		noRujukanOnline = "JKPTG/BPHP/04/"
 				+ kodUrusan
+				+ "/"
+				+ currentDate.get(Calendar.YEAR)
 				+ "/"
 				+ kodKementerian
 				+ "/"
 				+ kodNegeri
 				+ "-"
-				+ File.getSeqNo(4, 6, Integer.parseInt(idKementerian),
-						Integer.parseInt(idNegeri));
+				+ File.getSeqNo(4, 6, 0, 0, 0, false, false, currentDate.get(Calendar.YEAR), 0);
 
-		return noFail;
+		return noRujukanOnline;
 	}
 	public String getKodKementerian(String idKementerian) throws Exception {
 		Db db = null;
@@ -1484,18 +1518,19 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN "
+			sql = "SELECT A.ID_FAIL, B.NO_PERMOHONAN, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANPELEPASAN C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("setMaklumatPermohonan==="+sql);
 
 			Hashtable<String, Object> h;
 			int bil = 1;
 			while (rs.next()) {
 				h = new Hashtable<String, Object>();
 				h.put("idFail",rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
-				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
+				h.put("noRujukanOnline", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN").toUpperCase());
 				h.put("idPermohonan",rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
 				h.put("idPemohon",rs.getString("ID_PEMOHON") == null ? "" : rs.getString("ID_PEMOHON"));
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? "": sdf.format(rs.getDate("TARIKH_SURAT")));
