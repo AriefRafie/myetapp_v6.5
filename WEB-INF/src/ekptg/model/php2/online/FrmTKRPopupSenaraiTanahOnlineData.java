@@ -27,7 +27,7 @@ public class FrmTKRPopupSenaraiTanahOnlineData {
 	private Vector beanMaklumatAgensi = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	static Logger myLog = Logger.getLogger(FrmPLPOnlineKJPSenaraiFailData.class);
+	static Logger myLog = Logger.getLogger(FrmTKRPopupSenaraiTanahOnlineData.class);
 
 	public void carianTanah(String idJenisTanah, String peganganHakmilik,
 			String jenisHakmilik, String noHakmilik, String jenisLot,
@@ -60,6 +60,7 @@ public class FrmTKRPopupSenaraiTanahOnlineData {
 					+ " AND HM.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) AND HM.ID_KATEGORI = RUJKATEGORI.ID_KATEGORI(+) AND HM.ID_SUBKATEGORI = RUJSUBKATEGORI.ID_SUBKATEGORI(+)"
 					+ " AND HMA.ID_AGENSI = RUJAGENSI.ID_AGENSI(+) AND RUJAGENSI.ID_KEMENTERIAN = RUJKEMENTERIAN.ID_KEMENTERIAN(+)"
 					+ " AND (HM.STATUS_SAH != 'B' OR HM.STATUS_SAH IS NULL) AND HMA.FLAG_AKTIF = 'Y'";
+		
 
 			// idJenisTanah
 			if (idJenisTanah != null) {

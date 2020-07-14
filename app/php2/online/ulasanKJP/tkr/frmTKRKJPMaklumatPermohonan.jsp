@@ -51,7 +51,7 @@
     <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
-          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENAWARAN</li>
+          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TUKARGUNA</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MUAT NAIK DOKUMEN</li>
           #if ($idStatus == '1610207' || $idStatus == '1610208')
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
@@ -84,7 +84,7 @@
                 <td>&nbsp;</td>
                 <td>Luas Lot</td>
                 <td>:</td>
-                <td>$beanMaklumatTanah.luasLot</td>
+                <td>$beanMaklumatTanah.luas</td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
