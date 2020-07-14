@@ -175,6 +175,14 @@
   				<legend><strong>Borang PU</strong></legend>
   				
   					<table width="100%" border="0">
+  					
+  						<tr>
+  							<td>&nbsp;</td>
+  							<td>No. Fail JUPEM</td>
+  							<td>:</td>
+  							<td><input type="text" name="txtNoJUPEM" id="txtNoJUPEM" value="$!txtNoJUPEM" size="20" maxlength="20"></td>
+  						</tr>
+  					
   						<tr>
   							<td width="1%">&nbsp;</td>
   							<td width="20%">Tarikh Hantar Ke JUPEM</td>
@@ -207,6 +215,7 @@
   				#foreach($dataPU in $dataPermintaanUkur)
 	    			<!-- set($txtNoPelan=$dataPU.no_pelan) -->
 	    			#set($txtNoPU=$dataPU.no_pu)
+	    			#set($txtNoJUPEM=$dataPU.no_jupem)
 	    			#set($txdTarikhSuratPTG=$dataPU.tarikh_surat_ptg)
 	    			#set($txdTarikhHantarJUPEM=$dataPU.tarikh_hantar_jupem)
 	    			#set($txdTarikhBorangPU=$dataPU.tarikh_pu)
@@ -325,6 +334,14 @@
   				<legend><strong>Borang PU</strong></legend>
   				
   					<table width="100%" border="0">
+  					
+  						<tr>
+  							<td>&nbsp;</td>
+  							<td>No. Fail JUPEM</td>
+  							<td>:</td>
+  							<td><input $disability $disabilityx type="text" name="txtNoJUPEM" id="txtNoJUPEM" value="$!txtNoJUPEM" size="20" maxlength="20"></td>
+  						</tr>
+  						
   						<tr>
   							<td width="1%">&nbsp;</td>
   							<td width="20%">Tarikh Hantar Ke JUPEM</td>
@@ -332,12 +349,14 @@
   							<td width="68%"><input $disability $disabilityx name="txdTarikhHantarJUPEM" id="txdTarikhHantarJUPEM" size="11" type="text" value="$!txdTarikhHantarJUPEM" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
             				#if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhHantarJUPEM',false,'dmy');">&nbsp;$!frmtdate#end</td>
   						</tr>
+  						
   						<tr>
   							<td>&nbsp;</td>
   							<td>No. PU</td>
   							<td>:</td>
   							<td><input $disability $disabilityx type="text" name="txtNoPU" id="txtNoPU" value="$!txtNoPU" size="20" maxlength="20"   ></td>
   						</tr>
+  						
   						<tr>
   							<td>&nbsp;</td>
   							<td>Tarikh Borang PU</td>
