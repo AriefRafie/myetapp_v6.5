@@ -9,6 +9,7 @@
 -->
 <style type="text/css">
 <!--
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -184,7 +185,7 @@ Click me</a>
     <tr>
       <td><div id="TabbedPanels1" class="TabbedPanels">
           <ul class="TabbedPanelsTabGroup">
-            <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,0,0,0);SimatiView()" >PERMOHONAN</li>
+            <li class="TabbedPanelsTab style1 style3 TabbedPanelsTabSelected" tabindex="0" onclick="setSelected(0,0,0,0);SimatiView()" >PERMOHONAN</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(1,0,0,0);HtaamView()">HARTA TAK ALIH</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(2,0,0,0);HAview()" >HARTA ALIH</li>
             #if($!skrin_online != "yes")
@@ -207,7 +208,7 @@ Click me</a>
                   <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,5,0,0);PemiutangView()">PEMIUTANG</li>
                   <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,6,0,0);PenghutangView()">PENGHUTANG</li>
                   #if($!skrin_online == "yes")
-                  <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,7,0,0);TukarPemohonView()" id="maklumat_pemohon">PERTUKARAN PEMOHON</li>
+                  <li class="TabbedPanelsTab style1 style3 TabbedPanelsTabSelected" tabindex="0" onclick="setSelected(0,7,0,0);TukarPemohonView()" id="maklumat_pemohon">PERTUKARAN PEMOHON</li>
                    #end
                 </ul>
                 <div class="TabbedPanelsContentGroup">
@@ -285,11 +286,12 @@ Click me</a>
                       #end
                      
                       #end
-                      
+                     
                       #if($show_hantar_btn == "yes")
 		                      #foreach($list in $listCheckPertukaran)
 			                      #set($id_Pemohonbaru = $list.id_pemohonbaru)
 			                      #set($sebabTukar = $list.sebab_tukar)
+			                      #set($tarikhMati = $list.tarikh_mati)
 			                      
 			                      #set ($check0 = "checked")
 			                      
@@ -311,6 +313,7 @@ Click me</a>
                       
                       #if($show_senarai_lapis_pertama == "yes")
                         <input name="id_Pemohonbaru" id="id_Pemohonbaru" type="hidden"  value="$!id_Pemohonbaru"/>
+                        <input name="" id="" type="hidden"  value="$!tarikhMati"/>
 	                      
                       <tr>
                       	<td>
@@ -468,7 +471,7 @@ Click me</a>
      							</tr>
      							<tr>
      								<td></td>
-     								<td><span class="style44">*</span> TARIKH KEMATIAN :&nbsp;<input type="text" name="tarikh_mati" id="tarikh_mati" $setMode3> <a href="javascript:displayDatePicker('tarikh_mati',false,'dmy');">#parse("app/ppk/ppk_calender.jsp")</a></td>
+     								<td><span class="style44">*</span> TARIKH KEMATIAN :&nbsp;<input type="text" name="tarikh_mati" id="tarikh_mati" value="$!tarikhMati" $setMode3> <a href="javascript:displayDatePicker('tarikh_mati',false,'dmy');">#parse("app/ppk/ppk_calender.jsp")</a></td>
      								<td></td>
      							</tr>
      							<tr>
@@ -478,8 +481,10 @@ Click me</a>
     							 </tr>
     							 <tr>
 								     <td></td>
-								     <td>MUATNAIK DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')" />
-<!-- 								     								 <input id="download" name="download" type="button" value="Muat Turun Dokumen"/> -->
+								     <td>DOKUMEN SOKONGAN : #if($show_hantar_btn == "")<input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')" /> #end
+<!-- 								  	   								 <input id="download" name="download" type="button" value="Muat Turun Dokumen"/> -->
+								     #if($show_hantar_btn == "yes") &nbsp; #end
+								     $!lampirans
 								     </td>
 								     <td></td>
       							</tr>
@@ -491,20 +496,29 @@ Click me</a>
 									       	<input type="button" value="Cetak Borang AA" />
 									      </a>
 									      <a href="#" onClick="javascript:cetakSuratPengesahan('$!idPermohonan','$!id_fail_carian')">
-									       	<input type="button" value="Cetak Surat Akuan" />
+									       	<input type="button" value="Cetak Surat Pengesahan" />
 									      </a>
 <!-- 									      <font color="red"><b>Cetak Borang AA</b></font> -->
 									</td>
      							</tr>
      						#else
      						
-     						 #if($id_Status != "21")
-							    <tr align="center">
-									<td></td>
-									<td>
-										<input name="cmdSimpanKPOb" id="cmdSimpanKPOb" value="Hantar" type="button" onClick="javascript:testSimpan('$idSimati','$id_Permohonansimati','$id_fail_carian','$noFail','cmdSimpanKPOb')">
-									</td>
-     							</tr>
+     						 	#if($id_Status != "21")
+     						 		#if($listWaris.size()==1)
+	     							<tr align="center">
+										<td></td>
+										<td>  
+										      <font color="red"><b>Anda adalah pemohon tunggal. Pertukaran pemohon tidak dibenarkan.</b></font>
+										</td>
+	     							</tr>
+	     							#else
+								    <tr align="center">
+										<td></td>
+										<td>
+											<input name="cmdSimpanKPOb" id="cmdSimpanKPOb" value="Hantar" type="button" onClick="javascript:testSimpan('$idSimati','$id_Permohonansimati','$id_fail_carian','$noFail','cmdSimpanKPOb')">
+										</td>
+	     							</tr>
+	     							#end
      							#else
      							<tr align="center">
 									<td></td>
@@ -603,21 +617,21 @@ Click me</a>
                      
                     </table>
                   </div>
-                  <div class="TabbedPanelsContent"></div>
-                  <div class="TabbedPanelsContent"></div>
-                  <div class="TabbedPanelsContent"></div>
-                  <div class="TabbedPanelsContent"></div>
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
                 </div>
               </div>
             </div>
-            <div class="TabbedPanelsContent">
-              <div id="TabbedPanels4" class="TabbedPanelsContentVisible">
-                <div class="TabbedPanelsContentGroup">
-                  <div class="TabbedPanelsContent"></div>
-                  <div class="TabbedPanelsContent"></div>
-                </div>
-              </div>
-            </div>
+<!--             <div class="TabbedPanelsContent"> -->
+<!--               <div id="TabbedPanels4" class="TabbedPanelsContentVisible"> -->
+<!--                 <div class="TabbedPanelsContentGroup"> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
             <div class="TabbedPanelsContent"></div>
             <div class="TabbedPanelsContent"></div>
           </div>
@@ -4174,6 +4188,14 @@ function lampiran(idPermohonan,jenisUpload) {
 	var h = 800;
     var left = (screen.width/2)-(w/2);
 
+}
+
+function paparLampiran(id_){
+  	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
+      var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+      if ((document.window != null) && (!hWnd.opener))
+  	hWnd.opener=document.window;
+      if (hWnd.focus != null) hWnd.focus();
 }
 
 function cetakBorangAA(idpermohonan,idfail) {
