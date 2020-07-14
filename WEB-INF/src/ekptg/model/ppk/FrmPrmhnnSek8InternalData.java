@@ -434,9 +434,10 @@ public Boolean sendNilaianHTA(String ID_PERMOHONAN, String ID_HTA, String JENIS_
 	
 	// syafiqah add
 	// public boolean setCheckPertukaran(String id) throws Exception {
-	public void setCheckPertukaran(String id) throws Exception {
+	public Vector setCheckPertukaran(String id) throws Exception {
 		// boolean returnVal =false;
 		Db db = null;
+		Connection conn = null;
 		listCheckPertukaran.clear();
 		String sql = "";
 
@@ -445,17 +446,20 @@ public Boolean sendNilaianHTA(String ID_PERMOHONAN, String ID_HTA, String JENIS_
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			sql = "select pt.id_permohonansimati, pt.id_pemohonbaru, pt.sebab_tukar from tblppktukarpemohon pt "
-					+ "where pt.id_permohonansimati = " + id;
-			System.out.println("syafiqah add :"+sql); 
+			sql = "select pt.id_permohonansimati, pt.id_pemohonbaru, pt.sebab_tukar, to_char(po.tarikh_mati, 'DD/MM/YYYY') as tarikh_mati from tblppktukarpemohon pt, tblppkob po "
+					+ "where pt.id_pemohonlama = po.id_pemohon and pt.id_permohonansimati = " + id;
+			System.out.println("syafiqah get borang aa :"+sql); 
 			ResultSet rs = stmt.executeQuery(sql);
+			
 			Hashtable h;
 
 			while (rs.next()) {
+				// myLogger.info("DIA X BACA KAT SINI"); 
 				h = new Hashtable();
 				h.put("id_permohonansimati", rs.getString("id_permohonansimati") == null ? "" : rs.getString("id_permohonansimati"));
 				h.put("id_pemohonbaru", rs.getString("id_pemohonbaru") == null ? "" : rs.getString("id_pemohonbaru"));
 				h.put("sebab_tukar", rs.getString("sebab_tukar") == null ? "" : rs.getString("sebab_tukar"));
+				h.put("tarikh_mati", rs.getString("tarikh_mati") == null ? "" : rs.getString("tarikh_mati"));
 				// h.put("id_permohonansimati", rs.getString("id_permohonansimati") == null ? "" : rs.getString("id_permohonansimati"));
 				listCheckPertukaran.addElement(h);
 				// returnVal = true; 
@@ -469,6 +473,7 @@ public Boolean sendNilaianHTA(String ID_PERMOHONAN, String ID_HTA, String JENIS_
 				db.close();
 		}
 		// return returnVal;
+		return listCheckPertukaran;
 
 	}
 	

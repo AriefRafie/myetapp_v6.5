@@ -160,7 +160,7 @@ resetOnBlur:false
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,0,0,0);SimatiView()" >PERMOHONAN</li>
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(1,0,0,0);HtaamView()">HARTA TAK ALIH</li>
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(2,0,0,0);HAview()" >HARTA ALIH</li>
-        #if($!skrin_online != "yes")
+       #if($!skrin_online != "yes")
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(3,0,0,0);NAview()" >NILAIAN HARTA</li>
       #else
       #if($!hideTabPengesahan == "show")
@@ -187,6 +187,9 @@ resetOnBlur:false
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,4,0,0);SaksiView()">SAKSI</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,5,0,0);PemiutangView()">PEMIUTANG</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,6,0,0);PenghutangView()">PENGHUTANG</li>
+             #if( ($!skrin_online == "yes") && ($!skrin_deraf == "") )
+            <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,7,0,0);TukarPemohonView()">PERTUKARAN PEMOHON</li>
+            #end
           </ul>
           
           
@@ -1521,6 +1524,29 @@ document.f1.action = "";
 	document.f1.command.value = "nilai_harta";
 	document.f1.submit();
 }
+
+<!-- syafiqah add -->
+// function TukarPemohonView(){
+// 	document.f1.action = "";
+// 	document.f1.mode.value = "TukarPemohonview";
+// 	document.f1.command.value = "Tukarpemohon";
+// 	document.f1.submit();
+// }
+
+function TukarPemohonView() {
+	if('$!skrin_online' == 'yes')
+{
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
+}
+else
+{
+document.f1.action = "";
+}
+	document.f1.mode.value = "TukarPemohonview";
+	document.f1.command.value = "Tukarpemohon";
+	document.f1.submit();
+}
+<!-- syafiqah add end -->
 
 function PenghutangView() {
 	if('$!skrin_online' == 'yes')
