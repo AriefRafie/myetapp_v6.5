@@ -190,7 +190,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 		
 		//myLog.info("actionTukarguna="+actionTukarguna);
-		//myLog.info("submit2="+submit2);
+		myLog.info("submit="+submit);
 		myLog.info("hitButton="+hitButton);
 		this.context.put("errorPeganganHakmilik", "");
 		
@@ -404,7 +404,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				//vm = "/start.jsp";
 
 			} else if ("carian".equals(submit)) {
-
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				String findNoFail = getParam("findNoFail");
 				String findTajukFail = getParam("findTajukFail");				
@@ -443,7 +442,9 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				}
 
 				Vector listFail = logic.getSenaraiFail(findNoFail, findTajukFail, findPemohon, findNoPengenalan, findTarikhTerima, 
-						findNoHakmilik, findNoWarta, findNoPegangan, findJenisHakmilik, findJenisLot, findNoLot, findNegeri, findDaerah, findMukim, userId);
+						findNoHakmilik, findNoWarta, findNoPegangan, findJenisHakmilik, findJenisLot, findNoLot
+						, findNegeri, findDaerah, findMukim
+						, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
@@ -505,16 +506,11 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				vm = "/start.jsp";
 
 			}else if ("seterusnya".equals(submit)) {
-				myLog.info("seterusnya");
-				
+				myLog.info("seterusnya");				
 				// GO TO MAKLUMAT PERMOHONAN
-				vm = "/frmTKRKJPMaklumatPermohonan.jsp";
-
-				
-				
+				vm = "/frmTKRKJPMaklumatPermohonan.jsp";			
 
 			} else {
-
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
