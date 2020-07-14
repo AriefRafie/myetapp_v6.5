@@ -411,13 +411,14 @@ public class FrmPrmhnnSek8SenaraiSemakInternalKutipan extends VTemplate {
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftarKutipan.jsp";
 		} else if ("Simpan".equals(submit)) {
 			String uu = (String) session.getAttribute("_ekptg_user_id");
-			int uu_ser = Integer.parseInt(uu);
+			//int uu_ser = Integer.parseInt(uu);
 			String eventstatus = getParam("eventStatus");
 			eventStatus = Integer.parseInt(eventstatus);
 			if (eventStatus == 0) {
 				long idPermohonan = DB.getNextID("TBLPPKPERMOHONAN_SEQ");
 				String buktimati = getParam("cbsemakradio");
 				String tempid = Long.toString(idPermohonan);
+				String tarikhperintah = "";
 				delete_semakan(session, tempid);
 				String[] cbsemaks = this.request.getParameterValues("cbsemaks");
 				// FrmPrmhnnSek8SenaraiSemakInternalData
@@ -437,13 +438,11 @@ public class FrmPrmhnnSek8SenaraiSemakInternalKutipan extends VTemplate {
 						} else if (cbsemaks[i].equals("23")) {
 							txtbox = getParam("txtLainLainTujuan");
 						}
-						// frmPrmhnnSek8SenaraiSemakData.semakanAdd(cbsemaks[i],
-						// String.valueOf(idPermohonan), String.valueOf(txtbox),
-						// String.valueOf(tarikhresit));
 
-						logic_C.semakanAdd(cbsemaks[i], String
-								.valueOf(idPermohonan), String.valueOf(txtbox),
-								String.valueOf(tarikhresit), buktimati, uu);
+
+
+						logic_C.semakanAdd(cbsemaks[i], String.valueOf(idPermohonan), String.valueOf(txtbox),
+								String.valueOf(tarikhresit), String.valueOf(tarikhperintah),buktimati, uu);
 
 					}
 				}

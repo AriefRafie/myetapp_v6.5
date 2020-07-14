@@ -371,6 +371,11 @@
 						                       		<tr>
 						                            	<td>
 						                              	<fieldset><legend>HARTA TAK ALIH(TIADA HAKMILIK)</legend>
+						                              	#if($!skrin_online == "yes")
+					                          					<div id="info_skrin_daftar_sek8"></div>
+																				      <script>
+																				 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><table><tr><b><blink>*</blink> Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Tiada Hakmilik) : Harta tak alih yang tidak mempunyai hakmilik/geran yang berdaftar nama si mati dan kepentingan si mati berdasarkan surat perjanjian jual beli.</br></b></div>";
+																				 			</script> #end
 						                                	<input name="noradio" type="hidden" />
 						                                   	<table width="70%" align="center">
 										                        <tr>
@@ -378,9 +383,10 @@
 					                                              		<input name="radioHtaamViewX" id="radioHtaamViewX1" type="radio" onclick="setSelected(1,0,0,1);HtaamViewX1()"   $checked1 value="1" />
 					                                                   
 					                                                  Perjanjian Jual Beli</span>
+					                                                  #if($!skrin_online == "yes")
 					                                                  <a href="javascript:info('perjanjian')" class="help" title="info">					
 									                															<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									           															  </a>
+									           															  </a>#end
 					                                                  </td>
 					                                          	</tr>
 					                                   			<tr>

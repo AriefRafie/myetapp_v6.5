@@ -834,9 +834,10 @@ resetOnBlur:false
 																	#else
                                   <input name="txtNoSijilMatiSimati" onBlur="this.value=this.value.toUpperCase()" type="text" id="txtNoSijilMatiSimati" style="text-transform:uppercase;" value="$listmati.noSijilMati" size="30" maxlength="15" $readmodesy />
                                 #end
+                                #if($!skrin_online == "yes")
                                 <a href="javascript:info('sijil')" class="help" title="info">					
 																	<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-																</a>
+																</a>#end
                                 </label></td>
                               </tr>
                               
@@ -878,9 +879,10 @@ resetOnBlur:false
                                   	#if($readmode != "disabled" )
                                   		<span class="style52">dd/mm/yyyy</span>
                                   	#end
+                                  	#if($!skrin_online == "yes")
                                   	<a href="javascript:info('tarikh')" class="help" title="info">					
 									                        <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                  </a>                                   
+									                  </a>#end                               
 								</td>
                               </tr>
                               <tr>
@@ -975,9 +977,10 @@ resetOnBlur:false
                                                    
                               <textarea name="txtTempatMatiSimati" id="patMatiSimati"   cols="31" rows="3"    $readmodeR class="$readmode" >$listmati.tempatMati</textarea>
                               </label>
+                              #if($!skrin_online == "yes")
                               <a href="javascript:info('tempat')" class="help" title="info">					
 									                <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									            </a> </td>
+									            </a>#end </td>
                             </tr>
                             <tr>
                               <!-- <td class="style38" valign="top" > -->
@@ -994,9 +997,10 @@ resetOnBlur:false
                                 <div align="left">#end                              </div></td>
                               <td valign="top">:</td>
                               <td><textarea name="txtSebabKematianSimati" cols="31" rows="3" id="txtSebabKematian"   $readmodeR class="$readmode" >$listmati.sebabMati</textarea>
+                             	#if($!skrin_online == "yes")
                               <a href="javascript:info('sebab')" class="help" title="info">					
 									                <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									            </a>
+									            </a>#end
                               </td>
                             </tr>
                             <tr>
@@ -1009,9 +1013,10 @@ resetOnBlur:false
                               <td ><label>
                                 <input name="txtAlamatTerakhir1Simati" type="text" id="txtAlamatTerakhir" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" value="$listmati.alamat1" size="34" maxlength="50"    $readmodeR class="$readmode"  />
                               </label>
+                              #if($!skrin_online == "yes")
                               <a href="javascript:info('alamat')" class="help" title="info">					
 									                <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									            </a>
+									            </a>#end
                               </td>
                             </tr>
                             <tr>
