@@ -33,7 +33,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	private String readonly = "disabled class = \"disabled\"";
-	static Logger myLog = Logger.getLogger(FrmPLPOnlineKJPSenaraiFailView.class);
+	static Logger myLog = Logger.getLogger(FrmTKROnlineKJPSenaraiFailView.class);
 
 	FrmTKRHeaderData logicHeader = new FrmTKRHeaderData();
 	FrmTKRJabatanTeknikalData logicJabatanTeknikal = new FrmTKRJabatanTeknikalData();
