@@ -15,6 +15,7 @@
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idPermohonanSewa" type="hidden" id="idPermohonanSewa" value="$idPermohonanSewa"/>
+  <input name="idTujuanPermohonan" type="hidden" id="idTujuanPermohonan" value="$idTujuanPermohonan"/>
   <input name="idPemohon" type="hidden" id="idPemohon" value="$idPemohon"/>
   <input name="idHakmilikAgensi" type="hidden" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
   <input name="idHakmilikAgensiPopup" type="hidden" id="idHakmilikAgensiPopup"/>
@@ -172,9 +173,21 @@
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatSewa in $BeanMaklumatSewa)
+	          <tr>
+          		<td>&nbsp;</td>
+          		<td>Urusan</td>
+          		<td>:</td>
+          		<td>$selectUrusan</td>
+        	  </tr>
+	          <tr>
+          		<td>&nbsp;</td>
+          		<td>Suburusan</td>
+          		<td>:</td>
+          		<td>$selectSuburusan</td>
+        	  </tr>
               <tr>
-				<td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
-				<td>Tujuan</td>
+				<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+				<td>Tujuan Penyewaan</td>
 				<td>:</td>
 				<td>$selectSubSuburusan</td>
 				<input type="hidden" name="namatujuan" id="namatujuan" value="$beanMaklumatSewa.tujuan" />
@@ -290,9 +303,6 @@
                   #if ($mode == 'view')
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
                   <input type="button" name="cmdBackList2" id="cmdBackList2" value="Kembali" onClick="doBacklist()"/>
-                  <!-- butang hantar & email / butang hapus dipindah ke tab pengesahan -->
-                  <!-- <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
-                  <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>-->
                   #end
                   #if ($mode == 'update')
                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPenyewaan('$idLuas')"/>
@@ -321,46 +331,118 @@
            	</tr>
            	</table>
          </div>
+         
          <div class="TabbedPanelsContent">
+         	<br>
+         	<fieldset>
+         		<legend><strong>MAKLUMAT JKPTG</strong></legend>
+         		#foreach ($beanMaklumatPejabat in $BeanMaklumatPejabat)
+         		<table width="100%" border="0" cellspacing="2" cellpadding="2">
+         			<tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">Negeri</td>
+						<td width="1%">:</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.negeri</strong></td>
+				    </tr>
+				    <tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">Daerah</td>
+						<td width="1%">:</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.daerah</strong></td>
+				    </tr>
+				    <tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">Pejabat</td>
+						<td width="1%">:</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.namaPejabat</strong></td>
+				    </tr>
+				    <tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">Alamat</td>
+						<td width="1%">:</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.alamat1</strong></td>
+				    </tr>
+				    <tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">&nbsp;</td>
+						<td width="1%">&nbsp;</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.alamat2</strong></td>
+				    </tr>
+				    <tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">&nbsp;</td>
+						<td width="1%">&nbsp;</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.alamat3</strong></td>
+				    </tr>
+				    <tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">Poskod</td>
+						<td width="1%">:</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.poskod</strong></td>
+				    </tr>
+				    <tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">No. Telefon</td>
+						<td width="1%">:</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.noTel</strong></td>
+				    </tr>
+				    <tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">No. Faks</td>
+						<td width="1%">:</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.noFax</strong></td>
+				    </tr>
+				    <tr>
+						<td width="1%">&nbsp;</td>
+						<td width="28%">Emel</td>
+						<td width="1%">:</td>
+						<td width="70%"><strong>$!beanMaklumatPejabat.emel</strong></td>
+				    </tr>
+				    <br>
+         		</table>
+         		#end
+         	</fieldset>
+         	<br>
+         	<fieldset>
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
-           	<td valign="top">
-           	#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
-           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
-           	<td>Saya, $!pemohon.get("namaPemohon"), dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
-           	<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</td> 
-           	<tr>
-           	<td colspan=2 align="center">
-           	#if ($idStatus == '')
-           		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
-            	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-            #else
-            #if ($idStatus !='')
-            	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-            #end
-            #end
-            </td>
-           	</tr>          	        	
-           	</table>
+           		<tr>
+	           		<td valign="top">
+	           		#if ($idStatus == '')
+	           			<input type="checkbox" name="pengesahan" id="pengesahan">#end
+	           		#if ($idStatus != '')
+	           			<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end
+	           		</td>
+	           		<td>Saya, $!pemohon.get("namaPemohon"), $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
+	           			<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+	           		</td> 
+           		</tr>
+           		<tr>
+           			<td>&nbsp;</td>
+           			<td>&nbsp;</td>
+           		</tr>
+	           	<tr>
+	           		<td>&nbsp;</td>
+	           		<td colspan=2 align="center">
+	           		#if ($idStatus == '')
+	           			<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+	           			<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
+	            		<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
+	            	#else
+	            	#if ($idStatus !='')
+	            		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+	           			<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+	           		#end
+	            	#end
+	            	</td>
+	           	</tr>          	        	
+           	</table></fieldset>
          </div>
         </div>
       </div></td>
   </tr>
   #end
 </table>
-<!-- <div id="calculateTotalPercentPengarah_result"></div>
-<fieldset id="tableReport" style="display:none;"-->
-<!--<legend><strong>SENARAI LAPORAN</strong></legend>
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <tr>
-    <td ><a href="#" class="style2" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"> Borang Permohonan </a></td>
-  </tr>
-  <tr>
-    <td ><a href="#" class="style2" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"> Pengesahan Permohonan </a></td>
-  </tr>
-</table>
-</fieldset> -->
+
 <script type="text/javascript">
 #if ($idFail != '')
 	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
@@ -383,6 +465,12 @@ function doChangePeganganHakmilik1() {
 }
 function doChangeNegeri() {
 	doAjaxCall${formName}("doChangeNegeri");
+}
+function doChangeLuasKegunaan() {
+	doAjaxCall${formName}("doChangeLuasKegunaan");
+}
+function doChangeLuas() {
+	doAjaxCall${formName}("doChangeLuas");
 }
 function pilihTanahPYW() {
 	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmPYWOnlinePopupSenaraiTanahView";
@@ -433,12 +521,6 @@ function validateLuas(elmnt,content,content2) {
 		return;
 	}
 }
-function doChangeLuasKegunaan() {
-	doAjaxCall${formName}("doChangeLuasKegunaan");
-}
-function doChangeLuas() {
-	doAjaxCall${formName}("doChangeLuas");
-}
 function calculate(valueMohon,valueBaki){	
 	var luasPenyewaan = document.${formName}.txtLuasPenyewaan.value * 1;
 	var luasAsal = document.${formName}.txtLuasAsal.value * 1;
@@ -466,6 +548,11 @@ function doBatalKemaskini() {
 }
 function doSimpanKemaskiniMaklumatPenyewaan(idLuas) {
 
+	if(document.${formName}.socSubsuburusan.value == ""){
+		alert('Sila pilih Tujuan Penyewaan.');
+  		document.${formName}.socSubsuburusan.focus(); 
+		return; 
+	}
 	if(document.${formName}.socTempohSewa.value == "SILA PILIH"){
 		alert('Sila pilih Tempoh Sewa.');
   		document.${formName}.socTempohSewa.focus(); 
