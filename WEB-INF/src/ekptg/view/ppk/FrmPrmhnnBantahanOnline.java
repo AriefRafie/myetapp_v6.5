@@ -1,5 +1,8 @@
 package ekptg.view.ppk;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +28,7 @@ import ekptg.model.ppk.FrmPrmhnnSek8Data;
 import ekptg.model.ppk.FrmPrmhnnSek8SecaraOnlineData;
 import ekptg.model.ppk.FrmPrmhnnSek8SenaraiHTATHData;
 import ekptg.model.ppk.FrmPrmhnnStatusPengunaOnlineData;
+import ekptg.model.ppk.FrmTukaranStatus;
 import ekptg.model.ppk.online.IStatusPermohonan;
 import ekptg.model.ppk.online.StatusPermohonanFacade;
 
@@ -35,6 +39,7 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 	FrmPrmhnnSek8SecaraOnlineData logiconline = new FrmPrmhnnSek8SecaraOnlineData();
 	FrmBorangPSek17OnlineData logic = new FrmBorangPSek17OnlineData();
 	FrmPrmhnnSek8Data logic3 = new FrmPrmhnnSek8Data();
+	FrmTukaranStatus model = new FrmTukaranStatus();
 
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -53,16 +58,35 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		String disability2 = "";
 		String readability1 = "";
 		String readability2 = "";
-		this.context.put("Util", new lebah.util.Util());
+		this.context.put("Util", new lebah.util.Util()); 
 		Vector senaraiFail = new Vector();
 		Vector senaraiBantah = new Vector();
 		
 		String USER_LOGIN_SYSTEM = (String)session.getAttribute("_portal_login");
 
 		this.context.put("skrin_deraf", "");
+		this.context.put("txtNoFailSub","");
 
 		// this.context.put("skrin_online_popup","");
 		myLogger.info("submit="+submit);
+		
+		if ("cariMainSub".equals(submit)){
+			
+    		String txtNoFailSub = getParam("txtNoFailSub"); 
+    		String txtIcPemohon = getParam("txtIcPemohon");
+    		String txtNamaSimati = getParam("txtNamaSimati"); 
+    		String txtNamaPemohon = getParam("txtNamaPemohon");
+    		context.put("txtNoFailSub", txtNoFailSub.trim());
+    		context.put("txtIcPemohon",txtIcPemohon.trim());
+    		context.put("txtNamaSimati",txtNamaSimati.trim());
+    		context.put("txtNamaPemohon",txtNamaPemohon.trim());
+    		context.put("list_fail",model.search_bantahan(txtNoFailSub.trim(),usid,txtIcPemohon,txtNamaSimati,txtNamaPemohon));
+    		context.put("view_list_fail","yes"); 
+    		
+  
+			vm = "app/ppk/frmPrmhnnBantahanOnline.jsp";
+    
+    	}
 
 		if ("check_kp".equals(submit)) {
 			String NoKPBaru = getParam("txtNoKPBaru1a")
@@ -85,15 +109,36 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 								(String) session.getAttribute("_portal_role"),
 								getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
 								"no");
+				senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
+						.getAttribute("_ekptg_user_id"),
+						(String) session.getAttribute("_portal_role"),
+						getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
+						"no");
 				
 
 				this.context.put("senaraitugasan", senaraiFail);
+				this.context.put("senaraibantahan", senaraiBantah);
+				myLogger.info("lalu sini A");
 				vm = "app/ppk/frmPrmhnnBantahanOnline.jsp";
 			}
 		} 
 		else if ("doChanges".equals(submit)) {
+			
+			senaraiFail = FrmPrmhnnStatusPengunaOnlineData
+					.getSenaraiPermohonanBantahan("", (String) session
+							.getAttribute("_ekptg_user_id"),
+							(String) session.getAttribute("_portal_role"),
+							getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
+							"no");
+			senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
+					.getAttribute("_ekptg_user_id"),
+					(String) session.getAttribute("_portal_role"),
+					getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
+					"no");
 
+			this.context.put("senaraibantahan", senaraiBantah);
 			vm = "app/ppk/frmPrmhnnBantahanOnline.jsp";
+			myLogger.info("lalu sini B");
 			setupPage(session, action, senaraiFail);
 		}
 		
@@ -101,8 +146,9 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		else if("skrinBantahNow".equals(submit)) {
 			String idPermohonan = getParam("idPermohonan");
 			String idFail = getParam("idFail");
-			String noFail = getParam("nofail");
+			String noFail = getParam("noFail");
 			String nama_simati = getParam("nama_simati");
+			String ic_simati = getParam("icSimati");
 			
 			senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
 					.getAttribute("_ekptg_user_id"),
@@ -131,11 +177,13 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 			this.context.put("idfail", idFail);
 			this.context.put("nofail", noFail);
 			this.context.put("nama_simati", nama_simati);
+			this.context.put("ic_simati", ic_simati);
 			this.context.put("senaraibantahan", senaraiBantah);
 		}
 		else if("skrinBantahPast".equals(submit)) {
 			String idFail = getParam("idFail");
 			String noFail = getParam("nofail");
+			String ic_simati = getParam("icSimati");
 			
 			senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
 					.getAttribute("_ekptg_user_id"),
@@ -160,6 +208,7 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 			this.context.put("dah_simpan", "");
 			this.context.put("idfail", idFail);
 			this.context.put("nofail", noFail);
+			this.context.put("ic_simati", ic_simati);
 			this.context.put("senaraibantahan", senaraiBantah);
 		}
 		else if("paparDcl".equals(submit)) {
@@ -4402,8 +4451,16 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 				(String) session.getAttribute("_ekptg_user_id"),
 				(String) session.getAttribute("_portal_role"),
 				getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, "no");
+		
+		senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
+				.getAttribute("_ekptg_user_id"),
+				(String) session.getAttribute("_portal_role"),
+				getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
+				"no");
+		
 		System.out.println("USER_LOGIN_SYSTEM >>> "+USER_LOGIN_SYSTEM);
-		// context.put("senaraiFail",senaraiFail);
+		
+		this.context.put("senaraibantahan", senaraiBantah);
 		setupPage(session, action, senaraiFail);
 
 		context.put("IDpemohon", USER_LOGIN_SYSTEM);
@@ -5467,6 +5524,10 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 	}
 	
 	private void addBantahan(HttpSession session) throws Exception {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		String currentDate = dateFormat.format(date);
+		
 		String idP = getParam("id_pemohon");
 		String idFail = getParam("id_fail");
 		String noFail = getParam("nama_fail");
@@ -5501,6 +5562,7 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		h.put("id_fail", idFail);
 		h.put("no_fail", noFail);
 		h.put("no_kp_baru", myidP);
+		h.put("tarikh_hantar", currentDate);
 		
 		logiconline.insertPermohonanBantah(h);
 		

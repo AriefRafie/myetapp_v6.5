@@ -1,4 +1,4 @@
-<fieldset><legend>Pembelian</legend>
+<fieldset><legend><!-- Pembelian --></legend>
 <fieldset><legend>Maklumat Fail</legend>#parse ("app/htp/pembelian/fail/fileInfo.jsp")
 </fieldset>
 
@@ -336,12 +336,12 @@
 		<TR >
 			<td align="center">
 			#if($button == "simpan")
-            	<input class="stylobutton" name="Simpan" value="Simpan" type="button" onclick="simpanMaklumatTanah();"/>
-                <input class="stylobutton" name="Kembali" value="Kembali" type="button" onclick="doAjaxCall${formName}('maklumatTanah','idPermohonan='+$!htpPermohonan.permohonan.getIdPermohonan())"/> 
+            	<input class="stylobutton_" name="Simpan" value="Simpan" type="button" onclick="simpanMaklumatTanah();"/>
+                <input class="stylobutton_" name="Kembali" value="Kembali" type="button" onclick="doAjaxCall${formName}('maklumatTanah','idPermohonan='+$!htpPermohonan.permohonan.getIdPermohonan())"/> 
            	#else
                 <!-- <input class="stylobutton" name="Simpan" value="Kemaskini" type="button" onclick="doAjaxCall${formName}('kemaskiniMaklumatTanah')"/> -->
-                <input class="stylobutton" name="Simpan" value="Kemaskini" type="button" onclick="doAjaxCall${formName}('kemaskiniMaklumatTanah')"/>
-                <input class="stylobutton" name="Kembali" value="Kembali" type="button" onclick="doAjaxCall${formName}('maklumatTanah','idPermohonan='+$!htpPermohonan.permohonan.getIdPermohonan())"/>
+                <input class="stylobutton_" name="Simpan" value="Kemaskini" type="button" onclick="doAjaxCall${formName}('kemaskiniMaklumatTanah')"/>
+                <input class="stylobutton_" name="Kembali" value="Kembali" type="button" onclick="doAjaxCall${formName}('maklumatTanah','idPermohonan='+$!htpPermohonan.permohonan.getIdPermohonan())"/>
           	#end
             </td>
 		</TR>

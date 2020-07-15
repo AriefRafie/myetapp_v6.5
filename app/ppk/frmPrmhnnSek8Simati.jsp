@@ -160,7 +160,7 @@ resetOnBlur:false
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,0,0,0);SimatiView()" >PERMOHONAN</li>
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(1,0,0,0);HtaamView()">HARTA TAK ALIH</li>
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(2,0,0,0);HAview()" >HARTA ALIH</li>
-        #if($!skrin_online != "yes")
+       #if($!skrin_online != "yes")
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(3,0,0,0);NAview()" >NILAIAN HARTA</li>
       #else
       #if($!hideTabPengesahan == "show")
@@ -187,6 +187,9 @@ resetOnBlur:false
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,4,0,0);SaksiView()">SAKSI</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,5,0,0);PemiutangView()">PEMIUTANG</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,6,0,0);PenghutangView()">PENGHUTANG</li>
+             #if( ($!skrin_online == "yes") && ($!skrin_deraf == "") )
+            <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,7,0,0);TukarPemohonView()">PERTUKARAN PEMOHON</li>
+            #end
           </ul>
           
           
@@ -831,9 +834,10 @@ resetOnBlur:false
 																	#else
                                   <input name="txtNoSijilMatiSimati" onBlur="this.value=this.value.toUpperCase()" type="text" id="txtNoSijilMatiSimati" style="text-transform:uppercase;" value="$listmati.noSijilMati" size="30" maxlength="15" $readmodesy />
                                 #end
+                                #if($!skrin_online == "yes")
                                 <a href="javascript:info('sijil')" class="help" title="info">					
 																	<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-																</a>
+																</a>#end
                                 </label></td>
                               </tr>
                               
@@ -875,9 +879,10 @@ resetOnBlur:false
                                   	#if($readmode != "disabled" )
                                   		<span class="style52">dd/mm/yyyy</span>
                                   	#end
+                                  	#if($!skrin_online == "yes")
                                   	<a href="javascript:info('tarikh')" class="help" title="info">					
 									                        <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                  </a>                                   
+									                  </a>#end                               
 								</td>
                               </tr>
                               <tr>
@@ -972,9 +977,10 @@ resetOnBlur:false
                                                    
                               <textarea name="txtTempatMatiSimati" id="patMatiSimati"   cols="31" rows="3"    $readmodeR class="$readmode" >$listmati.tempatMati</textarea>
                               </label>
+                              #if($!skrin_online == "yes")
                               <a href="javascript:info('tempat')" class="help" title="info">					
 									                <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									            </a> </td>
+									            </a>#end </td>
                             </tr>
                             <tr>
                               <!-- <td class="style38" valign="top" > -->
@@ -991,9 +997,10 @@ resetOnBlur:false
                                 <div align="left">#end                              </div></td>
                               <td valign="top">:</td>
                               <td><textarea name="txtSebabKematianSimati" cols="31" rows="3" id="txtSebabKematian"   $readmodeR class="$readmode" >$listmati.sebabMati</textarea>
+                             	#if($!skrin_online == "yes")
                               <a href="javascript:info('sebab')" class="help" title="info">					
 									                <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									            </a>
+									            </a>#end
                               </td>
                             </tr>
                             <tr>
@@ -1006,9 +1013,10 @@ resetOnBlur:false
                               <td ><label>
                                 <input name="txtAlamatTerakhir1Simati" type="text" id="txtAlamatTerakhir" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" value="$listmati.alamat1" size="34" maxlength="50"    $readmodeR class="$readmode"  />
                               </label>
+                              #if($!skrin_online == "yes")
                               <a href="javascript:info('alamat')" class="help" title="info">					
 									                <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									            </a>
+									            </a>#end
                               </td>
                             </tr>
                             <tr>
@@ -1521,6 +1529,29 @@ document.f1.action = "";
 	document.f1.command.value = "nilai_harta";
 	document.f1.submit();
 }
+
+<!-- syafiqah add -->
+// function TukarPemohonView(){
+// 	document.f1.action = "";
+// 	document.f1.mode.value = "TukarPemohonview";
+// 	document.f1.command.value = "Tukarpemohon";
+// 	document.f1.submit();
+// }
+
+function TukarPemohonView() {
+	if('$!skrin_online' == 'yes')
+{
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
+}
+else
+{
+document.f1.action = "";
+}
+	document.f1.mode.value = "TukarPemohonview";
+	document.f1.command.value = "Tukarpemohon";
+	document.f1.submit();
+}
+<!-- syafiqah add end -->
 
 function PenghutangView() {
 	if('$!skrin_online' == 'yes')

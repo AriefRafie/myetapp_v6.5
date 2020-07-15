@@ -9,6 +9,7 @@
 -->
 <style type="text/css">
 <!--
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -46,12 +47,12 @@
 -->
 </style>
 
-</head>
+</head> 
 <!-- onload="submitForm()" -->
 <!--
 <body onload="submitForm();jeniswaktu2();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();check_pengenalan_simati_4_onload()" >
 -->
-<body onload="submitForm();" >
+<body onload="submitForm();check_pilih();" >
 <form id="form1" name="f1" method="post" action="">
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
@@ -184,7 +185,7 @@ Click me</a>
     <tr>
       <td><div id="TabbedPanels1" class="TabbedPanels">
           <ul class="TabbedPanelsTabGroup">
-            <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,0,0,0);SimatiView()" >PERMOHONAN</li>
+            <li class="TabbedPanelsTab style1 style3 TabbedPanelsTabSelected" tabindex="0" onclick="setSelected(0,0,0,0);SimatiView()" >PERMOHONAN</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(1,0,0,0);HtaamView()">HARTA TAK ALIH</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(2,0,0,0);HAview()" >HARTA ALIH</li>
             #if($!skrin_online != "yes")
@@ -206,7 +207,9 @@ Click me</a>
                   <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,4,0,0);SaksiView()">SAKSI</li>
                   <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,5,0,0);PemiutangView()">PEMIUTANG</li>
                   <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,6,0,0);PenghutangView()">PENGHUTANG</li>
-                  <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,7,0,0);TukarPemohonView()" id="maklumat_pemohon">PERTUKARAN PEMOHON</li>
+                  #if($!skrin_online == "yes")
+                  <li class="TabbedPanelsTab style1 style3 TabbedPanelsTabSelected" tabindex="0" onclick="setSelected(0,7,0,0);TukarPemohonView()" id="maklumat_pemohon">PERTUKARAN PEMOHON</li>
+                   #end
                 </ul>
                 <div class="TabbedPanelsContentGroup">
                   <div class="TabbedPanelsContentVisible"></div>
@@ -283,12 +286,39 @@ Click me</a>
                       #end
                      
                       #end
+                     
+                      #if($show_hantar_btn == "yes")
+		                      #foreach($list in $listCheckPertukaran)
+			                      #set($id_Pemohonbaru = $list.id_pemohonbaru)
+			                      #set($sebabTukar = $list.sebab_tukar)
+			                      #set($tarikhMati = $list.tarikh_mati)
+			                      
+			                      #set ($check0 = "checked")
+			                      
+			                      #set ($setMode0 = "readonly") 
+			                      #set ($setMode3 = "readonly") 
+			                      
+			                      #set ($setMode0 = "disabled") 
+			                      #set ($setMode1 = "disabled") 
+			                      #set ($setMode2 = "disabled")
+			                      #set ($setMode3 = "disabled")
+			                      
+			                      #if($sebabTukar == "kematian")
+			                      	#set ($check1 = "checked")
+			                      #else
+			                      	#set ($check2 = "checked")
+			                      #end
+		                      #end	
+		                   #end
                       
                       #if($show_senarai_lapis_pertama == "yes")
+                        <input name="id_Pemohonbaru" id="id_Pemohonbaru" type="hidden"  value="$!id_Pemohonbaru"/>
+                        <input name="" id="" type="hidden"  value="$!tarikhMati"/>
+	                      
                       <tr>
                       	<td>
                       		<fieldset>
-								<legend>SENARAI WARIS DAN ORANG BERKEPENTINGAN</legend>
+								<legend>SENARAI WARIS</legend>
 								
 								<table width="100%" >
 								 <tr>
@@ -363,7 +393,8 @@ Click me</a>
 								           #set($hidup="")
 								           #end
 <!-- 								           <td width="20%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td> -->
-								           <td width="15%" class="row1"><div align="center" class="style72"><input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$listwaris.idwaris"></div></td>
+								           <td width="15%" class="row1"><div align="center" class="style72"><input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$listwaris.idwaris" $check0 $setMode0>
+								           																	<input name="setMode0" id="setMode0" type="hidden" value="$setMode0" ></div></td>
 								         </tr>
 								         #else
 								         <tr class="table_header">
@@ -396,7 +427,8 @@ Click me</a>
 								           #set($hidup="")
 								           #end
 <!-- 								           <td width="20%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td> -->
-								           <td width="15%" class="row2"><div align="center" class="style72"><input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$listwaris.idwaris"></div></td>
+								           <td width="15%" class="row2"><div align="center" class="style72"><input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$listwaris.idwaris" $check0 $setMode0>
+								           																	<input name="setMode0" id="setMode0" type="hidden" value="$setMode0" ></div></td>
 								          </tr>
 								          #end
 								          
@@ -432,45 +464,61 @@ Click me</a>
                       		 	<input type="hidden" name="idPermohonansimati" id="idPermohonansimati" value="$id_Permohonansimati"></input>
                       		 	<input name="idPermohonan" type="hidden"  value="$idPermohonan"/>
                       		 	<tr>
-     								<td><input type="radio" name="sebab" id="kematian" value="kematian"></td>
+     								<td><input type="radio" name="sebab" id="kematian" value="kematian" $check1 $setMode1>
+     									</td>
      								<td>KEMATIAN</td>
      								<td></td>
      							</tr>
      							<tr>
      								<td></td>
-     								<td><span class="style44">*</span> TARIKH KEMATIAN :&nbsp;<input type="text" name="tarikh_mati" id="tarikh_mati"> <a href="javascript:displayDatePicker('tarikh_mati',false,'dmy');">#parse("app/ppk/ppk_calender.jsp")</a></td>
+     								<td><span class="style44">*</span> TARIKH KEMATIAN :&nbsp;<input type="text" name="tarikh_mati" id="tarikh_mati" value="$!tarikhMati" $setMode3> <a href="javascript:displayDatePicker('tarikh_mati',false,'dmy');">#parse("app/ppk/ppk_calender.jsp")</a></td>
      								<td></td>
      							</tr>
      							<tr>
-	     							<td><input type="radio" name="sebab" id="kesihatan" value="kesihatan"></td>
+	     							<td><input type="radio" name="sebab" id="kesihatan" value="kesihatan" $check2 $setMode2></td>
 	     							<td>MASALAH KESIHATAN</td>
 	     							<td></td>
     							 </tr>
     							 <tr>
 								     <td></td>
-								     <td>MUATNAIK DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')"> </td>
+								     <td>DOKUMEN SOKONGAN : #if($show_hantar_btn == "")<input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')" /> #end
+<!-- 								  	   								 <input id="download" name="download" type="button" value="Muat Turun Dokumen"/> -->
+								     #if($show_hantar_btn == "yes") &nbsp; #end
+								     $!lampirans
+								     </td>
 								     <td></td>
       							</tr>
-      							
       						 #if($show_hantar_btn == "yes")
       						 	<tr align="center">
 									<td></td>
 									<td>  
 									      <a href="#" onClick="javascript:cetakBorangAA('$!idPermohonan','$!id_fail_carian')">
 									       	<input type="button" value="Cetak Borang AA" />
-									    </a>
+									      </a>
+									      <a href="#" onClick="javascript:cetakSuratPengesahan('$!idPermohonan','$!id_fail_carian')">
+									       	<input type="button" value="Cetak Surat Pengesahan" />
+									      </a>
 <!-- 									      <font color="red"><b>Cetak Borang AA</b></font> -->
 									</td>
      							</tr>
      						#else
      						
-     						 #if($id_Status != "21")
-							    <tr align="center">
-									<td></td>
-									<td>
-										<input name="cmdSimpanKPOb" id="cmdSimpanKPOb" value="Hantar" type="button" onClick="javascript:testSimpan('$idSimati','$id_Permohonansimati','$id_fail_carian','$noFail','cmdSimpanKPOb')">
-									</td>
-     							</tr>
+     						 	#if($id_Status != "21")
+     						 		#if($listWaris.size()==1)
+	     							<tr align="center">
+										<td></td>
+										<td>  
+										      <font color="red"><b>Anda adalah pemohon tunggal. Pertukaran pemohon tidak dibenarkan.</b></font>
+										</td>
+	     							</tr>
+	     							#else
+								    <tr align="center">
+										<td></td>
+										<td>
+											<input name="cmdSimpanKPOb" id="cmdSimpanKPOb" value="Hantar" type="button" onClick="javascript:testSimpan('$idSimati','$id_Permohonansimati','$id_fail_carian','$noFail','cmdSimpanKPOb')">
+										</td>
+	     							</tr>
+	     							#end
      							#else
      							<tr align="center">
 									<td></td>
@@ -569,21 +617,21 @@ Click me</a>
                      
                     </table>
                   </div>
-                  <div class="TabbedPanelsContent"></div>
-                  <div class="TabbedPanelsContent"></div>
-                  <div class="TabbedPanelsContent"></div>
-                  <div class="TabbedPanelsContent"></div>
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
                 </div>
               </div>
             </div>
-            <div class="TabbedPanelsContent">
-              <div id="TabbedPanels4" class="TabbedPanelsContentVisible">
-                <div class="TabbedPanelsContentGroup">
-                  <div class="TabbedPanelsContent"></div>
-                  <div class="TabbedPanelsContent"></div>
-                </div>
-              </div>
-            </div>
+<!--             <div class="TabbedPanelsContent"> -->
+<!--               <div id="TabbedPanels4" class="TabbedPanelsContentVisible"> -->
+<!--                 <div class="TabbedPanelsContentGroup"> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                   <div class="TabbedPanelsContent"></div> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
             <div class="TabbedPanelsContent"></div>
             <div class="TabbedPanelsContent"></div>
           </div>
@@ -2503,6 +2551,13 @@ function insertsaudara1()
 	}
 }
 
+function check_pilih(){
+	if( document.f1.id_Pemohonbaru.value != "" && document.f1.id_Pemohonbaru.value != "0"){
+		document.f1.id_ob_pemohon.value = document.f1.id_Pemohonbaru.value;
+		document.f1.setMode0.value = "disabled";
+		// alert('id adalah : '+document.f1.id_Pemohonbaru.value);
+	}
+}
 
 function hapus_waris(){
 
@@ -4135,8 +4190,24 @@ function lampiran(idPermohonan,jenisUpload) {
 
 }
 
+function paparLampiran(id_){
+  	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
+      var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+      if ((document.window != null) && (!hWnd.opener))
+  	hWnd.opener=document.window;
+      if (hWnd.focus != null) hWnd.focus();
+}
+
 function cetakBorangAA(idpermohonan,idfail) {
     var url = "../servlet/ekptg.report.ppk.BorangAA?idPermohonan="+idpermohonan+"&idfail="+idfail;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function cetakSuratPengesahan(idpermohonan,idfail) {
+    var url = "../servlet/ekptg.report.ppk.PengesahanPertukaranPemohon?idpermohonan="+idpermohonan+"&idfail="+idfail;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -4168,7 +4239,7 @@ function testSimpan(idSimati, id_permohonansimati, id_fail, no_fail, nama_butang
 // 		return;
 // 	}
 	else {
-		input_box = confirm("Adakah anda pasti?");	
+		input_box = confirm("Permohonan Tukar Pempetisyen adalah dibenarkan SEKALI SAHAJA. Adakah anda pasti?");	
 		if (input_box == true) {
 			
 			//baru 6/7/2020

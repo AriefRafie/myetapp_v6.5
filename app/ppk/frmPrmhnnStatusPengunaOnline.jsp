@@ -204,11 +204,11 @@
 			      <font color="red">SILA PASTIKAN NOTIS PERBICARAAN DISAMPAIKAN KEPADA SETIAP WARIS BERKAITAN </font>
 			      
 			#elseif(($senarai.id_status == '70') || ($senarai.id_status == '47') || ($senarai.id_status == '169')) 
-				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$senarai.catatan')"><font color="blue"><strong>$senarai.status</strong></font></a>
-<!-- 				<br><font color="red">$senarai.catatan</font> -->
+				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','$!senarai.catatan')"><font color="blue"><strong>$senarai.status</strong></font></a>
 				
 			#elseif($senarai.id_status == '152')
-				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('TELAH ADA PERMOHONAN AWAL.')"><font color="blue"><strong>$senarai.status</strong></font></a>
+				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','TELAH ADA PERMOHONAN AWAL.')"><font color="blue"><strong>$senarai.status</strong></font></a>
+			
 			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
 				<strong>$senarai.status</strong>
 				<br>
@@ -223,10 +223,10 @@
 			#else
 	  			<strong>$senarai.status</strong>
 		  	#end
-		  	<br>
-		  		<label style="background-color:blue" align="center" valign="top" > 
-					<b><font color="WHITE" size="0.6em"><span class="blink">$!senarai.catatan</span></font></b>
-				</label>
+<!-- 		  	<br> -->
+<!-- 		  		<label style="background-color:blue" align="center" valign="top" >  -->
+<!-- 					<b><font color="WHITE" size="0.6em"><span class="blink">$!senarai.catatan</span></font></b> -->
+<!-- 				</label> -->
 		  	
 	  </td>
 	  #if($!skrin_deraf =="yes")
@@ -282,12 +282,12 @@
 </body>
 
 <script>
-	function maklumatBatal(catatan){
+	function maklumatBatal(nofail,nama,status,catatan){
 		console.log(catatan);
 		
-		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupMaklumatBatal?catatan="+catatan;
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupMaklumatBatal?noFail="+nofail+"&namaS="+nama+"&status="+status+"&catatan="+catatan;
 		
-		var hWnd = window.open(url,'printuser','width=600,height=100, resizable=yes,scrollbars=yes');
+		var hWnd = window.open(url,'printuser','width=580,height=220, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		       hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();

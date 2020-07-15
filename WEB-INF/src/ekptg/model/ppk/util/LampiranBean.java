@@ -119,6 +119,55 @@ public class LampiranBean {
 		return listLampiran;
 		    
 	 }	 
+	//07/07/2020
+	public Vector<Hashtable<String, String>> lampiranHarta(String id, String iDokumen,boolean isHA) 
+			throws Exception {
+			Db db = null;
+			String sql = "";
+			Vector<Hashtable<String, String>> listLampiran = new Vector<Hashtable<String, String>>();
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+				r.add("D.ID_DOKUMEN");
+				r.add("D.NAMA_DOKUMEN");
+				r.add("D.FORMAT");
+				if(isHA){
+					r.add("D.ID_HA");
+					r.add("D.ID_HA",id);
+				}else{
+					r.add("D.ID_HTA");
+					r.add("D.ID_HTA",id);
+				}
+				if(iDokumen != null){
+					r.add("D.DOKUMEN",iDokumen);
+				}
+				if(isHA)
+					sql = r.getSQLSelect("TBLPPKDOKUMENHA D");
+				else
+					sql = r.getSQLSelect("TBLPPKDOKUMENHTA D");
+				
+				//myLog.info(sql);
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable<String, String> h;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable<String, String>();
+					h.put("bil",String.valueOf(bil));
+					h.put("idDokumen",rs.getString("id_dokumen"));
+					h.put("namaFail", Utils.isNull(rs.getString("nama_dokumen")));
+					h.put("jenisMime", Utils.isNull(rs.getString("format")));
+					listLampiran.addElement(h);
+					bil++;
+			      
+				}
+
+			} finally {
+				if (db != null) db.close();
+			}
+			return listLampiran;
+			    
+		 }	 
 
 	public void hapusLampiran(String idDokumen,String idLampiran,boolean isHA) throws Exception {
 		//myLog.info("hapusLampiran");
@@ -260,13 +309,15 @@ public class LampiranBean {
 			r.add("D.ID_DOKUMEN");
 			r.add("D.NAMA_DOKUMEN");
 			r.add("D.FORMAT");
+			r.add("D.ID_SIMATI");
 			r.add("D.NO_RUJUKAN",id);
 			r.add("D.ID_JENISDOKUMEN",jenisDokumen);
 			if(iDokumen != null){
 				r.add("D.ID_DOKUMEN",iDokumen);
 			}
 			sql = r.getSQLSelect("TBLPPKDOKUMENSIMATI D");
-			//myLog.info(sql);
+			//
+			myLog.info(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String, String> h;
 			int bil = 1;
@@ -276,6 +327,7 @@ public class LampiranBean {
 				h.put("idDokumen",rs.getString("id_dokumen"));
 				h.put("namaFail", Utils.isNull(rs.getString("nama_dokumen")));
 				h.put("jenisMime", Utils.isNull(rs.getString("format")));
+				h.put("simati", Utils.isNull(rs.getString("id_simati")));
 				listLampiran.addElement(h);
 				bil++;
 			      
@@ -349,7 +401,7 @@ public class LampiranBean {
 					r.add("D.ID_DOKUMEN",iDokumen);
 				}
 				sql = r.getSQLSelect("TBLPPKDOKUMENSIMATI D");
-				//myLog.info(sql);
+//				myLog.info("getLampiranSimatii:sql="+sql);
 				ResultSet rs = stmt.executeQuery(sql);
 				Hashtable<String, String> h;
 				int bil = 1;
@@ -410,6 +462,41 @@ public class LampiranBean {
 		
 	}
 	
+	public void kemaskiniLampiranSimati(String rujukan,String idJenis,String idSimati) throws Exception {
+		//myLog.info("hapusLampiran");
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();	
+			r.update("no_rujukan", rujukan);
+			r.update("id_jenisdokumen", idJenis);
+			r.add("id_simati", idSimati);
+			
+			sql = r.getSQLUpdate("TBLPPKDOKUMENSIMATI");
+			myLog.info("kemaskiniLampiranSimati:TBLPPKDOKUMENSIMATI::sql="+sql);
+			stmt.executeUpdate(sql);
+			
+			conn.commit();
+			
+		} catch (SQLException ex) { 
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah kemaskini data " + ex.getMessage());
+	    	
+	    } finally {
+			if (db != null)
+				db.close();
+		}	
+		
+	}
 	public String getLampiranSimatiPapar(String idRujukan,String idJenis) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		Vector<Hashtable<String, String>> dokumens = getLampiranSimati(idRujukan,null,idJenis);
@@ -434,6 +521,7 @@ public class LampiranBean {
 	public String getLampiranSimatiPapari(String idRujukan,String idJenis) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		Vector<Hashtable<String, String>> dokumens = getLampiranSimatii(idRujukan,null,idJenis);
+//		myLog.info("getLampiranSimatiPapari: size="+dokumens.size());
 		for (int i = 0; i < dokumens.size(); i++) {
 			Hashtable<String, String> mo = (Hashtable<String, String>) dokumens.get(i);			
 			sb.append("<a class=\"style4\" href=\"javascript:paparLampiran("+mo.get("idDokumen")+")\"");
@@ -446,7 +534,15 @@ public class LampiranBean {
 			else
 				sb.append(" </a>,");
 			sb.append("<br>");
-
+			sb.append("\n<script>");
+			sb.append("\nfunction paparLampiran("+mo.get("idDokumen")+"){");
+			sb.append("\nvar url = '../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen='"+mo.get("idDokumen")+"&tablename=hta';");
+			sb.append("\nvar hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');");
+			sb.append("\nif ((document.window != null) && (!hWnd.opener))");
+			sb.append("\nhWnd.opener=document.window;");
+			sb.append("\nif (hWnd.focus != null) hWnd.focus();");
+			sb.append("\n}");
+			sb.append("\n</script>");
 		}
 		return sb.toString();
 		
