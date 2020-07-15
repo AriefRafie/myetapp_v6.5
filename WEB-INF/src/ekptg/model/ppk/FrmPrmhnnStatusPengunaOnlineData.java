@@ -1,14 +1,23 @@
 package ekptg.model.ppk;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.servlet.http.HttpSession;
+
 import lebah.db.Db;
+import lebah.db.SQLRenderer;
 
 import org.apache.log4j.Logger;
+
+import ekptg.helpers.DB;
+import ekptg.helpers.File;
 
 public class FrmPrmhnnStatusPengunaOnlineData {
 	static Logger myLogger = Logger.getLogger(FrmPrmhnnStatusPengunaOnlineData.class);	
@@ -799,7 +808,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	Vector checkEmail = null;
 	
 	@SuppressWarnings("unchecked")
-	public Vector checkEmail(String userId) throws Exception {
+	public Vector checkEmail(HttpSession session) throws Exception {
 		
 		checkEmail = new Vector();
 		checkEmail.clear();
@@ -811,10 +820,10 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT EMEL FROM USERS_ONLINE WHERE USER_ID = '"+userId+"' AND EMEL IS NOT NULL";
+			sql = "SELECT EMEL FROM USERS_ONLINE WHERE USER_ID = '"+session+"' AND EMEL IS NOT NULL";
 	
 			ResultSet rs = stmt.executeQuery(sql);
-			System.out.println("*** EMAIL SIAPA NI : "+sql);
+			myLogger.info("*** EMAIL SIAPA NI : "+sql);
 			Hashtable h;
 			while (rs.next()) {
 				h = new Hashtable();
@@ -826,5 +835,76 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 			if (db != null)	db.close();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static String addTAC(Hashtable data) throws Exception
+	  {
+		
+		Connection conn = null;
+	    Db db = null;
+	    String sql = "";
+	    String sql5 = "";
+	    String output="";
+	    try
+	    {
+	    	db = new Db();
+	    	conn = db.getConnection();
+			conn.setAutoCommit(false);
+	    	Statement stmt = db.getStatement();
+	    	myLogger.info("masuk db");
+	    	//user login id
+	    	String id_user = (String)data.get("id_user");
+	    	
+	    	//Table pptpermohonan
+	    	//String no_rujukan_ptg = (String)data.get("no_rujukan_ptg");	       
+	    	//String no_rujukan_ptd = (String)data.get("no_rujukan_ptd");
+	    	//String no_rujukan_upt = (String)data.get("no_rujukan_upt");
+	    	
+	    	
+	      
+	    	//generate no permohonan "JKPTG/PPT/kod_suburusan/this_year-000001
+	    	long id_tac = DB.getNextID("TBLPPKTAC_SEQ");    
+	    	
+	    	Date now = new Date();
+	    	SimpleDateFormat formatter =  new SimpleDateFormat("yyyy");
+	    	String tahun = formatter.format(now);
+	    	int thn = Integer.parseInt(tahun);
+
+	    	//generate no permohonan	    	
+	    	String seq = String.format("%06d",File.getSeqNo(1,1,0,0,0,false,false,thn,0));	    	
+	    	String noPermohonan = tahun+"-"+seq;
+	      
+	    	SQLRenderer rF = new SQLRenderer();
+	    	rF.add("id_tac",id_tac);
+	    	rF.add("no_tac", 555555);
+	    	rF.add("id_perintah", 100000);	    	
+	    	rF.add("tarikh_masuk",rF.unquote("sysdate"));
+			rF.add("id_masuk",id_user);
+	    	sql = rF.getSQLInsert("tblppktac");
+	    	myLogger.info("INSERT TEST TABLPPKTAC : "+sql);
+	    	stmt.executeUpdate(sql);
+	      
+	           	
+	     	output = ""+id_tac;
+	    	
+	     	conn.commit();	
+		      
+	    }catch (SQLException se) { 
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException se2) {
+	    		throw new Exception("Rollback error:"+se2.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah penyimpanan data ");
+	    }
+	    finally {
+	    if (db != null) db.close();
+	    }
+	    
+	    return output;
+	   
+	  }//close add
+	
+	
 
 }

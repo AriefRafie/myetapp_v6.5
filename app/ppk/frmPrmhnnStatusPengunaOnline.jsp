@@ -212,7 +212,7 @@
 			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
 				<strong>$senarai.status</strong>
 				<br>
-				<a href="#" onClick="javascript:cetakBorangF('$!senarai.idFail')"><font color="blue"> Borang F </font></a>
+				<a href="#" onClick="javascript:cetakBorangF('$!senarai.idFail','$idPerintahHTAOBMST')"><font color="blue"> Borang F </font></a>
 				
 			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
 				<strong>$senarai.status</strong>
@@ -351,13 +351,16 @@ function cetakBorangE(idFail,idPermohonanSimati,idSimati,idPerintahHTAOBMST) {
 	hWnd.focus();
 }
 
-function cetakBorangF(idFail) {
-	var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
-    var hWnd = window.open(url,'printuser','width=700,height=200, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
+function cetakBorangF(idFail,idPerintahHTAOBMST) {
+	alert(idFail);
+	//var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupTAC?idFail="+idFail+"&idPerintahHTAOBMST="+idPerintahHTAOBMST;
+	
+	var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+	if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
 }
 
 function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {		
