@@ -16,7 +16,7 @@
   #if ($!command == 'paparFail')
   	#parse("$templateDir/paparFail.jsp")
   #else 
-  		#parse("$templateDir/senaraiFail.jsp")
+  	#parse("$templateDir/senaraiFail.jsp")
   #end 
 </div>
   
