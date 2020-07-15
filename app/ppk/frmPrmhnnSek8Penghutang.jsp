@@ -1573,7 +1573,7 @@
                             <td width="100%">
                             
                             <fieldset>
-                            <legend>MAKLUMAT PENGHUTANG</legend>
+                            <legend>MAKLUMAT PENGHUTANG (SIMATI MEMBERI HUTANG)</legend>
                             
                             <table width="100%" border="0">
                               <tr>

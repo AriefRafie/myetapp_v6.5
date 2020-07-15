@@ -1,3 +1,14 @@
+14072020	PPT-33
+ALTER TABLE TBLPPTPERMINTAANUKUR ADD NO_JUPEM VARCHAR(400);
+
+----------------------------------------------------------------------------------
+
+14072020	PPT-06
+ALTER TABLE TBLPPTBORANGEHAKMILIK ADD MASA_SIASATAN VARCHAR(400);
+ALTER TABLE TBLPPTBORANGEHAKMILIK ADD JENIS_WAKTU VARCHAR(400);
+
+----------------------------------------------------------------------------------
+
 
 20200609 UAT--------------------------------------------------------------------------------
 

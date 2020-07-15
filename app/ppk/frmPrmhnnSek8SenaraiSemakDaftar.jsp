@@ -593,14 +593,14 @@
               Memiliki Harta Tak Alih
               #end </td>
           </tr>
-          <tr>
+          <!--  <tr>
             <td width="10%" >&nbsp;</td>
              <td width="1%" valign="top" >#if($chkmode != "disabled")<span class="style2"></span> #end</td>
             <td width="3%" ><input type="checkbox" name="cbsemaks" id="cbsemaks20" $chkmode value="26" $checked26 onClick="ReadOnlyCheckBox(this);checkit_ha_cancel()" />            </td>
             <td width="86%"> #if($chkmode != "disabled") Memiliki Harta Alih #else
               Memiliki Harta Alih
               #end </td>
-          </tr>
+          </tr>-->
         </table></td>
       </tr>
        <tr>
@@ -1585,7 +1585,7 @@ function DoTheCheck() {
 		return false
 	}
 	//arief add ::--  && document.f1.cbsemaks[25].checked == false
-	else if (document.f1.cbsemaks[23].checked == false && document.f1.cbsemaks[25].checked == false ) { 
+	else if (document.f1.cbsemaks[23].checked == false && document.f1.cbsemaks[16].checked == false ) { 
 		alert("Sila masukkan Memiliki Harta Tidak Alih ATAU Harta Alih");
 		
 	}
@@ -1822,7 +1822,7 @@ document.f1.cbsemaks[15].checked = false;
 }	
 }
 //arief add checkit_ha()
-function checkit_ha()
+/*function checkit_ha()
 {
 	if (document.f1.cbsemaks[17].checked == true || document.f1.cbsemaks[18].checked == true || document.f1.cbsemaks[19].checked == true || document.f1.cbsemaks[20].checked == true || document.f1.cbsemaks[21].checked == true || document.f1.cbsemaks[22].checked == true)
 	{
@@ -1832,9 +1832,9 @@ function checkit_ha()
 	{
 		document.f1.cbsemaks[26].checked = false;
 	}		
-}
+}*/
 //arief add checkit_ha_cancel()
-function checkit_ha_cancel()
+/*function checkit_ha_cancel()
 {
 	if (document.f1.cbsemaks[26].checked == false)
 	{
@@ -1846,5 +1846,5 @@ function checkit_ha_cancel()
 		document.f1.cbsemaks[22].checked = false;
 		document.f1.txtLainLainTujuan.value="";
 	}
-}
+}*/
 </script>

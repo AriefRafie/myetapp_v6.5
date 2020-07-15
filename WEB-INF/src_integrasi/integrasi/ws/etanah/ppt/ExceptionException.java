@@ -6,10 +6,8 @@
  */
 package integrasi.ws.etanah.ppt;
 
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.ExceptionE;
-
 public class ExceptionException extends java.lang.Exception {
-    private static final long serialVersionUID = 1590751995276L;
+    private static final long serialVersionUID = 1594386687642L;
     private integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.ExceptionE faultMessage;
 
     public ExceptionException() {
