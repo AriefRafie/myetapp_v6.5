@@ -3227,10 +3227,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			myLogger.info("testCheckPertukaran.size() = "+testCheckPertukaran.size());
 			myLogger.info("listCheckPertukaran.size() = "+listCheckPertukaran.size());
 			if (listCheckPertukaran.size() > 0) {
-				myLogger.info("SYAFIQAH SEDEY1");
+				// myLogger.info("SYAFIQAH 1");
 				this.context.put("show_hantar_btn", "yes");
 			} else {
-				myLogger.info("SYAFIQAH SEDEY2");
+				//myLogger.info("SYAFIQAH 2");
 				this.context.put("show_hantar_btn", "");
 			}
 			
@@ -3250,10 +3250,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				listCheckPertukaran = logic.getCheckPertukaran();
 				
 				if (listCheckPertukaran.size() > 0) {
-					myLogger.info("SYAFIQAH SEDEY1");
+					// myLogger.info("SYAFIQAH 1");
 					this.context.put("show_hantar_btn", "yes");
 				} else {
-					myLogger.info("SYAFIQAH SEDEY2");
+					// myLogger.info("SYAFIQAH 2");
 					this.context.put("show_hantar_btn", "");
 				}
 				
