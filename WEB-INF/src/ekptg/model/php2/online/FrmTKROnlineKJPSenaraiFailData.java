@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
@@ -32,6 +33,8 @@ public class FrmTKROnlineKJPSenaraiFailData {
 	private Vector<Hashtable<String, Object>> beanMaklumatPemohon = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatPejabat = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatHakmilik = null;
+	private Vector<Hashtable<String, Object>> beanMaklumatHeader = null;
+	private Vector<Hashtable<String, Object>> beanMaklumatLampiran = null;
 
 	protected Db db;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -39,7 +42,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 
 	static Logger myLogger = Logger.getLogger(FrmPLPOnlineKJPSenaraiFailData.class);
 	
-	public void carianFail(String noFail, String tajukFail, String namaPemohon,
+	public void carianFail(String noFail, String noPermohonan, String tajukFail, String namaPemohon,
 			String tarikhTerima, String idNegeri, String idDaerah,
 			String idMukim, String idJenisHakmilik, String noHakmilik,
 			String noWarta, String idLot, String noLot, String noPegangan,
@@ -57,7 +60,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			db1 = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.TARIKH_TERIMA, A.TARIKH_DAFTAR_FAIL, C.NAMA, D.KETERANGAN, B.ID_STATUS, H.USER_NAME, B.NO_RAYUAN, RUJNEGERI.NAMA_NEGERI "
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.NO_PERMOHONAN, A.TAJUK_FAIL, B.TARIKH_TERIMA, A.TARIKH_DAFTAR_FAIL, C.NAMA, D.KETERANGAN, B.ID_STATUS, H.USER_NAME, B.NO_RAYUAN, RUJNEGERI.NAMA_NEGERI "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, USERS H, TBLRUJNEGERI RUJNEGERI "
 					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_SUBURUSAN = '33' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS"
 					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
@@ -224,6 +227,8 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				h.put("idPermohonan", idPermohonan);
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
 						.getString("NO_FAIL").toUpperCase());
+				h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs
+						.getString("NO_PERMOHONAN").toUpperCase());
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tarikhBukaFail",
@@ -259,7 +264,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 		}
 	}
 	
-	public Vector<Hashtable<String, Object>> getSenaraiFail(String findNoFail, String findTajukFail
+	public Vector<Hashtable<String, Object>> getSenaraiFail(String findNoFail, String findNoPermohonan, String findTajukFail
 		, String findPemohon, String findNoPengenalan
 		, String findTarikhTerima
 		, String findNoHakmilik, String findNoWarta, String findNoPegangan, String findJenisHakmilik, String findJenisLot, String findNoLot
@@ -279,7 +284,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			sql = "SELECT "
 //					+ "TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL"
 					+ " F.ID_FAIL, F.NO_FAIL, F.TAJUK_FAIL"
-					+ " ,RS.KETERANGAN STATUS, P.TARIKH_TERIMA"
+					+ " ,RS.KETERANGAN STATUS, P.TARIKH_TERIMA, P.NO_PERMOHONAN"
 //					+ ", TBLPHPULASANTEKNIKAL.TARIKH_HANTAR, TBLPHPULASANTEKNIKAL.TARIKH_JANGKA_TERIMA"
 					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
 					+ " ,USERS_KEMENTERIAN UK"
@@ -408,13 +413,14 @@ public class FrmTKROnlineKJPSenaraiFailData {
 //			sql = sql + " ORDER BY TBLPHPULASANTEKNIKAL.TARIKH_HANTAR DESC ";
 			sql = sql + " ORDER BY F.TARIKH_MASUK DESC ";
 
-			myLogger.info("FrmTKROnlineKJPSenaraiFailView :::: sql="+sql);
+			myLogger.info("getSenaraiFail :::: sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				h = new Hashtable<String, Object>();
 				//h.put("ID_ULASANTEKNIKAL", rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs.getString("ID_ULASANTEKNIKAL"));
 				h.put("ID_FAIL", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
+				h.put("NO_PERMOHONAN", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
 				h.put("TAJUK_FAIL", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL"));
 				h.put("STATUS", rs.getString("STATUS") == null ? "" : rs.getString("STATUS"));
 				h.put("TARIKH_TERIMA", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
@@ -862,37 +868,8 @@ public class FrmTKROnlineKJPSenaraiFailData {
 									.getString("ID_NEGERI").toUpperCase());
 				}
 
-			} /*else if ("8".equals(idKategoriPemohon)) {
-				r.add("ID_PEJABAT", idPejabat);
-				sql = "SELECT * FROM TBLRUJPEJABATJKPTG WHERE ID_PEJABATJKPTG = '"
-						+ idPejabat + "'";
-				ResultSet rs = stmt.executeQuery(sql);
-
-				if (rs.next()) {
-					r.add("NAMA", rs.getString("NAMA_PEJABAT") == null ? ""
-							: rs.getString("NAMA_PEJABAT").toUpperCase());
-					r.add("ALAMAT1_TETAP", rs.getString("ALAMAT1") == null ? ""
-							: rs.getString("ALAMAT1").toUpperCase());
-					r.add("ALAMAT2_TETAP", rs.getString("ALAMAT2") == null ? ""
-							: rs.getString("ALAMAT2").toUpperCase());
-					r.add("ALAMAT3_TETAP", rs.getString("ALAMAT3") == null ? ""
-							: rs.getString("ALAMAT3").toUpperCase());
-					r.add("POSKOD_TETAP", rs.getString("POSKOD") == null ? ""
-							: rs.getString("POSKOD").toUpperCase());
-					r.add("ID_BANDARTETAP",
-							rs.getString("ID_BANDAR") == null ? "" : rs
-									.getString("ID_BANDAR").toUpperCase());
-					r.add("ID_NEGERITETAP",
-							rs.getString("ID_NEGERI") == null ? "" : rs
-									.getString("ID_NEGERI").toUpperCase());
-					r.add("NO_TEL",
-							rs.getString("NO_TEL") == null ? "" : rs
-									.getString("NO_TEL"));
-					r.add("NO_FAX",
-							rs.getString("NO_FAX") == null ? "" : rs
-									.getString("NO_FAX"));
-				}
-			}*/
+			} 
+			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
@@ -1534,8 +1511,8 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.NO_PERMOHONAN, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN "
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANPELEPASAN C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
+			sql = "SELECT A.ID_FAIL, B.NO_PERMOHONAN, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN, D.KETERANGAN AS STATUS "
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANPELEPASAN C, TBLRUJSTATUS D WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -1555,6 +1532,8 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				h.put("perkara", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL").toUpperCase());
 				h.put("flagGuna",rs.getString("FLAG_GUNA") == null ? "" : rs.getString("FLAG_GUNA"));
 				h.put("tujuanKegunaan",rs.getString("CADANGAN_KEGUNAAN") == null ? "" : rs.getString("CADANGAN_KEGUNAAN"));
+				h.put("status",rs.getString("STATUS") == null ? "" : rs.getString("STATUS"));
+				//h.put("status",rs.getString("status") == null ? "" : rs.getString("status"));
 				beanMaklumatPermohonan.addElement(h);
 				bil++;
 			}
@@ -1999,6 +1978,102 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
+	public void setMaklumatHeader(String idFail, HttpSession session) throws Exception {
+		Db db = null;
+		String sql = "";
+			
+		try {
+			beanMaklumatHeader = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			int bil = 1;
+			Hashtable h;
+			SQLRenderer r = new SQLRenderer();
+			
+//			if (!"".equals(idFail) && session.getAttribute("ID_FAIL") != null) {
+//				idFail = (String) session.getAttribute("ID_FAIL");
+//			}
+
+			sql = " SELECT A.ID_FAIL,F.ID_HAKMILIKPERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.ID_PERMOHONAN, B.TARIKH_TERIMA, " 
+				+ " B.TARIKH_SURAT, C.ID_PEMOHON, C.NAMA, C.ID_NEGERITETAP, C.ID_KATEGORIPEMOHON, C.ID_PEJABAT, " 
+				+ " I.ID_NEGERI AS ID_NEGERITANAH, H.ID_KEMENTERIAN AS ID_KEMENTERIANTANAH, "
+				+ " H.ID_AGENSI AS ID_AGENSITANAH, J.KEPUTUSAN, J.FLAG_PROSESFAIL,"
+				+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, " 
+				+ " G.KETERANGAN AS NAMA_BANDAR, C.NO_TEL, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, I.NO_HAKMILIK, I.NO_WARTA, " 
+				+ " H.ID_HAKMILIKAGENSI, H.ID_HAKMILIK, J.FLAG_PERMOHONANDARI, K.NAMA_URUSAN, L.ID_SUBURUSAN, " 
+				+ " L.NAMA_SUBURUSAN, K.ID_URUSAN, B.FLAG_AKTIF, B.NO_SAMBUNGAN, B.NO_PERMOHONAN"
+				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, " 
+				+ " TBLPHPHAKMILIKPERMOHONAN F, TBLRUJBANDAR G, TBLHTPHAKMILIKAGENSI H, TBLHTPHAKMILIK I, " 
+				+ " TBLPHPPERMOHONANSEWA J, TBLRUJURUSAN K, TBLRUJSUBURUSAN L"
+				+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' " 
+				+ " AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND C.ID_NEGERITETAP = D.ID_NEGERI(+) " 
+				+ " AND B.ID_STATUS = E.ID_STATUS(+) AND B.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.ID_URUSAN = K.ID_URUSAN " 
+				+ " AND A.ID_SUBURUSAN = L.ID_SUBURUSAN AND F.ID_HAKMILIKAGENSI = H.ID_HAKMILIKAGENSI " 
+				+ " AND H.ID_HAKMILIK = I.ID_HAKMILIK AND C.ID_BANDARTETAP = G.ID_BANDAR(+) " 
+				+ " AND B.ID_PERMOHONAN = J.ID_PERMOHONAN AND A.ID_FAIL = '" + idFail + "'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("beanMaklumatHeader======== " +sql);
+
+			if (rs.next()) {
+				h = new Hashtable();
+				h.put("idFail", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
+				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
+				h.put("urusan", rs.getString("NAMA_URUSAN") == null ? "" : rs.getString("NAMA_URUSAN").toUpperCase());
+				h.put("flagAktif", rs.getString("FLAG_AKTIF") == null ? "" : rs.getString("FLAG_AKTIF").toUpperCase());
+				h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN").toUpperCase());
+				h.put("subUrusan", rs.getString("NAMA_SUBURUSAN") == null ? "" : rs.getString("NAMA_SUBURUSAN").toUpperCase());
+				h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN").toUpperCase());
+				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
+				h.put("idPemohon", rs.getString("ID_PEMOHON") == null ? "" : rs.getString("ID_PEMOHON").toUpperCase());
+				h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS").toUpperCase());
+				h.put("perkara", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL").toUpperCase());
+				if ("1610197".equals(rs.getString("ID_STATUS")) || "1610212".equals(rs.getString("ID_STATUS"))|| 
+						"1610208".equals(rs.getString("ID_STATUS")) || "1610207".equals(rs.getString("ID_STATUS"))){
+					h.put("status", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase());
+					
+				} else if ("".equals(rs.getString("ID_STATUS")) || rs.getString("ID_STATUS") == null){
+					h.put("status", " PENDAFTARAN");
+					
+				} else {
+					h.put("status", " SEDANG DIPROSES");
+				}
+				h.put("idHakmilik", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK").toUpperCase());
+				h.put("idUrusanH", rs.getString("ID_URUSAN") == null ? "" : rs.getString("ID_URUSAN").toUpperCase());
+				h.put("idSuburusanH", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN").toUpperCase());
+				h.put("idHakmilikAgensi", rs.getString("ID_HAKMILIKAGENSI") == null ? "" : rs.getString("ID_HAKMILIKAGENSI"));
+				beanMaklumatHeader.addElement(h);
+				bil++;
+				
+				session.setAttribute("ID_FAIL", rs.getString("ID_FAIL"));
+			}
+			
+			//if (bil == 1){
+			else{
+				h = new Hashtable();
+				h.put("idFail", "");
+				h.put("noFail", "");
+				h.put("subUrusan", "");
+				h.put("idPermohonan", "");
+				h.put("tarikhTerima", "");
+				h.put("idPemohon", "");
+				h.put("idStatus", "");
+				h.put("status", "");
+				h.put("idHakmilik", "");
+				h.put("flagAktif", "");
+				h.put("idHakmilikAgensi","");
+				h.put("perkara", "");
+				beanMaklumatHeader.addElement(h);
+			}
+
+		} catch (Exception re) {
+			myLogger.error("Error: ", re);
+			throw re;
+			} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	public void setMaklumatPejabatJKPTG(String idPejabat) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -2116,6 +2191,37 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				beanMaklumatAgensi.addElement(h);
 			}
 
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	public void setMaklumatLampiran(String idDokumen) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			beanMaklumatLampiran = new Vector();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, JENIS_MIME FROM TBLPHPDOKUMEN WHERE ID_DOKUMEN = '"
+					+ idDokumen + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+				h.put("namaLampiran", rs.getString("NAMA_DOKUMEN") == null ? ""
+						: rs.getString("NAMA_DOKUMEN").toUpperCase());
+				h.put("catatanLampiran",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				h.put("jenisMime",
+						rs.getString("JENIS_MIME") == null ? "" : StringUtils.substringBefore(rs.getString("JENIS_MIME"), "/"));
+				beanMaklumatLampiran.addElement(h);
+			}
 		} finally {
 			if (db != null)
 				db.close();
@@ -2311,6 +2417,13 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
+	public Vector getBeanMaklumatLampiran() {
+		return beanMaklumatLampiran;
+	}
+
+	public void setBeanMaklumatLampiran(Vector beanMaklumatLampiran) {
+		this.beanMaklumatLampiran = beanMaklumatLampiran;
+	}
 	public Vector<Hashtable<String, Object>> getSenaraiFail() {
 		return senaraiFail;
 	}
@@ -2365,11 +2478,10 @@ public class FrmTKROnlineKJPSenaraiFailData {
 	public void setBeanMaklumatPejabat(Vector<Hashtable<String, Object>> beanMaklumatPejabat) {
 		this.beanMaklumatPejabat = beanMaklumatPejabat;
 	}
+	public Vector<Hashtable<String, Object>> getBeanMaklumatHeader() {
+		return beanMaklumatHeader;
+	}
+	public void setBeanMaklumatHeader(Vector<Hashtable<String, Object>> beanMaklumatHeader) {
+		this.beanMaklumatHeader = beanMaklumatHeader;
+	}
 }
-
-
-
-
-
-
-

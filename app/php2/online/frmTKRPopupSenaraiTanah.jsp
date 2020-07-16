@@ -10,7 +10,7 @@
 }
 </style>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($idKategoriPemohon == '3')
+  #if ($idKategoriPemohon == $idKategoriPemohon)
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT PEMOHON</strong></legend>
