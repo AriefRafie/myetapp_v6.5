@@ -64,9 +64,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
         	mode = "view";
         }
 		
-//		if ("kembali".equals(submit2) || "seterusnya".equals(submit2)) {
-//			submit = submit2;
-//		}
 		myLog.info("submit="+submit);
 		myLog.info("submit2="+submit2);
 		String hitButton = getParam("hitButton");
@@ -87,6 +84,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		idHakmilikSementara = getParam("idHakmilikSementara");
 		String idDokumen = getParam("idDokumen"); // ADD MAKLUMAT LAMPIRAN
 		String idUlasanTeknikal = getParam("idUlasanTeknikal");
+		String idPermohonan = getParam("idPermohonan");
 		
 		String idKategoriPemohon = "";
 		String idJenisTanah = "1";
@@ -211,6 +209,15 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 						getParam("txtTujuanKegunaan"), getParam("idKementerianTanah"), getParam("idNegeriTanah"),
 						getParam("idLuasTanah"), getParam("luasTanah"), idHakmilikSementara, session);
 			}
+			if("doSimpanSenaraiSemak".equals(hitButton)){
+				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"), 
+						session);
+			}
+			//SENARAI SEMAK
+			if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
+        		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
+    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
+        	}
 		}
 
 		
@@ -555,7 +562,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				// GO TO MAKLUMAT PERMOHONAN
 				vm = "/frmTKRKJPMaklumatPermohonan.jsp";
 				
-				this.context.put("mode", "view");
+				//this.context.put("mode", "view");
 				this.context.put("readonly", "readonly");
 				this.context.put("inputTextClass", "disabled");
 

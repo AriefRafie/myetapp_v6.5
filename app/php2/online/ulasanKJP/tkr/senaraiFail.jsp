@@ -86,12 +86,12 @@
             <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
            	<td width="19%"><strong>No. Rujukan <i>Online</i></strong></td>
            	<td width="19%"><strong>No. Fail</i></strong></td>
-            <td width="34%"><strong>Tajuk Fail</strong></td>
-            <td width="10%" align="center"><strong>Tarikh Ulasan</strong></td>
-            <td width="16%" align="center"><strong>Tarikh Akhir Maklumbalas</strong></td>
+            <td width="32%"><strong>Tajuk Fail</strong></td>
+            <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
+            <td width="15%"><strong>Status</strong></td>
 
           </tr>
-          #set ($list = "")
+        #set ($list = "")
         #set ( $count = $startNumber )
         #if ($SenaraiFail.size() > 0)
         #foreach ($list in $SenaraiFail)
