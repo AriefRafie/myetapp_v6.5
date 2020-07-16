@@ -6,7 +6,7 @@
 -->
 </style>
 
-#set($saizTxtPerkara="1000")
+
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
  
@@ -16,7 +16,7 @@
   
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
-  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  <input name="idFail" type="text" id="idFail" value="$idFail"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input type="hidden" name="idHakmilikSementara" id="idHakmilikSementara" value="$!idHakmilikSementara" />
   <input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$!idHakmilikAgensi" />
@@ -230,9 +230,9 @@
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Fail</td>
+          <td width="30%"><div align="left">No. Rujukan <i>Online</i></div></td>
           <td width="1%" >:</td>
-          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noRujukanOnline</strong>
             <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
             <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
         </tr>
@@ -268,26 +268,6 @@
           <td>:</td>
           <td><input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat" value="$beanMaklumatPermohonan.noRujukanSurat" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50"/></td>
         </tr>
-        <tr>
-          <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Perkara</td>
-          <td valign="top">:</td>
-          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" >$beanMaklumatPermohonan.perkara</textarea>
-            #if ($mode == 'new')
-            #if ($idHakmilikAgensi != '')
-            <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Jana Tajuk" onclick="janaTajuk('$idKategoriPemohon')"/>
-            #end
-            #end </td>
-        </tr>
-        #if ($mode != 'view')
-        <tr>
-          <td valign="top">&nbsp;</td>
-          <td valign="top">&nbsp;</td>
-          <td valign="top">&nbsp;</td>
-          <td>Baki Aksara :&nbsp;
-            <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtPerkara" /></td>
-        </tr>
-        #end  
         #end
       </table>
       </fieldset></td>
@@ -301,7 +281,7 @@
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'new')
-      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar" onclick="daftarBaru()"/>
+      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Simpan" onclick="daftarBaru()"/>
       <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
       #end
       #if ($mode == 'view')
@@ -311,181 +291,3 @@
   </tr>
 </table>
 <script>
-
-
-
-
-function daftarBaru() {
-	//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
-	var dt1   = parseInt(str1.substring(0,2),10);
-	var mon1  = parseInt(str1.substring(3,5),10)-1;
-	var yr1   = parseInt(str1.substring(6,10),10);
-	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
-	var str2  =  document.${formName}.tarikhSurat.value;		   
-	var dt2   = parseInt(str2.substring(0,2),10);
-	var mon2  = parseInt(str2.substring(3,5),10)-1;
-	var yr2   = parseInt(str2.substring(6,10),10);
-	var tarikhSurat = new Date(yr2, mon2, dt2);
-	
-	var currentDate = new Date();
-	if (tarikhTerima > currentDate){
-		alert('Tarikh Terima tidak boleh melebihi dari tarikh hari ini.');
-  		document.${formName}.tarikhTerima.focus(); 
-		return;
-	}
-	if (tarikhSurat > currentDate){
-		alert('Tarikh Surat tidak boleh melebihi dari tarikh hari ini.');
-  		document.${formName}.tarikhSurat.focus(); 
-		return;
-	}
-	if (tarikhSurat > tarikhTerima){
-		alert('Tarikh Surat tidak boleh melebihi dari Tarikh Terima.');
-  		document.${formName}.tarikhSurat.focus(); 
-		return;
-	}
-	if(document.${formName}.tarikhTerima.value == ""){
-		alert('Sila masukkan Tarikh Terima.');
-  		document.${formName}.tarikhTerima.focus(); 
-		return; 
-	}
-	if(document.${formName}.tarikhSurat.value == ""){
-		alert('Sila masukkan Tarikh Surat.');
-  		document.${formName}.tarikhSurat.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtNoRujukanSurat.value == ""){
-		alert('Sila masukkan No. Rujukan Surat.');
-  		document.${formName}.txtNoRujukanSurat.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtPerkara.value == ""){
-		alert('Sila masukkan Perkara.');
-  		document.${formName}.txtPerkara.focus(); 
-		return; 
-	}
-	if(document.${formName}.socKementerian.value == ""){
-		alert('Sila pilih Kementerian.');
-		document.${formName}.socKementerian.focus(); 
-		return; 
-	}	
-	if(document.${formName}.socAgensi.value == ""){
-		alert('Sila pilih Agensi.');
-		document.${formName}.socAgensi.focus(); 
-		return; 
-	}		
-	if(document.${formName}.idHakmilikAgensi.value == "" && document.${formName}.idHakmilikSementara.value == ""){
-		alert('Sila pilih Pegangan Hakmilik.');
-		return; 
-	}
-	if(document.${formName}.socLuasKegunaan.value == ""){
-		alert('Sila masukkan Luas Kegunaan.');
-  		document.${formName}.socLuasKegunaan.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtTujuanKegunaan.value == ""){
-		alert('Sila masukkan Tujuan Kegunaan.');
-  		document.${formName}.txtTujuanKegunaan.focus(); 
-		return; 
-	}
-	
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		document.${formName}.command.value = "daftarBaru";
-		return;
-	}
-	
-	document.${formName}.actionTukarguna.value = "papar";
-	document.${formName}.hitButton.value = "daftarBaru";
-	doAjaxCall${formName}("");
-}
-function kembali() {
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmTKRSenaraiFailView";
-	document.${formName}.method="POST";	
-	document.${formName}.actionTukarguna.value = "";
-	document.${formName}.submit();
-}
-
-function cekTarikhTerima(elmnt) {
-//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
-	var dt1   = parseInt(str1.substring(0,2),10);
-	var mon1  = parseInt(str1.substring(3,5),10)-1;
-	var yr1   = parseInt(str1.substring(6,10),10);
-	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
-	var currentDate = new Date();
-	
-	if (tarikhTerima > currentDate){
-		alert('Tarikh Terima tidak boleh melebihi dari tarikh hari ini.');
-  		elmnt.value ="";
-		document.${formName}.tarikhTerima.focus(); 
-		return;
-	}
-}
-function cekTarikhSurat(elmnt) {  
-	//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
-	var dt1   = parseInt(str1.substring(0,2),10);
-	var mon1  = parseInt(str1.substring(3,5),10)-1;
-	var yr1   = parseInt(str1.substring(6,10),10);
-	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
-	var str2  =  document.${formName}.tarikhSurat.value;		   
-	var dt2   = parseInt(str2.substring(0,2),10);
-	var mon2  = parseInt(str2.substring(3,5),10)-1;
-	var yr2   = parseInt(str2.substring(6,10),10);
-	var tarikhSurat = new Date(yr2, mon2, dt2);
-	
-	var currentDate = new Date();
-	
-	if (tarikhSurat > currentDate){
-		alert('Tarikh Surat tidak boleh melebihi dari tarikh hari ini.');
-		elmnt.value ="";
-  		document.${formName}.tarikhSurat.focus(); 
-		return;
-	}
-	if (tarikhSurat > tarikhTerima){
-		alert('Tarikh Surat tidak boleh melebihi dari Tarikh Terima.');
-		elmnt.value ="";
-  		document.${formName}.tarikhSurat.focus(); 
-		return;
-	}
-}
-function validateLength(str) {	
-	if (str.length < 5) {
- 		alert("Sila Masukan Poskod Dengan Betul.")
-		document.${formName}.txtPoskod.value = "";
-		return false
-	}
-}
-function textCounter(field, countfield, maxlimit) {
-   if (field.value.length > maxlimit) // if too long...trim it!
-		 field.value = field.value.substring(0, maxlimit);
-    // otherwise, update 'Baki Aksara' counter
-	else
-	 countfield.value = maxlimit - field.value.length;
-}
-function seterusnya(){
-	document.${formName}.action = "$EkptgUtil.getTabID("Tukar Guna",$portal_role)?_portal_module=ekptg.view.php2.FrmTKRMaklumatPermohonanView";
-	document.${formName}.submit();
-}
-function pilihBorangK(idKategoriPemohon,idAgensiPemohon,idNegeriJKPTG) {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmTKRPopupSenaraiBorangKView?idKategoriPemohon="+idKategoriPemohon+"&idAgensiPemohon="+idAgensiPemohon+"&idNegeriJKPTG="+idNegeriJKPTG;
-    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
-}
-function refreshFromPilihBorangK(idPPTBorangK,idHakmilikUrusan,idPHPBorangK) {
-	
-	document.${formName}.idPPTBorangK.value = idPPTBorangK;
-	document.${formName}.idHakmilikUrusan.value = idHakmilikUrusan;
-	document.${formName}.idPHPBorangK.value = idPHPBorangK;
-	doAjaxCall${formName}("doChangeMaklumatBorangK");
-}
-function doChangePeganganHakmilikBorangK() {
-	doAjaxCall${formName}("doChangePeganganHakmilikBorangK");
-}
-</script>

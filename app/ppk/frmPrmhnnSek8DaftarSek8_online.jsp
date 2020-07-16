@@ -677,7 +677,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
               
               #if($taraf_penting!="")
               <input type="hidden" name="socTarafKePemohonanpp2" value="$taraf_penting" />
-              <select name="taraf_penting" id="taraf_penting" class="largeselect;disabled" style="text-transform:uppercase;"  onblur="uppercase()" onChange="pilih_taraf();pilih_amanah();default_amanah()" >
+              <select name="taraf_penting" id="taraf_penting" class="largeselect;disabled" style="text-transform:uppercase;"  onblur="uppercase()" onChange="pilih_taraf();pilih_amanah();default_amanah();pilih_majlisagama()" >
                 <option value="$taraf_penting" style="text-transform:uppercase;"  onblur="uppercase()">$tarafkePemohonan</option>
                                                                          
                                           #foreach($listtar in $listtaraf)
@@ -884,7 +884,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             <td >&nbsp; </td>
             <td >Majlis Agama Islam Negeri</td>
             <td >:</td>
-            <td ><select name="jenis_pej3" id="jenis_pej3" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >
+            <td ><select name="jenis_pej3" id="jenis_pej3" class="largeselect" $setMode style="text-transform:uppercase;" onChange="pilih_majlisagama()" >
                 
           #if($!jenis_pej == "" || $!jenis_pej == "0") 
           
@@ -1989,7 +1989,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 				    	<td valign="top" width="2%">
 				    	<span class="style1">*</span>
 				      	</td>
-				     	<td width="28%"> Muatnaik Sijil Mati </td>
+				     	<td width="28%"> Muatnaik Sijil Mati / Surat Akuan / Anggapan Kematian / Permit Pengkuburan </td>
 				     	<td width="1%">:</td> 
 				     	<td width="9%">
 							<input type="button" id="fileupload" name="fileupload" value="Lampiran" onClick="lampiran(this.value,'cod')">
@@ -3008,6 +3008,35 @@ if(document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == 
     }
 }
 
+  function pilih_majlisagama()
+  {
+	  if(document.f1.taraf_penting.value == '6')
+	  {
+	  document.f1.jenis_pej.value = document.f1.jenis_pej1.value;
+	  }
+	  if(document.f1.taraf_penting.value == '8')
+	  {
+	  document.f1.jenis_pej.value = document.f1.jenis_pej2.value;
+	  }
+	  if(document.f1.taraf_penting.value == '20')
+	  {
+	  document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
+	  }
+
+
+	  if('$!skrin_online_popup' == "yes")
+	  {
+	  url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
+	  }
+	  else
+	  {
+	  url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+	  }
+	    actionName = "getalamat_raya";
+	    target = "add_alamat_raya";
+	    doAjaxUpdater(document.f1, url, target, actionName);
+
+	  }
 
 function alamat_raya()
 {

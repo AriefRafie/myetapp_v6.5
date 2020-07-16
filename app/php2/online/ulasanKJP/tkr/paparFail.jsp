@@ -1,4 +1,5 @@
 <input type="hidden" name="idUlasanTeknikal" id="idUlasanTeknikal" value='$!idUlasanTeknikal'>
+<input type="hidden" name="idFail" id="idFail" value='$!idFail'>
 <input type="hidden" name="idPermohonan" id="idPermohonan" value='$!idPermohonan'>
 <input type="hidden" name="idDokumen" id="idDokumen" value='$!idDokumen'>
 <input type="hidden" name="flagDokumen" id="flagDokumen" value='$!flagDokumen'>
