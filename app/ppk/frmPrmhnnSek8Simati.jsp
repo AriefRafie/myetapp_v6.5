@@ -1300,9 +1300,9 @@ resetOnBlur:false
                     
                     </fieldset>
                     <p> #end </p>                </tr>
-                    
-                    
-<tr>
+	
+	#if($!skrin_online != "yes") 
+		<tr>
             <td><fieldset>
               <legend>DOKUMEN SOKONGAN</legend>
               <table width="100%" border="0">
@@ -1333,6 +1333,7 @@ resetOnBlur:false
                   #end
                     </td>
                 </tr>
+	#end
                  </table>
                  </fieldset></td>
             </tr>
@@ -1353,7 +1354,7 @@ resetOnBlur:false
              
                 #if($boleh_kemaskini == "yes")
                 #end  
-                                                                                                                                                                                                                                                #if($!skrin_online != "yes") 
+                #if($!skrin_online != "yes") 
                 <input type="button" name="cmdKemaskini1" id="cmdKemaskini1" value="Kemaskini" onClick="setSelected(0,0,0,0);kemaskini_simati()" />
                  #if($flag_kemaskini_selesai != "yes")
                 <script>

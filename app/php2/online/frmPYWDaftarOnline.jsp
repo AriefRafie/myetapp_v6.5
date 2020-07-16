@@ -114,19 +114,18 @@
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0">
        <tr>
-  				<td width="1%"><span class="style1">*</span></td>
-    			<td width="28%">Jenis Permohonan</td>
+  			<td width="1%"><span class="style1">*</span></td>
+    		<td width="28%">Jenis Permohonan</td>
       		<td width="1%">:</td>
       		<td width="70%">
-       	<select name="socJenisPermohonan"
-						id="socJenisPermohonan" onchange="doChangeJenisPermohonan()"
+       			<select name="socJenisPermohonan" id="socJenisPermohonan" onchange="doChangeJenisPermohonan()"
 						$inputTextClass class="$inputTextClass">
 					<option $selected_0 value="0">SILA PILIH</option>
 					<option $selected_1 value="1">PERMOHONAN BARU</option>
 					<option $selected_2 value="2">PERMOHONAN PERLANJUTAN</option>
 					<option $selected_3 value="3">PERMOHONAN PENGURANGAN KADAR SEWA</option>
 				</select>
-				</td>
+			</td>
   		</tr>
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)        
         <input type="hidden" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" 
@@ -173,19 +172,6 @@
         	size="38" maxlength="50" />
 			</td>
         </tr>
-<!--         <tr> -->
-<!--         <td></td> -->
-<!--         <td valign="top">Perkara</td> -->
-<!--         <td valign="top">:</td> -->
-<!--         <td><textarea name="txtperkara" id="txtperkara" rows="5" -->
-<!-- 			cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" -->
-<!-- 			onKeyUp="textCounter(this.form.txtperkara,this.form.remLen1,$!saizTxtPerkara);" -->
-<!-- 			onKeyDown="textCounter(this.form.txtperkara,this.form.remLen1,$!saizTxtPerkara);">$beanMaklumatPermohonan.perkara</textarea> -->
-<!-- 			#if ($mode == 'new')  -->
-<!-- 			<input type="button" name="cmdDaftarBaru2" id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk()" /> -->
-<!-- 			#end -->
-<!-- 		</td> -->
-<!-- 		</tr> -->
 		#if ($mode != 'view')
 		<tr>
 			<td valign="top">&nbsp;</td>
@@ -248,30 +234,6 @@
    </fieldset></td>
   </tr>
   #end 
-  
-  <!-- JENIS PERMOHONAN 
-  <tr>  
-  		<td colspan="2"><fieldset>
-  			<legend><strong>JENIS PERMOHONAN</strong></legend>
-  			<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  				<tr>
-  					<td width="1%"><span class="style1">*</span></td>
-    				<td width="28%">Jenis Permohonan</td>
-       				<td width="1%">:</td>
-        			<td width="70%">
-        				<select name="socJenisPermohonan"
-							id="socJenisPermohonan" onchange="doChangeJenisPermohonan()"
-							$inputTextClass class="$inputTextClass">
-							<option $selected_0 value="0">SILA PILIH</option>
-							<option $selected_1 value="1">PERMOHONAN BARU</option>
-							<option $selected_2 value="2">PERMOHONAN PERLANJUTAN</option>
-							<option $selected_3 value="3">PERMOHONAN PENGURANGAN KADAR SEWA</option>
-						</select>
-					</td>
-  				</tr>
-  			</table>
-  		</td>
-  </tr>-->
   #if($idJenisPermohonan == '1')
   <!-- MAKLUMAT TANAH -->
   <tr>
