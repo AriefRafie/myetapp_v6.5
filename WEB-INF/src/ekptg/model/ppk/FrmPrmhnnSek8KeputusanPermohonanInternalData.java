@@ -626,6 +626,7 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 	}
 	
 	public static void setMaklumatMahkamahJ(String v) throws Exception {
+		System.out.println("setMaklumatMahkamahJ");
 		Db db = null;
 		//String v="08";
 		listMaklumatMahkamahJ.clear();
@@ -663,7 +664,7 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 			
 			//sql = "SELECT kp.id_Permohonan, pej.nama_Pejabat  FROM Tblppkkeputusanpermohonan kp, Tblrujpejabat pej, Tblppkpermohonan p, Tblrujdaerah d WHERE kp.id_Permohonan = p.id_Permohonan  AND p.id_Permohonan = 323  AND pej.jenis_pejabat = '08'  AND kp.id_Daerah_Mahkamah = d.id_Daerah  AND d.id_Daerah = pej.id_Daerah";
 			//sql = "select '123' as id_Permohonan,'AJAE TEST' as nama_Pejabat from DUAL";
-			//System.out.println("MAHKLAMAH XX:"+sql);
+			System.out.println("MAHKAMAH XX:"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next())	{
