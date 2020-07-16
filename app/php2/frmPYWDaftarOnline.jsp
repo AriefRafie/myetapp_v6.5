@@ -193,13 +193,13 @@
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%">No Fail</td>
+          <td width="28%">No. Fail</td>
           <td width="1%">:</td>
           <td width="70%"><strong>$beanMaklumatPermohonan.noFail </strong></td>
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Permohonan</td>
+          <td width="28%" valign="top">No. Rujukan Online</td>
           <td width="1%" >:</td>
           <td width="70%">$beanMaklumatPermohonan.noPermohonan </td>
         </tr>
@@ -274,6 +274,7 @@
             <input type="button" name="cmdDaftar" id="cmdDaftar" value="Daftar" onclick="daftar()"/>
             <input type="button" name="cmdKembali" id="cmdKembali" value="Batal" onclick="kembali()"/>
             #else
+            <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
             <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
             #end </td>
         </tr>
@@ -294,6 +295,11 @@ function daftar() {
 	
 	document.${formName}.actionOnline.value = "papar";
 	document.${formName}.hitButton.value = "daftarBaru";
+	document.${formName}.submit();
+}
+function seterusnya() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailView";
+	document.${formName}.actionPenyewaan = "";
 	document.${formName}.submit();
 }
 function kembali() {	

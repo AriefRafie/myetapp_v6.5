@@ -31,7 +31,8 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 
 	@Override
 	public String doTemplate2() throws Exception {
-		HttpSession session = this.request.getSession();
+		HttpSession session = this.request.g
+etSession();
 		
 		Boolean postDB = false;
 		String doPost =  (String) session.getAttribute("doPost");
@@ -67,7 +68,9 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		String userRole = "";
 		String userJawatan = "";
 		String layerKJP = "";
-		String idNegeriPemohon = "", idAgensiPmhn = "", idKementerianPmhn = "";
+		String idNegeriPemohon = ""; 
+		String idAgensi = ""; 
+		String idKementerian = "";
 		String idPermohonan = getParam("idPermohonan");
 		String idPermohonanPelepasan = getParam("idPermohonanPelepasan");
 		String idTanahGanti = getParam("idTanahGanti");
@@ -125,23 +128,31 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		if(!listDetailKJP.isEmpty() && listDetailKJP.size()> 0) {
     		Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
     		idNegeriPemohon = hashRayuanDB.get("idNegeri").toString();
-    		idKementerianPmhn= hashRayuanDB.get("idKementerian").toString();
-    		idAgensiPmhn= hashRayuanDB.get("idAgensi").toString();
+    		idKementerian= hashRayuanDB.get("idKementerian").toString();
+    		idAgensi= hashRayuanDB.get("idAgensi").toString();
     		
 		}
 		
 		this.context.put("idNegeriPemohon", idNegeriPemohon);
-		this.context.put("idKementerianPmhn", idKementerianPmhn);
-		this.context.put("idAgensiPmhn", idAgensiPmhn);	
+		this.context.put("idKementerian", idKementerian);
+		this.context.put("idAgensi", idAgensi);	
 		this.context.put("onload", "");
 		this.context.put("completed", false);
 		
 		myLog.info("hitButton="+hitButton+",actionOnline="+actionOnline);
 		//HITBUTTON
 		if (postDB) {
+<<<<<<< HEAD
+			if ("doDaftarBaru".equals(hitButton)){
+
+           		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
+        	}
+			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
+=======
 			if (hitButton.equals("doDaftarBaru")){
            		idFail = logic.daftarBaru(userRole,idKementerianPmhn,idAgensiPmhn, getParam("idHakmilikAgensi"), session);
         	}else if (hitButton.equals("doSimpanKemaskiniMaklumatTnh")){
+>>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
         		logic.updateTanah(idPermohonan,idHakmilikAgensi,session);	
             }else if (hitButton.equals("doSimpanKemaskiniMaklumatPelepasan")){
         		logic.updatePermohonanPenawaran(idPermohonanPelepasan,
@@ -153,15 +164,29 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
+<<<<<<< HEAD
+					logic.updatePermohonanSemakan(idPermohonan, idKementerian, session);
+				}				
+			}
+			
+			if ("doHantarKelulusan".equals(hitButton)){
+=======
 					logic.updatePermohonanSemakan(idPermohonan, idKementerianPmhn, session);
 				}
+>>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
 				
 			}else if (hitButton.equals("doHantarKelulusan")){			
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
+<<<<<<< HEAD
+					logic.updatePermohonanKelulusan(idPermohonan, idKementerian, session);
+				}				
+			}else if ("doHantarEmel".equals(hitButton)){
+=======
 					logic.updatePermohonanKelulusan(idPermohonan, idKementerianPmhn, session);
 				}	
+>>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
 				
 			}else if (hitButton.equals("doHantarEmel")){			
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
@@ -220,7 +245,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 			
 			//MAKLUMAT HAKMILIK
 			if ("doChangePeganganHakmilik".equals(submit)) {
-				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerianPmhn, idAgensiPmhn, getParam("txtPeganganHakmilik"));
+				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerian, idAgensi, getParam("txtPeganganHakmilik"));
 				if (idHakmilikAgensi.isEmpty()) {
 					this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
 				}
@@ -321,13 +346,14 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
         		 
 	        		if ("doChangePeganganHakmilik1".equals(submit)){
 	    				beanMaklumatTanah = new Vector();
-	    				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerianPmhn, idAgensiPmhn, getParam("txtPeganganHakmilik1"));
+	    				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerian, idAgensi, getParam("txtPeganganHakmilik1"));
 	    				logic.setMaklumatTanah(idHakmilikAgensi);
 	    				beanMaklumatTanah = logic.getBeanMaklumatTanah();
 	    				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 	    				this.context.put("idHakmilikAgensi", idHakmilikAgensi);
 	    				this.context.put("idKementerian", getParam("idKementerian"));
 	    				this.context.put("kodKementerian", getParam("kodKementerian"));
+
 	    				this.context.put("idNegeriTanah", getParam("idNegeriTanah"));
 	    				this.context.put("kodNegeriTanah", getParam("kodNegeriTanah"));
 	    				if (idHakmilikAgensi.isEmpty()){
@@ -383,7 +409,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 	    				hashMaklumatPenawaran.put("luas1", getParam("txtLuasMohon1"));
 	    				hashMaklumatPenawaran.put("luas2", getParam("txtLuasMohon2"));
 	    				hashMaklumatPenawaran.put("luas3", getParam("txtLuasMohon3"));
-	    				if ("1".equals(idLuasKegunaan)){
+	    				if ("1".equals(idLuasKegunaag)){
 	    					hashMaklumatPenawaran.put("luasBersamaan",  hashMaklumatPenawaranDB.get("luasAsal"));		
 	    					hashMaklumatPenawaran.put("luasBaki", Utils.formatLuas(0D));
 	    				} else {
@@ -619,7 +645,5 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 				db.close();
 		}
 		this.context.put("completed", true);
-	}
-	
-	
-}
+	e
+

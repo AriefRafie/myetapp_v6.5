@@ -2946,6 +2946,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			
 			
 			String no_hp = (String) data.get("no_hp");
+			String emel = (String) data.get("emel");
 			String taraf_penting = (String) data.get("taraf_penting");
 			String jenis_pemohon = (String) data.get("jenis_pemohon");
 			String adaob = (String) data.get("adaob");
@@ -3089,6 +3090,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				r.add("umur", txtUmurPemohon);
 				r.add("jantina", socJantinaPemohon);
 				r.add("no_hp", no_hp);
+				r.add("emel",emel);
 			} else {
 				r.add("no_kp_baru", "");
 				r.add("no_kp_lama", "");
@@ -3097,6 +3099,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				r.add("umur", "");
 				r.add("jantina", "");
 				r.add("no_hp", "");
+				r.add("emel",emel);
 
 			}
 			r.add("nama_pemohon", nama_pemohon.toUpperCase());
