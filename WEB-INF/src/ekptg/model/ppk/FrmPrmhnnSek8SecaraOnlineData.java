@@ -2941,6 +2941,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String no_fail = (String) data.get("no_fail");
 			String no_kp_baru = (String) data.get("no_kp_baru");
 			String tarikh_hantar = (String) data.get("tarikh_hantar");
+			String id_perbicaraan = (String) data.get("id_perbicaraan");
 			
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -2961,6 +2962,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			r.add("NO_FAIL", no_fail);
 			r.add("NO_KP_BARU", no_kp_baru);
 			r.add("TARIKH_HANTAR", tarikh_hantar);
+			r.add("ID_PERBICARAAN", id_perbicaraan);
 			
 			
 			myLogger.info("Step 3 SYAFIQAH");
