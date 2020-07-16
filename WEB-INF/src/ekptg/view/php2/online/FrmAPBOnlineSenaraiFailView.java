@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.PUT;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -370,6 +371,9 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
             beanHeader = logic.getBeanMaklumatHeader();
     		this.context.put("BeanHeader", beanHeader);
     		
+    		Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);
+			this.context.put("pemohon", vec.get(0));
+    		
     		if (beanHeader.size() != 0){
     			Hashtable hashHeader = (Hashtable) logic.getBeanMaklumatHeader().get(0);
     			idFail = (String) hashHeader.get("idFail");
@@ -422,7 +426,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    			this.context.put("SenaraiSemak", senaraiSemak);
 	    			
 	    			if ("update".equals(mode)){
-	        			
+	    				
 	        			senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
 		    			this.context.put("SenaraiSemak", senaraiSemak);
 	    			}
