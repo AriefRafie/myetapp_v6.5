@@ -62,7 +62,7 @@
 		<td>
 			#if($view_list_fail == "yes")
 			<fieldset>
-		        <table width="97%"  cellpadding="1" cellspacing="2" border="0">
+		        <table width="100%"  cellpadding="1" cellspacing="2" border="0">
 					<tr>
 		                <td class="table_header" width="0%" style="display:none"><b></b></td>
 		      		    <td class="table_header" width="0%" style="display:none"><b>ID FAIL</b></td>
@@ -95,6 +95,8 @@
 		         
 		         <input type="hidden" name="idFail" id="idFail" value="$!list.ID_FAIL" />
 		         <input type="hidden" name="noFail" id="noFail" value="$!list.NO_FAIL" />
+		         
+		         <input type="text" name="idBicara" id="idBicara" value="$!list.ID_PERBICARAAN" />
 		         
 		         <input type="hidden" name="icSimati" id="icSimati" value="$!list.NO_KP_BARU" />
 		         
@@ -182,6 +184,7 @@
 					  	<td width="15%" align="center">Nama Pembantah</td>
 					  	<td width="20%" align="center">Sebab Bantah</td>
 					  	<td width="10%" align="center">Dokumen Sokongan</td>
+					  	<td width="5%" align="center">Maklumat Bicara</td>
 				  	</tr>
 					#foreach ($senarai in $senaraibantahan)
 						#set( $counter = $velocityCount )
@@ -198,8 +201,24 @@
 						 <td class="$row" align="center">$!senarai.tarikh_hantar</td>
 						 <td class="$row" align="center">$!senarai.no_fail</td>
 						 <td class="$row" align="center">$!senarai.nama_pembantah</td>
-						 <td class="$row" align="center">$!senarai.sebab</td>
-						 <td class="$row" align="center"></td>
+						 <td class="$row" align="center">$!senarai.sebab.toUpperCase()</td>
+						 <td class="$row" align="center">$!senarai.nama_dokumen</td>
+						 <td class="$row" align="center">$!senarai.id_perbicaraan</td>
+<!-- 						 <td class="$row" align="center"> -->
+<!-- 						 	<table width="100%" border="0"> -->
+<!-- 						 		<tr><td colspan="3">Permohonan bantahan yang dikemukakan telah dihantar. Tuan/Puan adalah dikehendaki hadir pada Hari Perbicaraan seperti tetapan di bawah:</td></tr> -->
+<!-- 						 		<tr> -->
+<!-- 						 			<td>Tarikh Bicara</td> -->
+<!-- 						 			<td>:</td> -->
+<!-- 						 			<td></td> -->
+<!-- 						 		</tr> -->
+<!-- 						 		<tr> -->
+<!-- 						 			<td>Tempat Bicara</td> -->
+<!-- 						 			<td>:</td> -->
+<!-- 						 			<td></td> -->
+<!-- 						 		</tr> -->
+<!-- 						 	</table> -->
+<!-- 						 </td> -->
 					</tr>
 					#end
 					#if ($cnt == 0)
