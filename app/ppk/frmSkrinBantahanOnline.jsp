@@ -21,54 +21,57 @@
 <input type="hidden" name="id_pemohon" id="id_pemohon" value="$!pemohon.iduser" />
 <input type="hidden" name="id_fail" id="id_fail" value="$!idfail" />
 <input type="hidden" name="nama_fail" id="nama_fail" value="$!nofail" />
+<input type="hidden" name="id_permohonan" id="id_permohonan" value="$!idPermohonan" />
 
 <input name="nowpast" type="hidden" id="nowpast" value="$nowpast"/>
 <br>
 
-<table width="100%" border="0">
-	<tr>
-		<td>
-			<fieldset>
-				<legend>SENARAI BANTAHAN DAHULU</legend>
-				#parse("app/utils/record_paging.jsp")
-				<table width="100%" border="0">
-					<tr class="table_header">
-					  	<td width="2%" align="center">No</td>
-					  	<td width="5%" align="center">Tarikh Hantar</td>
-					  	<td width="15%" align="center">No Fail</td>
-					  	<td width="15%" align="center">Nama Pembantah</td>
-					  	<td width="20%" align="center">Sebab Bantah</td>
-				  	</tr>
-					#foreach ($senarai in $senaraibantahan)
-						#set( $counter = $velocityCount )
-						#if ( ($counter % 2) == 0 )
-							#set( $row = "row2" )
-						#else
-							#set( $row = "row1" )
-						#end
-				  	<tr>
-						<td class="$row" align="center">
-						  #set ($cnt = ($page - 1) * $itemsPerPage + $counter )
-						  $!cnt
-						 </td>
-						 <td class="$row" align="center"></td>
-						 <td class="$row" align="center">$!senarai.no_fail</td>
-						 <td class="$row" align="center">$!senarai.nama_pembantah</td>
-						 <td class="$row" align="center">$!senarai.sebab</td>
-					</tr>
-					#end
-					#if ($cnt == 0)
-					<tr> 
-						<td colspan="3" scope="row"><font color="#FF0000">Tiada Rekod</font></td>
-					</tr>
-					#end
-				</table>	
-			</fieldset>
-		</td>
-	</tr>
-</table>
+<!-- <table width="100%" border="0"> -->
+<!-- 	<tr> -->
+<!-- 		<td> -->
+<!-- 			<fieldset> -->
+<!-- 				<legend>SENARAI BANTAHAN DAHULU</legend> -->
+<!-- 				#parse("app/utils/record_paging.jsp") -->
+<!-- 				<table width="100%" border="0"> -->
+<!-- 					<tr class="table_header"> -->
+<!-- 					  	<td width="2%" align="center">No</td> -->
+<!-- 					  	<td width="5%" align="center">Tarikh Hantar</td> -->
+<!-- 					  	<td width="15%" align="center">No Fail</td> -->
+<!-- 					  	<td width="15%" align="center">Nama Pembantah</td> -->
+<!-- 					  	<td width="20%" align="center">Sebab Bantah</td> -->
+<!-- 					  	<td width="10%" align="center">Dokumen Sokongan</td> -->
+<!-- 				  	</tr> -->
+<!-- 					#foreach ($senarai in $senaraibantahan) -->
+<!-- 						#set( $counter = $velocityCount ) -->
+<!-- 						#if ( ($counter % 2) == 0 ) -->
+<!-- 							#set( $row = "row2" ) -->
+<!-- 						#else -->
+<!-- 							#set( $row = "row1" ) -->
+<!-- 						#end -->
+<!-- 				  	<tr> -->
+<!-- 						<td class="$row" align="center"> -->
+<!-- 						  #set ($cnt = ($page - 1) * $itemsPerPage + $counter ) -->
+<!-- 						  $!cnt -->
+<!-- 						 </td> -->
+<!-- 						 <td class="$row" align="center">$!senarai.tarikh_hantar</td> -->
+<!-- 						 <td class="$row" align="center">$!senarai.no_fail</td> -->
+<!-- 						 <td class="$row" align="center">$!senarai.nama_pembantah</td> -->
+<!-- 						 <td class="$row" align="center">$!senarai.sebab</td> -->
+<!-- 						 <td class="$row" align="center"></td> -->
+<!-- 					</tr> -->
+<!-- 					#end -->
+<!-- 					#if ($cnt == 0) -->
+<!-- 					<tr>  -->
+<!-- 						<td colspan="3" scope="row"><font color="#FF0000">Tiada Rekod</font></td> -->
+<!-- 					</tr> -->
+<!-- 					#end -->
+<!-- 				</table>	 -->
+<!-- 			</fieldset> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- </table> -->
 
-<br>
+<!-- <br> -->
 
 <table width="100%" border="0">
 	<tr>
@@ -92,14 +95,14 @@
 			<!-- 		#set($nowpast = "past") -->
 			<!-- 	#end -->
 				<tr>
-					<td width="5%"><label><div align="right"><input type="radio" id="radiox" name="radiox" $nowcheck value="now" onClick="NowView('$!idfail','$!nofail','$!nama_simati')"></div></label></td>
+					<td width="5%"><label><div align="right"><input type="radio" id="radiox" name="radiox" $nowcheck value="now" onClick="NowView('$!idfail','$!nofail','$!nama_simati','$!ic_simati')"></div></label></td>
 					<td width="1%">:</td>
 					<td width="94%"><div align="left">#if($nowpast == "now")<span class="style42">Pemohon adalah Pembantah</span>
 													  #else Pemohon adalah Pembantah</div></td>
 													  #end
 				</tr>
 				<tr>
-					<td width="5"><label><div align="right"><input type="radio" id="radiox" name="radiox" $pastcheck value="past" onClick="PastView('$!idfail','$!nofail','$!nama_simati')"></div></label></td>
+					<td width="5"><label><div align="right"><input type="radio" id="radiox" name="radiox" $pastcheck value="past" onClick="PastView('$!idfail','$!nofail','$!nama_simati','$!ic_simati')"></div></label></td>
 					<td width="1%">:</td>
 					<td width="94%"><div align="left">#if($nowpast == "past")<span class="style42">Pemohon bukan Pembantah</span>
 													  #else Pemohon bukan Pembantah</div></td>
@@ -119,23 +122,26 @@
 				<legend>PERMOHONAN BANTAHAN BARU</legend>
 				<table width="100%" border="0">
 					<tr>
-						<td width="2%" valign="top">&nbsp;</td>
-		              	<td width="2%">&nbsp;</td>
-		             	<td width="17%"><b>No Fail</b></td>
+						<td width="1%" valign="top">&nbsp;</td>
+		             	<td width="17%">No. Fail</td>
 		             	<td width="1%">:</td>
 						<td><b>$!nofail</b></td>
 					</tr>
 					<tr>
-						<td width="2%" valign="top">&nbsp;</td>
-		              	<td width="2%">&nbsp;</td>
-		             	<td width="17%"><b>Nama Simati</b></td>
+						<td width="1%" valign="top">&nbsp;</td>
+		             	<td width="17%">Nama Simati</td>
 		             	<td width="1%">:</td>
 						<td><b>$!nama_simati</b></td>
 					</tr>
+					<tr>
+						<td width="1%" valign="top">&nbsp;</td>
+		             	<td width="17%">No. K/P Simati</td>
+		             	<td width="1%">:</td>
+						<td><b>$!ic_simati</b></td>
+					</tr>
 					<tr><td>&nbsp;</td></tr>
 	             	<tr>
-	             	  <td width="2%" valign="top"><span class="style1">*</span></td>
-		              <td width="2%">&nbsp;</td>
+	             	  <td width="1%" valign="top"><span class="style1">*</span></td>
 		              <td width="17%">Nama</td>
 		              <td width="1%">:</td>
 		              <td><input name="txtNama" type="text" class="disabled"
@@ -144,9 +150,8 @@
 							onblur="this.value=this.value.toUpperCase();" /></td>
 		           </tr>
 		           <tr>
-		           	  <td width="2%" valign="top"><span class="style1">*</span></td>
-		              <td width="2%">&nbsp;</td>
-		              <td width="17%">MyID</td>
+		           	  <td width="1%" valign="top"><span class="style1">*</span></td>
+		             <td width="17%">MyID</td>
 		              <td width="1%">:</td>
 		              <td><input name="txtNoKPLamaPemohon" type="text" class="disabled"
 							id="txtNoKPLamaPemohon" value="$pemohon.noPengenalan" size="43"
@@ -154,72 +159,62 @@
 							onblur="this.value=this.value.toUpperCase();" /></td>
 		          </tr>
 		          <tr>
-		          	  <td width="2%" valign="top"><span class="style1">*</span></td>
-		              <td width="2%">&nbsp;</td>
+		          	  <td width="1%" valign="top"><span class="style1">*</span></td>
 		              <td width="17%">Alamat</td>
 		              <td width="1%">:</td>
 		              <td width="80%"><input name="txtAlamat1" type="text" id="txtAlamat1" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" value="$pemohon.alamat1" size="50"  maxlength="200"/></td>
 		          </tr>
 		          <tr>
-		          	<td width="2%">&nbsp;</td>
-		          	<td width="2%">&nbsp;</td>
+		          	<td width="1%">&nbsp;</td>
 		          	<td width="17%">&nbsp;</td>
 		          	<td width="1%">&nbsp;</td>
           			<td width="80%"><input name="" type="text" id="" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" value="$pemohon.alamat2" size="50"  maxlength="200" /></td>
 		          </tr>
 		          <tr>
-		          	<td width="2%">&nbsp;</td>
-		          	<td width="2%">&nbsp;</td>
+		          	<td width="1%">&nbsp;</td>
 		          	<td width="17%">&nbsp;</td>
 		          	<td width="1%">&nbsp;</td>
           			<td width="80%"><input name="" type="text" id="" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" value="$pemohon.alamat3" size="50"  maxlength="200" /></td>
 		          </tr>
 		          <tr>
-		          	  <td width="2%" valign="top"><span class="style1">*</span></td>
-		              <td width="2%">&nbsp;</td>
+		          	  <td width="1%" valign="top"><span class="style1">*</span></td>
 		              <td width="17%">Poskod</td>
 		              <td width="1%">:</td>
 		              <td width="80%"><input name="txtPoskod" type="text" id="txtPoskod" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" value="$pemohon.poskod" size="50"  maxlength="200"/></td>
 		          </tr>
 		           <tr>
-		           	  <td width="2%" valign="top"><span class="style1">*</span></td>
-		              <td width="2%">&nbsp;</td>
+		           	  <td width="1%" valign="top"><span class="style1">*</span></td>
 		              <td width="17%">Bandar</td>
 		              <td width="1%">:</td>
 		              <td width="80%"><input name="txtBandar" type="text" id="txtBandar" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" value="$pemohon.bandar" size="50"  maxlength="200"/></td>
 		          </tr>
 		           <tr>
-		           	  <td width="2%" valign="top"><span class="style1">*</span></td>
-		              <td width="2%">&nbsp;</td>
-		              <td width="17%">Negeri</td>
+		           	  <td width="1%" valign="top"><span class="style1">*</span></td>
+		             <td width="17%">Negeri</td>
 		              <td width="1%">:</td>
 		              <td width="80%"><input name="txtNegeri" type="text" id="txtNegeri" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" value="$pemohon.negeri" size="50"  maxlength="200" /></td>
 		          </tr>
 		           <tr>
-		           	  <td width="2%" valign="top"><span class="style1">*</span></td>
-		              <td width="2%">&nbsp;</td>
+		           	  <td width="1%" valign="top"><span class="style1">*</span></td>
 		              <td width="17%">No. Telefon</td>
 		              <td width="1%">:</td>
 		              <td width="80%"><input name="txtNoTel" type="text" id="txtNoTel" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" value="$pemohon.noTel" size="50"  maxlength="200" /></td>
 		          </tr>
 		           <tr>
-		           	  <td width="2%">&nbsp;</td>
-		              <td width="2%">&nbsp;</td>
+		           	  <td width="1%">&nbsp;</td>
 		              <td width="17%">Emel</td>
 		              <td width="1%">:</td>
-		              <td width="80%"><input name="txtEmel" type="text" id="txtEmel" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" value="$pemohon.emel" size="50"  maxlength="200" /></td>
+		              <td width="80%"><input name="txtEmel" type="text" id="txtEmel" style=""  onblur="" value="$!pemohon.emel" size="50"  maxlength="200" /></td>
 		          </tr>
 		           <tr>
-		           	  <td width="2%" valign="top"><span class="style1">*</span></td>
-		              <td width="2%">&nbsp;</td>
-		              <td width="17%">Sebab Bantah</td>
-		              <td width="1%">:</td>
+		           	  <td width="1%" valign="top"><span class="style1">*</span></td>
+		              <td width="17%" valign="top">Sebab Bantah</td>
+		              <td width="1%" valign="top">:</td>
 		              <td width="80%"><textarea cols="60" rows="5" name="catatan" id="catatan"></textarea></td>
 		          </tr>
 		           <tr>
-		           	  <td width="2%">&nbsp;</td>
-		              <td width="2%">&nbsp;</td>
-		              <td width="17%">Muatnaik Dokumen Sokongan</td>
+		           	  <td width="1%">&nbsp;</td>
+		              <td width="17%">Dokumen Sokongan</td>
 		              <td width="1%">:</td>
 		              <td width="80%"><input id="docSokongan" name="docSokongan" type="file" value="Lampiran" size="40"  onClick="lampiran('$!idPermohonan','dokumenS')"></td>
 		          </tr>
@@ -229,9 +224,8 @@
 	            	<tr>&nbsp;</tr>
 	            	<tr>
 	            		<td width="1%" valign="top"></td>
-	    				<td width="3%"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled></td>
-	      				<td width="89%">Saya $!pemohon.namaPemohon No.K/P $!pemohon.noPengenalan dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-	            	</tr>
+	    				<td colspan="3"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled> &nbsp;Saya $!pemohon.namaPemohon No.K/P $!pemohon.noPengenalan dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+	      			</tr>
 	            </table>
 			</fieldset>
 		</td>
@@ -248,23 +242,26 @@
 				<legend>PERMOHONAN BANTAHAN BARU</legend>
 				<table width="100%" border="0">
 				<tr>
-					<td width="2%" valign="top">&nbsp;</td>
-	              	<td width="2%">&nbsp;</td>
-	             	<td width="17%"><b>No Fail</b></td>
+					<td width="1%" valign="top">&nbsp;</td>
+					<td width="17%">No. Fail</td>
 	             	<td width="1%">:</td>
 					<td><b>$!nofail</b></td>
 				</tr>
 				<tr>
-					<td width="2%" valign="top">&nbsp;</td>
-	              	<td width="2%">&nbsp;</td>
-	             	<td width="17%"><b>Nama Simati</b></td>
+					<td width="1%" valign="top">&nbsp;</td>
+					<td width="17%">Nama Simati</td>
 	             	<td width="1%">:</td>
 					<td><b>$!nama_simati</b></td>
 				</tr>
+				<tr>
+						<td width="1%" valign="top">&nbsp;</td>
+		             	<td width="17%">No. K/P Simati</td>
+		             	<td width="1%">:</td>
+						<td><b>$!ic_simati</b></td>
+					</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
-             	  <td width="2%" valign="top"><span class="style1">*</span></td>
-	              <td width="2%">&nbsp;</td>
+             	  <td width="1%" valign="top"><span class="style1">*</span></td>
 	              <td width="17%">Nama</td>
 	              <td width="1%">:</td>
 	              <td><input name="txtNama" type="text"
@@ -273,8 +270,7 @@
 						onblur="this.value=this.value.toUpperCase();tukarInput()" /></td>
 	           </tr>
 	           <tr>
-	           	  <td width="2%" valign="top"><span class="style1">*</span></td>
-	              <td width="2%">&nbsp;</td>
+	           	  <td width="1%" valign="top"><span class="style1">*</span></td>
 	              <td width="17%">MyID</td>
 	              <td width="1%">:</td>
 	              <td><input name="txtNoKPLamaPemohon" type="text"
@@ -283,74 +279,64 @@
 						onblur="this.value=this.value.toUpperCase();tukarInput()" /></td>
 				</tr> 
 				<tr>
-					  <td width="2%" valign="top"><span class="style1">*</span></td>
-				    <td width="2%">&nbsp;</td>
+					<td width="1%" valign="top"><span class="style1">*</span></td>
 				    <td width="17%">Alamat</td>
 				    <td width="1%">:</td>
 				    <td width="80%"><input name="txtAlamat1" type="text" id="txtAlamat1" style="text-transform:uppercase;" value="$!txtAlamat1" onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200" /></td>
 				</tr>
 				<tr>
-					<td width="2%">&nbsp;</td>
-					<td width="2%">&nbsp;</td>
+					<td width="1%">&nbsp;</td>
 					<td width="17%">&nbsp;</td>
 					<td width="1%">&nbsp;</td>
 					<td width="80%"><input name="txtAlamat2" type="text" id="txtAlamat2" style="text-transform:uppercase;"  value="$!txtAlamat2" onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200" /></td>
 				</tr>
 				<tr>
-					<td width="2%">&nbsp;</td>
-					<td width="2%">&nbsp;</td>
+					<td width="1%">&nbsp;</td>
 					<td width="17%">&nbsp;</td>
 					<td width="1%">&nbsp;</td>
 					<td width="80%"><input name="txtAlamat3" type="text" id="txtAlamat3" style="text-transform:uppercase;"  value="$!txtAlamat3" onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200" /></td>
 				</tr>
 				<tr>
-					  <td width="2%" valign="top"><span class="style1">*</span></td>
-				    <td width="2%">&nbsp;</td>
+					<td width="1%" valign="top"><span class="style1">*</span></td>
 				    <td width="17%">Poskod</td>
 				    <td width="1%">:</td>
 				    <td width="80%"><input name="txtPoskod" type="text" id="txtPoskod" style="text-transform:uppercase;"  value="$!txtPoskod" onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200"/></td>
 				</tr>
 				 <tr>
-				 	  <td width="2%" valign="top"><span class="style1">*</span></td>
-				    <td width="2%">&nbsp;</td>
+				 	<td width="1%" valign="top"><span class="style1">*</span></td>
 				    <td width="17%">Bandar</td>
 				    <td width="1%">:</td>
 				    <td width="80%"><input name="txtBandar" type="text" id="txtBandar" style="text-transform:uppercase;"  value="$!txtBandar" onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200" /></td>
 				</tr>
 				 <tr>
-				 	  <td width="2%" valign="top"><span class="style1">*</span></td>
-				    <td width="2%">&nbsp;</td>
+				 	<td width="1%" valign="top"><span class="style1">*</span></td>
 				    <td width="17%">Negeri</td>
 				    <td width="1%">:</td>
 				    <td width="80%"><input name="txtNegeri" type="text" id="txtNegeri" style="text-transform:uppercase;"  value="$!txtNegeri" onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200" /></td>
 				</tr>
 				 <tr>
-				 	 <td width="2%" valign="top"><span class="style1">*</span></td>
-				    <td width="2%">&nbsp;</td>
+				 	<td width="1%" valign="top"><span class="style1">*</span></td>
 				    <td width="17%">No. Telefon</td>
 				    <td width="1%">:</td>
 				    <td width="80%"><input name="txtNoTel" type="text" id="txtNoTel" style="text-transform:uppercase;" value="$!txtNoTel" onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200"/></td>
 				</tr>
 				 <tr>
-				 	  <td width="2%">&nbsp;</td>
-				    <td width="2%">&nbsp;</td>
+				 	<td width="1%">&nbsp;</td>
 				    <td width="17%">Emel</td>
 				    <td width="1%">:</td>
-				    <td width="80%"><input name="txtEmel" type="text" id="txtEmel" style="text-transform:uppercase;" value="$!txtEmel" onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200" /></td>
+				    <td width="80%"><input name="txtEmel" type="text" id="txtEmel" style="" value="$!txtEmel" onblur="" size="50"  maxlength="200" /></td>
 				</tr>
 				 <tr>
-				 	  <td width="2%" valign="top"><span class="style1">*</span></td>
-				    <td width="2%">&nbsp;</td>
+				 	<td width="1%" valign="top"><span class="style1">*</span></td>
 				    <td width="17%">Sebab Bantah</td>
 				    <td width="1%">:</td>
-				    <td width="80%"><textarea cols="60" rows="5" name="catatan" id="catatan" value="$catatan"></textarea></td>
+				    <td width="80%"><textarea cols="60" rows="5" name="catatan" id="catatan" value="$!catatan"></textarea></td>
 				</tr>
 				 <tr>
-				 	  <td width="2%">&nbsp;</td>
-				    <td width="2%">&nbsp;</td>
+				 	<td width="1%">&nbsp;</td>
 				    <td width="17%">Muatnaik Dokumen Sokongan</td>
 				    <td width="1%">:</td>
-				    <td width="80%"><input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40"></td>
+				    <td width="80%"><input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenS')"></td>
 				</tr>
 	            </table>
 	            
@@ -361,9 +347,9 @@
 	            	<tr>&nbsp;</tr>
 	            	<tr>
 	            		<td width="1%" valign="top"></td>
-	    				<td width="3%"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled></td>
+	    				
 <!-- 	      				<td width="89%">Saya $!name No.K/P $!no_kp dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td> -->
-	      				<td width="89%">Saya <input style="border:none;background:transparent;" name="nameD" id="nameD"/> No.K/P <input style="border:none;background:transparent;" name="no_kpD" id="no_kpD"/> dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+	      				<td colspan="3"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled> Saya <input style="border:none;background:transparent;" name="nameD" id="nameD"/> No.K/P <input style="border:none;background:transparent;" name="no_kpD" id="no_kpD"/> dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
 	            	</tr>
 	            </table>
 			</fieldset>
@@ -495,19 +481,19 @@ function showDisclaimer(name,no_kp){
 }
 
 
-function NowView(idfail,nofail,simati) {
+function NowView(idfail,nofail,simati,ic) {
 // 	alert(idfail+"&"+nofail)
 // 	document.${formname}.method="post";
 // 	// document.${formName}.mode.value ="Nowview";
 // 	document.${formname}.action="?_portal_module=ekptg.view.ppk.FrmPrmhnnBantahanOnline";
 // 	doAjaxCall${formName}("skrinBantahNow");
 // 	document.${formName}.submit();
-	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBantahanOnline&command=skrinBantahNow&idFail="+idfail+"&noFail="+nofail+"&nama_simati="+simati;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBantahanOnline&command=skrinBantahNow&idFail="+idfail+"&noFail="+nofail+"&nama_simati="+simati+"&icSimati="+ic;
 	document.${formName}.method="POST";
   	document.${formName}.submit();
 }
 
-function PastView(idfail,nofail,simati) {
+function PastView(idfail,nofail,simati,ic) {
 // 	alert(idfail+"&"+nofail)
 // 	document.${formname}.method="post";
 // 	// document.${formName}.mode.value ="Nowview";
@@ -515,7 +501,7 @@ function PastView(idfail,nofail,simati) {
 // 	doAjaxCall${formName}("skrinBantahPast");
 // 	document.${formName}.submit();
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBantahanOnline&command=skrinBantahPast&idFail="+idfail+"&nofail="+nofail+"&nama_simati="+simati;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBantahanOnline&command=skrinBantahPast&idFail="+idfail+"&nofail="+nofail+"&nama_simati="+simati+"&icSimati="+ic;
 	document.${formName}.method="POST";
   	document.${formName}.submit();
 }

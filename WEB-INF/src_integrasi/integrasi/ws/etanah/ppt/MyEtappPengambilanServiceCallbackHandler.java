@@ -6,16 +6,6 @@
  */
 package integrasi.ws.etanah.ppt;
 
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.AuthResponseE;
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.BorangCdanMMKResponseE;
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanBorangAMMkResponseE;
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanSek8ResponseE;
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.EndorsBorangDMaklumatWartaResponseE;
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.EndorsBorangKResponseE;
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.HakmilikDetailByCarianResitResponseE;
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumanPenghantaranPUResponseE;
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatWartaborangBResponseE;
-import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.SijilPembebasanUkurResponseE;
 
 /**
  *  MyEtappPengambilanServiceCallbackHandler Callback class, Users can extend this class and implement
@@ -121,21 +111,6 @@ public abstract class MyEtappPengambilanServiceCallbackHandler {
      * override this method for handling error response from daftarPermohonanSek8 operation
      */
     public void receiveErrordaftarPermohonanSek8(java.lang.Exception e) {
-    }
-
-    /**
-     * auto generated Axis2 call back method for auth method
-     * override this method for handling normal response from auth operation
-     */
-    public void receiveResultauth(
-        integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.AuthResponseE result) {
-    }
-
-    /**
-     * auto generated Axis2 Error handler
-     * override this method for handling error response from auth operation
-     */
-    public void receiveErrorauth(java.lang.Exception e) {
     }
 
     /**

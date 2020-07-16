@@ -204,6 +204,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		Vector listPemiutang = null;
 		Vector listSaksi = null;
 		Vector listCheckPertukaran = null;
+		Vector testCheckPertukaran = null;
 		Vector listCheckPeguam = null;
 		Vector listPenghutangbyIDOB = null;
 		Vector listPentingbyIDOB = null;
@@ -3190,10 +3191,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			listWarisOB = logic.getDataWarisOB();
 			this.context.put("listWarisOB", listWarisOB);
 			
-			this.context.put("selectedTabatas", 0);
-			this.context.put("selectedTabtengah", 2);
-			this.context.put("selectedTabbawah", 0);
-			this.context.put("selectedTabtepi", 0);
+//			this.context.put("selectedTabatas", 0);
+//			this.context.put("selectedTabtengah", 2);
+//			this.context.put("selectedTabbawah", 0);
+//			this.context.put("selectedTabtepi", 0);
 			context.put("DATEUTIL", new DateUtil());
 			// logic_A.setData_online(id,(String)
 			// session.getAttribute("_ekptg_user_id"));
@@ -3216,16 +3217,20 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			
 			
 			// boolean listCheckPertukaran_ = 
-			logic.setCheckPertukaran(id_Permohonansimati);
+			testCheckPertukaran = logic.setCheckPertukaran(id_Permohonansimati);
 			listCheckPertukaran = logic.getCheckPertukaran();
 			this.context.put("listCheckPertukaran", listCheckPertukaran);
 			
 			// myLogger.info("SYAFIQAH : " + listCheckPertukaran.size()); 
 			
 			// if(listCheckPertukaran_) {
-			if (listCheckPertukaran.size() != 0) {
+			myLogger.info("testCheckPertukaran.size() = "+testCheckPertukaran.size());
+			myLogger.info("listCheckPertukaran.size() = "+listCheckPertukaran.size());
+			if (listCheckPertukaran.size() > 0) {
+				myLogger.info("SYAFIQAH SEDEY1");
 				this.context.put("show_hantar_btn", "yes");
 			} else {
+				myLogger.info("SYAFIQAH SEDEY2");
 				this.context.put("show_hantar_btn", "");
 			}
 			
@@ -3238,13 +3243,28 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			else if ("hantarPertukaran".equals(mode)) {
 				String xxxxx = getParam("docSokongan");
 				
-				this.context.put("show_senarai_lapis_pertama", "yes");
-				this.context.put("listCheckPertukaran", listCheckPertukaran);
-				
 				myLogger.info("STEP 1 SYAFIQAH");
 				addPertukaran(session);
+				
+				testCheckPertukaran = logic.setCheckPertukaran(id_Permohonansimati);
+				listCheckPertukaran = logic.getCheckPertukaran();
+				
+				if (listCheckPertukaran.size() > 0) {
+					myLogger.info("SYAFIQAH SEDEY1");
+					this.context.put("show_hantar_btn", "yes");
+				} else {
+					myLogger.info("SYAFIQAH SEDEY2");
+					this.context.put("show_hantar_btn", "");
+				}
+				
+				
+				this.context.put("show_senarai_lapis_pertama", "yes");
+				this.context.put("listCheckPertukaran", listCheckPertukaran);
 			}
 			
+			//Lampiran
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans", lBean.getLampiranSimatiPapar(id, "99210"));
 			vm = "app/ppk/frmTukarPemohonSek8.jsp";
 			
 		} else if ("harta_alih".equals(submit)) {

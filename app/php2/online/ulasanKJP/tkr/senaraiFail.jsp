@@ -81,13 +81,13 @@
         <legend><b>SENARAI PERMOHONAN</b></legend>
         #parse("app/utils/record_paging.jsp")
         <table align="center" width="100%">
-         <td><input name="cmdDaftarPermohonan" id="cmdDaftarPermohonan" value="Daftar Permohonan Baru" type="button" onclick="doDivAjaxCall$formname('divMainForm','daftarPermohonan','');">
+         <td><input name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar Permohonan Baru" type="button" onclick="doDivAjaxCall$formname('divMainForm','daftarBaru','');">
           <tr class="table_header">
-            <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-            <td width="15%"><strong>No Fail</strong></td>
-            <td width="35%"><strong>Tajuk Fail</strong></td>
-            <td width="10%" align="center"><strong>Tarikh Ulasan</strong></td>
-            <td width="8%" align="center"><strong>Tarikh Akhir Maklumbalas</strong></td>
+            <td scope="row" width="3%" align="center"><strong>Bil</strong></td>
+            <td width="20%"><strong>No. Fail</strong></td>
+            <td width="56%"><strong>Tajuk Fail</strong></td>
+            <td width="10%" align="center"><strong>Tarikh Daftar</strong></td>
+            <td width="11%" align="center"><strong>Status</strong></td>
           </tr>
           #set ($list = "")
         #set ( $count = $startNumber )
@@ -105,8 +105,8 @@
             <td class="$row" align="center">$count</td>
             <td class="$row"><a href="javascript:paparFail('$!list.ID_FAIL', '$!list.ID_ULASANTEKNIKAL')" class="style2">$list.NO_FAIL</a></td>
             <td class="$row">$list.TAJUK_FAIL</td>
-            <td class="$row" align="center">$list.TARIKH_HANTAR</td>
-            <td class="$row" align="center">$list.TARIKH_JANGKA_TERIMA</td>
+            <td class="$row" align="center">$list.TARIKH_TERIMA</td>
+            <td class="$row" align="center">$list.STATUS</td>
           </tr>
           #end
           #else
