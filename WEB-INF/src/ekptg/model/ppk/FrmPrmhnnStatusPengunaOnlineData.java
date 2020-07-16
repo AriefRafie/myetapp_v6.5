@@ -455,8 +455,10 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    		  " AND NVL(OBP.NO_KP_BARU,' ') NOT IN ('-','TIADA',' ','0') "+
 	    		  " AND P.ID_STATUS = S.ID_STATUS AND P.ID_DAERAHMHN = D.ID_DAERAH(+) AND P.ID_NEGERIMHN = N.ID_NEGERI "+
 	    		  " AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN(+) AND KP.ID_KEPUTUSANPERMOHONAN = B.ID_KEPUTUSANPERMOHONAN(+) "+
-	    		  " AND B.ID_PERBICARAAN = PERINTAH.ID_PERBICARAAN(+) AND P.ID_STATUS NOT IN ('150', '160') AND UO.USER_ID = '"+idMasuk+"' " +
-	    		  " AND B.BIL_BICARA  = (SELECT MAX(BIL_BICARA) FROM TBLPPKPERBICARAAN WHERE ID_KEPUTUSANPERMOHONAN = B.ID_KEPUTUSANPERMOHONAN )  ";
+	    		  " AND B.ID_PERBICARAAN = PERINTAH.ID_PERBICARAAN(+) AND P.ID_STATUS NOT IN ('150', '160') AND UO.USER_ID = '"+idMasuk+"' "+ 
+	    		  //" AND B.BIL_BICARA  = (SELECT MAX(BIL_BICARA) FROM TBLPPKPERBICARAAN WHERE ID_KEPUTUSANPERMOHONAN = B.ID_KEPUTUSANPERMOHONAN )  ";
+	    		  " AND (B.BIL_BICARA IS NULL OR B.BIL_BICARA = (SELECT MAX(BIL_BICARA) "+
+	    		  " FROM TBLPPKPERBICARAAN WHERE ID_KEPUTUSANPERMOHONAN = B.ID_KEPUTUSANPERMOHONAN ) ) ";
 	      
 		    if(!kpsimati.equals(""))
       		{// CHECK KP SIMATI
@@ -638,10 +640,13 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	      db = new Db();
 	      Statement stmt = db.getStatement();
 	      
-	      sql = " SELECT DISTINCT B.ID_PEMBANTAH, B.NAMA_PEMBANTAH, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.BANDAR, B.NEGERI, "
-	      		+ "B.EMEL, B.NO_HP, B.SEBAB, B.ID_FAIL, TO_CHAR(B.NO_FAIL) AS NO_FAIL"+
-	    		  " FROM TBLPPKBANTAHANONLINE B"+
-	    		  " WHERE B.ID_PEMBANTAH = '"+idMasuk+"' ";
+	      sql = "SELECT DISTINCT B.ID_PEMBANTAH, B.NAMA_PEMBANTAH, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.BANDAR, B.NEGERI, "+
+	      		"B.EMEL, B.NO_HP, B.SEBAB, B.ID_FAIL, TO_CHAR(B.NO_FAIL) AS NO_FAIL, TO_CHAR (B.TARIKH_HANTAR,'DD/MM/YYYY') as TARIKH_HANTAR,"+
+	      		"S.NAMA_DOKUMEN "+
+	    		"FROM TBLPPKBANTAHANONLINE B, TBLPPKDOKUMENSIMATI S "+
+	    		"WHERE B.ID_PEMBANTAH = S.ID_MASUK "+
+	    		"AND S.ID_JENISDOKUMEN = '99204' "+
+	    		"AND B.ID_PEMBANTAH = '"+idMasuk+"' ";
 	      
 	      // add pada id_status not in (21 - selesai, 169,47,70,152 - batal)
 	    
@@ -682,6 +687,8 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	  h.put("sebab", rs.getString("SEBAB")==null?"":rs.getString("SEBAB"));
 	    	  h.put("id_fail", rs.getString("ID_FAIL")==null?"":rs.getString("ID_FAIL"));
 	    	  h.put("no_fail", rs.getString("NO_FAIL")==null?"":rs.getString("NO_FAIL"));
+	    	  h.put("tarikh_hantar", rs.getString("TARIKH_HANTAR")==null?"":rs.getString("TARIKH_HANTAR"));
+	    	  h.put("nama_dokumen", rs.getString("NAMA_DOKUMEN")==null?"":rs.getString("NAMA_DOKUMEN"));
 	    	  
 	    	  list.addElement(h);
 	      }
@@ -792,5 +799,37 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    }
 	      return returnVal;
 	}*/ 
+	
+	//yati tambah
+	Vector checkEmail = null;
+	
+	@SuppressWarnings("unchecked")
+	public Vector checkEmail(String userId) throws Exception {
+		
+		checkEmail = new Vector();
+		checkEmail.clear();
+		
+		Db db = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT EMEL FROM USERS_ONLINE WHERE USER_ID = '"+userId+"' AND EMEL IS NOT NULL";
+	
+			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println("*** EMAIL SIAPA NI : "+sql);
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("EMEL", rs.getString("EMEL")== null?"":rs.getString("EMEL"));
+				checkEmail.addElement(h);
+			}
+			return checkEmail;
+		} finally {
+			if (db != null)	db.close();
+		}
+	}
 
 }
