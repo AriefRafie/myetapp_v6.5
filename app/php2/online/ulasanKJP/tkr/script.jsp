@@ -6,7 +6,8 @@ function doChangeDaerah(){
 	doDivAjaxCall$formname('divMainForm','carian','');
 }
 function paparFail(idFail, idUlasanTeknikal){
-	doDivAjaxCall$formname('divMainForm','paparFail','idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
+	alert('idFail==='+idFail);
+	doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
 }
 function simpanUlasan(){	
 
@@ -140,11 +141,6 @@ function daftarBaru() {
   		document.${formName}.txtNoRujukanSurat.focus(); 
 		return; 
 	}
-	if(document.${formName}.txtPerkara.value == ""){
-		alert('Sila masukkan Perkara.');
-  		document.${formName}.txtPerkara.focus(); 
-		return; 
-	}
 	if(document.${formName}.socKementerian.value == ""){
 		alert('Sila pilih Kementerian.');
 		document.${formName}.socKementerian.focus(); 
@@ -177,6 +173,7 @@ function daftarBaru() {
 		return;
 	}
 	
+	alert('daftarBaru idFail==='+document.${formName}.idFail.value+' idHakmilik agensi=== '+document.${formName}.idHakmilikAgensi.value);
 	document.${formName}.submit2.value = "papar";
 	alert("test = "+document.${formName}.submit2.value);
 	document.${formName}.hitButton.value = "daftarBaru";
@@ -204,6 +201,7 @@ function doChangePejabat() {
 	doAjaxCall${formName}("doChangePejabat");
 }
 function pilihTanah(idKementerian,idAgensiPemohon) {
+	
 	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmTKROnlinePopupSenaraiTanahView?idKementerian="+idKementerian+"&idAgensiPemohon="+idAgensiPemohon;
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
@@ -216,7 +214,7 @@ function refreshFromPilihTanah(idHakmilikAgensi) {
 	document.${formName}.idHakmilikAgensi.value = idHakmilikAgensi;
 	doAjaxCall${formName}("doChangeMaklumatTanah");
 }
-function janaTajuk(idKategoriPemohon) {
+/* function janaTajuk(idKategoriPemohon) {
 	
 	if(document.${formName}.idHakmilikAgensi.value == "" && document.${formName}.idHakmilikSementara.value == ""){
 		alert('Sila pilih Pegangan Hakmilik Sebelum Menjana Tajuk.');
@@ -265,7 +263,7 @@ function janaTajuk(idKategoriPemohon) {
 	strTajuk = "PERMOHONAN TUKARGUNA " + luasKegunaan +" TANAH " + statusRizabTnh + " PERSEKUTUAN " + str1 +", " + milikOrRizab + ", "+ str4 + ", " + str5+ ", " + str6 +" (" + kegunaanTanah + ")" + " DARIPADA " + kjpTnh + " KEPADA " + pemohon +" BAGI TUJUAN " + tujuanKegunaan;
 	
 	document.${formName}.txtPerkara.value = strTajuk;
-}
+} */
 function kembali() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";	
@@ -273,7 +271,7 @@ function kembali() {
 	document.${formName}.submit();
 }
 function seterusnya(){
-	alert('BACA SETERUSNYAAA');
+	alert('BACA SETERUSNYAAA'+document.${formName}.idFail.value+' idHakmilik agensi '+document.${formName}.idHakmilikAgensi.value);
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";	
 	document.${formName}.submit2.value = "seterusnya";
