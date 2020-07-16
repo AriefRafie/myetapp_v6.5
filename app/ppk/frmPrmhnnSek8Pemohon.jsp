@@ -161,9 +161,11 @@
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,4,0,0);SaksiView()">SAKSI</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,5,0,0);PemiutangView()">PEMIUTANG</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,6,0,0);PenghutangView()">PENGHUTANG</li>
-            #if($!skrin_online == "yes")
+          
+            #if( ($!skrin_online == "yes") && ($!skrin_deraf == "") )
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,7,0,0);TukarPemohonView()">PERTUKARAN PEMOHON</li>
             #end
+	          
           </ul>
           
           <div class="TabbedPanelsContentGroup">

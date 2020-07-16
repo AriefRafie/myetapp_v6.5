@@ -1,38 +1,36 @@
-<script type="text/javascript" src="../../library/js/SpryTabbedPanels.js"></script>
-<script type="text/javascript" src="../../library/js/ekptgTools.js"></script>
-<script type="text/javascript" src="../../img"></script>
-<link rel="stylesheet" type="text/css" href="../../css/SpryTabbedPanels.css">
 <style type="text/css">
-#parse("css/online.css")
 <!--
-.style1 {
-	color: #0000FF
-}
+#parse("css/eTapp_PHP.css")
+-->
 </style>
-
+<input type="hidden" name="actionPopup"/>
+<input type="hidden" name="idKategoriPemohon" value="$idKategoriPemohon"/>
+<input type="hidden" name="idAgensiPemohon" value="$idAgensiPemohon"/>
+<input type="hidden" name="idNegeriJKPTG" value="$idNegeriJKPTG"/>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT TANAH</strong></legend>
       #foreach($beanMaklumatTanah in $BeanMaklumatTanah)
-      	  #set($idHakmilikAgensi = $beanMaklumatTanah.idHakmilikAgensi)
-          #set($idHakmilik = $beanMaklumatTanah.idHakmilik)
-          #set($peganganHakmilik = $beanMaklumatTanah.peganganHakmilik)
-          #set($noLot = $beanMaklumatTanah.noLot)
-          #set($luasLot = $beanMaklumatTanah.luasLot)
-          #set($noHakmilik = $beanMaklumatTanah.noHakmilik)
-          #set($noWarta = $beanMaklumatTanah.noWarta)
-          #set($tarikhWarta = $beanMaklumatTanah.tarikhWarta)             
-          #set($mukim = $beanMaklumatTanah.mukim)
-          #set($daerah = $beanMaklumatTanah.daerah)
-          #set($negeri = $beanMaklumatTanah.negeri)            
-          #set($kategoriTanah = $beanMaklumatTanah.kategoriTanah)
-          #set($subKategoriTanah = $beanMaklumatTanah.subKategoriTanah)
-          #set($syarat = $beanMaklumatTanah.syarat)
-          #set($sekatan = $beanMaklumatTanah.sekatan)
-          #set($kementerian = $beanMaklumatTanah.kementerian)
-          #set($agensi = $beanMaklumatTanah.agensi) 
-          #set($kegunaanTanah = $beanMaklumatTanah.kegunaanTanah)         
+      #set($idHakmilikAgensi = $beanMaklumatTanah.idHakmilikAgensi)
+      #set($idHakmilikSementara = $beanMaklumatTanah.idHakmilikSementara)
+      #set($idHakmilik = $beanMaklumatTanah.idHakmilik)
+      #set($peganganHakmilik = $beanMaklumatTanah.peganganHakmilik)
+      #set($lot = $beanMaklumatTanah.lot)
+      #set($luas = $beanMaklumatTanah.luas)
+      #set($hakmilik = $beanMaklumatTanah.hakmilik)
+      #set($noWarta = $beanMaklumatTanah.noWarta)
+      #set($tarikhWarta = $beanMaklumatTanah.tarikhWarta)             
+      #set($mukim = $beanMaklumatTanah.mukim)
+      #set($daerah = $beanMaklumatTanah.daerah)
+      #set($negeri = $beanMaklumatTanah.negeri)            
+      #set($kategoriTanah = $beanMaklumatTanah.kategoriTanah)
+      #set($subKategoriTanah = $beanMaklumatTanah.subKategoriTanah)
+      #set($syarat = $beanMaklumatTanah.syarat)
+      #set($sekatan = $beanMaklumatTanah.sekatan)
+      #set($kementerian = $beanMaklumatTanah.kementerian)
+      #set($agensi = $beanMaklumatTanah.agensi) 
+      #set($kegunaanTanah = $beanMaklumatTanah.kegunaanTanah)         
       #end
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
@@ -40,23 +38,19 @@
               #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
               <tr>
                 <td width="37%" align="right">PEGANGAN HAKMILIK :</td>
-                <td width="63%"><font color="blue">$peganganHakmilik</font>
-                  <input type="hidden" name="actionPopup"/>
-                  <input type="hidden" name="idKategoriPemohon" value="$idKategoriPemohon"/>
-            	  <input type="hidden" name="idAgensiPemohon" value="$idAgensiPemohon"/>
-                  </td>
+                <td width="63%"><font color="blue">$peganganHakmilik</font> </td>
               </tr>
               <tr>
                 <td align="right">NO. LOT :</td>
-                <td><font color="blue">$noLot</font></td>
+                <td><font color="blue">$lot</font></td>
               </tr>
               <tr>
                 <td align="right">LUAS  :</td>
-                <td><font color="#0000FF">$luasLot</font></td>
+                <td><font color="#0000FF">$luas</font></td>
               </tr>
               <tr>
                 <td align="right">NO. HAKMILIK :</td>
-                <td><font color="blue">$noHakmilik</font></td>
+                <td><font color="blue">$hakmilik</font></td>
               </tr>
               <tr>
                 <td align="right">NO. WARTA :</td>
@@ -133,7 +127,7 @@
       </fieldset></td>
   </tr>
   <tr>
-    <td align="center"><input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onClick="pilihTanah('$idHakmilikAgensi')">
+    <td align="center"><input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onClick="pilihTanah('$idHakmilikAgensi','$idHakmilikSementara')">
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="kembali()">
     </td>
   </tr>
@@ -143,8 +137,8 @@ function kembali() {
 	document.${formName}.actionPopup.value = "";
 	document.${formName}.submit();
 }
-function pilihTanah(idHakmilikAgensi) {
-	window.opener.refreshFromPilihTanah(idHakmilikAgensi);
+function pilihTanah(idHakmilikAgensi,idHakmilikSementara) {
+	window.opener.refreshFromPilihTanah(idHakmilikAgensi,idHakmilikSementara);
 	window.close();
 }
 </script>

@@ -203,8 +203,8 @@ function doChangeNegeri() {
 function doChangePejabat() {
 	doAjaxCall${formName}("doChangePejabat");
 }
-function pilihTanah(idKategoriPemohon,idAgensiPemohon) {
-	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmTKROnlinePopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idAgensiPemohon="+idAgensiPemohon;
+function pilihTanah(idKementerian,idAgensiPemohon) {
+	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmTKROnlinePopupSenaraiTanahView?idKementerian="+idKementerian+"&idAgensiPemohon="+idAgensiPemohon;
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

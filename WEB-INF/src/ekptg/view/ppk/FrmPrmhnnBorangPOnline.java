@@ -53,6 +53,7 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 	FrmBorangPSek17OnlineData logic_17 = null;
 	FrmHeaderPpk mainheader = null;
 	FrmSemakHartaSek17 FrmSemakHartaSek17 = null;
+//	private LampiranBean lBean = null;
 	
 	private int simpanStatus = 0;
 	private int eventStatus = 0;
@@ -2316,7 +2317,11 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 
 			String id2 = getParam("idPemohon");
 			String id1 = getParam("idSimati");
-			int s1 = Integer.parseInt(getParam("no_subjaket"));
+			String no_subjacket = getParam("no_subjaket");
+			int s1 = 0;
+			if(!no_subjacket.equals("NaN")) {
+				s1 = Integer.parseInt(getParam("no_subjaket"));
+			}
 			this.context.put("no_subjaket", s1);
 			readability2 = "readonly";
 			disability1 = "disabled";

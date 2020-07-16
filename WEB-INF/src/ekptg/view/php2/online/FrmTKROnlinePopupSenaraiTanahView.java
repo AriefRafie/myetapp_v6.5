@@ -8,6 +8,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
@@ -18,6 +20,7 @@ public class FrmTKROnlinePopupSenaraiTanahView extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
 	
 	FrmTKRPopupSenaraiTanahOnlineData logic = new FrmTKRPopupSenaraiTanahOnlineData();
+	static Logger myLog = Logger.getLogger(FrmTKROnlinePopupSenaraiTanahView.class);
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -30,7 +33,7 @@ public class FrmTKROnlinePopupSenaraiTanahView extends AjaxBasedModule {
 	    String actionPopup = getParam("actionPopup");
 	    String submit = getParam("command");
 	    String hitButton = getParam("hitButton");
-	    
+	    String idKementerian = getParam("idKementerian");
 	    String idHakmilikAgensi = getParam("idHakmilikAgensi");
 	    String idKategoriPemohon = getParam("idKategoriPemohon");
 	    String idAgensiPemohon = getParam("idAgensiPemohon");
@@ -67,10 +70,6 @@ public class FrmTKROnlinePopupSenaraiTanahView extends AjaxBasedModule {
 		String idMukim = getParam("socMukim");
 		if (idMukim == null || idMukim.trim().length() == 0){
 			idMukim = "99999";
-		}
-		String idKementerian = getParam("socKementerian");
-		if (idKementerian == null || idKementerian.trim().length() == 0){
-			idKementerian = "99999";
 		}
 		String idAgensi = getParam("socAgensi");
 		if (idAgensi == null || idAgensi.trim().length() == 0){
@@ -157,7 +156,7 @@ public class FrmTKROnlinePopupSenaraiTanahView extends AjaxBasedModule {
 	    } else if ("papar".equals(actionPopup)){
 	    	
 	    	//GO TO DETAIL MAKLUMAT TANAH        	
-        	vm = "app/php2/frmTKRPopupMaklumatTanah.jsp";
+        	vm = "app/php2/online/frmTKRPopupMaklumatTanah.jsp";
         	
         	beanMaklumatTanah = new Vector();
         	logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
@@ -167,7 +166,7 @@ public class FrmTKROnlinePopupSenaraiTanahView extends AjaxBasedModule {
 	    } else {
 	    	
 	    	//GO TO LIST TANAH        	
-        	vm = "app/php2/frmTKRPopupSenaraiTanah.jsp";   
+        	vm = "app/php2/online/frmTKRPopupSenaraiTanah.jsp";   
         	
         	//SET DEFAULT VALUE
         	if("8".equals(idKategoriPemohon)) {
@@ -245,6 +244,7 @@ public class FrmTKROnlinePopupSenaraiTanahView extends AjaxBasedModule {
 	    this.context.put("idKategoriPemohon", idKategoriPemohon);
 	    this.context.put("idAgensiPemohon", idAgensiPemohon);
 	    this.context.put("idNegeriJKPTG", idNegeriJKPTG);
+	    this.context.put("idKementerian", idKementerian);
 	    
 	    this.context.put("actionPopup", actionPopup);
 		this.context.put("idLuas", idLuas);

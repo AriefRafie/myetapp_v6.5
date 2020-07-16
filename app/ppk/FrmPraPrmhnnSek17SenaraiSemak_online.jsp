@@ -796,6 +796,16 @@ document.getElementById('frmsemakharta').style.display = "";
 	  	hWnd.opener=document.window;
 	      if (hWnd.focus != null) hWnd.focus();
 	}	
+	
+	function semakLampiran(v_t){
+	  	alert('Semak Lampiran');
+	  	document.f1.method = "POST";
+	  	document.f1.command.value="getlampiran";
+	  	document.f1.eventStatus.value="1";
+	  	document.f1.action = "";
+	  	document.f1.v_tab.value = v_t;
+	  	document.f1.submit();
+	  }
   
 function getRujukan(ic,idlama,jenis,lain){
 	var rujukan ='';
