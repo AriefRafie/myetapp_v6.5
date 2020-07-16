@@ -25,15 +25,32 @@ public class EmailTester {
 			suburusan = "Seksyen 4";
 		}else if(jenisSuburusan.equals("sementara")){
 			suburusan = "Pendudukan / Penggunaan Sementara";
+		}else if(jenisSuburusan.equals("PPK")){
+			suburusan = "PPK TAC";
+			String subject_emel = "myetaPP : Pengesahan Permohonan TAC "+suburusan;
+			String email_from = "norhayati.bain@gmail.com";
+			
+			EmailSender email = EmailSender.getInstance();
+			
+			//email.FROM = email_from;
+			email.SUBJECT = subject_emel;
+			email.MESSAGE =setMessageTable(emailType,nama_projek)+""+setParaGraph(emailType,suburusan,nofail,tarikh_permohonan,nama_kementerian);	
+			email.MULTIPLE_RECIEPIENT = new String[1];
+			//email.MULTIPLE_RECIEPIENT[0] = "m.syazreen@hla-group.com";
+			
+			email.TO_CC = new String[1];
+			//email.TO_CC[0]  = "razman@hla-group.com";
+
+			email.sendEmail();
 		}
-	
+		else{
 		//subject (untuk testing)
-		String subject_emel = "eTaPP : Pengesahan Permohonan Pengambilan Tanah "+suburusan;
-		
+		String subject_emel = "eTaPP : Pengesahan Permohonan Pengambilan Tanah "+suburusan;		
 		//default sender email
 		String email_from = "etapp_webmaster@ekptg.gov.my";
-			
+		
 		EmailSender email = EmailSender.getInstance();
+		
 		//email.FROM = email_from;
 		email.SUBJECT = subject_emel;
 		email.MESSAGE =setMessageTable(emailType,nama_projek)+""+setParaGraph(emailType,suburusan,nofail,tarikh_permohonan,nama_kementerian);	
@@ -44,6 +61,8 @@ public class EmailTester {
 		//email.TO_CC[0]  = "razman@hla-group.com";
 
 		email.sendEmail();
+		}
+	
 
 	}
 	
@@ -87,6 +106,10 @@ public class EmailTester {
 		}else if(emailType.equals("hantarUntukSemakan")){
 			
 			bff.append("Sila semak dan sahkan Kertas Kerja MMK bagi permohonan Pengambilan Tanah daripada "+nama_kementerian+" - "+nofail+".");
+		
+		}else if(emailType.equals("hantarUntukTAC")){
+			
+			bff.append("Sila semak dan sahkan No.TAC");
 		
 		}
 		
