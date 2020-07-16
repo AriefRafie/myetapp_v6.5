@@ -808,7 +808,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	Vector checkEmail = null;
 	
 	@SuppressWarnings("unchecked")
-	public Vector checkEmail(HttpSession session) throws Exception {
+	public Vector checkEmail(String userId) throws Exception {
 		
 		checkEmail = new Vector();
 		checkEmail.clear();
@@ -820,8 +820,9 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT EMEL FROM USERS_ONLINE WHERE USER_ID = '"+session+"' AND EMEL IS NOT NULL";
-	
+			//sql = "SELECT EMEL FROM USERS_ONLINE WHERE USER_ID = '"+userId+"' AND EMEL IS NOT NULL";
+			sql = "SELECT A.EMEL FROM USERS_ONLINE A, USERS B WHERE B.USER_LOGIN = '"+userId+"' AND EMEL IS NOT NULL AND A.USER_ID = B.USER_ID ";
+
 			ResultSet rs = stmt.executeQuery(sql);
 			myLogger.info("*** EMAIL SIAPA NI : "+sql);
 			Hashtable h;
@@ -855,16 +856,10 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	//user login id
 	    	String id_user = (String)data.get("id_user");
 	    	
-	    	//Table pptpermohonan
-	    	//String no_rujukan_ptg = (String)data.get("no_rujukan_ptg");	       
-	    	//String no_rujukan_ptd = (String)data.get("no_rujukan_ptd");
-	    	//String no_rujukan_upt = (String)data.get("no_rujukan_upt");
-	    	
-	    	
-	      
-	    	//generate no permohonan "JKPTG/PPT/kod_suburusan/this_year-000001
+	    
 	    	long id_tac = DB.getNextID("TBLPPKTAC_SEQ");    
-	    	
+	    	String idFail = (String)data.get("idFail");	  
+	    	myLogger.info("fail : "+idFail);
 	    	Date now = new Date();
 	    	SimpleDateFormat formatter =  new SimpleDateFormat("yyyy");
 	    	String tahun = formatter.format(now);
@@ -877,7 +872,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	SQLRenderer rF = new SQLRenderer();
 	    	rF.add("id_tac",id_tac);
 	    	rF.add("no_tac", 555555);
-	    	rF.add("id_perintah", 100000);	    	
+	    	rF.add("id_fail", idFail);	    	
 	    	rF.add("tarikh_masuk",rF.unquote("sysdate"));
 			rF.add("id_masuk",id_user);
 	    	sql = rF.getSQLInsert("tblppktac");
@@ -904,7 +899,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    return output;
 	   
 	  }//close add
-	
+
 	
 
 }
