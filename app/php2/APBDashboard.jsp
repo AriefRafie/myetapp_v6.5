@@ -198,6 +198,10 @@ a.nav:visited {
                             <td><a href="javascript:gotoKutipanAPB()" class="help" title="Kutipan Data Akta Pelantar Benua"> <font color="blue">
                               <li>&nbsp;Kutipan Data Akta Pelantar Benua</li>
                               </font> </a> </td>
+                          </tr>                       <tr>
+                          <td><a href="javascript:gotoPermohonanOnline()" class="help" title="Semakan Permohonan Online"> <font color="blue">
+                              <li>&nbsp;Semakan Permohonan Online</li>
+                              </font> </a> </td>
                           </tr>
                         </table></td>
                     </tr>
@@ -233,8 +237,8 @@ a.nav:visited {
                           </tr>
                           <tr>
                             <td><a href="javascript:gotoAPBRecord()" class="help"  title="Ulasan Jabatan Teknikal"> <font color="blue">
-                              <li>#if($!check_notifikasi_aduan > 0)
-                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>5</blink></font></b> </label>
+                              <li>#if($!failBelumSelesai > 0)
+                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$failBelumSelesai</blink></font></b> </label>
                                 &nbsp;
                                 #end&nbsp;Ulasan</li>
                               </font> </a> </td>
@@ -467,6 +471,10 @@ function gotoInbox() {
 }
 function gotoDokumenRujukan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Panduan Pengguna",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBKemasukanDokumen";
+	document.${formName}.submit();
+}
+function gotoPermohonanOnline() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBSenaraiFailOnlineView";
 	document.${formName}.submit();
 }
 </script>
