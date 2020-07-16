@@ -2944,16 +2944,8 @@ public class UserListModuleV3 extends AjaxBasedModule {
 							sql+=sql_KJP;
 						}
 						sql += " ORDER BY KOD, LAYER ";
-			}
-			else if(tableRujukan.equals("TBLRUJPEJABAT"))
-			{
+			}else if(tableRujukan.equals("TBLRUJPEJABAT")){
 				sql = "  SELECT ID_PEJABAT AS ID, KOD_PEJABAT AS KOD, UPPER(NAMA_PEJABAT) AS KETERANGAN FROM TBLRUJPEJABAT WHERE ID_JENISPEJABAT = 61 ORDER BY KOD_PEJABAT ";
-			}
-			else if(tableRujukan.equals("TBLRUJPEJABAT2"))
-			{
-				sql = " SELECT ID_PEJABAT AS ID, KOD_PEJABAT AS KOD, UPPER(NAMA_PEJABAT) AS KETERANGAN FROM TBLRUJPEJABAT WHERE ID_PEJABAT IS NOT NULL " +
-						" AND ID_PEJABAT = '"+id_filter+"' " +
-								" ORDER BY KOD_PEJABAT";
 			}
 
 			myLogger.info(" V3: SQL listTableRujukanV3 ("+tableRujukan+") :"+ sql);
