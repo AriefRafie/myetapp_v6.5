@@ -258,7 +258,7 @@
     
     <input type="hidden" name="idpermohonan" id="idpermohonan">    
     <input type="hidden" name="idPermohonan" id="idPermohonan">  
-    <input type="text" name="id_Permohonan" id="id_Permohonan"  value="$!id_Permohonan" >  
+    <input type="hidden" name="id_Permohonan" id="id_Permohonan"  value="$!id_Permohonan" >  
     <input type="hidden" name="idSimati" id="idSimati">
     <input type="hidden" name="idPemohon" id="idPemohon">
     
@@ -353,8 +353,8 @@ function cetakBorangE(idFail,idPermohonanSimati,idSimati,idPerintahHTAOBMST) {
 }
 
 function cetakBorangF(idFail,id_Permohonan) {
-	alert(idFail);
-	alert(id_Permohonan);
+	//alert(idFail);
+	//alert(id_Permohonan);
 	//var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
 	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupTAC?idFail="+idFail+"&id_Permohonan="+id_Permohonan;
 	
