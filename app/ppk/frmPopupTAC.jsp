@@ -1,12 +1,13 @@
-XXX
+
 <style type="text/css">
 <!--
 .style1 {color: #FF0000}
 -->
 </style>
 
- <input type="text" name="idFail" id="idFail" value="$idFail"> 
-  <input type="text" name="userId" id="userId" value="$userId"> 
+ <input type="hidden" name="idFail" id="idFail" value="$idFail"> 
+  <input type="hidden" name="userId" id="userId" value="$userId"> 
+    <input type="hidden" name="otp" id="otp" value="$!otp">
 <script type="text/javascript" src="../../library/js/SpryTabbedPanels.js"></script>
 <script type="text/javascript" src="../../library/js/ekptgTools.js"></script>
 <script type="text/javascript" src="../../img"></script>
@@ -86,12 +87,17 @@ function mohonTAC(idFail,id_Permohonan) {
     if (hWnd.focus != null) hWnd.focus();*/
     //alert(document.${formName}.action);
    // alert(idfail);
-    alert("id_Permohonan xxx"+id_Permohonan);
+    //alert("id_Permohonan xxx"+id_Permohonan);
     
-    alert("id_FAIL CCC"+idFail);
+    //alert("id_FAIL CCC"+idFail);
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupTAC&command=simpan";
-	   alert(document.${formName}.action);
-	document.${formName}.submit();
+	//alert(document.${formName}.action);
+	//if ( !window.confirm("No TAC telah dihantar") ){
+		alert("No. TAC telah dihantar ke emel pengguna");
+		document.${formName}.submit();
+	//	return;
+	//}
+	
 }
 
 function cetakBorangD(noFail,idfail,idPerbicaraan) {
