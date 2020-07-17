@@ -82,6 +82,7 @@ public class FrmAPBCetakSuratKelulusanLesenKepadaPemohon extends AjaxBasedModule
         Vector beanMaklumatPelan = null;
 
 		String step = getParam("step");
+		String actionPopup = getParam("actionPopup");
 		
 		this.context.put("onload", "");
 		
@@ -219,6 +220,10 @@ public class FrmAPBCetakSuratKelulusanLesenKepadaPemohon extends AjaxBasedModule
 		
 		if ("batalPermohonan".equals(step)){
         	vm = "app/php2/frmBatalPermohonan.jsp";
+        }
+		
+		if ("paparSejarah".equals(actionPopup)){
+        	vm = "app/php2/frmPopupSejarahMaklumatLesen.jsp";
         }
 
 		//SET DEFAULT PARAM

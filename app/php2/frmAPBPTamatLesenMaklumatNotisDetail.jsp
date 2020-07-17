@@ -8,26 +8,26 @@
           <td width="28%">Jenis Dokumen</td>
           <td width="1%">:</td>
           <td width="70%"><select name="jenisDokumen" id="jenisDokumen" style="width:230px;" $readonlyS class="$inputTextClassS" $inputTextClassS onChange="">
-           #if($jenisDokumen == '1')       
+           #if($jenisDokumen == '15')       
               <option value="">SILA PILIH</option>
-              <option value="1" selected="selected">SURAT TUNJUK SEBAB </option>
-              <option value="2">SURAT PERINGATAN </option>
-              <option value="3">SURAT PERINGATAN TERAKHIR </option>
-           #elseif($jenisDokumen == '2')
+              <option value="15" selected="selected">SURAT TUNJUK SEBAB </option>
+              <option value="16">SURAT PERINGATAN </option>
+              <option value="17">SURAT PERINGATAN TERAKHIR </option>
+           #elseif($jenisDokumen == '16')
              <option value="">SILA PILIH</option>
-              <option value="1">SURAT TUNJUK SEBAB </option>
-              <option value="2" selected="selected">SURAT PERINGATAN </option>
-              <option value="3">SURAT PERINGATAN TERAKHIR </option>
-           #elseif($jenisDokumen == '3')
+              <option value="15">SURAT TUNJUK SEBAB </option>
+              <option value="16" selected="selected">SURAT PERINGATAN </option>
+              <option value="17">SURAT PERINGATAN TERAKHIR </option>
+           #elseif($jenisDokumen == '17')
              <option value="">SILA PILIH</option>
-              <option value="1">SURAT TUNJUK SEBAB </option>
-              <option value="2" >SURAT PERINGATAN </option>
-              <option value="3" selected="selected">SURAT PERINGATAN TERAKHIR </option>
+              <option value="15">SURAT TUNJUK SEBAB </option>
+              <option value="16" >SURAT PERINGATAN </option>
+              <option value="17" selected="selected">SURAT PERINGATAN TERAKHIR </option>
            #else
              <option value=""  selected="selected">SILA PILIH</option>
-              <option value="1">SURAT TUNJUK SEBAB </option>
-              <option value="2" >SURAT PERINGATAN </option>
-              <option value="3">SURAT PERINGATAN TERAKHIR </option>
+              <option value="15">SURAT TUNJUK SEBAB </option>
+              <option value="16" >SURAT PERINGATAN </option>
+              <option value="17">SURAT PERINGATAN TERAKHIR </option>
            #end
             </select>
           </td>
