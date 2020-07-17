@@ -24,9 +24,9 @@
           </td>
         </tr>
         <tr>
-          <td width="30%" height="24" scope="row" align="right">Tarikh Mohon : </td>
-          <td width="70%"><input type="text" name="txdTarikhPermohonan" id="txdTarikhPermohonan" value="$txdTarikhPermohonan" onBlur="check_date(this)" size="9"/>
-            <a href="javascript:displayDatePicker('txdTarikhPermohonan',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
+          <td width="30%" height="24" scope="row" align="right">Tarikh Terima : </td>
+          <td width="70%"><input type="text" name="txdTarikhTerima" id="txdTarikhTerima" value="$txdTarikhTerima" onblur="check_date(this)" size="9"/>
+            <a href="javascript:displayDatePicker('txdTarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
         </tr>
         <tr>
           <td scope="row"></td>
@@ -45,43 +45,54 @@
       <legend><b>SENARAI PERMOHONAN</b></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
+ ##       <tr>
+ ##         <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/></td>
+ ##       </tr>
         <tr class="table_header">
-          <td scope="row" width="4%" align="left"><strong>Bil</strong></td>
-          <td width="25%" align="left"><strong>No Permohonan</strong></td>
-          <td width="11%" align="left"><strong>No Fail</strong></td>
-          <td width="25%" align="left"><strong>Nama Pemohon</strong></td>
-          <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
-          <td width="25%" align="left"><strong>Urusan</strong></td>
+          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+          <td width="20%"><strong>No Permohonan</strong></td>
+          <td width="30%"><strong>Nama Pemohon/Syarikat</strong></td>
+          <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
+          <td width="10%"><strong>Kawasan Dipohon</strong></td>
+          <td width="10%"><strong>Jenis Permohonan</strong></td>
+          <td width="8%"><strong>Jenis Lesen</strong></td>
+          <td width="10%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
-        #if ($SenaraiFail.size() > 0)
-        #foreach ($list in $SenaraiFail)
-        #if ($list.bil == '')
-        #set( $row = "row1" )
-        #elseif (($list.bil % 2) != 0)
-        #set( $row = "row1" )
-        #else 
-        #set( $row = "row2" )
-        #end
+   	#if ($SenaraiFail.size() > 0)
+  		#foreach ($list in $SenaraiFail)
+		  	#set( $i = $velocityCount )
+		    #if ( ($i % 2) != 1 )
+		    	#set( $row = "row2" )
+		    #else
+		    	#set( $row = "row1" )
+		    #end
+    
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row"><a href="javascript:papar('$list.idFail','$list.idUrusan','$list.idPermohonan')" class="style1">$list.noPermohonan</a></td>
-          <td class="$row">$list.noFail</td>
+          <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noPermohonan</a>
+          <br />
+          <font class="blink" ><span class="style2">$!list.statusLesen</span></font>
+          <font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
           <td class="$row">$list.namaPemohon</td>
-          <td class="$row" align="center">$list.tarikhPermohonan </td>
-          <td class="$row">$list.namaUrusan</td>
+          <td class="$row" align="center">$list.tarikhTerima</td>
+          <td class="$row">$list.kawasanDipohon</td>
+          <td class="$row">PERMOHONAN BARU</td>
+          <td class="$row">LESEN PASIR DASAR LAUT</td>
+          <td class="$row">$list.status</td>
         </tr>
-        #end
-        #else
+   		#end
+ 	
+ 	#else
         <tr>
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">Tiada Rekod</td>
-          <td class="row1">&nbsp;</td>
+          <td class="row1" align="center">&nbsp;</td>
           <td class="row1">&nbsp;</td>
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">&nbsp;</td>
         </tr>
-        #end
+ 	#end
       </table>
       </fieldset></td>
   </tr>
@@ -92,11 +103,12 @@ function carian(){
 	document.${formName}.actionOnline.value = "";
 	doAjaxCall${formName}("");
 }
-function kosongkan(flagDetail) {
+
+function kosongkan() {
 	document.${formName}.reset();
 	document.${formName}.txtNoPermohonan.value = "";
-	document.${formName}.txdTarikhPermohonan.value = "";
-	doAjaxCall${formName}("");
+	document.${formName}.txdTarikhTerima.value = "";
+	document.${formName}.submit();
 }
 function papar(idFail,idUrusan,idPermohonan) {
 	document.${formName}.idFail.value = idFail;

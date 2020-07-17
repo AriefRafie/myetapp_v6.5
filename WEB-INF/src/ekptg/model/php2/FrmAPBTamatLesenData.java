@@ -864,7 +864,7 @@ public class FrmAPBTamatLesenData {
 				db.close();
 		}
 	}
-	public String simpanMaklumatNotis(String idPermohonan, String idPejabat,
+	public String simpanMaklumatNotis(String idPermohonan, String idJenisDokumen, String idPejabat,
 			String idNegeri, String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, String idSuratKe,
 			String idKementerianTanah, String idAgensiTanah, HttpSession session)
@@ -888,7 +888,8 @@ public class FrmAPBTamatLesenData {
 			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
 			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_DOKUMEN", "8");
+			//r.add("ID_DOKUMEN", "8");
+			r.add("ID_DOKUMEN", idJenisDokumen);
 			r.add("FLAG_KJP", idSuratKe);
 			r.add("ID_NEGERI", idNegeri);
 			r.add("ID_PEJABAT", idPejabat);
@@ -1124,7 +1125,7 @@ public class FrmAPBTamatLesenData {
 			sql = "SELECT A.ID_ULASANTEKNIKAL, D.KETERANGAN AS NAMA_DOKUMEN,A.TARIKH_HANTAR, A.TARIKH_JANGKA_TERIMA, A.FLAG_STATUS, D.ID_DOKUMEN,"
 					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
 					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLPHPRUJDOKUMEN D,TBLRUJPEJABAT E WHERE "
-					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_DOKUMEN = D.ID_DOKUMEN(+) AND A.ID_DOKUMEN = 8 AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_DOKUMEN = D.ID_DOKUMEN(+) AND (A.ID_DOKUMEN = '15' OR A.ID_DOKUMEN = '16' OR A.ID_DOKUMEN = '17') AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
 					+ " AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);

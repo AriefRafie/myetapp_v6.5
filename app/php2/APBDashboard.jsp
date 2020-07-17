@@ -198,6 +198,10 @@ a.nav:visited {
                             <td><a href="javascript:gotoKutipanAPB()" class="help" title="Kutipan Data Akta Pelantar Benua"> <font color="blue">
                               <li>&nbsp;Kutipan Data Akta Pelantar Benua</li>
                               </font> </a> </td>
+                          </tr>                       <tr>
+                          <td><a href="javascript:gotoPermohonanOnline()" class="help" title="Semakan Permohonan Online"> <font color="blue">
+                              <li>&nbsp;Semakan Permohonan Online</li>
+                              </font> </a> </td>
                           </tr>
                         </table></td>
                     </tr>
@@ -233,8 +237,8 @@ a.nav:visited {
                           </tr>
                           <tr>
                             <td><a href="javascript:gotoAPBRecord()" class="help"  title="Ulasan Jabatan Teknikal"> <font color="blue">
-                              <li>#if($!check_notifikasi_aduan > 0)
-                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>5</blink></font></b> </label>
+                              <li>#if($!failBelumSelesai > 0)
+                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$failBelumSelesai</blink></font></b> </label>
                                 &nbsp;
                                 #end&nbsp;Ulasan</li>
                               </font> </a> </td>
@@ -285,23 +289,23 @@ a.nav:visited {
                             <td><b>Dokumen Rujukan</b></td>
                           </tr>
                           <tr>
-                            <td><a href="" class="help" title="Senarai Rujukan SOP"> <font color="blue">
+                            <td><a href="javascript:gotoDokumenRujukan()" class="help" title="Senarai Rujukan SOP"> <font color="blue">
                               <li>&nbsp;Senarai Rujukan SOP</li>
                               </font> </a> </td>
                           </tr>
                           <tr>
-                            <td><a href="" class="help" title="Pekeliling"> <font color="blue">
+                            <td><a href="javascript:gotoDokumenRujukan()" class="help" title="Pekeliling"> <font color="blue">
                               <li>&nbsp;Pekeliling</li>
                               </font> </a> </td>
                           </tr>
                           <tr>
-                            <td><a href="" class="help" title="Warta"> <font color="blue">
+                            <td><a href="javascript:gotoDokumenRujukan()" class="help" title="Warta"> <font color="blue">
                               <li>&nbsp;Warta</li>
                               </font> </a> </td>
                           </tr>
                           <tr>
-                            <td><a href="" class="help" title="Akta"> <font color="blue">
-                              <li>&nbsp;Akta</li>
+                            <td><a href="javascript:gotoDokumenRujukan()" class="help" title="Akta"> <font color="blue">
+                              <li>&nbsp;Akta dan Lain-lain</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -463,6 +467,14 @@ function gotoFLMSstat() {
 }
 function gotoInbox() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.utils.FrmInboxUsers";
+	document.${formName}.submit();
+}
+function gotoDokumenRujukan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Panduan Pengguna",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBKemasukanDokumen";
+	document.${formName}.submit();
+}
+function gotoPermohonanOnline() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBSenaraiFailOnlineView";
 	document.${formName}.submit();
 }
 </script>

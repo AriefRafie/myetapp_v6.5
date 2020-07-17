@@ -857,7 +857,8 @@ function simpanKemaskiniKoordinat(){
 	}
 	
 	document.${formName}.mode.value = "viewKoordinat";
-	document.${formName}.hitButton.value = "doSimpanKemaskiniKoordinat";
+	//document.${formName}.hitButton.value = "doSimpanKemaskiniKoordinat";
+	document.${formName}.hitButton.value = "doSimpanKoordinat";
 	doAjaxCall${formName}("");
 }
 function batalKemaskiniKoordinat(){

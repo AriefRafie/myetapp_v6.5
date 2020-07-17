@@ -118,9 +118,8 @@ public class FrmAPBTamatLesen extends AjaxBasedModule {
     		if ("simpanMaklumatNotis".equals(hitButton)){
         		//idUlasanTeknikal = logic.simpanMaklumatNotis(idPermohonan,idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         		//		getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"),getParam("idSuratKe"), idKementerianTanah, idAgensiTanah, session);
-    			idUlasanTeknikal = logic.simpanMaklumatNotis(idMohonTamat,idPejabat, idNegeri, getParam("txtTarikhHantar"), 
+    			idUlasanTeknikal = logic.simpanMaklumatNotis(idMohonTamat,getParam("jenisDokumen"),idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"),getParam("idSuratKe"), idKementerianTanah, idAgensiTanah, session);
-    			
     		}
     		if ("simpanMaklumatUlanganNotis".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlangaNotis(idUlasanTeknikal, idMohonTamat, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
