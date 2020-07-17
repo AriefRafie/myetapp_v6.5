@@ -1082,7 +1082,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
 			myLogger.info("sql 8: "+sql);
-			stmt.executeUpdate(sql);
+//			stmt.executeUpdate(sql);
 
 			// TBLPHPLAPORANTANAH
 			r = new SQLRenderer();

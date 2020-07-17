@@ -25,6 +25,10 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.model.entities.Tblrujsuburusanstatusfail;
+import ekptg.model.htp.FrmUtilData;
+import ekptg.model.htp.HTPStatusBean;
+import ekptg.model.htp.IHTPStatus;
 import ekptg.model.php2.FrmTKRHeaderData;
 import ekptg.model.php2.FrmTKRJabatanTeknikalData;
 import ekptg.model.php2.online.FrmTKROnlineKJPSenaraiFailData;
@@ -210,6 +214,16 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 						idHakmilikAgensi, idLuasKegunaan,
 						getParam("txtTujuanKegunaan"), getParam("idKementerianTanah"), getParam("idNegeriTanah"),
 						getParam("idLuasTanah"), getParam("luasTanah"), idHakmilikSementara, session);
+				
+				Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
+				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",idSubsuburusan,"=");
+				subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
+				subUrusanStatusFailN.setAktif("1");
+				subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
+				
+				HTPStatusBean sb = new HTPStatusBean();
+				sb.simpanStatusAktif(subUrusanStatusFailN);
+
 			}
 		}
 
@@ -788,4 +802,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			this.context.put("error", e.getMessage());
 		}
 	}
+
+	
 }
