@@ -163,11 +163,21 @@ private static final long serialVersionUID = 1L;
 			emel = (String)ceP.get("EMEL");
 		}
 
-		EmailTester et = new EmailTester();
+		//EmailTester et = new EmailTester();
 		
 		//if(emelPengarah!="" ){
 			//et.setEmail("ppk",emelPengarah,"hantarUntukTAC");
-		et.setEmail("PPK",emel,"hantarUntukTAC","","","","");
+//		et.setEmail("PPK",emel,"hantarUntukTAC","","","","");
+		EmailConfig ef = new EmailConfig();
+		String userMail = emel;
+		String tajuk = "Modul Pengurusan Pusaka: Permohonan TAC";
+		String kandungan = "<br/>" +
+				"<br/>/<br/>" +
+				" TAC:" +
+				"<br/><br/>" +
+				"";
+		ef.sendTo(userMail,tajuk, kandungan);
+
 		
 	}//close sendEmail
 	
