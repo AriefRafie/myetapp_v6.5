@@ -342,7 +342,7 @@
 			<div class="TabbedPanelsContent">
 				<fieldset>
 				<legend><strong>SENARAI SEMAK</strong></legend>
-                	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+                	<table width="100%" cellspacing="2" cellpadding="2">
   					#if ($SenaraiSemak.size() > 0)
       				#set ($list = "")
 					#foreach ($list in $SenaraiSemak)
@@ -361,8 +361,17 @@
         			#end
 	        
    				    	<tr>
-     						<td class="$row" width="5%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>
-          					<td class="$row" width="95%">$list.keterangan</td>
+     						<td class="$row" width="95%"><input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked $disabled />
+     						$list.keterangan
+     						</td>
+          					<td class="$row" width="5%">
+          					#if($list.jenisDokumen != 0)
+          					<a href = "javascript:onlineAttach('$list.id','$list.jenisDokumen');">
+											<img border="0" src="../img/plus.gif" width="20" height="15"/>
+										</a><br>
+							 			$!listam.lampirans
+							#end 			
+          					</td>
         				</tr>
         				#end
         				#else
@@ -375,11 +384,11 @@
     						<td colspan="2">&nbsp;</td>
   						</tr>
   						<tr>
-    						<td width="30%">&nbsp;</td>
-    						<td width="70%">#if ($mode == 'update')
+    						<td colspan="2" align="center">
+    						#if ($mode == 'update')
       							<input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSenaraiSemak()"/>
       							<input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
-      							#end
+      						#end
       							#if ($mode == 'view')
       							#if ($idStatus == '')
       							<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:KemaskiniFail()"/>
@@ -406,7 +415,7 @@
            	<td valign="top">
            	#if ($mode == 'view')<input type="checkbox" name="pengesahan" id="pengesahan">#end
       			#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
-           	<td>Saya,$!pemohon.get("namaPemohon"), dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
+           	<td>Kami $!namaPemohon, dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
            	<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</td> 
            	<tr>
            	<td colspan=2 align="center">
@@ -442,6 +451,33 @@
 </script>
 
 <script>
+	//LAMPIRAN
+	//onlineAttach('$list.id','$list.jenisDokumen')
+	function onlineAttach(idSenarai,idJenisDokumen) {
+	    //
+		var url = "../x/${securityToken}/ekptg.view.online.UploadDokumen?actionrefresh=paparHTA&actionPopup=papar&idHarta="+idSenarai+"&idJenisDokumen="+idJenisDokumen+"&flagOnline=$!flagOnline";
+	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus(); /**/
+	    //
+	    var title = 'Cetakan';
+		var w =1024;
+		var h = 800;
+	    var left = (screen.width/2)-(w/2);
+	    //var top = (screen.height/2)-(h/2);
+	    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+	
+	}
+function onlineAttachView(id_){
+	var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}	
+
 function seterusnya(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionPajakan.value = "papar";
