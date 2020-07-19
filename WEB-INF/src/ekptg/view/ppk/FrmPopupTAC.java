@@ -77,18 +77,6 @@ public class FrmPopupTAC extends AjaxBasedModule {
 			String result1 = "";
 			String result2 = "";
 
-			// String otp = null;
-			// if (doPost.equals("true")) {
-			// String otp = OTP();
-			// result = addTAC(session);
-			// result2 = OTP();
-			// result1 = sendEmail(userId);
-			// OTP();
-			// sendEmail(USER_LOGIN_SYSTEM,"TAC","","","","");
-
-			// sendEmail(idP);
-			// }
-			// context.put("otp", otp);
 			context.put("ResultAdd", result);
 			context.put("ResultAdd1", result1);
 			// context.put("ResultAdd2",result2);
@@ -109,15 +97,25 @@ public class FrmPopupTAC extends AjaxBasedModule {
 			otp = FrmPopupTAC.OTP();
 			// verifyOTP();
 			context.put("otp", otp);
+    		
 			myLogger.info("otp : " + otp);
-			sendEmail(USER_LOGIN_SYSTEM, "TAC", "", "", "", "");
-			result = addTAC(session, otp);
+    		sendEmail(USER_LOGIN_SYSTEM,otp);
+    		String flag = "1" ;
+    		context.put("flag",flag);
+    		result = addTAC(session,otp,flag);
 
 			// form validation
 			context.put("semak", "yes");
 			context.put("edit", "no");
 
 		} // close simpan
+    	else 
+    		if ("hantar".equals(submit)){
+    	
+			String verifyOTP = "";
+    		verifyOTP = FrmPopupTAC.verifyOTP("", "", "");
+    		myLogger.info("verifyotp : "+verifyOTP);
+    	}
 
 		return vm;
 
@@ -141,15 +139,14 @@ public class FrmPopupTAC extends AjaxBasedModule {
 
 		return otp;
 	}
-
+	
 	@SuppressWarnings({ "unchecked", "static-access" })
-	private void sendEmail(String userId, String jenisSend, String nofail, String nama_projek, String tarikh_permohonan,
-			String nama_kementerian) throws Exception {
-
-		Vector checkEmail = new Vector();
-		checkEmail.clear();
-
-		// check email (pengarah)
+	private void sendEmail(String userId,String otp) throws Exception{
+		// check email (pengarah)	
+    	Vector checkEmail = new Vector();
+    	checkEmail.clear();
+    	
+		//check email (pengarah)
 		checkEmail = myInfo.checkEmail(userId);
 		String emel = "";
 		if (checkEmail.size() != 0) {
@@ -157,15 +154,17 @@ public class FrmPopupTAC extends AjaxBasedModule {
 			emel = (String) ceP.get("EMEL");
 		}
 
-		// EmailTester et = new EmailTester();
+		myLogger.info(otp);
 
-		// if(emelPengarah!="" ){
-		// et.setEmail("ppk",emelPengarah,"hantarUntukTAC");
-//		et.setEmail("PPK",emel,"hantarUntukTAC","","","","");
 		EmailConfig ef = new EmailConfig();
 		String userMail = emel;
-		String tajuk = "Modul Pengurusan Pusaka: Permohonan TAC";
-		String kandungan = "<br/>" + "<br/>/<br/>" + " TAC:" + "<br/><br/>" + "";
+		String tajuk = "Modul Pengurusan Pusaka: Permohonan TAC Untuk Cetakan Perintah";
+		String kandungan = "<br/>" +
+				"No. TAC:" + 
+				otp +
+				"<br></br>" +
+				"No.TAC ini hanya sah sehingga (tarikh expired)" + 
+				"";
 		ef.sendTo(userMail, tajuk, kandungan);
 
 	}// close sendEmail
@@ -193,31 +192,35 @@ public class FrmPopupTAC extends AjaxBasedModule {
 		// return checkEmail;
 		return returnValue;
 
+	
 	}
 
 	@SuppressWarnings("unchecked")
-	private String addTAC(HttpSession session, String otp) throws Exception {
-
-		Hashtable h = new Hashtable();
-
-		h.put("idFail", getParam("idFail"));
-		h.put("no_rujukan_upt", getParam("no_rujukan_upt"));
-
-		h.put("id_user", session.getAttribute("_ekptg_user_id"));
-
-		// b tambah
-		h.put("otp", otp);
-		myLogger.info(h.put("otp", getParam("otp")));
-
-		return FrmPrmhnnStatusPengunaOnlineData.addTAC(h, otp);
-
-	}// close add
-
-	// b tambah verify otp
-	// call this bila nk verify
-	// bwak parameters yg diperlukan
-	private static String verifyOTP(String otpFrmUser, String otpFrmDB, String masaMasukOTPdb) {
-
+	private String addTAC(HttpSession session,String otp,String flag) throws Exception{
+		
+	    	Hashtable h = new Hashtable();
+	    	    	
+	    	h.put("idFail", getParam("idFail"));
+	    	h.put("no_rujukan_upt", getParam("no_rujukan_upt"));	    	
+	    	
+	    	h.put("id_user", session.getAttribute("_ekptg_user_id"));
+	    	
+	    	//b tambah
+	    	h.put("otp",otp);
+	    	
+	    	h.put("flag",flag);
+	    	myLogger.info(h.put("otp", getParam("otp")));
+	    	
+	    	return FrmPrmhnnStatusPengunaOnlineData.addTAC(h,otp,flag);
+	  
+	}//close add
+	
+	 
+	      //b tambah verify otp
+	      //call this bila nk verify
+	      //bwak parameters yg diperlukan
+		  private static String verifyOTP(String otpFrmUser,String otpFrmDB, String masaMasukOTPdb) 
+		    { 	  
 		// current date ni kne ikut format sysdate tu untuk compare
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date currentDate = new Date();

@@ -58,7 +58,7 @@
   		</td>
   		-->
   		<td>
-            	<input name="cari" value="Hantar" type="button" onclick="javascript:cetakSuratPanduanBicara('$!idFail','$!id_Permohonan')" />
+            	<input name="hantar" value="Hantar" type="button" onclick="javascript:hantarTAC('$!idFail','$!id_Permohonan')" />
   				<input type=button value = "Reset" onClick="javascript:clearData();">
             </td>
   		
@@ -94,11 +94,24 @@ function mohonTAC(idFail,id_Permohonan) {
 	//alert(document.${formName}.action);
 	//if ( !window.confirm("No TAC telah dihantar") ){
 		alert("No. TAC telah dihantar ke emel pengguna");
-		document.${formName}.submit();
+		document.${formName}.submit();		
 	//	return;
 	//}
 	
 }
+function hantarTAC(idFail,id_Permohonan) {
+	alert(idFail);
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupTAC&command=hantar";	
+		document.${formName}.submit();		
+
+		var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
+		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+			hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus(); 
+	
+	}
 
 function cetakBorangD(noFail,idfail,idPerbicaraan) {
 	var url = "../../servlet/ekptg.report.ppk.BorangD_ORI?nofail="+noFail+"&idfail="+idfail+"&idperbicaraan="+idPerbicaraan;
