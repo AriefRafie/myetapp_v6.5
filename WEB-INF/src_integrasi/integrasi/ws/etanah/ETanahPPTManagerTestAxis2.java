@@ -91,11 +91,18 @@ public class ETanahPPTManagerTestAxis2 {
 		String mesej = "";
 		if (hf != null && hf.getIdHakmilik() != null) {
 			//System.out.println("hf:NO.LOT="+hf.getNoPT());
-			mesej = "hf:NO.LOT="+hf.getNoPT();
+			mesej = "hf:NO.LOT="+hf.isNoPTSpecified()+"-"+hf.getNoPT();
 
 			PemilikForm[] pf = hf.getListPemilik();
 			mesej += "\n pf:size="+pf.length;
+			
+			//PemilikForm[] pemilik = hakmilik.getListPemilik();				
+			for (int i = 0; i < pf.length; i++){
+				PemilikForm pemilik = pf[i];
+				System.out.print(pemilik.getNamaPemilik());
+		
 
+			} 
 		} else {
 			//etanah.setFlagMsg("N");
 			//etanah.setOutputMsg("HAKMILIK TIDAK DITEMUI");
