@@ -7,11 +7,9 @@ import java.util.Date;
  * 
  * @author MyEclipse Persistence Tools
  */
-public class Tblrujdokumen extends AbstractDokumen implements
-		java.io.Serializable {
+public class Tblrujdokumen extends AbstractDokumen implements java.io.Serializable {
 
 	// Constructors
-
 	/** default constructor */
 	public Tblrujdokumen() {
 	}
@@ -24,5 +22,6 @@ public class Tblrujdokumen extends AbstractDokumen implements
 			, catatan, dokumen, idJenis,kandungan
 			, idMasuk,tarikhMasuk,idKemaskini,tarikhKemaskini);
 	}
+	
 
 }

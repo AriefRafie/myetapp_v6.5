@@ -38,7 +38,7 @@ public class LaporanPermohonan extends EkptgReportServlet {
 		String tmula =(String)parameters.get("BULANTAHUN");
 		String ttamat =(String)parameters.get("BULANTAHUNTMT");
 		String bulan = (String)(parameters.get("bulan")==null?"1":parameters.get("bulan"));
-		myLog.info("doProcessing:idsuburusan="+idsuburusan);
+//		myLog.info("doProcessing:idsuburusan="+idsuburusan);
 		myLog.info("doProcessing:bulan="+bulan);
 		//if (template.contains("Prestasi")) {
 		//	template += bulan;
