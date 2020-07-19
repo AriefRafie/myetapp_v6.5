@@ -4,52 +4,62 @@
   <tr>
     <td colspan="2">
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
-       #if ($SenaraiSemak.size() > 0)
+    	<tr class="row2">
+		<td width="3%"></td>
+		<td width="82%"><b>Keterangan</b></td>
+		<td width="15%"><b>Dokumen</b></td>
+	</tr>  
+	#if ($SenaraiSemak.size() > 0)
         #set ($list = "")
         #foreach ($list in $SenaraiSemak)
-        #if ($list.bil == '')
-        #set( $row = "row1" )
-        #elseif (($list.bil % 2) != 0)
-        #set( $row = "row1" )
-        #else 
-        #set( $row = "row2" )
-        #end
-        
+          	#set( $i = $velocityCount )
+       		#if ( ($i % 2) == 0 )
+   	        	#set( $row = "row2" )
+            #else
+               	#set( $row = "row1" )
+          	#end
+                	
         #if($list.flag == 'Y')
-        #set($checked = 'checked')
-        #set($disabled = 'disabled')
+        	#set($checked = 'checked')
+        	#set($disabled = 'disabled')
         #else
-        #set($checked = '')
+        	#set($checked = '')
         #end
         
         #if ($mode == 'update')
-	        <tr>
-	          <td class="$row" width="5%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked /></td>
-	          <td class="$row" width="95%">$list.keterangan</td>
+	        <tr class="$row">
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked /></td>
+	          <td class="$row" width="82%">$i. $list.keterangan</td>
+	          	<td class="$row" width="15%">
+	          	$!list.lampirans
+	        	</td>
 	        </tr>
 	      #end
 	      #if ($mode == 'view')
-	      	<tr>
-	          <td class="$row" width="5%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>
-	          <td class="$row" width="95%">$list.keterangan</td>
+	      	<tr class="$row">
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>
+	          <td class="$row" width="82%">$i. $list.keterangan</td>
+	          <td class="$row" width="15%">
+	          $!list.lampirans
+	          </td>
 	        </tr>
 	      #end
 	      
         #end
         #else
         <tr>
-          <td class="$row" width="5%">&nbsp;</td>
-          <td class="$row" width="95%">Tiada Rekod</td>
+          <td class="$row" width="3%">&nbsp;</td>
+          <td class="$row" colspan="2" width="95%">Tiada Rekod</td>
         </tr>
         #end
       </table></td>
   </tr>
   <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="3">&nbsp;</td>
   </tr>
   <tr>
-    <td width="30%">&nbsp;</td>
-    <td width="70%">#if ($mode == 'update')
+    <!-- <td width="30%">&nbsp;</td> -->
+    <td width="100%">#if ($mode == 'update')
       <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSenaraiSemak()"/>
       <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalProjek()"/>
       #end

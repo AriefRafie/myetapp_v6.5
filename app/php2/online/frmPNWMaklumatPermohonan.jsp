@@ -35,16 +35,16 @@
 
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($idFail != '')
-  <tr>
+  ##if ($idFail != '')
+  <!-- <tr>
     <td> #parse("app/php2/online/frmPLPHeader.jsp") </td>
-  </tr>
-  #else
-  <tr>
+  </tr> -->
+  ##else
+ <!--  <tr>
     <td>&nbsp;
       <div class="warning">SILA PILIH FAIL DI SENARAI PERMOHONAN TERLEBIH DAHULU</div></td>
-  </tr>
-  #end
+  </tr> -->
+  ##end
   <tr>
     <td>&nbsp;</td>
   </tr>

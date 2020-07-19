@@ -169,23 +169,23 @@ function refreshFromPilihTanah(idHakmilikAgensi) {
 function doChangePeganganHakmilik() {
 	doAjaxCall${formName}("doChangePeganganHakmilik");
 }
-function daftarBaru() {
-	
-	if(document.${formName}.idHakmilikAgensi.value == ""){
-		alert('Sila pilih Pegangan Hakmilik.');
-		return; 
+	function daftarBaru() {
+		
+		if(document.${formName}.idHakmilikAgensi.value == ""){
+			alert('Sila pilih Pegangan Hakmilik.');
+			return; 
+		}
+		
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			document.${formName}.actionOnline.value = "daftarBaru";
+			return;
+		}
+		
+		document.${formName}.actionOnline.value = "seterusnya";
+		document.${formName}.mode.value = "view";
+		document.${formName}.hitButton.value = "doDaftarBaru";
+		document.${formName}.submit();
 	}
-	
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		document.${formName}.actionOnline.value = "daftarBaru";
-		return;
-	}
-	
-	document.${formName}.actionOnline.value = "seterusnya";
-	document.${formName}.mode.value = "view";
-	document.${formName}.hitButton.value = "doDaftarBaru";
-	document.${formName}.submit();
-}
 function kembali() {	
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();

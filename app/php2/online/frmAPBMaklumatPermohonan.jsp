@@ -6,6 +6,9 @@
 .style2 {
 	color: #0000FF
 }
+.pautan {
+	color: #0000FF
+}
 -->
 </style>
 <p>
@@ -45,24 +48,22 @@
           <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
           <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN PERMOHONAN</li>
         </ul>
-        <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
+     	<div class="TabbedPanelsContentGroup">
+        	<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
             #parse("app/php2/online/frmAPBMaklumatPermohonanPermohonan.jsp")
             #end </div>
-          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
+          	<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
             #parse("app/php2/online/frmAPBMaklumatPermohonanPembeliPasir.jsp")
             #end </div>
-  				<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
-						#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") </td>
-						#end</div>
-					<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3')
-  					#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp")
-  					#end</div>
-					<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
+  			<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
+			#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") </td>
+			#end</div>
+			<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3')
+  			#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp")
+  			#end</div>
+		<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
 					           	
 <fieldset>
-
-
 
 <legend>PENGESAHAN PERMOHONAN</legend>
 <!--
@@ -1143,4 +1144,26 @@ function doBatalKemaskini() {
 	doAjaxCall${formName}("");
 }
 
+//LAMPIRAN
+//onlineAttach('$list.id','$list.jenisDokumen')
+function onlineAttach_(idPermohonan,idSenarai,idJenisDokumen) {
+    //
+    param = "actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline";
+    param += "&rujukan="+idPermohonan+"&jenisdokumen="+idJenisDokumen+"&idsenarai="+idSenarai;
+	var url = "../x/${securityToken}/ekptg.view.online.UploadDokumenSemak?"+param;
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Cetakan';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+    //var top = (screen.height/2)-(h/2);
+    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+
+}
 </script>
+$javascriptLampiran
