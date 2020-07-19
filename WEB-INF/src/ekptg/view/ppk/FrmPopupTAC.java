@@ -79,18 +79,6 @@ private static final long serialVersionUID = 1L;
     		String result1 = "";
     		String result2 = "";
     	
-    		//String otp = null;
-    		//if (doPost.equals("true")) {
-    	    	//String otp = OTP();
-    			//result = addTAC(session);
-    			//result2 = OTP();
-    			//result1 = sendEmail(userId);
-    			//OTP();
-    		//sendEmail(USER_LOGIN_SYSTEM,"TAC","","","",""); 
-    		
-        		//sendEmail(idP); 
-     		//}
-    		//context.put("otp", otp);
     		context.put("ResultAdd",result);
     		context.put("ResultAdd1",result1);
     		//context.put("ResultAdd2",result2);
@@ -112,9 +100,12 @@ private static final long serialVersionUID = 1L;
     		otp =  FrmPopupTAC.OTP();
     		//verifyOTP();
     		context.put("otp",otp);
+    		
     		myLogger.info("otp : "+otp);
-    		sendEmail(USER_LOGIN_SYSTEM,"TAC","","","",""); 
-    		result = addTAC(session,otp);
+    		sendEmail(USER_LOGIN_SYSTEM,otp);
+    		String flag = "1" ;
+    		context.put("flag",flag);
+    		result = addTAC(session,otp,flag);
  
    
         		//form validation
@@ -123,6 +114,13 @@ private static final long serialVersionUID = 1L;
         		
         	
 		}//close simpan
+    	else 
+    		if ("hantar".equals(submit)){
+    	
+			String verifyOTP = "";
+    		verifyOTP = FrmPopupTAC.verifyOTP("", "", "");
+    		myLogger.info("verifyotp : "+verifyOTP);
+    	}
     		
 		return vm;
 		
@@ -147,10 +145,9 @@ private static final long serialVersionUID = 1L;
 	        
 	        return otp; 
 	    } 
-
 	
 	@SuppressWarnings({ "unchecked", "static-access" })
-	private void sendEmail(String userId,String jenisSend,String nofail,String nama_projek,String tarikh_permohonan,String nama_kementerian) throws Exception{
+	private void sendEmail(String userId,String otp) throws Exception{
 		
     	Vector checkEmail = new Vector();
     	checkEmail.clear();
@@ -163,18 +160,16 @@ private static final long serialVersionUID = 1L;
 			emel = (String)ceP.get("EMEL");
 		}
 
-		//EmailTester et = new EmailTester();
+		myLogger.info(otp);
 		
-		//if(emelPengarah!="" ){
-			//et.setEmail("ppk",emelPengarah,"hantarUntukTAC");
-//		et.setEmail("PPK",emel,"hantarUntukTAC","","","","");
 		EmailConfig ef = new EmailConfig();
 		String userMail = emel;
-		String tajuk = "Modul Pengurusan Pusaka: Permohonan TAC";
+		String tajuk = "Modul Pengurusan Pusaka: Permohonan TAC Untuk Cetakan Perintah";
 		String kandungan = "<br/>" +
-				"<br/>/<br/>" +
-				" TAC:" +
-				"<br/><br/>" +
+				"No. TAC:" + 
+				otp +
+				"<br></br>" +
+				"No.TAC ini hanya sah sehingga (tarikh expired)" + 
 				"";
 		ef.sendTo(userMail,tajuk, kandungan);
 
@@ -207,7 +202,7 @@ private static final long serialVersionUID = 1L;
 	
 	}
 	@SuppressWarnings("unchecked")
-	private String addTAC(HttpSession session,String otp) throws Exception{
+	private String addTAC(HttpSession session,String otp,String flag) throws Exception{
 		
 	    	Hashtable h = new Hashtable();
 	    	    	
@@ -218,9 +213,11 @@ private static final long serialVersionUID = 1L;
 	    	
 	    	//b tambah
 	    	h.put("otp",otp);
+	    	
+	    	h.put("flag",flag);
 	    	myLogger.info(h.put("otp", getParam("otp")));
 	    	
-	    	return FrmPrmhnnStatusPengunaOnlineData.addTAC(h,otp);
+	    	return FrmPrmhnnStatusPengunaOnlineData.addTAC(h,otp,flag);
 	  
 	}//close add
 	
@@ -229,9 +226,7 @@ private static final long serialVersionUID = 1L;
 	      //call this bila nk verify
 	      //bwak parameters yg diperlukan
 		  private static String verifyOTP(String otpFrmUser,String otpFrmDB, String masaMasukOTPdb) 
-		    { 
-
-		  
+		    { 	  
 			     //current date ni kne ikut format sysdate tu untuk compare
 	             DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	             Date currentDate = new Date();
