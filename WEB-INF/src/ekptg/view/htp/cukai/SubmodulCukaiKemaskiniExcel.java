@@ -1,4 +1,4 @@
-package ekptg.view.htp;
+package ekptg.view.htp.cukai;
 
 import java.util.Date;
 import java.util.Hashtable;
@@ -25,10 +25,12 @@ import ekptg.model.htp.cukai.entity.CukaiTemp;
 import ekptg.model.htp.entity.HakMilik;
 import ekptg.model.htp.entity.HakmilikCukai;
 
-@SuppressWarnings("serial")
-public class FrmCukaiKemaskiniDataExcel extends AjaxBasedModule{
-	
-	static Logger myLog = Logger.getLogger(ekptg.view.htp.FrmCukaiKemaskiniDataExcel.class);
+public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8016335497334923015L;
+	static Logger myLog = Logger.getLogger(ekptg.view.htp.cukai.SubmodulCukaiKemaskiniExcel.class);
 	private final String PATHTP="app/htp/";
 	private final String PATHVER = PATHTP+ResourceBundle.getBundle("file").getString("ver_htp")+"/";
 	private final String PATH = PATHVER+"cukai/";
@@ -57,6 +59,7 @@ public class FrmCukaiKemaskiniDataExcel extends AjaxBasedModule{
 			
 			HttpSession session = this.request.getSession();
 			String action = getParam("action");
+			//
 			String submit = getParam("command");
 			Vector SenaraiFailTemp = null;
 			Vector SenaraiFailOrig = null;
@@ -69,6 +72,7 @@ public class FrmCukaiKemaskiniDataExcel extends AjaxBasedModule{
 		 	userId =(String)session.getAttribute("_ekptg_user_id");
 		 	noHakmilik = getParam("txtnohakmilik");
 			String tahun = getParam("tahun");
+			myLog.info("submit="+submit);
 			/**
 			 * Simpan kemaskini data compare antara data Excel dng data Oracle			
 			 */		
@@ -488,9 +492,20 @@ public class FrmCukaiKemaskiniDataExcel extends AjaxBasedModule{
 		    	this.context.put("manualMukim", HTML.SelectMukim("manualMukim"));
 		    	this.context.put("jenisLot",HTML.SelectLot("jenisLot"));
 		    	this.context.put("JenisHakmilik",HTML.SelectJenisHakmilik("JenisHakmilik"));
-		    	this.context.put("Tahun", tahun);	    		
+		    	this.context.put("Tahun", tahun);	  
+		    	String paparan = "";
+		    	if (!getParam("div_getListCukai_open").equals("Y")) {
+					this.context.put("div_getListCukai_open", "Y");
+					//listCukai = DBListKemaskiniCukai(session);
+					//this.context.put("listCukai", listCukai);
+				} else {
+					this.context.put("div_getListCukai_open", "N");
+				}
+		    	//
 		    	template_name = PATH+"new.jsp";
-			
+		    	//template_name = "app/htp/6.0/utiliti/div_listCukai.jsp";
+		    	
+
 			}else if(submit.equals("doChangeDaerahManual")){			
 				changeDaerahManual();
 				template_name = PATH+"new.jsp";
@@ -524,7 +539,7 @@ public class FrmCukaiKemaskiniDataExcel extends AjaxBasedModule{
 				template_name =PATH+"frmCukaiSenaraiFailUploadExcel_.jsp";
 					
 			}else{
-				myLog.info("default");
+//				myLog.info("default");
 				isCarian = getParam("carian");
 			    String noLot = getParam("txtNoLot")==""?"":getParam("txtNoLot");
 				if(isCarian.equals("ya")){
