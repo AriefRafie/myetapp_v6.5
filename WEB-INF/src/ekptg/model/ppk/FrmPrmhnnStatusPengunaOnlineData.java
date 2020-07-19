@@ -843,7 +843,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static String addTAC(Hashtable data,String otp2) throws Exception
+	public static String addTAC(Hashtable data,String otp2,String msg) throws Exception
 	  {
 		
 		Connection conn = null;
@@ -865,7 +865,8 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	long id_tac = DB.getNextID("TBLPPKTAC_SEQ");    
 	    	String idFail = (String)data.get("idFail");	 
 	    	String otp = otp2;
-	    	myLogger.info("otp2 : "+otp);
+	    	String flagmsg = msg;
+	    	myLogger.info("flagmsg : "+flagmsg);
 	    	Date now = new Date();
 	    	SimpleDateFormat formatter =  new SimpleDateFormat("yyyy");
 	    	String tahun = formatter.format(now);
@@ -881,6 +882,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	rF.add("id_fail", idFail);	    	
 	    	rF.add("tarikh_masuk",rF.unquote("sysdate"));
 			rF.add("id_masuk",id_user);
+			rF.add("msg_status", flagmsg);	
 	    	sql = rF.getSQLInsert("tblppktac");
 	    	myLogger.info("INSERT TEST TABLPPKTAC : "+sql);
 	    	stmt.executeUpdate(sql);
