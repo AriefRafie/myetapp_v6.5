@@ -226,7 +226,7 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 	}
 	private ILampiran getDoc(){
 		if(iLampiran == null){
-			iLampiran = new LampiranBean();
+			iLampiran = new ekptg.model.php2.utiliti.LampiranBean();
 		}
 		return iLampiran;
 			
