@@ -1079,9 +1079,8 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
 			
-			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			//sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
 			myLogger.info("sql 8: "+sql);
 //			stmt.executeUpdate(sql);
 
