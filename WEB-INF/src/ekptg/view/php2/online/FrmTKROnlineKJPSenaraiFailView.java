@@ -214,7 +214,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 						getParam("idLuasTanah"), getParam("luasTanah"), idHakmilikSementara, session);
 				
 				Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
-				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",idSubsuburusan,"=");
+				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",idSuburusan,"=");
 				subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
 				subUrusanStatusFailN.setAktif("1");
 				subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
