@@ -1863,7 +1863,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 			    sql = r.getSQLSelect("tblrujsuburusanstatus rsus");
 			      
 			    Statement stmt = db.getStatement();
-			    //myLog.info("getIdSuburusanStatusByLangkah("+ langkah+","+idsuburusan+","+op+"):sql::"+sql);
+			    myLog.info("getIdSuburusanStatusByLangkah("+ langkah+","+idsuburusan+","+op+"):sql::"+sql);
 			    ResultSet rs = stmt.executeQuery(sql);
 			    while (rs.next()) {
 			    	  returnValue = Long.parseLong(rs.getString("id_suburusanstatus"));
