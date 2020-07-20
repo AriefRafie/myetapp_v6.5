@@ -10,6 +10,7 @@
 		<td width="82%"><b>Keterangan</b></td>
 		<td width="15%"><b>Dokumen</b></td>
 	</tr>  
+	
 	#if ($SenaraiSemak.size() > 0)
         #set ($list = "")
         #foreach ($list in $SenaraiSemak)

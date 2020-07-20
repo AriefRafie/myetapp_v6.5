@@ -537,7 +537,6 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("ID_MAKLUMATPAKAR");
 			r.add("NAMA");
 			r.add("KELAYAKAN");
-
 			r.add("ID_PERMOHONAN", idPermohonan);
 
 			sql = r.getSQLSelect("TBLPHPMAKLUMATPAKAR", "ID_MAKLUMATPAKAR ASC");

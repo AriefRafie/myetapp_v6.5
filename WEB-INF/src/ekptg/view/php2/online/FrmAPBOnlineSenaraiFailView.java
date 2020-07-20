@@ -47,8 +47,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		String doPost =  (String) session.getAttribute("doPost");
 	    if (doPost.equals("true")) {
 	        postDB = true;
-	    }
-	    	    
+	    }	    	    
 	    // DROP DOWN PENDAFTARAN
 	    String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
 	    String vm = ""; 
