@@ -190,7 +190,7 @@
 				<input class="stylobutton" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanFail()">
 				<input class="stylobutton" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doAjaxCall${formName}('indexPage')">
 			#elseif($pageMode=="update")
-				<input class="stylobutton100" type="button" onclick="javascript:pembelianTerima($!idFail);" value="Simpan & Email" />
+				<input class="stylobutton100" type="button" onclick="javascript:pembelianTerima($!idFail);" value="Simpan & Email 2" />
 				<!-- <input class="stylobutton" type="button" onclick="javascript:pembelianTolak($!idFail);" value="Tolak" /> -->
           	#else
           		<input class="stylobutton100" type="button" onclick="javascript:pembelianViewMaklumatOnline('$!htpPermohonan.permohonan.getIdPermohonan()','$!htpPermohonan.getIdHtpPermohonan()');" value="Seterusnya" />
@@ -209,3 +209,27 @@
 <input type="hidden" name="txtidHtpPermohonan" value="$!htpPermohonan.getIdHtpPermohonan()"/>
 <input type="hidden" name="pageMode" value="$!pageMode">
 
+
+	
+	<script>
+	function cetakImej(id){
+		//var url = "../servlet/ekptg.view.htp.FrmRekodDisplayImej?id="+id;
+	    var url = "../servlet/ekptg.view.pfd.DisplayBlob?id="+id;
+	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener=document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
+/* 	function pembelianTerima(id){
+		var mode = 'viewMaklumatPermohonan';
+		doAjaxCall${formName}("pembelianditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
+	} */
+function pembelianTerima(id){
+	var mode = 'pembelianditerima';
+	//doAjaxCall${formName}("pajakanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
+	document.${formName}.command.value = mode;
+	document.${formName}.actionPajakan.value = "";
+	document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&actionPerletakhakan=papar&idfail="+id;
+	document.${formName}.submit();
+}
+	</script>
