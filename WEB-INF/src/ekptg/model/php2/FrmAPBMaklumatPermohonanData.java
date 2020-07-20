@@ -1086,7 +1086,9 @@ public class FrmAPBMaklumatPermohonanData {
 					+ "WHERE "
 					+ "TBLPHPKOORDINATPERMOHONAN.ID_ULASANTEKNIKAL IS NULL "
 					+ "AND TBLPHPKOORDINATPERMOHONAN.ID_PERMOHONAN = '"
-					+ idPermohonan + "'" + " ORDER BY LABEL_TITIK ASC ";
+					//roszai - edit untuk sort by history (17072020)
+					//+ idPermohonan + "'" + " ORDER BY LABEL_TITIK ASC ";
+					+ idPermohonan + "'" + " ORDER BY TARIKH_MASUK DESC ";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -1760,12 +1762,18 @@ public class FrmAPBMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 			
 			// TBLPHPKERTASKERJAAPB
-			r = new SQLRenderer();
-    		r.update("ID_PERMOHONAN", idPermohonan);
-			r.update("FLAG_KERTAS", "1");
-			sql = r.getSQLDelete("TBLPHPKERTASKERJAAPB");
-			stmt.executeUpdate(sql);
+			sql = "SELECT FLAG_KERTAS FROM TBLPHPKERTASKERJAAPB WHERE ID_PERMOHONAN = '"
+					+ idPermohonan + "'";
+			ResultSet rs = stmt.executeQuery(sql);
 			
+			if (rs.next()) {
+				r = new SQLRenderer();
+	    		r.update("ID_PERMOHONAN", idPermohonan);
+				r.update("FLAG_KERTAS", "1");
+				sql = r.getSQLDelete("TBLPHPKERTASKERJAAPB");
+				stmt.executeUpdate(sql);
+			}
+
 			// TBLPHPKERTASKERJAAPB
 			r = new SQLRenderer();
 			long idKertasKerja = DB.getNextID("TBLPHPKERTASKERJAAPB_SEQ");

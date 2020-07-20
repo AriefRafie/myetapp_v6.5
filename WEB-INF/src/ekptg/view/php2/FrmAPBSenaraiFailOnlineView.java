@@ -11,6 +11,7 @@ import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmAPBSenaraiFailData;
 import ekptg.model.php2.FrmAPBSenaraiFailOnlineData;
 
+@SuppressWarnings("serial")
 public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 
 	FrmAPBSenaraiFailData logic = new FrmAPBSenaraiFailData();
@@ -41,8 +42,8 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
        		        
         //VECTOR
         Vector list = null;
-        Vector beanMaklumatPermohonan = null;
-        Vector beanMaklumatPemohon = null;
+        //Vector beanMaklumatPermohonan = null;
+        //Vector beanMaklumatPemohon = null;
         
         String idKategoriPemohon = getParam("socKategoriPemohon");
 		if (idKategoriPemohon == null || idKategoriPemohon.trim().length() == 0) {
@@ -59,16 +60,21 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
         
        //ACTION BUTTON
 		if (postDB){
+			this.context.put("noFailOnline", "");
         	if ("daftarBaru".equals(hitButton)){
-        		logic.updateDaftarOnline(idFail,idPermohonan,getParam("txtPerkara"),session);
+        		logic.updateDaftarOnline(idFail,getParam("idPermohonan"),getParam("txtPerkara"),session);
         	}
         	if ("generateNoFailAPBOnline".equals(hitButton)){
         		String nofailAPBOnline=logic.generateNoFail(session);
         		this.context.put("noFailOnline", nofailAPBOnline);
         	}
     	}
-	    		
+		
+		Vector beanMaklumatPermohonan = null;
+        Vector beanMaklumatPemohon = null;
+        
         if ("papar".equals(actionOnline)){
+        	
         	
         	this.context.put("mode", "view");
         	this.context.put("readonly", "readonly");
@@ -131,14 +137,12 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 			vm = "app/php2/frmAPBSenaraiFailOnline.jsp";
 	
 			//logic.getCarianFail(getParam("txtNoPermohonan"),getParam("txdTarikhPermohonan"));
-			list = logic.getCarianFailOnline(getParam("txtNoPermohonan"),getParam("txdTarikhTerima"));
+			list = logic.getCarianFailOnline(getParam("txtNoPermohonan"),getParam("txtTarikhTerima"));
 			list = new Vector();
 			list = logic.getSenaraiFail();
 			this.context.put("SenaraiFail", list);
 			this.context.put("txtNoPermohonan", getParam("txtNoPermohonan"));
-			this.context
-					.put("txdTarikhPermohonan", getParam("txdTarikhPermohonan"));
-	
+			this.context.put("txtTarikhTerima", getParam("txtTarikhTerima"));
 			setupPage(session, action, list);
         }
 		

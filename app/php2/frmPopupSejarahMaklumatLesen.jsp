@@ -9,6 +9,8 @@
 <input type="hidden" name="actionPopup"/>
 <input type="hidden" name="idHakmilikAgensi"/>
 <input type="hidden" name="idPemohon"/>
+<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>
