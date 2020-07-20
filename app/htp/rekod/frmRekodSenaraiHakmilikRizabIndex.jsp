@@ -283,6 +283,25 @@
 
 <script>
 
+	function TanahXWarta(){
+		//i.	166(3)  Pulau Pinang,Melaka
+		//ii.	166(4)  Seluruh semenanjung kecuali Pulau Pinang, Melaka
+
+		//alert('negeri='+document.${formName}.socNegeriHR.value);'
+		if(document.${formName}.socNegeriHR.value=='4' || document.${formName}.socNegeriHR.value=='7')
+			document.${formName}.txtNoWarta.value = '166(3)';
+		else if (document.${formName}.socNegeriHR.value=='12' || document.${formName}.socNegeriHR.value=='13')
+			document.${formName}.txtNoWarta.value = '';
+		else
+			document.${formName}.txtNoWarta.value = '166(4)';
+		
+	}
+	
+	function TanahWarta(){
+		//
+		document.${formName}.txtNoWarta.value = '';		
+	}
+
 	if(document.${formName}.isimpangis.value == 'true'){
 		alert("Maklumat untuk GIS telah dihantar.");
 	}
@@ -683,6 +702,17 @@
 			doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskinidetailhakmiliksamb&lastAction=doChange");	
 		}else{
 			doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailHakmilik&lastAction=doChange");		
+		}
+		
+	}
+	
+	function doChangeTarafRizab() {
+		//2020/04/12
+		//document.${formName}.firstAction.value = "PendaftaranHakmilik"; 				
+		if(document.${formName}.socStatusDaftar.value=='S'){
+			doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskinidetailhakmiliksamb&lastAction=doChange");	
+		}else{
+			doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=kemaskiniDetailRizab&lastAction=doChange");		
 		}
 		
 	}
@@ -1409,6 +1439,7 @@
 	}
 
 	function rizabDetail(id_,status){
+		document.${formName}.firstAction.value = "PendaftaranHakmilik"; 		
 		doAjaxCall${formName}("","firstAction=PendaftaranHakmilik&nextAction=paparDetailRizab&idHakmilik="+id_+"&statusSah="+status);
 	}
 	function rizab_detail(id_,status){

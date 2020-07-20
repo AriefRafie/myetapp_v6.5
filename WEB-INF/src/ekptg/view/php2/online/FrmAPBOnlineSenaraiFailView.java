@@ -22,18 +22,22 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmAPBHeaderData;
 import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.online.FrmAPBOnlineSenaraiFailData;
+import ekptg.model.php2.utiliti.LampiranBean;
+import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView.class);
+	private ILampiran iLampiran = null;
 	
 	FrmAPBOnlineSenaraiFailData logic = new FrmAPBOnlineSenaraiFailData();
 	FrmAPBHeaderData header = new FrmAPBHeaderData();
-
+	
 	@Override
 	public String doTemplate2() throws Exception {
 		
@@ -79,7 +83,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         String idPemohon = getParam("idPemohon");
         String idFailLama = getParam("idFailLama");
         String idDokumen = getParam("idDokumen"); // ADD MAKLUMAT LAMPIRAN
-        String kategori = getParam("kategori");        
+        String kategori = getParam("kategori");
 		        
         //VECTOR
         Vector<Hashtable<String,String>> list = null;
@@ -98,6 +102,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         Vector beanMaklumatLampiran = null;
         Vector senaraiLampiran = null;
         Vector senaraiSemak = null;
+        Vector beanMaklumatPejabat = null; //BARU TAMBAH
         
         
         //GET DROPDOWN PARAM
@@ -145,7 +150,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		log.info("hitButton : " +hitButton);
 		log.info("mode : " +mode);
 		log.info("modePopup : " +modePopup);
-		
+		log.info("flagPopup : " +flagPopup);
+		FrmSemakan semak = null;
 		//SAVE TO DB		
 		if (postDB){
 				if ("daftarBaru".equals(hitButton)){
@@ -227,8 +233,18 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				//BARU TAMBAH
 				//SENARAI SEMAK		
 				if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
-	        		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
-	    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
+	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
+	    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
+	    				
+	        		//String[] cbsemaks = this.request.getParameterValues("cbsemaks");
+	    			FrmSemakan frmSemak = new FrmSemakan();
+	    			frmSemak.semakanHapusByPermohonan(idPermohonan);
+	    			if (cbsemaks != null) {
+	    				for (int i = 0; i < cbsemaks.length; i++) {
+	    					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
+	    				}
+	    			}
+	    				
 	        	}
 				//LAMPIRAN
 				if("doSimpanSenaraiSemak".equals(hitButton)){
@@ -245,7 +261,9 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 					logic.hapusLampiran(idDokumen, session);
 				}
         }
-			
+		
+		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
+		
 		if ("papar".equals(actionOnline)){
 			
 			//GO TO VIEW APB        	
@@ -362,6 +380,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 
         } else if ("seterusnya".equals(actionOnline)){
         	
+        	log.info("masuk sini");
         	// GO TO MAKLUMAT PERMOHONAN  
        		vm = "app/php2/online/frmAPBMaklumatPermohonan.jsp";
        		
@@ -378,6 +397,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
     			Hashtable hashHeader = (Hashtable) logic.getBeanMaklumatHeader().get(0);
     			idFail = (String) hashHeader.get("idFail");
     			idPermohonan = (String) hashHeader.get("idPermohonan");
+    			log.info("idPermohonan :" +idPermohonan); 
     			this.context.put("idPermohonan", idPermohonan);
     			idStatus = (String) hashHeader.get("idStatus");
     			idPemohon = (String)hashHeader.get("idPemohon");	
@@ -409,9 +429,13 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    			//SENARAI PENGARAH
 	        		logic.setSenaraiPengarah(idPemohon);
 	        		senaraiPengarah = logic.getListPengarah();
-	        		this.context.put("SenaraiPengarah", senaraiPengarah);	        		
+	        		this.context.put("SenaraiPengarah", senaraiPengarah);
+	        		this.context.put("completed", false);
+	        		this.context.put("flagPopup", "closePopupLampiran");
 	        		
 	            } else if ("1".equals(selectedTabUpper)){
+	            	this.context.put("completed", false);
+	        		this.context.put("flagPopup", "closePopupLampiran");
 	            	
 	            	maklumatPembeliPasir(mode, idPembeliPasir, idPermohonan);
 	            	
@@ -421,70 +445,87 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	        		this.context.put("SenaraiPembeliPasir", senaraiPembeliPasir);
 	        		
 	            }	else if ("2".equals(selectedTabUpper)){
+	            	this.context.put("completed", false);
+	        		this.context.put("flagPopup", "closePopupLampiran");
+					semak = new FrmSemakan();
+					semak.mode = mode;
+					senaraiSemak = semak.getSenaraiSemakanAttach("phpapb",idPermohonan);
 	            	
-	            	senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+	            	//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
 	    			this.context.put("SenaraiSemak", senaraiSemak);
 	    			
-	    			if ("update".equals(mode)){
+	    			if (mode.equals("update")){
 	    				
-	        			senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
-		    			this.context.put("SenaraiSemak", senaraiSemak);
+	        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+		    			//this.context.put("SenaraiSemak", senaraiSemak);
 	    			}
-	    			else if ("view".equals(mode)){
+	    			else if (mode.equals("view")){
 	        			
-	        			senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
-		    			this.context.put("SenaraiSemak", senaraiSemak);
+	        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+		    			//this.context.put("SenaraiSemak", senaraiSemak);
 		    			
 	        		}
 	    			
-	            } else if ("3".equals(selectedTabUpper)){
-        			if ("openPopupLampiran".equals(flagPopup)){
-    	        		
-    	        		if ("new".equals(modePopup)){
-    	        			
-    	        			this.context.put("readonlyPopup", "");
-    		    			this.context.put("inputTextClassPopup", "");
-    		    			
-    		    			beanMaklumatLampiran = new Vector();    			
-    		    			Hashtable hashMaklumatLampiran = new Hashtable();
-    		    			hashMaklumatLampiran.put("namaLampiran", "");
-    		    			hashMaklumatLampiran.put("catatanLampiran", "");
-    		    			beanMaklumatLampiran.addElement(hashMaklumatLampiran);
-    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-    		    			
-    	        		} else if ("update".equals(modePopup)){
-    	        			
-    	        			this.context.put("readonlyPopup", "");
-    		    			this.context.put("inputTextClassPopup", "");
-    		    			
-    		    			//MAKLUMAT LAMPIRAN
-    		    			beanMaklumatLampiran = new Vector();
-    						logic.setMaklumatLampiran(idDokumen);
-    						beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
-    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-    		    			
-    	        		} else if ("view".equals(modePopup)){
-    	        			
-    	        			this.context.put("readonlyPopup", "readonly");
-    		    			this.context.put("inputTextClassPopup", "disabled");
-    		    			
-    		    			//MAKLUMAT LAMPIRAN
-    		    			beanMaklumatLampiran = new Vector();
-    						logic.setMaklumatLampiran(idDokumen);
-    						beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
-    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-    	        		}
-        		}
+	            } 
+//	            else if ("3".equals(selectedTabUpper)){
+//        			if ("openPopupLampiran".equals(flagPopup)){
+//
+//    	        		if ("new".equals(modePopup)){
+//    	        			
+//    	        			this.context.put("readonlyPopup", "");
+//    		    			this.context.put("inputTextClassPopup", "");
+//    		    			
+//    		    			beanMaklumatLampiran = new Vector();    			
+//    		    			Hashtable hashMaklumatLampiran = new Hashtable();
+//    		    			hashMaklumatLampiran.put("namaLampiran", "");
+//    		    			hashMaklumatLampiran.put("catatanLampiran", "");
+//    		    			beanMaklumatLampiran.addElement(hashMaklumatLampiran);
+//    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
+//    						modePopup = "";
+//    						log.info("Read Here");
+//    		    			
+//    	        		} else if ("update".equals(modePopup)){
+//    	        			
+//    	        			this.context.put("readonlyPopup", "");
+//    		    			this.context.put("inputTextClassPopup", "");
+//    		    			
+//    		    			//MAKLUMAT LAMPIRAN
+//    		    			beanMaklumatLampiran = new Vector();
+//    						logic.setMaklumatLampiran(idDokumen);
+//    						beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
+//    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
+//    						log.info("Read Here2");
+//    		    			
+//    	        		} else if ("view".equals(modePopup)){
+//    	        			
+//    	        			this.context.put("readonlyPopup", "readonly");
+//    		    			this.context.put("inputTextClassPopup", "disabled");
+//    		    			
+//    		    			//MAKLUMAT LAMPIRAN
+//    		    			beanMaklumatLampiran = new Vector();
+//    						logic.setMaklumatLampiran(idDokumen);
+//    						beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
+//    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
+//    						log.info("Read Here3");
+//    	        		}
+//        		}
         			
-        	}
+//        	}
+//	    		
+//	    	//SENARAI LAMPIRAN
+//        	senaraiLampiran = new Vector();
+//       		logic.setSenaraiLampiran(idPermohonan);
+//    		senaraiLampiran = logic.getListLampiran();
+//       		this.context.put("SenaraiLampiran", senaraiLampiran);
+//       		log.info("idPermohonan :" +idPermohonan);
 	    		
-	    	//SENARAI LAMPIRAN
-        	senaraiLampiran = new Vector();
-       		logic.setSenaraiLampiran(idPermohonan);
-    		senaraiLampiran = logic.getListLampiran();
-       		this.context.put("SenaraiLampiran", senaraiLampiran);
-       		log.info("idPermohonan :" +idPermohonan);
-	    		
+	           else if ("4".equals(selectedTabUpper)){
+	        	log.info("maklumatPejabat :");
+				logic = new FrmAPBOnlineSenaraiFailData();
+				Vector<Hashtable<String,String>> vec1 = logic.setMaklumatPejabatJKPTG();
+				this.context.put("maklumatPejabat", vec1.get(0));
+	           }
+				
         } else {
         	  		
      		//GO TO LIST FAIL APB       	
@@ -594,6 +635,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		
 		if ("update".equals(mode)){
 			
+			log.info("update senarai semak");
 			this.context.put("readonly", "");
         	this.context.put("inputTextClass", "");
         	this.context.put("disabled", "");
@@ -943,6 +985,7 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 	//BARU TAMBAH21062020
 	//UPLOAD LAMPIRAN
 	private void uploadLampiran(String idPermohonan, HttpSession session) throws Exception {
+		log.info("lalu A");
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -952,6 +995,7 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 				while (itr.hasNext()) {
 					FileItem item = (FileItem) itr.next();
 					if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+						log.info("lalu B");
 						saveLampiran(item, idPermohonan, session);
 					}
 				}
@@ -959,6 +1003,7 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 	}
 	
 	private void saveLampiran(FileItem item, String idPermohonan, HttpSession session) throws Exception {
+		log.info("lalu C");
 
 		Db db = null;
 			String userId = (String) session.getAttribute("_ekptg_user_id");
@@ -985,6 +1030,7 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 				ps.executeUpdate();
 
 				con.commit();
+				log.info("lalu D");
 					
 				AuditTrail.logActivity("1610198", "4", null, session, "INS", "FAIL [" + idPermohonan + "] DIDAFTARKAN");
 					
@@ -993,5 +1039,13 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 				db.close();
 		}
 		this.context.put("completed", true);
+	}
+	
+	private ILampiran getDocPHP(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+				
 	}
 }

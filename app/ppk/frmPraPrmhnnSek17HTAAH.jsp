@@ -3165,7 +3165,8 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                   #end
                                   #if($ht == "Y")
                                   #if($open_button_online == "yes")
-                                  <input name="cmdSemakanHakmilikEtanah" type="button" value="Capaian Hakmilik dari eTanah" onclick="javascript:semakanHakmilikEtanah('$idPermohonanSimati')"/>
+                                  <!--  e-Tanah Melaka-->
+                                  <input name="cmdSemakanHakmilikEtanah" type="button" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikEtanah('$idPermohonanSimati')"/>
                                   <input type="submit" name="buttonTambah" id="buttonTambah" value="Tambah" onclick="nktambah()"/>
                                   #if($flag_kemaskini_selesai != "yes")
                                   <script>
@@ -6665,18 +6666,16 @@ function check_ob_flag(id_hta,id_ob,flag,status,set_tadbir,id_ob_sub)
 	
 }
 
-
-
-function semakanHakmilikEtanah(idPermohonanSimati) {
-
-	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupCapaianHakmilikEtanahView?idPermohonanSimati="+idPermohonanSimati;
-    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
-
-}
+	function semakanHakmilikEtanah(idPermohonanSimati) {
+		var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul=ppk&idPermohonan="+idPermohonanSimati;
+		//var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupCapaianHakmilikEtanahView?idPermohonanSimati="+idPermohonanSimati;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	
+	}
 
 function CheckBandarSurat()
 {

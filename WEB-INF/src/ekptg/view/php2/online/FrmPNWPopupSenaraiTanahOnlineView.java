@@ -7,6 +7,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
@@ -18,6 +20,7 @@ public class FrmPNWPopupSenaraiTanahOnlineView extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
 	
 	FrmPNWPopupSenaraiTanahOnlineData logic = new FrmPNWPopupSenaraiTanahOnlineData();
+	static Logger myLog = Logger.getLogger(FrmTKROnlinePopupSenaraiTanahView.class);
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -122,6 +125,8 @@ public class FrmPNWPopupSenaraiTanahOnlineView extends AjaxBasedModule {
 			this.context.put("txtNoWarta", getParam("txtNoWarta"));
 			this.context.put("tarikhWarta", getParam("tarikhWarta"));
 			
+			myLog.info("idKementerian popup view============"+idKementerian);;
+			
 			list = new Vector();
         	logic.carianTanah(idJenisTanah, getParam("txtPeganganHakmilik"), jenisHakmilik, getParam("txtNoHakmilik"), jenisLot,
         			getParam("txtNoLot"), getParam("txtNoWarta"), getParam("tarikhWarta"), idNegeri, idDaerah, idMukim, idKementerian, idAgensiC);
@@ -132,6 +137,8 @@ public class FrmPNWPopupSenaraiTanahOnlineView extends AjaxBasedModule {
 			logic.setMaklumatAgensi(idAgensi);
 			beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
 			this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);
+			
+			
 			
         	setupPage(session,action,list);
 	    }

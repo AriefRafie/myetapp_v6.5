@@ -465,7 +465,8 @@ function popupMsg(){
 function kemaskiniPermohonan() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();	
+	//doAjaxCall${formName}("");
 }
 function batalKemaskiniPermohonan() {
 	document.${formName}.mode.value = "view";
@@ -917,3 +918,4 @@ function doBatalKemaskini() {
 }
 
 </script>
+$javascriptLampiran
