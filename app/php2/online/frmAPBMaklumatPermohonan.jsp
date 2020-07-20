@@ -1145,25 +1145,5 @@ function doBatalKemaskini() {
 }
 
 //LAMPIRAN
-//onlineAttach('$list.id','$list.jenisDokumen')
-function onlineAttach_(idPermohonan,idSenarai,idJenisDokumen) {
-    //
-    param = "actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline";
-    param += "&rujukan="+idPermohonan+"&jenisdokumen="+idJenisDokumen+"&idsenarai="+idSenarai;
-	var url = "../x/${securityToken}/ekptg.view.online.UploadDokumenSemak?"+param;
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus(); /**/
-    //
-    var title = 'Cetakan';
-	var w =1024;
-	var h = 800;
-    var left = (screen.width/2)-(w/2);
-    //var top = (screen.height/2)-(h/2);
-    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-}
 </script>
 $javascriptLampiran
