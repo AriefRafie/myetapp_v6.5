@@ -31,7 +31,8 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 
 	@Override
 	public String doTemplate2() throws Exception {
-		HttpSession session = this.request.getSession();
+		HttpSession session = this.request.g
+etSession();
 		
 		Boolean postDB = false;
 		String doPost =  (String) session.getAttribute("doPost");
@@ -142,22 +143,16 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		//HITBUTTON
 		if (postDB) {
 <<<<<<< HEAD
-
-           		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
-=======
-<<<<<<< WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
-			if (hitButton.equals("doDaftarBaru")){
-           		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
-        	}else if (hitButton.equals("doSimpanKemaskiniMaklumatTnh")){
-=======
 			if ("doDaftarBaru".equals(hitButton)){
 
            		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
         	}
 			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
-
->>>>>>> WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
->>>>>>> 2fa9f4ce5bc213fd2b2f727f7e7ee7f4c8b28e46
+=======
+			if (hitButton.equals("doDaftarBaru")){
+           		idFail = logic.daftarBaru(userRole,idKementerianPmhn,idAgensiPmhn, getParam("idHakmilikAgensi"), session);
+        	}else if (hitButton.equals("doSimpanKemaskiniMaklumatTnh")){
+>>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
         		logic.updateTanah(idPermohonan,idHakmilikAgensi,session);	
             }else if (hitButton.equals("doSimpanKemaskiniMaklumatPelepasan")){
         		logic.updatePermohonanPenawaran(idPermohonanPelepasan,
@@ -169,40 +164,29 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
-
-
-					logic.updatePermohonanSemakan(idPermohonan, idKementerian, session);
 <<<<<<< HEAD
-=======
-<<<<<<< WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
-				}
-=======
+					logic.updatePermohonanSemakan(idPermohonan, idKementerian, session);
 				}				
 			}
 			
 			if ("doHantarKelulusan".equals(hitButton)){
->>>>>>> WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
->>>>>>> 2fa9f4ce5bc213fd2b2f727f7e7ee7f4c8b28e46
+=======
+					logic.updatePermohonanSemakan(idPermohonan, idKementerianPmhn, session);
+				}
+>>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
 				
 			}else if (hitButton.equals("doHantarKelulusan")){			
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
 <<<<<<< HEAD
-
-					logic.updatePermohonanKelulusan(idPermohonan, idKementerian, session);
-				}	
-=======
-<<<<<<< WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
-					logic.updatePermohonanKelulusan(idPermohonan, idKementerian, session);
-				}	
-=======
-
 					logic.updatePermohonanKelulusan(idPermohonan, idKementerian, session);
 				}				
 			}else if ("doHantarEmel".equals(hitButton)){
->>>>>>> WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
->>>>>>> 2fa9f4ce5bc213fd2b2f727f7e7ee7f4c8b28e46
+=======
+					logic.updatePermohonanKelulusan(idPermohonan, idKementerianPmhn, session);
+				}	
+>>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
 				
 			}else if (hitButton.equals("doHantarEmel")){			
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
@@ -222,7 +206,6 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 			}
 			
 		}
-	
 		
 		if ("papar".equals(actionOnline)) {
 			// GO TO VIEW PENAWARAN
@@ -426,7 +409,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 	    				hashMaklumatPenawaran.put("luas1", getParam("txtLuasMohon1"));
 	    				hashMaklumatPenawaran.put("luas2", getParam("txtLuasMohon2"));
 	    				hashMaklumatPenawaran.put("luas3", getParam("txtLuasMohon3"));
-	    				if ("1".equals(idLuasKegunaan)){
+	    				if ("1".equals(idLuasKegunaag)){
 	    					hashMaklumatPenawaran.put("luasBersamaan",  hashMaklumatPenawaranDB.get("luasAsal"));		
 	    					hashMaklumatPenawaran.put("luasBaki", Utils.formatLuas(0D));
 	    				} else {
@@ -628,7 +611,6 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		}
 	}
 
-
 	private void saveData(FileItem item, String idPermohonan, HttpSession session) throws Exception {
 
 		Db db = null;
@@ -663,16 +645,5 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 				db.close();
 		}
 		this.context.put("completed", true);
-	}
-<<<<<<< HEAD
-}
-
-=======
-<<<<<<< WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
-
-
-=======
->>>>>>> WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
->>>>>>> 2fa9f4ce5bc213fd2b2f727f7e7ee7f4c8b28e46
-}
+	e
 

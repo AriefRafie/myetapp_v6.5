@@ -610,7 +610,7 @@
 									#end
 									$!sstatus 
 								#else
-									<select name="socStatusDaftar" style="width:200px;" $readonly class="$disabled" $disabled onChange="doChangeTaraf()">
+									<select name="socStatusDaftar" style="width:200px;" $readonly class="$disabled" $disabled>
 							            #if($socStatus == 'D')
 							          		<option value="">SILA PILIH</option>
 							            	<option value="D" selected="selected">D - DAFTAR</option>

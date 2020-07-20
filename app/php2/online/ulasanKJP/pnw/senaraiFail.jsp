@@ -122,7 +122,7 @@
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noPermohonan</a></td>
           <td class="$row">$list.tajukFail</td>
           <td class="$row" align="center">$list.tarikhTerima </td>
-          <td class="$row">$list.keterangan</td>
+          <td class="$row">$list.status</td>
           <td class="$row">$list.namaSuburusan</td>
         </tr>
         #end

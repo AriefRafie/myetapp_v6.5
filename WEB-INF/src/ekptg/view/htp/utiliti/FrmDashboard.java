@@ -28,11 +28,9 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.Utils;
 import ekptg.model.htp.HTPPermohonanBean;
-import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.HtpPeringatanBean;
 import ekptg.model.htp.IHTPPermohonan;
 import ekptg.model.htp.IHTPStatus;
-import ekptg.model.htp.IHtp;
 import ekptg.model.htp.IHtpPeringatan;
 import ekptg.model.htp.cukai.CukaiBean;
 import ekptg.model.htp.cukai.CukaiPenyataBean;
@@ -42,8 +40,6 @@ import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.online.IOnline;
 import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.htp.rekod.HTPStatusRekodBean;
-import ekptg.model.utils.status.IStatus;
-import ekptg.model.utils.status.StatusBean;
 import ekptg.view.admin.Pengumuman;
 
 public class FrmDashboard extends AjaxBasedModule {
@@ -63,10 +59,8 @@ public class FrmDashboard extends AjaxBasedModule {
 	private Hashtable<String,String> mBayaran = null;
 	private ICukai iCukai = null;
 	private ICukaiPenyata iCukaiPenyata = null;
-	private IHtp iErr = null;
 	private IHTPPermohonan iHTPPermohonan = null;
 	private IHTPStatus iStatus = null;
-	private IStatus iStatusOnline = null;
 	private IOnline iOnline = null;
 	private Vector<HtpPermohonan> vecSenaraiOnline = null;
 	private Db db = null;
@@ -90,7 +84,7 @@ public class FrmDashboard extends AjaxBasedModule {
 		String portal_role = (String)session.getAttribute("myrole");
 		context.put("portal_role_",portal_role);
 		String command = getParam("command");
-		myLog.info("command="+command);
+		
 		//Carian 
 		if (command.equals("doCarianFail")) {
 			return doCarianFail(session);
@@ -157,39 +151,23 @@ public class FrmDashboard extends AjaxBasedModule {
 		check_notifikasi_aduan = getListNotifikasi_main_list(role,user_negeri_login,"","",userId,"NO");
 		context.put("check_notifikasi_aduan",check_notifikasi_aduan);	
 		int bilPermohonanOnline = 0; 
-//    	if(isTab(portal_role,"<i>Online</i>")){
-//    		context.remove("senaraionline");
-//    		
-//    		vecSenaraiOnline = getIOnline().findFailOnlineAktif(getParam("txtTajukFail"), getParam("txtNoFail"), "", "");
-//    		if(vecSenaraiOnline != null)
-//    			bilPermohonanOnline = vecSenaraiOnline.size();
-//    			    		
-//    	}
-//     	context.put("senaraionline", vecSenaraiOnline);  
+    	if(isTab(portal_role,"<i>Online</i>")){
+    		context.remove("senaraionline");
+    		vecSenaraiOnline = getIOnline().findFailOnlineAktif(getParam("txtTajukFail"), getParam("txtNoFail"), "", "");
+    		if(vecSenaraiOnline != null)
+    			bilPermohonanOnline = vecSenaraiOnline.size();
+    			    		
+    	}
+     	context.put("senaraionline", vecSenaraiOnline);  
    	
-		//ONLINE - Submodul Permohonan
     	Vector<HtpPermohonan> onlinePermohonan = null; 
-    	Vector<Hashtable<String, String>> onlinePermohonanPra = null; 
-    	Vector<Hashtable<String, String>> onlinePermohonanPraRizab = null; 
-    	if(isTab(portal_role,"Permohonan")){
+		if(isTab(portal_role,"Permohonan")){
     		context.remove("onlinePermohonan");
     		onlinePermohonan = getIOnline().findFailOnlineUrusan("","","","","1,10");
     		if(onlinePermohonan != null)
-    			bilPermohonanOnline += onlinePermohonan.size();
-    		
-    		onlinePermohonanPra =  getStatusOnlinePra("1");
-    		if(onlinePermohonanPra != null)
-    			bilPermohonanOnline += onlinePermohonanPra.size();
-
-    		onlinePermohonanPraRizab =  getStatusOnlinePra("10");
-    		if(onlinePermohonanPraRizab != null)
-    			bilPermohonanOnline += onlinePermohonanPraRizab.size();
-
+    			bilPermohonanOnline += onlinePermohonan.size();    			
     		
     	}
-    	if(onlinePermohonanPra !=null & onlinePermohonan != null)
-    		context.put("onlinePermohonanPra", onlinePermohonanPra.size() + onlinePermohonanPraRizab.size());  
-
     	context.put("onlinePermohonan", onlinePermohonan);  
     	
     	Vector<HtpPermohonan> onlinePembelian = null; 
@@ -392,15 +370,6 @@ public class FrmDashboard extends AjaxBasedModule {
 		this.context.put("listHakmilik", listHakmilik);
 
 		return PATH+"/div_carianHakmilik.jsp";
-	}
-	
-	private String doCarianPermohonanPra(HttpSession session) throws Exception {
-		//myLog.info("doCarianFail : "+getParam("search"));
-		//this.context.put("div_carianFail_open", "Y");
-		listFail = ListFail(session, "fail", getParam("search"));
-		this.context.put("listFail", listFail);
-
-		return PATH+"/div_carianFail.jsp";
 	}
 	
 	private String doCloseCarianFail(HttpSession session) throws Exception {
@@ -805,6 +774,15 @@ public class FrmDashboard extends AjaxBasedModule {
 		
 	}	
 	
+	private IHTPStatus getStatusRekod(){
+		if(iStatus==null){
+			iStatus = new HTPStatusRekodBean();
+		}
+		return iStatus;
+				
+	}
+	
+	
 	private ICukai getICukai(){
 		if(iCukai==null){
 			iCukai = new CukaiBean();
@@ -1078,7 +1056,7 @@ public class FrmDashboard extends AjaxBasedModule {
 					" AND C.FLAG_KEMASKINI_CUKAI = 'NEW' ";
 			
 			stmt.setFetchSize(20);
-//			System.out.println("kemaskini cukai : "+sql);
+			System.out.println("kemaskini cukai : "+sql);
 			rs = stmt.executeQuery(sql);
 
 			int bil = 1;
@@ -1158,42 +1136,10 @@ public class FrmDashboard extends AjaxBasedModule {
 		
 	}
 	
-	public Vector<Hashtable<String, String>> getStatusOnlinePra(String idUrusan) throws Exception {
-		Vector<Hashtable<String, String>> returnVal = null;
-		try {
-			returnVal = getStatusOnline().getInfoStatusPermohonan(idUrusan,"","-4");
-		}catch(Exception e){
-			throw new Exception(getErr().getErrorHTML("inquery:"+idUrusan+"::"+e.getMessage()));
-		}
-		return returnVal ;
-		
-	}
-	
-	private IHtp getErr(){
-		if(iErr== null)
-			iErr = new HtpBean();
-		return iErr;
-	}
-
 	private IHtpPeringatan getIHTPP(){
 		if(iHTPP== null)
 			iHTPP = new HtpPeringatanBean();
 		return iHTPP;
-	}
-	
-	private IHTPStatus getStatusRekod(){
-		if(iStatus==null){
-			iStatus = new HTPStatusRekodBean();
-		}
-		return iStatus;
-				
-	}
-	
-	private IStatus getStatusOnline(){
-		if (iStatusOnline==null){
-			iStatusOnline=new StatusBean();
-		}
-		return iStatusOnline;
 	}
 	
 	

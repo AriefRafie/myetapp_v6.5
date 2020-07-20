@@ -26,17 +26,10 @@
             <td><font color="blue">$beanHeader.tarikhTerima</font></td>
           </tr>
           <tr>
-            <td align="right">Status Permohonan</td>
-            <td>:</td>
-            <td><font color="green">$beanHeader.status</font></td>
-          </tr>
-          <tr>
             <td align="right" valign="top">Perkara</td>
             <td valign="top">:</td>
             <td rowspan="5" valign="top"><font color="blue">$beanHeader.tajukFail</font></td>
           </tr>
-           
-          <tr>
           <tr>
             <td align="right">&nbsp;</td>
             <td>&nbsp;</td>

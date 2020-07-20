@@ -155,12 +155,6 @@
          <td>:</td>
          <td><input type="text" name="txtNoFailLain" id="txtNoFailLain" value="$beanMaklumatPermohonan.noFailLain" onblur="this.value=this.value.toUpperCase();"/></td>
          </tr> -->
-         	<tr>
-         		<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-            	<td>Status Tanah</td>
-            	<td>:</td>
-            	<td>$selectStatusTanah</td>
-         	</tr>
          <tr>
           <td>
             #if ($mode != 'view')<span class="style1">*</span>#end 

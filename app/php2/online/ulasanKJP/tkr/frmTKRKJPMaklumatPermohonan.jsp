@@ -27,9 +27,7 @@
   <input name="hitButton" type="hidden" id="hitButton"/>
   <input name="kategori" type="hidden" id="kategori" value="$!pemohon.get("kategoriPemohon")/>
   <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
-  <input name="submit2" type="hidden" id="submit2" />
-  <input name="userJawatan" type="hidden" id="userJawatan" />
-   
+   <input name="submit2" type="text" id="submit2" />
 </p>
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -208,15 +206,24 @@
                 <td>:</td>
                 <td >$selectLuasKegunaan</td>
               </tr>
-              #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+              ##end
+              ##foreach ($beanMaklumatTukarguna1 in $BeanMaklumatTukarguna1)
               <tr>
                 <td>&nbsp;</td>
                 <td>Keluasan Asal</td>
                 <td>:</td>
-                <td>$beanMaklumatTanah.luas
+                <td>$beanMaklumatTukarguna1.luas
                   <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$!beanMaklumatTukarguna1.luasAsal"/></td>
               </tr>
-              #end
+              ##end
+              ##foreach ($beanMaklumatTukarguna in $BeanMaklumatTukarguna)
+              <tr>
+                <td>&nbsp;</td>
+                <td>Keluasan Asal</td>
+                <td>:</td>
+                <td>$beanMaklumatTukarguna.luasAsal $beanMaklumatTukarguna.keteranganLuasAsal
+                  <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatTukarguna.luasAsal"/></td>
+              </tr>
               #if ($idLuasKegunaan == '2')
               
               #if ($mode == 'update')
@@ -258,31 +265,27 @@
               </tr>
               #end
               #end
-              #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
               <tr>
                 <td>&nbsp;</td>
                 <td>Luas Bersamaan</td>
                 <td>:</td>
-                <td><input type="text" name="txtLuasBersamaan" id="txtLuasBersamaan" value="$beanMaklumatTanah.luasBersamaan"  style="text-align:right" readonly class="disabled"/>
+                <td><input type="text" name="txtLuasBersamaan" id="txtLuasBersamaan" value="$beanMaklumatTukarguna.luasBersamaan"  style="text-align:right" readonly class="disabled"/>
                   HEKTAR</td>
               </tr>
-              #end
-              #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
               <tr>
                 <td>&nbsp;</td>
                 <td>Baki Luas</td>
                 <td>:</td>
-                <td><input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$beanMaklumatPermohonan.luasBaki" readonly class="disabled" style="text-align:right"/>
+                <td><input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$beanMaklumatTukarguna.luasBaki" readonly class="disabled" style="text-align:right"/>
                   HEKTAR</td>
               </tr>
-              #end
               <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
               </tr>
-              #if ($mode == 'update')
+              ##if ($mode == 'update')
               <tr>
                 <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
               </tr>
@@ -291,20 +294,20 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td> #if ($mode == 'update')
+                <td> ##if ($mode == 'update')
                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="javascript:doSimpanKemaskiniMaklumatTukarguna('$idLuas')"/>
                   <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="javascript:doBatalKemaskini()"/>
-                  #end
-                  #if ($mode == 'view')
+                  ##end
+                  ##if ($mode == 'view')
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="javascript:doKemaskini()"/>
-                  #if($idStatus == '1610198')
+                  ##if($idStatus == '1610198')
                   <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="javascript:doSeterusnya()"/>
                   <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="javascript:gotoBatalPermohonan()"/>
-                  #end
+                  ##end
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                  #end </td>
+                  ##end </td>
               </tr>
-              #end
+              ##end
             </table>
             <div class="TabbedPanelsContent">
               <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -370,7 +373,7 @@
           <div class="TabbedPanelsContent">
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<tr>
-  				<td> #parse("app/php2/online/ulasanKJP/tkr/frmTKRSenaraiSemak.jsp") </td>
+  				<td> #parse("app/php2/online/frmPYWSenaraiSemakOnline.jsp") </td>
               </tr>
            	</table>
          </div>
@@ -378,7 +381,7 @@
          <div class="TabbedPanelsContent">
          <table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<tr>
-           	<td>#parse("app/php2/online/ulasanKJP/tkr/frmTKRSenaraiLampiran.jsp")</td>
+           	<td>#parse("app/php2/online/frmPYWMaklumatLampiranOnline.jsp")</td>
            	</tr>
            	</table>
          </div>
@@ -391,9 +394,9 @@
            	<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</td> 
            	<tr>
            	<td colspan=2 align="center">
-           	#if ($userJawatan == '24')
+           	#if ($idStatus == '')
            		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar Untuk Semakan" onClick="doHantarEmel()"/>
+           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
             	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
             #else
             #if ($idStatus !='')
@@ -1073,9 +1076,9 @@ function cetakPengesahanPermohonan(idPermohonan) {
 <script>
 <!-- MAKLUMAT LAMPIRAN -->
 function daftarLampiran() {
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView";
 	document.${formName}.method="POST";
-	document.${formName}.submit2 = "seterusnya";
+	document.${formName}.actionPenyewaan = "paparMaklumatPenyewaan";
 	document.${formName}.mode.value = "view";	
 	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "new";
@@ -1084,8 +1087,6 @@ function daftarLampiran() {
 
 <!-- SENARAI SEMAK -->
 function doSimpanKemaskiniSenaraiSemak() {
-	
-	alert('baca semakkkkk');
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";

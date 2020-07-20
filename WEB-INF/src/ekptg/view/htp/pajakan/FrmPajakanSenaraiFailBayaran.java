@@ -679,7 +679,7 @@ public class FrmPajakanSenaraiFailBayaran extends AjaxBasedModule {
 			this.context.put("socNegeri",HTML.SelectNegeri("socNegeri", Long.parseLong(idNegeri), "", "  onChange=\"doChangeKementerian();\""));
 			this.context.put("socKementerian",HTML.SelectKementerian("socKementerian",Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\" style=\"width:400\""));
 			this.context.put("socAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian ,Long.parseLong(idAgensi), "", " onChange=\"doChangeKementerian();\" style=\"width:400\""));
-			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socSuburusan" ,idSuburusan, "", ""));
+			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socSuburusan" ,Long.parseLong(idSuburusan), "", ""));
 			if(flagAdvSearch.equals("Y")){
 				list = getIHTPFBayaran().carianFail(getParam("txtNoFail")
 					, getParam("txtTajukFail")
@@ -721,7 +721,7 @@ public class FrmPajakanSenaraiFailBayaran extends AjaxBasedModule {
 			this.context.put("socNegeri",HTML.SelectNegeri("socNegeri", Long.parseLong(idNegeri), "", " onChange=\"doChangeKementerian();\""));
 			this.context.put("socKementerian",HTML.SelectKementerian("socKementerian",Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\" style=\"width:400\""));
 			this.context.put("socAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian ,Long.parseLong(idAgensi), "", " onChange=\"doChangeKementerian();\" style=\"width:400\""));
-			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socSuburusan" ,idSuburusan, "", ""));
+			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socSuburusan" ,Long.parseLong(idSuburusan), "", ""));
 			//myLog.info("default");
 			if(flagAdvSearch.equals("Y")){
 				list = getIHTPFBayaran().carianFail(getParam("txtNoFail")

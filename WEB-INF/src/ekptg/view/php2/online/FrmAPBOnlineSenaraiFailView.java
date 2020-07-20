@@ -22,19 +22,15 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmAPBHeaderData;
 import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.online.FrmAPBOnlineSenaraiFailData;
-import ekptg.model.php2.utiliti.LampiranBean;
-import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView.class);
-	private ILampiran iLampiran = null;
-
+	
 	FrmAPBOnlineSenaraiFailData logic = new FrmAPBOnlineSenaraiFailData();
 	FrmAPBHeaderData header = new FrmAPBHeaderData();
 
@@ -149,7 +145,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		log.info("hitButton : " +hitButton);
 		log.info("mode : " +mode);
 		log.info("modePopup : " +modePopup);
-		FrmSemakan semak = null;
+		
 		//SAVE TO DB		
 		if (postDB){
 				if ("daftarBaru".equals(hitButton)){
@@ -231,18 +227,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				//BARU TAMBAH
 				//SENARAI SEMAK		
 				if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
-	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
-	    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
-	    				
-	        		//String[] cbsemaks = this.request.getParameterValues("cbsemaks");
-	    			FrmSemakan frmSemak = new FrmSemakan();
-	    			frmSemak.semakanHapusByPermohonan(idPermohonan);
-	    			if (cbsemaks != null) {
-	    				for (int i = 0; i < cbsemaks.length; i++) {
-	    					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
-	    				}
-	    			}
-	    				
+	        		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
+	    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
 	        	}
 				//LAMPIRAN
 				if("doSimpanSenaraiSemak".equals(hitButton)){
@@ -260,8 +246,6 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				}
         }
 			
-		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
-
 		if ("papar".equals(actionOnline)){
 			
 			//GO TO VIEW APB        	
@@ -376,7 +360,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			//JENIS LESEN
 			this.context.put("selectJenisLesen", HTML.SelectJenisLesen("socJenisLesen", Long.parseLong(idJenisLesen), "", "onChange=\"doChangeJenisLesen();\""));
 
-        } else if ("seterusnya".equals(actionOnline)){        	
+        } else if ("seterusnya".equals(actionOnline)){
+        	
         	// GO TO MAKLUMAT PERMOHONAN  
        		vm = "app/php2/online/frmAPBMaklumatPermohonan.jsp";
        		
@@ -398,7 +383,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
     			idPemohon = (String)hashHeader.get("idPemohon");	
     		}
 
-	    	if ("0".equals(selectedTabUpper)){
+	    		if ("0".equals(selectedTabUpper)){
 	    			
 	    			maklumatPermohonan(mode, idPermohonan, session);			
 	    			maklumatProjek(mode, idPermohonan, idProjek);
@@ -426,7 +411,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	        		senaraiPengarah = logic.getListPengarah();
 	        		this.context.put("SenaraiPengarah", senaraiPengarah);	        		
 	        		
-	    	} else if ("1".equals(selectedTabUpper)){
+	            } else if ("1".equals(selectedTabUpper)){
 	            	
 	            	maklumatPembeliPasir(mode, idPembeliPasir, idPermohonan);
 	            	
@@ -435,24 +420,24 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	        		senaraiPembeliPasir = logic.getListPembeliPasir();
 	        		this.context.put("SenaraiPembeliPasir", senaraiPembeliPasir);
 	        		
-	    	}else if ("2".equals(selectedTabUpper)){	
-	    		semak = new FrmSemakan();
-	    		semak.mode = mode;
-	    		senaraiSemak = semak.getSenaraiSemakanAttach("phpapb",idPermohonan);
-	    		//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
-	    		this.context.put("SenaraiSemak", senaraiSemak);
-	    		
-	    		if (mode.equals("update")){	    				
-	        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
-		    			//this.context.put("SenaraiSemak", senaraiSemak);
+	            }	else if ("2".equals(selectedTabUpper)){
+	            	
+	            	senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+	    			this.context.put("SenaraiSemak", senaraiSemak);
 	    			
-	    		}else if (mode.equals("view")){	
-	        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
-		    			//this.context.put("SenaraiSemak", senaraiSemak);
+	    			if ("update".equals(mode)){
+	    				
+	        			senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+		    			this.context.put("SenaraiSemak", senaraiSemak);
+	    			}
+	    			else if ("view".equals(mode)){
+	        			
+	        			senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+		    			this.context.put("SenaraiSemak", senaraiSemak);
 		    			
-	        	}
+	        		}
 	    			
-	    	} else if ("3".equals(selectedTabUpper)){
+	            } else if ("3".equals(selectedTabUpper)){
         			if ("openPopupLampiran".equals(flagPopup)){
     	        		
     	        		if ("new".equals(modePopup)){
@@ -1009,13 +994,4 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 		}
 		this.context.put("completed", true);
 	}
-
-	private ILampiran getDocPHP(){
-		if(iLampiran == null){
-			iLampiran = new LampiranBean();
-		}
-		return iLampiran;
-				
-	}
-	
 }
