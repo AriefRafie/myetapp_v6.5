@@ -195,12 +195,29 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				idPermohonan = hashHeader.get("idPermohonan").toString();
 				idStatus = hashHeader.get("idStatus").toString();
 				subUrusan = hashHeader.get("subUrusan").toString();
+			
 			}
 			log.info("mode = " + mode);
 
 			//MODE VIEW
 			log.info("mode = " + mode);
-			if ("view".equals(mode)){
+			if ("view".equals(mode)){	
+				this.context.put("readOnly", "readOnly");
+	        	this.context.put("classDis", "disabled");
+	        	this.context.put("inputTextClass", "disabled");
+	        	
+				//MAKLUMAT PERMOHONAN
+				logicHeader.setMaklumatPermohonan(idFail);
+				beanMaklumatPermohonan = new Vector();
+				beanMaklumatPermohonan = logicHeader.getBeanMaklumatPermohonan();
+				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+				//MaklumatPermohonanView(mode);
+	        	
+				//MAKLUMAT HAKMILIK
+				beanMaklumatTanah = new Vector();
+				logicMaklumat.setMaklumatTanah(idHakmilikAgensi);
+				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
+				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 				
 				this.context.put("readOnly", "readOnly");
 	        	this.context.put("classDis", "disabled");
@@ -219,7 +236,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
 				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 				
-				senaraiSemak = logicMaklumat.getSenaraiSemak(idPermohonan, kategori);
+				getSenaraiSemakFail(idPermohonan,mode);
     			this.context.put("SenaraiSemak", senaraiSemak);
     	    }
 			else if ("update".equals(mode)){
@@ -468,6 +485,13 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 			    
 	}
 		 
+	private void getSenaraiSemakFail(String idPermohonan,String mode) throws Exception{
+		FrmSemakan fs = new FrmSemakan();
+		fs.mode = mode;
+		context.put("SenaraiSemak", fs.getSenaraiSemakanAttach("htppajakanmycoid",idPermohonan));
+		context.put("semakclass", new FrmSemakan());
+	}
+	
 	private IOnline getIOnline(){
 		if(iOnline==null){
 			iOnline = new OnlineBean();

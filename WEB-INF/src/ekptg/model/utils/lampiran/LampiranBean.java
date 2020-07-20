@@ -32,6 +32,9 @@ import ekptg.model.entities.Tblrujdokumen;
 public class LampiranBean implements ILampiran{
 	private static Logger myLog = Logger.getLogger(ekptg.model.utils.lampiran.LampiranBean.class);
 	Connection conn = null;
+    Db db = null;
+    String sql = "";
+    
 	
 	public void uploadFiles(Hashtable<String,String> hash,HttpServletRequest request) throws Exception {		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -241,6 +244,36 @@ public class LampiranBean implements ILampiran{
 			    
 		 }	 
 
+	    try {
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      //   "(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,nama_dokumen) " +
+		      sql = " SELECT "+
+		      		" ID_PERMOHONAN,ID_DOKUMEN,JENIS_DOKUMEN,NAMA_DOKUMEN NAMA_FAIL,JENIS_MIME,ULASAN KETERANGAN,CONTENT "+
+					" FROM TBLHTPDOKUMEN "+
+					" WHERE ID_PERMOHONAN = '"+idRujukan+"' "+
+		    		" AND NAMA_DOKUMEN = '"+jenis+"' "+
+					"";
+//		      myLog.info("getLampirans :sql="+sql);
+		      ResultSet rs = stmt.executeQuery(sql);   
+		      Tblrujdokumen h = null;
+		      int bil = 0;
+		    
+		      while (rs.next()) {    	
+		    	  bil = bil + 1;
+		    	  h = new Tblrujdokumen();
+		    	  h.setIdDokumen(rs.getString("ID_DOKUMEN")== null?"":rs.getString("ID_DOKUMEN"));
+		    	  h.setNamaDokumen(rs.getString("NAMA_FAIL")== null?"":rs.getString("NAMA_FAIL"));
+		    	  h.setDokumen("");
+		    	  h.setCatatan(rs.getString("KETERANGAN")== null?"":rs.getString("KETERANGAN"));		    	  
+		    	  listDokumen.addElement(h);
+		    	  
+		      }		      
+		      
+		    } finally {
+		      if (db != null) db.close();
+		    }
+	    
 	public String getLampirans(String idHarta) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		Vector<Hashtable<String, String>> dokumens = lampiranMengikutHarta(idHarta, null,false);

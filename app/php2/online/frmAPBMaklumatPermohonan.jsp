@@ -6,6 +6,9 @@
 .style2 {
 	color: #0000FF
 }
+.pautan {
+	color: #0000FF
+}
 -->
 </style>
 <p>
@@ -45,24 +48,22 @@
           <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
           <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN PERMOHONAN</li>
         </ul>
-        <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
+     	<div class="TabbedPanelsContentGroup">
+        	<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
             #parse("app/php2/online/frmAPBMaklumatPermohonanPermohonan.jsp")
             #end </div>
-          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
+          	<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
             #parse("app/php2/online/frmAPBMaklumatPermohonanPembeliPasir.jsp")
             #end </div>
-  				<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
-						#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") </td>
-						#end</div>
-					<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3')
-  					#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp")
-  					#end</div>
-					<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
+  			<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
+			#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") </td>
+			#end</div>
+			<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3')
+  			#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp")
+  			#end</div>
+		<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
 					           	
 <fieldset>
-
-
 
 <legend>PENGESAHAN PERMOHONAN</legend>
 <!--
@@ -1143,4 +1144,6 @@ function doBatalKemaskini() {
 	doAjaxCall${formName}("");
 }
 
+//LAMPIRAN
 </script>
+$javascriptLampiran
