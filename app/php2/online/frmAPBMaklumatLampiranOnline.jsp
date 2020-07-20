@@ -60,7 +60,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
 </table>
 
 <script>
-function simpanLampiran(idPermohonan,idFail) {
+function simpanLampiran(idPermohonan) {
 	if(document.${formName}.txtNamaLampiran.value == ""){
 		alert('Sila masukkan Nama Lampiran.');
   		document.${formName}.txtNamaLampiran.focus(); 
@@ -81,26 +81,22 @@ function simpanLampiran(idPermohonan,idFail) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token=" + dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanLampiran&namaLampiran="+namaLampiran+"&catatanLampiran="+catatanLampiran+"&idFail="+idFail+"&idPermohonan="+idPermohonan+"&actionOnline=seterusnya&selectedTabUpper=3"+dopost+"&flagPopup=openPopupLampiran&modePopup=new";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanLampiran&namaLampiran="+namaLampiran+"&catatanLampiran="+catatanLampiran+"&idPermohonan="+idPermohonan+"&actionOnline=seterusnya&selectedTabUpper=3"+dopost+"&flagPopup=openPopupLampiran&modePopup=new";
+	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
   document.${formName}.encoding="multipart/form-data";
-  document.${formName}.method="post";
-  document.${formName}.submit();
-	
+	document.${formName}.submit();
 }
-
 function batalLampiran(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
 	doAjaxCall${formName}("");
 }
-
 function kemaskiniLampiran(){
 	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "update";
 	doAjaxCall${formName}("");
 }
-
 function simpanKemaskiniLampiran() {
 
 	if(document.${formName}.txtNamaLampiran.value == ""){
@@ -118,7 +114,6 @@ function simpanKemaskiniLampiran() {
 	document.${formName}.hitButton.value = "simpanKemaskiniLampiran";
 	doAjaxCall${formName}("");
 }
-
 function paparLampiran(idDokumen){
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
 	document.${formName}.method="POST";
@@ -128,7 +123,6 @@ function paparLampiran(idDokumen){
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.submit();
 }
-
 function hapusLampiran(){	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
@@ -139,7 +133,6 @@ function hapusLampiran(){
 	document.${formName}.hitButton.value = "hapusLampiran";
 	document.${formName}.submit();
 }
-
 function cetakLampiran(id){
 	var url = "../servlet/ekptg.view.php2.online.FrmDisplayImage?id="+id;
     var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');

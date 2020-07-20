@@ -16,7 +16,7 @@
   
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
-  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  <input name="idFail" type="text" id="idFail" value="$idFail"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input type="hidden" name="idHakmilikSementara" id="idHakmilikSementara" value="$!idHakmilikSementara" />
   <input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$!idHakmilikAgensi" />

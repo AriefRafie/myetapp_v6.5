@@ -27,7 +27,7 @@ public class FrmSenaraiLaporanHTPPajakan extends AjaxBasedModule {
 	String socUnit = "";
 	Vector<?> vecHash = null;
 	Vector<?> vecRekod = null;
-	String socAgensi = "";
+	String socDaerah = "";
 	String socDaerahBaru = "";
 
 	public String doTemplate2() throws Exception {
@@ -43,23 +43,15 @@ public class FrmSenaraiLaporanHTPPajakan extends AjaxBasedModule {
     		idSuburusan = "99999";
     	}		
         String tarikhMula = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");		
-        String tarikhAkhir = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");	    
-        //Carian
-		this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
-		displayNegeri(0L);
-		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru");
-		socUnit = HTML.SelectKementerian("socUnit", Long.parseLong(getParam("socUnit")==""?"0":getParam("socUnit")), null, "onChange=\"doChangeUnit()\" style=\"width:400\"");
-		socAgensi = HTML.SelectAgensiByKementerian("socDaerah","0",Long.parseLong("1"),"style=\"width:400\"");
-
-    	myLog.info("submit="+submit);
+        String tarikhAkhir = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");	
 
     	if ("PilihNegeri".equals(submit)){
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
 			displayNegeriUnit(tempIdNegeri,0L);
 			socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru");
-//   			socUnit = HTML.SelectKementerian("socUnit", Long.parseLong(getParam("socUnit")==""?"0":getParam("socUnit")), null, "onChange=\"doChangeUnit()\" style=\"width:400\"");
-   			socAgensi = HTML.SelectAgensiByKementerian("socDaerah","0",Long.parseLong("1"),"style=\"width:400\"");
-//			this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
+   			socUnit = HTML.SelectKementerian("socUnit", Long.parseLong(getParam("socUnit")==""?"0":getParam("socUnit")), null, "onChange=\"doChangeUnit()\" style=\"width:400\"");
+			socDaerah = HTML.SelectAgensiByKementerian("socDaerah","0",Long.parseLong("1"),"style=\"width:400\"");
+			this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
     		if(!"".equals(getParam("txdMula"))){
     			tarikhMula = getParam("txdMula");
     		}
@@ -70,17 +62,16 @@ public class FrmSenaraiLaporanHTPPajakan extends AjaxBasedModule {
     		//public Vector<Hashtable<String, Comparable>> getLaporanMengikutUrusanLike
 			//(String suburusan, String level, String jlaporan,String template) throws Exception {
 			vecHash = getILaporan().getLaporanMengikutUrusanLike("7,17,18",null,"L","Negeri");
-    	}else if ("PilihAgensi".equals(submit)) {
 
     	}else if ("PilihUnit".equals(submit)) {
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
-			Long tempIdDaerah =  Long.parseLong(getParam("socDaerahBaru")==""?"0":getParam("socDaerahBaru"));
- 			String id_kementerian = String.valueOf(Long.parseLong(getParam("socUnit")==""?"0":getParam("socUnit")));
+			Long tempIdDaerah = Long.parseLong(getParam("socNegeri"));
+ 			String id_kementerian = getParam("socUnit");
 			displayNegeriUnitXNegeri(tempIdNegeri,Long.parseLong(id_kementerian));  	
 			socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(""+tempIdNegeri,"socDaerahBaru",tempIdDaerah, "");
-//   			socUnit = HTML.SelectKementerian("socUnit", Long.parseLong(id_kementerian), null, "onChange=\"doChangeUnit()\" style=\"width:400\"");
-   			socAgensi = HTML.SelectAgensiByKementerian("socDaerah",id_kementerian,Long.parseLong("1")," style=\"width:400\"");
-//			this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
+   			socUnit = HTML.SelectKementerian("socUnit", Long.parseLong(id_kementerian), null, "onChange=\"doChangeUnit()\" style=\"width:400\"");
+			socDaerah = HTML.SelectAgensiByKementerian("socDaerah",id_kementerian,Long.parseLong("1")," style=\"width:400\"");
+			this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
     		if(!"".equals(getParam("txdMula"))){
     			tarikhMula = getParam("txdMula");
     		}
@@ -89,30 +80,7 @@ public class FrmSenaraiLaporanHTPPajakan extends AjaxBasedModule {
     		}
 			paparanRekod(userLevel,userId);
      	
-    	}else if (submit.equals("pilihtempoh")) {
-    		String sorTempoh = getParam("sorTempoh");   	
-        	myLog.info("sorTempoh="+sorTempoh);
-        	String checkBulan = "";
-        	String checkTahun = "";
-        	String checkTempoh = "";
-        	
-        	if(sorTempoh.equals("1")){
-        		checkBulan = "checked";		
-    		}else if(sorTempoh.equals("2")){			
-    			checkTahun = "checked";		
-    		}else if(sorTempoh.equals("3")){		
-    			checkTempoh = "checked";	    		
-    		}
-    		context.put("checkBulan",checkBulan);
-    		context.put("checkTahun",checkTahun);
-    		context.put("checkTempoh",checkTempoh);
-    		
-    		context.put("socTarikhMula",HTML.SelectBulan("txdMula"," style=\"width: 100px;\""));
-    		context.put("socTarikhTamat",HTML.SelectBulan("txdTamat"));
-    		String defaulTahun = lebah.util.Util.getDateTime(new Date(), "yyyy");
-    		context.put("socTahunMula",HTML.SelectTahun("txdTahunMula",defaulTahun," style=\"width: 100px;\"",null));
-
-   
+//    	}else if ("PilihUnitLevel".equals(submit)) {
 //			vm = "app/ppk/frmSenaraiLaporanPUnit.jsp";			
 // 			String idPejabat = getParam("socUnit");
 //			Tblrujpejabatjkptg pej = null;
@@ -134,11 +102,11 @@ public class FrmSenaraiLaporanHTPPajakan extends AjaxBasedModule {
 //      			displayNegeriUnitAll(tempIdNegeri);
 //    			socDaerah = UtilHTML.SelectDaerah("socDaerah",null,"style=width:340");
 //    		}else{
-//   				displayNegeri(0L);
+   				displayNegeri(0L);
      			socDaerahBaru = UtilHTML.SelectDaerah("socDaerahBaru",null,"");
      			socUnit = UtilHTML.selectKementerianLaporan("socUnit", null, null, "onChange=\"doChangeUnit()\" style=\"width:400\"");
-     			socAgensi = HTML.SelectAgensiByKementerian("socDaerah","0",Long.parseLong("1")," style=\"width:400\"");
-//    			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
+    			socDaerah = HTML.SelectAgensiByKementerian("socDaerah","0",Long.parseLong("1")," style=\"width:400\"");
+    			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
     			paparanRekod(userLevel,userId);
 
 //    		}
@@ -159,8 +127,7 @@ public class FrmSenaraiLaporanHTPPajakan extends AjaxBasedModule {
 			//checked
     		checkC = "checked";		
 		}
-    	
- 		context.put("checkA",checkA);
+		context.put("checkA",checkA);
 		context.put("checkB",checkB);
 		context.put("checkC",checkC);
    	
@@ -170,7 +137,7 @@ public class FrmSenaraiLaporanHTPPajakan extends AjaxBasedModule {
    		//dropdown
 		context.put("selectNegeri",socNegeri);
 		context.put("selectUnit",socUnit);
-		context.put("selectAgensi",socAgensi);
+		context.put("selectDaerah",socDaerah);
 		context.put("selectDaerahBaru",socDaerahBaru);
 		this.context.put("txdMula", tarikhMula);  
 		this.context.put("txdAkhir", tarikhAkhir);  

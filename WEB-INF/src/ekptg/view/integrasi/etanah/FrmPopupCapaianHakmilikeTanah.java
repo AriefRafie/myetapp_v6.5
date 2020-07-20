@@ -2,6 +2,7 @@
 package ekptg.view.integrasi.etanah;
 
 import integrasi.rest.etanah.wpkl.ppk.EtanahWPKLPPKManager;
+import integrasi.ws.etanah.melaka_ns.ppk.EtanahN9MelPPKManager;
 import integrasi.ws.etanah.ppt.ETanahCarianManager;
 
 import java.util.Hashtable;
@@ -13,10 +14,7 @@ import org.apache.log4j.Logger;
 
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.Paging;
-import ekptg.model.integrasi.CapaianHakmilikeTanahHTP;
-import ekptg.model.integrasi.CapaianHakmilikeTanahPPK;
 import ekptg.model.integrasi.FrmPopupCapaianHakmilikeTanahData;
-import ekptg.model.integrasi.IIntegrasieTanahCarian;
 
 /**
  * @author mohamad Rosli
@@ -25,11 +23,7 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 2124227445129379348L;
 	static Logger myLog = Logger.getLogger(FrmPopupCapaianHakmilikeTanah.class);
-	
- 	private IIntegrasieTanahCarian carianHTP = null;  
- 	private IIntegrasieTanahCarian carianPPK = null;  
-// 	private String idHarta = "";
- 	FrmPopupCapaianHakmilikeTanahData logic = new FrmPopupCapaianHakmilikeTanahData();	
+	FrmPopupCapaianHakmilikeTanahData logic = new FrmPopupCapaianHakmilikeTanahData();	
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -64,13 +58,7 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 			String kodNegeri = idHakmilik.substring(0, 2);
 			if ("04".equals(kodNegeri) || "05".equals(kodNegeri)){
 				ETanahCarianManager cm = new ETanahCarianManager("E-TANAH");
-				if(modul.equals("htp")) {
-					ETanahCarianManager.getMaklumatHakmilikeTanahHTP(noResit, idHakmilik, idPermohonan, kodNegeri);
-				}else if (modul.equals("ppk")){
-					ETanahCarianManager.getMaklumatHakmilikeTanahPPK(noResit, idHakmilik, idPermohonan, kodNegeri);
-				}else if (modul.equals("ppt")) {
-					ETanahCarianManager.getMaklumatHakmilikFromEtanah(noResit, idHakmilik, idPermohonan, kodNegeri);
-				}
+				cm.getMaklumatHakmilikFromEtanah(noResit, idHakmilik, idPermohonan, kodNegeri);
 				
 				this.context.put("flagMsg", ETanahCarianManager.getFlagMsg());
 				this.context.put("outputMsg", ETanahCarianManager.getOutputMsg());
@@ -88,39 +76,15 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 			}			
 		
 		}else if (hitButt.equals("daftar")){
-			String idHarta = getParam("idPPKHTA");
-			if(modul.equals("htp")) {
-				getCarianHTP().daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
-			}else if (modul.equals("ppk")) { 
-				getCarianPPK().daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
-			}else if (modul.equals("ppt")) { 
-				logic.daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
-			}
-			
+			logic.daftarHakmilik(getParam("idPPKHTA"), getParam("noResit"), getParam("idHakmilik"), idPermohonan, session);
 		}
 		
 		if (actionPopup.equals("papar")){			
 			vm = "app/integrasi/etanah/frmPopupMaklumatHakmilikeTanah.jsp";
-			idHakmilik = getParam("idPPKHTA");
 			
-			Hashtable<String,String> mt = null;
-			if(modul.equals("htp")) {
-				mt = getCarianHTP().setMaklumatHakmilik(idHakmilik);
-				beanMaklumatHakmilik = getCarianHTP().getBeanMaklumatHakmilik();
-			
-			}else if (modul.equals("ppk")) { 
-				mt = getCarianPPK().setMaklumatHakmilik(idHakmilik);
-				beanMaklumatHakmilik = getCarianPPK().getBeanMaklumatHakmilik();
-			
-			}else if (modul.equals("ppt")) { 
-//				mt = getCarianPPK().setMaklumatHakmilik(getParam("idPPKHTA"));
-//				beanMaklumatHakmilik = getCarianPPK().getBeanMaklumatHakmilik();
-//				beanMaklumatHakmilik = new Vector();
-				mt = logic.setMaklumatHakmilik(idHakmilik);
-				beanMaklumatHakmilik = logic.getBeanMaklumatHakmilik();			
-			
-			}
-
+			beanMaklumatHakmilik = new Vector();
+			logic.setMaklumatHakmilik(getParam("idPPKHTA"));
+			beanMaklumatHakmilik = logic.getBeanMaklumatHakmilik();
 			this.context.put("BeanMaklumatHakmilik", beanMaklumatHakmilik);
 			
 		} else {			
@@ -132,7 +96,6 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 			this.context.put("SenaraiCarianRasmi", list);
 			
 			setupPage(session,action,list);
-			
 		}
 		
 		this.context.put("txtNoResit", noResit);
@@ -183,17 +146,4 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 			this.context.put("error",e.getMessage());
 		}	
 	}
-		  
-	private IIntegrasieTanahCarian getCarianHTP(){
-		if(carianHTP== null)
-			carianHTP = new CapaianHakmilikeTanahHTP();
-		return carianHTP;
-	}
-	private IIntegrasieTanahCarian getCarianPPK(){
-		if(carianPPK== null)
-			carianPPK = new CapaianHakmilikeTanahPPK();
-		return carianPPK;
-	}
-
-
 }

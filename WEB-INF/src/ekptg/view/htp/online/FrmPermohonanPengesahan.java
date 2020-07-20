@@ -26,10 +26,8 @@ import ekptg.model.htp.FrmSenaraiFailTerimaPohonData;
 import ekptg.model.htp.FrmTerimaPohonData;
 import ekptg.model.htp.FrmUtilData;
 import ekptg.model.htp.HTPEmelBean;
-import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHTPEmel;
-import ekptg.model.htp.IHTPStatus;
 import ekptg.model.htp.IHtp;
 import ekptg.model.htp.IPenggunaKementerian;
 import ekptg.model.htp.PenggunaKementerianBean;
@@ -50,7 +48,6 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.online.FrmPermohonanPengesahan.class);
 	private ekptg.model.htp.IHtp iHtp = null;
 	private ekptg.model.htp.IHTPEmel iHTPEmel = null;
-	private ekptg.model.htp.IHTPStatus iStatus = null;
 	private final String PATHTP="app/htp/";
 	private final String PATHVER = PATHTP+ResourceBundle.getBundle("file").getString("ver_htp")+"/";
 	private final String PATH = PATHVER+"online/";
@@ -200,7 +197,7 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 		
     	if(isTab(portal_role,"Gadaian")){
     		IDURUSAN = "108";   
-    	}else if(isTab(portal_role,"JRP1")){
+    	}else if(isTab(portal_role,"JRP")){
     		IDURUSAN = "14"; 
     	}else if(isTab(portal_role,"Pajakan")){
     		IDURUSAN = "3";
@@ -575,7 +572,6 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 		this.context.put("idFail", idFail);
 		//2010/09/21
 		//this.context.put("idfail", idfail);
-		myLog.info("idPermohonan="+idPermohonan);
 		this.context.put("idPermohonan", idPermohonan);
 		this.context.put("idHtpPermohonan", idHtpPermohonan);
 		this.context.put("idSuburusanStatusFail", idSuburusanStatusFail);
@@ -586,46 +582,46 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 	  
    }
 	//********************************* SENARAI METHOD *******************************************************************
-//	public void setupPage(HttpSession session,String action,Vector list) {
-//		
-//		try {
-//		
-//			this.context.put("totalRecords",list.size());
-//			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
-//			
-//			int itemsPerPage;
-//			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
-//				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
-//			} else {
-//				itemsPerPage = (Integer)this.context.get("itemsPerPage");
-//			}
-//		    
-//		    if ("getNext".equals(action)) {
-//		    	page++;
-//		    } else if ("getPrevious".equals(action)) {
-//		    	page--;
-//		    } else if ("getPage".equals(action)) {
-//		    	page = getParamAsInteger("value");
-//		    } else if ("doChangeItemPerPage".equals(action)) {
-//		       itemsPerPage = getParamAsInteger("itemsPerPage");
-//		    }
-//		    	
-//		    Paging paging = new Paging(session,list,itemsPerPage);
-//			
-//			if (page > paging.getTotalPages()) page = 1; //reset page number
-//				this.context.put("SenaraiFail",paging.getPage(page));
-//			    this.context.put("page", new Integer(page));
-//			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
-//			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
-//			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
-//			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
-//			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
-//	        
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			this.context.put("error",e.getMessage());
-//		}	
-//	}
+	public void setupPage(HttpSession session,String action,Vector list) {
+		
+		try {
+		
+			this.context.put("totalRecords",list.size());
+			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
+			
+			int itemsPerPage;
+			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer)this.context.get("itemsPerPage");
+			}
+		    
+		    if ("getNext".equals(action)) {
+		    	page++;
+		    } else if ("getPrevious".equals(action)) {
+		    	page--;
+		    } else if ("getPage".equals(action)) {
+		    	page = getParamAsInteger("value");
+		    } else if ("doChangeItemPerPage".equals(action)) {
+		       itemsPerPage = getParamAsInteger("itemsPerPage");
+		    }
+		    	
+		    Paging paging = new Paging(session,list,itemsPerPage);
+			
+			if (page > paging.getTotalPages()) page = 1; //reset page number
+				this.context.put("SenaraiFail",paging.getPage(page));
+			    this.context.put("page", new Integer(page));
+			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
+			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
+			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
+			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
+			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.context.put("error",e.getMessage());
+		}	
+	}
 	//VIEW PENDAFTARAN PERLETAHAKAN BY ID FAIL
 	private void viewPendaftaranPerletakhakanByIdFail(String actionPerletakhakan,String idFail) throws Exception {
 		
@@ -770,7 +766,8 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
 			subUrusanStatusFailN.setAktif("1");
 			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
-			getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN);
+			//getIOnline().simpanStatusPermohonan(subUrusanStatusFailN);
+			getIOnline().kemaskiniSimpanStatusPermohonanAktif(subUrusanStatusFail, subUrusanStatusFailN);
 			
 		} catch (Exception e) {
 			throw new Exception("Ralat[554]:"+e.getCause());
@@ -943,35 +940,22 @@ public void doSimpanMaklumatAsasTanah() throws Exception {
 		return returnValue;
 		
 	}
-	
 	private void getSemakanPerakuanPembelian()throws Exception{
 		context.put("semakclass", new FrmSemakan());
 		Vector semakList = FrmSemakan.getSenaraiSemakan("frmPajakanSemakan");
 		context.put("perakuanPembelian", semakList);
 	}
-	
-	private IHtp getHTP(){
-		if(iHtp == null)
-			iHtp = new HtpBean();
-		return iHtp;
-		
-	}
+		private IHtp getHTP(){
+			if(iHtp == null)
+				iHtp = new HtpBean();
+			return iHtp;
+		}
 
-	private IHTPEmel getHTPEmel(){
-		if(iHTPEmel == null)
-			iHTPEmel = new HTPEmelBean();
+		private IHTPEmel getHTPEmel(){
+			if(iHTPEmel == null)
+				iHTPEmel = new HTPEmelBean();
+			return iHTPEmel;
+		}	
 		
-		return iHTPEmel;
 		
-	}	
-	
-	private IHTPStatus getStatus(){
-		if(iStatus == null)
-			iStatus = new HTPStatusBean();
-		
-		return iStatus;
-		
-	}
-
-	
 }

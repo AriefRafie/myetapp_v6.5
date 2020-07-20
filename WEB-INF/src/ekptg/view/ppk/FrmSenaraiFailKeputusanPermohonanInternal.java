@@ -3930,18 +3930,18 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					/*Vector checkIdKeputusan = FrmPrmhnnSek8KeputusanPermohonanInternalData
 							.getSemakIdKeputusan();*/
 					/*Hashtable j = (Hashtable) checkIdKeputusan.get(0);*/
-					//String idKeputusanPermohonan = j.get("cntid").toString();
-					//System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
+					String idKeputusanPermohonan = j.get("cntid").toString();
+					System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
 					
-					//check_tblppksd(idKeputusanPermohonan);
+					check_tblppksd(idKeputusanPermohonan);
 					/*Vector checktblppksd = FrmPrmhnnSek8KeputusanPermohonanInternalData
 							.getsemaktblppksd();*/
 					/*Hashtable k = (Hashtable) checktblppksd.get(0);*/
-					//String cntResultppksd = k.get("cntid").toString();
+					String cntResultppksd = k.get("cntid").toString();
 					
-					//System.out.println("-------cntResultppksd----"+cntResultppksd);
+					System.out.println("-------cntResultppksd----"+cntResultppksd);
 					
-					//updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
+					updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
 					if (ARB.equals("YES"))
 						{
 							System.out.println("-------ARB keputusan2----"+ARB);

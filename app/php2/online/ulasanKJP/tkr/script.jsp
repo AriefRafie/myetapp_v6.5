@@ -173,9 +173,9 @@ function daftarBaru() {
 		return;
 	}
 	
-	//alert('daftarBaru idFail==='+document.${formName}.idFail.value+' idHakmilik agensi=== '+document.${formName}.idHakmilikAgensi.value);
+	alert('daftarBaru idFail==='+document.${formName}.idFail.value+' idHakmilik agensi=== '+document.${formName}.idHakmilikAgensi.value);
 	document.${formName}.submit2.value = "papar";
-	//alert("test = "+document.${formName}.submit2.value);
+	alert("test = "+document.${formName}.submit2.value);
 	document.${formName}.hitButton.value = "daftarBaru";
 	doAjaxCall${formName}("");
 }
@@ -271,7 +271,7 @@ function kembali() {
 	document.${formName}.submit();
 }
 function seterusnya(){
-	//alert('BACA SETERUSNYAAA'+document.${formName}.idFail.value+' idHakmilik agensi '+document.${formName}.idHakmilikAgensi.value);
+	alert('BACA SETERUSNYAAA'+document.${formName}.idFail.value+' idHakmilik agensi '+document.${formName}.idHakmilikAgensi.value);
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";	
 	document.${formName}.submit2.value = "seterusnya";

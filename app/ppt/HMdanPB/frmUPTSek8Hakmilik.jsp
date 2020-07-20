@@ -974,10 +974,7 @@
         <tr align="center">
           <td>
             ##if($mode=="view")
-            #if($!id_negeriprojek == "4")
-        		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('ppt','$id_permohonan')">
-          	#end  
-<!--             <input type="button" name="cmdCapaianETanah" value ="Capaian Maklumat Hakmilik" onClick="javascript:viewEtanah('$!id_hakmilik')"> -->
+            <input type="button" name="cmdCapaianETanah" value ="Capaian Maklumat Hakmilik" onClick="javascript:viewEtanah('$!id_hakmilik')">
             <input type="button" name="cmdETanah" value ="Semakan Maklumat Hakmilik" onClick="javascript:checkWSHM('$!id_hakmilik')">
             <input type="button" name="cmdSPTB" value ="Semakan Maklumat Geran" onClick="javascript:viewSPTB('$!id_fail','$!id_hakmilik','1')">
 			##end
@@ -3225,7 +3222,7 @@ function viewSPTB(ID_FAIL,ID_HAKMILIK,ID_SEKSYEN) {
 	document.${formName}.submit();
 }
 function checkWSHM(ID_HAKMILIK) {
-	// 20100906 - kmie 
+	// kmie, 20100906
 	// check hakmilik status with eTanah
     var url = "../x/${securityToken}/ekptg.view.integrasi.FrmViewETanah?action2=checkHM&isPPT=1&ID_HAKMILIK=" + ID_HAKMILIK;
     var hWnd = window.open(url, 'Semakan Status Hakmilik di Sistem eTanah', 'width=800,height=500, resizable=yes,scrollbars=yes');
