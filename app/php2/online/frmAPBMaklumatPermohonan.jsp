@@ -6,9 +6,6 @@
 .style2 {
 	color: #0000FF
 }
-.pautan {
-	color: #0000FF
-}
 -->
 </style>
 <p>
@@ -45,355 +42,129 @@
           <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
           <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMBELI PASIR</li>
           <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
+<!--           <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li> -->
           <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN PERMOHONAN</li>
         </ul>
-     	<div class="TabbedPanelsContentGroup">
-        	<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
+        <div class="TabbedPanelsContentGroup">
+          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
             #parse("app/php2/online/frmAPBMaklumatPermohonanPermohonan.jsp")
             #end </div>
-          	<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
+          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
             #parse("app/php2/online/frmAPBMaklumatPermohonanPembeliPasir.jsp")
             #end </div>
-  			<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
-			#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") </td>
-			#end</div>
-			<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3')
-  			#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp")
-  			#end</div>
-		<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
-					           	
-<fieldset>
-
-<legend>PENGESAHAN PERMOHONAN</legend>
-<!--
-<font color="#FF0000" size="2">
-<i>* Sila cetak Borang A dan Pengesahan Permohonan untuk dibawa ke Unit Pembahagian Pusaka Kecil.
-<br>   * Permohonan akan dibatalkan sekiranya terdapat permohonan lain yang lengkap dihantar ke Unit Pembahagian Pusaka Kecil.    
-    </i></font>
-<br>
-<br>
-<br>-->
-
-#if ($idStatus != "150")
-#if($kemaskini_pejabat != "yes")
-#set($disabledDropdown = "disabled")
-#else
-#set($disabledDropdown = "")
-#end
-#end
-<table width="100%" border="0">
-<tr>
-<td width="5%"></td>
-<td width="20%" >Negeri</td>
-<td width="1%">:</td>
-<td width="74%"><strong> #if($disabledDropdown == 'disabled')
-#set($nama_negeri="") 
- #foreach($listneg in $senaraiNegeriByPpkUnit) 
-                                        #if($negerimhn == $listneg.idnegeri)
-                                        
-                                        #set($nama_negeri="$listneg.namanegeri")
-                                        
-                                       
-                                        #end
-                                        #end <font  style="text-transform:uppercase;">$!nama_negeri</font>
-                                        
-                                <input type="hidden" size="50" maxlength="46" name="namanegeri" value="$!nama_negeri" readonly class="disabled" style="text-transform:uppercase;">
-                  
-                                <input type="hidden" id="socNegeriPengesahan"  name="socNegeriPengesahan" value="$!negerimhn" >                   
-
-#else
-
-
-<select name="socNegeriPengesahan" style="width: 300px;" onChange="getDaerah()" $disabledDropdown>
-  
-#set ($selIdNegeri = "")
-	#if ($selNegeri != "0")
-			#set ($selected = "")
-			#foreach ($listNegeri in $senaraiNegeriByPpkUnit)
-				#if ($listNegeri.idnegeri == $selNegeri)
-					#set ($selected = "selected")	
-				
-  <option value="$listNegeri.idnegeri" $selected>$listNegeri.namanegeri</option>
-  
-				#end
-			#end
-			
-			
-  <option value="0">Sila Pilih</option>
-  
-			#foreach ($listNegeri in $senaraiNegeriByPpkUnit)
-				#set ($selIdNegeri = $selNegeri)	
-				
-  <option value="$listNegeri.idnegeri">$listNegeri.namanegeri</option>
-  
-			#end
-	#else
-			#if ($negerimhn != "")
-				#foreach ($listNegeri in $senaraiNegeriByPpkUnit)
-						#if ($listNegeri.idnegeri == $negerimhn)
-							#set ($selected = "selected")	
-
-                           
-						
-  <option value="$listNegeri.idnegeri" $selected>$listNegeri.namanegeri</option>
-  
-						#end
-				#end	
-				
-  <option value="0">Sila Pilih</option>
-  
-				#foreach ($listNegeri in $senaraiNegeriByPpkUnit)
-					#set ($selIdNegeri = $selNegeri)	
+  				<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
+						#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") 
+						#end</div>
+<!-- 					<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3') -->
+<!--   					#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp") -->
+<!--   					#end</div> -->
+					<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
 					
-  <option value="$listNegeri.idnegeri">$listNegeri.namanegeri</option>
-  
-				#end
-			#else
-		
-				
-  <option value="0">Sila Pilih</option>
-  
-				#foreach ($listNegeri in $senaraiNegeriByPpkUnit)
-					#set ($selIdNegeri = $selNegeri)	
-					
-  <option value="$listNegeri.idnegeri">$listNegeri.namanegeri</option>
-  
-				#end
-			#end
-	#end
-
-</select>
-#end
-
-<input type="hidden" name="saizdata" value="$!saizData">
-</strong></td>
-</tr>
-<tr>
-<td></td>
-<td >Daerah</td>
-<td>:</td>
-<td><strong> #if($disabledDropdown == 'disabled')
-#set($nama_daerah="") 
- #foreach($listDaerah in $selectedDaerah) 
-                                       
-                                        
-                                        #if($!daerahmhn == $listDaerah.id)
-                                        
-                                        #set($nama_daerah="$listDaerah.nama")
-                                        
-                                       
-                                        #end
-                                        #end <font  style="text-transform:uppercase;">$!nama_daerah</font>
-                                <input type="hidden" size="50" maxlength="46" name="nama_daerah" value="$!nama_daerah" readonly class="disabled" style="text-transform:uppercase;">
-                                <input type="hidden" id="socDaerahPengesahan"  name="socDaerahPengesahan" value="$!daerahmhn" >    
-                                     
-
-#else
-
-<select name="socDaerahPengesahan" style="width: 300px;" onChange="getAddress()" $disabledDropdown>
-  
-	#if ($selDaerah != "0")
-			#foreach ($listDaerah in $selectedDaerah)
-				#if ($listDaerah.id == $selDaerah)
-					#set ($selected3 = "selected")
-				
-  <option value="$listDaerah.id" $selected3>$listDaerah.nama</option>
-  
-				#end
-			#end
-			
-  <option value="0">Sila Pilih</option>
-  
-			#foreach ($listDaerah in $selectedDaerah)
-				
-  <option value="$listDaerah.id">$listDaerah.nama</option>
-  
-			#end
-	#else
-			#if ($daerahmhn != "")
-					#foreach ($listDaerah in $selectedDaerah)
-						#if ($listDaerah.id == $daerahmhn)
-                       
-						
-  <option value="$listDaerah.id" selected>$listDaerah.nama</option>
-  
-						#end
-					#end
-					
-  <option value="0">Sila Pilih</option>
-  
-					#foreach ($listDaerah in $selectedDaerah)
-						
-  <option value="$listDaerah.id">$listDaerah.nama</option>
-  
-					#end
-			#else
-					
-  <option value="0">Sila Pilih</option>
-  
-					#foreach ($listDaerah in $selectedDaerah)
-						
-  <option value="$listDaerah.id">$listDaerah.nama</option>
-  
-					#end
-			#end
-	#end
-
-</select>
-
-#end
-</strong></td>
-</tr>
-#if ($selDaerah != "0" || $daerahmhn != "")
-	#foreach ($data in $selectedPpkAddress)
-		#set ($namapejabat = $data.namapejabat)
-		#set ($alamat1 = $data.alamatOne)
-		#set ($alamat2 = $data.alamatTwo)
-		#set ($alamat3 = $data.alamatThree)
-		#set ($poskod = $data.poskod)
-		#set ($no_tel = $data.notel)
-		#set ($no_fax = $data.nofax)
-		#set ($no_tel_samb = $data.notel_sambungan)
-	#end
-#end
-<tr>
-<td></td>
-<td >Pejabat</td>
-<td>:</td>
-<td><span style="font-weight: bold">
-  <input type="hidden" size="50" maxlength="46" name="namapejabat" value="$!namapejabat" readonly class="disabled" style="text-transform:uppercase;">
-  <font  style="text-transform:uppercase;">$!namapejabat</font>
-</span></td>
-</tr>
-<tr>
-<td></td>
-<td >Alamat</td>
-<td>:</td>
-<td><span style="font-weight: bold">
-  <input type="hidden" size="50" maxlength="46" name="alamat1" value="$!alamat1" readonly class="disabled" style="text-transform:uppercase;">
-  <font  style="text-transform:uppercase;">$!alamat1</font>
-</span></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td><span style="font-weight: bold">
-  <input type="hidden" size="50" maxlength="46" name="alamat2" value="$!alamat2" readonly class="disabled" style="text-transform:uppercase;">
-  <font  style="text-transform:uppercase;">$!alamat2</font>
-</span></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td><span style="font-weight: bold">
-  <input type="hidden" size="50" maxlength="46" name="alamat3" value="$!alamat3" readonly class="disabled" style="text-transform:uppercase;">
-  <font  style="text-transform:uppercase;">$!alamat3</font>
-</span></td>
-</tr>
-<tr>
-<td></td>
-<td >Poskod</td>
-<td>:</td>
-<td><strong>
-  <input type="hidden" size="5" maxlength="5" name="poskod" value="$!poskod" readonly class="disabled" >
-  <font  style="text-transform:uppercase;">$!poskod</font>
-</strong></td>
-</tr>
-<tr>
-<td></td>
-<td >No. Telefon</td>
-<td>:</td>
-<td><strong>
-  <input type="hidden" size="12" maxlength="11" value="$!no_tel" readonly class="disabled" >
-  <font  style="text-transform:uppercase;">$!no_tel</font></strong></td>
-</tr>
-#if ($no_tel_samb != "")
-<tr>
-<td></td>
-<td >No. Telefon (samb)</td>
-<td>:</td>
-<td><strong>
-  <input type="hidden" size="12" maxlength="11" value="$!no_tel_samb" readonly class="disabled" >
-  <font  style="text-transform:uppercase;">$!no_tel_samb</font>
-</strong></td>
-</tr>
-#end
-#if ($no_fax != "")
-<tr>
-<td></td>
-<td >No. Fax</td>
-<td>:</td>
-<td><strong>
-  <input type="hidden" size="12" maxlength="11" value="$!no_fax" readonly class="disabled" >
-  <font  style="text-transform:uppercase;">$!no_fax</font></strong></td>
-</tr>
-#end
-
-			#foreach($View in $View_pengesahan_pemohonan)
-        #set ($namaPemohon = $View.namaPemohon)
-        #set ($noKpBaruPemohon1 = $View.noKpBaruPemohon1)
-        #set ($noKpBaruPemohon2 = $View.noKpBaruPemohon2)
-        #set ($noKpBaruPemohon3 = $View.noKpBaruPemohon3)
-        #set ($jenis_pemohon = $View.jenis_pemohon)
-        #set ($noKpBaruPemohon = $View.noKpBaruPemohon)
-    #end
-    
-    #if($!skrin_deraf == "yes")
-	<tr><td> 
-    		<td width="1%" valign="top"></td>
-    		#if ($idStatus == "150")
-    		<td width="3%"><input type="checkbox" name='namecb1' id='namecb1'></td>
-    		#else
-    		<td width="3%"><input type="checkbox" name='namecb1' id='namecb1' checked disabled>
-    		</td>
-    		#end
-    		#if ($jenis_pemohon == "2")
-      	<td width="89%">Saya $!namaPemohon MyID $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-	
-				#elseif($jenis_pemohon == "1")
-      	<td width="89%">Kami $!namaPemohon dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-	
-	</td>#end
-	</tr>#end
-
+	<fieldset>	
+				<legend>
+				PENGESAHAN PERMOHONAN
+				</legend>
+				<table width="100%" border="0">
+				<tr>
+					<td width="5%"></td>
+					<td width="28%" >Negeri</td>
+					<td width="1%">:</td>
+					<td width="70%"><strong>$!maklumatPejabat.get("negeri")</strong></td>
+	</tr>
+	  <tr>
 		<td></td>
+		<td >Daerah</td>
+		<td>:</td>
+		<td><strong>$!maklumatPejabat.get("daerah")</strong></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td >Pejabat</td>
+		<td>:</td>
+		<td><span style="font-weight: bold">$!maklumatPejabat.get("namaPejabat")</span></td>
+	</tr>
+
+	<tr>
+		<td width="1%">&nbsp;</td>
+		<td width="28%">Alamat</td>
+		<td width="1%">:</td>
+		<td width="70%"><strong>$!maklumatPejabat.get("alamat1")</strong></td>
+	</tr>
+
+	<tr>
+		<td width="1%">&nbsp;</td>
+		<td width="28%">&nbsp;</td>
+		<td width="1%">&nbsp;</td>
+		<td width="70%"><strong>$!maklumatPejabat.get("alamat2")</strong></td>
+	</tr>
+	
+	<tr>
+		<td width="1%">&nbsp;</td>
+		<td width="28%">&nbsp;</td>
+		<td width="1%">&nbsp;</td>
+		<td width="70%"><strong>$!maklumatPejabat.get("alamat3")</strong></td>
+	</tr>
+	
+	<tr>
+		<td width="1%">&nbsp;</td>
+		<td width="28%">Poskod</td>
+		<td width="1%">:</td>
+		<td width="70%"><strong>$!maklumatPejabat.get("poskod")</strong></td>
+	</tr>
+	
+	<tr>
+		<td width="1%">&nbsp;</td>
+		<td width="28%">No. Telefon</td>
+		<td width="1%">:</td>
+		<td width="70%"><strong>$!maklumatPejabat.get("noTel")</strong></td>
+	</tr>
+	
+	<tr>
+		<td width="1%">&nbsp;</td>
+		<td width="28%">No. Faks</td>
+		<td width="1%">:</td>
+		<td width="70%"><strong>$!maklumatPejabat.get("noFax")</strong></td>
+  </tr>
+  
+	<tr>
+		<td width="1%">&nbsp;</td>
+		<td width="28%">Emel</td>
+		<td width="1%">:</td>
+		<td ><strong>$!maklumatPejabat.get("emel")</strong></td>
+	</tr>
+	
+	<tr>
+	<td></td>
 		<td ></td>
 		<td valign="top">
-           	#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
-           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
-           	<td>Saya, $!pemohon.get("namaPemohon"), MyID $!pemohon.get("noPengenalan") dengan ini maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-   <tr>
-					<td></td>
-					<td ></td>
-					<td></td>
-					<td>
-						<label align="left" valign="top"> 
-						<b><font color="BLUE" size="2"><span class="blink">Sekiranya permohonan telah dihantar, pemohon sudah tidak boleh mengemaskini permohonan.
-						<br> Jika terdapat sebarang maklumat yang perlu ditambah, sila mengemaskini permohonan terlebih dahulu sebelum menghantar permohonan.</span></font></b>
-						</label></td>
-	 </tr>
-	 
-           	<tr>
-           	<td colspan=2 align="center">
-           	#if ($idStatus == '')
-           		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
-            	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-            #else
-            #if ($idStatus !='')
-            	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-            #end
-            #end
-            </td>
-  </tr>
-  #end
-  #end
-	</table>
-</fieldset>
+        #if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan" >#end
+        
+        #if ($idStatus != '')
+        <input type="checkbox" name="pengesahan" id="pengesahan" checked disabled>#end</td>
+        <td>Kami wakil dari $!pemohon.get("namaPemohon"), MyCOID $!pemohon.get("noPengenalan") dengan ini maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+	</tr>
+	
+	<tr>
+	<td></td>
+  	<td></td>
+		<td valign="top" colspan=2>
+		#if ($idStatus == '')
+    <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+    <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
+    <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
+    #else
+    #if ($idStatus !='')
+    <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+    <input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+    #end
+    #end
+	</td>
+	</tr>
+				</table>
+				</fieldset>
+#end
+</td></tr>#end</table>
+</div>
 
 <!--<div id="calculateTotalPercentPengarah_result"></div>
 <fieldset id="tableReport" style="display:;"-->
@@ -1144,26 +915,4 @@ function doBatalKemaskini() {
 	doAjaxCall${formName}("");
 }
 
-//LAMPIRAN
-//onlineAttach('$list.id','$list.jenisDokumen')
-function onlineAttach_(idPermohonan,idSenarai,idJenisDokumen) {
-    //
-    param = "actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline";
-    param += "&rujukan="+idPermohonan+"&jenisdokumen="+idJenisDokumen+"&idsenarai="+idSenarai;
-	var url = "../x/${securityToken}/ekptg.view.online.UploadDokumenSemak?"+param;
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus(); /**/
-    //
-    var title = 'Cetakan';
-	var w =1024;
-	var h = 800;
-    var left = (screen.width/2)-(w/2);
-    //var top = (screen.height/2)-(h/2);
-    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-}
 </script>
-$javascriptLampiran
