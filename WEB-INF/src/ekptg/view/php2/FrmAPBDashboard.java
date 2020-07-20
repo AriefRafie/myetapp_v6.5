@@ -43,6 +43,7 @@ private static final long serialVersionUID = 1L;
 		context.put("getFailAPB", getFailAPB());
 		context.put("pelesenAktif", getPelesenAktif());
 		context.put("failBelumSelesai", getFailBelumSelesai());
+		context.put("permohonanBaru", getPermohonanBaru());
 		context.put("failSelesai", getFailSelesai());
 		context.put("check_notifikasi_aduan", getNotifikasiAduan("", user_negeri_login, userId, "", "NO"));
 		
@@ -171,6 +172,28 @@ private static final long serialVersionUID = 1L;
 				+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND A.NO_FAIL IS NOT NULL"
 				+ " AND B.ID_STATUS NOT IN (1610212,1610208,1610207,1610244)";
 			
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			return rs.getInt("BIL");
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	public Integer getPermohonanBaru() throws Exception {
+
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT COUNT(*) AS BIL"
+				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F"
+				+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PEMOHON = C.ID_PEMOHON "
+				+ " AND C.ID_NEGERITETAP = F.ID_NEGERI AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NULL ";
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 			return rs.getInt("BIL");

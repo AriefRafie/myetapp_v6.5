@@ -95,7 +95,7 @@ function simpanKemaskiniPerakuanKSU(){
 		return; 
 	}
 	if(document.${formName}.txtNamaKSU.value == ""){
-		alert('Sila masukkan Nama Ketua Setiausaha NRE');
+		alert('Sila masukkan Nama Ketua Setiausaha KETSA');
   		document.${formName}.txtNamaKSU.focus(); 
 		return; 
 	}
@@ -121,7 +121,7 @@ function simpanKemaskiniKeputusan(){
 		return; 
 	}
 	if(document.${formName}.txtNamaMenteri.value == ""){
-		alert('Sila masukkan Nama Menteri NRE');
+		alert('Sila masukkan Nama Menteri KETSA');
   		document.${formName}.txtNamaMenteri.focus(); 
 		return; 
 	}

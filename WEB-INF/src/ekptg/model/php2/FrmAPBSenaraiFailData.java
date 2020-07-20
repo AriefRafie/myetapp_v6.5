@@ -1231,22 +1231,17 @@ public class FrmAPBSenaraiFailData {
 
 			// TBLRUJSUBURUSANSTATUSFAIL
 			r = new SQLRenderer();
-			long idSuburusanstatusfail = DB
-					.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
+			long idSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_SUBURUSANSTATUS",
-					getIdSuburusanstatus(idSuburusan, "1610198")); // MAKLUMAT
-																	// PERMOHONAN
-
+			// MAKLUMAT PERMOHONAN
+			r.add("ID_SUBURUSANSTATUS",getIdSuburusanstatus(idSuburusan, "1610198")); 
 			r.add("AKTIF", "1");
 			r.add("ID_FAIL", idFail);
-
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
 			stmt.executeUpdate(sql);
 
@@ -1262,7 +1257,8 @@ public class FrmAPBSenaraiFailData {
 						&& !"".equals(rsUser.getString("EMEL"))) {
 					XEkptgEmailSender email = XEkptgEmailSender.getInstance();
 					email.FROM = "etapp_webmaster@kptg.gov.my";
-					email.RECIEPIENT = rsUser.getString("EMEL");
+					//email.RECIEPIENT = rsUser.getString("EMEL");
+					email.RECIEPIENT = "jojai@yopmail.com";
 					email.SUBJECT = "PERMOHONAN LESEN AKTA PELANTAR BENUA #"
 							+ rsUser.getString("NO_PERMOHONAN");
 					email.MESSAGE = rsUser.getString("NAMA").toUpperCase()

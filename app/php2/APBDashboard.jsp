@@ -179,9 +179,17 @@ a.nav:visited {
                           <tr>
                             <td><b>Daftar Permohonan</b></td>
                           </tr>
+                          ##<tr>
+                          ##  <td><a href="javascript:gotoAPB()" class="help" title="Permohonan Baru Akta Pelantar Benua"> <font color="blue">
+                          ##    <li>&nbsp;Akta Pelantar Benua</li>
+                          ##    </font> </a> </td>
+                          ##</tr>
                           <tr>
-                            <td><a href="javascript:gotoAPB()" class="help" title="Permohonan Baru Akta Pelantar Benua"> <font color="blue">
-                              <li>&nbsp;Akta Pelantar Benua</li>
+                          <td><a href="javascript:gotoPermohonanOnline()" class="help" title="Semakan Permohonan Online"> <font color="blue">
+                              <li>#if($!permohonanBaru > 0)
+                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$permohonanBaru</blink></font></b> </label>
+                                &nbsp;
+                                #end&nbsp;Semakan Permohonan Online</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -197,10 +205,6 @@ a.nav:visited {
                           <tr>
                             <td><a href="javascript:gotoKutipanAPB()" class="help" title="Kutipan Data Akta Pelantar Benua"> <font color="blue">
                               <li>&nbsp;Kutipan Data Akta Pelantar Benua</li>
-                              </font> </a> </td>
-                          </tr>                       <tr>
-                          <td><a href="javascript:gotoPermohonanOnline()" class="help" title="Semakan Permohonan Online"> <font color="blue">
-                              <li>&nbsp;Semakan Permohonan Online</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -474,7 +478,7 @@ function gotoDokumenRujukan() {
 	document.${formName}.submit();
 }
 function gotoPermohonanOnline() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBSenaraiFailOnlineView";
+	document.${formName}.action = "$EkptgUtil.getTabID("Akta Pelantar Benua",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBSenaraiFailOnlineView";
 	document.${formName}.submit();
 }
 </script>
