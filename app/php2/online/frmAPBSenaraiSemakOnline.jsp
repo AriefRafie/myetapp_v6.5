@@ -44,8 +44,7 @@
 	          $!list.lampirans
 	          </td>
 	        </tr>
-	      #end
-	      
+	      #end      
         #end
         #else
         <tr>

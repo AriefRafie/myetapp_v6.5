@@ -466,7 +466,7 @@ function kemaskiniPermohonan() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
 	document.${formName}.submit();	
-	//doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");comment jap
 }
 function batalKemaskiniPermohonan() {
 	document.${formName}.mode.value = "view";

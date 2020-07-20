@@ -466,7 +466,6 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			h.put("idProjek", rs.getString("ID_PROJEKLESENAPB"));
 			h.put("namaProjek", rs.getString("NAMA_PROJEK") == null ? ""
 					: rs.getString("NAMA_PROJEK").toUpperCase());
-
 			listProjek.addElement(h);
 			bil++;
 		}
