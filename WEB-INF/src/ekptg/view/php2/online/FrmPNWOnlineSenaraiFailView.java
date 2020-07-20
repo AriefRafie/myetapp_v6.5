@@ -141,9 +141,18 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		myLog.info("hitButton="+hitButton+",actionOnline="+actionOnline);
 		//HITBUTTON
 		if (postDB) {
+<<<<<<< WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
 			if (hitButton.equals("doDaftarBaru")){
            		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
         	}else if (hitButton.equals("doSimpanKemaskiniMaklumatTnh")){
+=======
+			if ("doDaftarBaru".equals(hitButton)){
+
+           		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
+        	}
+			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
+
+>>>>>>> WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
         		logic.updateTanah(idPermohonan,idHakmilikAgensi,session);	
             }else if (hitButton.equals("doSimpanKemaskiniMaklumatPelepasan")){
         		logic.updatePermohonanPenawaran(idPermohonanPelepasan,
@@ -157,14 +166,28 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 				} else {
 
 					logic.updatePermohonanSemakan(idPermohonan, idKementerian, session);
+<<<<<<< WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
 				}
+=======
+				}				
+			}
+			
+			if ("doHantarKelulusan".equals(hitButton)){
+>>>>>>> WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
 				
 			}else if (hitButton.equals("doHantarKelulusan")){			
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
+<<<<<<< WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
 					logic.updatePermohonanKelulusan(idPermohonan, idKementerian, session);
 				}	
+=======
+
+					logic.updatePermohonanKelulusan(idPermohonan, idKementerian, session);
+				}				
+			}else if ("doHantarEmel".equals(hitButton)){
+>>>>>>> WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
 				
 			}else if (hitButton.equals("doHantarEmel")){			
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
@@ -184,6 +207,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 			}
 			
 		}
+	
 		
 		if ("papar".equals(actionOnline)) {
 			// GO TO VIEW PENAWARAN
@@ -589,6 +613,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		}
 	}
 
+
 	private void saveData(FileItem item, String idPermohonan, HttpSession session) throws Exception {
 
 		Db db = null;
@@ -624,7 +649,10 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		}
 		this.context.put("completed", true);
 	}
+<<<<<<< WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
 
 
+=======
+>>>>>>> WEB-INF/src/ekptg/view/php2/online/FrmPNWOnlineSenaraiFailView.java
 }
 
