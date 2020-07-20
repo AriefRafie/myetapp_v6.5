@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -842,6 +843,41 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 		}
 	}
 	
+	//yati tambah
+		Vector checkOTP = null;
+		
+		@SuppressWarnings("unchecked")
+		public Vector checkOTP(String idFail,String userId) throws Exception {
+			
+			checkOTP = new Vector();
+			checkOTP.clear();
+			
+			Db db = null;
+			String sql = "";
+			
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = " SELECT NO_TAC FROM TBLPPKTAC WHERE ID_FAIL = '"+idFail+"' AND ID_MASUK = '"+userId+"' " +
+						" AND ID_TAC = (SELECT MAX(ID_TAC) FROM TBLPPKTAC WHERE ID_FAIL = '"+idFail+"' " +
+						" AND ID_MASUK = '"+userId+"' ) ";
+				
+				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("*** NO TAC ID_FAIL NI : "+sql);
+				Hashtable h;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("NO_TAC", rs.getString("NO_TAC")== null?"":rs.getString("NO_TAC"));
+					checkEmail.addElement(h);
+				}
+				return checkEmail;
+			} finally {
+				if (db != null)	db.close();
+			}
+		}
+	
+
 	@SuppressWarnings("unchecked")
 	public static String addTAC(Hashtable data,String otp2,String msg) throws Exception
 	  {
@@ -860,8 +896,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	myLogger.info("masuk db");
 	    	//user login id
 	    	String id_user = (String)data.get("id_user");
-	    	
-	    
+
 	    	long id_tac = DB.getNextID("TBLPPKTAC_SEQ");    
 	    	String idFail = (String)data.get("idFail");	 
 	    	String otp = otp2;
@@ -870,11 +905,35 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	Date now = new Date();
 	    	SimpleDateFormat formatter =  new SimpleDateFormat("yyyy");
 	    	String tahun = formatter.format(now);
-	    	int thn = Integer.parseInt(tahun);
 
+	    	int thn = Integer.parseInt(tahun);
+	    	
+	    	SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	    	
+	    	Calendar c = Calendar.getInstance();
+	        Date currentDate = new Date();
+			c.setTime(currentDate);
+
+	        // manipulate date
+			c.add(Calendar.DATE, 1);
+	       /* c.add(Calendar.YEAR, 1);
+	        c.add(Calendar.MONTH, 1);
+	        c.add(Calendar.DATE, 1); //same with c.add(Calendar.DAY_OF_MONTH, 1);
+	        c.add(Calendar.HOUR, 1);
+	        c.add(Calendar.MINUTE, 1);
+	        c.add(Calendar.SECOND, 1);*/
+
+	        // convert calendar to date
+	        Date currentDatePlusOne = c.getTime();
+
+			System.out.println("DATE EXPIRED FORMAT "+format.format(currentDatePlusOne));
+			//String EXP = "to_date('" +format.format(currentDatePlusOne) + "','dd/MM/yyyy HH:mm:ss')";
+	   		String EXP = "to_date('" + format.format(currentDatePlusOne) + "','MM/DD/YYYY HH24:MI:SS')";
+			
 	    	//generate no permohonan	    	
 	    	String seq = String.format("%06d",File.getSeqNo(1,1,0,0,0,false,false,thn,0));	    	
 	    	String noPermohonan = tahun+"-"+seq;
+	    	
 	      
 	    	SQLRenderer rF = new SQLRenderer();
 	    	rF.add("id_tac",id_tac);
@@ -883,11 +942,11 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	rF.add("tarikh_masuk",rF.unquote("sysdate"));
 			rF.add("id_masuk",id_user);
 			rF.add("msg_status", flagmsg);	
+			rF.add("tarikh_tamat", rF.unquote(EXP));
 	    	sql = rF.getSQLInsert("tblppktac");
 	    	myLogger.info("INSERT TEST TABLPPKTAC : "+sql);
 	    	stmt.executeUpdate(sql);
-	      
-	           	
+	                 	
 	     	output = ""+id_tac;
 	    	
 	     	conn.commit();	
