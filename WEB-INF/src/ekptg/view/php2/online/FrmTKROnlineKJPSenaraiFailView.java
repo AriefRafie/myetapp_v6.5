@@ -212,6 +212,16 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 						idHakmilikAgensi, idLuasKegunaan,
 						getParam("txtTujuanKegunaan"), getParam("idKementerianTanah"), getParam("idNegeriTanah"),
 						getParam("idLuasTanah"), getParam("luasTanah"), idHakmilikSementara, session);
+				
+				Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
+				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",idSuburusan,"=");
+				subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
+				subUrusanStatusFailN.setAktif("1");
+				subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
+				
+				HTPStatusBean sb = new HTPStatusBean();
+				sb.simpanStatusAktif(subUrusanStatusFailN);
+
 			}
 			if("doSimpanSenaraiSemak".equals(hitButton)){
 				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"), 
