@@ -24,7 +24,7 @@
           </td>
         </tr>
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No. Pemohonan : </td>
+          <td width="30%" height="24" scope="row" align="right">No Rujukan Online : </td>
           <td width="70%"><input name="txtNoPermohonan" id="txtNoPermohonan" type="text" value="$txtNoPermohonan" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
         </tr>
         <tr>
@@ -53,7 +53,7 @@
         </tr>
         <tr class="table_header">
           <td scope="row" width="3%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>No Permohonan</strong></td>
+          <td width="20%"><strong>No Rujukan Online</strong></td>
           <td width="20%"><strong>No Fail</strong></td>
           <td width="30%"><strong>Tujuan</strong></td>
           <td width="8%" align="center"><strong>Tarikh Mohon</strong></td>
