@@ -2941,6 +2941,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String no_fail = (String) data.get("no_fail");
 			String no_kp_baru = (String) data.get("no_kp_baru");
 			String tarikh_hantar = (String) data.get("tarikh_hantar");
+			String id_perbicaraan = (String) data.get("id_perbicaraan");
 			
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -2961,6 +2962,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			r.add("NO_FAIL", no_fail);
 			r.add("NO_KP_BARU", no_kp_baru);
 			r.add("TARIKH_HANTAR", tarikh_hantar);
+			r.add("ID_PERBICARAAN", id_perbicaraan);
 			
 			
 			myLogger.info("Step 3 SYAFIQAH");
@@ -3002,6 +3004,9 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		
 	public void insertPertukaranPemohon(Hashtable data) throws Exception {
 		Db db = null;
+		Db db2 = null;
+		Db db3 = null;
+		
 		String sql = "";
 		try {
 			String id_permohonan = (String) data.get("id_permohonan");
@@ -3013,26 +3018,60 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String id_permohonansimati = (String) data.get("id_permohonansimati");
 			String tarikhmati_pemohon = (String) data.get("tarikhmati_pemohon");
 			String tarikh_hantar = (String) data.get("tarikh_hantar");
+			String id_masuk = (String) data.get("id_masuk");
 			
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			r.add("ID_PERMOHONAN", id_permohonan);
-			r.add("NO_FAIL", no_fail);
+			//r.add("ID_PERMOHONAN", id_permohonan);
+			//r.add("NO_FAIL", no_fail);
 			r.add("ID_SIMATI", id_simati);
 			r.add("ID_PEMOHONLAMA", id_pemohonlama);
 			r.add("ID_PEMOHONBARU", id_pemohonbaru);
 			r.add("SEBAB_TUKAR", sebab_tukar);
 			r.add("ID_PERMOHONANSIMATI", id_permohonansimati);
-			r.add("TARIKH_MATI_P", tarikhmati_pemohon);
-			r.add("TARIKH_HANTAR", tarikh_hantar);
+			//r.add("TARIKH_MATI_P", tarikhmati_pemohon);
+			r.add("TARIKH_MASUK", tarikh_hantar);
+			r.add("ID_MASUK", id_masuk);
 			
 			
 			myLogger.info("Step 3 SYAFIQAH");
-			sql = r.getSQLInsert("TBLPPKTUKARPEMOHONLINE");
+			sql = r.getSQLInsert("TBLPPKTUKARPEMOHON");
 			System.out.println("TBLPPKTUKARPEMOHONLINE-->>"+sql);
 			stmt.executeUpdate(sql);
+			
+				
+			String sql2 = "";
+			sql2 ="UPDATE TBLPPKOB SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
+					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+			
+			try {
+				db2 = new Db();
+				Statement stmt2  = db.getStatement();
+				ResultSet rs2 = stmt2.executeQuery(sql2);
+				myLogger.info("Step 4 syafiqah:" + sql2);
+				
+			} finally {
+				if (db2 != null)
+					db2.close();
+			}
+			
+			String sql3 = "";
+			sql3 ="UPDATE TBLPPKOBPERMOHONAN SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
+					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+			
+			try {
+				db2 = new Db();
+				Statement stmt3  = db.getStatement();
+				ResultSet rs3 = stmt3.executeQuery(sql3);
+				myLogger.info("Step 5 syafiqah:" + sql3);
+				
+			} finally {
+				if (db3 != null)
+					db3.close();
+			}
+			
 			
 		} finally {
 			if (db != null)

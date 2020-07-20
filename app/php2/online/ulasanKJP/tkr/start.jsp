@@ -10,13 +10,14 @@
 </style>
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+  
 </p>
 
 <div id="divMainForm">  
-  #if ($!command == 'paparFail')
+  #if ($!submit == 'paparFail')
   	#parse("$templateDir/paparFail.jsp")
   #else 
-  		#parse("$templateDir/senaraiFail.jsp")
+  	#parse("$templateDir/senaraiFail.jsp")
   #end 
 </div>
   

@@ -109,15 +109,36 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 								(String) session.getAttribute("_portal_role"),
 								getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
 								"no");
+				senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
+						.getAttribute("_ekptg_user_id"),
+						(String) session.getAttribute("_portal_role"),
+						getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
+						"no");
 				
 
 				this.context.put("senaraitugasan", senaraiFail);
+				this.context.put("senaraibantahan", senaraiBantah);
+				myLogger.info("lalu sini A");
 				vm = "app/ppk/frmPrmhnnBantahanOnline.jsp";
 			}
 		} 
 		else if ("doChanges".equals(submit)) {
+			
+			senaraiFail = FrmPrmhnnStatusPengunaOnlineData
+					.getSenaraiPermohonanBantahan("", (String) session
+							.getAttribute("_ekptg_user_id"),
+							(String) session.getAttribute("_portal_role"),
+							getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
+							"no");
+			senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
+					.getAttribute("_ekptg_user_id"),
+					(String) session.getAttribute("_portal_role"),
+					getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
+					"no");
 
+			this.context.put("senaraibantahan", senaraiBantah);
 			vm = "app/ppk/frmPrmhnnBantahanOnline.jsp";
+			myLogger.info("lalu sini B");
 			setupPage(session, action, senaraiFail);
 		}
 		
@@ -127,6 +148,8 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 			String idFail = getParam("idFail");
 			String noFail = getParam("noFail");
 			String nama_simati = getParam("nama_simati");
+			String ic_simati = getParam("icSimati");
+			String id_bicara = getParam("idBicara");
 			
 			senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
 					.getAttribute("_ekptg_user_id"),
@@ -155,11 +178,14 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 			this.context.put("idfail", idFail);
 			this.context.put("nofail", noFail);
 			this.context.put("nama_simati", nama_simati);
+			this.context.put("ic_simati", ic_simati);
+			this.context.put("id_bicara", id_bicara);
 			this.context.put("senaraibantahan", senaraiBantah);
 		}
 		else if("skrinBantahPast".equals(submit)) {
 			String idFail = getParam("idFail");
 			String noFail = getParam("nofail");
+			String ic_simati = getParam("icSimati");
 			
 			senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
 					.getAttribute("_ekptg_user_id"),
@@ -184,6 +210,7 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 			this.context.put("dah_simpan", "");
 			this.context.put("idfail", idFail);
 			this.context.put("nofail", noFail);
+			this.context.put("ic_simati", ic_simati);
 			this.context.put("senaraibantahan", senaraiBantah);
 		}
 		else if("paparDcl".equals(submit)) {
@@ -4426,8 +4453,16 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 				(String) session.getAttribute("_ekptg_user_id"),
 				(String) session.getAttribute("_portal_role"),
 				getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, "no");
+		
+		senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
+				.getAttribute("_ekptg_user_id"),
+				(String) session.getAttribute("_portal_role"),
+				getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, 
+				"no");
+		
 		System.out.println("USER_LOGIN_SYSTEM >>> "+USER_LOGIN_SYSTEM);
-		// context.put("senaraiFail",senaraiFail);
+		
+		this.context.put("senaraibantahan", senaraiBantah);
 		setupPage(session, action, senaraiFail);
 
 		context.put("IDpemohon", USER_LOGIN_SYSTEM);
@@ -5490,6 +5525,8 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		frmPrmhnnSek8SenaraiHTATHData.setDataHtath(id1);
 	}
 	
+	
+	//syafiqah add
 	private void addBantahan(HttpSession session) throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
@@ -5509,6 +5546,7 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		String noTel = getParam("txtNoTel");
 		String emel = getParam("txtEmel");
 		String catatan = getParam("catatan");
+		String id_perbicaraan = getParam("id_bicara");
 		
 		myLogger.info("Step 2 SYAFIQAH");
 		
@@ -5530,10 +5568,13 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		h.put("no_fail", noFail);
 		h.put("no_kp_baru", myidP);
 		h.put("tarikh_hantar", currentDate);
+		h.put("id_perbicaraan", id_perbicaraan);
 		
 		logiconline.insertPermohonanBantah(h);
 		
 	}
+	
+	//syafiqah add end
 
 	private void addHa(HttpSession session) throws Exception {
 		String id = getParam("id");

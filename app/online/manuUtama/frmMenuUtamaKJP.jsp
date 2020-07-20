@@ -261,6 +261,19 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
+														<tr>
+															<td>
+																<a href="javascript:penawaran()" class="help" title="Penawaran">
+																	<font color="blue"><li>
+																	#if($jumlah_notifikasi_penawaran > 0)
+																	<label style="background-color:blue" align="center" valign="top" > 
+																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penawaran</blink></font></b>
+																	</label>&nbsp;
+																	#end
+																	Penawaran</li></font>					
+																</a>
+															</td>
+														</tr>
 													</table>
 												</td>
 												#end
@@ -582,6 +595,11 @@ function pelepasan(){
 function penyewaan(){
 	//alert('$portalRole');
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPYWOnlineKJPSenaraiFailView";
+	document.${formName}.submit();
+}
+function penawaran(){
+	//alert('$portalRole');
+	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.submit();
 }
 

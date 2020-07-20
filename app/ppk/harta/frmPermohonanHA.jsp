@@ -299,7 +299,11 @@
 	#end 
 
 			<fieldset><legend>MAKLUMAT HARTA ALIH</legend>
-      		
+			#if($!skrin_online == "yes")
+			<div id="info_skrin_daftar_sek8"></div>
+      <script>
+ 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink>Wang tunai,saham, simpanan bank, KWSP, insurans, kenderaan, senjata api, barang kemas dan barang-barang berharga.</b></div>";
+ 			</script> #end
       		<table width="100%" border="0">
         		<tr>
           			<td>
@@ -1023,15 +1027,17 @@
                   <td>
                   #if ($socJenisHa == "1" || $socJenisHa == "2" || $socJenisHa == "3" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "6" )
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  /> 
+ 	  	#if($!skrin_online == "yes")
  	  	#if($socJenisHa == "3")
  	  	<a href="javascript:info('geran_kereta')" class="help" title="info">					
 					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-			</a>#end
+			</a>#end 
 			
 			#if($socJenisHa == "2")
  	  	<a href="javascript:info('agensi')" class="help" title="info">					
 					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
 			</a>#end
+			#end
 			
  	  	#else
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  />	  
@@ -1117,15 +1123,17 @@
              	<td>
         	#if ($socJenisHa == 1 || $socJenisHa == 4 || $socJenisHa == 3 || $socJenisHa == 5 || $socJenisHa == 6) 
       				<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />  
+      		#if($!skrin_online == "yes")
       		#if ($socJenisHa == "3")
       		<a href="javascript:info('daftar')" class="help" title="info">					
 								<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-					</a> #end
+					</a> #end #end
       		#elseif ($socJenisHa == 2)
       				<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;"  value="$norujukan" size="20" maxlength="30" onblur="this.value=this.value.toUpperCase()" $disabledR class="$disabled"  /> 
+      		#if($!skrin_online == "yes")
       		<a href="javascript:info('akaun')" class="help" title="info">					
 								<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-					</a> 
+					</a> #end
       		#else
       
           			<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />      
@@ -2992,7 +3000,8 @@ document.f1.txtNilaiTarikhMati.value=document.f1.txtNilaiTarikhMohon.value
 	
 	}
 	function lampiranHartaPapar(id_){
-		var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=ha";
+		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=hta";
+		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=ha";
 	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener=document.window;

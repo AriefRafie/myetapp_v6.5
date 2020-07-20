@@ -58,109 +58,179 @@
 			</fieldset>
 		</td>
 	</tr>
+	<tr>
+		<td>
+			#if($view_list_fail == "yes")
+			<fieldset>
+		        <table width="100%"  cellpadding="1" cellspacing="2" border="0">
+					<tr>
+		                <td class="table_header" width="0%" style="display:none"><b></b></td>
+		      		    <td class="table_header" width="0%" style="display:none"><b>ID FAIL</b></td>
+		                <td class="table_header" width="15%" align="center">No. Fail</td>
+		                <td class="table_header" width="15%" align="center">Nama Simati</td>
+		                <td class="table_header" width="15%" align="center">Nama Pemohon</td>
+		                <td class="table_header" width="15%" align="center">Status Semasa</td>
+		                <td class="table_header" width="5%" align="center">Tindakan</td>
+		    		</tr>
+		    		
+		    		#if($list_fail.size() > 0)
+		    		
+		    		#foreach($list in $list_fail)
+		    		 #set( $i = $velocityCount )
+		         		#if ( ($i % 2) != 1 )
+		              		 #set( $row = "row2" )
+		         		#else
+		               		 #set( $row = "row1" )
+		         		#end
+		                
+		               
+		               
+		               #set($tr_id = "tr_id"+$i)
+		               
+		              <!-- onMouseOver="tr_id_up('$tr_id','$row')" onMouseOut="tr_id_out('$tr_id','$row')" -->
+		         
+		         #if($list.ID_FAIL  == $id_fail_carian)
+		         #set( $row = "tr_class" )
+		         #end
+		         
+		         <input type="hidden" name="idFail" id="idFail" value="$!list.ID_FAIL" />
+		         <input type="hidden" name="noFail" id="noFail" value="$!list.NO_FAIL" />
+		         
+		         <input type="text" name="idBicara" id="idBicara" value="$!list.ID_PERBICARAAN" />
+		         
+		         <input type="hidden" name="icSimati" id="icSimati" value="$!list.NO_KP_BARU" />
+		         
+		         
+		            <tr id="$tr_id" class="$row"    >
+		                <td  style="display:none" align="center">  
+		         <a href="javascript:paparFail('$list.ID_FAIL')"  > 
+		         #if($list.ID_FAIL  == $id_fail_carian)
+		         <font color="white"> Papar  </font>
+		         #else
+		         <font color="blue"> Papar  </font>
+		         #end  
+		         
+		              </a>   
+		                </td>
+		      			
+		      		    <td  style="display:none" align="center">  
+		                  $list.ID_FAIL   
+		                </td>
+		                
+		                <td  align="center"> 
+		                 <a href="javascript:paparFail('$list.ID_FAIL')"  > 
+		         #if($list.ID_FAIL  == $id_fail_carian)
+		         <font color="black"> $list.NO_FAIL    </font>
+		         #else
+		         <font color="black"> $list.NO_FAIL    </font>
+		         #end  
+		         
+		              </a>   
+		                
+		                </td>
+		                
+		                <td align="center" >
+		               $list.NAMA_SIMATI
+		                </td>
+		                
+		                <td align="center">
+		                $list.NAMA_PEMOHON 
+		                </td>
+		                
+		                 <td align="center">
+		               $list.NAMA_STATUS
+		                </td>
+		                
+		                <td align="center">
+		                	<input type="button" name="btnBantah" id="btnBantah" value="Bantah" onclick="skrinBantah('$!list.ID_PERMOHONAN','$!list.ID_FAIL','$!list.NO_FAIL','$!list.NAMA_SIMATI')"/>
+		                </td>
+		                          
+		    		</tr>
+		         
+		            #end
+		            #else
+		            
+		            <tr class="row">
+		      			
+		      		    <td class="row" colspan="10" > 
+		                Tiada Rekod              
+		                </td>
+		               
+		                          
+		    		</tr>
+		            
+		            #end
+		    	</table>	
+		    </fieldset>
+			#end
+		</td>
+	</tr>
 </table>
 
+<br>
+<br>
 
-#if($view_list_fail == "yes")
-    <br>
-	<fieldset>
-        <table width="97%"  cellpadding="1" cellspacing="2" border="0">
-			<tr>
-                <td class="table_header" width="5%" style="display:none"><b></b></td>
-      		    <td class="table_header" width="10%" style="display:none"><b>ID FAIL</b></td>
-                <td class="table_header" width="10%"><b>NO FAIL</b></td>
-                <td class="table_header" width="15%"><b>NAMA SIMATI</b></td>
-                <td class="table_header" width="15%"><b>NAMA PEMOHON</b></td>
-                <td class="table_header" width="10%"><b>STATUS SEMASA</b></td>
-                <td class="table_header" width="10%"><b>TINDAKAN</b></td>
-    		</tr>
-    		
-    		#if($list_fail.size() > 0)
-    		
-    		#foreach($list in $list_fail)
-    		 #set( $i = $velocityCount )
-         		#if ( ($i % 2) != 1 )
-              		 #set( $row = "row2" )
-         		#else
-               		 #set( $row = "row1" )
-         		#end
-                
-               
-               
-               #set($tr_id = "tr_id"+$i)
-               
-              <!-- onMouseOver="tr_id_up('$tr_id','$row')" onMouseOut="tr_id_out('$tr_id','$row')" -->
-         
-         #if($list.ID_FAIL  == $id_fail_carian)
-         #set( $row = "tr_class" )
-         #end
-         
-         <input type="hidden" name="idFail" id="idFail" value="$!list.ID_FAIL" />
-         <input type="hidden" name="noFail" id="noFail" value="$!list.NO_FAIL" />
-         
-         
-            <tr id="$tr_id" class="$row"    >
-                <td  style="display:none" >  
-         <a href="javascript:paparFail('$list.ID_FAIL')"  > 
-         #if($list.ID_FAIL  == $id_fail_carian)
-         <font color="white"> Papar  </font>
-         #else
-         <font color="blue"> Papar  </font>
-         #end  
-         
-              </a>   
-                </td>
-      			
-      		    <td  style="display:none">  
-                  $list.ID_FAIL   
-                </td>
-                
-                <td  > 
-                 <a href="javascript:paparFail('$list.ID_FAIL')"  > 
-         #if($list.ID_FAIL  == $id_fail_carian)
-         <font color="black"> $list.NO_FAIL    </font>
-         #else
-         <font color="black"> $list.NO_FAIL    </font>
-         #end  
-         
-              </a>   
-                
-                </td>
-                
-                <td  >
-               $list.NAMA_SIMATI
-                </td>
-                
-                <td >
-                $list.NAMA_PEMOHON 
-                </td>
-                
-                 <td >
-               $list.NAMA_STATUS
-                </td>
-                
-                <td>
-                	<input type="button" name="btnBantah" id="btnBantah" value="Bantah" onclick="skrinBantah('$!list.ID_PERMOHONAN','$!list.ID_FAIL','$!list.NO_FAIL','$!list.NAMA_SIMATI')"/>
-                </td>
-                          
-    		</tr>
-         
-            #end
-            #else
-            
-            <tr class="row">
-      			
-      		    <td class="row" colspan="10" > 
-                Tiada Rekod              
-                </td>
-               
-                          
-    		</tr>
-            
-            #end
-    	</table>	
-    </fieldset>
-#end
+<table width="100%" border="0">
+	<tr>
+		<td>
+			<fieldset>
+				<legend>Senarai Bantahan Dahulu</legend>
+				#parse("app/utils/record_paging.jsp")
+				<table width="100%" border="0">
+					<tr class="table_header">
+					  	<td width="2%" align="center">No.</td>
+					  	<td width="5%" align="center">Tarikh Hantar</td>
+					  	<td width="15%" align="center">No. Fail</td>
+					  	<td width="15%" align="center">Nama Pembantah</td>
+					  	<td width="20%" align="center">Sebab Bantah</td>
+					  	<td width="10%" align="center">Dokumen Sokongan</td>
+					  	<td width="5%" align="center">Maklumat Bicara</td>
+				  	</tr>
+					#foreach ($senarai in $senaraibantahan)
+						#set( $counter = $velocityCount )
+						#if ( ($counter % 2) == 0 )
+							#set( $row = "row2" )
+						#else
+							#set( $row = "row1" )
+						#end
+				  	<tr>
+						<td class="$row" align="center">
+						  #set ($cnt = ($page - 1) * $itemsPerPage + $counter )
+						  $!cnt
+						 </td>
+						 <td class="$row" align="center">$!senarai.tarikh_hantar</td>
+						 <td class="$row" align="center">$!senarai.no_fail</td>
+						 <td class="$row" align="center">$!senarai.nama_pembantah</td>
+						 <td class="$row" align="center">$!senarai.sebab.toUpperCase()</td>
+						 <td class="$row" align="center">$!senarai.nama_dokumen</td>
+						 <td class="$row" align="center">$!senarai.id_perbicaraan</td>
+<!-- 						 <td class="$row" align="center"> -->
+<!-- 						 	<table width="100%" border="0"> -->
+<!-- 						 		<tr><td colspan="3">Permohonan bantahan yang dikemukakan telah dihantar. Tuan/Puan adalah dikehendaki hadir pada Hari Perbicaraan seperti tetapan di bawah:</td></tr> -->
+<!-- 						 		<tr> -->
+<!-- 						 			<td>Tarikh Bicara</td> -->
+<!-- 						 			<td>:</td> -->
+<!-- 						 			<td></td> -->
+<!-- 						 		</tr> -->
+<!-- 						 		<tr> -->
+<!-- 						 			<td>Tempat Bicara</td> -->
+<!-- 						 			<td>:</td> -->
+<!-- 						 			<td></td> -->
+<!-- 						 		</tr> -->
+<!-- 						 	</table> -->
+<!-- 						 </td> -->
+					</tr>
+					#end
+					#if ($cnt == 0)
+					<tr> 
+						<td colspan="3" scope="row"><font color="#FF0000">Tiada Rekod</font></td>
+					</tr>
+					#end
+				</table>	
+			</fieldset>
+		</td>
+	</tr>
+</table>
 
 
 <!-- <fieldset> -->

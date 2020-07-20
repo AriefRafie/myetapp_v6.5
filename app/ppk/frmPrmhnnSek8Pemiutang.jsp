@@ -1722,7 +1722,7 @@
                             <td width="100%">
                             
                             <fieldset>
-                            <legend>MAKLUMAT PEMIUTANG</legend>
+                            <legend>MAKLUMAT PEMIUTANG(SIMATI BERHUTANG)</legend>
                             
                             <table width="100%" border="0">
                               <tr>
