@@ -244,6 +244,8 @@ public class LampiranBean implements ILampiran{
 			    
 		 }	 
 
+	public Vector<Tblrujdokumen> getLampirans(String idRujukan,String jenis) throws Exception {				
+	    Vector<Tblrujdokumen> listDokumen = new Vector<Tblrujdokumen>();
 	    try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
@@ -273,7 +275,10 @@ public class LampiranBean implements ILampiran{
 		    } finally {
 		      if (db != null) db.close();
 		    }
+	    return listDokumen;
 	    
+	}
+	
 	public String getLampirans(String idHarta) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		Vector<Hashtable<String, String>> dokumens = lampiranMengikutHarta(idHarta, null,false);
