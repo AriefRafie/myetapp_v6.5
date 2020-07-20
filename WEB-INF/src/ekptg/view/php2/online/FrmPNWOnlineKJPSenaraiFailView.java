@@ -91,7 +91,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		}
 		String idFail = getParam("idFail");
 		String idStatus = getParam("idStatus");
-		String idSubUrusan = "32";
+//		String idSubUrusan = "32";
 		String mode = getParam("mode");
 		if (mode.isEmpty()) {
 			mode = "view";
@@ -249,6 +249,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 				} else {
 					logic.updatePermohonanSemakan(idPermohonan, idKementerian, session);
 				}
+				
 			}
 			if ("doHantarKelulusan".equals(hitButton)) {
 

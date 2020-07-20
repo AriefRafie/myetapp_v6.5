@@ -343,43 +343,49 @@
 				<fieldset>
 				<legend><strong>SENARAI SEMAK</strong></legend>
                 	<table width="100%" cellspacing="2" cellpadding="2">
-  					#if ($SenaraiSemak.size() > 0)
-      				#set ($list = "")
-					#foreach ($list in $SenaraiSemak)
-        			#if ($list.bil == '')
-        			#set( $row = "row1" )
-        			#elseif (($list.bil % 2) != 0)
-        			#set( $row = "row1" )
-        			#else 
-        			#set( $row = "row2" )
-        			#end
+                	    <tr class="row2">
+						<td width="3%"><b>Bil</b></td>
+						<td width="82%"><b>Keterangan</b></td>
+						<td width="15%"><b>Dokumen</b></td>
+					</tr> 
+  		#if ($SenaraiSemak.size() > 0)
+      		#set ($list = "")
+			#foreach ($list in $SenaraiSemak)
+	        	#set( $i = $velocityCount )
+	       		#if ( ($i % 2) == 0 )
+	   	        	#set( $row = "row2" )
+	            #else
+	               	#set( $row = "row1" )
+	          	#end
         
-        			#if($list.flag == 'Y')
+        		#if($list.flag == 'Y')
         			#set($checked = 'checked')
-        			#else
+        		#else
         			#set($checked = '')
-        			#end
+        		#end
 	        
-   				    	<tr>
-     						<td class="$row" width="95%"><input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked $disabled />
-     						$list.keterangan
+   				    	<tr class="$row">
+     						<td width="3%">
+     							<input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked $disabled />
      						</td>
-          					<td class="$row" width="5%">
-          					#if($list.jenisDokumen != 0)
-          					<a href = "javascript:onlineAttach('$list.id','$list.jenisDokumen');">
-											<img border="0" src="../img/plus.gif" width="20" height="15"/>
-										</a><br>
-							 			$!listam.lampirans
-							#end 			
+     						<td class="$row" width="82%">$i. $list.keterangan</td>     						
+          					<td width="15%">
+          				##if($list.jenisDokumen != 0)
+          						<!-- <a href = "javascript:onlineAttach('$list.id','$list.jenisDokumen');">
+								<img border="0" src="../img/plus.gif" width="20" height="15"/>
+								</a><br> -->
+							 	$!listam.lampirans
+						##end 			
           					</td>
         				</tr>
         				#end
-        				#else
+        	
+        #else
         				<tr>
-	          				<td class="$row" width="5%">&nbsp;</td>
-    	      				<td class="$row" width="95%">Tiada Rekod</td>
+	          				<td class="$row" width="3%">&nbsp;</td>
+    	      				<td class="$row" colspan="2" width="95%">Tiada Rekod</td>
         				</tr>
-        				#end
+        #end
 						<tr>
     						<td colspan="2">&nbsp;</td>
   						</tr>
@@ -389,16 +395,18 @@
       							<input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSenaraiSemak()"/>
       							<input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
       						#end
-      							#if ($mode == 'view')
+      						
+      						#if ($mode == 'view')
       							#if ($idStatus == '')
       							<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:KemaskiniFail()"/>
-                		<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="javascript:goBack()"/>
+                				<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="javascript:goBack()"/>
       							#end
       							<input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-      							#end
-      							#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+      						#end
+      							
+      						#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
 								<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
-      							#end
+      						#end
      						</td>
       					</tr>
                     </table>

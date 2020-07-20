@@ -209,6 +209,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				idPermohonan = hashHeader.get("idPermohonan").toString();
 				idStatus = hashHeader.get("idStatus").toString();
 				subUrusan = hashHeader.get("subUrusan").toString();
+			
 			}
 //			log.info("mode = " + mode);
 			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(idUser);
@@ -216,8 +217,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
         	
 			//MODE VIEW
 			log.info("mode = " + mode);
-			if ("view".equals(mode)){
-				
+			if ("view".equals(mode)){	
 				this.context.put("readOnly", "readOnly");
 	        	this.context.put("classDis", "disabled");
 	        	this.context.put("inputTextClass", "disabled");
@@ -235,7 +235,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
 				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 				
-				getSenaraiSemakFail(idPermohonan);
+				getSenaraiSemakFail(idPermohonan,mode);
 		
     	    }
 			else if ("update".equals(mode)){
@@ -509,9 +509,10 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 			
 	}
 	
-	private void getSenaraiSemakFail(String idPermohonan) throws Exception{
+	private void getSenaraiSemakFail(String idPermohonan,String mode) throws Exception{
 		FrmSemakan fs = new FrmSemakan();
-		context.put("SenaraiSemak", fs.getSenaraiSemakanAttach("pajakanmycoid",idPermohonan));
+		fs.mode = mode;
+		context.put("SenaraiSemak", fs.getSenaraiSemakanAttach("htppajakanmycoid",idPermohonan));
 		context.put("semakclass", new FrmSemakan());
 	}
 	
