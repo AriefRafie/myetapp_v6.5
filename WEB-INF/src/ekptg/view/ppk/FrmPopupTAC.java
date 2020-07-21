@@ -166,7 +166,6 @@ private static final long serialVersionUID = 1L;
 			Hashtable ceP = (Hashtable)checkEmail.get(0);
 			emel = (String)ceP.get("EMEL");
 		}
-
 		myLogger.info(otp);
 		
 		EmailConfig ef = new EmailConfig();
