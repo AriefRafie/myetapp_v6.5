@@ -329,7 +329,6 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			this.context.put("mode", "new");
 			this.context.put("readonly", "");
 			this.context.put("inputTextClass", "");
-			myLog.info("idHakmilikAgensi ros: " + idHakmilikAgensi);
 
 			if ("doChangeKementerian".equals(submit)) {
 				idAgensi = "99999";
@@ -685,7 +684,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 				}
 			}*/
 			
-				
+		//shiqa 20072020
 		} else if ("pengesahan".equals(actionOnline)) {
 			myLog.info("baca pengesahan====");
 			String id = getParam("id_kemaskini");
@@ -832,7 +831,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 			
 				Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
-				myLog.info("Langkah=="+langkah2);
+				myLog.info("Langkah=="+langkah2+" idSubUrusan=="+idSubUrusan);
 				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,idSubUrusan,"=");
 				myLog.info("setIdSuburusanstatus="+setIdSuburusanstatus);
 				rsusf.setIdPermohonan(Long.parseLong(idPermohonan));
@@ -870,7 +869,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}
 			vm = "app/php2/online/ulasanKJP/pnw/frmPengesahan.jsp";
 
-			// shiqa - simpanpengesahan 25062020
+			// shiqa - simpanpengesahan 20072020
 			
 		}else {
 
