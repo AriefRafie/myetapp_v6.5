@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
@@ -28,16 +29,14 @@ import com.Ostermiller.util.Base64;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujdokumen;
+import ekptg.model.utils.Fungsi;
 
 public class LampiranBean implements ILampiran{
 	private static Logger myLog = Logger.getLogger(ekptg.model.utils.lampiran.LampiranBean.class);
 //	private Connection conn = null;
-	private Db db = null;
-	private String sql = "";
-	private Vector<Tblrujdokumen> lampiran = null;
- 	
+	Vector<Tblrujdokumen> lampiran = null;
 	public StringBuffer sb = new StringBuffer("");
-   
+
 	public String getLampirans(String idRujukan,String jenisDokumen,String js) throws Exception {
 		sb = new StringBuffer("");
 		lampiran = getLampirans(idRujukan,jenisDokumen);
@@ -62,8 +61,6 @@ public class LampiranBean implements ILampiran{
 		return sb.toString();
 		
 	}
-
-    
 	
 	public void uploadFiles(Hashtable<String,String> hash,HttpServletRequest request) throws Exception {		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -121,6 +118,34 @@ public class LampiranBean implements ILampiran{
 				
 	}
 	
+	public void simpan(FileItem item,HttpServletRequest request) throws Exception {
+  		Db db = null;
+        try {
+        	db = new Db();
+        	long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
+        	Connection con = db.getConnection();
+        	con.setAutoCommit(false);
+        	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
+        			"(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,tajuk,keterangan) " +
+        			"values(?,?,?,?,?,?,?)");
+        	ps.setLong(1, id_Dokumen);
+        	ps.setString(2, request.getParameter("id_permohonan"));
+        	ps.setString(3,item.getName());
+        	ps.setString(4,item.getContentType());
+        	ps.setBinaryStream(5,item.getInputStream(),(int)item.getSize());
+        	ps.setString(6, request.getParameter("nama_dokumen"));
+        	ps.setString(7, request.getParameter("keterangan"));
+        	ps.executeUpdate();
+            con.commit();
+            
+	    }catch (SQLException se) { 
+	    	throw new Exception("Ralat : Masalah muatnaik fail");
+	    }finally {
+		      if (db != null) db.close();
+	    }
+        
+	}
+
 	private void saveData(FileItem item,HttpServletRequest request) throws Exception {
   		Db db = null;
         try {
@@ -420,6 +445,42 @@ public class LampiranBean implements ILampiran{
 		}	
 		
 	}
+	public void hapus(String idDokumen) throws Exception {
+		//myLog.info("hapusLampiran");
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();	
+			//Tblpfdrujlampiran a,Tblpfddokumen			
+			//TBLHTPGAMBAR
+			r.add("ID_DOKUMEN", idDokumen);
+				sql = r.getSQLDelete("TBLPPKDOKUMENHA");
+			
+			myLog.info("hapusLampiran:Tblpfddokumen::sql="+sql);
+			stmt.executeUpdate(sql);
+			
+			conn.commit();
+			
+		} catch (SQLException ex) { 
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah menghapus data " + ex.getMessage());
+	    	
+	    } finally {
+			if (db != null)
+				db.close();
+		}	
+		
+	}
+
 	
 	public void saveData(String idHarta,String idUser,FileItem item,boolean isHA) throws Exception {
 		Db db = null;
@@ -555,6 +616,23 @@ public class LampiranBean implements ILampiran{
 		return sb.toString();
 		
 	}
-
+	public String javascriptUpload(String jsUpload,String jsPapar
+			,String idDokumen,HttpSession session) throws Exception {
+			Fungsi.setWin800600();
+			
+			sb = new StringBuffer("");
+			sb.append("<script>");
+			sb.append("function "+jsPapar+"(idDokumen){");
+//			sb.append("function "+jsPapar+"(){");
+			sb.append("var url = '../servlet/ekptg.model.utils.DisplayBlob?id='+idDokumen+'&tablename=tblphpdokumen';");
+			sb.append("var hWnd=window.open(url,'Cetak','width="+Fungsi.lebar+",height="+Fungsi.tinggi+", resizable=yes,scrollbars=yes,menubar=1');");
+			sb.append("if ((document.window != null) && (!hWnd.opener))");
+			sb.append("hWnd.opener=document.window;");
+			sb.append("if (hWnd.focus != null) hWnd.focus();");
+			sb.append("}");
+			sb.append("</script>");
+			return sb.toString();
+		 
+		}
 	
 }

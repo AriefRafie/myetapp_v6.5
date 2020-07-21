@@ -2,6 +2,7 @@ package ekptg.view.htp;
 
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -27,10 +28,13 @@ import ekptg.model.htp.entity.HakmilikCukai;
 @SuppressWarnings("serial")
 public class FrmCukaiKemaskiniDataExcel extends AjaxBasedModule{
 	
-	private final String PATH="app/htp/cukai/";
+	static Logger myLog = Logger.getLogger(ekptg.view.htp.FrmCukaiKemaskiniDataExcel.class);
+	private final String PATHTP="app/htp/";
+	private final String PATHVER = PATHTP+ResourceBundle.getBundle("file").getString("ver_htp")+"/";
+	private final String PATH = PATHVER+"cukai/";
+
 	private ICukai iCukai = null;
  	private IHtp iHTP = null;  
-	static Logger myLog = Logger.getLogger(ekptg.view.htp.FrmCukaiKemaskiniDataExcel.class);
 	String socNegeri = "";
 	String socDaerah = "";
 	String socMukim = "";

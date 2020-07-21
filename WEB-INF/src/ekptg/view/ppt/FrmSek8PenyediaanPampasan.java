@@ -165,7 +165,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     	String screenMainPage2 = "app/ppt/frmSek8BentukBayaranAward.jsp";
     	String screenMainPage3 = "app/ppt/frmSek8BayaranPampasan.jsp";
     	String screenMainPage4 = "app/ppt/frmSek8PenerimaanCek.jsp";
-    	
+    
     	//default list
     	//listPageDepan = model.getListPermohonan(userIdNeg);
     	
@@ -1883,7 +1883,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
         	vm = screenMainPage3;
     		
     	}//close viewDataEFT
-    	
+ 	
     	else 
     	if("hapusEFT".equals(submit)){
     			

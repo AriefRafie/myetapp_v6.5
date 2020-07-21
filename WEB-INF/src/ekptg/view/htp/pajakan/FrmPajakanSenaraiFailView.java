@@ -736,7 +736,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 			this.context.put("socNegeri",HTML.SelectNegeri("socnegericarian", Long.parseLong(idNegeri), "", "  onChange=\"doChangeKementerian();\""));
 			this.context.put("socKementerian",HTML.SelectKementerian("sockementeriancarian",Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\" style=\"width:400\""));
 			this.context.put("socAgensi",HTML.SelectAgensiByKementerian("socagensicarian", idKementerian ,Long.parseLong(idAgensi), "", " onChange=\"doChangeKementerian();\" style=\"width:400\""));
-			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socsuburusancarian" ,Long.parseLong(idSuburusan), "", ""));
+			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socsuburusancarian" ,idSuburusan, "", ""));
 			this.context.put("selectStatus",UtilHTML.selectStatusByModule("socstatuscarian", Long.parseLong(idStatus), "", "3"));
 			if(flagAdvSearch.equals("Y")){
 				list = getIHTP().carianFail(getParam("txtNoFail"), getParam("txtTajukFail"), getParam("txdtarikhdaftarfail"), getParam("txdTarikhTerima")
@@ -795,7 +795,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 			this.context.put("socNegeri",HTML.SelectNegeri("socnegericarian", Long.parseLong(idNegeri), "", " onChange=\"doChangeKementerian();\""));
 			this.context.put("socKementerian",HTML.SelectKementerian("sockementeriancarian",Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\" style=\"width:400\""));
 			this.context.put("socAgensi",HTML.SelectAgensiByKementerian("socagensicarian", idKementerian ,Long.parseLong(idAgensi), "", " onChange=\"doChangeKementerian();\" style=\"width:400\""));
-			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socsuburusancarian" ,Long.parseLong(idSuburusan), "", ""));
+			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socsuburusancarian" ,idSuburusan, "", ""));
 			this.context.put("selectStatus",UtilHTML.selectStatusByModule("socstatuscarian", Long.parseLong(idStatus), "", "3"));
 			if(flagAdvSearch.equals("Y")){
 				list = getIHTP().carianFail(getParam("txtNoFail"), getParam("txtTajukFail"), getParam("txdtarikhdaftarfail"), getParam("txdTarikhTerima")

@@ -77,14 +77,26 @@
 </table>
 
 <script>
+	function popupEmel(idPermohonan, laporan){
+		var url = "../x/${securityToken}/ekptg.report.htp.utiliti.FrmPopupEmel?idpermohonan="+idPermohonan+"&report="+laporan;	
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	
+	}
+	
 	function emelPeringatan(id_) {
-		input_box = confirm("Emel Peringatan Bayaran Akan Dihantar Kepada Pemajak");
+		popupEmel(id_, 'emelperingatan');
+
+/* 		input_box = confirm("Emel Peringatan Bayaran Akan Dihantar Kepada Pemajak");
 		if (input_box == true) {
 			document.${formName}.command.value = "emelperingatan";
 			document.${formName}.fail.value = id_;
 			document.${formName}.action = "";
 			document.${formName}.submit();
-		}
+		} */
 		
 	}
 	
