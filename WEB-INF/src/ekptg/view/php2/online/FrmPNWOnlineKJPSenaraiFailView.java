@@ -834,13 +834,15 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 				Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
 				myLog.info("Langkah=="+langkah2);
 				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,idSubUrusan,"=");
+				myLog.info("setIdSuburusanstatus="+setIdSuburusanstatus);
 				rsusf.setIdPermohonan(Long.parseLong(idPermohonan));
 				myLog.info("idFail="+idFail+",idPermohonan="+idPermohonan);
 				rsusf.setIdFail(Long.parseLong(idFail));
 				rsusf.setIdSuburusanstatusfail(Long.parseLong(idSubUrusan));
 				rsusf.setIdSuburusanstatus(setIdSuburusanstatus);
 				rsusf.setUrl("-");
-				simpanPengesahan(rsusf,langkah2);
+//				simpanPengesahan(rsusf,langkah2);
+				
 				myLog.info("userId=="+userId);
 				rsusf.setIdMasuk(Long.parseLong(userId));
 
