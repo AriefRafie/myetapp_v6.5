@@ -53,7 +53,6 @@ public class LampiranBean implements ILampiran{
 			else
 				sb.append(" </a>,");
 			sb.append("<br>");
-
 		}
 		return sb.toString();
 		
