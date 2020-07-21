@@ -56,7 +56,6 @@ public class PHPUtilHTML {
 			throw ex;
 		}
 		return sb.toString();
-
 	}
 	
 	public static String SelectJenisNoFail(String selectName, Long selectedValue,
