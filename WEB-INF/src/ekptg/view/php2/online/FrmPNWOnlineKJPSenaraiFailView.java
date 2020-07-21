@@ -719,8 +719,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 			String semakMode = "";
 			String statusSemasa = "-1";
-			// if(getIOnline().isHantar(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),htpPermohonan.getPermohonan().getIdPermohonan()
-			// ,htpPermohonan.getPermohonan().getPfdFail().getIdFail(),"4"))
+			
 
 			if (getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan.get("idSubUrusan"))),
 					Long.parseLong(String.valueOf(permohonan.get("idPermohonan"))),
@@ -811,7 +810,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 							, String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
 							, emelSubjek, kandungan);
 								
-				}else if (idJawatan.equals("-4")){
+				}else if (idJawatan.equals("4")){
 					langkah2 = "-4";
 					emelSubjek = ec.tajukHantarPermohonan + "Penawaran";
 							
@@ -840,7 +839,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 				rsusf.setIdSuburusanstatusfail(Long.parseLong(idSubUrusan));
 				rsusf.setIdSuburusanstatus(setIdSuburusanstatus);
 				rsusf.setUrl("-");
-//				simpanPengesahan(rsusf,langkah2);
+				simpanPengesahan(rsusf,langkah2,userId);
 				
 				myLog.info("userId=="+userId);
 				rsusf.setIdMasuk(Long.parseLong(userId));
@@ -1051,7 +1050,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		this.context.put("completed", true);
 	}
 	//shiqa - simpanpengesahan 20072020
-	private void simpanPengesahan(Tblrujsuburusanstatusfail rsusf, String langkah2) throws Exception {
+	private void simpanPengesahan(Tblrujsuburusanstatusfail rsusf, String langkah2,String userid) throws Exception {
 		try {
 			subUrusanStatusFail = new Tblrujsuburusanstatusfail();
 			subUrusanStatusFail.setIdPermohonan(rsusf.getIdPermohonan());
@@ -1064,8 +1063,10 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
 			subUrusanStatusFailN.setAktif("1");
 			subUrusanStatusFailN.setUrl(Utils.isNull(rsusf.getUrl()));
-			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
-			subUrusanStatusFailN.setIdKemaskini(Long.parseLong(userId));
+			//subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
+			//subUrusanStatusFailN.setIdKemaskini(Long.parseLong(userId));
+			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userid));
+			subUrusanStatusFailN.setIdKemaskini(Long.parseLong(userid));
 			getIHTP().kemaskiniSimpanStatusPermohonanAktif(subUrusanStatusFail, subUrusanStatusFailN);
 
 		} catch (Exception e) {
