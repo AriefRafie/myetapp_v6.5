@@ -14,7 +14,7 @@
       <legend><b>CARIAN</b></legend>
       <table width="100%" align="center" border="0">
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No Permohonan : </td>
+          <td width="30%" height="24" scope="row" align="right">No Permohonan Online : </td>
           <td width="70%"><input name="txtNoPermohonan" id="txtNoPermohonan" type="text" value="$txtNoPermohonan" size="50" maxlength="50" style="text-transform:uppercase;" >
             <input type="hidden" name="idFail" />
             <input type="hidden" name="idPermohonan" />
@@ -42,7 +42,7 @@
   </tr>
   <tr>
     <td><fieldset>
-      <legend><b>SENARAI PERMOHONAN</b></legend>
+      <legend><b>SENARAI PERMOHONAN ONLINE</b></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
         <tr class="table_header">

@@ -105,6 +105,13 @@ a.nav:visited {
 	overflow: auto;
 	width: 100%;
 }
+.blink {
+	animation: blink 1s steps(5, start) infinite;
+}
+@keyframes blink {
+ to {
+ visibility: hidden;
+}
 </style>
 <script type="text/javascript" src="../library/online/prototype.js"></script>
 <script type="text/javascript" src="../library/online/scriptaculous/scriptaculous.js"></script>
@@ -187,8 +194,8 @@ a.nav:visited {
                           <tr>
                           <td><a href="javascript:gotoPermohonanOnline()" class="help" title="Semakan Permohonan Online"> <font color="blue">
                               <li>#if($!permohonanBaru > 0)
-                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$permohonanBaru</blink></font></b> </label>
-                                &nbsp;
+                                ##<label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$permohonanBaru</blink></font></b> </label>
+                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE" class="blink">$!permohonanBaru</font></b> </label>
                                 #end&nbsp;Semakan Permohonan Online</li>
                               </font> </a> </td>
                           </tr>
@@ -242,7 +249,8 @@ a.nav:visited {
                           <tr>
                             <td><a href="javascript:gotoAPBRecord()" class="help"  title="Ulasan Jabatan Teknikal"> <font color="blue">
                               <li>#if($!failBelumSelesai > 0)
-                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$failBelumSelesai</blink></font></b> </label>
+                                ##<label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$failBelumSelesai</blink></font></b> </label>
+                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE" class="blink">$!failBelumSelesai</font></b> </label>
                                 &nbsp;
                                 #end&nbsp;Ulasan</li>
                               </font> </a> </td>
@@ -267,8 +275,8 @@ a.nav:visited {
                           <tr>
                             <td><a href="javascript:gotoFLMS()" class="help" title="Hantar Log Aduan, Cadangan atau Pertanyaan"> <font color="blue">
                               <li> #if($!check_notifikasi_aduan > 0)
-                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_aduan</blink></font></b> </label>
-                                &nbsp;
+                                ##<label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_aduan</blink></font></b> </label>
+                                <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE" class="blink">$!check_notifikasi_aduan</font></b> </label>
                                 #end
                                 Log Aduan</li>
                               </font> </a> </td>

@@ -61,7 +61,6 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         
         //VECTOR
         Vector beanHeader = null;
-        
         Vector senaraiPengarah = null;
         Vector senaraiPembeliPasir = null;
         Vector senaraiProjek = null;
