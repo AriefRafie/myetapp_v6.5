@@ -36,6 +36,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 	private Vector<Hashtable<String, Object>> beanMaklumatHakmilik = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatHeader = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatLampiran = null;
+	private Vector<Hashtable<String, Object>> listLampiran = null;
 
 	protected Db db;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -1079,10 +1080,11 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
 			
-			//sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
 			myLogger.info("sql 8: "+sql);
-//			stmt.executeUpdate(sql);
+			stmt.executeUpdate(sql);
 
 			// TBLPHPLAPORANTANAH
 			r = new SQLRenderer();
@@ -1511,7 +1513,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.NO_PERMOHONAN, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN, D.KETERANGAN AS STATUS "
+			sql = "SELECT A.ID_FAIL, B.NO_PERMOHONAN, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.LUAS_BAKI, C.CADANGAN_KEGUNAAN, D.KETERANGAN AS STATUS "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANPELEPASAN C, TBLRUJSTATUS D WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -1525,6 +1527,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				h.put("idFail",rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 				h.put("noRujukanOnline", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN").toUpperCase());
 				h.put("idPermohonan",rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
+				h.put("luasBaki", rs.getString("LUAS_BAKI") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_BAKI")));
 				h.put("idPemohon",rs.getString("ID_PEMOHON") == null ? "" : rs.getString("ID_PEMOHON"));
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? "": sdf.format(rs.getDate("TARIKH_SURAT")));
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
@@ -2499,6 +2502,43 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			}
 			return senaraiSemak;
 		}
+		public void setSenaraiLampiran(String idPermohonan) throws Exception {
+			Db db = null;
+			String sql = "";
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+			try {
+				db = new Db();
+				listLampiran = new Vector();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN"
+						+ " WHERE ID_PERMOHONAN = '" + idPermohonan + "' AND FLAG_DOKUMEN = 'L'"
+						+ " AND ID_ULASANTEKNIKAL IS NULL AND ID_MESYUARAT IS NULL AND ID_PHPHAKMILIK IS NULL AND ID_PENAWARANKJP IS NULL" 
+						+ " ORDER BY ID_DOKUMEN DESC";
+
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h;
+				int bil = 1;
+				int count = 0;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("bil", bil);
+					h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+					h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
+							: rs.getString("NAMA_DOKUMEN"));
+					h.put("catatan",
+							rs.getString("CATATAN") == null ? "" : rs
+									.getString("CATATAN"));
+					listLampiran.addElement(h);
+					bil++;
+					count++;
+				}
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
 		
 		//UPDATE SENARAI SEMAK
 		public void updateSenaraiSemak(String idPermohonan, String[] semaks, HttpSession session) throws Exception {
@@ -2604,5 +2644,11 @@ public class FrmTKROnlineKJPSenaraiFailData {
 	}
 	public void setBeanMaklumatHeader(Vector<Hashtable<String, Object>> beanMaklumatHeader) {
 		this.beanMaklumatHeader = beanMaklumatHeader;
+	}
+	public Vector<Hashtable<String, Object>> getListLampiran() {
+		return listLampiran;
+	}
+	public void setListLampiran(Vector<Hashtable<String, Object>> listLampiran) {
+		this.listLampiran = listLampiran;
 	}
 }
