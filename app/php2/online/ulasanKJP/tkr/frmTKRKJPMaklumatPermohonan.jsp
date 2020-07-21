@@ -29,7 +29,7 @@
   <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
   <input name="submit2" type="hidden" id="submit2" />
   <input name="userJawatan" type="hidden" id="userJawatan" />
-   
+
 </p>
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -37,7 +37,7 @@
   <tr>
     <td> #parse("app/php2/online/ulasanKJP/tkr/frmTKRKJPHeader.jsp") </td>
   </tr>
-  
+
   #end
   <tr>
     <td>&nbsp;</td>
@@ -49,11 +49,11 @@
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TUKARGUNA</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
+          <!-- <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li> -->
           <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
-        
+
         <!-- START MAKLUMAT TANAH -->
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -148,37 +148,23 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
               </tr>
-              #if ($mode == 'update')
-              <tr>
-                <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
-              </tr>
-              #end
               <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td> #if ($idStatus == '')
-                  #if ($mode == 'view')
-                  <input type="button" name="cmdKemaskiniTnh" id="cmdKemaskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
+                <td>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  #end
-                  #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
-                  <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
-                  #end 
-                  #else
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  #end </td>
+                 </td>
               </tr>
               #end
             </table>
           </div>
           <!-- END MAKLUMAT TANAH -->
-          
+
           <!-- START MAKLUMAT TUKARGUNA -->
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
-             
+
               #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
               <tr>
                 <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
@@ -218,7 +204,7 @@
               </tr>
               #end
               #if ($idLuasKegunaan == '2')
-              
+
               #if ($mode == 'update')
               <tr>
                 <td><span class="style1">*</span></td>
@@ -239,7 +225,7 @@
                   </select></td>
               </tr>
               #end
-              
+
               #if ($idLuas != '99999' && $idLuas != '')
               <tr>
                 <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
@@ -258,21 +244,19 @@
               </tr>
               #end
               #end
-              #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+              #foreach ($beanMaklumatTukarguna in $beanMaklumatTukarguna)
               <tr>
                 <td>&nbsp;</td>
                 <td>Luas Bersamaan</td>
                 <td>:</td>
-                <td><input type="text" name="txtLuasBersamaan" id="txtLuasBersamaan" value="$beanMaklumatTanah.luasBersamaan"  style="text-align:right" readonly class="disabled"/>
+                <td><input type="text" name="txtLuasBersamaan" id="txtLuasBersamaan" value="$beanMaklumatTukarguna.luasBersamaan"  style="text-align:right" readonly class="disabled"/>
                   HEKTAR</td>
               </tr>
-              #end
-              #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
               <tr>
                 <td>&nbsp;</td>
                 <td>Baki Luas</td>
                 <td>:</td>
-                <td><input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$beanMaklumatPermohonan.luasBaki" readonly class="disabled" style="text-align:right"/>
+                <td><input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$beanMaklumatTukarguna.luasBaki" readonly class="disabled" style="text-align:right"/>
                   HEKTAR</td>
               </tr>
               #end
@@ -291,18 +275,7 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td> #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="javascript:doSimpanKemaskiniMaklumatTukarguna('$idLuas')"/>
-                  <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="javascript:doBatalKemaskini()"/>
-                  #end
-                  #if ($mode == 'view')
-                  <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="javascript:doKemaskini()"/>
-                  #if($idStatus == '1610198')
-                  <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="javascript:doSeterusnya()"/>
-                  <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="javascript:gotoBatalPermohonan()"/>
-                  #end
-                  <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                  #end </td>
+                <td>&nbsp;</td>
               </tr>
               #end
             </table>
@@ -329,7 +302,7 @@
                         #set( $row = "row1" )
                         #elseif (($senaraiTanahSemua.bil % 2) != 0)
                         #set( $row = "row1" )
-                        #else 
+                        #else
                         #set( $row = "row2" )
                         #end
                         <tr>
@@ -366,7 +339,7 @@
             </div>
           </div>
           <!-- END MAKLUMAT TUKARGUNA -->
-          
+
           <div class="TabbedPanelsContent">
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<tr>
@@ -374,21 +347,23 @@
               </tr>
            	</table>
          </div>
-         
-         <div class="TabbedPanelsContent">
+
+         <!-- <div class="TabbedPanelsContent">
          <table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<tr>
            	<td>#parse("app/php2/online/ulasanKJP/tkr/frmTKRSenaraiLampiran.jsp")</td>
            	</tr>
            	</table>
-         </div>
+         </div> -->
          <div class="TabbedPanelsContent">
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<td valign="top">
            	#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
            	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
-           	<td>Saya, $!pemohon.get("namaPemohon"), dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
-           	<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</td> 
+           	<td>
+        	Saya, $!pemohon.get("namaPemohon"), $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   			<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+      		</td>
            	<tr>
            	<td colspan=2 align="center">
            	#if ($userJawatan == '24')
@@ -402,7 +377,7 @@
             #end
             #end
             </td>
-           	</tr>          	        	
+           	</tr>
            	</table>
          </div>
         </div>
@@ -452,9 +427,9 @@ function doSimpanKemaskiniMaklumatTnh() {
 
 	if(document.${formName}.idHakmilikAgensi1.value == ""){
 		alert('Sila pilih Pegangan Hakmilik.');
-		return; 
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
 		return;
@@ -478,7 +453,7 @@ function validateLuas(elmnt,content,content2) {
 		elmnt.value = content2;
 		return;
 	}
-	
+
 	if(content != ""){
 		var num = content * 1;
 		elmnt.value = num.toFixed(5);
@@ -494,16 +469,16 @@ function doChangeLuasKegunaan() {
 function doChangeLuas() {
 	doAjaxCall${formName}("doChangeLuas");
 }
-function calculate(valueMohon,valueBaki){	
+function calculate(valueMohon,valueBaki){
 	var luasPenyewaan = document.${formName}.txtLuasPenyewaan.value * 1;
 	var luasAsal = document.${formName}.txtLuasAsal.value * 1;
-	
-	if (luasPenyewaan != ""){	
+
+	if (luasPenyewaan != ""){
 		if (luasPenyewaan > luasAsal){
 			alert('Luas yang dimasukkan telah melebihi luas asal.');
 			document.${formName}.txtLuasPenyewaan.value = valueMohon;
 			document.${formName}.txtBakiLuas.value = valueBaki;
-			return; 
+			return;
 		} else {
 			var luasBaki = (luasAsal - luasPenyewaan) * 1;
 			document.${formName}.txtBakiLuas.value = luasBaki.toFixed(5);
@@ -511,9 +486,9 @@ function calculate(valueMohon,valueBaki){
 	}
 }
 function doKemaskini() {
-	document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
+	document.${formName}.submit2.value = "seterusnya";
 	document.${formName}.mode.value = "update";
-	doAjaxCall${formName}("doKemaskini");
+	doAjaxCall${formName}("");
 }
 function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
@@ -523,66 +498,66 @@ function doSimpanKemaskiniMaklumatPenyewaan(idLuas) {
 
 	if(document.${formName}.socTempohSewa.value == "SILA PILIH"){
 		alert('Sila pilih Tempoh Sewa.');
-  		document.${formName}.socTempohSewa.focus(); 
-		return; 
+  		document.${formName}.socTempohSewa.focus();
+		return;
 	}
 	if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila pilih Luas Kegunaan.');
-  		document.${formName}.socLuasKegunaan.focus(); 
-		return; 
+  		document.${formName}.socLuasKegunaan.focus();
+		return;
 	}
 	if(document.${formName}.socLuasKegunaan.value == "2"){
 		if(document.${formName}.socLuas.value == "0"){
 			alert('Sila pilih Unit Luas.');
-			document.${formName}.socLuas.focus(); 
-			return; 
+			document.${formName}.socLuas.focus();
+			return;
 		}
-	
+
 		if(idLuas == '1' || idLuas == '2' || idLuas == '3' || idLuas == '5' || idLuas == '6' || idLuas == '9'){
 			if(document.${formName}.txtLuasMohon1.value == ""){
 				alert('Sila masukkan Luas Sewa .');
-				document.${formName}.txtLuasMohon1.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon1.focus();
+				return;
 			}
 		}
 		else
 		if(idLuas == '4' || idLuas == '8'){
 			if(document.${formName}.txtLuasMohon1.value == ""){
 				alert('Sila masukkan Luas Sewa.');
-				document.${formName}.txtLuasMohon1.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon1.focus();
+				return;
 			}
 			if(document.${formName}.txtLuasMohon2.value == ""){
 				alert('Sila masukkan Luas Sewa.');
-				document.${formName}.txtLuasMohon2.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon2.focus();
+				return;
 			}
 			if(document.${formName}.txtLuasMohon3.value == ""){
 				alert('Sila masukkan Luas Sewa.');
-				document.${formName}.txtLuasMohon3.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon3.focus();
+				return;
 			}
-		} 
+		}
 		else
 		if(idLuas == '7'){
 			if(document.${formName}.txtLuasMohon1.value == ""){
 				alert('Sila masukkan Luas Sewa.');
-				document.${formName}.txtLuasMohon1.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon1.focus();
+				return;
 			}
 			if(document.${formName}.txtLuasMohon2.value == ""){
 				alert('Sila masukkan Luas Sewa.');
-				document.${formName}.txtLuasMohon2.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon2.focus();
+				return;
 			}
-		} 
+		}
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPenyewaan";
 	document.${formName}.submit();
@@ -594,21 +569,21 @@ function doSimpanKemaskiniMaklumatPemohon(type) {
 	if(type == "syarikat"){
 		if(document.${formName}.txtModalBenar.value == ""){
 			alert('Sila masukan Modal Dibenarkan.');
-  			document.${formName}.txtModalBenar.focus(); 
-			return; 
-		}		
+  			document.${formName}.txtModalBenar.focus();
+			return;
+		}
 		if(document.${formName}.txtModalJelas.value == ""){
 			alert('Sila masukan Modal Jelas.');
-  			document.${formName}.txtModalJelas.focus(); 
-			return; 
+  			document.${formName}.txtModalJelas.focus();
+			return;
 		}
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPemohon";
 	document.${formName}.submit();
@@ -643,20 +618,20 @@ function doBatalKemaskiniPengarah(){
 function doSimpanKemaskiniPengarah(){
 	if(document.${formName}.socWargaPengarah.value == ""){
 		alert('Sila pilih Warganegara.');
-  		document.${formName}.socWargaPengarah.focus(); 
-		return; 
+  		document.${formName}.socWargaPengarah.focus();
+		return;
 	}
 	if(document.${formName}.txtNamaPengarah.value == ""){
 		alert('Sila masukkan Nama Pengarah.');
-  		document.${formName}.txtNamaPengarah.focus(); 
-		return; 
+  		document.${formName}.txtNamaPengarah.focus();
+		return;
 	}
 	if(document.${formName}.txtSaham.value == ""){
 		alert('Sila masukan Pegangan Saham.');
-  		document.${formName}.txtSaham.focus(); 
-		return; 
+  		document.${formName}.txtSaham.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.flagPopup.value = "openPopupPengarah";
 		document.${formName}.modePopup.value = "new";
@@ -672,18 +647,18 @@ function doSimpanKemaskiniPengarah(){
 function doSimpanPengarah(){
 	if(document.${formName}.socWargaPengarah.value == ""){
 		alert('Sila pilih Warganegara.');
-  		document.${formName}.socWargaPengarah.focus(); 
-		return; 
+  		document.${formName}.socWargaPengarah.focus();
+		return;
 	}
 	if(document.${formName}.txtNamaPengarah.value == ""){
 		alert('Sila masukkan Nama Pengarah.');
-  		document.${formName}.txtNamaPengarah.focus(); 
-		return; 
+  		document.${formName}.txtNamaPengarah.focus();
+		return;
 	}
 	if(document.${formName}.txtSaham.value == ""){
 		alert('Sila masukan Pegangan Saham.');
-  		document.${formName}.txtSaham.focus(); 
-		return; 
+  		document.${formName}.txtSaham.focus();
+		return;
 	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.flagPopup.value = "openPopupPengarah";
@@ -691,7 +666,7 @@ function doSimpanPengarah(){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
 	document.${formName}.hitButton.value = "doSimpanPengarah";
@@ -703,7 +678,7 @@ function doSeterusnya(){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSeterusnya";
 	document.${formName}.submit();
@@ -744,13 +719,13 @@ function echeck(str) {
 		    alert("Sila Masukan Email Dengan Betul.")
 		    return false
 		 }
-		
+
 		 if (str.indexOf(" ")!=-1){
 		    alert("Sila Masukan Email Dengan Betul.")
 		    return false
 		 }
 
- 		 return true					
+ 		 return true
 	}
 function validateNumber(elmnt,content) {
 	//if it is character, then remove it..
@@ -760,7 +735,7 @@ function validateNumber(elmnt,content) {
 	}
 }
 function validateLength(str) {
-	
+
 	if (str.length < 5) {
  		alert("Sila Masukan Poskod Dengan Betul.")
 		 return false
@@ -772,7 +747,7 @@ function validateCurrency(elmnt,content,content2) {
 		elmnt.value = content2;
 		return;
 	}
-	
+
 	if(content != ""){
 		var num = content * 1;
 		elmnt.value = num.toFixed(2);
@@ -785,11 +760,11 @@ function validateCurrency(elmnt,content,content2) {
 function checkPercentage(x){;
 	if(parseInt(x) > 100){
 		alert('Sila Nilai Peratusan Pegangan Saham dengan Betul.');
-  		document.${formName}.txtSaham.focus(); 
-		return; 
+  		document.${formName}.txtSaham.focus();
+		return;
 	}
 }
-function doHapusMaklumatPengarah(){	
+function doHapusMaklumatPengarah(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
@@ -803,14 +778,14 @@ function validateTempohSewa() {
 	//if it is character, then remove it..
 	if (document.${formName}.txtTempohSewa.value > 36 ){
 		alert('Tempoh sewa anda melebihi had yang dibenarkan. Sila isi tempoh yang betul.');
-		document.${formName}.txtTempohSewa.focus(); 
+		document.${formName}.txtTempohSewa.focus();
 		return;
 	}
 }
 function kiraLuas(idLuas){
 
   var jenisLuas = idLuas;
-  
+
   // KILOMETER PERSEGI
   if(jenisLuas == "1"){
 
@@ -819,7 +794,7 @@ function kiraLuas(idLuas){
 			luasK = document.${formName}.txtLuasMohon1.value*1;
 		}
 		var luasH = luasK*100;
-		
+
 		if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -832,12 +807,12 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "2"){ //HEKTER
-  	
+
 		var luasH = 0;
 		if (document.${formName}.txtLuasMohon1.value != ''){
 			luasH = document.${formName}.txtLuasMohon1.value*1;
 		}
-  		
+
 		if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -850,13 +825,13 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "3"){ // METER PERSEGI
-    	
+
 		var luasM = 0;
 		if (document.${formName}.txtLuasMohon1.value != ''){
 			luasM = document.${formName}.txtLuasMohon1.value*1;
 		}
   	  	var luasH = (luasM*0.0001);
-	  	
+
 		if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -883,7 +858,7 @@ function kiraLuas(idLuas){
 			luasP = document.${formName}.txtLuasMohon3.value*1;
 		}
 	  	var luasH = (luasE*0.4046864)+(luasR*0.1011716)+(luasP*0.00252929);
-  	  	
+
 		if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -898,13 +873,13 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "5"){ //KAKI PERSEGI
-  	  
+
 	  var luasAsal = 0;
 	  if (document.${formName}.txtLuasMohon1.value != ''){
 	  	  luasAsal = document.${formName}.txtLuasMohon1.value*1;
 	  }
 	  var luasH = luasAsal*0.0000092;
-  	  
+
 	  if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -917,13 +892,13 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "6"){	//EKAR PERPULUHAN
-  	  
+
 	  var luasAsal = 0;
 	  if (document.${formName}.txtLuasMohon1.value != ''){
 	  	  luasAsal = document.${formName}.txtLuasMohon1.value*1;
 	  }
 	  var luasH = luasAsal*0.405;
-	  
+
 	  if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -934,9 +909,9 @@ function kiraLuas(idLuas){
 			var bakiLuas = (document.${formName}.txtLuasAsal.value - luasH).toFixed(5);
 			document.${formName}.txtBakiLuas.value = bakiLuas;
 		}
-  	  
+
    } else if(jenisLuas == "7"){ //EKAR,DEPA
-  	  
+
 	  	var luasE = 0;
 		if (document.${formName}.txtLuasMohon1.value != ''){
 			luasE = document.${formName}.txtLuasMohon1.value*1;
@@ -945,9 +920,9 @@ function kiraLuas(idLuas){
 		if (document.${formName}.txtLuasMohon2.value != ''){
 			luasD = document.${formName}.txtLuasMohon2.value*1;
 		}
-	  
+
 	  var luasH = (luasE*0.4046864)+(luasD*0.00040469);
-	  
+
 	  if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -961,7 +936,7 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "8"){ //RELONG,JEMBA,KAKI PERSEGI
-  	  
+
 	 	var luasR = 0;
 		if (document.${formName}.txtLuasMohon1.value != ''){
 			luasR = document.${formName}.txtLuasMohon1.value*1;
@@ -974,9 +949,9 @@ function kiraLuas(idLuas){
 		if (document.${formName}.txtLuasMohon3.value != ''){
 			luasK = document.${formName}.txtLuasMohon3.value*1;
 		}
-	  
+
 	  var luasH = (luasR*0.2877764)+(luasJ*0.0005945)+(luasK*0.0000092);
-	  
+
 	  if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -1007,9 +982,9 @@ function calculateTotalPercentPengarah() {
 function checkPercentage(){;
 	if(parseInt(document.${formName}.txtSaham.value) > 100){
 		alert('Sila masukkan nilai peratusan saham dengan betul.');
-		document.${formName}.txtSaham.value = ""; 
-  		document.${formName}.txtSaham.focus(); 
-		return; 
+		document.${formName}.txtSaham.value = "";
+  		document.${formName}.txtSaham.focus();
+		return;
 	}
 }
 function popupMsg(){
@@ -1019,23 +994,23 @@ function popupMsg(){
 function doHantarEmel(){
 	if(pengesahan.checked != true){
 		alert('Sila tanda pada checkbox untuk teruskan permohonan. ');
-		return; 
+		return;
 	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHantarEmel";
 	document.${formName}.submit();
 }
 function doHapus(){
-		
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapus";
 	document.${formName}.actionPenyewaan.value = "";
@@ -1076,7 +1051,7 @@ function daftarLampiran() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.submit2 = "seterusnya";
-	document.${formName}.mode.value = "view";	
+	document.${formName}.mode.value = "view";
 	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.submit();
@@ -1084,14 +1059,14 @@ function daftarLampiran() {
 
 <!-- SENARAI SEMAK -->
 function doSimpanKemaskiniSenaraiSemak() {
-	
+
 	alert('baca semakkkkk');
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
 	document.${formName}.submit();
