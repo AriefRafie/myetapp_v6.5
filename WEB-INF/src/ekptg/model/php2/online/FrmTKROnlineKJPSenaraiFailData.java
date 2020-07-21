@@ -19,7 +19,6 @@ import lebah.db.SQLRenderer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
@@ -36,7 +35,6 @@ public class FrmTKROnlineKJPSenaraiFailData {
 	private Vector<Hashtable<String, Object>> beanMaklumatHakmilik = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatHeader = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatLampiran = null;
-	private Vector<Hashtable<String, Object>> listLampiran = null;
 
 	protected Db db;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -1513,7 +1511,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.NO_PERMOHONAN, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.LUAS_BAKI, C.CADANGAN_KEGUNAAN, D.KETERANGAN AS STATUS "
+			sql = "SELECT A.ID_FAIL, B.NO_PERMOHONAN, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN, D.KETERANGAN AS STATUS "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANPELEPASAN C, TBLRUJSTATUS D WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -1527,7 +1525,6 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				h.put("idFail",rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 				h.put("noRujukanOnline", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN").toUpperCase());
 				h.put("idPermohonan",rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
-				h.put("luasBaki", rs.getString("LUAS_BAKI") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_BAKI")));
 				h.put("idPemohon",rs.getString("ID_PEMOHON") == null ? "" : rs.getString("ID_PEMOHON"));
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? "": sdf.format(rs.getDate("TARIKH_SURAT")));
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
@@ -2230,50 +2227,6 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
-	public void simpanKemaskiniLampiran(String idDokumen, String txtNamaLampiran,
-			String txtCatatan, HttpSession session) throws Exception {
-		Db db = null;
-		Connection conn = null;
-		String userId = (String) session.getAttribute("_ekptg_user_id");
-		String sql = "";
-
-		try {
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-
-			// TBLPHPDOKUMEN
-			r.update("ID_DOKUMEN", idDokumen);
-			r.add("NAMA_DOKUMEN", txtNamaLampiran);
-			r.add("CATATAN", txtCatatan);
-
-			r.add("ID_KEMASKINI", userId);
-			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-			sql = r.getSQLUpdate("TBLPHPDOKUMEN");
-			stmt.executeUpdate(sql);
-
-			conn.commit();
-			
-			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
-					"FAIL [" + idDokumen + "] DIKEMASKINI");
-
-		} catch (SQLException ex) {
-			try {
-				conn.rollback();
-			} catch (SQLException e) {
-				throw new Exception("Rollback error : " + e.getMessage());
-			}
-			throw new Exception("Ralat : Masalah penyimpanan data "
-					+ ex.getMessage());
-
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
 	public void setMaklumatHakmilik(String idHakmilikPermohonan)
 			throws Exception {
 		Db db = null;
@@ -2464,120 +2417,6 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
-	//SENARAI SEMAK
-		public Vector getSenaraiSemak(String idPermohonan, String kategori) throws Exception {
-
-			Db db = null;
-			String sql = "";
-			Vector senaraiSemak = new Vector();
-			
-			try {
-				db = new Db();
-				Statement stmt = db.getStatement();
-
-				sql = "SELECT A.ID_RUJSENARAISEMAK, A.KETERANGAN,"
-						+ " CASE WHEN A.ID_RUJSENARAISEMAK IN (SELECT ID_RUJSENARAISEMAK FROM TBLPHPSENARAISEMAK WHERE ID_PERMOHONAN = '" + idPermohonan + "')"
-						+ " THEN 'Y' END AS FLAG, "
-						+ " CASE WHEN B.KETERANGAN = 'INDIVIDU' THEN '1' ELSE '2' END AS ID_KATEGORIPEMOHON "
-						+ " FROM TBLPHPRUJSENARAISEMAK A, TBLRUJKATEGORIPEMOHON B "
-						+ " WHERE A.ID_KATEGORIPEMOHON = B.ID_KATEGORIPEMOHON AND A.FLAG_AKTIF = 'Y' AND B.KETERANGAN = '" + kategori + "' ";
-				
-				ResultSet rs = stmt.executeQuery(sql);
-
-				Hashtable h;
-				while (rs.next()) {
-					h = new Hashtable();
-					h.put("idSenaraiSemak", rs.getString("ID_RUJSENARAISEMAK") == null ? "" : rs.getString("ID_RUJSENARAISEMAK"));
-					h.put("keterangan", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
-					h.put("flag", rs.getString("FLAG") == null ? "" : rs.getString("FLAG"));
-					senaraiSemak.addElement(h);
-				}
-
-			} catch (Exception re) {
-				myLogger.error("Error: ", re);
-				throw re;
-				} finally {
-				if (db != null)
-					db.close();
-			}
-			return senaraiSemak;
-		}
-		public void setSenaraiLampiran(String idPermohonan) throws Exception {
-			Db db = null;
-			String sql = "";
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-			try {
-				db = new Db();
-				listLampiran = new Vector();
-				Statement stmt = db.getStatement();
-
-				sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN"
-						+ " WHERE ID_PERMOHONAN = '" + idPermohonan + "' AND FLAG_DOKUMEN = 'L'"
-						+ " AND ID_ULASANTEKNIKAL IS NULL AND ID_MESYUARAT IS NULL AND ID_PHPHAKMILIK IS NULL AND ID_PENAWARANKJP IS NULL" 
-						+ " ORDER BY ID_DOKUMEN DESC";
-
-				ResultSet rs = stmt.executeQuery(sql);
-				Hashtable h;
-				int bil = 1;
-				int count = 0;
-				while (rs.next()) {
-					h = new Hashtable();
-					h.put("bil", bil);
-					h.put("idDokumen", rs.getString("ID_DOKUMEN"));
-					h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
-							: rs.getString("NAMA_DOKUMEN"));
-					h.put("catatan",
-							rs.getString("CATATAN") == null ? "" : rs
-									.getString("CATATAN"));
-					listLampiran.addElement(h);
-					bil++;
-					count++;
-				}
-			} finally {
-				if (db != null)
-					db.close();
-			}
-		}
-		
-		//UPDATE SENARAI SEMAK
-		public void updateSenaraiSemak(String idPermohonan, String[] semaks, HttpSession session) throws Exception {
-			
-			String userId = (String) session.getAttribute("_ekptg_user_id");
-			Db db = new Db();
-			String sql = "";		
-			
-			try {
-				Connection conn = db.getConnection();
-				conn.setAutoCommit(false);
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();
-				r = new SQLRenderer();
-				
-				r.add("ID_PERMOHONAN", idPermohonan);
-				sql = r.getSQLDelete("TBLPHPSENARAISEMAK");
-				stmt.executeUpdate(sql);
-				
-				for (int i = 0; i < semaks.length; i++) {
-				 	r = new SQLRenderer();
-					long ID_SENARAISEMAK = DB.getNextID("TBLPHPSENARAISEMAK_SEQ");
-					r.add("ID_SENARAISEMAK", ID_SENARAISEMAK);
-					r.add("ID_PERMOHONAN", idPermohonan);
-					r.add("ID_RUJSENARAISEMAK", semaks[i]);
-					r.add("ID_MASUK", userId);
-					r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-					sql = r.getSQLInsert("TBLPHPSENARAISEMAK");
-					stmt.executeUpdate(sql);
-				}
-				conn.commit();
-				
-				AuditTrail.logActivity("1610198", "4", null, session, "UPD",
-						"FAIL [" + idPermohonan + "] DIKEMASKINI");
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	public Vector getBeanMaklumatLampiran() {
 		return beanMaklumatLampiran;
 	}
@@ -2644,11 +2483,5 @@ public class FrmTKROnlineKJPSenaraiFailData {
 	}
 	public void setBeanMaklumatHeader(Vector<Hashtable<String, Object>> beanMaklumatHeader) {
 		this.beanMaklumatHeader = beanMaklumatHeader;
-	}
-	public Vector<Hashtable<String, Object>> getListLampiran() {
-		return listLampiran;
-	}
-	public void setListLampiran(Vector<Hashtable<String, Object>> listLampiran) {
-		this.listLampiran = listLampiran;
 	}
 }
