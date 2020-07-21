@@ -25,6 +25,9 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.model.entities.Tblrujsuburusanstatusfail;
+import ekptg.model.htp.FrmUtilData;
+import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.php2.FrmTKRHeaderData;
 import ekptg.model.php2.FrmTKRJabatanTeknikalData;
 import ekptg.model.php2.online.FrmTKROnlineKJPSenaraiFailData;
@@ -611,6 +614,10 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			    this.context.put("idHakmilikAgensi", idHakmilikAgensi);
 			    
     			
+//	    			senaraiLampiran = new Vector();
+//	    			logic.setSenaraiLampiran(idPermohonan);
+//	    			senaraiLampiran = logic.getListLampiran();
+//	    			this.context.put("SenaraiLampiran", senaraiLampiran);
 			
 			
 			} else {
