@@ -170,16 +170,10 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/jackson-core-2.9.4.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jackson-databind-2.9.4.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/httpmime-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 8.5/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 8.5/lib/annotations-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 8.5/lib/el-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 8.5/lib/jasper.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 8.5/lib/jsp-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/servlet-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/jasper.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/jsp-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/el-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/annotations-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_261/lib/javax.mail.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
