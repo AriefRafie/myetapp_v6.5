@@ -743,7 +743,8 @@ public class FrmPermohonanPengesahan_bakv7 extends AjaxBasedModule {
 			subUrusanStatusFailN.setAktif("1");
 			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
 			//getIOnline().simpanStatusPermohonan(subUrusanStatusFailN);
-			getIOnline().kemaskiniSimpanStatusPermohonanAktif(subUrusanStatusFail, subUrusanStatusFailN);
+			//2020/07/21, tiada method di OnlineBean
+			//getIOnline().kemaskiniSimpanStatusPermohonanAktif(subUrusanStatusFail, subUrusanStatusFailN);
 			
 		} catch (Exception e) {
 			throw new Exception("Ralat[554]:"+e.getCause());
