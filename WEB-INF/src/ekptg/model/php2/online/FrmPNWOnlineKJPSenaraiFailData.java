@@ -485,6 +485,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPFDFAIL");
+			myLog.info("TBLPFDFAIL 1=="+sql);
 			stmt.executeUpdate(sql);
 			// TBLPHPPEMOHON
 			r = new SQLRenderer();
@@ -496,6 +497,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 
 			sql = "SELECT * FROM TBLRUJAGENSI WHERE ID_AGENSI = '"
 						+ idAgensiPemohon + "'";
+			myLog.info("TBLPHPPEMOHON 2=="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				r.add("NAMA", rs.getString("NAMA_AGENSI") == null ? "" : rs
@@ -536,6 +538,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPERMOHONAN");
+			myLog.info("TBLPERMOHONAN 3=="+sql);
 			stmt.executeUpdate(sql);
 			// TBLPHPHAKMILIKPERMOHONAN
 			r = new SQLRenderer();
@@ -554,8 +557,8 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-
 			sql = r.getSQLInsert("TBLPHPHAKMILIKPERMOHONAN");
+			myLog.info("TBLPHPHAKMILIKPERMOHONAN 4=="+sql);
 			stmt.executeUpdate(sql);
 			// TBLPHPHAKMILIK
 			String peganganHakmilik = "";
@@ -594,6 +597,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 					r.add("ID_AGENSI", hashTanah.get("idAgensi"));
 
 					sql = r.getSQLInsert("TBLPHPHAKMILIK");
+					myLog.info("TBLPHPHAKMILIK 5=="+sql);
 					stmt.executeUpdate(sql);
 
 				}
@@ -611,6 +615,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPPERMOHONANPELEPASAN");
+			myLog.info("TBLPHPPERMOHONANPELEPASAN 6=="+sql);
 			stmt.executeUpdate(sql);
 
 			// TBLRUJSUBURUSANSTATUSFAIL
@@ -630,6 +635,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			myLog.info("TBLRUJSUBURUSANSTATUSFAIL 7=="+sql);
 			stmt.executeUpdate(sql);
 			// TBLPHPLAPORANTANAH
 			r = new SQLRenderer();
@@ -644,6 +650,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPLAPORANTANAH");
+			myLog.info("TBLPHPLAPORANTANAH 8=="+sql);
 			stmt.executeUpdate(sql);
 			conn.commit();
 
@@ -1060,6 +1067,9 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
+	
+	
+	
 
 	public void setMaklumatHeader(String idFail) throws Exception {
 		Db db = null;

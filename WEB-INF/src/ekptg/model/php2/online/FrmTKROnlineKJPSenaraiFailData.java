@@ -19,7 +19,6 @@ import lebah.db.SQLRenderer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
@@ -1079,10 +1078,11 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
 			
-			//sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
 			myLogger.info("sql 8: "+sql);
-//			stmt.executeUpdate(sql);
+			stmt.executeUpdate(sql);
 
 			// TBLPHPLAPORANTANAH
 			r = new SQLRenderer();
@@ -2227,50 +2227,6 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
-	public void simpanKemaskiniLampiran(String idDokumen, String txtNamaLampiran,
-			String txtCatatan, HttpSession session) throws Exception {
-		Db db = null;
-		Connection conn = null;
-		String userId = (String) session.getAttribute("_ekptg_user_id");
-		String sql = "";
-
-		try {
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-
-			// TBLPHPDOKUMEN
-			r.update("ID_DOKUMEN", idDokumen);
-			r.add("NAMA_DOKUMEN", txtNamaLampiran);
-			r.add("CATATAN", txtCatatan);
-
-			r.add("ID_KEMASKINI", userId);
-			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-			sql = r.getSQLUpdate("TBLPHPDOKUMEN");
-			stmt.executeUpdate(sql);
-
-			conn.commit();
-			
-			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
-					"FAIL [" + idDokumen + "] DIKEMASKINI");
-
-		} catch (SQLException ex) {
-			try {
-				conn.rollback();
-			} catch (SQLException e) {
-				throw new Exception("Rollback error : " + e.getMessage());
-			}
-			throw new Exception("Ralat : Masalah penyimpanan data "
-					+ ex.getMessage());
-
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
 	public void setMaklumatHakmilik(String idHakmilikPermohonan)
 			throws Exception {
 		Db db = null;
@@ -2461,83 +2417,6 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
-	//SENARAI SEMAK
-		public Vector getSenaraiSemak(String idPermohonan, String kategori) throws Exception {
-
-			Db db = null;
-			String sql = "";
-			Vector senaraiSemak = new Vector();
-			
-			try {
-				db = new Db();
-				Statement stmt = db.getStatement();
-
-				sql = "SELECT A.ID_RUJSENARAISEMAK, A.KETERANGAN,"
-						+ " CASE WHEN A.ID_RUJSENARAISEMAK IN (SELECT ID_RUJSENARAISEMAK FROM TBLPHPSENARAISEMAK WHERE ID_PERMOHONAN = '" + idPermohonan + "')"
-						+ " THEN 'Y' END AS FLAG, "
-						+ " CASE WHEN B.KETERANGAN = 'INDIVIDU' THEN '1' ELSE '2' END AS ID_KATEGORIPEMOHON "
-						+ " FROM TBLPHPRUJSENARAISEMAK A, TBLRUJKATEGORIPEMOHON B "
-						+ " WHERE A.ID_KATEGORIPEMOHON = B.ID_KATEGORIPEMOHON AND A.FLAG_AKTIF = 'Y' AND B.KETERANGAN = '" + kategori + "' ";
-				
-				ResultSet rs = stmt.executeQuery(sql);
-
-				Hashtable h;
-				while (rs.next()) {
-					h = new Hashtable();
-					h.put("idSenaraiSemak", rs.getString("ID_RUJSENARAISEMAK") == null ? "" : rs.getString("ID_RUJSENARAISEMAK"));
-					h.put("keterangan", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
-					h.put("flag", rs.getString("FLAG") == null ? "" : rs.getString("FLAG"));
-					senaraiSemak.addElement(h);
-				}
-
-			} catch (Exception re) {
-				myLogger.error("Error: ", re);
-				throw re;
-				} finally {
-				if (db != null)
-					db.close();
-			}
-			return senaraiSemak;
-		}
-		
-		//UPDATE SENARAI SEMAK
-		public void updateSenaraiSemak(String idPermohonan, String[] semaks, HttpSession session) throws Exception {
-			
-			String userId = (String) session.getAttribute("_ekptg_user_id");
-			Db db = new Db();
-			String sql = "";		
-			
-			try {
-				Connection conn = db.getConnection();
-				conn.setAutoCommit(false);
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();
-				r = new SQLRenderer();
-				
-				r.add("ID_PERMOHONAN", idPermohonan);
-				sql = r.getSQLDelete("TBLPHPSENARAISEMAK");
-				stmt.executeUpdate(sql);
-				
-				for (int i = 0; i < semaks.length; i++) {
-				 	r = new SQLRenderer();
-					long ID_SENARAISEMAK = DB.getNextID("TBLPHPSENARAISEMAK_SEQ");
-					r.add("ID_SENARAISEMAK", ID_SENARAISEMAK);
-					r.add("ID_PERMOHONAN", idPermohonan);
-					r.add("ID_RUJSENARAISEMAK", semaks[i]);
-					r.add("ID_MASUK", userId);
-					r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-					sql = r.getSQLInsert("TBLPHPSENARAISEMAK");
-					stmt.executeUpdate(sql);
-				}
-				conn.commit();
-				
-				AuditTrail.logActivity("1610198", "4", null, session, "UPD",
-						"FAIL [" + idPermohonan + "] DIKEMASKINI");
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	public Vector getBeanMaklumatLampiran() {
 		return beanMaklumatLampiran;
 	}
