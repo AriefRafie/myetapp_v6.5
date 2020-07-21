@@ -25,6 +25,9 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.model.entities.Tblrujsuburusanstatusfail;
+import ekptg.model.htp.FrmUtilData;
+import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.php2.FrmTKRHeaderData;
 import ekptg.model.php2.FrmTKRJabatanTeknikalData;
 import ekptg.model.php2.online.FrmTKROnlineKJPSenaraiFailData;
@@ -212,9 +215,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 						idHakmilikAgensi, idLuasKegunaan,
 						getParam("txtTujuanKegunaan"), getParam("idKementerianTanah"), getParam("idNegeriTanah"),
 						getParam("idLuasTanah"), getParam("luasTanah"), idHakmilikSementara, session);
-<<<<<<< HEAD
-				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",idSuburusan,"=");
-=======
 				
 				Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
 				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",idSuburusan,"=");
@@ -225,7 +225,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				HTPStatusBean sb = new HTPStatusBean();
 				sb.simpanStatusAktif(subUrusanStatusFailN);
 
->>>>>>> 2fa9f4ce5bc213fd2b2f727f7e7ee7f4c8b28e46
 			}
 			if("doSimpanSenaraiSemak".equals(hitButton)){
 				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"), 
@@ -695,10 +694,10 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 						
 					}
 					//SENARAI LAMPIRAN
-	    			senaraiLampiran = new Vector();
-	    			logic.setSenaraiLampiran(idPermohonan);
-	    			senaraiLampiran = logic.getListLampiran();
-	    			this.context.put("SenaraiLampiran", senaraiLampiran);
+//	    			senaraiLampiran = new Vector();
+//	    			logic.setSenaraiLampiran(idPermohonan);
+//	    			senaraiLampiran = logic.getListLampiran();
+//	    			this.context.put("SenaraiLampiran", senaraiLampiran);
 					
 				}
 				
