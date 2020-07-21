@@ -34,7 +34,9 @@ import ekptg.model.utils.Fungsi;
 public class LampiranBean implements ILampiran{
 	private static Logger myLog = Logger.getLogger(ekptg.model.utils.lampiran.LampiranBean.class);
 //	private Connection conn = null;
-	Vector<Tblrujdokumen> lampiran = null;
+	private Db db = null;
+	private String sql = "";
+	private Vector<Tblrujdokumen> lampiran = null;
 	public StringBuffer sb = new StringBuffer("");
 
 	public String getLampirans(String idRujukan,String jenisDokumen,String js) throws Exception {
