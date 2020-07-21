@@ -811,7 +811,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 							, String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
 							, emelSubjek, kandungan);
 								
-				}else if (idJawatan.equals("-4")){
+				}else if (idJawatan.equals("4")){
 					langkah2 = "-4";
 					emelSubjek = ec.tajukHantarPermohonan + "Penawaran";
 							
@@ -840,10 +840,10 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 				rsusf.setIdSuburusanstatusfail(Long.parseLong(idSubUrusan));
 				rsusf.setIdSuburusanstatus(setIdSuburusanstatus);
 				rsusf.setUrl("-");
-//				simpanPengesahan(rsusf,langkah2);
 				
 				myLog.info("userId=="+userId);
 				rsusf.setIdMasuk(Long.parseLong(userId));
+//				simpanPengesahan(rsusf,langkah2);
 
 				
 				if(getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan3.get("idSubUrusan"))),
