@@ -27,6 +27,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
+import lebah.db.DbException;
 import lebah.db.SQLRenderer;
 import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
@@ -4759,7 +4760,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
-	public void sendEmail(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
+	public void sendEmailNotifikasi(String idPermohonan,String emel) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		Vector beanMaklumatEmail = null;
@@ -4779,17 +4780,17 @@ public class FrmAPBJabatanTeknikalData {
 			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA "
 				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLPERMOHONAN C, TBLPFDFAIL D "
 				+ " WHERE A.ID_MENTERI = B.ID_KEMENTERIAN AND A.ID_PERMOHONAN = C.ID_PERMOHONAN "
-				+ " AND C.ID_FAIL = D.ID_FAIL AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
+				+ " AND C.ID_FAIL = D.ID_FAIL"
 				+ " AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
 			
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				noFail = rsEmel.getString("NO_FAIL");
-				emelUser = rsEmel.getString("EMEL");
+				//emelUser = rsEmel.getString("EMEL");
 				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
 			}	
 			
-			email.RECIEPIENT = emelUser;
+			email.RECIEPIENT = emel;
 			email.SUBJECT = "PERMOHONAN ULASAN JABATAN TEKNIKAL BAGI NO. FAIL " + noFail;
 			email.MESSAGE = "Mohon pihak tuan memberikan ulasan dan keputusan bagi permohonan tersebut<br><br>"
 							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
@@ -4804,7 +4805,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 	}
 	
-	public void sendEmailMaklumanJT(String emelUnitAPB,String idPermohonan, String idKementerian, HttpSession session) throws Exception {
+	public void sendEmailMaklumanJT(String emelUnitAPB,String idPermohonan) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		Vector beanMaklumatEmail = null;
@@ -4824,14 +4825,14 @@ public class FrmAPBJabatanTeknikalData {
 			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA "
 				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLPERMOHONAN C, TBLPFDFAIL D "
 				+ " WHERE A.ID_MENTERI = B.ID_KEMENTERIAN AND A.ID_PERMOHONAN = C.ID_PERMOHONAN "
-				+ " AND C.ID_FAIL = D.ID_FAIL AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
+				+ " AND C.ID_FAIL = D.ID_FAIL" // AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
 				+ " AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
 			
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				noFail = rsEmel.getString("NO_FAIL");
-				emelUser = rsEmel.getString("EMEL");
-				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
+				//emelUser = rsEmel.getString("EMEL");
+				//tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
 			}	
 			
 			//email.RECIEPIENT = emelUser;
