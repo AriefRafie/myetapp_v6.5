@@ -464,6 +464,5 @@ public class FrmSemakan {
 				
 	}
 
-	
-	}
+
 }
