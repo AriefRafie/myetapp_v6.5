@@ -1,33 +1,33 @@
 <style type="text/css">
 
 #if ($!modul == 'htp')
-<!--
-#parse("css/eTapp_HTP.css") .style1 {
-color: #0000FF
-}
-.style2 {
-	color: #FF0000
-}
--->
-#else if($!modul == 'ppt')
-<!--
-#parse("css/eTapp_PPT.css") .style1 {
-color: #0000FF
-}
-.style2 {
-	color: #FF0000
-}
--->
-#else
-<!--
-#parse("css/eTapp_PPK.css") .style1 {
-color: #0000FF
-}
-.style2 {
-	color: #FF0000
-}
--->
-        
+	<!--
+	#parse("css/eTapp_HTP.css") .style1 {
+	color: #0000FF
+	}
+	.style2 {
+		color: #FF0000
+	}
+	-->
+#elseif($!modul == 'ppt')
+	<!--
+	#parse("css/eTapp_PPT.css") .style1 {
+	color: #0000FF
+	}
+	.style2 {
+		color: #FF0000
+	}
+	-->
+#elseif($!modul == 'ppk')
+	<!--
+	#parse("css/eTapp_PPK.css") .style1 {
+	color: #0000FF
+	}
+	.style2 {
+		color: #FF0000
+	}
+	-->
+#else       
 #end
 </style>
 <input type="hidden" name="actionPopup"/>
@@ -38,13 +38,13 @@ color: #0000FF
   #if ($flagMsg == 'Y')
   <tr>
     <td colspan="3">&nbsp;
-      <div class="success">HAKMILIK BERYAJA DIDAFTARKAN</div></td>
+      <div class="success">HAKMILIK BERJAYA DIDAFTARKAN</div></td>
   </tr>
   #end
   #if ($flagMsg == 'N')
   <tr>
     <td colspan="3">&nbsp;
-      <div class="error">HAKMILIK TIDAK BERYAJA DIDAFTARKAN : $outputMsg</div></td>
+      <div class="error">HAKMILIK TIDAK BERJAYA DIDAFTARKAN : $outputMsg</div></td>
   </tr>
   #end
   <tr>
@@ -59,7 +59,7 @@ color: #0000FF
               <input type="hidden" name="noResit" value="$beanMaklumatHakmilik.noResit"/>
               <input type="hidden" name="idPermohonanSimati" value="$beanMaklumatHakmilik.idPermohonanSimati"/>
               <tr>
-                <td width="37%" align="right">NO RESIT :</td>
+                <td width="37%" align="right">NO. RESIT :</td>
                 <td width="63%"><span class="style1">$beanMaklumatHakmilik.noResit</span></td>
               </tr>
               <tr>
@@ -90,16 +90,25 @@ color: #0000FF
                 <td align="right">NEGERI :</td>
                 <td><span class="style1">$beanMaklumatHakmilik.negeri</span></td>
               </tr>
+              #if($!modul == 'ppk')
+              
               <tr>
                 <td align="right">BAHAGIAN SIMATI :</td>
                 <td><span class="style1">$beanMaklumatHakmilik.ba / $beanMaklumatHakmilik.bb</span></td>
               </tr>
+              ##end
+              #elseif($!modul == 'ppt')
+              <tr>
+                <td align="right">SYER :</td>
+                <td><span class="style1">$beanMaklumatHakmilik.ba / $beanMaklumatHakmilik.bb</span></td>
+              </tr>
+              #end
               <tr>
                 <td align="right"> PAJAKAN :</td>
                 <td><span class="style1">$beanMaklumatHakmilik.pajakan</span></td>
               </tr>
               <tr>
-                <td align="right">NO PERSERAHAN PAJAKAN:</td>
+                <td align="right">NO. PERSERAHAN PAJAKAN:</td>
                 <td><span class="style1">$beanMaklumatHakmilik.noPerserahan</span></td>
               </tr>
               <tr>
@@ -107,7 +116,7 @@ color: #0000FF
                 <td><span class="style1">$beanMaklumatHakmilik.gadaian</span></td>
               </tr>
               <tr>
-                <td align="right">NO PERSERAHAN GADAIAN:</td>
+                <td align="right">NO. PERSERAHAN GADAIAN:</td>
                 <td><span class="style1">$beanMaklumatHakmilik.noPerserahanGadaian</span></td>
               </tr>
             </table></td>
@@ -117,7 +126,7 @@ color: #0000FF
                 <td width="63%" valign="top"><span class="style1">$beanMaklumatHakmilik.kaveat</span></td>
               </tr>
               <tr>
-                <td align="right" valign="top">NO PERSERAHAN KAVEAT:</td>
+                <td align="right" valign="top">NO. PERSERAHAN KAVEAT:</td>
                 <td><span class="style1">$beanMaklumatHakmilik.noPerserahanKaveat</span></td>
               </tr>
               <tr>

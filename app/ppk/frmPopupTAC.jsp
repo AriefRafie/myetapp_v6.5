@@ -6,7 +6,7 @@
 </style>
 
  <input type="hidden" name="idFail" id="idFail" value="$idFail"> 
-  <input type="hidden" name="userId" id="userId" value="$userId"> 
+  <input type="hidden" name="userId" id="userId" value="$userId">
     <input type="hidden" name="otp" id="otp" value="$!otp">
 <script type="text/javascript" src="../../library/js/SpryTabbedPanels.js"></script>
 <script type="text/javascript" src="../../library/js/ekptgTools.js"></script>

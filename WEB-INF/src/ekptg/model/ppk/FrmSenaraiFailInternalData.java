@@ -1041,7 +1041,7 @@ public class FrmSenaraiFailInternalData {
 			sql = sql
 					+ " AND f.no_fail is not null ORDER BY  A.TARIKH_MOHON DESC, A.ID_DAERAHMHN";
 
-			// System.out.print("SQL 17 SENARAI XXXX :"+sql);
+			myLogger.info("SQL 17 SENARAI XXXX sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 			int bil = 1;

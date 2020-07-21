@@ -118,7 +118,7 @@
 			    				<!--$!list.permohonan.getNoPermohonan()
 			    				</font></a>-->
 			    		#if ($!list.permohonan.pfdFail.getIdUrusan() == '1' || $!list.permohonan.pfdFail.getIdUrusan()=='10') 
-			    				<a href="javascript:permohonanViewMaklumatOnline('$!list.permohonan.pfdFail.getIdFail()')" class="pautanms">$!list.permohonan.getNoPermohonan()</a>
+			    				<a href="javascript:permohonanViewMaklumatOnline('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()')" class="pautanms">$!list.permohonan.getNoPermohonan()</a>
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '5' ) 
 			    				<a href="javascript:perletakhakanViewMaklumatOnline('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan','$list.idSuburusanStatusFail')" class="pautanms">$!list.permohonan.getNoPermohonan()</a>
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '2' ) 
@@ -134,16 +134,16 @@
 						#if(!$list.getStatusPermohonan().contains('TOLAK')) 
 			    			
 						#if ($!list.permohonan.pfdFail.getIdUrusan() == '1' || $!list.permohonan.pfdFail.getIdUrusan()=='10') 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Proses" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya" 
 			    			onclick="permohonanSimpanPengesahan($!list.permohonan.pfdFail.getIdFail())">
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '5' ) 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Proses" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya2" 
 			    			onclick="perletakhakanSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan','$list.idSuburusanStatusFail')">			    		
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '2' ) 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Proses" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya3" 
 			    			onclick="pembelianSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan')">			    		
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '3' ) 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Proses" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya4" 
 			    			onclick="pajakanSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan','$list.idSuburusanStatusFail')">			    		
 			    		#end
 			    		
@@ -169,160 +169,73 @@
 	<input type="hidden" name="mode" /></td>
 
 <script>
-	
-	//cmdCari
-	function carian(){
-		document.${formName}.txtcarian.value="ya";
-		doAjaxCall${formName}("","");
-	
-	}
-	
-	function doChangeKementerianCarian(){
-		document.${formName}.txtcarian.value="ya";
-		doAjaxCall${formName}("","");
-	
-	}
-	
-	function doChangeNegeriCarian(){
-		document.${formName}.txtcarian.value="ya";
-		doAjaxCall${formName}("","");
-	
-	}
-	
-	function doChangeDaerahCarian(){
-		document.${formName}.txtcarian.value="ya";
-		doAjaxCall${formName}("","");
-	
-	}
-	//PERMOHONAN
-	function kemaskiniterimapermohonan(id){
-		var mode = 'MakAsasTanah';
-		doAjaxCall${formName}("permohonankemaskinionline","mode="+mode+"&idfail="+id+"&pagemode=0");
-	}
-	
-	function permohonanSimpanPengesahan(id){
-		var mode = 'viewMaklumatPermohonan';
-		doAjaxCall${formName}("permohonanviewmaklumat","mode="+mode+"&idfail="+id+"&pagemode=0");
-	}
-	
-	function permohonanTolak(id){
-		var mode = 'viewMaklumatPermohonan';
-		doAjaxCall${formName}("permohonanditolak","mode="+mode+"&idfail="+id+"&pagemode=0");
-	}
-
-	function permohonanTerima(id){
-		var mode = 'viewMaklumatPermohonan';
-		doAjaxCall${formName}("permohonanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
-	}
-	
-	function viewMaklumatPermohonan(id){
-		var mode = 'viewMaklumatPermohonan';
-		document.${formName}.command.value = 'viewMaklumatPermohonan';
-		document.${formName}.action = "$EkptgUtil.getTabID('Permohonan',$portal_role)?_portal_module=ekptg.view.htp.FrmTerimaPohon1&mode="+mode+"&idfail="+id+"&pagemode=0";
-		document.${formName}.submit();
-	}
-	
-	function permohonanViewMaklumatOnline(id){	
-		var mode = 'viewMaklumatPermohonan';
-		document.${formName}.command.value = 'viewMaklumatPermohonan';
-		document.${formName}.action = "$EkptgUtil.getTabID('Permohonan',$portal_role)?_portal_module=ekptg.view.htp.FrmTerimaPohon1&mode="+mode+"&idfail="+id+"&pagemode=0";
-		document.${formName}.submit();
-	}
-	
-	//PERLETAKHAKAN
-	function perletakhakanSimpanPengesahan(idA,idB,idC,idE){
-		//var mode = 'viewMaklumatPermohonan';
-		//doAjaxCall${formName}("perletakhakanviewmaklumat","mode="+mode+"&idfail="+id+"&pagemode=0");
-		doAjaxCall${formName}("perletakhakanviewmaklumat","actionPerletakhakan=papar&idfail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE);
-	}
-	
-	function perletakhakanViewMaklumatOnline(idA,idB,idC,idE){
-		//doAjaxCall${formName}("","actionPerletakhakan=papar&idFail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE);
-		document.${formName}.action = "$EkptgUtil.getTabID('Perletakhakan',$portal_role)?_portal_module=ekptg.view.htp.FrmPerletakhakanPendaftaran&actionPerletakhakan=papar&idFail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE;
-		document.${formName}.submit();
-	}
-	
-	function perletakhakanTolak(id){
-		var mode = 'viewMaklumatPermohonan';
-		doAjaxCall${formName}("perletakhakanditolak","mode="+mode+"&idfail="+id+"&pagemode=0");
-	}
-
-	function perletakhakanTerima(id){
-		var mode = 'viewMaklumatPermohonan';
-		doAjaxCall${formName}("perletakhakanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
-	}
-	
-	//PAJAKAN
+//PAJAKAN
 	function pajakanSimpanPengesahan(idA,idB,idC,idE){
-		//var mode = 'viewMaklumatPermohonan';
-		//doAjaxCall${formName}("perletakhakanviewmaklumat","mode="+mode+"&idfail="+id+"&pagemode=0");
-		doAjaxCall${formName}("pajakanviewmaklumat","actionPerletakhakan=papar&idfail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE);
-	}
-	
-	function pajakanViewMaklumatOnline(idFail,idB,idC,idE){
-		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
-		actionName = "setSessionIdFail";
-		target = "setSessionIdFail_result";
-		doAjaxUpdater(document.${formName}, url, target, actionName);
-		
-		//document.${formName}.action = "$EkptgUtil.getTabID('Pajakan',$portal_role)?_portal_module=ekptg.view.htp.FrmPerletakhakanPendaftaran&actionPerletakhakan=papar&idFail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE;
-		document.${formName}.action = "$EkptgUtil.getTabID('Pajakan',$portal_role)?_portal_module=ekptg.view.htp.pajakan.FrmPajakanPendaftaranView";
-	
-		document.${formName}.mode.value = "view";
-		//document.${formName}.actionPajakan.value = "papar";
+		//
+		var mode = 'pajakanviewmaklumat';
+			//doAjaxCall${formName}("perletakhakanviewmaklumat","mode="+mode+"&idfail="+id+"&pagemode=0");
+		//doAjaxCall${formName}("pajakanviewmaklumat","actionPerletakhakan=papar&idfail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE);
+		document.${formName}.command.value = mode;
+		document.${formName}.action = "$EkptgUtil.getTabID('Pajakan',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&actionPerletakhakan=papar&idfail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE;
 		document.${formName}.submit();
-	
-	}
-	
-	function pajakanTolak(id){
-		var mode = 'viewMaklumatPermohonan';
-		doAjaxCall${formName}("pajakanditolak","mode="+mode+"&idfail="+id+"&pagemode=0");
-	}
 
-	function pajakanTerima(id){
-		var mode = 'viewMaklumatPermohonan';
-		doAjaxCall${formName}("pajakanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
 	}
 	
-	//PEMBELIAN
-	function pembelianSimpanPengesahan(idA,idB,idC){
+//PERLETAKHAKAN
+
+//PEMBELIAN
+	
+	function pembelianViewMaklumatOnline(idPermohonan,idHtp){
+		//doAjaxCall${formName}("detail",'idPermohonan='+id+'&idHtpPermohonan='+idhtp);
+		document.${formName}.command.value = 'detail';
+		document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idPermohonan+"&idHtpPermohonan="+idHtp;
+		//document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idPermohonan+"&idHtpPermohonan="+idHtp;
+		document.${formName}.submit();
+	}
+	
+function pembelianSimpanPengesahan(idA,idB,idC){
 		document.${formName}.command.value = 'pembelianviewmaklumat';
-		document.${formName}.action = "$EkptgUtil.getTabID('Perakuan Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idB+"&idHtpPermohonan="+idC;
+		document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&idPermohonan="+idB+"&idHtpPermohonan="+idC;
+		//document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idB+"&idHtpPermohonan="+idC;
 		document.${formName}.submit();
 		
 		//var mode = 'viewMaklumatPermohonan';
 		//doAjaxCall${formName}("perletakhakanviewmaklumat","mode="+mode+"&idfail="+id+"&pagemode=0");
 		//doAjaxCall${formName}("pembelianviewmaklumat","idfail="+idA+"&txtidPermohonan="+idB+"&idPermohonan="+idB+"&idHtpPermohonan="+idC);
 	}
+
+//PERMOHONAN
+	//guna di frmPermohonanPengesahan.jsp
+// 	function tolakPermohonanOnline(id_permohonan,formnew) {	
+//	    var title = 'Cetakan';
+//		var w =400;
+//		var h = 200;
+//
+//		var left = (screen.width/2)-(w/2);
+//		var top = (screen.height/2)-(h/2);
+//		var url = "../x/${securityToken}/FrmPopupTolakPermohonan?id_permohonan="+id_permohonan+"&formnew="+formnew+"&modul=ppk&jenisTolak=internal";
+//		
+//		var hWnd = window.open(url, "Permohonan Online Dikembalikan", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+//		if ((document.window != null) && (!hWnd.opener))
+//		hWnd.opener = document.window;
+//	    if (hWnd.focus != null) hWnd.focus();
+//		
+//	} 
 	
-	function pembelianViewMaklumatOnline(idPermohonan,idHtp){
-		//doAjaxCall${formName}("detail",'idPermohonan='+id+'&idHtpPermohonan='+idhtp);
-		document.${formName}.command.value = 'detail';
-		document.${formName}.action = "$EkptgUtil.getTabID('Perakuan Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idPermohonan+"&idHtpPermohonan="+idHtp;
-		//document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.htp.pembelian.SenaraiFailModule&idPermohonan="+idPermohonan+"&idHtpPermohonan="+idHtp;
+	function permohonanSimpanPengesahan(idFail){		
+		var mode = 'viewMaklumatPermohonan';
+		document.${formName}.command.value = 'permohonanviewmaklumat';
+		document.${formName}.action = "$EkptgUtil.getTabID('Permohonan',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&idfail="+idFail;
+		document.${formName}.submit();
+ 
+		/* doAjaxCall${formName}("permohonanviewmaklumat","mode="+mode+"&idfail="+id+"&pagemode=0");
+	*/
+	}
+	
+	function permohonanViewMaklumatOnline(idFail){	
+		var mode = 'viewMaklumatPermohonan';
+		document.${formName}.command.value = 'viewMaklumatPermohonan';
+		document.${formName}.action = "$EkptgUtil.getTabID('Permohonan',$portal_role)?_portal_module=ekptg.view.htp.FrmTerimaPohon1&mode="+mode+"&idfail="+idFail+"&pagemode=0";
 		document.${formName}.submit();
 	}
-	
-	function pembelianTolak(id){
-		var mode = 'viewMaklumatPermohonan';
-		doAjaxCall${formName}("pembelianditolak","mode="+mode+"&idfail="+id+"&pagemode=0");
-	}
-
-	function pembelianTerima(id){
-		var mode = 'viewMaklumatPermohonan';
-		doAjaxCall${formName}("pembelianditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
-	}
-	
-	function cetakImej(id){
-		//var url = "../servlet/ekptg.view.htp.FrmRekodDisplayImej?id="+id;
-	    var url = "../servlet/ekptg.view.pfd.DisplayBlob?id="+id;
-	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
-	    if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener=document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-	}
-	
-	
-	
-
 </script>

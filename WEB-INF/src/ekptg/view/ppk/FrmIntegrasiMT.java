@@ -1743,16 +1743,16 @@ public class FrmIntegrasiMT extends VTemplate {
 						"namaDokumen",
 						rs.getString("NAMA_DOKUMEN") == null ? "" : rs
 								.getString("NAMA_DOKUMEN"));
-				
-				Blob  b = rs.getBlob("KANDUNGAN");
-				InputStream is = b.getBinaryStream();
-				 byte [] b2 = IOUtils.toByteArray(is);
-					String content = Base64.encodeToString(b2);
-					myLogger.info("*****KANDUNGAN*****");
-				
-				permohonanMT.put("docContent", content);
-				
-				
+				String content = "TIADA";	
+				if(rs.getString("KANDUNGAN")!=null) {
+					Blob  b = rs.getBlob("KANDUNGAN");
+					InputStream is = b.getBinaryStream();
+					byte [] b2 = IOUtils.toByteArray(is);
+					content = Base64.encodeToString(b2);
+					
+				}	
+//				myLogger.info("*****KANDUNGAN*****");			
+				permohonanMT.put("docContent", content);				
 				
 			}
 		} catch (Exception ex) {

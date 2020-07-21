@@ -436,7 +436,7 @@ Vector listabc = null;
 							txtbox = getParam("txtTahunKematian");
 						}
 						// if(bolehsimpan.equals("yes")){
-//						logic_C.semakanAdd(cbsemaks[i], String.valueOf(idPermohonan), String.valueOf(txtbox),
+						logic_C.semakanAdd(cbsemaks[i], String.valueOf(idPermohonan), String.valueOf(txtbox),
 								String.valueOf(tarikhresit),String.valueOf(tarikhperintah), buktimati, uu);
 						// }
 
