@@ -40,11 +40,7 @@ public class EmailTesting {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(
                     Message.RecipientType.TO,
-<<<<<<< HEAD
                     InternetAddress.parse("roslizakaria@gmail.com, matle04@yahoo.com")
-=======
-                    InternetAddress.parse("cikyatiey@gmail.com, matle04@yahoo.com")
->>>>>>> 49eb18d648990948c4166d12fdc18300bc0eabba
             );
             message.setSubject("Testing Gmail TLS");
             //message.setText("Dear Mail Crawler,"
