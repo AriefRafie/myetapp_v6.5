@@ -26,6 +26,7 @@ import ekptg.helpers.Paging;
 import ekptg.model.htp.FrmOnlinePajakanHeaderData;
 //import ekptg.model.htp.FrmPajakanHeaderData;
 import ekptg.model.htp.FrmOnlinePajakanSenaraiFailData;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.HakmilikUrusan;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;

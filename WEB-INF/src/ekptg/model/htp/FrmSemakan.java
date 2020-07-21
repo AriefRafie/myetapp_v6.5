@@ -14,10 +14,16 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblsemakan;
+import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmSemakan {
 	
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.FrmSemakan.class);
+	private ILampiran iLampiran = null;
+	private ILampiran iLampiranPHP = null;
+	private static Db db = null;
+	private static String sql = "";
+	public String mode = "";
 
 	public static Vector<Tblsemakan> getSemakan(String idSemakan,String semakan) throws Exception {
 		Db db = null;
@@ -226,7 +232,69 @@ public class FrmSemakan {
 		  
 		 }
 		 
-	 
+		public Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm,String idPermohonan) 
+				throws Exception {
+				//public Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm) throws Exception {
+				Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
+//		        myLog.info("getSenaraiSemakanAttach :kodForm= " + kodForm.substring(0,3));
+
+				    try {
+				      db = new Db();
+				      Statement stmt = db.getStatement();
+				      SQLRenderer r = new SQLRenderer();
+				      r.add("i.aturan");
+				      r.add("i.id_semakansenarai");
+				      r.add("s.perihal");
+				      r.add("NVL(SJD.ID_JENISDOKUMEN,0) jenis_dokumen");
+				      r.add("NVL(JD.KETERANGAN,'TIADA') nama_dokumen");
+				      r.add("CASE "+
+				    		  "WHEN sh.ID_SEMAKANHANTAR IS NULL "+
+				    		  "	THEN 'N' "+
+				    		  "ELSE 'Y'	"+
+				    		 "END FLAG ");
+				      r.add("i.id_semakan",r.unquote("s.id_semakan"));
+				      r.add("i.id_semakan",r.unquote("sjd.id_semakan(+)"));
+				      r.add("sjd.id_jenisdokumen",r.unquote("jd.id_jenisdokumen(+)"));
+				      r.add("i.id_semakansenarai",r.unquote("sh.id_semakansenarai(+)"));
+
+				      if(!kodForm.equals("0"))
+				    	  r.add("i.kod_form",kodForm);
+				      sql = " tblsemakan s,tblsemakansenarai i,tblsemakanjenisdokumen sjd,tblrujjenisdokumen jd,tblsemakanhantar sh";
+				      sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
+//			          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
+				      ResultSet rs = stmt.executeQuery(sql);
+				      Hashtable<String,String> h;
+				      String lampiran = "-";
+				      while (rs.next()) {
+				    	  h = new Hashtable<String,String>();
+				    	  h.put("id", rs.getString("id_semakansenarai"));
+				    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
+				    	  h.put("keterangan", rs.getString("perihal"));
+				    	  h.put("jenisDokumen", rs.getString("jenis_dokumen"));
+				    	  h.put("flag", rs.getString("flag"));
+				    	  if(!rs.getString("jenis_dokumen").equals("0")) {
+				    		  lampiran = setLampiran(kodForm.substring(0,3),idPermohonan,rs.getString("id_semakansenarai"),rs.getString("jenis_dokumen"));
+//				    		  lampiran = "X";
+				    	  }else {
+				    		  lampiran = "";
+				    	  }
+				    	  h.put("lampirans", lampiran);
+							
+				    	  list.addElement(h);
+				    	  
+				      }
+				      
+			   }catch(Exception e){
+				   e.printStackTrace();
+			   }finally {
+				   if (db != null){
+					   db.close();
+				   }
+			   }	    
+			    return list;
+				  
+			}
+	
 	 public static Vector getSenaraiSemakan(String kodForm,String aktif)throws Exception {
 		    Db db = null;
 		    String sql = "";
@@ -424,6 +492,38 @@ public class FrmSemakan {
 		      if (db != null) db.close();
 		    }
 		  }
+	 private String setLampiran(String modul,String rujukan,String jenisDokumen,String mode) throws Exception {		
+			StringBuffer sb = new StringBuffer("");	
+			if(!mode.equals("view")) {
+				sb.append("<a href=\"javascript:onlineAttach('"+rujukan+"','"+jenisDokumen+"');\">");
+				sb.append("<img border='0' src='../img/plus.gif' width='20' height='15'/>");
+//				sb.append("</a>");
+				sb.append("</a><br>");
+				
+			}
+			 if(modul.equals("php"))
+				 sb.append(getDocPHP().getLampirans(rujukan, jenisDokumen,""));
+			 else
+				 sb.append(getDoc().getLampirans(rujukan, jenisDokumen,""));
 
-
+			 //lampiran = lb.getLampirans(idSimati,"paparLampiran");
+			 return sb.toString();
+			 
+		}
+		
+	 private ILampiran getDocPHP(){
+		if(iLampiranPHP == null){
+			iLampiranPHP = new LampiranBean();
+		}
+		return iLampiranPHP;
+				
+	 }
+	 
+	 private ILampiran getDoc(){
+		if(iLampiran == null){
+			iLampiran = new ekptg.model.utils.lampiran.LampiranBean();
+		}
+		return iLampiran;
+				
+	}
 	}

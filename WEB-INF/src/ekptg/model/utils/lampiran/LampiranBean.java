@@ -31,9 +31,38 @@ import ekptg.model.entities.Tblrujdokumen;
 
 public class LampiranBean implements ILampiran{
 	private static Logger myLog = Logger.getLogger(ekptg.model.utils.lampiran.LampiranBean.class);
-	Connection conn = null;
-    Db db = null;
-    String sql = "";
+//	private Connection conn = null;
+	private Db db = null;
+	private String sql = "";
+	private Vector<Tblrujdokumen> lampiran = null;
+ 	
+	public StringBuffer sb = new StringBuffer("");
+   
+	public String getLampirans(String idRujukan,String jenisDokumen,String js) throws Exception {
+		sb = new StringBuffer("");
+		lampiran = getLampirans(idRujukan,jenisDokumen);
+		for (int i = 0; i < lampiran.size(); i++) {
+			Tblrujdokumen mo = lampiran.get(i);	
+			if(!js.equals(""))
+				sb.append("<a href=\"javascript:"+js+"("+mo.getIdDokumen()+")\"");
+			else
+				sb.append("<a href=\"javascript:paparLampiran("+mo.getIdDokumen()+")\"");
+
+			sb.append(" onkeypress=\"window.open(this.href); return false;\">"); 
+			sb.append("<div class=\"pautan\">"+mo.getNamaDokumen()+"</div>");
+
+			if(lampiran.size()==1 || (i == (lampiran.size()-1) && lampiran.size() != 1) )
+				sb.append(" </a>");
+			else
+				sb.append(" </a>,");
+
+			sb.append("<br>");
+
+		}
+		return sb.toString();
+		
+	}
+
     
 	
 	public void uploadFiles(Hashtable<String,String> hash,HttpServletRequest request) throws Exception {		
