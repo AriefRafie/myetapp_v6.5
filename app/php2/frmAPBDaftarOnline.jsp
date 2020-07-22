@@ -34,7 +34,7 @@
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Permohonan</td>
+          <td width="28%" valign="top">No. Rujukan <i>Online</i></td>
           <td width="1%" >:</td>
           <td width="70%">$beanMaklumatPermohonan.noPermohonan
             </td>
