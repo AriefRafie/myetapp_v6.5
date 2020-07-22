@@ -50,9 +50,8 @@
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENAWARAN</li>
-          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MUAT NAIK DOKUMEN</li>
-          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
-          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
+          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
+          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
           #if ($idStatus == '1610207' || $idStatus == '1610208')
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
           #end
@@ -275,7 +274,12 @@
             </table>
           </div>
           <!-- END TAB MAKLUMAT PENAWARAN  -->
-          <!-- START KEPUTUSAN -->
+						<!-- START TAB SENARAI SEMAK  -->
+						<div class="TabbedPanelsContent">#if ($selectedTabUpper ==
+							'2') #parse("app/php2/online/ulasanKJP/pnw/frmPNWSenaraiSemakOnline.jsp") #end</div>
+
+						<!-- END TAB SENARAI SEMAK  -->
+						<!-- START KEPUTUSAN -->
           <div class="TabbedPanelsContent">
           	#parse("app/php2/online/frmPNWImejan.jsp")
           </div>
@@ -387,7 +391,7 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
                 <td><fieldset>
-                  <legend>LAMPIRANnnnn</legend>
+                  <legend>LAMPIRAN</legend>
                   <table width="100%" border="0" cellspacing="2" cellpadding="2">
                     #foreach($beanMaklumatKeputusan in $BeanMaklumatKeputusan)
                     <tr>
@@ -938,6 +942,17 @@ function nextPengesahan(idPermohonan) {
 	//document.${formName}.semakMode.value = 'update';
 	doAjaxCall${formName}("pengesahan",'idpermohonan='+idPermohonan);
 	//doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
+}
+<!-- SENARAI SEMAK -->
+function doSimpanKemaskiniSenaraiSemak() {
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "view";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
+	document.${formName}.submit();
 }
 </script>
 
