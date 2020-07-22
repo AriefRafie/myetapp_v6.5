@@ -28,11 +28,9 @@
           <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Fail</td>
           <td width="1%" >:</td>
-          <strong>$beanMaklumatPermohonan.noFail</strong>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong></td>
           ##<td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" value="$noFailOnline">
-          ##<a href="javascript:generateNoFailAPB('txtNoFail');"><img border="0" src="../img/plus.gif"/>
-          </td>
-            
+          ##<a href="javascript:generateNoFailAPB('txtNoFail');"><img border="0" src="../img/plus.gif"/>    
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
