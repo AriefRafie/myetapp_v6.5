@@ -1,5 +1,5 @@
 #if ( $SimpanStatus == "success" )
-    <table width="100%" border="0">
+    <table style="width:100%">
         <tr>
             <td>
             <font color="blue">
@@ -17,11 +17,10 @@
 
  #end
 
-
 <br>
 <fieldset>
 <legend>Maklumat Semakan</legend>
-<table width="100%">
+<table style="width:100%">
 
 <!--     <tr>
     	<td>
@@ -523,7 +522,7 @@
          </td>
       </tr>
 </table>
-
+</fieldset>
 
 <script type="text/javascript">
 
@@ -716,7 +715,6 @@ function setSelected(tabId) {
 
     document.${formName}.tabId.value = tabId;
 }
-
 
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTab});
 

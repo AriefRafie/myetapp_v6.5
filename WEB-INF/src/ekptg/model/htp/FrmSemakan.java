@@ -190,7 +190,6 @@ public class FrmSemakan {
  
 	public Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm,String idPermohonan) 
 		throws Exception {
-		//public Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm) throws Exception {
 		Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
 //        myLog.info("getSenaraiSemakanAttach :kodForm= " + kodForm.substring(0,3));
 
