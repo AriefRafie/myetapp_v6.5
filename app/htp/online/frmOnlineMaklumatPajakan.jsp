@@ -347,7 +347,7 @@
 						<td width="3%"><b>Bil</b></td>
 						<td width="82%"><b>Keterangan</b></td>
 						<td width="15%"><b>Dokumen</b></td>
-					</tr> 
+						</tr> 
   		#if ($SenaraiSemak.size() > 0)
       		#set ($list = "")
 			#foreach ($list in $SenaraiSemak)
@@ -365,17 +365,13 @@
         		#end
 	        
    				    	<tr class="$row">
-     						<td class="$row" width="95%"><input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked $disabled />
-     						$list.keterangan
-     						</td>
-          					<td class="$row" width="5%">
-          					#if($list.jenisDokumen != 0)
-          					<a href = "javascript:onlineAttach('$list.id','$list.jenisDokumen');">
-											<img border="0" src="../img/plus.gif" width="20" height="15"/>
-										</a><br>
-							 			$!listam.lampirans
-							#end 			
+     						<td>$i.</td>
+          					<td>
+          						<input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked $disabled />
+     							$list.keterangan	
           					</td>
+          					<td>$!list.lampirans</td>
+          					
         				</tr>
         				#end
         	
@@ -460,7 +456,7 @@
 <script>
 	//LAMPIRAN
 	//onlineAttach('$list.id','$list.jenisDokumen')
-	function onlineAttach(idSenarai,idJenisDokumen) {
+	function onlineAttach_(idSenarai,idJenisDokumen) {
 	    //
 		var url = "../x/${securityToken}/ekptg.view.online.UploadDokumen?actionrefresh=paparHTA&actionPopup=papar&idHarta="+idSenarai+"&idJenisDokumen="+idJenisDokumen+"&flagOnline=$!flagOnline";
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');

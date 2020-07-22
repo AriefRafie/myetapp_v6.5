@@ -99,7 +99,7 @@
 			</td>
 			</tr>
 	       	<tr>
-                <td><div align="left"><strong>No. Fail Seksyen </strong></div></td>
+                <td><div align="left"><strong>No. Fail </strong></div></td>
                 <td><strong>:</strong></td>
                 <td><input type="text" name="txtNoFailSek" size="30" value="$nofailseksyen"  $inputstyle readonly></td>
               </tr>	

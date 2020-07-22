@@ -52,7 +52,7 @@
 	   <tr class="table_header">
 	          
 	              <td scope="row" width="5%" align="center">BIL</td>
-	              <td width="30%">NO FAIL SEKSYEN</td>             
+	              <td width="30%">NO. FAIL</td>             
 	              <td width="30%">KEGUNAAN TANAH</td>
 	     		  <td width="15%">NO.HAKMILIK</td>
 	     		  <td width="20%">TINDAKAN</td>
