@@ -150,6 +150,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		log.info("modePopup : " +modePopup);
 		log.info("flagPopup : " +flagPopup);
 		FrmSemakan semak = null;
+		
 		//SAVE TO DB		
 		if (postDB){
 				if ("daftarBaru".equals(hitButton)){
@@ -244,6 +245,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    			}
 	    				
 	        	}
+				
 				//LAMPIRAN
 				if("doSimpanSenaraiSemak".equals(hitButton)){
 					logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"), session);

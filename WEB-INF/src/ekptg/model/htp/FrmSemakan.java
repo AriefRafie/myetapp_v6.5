@@ -217,7 +217,7 @@ public class FrmSemakan {
 		    	  r.add("i.kod_form",kodForm);
 		      sql = " tblsemakan s,tblsemakansenarai i,tblsemakanjenisdokumen sjd,tblrujjenisdokumen jd,tblsemakanhantar sh";
 		      sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
-//	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
+	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable<String,String> h;
 		      String lampiran = "-";
