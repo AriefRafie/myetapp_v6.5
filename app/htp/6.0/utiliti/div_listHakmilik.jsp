@@ -58,7 +58,7 @@
 	              <td scope="row" width="5%" align="center">BIL</td>
 	              <td width="50%">NO HAKMILIK</td> 
 	              <td width="45%">NO FAIL</td>             
-	              <!-- <td width="45%">NO FAIL SEKSYEN</td> -->
+	              <!-- <td width="45%">NO FAIL</td> -->
 	     
 	   </tr>
 	   
