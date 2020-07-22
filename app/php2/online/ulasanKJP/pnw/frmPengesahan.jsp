@@ -113,38 +113,35 @@
   </tr>
 </table>
 		<input type="hidden" name="id_kemaskini" />
-		<input type="text" name="idFail" value="$idFail" />
+		<input type="hidden" name="idFail" value="$idFail" />
 		<input type="hidden" name="langkah" value="0" />
-		<input type="text" name="idPermohonan" value="$idPermohonan" />
-		<input type="text" name="idjawatan" value="$idjawatan" />
-		<input type="text" name="statussemasa" value="$statussemasa" />
-		<input name="submit" type="text" id="submit" value="$submit"/>
-		<input name="actionOnline" type="text" id="actionOnline" value="$actionOnline"/>
+		<input type="hidden" name="idPermohonan" value="$idPermohonan" />
+		<input type="hidden" name="idjawatan" value="$idjawatan" />
+		<input type="hidden" name="statussemasa" value="$statussemasa" />
+		<input name="submit" type="hidden" id="submit" value="$submit"/>
+		<input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
 		
 		
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 			<td align="center" colspan="4">
-			semakMode = $semakMode
-			idjawatan = $!idjawatan
-			statussemasa = $!statussemasa
 						#if($semakMode == "update")
-		    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("-1")) 
+		    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1")) 
 		    				<p><input type="checkbox" id="checkme"/><a>&nbsp;Pastikan maklumat yang dimasukkan adalah betul.</a></p>
 		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
-						#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("-2"))
+						#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("2"))
 							<p><input type="checkbox" id="checkme"/><a>&nbsp;Pastikan maklumat yang dimasukkan adalah betul.</a></p>
 		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
 						
-						#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("-3"))
+						#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
 							<p><input type="checkbox" id="checkme"/><a>&nbsp;Pastikan maklumat yang dimasukkan adalah betul.</a></p>
 		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
                 		
                 		#end
                 		
-                	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step2Online($!permohonan.get(idpermohonan))" /> 
+                	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> 
 		    		#else
                     <input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:cetakPengesahan('$!permohonan.idpermohonan');" />
-               		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step2Online($!permohonan.idpermohonan)" />
+               		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
 		    		#end
 		    </td>
 </table>
@@ -164,12 +161,18 @@ if(this.checked){
 }
 
 function simpanpengesahan2() {
-	alert('baca idFail=='+document.${formName}.idFail.value+" idPermohonan=="+idPermohonan);
+	//alert('baca idFail=='+document.${formName}.idFail.value+" idPermohonan=="+idPermohonan);
 	//doAjaxCall${formName}("pkmaklumatseterus","id_kemaskini="+id);	
 	//document.${formName}.pagemode.value = 0;
 	document.${formName}.actionOnline.value = "simpanpengesahan2";
 	//document.${formName}.semakMode.value = 'update';
 	doAjaxCall${formName}("simpanpengesahan2",'idpermohonan='+idPermohonan);
 	//doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
+}
+function doBacklist() {
+	document.${formName}.actionOnline.value = "";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
+	document.${formName}.method="POST";
+	document.${formName}.submit();
 }
 </script>

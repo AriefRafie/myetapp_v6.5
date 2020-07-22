@@ -13,11 +13,11 @@
 #set($saizTxtCatatan="500")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="idFail" type="text" id="idFail" value="$idFail"/>
+  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idHakmilikAgensi" type="hidden" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
-  <input name="idStatus" type="text" id="idStatus" value="$idStatus"/>
+  <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
@@ -51,6 +51,8 @@
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENAWARAN</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MUAT NAIK DOKUMEN</li>
+          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
+          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
           #if ($idStatus == '1610207' || $idStatus == '1610208')
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
           #end
@@ -273,10 +275,11 @@
             </table>
           </div>
           <!-- END TAB MAKLUMAT PENAWARAN  -->
+          <!-- START KEPUTUSAN -->
           <div class="TabbedPanelsContent">
           	#parse("app/php2/online/frmPNWImejan.jsp")
           </div>
-           #if ($idStatus == '1610207' || $idStatus == '1610208')
+           ##if ($idStatus == '1610207' || $idStatus == '1610208')
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
@@ -317,7 +320,7 @@
               <tr>
                 <td>&nbsp;</td>
               </tr>
-              #if ($idStatus == '1610207') 
+              ##if ($idStatus == '1610207') 
               <tr>
                 <td><fieldset>
                   <legend><strong>SENARAI KEMENTERIAN / AGENSI YANG MENERIMA</strong></legend>
@@ -368,13 +371,117 @@
                   </table>
                   </fieldset></td>
               </tr>
-              #end
+              ##end
               <tr>
                 <td align="center"></td>
               </tr>
             </table>
           </div>
-          #end
+          ##end
+           <!-- START LAMPIRAN -->
+           <div class="TabbedPanelsContent">
+          	#parse("app/php2/online/frmPNWImejan.jsp")
+          </div>
+           ##if ($idStatus == '1610207' || $idStatus == '1610208')
+          <div class="TabbedPanelsContent">
+            <table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td><fieldset>
+                  <legend>LAMPIRANnnnn</legend>
+                  <table width="100%" border="0" cellspacing="2" cellpadding="2">
+                    #foreach($beanMaklumatKeputusan in $BeanMaklumatKeputusan)
+                    <tr>
+                      <td width="1%">&nbsp;</td>
+                      <td width="28%">Keputusan</td>
+                      <td width="1%">:</td>
+                      <td width="70%">LULUS</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>Tarikh Hantar Surat</td>
+                      <td>:</td>
+                      <td>$beanMaklumatKeputusan.tarikhKeputusan
+                        </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+                  <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/></td>
+                    </tr>
+                    #end
+                  </table>
+                  </fieldset></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              ##if ($idStatus == '1610207') 
+              <tr>
+                <td><fieldset>
+                  <legend><strong>SENARAI KEMENTERIAN / AGENSI YANG MENERIMA</strong></legend>
+                  <table align="center" width="100%">
+                    <tr>
+                      <td colspan="5" align="right"><div id="calculateTotal_result" style="color:#FF0000;font-weight:bold"></div></td>
+                    </tr>
+                    <tr class="table_header">
+                      <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+                      <td width="35%"><strong>Kementerian</strong></td>
+                      <td width="35%"><strong>Agensi</strong></td>
+                      <td width="25%" align="center"><strong>Luas (Hektar)</strong></td>
+                    </tr>
+                    #set ($senaraiAgensi = "")
+                    #if ($SenaraiAgensi.size() > 0)
+                    #foreach ($senaraiAgensi in $SenaraiAgensi)
+                    #if ($senaraiAgensi.bil == '')
+                    #set( $row = "row1" )
+                    #elseif (($senaraiAgensi.bil % 2) != 0)
+                    #set( $row = "row1" )
+                    #else 
+                    #set( $row = "row2" )
+                    #end
+                    <tr>
+                      <td class="$row" align="center">$senaraiAgensi.bil</td>
+                      <td class="$row">$senaraiAgensi.kementerian</td>
+                      <td class="$row">$senaraiAgensi.agensi</td>
+                      <td class="$row" align="center">$senaraiAgensi.luas
+                        <input name="ids" type="hidden" value="$senaraiAgensi.idPenawaranKJP">
+                      </td>
+                    </tr>
+                    #end
+                    <tr class="table_header">
+                      <td width="5%">&nbsp;</td>
+                      <td colspan="2" align="left"><strong>JUMLAH</strong></td>
+                      <td align="center" width="35%">$txtJumlahLuas
+                      </td>
+                    </tr>
+                    #else
+                    <tr>
+                      <td class="row1" align="center">&nbsp;</td>
+                      <td class="row1">Tiada Rekod</td>
+                      <td class="row1">&nbsp;</td>
+                      <td class="row1">&nbsp;</td>
+                      <td class="row1">&nbsp;</td>
+                    </tr>
+                    #end
+                  </table>
+                  </fieldset></td>
+              </tr>
+              ##end
+              <tr>
+                <td align="center"></td>
+              </tr>
+            </table>
+          </div>
+          ##end
+          <!-- END LAMPIRAN -->
         </div>
       </div></td>
   </tr>
@@ -824,7 +931,7 @@ function cetakPengesahanPermohonan(idPermohonan) {
 	hWnd.focus();
 }
 function nextPengesahan(idPermohonan) {
-	alert('baca idFail=='+document.${formName}.idFail.value+" idPermohonan=="+idPermohonan);
+	//alert('baca idFail=='+document.${formName}.idFail.value+" idPermohonan=="+idPermohonan);
 	//doAjaxCall${formName}("pkmaklumatseterus","id_kemaskini="+id);	
 	//document.${formName}.pagemode.value = 0;
 	document.${formName}.actionOnline.value = "pengesahan";
