@@ -7,9 +7,6 @@
 .style2 {
 	color: #0000FF
 }
-.pautan {
-	color: #0000FF
-}
 -->
 </style>
 <p>
@@ -49,23 +46,25 @@
 <!--           <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li> -->
           <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN PERMOHONAN</li>
         </ul>
-     	<div class="TabbedPanelsContentGroup">
-        	<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
+        <div class="TabbedPanelsContentGroup">
+          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
             #parse("app/php2/online/frmAPBMaklumatPermohonanPermohonan.jsp")
             #end </div>
-          	<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
+          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
             #parse("app/php2/online/frmAPBMaklumatPermohonanPembeliPasir.jsp")
             #end </div>
-  			<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
-			#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") </td>
-			#end</div>
-			<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3')
-  			#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp")
-  			#end</div>
-		<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
+  				<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
+						#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") 
+						#end</div>
+<!-- 					<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3') -->
+<!--   					#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp") -->
+<!--   					#end</div> -->
+					<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
 					
 	<fieldset>	
 				<legend>
+				PENGESAHAN PERMOHONAN
+				</legend>
 				<table width="100%" border="0">
 				<tr>
 					<td width="5%"></td>
@@ -143,7 +142,7 @@
         
         #if ($idStatus != '')
         <input type="checkbox" name="pengesahan" id="pengesahan" checked disabled>#end</td>
-        <td>Kami wakil dari $!pemohon.get("namaPemohon"), MyCOID $!pemohon.get("noPengenalan") dengan ini maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+        <td>Kami $!pemohon.get("namaPemohon"), MyCOID $!pemohon.get("noPengenalan") dengan ini maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
 	</tr>
 	
 	<tr>
@@ -188,7 +187,8 @@ function doChangeTab(tabId) {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "view";
 	document.${formName}.selectedTabUpper.value = tabId;
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
+// 	doAjaxCall${formName}("");
 }
 function doBacklist() {
 	document.${formName}.actionOnline.value = "";
@@ -467,7 +467,7 @@ function kemaskiniPermohonan() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
 	document.${formName}.submit();	
-	//doAjaxCall${formName}("");comment jap ye
+// 	doAjaxCall${formName}("");//comment jap ye
 }
 function batalKemaskiniPermohonan() {
 	document.${formName}.mode.value = "view";
@@ -587,7 +587,8 @@ function simpanProjek(){
 	
 	document.${formName}.mode.value = "newProjek";
 	document.${formName}.hitButton.value = "doSimpanProjek";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
+// 	doAjaxCall${formName}("");
 }
 function kemaskiniProjek(){
 	document.${formName}.mode.value = "updateProjek";
@@ -861,6 +862,7 @@ function doHapus(){
 	document.${formName}.submit();
 }
 </script>
+
 <script>
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
@@ -918,6 +920,5 @@ function doBatalKemaskini() {
 	doAjaxCall${formName}("");
 }
 
-//LAMPIRAN
 </script>
 $javascriptLampiran
