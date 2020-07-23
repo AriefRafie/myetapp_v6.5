@@ -229,7 +229,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN "
+			sql = "SELECT B.NO_PERMOHONAN, A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANPELEPASAN C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 			myLog.info("setMaklumatPermohonan: "+sql);
@@ -243,7 +243,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
 				h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
 				h.put("idPemohon", rs.getString("ID_PEMOHON") == null ? "" : rs.getString("ID_PEMOHON"));
-				h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN").toUpperCase());
+				h.put("noRujukanOnline", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN").toUpperCase());
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? "": sdf.format(rs.getDate("TARIKH_SURAT")));
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("noRujukanSurat",rs.getString("NO_RUJ_SURAT") == null ? "" : rs.getString("NO_RUJ_SURAT").toUpperCase());
@@ -448,6 +448,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 		String userId = (String) session.getAttribute("_ekptg_user_id");
 		String sql = "";
 		String idFailString = "";
+		String noRujukanOnline = "";
 		String noFail = "";
 
 		try {
@@ -470,7 +471,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("FLAG_FAIL", "1");
 			r.add("TARIKH_DAFTAR_FAIL", r.unquote("SYSDATE"));
 			r.add("TAJUK_FAIL", perkara);
-			String kodUrusan = "879";
+			//String kodUrusan = "879";
 			/*noFail = generateNoFail(session, kodUrusan,
 					getKodKementerian(idKementerianTanah), idKementerianTanah,
 					getKodNegeri(idNegeriTanah), idNegeriTanah);*/
@@ -485,6 +486,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPFDFAIL");
+			myLog.info("TBLPFDFAIL 1=="+sql);
 			stmt.executeUpdate(sql);
 			// TBLPHPPEMOHON
 			r = new SQLRenderer();
@@ -496,6 +498,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 
 			sql = "SELECT * FROM TBLRUJAGENSI WHERE ID_AGENSI = '"
 						+ idAgensiPemohon + "'";
+			myLog.info("TBLPHPPEMOHON 2=="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				r.add("NAMA", rs.getString("NAMA_AGENSI") == null ? "" : rs
@@ -525,17 +528,24 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_JKPTG", "1");
 			r.add("ID_FAIL", idFail);
-			//r.add("ID_STATUS", "1610198");
-			r.add("ID_STATUS", "1610198");
+			r.add("ID_STATUS", "9920199");
 			r.add("TARIKH_SURAT", r.unquote(TS));
 			r.add("TARIKH_TERIMA", r.unquote(TT));
 			r.add("NO_RUJ_SURAT", noRujukanSurat);
 			r.add("FLAG_AKTIF", "Y");
 
+			String kodUrusan = "879";
+			Calendar currentDate = new GregorianCalendar();
+
+			noRujukanOnline = "JKPTG/BPHP/04/" + kodUrusan + "/" + currentDate.get(Calendar.YEAR) + "/" + File.getSeqNo(db, 4, 6, 0, 0, 0, false, false, currentDate.get(Calendar.YEAR), 0);
+
+			r.add("NO_PERMOHONAN",noRujukanOnline);
+			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPERMOHONAN");
+			myLog.info("TBLPERMOHONAN 3=="+sql);
 			stmt.executeUpdate(sql);
 			// TBLPHPHAKMILIKPERMOHONAN
 			r = new SQLRenderer();
@@ -554,8 +564,8 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-
 			sql = r.getSQLInsert("TBLPHPHAKMILIKPERMOHONAN");
+			myLog.info("TBLPHPHAKMILIKPERMOHONAN 4=="+sql);
 			stmt.executeUpdate(sql);
 			// TBLPHPHAKMILIK
 			String peganganHakmilik = "";
@@ -594,6 +604,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 					r.add("ID_AGENSI", hashTanah.get("idAgensi"));
 
 					sql = r.getSQLInsert("TBLPHPHAKMILIK");
+					myLog.info("TBLPHPHAKMILIK 5=="+sql);
 					stmt.executeUpdate(sql);
 
 				}
@@ -611,6 +622,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPPERMOHONANPELEPASAN");
+			myLog.info("TBLPHPPERMOHONANPELEPASAN 6=="+sql);
 			stmt.executeUpdate(sql);
 
 			// TBLRUJSUBURUSANSTATUSFAIL
@@ -630,6 +642,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			myLog.info("TBLRUJSUBURUSANSTATUSFAIL 7=="+sql);
 			stmt.executeUpdate(sql);
 			// TBLPHPLAPORANTANAH
 			r = new SQLRenderer();
@@ -644,6 +657,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPLAPORANTANAH");
+			myLog.info("TBLPHPLAPORANTANAH 8=="+sql);
 			stmt.executeUpdate(sql);
 			conn.commit();
 
@@ -1060,6 +1074,9 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
+	
+	
+	
 
 	public void setMaklumatHeader(String idFail) throws Exception {
 		Db db = null;
@@ -1101,9 +1118,11 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 				h.put("poskod", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD").toUpperCase());
 				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI").toUpperCase());
 				h.put("perkara", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL").toUpperCase());
+				
 				if ("1610197".equals(rs.getString("ID_STATUS")) || "1610212".equals(rs.getString("ID_STATUS"))|| 
-						"1610208".equals(rs.getString("ID_STATUS")) || "1610207".equals(rs.getString("ID_STATUS"))){
-				h.put("status", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase());
+						"1610208".equals(rs.getString("ID_STATUS")) || "1610207".equals(rs.getString("ID_STATUS")))
+				{
+					h.put("status", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase());
 				}else if ("".equals(rs.getString("ID_STATUS")) || rs.getString("ID_STATUS") == null){
 					h.put("status", " PENDAFTARAN");
 				} else {

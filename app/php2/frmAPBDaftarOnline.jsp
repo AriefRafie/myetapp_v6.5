@@ -15,7 +15,7 @@
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idUrusan" type="hidden" id="idUrusan" value="$idUrusan"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
-  <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
+  ##<input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
   <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" />
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -28,14 +28,13 @@
           <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Fail</td>
           <td width="1%" >:</td>
-          ##<strong>$beanMaklumatPermohonan.noFail</strong>
-          <td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" value="$noFailOnline">
-          <a href="javascript:generateNoFailAPB('txtNoFail');"><img border="0" src="../img/plus.gif"/></td>
-            
+          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong></td>
+          ##<td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" value="$noFailOnline">
+          ##<a href="javascript:generateNoFailAPB('txtNoFail');"><img border="0" src="../img/plus.gif"/>    
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Permohonan</td>
+          <td width="28%" valign="top">No. Rujukan <i>Online</i></td>
           <td width="1%" >:</td>
           <td width="70%">$beanMaklumatPermohonan.noPermohonan
             </td>
@@ -178,11 +177,6 @@
 <script>
 function daftarBaru() {
 
-	if(document.${formName}.txtNoFail.value == ""){
-		alert('Sila masukkan no.fail.');
-  		document.${formName}.txtNoFail.focus(); 
-		return; 
-	}
 	if(document.${formName}.txtPerkara.value == ""){
 		alert('Sila masukkan Perkara.');
   		document.${formName}.txtPerkara.focus(); 

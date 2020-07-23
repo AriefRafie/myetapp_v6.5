@@ -163,7 +163,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         				getParam("txtTarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtUlasan"), getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
         		if (getParam("txtUlasan").trim().length() > 0)
         			logic.updateUlasanJUPEM(idPermohonan, getParam("txtNoRujukanSurat"), getParam("txtTarikhTerima"), getParam("txtUlasan"),  session);
-        			logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan, idKementerianTanah, session);
+        			logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan);
         	}
         	if ("simpanMaklumatJAS".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatJAS(idPermohonan, idKementerianJAS, logic.getIdPejabatJASByNegeri(logic.getIdNegeriPerairan(idPermohonan)), getParam("txtTarikhHantar"), 
@@ -193,7 +193,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         				getParam("txtTarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtUlasan"), getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
         		if (getParam("txtUlasan").trim().length() > 0)
         			logic.updateUlasanJAS(idPermohonan, getParam("txtNoRujukanSurat"), getParam("txtTarikhTerima"), getParam("txtUlasan"),  session);
-        			logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan, idKementerianTanah, session);
+        			logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan);
         	}
         	if ("simpanMaklumatJMG".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatJMG(idPermohonan, idKementerianJMG, idAgensiJMG, getParam("txtTarikhHantar"), 
@@ -223,7 +223,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         				getParam("txtTarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtUlasan"), getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
         		if (getParam("txtUlasan").trim().length() > 0)
         			logic.updateUlasanJMG(idPermohonan, getParam("txtNoRujukanSurat"), getParam("txtTarikhTerima"), getParam("txtUlasan"),  session);
-        		    logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan, idKementerianTanah, session);
+        		    logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan);
         	}
         	if ("simpanMaklumatJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatJP(idPermohonan, idKementerianJP, idAgensiJP, getParam("txtTarikhHantar"), 
@@ -253,7 +253,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         				getParam("txtTarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtUlasan"), getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
         		if (getParam("txtUlasan").trim().length() > 0)
         			logic.updateUlasanJP(idPermohonan, getParam("txtNoRujukanSurat"), getParam("txtTarikhTerima"), getParam("txtUlasan"),  session);
-        			logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan, idKementerianTanah, session);
+        			logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan);
         	}
         	if ("simpanMaklumatJLM".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatJLM(idPermohonan, idKementerianJLM, idAgensiJLM, getParam("txtTarikhHantar"), 
@@ -283,7 +283,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         				getParam("txtTarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtUlasan"), getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
         		if (getParam("txtUlasan").trim().length() > 0)
         			logic.updateUlasanJLM(idPermohonan, getParam("txtNoRujukanSurat"), getParam("txtTarikhTerima"), getParam("txtUlasan"),  session);
-        		    logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan, idKementerianTanah, session);
+        		    logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan);
         	}
         	if ("simpanMaklumatPHM".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatPHM(idPermohonan, idKementerianPHM, idAgensiPHM, getParam("txtTarikhHantar"), 
@@ -313,7 +313,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         				getParam("txtTarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtUlasan"), getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
         		if (getParam("txtUlasan").trim().length() > 0)
         			logic.updateUlasanPHM(idPermohonan, getParam("txtNoRujukanSurat"), getParam("txtTarikhTerima"), getParam("txtUlasan"),  session);
-        		logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan, idKementerianTanah, session);
+        		logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan);
         	}
         	if ("simpanMaklumatJPS".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatJPS(idPermohonan, idKementerianJPS, idAgensiJPS, getParam("txtTarikhHantar"), 
@@ -343,7 +343,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         				getParam("txtTarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtUlasan"), getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
         		if (getParam("txtUlasan").trim().length() > 0)
         			logic.updateUlasanJPS(idPermohonan, getParam("txtNoRujukanSurat"), getParam("txtTarikhTerima"), getParam("txtUlasan"), session);
-        		    logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan, idKementerianTanah, session);
+        		    logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan);
         	}
         	if ("simpanMaklumatPTG".equals(hitButton)){    			
         		idUlasanTeknikal = logic.simpanMaklumatPTG(idPermohonan, idKementerianPTG, logic.getIdPejabatPTGByNegeri(logic.getIdNegeriPerairan(idPermohonan)), getParam("txtTarikhHantar"), 
@@ -373,7 +373,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         				getParam("txtTarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtUlasan"), getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
         		if (getParam("txtUlasan").trim().length() > 0)
         			logic.updateUlasanPTG(idPermohonan, getParam("txtNoRujukanSurat"), getParam("txtTarikhTerima"), getParam("txtUlasan"), session);
-        		    logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan, idKementerianTanah, session);
+        		    logic.sendEmailMaklumanJT("apbteam@yopmail.com",idPermohonan);
         	}
         	
         	if ("simpanDokumenKJT".equals(hitButton)) {
@@ -412,7 +412,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("idSuratKe"), idKementerianTanah,
 						idAgensiTanah, getParam("txtNamaPegawai"), 
 						getParam("txtJawatan"), getParam("txtEmel"),session);
-				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+				logic.sendEmailNotifikasi(idPermohonan, getParam("txtEmel"));
 			}
 			if ("simpanRekodEmailJAS".equals(hitButton)) {
 				idUlasanTeknikal = logic.simpanRekodEmailJAS(
@@ -422,7 +422,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("idSuratKe"), idKementerianTanah,
 						idAgensiTanah, getParam("txtNamaPegawai"), 
 						getParam("txtJawatan"), getParam("txtEmel"),session);
-				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+				logic.sendEmailNotifikasi(idPermohonan, getParam("txtEmel"));
 			}
 			if ("simpanRekodEmailJMG".equals(hitButton)) {
 				idUlasanTeknikal = logic.simpanRekodEmailJMG(
@@ -432,7 +432,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("idSuratKe"), idKementerianTanah,
 						idAgensiTanah, getParam("txtNamaPegawai"), 
 						getParam("txtJawatan"), getParam("txtEmel"),session);
-				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+				logic.sendEmailNotifikasi(idPermohonan, getParam("txtEmel"));
 			}
 			if ("simpanRekodEmailJP".equals(hitButton)) {
 				idUlasanTeknikal = logic.simpanRekodEmailJP(
@@ -442,7 +442,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("idSuratKe"), idKementerianTanah,
 						idAgensiTanah, getParam("txtNamaPegawai"), 
 						getParam("txtJawatan"), getParam("txtEmel"),session);
-				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+				logic.sendEmailNotifikasi(idPermohonan, getParam("txtEmel"));
 			}
 			if ("simpanRekodEmailJLM".equals(hitButton)) {
 				idUlasanTeknikal = logic.simpanRekodEmailJLM(
@@ -452,7 +452,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("idSuratKe"), idKementerianTanah,
 						idAgensiTanah, getParam("txtNamaPegawai"), 
 						getParam("txtJawatan"), getParam("txtEmel"),session);
-				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+				logic.sendEmailNotifikasi(idPermohonan, getParam("txtEmel"));
 			}
 			if ("simpanRekodEmailPHM".equals(hitButton)) {
 				idUlasanTeknikal = logic.simpanRekodEmailPHM(
@@ -462,7 +462,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("idSuratKe"), idKementerianTanah,
 						idAgensiTanah, getParam("txtNamaPegawai"), 
 						getParam("txtJawatan"), getParam("txtEmel"),session);
-				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+				logic.sendEmailNotifikasi(idPermohonan,getParam("txtEmel"));
 			}
 			if ("simpanRekodEmailJPS".equals(hitButton)) {
 				idUlasanTeknikal = logic.simpanRekodEmailJPS(
@@ -472,7 +472,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("idSuratKe"), idKementerianTanah,
 						idAgensiTanah, getParam("txtNamaPegawai"), 
 						getParam("txtJawatan"), getParam("txtEmel"),session);
-				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+				logic.sendEmailNotifikasi(idPermohonan, getParam("txtEmel"));
 			}
 			if ("simpanRekodEmailPTG".equals(hitButton)) {
 				idUlasanTeknikal = logic.simpanRekodEmailPTG(
@@ -482,7 +482,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("idSuratKe"), idKementerianTanah,
 						idAgensiTanah, getParam("txtNamaPegawai"), 
 						getParam("txtJawatan"), getParam("txtEmel"),session);
-				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+				logic.sendEmailNotifikasi(idPermohonan, getParam("txtEmel"));
 			}
 		}
 

@@ -14,7 +14,7 @@
       <legend><b>CARIAN</b></legend>
       <table width="100%" align="center" border="0">
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No Permohonan : </td>
+          <td width="30%" height="24" scope="row" align="right">No. Rujukan <i>Online</i> : </td>
           <td width="70%"><input name="txtNoPermohonan" id="txtNoPermohonan" type="text" value="$txtNoPermohonan" size="50" maxlength="50" style="text-transform:uppercase;" >
             <input type="hidden" name="idFail" />
             <input type="hidden" name="idPermohonan" />
@@ -25,8 +25,8 @@
         </tr>
         <tr>
           <td width="30%" height="24" scope="row" align="right">Tarikh Terima : </td>
-          <td width="70%"><input type="text" name="txdTarikhTerima" id="txdTarikhTerima" value="$txdTarikhTerima" onblur="check_date(this)" size="9"/>
-            <a href="javascript:displayDatePicker('txdTarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
+          <td width="70%"><input type="text" name="txtTarikhTerima" id="txtTarikhTerima" value="$txtTarikhTerima" onblur="check_date(this)" size="9"/>
+            <a href="javascript:displayDatePicker('txtTarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
         </tr>
         <tr>
           <td scope="row"></td>
@@ -42,15 +42,12 @@
   </tr>
   <tr>
     <td><fieldset>
-      <legend><b>SENARAI PERMOHONAN</b></legend>
+      <legend><b>SENARAI PERMOHONAN ONLINE</b></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
- ##       <tr>
- ##         <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/></td>
- ##       </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>No Permohonan</strong></td>
+          <td width="20%"><strong>No. Rujukan <i>Online</i></strong></td>
           <td width="30%"><strong>Nama Pemohon/Syarikat</strong></td>
           <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
           <td width="10%"><strong>Kawasan Dipohon</strong></td>
@@ -70,7 +67,7 @@
     
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noPermohonan</a>
+          <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus','$list.idPermohonan')" class="style1">$list.noPermohonan</a>
           <br />
           <font class="blink" ><span class="style2">$!list.statusLesen</span></font>
           <font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
@@ -107,14 +104,14 @@ function carian(){
 function kosongkan() {
 	document.${formName}.reset();
 	document.${formName}.txtNoPermohonan.value = "";
-	document.${formName}.txdTarikhTerima.value = "";
+	document.${formName}.txtTarikhTerima.value = "";
 	document.${formName}.submit();
 }
 function papar(idFail,idUrusan,idPermohonan) {
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idUrusan.value = idUrusan;
 	document.${formName}.idPermohonan.value = idPermohonan;
-	document.${formName}.actionOnline.value = "daftar"; 	
+	document.${formName}.actionOnline.value = "daftar";
 	document.${formName}.submit();
 }
 </script>

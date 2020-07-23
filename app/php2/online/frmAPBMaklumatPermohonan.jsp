@@ -142,7 +142,7 @@
         
         #if ($idStatus != '')
         <input type="checkbox" name="pengesahan" id="pengesahan" checked disabled>#end</td>
-        <td>Kami wakil dari $!pemohon.get("namaPemohon"), MyCOID $!pemohon.get("noPengenalan") dengan ini maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+        <td>Kami $!pemohon.get("namaPemohon"), MyCOID $!pemohon.get("noPengenalan") dengan ini maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
 	</tr>
 	
 	<tr>
@@ -187,7 +187,8 @@ function doChangeTab(tabId) {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "view";
 	document.${formName}.selectedTabUpper.value = tabId;
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
+// 	doAjaxCall${formName}("");
 }
 function doBacklist() {
 	document.${formName}.actionOnline.value = "";
@@ -466,7 +467,7 @@ function kemaskiniPermohonan() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
 	document.${formName}.submit();	
-	//doAjaxCall${formName}("");comment jap ye
+// 	doAjaxCall${formName}("");//comment jap ye
 }
 function batalKemaskiniPermohonan() {
 	document.${formName}.mode.value = "view";
@@ -586,7 +587,8 @@ function simpanProjek(){
 	
 	document.${formName}.mode.value = "newProjek";
 	document.${formName}.hitButton.value = "doSimpanProjek";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
+// 	doAjaxCall${formName}("");
 }
 function kemaskiniProjek(){
 	document.${formName}.mode.value = "updateProjek";
@@ -860,6 +862,7 @@ function doHapus(){
 	document.${formName}.submit();
 }
 </script>
+
 <script>
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){

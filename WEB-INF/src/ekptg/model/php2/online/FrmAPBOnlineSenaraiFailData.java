@@ -48,7 +48,6 @@ public class FrmAPBOnlineSenaraiFailData {
 	private Vector beanMaklumatKawasanMohon = null;
 	private Vector beanMaklumatLampiran = null;
 	private Vector listLampiran = null;
-//	private Vector beanMaklumatPejabat = null;
 	private Vector<Hashtable<String,String>> beanMaklumatPejabat = null;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	

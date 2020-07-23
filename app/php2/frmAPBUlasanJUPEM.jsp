@@ -290,8 +290,8 @@ function doDaftarNotifikasi(){
 	document.${formName}.flagPopup.value = "openJUPEM";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.flagNotifikasi.value = "openNotifikasi";
-	//document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView";
-	//document.${formName}.method="POST";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView";
+	document.${formName}.method="POST";
 	document.${formName}.submit();
 }
 

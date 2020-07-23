@@ -1,19 +1,19 @@
-           <table width="100%" border="0" cellpadding="2" cellspacing="0">
-                <tr>
-                    <td  align="left">Jumlah Rekod: $totalRecords</td>
-                    <td  align="right">
-                        Papar
-                        <select class="smallselect" name="itemsPerPage" onchange="javascript:doAjaxCall${formname}('doChanges','action=doChangeItemPerPage')">
-                            <option value="10" #if ($itemsPerPage == 10) selected #end>10</option>
-                            <option value="20" #if ($itemsPerPage == 20) selected #end>20</option>
-                            <option value="30" #if ($itemsPerPage == 30) selected #end>30</option>
-                            <option value="40" #if ($itemsPerPage == 40) selected #end>40</option>
-                            <option value="50" #if ($itemsPerPage == 50) selected #end>50</option>
-                            <option value="100" #if ($itemsPerPage == 100) selected #end>100</option>
-                        </select>
-                    </td>
-                 </tr>
-            </table>
+<table width="100%" border="0" cellpadding="2" cellspacing="0">
+     <tr>
+         <td  align="left">Jumlah Rekod: $totalRecords</td>
+         <td  align="right">
+             Papar
+             <select class="smallselect" name="itemsPerPage" onchange="javascript:doAjaxCall${formname}('doChanges','action=doChangeItemPerPage')">
+                 <option value="10" #if ($itemsPerPage == 10) selected #end>10</option>
+                 <option value="20" #if ($itemsPerPage == 20) selected #end>20</option>
+                 <option value="30" #if ($itemsPerPage == 30) selected #end>30</option>
+                 <option value="40" #if ($itemsPerPage == 40) selected #end>40</option>
+                 <option value="50" #if ($itemsPerPage == 50) selected #end>50</option>
+                 <option value="100" #if ($itemsPerPage == 100) selected #end>100</option>
+             </select>
+         </td>
+      </tr>
+ </table>
             
             
 	  <table width="100%" cellpadding="0" cellspacing="0" border="0">

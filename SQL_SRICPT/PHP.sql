@@ -462,3 +462,50 @@ Insert into TBLRUJSUBURUSAN
     NULL, NULL, NULL, 4, NULL, 
     '1');
 COMMIT;
+
+ --rozai add untuk apb--20/07/2020
+ CREATE TABLE TBLINTPHPDOKUMENRUJUKAN
+(
+  ID                    NUMBER,
+  NAMA_DOKUMEN_RUJUKAN  VARCHAR2(100 BYTE),
+  URUSAN                VARCHAR2(100 BYTE)
+)
+TABLESPACE PHP01
+PCTUSED    0
+PCTFREE    10
+INITRANS   1
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           )
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+SET DEFINE OFF;
+Insert into TBLINTPHPDOKUMENRUJUKAN
+   (ID, NAMA_DOKUMEN_RUJUKAN, URUSAN)
+ Values
+   (1, 'Senarai Rujukan SOP', 'APB');
+Insert into TBLINTPHPDOKUMENRUJUKAN
+   (ID, NAMA_DOKUMEN_RUJUKAN, URUSAN)
+ Values
+   (2, 'Pekeliling', 'APB');
+Insert into TBLINTPHPDOKUMENRUJUKAN
+   (ID, NAMA_DOKUMEN_RUJUKAN, URUSAN)
+ Values
+   (3, 'Warta', 'APB');
+Insert into TBLINTPHPDOKUMENRUJUKAN
+   (ID, NAMA_DOKUMEN_RUJUKAN, URUSAN)
+ Values
+   (4, 'Akta dan Lain-lain', 'APB');
+COMMIT;
+ 
+ ALTER TABLE TBLPHPDOKUMEN
+ ADD (id_dokumen_rujukan  NUMBER);

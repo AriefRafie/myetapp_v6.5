@@ -421,11 +421,12 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 		var idPermohonan  = "&idpermohonan="+$jquery('#id_permohonan').val();
 		var idSiasatan  = "&idsiasatan="+$jquery('#id_siasatan').val();
 		var idWarta  = "&idwarta=$!idWarta";
-		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
+		var mahkamah  = "&idmt=$!idMT";
+		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan+mahkamah;
 		//alert(param);
-		var url = "../x/${securityToken}/ekptg.view.ppt.bantahan.IntegrasiMT?"+param+"&command=bantahanpb&frmFrom=frmPrmhnnSek8DaftarSek8";
+		var url = "../x/${securityToken}/ekptg.view.ppt.bantahan.IntegrasiMT?"+param+"&command=bantahanpb&frmFrom=FrmBantahanSenaraiCarian";
 		var hWnd = window.open(url,'Cetak','width=625,height=575, resizable=no,scrollbars=yes');
-	    if ((document.window != null) && (!hWnd.opener))
+		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();	
 	

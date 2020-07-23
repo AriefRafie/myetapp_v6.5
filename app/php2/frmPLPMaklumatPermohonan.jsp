@@ -78,8 +78,8 @@
                   <legend><b>SENARAI TANAH BERKAITAN</b></legend>
                   <table align="center" width="100%">
                     <tr>
-                      <td colspan="8" scope="row"><input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                        <input name="cmdDaftar" type="button" value="Daftar Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/></td>
+                      <td colspan="8" scope="row"><input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
+                        <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/></td>
                     </tr>
                     <tr class="table_header">
                       <td scope="row" width="5%" align="center"><strong>Bil</strong></td>

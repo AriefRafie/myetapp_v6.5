@@ -209,6 +209,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				idPermohonan = hashHeader.get("idPermohonan").toString();
 				idStatus = hashHeader.get("idStatus").toString();
 				subUrusan = hashHeader.get("subUrusan").toString();
+			
 			}
 //			log.info("mode = " + mode);
 			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(idUser);
@@ -216,7 +217,23 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
         	
 			//MODE VIEW
 			log.info("mode = " + mode);
-			if ("view".equals(mode)){
+			if ("view".equals(mode)){	
+				this.context.put("readOnly", "readOnly");
+	        	this.context.put("classDis", "disabled");
+	        	this.context.put("inputTextClass", "disabled");
+	        	
+				//MAKLUMAT PERMOHONAN
+				logicHeader.setMaklumatPermohonan(idFail);
+				beanMaklumatPermohonan = new Vector();
+				beanMaklumatPermohonan = logicHeader.getBeanMaklumatPermohonan();
+				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+				//MaklumatPermohonanView(mode);
+	        	
+				//MAKLUMAT HAKMILIK
+				beanMaklumatTanah = new Vector();
+				logicMaklumat.setMaklumatTanah(idHakmilikAgensi);
+				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
+				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 				
 				this.context.put("readOnly", "readOnly");
 	        	this.context.put("classDis", "disabled");

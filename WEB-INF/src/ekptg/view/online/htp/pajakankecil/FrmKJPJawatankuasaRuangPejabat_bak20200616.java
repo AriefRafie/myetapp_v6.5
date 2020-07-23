@@ -46,12 +46,12 @@ import ekptg.model.htp.utiliti.IHTPSusulan;
 import ekptg.model.htp.utiliti.fail.HTPFailBean;
 import ekptg.model.htp.utiliti.fail.IHTPFail;
 
-public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{	
+public class FrmKJPJawatankuasaRuangPejabat_bak20200616 extends AjaxBasedModule{	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -609204869152059236L;
-	private static Logger myLog = Logger.getLogger(ekptg.view.htp.pkecil.FrmJawatankuasaRuangPejabat.class);
+	private static Logger myLog = Logger.getLogger(ekptg.view.online.htp.pajakankecil.FrmKJPJawatankuasaRuangPejabat_bak20200616.class);
 	private ekptg.model.htp.IHtp iHtp = null;
 	private final String PATH = "app/htp/pajakankecil/online/";
 	//private final String PATHPK="app/htp/";

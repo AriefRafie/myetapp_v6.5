@@ -216,7 +216,7 @@
           <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Rujukan <em>Online</em></td>
           <td width="1%" >:</td>
-          <td width="70%"><strong>$beanMaklumatPermohonan.noPermohonan</strong>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noRujukanOnline</strong>
             <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
             <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
         </tr>
@@ -287,6 +287,10 @@
       <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Simpan" onClick="daftarBaru()"/>
       <input type="button" name="cmdKembali" id="cmdKembali" value="Batal" onClick="kembali()"/>
       #end
+      #if ($mode == 'view')
+      <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
+      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
+      #end </td>
        </td>
   </tr>
 </table>
@@ -323,7 +327,7 @@ function daftarBaru() {
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doDaftarBaru";
 	document.${formName}.submit(); */
-	document.${formName}.actionOnline.value = "seterusnya";
+	document.${formName}.actionOnline.value = "papar";
 	document.${formName}.hitButton.value = "doDaftarBaru";
 	doAjaxCall${formName}("");
 }
@@ -379,5 +383,12 @@ function janaTajuk(idKategoriPemohon) {
 	//strTajuk = "PERMOHONAN TUKARGUNA " + luasKegunaan +" TANAH " + statusRizabTnh + " PERSEKUTUAN " + str1 +", " + milikOrRizab + ", "+ str4 + ", " + str5+ ", " + str6 +" (" + kegunaanTanah + ")" + " DARIPADA " + kjpTnh + " KEPADA " + pemohon +" BAGI TUJUAN " + tujuanKegunaan;
 	strTajuk = "PENAWARAN TANAH " + statusRizabTnh + " PERSEKUTUAN DI ATAS " + str1 +", " + milikOrRizab + ", "+ str4 + ", " + str5+ ", " + str6 +" ( " + kegunaanTanah + " )" + " KEGUNAAN  " + kjpTnh;
 	document.${formName}.txtPerkara.value = strTajuk;
+}
+function seterusnya(){
+	alert('BACA SETERUSNYAAA');
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
+	document.${formName}.method="POST";	
+	document.${formName}.actionOnline.value = "seterusnya";
+	document.${formName}.submit();
 }
 </script>
