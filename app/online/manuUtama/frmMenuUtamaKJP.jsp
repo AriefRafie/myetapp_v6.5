@@ -274,6 +274,19 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
+														<tr>
+															<td>
+																<a href="javascript:aktapelantarbenua()" class="help" title="Penawaran">
+																	<font color="blue"><li>
+																	#if($jumlah_notifikasi_penawaran > 0)
+																	<label style="background-color:blue" align="center" valign="top" > 
+																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penawaran</blink></font></b>
+																	</label>&nbsp;
+																	#end
+																	Akta Pelantar Benua</li></font>					
+																</a>
+															</td>
+														</tr>
 													</table>
 												</td>
 												#end
@@ -602,7 +615,10 @@ function penawaran(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.submit();
 }
-
+function aktapelantarbenua(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmAPBOnlineKJPSenaraiFailView";
+	document.${formName}.submit();
+}
 function rekod(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.rekod.FrmRekodPendaftaranTanah";
 	document.${formName}.submit();

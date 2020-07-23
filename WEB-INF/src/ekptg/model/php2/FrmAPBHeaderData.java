@@ -68,6 +68,7 @@ public class FrmAPBHeaderData {
 						rs.getString("NO_RAYUAN") == null ? "0" : rs
 								.getString("NO_RAYUAN"));
 				h.put("urusan", "AKTA PELANTAR BENUA");
+				h.put("subUrusan", "AKTA PELANTAR BENUA");
 				h.put("idPermohonan",
 						rs.getString("ID_PERMOHONAN") == null ? "" : rs
 								.getString("ID_PERMOHONAN").toUpperCase());
@@ -79,6 +80,8 @@ public class FrmAPBHeaderData {
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_SURAT")));
 				h.put("perkara", rs.getString("TUJUAN") == null ? "" : rs
+						.getString("TUJUAN").toUpperCase());
+				h.put("tajukFail", rs.getString("TUJUAN") == null ? "" : rs
 						.getString("TUJUAN").toUpperCase());
 				h.put("idPemohon", rs.getString("ID_PEMOHON") == null ? "" : rs
 						.getString("ID_PEMOHON").toUpperCase());
