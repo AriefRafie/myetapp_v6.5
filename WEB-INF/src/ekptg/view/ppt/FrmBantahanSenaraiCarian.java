@@ -4,11 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -1393,7 +1390,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanDeposit.jsp";
 
 		} else if ("borangO".equals(submit)) {
+			jenisDokumen = "pptbantahan";
 			selectedtab = "2";
+			context.put("idWarta", id_warta);
 			context.put("selectedtab", selectedtab);
 
 			id_fail = getParam("id_fail");
@@ -1401,16 +1400,14 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			list = model.getMaklumatBantahan(id_hakmilikpb, _MaxIdSiasatan, id_warta);
 			context.put("getMaklumatBantahan", list);
-			String id_bantahan = "";
-			
+			String id_bantahan = "";			
 			
 			if (list.size() != 0) {
 				Hashtable a = (Hashtable) list.get(0);
 				id_bantahan = (String) a.get("id_bantahan");
 				// get JENIS_DOKUMEN
 				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
-				myLogger.info("ID Bantahan borangO >>> "+id_bantahan);
-				myLogger.info("Jenis Dokumen borangO >>> "+jenisDoc);// Logger sahaja
+				myLogger.info("ID Bantahan borangO >>> "+id_bantahan+",Jenis Dokumen borangO >>> "+jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 				
@@ -1443,7 +1440,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				context.put("button", "edit");
 
 			} else {
-
 //				myLogger.info("ADA MAKLUMAT BORANG O >>>> ");
 				Hashtable getIdBorangO = model.getIdBorangO(id_hakmilikpb, id_bantahan);
 				String idBorangO = getIdBorangO.get("id_borango").toString();
@@ -1496,6 +1492,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				context.put("button", "view");
 
 			}
+			context.put("idMT", _cIdMahkamah);
 
 			vm = "app/ppt/frmBantahanBorangO.jsp";
 
