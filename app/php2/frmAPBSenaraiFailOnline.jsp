@@ -14,7 +14,7 @@
       <legend><b>CARIAN</b></legend>
       <table width="100%" align="center" border="0">
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No Permohonan Online : </td>
+          <td width="30%" height="24" scope="row" align="right">No. Rujukan <i>Online</i> : </td>
           <td width="70%"><input name="txtNoPermohonan" id="txtNoPermohonan" type="text" value="$txtNoPermohonan" size="50" maxlength="50" style="text-transform:uppercase;" >
             <input type="hidden" name="idFail" />
             <input type="hidden" name="idPermohonan" />
@@ -47,7 +47,7 @@
       <table align="center" width="100%">
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>No Permohonan</strong></td>
+          <td width="20%"><strong>No. Rujukan <i>Online</i></strong></td>
           <td width="30%"><strong>Nama Pemohon/Syarikat</strong></td>
           <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
           <td width="10%"><strong>Kawasan Dipohon</strong></td>

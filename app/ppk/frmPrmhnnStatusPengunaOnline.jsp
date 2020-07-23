@@ -212,12 +212,12 @@
 			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
 				<strong>$senarai.status</strong>
 				<br>
-				<a href="#" onClick="javascript:cetakBorangF('$!senarai.idFail','$!senarai.id_Permohonan')"><font color="blue"> Borang F </font></a>
+				<a href="#" onClick="javascript:cetakBorangF('$!senarai.idFail','$!senarai.id_Permohonan')"><font color="blue"> Cetak Perintah </font></a>
 				
 			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
 				<strong>$senarai.status</strong>
 				<br>
-				<a href="#" onClick="javascript:cetakBorangE('$!senarai.idFail','$!senarai.id_Permohonan','$!senarai.id_simati','$idPerintahHTAOBMST')"><font color="blue"> Borang E </font></a>
+				<a href="#" onClick="javascript:cetakBorangE('$!senarai.idFail','$!senarai.id_Permohonan','$!senarai.id_simati','$idPerintahHTAOBMST')"><font color="blue"> Cetak Perintah </font></a>
 		
 			
 			#else
@@ -356,7 +356,7 @@ function cetakBorangF(idFail,id_Permohonan) {
 	//alert(idFail);
 	//alert(id_Permohonan);
 	//var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
-	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupTAC?idFail="+idFail+"&id_Permohonan="+id_Permohonan;
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupTAC?idFail="+idFail;
 	
 	var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
 	if ((document.window != null) && (!hWnd.opener))

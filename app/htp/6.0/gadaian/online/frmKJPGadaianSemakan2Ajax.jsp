@@ -62,7 +62,7 @@
 		        <td align="center" valign="top" width="50%"><table width="100%" border="0">
 		              <tr>
 		                <td width="3%"><div align="right"><font color="#FF0000">*</font></div></td>
-		                <td width="31%"><div align="left">No. Fail Seksyen</div></td>
+		                <td width="31%"><div align="left">No. Fail</div></td>
 		                <td width="2%">:</td>
 		                <td width="64%">
 		                 #if ($idFail == "")

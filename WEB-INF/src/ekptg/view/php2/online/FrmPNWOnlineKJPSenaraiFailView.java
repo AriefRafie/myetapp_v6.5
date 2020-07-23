@@ -115,6 +115,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		String poskod = "";
 		String negeri = "";
 		String perkara = "";
+		String keterangan = "";
 		String noFail = "";
 		String idPermohonan = getParam("idPermohonan");
 		String idPermohonanPelepasan = getParam("idPermohonanPelepasan");
@@ -124,6 +125,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		String idKategoriPemohon = "";
 		String idJenisTanah = "1";
 		String namaJenisTanah = "TANAH MILIK PERSEKUTUAN";
+		String namaKementerian = "";
 
 		// VECTOR
 		Vector list = null;
@@ -225,7 +227,6 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				myLog.info("doDaftarBaru: id kementerian tanah >> " + getParam("idKementerianTanah"));
 
-				/*idFail = logic.daftarBaru(userRole, idKementerian, idAgensi, idHakmilikAgensi, session);*/
 				idFail = logic.daftarBaru(idJenisTanah, getParam("tarikhTerima"),
 						getParam("tarikhSurat"), getParam("txtNoRujukanSurat"), getParam("txtPerkara"),
 						"3", idKementerian, idAgensi,
@@ -302,6 +303,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			logic.setMaklumatPermohonan(idFail);
 			beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+			
 
 			// MAKLUMAT KEGUNAAN TANAH
 			beanMaklumatTanah = new Vector();
@@ -354,7 +356,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			beanMaklumatPermohonan = new Vector();
 			Hashtable hashPermohonan = new Hashtable();
 			hashPermohonan.put("noPermohonan", "");
-			hashPermohonan.put("noFail", "");
+			hashPermohonan.put("noRujukanOnline", "");
 			hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
 			hashPermohonan.put("tarikhSurat",getParam("tarikhSurat") == null ? "": getParam("tarikhSurat"));
 			hashPermohonan.put("noRujukanSurat",getParam("txtNoRujukanSurat") == null ? "": getParam("txtNoRujukanSurat"));
@@ -707,6 +709,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			poskod = (String) permohonan.get("poskod");
 			negeri = (String) permohonan.get("negeri");
 			perkara = (String) permohonan.get("perkara");
+			keterangan = (String) permohonan.get("keterangan");
 			this.context.put("noFail", noFail);
 			this.context.put("namaKementerian", nama);
 			this.context.put("namaAgensi", namaAgensi);
@@ -716,14 +719,31 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			this.context.put("poskod", poskod);
 			this.context.put("negeri", negeri);
 			this.context.put("perkara", perkara);
+			this.context.put("keterangan", keterangan);
+			// MAKLUMAT PEMOHON
+						beanMaklumatPemohon = new Vector();
+						logic.setMaklumatPemohon(idFail);		
+						if (logic.getBeanMaklumatPemohon().size() != 0){
+							Hashtable hashPemohon = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
+							idKategoriPemohon = (String) hashPemohon.get("idKategoriPemohon");
+							idPejabat = (String) hashPemohon.get("idPejabat");
+							idKementerian = (String) hashPemohon.get("idKementerian");
+							idAgensi = (String) hashPemohon.get("idAgensi");
+							namaKementerian = (String) hashPemohon.get("namaKementerian");
+							beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
+						}
+						idKategoriPemohon = logic.getKategoriPemohonPenawaran();
+						this.context.put("idKategoriPemohon", idKategoriPemohon);
+						this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "disabled", " class=\"disabled\""));
+						this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "disabled", " class=\"disabled\""));
 
 			String semakMode = "";
-			String statusSemasa = "-1";
+			String statusSemasa = "1";
 			
 
 			if (getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan.get("idSubUrusan"))),
 					Long.parseLong(String.valueOf(permohonan.get("idPermohonan"))),
-					Long.parseLong(String.valueOf(permohonan.get("idFail"))), "-4")) {
+					Long.parseLong(String.valueOf(permohonan.get("idFail"))), "4")) {
 				semakMode = "xupdate";
 			} else {
 
@@ -731,18 +751,18 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 				semakMode = "update";
 				if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idSubUrusan"))),
 						Long.parseLong(String.valueOf(permohonan.get("idPermohonan"))),
-						Long.parseLong(String.valueOf(permohonan.get("idFail"))), "-1")) {
-					statusSemasa = "-1";
+						Long.parseLong(String.valueOf(permohonan.get("idFail"))), "1")) {
+					statusSemasa = "1";
 
 				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idSubUrusan"))),
 						Long.parseLong(String.valueOf(permohonan.get("idPermohonan"))),
-						Long.parseLong(String.valueOf(permohonan.get("idFail"))), "-2")) {
-					statusSemasa = "-2";
+						Long.parseLong(String.valueOf(permohonan.get("idFail"))), "2")) {
+					statusSemasa = "2";
 
 				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idSubUrusan"))),
 						Long.parseLong(String.valueOf(permohonan.get("idPermohonan"))),
-						Long.parseLong(String.valueOf(permohonan.get("idFail"))), "-3")) {
-					statusSemasa = "-3";
+						Long.parseLong(String.valueOf(permohonan.get("idFail"))), "3")) {
+					statusSemasa = "3";
 
 				}
 			}
@@ -774,7 +794,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 				 * -4 untuk status - Permohonan Online (Pengesahan) 
 				 * -5  untuk status - Penerimaan Permohonan
 				*/
-				String langkah2 = "-2";
+				String langkah2 = "2";
 				EmailConfig ec = new EmailConfig();
 
 				//myLog.info("from="+email.FROM);
@@ -785,7 +805,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 					
 					this.context.put("idKementerian", idKementerian);
 					
-					langkah2 = "-2";
+					langkah2 = "2";
 					
 					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
 	    			
@@ -798,7 +818,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 							, emelSubjek, kandungan);
 
 				}else if (idJawatan.equals("9")){
-					langkah2 = "-3";				
+					langkah2 = "3";				
 					
 					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
 	    			
@@ -806,12 +826,12 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 						getIHTP().getErrorHTML("[ONLINE-HTP PENAWARAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 
 					ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
-							, "-4"
+							, "4"
 							, String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
 							, emelSubjek, kandungan);
 								
 				}else if (idJawatan.equals("4")){
-					langkah2 = "-4";
+					langkah2 = "4";
 					emelSubjek = ec.tajukHantarPermohonan + "Penawaran";
 							
 					kandungan = getEmelSemak().setKandungan(String.valueOf(String.valueOf(permohonan2.get("tajukFail")))

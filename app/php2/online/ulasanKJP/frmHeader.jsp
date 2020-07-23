@@ -11,7 +11,7 @@
             <td width="63%"><font color="blue">$beanHeader.noFail</font></td>
           </tr>
           <tr>
-            <td width="36%" align="right">Suburusan</td>
+            <td width="36%" align="right">Urusan</td>
             <td width="1%">:</td>
             <td width="63%"><font color="blue">$beanHeader.subUrusan</font></td>
           </tr>

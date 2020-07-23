@@ -826,7 +826,6 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			//sql = "SELECT EMEL FROM USERS_ONLINE WHERE USER_ID = '"+userId+"' AND EMEL IS NOT NULL";
 			sql = "SELECT A.EMEL FROM USERS_ONLINE A, USERS B WHERE B.USER_LOGIN = '"+userId+"' AND EMEL IS NOT NULL AND A.USER_ID = B.USER_ID ";
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -842,12 +841,48 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 			if (db != null)	db.close();
 		}
 	}
+
+	//yati tambah check date generate otp
+	Vector checkDateOTP = null;
 	
+	@SuppressWarnings("unchecked")
+	public Vector checkDateOTP(String userId,String idFail) throws Exception {
+		
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		checkDateOTP = new Vector();
+		checkDateOTP.clear();
+		
+		Db db = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = " SELECT T.TARIKH_MASUK FROM TBLPPKTAC T, USERS U WHERE T.ID_FAIL = '"+idFail+"' AND T.ID_MASUK=U.USER_ID AND U.USER_LOGIN = '"+userId+"' " +
+					" AND ID_TAC = (SELECT MAX(ID_TAC) FROM TBLPPKTAC T, USERS U WHERE T.ID_FAIL = '"+idFail+"' " +
+					" AND T.ID_MASUK=U.USER_ID AND U.USER_LOGIN = '"+userId+"' ) ";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("*** TARIKH_MASUK ID_FAIL NI : "+sql);
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("TARIKH_MASUK", df.format(rs.getTimestamp("TARIKH_MASUK"))==null?"":df.format(rs.getTimestamp("TARIKH_MASUK")));
+				checkDateOTP.addElement(h);
+			}
+			
+			return checkDateOTP;
+		
+		} finally {
+			if (db != null)	db.close();
+		}
+	}
 	//yati tambah
 		Vector checkOTP = null;
 		
 		@SuppressWarnings("unchecked")
-		public Vector checkOTP(String idFail,String userId) throws Exception {
+		public Vector checkOTP(String userId,String idFail) throws Exception {
 			
 			checkOTP = new Vector();
 			checkOTP.clear();
@@ -859,25 +894,25 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 				db = new Db();
 				Statement stmt = db.getStatement();
 
-				sql = " SELECT NO_TAC FROM TBLPPKTAC WHERE ID_FAIL = '"+idFail+"' AND ID_MASUK = '"+userId+"' " +
-						" AND ID_TAC = (SELECT MAX(ID_TAC) FROM TBLPPKTAC WHERE ID_FAIL = '"+idFail+"' " +
-						" AND ID_MASUK = '"+userId+"' ) ";
+				sql = " SELECT NO_TAC FROM TBLPPKTAC T, USERS U WHERE T.ID_FAIL = '"+idFail+"' AND T.ID_MASUK=U.USER_ID AND U.USER_LOGIN = '"+userId+"' " +
+						" AND ID_TAC = (SELECT MAX(ID_TAC) FROM TBLPPKTAC T, USERS U WHERE T.ID_FAIL = '"+idFail+"' " +
+						" AND T.ID_MASUK=U.USER_ID AND U.USER_LOGIN = '"+userId+"' ) ";
 				
 				ResultSet rs = stmt.executeQuery(sql);
 				myLogger.info("*** NO TAC ID_FAIL NI : "+sql);
 				Hashtable h;
 				while (rs.next()) {
 					h = new Hashtable();
-					h.put("NO_TAC", rs.getString("NO_TAC")== null?"":rs.getString("NO_TAC"));
-					checkEmail.addElement(h);
+					h.put("NO_TAC", rs.getString("NO_TAC")== null?"":rs.getString("NO_TAC"));					
+					checkOTP.addElement(h);
 				}
-				return checkEmail;
+				return checkOTP;
+			
 			} finally {
 				if (db != null)	db.close();
 			}
 		}
 	
-
 	@SuppressWarnings("unchecked")
 	public static String addTAC(Hashtable data,String otp2,String msg) throws Exception
 	  {
@@ -893,15 +928,12 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	conn = db.getConnection();
 			conn.setAutoCommit(false);
 	    	Statement stmt = db.getStatement();
-	    	myLogger.info("masuk db");
-	    	//user login id
 	    	String id_user = (String)data.get("id_user");
 
 	    	long id_tac = DB.getNextID("TBLPPKTAC_SEQ");    
 	    	String idFail = (String)data.get("idFail");	 
 	    	String otp = otp2;
 	    	String flagmsg = msg;
-	    	myLogger.info("flagmsg : "+flagmsg);
 	    	Date now = new Date();
 	    	SimpleDateFormat formatter =  new SimpleDateFormat("yyyy");
 	    	String tahun = formatter.format(now);
@@ -926,14 +958,11 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	        // convert calendar to date
 	        Date currentDatePlusOne = c.getTime();
 
-			System.out.println("DATE EXPIRED FORMAT "+format.format(currentDatePlusOne));
-			//String EXP = "to_date('" +format.format(currentDatePlusOne) + "','dd/MM/yyyy HH:mm:ss')";
 	   		String EXP = "to_date('" + format.format(currentDatePlusOne) + "','MM/DD/YYYY HH24:MI:SS')";
 			
 	    	//generate no permohonan	    	
 	    	String seq = String.format("%06d",File.getSeqNo(1,1,0,0,0,false,false,thn,0));	    	
-	    	String noPermohonan = tahun+"-"+seq;
-	    	
+	    	String noPermohonan = tahun+"-"+seq;	    	
 	      
 	    	SQLRenderer rF = new SQLRenderer();
 	    	rF.add("id_tac",id_tac);
@@ -961,12 +990,9 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    }
 	    finally {
 	    if (db != null) db.close();
-	    }
-	    
+	    }	    
 	    return output;
 	   
 	  }//close add
-
-	
 
 }

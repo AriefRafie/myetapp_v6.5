@@ -49,12 +49,12 @@ public class FrmAPBJabatanTeknikalData {
 	private Vector listPTG = null;
 	private Vector listPertindihan = null;
 	private Vector beanMaklumatPertindihan = null;
-
 	private Vector beanMaklumatKJT = null;
 	private Vector beanMaklumatDokumen = null;
-
 	private Vector beanMaklumatPejabat = null;
 	private Vector listNotifikasi = null;
+	private Vector beanMaklumatKJP = null;
+	private Vector beanMaklumatLampiranKJP = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -3306,104 +3306,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 	}
 
-	public Vector getListJUPEM() {
-		return listJUPEM;
-	}
-
-	public void setListJUPEM(Vector listJUPEM) {
-		this.listJUPEM = listJUPEM;
-	}
-
-	public Vector getListJAS() {
-		return listJAS;
-	}
-
-	public void setListJAS(Vector listJAS) {
-		this.listJAS = listJAS;
-	}
-
-	public Vector getListJMG() {
-		return listJMG;
-	}
-
-	public void setListJMG(Vector listJMG) {
-		this.listJMG = listJMG;
-	}
-
-	public Vector getListJP() {
-		return listJP;
-	}
-
-	public void setListJP(Vector listJP) {
-		this.listJP = listJP;
-	}
-
-	public Vector getListJLM() {
-		return listJLM;
-	}
-
-	public void setListJLM(Vector listJLM) {
-		this.listJLM = listJLM;
-	}
-
-	public Vector getListPHM() {
-		return listPHM;
-	}
-
-	public void setListPHM(Vector listPHM) {
-		this.listPHM = listPHM;
-	}
-
-	public Vector getListJPS() {
-		return listJPS;
-	}
-
-	public void setListJPS(Vector listJPS) {
-		this.listJPS = listJPS;
-	}
-
-	public Vector getBeanMaklumatKJT() {
-		return beanMaklumatKJT;
-	}
-
-	public void setBeanMaklumatKJT(Vector beanMaklumatKJT) {
-		this.beanMaklumatKJT = beanMaklumatKJT;
-	}
-
-	public Vector getBeanMaklumatDokumen() {
-		return beanMaklumatDokumen;
-	}
-
-	public void setBeanMaklumatDokumen(Vector beanMaklumatDokumen) {
-		this.beanMaklumatDokumen = beanMaklumatDokumen;
-	}
-
-	public Vector getListPertindihan() {
-		return listPertindihan;
-	}
-
-	public void setListPertindihan(Vector listPertindihan) {
-		this.listPertindihan = listPertindihan;
-	}
-
-	public Vector getBeanMaklumatPertindihan() {
-		return beanMaklumatPertindihan;
-	}
-
-	public void setBeanMaklumatPertindihan(Vector beanMaklumatPertindihan) {
-		this.beanMaklumatPertindihan = beanMaklumatPertindihan;
-	}
-
-	public Vector getListPTG() {
-		return listPTG;
-	}
-
-	public void setListPTG(Vector listPTG) {
-		this.listPTG = listPTG;
-	}
-
 	// 10/6/2020
-
 	// START TAMBAH NOTIFIKASI EMAIL//
 
 	public void sendEmail(String mailTo, String tajuk, String tarikh,
@@ -3527,10 +3430,6 @@ public class FrmAPBJabatanTeknikalData {
 			if (db != null)
 				db.close();
 		}
-	}
-
-	public Vector getBeanMaklumatPejabat() {
-		return beanMaklumatPejabat;
 	}
 
 	public void setMaklumatPejabatJKPTG(String idPejabat) throws Exception {
@@ -4729,10 +4628,6 @@ public class FrmAPBJabatanTeknikalData {
 		}
 	}
 	//end PTG
-	
-	public Vector getListNotifikasi() {
-		return listNotifikasi;
-	}
 
 	public String getNoFailByIdPermohonan(String idPermohonan) throws Exception {
 		Db db = null;
@@ -4760,6 +4655,7 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
+	
 	public void sendEmailNotifikasi(String idPermohonan,String emel) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -4848,4 +4744,248 @@ public class FrmAPBJabatanTeknikalData {
 				db.close();
 		}
 	}
+	
+	public void setMaklumatKJP(String idUlasanTeknikal, String idPermohonan)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatKJP = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT B.NAMA_KEMENTERIAN, C.NAMA_AGENSI, A.ID_ULASANTEKNIKAL, A.ID_PERMOHONAN, A.TARIKH_HANTAR, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA, "
+				+ "A.FLAG_STATUS, A.FLAG_AKTIF, A.ID_MENTERI, A.ID_AGENSI, A.TARIKH_TERIMA, A.TARIKH_SURAT, A.NO_RUJUKAN, A.ULASAN, "
+				+ "A.FLAG_KEPUTUSAN, A.NAMA_PEGAWAI, A.NO_TELEFON "
+				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE A.ID_MENTERI = B.ID_KEMENTERIAN"
+				+ " AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_ULASANTEKNIKAL = '" + idUlasanTeknikal + "'"
+				+ " AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("kementerian",
+						rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs
+								.getString("NAMA_KEMENTERIAN"));
+				h.put("agensi",
+						rs.getString("NAMA_AGENSI") == null ? "" : rs
+								.getString("NAMA_AGENSI"));
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				h.put("idKementerianKJP",
+						rs.getString("ID_MENTERI") == null ? "" : rs
+								.getString("ID_MENTERI"));
+				h.put("idAgensiKJP", rs.getString("ID_AGENSI") == null ? ""
+						: rs.getString("ID_AGENSI"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+				h.put("jangkamasa", rs.getString("JANGKAMASA") == null ? ""
+						: rs.getString("JANGKAMASA"));
+				h.put("tarikhJangkaTerima",
+						rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
+				h.put("flagStatus",
+						rs.getString("FLAG_STATUS") == null ? "99999" : rs
+								.getString("FLAG_STATUS"));
+				h.put("aktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_TERIMA")));
+				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_SURAT")));
+				h.put("noRujukan",
+						rs.getString("NO_RUJUKAN") == null ? "" : rs
+								.getString("NO_RUJUKAN"));
+				h.put("ulasan",
+						rs.getString("ULASAN") == null ? "" : rs
+								.getString("ULASAN"));
+				h.put("flagKeputusan",
+						rs.getString("FLAG_KEPUTUSAN") == null ? "" : rs
+								.getString("FLAG_KEPUTUSAN"));
+				//untuk dapatkan nama pegawai yang memberi ulasan
+				h.put("namaPengulas", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("noTelPengulas", rs.getString("NO_TELEFON") == null ? ""
+						: rs.getString("NO_TELEFON"));
+				beanMaklumatKJP.addElement(h);
+				bil++;
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void setLampiranKJP(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		try {
+			db = new Db();
+			beanMaklumatLampiranKJP = new Vector();
+			Statement stmt = db.getStatement();
+
+			sql = " SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, CONTENT, ID_PERMOHONAN, FLAG_DOKUMEN, NAMA_FAIL FROM TBLPHPDOKUMEN "
+					+ " WHERE FLAG_DOKUMEN = 'L' AND ID_ULASANTEKNIKAL IS NULL AND ID_MESYUARAT IS NULL AND ID_PHPHAKMILIK IS NULL "
+					+ " AND ID_PENAWARANKJP IS NULL AND ID_PERMOHONAN = '"
+					+ idPermohonan + "' ";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			int count = 0;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
+						: rs.getString("NAMA_DOKUMEN"));
+				h.put("catatan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				h.put("content",
+						rs.getString("CONTENT") == null ? "" : rs
+								.getString("CONTENT"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				h.put("flagDokumen", rs.getString("FLAG_DOKUMEN") == null ? ""
+						: rs.getString("FLAG_DOKUMEN"));
+				h.put("namaFail",
+						rs.getString("NAMA_FAIL") == null ? "" : rs
+								.getString("NAMA_FAIL"));
+				beanMaklumatLampiranKJP.addElement(h);
+				bil++;
+				count++;
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Vector getListJUPEM() {
+		return listJUPEM;
+	}
+
+	public void setListJUPEM(Vector listJUPEM) {
+		this.listJUPEM = listJUPEM;
+	}
+
+	public Vector getListJAS() {
+		return listJAS;
+	}
+
+	public void setListJAS(Vector listJAS) {
+		this.listJAS = listJAS;
+	}
+
+	public Vector getListJMG() {
+		return listJMG;
+	}
+
+	public void setListJMG(Vector listJMG) {
+		this.listJMG = listJMG;
+	}
+
+	public Vector getListJP() {
+		return listJP;
+	}
+
+	public void setListJP(Vector listJP) {
+		this.listJP = listJP;
+	}
+
+	public Vector getListJLM() {
+		return listJLM;
+	}
+
+	public void setListJLM(Vector listJLM) {
+		this.listJLM = listJLM;
+	}
+
+	public Vector getListPHM() {
+		return listPHM;
+	}
+
+	public void setListPHM(Vector listPHM) {
+		this.listPHM = listPHM;
+	}
+
+	public Vector getListJPS() {
+		return listJPS;
+	}
+
+	public void setListJPS(Vector listJPS) {
+		this.listJPS = listJPS;
+	}
+
+	public Vector getBeanMaklumatKJT() {
+		return beanMaklumatKJT;
+	}
+
+	public void setBeanMaklumatKJT(Vector beanMaklumatKJT) {
+		this.beanMaklumatKJT = beanMaklumatKJT;
+	}
+
+	public Vector getBeanMaklumatDokumen() {
+		return beanMaklumatDokumen;
+	}
+
+	public void setBeanMaklumatDokumen(Vector beanMaklumatDokumen) {
+		this.beanMaklumatDokumen = beanMaklumatDokumen;
+	}
+
+	public Vector getListPertindihan() {
+		return listPertindihan;
+	}
+
+	public void setListPertindihan(Vector listPertindihan) {
+		this.listPertindihan = listPertindihan;
+	}
+
+	public Vector getBeanMaklumatPertindihan() {
+		return beanMaklumatPertindihan;
+	}
+
+	public void setBeanMaklumatPertindihan(Vector beanMaklumatPertindihan) {
+		this.beanMaklumatPertindihan = beanMaklumatPertindihan;
+	}
+
+	public Vector getListPTG() {
+		return listPTG;
+	}
+
+	public void setListPTG(Vector listPTG) {
+		this.listPTG = listPTG;
+	}
+
+	public Vector getBeanMaklumatPejabat() {
+		return beanMaklumatPejabat;
+	}
+	
+	public Vector getListNotifikasi() {
+		return listNotifikasi;
+	}
+	
+	public Vector getBeanMaklumatKJP() {
+		return beanMaklumatKJP;
+	}
+	
+	public Vector getBeanMaklumatLampiranKJP() {
+		return beanMaklumatLampiranKJP;
+	}
+	
 }

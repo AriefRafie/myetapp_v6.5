@@ -1245,6 +1245,42 @@ public class FrmAPBSenaraiFailData {
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
 			stmt.executeUpdate(sql);
 
+			String idJadualPertama="";
+			Date tarikhTerima=null;
+			
+			//dapatkan idjadualpertama
+			sql = "SELECT ID_PHPPMOHONNJDUALPERTAMA FROM TBLPHPPMOHONNJDUALPERTAMA WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+			ResultSet rss = stmt.executeQuery(sql);
+			if (rss.next()) {
+				idJadualPertama=rss.getString("ID_PHPPMOHONNJDUALPERTAMA") == null ? "" : rss.getString("ID_PHPPMOHONNJDUALPERTAMA").toString();
+			}
+			
+			//dapatkan tarikh terima
+			sql = "SELECT TARIKH_TERIMA FROM TBLPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+			ResultSet rsTarikh = stmt.executeQuery(sql);
+			if (rsTarikh.next()) {
+				//tarikhTerima=rsTarikh.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rsTarikh.getDate("TARIKH_TERIMA"));
+				tarikhTerima=rsTarikh.getDate("TARIKH_TERIMA");
+			}
+			
+			// TBLPHPAKAUN - FI PERMOHONAN
+			r = new SQLRenderer();
+			long idAkaun = DB.getNextID("TBLPHPAKAUN_SEQ");
+			r.add("ID_AKAUN", idAkaun);
+			r.add("ID_PHPPMOHONNJDUALPERTAMA", idJadualPertama);
+			//r.add("TARIKH", r.unquote(tarikhTerima));
+			r.add("TARIKH", tarikhTerima);
+			r.add("ID_JENISBAYARAN", "11");
+			r.add("DEBIT", 1000);
+			r.add("CATATAN", "FI PERMOHONAN");
+			r.add("ID_JENISTRANSAKSI", "1"); // CAJ
+			r.add("FLAG_DEPOSIT", "T");
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPAKAUN");
+			stmt.executeUpdate(sql);
+			
 			conn.commit();
 
 			sql = "SELECT B.NO_PERMOHONAN, A.NAMA, A.EMEL FROM TBLPHPPEMOHON A, TBLPERMOHONAN B"
