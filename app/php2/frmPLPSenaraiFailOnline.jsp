@@ -47,8 +47,8 @@
       <table align="center" width="100%">
         <tr class="table_header">
           <td scope="row" width="4%" align="left"><strong>Bil</strong></td>
-          <td width="25%" align="left"><strong>No Permohonan</strong></td>
-          <td width="11%" align="left"><strong>No Fail</strong></td>
+          <td width="25%" align="left"><strong>No. Rujukan <i>Online</i></strong></td>
+          <td width="11%" align="left"><strong>No. Fail</strong></td>
           <td width="25%" align="left"><strong>Nama Pemohon</strong></td>
           <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
           <td width="25%" align="left"><strong>Sub Urusan</strong></td>
