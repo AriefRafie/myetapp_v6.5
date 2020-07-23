@@ -66,7 +66,7 @@
 					<tr>
 						<td>
 						<a href="javascript:goTo('MYINFO')" class="help" title="Tukar Kata Laluan">
-							<font color="blue"><li>$change_password</li></font>
+							<font color="blue"><li>Kemaskini Profil</li></font>
 						</a>
 						</td>
 					</tr>
