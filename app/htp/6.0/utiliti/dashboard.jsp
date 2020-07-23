@@ -1206,7 +1206,7 @@ function open_info() {
 	new_window.document.write("<table width='100%'><tr><td width='50%' valign='top'>");
 	
 	new_window.document.write("<table><tr><td><b>Fail</b></td></tr>");
-	new_window.document.write("<tr><td><font color='blue'><li>&nbsp;No. Fail Seksyen </li></font>");
+	new_window.document.write("<tr><td><font color='blue'><li>&nbsp;No. Fail </li></font>");
 	new_window.document.write("<font color='blue'><li>&nbsp;No. Fail PTG</li></font>");
 	new_window.document.write("<font color='blue'><li>&nbsp;No. Fail PTD</li></font>");
 	new_window.document.write("<font color='blue'><li>&nbsp;Tajuk</li></font>	");
@@ -1251,7 +1251,7 @@ function open_infoSID() {
 	new_window.document.write("<table width='100%'><tr><td width='50%' valign='top'>");
 	
 	new_window.document.write("<table><tr><td><b>Fail</b></td></tr>");
-	new_window.document.write("<tr><td><font color='blue'><li>&nbsp;No. Fail Seksyen </li></font>");
+	new_window.document.write("<tr><td><font color='blue'><li>&nbsp;No. Fail </li></font>");
 	
 	new_window.document.write("</td></tr></table>");
 	
