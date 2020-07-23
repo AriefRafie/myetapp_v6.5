@@ -7,6 +7,8 @@
 
  <input type="hidden" name="idFail" id="idFail" value="$idFail"> 
   <input type="hidden" name="userId" id="userId" value="$userId">
+
+    <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
     <input type="hidden" name="otp" id="otp" value="$!otp">
 <script type="text/javascript" src="../../library/js/SpryTabbedPanels.js"></script>
 <script type="text/javascript" src="../../library/js/ekptgTools.js"></script>
@@ -78,6 +80,9 @@
 
 
 <script>
+function clearData() {
+	document.${formName}.notac.value = "";		
+	}
 
 function mohonTAC(idFail,id_Permohonan) {
  /*   var url = "../../servlet/ekptg.report.ppk.SuratPanduanBicara?idpermohonan="+idpermohonan+"&idfail="+idfail;
@@ -90,7 +95,7 @@ function mohonTAC(idFail,id_Permohonan) {
     //alert("id_Permohonan xxx"+id_Permohonan);
     
     //alert("id_FAIL CCC"+idFail);
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupTAC&command=simpan";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC&command=simpan";
 	//alert(document.${formName}.action);
 	//if ( !window.confirm("No TAC telah dihantar") ){
 		alert("No. TAC telah dihantar ke emel pengguna");
@@ -100,16 +105,20 @@ function mohonTAC(idFail,id_Permohonan) {
 	
 }
 function hantarTAC(idFail,id_Permohonan) {
-	alert(idFail);
+		//alert(idFail);
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupTAC&command=hantar";	
-		document.${formName}.submit();		
-
-		var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
-		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+		document.${formName}.submit();	
+		//alert(document.${formName}.command);
 		
+ 		//var url = "../../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
+		//var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
+		//var url = "../x/${securityToken}/ekptg.view.ppk.BorangF?idFail="+idFail+"&id_Permohonan="+id_Permohonan;
+		//var url = "../x/${securityToken}/ekptg.report.ppk.BorangF?idfail="+idFail;
+		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
-			hWnd.opener = document.window;
-		if (hWnd.focus != null) hWnd.focus(); 
+		       hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();
 	
 	}
 
