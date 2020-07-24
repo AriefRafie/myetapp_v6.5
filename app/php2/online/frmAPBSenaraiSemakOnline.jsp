@@ -1,4 +1,6 @@
-
+<style type="text/css">
+.pautan {color: #0000FF}
+</style>
 <fieldset>
 <legend>SENARAI SEMAK</legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -30,7 +32,7 @@
         
         #if ($mode == 'update')
 	        <tr class="$row">
-	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked /></td>
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked /></td>
 	          <td class="$row" width="82%">$i. $list.keterangan</td>
 	          	<td class="$row" width="15%">
 	          	$!list.lampirans
@@ -39,7 +41,7 @@
 	      #end
 	      #if ($mode == 'view')
 	      	<tr class="$row">
-	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked $disabled /></td>
 	          <td class="$row" width="82%">$i. $list.keterangan</td>
 	          <td class="$row" width="15%">
 	          $!list.lampirans
@@ -65,10 +67,9 @@
       <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalProjek()"/>
       #end
       #if ($mode == 'view')
-      #if ($idStatus == '')
       <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskiniPermohonan()"/>
       <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-      #end
+      
       #end
       #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>

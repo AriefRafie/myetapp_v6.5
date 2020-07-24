@@ -36,6 +36,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	
 	FrmAPBOnlineSenaraiFailData logic = new FrmAPBOnlineSenaraiFailData();
 	FrmAPBHeaderData header = new FrmAPBHeaderData();
+	private String[] semaks;
 	
 	@Override
 	public String doTemplate2() throws Exception {
@@ -228,9 +229,10 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	        	}
 	        	if ("doHantarEmel".equals(hitButton)){
 	        		if (logic.checkMaklumatAPBLengkap(idPermohonan)){
+	        			logic.updatePermohonanEmel(idFail,idPermohonan,session);
+	        		} else {
 	        			this.context.put("onload","\"alert('Masih terdapat maklumat permohonan yang belum lengkap.')\"");
 	        		}
-					logic.updatePermohonanEmel(idFail,idPermohonan,session);
 				}
 				if ("doHapus".equals(hitButton)){
 					logic.hapusPermohonan(idFail);
@@ -240,7 +242,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				//SENARAI SEMAK		
 				if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
 	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
-	    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
+//	    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
 	    				
 	        		//String[] cbsemaks = this.request.getParameterValues("cbsemaks");
 	    			FrmSemakan frmSemak = new FrmSemakan();
@@ -461,7 +463,6 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 
         } else if ("seterusnya".equals(actionOnline)){
         	
-        	log.info("masuk sini");
         	// GO TO MAKLUMAT PERMOHONAN  
        		vm = "app/php2/online/frmAPBMaklumatPermohonan.jsp";
        		
@@ -1084,8 +1085,7 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 	}
 	
 	private void saveLampiran(FileItem item, String idPermohonan, HttpSession session) throws Exception {
-		log.info("lalu C");
-
+	
 		Db db = null;
 			String userId = (String) session.getAttribute("_ekptg_user_id");
 				

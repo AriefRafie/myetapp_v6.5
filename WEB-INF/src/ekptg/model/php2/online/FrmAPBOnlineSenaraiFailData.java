@@ -96,7 +96,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_KATEGORIPEMOHON", "2");
 			sql = "SELECT A.USER_NAME,B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_NEGERI,B.NO_FAX, B.NO_HP," 
-				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL"
+				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.ID_BANDAR"
 				+ " FROM USERS A, USERS_ONLINE B"
 				+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
 			ResultSet rsUserOnline = stmt.executeQuery(sql);
@@ -119,7 +119,7 @@ public class FrmAPBOnlineSenaraiFailData {
 					emelUser = rsUserOnline.getString("EMEL");
 				}
 				r.add("EMEL", emelUser);
-				r.add("ID_BANDARTETAP","99999");
+				r.add("ID_BANDARTETAP",rsUserOnline.getString("ID_BANDAR") == null ? "99999" : rsUserOnline.getString("ID_BANDAR"));
 			}		
 			
 			r.add("ID_MASUK", userId);
