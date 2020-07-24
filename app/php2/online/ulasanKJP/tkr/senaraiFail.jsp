@@ -111,7 +111,7 @@
           <tr>
             <td class="$row" align="center">$count</td>
             <td class="$row"><a href="javascript:papar('$list.ID_FAIL','$list.ID_STATUS')" class="style1">$list.NO_PERMOHONAN</a></td>
-            <td class="$row"><a href="javascript:paparFail('$!list.ID_FAIL', '$!list.ID_ULASANTEKNIKAL')" class="style2">$list.NO_FAIL</a></td>
+            <td class="$row">$list.NO_FAIL</td>
             <td class="$row">$list.TAJUK_FAIL</td>
             <td class="$row" align="center">$list.TARIKH_TERIMA</td>
             <td class="$row" align="center">$list.STATUS</td>
@@ -129,7 +129,6 @@
 </table>
 <script>
 function papar(idFail,idStatus) {
-alert("masuk x sini >>> "+idFail+idStatus);
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idStatus.value = idStatus;
 	document.${formName}.submit2.value = "seterusnya";

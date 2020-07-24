@@ -783,7 +783,7 @@ public class FrmTKRHeaderData {
 					  " USERS_KEMENTERIAN UO" +
 					  " WHERE U.USER_ID = UO.USER_ID" +
 					  " AND U.USER_ID = '" + idUser + "'";
-			log.info("header:sql="+sql);
+			log.info("header ros:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
