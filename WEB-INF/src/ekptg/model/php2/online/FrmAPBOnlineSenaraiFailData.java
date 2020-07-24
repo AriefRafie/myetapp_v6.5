@@ -769,7 +769,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					+ noFail.trim().toUpperCase() + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
-
+			myLog.info("sql no. fail lama: "+sql);
 			if (rs.next()) {
 				return rs.getString("ID_FAIL") == null ? "" : rs
 						.getString("ID_FAIL").toString();
@@ -2487,7 +2487,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				+ " AND B.ID_BANDAR = E.ID_BANDAR(+)";
 
 			ResultSet rs = stmt.executeQuery(sql);
-
+			myLog.info("sql 2 = "+sql);
 			Hashtable h;
 			while (rs.next()) {
 				h = new Hashtable();
