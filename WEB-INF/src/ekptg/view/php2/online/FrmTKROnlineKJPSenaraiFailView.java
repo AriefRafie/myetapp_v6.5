@@ -283,6 +283,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		myLog.info("submit2="+submit2);
 		myLog.info("hitButton="+hitButton);
 		this.context.put("errorPeganganHakmilik", "");
+		
+		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("onlineAttach", "paparLampiran", "idDokumen",session,"tkr"));
 
 		try {
 
@@ -612,7 +614,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				vm = "/start.jsp";
 
 			} else if ("seterusnya".equals(submit2)) {
-
 				myLog.info("baca seterusnya");
 				myLog.info("idFail=========" + idFail);
 				// GO TO MAKLUMAT PERMOHONAN
