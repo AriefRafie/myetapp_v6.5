@@ -109,8 +109,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			displayHakmilik(id_permohonan, flag_skrin, action,
 					getParam("NO_LOT"), getParam("NAMA_PB"), getParam("NO_PB"),
 					db, id_pegawai, id_borange);
-			context.put("saiz_listTanah",
-					getTanah_count(id_permohonan, "", "", db));
+			context.put("saiz_listTanah",getTanah_count(id_permohonan, "", "", db));
 			
 			myLogger.info("vm SkrinPopupCarianHakmilik >>> "+vm);
 
@@ -446,8 +445,8 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 	 */
 
 	private void displayHakmilik(String id_permohonan, String flag_skrin,
-			String action, String no_lot, String nama_pb, String no_pb, Db db,
-			String id_pegawai, String id_borange) throws Exception {
+		String action, String no_lot, String nama_pb, String no_pb, Db db,
+		String id_pegawai, String id_borange) throws Exception {
 		List<Hashtable> list = null;
 		list = getHakmilik(id_permohonan, flag_skrin, no_lot, nama_pb, no_pb,
 				db, id_pegawai, id_borange);
@@ -603,8 +602,8 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 	Vector list_hakmilik = null;
 
 	public Vector getHakmilik(String id_permohonan, String flag_skrin,
-			String no_lot, String nama_pb, String no_pb, Db db,
-			String idpegawai, String id_borange) throws Exception {
+		String no_lot, String nama_pb, String no_pb, Db db,
+		String idpegawai, String id_borange) throws Exception {
 		// temp
 
 		String noLOT = no_lot.trim();

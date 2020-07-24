@@ -8,9 +8,9 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 import org.apache.log4j.Logger;
 
-import ekptg.model.IStatus;
-import ekptg.model.StatusBean;
 import ekptg.model.ppt.FrmPermohonanUPTData;
+import ekptg.model.utils.status.IStatus;
+import ekptg.model.utils.status.StatusBean;
 
 
 public class FrmPopupTolakPermohonan extends AjaxBasedModule {
@@ -30,15 +30,16 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
     	context.put("jenisTolak",jenisTolak);
     	String id_permohonan = getParam("id_permohonan");
     	String formnew = getParam("formnew");
-    	myLogger.info("jenisTolak ::::::::::: "+jenisTolak+"formnew ::::::::::: "+formnew);
+    	myLogger.info("jenisTolak= "+jenisTolak+",formnew="+formnew);
     	
     	//default
 		context.put("mode","");
 		context.put("isEdit","");	
     	String submit = getParam("command");
-    	myLogger.info("formnew :"+formnew+",submit : " + submit);
+    	myLogger.info("submit=" + submit);
 		String userId = (String)session.getAttribute("_ekptg_user_id");
     	String modul = getParam("modul");
+    	myLogger.info("modul : " + modul);
 
     	//NEW FORM
     	if(formnew.equals("yes")){    		
@@ -51,16 +52,24 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
     				//simpanCatatanTolak(session,id_permohonan);
     				
     				FrmPermohonanUPTData dt = new FrmPermohonanUPTData();
-    				Hashtable<String,String> hash  = null;
+    				Hashtable<String,String> hashPermohonan  = null ;
     				if(modul.equals("ppk"))
-    					hash = dt.getPermohonanPPK(id_permohonan);
+    					hashPermohonan = dt.getPermohonanPPK(id_permohonan);
     				else
-    					hash = dt.getPermohonan(id_permohonan);
+    					hashPermohonan = dt.getPermohonan(id_permohonan);
     				
-    				hash.put("catatan", getParam("txtCatatan"));
+    		    	myLogger.info("getParam(\"txtCatatan\")= " + getParam("txtCatatan"));
+    				Hashtable<String,String> hash  = new Hashtable<String,String> () ;
+
+    		    	hash.put("catatan", getParam("txtCatatan"));
     				hash.put("idUser", userId);
     				hash.put("langkah", "50");
-
+    				
+    				hash.put("idPermohonan",hashPermohonan.get("idPermohonan"));
+					hash.put("idFail", hashPermohonan.get("idFail"));
+					hash.put("idSuburusan", hashPermohonan.get("idSuburusan"));
+					myLogger.info(hash);
+	
 //    				String idSuburusanStatus = getStatus().getIdSuburusanStatusByLangkah("50",String.valueOf(hash.get("idSuburusan")), "=");   				
 //    				Tblrujsuburusanstatusfail susf = new Tblrujsuburusanstatusfail();
 //    				susf.setIdFail(Long.parseLong(String.valueOf(hash.get("idFail"))));
@@ -72,7 +81,7 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 //    				susf.setTarikhMasuk("sysdate");
 //    				susf.setIdKemaskini(Long.parseLong(userId));
 //    				susf.setTarikhKemaskini("sysdate");
-    				getStatus().simpan(hash);
+    				getStatus().simpan(hashPermohonan);
     				
     			}else if(jenisTolak.equals("pelulus") || jenisTolak.equals("penyemak")){
     					//simpanCatatanTolak(session,id_permohonan);

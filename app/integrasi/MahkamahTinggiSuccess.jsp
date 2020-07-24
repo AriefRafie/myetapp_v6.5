@@ -18,7 +18,7 @@
 		</tr>
 	    <tr border="1" bgcolor=#dff2bf>
 	   		<td colspan="3" class="success">
-		   		<p><span>Permohonan semakan telah berjaya dihantar.</span></p>
+		   		<p><span>Permohonan bantahan telah berjaya dihantar.</span></p>
 		   		<!-- <p><span>Berikut adalah butiran permohonan semakan.</span></p> -->
 	   		</td>
 	    </tr>

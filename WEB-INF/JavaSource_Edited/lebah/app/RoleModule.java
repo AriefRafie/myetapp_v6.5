@@ -53,7 +53,7 @@ public class RoleModule extends AjaxBasedModule {
 		defaultPut();
 		HttpSession session = this.request.getSession();
 		String command = getParam("command");
-		myLogger.info("**command : "+command);
+		//myLogger.info("**command : "+command);
 		this.context.put("command",command);
 		
 		
@@ -820,9 +820,7 @@ public class RoleModule extends AjaxBasedModule {
 			  sql += " AND RRR.CSS_NAME = '"+CSS_NAME+"' ";
 			}
 			 sql+=" ORDER BY TITLE";
-			
-			
-			myLogger.info(" mm: SQL listGroupRole :"+ sql);
+//			myLogger.info(" mm: SQL listGroupRole :"+ sql);
 			
 			rs = stmt.executeQuery(sql);
 			listRole = Collections.synchronizedList(new ArrayList());
@@ -1825,7 +1823,7 @@ public class RoleModule extends AjaxBasedModule {
 			stmt = db1.getStatement();
 			sql = 	" SELECT S.ID_SEKSYEN, S.NAMA_SEKSYEN FROM TBLRUJSEKSYEN S " +
 					" WHERE S.ID_SEKSYEN IN (20,1,2,3,4,5,11,12) ORDER BY S.ID_SEKSYEN ";
-			myLogger.info(" V3: SQL listModuleForStat :"+ sql);
+//			myLogger.info(" V3: SQL listModuleForStat :"+ sql);
 			rs = stmt.executeQuery(sql);
 			listModuleForStat = Collections.synchronizedList(new ArrayList());
 			Map h = null;

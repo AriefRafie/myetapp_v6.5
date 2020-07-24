@@ -46,16 +46,48 @@ public class LampiranBean {
 		return sb.toString(); 
 		
 	}
+	
+	public String getLampirans(String idSimati,String js) throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		Vector<Hashtable<String, String>> dokumens = null;
+//		Vector<Hashtable<String, String>> vecHarta = getHarta(idSimati);
+		dokumens = getHarta(idSimati);
+//		myLog.info("getLampirans, size="+dokumens.size());
+		for (int i = 0; i < dokumens.size(); i++) {
+			Hashtable<String, String> mo = (Hashtable<String, String>) dokumens.get(i);	
+//			myLog.info("getLampirans, size="+i);
+			sb.append("<a href=\"javascript:"+js+"("+mo.get("idDokumen")+")\"");
+//			sb.append(" onclick=\"lampiranHartaPapar("+mo.get("idDokumen")+"); return false;\"");
+			sb.append(" onkeypress=\"window.open(this.href); return false;\">"); 
+			//sb.append(" onclick=\"cetakImej("+mo.get("idDokumen")+"); return false;\""); 
+			sb.append("<div class=\"pautan\">"+mo.get("namaFail")+"</div>");
+
+			if(dokumens.size()==1 || (i == (dokumens.size()-1) && dokumens.size() != 1) )
+				sb.append(" </a>");
+			else
+				sb.append(" </a>,");
+//			<a class="opener" href="javascript:deleteDetailImej($!mo.idDokumen,$!mo.idLampiran)" 
+//				onclick="deleteDetailImej($!mo.idDokumen,$!mo.idLampiran); return false;">
+//				<img src="../img/online/x.gif" alt="hapus" width="20" height="15"/>
+//			</a>
+			sb.append("<br>");
+
+		}
+		return sb.toString();
+		
+	}
+	
 	public String getLampirans(String idHarta) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		Vector<Hashtable<String, String>> dokumens = lampiranMengikutHarta(idHarta, null,false);
 		for (int i = 0; i < dokumens.size(); i++) {
 			Hashtable<String, String> mo = (Hashtable<String, String>) dokumens.get(i);			
-			sb.append("<a class=\"style42\" href=\"javascript:lampiranHartaPapar("+mo.get("idDokumen")+")\"");
-			sb.append(" onclick=\"lampiranHartaPapar("+mo.get("idDokumen")+"); return false;\"");
+			sb.append("<a href=\"javascript:lampiranHartaPapar("+mo.get("idDokumen")+")\"");
+//			sb.append("<a class=\"style42\" href=\"javascript:lampiranHartaPapar("+mo.get("idDokumen")+")\"");
+//			sb.append(" onclick=\"lampiranHartaPapar("+mo.get("idDokumen")+"); return false;\"");
 			sb.append(" onkeypress=\"window.open(this.href); return false;\">"); 
 			//sb.append(" onclick=\"cetakImej("+mo.get("idDokumen")+"); return false;\""); 
-			sb.append(mo.get("namaFail"));
+			sb.append("<div class=\"pautan\">"+mo.get("namaFail")+"</div>");
 			if(dokumens.size()==1 || (i == (dokumens.size()-1) && dokumens.size() != 1) )
 				sb.append(" </a>");
 			else
@@ -527,24 +559,64 @@ public class LampiranBean {
 			sb.append(" onclick=\"paparLampiran("+mo.get("idDokumen")+"); return false;\"");
 			sb.append(" onkeypress=\"window.open(this.href); return false;\">"); 
 			//sb.append(" onclick=\"cetakImej("+mo.get("idDokumen")+"); return false;\""); 
-			sb.append(mo.get("namaFail"));
+			sb.append("<div class=\"pautan\">"+mo.get("namaFail")+"</div>");
 			if(dokumens.size()==1 || (i == (dokumens.size()-1) && dokumens.size() != 1) )
 				sb.append(" </a>");
 			else
 				sb.append(" </a>,");
 			sb.append("<br>");
+		}
 			sb.append("\n<script>");
-			sb.append("\nfunction paparLampiran("+mo.get("idDokumen")+"){");
-			sb.append("\nvar url = '../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen='"+mo.get("idDokumen")+"&tablename=hta';");
+			sb.append("\nfunction paparLampiran(idDokumen){");
+			sb.append("\nvar url = '../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen='+idDokumen+'&tablename=hta';");
 			sb.append("\nvar hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');");
 			sb.append("\nif ((document.window != null) && (!hWnd.opener))");
 			sb.append("\nhWnd.opener=document.window;");
 			sb.append("\nif (hWnd.focus != null) hWnd.focus();");
 			sb.append("\n}");
 			sb.append("\n</script>");
-		}
+	
 		return sb.toString();
 		
+	}
+		
+	public Vector<Hashtable<String, String>> getHarta(String idSimati) 
+//	public Vector<Hashtable<String, String>> getHarta(String idSimati, String iDokumen) 
+		throws Exception {
+		Db db = null;
+		String sql = "";
+		Vector<Hashtable<String, String>> listLampiran = new Vector<Hashtable<String, String>>();
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r.add("V.TANAH");
+			r.add("V.HARTA");
+			r.add("V.ID_SIMATI",idSimati);
+			sql = r.getSQLSelect("VPPK_HARTA V");
+//				myLog.info("getHarta:sql="+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable<String, String> h;
+			int i= 0;
+			while (rs.next()) {
+				h = new Hashtable<String, String>();
+				if(rs.getString("HARTA").equals("HTA"))
+					listLampiran = lampiranMengikutHarta(rs.getString("TANAH"), null,false);
+				else if(rs.getString("HARTA").equals("HA"))
+					listLampiran = lampiranMengikutHarta(rs.getString("TANAH"), null,true);
+
+				//listLampiran.addElement(h);				      
+				i++;
+			}
+			myLog.info("getHarta:i="+i);
+
+		} finally {
+			if (db != null) db.close();
+	
+		}
+		
+		return listLampiran;
+				    	
 	}
 
 

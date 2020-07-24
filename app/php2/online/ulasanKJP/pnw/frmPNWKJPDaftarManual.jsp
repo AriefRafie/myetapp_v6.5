@@ -11,14 +11,15 @@
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
-  <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+  <input name="hitButton" type="hidden" id="hitButton"/>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idNegeriPemohon" type="hidden" id="idNegeriPemohon" value="$idNegeriPemohon"/>
   <input name="idSuburusan" type="hidden" id="idSuburusan"/>
   <input name="idSuburusanPmhn" type="hidden" id="idSuburusan" />
-  <input name="hitButton" type="hidden" id="hitButton"/>
-  
+  <input type="hidden" name="idPHPBorangK" id="idPHPBorangK"/>
+  <input type="hidden" name="idPPTBorangK" id="idPPTBorangK"/>
+
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 <tr>
@@ -89,10 +90,10 @@
           <td width="1%">:</td>
           <td width="70%"> #if ($mode == 'new')
             <!--penawaran-->
-           
+
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onBlur="doChangePeganganHakmilik();" />
-             <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onClick="pilihTanah('$idKementerian','$idAgensi')">   
-      
+             <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onClick="pilihTanah('$idKementerian','$idAgensi')">
+
             #else
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
             #end
@@ -103,7 +104,8 @@
           <td>&nbsp;</td>
           <td>No. Lot</td>
           <td>:</td>
-          <td>$beanMaklumatTanah.noLot</td>
+          <td>$beanMaklumatTanah.noLot
+          <input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.noLot" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -115,13 +117,15 @@
           <td>&nbsp;</td>
           <td>No. Hakmilik</td>
           <td>:</td>
-          <td>$beanMaklumatTanah.noHakmilik</td>
+          <td>$beanMaklumatTanah.noHakmilik
+          <input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.noHakmilik" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>No. Warta</td>
           <td>:</td>
-          <td>$beanMaklumatTanah.noWarta</td>
+          <td>$beanMaklumatTanah.noWarta
+            <input type="hidden" name="noWartaTanah" id="noWartaTanah" value="$beanMaklumatTanah.noWarta" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -133,29 +137,34 @@
           <td>&nbsp;</td>
           <td>Mukim</td>
           <td>:</td>
-          <td>$beanMaklumatTanah.mukim</td>
+          <td>$beanMaklumatTanah.mukim
+            <input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>Daerah</td>
           <td>:</td>
-          <td>$beanMaklumatTanah.daerah</td>
+          <td>$beanMaklumatTanah.daerah
+            <input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>Negeri</td>
           <td>:</td>
           <td>$beanMaklumatTanah.negeri
-            <input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah" />
-            <input type="hidden" name="kodNegeriTanah" id="kodNegeriTanah" value="$beanMaklumatTanah.kodNegeriTanah" />          </td>
+            <input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeri" />
+            <input type="hidden" name="kodNegeriTanah" id="kodNegeriTanah" value="$beanMaklumatTanah.kodNegeriTanah" />
+              <input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$beanMaklumatTanah.negeri" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>Kementerian</td>
           <td>:</td>
           <td>$beanMaklumatTanah.kementerian
-           
-            <input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian" />          </td>
+
+            <input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian" />
+            <input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatTanah.idKementerian" />
+            <input type="hidden" name="namaKementerianTanah" id="namaKementerianTanah" value="$beanMaklumatTanah.kementerian" />          </td>
         </tr>
         <tr>
           <td height="31">&nbsp;</td>
@@ -167,13 +176,15 @@
           <td>&nbsp;</td>
           <td>Kegunaan Tanah</td>
           <td>:</td>
-          <td>$beanMaklumatTanah.kegunaanTanah</td>
+          <td>$beanMaklumatTanah.kegunaanTanah
+            <input type="hidden" name="kegunaanTanah" id="kegunaanTanah" value="$beanMaklumatTanah.kegunaanTanah" />
+              <input type="hidden" name="statusRizab" id="statusRizab" value="$beanMaklumatTanah.statusRizab" /></td>
         </tr>
         #end
       </table>
       </fieldset></td>
   </tr>
-    <tr>
+    <!-- <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT KEGUNAAN TANAH</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -196,7 +207,7 @@
       </table>
       </fieldset></td>
   </tr>
-<tr>
+<tr> -->
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -205,7 +216,7 @@
           <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Rujukan <em>Online</em></td>
           <td width="1%" >:</td>
-          <td width="70%"><strong>$beanMaklumatPermohonan.noPermohonan</strong>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noRujukanOnline</strong>
             <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
             <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
         </tr>
@@ -260,7 +271,7 @@
           <td>Baki Aksara :&nbsp;
             <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtPerkara" /></td>
         </tr>
-        #end  
+        #end
         #end
       </table>
       </fieldset></td>
@@ -273,16 +284,20 @@
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'new')
-      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onClick="daftarBaru()"/>
+      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Simpan" onClick="daftarBaru()"/>
       <input type="button" name="cmdKembali" id="cmdKembali" value="Batal" onClick="kembali()"/>
       #end
+      #if ($mode == 'view')
+      <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
+      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
+      #end </td>
        </td>
   </tr>
 </table>
 <script>
 function pilihTanah(idKementerian,idAgensi) {
 	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmPNWPopupSenaraiTanahOnlineView?idKementerian="+idKementerian+"&idAgensi="+idAgensi;
-	
+
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -297,57 +312,59 @@ function doChangePeganganHakmilik() {
 	doAjaxCall${formName}("doChangePeganganHakmilik");
 }
 function daftarBaru() {
-	
+
 	if(document.${formName}.idHakmilikAgensi.value == ""){
 		alert('Sila pilih Pegangan Hakmilik.');
-		return; 
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionOnline.value = "daftarBaru";
 		return;
 	}
-	
-	document.${formName}.actionOnline.value = "seterusnya";
+
+	/* document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doDaftarBaru";
-	document.${formName}.submit();
+	document.${formName}.submit(); */
+	document.${formName}.actionOnline.value = "papar";
+	document.${formName}.hitButton.value = "doDaftarBaru";
+	doAjaxCall${formName}("");
 }
-function kembali() {	
+function kembali() {
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
 }
 function janaTajuk(idKategoriPemohon) {
-	alert('baca jana tajuk!!');
-	
+
 	if(document.${formName}.idHakmilikAgensi.value == ""){
 		alert('Sila pilih Pegangan Hakmilik Sebelum Menjana Tajuk.');
 		document.${formName}.idHakmilikAgensi.focus();
 		return;
 	}
-	if(document.${formName}.socLuasKegunaan.value == ""){
+	/* if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila masukkan Luas Kegunaan.');
 		document.${formName}.socLuasKegunaan.focus();
 		return;
 	}
 		if(document.${formName}.txtTujuanKegunaan.value == ""){
 		alert('Sila masukkan Tujuan Kegunaan.');
-  		document.${formName}.txtTujuanKegunaan.focus(); 
-		return; 
-	}
-	
+  		document.${formName}.txtTujuanKegunaan.focus();
+		return;
+	} */
+
 	var strTajuk = " ";
 	var luasKegunaan = " ";
 	var milikOrRizab = " ";
-	var pemohon = document.${formName}.namaAgensiKem.value;
-	
-	if(document.${formName}.socLuasKegunaan.value == "1") {
+	var pemohon = document.${formName}.socKementerian.value;
+
+	/* if(document.${formName}.socLuasKegunaan.value == "1") {
 		luasKegunaan = "KESELURUHAN";
 	}
 	else if(document.${formName}.socLuasKegunaan.value == "2"){
 		luasKegunaan = "SEBAHAGIAN";
-	}
-	
+	} */
+
 	var str1 = document.${formName}.noLotTanah.value;
 	var str2 = document.${formName}.noMilikTanah.value;
 	var str3 = document.${formName}.noWartaTanah.value;
@@ -356,16 +373,22 @@ function janaTajuk(idKategoriPemohon) {
 	var str6 = document.${formName}.namaNegeriTanah.value;
 	var kegunaanTanah = document.${formName}.kegunaanTanah.value;
 	var statusRizabTnh = document.${formName}.statusRizab.value;
-	var kjpTnh = document.${formName}.kementerian.value;
-	var tujuanKegunaan = document.${formName}.txtTujuanKegunaan.value;
-		
+	var kjpTnh = document.${formName}.namaKementerianTanah.value;
+	//var tujuanKegunaan = document.${formName}.txtTujuanKegunaan.value;
 	if(statusRizabTnh == 'MILIK') {
 		milikOrRizab = str2;
 	} else if(statusRizabTnh == 'RIZAB') {
 		milikOrRizab = str3;
 	}
-	strTajuk = "PERMOHONAN TUKARGUNA " + luasKegunaan +" TANAH " + statusRizabTnh + " PERSEKUTUAN " + str1 +", " + milikOrRizab + ", "+ str4 + ", " + str5+ ", " + str6 +" (" + kegunaanTanah + ")" + " DARIPADA " + kjpTnh + " KEPADA " + pemohon +" BAGI TUJUAN " + tujuanKegunaan;
-	
+	//strTajuk = "PERMOHONAN TUKARGUNA " + luasKegunaan +" TANAH " + statusRizabTnh + " PERSEKUTUAN " + str1 +", " + milikOrRizab + ", "+ str4 + ", " + str5+ ", " + str6 +" (" + kegunaanTanah + ")" + " DARIPADA " + kjpTnh + " KEPADA " + pemohon +" BAGI TUJUAN " + tujuanKegunaan;
+	strTajuk = "PENAWARAN TANAH " + statusRizabTnh + " PERSEKUTUAN DI ATAS " + str1 +", " + milikOrRizab + ", "+ str4 + ", " + str5+ ", " + str6 +" ( " + kegunaanTanah + " )" + " KEGUNAAN  " + kjpTnh;
 	document.${formName}.txtPerkara.value = strTajuk;
+}
+function seterusnya(){
+	alert('BACA SETERUSNYAAA');
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
+	document.${formName}.method="POST";	
+	document.${formName}.actionOnline.value = "seterusnya";
+	document.${formName}.submit();
 }
 </script>

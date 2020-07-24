@@ -78,6 +78,11 @@
       <td width="1%">:</td>
       <td >$!pemohon.get("noFax")</td>
       </tr>
+      <tr>
+      <td width="30%">Emel</td>
+      <td width="1%">:</td>
+      <td >$!pemohon.get("emel")</td>
+      </tr>
       </table>
       </fieldset>
       </td>

@@ -14,6 +14,7 @@
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idHakmilikAgensi" type="hidden" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
@@ -39,11 +40,6 @@
   <tr>
     <td> #parse("app/php2/online/frmPLPHeader.jsp") </td>
   </tr>
-  #else
-  <tr>
-    <td>&nbsp;
-      <div class="warning">SILA PILIH FAIL DI SENARAI PERMOHONAN TERLEBIH DAHULU</div></td>
-  </tr>
   #end
   <tr>
     <td>&nbsp;</td>
@@ -54,12 +50,14 @@
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENAWARAN</li>
-          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MUAT NAIK DOKUMEN</li>
+          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
+          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
           #if ($idStatus == '1610207' || $idStatus == '1610208')
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
           #end
         </ul>
         <div class="TabbedPanelsContentGroup">
+        <!-- START TAB MAKLUMAT TANAH  -->
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
@@ -162,14 +160,14 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td> 
-                 #if ($idStatus == '')
+                 ##if ($idStatus == '')
                  #if ($mode == 'view')
-                  #if ($userRole == 'online_kjp' && $layerKJP  == $flagLayerKJP )
+                  ##if ($userRole == 'online_kjp' && $layerKJP  == $flagLayerKJP )
                   <input type="button" name="cmdKmskiniTnh" id="cmdKmskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
                   <input type="button" name="cmdHapus2" id="cmdHapus2" value="Hapus" onClick="doHapus()"/>
-                  #end
+                  ##end
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  #end
+                  ##end
                   #if ($mode == 'update')
                   <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
                   <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
@@ -182,6 +180,8 @@
               #end
             </table>
           </div>
+          <!-- END TAB MAKLUMAT TANAH  -->
+          <!-- START TAB MAKLUMAT PENAWARAN  -->
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatPenawaran in $BeanMaklumatPenawaran)
@@ -253,14 +253,14 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td> 
-                #if ($idStatus == '')
+                ##if ($idStatus == '')
                 #if ($mode == 'view')
-                  #if ($userRole == 'online_kjp' && $layerKJP  == $flagLayerKJP )
+                  ##if ($userRole == 'online_kjp' && $layerKJP  == $flagLayerKJP )
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
                   <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-                  #end
+                  ##end
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  #end
+                  ##end
                   #if ($mode == 'update')
                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
                   <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
@@ -273,10 +273,17 @@
               #end
             </table>
           </div>
+          <!-- END TAB MAKLUMAT PENAWARAN  -->
+						<!-- START TAB SENARAI SEMAK  -->
+						<div class="TabbedPanelsContent">#if ($selectedTabUpper ==
+							'2') #parse("app/php2/online/ulasanKJP/pnw/frmPNWSenaraiSemakOnline.jsp") #end</div>
+
+						<!-- END TAB SENARAI SEMAK  -->
+						<!-- START KEPUTUSAN -->
           <div class="TabbedPanelsContent">
           	#parse("app/php2/online/frmPNWImejan.jsp")
           </div>
-           #if ($idStatus == '1610207' || $idStatus == '1610208')
+           ##if ($idStatus == '1610207' || $idStatus == '1610208')
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
@@ -317,7 +324,7 @@
               <tr>
                 <td>&nbsp;</td>
               </tr>
-              #if ($idStatus == '1610207') 
+              ##if ($idStatus == '1610207') 
               <tr>
                 <td><fieldset>
                   <legend><strong>SENARAI KEMENTERIAN / AGENSI YANG MENERIMA</strong></legend>
@@ -368,17 +375,126 @@
                   </table>
                   </fieldset></td>
               </tr>
-              #end
+              ##end
               <tr>
                 <td align="center"></td>
               </tr>
             </table>
           </div>
-          #end
+          ##end
+           <!-- START LAMPIRAN -->
+           <div class="TabbedPanelsContent">
+          	#parse("app/php2/online/frmPNWImejan.jsp")
+          </div>
+           ##if ($idStatus == '1610207' || $idStatus == '1610208')
+          <div class="TabbedPanelsContent">
+            <table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td><fieldset>
+                  <legend>LAMPIRAN</legend>
+                  <table width="100%" border="0" cellspacing="2" cellpadding="2">
+                    #foreach($beanMaklumatKeputusan in $BeanMaklumatKeputusan)
+                    <tr>
+                      <td width="1%">&nbsp;</td>
+                      <td width="28%">Keputusan</td>
+                      <td width="1%">:</td>
+                      <td width="70%">LULUS</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>Tarikh Hantar Surat</td>
+                      <td>:</td>
+                      <td>$beanMaklumatKeputusan.tarikhKeputusan
+                        </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+                  <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/></td>
+                    </tr>
+                    #end
+                  </table>
+                  </fieldset></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              ##if ($idStatus == '1610207') 
+              <tr>
+                <td><fieldset>
+                  <legend><strong>SENARAI KEMENTERIAN / AGENSI YANG MENERIMA</strong></legend>
+                  <table align="center" width="100%">
+                    <tr>
+                      <td colspan="5" align="right"><div id="calculateTotal_result" style="color:#FF0000;font-weight:bold"></div></td>
+                    </tr>
+                    <tr class="table_header">
+                      <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+                      <td width="35%"><strong>Kementerian</strong></td>
+                      <td width="35%"><strong>Agensi</strong></td>
+                      <td width="25%" align="center"><strong>Luas (Hektar)</strong></td>
+                    </tr>
+                    #set ($senaraiAgensi = "")
+                    #if ($SenaraiAgensi.size() > 0)
+                    #foreach ($senaraiAgensi in $SenaraiAgensi)
+                    #if ($senaraiAgensi.bil == '')
+                    #set( $row = "row1" )
+                    #elseif (($senaraiAgensi.bil % 2) != 0)
+                    #set( $row = "row1" )
+                    #else 
+                    #set( $row = "row2" )
+                    #end
+                    <tr>
+                      <td class="$row" align="center">$senaraiAgensi.bil</td>
+                      <td class="$row">$senaraiAgensi.kementerian</td>
+                      <td class="$row">$senaraiAgensi.agensi</td>
+                      <td class="$row" align="center">$senaraiAgensi.luas
+                        <input name="ids" type="hidden" value="$senaraiAgensi.idPenawaranKJP">
+                      </td>
+                    </tr>
+                    #end
+                    <tr class="table_header">
+                      <td width="5%">&nbsp;</td>
+                      <td colspan="2" align="left"><strong>JUMLAH</strong></td>
+                      <td align="center" width="35%">$txtJumlahLuas
+                      </td>
+                    </tr>
+                    #else
+                    <tr>
+                      <td class="row1" align="center">&nbsp;</td>
+                      <td class="row1">Tiada Rekod</td>
+                      <td class="row1">&nbsp;</td>
+                      <td class="row1">&nbsp;</td>
+                      <td class="row1">&nbsp;</td>
+                    </tr>
+                    #end
+                  </table>
+                  </fieldset></td>
+              </tr>
+              ##end
+              <tr>
+                <td align="center"></td>
+              </tr>
+            </table>
+          </div>
+          ##end
+          <!-- END LAMPIRAN -->
         </div>
       </div></td>
   </tr>
   #end
+</table>
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+	<td align="center" colspan="4">
+   		<input  class="stylobutton"type="button" name="cmdSeterusnya" id="cmdsblm" value="Seterusnya" onclick="nextPengesahan('$idPermohonan')" />
+ 	</td>
 </table>
 <fieldset id="tableReport" style="display:none;"-->
 <legend><strong>SENARAI LAPORAN</strong></legend>
@@ -400,7 +516,7 @@ function doChangeTabUpper(tabId) {
 	document.${formName}.mode.value = "view";
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineSenaraiFailView";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 }
@@ -817,6 +933,26 @@ function cetakPengesahanPermohonan(idPermohonan) {
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
+}
+function nextPengesahan(idPermohonan) {
+	//alert('baca idFail=='+document.${formName}.idFail.value+" idPermohonan=="+idPermohonan);
+	//doAjaxCall${formName}("pkmaklumatseterus","id_kemaskini="+id);	
+	//document.${formName}.pagemode.value = 0;
+	document.${formName}.actionOnline.value = "pengesahan";
+	//document.${formName}.semakMode.value = 'update';
+	doAjaxCall${formName}("pengesahan",'idpermohonan='+idPermohonan);
+	//doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
+}
+<!-- SENARAI SEMAK -->
+function doSimpanKemaskiniSenaraiSemak() {
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "view";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
+	document.${formName}.submit();
 }
 </script>
 

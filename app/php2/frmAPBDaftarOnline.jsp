@@ -15,6 +15,8 @@
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idUrusan" type="hidden" id="idUrusan" value="$idUrusan"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+  ##<input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
+  <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" />
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -26,13 +28,13 @@
           <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Fail</td>
           <td width="1%" >:</td>
-          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong>
-            <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
-            <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong></td>
+          ##<td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" value="$noFailOnline">
+          ##<a href="javascript:generateNoFailAPB('txtNoFail');"><img border="0" src="../img/plus.gif"/>    
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Permohonan</td>
+          <td width="28%" valign="top">No. Rujukan <i>Online</i></td>
           <td width="1%" >:</td>
           <td width="70%">$beanMaklumatPermohonan.noPermohonan
             </td>
@@ -92,7 +94,7 @@
           <td>&nbsp;</td>
           <td>No. Pengenalan / Pendaftaran</td>
           <td>:</td>
-          <td>$beanMaklumatPemohon.noPendaftaran </td>
+          <td>$beanMaklumatPemohon.noPengenalan</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -146,7 +148,7 @@
           <td>&nbsp;</td>
           <td>No. Faks</td>
           <td>:</td>
-          <td>$beanMaklumatPemohon.noFaks </td>
+          <td>$beanMaklumatPemohon.noFax </td>
         </tr>
         #end
       </table>
@@ -196,6 +198,11 @@ function kembali() {
 function janaTajuk(){	
 	var strTajuk = "Permohonan Untuk Mendapatkan Lesen Bagi Mengeluarkan Pasir Dasar Laut Di Bawah Seksyen 4, Akta Pelantar Benua 1966 P.U 2009 di Kawasan Luar Perairan ";
 	document.${formName}.txtPerkara.value = strTajuk;
+}
+
+function generateNoFailAPB(){	
+	document.${formName}.hitButton.value = "generateNoFailAPBOnline";
+	document.${formName}.submit();
 }
 function textCounter(field, countfield, maxlimit) {
    if (field.value.length > maxlimit) // if too long...trim it!

@@ -66,8 +66,6 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 
 	PopupPengambilanTanahData logic = new PopupPengambilanTanahData();
 	
-	
-
 	@Override
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -104,7 +102,6 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			current_turutan = Integer.parseInt(getParam("current_turutan"));
 		}
 		*/
-		
 		
 		
 		String id_fail = getParam("id_fail");

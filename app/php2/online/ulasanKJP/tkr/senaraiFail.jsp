@@ -5,7 +5,12 @@
 }
 -->
 </style>
+<p>
 
+  <input type="hidden" name="submit2" />
+  <input type="hidden" name="idFail" />
+  <input type="hidden" name="idStatus" />
+</p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>
@@ -86,12 +91,12 @@
             <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
            	<td width="19%"><strong>No. Rujukan <i>Online</i></strong></td>
            	<td width="19%"><strong>No. Fail</i></strong></td>
-            <td width="34%"><strong>Tajuk Fail</strong></td>
-            <td width="10%" align="center"><strong>Tarikh Ulasan</strong></td>
-            <td width="16%" align="center"><strong>Tarikh Akhir Maklumbalas</strong></td>
+            <td width="32%"><strong>Tajuk Fail</strong></td>
+            <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
+            <td width="15%"><strong>Status</strong></td>
 
           </tr>
-          #set ($list = "")
+        #set ($list = "")
         #set ( $count = $startNumber )
         #if ($SenaraiFail.size() > 0)
         #foreach ($list in $SenaraiFail)
@@ -100,13 +105,13 @@
         #set( $row = "row1" )
         #elseif (($count % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
           <tr>
             <td class="$row" align="center">$count</td>
-            <td class="$row"><a href="javascript:paparFail('$!list.ID_FAIL', '$!list.ID_ULASANTEKNIKAL')" class="style2">$list.NO_PERMOHONAN</a></td>
-            <td class="$row"><a href="javascript:paparFail('$!list.ID_FAIL', '$!list.ID_ULASANTEKNIKAL')" class="style2">$list.NO_FAIL</a></td>
+            <td class="$row"><a href="javascript:papar('$list.ID_FAIL','$list.ID_STATUS')" class="style1">$list.NO_PERMOHONAN</a></td>
+            <td class="$row">$list.NO_FAIL</td>
             <td class="$row">$list.TAJUK_FAIL</td>
             <td class="$row" align="center">$list.TARIKH_TERIMA</td>
             <td class="$row" align="center">$list.STATUS</td>
@@ -122,4 +127,12 @@
       </fieldset></td>
   </tr>
 </table>
+<script>
+function papar(idFail,idStatus) {
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idStatus.value = idStatus;
+	document.${formName}.submit2.value = "seterusnya";
+	document.${formName}.submit();
+}
+</script>
 

@@ -24,7 +24,7 @@
 				        	</td>				        
                         	<td width="30%">
                             	<div align="left">
-                            		<span class="labelinput">No. Fail Seksyen</span>
+                            		<span class="labelinput">No. Fail</span>
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
@@ -610,7 +610,7 @@
 									#end
 									$!sstatus 
 								#else
-									<select name="socStatusDaftar" style="width:200px;" $readonly class="$disabled" $disabled>
+									<select name="socStatusDaftar" style="width:200px;" $readonly class="$disabled" $disabled onChange="doChangeTaraf()">
 							            #if($socStatus == 'D')
 							          		<option value="">SILA PILIH</option>
 							            	<option value="D" selected="selected">D - DAFTAR</option>

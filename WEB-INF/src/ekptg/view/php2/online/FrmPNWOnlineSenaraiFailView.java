@@ -31,8 +31,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 
 	@Override
 	public String doTemplate2() throws Exception {
-		HttpSession session = this.request.g
-etSession();
+		HttpSession session = this.request.getSession();
 		
 		Boolean postDB = false;
 		String doPost =  (String) session.getAttribute("doPost");
@@ -142,17 +141,9 @@ etSession();
 		myLog.info("hitButton="+hitButton+",actionOnline="+actionOnline);
 		//HITBUTTON
 		if (postDB) {
-<<<<<<< HEAD
-			if ("doDaftarBaru".equals(hitButton)){
-
-           		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
-        	}
-			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
-=======
 			if (hitButton.equals("doDaftarBaru")){
-           		idFail = logic.daftarBaru(userRole,idKementerianPmhn,idAgensiPmhn, getParam("idHakmilikAgensi"), session);
+           		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
         	}else if (hitButton.equals("doSimpanKemaskiniMaklumatTnh")){
->>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
         		logic.updateTanah(idPermohonan,idHakmilikAgensi,session);	
             }else if (hitButton.equals("doSimpanKemaskiniMaklumatPelepasan")){
         		logic.updatePermohonanPenawaran(idPermohonanPelepasan,
@@ -164,30 +155,14 @@ etSession();
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
-<<<<<<< HEAD
 					logic.updatePermohonanSemakan(idPermohonan, idKementerian, session);
 				}				
-			}
-			
-			if ("doHantarKelulusan".equals(hitButton)){
-=======
-					logic.updatePermohonanSemakan(idPermohonan, idKementerianPmhn, session);
-				}
->>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
-				
 			}else if (hitButton.equals("doHantarKelulusan")){			
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
-<<<<<<< HEAD
 					logic.updatePermohonanKelulusan(idPermohonan, idKementerian, session);
 				}				
-			}else if ("doHantarEmel".equals(hitButton)){
-=======
-					logic.updatePermohonanKelulusan(idPermohonan, idKementerianPmhn, session);
-				}	
->>>>>>> 28ed64991bd776b0e47ff3abef9b65b7ca9ca50d
-				
 			}else if (hitButton.equals("doHantarEmel")){			
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
@@ -206,6 +181,7 @@ etSession();
 			}
 			
 		}
+	
 		
 		if ("papar".equals(actionOnline)) {
 			// GO TO VIEW PENAWARAN
@@ -409,7 +385,7 @@ etSession();
 	    				hashMaklumatPenawaran.put("luas1", getParam("txtLuasMohon1"));
 	    				hashMaklumatPenawaran.put("luas2", getParam("txtLuasMohon2"));
 	    				hashMaklumatPenawaran.put("luas3", getParam("txtLuasMohon3"));
-	    				if ("1".equals(idLuasKegunaag)){
+	    				if ("1".equals(idLuasKegunaan)){
 	    					hashMaklumatPenawaran.put("luasBersamaan",  hashMaklumatPenawaranDB.get("luasAsal"));		
 	    					hashMaklumatPenawaran.put("luasBaki", Utils.formatLuas(0D));
 	    				} else {
@@ -611,6 +587,7 @@ etSession();
 		}
 	}
 
+
 	private void saveData(FileItem item, String idPermohonan, HttpSession session) throws Exception {
 
 		Db db = null;
@@ -645,5 +622,6 @@ etSession();
 				db.close();
 		}
 		this.context.put("completed", true);
-	e
+	}
+}
 

@@ -3667,6 +3667,7 @@ public class FrmPopupPilihPegawaiReportData {
 			sql = "SELECT A.SIGNED_TEXT FROM TBLPPKPERBICARAAN A WHERE A.ID_PERBICARAAN ="+ idPerbicaraan;
 
 			Statement stmt = db.getStatement();
+			myLogger.info("sql = "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			String temp = "";
 

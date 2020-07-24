@@ -24,7 +24,7 @@
           </td>
         </tr>
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No. Pemohonan : </td>
+          <td width="30%" height="24" scope="row" align="right">No Rujukan <i>Online</i> : </td>
           <td width="70%"><input name="txtNoPermohonan" id="txtNoPermohonan" type="text" value="$txtNoPermohonan" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
         </tr>
         <tr>
@@ -53,7 +53,7 @@
         </tr>
         <tr class="table_header">
           <td scope="row" width="3%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>No Permohonan</strong></td>
+          <td width="20%"><strong>No Rujukan Online</strong></td>
           <td width="20%"><strong>No Fail</strong></td>
           <td width="30%"><strong>Tujuan</strong></td>
           <td width="8%" align="center"><strong>Tarikh Mohon</strong></td>
@@ -72,7 +72,8 @@
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus','$list.idPemohon')" class="style1">$list.noPermohonan</a></td>
-          <td class="$row">$list.noFail</td>
+         <!--  <td class="$row">$list.noFail</td> --> 
+          <td class="$row"><a href="javascript:paparRenewLesen('$list.idFail','$list.idStatus','$list.idPemohon')" class="style1">$list.noFail</a></td>
           <td class="$row">$list.tujuanPengambilan</td>
           <td class="$row" align="center">$list.tarikhPermohonan </td>
           <td class="$row">$list.status</td>
@@ -104,6 +105,13 @@ function papar(idFail,idStatus,idPemohon) {
 	document.${formName}.idStatus.value = idStatus;
 	document.${formName}.idPemohon.value = idPemohon;
 	document.${formName}.actionOnline.value = "seterusnya"; 	
+	document.${formName}.submit();
+}
+function paparRenewLesen(idFail,idStatus,idPemohon) {
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idStatus.value = idStatus;
+	document.${formName}.idPemohon.value = idPemohon;
+	document.${formName}.actionOnline.value = "daftarBaruLesen";
 	document.${formName}.submit();
 }
 

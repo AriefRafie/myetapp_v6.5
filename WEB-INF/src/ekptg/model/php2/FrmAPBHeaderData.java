@@ -48,12 +48,12 @@ public class FrmAPBHeaderData {
 				idFail = (String) session.getAttribute("ID_FAIL");
 			}
 
-			sql = "SELECT D.ID_NEGERI,A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.TARIKH_TERIMA, B.TARIKH_SURAT, B.TUJUAN,B.FLAG_AKTIF, C.ID_PEMOHON, C.ID_KATEGORIPEMOHON, C.NAMA,B.NO_RAYUAN,"
+			sql = "SELECT D.ID_NEGERI,A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN,B.NO_PERMOHONAN, B.TARIKH_TERIMA, B.TARIKH_SURAT, B.TUJUAN,B.FLAG_AKTIF, C.ID_PEMOHON, C.ID_KATEGORIPEMOHON, C.NAMA,B.NO_RAYUAN,"
 					+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, C.NO_TEL_RUMAH, C.NO_TEL_PEJABAT, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, F.FLAG_SAMBUNGAN,"
 					+ " G.KETERANGAN AS NAMA_BANDAR"
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, TBLPHPPMOHONNJDUALPERTAMA F, TBLRUJBANDAR G"
 					+ " WHERE B.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND C.ID_NEGERITETAP = D.ID_NEGERI AND B.ID_STATUS = E.ID_STATUS"
-					+ " AND C.ID_BANDARTETAP = G.ID_BANDAR"
+					+ " AND C.ID_BANDARTETAP = G.ID_BANDAR(+)"
 					+ " AND A.ID_FAIL = '" + idFail + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
@@ -68,14 +68,20 @@ public class FrmAPBHeaderData {
 						rs.getString("NO_RAYUAN") == null ? "0" : rs
 								.getString("NO_RAYUAN"));
 				h.put("urusan", "AKTA PELANTAR BENUA");
+				h.put("subUrusan", "AKTA PELANTAR BENUA");
 				h.put("idPermohonan",
 						rs.getString("ID_PERMOHONAN") == null ? "" : rs
 								.getString("ID_PERMOHONAN").toUpperCase());
+				h.put("noPermohonan",
+						rs.getString("NO_PERMOHONAN") == null ? "" : rs
+								.getString("NO_PERMOHONAN").toUpperCase());
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_SURAT")));
 				h.put("perkara", rs.getString("TUJUAN") == null ? "" : rs
+						.getString("TUJUAN").toUpperCase());
+				h.put("tajukFail", rs.getString("TUJUAN") == null ? "" : rs
 						.getString("TUJUAN").toUpperCase());
 				h.put("idPemohon", rs.getString("ID_PEMOHON") == null ? "" : rs
 						.getString("ID_PEMOHON").toUpperCase());
@@ -169,7 +175,7 @@ public class FrmAPBHeaderData {
 			sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UO.NO_KP_BARU, UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3, " +
 					  " UO.POSKOD, UO.NO_FAX, UO.NO_HP, UO.EMEL, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI FROM USERS U, " +
 					  " USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
-					  " WHERE U.USER_ID = UO.USER_ID AND UO.ID_BANDAR = RB.ID_BANDAR AND UO.ID_NEGERI = RN.ID_NEGERI" +
+					  " WHERE U.USER_ID = UO.USER_ID AND UO.ID_BANDAR = RB.ID_BANDAR(+) AND UO.ID_NEGERI = RN.ID_NEGERI" +
 					  " AND U.USER_ID = '" + idUser + "'";
 			log.info("header:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);

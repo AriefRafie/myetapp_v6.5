@@ -5,6 +5,17 @@
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach($beanHeader in $BeanHeader)
         <tr>
+          <td width="36%" align="right">NO.RUJUKAN <i>ONLINE</i></td>
+          <td width="1%">:</td>
+          <td width="63%"><font color="blue">
+          #if ($beanHeader.noPermohonan == '')
+          <span>-</span>
+          #else
+          $beanHeader.noPermohonan
+          #end
+          </font></td>
+        </tr>
+        <tr>
           <td width="36%" align="right">NO FAIL</td>
           <td width="1%">:</td>
           <td width="63%"><font color="blue">$beanHeader.noFail</font></td>

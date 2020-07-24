@@ -1,12 +1,15 @@
-XXX
+
 <style type="text/css">
 <!--
 .style1 {color: #FF0000}
 -->
 </style>
 
- <input type="text" name="idFail" id="idFail" value="$idFail"> 
-  <input type="text" name="userId" id="userId" value="$userId"> 
+ <input type="hidden" name="idFail" id="idFail" value="$idFail"> 
+  <input type="hidden" name="userId" id="userId" value="$userId">
+
+    <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+    <input type="hidden" name="otp" id="otp" value="$!otp">
 <script type="text/javascript" src="../../library/js/SpryTabbedPanels.js"></script>
 <script type="text/javascript" src="../../library/js/ekptgTools.js"></script>
 <script type="text/javascript" src="../../img"></script>
@@ -57,7 +60,7 @@ XXX
   		</td>
   		-->
   		<td>
-            	<input name="cari" value="Hantar" type="button" onclick="javascript:cetakSuratPanduanBicara('$!idFail','$!id_Permohonan')" />
+            	<input name="hantar" value="Hantar" type="button" onclick="javascript:hantarTAC('$!idFail','$!id_Permohonan')" />
   				<input type=button value = "Reset" onClick="javascript:clearData();">
             </td>
   		
@@ -77,6 +80,9 @@ XXX
 
 
 <script>
+function clearData() {
+	document.${formName}.notac.value = "";		
+	}
 
 function mohonTAC(idFail,id_Permohonan) {
  /*   var url = "../../servlet/ekptg.report.ppk.SuratPanduanBicara?idpermohonan="+idpermohonan+"&idfail="+idfail;
@@ -86,13 +92,35 @@ function mohonTAC(idFail,id_Permohonan) {
     if (hWnd.focus != null) hWnd.focus();*/
     //alert(document.${formName}.action);
    // alert(idfail);
-    alert("id_Permohonan xxx"+id_Permohonan);
+    //alert("id_Permohonan xxx"+id_Permohonan);
     
-    alert("id_FAIL CCC"+idFail);
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupTAC&command=simpan";
-	   alert(document.${formName}.action);
-	document.${formName}.submit();
+    //alert("id_FAIL CCC"+idFail);
+	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC&command=simpan";
+	//alert(document.${formName}.action);
+	//if ( !window.confirm("No TAC telah dihantar") ){
+		alert("No. TAC telah dihantar ke emel pengguna");
+		document.${formName}.submit();		
+	//	return;
+	//}
+	
 }
+function hantarTAC(idFail,id_Permohonan) {
+		//alert(idFail);
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupTAC&command=hantar";	
+		document.${formName}.submit();	
+		//alert(document.${formName}.command);
+		
+ 		//var url = "../../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
+		//var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
+		//var url = "../x/${securityToken}/ekptg.view.ppk.BorangF?idFail="+idFail+"&id_Permohonan="+id_Permohonan;
+		//var url = "../x/${securityToken}/ekptg.report.ppk.BorangF?idfail="+idFail;
+		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		       hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();
+	
+	}
 
 function cetakBorangD(noFail,idfail,idPerbicaraan) {
 	var url = "../../servlet/ekptg.report.ppk.BorangD_ORI?nofail="+noFail+"&idfail="+idfail+"&idperbicaraan="+idPerbicaraan;

@@ -726,3 +726,5 @@
 #parse("app/htp/utiliti/javascript/javaScriptPajakanIndex.jsp")
 #parse("app/htp/utiliti/javascript/javaScriptPajakan.jsp")
 #parse("app/htp/utiliti/javaScriptUmum.jsp")
+
+	$!javascriptLampiran

@@ -5871,7 +5871,7 @@ var dt=document.f1.txtTarikhPerjanjianHtaamX
 
 }
 	function lampiranHarta(idHarta,flagOnline) {
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline="+flagOnline;
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline="+flagOnline;
 	    //
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))

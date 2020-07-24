@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
+import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
 
@@ -639,14 +640,13 @@ public class FrmOnlinePajakanSenaraiFailData {
 			idFailString = String.valueOf(idFail);
 			r.add("ID_FAIL", idFail);
 			r.add("ID_URUSAN", "3");
-			r.add("ID_SUBURUSAN", idSuburusan);
-			r.add("ID_TARAFKESELAMATAN", idJenisFail);
+			r.add("ID_SUBURUSAN", idSuburusan);		
+			r.add("ID_TARAFKESELAMATAN", 2);	//2 - TERHAD
 			r.add("ID_SEKSYEN", "3");
 			r.add("FLAG_FAIL", "1");
 			r.add("TARIKH_DAFTAR_FAIL", r.unquote("SYSDATE"));
 			r.add("TAJUK_FAIL", tajuk);
-			
-			String kodUrusan = "882";
+//			String kodUrusan = "882";
 			
 			//r.add("NO_FAIL", " ");
 			r.add("ID_NEGERI", idNegeri);
@@ -656,7 +656,7 @@ public class FrmOnlinePajakanSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPFDFAIL");
-			log.info("sql:TBLPFDFAIL="+sql);
+			log.info("TBLPFDFAIL:sql="+sql);
 			stmt.executeUpdate(sql);
 			
 			//TBLPERMOHONAN
@@ -712,7 +712,41 @@ public class FrmOnlinePajakanSenaraiFailData {
 			log.info("sql:TBLHTPPERMOHONAN="+sql);
 			stmt.executeUpdate(sql);
 			
+			FrmOnlinePajakanHeaderData logicHeader = new FrmOnlinePajakanHeaderData();
+			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(userId);
+	    	Hashtable<String,String> hash = vec.get(0);
+
+			String idPemohon = String.valueOf(DB.getNextID(db, "TBLHTPPEMOHON_SEQ"));
+			r = new SQLRenderer();
+			r.add("ID_PEMOHON", idPemohon);
+			r.add("ID_PERMOHONAN", idPermohonan);	
+			r.add("NO_PEMOHON", hash.get("noPengenalan"));
+			r.add("NAMA_PEMOHON", hash.get("namaPemohon"));
+			r.add("ALAMAT_PEMOHON1", hash.get("alamat1"));
+			r.add("ALAMAT_PEMOHON2", hash.get("alamat2"));
+			r.add("ALAMAT_PEMOHON3", hash.get("alamat3"));
+			r.add("POSKOD", hash.get("poskod"));
+			r.add("ID_DAERAH", FrmGadaianHakmilikData.getDaerahMengikutBandar(String.valueOf(hash.get("idBandar"))));
+			r.add("ID_NEGERI", hash.get("idNegeri"));
+			if(!hash.get("noTel").equals(""))
+				r.add("NO_TEL", hash.get("noTel"));
 			
+			if(!hash.get("noFax").equals(""))
+				r.add("NO_FAX", hash.get("noFax"));
+			
+			if(!hash.get("noFax").equals(""))
+				r.add("ID_BANDAR", hash.get("idBandar"));
+			
+			r.add("EMEL", hash.get("emel"));				
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLHTPPEMOHON");
+			log.info("TBLHTPPEMOHON:sql = "+sql);
+			stmt.executeUpdate(sql);
+        
 			r.clear();
 			r.add("id_Permohonan", idPermohonan);
 			r.add("Id_Suburusanstatus", FrmUtilData.getIdSuburusanstatusByLangkah("-2",""+idSuburusan,"="));
@@ -1223,7 +1257,7 @@ public class FrmOnlinePajakanSenaraiFailData {
 					
 					
 	ResultSet rsPermohonan = stmt.executeQuery(sql);
-		if (rsPermohonan.next()){
+	if (rsPermohonan.next()){
 		idhakmilikPermohonan = rsPermohonan.getString("ID_HAKMILIKPERMOHONAN");
 		noPermohonan = rsPermohonan.getString("NO_PERMOHONAN");
 		idSuburusan = rsPermohonan.getString("ID_SUBURUSAN");
@@ -1246,22 +1280,22 @@ public class FrmOnlinePajakanSenaraiFailData {
 	stmt.executeUpdate(sql);
 					
 	//TBLRUJSUBURUSANSTATUSFAIL
-	r = new SQLRenderer();
-	long idSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
-	r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
-	r.add("ID_PERMOHONAN", idPermohonan);
-	r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus(idSuburusan, "186")); //PERMOHONAN BARU
-	r.add("AKTIF", "1");
-	r.add("ID_FAIL", idFail);
-					
-	r.add("ID_MASUK", userId);
-	r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-	r.add("ID_KEMASKINI", userId);
-	r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-	sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
-					
-	stmt.executeUpdate(sql);
+//	r = new SQLRenderer();
+//	long idSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
+//	r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
+//	r.add("ID_PERMOHONAN", idPermohonan);
+//	r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus(idSuburusan, "186")); //PERMOHONAN BARU
+//	r.add("AKTIF", "1");
+//	r.add("ID_FAIL", idFail);
+//					
+//	r.add("ID_MASUK", userId);
+//	r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+//	r.add("ID_KEMASKINI", userId);
+//	r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+//
+//	sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+//					
+//	stmt.executeUpdate(sql);
 					
 	conn.commit();
 					
@@ -1418,5 +1452,6 @@ public class FrmOnlinePajakanSenaraiFailData {
 					db.close();
 			}	
 		}
+		
 		
 }
