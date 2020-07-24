@@ -1,4 +1,4 @@
-<!-- 
+<!--
 <style type="text/css">
 .hyu {
 	font-size: 15px;
@@ -25,7 +25,7 @@ a:active {
 }
 </style>
 -->
-<!-- 
+<!--
   <style type="text/css">
   .pautanms {color: #0033FF}
   </style>
@@ -61,7 +61,7 @@ function toggle_div(id) {
 														<tr>
 															<td>
 																<a href="javascript:gotoProfile()" class="help" title="Tukar Kata Laluan">
-																	<font color="blue"><li>&nbsp;Tukar Kata Laluan</li></font>						
+																	<font color="blue"><li>&nbsp;Tukar Kata Laluan</li></font>
 																</a>
 															</td>
 														</tr>
@@ -69,19 +69,19 @@ function toggle_div(id) {
 															<td>
 																<a href="javascript:gotoInbox()" class="help" title="My Inbox">
 																	<font color="blue"><li>
-																	#if($!notifikasi_inbox > 0)                         
-																		<label style="background-color:blue" align="center" valign="top" > 
+																	#if($!notifikasi_inbox > 0)
+																		<label style="background-color:blue" align="center" valign="top" >
 																			<b><font color="WHITE"><blink>$!notifikasi_inbox</blink></font></b>
 																		</label>&nbsp;
 																	#end
-																	Ruang Perbincangan Formal</li></font>						
+																	Ruang Perbincangan Formal</li></font>
 																</a>
 															</td>
 														</tr> -->
 														<!-- <tr>
 															<td>
 																<a href="javascript:gotoMyCalendar()" class="help" title="MyCalendar">
-																	<font color="blue"><li><i>&nbsp;MyCalendar</i></li></font>						
+																	<font color="blue"><li><i>&nbsp;MyCalendar</i></li></font>
 																</a>
 															</td>
 														</tr> -->
@@ -91,7 +91,7 @@ function toggle_div(id) {
 										</table>
 									</td>
 									<td width="50%" valign="top">
-										
+
 									</td>
 								</tr>
 							</table>
@@ -117,19 +117,19 @@ function toggle_div(id) {
 																<!-- <a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah"> -->
 																<a href="javascript:permohonanUPT()" class="help" title="Membuat Permohonan Pengambilan Tanah">
 																	<font color="blue"><li>
-																	#if($!jumlah_notifikasi > 0)                         
-																		<label style="background-color:blue" align="center" valign="top" > 
+																	#if($!jumlah_notifikasi > 0)
+																		<label style="background-color:blue" align="center" valign="top" >
 																			<b><font color="WHITE"><blink>$!jumlah_notifikasi</blink></font></b>
 																		</label>&nbsp;
 																	#end
-																	
-																	<!-- 
-																	<label style="background-color:blue" align="center" valign="top" > 
+
+																	<!--
+																	<label style="background-color:blue" align="center" valign="top" >
 																				<b><font color="WHITE"><blink>$!jumlah_notifikasitolak</blink></font></b>
 																		</label>&nbsp;
 																	 -->
-																	
-																	Pengambilan Tanah</li></font>						
+
+																	Pengambilan Tanah</li></font>
 																</a>
 															</td>
 														</tr>
@@ -137,16 +137,16 @@ function toggle_div(id) {
 														<!-- <tr>
 															<td>
 																<a href="javascript:paparanMalumatPermohonan()" class="help" title="Paparan maklumat permohonan KJP yang dihantar ke negeri">
-																	<font color="blue"><li>&nbsp;Paparan Maklumat Permohonan</li></font>						
+																	<font color="blue"><li>&nbsp;Paparan Maklumat Permohonan</li></font>
 																</a>
 															</td>
 														</tr> -->
 														<!-- <tr>
 														<td valign="top" align="left">
-														    
+
 														    <table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
 															<tr>
-															
+
 															<td width="50%" valign="top">
 															<table width="100%" >
 																<tr>
@@ -157,45 +157,45 @@ function toggle_div(id) {
 															</td>
 															</tr>
 															</table>
-														    
+
 														</td>
 														</tr> -->
 														<!-- AISHAH TAMBAH END -->
 														<tr>
 															<td>
 																<a href="javascript:permohonanPenarikanBalik()" class="help" title="Permohonan Penarikan Balik">
-																	<font color="blue"><li>&nbsp;Penarikan Balik</li></font>						
+																	<font color="blue"><li>&nbsp;Penarikan Balik</li></font>
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
 																<a href="javascript:permohonanPembatalan()" class="help" title="Membuat Permohonan Pembatalan">
-																	<font color="blue"><li>&nbsp;Pembatalan</li></font>						
+																	<font color="blue"><li>&nbsp;Pembatalan</li></font>
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
 																<a href="javascript:permohonanDaftarBantahan()" class="help" title="Permohonan Daftar Bantahan">
-																	<font color="blue"><li>&nbsp;Bantahan</li></font>						
+																	<font color="blue"><li>&nbsp;Bantahan</li></font>
 																</a>
 															</td>
-														</tr>	
-														
+														</tr>
+
 														<tr>
 															<td>
 																<a href="javascript:penyewaan()" class="help" title="Penyewaan">
 																	<font color="blue"><li>
 																	##if($jumlah_notifikasi_penyewaan > 0)
-																	<label style="background-color:blue" align="center" valign="top" > 
+																	<label style="background-color:blue" align="center" valign="top" >
 																		<b><font color="WHITE"><blink>$!bilPPTDikembali</blink></font></b>
 																	</label>&nbsp;
 																	##end
-																	Permohonan Dikembalikan</li></font>					
+																	Permohonan Dikembalikan</li></font>
 																</a>
 															</td>
-														</tr>													
+														</tr>
 													</table>
 												</td>
 											</tr>
@@ -215,7 +215,7 @@ function toggle_div(id) {
 														<!-- <tr>
 															<td>
 																<a href="javascript:penawaran()" class="help" title="Penawaran">
-																	<font color="blue"><li>&nbsp;Penawaran</li></font>						
+																	<font color="blue"><li>&nbsp;Penawaran</li></font>
 																</a>
 															</td>
 														</tr> -->
@@ -224,27 +224,40 @@ function toggle_div(id) {
 																<a href="javascript:pelepasan()" class="help" title="Pelepasan">
 																	<font color="blue"><li>
 																	#if($jumlah_notifikasi_pelepasan > 0)
-																	<label style="background-color:blue" align="center" valign="top" > 
+																	<label style="background-color:blue" align="center" valign="top" >
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_pelepasan</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Pelepasan</li></font>				
+																	Pelepasan</li></font>
 																</a>
 																<!-- <a href="javascript:pelepasan()" class="help" title="Pelepasan">
-																	<font color="blue"><li>&nbsp;Pelepasan</li></font>				
+																	<font color="blue"><li>&nbsp;Pelepasan</li></font>
 																</a> -->
 															</td>
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:tukarGuna()" class="help" title="Tukar Guna">
+																<a href="javascript:tukarGuna()" class="help" title="Permohonan Tukar Guna">
 																	<font color="blue"><li>
 																	#if($jumlah_notifikasi_tukarguna > 0)
-																	<label style="background-color:blue" align="center" valign="top" > 
+																	<label style="background-color:blue" align="center" valign="top" >
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_tukarguna</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Tukar Guna</li></font>						
+																	Permohonan Tukar Guna</li></font>
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:tukarGunaUlasan()" class="help" title="Ulasan Tukar Guna">
+																	<font color="blue"><li>
+																	#if($jumlah_notifikasi_tukarguna > 0)
+																	<label style="background-color:blue" align="center" valign="top" >
+																		<b><font color="WHITE"><blink>$jumlah_notifikasi_tukarguna</blink></font></b>
+																	</label>&nbsp;
+																	#end
+																	Ulasan Tukar Guna</li></font>
 																</a>
 															</td>
 														</tr>
@@ -253,11 +266,11 @@ function toggle_div(id) {
 																<a href="javascript:penyewaan()" class="help" title="Penyewaan">
 																	<font color="blue"><li>
 																	#if($jumlah_notifikasi_penyewaan > 0)
-																	<label style="background-color:blue" align="center" valign="top" > 
+																	<label style="background-color:blue" align="center" valign="top" >
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penyewaan</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Penyewaan</li></font>					
+																	Penyewaan</li></font>
 																</a>
 															</td>
 														</tr>
@@ -266,24 +279,11 @@ function toggle_div(id) {
 																<a href="javascript:penawaran()" class="help" title="Penawaran">
 																	<font color="blue"><li>
 																	#if($jumlah_notifikasi_penawaran > 0)
-																	<label style="background-color:blue" align="center" valign="top" > 
+																	<label style="background-color:blue" align="center" valign="top" >
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penawaran</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Penawaran</li></font>					
-																</a>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<a href="javascript:aktapelantarbenua()" class="help" title="Penawaran">
-																	<font color="blue"><li>
-																	#if($jumlah_notifikasi_penawaran > 0)
-																	<label style="background-color:blue" align="center" valign="top" > 
-																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penawaran</blink></font></b>
-																	</label>&nbsp;
-																	#end
-																	Akta Pelantar Benua</li></font>					
+																	Penawaran</li></font>
 																</a>
 															</td>
 														</tr>
@@ -314,42 +314,42 @@ function toggle_div(id) {
 														<tr>
 															<td>
 																<a href="javascript:senaraiPemberimilikan()" class="help" title="Pemberimilikan / Perizaban">
-																	<font color="blue"><li>Pemberimilikan / Perizaban</li></font>						
+																	<font color="blue"><li>Pemberimilikan / Perizaban</li></font>
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
 																<a href="javascript:pembelian()" class="help" title="Pembelian">
-																	<font color="blue"><li>Pembelian</li></font>						
+																	<font color="blue"><li>Pembelian</li></font>
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
 																<a href="javascript:rekod()" class="help" title="Rekod Hakmilik / Rizab">
-																	<font color="blue"><li>Rekod Hakmilik / Rizab</li></font>						
+																	<font color="blue"><li>Rekod Hakmilik / Rizab</li></font>
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
 																<a href="javascript:laporanHakmilik()" class="help" title="Laporan Hakmilik / Rizab">
-																	<font color="blue"><li>Laporan Hakmilik / Rizab</li></font>						
+																	<font color="blue"><li>Laporan Hakmilik / Rizab</li></font>
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
 																<a href="javascript:gadaian()" class="help" title="Gadaian">
-																	<font color="blue"><li>Gadaian</li></font>						
+																	<font color="blue"><li>Gadaian</li></font>
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
 																<a href="javascript:jawatankuasaRuangPejabat()" class="help" title="Jawatankuasa Ruang Pejabat">
-																	<font color="blue"><li>Jawatankuasa Ruang Pejabat</li></font>						
+																	<font color="blue"><li>Jawatankuasa Ruang Pejabat</li></font>
 																</a>
 															</td>
 														</tr>
@@ -359,7 +359,7 @@ function toggle_div(id) {
 											</tr>
 										</table>
 									</td>
-									
+
 									<td width="50%" valign="top">
 										<table width="100%" >
 											<tr>
@@ -369,11 +369,11 @@ function toggle_div(id) {
 														<tr>
 															<td><b>Aduan / Cadangan</b></td>
 														</tr>
-									
+
 														<!-- <tr>
 															<td>
 																<a href="javascript:statusAduan()" class="help" title="Pengurusan Log Aduan">
-																	<font color="blue"><li>&nbsp;Status Aduan</li></font>	
+																	<font color="blue"><li>&nbsp;Status Aduan</li></font>
 																</a>
 															</td>
 														</tr> -->
@@ -382,7 +382,7 @@ function toggle_div(id) {
 											</tr>
 										</table>
 									</td>
-									
+
 								</tr>
 							</table>
 						</td>
@@ -404,14 +404,14 @@ function toggle_div(id) {
 														<tr>
 															<td>
 																<a href="javascript:aduan()" class="help" title="Pengurusan Log Aduan">
-																	<font color="blue"><li>&nbsp;Hantar Aduan & Cadangan</li></font>	
+																	<font color="blue"><li>&nbsp;Hantar Aduan & Cadangan</li></font>
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
 																<a href="javascript:statusAduan()" class="help" title="Pengurusan Log Aduan">
-																	<font color="blue"><li>&nbsp;Status Aduan</li></font>	
+																	<font color="blue"><li>&nbsp;Status Aduan</li></font>
 																</a>
 															</td>
 														</tr>
@@ -421,7 +421,7 @@ function toggle_div(id) {
 										</table>
 									</td>
 									<td width="50%" valign="top">
-										
+
 									</td>
 								</tr>
 							</table>
@@ -430,7 +430,7 @@ function toggle_div(id) {
 					#end -->
 				</table>
 			</td>
-			
+
 			<td width="39%" valign="top">
 				<table width="100%" border="0" >
 					<!-- <tr>
@@ -498,7 +498,7 @@ function toggle_div(id) {
 												</ul>
 												<div class="TabbedPanelsContentGroup">
 													#if($list_memo_aktif.size()>0)
-														<div class="TabbedPanelsContent"  id="Peringatan_Main" style="height:250" >  
+														<div class="TabbedPanelsContent"  id="Peringatan_Main" style="height:250" >
 															<table width="100%" >
 																<tr>
 																	<td width="12%" align="center" valign="top"><img width="30" height="30" src="../img/online/kblogger.png" align="center"/></td>
@@ -525,7 +525,7 @@ function toggle_div(id) {
 					#end
 				</table>
 			</td>
-			
+
 			<td width="1%" valign="top"></td>
 		</tr>
 	</table>
@@ -538,36 +538,36 @@ function toggle_div(id) {
 <!-- AISHAH TAMBAH START -->
 function gotoSek4()
 {
-all_reset('div_getOnline4');	
-document.getElementById('div_getOnline4').style.display="";	
+all_reset('div_getOnline4');
+document.getElementById('div_getOnline4').style.display="";
 doDivAjaxCall$formname('div_getOnline4','getOnline4','');
 }
 function gotoSek8()
 {
 all_reset('div_getOnline8');
-document.getElementById('div_getOnline8').style.display="";		
-doDivAjaxCall$formname('div_getOnline8','getOnline8','');		
+document.getElementById('div_getOnline8').style.display="";
+doDivAjaxCall$formname('div_getOnline8','getOnline8','');
 }
 <!-- AISHAH TAMBAH END -->
 function permohonanUPT(){
 //	document.$(formName).jawatan.value = "$!jawatan";
 	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
-	
+
 	var flag_noti = "";
 	var noti = document.getElementById('notifikasi').value;
 	//alert(" noti : "+noti);
 	if(noti!="")
 	{
-		if(parseInt(noti)>0)	
+		if(parseInt(noti)>0)
 		{
 			//alert(" parseInt(noti) : "+parseInt(noti));
 			flag_noti = "Y";
 		}
-		
+
 	}
 	document.getElementById('flag_noti').value = flag_noti;
-	
-	
+
+
 //	document.${formName}.action = "$EkptgUtil.getTabID('Menu Utama',$portalRole)?_portal_module=ekptg.view.online.FrmOnlineMenuUtamaKJP";
 	document.${formName}.submit();
 }
@@ -600,6 +600,11 @@ function tukarGuna(){
 	document.${formName}.submit();
 }
 
+function tukarGunaUlasan(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiUlasanFailView";
+	document.${formName}.submit();
+}
+
 function pelepasan(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPLPOnlineKJPSenaraiFailView";
 	document.${formName}.submit();
@@ -615,10 +620,7 @@ function penawaran(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.submit();
 }
-function aktapelantarbenua(){
-	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmAPBOnlineKJPSenaraiFailView";
-	document.${formName}.submit();
-}
+
 function rekod(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.rekod.FrmRekodPendaftaranTanah";
 	document.${formName}.submit();
