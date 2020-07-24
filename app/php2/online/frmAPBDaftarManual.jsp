@@ -13,21 +13,48 @@
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
-  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
-  <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
+  <input name="idFail" type="text" id="idFail" value="$idFail"/>
+  <input name="idStatus" type="text" id="idStatus" value="$idStatus"/>
   <input name="idNegeriPemohon" type="hidden" id="idNegeriPemohon" value="$idNegeriPemohon"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-<tr>  
+ <tr>  
   	<td colspan="2"><fieldset>
   	  <legend><strong>JENIS PERMOHONAN</strong></legend>
   	  <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  		<tr>
+  	<!--  <tr>
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td valign="top">Jenis Permohonan</td>
           <td width="1%">:</td>
           <td width="70%">$selectJenisPermohonan</td>
-        </tr>
+        </tr> 
+        -->
+        #if ($idStatus == '')
+        <tr>
+        <td width="1%">&nbsp;</td>
+  		<td>Jenis Permohonan</td>
+  		<td width = "1%">:</td>
+  		<td width ="70%">PERMOHONAN BARU</td>		
+  	</tr>
+  	#end
+  	#if ($idStatus == '1610207')
+  	 <tr>
+        <td width="1%">&nbsp;</td>
+  		<td>Jenis Permohonan</td>
+  		<td width = "1%">:</td>
+  		<td width ="70%">PEMBAHARUAN LESEN</td>		
+  	</tr>
+  	 <tr>
+        <td width="1%">&nbsp;</td>
+  		<td>No. Fail Lama</td>
+  		<td width = "1%">:</td>
+  		<td width ="70%">$!noFailLama</td>		
+  	</tr>
+  	 
+  	#end
+  	  
+        
+      <!-- 
         #if ($idJenisPermohonan == '1')
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
@@ -40,20 +67,21 @@
           </td>
         </tr>
         #end
-        #elseif ($idJenisPermohonan == '2')
+        #elseif ($idJenisPermohonan == '2') -->
 <!--         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan) -->
-        <tr>
+      <!--    <tr>
           <td width="1%">&nbsp;</td>
           <td valign="top">No. Fail Lama</td>
           <td>:</td>
-          <td>$!getIdFailByNoFail.get("noFailLama")
+          <td>$!c.get("noFailLama")
           	<input type="text" name="txtNoFailLama" id="txtNoFailLama" size="43" value="$beanMaklumatPermohonan.noFail" 
           		onblur="this.value=this.value.toUpperCase();doChangeNoFailAPB();" $readonly class="$inputTextClass"/>
           </td>
           </td>
-        </tr>
+        </tr> -->
 <!--         #end -->
-        #end
+     <!--     #end
+         -->
   	  </table>
   	</td>
   </tr>
@@ -148,7 +176,7 @@
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-        <tr>
+       <!--  <tr>
           <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Permohonan</td>
           <td width="1%" >:</td>
@@ -156,6 +184,13 @@
             <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
             <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
         </tr>
+         -->
+        <tr>
+        <td width="1%">&nbsp;</td>
+  		<td>No. Permohonan</td>
+  		<td width = "1%">:</td>
+  		<td width ="70%">$!noPermohonan</td>		
+  	</tr>
         <tr>
           <td>&nbsp;</td>
           <td >Urusan</td>
@@ -347,11 +382,12 @@ function doChangeNoFailAPB() {
 	doAjaxCall${formName}("doChangeNoFailAPB");
 }
 function daftarBaru() {
-	if(document.${formName}.socJenisPermohonan.value == ""){
+	alert("xxx");
+	/*if(document.${formName}.socJenisPermohonan.value == ""){
 		alert('Sila pilih Jenis Permohonan.');
   		document.${formName}.socJenisPermohonan.focus(); 
 		return; 
-	}
+	}*/
 	if(document.${formName}.socJenisLesen.value == ""){
 		alert('Sila pilih Jenis Lesen.');
   		document.${formName}.socJenisLesen.focus(); 
@@ -406,6 +442,7 @@ function daftarBaru() {
 		document.${formName}.actionOnline.value = "daftarBaru";
 		return;
 	}
+	alert("yyyy");
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.hitButton.value = "daftarBaru";
 	document.${formName}.mode.value = "view";

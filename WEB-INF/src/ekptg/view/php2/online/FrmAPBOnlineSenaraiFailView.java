@@ -53,14 +53,17 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    String vm = ""; 
         String actionOnline = getParam("actionOnline");
         String submit = getParam("command");   
-        
+        log.info(" actionOnline " +actionOnline);
         //GET ID PARAM
         String idFailSession = "";
+       
         if (session.getAttribute("idFail") != null){
         	idFailSession = (String) session.getAttribute("idFail");
         }
         String idFail = getParam("idFail");
         String idStatus = getParam("idStatus");
+        log.info("ID STATUS DAFTAR BARU "+idStatus);
+       // String idStatus = "";
         String mode = getParam("mode");
         if (mode.isEmpty()){
         	mode = "view";
@@ -322,9 +325,12 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         	this.context.put("readonly", "");
         	this.context.put("inputTextClass", "");
         	this.context.put("disabled", "");
+        	this.context.put("jenisPermohonan", "PERMOHONAN BARU");
+        	this.context.put("idStatus", "");
+        	log.info(idStatus);
         	
         	//JENIS PERMOHONAN
-			this.context.put("selectJenisPermohonan", HTML.SelectJenisPermohonanAPB("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "", " onChange=\"doChangeJenisPermohonan();\""));
+			//this.context.put("selectJenisPermohonan", HTML.SelectJenisPermohonanAPB("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "", " onChange=\"doChangeJenisPermohonan();\""));
         	
     		String noFailLama = getParam("txtNoFailLama");
     		beanMaklumatPermohonan = new Vector();
@@ -395,14 +401,21 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         	this.context.put("readonly", "");
         	this.context.put("inputTextClass", "");
         	this.context.put("disabled", "");
+        	context.put("idFail", idFail);
+        	log.info("ID FAIL : "+idFail);
         	
         	//JENIS PERMOHONAN
 			this.context.put("selectJenisPermohonan", HTML.SelectJenisPermohonanAPB("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "", " onChange=\"doChangeJenisPermohonan();\""));
         	
     		String noFailLama = getParam("txtNoFailLama");
+    		String noPermohonan = getParam("txtNoPermohonan");
     		//String noFailOnline = getParam();
     		beanMaklumatPermohonan = new Vector();
-    		idFailLama = logic.getIdFailByNoFail(noFailLama);
+    		idFailLama = logic.getIdFailByNoFail(noFailLama);   		
+    		noFailLama = logic.getNoFail(idFail);
+    		context.put("noFailLama", noFailLama);
+    		noPermohonan = logic.getNoFailPermohonan(idFail);
+    		context.put("noPermohonan", noPermohonan);
     		
     		if ("doChangeNoFailAPB".equals(submit)){
     			

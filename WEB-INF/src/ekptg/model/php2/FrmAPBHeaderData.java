@@ -57,6 +57,7 @@ public class FrmAPBHeaderData {
 					+ " AND A.ID_FAIL = '" + idFail + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
+			log.info("sql maklumat : "+sql);
 			if (rs.next()) {
 				h = new Hashtable();
 				h.put("idFail",

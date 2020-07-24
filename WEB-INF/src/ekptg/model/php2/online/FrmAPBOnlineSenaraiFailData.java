@@ -754,6 +754,65 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				db.close();
 		}
 	}
+	//yati tambah baru
+	public String getNoFail(String idFail)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT NO_FAIL FROM TBLPFDFAIL WHERE ID_SUBURUSAN = '57'" 
+					+ "AND ID_URUSAN = '9' AND ID_FAIL  = '"
+					+ idFail + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("sql no. fail lama: "+sql);
+			if (rs.next()) {
+				return rs.getString("NO_FAIL") == null ? "" : rs
+						.getString("NO_FAIL").toString();
+
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	//yati tambah baru
+		public String getNoFailPermohonan(String idFail)
+				throws Exception {
+			Db db = null;
+			String sql = "";
+
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT NO_PERMOHONAN FROM TBLPERMOHONAN WHERE " 
+						+ "ID_FAIL  = '"
+						+ idFail + "'";
+
+				ResultSet rs = stmt.executeQuery(sql);
+				myLog.info("sql no. permohonan lama: "+sql);
+				if (rs.next()) {
+					return rs.getString("NO_PERMOHONAN") == null ? "" : rs
+							.getString("NO_PERMOHONAN").toString();
+
+				} else {
+					return "";
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
 	
 	public String getIdFailByNoFail(String noFail)
 			throws Exception {
@@ -769,7 +828,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					+ noFail.trim().toUpperCase() + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
-			myLog.info("sql no. fail lama: "+sql);
+			//myLog.info("sql id. fail lama: "+sql);
 			if (rs.next()) {
 				return rs.getString("ID_FAIL") == null ? "" : rs
 						.getString("ID_FAIL").toString();
