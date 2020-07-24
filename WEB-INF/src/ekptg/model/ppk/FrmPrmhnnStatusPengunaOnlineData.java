@@ -641,6 +641,140 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    }
 	}
 	
+	public static Vector getMaklumatPraPerbicaraan(String search,String idMasuk,String role, String USER_LOGIN_SYSTEM, String flag_draff) throws Exception {
+		Db db = null;
+	    String sql = "";
+	    Format formatter = new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      
+	      sql = "SELECT PC.ID_NOTISPRAPERBICARAAN, PC.ID_PRAPERBICARAAN, PC.ALAMAT_BICARA1, PC.ALAMAT_BICARA2, PC.ALAMAT_BICARA3, PC.CATATAN_NOTIS, PC.ID_PERMOHONAN "
+	      		+ "FROM TBLPPKPRAPERBICARAAN PC, TBLPPKPERMOHONAN P "
+	      		+ "WHERE PC.ID_PERMOHONAN = P.ID_PERMOHONAN "
+	      		+ "AND P.ID_MASUK = '"+idMasuk+"'";
+	      
+	      myLogger.info("SQL LIST PRA PERBICARAAN >>>>>>>>>>>>> "+sql.toUpperCase());
+	      ResultSet rs = stmt.executeQuery(sql);
+	      Vector list = new Vector();
+	      Hashtable h;
+	      
+	      while (rs.next()) {
+	    	  h = new Hashtable();
+	    	
+	    	  h.put("id_notispraperbicaraan", rs.getString("ID_NOTISPRAPERBICARAAN")==null?"":rs.getString("ID_NOTISPRAPERBICARAAN"));
+	    	  h.put("id_praperbicaraan", rs.getString("ID_PRAPERBICARAAN")==null?"":rs.getString("ID_PRAPERBICARAAN"));
+	    	  h.put("alamat_bicara1", rs.getString("ALAMAT_BICARA1")==null?"":rs.getString("ALAMAT_BICARA1"));
+	    	  h.put("alamat_bicara2", rs.getString("ALAMAT_BICARA2")==null?"":rs.getString("ALAMAT_BICARA2"));
+	    	  h.put("alamat_bicara3", rs.getString("ALAMAT_BICARA3")==null?"":rs.getString("ALAMAT_BICARA3"));
+	    	  h.put("catatan_notis", rs.getString("CATATAN_NOTIS")==null?"":rs.getString("CATATAN_NOTIS"));
+	    	  h.put("id_permohonan", rs.getString("ID_PERMOHONAN")==null?"":rs.getString("ID_PERMOHONAN"));
+	    	  
+	    	  list.addElement(h);
+	      }
+	      
+	      return list;
+	    } finally {
+	      if (db != null) db.close();
+	    }
+	}
+	
+	public static Vector getPopupPraPerbicaraan(String search,String idPraPerbicaraan, String flag_draff) throws Exception {
+		Db db = null;
+	    String sql = "";
+	    Format formatter = new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      
+	      sql = "SELECT PC.ID_NOTISPRAPERBICARAAN, PC.ID_PRAPERBICARAAN, PC.ALAMAT_BICARA1, PC.ALAMAT_BICARA2, PC.ALAMAT_BICARA3, "
+	      		+ "TO_CHAR (PC.TARIKH_INKUIRI,'DD/MM/YYYY') as TARIKH_INKUIRI, PC.CATATAN_NOTIS, PC.SEBAB_INKUIRI, PC.ID_PERMOHONAN "
+	      		+ "FROM TBLPPKPRAPERBICARAAN PC "
+	      		+ "WHERE PC.ID_PRAPERBICARAAN = '"+idPraPerbicaraan+"'";
+	      
+	      myLogger.info("SQL LIST PRA PERBICARAAN >>>>>>>>>>>>> "+sql.toUpperCase());
+	      ResultSet rs = stmt.executeQuery(sql);
+	      Vector list = new Vector();
+	      Hashtable h;
+	      
+	      while (rs.next()) {
+	    	  h = new Hashtable();
+	    	
+	    	  h.put("id_notispraperbicaraan", rs.getString("ID_NOTISPRAPERBICARAAN")==null?"":rs.getString("ID_NOTISPRAPERBICARAAN"));
+	    	  h.put("id_praperbicaraan", rs.getString("ID_PRAPERBICARAAN")==null?"":rs.getString("ID_PRAPERBICARAAN"));
+	    	  h.put("tarikh_inkuiri", rs.getString("TARIKH_INKUIRI")==null?"":rs.getString("TARIKH_INKUIRI"));
+	    	  h.put("alamat_bicara1", rs.getString("ALAMAT_BICARA1")==null?"":rs.getString("ALAMAT_BICARA1"));
+	    	  h.put("alamat_bicara2", rs.getString("ALAMAT_BICARA2")==null?"":rs.getString("ALAMAT_BICARA2"));
+	    	  h.put("alamat_bicara3", rs.getString("ALAMAT_BICARA3")==null?"":rs.getString("ALAMAT_BICARA3"));
+	    	  h.put("catatan_notis", rs.getString("CATATAN_NOTIS")==null?"":rs.getString("CATATAN_NOTIS"));
+	    	  h.put("sebab_inkuiri", rs.getString("SEBAB_INKUIRI")==null?"":rs.getString("SEBAB_INKUIRI"));
+	    	  h.put("id_permohonan", rs.getString("ID_PERMOHONAN")==null?"":rs.getString("ID_PERMOHONAN"));
+	    	  
+	    	  list.addElement(h);
+	      }
+	      
+	      return list;
+	    } finally {
+	      if (db != null) db.close();
+	    }
+	}
+	
+	public static Vector getMaklumatPerbicaraan(String search,String idBicara,String flag_draff)throws Exception {
+		
+	    Db db = null;
+	    String sql = "";
+	    Format formatter = new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      
+	      sql = "SELECT\r\n" + 
+	      		"	TO_CHAR (C.TARIKH_BICARA, 'DD/MM/YYYY') AS TARIKH_BICARA,\r\n" + 
+	      		"CASE WHEN C.MASA_BICARA LIKE '%.%' THEN (CASE WHEN NVL (LENGTH (SUBSTR (C.MASA_BICARA, 1, INSTR (C.MASA_BICARA, '.') - 1)),0) = 1 THEN '0' || CASE "+
+    		   " WHEN NVL (LENGTH (SUBSTR (C.MASA_BICARA, INSTR (C.MASA_BICARA, '.') + 1)), 0) = 1 THEN C.MASA_BICARA || '0' ELSE C.MASA_BICARA END WHEN NVL "+
+    		   " (LENGTH (SUBSTR (C.MASA_BICARA, INSTR (C.MASA_BICARA, '.' ) + 1 ) ), 0 ) = 1 THEN C.MASA_BICARA || '0' ELSE C.MASA_BICARA END ) "+
+    		   " WHEN LENGTH (C.MASA_BICARA) = 4 THEN    SUBSTR (C.MASA_BICARA, 1, 2) || '.' || SUBSTR (C.MASA_BICARA, 3) ELSE '' END || "+
+    		   " (CASE WHEN C.JENIS_MASA_BICARA = '1' THEN ' PAGI' WHEN C.JENIS_MASA_BICARA = '2' THEN ' TENGAH HARI' WHEN C.JENIS_MASA_BICARA = '3' THEN ' PETANG' ELSE '' END) AS MASA_BICARA, " +
+      		
+	      		"	C.TEMPAT_BICARA,\r\n" + 
+	      		"	C.ALAMAT_BICARA1,\r\n" + 
+	      		"	C.ALAMAT_BICARA2,\r\n" + 
+	      		"	C.ALAMAT_BICARA3,\r\n" + 
+	      		"	C.POSKOD,\r\n" + 
+	      		"	C.BANDAR,\r\n" + 
+	      		"	C.ID_NEGERI, UPPER (N.NAMA_NEGERI) AS NAMA_NEGERI\r\n" + 
+	      		"FROM\r\n" + 
+	      		"	TBLPPKPERBICARAAN C, TBLRUJNEGERI N \r\n" + 
+	      		"WHERE\r\n" + 
+	      		"	C.ID_NEGERIBICARA = N.ID_NEGERI AND C.ID_PERBICARAAN = '"+ idBicara +"'";
+  	      
+	      myLogger.info("SQL LIST PERBICARAAN >>>>>>>>>>>>> "+sql.toUpperCase());
+	      ResultSet rs = stmt.executeQuery(sql);
+	      Vector list = new Vector();
+	      Hashtable h;
+	      
+	      while (rs.next()) {
+	    	  h = new Hashtable();
+	    	
+	    	  h.put("tarikhBicara", rs.getString("TARIKH_BICARA")==null?"":rs.getString("TARIKH_BICARA"));
+	    	  h.put("masaBicara", rs.getString("MASA_BICARA")==null?"":rs.getString("MASA_BICARA"));
+	    	  h.put("tempatBicara", rs.getString("TEMPAT_BICARA")==null?"":rs.getString("TEMPAT_BICARA"));
+	    	  h.put("alamatBicara1", rs.getString("ALAMAT_BICARA1")==null?"":rs.getString("ALAMAT_BICARA1"));
+	    	  h.put("alamatBicara2", rs.getString("ALAMAT_BICARA2")==null?"":rs.getString("ALAMAT_BICARA2"));
+	    	  h.put("alamatBicara3", rs.getString("ALAMAT_BICARA3")==null?"":rs.getString("ALAMAT_BICARA3"));
+	    	  h.put("poskod", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
+	    	  h.put("bandar", rs.getString("BANDAR")==null?"":rs.getString("BANDAR"));
+	    	  h.put("negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
+	    	  
+	    	  list.addElement(h);
+	      }
+	      
+	      return list;
+	    } finally {
+	      if (db != null) db.close();
+	    }
+	  }
+	
 	public static Vector getSenaraiBantahan(String search,String idMasuk,String role,String kppemohon,String kpsimati, String USER_LOGIN_SYSTEM, String flag_draff)throws Exception {
 		Db db = null;
 	    String sql = "";
@@ -650,10 +784,12 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	      Statement stmt = db.getStatement();
 	      
 	      sql = "SELECT DISTINCT B.ID_PEMBANTAH, B.NAMA_PEMBANTAH, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.BANDAR, B.NEGERI, "+
-	      		"B.EMEL, B.NO_HP, B.SEBAB, B.ID_FAIL, TO_CHAR(B.NO_FAIL) AS NO_FAIL, TO_CHAR (B.TARIKH_HANTAR,'DD/MM/YYYY') as TARIKH_HANTAR,"+
-	      		"S.NAMA_DOKUMEN "+
-	    		"FROM TBLPPKBANTAHANONLINE B, TBLPPKDOKUMENSIMATI S "+
+	      		"B.EMEL, B.NO_HP, B.SEBAB, B.ID_FAIL, B.ID_PERBICARAAN, TO_CHAR(B.NO_FAIL) AS NO_FAIL, TO_CHAR (B.TARIKH_HANTAR,'DD/MM/YYYY') as TARIKH_HANTAR,"+
+	      		"S.NAMA_DOKUMEN, S.NO_RUJUKAN, S.ID_DOKUMEN "+
+	    		"FROM TBLPPKPERMOHONAN P, TBLPPKBANTAHANONLINE B, TBLPPKDOKUMENSIMATI S "+
 	    		"WHERE B.ID_PEMBANTAH = S.ID_MASUK "+
+	    		"AND B.ID_FAIL = P.ID_FAIL "+
+	    		"AND P.ID_PERMOHONAN = S.NO_RUJUKAN "+
 	    		"AND S.ID_JENISDOKUMEN = '99204' "+
 	    		"AND B.ID_PEMBANTAH = '"+idMasuk+"' ";
 	      
@@ -698,6 +834,9 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	  h.put("no_fail", rs.getString("NO_FAIL")==null?"":rs.getString("NO_FAIL"));
 	    	  h.put("tarikh_hantar", rs.getString("TARIKH_HANTAR")==null?"":rs.getString("TARIKH_HANTAR"));
 	    	  h.put("nama_dokumen", rs.getString("NAMA_DOKUMEN")==null?"":rs.getString("NAMA_DOKUMEN"));
+	    	  h.put("no_rujukan", rs.getString("NO_RUJUKAN")==null?"":rs.getString("NO_RUJUKAN"));
+	    	  h.put("id_dokumen", rs.getString("ID_DOKUMEN")==null?"":rs.getString("ID_DOKUMEN"));
+	    	  h.put("id_perbicaraan", rs.getString("ID_PERBICARAAN")==null?"":rs.getString("ID_PERBICARAAN"));
 	    	  
 	    	  list.addElement(h);
 	      }
