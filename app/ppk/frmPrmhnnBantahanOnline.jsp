@@ -13,6 +13,8 @@
 
 <input type="hidden" name="v_tab" id="v_tab" value="" />
 <input type="hidden" name="id_pemohon" id="id_pemohon" value="$!id_pemohon" />
+
+
 <table width="100%" cellspacing="2" cellpadding="1" border="0">
 	<tr>
 		<td colspan="6">
@@ -96,7 +98,7 @@
 		         <input type="hidden" name="idFail" id="idFail" value="$!list.ID_FAIL" />
 		         <input type="hidden" name="noFail" id="noFail" value="$!list.NO_FAIL" />
 		         
-		         <input type="text" name="idBicara" id="idBicara" value="$!list.ID_PERBICARAAN" />
+		         <input type="hidden" name="idBicara" id="idBicara" value="$!list.ID_PERBICARAAN" />
 		         
 		         <input type="hidden" name="icSimati" id="icSimati" value="$!list.NO_KP_BARU" />
 		         
@@ -184,7 +186,6 @@
 					  	<td width="15%" align="center">Nama Pembantah</td>
 					  	<td width="20%" align="center">Sebab Bantah</td>
 					  	<td width="10%" align="center">Dokumen Sokongan</td>
-					  	<td width="5%" align="center">Maklumat Bicara</td>
 				  	</tr>
 					#foreach ($senarai in $senaraibantahan)
 						#set( $counter = $velocityCount )
@@ -199,11 +200,11 @@
 						  $!cnt
 						 </td>
 						 <td class="$row" align="center">$!senarai.tarikh_hantar</td>
-						 <td class="$row" align="center">$!senarai.no_fail</td>
+						 <td class="$row" align="center"><a href="javascript:paparBicara('$!senarai.id_perbicaraan')" class="style1">$!senarai.no_fail</a></td>
 						 <td class="$row" align="center">$!senarai.nama_pembantah</td>
 						 <td class="$row" align="center">$!senarai.sebab.toUpperCase()</td>
-						 <td class="$row" align="center">$!senarai.nama_dokumen</td>
-						 <td class="$row" align="center">$!senarai.id_perbicaraan</td>
+						 <td class="$row" align="center"><a href="javascript:paparLampiran('$!senarai.id_dokumen')" class="style1">$!senarai.nama_dokumen</a></td>
+<!-- 						 <td class="$row" align="center"><input type="button" name="btnPapar" id="btnPapar" value="$!senarai.id_perbicaraan" onClick="paparBicara('$!senarai.id_perbicaraan')"></td> -->
 <!-- 						 <td class="$row" align="center"> -->
 <!-- 						 	<table width="100%" border="0"> -->
 <!-- 						 		<tr><td colspan="3">Permohonan bantahan yang dikemukakan telah dihantar. Tuan/Puan adalah dikehendaki hadir pada Hari Perbicaraan seperti tetapan di bawah:</td></tr> -->
@@ -378,6 +379,31 @@ function skrinBantah(idpermohonan,idfail,nofail,simati) {
 	// document.${formName}.nofail.value = nofail;
 	document.${formName}.submit();
 }
+
+// function paparBicara(idBicara){
+// 	alert (idBicara);
+// 	document.${formName}.command.value = "papar_bicara";
+// 	document.${formName}.action="?_portal_module=ekptg.view.ppk.FrmPrmhnnBantahanOnline";
+// 	document.${formName}.submit();
+// }
+
+function paparBicara(idBicara){
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupMaklumatBicara?idBicara="+idBicara;
+	
+	var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+	if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+}
+
+function paparLampiran(id_){
+  	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
+      var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+      if ((document.window != null) && (!hWnd.opener))
+  	hWnd.opener=document.window;
+      if (hWnd.focus != null) hWnd.focus();
+}	
 
 
 function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {		

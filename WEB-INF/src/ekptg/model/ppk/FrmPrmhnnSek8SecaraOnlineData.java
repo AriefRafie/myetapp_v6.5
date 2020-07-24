@@ -2972,19 +2972,20 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			
 			String sql2 = "";
 			sql2 = "UPDATE TBLPPKPERBICARAAN SET FLAG_BANTAHAN = 'Y', KETERANGAN_BANTAHAN = '"+nama_pembantah+" yang bernombor KP "+no_kp_baru+" telah membuat bantahan berdasarkan "+sebab+"' \r\n" + 
-					"WHERE ID_PERBICARAAN = \r\n" + 
-					"(SELECT id_perbicaraan\r\n" + 
-					"  FROM tblppkperbicaraan\r\n" + 
-					" WHERE id_keputusanpermohonan IN (\r\n" + 
-					"          SELECT id_keputusanpermohonan\r\n" + 
-					"            FROM tblppkkeputusanpermohonan\r\n" + 
-					"           WHERE id_permohonan =\r\n" + 
-					"                    (SELECT id_permohonan\r\n" + 
-					"                       FROM tblppkpermohonan\r\n" + 
-					"                      WHERE id_fail =\r\n" + 
-					"                                 (SELECT id_fail\r\n" + 
-					"                                    FROM tblpfdfail\r\n" + 
-					"                                   WHERE no_fail = '"+no_fail+"'))) )";
+					"WHERE ID_PERBICARAAN ='"+id_perbicaraan+"'";
+//					+ " \r\n" + 
+//					"(SELECT id_perbicaraan\r\n" + 
+//					"  FROM tblppkperbicaraan\r\n" + 
+//					" WHERE id_keputusanpermohonan IN (\r\n" + 
+//					"          SELECT id_keputusanpermohonan\r\n" + 
+//					"            FROM tblppkkeputusanpermohonan\r\n" + 
+//					"           WHERE id_permohonan =\r\n" + 
+//					"                    (SELECT id_permohonan\r\n" + 
+//					"                       FROM tblppkpermohonan\r\n" + 
+//					"                      WHERE id_fail =\r\n" + 
+//					"                                 (SELECT id_fail\r\n" + 
+//					"                                    FROM tblpfdfail\r\n" + 
+//					"                                   WHERE no_fail = '"+no_fail+"'))) )";
 			
 			try {
 				db2 = new Db();

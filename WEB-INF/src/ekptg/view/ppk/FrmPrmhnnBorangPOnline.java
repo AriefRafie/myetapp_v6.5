@@ -2314,7 +2314,7 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 
 			vm = "app/ppk/frmPraPrmhnnSek17Pemohon.jsp";
 		} else if ("Simati".equals(submit)) {
-
+			myLogger.info("test sek 17 A");
 			String id2 = getParam("idPemohon");
 			String id1 = getParam("idSimati");
 			String no_subjacket = getParam("no_subjaket");
@@ -2341,7 +2341,7 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 				this.context.put("listBandarTetapbyNegeri", "");
 			}
 			if ("Simatiview".equals(mode)) {
-
+				myLogger.info("test sek 17 B");
 				this.context.put("readmode", disability1);
 				this.context.put("show_kemaskini_button", "yes");
 			}
