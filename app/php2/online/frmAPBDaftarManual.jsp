@@ -15,6 +15,7 @@
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
   <input name="idFail" type="text" id="idFail" value="$idFail"/>
   <input name="idStatus" type="text" id="idStatus" value="$idStatus"/>
+  <input name="idJenisPermohonan" type="text" id="idJenisPermohonan" value="$idJenisPermohonan"/>
   <input name="idNegeriPemohon" type="hidden" id="idNegeriPemohon" value="$idNegeriPemohon"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -44,6 +45,7 @@
   		<td width = "1%">:</td>
   		<td width ="70%">PEMBAHARUAN LESEN</td>		
   	</tr>
+  	
   	 <tr>
         <td width="1%">&nbsp;</td>
   		<td>No. Fail Lama</td>
@@ -206,10 +208,10 @@
           <td>$selectJenisLesen</td>
         </tr>
         <tr>
-          <td width="1%">&nbsp;</td>
-          <td width="28%">Jenis Tujuan</td>
-          <td width="1%">:</td>
-          <td width="70%">MENGOREK</td>
+           <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td>Jenis Tujuan</td>
+          <td>:</td>
+          <td width="70%">$selectJenisTujuan</td>
         </tr>
         <tr>
           <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>

@@ -116,7 +116,7 @@ function paparRenewLesen(idFail,idStatus,idPemohon) {
 }
 
 function daftarBaru(){
-	document.${formName}.actionOnline.value = "daftarBaru";
+	document.${formName}.actionOnline.value = "daftarBaru";;
 	document.${formName}.idStatus.value = "";
 	document.${formName}.submit();
 }
