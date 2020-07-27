@@ -10,6 +10,8 @@
 -->
 <style type="text/css">
 <!--
+
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
