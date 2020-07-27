@@ -10,6 +10,7 @@
 -->
 <style type="text/css">
 <!--
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -3594,7 +3595,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                         <td width="10%"><div align="left">NO PT/NO LOT</div></td>
                                         -->
                                         <td width="5%"><div align="center">BAHAGIAN SIMATI</div></td>
-                                        <td width="5%"><div align="center">DOKUMEN</div></td>
+                                        <td width="15%"><div align="center">DOKUMEN</div></td>
                                       </tr>
                                       #end
                                       
@@ -3690,7 +3691,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
   
     #end   
     
-    <td>  
+    <td class="row1 style54">  
 	                             #if($tambahharta == "yes")
 	                         		#if($id_Status != "169" 
                        					&& $id_Status != "21" 
@@ -3766,7 +3767,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
    
     #end    
     
-    <td>  
+    <td class="row1 style54">  
 	                             #if($tambahharta == "yes")
 	                         		#if($id_Status != "169" 
                        					&& $id_Status != "21" 

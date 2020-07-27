@@ -9,6 +9,7 @@
 -->
 <style type="text/css">
 <!--
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -3288,7 +3289,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                               #else
                               <td class="row1"></td>
                               #end 
-                              <td>  
+                              <td class="row1">  
 	                             #if($tambahharta == "yes")
 	                         		#if($id_Status != "169" 
                        					&& $id_Status != "21" 
@@ -3361,7 +3362,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                               #else
                               <td class="row2"></td>
                               #end 
-                              <td>  
+                              <td class="row2">  
 	                             #if($tambahharta == "yes")
 	                         		#if($id_Status != "169" 
                        					&& $id_Status != "21" 
