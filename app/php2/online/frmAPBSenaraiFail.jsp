@@ -9,7 +9,7 @@
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="actionOnline" />
   <input type="hidden" name="idFail" />
-  <input type="hidden" name="idStatus" />
+  <input type="text" name="idStatus" />
   <input type="hidden" name="idPemohon" />
 </p>
 
@@ -116,7 +116,8 @@ function paparRenewLesen(idFail,idStatus,idPemohon) {
 }
 
 function daftarBaru(){
-	document.${formName}.actionOnline.value = "daftarBaru";
+	document.${formName}.actionOnline.value = "daftarBaru";;
+	document.${formName}.idStatus.value = "";
 	document.${formName}.submit();
 }
 </script>
