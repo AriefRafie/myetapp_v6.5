@@ -1072,3 +1072,4 @@ function doSimpanKemaskiniSenaraiSemak() {
 	document.${formName}.submit();
 }
 </script>
+$javascriptLampiran
