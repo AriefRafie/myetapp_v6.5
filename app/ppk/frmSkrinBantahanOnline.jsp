@@ -114,7 +114,7 @@
 		              <td><input name="txtNama" type="text"
 							id="txtNama" size="43"
 							maxlength="80" 
-							onblur="this.value=this.value.toUpperCase();" /></td>
+							onblur="this.value=this.value.toUpperCase();tukarInput()" /></td>
 		           </tr>
 		           <tr>
 		           	  <td width="1%" valign="top"><span class="style1">*</span></td>
@@ -123,7 +123,7 @@
 		              <td><input name="txtNoKPLamaPemohon" type="text" 
 							id="txtNoKPLamaPemohon" size="43"
 							maxlength="80" 
-							onblur="this.value=this.value.toUpperCase();" /></td>
+							onblur="this.value=this.value.toUpperCase();tukarInput()" /></td>
 		          </tr>
 		          <tr>
 		          	  <td width="1%" valign="top"><span class="style1">*</span></td>
@@ -191,7 +191,8 @@
 	            	<tr>&nbsp;</tr>
 	            	<tr>
 	            		<td width="1%" valign="top"></td>
-	    				<td colspan="3"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled> &nbsp;Saya $!pemohon.namaPemohon No.K/P $!pemohon.noPengenalan dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+<!-- 	    				<td colspan="3"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled> &nbsp;Saya $!pemohon.namaPemohon No.K/P $!pemohon.noPengenalan dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td> -->
+	      				<td colspan="3"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled> Saya <input style="border:none;background:transparent;" name="nameD" id="nameD"/> No.K/P <input style="border:none;background:transparent;" name="no_kpD" id="no_kpD"/> dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
 	      			</tr>
 	            </table>
 			</fieldset>

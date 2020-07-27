@@ -9865,6 +9865,10 @@ public void deleteHtaamSenarai(String idDokumen, String uid, String id_permohona
 				h.put("syaratNyata", rs.getString("SYARAT_NYATA") == null ? "" : rs.getString("KETERANGAN").toUpperCase());
 				h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN").toUpperCase());
 
+				//SYAFIQAH ADD UNTUK PAPAR LAMPIRAN 230720
+				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
+				h.put("lampirans", l.getLampirans(rs.getString("ID_HTA")));
+				
 			    System.out.println(h);
 			   // h.put("alamathta2","hta 2");
 			    i = i+1;
@@ -11646,6 +11650,10 @@ public void deleteHtaamSenarai(String idDokumen, String uid, String id_permohona
 				h.put("poskod", rs.getString("POSKOD_HTA") == null ? "" : rs.getString("POSKOD_HTA"));
 				h.put("jenis_penting",rs.getString("JENIS_KEPENTINGAN") == null ? "" : rs.getString("JENIS_KEPENTINGAN"));
 				h.put("ketegori_hta",rs.getString("FLAG_KATEGORI_HTA") == null ? "" : rs.getString("FLAG_KATEGORI_HTA"));
+				
+				//SYAFIQAH ADD UNTUK PAPAR LAMPIRAN 230720
+				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
+				h.put("lampirans", l.getLampirans(rs.getString("ID_HTA")));
 
 				listHTAX.addElement(h);
 			}

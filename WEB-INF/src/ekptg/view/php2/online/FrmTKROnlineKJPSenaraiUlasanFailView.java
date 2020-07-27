@@ -32,22 +32,21 @@ import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.online.FrmTKRHeaderData;
 import ekptg.model.php2.FrmTKRJabatanTeknikalData;
-import ekptg.model.php2.online.FrmTKROnlineKJPSenaraiFailData;
+import ekptg.model.php2.online.FrmTKROnlineKJPSenaraiUlasanFailData;
 import ekptg.model.php2.utiliti.LampiranBean;
 import ekptg.model.utils.lampiran.ILampiran;
 
-public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
+public class FrmTKROnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	private String readonly = "disabled class = \"disabled\"";
-	static Logger myLog = Logger.getLogger(FrmTKROnlineKJPSenaraiFailView.class);
+	static Logger myLog = Logger.getLogger(FrmTKROnlineKJPSenaraiUlasanFailView.class);
 	private ILampiran iLampiran = null;
 
 	FrmTKRHeaderData logicHeader = new FrmTKRHeaderData();
 	FrmTKRJabatanTeknikalData logicJabatanTeknikal = new FrmTKRJabatanTeknikalData();
-	FrmTKROnlineKJPSenaraiFailData logic = new FrmTKROnlineKJPSenaraiFailData();
-	private String templateDir = "app/php2/online/ulasanKJP/tkr";
-	private String idSuburusan = "33";
+	FrmTKROnlineKJPSenaraiUlasanFailData logic = new FrmTKROnlineKJPSenaraiUlasanFailData();
+	private String templateDir = "app/php2/online/ulasanKJP/tkr/ulasan";
 
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -117,7 +116,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		Vector senaraiSemak = null;
 		Vector senaraiLampiran = null;
 		Vector beanMaklumatTukarguna = null;
-		Vector beanHeader = null;
 
 		// GET DROPDOWN PARAM
 		/*String idKategoriPemohon = getParam("socKategoriPemohon");
@@ -132,10 +130,10 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		if (idUrusan == null || idUrusan.trim().length() == 0) {
 			idUrusan = "99999";
 		}
-		/*String idSuburusan = getParam("socSuburusan");
+		String idSuburusan = getParam("socSuburusan");
 		if (idSuburusan == null || idSuburusan.trim().length() == 0) {
 			idSuburusan = "99999";
-		}*/
+		}
 		String idSubsuburusan = getParam("socSubsuburusan");
 		if (idSubsuburusan == null || idSubsuburusan.trim().length() == 0) {
 			idSubsuburusan = "99999";
@@ -216,42 +214,21 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		Date currentDate = new Date();
 		FrmSemakan semak = null;
 
-
-		myLog.info("idSuburusan ros >>>> "+idSuburusan);
 		// HITBUTTON
-		if (postDB) {
+		/*if (postDB) {
 			if ("daftarBaru".equals(hitButton)) {
 				idFail = logic.daftarBaru(idUrusan,idSuburusan,idSubsuburusan,idJenisTanah, getParam("tarikhTerima"), getParam("tarikhSurat"),
 						getParam("txtNoRujukanSurat"), getParam("txtPerkara"), "3", idKementerian, idAgensi,
 						idHakmilikAgensi, idLuasKegunaan,
 						getParam("txtTujuanKegunaan"), getParam("idKementerianTanah"), getParam("idNegeriTanah"),
 						getParam("idLuasTanah"), getParam("luasTanah"), idHakmilikSementara, session);
-
-				/*myLog.info("if Fail ros >> "+idFail);
-				myLog.info("id Permohonan >>>> "+idPermohonan);
-
-				Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
-				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",idSuburusan,"=");
-				subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
-				subUrusanStatusFailN.setAktif("1");
-				subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
-				subUrusanStatusFailN.setIdFail(Long.parseLong(idFail));
-				subUrusanStatusFailN.setIdPermohonan(Long.parseLong(idPermohonan));
-
-				HTPStatusBean sb = new HTPStatusBean();
-				sb.simpanStatusAktif(subUrusanStatusFailN);*/
-
 			}
 			if("doSimpanSenaraiSemak".equals(hitButton)){
 				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"),
 						session);
 			}
-			//SENARAI SEMAK
 			if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
 	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
-	    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
-
-	        		//String[] cbsemaks = this.request.getParameterValues("cbsemaks");
 	    			FrmSemakan frmSemak = new FrmSemakan();
 	    			frmSemak.semakanHapusByPermohonan(idPermohonan);
 	    			if (cbsemaks != null) {
@@ -259,12 +236,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
 	    				}
 	    			}
-        		/*String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
-    			logic.updateSenaraiSemak(idPermohonan,semaks,session);*/
         	}
 			if ("doHantarEmel".equals(hitButton)){
-				myLog.info("id Permohonan ros 1>>>> "+idPermohonan);
-
 				if (logic.getBeanMaklumatPermohonan().size() != 0){
 					Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
 					idUrusan = (String) hashPermohonan.get("idUrusan");
@@ -272,27 +245,22 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					idSubsuburusan = (String) hashPermohonan.get("idTujuan");
 					idPermohonan= (String) hashPermohonan.get("idPermohonan");
 				}
-				myLog.info("id Permohonan ros 2>>>> "+idPermohonan);
 				if (logic.checkMaklumatPywLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat tukar guna yang belum lengkap.')\"");
 				} else {
 					logic.updatePermohonanEmel(idFail,idPermohonan,session);
 				}
 			}
-		}
+		}*/
 
-
-		//myLog.info("actionTukarguna="+actionTukarguna);
 		myLog.info("submit="+submit);
 		myLog.info("submit2="+submit2);
 		myLog.info("hitButton="+hitButton);
 		this.context.put("errorPeganganHakmilik", "");
-		
-		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("onlineAttach", "paparLampiran", "idDokumen",session,"tkr"));
 
 		try {
 
-			if ("refreshDokumenMuatNaik".equals(submit)) {
+			if ("refreshDokumenMuatNaik".equals(submit)) {//ros guna nie
 
 				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
@@ -304,17 +272,16 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				vm = "/maklumatUlasan.jsp";
 
-			} else if ("muatNaikDokumen".equals(submit)) {
+			} else if ("muatNaikDokumen".equals(submit)) {//ros guna nie
 
 				logic.hapusDokumen(idUlasanTeknikal);
 				uploadFiles(idUlasanTeknikal, session);
 
 				vm = "/refreshDokumenMuatNaik.jsp";
 
-			} else if ("hantarUlasan".equals(submit)) {
+			} else if ("hantarUlasan".equals(submit)) {//ros guna nie
 				context.remove("flagStatus");
 
-				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				String txtTarikhSurat = getParam("txtTarikhSurat");
 				String txtNoRujukanSurat = getParam("txtNoRujukanSurat");
 				String txtUlasan = getParam("txtUlasan");
@@ -336,10 +303,9 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				vm = "/maklumatUlasan.jsp";
 
-			} else if ("simpanUlasan".equals(submit)) {
+			} else if ("simpanUlasan".equals(submit)) {//ros guna nie
 				context.remove("flagStatus");
 
-				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				String txtTarikhSurat = getParam("txtTarikhSurat");
 				String txtNoRujukanSurat = getParam("txtNoRujukanSurat");
 				String txtUlasan = getParam("txtUlasan");
@@ -361,10 +327,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				vm = "/maklumatUlasan.jsp";
 
-			} else if ("papar".equals(submit2)) {
+			}/* else if ("papar".equals(submit2)) {
 				vm = "/frmTKRKJPDaftarManual.jsp";
-				myLog.info("papar=================");
-				myLog.info("idFail========="+idFail);
 
 				this.context.put("mode", "view");
 				this.context.put("readonly", "readonly");
@@ -482,7 +446,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				context.put("namaJenisTanah", namaJenisTanah);
 				//vm = "/start.jsp";
 
-			} else if ("paparFail".equals(submit)) {
+			}*/ else if ("paparFail".equals(submit)) {//ros guna ni
 				myLog.info("bacaaaa paparFail");
 				vm = "/paparFail.jsp";
 				//TO CLEAR CONTEXT
@@ -514,7 +478,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 
 
-			}else if ("carian".equals(submit)) {
+			}else if ("carian".equals(submit)) { //ros ni guna
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				myLog.info("masuk carian");
 				String findNoFail = getParam("findNoFail");
@@ -579,7 +543,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				vm = "/start.jsp";
 
-			} else if ("kembali".equals(submit)) {
+			}/* else if ("kembali".equals(submit)) {
 				myLog.info("kembali");
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
@@ -620,6 +584,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				vm = "/start.jsp";
 
 			} else if ("seterusnya".equals(submit2)) {
+
 				myLog.info("baca seterusnya");
 				myLog.info("idFail=========" + idFail);
 				// GO TO MAKLUMAT PERMOHONAN
@@ -647,7 +612,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 							Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\""));
 					this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
 
-					//MAKLUMAT HEADER
+					//MAKLUMAT PEMOHON
 					logicHeader = new FrmTKRHeaderData();
 	    			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(userId);
 	    			this.context.put("pemohon", vec.get(0));
@@ -790,8 +755,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 
 
-			} else {
-				myLog.info("masuk else");
+			}*/ else {
+				myLog.info("masuk else"); //ros ni guna
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
