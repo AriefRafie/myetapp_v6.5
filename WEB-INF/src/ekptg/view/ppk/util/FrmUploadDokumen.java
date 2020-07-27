@@ -38,7 +38,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 	    String idHarta = getParam("idHarta");
 	    String flagOnline = getParam("flagOnline");
 	    //lampiran simati/permohonan
-	    idRujukan = getParam("rujukan");
+	    idRujukan = getParam("rujukan"); 
 	    
 	    //VECTOR
 		Vector<Hashtable<String, String>> dokumens = null;

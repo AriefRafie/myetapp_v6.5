@@ -43,7 +43,7 @@ public class LampiranBean {
 			sb.append("<br>");
 
 		}
-		return sb.toString();
+		return sb.toString(); 
 		
 	}
 	
@@ -529,6 +529,7 @@ public class LampiranBean {
 		}	
 		
 	}
+	
 	public String getLampiranSimatiPapar(String idRujukan,String idJenis) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		Vector<Hashtable<String, String>> dokumens = getLampiranSimati(idRujukan,null,idJenis);
@@ -544,10 +545,8 @@ public class LampiranBean {
 			else
 				sb.append(" </a>,");
 			sb.append("<br>");
-
 		}
 		return sb.toString();
-		
 	}
 	
 	public String getLampiranSimatiPapari(String idRujukan,String idJenis) throws Exception {

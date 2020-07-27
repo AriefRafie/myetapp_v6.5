@@ -12,6 +12,8 @@ import ekptg.model.entities.Tblrujdokumen;
 
 public interface ILampiran {	
 	public String javascriptUpload(String jsUpload,String jsPapar
+			,String idDokumen,HttpSession session,String skrin) throws Exception;
+	public String javascriptUpload(String jsUpload,String jsPapar
 			,String idDokumen,HttpSession session) throws Exception;
 	public String getLampirans(String idRujukan,String jenisDokumen,String js) throws Exception;
 	public Tblrujdokumen getLampiran(String iDokumen) throws Exception;

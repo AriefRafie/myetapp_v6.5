@@ -216,7 +216,7 @@ function simpan() {
 		document.${formname}.method="post";
 		//document.${formName}.mode.value ="Simatiview";
 		//document.${formname}.action="?_portal_module=ekptg.view.ppk.FrmPrmhnnStatusPengunaOnline";
-		document.${formname}.action="?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";		
+		document.${formname}.action="?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 		doAjaxCall${formName}("SimpanSemak");
 		document.${formName}.submit();	
 }
