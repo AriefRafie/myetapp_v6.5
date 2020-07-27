@@ -53,6 +53,7 @@ public class LampiranBean implements ILampiran{
 			else
 				sb.append(" </a>,");
 			sb.append("<br>");
+
 		}
 		return sb.toString();
 		
@@ -414,13 +415,9 @@ public class LampiranBean implements ILampiran{
 		sb.append("hWnd.opener=document.window;");
 		sb.append("if (hWnd.focus != null) hWnd.focus();");
 		sb.append("}");
-		
 		Fungsi.setWin400300();
-		if(jsUpload.equals(""))
-			sb.append("function onlineAttach(idPermohonan,idSenarai,idJenisDokumen) {");
-		else
-			sb.append("function "+jsUpload+"(idPermohonan,idSenarai,idJenisDokumen) {");
-	
+
+		sb.append("function onlineAttach(idPermohonan,idSenarai,idJenisDokumen) {");
 		sb.append("param = 'actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
 //		sb.append("param = 'actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
 		sb.append("param += '&rujukan='+idPermohonan+'&jenisdokumen='+idJenisDokumen+'&idsenarai='+idSenarai;");
