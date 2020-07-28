@@ -356,17 +356,40 @@
            	</table>
          </div> -->
          <div class="TabbedPanelsContent">
+
+		<input type="hidden" name="idjawatan" value="$idjawatan" />
+		<input type="hidden" name="statussemasa" value="$statussemasa" />
+		<input type="hidden" name="semakMode" value="$semakMode" />
+		<input type="hidden" name="langkah" value="0" />
+		<input type="hidden" name="buttonSend"  value="$buttonSend"/>
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<td valign="top">
-           	#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
-           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
+           	<input type="checkbox" name="pengesahan" id="pengesahan">
+           	<!-- #if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
+           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td> -->
            	<td>
         	Saya, $!pemohon.get("namaPemohon"), $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
       		</td>
            	<tr>
            	<td colspan=2 align="center">
-           	#if ($userJawatan == '24')
+           	#if($semakMode == "update")
+   			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1"))
+   				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+			#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("2"))
+   				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+
+			#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
+   				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+
+             		#end
+
+             	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
+   		#else
+                 <input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:cetakPengesahan('$!permohonan.idpermohonan');" />
+            		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
+   		#end
+           <!-- 	#if ($userJawatan == '24')
            		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
            		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar Untuk Semakan" onClick="doHantarEmel()"/>
             	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
@@ -374,7 +397,7 @@
             #if ($idStatus !='')
             	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
            		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-            #end
+            #end -->
             #end
             </td>
            	</tr>
@@ -403,6 +426,25 @@
 #end
 </script>
 <script>
+var checker = document.getElementById('pengesahan');
+var sendbtn = document.getElementById('cmdSimpan');
+// when unchecked or checked, run the function
+checker.onchange = function(){
+sendbtn.disabled = true;
+
+if(this.checked){
+   sendbtn.disabled = false;
+} else {
+   sendbtn.disabled = true;
+}
+
+}
+
+function kembali() {
+	document.${formName}.submit2.value = "";
+	document.${formName}.submit();
+}
+
 function doChangeTabUpper(tabId) {
 	document.${formName}.submit2.value = "seterusnya";
 	document.${formName}.selectedTabUpper.value = tabId;
@@ -444,7 +486,7 @@ function doChangePeganganHakmilik1() {
 	doAjaxCall${formName}("doChangePeganganHakmilik1");
 }
 function doBacklist() {
-	document.${formName}.actionPenyewaan.value = "";
+	document.${formName}.submit2.value = "";
 	document.${formName}.submit();
 }
 function validateLuas(elmnt,content,content2) {
@@ -995,7 +1037,7 @@ function doHantarEmel(){
 	if(pengesahan.checked != true){
 		alert('Sila tanda pada checkbox untuk teruskan permohonan. ');
 		return;
-	}
+	}else{}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
@@ -1072,4 +1114,3 @@ function doSimpanKemaskiniSenaraiSemak() {
 	document.${formName}.submit();
 }
 </script>
-$javascriptLampiran
