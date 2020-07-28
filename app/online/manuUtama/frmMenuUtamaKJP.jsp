@@ -228,7 +228,7 @@ function toggle_div(id) {
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_pelepasan</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Pelepasan</li></font>
+																	Ulasan Pelepasan</li></font>
 																</a>
 																<!-- <a href="javascript:pelepasan()" class="help" title="Pelepasan">
 																	<font color="blue"><li>&nbsp;Pelepasan</li></font>
@@ -239,9 +239,9 @@ function toggle_div(id) {
 															<td>
 																<a href="javascript:tukarGuna()" class="help" title="Permohonan Tukar Guna">
 																	<font color="blue"><li>
-																	#if($jumlah_notifikasi_tukarguna > 0)
+																	#if($jumlah_notifikasi_tukarguna1 > 0)
 																	<label style="background-color:blue" align="center" valign="top" >
-																		<b><font color="WHITE"><blink>$jumlah_notifikasi_tukarguna</blink></font></b>
+																		<b><font color="WHITE"><blink>$jumlah_notifikasi_tukarguna1</blink></font></b>
 																	</label>&nbsp;
 																	#end
 																	Permohonan Tukar Guna</li></font>
@@ -270,7 +270,7 @@ function toggle_div(id) {
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penyewaan</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Penyewaan</li></font>
+																	Ulasan Penyewaan</li></font>
 																</a>
 															</td>
 														</tr>
@@ -283,7 +283,7 @@ function toggle_div(id) {
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penawaran</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Penawaran</li></font>
+																	Permohonan Penawaran</li></font>
 																</a>
 															</td>
 														</tr>
