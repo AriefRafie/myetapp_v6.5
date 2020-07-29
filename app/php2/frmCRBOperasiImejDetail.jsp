@@ -32,36 +32,36 @@
 					</tr>
 					#end
 					<tr>
-						<td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-						<td width="28%">Jenis Imej</td>
-						<td width="1%">:</td>
-						<td><select name="socJenisImej" id="socJenisImej"
-											style="width: 275px;" $readonlyPopup class="inputTextClassPopup"
-											onchange="javascript:doChangeJenisImej(this.value)" $disabled>
-							#if ($beanMaklumatImejan.jenisImej == 'SB')
-								<option value="0">SILA PILIH</option>
-								<option value="SB" selected="selected">IMEJ SEBELUM OPERASI</option>
-								<option value="SM">IMEJ SEMASA OPERASI</option>
-								<option value="SL">IMEJ SELEPAS OPERASI</option>
-							#elseif ($beanMaklumatImejan.jenisImej == 'SM')	
-								<option value="0">SILA PILIH</option>
-								<option value="SB">IMEJ SEBELUM OPERASI</option>
-								<option value="SM" selected="selected">IMEJ SEMASA OPERASI</option>
-								<option value="SL">IMEJ SELEPAS OPERASI</option>
-							#elseif ($beanMaklumatImejan.jenisImej == 'SL')	
-								<option value="0">SILA PILIH</option>
-								<option value="SB">IMEJ SEBELUM OPERASI</option>
-								<option value="SM">IMEJ SEMASA OPERASI</option>
-								<option value="SL" selected="selected">IMEJ SELEPAS OPERASI</option>
-							#else
-								<option value="0" selected="selected">SILA PILIH</option>
-								<option value="SB">IMEJ SEBELUM OPERASI</option>
-								<option value="SM">IMEJ SEMASA OPERASI</option>
-								<option value="SL">IMEJ SELEPAS OPERASI</option>
-							#end
-							</select>
-						</td>
-					</tr>
+			          	<td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+			          	<td width="28%">Jenis Imej</td>
+			          	<td width="1%">:</td>
+			          	<td width="70%"><select name="socJenisImej" id="socJenisImej" 
+			          				style="width: 275px;" $readonlyPopup class="inputTextClassPopup"
+			          				$inputTextClassPopup onChange="doChangeJenisImej()" >
+			   			#if ($socJenisImej == 'SB')               
+			              <option value="">SILA PILIH</option>
+						  <option value="SB" selected="selected">IMEJ SEBELUM OPERASI</option>
+					      <option value="SM">IMEJ SEMASA OPERASI</option>
+						  <option value="SL">IMEJ SELEPAS OPERASI</option>
+			    		#elseif ($socJenisImej == 'SM') 
+			              <option value="">SILA PILIH</option>
+						  <option value="SB">IMEJ SEBELUM OPERASI</option>
+						  <option value="SM" selected="selected">IMEJ SEMASA OPERASI</option>
+						  <option value="SL">IMEJ SELEPAS OPERASI</option>
+			   			#elseif ($socJenisImej == 'SL')	
+						  <option value="">SILA PILIH</option>
+						  <option value="SB">IMEJ SEBELUM OPERASI</option>
+						  <option value="SM">IMEJ SEMASA OPERASI</option>
+						  <option value="SL" selected="selected">IMEJ SELEPAS OPERASI</option>
+			   			#else
+			              <option value="" selected="selected">SILA PILIH</option>
+						  <option value="SB">IMEJ SEBELUM OPERASI</option>
+						  <option value="SM">IMEJ SEMASA OPERASI</option>
+						  <option value="SL">IMEJ SELEPAS OPERASI</option>
+						#end            
+			            </select>
+			          </td>
+			        </tr>
 					<tr>
 						<td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end
 						</td>
@@ -97,6 +97,7 @@
 									melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba
 									dengan saiz imej yang lebih kecil.</span></span></td>
 					</tr>
+						
 					#end #if ($modePopup != 'view')
 					<tr>
 						<td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font>:
@@ -107,18 +108,18 @@
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
-						<td>#if ($modePopup == 'new') <input name="cmdSimpan"
-							type="button" value="Simpan"
-							onClick="simpanDokumen('$idLaporanTanah','$idPermohonan')" /> <input
-							name="cmdBatal" type="button" value="Batal"
-							onClick="batalDokumen()" /> #end #if ($modePopup == 'view') <input
-							name="cmdKemaskini" type="button" value="Kemaskini"
-							onClick="kemaskiniDokumen()" /> <input name="cmdHapus"
-							type="button" value="Hapus" onClick="hapusDokumen()">
-							#end #if ($modePopup == 'update') <input
-							name="cmdSimpanKemaskini" type="button" value="Simpan"
-							onClick="simpanKemaskiniDokumen()" /> <input name="cmdBatal"
-							type="button" value="Batal" onClick="batalKemaskiniDokumen()" />
+						<td>
+							#if ($modePopup == 'new') 
+							<input name="cmdSimpan" type="button" value="Simpan" onClick="simpanDokumen('$idLaporanTanah','$idPermohonan')" /> 
+							<input name="cmdBatal" type="button" value="Batal" onClick="batalDokumen()" /> 
+							#end 
+							#if ($modePopup == 'view') 
+							<input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniDokumen()" /> 
+							<input name="cmdHapus" type="button" value="Hapus" onClick="hapusDokumen()">
+							#end 
+							#if ($modePopup == 'update') 
+							<input name="cmdSimpanKemaskini" type="button" value="Simpan" onClick="simpanKemaskiniDokumen()" /> 
+							<input name="cmdBatal" type="button" value="Batal" onClick="batalKemaskiniDokumen()" />
 							#end
 						</td>
 					</tr>
