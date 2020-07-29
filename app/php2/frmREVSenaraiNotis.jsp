@@ -11,28 +11,44 @@
           </td>
         </tr>
         #end
-        <tr class="table_header">
+        <tr class="table_header" align="center">
           <td width="5%" align="center"><strong>Bil</strong></td>
           <td width="25%" ><strong>Jenis Notis</strong></td>
-          <td width="10%" align="center"><strong>Bil. Peringatan</strong></td>
-          <td width="10%" align="center"><strong>Tarikh Notis</strong></td>
-          <td width="10%" align="center"><strong>Tarikh Akhir Notis</strong></td>
-          <td width="10%" align="right"><strong>Kadar Sewa (RM)</strong></td>
-          <td width="10%" align="center"><strong>Jumlah Bulan Tertunggak (Bulan)</strong></td>
-          <td width="10%" align="right"><strong>Jumlah Tunggakan (RM)</strong></td>
+          <td width="10%"><strong>Bil. Peringatan</strong></td>
+          <td width="10%"><strong>Tarikh Transaksi</strong></td>
+          <td width="10%"><strong>Tarikh Akhir Notis</strong></td>
+          <td width="10%"><strong>Kadar Sewa (RM)</strong></td>
+          <td width="10%"><strong>Jumlah Bulan Tertunggak (Bulan)</strong></td>
+          <td width="10%"><strong>Jumlah Tunggakan (RM)</strong></td>
+          <td width="10%"><strong>Status</strong></td>
           <td width="5%">&nbsp;</td>
           <td width="5%">&nbsp;</td>
         </tr>
         #set ($list = "")
         #set ( $count = 0 )
         #if ($listNotis.size() > 0)
+        #if ($listNotis.size() == '1')
+	          #set( $statusP = 'AKTIF')
+	        	#set( $statusD = 'TIDAK AKTIF')
+	        	#set( $statusT = 'TIDAK AKTIF')
+	    #end
+          #if ($listNotis.size()  == '2')
+          		#set( $statusP = 'TIDAK AKTIF')
+        		#set( $statusD = 'AKTIF')
+	        	#set( $statusT = 'TIDAK AKTIF')
+	    #end
+        #if ($listNotis.size()  == '3')
+	          	#set( $statusP = 'TIDAK AKTIF')
+	        	#set( $statusD = 'TIDAK AKTIF')
+	        	#set( $statusT = 'AKTIF')
+        #end
         #foreach ($list in $listNotis)
         #set ( $count = $count + 1 )
         #if ($count == '')
         #set( $row = "row1" )
         #elseif (($count % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
         <tr>
@@ -54,6 +70,17 @@
           <td class="$row" align="right">$list.kadarSewa</td>
           <td class="$row" align="center">$list.bulanTunggakan</td>
           <td class="$row" align="right">$list.jumlahTunggakan</td>
+          <td class="$row"  align="center">
+
+          #if ($list.idJenisNotis == '1' && $list.bilPeringatan == '1')
+	          $statusP
+          #elseif ($list.idJenisNotis == '1' && $list.bilPeringatan == '2')
+         	  $statusD
+          #elseif ($list.idJenisNotis == '1' && $list.bilPeringatan == '3')
+	          $statusT
+          #end
+
+          </td>
           <td class="$row" align="center">
           #if ($list.idJenisNotis == '1')
           <a href="#" class="style2" onClick="javascript:cetakSuratTuntutanTunggakanSewa('$list.idNotis')"><img border="0" src="../img/print.gif"/></a>
