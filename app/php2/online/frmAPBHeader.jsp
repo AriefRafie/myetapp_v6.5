@@ -8,6 +8,7 @@
     #set($idStatus = $beanHeader.idStatus) 
     #set($status = $beanHeader.status)    
     #set($noFail = $beanHeader.noFail)
+    #set($noFailLama = $beanHeader.noFailLama)
     #set($tujuanPengambilan = $beanHeader.tujuanPengambilan)
     #end
     <td width="50%" valign="top" ><fieldset>
@@ -17,6 +18,11 @@
           <td width="30%">No Permohonan </td>
           <td width="1%">:</td>
           <td ><font color="blue">$noPermohonan</font></td>
+        </tr>
+         <tr>
+          <td width="30%">No Fail Lama </td>
+          <td width="1%">:</td>
+          <td ><font color="blue">$noFailLama</font></td>
         </tr>
         <tr>
           <td width="30%">No Fail </td>

@@ -90,7 +90,6 @@ public class PHPUtilData {
 	public static Vector<Tblphprujjenistujuan> getJenistujuanAPB() throws Exception { //yati tambah 24/7/2020
 		Db db = null;
 		String sql = "Select id_JenisTujuan, upper(kod_JenisTujuan) as kod_JenisTujuan, upper(keterangan) as keterangan from tblphprujjenistujuan order by id_JenisTujuan asc";
-		myLogger.info("sql :"+sql);
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();

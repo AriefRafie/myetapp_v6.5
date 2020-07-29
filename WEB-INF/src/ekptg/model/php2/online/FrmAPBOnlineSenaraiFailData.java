@@ -54,7 +54,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	public String daftarBaru(String idKaitanTujuan, String idJenistujuan, String idJenisLesen, String tujuanPengambilan, String tempoh,
 			String pengalaman, String idNegeri, String lokasi,String luas, String idLuas, String idJenisPengenalanIndividu, 
 			String idKategoriIndividu, String idKategoriPemohon, String idJantina, String idBangsa, String idBandar, 
-			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, HttpSession session) throws Exception {
+			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, String idPermohonanLama, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -173,6 +173,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("LOKASI_PERMOHONAN", lokasi);
 			r.add("ID_JENISPERMOHONAN",idJenisPermohonan);
 			r.add("ID_JENIS_LESEN",idJenisLesen);
+			r.add("ID_PERMOHONANLAMA",idPermohonanLama);
 			r.add("ID_NEGERI_PERAIRAN", idNegeri);
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -319,7 +320,8 @@ public void carianFail(String noFail,String noPermohonan, String tarikhPermohona
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, F.TUJUAN_PENGAMBILAN, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN, B.NO_PERMOHONAN, C.ID_PEMOHON "
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, F.TUJUAN_PENGAMBILAN, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN, B.NO_PERMOHONAN, C.ID_PEMOHON, "
+				+ " CASE WHEN F.ID_JENISPERMOHONAN = '2' THEN 'PEMBAHARUAN LESEN' ELSE 'PERMOHONAN BARU' END AS JENISPERMOHONAN, F.ID_PERMOHONANLAMA "
 				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLPHPPMOHONNJDUALPERTAMA F"
 				+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.FLAG_JENIS_FAIL = '4' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS(+)"
 				+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = F.ID_PERMOHONAN"
@@ -352,8 +354,10 @@ public void carianFail(String noFail,String noPermohonan, String tarikhPermohona
 				h.put("bil", bil);
 				h.put("idFail", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 				h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
+				h.put("idPermohonanLama", rs.getString("ID_PERMOHONANLAMA") == null ? "" : rs.getString("ID_PERMOHONANLAMA"));
 				h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
+				h.put("jenispermohonan", rs.getString("JENISPERMOHONAN") == null ? "" : rs.getString("JENISPERMOHONAN").toUpperCase());
 				h.put("tarikhPermohonan", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("namaPemohon",rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
 				h.put("idPemohon", rs.getString("ID_PEMOHON") == null ? "" : rs.getString("ID_PEMOHON"));
@@ -389,8 +393,16 @@ public void setMaklumatHeader(String idFail) throws Exception {
 		Hashtable h;
 
 		sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.TARIKH_TERIMA, B.NO_PERMOHONAN, B.TUJUAN,B.FLAG_AKTIF, C.ID_PEMOHON, C.ID_KATEGORIPEMOHON, C.NAMA,B.NO_RAYUAN,"
-			+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, C.NO_TEL, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, F.FLAG_SAMBUNGAN, F.TUJUAN_PENGAMBILAN"
-			+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, TBLPHPPMOHONNJDUALPERTAMA F"
+			+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, C.NO_TEL, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, F.FLAG_SAMBUNGAN, F.TUJUAN_PENGAMBILAN,"
+			+ " (SELECT F.NO_FAIL FROM TBLPFDFAIL F, TBLPERMOHONAN P "
+			+ " WHERE F.ID_FAIL = P.ID_FAIL "
+			+ " AND P.ID_PERMOHONAN = (SELECT ID_PERMOHONANLAMA FROM TBLPFDFAIL F, TBLPERMOHONAN P, TBLPHPPMOHONNJDUALPERTAMA JP "
+			+ " WHERE F.ID_FAIL = '" + idFail + "' "
+			+ " AND F.ID_FAIL = P.ID_FAIL "
+			+ " AND P.ID_PERMOHONAN = JP.ID_PERMOHONAN ) ) NO_FAILLAMA"
+			+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, TBLPHPPMOHONNJDUALPERTAMA F,"
+			+ " (SELECT F.NO_FAIL FROM TBLPFDFAIL F, TBLPERMOHONAN P, " 
+			+ " TBLPHPPMOHONNJDUALPERTAMA JP WHERE F.ID_FAIL = P.ID_FAIL AND P.ID_PERMOHONAN = JP.ID_PERMOHONANLAMA AND JP.ID_PERMOHONAN = '99201007342') G "
 			+ " WHERE B.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' " 
 			+ " AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND "
 			+ " C.ID_NEGERITETAP = D.ID_NEGERI AND B.ID_STATUS = E.ID_STATUS(+) AND A.ID_FAIL = '" + idFail + "'";
@@ -401,6 +413,7 @@ public void setMaklumatHeader(String idFail) throws Exception {
 			h = new Hashtable();
 			h.put("idFail", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 			h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
+			h.put("noFailLama", rs.getString("NO_FAILLAMA") == null ? "" : rs.getString("NO_FAILLAMA").toUpperCase());
 			h.put("noRayuan", rs.getString("NO_RAYUAN") == null ? "0" : rs.getString("NO_RAYUAN"));
 			h.put("urusan", "AKTA PELANTAR BENUA");
 			h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN").toUpperCase());
@@ -797,6 +810,34 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 	}
 	
 	//yati tambah baru
+			public String getNoFailPermohonanLama(String idPermohonanLama)
+					throws Exception {
+				Db db = null;
+				String sql = "";
+
+				try {
+					db = new Db();
+					Statement stmt = db.getStatement();
+
+					sql = " SELECT ID_PERMOHONANLAMA FROM TBLPHPPMOHONNJDUALPERTAMA WHERE ID_PERMOHONANLAMA = '" +idPermohonanLama+ "'" ;
+
+					ResultSet rs = stmt.executeQuery(sql);
+					myLog.info("sql id. permohonan lama: "+sql);
+					if (rs.next()) {
+						return rs.getString("ID_PERMOHONANLAMA") == null ? "" : rs
+								.getString("ID_PERMOHONANLAMA").toString();
+
+					} else {
+						return "";
+					}
+
+				} finally {
+					if (db != null)
+						db.close();
+				}
+			}
+	
+	//yati tambah baru
 		public String getNoFailPermohonan(String idFail)
 				throws Exception {
 			Db db = null;
@@ -844,6 +885,35 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			if (rs.next()) {
 				return rs.getString("ID_FAIL") == null ? "" : rs
 						.getString("ID_FAIL").toString();
+
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getIdPermohonanByNoFail(String idFail)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_PERMOHONAN FROM TBLPERMOHONAN WHERE " 
+						+ "ID_FAIL  = '"
+						+ idFail + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			//myLog.info("sql id. fail lama: "+sql);
+			if (rs.next()) {
+				return rs.getString("ID_PERMOHONAN") == null ? "" : rs
+						.getString("ID_PERMOHONAN").toString();
 
 			} else {
 				return "";
@@ -1749,8 +1819,13 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("A.ID_FAIL", r.unquote("C.ID_FAIL"));
 			r.add("C.ID_PEMOHON", r.unquote("D.ID_PEMOHON"));
 			r.add("B.ID_PERMOHONAN", idPermohonan);
+			r.add("A.ID_FAIL",r.unquote("E.ID_FAIL(+)"));
+			r.add("E.NO_FAIL");
+			
 
-			sql = r.getSQLSelect("TBLPFDFAIL A,TBLPHPPMOHONNJDUALPERTAMA B, TBLPERMOHONAN C,TBLPHPPEMOHON D ");
+			sql = r.getSQLSelect("TBLPFDFAIL A,TBLPHPPMOHONNJDUALPERTAMA B, TBLPERMOHONAN C,TBLPHPPEMOHON D, (SELECT F.ID_FAIL,F.NO_FAIL FROM TBLPFDFAIL F, TBLPERMOHONAN P, "
+					+ " TBLPHPPMOHONNJDUALPERTAMA JP WHERE F.ID_FAIL = P.ID_FAIL AND P.ID_PERMOHONAN = JP.ID_PERMOHONANLAMA AND JP.ID_PERMOHONAN = '" + idPermohonan + "') E ");
+			myLog.info("sql set maklumat permohonan : "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -1765,6 +1840,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? "" : sdf.format(rs.getDate("TARIKH_SURAT")));
 				h.put("perkara", rs.getString("TUJUAN") == null ? "" : rs.getString("TUJUAN"));
+				h.put("noFailLama", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
 				h.put("tujuanPengambilan", rs.getString("TUJUAN_PENGAMBILAN") == null ? "" : rs.getString("TUJUAN_PENGAMBILAN"));
 				h.put("tempoh",rs.getString("TEMPOH_DIPOHON") == null ? "" : rs.getString("TEMPOH_DIPOHON"));
 				h.put("idTempoh",rs.getString("ID_TEMPOH") == null ? "99999" : rs.getString("ID_TEMPOH"));

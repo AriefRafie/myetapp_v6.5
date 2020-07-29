@@ -178,7 +178,7 @@ public class FrmAPBHeaderData {
 					  " USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
 					  " WHERE U.USER_ID = UO.USER_ID AND UO.ID_BANDAR = RB.ID_BANDAR(+) AND UO.ID_NEGERI = RN.ID_NEGERI" +
 					  " AND U.USER_ID = '" + idUser + "'";
-			log.info("header:sql="+sql);
+
 			ResultSet rs = stmt.executeQuery(sql);
 	
 			if (rs.next()) {

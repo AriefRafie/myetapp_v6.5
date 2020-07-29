@@ -11,8 +11,8 @@
 </style>
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
-  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+  <input name="idFail" type="text" id="idFail" value="$idFail"/>
+  <input name="idPermohonan" type="text" id="idPermohonan" value="$idPermohonan"/>
   <input name="idPemohon" type="hidden" id="idPemohon" value="$idPemohon"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idPengarah" type="hidden" id="idPengarah" value="$idPengarah"/>
