@@ -553,7 +553,6 @@ function simpanDokumen(idLaporanTanah,idPermohonan) {
  	var catatanImej = document.${formName}.txtCatatanImej.value ;
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
-	alert(jenisImej);
 	
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmCRBOperasiPenguatkuasaanView&hitButton=simpanDokumen&namaImej="+namaImej+"&catatanImej="+catatanImej+"&jenisImej="+jenisImej+"&idLaporanTanah="+idLaporanTanah+"&idPermohonan="+idPermohonan+"&selectedTabUpper=0&selectedTabLower=2&actionCRB=viewLaporanOperasi"+dopost;
 	document.${formName}.method="post";

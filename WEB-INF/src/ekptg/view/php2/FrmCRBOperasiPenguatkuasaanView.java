@@ -74,7 +74,8 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		String idAgensiTanah = getParam("idAgensiTanah");
 		String flagStatus = getParam("flagStatus");
 		String flagAktif = getParam("flagAktif");
-		String flagSuratKe = getParam("idSuratKe");		
+		String flagSuratKe = getParam("idSuratKe");	
+		String jenisImejan = getParam("socJenisImej");
 		String idHakmilik = "";
 
 		this.context.put("completed", false);
@@ -357,12 +358,15 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 
 							// MAKLUMAT DOKUMEN
 							beanMaklumatImejan = new Vector();
-							logic.setMaklumatImej(idDokumen);
-							beanMaklumatImejan = logic.getBeanMaklumatImejan();
-							Hashtable hashMaklumatImejanDB = (Hashtable) logic.getBeanMaklumatImejan().get(0);
+							//logic.setMaklumatImej(idDokumen);
+							//beanMaklumatImejan = logic.getBeanMaklumatImejan();
+							//Hashtable hashMaklumatImejanDB = (Hashtable) logic.getBeanMaklumatImejan().get(0);
 							Hashtable hashMaklumatImejan = new Hashtable();
+							hashMaklumatImejan.put("namaImej", getParam("txtNamaImej"));
+							hashMaklumatImejan.put("catatanImej", getParam("txtCatatanImej"));
+							hashMaklumatImejan.put("jenisImej", getParam("socJenisImej"));
 							beanMaklumatImejan.addElement(hashMaklumatImejan);
-							this.context.put("BeanMaklumatImejan", beanMaklumatImejan);
+							this.context.put("BeanMaklumatImejan", beanMaklumatImejan);			
 
 						} else if ("view".equals(modePopup)) {
 
@@ -374,6 +378,12 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 							logic.setMaklumatImej(idDokumen);
 							beanMaklumatImejan = logic.getBeanMaklumatImejan();
 							this.context.put("BeanMaklumatImejan", beanMaklumatImejan);
+							
+							if (beanMaklumatImejan.size() != 0) {
+								Hashtable hashMaklumatImejanDB = (Hashtable) logic.getBeanMaklumatImejan().get(0);
+								jenisImejan = (String) hashMaklumatImejanDB.get("jenisImej"); 
+							}
+							
 						}
 					}
 
@@ -664,6 +674,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		this.context.put("flagAktif", flagAktif);
 		this.context.put("idSuratKe", flagSuratKe);
 		this.context.put("actionCRB", actionCRB);
+		this.context.put("socJenisImej", jenisImejan);
 
 		this.context.put("flagOpenDetail", flagOpenDetail);
 		this.context.put("status", status.toUpperCase());

@@ -30,6 +30,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td><strong>Nama Imej</strong></td>
+          <td><strong>Jenis Imej</strong></td>
         </tr>
         #set ($senaraiImejan = "")
         #if ($SenaraiImejan.size() > 0)
@@ -44,6 +45,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
         <tr>
           <td class="$row" align="center">$senaraiImejan.bil</td>
           <td class="$row"><a href="javascript:paparDokumen($senaraiImejan.idDokumen)" class="style2">$senaraiImejan.namaDokumen</a></td>
+          <td class="$row">$senaraiImejan.jenisImej</td>
         </tr>
         #end
         #else
