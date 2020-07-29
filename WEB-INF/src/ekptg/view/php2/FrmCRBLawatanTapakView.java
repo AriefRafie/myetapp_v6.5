@@ -21,6 +21,7 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.model.php2.FrmCRBHeaderData;
 import ekptg.model.php2.FrmCRBLawatanTapakData;
+import ekptg.model.utils.emel.EmailConfig;
 
 public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 
@@ -28,6 +29,11 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 
 	FrmCRBHeaderData logicHeader = new FrmCRBHeaderData();
 	FrmCRBLawatanTapakData logic = new FrmCRBLawatanTapakData();
+	EmailConfig email = new EmailConfig();
+	
+	String userId = null;
+	String userRole = null;
+	String idNegeriUser = null;
 
 	// @Override
 	public String doTemplate2() throws Exception {
@@ -39,6 +45,15 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 		if (doPost.equals("true")) {
 			postDB = true;
 		}
+		
+		userId = (String)session.getAttribute("_ekptg_user_id");
+		userRole = (String)session.getAttribute("myrole");
+		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
+			
+        //SET VALUE USER
+	    this.context.put("userId", userId);
+	   	this.context.put("userRole", userRole);
+	  	this.context.put("idNegeriUser", idNegeriUser);
 
 		// GET DEFAULT PARAM
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
@@ -143,6 +158,8 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 			if ("simpanMaklumatKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJT(idPermohonan, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logic.sendEmail(idPermohonan, idPejabat, session);
+        		session.setAttribute("MSG", "Emel telah dihantar kepada JKPTG berkaitan");
     		}
         	if ("simpanMaklumatUlanganKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJT(idUlasanTeknikal, idPermohonan, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
