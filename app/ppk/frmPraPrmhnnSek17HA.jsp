@@ -11,6 +11,7 @@
 -->
 <style type="text/css">
 <!--
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -1857,9 +1858,10 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
 
 </tr>
 <tr class="table_header">
-<td width="5%"><div align="center">Bil</div></td>
-<td width="70%">Jenis Harta Alih</td>
+<td width="3%"><div align="center">Bil</div></td>
+<td width="40%">Jenis Harta Alih</td>
 <td width="25%">No Rujukan UPT / No Daftar / No Akaun / No Ahli</td>
+<td width="32%">Dokumen</td>
 </tr>
 
 
@@ -1994,12 +1996,38 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
 <td class="row1"><div align="center">$cnt</div></td>
 <td class="row1">  <div align="left" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:edit_hartaalih('$id3')" class="style4"> $list.Keterangan <span class="style10">$cat</span></a></div> </td>
 <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$list.noDaftar</div></td>
+<td class="row1">  
+	#if($id_Status != "169" 
+        && $id_Status != "21" 
+		&& $id_Status != "64" 
+        && $id_Status != "163" 
+        && $id_Status != "164" 
+        && $id_Status != "165")	 
+		<a href = "javascript:lampiranHartaHA('$list.id_Ha','$!paramOnline');">
+			<img border="0" src="../img/plus.gif" width="20" height="15"/>
+		</a><br>
+	#end
+		$list.lampirans
+</td>
 </tr>
 #else
 <tr bgcolor="white">
 <td class="row2"><div align="center">$cnt</div></td>
 <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:edit_hartaalih('$id3')" class="style4">$list.Keterangan  <span class="style10">$cat</span></a></div>  </td>
 <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$list.noDaftar</div></td>
+<td class="row1">  
+	#if($id_Status != "169" 
+        && $id_Status != "21" 
+		&& $id_Status != "64" 
+        && $id_Status != "163" 
+        && $id_Status != "164" 
+        && $id_Status != "165")	 
+		<a href = "javascript:lampiranHartaHA('$list.id_Ha','$!paramOnline');">
+			<img border="0" src="../img/plus.gif" width="20" height="15"/>
+		</a><br>
+	#end
+		$list.lampirans
+</td>
 </tr>
 
 #end
@@ -3052,6 +3080,33 @@ function samakan()
 document.f1.txtNilaiTarikhMati.value=document.f1.txtNilaiTarikhMohon.value
  
                  
+}
+
+function lampiranHartaHA(idHarta) {
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHA&actionPopup=paparHA&idHarta="+idHarta+"&flagOnline=$!flagOnline";
+    //
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Cetakan';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+    //var top = (screen.height/2)-(h/2);
+    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+
+}
+
+function lampiranHartaPapar(id_){
+	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=ha";
+	//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=ha";
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 
 

@@ -51,10 +51,10 @@ public class FrmAPBOnlineSenaraiFailData {
 	private Vector<Hashtable<String,String>> beanMaklumatPejabat = null;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
-	public String daftarBaru(String idKaitanTujuan, String tujuanPengambilan, String tempoh,
+	public String daftarBaru(String idKaitanTujuan, String idJenistujuan, String idJenisLesen, String tujuanPengambilan, String tempoh,
 			String pengalaman, String idNegeri, String lokasi,String luas, String idLuas, String idJenisPengenalanIndividu, 
 			String idKategoriIndividu, String idKategoriPemohon, String idJantina, String idBangsa, String idBandar, 
-			String idNegeriSykt, String idBandarSykt, HttpSession session) throws Exception {
+			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -64,7 +64,7 @@ public class FrmAPBOnlineSenaraiFailData {
 		String idUrusan = "9";
 		String namaUser = "";
 		String emelUser = "";	
-		
+		myLog.info("idJenisLesen : "+idJenisLesen);
 		try {
 			db = new Db();
 			conn = db.getConnection();
@@ -75,6 +75,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			//TBLPFDFAIL
 			long idFail = DB.getNextID("TBLPFDFAIL_SEQ");
 			idFailString = String.valueOf(idFail);
+			myLog.info("idFail : "+idFailString);
 			r.add("ID_FAIL", idFail);
 			r.add("ID_URUSAN", "9");
 			r.add("ID_SUBURUSAN", "57");
@@ -96,7 +97,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_KATEGORIPEMOHON", "2");
 			sql = "SELECT A.USER_NAME,B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_NEGERI,B.NO_FAX, B.NO_HP," 
-				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL"
+				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.ID_BANDAR"
 				+ " FROM USERS A, USERS_ONLINE B"
 				+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
 			ResultSet rsUserOnline = stmt.executeQuery(sql);
@@ -119,7 +120,7 @@ public class FrmAPBOnlineSenaraiFailData {
 					emelUser = rsUserOnline.getString("EMEL");
 				}
 				r.add("EMEL", emelUser);
-				r.add("ID_BANDARTETAP","99999");
+				r.add("ID_BANDARTETAP",rsUserOnline.getString("ID_BANDAR") == null ? "99999" : rsUserOnline.getString("ID_BANDAR"));
 			}		
 			
 			r.add("ID_MASUK", userId);
@@ -131,6 +132,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			//TBLPERMOHONAN
 			r = new SQLRenderer();
 			long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
+			myLog.info("idPermohonan : "+idPermohonan);
 			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_JKPTG", "1");
@@ -159,7 +161,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("ID_PHPPMOHONNJDUALPERTAMA", id);
 			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("FLAG_RAYUAN", 0);
-			r.add("ID_JENISTUJUAN",3);
+			r.add("ID_JENISTUJUAN",idJenistujuan);
 			r.add("ID_KAITANTUJUAN", idKaitanTujuan);
 			r.add("TUJUAN_PENGAMBILAN", tujuanPengambilan);
 			r.add("TEMPOH_DIPOHON", tempoh);
@@ -169,11 +171,14 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("LUAS_DIPOHON", luas);
 			r.add("ID_UNITLUAS", idLuas);
 			r.add("LOKASI_PERMOHONAN", lokasi);
+			r.add("ID_JENISPERMOHONAN",idJenisPermohonan);
+			r.add("ID_JENIS_LESEN",idJenisLesen);
 			r.add("ID_NEGERI_PERAIRAN", idNegeri);
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPPMOHONNJDUALPERTAMA");
+			myLog.info("sql -- "+sql);
 			stmt.executeUpdate(sql);
 						
 			conn.commit();
@@ -254,6 +259,9 @@ public class FrmAPBOnlineSenaraiFailData {
 
 			r.add("C.NO_PERMOHONAN");
 			r.add("B.ID_KAITANTUJUAN");
+			r.add("B.ID_JENISTUJUAN");
+			r.add("B.ID_JENIS_LESEN");
+			r.add("B.ID_JENISPERMOHONAN");
 			r.add("B.TUJUAN_PENGAMBILAN");
 			r.add("B.TEMPOH_DIPOHON");
 			r.add("B.ID_TEMPOH");
@@ -268,6 +276,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("A.ID_FAIL", idFail);
 
 			sql = r.getSQLSelect("TBLPFDFAIL A, TBLPHPPMOHONNJDUALPERTAMA B, TBLPERMOHONAN C");
+			myLog.info("ID PERMOHONAN :" +sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -278,6 +287,9 @@ public class FrmAPBOnlineSenaraiFailData {
 				h.put("noFail",rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
 				h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN").toUpperCase());
 				h.put("idKaitanTujuan",rs.getString("ID_KAITANTUJUAN") == null ? "99999" : rs.getString("ID_KAITANTUJUAN"));
+				h.put("idJenistujuan",rs.getString("ID_JENISTUJUAN") == null ? "99999" : rs.getString("ID_JENISTUJUAN"));
+				h.put("idJenisPermohonan",rs.getString("ID_JENISPERMOHONAN") == null ? "" : rs.getString("ID_JENISPERMOHONAN"));
+				h.put("idJenisLesen",rs.getString("ID_JENIS_LESEN") == null ? "" : rs.getString("ID_JENIS_LESEN"));
 				h.put("tujuanPengambilan", rs.getString("TUJUAN_PENGAMBILAN") == null ? "" : rs.getString("TUJUAN_PENGAMBILAN"));
 				h.put("tempoh",rs.getString("TEMPOH_DIPOHON") == null ? "" : rs.getString("TEMPOH_DIPOHON"));
 				h.put("idTempoh",rs.getString("ID_TEMPOH") == null ? "99999" : rs.getString("ID_TEMPOH"));
@@ -754,6 +766,65 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				db.close();
 		}
 	}
+	//yati tambah baru
+	public String getNoFail(String idFail)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT NO_FAIL FROM TBLPFDFAIL WHERE ID_SUBURUSAN = '57'" 
+					+ "AND ID_URUSAN = '9' AND ID_FAIL  = '"
+					+ idFail + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("sql no. fail lama: "+sql);
+			if (rs.next()) {
+				return rs.getString("NO_FAIL") == null ? "" : rs
+						.getString("NO_FAIL").toString();
+
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	//yati tambah baru
+		public String getNoFailPermohonan(String idFail)
+				throws Exception {
+			Db db = null;
+			String sql = "";
+
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT NO_PERMOHONAN FROM TBLPERMOHONAN WHERE " 
+						+ "ID_FAIL  = '"
+						+ idFail + "'";
+
+				ResultSet rs = stmt.executeQuery(sql);
+				myLog.info("sql no. permohonan lama: "+sql);
+				if (rs.next()) {
+					return rs.getString("NO_PERMOHONAN") == null ? "" : rs
+							.getString("NO_PERMOHONAN").toString();
+
+				} else {
+					return "";
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
 	
 	public String getIdFailByNoFail(String noFail)
 			throws Exception {
@@ -769,7 +840,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					+ noFail.trim().toUpperCase() + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
-
+			//myLog.info("sql id. fail lama: "+sql);
 			if (rs.next()) {
 				return rs.getString("ID_FAIL") == null ? "" : rs
 						.getString("ID_FAIL").toString();
@@ -1656,6 +1727,9 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			SQLRenderer r = new SQLRenderer();
 
 			r.add("B.ID_KAITANTUJUAN");
+			r.add("B.ID_JENISTUJUAN");
+			r.add("B.ID_JENIS_LESEN");
+			r.add("B.ID_JENISPERMOHONAN");
 			r.add("B.TUJUAN_PENGAMBILAN");
 			r.add("B.TEMPOH_DIPOHON");
 			r.add("B.ID_TEMPOH");
@@ -1685,6 +1759,9 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("idKaitanTujuan",rs.getString("ID_KAITANTUJUAN") == null ? "99999" : rs.getString("ID_KAITANTUJUAN"));
+				h.put("idJenistujuan",rs.getString("ID_JENISTUJUAN") == null ? "99999" : rs.getString("ID_JENISTUJUAN"));
+				h.put("idJenisPermohonan",rs.getString("ID_JENISPERMOHONAN") == null ? "" : rs.getString("ID_JENISPERMOHONAN"));
+				h.put("idJenisLesen",rs.getString("ID_JENIS_LESEN") == null ? "" : rs.getString("ID_JENIS_LESEN"));
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? "" : sdf.format(rs.getDate("TARIKH_SURAT")));
 				h.put("perkara", rs.getString("TUJUAN") == null ? "" : rs.getString("TUJUAN"));
@@ -1752,7 +1829,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 	
 	public void updatePermohonan(String idFail,String idPermohonan,String idPemohon,String idKaitanTujuan, String tujuanPengambilan,
 			String tempoh, String pengalaman,String idNegeri, String lokasi,
-			String luas, String idLuas,String modalBenar, String modalJelas,HttpSession session) throws Exception {
+			String luas, String idLuas,String modalBenar, String modalJelas,String idJenistujuan,String idJenisPermohonan, String idJenisLesen, HttpSession session) throws Exception {
 
 
 		Db db = null;
@@ -1779,8 +1856,10 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			//TBLPHPPMOHONNJDUALPERTAMA
 			r = new SQLRenderer();
 			r.update("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_JENISTUJUAN",3);
+			r.add("ID_JENISTUJUAN",idJenistujuan);
 			r.add("ID_KAITANTUJUAN", idKaitanTujuan);
+			r.add("ID_JENISPERMOHONAN",idJenisPermohonan);
+			r.add("ID_JENIS_LESEN",idJenisLesen);
 			r.add("TUJUAN_PENGAMBILAN", tujuanPengambilan);
 			r.add("TEMPOH_DIPOHON", tempoh);
 			r.add("ID_TEMPOH", 2);
@@ -2487,7 +2566,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				+ " AND B.ID_BANDAR = E.ID_BANDAR(+)";
 
 			ResultSet rs = stmt.executeQuery(sql);
-
+			myLog.info("sql 2 = "+sql);
 			Hashtable h;
 			while (rs.next()) {
 				h = new Hashtable();

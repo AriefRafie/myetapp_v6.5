@@ -36,7 +36,7 @@ private static final long serialVersionUID = 1L;
 	FrmPopupPilihPegawaiReportData logic = new FrmPopupPilihPegawaiReportData();
 	static Logger myLogger = Logger.getLogger(FrmPopupTAC.class);
 	
-	FrmPrmhnnStatusPengunaOnlineData myInfo = new FrmPrmhnnStatusPengunaOnlineData();
+	static FrmPrmhnnStatusPengunaOnlineData myInfo = new FrmPrmhnnStatusPengunaOnlineData();
 	
 	@Override
 	public String doTemplate2() throws Exception {
@@ -52,6 +52,7 @@ private static final long serialVersionUID = 1L;
     	String doPost = (String) session.getAttribute("doPost");		
 		String vm = "";	
 		String otp = "";
+		String notac = "";
 		String exp = "";
 				
 		String id_Permohonan = getParam("id_Permohonan"); //lps klik dr cetakborangf senarai
@@ -59,6 +60,7 @@ private static final long serialVersionUID = 1L;
 		
 		vm = "app/ppk/frmPopupTAC.jsp";	
 
+		context.put("notac","");
 		this.context.put("idFail", idFail);
 		this.context.put("id_Permohonan", id_Permohonan);
 		
@@ -67,13 +69,11 @@ private static final long serialVersionUID = 1L;
     	
     	if ("simpan".equals(submit)) {
     			    
+    		notac = "";  
     		otp = "";    
-    		myLogger.info("masuk sini");
     		String result = "";
-    		String result1 = "";
    	
     		context.put("ResultAdd",result);
-    		context.put("ResultAdd1",result1);
     		
     		id_Permohonan = (String) context.get("ResultAdd");
     		idFail = getParam("idFail");
@@ -84,8 +84,6 @@ private static final long serialVersionUID = 1L;
     		context.put("otp",otp);
     		context.put("exp",exp);
     		
-    		myLogger.info("otp : "+otp);
-    		myLogger.info("exp : "+exp);
     		sendEmail(USER_LOGIN_SYSTEM,otp,exp);
     		String flag = "1" ;
     		context.put("flag",flag);
@@ -98,32 +96,73 @@ private static final long serialVersionUID = 1L;
 		}//close simpan
     	else 
     		if ("hantar".equals(submit)){
-
-    		String notac = getParam("notac");
+    			
+    		notac = getParam("notac");
+    		String otpDB = "";
+    		otpDB =  FrmPopupTAC.OtpDB(USER_LOGIN_SYSTEM, idFail);
     		
-    		//String otpDB =  FrmPrmhnnStatusPengunaOnlineData.checkOTP(idFail,USER_LOGIN_SYSTEM);
+    		String dateotpDB = "";
+    		
+    		dateotpDB =  FrmPopupTAC.dateOtpDB(USER_LOGIN_SYSTEM, idFail);
     		context.put("notac", "notac");
-    		myLogger.info("notac" +notac);
+    		//myLogger.info("notac" +notac);
     		context.put("otp", "otp");
+    		context.put("otpDB", "otpDB");
+    		context.put("dateotpDB", "dateotpDB");	
     		context.put("exp", "exp");
+    		context.put("dateDB", "dateDB");
+    		myLogger.info("dateotpDB : " +dateotpDB);
+
 			String verifyOTP = "";
-			//context.put("otpUser",otpUser);
-    		verifyOTP = FrmPopupTAC.verifyOTP(notac, otp, exp);
+			
+    		verifyOTP = FrmPopupTAC.verifyOTP(notac, otpDB, dateotpDB);
     		myLogger.info("verifyotp : "+verifyOTP);
+    		
+    		//if(verifyOTP)
+    		//{
+    			
+    		//}
+    		
+    		//context.put("notac", "notac");
     	}    		
 		return vm;		
 	}
 	
-	 private static String OTP() 
-	    { 
-		   myLogger.info("Generating OTP using random() : "); 
-		   myLogger.info("You OTP is : "); 
+	private static String OtpDB(String userId,String idFail) throws Exception{
 	        
+			Vector checkOTPDB = new Vector();
+	    	checkOTPDB.clear();
+			checkOTPDB = myInfo.checkOTP(userId,idFail);
+			String otpDB= "";
+			if(checkOTPDB.size()!=0){
+				Hashtable ceP = (Hashtable)checkOTPDB.get(0);
+				otpDB = (String)ceP.get("NO_TAC");
+			}
+			//myLogger.info("OTP DARI DB"+otpDB);
+	           return otpDB;        	        		
+	    } 
+	private static String dateOtpDB(String userId,String idFail) throws Exception{
+       
+		Vector dateOTPDB = new Vector();
+    	dateOTPDB.clear();
+		dateOTPDB = myInfo.checkDateOTP(userId,idFail);
+		String dateotpDB = "";
+				
+		if(dateOTPDB.size()!=0){
+			Hashtable ceP = (Hashtable)dateOTPDB.get(0);
+			dateotpDB = (String)ceP.get("TARIKH_MASUK");
+			
+		}
+		
+        return dateotpDB;        	        		
+    } 
+	
+	 private static String OTP() 
+	    { 		       
 	      //generate random number
 	        java.util.Random generator = new java.util.Random();
 	        generator.setSeed(System.currentTimeMillis());
 	        int i = generator.nextInt(1000000) % 1000000;
-
 	        java.text.DecimalFormat f = new java.text.DecimalFormat("000000");
 	       
 	        String otp = f.format(i);	               	        
@@ -132,8 +171,7 @@ private static final long serialVersionUID = 1L;
 	 
 	 private static String expDate() 
 	    {
-		 SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-	    	
+		 	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");    	
 	    	Calendar c = Calendar.getInstance();
 	        Date currentDate = new Date();
 			c.setTime(currentDate);
@@ -145,11 +183,8 @@ private static final long serialVersionUID = 1L;
 	        c.add(Calendar.HOUR, 1);
 	        c.add(Calendar.MINUTE, 1);
 	        c.add(Calendar.SECOND, 1);*/
-
 	        // convert calendar to date
 	        Date currentDatePlusOne = c.getTime();
-
-			System.out.println("DATE EXPIRED FORMAT "+format.format(currentDatePlusOne));
    
 	        String exp = format.format(currentDatePlusOne);	               	        
 	        return exp; 
@@ -184,17 +219,15 @@ private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unchecked")
 	private String addTAC(HttpSession session,String otp,String flag) throws Exception{
 		
-	    	Hashtable h = new Hashtable();
+	    Hashtable h = new Hashtable();
 	    	    	
-	    	h.put("idFail", getParam("idFail"));
-	    	h.put("no_rujukan_upt", getParam("no_rujukan_upt"));	    		    	
-	    	h.put("id_user", session.getAttribute("_ekptg_user_id"));
-	    	h.put("otp",otp);
-	    	h.put("flag",flag);
-	    	myLogger.info(h.put("otp", getParam("otp")));
-	    	
-	    	return FrmPrmhnnStatusPengunaOnlineData.addTAC(h,otp,flag);
-	  
+	    h.put("idFail", getParam("idFail"));
+	    h.put("no_rujukan_upt", getParam("no_rujukan_upt"));	    		    	
+	    h.put("id_user", session.getAttribute("_ekptg_user_id"));
+	    h.put("otp",otp);
+	    h.put("flag",flag);
+	 
+	    return FrmPrmhnnStatusPengunaOnlineData.addTAC(h,otp,flag);	  
 	}//close add
 		 	 	
 	private static String verifyOTP(String otpFrmUser,String otpFrmDB, String masaMasukOTPdb) 
@@ -206,17 +239,11 @@ private static final long serialVersionUID = 1L;
          //guna untuk compare masa user terima otp dan waktu verify
          String currentD=df.format(currentDate);
 	
-         System.out.println("current date ---- "+currentD);	
-         System.out.println("otpFrmUser ---- "+otpFrmUser);	
-         System.out.println("otpFrmDB ---- "+otpFrmDB);	
-         System.out.println("masaMasukOTPdb ---- "+masaMasukOTPdb);		
-
          //compare otpDB dan otpUser
          if(otpFrmUser.equals(otpFrmDB)){
-        	 System.out.println("otp match");
+        	 myLogger.info("otp match");
          //ni pun kene ikut frmat sysdate
          //SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
 	 		Date d1 = null;
 	 		Date d2 = null;
 	 		//ni declaration ikut seken,minit,jam,dan hari
@@ -239,56 +266,43 @@ private static final long serialVersionUID = 1L;
 	 		try {
 	 			d1 = df.parse(otpExp);
 	 			d2 = df.parse(currentD);
-
-				System.out.println("date expired ----------- "+d1);
-				System.out.println("date current ----------- "+d2);
-
+	 		
 	 			//in milliseconds
 	 			long diff = d2.getTime() - d1.getTime();
+	 			
+	 			diffSeconds = diff / 1000 % 60;
+	 			diffMinutes = diff / (60 * 1000) % 60;
+	 			diffHours = diff / (60 * 60 * 1000) % 24;
+	 			diffDays = diff / (24 * 60 * 60 * 1000);
 
-	 			 diffSeconds = diff / 1000 % 60;
-	 			 diffMinutes = diff / (60 * 1000) % 60;
-	 			 diffHours = diff / (60 * 60 * 1000) % 24;
-	 			 diffDays = diff / (24 * 60 * 60 * 1000);
-
-	 			System.out.print(diffDays + " days, ");
-	 			System.out.print(diffHours + " hours, ");
-	 			System.out.print(diffMinutes + " minutes, ");
-	 			System.out.print(diffSeconds + " seconds.");
+	 			myLogger.info(diffDays + " days, ");
+	 			myLogger.info(diffHours + " hours, ");
+	 			myLogger.info(diffMinutes + " minutes, ");
+	 			myLogger.info(diffSeconds + " seconds.");
 
 	 		} catch (Exception e) {
 	 			e.printStackTrace();
-	 			System.out.print("exception "+e);
+	 			myLogger.info("exception "+e);
 	 			return "exception masa calculation";
-	 		}
-             
+	 		}            
 	 		//ni compare setelah tolak waktu dia verify dan waktu
 	 		//terima otp. klau minit masa dia verify tu lebih dari
 	 		//waktu kita set 5 minit di atas td, kira expired lah otp tu
-             if(diffDays>otptime){
-                
-                 System.out.println("otp already expired"); 
-                 return "otp expired";
-                 
+             if(diffDays>otptime){               
+            	myLogger.info("otp already expired"); 
+                return "otp expired";                 
              }else{
                 //ni otp valid
-                 System.out.println("otp valid");  
-               
-             }
-             
+            	myLogger.info("otp valid");                
+             }          
          }else{
              //ni otp x sama..yg dia terima dgn yg dia verify
-             System.out.println("otp not match");
-             return "otp not match";
-             
-         }
-        
+        	 myLogger.info("otp not match");
+             return "otp not match";            
+         }       
         //class ni return string
          //ubah lah ikut kesesuaian
-        return "otp valid"; 
+         	return "otp valid"; 
     }
-	    
-	  
-	
-	
+
 }

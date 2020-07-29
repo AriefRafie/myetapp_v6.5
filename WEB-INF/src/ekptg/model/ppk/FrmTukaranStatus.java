@@ -23,7 +23,7 @@ import ekptg.helpers.DB;
  */
 
 public class FrmTukaranStatus {
-	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");
+	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy"); 
 	static Logger myLogger = Logger.getLogger(FrmTukaranStatus.class);	
 	
 	private static Vector list = new Vector();

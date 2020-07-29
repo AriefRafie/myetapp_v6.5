@@ -53,6 +53,7 @@ public class LampiranBean implements ILampiran{
 			else
 				sb.append(" </a>,");
 			sb.append("<br>");
+
 		}
 		return sb.toString();
 		
@@ -358,6 +359,46 @@ public class LampiranBean implements ILampiran{
 	}
 	
 	public String javascriptUpload(String jsUpload,String jsPapar
+			,String idDokumen,HttpSession session,String skrin) throws Exception {
+			Fungsi.setWin800600();
+			
+			sb = new StringBuffer("");
+			sb.append("<script>");
+			if(jsUpload.equals(""))
+				sb.append("function paparLampiran(idDokumen){");
+			else
+				sb.append("function "+jsPapar+"(idDokumen){");
+
+			//sb.append("function "+jsPapar+"(){");
+			sb.append("var url = '../servlet/ekptg.model.utils.DisplayBlob?id='+idDokumen+'&tablename=tblphpdokumen';");
+			sb.append("var hWnd=window.open(url,'Cetak','width="+Fungsi.lebar+",height="+Fungsi.tinggi+", resizable=yes,scrollbars=yes,menubar=1');");
+			sb.append("if ((document.window != null) && (!hWnd.opener))");
+			sb.append("hWnd.opener=document.window;");
+			sb.append("if (hWnd.focus != null) hWnd.focus();");
+			sb.append("}");
+			
+			Fungsi.setWin400300();
+			if(jsUpload.equals(""))
+				sb.append("function onlineAttach(idPermohonan,idSenarai,idJenisDokumen) {");
+			else
+				sb.append("function "+jsUpload+"(idPermohonan,idSenarai,idJenisDokumen) {");
+		
+			sb.append("param = 'actionrefresh=php"+skrin+"&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
+//			sb.append("param = 'actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
+			sb.append("param += '&rujukan='+idPermohonan+'&jenisdokumen='+idJenisDokumen+'&idsenarai='+idSenarai;");
+			sb.append("var url = '../x/"+session.getAttribute("securityToken")+"/ekptg.view.online.UploadDokumenSemak?'+param;");
+			sb.append("var hWnd = window.open(url,'printuser','width="+Fungsi.lebar+",height="+Fungsi.tinggi+", resizable=yes,scrollbars=yes');");
+			sb.append("if ((document.window != null) && (!hWnd.opener))");
+			sb.append("hWnd.opener=document.window;");
+			sb.append("if (hWnd.focus != null) hWnd.focus();");
+			sb.append("}");
+			//sb.append(javascriptUpload(sb));
+			sb.append("</script>");
+			return sb.toString();
+		 
+	}
+	
+	public String javascriptUpload(String jsUpload,String jsPapar
 		,String idDokumen,HttpSession session) throws Exception {
 		Fungsi.setWin800600();
 		
@@ -367,21 +408,16 @@ public class LampiranBean implements ILampiran{
 			sb.append("function paparLampiran(idDokumen){");
 		else
 			sb.append("function "+jsPapar+"(idDokumen){");
-//		
-		sb.append("function "+jsPapar+"(){");
+
 		sb.append("var url = '../servlet/ekptg.model.utils.DisplayBlob?id='+idDokumen+'&tablename=tblphpdokumen';");
 		sb.append("var hWnd=window.open(url,'Cetak','width="+Fungsi.lebar+",height="+Fungsi.tinggi+", resizable=yes,scrollbars=yes,menubar=1');");
 		sb.append("if ((document.window != null) && (!hWnd.opener))");
 		sb.append("hWnd.opener=document.window;");
 		sb.append("if (hWnd.focus != null) hWnd.focus();");
 		sb.append("}");
-		
 		Fungsi.setWin400300();
-		if(jsUpload.equals(""))
-			sb.append("function onlineAttach(idPermohonan,idSenarai,idJenisDokumen) {");
-		else
-			sb.append("function "+jsUpload+"(idPermohonan,idSenarai,idJenisDokumen) {");
-	
+
+		sb.append("function onlineAttach(idPermohonan,idSenarai,idJenisDokumen) {");
 		sb.append("param = 'actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
 //		sb.append("param = 'actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
 		sb.append("param += '&rujukan='+idPermohonan+'&jenisdokumen='+idJenisDokumen+'&idsenarai='+idSenarai;");

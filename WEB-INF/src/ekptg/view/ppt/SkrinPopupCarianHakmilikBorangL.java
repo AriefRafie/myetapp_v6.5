@@ -99,10 +99,6 @@ public class SkrinPopupCarianHakmilikBorangL extends AjaxBasedModule {
 					simpanBorangL(session,id_permohonan,db);
 				}
 				
-				
-				
-				
-				
 				header.setDataHeader(id_permohonan);
 				Vector dataHeader = header.getDataHeader();
 				if(dataHeader.size()!=0){
@@ -146,6 +142,7 @@ public static void simpanBorangL(String idUser,String id_hakmilik,long id_borang
 	 	    r.add("tarikh_masuk",r.unquote("sysdate"));
 	 	    sql = r.getSQLInsert("tblpptborangl");
 	 	    stmt.executeUpdate(sql);
+	 	    myLogger.info("simpanBorangL tblpptborangl: " +sql);
 	 	    
 	    }//close try 
 	    finally {
@@ -249,7 +246,7 @@ public static void simpanBorangL(String idUser,String id_hakmilik,long id_borang
 				//sql += " ORDER BY LPAD(M.NO_SUBJAKET,10) asc, LPAD(M.no_lot,10) asc, LPAD(M.no_pt,10) asc, LPAD(NO_LOTSUB,10) asc, MK.NAMA_MUKIM asc";
 				sql += " ORDER BY mk.nama_mukim asc, LPAD(m.no_lot,20) asc, LPAD(m.no_pt,20) asc, LPAD(NO_LOTSUB,20) asc, LPAD(m.no_subjaket,20) asc";
 				
-				ResultSet rs = stmt.executeQuery(sql);	
+				ResultSet rs = stmt.executeQuery(sql);
 				Hashtable h;
 				int bil = 1;
 				
@@ -723,7 +720,7 @@ public static void simpanBorangL(String idUser,String id_hakmilik,long id_borang
 					}
 					
 					
-					//sql += " AND (select count(*)from Tblpptborangk a, Tblppthakmilikborangk b where a.id_borangk = b.id_borangk and b.id_hakmilik(+) = m.id_hakmilik) > '0' ";
+//					sql += " AND (select count(*)from Tblpptborangk a, Tblppthakmilikborangk b where a.id_borangk = b.id_borangk and b.id_hakmilik(+) = m.id_hakmilik) > '0' ";
 					
 					
 					

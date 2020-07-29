@@ -11,6 +11,8 @@
 -->
 <style type="text/css">
 <!--
+
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -1839,11 +1841,11 @@
 									                        && $id_Status != "163" 
 									                      	&& $id_Status != "164" 
 									                      	&& $id_Status != "165")	 									                 		
-									                 	##if($open_button_online == "yes")
+									                 	#if($open_button_online == "yes")
 										                   		<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
-														##end
+														#end
 														#end
 															 	$listam.lampirans
 									                  		</td>
@@ -4130,7 +4132,7 @@ var dt=document.f1.txtTarikhPerjanjianHtaamX
 }
 	//Mula Lampiran
 	function lampiranHarta(idHarta) {
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline="+flagOnline;
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
 	    //
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))

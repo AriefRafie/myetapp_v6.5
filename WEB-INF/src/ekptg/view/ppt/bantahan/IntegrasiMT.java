@@ -120,17 +120,20 @@ public class IntegrasiMT extends AjaxBasedModule{
 				context.put("listDokumen_size", 0);
 			}
 			
+			String pejabatMT = getParam("idmt");
 //			Vector<Hashtable<String, Object>> vecMT 
 //				= ekptg.helpers.DB.getMahkamahByNegeri(Long.parseLong(idNegeriPer));
+			if(pejabatMT.equals("")) {
 //			if(vecMT.isEmpty() || vecMT.size() > 1) {
 					socmt = getPilihan().Pilihan("socmt", "onchange = \'pilihMT()\'");
 		
 //			Tujuan Pengujian
-//			}else {
-//				im = new MTRegManager();
+			}else {
+				im = new MTRegManager();
+				socmt = getPilihan().Pilihan("socmt",pejabatMT, "disabled");
 //				socmt = String.valueOf(vecMT.get(0).get("namaPejabat"));
-//				kodmt = im.getKodMT(String.valueOf(vecMT.get(0).get("id")));
-//			}
+				kodmt = im.getKodMT(pejabatMT);
+			}
 			
 //			Vector<Tblrujpejabat> vecPejabat = DBPPT.getMTByPermohonan(idPermohonan);
 //			if(vecPejabat.size() > 1) {

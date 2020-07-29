@@ -10,6 +10,7 @@
 -->
 <style type="text/css">
 <!--
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -3594,7 +3595,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                         <td width="10%"><div align="left">NO PT/NO LOT</div></td>
                                         -->
                                         <td width="5%"><div align="center">BAHAGIAN SIMATI</div></td>
-                                        <td width="5%"><div align="center">DOKUMEN</div></td>
+                                        <td width="15%"><div align="center">DOKUMEN</div></td>
                                       </tr>
                                       #end
                                       
@@ -3690,12 +3691,21 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
   
     #end   
     
-    #if($listam.idDokumen != "" )
-         <td class="row1"><div align="center"><a onclick="javascript:cetakImej($listam.idDokumen)" href="#" style="color: #0000FF"> lihat </a></div></td>
-        #else
-        <td class="row1">  </td>
-       #end
-        </td>
+    <td class="row1 style54">  
+	                             #if($tambahharta == "yes")
+	                         		#if($id_Status != "169" 
+                       					&& $id_Status != "21" 
+                       					&& $id_Status != "64" 
+                       					&& $id_Status != "163" 
+                       					&& $id_Status != "164" 
+                       					&& $id_Status != "165")				                              		
+		                        		<a href = "javascript:lampiranHarta('$listam.idhta');">
+											<img border="0" src="../img/plus.gif" width="20" height="15"/>
+										</a><br>
+									#end		
+								 #end	
+						 		$listam.lampirans
+	                  		  </td>
     </tr>
                                       #else
   <tr class="table_header">
@@ -3757,12 +3767,21 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
    
     #end    
     
-    #if($listam.idDokumen != "" )
-         <td class="row2"><div align="center"><a onclick="javascript:cetakImej($listam.idDokumen)" href="#" style="color: #0000FF"> lihat </a></div></td>
-        #else
-        <td class="row2">  </td>
-       #end
-       </td> 
+    <td class="row1 style54">  
+	                             #if($tambahharta == "yes")
+	                         		#if($id_Status != "169" 
+                       					&& $id_Status != "21" 
+                       					&& $id_Status != "64" 
+                       					&& $id_Status != "163" 
+                       					&& $id_Status != "164" 
+                       					&& $id_Status != "165")				                              		
+		                        		<a href = "javascript:lampiranHarta('$listam.idhta');">
+											<img border="0" src="../img/plus.gif" width="20" height="15"/>
+										</a><br>
+									#end		
+								 #end	
+						 		$listam.lampirans
+	                  		  </td>
   </tr>
                                       #end
                                       #set($xjumpa_beli = "no")
@@ -4942,6 +4961,53 @@ parent.document.getElementById("info_pilihan_harta").innerHTML="<div class=\"war
 </form>
 
 <script>
+
+function info(jenis) {
+    //
+	var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=no,scrollbars=no');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Info';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+    //var top = (screen.height/2)-(h/2);
+    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+
+}
+
+function lampiranHarta(idHarta) {
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTA&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
+    //
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Cetakan';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+    //var top = (screen.height/2)-(h/2);
+    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+
+}
+
+function lampiranHartaPapar(id_){
+	var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+
+
 <!-- TAB -->
 function HtaamViewX() {
 	document.f1.action = "";

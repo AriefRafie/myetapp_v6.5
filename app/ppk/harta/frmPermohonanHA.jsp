@@ -10,6 +10,8 @@
 -->
 <style type="text/css">
 <!--
+
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -1881,10 +1883,12 @@
 				                          					&& $id_Status != "64" 
 				                          					&& $id_Status != "163" 
 				                          					&& $id_Status != "164" 
-				                          					&& $id_Status != "165")	  
+				                          					&& $id_Status != "165")	
+				                          					#if($open_button_online == "yes")  
 										                   		<a href = "javascript:lampiranHartaHA('$list.idha','$!paramOnline');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
+															#end
 														#end		
 															 	$list.lampirans
 									             	</td>
@@ -3000,7 +3004,7 @@ document.f1.txtNilaiTarikhMati.value=document.f1.txtNilaiTarikhMohon.value
 	
 	}
 	function lampiranHartaPapar(id_){
-		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=hta";
+		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=ha";
 		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=ha";
 	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
 	    if ((document.window != null) && (!hWnd.opener))

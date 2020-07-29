@@ -10093,6 +10093,13 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				h.put("butiran",
 						rs.getString("butiran") == null ? "" : rs
 								.getString("butiran"));
+				
+				//SYAFIQAH ADD UNTUK PAPAR LAMPIRAN 230720
+				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
+				h.put("lampirans", l.getLampiransHA(rs.getString("id_Ha")));
+				
+				System.out.println(h);
+				
 				listDataHa.addElement(h);
 				bil++;
 			}
@@ -10341,6 +10348,10 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				h.put("butiran",
 						rs.getString("butiran") == null ? "" : rs
 								.getString("butiran"));
+				
+				//SYAFIQAH ADD UNTUK PAPAR LAMPIRAN 230720
+				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
+				h.put("lampirans", l.getLampirans(rs.getString("id_Ha")));
 
 				listDataHadulu_pilihan.addElement(h);
 				bil++;
