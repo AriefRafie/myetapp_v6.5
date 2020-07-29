@@ -304,6 +304,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}
 		}
 
+		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
+
 
 		//myLog.info("actionTukarguna="+actionTukarguna);
 		myLog.info("submit="+submit);
