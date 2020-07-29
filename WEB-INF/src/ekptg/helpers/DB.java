@@ -92,7 +92,7 @@ public class DB extends EkptgCache implements Serializable {
 		String sql = "select " + statecode + " || to_char(sysdate,'YY') || " + seqName + ".NEXTVAL  FROM DUAL ";
 		try {
 			Statement stmt = db.getStatement();
-			myLogger.info("TBLPPKPERMOHONANSIMATI_PK :"+sql);
+			myLogger.info(seqName+" :sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 			return rs.getLong(1);
