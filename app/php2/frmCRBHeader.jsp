@@ -36,11 +36,6 @@
           <td width="63%"><font color="blue">$urusan</font></td>
         </tr>
         <tr>
-          <td width="36%" align="right">Suburusan</td>
-          <td width="1%">:</td>
-          <td width="63%"><font color="blue">$subUrusan</font></td>
-        </tr>
-        <tr>
           <td align="right">Tarikh Terima Aduan</td>
           <td>:</td>
           <td><font color="blue">$tarikhTerima</font></td>

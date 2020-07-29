@@ -376,7 +376,7 @@
           <td>No. Lot</td>
           <td>:</td>
           <td>$beanMaklumatTanah.lot
-            <input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.noLot" /></td>
+            <input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.lot" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -391,7 +391,7 @@
           <td>No. Hakmilik</td>
           <td>:</td>
           <td>$beanMaklumatTanah.hakmilik
-            <input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.noHakmilik" /></td>
+            <input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -1012,9 +1012,15 @@ function janaTajuk() {
 	var str5  = document.${formName}.namaMukimTanah.value;
 	var str6  = document.${formName}.namaDerahTanah.value;	
 	var str7  = document.${formName}.namaNegeriTanah.value;	
+	var statusRizabTnh = document.${formName}.statusRizab.value;
+		
+	if(statusRizabTnh == 'MILIK') {
+		milikOrRizab = str2;
+	} else if(statusRizabTnh == 'RIZAB') {
+		milikOrRizab = str3;
+	}
 
-	var strTajuk = "PENCEROBOHAN TANAH MILIK/RIZAB KJP DI ATAS TANAH  " + str2 +", " + str3 + str4 + ", " + str5 + ", " + str6 + ", " + str7;
-
+	var strTajuk = "PENCEROBOHAN TANAH " + statusRizabTnh + " PERSEKUTUAN DI ATAS TANAH  " + str2 +", " + str3 + str4 + ", " + str5 + ", " + str6 + ", " + str7;
 	
 	document.${formName}.txtPerkara.value = strTajuk;
 }

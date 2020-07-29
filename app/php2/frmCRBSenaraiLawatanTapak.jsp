@@ -17,7 +17,6 @@
   <input name="idPenceroboh" type="hidden" id="idPenceroboh" value="$idPenceroboh"/>
   <input name="idPegawaiLaporanTanah" type="hidden" id="idPegawaiLaporanTanah" value="$idPegawaiLaporanTanah"/>
   <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
-  
   <input name="actionCRB" type="hidden" id="actionCRB" value="$actionCRB"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
