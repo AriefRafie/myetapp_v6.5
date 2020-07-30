@@ -1101,9 +1101,6 @@ function daftarLampiran() {
 
 <!-- SENARAI SEMAK -->
 function doSimpanKemaskiniSenaraiSemak() {
-
-	alert('baca semakkkkk');
-
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";
 		return;
@@ -1113,4 +1110,11 @@ function doSimpanKemaskiniSenaraiSemak() {
 	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
 	document.${formName}.submit();
 }
+
+function tutup() {
+	//
+	window.close();
+	refresh('Y');
+}
 </script>
+$javascriptLampiran
