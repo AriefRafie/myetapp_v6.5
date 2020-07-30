@@ -41,6 +41,8 @@ public class CukaiTemp implements Serializable {
 	private String tarikhMasuk;
 	private String idKemaskini;
 	private String tarikhKemaskini;
+	private String notifikasi;
+
 	private double totalcukai;
 		
 	private Tblrujnegeri rujNegeri;
@@ -49,6 +51,12 @@ public class CukaiTemp implements Serializable {
 	private Tblrujjenishakmilik rujJenisHakmilik;
 	private Tblrujmukim rujMukim;
 	
+	public void setNotifikasi(String notifikasi) {
+		this.notifikasi = notifikasi;
+	}
+	public String getNotifikasi() {
+		return notifikasi;
+	}
 	public long getIdCukaiTemp() {
 		return idCukaiTemp;
 	}
