@@ -2250,7 +2250,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	//pengambilan segera
     	h.put("socPSegera", getParam("socPSegera"));
     	
-//    	PPT-03 Usop tambah
+//    	PPT-03 Strata
     	h.put("txtNoBangunan", getParam("txtNoBangunan"));
     	h.put("txtNoTingkat", getParam("txtNoTingkat"));
     	h.put("txtNoPetak", getParam("txtNoPetak"));
@@ -2308,6 +2308,12 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	h.put("txtLain", getParam("txtLain"));
     	h.put("txtNoWartaRizab", getParam("txtNoWartaRizab"));
     	h.put("txdTarikhWarta", getParam("txdTarikhWarta"));
+    	
+    	// PPT-03 Strata
+    	h.put("no_bangunan", getParam("txtNoBangunan"));
+    	h.put("no_tingkat", getParam("txtNoTingkat"));
+    	h.put("no_petak", getParam("txtNoPetak"));
+    	myLogger.info("View updateHM no bangunan: " +getParam("txtNoBangunan"));
 		
     	//pengambilan segera
     	h.put("socPSegera", getParam("socPSegera"));
