@@ -1,5 +1,8 @@
 package ekptg.view.htp.cukai;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
@@ -7,10 +10,14 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import lebah.db.Db;
+import lebah.db.DbException;
+import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
+import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
@@ -76,7 +83,7 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 			/**
 			 * Simpan kemaskini data compare antara data Excel dng data Oracle			
 			 */		
-			if("CukaiKemaskini".equals(submit)){	
+			if(submit.equals("CukaiKemaskini")){	
 				Hashtable data = null;
 				data = new Hashtable();
 				String perluBayar ="";
@@ -140,6 +147,13 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 				cukai.setTotalcukai(Double.parseDouble(Utils.RemoveComma(cukaiJumlah)));			//TBLHTPCUKAITEMP
 				cukai.setCukaiKenaBayar(Double.parseDouble(Utils.RemoveComma(cukaiJumlah)));			//TBLHTPCUKAITEMP
 				cukai.setTahun(socTahun);										//TBLHTPCUKAITEMP
+				String notifikasi = "";
+				if(!perluBayar.equals(getParam("cukaikenabayarlama1"))){
+					myLog.info("Cukai Baru");
+					notifikasi = "NEW";
+					
+				}
+				cukai.setNotifikasi(notifikasi); //22/07/2020
 				hakmilikBaru.setHakmilikCTemp(cukai);
 				hakmilikBaru.setIdMasuk(Long.parseLong(userId));				//TBLHTPCUKAITEMP
 				
@@ -156,9 +170,16 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 				hcukai.setJumlah(Double.parseDouble(Utils.RemoveComma(cukaiJumlah)));
 				hcukai.setIdHakmilikCukai(Long.parseLong(senaraiID_HAKMILIKCUKAI));
 		    	hakmilikBaru.setHakmilikCukai(hcukai);
-
-				getICukai().simpanCukaiHakmilikTemp(hakmilikBaru);
+//				ekptg.model.htp.entity.HakMilik hakmilikReturn = 
+		    	getICukai().simpanCukaiHakmilikTemp(hakmilikBaru);
 				getICukai().simpanCukaiHakmilikTerperinci(hakmilikBaru);
+//				myLog.info("Cukai Baru:perluBayar="+perluBayar);
+//				myLog.info("Cukai Baru:"+getParam("cukaikenabayarlama1"));
+				if(!perluBayar.equals(getParam("cukaikenabayarlama1"))){
+					myLog.info("Cukai Baru");
+					kemaskiniHakmilikCukai(senaraiID_HAKMILIKCUKAI,cukai);
+
+				}
 
 				//getICukai().salinanCukaiBaru(hakmilikBaru);
 
@@ -296,27 +317,11 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 				String[] cbsemaks = this.request.getParameterValues("cb");
 				String[] cbsemaks_ = this.request.getParameterValues("cb_");
 				bil = getParam("bil");
-	 			myLog.info("cukaikemaskinisemua:bil="+bil);
-	 			myLog.info("cukaikemaskinisemua:length="+cbsemaks_.length);
+//	 			myLog.info("cukaikemaskinisemua:bil="+bil);
+//	 			myLog.info("cukaikemaskinisemua:length="+cbsemaks_.length);
 	          	if(cbsemaks_!=null){
 	        		for (int i = 0; i < cbsemaks_.length; i++) { 
 	        			if(cbsemaks_[i].equals("true")){
-//	        				data.put("tahun", socTahun);
-//	        				data.put("tunggakan", Utils.RemoveComma(getParam("cukaitunggakan"+(i+1))));
-//	        				data.put("denda", Utils.RemoveComma(getParam("cukaidenda"+(i+1))));
-//	        				data.put("pengurangan", Utils.RemoveComma(getParam("cukaipengurangan"+(i+1))));
-//	        				data.put("lebihan", Utils.RemoveComma(getParam("cukaipengecualian"+(i+1))));
-//	        				data.put("cukai_taliair", Utils.RemoveComma(getParam("cukaitaliair"+(i+1))));
-//	        				data.put("cukai_parit", Utils.RemoveComma(getParam("cukaiparit"+(i+1))));
-//	        				data.put("cukai_kenabayar", Utils.RemoveComma(getParam("cukaijumlah"+(i+1))));
-//	        				data.put("cukaiPerluBayar", Utils.RemoveComma(getParam("cukaiperlubayar"+(i+1))));
-//	        				data.put("senaraiNolot", senaraiNoLots[i]);
-//	        				data.put("senaraiID_HAKMILIKCUKAI", Utils.RemoveComma(getParam("senaraiID_HAKMILIKCUKAI"+(i+1))));
-//	        				data.put("cukaiKenaBayarLama", Utils.RemoveComma(getParam("cukaikenabayarlama"+(i+1))));
-//	        				data.put("senaraiNO_HAKMILIKUPLOAD", senaraiNoHakmilikUploads[i]);
-//	        				data.put("senaraiNO_HAKMILIK", senaraiNoHakmiliks[i]);
-//	        				myLog.info("data="+data);
-//	        				FrmCukaiKemaskiniDataBaru.kemaskiniData(data); 
 	        				HakMilik hakmilikBaru = new HakMilik();
 	        				hakmilik = getICukai().getCukai(getParam("senaraiID_HAKMILIKCUKAI"+(i+1)));		//TBLHTPCUKAITEMP		
 	        				hakmilikBaru.setIdPermohonan(hakmilik.getIdPermohonan());		//TBLHTPCUKAITEMP
@@ -327,6 +332,13 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 	        				Tblrujmukim mukim = new Tblrujmukim();
 	        				mukim.setNamaMukim(hakmilik.getMukim().getNamaMukim());			//TBLHTPCUKAITEMP
 	        				cukai.setRujMukim(mukim);
+	        				String notifikasi = "";
+	        			  	if(!cukais[i].equals(getParam("cukaikenabayarlama"+i))){
+	        					myLog.info("Cukai Baru "+i);
+	        					notifikasi = "NEW";
+	        					
+	        				}
+	        				cukai.setNotifikasi(notifikasi); //22/07/2020
 	        				hakmilikBaru.setKegunaan(hakmilik.getKegunaan());				//TBLHTPCUKAITEMP
 	        				hakmilikBaru.setIdJenisLot(hakmilik.getIdJenisLot());			//TBLHTPCUKAITEMP
 	        				hakmilikBaru.setNoLot(hakmilik.getNoLot());						//TBLHTPCUKAITEMP
@@ -335,7 +347,7 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 	        				hakmilikBaru.setIdJenisHakmilik(hakmilik.getRujJenisHakmilik().getIdJenishakmilik()); //TBLHTPCUKAITEMP
 	        				hakmilikBaru.setNoHakmilik(hakmilik.getNoHakmilik());			//TBLHTPCUKAITEMP
 	        				cukai.setNoHakmilik(hakmilik.getRujJenisHakmilik().getKodJenisHakmilik()+hakmilik.getNoHakmilik()); //TBLHTPCUKAITEMP
-	        				myLog.info("cukais[i]="+cukais[i]);
+	        				//myLog.info("cukais[i]="+cukais[i]);
 	        				cukai.setCukaiPerluBayar(Double.parseDouble(Utils.RemoveComma(cukais[i])));
 //	        				cukai.setCukaiTaliAir(Double.parseDouble(Utils.RemoveComma(getParam("cukaitaliair"+(i+1)))));				//TBLHTPCUKAITEMP
 	        				cukai.setCukaiTaliAir(Double.parseDouble(Utils.RemoveComma(taliair2s[i])));				//TBLHTPCUKAITEMP
@@ -364,14 +376,6 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 	        				//TBLHTPCUKAITERPERINCI
 	        				HakmilikCukai hcukai = new HakmilikCukai();
 	        				hcukai.setKodBayaranCukai(socTahun);
-//	        				hcukai.setCukaiTerkini(Double.parseDouble(Utils.RemoveComma(getParam("cukaikenabayarlama"+(i+1)))));
-//	        				hcukai.setTunggakan(Double.parseDouble(Utils.RemoveComma(getParam("cukaitunggakan"+(i+1)))));
-//	        				hcukai.setDenda(Double.parseDouble(Utils.RemoveComma(getParam("cukaidenda"+(i+1)))));
-//	        				hcukai.setCukaiTaliAir(Double.parseDouble(Utils.RemoveComma(getParam("cukaitaliair"+(i+1)))));				
-//	        				hcukai.setCukaiParit(Double.parseDouble(Utils.RemoveComma(getParam("cukaiparit"+(i+1)))));					
-//	        				hcukai.setPengurangan(Double.parseDouble(Utils.RemoveComma(getParam("cukaipengurangan"+(i+1)))));			
-//	        				hcukai.setPengecualian(Double.parseDouble(Utils.RemoveComma(getParam("cukaipengecualian"+(i+1)))));
-//	        				hcukai.setJumlah(Double.parseDouble(Utils.RemoveComma(getParam("cukaijumlah"+(i+1)))));
 	        				hcukai.setCukaiTerkini(Double.parseDouble(Utils.RemoveComma(cukais[i])));
 	        				hcukai.setTunggakan(Double.parseDouble(Utils.RemoveComma(tunggakans[i])));
 	        				hcukai.setDenda(Double.parseDouble(Utils.RemoveComma(dendas[i])));
@@ -382,7 +386,12 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 	        				hcukai.setJumlah(Double.parseDouble(Utils.RemoveComma(cukaiJumlahs[i])));
 	        				hcukai.setIdHakmilikCukai(Long.parseLong(getParam("senaraiID_HAKMILIKCUKAI"+(i+1))));
 	        		    	hakmilikBaru.setHakmilikCukai(hcukai);	 
-	        		    	
+	        				
+	        		    	if(!cukais[i].equals(getParam("cukaikenabayarlama"+i))){
+	        					myLog.info("Cukai Baru >1 "+i);
+	        					kemaskiniHakmilikCukai(getParam("senaraiID_HAKMILIKCUKAI"+(i+1)),cukai);
+	
+	        				}
 	        				getICukai().simpanCukaiHakmilikTemp(hakmilikBaru);
 	        				getICukai().simpanCukaiHakmilikTerperinci(hakmilikBaru);
 	        				
@@ -568,12 +577,9 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 			this.context.put("carianNoHakmilik", noHakmilik);
 			return template_name;		
 		
-			}catch(Exception e){
-//				e.printStackTrace();
-//				throw new Exception("[HTP CUKAI PELARASAN] SILA LOGIN SEMULA");
-				throw new Exception(getIHTP().getErrorHTML(e.toString()));
-			
-			}
+		}catch(Exception e){
+			throw new Exception(getIHTP().getErrorHTML(e.toString()));			
+		}
 			
 	}
 	
@@ -616,17 +622,17 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 			this.context.put("error",e.getMessage());
 		}	
 	}
+		
+	private void salinCukai(String idnegeri,String iddaerah,String idmukim,String socTahun){
+		getICukai().salinCukai(idnegeri,iddaerah,idmukim,socTahun);
+		
+	}
 	
 	private ICukai getICukai(){
 		if(iCukai==null){
 			iCukai = new CukaiBean();
 		}
 		return iCukai;
-		
-	}
-	
-	private void salinCukai(String idnegeri,String iddaerah,String idmukim,String socTahun){
-		getICukai().salinCukai(idnegeri,iddaerah,idmukim,socTahun);
 		
 	}
 	  
@@ -662,7 +668,7 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 		String lblNegeri3 = "";
 		String idNegeri3 = getParam("manualNegeri");
 		String idDaerah3= getParam("manualDaerah");
-		String idMukim3= getParam("manualMukim");		
+//		String idMukim3= getParam("manualMukim");		
    		lblNegeri3 = HTML.SelectNegeri("manualNegeri", Utils.parseLong(idNegeri3), null, "onChange=\"doChangeDaerahManual()\" ");
 		this.context.put("manualNegeri", lblNegeri3);
 		
@@ -713,7 +719,7 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 		KegunaanTanah = getParam("txtKegunaanTanah")==""?"0":getParam("txtKegunaanTanah");
 		tahun = getParam("tahun")==""?"0":getParam("tahun");
 		
-		Hashtable h = new Hashtable();
+		Hashtable<String,String> h = new Hashtable<String,String>();
 		h.put("idNegeri2", idNegeri2);
 		h.put("idDaerah2", idDaerah2);
 		h.put("idMukim2", idMukim2);
@@ -757,28 +763,82 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 			this.context.put("lblMukim2", HTML.SelectMukimByDaerah(idDaerah2, "lblMukim2"));
 		}
 		
-	}
-	
+	}	
 	//KEMASUKAN MANUAL
 	private void getSenaraiFail(HttpSession session,String action, String tahun)throws Exception{
-		Vector senaraiFailbyTahun = FrmCukaiSenaraiFailExcelUpload.getCukaiTempByTahun(tahun);
+		Vector<CukaiTemp> senaraiFailbyTahun = FrmCukaiSenaraiFailExcelUpload.getCukaiTempByTahun(tahun);
 		this.context.put("SenaraiFail", senaraiFailbyTahun);		
 		setupPage(session,action,senaraiFailbyTahun);
 		
-	}	
-	
+	}		
 	//KEMASUKAN MANUAL
 	private void searchHakmilik(HttpSession session,String action, String tahun)throws Exception{
 		String lblNegericari = getParam("lblNegeri2");
 		String lblDaerahcari = getParam("lblDaerah2");
 		String lblMukimcari = getParam("lblMukim2");
 		String noHakmilikcari = getParam("txtNoHakmilik").trim();
-		Vector list = null;
+		Vector<Hashtable<String, String>> list = null;
 
 		list = FrmCukaiSenaraiFailExcelUpload.CukaigetSenaraiFailExcel2(lblNegericari,lblDaerahcari,lblMukimcari,noHakmilikcari,tahun);
 		setupPage2(session,action,list);
 		changeDaerah();
 		
+	}
+	
+	public void kemaskiniHakmilikCukai(String idHakmilikCukai,CukaiTemp data) throws SQLException, DbException{
+    	Db db = null;;
+    	Connection conn = null;
+		String sqlCukai = "";
+    	String sqlHakmilik = "";
+    	SQLRenderer r1 = new SQLRenderer();
+	    try{	    	
+	    	db = new Db();
+	    	conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+	    	Statement stmt = db.getStatement();
+	
+			r1.update("ID_HAKMILIKCUKAI",r1.unquote(idHakmilikCukai)); 
+	    	r1.add("STATUS","N");
+	    	r1.add("ID_KEMASKINI",r1.unquote(userId));
+	    	r1.add("TARIKH_KEMASKINI",r1.unquote("SYSDATE"));
+	    	sqlCukai = r1.getSQLUpdate("TBLHTPHAKMILIKCUKAI");
+	    	stmt.executeUpdate(sqlCukai);
+	    	
+	        r1 = new SQLRenderer();
+		    long idHakmilikCukai_ = DB.getNextID("TBLHTPHAKMILIKCUKAI_SEQ"); 
+		    r1.add("ID_HAKMILIKCUKAI",idHakmilikCukai_); 
+		    r1.add("ID_HAKMILIK",hakmilik.getIdHakmilik()); 
+			r1.add("KOD_BAYARAN_CUKAI","P");
+			r1.add("CUKAI",data.getCukaiPerluBayar());
+			r1.add("CUKAI_TERKINI",Utils.RemoveComma(String.valueOf(data.getCukaiPerluBayar())));
+			r1.add("STATUS","S");
+			r1.add("ID_MASUK",userId);
+			r1.add("TARIKH_MASUK",r1.unquote("SYSDATE"));
+			r1.add("ID_KEMASKINI",userId);
+			r1.add("TARIKH_KEMASKINI",r1.unquote("SYSDATE"));
+			sqlCukai = r1.getSQLInsert("TBLHTPHAKMILIKCUKAI");
+			stmt.executeUpdate(sqlCukai);
+			
+			/* User Request for manually update*/
+			r1 = new SQLRenderer();
+			r1.update("ID_HAKMILIK",hakmilik.getIdHakmilik()); 
+	    	r1.add("CUKAI_TERKINI",Utils.RemoveComma(String.valueOf(data.getCukaiPerluBayar())));
+	    	r1.add("ID_KEMASKINI",userId);
+	    	r1.add("TARIKH_KEMASKINI",r1.unquote("SYSDATE"));
+	    	sqlHakmilik = r1.getSQLUpdate("TBLHTPHAKMILIK");
+	    	stmt.executeUpdate(sqlHakmilik);
+	    	
+	    	conn.commit();
+    	
+	    }catch(Exception ex){
+	    	conn.rollback();
+	    	myLog.info("error : "+ex.getMessage());
+	    	
+	    }finally {
+	      if (db != null) db.close();
+	      
+	    }
+	    
 	}
 
 
