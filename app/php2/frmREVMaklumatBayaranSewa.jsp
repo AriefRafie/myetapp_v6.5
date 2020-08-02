@@ -20,6 +20,8 @@
   <input type="hidden" name="hitButton" id="hitButton"/>
   <input type="hidden" name="selectedTabUpper" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="anchor" type="hidden" id="anchor"/>
+  <input type="hidden" name="txtNamaPemohon" id="txtNamaPemohon" value="$txtNamaPemohon"/>
+
 </p>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -60,6 +62,9 @@
   <tr>
     <td>&nbsp;</td>
   </tr>
+  <tr align="center">
+  	<td><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/></td>
+  </tr>
 </table>
 
 <div id="checkingExistNoFailUpdate_result"></div>
@@ -73,6 +78,12 @@ function doChangeTabUpper(tabId) {
 }
 function kembali(){
 	document.${formName}.actionHasil.value = "";
+	document.${formName}.submit();
+}
+
+function doBacklist() {
+	document.${formName}.actionHasil.value = "";
+	document.${formName}.txtNamaPemohon.value = "$txtNamaPemohon";
 	document.${formName}.submit();
 }
 function batal(){

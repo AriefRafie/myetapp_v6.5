@@ -248,6 +248,8 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	//HEADER
         	header(idHasil);
 
+        	this.context.put("txtNamaPemohon", getParam("txtNamaPemohon"));
+
         	//MAKLUMAT DEPOSIT
         	if ("0".equals(selectedTabUpper)){
 
@@ -1341,6 +1343,8 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		if (logicHeader.getBeanMaklumatPermohonan().size() != 0){
 			Hashtable hashPermohonan = (Hashtable) logicHeader.getBeanMaklumatPermohonan().get(0);
 			this.context.put("idFail", (String) hashPermohonan.get("idFail"));
+			//this.context.put("txtNamaPemohon", (String) hashPermohonan.get("namaPemohon"));
+			//this.context.put("txtNoFail", (String) hashPermohonan.get("noFail"));
 		}
 	}
 
