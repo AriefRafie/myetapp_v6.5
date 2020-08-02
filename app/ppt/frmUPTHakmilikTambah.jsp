@@ -5,6 +5,7 @@
 <br/>
 
 #foreach($data in $dataMaklumatTanah)
+
 	#set($idPermohonan=$data.id_permohonan)
 	#set($idTanah=$data.id_hakmilik)
 	#set($txtNoHakmilik=$data.no_hakmilik)
@@ -15,6 +16,9 @@
 	#set($seksyen=$data.seksyen)
 	#set($catatan=$data.catatan)
     #set($id_fail=$data.id_fail)
+    #set($txtNoBangunan=$data.no_bangunan)
+    #set($txtNoPetak=$data.no_petak)
+    #set($txtNoTingkat=$data.no_tingkat)
     
     
 #end
@@ -22,7 +26,6 @@
 #if($semakTanah=="no")
 
 #if($maklumat_Hakmilik_Salin.size()>0)
-
 
 	#set($txtNoHakmilik=$maklumat_Hakmilik_Salin.no_hakmilik)
 	#set($txtnolot=$maklumat_Hakmilik_Salin.no_lot)
@@ -233,6 +236,21 @@
 				<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50" readonly class="disabled"></td>
 			</tr>
 			
+			<!-- PPT-3 Baru -->
+			<tr>     
+                <td width="2%">
+                <div align="left">
+                	<span>No. Strata</span>
+                </div>
+                </td>
+                <td width="1%">:</td>
+                <td width="10%">
+                	<span>No.Bang</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" readonly class="disabled" onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Ting</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" readonly class="disabled" onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Petak</span>&nbsp;<input name="txtNoPetak" id="txtNoPetak" type="text" value="$!txtNoPetak" size="3" maxlength="3" readonly class="disabled" onkeyup="this.value=this.value.toUpperCase();"/>
+  				</td>
+            </tr>
+			
             <tr>
             	<td>No.PT</td>
             	<td>:</td>
@@ -311,6 +329,21 @@
 				<td>:</td>
 				<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50"></td>
 			</tr>
+			
+			<!-- PPT-3 Baru -->
+			<tr>     
+                <td width="2%">
+                <div align="left">
+                	<span>No. Strata</span>
+                </div>
+                </td>
+                <td width="1%">:</td>
+                <td width="10%">
+                	<span>No.Bang</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Ting</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Petak</span>&nbsp;<input name="txtNoPetak" id="txtNoPetak" type="text" value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+  				</td>
+            </tr>
 			
             <tr>
             	<td>No.PT</td>
@@ -488,7 +521,6 @@ function checkExistLot(mode,isEdit){
 }
 
 
-
 function popupCarianHakmilikSalin(id_permohonan,flag_skrin,id_daerah)
 {
 	var no_lot = document.${formName}.txtnolot.value;	
@@ -516,6 +548,8 @@ function popupCarianHakmilik(id_permohonan,flag_skrin)
 	hWnd.focus();		
 	
 }
+
+
 function defaultLOT(){
 
 	if(document.${formName}.txtnolot.value==""){
@@ -523,6 +557,7 @@ function defaultLOT(){
 	}
 	
 }
+
 
 function add_maklumat_tanah(id_permohonan,id_hakmilik,flagSubjaket,mode)
 {   
@@ -595,6 +630,7 @@ function add_maklumat_tanah(id_permohonan,id_hakmilik,flagSubjaket,mode)
 	
 }
 
+
 function salin_hakmilik(id_permohonan,id_hakmilik_salin)
 {
 	document.${formName}.ScreenLocation.value = "top";
@@ -609,6 +645,7 @@ function salin_hakmilik(id_permohonan,id_hakmilik_salin)
 	document.${formName}.submit();	
 }
 
+
 function kemaskiniTanah() {
 
 	document.${formName}.ScreenLocation.value = "changeTanah";
@@ -618,6 +655,8 @@ function kemaskiniTanah() {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4"; 
 	document.${formName}.submit();
 }
+
+
 function edit_maklumat(id_hakmilik) {
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
 	document.${formName}.id_hakmilik.value = id_hakmilik;
@@ -625,12 +664,16 @@ function edit_maklumat(id_hakmilik) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4";
 	document.${formName}.submit();
 }
+
+
 function kembali(id_permohonan) {
 	document.${formName}.ScreenLocation.value = "TabbedPanels1";
 	document.${formName}.tabId.value = "0";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4&command=semak&id_permohonan="+id_permohonan;
 	document.${formName}.submit();
 }
+
+
 function update_maklumat(id_hakmilik) {
 	
 	var alert_lot = "N";	
@@ -707,6 +750,8 @@ function update_maklumat(id_hakmilik) {
 	document.${formName}.submit();	
 	}
 }
+
+
 function delete_maklumatTanah(id_hakmilik) {
 
 	document.${formName}.ScreenLocation.value = "TabbedPanels1";
@@ -717,6 +762,8 @@ function delete_maklumatTanah(id_hakmilik) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4";
 	document.${formName}.submit();
 }
+
+
 function validate(elmnt,content) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
@@ -724,6 +771,7 @@ function validate(elmnt,content) {
 		return;
 	}
 }
+
 
 function RemoveNonNumeric( strString )
 {
@@ -743,6 +791,8 @@ function RemoveNonNumeric( strString )
       }
       return strReturn;
 }
+
+
 function textCounter(field, countfield, maxlimit) {
 	if (field.value.length > maxlimit) // if too long...trim it!
 		field.value = field.value.substring(0, maxlimit);
@@ -750,6 +800,8 @@ function textCounter(field, countfield, maxlimit) {
 	else 
 		countfield.value = maxlimit - field.value.length;
 }
+
+
 function submitForm(){
 
 	if('$ScreenLocation' != ""){
@@ -757,6 +809,8 @@ function submitForm(){
 		goTo('$CursorPoint');
 	}
 }
+
+
 function viewMaklumat(id_hakmilik) {
 	
 	document.${formName}.ScreenLocation.value = "changeTanah";
@@ -767,6 +821,8 @@ function viewMaklumat(id_hakmilik) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4";
 	document.${formName}.submit();
 }
+
+
 function cariLOT(idpermohonan,mode,idhakmilik) {
 	
 	document.${formName}.ScreenLocation.value = "bottom";
@@ -782,6 +838,8 @@ function cariLOT(idpermohonan,mode,idhakmilik) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4";
 	document.${formName}.submit();
 }
+
+
 function kosongkanLOT(idpermohonan,mode,idhakmilik) {
 	
 	document.${formName}.ScreenLocation.value = "bottom";
@@ -798,6 +856,8 @@ function kosongkanLOT(idpermohonan,mode,idhakmilik) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4";
 	document.${formName}.submit();
 }
+
+
 function tambah() {
 	
 	document.${formName}.ScreenLocation.value = "changeTanah";
@@ -805,8 +865,11 @@ function tambah() {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4&command=tambah"; 
 	document.${formName}.submit();
 }
+
+
 function viewSPTB(ID_FAIL,ID_HAKMILIK,ID_SEKSYEN) {
 	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.integrasi.FrmViewSPTB&action2=viewSPTB&ID_FAIL=" + ID_FAIL+"&ID_HAKMILIK=" + ID_HAKMILIK+"&ID_SEKSYEN=" + ID_SEKSYEN;
 	document.${formName}.submit();
 }
 </script>
+

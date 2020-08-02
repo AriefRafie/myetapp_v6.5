@@ -1289,7 +1289,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
   			}
   			context.put("existDaerah", nama_daerah);
 	    	context.put("id_existDaerah", id_daerah);
-	    				
+	    	
   			model.setListPohon2(idpermohonan);
   			listPohon2 = model.getListPohon2();
   			String nama_projekNegeri = "";
@@ -2138,8 +2138,8 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	    	h.put("anggaran_luas", "");
 	    	h.put("socKategoriTanah", "");
 	    	
-//	    	PPT-03 Usop Tambah
-	    	myLogger.info("bangunan="+getParam("txtNoBangunan"));
+//	    	PPT-03 Penambahan Strata
+	    	myLogger.info("No. Bangunan = "+getParam("txtNoBangunan"));
 	    	h.put("txtNoBangunan", getParam("txtNoBangunan"));
 	    	h.put("txtNoTingkat", getParam("txtNoTingkat"));
 	    	h.put("txtNoPetak", getParam("txtNoPetak"));
@@ -2224,9 +2224,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	 
 	@SuppressWarnings("unchecked")
 	private void updateMaklumatTanah(HttpSession session) throws Exception{
-		 
+		 	
 		 	Hashtable i = new Hashtable();
-
+		 	
 		    i.put("id_hakmilik", getParam("id_hakmilik"));
 		    i.put("editNegeri", getParam("id_existNegeri"));
 		    i.put("editDaerah", getParam("id_existDaerah"));
@@ -2245,6 +2245,12 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 		    
 		    i.put("editJenisHakmilik", getParam("socJenisHakmilik"));
 	    	i.put("edit_no_hakmilik", getParam("txtNoHakmilik"));
+	    	
+	    	// PPT-03 Penambahan Strata
+	    	i.put("no_bangunan", getParam("txtNoBangunan"));
+	    	i.put("no_petak", getParam("txtNoPetak"));
+	    	i.put("no_tingkat", getParam("txtNoTingkat"));
+//	    	myLogger.info("no_bangunan :" +getParam("txtNoBangunan"));
 	    	
 		    i.put("editLot", getParam("editLot"));	
 		    i.put("editLuas", "");
