@@ -117,7 +117,7 @@ public class CukaiBean implements ICukai {
 					//		",TBLHTPHAKMILIKAGENSI TPA,TBLRUJAGENSIMAPPING RAM" +
 			//		",TBLRUJAGENSI RA,TBLRUJKEMENTERIAN RK,TBLRUJKEMENTERIANMAPPING RKM");
 
-//			myLog.info("getCukai:"+sql);
+			myLog.info("getCukai:sql="+sql);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()){
 				hakmilik = new HakMilik();
@@ -3250,7 +3250,7 @@ public class CukaiBean implements ICukai {
 	    	db = new Db();
 	    	conn = db.getConnection();
 			if(isCukaiTerperinci(hakmilik)==false){
-		    	long IDCUKAITERPERINCI = DB.getNextID("tblhtpcukaiterperinci_SEQ");
+		    	long IDCUKAITERPERINCI = DB.getNextID("TBLHTPCUKAITERPERINCI_SEQ");
 		    	conn.setAutoCommit(false);
 		    	Statement stmt = db.getStatement();
 		    	SQLRenderer r = new SQLRenderer();		  
@@ -3299,6 +3299,10 @@ public class CukaiBean implements ICukai {
 			data = new Hashtable();
 			if(isCukaiTemp(hakmilik)==false){
 				long idCukaiTemp = DB.getNextID(db,"TBLHTPCUKAITEMP_SEQ"); 
+//				CukaiTemp hakmilikCTemp = new  CukaiTemp();
+//				hakmilikCTemp.setIdCukaiTemp(idCukaiTemp);
+//				hakmilik.setHakmilikCTemp(hakmilikCTemp);
+				
 				r.add("ID_CUKAITEMP", idCukaiTemp);
 				r.add("ID_PERMOHONAN",hakmilik.getIdPermohonan());
 				r.add("ID_NEGERI",hakmilik.getIdNegeri());
@@ -3309,7 +3313,6 @@ public class CukaiBean implements ICukai {
 				r.add("ID_LOT", hakmilik.getIdJenisLot());
 				r.add("NO_LOT",hakmilik.getNoLot());
 				r.add("NO_LOTUPLOAD", hakmilik.getHakmilikCTemp().getNoLot());
-	//			r.add("ID_HAKMILIK",hakmilik.getIdHakmilik());
 				r.add("ID_JENISHAKMILIK",hakmilik.getIdJenisHakmilik());
 				r.add("NO_HAKMILIK",hakmilik.getNoHakmilik());
 				r.add("NO_HAKMILIKUPLOAD",hakmilik.getHakmilikCTemp().getNoHakmilik());
@@ -3327,6 +3330,9 @@ public class CukaiBean implements ICukai {
 				r.add("ID_MASUK",hakmilik.getIdMasuk());
 				r.add("TARIKH_MASUK", r.unquote("sysdate"));
 				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));	  
+				if(!hakmilik.getHakmilikCTemp().getNotifikasi().equals(""))
+					r.add("FLAG_KEMASKINI_CUKAI", hakmilik.getHakmilikCTemp().getNotifikasi());	  
+					
 				sql = r.getSQLInsert("TBLHTPCUKAITEMP");
 				myLog.info("simpanCukaiHakmilikTemp:sql="+sql);
 				stmt.executeUpdate(sql);	
@@ -3726,7 +3732,7 @@ public class CukaiBean implements ICukai {
 	}
 	
 	@Override
-	public Vector<Hashtable<String, Comparable>> getSenaraiNegeriXPenyata(String tahun) throws Exception {
+	public Vector<Hashtable<String, String>> getSenaraiNegeriXPenyata(String tahun) throws Exception {
 		Db db = null;
 		String sql = "SELECT RN.ID_NEGERI,RN.NAMA_NEGERI " +
 		   			 " FROM TBLRUJNEGERI RN " +
@@ -3739,13 +3745,13 @@ public class CukaiBean implements ICukai {
 		   			 "";
 		try {
 			db = new Db();
-		      Vector<Hashtable<String, Comparable>> v = new Vector<Hashtable<String, Comparable>>(); 
+		      Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>(); 
 		      Statement stmt = db.getStatement();
 		      ResultSet rs = stmt.executeQuery(sql);
-		      Hashtable<String, Comparable> h;
+		      Hashtable<String, String> h;
 		      while (rs.next()) {
-		    	  h = new Hashtable<String, Comparable>();
-		    	  h.put("idNegeri",rs.getLong("ID_NEGERI")); 
+		    	  h = new Hashtable<String, String>();
+		    	  h.put("idNegeri",rs.getString("ID_NEGERI")); 
 		    	  h.put("nama",rs.getString("NAMA_NEGERI"));  
 		    	  v.addElement(h);
 		      }		      
