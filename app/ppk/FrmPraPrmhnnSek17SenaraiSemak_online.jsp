@@ -174,6 +174,7 @@
         <td width="73%" style="text-transform:uppercase;"><div class="style40">$!nopermohonan
         </div></td>
       </tr>
+      <input type="hidden" name="txtNoPermohonan" id="txtNoPermohonan" value="$!nofaillama"/>
       <tr>
         <td  width="1%" align="left" style="text-transform:uppercase;">&nbsp;</td>
         <td width="25%" align="left" style="text-transform:uppercase;">No Fail Lama</td> 
@@ -553,7 +554,7 @@ lain tujuan ::: $lt
               <td width="3%"></td>
               <td>
                 <div align="left">
-                  <textarea name="txtLainLainTujuan" id="txtLainLainTujuan" $chkmodeR class="$chkmode" cols="40" rows="2" style="text-transform:uppercase;" onKeyUp="checkit18()" >$txtchecked23</textarea>
+                  <textarea name="txtLainLainTujuan" id="txtLainLainTujuan" $chkmodeR class="$chkmode" cols="40" rows="2" style="text-transform:uppercase;" onKeyUp="checkit18()" >$!txtchecked23</textarea>
                    </div></td>
             </tr>
           </table></td>
@@ -797,14 +798,21 @@ document.getElementById('frmsemakharta').style.display = "";
 	      if (hWnd.focus != null) hWnd.focus();
 	}	
 	
-	function semakLampiran(v_t){
-	  	alert('Semak Lampiran');
+	function semakLampiran(){
+//	  	alert('Semak Lampiran');
 	  	document.f1.method = "POST";
-	  	document.f1.command.value="getlampiran";
-	  	document.f1.eventStatus.value="1";
+	  	document.f1.command.value="check_kp";
+// 	  	document.f1.eventStatus.value="1";
 	  	document.f1.action = "";
-	  	document.f1.v_tab.value = v_t;
+// 	  	document.f1.v_tab.value = v_t;
 	  	document.f1.submit();
+	  	
+	  	
+// 	  	document.f1.command.value = "check_kp";
+	  	// document.f1.mode.value = "getlampiran";
+// 		document.f1.method="POST";
+// 		document.f1.action = "";
+// 		document.f1.submit();
 	  }
   
 function getRujukan(ic,idlama,jenis,lain){

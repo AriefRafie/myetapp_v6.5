@@ -4149,7 +4149,8 @@ var dt=document.f1.txtTarikhPerjanjianHtaamX
 
 	}
 	function lampiranHartaPapar(id_){
-		var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
+		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=hta";
+		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
 	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener=document.window;
