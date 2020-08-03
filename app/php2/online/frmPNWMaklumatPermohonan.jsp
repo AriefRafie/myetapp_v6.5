@@ -13,9 +13,10 @@
 #set($saizTxtCatatan="500")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
-  
-  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+  <input name="userId" type="text" id="userId" value="$userId"/>
+  <input name="idFail" type="text" id="idFail" value="$idFail"/>
+  <input name="namaPemohon" type="text" id="namaPemohon" value="$namaPemohon"/>
+  <input name="idPermohonan" type="text" id="idPermohonan" value="$idPermohonan"/>
   <input name="idHakmilikAgensi" type="hidden" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
@@ -30,8 +31,11 @@
   <input name="idPermohonanPelepasan" type="hidden" id="idPermohonanPelepasan" value="$idPermohonanPelepasan"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
-  <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
+  <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
+  <input name="idLuasKegunaan" type="hidden" id="idLuasKegunaan" value="$idLuasKegunaan"/>
   
+  
+ 
 </p>
 
 <body onLoad = $onload >
@@ -51,10 +55,10 @@
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENAWARAN</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
+          <!-- <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
           #if ($idStatus == '1610207' || $idStatus == '1610208')
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
-          #end
+          #end -->
         </ul>
         <div class="TabbedPanelsContentGroup">
         <!-- START TAB MAKLUMAT TANAH  -->
@@ -67,7 +71,7 @@
                 <td width="1%">:</td>
                 <td width="70%"> #if ($mode == 'update')
                   <input type="text" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik" onBlur="doChangePeganganHakmilik1();" />
-                  <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onClick="pilihTanah('$idKementerianPmhn','$idAgensiPmhn')">
+                  <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onClick="pilihTanah('$idKementerian','$idAgensi')">
                   #else
                   <input type="text" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
                   #end
@@ -173,6 +177,8 @@
                   <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
                   #end
                   #else
+                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+                  <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
                  #end  </td>
@@ -266,6 +272,7 @@
                   <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
                   #end
                    #else
+                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
                  #end </td>
@@ -281,7 +288,31 @@
 						<!-- END TAB SENARAI SEMAK  -->
 						<!-- START KEPUTUSAN -->
           <div class="TabbedPanelsContent">
-          	#parse("app/php2/online/frmPNWImejan.jsp")
+          
+          	##parse("app/php2/online/frmPNWImejan.jsp")
+          	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+           	<td valign="top">
+           	#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
+           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
+           	<td>
+        	Saya, $namaPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   			<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+      		</td>
+           	<tr>
+           	<td colspan=2 align="center">
+           	#if ($userJawatan == '24')
+           		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar Untuk Semakan" onClick="doHantarEmel()"/>
+            	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
+            #else
+            #if ($idStatus !='')
+            	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            #end
+            #end
+            </td>
+           	</tr>
+           	</table>
           </div>
            ##if ($idStatus == '1610207' || $idStatus == '1610208')
           <div class="TabbedPanelsContent">
@@ -522,7 +553,7 @@ function doChangeTabUpper(tabId) {
 }
 function pilihTanah(idKementerian,idAgensi) {
 	
-	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmPNWPopupSenaraiTanahOnlineView?idKementerian="+idKementerian+"&idAgensi="+idAgensi+"&jenisPemohon=K";
+	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmPNWPopupSenaraiTanahOnlineView?idKementerian="+idKementerian+"&idAgensi="+idAgensi;
 	
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
@@ -562,7 +593,7 @@ function doChangeLuas() {
 function doKemaskini() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineSenaraiFailView";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 	document.${formName}.submit();
@@ -573,11 +604,11 @@ function doBatalKemaskini() {
 }
 function doSimpanKemaskiniMaklumatPelepasan(idLuas) {
 	
-	if(document.${formName}.socLuasKegunaan.value == ""){
+	/* if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila masukkan Luas Kegunaan.');
   		document.${formName}.socLuasKegunaan.focus(); 
 		return; 
-	}
+	} */
 	if(document.${formName}.socLuasKegunaan.value == "2"){
 		if(document.${formName}.socLuas.value == "0"){
 			alert('Sila pilih Unit Luas.');
@@ -839,7 +870,7 @@ function textCounter(field, countfield, maxlimit) {
 }
 function doBacklist() {
 	document.${formName}.actionOnline.value = "";
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineSenaraiFailView";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 }
@@ -912,7 +943,7 @@ function doHapus(){
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapus";
 	document.${formName}.actionOnline.value = "";
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineSenaraiFailView";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 }
@@ -943,6 +974,7 @@ function nextPengesahan(idPermohonan) {
 	doAjaxCall${formName}("pengesahan",'idpermohonan='+idPermohonan);
 	//doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
 }
+
 <!-- SENARAI SEMAK -->
 function doSimpanKemaskiniSenaraiSemak() {
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -954,5 +986,15 @@ function doSimpanKemaskiniSenaraiSemak() {
 	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
 	document.${formName}.submit();
 }
+function kemaskiniPermohonan() {
+	document.${formName}.actionOnline.value = "seterusnya";
+	document.${formName}.mode.value = "update";
+	document.${formName}.submit();
+}
+function batalProjek() {
+	document.${formName}.mode.value = "view";
+	document.${formName}.submit();
+// 	doAjaxCall${formName}("");
+}
 </script>
-
+$javascriptLampiran

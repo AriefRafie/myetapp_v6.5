@@ -51,19 +51,19 @@
       <legend><strong>MAKLUMAT PEMOHON</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
-          <td width="1%"><span class="style1">*</span></td>
+          <td width="1%"></td>
           <td width="28%">Kategori Pemohon</td>
           <td>:</td>
           <td width="70%">$idKategoriPemohon</td>
         </tr>
         <tr>
-          <td><span class="style1">*</span></td>
+          <td></td>
           <td>Kementerian</td>
           <td>:</td>
           <td>$namaKementerian</td>
         </tr>
         <tr>
-          <td><span class="style1">*</span></td>
+          <td></td>
           <td>Agensi</td>
           <td>:</td>
           <td>$namaAgensi</td>
@@ -118,32 +118,41 @@
 		<input type="hidden" name="idPermohonan" value="$idPermohonan" />
 		<input type="hidden" name="idjawatan" value="$idjawatan" />
 		<input type="hidden" name="statussemasa" value="$statussemasa" />
-		<input name="submit" type="hidden" id="submit" value="$submit"/>
+		<input type="hidden" name="namaPemohon" value=$namaPemohon />
+		
 		<input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
 		
 		
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
+			
+      		<tr>
 			<td align="center" colspan="4">
 						#if($semakMode == "update")
 		    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1")) 
-		    				<p><input type="checkbox" id="checkme"/><a>&nbsp;Pastikan maklumat yang dimasukkan adalah betul.</a></p>
+		    				<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   							<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
 		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
 						#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("2"))
-							<p><input type="checkbox" id="checkme"/><a>&nbsp;Pastikan maklumat yang dimasukkan adalah betul.</a></p>
+							<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   							<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
 		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
 						
 						#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
-							<p><input type="checkbox" id="checkme"/><a>&nbsp;Pastikan maklumat yang dimasukkan adalah betul.</a></p>
+							<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   							<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
 		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
                 		
                 		#end
                 		
-                	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> 
+                	<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+                	
 		    		#else
-                    <input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:cetakPengesahan('$!permohonan.idpermohonan');" />
-               		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
+		    		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           			<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+               		<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
 		    		#end
 		    </td>
+		    </tr>
 </table>
 <script>
 var checker = document.getElementById('checkme');
@@ -160,19 +169,5 @@ if(this.checked){
 
 }
 
-function simpanpengesahan2() {
-	//alert('baca idFail=='+document.${formName}.idFail.value+" idPermohonan=="+idPermohonan);
-	//doAjaxCall${formName}("pkmaklumatseterus","id_kemaskini="+id);	
-	//document.${formName}.pagemode.value = 0;
-	document.${formName}.actionOnline.value = "simpanpengesahan2";
-	//document.${formName}.semakMode.value = 'update';
-	doAjaxCall${formName}("simpanpengesahan2",'idpermohonan='+idPermohonan);
-	//doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
-}
-function doBacklist() {
-	document.${formName}.actionOnline.value = "";
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
-	document.${formName}.method="POST";
-	document.${formName}.submit();
-}
+
 </script>

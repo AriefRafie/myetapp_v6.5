@@ -16,7 +16,7 @@
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idNegeriPemohon" type="hidden" id="idNegeriPemohon" value="$idNegeriPemohon"/>
   <input name="idSuburusan" type="hidden" id="idSuburusan"/>
-  <input name="idSuburusanPmhn" type="hidden" id="idSuburusan" />
+  <input name="idSuburusan" type="hidden" id="idSuburusan" />
   <input type="hidden" name="idPHPBorangK" id="idPHPBorangK"/>
   <input type="hidden" name="idPPTBorangK" id="idPPTBorangK"/>
 
@@ -112,6 +112,8 @@
           <td>Luas Lot</td>
           <td>:</td>
           <td>$beanMaklumatTanah.luasLot</td>
+          <input type="hidden" name="idLuasTanah" id="idLuasTanah" value="$!beanMaklumatTanah.luas" />
+              <input type="hidden" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luasBersamaan" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -184,7 +186,7 @@
       </table>
       </fieldset></td>
   </tr>
-    <!-- <tr>
+    <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT KEGUNAAN TANAH</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -193,7 +195,7 @@
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td width="28%">Luas Kegunaan</td>
           <td width="1%">:</td>
-          <td width="70%">$selectLuasKegunaan </td>
+          <td width="70%">$!selectLuasKegunaan </td>
         </tr>
         <tr>
           <td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
@@ -207,7 +209,7 @@
       </table>
       </fieldset></td>
   </tr>
-<tr> -->
+<tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -252,26 +254,6 @@
           <td>:</td>
           <td><input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat" value="$beanMaklumatPermohonan.noRujukanSurat" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50"/></td>
         </tr>
-        <tr>
-          <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Perkara</td>
-          <td valign="top">:</td>
-          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizTxtPerkara);" >$beanMaklumatPermohonan.perkara</textarea>
-            #if ($mode == 'new')
-            #if ($idHakmilikAgensi != '')
-            <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Jana Tajuk" onclick="janaTajuk('$idKategoriPemohon')"/>
-            #end
-            #end </td>
-        </tr>
-        #if ($mode != 'view')
-        <tr>
-          <td valign="top">&nbsp;</td>
-          <td valign="top">&nbsp;</td>
-          <td valign="top">&nbsp;</td>
-          <td>Baki Aksara :&nbsp;
-            <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtPerkara" /></td>
-        </tr>
-        #end
         #end
       </table>
       </fieldset></td>
@@ -342,7 +324,7 @@ function janaTajuk(idKategoriPemohon) {
 		document.${formName}.idHakmilikAgensi.focus();
 		return;
 	}
-	/* if(document.${formName}.socLuasKegunaan.value == ""){
+	if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila masukkan Luas Kegunaan.');
 		document.${formName}.socLuasKegunaan.focus();
 		return;
@@ -351,19 +333,19 @@ function janaTajuk(idKategoriPemohon) {
 		alert('Sila masukkan Tujuan Kegunaan.');
   		document.${formName}.txtTujuanKegunaan.focus();
 		return;
-	} */
+	}
 
 	var strTajuk = " ";
 	var luasKegunaan = " ";
 	var milikOrRizab = " ";
 	var pemohon = document.${formName}.socKementerian.value;
 
-	/* if(document.${formName}.socLuasKegunaan.value == "1") {
+	if(document.${formName}.socLuasKegunaan.value == "1") {
 		luasKegunaan = "KESELURUHAN";
 	}
 	else if(document.${formName}.socLuasKegunaan.value == "2"){
 		luasKegunaan = "SEBAHAGIAN";
-	} */
+	}
 
 	var str1 = document.${formName}.noLotTanah.value;
 	var str2 = document.${formName}.noMilikTanah.value;
@@ -374,7 +356,7 @@ function janaTajuk(idKategoriPemohon) {
 	var kegunaanTanah = document.${formName}.kegunaanTanah.value;
 	var statusRizabTnh = document.${formName}.statusRizab.value;
 	var kjpTnh = document.${formName}.namaKementerianTanah.value;
-	//var tujuanKegunaan = document.${formName}.txtTujuanKegunaan.value;
+	var tujuanKegunaan = document.${formName}.txtTujuanKegunaan.value;
 	if(statusRizabTnh == 'MILIK') {
 		milikOrRizab = str2;
 	} else if(statusRizabTnh == 'RIZAB') {
@@ -385,7 +367,7 @@ function janaTajuk(idKategoriPemohon) {
 	document.${formName}.txtPerkara.value = strTajuk;
 }
 function seterusnya(){
-	alert('BACA SETERUSNYAAA');
+	//alert('BACA SETERUSNYAAA');
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";	
 	document.${formName}.actionOnline.value = "seterusnya";
