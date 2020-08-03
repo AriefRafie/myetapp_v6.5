@@ -503,6 +503,10 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                             HARTA TAK ALIH (TIADA HAKMILIK) TERDAHULU
                                             #end
                                             </legend>
+                                            <div id="info_skrin_daftar_sek17"></div>
+												<script>
+													parent.document.getElementById("info_skrin_daftar_sek17").innerHTML="<div class=\"warning_online_ppk\"><table><tr><b><blink>*</blink> Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Tiada Hakmilik) : Harta tak alih yang tidak mempunyai hakmilik/geran yang berdaftar nama si mati dan kepentingan si mati berdasarkan surat perjanjian jual beli.</br></b></div>";
+												</script>
                                             <input name="noradio" type="hidden"  />
                                             <table width="70%" align="center">
                                               <tr>
@@ -511,7 +515,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                                   
                                              
                                                   
-                                                  Perjanjian Jual Beli</span></td>
+                                                  Perjanjian Jual Beli</span>
+                                                  #if($!skrin_online_17 == "yes")
+					                                         <a href="javascript:info('perjanjian')" class="help" title="info">					
+									                								<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									           											 </a>#end
+                                                  </td>
                                               </tr>
                                               <tr>
                                                 <td><span class="style36">
@@ -3698,10 +3707,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                        					&& $id_Status != "64" 
                        					&& $id_Status != "163" 
                        					&& $id_Status != "164" 
-                       					&& $id_Status != "165")				                              		
+                       					&& $id_Status != "165")
+                       					#if($open_button_online == "yes")				                              		
 		                        		<a href = "javascript:lampiranHarta('$listam.idhta');">
 											<img border="0" src="../img/plus.gif" width="20" height="15"/>
 										</a><br>
+										#end
 									#end		
 								 #end	
 						 		$listam.lampirans
@@ -3774,10 +3785,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                        					&& $id_Status != "64" 
                        					&& $id_Status != "163" 
                        					&& $id_Status != "164" 
-                       					&& $id_Status != "165")				                              		
+                       					&& $id_Status != "165")	
+                       					#if($open_button_online == "yes")			                              		
 		                        		<a href = "javascript:lampiranHarta('$listam.idhta');">
 											<img border="0" src="../img/plus.gif" width="20" height="15"/>
 										</a><br>
+										#end
 									#end		
 								 #end	
 						 		$listam.lampirans
@@ -4999,7 +5012,7 @@ function lampiranHarta(idHarta) {
 }
 
 function lampiranHartaPapar(id_){
-	var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
+	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=hta";
     var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;

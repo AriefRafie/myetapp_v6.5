@@ -4848,6 +4848,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 					r.add("TARIKH_KEMASKINI", r.unquote(sekarang));
 					r.add("ID_FAIL", r.unquote(idFail));
 					sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+					myLog.info("simpanKemaskiniStatusPermohonan"+sql);
 					stmt.executeUpdate(sql);
 					
 				}	

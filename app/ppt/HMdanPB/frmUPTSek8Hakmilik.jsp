@@ -155,9 +155,9 @@
 				<td> No. Strata</td>
 				<td>:</td>
 				<td>
-                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" class="$disabled" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" class="$disabled" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" class="$disabled" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
   				</td>
 			</tr>
 			
@@ -374,44 +374,6 @@
 				</td>
 			</tr>
 			#end
-			
-			<!-- PPT-03 Lama -->
-			<!-- tr>
-				<td>&nbsp;</td>
-				<td>No. Bangunan</td>
-				<td>:</td>
-				<td><input type="text" name="txtNoBangunan" id="txtNoBangunan" value="" size="12" maxlength="100"   ></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>No. Tingkat</td>
-				<td>:</td>
-				<td><input type="text" name="txtNoTingkat" id="txtNoTingkat" value="" size="12" maxlength=""100""   ></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>No. Petak</td>
-				<td>:</td>
-				<td><input type="text" name="txtNoPetak" id="txtNoPetak" value="" size="12" maxlength=""100""   ></td>
-			</tr -->
-			
-			<!-- PPT-3 sama macam atas tapi inline -->
-			<!-- tr>
-  				<td width="1%"  >
-				</td>				        
-                <td width="20%">
-                <div align="left">
-                	<span>No. Strata</span>
-                </div>
-                </td>
-                <td width="1%">:</td>
-                <td width="100%">
-                	<span>No.Bang</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-					<span>No.Ting</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-					<span>No.Petak</span>&nbsp;<input name="txtNoPetak" id="txtNoPetak" type="text" value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-  				</td>
-            </tr -->
-			
 			
         </table>
      </fieldset>	
@@ -633,6 +595,19 @@
 				<td>:</td>
 				<td><input $disability $disabilityx type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50"   ></td>
 			</tr>
+			
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td> No. Strata</td>
+				<td>:</td>
+				<td>
+                   	<span class="labelinput">No.Bang</span>&nbsp;<input $disability $disabilityx name="txtNoBangunan" type="text" class="$disabled" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Ting</span>&nbsp;<input $disability $disabilityx name="txtNoTingkat" type="text" class="$disabled" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Petak</span>&nbsp;<input $disability $disabilityx name="txtNoPetak" type="text" class="$disabled" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3 onkeyup="this.value=this.value.toUpperCase();"/>
+  				</td>
+			</tr>
+			
 			<tr>
 				<td>&nbsp;</td>
 				<td>Tarikh Daftar</td>
@@ -841,38 +816,6 @@
 				</td>
 			</tr>
 			#end
-			
-			 <!-- PPT-03  -->
-			<!-- tr>
-				<td><font color="red">$!M</font></td>
-				<td>No. Bangunan</td>
-				<td>:</td>
-				<td><input $disability $disabilityx type="text" name="txtNoBangunan" id="txtNoBangunan" value="$!txtNoBangunan" size="12" maxlength="50"   ></td>
-			</tr>
-			<tr>
-				<td><font color="red">$!M</font></td>
-				<td>No. Tingkat</td>
-				<td>:</td>
-				<td><input $disability $disabilityx type="text" name="txtNoTingkat" id="txtNoTingkat" value="$!txtNoTingkat" size="12" maxlength="50"   ></td>
-			</tr>
-			<tr>
-				<td><font color="red">$!M</font></td>
-				<td>No. Petak</td>
-				<td>:</td>
-				<td><input $disability $disabilityx type="text" name="txtNoPetak" id="txtNoPetak" value="$!txtNoPetak" size="12" maxlength="50"   ></td>
-			</tr -->
-			
-			<!-- PPT-03 Usop tambah -->
-			<tr>
-				<td>&nbsp;</td>
-				<td> No. Strata</td>
-				<td>:</td>
-				<td>
-                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" $disability $disabilityx  id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" $disability $disabilityx  id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" $disability $disabilityx  id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-  				</td>
-			</tr>
 			
         </table>
      </fieldset>	

@@ -172,6 +172,10 @@ padding:0 0.25em;
 		/* 	document.${formName}.hitButton.value = "simpanHA";
 			document.${formName}.actionPopup.value = "paparHA";
 		}else{ */
+		}else if('phppnw'=='$!actionRefresh'){
+		/* 	document.${formName}.hitButton.value = "simpanHA";
+			document.${formName}.actionPopup.value = "paparHA";
+		}else{ */
 		}
 		//alert('simpanLampiran:$!jenisdokumen');
 		document.${formName}.action = "?_portal_module=ekptg.view.online.UploadDokumenSemak"+paramsimpan;
@@ -237,7 +241,7 @@ padding:0 0.25em;
 	}
 	
 	function refresh(flagOnline) {
-		//alert('$!actionRefresh');
+		alert('$!actionRefresh');
 		if('paparHA'=='$!actionRefresh'){
 			window.opener.setSelected(2,0,0,0);
 			window.opener.HAview(flagOnline);
@@ -255,6 +259,10 @@ padding:0 0.25em;
 			
 		}else if('$!actionRefresh'=='phpapb'){
 			window.opener.doChangeTab('2');
+			
+		}else if('$!actionRefresh'=='phppnw'){
+			alert("masuk actionRefresh phppnw");
+			window.opener.doChangeTabUpper('2');
 		}
 		
 	}

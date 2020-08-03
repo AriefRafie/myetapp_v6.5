@@ -287,6 +287,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                           #if($nowpast == "past")
                           HARTA TAK ALIH (ADA HAKMILIK) TERDAHULU
                           #end </legend>
+                          
+                          <div id="info_skrin_daftar_sek17"></div>
+                           <script>
+			 						parent.document.getElementById("info_skrin_daftar_sek17").innerHTML="<div class=\"warning_online_ppk\"><table><tr><b><blink>*</blink> Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Ada Hakmilik): Harta tak alih yang mempunyai hakmilik/geran yang berdaftar nama si mati sebagai pemilik.</br></b></div>";
+			 			   </script>
+			 			   
                           <table width="100%" border="0">
                             <tr>
                               <td width="50%" valign="top"><table width="100%" border="0">
@@ -376,7 +382,15 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                       
                                       
                                       </select>
-                                      #end </td>
+                                      #end
+                                      
+                                       #if($!skrin_online_17 == "yes")
+										<a href="javascript:info('maklumat_tanah')" class="help" title="info">					
+			                          		<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+			                          	</a>
+			                          #end 
+			                           			
+                                      </td>
                                   </tr>
                                   <tr>
                                     <td valign="top" class="style47" >*</td>
@@ -666,7 +680,15 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                       
                                       
                                       </select>
-                                      #end </td>
+                                      #end 
+                                      
+                                      #if($!skrin_online_17 == "yes")
+                                   	   <a href="javascript:info('tanah')" class="help" title="info">
+                                   			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+                                     	</a>
+                                     #end
+                                      
+                                      </td>
                                   </tr>
                                   <tr>
                                     <td valign="top" class="style47">*</td>
@@ -676,7 +698,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                     <td><div align="right">:</div></td>
                                     <td><label>
                                       <input name="txtNoHakmilikHtaam" type="text" id="txtNoHakmilikHtaam" value="$noHakmilik"  size="20" maxlength="50" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"/>
-                                      </label></td>
+                                      </label>
+                                       #if($!skrin_online_17 == "yes")
+                                      	<a href="javascript:info('hakmilik')" class="help" title="info">					
+			                            	<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+			                            </a>#end
+                                    </td>
                                   </tr>
                                   <tr>
                                     <td valign="top" class="style47">*</td>
@@ -687,7 +714,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                     <td><label>
                                       <input name="txtNoPTHtaam" type="text" id="txtNoPTHtaam" value="$nopt" size="15"  maxlength="50" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"  onkeyup="no_lot1();checklot()" />
                                       </label>
-                                      <span id="checklot" style="color:red" ></span> </td>
+                                      <span id="checklot" style="color:red" ></span> 
+                                      #if($!skrin_online_17 == "yes")
+                            			<a href="javascript:info('lot')" class="help" title="info">					
+                     						<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+                     					</a>#end
+                                      </td>
                                   </tr>
                                    <!--    <!-- Salnizam edit starts --> 
                                                            
@@ -829,6 +861,10 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                     <td><input name="txtBahagianSimati1" type="text" id="txtBahagianSimati1" onKeyUp="javascript:validateIC(event,this,this.value,'txtBahagianSimati1')" style="text-align:right;text-transform:uppercase;" value="$basimati" size="14" maxlength="14" onblur="bahagiansimati()"/>
                                       /
                                       <input name="txtBahagianSimati2" type="text" id="txtBahagianSimati2" onKeyUp="javascript:validateIC(event,this,this.value,'txtBahagianSimati2')" style="text-align:left;text-transform:uppercase;" value="$bbsimati" size="14" maxlength="14" onblur="bahagiansimati()"/>
+                                     #if($!skrin_online_17 == "yes")
+								         <a href="javascript:info('bahagian')" class="help" title="info">					
+									         <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									     </a>#end
                                     </td>
                                   </tr>
                                   <tr>
@@ -869,7 +905,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                     <td valign="top"><div align="right">:</div></td>
                                     <td valign="top"><label>
                                       <textarea name="txtSyaratNyata" id="txtSyaratNyata" cols="31" rows="5" onblur="this.value=this.value.toUpperCase()">$syaratNyata</textarea>
-                                      </label></td>
+                                      </label>
+                                      #if($!skrin_online_17 == "yes")
+										<a href="javascript:info('syarat')" class="help" title="info">					
+											<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+										</a>#end
+									</td>
                                   </tr>
                                 </table></td>
                               <td width="50%" valign="top"><table width="100%" border="0">
@@ -1006,7 +1047,8 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                       
                                       
                                       </select>
-                                      #end </td>
+                                      #end
+                                     </td>
                                   </tr>
                                   <tr>
                                     <td class="style38"><div align="left">Luas Asal</div></td>
@@ -1412,7 +1454,14 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                         <option value="3">TANAH GSA</option>
                                         <option value="4">BUKAN TANAH GSA</option>
                                       </select>
-                                      #end </label></td>
+                                      #end </label>
+                                      
+                                      #if($!skrin_online_17 == "yes")
+								 	  	<a href="javascript:info('Tanah_gsa')" class="help" title="info">					
+											<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+										</a>#end
+                                      
+                                      </td>
                                   </tr>
                                   <tr>
                                     <td class="style38" valign="top"><div align="left">Catatan</div></td>
@@ -3296,10 +3345,12 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                        					&& $id_Status != "64" 
                        					&& $id_Status != "163" 
                        					&& $id_Status != "164" 
-                       					&& $id_Status != "165")				                              		
+                       					&& $id_Status != "165")	
+                       					#if($open_button_online == "yes")			                              		
 		                        		<a href = "javascript:lampiranHarta('$listam.idhta');">
 											<img border="0" src="../img/plus.gif" width="20" height="15"/>
 										</a><br>
+										#end
 									#end		
 								 #end	
 						 		$listam.lampirans
@@ -3369,10 +3420,12 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                        					&& $id_Status != "64" 
                        					&& $id_Status != "163" 
                        					&& $id_Status != "164" 
-                       					&& $id_Status != "165")				                              		
+                       					&& $id_Status != "165")	
+                       					#if($open_button_online == "yes")			                              		
 		                        		<a href = "javascript:lampiranHarta('$listam.idhta');">
 											<img border="0" src="../img/plus.gif" width="20" height="15"/>
 										</a><br>
+										#end
 									#end		
 								 #end	
 						 		$listam.lampirans
@@ -3668,7 +3721,7 @@ function lampiranHarta(idHarta) {
 }
 
 function lampiranHartaPapar(id_){
-	var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
+	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=hta";
     var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;
