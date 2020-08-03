@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ekptg.model.php2;
 
@@ -29,7 +29,7 @@ import ekptg.helpers.Utils;
 import ekptg.view.php2.util.UtilHasil;
 
 /**
- * 
+ *
  *
  */
 public class FrmREVMemantauBayaranSewaData {
@@ -54,7 +54,7 @@ public class FrmREVMemantauBayaranSewaData {
 
 	@SuppressWarnings("unchecked")
 	public void carianFail(String noFail, String namaPemohon, String noRujukan,
-			String idBank, String noCek, String noResit, String idJenisFail, String idStatusPerjanjian, String tujuan, 
+			String idBank, String noCek, String noResit, String idJenisFail, String idStatusPerjanjian, String tujuan,
 			String idNegeri, String idDaerah, String idMukim, String idJenisHakmilik,
 			String noHakmilik, String noWarta, String idLot, String noLot,
 			String peganganHakmilik, String idKementerian, String idAgensi)
@@ -72,7 +72,7 @@ public class FrmREVMemantauBayaranSewaData {
 					+ " TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT, TBLPHPHASIL.MAKLUMAT_LOT,"
 					+ " TBLPHPHASIL.ID_HASIL, TBLPFDFAIL.ID_FAIL, TBLPFDFAIL.ID_SUBURUSAN, TBLPHPHASIL.FLAG_TUNGGAKAN, TBLPHPHASIL.FLAG_TUNGGAKAND,"
 					+ " TBLPHPBAYARANPERLUDIBAYAR.STATUS AS STATUS_PERJANJIAN, TBLPHPHASIL.NILAI_TUNGGAKAN, TBLPHPHASIL.TUJUAN"
-					
+
 					+ " FROM TBLPHPHASIL, TBLPFDFAIL, TBLPHPPEMOHON, TBLPFDFAIL TBLPFDFAILPERMOHONAN, TBLPERMOHONAN, TBLPHPHAKMILIKPERMOHONAN,"
 					+ " TBLPHPHAKMILIK, TBLPHPBAYARANPERLUDIBAYAR"
 
@@ -131,7 +131,7 @@ public class FrmREVMemantauBayaranSewaData {
 					sql = sql + " AND TBLPHPHASIL.FLAG_TUNGGAKAN = 'Y'";
 				}
 			}
-			
+
 			// idStatusPerjanjian
 			if (idStatusPerjanjian != null) {
 				if (!idStatusPerjanjian.trim().equals("")
@@ -238,7 +238,7 @@ public class FrmREVMemantauBayaranSewaData {
 							+ peganganHakmilik.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			
+
 			//tujuanPenyewaan
 			if (tujuan != null) {
 				if (!tujuan.trim().equals("")) {
@@ -288,8 +288,8 @@ public class FrmREVMemantauBayaranSewaData {
 					h.put("statusPerjanjian", "DITAMATKAN");
 				} else {
 					h.put("statusPerjanjian", "");
-				}				
-				
+				}
+
 				String statusDeposit = "";
 				String status = "";
 				int bilHari = 0;
@@ -305,7 +305,7 @@ public class FrmREVMemantauBayaranSewaData {
 
 					bilHari = daysBetween(calTamat.getTime(), calCurrent.getTime());
 
-					if (calCurrent.getTime().after(calTamat.getTime())) {						
+					if (calCurrent.getTime().after(calTamat.getTime())) {
 						if (rs.getString("FLAG_TUNGGAKAND") != null && rs.getString("FLAG_TUNGGAKAND").equals("Y")) {
 							statusDeposit = "DEPOSIT TIDAK DITUNTUT";
 						}
@@ -320,7 +320,7 @@ public class FrmREVMemantauBayaranSewaData {
 					h.put("statusDeposit", "");
 				}
 
-				if (rs.getString("FLAG_TUNGGAKAN") != null && rs.getString("FLAG_TUNGGAKAN").equals("Y")) {					
+				if (rs.getString("FLAG_TUNGGAKAN") != null && rs.getString("FLAG_TUNGGAKAN").equals("Y")) {
 					h.put("statusTunggakan", "TERTUNGGAK");
 					if (rs.getDouble("NILAI_TUNGGAKAN") == 0D) {
 						h.put("tunggakan", "0.00");
@@ -334,7 +334,7 @@ public class FrmREVMemantauBayaranSewaData {
 					} else {
 						h.put("tunggakan", "(" + Util.formatDecimal(rs.getDouble("NILAI_TUNGGAKAN")) + ")");
 					}
-				}	
+				}
 				h.put("kadarSewa", Util.formatDecimal(rs.getDouble("BAYARAN")));
 				h.put("maklumatLot",
 						rs.getString("MAKLUMAT_LOT") == null ? "" : rs
@@ -342,7 +342,7 @@ public class FrmREVMemantauBayaranSewaData {
 				h.put("tujuan",
 						rs.getString("TUJUAN") == null ? "" : rs
 								.getString("TUJUAN"));
-				
+
 				senaraiFail.addElement(h);
 
 				bil++;
@@ -373,7 +373,7 @@ public class FrmREVMemantauBayaranSewaData {
 				sql = sql + " AND TBLPHPAKAUN.ID_BANK = " + idBank;
 			}
 		}
-		
+
 		if (noResit != null) {
 			if (!noResit.trim().equals("")) {
 				sql = sql + " AND UPPER(TBLPHPAKAUN.NO_RESIT) LIKE '%"
@@ -711,13 +711,13 @@ public class FrmREVMemantauBayaranSewaData {
 
 			sql = r.getSQLInsert("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "INS",
 					"FAIL [" + idHasil
 							+ "] DIDAFTARKAN");
-			
+
 			UtilHasil.updateFlagTunggakanD(idHasil, db);
 
 		} catch (SQLException ex) {
@@ -787,7 +787,7 @@ public class FrmREVMemantauBayaranSewaData {
 			sql = r.getSQLUpdate("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "UPD",
 					"FAIL [" + idHasil
 							+ "] DIKEMASKINI");
@@ -833,7 +833,7 @@ public class FrmREVMemantauBayaranSewaData {
 			sql = r.getSQLUpdate("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "DEL",
 					"FAIL [" + idHasil
 							+ "] DIHAPUSKAN");
@@ -910,7 +910,7 @@ public class FrmREVMemantauBayaranSewaData {
 			sql = r.getSQLInsert("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "INS",
 					"FAIL [" + idHasil
 							+ "] DIDAFTARKAN");
@@ -988,9 +988,9 @@ public class FrmREVMemantauBayaranSewaData {
 
 			sql = r.getSQLInsert("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "INS",
 					"FAIL [" + idHasil
 							+ "] DIDAFTARKAN");
@@ -1059,7 +1059,7 @@ public class FrmREVMemantauBayaranSewaData {
 			sql = r.getSQLUpdate("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "UPD",
 					"FAIL [" + idHasil
 							+ "] DIKEMASKINI");
@@ -1129,9 +1129,9 @@ public class FrmREVMemantauBayaranSewaData {
 
 			sql = r.getSQLUpdate("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "UPD",
 					"FAIL [" + idHasil
 							+ "] DIKEMASKINI");
@@ -1175,13 +1175,13 @@ public class FrmREVMemantauBayaranSewaData {
 			sql = r.getSQLUpdate("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "DEL",
 					"FAIL [" + idHasil
 							+ "] DIHAPUSKAN");
 
 			UtilHasil.updateFlagTunggakan(idHasil, db);
-			
+
 		} catch (SQLException ex) {
 			try {
 				conn.rollback();
@@ -1220,9 +1220,9 @@ public class FrmREVMemantauBayaranSewaData {
 
 			sql = r.getSQLUpdate("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "DEL",
 					"FAIL [" + idHasil
 							+ "] DIHAPUSKAN");
@@ -1298,9 +1298,9 @@ public class FrmREVMemantauBayaranSewaData {
 
 			sql = r.getSQLInsert("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "INS",
 					"FAIL [" + idHasil
 							+ "] DIDAFTARKAN");
@@ -1376,9 +1376,9 @@ public class FrmREVMemantauBayaranSewaData {
 
 			sql = r.getSQLUpdate("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "UPD",
 					"FAIL [" + idHasil
 							+ "] DIKEMASKINI");
@@ -1416,9 +1416,9 @@ public class FrmREVMemantauBayaranSewaData {
 			// TBLPHPAKAUN
 			sql = "DELETE FROM TBLPHPAKAUN WHERE ID_AKAUN = '" + idAkaun + "'";
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "DEL",
 					"FAIL [" + idHasil
 							+ "] DIHAPUSKAN");
@@ -1497,9 +1497,9 @@ public class FrmREVMemantauBayaranSewaData {
 
 			sql = r.getSQLInsert("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "INS",
 					"FAIL [" + idHasil
 							+ "] DIDAFTARKAN");
@@ -1575,9 +1575,9 @@ public class FrmREVMemantauBayaranSewaData {
 
 			sql = r.getSQLUpdate("TBLPHPAKAUN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "UPD",
 					"FAIL [" + idHasil
 							+ "] DIKEMASKINI");
@@ -1614,9 +1614,9 @@ public class FrmREVMemantauBayaranSewaData {
 			// TBLPHPAKAUN
 			sql = "DELETE FROM TBLPHPAKAUN WHERE ID_AKAUN = '" + idAkaun + "'";
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "DEL",
 					"FAIL [" + idHasil
 							+ "] DIHAPUSKAN");
@@ -2112,7 +2112,7 @@ public class FrmREVMemantauBayaranSewaData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "UPD",
 					"FAIL [" + idPemohon
 							+ "] DIKEMASKINI");
@@ -2174,7 +2174,7 @@ public class FrmREVMemantauBayaranSewaData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "UPD",
 					"FAIL [" + idFail
 							+ "] DIKEMASKINI");
@@ -2284,7 +2284,7 @@ public class FrmREVMemantauBayaranSewaData {
 				h.put("flagPerjanjian",
 						rs.getString("FLAG_PERJANJIAN") == null ? "" : rs
 								.getString("FLAG_PERJANJIAN"));
-				
+
 				String keteranganFlagPerjanjian = "";
 				if ("1".equals(rs.getString("FLAG_PERJANJIAN"))) {
 					keteranganFlagPerjanjian = "PENGURANGAN KADAR SEWA";
@@ -2294,7 +2294,7 @@ public class FrmREVMemantauBayaranSewaData {
 					keteranganFlagPerjanjian = "PENGECUALIAN KADAR SEWA";
 				}
 				h.put("keteranganFlagPerjanjian",keteranganFlagPerjanjian);
-				
+
 				h.put("noSiri",
 						rs.getString("NO_RUJUKAN") == null ? "" : rs
 								.getString("NO_RUJUKAN"));
@@ -2372,7 +2372,7 @@ public class FrmREVMemantauBayaranSewaData {
 						.getString("TUJUAN").toUpperCase());
 				h.put("catatan", rs.getString("CATATAN") == null ? "" : rs
 						.getString("CATATAN").toUpperCase());
-				
+
 				beanMaklumatPermohonan.addElement(h);
 				bil++;
 			}
@@ -2484,7 +2484,7 @@ public class FrmREVMemantauBayaranSewaData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "UPD",
 					"FAIL [" + idFail
 							+ "] DIKEMASKINI");
@@ -2531,9 +2531,9 @@ public class FrmREVMemantauBayaranSewaData {
 			stmt.addBatch(sql3);
 			stmt.addBatch(sql4);
 			stmt.executeBatch();
-			
+
 			conn.commit();
-			
+
 			AuditTrail.logActivity("999", "4", null, session, "UPD",
 					"FAIL [" + idFail
 							+ "] DIKEMASKINI");
@@ -2552,18 +2552,18 @@ public class FrmREVMemantauBayaranSewaData {
 				db.close();
 		}
 	}
-	
+
 	public Hashtable getMaklumatABT(String idHasil) {
 		String sql = "";
 		Hashtable abt = null;
-		
-		try {			
+
+		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			
+
 			sql = "SELECT TBLPHPHASIL.CATATAN_ABT, TO_CHAR (SUM (NVL (DEBIT, 0)), '999,999,990.99') AS JUMLAH_SEWA, TO_CHAR (SUM (NVL (KREDIT, 0)), '999,999,990.99') AS JUMLAH_BAYARAN,"
 					+ " TO_CHAR ((SUM (NVL (DEBIT, 0)) - SUM (NVL (KREDIT, 0))),'999,999,990.99') AS TUNGGAKAN,"
-					+ " TO_NUMBER (CEIL (  (SUM (NVL (DEBIT, 0)) - SUM (NVL (KREDIT, 0))) / TBLPHPBAYARANPERLUDIBAYAR.BAYARAN),'999,999,990.99') AS BULAN"        
+					+ " TO_NUMBER (CEIL (  (SUM (NVL (DEBIT, 0)) - SUM (NVL (KREDIT, 0))) / TBLPHPBAYARANPERLUDIBAYAR.BAYARAN),'999,999,990.99') AS BULAN"
 					+ " FROM TBLPHPAKAUN AKAUN, TBLPHPHASIL, TBLPFDFAIL, TBLPHPPEMOHON, TBLRUJURUSAN, TBLRUJSUBURUSAN, TBLPHPBAYARANPERLUDIBAYAR"
 					+ " WHERE TBLPHPHASIL.ID_FAIL = TBLPFDFAIL.ID_FAIL(+) AND AKAUN.ID_HASIL = TBLPHPHASIL.ID_HASIL AND TBLPHPHASIL.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON(+)"
 					+ " AND TBLPFDFAIL.ID_SUBURUSAN = TBLRUJSUBURUSAN.ID_SUBURUSAN(+) AND TBLRUJSUBURUSAN.ID_URUSAN = TBLRUJURUSAN.ID_URUSAN(+)"
@@ -2575,7 +2575,7 @@ public class FrmREVMemantauBayaranSewaData {
 					+ " TBLPHPBAYARANPERLUDIBAYAR.BAYARAN";
 
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			if (rs.next()) {
 				abt = new Hashtable();
 				abt.put("catatanABT", rs.getString("CATATAN_ABT") == null ? "" : rs.getString("CATATAN_ABT"));
@@ -2587,18 +2587,18 @@ public class FrmREVMemantauBayaranSewaData {
 				} else {
 					abt.put("tunggakan", rs.getString("TUNGGAKAN") == null ? "" : "(" +  Util.formatDecimal((Double.valueOf(Utils.RemoveComma(rs.getString("TUNGGAKAN"))) * -1)) + ")");
 					abt.put("bulan", "0");
-				}				
+				}
 			}
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			if (db != null ) db.close();
 		}
-		
+
 		return abt;
 	}
-	
+
 	public void kemaskiniABT(String idHasil, String catatan, HttpSession session) throws Exception {
 
 		Db db = null;
@@ -2625,7 +2625,7 @@ public class FrmREVMemantauBayaranSewaData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "UPD",
 					"FAIL [" + idHasil
 							+ "] DIKEMASKINI");
@@ -2644,21 +2644,21 @@ public class FrmREVMemantauBayaranSewaData {
 				db.close();
 		}
 	}
-	
+
 	public Vector getSenaraiNotis(String idHasil) {
 		String sql = "";
 		Vector listNotis = null;
 		Hashtable h;
-		
+
 		try {
 			listNotis = new Vector();
-			
+
 			db = new Db();
 			Statement stmt = db.getStatement();
-			
-			sql = "SELECT * FROM TBLPHPNOTISHASIL WHERE ID_HASIL = '" + idHasil + "' ORDER BY TARIKH_NOTIS ASC";			
+
+			sql = "SELECT * FROM TBLPHPNOTISHASIL WHERE ID_HASIL = '" + idHasil + "'  AND FLAG_NOTIS IS NULL ORDER BY TARIKH_NOTIS ASC";
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("idNotis", rs.getString("ID_NOTIS") == null ? "" : rs.getString("ID_NOTIS"));
@@ -2685,19 +2685,73 @@ public class FrmREVMemantauBayaranSewaData {
 				} else {
 					h.put("peringatan", "");
 				}
-				
+
 				listNotis.addElement(h);
 			}
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			if (db != null ) db.close();
 		}
-		
+
 		return listNotis;
 	}
-	
+
+	public Vector getSenaraiMemo(String idHasil) {
+		String sql = "";
+		Vector listNotis = null;
+		Hashtable h;
+		String memo = "MEMO";
+
+		try {
+			listNotis = new Vector();
+
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT * FROM TBLPHPNOTISHASIL WHERE ID_HASIL = '" + idHasil + "' AND FLAG_NOTIS = '" + memo + "' ORDER BY TARIKH_NOTIS ASC";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idNotis", rs.getString("ID_NOTIS") == null ? "" : rs.getString("ID_NOTIS"));
+				h.put("idJenisNotis", rs.getString("ID_JENIS_NOTIS") == null ? "" : rs.getString("ID_JENIS_NOTIS"));
+				if ("1".equals(rs.getString("ID_JENIS_NOTIS"))) {
+					h.put("jenisNotis", "NOTIS TUNTUTAN TUNGGAKAN");
+				} else if ("2".equals(rs.getString("ID_JENIS_NOTIS"))) {
+					h.put("jenisNotis", "NOTIS RAMPASAN DEPOSIT");
+				} else {
+					h.put("jenisNotis", "");
+				}
+				h.put("tarikhNotis", rs.getDate("TARIKH_NOTIS") == null ? "" : sdf.format(rs.getDate("TARIKH_NOTIS")));
+				h.put("tarikhAkhirNotis", rs.getDate("TARIKH_AKHIR_NOTIS") == null ? "" : sdf.format(rs.getDate("TARIKH_AKHIR_NOTIS")));
+				h.put("kadarSewa", rs.getString("KADAR_SEWA") == null || rs.getString("KADAR_SEWA").equals("0") ? "0.00" : Util.formatDecimal(Double.valueOf(rs.getString("KADAR_SEWA"))));
+				h.put("bulanTunggakan", rs.getString("BULAN_TUNGGAKAN") == null ? "" : rs.getString("BULAN_TUNGGAKAN"));
+				h.put("jumlahTunggakan",rs.getString("JUMLAH_TUNGGAKAN") == null || rs.getString("JUMLAH_TUNGGAKAN").equals("0") ? "0.00" : Util.formatDecimal(Double.valueOf(rs.getString("JUMLAH_TUNGGAKAN"))));
+				h.put("bilPeringatan", rs.getString("BIL_PERINGATAN") == null ? "" : rs.getString("BIL_PERINGATAN"));
+				if ("1".equals(rs.getString("BIL_PERINGATAN"))) {
+					h.put("peringatan", "PERTAMA");
+				} else if ("2".equals(rs.getString("BIL_PERINGATAN"))) {
+					h.put("peringatan", "KEDUA");
+				} else if ("3".equals(rs.getString("BIL_PERINGATAN"))) {
+					h.put("peringatan", "KETIGA");
+				} else {
+					h.put("peringatan", "");
+				}
+
+				listNotis.addElement(h);
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null ) db.close();
+		}
+
+		return listNotis;
+	}
+
 	public void hapusNotis(String idNotis, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -2709,7 +2763,7 @@ public class FrmREVMemantauBayaranSewaData {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			// TBLPHPNOTISHASIL
 			r = new SQLRenderer();
 			r.add("ID_NOTIS", idNotis);
@@ -2718,7 +2772,7 @@ public class FrmREVMemantauBayaranSewaData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("", "4", null, session, "DEL",
 					"FAIL [" + idNotis
 							+ "] DIHAPUSKAN");

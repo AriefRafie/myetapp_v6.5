@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ekptg.view.php2;
 
@@ -39,17 +39,17 @@ import ekptg.model.utils.emel.EmailConfig;
 import ekptg.ws.gfmas.GfmasMemantauBayaranSewaManager;
 
 /**
- * 
+ *
  *
  */
 public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
-		
+
 	private static final long serialVersionUID = 1L;
-	
+
 	FrmREVMemantauBayaranSewaData logic = new FrmREVMemantauBayaranSewaData();
 	FrmREVHeaderData logicHeader = new FrmREVHeaderData();
 	GfmasMemantauBayaranSewaManager gfmas = new GfmasMemantauBayaranSewaManager();
-	
+
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	static Logger myLogger = Logger.getLogger(FrmREVMemantauBayaranSewaView.class);
 
@@ -57,37 +57,37 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 	public String doTemplate2() throws Exception {
 
 		HttpSession session = this.request.getSession();
-		
+
 		Boolean postDB = false;
 		String doPost =  session.getAttribute("doPost").toString();
 	    if (doPost.equals("true")) {
 	        postDB = true;
 	    }
-	    
+
 	    //GET DEFAULT PARAM
 	    String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
-	    String vm = ""; 
+	    String vm = "";
         String actionHasil = getParam("actionHasil");
 	    String hitButton = getParam("hitButton");
-        String submit = getParam("command");   
-        String mode = getParam("mode");  
+        String submit = getParam("command");
+        String mode = getParam("mode");
         String selectedTabUpper = (String) getParam("selectedTabUpper");
 		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
 			selectedTabUpper = "0";
 		}
-        
+
         //GET ID PARAM
 		String idFail = getParam("idFail");
         String idHasil = getParam("idHasil");
         String idPemohon = getParam("idPemohon");
         String idAkaun = getParam("idAkaun");
-        String idNotis = getParam("idNotis"); 
-        
+        String idNotis = getParam("idNotis");
+
 		String idJenisPelarasan = getParam("socJenisPelarasan");
 		if (idJenisPelarasan == null || idJenisPelarasan.trim().length() == 0){
 			idJenisPelarasan = "99999";
 		}
-		
+
 		String idNegeri = getParam("socNegeri");
 		if (idNegeri == null || idNegeri.trim().length() == 0){
 			idNegeri = "99999";
@@ -96,7 +96,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		if (idBandar == null || idBandar.trim().length() == 0){
 			idBandar = "99999";
 		}
-		
+
 		String idUrusan = getParam("socUrusan");
 		if (idUrusan == null || idUrusan.trim().length() == 0){
 			idUrusan = "99999";
@@ -136,8 +136,8 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		String idBank = getParam("socBank");
 		if (idBank == null || idBank.trim().length() == 0){
 			idBank = "99999";
-		}  
-		
+		}
+
         //VECTOR
         Vector list = null;
         Vector beanMaklumatPemohon = null;
@@ -148,12 +148,12 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         Vector beanMaklumatBayaranLL = null;
         Vector beanMaklumatPelarasanD = null;
         Vector beanMaklumatPelarasan = null;
-        
+
         String idStatusDeposit = getParam("socStatusDeposit");
 		if (idStatusDeposit == null || idStatusDeposit.trim().length() == 0){
 			idStatusDeposit = "Y";
 		}
-        
+
         if (postDB){
         	if ("doSimpanKemaskiniPemohon".equals(hitButton)){
         		logic.updatePemohon(idPemohon,
@@ -167,43 +167,43 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	if ("doSimpanKemaskiniPermohonan".equals(hitButton)){
         		logic.updatePermohonan(idFail, idHasil, getParam("noFail"), idUrusan, idSuburusan, getParam("txtPerkara"), getParam("txtTujuan"), getParam("txtCatatanPermohonan"), session);
         	}
-        	
+
         	if ("doSimpanKemaskiniTanah".equals(hitButton)){
         		logic.updateTanah(idFail, idHasil, idNegeriTanah, idKementerian, idAgensi, getParam("txtMaklumatLot"), idLuas, getParam("txtLuas"), getParam("txtCatatanTanah"), session);
         	}
     		if ("simpanBayaranD".equals(hitButton)){
-         		idAkaun = logic.simpanBayaranD(idHasil, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"), 
+         		idAkaun = logic.simpanBayaranD(idHasil, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"),
          				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"),idStatusDeposit, getParam("txtNoMel"), idModBayaran, session);
         	}
     		if ("simpanKemaskiniBayaranD".equals(hitButton)){
-    			logic.simpanKemaskiniBayaranD(idHasil, idAkaun, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"), 
+    			logic.simpanKemaskiniBayaranD(idHasil, idAkaun, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"),
      				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"), idStatusDeposit, getParam("txtNoMel"), idModBayaran, session);
     		}
     		if ("hapusBayaranD".equals(hitButton)){
          		logic.hapusBayaranD(idHasil, idAkaun, session);
         	}
     		if ("simpanBayaran".equals(hitButton)){
-         		idAkaun = logic.simpanBayaran(idHasil, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"), 
+         		idAkaun = logic.simpanBayaran(idHasil, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"),
          				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"), getParam("txtNoMel"), idModBayaran, session);
         	}
     		if ("simpanKemaskiniBayaran".equals(hitButton)){
-    			logic.simpanKemaskiniBayaran(idHasil, idAkaun, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"), 
+    			logic.simpanKemaskiniBayaran(idHasil, idAkaun, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"),
      				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"), getParam("txtNoMel"), idModBayaran, session);
     		}
     		if ("hapusBayaran".equals(hitButton)){
          		logic.hapusBayaran(idHasil, idAkaun, session);
-        	}   
+        	}
     		if ("simpanBayaranLL".equals(hitButton)){
-         		idAkaun = logic.simpanBayaranLL(idHasil, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"), 
+         		idAkaun = logic.simpanBayaranLL(idHasil, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"),
          				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"), getParam("txtNoMel"), idModBayaran, idKategoriBayaran, session);
         	}
     		if ("simpanKemaskiniBayaranLL".equals(hitButton)){
-    			logic.simpanKemaskiniBayaranLL(idHasil, idAkaun, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"), 
+    			logic.simpanKemaskiniBayaranLL(idHasil, idAkaun, getParam("txtTarikh"), idCaraBayaran, idBank, getParam("txtNoRujukan"), getParam("txtTarikhCek"),
      				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtNoResit"), getParam("txtTarikhResit"), getParam("txtButiran"), getParam("txtNoMel"), idModBayaran, idKategoriBayaran, session);
     		}
     		if ("hapusBayaranLL".equals(hitButton)){
          		logic.hapusBayaranLL(idHasil, idAkaun, session);
-        	} 
+        	}
     		if ("simpanPelarasanD".equals(hitButton)){
          		idAkaun = logic.simpanPelarasanD(idHasil, getParam("txtTarikh"), idJenisPelarasan, getParam("txtNoRujukan"),
          				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtButiran"), getParam("txtTarikhCek"), idBank, getParam("txtNoResit"), getParam("txtTarikhResit"), session);
@@ -214,7 +214,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	}
     		if ("hapusPelarasanD".equals(hitButton)){
          		logic.hapusPelarasanD(idHasil, idAkaun, session);
-        	}    		
+        	}
     		if ("simpanPelarasan".equals(hitButton)){
          		idAkaun = logic.simpanPelarasan(idHasil, getParam("txtTarikh"), idJenisPelarasan, getParam("txtNoRujukan"),
          				Utils.RemoveSymbol(getParam("txtAmaun")), getParam("txtButiran"), getParam("txtTarikhCek"), idBank, getParam("txtNoResit"), getParam("txtTarikhResit"), session);
@@ -240,19 +240,21 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
     			hantarInvoisByEmel(session, idAkaun, idFail, servletContext, request, response);
     		}
     	}
-        
+
         if ("papar".equals(actionHasil)){
-        	
+
         	vm = "app/php2/frmREVMaklumatBayaranSewa.jsp";
-        	
+
         	//HEADER
         	header(idHasil);
-        	
+
+        	this.context.put("txtNamaPemohon", getParam("txtNamaPemohon"));
+
         	//MAKLUMAT DEPOSIT
         	if ("0".equals(selectedTabUpper)){
-        		
+
         		if ("newBayaranD".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
@@ -269,39 +271,39 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashBayaran.put("noMel", getParam("txtNoMel"));
         			beanMaklumatBayaranD.addElement(hashBayaran);
         			this.context.put("BeanMaklumatBayaranD", beanMaklumatBayaranD);
-                	
+
                 	this.context.put("selectCaraBayaran",HTML.selectCaraBayaran("socCaraBayaran", Long.parseLong(idCaraBayaran), "", " onChange=\"doChangeCaraBayar();\""));
                 	this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
                 	this.context.put("selectStatusDeposit",HTML.SelectStatusAktifTidak("socStatusDeposit", idStatusDeposit, "", ""));
                 	this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", " onChange=\"doChangeModBayaran();\""));
-                	
+
         		} else if ("capaianGfmas".equals(mode)) {
-        			
+
         			this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
-        			
+
         			String noResit = getParam("txtNoResit");
-        			
+
     				Hashtable<String, String> data = gfmas.getMaklumat(noResit);
-        			
+
         			String tarikhTransaksi = data.get("tarikhTransaksi");
     				this.context.put("tarikhTransaksi", data.get("tarikhTransaksi"));
-        			
+
     				String caraBayar = data.get("caraBayar");
     				this.context.put("caraBayar", data.get("caraBayar"));
-    				
+
     				String tarikhCek = data.get("tarikhCek");
     				this.context.put("tarikhCek", data.get("tarikhCek"));
-    				
+
     				String noCekRujukan = data.get("noCekRujukan");
     				this.context.put("noCekRujukan", data.get("noCekRujukan"));
-    				
+
     				String amaunRM = data.get("amaunRM");
     				this.context.put("amaunRM", data.get("amaunRM"));
-    				
+
     				String tarikhResit = data.get("tarikhResit");
     				this.context.put("tarikhResit", data.get("tarikhResit"));
-    				
+
     				beanMaklumatBayaranD = new Vector();
         			Hashtable hashBayaran = new Hashtable();
         			hashBayaran.put("tarikh", data.get("tarikhTransaksi"));
@@ -314,22 +316,22 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashBayaran.put("noResit", noResit);
         			hashBayaran.put("tarikhResit", data.get("tarikhResit"));
         			beanMaklumatBayaranD.addElement(hashBayaran);
-        			
+
         			this.context.put("BeanMaklumatBayaranD", beanMaklumatBayaranD);
-        			
+
         			mode = "newBayaranD";
 
     			}  else if ("viewBayaranD".equals(mode)){
-        			
+
                 	this.context.put("readonly", "readonly");
                 	this.context.put("inputTextClass", "disabled");
-                	
+
                 	//MAKLUMAT BAYARAN
                 	beanMaklumatBayaranD = new Vector();
                     logic.setMaklumatBayaran(idAkaun);
                     beanMaklumatBayaranD = logic.getBeanMaklumatBayaran();
             		this.context.put("BeanMaklumatBayaranD", beanMaklumatBayaranD);
-                	
+
             		if (beanMaklumatBayaranD.size() != 0){
             			Hashtable hashBayaranDB = (Hashtable) logic.getBeanMaklumatBayaran().get(0);
             			idCaraBayaran = (String) hashBayaranDB.get("idCaraBayar");
@@ -341,9 +343,9 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
             			this.context.put("selectStatusDeposit",HTML.SelectStatusAktifTidak("socStatusDeposit", idStatusDeposit, "disabled", " class=\"disabled\""));
             			this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "disabled", " class=\"disabled\""));
             		}
-        			
+
         		} else if ("updateBayaranD".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
@@ -360,15 +362,15 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashBayaran.put("noMel", getParam("txtNoMel"));
         			beanMaklumatBayaranD.addElement(hashBayaran);
         			this.context.put("BeanMaklumatBayaranD", beanMaklumatBayaranD);
-        			
+
             		this.context.put("selectCaraBayaran",HTML.selectCaraBayaran("socCaraBayaran", Long.parseLong(idCaraBayaran), "", "onChange=\"doChangeCaraBayar();\""));
             		this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
             		this.context.put("selectStatusDeposit",HTML.SelectStatusAktifTidak("socStatusDeposit", idStatusDeposit, "", ""));
             		this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", "onChange=\"doChangeModBayaran();\""));
         		}
-        		
+
         		if ("newPelarasanD".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
@@ -383,194 +385,194 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashPelarasan.put("butiran", getParam("txtButiran"));
         			hashPelarasan.put("tarikhCek", getParam("txtTarikhCek"));
         			beanMaklumatPelarasanD.addElement(hashPelarasan);
-        			
+
         			this.context.put("BeanMaklumatPelarasanD", beanMaklumatPelarasanD);
         			this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
-                	
+
         			if ("D".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "selected");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("K".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "selected");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			}else if ("C".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "selected");
         				this.context.put("selectedR", "");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else if ("R".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "selected");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else {
-        				
+
         				this.context.put("selected", "selected");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			}
-                	
+
         		} else if ("viewPelarasanD".equals(mode)){
-        			
+
                 	this.context.put("readonly", "readonly");
                 	this.context.put("inputTextClass", "disabled");
-                	
+
                 	//MAKLUMAT PELARASAN
                 	beanMaklumatPelarasanD = new Vector();
                     logic.setMaklumatPelarasan(idAkaun);
                     beanMaklumatPelarasanD = logic.getBeanMaklumatPelarasan();
-                    
+
             		this.context.put("BeanMaklumatPelarasanD", beanMaklumatPelarasanD);
-                	
+
             		if (beanMaklumatPelarasanD.size() != 0){
             			Hashtable hashPelarasanDB = (Hashtable) logic.getBeanMaklumatPelarasan().get(0);
             			idJenisPelarasan = (String) hashPelarasanDB.get("idJenisPelarasan");
-            			
+
             			if("C".equals(idJenisPelarasan)){
             				idBank = (String) hashPelarasanDB.get("idBank");
             				this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "disabled", " class=\"disabled\""));
             			}
-            		}        	
-            		
+            		}
+
             		if ("D".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "selected");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("K".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "selected");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("C".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "selected");
         				this.context.put("selectedR", "");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else if ("R".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "selected");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else {
-        				
+
         				this.context.put("selected", "selected");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			}
-        			
+
         		} else if ("updatePelarasanD".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
                 	beanMaklumatPelarasanD = new Vector();
                     logic.setMaklumatPelarasan(idAkaun);
                     beanMaklumatPelarasanD = logic.getBeanMaklumatPelarasan();
-                    
+
             		this.context.put("BeanMaklumatPelarasanD", beanMaklumatPelarasanD);
             		this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
-                	
+
             		if ("D".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "selected");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("K".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "selected");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("C".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "selected");
         				this.context.put("selectedR", "");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else if ("R".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "selected");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else {
-        				
+
         				this.context.put("selected", "selected");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
-        			} 
+
+        			}
         		}
 
         		senaraiDeposit(idHasil, action, session);
         	}
-        	
+
         	//MAKLUMAT AKAUN
         	if ("1".equals(selectedTabUpper)){
-        		
+
         		if ("newBayaran".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
@@ -587,20 +589,20 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashBayaran.put("noMel", getParam("txtNoMel"));
         			beanMaklumatBayaran.addElement(hashBayaran);
         			this.context.put("BeanMaklumatBayaran", beanMaklumatBayaran);
-                	
+
                 	this.context.put("selectCaraBayaran",HTML.selectCaraBayaran("socCaraBayaran", Long.parseLong(idCaraBayaran), "", "onChange=\"doChangeCaraBayar();\""));
                 	this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
                 	this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", "onChange=\"doChangeModBayaran();\""));
-                	
+
         		} else if ("capaianGfmasSewa".equals(mode)) {
-        			
+
         			this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
-        			
+
         			String noResit = getParam("txtNoResit");
-        			
+
     				Hashtable<String, String> data = gfmas.getMaklumat(noResit);
-        			
+
     				beanMaklumatBayaran = new Vector();
         			Hashtable hashBayaran = new Hashtable();
         			hashBayaran.put("tarikh", data.get("tarikhTransaksi"));
@@ -613,20 +615,20 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashBayaran.put("tarikhResit", data.get("tarikhResit"));
         			beanMaklumatBayaran.addElement(hashBayaran);
         			this.context.put("BeanMaklumatBayaran", beanMaklumatBayaran);
-        			
+
         			mode = "newBayaran";
 
     			} else if ("viewBayaran".equals(mode)){
-        			
+
                 	this.context.put("readonly", "readonly");
                 	this.context.put("inputTextClass", "disabled");
-                	
+
                 	//MAKLUMAT BAYARAN
                 	beanMaklumatBayaran = new Vector();
                     logic.setMaklumatBayaran(idAkaun);
                     beanMaklumatBayaran = logic.getBeanMaklumatBayaran();
             		this.context.put("BeanMaklumatBayaran", beanMaklumatBayaran);
-                	
+
             		if (beanMaklumatBayaran.size() != 0){
             			Hashtable hashBayaranDB = (Hashtable) logic.getBeanMaklumatBayaran().get(0);
             			idCaraBayaran = (String) hashBayaranDB.get("idCaraBayar");
@@ -636,9 +638,9 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
             			this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "disabled", " class=\"disabled\""));
             			this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "disabled", " class=\"disabled\""));
             		}
-        			
+
         		} else if ("updateBayaran".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
@@ -655,15 +657,15 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashBayaran.put("noMel", getParam("txtNoMel"));
         			beanMaklumatBayaran.addElement(hashBayaran);
         			this.context.put("BeanMaklumatBayaran", beanMaklumatBayaran);
-                	
+
             		this.context.put("selectCaraBayaran",HTML.selectCaraBayaran("socCaraBayaran", Long.parseLong(idCaraBayaran), "", "onChange=\"doChangeCaraBayar();\""));
             		this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
             		this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", "onChange=\"doChangeModBayaran();\""));
 
         		}
-        		
+
         		if ("newPelarasan".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
@@ -681,122 +683,122 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			this.context.put("BeanMaklumatPelarasan", beanMaklumatPelarasan);
         			this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
         			if ("D".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "selected");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("K".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "selected");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("C".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "selected");
         				this.context.put("selectedR", "");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else if ("R".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "selected");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else {
-        				
+
         				this.context.put("selected", "selected");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			}
-                	
+
         		} else if ("viewPelarasan".equals(mode)){
-        			
+
                 	this.context.put("readonly", "readonly");
                 	this.context.put("inputTextClass", "disabled");
-                	
+
                 	//MAKLUMAT PELARASAN
                 	beanMaklumatPelarasan = new Vector();
                     logic.setMaklumatPelarasan(idAkaun);
                     beanMaklumatPelarasan = logic.getBeanMaklumatPelarasan();
             		this.context.put("BeanMaklumatPelarasan", beanMaklumatPelarasan);
-                	
+
             		if (beanMaklumatPelarasan.size() != 0){
             			Hashtable hashPelarasanB = (Hashtable) logic.getBeanMaklumatPelarasan().get(0);
             			idJenisPelarasan = (String) hashPelarasanB.get("idJenisPelarasan");
-            			
+
             			if("C".equals(idJenisPelarasan)){
                 			idBank = (String) hashPelarasanB.get("idBank");
                 			this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "disabled", " class=\"disabled\""));
                 			}
-            		}        	
-            		
+            		}
+
             		if ("D".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "selected");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("K".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "selected");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("C".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "selected");
         				this.context.put("selectedR", "");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else if ("R".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "selected");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else {
-        				
+
         				this.context.put("selected", "selected");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			}
-        			
+
         		} else if ("updatePelarasan".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
@@ -805,63 +807,63 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
                     beanMaklumatPelarasan = logic.getBeanMaklumatPelarasan();
             		this.context.put("BeanMaklumatPelarasan", beanMaklumatPelarasan);
             		this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
-                	
+
             		if ("D".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "selected");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("K".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "selected");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
+
         			} else if ("C".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "selected");
         				this.context.put("selectedR", "");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else if ("R".equals(idJenisPelarasan)){
-        				
+
         				this.context.put("selected", "");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "selected");
         				this.context.put("cek", idJenisPelarasan);
-        				
+
         			} else {
-        				
+
         				this.context.put("selected", "selected");
         				this.context.put("selectedD", "");
         				this.context.put("selectedK", "");
         				this.context.put("selectedC", "");
         				this.context.put("selectedR", "");
         				this.context.put("cek", "");
-        				
-        			} 
+
+        			}
         		}
 
         		senaraiAkaun(idHasil, action, session);
         	}
-        	
+
         	//MAKLUMAT AKAUN
         	if ("2".equals(selectedTabUpper)){
-        		
+
         		if ("newBayaranLL".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
@@ -878,21 +880,21 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashBayaran.put("noMel", getParam("txtNoMel"));
         			beanMaklumatBayaranLL.addElement(hashBayaran);
         			this.context.put("BeanMaklumatBayaranLL", beanMaklumatBayaranLL);
-                	
+
                 	this.context.put("selectCaraBayaran",HTML.selectCaraBayaran("socCaraBayaran", Long.parseLong(idCaraBayaran), "", "onChange=\"doChangeCaraBayar();\""));
                 	this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
                 	this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", "onChange=\"doChangeModBayaran();\""));
                 	this.context.put("selectKategoriBayaran",HTML.SelectSuburusanByIdUrusan("12", "socKategoriBayaran", Long.parseLong(idKategoriBayaran), "", "onChange=\"doChangeModBayaran();\""));
-                	
+
         		} else if ("capaianGfmasBayaran".equals(mode)) {
-        			
+
         			this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
-        			
+
         			String noResit = getParam("txtNoResit");
-        			
+
     				Hashtable<String, String> data = gfmas.getMaklumat(noResit);
-        			
+
     				beanMaklumatBayaranLL = new Vector();
         			Hashtable hashBayaran = new Hashtable();
         			hashBayaran.put("tarikh", data.get("tarikhTransaksi"));
@@ -905,20 +907,20 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashBayaran.put("tarikhResit", data.get("tarikhResit"));
         			beanMaklumatBayaranLL.addElement(hashBayaran);
         			this.context.put("BeanMaklumatBayaranLL", beanMaklumatBayaranLL);
-        			
+
         			mode = "newBayaranLL";
 
     			} else if ("viewBayaranLL".equals(mode)){
-        			
+
                 	this.context.put("readonly", "readonly");
                 	this.context.put("inputTextClass", "disabled");
-                	
+
                 	//MAKLUMAT BAYARAN
                 	beanMaklumatBayaran = new Vector();
                     logic.setMaklumatBayaranLL(idAkaun);
                     beanMaklumatBayaranLL = logic.getBeanMaklumatBayaranLL();
             		this.context.put("BeanMaklumatBayaranLL", beanMaklumatBayaranLL);
-                	
+
             		if (beanMaklumatBayaranLL.size() != 0){
             			Hashtable hashBayaranDB = (Hashtable) logic.getBeanMaklumatBayaranLL().get(0);
             			idCaraBayaran = (String) hashBayaranDB.get("idCaraBayar");
@@ -929,9 +931,9 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
             			this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "disabled", " class=\"disabled\""));
                     	this.context.put("selectKategoriBayaran",HTML.SelectSuburusanByIdUrusan("12", "socKategoriBayaran", Long.parseLong(idKategoriBayaran), "disabled", "class=\"disabled\""));
             		}
-        			
+
         		} else if ("updateBayaranLL".equals(mode)){
-        			
+
                 	this.context.put("readonly", "");
                 	this.context.put("inputTextClass", "");
 
@@ -948,26 +950,26 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashBayaran.put("noMel", getParam("txtNoMel"));
         			beanMaklumatBayaranLL.addElement(hashBayaran);
         			this.context.put("BeanMaklumatBayaranLL", beanMaklumatBayaranLL);
-                	
+
             		this.context.put("selectCaraBayaran",HTML.selectCaraBayaran("socCaraBayaran", Long.parseLong(idCaraBayaran), "", "onChange=\"doChangeCaraBayar();\""));
             		this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
             		this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", "onChange=\"doChangeModBayaran();\""));
                 	this.context.put("selectKategoriBayaran",HTML.SelectSuburusanByIdUrusan("12", "socKategoriBayaran", Long.parseLong(idKategoriBayaran), "", "onChange=\"doChangeModBayaran();\""));
 
-        		} 
+        		}
 
         		senaraiAkaunLL(idHasil);
         	}
-        	
+
         	//MAKLUMAT PERJANJIAN
         	if ("3".equals(selectedTabUpper)){
-        		
+
         		//PERJANJIAN UTAMA
         		Vector senaraiPerjanjian = new Vector();
                 logic.setListPerjanjian(idHasil);
                 senaraiPerjanjian = logic.getSenaraiPerjanjian();
         		this.context.put("SenaraiPerjanjian", senaraiPerjanjian);
-        		
+
         		//PERJANJIAN TAMBAHAN
         		Vector senaraiPerjanjianTambahan = new Vector();
                 logic.setListPerjanjianTambahan(idHasil);
@@ -976,17 +978,17 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	}
         	//MAKLUMAT PEMOHON
         	if ("4".equals(selectedTabUpper)){
-        		
+
         		if ("view".equals(mode)){
-        			
+
         			this.context.put("readonly", "readonly");
         			this.context.put("inputTextClass", "disabled");
         			this.context.put("disabled", "disabled");
-        			
+
         			// MAKLUMAT PEMOHON
         			logic.setMaklumatPemohon(idHasil);
         			beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
-        			this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);			
+        			this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);
         			if (logic.getBeanMaklumatPemohon().size() != 0){
         				Hashtable hashPemohon = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
         				idPemohon = (String) hashPemohon.get("idPemohon");
@@ -996,16 +998,16 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 
         			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
         			this.context.put("selectBandar", HTML.SelectBandarByNegeri(idNegeri, "socBandar", Long.parseLong(idBandar), "disabled", " class=\"disabled\""));
-        			
+
         		} else if ("update".equals(mode)){
-        			
+
         			this.context.put("readonly", "");
             		this.context.put("inputTextClass", "");
             		this.context.put("disabled", "");
-            		
+
             		this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), ""," onChange=\"doChangeNegeri();\""));
         			this.context.put("selectBandar", HTML.SelectBandarByNegeri(idNegeri, "socBandar", Long.parseLong(idBandar), ""));
-        			
+
         			//MAKLUMAT PEMOHON
             		beanMaklumatPemohon = new Vector();
         			Hashtable hashPemohon = new Hashtable();
@@ -1022,19 +1024,19 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashPemohon.put("catatan", getParam("txtCatatan") == null ? "": getParam("txtCatatan"));
         			beanMaklumatPemohon.addElement(hashPemohon);
         			this.context.put("BeanMaklumatPemohon", beanMaklumatPemohon);
-            		
+
         		}
         	}
-        	
+
         	//MAKLUMAT PERMOHONAN
         	if ("5".equals(selectedTabUpper)){
-        		
+
         		if ("view".equals(mode)){
-        			
+
         			this.context.put("readonly", "readonly");
         			this.context.put("inputTextClass", "disabled");
         			this.context.put("disabled", "disabled");
-        			
+
         			// MAKLUMAT PERMOHONAN
         			beanMaklumatPermohonan = new Vector();
         			logic.setMaklumatPermohonan(idHasil);
@@ -1048,16 +1050,16 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			}
         			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " class=\"disabled\""));
         			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "disabled", " class=\"disabled\""));
-        			
+
         		} else if ("update".equals(mode)){
-        			
+
         			this.context.put("readonly", "");
             		this.context.put("inputTextClass", "");
             		this.context.put("disabled", "");
-            		
+
             		this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "", " onChange=\"doChangeUrusan();\""));
         			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "", " "));
-        			
+
         			// MAKLUMAT PERMOHONAN
         			beanMaklumatPermohonan = new Vector();
         			Hashtable hashPermohonan = new Hashtable();
@@ -1067,20 +1069,20 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashPermohonan.put("catatan", getParam("txtCatatanPermohonan") == null ? "": getParam("txtCatatanPermohonan"));
         			beanMaklumatPermohonan.addElement(hashPermohonan);
         			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-            		
+
         		}
         	}
-        	
+
         	//MAKLUMAT TANAH
         	if ("6".equals(selectedTabUpper)){
-        		
+
         		if ("view".equals(mode)){
-        			
+
         			this.context.put("readonly", "readonly");
         			this.context.put("inputTextClass", "disabled");
         			this.context.put("disabled", "disabled");
-        			
-        			// MAKLUMAT TANAH			
+
+        			// MAKLUMAT TANAH
         			beanMaklumatTanah = new Vector();
         			logic.setMaklumatTanah(idFail);
         			beanMaklumatTanah = logic.getBeanMaklumatTanah();
@@ -1092,18 +1094,18 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         				idLuas = (String) hashMaklumatTanah.get("idLuas");
         			}
         			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
-        			
+
         			this.context.put("selectNegeriTanah", HTML.SelectNegeri("socNegeriTanah",Long.parseLong(idNegeriTanah), "disabled", " class=\"disabled\""));
         			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "disabled", " class=\"disabled\""));
         			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "disabled", " class=\"disabled\""));
-        			
+
         		} else if ("update".equals(mode)){
-        			
+
         			this.context.put("readonly", "");
             		this.context.put("inputTextClass", "");
             		this.context.put("disabled", "");
-            		
-            		// MAKLUMAT TANAH			
+
+            		// MAKLUMAT TANAH
         			beanMaklumatTanah = new Vector();
         			Hashtable hashMaklumatTanah = new Hashtable();
         			hashMaklumatTanah.put("maklumatLot", getParam("txtMaklumatLot") == null ? "": getParam("txtMaklumatLot"));
@@ -1111,35 +1113,45 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         			hashMaklumatTanah.put("catatanTanah",getParam("txtCatatanTanah") == null ? "": getParam("txtCatatanTanah"));
         			beanMaklumatTanah.addElement(hashMaklumatTanah);
         			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
-        			
+
         			this.context.put("selectNegeriTanah", HTML.SelectNegeri("socNegeriTanah",Long.parseLong(idNegeriTanah), "",""));
         			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\""));
         			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "", ""));
-            		
+
         		}
         	}
-        	
+
         	//MAKLUMAT ABT
         	if ("7".equals(selectedTabUpper)){
-        		Hashtable abt = logic.getMaklumatABT(idHasil);	
+        		Hashtable abt = logic.getMaklumatABT(idHasil);
         		context.put("abt", abt);
         	}
-        	
+
         	//MAKLUMAT NOTIS
         	if ("8".equals(selectedTabUpper)){
         		//MAKLUMAT ABT
-        		Hashtable abt = logic.getMaklumatABT(idHasil);	
+        		Hashtable abt = logic.getMaklumatABT(idHasil);
         		context.put("abt", abt);
-        		
+
         		//SENARAI NOTIS
         		Vector listNotis = logic.getSenaraiNotis(idHasil);
 				this.context.put("listNotis", listNotis);
         	}
-        	
+        	//MAKLUMAT MEMO
+        	if ("9".equals(selectedTabUpper)){
+        		//MAKLUMAT ABT
+        		Hashtable abt = logic.getMaklumatABT(idHasil);
+        		context.put("abt", abt);
+
+        		//SENARAI MEMO
+        		Vector listMemo = logic.getSenaraiMemo(idHasil);
+				this.context.put("listMemo", listMemo);
+        	}
+
         } else {
-        	
+
         	vm = "app/php2/frmREVSenaraiFail.jsp";
-        	
+
         	// DROP DOWN CARIAN
     		String jenisHakmilik = getParam("socJenisHakmilik");
     		if (jenisHakmilik == null || jenisHakmilik.trim().length() == 0){
@@ -1160,7 +1172,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
     		String idMukimC = getParam("socMukimC");
     		if (idMukimC == null || idMukimC.trim().length() == 0){
     			idMukimC = "99999";
-    		}  
+    		}
     		String idKementerianC = getParam("socKementerianC");
 			if (idKementerianC == null || idKementerianC.trim().length() == 0) {
 				idKementerianC = "99999";
@@ -1182,40 +1194,40 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
     			idStatusPerjanjianC = "99999";
     		}
     		String flagDetail = getParam("flagDetail");
-    		
+
     		if ("S".equals(idJenisFailC)){
-				
+
 				this.context.put("selected", "");
 				this.context.put("selectedD", "");
 				this.context.put("selectedS", "selected");
-				
+
 			} else if ("D".equals(idJenisFailC)){
-				
+
 				this.context.put("selected", "");
 				this.context.put("selectedD", "selected");
 				this.context.put("selectedS", "");
-				
+
 			} else {
 				this.context.put("selected", "selected");
 				this.context.put("selectedD", "");
 				this.context.put("selectedS", "");
 			}
-    		
+
     		list = new Vector();
-    		
-        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC, getParam("txtNoCek"), getParam("txtNoResit"), idJenisFailC, idStatusPerjanjianC, 
+
+        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC, getParam("txtNoCek"), getParam("txtNoResit"), idJenisFailC, idStatusPerjanjianC,
         			getParam("txtTujuan"), idNegeriC, idDaerahC, idMukimC, jenisHakmilik, getParam("txtNoHakmilik"), getParam("txtNoWarta"), jenisLot,getParam("txtNoLot"),
         			getParam("txtNoPegangan"), idKementerianC, idAgensiC);
-		
+
     		list = logic.getSenaraiFail();
 			this.context.put("SenaraiFail", list);
-			
+
 			this.context.put("txtNoFail", getParam("txtNoFail"));
 			this.context.put("txtNamaPemohon", getParam("txtNamaPemohon"));
-			this.context.put("txtNoRujukan", getParam("txtNoRujukan"));			
+			this.context.put("txtNoRujukan", getParam("txtNoRujukan"));
 			this.context.put("txtNoCek", getParam("txtNoCek"));
 			this.context.put("txtNoResit", getParam("txtNoResit"));
-			this.context.put("selectBankC", HTML.selectBank("socBankC", Long.parseLong(idBankC), "", ""));			
+			this.context.put("selectBankC", HTML.selectBank("socBankC", Long.parseLong(idBankC), "", ""));
 			this.context.put("socJenisFail", getParam("socJenisFail"));
 			this.context.put("txtTujuan", getParam("txtTujuan"));
 			this.context.put("txtNoPegangan", getParam("txtNoPegangan"));
@@ -1231,15 +1243,15 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensiC", idKementerianC,  Long.parseLong(idAgensiC), "", ""));
 			this.context.put("selectStatusPerjanjian", HTML.SelectStatusPerjanjianSewa("socStatusPerjanjianC", Long.parseLong(idStatusPerjanjianC), "", ""));
 			this.context.put("flagDetail", flagDetail);
-			
+
 			setupPage(session,action,list);
         }
-        
+
         //SET DEFAULT PARAM
 		this.context.put("actionHasil", actionHasil);
 		this.context.put("selectedTabUpper", selectedTabUpper);
 		this.context.put("mode", mode);
-		
+
 		//SET DEFAULT ID PARAM
 		this.context.put("idHasil", idHasil);
 		this.context.put("idAkaun", idAkaun);
@@ -1251,43 +1263,43 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		this.context.put("idNegeri", idNegeri);
 		this.context.put("idBandar", idBandar);
 		this.context.put("idLuas", idLuas);
-        
+
 		return vm;
 	}
-	
+
 	private void senaraiDeposit(String idHasil, String action, HttpSession session) throws Exception {
 		Vector senaraiDeposit = new Vector();
         logic.setListDeposit(idHasil);
         senaraiDeposit = logic.getSenaraiDeposit();
 		this.context.put("SenaraiDeposit", senaraiDeposit);
-		
+
 		setupPageDeposit(session,action,senaraiDeposit);
-		
+
 		//CALCULATE TOTAL
 		Double total = 0D;
 		total = logic.calculateTotalDeposit(idHasil);
-		
+
 		if (total > 0D){
 			this.context.put("totalDeposit", Util.formatDecimal(total));
 		} else if (total < 0D){
 			this.context.put("totalDeposit", "(" + Util.formatDecimal(total * -1) + ")");
 		} else {
 			this.context.put("totalDeposit", "0.00");
-		}		
+		}
 	}
-	
+
 	private void senaraiAkaun(String idHasil, String action, HttpSession session) throws Exception {
 		Vector senaraiAkaun = new Vector();
         logic.setListAkaun(idHasil);
         senaraiAkaun = logic.getSenaraiAkaun();
 		this.context.put("SenaraiAkaun", senaraiAkaun);
-		
+
 		setupPageSewa(session,action,senaraiAkaun);
-		
+
 		//CALCULATE TOTAL
 		Double total = 0D;
 		total = logic.calculateTotal(idHasil);
-		
+
 		if (total > 0D){
 			this.context.put("total", Util.formatDecimal(total));
 			this.context.put("flag_tunggakan", "Y");
@@ -1297,19 +1309,19 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		} else {
 			this.context.put("total", "0.00");
 			this.context.put("flag_tunggakan", "T");
-		}		
+		}
 	}
-	
+
 	private void senaraiAkaunLL(String idHasil) throws Exception {
 		Vector senaraiAkaunLL = new Vector();
         logic.setListAkaunLL(idHasil);
         senaraiAkaunLL = logic.getSenaraiAkaunLL();
 		this.context.put("SenaraiAkaunLL", senaraiAkaunLL);
-		
+
 		//CALCULATE TOTAL
 		Double total = 0D;
 		total = logic.calculateTotalLL(idHasil);
-		
+
 		if (total > 0D){
 			this.context.put("total", Util.formatDecimal(total));
 			this.context.put("flag_tunggakan", "Y");
@@ -1319,11 +1331,11 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		} else {
 			this.context.put("total", "0.00");
 			this.context.put("flag_tunggakan", "T");
-		}		
+		}
 	}
 
 	private void header(String idHasil) throws Exception {
-		
+
 		Vector beanHeader = new Vector();
         logicHeader.setMaklumatPermohonan(idHasil);
         beanHeader = logicHeader.getBeanMaklumatPermohonan();
@@ -1331,22 +1343,24 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		if (logicHeader.getBeanMaklumatPermohonan().size() != 0){
 			Hashtable hashPermohonan = (Hashtable) logicHeader.getBeanMaklumatPermohonan().get(0);
 			this.context.put("idFail", (String) hashPermohonan.get("idFail"));
+			//this.context.put("txtNamaPemohon", (String) hashPermohonan.get("namaPemohon"));
+			//this.context.put("txtNoFail", (String) hashPermohonan.get("noFail"));
 		}
 	}
-	
+
 	public void setupPage(HttpSession session,String action,Vector list) {
-		
-		try {		
+
+		try {
 			this.context.put("totalRecords",list.size());
 			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
-			
+
 			int itemsPerPage;
 			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
 				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
 			} else {
 				itemsPerPage = (Integer)this.context.get("itemsPerPage");
 			}
-		    
+
 		    if ("getNext".equals(action)) {
 		    	page++;
 		    } else if ("getPrevious".equals(action)) {
@@ -1356,9 +1370,9 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		    } else if ("doChangeItemPerPage".equals(action)) {
 		       itemsPerPage = getParamAsInteger("itemsPerPage");
 		    }
-		    	
+
 		    Paging paging = new Paging(session,list,itemsPerPage);
-			
+
 			if (page > paging.getTotalPages()) page = 1; //reset page number
 				this.context.put("SenaraiFail",paging.getPage(page));
 			    this.context.put("page", new Integer(page));
@@ -1367,28 +1381,28 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
 			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
 			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
-	        
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.context.put("error",e.getMessage());
-		}	
+		}
 	}
-	
+
 	public void setupPageDeposit(HttpSession session,String action,Vector list) {
-		
+
 		try {
 			this.context.put("pagingTitle","");
-			
+
 			this.context.put("totalRecords",list.size());
 			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
-			
+
 			int itemsPerPage;
 			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
 				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
 			} else {
 				itemsPerPage = (Integer)this.context.get("itemsPerPage");
 			}
-		    
+
 		    if ("getNext".equals(action)) {
 		    	page++;
 		    } else if ("getPrevious".equals(action)) {
@@ -1398,14 +1412,14 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		    } else if ("doChangeItemPerPage".equals(action)) {
 		       itemsPerPage = getParamAsInteger("itemsPerPage");
 		    }
-		    
+
 		    //CUSTOMIZE BY PEJE - TO RESET ITEMSPERPAGE VALUE WHEN CHANGE TAB
 		    if ("doChangeTabUpper".equals(getParam("command"))) {
 				itemsPerPage = 10;
 			}
-		    	
+
 		    Paging paging = new Paging(session,list,itemsPerPage);
-			
+
 			if (page > paging.getTotalPages()) page = 1; //reset page number
 				this.context.put("SenaraiDeposit",paging.getPage(page));
 			    this.context.put("page", new Integer(page));
@@ -1414,28 +1428,28 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
 			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
 			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
-	        
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.context.put("error",e.getMessage());
-		}	
+		}
 	}
 
 	public void setupPageSewa(HttpSession session,String action,Vector list) {
-		
+
 		try {
 			this.context.put("pagingTitle","");
-			
+
 			this.context.put("totalRecords",list.size());
 			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
-			
-			int itemsPerPage;			
+
+			int itemsPerPage;
 			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
 				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
 			} else {
 				itemsPerPage = (Integer)this.context.get("itemsPerPage");
 			}
-		    
+
 		    if ("getNext".equals(action)) {
 		    	page++;
 		    } else if ("getPrevious".equals(action)) {
@@ -1445,14 +1459,14 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		    } else if ("doChangeItemPerPage".equals(action)) {
 		       itemsPerPage = getParamAsInteger("itemsPerPage");
 		    }
-		    
+
 		    //CUSTOMIZE BY PEJE - TO RESET ITEMSPERPAGE VALUE WHEN CHANGE TAB
 		    if ("doChangeTabUpper".equals(getParam("command"))) {
 				itemsPerPage = 10;
 			}
-		    	
+
 		    Paging paging = new Paging(session,list,itemsPerPage);
-			
+
 			if (page > paging.getTotalPages()) page = 1; //reset page number
 				this.context.put("SenaraiAkaun",paging.getPage(page));
 			    this.context.put("page", new Integer(page));
@@ -1461,17 +1475,17 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
 			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
 			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
-	        
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.context.put("error",e.getMessage());
-		}	
+		}
 	}
-	
+
 	public static void hantarInvoisByEmel(HttpSession session, String idAkaun,
 			String idFail, ServletContext servletContext, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
+
 		myLogger.info("MASUK FUNCTION EMEL--------------------");
 		Db db = null;
 		Connection conn = null;
@@ -1481,21 +1495,21 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		String emelUser = "";
 		String subject = "";
 		String content = "";
-		
+
 		EmailSender email = EmailSender.getInstance();
 		EmailProperty pro = EmailProperty.getInstance();
-		
+
 		try{
 			db = new Db();
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-			
-			sql = "SELECT A.NO_FAIL, C.NAMA, C.EMEL " 
+
+			sql = "SELECT A.NO_FAIL, C.NAMA, C.EMEL "
 					+ " FROM TBLPFDFAIL A, TBLPHPHASIL B, TBLPHPPEMOHON C "
 					+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON "
 					+ " AND A.ID_FAIL = '" + idFail + "'";
-			
+
 			ResultSet rs = stmt.executeQuery(sql);
 			myLogger.info("MASUK "+sql);
 			while (rs.next()) {
@@ -1503,14 +1517,14 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 				namaUser = rs.getString("NAMA");
 				emelUser = rs.getString("EMEL");
 			}
-			
+
 			if (!"".equals(namaUser) && !"".equals(emelUser)){
-				
+
 				subject = "INVOIS " + noFail;
 				content = namaUser.toUpperCase() + "."
 						+ "<br><br>Permohonan anda telah diterima.Sila gunakan nombor permohonan diatas sebagai rujukan."
 						+ "Anda akan dimaklumkan setelah permohonan ini telah didaftarkan.";
-				
+
 				//To send attachments
 				GetAttachment report = new GetAttachment();
 				//ServletContext context = getServletContext();
@@ -1518,7 +1532,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		    	String path ="";
 		    	String folderName = "php2\\REV";
 		    	String fileName = "REVInvoisSewa";
-		    	
+
 		    	if (folderName != null) {
 					// path = "/reports/" + folderName + "/" + fileName ;
 					path = File.separator + "reports" + File.separator + folderName + File.separator + fileName;
@@ -1526,23 +1540,23 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 					// path = "/reports/" + fileName ;
 					path = File.separator + "reports" + File.separator + fileName;
 				}
-		    	
+
 		    	myMap.put("idfail", idFail);
 		    	myMap.put("flagVersion", "no");
 		    	myMap.put("ReportDir", path);
 		    	myLogger.info("path "+path);
 		    	myMap.put("os", "1");
-		    	
-		    	//parameter utk panggil report, boleh multiple    	
+
+		    	//parameter utk panggil report, boleh multiple
 		    	byte[] bytes1 = report.getReportBytes("php2\\REV", "REVInvoisSewa", request, response, servletContext, myMap);
-		    	
+
 		    	//open razman add new feature : attachment in bytes
 				email.ATTACHMENT_BYTES = new String[1];
 				email.ATTACHMENT_BYTES[0] = new String(bytes1, "ISO-8859-1");;
 				email.ATTACHMENT_BYTES_NAME = new String[1]; //kena sama dengan jumlah attachment
 				email.ATTACHMENT_BYTES_NAME[0] = "Invois Sewa";//letak nama file bersesuaian
 				//close razman add new feature : attachment in bytes
-				
+
 				email.SUBJECT = subject;
 				email.MESSAGE = content;
 				email.RECIEPIENT = emelUser;
