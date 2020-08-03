@@ -12,7 +12,7 @@
 		#set($txtSeksyen=$maklumat_Hakmilik_Salin.seksyen)
 		#set($txtNoHakmilik=$maklumat_Hakmilik_Salin.no_hakmilik)				
 		#set($txdTarikhLuput=$maklumat_Hakmilik_Salin.tarikh_luput)		
-		#set($txdTarikhDaftar=$maklumat_Hakmilik_Salin.tarikh_daftar)				
+		#set($txdTarikhDaftar=$maklumat_Hakmilik_Salin.tarikh_daftar)
 		#set($txtBakiTempoh=$maklumat_Hakmilik_Salin.tempoh_luput)
 		#set($txtNoSyit=$maklumat_Hakmilik_Salin.no_syit)
 		#set($txtNoLot=$maklumat_Hakmilik_Salin.no_lot)
@@ -35,9 +35,6 @@
 		#set($txtSekatanKepentingan=$maklumat_Hakmilik_Salin.sekatan_kepentingan)
 		#set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)	
         
-        
-        
-         
         #set($showDropdownUnitAsal="yes")
         #set($showDropdownUnitAmbil="yes")
         
@@ -137,19 +134,19 @@
 			</tr>	
 			<tr>
 				<td><font color="red">*</font></td>
-				<td>No. Hakmilik testing ni</td>
+				<td>No. Hakmilik</td>
 				<td>:</td>
 				<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50"   ></td>
 			</tr>
 			
-			< tr>
+			<tr>
 				<td>&nbsp;</td>
-				<td> No. Strata</td>
+				<td> No. Strata </td>
 				<td>:</td>
 				<td>
-                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" class="$disabled" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" class="$disabled" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" class="$disabled" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
   				</td>
 			</tr>
 			
@@ -452,6 +449,10 @@
 		#set($txtLuasLotAsalSebelumConvert=$data.nama_luas_asal)
 		#set($txtLuasLotAmbilSebelumConvert=$data.nama_luas_ambil)
 		#set($socPSegera=$data.flag_segera_sebahagian)
+		#set($txtNoBangunan=$data.no_bangunan)
+		#set($txtNoTingkat=$data.no_tingkat)
+		#set($txtNoPetak=$data.no_petak)
+		
 		#end
 	#end
 	
@@ -544,6 +545,17 @@
 				<td>No. Hakmilik</td>
 				<td>:</td>
 				<td><input $disability $disabilityx type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50"   ></td>
+			</tr>
+
+			<tr>
+				<td>&nbsp;</td>
+				<td> No. Strata </td>
+				<td>:</td>
+				<td>
+                   	<span class="labelinput">No.Bang</span>&nbsp;<input $disability $disabilityx  name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Ting</span>&nbsp;<input $disability $disabilityx  name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Petak</span>&nbsp;<input $disability $disabilityx  name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+  				</td>
 			</tr>
 			
 			<tr>

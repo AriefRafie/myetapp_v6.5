@@ -493,10 +493,6 @@ public class FrmUPTSek8HakmilikData {
 	    		//pengambilan segera
 	    		String socPSegera = (String)data.get("socPSegera");
 	    		
-	    		
-	    		
-	    		
-	    		
 	    		String socDaerahPenggawa = (String)data.get("socDaerahPenggawa");
 	    		
 	    		String id_hakmilik = (String)data.get("id_hakmilik");
@@ -533,7 +529,6 @@ public class FrmUPTSek8HakmilikData {
 	    		String sekatanHak = (String)data.get("txtSekatanHak");
 	    		String noSyit = (String)data.get("txtNoSyit");	
 	    		
-
 	    		//new
 	    		String id_luasambil = (String)data.get("unitLuasAmbil");
 	    		String nama_luas_asal = (String)data.get("txtLuasLotAsalSebelumConvert");
@@ -546,10 +541,12 @@ public class FrmUPTSek8HakmilikData {
 	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 
-	    		//PPT-03  
-	    		String txtNoBangunan = (String)data.get("txtNoBangunan");
-	    		String txtNoTingkat = (String)data.get("txtNoTingkat");
-	    		String txtNoPetak =  (String)data.get("txtNoPetak");
+	    		//PPT-03 Penambahan Strata ni?
+	    		String txtNoBangunan = (String)data.get("no_bangunan");
+	    		String txtNoTingkat = (String)data.get("no_tingkat");
+	    		String txtNoPetak =  (String)data.get("no_petak");
+	    		myLogger.info("Data updateHM no bangunan: " +txtNoBangunan);
+	    		myLogger.info("nak nombor bangunan ni: " +(String)data.get("no_bangunan"));
 	    		
 	    		String flagSebahagian = "0";
 	    		
@@ -608,10 +605,11 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("sekatan_kepentingan",sekatanKepentingan);
 	    		r.add("sekatan_hak",sekatanHak);
 	    		r.add("no_syit",noSyit);
-
-	    		r.add("no_bangunan",txtNoBangunan); //PPT-03 
-	    		r.add("no_tingkat",txtNoTingkat); //PPT-03 
-	    		r.add("no_petak",txtNoPetak); //PPT-03 
+	    		
+//	    		PPT-03 Strata
+	    		r.add("no_bangunan",txtNoBangunan);
+	    		r.add("no_tingkat",txtNoTingkat);
+	    		r.add("no_petak",txtNoPetak);
 	    		
 	    		//new
 	    		r.add("id_unitluasambil", id_luasambil);
@@ -624,8 +622,8 @@ public class FrmUPTSek8HakmilikData {
 	    		r.add("id_kemaskini",id_user); 
 	    		
 	    		sql = r.getSQLUpdate("TBLPPTHAKMILIK");
-	    		myLogger.info("updateHM ****  : "+sql);
 	    		stmt.executeUpdate(sql);
+	    		myLogger.info("updateHM ****  : "+sql);
     	
 	    } catch (Exception re) {
 	    	log.error("Error: ", re);
