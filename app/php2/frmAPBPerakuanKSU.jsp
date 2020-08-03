@@ -95,7 +95,7 @@ function simpanKemaskiniPerakuanKSU(){
 		return; 
 	}
 	if(document.${formName}.txtNamaKSU.value == ""){
-		alert('Sila masukkan Nama Ketua Setiausaha KETSA');
+		alert('Sila masukkan Nama Ketua Setiausaha KeTSA');
   		document.${formName}.txtNamaKSU.focus(); 
 		return; 
 	}
@@ -121,7 +121,7 @@ function simpanKemaskiniKeputusan(){
 		return; 
 	}
 	if(document.${formName}.txtNamaMenteri.value == ""){
-		alert('Sila masukkan Nama Menteri KETSA');
+		alert('Sila masukkan Nama Menteri KeTSA');
   		document.${formName}.txtNamaMenteri.focus(); 
 		return; 
 	}
