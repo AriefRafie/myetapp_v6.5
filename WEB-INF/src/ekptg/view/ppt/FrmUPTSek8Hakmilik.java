@@ -4095,11 +4095,6 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		h.put("txtCatatan", getParam("txtCatatan"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
 
-		// PPT-03 
-		h.put("txtNoBangunan", getParam("txtNoBangunan"));
-		h.put("txtNoTingkat", getParam("txtNoTingkat"));
-		h.put("txtNoPetak", getParam("txtNoPetak"));
-
 		h.put("unitLuas", getParam("socUnitLuasLot"));
 		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));
 		h.put("txtLuasLotAsalSebelumConvert",
@@ -4116,6 +4111,12 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		h.put("txdTarikhWarta", getParam("txdTarikhWarta"));
 
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
+
+		// PPT-03 Strata
+    	h.put("no_bangunan", getParam("txtNoBangunan"));
+    	h.put("no_tingkat", getParam("txtNoTingkat"));
+    	h.put("no_petak", getParam("txtNoPetak"));
+		myLogger.info("Hakmilik&PB no bangunan: " +getParam("txtNoBangunan"));
 
 		// pengambilan segera
 		h.put("socPSegera", getParam("socPSegera"));

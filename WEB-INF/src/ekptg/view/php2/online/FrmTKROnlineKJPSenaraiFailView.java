@@ -25,16 +25,27 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmUtilData;
 import ekptg.model.htp.HTPStatusBean;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHtp;
+import ekptg.model.htp.online.IOnline;
+import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.online.FrmTKRHeaderData;
 import ekptg.model.php2.FrmTKRJabatanTeknikalData;
 import ekptg.model.php2.online.FrmTKROnlineKJPSenaraiFailData;
 import ekptg.model.php2.utiliti.LampiranBean;
+import ekptg.model.utils.IUserPegawai;
+import ekptg.model.utils.UserBean;
+import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.emel.IEmel;
 import ekptg.model.utils.lampiran.ILampiran;
+import ekptg.view.htp.online.jrp.HTPEmelJRPBean;
+import ekptg.model.htp.online.IOnline;
 
 public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
@@ -46,8 +57,14 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	FrmTKRHeaderData logicHeader = new FrmTKRHeaderData();
 	FrmTKRJabatanTeknikalData logicJabatanTeknikal = new FrmTKRJabatanTeknikalData();
 	FrmTKROnlineKJPSenaraiFailData logic = new FrmTKROnlineKJPSenaraiFailData();
+	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
+	private ekptg.model.utils.emel.IEmel emelSemak = null;
+	private IUserPegawai iUser = null;
 	private String templateDir = "app/php2/online/ulasanKJP/tkr";
 	private String idSuburusan = "33";
+	String idJawatan = "";
+	private IOnline iOnline = null;
+	private IHtp iHTP = null;
 
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -95,6 +112,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		String idUlasanTeknikal = getParam("idUlasanTeknikal");
 		String idPermohonan = getParam("idPermohonan");
 		String kategori = getParam("kategori");
+		String langkah = getParam("langkah");
 
 		String idKategoriPemohon = "";
 		String idJenisTanah = "1";
@@ -202,6 +220,11 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 		}
 
+		Hashtable hUser = getIUser().getPengguna(userId);
+		userJawatan = String.valueOf(hUser.get("userJawatan"));
+		idJawatan = String.valueOf(hUser.get("idjawatan"));
+		context.put("idjawatan", idJawatan);
+
 
 		this.context.put("idNegeriPemohon", idNegeriPemohon);
 		this.context.put("idKementerian", idKementerian);
@@ -281,14 +304,14 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}
 		}
 
+		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
+
 
 		//myLog.info("actionTukarguna="+actionTukarguna);
 		myLog.info("submit="+submit);
 		myLog.info("submit2="+submit2);
 		myLog.info("hitButton="+hitButton);
 		this.context.put("errorPeganganHakmilik", "");
-		
-		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("onlineAttach", "paparLampiran", "idDokumen",session,"tkr"));
 
 		try {
 
@@ -620,6 +643,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				vm = "/start.jsp";
 
 			} else if ("seterusnya".equals(submit2)) {
+
 				myLog.info("baca seterusnya");
 				myLog.info("idFail=========" + idFail);
 				// GO TO MAKLUMAT PERMOHONAN
@@ -691,9 +715,21 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					beanMaklumatTanah = logic.getBeanMaklumatHakmilik();
 					this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 
+
+					if (logic.getBeanMaklumatPermohonan().size() != 0){
+						Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
+						idUrusan = (String) hashPermohonan.get("idUrusan");
+						idSuburusan = (String) hashPermohonan.get("idSuburusan");
+						idSubsuburusan = (String) hashPermohonan.get("idTujuan");
+						idPermohonan= (String) hashPermohonan.get("idPermohonan");
+					}
+
 					// MAKLUMAT KEGUNAAN TANAH
 					beanMaklumatTukarguna = new Vector();
+					myLog.info("masuk sini tak lepas error nie >>>> id permohonan >>>>> "+idPermohonan);
 					logic.setMaklumatTukarguna(idPermohonan);
+
+					myLog.info("masuk sini tak lepas error nie");
 					beanMaklumatTukarguna = logic.getBeanMaklumatTukarguna();
 					this.context.put("beanMaklumatTukarguna", beanMaklumatTukarguna);
 
@@ -705,21 +741,17 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					this.context.put("idHakmilikAgensi", idHakmilikAgensi);
 
 					//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
-					if (logic.getBeanMaklumatPermohonan().size() != 0){
-						Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-						idUrusan = (String) hashPermohonan.get("idUrusan");
-						idSuburusan = (String) hashPermohonan.get("idSuburusan");
-						idSubsuburusan = (String) hashPermohonan.get("idTujuan");
-						idPermohonan= (String) hashPermohonan.get("idPermohonan");
-					}
 					semak = new FrmSemakan();
 					semak.mode = mode;
 					senaraiSemak = semak.getSenaraiSemakanAttach("phptukar",idPermohonan);
 	    			this.context.put("SenaraiSemak", senaraiSemak);
 	    			this.context.put("mode", mode);
 
+
+	    			myLog.info("senaraiSemak ="+senaraiSemak);
+
 					// POPUP LAMPIRAN
-					if ("3".equals(selectedTabUpper)) {
+					/*if ("3".equals(selectedTabUpper)) {
 						myLog.info("baca popup selectedTabUpper 3=====");
 
 						if ("openPopupLampiran".equals(flagPopup)) {
@@ -767,13 +799,61 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 							this.context.put("modePopup", modePopup);
 						}
 
-					}
+					}*/
 					//SENARAI LAMPIRAN
 	    			senaraiLampiran = new Vector();
 	    			//logic.setSenaraiLampiran(idPermohonan);
 	    			//senaraiLampiran = logic.getListLampiran();
 	    			this.context.put("SenaraiLampiran", senaraiLampiran);
 
+	    			//ros tambah untuk langkah
+	    			String semakMode = "";
+	    			String statusSemasa = "1";
+
+
+	    			if (getIOnline().isHantar(Long.parseLong(String.valueOf(33)),
+	    					Long.parseLong(String.valueOf(idPermohonan)),
+	    					Long.parseLong(String.valueOf(idFail)), "4")) {
+	    				semakMode = "xupdate";
+	    			} else {
+
+	    				//myLog.info("idPermohonan::" + logic.getBeanMaklumatHeader().get(0));
+	    				semakMode = "update";
+	    				myLog.info("A >>>>  "+getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
+	    						Long.parseLong(String.valueOf(idPermohonan)),
+	    						Long.parseLong(String.valueOf(idFail)), "1"));
+	    				myLog.info("B >>>>  "+getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
+	    						Long.parseLong(String.valueOf(idPermohonan)),
+	    						Long.parseLong(String.valueOf(idFail)), "2"));
+	    				myLog.info("C >>>>  "+getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
+	    						Long.parseLong(String.valueOf(idPermohonan)),
+	    						Long.parseLong(String.valueOf(idFail)), "3"));
+
+
+	    				if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
+	    						Long.parseLong(String.valueOf(idPermohonan)),
+	    						Long.parseLong(String.valueOf(idFail)), "1")) {
+	    					statusSemasa = "1";
+
+	    				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
+	    						Long.parseLong(String.valueOf(idPermohonan)),
+	    						Long.parseLong(String.valueOf(idFail)), "2")) {
+	    					statusSemasa = "2";
+
+	    				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
+	    						Long.parseLong(String.valueOf(idPermohonan)),
+	    						Long.parseLong(String.valueOf(idFail)), "3")) {
+	    					statusSemasa = "3";
+
+	    				}
+	    			}
+	    			myLog.info("semakMode="+semakMode);
+	    			context.put("semakMode", semakMode);
+	    			myLog.info("statusSemasa:" + statusSemasa);
+	    			context.put("statussemasa", statusSemasa);
+	    			context.put("idFail", (idFail));
+	    			context.put("buttonSend", "disabled");
+	    			context.put("idPermohonan", Long.parseLong(String.valueOf(idPermohonan)));
 				}
 
 				// MODE UPDATE
@@ -790,7 +870,198 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 
 
-			} else {
+			}else if ("simpanpengesahan2".equals(submit)){
+
+				String semakMode = "";
+    			String statusSemasa = "1";
+
+    			if (getIOnline().isHantar(Long.parseLong(String.valueOf(33)),
+    					Long.parseLong(String.valueOf(idPermohonan)),
+    					Long.parseLong(String.valueOf(idFail)), "4")) {
+    				semakMode = "xupdate";
+    			} else {
+
+    				if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
+    						Long.parseLong(String.valueOf(idPermohonan)),
+    						Long.parseLong(String.valueOf(idFail)), "1")) {
+    					statusSemasa = "1";
+
+    				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
+    						Long.parseLong(String.valueOf(idPermohonan)),
+    						Long.parseLong(String.valueOf(idFail)), "2")) {
+    					statusSemasa = "2";
+
+    				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
+    						Long.parseLong(String.valueOf(idPermohonan)),
+    						Long.parseLong(String.valueOf(idFail)), "3")) {
+    					statusSemasa = "3";
+
+    				}
+    			}
+    			myLog.info("semakMode="+semakMode);
+    			context.put("semakMode", semakMode);
+    			myLog.info("statusSemasa:" + statusSemasa);
+    			context.put("statussemasa", statusSemasa);
+    			context.put("idFail", (idFail));
+    			context.put("buttonSend", "disabled");
+    			context.put("idPermohonan", Long.parseLong(String.valueOf(idPermohonan)));
+
+				//myLog.info("simpanpengesahan2 ::idpermohonan=" + logic.getBeanMaklumatHeader().get(0));
+				logic.setMaklumatPermohonan(idFail);
+				beanHeader = logic.getBeanMaklumatPermohonan();
+				//idPermohonan = getParam("idPermohonan");
+				Hashtable permohonan2 = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
+				myLog.info("simpanpengesahan1 ::id_permohonan="+permohonan2);
+		    	myLog.info("simpanpengesahan2 ::idpermohonan="+logic.getBeanMaklumatPermohonan().get(0));
+				semakMode="";
+
+
+
+				/*
+				 * -1 untuk status - Pra-daftar
+				 * -2 untuk status - Tindakan Penyemak
+				 * -3 untuk status - Tindakan Pelulus
+				 * -4 untuk status - Permohonan Online (Pengesahan)
+				 * -5  untuk status - Penerimaan Permohonan
+				*/
+				String langkah2 = "2";
+				EmailConfig ec = new EmailConfig();
+
+				//myLog.info("from="+email.FROM);
+				String emelSubjek = ec.tajukSemakan+"Tukar Guna";
+				String kandungan = "";
+				if(idJawatan.equals("20")||idJawatan.equals("24")){
+					myLog.info("BACA SINIIIII============"+idKementerian);
+
+					this.context.put("idKementerian", idKementerian);
+
+					langkah2 = "2";
+
+					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
+
+					if(!getEmelSemak().checkEmail(userId).equals(""))
+						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+					//email remove bler push
+					/*ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+							, "9"
+							, String.valueOf(String.valueOf(idKementerian))
+							, emelSubjek, kandungan);*/
+
+				}else if (idJawatan.equals("9")){
+					langkah2 = "3";
+
+					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
+
+					if(!getEmelSemak().checkEmail(userId).equals(""))
+						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+					//email remove bler push
+					/*ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+							, "4"
+							, String.valueOf(String.valueOf(idKementerian))
+							, emelSubjek, kandungan);*/
+
+				}else if (idJawatan.equals("4")){
+					langkah2 = "4";
+					emelSubjek = ec.tajukHantarPermohonan + "Tukar Guna";
+
+					kandungan = getEmelSemak().setKandungan(String.valueOf(String.valueOf(permohonan2.get("tajukFail")))
+								,String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
+								,String.valueOf(String.valueOf(permohonan2.get("noPermohonan"))));
+
+					if(!getEmelSemak().checkEmail(userId).equals(""))
+						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+					//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
+
+					//email remove bler push
+					//ec.hantarPermohonan(getEmelSemak().checkEmail(userId), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
+
+				}
+				Hashtable permohonan3 = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
+				//idPermohonan = String.valueOf(permohonan3.get("idPermohonan"));
+
+
+				Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
+				myLog.info("Langkah=="+langkah2+" idSubUrusan=="+idSuburusan);
+				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,idSuburusan,"=");
+				myLog.info("setIdSuburusanstatus="+setIdSuburusanstatus);
+				myLog.info("idPermohonan="+idPermohonan);
+				rsusf.setIdPermohonan(Long.parseLong(idPermohonan));
+				myLog.info("idFail="+idFail+",idPermohonan="+idPermohonan);
+				rsusf.setIdFail(Long.parseLong(idFail));
+				rsusf.setIdSuburusanstatusfail(Long.parseLong(idSuburusan));
+				rsusf.setIdSuburusanstatus(setIdSuburusanstatus);
+				rsusf.setUrl("-");
+				rsusf.setIdMasuk(Long.parseLong(userId));
+				myLog.info("userId=="+userId);
+
+				simpanPengesahan(rsusf,langkah2,userId);
+
+				long setIdstatus = FrmUtilData.getIdStatusByLangkah (langkah2,idSuburusan,"=");
+				FrmUtilData utildata = new FrmUtilData();
+				utildata.kemaskiniStatusPermohonan(idPermohonan,String.valueOf(setIdstatus));
+
+//				simpanPengesahan(rsusf,langkah2);
+
+
+				if(getIOnline().isHantar(Long.parseLong(String.valueOf(33)),
+						Long.parseLong(idPermohonan),
+						Long.parseLong(idFail),langkah)){
+					semakMode = "xupdate";
+				}else{
+					semakMode = "update";
+				}
+				myLog.info("selectedTab=======");
+				context.put("semakMode", semakMode);
+				context.put("statussemasa", langkah2);
+				idFail = (String) permohonan2.get("idFail");
+				idPermohonan = (String) permohonan2.get("idPermohonan");
+				idStatus = (String) permohonan2.get("idStatus");
+				this.context.put("BeanHeader", beanHeader);
+
+				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
+				this.context.put("SenaraiFail", listFail);
+				setupPage(session, action, listFail);
+
+				context.remove("findNoFail");
+				context.remove("findNoPermohonan");
+				context.remove("findTajukFail");
+				context.remove("findPemohon");
+				context.remove("findNoPengenalan");
+				context.remove("findTarikhTerima");
+				context.remove("findNoHakmilik");
+				context.remove("findNoWarta");
+				context.remove("findNoPegangan");
+				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong("9999"), "", ""));
+				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong("9999"), "", ""));
+				context.remove("findNoLot");
+				context.put("selectNegeri", HTML.SelectNegeri("findNegeri",Long.parseLong("9999"), ""," onChange=\"doChangeNegeri();\""));
+				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri("9999", "findDaerah", Long.parseLong("9999"), ""," onChange=\"doChangeDaerah();\""));
+				context.put("selectMukim", HTML.SelectMukimByDaerah("9999", "findMukim", Long.parseLong("9999"), "",""));
+
+				context.put("namaJenisTanah", namaJenisTanah);
+				context.put("idJenisTanah", idJenisTanah);
+				myLog.info("masuk else idFail "+idFail);
+				myLog.info("masuk else idUlasanTeknikal "+idUlasanTeknikal);
+				// SET DEFAULT ID PARAM
+				this.context.put("idFail", idFail);
+				this.context.put("idStatus", idStatus);
+				this.context.put("idKategoriPemohon", idKategoriPemohon);
+				this.context.put("idAgensi", idAgensi);
+
+				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+
+				Vector maklumatLampiran = null;
+				maklumatLampiran = new Vector();
+				logicJabatanTeknikal.setLampiranKJP(logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				maklumatLampiran = logicJabatanTeknikal.getBeanMaklumatLampiranKJP();
+				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
+				this.context.put("maklumatLampiran", maklumatLampiran);
+
+				vm = "/start.jsp";
+			}
+			else {
 				myLog.info("masuk else");
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
@@ -805,7 +1076,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				context.remove("findTarikhTerima");
 				context.remove("findNoHakmilik");
 				context.remove("findNoWarta");
-				context.remove("findNoPegangan");;
+				context.remove("findNoPegangan");
 				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong("9999"), "", ""));
 				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong("9999"), "", ""));
 				context.remove("findNoLot");
@@ -983,11 +1254,64 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		}
 	}
 
+	private void simpanPengesahan(Tblrujsuburusanstatusfail rsusf, String langkah2,String userid) throws Exception {
+		myLog.info("simpanPengesahan::rsusf >>>> "+rsusf);
+		myLog.info("simpanPengesahan::langkah2 >>>> "+langkah2);
+		myLog.info("simpanPengesahan::userid >>>> "+userid);
+		try {
+			subUrusanStatusFail = new Tblrujsuburusanstatusfail();
+			subUrusanStatusFail.setIdPermohonan(rsusf.getIdPermohonan());
+			subUrusanStatusFail.setIdFail(rsusf.getIdFail());
+			subUrusanStatusFail.setAktif("0");
+
+			Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
+			long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,
+					String.valueOf(rsusf.getIdSuburusanstatusfail()), "=");
+			subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
+			subUrusanStatusFailN.setAktif("1");
+			subUrusanStatusFailN.setUrl(Utils.isNull(rsusf.getUrl()));
+			//subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
+			//subUrusanStatusFailN.setIdKemaskini(Long.parseLong(userId));
+			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userid));
+			subUrusanStatusFailN.setIdKemaskini(Long.parseLong(userid));
+			getIHTP().kemaskiniSimpanStatusPermohonanAktif(subUrusanStatusFail, subUrusanStatusFailN);
+
+		} catch (Exception e) {
+			// throw new Exception("Ralat FrmGadaian[554]:"+e.getCause());
+			getIHTP().getErrorHTML(e.toString());
+
+		}
+	}
+
 	private ILampiran getDocPHP(){
 		if(iLampiran == null){
 			iLampiran = new LampiranBean();
 		}
 		return iLampiran;
+
+	}
+	private IOnline getIOnline(){
+		if(iOnline==null){
+			iOnline = new OnlineBean();
+		}
+		return iOnline;
+
+	}
+	private IHtp getIHTP(){
+		if(iHTP== null)
+			iHTP = new HtpBean();
+		return iHTP;
+	}
+	private IEmel getEmelSemak(){
+		if(emelSemak == null)
+			emelSemak = new HTPEmelJRPBean();
+		return emelSemak;
+	}
+	private IUserPegawai getIUser(){
+		if(iUser==null){
+			iUser = new UserBean();
+		}
+		return iUser;
 
 	}
 }

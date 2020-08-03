@@ -128,17 +128,17 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
             #end
         
         #end
-        
-       #if($flag_skrin == "hakmilik_borangL")
+		
+       	#if($flag_skrin == "hakmilik_borangL")
         
         #if($isEdit=="no")
 				<input type="button" name="cmdKemaskini" value ="Kemaskini Maklumat Borang L" onClick="javascript:kemaskiniBorangL('$!id_permohonan','$flag_skrin')">
 				#else
 				<input type="button" name="cmdUpdate" value ="Simpan" onClick="javascript:simpanBorangL('$!id_permohonan','$flag_skrin')">
 				<input type="button" name="cmdBatal" value ="Batal" onClick="javascript:batalKemaskini('$!id_permohonan','$flag_skrin')">
-				#end
+			#end
 			
-        #end        
+        #end
         
         
         <table align="center" width="100%" cellspacing="1" cellpadding="0">
@@ -146,7 +146,8 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
         
         <tr class="table_header">
         				<!-- PPT-11 -->
-        				<td align="center" ><b><input type="checkbox" title="Sila Semak Untuk Pilih Semua" name="checkall" id="checkall" onclick="checkALL()" ></b></td>
+        				<!-- td align="center" ><b><input type="checkbox" title="Sila Semak Untuk Pilih Semua" name="checkall" id="checkall" onclick="checkALL()" ></b></td -->
+        				<td align="center"><b><font color="white">Surat Pelupusan Hakmilik</b></td>
                   		<td align="center" ><b><font color="white">NO</font></b></td>
                   		<td  ><b><font color="white">NO HAKMILIK</font></b></td>
                         #if($flag_skrin != "hakmilik_borangL")
@@ -156,7 +157,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         #if($flag_skrin != "hakmilik_borangL")          
                   		<td  ><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>
                         #end
-                  		<td   ><b><font color="white">LUAS DIAMBIL</font></b></td>
+                  		<td align="center"><b><font color="white">LUAS DIAMBIL</font></b></td>
                         
                         #if($flag_skrin == "daftar_sek8_online")  
                         
@@ -205,15 +206,17 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                     #end
                     
                     
-                    
-
-                    
-                    
-                    
                       <tr>
-                        <!-- PPT-11 -->
-                        <td class="$rowx" align="center"><input type="checkbox" $checkedCB name="cbsemaks" id="cbsemaks" onclick="doUpdateCheckAll()" value="$!listTanah.id_hakmilik"></td>
-                		<td class="$rowx" align="center">$!listTanah.rn</td>
+						<!-- PPT-11 -->
+						#if($flag_skrin == "hakmilik_borangL")
+        					#if($isEdit=="no")
+								<td class="$rowx" align="center"><input type="checkbox" $checkedCB name="cbsemaks" id="cbsemaks" onclick="doUpdateCheckAll()" value="$!listTanah.id_hakmilik" title="Sila semak bagi cetakan 'Surat Pelupusan Hakmilik'" ></td>
+							#else
+								<td class="$rowx" align="center"><input type="checkbox" $checkedCB disabled name="cbsemaks" id="cbsemaks" onclick="doUpdateCheckAll()" value="$!listTanah.id_hakmilik" title="Selesaikan sesi 'Kemaskini Maklumat Borang L' bagi mencetak 'Surat Pelupusan Hakmilik'" ></td>
+							#end
+						#end
+						<td class="$rowx" align="center">$!listTanah.rn</td>
+						
                         <!--
                 		#if($showLinkHM=="yes" || ($ModuleName=="ekptg.view.ppt.FrmSek8PermintaanUkur" && $listTanah.flagPU == "yes"))
                		 	<td  class="$rowx"><a href="javascript:viewHM('$!listTanah.id_hakmilik')"><font color="blue">$!listTanah.kod_jenis_hakmilik $!listTanah.no_hakmilik</font></a></td>
@@ -372,12 +375,9 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                 
                 #end    
                      
-                     
                       </td>     
                 		 
                         #end 
-                        
-                        
                         
                         #if($flag_skrin == "hakmilik_borangL")
                         <td class="$rowx">
@@ -417,20 +417,11 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         #if($!listTanah.tarikh_borangl != "")
                         
                         <input type="button" name="cmdCetakBorangL" value ="Cetak" onClick="javascript:cetakBorangL($!listTanah.id_hakmilik,$!id_fail,$!id_permohonan,'$!listTanah.tarikh_borangl','$!listTanah.tempoh')">
-                        <input type="button" name="cmdCetakPenyampaianBorangL" value ="Penyampaian Borang L" onClick="javascript:cetakPenyampaianBorangL($!listTanah.id_hakmilik,$!id_fail,$!id_permohonan,'$!listTanah.tarikh_borangl','$!listTanah.tempoh')">
-                        #end                        
+                        <input type="button" name="cmdCetakPenyampaianBorangL" value ="Penyampaian Borang L" onClick="javascript:cetakPenyampaianBorangL($!listTanah.id_hakmilik, $!id_fail,$!id_permohonan, '$!listTanah.tarikh_borangl', '$!listTanah.tempoh')">
+                        #end
                         </td>
                         #end
-
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                		
             		</tr>
                     
               #set ($count_check = $count_check + 1)      
@@ -450,13 +441,17 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 		<table width="100%" border="0">
 			<tr align="center">
 				<td>
-
-				<input type="button" name="cmdCetak" value="Cetak" onClick="javascript:cetakSuratIringan('$!id_permohonan');">
 					
+					#if($flag_skrin == "hakmilik_borangL")
+						#if($isEdit=="no")
+							<input type="button" name="cmdCetak" value="Cetak Surat Pelupusan" onClick="javascript:cetakSuratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot');">
+						#else
+						#end
+					#end
+				
 				</td>
 			</tr>
-		</table>          
-      
+		</table>
       
       </fieldset>
       
@@ -571,15 +566,7 @@ function checkDuplicated(value,div_id,bil,div_alert)
 	
 }
 
-
-
 //refreshSkrinHakmilik(id_permohonan,flag_skrin);
-
-
-
-
-
-
 
 function paparByAgensi(id_hakmilik,status_bantahan_ap,id_permohonan,flag_skrin)
 {
@@ -721,6 +708,7 @@ function simpanBorangL(id_permohonan,flag_skrin) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8BorangL";
 	document.${formName}.submit();*/
 }
+
 function batalKemaskini(id_permohonan,flag_skrin) {
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
 	document.${formName}.command.value = "batalKemaskiniL";
@@ -939,9 +927,6 @@ function paparHakmilik(id_hakmilik,id_permohonan,flag_skrin){
 		window.opener.viewHM(id_hakmilik);
 		}
 		
-		
-		
-		
 	}
 	catch (err) {}
    	window.close();	
@@ -979,41 +964,61 @@ function kembaliKeSkrinUtama(id_permohonan) {
 	document.${formName}.cmdKembaliSkrinUtama.value = "Sila Tunggu....";		
 }
 
-<!-- PPT-11 -->
-function checkALL() {
-
-	 if (document.${formName}.checkall.checked == true){
-	        if (document.${formName}.cbsemaks.length == null){
-	            document.${formName}.cbsemaks.checked = true;
-	        } else {
-	            for (i = 0; i < document.${formName}.cbsemaks.length; i++){
-	                document.${formName}.cbsemaks[i].checked = true;
-	            }
-	        }
-	    } else {
-	        if (document.${formName}.cbsemaks.length == null){
-	            document.${formName}.cbsemaks.checked = false;
-	        } else {
-	            for (i = 0; i < document.${formName}.cbsemaks.length; i++){
-	                document.${formName}.cbsemaks[i].checked = false;	                
-	            }
-	            
-	        }
-	    }
-}
-
-//surat iringan belum ada 260220
-function cetakSuratIringan(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempohBL) {
+// PPT-11 Cetak Surat Pelupusan Hakmilik
+function cetakSuratPelupusanHakmilik(id_hakmilik, id_fail, id_permohonan, bilLot) {
+	alert(document.querySelectorAll('input[type="checkbox"]:checked').length);
+	var bilLot = document.querySelectorAll('input[type="checkbox"]:checked').length;
+	// var count = document.querySelectorAll('input[type="checkbox"]:checked').length;
 	
-	//alert("tarikhBorangL : "+tarikhBorangL);
-
-	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&report=BorangL&selectNoFail=yes&tarikhBorangL="+tarikhBorangL+"&tempohBL="+tempohBL;
+	var checkSelected = false;
+	if(document.${formName}.cbsemaks.length > 1){
+		for(var i = 0 ; i < document.${formName}.cbsemaks.length; i++)	{ 
+    		if (document.${formName}.cbsemaks[i].checked)  	{
+  				checkSelected=true;
+  			}
+		}
+	}	else	{
+		if (document.${formName}.cbsemaks.checked)	{
+			checkSelected=true;
+    	}
+	}
+	
+	 if(!checkSelected){
+		alert("Sila semak pada \"Surat Pelupusan Hakmilik\" terlebih dahulu.");
+		return;
+		
+	}	else	{
+	
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&bilLot="+bilLot+"&report=suratPelupusanHakmilik";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
+    
+    }
 }
+
+
+<!-- PPT-11 -->
+// function checkALL() {
+
+// 	 if (document.${formName}.checkall.checked == true){
+// 	        if (document.${formName}.cbsemaks.length == null){
+// 	            document.${formName}.cbsemaks.checked = true;
+// 	        } else {
+// 	            for (i = 0; i < document.${formName}.cbsemaks.length; i++){
+// 	                document.${formName}.cbsemaks[i].checked = true;
+// 	            }
+// 	        }
+// 	    } else {
+// 	        if (document.${formName}.cbsemaks.length == null){
+// 	            document.${formName}.cbsemaks.checked = false;
+// 	        } else {
+// 	            for (i = 0; i < document.${formName}.cbsemaks.length; i++){
+// 	                document.${formName}.cbsemaks[i].checked = false;	                
+// 	            }
+// 	        }
+// 	    }
+// }
+
 </script>
-
-
-
