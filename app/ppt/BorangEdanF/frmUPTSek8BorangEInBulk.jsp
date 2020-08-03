@@ -9,6 +9,7 @@
 #set($disabilityx = "") #set($disability1 = "") #else #set($M = "")
 #set($disability = "readonly") #set($disabilityx = "class=disabled")
 #set($disability1 = "disabled") #end #if($onchangeEdit=="no")
+
 #foreach($data in $dataBorangEInBulk)
 #set($txdTarikhBorangF=$data.tarikh_borangf)
 #set($txdTarikhBorangE=$data.tarikh_borange)
@@ -18,6 +19,7 @@
 #set($txtAlamat2=$data.alamat2) #set($txtAlamat3=$data.alamat3)
 #set($txtPoskod=$data.poskod) #set($tarikh_cetak=$data.tarikh_cetak)
 #set($txdTarikhTampal=$data.tarikh_akhir_tampal) #end #end #end
+
 
 <center>
 
@@ -83,9 +85,9 @@
 					#end</td>
 			</tr>
 
-			<tr>
+			<!-- tr>
 				<td>&nbsp;</td>
-				<td>Masa Siasatan</td>
+				<td>Masa Siasatan yang asal</td>
 				<td>:</td>
 				<td><input $disability $disabilityx type="text"
 					name="txtMasaSiasatan" id="txtMasaSiasatan"
@@ -105,7 +107,7 @@
 				</select>&nbsp;#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) ||
 					($mode=="view" && $isEdit=="yes")) <font color="blue"
 					style="font-size: 10px"><i>format 12 jam (HHMM)</i></font>#end</td>
-			</tr>
+			</tr -->
 
 			<tr>
 				<td>&nbsp;</td>
@@ -159,8 +161,7 @@
 
 		<fieldset id="center">
 			<legend>
-				<strong><font color="red">$M</font> Senarai Pilihan
-					Hakmilik</strong>
+				<strong><font color="red">$M</font>Senarai Pilihan	Hakmilik</strong>
 			</legend>
 
 			#if($saiz_listHakmilikBorangEInBulk > 10)
@@ -172,22 +173,22 @@
 					<tr class="table_header">
 						#if($saiz_listHakmilikBorangEInBulk != 0)
 						<td align="center" width="5%"><b><input $disability1
-								type="checkbox" title="Sila Semak Untuk Pilih Semua"
-								name="checkall" id="checkall" onclick="checkALL()"></b></td> #end
+							type="checkbox" title="Sila Semak Untuk Pilih Semua"
+							name="checkall" id="checkall" onclick="checkALL()"></b></td> #end
 						<td align="center" width="15%"><b>No (Tarikh Borang E)</b></td>
 						<td width="20%"><b>No.Hakmilik</b></td>
 						<td width="15%"><b>No.LOT/No.PT</b></td>
-						<td width="25%"><b>Mukim/Pekan/Bandar</b></td>
+						<td width="20%"><b>Mukim/Pekan/Bandar</b></td>
 						#if($!flag_subjaket!="")
 						<td width="10%"><b>No.Subjaket</b></td>#end
-						<!-- td width="15%"><b>Masa</b></td-->
-						<!-- PPT-06 -->
+						<td width="20%"><b>Masa Siasatan</b></td>
 					</tr>
 
-					#if($saiz_listHakmilikBorangEInBulk!=0) #foreach($listTanah in
-					$listHakmilikBorangEInBulk) #set( $i = $velocityCount ) #if ( ($i %
-					2) != 1 ) #set( $row = "row2" ) #else #set( $row = "row1" ) #end
-
+					#if($saiz_listHakmilikBorangEInBulk!=0) 
+					#foreach($listTanah in $listHakmilikBorangEInBulk) 
+					#set( $i = $velocityCount ) #if ( ($i % 2) != 1 ) 
+					#set( $row = "row2" ) #else #set( $row = "row1" ) #end
+					
 					#if($listTanah.selectedcb > 0) #set($checkCB = "checked") #else
 					#set($checkCB = "") #end #set($checkedCB = "") #if($mode=="new")
 					#foreach ($foo in $selectedItem) #if($foo ==
@@ -197,7 +198,7 @@
 					#foreach ($foo in $selectedItem) #if($foo ==
 					$!listTanah.id_hakmilik) #set($checkedCB = "checked") #end #end
 					#end #end
-
+					
 					<tr>
 						#if($saiz_listHakmilikBorangEInBulk != 0)
 						<td class="$row" align="center"><input type="checkbox"
@@ -213,12 +214,26 @@
 						<td class="$row">$!listTanah.nama_mukim
 							#if($listTanah.seksyen!="")<font style="font-size: 10px">Seksyen
 								$listTanah.seksyen</font>#end
-						</td> #if($!flag_subjaket!="")
-						<td class="$row">Sj.$!listTanah.no_subjaket</td>#end
+						</td> 
+						#if($!flag_subjaket!="")
+							<td class="$row">Sj.$!listTanah.no_subjaket</td>
+						#end
+						
 						<!-- PPT-06 -->
-						<!-- td class="$row">
-				<input $disability $disabilityx type="text" name="txtMasaSiasatan" id="txtMasaSiasatan" value="$!txtMasaSiasatan" onblur="validateNumber(this,this.value);checkDigit()" onkeyup="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" maxlength="4" size="4" />
-			</td-->
+						<td class="$row">
+							<input $disability $disabilityx type="text" name="txtMasaSiasatan" id="txtMasaSiasatan" value="$!listTanah.masa_siasatan" 
+							onblur="validateNumber(this,this.value);checkDigit()" onkeyup="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" 
+							maxlength="4" size="4" />
+							
+							<select $disability1 $disabilityx name="socJenisWaktu" id="socJenisWaktu" style="width: 105px">
+							
+								<option value="0" #if($listTanah.jenis_waktu== "" || $listTanah.jenis_waktu=="0" ) selected=selected #end>SILA PILIH</option>
+								<option value="1" #if($listTanah.jenis_waktu== '1') selected=selected #end>PAGI</option>
+								<option value="2" #if($listTanah.jenis_waktu== '2') selected=selected #end>TENGAH HARI</option>
+								<option value="3" #if($listTanah.jenis_waktu== '3') selected=selected #end>PETANG</option>
+
+							</select>&nbsp;#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) || ($mode=="view" && $isEdit=="yes")) <font color="blue" style="font-size: 10px"><i>format 12 jam (HHMM)</i></font>#end
+						</td>
 					</tr>
 					#end #else
 					<tr>
@@ -226,9 +241,9 @@
 					</tr>
 					#end
 
-				</table>
-
-				#if($saiz_listHakmilikBorangEInBulk > 10)
+			</table>
+			
+			#if($saiz_listHakmilikBorangEInBulk > 10)
 			</div>
 			#end
 
@@ -245,6 +260,7 @@
 				#end #if($mode=="view") #if($isEdit=="no") <input type="button"
 				name="cmdKemaskini" value="Kemaskini"
 				onClick="javascript:kemaskiniBorangEInBulk('$!id_borange')">
+				
 				<input type="button" name="button" id="button" value="Cetak"
 				onClick="javascript:setTable('tableReport1')" /> #else <input
 				type="button" name="cmdUpdate" value="Simpan"
@@ -602,22 +618,19 @@ function simpanBorangEInBulk(id_permohonan,size,mode,id_borange){
 
 	var checkSelected=false;
 	if(size>1){
-		for(var i=0 ; i < document.${formName}.cbsemaks.length; i++) 
-		{ 
-    		if (document.${formName}.cbsemaks[i].checked)
-        	{
+		for(var i=0 ; i < document.${formName}.cbsemaks.length; i++) { 
+    		if (document.${formName}.cbsemaks[i].checked)	{
   				checkSelected=true; 
   			}
 		}
-	}else{
-		if (document.${formName}.cbsemaks.checked)
-    	{
+	}	else	{
+		if (document.${formName}.cbsemaks.checked) 	{
 			checkSelected=true; 
     	}
 	}
 	
 	var TB  = document.getElementById("txdTarikhTampal").value;
-
+	
 	var dt1   = parseInt(TB.substring(0,2),10)+20;
    	var mon1  = parseInt(TB.substring(3,5),10)-1;
    	var yr1   = parseInt(TB.substring(6,10),10);
@@ -629,7 +642,7 @@ function simpanBorangEInBulk(id_permohonan,size,mode,id_borange){
 	var dt2   = parseInt(tarikhSiasatan.substring(0,2),10);
    	var mon2  = parseInt(tarikhSiasatan.substring(3,5),10)-1;
    	var yr2   = parseInt(tarikhSiasatan.substring(6,10),10);
-
+	
    	var dateSiasatan = new Date(yr2, mon2, dt2);
    	
 	var dat1 = document.${formName}.txdTarikhBorangF
@@ -637,42 +650,39 @@ function simpanBorangEInBulk(id_permohonan,size,mode,id_borange){
 	var dat3 = document.${formName}.txdTarikhSiasatan
 	var dat4 = document.${formName}.txdTarikhTampal
 	
-	if (dat2.value=="")
-	{
+	if (dat2.value=="")	{
+	
 		alert("Sila Masukkan Tarikh Borang E")
 		dat2.focus()
 		return;
-	}
-	else if (dat1.value!="" && isDate(dat1.value)==false)
-	{
+		
+	}	
+	else if (dat1.value!="" && isDate(dat1.value)==false)	{
 		dat1.focus()
 		return;
-	}
-	else if (dat2.value!="" && isDate(dat2.value)==false)
-	{
+	}	
+	else if (dat2.value!="" && isDate(dat2.value)==false)	{
 		dat2.focus()
 		return;
 	}
-	else if (dat4.value!="" && isDate(dat4.value)==false)
-	{
+	else if (dat4.value!="" && isDate(dat4.value)==false)	{
 		dat4.focus()
 		return;
 	}
-	else if (dat3.value!="" && isDate(dat3.value)==false)
-	{
+	else if (dat3.value!="" && isDate(dat3.value)==false)	{
 		dat3.focus()
 		return;
 	}
-	else if((dat4.value!="" && dat3.value!="") && (dateSiasatan < dateValSiasatan)){
+	else if((dat4.value!="" && dat3.value!="") && (dateSiasatan < dateValSiasatan))	{
 		alert("Sila pastikan \"Tarikh Siasatan\" tidak kurang 21 hari dari \"Tarikh Akhir Tampal\"");
 	 	document.${formName}.txdTarikhSiasatan.focus();
 	 	return;
 	}
-	else if(!checkSelected){
+	else if(!checkSelected)	{
 		alert("Sila pilih \"Hakmilik\" terlebih dahulu.");
 		return;
-	}
-	else{
+		
+	}	else	{
 		
 		if ( !window.confirm("Adakah Anda Pasti?") ) return;
 		document.${formName}.ScreenLocation.value = "top";
@@ -680,7 +690,7 @@ function simpanBorangEInBulk(id_permohonan,size,mode,id_borange){
 		if(mode=="new"){
 			document.${formName}.command.value = "daftarMaklumatBorangEInBulk";
 			document.${formName}.command2.value = "simpanMaklumatBorangEInBulk";
-		}else{
+		}	else	{
 			document.${formName}.id_borange.value = id_borange;
 			document.${formName}.command.value = "viewMaklumatBorangEInBulk";
 			document.${formName}.command2.value = "kemaskiniBorangEInBulk";
@@ -690,8 +700,8 @@ function simpanBorangEInBulk(id_permohonan,size,mode,id_borange){
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmUPTSek8BorangF";
 		document.${formName}.submit();
 	}
-	
 }
+
 function cetakBorangE(idpermohonan,id_borange,tarikh_cetak) {
 
 	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_borange="+id_borange+"&report=BorangE&selectNoFail=yes";
@@ -700,6 +710,7 @@ function cetakBorangE(idpermohonan,id_borange,tarikh_cetak) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
 		document.getElementById(id).style.display="block";

@@ -201,10 +201,10 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 														<td class="$row">Sj.$!listR.no_subjaket</td>
 													#end
 													<td class="$row">$!listR.tarikh_siasatan</td>
-													<td class="$row">$!listR.masa_siasatan
-														#if($!listR.jenis_waktu== '1') PAGI  #end
-														#if($!listR.jenis_waktu== '2') TENGAH HARI  #end
-														#if($!listR.jenis_waktu== '3') PETANG  #end
+													<td class="$row">$!txtMasaSiasatan
+														#if($!socJenisWaktu == '1') PAGI  #end
+														#if($!socJenisWaktu == '2') TENGAH HARI  #end
+														#if($!socJenisWaktu == '3') PETANG  #end
 													</td>
 												</tr>
 								           	#end
@@ -251,7 +251,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 				                            	<td align="center" ><b><font color="white">NO. SUBJAKET</font></b></td> 
 				                            #end 
 				                            <td align="center"><b><font color="white">TARIKH SIASATAN</font></b></td>
-					                  		<td align="center"><b><font color="white">MASA SIASATAN</font></b></td>    
+					                  		<td align="center"><b><font color="white">MASA SIASATAN amek query ni</font></b></td>    
 				           		 		</tr>
 						
 							         	#if($SenaraiRingkasan.size()>0)
@@ -267,15 +267,16 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 													<td class="$row">$!listR.nama_mukim
 														#if($listR.seksyen!="")
 															<font style="font-size: 10px">Seksyen $listR.seksyen</font>
-															
 														#end
 													</td> 
 													#if($!flag_subjaket!="")
 														<td class="$row">Sj.$!listR.no_subjaket</td>
 													#end
+													
 													<td class="$row">
 														<input type="text" name="txtTarikhSiasatan" id="txtTarikhSiasatan" value="$!listR.tarikh_siasatan" onblur="validateNumber(this,this.value);checkDigit()" maxlength="12" size="12" />
 													</td>
+													
 													<td class="$row">
 														<input type="text" name="txtMasaSiasatan" id="txtMasaSiasatan" value="$!listR.masa_siasatan" onblur="validateNumber(this,this.value);checkDigit()" onkeyup="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" maxlength="4" size="4" />
 													
@@ -286,9 +287,9 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 																	<option value="2" #if($!listR.jenis_waktu== '2') selected=selected #end>TENGAH
 																		HARI</option>
 																	<option value="3" #if($!listR.jenis_waktu== '3') selected=selected #end>PETANG</option>
-											
 														</select>
 													</td>
+													
 												</tr>
 								           	#end
 										#else
