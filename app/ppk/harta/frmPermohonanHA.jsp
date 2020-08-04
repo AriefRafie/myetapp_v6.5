@@ -1904,11 +1904,13 @@
 				                          					&& $id_Status != "64" 
 				                          					&& $id_Status != "163" 
 				                          					&& $id_Status != "164" 
-				                          					&& $id_Status != "165")	   
+				                          					&& $id_Status != "165")	  
+				                          					#if($open_button_online == "yes")   
 										                   		<a href = "javascript:lampiranHartaHA('$list.idha','$!paramOnline');">
 																	<img border="0" src="../myetapp65/img/jkptg.png" width="20" height="15"/>
 																</a><br>
-															#end	
+															#end
+														#end	
 															 	$list.lampirans
 									             	</td>
 												</tr>
