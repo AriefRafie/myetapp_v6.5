@@ -5996,6 +5996,7 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 			this.context.put("tutup", "");
 
 			list = logiconline.semakDataSimati(getParam("id_Permohonan_terdahulu"));
+			myLogger.info("syafiqah get id dahulu : "+ getParam("id_Permohonan_terdahulu") );
 			this.context.put("View", list);
 			Hashtable n = (Hashtable) list.get(0);
 
@@ -6770,7 +6771,7 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 		}
 
 		if (getParam("txtUmurPemohon") != "") {
-			k.put("umur", Integer.parseInt(getParam("txtUmurPemohon")));
+			k.put("umur", getParam("txtUmurPemohon"));
 		}
 		int umu = 0;
 		if (getParam("txtUmurPemohon") == "") {
@@ -9474,7 +9475,16 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 		
 			//Lampiran
 			LampiranBean lBean = new LampiranBean();
-			this.context.put("lampirans", lBean.getLampiranSimatiPapar(idPermohonan, "99203"));	// sebab permohonan S17			
+			this.context.put("lampirans", lBean.getLampiranSimatiPapar(idPermohonan, "99203"));	// sebab permohonan S17		
+			this.context.put("perintahbaru", getParam("perintahminta"));
+			this.context.put("txtchecked23", getParam("txtLainLainTujuan"));
+			// this.context.put("chkmode", getParam("cbsemaks"));
+			String vc = getParam("cbsemaks");
+			String nv = "checked" + vc;
+			this.context.put(nv, "checked");
+			
+			
+			myLogger.info("syafiqah: "+nv);
 
 			vm = "app/ppk/FrmPraPrmhnnSek17SenaraiSemak_online.jsp";
 

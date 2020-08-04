@@ -272,8 +272,9 @@ padding:0 0.25em;
 		
 		}else if('lampiransimati'=='$!actionRefresh'){
 			window.opener.semakLampiran('socBandar');
-		}else if('$!actionRefresh' == 'borangP'){
-			//window.opener.semakLampiran('socBandar');
+			
+		}else if('borangP' == '$!actionRefresh'){
+			window.opener.semakLampiran();
 		
 		}
 		

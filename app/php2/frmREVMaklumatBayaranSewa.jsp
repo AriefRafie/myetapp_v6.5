@@ -21,6 +21,7 @@
   <input type="hidden" name="selectedTabUpper" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="anchor" type="hidden" id="anchor"/>
   <input type="hidden" name="txtNamaPemohon" id="txtNamaPemohon" value="$txtNamaPemohon"/>
+  <input type="hidden" name="txtNoFail" id="txtNoFail" value="$txtNoFail"/>
 
 </p>
 
@@ -84,6 +85,7 @@ function kembali(){
 function doBacklist() {
 	document.${formName}.actionHasil.value = "";
 	document.${formName}.txtNamaPemohon.value = "$txtNamaPemohon";
+	document.${formName}.txtNoFail.value = "$txtNoFail";
 	document.${formName}.submit();
 }
 function batal(){
