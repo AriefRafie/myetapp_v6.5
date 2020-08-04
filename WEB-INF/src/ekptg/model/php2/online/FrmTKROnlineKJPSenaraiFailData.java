@@ -453,6 +453,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			sql = "SELECT USER_ROLE  FROM USERS WHERE USER_ID = '" + userId + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
+	
 
 			if (rs.next()){
 				return rs.getString("USER_ROLE").toString();

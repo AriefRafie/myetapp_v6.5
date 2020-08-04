@@ -101,7 +101,7 @@
         #end
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="30%"><strong>No Rujukan Online</strong></td>
+          <td width="30%"><strong>No Rujukan <i>Online</i></strong></td>
           <td width="25%"><strong>Tajuk Fail</strong></td>
           <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
           <td width="15%"><strong>Status</strong></td>
