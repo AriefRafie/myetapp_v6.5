@@ -819,16 +819,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 	    				//myLog.info("idPermohonan::" + logic.getBeanMaklumatHeader().get(0));
 	    				semakMode = "update";
-	    				myLog.info("A >>>>  "+getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
-	    						Long.parseLong(String.valueOf(idPermohonan)),
-	    						Long.parseLong(String.valueOf(idFail)), "1"));
-	    				myLog.info("B >>>>  "+getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
-	    						Long.parseLong(String.valueOf(idPermohonan)),
-	    						Long.parseLong(String.valueOf(idFail)), "2"));
-	    				myLog.info("C >>>>  "+getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
-	    						Long.parseLong(String.valueOf(idPermohonan)),
-	    						Long.parseLong(String.valueOf(idFail)), "3"));
-
 
 	    				if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
 	    						Long.parseLong(String.valueOf(idPermohonan)),
@@ -1042,8 +1032,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				context.put("namaJenisTanah", namaJenisTanah);
 				context.put("idJenisTanah", idJenisTanah);
-				myLog.info("masuk else idFail "+idFail);
-				myLog.info("masuk else idUlasanTeknikal "+idUlasanTeknikal);
+				myLog.info("hantar idFail "+idFail);
+				myLog.info("hantar idUlasanTeknikal "+idUlasanTeknikal);
 				// SET DEFAULT ID PARAM
 				this.context.put("idFail", idFail);
 				this.context.put("idStatus", idStatus);
@@ -1059,7 +1049,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
 				this.context.put("maklumatLampiran", maklumatLampiran);
 
-				vm = "/start.jsp";
+				vm = "/senaraiFail.jsp";
 			}
 			else {
 				myLog.info("masuk else");
