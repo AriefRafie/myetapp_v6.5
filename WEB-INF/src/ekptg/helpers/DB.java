@@ -2364,7 +2364,8 @@ public class DB extends EkptgCache implements Serializable {
 			r.add("no_fax");
 			r.add("id_seksyen", idSeksyen);
 			r.add("id_negeri", idNegeri);
-			r.add("id_daerah", idDaerah);
+			if(!idDaerah.equals("0"))
+				r.add("id_daerah", idDaerah);
 
 			sql = r.getSQLSelect("tblrujpejabatjkptg");
 			myLogger.info("getPejabatJKPTG:sql="+sql);

@@ -425,11 +425,92 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 		      if (db != null) db.close();
 		    }
 		  }
-	    
+
 	  /** 
 	   * Simpan permohonan -TBLPERMOHONAN,TBLHTPPERMOHONAN 
 	   */
-	  public static String simpanPermohonanHTP(Hashtable<?, ?> data) throws Exception {
+	  public static String simpanPermohonanHTPStr(Hashtable<String, String> data) throws Exception {
+		  Db db = null;
+		  String sql = "";
+		  
+		  try{
+			  Tblrujpejabatjkptg pejabat = null;
+			  Hashtable<String, String> userInfo = null;
+
+			  String idAgensi = String.valueOf(data.get("id_Agensi"));
+	          String idJenistanah = String.valueOf(data.get("id_Jenistanah"));
+			  
+	          long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
+			  long idHtppermohonan = DB.getNextID("TBLHTPPERMOHONAN_SEQ");			  
+			  
+			  String idFail = (String)data.get("id_Fail");		    	
+//			  String idJKPTG = String.valueOf(data.get("idPejabat"));
+			  String idMasuk = (String)data.get("id_Masuk");
+			  userInfo = getUserInternalInfo(idMasuk);
+			  pejabat = DB.getPejabatJKPTG(userInfo.get("IdSeksyen"),userInfo.get("IdNegeri"),userInfo.get("IdDaerah"));		      //ekptg_user_unit	
+			  Long idJKPTG = pejabat.getIdPejabatjkptg();
+//	          String tarikhMasuk = "to_date('" + (String)data.get("tarikh_Masuk") + "','dd/MM/yyyy')";
+	          String noFailkjp = (String)data.get("no_Failkjp");
+	          String noFaillain = (String)data.get("no_Faillain");
+			  String noPermohonan = (String)data.get("no_Permohonan");
+			  String noPerserahan = (String)data.get("no_Perserahan");    	
+	          String tarikhAgihan = "to_date('" + (String)data.get("tarikh_Agihan") + "','dd/MM/yyyy')";
+			  String tarikhTerima = "to_date('" + (String)data.get("tarikh_Terima") + "','dd/MM/yyyy')";
+			  String tarikhSuratKJP = "to_date('" + (String)data.get("tarikh_SuratKJP") + "','dd/MM/yyyy')";
+	          String tujuan = (String)data.get("tajuk");
+
+	          db = new Db();
+	          Statement stmt = db.getStatement();
+	          SQLRenderer r = new SQLRenderer();
+	          r.add("id_permohonan", r.unquote(""+idPermohonan));
+	          r.add("id_fail",idFail);
+	          if(!idJKPTG.equals(null))
+	        	  r.add("id_jkptg",idJKPTG);
+	          
+	          r.add("no_permohonan",noPermohonan);
+	          r.add("no_perserahan",noPerserahan);
+	          r.add("tarikh_surat", r.unquote(tarikhSuratKJP));
+	          	//tarikh_Terima juga utk tarikh permohonan
+	          r.add("tarikh_terima", r.unquote(tarikhTerima));
+	          r.add("tujuan",tujuan);
+	          r.add("id_masuk",idMasuk);
+	          r.add("tarikh_masuk",r.unquote("SYSDATE"));
+	          r.add("id_kemaskini",idMasuk);
+	          r.add("tarikh_kemaskini",r.unquote("SYSDATE"));
+	          sql = r.getSQLInsert("tblpermohonan");
+	          myLog.info("FrmUtilData::simpanPermohonanHTP:TBLPERMOHONAN = "+sql);
+	          stmt.executeUpdate(sql);
+		      
+	          Statement stmtHtp = db.getStatement();
+	          SQLRenderer rHtp = new SQLRenderer();
+	          rHtp.add("id_htppermohonan",idHtppermohonan);
+	          rHtp.add("id_permohonan", idPermohonan);
+	          rHtp.add("id_agensi", idAgensi);
+	          rHtp.add("id_jenistanah", idJenistanah);
+	          rHtp.add("id_pegawai", idMasuk);
+	          rHtp.add("no_rujukan_kjp", noFailkjp);
+	          rHtp.add("no_rujukan_lain", noFaillain);
+	          rHtp.add("tarikh_agihan", rHtp.unquote(tarikhAgihan));
+	          rHtp.add("id_masuk",idMasuk);
+	          rHtp.add("tarikh_masuk",rHtp.unquote("SYSDATE"));
+	          rHtp.add("id_kemaskini",idMasuk);
+	          rHtp.add("tarikh_kemaskini",rHtp.unquote("SYSDATE"));
+	          sql = rHtp.getSQLInsert("tblhtppermohonan");
+	          myLog.info("FrmUtilData::simpanPermohonanHTP::TBLHTPPERMOHONAN = "+sql);
+	          stmtHtp.executeUpdate(sql);   
+		      //StatusChange_Action(idPermohonan, idSuburusan);
+		   
+		      return String.valueOf(idPermohonan);
+		      
+		  }finally {
+			  if (db != null) db.close();
+		  }
+		  
+	  }
+	  /** 
+	   * Simpan permohonan -TBLPERMOHONAN,TBLHTPPERMOHONAN 
+	   */
+	  public static String simpanPermohonanHTP(Hashtable<String, ?> data) throws Exception {
 		  Db db = null;
 		  String sql = "";
 		  
