@@ -88,7 +88,7 @@
 
 			<!-- tr>
 				<td>&nbsp;</td>
-				<td>Masa Siasatan yang asal</td>
+				<td>Masa Siasatan yang asala wehhhh</td>
 				<td>:</td>
 				<td><input $disability $disabilityx type="text"
 					name="txtMasaSiasatan" id="txtMasaSiasatan"
