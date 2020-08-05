@@ -15,10 +15,11 @@
 #set($txdTarikhBorangE=$data.tarikh_borange)
 #set($txdTarikhSiasatan=$data.tarikh_siasatan)
 #set($txtMasaSiasatan=$data.masa_siasatan)
-#set($socJenisWaktu=$data.jenis_waktu) #set($txtAlamat1=$data.alamat1)
-#set($txtAlamat2=$data.alamat2) #set($txtAlamat3=$data.alamat3)
-#set($txtPoskod=$data.poskod) #set($tarikh_cetak=$data.tarikh_cetak)
-#set($txdTarikhTampal=$data.tarikh_akhir_tampal) #end #end #end
+#set($socJenisWaktu=$data.jenis_waktu)
+#set($txtAlamat1=$data.alamat1) #set($txtAlamat2=$data.alamat2)
+#set($txtAlamat3=$data.alamat3) #set($txtPoskod=$data.poskod)
+#set($tarikh_cetak=$data.tarikh_cetak) #set($txdTarikhTampal=$data.tarikh_akhir_tampal)
+#end #end #end
 
 
 <center>
@@ -97,16 +98,12 @@
 					maxlength="4" size="4" /> <select $disability1 $disabilityx
 					name="socJenisWaktu" id="socJenisWaktu" style="width: 105px">
 
-						<option value="0" #if($socJenisWaktu== "" || $socJenisWaktu==
-							"0" ) selected=selected #end>SILA PILIH</option>
+						<option value="0" #if($socJenisWaktu== "" || $socJenisWaktu=="0" ) selected=selected #end>SILA PILIH</option>
 						<option value="1" #if($socJenisWaktu== '1') selected=selected #end>PAGI</option>
-						<option value="2" #if($socJenisWaktu== '2') selected=selected #end>TENGAH
-							HARI</option>
+						<option value="2" #if($socJenisWaktu== '2') selected=selected #end>TENGAH HARI</option>
 						<option value="3" #if($socJenisWaktu== '3') selected=selected #end>PETANG</option>
 
-				</select>&nbsp;#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) ||
-					($mode=="view" && $isEdit=="yes")) <font color="blue"
-					style="font-size: 10px"><i>format 12 jam (HHMM)</i></font>#end</td>
+				</select>&nbsp;#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) || ($mode=="view" && $isEdit=="yes")) <font color="blue" style="font-size: 10px"><i>format 12 jam (HHMM)</i></font>#end</td>
 			</tr -->
 
 			<tr>
@@ -183,20 +180,18 @@
 						<td width="10%"><b>No.Subjaket</b></td>#end
 						<td width="20%"><b>Masa Siasatan</b></td>
 					</tr>
-
-					#if($saiz_listHakmilikBorangEInBulk!=0) 
-					#foreach($listTanah in $listHakmilikBorangEInBulk) 
-					#set( $i = $velocityCount ) #if ( ($i % 2) != 1 ) 
+					
+					#if($saiz_listHakmilikBorangEInBulk!=0)
+					#foreach($listTanah in $listHakmilikBorangEInBulk)
+					#set( $i = $velocityCount ) #if ( ($i % 2) != 1 )
 					#set( $row = "row2" ) #else #set( $row = "row1" ) #end
 					
 					#if($listTanah.selectedcb > 0) #set($checkCB = "checked") #else
 					#set($checkCB = "") #end #set($checkedCB = "") #if($mode=="new")
-					#foreach ($foo in $selectedItem) #if($foo ==
-					$!listTanah.id_hakmilik) #set($checkedCB = "checked") #end #end
+					#foreach ($foo in $selectedItem) #if($foo == $!listTanah.id_hakmilik) #set($checkedCB = "checked") #end #end
 					#else #if($onchangeEdit=="no") #if($listTanah.selectedcb > 0)
 					#set($checkedCB = "checked") #else #set($checkedCB = "") #end #else
-					#foreach ($foo in $selectedItem) #if($foo ==
-					$!listTanah.id_hakmilik) #set($checkedCB = "checked") #end #end
+					#foreach ($foo in $selectedItem) #if($foo == $!listTanah.id_hakmilik) #set($checkedCB = "checked") #end #end
 					#end #end
 					
 					<tr>
@@ -212,8 +207,7 @@
 							$!listTanah.no_hakmilik</td>
 						<td class="$row">$!listTanah.no_lotpt</td>
 						<td class="$row">$!listTanah.nama_mukim
-							#if($listTanah.seksyen!="")<font style="font-size: 10px">Seksyen
-								$listTanah.seksyen</font>#end
+							#if($listTanah.seksyen!="")<font style="font-size: 10px">Seksyen $listTanah.seksyen</font>#end
 						</td> 
 						#if($!flag_subjaket!="")
 							<td class="$row">Sj.$!listTanah.no_subjaket</td>
@@ -271,7 +265,7 @@
 
 				<input type="button" name="cmdKembali"
 				value="Kembali" onClick="javascript:viewListHM('$!id_permohonan');">
-
+			
 			</td>
 		</tr>
 	</table>
@@ -282,16 +276,15 @@
 	<fieldset>
 		<legend>
 			<strong>Senarai Rekod Maklumat Borang E</strong> #if($mode=="view")<input
-				type="button" name="cmdMainscreen"
-				value="Kemasukan Maklumat Borang E"
+				type="button" name="cmdMainscreen" value="Kemasukan Maklumat Borang E"
 				onClick="javascript:daftarMaklumatBorangEInBulk();">#end
 		</legend>
 
 		<table width="100%" border="0">
 			<tr>
 				<td align="left"><a
-					href="javascript:popupCarianHakmilik('$id_permohonan','senarai_borangE_inbulk')"><font
-						color="blue">>> SKRIN CAPAIAN MAKLUMAT BORANG E</font></a></td>
+					href="javascript:popupCarianHakmilik('$id_permohonan','senarai_borangE_inbulk')">
+					<font color="blue">>> SKRIN CAPAIAN MAKLUMAT BORANG E</font></a></td>
 			</tr>
 		</table>
 		<!--
