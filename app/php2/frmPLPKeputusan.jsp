@@ -161,20 +161,26 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>
-          #if ($mode == 'view')
+          	#if ($mode == 'view')
+          	#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
             <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskini()"/>
             #if ($idStatus == '1617200')
-              <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doHantarProses()"/>
-              <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-             #end
-             #if($idKeputusanPTD == 'TS')
-              <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-             #end
+            <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doHantarProses()"/>
+            <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
             #end
+            #end
+            #if($idKeputusanPTD == 'TS')
+            <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+            #end
+            #end
+            #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+        	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+        	#end
             #if ($mode == 'update')
             <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="simpanKeputusan('$idPampasan','$idKeputusanPTD')"/>
             <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batal()"/>
-            #end </td>
+            #end 
+          </td>
         </tr>
         #end
       </table>
@@ -318,5 +324,9 @@ function cetakSuratKelulusanSebahagian(idFail) {
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
+}
+function gotoSenaraiFailKeseluruhan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
+	document.${formName}.submit();
 }
 </script>
