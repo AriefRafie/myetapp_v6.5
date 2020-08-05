@@ -2364,7 +2364,8 @@ public class DB extends EkptgCache implements Serializable {
 			r.add("no_fax");
 			r.add("id_seksyen", idSeksyen);
 			r.add("id_negeri", idNegeri);
-			r.add("id_daerah", idDaerah);
+			if(!idDaerah.equals("0"))
+				r.add("id_daerah", idDaerah);
 
 			sql = r.getSQLSelect("tblrujpejabatjkptg");
 			myLogger.info("getPejabatJKPTG:sql="+sql);
@@ -6330,7 +6331,7 @@ public class DB extends EkptgCache implements Serializable {
 		Db db = null;
 		String sql = "";
 		sql = "SELECT ID_KATEGORIPEMOHON, KOD_KATEGORIPEMOHON, KETERANGAN FROM TBLRUJKATEGORIPEMOHON"
-				+ " WHERE ID_KATEGORIPEMOHON IN (1,2,3,4,5,6,7,8) ORDER BY KOD_KATEGORIPEMOHON ASC";
+				+ " WHERE ID_KATEGORIPEMOHON IN (4,5,8) ORDER BY KOD_KATEGORIPEMOHON ASC";
 
 		try {
 			db = new Db();

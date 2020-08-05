@@ -74,10 +74,15 @@
       </fieldset></td>
   </tr>
   <tr>
-    <td align="center"> #if ($idStatus == '1610199')
-	  <!--       <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/> -->
-      <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-      #end</td>
+    <td align="center"> 
+    	#if ($idStatus == '1610199')
+	  	<!--       <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/> -->
+      	<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+      	#end
+      	#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+        #end
+    </td>
   </tr>
 </table>
 <script>

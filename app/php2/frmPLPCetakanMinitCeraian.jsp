@@ -174,21 +174,27 @@
         <tr>
           <td colspan="2">&nbsp;</td>
         </tr>
-        <tr>
+        <tr align="center">
           <td width="20%">&nbsp;</td>
           <td width="80%"> 
             #if ($mode == 'view')
+            #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
             <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskiniCeraian()"/>
-            <input type="button" name="cdmCetakCadangan" id="cdmCetakCadangan" value="Cetak" onClick="javascript:setTable('tableReportMinitKewangan')"/>
             #if ($idStatus == '1610204')
             <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
             <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-            #end            
             #end
+            #end
+            <input type="button" name="cdmCetakCadangan" id="cdmCetakCadangan" value="Cetak" onClick="javascript:setTable('tableReportMinitKewangan')"/>            
+            #end
+            #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+        	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+        	#end
             #if ($mode == 'update')
             <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="simpanKemaskiniCeraian()"/>
             <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalCeraian()"/>
-            #end </td>
+            #end 
+          </td>
         </tr>
     </table></td>
   </tr>
@@ -249,5 +255,9 @@ function cetakMinitCeraian(idFail) {
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
+}
+function gotoSenaraiFailKeseluruhan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
+	document.${formName}.submit();
 }
 </script>
