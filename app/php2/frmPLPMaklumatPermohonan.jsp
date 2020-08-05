@@ -64,9 +64,9 @@
           		#parse("app/php2/frmPLPMaklumatBorangK.jsp") 
           	#else 
           		#parse("app/php2/frmPLPMaklumatTanah.jsp")
-          	  #if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ' || $userRole == '(PHP)PYWPenolongPengarahHQ' || $userRole == '(PHP)PYWPengarahHQ')
-          		#parse("app/php2/frmPLPTindakan.jsp") 
-          	  #end
+          	  	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ' || $userRole == '(PHP)PYWPenolongPengarahHQ' || $userRole == '(PHP)PYWPengarahHQ')
+          			#parse("app/php2/frmPLPTindakan.jsp") 
+          	 	#end
           	#end
           </div>
           
@@ -77,10 +77,13 @@
                 <td><fieldset>
                   <legend><b>SENARAI TANAH BERKAITAN</b></legend>
                   <table align="center" width="100%">
+                  	#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                     <tr>
                       <td colspan="8" scope="row"><input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                        <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/></td>
+                        <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
+                      </td>
                     </tr>
+                    #end
                     <tr class="table_header">
                       <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
                       <td width="15%"><strong>Pegangan Hakmilik</strong></td>
@@ -133,11 +136,16 @@
                     #if ($flagPopup == '')
                     <tr>
                       <td colspan="8" align="center">
+                        #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                         #if($idStatus == '1610198')
                         <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
                         <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
                         #end
+                        #end
                         <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+                        #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+                        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+                        #end </td>
                         </td>
                     </tr>
                     #end
@@ -280,18 +288,25 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td> #if ($mode == 'update')
+                <td>
+                  #if ($mode == 'update')
                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
                   <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
                   #end
                   #if ($mode == 'view')
+                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
                   #if($idStatus == '1610198')
                   <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
                   <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
                   #end
+                  #end
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+                  #end 
+                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+                  <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
                   #end </td>
+                </td>
               </tr>
               #end
             </table>
@@ -517,13 +532,19 @@
                   <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
                   #end
                   #if ($mode == 'view')
+                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
                   #if($idStatus == '1610198')
                   <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
                   <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
                   #end
+                  #end
                   <input type="button" name="cdmCetak3" id="cdmCetak3" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                  #end </td>
+                  #end 
+                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+                  <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+                  #end
+                </td>
               </tr>
             </table>
           </div>
@@ -585,9 +606,11 @@
                 <td><fieldset>
                   <legend><b>SENARAI TANAH GANTI</b></legend>
                   <table align="center" width="100%">
+                    #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                     <tr>
                       <td colspan="7" scope="row"><input name="cmdDaftar" type="button" value="Daftar Baru" onClick="javascript:doDaftarBaruTanahGanti()"/></td>
                     </tr>
+                    #end
                     <tr class="table_header">
                       <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
                       <td width="15%"><strong>Pegangan Hakmilik</strong></td>
@@ -633,11 +656,17 @@
                     </tr>
                     #if ($flagPopup == '')
                     <tr>
-                      <td colspan="7" align="center"> #if($idStatus == '1610198')
+                      <td colspan="7" align="center"> 
+                        #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+                        #if($idStatus == '1610198')
                         <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
                         <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
                         #end
+                        #end
                         <input type="button" name="cdmCetak4" id="cdmCetak4" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+                        #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+      					<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+      					#end
                       </td>
                     </tr>
                     #end
@@ -1491,6 +1520,10 @@ function cetakMaklumatHakmilik(idhakmilik){
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;
 	if (hWnd.focus != null) hWnd.focus();
+}
+function gotoSenaraiFailKeseluruhan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
+	document.${formName}.submit();
 }
 </script>
 <script>
