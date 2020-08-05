@@ -113,8 +113,11 @@
   #end
   <tr>
     <td width="35%">&nbsp;</td>
-    <td width="65%">#if ($mode == 'view')
+    <td width="65%">
+      #if ($mode == 'view')
+      #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
       <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniMaklumatLain()"/>
+      #end
       <input type="button" name="cmKembali" id="cmKembali" value="Kembali" onclick="kembali()"/>
       #end
       #if ($mode == 'update')
