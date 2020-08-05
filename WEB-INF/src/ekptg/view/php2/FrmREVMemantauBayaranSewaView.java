@@ -249,6 +249,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	header(idHasil);
 
         	this.context.put("txtNamaPemohon", getParam("txtNamaPemohon"));
+        	this.context.put("txtNoFail", getParam("txtNoFail"));
 
         	//MAKLUMAT DEPOSIT
         	if ("0".equals(selectedTabUpper)){

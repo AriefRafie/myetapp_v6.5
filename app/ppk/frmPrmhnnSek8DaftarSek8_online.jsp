@@ -8,6 +8,7 @@
 .style3 {font-size: 9px}
 .style36 {font-size: 12}
 .style51 {color: #0000FF; font-size: 9px; }
+.pautan {color: #0000FF}
 -->
 </style>
 
