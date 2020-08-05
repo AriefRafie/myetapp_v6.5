@@ -102,6 +102,7 @@
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="30%"><strong>No Rujukan <i>Online</i></strong></td>
+          <td width="30%"><strong>No Fail</strong></td>
           <td width="25%"><strong>Tajuk Fail</strong></td>
           <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
           <td width="15%"><strong>Status</strong></td>
@@ -120,6 +121,7 @@
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noPermohonan</a></td>
+          <td class="$row">$list.noFail</td>
           <td class="$row">$list.tajukFail</td>
           <td class="$row" align="center">$list.tarikhTerima </td>
           <td class="$row">$list.keterangan</td>
