@@ -82,6 +82,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		String vm = "";
 		//String actionTukarguna = getParam("actionTukarguna");
 		String submit = getParam("command");
+		System.out.println("comaaand >>> "+getParam("command"));
 		String submit2 = getParam("submit2");
 		String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
@@ -433,190 +434,23 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				//vm = "/start.jsp";
 
-			} else if ("daftarBaru".equals(submit)) {
-				myLog.info("masuk daftar Baru");
-				vm = "/frmTKRKJPDaftarManual.jsp";
-				this.context.put("mode", "new");
-				this.context.put("readonly", "");
-				this.context.put("inputTextClass", "");
-				myLog.info("idFail========="+idFail);
-				if ("doChangeKementerian".equals(submit)){
-					idAgensi = "99999";
-				}
-				if ("doChangeAgensi".equals(submit)){
-					idHakmilikAgensi = "";
-				}
-				if ("doChangeJenisTanah".equals(submit)){
-					idHakmilikAgensi = "";
-				}
+			}  else if ("kembali".equals(submit2)){
 
-				// MAKLUMAT PERMOHONAN
-				beanMaklumatPermohonan = new Vector();
-				Hashtable hashPermohonan = new Hashtable();
-				hashPermohonan.put("noPermohonan", "");
-				hashPermohonan.put("noRujukanOnline", "");
-				hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
-				hashPermohonan.put("tarikhSurat",getParam("tarikhSurat") == null ? "": getParam("tarikhSurat"));
-				hashPermohonan.put("noRujukanSurat",getParam("txtNoRujukanSurat") == null ? "": getParam("txtNoRujukanSurat"));
-				hashPermohonan.put("perkara", getParam("txtPerkara") == null ? "": getParam("txtPerkara"));
-				hashPermohonan.put("tujuanKegunaan", getParam("txtTujuanKegunaan") == null ? "": getParam("txtTujuanKegunaan"));
-				beanMaklumatPermohonan.addElement(hashPermohonan);
-				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-
-				// MAKLUMAT PEMOHON
-				idKategoriPemohon = logic.getKategoriPemohonTukarguna();
-				myLog.info("idKategoriPemohonDaftar: " + idKategoriPemohon);
-
-				beanMaklumatAgensi = new Vector();
-				logic.setMaklumatAgensi(idAgensi);
-				beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
-				this.context.put("idKategoriPemohon", idKategoriPemohon);
-				this.context.put("idAgensi", idAgensi);
-				this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);
-				this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian",
-						Long.parseLong(idKementerian), "", readonly+" style=\"width:400\" "));
-				this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian,
-						Long.parseLong(idAgensi), "", readonly+" style=\"width:400\" "));
-
-				// MAKLUMAT KEGUNAAN TANAH
-				this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " "));
-
-
-				//MAKLUMAT HAKMILIK
-				if ("doChangePeganganHakmilik".equals(submit)) {
-					idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(getParam("txtPeganganHakmilik"), "3", idAgensi);
-
-						if (idHakmilikAgensi.isEmpty()) {
-						this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
-						}
-
-				}
-
-				beanMaklumatTanah = new Vector();
-				myLog.info("idHakmilikAgensi: "+idHakmilikAgensi+" idHakmilikSementara: "+idHakmilikSementara);
-				logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
-				beanMaklumatTanah = logic.getBeanMaklumatTanah();
-				context.put("BeanMaklumatTanah", beanMaklumatTanah);
-				this.context.put("idFail", idFail);
-				this.context.put("idHakmilikSementara", idHakmilikSementara);
-				this.context.put("idHakmilikAgensi", idHakmilikAgensi);
-
-
-				context.put("namaJenisTanah", namaJenisTanah);
-				//vm = "/start.jsp";
-
-			} else if ("paparFail".equals(submit)) {
-				myLog.info("bacaaaa paparFail");
-				vm = "/paparFail.jsp";
-				//TO CLEAR CONTEXT
-				context.remove("BeanHeader");
-				context.remove("BeanMaklumatTanah");
-				context.remove("lampiran");
-				context.remove("flagStatus");
-
-				setMaklumatHeader(idFail, session);
-				setMaklumatTanah(idFail, session);
-
-				myLog.info("idFail: "+idFail);
-
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
-
-				Vector maklumatLampiran = null;
-				maklumatLampiran = new Vector();
-				logicJabatanTeknikal.setLampiranKJP(logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				maklumatLampiran = logicJabatanTeknikal.getBeanMaklumatLampiranKJP();
-
-				this.context.put("maklumatUlasan", maklumatUlasan);
-				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
-				this.context.put("idFail", idFail);
-				this.context.put("maklumatLampiran", maklumatLampiran);
-
-				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				this.context.put("lampiran", lampiran);
-
-
-
-			}else if ("carian".equals(submit)) {
-				//String userId = (String) session.getAttribute("_ekptg_user_id");
-				myLog.info("masuk carian");
-				String findNoFail = getParam("findNoFail");
-				String findNoPermohonan = getParam("findNoPermohonan");
-				String findTajukFail = getParam("findTajukFail");
-				String findPemohon = getParam("findPemohon");
-				String findNoPengenalan = getParam("findNoPengenalan");
-				String findTarikhTerima = getParam("findTarikhTerima");
-				String findNoHakmilik = getParam("findNoHakmilik");
-				String findNoWarta = getParam("findNoWarta");
-				String findNoPegangan = getParam("findNoPegangan");
-				String findJenisHakmilik = getParam("findJenisHakmilik");
-				if(findJenisHakmilik.equals(""))
-				myLog.info("findNoFail====="+findNoFail);
-				{
-					findJenisHakmilik = "9999";
-				}
-				String findJenisLot = getParam("findJenisLot");
-				if(findJenisLot.equals(""))
-				{
-					findJenisLot = "9999";
-				}
-				String findNoLot = getParam("findNoLot");
-
-				String findNegeri = getParam("findNegeri");
-				if(findNegeri.equals(""))
-				{
-					findNegeri = "9999";
-				}
-				String findDaerah = getParam("findDaerah");
-				if(findDaerah.equals(""))
-				{
-					findDaerah = "9999";
-				}
-				String findMukim = getParam("findMukim");
-				if(findMukim.equals(""))
-				{
-					findMukim = "9999";
-				}
-
-				Vector listFail = logic.getSenaraiFail(findNoFail, findNoPermohonan, findTajukFail, findPemohon, findNoPengenalan, findTarikhTerima,
-						findNoHakmilik, findNoWarta, findNoPegangan, findJenisHakmilik, findJenisLot, findNoLot
-						, findNegeri, findDaerah, findMukim
-						, userId);
-				this.context.put("SenaraiFail", listFail);
-				setupPage(session, action, listFail);
-
-				context.put("findNoFail", findNoFail);
-				context.put("findTajukFail", findTajukFail);
-				context.put("findPemohon", findPemohon);
-				context.put("findNoPengenalan", findNoPengenalan);
-				context.put("findTarikhTerima", findTarikhTerima);
-				context.put("findNoHakmilik", findNoHakmilik);
-				context.put("findNoWarta", findNoWarta);
-				context.put("findNoPegangan", findNoPegangan);
-				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong(findJenisHakmilik), "", ""));
-				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong(findJenisLot), "", ""));
-				context.put("findNoLot", findNoLot);
-				context.put("selectNegeri", HTML.SelectNegeri("findNegeri",Long.parseLong(findNegeri), ""," onChange=\"doChangeNegeri();\""));
-				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri(findNegeri, "findDaerah", Long.parseLong(findDaerah), ""," onChange=\"doChangeDaerah();\""));
-				context.put("selectMukim", HTML.SelectMukimByDaerah(findDaerah, "findMukim", Long.parseLong(findMukim), "",""));
-
-				vm = "/start.jsp";
-
-			} else if ("kembali".equals(submit)) {
-				myLog.info("kembali");
+				myLog.info("masuk else");
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
 				context.remove("findNoFail");
+				context.remove("findNoPermohonan");
 				context.remove("findTajukFail");
 				context.remove("findPemohon");
 				context.remove("findNoPengenalan");
 				context.remove("findTarikhTerima");
 				context.remove("findNoHakmilik");
 				context.remove("findNoWarta");
-				context.remove("findNoPegangan");;
+				context.remove("findNoPegangan");
 				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong("9999"), "", ""));
 				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong("9999"), "", ""));
 				context.remove("findNoLot");
@@ -626,7 +460,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				context.put("namaJenisTanah", namaJenisTanah);
 				context.put("idJenisTanah", idJenisTanah);
-
+				myLog.info("masuk else idFail "+idFail);
+				myLog.info("masuk else idUlasanTeknikal "+idUlasanTeknikal);
 				// SET DEFAULT ID PARAM
 				this.context.put("idFail", idFail);
 				this.context.put("idStatus", idStatus);
@@ -639,10 +474,23 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				//this.context.put("idHakmilikUrusan", idHakmilikUrusan);
 				//this.context.put("idPHPBorangK", idPHPBorangK);
 
+				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				//Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
+
+				Vector maklumatLampiran = null;
+				maklumatLampiran = new Vector();
+				logicJabatanTeknikal.setLampiranKJP(logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				maklumatLampiran = logicJabatanTeknikal.getBeanMaklumatLampiranKJP();
+
+				//this.context.put("maklumatUlasan", maklumatUlasan);
+				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
+				//this.context.put("idFail", idFail);
+				this.context.put("maklumatLampiran", maklumatLampiran);
+
 
 				vm = "/start.jsp";
-
-			} else if ("seterusnya".equals(submit2)) {
+			}
+				else if ("seterusnya".equals(submit2)) {
 
 				myLog.info("baca seterusnya");
 				myLog.info("idFail=========" + idFail);
@@ -859,6 +707,216 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				}
 
 
+
+			}else if ("daftarBaru".equals(submit)) {
+				myLog.info("ros submit2 2 >>> "+submit2);
+				myLog.info("masuk daftar Baru");
+				vm = "/frmTKRKJPDaftarManual.jsp";
+				this.context.put("mode", "new");
+				this.context.put("readonly", "");
+				this.context.put("inputTextClass", "");
+				myLog.info("idFail========="+idFail);
+				if ("doChangeKementerian".equals(submit)){
+					idAgensi = "99999";
+				}
+				if ("doChangeAgensi".equals(submit)){
+					idHakmilikAgensi = "";
+				}
+				if ("doChangeJenisTanah".equals(submit)){
+					idHakmilikAgensi = "";
+				}
+
+				// MAKLUMAT PERMOHONAN
+				beanMaklumatPermohonan = new Vector();
+				Hashtable hashPermohonan = new Hashtable();
+				hashPermohonan.put("noPermohonan", "");
+				hashPermohonan.put("noRujukanOnline", "");
+				hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
+				hashPermohonan.put("tarikhSurat",getParam("tarikhSurat") == null ? "": getParam("tarikhSurat"));
+				hashPermohonan.put("noRujukanSurat",getParam("txtNoRujukanSurat") == null ? "": getParam("txtNoRujukanSurat"));
+				hashPermohonan.put("perkara", getParam("txtPerkara") == null ? "": getParam("txtPerkara"));
+				hashPermohonan.put("tujuanKegunaan", getParam("txtTujuanKegunaan") == null ? "": getParam("txtTujuanKegunaan"));
+				beanMaklumatPermohonan.addElement(hashPermohonan);
+				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+
+				// MAKLUMAT PEMOHON
+				idKategoriPemohon = logic.getKategoriPemohonTukarguna();
+				myLog.info("idKategoriPemohonDaftar: " + idKategoriPemohon);
+
+				beanMaklumatAgensi = new Vector();
+				logic.setMaklumatAgensi(idAgensi);
+				beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
+				this.context.put("idKategoriPemohon", idKategoriPemohon);
+				this.context.put("idAgensi", idAgensi);
+				this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);
+				this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian",
+						Long.parseLong(idKementerian), "", readonly+" style=\"width:400\" "));
+				this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian,
+						Long.parseLong(idAgensi), "", readonly+" style=\"width:400\" "));
+
+				// MAKLUMAT KEGUNAAN TANAH
+				this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " "));
+
+
+				//MAKLUMAT HAKMILIK
+				if ("doChangePeganganHakmilik".equals(submit)) {
+					idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(getParam("txtPeganganHakmilik"), "3", idAgensi);
+
+						if (idHakmilikAgensi.isEmpty()) {
+						this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
+						}
+
+				}
+
+				beanMaklumatTanah = new Vector();
+				myLog.info("idHakmilikAgensi: "+idHakmilikAgensi+" idHakmilikSementara: "+idHakmilikSementara);
+				logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
+				beanMaklumatTanah = logic.getBeanMaklumatTanah();
+				context.put("BeanMaklumatTanah", beanMaklumatTanah);
+				this.context.put("idFail", idFail);
+				this.context.put("idHakmilikSementara", idHakmilikSementara);
+				this.context.put("idHakmilikAgensi", idHakmilikAgensi);
+
+
+				context.put("namaJenisTanah", namaJenisTanah);
+				//vm = "/start.jsp";
+
+			} else if ("paparFail".equals(submit)) {
+				myLog.info("bacaaaa paparFail");
+				vm = "/paparFail.jsp";
+				//TO CLEAR CONTEXT
+				context.remove("BeanHeader");
+				context.remove("BeanMaklumatTanah");
+				context.remove("lampiran");
+				context.remove("flagStatus");
+
+				setMaklumatHeader(idFail, session);
+				setMaklumatTanah(idFail, session);
+
+				myLog.info("idFail: "+idFail);
+
+				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
+
+				Vector maklumatLampiran = null;
+				maklumatLampiran = new Vector();
+				logicJabatanTeknikal.setLampiranKJP(logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				maklumatLampiran = logicJabatanTeknikal.getBeanMaklumatLampiranKJP();
+
+				this.context.put("maklumatUlasan", maklumatUlasan);
+				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
+				this.context.put("idFail", idFail);
+				this.context.put("maklumatLampiran", maklumatLampiran);
+
+				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				this.context.put("lampiran", lampiran);
+
+
+
+			}else if ("carian".equals(submit)) {
+				//String userId = (String) session.getAttribute("_ekptg_user_id");
+				myLog.info("masuk carian");
+				String findNoFail = getParam("findNoFail");
+				String findNoPermohonan = getParam("findNoPermohonan");
+				String findTajukFail = getParam("findTajukFail");
+				String findPemohon = getParam("findPemohon");
+				String findNoPengenalan = getParam("findNoPengenalan");
+				String findTarikhTerima = getParam("findTarikhTerima");
+				String findNoHakmilik = getParam("findNoHakmilik");
+				String findNoWarta = getParam("findNoWarta");
+				String findNoPegangan = getParam("findNoPegangan");
+				String findJenisHakmilik = getParam("findJenisHakmilik");
+				if(findJenisHakmilik.equals(""))
+				myLog.info("findNoFail====="+findNoFail);
+				{
+					findJenisHakmilik = "9999";
+				}
+				String findJenisLot = getParam("findJenisLot");
+				if(findJenisLot.equals(""))
+				{
+					findJenisLot = "9999";
+				}
+				String findNoLot = getParam("findNoLot");
+
+				String findNegeri = getParam("findNegeri");
+				if(findNegeri.equals(""))
+				{
+					findNegeri = "9999";
+				}
+				String findDaerah = getParam("findDaerah");
+				if(findDaerah.equals(""))
+				{
+					findDaerah = "9999";
+				}
+				String findMukim = getParam("findMukim");
+				if(findMukim.equals(""))
+				{
+					findMukim = "9999";
+				}
+
+				Vector listFail = logic.getSenaraiFail(findNoFail, findNoPermohonan, findTajukFail, findPemohon, findNoPengenalan, findTarikhTerima,
+						findNoHakmilik, findNoWarta, findNoPegangan, findJenisHakmilik, findJenisLot, findNoLot
+						, findNegeri, findDaerah, findMukim
+						, userId);
+				this.context.put("SenaraiFail", listFail);
+				setupPage(session, action, listFail);
+
+				context.put("findNoFail", findNoFail);
+				context.put("findTajukFail", findTajukFail);
+				context.put("findPemohon", findPemohon);
+				context.put("findNoPengenalan", findNoPengenalan);
+				context.put("findTarikhTerima", findTarikhTerima);
+				context.put("findNoHakmilik", findNoHakmilik);
+				context.put("findNoWarta", findNoWarta);
+				context.put("findNoPegangan", findNoPegangan);
+				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong(findJenisHakmilik), "", ""));
+				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong(findJenisLot), "", ""));
+				context.put("findNoLot", findNoLot);
+				context.put("selectNegeri", HTML.SelectNegeri("findNegeri",Long.parseLong(findNegeri), ""," onChange=\"doChangeNegeri();\""));
+				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri(findNegeri, "findDaerah", Long.parseLong(findDaerah), ""," onChange=\"doChangeDaerah();\""));
+				context.put("selectMukim", HTML.SelectMukimByDaerah(findDaerah, "findMukim", Long.parseLong(findMukim), "",""));
+
+				vm = "/start.jsp";
+
+			} else if ("kembali".equals(submit)) {
+				myLog.info("kembali");
+				//String userId = (String) session.getAttribute("_ekptg_user_id");
+				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
+				this.context.put("SenaraiFail", listFail);
+				setupPage(session, action, listFail);
+
+				context.remove("findNoFail");
+				context.remove("findTajukFail");
+				context.remove("findPemohon");
+				context.remove("findNoPengenalan");
+				context.remove("findTarikhTerima");
+				context.remove("findNoHakmilik");
+				context.remove("findNoWarta");
+				context.remove("findNoPegangan");;
+				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong("9999"), "", ""));
+				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong("9999"), "", ""));
+				context.remove("findNoLot");
+				context.put("selectNegeri", HTML.SelectNegeri("findNegeri",Long.parseLong("9999"), ""," onChange=\"doChangeNegeri();\""));
+				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri("9999", "findDaerah", Long.parseLong("9999"), ""," onChange=\"doChangeDaerah();\""));
+				context.put("selectMukim", HTML.SelectMukimByDaerah("9999", "findMukim", Long.parseLong("9999"), "",""));
+
+				context.put("namaJenisTanah", namaJenisTanah);
+				context.put("idJenisTanah", idJenisTanah);
+
+				// SET DEFAULT ID PARAM
+				this.context.put("idFail", idFail);
+				this.context.put("idStatus", idStatus);
+				this.context.put("idKategoriPemohon", idKategoriPemohon);
+				this.context.put("idAgensi", idAgensi);
+				//this.context.put("actionTukarguna", actionTukarguna);
+
+
+				//this.context.put("idPPTBorangK", idPPTBorangK);
+				//this.context.put("idHakmilikUrusan", idHakmilikUrusan);
+				//this.context.put("idPHPBorangK", idPHPBorangK);
+
+
+				vm = "/start.jsp";
 
 			}else if ("simpanpengesahan2".equals(submit)){
 
