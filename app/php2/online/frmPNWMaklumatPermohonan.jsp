@@ -13,10 +13,10 @@
 #set($saizTxtCatatan="500")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="userId" type="text" id="userId" value="$userId"/>
-  <input name="idFail" type="text" id="idFail" value="$idFail"/>
-  <input name="namaPemohon" type="text" id="namaPemohon" value="$namaPemohon"/>
-  <input name="idPermohonan" type="text" id="idPermohonan" value="$idPermohonan"/>
+  <input name="userId" type="hidden" id="userId" value="$userId"/>
+  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  <input name="namaPemohon" type="hidden" id="namaPemohon" value="$namaPemohon"/>
+  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idHakmilikAgensi" type="hidden" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
@@ -55,8 +55,8 @@
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENAWARAN</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <!-- <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
-          #if ($idStatus == '1610207' || $idStatus == '1610208')
+          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
+          <!-- #if ($idStatus == '1610207' || $idStatus == '1610208')
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
           #end -->
         </ul>
@@ -166,10 +166,10 @@
                 <td> 
                  ##if ($idStatus == '')
                  #if ($mode == 'view')
-                  ##if ($userRole == 'online_kjp' && $layerKJP  == $flagLayerKJP )
+                  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
                   <input type="button" name="cmdKmskiniTnh" id="cmdKmskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
                   <input type="button" name="cmdHapus2" id="cmdHapus2" value="Hapus" onClick="doHapus()"/>
-                  ##end
+                  #end
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   ##end
                   #if ($mode == 'update')
@@ -261,10 +261,10 @@
                 <td> 
                 ##if ($idStatus == '')
                 #if ($mode == 'view')
-                  ##if ($userRole == 'online_kjp' && $layerKJP  == $flagLayerKJP )
+                  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
                   <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-                  ##end
+                  #end
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   ##end
                   #if ($mode == 'update')
@@ -281,36 +281,41 @@
             </table>
           </div>
           <!-- END TAB MAKLUMAT PENAWARAN  -->
-						<!-- START TAB SENARAI SEMAK  -->
-						<div class="TabbedPanelsContent">#if ($selectedTabUpper ==
-							'2') #parse("app/php2/online/ulasanKJP/pnw/frmPNWSenaraiSemakOnline.jsp") #end</div>
+		  <!-- START TAB SENARAI SEMAK  -->
+				<div class="TabbedPanelsContent">#if ($selectedTabUpper == '2') #parse("app/php2/online/ulasanKJP/pnw/frmPNWSenaraiSemakOnline.jsp") #end</div>
 
-						<!-- END TAB SENARAI SEMAK  -->
-						<!-- START KEPUTUSAN -->
+		  <!-- END TAB SENARAI SEMAK  -->
+		  <!-- START KEPUTUSAN -->
           <div class="TabbedPanelsContent">
           
           	##parse("app/php2/online/frmPNWImejan.jsp")
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
-           	<td valign="top">
-           	#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
-           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
-           	<td>
-        	Saya, $namaPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
-   			<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
-      		</td>
-           	<tr>
-           	<td colspan=2 align="center">
-           	#if ($userJawatan == '24')
-           		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar Untuk Semakan" onClick="doHantarEmel()"/>
-            	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-            #else
-            #if ($idStatus !='')
-            	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-            #end
-            #end
-            </td>
+           				<td align="center" colspan="4">
+						#if($semakMode == "update")
+		    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1")) 
+		    				<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   							<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
+		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+						#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("2"))
+							<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   							<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
+		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+						
+						#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
+							<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   							<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
+		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+                		
+                		#end
+                		
+                	<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+                	
+		    		#else
+		    		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           			<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+               		<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+		    		#end
+		    </td>
            	</tr>
            	</table>
           </div>
@@ -522,11 +527,6 @@
   </tr>
   #end
 </table>
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-	<td align="center" colspan="4">
-   		<input  class="stylobutton"type="button" name="cmdSeterusnya" id="cmdsblm" value="Seterusnya" onclick="nextPengesahan('$idPermohonan')" />
- 	</td>
-</table>
 <fieldset id="tableReport" style="display:none;"-->
 <legend><strong>SENARAI LAPORAN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -541,6 +541,19 @@
 #end
 </script>
 <script>
+var checker = document.getElementById('checkme');
+var sendbtn = document.getElementById('cmdSimpan');
+// when unchecked or checked, run the function
+checker.onchange = function(){
+sendbtn.disabled = true;
+
+if(this.checked){
+   sendbtn.disabled = false;
+} else {
+   sendbtn.disabled = true;
+}
+
+}
 function doChangeTabUpper(tabId) {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.selectedTabUpper.value = tabId;
@@ -965,16 +978,6 @@ function cetakPengesahanPermohonan(idPermohonan) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
-function nextPengesahan(idPermohonan) {
-	//alert('baca idFail=='+document.${formName}.idFail.value+" idPermohonan=="+idPermohonan);
-	//doAjaxCall${formName}("pkmaklumatseterus","id_kemaskini="+id);	
-	//document.${formName}.pagemode.value = 0;
-	document.${formName}.actionOnline.value = "pengesahan";
-	//document.${formName}.semakMode.value = 'update';
-	doAjaxCall${formName}("pengesahan",'idpermohonan='+idPermohonan);
-	//doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
-}
-
 <!-- SENARAI SEMAK -->
 function doSimpanKemaskiniSenaraiSemak() {
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
