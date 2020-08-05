@@ -690,8 +690,8 @@ function kehadiran(id_siasatan,flag_skrin)
    	window.close();	
     return false;
 	
-
 }
+
 
 function maklumatsiasatan(id_siasatan,flag_skrin)
 {
@@ -828,145 +828,113 @@ function kemasukanBorangF(id_hakmilik,id_permohonan,flag_skrin,id_borange)
 */
 
 
-
 function paparHakmilik(id_hakmilik,id_permohonan,flag_skrin){
 	try {
-		if(flag_skrin=="daftar_sek8")
-		{
-		window.opener.viewHM(id_hakmilik);
+		if(flag_skrin=="daftar_sek8")	{
+			window.opener.viewHM(id_hakmilik);
+		}	
+		else if(flag_skrin=="daftar_sek4")	{
+			window.opener.viewMaklumat(id_hakmilik);
 		}
-		else if(flag_skrin=="daftar_sek4")
-		{
-		window.opener.viewMaklumat(id_hakmilik);
+		else if(flag_skrin=="skrin_hakmilik_sek8")	{
+			window.opener.viewHM(id_hakmilik);
 		}
-		else if(flag_skrin=="skrin_hakmilik_sek8")
-		{
-		window.opener.viewHM(id_hakmilik);
+		else if(flag_skrin=="skrin_hakmilik_sek4")	{
+			window.opener.viewMaklumat(id_hakmilik);
 		}
-		else if(flag_skrin=="skrin_hakmilik_sek4")
-		{
-		window.opener.viewMaklumat(id_hakmilik);
+		else if(flag_skrin=="skrin_list_hakmilik_pb_sek8")	{
+			window.opener.viewHM(id_hakmilik);
 		}
-		else if(flag_skrin=="skrin_list_hakmilik_pb_sek8")
-		{
-		window.opener.viewHM(id_hakmilik);
+		else if(flag_skrin=="skrin_hakmilik_pb_sek8")	{
+			window.opener.viewHM(id_hakmilik);	
 		}
-		else if(flag_skrin=="skrin_hakmilik_pb_sek8")
-		{
-		window.opener.viewHM(id_hakmilik);	
-		}
-		else if(flag_skrin=="laporan_tanah_terperinci")
-		{
+		else if(flag_skrin=="laporan_tanah_terperinci")	{
 			//alert(id_hakmilik);
-		window.opener.viewHM(id_hakmilik);	
+			window.opener.viewHM(id_hakmilik);	
 		}
-		else if(flag_skrin=="bukti_notis")
-		{
-		window.opener.viewHM(id_hakmilik);	
+		else if(flag_skrin=="bukti_notis")	{
+			window.opener.viewHM(id_hakmilik);	
 		}
 		/*
-		else if(flag_skrin=="laporan_bangunan")
-		{    
+		else if(flag_skrin=="laporan_bangunan")	{    
+        
         var url = "../${securityToken}/ekptg.view.ppt.SkrinPopupBangunan?&id_permohonan="+id_permohonan+"&id_hakmilik="+id_hakmilik+"&flag_skrin="+flag_skrin;
         var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
         if ((document.window != null) && (!hWnd.opener))
            hWnd.opener = document.window;
         if (hWnd.focus != null) hWnd.focus();
         hWnd.focus();
+		
 		}
         */
-		else if(flag_skrin=="laporan_bangunan")
-		{    
-        window.opener.viewHM(id_hakmilik);	
+		else if(flag_skrin=="laporan_bangunan")	{    
+        	window.opener.viewHM(id_hakmilik);	
 		}
-		else if(flag_skrin=="hakmilik_pampasan")
-		{    
-        window.opener.viewHM(id_hakmilik);	
+		else if(flag_skrin=="hakmilik_pampasan")	{    
+        	window.opener.viewHM(id_hakmilik);	
 		}
-		else if(flag_skrin=="hakmilik_borangk")
-		{    
-        window.opener.viewHM(id_hakmilik);	
+		else if(flag_skrin=="hakmilik_borangk")	{    
+        	window.opener.viewHM(id_hakmilik);	
 		}
-		else if(flag_skrin=="bukti_notis_borangK")
-		{    
-        window.opener.viewHM(id_hakmilik);	
+		else if(flag_skrin=="bukti_notis_borangK")	{    
+        	window.opener.viewHM(id_hakmilik);	
 		}
-		else if(flag_skrin=="senarai_pu")
-		{    
-        window.opener.viewHM(id_hakmilik);	
+		else if(flag_skrin=="senarai_pu")	{    
+        	window.opener.viewHM(id_hakmilik);	
 		}
-		else if(flag_skrin=="daftar_sementara")
-		{    
-        window.opener.viewHM(id_hakmilik);	
+		else if(flag_skrin=="daftar_sementara")	{    
+        	window.opener.viewHM(id_hakmilik);	
 		}
-		else if(flag_skrin=="skrin_hakmilik_sementara")
-		{
-		window.opener.viewHM(id_hakmilik);
+		else if(flag_skrin=="skrin_hakmilik_sementara")	{
+			window.opener.viewHM(id_hakmilik);
 		}
-		else if(flag_skrin=="laporan_bangunan_sementara")
-		{    
-        window.opener.viewInfoTanah(id_hakmilik);	
+		else if(flag_skrin=="laporan_bangunan_sementara")	{    
+        	window.opener.viewInfoTanah(id_hakmilik);	
 		}
-		else if(flag_skrin=="laporan_tanah_terperinci_sementara")
-		{
-		window.opener.maklumatTanah(id_hakmilik);	
+		else if(flag_skrin=="laporan_tanah_terperinci_sementara")	{
+			window.opener.maklumatTanah(id_hakmilik);	
 		}
-		else if(flag_skrin=="notis_awam_sementara")
-		{
-		window.opener.tambahNotis(id_hakmilik);	
+		else if(flag_skrin=="notis_awam_sementara")	{
+			window.opener.tambahNotis(id_hakmilik);	
 		}
-		else if(flag_skrin=="bukti_notis_sementara")
-		{
-		window.opener.viewListPenyampaianNotis(id_hakmilik);	
+		else if(flag_skrin=="bukti_notis_sementara")	{
+			window.opener.viewListPenyampaianNotis(id_hakmilik);	
 		}
-		else if(flag_skrin=="skrin_jpph_sementara")
-		{
-		window.opener.viewMaklumat(id_hakmilik);	
+		else if(flag_skrin=="skrin_jpph_sementara")	{
+			window.opener.viewMaklumat(id_hakmilik);	
 		}
-		else if(flag_skrin=="penandaan_sementara")
-		{
-		window.opener.penandaanKawasan(id_hakmilik);	
+		else if(flag_skrin=="penandaan_sementara")	{
+			window.opener.penandaanKawasan(id_hakmilik);	
 		}
-		else if(flag_skrin=="senarai_pampasan_sementara")
-		{
-		window.opener.viewSenaraiPampasanPB(id_hakmilik);	
+		else if(flag_skrin=="senarai_pampasan_sementara")	{
+			window.opener.viewSenaraiPampasanPB(id_hakmilik);	
 		}
-		else if(flag_skrin=="daftar_sek8_online")
-		{
-		window.opener.viewHM(id_hakmilik);
+		else if(flag_skrin=="daftar_sek8_online")	{
+			window.opener.viewHM(id_hakmilik);
 		}
-		else if(flag_skrin=="skrin_hakmilik_sek8_KJP")
-		{
-		window.opener.viewHM(id_hakmilik);
+		else if(flag_skrin=="skrin_hakmilik_sek8_KJP")	{
+			window.opener.viewHM(id_hakmilik);
 		}
-		
-		
-		
-		
 	}
 	catch (err) {}
    	window.close();	
     return false;
 }
 
-function tambahPbPopup(id_hakmilik,flag_skrin)
-{
+
+function tambahPbPopup(id_hakmilik,flag_skrin)	{
 	//alert(id_hakmilik);
 	try {
-		if(flag_skrin=="skrin_list_hakmilik_pb_sek8" || flag_skrin=="skrin_hakmilik_pb_sek8")
-		{
+		if(flag_skrin=="skrin_list_hakmilik_pb_sek8" || flag_skrin=="skrin_hakmilik_pb_sek8")	{
 			window.opener.tambahWakil(id_hakmilik);
-		}else if(flag_skrin=="skrin_hakmilik_sementara")
-		{
+		}	else if(flag_skrin=="skrin_hakmilik_sementara")	{
 			window.opener.tambahPB(id_hakmilik);
 		}
-		
 	}
 	catch (err) {}
     window.close();
     return false;
 }
-
 
 
 function kembaliKeSkrinUtama(id_permohonan) {
@@ -1017,6 +985,7 @@ function cetakSuratIringan(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempo
     if (hWnd.focus != null) hWnd.focus();
 }
 
+
 function cetakSuratEndorsanBorangK(idpermohonan,idhakmilik) {
 	
 	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratEndorsanBorangK&selectNoFail=yes";
@@ -1026,6 +995,8 @@ function cetakSuratEndorsanBorangK(idpermohonan,idhakmilik) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakSuratIringanAgensiPemohon(idpermohonan,idhakmilik) {
 	
 	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratIringanAgensiPemohon&selectNoFail=yes";
@@ -1035,11 +1006,7 @@ function cetakSuratIringanAgensiPemohon(idpermohonan,idhakmilik) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-
-
 //PPT-30(ii)
 
 </script>
-
-
 
