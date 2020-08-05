@@ -39,7 +39,9 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
         String idPemohon = getParam("idPemohon");
         String idUrusan = getParam("idUrusan");
         String hitButton = getParam("hitButton");
-       		        
+        String noFailLama = getParam("noFailLama");
+        String idPermohonanLama = getParam("idPermohonanLama");
+        
         //VECTOR
         Vector list = null;
         //Vector beanMaklumatPermohonan = null;
@@ -68,6 +70,9 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
         		String nofailAPBOnline=logic.generateNoFail(session);
         		this.context.put("noFailOnline", nofailAPBOnline);
         	}
+			if("daftarSambung".equals(hitButton)){// set flag aktif = 0
+				logic.simpanSambungan(idFail,getParam("idPermohonan"),getParam("tarikhTerima"),getParam("tarikhTerima"),noFailLama,idPermohonanLama, session);	
+	    	}
     	}
 		
 		Vector beanMaklumatPermohonan = null;
@@ -87,7 +92,7 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 			logic.setMaklumatPermohonan(idFail);
 			beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan); 
-			
+				
 			// MAKLUMAT PEMOHON
 			logic.setMaklumatPemohon(idFail);
 			beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
