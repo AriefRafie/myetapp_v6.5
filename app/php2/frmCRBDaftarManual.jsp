@@ -9,7 +9,7 @@
 -->
 </style>
 
-#set($saizTxtPerkara="1000") 
+#set($saizTxtPerkara="1000")
 #set($saizTxtJenisPerniagaan="500")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
@@ -43,15 +43,15 @@
 	          <td>Jenis Fail</td>
 	          <td>:</td>
 	          <td><select name="jenisFail" id="jenisFail" style="width:170px;" $readonly class="$inputTextClass" $inputTextClass>
-	              #if($beanMaklumatPermohonan.jenisFail == "1") 
+	              #if($beanMaklumatPermohonan.jenisFail == "1")
 	               <option value="">SILA PILIH</option>
 	               <option value="1" selected="selected">1 - PENGUATKUASAAN</option>
 	               <option value="2">2 - PELBAGAI</option>
-				  #elseif($beanMaklumatPermohonan.jenisFail == "2") 
+				  #elseif($beanMaklumatPermohonan.jenisFail == "2")
 					<option value="">SILA PILIH</option>
 	               <option value="1">1 - PENGUATKUASAAN</option>
 	               <option value="2" selected="selected">2 - PELBAGAI</option>
-	              #elseif($beanMaklumatPermohonan.jenisFail == "") 
+	              #elseif($beanMaklumatPermohonan.jenisFail == "")
 	               <option value="" selected="selected">SILA PILIH</option>
 	               <option value="1">1 - PENGUATKUASAAN</option>
 	               <option value="2">2 - PELBAGAI</option>
@@ -145,8 +145,8 @@
           <td>:</td>
           <td>$beanMaklumatAgensi.negeri</td>
         </tr>
-        #end        
-        #end        
+        #end
+        #end
         #if($idKategoriPemohon == '1' || $idKategoriPemohon == '2' || $idKategoriPemohon == '6' || $idKategoriPemohon == '7' || $idKategoriPemohon == '9')
         #foreach ($beanMaklumatPemohon in $BeanMaklumatPemohon)
         <tr>
@@ -160,7 +160,7 @@
             #elseif($idKategoriPemohon == '7')
             Nama Agensi
             #elseif($idKategoriPemohon == '9')
-            Nama 
+            Nama
             #end </td>
           <td>:</td>
           <td><input name="txtNama" type="text" class="$inputTextClass" id="txtNama" value="$beanMaklumatPemohon.nama" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/>
@@ -339,7 +339,7 @@
               <option $selected1 value="1">TANAH MILIK PERSEKUTUAN</option>
               <option $selected2 value="2">TANAH RIZAB PERSEKUTUAN</option>
               <option $selected3 value="3">BORANG K</option>
-              <option $selected4 value="4">LAIN-LAIN TANAH</option>
+              <!-- <option $selected4 value="4">LAIN-LAIN TANAH</option> -->
             </select></td>
         </tr>
         #if ($idJenisTanah == '1' || $idJenisTanah == '2')
@@ -348,7 +348,7 @@
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td width="28%">Pegangan Hakmilik</td>
           <td width="1%">:</td>
-          <td width="70%"> 
+          <td width="70%">
           #if ($mode == 'new')
            #if ($idKategoriPemohon == '3')
             #if ($idKementerian != '' && $idKementerian != '99999')
@@ -367,8 +367,8 @@
            #end
           #else
            <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
-          #end 
-           <span class="style1">$errorPeganganHakmilik</span> 
+          #end
+           <span class="style1">$errorPeganganHakmilik</span>
           </td>
         </tr>
         <tr>
@@ -457,7 +457,7 @@
           <td>&nbsp;</td>
           <td>Pegangan Hakmilik</td>
           <td>:</td>
-          <td><input type="text" class="$inputTextClass" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik1" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/></td>          
+          <td><input type="text" class="$inputTextClass" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik1" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -520,7 +520,7 @@
             <input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" />
             <input type="hidden" name="idDaerahTanah" id="idDaerahTanah" value="$beanMaklumatTanah.idDaerah" /></td>
           </td>
-        </tr>        
+        </tr>
         <tr>
           <td>&nbsp;</td>
           <td>Mukim</td>
@@ -698,7 +698,7 @@
           <td>Baki Aksara :&nbsp;
             <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtPerkara" /></td>
         </tr>
-        #end  
+        #end
         #end
       </table>
       </fieldset></td>
@@ -777,156 +777,156 @@ function refreshFromPilihTanah(idHakmilikAgensi,idHakmilikSementara) {
 function doChangePeganganHakmilik() {
 	doAjaxCall${formName}("doChangePeganganHakmilik");
 }
-function kembali() {	
+function kembali() {
 	document.${formName}.actionPengkuatkuasaan.value = "";
 	document.${formName}.submit();
 }
 function cekTarikhTerima(elmnt) {
-//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
+//CHECK DATE
+	var str1  = document.${formName}.tarikhTerima.value;
 	var dt1   = parseInt(str1.substring(0,2),10);
 	var mon1  = parseInt(str1.substring(3,5),10)-1;
 	var yr1   = parseInt(str1.substring(6,10),10);
 	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
+
 	var currentDate = new Date();
-	
+
 	if (tarikhTerima > currentDate){
 		alert('Tarikh Terima tidak boleh melebihi dari tarikh hari ini.');
   		elmnt.value ="";
-		document.${formName}.tarikhTerima.focus(); 
+		document.${formName}.tarikhTerima.focus();
 		return;
 	}
 }
 function cekTarikhSurat(elmnt) {
-   
-	//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
+
+	//CHECK DATE
+	var str1  = document.${formName}.tarikhTerima.value;
 	var dt1   = parseInt(str1.substring(0,2),10);
 	var mon1  = parseInt(str1.substring(3,5),10)-1;
 	var yr1   = parseInt(str1.substring(6,10),10);
 	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
-	var str2  =  document.${formName}.tarikhSurat.value;		   
+
+	var str2  =  document.${formName}.tarikhSurat.value;
 	var dt2   = parseInt(str2.substring(0,2),10);
 	var mon2  = parseInt(str2.substring(3,5),10)-1;
 	var yr2   = parseInt(str2.substring(6,10),10);
 	var tarikhSurat = new Date(yr2, mon2, dt2);
-	
+
 	var currentDate = new Date();
-	
+
 	if (tarikhSurat > currentDate){
 		alert('Tarikh Surat tidak boleh melebihi dari tarikh hari ini.');
 		elmnt.value ="";
-  		document.${formName}.tarikhSurat.focus(); 
+  		document.${formName}.tarikhSurat.focus();
 		return;
 	}
 	if (tarikhSurat > tarikhTerima){
 		alert('Tarikh Surat tidak boleh melebihi dari Tarikh Terima.');
 		elmnt.value ="";
-  		document.${formName}.tarikhSurat.focus(); 
+  		document.${formName}.tarikhSurat.focus();
 		return;
 	}
 }
 function daftarBaru() {
-	//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
+	//CHECK DATE
+	var str1  = document.${formName}.tarikhTerima.value;
 	var dt1   = parseInt(str1.substring(0,2),10);
 	var mon1  = parseInt(str1.substring(3,5),10)-1;
 	var yr1   = parseInt(str1.substring(6,10),10);
 	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
-	var str2  =  document.${formName}.tarikhSurat.value;		   
+
+	var str2  =  document.${formName}.tarikhSurat.value;
 	var dt2   = parseInt(str2.substring(0,2),10);
 	var mon2  = parseInt(str2.substring(3,5),10)-1;
 	var yr2   = parseInt(str2.substring(6,10),10);
 	var tarikhSurat = new Date(yr2, mon2, dt2);
-	
+
 	var currentDate = new Date();
-	
+
 	if (tarikhTerima > currentDate){
 		alert('Tarikh Terima tidak boleh melebihi dari tarikh hari ini.');
-  		document.${formName}.tarikhTerima.focus(); 
+  		document.${formName}.tarikhTerima.focus();
 		return;
 	}
 	if (tarikhSurat > currentDate){
 		alert('Tarikh Surat tidak boleh melebihi dari tarikh hari ini.');
-  		document.${formName}.tarikhSurat.focus(); 
+  		document.${formName}.tarikhSurat.focus();
 		return;
 	}
 	if (tarikhSurat > tarikhTerima){
 		alert('Tarikh Surat tidak boleh melebihi dari Tarikh Terima.');
-  		document.${formName}.tarikhSurat.focus(); 
+  		document.${formName}.tarikhSurat.focus();
 		return;
 	}
 	if(document.${formName}.tarikhTerima.value == ""){
 		alert('Sila masukkan Tarikh Terima Aduan.');
-  		document.${formName}.tarikhTerima.focus(); 
-		return; 
+  		document.${formName}.tarikhTerima.focus();
+		return;
 	}
 	if(document.${formName}.tarikhSurat.value == ""){
 		alert('Sila masukkan Tarikh Surat Aduan.');
-  		document.${formName}.tarikhSurat.focus(); 
-		return; 
+  		document.${formName}.tarikhSurat.focus();
+		return;
 	}
 	if(document.${formName}.txtPerkara.value == ""){
 		alert('Sila masukkan Perkara.');
-  		document.${formName}.txtPerkara.focus(); 
-		return; 
+  		document.${formName}.txtPerkara.focus();
+		return;
 	}
 	if(document.${formName}.socKategoriPemohon.value == ""){
 		alert('Sila pilih Jenis Kategori Pemohon.');
-  		document.${formName}.socKategoriPemohon.focus(); 
-		return; 
+  		document.${formName}.socKategoriPemohon.focus();
+		return;
 	}
 	if(document.${formName}.socKategoriPemohon.value == "3"){
 		if(document.${formName}.socKementerian.value == ""){
 			alert('Sila pilih Kementerian.');
-			document.${formName}.socKementerian.focus(); 
-			return; 
+			document.${formName}.socKementerian.focus();
+			return;
 		}
 		if(document.${formName}.socAgensi.value == ""){
 			alert('Sila pilih Agensi.');
-			document.${formName}.socAgensi.focus(); 
-			return; 
+			document.${formName}.socAgensi.focus();
+			return;
 		}
 	}
 	if(document.${formName}.socKategoriPemohon.value == "1" || document.${formName}.socKategoriPemohon.value == "2" || document.${formName}.socKategoriPemohon.value == "6" || document.${formName}.socKategoriPemohon.value == "7" || document.${formName}.socKategoriPemohon.value == "9"){
 		if(document.${formName}.txtNama.value == ""){
 			alert('Sila masukkan Nama.');
-  			document.${formName}.txtNama.focus(); 
-			return; 
+  			document.${formName}.txtNama.focus();
+			return;
 		}
 	}
 	if((document.${formName}.socKategoriPemohon.value == "4") || (document.${formName}.socKategoriPemohon.value == "5") || (document.${formName}.socKategoriPemohon.value == "8")){
 		if(document.${formName}.socNegeri.value == ""){
 			alert('Sila pilih Negeri.');
-			document.${formName}.socNegeri.focus(); 
-			return; 
+			document.${formName}.socNegeri.focus();
+			return;
 		}
 		if(document.${formName}.socPejabat.value == ""){
 			alert('Sila pilih Pejabat.');
-			document.${formName}.socPejabat.focus(); 
-			return; 
+			document.${formName}.socPejabat.focus();
+			return;
 		}
 	}
 	if(document.${formName}.socJenisTanah.value == "3"){
 		if(document.${formName}.idPHPBorangK.value == ""){
 			alert('Sila pilih Pegangan Hakmilik.');
-			return; 
+			return;
 		}
-	} else {		
+	} else {
 		if(document.${formName}.idHakmilikAgensi.value == "" && document.${formName}.idHakmilikSementara.value == ""){
 			alert('Sila pilih Pegangan Hakmilik.');
-			return; 
+			return;
 		}
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionPengkuatkuasaan.value = "daftarBaru";
 		return;
 	}
-	
+
 	document.${formName}.actionPengkuatkuasaan.value = "papar";
 	document.${formName}.hitButton.value = "daftarBaru";
 	doAjaxCall${formName}("");
@@ -940,7 +940,7 @@ function checkEmail(str) {
 		var ldot=str.indexOf(dot)
 		if (str.indexOf(at)==-1){
 		   alert("Sila Masukan Email Dengan Betul.")
-		   document.${formName}.txtEmelI.focus(); 
+		   document.${formName}.txtEmelI.focus();
 		   return false
 		}
 
@@ -968,13 +968,13 @@ function checkEmail(str) {
 		    alert("Sila Masukan Email Dengan Betul.")
 		    return false
 		 }
-		
+
 		 if (str.indexOf(" ")!=-1){
 		    alert("Sila Masukan Email Dengan Betul.")
 		    return false
 		 }
 
- 		 return true					
+ 		 return true
 }
 function validateNumber(elmnt,content) {
 	//if it is character, then remove it..
@@ -984,7 +984,7 @@ function validateNumber(elmnt,content) {
 	}
 }
 function validateLength(str) {
-	
+
 	if (str.length < 5) {
  		alert("Sila Masukan Poskod Dengan Betul.")
 		 return false
@@ -1004,16 +1004,16 @@ function janaTajuk() {
 			return;
 		}
 	}
-	
+
 	//var str1  = document.${formName}.keteranganLotTanah.value;
 	var str2  = document.${formName}.noLotTanah.value;
 	var str3  = document.${formName}.noWartaTanah.value;
 	var str4  = document.${formName}.noMilikTanah.value;
 	var str5  = document.${formName}.namaMukimTanah.value;
-	var str6  = document.${formName}.namaDerahTanah.value;	
-	var str7  = document.${formName}.namaNegeriTanah.value;	
+	var str6  = document.${formName}.namaDerahTanah.value;
+	var str7  = document.${formName}.namaNegeriTanah.value;
 	var statusRizabTnh = document.${formName}.statusRizab.value;
-		
+
 	if(statusRizabTnh == 'MILIK') {
 		milikOrRizab = str2;
 	} else if(statusRizabTnh == 'RIZAB') {
@@ -1021,7 +1021,7 @@ function janaTajuk() {
 	}
 
 	var strTajuk = "PENCEROBOHAN TANAH " + statusRizabTnh + " PERSEKUTUAN DI ATAS TANAH  " + str2 +", " + str3 + str4 + ", " + str5 + ", " + str6 + ", " + str7;
-	
+
 	document.${formName}.txtPerkara.value = strTajuk;
 }
 function seterusnya(){
