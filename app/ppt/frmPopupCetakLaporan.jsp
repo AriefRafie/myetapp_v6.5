@@ -190,7 +190,7 @@
               && $report != 'BorangL' && $report != 'SuratEndorsanBorangK' && $report != 'SuratIringanAgensiPemohon' 
               && $report != 'coveringSijilPU' && $report != 'minitSijilPU' && $report != 'cetakNotis' && $report != 'senaraiKehadiran' 
               && $report != 'senaraiKehadiranKosong' && $report != 'BayaranLainKos_Nofail' && $report != 'sabpn_notis_awam_sek4' && $report != 'sabpn_notis_awam_sek8'  && $report != 'sabpn_notis_borange'  
-              && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh' && $report != 'SuratMohonBayaranAgensi')
+              && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh')
 <!--               || $report == 'SuratPengosonganTanah' || -->
               <!-- PPT-27 & PPT-30-->
               <tr>
@@ -832,11 +832,11 @@
             
         </fieldset>
         
-        #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes'))||$report=='Surat_Iringan_Mohon_Bayaran')
+        #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes'))||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
         
         <fieldset>
             <table width="100%" border="0" cellspacing="2" cellpadding="2">            
-            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_MT=='yes')||$report=='Surat_Iringan_Mohon_Bayaran')
+            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_MT=='yes')||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
             	<tr class="table_header">
             		<td colspan="4"><b>Maklumat Akaun Mahkamah Tinggi</b></td>
             	</tr>
@@ -860,7 +860,7 @@
             	</tr>            	
             	
             #end
-            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_ARB=='yes')||$report=='Surat_Iringan_Mohon_Bayaran')	
+            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_ARB=='yes')||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')	
             	<tr class="table_header">
             		<td colspan="4"><b>Maklumat Akaun Amanah Raya Berhad</b></td>
             	</tr>
@@ -1437,8 +1437,8 @@
                 	#end                                       
                     
                     <!-- PPT 43i-->
-                    #if($report == 'SuratMohonBayaranAgensi')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMohonBayaranAgensi('$!id_hakmilik','$!nama_pegawai','$!id_jawatan','$!nama2Mukim')">
+                    #if($report == 'SuratBayaranAgensi')
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMohonBayaranAgensi('$!id_fail','$!nama_pegawai','$!no_fail','$!id_hakmilik')">
                 	#end
                     
                     <!-- END REPORT SEMENTARA ------------->
@@ -5671,65 +5671,31 @@ function cetakSementaraMMKKL(idfail,nama_pengarah,no_fail,id_negeri) {
 }
 
 //PPT-43(i)
-function cetakMohonBayaranAgensi(idhakmilik,nama_pegawai,id_jawatan,mukim) {
-		//alert("debug");
-		if (document.${formName}.sorSelectNoFail.value == ""){
-			alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
-			document.${formName}.sorSelectNoFail.focus(); 
-			return;
-		}
-		//alert("debug1");
-		else if(document.${formName}.socPegawai.value == ""){
-			alert('Sila pilih nama pegawai terlebih dahulu.');
-	  		document.${formName}.socPegawai.focus(); 
-			return; 
-		}
-		//alert("debug2");
-		else{
-
-			var idJawatan = 0;
-			if(id_jawatan!=""){
-				idJawatan = id_jawatan;
-			}
-
-			var valType = document.${formName}.sorSelectNoFail.value;
-			var nofail = "";
+function cetakMohonBayaranAgensi(id_fail,nama_pengarah,no_fail,id_hakmilik) {
+	if(document.${formName}.socPegawai.value == ""){
+		alert('Sila pilih nama pegawai terlebih dahulu.');
+		document.${formName}.socPegawai.focus(); 
+		return; 
+	}else{
+		var bankMT = document.${formName}.txtNamaBankMT.value;
+		var noMT = document.${formName}.txtNomborAkaunMT.value;
+		var akaunMT = document.${formName}.txtNamaAkaunMT.value; 
+								
+		var bankARB = document.${formName}.txtNamaBankARB.value;
+		var noARB = document.${formName}.txtNomborAkaunARB.value;
+		var akaunARB = document.${formName}.txtNamaAkaunARB.value;
 			
-			if(valType=="1"){
-				nofail = document.${formName}.no_fail.value;
-			}else if(valType=="2"){
-				nofail = document.${formName}.no_rujukan_ptg.value;
-			}else if(valType=="3"){
-				nofail = document.${formName}.no_rujukan_ptd.value;
-			}else if(valType=="4"){
-				nofail = document.${formName}.no_rujukan_upt.value;
-			}else{
-				nofail = document.${formName}.no_fail.value;
-			}
-
-			var bankMT = document.${formName}.txtNamaBankMT.value;
-			var noMT = document.${formName}.txtNomborAkaunMT.value;
-			var akaunMT = document.${formName}.txtNamaAkaunMT.value;
-			var bankARB = document.${formName}.txtNamaBankARB.value;
-			var noARB = document.${formName}.txtNomborAkaunARB.value;
-			var akaunARB = document.${formName}.txtNamaAkaunARB.value;
-			var noTel = document.${formName}.txtNotel.value;
-			var emel = document.${formName}.txtEmel.value;
+		var item1 = "idfail="+id_fail+"&id_hakmilik="+id_hakmilik+"&namaPegawai="+nama_pengarah;
+		var item2 = "&bankMT="+bankMT+"&noMT="+noMT+"&akaunMT="+akaunMT;
+		var item3 = "&bankARB="+bankARB+"&noARB="+noARB+"&akaunARB="+akaunARB;
 			
-			var emelEFT = document.${formName}.txtEmelEFT.value;
-			var sysdate = document.${formName}.txtTarikhSuratCetak.value;
-
-			var item1 = "id_hakmilik="+idhakmilik+"&namaPegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'";
-			var item2 = "&mukim="+mukim+"&no_fail="+nofail+"&emel_eft="+emelEFT+"&sysdate="+sysdate; 
-			var item3 = "&emel="+emel+"&no_tel="+noTel+"&bankMT="+bankMT+"&noMT="+noMT+"&akaunMT="+akaunMT
-						+"&bankARB="+bankARB+"&noARB="+noARB+"&akaunARB="+akaunARB;
-			
-			var url = "../../servlet/ekptg.report.ppt.SuratMohonBayaranAgensi?"+item1+item2+item3;
-			var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-			if ((document.window != null) && (!hWnd.opener))
+	    var url = "../../servlet/ekptg.report.ppt.SuratMohonBayaranAgensi?"+item1+item2+item3;
+	    			
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
 			hWnd.opener = document.window;
-			if (hWnd.focus != null) hWnd.focus();
-		}
+	    if (hWnd.focus != null) hWnd.focus();
+	}
 }
 
 <!-- END REPORT SEMENTARA -->
