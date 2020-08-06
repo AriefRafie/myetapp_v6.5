@@ -287,6 +287,19 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
+														<tr>
+															<td>
+																<a href="javascript:ulasanKertasKewangan()" class="help" title="lasan Kertas Kewangan">
+																	<font color="blue"><li>
+																	#if($jumlah_notifikasi_MOF > 0)
+																	<label style="background-color:blue" align="center" valign="top" >
+																		<b><font color="WHITE"><blink>$jumlah_notifikasi_MOF</blink></font></b>
+																	</label>&nbsp;
+																	#end
+																	Ulasan Kertas Kewangan</li></font>
+																</a>
+															</td>
+														</tr>
 													</table>
 												</td>
 												#end
@@ -616,11 +629,13 @@ function penyewaan(){
 	document.${formName}.submit();
 }
 function penawaran(){
-	//alert('$portalRole');
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.submit();
 }
-
+function ulasanKertasKewangan(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmMOFOnlineKJPSenaraiUlasanFailView";
+	document.${formName}.submit();
+}
 function rekod(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.rekod.FrmRekodPendaftaranTanah";
 	document.${formName}.submit();
