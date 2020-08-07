@@ -65,9 +65,10 @@
       <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalProjek()"/>
       #end
       #if ($mode == 'view')
+      #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
       <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskiniPermohonan()"/>
       <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-    
+      #end
       #end
       #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>

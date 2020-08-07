@@ -271,10 +271,18 @@ function kembali() {
 	document.${formName}.submit();
 }
 function seterusnya(){
+	alert('masuk sini ros');
 	//alert('BACA SETERUSNYAAA'+document.${formName}.idFail.value+' idHakmilik agensi '+document.${formName}.idHakmilikAgensi.value);
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.submit2.value = "seterusnya";
+	document.${formName}.command.value = "seterusnya";
+	document.${formName}.submit();
+}
+
+function doBacklist() {
+	document.${formName}.submit2.value = "kembali";
+	document.${formName}.command.value = "";
 	document.${formName}.submit();
 }
 

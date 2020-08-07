@@ -1,7 +1,8 @@
-package ekptg.view.htp;
+package ekptg.view.htp.cukai;
 
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -30,12 +31,15 @@ import ekptg.model.htp.entity.Bayaran;
 import ekptg.model.htp.entity.HakMilik;
 import ekptg.model.htp.entity.Resit;
 
-public class FrmCukai extends AjaxBasedModule{
+public class SubmodulCukai extends AjaxBasedModule{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final String PATH="app/htp/cukai/";
+	private final String PATHTP="app/htp/";
+	private final String PATHVER = PATHTP+ResourceBundle.getBundle("file").getString("ver_htp")+"/";
+	private final String PATH = PATHVER+"cukai/";
+
 	private String result = new String();
 	static Logger myLog = Logger.getLogger(ekptg.view.htp.FrmCukai.class);
 	private String peringkatBayar = "";

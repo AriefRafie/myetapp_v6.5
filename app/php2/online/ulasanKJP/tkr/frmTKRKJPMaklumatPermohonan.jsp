@@ -384,10 +384,12 @@
 
              		#end
 
-             	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
-   		#else
-                 <input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:cetakPengesahan('$!permohonan.idpermohonan');" />
-            		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
+             	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> -->
+             	#end
+   		#if ($idStatus !='')
+                <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
    		#end
            <!-- 	#if ($userJawatan == '24')
            		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
@@ -1078,7 +1080,7 @@ function cetakBorangPermohonan(idPermohonan) {
 	hWnd.focus();
 }
 function cetakPengesahanPermohonan(idPermohonan) {
-	var url = "../servlet/ekptg.report.php2.online.PYWPengesahanPermohonanOnline?ID_PERMOHONAN="+idPermohonan;
+	var url = "../servlet/ekptg.report.php2.online.TKRPengesahanPermohonanOnline?ID_PERMOHONAN="+idPermohonan;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -1115,6 +1117,13 @@ function tutup() {
 	//
 	window.close();
 	refresh('Y');
+}
+
+function papar(idFail,idStatus) {
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idStatus.value = idStatus;
+	document.${formName}.submit2.value = "seterusnya";
+	document.${formName}.submit();
 }
 </script>
 $javascriptLampiran
