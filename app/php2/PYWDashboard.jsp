@@ -191,12 +191,24 @@ a.nav:visited {
                           </tr>
                           <tr>
                             <td><a href="javascript:gotoSenaraiTugasanPelepasan()" class="help" title="Fail Tugasan"> <font color="blue">
-                              <li> Pelepasan</li>
+                              <li> 
+                              	#if($!check_notifikasi_tugasan_plp > 0)
+                                  <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_tugasan_plp</blink></font></b> </label>
+                                  &nbsp;
+                                #end 
+                                Pelepasan
+                              </li>
                               </font> </a> </td>
                           </tr>
                           <tr>
                             <td><a href="javascript:gotoSenaraiTugasanPenguatkuasaan()" class="help" title="Fail Tugasan"> <font color="blue">
-                              <li> Penguatkusaan</li>
+                              <li> 
+                                #if($!check_notifikasi_tugasan_crb > 0)
+                                  <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_tugasan_crb</blink></font></b> </label>
+                                  &nbsp;
+                                #end
+                                Penguatkusaan
+                              </li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -338,8 +350,13 @@ a.nav:visited {
                               </font> </a> </td>
                           </tr>
                           <tr>
-                            <td><a href="javascript:gotoPLPSenaraiFailKeseluruhan()" class="help" title="Senarai Fail Penyewaan"> <font color="blue">
+                            <td><a href="javascript:gotoPLPSenaraiFailKeseluruhan()" class="help" title="Senarai Fail Pelepasan"> <font color="blue">
                               <li>&nbsp;Senarai Fail Pelepasan</li>
+                              </font> </a> </td>
+                          </tr>
+                          <tr>
+                            <td><a href="javascript:gotoCRBSenaraiFailKeseluruhan()" class="help" title="Senarai Fail Penguatkuasaan"> <font color="blue">
+                              <li>&nbsp;Senarai Fail Penguatkuasaan</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -562,6 +579,10 @@ function gotoPYWSenaraiFailKeseluruhan() {
 }
 function gotoPLPSenaraiFailKeseluruhan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
+	document.${formName}.submit();
+}
+function gotoCRBSenaraiFailKeseluruhan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiFailKeseluruhanView";
 	document.${formName}.submit();
 }
 function gotoFLMS() {
