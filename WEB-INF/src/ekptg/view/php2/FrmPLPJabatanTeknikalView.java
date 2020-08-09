@@ -218,9 +218,7 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
     			step = "";
     			
     		} else if ("gotoHantarTugasanPPT".equals(step)){
-    			
     			this.context.put("selectPegawai", HTML.SelectPYWPenolongPegawaiTanahHQ("socPegawai", Long.parseLong(idPegawai), "", ""));
-    			
     			vm = "app/php2/frmPYWAgihanTugas.jsp";
             
     		}

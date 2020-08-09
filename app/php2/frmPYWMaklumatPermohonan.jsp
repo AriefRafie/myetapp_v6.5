@@ -1215,10 +1215,10 @@ function doHapus(idHakmilikPermohonan) {
 	doAjaxCall${formName}("");
 }
 function gotoSenaraiFailKeseluruhan() {
-	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailKeseluruhanView";
+	alert("")
+	document.${formName}.action = "$EkptgUtil.getTabID('My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailKeseluruhanView";
 	document.${formName}.submit();
 }
-
 function doSetujuTolakRingkas(idPermohonan) {
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;

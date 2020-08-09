@@ -20,6 +20,10 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 
 	FrmCRBSenaraiFailData logic = new FrmCRBSenaraiFailData();
 
+	String userId = null;
+	String userRole = null;
+	String idNegeriUser = null;
+	
 	public String doTemplate2() throws Exception {
 
 		HttpSession session = this.request.getSession();
@@ -29,10 +33,17 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 		if (doPost.equals("true")) {
 			postDB = true;
 		}
+		
+		userId = (String)session.getAttribute("_ekptg_user_id");
+		userRole = (String)session.getAttribute("myrole");
+		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
+		
+		this.context.put("userId", userId);
+		this.context.put("userRole", userRole);
+		this.context.put("idNegeriUser", idNegeriUser);
 
 		// GET DEFAULT PARAM
-		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP
-											// PAGING SHJ
+		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
 		String vm = "";
 		String actionPengkuatkuasaan = getParam("actionPengkuatkuasaan");
 		String submit = getParam("command");
@@ -526,8 +537,8 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 					idNegeriC, idDaerahC, idMukimC, idJenisHakmilikC,
 					getParam("txtNoHakmilik"), getParam("txtNoWarta"), idLotC,
 					getParam("txtNoLot"), getParam("txtNoPegangan"), idStatusC,
-					idKementerianTanah, idAgensiTanah,
-					getParam("txtKegunaanTnh"));
+					idKementerianTanah, idAgensiTanah, getParam("txtKegunaanTnh"), 
+					userId, idNegeriUser, userRole);
 
 			list = new Vector();
 			list = logic.getSenaraiFail();
