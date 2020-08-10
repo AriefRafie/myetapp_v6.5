@@ -15,6 +15,10 @@ public class FrmCRBMaklumatPermohonanView extends AjaxBasedModule {
 
 	FrmCRBHeaderData logicHeader = new FrmCRBHeaderData();
 	FrmCRBMaklumatPermohonanData logic = new FrmCRBMaklumatPermohonanData();
+	
+	String userId = null;
+	String userRole = null;
+	String idNegeriUser = null;
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -26,6 +30,15 @@ public class FrmCRBMaklumatPermohonanView extends AjaxBasedModule {
 		if (doPost.equals("true")) {
 			postDB = true;
 		}
+		
+		userId = (String)session.getAttribute("_ekptg_user_id");
+		userRole = (String)session.getAttribute("myrole");
+		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
+		
+		//SET VALUE USER
+        this.context.put("userId", userId);
+  	  	this.context.put("userRole", userRole);
+  	  	this.context.put("idNegeriUser", idNegeriUser);
 
 		// GET DEFAULT PARAM
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP
@@ -194,12 +207,14 @@ public class FrmCRBMaklumatPermohonanView extends AjaxBasedModule {
 		// SET DEFAULT PARAM
 		this.context.put("mode", mode);
 		this.context.put("selectedTabUpper", selectedTabUpper);
-
 		this.context.put("flagBorangK", flagBorangK);
 		this.context.put("idBorangK", idBorangK);
-
 		this.context.put("flagOpenDetail", flagOpenDetail);
 		this.context.put("status", status.toUpperCase());
+		
+		if (!"".equals(getParam("flagFrom"))){
+        	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+        }
 
 		return vm;
 	}
