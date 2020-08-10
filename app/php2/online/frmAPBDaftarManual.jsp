@@ -13,12 +13,12 @@
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
-  <input name="idFail" type="text" id="idFail" value="$idFail"/>
-  <input name="idPermohonan" type="text" id="idPermohonan" value="$idPermohonan"/>
-   <input name="idPermohonanLama" type="text" id="idPermohonanLama" value="$idPermohonanLama"/>
-   <input name="checkId" type="text" id="checkId" value="$checkId"/>
-  <input name="idStatus" type="text" id="idStatus" value="$idStatus"/>
-  <input name="idJenisPermohonan" type="text" id="idJenisPermohonan" value="$idJenisPermohonan"/>
+  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+   <input name="idPermohonanLama" type="hidden" id="idPermohonanLama" value="$idPermohonanLama"/>
+   <input name="checkId" type="hidden" id="checkId" value="$checkId"/>
+  <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
+  <input name="idJenisPermohonan" type="hidden" id="idJenisPermohonan" value="$idJenisPermohonan"/>
   <input name="idNegeriPemohon" type="hidden" id="idNegeriPemohon" value="$idNegeriPemohon"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">

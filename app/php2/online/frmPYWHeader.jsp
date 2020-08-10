@@ -4,6 +4,7 @@
     #set($subUrusan = $beanHeader.subUrusan)
     #set($idPermohonan = $beanHeader.idPermohonan)
     #set($noPermohonan = $beanHeader.noPermohonan)
+    #set($jenisPermohonan = $beanHeader.jenisPermohonan)
     #set($tarikhTerima = $beanHeader.tarikhTerima)
     #set($idStatus = $beanHeader.idStatus) 
     #set($status = $beanHeader.status)    
@@ -60,7 +61,7 @@
 	      	<tr>
 	          <td width="30%">Jenis Permohonan</td>
 	          <td width="1%">:</td>
-	          <td><font color="blue"></font></td>
+	          <td><font color="blue">$jenisPermohonan</font></td>
 	        </tr>
 	        <tr>
 	          <td width="30%" >No. Rujukan Online</td>
