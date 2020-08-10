@@ -489,7 +489,7 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 		h.put("alamatpemaju3", String.valueOf(data.get("txtAlamatPemaju3HtaamX")));
 		h.put("poskodpemaju", String.valueOf(data.get("txtPoskodPemaju1HtaamX")));
 		h.put("bandarpemaju", String.valueOf(data.get("txtBandarPemaju1HtaamX")));
-		h.put("negeripemaju", String.valueOf(data.get("txtBandarPemaju1HtaamX")));
+		h.put("negeripemaju", String.valueOf(data.get("socNegeriPemajuHtaamX")));
 
 		h.put("alamathta1", String.valueOf(data.get("txtAlamatHarta1HtaamX")));
 		h.put("alamathta2", String.valueOf(data.get("txtAlamatHarta2HtaamX")));
