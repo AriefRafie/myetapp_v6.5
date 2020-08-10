@@ -383,6 +383,7 @@ public class FrmPrmhnnSek8InternalKutipan extends VTemplate {
 
 				// long idPermohonan = Long.parseLong(getParam("idpermohonan"));
 				String buktimati = getParam("cbsemakradio");
+				String tarikhperintah = "";
 				String[] cbsemaks = this.request.getParameterValues("cbsemaks");
 				// FrmPrmhnnSek8SenaraiSemakInternalData frm = new
 				// FrmPrmhnnSek8SenaraiSemakInternalData();
@@ -400,9 +401,9 @@ public class FrmPrmhnnSek8InternalKutipan extends VTemplate {
 						} else if (cbsemaks[i].equals("23")) {
 							txtbox = getParam("txtLainLainTujuan");
 						}
-						logic_C.semakanAdd(cbsemaks[i], String
-								.valueOf(idPermohonan), String.valueOf(txtbox),
-								String.valueOf(tarikhresit), buktimati, uu);
+						
+						logic_C.semakanAdd(cbsemaks[i], String.valueOf(idPermohonan), String.valueOf(txtbox),
+								String.valueOf(tarikhresit), String.valueOf(tarikhperintah),buktimati, uu);
 					}
 				}
 				eventStatus = 1;

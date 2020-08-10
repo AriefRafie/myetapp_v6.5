@@ -12,6 +12,7 @@
   <input type="hidden" name="idStatus" />
   <input type="hidden" name="idKementerian" />
 </p>
+ ##if ($idKementerian == '13')
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>

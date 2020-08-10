@@ -44,7 +44,7 @@
   </tr>
   #end
   #end
-  
+
   #if ($idFail != '' && $idStatus != '1610198' && $idStatus != '1610199' && $idStatus != '1610200' && $idStatus != '1610201')
   <tr>
     <td><fieldset>
@@ -195,11 +195,11 @@
                 <td>Cagaran (RM)</td>
                 <td>:</td>
                 <td>
-                	<input name="txtCagaran" type="text" value="$beanMaklumatPerjanjian.cagaran" $readonly class="$inputTextClass" 
+                	<input name="txtCagaran" type="text" value="$beanMaklumatPerjanjian.cagaran" $readonly class="$inputTextClass"
                 		onblur="validateCurrency(this,this.value,'$beanMaklumatPerjanjian.cagaran');" />
-                	#if ($mode == 'view')
+                	<!-- #if ($mode == 'view')
                 	<input type="button" name="cmdKeHasil" id="cmdKeHasil" value="Hantar Ke Hasil" onClick="gotoFailHasil()"/>
-                	#end
+                	#end -->
                 </td>
               </tr>
             </table>
@@ -320,7 +320,11 @@
                 <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
                 <td>Cagaran (RM)</td>
                 <td>:</td>
-                <td><input name="txtCagaran" type="text" value="$beanMaklumatPerjanjian.cagaran" $readonly class="$inputTextClass" onblur="validateCurrency(this,this.value,'$beanMaklumatPerjanjian.cagaran');" /></td>
+                <td><input name="txtCagaran" type="text" value="$beanMaklumatPerjanjian.cagaran" $readonly class="$inputTextClass" onblur="validateCurrency(this,this.value,'$beanMaklumatPerjanjian.cagaran');" />
+                #if($BeanMaklumatHasil == [])
+		            <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar Ke Hasil" onClick="doHantarHasil()"/>
+				 #else
+				 #end</td>
               </tr>
             </table>
             #end
@@ -342,7 +346,7 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td> 
+          <td>
           	#if ($mode == 'view')
             #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
             <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskini()"/>
@@ -365,7 +369,8 @@
             #end
             #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
             <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
-            #end </td>
+            #end
+            </td>
         </tr>
         #end
       </table>
@@ -418,7 +423,7 @@ function validateCurrency(elmnt,content,content2) {
 		elmnt.value = content2;
 		return;
 	}
-	
+
 	if(content != ""){
 		var num = content * 1;
 		elmnt.value = num.toFixed(2);
@@ -433,62 +438,62 @@ function simpanKeputusan(idKeputusan,idSuburusan) {
 		if (idKeputusan == 'D'){
 			if(document.${formName}.txtTarikhMulaDasar.value == ""){
 				alert('Sila masukkan Tarikh Mula Kelulusan Dasar');
-				document.${formName}.txtTarikhMulaDasar.focus(); 
-				return; 
+				document.${formName}.txtTarikhMulaDasar.focus();
+				return;
 			}
 			if(document.${formName}.txtTarikhTamatDasar.value == ""){
 				alert('Sila masukkan Tarikh Tamat Kelulusan Dasar');
-				document.${formName}.txtTarikhTamatDasar.focus(); 
-				return; 
+				document.${formName}.txtTarikhTamatDasar.focus();
+				return;
 			}
 		}
-		
+
 		if(document.${formName}.txtTarikhMula.value == ""){
 			alert('Sila masukkan Tarikh Mula Perjanjian');
-			document.${formName}.txtTarikhMula.focus(); 
-			return; 
+			document.${formName}.txtTarikhMula.focus();
+			return;
 		}
 		if(document.${formName}.txtTempoh.value == ""){
 			alert('Sila masukkan Tempoh Perjanjian');
-			document.${formName}.txtTempoh.focus(); 
-			return; 
+			document.${formName}.txtTempoh.focus();
+			return;
 		}
 		if(document.${formName}.txtTarikhTamat.value == ""){
 			alert('Sila masukkan Tarikh Tamat Perjanjian');
-			document.${formName}.txtTarikhTamat.focus(); 
-			return; 
+			document.${formName}.txtTarikhTamat.focus();
+			return;
 		}
 		if(document.${formName}.socJenisKadarSewa.value == ""){
 			alert('Sila pilih Jenis Kadar Sewa');
-			document.${formName}.socJenisKadarSewa.focus(); 
-			return; 
+			document.${formName}.socJenisKadarSewa.focus();
+			return;
 		}
 		if(idSuburusan != '27'){
 			if(document.${formName}.txtKadarSewa.value == ""){
 				alert('Sila masukkan Kadar Sewa');
-				document.${formName}.txtKadarSewa.focus(); 
-				return; 
+				document.${formName}.txtKadarSewa.focus();
+				return;
 			}
 		}
 		else{
 			if(document.${formName}.txtRoyalti.value == ""){
 				alert('Sila masukkan Royalti');
-				document.${formName}.txtRoyalti.focus(); 
-				return; 
+				document.${formName}.txtRoyalti.focus();
+				return;
 			}
 		}
 		if(document.${formName}.txtCagaran.value == ""){
 			alert('Sila masukkan Cagaran');
-			document.${formName}.txtCagaran.focus(); 
-			return; 
+			document.${formName}.txtCagaran.focus();
+			return;
 		}
-	}	
-	
+	}
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpan";
 	doAjaxCall${formName}("");
@@ -506,9 +511,19 @@ function doHantarProses(){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHantarProses";
+	document.${formName}.submit();
+}
+function doHantarHasil(){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "view";
+		return;
+	}
+
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doHantarHasil";
 	document.${formName}.submit();
 }
 function gotoFailHasil(){
@@ -516,113 +531,113 @@ function gotoFailHasil(){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "gotoFailHasil";
 	document.${formName}.submit();
 }
-function gotoBatalPermohonan(){	
+function gotoBatalPermohonan(){
 	document.${formName}.step.value = "batalPermohonan";
 	document.${formName}.submit();
 }
 function calcDate(){
 	if (document.${formName}.txtTarikhMula.value != "" && document.${formName}.txtTempoh.value != ""){
-		
+
 		var tarikhMula  = document.${formName}.txtTarikhMula.value;
 		var month  = parseInt(document.${formName}.txtTempoh.value);
-		
+
 		var dt1   = parseInt(tarikhMula.substring(0,2),10);
 		var mon1  = parseInt(tarikhMula.substring(3,5),10)-1 + month;
 		var yr1   = parseInt(tarikhMula.substring(6,10),10);
-	 
+
 		var myDate = new Date(yr1, mon1, dt1);
 		myDate.setDate(myDate.getDate()-1);
-		
+
 		var day = myDate.getDate();
 		var month = myDate.getMonth()+1;
 		var year = myDate.getFullYear();
-		
+
 		var tarikhTamat = "";
 		if(month>=10){
 			if(day>=10){
-				tarikhTamat = day + "/" + month + "/" + year;	
+				tarikhTamat = day + "/" + month + "/" + year;
 			} else {
-				tarikhTamat = "0"+ day + "/" + month + "/" + year;	
-			}				
+				tarikhTamat = "0"+ day + "/" + month + "/" + year;
+			}
 		} else {
 			if(day>=10){
-				tarikhTamat = day + "/0" + month + "/" + year;	
+				tarikhTamat = day + "/0" + month + "/" + year;
 			} else {
-				tarikhTamat = "0"+ day + "/0" + month + "/" + year;	
+				tarikhTamat = "0"+ day + "/0" + month + "/" + year;
 			}
 		}
 		document.${formName}.txtTarikhTamat.value = tarikhTamat;
-	
+
 	} else {
 		document.${formName}.txtTarikhTamat.value = "";
 	}
 }
 function calcDateDasar(){
 	if (document.${formName}.txtTarikhMulaDasar.value != "" && document.${formName}.txtTempohDasar.value != ""){
-		
+
 		var tarikhMulaDasar  = document.${formName}.txtTarikhMulaDasar.value;
 		var monthDasar  = parseInt(document.${formName}.txtTempohDasar.value);
-		
+
 		var dt1   = parseInt(tarikhMulaDasar.substring(0,2),10);
 		var mon1  = parseInt(tarikhMulaDasar.substring(3,5),10)-1 + monthDasar;
 		var yr1   = parseInt(tarikhMulaDasar.substring(6,10),10);
-	 
+
 		var myDate = new Date(yr1, mon1, dt1);
 		myDate.setDate(myDate.getDate()-1);
-		
+
 		var day = myDate.getDate();
 		var month = myDate.getMonth()+1;
 		var year = myDate.getFullYear();
-		
+
 		var tarikhTamatDasar = "";
 		if(month>=10){
 			if(day>=10){
-				tarikhTamatDasar = day + "/" + month + "/" + year;	
+				tarikhTamatDasar = day + "/" + month + "/" + year;
 			} else {
-				tarikhTamatDasar = "0"+ day + "/" + month + "/" + year;	
-			}				
+				tarikhTamatDasar = "0"+ day + "/" + month + "/" + year;
+			}
 		} else {
 			if(day>=10){
-				tarikhTamatDasar = day + "/0" + month + "/" + year;	
+				tarikhTamatDasar = day + "/0" + month + "/" + year;
 			} else {
-				tarikhTamatDasar = "0"+ day + "/0" + month + "/" + year;	
+				tarikhTamatDasar = "0"+ day + "/0" + month + "/" + year;
 			}
 		}
 		document.${formName}.txtTarikhTamatDasar.value = tarikhTamatDasar;
-	
+
 	} else {
 		document.${formName}.txtTarikhTamatDasar.value = "";
 	}
 }
 function calcCagaran(){
 	if (document.${formName}.txtKadarSewa.value != ""){
-		
+
 		var kadarSewa  = document.${formName}.txtKadarSewa.value*1;
 		var cagaran  = 0;
-		
+
 		cagaran = kadarSewa * 3;
-		
+
 		document.${formName}.txtCagaran.value = cagaran.toFixed(2);
-	
+
 	} else {
 		document.${formName}.txtCagaran.value = "";
 	}
 }
 function calcRoyalti(){
 	if (document.${formName}.txtRoyalti.value != ""){
-		
+
 		var royalti  = document.${formName}.txtRoyalti.value*1;
 		var cagaran  = 0;
-		
+
 		cagaran = royalti * 10/100;
-		
+
 		document.${formName}.txtCagaran.value = cagaran.toFixed(2);
-	
+
 	} else {
 		document.${formName}.txtCagaran.value = "";
 	}

@@ -55,14 +55,11 @@ public class FrmPLPMesyuaratData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
-			r.add("ID_MESYUARAT");
-			r.add("TAJUK");
-			r.add("BIL_MESYUARAT");
-			r.add("TARIKH_MESYUARAT");
-			r.add("FLAG_SYOR");
-			r.add("ID_PERMOHONAN", idPermohonan);
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.STATUS_MESYUARAT "
+					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
+					+ " AND B.ID_PERMOHONAN = '"
+					+ idPermohonan + "'";
 
-			sql = r.getSQLSelect("TBLPHPMESYUARAT", "ID_MESYUARAT ASC");
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;

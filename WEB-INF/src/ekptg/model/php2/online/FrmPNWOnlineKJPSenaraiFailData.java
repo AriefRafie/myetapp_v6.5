@@ -1194,8 +1194,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("idFail", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
-				// h.put("noFail", rs.getString("NO_FAIL") == null ? "" :
-				// rs.getString("NO_FAIL").toUpperCase());
+				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
 				h.put("namaAgensi",
 						rs.getString("NAMA_AGENSI") == null ? "" : rs.getString("NAMA_AGENSI").toUpperCase());
 				h.put("namaKementerian", rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
@@ -1243,7 +1242,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			if (bil == 1) {
 				h = new Hashtable();
 				h.put("idFail", "");
-				// h.put("noFail", "");
+				h.put("noFail", "");
 				h.put("namaKementerian", "");
 				h.put("idKementerian", "");
 				h.put("noPermohonan", "");

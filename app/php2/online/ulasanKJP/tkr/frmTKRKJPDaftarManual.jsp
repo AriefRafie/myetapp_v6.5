@@ -290,10 +290,3 @@
       #end </td>
   </tr>
 </table>
-<script>
-function doBacklist() {
-	alert("masuk x sini?");
-	document.${formName}.submit2.value = "";
-	document.${formName}.submit();
-}
-</script>

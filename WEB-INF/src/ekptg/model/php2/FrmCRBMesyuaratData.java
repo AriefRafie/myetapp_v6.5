@@ -23,6 +23,7 @@ public class FrmCRBMesyuaratData {
 	private Vector listKehadiran = null;
 	private Vector listImejan = null;
 	private Vector beanMaklumatImejan = null;
+	private Vector listNotifikasi = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -49,7 +50,6 @@ public class FrmCRBMesyuaratData {
 			long idMesyuarat = DB.getNextID("TBLPHPMESYUARAT_SEQ");
 			idMesyuaratString = String.valueOf(idMesyuarat);
 			r.add("ID_MESYUARAT", idMesyuarat);
-			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("TAJUK", tujuan);
 			r.add("BIL_MESYUARAT", bilMesyuarat);
 			if (!"".equals(tarikhMesyuarat)) {
@@ -69,6 +69,19 @@ public class FrmCRBMesyuaratData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPMESYUARAT");
+			stmt.executeUpdate(sql);
+			
+			// TBLPHPMESYUARATPERMOHONAN
+			r = new SQLRenderer();
+			long idMesyuaratMohon = DB.getNextID("TBLPHPMESYUARATPERMOHONAN_SEQ");
+			r.add("ID_MESYUARAT_PERMOHONAN", idMesyuaratMohon);
+			r.add("ID_MESYUARAT", idMesyuarat);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPMESYUARATPERMOHONAN");
 			stmt.executeUpdate(sql);
 
 			conn.commit();
@@ -412,15 +425,12 @@ public class FrmCRBMesyuaratData {
 			listMesyuarat = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
 
-			r.add("ID_MESYUARAT");
-			r.add("TAJUK");
-			r.add("TARIKH_MESYUARAT");
-			r.add("TINDAKAN_MESYUARAT");
-			r.add("ID_PERMOHONAN", idPermohonan);
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.TARIKH_MESYUARAT, A.TINDAKAN_MESYUARAT "
+					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
+					+ " AND B.ID_PERMOHONAN = '"
+					+ idPermohonan + "'";
 
-			sql = r.getSQLSelect("TBLPHPMESYUARAT", "ID_MESYUARAT ASC");
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -908,6 +918,79 @@ public class FrmCRBMesyuaratData {
 			if (db != null)
 				db.close();
 		}
+	}
+	
+	public void setSenaraiNotifikasi(String idMesyuarat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listNotifikasi = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.NAMA_PEGAWAI,A.EMEL_PEGAWAI,A.NO_TELEFON,A.TARIKH_HANTAR, A.FLAG_STATUS,"
+					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJPEJABAT E WHERE "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+			
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai",
+						rs.getString("NAMA_PEGAWAI") == null ? "" : rs
+								.getString("NAMA_PEGAWAI"));
+				h.put("emel",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("noTelefon",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				listNotifikasi.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Vector getListNotifikasi() {
+		return listNotifikasi;
 	}
 
 	public Vector getListMesyuarat() {

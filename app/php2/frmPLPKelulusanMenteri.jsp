@@ -119,11 +119,14 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td> #if ($mode == 'view')
+          <td>
+          	#if ($mode == 'view')
+          	#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
             <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniKelulusanMenteri()"/>
             #if($idStatus == '1610205')
             <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
             <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+            #end
             #end
             #if ($keputusanMenteri == 'B')
       		<input name="cmdCetak" type="button" onClick="cetakPLPSuratLulusBersyarat('$idFail')" value="Cetak Surat Lulus Bersyarat">
@@ -131,12 +134,16 @@
       		<input name="cmdCetak" type="button" onClick="javascript:cetakPLPSuratTolak('$idFail')" value="Cetak Surat Tolak">
       		#end
             #end
+            #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+        	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+        	#end
             #if ($mode == 'update')
             <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="simpanKemaskiniKelulusanMenteri('$idStatus')"/>
             <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalKelulusanMenteri()"/>
             #end 
             
             <!-- START SPECIAL CASE - TO CATER JIKA KEPUTUSAN MENTERI BERUBAH EVEN SETELAH SELESAI -->
+            #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
             #set ($allowPindaanKeputusan = 'Y')
             #if ($idStatus == '1614197' && $keputusanMenteri == 'L')
             	#set ($allowPindaanKeputusan = 'T')
@@ -152,8 +159,9 @@
 	            	<input type="button" name="cmdHantar" id="cmdHantar" value="Pinda Keputusan" onClick="doPindaKeputusan()"/>
 	            #end
             #end
+            #end
             <!-- END SPECIAL CASE - TO CATER JIKA KEPUTUSAN MENTERI BERUBAH EVEN SETELAH SELESAI -->
-            </td>
+          </td>
         </tr>
         #end
       </table>
@@ -240,5 +248,9 @@ function cetakPLPSuratTolak(idFail) {
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
+}
+function gotoSenaraiFailKeseluruhan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
+	document.${formName}.submit();
 }
 </script>

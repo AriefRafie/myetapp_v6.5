@@ -39,7 +39,6 @@ public class FrmPYWMesyuaratData {
 
 			ResultSet rs = stmt.executeQuery(sql);
 			
-
 			Hashtable h;
 			int bil = 1;
 			while (rs.next()) {

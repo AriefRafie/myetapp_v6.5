@@ -940,7 +940,7 @@ Lain - Lain Kos</td>
       
       <!-- PPT-43 (i) -->
       <tr>  
-      	 <td><a href="#" onClick="javascript:cetakSuratMohonBayaranAgensi('$id_siasatan','$!id_fail','$!id_hakmilik','$!id_permohonan')"><font color="blue">Surat Mohon Bayaran Agensi</font></a></td>
+      	 <td><a href="#" onClick="javascript:cetakSuratMohonBayaranAgensi('$id_fail','$id_hakmilik','$id_permohonan')"><font color="blue">Surat Mohon Bayaran Agensi</font></a></td>
       </tr> 
       <!-- PPT-43 (iv) -->
       <tr>  
@@ -4071,14 +4071,10 @@ function cetakNotaRundingan(id_siasatan) {
     if (hWnd.focus != null) hWnd.focus();
 }
 //PPT-43(i)
-function cetakSuratMohonBayaranAgensi(id_siasatan,id_fail,id_hakmilik,id_permohonan) {
+function cetakSuratMohonBayaranAgensi(id_fail,id_hakmilik,id_permohonan) {
 	
-    /*var url = "../servlet/ekptg.report.ppt.SuratMohonBayaranAgensi?id_siasatan="+id_siasatan;
-    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();*/
-	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idFail="+id_fail+"&id_hakmilik="+id_hakmilik+"&id_permohonan="+id_permohonan+"&report=SuratMohonBayaranAgensi&flagReport=S";	
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&report=SuratBayaranAgensi&flagReport=S";
+	
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
