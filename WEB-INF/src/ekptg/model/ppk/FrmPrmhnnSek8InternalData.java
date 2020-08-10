@@ -8021,8 +8021,8 @@ System.out.println("TARIKH_SURAT_AKUAN=="+TARIKH_SURAT_AKUAN);
 			String alamathta2 = (String) data.get("alamathta2");
 			String alamathta3 = (String) data.get("alamathta3");
 			String poskodhta = (String) data.get("poskodhta");
-			//int bandarhta = (Integer) data.get("bandarhta");
-			 String bandarhta = (String) data.get("bandarhta");
+			int bandarhta = (Integer) data.get("bandarhta");
+			// String bandarhta = (String) data.get("bandarhta");
 			String noperjanjian = (String) data.get("noperjanjian");
 			String tarikhperja = (String) data.get("tarikhperjanjian");
 			String tarikhperjanjian = "to_date('" + tarikhperja + "','dd/MM/yyyy')";
@@ -8731,11 +8731,13 @@ System.out.println("TARIKH_SURAT_AKUAN=="+TARIKH_SURAT_AKUAN);
 			}
 			r.add("catatan", catatan);
 			//r.add("", noperserahan);
+			
 			r.add("alamat_hta1", alamat_hta1);
 			r.add("alamat_hta2", alamat_hta2);
 			r.add("alamat_hta3", alamat_hta3);
 			r.add("poskod_hta", poskod_hta);
 			r.add("id_bandarhta", id_bandarhta);
+			
 			r.add("jenis_Hta", jenis_Hta);
 			r.add("flag_Kategori_Hta", flag);
 			r.add("id_Kemaskini", id_Kemaskini);
