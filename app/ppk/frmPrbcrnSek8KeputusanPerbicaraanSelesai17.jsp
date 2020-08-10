@@ -340,6 +340,24 @@ document.getElementById("header_lama").style.display="block";
                               <input type="text" size="15" name="txtJumHarta" onblur="this.value=this.value.toUpperCase();" id="txtJumHarta" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumHarta)" />
                               </label></td>
                          </tr>
+                         <!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
+          				<tr>
+            				<td width="47%" ><div align="left">Jumlah Harta yang Dikenakan Bayaran Perintah &nbsp;(RM)</div></td>
+            				<td width="2%"><div align="right">:</div></td>
+            				<td width="51%"><label>
+              				<input type="text" size="15" name="txtJumHartaDikenakanBayaranPerintah" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaDikenakanBayaranPerintah" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($!txtJumHartaDikenakanBayaranPerintah)" />
+              				</label></td>
+          				</tr>
+          				<!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
+          				<!-- arief add Bayaran Denda Lewat Pendaftaran Open -->
+           				<tr>
+            				<td width="47%" ><div align="left">Bayaran Denda Lewat Pendaftaran&nbsp;&nbsp;&nbsp;(RM)</div></td>
+            				<td width="2%"><div align="right">:</div></td>
+            				<td width="51%"><label>
+              				<input type="text" size="15" name="txtJumDendaLewat" onblur="this.value=this.value.toUpperCase();" id="jumDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($!txtJumDendaLewat)" />
+              				</label></td>
+          				</tr>
+          				<!-- arief add Bayaran Denda Lewat Pendaftaran Close -->
                          <tr>
                           	<td><div align="left"><font color="red">*</font>&nbsp;Jumlah &nbsp;&nbsp;&nbsp;Bayaran(RM)</div></td>
                           	<td><div align="right">:</div></td>
@@ -357,6 +375,50 @@ document.getElementById("header_lama").style.display="block";
                             
                             </td>
                         </tr>
+                        <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
+          				<!-- <tr>
+            				<td><div align="left"><font color="red">*</font>&nbsp;Jumlah Bayaran Sebenar&nbsp;&nbsp;(RM)</div></td>
+            				<td><div align="right">: </div></td>
+                        	<td>
+                        	#if ( $FlagtarikhMohon == 0 )
+              					<input type="text" size="15" name="txtJumBayaranSebenar" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaranSebenar" style="text-transform:uppercase;" value="$!Util.formatDecimal($!txtJumBayaranSebenar)" />
+              					<input type="hidden" size="12" name="txtJumBayaranSebenar" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaranSebenar" style="text-transform:uppercase;" readonly class="disabled" value="$!txtJumBayaranSebenar" />
+              				#end
+              				#if ( $FlagtarikhMohon == 1 )
+              					<input type="text" size="15" name="txtJumBayaranSebenar" id="txtJumBayaranSebenar" onblur="validateNumber(this,this.value);validateModal(this,this.value,$!txtJumBayaranPusakaSebenar)" onkeyup="validateNumber(this,this.value);" />
+              				#end </td>
+          				</tr> -->
+          				<!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
+          				<!-- arief add Pengecualian Bayaran OPEN -->
+           				<tr>
+        					<td width="47%" ><div align="left">Pengecualian Bayaran</div></td>
+        					<td width="1%"><div align="right">:</div></td>
+        					<td width="79%">
+        					#if($!check_pengecualian == "1")
+        						#set($check_pengecualian_mode = "checked")
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"checked/>Sebahagian
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"/>Keseluruhan
+        					#elseif ($!check_pengecualian == "2")
+        						#set($check_pengecualian_mode = "checked")
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"/>Sebahagian
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"checked/>Keseluruhan
+        					#else
+        						#set($check_pengecualian_mode = "")
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"/>Sebahagian
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"/>Keseluruhan
+        					#end
+							</td>
+          				</tr>
+          				<!-- arief add Pengecualian Bayaran CLOSE -->
+          				<!-- arief add textbox Pengecualian Bayaran OPEN-->
+          				<tr>
+        					<td width="47%" ><div align="left">Catatan Pengecualian</div></td>
+        					<td width="1%"><div align="right">:</div></td>
+        					<td width="79%">
+        					<textarea name="catatan_pengecualian" cols="35" rows="3" id="catatan_pengecualian"  >$!catatan_pengecualian</textarea>
+        					</td>
+          				</tr>
+          				<!-- arief add textbox Pengecualian Bayaran CLOSE-->
                         <tr>
                             <td valign="top"><div align="left"><font color="red">*</font>&nbsp;No Resit</div></td>
                             <td><div align="right">:</div></td>
@@ -1121,14 +1183,78 @@ Sebab-sebab Lain</td>
                           <td width="3%"><div align="right">:</div></td>
                           <td width="46%"><label><input type="text" size="12" name="txtJumHarta" onblur="this.value=this.value.toUpperCase();" id="txtJumHarta" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumHarta)" /></label></td>
                         </tr>
+                        <!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
+          				<tr>
+            				<td width="47%" ><div align="left">Jumlah Harta yang Dikenakan Bayaran Perintah &nbsp;(RM)</div></td>
+            				<td width="2%"><div align="right">:</div></td>
+            				<td width="51%"><label>
+              				<input type="text" size="15" name="txtJumHartaDikenakanBayaranPerintah" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaDikenakanBayaranPerintah" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumHartaDikenakanBayaranPerintah)" />
+              				</label></td>
+          				</tr>
+          				<!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
+          				<!-- arief add Bayaran Denda Lewat Pendaftaran Open -->
+          				<tr>
+            				<td width="47%" ><div align="left">Bayaran Denda Lewat Pendaftaran&nbsp;&nbsp;&nbsp;(RM)</div></td>
+            				<td width="2%"><div align="right">:</div></td>
+            				<td width="51%"><label>
+              				<input type="text" size="15" name="txtJumDendaLewat" onblur="this.value=this.value.toUpperCase();" id="jumDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumDendaLewat)" />
+              				</label></td>
+          				</tr>
+          				<!-- arief add Bayaran Denda Lewat Pendaftaran Close -->
                          <tr>
                           	<td><div align="left">Jumlah Bayaran (RM)</div></td>
                           	<td><div align="right">:</div></td>
                           	<td><label><span style="text-transform:uppercase;">
                             <input type="text" size="12" name="txtJumBayaran1" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaran1" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($bayaran_perintah)" /></span></label><input type="hidden" name="txtJumBayaran" id="txtJumBayaran" value="$bayaran_perintah" />
-             <input type="hidden" name="txtJumBayaranTerkini" id="txtJumBayaranTerkini" value="$Util.formatDecimal($txtJumBayaranTerkini)" />             
+             				<input type="hidden" name="txtJumBayaranTerkini" id="txtJumBayaranTerkini" value="$Util.formatDecimal($txtJumBayaranTerkini)" />             
                         	</td>
                         </tr>
+                        <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
+          				<!-- <tr>
+            				<td><div align="left"><font color="red">*</font>&nbsp;Jumlah Bayaran Sebenar&nbsp;&nbsp;(RM)</div></td>
+            				<td><div align="right">: </div></td>
+							<td>
+							#if ( $FlagtarikhMohon == 0 )
+              					<input type="text" size="15" name="txtJumBayaranSebenar" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaranSebenar" style="text-transform:uppercase;" value="$!Util.formatDecimal($!txtJumBayaranSebenar)" />
+              					<input type="hidden" size="12" name="txtJumBayaranSebenar" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaranSebenar" style="text-transform:uppercase;" readonly class="disabled" value="$!txtJumBayaranSebenar" />
+              				#end
+              				#if ( $FlagtarikhMohon == 1 )
+              					<input type="text" size="15" name="txtJumBayaranSebenar" id="txtJumBayaranSebenar" onblur="validateNumber(this,this.value);validateModal(this,this.value,$!txtJumBayaranPusakaSebenar)" onkeyup="validateNumber(this,this.value);" />
+              				#end
+              				</td>
+          				</tr> -->
+          				<!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
+                        <!-- arief add Pengecualian Bayaran OPEN -->
+           				<tr>
+        					<td width="47%" ><div align="left">Pengecualian Bayaran</div></td>
+        					<td width="1%"><div align="right">:</div></td>
+        					<td width="79%">
+        					#if($!check_pengecualian == "1")
+        						#set($check_pengecualian_mode = "checked")
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"disabled checked/>Sebahagian
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"disabled/>Keseluruhan
+        					#elseif ($!check_pengecualian == "2")
+        						#set($check_pengecualian_mode = "checked")
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"disabled/>Sebahagian
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"disabled checked/>Keseluruhan
+        					#else
+        						#set($check_pengecualian_mode = "")
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"disabled/>Sebahagian
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"disabled/>Keseluruhan
+        					#end
+							</td>
+          				</tr>
+          				<!-- arief add Pengecualian Bayaran CLOSE -->
+          				<!-- arief add textbox Pengecualian Bayaran OPEN-->
+          				<tr>
+        					<tr>
+        					<td width="47%" ><div align="left">Catatan Pengecualian</div></td>
+        					<td width="1%"><div align="right">:</div></td>
+        					<td width="79%">
+        					<textarea name="catatan_pengecualian" cols="35" rows="3" id="catatan_pengecualian" disabled >$!catatan_pengecualian</textarea>
+        					</td>
+          				</tr>
+         	 			<!-- arief add textbox Pengecualian Bayaran CLOSE-->
                         <tr>
                             <td valign="top"><div align="left">No Resit</div></td>
                             <td><div align="right"><span class="style38">:</span></div></td>
@@ -1614,16 +1740,25 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
         <td width="70%">
         #if($!check_kiv == "1")
         #set($check_kiv_mode = "checked")
-         <input type="radio" name="check_kiv" id="check_kiv"  value="1"  onclick="putValue(this.value)"  checked/>KIV
-         <input type="radio" name="check_kiv" id="check_doc"  value="0"  onclick="putValue(this.value)" />Dokumen telah dikemukakan
-        #elseif($!check_kiv == "0")
-        #set($check_kiv_mode = "")
-         <input type="radio" name="check_kiv" id="check_kiv"  value="1"  onclick="putValue(this.value)"  />KIV
-         <input type="radio" name="check_kiv" id="check_doc"  value="0"  onclick="putValue(this.value)"  checked/>Dokumen telah dikemukakan
+          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" disabled checked />KIV
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen telah dikemukakan
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen gagal dikemukakan
+		#elseif($!check_kiv == "0")
+        #set($check_kiv_mode = "checked")
+          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" disabled  />KIV
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled checked />Dokumen telah dikemukakan
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen gagal dikemukakan
+        #elseif($!check_kiv == "3")
+        #set($check_kiv_mode = "checked")
+          <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" disabled  />KIV
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled  />Dokumen telah dikemukakan
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled checked/>Dokumen gagal dikemukakan
         #else
         #set($check_kiv_mode = "")
-         <input type="radio" name="check_kiv" id="check_kiv"  value="1"  onclick="putValue(this.value)"  />KIV
-         <input type="radio" name="check_kiv" id="check_doc"  value="0"  onclick="putValue(this.value)"  />Dokumen telah dikemukakan
+        
+         <input type="radio" name="check_kiv" id="check_kiv" value="1" onclick="putValue(this.value)" disabled/>KIV
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen telah dikemukakan
+		 <input type="radio" name="check_kiv" id="check_doc" value="0" onclick="putValue(this.value)" disabled />Dokumen gagal dikemukakan
         #end
        
         &nbsp;
@@ -1717,8 +1852,26 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
                         <tr>
                             <td width="54%"><div align="left">&nbsp;&nbsp;&nbsp;Jumlah Harta (RM)</div></td>
                           <td width="2%"><div align="right">:</div></td>
-                          <td width="44%"><label><input type="text" size="12" name="txtJumHartaEDIT" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaEDIT" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($txtJumHarta)" /></label></td>
+                          <td width="44%"><label><input type="text" size="12" name="txtJumHartaEDIT" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaEDIT" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumHarta)" /></label></td>
                         </tr>
+                        <!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
+          				<tr>
+            				<td width="47%" ><div align="left">Jumlah Harta yang Dikenakan Bayaran Perintah &nbsp;(RM)</div></td>
+            				<td width="2%"><div align="right">:</div></td>
+            				<td width="51%"><label>
+              				<input type="text" size="15" name="txtJumHartaDikenakanBayaranPerintah" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaDikenakanBayaranPerintah" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumHartaDikenakanBayaranPerintah)" />
+              				</label></td>
+          				</tr>
+          				<!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
+          				<!-- arief add Bayaran Denda Lewat Pendaftaran Open -->
+          				<tr>
+            				<td width="47%" ><div align="left">Bayaran Denda Lewat Pendaftaran&nbsp;&nbsp;&nbsp;(RM)</div></td>
+            				<td width="2%"><div align="right">:</div></td>
+            				<td width="51%"><label>
+              				<input type="text" size="15" name="txtJumDendaLewat" onblur="this.value=this.value.toUpperCase();" id="jumDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumDendaLewat)" />
+              				</label></td>
+          				</tr>
+          				<!-- arief add Bayaran Denda Lewat Pendaftaran Close -->
                          <tr>
                           	<td><div align="left"><font color="red">*</font>&nbsp;Jumlah Bayaran (RM)</div></td>
                           	<td><div align="right">:</div></td>
@@ -1726,6 +1879,45 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
                             <input type="text" size="12" name="txtJumBayaranEDIT" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaranEDIT" style="text-transform:uppercase;" value="$!bayaran_perintah" />
                             <input type="hidden" size="12" name="txtJumBayaranEDITx" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaranEDITx" style="text-transform:uppercase;" readonly class="disabled" value="$bayaran_perintah" /></span></label></td>
                         </tr>
+                        <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
+        				<!-- <tr>
+          					<td><div align="left">Jumlah Bayaran Sebenar&nbsp;&nbsp;(RM)</div></td>
+          					<td><div align="right">:</div></td>
+          					<td><label>
+            				<input type="text" size="15" name="txtJumBayaranSebenar" id="txtJumBayaranSebenar" readonly class="disabled" value="$!Util.formatDecimal($!bayaran_perintah_sebenar)" />
+            				</label></td>
+        				</tr> -->
+        				<!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
+                        <!-- arief add Pengecualian Bayaran OPEN -->
+          				<tr>
+        					<td width="47%" ><div align="left">Pengecualian Bayaran</div></td>
+        					<td width="1%"><div align="right">:</div></td>
+        					<td width="79%">
+        					#if($!check_pengecualian == "1")
+        						#set($check_pengecualian_mode = "checked")
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"checked/>Sebahagian
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"/>Keseluruhan
+        					#elseif ($!check_pengecualian == "2")
+        						#set($check_pengecualian_mode = "checked")
+        						<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"/>Sebahagian
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"checked/>Keseluruhan
+        					#else
+        						#set($check_pengecualian_mode = "")
+         						<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"/>Sebahagian
+								<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"/>Keseluruhan
+        					#end
+							</td>
+          				</tr>
+          				<!-- arief add Pengecualian Bayaran CLOSE -->
+          				<!-- arief add textbox Pengecualian Bayaran OPEN-->
+          				<tr>
+        					<td width="47%" ><div align="left">Catatan Pengecualian</div></td>
+        					<td width="1%"><div align="right">:</div></td>
+        					<td width="79%">
+        					<textarea name="catatan_pengecualian" cols="35" rows="3" id="catatan_pengecualian"  >$!catatan_pengecualian</textarea>
+        					</td>
+        				</tr>
+        				<!-- arief add textbox Pengecualian Bayaran CLOSE-->
                         <tr>
                             <td valign="top"><div align="left"><font color="red">*</font>&nbsp;No Resit</div></td>
                             <td><div align="right"><span class="style38">:</span></div></td>

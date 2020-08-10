@@ -219,52 +219,26 @@
 </fieldset>
 </td>
 </tr>
+<!-- arief add Tidak Hadir OPEN-->
+<!--<tr  >
+<td >
+</td>
+<td >
+<fieldset>
+<legend>Waris / Orang Berkepentingan Tidak Hadir</legend>
+<div id="view_tidakhadir">
 
-<!-- arief add KETIDAKHADIRAN WARIS/OB sewaktu hari Perbicaraan OPEN -->
-<tr>
-	<td>
-	</td>
-	<td>
-		<fieldset name="listTidakHadir" id="listTidakHadir">
-		<legend>Waris / Orang Berkepentingan Tidak Hadir</legend>
-		<div id="view_tidakhadir">
- 
-		<table class="classFade" width="100%" cellspacing="1" cellpadding="3" border="0"> 
-		<tbody>
-		<tr class="table_header">
-		   <td width="5%" valign="top" align="center">Bil.</td>
-		   <td valign="top" align="left">Nama</td>
-           <td valign="top" align="left">Pengenalan</td>
-		   <td valign="top" align="left">Kaitan / Hubungan</td>	
-           <td valign="top" align="center">Umur</td>	
-           <td valign="top" align="left">Status</td>		  
-           <td width="10%" valign="top" align="center">Tindakan</td>
-		</tr>
-	    
-	    <tr id="rowTidakHadir">
-			   <!--  <td class="$pr.rowCss" valign="top" align="center">-</td>
-               <td class="$pr.rowCss" valign="top" align="left"><input type="text" style="text-transform: uppercase; display: none;" class="fullwidth_input" value="" placeholder="Sila Masukkan Nama..." maxlength="500" id="NAMA_TIDAKHADIR_" name="NAMA_TIDAKHADIR_"></td>
-               <td class="$pr.rowCss" valign="top" align="left"><input type="text" style="text-transform: uppercase; display: none;" name="PENGENALAN_TURUTHADIR_" class="fullwidth_input" id="PENGENALAN_TURUTHADIR_" value="" maxlength="20"></td>	
-               <td class="$pr.rowCss" valign="top" align="left">
-               <datalist id="dataHubungan"><option label="AMANAH RAYA BERHAD" value="AMANAH RAYA BERHAD"></option><option label="ANAK ANGKAT LELAKI" value="ANAK ANGKAT LELAKI"></option><option label="ANAK ANGKAT PEREMPUAN" value="ANAK ANGKAT PEREMPUAN"></option><option label="ANAK LELAKI" value="ANAK LELAKI"></option><option label="ANAK LELAKI BAPA SAUDARA SEBAPA" value="ANAK LELAKI BAPA SAUDARA SEBAPA"></option><option label="ANAK LELAKI BAPA SAUDARA SEIBU SEBAPA" value="ANAK LELAKI BAPA SAUDARA SEIBU SEBAPA"></option><option label="ANAK LELAKI SEBAPA" value="ANAK LELAKI SEBAPA"></option><option label="ANAK LELAKI SEIBU" value="ANAK LELAKI SEIBU"></option><option label="ANAK PEREMPUAN" value="ANAK PEREMPUAN"></option><option label="ANAK PEREMPUAN DARI CUCU LELAKI" value="ANAK PEREMPUAN DARI CUCU LELAKI"></option><option label="ANAK PEREMPUAN SEBAPA" value="ANAK PEREMPUAN SEBAPA"></option><option label="ANAK PEREMPUAN SEIBU" value="ANAK PEREMPUAN SEIBU"></option><option label="ANAK SAUDARA LELAKI SEBAPA" value="ANAK SAUDARA LELAKI SEBAPA"></option><option label="ANAK SAUDARA LELAKI SEIBU SEBAPA" value="ANAK SAUDARA LELAKI SEIBU SEBAPA"></option><option label="ANAK SAUDARA PEREMPUAN SEBAPA" value="ANAK SAUDARA PEREMPUAN SEBAPA"></option><option label="ANAK SAUDARA PEREMPUAN SEIBU SEBAPA" value="ANAK SAUDARA PEREMPUAN SEIBU SEBAPA"></option><option label="ANAK TIRI" value="ANAK TIRI"></option><option label="BAPA" value="BAPA"></option><option label="BAPA SAUDARA SEBAPA" value="BAPA SAUDARA SEBAPA"></option><option label="BAPA SAUDARA SEIBU SEBAPA" value="BAPA SAUDARA SEIBU SEBAPA"></option><option label="BAPA TIRI" value="BAPA TIRI"></option><option label="CUCU LELAKI" value="CUCU LELAKI"></option><option label="CUCU PEREMPUAN DARI ANAK LELAKI" value="CUCU PEREMPUAN DARI ANAK LELAKI"></option><option label="CUCU PEREMPUAN DARI ANAK PEREMPUAN" value="CUCU PEREMPUAN DARI ANAK PEREMPUAN"></option><option label="DATUK" value="DATUK"></option><option label="IBU" value="IBU"></option><option label="IBU TIRI" value="IBU TIRI"></option><option label="ISTERI" value="ISTERI"></option><option label="ISTERI(X)" value="ISTERI(X)"></option><option label="MENANTU" value="MENANTU"></option><option label="NENEK PEREMPUAN SEBELAH BAPA (HINGGA ATAS)" value="NENEK PEREMPUAN SEBELAH BAPA (HINGGA ATAS)"></option><option label="NENEK PEREMPUAN SEBELAH IBU (HINGGA ATAS)" value="NENEK PEREMPUAN SEBELAH IBU (HINGGA ATAS)"></option><option label="PEMBELI" value="PEMBELI"></option><option label="PEMBELI" value="PEMBELI"></option><option label="PETUAN HAMBA SAHAYA" value="PETUAN HAMBA SAHAYA"></option><option label="PETUAN PEREMPUAN HAMBA SAHAYA" value="PETUAN PEREMPUAN HAMBA SAHAYA"></option><option label="SAUDARA LELAKI SEBAPA" value="SAUDARA LELAKI SEBAPA"></option><option label="SAUDARA LELAKI SEIBU" value="SAUDARA LELAKI SEIBU"></option><option label="SAUDARA LELAKI SEIBU SEBAPA" value="SAUDARA LELAKI SEIBU SEBAPA"></option><option label="SAUDARA PEREMPUAN SEBAPA" value="SAUDARA PEREMPUAN SEBAPA"></option><option label="SAUDARA PEREMPUAN SEIBU" value="SAUDARA PEREMPUAN SEIBU"></option><option label="SAUDARA PEREMPUAN SEIBU SEBAPA" value="SAUDARA PEREMPUAN SEIBU SEBAPA"></option><option label="SUAMI" value="SUAMI"></option><option label="TIADA MAKLUMAT" value="TIADA MAKLUMAT"></option></datalist>
-               <input type="text" style="text-transform: uppercase; display: none;" name="HUBUNGAN_TURUTHADIR_" class="fullwidth_input" id="HUBUNGAN_TURUTHADIR_" value="" maxlength="100" list="dataHubungan"></td>
-               <td class="$pr.rowCss" valign="top" align="center"><input type="text" style="text-transform: uppercase; display: none;" name="UMUR_TURUTHADIR_" class="fullwidth_input" id="UMUR_TURUTHADIR_" value="" maxlength="3" onkeydown="validateNumber(event);"></td>
-               <td class="$pr.rowCss" valign="top" align="left">
-               <datalist id="dataStatusOB"><option label="DEWASA / WARAS" value="DEWASA / WARAS"></option><option label="TIDAK SEMPURNA AKAL" value="TIDAK SEMPURNA AKAL"></option></datalist>
-               <input type="text" style="text-transform: uppercase; display: none;" name="STATUS_TURUTHADIR_" class="fullwidth_input" id="STATUS_TURUTHADIR_" value="" maxlength="100" list="dataStatusOB"></td>	
-               <td class="$pr.rowCss" valign="top" align="center">
-               <input type="button" id="cmdAddTurutHadir" name="cmdAddTurutHadir" value="Tambah" onclick="simpanTurutHadir('','99191158219','99191200658',getPageLocation(),'','')" style="display: none;">               
-               </td>	-->
-		</tr>		
-	</tbody></table>
-
-
+  <script> 
+	$jquery(document).ready(function () {
+		//alert("x");	
+	doDivAjaxCall$formname('view_tidakhadir','show_tidakhadir','ID_PERBICARAAN=$ID_PERBICARAAN&ID_PERMOHONAN=$ID_PERMOHONAN&scrolPosition='+getPageLocation());			 	  
+	});
+</script
 </div>
 </fieldset>
 </td>
-</tr>
-<!-- arief add KETIDAKHADIRAN WARIS/OB sewaktu hari Perbicaraan CLOSE -->
-
+</tr>-->
+<!-- arief add Tidak Hadir CLOSE-->
 </table>
 
 <script>
