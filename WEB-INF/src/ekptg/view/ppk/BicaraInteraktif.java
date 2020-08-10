@@ -1,5 +1,5 @@
 package ekptg.view.ppk;
-import java.sql.Connection;
+import java.sql.Connection;  
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +39,8 @@ import ekptg.model.ppk.FrmPrmhnnSek8BicaraData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8KptsanBicaraData;
 
-public class BicaraInteraktif extends AjaxBasedModule {
+public class BicaraInteraktif extends AjaxBasedModule {    
+	
 	public ResourceBundle rbCetakan = ResourceBundle.getBundle("cetakan");
 	static Logger myLogger = Logger.getLogger(BicaraInteraktif.class);
 	String skrin_name = "app/ppk/BicaraInteraktif/index.jsp";	
@@ -104,6 +105,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			List listPermohonanTukarPegawai = null;
 			List listTurutHadir = null;
 			Map viewTuruthadir = null;
+			List listTidakHadir = null; //arief add
+			Map viewTidakHadir = null;	//arief add
 			List listPerbicaraan = null;
 			List listKronologiStatus = null;
 			defaultPut();
@@ -1413,6 +1416,149 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("listKehadiran", listKehadiran);
 			skrin_name = "app/ppk/BicaraInteraktif/viewKehadiran.jsp";
 		}
+		
+		//arief add OPEN
+		/**else if(command.equals("saveTidakHadir"))
+		{
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
+			String ID_BITIDAKHADIR = getParam("ID_BITIDAKHADIR");
+			this.context.put("ID_BTIDAKHADIR", ID_BITIDAKHADIR);
+			this.context.put("rowCss", getParam("rowCss"));
+			this.context.put("BIL", getParam("BIL"));
+			this.context.put("scrolPosition", getParam("scrolPosition"));
+			Db db = null;
+			try {
+				db = new Db();
+				modelBI.simpanTidakHadir(session,ID_BITIDAKHADIR, ID_PERBICARAAN, getParam("NAMA_TIDAKHADIR_"+ID_BITIDAKHADIR), getParam("HUBUNGAN_TIDAKHADIR_"+ID_BITIDAKHADIR),
+						getParam("PENGENALAN_TIDAKHADIR_"+ID_BITIDAKHADIR),getParam("STATUS_TIDAKHADIR_"+ID_BITIDAKHADIR),getParam("UMUR_TIDAKHADIR_"+ID_BITIDAKHADIR),
+						"T", "", db);
+				viewTidakHadir = modelBI.viewTidakHadir(session, ID_BITIDAKHADIR, db);
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			this.context.put("viewTidakHadir", viewTidakHadir);
+			skrin_name = "app/ppk/BicaraInteraktif/viewRowTidakHadir.jsp";
+		}
+		else if(command.equals("editTidakHadir") )
+		{
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
+			String ID_BITIDAKHADIR = getParam("ID_BITIDAKHADIR");
+			this.context.put("ID_BITIDAKHADIR", ID_BITIDAKHADIR);
+			
+			this.context.put("rowCss", getParam("rowCss"));
+			this.context.put("BIL", getParam("BIL"));
+			this.context.put("scrolPosition", getParam("scrolPosition"));	
+			this.context.put("div", getParam("div"));	
+			
+			String NAMA = "";
+			String KETERANGAN = "";
+			String NOTA_PEGAWAI = "";
+			viewTuruthadir = null;
+			Db db = null;
+			try {
+				db = new Db();
+				
+				if(!ID_BITIDAKHADIR.equals(""))
+				{
+					viewTidakHadir = modelBI.viewTidakHadir(session, ID_BITIDAKHADIR, db);
+					NAMA = (String) viewTidakHadir.get("NAMA") == null ? "" : (String) viewTidakHadir.get("NAMA");
+				}
+				this.context.put("dataStatusOB",modelBI.setDataList(session,"dataStatusOB", "", "","STATUS_OB","", "", "", db));
+				this.context.put("dataHubungan",modelBI.setDataList(session,"dataHubungan", "", "","TBLPPKRUJSAUDARA","ID_SAUDARA", "KOD", db));			
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			this.context.put("NAMA", NAMA);
+			
+			this.context.put("viewTidakHadir",viewTidakHadir);
+			
+		}
+		else if(command.equals("show_tidakhadir") || command.equals("tambah_tidakhadir") || command.equals("delete_tidakhadir"))
+		{			
+			this.context.put("div", "view_tidakhadir");
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);			
+			Db db = null;
+			try {
+				db = new Db();
+				if(command.equals("tambah_tidakhadir"))
+				{
+					modelBI.simpanTidakHadir(session,"", ID_PERBICARAAN, getParam("NAMA_TIDAKHADIR_"), 
+							getParam("HUBUNGAN_TIDAKHADIR_"), 
+							getParam("PENGENALAN_TIDAKHADIR_"),
+							getParam("STATUS_TIDAKHADIR_"),
+							getParam("UMUR_TIDAKHADIR_"),
+							"T", "", null);
+				}
+				else if(command.equals("delete_tidakhadir"))
+				{
+					String ID_BIKEHADIRAN = getParam("ID_BIKEHADIRAN");
+					modelBI.deleteTidakHadir(session,ID_BIKEHADIRAN,ID_PERBICARAAN,"T",db);
+				}
+				
+				this.context.put("dataStatusOB",modelBI.setDataList(session,"dataStatusOB", "", "","STATUS_OB","", "", "", db));
+				this.context.put("dataHubungan",modelBI.setDataList(session,"dataHubungan", "", "","TBLPPKRUJSAUDARA","ID_SAUDARA", "", db));
+				
+				
+				listTidakHadir = modelBI.listTidakHadir(session,ID_PERBICARAAN, null);
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}			
+			this.context.put("listTurutHadir", listTurutHadir);			
+			this.context.put("scrolPosition", getParam("scrolPosition"));			
+			skrin_name = "app/ppk/BicaraInteraktif/viewTidakHadir.jsp";
+		}
+		else if(command.equals("simpan_tidakHadir"))
+		{			
+			String ID_PERMOHONANSIMATI = getParam("ID_PERMOHONANSIMATI");
+			this.context.put("ID_PERMOHONANSIMATI", ID_PERMOHONANSIMATI);
+			this.context.put("div", "view_kehadiran");
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PEMOHON = getParam("ID_PEMOHON");
+			this.context.put("ID_PEMOHON", ID_PEMOHON);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
+			this.context.put("scrolPosition", getParam("scrolPosition"));
+			Db db = null;
+			try {
+				db = new Db();
+				modelBI.deleteTidakHadir(session,"",ID_PERBICARAAN,"OB",db);
+				String[] checkTidakHadir = request.getParameterValues("checkTidakHadir");
+				if(checkTidakHadir != null)
+				{
+					for (String ck : checkTidakHadir) {
+						myLogger.info("::: CHECK TIDAK HADIR ::: "+ck);
+						modelBI.simpanTidakHadir(session,"", ID_PERBICARAAN, getParam("NAMA_"+ck), getParam("HUBUNGAN_"+ck), 
+								 getParam("PENGENALAN_"+ck),  getParam("STATUS_"+ck),  getParam("UMUR_"+ck), 
+								"OB", ck, db);
+					}
+				}
+				listTidakHadir = modelBI.listTidakHadir(session,ID_PERMOHONANSIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PEMOHON,db);
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			this.context.put("listTidakHadir", listTidakHadir);
+			skrin_name = "app/ppk/BicaraInteraktif/viewTidakHadir.jsp";
+		}**/
+		//arief add CLOSE
+		
 		else if(command.equals("showSenarai") || command.equals("refreshList") || command.equals("deleteHistory") 
 				//|| command.equals("deleteMaklumat")
 				) 
@@ -1703,13 +1849,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		}
 		else if(command.equals("viewSuplimentPerintah"))
 		{
-			/**arief add bagi PPK-60 (a): Keputusan Perbicaraan di skrin Bicara Interaktif
-			 * 1. Menambah pilihan butang untuk “Dokumen Gagal Dikemukakan” dan perlu ada ruangan bagi ulasan dan justifikasi pegawai.
-			 * Menyediakan:
-			 * a.	Butang ‘Dokumen Gagal Dikemukakan’
-			 * b.	Ruangan ulasan/Justifikasi Pegawai
-			 * OPEN
-			 */
+			
 			
 			//get data TBLPPKPERBICARAAN
 			Hashtable h = FrmPrmhnnSek8KptsanBicaraData.setInfoBicaraList(idpermohonan);
@@ -1749,13 +1889,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
     		context.put("tarikh", "perintah");
     		context.put("listSemak", list);
     		
-    		/**arief add bagi PPK-60 (a): Keputusan Perbicaraan di skrin Bicara Interaktif
-			 * 1. Menambah pilihan butang untuk “Dokumen Gagal Dikemukakan” dan perlu ada ruangan bagi ulasan dan justifikasi pegawai.
-			 * Menyediakan:
-			 * a.	Butang ‘Dokumen Gagal Dikemukakan’
-			 * b.	Ruangan ulasan/Justifikasi Pegawai
-			 * CLOSE
-			 */
+    		
 
 			String skrinName = getParam("skrinName");
 			this.context.put("skrinName", skrinName);
@@ -1778,7 +1912,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("div", getParam("div"));
 			String FLAG_KEPUTUSAN = getParam("FLAG_KEPUTUSAN");			
 			String setupSkrin = "";
-			String mode = getParam("mode");
+		String mode = getParam("mode");
 			myLogger.info("MODE ::::::::::::: "+mode);
 			Db db = null;
 			try {
@@ -5088,7 +5222,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				}
 				myLogger.info("totalharta - totalhartaAR : "+totalharta);
 				
-				if(totalharta > 0)
+				
+				//arief comment
+				//Boleh dibuka sekiranya Akta Nilaian Harta LEBIH RM5JUTA BELUM diLULUSkan di Parlimen
+				/**if(totalharta > 0)
 				{
 					if ( totalharta >= 1 && totalharta <= 1000 ) {
     					if(SEKSYEN.equals("8"))
@@ -5112,6 +5249,32 @@ public class BicaraInteraktif extends AjaxBasedModule {
     					defaultYuranPerintah = modelBI.getBundaranBayaran(defaultYuranPerintah);
     				} else {
     					defaultYuranPerintah = (0.2/100) * totalharta ;
+    					defaultYuranPerintah = modelBI.getBundaranBayaran(defaultYuranPerintah);
+    				}
+				}**/
+				
+				//arief add
+				//open bila Akta Nilaian Harta LEBIH RM5JUTA diLULUSkan di Parlimen
+				if(totalharta > 0)
+				{
+					if ( totalharta >= 1 && totalharta <= 1000 ) {
+    					if(SEKSYEN.equals("8"))
+						{
+							defaultYuranPerintah = 10.00;
+						}
+    				} else if ( (totalharta >= 1001) && (totalharta <= 50000) ){
+    					if(SEKSYEN.equals("8"))
+						{
+							defaultYuranPerintah = 30.00;
+						}
+    				}else if ( (totalharta > 50000) && (totalharta <= 2000000) ){
+    					if(SEKSYEN.equals("8"))
+						{
+    						defaultYuranPerintah = 0.002 * totalharta ;
+        					defaultYuranPerintah = modelBI.getBundaranBayaran(defaultYuranPerintah);
+						} 
+    				}else {
+    					defaultYuranPerintah = 0.005 * totalharta ;
     					defaultYuranPerintah = modelBI.getBundaranBayaran(defaultYuranPerintah);
     				}
 				}
@@ -5170,12 +5333,13 @@ public class BicaraInteraktif extends AjaxBasedModule {
 					}
 					info_perintah += "<br>";
 				}
-				myLogger.info("info perintah : "+info_perintah);
+				myLogger.info("info perintahssss : "+info_perintah);
 				htmlPageSetup += info_perintah;
 				htmlPageSetup += modelBI.openHTMLTable();
 				//xx tanda sini
 				htmlPageSetup += "<tr id=\"trMaklumatKiv\"><td colspan=\"4\" class=\"table_header\">Maklumat KIV (Jika Ada)</td></tr>";
 				htmlPageSetup += modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,command,mode,setupSkrin,"Status KIV",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"CHECK_KIV","","select","Y","","","","","","","","","","","","","",formName,"",0,db1);
+				myLogger.info("htmlPageSetup : "+htmlPageSetup);
 				htmlPageSetup += modelBI.setRowTextTarikh(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"Tarikh Kiv",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"DATE_KIV","Y","text","Y","10","Y","",0,db1);
 				htmlPageSetup += modelBI.setRowTextArea(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"Catatan Kiv",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"CATATAN_KIV","Y","text","Y","4000","Y","",0,db1);
 								
@@ -5261,14 +5425,13 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			htmlPageSetup += "<div id=\"word"+skrinName+"CATATAN_KEPUTUSAN_PERBICARAAN\"></div>";
 			htmlPageSetup += "</td></tr>";
 			
-			htmlPageSetup += modelBI.setRowTextArea(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"Catatan Dokumen Dikembalikan",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"CATATAN_DOCKIV","","text","","4000","",CATATAN_DOCKIVT,0,db1);
+			htmlPageSetup += modelBI.setRowTextArea(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"Catatan Dokumen TELAH / GAGAL Dikembalikan",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"CATATAN_DOCKIV","","text","","4000","",CATATAN_DOCKIVT,0,db1); //arief add GAGAL Dikembalikan
 			htmlPageSetup += "<tr id=\"trinfobutton"+skrinName+"CATATAN_DOCKIV\" style=\"display:none\" ><td></td><td></td><td></td><td>";
 			htmlPageSetup += "<div id=\"infobutton"+skrinName+"CATATAN_DOCKIV\" ><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keputusan'</font> akan dipaparkan.</i></div>";
 			htmlPageSetup += "</td></tr>";
 			htmlPageSetup += "<tr id=\"trword"+skrinName+"CATATAN_DOCKIV\"><td></td><td></td><td></td><td align=\"right\">";
 			htmlPageSetup += "<div id=\"word"+skrinName+"CATATAN_DOCKIV\"></div>";
-			htmlPageSetup += "</td></tr>";		
-			
+			htmlPageSetup += "</td></tr>";
 			
 			
 			
@@ -5288,7 +5451,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			if(FLAG_KEPUTUSAN.equals("0"))
 			{
 				htmlPageSetup += modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,command,mode,setupSkrin,"Perintah",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_INTROPERINTAH","",field_ID_INTROPERINTAH_type,"Y","TBLPPKRUJINTROPERINTAH","ID_INTROPERINTAH","","INTRO","SEKSYEN",SEKSYEN,"","","","","","","",formName,"",6,db1);
-				htmlPageSetup += modelBI.setRowTextArea(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"INTRO_CATATAN","","text","","4000","",INTRO_CATATAN_TEMP,0,db1);
+				//htmlPageSetup += modelBI.setRowTextArea(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"INTRO_CATATAN","","text","","4000","",INTRO_CATATAN_TEMP,0,db1);//arief comment
 				htmlPageSetup += "<tr id=\"trinfobutton"+skrinName+"INTRO_CATATAN\" style=\"display:none\" ><td></td><td></td><td></td><td>";
 				htmlPageSetup += "<div id=\"infobutton"+skrinName+"INTRO_CATATAN\" ><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keputusan'</font> akan dipaparkan.</i></div>";
 				htmlPageSetup += "</td></tr>";
@@ -5296,8 +5459,9 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				htmlPageSetup += "<div id=\"word"+skrinName+"INTRO_CATATAN\"></div>";
 				htmlPageSetup += "</td></tr>";		
 			}
-						
-			htmlPageSetup += modelBI.setRowTextArea(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"Catatan Perintah",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"CATATAN","","hidden","Y","4000","",CATATAN_PERINTAH_TEMP,0,db1);
+					
+			//htmlPageSetup += modelBI.setRowTextArea(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"Catatan Perintah",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"CATATAN","","hidden","Y","4000","",CATATAN_PERINTAH_TEMP,0,db1); //arief comment
+			htmlPageSetup += modelBI.setRowTextArea(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,mode,setupSkrin,"Catatan Perintah",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"CATATAN","","text","Y","4000","",CATATAN_PERINTAH_TEMP,0,db1); //arief add
 			htmlPageSetup += "<tr id=\"trinfobutton"+skrinName+"CATATAN\" style=\"display:none\" ><td></td><td></td><td></td><td>";
 			htmlPageSetup += "<div id=\"infobutton"+skrinName+"CATATAN\" style=\"display:none\" ><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keputusan'</font> akan dipaparkan.</i></div>";
 			htmlPageSetup += "</td></tr>";
@@ -5948,7 +6112,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			{
 				//boleh kemaskini nama pegawai & tarikh
 				//modeControl = "view";
-			}			
+			}		
 			htmlPageSetup += modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,command,"view",setupSkrin,"Pegawai Pengendali",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_UNITPSK","Y","select","Y","TBLPPKRUJUNIT","ID_UNITPSK","","NAMA_PEGAWAI","ID_NEGERI",id_negeri_fail,"","","","","","","",formName,defaultPegawai,0,db1);
 			htmlPageSetup += modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,command,mode,setupSkrin,"Keputusan Perbicaraan",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"FLAG_JENIS_KEPUTUSAN","Y","select","Y","","","","","","","","","","","","","",formName,"",0,db1);
 			htmlPageSetup += modelBI.setRowTextTarikh(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,modeControl,setupSkrin,"Tarikh Perintah",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"TARIKH_PERINTAH","Y","text","Y","10","Y",defautTarikhPerintah,0,db1);
@@ -6152,11 +6316,14 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		String INTRO_CATATAN = getParam(skrinName+"INTRO_CATATAN");	
 		String CATATAN_DOCKIV = getParam(skrinName+"CATATAN_DOCKIV");
 		
-		if(!CHECK_KIV.equals("0"))
+		/**if(!CHECK_KIV.equals("0"))
+		{
+			CATATAN_DOCKIV = "";
+		}**/
+		if(!CHECK_KIV.equals("0") || !CHECK_KIV.equals("3")) //arief add
 		{
 			CATATAN_DOCKIV = "";
 		}
-		
 		
 		String CATATAN = getParam(skrinName+"CATATAN");		
 		String SEBAB_TANGGUH = getParam(skrinName+"SEBAB_TANGGUH");	

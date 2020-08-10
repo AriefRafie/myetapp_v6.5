@@ -297,11 +297,11 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
   				checkingNilaianAmanahRaya = logic2.checkingNilaianAmanahRaya(id_permohonansimati);
   				double nilai_ha_tarikhmohon;
   				if(checkingNilaianAmanahRaya.size()!=0){
-
+  					
   					System.out.println("ADA NILAIAN HARTA AMANAH RAYA");
   					Hashtable nilaian = (Hashtable) checkingNilaianAmanahRaya.get(0);
   					nilai_ha_tarikhmohon = Double.parseDouble(nilaian.get("nilai_ha_tarikhmohon").toString());
-
+  					double jumlahHartaDeductNilaianAmanahRaya;
 	    			if(getJumlahBayaran17.size()!=0){
 	    				Hashtable a = (Hashtable) getJumlahBayaran17.get(0);
 	    				Hashtable z = (Hashtable) getMaklumatPermohonan17.get(0);
@@ -309,11 +309,28 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    	    		double bayaranYuranPerintah17;
 
 	    	    		jumlah_harta17_tarikhmohon = Double.parseDouble(a.get("sumharta").toString());
+	    	    		jumlahHartaDeductNilaianAmanahRaya= jumlah_harta17_tarikhmohon - nilai_ha_tarikhmohon;
 	    	    		String batal_kuasa_pentadbir = (String)z.get("batal_kuasa_pentadbir");
 	    	    		String batal_p_amanah = z.get("batal_p_amanah").toString();
-
+	    	    		//arief add OPEN
+	    	    		if ( jumlah_harta17_tarikhmohon > 0 && jumlah_harta17_tarikhmohon <= 1000 ) {
+	    					bayaranYuranPerintah17 = 10.00 ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
+	    					bayaranYuranPerintah17 = 30.00 ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				}else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 5000000) ) {
+	    					bayaranYuranPerintah17 = (0.002)* jumlah_harta17_tarikhmohon ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				}
+	    				else {
+	    					bayaranYuranPerintah17 = (0.005) * jumlah_harta17_tarikhmohon ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				}
+	    	    		//arief add CLOSE
+	    	    		
 	    	    		//Azam Add on 20/4/2011 , jumlah_harta17_tarikhmohon >= 1
-	    				if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
+	    				/**if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
 	    					//bayaranYuranPerintah17 = 10.00 ;
 	    					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 	    					//ADD BY PEJE
@@ -327,7 +344,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 	    					//ADD BY PEJE
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				}
+	    				}**/
 	    				double j = 0;
 	    					if (batal_kuasa_pentadbir.equals("Y")) {
 	    						j += 30.00 ;
@@ -337,10 +354,13 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    					}
 	    				double total = (j + bayaranYuranPerintah17);
 	    				this.context.put("txtJumBayaranTerkini", total);
+	    				this.context.put("txtJumHarta", jumlah_harta17_tarikhmohon);
+						this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlahHartaDeductNilaianAmanahRaya);
 	//    				System.out.println("BAYARAN YURAN PERINTAH 17 :: "+bayaranYuranPerintah17);
 	//    				System.out.println("BAYARAN J :: "+j);
 	//    				System.out.println("TOTAL BAYARAN KESELURUHAN :: "+total);
 	    			}
+			    	
 	    				context.put("dataJumlahBayaran", getJumlahBayaran17);
 
   				}else{
@@ -352,6 +372,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
   			    		//double bayaranYuran;
   				   		jumlah_harta17_tarikhmohon = Double.parseDouble(a.get("sumharta").toString());
   						this.context.put("txtJumHarta", jumlah_harta17_tarikhmohon);
+  						this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlah_harta17_tarikhmohon);
   						System.out.println("JUMLAH HARTA :: "+jumlah_harta17_tarikhmohon);
   					}
   				}
@@ -1284,9 +1305,29 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    	    		jumlah_harta17_tarikhmohon = Double.parseDouble(a.get("sumharta").toString());
 	    	    		String batal_kuasa_pentadbir = z.get("batal_kuasa_pentadbir").toString();
 	    	    		String batal_p_amanah = z.get("batal_p_amanah").toString();
-
+	    	    		
+	    	    		//arief add OPEN
+	    	    		if ( jumlah_harta17_tarikhmohon > 0 && jumlah_harta17_tarikhmohon <= 1000 ) {
+	    					bayaranYuranPerintah17 = 10.00 ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA3");
+	    				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
+	    					bayaranYuranPerintah17 = 30.00 ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA4");
+	    				} else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 5000000) ) {
+	    					bayaranYuranPerintah17 = (0.002) * jumlah_harta17_tarikhmohon ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA5");
+	    				}else {
+	    					bayaranYuranPerintah17 = (0.005) * jumlah_harta17_tarikhmohon ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA6");
+	    				}
+	    	    		//arief add CLOSE
+	    	    		
 						//Azam Add on 20/4/2011 , jumlah_harta17_tarikhmohon >= 1
-	    				if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
+	    				/**if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
 	    					//bayaranYuranPerintah17 = 10.00 ;
 	    					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 	    					//ADD BY PEJE
@@ -1303,7 +1344,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    					//ADD BY PEJE
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA5");
-	    				}
+	    				}**/
 	    				double j = 0;
 	    					if (batal_kuasa_pentadbir.equals("Y")) {
 	    						j += 30.00 ;
@@ -1312,7 +1353,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    						j += 30.00 ;
 	    					}
 	    				double total = (j + bayaranYuranPerintah17);
-	    				System.out.println("ADA NILAIAN HARTA AMANAH RAYA6");
+	    				System.out.println("ADA NILAIAN HARTA AMANAH RAYA7");
 	    				this.context.put("txtJumBayaranTerkini", total);
 	    				this.context.put("txtJumHarta", jumlah_harta17_tarikhmohon);
 	    			}
@@ -1535,9 +1576,25 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    	    		jumlah_harta17_tarikhmohon = Double.parseDouble(a.get("sumharta").toString());
 	    	    		String batal_kuasa_pentadbir = z.get("batal_kuasa_pentadbir").toString();
 	    	    		String batal_p_amanah = z.get("batal_p_amanah").toString();
-
+	    	    		
+	    	    		//arief add OPEN
+	    	    		if ( jumlah_harta17_tarikhmohon > 0 && jumlah_harta17_tarikhmohon <= 1000 ) {
+	    					bayaranYuranPerintah17 = 10.00 ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				} else if ( (jumlah_harta17_tarikhmohon > 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
+	    					bayaranYuranPerintah17 = 30.00 ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				}else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 5000000) ) {
+	    					bayaranYuranPerintah17 = (0.002) * jumlah_harta17_tarikhmohon ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				}else {
+	    					bayaranYuranPerintah17 = (0.005) * jumlah_harta17_tarikhmohon ;
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    				}
+	    	    		//arief add CLOSE
+	    	    		
 						//Azam Add on 20/4/2011 , jumlah_harta17_tarikhmohon >= 1
-	    				if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
+	    				/**if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
 	    					//bayaranYuranPerintah17 = 10.00 ;
 	    					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 	    					//ADD BY PEJE
@@ -1551,7 +1608,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 	    					//ADD BY PEJE
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				}
+	    				}**/
 	    				double j = 0;
 	    					if (batal_kuasa_pentadbir.equals("Y")) {
 	    						j += 30.00 ;
@@ -3841,7 +3898,24 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 		    		String batal_kuasa_pentadbir = z.get("batal_kuasa_pentadbir").toString();
 		    		String batal_p_amanah = z.get("batal_p_amanah").toString();
 		    		String harta_tinggal =  z.get("harta_tinggal").toString();
-					if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
+		    		
+		    		//arief add OPEN
+		    		if ( (jumlahHartaDeductNilaianAmanahRaya >0) && (jumlahHartaDeductNilaianAmanahRaya <= 1000) ) {
+						bayaranYuranPerintah17 = 10.00 ;
+    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 1000) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
+						bayaranYuranPerintah17 = 30.00 ;
+    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+					}else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000) ) {
+						bayaranYuranPerintah17 = (0.002) * jumlahHartaDeductNilaianAmanahRaya ;
+    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+					}else {
+						bayaranYuranPerintah17 = (0.005) * jumlahHartaDeductNilaianAmanahRaya ;
+    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+					}
+		    		//arief add CLOSE
+		    		
+					/**if ( jumlahHartaDeductNilaianAmanahRaya <= 1000 ) {
 						//bayaranYuranPerintah17 = 10.00 ;
 						bayaranYuranPerintah17 = (0.2/100) * jumlahHartaDeductNilaianAmanahRaya ;
 						//ADD BY PEJE
@@ -3855,7 +3929,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 						bayaranYuranPerintah17 = (0.2/100) * jumlahHartaDeductNilaianAmanahRaya ;
 						//ADD BY PEJE
     					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-					}
+					}**/
 
 					double j = 0;
 						if (batal_kuasa_pentadbir.equals("Y")) {
@@ -3871,7 +3945,8 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 						total = 10;
 					}
 					this.context.put("txtJumBayaran", total);
-					this.context.put("txtJumHarta",jumlahHartaDeductNilaianAmanahRaya);
+					this.context.put("txtJumHarta",jumlah_harta17_tarikhmohon);
+					this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlahHartaDeductNilaianAmanahRaya);
 				}
 					context.put("dataJumlahBayaran", getJumlahBayaran17);
 
@@ -3891,8 +3966,24 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 		    		String batal_p_amanah = z.get("batal_p_amanah").toString();
 		    		String harta_tinggal =  z.get("harta_tinggal").toString();
 
+		    		//arief add OPEN
+		    		if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
+						bayaranYuranPerintah17 = 10.00 ;
+    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+					} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
+						bayaranYuranPerintah17 = 30.00 ;
+    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+					} else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 5000000) ) {
+						bayaranYuranPerintah17 = (0.002) * jumlah_harta17_tarikhmohon ;
+    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+					}else {
+						bayaranYuranPerintah17 = (0.005) * jumlah_harta17_tarikhmohon ;
+    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+					}
+		    		//arief add CLOSE
+		    		
 		    		//Azam Add on 20/4/2011 , jumlah_harta17_tarikhmohon >= 1
-					if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
+					/**if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
 						//bayaranYuranPerintah17 = 10.00 ;
 						bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 						//ADD BY PEJE
@@ -3906,7 +3997,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 						bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 						//ADD BY PEJE
     					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-					}
+					}**/
 
 					double j = 0;
 						if (batal_kuasa_pentadbir.equals("Y")) {
@@ -3918,6 +4009,8 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 					double total = (j + bayaranYuranPerintah17);
 					this.context.put("txtJumBayaran", total);
 					this.context.put("txtJumHarta",jumlah_harta17_tarikhmohon);
+					this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlah_harta17_tarikhmohon);
+					
 				}
 					context.put("dataJumlahBayaran", getJumlahBayaran17);
 			}
@@ -7044,8 +7137,24 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 //				System.out.println("BATAL KUASA TADBIR :: "+batal_kuasa_pentadbir);
 //				System.out.println("BATAL P.AMANAH :: "+batal_p_amanah);
 
+	    		//arief add OPEN
+	    		if ( jumlah_harta17_tarikhmohon > 0 && jumlah_harta17_tarikhmohon <= 1000 ) {
+					bayaranYuranPerintah17 = 10.00 ;
+					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
+					bayaranYuranPerintah17 = 30.00 ;
+					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+				} else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 50000) ){
+					bayaranYuranPerintah17 = (0.002) * jumlah_harta17_tarikhmohon ;
+					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+				}else {
+					bayaranYuranPerintah17 = (0.005) * jumlah_harta17_tarikhmohon ;
+					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+				}
+	    		//arief add CLOSE
+	    		
 				//Azam Add on 20/4/2011 , jumlah_harta17_tarikhmohon >= 1
-				if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
+				/**if ( jumlah_harta17_tarikhmohon >= 1 && jumlah_harta17_tarikhmohon <= 1000 ) {
 					//bayaranYuranPerintah17 = 10.00 ;
 					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 					//ADD BY PEJE
@@ -7059,7 +7168,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 					bayaranYuranPerintah17 = (0.2/100) * jumlah_harta17_tarikhmohon ;
 					//ADD BY PEJE
 					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-				}
+				}**/
 				double j = 0;
 					if (batal_kuasa_pentadbir.equals("Y")) {
 						j += 30.00 ;

@@ -41,8 +41,37 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 	private static Vector listMaklumatMahkamahARB = new Vector();
 	private static Vector listMaklumatPentadbirTanah = new Vector();
 	private static Vector listMaklumatInsolvensi = new Vector();
+	private static Vector flag5juta = new Vector();
 		
 	static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8KeputusanPermohonanInternalData.class);
+	
+	public static Vector getFlag5Juta(){
+		return flag5juta;
+	}
+	
+	public static void checkFlag5Juta (String id) throws Exception {
+		Db db = null;
+		flag5juta.clear();
+		String sql = "";
+		boolean f5j = false;
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT FLAG_5JUTA FROM TBLPPKPERUBAHANAKTA";
+			System.out.println("FLAG 5 JUTA: "+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next())	{
+				Hashtable h = new Hashtable();
+				if (h.put("flag_5juta", rs.getString(1)==null?"":rs.getString(1)) == "T") {
+					f5j = true;
+				}
+			} 
+		}
+		finally {
+			if(db != null)db.close();			
+		}
+	}
 	
 	public static Vector getDataKeputusan(){
 		System.out.println("-------Read Here----");
@@ -136,6 +165,8 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 				if(db != null)db.close();			
 		}
 	}	
+	
+	
 	
 	public static void setMaklumatMahkamah2(String idPerbicaraan) throws Exception {
 		Db db = null;

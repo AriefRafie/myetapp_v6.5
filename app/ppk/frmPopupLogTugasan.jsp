@@ -9,7 +9,7 @@
 -->
 </style>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <tr>
+  <!--  <tr>
     <td><fieldset>
       <legend><strong>TUGASAN SEMASA</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -35,14 +35,14 @@
         </tr>
       </table>
       </fieldset></td>
-  </tr>
+  </tr>-->
   <tr>
     <td><fieldset>
       <legend><b>SENARAI LOG TUGASAN</b></legend>
       <table align="center" width="100%">
         <tr class="table_header" align="center">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td ><strong>Tugasan Dari</strong></td>
+          <td ><strong>No. Fail</strong></td>
           <td ><strong>Tindakan Pegawai</strong></td>
           <td ><strong>Tarikh Ditugaskan</strong></td>
         </tr>
@@ -60,7 +60,7 @@
         #end
         <tr>
           <td class="$row" align="center">$counter</td>
-          <td class="$row">$list.tugasanDari</td>
+          <td class="$row">$list.noFail</td>
           <td class="$row">$list.pegawaiTindakan - $list.rolePegawaiTindakan</td>
           <td class="$row" align="center">$list.tarikhTugasan</td>
         </tr>
