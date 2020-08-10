@@ -794,6 +794,7 @@ public class HTABean implements IMaklumatHarta {
 		,HttpServletRequest request
 		,HttpSession session
 		,org.apache.velocity.VelocityContext context) throws Exception{
+		myLog.info("getHTAAH:hParam="+hParam);
 		//int idnegerii = 0;
 		String add_new_harta = "";
 		String buttonhtaam = "";

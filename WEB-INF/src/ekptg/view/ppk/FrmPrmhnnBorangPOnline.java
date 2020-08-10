@@ -8620,6 +8620,14 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 		h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
 		h.put("idSimati", getParam("idSimati"));
 		h.put("nopt", getParam("txtNoPTHtaamUp"));
+		
+		//syafiqah add 7/8/2020
+		h.put("alamat_hta1", getParam("txtAlamat1Htaam1"));
+		h.put("alamat_hta2", getParam("txtAlamat2Htaam"));
+		h.put("alamat_hta3", getParam("txtAlamat3Htaam"));
+		h.put("poskod", getParam("txtAlamatPoskodHtaam"));
+		h.put("id_bandarhta", getParam("txtBandarHartaHtaamX2"));
+		
 		/*
 		 * if (getParam("txtNilaiTarikhMohonHt") != "") {
 		 * h.put("nilai_Hta_memohon", Double
