@@ -10,6 +10,7 @@
 -->
 </style>
 
+
 #set($saizTxtTujuanPengambilan="500")
 #set($saizTxtRingkasanPengalaman="900")
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -441,7 +442,8 @@ TAHUN </td>
   </tr>
   #end
   <tr>
-    <td colspan="2" align="center"> #if ($idStatus == '')
+    <td colspan="2" align="center"> 
+    #if ($idStatus == '')
       #if ($mode == 'view')
       <input type="button" name="cmdKemaskiniPermohonan" id="cmdKemaskiniPermohonan" value="Kemaskini" onclick="kemaskiniPermohonan()"/>
       <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onclick="doBacklist()"/>
@@ -449,10 +451,13 @@ TAHUN </td>
       #if ($mode == 'update')
       <input type="button" name="cmdSimpanKemaskiniPermohonan" id="cmdSimpanKemaskiniPermohonan" value="Simpan" onclick="simpanKemaskiniPermohonan()"/>
       <input type="button" name="cmdBatalKemaskiniPermohonan" id="cmdSimpanKemaskiniPermohonan" value="Batal" onclick="batalKemaskiniPermohonan()"/>
-      #end
-      #else
+      #end      
+     #else
       <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-      #end </td>
+  	 #end
+  	
+      </td>
+      
   </tr>
 </table>
 <script>
@@ -466,4 +471,5 @@ function validateCurrency(elmnt,content,content2) {
 	elmnt.value = num.toFixed(2);
 	return;
 }
+
 </script>

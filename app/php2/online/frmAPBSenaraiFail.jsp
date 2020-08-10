@@ -75,9 +75,9 @@
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus','$list.idPemohon','$list.idPermohonan')" class="style1">$list.noPermohonan</a></td>
-         <!--  <td class="$row">$list.noFail</td> --> 
-          <td class="$row"><a href="javascript:paparRenewLesen('$list.idFail','$list.idStatus','$list.idPemohon','$list.idPermohonan')" class="style1">$list.noFail</a></td>
-           <td class="$row">$list.jenispermohonan</td>
+          <!--  <td class="$row">$list.noFail</td> --> 
+          <td class="$row">$list.noFail</td>
+          <td class="$row">$list.jenispermohonan</td>
           <td class="$row">$list.tujuanPengambilan</td>
           <td class="$row" align="center">$list.tarikhPermohonan </td>
           <td class="$row">$list.status</td>

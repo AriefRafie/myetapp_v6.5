@@ -11,8 +11,8 @@
 </style>
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="idFail" type="text" id="idFail" value="$idFail"/>
-  <input name="idPermohonan" type="text" id="idPermohonan" value="$idPermohonan"/>
+  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idPemohon" type="hidden" id="idPemohon" value="$idPemohon"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idPengarah" type="hidden" id="idPengarah" value="$idPengarah"/>
@@ -29,6 +29,7 @@
   <input name="kategori" type="hidden" id="kategori" value="$!pemohon.get("kategoriPemohon")"/>
   <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
 </p>
+
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
@@ -149,14 +150,18 @@
 	<td></td>
   	<td></td>
 		<td valign="top" colspan=2>
-		#if ($idStatus == '')
+	#if ($idStatus == '')
     <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
     <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
     <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
     #else
-    #if ($idStatus !='')
+    #if($idStatus == '1610207') <!-- 1610207 -->
+    <input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan') "/>       	 
+    #else
+    #if ($idStatus !='' && $idStatus != '1610207')
     <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
     <input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+    #end
     #end
     #end
 	</td>
@@ -184,6 +189,7 @@
 </script>
 <script>
 function doChangeTab(tabId) {
+	//document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "view";
 	document.${formName}.selectedTabUpper.value = tabId;
@@ -964,6 +970,18 @@ function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
+function daftarPembaharuan(idFail,idPermohonan) {	
+
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idPermohonan.value = idPermohonan;
+	//document.${formName}.idPermohonanLama.value = idPermohonanLama;
+	document.${formName}.actionOnline = "daftarBaruLesen";
+	document.${formName}.mode.value = "new";	
+	document.${formName}.submit();
+
+}
+
 
 </script>
 $javascriptLampiran
