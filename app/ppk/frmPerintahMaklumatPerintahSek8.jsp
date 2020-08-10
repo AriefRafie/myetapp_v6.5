@@ -2529,7 +2529,7 @@ document.getElementById("header_lama").style.display="block";
 <fieldset id="tableReport" style="display:none;"-->
   <legend><strong>SENARAI LAPORAN</strong></legend>
   <table width="100%" border="0" cellspacing="2" cellpadding="2">
-
+	
   #if ($PPT == "Ada" || $flagAdaHTAPT == 1)
     <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBorangE('$idFail','$idPermohonanSimati','$idSimati','$idPerintahHTAOBMST')"> Borang E </a></td>
@@ -4027,36 +4027,12 @@ function popupIntergrasiPerintahEtanah(idFail, idPerintah) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
-
-//arief add NOTIFIKASI EMAIL open	
-function emailPerintah() {	
-	document.${formName}.hitButt.value = "emailPerintah";	
-	document.${formName}.actionEmailPerintah.value = "papar";	
-	document.${formName}.submit();	
-}
-//perlu modify 
-function popupEmailPerintah(idFail, idPerintah) {	
-	var url = ""+idPerintah+"&idFail="+idFail;	
-		
-    var hWnd = window.open(url,'printuser','width=1000,height=350, resizable=yes,scrollbars=yes');	
-    if ((document.window != null) && (!hWnd.opener))	
-       hWnd.opener = document.window;	
-    if (hWnd.focus != null) hWnd.focus();	
-	hWnd.focus();	
-}	
-//arief add NOTIFIKASI EMAIL close
 </script>
 
 <script>
 //arief add Tandatangan Digital OPEN
-function TindakanPeg() {
-	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPerintahSek8";
-	document.${formName}.command.value = "tindakanPeg";
-	document.${formName}.submit();
-}
 function sendDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
-	 var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=sendDGCert";
-    /* var url = "../servlet/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert"; */
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&commandw=sendDGCertPerintah";
 	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
     hWnd.opener = document.window;
@@ -4065,12 +4041,20 @@ function sendDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermoh
 
 function verifyDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
     var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=verify";
-    /* var url = "../servlet/ekptg.view.ppk.FrmIntegrasiDGCert?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&command=sendDGCert"; */
 	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
     hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-
 //arief add Tandatangan Digital CLOSE
+
+/**List fail-fail Tandatangan Digital di Perintah:
+	1.	FrmPerintahSek8.java
+	2.	FrmPerintahMaklumatPerintahSek8.jsp
+	3.	tindakanPegawaiPerintahSek8.jsp
+	4.	FrmIntegrasiDGCertPerintah.java
+	5.	DGCertPerintah.jsp
+	6.	FrmPerintahSek8Data.java
+	7.	TandatanganSuccessPerintah.jsp
+*/
 </script>

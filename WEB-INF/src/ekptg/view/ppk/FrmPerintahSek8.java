@@ -72,6 +72,18 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 	    //GET DEFAULT PARAM
 		String vm = ""; 
 		int simpanStatus = 2;
+		String idpbrn = "";
+		String nama_peg_pengendali = "";
+		String idkp = "";
+		String idperbicaraan = "";
+		String idpsk = "";
+		String idNeg = "";
+		String currentBil = "";
+		String idpejabat = "";
+		String idjenispejabat = "";
+		String tempatBicara = "";
+		Vector validPegPengendali = new Vector();
+		validPegPengendali.clear();
 		String noFail2 = getParam("noFail3");
 		String noFail1 = getParam("noFail");
 		String kemaskini = getParam("kemaskini");
@@ -159,6 +171,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		Vector getPenghantarNotis = new Vector();
 		Vector getSelectedPenghantarNotis = new Vector();
 		Vector getSelectedPenghantarNotisByJkptg = new Vector();
+		Vector dataNotis = new Vector();
         
 		// clear data vector
 		getSelectedPenghantarNotisByJkptg.clear();
@@ -422,7 +435,46 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			context.put("penerima", penerima);
 			context.put("selectionBox",selectionBox);
 			}
-			 
+			// --data notis
+						modelNotis.setListSemakWithData(idkp);
+						dataNotis = modelNotis.getListSemakWithData();
+						if (dataNotis.size() != 0) {
+							Hashtable idn = (Hashtable) dataNotis.get(0);
+							idpbrn = idn.get("id_perbicaraan").toString();
+							idpsk = idn.get("id_unitpsk").toString();
+							idNeg = idn.get("id_negeribicara").toString();
+							currentBil = idn.get("bil_bicara").toString();
+							idpejabat = idn.get("id_pejabat").toString();
+							tempatBicara = idn.get("tempat_bicara").toString();
+							idjenispejabat = idn.get("id_jenispejabat").toString();
+							nama_peg_pengendali = idn.get("pengendali").toString();
+							if(nama_peg_pengendali.equals("")){
+								nama_peg_pengendali = "";
+							}
+						}
+						context.put("dataNotis_size", dataNotis.size());
+						context.put("nama_peg_pengendali", nama_peg_pengendali);
+						String username = (String) session.getAttribute("_portal_username");
+						modelNotis.setValidPegawaiPengendali(usid,idpbrn,nama_peg_pengendali,username );
+						validPegPengendali = modelNotis.getValidPegawaiPengendali();
+
+						System.out.println("validPegPengendali.size()==="+validPegPengendali.size());
+						if (validPegPengendali.size() != 0) {
+							context.put("enabledPegawai", "yes");
+						} else {
+							context.put("enabledPegawai", "no");
+						}
+						boolean statusHantarPNB = false;
+						// validate status hantar PNB
+						statusHantarPNB = modelNotis.getPNBValidation(idpbrn);
+						
+						if (statusHantarPNB) {
+							context.put("statusPNB", "yes");
+						} else {
+							context.put("statusPNB", "no");
+						}
+						myLogger.info("statusHantarPNB==="+statusHantarPNB);
+			
 			vm = "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 			return vm;
  
@@ -509,7 +561,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         		}
         	this.context.put("kemaskini", kemaskini1);
         	
-        	vm = "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
+        	vm = "app/ppk/frmPerintahMaklumatPerintahSek8.jsp,";
         	
         }
 		if (hitButt.equals("SimpanSerahan")) {
