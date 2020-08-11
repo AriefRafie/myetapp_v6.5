@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
-import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 
@@ -1846,53 +1845,6 @@ public class FrmCRBLawatanTapakData {
 				return "";
 			}
 
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
-	public void sendEmail(String idPermohonan, String idPejabat, HttpSession session) throws Exception {
-		Db db = null;
-		Connection conn = null;
-		Vector beanMaklumatEmail = null;
-		EmailSender email = EmailSender.getInstance();
-		String sql = "";
-		String tempoh = "";
-		String noFail = "";
-		String tarikhAkhir = "";
-		String namaPemohon = "";
-		String emelUser = "nurulain.siprotech@gmail.com"; //untuk sementara
-		
-		try {
-			db = new Db();
-			conn = db.getConnection();
-	    	conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			
-			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA, B.NAMA_PEJABAT, E.NAMA AS NAMA_PEMOHON"
-				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E"
-				+ " WHERE A.ID_PEJABAT = B.ID_PEJABATJKPTG AND A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_PEMOHON = E.ID_PEMOHON"
-				+ " AND C.ID_FAIL = D.ID_FAIL AND A.ID_PEJABAT = '"+idPejabat+"'" + " AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
-			
-			ResultSet rsEmel = stmt.executeQuery(sql);
-			if (rsEmel.next()){
-				noFail = rsEmel.getString("NO_FAIL");
-				tempoh = rsEmel.getString("JANGKAMASA");
-				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
-				namaPemohon = rsEmel.getString("NAMA_PEMOHON");
-			}	
-			
-			email.RECIEPIENT = emelUser;
-			email.SUBJECT = "PERMOHONAN PENYEDIAAN LAPORAN LAWATAN TAPAK URUSAN PENGUATKUASAAN BAGI NO. FAIL " + noFail;
-			email.MESSAGE = "Dengan segala hormatnya saya merujuk kepada perkara tersebut seperti di atas.<br><br>"
-							 + "Adalah dimaklumkan bahawa pihak kami telah menerima aduan daripada " + namaPemohon.toUpperCase() + "mengenai pencerobohan tanah."
-							 + "sebelum " + tarikhAkhir + " amatlah dihargai."
-							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
-							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
-			email.sendEmail();
-			
 		} finally {
 			if (db != null)
 				db.close();

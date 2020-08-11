@@ -9,11 +9,11 @@
 
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-
+ 
   <input name="command" type="hidden" id="command" value="$command"/>
   <!-- <input name="submit" type="hidden" id="command" value="$command"/> -->
  <input name="submit2" type="hidden" id="submit2" />
-
+  
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
@@ -105,7 +105,7 @@
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td width="28%">Pegangan Hakmilik</td>
           <td width="1%">:</td>
-          <td width="70%">
+          <td width="70%"> 
           	#if ($mode == 'new')
           	 #if ($idAgensi != '' && $idAgensi != '99999')
               <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();"/>
@@ -272,7 +272,7 @@
       </table>
       </fieldset></td>
   </tr>
-
+  
   #if ($mode != 'view')
   <tr>
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i> </td>
@@ -282,11 +282,11 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'new')
       <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Simpan" onclick="daftarBaru()"/>
-      <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="doBacklist()"/>
+      <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
       #end
       #if ($mode == 'view')
       <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
-      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="doBacklist()"/>
+      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
       #end </td>
   </tr>
 </table>

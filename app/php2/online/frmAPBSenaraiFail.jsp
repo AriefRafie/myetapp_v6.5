@@ -1,3 +1,4 @@
+
 <style type="text/css">
 <!--
 .style1 {
@@ -9,8 +10,9 @@
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="actionOnline" />
   <input type="hidden" name="idFail" />
-  <input type="text" name="idStatus" />
+  <input type="hidden" name="idStatus" />
   <input type="hidden" name="idPemohon" />
+   <input type="hidden" name="idPermohonanLama" />
 </p>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -55,6 +57,7 @@
           <td scope="row" width="3%" align="center"><strong>Bil</strong></td>
           <td width="20%"><strong>No Rujukan Online</strong></td>
           <td width="20%"><strong>No Fail</strong></td>
+          <td width="20%"><strong>Jenis Permohonan</strong></td>
           <td width="30%"><strong>Tujuan</strong></td>
           <td width="8%" align="center"><strong>Tarikh Mohon</strong></td>
           <td width="20%"><strong>Status</strong></td>
@@ -71,9 +74,10 @@
         #end
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus','$list.idPemohon')" class="style1">$list.noPermohonan</a></td>
-         <!--  <td class="$row">$list.noFail</td> --> 
-          <td class="$row"><a href="javascript:paparRenewLesen('$list.idFail','$list.idStatus','$list.idPemohon')" class="style1">$list.noFail</a></td>
+          <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus','$list.idPemohon','$list.idPermohonan')" class="style1">$list.noPermohonan</a></td>
+          <!--  <td class="$row">$list.noFail</td> --> 
+          <td class="$row">$list.noFail</td>
+          <td class="$row">$list.jenispermohonan</td>
           <td class="$row">$list.tujuanPengambilan</td>
           <td class="$row" align="center">$list.tarikhPermohonan </td>
           <td class="$row">$list.status</td>
@@ -107,10 +111,11 @@ function papar(idFail,idStatus,idPemohon) {
 	document.${formName}.actionOnline.value = "seterusnya"; 	
 	document.${formName}.submit();
 }
-function paparRenewLesen(idFail,idStatus,idPemohon) {
+function paparRenewLesen(idFail,idStatus,idPemohon,idPermohonanLama) {
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idStatus.value = idStatus;
 	document.${formName}.idPemohon.value = idPemohon;
+	document.${formName}.idPermohonanLama.value = idPermohonanLama;
 	document.${formName}.actionOnline.value = "daftarBaruLesen";
 	document.${formName}.submit();
 }
