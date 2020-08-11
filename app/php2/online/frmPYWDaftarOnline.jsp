@@ -131,11 +131,13 @@
         <input type="hidden" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" 
         onblur="check_date(this);cekTarikhTerima(this)" size="9" $readonly class="$inputTextClass" />
         <tr>
-        	<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+        #if ($idJenisPermohonan =='1')
+        	<td width="1%">#if ($mode == 'new') <span class="style1">*</span>#end</td>
         	<td width="28%">Urusan</td>
           	<td width="1%">:</td>
           	<td width="70%">$selectUrusan</td>
         </tr>
+        
         <tr>
           	<td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           	<td>Suburusan</td>
@@ -172,7 +174,8 @@
         	size="38" maxlength="50" />
 			</td>
         </tr>
-		#if ($mode != 'view')
+        #end
+		#if ($mode != 'view' && $idJenisPermohonan == '1')
 		<tr>
 			<td valign="top">&nbsp;</td>
 			<td valign="top">&nbsp;</td>
@@ -199,42 +202,51 @@
         	<td width="70%">$!selectNoFailLama</td>
   		</tr>
   		#if($idFailLama != '99999' && $idFailLama != 'null')
+  		
         <tr>
         	<td></td>
         	<td width="28%">Urusan</td>
           	<td width="1%">:</td>
-          	<td width="70%">$!pemohon.get("namaPemohon")</td>
+          	<td width="70%">$!selectUrusan</td>
         </tr>
         <tr>
           	<td></td>
           	<td>Suburusan</td>
           	<td>:</td>
-          	<td>$!beanMaklumatPermohonan.suburusan</td>
+          	<td>$!selectSuburusan</td>
         </tr>
+          <tr>
+			<td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
+			<td>Tujuan</td>
+			<td>:</td>
+			<td>$selectSubSuburusan</td>
+			<input type="hidden" name="namatujuan" id="namatujuan" value="$namatujuan" />
+			
+		</tr>
         <tr>
         	<td></td>
         	<td>Tarikh Surat/Borang</td>
         	<td>:</td>
-        	<td>$!beanMaklumatPermohonan.tarikhSurat</td>
+        	<td>$!tarikhSurat</td>
         </tr>
         <tr>
         	<td></td>
         	<td>No. Rujukan Surat</td>
         	<td>:</td>
-        	<td>$!beanMaklumatPermohonan.noRujukanSurat</td>
+        	<td>$!noRujukanSurat</td>
         </tr>
         <tr>
         <td></td>
         <td valign="top">Perkara</td>
         <td valign="top">:</td>
-        <td>$!beanMaklumatPermohonan.perkara</td>
+        <td>$!perkara</td>
 		</tr>
         #end
       </table>
    </fieldset></td>
   </tr>
   #end 
-  #if($idJenisPermohonan == '1')
+  #if($idJenisPermohonan != '3')
   <!-- MAKLUMAT TANAH -->
   <tr>
     <td><fieldset>
@@ -451,8 +463,11 @@
   
   <tr>
     <td width="100%" align="center"> 
-    #if ($mode == 'new')
+    #if ($mode == 'new' && $idJenisPermohonan =='1')
       <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onclick="daftar()"/>
+      <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
+      #else 
+         <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onclick="daftarLanjut()"/>
       <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
     #end 
     </td>
@@ -519,13 +534,43 @@ function daftar() {
 	}
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		document.${formName}.actionPenyewaan.value = "daftarBaru";
+		document.${formName}.actionPenyewaan.value = "daftarBaru" ;
 		return;
 	}
+
+	document.${formName}.hitButton.value = "doDaftarBaru";
 	document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
 	document.${formName}.mode.value = "view";
-	document.${formName}.hitButton.value = "doDaftarBaru";
 	document.${formName}.submit();
+	
+}
+
+function daftarLanjut() {
+	if(document.${formName}.socUrusan.value == ""){
+		alert('Sila pilih Urusan.');
+  		document.${formName}.socUrusan.focus(); 
+		return; 
+	}
+	if(document.${formName}.socSuburusan.value == ""){
+		alert('Sila pilih Suburusan.');
+  		document.${formName}.socSuburusan.focus(); 
+		return; 
+	}
+	if(document.${formName}.idHakmilikAgensi.value == ""){
+		alert('Sila pilih Pegangan Hakmilik.');
+		return; 
+	}
+	
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.actionPenyewaan.value = "daftarLanjut" ;
+		return;
+	}
+
+	document.${formName}.hitButton.value = "doDaftarBaru";
+	document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
+	document.${formName}.mode.value = "view";
+	document.${formName}.submit();
+	
 }
 function kembali() {	
 	document.${formName}.actionPenyewaan.value = "";
