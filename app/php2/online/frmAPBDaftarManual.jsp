@@ -13,12 +13,16 @@
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
-  <input name="idFail" type="text" id="idFail" value="$idFail"/>
-  <input name="idStatus" type="text" id="idStatus" value="$idStatus"/>
-  <input name="idJenisPermohonan" type="text" id="idJenisPermohonan" value="$idJenisPermohonan"/>
+  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+   <input name="idPermohonanLama" type="hidden" id="idPermohonanLama" value="$idPermohonanLama"/>
+   <input name="checkId" type="hidden" id="checkId" value="$checkId"/>
+  <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
+  <input name="idJenisPermohonan" type="hidden" id="idJenisPermohonan" value="$idJenisPermohonan"/>
   <input name="idNegeriPemohon" type="hidden" id="idNegeriPemohon" value="$idNegeriPemohon"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
+	#if ($checkId != '')	
  <tr>  
   	<td colspan="2"><fieldset>
   	  <legend><strong>JENIS PERMOHONAN</strong></legend>
@@ -187,12 +191,14 @@
             <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
         </tr>
          -->
+         #if ($idStatus != '')
         <tr>
         <td width="1%">&nbsp;</td>
   		<td>No. Permohonan</td>
   		<td width = "1%">:</td>
   		<td width ="70%">$!noPermohonan</td>		
   	</tr>
+  	#end
         <tr>
           <td>&nbsp;</td>
           <td >Urusan</td>
@@ -369,12 +375,13 @@
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%">       
-      #if ($mode == 'new')
+      #if (($mode == 'new' && $idStatus == '1610207') || ($mode == 'new' && $idStatus == ''))
       <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onclick="daftarBaru()"/>
       <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
       #end 
       </td>
   </tr>
+  #end
 </table>
 <script>
 function doChangeJenisPermohonan() {
@@ -384,12 +391,7 @@ function doChangeNoFailAPB() {
 	doAjaxCall${formName}("doChangeNoFailAPB");
 }
 function daftarBaru() {
-	alert("xxx");
-	/*if(document.${formName}.socJenisPermohonan.value == ""){
-		alert('Sila pilih Jenis Permohonan.');
-  		document.${formName}.socJenisPermohonan.focus(); 
-		return; 
-	}*/
+
 	if(document.${formName}.socJenisLesen.value == ""){
 		alert('Sila pilih Jenis Lesen.');
   		document.${formName}.socJenisLesen.focus(); 
@@ -444,7 +446,7 @@ function daftarBaru() {
 		document.${formName}.actionOnline.value = "daftarBaru";
 		return;
 	}
-	alert("yyyy");
+
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.hitButton.value = "daftarBaru";
 	document.${formName}.mode.value = "view";
