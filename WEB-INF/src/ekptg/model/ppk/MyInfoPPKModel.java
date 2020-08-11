@@ -25,12 +25,10 @@ public class MyInfoPPKModel  extends VTemplate{
 	public HttpSession session;
 	public String modul = "";
 	
-	
-	
 	//setting environtment untuk kegunaan controller, 
 	//betujuan untuk kita mantain environment setting
-	public void setMyInfoPPKModel(VelocityEngine engine, VelocityContext context, HttpServletRequest request, HttpServletResponse response,HttpSession session,String modul)
-    {
+	public void setMyInfoPPKModel(VelocityEngine engine
+		, VelocityContext context, HttpServletRequest request, HttpServletResponse response,HttpSession session,String modul){
         this.engine = engine;
         this.context = context;
         this.request = request;
