@@ -1301,11 +1301,29 @@
 							                             	<tr>
 							                                   		<td>&nbsp;</td>
 							                                     	<td><div align="right" class="style57">
-							                                       		<div align="left">Negeri 2</div>
+							                                       		<div align="left">Negeri</div>
 							                                        </div></td>
 							                                       	<td width="1%"><div align="right" class="style43">:</div></td>
-							                                 		<td>$!socNegeriAdd</td>
-							                                 		<td>$listam.negeripemaju</td>
+							                                 		<td>
+							                                 		#if($readmode == "disabled")
+							                                 			
+							                                 			#foreach($listN in $listnegeri)
+										                             		#if($listam.negeripemaju==$listN.id_Negeri)
+										                                    	#set($negerikodpemoP=$listN.kod_Negeri)
+										                                  		#set($negeriketeranganpemoP=$listN.nama_Negeri)
+										                                  	#end 
+									                       				#end
+							                                      	
+							                                      		#if($listam.negeripemaju!="" && $listam.negeripemaju!="0" )
+								                                      		<input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+								                                      	#else
+								                                      		<input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+								                                      	#end
+							                                 			
+							                                 		#else
+							                                 			$!socNegeriAdd
+							                                 		#end
+							                                 		</td>
 							                          		</tr>
                              		
 							                            	<tr>
@@ -1631,7 +1649,7 @@
 							                         		<tr>
 							                                                <td><div align="left"><span class="style43"></span></div></td>
 							                                                <td><div align="right" class="style57">
-							                                                  <div align="left">Status Pemilikan 2</div>
+							                                                  <div align="left">Status Pemilikan</div>
 							                                                </div></td>
 							                                                <td width="1%"><div align="right" class="style43">:</div></td>
 							                                                <td>

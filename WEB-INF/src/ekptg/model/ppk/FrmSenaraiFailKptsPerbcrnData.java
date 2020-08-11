@@ -22,6 +22,24 @@ public class FrmSenaraiFailKptsPerbcrnData {
 	private static Vector list = new Vector();
 	private static Vector list17 = new Vector();
 	private static Vector checkingNilaian = new Vector();
+	private static Vector nilaianSebenar = new Vector(); //arief add
+	
+	//arief add
+	public static Vector getNilaianSebenar() {
+		return nilaianSebenar;
+	}
+	
+	//arief add
+	public static void setNilaianSebenar(String usid) throws Exception{
+		Db db = null;
+		nilaianSebenar.clear();
+		String sql="";
+		try {
+			
+		}finally {
+			if(db != null) db.close();			
+		}
+	}
 	
 	
 	public static Vector getList(){

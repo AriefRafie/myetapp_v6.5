@@ -229,8 +229,8 @@ input[readonly]{
 			</table>
 							
 			<table width="100%"  cellpadding="1" cellspacing="1" border="0">
-			<tr><td align=center colspan=3><input type="button" name="signButton" id="signButton" value="Tandatangan Digital dan Hantar" align="left"/></td></tr>
-			<!--  <tr><td align=center colspan=3><input type="button" name="hantar" id="hantar" value="Tandatangan" align="left" onclick="sendToDigitalSign();" /></td></tr>  -->
+			<!--  <tr><td align=center colspan=3><input type="button" name="signButton" id="signButton" value="Tandatangan Digital dan Hantar" align="left"/></td></tr>-->
+			<tr><td align=center colspan=3><input type="button" name="hantar" id="hantar" value="Tandatangan Digital dan Hantar" align="left" onclick="sendToDigitalSign();" /></td></tr>
 			
 			</table>	
     	<div id="locationSaveData" ></div>   
@@ -239,7 +239,7 @@ input[readonly]{
 
 <script type="text/javascript">
 
-	function openPopupPNB(NO_FAIL,id_perbicaraan,id_fail,signedData){
+	/**function openPopupPNB(NO_FAIL,id_perbicaraan,id_fail,signedData){
 		input_box = confirm("Sila pastikan butiran yang dihantar adalah tepat!");
 		
 		if (input_box == true) {
@@ -251,13 +251,13 @@ input[readonly]{
 	    
 		}
 		
-	}
+	}**/
 
 	function sendToDigitalSign() {
 		input_box = confirm("Sila pastikan butiran yang dihantar adalah tepat!");
 		if (input_box == true) {
 			document.f1.method="post";
-			document.f1.action="ekptg.view.ppk.FrmIntegrasiDGCert?command=sahTandatangan";
+			document.f1.action="ekptg.view.ppk.FrmIntegrasiDGCertPerintah?command=sahTandatangan";
 			document.f1.submit();			
 		}
 	
@@ -395,7 +395,7 @@ openPopupPNB('$NO_FAIL','$id_perbicaraan','$id_fail','');
 		var signedData = $("#signedText").val();
 	
 		document.f1.method="post";
-		document.f1.action="ekptg.view.ppk.FrmIntegrasiDGCert?command=simpanTemp";
+		document.f1.action="ekptg.view.ppk.FrmIntegrasiDGCertPerintah?command=simpanTemp";
 		//document.f1.command.value = "simpanTemp";
 		document.f1.submit();
 	

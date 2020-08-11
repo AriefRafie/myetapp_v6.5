@@ -71,7 +71,14 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	private static Vector dataKeputusanBayaran = new Vector();	
 	private static Vector listPerintahTangguhMufti = new Vector();
 	private static Vector dataFlagTangguh = new Vector();		
-	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");	
+	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");
+	private static Vector listDendaLewat = new Vector();//arief add
+	private static Vector dataFlagDendaLewat = new Vector();//arief add
+	
+	//arief add getFlagDendaLewat
+	public static Vector getFlagDendaLewat(){
+		return dataFlagDendaLewat;
+	 }	
 
 	 public static Vector getFlagTangguh(){
 		return dataFlagTangguh;
@@ -848,11 +855,7 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
-		      
-		      //r.add("jumlahBayaranDendaLewatPendaftaran");
-		      r.add("jumlah_harta_tarikhmohon");		      
-
-		      //r.add("tarikh_mohon", tarikhmohon);
+		      r.add("jumlah_harta_tarikhmohon");
 		      r.add("id_permohonan",idpermohonan);
 
 		      sql = r.getSQLSelect("Tblppkpermohonan");
@@ -873,7 +876,40 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		    finally {
 		      if (db != null) db.close();
 		    }
-		}			
+		}	
+		
+		//arief add setDendaLewat
+		/**public static Vector setDendaLewat(String idpermohonan) throws Exception{
+			
+			Db db = null;
+			listDendaLewat.clear();
+			String sql = "";
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		    try {
+		    	db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+		    	sql = "SELECT * FROM TBLPPKPERMOHONAN WHERE ID_PERMOHONAN = '" + idpermohonan
+					+ "'";
+		    	ResultSet rs = stmt.executeQuery(sql);
+		    	Hashtable h;
+		    	while (rs.next()) {
+					h = new Hashtable();
+					h.put("id_permohonan",
+							rs.getString("id_permohonan") == null ? "" : rs
+									.getString("id_permohonan"));
+					h.put("id_fail",
+							rs.getString("id_fail") == null ? "" : rs
+									.getString("id_fail"));
+
+					listDendaLewat.addElement(h);
+				}
+		    	return listDendaLewat;
+			}
+		    finally {
+			      if (db != null) db.close();
+			}
+		}**/
 		
 		public static void setJumlahBayaran17(String id_permohonansimati) throws Exception {
 			Db db = null;

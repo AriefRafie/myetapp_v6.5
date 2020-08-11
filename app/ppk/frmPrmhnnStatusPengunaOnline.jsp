@@ -169,7 +169,7 @@
 			  		#foreach ($senaraiprabicara in $senaraiPraPerbicaraan)
 					   #if ($senaraiprabicara.id_permohonan == $!senarai.id_Permohonan)
 <!-- 					  	<input type="text" name="idCheck" id="idCheck" value="ADA PRA PERBICARAAN"/> -->
-						<br><a href="javascript:paparPraBicara('$!senaraiprabicara.id_praperbicaraan')"><span class="blink"><small>NOTIS PRA PERBICARAAN (KLIK DI SINI)</small></span></a>
+						<br><a href="javascript:paparPraBicara('$!senaraiprabicara.id_praperbicaraan')"><span class="blink"><small style="color:blue">NOTIS PRA PERBICARAAN (KLIK DI SINI)</small></span></a>
 					  	#else
 <!-- 					  	<input type="text" name="idCheck" id="idCheck" value="TAKDE"/> -->
 					  #end
@@ -213,10 +213,10 @@
 			      <font color="red">SILA PASTIKAN NOTIS PERBICARAAN DISAMPAIKAN KEPADA SETIAP WARIS BERKAITAN </font>
 			      
 			#elseif(($senarai.id_status == '70') || ($senarai.id_status == '47') || ($senarai.id_status == '169')) 
-				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','$!senarai.catatan')"><strong>$senarai.status </strong><small>(KLIK DI SINI)</small></a>
+				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','$!senarai.catatan')"><strong>$senarai.status </strong><small style="color:blue">(KLIK DI SINI)</small></a>
 				
 			#elseif($senarai.id_status == '152')
-				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','TELAH ADA PERMOHONAN AWAL.')"><strong>$senarai.status </strong><small>(KLIK DI SINI)</small></a>
+				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','TELAH ADA PERMOHONAN AWAL.')"><strong>$senarai.status </strong><small style="color:blue">(KLIK DI SINI)</small></a>
 			
 			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
 				<strong>$senarai.status</strong>
