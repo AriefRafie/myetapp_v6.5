@@ -1215,8 +1215,7 @@ function doHapus(idHakmilikPermohonan) {
 	doAjaxCall${formName}("");
 }
 function gotoSenaraiFailKeseluruhan() {
-	alert("")
-	document.${formName}.action = "$EkptgUtil.getTabID('My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailKeseluruhanView";
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailKeseluruhanView";
 	document.${formName}.submit();
 }
 function doSetujuTolakRingkas(idPermohonan) {
