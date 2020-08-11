@@ -54,7 +54,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	public String daftarBaru(String idKaitanTujuan, String idJenistujuan, String idJenisLesen, String tujuanPengambilan, String tempoh,
 			String pengalaman, String idNegeri, String lokasi,String luas, String idLuas, String idJenisPengenalanIndividu, 
 			String idKategoriIndividu, String idKategoriPemohon, String idJantina, String idBangsa, String idBandar, 
-			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, HttpSession session) throws Exception {
+			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, String idPermohonanLama, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -75,7 +75,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			//TBLPFDFAIL
 			long idFail = DB.getNextID("TBLPFDFAIL_SEQ");
 			idFailString = String.valueOf(idFail);
-			myLog.info("idFail : "+idFailString);
+
 			r.add("ID_FAIL", idFail);
 			r.add("ID_URUSAN", "9");
 			r.add("ID_SUBURUSAN", "57");
@@ -132,7 +132,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			//TBLPERMOHONAN
 			r = new SQLRenderer();
 			long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
-			myLog.info("idPermohonan : "+idPermohonan);
+
 			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_JKPTG", "1");
