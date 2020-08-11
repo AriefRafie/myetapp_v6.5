@@ -153,18 +153,21 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td> #if ($idStatus == '')
+                <td>#if ($idStatus == '')
                   #if ($mode == 'view')
                   <input type="button" name="cmdKemaskiniTnh" id="cmdKemaskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>                 
                   #end
                   #if ($mode == 'update')
                   <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
                   <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
+                  #end                   					  
                   #end 
-                  #else
+                   #if ($idStatus == '1610195')
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  #end </td>
+                  <input type="button" name="cmdDaftarLanjut" id="cmdDaftarLanjut" value="Permohonan Lanjutan" onclick="permohonanLanjutan()"/>
+ 				 #end
+ 				</td>
               </tr>
               #end
             </table>
@@ -407,6 +410,11 @@ function doBacklist() {
 	document.${formName}.actionPenyewaan.value = "";
 	document.${formName}.submit();
 }
+function permohonanLanjutan() {
+	document.${formName}.actionPenyewaan.value = "daftarLanjut";
+	document.${formName}.submit();
+}
+
 function validateLuas(elmnt,content,content2) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
