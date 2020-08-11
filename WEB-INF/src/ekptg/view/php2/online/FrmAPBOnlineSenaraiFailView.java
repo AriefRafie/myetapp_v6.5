@@ -756,7 +756,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    		log.info("idFail : "+idFail);
 				
         } else {
-        	  		
+  
+        	
      		//GO TO LIST FAIL APB       	
         	vm = "app/php2/online/frmAPBSenaraiFail.jsp";
         	///test
