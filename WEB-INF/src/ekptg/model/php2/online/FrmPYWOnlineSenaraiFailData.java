@@ -1803,13 +1803,12 @@ public class FrmPYWOnlineSenaraiFailData {
 
 			sql = r.getSQLInsert("TBLPHPPEMOHON");
 			stmt.executeUpdate(sql);
-			log.info("INSERT : "+sql);
+			
 			String idPejabatJKPTG = "";
 			sql = "SELECT ID_PEJABATJKPTG, ID_NEGERI FROM TBLRUJPEJABATJKPTG "
 					+ " WHERE ID_SEKSYEN = '4' AND ID_NEGERI = '" + idNegeriHakmilik + "'";
 				
 			ResultSet rsJKPTG = stmt.executeQuery(sql);
-			log.info("Pejabat JKPTG" +sql);
 			if (rsJKPTG.next()){
 				idPejabatJKPTG = rsJKPTG.getString("ID_PEJABATJKPTG");
 			}
@@ -1837,7 +1836,7 @@ public class FrmPYWOnlineSenaraiFailData {
 
 			sql = r.getSQLInsert("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
-			log.info("INSERT : "+sql);
+			
 			//TBLPHPHAKMILIKPERMOHONAN
 			r = new SQLRenderer();
 			long idhakmilikPermohonan = DB.getNextID("TBLPHPHAKMILIKPERMOHONAN_SEQ");
@@ -1853,16 +1852,17 @@ public class FrmPYWOnlineSenaraiFailData {
 
 			sql = r.getSQLInsert("TBLPHPHAKMILIKPERMOHONAN");
 			stmt.executeUpdate(sql);
-			log.info("INSERT : "+sql);
+			
 			//TBLPHPPERMOHONANSEWA
 			String namaTujuan = getNamaTujuan(idSubsuburusan);
-			log.info("idSubsuburusan "+idSubsuburusan);
+			
 			r = new SQLRenderer();
 			long idPHPPermohonanSewa = DB.getNextID("TBLPHPPERMOHONANSEWA_SEQ");
 			r.add("ID_PHPPERMOHONANSEWA", idPHPPermohonanSewa);
 			r.add("ID_PERMOHONAN", idPermohonan);			
 			r.add("ID_LUASASAL", idLuas);
 			r.add("LUAS_ASAL", luas);
+			r.add("ID_JENIS_PERMOHONAN", idJenisPermohonan);
 			if ("14".equals(idNegeriHakmilik)){
 				r.add("FLAG_PERMOHONANDARI", "0");
 			} else {
