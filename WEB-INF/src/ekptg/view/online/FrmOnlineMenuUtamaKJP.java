@@ -71,6 +71,12 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 context.put("jumlah_notifikasi_tukarguna", Long.parseLong(jumlah_notifikasi_tukarguna));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
 		 
+		 Hashtable get_notifikasi_tukarguna1 = null; 
+		 get_notifikasi_tukarguna1 = (Hashtable) notifikasi_tukarguna1(user_id);
+		 String jumlah_notifikasi_tukarguna1 = (String)get_notifikasi_tukarguna1.get("JUMLAHPERMOHONAN");
+		 context.put("jumlah_notifikasi_tukarguna1", Long.parseLong(jumlah_notifikasi_tukarguna1));
+		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
+		 
 		 Hashtable get_notifikasi_penyewaan = null; 
 		 get_notifikasi_penyewaan = (Hashtable) notifikasi_penyewaan(user_id);
 		 String jumlah_notifikasi_penyewaan = (String)get_notifikasi_penyewaan.get("JUMLAHPERMOHONAN");
@@ -230,13 +236,18 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			
 			sql = "SELECT (SELECT COUNT (*) "
 					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
-					+ " ,USERS_KEMENTERIAN UK"
-					+ " ,TBLRUJSTATUS RS"
+					+ " ,USERS_KEMENTERIAN UK, USERS H "
+					+ " ,TBLRUJSTATUS RS, tblphppemohon C, tblhtphakmilikagensi D,"
+					+ " tblphphakmilikpermohonan E"
 					+ " WHERE F.ID_FAIL = P.ID_FAIL"
 					+ " AND F.ID_SUBURUSAN = '32'"
 					+ " AND P.ID_STATUS = RS.ID_STATUS "
 					+ " AND P.ID_STATUS NOT IN (1610199)"
 					+ " AND F.ID_KEMENTERIAN = UK.ID_KEMENTERIAN "
+					+ " AND P.ID_PEMOHON = C.ID_PEMOHON "
+					+ " AND P.ID_PERMOHONAN = E.ID_PERMOHONAN "
+					+ " AND H.USER_ID = UK.USER_ID "
+					+ " AND E.ID_HAKMILIKAGENSI = D.ID_HAKMILIKAGENSI "
 					+ " AND UK.USER_ID = '" + userID + "') AS jumlahpermohonan "
 					+ " FROM DUAL ";
 			
@@ -425,6 +436,50 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				   + " AND users_kementerian.id_agensi = tblphpulasanteknikal.id_agensi "
 				   + " AND users.user_id = '" + userID + "') AS jumlahpermohonan "
 				  + " FROM DUAL ";
+
+			// myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
+			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println("notifikasi_tukarguna :"+sql.toUpperCase());
+			Hashtable h;
+			h = new Hashtable();
+			while (rs.next()) {
+				h.put("JUMLAHPERMOHONAN",
+						rs.getString("JUMLAHPERMOHONAN"));
+			}
+			return h;
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Hashtable notifikasi_tukarguna1(String userID)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT (SELECT COUNT (*) "
+					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
+					+ " ,USERS_KEMENTERIAN UK, USERS H "
+					+ " ,TBLRUJSTATUS RS, tblphppemohon C, tblhtphakmilikagensi D,"
+					+ " tblphphakmilikpermohonan E"
+					+ " WHERE F.ID_FAIL = P.ID_FAIL"
+					+ " AND F.ID_SUBURUSAN = '33'"
+					+ " AND P.ID_STATUS = RS.ID_STATUS "
+					+ " AND P.ID_STATUS NOT IN (1610199)"
+					+ " AND F.ID_KEMENTERIAN = UK.ID_KEMENTERIAN "
+					+ " AND P.ID_PEMOHON = C.ID_PEMOHON "
+					+ " AND P.ID_PERMOHONAN = E.ID_PERMOHONAN "
+					+ " AND H.USER_ID = UK.USER_ID "
+					+ " AND E.ID_HAKMILIKAGENSI = D.ID_HAKMILIKAGENSI "
+					+ " AND UK.USER_ID = '" + userID + "') AS jumlahpermohonan "
+					+ " FROM DUAL ";
 
 			// myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);

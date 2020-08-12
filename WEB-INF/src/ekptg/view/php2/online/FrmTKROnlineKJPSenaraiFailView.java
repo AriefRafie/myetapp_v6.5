@@ -34,7 +34,6 @@ import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
 import ekptg.model.htp.online.IOnline;
 import ekptg.model.htp.online.OnlineBean;
-import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.online.FrmTKRHeaderData;
 import ekptg.model.php2.FrmTKRJabatanTeknikalData;
 import ekptg.model.php2.online.FrmTKROnlineKJPSenaraiFailData;
@@ -80,9 +79,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		// GET DEFAULT PARAM
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
 		String vm = "";
-		//String actionTukarguna = getParam("actionTukarguna");
 		String submit = getParam("command");
-		System.out.println("comaaand >>> "+getParam("command"));
 		String submit2 = getParam("submit2");
 		String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
@@ -94,9 +91,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		myLog.info("submit="+submit);
 		myLog.info("submit2="+submit2);
 		String hitButton = getParam("hitButton");
-		//myLog.info("actionTukarguna="+actionTukarguna);
 		myLog.info("hitButton="+hitButton);
-		myLog.info("-------------------");
 		String idNegeriPemohon = "";
 		String userRole = "";
 		String userJawatan = "";
@@ -138,11 +133,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		Vector beanMaklumatTukarguna = null;
 		Vector beanHeader = null;
 
-		// GET DROPDOWN PARAM
-		/*String idKategoriPemohon = getParam("socKategoriPemohon");
-		if (idKategoriPemohon == null || idKategoriPemohon.trim().length() == 0) {
-			idKategoriPemohon = "99999";
-		}*/
 		String selectedTabUpper = (String) getParam("selectedTabUpper");
 		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
 			selectedTabUpper = "0";
@@ -151,10 +141,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		if (idUrusan == null || idUrusan.trim().length() == 0) {
 			idUrusan = "99999";
 		}
-		/*String idSuburusan = getParam("socSuburusan");
-		if (idSuburusan == null || idSuburusan.trim().length() == 0) {
-			idSuburusan = "99999";
-		}*/
+		
 		String idSubsuburusan = getParam("socSubsuburusan");
 		if (idSubsuburusan == null || idSubsuburusan.trim().length() == 0) {
 			idSubsuburusan = "99999";
@@ -180,11 +167,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
 			idLuasKegunaan = "99999";
 		}
-		/*String idJenisTanah = getParam("socJenisTanah");
-		if (idJenisTanah == null || idJenisTanah.trim().length() == 0){
-			idJenisTanah = "99999";
-		}*/
-
+		
 		this.context.put("command", submit);
 		this.context.put("templateDir", templateDir);
 
@@ -241,7 +224,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		FrmSemakan semak = null;
 
 
-		myLog.info("idSuburusan ros >>>> "+idSuburusan);
+		myLog.info("idSuburusan==="+idSuburusan);
 		// HITBUTTON
 		if (postDB) {
 			if ("daftarBaru".equals(hitButton)) {
@@ -251,20 +234,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 						getParam("txtTujuanKegunaan"), getParam("idKementerianTanah"), getParam("idNegeriTanah"),
 						getParam("idLuasTanah"), getParam("luasTanah"), idHakmilikSementara, session);
 
-				/*myLog.info("if Fail ros >> "+idFail);
-				myLog.info("id Permohonan >>>> "+idPermohonan);
-
-				Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
-				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",idSuburusan,"=");
-				subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
-				subUrusanStatusFailN.setAktif("1");
-				subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
-				subUrusanStatusFailN.setIdFail(Long.parseLong(idFail));
-				subUrusanStatusFailN.setIdPermohonan(Long.parseLong(idPermohonan));
-
-				HTPStatusBean sb = new HTPStatusBean();
-				sb.simpanStatusAktif(subUrusanStatusFailN);*/
-
+				
 			}
 			if("doSimpanSenaraiSemak".equals(hitButton)){
 				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"),
@@ -283,11 +253,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
 	    				}
 	    			}
-        		/*String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
-    			logic.updateSenaraiSemak(idPermohonan,semaks,session);*/
         	}
 			if ("doHantarEmel".equals(hitButton)){
-				myLog.info("id Permohonan ros 1>>>> "+idPermohonan);
 
 				if (logic.getBeanMaklumatPermohonan().size() != 0){
 					Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
@@ -296,7 +263,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					idSubsuburusan = (String) hashPermohonan.get("idTujuan");
 					idPermohonan= (String) hashPermohonan.get("idPermohonan");
 				}
-				myLog.info("id Permohonan ros 2>>>> "+idPermohonan);
 				if (logic.checkMaklumatPywLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat tukar guna yang belum lengkap.')\"");
 				} else {
@@ -308,7 +274,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
 
 
-		//myLog.info("actionTukarguna="+actionTukarguna);
 		myLog.info("submit="+submit);
 		myLog.info("submit2="+submit2);
 		myLog.info("hitButton="+hitButton);
@@ -574,7 +539,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 					// MAKLUMAT KEGUNAAN TANAH
 					beanMaklumatTukarguna = new Vector();
-					myLog.info("masuk sini tak lepas error nie >>>> id permohonan >>>>> "+idPermohonan);
 					logic.setMaklumatTukarguna(idPermohonan);
 
 					myLog.info("masuk sini tak lepas error nie");
@@ -654,7 +618,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    			//senaraiLampiran = logic.getListLampiran();
 	    			this.context.put("SenaraiLampiran", senaraiLampiran);
 
-	    			//ros tambah untuk langkah
+	    			// tambah untuk langkah
 	    			String semakMode = "";
 	    			String statusSemasa = "1";
 
@@ -709,7 +673,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 
 			}else if ("daftarBaru".equals(submit)) {
-				myLog.info("ros submit2 2 >>> "+submit2);
 				myLog.info("masuk daftar Baru");
 				vm = "/frmTKRKJPDaftarManual.jsp";
 				this.context.put("mode", "new");
