@@ -84,9 +84,7 @@ public class FrmPrmhnnSek8InternalData {
 	private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 	public Vector getData() {
-
 		return list;
-
 	}
 
 	public Vector getcheckpemohonwaris() {
