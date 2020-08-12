@@ -160,7 +160,7 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 			if ("simpanMaklumatKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJT(idPermohonan, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		logic.sendEmail(idPermohonan, idPejabat, session);
+        		//logic.sendEmail(idPermohonan, idPejabat, session);
         		session.setAttribute("MSG", "Emel telah dihantar kepada JKPTG berkaitan");
     		}
         	if ("simpanMaklumatUlanganKJT".equals(hitButton)){
