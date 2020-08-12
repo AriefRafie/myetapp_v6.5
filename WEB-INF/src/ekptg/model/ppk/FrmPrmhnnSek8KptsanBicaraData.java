@@ -991,25 +991,6 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 //					String TTP = "to_date('" + txdTarikhPerintah + "','dd/MM/yyyy')";
 					String TBP = "to_date('" + txdTarikhBayaranPerintah + "','dd/MM/yyyy')";		
 					
-				  //------------------------------- TBLPPKPERINTAH ------------------------------------
-				    
-//					db = new Db();
-//					Statement stmt = db.getStatement();
-//					SQLRenderer r = new SQLRenderer();
-//					r.add("id_perintah",id_perintah);
-//					r.add("id_perbicaraan",id_perbicaraan);
-//					r.add("tarikh_perintah", r.unquote(TTP));
-//					r.add("id_unitpsk",EDITsocPegawaiPengendali);
-//					r.add("flag_jenis_keputusan",flag_jenis_keputusan);
-//					r.add("catatan",txtCatatanSelesai);
-//					r.add("id_masuk",usid);
-//					r.add("tarikh_masuk",r.unquote("sysdate"));
-//
-//					sql = r.getSQLInsert("Tblppkperintah");		
-//					myLogger.info("SQL INSERT TBLPPKPERINTAH = "+sql);
-//					stmt.executeUpdate(sql);
-								
-					//--------------------------------- TBLPPKBAYARAN -----------------------------------------
 					db = new Db();
 					Statement stmt2 = db.getStatement();
 					SQLRenderer r2 = new SQLRenderer();
@@ -1079,31 +1060,6 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 								 check_kiv, date_kiv, catatan_kiv);
 					 }
 					 
-					 
-					
-					/*
-					String TTP = "to_date('" + txdTarikhPerintah + "','dd/MM/yyyy')";						
-					
-				  //------------------------------- TBLPPKPERINTAH ------------------------------------				    
-					db = new Db();
-					Statement stmt = db.getStatement();
-					SQLRenderer r = new SQLRenderer();
-					r.add("id_perintah",id_perintah);
-					r.add("id_perbicaraan",id_perbicaraan);
-					r.add("tarikh_perintah", r.unquote(TTP));
-					r.add("id_unitpsk",EDITsocPegawaiPengendali);
-					r.add("flag_jenis_keputusan",flag_jenis_keputusan);
-					r.add("catatan",txtCatatanSelesai);
-					r.add("id_masuk",usid);
-					r.add("tarikh_masuk",r.unquote("sysdate"));
-
-					sql = r.getSQLInsert("Tblppkperintah");		
-					myLogger.info("INSERT TBLPPKPERINTAH = "+sql);
-					stmt.executeUpdate(sql);*/
-					
-					
-					
-					
 				}finally {
 					if(db != null) db.close();
 				}			
