@@ -91,7 +91,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 					+ " AND B.ID_PEMOHON = C.ID_PEMOHON "
 					+ "AND B.ID_PERMOHONAN = E.ID_PERMOHONAN "
 					+ "AND H.USER_ID = I.USER_ID"
-					+ " AND C.ID_KEMENTERIAN = I.ID_KEMENTERIAN AND A.ID_MASUK = H.USER_ID(+)"
+					+ " AND C.ID_KEMENTERIAN = I.ID_KEMENTERIAN "
 					+ " AND I.USER_ID = '" + userId + "'";
 
 			// noFail
