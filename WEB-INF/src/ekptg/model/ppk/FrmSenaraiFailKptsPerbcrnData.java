@@ -56,7 +56,6 @@ public class FrmSenaraiFailKptsPerbcrnData {
 		String sql = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
-		
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      
@@ -118,8 +117,6 @@ public class FrmSenaraiFailKptsPerbcrnData {
 			if(db != null) db.close();			
 		}
 	}
-
-
 	//List permohonan seksyen 17
 	public static void setList17(String usid)throws Exception {	    
 		Db db = null;

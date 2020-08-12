@@ -87,7 +87,7 @@
     #end
     </td>
   </tr>
-</table>
+</table>  
 <script>
 function calcDate(){
 	if (document.${formName}.txtTarikhHantar.value != "" && document.${formName}.txtJangkaMasa.value != ""){

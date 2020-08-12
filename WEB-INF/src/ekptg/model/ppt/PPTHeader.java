@@ -696,7 +696,7 @@ public class PPTHeader {
 	    		sql += " where px.id_permohonan = p.id_permohonan ";
 	    		
 	    		//open komen temp by razman
-	    		//sql += " and " +
+	    		//sql += " and " 
 	    		//close komen temp by razman
 	    				/*"px.id_status='38' ";   
 	    		sql += " OR px.id_status='62' ";
@@ -707,8 +707,8 @@ public class PPTHeader {
 	    		sql += " OR " +*/
 	    		
 	    		//open komen temp by razman
-	    				//sql += " px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptborange bx, Tblpptborangehakmilik beh "; 
-	    	    		//sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = beh.id_hakmilik and beh.id_borange = bx.id_borange) ";
+	    				sql += " and px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptborange bx, Tblpptborangehakmilik beh "; 
+	    	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = beh.id_hakmilik and beh.id_borange = bx.id_borange) ";
 	    	    //close komen temp by razman	
 	    	    		
 	    		/*sql += " OR px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptbuktipenyampaian bpx "; 

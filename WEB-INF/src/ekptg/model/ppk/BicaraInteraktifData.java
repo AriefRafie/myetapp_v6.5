@@ -1348,7 +1348,7 @@ public class BicaraInteraktifData {
 		}
 		else if(flag.equals("4"))
 		{
-			keterangan = "Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta";
+			keterangan = "Pindah ke Mahkamah Tinggi kerana harta melebihi RM5 juta";
 		}
 		else if(flag.equals("5"))
 		{
@@ -5124,7 +5124,7 @@ public class BicaraInteraktifData {
 		}
 	}
 	
-	//arief add
+	//arief add tidak hadir
 	public void simpanTidakHadir(HttpSession session, String id_bitidakhadir, String id_perbicaraan, String nama, String hubungan, String pengenalan, String status, String umur, Db db) throws Exception {
 		Db db1 = null;
 		String sql = "";
@@ -5190,7 +5190,7 @@ public class BicaraInteraktifData {
 		}
 	}
 	
-	//arief add
+	//arief add tidak hadir
 	public Map viewTidakHadir(HttpSession session, String id_bitidakhadir, Db db)throws Exception {
 		Db db1 = null;
 		ResultSet rs = null;
@@ -5222,7 +5222,7 @@ public class BicaraInteraktifData {
 		}
 	}
 	
-	//arief add
+	//arief add tidak hadir
 	public String queryListTidakHadir(String id_perbicaraan,String id_bitidakhadir)
 	{
 		String sql = " SELECT " +
@@ -5243,7 +5243,7 @@ public class BicaraInteraktifData {
 		return sql;
 	}
 	
-	//arief add
+	//arief add tidak hadir
 	public Map getHashMapTidakHadir(HttpSession session, ResultSet rs,String rowCss, String bil, Db db) 
 			throws Exception
 	{
@@ -5310,7 +5310,7 @@ public class BicaraInteraktifData {
 			
 		}
   }
-	//arief add
+	//arief add tidak hadir
 	public void deleteTidakHadir(HttpSession session,String id_bitidakhadir,String id_perbicaraan,Db db) throws Exception {
 		Db db1 = null;
 		String sql = "";
@@ -5347,7 +5347,7 @@ public class BicaraInteraktifData {
 		}
 	}
 	
-	//arief add
+	//arief add tidak hadir
 	public List listTidakHadir(HttpSession session,String id_permohonansimati,String id_permohonan, String id_perbicaraan,String id_pemohon, Db db)throws Exception {
 		Db db1 = null;
 		ResultSet rs = null;
@@ -5717,6 +5717,25 @@ public class BicaraInteraktifData {
 		return sql;
 	}
 	
+	//arief add query list saksi
+	public String queryListSaksi(String id_perbicaraan,String id_bikehadiran)
+	{
+		String sql = " SELECT " +				
+				"TRIM(REGEXP_REPLACE(KP.KETERANGAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS KETERANGAN, " +
+				"TRIM(REGEXP_REPLACE(KP.NOTA_PEGAWAI, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS NOTA_PEGAWAI,  " +				
+				"KP.* FROM TBLPPKBIKEHADIRAN KP WHERE KP.ID_BIKEHADIRAN IS NOT NULL ";
+		if(!id_perbicaraan.equals(""))
+		{
+			sql +=" AND KP.JENIS_HADIR = 'T' AND KP.ID_PERBICARAAN = '"+id_perbicaraan+"' ";
+		}
+		if(!id_bikehadiran.equals(""))
+		{
+			sql +=" AND KP.ID_BIKEHADIRAN = '"+id_bikehadiran+"' ";
+		}
+		sql += "ORDER BY NAMA ";
+		return sql;
+	}
+	
 	
 	
 			@SuppressWarnings("unchecked")
@@ -5814,6 +5833,39 @@ public class BicaraInteraktifData {
 		}
 	}
 	
+	//arief add view Saksi
+	@SuppressWarnings("unchecked")
+	public Map viewSaksi(HttpSession session, String id_bikehadiran, Db db)throws Exception {
+		Db db1 = null;
+		ResultSet rs = null;
+		Statement stmt = null;
+		String sql = "";
+		try {
+			if(db != null)
+			{
+				db1 = db;
+			}
+			else
+			{
+				db1 = new Db();
+			}
+			stmt = db1.getStatement();	
+			sql += queryListSaksi("",id_bikehadiran);		
+			myLogger.info(" BICARA INTERAKTIF : SQL viewSaksi :"+ sql);			
+			rs = stmt.executeQuery(sql);
+			Map h = Collections.synchronizedMap(new HashMap());		
+			while (rs.next()) {				
+				h = getHashMapSaksi(session,rs,"","",db);
+			}
+			return h;
+		} finally {
+			if (db == null)
+			{
+				db1.close();
+			}
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List listTurutHadir(HttpSession session,String id_perbicaraan, Db db)throws Exception {
 		Db db1 = null;
@@ -5874,7 +5926,82 @@ public class BicaraInteraktifData {
 		return listKehadiran;
 	}
 	
+	//arief add Saksi
+	@SuppressWarnings("unchecked")
+	public List listSaksi(HttpSession session,String id_perbicaraan, Db db)throws Exception {
+		Db db1 = null;
+		ResultSet rs = null;
+		Statement stmt = null;
+		List listSaksi = null;
+		String sql = "";	
+		
+		try{
+			
+		if(db != null)
+		{
+			db1 = db;
+		}
+		else
+		{
+			db1 = new Db();
+		}
+		
+		stmt = db1.getStatement();			
+		sql += queryListSaksi(id_perbicaraan,"");		
+		myLogger.info(" BICARA INTERAKTIF : SQL listSaksi :"+ sql);		
+		rs = stmt.executeQuery(sql);
+		listSaksi = Collections.synchronizedList(new ArrayList());
+		
+		Map h = null;
+		int bil = 0;
+		while (rs.next()) {
+			h = Collections.synchronizedMap(new HashMap());
+			bil++;
+			String rowCss = "";
+			if ( (bil % 2) == 0 )
+			{
+				rowCss = "row2";
+			}
+	        else
+	        {
+	        	rowCss = "row1";
+	        }			
+			listSaksi.add(getHashMapSaksi(session,rs,rowCss,bil+"",db));
+		}
+		} finally {
+			if (db == null)
+			{
+				db1.close();
+			}
+		}
+		return listSaksi;
+	}
+	
+	
 	public Map getHashMapTurutHadir(HttpSession session, ResultSet rs,String rowCss, String bil, Db db) 
+			throws Exception
+	{
+		Map h = Collections.synchronizedMap(new HashMap());
+		h.put("rowCss",rowCss);
+		h.put("BIL",bil);
+		h.put("ID_BIKEHADIRAN",rs == null ? "" :rs.getString("ID_BIKEHADIRAN") == null ? "" : rs.getString("ID_BIKEHADIRAN").toUpperCase());
+		h.put("ID_PERBICARAAN",rs == null ? "" :rs.getString("ID_PERBICARAAN") == null ? "" : rs.getString("ID_PERBICARAAN").toUpperCase());
+		h.put("NAMA",rs == null ? "" :rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
+		h.put("HUBUNGAN",rs == null ? "" :rs.getString("HUBUNGAN") == null ? "" : rs.getString("HUBUNGAN").toUpperCase());
+		h.put("STATUS",rs == null ? "" :rs.getString("STATUS") == null ? "" : rs.getString("STATUS").toUpperCase());
+		h.put("UMUR",rs == null ? "" :rs.getString("UMUR") == null ? "" : rs.getString("UMUR").toUpperCase());
+		h.put("PENGENALAN",rs == null ? "" :rs.getString("PENGENALAN") == null ? "" : rs.getString("PENGENALAN").toUpperCase());
+		h.put("CATATAN",rs == null ? "" :rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN").toUpperCase());
+		h.put("KETERANGAN",rs == null ? "" :rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+		h.put("NOTA_PEGAWAI",rs == null ? "" :rs.getString("NOTA_PEGAWAI") == null ? "" : rs.getString("NOTA_PEGAWAI"));
+		h.put("JENIS_HADIR",rs == null ? "" :rs.getString("JENIS_HADIR") == null ? "" : rs.getString("JENIS_HADIR").toUpperCase());
+		h.put("ID_HADIR",rs == null ? "" :rs.getString("ID_HADIR") == null ? "" : rs.getString("ID_HADIR").toUpperCase());
+		return h;	
+		
+	}
+	
+	//arief add saksi
+	public Map getHashMapSaksi(HttpSession session, ResultSet rs,String rowCss, String bil, Db db) 
 			throws Exception
 	{
 		Map h = Collections.synchronizedMap(new HashMap());

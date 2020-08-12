@@ -309,12 +309,14 @@
                 			<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                 		#end
                 		
-<!--                 	<td align="center"><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/></td>
- -->                	
+                 	<!-- <td align="center"><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/></td> -->
+                 	                	
 		    		#else
-		    		<p align="center"><input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+		    		<!-- <p align="center"><input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/> -->
+		    		
            			<p align="center"><input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-               		<p align="center"><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+           			
+               		<!-- <p align="center"><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/> -->
 		    		#end
 		    </td>
            	</tr>
@@ -604,14 +606,14 @@ function doChangeLuasKegunaan() {
 function doChangeLuas() {
 	doAjaxCall${formName}("doChangeLuas");
 }
-function doKemaskini() {
+/* function doKemaskini() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 	document.${formName}.submit();
-}
+} */
 function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();

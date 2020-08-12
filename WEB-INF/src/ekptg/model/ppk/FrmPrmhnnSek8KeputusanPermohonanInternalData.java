@@ -202,25 +202,10 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 				h.put("alamat3", rs.getString("alamat3")==null?"":rs.getString("alamat3"));
 				
 				h.put("poskod", rs.getString("poskod")==null?"":rs.getString("poskod"));
-				
-				//h.put("no_tel", rs.getString("no_Tel")==null?"":rs.getString("no_Tel"));
-				//h.put("no_fax", rs.getString("no_Fax")==null?"":rs.getString("no_Fax"));
-				
+								
 				h.put("daerah", rs.getString("id_daerah")==null?"":rs.getString("id_daerah"));
 				h.put("negeri", rs.getString("id_negeri")==null?"":rs.getString("id_negeri"));
 				
-				/*
-				 * r.add("kp.id_Permohonan");
-			r.add("pej.nama_Pejabat");
-			r.add("pej.alamat1");
-			r.add("pej.alamat2");
-			r.add("pej.alamat3");
-			r.add("pej.poskod");
-			r.add("pej.no_Tel");
-			r.add("pej.no_Fax");
-			r.add("d.nama_Daerah");
-			r.add("n.nama_Negeri");
-				 */
 				
 				listMaklumatMahkamah.addElement(h);
 			}}
