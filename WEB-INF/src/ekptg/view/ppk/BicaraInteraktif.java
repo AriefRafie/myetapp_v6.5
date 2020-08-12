@@ -105,8 +105,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			List listPermohonanTukarPegawai = null;
 			List listTurutHadir = null;
 			Map viewTuruthadir = null;
-			List listTidakHadir = null; //arief add
-			Map viewTidakHadir = null;	//arief add
+			List listTidakHadir = null;//arief add
+			Map viewTidakHadir = null;//arief add
+			List listSaksi = null;//arief add
+			Map viewSaksi = null;//arief add
 			List listPerbicaraan = null;
 			List listKronologiStatus = null;
 			defaultPut();
@@ -773,7 +775,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			}
 			skrin_name = "app/ppk/BicaraInteraktif/blank.jsp";
 		}
-		else if(command.equals("autoSaveKeterangan") || command.equals("autoSaveKeteranganTuruthadir"))
+		else if(command.equals("autoSaveKeterangan") || command.equals("autoSaveKeteranganTuruthadir") || command.equals("autoSaveKeteranganSaksi")) //arief add keterangan Saksi
 		{
 			String ACTION = getParam("ACTION");
 			String ID_OBPERMOHONAN = getParam("ID_OBPERMOHONAN");
@@ -791,6 +793,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				{
 					modelBI.simpanKeterangan(ID_BIKEHADIRAN,getParam("KETERANGAN_TURUTHADIR_"+ID_BIKEHADIRAN),getParam("NOTA_PEGAWAI_TURUTHADIR_"+ID_BIKEHADIRAN),db);
 				}
+				else if(command.equals("autoSaveKeteranganSaksi"))
+				{
+					modelBI.simpanKeterangan(ID_BIKEHADIRAN,getParam("KETERANGAN_SAKSI_"+ID_BIKEHADIRAN),getParam("NOTA_PEGAWAI_SAKSI_"+ID_BIKEHADIRAN),db);//arief add
+				}
 			}
 			finally {
 				if (db != null)
@@ -799,7 +805,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("ACTION", ACTION);			
 			this.context.put("ID_OBPERMOHONAN", ID_OBPERMOHONAN);			
 			this.context.put("ID_BIKEHADIRAN", ID_BIKEHADIRAN);	
-			this.context.put("divUnique_id", divUnique_id);	
+			this.context.put("divUnique_id", divUnique_id);
 			
 			skrin_name = "app/ppk/BicaraInteraktif/divTimeAutoSave.jsp";
 		}			
@@ -910,6 +916,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			String ID_OBPERMOHONANMINOR = "";		
 			String LISTPENJAGA= "";		
 			viewTuruthadir = null;
+			viewSaksi = null; //arief add
 			Map viewPejagaWaris = null;
 			Db db = null;
 			String SEKSYEN = "";
@@ -923,6 +930,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				{
 					viewTuruthadir = modelBI.viewTuruthadir(session, ID_BIKEHADIRAN, db);
 					NAMA = (String) viewTuruthadir.get("NAMA") == null ? "" : (String) viewTuruthadir.get("NAMA");
+					viewSaksi = modelBI.viewSaksi(session, ID_BIKEHADIRAN, db);//arief add
+					NAMA = (String) viewSaksi.get("NAMA") == null ? "" : (String) viewSaksi.get("NAMA");//arief add
 				}
 				myLogger.info("NAMA ::::::::::: "+NAMA);
 				
@@ -1046,32 +1055,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 					}
 					
 					String alamatTerakhir = "";
-					/*
-					if(!ALAMAT_1.equals(""))
-					{
-						alamatTerakhir += modelBI.upperCaseAllFirst(modelBI.removeLastKoma(ALAMAT_1))+", ";
-					}
-					if(!ALAMAT_2.equals(""))
-					{
-						alamatTerakhir += modelBI.upperCaseAllFirst(modelBI.removeLastKoma(ALAMAT_2))+", ";
-					}
-					if(!ALAMAT_3.equals(""))
-					{
-						alamatTerakhir += modelBI.upperCaseAllFirst(modelBI.removeLastKoma(ALAMAT_3))+", ";
-					}
-					if(!POSKOD.equals(""))
-					{
-						alamatTerakhir += modelBI.removeLastKoma(POSKOD)+", ";
-					}
-					if(!NAMA_BANDAR.equals(""))
-					{
-						alamatTerakhir += modelBI.upperCaseAllFirst(NAMA_BANDAR)+", ";
-					}
-					if(!NAMA_NEGERI.equals(""))
-					{
-						alamatTerakhir += modelBI.upperCaseAllFirst(NAMA_NEGERI)+", ";
-					}
-					*/
+
 					if(!TEMPAT_MATI.equals(""))
 					{
 						alamatTerakhir = modelBI.upperCaseAllFirst(modelBI.removeLastKoma(TEMPAT_MATI));
@@ -1276,6 +1260,33 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("viewTuruthadir", viewTuruthadir);
 			skrin_name = "app/ppk/BicaraInteraktif/viewRowTurutHadir.jsp";
 		}
+		//arief add saksi
+		else if(command.equals("saveSaksi"))
+		{
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
+			String ID_BIKEHADIRAN = getParam("ID_BIKEHADIRAN");
+			this.context.put("ID_BIKEHADIRAN", ID_BIKEHADIRAN);
+			this.context.put("rowCss", getParam("rowCss"));
+			this.context.put("BIL", getParam("BIL"));
+			this.context.put("scrolPosition", getParam("scrolPosition"));
+			Db db = null;
+			try {
+				db = new Db();
+				modelBI.simpanKehadiran(session, getParam("KETERANGAN_SAKSI_"+ID_BIKEHADIRAN),getParam("NOTA_PEGAWAI_SAKSI_"+ID_BIKEHADIRAN),ID_BIKEHADIRAN, ID_PERBICARAAN, getParam("NAMA_SAKSI_"+ID_BIKEHADIRAN), getParam("HUBUNGAN_SAKSI_"+ID_BIKEHADIRAN),
+						getParam("PENGENALAN_SAKSI_"+ID_BIKEHADIRAN),getParam("STATUS_SAKSI_"+ID_BIKEHADIRAN),getParam("UMUR_SAKSI_"+ID_BIKEHADIRAN),
+						"T", "", db);
+				viewSaksi = modelBI.viewSaksi(session, ID_BIKEHADIRAN, db);
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			this.context.put("viewSaksi", viewSaksi);
+			skrin_name = "app/ppk/BicaraInteraktif/viewRowSaksi.jsp"; 
+		}		
 		else if(command.equals("editTurutHadir") || command.equals("showKeteranganTurutHadir") || command.equals("simpanTurutHadirKeterangan")  || command.equals("tutupTurutHadirKeterangan"))
 		{
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
@@ -1340,6 +1351,71 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				skrin_name = "app/ppk/BicaraInteraktif/editTurutHadir.jsp";
 			}
 		}
+		//arief add saksi
+		else if(command.equals("editSaksi") || command.equals("showKeteranganSaksi") || command.equals("simpanSaksiKeterangan")  || command.equals("tutupSaksiKeterangan"))
+		{
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
+			String ID_BIKEHADIRAN = getParam("ID_BIKEHADIRAN");
+			this.context.put("ID_BIKEHADIRAN", ID_BIKEHADIRAN);
+			
+			this.context.put("rowCss", getParam("rowCss"));
+			this.context.put("BIL", getParam("BIL"));
+			this.context.put("scrolPosition", getParam("scrolPosition"));	
+			this.context.put("div", getParam("div"));	
+			
+			String NAMA = "";
+			String KETERANGAN = "";
+			String NOTA_PEGAWAI = "";
+			viewSaksi = null;
+			Db db = null;
+			try {
+				db = new Db();
+				
+				if(!ID_BIKEHADIRAN.equals(""))
+				{
+					viewSaksi = modelBI.viewSaksi(session, ID_BIKEHADIRAN, db);
+					NAMA = (String) viewSaksi.get("NAMA") == null ? "" : (String) viewSaksi.get("NAMA");
+				}
+				this.context.put("dataStatusOB",modelBI.setDataList(session,"dataStatusOB", "", "","STATUS_OB","", "", "", db));
+				this.context.put("dataHubungan",modelBI.setDataList(session,"dataHubungan", "", "","TBLPPKRUJSAUDARA","ID_SAUDARA", "KOD", "KETERANGAN", db));
+				
+				if(command.equals("showKeteranganSaksi") || command.equals("simpanSaksiKeterangan") || command.equals("tutupSaksiKeterangan"))
+				{
+					if(command.equals("simpanSaksiKeterangan") || command.equals("tutupSaksiKeterangan"))
+					{
+						modelBI.simpanKeterangan(ID_BIKEHADIRAN,getParam("KETERANGAN_SAKSI_"+ID_BIKEHADIRAN),getParam("NOTA_PEGAWAI_SAKSI_"+ID_BIKEHADIRAN),db);
+					}					
+					Map viewKeterangan = modelBI.viewKeterangan(session, ID_BIKEHADIRAN, db);
+					KETERANGAN = (String) viewKeterangan.get("KETERANGAN");	
+					NOTA_PEGAWAI = (String) viewKeterangan.get("NOTA_PEGAWAI");	
+				}			
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			this.context.put("NAMA", NAMA);
+			this.context.put("KETERANGAN", KETERANGAN);
+			this.context.put("NOTA_PEGAWAI", NOTA_PEGAWAI);
+			
+			this.context.put("viewSaksi",viewSaksi);
+			
+			if(command.equals("showKeteranganSaksi") || command.equals("simpanSaksiKeterangan"))
+			{				
+				skrin_name = "app/ppk/BicaraInteraktif/viewKeteranganSaksi.jsp";
+			}
+			else if(command.equals("tutupSaksiKeterangan"))
+			{				
+				skrin_name = "app/ppk/BicaraInteraktif/viewKeteranganSaksiTutup.jsp";
+			}
+			else
+			{
+				skrin_name = "app/ppk/BicaraInteraktif/editSaksi.jsp";
+			}
+		}
 		else if(command.equals("show_turuthadir") || command.equals("tambah_turuthadir") || command.equals("delete_turuthadir"))
 		{			
 			this.context.put("div", "view_turuthadir");
@@ -1378,6 +1454,46 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("listTurutHadir", listTurutHadir);			
 			this.context.put("scrolPosition", getParam("scrolPosition"));			
 			skrin_name = "app/ppk/BicaraInteraktif/viewTurutHadir.jsp";
+		}
+		//arief add saksi
+		else if(command.equals("show_saksi") || command.equals("tambah_saksi") || command.equals("delete_saksi"))
+		{			
+			this.context.put("div", "view_saksi");
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);			
+			Db db = null;
+			try {
+				db = new Db();
+				if(command.equals("tambah_saksi"))
+				{
+					modelBI.simpanKehadiran(session, getParam("KETERANGAN_SAKSI_"),getParam("NOTA_PEGAWAI_SAKSI_"),"", ID_PERBICARAAN, getParam("NAMA_SAKSI_"), 
+							getParam("HUBUNGAN_SAKSI_"), 
+							getParam("PENGENALAN_SAKSI_"),
+							getParam("STATUS_SAKSI_"),
+							getParam("UMUR_SAKSI_"),
+							"T", "", null);
+				}
+				else if(command.equals("delete_saksi"))
+				{
+					String ID_BIKEHADIRAN = getParam("ID_BIKEHADIRAN");
+					modelBI.deleteKehadiran(session,ID_BIKEHADIRAN,ID_PERBICARAAN,"T",db);
+				}
+				
+				this.context.put("dataStatusOB",modelBI.setDataList(session,"dataStatusOB", "", "","STATUS_OB","", "", "", db));
+				this.context.put("dataHubungan",modelBI.setDataList(session,"dataHubungan", "", "","TBLPPKRUJSAUDARA","ID_SAUDARA", "", "KETERANGAN", db));
+				
+				
+				listSaksi = modelBI.listSaksi(session,ID_PERBICARAAN, null);
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}			
+			this.context.put("listSaksi", listSaksi);			
+			this.context.put("scrolPosition", getParam("scrolPosition"));			
+			skrin_name = "app/ppk/BicaraInteraktif/viewSaksi.jsp";
 		}
 		else if(command.equals("simpan_kehadiran"))
 		{			
@@ -1461,7 +1577,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			String NAMA = "";
 			String KETERANGAN = "";
 			String NOTA_PEGAWAI = "";
-			viewTuruthadir = null;
+			viewTidakHadir = null;
 			Db db = null;
 			try {
 				db = new Db();
@@ -1504,8 +1620,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				}
 				else if(command.equals("delete_tidakhadir"))
 				{
-					String ID_BIKEHADIRAN = getParam("ID_BIKEHADIRAN");
-					modelBI.deleteTidakHadir(session,ID_BIKEHADIRAN,ID_PERBICARAAN,"T",db);
+					String ID_BITIDAKHADIR = getParam("ID_BITIDAKHADIR");
+					modelBI.deleteTidakHadir(session,ID_BITIDAKHADIR,ID_PERBICARAAN,"T",db);
 				}
 				
 				this.context.put("dataStatusOB",modelBI.setDataList(session,"dataStatusOB", "", "","STATUS_OB","", "", "", db));
@@ -1518,7 +1634,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				if (db != null)
 					db.close();
 			}			
-			this.context.put("listTurutHadir", listTurutHadir);			
+			this.context.put("listTidakHadir", listTidakHadir);			
 			this.context.put("scrolPosition", getParam("scrolPosition"));			
 			skrin_name = "app/ppk/BicaraInteraktif/viewTidakHadir.jsp";
 		}
@@ -3167,7 +3283,11 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		this.context.put("viewPerbicaraan","");
 		this.context.put("listKehadiran","");
 		this.context.put("listTurutHadir","");
-		this.context.put("viewTuruthadir","");		
+		this.context.put("viewTuruthadir","");
+		this.context.put("listSaksi","");//arief add
+		this.context.put("viewSaksi","");//arief add
+		this.context.put("listTidakHadir","");//arief add
+		this.context.put("viewTidakHadirr","");//arief add
 		this.context.put("ID_PERBICARAAN","");
 		this.context.put("ID_PERMOHONAN","");
 		this.context.put("ID_PERMOHONANSIMATI","");
