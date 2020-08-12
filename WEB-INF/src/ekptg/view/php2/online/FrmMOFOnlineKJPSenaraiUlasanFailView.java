@@ -26,7 +26,6 @@ import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmPLPHeaderData;
 import ekptg.model.php2.FrmPLPJabatanTeknikalData;
 import ekptg.model.php2.online.FrmMOFOnlineKJPSenaraiUlasanFailData;
-import ekptg.model.php2.online.FrmPLPOnlineKJPSenaraiFailData;
 
 public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 
@@ -60,8 +59,26 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 
 		String idFail = getParam("idFail");
 		String idUlasanTeknikal = getParam("idUlasanTeknikal");
+		String idKementerian = "";
+		Vector listDetailKJP = null;
+		
 
 		try {
+			String userId1 = (String) session.getAttribute("_ekptg_user_id");
+			listDetailKJP = logic.getIdNegeriKJPByUserId(userId1);
+
+			if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
+				Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
+				idKementerian = hashRayuanDB.get("idKementerian").toString();
+
+				myLog.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
+
+			}
+
+			this.context.put("idKementerian", idKementerian);
+			this.context.put("onload", "");
+			this.context.put("completed", false);
+			
 			if ("refreshDokumenMuatNaik".equals(command)) {
 				
 				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
