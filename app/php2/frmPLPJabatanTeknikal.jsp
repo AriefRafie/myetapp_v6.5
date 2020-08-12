@@ -61,12 +61,12 @@
           <!-- <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">KERTAS CADANGAN</li>  -->         
         </ul>
         <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent">
+           <div class="TabbedPanelsContent">
            #parse("app/php2/frmPLPUlasanJPPH.jsp") </div>
-          <div class="TabbedPanelsContent">
+           <div class="TabbedPanelsContent">
            #parse("app/php2/frmPLPNilaianJPPH.jsp") </div>
            <div class="TabbedPanelsContent">
-            #parse("app/php2/frmPLPDokumenKJP.jsp") </div>
+           #parse("app/php2/frmPLPDokumenKJP.jsp") </div>
            <div class="TabbedPanelsContent">
            #parse("app/php2/frmPLPKertasCadangan.jsp") </div>
         </div>
