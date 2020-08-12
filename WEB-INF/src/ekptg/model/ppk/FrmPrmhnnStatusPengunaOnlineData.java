@@ -23,7 +23,7 @@ import ekptg.helpers.File;
 public class FrmPrmhnnStatusPengunaOnlineData {
 	static Logger myLogger = Logger.getLogger(FrmPrmhnnStatusPengunaOnlineData.class);	
 	
-	//YATI TAMBAH NEW
+	//YATI TAMBAH NEW 12/8/2020
 public static Vector getSenaraiTugasanA(String search,String idMasuk,String role,String kppemohon,String kpsimati, String USER_LOGIN_SYSTEM, String flag_draff)throws Exception {
 		
 		

@@ -51,14 +51,7 @@
   		</td>
   			<td> 
   		</td>
-  			<!--  	<td> <a href="#" onClick="javascript:cetakSuratPanduanBicara('$!idFail','$!id_Permohonan')">
-		       	<input type="button" value="Hantar">
-		    </a>
-		      <a href="#"  onClick="javascript:clearData();">
-		    </a>
-		    
-  		</td>
-  		-->
+  		
   		<td>
             	<input name="hantar" value="Hantar" type="button" onclick="javascript:hantarTAC('$!idFail','$!id_Permohonan')" />
   				<input type=button value = "Reset" onClick="javascript:clearData();">
@@ -106,7 +99,7 @@ function mohonTAC(idFail,id_Permohonan) {
 }
 function hantarTAC(idFail,id_Permohonan) {
 		//alert(idFail);
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupTAC&command=hantar";	
+		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC&command=hantar";	
 		document.${formName}.submit();	
 		//alert(document.${formName}.command);
 		
@@ -122,23 +115,6 @@ function hantarTAC(idFail,id_Permohonan) {
 	
 	}
 
-function cetakBorangD(noFail,idfail,idPerbicaraan) {
-	var url = "../../servlet/ekptg.report.ppk.BorangD_ORI?nofail="+noFail+"&idfail="+idfail+"&idperbicaraan="+idPerbicaraan;
-	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-	
-	if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener = document.window;
-	if (hWnd.focus != null) hWnd.focus(); 
-}
-
-function cetakBorangS(noFail,idfail,id_perbicaraan,idpemohonsek8,idsimati,signedData) {
-	var url = "../../servlet/ekptg.report.ppk.BorangS_ORI?nofail="+noFail+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&idpemohons8="+idpemohonsek8+"&idsimati="+idsimati+"&signedData="+signedData;
-	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-	
-	if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener = document.window;
-	if (hWnd.focus != null) hWnd.focus(); 
-}
 
 function keluar() {
 	window.close();
