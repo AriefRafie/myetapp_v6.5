@@ -162,7 +162,6 @@ public class FrmPLPOnlineKJPSenaraiFailData {
 		} finally {
 			if (db != null ) db.close();
 		}
-		
 		return listFail;
 	}
 
