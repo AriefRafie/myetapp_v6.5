@@ -168,13 +168,6 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	    this.context.put("idpermohonan",idpermohonan);
 	    System.out.println("idpermohonan===XXX"+idpermohonan);
 	  
-	   /* 
-	    System.out.println("id_permohonan==="+id_permohonan);
-	    
-	    if(id_permohonan!=null){
-	    	idpermohonan = id_permohonan;
-	    }
-*/
 	    String idsuburusanstatusfail = getParam("idsuburusanstatusfail");
 	    this.context.put("idsuburusanstatusfail",idsuburusanstatusfail);
 
