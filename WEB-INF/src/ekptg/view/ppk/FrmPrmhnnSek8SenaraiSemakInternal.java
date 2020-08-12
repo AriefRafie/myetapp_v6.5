@@ -83,7 +83,7 @@ public class FrmPrmhnnSek8SenaraiSemakInternal extends VTemplate {
 		mainheader = new FrmHeaderPpk();
 
 		headerppk_baru_default();
-		System.out.println("read here&*&*&*&*");
+		
 		int flagno = 0;
 		int idFlag = 0;
 		int flag_no = 0;
@@ -288,7 +288,7 @@ Vector listabc = null;
 		this.context.put("val_tab", v_tab);
 		
 		
-		System.out.println("vm======="+vm);
+		myLogger.info("vm======="+submit);
 
 		if ("Kemaskini".equals(submit)) {
 			String tempid = getParam("idtemp");
@@ -7289,73 +7289,7 @@ Vector listabc = null;
 		}
 
 		String usid = "";
-		// usid="81"; //kelantan
-		// session.setAttribute("_ekptg_user_id", usid);
-		// this.context.put("usid",usid);
-
-		
-		/*
-		usid = (String) session.getAttribute("_ekptg_user_id");
-		this.context.put("usid", usid);
-
-		this.context.put("DATEUTIL", new DateUtil());
-
-		listnegeri = logic_A.getListnegeri();
-		this.context.put("listnegeri", listnegeri);
-
-		Vector count_dunia = logic_A.getNofaildunia(2, 1, 8);
-		this.context.put("count_dunia", count_dunia);
-
-		Vector listtaraf = logic_A.getListtaraf();
-		this.context.put("listtaraf", listtaraf);
-
-		Vector listsaudara = logic_A.getListsaudara();
-		this.context.put("listsaudara", listsaudara);
-
-		Vector listbuktimati = logic_A.getListbuktimati();
-		this.context.put("listbuktimati", listbuktimati);
-
-		listdaerah = logic_A.getListDaerah();
-		this.context.put("listdaerah", listdaerah);
-
-		Vector listluas = logic_A.getListLuas();
-		this.context.put("listluas", listluas);
-
-		String statuspemilik = "Y";
-		Vector listpemilikan = logic_A.getListStatusPemilik(statuspemilik);
-		this.context.put("listpemilikan", listpemilikan);
-
-		Vector listtanah = logic_A.getListJenisTanah();
-		this.context.put("listtanah", listtanah);
-
-		listmukim = logic_A.getListMukim();
-		this.context.put("listmukim", listmukim);
-
-		String statushak = "Y";
-		Vector listjenishakmilik = logic_A.getListJenisHakMilik(statushak);
-		this.context.put("listJenisHakMilik", listjenishakmilik);
-
-		Vector listkategori = logic_A.getListKategori();
-		this.context.put("listkategori", listkategori);
-
-		this.context.put("flagFromSenaraiFailSek8", flagFromSenaraiFailSek8);
-		this.context.put("flagForView", flagForView);
-		this.context.put("flagFromSenaraiPermohonanSek8",
-				flagFromSenaraiPermohonanSek8);
-		
-		
-		Vector kenegaraan = null;
-		kenegaraan = mainheader.kenegaraan();
-		this.context.put("kenegaraan", kenegaraan);
-		
-		
-		FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamahARB();
-		Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
-				.getMaklumatMahkamahARB();
-		this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
-		*/
-		
-		
+				
 		Db db = null;
 		try {
 		db = new Db();
@@ -7430,7 +7364,7 @@ Vector listabc = null;
 		}
 		
 		Template template = this.engine.getTemplate(vm);
-		System.out.println("vm : " + vm);
+		myLogger.info("vm : " + vm);
 		return template;
 
 	}

@@ -53,13 +53,10 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 	
 	public Vector getDataPPSPP() {
 		return list;
-		
 	}
 	
-
 	public Vector getPerubahanAkta() {
 		return listUbah;
-		
 	}
 	
 	public  Vector setPerubahanAkta() throws Exception {
