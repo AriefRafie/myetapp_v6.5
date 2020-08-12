@@ -38,7 +38,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		// razman comment
 		String portal_role = (String) session.getAttribute("myrole");
 		String user_negeri_login = (String)session.getAttribute("_ekptg_user_negeri");
-		System.out.println("*** user_negeri_login :"+user_negeri_login);
+		myLog.info("*** user_negeri_login :"+user_negeri_login);
 		 
 		Vector list_memo_aktif = null;
 		list_memo_aktif = logic.getMemo("", "Aktif", "1", "0");
