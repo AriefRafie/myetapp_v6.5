@@ -63,6 +63,7 @@ public class FrmAPBCetakSuratKelulusanLesenKepadaPemohon extends AjaxBasedModule
         String idStatus = getParam("idStatus");
         String idDokumen = getParam("idDokumen");
         String idLaporanPasir = getParam("idLaporanPasir");
+        String idUlasanTeknikal = getParam("idUlasanTeknikal");
 		this.context.put("completed",false);
 		
 		String idLuas = getParam("socLuas");

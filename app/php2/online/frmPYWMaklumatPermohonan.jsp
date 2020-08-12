@@ -47,8 +47,7 @@
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENYEWAAN</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
-          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
+          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">
@@ -304,7 +303,6 @@
               #end              
             </table>
           </div>
-          
           <div class="TabbedPanelsContent">
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<tr>
@@ -312,7 +310,6 @@
               </tr>
            	</table>
          </div>
-         
          <div class="TabbedPanelsContent">
          <table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<tr>
@@ -985,7 +982,6 @@ function doHapus(){
 	document.${formName}.submit();
 }
 </script>
-
 <script>
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
@@ -1011,9 +1007,6 @@ function cetakPengesahanPermohonan(idPermohonan) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
-</script>
-
-<script>
 <!-- MAKLUMAT LAMPIRAN -->
 function daftarLampiran() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView";
@@ -1024,8 +1017,12 @@ function daftarLampiran() {
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.submit();
 }
-
 <!-- SENARAI SEMAK -->
+function kemaskiniPermohonan() {
+	document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
+	document.${formName}.mode.value = "update";
+	document.${formName}.submit();	
+}
 function doSimpanKemaskiniSenaraiSemak() {
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -1038,3 +1035,4 @@ function doSimpanKemaskiniSenaraiSemak() {
 	document.${formName}.submit();
 }
 </script>
+$javascriptLampiran

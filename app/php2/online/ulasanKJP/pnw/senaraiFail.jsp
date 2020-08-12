@@ -94,11 +94,11 @@
       <legend><b>SENARAI PERMOHONAN</b></legend>
         #parse("app/utils/record_paging.jsp")
         <table align="center" width="100%">
-        #if ($userRole == 'online_kjp' && $layerKJP == '1')
+        ##if ($userRole == 'online_kjp' && $layerKJP == '1')
         <tr>
           <td colspan="6" scope="row"><input name="cmdDaftar" type="button" value="Daftar Permohonan" onclick="javascript:daftarBaru()"/></td>
         </tr>
-        #end
+        ##end
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="30%"><strong>No Rujukan <i>Online</i></strong></td>

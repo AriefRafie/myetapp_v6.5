@@ -53,13 +53,10 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 	
 	public Vector getDataPPSPP() {
 		return list;
-		
 	}
 	
-
 	public Vector getPerubahanAkta() {
 		return listUbah;
-		
 	}
 	
 	public  Vector setPerubahanAkta() throws Exception {
@@ -207,14 +204,6 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 							"TBLPPKPERMOHONANSIMATI MOSI" 
 							//", USERS_INTERNAL UR  "
 					+ " WHERE " +
-					//		"F.ID_NEGERI = N.ID_NEGERI(+)  "
-					// +" AND N.ID_NEGERI = PM.ID_NEGERISURAT(+)"
-					//+ " AND P.ID_DAERAHMHN = D.ID_DAERAH(+) "
-					//+ " AND UR.USER_ID  = '"
-					//+ userid
-					//+ "' "
-					//+ " AND UR.ID_PEJABATJKPTG = U.ID_PEJABATJKPTG "
-					//+ " AND " +
 							"P.ID_FAIL = F.ID_FAIL"
 					// + " AND PM.ID_PERMOHONAN = P.ID_PERMOHONAN(+) "
 					+ " AND P.ID_PEMOHON = PM.ID_PEMOHON(+) "

@@ -185,7 +185,7 @@ public class EmailConfig {
 		mail.RECIEPIENT = userMail;
 //		mail.TO_CC = new String[1];		
 		mail.sendEmail();	
-	}
+	} 
 	
 	public void sendByKJPPenyedia(String idKementerian, String idAgensi, String userMail, String tajuk,
 			String kandungan) throws Exception {

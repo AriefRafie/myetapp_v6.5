@@ -12,7 +12,7 @@ import ekptg.report.EkptgReportServlet;
 
 public class LaporanPermohonan extends EkptgReportServlet {
 	
-	static Logger myLog = Logger.getLogger(ekptg.report.htp.LaporanPermohonan.class);
+	static Logger myLog = Logger.getLogger(ekptg.report.LaporanPermohonan.class);
     private static String OS = System.getProperty("os.name").toLowerCase();
 	public LaporanPermohonan() {
 //		super.setFolderName("htp");
