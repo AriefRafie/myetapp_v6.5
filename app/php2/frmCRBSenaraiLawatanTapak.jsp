@@ -22,10 +22,11 @@
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
-  
+  <input name="step" type="hidden" id="step"/>
   <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="selectedTabLower" type="hidden" id="selectedTabLower" value="$selectedTabLower"/>
 </p>
+<body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
   <tr>
@@ -111,15 +112,27 @@
   </tr>
   <tr>
     <td>&nbsp;</td>
-  </tr>
-  #if ($idStatus == '1610200' && $actionCRB == '' && $flagPopup == '')
+  </tr>      
   <tr>
-    <td align="center"><input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
-      <input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
-      <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+    <td align="center">
+     #if ($idStatus == '1610200' && $actionCRB == '' && $flagPopup == '')
+     #if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ')
+    	<input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+	 #end
+      	<input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
+      	<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+     #if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
+      	<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar ke Ibu Pejabat" onClick="gotoIbuPejabat()"/>
+	 #end
+	 #if ($userRole == '(PHP)PYWPengarahHQ')
+      	<input type="button" name="cmdHantarTugasan2" id="cmdHantarTugasan2" value="Hantar Kepada Penolong Pengarah" onClick="gotoHantarTugasanPP()"/>
+     #end
+     #if ($userRole == '(PHP)PYWPenolongPengarahHQ')
+         <input type="button" name="cmdHantarTugasan" id="cmdHantarTugasan" value="Agihan Kepada Pen. Pegawai Tanah" onClick="gotoHantarTugasanPPT()"/>
+      #end
+     #end
     </td>
   </tr>
-  #end
   #elseif ($idFail != '')
   <tr>
     <td> 
@@ -151,8 +164,6 @@ function doChangeTabLower(tabId) {
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.submit();
 }
-</script>
-<script>
 function doDaftarBaruLT(){
 	document.${formName}.actionCRB.value = "newLawatanTapak";
 	document.${formName}.flagPopup.value = "";
@@ -461,8 +472,6 @@ function batalPegawaiPelapor() {
 	document.${formName}.modePopup.value = "view";
 	doAjaxCall${formName}("");
 }
-</script>
-<script>
 function daftarDokumen() {	
 	document.${formName}.flagPopup.value = "openPopupDokumen";
 	document.${formName}.modePopup.value = "new";
@@ -605,8 +614,6 @@ function doSeterusnya(){
 	document.${formName}.hitButton.value = "doSeterusnya";
 	document.${formName}.submit();
 }
-</script>
-<script>
 function validateJarak(elmnt,content,content2) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
@@ -655,7 +662,6 @@ function cetakCRBLampiranA(idLaporanTanah) {
 	hWnd.focus();
 }
 </script>
-<input name="step" type="hidden" id="step"/>
 <script>
 function gotoSelesaiPermohonan(){	
 	document.${formName}.step.value = "selesaiPermohonan";
@@ -663,6 +669,28 @@ function gotoSelesaiPermohonan(){
 }
 function gotoBatalPermohonan(){	
 	document.${formName}.step.value = "batalPermohonan";
+	document.${formName}.submit();
+}
+function gotoIbuPejabat(){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	document.${formName}.hitButton.value = "gotoIbuPejabat";
+	document.${formName}.submit();
+}
+function gotoHantarTugasanPP(){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	document.${formName}.hitButton.value = "gotoHantarTugasanPP";
+	document.${formName}.submit();
+}
+function gotoHantarTugasanPPT(){	
+	document.${formName}.step.value = "gotoHantarTugasanPPT";
+	document.${formName}.submit();
+}
+function gotoSenaraiFail(){
+	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiFailView";
 	document.${formName}.submit();
 }
 </script>

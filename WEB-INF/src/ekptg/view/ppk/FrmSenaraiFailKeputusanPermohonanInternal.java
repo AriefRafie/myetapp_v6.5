@@ -69,9 +69,10 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		logic_E = new FrmSenaraiFailInternalData();
 		logic_F = new FrmPrmhnnSek8KeputusanPermohonanInternalData();
 		mainheader = new FrmHeaderPpk();
+		Vector flag5juta =  new Vector(); //arief add 5 juta
 		this.context.put("seksyen_kp", "8");
 		Vector listSupportingDoc = null;
-
+		
 		HttpSession session = this.request.getSession();
 		String submit = "";
 		submit = getParam("command");
@@ -184,7 +185,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			// System.out.println("SIZE LIST C: " + listC.size());
 			// this.context.put("listC", listC);
 		}
-
+		
+		FrmPrmhnnSek8KeputusanPermohonanInternalData.checkFlag5Juta(id);
+		flag5juta = FrmPrmhnnSek8KeputusanPermohonanInternalData.getFlag5Juta();
+		this.context.put("flag5juta", flag5juta);
+		
 		if ("paparKeputusan".equals(submit)) {
 			System.out.println("~~~~~~~~ paparKeputusan ~~~~~~~~~~~~~~~~~~~");
 			String idPermohonan = getParam("idPermohonan");

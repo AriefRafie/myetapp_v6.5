@@ -2307,7 +2307,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                								#if($listamid.bandar!="" && $listamid.bandar!="0")
                								
                									<select name="txtBandarHartaHtaamX2" id="txtBandarHartaHtaamX2" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
-                									<option value="$listamid.bandar">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
+                									<option value="$listamid.bandarhta">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
                           					        #foreach($listdaerah in $listBandarbyNegeri)                                 
                               							#if($listamid.bandar!=$listdaerah.id)
                  						 					<option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>

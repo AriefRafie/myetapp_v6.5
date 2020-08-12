@@ -447,7 +447,7 @@
                                    	<tr>
                            				<td>&nbsp;</td>
                                        	<td><div align="right" class="style43">
-                                              <div align="left">Alamat Harta</div>
+                                              <div align="left">Alamat Harta 1</div>
                                      	</div></td>
                                     	<td><div align="right">:</div></td>
                                    		<td><input name="txtAlamatHarta1HtaamX" type="text" id="textfield57" value="$alamathta1" size="34" $readmode style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"/></td>
@@ -645,7 +645,7 @@
                       			<tr>
                                               <td><span class="style56"></span></td>
                                               <td><div align="right" class="style57">
-                                                <div align="left">Kategori Tanah</div>
+                                                <div align="left">Kategori Tanah 1</div>
                                               </div></td>
                                               <td><div align="right">:</div></td>
                                               <td>
@@ -1095,7 +1095,26 @@
 							                                      		<div align="left">#if($readmodenegeri != "disabled")Negeri#else Negeri#end</div>
 							                                      	</div></td>
 							                                      	<td width="1%"><div align="right" class="style43">:</div></td>
-							                                      	<td width="70%">$!socNegeri</td>
+							                                      	<td width="70%">
+							                                      	#if($readmode == "disabled")
+							                                      	
+							                                      		#foreach($listN in $listnegeri)
+										                             		#if($listam.negeri==$listN.id_Negeri)
+										                                    	#set($negerikodpemoP=$listN.kod_Negeri)
+										                                  		#set($negeriketeranganpemoP=$listN.nama_Negeri)
+										                                  	#end 
+									                       				#end
+							                                      	
+							                                      		#if($listam.negeri!="" && $listam.negeri!="0" )
+								                                      		<input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+								                                      	#else
+								                                      		<input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+								                                      	#end
+							                                      		
+							                                      	#else
+							                                      		$!socNegeri
+							                                      	#end
+							                                      	</td>
 							                               	</tr>
                             	
 							                            	<tr>
@@ -1104,7 +1123,26 @@
 							                                       		<div align="left">#if($readmodedaerah != "disabled")Daerah#else Daerah#end</div>
 							                                       	</div></td>
 							                                    	<td width="1%"><div align="right" class="style43">:</div></td>
-							                                       	<td>$!socDaerah</td>
+							                                       	<td>
+							                                       	#if($readmode == "disabled")
+							                                       	
+							                                       		#foreach($listD in $listdaerah)
+														                    #if($listam.daerah==$listD.id)
+															                    #set($listDaerahK=$listD.kod)
+															                    #set($listDaerahN=$listD.nama)
+															                #end
+														                #end
+														                
+														                #if($listam.daerah!="" && $listam.daerah!="0" )
+								                                      		<input name="d" value="$listDaerahK - $listDaerahN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+										                                #else
+										                                     <input name="d" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode"/>
+										                                #end
+														                
+							                                       	#else
+							                                       		$!socDaerah
+							                                       	#end
+							                                       	</td>
 							                               	</tr>
                                 
 							                              	<tr>
@@ -1113,7 +1151,26 @@
 							                                       		<div align="left">#if($readmodemukim != "disabled")Mukim#else Mukim#end</div>
 							                                      	</div></td>
 							                                       	<td width="1%"><div align="right" class="style43">:</div></td>
-							                                       	<td>$!socMukim</td>
+							                                       	<td>
+							                                       	#if($readmode == "disabled")
+							                                       	
+							                                       		#foreach($listM in $listmukim)
+														                    #if($listam.mukim==$listM.id)
+															                    #set($listMukimK=$listM.kod)
+															                    #set($listMukimN=$listM.nama)
+															                #end
+														                #end
+							                                       		
+							                                       		#if($listam.mukim!="" && $listam.mukim!="0" )
+									                                    	<input name="m" value="$listMukimK - $listMukimN" size="34" $readmodeR class="$readmode" style="text-transform:uppercase;" />
+									                                  	#else
+									                                      	<input name="m" value="" size="34" $readmodeR class="$readmode" style="text-transform:uppercase;" />
+									                             		#end
+									                             		
+							                                       	#else
+							                                       		$!socMukim
+							                                       	#end
+							                                       	</td>
 							                       			</tr>										
 							                 #if($listam.flag=="1")
 							                             	<tr>
@@ -1155,7 +1212,25 @@
 							                                      		<div align="left">Bandar</div>
 							                                    	</div></td>
 							                                  		<td><div align="right"><span class="style38">:</span></div></td>
-							                                    	<td>$!socBandar</td>
+							                                    	<td>
+						                                    		#if($readmode == "disabled")
+						                                    		
+																		#foreach($listB in $listbandar)
+														                    #if($listam.bandar==$listB.id)
+															                    #set($listBandar=$listB.nama)
+															                #end
+														                #end
+							                                    
+							                                     		#if($listam.bandar!="" && $listam.bandar!="0" )
+							                                     			<input name="ntbb2" value="$listBandar" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+							                                     		#else
+							                                     			<input name="ntbb3" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+							                                     		#end  
+							                                     		                   
+							                                   		#else                             
+							                                  			$!socBandar
+																	#end
+							                                    	</td>
 							                            	</tr>
                                          	#end                                  	
 							                             	<tr>
@@ -1229,7 +1304,26 @@
 							                                       		<div align="left">Negeri</div>
 							                                        </div></td>
 							                                       	<td width="1%"><div align="right" class="style43">:</div></td>
-							                                 		<td>$!socNegeriAdd</td>
+							                                 		<td>
+							                                 		#if($readmode == "disabled")
+							                                 			
+							                                 			#foreach($listN in $listnegeri)
+										                             		#if($listam.negeripemaju==$listN.id_Negeri)
+										                                    	#set($negerikodpemoP=$listN.kod_Negeri)
+										                                  		#set($negeriketeranganpemoP=$listN.nama_Negeri)
+										                                  	#end 
+									                       				#end
+							                                      	
+							                                      		#if($listam.negeripemaju!="" && $listam.negeripemaju!="0" )
+								                                      		<input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+								                                      	#else
+								                                      		<input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+								                                      	#end
+							                                 			
+							                                 		#else
+							                                 			$!socNegeriAdd
+							                                 		#end
+							                                 		</td>
 							                          		</tr>
                              		
 							                            	<tr>
@@ -1238,7 +1332,25 @@
 							                                      		<div align="left">Bandar</div>
 							                                    	</div></td>
 							                                   		<td><div align="right"><span class="style38">:</span></div></td>
-							                                    	<td>$!socBandarAdd</td>
+							                                    	<td>
+						                                    		#if($readmode == "disabled")
+						                                    		
+						                                    			#foreach($listB in $listbandar)
+														                    #if($listam.bandarpemaju==$listB.id)
+															                    #set($listBandarP=$listB.nama)
+															                #end
+														                #end
+														                
+														                #if($listam.bandarpemaju!="" && $listam.bandarpemaju!="0" )
+							                                     			<input name="" value="$listBandarP" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+							                                     		#else
+							                                     			<input name="" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+							                                     		#end
+														                
+														            #else
+						                                    			$!socBandarAdd
+						                                    		#end
+							                                    	</td>
 							                             	</tr>
 										#if($listam.flag=="1")
 							                       			<tr>
@@ -1322,24 +1434,41 @@
 							                      			<tr>
 							                               		<td><div align="left"><span class="style43"></span></div></td>
 							                                    <td><div align="right" class="style57">
-							                                    	<div align="left">Kategori Tanah </div>
+							                                    	<div align="left">Kategori Tanah</div>
 							                                 	</div></td>
 							                                 	<td width="1%"><div align="right" class="style43">:</div></td>
 							                                  	<td>
-							                        	#if($listam.kategori == "2")
-							                            	#set($meterhektar = "Hektar")
-							                            #elseif($listam.kategori == "1" 
-							                            	|| $listam.kategori == "3" 
-							                            	|| $listam.kategori == "4" 
-							                            	|| $listam.kategori == "5" 
-							                            	|| $listam.kategori == "6"
-							                            	|| $listam.kategori == "7" 
-							                            	|| $listam.kategori == "8")
-							                             	#set($meterhektar = "Meter Persegi")
-							                             #else
-							                         		#set($meterhektar = "")
-							                            #end
-							                                    $socKaTanah           
+									                        	#if($listam.kategori == "2")
+									                            	#set($meterhektar = "Hektar")
+									                            #elseif($listam.kategori == "1" 
+									                            	|| $listam.kategori == "3" 
+									                            	|| $listam.kategori == "4" 
+									                            	|| $listam.kategori == "5" 
+									                            	|| $listam.kategori == "6"
+									                            	|| $listam.kategori == "7" 
+									                            	|| $listam.kategori == "8")
+									                             	#set($meterhektar = "Meter Persegi")
+									                             #else
+									                         		#set($meterhektar = "")
+									                            #end
+									                            
+									                            #if($readmode == "disabled")
+									                            
+									                            	#foreach($listK in $listkategori)
+													                    #if($listam.kategori==$listK.id)
+														                    #set($listKategoriTanah=$listK.keterangan)
+														                #end
+													                #end
+													                
+													                #if($listam.kategori!="" && $listam.kategori!="0" )
+						                                     			<input name="" value="$listKategoriTanah" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+						                                     		#else
+						                                     			<input name="" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+						                                     		#end
+													                
+									                            #else
+							                                    	$socKaTanah
+							                                    #end       
 							                         			</td>
 							                           		</tr>
 							                               	
@@ -1380,7 +1509,26 @@
 							                                   		<div align="left">Jenis Luas</div>
 							                                   	</div></td>
 							                               		<td width="1%"><div align="right" class="style43">:</div></td>
-							                            		<td>$!socLuas</td>
+							                            		<td>
+							                            		#if($readmode == "disabled")
+							                            		
+							                            			#foreach($listluashta in $listluas) 
+								                                    	#if($listam.jenisluas==$listluashta.id)    
+								                                          	#set($listluasK=$listluashta.kod)
+								                                          	#set($listluasN=$listluashta.nama)
+								                             			#end 
+								                            		#end
+								                            		
+								                            		 #if($listam.jenisluas!="" && $listam.jenisluas!="0" )
+						                                     			<input name="" value="$listluasK - $listluasN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+						                                     		#else
+						                                     			<input name="" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+						                                     		#end
+								                            		
+							                            		#else
+							                            			$!socLuas
+							                            		#end
+							                            		</td>
 							                               	</tr>
                                           
 					                              			<tr id="tr_luasharta" style="display:none;">
@@ -1504,7 +1652,25 @@
 							                                                  <div align="left">Status Pemilikan</div>
 							                                                </div></td>
 							                                                <td width="1%"><div align="right" class="style43">:</div></td>
-							                                                <td>$!socPB</td>
+							                                                <td>
+							                                                #if($readmode=="disabled")
+							                                                
+							                                                	#foreach($listpemilik in $listpemilikan)
+							                                                		#if($listam.pemilikan==$listpemilik.id)
+								                                                		#set($listpemilikK=$listpemilik.kod)
+								                                                		#set($listpemilikN=$listpemilik.keterangan)
+								                                                	#end 
+								                                                #end
+								                            		
+											                            		#if($listam.pemilikan!="" && $listam.pemilikan!="0" )
+									                                     			<input name="" value="$listpemilikK - $listpemilikN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+									                                     		#else
+									                                     			<input name="" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+									                                     		#end
+							                                                #else
+							                                                	$!socPB
+							                                                #end
+							                                                </td>
 							                            	</tr>
 							                                              
 							                              	<tr>

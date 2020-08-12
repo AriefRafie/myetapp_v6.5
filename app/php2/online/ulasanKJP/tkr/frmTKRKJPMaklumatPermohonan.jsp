@@ -155,27 +155,6 @@
                 <td>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                  </td>
-                 
-                 <!-- #if ($mode == 'view')
-                  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
-                  <input type="button" name="cmdKmskiniTnh" id="cmdKmskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
-                  <input type="button" name="cmdHapus2" id="cmdHapus2" value="Hapus" onClick="doHapus()"/>
-                  #end
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  ##end
-                  #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
-                  <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
-                  #end
-                  #else
-                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
-                  <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                 #end  </td>
-                  -->
-                 
-                 
               </tr>
               #end
             </table>
@@ -297,28 +276,10 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <!-- <td> 
-                ##if ($idStatus == '')
-                #if ($mode == 'view')
-                  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
-                  <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
-                  <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-                  #end
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  ##end
-                  #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
-                  <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
-                  #end
-                   #else
-                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                 #end </td> -->
               </tr>
               #end
             </table>
-<!--             <div class="TabbedPanelsContent">
+            <div class="TabbedPanelsContent">
               <table width="100%" border="0" cellspacing="2" cellpadding="2">
                 <tr>
                   <td><fieldset>
@@ -375,7 +336,7 @@
                     </fieldset></td>
                 </tr>
               </table>
-            </div> -->
+            </div>
           </div>
           <!-- END MAKLUMAT TUKARGUNA -->
 
@@ -403,43 +364,43 @@
 		<input type="hidden" name="buttonSend"  value="$buttonSend"/>
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<td valign="top">
+           	<input type="checkbox" name="pengesahan" id="pengesahan">
+           	<!-- #if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
+           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td> -->
+           	<td>
+        	Saya, $!pemohon.get("namaPemohon"), $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   			<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+      		</td>
            	<tr>
            	<td colspan=2 align="center">
            	#if($semakMode == "update")
    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1"))
-           	<td>
-           	<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
-        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
-   			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
-   			<p align="center"> <input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
-			</td>
-			
+   				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
 			#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("2"))
-			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
-           	<td>
-        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
-   			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
-      		</td>
-   			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
+   				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
 
 			#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
-			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
-           	<td>
-        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
-   			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
-      		</td>
-   			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
+   				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
 
-            
+             		#end
 
              	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> -->
-            #else
-                <!-- <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/> -->
+             	#end
+   		#if ($idStatus !='')
+                <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
            		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-            	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> -->
-   			#end
-   			#end
-   			#end
+            	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
+   		#end
+           <!-- 	#if ($userJawatan == '24')
+           		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar Untuk Semakan" onClick="doHantarEmel()"/>
+            	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
+            #else
+            #if ($idStatus !='')
+            	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            #end -->
+            #end
             </td>
            	</tr>
            	</table>
@@ -447,6 +408,7 @@
         </div>
       </div></td>
   </tr>
+  #end
 </table>
 <!-- <div id="calculateTotalPercentPengarah_result"></div>
 <fieldset id="tableReport" style="display:none;"-->

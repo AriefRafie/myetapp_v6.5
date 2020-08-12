@@ -54,7 +54,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	public String daftarBaru(String idKaitanTujuan, String idJenistujuan, String idJenisLesen, String tujuanPengambilan, String tempoh,
 			String pengalaman, String idNegeri, String lokasi,String luas, String idLuas, String idJenisPengenalanIndividu, 
 			String idKategoriIndividu, String idKategoriPemohon, String idJantina, String idBangsa, String idBandar, 
-			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, HttpSession session) throws Exception {
+			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, String idPermohonanLama, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -75,7 +75,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			//TBLPFDFAIL
 			long idFail = DB.getNextID("TBLPFDFAIL_SEQ");
 			idFailString = String.valueOf(idFail);
-			myLog.info("idFail : "+idFailString);
+
 			r.add("ID_FAIL", idFail);
 			r.add("ID_URUSAN", "9");
 			r.add("ID_SUBURUSAN", "57");
@@ -132,7 +132,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			//TBLPERMOHONAN
 			r = new SQLRenderer();
 			long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
-			myLog.info("idPermohonan : "+idPermohonan);
+
 			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_JKPTG", "1");
@@ -319,7 +319,8 @@ public void carianFail(String noFail,String noPermohonan, String tarikhPermohona
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, F.TUJUAN_PENGAMBILAN, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN, B.NO_PERMOHONAN, C.ID_PEMOHON "
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, F.TUJUAN_PENGAMBILAN, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN, B.NO_PERMOHONAN, C.ID_PEMOHON, "
+				+ " CASE WHEN F.ID_JENISPERMOHONAN = '2' THEN 'PEMBAHARUAN LESEN' ELSE 'PERMOHONAN BARU' END AS JENISPERMOHONAN, F.ID_PERMOHONANLAMA "	
 				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLPHPPMOHONNJDUALPERTAMA F"
 				+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.FLAG_JENIS_FAIL = '4' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS(+)"
 				+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = F.ID_PERMOHONAN"
@@ -352,8 +353,10 @@ public void carianFail(String noFail,String noPermohonan, String tarikhPermohona
 				h.put("bil", bil);
 				h.put("idFail", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 				h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
+				h.put("idPermohonanLama", rs.getString("ID_PERMOHONANLAMA") == null ? "" : rs.getString("ID_PERMOHONANLAMA"));
 				h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
+				h.put("jenispermohonan", rs.getString("JENISPERMOHONAN") == null ? "" : rs.getString("JENISPERMOHONAN").toUpperCase());
 				h.put("tarikhPermohonan", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("namaPemohon",rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
 				h.put("idPemohon", rs.getString("ID_PEMOHON") == null ? "" : rs.getString("ID_PEMOHON"));
@@ -844,6 +847,36 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			if (rs.next()) {
 				return rs.getString("ID_FAIL") == null ? "" : rs
 						.getString("ID_FAIL").toString();
+
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	//yati tambah
+	public String getIdPermohonanByNoFail(String idFail)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_PERMOHONAN FROM TBLPERMOHONAN WHERE " 
+						+ "ID_FAIL  = '"
+						+ idFail + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			//myLog.info("sql id. fail lama: "+sql);
+			if (rs.next()) {
+				return rs.getString("ID_PERMOHONAN") == null ? "" : rs
+						.getString("ID_PERMOHONAN").toString();
 
 			} else {
 				return "";

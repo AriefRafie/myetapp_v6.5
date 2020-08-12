@@ -76,6 +76,7 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 
 		// GET ID PARAM
 		String idFail = getParam("idFail");
+		String step = getParam("step");
 		String idPermohonan = getParam("idPermohonan");
 		String idStatus = getParam("idStatus");		
 		String idUlasanTeknikal = getParam("idUlasanTeknikal");
@@ -84,11 +85,12 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
         String idPenceroboh = getParam("idPenceroboh");
         String idPegawaiLaporanTanah = getParam("idPegawaiLaporanTanah");
         String idDokumen = getParam("idDokumen");	
-		
 		String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
 		String flagStatus = getParam("flagStatus");
 		String flagAktif = "";
+		String flagReKeyin = "";
+		String flagReKeyinPenceroboh = "";
 
 		// VECTOR
 		Vector beanHeader = null;	
@@ -143,13 +145,13 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 		if (idNegeriPenyemak == null || idNegeriPenyemak.trim().length() == 0) {
 			idNegeriPenyemak = "99999";
 		}
-		
-		String flagReKeyin = "";
-		String flagReKeyinPenceroboh = "";
+		String idPegawai = getParam("socPegawai");
+		if (idPegawai == null || idPegawai.trim().length() == 0) {
+			idPegawai = "99999";
+		}
 		
 		this.context.put("completed", false);
-		
-		String step = getParam("step");
+		this.context.put("onload", "");
 
 		vm = "app/php2/frmCRBSenaraiLawatanTapak.jsp";
 
@@ -274,7 +276,18 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 			if ("doSeterusnya".equals(hitButton)) {
 				logic.updateStatus(idFail, idPermohonan, session);
 			}
-			
+        	if ("gotoIbuPejabat".equals(hitButton)){
+        		logic.gotoHantarHQ(idFail, idNegeriUser, idPermohonan, session);
+        		session.removeAttribute("ID_FAIL");
+				session.setAttribute("MSG", "FAIL TELAH DIHANTAR KE IBUPEJABAT");
+	    		this.context.put("onload", "gotoSenaraiFail();");
+        	}
+        	if ("gotoHantarTugasanPP".equals(hitButton)){
+	    		logic.gotoHantarTugasanPP(idFail, idNegeriUser, session);
+	    		session.removeAttribute("ID_FAIL");
+				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PENOLONG PENGARAH");
+	    		this.context.put("onload", "gotoSenaraiFail();");
+			}
 			if ("doSelesaiPermohonan".equals(hitButton)){
 				logicHeader.doSelesaiPermohonan(idFail, idPermohonan, idStatus, getParam("tarikhSelesai"), getParam("txtSebab"), session);
     			step = "";
@@ -282,7 +295,12 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 			if ("doBatalPermohonan".equals(hitButton)){
 				logicHeader.doBatalPermohonan(idFail, idPermohonan, idStatus, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
-    		}
+    			
+			} else if ("gotoHantarTugasanPPT".equals(step)){
+    			this.context.put("selectPegawai", HTML.SelectPYWPenolongPegawaiTanahHQ("socPegawai", Long.parseLong(idPegawai), "", ""));
+    			vm = "app/php2/frmPYWAgihanTugas.jsp";
+            
+    		} 
 		}// END POSTDB
 
 		// HEADER
@@ -841,7 +859,6 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 		this.context.put("actionCRB", actionCRB);
 		this.context.put("selectedTabUpper", selectedTabUpper);
 		this.context.put("selectedTabLower", selectedTabLower);
-
 		this.context.put("flagPopup", flagPopup);
 		this.context.put("modePopup", modePopup);	
 		this.context.put("flagStatus", flagStatus);
@@ -856,9 +873,12 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 		this.context.put("idPenceroboh", idPenceroboh);
 		this.context.put("idPegawaiLaporanTanah", idPegawaiLaporanTanah);
 		this.context.put("idDokumen", idDokumen);
-		
 		this.context.put("flagOpenDetail", flagOpenDetail);
 	    this.context.put("status", status.toUpperCase());
+	    
+	    if (!"".equals(getParam("flagFrom"))){
+        	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+        }
 
 		return vm;
 	}

@@ -452,7 +452,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			
 			//modelNotis.insertPenghantaranNotisReal(idperbicaraan);
 			
-				vm = "app/ppk/integrasi/TandatanganSuccess.jsp";
+				vm = "app/ppk/integrasi/TandatanganSuccessPerintah.jsp";
 			
 			
 		}
@@ -960,10 +960,12 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 	
 }
 
-/**
- * List fail-fail Tandatangan Digital di Perintah
- * 1.	FrmIntegrasiDGCertPerintah.java
- * 2.	app/ppk/integrasi/DGCertPerintah.jsp
- * 3.	app/ppk/integrasi/verifyDGCertPerintah.jsp
- * 4.	app/ppk/integrasi/TandatanganSuccess.jsp
- */
+/**List fail-fail Tandatangan Digital di Perintah:
+ * 1.	FrmPerintahSek8.java
+ * 2.	FrmPerintahMaklumatPerintahSek8.jsp
+ * 3.	tindakanPegawaiPerintahSek8.jsp
+ * 4.	FrmIntegrasiDGCertPerintah.java
+ * 5.	DGCertPerintah.jsp
+ * 6.	FrmPerintahSek8Data.java
+ * 7.	TandatanganSuccessPerintah.jsp
+**/
