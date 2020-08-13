@@ -203,8 +203,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 					sql = sql + " AND I.ID_AGENSI = F.ID_AGENSI";
 				}
 			}
-			myLog.info("carianFail: " + sql);
-			myLog.info("senaraiFail: " + sql);
+			myLog.info("carianFail: sql=" + sql);
 
 			sql = sql + " ORDER BY B.ID_PERMOHONAN DESC";
 			ResultSet rs = stmt.executeQuery(sql);
