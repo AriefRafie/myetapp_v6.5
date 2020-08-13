@@ -1321,7 +1321,7 @@ resetOnBlur:false
                     </fieldset>
                     <p> #end </p>                </tr>
                     
-                    
+#if($!skrin_online != "yes" && $!skrin_online_17 != "yes")                    
 <tr>
             <td><fieldset>
               <legend>DOKUMEN SOKONGAN</legend>
@@ -1356,6 +1356,7 @@ resetOnBlur:false
                  </table>
                  </fieldset></td>
             </tr>
+#end
                 
                 
                  <tr>
