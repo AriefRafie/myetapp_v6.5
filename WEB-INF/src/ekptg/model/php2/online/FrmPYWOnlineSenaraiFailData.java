@@ -146,7 +146,6 @@ public class FrmPYWOnlineSenaraiFailData {
 						temp = temp + "," + idAkaun;
 					}
 				}
-				
 				h.put("idAkaun", idAkaun);
 				h.put("idHasil",
 						rs.getString("ID_HASIL") == null ? "" : rs

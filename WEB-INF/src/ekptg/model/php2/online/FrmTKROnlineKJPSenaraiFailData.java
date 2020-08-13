@@ -27,6 +27,7 @@ import ekptg.model.utils.emel.EmailConfig;
 
 public class FrmTKROnlineKJPSenaraiFailData {
 
+	//test 13/8/2020
 	private Vector<Hashtable<String, Object>> senaraiFail = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatAgensi = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatTanah = null;

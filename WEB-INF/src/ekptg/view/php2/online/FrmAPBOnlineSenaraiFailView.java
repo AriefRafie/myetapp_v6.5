@@ -166,6 +166,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		log.info("flagPopup : " +flagPopup);
 		
 		FrmSemakan semak = null;
+	
+		//log.info("checkIdPermohonan : "+checkId);
 		
 		//SAVE TO DB		
 		if (postDB){

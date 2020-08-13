@@ -115,6 +115,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		
 		if(command.equals("showListPerbicaraan") || command.equals("cariListPerbicaraan"))
 		{
+			
 			String paramsButton = "";
 			String flagCari = "";
 			String htmlSkrin = "";

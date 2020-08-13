@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.Vector;
 
 public interface IUserPegawai {
+
+	// class IUserPegawai
+	// test 13/8/2020
+
 	public boolean delete(String id);
 	public boolean insert(Hashtable<?, ?> parameters,String uid);
 	public boolean update(Hashtable<?, ?> parameters,String id);

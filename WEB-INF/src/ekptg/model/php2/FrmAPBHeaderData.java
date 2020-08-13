@@ -39,7 +39,6 @@ public class FrmAPBHeaderData {
 		String sql = "";
 
 		try {
-			
 			beanMaklumatPermohonan = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();

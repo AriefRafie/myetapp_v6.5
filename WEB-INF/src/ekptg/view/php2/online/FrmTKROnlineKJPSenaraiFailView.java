@@ -46,6 +46,7 @@ import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.view.htp.online.jrp.HTPEmelJRPBean;
 import ekptg.model.htp.online.IOnline;
 
+//test 13/8/2020
 public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
@@ -65,7 +66,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	private IOnline iOnline = null;
 	private IHtp iHTP = null;
 
-	
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
 
@@ -1074,7 +1074,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				vm = "/senaraiFail.jsp";
 			}
 			else {
-				
 				myLog.info("masuk else");
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);

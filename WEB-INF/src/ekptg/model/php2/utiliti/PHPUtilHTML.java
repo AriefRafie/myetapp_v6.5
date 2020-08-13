@@ -33,7 +33,6 @@ public class PHPUtilHTML {
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
 		StringBuffer sb = new StringBuffer("");
-		
 		try {
 			sb.append("<select name='" + selectName + "'");
 			if (disability != null)
