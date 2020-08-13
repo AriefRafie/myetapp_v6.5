@@ -11,6 +11,9 @@ import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Pemohon;
 
 public interface IHtp {
+
+	// class IHtp
+
 	public Vector<Hashtable<String, String>> carianFail(String noFail,String tajukFail,String tarikhDaftar,String tarikhTerima
 		,String namaPemohon
 		,String idNegeri

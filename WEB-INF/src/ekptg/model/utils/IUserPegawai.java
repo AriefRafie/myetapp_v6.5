@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Vector;
 
 public interface IUserPegawai {
+
+	// class IUserPegawai
+
 	public boolean delete(String id);
 	public boolean insert(Hashtable<?, ?> parameters,String uid);
 	public boolean update(Hashtable<?, ?> parameters,String id);

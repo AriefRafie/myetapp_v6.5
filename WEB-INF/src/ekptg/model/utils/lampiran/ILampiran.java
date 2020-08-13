@@ -11,6 +11,9 @@ import org.apache.commons.fileupload.FileItem;
 import ekptg.model.entities.Tblrujdokumen;
 
 public interface ILampiran {
+
+	// class ILampiran
+
 	public String javascriptUpload(String jsUpload,String jsPapar
 			,String idDokumen,HttpSession session,String skrin) throws Exception;
 	public String javascriptUpload(String jsUpload,String jsPapar
