@@ -185,7 +185,7 @@
                 <td>&nbsp;</td>
                 <td> 
                   #if ($mode == 'view')
-	                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+	                  #if ($userRole != '(PHP)PYWPenolongPengarahNegeri' || $userRole != '(PHP)PYWPengarahNegeri')
 		                  <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
 		                  #if ($idStatus == '1610198')
 			                  <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
@@ -193,7 +193,7 @@
 			                  <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
 	                  	  #end
                   	  #end
-                  	<input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+                  	  <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
                   #end
                   #if ($mode == 'update')
 	                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatAduan()"/>
