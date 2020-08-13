@@ -31,8 +31,9 @@
     #else
     <body onload="submitForm()">
     #end
-
-
+    
+    
+    <!-- 13/8/2020 -->
 <form id="form1" name="f1" method="post" action="">
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
