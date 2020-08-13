@@ -72,6 +72,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 					+ " AND A.ID_MASUK = H.USER_ID(+)"
 					+ " AND B.ID_STATUS != '999'";
 
+			
 
 			// noFail
 			if (noFail != null) {

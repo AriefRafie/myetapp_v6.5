@@ -55,6 +55,7 @@ public class FrmTKRHeaderData {
 					+ " AND FAIL.ID_SEKSYEN = 4 AND FAIL.ID_URUSAN = 6 AND FAIL.ID_SUBURUSAN = 33"
 					+ " AND FAIL.ID_FAIL = '" + idFail + "'";
 
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {

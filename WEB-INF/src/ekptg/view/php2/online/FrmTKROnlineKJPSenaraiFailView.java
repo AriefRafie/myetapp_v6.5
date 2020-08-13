@@ -65,6 +65,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	private IOnline iOnline = null;
 	private IHtp iHTP = null;
 
+	
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
 
