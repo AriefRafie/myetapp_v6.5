@@ -43,10 +43,6 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	FrmRynSek8SemakPenerimaan model = new FrmRynSek8SemakPenerimaan();
 	FrmPrmhnnSek8KeputusanPermohonanInternalData logicKeputusanPrmhnn = new FrmPrmhnnSek8KeputusanPermohonanInternalData();
 	
-	
-	
-	
-	
  	String checkedTidakHadir = "";
 	String checkedWarisTidakLengkap = "";
 	String checkedMahkamahTinggi = "";
@@ -80,8 +76,6 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	int bezaTahun = 0; //arief add
 	int tahunAktifDenda = 2020; // arief add
 	int tahunDaftar = 2021; //arief add
-	
-	
 	
 	public String doTemplate2() throws Exception
     {
