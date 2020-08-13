@@ -361,7 +361,7 @@
      <tr>
                                          <td>
                                           <fieldset>
-                                          <legend>MAKLUMAT PENGHUTANG</legend>
+                                          <legend>MAKLUMAT PENGHUTANG (Pihak yang menerima hutang daripada Simati)</legend>
                                          #if($!skrin_online != "yes") 
 #if($readmode == "disabled")
 #set($readmodeR = "readonly")
@@ -1573,7 +1573,7 @@
                             <td width="100%">
                             
                             <fieldset>
-                            <legend>MAKLUMAT PENGHUTANG</legend>
+                            <legend>MAKLUMAT PENGHUTANG (Pihak yang menerima hutang daripada Simati)</legend>
                             
                             <table width="100%" border="0">
                               <tr>
