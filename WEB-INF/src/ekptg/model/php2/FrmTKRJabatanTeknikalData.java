@@ -57,6 +57,8 @@ public class FrmTKRJabatanTeknikalData {
 					+ " AND A.ID_PEJABAT = C.ID_PEJABATJKPTG(+) AND A.ID_DOKUMEN = D.ID_DOKUMEN(+) AND A.FLAG_KJP = 'KJT' AND A.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
 
+			
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
