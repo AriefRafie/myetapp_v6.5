@@ -480,61 +480,6 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
  
 		}// close onchangemyList
 
-		
-		
-		
-		// Masukkan nama waris. End.
-		
-		
-		
-		/* User tak nak nama penghantar notis ditarik daripada database
-		if (id_penghantarnotis != "") {
-			String nama = "";
-			String kod = "";
-			// get data keputusan permohonan
-			getPenghantarNotis = modelNotis
-					.getDetailPenghantarNotis(id_penghantarnotis);
-			if (getPenghantarNotis.size() != 0) {
-				Hashtable x = (Hashtable) getPenghantarNotis.get(0);
-				nama = x.get("nama").toString();
-				kod = x.get("kod_penghantar_notis").toString();
-			}
-
-			context.put("idPenghantar", id_penghantarnotis);
-			context.put("namaPenghantar", nama);
-			context.put("kodPenghantar", kod);
-
-			// selected penghantar ob
-			getSelectedPenghantarNotisByJkptg = modelNotis
-					.getSelectedPenghantarNotisByJkptg(idPejabatJKPTG,
-							id_penghantarnotis);
-			// and
-			getSelectedPenghantarNotis = modelNotis
-					.getSelectedPenghantarNotis(id_penghantarnotis);
-			// check penghantar notis ade o xde dlm negeri
-			modelNotis.setPenghantarNotisByJkptg(idPejabatJKPTG);
-			penghantarNotisByJkptg = modelNotis
-					.getPenghantarNotisByJkptg();
-
-			if (idPejabatJKPTG != "") {
-				if (penghantarNotisByJkptg.size() != 0) {
-					context.put("penghantarNotisONCHANGE",
-							getSelectedPenghantarNotisByJkptg);
-				} else {
-					context.put("penghantarNotisONCHANGE",
-							getSelectedPenghantarNotis);
-				}
-			} else {
-				context.put("penghantarNotisONCHANGE",
-						getSelectedPenghantarNotis);
-			}
-
-			context.put("onchangeMyList", "yes");
-
-		} else {
-			context.put("onchangeMyList", "no");
-		}
-        */
         if (hitButt.equals("Batal")) {
         	System.out.println("-------Read Batal KemaskiniLaporan-------");
         	simpanStatus = 2;
@@ -606,12 +551,8 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			
 		}	
 
-
 		//Salnizam edit ends
-        
-        
-        
-        
+
         //GET DROPDOWN PARAM
 		String jenisKp = getParam("socJenisKp");
 		if (jenisKp == null || jenisKp.trim().length() == 0){
@@ -2051,33 +1992,6 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				//String TARIKH_SERAHAN = dateFormat.format(TARIKH_SERAHAN1);
 				String TARIKH_SERAHAN =  rs.getDate("TARIKH_SERAHAN") == null ? "" : dateFormat.format(rs.getDate("TARIKH_SERAHAN"));//aishahlatip 06022017
 				
-				/*
-				if (id_penghantar_notis != null)
-				{
-					try {
-				    	db2 = new Db();
-				    	Connection con2 = db2.getConnection();
-				    	Statement stmt2 = db2.getStatement();
-				    	sqlPaparNamaPenghantarNotis = "SELECT PE.NAMA, PE.ID_PENGHANTARNOTIS, PE.KOD_PENGHANTAR_NOTIS FROM TBLPPKRUJPENGHANTARNOTIS PE WHERE PE.ID_PENGHANTARNOTIS='" + id_penghantar_notis + "'";
-				    			//"SELECT NO_FAIL,JENIS_PENGHANTARAN, TARIKH_SERAHAN, ID_PENGHANTAR_NOTIS, NAMA_PENERIMA, NO_KP_PENERIMA, CATATAN, ID_PERINTAH, ID_PENGHANTARAN FROM TBLPPKHANTARPERINTAH WHERE NO_FAIL='" + noFail1 + "' AND ID_PENGHANTARAN=(SELECT MAX(ID_PENGHANTARAN) FROM TBLPPKHANTARPERINTAH WHERE NO_FAIL = '" + noFail1 + "')";
-				    	//sqlPaparTblLaporanHantarPerintah = "SELECT * FROM TBLPPKHANTARPERINTAH WHERE (ID_PENGHANTARAN =(SELECT MAX(ID_PENGHANTARAN) FROM TBLPPKHANTARPERINTAH) AND NO_FAIL = '" + noFail1 + "')";	
-				    	System.out.println("sqlPaparTblLaporanHantarPerintah = " + sqlPaparTblLaporanHantarPerintah);
-				    
-						ResultSet rs2 = stmt2.executeQuery(sqlPaparNamaPenghantarNotis);
-						while (rs2.next())
-						{
-							this.context.put("NAMA", rs2.getString("NAMA"));
-							this.context.put("KOD_PENGHANTAR_NOTIS", rs2.getString("KOD_PENGHANTAR_NOTIS"));
-						}
-					}
-					finally 
-					{
-			    	
-				      if (db2 != null) db2.close();
-				     
-					}
-				}
-				*/
 				this.context.put("TARIKH_SERAHAN", TARIKH_SERAHAN);
 				this.context.put("NAMA_PENERIMA", rs.getString("NAMA_PENERIMA") == null ? ""
 						:rs.getString("NAMA_PENERIMA"));
@@ -2161,17 +2075,6 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		    	sqlInsertTblLaporanHantarPerintah = r.getSQLInsert("TBLPPKHANTARPERINTAH");
 		    	System.out.println("sqlInsertTblLaporanHantarPerintah = " + sqlInsertTblLaporanHantarPerintah);
 				stmt.executeUpdate(sqlInsertTblLaporanHantarPerintah);
-				
-				
-		    	/*
-		    	sqlInsertTblLaporanHantarPerintah = "INSERT INTO TBLPPKHANTARPERINTAH (ID_PENGHANTARAN, NO_FAIL, " +
-		    			"CATATAN, TARIKH_SERAHAN, JENIS_PENGHANTARAN, NAMA_PENERIMA, NO_KP_BARU, NO_KP_LAMA, " +
-		    			"NO_KP_LAIN, NAMA_PENYERAH, ID_PERINTAH) " +
-		    			"VALUES ('"+id_penghantaran+"','"+noFail1+"','"+txtCatatan1+"','"+txtTarikh1+"'," +
-		    					"'"+radioJenis1+"','"+txtNamaPenerima1+"','"+txtNoKpBaru1+"','"+txtNoKpLama1+"'," +
-		    							"'"+txtNoKpLain1+"','"+txtNamaPenghantarNotis+"','"+idperintah+"')";*/
-		    	
-		    	//stmt.executeUpdate(sqlInsertTblLaporanHantarPerintah);
 		    	con.commit();
 		    	return;
 		    }
