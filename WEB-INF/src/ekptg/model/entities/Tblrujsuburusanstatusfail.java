@@ -10,6 +10,7 @@ import java.util.Date;
 public class Tblrujsuburusanstatusfail extends
 		AbstractTblrujsuburusanstatusfail implements java.io.Serializable {
 
+	// class Tblrujsuburusanstatusfail
 	// Constructors
 
 	/** default constructor */
