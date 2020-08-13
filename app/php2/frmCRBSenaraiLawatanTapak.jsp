@@ -116,20 +116,20 @@
   <tr>
     <td align="center">
      #if ($idStatus == '1610200' && $actionCRB == '' && $flagPopup == '')
-     #if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ')
-    	<input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
-	 #end
+     	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ')
+    		<input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+	 	#end
       	<input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
       	<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-     #if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
-      	<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar ke Ibu Pejabat" onClick="gotoIbuPejabat()"/>
-	 #end
-	 #if ($userRole == '(PHP)PYWPengarahHQ')
-      	<input type="button" name="cmdHantarTugasan2" id="cmdHantarTugasan2" value="Hantar Kepada Penolong Pengarah" onClick="gotoHantarTugasanPP()"/>
-     #end
-     #if ($userRole == '(PHP)PYWPenolongPengarahHQ')
-         <input type="button" name="cmdHantarTugasan" id="cmdHantarTugasan" value="Agihan Kepada Pen. Pegawai Tanah" onClick="gotoHantarTugasanPPT()"/>
-      #end
+     	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
+      		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar ke Ibu Pejabat" onClick="gotoIbuPejabat()"/>
+	 	#end
+	 	#if ($userRole == '(PHP)PYWPengarahHQ')
+      		<input type="button" name="cmdHantarTugasan2" id="cmdHantarTugasan2" value="Hantar Kepada Penolong Pengarah" onClick="gotoHantarTugasanPP()"/>
+     	#end
+     	#if ($userRole == '(PHP)PYWPenolongPengarahHQ')
+         	<input type="button" name="cmdHantarTugasan" id="cmdHantarTugasan" value="Agihan Kepada Pen. Pegawai Tanah" onClick="gotoHantarTugasanPPT()"/>
+      	#end
      #end
     </td>
   </tr>
