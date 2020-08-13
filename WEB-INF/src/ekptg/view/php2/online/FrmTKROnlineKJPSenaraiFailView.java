@@ -1074,6 +1074,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				vm = "/senaraiFail.jsp";
 			}
 			else {
+				
 				myLog.info("masuk else");
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
