@@ -15,7 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ekptg.helpers.Utils;
-
+//test 13/8/2020
 public class FrmTKRHeaderData {
 
 	private Vector beanMaklumatPermohonan = null;
@@ -55,6 +55,7 @@ public class FrmTKRHeaderData {
 					+ " AND FAIL.ID_SEKSYEN = 4 AND FAIL.ID_URUSAN = 6 AND FAIL.ID_SUBURUSAN = 33"
 					+ " AND FAIL.ID_FAIL = '" + idFail + "'";
 
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
