@@ -221,7 +221,7 @@ function toggle_div(id) {
 														</tr> -->
 														<tr>
 															<td>
-																<a href="javascript:pelepasan()" class="help" title="Ulasan Pelepasan">
+																<a href="javascript:pelepasan()" class="help" title="Pelepasan">
 																	<font color="blue"><li>
 																	#if($jumlah_notifikasi_pelepasan > 0)
 																	<label style="background-color:blue" align="center" valign="top" >
@@ -263,7 +263,7 @@ function toggle_div(id) {
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:penyewaan()" class="help" title="Ulasan Penyewaan">
+																<a href="javascript:penyewaan()" class="help" title="Penyewaan">
 																	<font color="blue"><li>
 																	#if($jumlah_notifikasi_penyewaan > 0)
 																	<label style="background-color:blue" align="center" valign="top" >
@@ -276,7 +276,7 @@ function toggle_div(id) {
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:penawaran()" class="help" title="Permohonan Penawaran">
+																<a href="javascript:penawaran()" class="help" title="Penawaran">
 																	<font color="blue"><li>
 																	#if($jumlah_notifikasi_penawaran > 0)
 																	<label style="background-color:blue" align="center" valign="top" >
@@ -289,20 +289,7 @@ function toggle_div(id) {
 														</tr>
 														<tr>
 															<td>
-																<a href="javascript:aktapelantarbenua()" class="help" title="Akta Pelantar Benua">
-																	<font color="blue"><li>
-																	#if($jumlah_notifikasi_apb > 0)
-																	<label style="background-color:blue" align="center" valign="top" >
-																		<b><font color="WHITE"><blink>$jumlah_notifikasi_apb</blink></font></b>
-																	</label>&nbsp;
-																	#end
-																	Akta Pelantar Benua</li></font>
-																</a>
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<a href="javascript:ulasanKertasKewangan()" class="help" title="Ulasan Kertas Kewangan">
+																<a href="javascript:ulasanKertasKewangan()" class="help" title="lasan Kertas Kewangan">
 																	<font color="blue"><li>
 																	#if($jumlah_notifikasi_MOF > 0)
 																	<label style="background-color:blue" align="center" valign="top" >
@@ -628,11 +615,6 @@ function tukarGuna(){
 
 function tukarGunaUlasan(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiUlasanFailView";
-	document.${formName}.submit();
-}
-
-function aktapelantarbenua(){
-	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmAPBOnlineKJPSenaraiFailView";
 	document.${formName}.submit();
 }
 

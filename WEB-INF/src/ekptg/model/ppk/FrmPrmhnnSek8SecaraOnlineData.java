@@ -2961,7 +2961,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			r.add("ID_FAIL", id_fail);
 			r.add("NO_FAIL", no_fail);
 			r.add("NO_KP_BARU", no_kp_baru);
-			r.add("TARIKH_HANTAR", r.unquote("sysdate"));
+			r.add("TARIKH_HANTAR", tarikh_hantar);
 			r.add("ID_PERBICARAAN", id_perbicaraan);
 			
 			
@@ -3033,7 +3033,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			r.add("SEBAB_TUKAR", sebab_tukar);
 			r.add("ID_PERMOHONANSIMATI", id_permohonansimati);
 			//r.add("TARIKH_MATI_P", tarikhmati_pemohon);
-			r.add("TARIKH_MASUK", r.unquote("sysdate"));
+			r.add("TARIKH_MASUK", tarikh_hantar);
 			r.add("ID_MASUK", id_masuk);
 			
 			

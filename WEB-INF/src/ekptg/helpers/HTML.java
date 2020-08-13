@@ -78,7 +78,7 @@ public class HTML {
 	public static String SelectNegeri(String selectName, String jsFunction)
 			throws Exception {
 		return SelectNegeri(selectName, null, null, jsFunction);
-	} 
+	}
 
 	public static String SelectNegeri(String selectName, Long selectedValue)
 			throws Exception {

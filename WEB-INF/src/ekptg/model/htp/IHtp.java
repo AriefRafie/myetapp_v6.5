@@ -10,10 +10,7 @@ import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Pemohon;
 
-public interface IHtp {
-
-	// class IHtp
-
+public interface IHtp {	
 	public Vector<Hashtable<String, String>> carianFail(String noFail,String tajukFail,String tarikhDaftar,String tarikhTerima
 		,String namaPemohon
 		,String idNegeri
@@ -48,17 +45,17 @@ public interface IHtp {
 	public HtpPermohonan findPermohonan(String idPermohonan, String idHtpPermohonan) throws Exception;
 	public HtpPermohonan findPermohonan(String idFail,String idPermohonan, String idHtpPermohonan) throws Exception;
 	public HtpPermohonan findPermohonanKutipan(String idPermohonan, String idHtpPermohonan) throws Exception;
-	public Hashtable<String,String> getInfoSelesaiPermohonan(String idPermohonan,String langkah)throws Exception ;
-	public Hashtable<String,String> getInfoSelesaiPermohonan(String idPermohonan) throws Exception ;
-	public Hashtable<String,String> getInfoTamatSelesaiPermohonan(String idPermohonan)throws Exception ;
+	public Hashtable<String,String> getInfoSelesaiPermohonan(String idPermohonan,String langkah)throws Exception ;	
+	public Hashtable<String,String> getInfoSelesaiPermohonan(String idPermohonan) throws Exception ;		
+	public Hashtable<String,String> getInfoTamatSelesaiPermohonan(String idPermohonan)throws Exception ;		
 	public void hapusHakmilik(String idHakmilikUrusan) throws Exception ;
-	public void kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail s,Tblrujsuburusanstatusfail sBaru)
+	public void kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail s,Tblrujsuburusanstatusfail sBaru) 
 		throws Exception ;
 	public void kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail s,Tblrujsuburusanstatusfail sBaru
 		,String strTarikh) throws Exception ;
 	public void kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail s,String strTarikh) throws Exception ;
 	public String SelectJenisHakmilik(String selectName,Long selectedValue, String disability) throws Exception;
-	public String SelectJenisHakmilik(String selectName,Long selectedValue, String disability, String jsFunction)
+	public String SelectJenisHakmilik(String selectName,Long selectedValue, String disability, String jsFunction) 
 		throws Exception;
 	public String getDaerahMengikutBandar(String idBandar) throws Exception ;
 	public Pemohon carianPemohonMengikutPermohonan(String idPermohonan);
@@ -73,11 +70,13 @@ public interface IHtp {
 		,String idNegeri) throws Exception;
 	public HtpPermohonan simpanPermohonan(HtpPermohonan htpPermohonan)throws Exception;
 	public void simpanStatusPermohonan(Tblrujsuburusanstatusfail s,Connection conn) throws Exception;
-	public Tblrujsuburusanstatusfail getPfdFailValues(String idSubUrusan,Long idPermohonan,Long idFail,Long idMasuk)
+	public Tblrujsuburusanstatusfail getPfdFailValues(String idSubUrusan,Long idPermohonan,Long idFail,Long idMasuk) 
 		throws Exception ;
 	public String getDaerahDefaultMengikutNegeri(String idNegeri) throws Exception ;
 	public String getAgensiDefault(String kodAgensi) throws Exception ;
 	public String getAgensiDefaultMengikutKementerian(String idKementerian) throws Exception ;
 	public String getErrorHTML(String msg) throws Exception,SQLException;
 	public void hapusTindakan(String idsusulan);
+
+	
 }

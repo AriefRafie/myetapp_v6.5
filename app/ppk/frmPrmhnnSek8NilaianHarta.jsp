@@ -1106,9 +1106,9 @@ kod :: $listhath.kod_hakmilik
 <fieldset><legend><strong>SENARAI SEMAKAN</strong></legend>     
 <table width="100%" border="0">
 	<tr class="row2">
-		<td width="2%"></td>
-		<td width="82%">Keterangan</td>
-		<td width="15%">Dokumen</td>
+		<td width="3%"></td>
+		<td width="92%">Keterangan</td>
+		<td width="5%">#</td>
 	</tr>  
           		#set ( $checked = "" )
             	#foreach ( $semak in $senaraiSemakan )
@@ -1117,45 +1117,20 @@ kod :: $listhath.kod_hakmilik
                     	#set( $row = "row2" )
                 	#else
                     	#set( $row = "row1" )
-                	#end    	
+                	#end
 	<tr class="$row">
-		<td width="3%">
+	<td width="3%">
 					#if ( $semakclass.isSemakan("$IdPermohonan", "$semak.id" ))
-	          #set ( $checked = "checked" )
-	          
-	        #else
-	          #set ( $checked = "" )
-	        #end
-	        #if($!skrin_deraf == "yes")
-	        <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked />
-	        #else
-	        <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked disabled/>
-	        #end
-	        </td>
-		<td width="82%">$i. $semak.keterangan</td>
-		<td width="15%">
-<!-- 		#if($semak.jenisDokumen == "99201") -->
-<!-- 				<a href = "javascript:lampiran($idSimati,'idPermohonan');"> -->
-<!-- 					<img border="0" src="../img/plus.gif" width="20" height="15"/> -->
-<!-- 				</a> -->
-<!-- 			#elseif($semak.jenisDokumen == "99202") -->
-<!-- 				<a href = "javascript:lampiran($idSimati,'cod');"> -->
-<!-- 					<img border="0" src="../img/plus.gif" width="20" height="15"/> -->
-<!-- 				</a> -->
-<!-- 			#elseif($semak.jenisDokumen == "99304") -->
-<!-- 				<a href = "javascript:lampiran($idSimati,'MyID');"> -->
-<!-- 					<img border="0" src="../img/plus.gif" width="20" height="15"/> -->
-<!-- 				</a> -->
-<!-- 			#elseif($semak.jenisDokumen == "1157") -->
-<!-- 				<a href = "javascript:lampiran($idSimati,'idPermohonan');"> -->
-<!-- 					<img border="0" src="../img/plus.gif" width="20" height="15"/> -->
-<!-- 				</a> -->
-<!-- 				<br> -->
-<!-- 			#end -->
-			$!semak.lampirans
-		</td>
-	</tr>
-	#end
+	                            #set ( $checked = "checked" )
+	               	#else
+	                           #set ( $checked = "" )
+	             	#end
+	                        <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked $modeSoc>
+	</td>
+	<td width="92%">$i. $semak.keterangan</td>
+	<td width="5%">$semak.lampirans</td>
+	</tr>  
+	       		#end
 	
 </table>	
 </fieldset>
@@ -1428,7 +1403,6 @@ kod :: $listhath.kod_hakmilik
 </tr>
 #end
 
-
 #foreach($View in $View_pengesahan_pemohonan)
         #set ($namaPemohon = $View.namaPemohon)
         #set ($noKpBaruPemohon1 = $View.noKpBaruPemohon1)
@@ -1467,20 +1441,14 @@ kod :: $listhath.kod_hakmilik
 <p align="center">
 
 #if ($idStatus == "150")
-
-#if($!namapejabat != "")
-<input type="button" name="cmdBorangA" value="Cetak Borang A" onClick="javascript:cetakBorangA('$id','$!no_fail_online')">
-#if($!fileupload != "")
-<input type="button" name="cmdHantar" value="Hantar ke $!namapejabat" onClick="javascript:getUnitPPK('$id','$nopermohonanonline')">
-#else
-#end
+	#if($!namapejabat != "")
+	<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()">
+	<input type="button" name="cmdHantar" value="Hantar ke $!namapejabat" onClick="javascript:getUnitPPK('$id','$nopermohonanonline')">
 <!--<input type="button" name="cmdKosongkan" value="Kosongkan" onClick="PengesahanView('3','0','0','0')">-->
-<!-- <input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()"> -->
-
-#else
-<input type="button" name="cmdBorangA" value="Cetak Borang A" onClick="javascript:cetakBorangA('$id','$!no_fail_online')">
-
-#end
+	
+	#else
+	<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()">
+	#end
 
 #else
 	#if ($skrin_online_popup == "yes")
@@ -2238,30 +2206,7 @@ else
 //alert("0")
 document.f1.txtHaNilaiTarikhMati.value = document.f1.txtHaNilaiTarikhMohon.value
 }
-}
 
-function lampiran(idSimati,isMyID) {
-
-	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=lampiransimati&actionPopup="+isMyID+"&rujukan="+idSimati+"&flagOnline=$!flagOnline";
-	if(isMyID == 'cod')
-   		url +="&jenisdokumen=cod";
-	else if(isMyID == 'idPermohonan')
-		url +="&jenisdokumen=1157";
-   	else
-   		url +="&jenisdokumen=myid";
-
-		
-	//
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus(); /**/
-    //
-    var title = 'Lampiran';
-	var w =1024;
-	var h = 800;
-    var left = (screen.width/2)-(w/2);
 
 }
 

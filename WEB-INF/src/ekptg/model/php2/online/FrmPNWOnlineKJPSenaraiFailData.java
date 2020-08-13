@@ -37,7 +37,6 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 	private Vector beanMaklumatImejan = null;
 	private Vector listImejan = null;
 
-	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	static Logger myLog = Logger.getLogger(FrmPNWOnlineKJPSenaraiFailData.class);
 

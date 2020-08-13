@@ -59,6 +59,7 @@ public class FrmPrmhnnSek8BicaraData {
 	private Vector listTangguhROTS = new Vector();
 	private static Vector listSemak = new Vector();
 	
+	
 	private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");
 	
@@ -315,6 +316,11 @@ public class FrmPrmhnnSek8BicaraData {
 				    	}else{
 				    		h.put("pmNama_negeri",rs.getString(3));
 				    	}
+			    	  /*if(rs.getString(2) == null || rs.getString(2) ==""){
+				    		h.put("pmidnegeri","0");
+				    	}else{
+				    		h.put("pmidnegeri",rs.getString(2));
+				    	}*/
 			    	  if(rs.getString(42) == null || rs.getString(42) ==""){
 				    		h.put("pmidnegeri","0");
 				    	}else{

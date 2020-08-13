@@ -198,36 +198,33 @@
   #end
   <tr>
     <td width="30%">&nbsp;</td>
-    <td width="70%"> 
-    	#if ($modePopup == 'new')
-	      <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatKJP()" value="Hantar">
-	      <input name="cmdBatal" type="button" onClick="doBatalMaklumatKJP()" value="Batal">
-      	#end
-      	#if ($modePopup == 'newUlangan')
-	      <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatUlanganKJP()" value="Hantar">
-	      <input name="cmdBatal" type="button" onClick="doBatalKemaskiniMaklumatKJP()" value="Batal">
-	    #end
-      	#if ($modePopup == 'view')
-      		#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-      			#if ($flagAktif != 'T')
-			      <input name="cmdKemaskini" type="button" onClick="doKemaskiniMaklumatKJP()" value="Kemaskini">
-			      <input name="cmdHapus" type="button" onClick="doHapusMaklumatKJP()" value="Hapus">
-      				#if ($flagStatus == '1')
-				      <input name="cmdTerima" type="button" onClick="doTerimaKJP()" value="Terima">
-				      <input name="cmdUlangan" type="button" onClick="doUlanganKJP()" value="Ulangan">
-      				#end
-      				#if ($flagKeputusanKJP == 'G')
-      					<input name="cmdCetak" type="button" onClick="cetakPLPSuratLulusBersyarat('$idFail')" value="Cetak Surat Lulus Bersyarat">
-      				#elseif ($flagKeputusanKJP == 'T')
-      					<input name="cmdCetak" type="button" onClick="javascript:cetakPLPSuratTolak('$idFail')" value="Cetak Surat Tolak">
-      				#end
-      			#end
-      		#end
-      	#end
-      	#if ($modePopup == 'update')
-	      <input name="cmdSimpan2" type="button" onclick="doSimpanKemaskiniMaklumatKJP()" value="Hantar" />
-	      <input name="cmdBatal" type="button" onClick="doBatalKemaskiniMaklumatKJP()" value="Batal">
-      	#end 
-    </td>
+    <td width="70%"> #if ($modePopup == 'new')
+      <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatKJP()" value="Hantar">
+      <input name="cmdBatal" type="button" onClick="doBatalMaklumatKJP()" value="Batal">
+      #end
+      #if ($modePopup == 'newUlangan')
+      <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatUlanganKJP()" value="Hantar">
+      <input name="cmdBatal" type="button" onClick="doBatalKemaskiniMaklumatKJP()" value="Batal">
+      #end
+      #if ($modePopup == 'view')
+      #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+      #if ($flagAktif != 'T')
+      <input name="cmdKemaskini" type="button" onClick="doKemaskiniMaklumatKJP()" value="Kemaskini">
+      <input name="cmdHapus" type="button" onClick="doHapusMaklumatKJP()" value="Hapus">
+      #if ($flagStatus == '1')
+      <input name="cmdTerima" type="button" onClick="doTerimaKJP()" value="Terima">
+      <input name="cmdUlangan" type="button" onClick="doUlanganKJP()" value="Ulangan">
+      #end
+      #if ($flagKeputusanKJP == 'G')
+      <input name="cmdCetak" type="button" onClick="cetakPLPSuratLulusBersyarat('$idFail')" value="Cetak Surat Lulus Bersyarat">
+      #elseif ($flagKeputusanKJP == 'T')
+      <input name="cmdCetak" type="button" onClick="javascript:cetakPLPSuratTolak('$idFail')" value="Cetak Surat Tolak">
+      #end
+      #end
+      #end
+      #if ($modePopup == 'update')
+      <input name="cmdSimpan2" type="button" onclick="doSimpanKemaskiniMaklumatKJP()" value="Hantar" />
+      <input name="cmdBatal" type="button" onClick="doBatalKemaskiniMaklumatKJP()" value="Batal">
+      #end </td>
   </tr>
 </table>

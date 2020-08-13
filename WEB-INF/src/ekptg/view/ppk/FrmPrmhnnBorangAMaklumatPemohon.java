@@ -241,6 +241,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		Vector listJenisha = null;
 		Vector selectedppkha = null;
 		Vector listdaerah = null;
+		Vector listbandar = null;
 		Vector sumppkhta = null;
 		Vector sumoverallppkhta = null;
 		Vector listxxx = null;
@@ -3979,6 +3980,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			String socNegeri = "";
 			String socDaerah = "";
 			String socMukim = "";
+			String socBandar = "";
 			permohonanInternal = new FrmPermohonanHTAData();
 			String mati = getParam("id_Permohonansimati");				
 			
@@ -4021,6 +4023,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			//2018
 			this.context.put("listNegeri", socNegeri);
 			this.context.put("listDaerah", socDaerah);
+			this.context.put("listBandar", socBandar);
 			this.context.put("listMukim", socMukim);
 
 			listHTA = permohonanInternal.getDataHTA(mati,"Y");								
@@ -4149,7 +4152,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("listBandarTetapbyNegeri", "");
 			}
 			
-			myLogger.info("syafiqah id: "+ id);
 			//myLogger.info("mode-------------------------------------"+mode);
 			if (mode.equals("Simatiview")) {
 				String idRujukan ="";
@@ -4354,6 +4356,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	
 			listdaerah = logic_A.getListDaerahDb(db);
 			this.context.put("listdaerah", listdaerah);
+			
+			listbandar = logic_A.getListBandar();
+			this.context.put("listbandar", listbandar);
 	
 			Vector listluas = logic_A.getListLuasDb(db);
 			this.context.put("listluas", listluas);
@@ -6860,68 +6865,24 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 
 	private void getSenaraiSemak(String idSimati,String idPermohonan) throws Exception{
-		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("1,2,3,4,11,12,13,14,15,16,17,99201000008",idSimati,idPermohonan);
+		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("4,1,17",idSimati,idPermohonan);
 		// 4 Bukti kematian
-		// 11 Dokumen hakmilik semua harta yang dituntut8
+		// 11 Dokumen hakmilik semua harta yang dituntut
 		context.put("senaraiSemakan", sm);
 		context.put("semakclass", new FrmSemakan());
 		
-		if (sm != null) {
 		for (int i = 0; i < sm.size(); i++) {
 			Hashtable hash = sm.elementAt(i);
 			String idsemakansenarai = String.valueOf(hash.get("id"));
 			
-			if(idsemakansenarai.equals("1")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("2")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("3")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("4")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("11")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("12")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("13")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("14")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("15")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("16")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("17")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}
-			if(idsemakansenarai.equals("99201000008")) {
-				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-			}else if (hash.get("id").equals("11")) {	
-				} else {
-				}
-			}
+//			if(idsemakansenarai.equals("20")) {
+//				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
+//					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
+//		
+//			} else if (hash.get("id").equals("11")) {
+//				
+//			} else {
+//			}
 		}
 		
 	}
