@@ -1,6 +1,6 @@
 package ekptg.model.utils.emel;
 
-
+//yati 13/8/2020
 public interface IEmel {	
 	
 	public String setKandungan(String tajuk,String daripada); 
