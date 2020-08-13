@@ -83,6 +83,8 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		String idHakmilikAgensi = getParam("idHakmilikAgensi");
 		String idHakmilikSementara = null;
 		idHakmilikSementara = getParam("idHakmilikSementara");
+		String idHakmilikAgensiPopup = null;
+		idHakmilikAgensiPopup = getParam("idHakmilikAgensiPopup");
 		String idPPTBorangK = getParam("idPPTBorangK");
 		String idHakmilikUrusan = getParam("idHakmilikUrusan");
 		String idPHPBorangK = getParam("idPHPBorangK");
@@ -475,6 +477,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 			// MODE VIEW
 			if ("view".equals(mode)) {
+				myLog.info("baca view!!");
     			String id = getParam("id_kemaskini");
     			logic.setMaklumatHeader(idFail);
     			beanHeader = logic.getBeanMaklumatHeader();
@@ -769,7 +772,6 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 			// MODE UPDATE
 			else if ("update".equals(mode)) {
-
 				this.context.put("readonly", "");
 				this.context.put("inputTextClass", "");
 				this.context.put("disabled", "");
@@ -778,6 +780,9 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 					// MAKLUMAT TANAH
 					beanMaklumatTanah = new Vector();
+					if(idHakmilikAgensiPopup!="") {
+						idHakmilikAgensi=idHakmilikAgensiPopup;
+					}
 					logic.setMaklumatTanah(idHakmilikAgensi);
 					beanMaklumatTanah = logic.getBeanMaklumatTanah();
 					this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
@@ -798,12 +803,25 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 							this.context.put("errorPeganganHakmilik", "Hakmilik tidak wujud.");
 						}
 					} else if ("doChangeMaklumatTanah".equals(submit)) {
+						
+						beanMaklumatAgensi = new Vector();
+						logic.setMaklumatAgensi(idAgensi);
+						beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
+						this.context.put("idKategoriPemohon", idKategoriPemohon);
+						this.context.put("idAgensi", idAgensi);
+						this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);
+						
+						
 						beanMaklumatTanah = new Vector();
 						idHakmilikAgensi = getParam("idHakmilikAgensi");
+						if(idHakmilikAgensiPopup!="") {
+							idHakmilikAgensi=idHakmilikAgensiPopup;
+						}
 						logic.setMaklumatTanah(idHakmilikAgensi);
 						beanMaklumatTanah = logic.getBeanMaklumatTanah();
 						this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 						this.context.put("idHakmilikAgensi", idHakmilikAgensi);
+			
 					}
 
 				} else if ("1".equals(selectedTabUpper)) {
@@ -943,6 +961,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}
 
 		}else {
+			myLog.info("baca else");
 
 			String jenisHakmilik = getParam("socJenisHakmilik");
 			if (jenisHakmilik == null || jenisHakmilik.trim().length() == 0) {

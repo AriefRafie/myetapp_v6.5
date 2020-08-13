@@ -33,6 +33,8 @@
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
   <input name="idLuasKegunaan" type="hidden" id="idLuasKegunaan" value="$idLuasKegunaan"/>
+  <input name="idKementerian" type="hidden" id="idKementerian" value="$idKementerian"/>
+  <input name="idAgensi" type="hidden" id="idAgensi" value="$idAgensi"/>
   
   
  
@@ -568,7 +570,6 @@ function doChangeTabUpper(tabId) {
 	document.${formName}.submit();
 }
 function pilihTanah(idKementerian,idAgensi) {
-	
 	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmPNWPopupSenaraiTanahOnlineView?idKementerian="+idKementerian+"&idAgensi="+idAgensi;
 	
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
@@ -606,14 +607,14 @@ function doChangeLuasKegunaan() {
 function doChangeLuas() {
 	doAjaxCall${formName}("doChangeLuas");
 }
-/* function doKemaskini() {
+function doKemaskini() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 	document.${formName}.submit();
-} */
+}
 function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();
