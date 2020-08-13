@@ -27,6 +27,7 @@ import ekptg.model.utils.emel.EmailConfig;
 
 public class FrmTKROnlineKJPSenaraiFailData {
 
+	//test 13/8/2020
 	private Vector<Hashtable<String, Object>> senaraiFail = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatAgensi = null;
 	private Vector<Hashtable<String, Object>> beanMaklumatTanah = null;
@@ -72,6 +73,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 					+ " AND A.ID_MASUK = H.USER_ID(+)"
 					+ " AND B.ID_STATUS != '999'";
 
+			
 
 			// noFail
 			if (noFail != null) {
@@ -315,6 +317,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 
 			sql = sql + " ORDER BY F.TARIKH_MASUK DESC ";
 
+			
 			myLogger.info("getSenaraiFail :::: sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
