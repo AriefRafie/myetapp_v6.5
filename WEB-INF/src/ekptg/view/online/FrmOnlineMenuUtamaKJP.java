@@ -20,13 +20,13 @@ import ekptg.view.admin.Pengumuman;
 
 public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 	/**
-	 * 
+	 *
 	 */
 	static Logger myLog = Logger.getLogger(FrmOnlineMenuUtamaKJP.class);
 	private static final long serialVersionUID = -4427185828234591107L;
 	private static final String PATH = "app/online/manuUtama/";
 	private String vm = PATH + "frmMenuUtamaKJP.jsp";
-	private IHtp iErr = null;  
+	private IHtp iErr = null;
 	//return Permohonan 1
 	private IStatus iStatus = null;
 
@@ -39,7 +39,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		String portal_role = (String) session.getAttribute("myrole");
 		String user_negeri_login = (String)session.getAttribute("_ekptg_user_negeri");
 		myLog.info("*** user_negeri_login :"+user_negeri_login);
-		 
+
 		Vector list_memo_aktif = null;
 		list_memo_aktif = logic.getMemo("", "Aktif", "1", "0");
 		context.put("list_memo_aktif", list_memo_aktif);
@@ -59,49 +59,55 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		context.put("portalRole", portal_role);
 		//System.out.println("*** jumlah_notifikasi --- "+jumlah_notifikasi);
 
-		 Hashtable get_notifikasi_pelepasan = null; 
+		 Hashtable get_notifikasi_pelepasan = null;
 		 get_notifikasi_pelepasan = (Hashtable) notifikasi_pelepasan(user_id);
 		 String jumlah_notifikasi_pelepasan = (String)get_notifikasi_pelepasan.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_pelepasan", Long.parseLong(jumlah_notifikasi_pelepasan));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
-		 
-		 Hashtable get_notifikasi_tukarguna = null; 
+
+		 Hashtable get_notifikasi_tukarguna = null;
 		 get_notifikasi_tukarguna = (Hashtable) notifikasi_tukarguna(user_id);
 		 String jumlah_notifikasi_tukarguna = (String)get_notifikasi_tukarguna.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_tukarguna", Long.parseLong(jumlah_notifikasi_tukarguna));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
-		 
-		 Hashtable get_notifikasi_tukarguna1 = null; 
+
+		 Hashtable get_notifikasi_tukarguna1 = null;
 		 get_notifikasi_tukarguna1 = (Hashtable) notifikasi_tukarguna1(user_id);
 		 String jumlah_notifikasi_tukarguna1 = (String)get_notifikasi_tukarguna1.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_tukarguna1", Long.parseLong(jumlah_notifikasi_tukarguna1));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
-		 
-		 Hashtable get_notifikasi_penyewaan = null; 
+
+		 Hashtable get_notifikasi_penyewaan = null;
 		 get_notifikasi_penyewaan = (Hashtable) notifikasi_penyewaan(user_id);
 		 String jumlah_notifikasi_penyewaan = (String)get_notifikasi_penyewaan.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_penyewaan", Long.parseLong(jumlah_notifikasi_penyewaan));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
-		 
-		 Hashtable get_notifikasi_penawaran = null; 
+
+		 Hashtable get_notifikasi_penawaran = null;
 		 get_notifikasi_penawaran = (Hashtable) notifikasi_penawaran(user_id);
 		 String jumlah_notifikasi_penawaran = (String)get_notifikasi_penawaran.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_penawaran", Long.parseLong(jumlah_notifikasi_penawaran));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
-		 
+
 		 Hashtable get_notifikasi_MOF = null;
 		 get_notifikasi_MOF = (Hashtable) notifikasi_MOF(user_id);
 		 String jumlah_notifikasi_MOF = (String)get_notifikasi_MOF.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_MOF", Long.parseLong(jumlah_notifikasi_MOF));
+		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
+
+		 Hashtable get_notifikasi_apb = null;
+		 get_notifikasi_apb = (Hashtable) notifikasi_apb(user_id);
+		 String jumlah_notifikasi_apb = (String)get_notifikasi_apb.get("JUMLAHPERMOHONAN");
+		 context.put("jumlah_notifikasi_tukarguna1", Long.parseLong(jumlah_notifikasi_apb));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
 		 //return Permohonan 4
 		 //PPT
 		 context.put("bilPPTDikembali", dikembalikan("51").size() + dikembalikan("52").size());
 //		 context.put("vecPPT4", dikembalikan("51"));
 //		 context.put("vecPPT8", dikembalikan("52"));
- 
+
 		return vm;
-		
+
 	}
 
 	public Hashtable notifikasi_permohonan(String userID, long jawatan)
@@ -113,7 +119,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-						
+
 //			sql += " SELECT SUM(JUMLAHPERMOHONAN) as jumlahPermohonan FROM ( ";
 //			if (jawatan == 9) {
 //				sql += "Select (SELECT COUNT(p.flag_semakan_online) FROM Tblpptpermohonan p, Tblpfdfail f,Tblrujsuburusan su,Tblrujstatus s, Tblrujkementerian k, Users u, Users_kementerian uk WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian AND f.id_suburusan in ('51','52','53') AND u.user_id ='"
@@ -131,7 +137,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 //					+ userID
 //					+ "' AND P.FLAG_STATUS_ONLINE = 1) AS JUMLAHPERMOHONAN FROM DUAL ";
 //			sql += ") ";
-			
+
 			if (jawatan == 24) {
 				/*sql += " SELECT SUM (jumlahpermohonan) AS jumlahpermohonan "
 						+" FROM (SELECT (SELECT COUNT (p.flag_semakan_online) "
@@ -148,7 +154,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 						+" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
 						+" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
 						+" AND f.id_suburusan IN ('51', '52', '53') AND U.USER_ID ='" + userID + "' "
-						+" AND p.flag_status_online = 1) AS jumlahpermohonan FROM DUAL)";*/	
+						+" AND p.flag_status_online = 1) AS jumlahpermohonan FROM DUAL)";*/
 				/*sql += " SELECT (SELECT COUNT (p.flag_status_online) "
 				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
 				        +" users u, users_kementerian uk "
@@ -156,7 +162,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
 				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
 				        +" AND p.flag_status_online = 'Y' AND p.flag_status_online = 1) AS jumlahpermohonan FROM DUAL ";*/
-				
+
 				sql += " SELECT SUM (JUMLAHPERMOHONAN) AS JUMLAHPERMOHONAN " +
 						" FROM (SELECT (SELECT COUNT (P.FLAG_STATUS_ONLINE) " +
 						" FROM TBLPPTPERMOHONAN P, TBLPFDFAIL F, TBLRUJSUBURUSAN SU, TBLRUJSTATUS S, TBLRUJKEMENTERIAN K, USERS U, USERS_KEMENTERIAN UK " +
@@ -188,20 +194,20 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
 				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
 				        +" AND p.flag_semakan_online = 2) AS jumlahpermohonan FROM DUAL ";
-			} else { 
+			} else {
 				sql += " SELECT (SELECT COUNT (p.flag_semakan_online) "
 				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
 				        +" users u, users_kementerian uk "
 				        +" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
 				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
 				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
-				        +" AND p.flag_semakan_online = 2) AS jumlahpermohonan FROM DUAL "; 
+				        +" AND p.flag_semakan_online = 2) AS jumlahpermohonan FROM DUAL ";
 			}
 
 			///myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
 			System.out.println("**** sql PPT --- "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			//System.out.println("**** sql PPT --- "+sql);
 
 			Hashtable h;
@@ -233,7 +239,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
-			
+
 			sql = "SELECT (SELECT COUNT (*) "
 					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
 					+ " ,USERS_KEMENTERIAN UK, USERS H "
@@ -250,7 +256,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 					+ " AND E.ID_HAKMILIKAGENSI = D.ID_HAKMILIKAGENSI "
 					+ " AND UK.USER_ID = '" + userID + "') AS jumlahpermohonan "
 					+ " FROM DUAL ";
-			
+
 			myLog.info("JUMLAH DOKUMEN PENAWARAN:"+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -267,7 +273,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				db.close();
 		}
 	}
-	
+
 	public Hashtable notifikasi_penyewaan(String userID)
 			throws Exception {
 		Db db = null;
@@ -296,7 +302,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				   + " AND users_kementerian.id_agensi = tblphpulasanteknikal.id_agensi "
 				   + " AND users.user_id = '" + userID + "') AS jumlahpermohonan "
 				  + " FROM DUAL ";
-			
+
 			System.out.println("JUMLAH DOKUMEN :"+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -313,7 +319,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				db.close();
 		}
 	}
-	
+
 	public Hashtable notifikasi_MOF(String userID)
 			throws Exception {
 		Db db = null;
@@ -342,7 +348,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				   + " AND users.user_id = users_kementerian.user_id "
 				   + " AND users.user_id = '" + userID + "') AS jumlahpermohonan "
 				  + " FROM DUAL ";
-			
+
 			// myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -389,8 +395,8 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				   + " AND users_kementerian.id_agensi = tblphpulasanteknikal.id_agensi "
 				   + " AND users.user_id = '" + userID + "') AS jumlahpermohonan "
 				  + " FROM DUAL ";
-			
-			// 
+
+			//
 			myLog.info("notifikasi_pelepasan :sql="+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -453,7 +459,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				db.close();
 		}
 	}
-	
+
 	public Hashtable notifikasi_tukarguna1(String userID)
 			throws Exception {
 		Db db = null;
@@ -498,6 +504,63 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		}
 	}
 
+	public Hashtable notifikasi_apb(String userID)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			/*sql = "SELECT (SELECT COUNT (*) "
+					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
+					+ " ,USERS_KEMENTERIAN UK, USERS H "
+					+ " ,TBLRUJSTATUS RS, tblphppemohon C, tblhtphakmilikagensi D,"
+					+ " tblphphakmilikpermohonan E"
+					+ " WHERE F.ID_FAIL = P.ID_FAIL"
+					+ " AND F.ID_SUBURUSAN = '33'"
+					+ " AND P.ID_STATUS = RS.ID_STATUS "
+					+ " AND P.ID_STATUS NOT IN (1610199)"
+					+ " AND F.ID_KEMENTERIAN = UK.ID_KEMENTERIAN "
+					+ " AND P.ID_PEMOHON = C.ID_PEMOHON "
+					+ " AND P.ID_PERMOHONAN = E.ID_PERMOHONAN "
+					+ " AND H.USER_ID = UK.USER_ID "
+					+ " AND E.ID_HAKMILIKAGENSI = D.ID_HAKMILIKAGENSI "
+					+ " AND UK.USER_ID = '" + userID + "') AS jumlahpermohonan "
+					+ " FROM DUAL ";*/
+
+			sql = "SELECT (SELECT COUNT (*) "
+					+ " FROM TBLPHPULASANTEKNIKAL, TBLPERMOHONAN, TBLPHPPEMOHON, TBLPFDFAIL, TBLPHPPMOHONNJDUALPERTAMA, USERS, USERS_KEMENTERIAN"
+					+ " WHERE TBLPHPULASANTEKNIKAL.FLAG_STATUS = 1 AND TBLPHPULASANTEKNIKAL.FLAG_AKTIF = 'Y'"
+					+ " AND TBLPHPULASANTEKNIKAL.ID_PERMOHONAN = TBLPERMOHONAN.ID_PERMOHONAN"
+					+ " AND TBLPERMOHONAN.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON AND TBLPERMOHONAN.ID_FAIL = TBLPFDFAIL.ID_FAIL"
+					+ " AND TBLPHPPMOHONNJDUALPERTAMA.ID_PERMOHONAN = TBLPERMOHONAN.ID_PERMOHONAN"
+					+ " AND TBLPFDFAIL.ID_SEKSYEN = 4 AND TBLPFDFAIL.ID_URUSAN = 9 AND TBLPFDFAIL.ID_SUBURUSAN = 57"
+					+ " AND TBLPERMOHONAN.ID_STATUS NOT IN (1610212, 1610207, 1610208)"
+					+ " AND TBLPHPULASANTEKNIKAL.ID_MENTERI = USERS_KEMENTERIAN.ID_KEMENTERIAN"
+					+ " AND USERS_KEMENTERIAN.ID_AGENSI = TBLPHPULASANTEKNIKAL.ID_AGENSI"
+					+ " AND USERS.USER_ID = USERS_KEMENTERIAN.USER_ID AND USERS.USER_ID = '" + userID + "') AS jumlahpermohonan "
+					+ " FROM DUAL ";
+
+			// myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
+			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println("notifikasi_apb :"+sql.toUpperCase());
+			Hashtable h;
+			h = new Hashtable();
+			while (rs.next()) {
+				h.put("JUMLAHPERMOHONAN",
+						rs.getString("JUMLAHPERMOHONAN"));
+			}
+			return h;
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
 	public Hashtable get_jawatan(String login) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -525,7 +588,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				db.close();
 		}
 	}
-	
+
 	//return Permohonan 3
 	public Vector<Hashtable<String, String>> dikembalikan(String idSubUrusan) throws Exception {
 		Vector<Hashtable<String, String>> returnVal = null;
@@ -535,9 +598,9 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			throw new Exception(getErr().getErrorHTML("inquery:"+idSubUrusan+"::"+e.getMessage()));
 		}
 		return returnVal ;
-		
+
 	}
-	
+
 	public Vector<Hashtable<String, String>> dikembalikanByUrusan(String idUrusan) throws Exception {
 		Vector<Hashtable<String, String>> returnVal = null;
 		try {
@@ -546,7 +609,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			throw new Exception(getErr().getErrorHTML("inquery:"+idUrusan+"::"+e.getMessage()));
 		}
 		return returnVal ;
-		
+
 	}
 	//return Permohonan 2
 	private IStatus getStatus(){
@@ -555,11 +618,11 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		}
 		return iStatus;
 	}
-		
+
 	private IHtp getErr(){
 		if(iErr== null)
 			iErr = new HtpBean();
 		return iErr;
-	}	
+	}
 
 }
