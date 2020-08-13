@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * Tblrujsuburusanstatusfail entity.
- * 
+ *
  * @author MyEclipse Persistence Tools
  */
 public class Tblrujsuburusanstatusfail extends
@@ -34,5 +34,4 @@ public class Tblrujsuburusanstatusfail extends
 				, idKemaskini, tarikhKemaskini, tarikhKemaskiniStr
 				,idFail);
 	}
-
 }
