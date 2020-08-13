@@ -10,6 +10,9 @@ import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Pemohon;
 
 public interface IOnline {
+
+	// class IOnline
+
 	public HtpPermohonan simpanPermohonan(HtpPermohonan htpPermohonan)throws Exception;
 	public HtpPermohonan simpanPermohonanOnline(HtpPermohonan htpPermohonan)throws Exception;
 	public HtpPermohonan kemaskiniPermohonan(HtpPermohonan htpPermohonan,String ipPermohonan,String idHtpPermohonan)throws Exception;
