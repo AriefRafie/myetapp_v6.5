@@ -66,6 +66,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
 		myLogger.info("actionPenyewaan : "+actionPenyewaan);
+		
 		//GET ID PARAM
 		String idHakmilikAgensi = getParam("idHakmilikAgensi");
 		String idFail = getParam("idFail");
