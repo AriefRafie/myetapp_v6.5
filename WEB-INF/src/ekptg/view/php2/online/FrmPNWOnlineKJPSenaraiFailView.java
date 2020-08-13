@@ -25,7 +25,6 @@ import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.entities.UserKementerian;
-import ekptg.model.htp.FrmJRPSenaraiPermohonanData;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmUtilData;
 import ekptg.model.htp.HtpBean;
@@ -43,6 +42,7 @@ import ekptg.view.htp.online.jrp.HTPEmelJRPBean;
 
 public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
+	
 	private static final long serialVersionUID = 1L;
 	private String readonly = "disabled class = \"disabled\"";
 	private IOnline iOnline = null;

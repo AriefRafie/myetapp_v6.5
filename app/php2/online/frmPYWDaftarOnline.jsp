@@ -175,16 +175,6 @@
 			</td>
         </tr>
         #end
-		#if ($mode != 'view' && $idJenisPermohonan == '1')
-		<tr>
-			<td valign="top">&nbsp;</td>
-			<td valign="top">&nbsp;</td>
-			<td valign="top">&nbsp;</td>
-			<td>Baki Aksara :&nbsp; 
-				<input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtPerkara" />
-			</td>
-		</tr>
-		#end
 		#end
          </table>
       </fieldset></td>

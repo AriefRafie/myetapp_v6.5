@@ -21,7 +21,6 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.model.php2.FrmCRBHeaderData;
 import ekptg.model.php2.FrmCRBLawatanTapakData;
-import ekptg.model.utils.emel.EmailConfig;
 
 public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 
@@ -29,7 +28,6 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 
 	FrmCRBHeaderData logicHeader = new FrmCRBHeaderData();
 	FrmCRBLawatanTapakData logic = new FrmCRBLawatanTapakData();
-	EmailConfig email = new EmailConfig();
 	
 	String userId = null;
 	String userRole = null;
@@ -160,7 +158,7 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 			if ("simpanMaklumatKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJT(idPermohonan, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		logic.sendEmail(idPermohonan, idPejabat, session);
+        		//logic.sendEmail(idPermohonan, idPejabat, session);
         		session.setAttribute("MSG", "Emel telah dihantar kepada JKPTG berkaitan");
     		}
         	if ("simpanMaklumatUlanganKJT".equals(hitButton)){

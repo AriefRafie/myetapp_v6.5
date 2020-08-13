@@ -24,6 +24,7 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.online.FrmPYWOnlineSenaraiFailData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
@@ -41,6 +42,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 
 		FrmPYWOnlineSenaraiFailData logic = new FrmPYWOnlineSenaraiFailData();
 		FrmPYWHeaderData header = new FrmPYWHeaderData();
+		FrmSemakan semak = null;
 
 		Boolean postDB = false;
 		String doPost = (String) session.getAttribute("doPost");
@@ -65,7 +67,6 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		String hitButton = getParam("hitButton");
 		String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
-		myLogger.info("actionPenyewaan : "+actionPenyewaan);
 		
 		//GET ID PARAM
 		String idHakmilikAgensi = getParam("idHakmilikAgensi");
@@ -186,7 +187,13 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			//SENARAI SEMAK
 			if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
         		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
-    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
+        		FrmSemakan frmSemak = new FrmSemakan();
+        		frmSemak.semakanHapusByPermohonan(idPermohonan);
+        		if (semaks != null) {
+    				for (int i = 0; i < semaks.length; i++) {
+    					FrmSemakan.semakanTambah(semaks[i], String.valueOf(idPermohonan));
+    				}
+    			}
         	}
 		}
 		
@@ -271,52 +278,24 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
     			this.context.put("SenaraiSemak", senaraiSemak);
     			
-    			//POPUP LAMPIRAN
-    			if ("3".equals(selectedTabUpper)) {
-    				
-    				if ("openPopupLampiran".equals(flagPopup)){
-    	        		
-    	        		if ("new".equals(modePopup)){
-    	        			
-    	        			this.context.put("readonlyPopup", "");
-    		    			this.context.put("inputTextClassPopup", "");
-    		    			
-    		    			beanMaklumatLampiran = new Vector();    			
-    		    			Hashtable hashMaklumatLampiran = new Hashtable();
-    		    			hashMaklumatLampiran.put("namaLampiran", "");
-    		    			hashMaklumatLampiran.put("catatanLampiran", "");
-    		    			beanMaklumatLampiran.addElement(hashMaklumatLampiran);
-    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-    		    			
-    	        		} else if ("update".equals(modePopup)){
-    	        			
-    	        			this.context.put("readonlyPopup", "");
-    		    			this.context.put("inputTextClassPopup", "");
-    		    			
-    		    			//MAKLUMAT LAMPIRAN
-    		    			beanMaklumatLampiran = new Vector();
-    						logic.setMaklumatLampiran(idDokumen);
-    						beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
-    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-    		    			
-    	        		} else if ("view".equals(modePopup)){
-    	        			
-    	        			this.context.put("readonlyPopup", "readonly");
-    		    			this.context.put("inputTextClassPopup", "disabled");
-    		    			
-    		    			//MAKLUMAT LAMPIRAN
-    		    			beanMaklumatLampiran = new Vector();
-    						logic.setMaklumatLampiran(idDokumen);
-    						beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
-    						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-    	        		}
-    	        	} 
-    			}
-    			//SENARAI LAMPIRAN
-    			senaraiLampiran = new Vector();
-    			logic.setSenaraiLampiran(idPermohonan);
-    			senaraiLampiran = logic.getListLampiran();
-    			this.context.put("SenaraiLampiran", senaraiLampiran);
+    			if ("2".equals(selectedTabUpper)) {
+	            	this.context.put("completed", false);
+	        		this.context.put("flagPopup", "closePopupLampiran");
+					semak = new FrmSemakan();
+					semak.mode = mode;
+					senaraiSemak = semak.getSenaraiSemakanAttach("apb",idPermohonan);
+	    			this.context.put("SenaraiSemak", senaraiSemak);
+	    			
+	    			if (mode.equals("update")){
+	        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+		    			//this.context.put("SenaraiSemak", senaraiSemak);
+	    			}
+	    			else if (mode.equals("view")){
+	        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+		    			//this.context.put("SenaraiSemak", senaraiSemak);
+	        		}
+	    			
+	            }
     			
     			beanMaklumatPejabat = new Vector();
 				logic.setMaklumatPejabatJKPTG(idPermohonan);

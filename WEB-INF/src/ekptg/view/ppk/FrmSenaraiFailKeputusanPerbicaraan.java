@@ -43,10 +43,6 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	FrmRynSek8SemakPenerimaan model = new FrmRynSek8SemakPenerimaan();
 	FrmPrmhnnSek8KeputusanPermohonanInternalData logicKeputusanPrmhnn = new FrmPrmhnnSek8KeputusanPermohonanInternalData();
 	
-	
-	
-	
-	
  	String checkedTidakHadir = "";
 	String checkedWarisTidakLengkap = "";
 	String checkedMahkamahTinggi = "";
@@ -80,8 +76,6 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	int bezaTahun = 0; //arief add
 	int tahunAktifDenda = 2020; // arief add
 	int tahunDaftar = 2021; //arief add
-	
-	
 	
 	public String doTemplate2() throws Exception
     {
@@ -168,13 +162,6 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	    this.context.put("idpermohonan",idpermohonan);
 	    System.out.println("idpermohonan===XXX"+idpermohonan);
 	  
-	   /* 
-	    System.out.println("id_permohonan==="+id_permohonan);
-	    
-	    if(id_permohonan!=null){
-	    	idpermohonan = id_permohonan;
-	    }
-*/
 	    String idsuburusanstatusfail = getParam("idsuburusanstatusfail");
 	    this.context.put("idsuburusanstatusfail",idsuburusanstatusfail);
 
