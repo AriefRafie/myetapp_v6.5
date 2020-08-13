@@ -647,8 +647,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
         if("tambahHakmilik".equals(submit)){
             	
         	//form validation
-    		context.put("mode","new");
-    		
+    		context.put("mode","new");    		
     		//clear value
     		clearValueHM();
     		
@@ -2847,6 +2846,11 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 		context.put("txtLuasLotAmbil2", getParam("txtLuasLotAmbil2"));
 		context.put("txtLuasLotAmbil3", getParam("txtLuasLotAmbil3"));
 		
+		//penambahan v7-yati
+		context.put("txtNoBangunan", getParam("txtNoBangunan"));
+		context.put("txtNoTingkat", getParam("txtNoTingkat"));
+		context.put("txtNoPetak", getParam("txtNoPetak"));
+		
 		if(resetRadio.equals("1")){
 			context.put("sorJenisRizab", "");
 		}else{
@@ -2896,6 +2900,10 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 		context.put("txtLuasLotAmbilSebelumConvert", "");
 		context.put("sorDropdownUnitAmbil", "");
 		
+		//penambahan v7 -yati
+		context.put("txtNoBangunan", "");
+		context.put("txtNoTingkat", "");
+		context.put("txtNoPetak", "");
 	}//close clearValueHM
 	
 	@SuppressWarnings("unchecked")

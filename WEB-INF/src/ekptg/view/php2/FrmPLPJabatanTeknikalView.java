@@ -64,7 +64,6 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         if (mode.isEmpty()){
         	mode = "view";
         }
-        
         String step = getParam("step");
 		
 		//GET ID PARAM

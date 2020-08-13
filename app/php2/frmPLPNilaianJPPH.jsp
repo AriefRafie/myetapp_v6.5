@@ -36,9 +36,8 @@
           <td class="$row" align="center"><input id="txtNilaiTanahPohon" name="txtNilaiTanahPohon" type="text" value="$list.nilaian" style="text-align:right" $readonly class="$inputTextClass" onblur="total()" >
           <td class="$row" align="center"><input id="txtNilaiBangunanPohon" name="txtNilaiBangunanPohon" type="text" value="$list.nilaianB" style="text-align:right" $readonly class="$inputTextClass" onblur="total()">
           <td class="$row" align="center">
-          <input id="txtNilaianTotal" name="txtNilaianTotal" type="text" style="text-align:right" $total() value = "$list.nilaianTotal" readonly="readonly" class="$inputTextClass" >
-          <input name="idHakmilikPermohonan" type="hidden" value="$list.idHakmilikPermohonan">
-         
+          	<input id="txtNilaianTotal" name="txtNilaianTotal" type="text" style="text-align:right" $total() value = "$list.nilaianTotal" readonly="readonly" class="$inputTextClass" >
+          	<input name="idHakmilikPermohonan" type="hidden" value="$list.idHakmilikPermohonan">
           </td>
         </tr>
         #end
