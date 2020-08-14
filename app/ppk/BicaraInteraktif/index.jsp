@@ -2860,12 +2860,12 @@ function showTrIndividuAgensi(skrinName,mode)
 		
 	var agensiOnly = false;
 	var pejabatOnly = false;	
-	if(ID_TARAFKPTG == "6" || ID_TARAFKPTG == "8")
+	if(ID_TARAFKPTG == "6" || ID_TARAFKPTG == "8" || ID_TARAFKPTG == "17" || ID_TARAFKPTG == "18" || ID_TARAFKPTG == "19" || ID_TARAFKPTG == "20") //arief add || ID_TARAFKPTG == "17" || ID_TARAFKPTG == "18" || ID_TARAFKPTG == "19" || ID_TARAFKPTG == "20"
 	{
 		agensiOnly = true;
 		pejabatOnly = true;
 	}
-	else if(ID_TARAFKPTG == "2" || ID_TARAFKPTG == "4")
+	else if(ID_TARAFKPTG == "2" || ID_TARAFKPTG == "4" || ID_TARAFKPTG == "10")//arief add || ID_TARAFKPTG == "10"
 	{
 		if(STATUS_PEMOHON == "1")
 		{
@@ -3039,7 +3039,7 @@ function reloadPejabat(mainTable,skrinName,mode,ID_PERBICARAAN)
 	var ID_TARAFKPTG = document.getElementById(skrinName+"ID_TARAFKPTG").value;
 	//alert(" reloadPejabat :::: ID_TARAFKPTG  :"+ID_TARAFKPTG+"  skrinName : "+skrinName);
 	
-	if(ID_TARAFKPTG=="6" || ID_TARAFKPTG=="8")
+	if(ID_TARAFKPTG=="6" || ID_TARAFKPTG=="8" || ID_TARAFKPTG == "17" || ID_TARAFKPTG == "18" || ID_TARAFKPTG == "19" || ID_TARAFKPTG == "20") //arief add
 	{
 		if(mode=="edit")
 		{

@@ -1108,8 +1108,6 @@ public class BicaraInteraktif extends AjaxBasedModule {
 					{						
 						KETERANGAN = bahasa + keteranganSimati + modelBI.defaultListHarta(session,(String)mainID.get("ID_PEMOHON"),(String)mainID.get("ID_SIMATI"),ID_PERBICARAAN,(String)mainID.get("ID_PERMOHONANSIMATI"),(String)mainID.get("ID_PERMOHONAN"), "", db, SEKSYEN)+cadanganPembahagian;
 					}
-					
-					
 				}
 				else
 				{
@@ -1287,7 +1285,34 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			}
 			this.context.put("viewSaksi", viewSaksi);
 			skrin_name = "app/ppk/BicaraInteraktif/viewRowSaksi.jsp"; 
-		}		
+		}
+		//arief add Tidak Hadir
+		else if(command.equals("saveTidakHadir"))
+		{
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
+			String ID_BITIDAKHADIR = getParam("ID_BITIDAKHADIR");
+			this.context.put("ID_BTIDAKHADIR", ID_BITIDAKHADIR);
+			this.context.put("rowCss", getParam("rowCss"));
+			this.context.put("BIL", getParam("BIL"));
+			this.context.put("scrolPosition", getParam("scrolPosition"));
+			Db db = null;
+			try {
+				db = new Db();
+				modelBI.simpanTidakHadir(session,ID_BITIDAKHADIR, ID_PERBICARAAN, getParam("NAMA_TIDAKHADIR_"+ID_BITIDAKHADIR), getParam("HUBUNGAN_TIDAKHADIR_"+ID_BITIDAKHADIR),
+						getParam("PENGENALAN_TIDAKHADIR_"+ID_BITIDAKHADIR),getParam("STATUS_TIDAKHADIR_"+ID_BITIDAKHADIR),getParam("UMUR_TIDAKHADIR_"+ID_BITIDAKHADIR),
+						"T", "", db);
+				viewTidakHadir = modelBI.viewTidakHadir(session, ID_BITIDAKHADIR, db);
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			this.context.put("viewTidakHadir", viewTidakHadir);
+			skrin_name = "app/ppk/BicaraInteraktif/viewRowTidakHadir.jsp";
+		}
 		else if(command.equals("editTurutHadir") || command.equals("showKeteranganTurutHadir") || command.equals("simpanTurutHadirKeterangan")  || command.equals("tutupTurutHadirKeterangan"))
 		{
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
@@ -1417,6 +1442,43 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				skrin_name = "app/ppk/BicaraInteraktif/editSaksi.jsp";
 			}
 		}
+		//arief add tidak hadir
+		else if(command.equals("editTidakHadir") )
+		{
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
+			String ID_BITIDAKHADIR = getParam("ID_BITIDAKHADIR");
+			this.context.put("ID_BITIDAKHADIR", ID_BITIDAKHADIR);
+			
+			this.context.put("rowCss", getParam("rowCss"));
+			this.context.put("BIL", getParam("BIL"));
+			this.context.put("scrolPosition", getParam("scrolPosition"));	
+			this.context.put("div", getParam("div"));	
+			
+			String NAMA = "";
+			viewTidakHadir = null;
+			Db db = null;
+			try {
+				db = new Db();
+				
+				if(!ID_BITIDAKHADIR.equals(""))
+				{
+					viewTidakHadir = modelBI.viewTidakHadir(session, ID_BITIDAKHADIR, db);
+					NAMA = (String) viewTidakHadir.get("NAMA") == null ? "" : (String) viewTidakHadir.get("NAMA");
+				}
+				this.context.put("dataStatusOB",modelBI.setDataList(session,"dataStatusOB", "", "","STATUS_OB","", "", db));
+				this.context.put("dataHubungan",modelBI.setDataList(session,"dataHubungan", "", "","TBLPPKRUJSAUDARA","ID_SAUDARA", "KOD", db));
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			this.context.put("NAMA", NAMA);
+			this.context.put("viewTidakHadir",viewTidakHadir);
+			skrin_name = "app/ppk/BicaraInteraktif/editTidakHadir.jsp";
+		}
 		else if(command.equals("show_turuthadir") || command.equals("tambah_turuthadir") || command.equals("delete_turuthadir"))
 		{			
 			this.context.put("div", "view_turuthadir");
@@ -1496,6 +1558,45 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("scrolPosition", getParam("scrolPosition"));			
 			skrin_name = "app/ppk/BicaraInteraktif/viewSaksi.jsp";
 		}
+		//arief add tidak hadir
+		else if(command.equals("show_tidakhadir") || command.equals("tambah_tidakhadir") || command.equals("delete_tidakhadir"))
+		{			
+			this.context.put("div", "view_tidakhadir");
+			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
+			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
+			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
+			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);			
+			Db db = null;
+			try {
+				db = new Db();
+				if(command.equals("tambah_tidakhadir"))
+				{
+					modelBI.simpanTidakHadir(session,"", ID_PERBICARAAN, getParam("NAMA_TIDAKHADIR_"), 
+							getParam("HUBUNGAN_TIDAKHADIR_"), 
+							getParam("PENGENALAN_TIDAKHADIR_"),
+							getParam("STATUS_TIDAKHADIR_"),
+							getParam("UMUR_TIDAKHADIR_"),
+							"T", "", null);
+				}
+				else if(command.equals("delete_tidakhadir"))
+				{
+					String ID_BITIDAKHADIR = getParam("ID_BITIDAKHADIR");
+					modelBI.deleteTidakHadir(session,ID_BITIDAKHADIR,ID_PERBICARAAN,"T",db);
+				}
+				
+				this.context.put("dataStatusOB",modelBI.setDataList(session,"dataStatusOB", "", "","STATUS_OB","", "", db));
+				this.context.put("dataHubungan",modelBI.setDataList(session,"dataHubungan", "", "","TBLPPKRUJSAUDARA","ID_SAUDARA", "KOD", db));
+							
+				listTidakHadir = modelBI.listTidakHadir(session,ID_PERBICARAAN, null);
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}			
+			this.context.put("listTidakHadir", listTidakHadir);			
+			this.context.put("scrolPosition", getParam("scrolPosition"));			
+			skrin_name = "app/ppk/BicaraInteraktif/viewTidakHadir.jsp";
+		}		
 		else if(command.equals("simpan_kehadiran"))
 		{			
 			String ID_PERMOHONANSIMATI = getParam("ID_PERMOHONANSIMATI");
@@ -1524,157 +1625,30 @@ public class BicaraInteraktif extends AjaxBasedModule {
 								"OB", ck, db);
 					}
 				}
+				//arief add tidak hadir
+				modelBI.deleteTidakHadir(session,"",ID_PERBICARAAN,"OB",db);
+				String[] checkTidakHadir = request.getParameterValues("checkTidakHadir");
+				if(checkTidakHadir != null)
+				{
+					for (String ctd : checkTidakHadir) {
+						myLogger.info("::: CHECK TIDAK HADIR ::: "+ctd);
+						modelBI.simpanTidakHadir(session,"", ID_PERBICARAAN, getParam("NAMA_"+ctd), getParam("HUBUNGAN_"+ctd), 
+								 getParam("PENGENALAN_"+ctd),  getParam("STATUS_"+ctd),  getParam("UMUR_"+ctd), 
+								"OB", ctd, db);
+					}
+				}
 				listKehadiran = modelBI.listKehadiran(session,ID_PERMOHONANSIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PEMOHON,db);
+				listTidakHadir = modelBI.listTidakHadir(session,ID_PERMOHONANSIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PEMOHON,db);//arief add
+				
 			}
 			finally {
 				if (db != null)
 					db.close();
 			}
 			this.context.put("listKehadiran", listKehadiran);
-			skrin_name = "app/ppk/BicaraInteraktif/viewKehadiran.jsp";
+			this.context.put("listTidakHadir", listTidakHadir);//arief add
+			skrin_name = "app/ppk/BicaraInteraktif/viewKehadiran.jsp";			
 		}
-		
-		//arief add OPEN
-		/**else if(command.equals("saveTidakHadir"))
-		{
-			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
-			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
-			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
-			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
-			String ID_BITIDAKHADIR = getParam("ID_BITIDAKHADIR");
-			this.context.put("ID_BTIDAKHADIR", ID_BITIDAKHADIR);
-			this.context.put("rowCss", getParam("rowCss"));
-			this.context.put("BIL", getParam("BIL"));
-			this.context.put("scrolPosition", getParam("scrolPosition"));
-			Db db = null;
-			try {
-				db = new Db();
-				modelBI.simpanTidakHadir(session,ID_BITIDAKHADIR, ID_PERBICARAAN, getParam("NAMA_TIDAKHADIR_"+ID_BITIDAKHADIR), getParam("HUBUNGAN_TIDAKHADIR_"+ID_BITIDAKHADIR),
-						getParam("PENGENALAN_TIDAKHADIR_"+ID_BITIDAKHADIR),getParam("STATUS_TIDAKHADIR_"+ID_BITIDAKHADIR),getParam("UMUR_TIDAKHADIR_"+ID_BITIDAKHADIR),
-						"T", "", db);
-				viewTidakHadir = modelBI.viewTidakHadir(session, ID_BITIDAKHADIR, db);
-			}
-			finally {
-				if (db != null)
-					db.close();
-			}
-			this.context.put("viewTidakHadir", viewTidakHadir);
-			skrin_name = "app/ppk/BicaraInteraktif/viewRowTidakHadir.jsp";
-		}
-		else if(command.equals("editTidakHadir") )
-		{
-			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
-			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
-			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
-			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
-			String ID_BITIDAKHADIR = getParam("ID_BITIDAKHADIR");
-			this.context.put("ID_BITIDAKHADIR", ID_BITIDAKHADIR);
-			
-			this.context.put("rowCss", getParam("rowCss"));
-			this.context.put("BIL", getParam("BIL"));
-			this.context.put("scrolPosition", getParam("scrolPosition"));	
-			this.context.put("div", getParam("div"));	
-			
-			String NAMA = "";
-			String KETERANGAN = "";
-			String NOTA_PEGAWAI = "";
-			viewTidakHadir = null;
-			Db db = null;
-			try {
-				db = new Db();
-				
-				if(!ID_BITIDAKHADIR.equals(""))
-				{
-					viewTidakHadir = modelBI.viewTidakHadir(session, ID_BITIDAKHADIR, db);
-					NAMA = (String) viewTidakHadir.get("NAMA") == null ? "" : (String) viewTidakHadir.get("NAMA");
-				}
-				this.context.put("dataStatusOB",modelBI.setDataList(session,"dataStatusOB", "", "","STATUS_OB","", "", "", db));
-				this.context.put("dataHubungan",modelBI.setDataList(session,"dataHubungan", "", "","TBLPPKRUJSAUDARA","ID_SAUDARA", "KOD", db));			
-			}
-			finally {
-				if (db != null)
-					db.close();
-			}
-			this.context.put("NAMA", NAMA);
-			
-			this.context.put("viewTidakHadir",viewTidakHadir);
-			
-		}
-		else if(command.equals("show_tidakhadir") || command.equals("tambah_tidakhadir") || command.equals("delete_tidakhadir"))
-		{			
-			this.context.put("div", "view_tidakhadir");
-			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
-			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
-			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
-			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);			
-			Db db = null;
-			try {
-				db = new Db();
-				if(command.equals("tambah_tidakhadir"))
-				{
-					modelBI.simpanTidakHadir(session,"", ID_PERBICARAAN, getParam("NAMA_TIDAKHADIR_"), 
-							getParam("HUBUNGAN_TIDAKHADIR_"), 
-							getParam("PENGENALAN_TIDAKHADIR_"),
-							getParam("STATUS_TIDAKHADIR_"),
-							getParam("UMUR_TIDAKHADIR_"),
-							"T", "", null);
-				}
-				else if(command.equals("delete_tidakhadir"))
-				{
-					String ID_BITIDAKHADIR = getParam("ID_BITIDAKHADIR");
-					modelBI.deleteTidakHadir(session,ID_BITIDAKHADIR,ID_PERBICARAAN,"T",db);
-				}
-				
-				this.context.put("dataStatusOB",modelBI.setDataList(session,"dataStatusOB", "", "","STATUS_OB","", "", "", db));
-				this.context.put("dataHubungan",modelBI.setDataList(session,"dataHubungan", "", "","TBLPPKRUJSAUDARA","ID_SAUDARA", "", db));
-				
-				
-				listTidakHadir = modelBI.listTidakHadir(session,ID_PERBICARAAN, null);
-			}
-			finally {
-				if (db != null)
-					db.close();
-			}			
-			this.context.put("listTidakHadir", listTidakHadir);			
-			this.context.put("scrolPosition", getParam("scrolPosition"));			
-			skrin_name = "app/ppk/BicaraInteraktif/viewTidakHadir.jsp";
-		}
-		else if(command.equals("simpan_tidakHadir"))
-		{			
-			String ID_PERMOHONANSIMATI = getParam("ID_PERMOHONANSIMATI");
-			this.context.put("ID_PERMOHONANSIMATI", ID_PERMOHONANSIMATI);
-			this.context.put("div", "view_kehadiran");
-			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
-			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
-			String ID_PEMOHON = getParam("ID_PEMOHON");
-			this.context.put("ID_PEMOHON", ID_PEMOHON);
-			String ID_PERMOHONAN = getParam("ID_PERMOHONAN");
-			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
-			this.context.put("scrolPosition", getParam("scrolPosition"));
-			Db db = null;
-			try {
-				db = new Db();
-				modelBI.deleteTidakHadir(session,"",ID_PERBICARAAN,"OB",db);
-				String[] checkTidakHadir = request.getParameterValues("checkTidakHadir");
-				if(checkTidakHadir != null)
-				{
-					for (String ck : checkTidakHadir) {
-						myLogger.info("::: CHECK TIDAK HADIR ::: "+ck);
-						modelBI.simpanTidakHadir(session,"", ID_PERBICARAAN, getParam("NAMA_"+ck), getParam("HUBUNGAN_"+ck), 
-								 getParam("PENGENALAN_"+ck),  getParam("STATUS_"+ck),  getParam("UMUR_"+ck), 
-								"OB", ck, db);
-					}
-				}
-				listTidakHadir = modelBI.listTidakHadir(session,ID_PERMOHONANSIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PEMOHON,db);
-			}
-			finally {
-				if (db != null)
-					db.close();
-			}
-			this.context.put("listTidakHadir", listTidakHadir);
-			skrin_name = "app/ppk/BicaraInteraktif/viewTidakHadir.jsp";
-		}**/
-		//arief add CLOSE
 		
 		else if(command.equals("showSenarai") || command.equals("refreshList") || command.equals("deleteHistory") 
 				//|| command.equals("deleteMaklumat")

@@ -5125,7 +5125,10 @@ public class BicaraInteraktifData {
 	}
 	
 	//arief add tidak hadir
-	public void simpanTidakHadir(HttpSession session, String id_bitidakhadir, String id_perbicaraan, String nama, String hubungan, String pengenalan, String status, String umur, Db db) throws Exception {
+	public void simpanTidakHadir(HttpSession session, String id_bitidakhadir, String id_perbicaraan, 
+			String nama, String hubungan, 
+			String pengenalan, String status, String umur,
+			String jenis_tidakhadir, String id_tidakhadir, Db db) throws Exception {
 		Db db1 = null;
 		String sql = "";
 		String USER_ID_SYSTEM = (String)session.getAttribute("_ekptg_user_id");	
@@ -5257,11 +5260,8 @@ public class BicaraInteraktifData {
 		h.put("STATUS",rs == null ? "" :rs.getString("STATUS") == null ? "" : rs.getString("STATUS").toUpperCase());
 		h.put("UMUR",rs == null ? "" :rs.getString("UMUR") == null ? "" : rs.getString("UMUR").toUpperCase());
 		h.put("PENGENALAN",rs == null ? "" :rs.getString("PENGENALAN") == null ? "" : rs.getString("PENGENALAN").toUpperCase());
-		//h.put("CATATAN",rs == null ? "" :rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN").toUpperCase());
-		//h.put("KETERANGAN",rs == null ? "" :rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
-		//h.put("NOTA_PEGAWAI",rs == null ? "" :rs.getString("NOTA_PEGAWAI") == null ? "" : rs.getString("NOTA_PEGAWAI"));
-		//h.put("JENIS_HADIR",rs == null ? "" :rs.getString("JENIS_HADIR") == null ? "" : rs.getString("JENIS_HADIR").toUpperCase());
-		//h.put("ID_HADIR",rs == null ? "" :rs.getString("ID_HADIR") == null ? "" : rs.getString("ID_HADIR").toUpperCase());
+		h.put("JENIS_TIDAKHADIR",rs == null ? "" :rs.getString("JENIS_TIDAKHADIR") == null ? "" : rs.getString("JENIS_TIDAKHADIR").toUpperCase());
+		h.put("ID_TIDAKHADIR",rs == null ? "" :rs.getString("ID_TIDAKHADIR") == null ? "" : rs.getString("ID_TIDAKHADIR").toUpperCase());
 		return h;	
 		
 	}
@@ -5311,7 +5311,7 @@ public class BicaraInteraktifData {
 		}
   }
 	//arief add tidak hadir
-	public void deleteTidakHadir(HttpSession session,String id_bitidakhadir,String id_perbicaraan,Db db) throws Exception {
+	public void deleteTidakHadir(HttpSession session,String id_bitidakhadir,String id_perbicaraan, String jenis_tidakhadir,Db db) throws Exception{
 		Db db1 = null;
 		String sql = "";
 		try {
@@ -5347,56 +5347,98 @@ public class BicaraInteraktifData {
 		}
 	}
 	
-	//arief add tidak hadir
-	public List listTidakHadir(HttpSession session,String id_permohonansimati,String id_permohonan, String id_perbicaraan,String id_pemohon, Db db)throws Exception {
-		Db db1 = null;
-		ResultSet rs = null;
-		Statement stmt = null;
-		List listTidakHadir = null;
-		String sql = "";	
-		
-		try{
+	//arief add listTidakHadir
+		@SuppressWarnings("unchecked")
+		public List listTidakHadir(HttpSession session,String id_perbicaraan, Db db)throws Exception {
+			Db db1 = null;
+			ResultSet rs = null;
+			Statement stmt = null;
+			List listTidakHadir = null;
+			String sql = "";	
 			
-		if(db != null)
-		{
-			db1 = db;
-		}
-		else
-		{
-			db1 = new Db();
-		}
-		
-		stmt = db1.getStatement();			
-		sql += queryListTidakHadir(id_perbicaraan,"");		
-		myLogger.info(" BICARA INTERAKTIF : SQL listTidakHadir :"+ sql);		
-		rs = stmt.executeQuery(sql);
-		listTidakHadir = Collections.synchronizedList(new ArrayList());
-		
-		Map h = null;
-		int bil = 0;
-		while (rs.next()) {
-			h = Collections.synchronizedMap(new HashMap());
-			bil++;
-			String rowCss = "";
-			if ( (bil % 2) == 0 )
+			try{
+				
+			if(db != null)
 			{
-				rowCss = "row2";
+				db1 = db;
 			}
-	        else
-	        {
-	        	rowCss = "row1";
-	        }			
-			listTidakHadir.add(getHashMapTidakHadir(session,rs,rowCss,bil+"",db));
-		}
-		} finally {
-			if (db == null)
+			else
 			{
-				db1.close();
+				db1 = new Db();
 			}
+			
+			stmt = db1.getStatement();			
+			sql += queryListSaksi(id_perbicaraan,"");		
+			myLogger.info(" BICARA INTERAKTIF : SQL listTidakHadir :"+ sql);		
+			rs = stmt.executeQuery(sql);
+			listTidakHadir = Collections.synchronizedList(new ArrayList());
+			
+			Map h = null;
+			int bil = 0;
+			while (rs.next()) {
+				h = Collections.synchronizedMap(new HashMap());
+				bil++;
+				String rowCss = "";
+				if ( (bil % 2) == 0 )
+				{
+					rowCss = "row2";
+				}
+		        else
+		        {
+		        	rowCss = "row1";
+		        }			
+				listTidakHadir.add(getHashMapTidakHadir(session,rs,rowCss,bil+"",db));
+			}
+			} finally {
+				if (db == null)
+				{
+					db1.close();
+				}
+			}
+			return listTidakHadir;
 		}
-		return listTidakHadir;
-	}
 	
+		//arief add listTidakHadir 
+		@SuppressWarnings("unchecked")
+		public List listTidakHadir(HttpSession session,String id_permohonansimati,String id_permohonan, String id_perbicaraan,String id_pemohon, Db db)throws Exception{
+			Db db1 = null;
+			ResultSet rs = null;
+			Statement stmt = null;
+			List listTidakHadir = null;
+			String sql = "";	
+			try{
+				if(db != null){
+					db1 = db;
+				}else{
+					db1 = new Db();
+				}
+				stmt = db1.getStatement();			
+				sql += queryListSaksi(id_perbicaraan,"");		
+				myLogger.info(" BICARA INTERAKTIF : SQL listTidakHadir :"+ sql);		
+				rs = stmt.executeQuery(sql);
+				listTidakHadir = Collections.synchronizedList(new ArrayList());
+					
+				Map h = null;
+				int bil = 0;
+				while (rs.next()) {
+					h = Collections.synchronizedMap(new HashMap());
+					bil++;
+					String rowCss = "";
+					if ( (bil % 2) == 0 ){
+						rowCss = "row2";
+					}else{
+				        rowCss = "row1";
+				    }			
+					listTidakHadir.add(getHashMapTidakHadir(session,rs,rowCss,bil+"",db));
+				}
+			} finally {
+				if (db == null){
+					db1.close();
+				}
+			}
+			return listTidakHadir;
+		}
+		
 	public void simpanKeteranganPerintah(String ID_PERINTAH,String ID_PERBICARAAN,String CATATAN_KEPUTUSAN_PERBICARAAN,String CATATAN,String INTRO_CATATAN,String CATATAN_DOCKIV,Db db) throws Exception {
 		myLogger.info(" CATATAN_KEPUTUSAN_PERBICARAAN : "+CATATAN_KEPUTUSAN_PERBICARAAN+"; CATATAN : "+CATATAN+"; simpanKeteranganPerintah ");
 		Db db1 = null;
