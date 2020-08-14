@@ -21,7 +21,6 @@ import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
 import ekptg.view.php2.emel.EmailOnline;
-import ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView;
 
 public class FrmPNWOnlineKJPSenaraiFailData {
 
@@ -2209,4 +2208,6 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 	public Vector<Hashtable<String, Object>> getBeanMaklumatPemohon() {
 		return beanMaklumatPemohon;
 	}
+	
+
 }

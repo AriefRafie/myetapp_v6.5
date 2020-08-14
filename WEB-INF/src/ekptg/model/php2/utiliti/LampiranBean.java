@@ -203,9 +203,8 @@ public class LampiranBean implements ILampiran{
 	
 	@Override
 	public Tblrujdokumen getLampiran(String iDokumen
-			,String colNama,String colJenis,String colCon
-			,String table) 
-			throws Exception {
+		,String colNama,String colJenis,String colCon
+		,String table) throws Exception {
 			Db db = null;
 			String sql = "";
 			Tblrujdokumen dokumen = null;
@@ -271,14 +270,14 @@ public class LampiranBean implements ILampiran{
 			}
 			return dokumen;
 			    
-		 }	 
+	}	 
 
 	public Vector<Hashtable<String, String>> lampiranMengikutHarta(String id, String iDokumen,boolean isHA) 
-			throws Exception {
-			Db db = null;
-			String sql = "";
-			Vector<Hashtable<String, String>> listLampiran = new Vector<Hashtable<String, String>>();
-			try {
+		throws Exception {
+		Db db = null;
+		String sql = "";
+		Vector<Hashtable<String, String>> listLampiran = new Vector<Hashtable<String, String>>();
+		try {
 				db = new Db();
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
@@ -315,12 +314,12 @@ public class LampiranBean implements ILampiran{
 			      
 				}
 
-			} finally {
-				if (db != null) db.close();
-			}
-			return listLampiran;
+		} finally {
+			if (db != null) db.close();
+		}
+		return listLampiran;
 			    
-		 }	 
+	}	 
 
 	public void hapus(String idDokumen) throws Exception {
 		//myLog.info("hapusLampiran");
@@ -440,7 +439,6 @@ public class LampiranBean implements ILampiran{
 		sb.append("}");
 		return sb.toString();
 	}
-	
 	
 	
 }
