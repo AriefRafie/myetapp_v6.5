@@ -44,6 +44,7 @@ public class FrmPYWHeaderData {
 			if ("".equals(idFail) && session.getAttribute("ID_FAIL") != null) {
 				idFail = (String) session.getAttribute("ID_FAIL");
 			}
+			
 			if ("Y".equals(initiateFlagBuka)) {
 				updateFlagBuka(idFail, session);
 			}

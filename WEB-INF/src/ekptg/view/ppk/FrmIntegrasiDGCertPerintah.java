@@ -279,49 +279,6 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 			
 			if (idjenispejabat.equals("22")) {
-				// dropdown pejabat jkptg
-//				if (idPejabatJKPTG != "") {
-//					if (idpejabat != "") {
-//						context
-//								.put(
-//										"showBicara",
-//										HTML
-//												.SelectTempatBicaraByPejabatJKPTG(
-//														idPejabatJKPTG,
-//														"editTempatBicara",
-//														Utils
-//																.parseLong(idpejabat),
-//														null,
-//														"style=width:400 class=disabled disabled "));
-//					} else {
-//						context
-//								.put(
-//										"showBicara",
-//										HTML
-//												.SelectTempatBicaraByPejabatJKPTG(
-//														idPejabatJKPTG,
-//														"editTempatBicara",
-//														null, null,
-//														"style=width:400 class=disabled disabled "));
-//					}
-//				} 
-//				else {
-//					if (idpejabat != "") {
-//						context.put("showBicara", HTML.SelectTempatBicara(
-//								"editTempatBicara", Utils.parseLong(idpejabat),
-//								null,
-//								"style=width:400 onChange=\"doChangeidTempatBicara();\" class=disabled disabled "));
-//					} else {
-//						context.put("showBicara", HTML.SelectTempatBicara(
-//								"editTempatBicara", null, null,
-//								"style=width:400 onChange=\"doChangeidTempatBicara();\" class=disabled disabled "));
-//					}
-//				}
-
-				// radio button
-//				context.put("checkP1", "checked");
-//				context.put("checkP2", "");
-//				context.put("checkP3", "");
 
 			} else if (idjenispejabat.equals("2")) {
 				// dropdown pejabat tanah
@@ -700,50 +657,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 			
 			if (idjenispejabat.equals("22")) {
-				// dropdown pejabat jkptg
-//				if (idPejabatJKPTG != "") {
-//					if (idpejabat != "") {
-//						context
-//								.put(
-//										"showBicara",
-//										HTML
-//												.SelectTempatBicaraByPejabatJKPTG(
-//														idPejabatJKPTG,
-//														"editTempatBicara",
-//														Utils
-//																.parseLong(idpejabat),
-//														null,
-//														"style=width:400 class=disabled disabled "));
-//					} else {
-//						context
-//								.put(
-//										"showBicara",
-//										HTML
-//												.SelectTempatBicaraByPejabatJKPTG(
-//														idPejabatJKPTG,
-//														"editTempatBicara",
-//														null, null,
-//														"style=width:400 class=disabled disabled "));
-//					}
-//				} 
-//				else {
-//					if (idpejabat != "") {
-//						context.put("showBicara", HTML.SelectTempatBicara(
-//								"editTempatBicara", Utils.parseLong(idpejabat),
-//								null,
-//								"style=width:400 onChange=\"doChangeidTempatBicara();\" class=disabled disabled "));
-//					} else {
-//						context.put("showBicara", HTML.SelectTempatBicara(
-//								"editTempatBicara", null, null,
-//								"style=width:400 onChange=\"doChangeidTempatBicara();\" class=disabled disabled "));
-//					}
-//				}
-
-				// radio button
-//				context.put("checkP1", "checked");
-//				context.put("checkP2", "");
-//				context.put("checkP3", "");
-
+				
 			} else if (idjenispejabat.equals("2")) {
 				// dropdown pejabat tanah
 				

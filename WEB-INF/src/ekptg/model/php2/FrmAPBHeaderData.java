@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package ekptg.model.php2;
 
 import java.sql.Connection;
@@ -22,7 +20,6 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 
 /**
- * 
  *
  */
 public class FrmAPBHeaderData {
@@ -33,12 +30,11 @@ public class FrmAPBHeaderData {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-	public void setMaklumatPermohonan(String idFail, HttpSession session)
-			throws Exception {
+	public void setMaklumatPermohonan(String idFail, HttpSession session) throws Exception {
 		Db db = null;
 		String sql = "";
-
 		try {
+			
 			beanMaklumatPermohonan = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -387,4 +383,6 @@ public class FrmAPBHeaderData {
 	public void setBeanMaklumatPermohonan(Vector beanMaklumatPermohonan) {
 		this.beanMaklumatPermohonan = beanMaklumatPermohonan;
 	}
+	
+	
 }
