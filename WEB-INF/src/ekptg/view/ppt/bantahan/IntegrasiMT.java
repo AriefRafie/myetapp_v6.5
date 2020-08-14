@@ -107,17 +107,18 @@ public class IntegrasiMT extends AjaxBasedModule{
 //			String idNegeriPer = String.valueOf(bdata.get("id_negeri"));
 			jenisRef = String.valueOf(bdata.get("id_jenispb")); //2=Syarikat, 10-Pertubuhan
 			idRujukanPB = String.valueOf(bdata.get("idRujukanPB"));
-
 			
 			if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
 //				Vector<Tblrujdokumen> listDokumen = getDoc().getLampirans(id_bantahan,"pptbantahan");
 	     		Vector listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan,"pptbantahan");
 //	     		Vector listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
-	    		context.put("listDokumen_size", listDokumen.size());	    		
+	    		context.put("listDokumen_size", listDokumen.size());	
+	    		
 			}else{				
 				context.put("listDokumen", "");
 				context.put("listDokumen_size", 0);
+			
 			}
 			
 			String pejabatMT = getParam("idmt");

@@ -712,34 +712,26 @@ function doCheckAll1(){
     }
 }
 
-function doUpdateCheckAll1(){  
-	var c = 0;
-	if(document.${formName}.ids1.length > 1)
-	{     
-		  for (i = 0; i < document.${formName}.ids1.length; i++)
-		  {
-	      if (document.${formName}.ids1[i].checked == false)
-		  {	 
-		  c++
-	      }
+	function doUpdateCheckAll1(){  
+		var c = 0;
+		if(document.${formName}.ids1.length > 1){     
+		  for (i = 0; i < document.${formName}.ids1.length; i++){
+	      	if (document.${formName}.ids1[i].checked == false){	 
+		  		c++
+	      	}
 		  }  
-	}
-	else
-	{
-
-	if (document.${formName}.ids1.checked == false)
-	{	 
-	c++;
-	}	 	
-	}
-		  if(c>0)
-		  {	  
+		}else{
+			if (document.${formName}.ids1.checked == false){	 
+				c++;
+			}	 	
+		}
+		  
+		if(c>0){	  
 		  document.${formName}.all1.checked = false;
-		  }
-		  else
-		  {
+		}else{
 		  document.${formName}.all1.checked = true;
-		  }      
+		}      
 	}
 
 </script>
+<!-- 06/08/2020 Kemaskini fungsi javascript doUpdateCheckAll1() -->

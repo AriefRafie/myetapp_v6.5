@@ -636,29 +636,30 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                 <div align="left"> Taraf Kepentingan </div>
               </div></td>
             <td class="style36"><span class="style38">:</span></td>
-            <td> #if($taraf_penting=="")                                          
-              #set($taraf_penting="")                                                          
+            <td> 
+    	#if($taraf_penting=="")                                          
+        	#set($taraf_penting="")                                                          
+         	#set($tarafkePemohonan="")
+          	#set($tarafkePemohonanid="")
               
-              #set($tarafkePemohonan="")
-              #set($tarafkePemohonanid="")
-              #else
-              #foreach($listtar in $listtaraf)
+      	#else
+       		#foreach($listtar in $listtaraf)
               
-              #if($taraf_penting==$listtar.id_Tarafkptg)
+         		#if($taraf_penting==$listtar.id_Tarafkptg)
+              		#set($tarafkePemohonan="$listtar.kod - $listtar.keterangan")
+              		#set($tarafkePemohonanid="$listtar.id_Tarafkptg")
               
-              #set($tarafkePemohonan="$listtar.kod - $listtar.keterangan")
-              #set($tarafkePemohonanid="$listtar.id_Tarafkptg")
+              	#end  
               
-              #end  
+        	#end
               
-              #end
-              #end
+     	#end
               
-              #if($taraf_penting!="" && $taraf_penting!=0 && $taraf_penting!="null" )
-              #set($dahada="ada")
-              #else
-              #set($dahada="Xada")
-              #end
+     	#if($taraf_penting!="" && $taraf_penting!=0 && $taraf_penting!="null" )
+        	#set($dahada="ada")
+      	#else
+       		#set($dahada="Xada")
+      	#end
               <!--::::::: ID TARAF :$listpemohon.idTarafkptg   
                   ::::::: ADA TARAF-->
                   
@@ -887,33 +888,35 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             <td >:</td>
             <td ><select name="jenis_pej3" id="jenis_pej3" class="largeselect" $setMode style="text-transform:uppercase;" onChange="pilih_majlisagama()" >
                 
-          #if($!jenis_pej == "" || $!jenis_pej == "0") 
+		#if($!jenis_pej == "" || $!jenis_pej == "0") 
           
                 <option value="">SILA PILIH </option>
-                
-           #else
-           #foreach($listJ in $listMaklumatMahkamahJ)
-           #if( $listJ.id_Pejabat == $jenis_pej )              
-           #set($listJid_Pejabat = $listJ.id_Pejabat)
-           #set($listJnama_pejabat=$listJ.nama_pejabat)
-           #set($listJdaerah = $listJ.daerah)  
-           #set($nama_bandar = $listJ.namabandar)         
-           #end
+     	#else
+        	#foreach($listJ in $listMaklumatMahkamahJ)
+           		#if( $listJ.id_Pejabat == $jenis_pej )              
+           			#set($listJid_Pejabat = $listJ.id_Pejabat)
+           			#set($listJnama_pejabat=$listJ.nama_pejabat)
+           			#set($listJdaerah = $listJ.daerah)  
+           			#set($nama_bandar = $listJ.namabandar)         
+           
+           		#end
+           
            #end
            
                 <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>
                             
-           #end        
-                                  #foreach($listJ in $listMaklumatMahkamahJ)
-                                  #if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '62' )
-	                          
+     	#end        
+        	
+      	#foreach($listJ in $listMaklumatMahkamahJ)
+       		#if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '62' )              
                 <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
-                  #end 
-                  #end 
+        	#end 
                   
-                  #if($!jenis_pej != "" || $!jenis_pej != "0"))
-                <option value="">SILA PILIH </option>
-                 #end                            
+     	#end 
+                  
+     	#if($!jenis_pej != "" || $!jenis_pej != "0"))
+       		<!-- <option value="">SILA PILIH </option> -->
+     	#end                            
               </select></td>
           </tr>
           

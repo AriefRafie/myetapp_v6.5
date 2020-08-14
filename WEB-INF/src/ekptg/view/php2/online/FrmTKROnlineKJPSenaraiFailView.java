@@ -30,7 +30,6 @@ import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmUtilData;
-import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp; 
 import ekptg.model.htp.online.IOnline;
@@ -45,7 +44,6 @@ import ekptg.model.utils.emel.EmailConfig;
 import ekptg.model.utils.emel.IEmel;
 import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.view.htp.online.jrp.HTPEmelJRPBean;
-import ekptg.model.htp.online.IOnline;
 
 //test 13/8/2020
 public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {

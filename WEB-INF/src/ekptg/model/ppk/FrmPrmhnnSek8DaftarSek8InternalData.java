@@ -11262,10 +11262,8 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 		Db db = null;
 		listChckId.clear();
 		String sql = "Select count(p.id_pemohon) as ids from tblppkpemohon pm, tblppkpermohonan p " +
-				"where p.id_pemohon = pm.id_pemohon and p.id_permohonan = '"
-				+ id + "'";
-		myLogger.info("COUNT :" + sql);
-
+				" where p.id_pemohon = pm.id_pemohon and p.id_permohonan = '"+ id + "'";
+//		myLogger.info("COUNT :" + sql);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
@@ -11277,8 +11275,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("count_id",
-						rs.getString("ids") == null ? "" : rs.getString("ids"));
-
+				rs.getString("ids") == null ? "" : rs.getString("ids"));
 				listChckId.addElement(h);
 				bil++;
 			}

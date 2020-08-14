@@ -703,12 +703,11 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 	private void updateBorangEInBulk(HttpSession session,String id_borange, Db db,String id_hakmilik) throws Exception{
 		
 //		PPT-06
-		String[] txtMasaSiasatan = request.getParameterValues("txtMasaSiasatan");
 		String[] socJenisWaktu = request.getParameterValues("socJenisWaktu");
-	    if(txtMasaSiasatan != null) {
-	    	for(int i = 0; i < txtMasaSiasatan.length; i++) {
-	    		myLogger.info("updateBorangEInBulk Masa_Siasatan = " +txtMasaSiasatan[i]);
-	    		myLogger.info("updateBorangEInBulk Jenis_Waktu = " +socJenisWaktu[i]);
+//	    if(txtMasaSiasatan != null) {
+//	    	for(int i = 0; i < txtMasaSiasatan.length; i++) {
+//	    		myLogger.info("updateBorangEInBulk Masa_Siasatan = " +txtMasaSiasatan[i]);
+//	    		myLogger.info("updateBorangEInBulk Jenis_Waktu = " +socJenisWaktu[i]);
 	    
 	    Hashtable h = new Hashtable();
 		
@@ -718,8 +717,8 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 		h.put("txdTarikhBorangE", getParam("txdTarikhBorangE"));
     	h.put("txdTarikhBorangF", getParam("txdTarikhBorangF"));
     	h.put("txdTarikhSiasatan", getParam("txdTarikhSiasatan"));
-    	h.put("txtMasaSiasatan", txtMasaSiasatan[i]); // PPT-06
-    	h.put("socJenisWaktu", socJenisWaktu[i]); // PPT-06
+//    	h.put("txtMasaSiasatan", txtMasaSiasatan[i]); // PPT-06
+//    	h.put("socJenisWaktu", socJenisWaktu[i]); // PPT-06
 //    	h.put("txtMasaSiasatan", getParam("txtMasaSiasatan"));
 //    	h.put("socJenisWaktu", getParam("socJenisWaktu"));
     	h.put("txtAlamat1", getParam("txtAlamat1"));
@@ -736,17 +735,24 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 //		delete senarai notis dalam attribute table
 		FrmUPTSek8BorangFData.deleteListCB(id_borange,db);
 		
+		String[] txtMasaSiasatan = request.getParameterValues("txtMasaSiasatan");
+		myLogger.info("updateBorangEInBulk txtMasaSiasatan.length = " +txtMasaSiasatan.length);
 		String[] cbsemaks = request.getParameterValues("cbsemaks");
-    	if(cbsemaks != null){
+		myLogger.info("updateBorangEInBulk cbsemaks.length = " +cbsemaks.length);
+		if(cbsemaks != null){
 			for (int j = 0; j < cbsemaks.length; j++) {
-				FrmUPTSek8BorangFData.deleteListCB_byHakmilik(cbsemaks[j],db);
-				FrmUPTSek8BorangFData.simpanBorangEInBulk(h,cbsemaks[j],Utils.parseLong(id_borange),db);
-				myLogger.info("simpanBorangEInBulk by cbsemaks: " +h);
+//				FrmUPTSek8BorangFData.deleteListCB_byHakmilik(cbsemaks[j],db);
+				
+//				FrmUPTSek8BorangFData.simpanBorangEInBulk(h,cbsemaks[j],Utils.parseLong(id_borange),db);
+				myLogger.info(j+",simpanBorangEInBulk by cbsemaks: " +cbsemaks[j]);
+//				myLogger.info("simpanBorangEInBulk by  2: " +h);
+				myLogger.info("simpanBorangEInBulk by txtMasaSiasatan: " +txtMasaSiasatan[j]);
+
 			}
 		} //close cbsemaks
 	  
-	    	}
-	  } //close jenisWaktu, MasaSiasatan PPT-06
+//	    	}
+//	  } //close jenisWaktu, MasaSiasatan PPT-06
 		
 	}//close updateBorangEInBulk
 	

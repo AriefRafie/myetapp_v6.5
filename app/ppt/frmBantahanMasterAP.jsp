@@ -494,7 +494,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!------------------------------------------------------ END MAKLUMAT PEMBANTAH ---------------------------------------->  
 
 <!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
-<!-- :::upload -->
+<!-- 
 <input type="hidden" name="nama_skrin" id="nama_skrin" value="main"  />
 
 <fieldset id="senarai_dokumen" >
@@ -541,12 +541,12 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
   #else
 	  	<tr>  
 	    	<td colspan="5">Tiada Rekod</td>    
-	  	tr>
+	  	</tr>
   #end
 	</table>
   
 </fieldset> 
-
+-->
         <div align="center"> 
      
           #if($button=="view" && $flag_online=="2" && $id_status_bantahan=="199")
@@ -555,8 +555,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
       
       	  #if($button=="view")
           <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniBantahan()" /> 
-          <input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
-          <!-- <input type="button" name="cmdintegrasimt1" id="cmdintegrasimt1" value="..." onclick="javascript:hantarBantahan2()" />  -->
+          <!-- <input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
+          <input type="button" name="cmdintegrasimt1" id="cmdintegrasimt1" value="..." onclick="javascript:hantarBantahan2()" />  -->
           <!--<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> -->
           #end
           

@@ -214,7 +214,7 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 		myLog.info("IDURUSAN="+IDURUSAN);
 		myLog.info("command="+submit+",mode="+mode);
 
-		Vector<?> list = null;
+		Vector<HtpPermohonan> list = null;
 		vm = PATH+"index.jsp";
 		if("".equals(submit)){
 			vm = PATH+"index.jsp";	   	   

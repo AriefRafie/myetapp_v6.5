@@ -601,7 +601,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			selectedtab = "0";
 			context.put("selectedtab", selectedtab);
 			context.put("idWarta", id_warta);
-			myLogger.info("check error 1 [id hakmilikpb] :: " + id_hakmilikpb);
+//			myLogger.info("check error 1 [id hakmilikpb] :: " + id_hakmilikpb);
 
 			// CHECKING JUMLAH PAMPASAN SEKSYEN 8
 			listA = model.getMaklumatPampasan(id_hakmilikpb);
@@ -610,7 +610,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				Hashtable d = (Hashtable) listA.get(0);
 				amaun_bayaran = Double.parseDouble(d.get("amaun_bayaran").toString());
 			}
-			myLogger.info("check error 2 [amaun bayaran] :: " + amaun_bayaran);
+			myLogger.info("check error 2 [amaun bayaran]=" + amaun_bayaran);
 
 			// PAMPASAN <= 3000.00 : ALASAN 3 DAN 4
 			if (amaun_bayaran <= 3000.00) {

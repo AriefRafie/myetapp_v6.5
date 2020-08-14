@@ -1158,8 +1158,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			vm = skrinDepositAP;
     			
     		}else if("borangO".equals(submit)){		
-    			String jenisDoc = "borangO";
     			selectedtab = "2";
+    			context.put("idWarta", id_warta); //integrasi MT
     			context.put("selectedtab",selectedtab);
     			
     	    	id_fail = getParam("id_fail");	
@@ -1174,6 +1174,12 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			if (list.size()!=0){
     				Hashtable a = (Hashtable) list.get(0);		
     				id_bantahan = (String)a.get("id_bantahan");
+    				// integrasi MT, get JENIS_DOKUMEN 
+    				listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+    				myLogger.info("borangO:id_bantahan= "+id_bantahan+",Jenis Dokumen="+jenisDokumen);
+    				context.put("listDokumen", listDokumen);
+    				context.put("listDokumen_size", listDokumen.size());
+    				
     			}else{
     				context.put("status", true);
     			}				
@@ -1243,7 +1249,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     				context.put("button","view");
     	
     			}			
-    		
+    			
+    			context.put("idMT", _cIdMahkamah);
     			vm = "app/ppt/frmBantahanAgensiBorangO.jsp";
     			
     	}else if("doChangeNegeriMahkamah".equals(submit)){
@@ -2425,8 +2432,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
                 vm = "app/ppt/frmBantahanAgensiDokumen.jsp";	
       
                 
-    		}else if("tambah_dokumen".equals(submit)){
-    			
+    		}else if("tambah_dokumen".equals(submit)){	
     			list = model.getMaklumatBantahanAP(id_permohonan,id_hakmilik,id_siasatan,id_warta);
     			context.put("getMaklumatBantahan", list);
     			String id_bantahan = "";
@@ -2544,11 +2550,43 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			}
                 
                 vm = "app/ppt/frmBantahanAgensiSusulan.jsp";	    		
+		
+    	}else if("hapusDokumenborango".equals(submit)){	
+			selectedtab = "2";
+			context.put("selectedtab", selectedtab);
+			
+			list = model.getMaklumatBantahanAP(id_permohonan,id_hakmilik,id_siasatan,id_warta);		
+			String id_bantahan = "";
+			if(list.size()!=0){
+				Hashtable a = (Hashtable) list.get(0);
+				id_bantahan = (String)a.get("id_bantahan");
+			}else{
+				context.put("status", true);
+			}
+			
+			String[] ids1 = this.request.getParameterValues("ids1");
+			if (ids1 != null) {
+				for (int i = 0; i < ids1.length; i++) {						
+						if (doPost.equals("true")) {
+							modelOperations.deleteDokumen(ids1[i]);
+						}
+					}
+				}
+			this.context.put("readmode", getParam("readmode"));	
+	
+            if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
+   	     		listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+	    		context.put("listDokumen", listDokumen);
+	    		context.put("listDokumen_size", listDokumen.size());	    		
+		
+            }else{				
+				context.put("listDokumen", "");
+				context.put("listDokumen_size", 0);
+			}
+            
+			vm = "app/ppt/frmBantahanAgensiDokumen.jsp";	
     			
-    		}
-    		
-    		else if("hapusDokumenMaster".equals(submit)){
-    			
+    	}else if("hapusDokumenMaster".equals(submit)){	
     			selectedtab = "0";
     			context.put("selectedtab", selectedtab);
     			

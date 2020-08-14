@@ -100,19 +100,22 @@
       <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="Batal('$!id_dokumen')">
     #end
     
-    <!-- :::upload -->
+    <!-- :::upload 
 		<input type="hidden" name="nama_skrin" id="nama_skrin" value="$!nama_skrin"  />
-
+	-->
    
+#if($!nama_skrin != "")
       
-        #if($!nama_skrin == "main")
-      <input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
-      #end
+  	##if($!nama_skrin == "main" || $!nama_skrin == "bantahan")
+   		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
+   	##end
       
-      #if($!nama_skrin == "perintah")
-       <input type="button" name="cmdKembali1" id="cmdKembali1"  value="Kembali" onclick="KembaliPerintah('')">
-      #end
+   	#if($!nama_skrin == "perintah")
+   		<input type="button" name="cmdKembali1" id="cmdKembali1"  value="Kembali" onclick="KembaliPerintah('')">
+  	#end
    
+#end
+   	
       </label></td>
   </tr>
   <tr>
@@ -276,75 +279,64 @@ if(readmode == "edit")
 </script>
 
 <script>
-//:::upload
-function Upload(){	
-   
-    var nama_skrin = document.${formName}.nama_skrin.value ; 
-    var id_bantahan = document.${formName}.id_bantahan.value ;
-	var id_permohonan = document.${formName}.id_permohonan.value ;	
-	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;	
-	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
-	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;	
-	var txtnamadokumen = document.${formName}.txtnamadokumen.value ;
-	var txtketerangandokumen = document.${formName}.txtketerangandokumen.value ;	
-	var location = document.${formName}.location.value ;
-	var point = document.${formName}.point.value ;
-	var id_dokumen = document.${formName}.id_dokumen.value ;
-	var allBlank = true;
+	
+	//upload
+	function Upload(){	
+	   
+	    //var nama_skrin = document.${formName}.nama_skrin.value ; 
+	    var id_bantahan = document.${formName}.id_bantahan.value ;
+		var id_permohonan = document.${formName}.id_permohonan.value ;	
+		var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;	
+		var id_hakmilik = document.${formName}.id_hakmilik.value ;	
+		var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;	
+		var txtnamadokumen = document.${formName}.txtnamadokumen.value ;
+		var txtketerangandokumen = document.${formName}.txtketerangandokumen.value ;	
+		var location = document.${formName}.location.value ;
+		var point = document.${formName}.point.value ;
+		var id_dokumen = document.${formName}.id_dokumen.value ;
+		var allBlank = true;
+	
+		var c = 0;
 
-	var c = 0;
+		if(document.${formName}.validation_field != null  ){
 
-if(document.${formName}.validation_field != null  )
-{
-
-   if (document.${formName}.validation_field.length == null)
-   {	
+   			if (document.${formName}.validation_field.length == null){	
     
-   if(document.${formName}.validation_field.value == "invalid")
-   {  
-   
-   c++;	
-   } 
+   				if(document.${formName}.validation_field.value == "invalid"){  
+   					c++;	
+				} 
    	
-   } 
+   			}else {
    
-   else 
-   {
-   
-        for (i = 0; i < document.${formName}.validation_field.length; i++)
-		{
-	
-			if(document.${formName}.validation_field[i].value == "invalid")
-			{
-			
-               c++;	 
-			}  	
-        }
-    }	
-}
-
-
-if(c>0){
-alert("Sila pastikan maklumat yang diisi adalah lengkap dan sah");
-return;
-}
-	else
-	{
-	input_box = confirm("Adakah anda pasti?");
-	if (input_box == true) {	
-	document.${formName}.command.value = "upload_dokumen";
-	document.${formName}.location.value = "senarai_dokumen";
-	document.${formName}.point.value = "senarai_dokumen";
-	document.${formName}.enctype = "multipart/form-data";
-	document.${formName}.encoding = "multipart/form-data";
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=upload_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&txtnamadokumen="+txtnamadokumen+"&location=senarai_dokumen&point=senarai_dokumen&txtketerangandokumen="+txtketerangandokumen+"&location="+location+"&point="+point+"&id_dokumen="+id_dokumen+"&nama_skrin="+nama_skrin;
-	document.${formName}.submit();	
-	}	
-	
-	}
-	
+	        	for (i = 0; i < document.${formName}.validation_field.length; i++){
 		
-}
+					if(document.${formName}.validation_field[i].value == "invalid"){
+						c++;	 
+					}  	
+	        	}
+    		}	
+		}
+
+		if(c>0){
+			alert("Sila pastikan maklumat yang diisi adalah lengkap dan sah");
+			return;
+		}else{
+	
+			input_box = confirm("Adakah anda pasti?");
+			if (input_box == true) {	
+				document.${formName}.command.value = "upload_dokumen";
+				document.${formName}.location.value = "senarai_dokumen";
+				document.${formName}.point.value = "senarai_dokumen";
+				document.${formName}.enctype = "multipart/form-data";
+				document.${formName}.encoding = "multipart/form-data";
+				document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=upload_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&txtnamadokumen="+txtnamadokumen+"&location=senarai_dokumen&point=senarai_dokumen&txtketerangandokumen="+txtketerangandokumen+"&location="+location+"&point="+point+"&id_dokumen="+id_dokumen+"&nama_skrin=$!nama_skrin";
+				document.${formName}.submit();	
+			
+			}	
+	
+		}
+			
+	}
 
 function hapusDokumen(r){
 input_box = confirm("Adakah anda pasti?");
@@ -361,7 +353,7 @@ input_box = confirm("Adakah anda pasti?");
 		var id_permohonan = document.${formName}.id_permohonan.value ;	
 		var senarai_dokumen = document.${formName}.senarai_dokumen.value ;
 		
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=dalamProses&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=$nama_skrin&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
 		document.${formName}.submit();
 
 	}
@@ -762,17 +754,11 @@ function checking_validation(field,point,mandatory,value_field,jenis_field){
 		   target = point;
 		   doAjaxUpdater(document.${formName}, url, target, actionName);	
 		
-		
 		}
-		
-		
-	   
-	   }
-	   
-	   
-	   
 	
-}
+	   }   
+	   
+	}
 
 
 </script>

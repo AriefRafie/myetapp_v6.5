@@ -194,12 +194,12 @@
 	<tr>
 		<td align="center">
 				#if ($pageMode == 2 )	
-					<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick= "simpanFail()">&nbsp;
+					<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick= "simpanFail()">&nbsp;
 				#end
 				#if ($pageMode == 0 || $pageMode == 4)	
 					#if ($tambahdisable == false)
-					<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick= "simpanFail()">
-					<input type="reset" class="stylobutton" name="cmdBatal" id="cmdBatal" value="Kosongkan" onclick="cancel">
+					<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick= "simpanFail()">
+					<input type="reset" class="stylobutton100" name="cmdBatal" id="cmdBatal" value="Kosongkan" onclick="cancel">
 					#end
 				#end <!--
 				#if ($pageMode == 2 )	
@@ -207,7 +207,7 @@
 				#end
 				 &nbsp;-->
 				#if ($tambahdisable == false)
-					<input type="button" class="stylobutton" name="cmdKembali" id="cmdKembali" value="Batal" onclick="backMain()">
+					<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Batal" onclick="backMain()">
 				#end
 	
 		</td>
