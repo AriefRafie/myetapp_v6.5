@@ -735,18 +735,6 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                   <td>
                   #if ($socJenisHa == "1" || $socJenisHa == "2" || $socJenisHa == "3" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "6" )
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  /> 
- 	  #if($!skrin_online == "yes")
- 	  	#if($socJenisHa == "3")
- 	  	<a href="javascript:info('geran_kereta')" class="help" title="info">					
-					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-			</a>#end 
-			
-			#if($socJenisHa == "2")
- 	  	<a href="javascript:info('agensi')" class="help" title="info">					
-					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-			</a>#end
-			#end
-			
  	  #else
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  />	  
       #end      </td> 
@@ -832,18 +820,8 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                   <td>
                   #if ($socJenisHa == 1 || $socJenisHa == 4 || $socJenisHa == 3 || $socJenisHa == 5 || $socJenisHa == 6) 
       	<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />  
-      #if($!skrin_online == "yes")
-      		#if ($socJenisHa == "3")
-      		<a href="javascript:info('daftar')" class="help" title="info">					
-								<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-					</a> #end #end
-					
       #elseif ($socJenisHa == 2)
       <input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;"  value="$norujukan" size="20" maxlength="30" onblur="this.value=this.value.toUpperCase()" $disabledR class="$disabled"  /> 
-      #if($!skrin_online == "yes")
-      		<a href="javascript:info('akaun')" class="help" title="info">					
-								<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-					</a> #end
       #else
       
           <input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />      
@@ -1771,23 +1749,6 @@ parent.document.getElementById("info_pilihan_harta").innerHTML="<div class=\"war
 </body>
 
 <script>
-function info(jenis) {
-    //
-	var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=no,scrollbars=no');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus(); /**/
-    //
-    var title = 'Info';
-	var w =1024;
-	var h = 800;
-    var left = (screen.width/2)-(w/2);
-    //var top = (screen.height/2)-(h/2);
-    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-}
 <!-- TAB -->
 
 	function lampiranHartaHA(idHarta) {

@@ -68,7 +68,6 @@ public class FrmPrmhnnSek8InternalData {
 	private Vector listWarisOB = new Vector();
 	private Vector listWarisLapisanIdMati = new Vector();
 	private Vector listWarisLapisanIdMatiDelete = new Vector();
-	private Vector listCheckPertukaran = new Vector();
 	private Vector listCheckPeguam = new Vector();
 	private Vector listCheckPeguam_online = new Vector();
 	private Vector listPenghutangbyIDOB = new Vector();
@@ -84,7 +83,9 @@ public class FrmPrmhnnSek8InternalData {
 	private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 	public Vector getData() {
+
 		return list;
+
 	}
 
 	public Vector getcheckpemohonwaris() {
@@ -94,10 +95,6 @@ public class FrmPrmhnnSek8InternalData {
 	// private Vector listcheckpemohonwaris = new Vector();
 	public Vector getCheckPeguam() {
 		return listCheckPeguam;
-	}
-	
-	public Vector getCheckPertukaran() {
-		return listCheckPertukaran;
 	}
 
 	public Vector getCheckPeguam_online() {
@@ -429,53 +426,6 @@ public Boolean sendNilaianHTA(String ID_PERMOHONAN, String ID_HTA, String JENIS_
 		}
 
 	}
-	
-	// syafiqah add
-	// public boolean setCheckPertukaran(String id) throws Exception {
-	public Vector setCheckPertukaran(String id) throws Exception {
-		// boolean returnVal =false;
-		Db db = null;
-		Connection conn = null;
-		listCheckPertukaran.clear();
-		String sql = "";
-
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			
-			sql = "select pt.id_permohonansimati, pt.id_pemohonbaru, pt.sebab_tukar, to_char(po.tarikh_mati, 'DD/MM/YYYY') as tarikh_mati from tblppktukarpemohon pt, tblppkob po "
-					+ "where pt.id_pemohonlama = po.id_pemohon and pt.id_permohonansimati = " + id;
-			System.out.println("syafiqah get borang aa :"+sql); 
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			Hashtable h;
-
-			while (rs.next()) {
-				// myLogger.info("DIA X BACA KAT SINI"); 
-				h = new Hashtable();
-				h.put("id_permohonansimati", rs.getString("id_permohonansimati") == null ? "" : rs.getString("id_permohonansimati"));
-				h.put("id_pemohonbaru", rs.getString("id_pemohonbaru") == null ? "" : rs.getString("id_pemohonbaru"));
-				h.put("sebab_tukar", rs.getString("sebab_tukar") == null ? "" : rs.getString("sebab_tukar"));
-				h.put("tarikh_mati", rs.getString("tarikh_mati") == null ? "" : rs.getString("tarikh_mati"));
-				// h.put("id_permohonansimati", rs.getString("id_permohonansimati") == null ? "" : rs.getString("id_permohonansimati"));
-				listCheckPertukaran.addElement(h);
-				// returnVal = true; 
-			}
-
-		}catch (Exception re) {
-			myLogger.error("Error: ", re);
-			throw re;
-		} finally {
-			if (db != null)
-				db.close();
-		}
-		// return returnVal;
-		return listCheckPertukaran;
-
-	}
-	
-	// syafiqah add ends
 
 	public void setCheckPeguam_online(String id) throws Exception {
 		Db db = null;
@@ -8019,8 +7969,8 @@ System.out.println("TARIKH_SURAT_AKUAN=="+TARIKH_SURAT_AKUAN);
 			String alamathta2 = (String) data.get("alamathta2");
 			String alamathta3 = (String) data.get("alamathta3");
 			String poskodhta = (String) data.get("poskodhta");
-			int bandarhta = (Integer) data.get("bandarhta");
-			// String bandarhta = (String) data.get("bandarhta");
+			//int bandarhta = (Integer) data.get("bandarhta");
+			 String bandarhta = (String) data.get("bandarhta");
 			String noperjanjian = (String) data.get("noperjanjian");
 			String tarikhperja = (String) data.get("tarikhperjanjian");
 			String tarikhperjanjian = "to_date('" + tarikhperja + "','dd/MM/yyyy')";
@@ -8602,9 +8552,7 @@ System.out.println("TARIKH_SURAT_AKUAN=="+TARIKH_SURAT_AKUAN);
 			r.add("SYARAT_NYATA", syaratNyata);
 
 			sql = r.getSQLInsert("tblppkhtapermohonan");
-			myLogger.info("TEST : "+ sql);
 			stmt.executeUpdate(sql);
-			
 
 			conn.commit();
 
@@ -8729,13 +8677,11 @@ System.out.println("TARIKH_SURAT_AKUAN=="+TARIKH_SURAT_AKUAN);
 			}
 			r.add("catatan", catatan);
 			//r.add("", noperserahan);
-			
 			r.add("alamat_hta1", alamat_hta1);
 			r.add("alamat_hta2", alamat_hta2);
 			r.add("alamat_hta3", alamat_hta3);
 			r.add("poskod_hta", poskod_hta);
 			r.add("id_bandarhta", id_bandarhta);
-			
 			r.add("jenis_Hta", jenis_Hta);
 			r.add("flag_Kategori_Hta", flag);
 			r.add("id_Kemaskini", id_Kemaskini);
@@ -9865,10 +9811,6 @@ public void deleteHtaamSenarai(String idDokumen, String uid, String id_permohona
 				h.put("syaratNyata", rs.getString("SYARAT_NYATA") == null ? "" : rs.getString("KETERANGAN").toUpperCase());
 				h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN").toUpperCase());
 
-				//SYAFIQAH ADD UNTUK PAPAR LAMPIRAN 230720
-				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
-				h.put("lampirans", l.getLampirans(rs.getString("ID_HTA")));
-				
 			    System.out.println(h);
 			   // h.put("alamathta2","hta 2");
 			    i = i+1;
@@ -11650,10 +11592,6 @@ public void deleteHtaamSenarai(String idDokumen, String uid, String id_permohona
 				h.put("poskod", rs.getString("POSKOD_HTA") == null ? "" : rs.getString("POSKOD_HTA"));
 				h.put("jenis_penting",rs.getString("JENIS_KEPENTINGAN") == null ? "" : rs.getString("JENIS_KEPENTINGAN"));
 				h.put("ketegori_hta",rs.getString("FLAG_KATEGORI_HTA") == null ? "" : rs.getString("FLAG_KATEGORI_HTA"));
-				
-				//SYAFIQAH ADD UNTUK PAPAR LAMPIRAN 230720
-				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
-				h.put("lampirans", l.getLampirans(rs.getString("ID_HTA")));
 
 				listHTAX.addElement(h);
 			}

@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package ekptg.view.php2.online;
 
 import java.sql.Connection;
@@ -22,48 +25,20 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.helpers.Utils;
-import ekptg.model.entities.Tblrujsuburusanstatusfail;
-import ekptg.model.htp.FrmSemakan;
-import ekptg.model.htp.FrmUtilData;
-import ekptg.model.htp.HTPStatusBean;
-import ekptg.model.htp.HtpBean;
-import ekptg.model.htp.IHtp; 
-import ekptg.model.htp.online.IOnline;
-import ekptg.model.htp.online.OnlineBean;
-import ekptg.model.php2.online.FrmTKRHeaderData;
+import ekptg.model.php2.FrmTKRHeaderData;
 import ekptg.model.php2.FrmTKRJabatanTeknikalData;
 import ekptg.model.php2.online.FrmTKROnlineKJPSenaraiFailData;
-import ekptg.model.php2.utiliti.LampiranBean;
-import ekptg.model.utils.IUserPegawai;
-import ekptg.model.utils.UserBean;
-import ekptg.model.utils.emel.EmailConfig;
-import ekptg.model.utils.emel.IEmel;
-import ekptg.model.utils.lampiran.ILampiran;
-import ekptg.view.htp.online.jrp.HTPEmelJRPBean;
-import ekptg.model.htp.online.IOnline;
 
-//test 14/8/2020
 public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
-	private String readonly = "disabled class = \"disabled\"";
-	static Logger myLog = Logger.getLogger(FrmTKROnlineKJPSenaraiFailView.class);
-	private ILampiran iLampiran = null;
+	static Logger myLog = Logger.getLogger(FrmPLPOnlineKJPSenaraiFailView.class);
 
 	FrmTKRHeaderData logicHeader = new FrmTKRHeaderData();
 	FrmTKRJabatanTeknikalData logicJabatanTeknikal = new FrmTKRJabatanTeknikalData();
 	FrmTKROnlineKJPSenaraiFailData logic = new FrmTKROnlineKJPSenaraiFailData();
-	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
-	private ekptg.model.utils.emel.IEmel emelSemak = null;
-	private IUserPegawai iUser = null;
 	private String templateDir = "app/php2/online/ulasanKJP/tkr";
-	private String idSuburusan = "33";
-	String idJawatan = "";
-	private IOnline iOnline = null;
-	private IHtp iHTP = null;
 
-	
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
 
@@ -73,84 +48,28 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			postDB = true;
 		}
 
-		String userId = (String) session.getAttribute("_ekptg_user_id");
-
 		// GET DEFAULT PARAM
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
 		String vm = "";
-		String submit = getParam("command");
-		String submit2 = getParam("submit2");
-		String flagPopup = getParam("flagPopup");
-		String modePopup = getParam("modePopup");
-		String mode = getParam("mode");
-        if (mode.isEmpty()){
-        	mode = "view";
-        }
-
-		myLog.info("submit="+submit);
-		myLog.info("submit2="+submit2);
-		String hitButton = getParam("hitButton");
-		myLog.info("hitButton="+hitButton);
-		String idNegeriPemohon = "";
-		String userRole = "";
-		String userJawatan = "";
-		String layerKJP = "";
-
-		// GET ID PARAM
-		String idFail = getParam("idFail");
-		String idStatus = getParam("idStatus");
-		this.context.put("idFail", idFail);
-		String idHakmilikAgensi = getParam("idHakmilikAgensi");
-		String idHakmilikSementara = null;
-		idHakmilikSementara = getParam("idHakmilikSementara");
-		String idDokumen = getParam("idDokumen"); // ADD MAKLUMAT LAMPIRAN
-		String idUlasanTeknikal = getParam("idUlasanTeknikal");
-		String idPermohonan = getParam("idPermohonan");
-		String kategori = getParam("kategori");
-		String langkah = getParam("langkah");
-
-		String idKategoriPemohon = "";
-		String idJenisTanah = "1";
-		String namaJenisTanah = "TANAH MILIK PERSEKUTUAN";
-		String namaKementerian = "";
-		String namaAgensi = "";
-
-
-
+		String command = getParam("command");
 
 		// VECTOR
 		Vector beanMaklumatPermohonan = null;
-		Vector beanMaklumatPemohon = null;
 		Vector beanMaklumatAgensi = null;
 		Vector beanMaklumatPejabat = null;
 		Vector beanMaklumatTanah = null;
 		Vector beanMaklumatBorangK = null;
-		Vector beanMaklumatLampiran = null;
-		Vector listDetailKJP = null;
-		Vector senaraiSemak = null;
-		Vector senaraiLampiran = null;
-		Vector beanMaklumatTukarguna = null;
-		Vector beanHeader = null;
 
-		String selectedTabUpper = (String) getParam("selectedTabUpper");
-		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
-			selectedTabUpper = "0";
-		}
-		String idUrusan = getParam("socUrusan");
-		if (idUrusan == null || idUrusan.trim().length() == 0) {
-			idUrusan = "99999";
-		}
-		
-		String idSubsuburusan = getParam("socSubsuburusan");
-		if (idSubsuburusan == null || idSubsuburusan.trim().length() == 0) {
-			idSubsuburusan = "99999";
+		// GET DROPDOWN PARAM
+		String idKategoriPemohon = getParam("socKategoriPemohon");
+		if (idKategoriPemohon == null || idKategoriPemohon.trim().length() == 0) {
+			idKategoriPemohon = "99999";
 		}
 		String idKementerian = getParam("socKementerian");
 		if (idKementerian == null || idKementerian.trim().length() == 0) {
 			idKementerian = "99999";
 		}
 		String idAgensi = getParam("socAgensi");
-		myLog.info("idAgensi "+idAgensi);
 		if (idAgensi == null || idAgensi.trim().length() == 0) {
 			idAgensi = "99999";
 		}
@@ -166,117 +85,23 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
 			idLuasKegunaan = "99999";
 		}
-		
-		this.context.put("command", submit);
-		this.context.put("templateDir", templateDir);
-
-		this.context.put("errorPeganganHakmilik", "");
-
-		userRole = logic.getUserRole(userId);
-		userJawatan = logic.getUserJawatan(userId);
-
-		if ("24".equals(userJawatan)) {
-			layerKJP = "1";
-		} else if ("9".equals(userJawatan)) {
-			layerKJP = "2";
-		} else if ("4".equals(userJawatan)) {
-			layerKJP = "3";
-		} else {
-			layerKJP = "1";
+		String idJenisTanah = getParam("socJenisTanah");
+		if (idJenisTanah == null || idJenisTanah.trim().length() == 0){
+			idJenisTanah = "99999";
 		}
 
+		context.put("command", command);
+		context.put("templateDir", templateDir);
 
-		this.context.put("userRole", userRole);
-		this.context.put("userJawatan", userJawatan);
-		this.context.put("layerKJP", layerKJP);
+		String idFail = getParam("idFail");
+		String idUlasanTeknikal = getParam("idUlasanTeknikal");
 
-		listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
-
-		if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
-			Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
-			idNegeriPemohon = hashRayuanDB.get("idNegeri").toString();
-			idKementerian = hashRayuanDB.get("idKementerian").toString();
-			idAgensi = hashRayuanDB.get("idAgensi").toString();
-
-			myLog.info("JAWATAN="+userJawatan);
-			myLog.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
-
-		}
-
-		Hashtable hUser = getIUser().getPengguna(userId);
-		userJawatan = String.valueOf(hUser.get("userJawatan"));
-		idJawatan = String.valueOf(hUser.get("idjawatan"));
-		context.put("idjawatan", idJawatan);
-
-
-		this.context.put("idNegeriPemohon", idNegeriPemohon);
-		this.context.put("idKementerian", idKementerian);
-		this.context.put("idAgensi", idAgensi);
-		this.context.put("onload", "");
-		this.context.put("completed", false);
-
-
-
-		// DATE
+		//DATE
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date currentDate = new Date();
-		FrmSemakan semak = null;
-
-
-		myLog.info("idSuburusan==="+idSuburusan);
-		// HITBUTTON
-		if (postDB) {
-			if ("daftarBaru".equals(hitButton)) {
-				idFail = logic.daftarBaru(idUrusan,idSuburusan,idSubsuburusan,idJenisTanah, getParam("tarikhTerima"), getParam("tarikhSurat"),
-						getParam("txtNoRujukanSurat"), getParam("txtPerkara"), "3", idKementerian, idAgensi,
-						idHakmilikAgensi, idLuasKegunaan,
-						getParam("txtTujuanKegunaan"), getParam("idKementerianTanah"), getParam("idNegeriTanah"),
-						getParam("idLuasTanah"), getParam("luasTanah"), idHakmilikSementara, session);
-
-				
-			}
-			if("doSimpanSenaraiSemak".equals(hitButton)){
-				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"),
-						session);
-			}
-			//SENARAI SEMAK
-			if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
-	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
-	    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
-
-	        		//String[] cbsemaks = this.request.getParameterValues("cbsemaks");
-	    			FrmSemakan frmSemak = new FrmSemakan();
-	    			frmSemak.semakanHapusByPermohonan(idPermohonan);
-	    			if (cbsemaks != null) {
-	    				for (int i = 0; i < cbsemaks.length; i++) {
-	    					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
-	    				}
-	    			}
-        	}
-			if ("doHantarEmel".equals(hitButton)){
-
-				if (logic.getBeanMaklumatPermohonan().size() != 0){
-					Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-					idUrusan = (String) hashPermohonan.get("idUrusan");
-					idSuburusan = (String) hashPermohonan.get("idSuburusan");
-					idSubsuburusan = (String) hashPermohonan.get("idTujuan");
-					idPermohonan= (String) hashPermohonan.get("idPermohonan");
-				}
-				if (logic.checkMaklumatPywLengkap(idPermohonan)){
-    				this.context.put("onload", " \"alert('Masih terdapat maklumat tukar guna yang belum lengkap.')\"");
-				} else {
-					logic.updatePermohonanEmel(idFail,idPermohonan,session);
-				}
-			}
-		}
-
-		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
-
-		this.context.put("errorPeganganHakmilik", "");
 
 		try {
-
-			if ("refreshDokumenMuatNaik".equals(submit)) {
+			if ("refreshDokumenMuatNaik".equals(command)) {
 
 				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
@@ -286,27 +111,27 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				this.context.put("lampiran", lampiran);
 
-				vm = "/maklumatUlasan.jsp";
+				vm = "/maklumatUlasan.jsp";	
 
-			} else if ("muatNaikDokumen".equals(submit)) {
+			} else if ("muatNaikDokumen".equals(command)) {
 
 				logic.hapusDokumen(idUlasanTeknikal);
 				uploadFiles(idUlasanTeknikal, session);
 
-				vm = "/refreshDokumenMuatNaik.jsp";
+				vm = "/refreshDokumenMuatNaik.jsp";	
 
-			} else if ("hantarUlasan".equals(submit)) {
+			} else if ("hantarUlasan".equals(command)) {
 				context.remove("flagStatus");
 
-				//String userId = (String) session.getAttribute("_ekptg_user_id");
+				String userId = (String) session.getAttribute("_ekptg_user_id");
 				String txtTarikhSurat = getParam("txtTarikhSurat");
 				String txtNoRujukanSurat = getParam("txtNoRujukanSurat");
-				String txtUlasan = getParam("txtUlasan");
+				String txtUlasan = getParam("txtUlasan");				
 				String txtKeputusan = getParam("txtKeputusan");
 				String txtNamaPengulas = getParam("txtNamaPengulas");
 				String txtNoTelPengulas = getParam("txtNoTelPengulas");
 
-				String flagStatus = logic.hantarUlasan(idUlasanTeknikal, txtTarikhSurat, txtNoRujukanSurat, txtUlasan, txtKeputusan,
+				String flagStatus = logic.hantarUlasan(idUlasanTeknikal, txtTarikhSurat, txtNoRujukanSurat, txtUlasan, txtKeputusan, 
 						txtNamaPengulas, txtNoTelPengulas, userId);
 				this.context.put("flagStatus", flagStatus);
 
@@ -320,18 +145,18 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				vm = "/maklumatUlasan.jsp";
 
-			} else if ("simpanUlasan".equals(submit)) {
+			} else if ("simpanUlasan".equals(command)) {
 				context.remove("flagStatus");
 
-				//String userId = (String) session.getAttribute("_ekptg_user_id");
+				String userId = (String) session.getAttribute("_ekptg_user_id");
 				String txtTarikhSurat = getParam("txtTarikhSurat");
 				String txtNoRujukanSurat = getParam("txtNoRujukanSurat");
-				String txtUlasan = getParam("txtUlasan");
+				String txtUlasan = getParam("txtUlasan");				
 				String txtKeputusan = getParam("txtKeputusan");
 				String txtNamaPengulas = getParam("txtNamaPengulas");
 				String txtNoTelPengulas = getParam("txtNoTelPengulas");
 
-				String flagStatus = logic.simpanUlasan(idUlasanTeknikal, txtTarikhSurat, txtNoRujukanSurat, txtUlasan, txtKeputusan,
+				String flagStatus = logic.simpanUlasan(idUlasanTeknikal, txtTarikhSurat, txtNoRujukanSurat, txtUlasan, txtKeputusan, 
 						txtNamaPengulas, txtNoTelPengulas, userId);
 				this.context.put("flagStatus", flagStatus);
 
@@ -345,403 +170,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				vm = "/maklumatUlasan.jsp";
 
-			} else if ("papar".equals(submit2)) {
-				vm = "/frmTKRKJPDaftarManual.jsp";
-				myLog.info("papar=================");
-				myLog.info("idFail========="+idFail);
-
-				this.context.put("mode", "view");
-				this.context.put("readonly", "readonly");
-				this.context.put("inputTextClass", "disabled");
-
-				// MAKLUMAT PERMOHONAN
-				beanMaklumatPermohonan = new Vector();
-				logic.setMaklumatPermohonan(idFail);
-				beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
-				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-				if (beanMaklumatPermohonan.size() != 0){
-	    			Hashtable hashMaklumatPelepasan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-	    			idLuasKegunaan = (String) hashMaklumatPelepasan.get("flagGuna");
-				}
-				this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\""));
-
-				// MAKLUMAT PEMOHON
-				logic.setMaklumatPemohon(idFail);
-				if (logic.getBeanMaklumatPemohon().size() != 0){
-					Hashtable hashPemohon = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
-					idKategoriPemohon = (String) hashPemohon.get("idKategoriPemohon");
-					idPejabat = (String) hashPemohon.get("idPejabat");
-					idKementerian = (String) hashPemohon.get("idKementerian");
-					idAgensi = (String) hashPemohon.get("idAgensi");
-				}
-				idKategoriPemohon = logic.getKategoriPemohonTukarguna();
-
-				//MAKLUMAT KEMENTERIAN/ AGENSI
-				beanMaklumatAgensi = new Vector();
-				logic.setMaklumatAgensi(idAgensi);
-				beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
-				this.context.put("BeanMaklumatAgensi",beanMaklumatAgensi);
-
-				this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "disabled", " class=\"disabled\""));
-				this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "disabled", " class=\"disabled\""));
-
-				// MAKLUMAT KEGUNAAN TANAH
-				beanMaklumatTanah = new Vector();
-				logic.setMaklumatHakmilik(logic.getIdHakmilikPermohonanByIdFail(idFail));
-				beanMaklumatTanah = logic.getBeanMaklumatHakmilik();
-				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
-
-
-				//vm = "/start.jsp";
-
-			}  else if ("kembali".equals(submit2)){
-
-				myLog.info("masuk else");
-				//String userId = (String) session.getAttribute("_ekptg_user_id");
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
-				this.context.put("SenaraiFail", listFail);
-				setupPage(session, action, listFail);
-
-				context.remove("findNoFail");
-				context.remove("findNoPermohonan");
-				context.remove("findTajukFail");
-				context.remove("findPemohon");
-				context.remove("findNoPengenalan");
-				context.remove("findTarikhTerima");
-				context.remove("findNoHakmilik");
-				context.remove("findNoWarta");
-				context.remove("findNoPegangan");
-				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong("9999"), "", ""));
-				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong("9999"), "", ""));
-				context.remove("findNoLot");
-				context.put("selectNegeri", HTML.SelectNegeri("findNegeri",Long.parseLong("9999"), ""," onChange=\"doChangeNegeri();\""));
-				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri("9999", "findDaerah", Long.parseLong("9999"), ""," onChange=\"doChangeDaerah();\""));
-				context.put("selectMukim", HTML.SelectMukimByDaerah("9999", "findMukim", Long.parseLong("9999"), "",""));
-
-				context.put("namaJenisTanah", namaJenisTanah);
-				context.put("idJenisTanah", idJenisTanah);
-				myLog.info("masuk else idFail "+idFail);
-				myLog.info("masuk else idUlasanTeknikal "+idUlasanTeknikal);
-				// SET DEFAULT ID PARAM
-				this.context.put("idFail", idFail);
-				this.context.put("idStatus", idStatus);
-				this.context.put("idKategoriPemohon", idKategoriPemohon);
-				this.context.put("idAgensi", idAgensi);
-				//this.context.put("actionTukarguna", actionTukarguna);
-
-
-				//this.context.put("idPPTBorangK", idPPTBorangK);
-				//this.context.put("idHakmilikUrusan", idHakmilikUrusan);
-				//this.context.put("idPHPBorangK", idPHPBorangK);
-
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				//Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
-
-				Vector maklumatLampiran = null;
-				maklumatLampiran = new Vector();
-				logicJabatanTeknikal.setLampiranKJP(logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				maklumatLampiran = logicJabatanTeknikal.getBeanMaklumatLampiranKJP();
-
-				//this.context.put("maklumatUlasan", maklumatUlasan);
-				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
-				//this.context.put("idFail", idFail);
-				this.context.put("maklumatLampiran", maklumatLampiran);
-
-
-				vm = "/start.jsp";
-			}
-				else if ("seterusnya".equals(submit2)) {
-
-				myLog.info("baca seterusnya");
-				myLog.info("idFail=========" + idFail);
-				// GO TO MAKLUMAT PERMOHONAN
-				vm = "/frmTKRKJPMaklumatPermohonan.jsp";
-
-				// this.context.put("mode", "view");
-				this.context.put("readonly", "readonly");
-				this.context.put("inputTextClass", "disabled");
-
-				// MODE VIEW
-				if ("view".equals(mode)) {
-					myLog.info("baca mode view");
-
-					// MAKLUMAT PERMOHONAN
-					beanMaklumatPermohonan = new Vector();
-					logic.setMaklumatPermohonan(idFail);
-					beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
-					if (beanMaklumatPermohonan.size() != 0){
-		    			Hashtable hashMaklumatPelepasan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-		    			idLuasKegunaan = (String) hashMaklumatPelepasan.get("flagGuna");
-					}
-					//myLog.info("idLuasKegunaan >>>> "+idLuasKegunaan);
-					Hashtable hashMaklumatPelepasan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-					this.context.put("selectLuasKegunaan", HTML.SelectLuasKegunaan("socLuasKegunaan",
-							Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\""));
-					this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-
-					//MAKLUMAT HEADER
-					logicHeader = new FrmTKRHeaderData();
-	    			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(userId);
-	    			this.context.put("pemohon", vec.get(0));
-
-					// MAKLUMAT PEMOHON
-					beanMaklumatPemohon = new Vector();
-					logic.setMaklumatPemohon(idFail);
-					if (logic.getBeanMaklumatPemohon().size() != 0) {
-						Hashtable hashPemohon = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
-						idKategoriPemohon = (String) hashPemohon.get("idKategoriPemohon");
-						idPejabat = (String) hashPemohon.get("idPejabat");
-						idKementerian = (String) hashPemohon.get("idKementerian");
-						idAgensi = (String) hashPemohon.get("idAgensi");
-						namaKementerian = (String) hashPemohon.get("namaKementerian");
-						beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
-					}
-					idKategoriPemohon = logic.getKategoriPemohonTukarguna();
-					this.context.put("idKategoriPemohon", idKategoriPemohon);
-					this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian",
-							Long.parseLong(idKementerian), "disabled", " class=\"disabled\""));
-					this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian,
-							Long.parseLong(idAgensi), "disabled", " class=\"disabled\""));
-
-					// MAKLUMAT KEMENTERIAN/ AGENSI
-					beanMaklumatAgensi = new Vector();
-					logic.setMaklumatAgensi(idAgensi);
-					Hashtable hashAgensi = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
-					beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
-					this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);
-					namaKementerian = (String) hashAgensi.get("kementerian");
-
-					this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian",
-							Long.parseLong(idKementerian), "disabled", " class=\"disabled\""));
-					this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian,
-							Long.parseLong(idAgensi), "disabled", " class=\"disabled\""));
-					this.context.put("kementerian", namaKementerian);
-
-					// MAKLUMAT TANAH
-					beanMaklumatTanah = new Vector();
-					logic.setMaklumatHakmilik(logic.getIdHakmilikPermohonanByIdFail(idFail));
-					beanMaklumatTanah = logic.getBeanMaklumatHakmilik();
-					this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
-
-
-					if (logic.getBeanMaklumatPermohonan().size() != 0){
-						Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-						idUrusan = (String) hashPermohonan.get("idUrusan");
-						idSuburusan = (String) hashPermohonan.get("idSuburusan");
-						idSubsuburusan = (String) hashPermohonan.get("idTujuan");
-						idPermohonan= (String) hashPermohonan.get("idPermohonan");
-					}
-
-					// MAKLUMAT KEGUNAAN TANAH
-					beanMaklumatTukarguna = new Vector();
-					logic.setMaklumatTukarguna(idPermohonan);
-
-					myLog.info("masuk sini tak lepas error nie");
-					beanMaklumatTukarguna = logic.getBeanMaklumatTukarguna();
-					this.context.put("beanMaklumatTukarguna", beanMaklumatTukarguna);
-
-					// SET DEFAULT ID PARAM
-					this.context.put("idFail", idFail);
-					this.context.put("idStatus", idStatus);
-					this.context.put("idLuasKegunaan", idLuasKegunaan);
-					this.context.put("idNegeriPemohon", idNegeriPemohon);
-					this.context.put("idHakmilikAgensi", idHakmilikAgensi);
-
-					//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
-					semak = new FrmSemakan();
-					semak.mode = mode;
-					senaraiSemak = semak.getSenaraiSemakanAttach("phptukar",idPermohonan);
-	    			this.context.put("SenaraiSemak", senaraiSemak);
-	    			this.context.put("mode", mode);
-
-
-	    			myLog.info("senaraiSemak ="+senaraiSemak);
-
-					// POPUP LAMPIRAN
-					/*if ("3".equals(selectedTabUpper)) {
-						myLog.info("baca popup selectedTabUpper 3=====");
-
-						if ("openPopupLampiran".equals(flagPopup)) {
-							myLog.info("baca openPopupLampiran flagPopup=====");
-
-							if ("new".equals(modePopup)) {
-								myLog.info("baca popup lampiran new=====");
-
-								this.context.put("readonlyPopup", "");
-								this.context.put("inputTextClassPopup", "");
-
-								beanMaklumatLampiran = new Vector();
-								Hashtable hashMaklumatLampiran = new Hashtable();
-								hashMaklumatLampiran.put("namaLampiran", "");
-								hashMaklumatLampiran.put("catatanLampiran", "");
-								beanMaklumatLampiran.addElement(hashMaklumatLampiran);
-								this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-
-							} else if ("update".equals(modePopup)) {
-								myLog.info("baca popup lampiran update=====");
-
-								this.context.put("readonlyPopup", "");
-								this.context.put("inputTextClassPopup", "");
-
-								// MAKLUMAT LAMPIRAN
-								beanMaklumatLampiran = new Vector();
-								logic.setMaklumatLampiran(idDokumen);
-								beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
-								this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-
-							} else if ("view".equals(modePopup)) {
-
-								this.context.put("readonlyPopup", "readonly");
-								this.context.put("inputTextClassPopup", "disabled");
-
-								// MAKLUMAT LAMPIRAN
-								beanMaklumatLampiran = new Vector();
-								logic.setMaklumatLampiran(idDokumen);
-								beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
-								this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
-							}
-							this.context.put("mode", mode);
-							this.context.put("selectedTabUpper", selectedTabUpper);
-							this.context.put("flagPopup", flagPopup);
-							this.context.put("modePopup", modePopup);
-						}
-
-					}*/
-					//SENARAI LAMPIRAN
-	    			senaraiLampiran = new Vector();
-	    			//logic.setSenaraiLampiran(idPermohonan);
-	    			//senaraiLampiran = logic.getListLampiran();
-	    			this.context.put("SenaraiLampiran", senaraiLampiran);
-
-	    			// tambah untuk langkah
-	    			String semakMode = "";
-	    			String statusSemasa = "1";
-
-
-	    			if (getIOnline().isHantar(Long.parseLong(String.valueOf(33)),
-	    					Long.parseLong(String.valueOf(idPermohonan)),
-	    					Long.parseLong(String.valueOf(idFail)), "4")) {
-	    				semakMode = "xupdate";
-	    			} else {
-
-	    				//myLog.info("idPermohonan::" + logic.getBeanMaklumatHeader().get(0));
-	    				semakMode = "update";
-
-	    				if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
-	    						Long.parseLong(String.valueOf(idPermohonan)),
-	    						Long.parseLong(String.valueOf(idFail)), "1")) {
-	    					statusSemasa = "1";
-
-	    				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
-	    						Long.parseLong(String.valueOf(idPermohonan)),
-	    						Long.parseLong(String.valueOf(idFail)), "2")) {
-	    					statusSemasa = "2";
-
-	    				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
-	    						Long.parseLong(String.valueOf(idPermohonan)),
-	    						Long.parseLong(String.valueOf(idFail)), "3")) {
-	    					statusSemasa = "3";
-
-	    				}
-	    			}
-	    			myLog.info("semakMode="+semakMode);
-	    			context.put("semakMode", semakMode);
-	    			myLog.info("statusSemasa:" + statusSemasa);
-	    			context.put("statussemasa", statusSemasa);
-	    			context.put("idFail", (idFail));
-	    			context.put("buttonSend", "disabled");
-	    			context.put("idPermohonan", Long.parseLong(String.valueOf(idPermohonan)));
-				}
-
-				// MODE UPDATE
-				else if ("update".equals(mode)) {
-					myLog.info("baca mode update");
-
-					myLog.info("baca mode update idPermohonan >>> "+idPermohonan);
-					semak = new FrmSemakan();
-					semak.mode = mode;
-					senaraiSemak = semak.getSenaraiSemakanAttach("phptukar",idPermohonan);
-	    			this.context.put("SenaraiSemak", senaraiSemak);
-	    			this.context.put("mode", mode);
-				}
-
-
-
-			}else if ("daftarBaru".equals(submit)) {
-				myLog.info("masuk daftar Baru");
-				vm = "/frmTKRKJPDaftarManual.jsp";
-				this.context.put("mode", "new");
-				this.context.put("readonly", "");
-				this.context.put("inputTextClass", "");
-				myLog.info("idFail========="+idFail);
-				if ("doChangeKementerian".equals(submit)){
-					idAgensi = "99999";
-				}
-				if ("doChangeAgensi".equals(submit)){
-					idHakmilikAgensi = "";
-				}
-				if ("doChangeJenisTanah".equals(submit)){
-					idHakmilikAgensi = "";
-				}
-
-				// MAKLUMAT PERMOHONAN
-				beanMaklumatPermohonan = new Vector();
-				Hashtable hashPermohonan = new Hashtable();
-				hashPermohonan.put("noPermohonan", "");
-				hashPermohonan.put("noRujukanOnline", "");
-				hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
-				hashPermohonan.put("tarikhSurat",getParam("tarikhSurat") == null ? "": getParam("tarikhSurat"));
-				hashPermohonan.put("noRujukanSurat",getParam("txtNoRujukanSurat") == null ? "": getParam("txtNoRujukanSurat"));
-				hashPermohonan.put("perkara", getParam("txtPerkara") == null ? "": getParam("txtPerkara"));
-				hashPermohonan.put("tujuanKegunaan", getParam("txtTujuanKegunaan") == null ? "": getParam("txtTujuanKegunaan"));
-				beanMaklumatPermohonan.addElement(hashPermohonan);
-				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-
-				// MAKLUMAT PEMOHON
-				idKategoriPemohon = logic.getKategoriPemohonTukarguna();
-				myLog.info("idKategoriPemohonDaftar: " + idKategoriPemohon);
-
-				beanMaklumatAgensi = new Vector();
-				logic.setMaklumatAgensi(idAgensi);
-				beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
-				this.context.put("idKategoriPemohon", idKategoriPemohon);
-				this.context.put("idAgensi", idAgensi);
-				this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);
-				this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian",
-						Long.parseLong(idKementerian), "", readonly+" style=\"width:400\" "));
-				this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian,
-						Long.parseLong(idAgensi), "", readonly+" style=\"width:400\" "));
-
-				// MAKLUMAT KEGUNAAN TANAH
-				this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " "));
-
-
-				//MAKLUMAT HAKMILIK
-				if ("doChangePeganganHakmilik".equals(submit)) {
-					idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(getParam("txtPeganganHakmilik"), "3", idAgensi);
-
-						if (idHakmilikAgensi.isEmpty()) {
-						this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
-						}
-
-				}
-
-				beanMaklumatTanah = new Vector();
-				myLog.info("idHakmilikAgensi: "+idHakmilikAgensi+" idHakmilikSementara: "+idHakmilikSementara);
-				logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
-				beanMaklumatTanah = logic.getBeanMaklumatTanah();
-				context.put("BeanMaklumatTanah", beanMaklumatTanah);
-				this.context.put("idFail", idFail);
-				this.context.put("idHakmilikSementara", idHakmilikSementara);
-				this.context.put("idHakmilikAgensi", idHakmilikAgensi);
-
-
-				context.put("namaJenisTanah", namaJenisTanah);
-				//vm = "/start.jsp";
-
-			} else if ("paparFail".equals(submit)) {
-				myLog.info("bacaaaa paparFail");
-				vm = "/paparFail.jsp";
+			} else if ("paparFail".equals(command)) {
 				//TO CLEAR CONTEXT
 				context.remove("BeanHeader");
 				context.remove("BeanMaklumatTanah");
@@ -751,8 +180,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				setMaklumatHeader(idFail, session);
 				setMaklumatTanah(idFail, session);
 
-				myLog.info("idFail: "+idFail);
-
 				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
 
@@ -763,20 +190,18 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				this.context.put("maklumatUlasan", maklumatUlasan);
 				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
-				this.context.put("idFail", idFail);
 				this.context.put("maklumatLampiran", maklumatLampiran);
 
 				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				this.context.put("lampiran", lampiran);
 
+				vm = "/start.jsp";
 
+			} else if ("carian".equals(command)) {
 
-			}else if ("carian".equals(submit)) {
-				//String userId = (String) session.getAttribute("_ekptg_user_id");
-				myLog.info("masuk carian");
+				String userId = (String) session.getAttribute("_ekptg_user_id");
 				String findNoFail = getParam("findNoFail");
-				String findNoPermohonan = getParam("findNoPermohonan");
-				String findTajukFail = getParam("findTajukFail");
+				String findTajukFail = getParam("findTajukFail");				
 				String findPemohon = getParam("findPemohon");
 				String findNoPengenalan = getParam("findNoPengenalan");
 				String findTarikhTerima = getParam("findTarikhTerima");
@@ -785,7 +210,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				String findNoPegangan = getParam("findNoPegangan");
 				String findJenisHakmilik = getParam("findJenisHakmilik");
 				if(findJenisHakmilik.equals(""))
-				myLog.info("findNoFail====="+findNoFail);
 				{
 					findJenisHakmilik = "9999";
 				}
@@ -812,10 +236,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					findMukim = "9999";
 				}
 
-				Vector listFail = logic.getSenaraiFail(findNoFail, findNoPermohonan, findTajukFail, findPemohon, findNoPengenalan, findTarikhTerima,
-						findNoHakmilik, findNoWarta, findNoPegangan, findJenisHakmilik, findJenisLot, findNoLot
-						, findNegeri, findDaerah, findMukim
-						, userId);
+				Vector listFail = logic.getSenaraiFail(findNoFail, findTajukFail, findPemohon, findNoPengenalan, findTarikhTerima, 
+						findNoHakmilik, findNoWarta, findNoPegangan, findJenisHakmilik, findJenisLot, findNoLot, findNegeri, findDaerah, findMukim, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
@@ -836,10 +258,96 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				vm = "/start.jsp";
 
-			} else if ("kembali".equals(submit)) {
-				myLog.info("kembali");
-				//String userId = (String) session.getAttribute("_ekptg_user_id");
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
+			} else if ("daftarPermohonan".equals(command)) {
+
+				vm = "/tkrKJPdaftarPermohonan.jsp"; 
+
+				this.context.put("mode", "new");
+				this.context.put("readonly", "");
+				this.context.put("inputTextClass", "");
+
+				// MAKLUMAT PERMOHONAN
+				beanMaklumatPermohonan = new Vector();
+				Hashtable hashPermohonan = new Hashtable();
+				hashPermohonan.put("noFail", "");
+				hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
+				hashPermohonan.put("tarikhSurat",getParam("tarikhSurat") == null ? "": getParam("tarikhSurat"));
+				hashPermohonan.put("noRujukanSurat",getParam("txtNoRujukanSurat") == null ? "": getParam("txtNoRujukanSurat"));
+				hashPermohonan.put("perkara", getParam("txtPerkara") == null ? "": getParam("txtPerkara"));
+				hashPermohonan.put("tujuanKegunaan", getParam("txtTujuanKegunaan") == null ? "": getParam("txtTujuanKegunaan"));
+				beanMaklumatPermohonan.addElement(hashPermohonan);
+				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+
+				// MAKLUMAT PEMOHON
+				this.context.put("selectKategoriPemohon", HTML.SelectKategoriPemohonPenawaran("socKategoriPemohon",Long.parseLong(idKategoriPemohon), ""," onChange=\"doChangeKategori();\""));
+				this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " "));
+
+
+			} else if ("3".equals(idKategoriPemohon)) {
+
+				beanMaklumatAgensi = new Vector();
+				logic.setMaklumatAgensi(idAgensi);
+				beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
+				this.context.put("BeanMaklumatAgensi",beanMaklumatAgensi);
+
+				this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\""));
+				this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "", " onChange=\"doChangeAgensi();\""));
+
+
+			} else if (("8".equals(idKategoriPemohon))) {
+
+				this.context.put("selectNegeri",HTML.SelectNegeri("socNegeriJKPTG", Long.parseLong(idNegeriJKPTG), "", " onChange=\"doChangeNegeri();\""));
+				this.context.put("selectPejabat",HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "", " onChange=\"doChangePejabat();\"", idNegeriJKPTG));
+
+				if ("doChangeNegeri".equals(submit)){
+
+					this.context.put("selectPejabat",HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "", " onChange=\"doChangePejabat();\"", idNegeriJKPTG));
+					idPejabat = "99999";
+				}
+
+				if ("doChangePejabat".equals(submit)){
+					beanMaklumatPejabat = new Vector();
+					logic.setMaklumatPejabatJKPTG(idPejabat);
+					beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
+					this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);			
+				}
+
+				if (!"99999".equals(idPejabat)){
+					beanMaklumatPejabat = new Vector();
+					logic.setMaklumatPejabatJKPTG(idPejabat);
+					beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
+					this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
+				} else {
+					beanMaklumatPejabat = new Vector();
+					Hashtable hashPejabat = new Hashtable();
+					hashPejabat.put("namaPejabat", "");
+					hashPejabat.put("alamat1", "");
+					hashPejabat.put("alamat2", "");
+					hashPejabat.put("alamat3", "");
+					hashPejabat.put("poskod", "");
+					hashPejabat.put("bandar", "");
+					hashPejabat.put("negeri", "");
+					hashPejabat.put("noTel", "");
+					hashPejabat.put("noFax", "");
+					beanMaklumatPejabat.addElement(hashPejabat);
+					this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
+				}
+				this.context.put("idPejabat", idPejabat);
+
+				beanMaklumatAgensi = new Vector();
+				logic.setMaklumatAgensi(idAgensi);
+				beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
+				this.context.put("BeanMaklumatAgensi",beanMaklumatAgensi);
+
+				this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\""));
+				this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "", " onChange=\"doChangeAgensi();\""));
+
+
+
+			} else {
+
+				String userId = (String) session.getAttribute("_ekptg_user_id");
+				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
@@ -858,281 +366,15 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri("9999", "findDaerah", Long.parseLong("9999"), ""," onChange=\"doChangeDaerah();\""));
 				context.put("selectMukim", HTML.SelectMukimByDaerah("9999", "findMukim", Long.parseLong("9999"), "",""));
 
-				context.put("namaJenisTanah", namaJenisTanah);
-				context.put("idJenisTanah", idJenisTanah);
-
-				// SET DEFAULT ID PARAM
-				this.context.put("idFail", idFail);
-				this.context.put("idStatus", idStatus);
-				this.context.put("idKategoriPemohon", idKategoriPemohon);
-				this.context.put("idAgensi", idAgensi);
-				//this.context.put("actionTukarguna", actionTukarguna);
-
-
-				//this.context.put("idPPTBorangK", idPPTBorangK);
-				//this.context.put("idHakmilikUrusan", idHakmilikUrusan);
-				//this.context.put("idPHPBorangK", idPHPBorangK);
-
-
-				vm = "/start.jsp";
-
-			}else if ("simpanpengesahan2".equals(submit)){
-
-				String semakMode = "";
-    			String statusSemasa = "1";
-
-    			if (getIOnline().isHantar(Long.parseLong(String.valueOf(33)),
-    					Long.parseLong(String.valueOf(idPermohonan)),
-    					Long.parseLong(String.valueOf(idFail)), "4")) {
-    				semakMode = "xupdate";
-    			} else {
-
-    				if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
-    						Long.parseLong(String.valueOf(idPermohonan)),
-    						Long.parseLong(String.valueOf(idFail)), "1")) {
-    					statusSemasa = "1";
-
-    				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
-    						Long.parseLong(String.valueOf(idPermohonan)),
-    						Long.parseLong(String.valueOf(idFail)), "2")) {
-    					statusSemasa = "2";
-
-    				} else if (getIOnline().isHantarAktif(Long.parseLong(String.valueOf(33)),
-    						Long.parseLong(String.valueOf(idPermohonan)),
-    						Long.parseLong(String.valueOf(idFail)), "3")) {
-    					statusSemasa = "3";
-
-    				}
-    			}
-    			myLog.info("semakMode="+semakMode);
-    			context.put("semakMode", semakMode);
-    			myLog.info("statusSemasa:" + statusSemasa);
-    			context.put("statussemasa", statusSemasa);
-    			context.put("idFail", (idFail));
-    			context.put("buttonSend", "disabled");
-    			context.put("idPermohonan", Long.parseLong(String.valueOf(idPermohonan)));
-
-				//myLog.info("simpanpengesahan2 ::idpermohonan=" + logic.getBeanMaklumatHeader().get(0));
-				logic.setMaklumatPermohonan(idFail);
-				beanHeader = logic.getBeanMaklumatPermohonan();
-				//idPermohonan = getParam("idPermohonan");
-				Hashtable permohonan2 = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-				myLog.info("simpanpengesahan1 ::id_permohonan="+permohonan2);
-		    	myLog.info("simpanpengesahan2 ::idpermohonan="+logic.getBeanMaklumatPermohonan().get(0));
-				semakMode="";
-
-
-
-				/*
-				 * -1 untuk status - Pra-daftar
-				 * -2 untuk status - Tindakan Penyemak
-				 * -3 untuk status - Tindakan Pelulus
-				 * -4 untuk status - Permohonan Online (Pengesahan)
-				 * -5  untuk status - Penerimaan Permohonan
-				*/
-				String langkah2 = "2";
-				EmailConfig ec = new EmailConfig();
-
-				//myLog.info("from="+email.FROM);
-				String emelSubjek = ec.tajukSemakan+"Tukar Guna";
-				String kandungan = "";
-				if(idJawatan.equals("20")||idJawatan.equals("24")){
-					myLog.info("BACA SINIIIII============"+idKementerian);
-
-					this.context.put("idKementerian", idKementerian);
-
-					langkah2 = "2";
-
-					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
-
-					if(!getEmelSemak().checkEmail(userId).equals(""))
-						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
-
-					//email remove bler push
-					/*ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
-							, "9"
-							, String.valueOf(String.valueOf(idKementerian))
-							, emelSubjek, kandungan);*/
-
-				}else if (idJawatan.equals("9")){
-					langkah2 = "3";
-
-					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
-
-					if(!getEmelSemak().checkEmail(userId).equals(""))
-						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
-
-					//email remove bler push
-					/*ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
-							, "4"
-							, String.valueOf(String.valueOf(idKementerian))
-							, emelSubjek, kandungan);*/
-
-				}else if (idJawatan.equals("4")){
-					langkah2 = "4";
-					emelSubjek = ec.tajukHantarPermohonan + "Tukar Guna";
-
-					kandungan = getEmelSemak().setKandungan(String.valueOf(String.valueOf(permohonan2.get("tajukFail")))
-								,String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
-								,String.valueOf(String.valueOf(permohonan2.get("noPermohonan"))));
-
-					if(!getEmelSemak().checkEmail(userId).equals(""))
-						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
-					//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
-
-					//email remove bler push
-					//ec.hantarPermohonan(getEmelSemak().checkEmail(userId), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
-
-				}
-				Hashtable permohonan3 = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-				//idPermohonan = String.valueOf(permohonan3.get("idPermohonan"));
-
-
-				Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
-				myLog.info("Langkah=="+langkah2+" idSubUrusan=="+idSuburusan);
-				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,idSuburusan,"=");
-				myLog.info("setIdSuburusanstatus="+setIdSuburusanstatus);
-				myLog.info("idPermohonan="+idPermohonan);
-				rsusf.setIdPermohonan(Long.parseLong(idPermohonan));
-				myLog.info("idFail="+idFail+",idPermohonan="+idPermohonan);
-				rsusf.setIdFail(Long.parseLong(idFail));
-				rsusf.setIdSuburusanstatusfail(Long.parseLong(idSuburusan));
-				rsusf.setIdSuburusanstatus(setIdSuburusanstatus);
-				rsusf.setUrl("-");
-				rsusf.setIdMasuk(Long.parseLong(userId));
-				myLog.info("userId=="+userId);
-
-				simpanPengesahan(rsusf,langkah2,userId);
-
-				long setIdstatus = FrmUtilData.getIdStatusByLangkah (langkah2,idSuburusan,"=");
-				FrmUtilData utildata = new FrmUtilData();
-				utildata.kemaskiniStatusPermohonan(idPermohonan,String.valueOf(setIdstatus));
-
-//				simpanPengesahan(rsusf,langkah2);
-
-
-				if(getIOnline().isHantar(Long.parseLong(String.valueOf(33)),
-						Long.parseLong(idPermohonan),
-						Long.parseLong(idFail),langkah)){
-					semakMode = "xupdate";
-				}else{
-					semakMode = "update";
-				}
-				myLog.info("selectedTab=======");
-				context.put("semakMode", semakMode);
-				context.put("statussemasa", langkah2);
-				idFail = (String) permohonan2.get("idFail");
-				idPermohonan = (String) permohonan2.get("idPermohonan");
-				idStatus = (String) permohonan2.get("idStatus");
-				this.context.put("BeanHeader", beanHeader);
-
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
-				this.context.put("SenaraiFail", listFail);
-				setupPage(session, action, listFail);
-
-				context.remove("findNoFail");
-				context.remove("findNoPermohonan");
-				context.remove("findTajukFail");
-				context.remove("findPemohon");
-				context.remove("findNoPengenalan");
-				context.remove("findTarikhTerima");
-				context.remove("findNoHakmilik");
-				context.remove("findNoWarta");
-				context.remove("findNoPegangan");
-				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong("9999"), "", ""));
-				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong("9999"), "", ""));
-				context.remove("findNoLot");
-				context.put("selectNegeri", HTML.SelectNegeri("findNegeri",Long.parseLong("9999"), ""," onChange=\"doChangeNegeri();\""));
-				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri("9999", "findDaerah", Long.parseLong("9999"), ""," onChange=\"doChangeDaerah();\""));
-				context.put("selectMukim", HTML.SelectMukimByDaerah("9999", "findMukim", Long.parseLong("9999"), "",""));
-
-				context.put("namaJenisTanah", namaJenisTanah);
-				context.put("idJenisTanah", idJenisTanah);
-				myLog.info("hantar idFail "+idFail);
-				myLog.info("hantar idUlasanTeknikal "+idUlasanTeknikal);
-				// SET DEFAULT ID PARAM
-				this.context.put("idFail", idFail);
-				this.context.put("idStatus", idStatus);
-				this.context.put("idKategoriPemohon", idKategoriPemohon);
-				this.context.put("idAgensi", idAgensi);
-
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-
-				Vector maklumatLampiran = null;
-				maklumatLampiran = new Vector();
-				logicJabatanTeknikal.setLampiranKJP(logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				maklumatLampiran = logicJabatanTeknikal.getBeanMaklumatLampiranKJP();
-				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
-				this.context.put("maklumatLampiran", maklumatLampiran);
-
-				vm = "/senaraiFail.jsp";
-			}
-			else {
-				
-				myLog.info("masuk else");
-				//String userId = (String) session.getAttribute("_ekptg_user_id");
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
-				this.context.put("SenaraiFail", listFail);
-				setupPage(session, action, listFail);
-
-				context.remove("findNoFail");
-				context.remove("findNoPermohonan");
-				context.remove("findTajukFail");
-				context.remove("findPemohon");
-				context.remove("findNoPengenalan");
-				context.remove("findTarikhTerima");
-				context.remove("findNoHakmilik");
-				context.remove("findNoWarta");
-				context.remove("findNoPegangan");
-				context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("findJenisHakmilik",Long.parseLong("9999"), "", ""));
-				context.put("selectLot", HTML.SelectLot("findJenisLot",Long.parseLong("9999"), "", ""));
-				context.remove("findNoLot");
-				context.put("selectNegeri", HTML.SelectNegeri("findNegeri",Long.parseLong("9999"), ""," onChange=\"doChangeNegeri();\""));
-				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri("9999", "findDaerah", Long.parseLong("9999"), ""," onChange=\"doChangeDaerah();\""));
-				context.put("selectMukim", HTML.SelectMukimByDaerah("9999", "findMukim", Long.parseLong("9999"), "",""));
-
-				context.put("namaJenisTanah", namaJenisTanah);
-				context.put("idJenisTanah", idJenisTanah);
-				myLog.info("masuk else idFail "+idFail);
-				myLog.info("masuk else idUlasanTeknikal "+idUlasanTeknikal);
-				// SET DEFAULT ID PARAM
-				this.context.put("idFail", idFail);
-				this.context.put("idStatus", idStatus);
-				this.context.put("idKategoriPemohon", idKategoriPemohon);
-				this.context.put("idAgensi", idAgensi);
-				//this.context.put("actionTukarguna", actionTukarguna);
-
-
-				//this.context.put("idPPTBorangK", idPPTBorangK);
-				//this.context.put("idHakmilikUrusan", idHakmilikUrusan);
-				//this.context.put("idPHPBorangK", idPHPBorangK);
-
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				//Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
-
-				Vector maklumatLampiran = null;
-				maklumatLampiran = new Vector();
-				logicJabatanTeknikal.setLampiranKJP(logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				maklumatLampiran = logicJabatanTeknikal.getBeanMaklumatLampiranKJP();
-
-				//this.context.put("maklumatUlasan", maklumatUlasan);
-				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
-				//this.context.put("idFail", idFail);
-				this.context.put("maklumatLampiran", maklumatLampiran);
-
-
 				vm = "/start.jsp";
 			}
 
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		}
-		this.context.put("idFail", idFail);
-		this.context.put("selectedTabUpper", selectedTabUpper);
+		} 
 
 		return templateDir + vm;
-
 	}
 
 	private void uploadFiles(String idUlasanTeknikal, HttpSession session) throws Exception {
@@ -1149,13 +391,13 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					saveData(item, idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal), session);
 				}
 			}
-		}
+		}			
 	}
 
 	private void saveData(FileItem item, String idUlasanTeknikal, String idPermohonan,
 			HttpSession session) {
 		Db db = null;
-		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String userId = (String) session.getAttribute("_ekptg_user_id"); 
 
 		try {
 			db = new Db();
@@ -1187,7 +429,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		}
 
 		this.context.put("flagStatus", "Y");
-		this.context.put("idUlasanTeknikalReload", idUlasanTeknikal);
+		this.context.put("idUlasanTeknikalReload", idUlasanTeknikal);		
 	}
 
 	private void setMaklumatTanah(String idFail, HttpSession session) throws Exception {
@@ -1195,10 +437,9 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		logicHeader.setMaklumatHakmilik(logicHeader.getIdHakmilikPermohonanByIdFail(idFail));
 		if (logicHeader.getBeanMaklumatHakmilik().size() != 0){
 			Hashtable hashHakmilik = (Hashtable) logicHeader.getBeanMaklumatHakmilik().get(0);
-			flagBorangK = (String) hashHakmilik.get("flagBorangK");
+			flagBorangK = (String) hashHakmilik.get("flagBorangK");			
 		}
 		this.context.put("flagBorangK", flagBorangK);
-		myLog.info("flagBorangK >>> "+flagBorangK);
 
 		if ("Y".equals(flagBorangK)){
 			Vector beanMaklumatBorangK = new Vector();
@@ -1207,7 +448,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		} else {
 			Vector beanMaklumatTanah = new Vector();
 			beanMaklumatTanah = logicHeader.getBeanMaklumatHakmilik();
-			myLog.info("beanMaklumatTanah >>>> "+beanMaklumatTanah);
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 		}
 	}
@@ -1259,66 +499,5 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			e.printStackTrace();
 			this.context.put("error", e.getMessage());
 		}
-	}
-
-	private void simpanPengesahan(Tblrujsuburusanstatusfail rsusf, String langkah2,String userid) throws Exception {
-		myLog.info("simpanPengesahan::rsusf >>>> "+rsusf);
-		myLog.info("simpanPengesahan::langkah2 >>>> "+langkah2);
-		myLog.info("simpanPengesahan::userid >>>> "+userid);
-		try {
-			subUrusanStatusFail = new Tblrujsuburusanstatusfail();
-			subUrusanStatusFail.setIdPermohonan(rsusf.getIdPermohonan());
-			subUrusanStatusFail.setIdFail(rsusf.getIdFail());
-			subUrusanStatusFail.setAktif("0");
-
-			Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
-			long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,
-					String.valueOf(rsusf.getIdSuburusanstatusfail()), "=");
-			subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
-			subUrusanStatusFailN.setAktif("1");
-			subUrusanStatusFailN.setUrl(Utils.isNull(rsusf.getUrl()));
-			//subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
-			//subUrusanStatusFailN.setIdKemaskini(Long.parseLong(userId));
-			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userid));
-			subUrusanStatusFailN.setIdKemaskini(Long.parseLong(userid));
-			getIHTP().kemaskiniSimpanStatusPermohonanAktif(subUrusanStatusFail, subUrusanStatusFailN);
-
-		} catch (Exception e) {
-			// throw new Exception("Ralat FrmGadaian[554]:"+e.getCause());
-			getIHTP().getErrorHTML(e.toString());
-
-		}
-	}
-
-	private ILampiran getDocPHP(){
-		if(iLampiran == null){
-			iLampiran = new LampiranBean();
-		}
-		return iLampiran;
-
-	}
-	private IOnline getIOnline(){
-		if(iOnline==null){
-			iOnline = new OnlineBean();
-		}
-		return iOnline;
-
-	}
-	private IHtp getIHTP(){
-		if(iHTP== null)
-			iHTP = new HtpBean();
-		return iHTP;
-	}
-	private IEmel getEmelSemak(){
-		if(emelSemak == null)
-			emelSemak = new HTPEmelJRPBean();
-		return emelSemak;
-	}
-	private IUserPegawai getIUser(){
-		if(iUser==null){
-			iUser = new UserBean();
-		}
-		return iUser;
-
 	}
 }

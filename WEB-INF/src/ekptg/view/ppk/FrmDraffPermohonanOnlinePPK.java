@@ -23,9 +23,6 @@ import ekptg.model.ppk.FrmPrmhnnSek8SenaraiHTATHData;
 import ekptg.model.ppk.FrmPrmhnnStatusPengunaOnlineData;
 import ekptg.model.ppk.online.IStatusPermohonan;
 import ekptg.model.ppk.online.StatusPermohonanFacade;
-import ekptg.model.ppk.util.StatusBeanPPK;
-import ekptg.model.utils.status.IStatus;
-import ekptg.model.utils.status.StatusBean;
 
 public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 	/**
@@ -38,7 +35,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 	FrmPrmhnnSek8SecaraOnlineData logiconline = new FrmPrmhnnSek8SecaraOnlineData();
 	FrmBorangPSek17OnlineData logic = new FrmBorangPSek17OnlineData();
 	FrmPrmhnnSek8Data logic3 = new FrmPrmhnnSek8Data();
-	private IStatus iStatusPPK = null;
 
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -51,10 +47,8 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 		String submit = getParam("command"); // First Level - default by
 												// AjaxBasedModule Call
 		String action = getParam("action"); // Second Level
-		myLogger.info("submit :command ="+submit+",action="+action);;
-//		myLogger.info("mode ="+mode);
-//		myLogger.info("myrole ="+getParam("myrole"));
-		
+		myLogger.info("submit command : "+submit+",action : "+action);;
+	
 		String disability1 = "";
 		String disability2 = "";
 		String readability1 = "";
@@ -93,17 +87,13 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("senaraitugasan", senaraiFail);
 				vm = "app/ppk/frmPrmhnnStatusPengunaOnline.jsp";
 			}
-			
-		} else if (submit.equals("dikembalikan")) {
-			senaraiFail = getStatusPPK().getStatusPermohonanByIndividu("382", usid, "50");
-			this.context.put("senaraitugasan", senaraiFail);
-		
-			
 		} else if ("doChanges".equals(submit)) {
+
 			vm = "app/ppk/frmPrmhnnStatusPengunaOnline.jsp";
 			setupPage(session, action, senaraiFail);
 			
 		} else if ("doHapus".equals(submit)){
+			
 			myLogger.info("try ::idFail= "+getParam("idFail")+"idPermohonan="+getParam("idPermohonan") );
 			//this.context.put("senaraitugasan", senaraiFail);
 			Hashtable fifah = new Hashtable();
@@ -310,6 +300,7 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 			// vm = "app/ppk/frmBorangPMaklumatPermohonanx.jsp";
 
 		} else if ("SimpanSemak".equals(submit)) {
+
 			simpandatasemak(session);
 
 			Vector detailPermohonan = FrmBorangPSek17OnlineData
@@ -1120,7 +1111,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("listHTAXbaru", listHTAXbaru);
 
 				vm = "app/ppk/frmPrmhnnBorangPHTATH.jsp";
-				
 			} else if ("masukkanX".equals(mode)) {
 				this.context.put("idPermohonan", getParam("idPermohonan"));
 				this.context.put("idSimati", getParam("idSimati"));
@@ -1597,7 +1587,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("show_button", "yes");
 
 				vm = "app/ppk/frmPrmhnnBorangAHTATH.jsp";
-				
 			} else if ("batalHtaamX".equals(mode)) {
 				this.context.put("idPermohonan", getParam("idPermohonan"));
 				this.context.put("idSimati", getParam("idSimati"));
@@ -1837,7 +1826,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("listHTAXbaru", listHTAXbaru);
 
 				vm = "app/ppk/frmPrmhnnBorangAHTATH.jsp";
-				
 			} else if ("simpanHtaamX".equals(mode)) {
 				initTabData();
 				this.context.put("SimpanStatus", getParam("simpanStatus"));
@@ -2366,6 +2354,7 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("show_htaa_add_table", "yes");
 
 			} else if ("masukkan".equals(mode)) {
+
 				id = getParam("idPermohonan");
 				id2 = getParam("idPemohon");
 				id1 = getParam("idSimati");
@@ -2534,6 +2523,7 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("syaratNyata", getParam("txtSyaratNyata"));
 
 			} else if ("negerichangeup".equals(mode)) {
+
 				id = getParam("idPermohonan");
 				id2 = getParam("idPemohon");
 				id1 = getParam("idSimati");
@@ -2620,6 +2610,7 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("show_button", "yes");
 
 			} else if ("daerahchangeup".equals(mode)) {
+
 				this.context.put("readmode", "");
 				this.context.put("readmodenegeri", "");
 				this.context.put("readmodedaerah", "");
@@ -2695,8 +2686,8 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("show_htaa_update_table", "yes");
 				this.context.put("show_htaa_add_table", "");
 				this.context.put("show_button", "yes");
-				
 			} else if ("getHtaam".equals(mode)) {
+
 				id = getParam("idPermohonan");
 				id2 = getParam("idPemohon");
 				id1 = getParam("idSimati");
@@ -2773,7 +2764,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("show_htaa_add_table", "");
 
 				initTabData();
-				
 			} else if ("batalHtaam".equals(mode)) {
 				id = getParam("idPermohonan");
 				id2 = getParam("idPemohon");
@@ -2929,7 +2919,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("show_kembali_htaam", "");
 				this.context.put("show_htaa_update_table", "");
 				this.context.put("show_htaa_add_table", "yes");
-				
 			} else if ("kemaskiniHtaam".equals(mode)) {
 				id = getParam("idPermohonan");
 				id2 = getParam("idPemohon");
@@ -3428,7 +3417,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("selectedPpkAddress", getAddressPpk);
 			}
 			vm = "app/ppk/frmPrmhnnBorangPPengesahan.jsp";
-			
 		} else if ("harta_alih".equals(submit)) {
 			initTabData();
 			this.context.put("SimpanStatus", getParam("simpanStatus"));
@@ -3823,7 +3811,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				initTabData();
 				this.context.put("SimpanStatus", getParam("simpanStatus"));
 				this.context.put("socJenisHa", 0);
-				
 			} else if ("batal_harta".equals(mode)) {
 				id = getParam("idPermohonan");
 				id2 = getParam("idPemohon");
@@ -3877,6 +3864,7 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("SimpanStatus", getParam("simpanStatus"));
 
 			} else if ("edit_harta".equals(mode)) {
+
 				id = getParam("idPermohonan");
 				id2 = getParam("idPemohon");
 				id1 = getParam("idSimati");
@@ -3947,7 +3935,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				this.context.put("selectedTabbawah", getParam("tabIdbawah"));
 				this.context.put("selectedTabtepi", getParam("tabIdtepi"));
 				this.context.put("SimpanStatus", getParam("simpanStatus"));
-				
 			} else if ("kemaskini_harta".equals(mode)) {
 				id = getParam("idPermohonan");
 				id2 = getParam("idPemohon");
@@ -4300,22 +4287,15 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 		} else if ("searchByIcSiMati".equals(submit)) {
 			context.remove("statusList");
 			vm = "app/ppk/online/searchSiMati.jsp";
-			
 		} else if ("cariSiMati".equals(submit)) {
 			String noKPSiMati = getParam("icNo");
-			Vector v = getStatusPermohonanFacade().getPermohonanSiMatiList(noKPSiMati);
+			Vector v = getStatusPermohonanFacade().getPermohonanSiMatiList(
+					noKPSiMati);
 			context.put("statusList", v);
 			vm = "app/ppk/online/searchSiMati.jsp";
-			
+		}
 		// end of seksyen 17
-		}else {
-			senaraiFail = FrmPrmhnnStatusPengunaOnlineData.getSenaraiTugasanDraf("",
-				(String) session.getAttribute("_ekptg_user_id"),
-				(String) session.getAttribute("_portal_role"),
-				getParam("kppemohon"), 
-				getParam("kpsimati"), 
-				"yes");			
-		
+		else {
 			/*Vector listDataPemohon = logiconline.getUserParticular((String) session.getAttribute("_ekptg_user_id"));
 			Hashtable n = (Hashtable) listDataPemohon.get(0);
 
@@ -4329,6 +4309,12 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 
 		}
 
+		senaraiFail = FrmPrmhnnStatusPengunaOnlineData.getSenaraiTugasanDraf("",
+				(String) session.getAttribute("_ekptg_user_id"),
+				(String) session.getAttribute("_portal_role"),
+				getParam("kppemohon"), 
+				getParam("kpsimati"), 
+				"yes");
 		// context.put("senaraiFail",senaraiFail);             
 		setupPage(session, action, senaraiFail);
 
@@ -5571,14 +5557,6 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 		} else
 			return Integer.parseInt(x);
 	}
+
 	// end of seksyen 17
-		
-	private IStatus getStatusPPK(){
-		if (iStatusPPK==null){
-			iStatusPPK=new StatusBeanPPK();
-		}
-		return iStatusPPK;
-	}
-
-
 }

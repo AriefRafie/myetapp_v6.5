@@ -25,11 +25,6 @@ import ekptg.model.ppt.PPTHeader;
 import ekptg.view.ppt.email.EmailOnline;
 
 public class FrmBantahanDaftarAPOnline extends AjaxBasedModule {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3281703621597506730L;
-
 	static Logger myLogger = Logger.getLogger(FrmBantahanDaftarAPOnline.class);
 	
 	// MODEL INTERNAL
@@ -42,7 +37,8 @@ public class FrmBantahanDaftarAPOnline extends AjaxBasedModule {
 	// MODEL ONLINE
 	BantahanAgensiDaftarOnline modelOnline = new BantahanAgensiDaftarOnline();
 	BantahanAgensiOnlineOperations modelOnlineOperations = new BantahanAgensiOnlineOperations();
-	FrmPermohonanUPTOnlineData modelUPTOnline = new FrmPermohonanUPTOnlineData();	
+	FrmPermohonanUPTOnlineData modelUPTOnline = new FrmPermohonanUPTOnlineData();
+	
 	
 	//DECLARATION
 	String checkedsbcBantahan1 = "";
@@ -608,7 +604,7 @@ public class FrmBantahanDaftarAPOnline extends AjaxBasedModule {
     			updateFlag(session,"2",id_bantahan);
     			
     			if (doPost.equals("true")) {   			
-    				sendEmail(namaProjek,"","","",usid,"hantarLulusBantahan",session);    		
+    				sendEmail(namaProjek,"","","",usid,"hantarLulusBantahan");    		
         		}
     			
     		}else if("lulusPermohonan".equals(submit2)){
@@ -781,17 +777,22 @@ public class FrmBantahanDaftarAPOnline extends AjaxBasedModule {
     	return vm;
     	
     }
+
+	
+
+
 	// METHOD
-	private void sendEmail(String nama_projek,String tarikh_permohonan,String userIdKementerian, String id_jawatan_user, String usid
-		,String purpose,HttpSession session) throws Exception{
+	
+	@SuppressWarnings({ "static-access" })
+	private void sendEmail(String nama_projek,String tarikh_permohonan,String userIdKementerian, String id_jawatan_user, String usid, String purpose) throws Exception{
+
 		EmailOnline et = new EmailOnline();
-		et.setEmail("","",purpose,"",nama_projek
-				,tarikh_permohonan,"", userIdKementerian, id_jawatan_user, usid
-				,String.valueOf(session.getAttribute("portal_username")));
+		et.setEmail("","",purpose,"",nama_projek,tarikh_permohonan,"", userIdKementerian, id_jawatan_user, usid);
 		
 	}//close sendEmail
 	
-	private void resetValueCarian() throws Exception{		
+	private void resetValueCarian() throws Exception{
+		
 		//dropdown
 		context.put("selectStatusSPT",HTML.SelectStatusSPT("socStatus",null,"style=width:auto"));
 		context.put("selectJenisHMCarian",HTML.SelectJenisHakmilik("socJenisHakmilik",null,"id=selectJenisHMCarian style=width:auto"));

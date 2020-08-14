@@ -31,14 +31,19 @@ public class FrmPYWMesyuaratData {
 			listMesyuarat = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
 
-			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.STATUS_MESYUARAT "
-					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
-					+ " AND B.ID_PERMOHONAN = '"
-					+ idPermohonan + "'";
+			r.add("ID_MESYUARAT");
+			r.add("TAJUK");
+			r.add("BIL_MESYUARAT");
+			r.add("TARIKH_MESYUARAT");
+			r.add("FLAG_SYOR");
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("FLAG_MESYUARAT", "1");
 
+			sql = r.getSQLSelect("TBLPHPMESYUARAT", "ID_MESYUARAT ASC");
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			Hashtable h;
 			int bil = 1;
 			while (rs.next()) {
@@ -58,9 +63,9 @@ public class FrmPYWMesyuaratData {
 				if (rs.getString("BIL_MESYUARAT") != null) {
 					if ("L".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "LULUS");
-					} else if ("T".equals(rs.getString("STATUS_MESYUARAT"))) {
+					} else if ("T".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "TOLAK");
-					} else if ("G".equals(rs.getString("STATUS_MESYUARAT"))) {
+					} else if ("G".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "TANGGUH");
 					} else {
 						h.put("syor", "");

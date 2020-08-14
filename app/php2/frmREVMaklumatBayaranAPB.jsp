@@ -80,7 +80,7 @@ function validateCurrency(elmnt,content,content2) {
 		elmnt.value = content2;
 		return;
 	}
-
+	
 	if(content != ""){
 		var num = content * 1;
 		elmnt.value = num.toFixed(2);
@@ -89,16 +89,6 @@ function validateCurrency(elmnt,content,content2) {
 		elmnt.value ="";
 		return;
 	}
-}
-
-function janaPenyataAkaun(idHasil) {
-
-	var url = "../servlet/ekptg.report.php2.REVPenyataAkaun?ID_JADUAL_PERTAMA="+idHasil;
-    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
 }
 </script>
 <!-- PEMBAYARAN DEPOSIT PASIR-->
@@ -116,30 +106,30 @@ function simpanBayaranD(){
 
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
+  		document.${formName}.txtTarikh.focus(); 
+		return; 
 	}
 	if(document.${formName}.socModBayaran.value == ""){
 		alert('Sila pilih Mod Bayaran.');
-  		document.${formName}.socModBayaran.focus();
-		return;
+  		document.${formName}.socModBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus();
-		return;
+  		document.${formName}.socCaraBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus();
-		return;
+  		document.${formName}.txtAmaun.focus(); 
+		return; 
 	}
-
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newBayaranD";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "viewBayaranD";
 	document.${formName}.hitButton.value = "simpanBayaranD";
 	doAjaxCall${formName}("");
@@ -159,7 +149,7 @@ function hapusBayaranD(){
 		document.${formName}.mode.value = "viewBayaranD";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "hapusBayaran";
 	doAjaxCall${formName}("");
@@ -167,25 +157,25 @@ function hapusBayaranD(){
 function simpanKemaskiniBayaranD(){
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
+  		document.${formName}.txtTarikh.focus(); 
+		return; 
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus();
-		return;
+  		document.${formName}.socCaraBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus();
-		return;
+  		document.${formName}.txtAmaun.focus(); 
+		return; 
 	}
-
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updateBayaranD";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "viewBayaranD";
 	document.${formName}.hitButton.value = "simpanKemaskiniBayaranD";
 	doAjaxCall${formName}("");
@@ -211,30 +201,30 @@ function simpanBayaranFiPermohonan(){
 
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
+  		document.${formName}.txtTarikh.focus(); 
+		return; 
 	}
 	if(document.${formName}.socModBayaran.value == ""){
 		alert('Sila pilih Mod Bayaran.');
-  		document.${formName}.socModBayaran.focus();
-		return;
+  		document.${formName}.socModBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus();
-		return;
+  		document.${formName}.socCaraBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus();
-		return;
+  		document.${formName}.txtAmaun.focus(); 
+		return; 
 	}
-
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newBayaranFiPermohonan";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "viewBayaranFiPermohonan";
 	document.${formName}.hitButton.value = "simpanBayaranFiPermohonan";
 	doAjaxCall${formName}("");
@@ -254,7 +244,7 @@ function hapusBayaranFiPermohonan(){
 		document.${formName}.mode.value = "viewBayaranFiPermohonan";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "hapusBayaran";
 	doAjaxCall${formName}("");
@@ -262,25 +252,25 @@ function hapusBayaranFiPermohonan(){
 function simpanKemaskiniBayaranFiPermohonan(){
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
+  		document.${formName}.txtTarikh.focus(); 
+		return; 
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus();
-		return;
+  		document.${formName}.socCaraBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus();
-		return;
+  		document.${formName}.txtAmaun.focus(); 
+		return; 
 	}
-
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updateBayaranFiPermohonan";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "viewBayaranFiPermohonan";
 	document.${formName}.hitButton.value = "simpanKemaskiniBayaranFiPermohonan";
 	doAjaxCall${formName}("");
@@ -306,30 +296,30 @@ function simpanBayaranFiLesen(){
 
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
+  		document.${formName}.txtTarikh.focus(); 
+		return; 
 	}
 	if(document.${formName}.socModBayaran.value == ""){
 		alert('Sila pilih Mod Bayaran.');
-  		document.${formName}.socModBayaran.focus();
-		return;
+  		document.${formName}.socModBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus();
-		return;
+  		document.${formName}.socCaraBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus();
-		return;
+  		document.${formName}.txtAmaun.focus(); 
+		return; 
 	}
-
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newBayaranFiLesen";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "viewBayaranFiLesen";
 	document.${formName}.hitButton.value = "simpanBayaranFiLesen";
 	doAjaxCall${formName}("");
@@ -349,7 +339,7 @@ function hapusBayaranFiLesen(){
 		document.${formName}.mode.value = "viewBayaranFiLesen";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "hapusBayaran";
 	doAjaxCall${formName}("");
@@ -357,25 +347,25 @@ function hapusBayaranFiLesen(){
 function simpanKemaskiniBayaranFiLesen(){
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
+  		document.${formName}.txtTarikh.focus(); 
+		return; 
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus();
-		return;
+  		document.${formName}.socCaraBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus();
-		return;
+  		document.${formName}.txtAmaun.focus(); 
+		return; 
 	}
-
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updateBayaranFiLesen";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "viewBayaranFiLesen";
 	document.${formName}.hitButton.value = "simpanKemaskiniBayaranFiLesen";
 	doAjaxCall${formName}("");
@@ -401,30 +391,30 @@ function simpanBayaranRoyalti(){
 
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
+  		document.${formName}.txtTarikh.focus(); 
+		return; 
 	}
 	if(document.${formName}.socModBayaran.value == ""){
 		alert('Sila pilih Mod Bayaran.');
-  		document.${formName}.socModBayaran.focus();
-		return;
+  		document.${formName}.socModBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus();
-		return;
+  		document.${formName}.socCaraBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus();
-		return;
+  		document.${formName}.txtAmaun.focus(); 
+		return; 
 	}
-
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newBayaranRoyalti";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "viewBayaranRoyalti";
 	document.${formName}.hitButton.value = "simpanBayaranRoyalti";
 	doAjaxCall${formName}("");
@@ -444,7 +434,7 @@ function hapusBayaranRoyalti(){
 		document.${formName}.mode.value = "viewBayaranRoyalti";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "hapusBayaran";
 	doAjaxCall${formName}("");
@@ -452,25 +442,25 @@ function hapusBayaranRoyalti(){
 function simpanKemaskiniBayaranRoyalti(){
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
+  		document.${formName}.txtTarikh.focus(); 
+		return; 
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus();
-		return;
+  		document.${formName}.socCaraBayaran.focus(); 
+		return; 
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus();
-		return;
+  		document.${formName}.txtAmaun.focus(); 
+		return; 
 	}
-
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updateBayaranRoyalti";
 		return;
 	}
-
+	
 	document.${formName}.mode.value = "viewBayaranRoyalti";
 	document.${formName}.hitButton.value = "simpanKemaskiniBayaranRoyalti";
 	doAjaxCall${formName}("");

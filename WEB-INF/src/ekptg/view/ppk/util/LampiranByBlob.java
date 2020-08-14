@@ -37,8 +37,8 @@ public class LampiranByBlob implements IServlet2{
 				tableName = "tblppkdokumenha";
 			else if(tableNameReq.equals("simati"))
 				tableName = "tblppkdokumensimati";
-			else if(tableNameReq.equals("hta"))
-				tableName = "tblppkdokumenhta";
+			else if(tableNameReq.equals("hahah"))
+				tableName = "tblppkdokumenha";
 
 			
 			String sql ="select kandungan content,format jenis_mime from "+tableName+" where id_dokumen = ?";

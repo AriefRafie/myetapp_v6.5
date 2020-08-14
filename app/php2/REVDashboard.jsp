@@ -141,7 +141,7 @@ a.nav:visited {
                               <li> #if($!check_notifikasi_inbox > 0)
                                 <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE" class="blink">$!check_notifikasi_inbox</font></b> </label>
                                 &nbsp;
-                                #end
+                                #end                                
                                 Ruangan Perbincangan Formal</li>
                               </font> </a> </td>
                           </tr>
@@ -173,12 +173,12 @@ a.nav:visited {
                             <td><a href="javascript:gotoTerimaanCek()" class="help" title="Terimaan Cek"> <font color="blue">
                               <li>&nbsp;Senarai Terimaan Cek</li>
                               </font> </a> </td>
-                          </tr>
+                          </tr> 
                           <tr>
                             <td><a href="javascript:gotoSenaraiAkaunPasir()" class="help" title="Senarai Akaun Pasir (APB)"> <font color="blue">
                               <li>&nbsp;Senarai Akaun Pasir (APB)</li>
                               </font> </a> </td>
-                          </tr>
+                          </tr>                         
                           <tr>
                             <td><a href="javascript:gotoSenaraiPampasanPLP()" class="help" title="Senarai Pampasan Pelepasan"> <font color="blue">
                               <li>&nbsp;Senarai Pampasan Pelepasan</li>
@@ -199,7 +199,7 @@ a.nav:visited {
                               <li> #if($!bilTunggakanSewa > 0)
                                 <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE" class="blink">$!bilTunggakanSewa</font></b> </label>
                                 &nbsp;
-                                #end
+                                #end                                
                                 Sewa Tertunggak</li>
                               </font> </a> </td>
                           </tr>
@@ -214,17 +214,17 @@ a.nav:visited {
                               <li> #if($!perjanjianAktif > 0)
                                 <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE" class="blink">$!perjanjianAktif</font></b> </label>
                                 &nbsp;
-                                #end
+                                #end                                
                                 Perjanjian Aktif</li>
                               </font> </a> </td>
                           </tr>
-                          <tr>
+                          <tr>                          
                           <tr>
                             <td><a href="javascript:gotoSenaraiAkaunSewa()" class="help" title="Perjanjian Tamat"> <font color="blue">
                               <li> #if($!perjanjianHampirTamat > 0)
                                 <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE" class="blink">$!perjanjianHampirTamat</font></b> </label>
                                 &nbsp;
-                                #end
+                                #end                                
                                 Perjanjian Hampir Tamat</li>
                               </font> </a> </td>
                           </tr>
@@ -233,7 +233,7 @@ a.nav:visited {
                               <li> #if($!perjanjianTamat > 0)
                                 <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE" class="blink">$!perjanjianTamat</font></b> </label>
                                 &nbsp;
-                                #end
+                                #end                                
                                 Perjanjian Tamat</li>
                               </font> </a> </td>
                           </tr>
@@ -353,7 +353,6 @@ a.nav:visited {
                       <li class="TabbedPanelsTab" tabindex="0" id="Pengumuman_Head" >Pengumuman</li>
                       #end
                       <li class="TabbedPanelsTab" tabindex="0"  id="Carta_Head"  >Carta</li>
-                      <li class="TabbedPanelsTab" tabindex="0" id="Peringatan_Head"><span class="blink">PERINGATAN !</span></li>
                     </ul>
                     <div class="TabbedPanelsContentGroup"> #if($list_memo_aktif.size()>0)
                       <div class="TabbedPanelsContent"  id="Peringatan_Main" style="height:250" >
@@ -387,66 +386,6 @@ a.nav:visited {
                           </table>
                         </div>
                       </div>
-                      <div class="TabbedPanelsContent" >
-	                  	<table width="90%" align="center" border="0"  class="alert">
-						   <tr>
-							   <td>
-							   </td>
-						   </tr>
-						   <tr>
-							   <td width="2%" valign="top" align="right">
-							   </td>
-						   <td width="98%">
-						   <div id="tertunggak">
-					   			<a href="javascript:gotoTertunggak('S')" class="help" title="Senarai Akaun Sewa">
-									<label style="background-color:red"  align="center" valign="top" >
-			                            <b><font color="WHITE"><span class="blink">&nbsp;$bilTunggakanSewa</span></font></b>
-		                             </label>&nbsp;
-									 Bil. Fail Penyewaan yang Tertunggak
-								</a>
-							</div>
-						   </tr>
-						  </table>
-						  <table width="90%" align="center" border="0"  class="alert">
-						   <tr>
-							   <td>
-							   </td>
-						   </tr>
-						   <tr>
-							   <td width="2%" valign="top" align="right">
-							   </td>
-						   <td width="98%">
-						  	<div id="depositTidakDituntut">
-	                             <a href="javascript:gotoTidakDituntut()" class="help" title="Senarai Akaun Sewa">
-									<label style="background-color:red"  align="center" valign="top" >
-			                            <b><font color="WHITE"><span class="blink">&nbsp;$bilTidakDituntut</span></font></b>
-		                             </label>&nbsp;
-								 	Bil. Fail Penyewaan yang Deposit Tidak Dituntut
-								 </a>
-							</div>
-						   </tr>
-						  </table>
-						  <table width="90%" align="center" border="0"  class="alert">
-						   <tr>
-							   <td>
-							   </td>
-						   </tr>
-						   <tr>
-							   <td width="2%" valign="top" align="right">
-							   </td>
-						   <td width="98%">
-							<div id="perjanjianTamat">
-							 	<a href="javascript:gotoTamat()" class="help" title="Senarai Akaun Sewa">
-									<label style="background-color:red"  align="center" valign="top" >
-			                            <b><font color="WHITE"><span class="blink">&nbsp;$perjanjianTamat</span></font></b>
-		                             </label>&nbsp;
-			                         <!-- <input name="socStatusPerjanjianC" type="hidden" id="socStatusPerjanjianC" value="2"/> -->
-									 Bil. Fail Penyewaan yang Tamat Perjanjian
-								 </a>
-							</div>
-						   </tr>
-						  </table>
-						</div>
                     </div>
                   </div></td>
               </tr>
@@ -489,25 +428,6 @@ function gotoInbox() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.utils.FrmInboxUsers";
 	document.${formName}.submit();
 }
-
-function gotoTertunggak(S) {
-	document.${formName}.action = "$EkptgUtil.getTabID("Hasil",$portal_role)?_portal_module=ekptg.view.php2.FrmREVMemantauBayaranSewaView&socJenisFailC=S";
-	//document.${formName}.socJenisFailC.value = S;
-	//document.Fekptg_view_php2_FrmREVMemantauBayaranSewaView.socJenisFailC.value = "S";
-	document.${formName}.submit();
-}
-
-function gotoTidakDituntut() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Hasil",$portal_role)?_portal_module=ekptg.view.php2.FrmREVMemantauBayaranSewaView&socJenisFailC=D";
-	//document.${formName}.socJenisFailC.value = "D";
-	//document.Fekptg_view_php2_FrmREVMemantauBayaranSewaView.socJenisFailC.value = "S";
-	document.${formName}.submit();
-}
-
-function gotoTamat() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Hasil",$portal_role)?_portal_module=ekptg.view.php2.FrmREVMemantauBayaranSewaView&socStatusPerjanjianC=2";
-	document.${formName}.submit();
-}
 </script>
 <script type="text/javascript" charset="utf-8">
 		$$("a.help").each( function(input) {
@@ -524,10 +444,10 @@ function gotoTamat() {
 <script src="../RGraph/libraries/RGraph.hbar.js" ></script>
 <script src="../RGraph/libraries/RGraph.pie.js" ></script>
 <script>
-
-	var kutipan = '$!kutipan';
-	var tunggakan = '$!tunggakan';
-
+	
+	var kutipan = '$!kutipan';	
+	var tunggakan = '$!tunggakan';	
+		
         window.onload = function (e)
         {
             var hbar = new RGraph.HBar('cvs', [parseInt(kutipan),parseInt(tunggakan)]);
@@ -535,48 +455,48 @@ function gotoTamat() {
             hbar.Set('chart.units.post','');
             hbar.Set('chart.colors', ['blue','red','blue','blue']);
             hbar.Set('chart.strokestyle', 'rgba(0,0,0,0)');
-            hbar.Set('chart.labels.above', true);
+            hbar.Set('chart.labels.above', true);			
             hbar.Set('chart.background.grid', true);
-            hbar.Set('chart.labels', ['Kutipan','Tunggakan']);
+            hbar.Set('chart.labels', ['Kutipan','Tunggakan']);            
             if (!RGraph.isOld()) {
                 hbar.Set('chart.tooltips', ['Kutipan','Tunggakan']);
-            }
+            }            
             hbar.Set('chart.labels.above.decimals',0);
             hbar.Set('chart.xlabels', false);
             hbar.Set('chart.gutter.left', 90);
             hbar.Set('chart.gutter.right', 60);
             hbar.Set('chart.gutter.top',10);
-
+    
             hbar.Set('chart.noxaxis', true);
             hbar.Set('chart.noxtickmarks', true);
             hbar.Set('chart.noytickmarks', true);
-            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);
+            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);			       
         }
-
+		
 </script>
 <script>
 	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:0});
 </script>
 <script>
 function arkibWindow(){
-
+	
 	var noFail = document.${formName}.txtNoFail.value;
 		var url = "../x/${securityToken}/ekptg.view.integrasi.sid.FrmPopupPaparArkibDokumen?kodModul=PHP&noFail="+noFail;
-
+		
 		var hWnd = window.open(url,"printuser","scrollbars=1,width=800,height=700");
 		 if ((document.window != null) && (!hWnd.opener))
 		       hWnd.opener = document.window;
 		    if (hWnd.focus != null) hWnd.focus();
 			hWnd.focus();
-
+			
 	}
-
+	
 function open_infoSID() {
 	var width  = 550;
 	var height = 300;
 	var left   = (screen.width  - width)/2;
 	var top    = (screen.height - height)/2;
-
+ 
 	var params = 'width='+width+', height='+height;
  	params += ', top='+top+', left='+left;
 	params += ', directories=no';
@@ -592,14 +512,14 @@ function open_infoSID() {
 	new_window.document.write("<html><title>Info Maklumat Carian</title>");
 	new_window.document.write("<body bgcolor=\"#FFFFFF\">");
 	new_window.document.write("<table><tr><td><b><u>Jenis-Jenis Carian</u></b></td></tr></table>");
-
+	
 	new_window.document.write("<table width='100%'><tr><td width='50%' valign='top'>");
-
+	
 	new_window.document.write("<table><tr><td><b>Fail</b></td></tr>");
 	new_window.document.write("<tr><td><font color='blue'><li>&nbsp;No. Fail Seksyen </li></font>");
-
+	
 	new_window.document.write("</td></tr></table>");
-
+	
 	new_window.document.write("<table><tr><td align='justify'>Sistem akan memaparkan senarai dokumen berkaitan dengan no fail yang di masukkan.</td></tr></table>");
 	new_window.document.write("</body></html>");
 	new_window.document.close();

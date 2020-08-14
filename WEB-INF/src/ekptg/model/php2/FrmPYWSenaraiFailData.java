@@ -805,8 +805,7 @@ public class FrmPYWSenaraiFailData {
 
 			// SENARAI TUGASAN
 			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole)
-					|| "(PHP)PYWPenolongPegawaiTanahHQ".equals(userRole)
-					|| "PenyemakNegeri".equals(userRole)) {
+					|| "(PHP)PYWPenolongPegawaiTanahHQ".equals(userRole)) {
 				sql = sql + " AND G.ID_PEGAWAI = '" + userId
 						+ "' AND G.ID_NEGERI = '" + idNegeriUser + "'"
 						+ " AND G.ROLE = '" + userRole
@@ -939,8 +938,6 @@ public class FrmPYWSenaraiFailData {
 					sql = sql + " AND B.ID_STATUS = '" + idStatus.trim() + "'";
 				}
 			}
-			
-			sql = sql + " ORDER BY B.ID_PERMOHONAN DESC";
 
 			ResultSet rs = stmt.executeQuery(sql);
 

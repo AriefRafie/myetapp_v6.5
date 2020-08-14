@@ -158,16 +158,11 @@ $!headerppk.message
           
     -->      
             </td>
-            <!-- arief add button LOG TUGASAN FAIL 8/4/2020 OPEN -->
-            #foreach ($ListIDStatus in $id_status)
-				#set($idstatus = $ListIDStatus.id_status )
-			#end
-            #if ($idstatus != 8 || $idstatus != 150 || $idstatus != 160 )
+            <!-- arief add button LOG TUGASAN FAIL 8/4/2020 OPEN 
             <td>
             <input name="cmdLogTugasanFail" id="cmdLogTugasanFail" value="LOG TUGASAN FAIL" type="button" onClick="javascript:viewLogTugasanFail()">
             </td>
-            #end
-            <!--arief add button LOG TUGASAN FAIL 8/4/2020 CLOSE -->
+            arief add button LOG TUGASAN FAIL 8/4/2020 CLOSE -->
         </tr>
         <tr> 
           <td  style="text-transform:uppercase;" valign="top"><div align="right">Negeri</div></td>
@@ -1256,11 +1251,11 @@ function arkibWindow(noFail){
 <script>
 function viewLogTugasanFail()
 {
-	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupLogTugasanView?idFail=$idFail"; //&command=LogTugasanView";
-	var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=yes,scrollbars=no');
+	var url = "../ekptg.view.ppk.FrmPopupLogTugasanView";
+	var hWnd = window.open(url,"scrollbars=1,width=800,height=700");
 	if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;
-	if (hWnd.focus != null)
+	    if (hWnd.focus != null) hWnd.focus();
 		hWnd.focus();
 }
 </script>

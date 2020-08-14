@@ -415,6 +415,7 @@ public class FrmAPBSenaraiFailOnlineData {
 	public String generateNoFailAPB() throws Exception {
 		String noFail = "";
 		noFail = "JKPTG(S)/SPHP/8-2 SK " + File.getSeqNo(4, 9);
+
 		return noFail;
 	}
 

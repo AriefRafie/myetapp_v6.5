@@ -53,13 +53,13 @@
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> <br>
-            #parse("app/php2/frmAPBUlasanJUPEM.jsp")</div>
+            #parse("app/php2/frmAPBUlasanJUPEM.jsp") </div>
           <div class="TabbedPanelsContent"> <br>
             #parse("app/php2/frmAPBUlasanJAS.jsp") </div>
           <div class="TabbedPanelsContent"> <br>
             #parse("app/php2/frmAPBUlasanJMG.jsp") </div>
           <div class="TabbedPanelsContent"> <br>
-            #parse("app/php2/frmAPBUlasanJP.jsp")  </div>
+            #parse("app/php2/frmAPBUlasanJP.jsp") </div>
           <div class="TabbedPanelsContent"> <br>
             #parse("app/php2/frmAPBUlasanJLM.jsp") </div>
           <div class="TabbedPanelsContent"> <br>

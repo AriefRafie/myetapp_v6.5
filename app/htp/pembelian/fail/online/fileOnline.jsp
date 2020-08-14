@@ -198,7 +198,7 @@
 	  				<tr>
 		            	<td width="1%">&nbsp;</td>
 		    			<td width="98%">&nbsp;&nbsp;&nbsp;
-		    				4. Salinan pelan</td>
+		    				4. Salinan KP Pemilik dan Penjual</td>
 	  				</tr>    
 	  				<tr>
 		            	<td width="1%">&nbsp;</td>

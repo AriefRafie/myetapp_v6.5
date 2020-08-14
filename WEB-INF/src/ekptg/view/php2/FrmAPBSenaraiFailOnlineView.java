@@ -8,13 +8,11 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.model.php2.FrmAPBSenaraiFailData;
 import ekptg.model.php2.FrmAPBSenaraiFailOnlineData;
 
-@SuppressWarnings("serial")
 public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 
-	FrmAPBSenaraiFailData logic = new FrmAPBSenaraiFailData();
+	FrmAPBSenaraiFailOnlineData logic = new FrmAPBSenaraiFailOnlineData();
 	
 	@Override
 	public String doTemplate2() throws Exception {
@@ -39,13 +37,11 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
         String idPemohon = getParam("idPemohon");
         String idUrusan = getParam("idUrusan");
         String hitButton = getParam("hitButton");
-        String noFailLama = getParam("noFailLama");
-        String idPermohonanLama = getParam("idPermohonanLama");
-        
+       		        
         //VECTOR
         Vector list = null;
-        //Vector beanMaklumatPermohonan = null;
-        //Vector beanMaklumatPemohon = null;
+        Vector beanMaklumatPermohonan = null;
+        Vector beanMaklumatPemohon = null;
         
         String idKategoriPemohon = getParam("socKategoriPemohon");
 		if (idKategoriPemohon == null || idKategoriPemohon.trim().length() == 0) {
@@ -62,24 +58,12 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
         
        //ACTION BUTTON
 		if (postDB){
-			this.context.put("noFailOnline", "");
         	if ("daftarBaru".equals(hitButton)){
-        		logic.updateDaftarOnline(idFail,getParam("idPermohonan"),getParam("txtPerkara"),session);
+        		logic.updateDaftarOnline(idFail,idPermohonan,getParam("txtPerkara"),session);
         	}
-        	if ("generateNoFailAPBOnline".equals(hitButton)){
-        		String nofailAPBOnline=logic.generateNoFail(session);
-        		this.context.put("noFailOnline", nofailAPBOnline);
-        	}
-			if("daftarSambung".equals(hitButton)){// set flag aktif = 0
-				logic.simpanSambungan(idFail,getParam("idPermohonan"),getParam("tarikhTerima"),getParam("tarikhTerima"),noFailLama,idPermohonanLama, session);	
-	    	}
     	}
-		
-		Vector beanMaklumatPermohonan = null;
-        Vector beanMaklumatPemohon = null;
-        
+	    		
         if ("papar".equals(actionOnline)){
-        	
         	
         	this.context.put("mode", "view");
         	this.context.put("readonly", "readonly");
@@ -92,7 +76,7 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 			logic.setMaklumatPermohonan(idFail);
 			beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan); 
-				
+			
 			// MAKLUMAT PEMOHON
 			logic.setMaklumatPemohon(idFail);
 			beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
@@ -103,6 +87,7 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 				idNegeri = (String) hashPemohon.get("idNegeri");
 				idBandar = (String) hashPemohon.get("idBandar");
 			}
+			
 			this.context.put("selectKategoriPemohon", HTML.SelectKategoriPemohonIndividuAndSyarikat("socKategoriPemohon", Long.parseLong(idKategoriPemohon), "disabled", " class=\"disabled\""));
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
 			this.context.put("selectBandar", HTML.SelectBandarByNegeri(idNegeri, "socBandar", Long.parseLong(idBandar), "disabled", " class=\"disabled\""));
@@ -141,13 +126,14 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 	     	// GO TO LIST FAIL APB
 			vm = "app/php2/frmAPBSenaraiFailOnline.jsp";
 	
-			//logic.getCarianFail(getParam("txtNoPermohonan"),getParam("txdTarikhPermohonan"));
-			list = logic.getCarianFailOnline(getParam("txtNoPermohonan"),getParam("txtTarikhTerima"));
+			logic.carianFail(getParam("txtNoPermohonan"),getParam("txdTarikhPermohonan"));
 			list = new Vector();
 			list = logic.getSenaraiFail();
 			this.context.put("SenaraiFail", list);
 			this.context.put("txtNoPermohonan", getParam("txtNoPermohonan"));
-			this.context.put("txtTarikhTerima", getParam("txtTarikhTerima"));
+			this.context
+					.put("txdTarikhPermohonan", getParam("txdTarikhPermohonan"));
+	
 			setupPage(session, action, list);
         }
 		
@@ -160,6 +146,47 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 	    this.context.put("idUrusan", idUrusan);
 	    
 		return vm;
+	}
+	
+	public void setupPage(HttpSession session,String action,Vector list) {
+		
+		try {
+		
+			this.context.put("totalRecords",list.size());
+			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
+			
+			int itemsPerPage;
+			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer)this.context.get("itemsPerPage");
+			}
+		    
+		    if ("getNext".equals(action)) {
+		    	page++;
+		    } else if ("getPrevious".equals(action)) {
+		    	page--;
+		    } else if ("getPage".equals(action)) {
+		    	page = getParamAsInteger("value");
+		    } else if ("doChangeItemPerPage".equals(action)) {
+		       itemsPerPage = getParamAsInteger("itemsPerPage");
+		    }
+		    	
+		    Paging paging = new Paging(session,list,itemsPerPage);
+			
+			if (page > paging.getTotalPages()) page = 1; //reset page number
+				this.context.put("SenaraiFail",paging.getPage(page));
+			    this.context.put("page", new Integer(page));
+			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
+			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
+			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
+			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
+			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.context.put("error",e.getMessage());
+		}	
 	}
 }
 	

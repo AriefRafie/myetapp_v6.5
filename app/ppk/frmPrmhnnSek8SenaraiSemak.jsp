@@ -607,7 +607,6 @@
           <tr>
             <td width="10%" >&nbsp;</td>
             <td width="1%" valign="top" ></td>
-            <td width="1%" valign="top" >#if($chkmode != "disabled") <span class="style2"></span> #end</td>
             <td width="3%" ><input type="checkbox" name="cbsemaks" id="cbsemaks19" $chkmode value="24" $checked24 onClick="ReadOnlyCheckBox(this);checkit_harta_cancel()" />            </td>
             <td width="86%"> #if($chkmode != "disabled") Memiliki Harta Tak Alih #else
               Memiliki Harta Tak Alih
@@ -1651,11 +1650,10 @@ function DoTheCheck() {
 		dm.focus()
 		return false
 	}
-	//arief add ::--  && document.f1.cbsemaks[25].checked == false
-	else if (document.f1.cbsemaks[23].checked == false && document.f1.cbsemaks[16].checked == false ) { 
-		alert("Sila masukkan Memiliki Harta Tidak Alih ATAU Harta Alih");
-		
-	}
+	
+	/* else if (document.f1.cbsemaks[23].checked == false) {
+		alert("Sila masukkan Memiliki Harta Tak Alih");
+	} */
 	else if ( date1 > currentTime ){
 	
 		alert("Sila pastikan tarikh bayaran tidak melebihi dari tarikh hari ini");

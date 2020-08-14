@@ -66,13 +66,10 @@ import ekptg.model.htp.rekod.HTPSusulanPembangunanBean;
 import ekptg.model.htp.rekod.HakmilikBean;
 import ekptg.model.htp.rekod.HakmilikInterface;
 import ekptg.model.htp.utiliti.HTPEmelPermohonanBean;
-import ekptg.model.htp.utiliti.HTPEmelSemakanBean;
 import ekptg.model.htp.utiliti.HTPSusulanBean;
 import ekptg.model.htp.utiliti.IHTPSusulan;
 import ekptg.model.utils.IUserPegawai;
-import ekptg.model.utils.UserKJPBean;
-import ekptg.model.utils.emel.EmailConfig;
-import ekptg.model.utils.emel.IEmel;
+import ekptg.model.utils.UserBean;
 
 public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	/**
@@ -80,60 +77,20 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	 */
 	private static final long serialVersionUID = 3744798063048260707L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.online.htp.permohonan.FrmTerimaPohon1Online.class);
-//	private final String IDSUBURUSANPERMOHONAN = "42";
-	private final String JENISTANAH = "1,3,6";
-	private final String PATH="app/htp/permohonan/online/";
-//	private final String PATHVER = PATH+"v02/";
-	
 	private ekptg.model.htp.IHtp iHtp = null;
-	private ekptg.model.htp.IHTPEmel iHTPEmel = null;	
-	private ekptg.model.htp.IHTPPermohonan iPermohonan = null;
-	private ekptg.model.htp.permohonan.IPermohonanPerizapan ipr= null;
-	private ekptg.model.utils.emel.IEmel emelSemak = null;
-	private Hashtable<String, String> hashUser = null;
-	private Hashtable<String, String> hashData = null;
-	private Hashtable<String, String> hashTerimaPohonInfo = null; 
+	private final String PATH="app/htp/permohonan/online/";
+	private final String PATHVER = PATH+"v02/";
+	//private final String PATHONLINE="app/htp/permohonan/online/";	
+	//private final String PATH="app/htp/permohonan/online/";	
+	private final String JENISTANAH = "1,3,6";
+	private final String IDSUBURUSANPERMOHONAN = "42";
 	private HtpPermohonan htpPermohonan = null;
-	private IBorangKIntergration kIntergration = null;
-	private IHtp iHTP = null; 
-	private IHTPBayaran iBayaran = null;
-	private IHTPPermohonan iHTPPermohonan = null;
-	private IHTPStatus iStatus = null;
-	private IHTPSusulan iSusulan = null;
-	private IHTPSusulan iSusulanPembangunan = null;
-  	private IntegrasiGISBean integrasiGIS = null;  	
-  	private IOnline iOnline = null;
 	private IPenggunaKementerian iPengguna = null;
-  	private IUserPegawai iUser = null;
 	private Permohonan permohonan = null;
 	private PfdFail fail = null;
-	private String DISABILITY = " disabled class=\"disabled\" ";
-	private String DISABILITYNUM = " disabled class=\"inputnumberdisabled\" ";
-  	private String idStatus = "";
-	private String inputStyle = DISABILITY;
-  	private String inputStyleNum = DISABILITYNUM;
-	private String listStatus = "";
-  	private String pageMode = "";	
-  	private String userID = null;
-	private String IDSUBURUSANS = "23,25";	
-	private String tarikhBukaFail = "";
-	private String txtNoLot = "";
-	private String noSyit = "";
-	private String noPelan = "";
-	private String socLot = "";
-	private String socLuas = "";
-	private String Luas = "";
-	private String LuasLama = "";
-	private String Lokasi = "";	
 	private UserKementerian uk = null;
-	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
-	private Vector<Hashtable<String, String>> list = null;
-	
+
 	FrmSenaraiFailTerimaPohonData fData = null;
-	HTPPermohonanTanahBean tanahBean =null;
-	String jawatan = "";
-	String idJawatan = "";
-	
 	//INIT
 	String socKementerian = "";
 	String socAgensi = "";
@@ -147,6 +104,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	String readability = "";
 	String disability = "";
 	String noLot = "";
+	
  	String txtTajuk = "";
  	String id_kementerian = "";
  	String id_agensi = "";
@@ -159,6 +117,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	String idpermohonan ="";
 	String idhakmilikurusan ="";
 	String idfail = "";
+	String idUser = "";
 	String tabmode = "";
 	String readOnly = "";
 	String disabled = "";
@@ -171,10 +130,62 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	Vector senaraiTerimaPohon = null;
 	//18/08/2010
 	String flagAdvSearch = "";
+	private IBorangKIntergration kIntergration = null;
+	
+	//----- Start addby zul 27/7/2017 -----
+	private Hashtable<String, String> hashTerimaPohonInfo = null; 
+	private Vector<Hashtable<String, String>> list = null;
+	HTPPermohonanTanahBean tanahBean =null;
+	private String DISABILITY = " disabled class=\"disabled\" ";
+  	private String inputStyle = DISABILITY;
+	private String DISABILITYNUM = " disabled class=\"inputnumberdisabled\" ";
+  	private String inputStyleNum = DISABILITYNUM;
+  	private String pageMode = "";
   	
-  	String button_ = "";
+  	//this for jkp online
+  	private IUserPegawai iUser = null;
+  	private String userID = null;
+	String jawatan = "";
+	String idJawatan = "";
+	
+	private FrmRekodUtilData frmRekodUtilData = null;
+	String userId = "";
+	private IHtp iHTP = null; 
+	
+	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
+	private IHTPPermohonan iHTPPermohonan = null;
+	private IOnline iOnline = null;
+	
+	private String idStatus = "";
+	private String listStatus = "";
+	//private String IDSUBURUSANS = "1,10";
+	private String IDSUBURUSANS = "23,25";
+	
+	private String tarikhBukaFail = "";
+	private String txtNoLot = "";
+	private String noSyit = "";
+	private String noPelan = "";
+	private String socLot = "";
+	private String socLuas = "";
+	private String Luas = "";
+	private String LuasLama = "";
+	private String Lokasi = "";
+	
+	Hashtable<String, String> hashData = null;
+	private ekptg.model.htp.permohonan.IPermohonanPerizapan ipr= null;
 	Vector<Hashtable<String, String>> maklumatAsasTanahInfo = null;
-
+	private IHTPStatus iStatus = null;
+	String button_ = "";
+	private ekptg.model.htp.IHTPPermohonan iPermohonan = null;
+	private IHTPSusulan iSusulan = null;
+	private IHTPSusulan iSusulanPembangunan = null;
+	private IHTPBayaran iBayaran = null;
+	
+	private ekptg.model.htp.IHTPEmel iHTPEmel = null;
+	//----- End addby zul 27/7/2017 -----
+	
+  	private IntegrasiGISBean integrasiGIS = null;
+  	
 	//END INIT	
 	@Override
 	public String doTemplate2() throws Exception {	
@@ -182,9 +193,9 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		HttpSession session = this.request.getSession();
 		
 		//idUser = (String)session.getAttribute("_ekptg_user_id");
-		userID = String.valueOf(session.getAttribute("_ekptg_user_id"));
-		if(userID == null){
-			getIHTP().getErrorHTML("[HTP SUBMODUL PERMOHONAN] SILA LOGIN SEMULA");
+		idUser = String.valueOf(session.getAttribute("_ekptg_user_id"));
+		if(idUser == null){
+			getIHTP().getErrorHTML("[HTP PERMOHONAN] SILA LOGIN SEMULA");
 		}
 		//Parameters
 		String butang3 = getParam("butang3");
@@ -217,7 +228,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	 	idsuburusan = getParam("socSubUrusan");
 	 	
 		if (id_kementerian == null || id_kementerian.trim().length() == 0){
-			uk = getIPengguna().getKementerian(userID);
+			uk = getIPengguna().getKementerian(idUser);
 			if(uk == null){
 				throw new Exception(getHTP().getErrorHTML("[ONLINE-HTP PERMOHONAN] KEMENTERIAN TIDAK DIJUMPAI"));
 			}
@@ -252,18 +263,21 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		String portal_role = String.valueOf(session.getAttribute("myrole"));
 		//---------- end addby zul 27/7/2017---------- 
 		
-		try{		
+		try{
+			
 			//---------- Start addby zul ----------
 			tanahBean = new HTPPermohonanTanahBean();
 			tanahBean.setLabelDaerah(context, idnegeri);
 			
 			//this for JKP online
-//			HttpSession ses = request.getSession();
-//			userID = (String)ses.getAttribute("_ekptg_user_id");
-			hashUser = getIUser().getPengguna(userID);
-			jawatan = String.valueOf(hashUser.get("jawatan"));
-			idJawatan = String.valueOf(hashUser.get("idJawatan"));
+			HttpSession ses = request.getSession();
+			userID = (String)ses.getAttribute("_ekptg_user_id");
+			Hashtable hUser = getIUser().getPengguna(userID);
+			jawatan = String.valueOf(hUser.get("jawatan"));
+			idJawatan = String.valueOf(hUser.get("idjawatan"));
 			context.put("idjawatan", idJawatan);
+			/*myLog.info("JAWATAN ===== " + jawatan);
+			myLog.info("JAWATAN ===== " + hUser.get("idjawatan"));*/
 			context.remove("showButton");
 			
 			if ("viewMaklumatPermohonan".equals(submit)) {
@@ -272,9 +286,9 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 				this.context.put("disabled", "disabled");	
 				setPaging(false,true,true,false,false);
 				template_name = PATH+"frmMaklumatPermohonanView.jsp";
-				hashTerimaPohonInfo = FrmSenaraiFailTerimaPohonData.getTerimaPohonInfo(idfail);
-				idpermohonan = (String)hashTerimaPohonInfo.get("lblIdPermohonan");
-	   			setMaklumatPermohonan(hashTerimaPohonInfo);
+				Hashtable TerimaPohonInfo = fData.getTerimaPohonInfo(idfail);
+				idpermohonan = (String)TerimaPohonInfo.get("lblIdPermohonan");
+	   			setMaklumatPermohonan(TerimaPohonInfo);
 	   			//context.remove("hideButton");
 	   			context.put("showButton", "show");
 	   			
@@ -313,7 +327,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 					//fail.setIdTarafKeselamatan(String.valueOf(TerimaPohonInfo.get("lblTanahKeselamatan")));	//lblTanahKeselamatan
 					fail.setTarikhDaftarFail(String.valueOf(hashTerimaPohonInfo.get("tarikhDaftarFail")));//tarikhDaftarFail
 					permohonan.setPfdFail(fail);
-					permohonan.setIdMasuk(Long.parseLong(userID));
+					permohonan.setIdMasuk(Long.parseLong(idUser));
 					//TBLPERMOHONAN (TARIKH_SURAT,TARIKH_TERIMA,TUJUAN,ID_KEMASKINI,TARIKH_KEMASKINI-Auto)
 					//TBLHTPPERMOHONAN (NO_RUJUKAN_LAIN,NO_RUJUKAN_KJP,NO_RUJUKAN_UPT,NO_RUJUKAN_PTG,NO_RUJUKAN_PTD
 					//	,ID_AGENSI,ID_DAERAH,ID_JENISTANAH,ID_KEMASKINI,TARIKH_KEMASKINI-Auto)
@@ -358,7 +372,10 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    	flagAdvSearch = "Y";
 				senaraiTerimaPohon = fData.TerimaPohongetList(null,nofail,txtTajuk,
 						id_kementerian,id_agensi,idnegeri,iddaerah,idmukim,idurusan,idStatus,noRujukanOnline); //--- addbyzul for carian by idStatus dan noRujukanOnline--
-				doListing(session,action,mode,senaraiTerimaPohon);				
+				doListing(session,action,mode,senaraiTerimaPohon);
+
+				
+				
 				
 		    } else if ("kemaskinipermohonan".equals(submit)) {
 		    	myLog.debug("kemaskinipermohonan="+submit);
@@ -571,7 +588,8 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    				semakMode = "update";
 		    			}
 		    			context.put("semakMode", semakMode);
-		    			context.put("selectedTab", 3);		    			
+		    			context.put("selectedTab", 3);
+		    			
 		    			
 		    			String nama_projek = null;
 						String tarikh_permohonan = null;
@@ -579,16 +597,18 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 						//String idJawatan = null;
 						//String id_user = null;
 						String purpose = null;
-						idurusan = String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdStatus());
+//						sendEmail(nama_projek, tarikh_permohonan, id_kementerian, idJawatan, idUser, purpose);
 						
-						sendEmailTindakanPermohonanOnline(id_kementerian,idJawatan,idurusan);
-//						if(idJawatan.equals("20")||idJawatan.equals("24")){
-//							sendEmailTindakanPermohonanOnline(id_kementerian,idJawatan,idurusan);
-//						}else if (idJawatan.equals("9")){
-//							sendEmailTindakanPermohonanOnline(id_kementerian,idJawatan,idurusan);
-//						}else if (idJawatan.equals("4")){
-//							sendEmailTindakanPermohonanOnline(id_kementerian,idJawatan,idurusan);
-//						}
+						if(idJawatan.equals("20")||idJawatan.equals("24")){
+							sendEmailTindakanPermohonanOnline(id_kementerian, idJawatan, idUser);
+							//System.out.println("JAWATAN 20 dan 24");
+						}else if (idJawatan.equals("9")){
+							sendEmailTindakanPermohonanOnline(id_kementerian, idJawatan, idUser);
+							//System.out.println("JAWATAN 9");
+						}else if (idJawatan.equals("4")){
+							sendEmailTindakanPermohonanOnline(id_kementerian, idJawatan, idUser);
+							//System.out.println("JAWATAN 4");
+						}
 		    			
 			    	} else {
 	    				//SENARAI 
@@ -1222,7 +1242,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hashData.put("id_Agensi",id_agensi);
 		hashData.put("flag_Fail","1");
 		hashData.put("id_Status", "8");
-		hashData.put("id_Masuk", userID);
+		hashData.put("id_Masuk", idUser);
 		hashData.put("TarikhSurKJP", getParam("txdTarikhSuratKJP"));
 		hashData.put("TarikhPermohonan", getParam("txdTarikhSuratKJP"));  
 		hashData.put("noFailUPT", getParam("txtnoFailUPT"));  
@@ -1230,13 +1250,13 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hashData.put("noFailPTG", getParam("txtnofailptg"));
 		hashData.put("StatusTanah", getParam("socStatustanah"));  
 //		return fData.simpanPermohonan(h,idUser);
-		return fData.simpanPermohonanOnline(hashData,userID);
+		return fData.simpanPermohonanOnline(hashData,idUser);
 			
 	}
 	
 	public void doSimpanMaklumatAsasTanah() throws Exception {
 		Hashtable data = new Hashtable();
-		data.put("idUser",userID);
+		data.put("idUser",idUser);
 		data.put("idpermohonan", getParam("idpermohonan"));
 		data.put("socNegeri", getParam("socnegeri2"));
 		data.put("socDaerah", getParam("socdaerah2"));
@@ -1257,7 +1277,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	/*start addbyzul*/
 	public String simpanMaklumatAsasTanah() throws Exception {
 		hashData = new Hashtable<String, String>();
-		hashData.put("idUser",userID);
+		hashData.put("idUser",userId);
 		hashData.put("idpermohonan", getParam("idpermohonan"));
 		hashData.put("socNegeri", getParam("socnegeri2"));
 		hashData.put("socDaerah", getParam("socdaerah2"));
@@ -1374,7 +1394,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	
 	public String kemaskiniMaklumatAsasTanah() throws Exception {
 		hashData = new Hashtable<String, String>();
-		hashData.put("idUser",userID);
+		hashData.put("idUser",userId);
 		hashData.put("idhakmilikurusan", getParam("idhakmilikurusan"));
 		hashData.put("idpermohonan", getParam("idpermohonan"));
 		hashData.put("socNegeri", getParam("socnegeri2"));
@@ -1400,7 +1420,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	
 	//CHARTING
 	private void ChartingSimpanKemaskini(String tindakan) throws Exception {
-		tanahBean.chartingSimpanKemaskini(userID, getParam("idpermohonan"), getParam("idhakmilikurusan"), getParam("RadioGroup1")
+		tanahBean.chartingSimpanKemaskini(userId, getParam("idpermohonan"), getParam("idhakmilikurusan"), getParam("RadioGroup1")
 			, getParam("JumBayaranPelan"), getParam("ulasan"), getParam("keteranganImej")
 			, String.valueOf(this.context.get("noFail")), tindakan);
 		
@@ -1419,7 +1439,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 			subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
 			subUrusanStatusFailN.setAktif("1");
 			subUrusanStatusFailN.setUrl(Utils.isNull(rsusf.getUrl()));
-			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userID));
+			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
 			subUrusanStatusFailN.setTarikhMasuk(rsusf.getTarikhMasukStr());
 			getHTP().kemaskiniSimpanStatusPermohonanAktif(subUrusanStatusFail, subUrusanStatusFailN,rsusf.getTarikhMasukStr());
 			
@@ -1476,7 +1496,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	public void keputusanPermohonan(String mode) throws Exception {
 		KeputusanUlasan ku = new KeputusanUlasan();
 		Tblrujsuburusanstatusfail sf = new Tblrujsuburusanstatusfail();
-		sf.setIdMasuk(Long.parseLong(userID));
+		sf.setIdMasuk(Long.parseLong(userId));
 		sf.setIdPermohonan(Long.parseLong(getParam("idpermohonan")));
 		sf.setIdSuburusanstatus(Long.parseLong(idsuburusan));
 		sf.setIdFail(Long.parseLong(idfail));
@@ -1510,7 +1530,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 				subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
 				subUrusanStatusFailN.setAktif("1");
 				subUrusanStatusFailN.setUrl("-");
-				subUrusanStatusFailN.setIdMasuk(Long.parseLong(userID));
+				subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
 				String strDate = getParam("txtarikhkeputusan")
 						.equals("")?"01/01/1900":getParam("txtarikhkeputusan");
 				Date date = new SimpleDateFormat("dd/MM/yyyy").parse(strDate);
@@ -1530,7 +1550,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hashData.put("txdTarikh", tarikh);
 		hashData.put("idPermohonan", idPermohonan);
 		hashData.put("catatan", catatan);
-		hashData.put("idMasuk",userID);
+		hashData.put("idMasuk",userId);
 		//h.put("idSusulanStatus", getParam("idsusulanstatus"));
 		return hashData;
 	
@@ -1596,9 +1616,14 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		}
 	/*----------------------- end addbyzul --------------------------*/
 	
+	
+	
+	
+	
+	
 	public void doKemaskiniMaklumatAsasTanah() throws Exception {
 		Hashtable data = new Hashtable();
-		data.put("idUser",userID);
+		data.put("idUser",idUser);
 		data.put("idhakmilikurusan", getParam("idhakmilikurusan"));
 		data.put("idpermohonan", getParam("idpermohonan"));
 		data.put("socNegeri", getParam("socnegeri2"));
@@ -1666,7 +1691,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	
 	private void SimpanLokasiTanah()throws Exception {
 		Hashtable data = new Hashtable();
-		data.put("idUser",userID);
+		data.put("idUser",idUser);
 		data.put("idhakmilikurusan", getParam("idhakmilikurusan"));
 		
 		data.put("txtbandar", getParam("txtJDbandar"));
@@ -1692,7 +1717,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	
 	private void doKemaskiniLokasiTanah()throws Exception {
 		Hashtable data = new Hashtable();
-		data.put("idUser",userID);
+		data.put("idUser",idUser);
 		data.put("idhakmilikurusan", getParam("idhakmilikurusan"));
 		
 		data.put("txtbandar", getParam("txtJDbandar"));
@@ -1720,7 +1745,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	//CHARTING
 	private void SimpanCharting()throws Exception {
 		Hashtable data = new Hashtable();
-		data.put("idUser", userID);
+		data.put("idUser", idUser);
 		data.put("idpermohonan", getParam("idpermohonan"));
 		data.put("idhakmilikurusan", getParam("idhakmilikurusan"));
 		data.put("Flagcharting", getParam("RadioGroup1"));
@@ -1733,7 +1758,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	
 	private void KemaskiniCharting()throws Exception {
 		Hashtable data = new Hashtable();
-		data.put("idUser", userID);
+		data.put("idUser", idUser);
 		data.put("idpermohonan", getParam("idpermohonan"));
 		data.put("idhakmilikurusan", getParam("idhakmilikurusan"));
 		myLog.debug("*** RadioGroup1:"+getParam("RadioGroup1"));
@@ -1783,7 +1808,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		
 		Hashtable data = null;
 		data = new Hashtable();
-		data.put("idUser",userID);
+		data.put("idUser",idUser);
 		data.put("idpermohonan", getParam("idpermohonan"));
 		//data.put("idhakmilikurusan", getParam("idhakmilikurusan"));
 		data.put("TarikhSuratKePTD", getParam("txtTarikhSuratKePTD"));
@@ -1832,7 +1857,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	public void KeputusanPermohonan(String mode) throws Exception {
 		Hashtable data = null;
 		data = new Hashtable();
-		data.put("idUser",userID);
+		data.put("idUser",idUser);
 		data.put("idpermohonan", getParam("idpermohonan"));
 		data.put("idkeputusanmohon", getParam("idkeputusanmohon"));		
 		data.put("NoRujukPTD", getParam("txtNoRujukPTD"));
@@ -1862,7 +1887,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	public void Notis5A(String mode,String idNotis) throws Exception {
 		
 		Hashtable hNotis = new Hashtable();
-		hNotis.put("idUser",userID);
+		hNotis.put("idUser",idUser);
 		hNotis.put("idpermohonan",Utils.isNull(getParam("idpermohonan")));
 		hNotis.put("NoKPPemilikAsal",Utils.isNull(getParam("txtNoKPPemilikAsal")));
 		hNotis.put("TarikhNotis5A",Utils.isNull(getParam("txtTarikhNotis5A")));
@@ -1876,6 +1901,9 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hNotis.put("PerihalRayuan",Utils.isNull(getParam("txtPerihalRayuan")));
 		hNotis.put("TarikhRayuan",Utils.isNull(getParam("txtTarikhRayuan")));
 		hNotis.put("TempohRayuan",Utils.isNull(getParam("txtTempohRayuan")));
+		
+		
+		
 		
 		hNotis.put("TarikhTerimaNotis5A",Utils.isNull(getParam("txtTarikhTerimaNotis5A")));
 		hNotis.put("TarikhLuputNotisKedua",Utils.isNull(getParam("txtTarikhLuputNotisKedua")));
@@ -1898,7 +1926,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		
 		Hashtable data = null;
 		data = new Hashtable();
-		data.put("idUser", userID);
+		data.put("idUser", idUser);
 		data.put("idPermohonan", getParam("dipermohonanNotis"));
 		data.put("NoBaucer", getParam("txtNoBaucer") == null ? "" : getParam("txtNoBaucer"));
 		data.put("TarikhBaucer", getParam("txtTarikhBaucer") == null ? "" : getParam("txtTarikhBaucer"));
@@ -2052,7 +2080,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	
 	private IUserPegawai getIUser(){
 		if(iUser==null){
-			iUser = new UserKJPBean();
+			iUser = new UserBean();
 		}
 		return iUser;
 			
@@ -2082,7 +2110,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hashData.put("id_Agensi",id_agensi);
 		hashData.put("flag_Fail","1");
 		hashData.put("id_Status", "8"); //138 = permohonan Online , 8 = PENDAFTARAN
-		hashData.put("id_Masuk", userID);
+		hashData.put("id_Masuk", idUser);
 		hashData.put("TarikhSurKJP", getParam("txdTarikhSuratKJP"));
 //		hashData.put("TarikhPermohonan", getParam("txdTarikhSuratKJP"));  
 		hashData.put("TarikhPermohonan", getParam("txtTarikhPermohonan")); 
@@ -2094,7 +2122,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		hashData.put("StatusTanah", "3"); //Status Tanah 3 = SULIT
 //		return fData.simpanPermohonan(h,idUser);
 		myLog.info("doSimpanMaklumatPermohonanOnline");
-		return fData.simpanPermohonanOnline(hashData,userID);
+		return fData.simpanPermohonanOnline(hashData,idUser);
 	}
 	
 	private void simpanPengesahan(Tblrujsuburusanstatusfail rsusf,String langkah)throws Exception {
@@ -2222,8 +2250,8 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	}
 	private void viewUploadMD() throws Exception {
 		myLog.debug("viewUploadMD");
-		//Vector MaklumatDokumen = fData.getUploadMD(idpermohonan);
-		//this.context.put("ViewUploadMD", MaklumatDokumen);
+		Vector MaklumatDokumen = fData.getUploadMD(idpermohonan);
+		this.context.put("ViewUploadMD", MaklumatDokumen);
 		myLog.debug("selesai viewUploadMD");
 	}
 	private void uploadFiles(String id_permohonan, String keterangan,
@@ -2279,8 +2307,10 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    	r.add("TARIKH_BAUCER", r.unquote(txdTarikhBaucer));
 		    	r.add("TARIKH_RESIT", r.unquote(txdTarikhResit));
 		    	r.add("JUMLAH_BAUCER", txtJumlahBaucer);
-		    	r.add("TARIKH_MASUK", r.unquote(tarikhMasuk));	    	
+		    	r.add("TARIKH_MASUK", r.unquote(tarikhMasuk));
+		    	
 		    	myLog.info("TarikhBauce: "+ tarikhBaucer);
+		    	myLog.info("id User: "+ idUser);
 		  
 		    	sqlInsertTblhtpbayaran = r.getSQLInsert("TBLHTPBAYARAN");
 		    	System.out.println("sqlInsertTblhtpbayaran = " + sqlInsertTblhtpbayaran);
@@ -2338,53 +2368,17 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		return permohonan;
 	}*/
 	
-	private void sendEmailTindakanPermohonanOnline(String id_kementerian, String idJawatan, String idUrusan) throws Exception {
-		EmailConfig ec = new EmailConfig();
-		String emelSubjek = "";
-		String kandungan = "";
+	@SuppressWarnings({ "static-access" })
+	private void sendEmailTindakanPermohonanOnline(String id_kementerian, String idJawatan, String idUser) throws Exception {
+	
+		System.out.println("sendEmailTest idUser ===== " + idUser);
 
-		if(idUrusan.equals("1"))
-			emelSubjek = "Permohonan Pemberimilikan";
-		else
-			emelSubjek = "Permohonan Perizaban";
-
-		kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hashUser.get("nama")));
-
-		if(!getEmelSemak().checkEmail(userID).equals(""))
-			getIHTP().getErrorHTML("[ONLINE-HTP PERMOHONAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
-
-		if(idJawatan.equals("20")||idJawatan.equals("24")){
-			ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
-					, "9"
-					, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
-					, ec.tajukSemakan+emelSubjek, kandungan);
-			
-		}else if (idJawatan.equals("9")){
-			ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
-					, "4"
-					, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
-					, ec.tajukSemakan+emelSubjek, kandungan);
-			
-		}else if (idJawatan.equals("4")){
-			emelSubjek = ec.tajukHantarPermohonan + emelSubjek;
-			
-			kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail()
-						,htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian()
-						,htpPermohonan.getPermohonan().getNoPermohonan());
-			
-			//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
-			ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPermohonan", emelSubjek, kandungan);
-			
-		}
+		EmailPermohonanOnline email = new EmailPermohonanOnline();
+		//et.setEmail(userIdKementerian, id_jawatan_user, id_user);
+		email.setEmailStatusPermohonanOnline(id_kementerian, idJawatan, idUser);
 		
 	}
 	
-	private IEmel getEmelSemak(){
-		if(emelSemak == null)
-			emelSemak = new HTPEmelSemakanBean();
-		return emelSemak;
-	}
-	
-	
+	//----- End addby zul 27/7/2017 -----
 }
 	

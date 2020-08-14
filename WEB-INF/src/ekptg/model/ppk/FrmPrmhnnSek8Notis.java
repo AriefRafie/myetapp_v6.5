@@ -1439,10 +1439,48 @@ public class FrmPrmhnnSek8Notis {
 
 			// tukar status permohonan diteruskan => notis perbicaraan
 			int status_notisperbicaraan = 18;
+
+			/*
+			 * SQLRenderer rP = new SQLRenderer();
+			 * rP.update("id_permohonan",id_permohonan); rP.add("id_status",
+			 * status_notisperbicaraan); rP.add("id_kemaskini",id_masuk);
+			 * rP.add("tarikh_kemaskini", rP.unquote("sysdate")); sql =
+			 * rP.getSQLUpdate("Tblppkpermohonan"); stmt.executeUpdate(sql);
+			 */
+
+			// update n add tblrujsuburusanstatus
+			/*
+			 * SQLRenderer r6 = new SQLRenderer();
+			 * r6.update("id_Suburusanstatusfail",id_suburusanstatusfail);
+			 * r6.add("AKTIF",0); r6.add("ID_KEMASKINI",id_masuk);
+			 * r6.add("TARIKH_KEMASKINI",r6.unquote("sysdate")); sql6 =
+			 * r6.getSQLUpdate("tblrujsuburusanstatusfail");
+			 * stmt.executeUpdate(sql6);
+			 * 
+			 * 
+			 * SQLRenderer r5 = new SQLRenderer();
+			 * r5.add("ID_SUBURUSANSTATUSFAIL"
+			 * ,DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ"));
+			 * r5.add("ID_PERMOHONAN",id_permohonan); r5.add("ID_FAIL",id_fail);
+			 * r5.add("ID_SUBURUSANSTATUS",354); r5.add("AKTIF",1);
+			 * r5.add("ID_MASUK",id_masuk); r5.add("id_kemaskini",id_masuk);
+			 * r5.add("TARIKH_MASUK",r5.unquote("sysdate"));
+			 * r5.add("TARIKH_KEMASKINI",r5.unquote("sysdate")); sql5 =
+			 * r5.getSQLInsert("tblrujsuburusanstatusfail");
+			 * stmt.executeUpdate(sql5);
+			 */
+
 			conn.commit();
 
 			Statement stmtfail = db.getStatement();
-			SQLRenderer rfail = new SQLRenderer();			
+			SQLRenderer rfail = new SQLRenderer();
+			/*String sql_fail = "SELECT F.NO_FAIL,  FROM  TBLPPKPERBICARAAN B,"
+					+ " TBLPPKKEPUTUSANPERMOHONAN KP,TBLPPKPERMOHONAN P,TBLPFDFAIL F "
+					+ " WHERE B.ID_KEPUTUSANPERMOHONAN = KP.ID_KEPUTUSANPERMOHONAN "
+					+ " AND KP.ID_PERMOHONAN = P.ID_PERMOHONAN "
+					+ " AND P.ID_FAIL = F.ID_FAIL AND B.ID_PERBICARAAN = '"
+					+ id_perbicaraan + "'";*/
+			
 			String sql_fail = "SELECT F.NO_FAIL, S.NAMA_SIMATI  FROM  TBLPPKPERBICARAAN B, " +
 					" TBLPPKKEPUTUSANPERMOHONAN KP,TBLPPKPERMOHONAN P,TBLPFDFAIL F , TBLPPKSIMATI S, TBLPPKPERMOHONANSIMATI M " +
 					" WHERE B.ID_KEPUTUSANPERMOHONAN = KP.ID_KEPUTUSANPERMOHONAN " +
@@ -1531,6 +1569,14 @@ public class FrmPrmhnnSek8Notis {
 			
 			/** END ADD BY PEJE - REGISTER EVENT TO MYCALENDAR TABLE **/
 
+//			 addCalendarNotis(session, event_id, event_text, tarikh_bicara,id_ppkrujunit, id_perbicaraan + "");
+			// saveActivityEvent(session,"09:00 AM","09:30 AM",event_text,nama_pejabat,
+			// remark,
+			// tarikh_bicara,user_login);
+			//########################## end insert calendar #############################
+			// :::SUB
+			// ID_STATUS : status_notisperbicaraan
+			// ID_SUBURUSAN : 354
 			FrmPrmhnnSek8DaftarSek8InternalData logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 			logic_A.kemaskiniSubUrusanStatusFail(session, id_permohonan,
 					id_masuk, status_notisperbicaraan + "", "354", id_fail);
@@ -1542,6 +1588,9 @@ public class FrmPrmhnnSek8Notis {
 			 if ((tarikh_bicara.compareTo(formatter.format(date)) > 0 ) || (tarikh_bicara.compareTo(formatter.format(date)) == 0 ) ){
 				 myLogger.info("send email  >>>>>> tarikh_bicara : ");
 				 hantarEmelTTPegawai(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+				 
+				//###############add send email#########################
+				//hantarEmel(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
 			 }
 		
 

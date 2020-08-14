@@ -23,17 +23,10 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmOnlinePajakanHeaderData;
 //import ekptg.model.htp.FrmPajakanHeaderData;
 import ekptg.model.htp.FrmOnlinePajakanSenaraiFailData;
-import ekptg.model.htp.FrmSemakan;
-import ekptg.model.htp.FrmUtilData;
-import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.htp.HakmilikUrusan;
-import ekptg.model.htp.HtpBean;
-import ekptg.model.htp.IHTPStatus;
-import ekptg.model.htp.IHtp;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
@@ -41,7 +34,6 @@ import ekptg.model.htp.online.FrmOnlineMaklumatPajakanData;
 import ekptg.model.htp.online.IOnline;
 import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.htp.pembelian.IPembelian;
-import ekptg.model.htp.pembelian.IPemilik;
 import ekptg.model.htp.pembelian.PembelianBean;
 /**
  * 
@@ -62,8 +54,6 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 	private Permohonan permohonan = null;
 	private HakmilikUrusan urusan = null;
 	private HtpPermohonan htpPermohonan = null;
-	private IHtp iHTP = null;  
- 	private IHTPStatus iStatus = null;
 	private IOnline iOnline = null;
 	private String idUser = null;
 
@@ -151,11 +141,8 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		if (postDB){
     		if ("simpan".equals(hitButton)){
     			log.info("simpan");
-    			
     			idNegeri = getParam("idNegeriTanah");
-         		idFail = logic.simpanOnline(idNegeri
-         				, getParam("idKementerianTanah"), getParam("idAgensiTanah")
-         				, idSuburusan, 
+         		idFail = logic.simpanOnline(idNegeri, idKementerian, idAgensi, idSuburusan, 
              			idStatusTanah, idJenisFail, getParam("txtNoFailKJP"), getParam("tarikhSuratKJP"), 
              			getParam("txtNoFailLain"), getParam("tarikhAgihan"), getParam("txtTajuk"), getParam("tarikhSuratPemohon"), 
              			idHakmilik, session);
@@ -182,7 +169,6 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penyewaan yang belum lengkap.')\"");	
 				} else {
 					logic.updatePengesahan(idFail,idPermohonan,session);
-					kemaskiniSimpanStatusSelesai(idFail,idPermohonan,idSuburusan,"-1");
 				}				
 			}
         	if ("doHapus".equals(hitButton)){
@@ -209,31 +195,12 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				idPermohonan = hashHeader.get("idPermohonan").toString();
 				idStatus = hashHeader.get("idStatus").toString();
 				subUrusan = hashHeader.get("subUrusan").toString();
-			
 			}
-//			log.info("mode = " + mode);
-			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(idUser);
-			this.context.put("namaPemohon", vec.get(0).get("namaPemohon"));
-        	
+			log.info("mode = " + mode);
+
 			//MODE VIEW
 			log.info("mode = " + mode);
-			if ("view".equals(mode)){	
-				this.context.put("readOnly", "readOnly");
-	        	this.context.put("classDis", "disabled");
-	        	this.context.put("inputTextClass", "disabled");
-	        	
-				//MAKLUMAT PERMOHONAN
-				logicHeader.setMaklumatPermohonan(idFail);
-				beanMaklumatPermohonan = new Vector();
-				beanMaklumatPermohonan = logicHeader.getBeanMaklumatPermohonan();
-				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-				//MaklumatPermohonanView(mode);
-	        	
-				//MAKLUMAT HAKMILIK
-				beanMaklumatTanah = new Vector();
-				logicMaklumat.setMaklumatTanah(idHakmilikAgensi);
-				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
-				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
+			if ("view".equals(mode)){
 				
 				this.context.put("readOnly", "readOnly");
 	        	this.context.put("classDis", "disabled");
@@ -252,8 +219,8 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
 				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 				
-				getSenaraiSemakFail(idPermohonan);
-		
+				senaraiSemak = logicMaklumat.getSenaraiSemak(idPermohonan, kategori);
+    			this.context.put("SenaraiSemak", senaraiSemak);
     	    }
 			else if ("update".equals(mode)){
 				
@@ -500,38 +467,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		return getIOnline().addMasuk(h);
 			    
 	}
-		
-	private String kemaskiniSimpanStatusSelesai(String idFail
-		,String idPermohonan
-		,String idSubUrusan
-		,String langkah) throws Exception {
-		
-		try {				
-			Tblrujsuburusanstatusfail subUrusanStatusFail = new Tblrujsuburusanstatusfail();
-			subUrusanStatusFail.setIdPermohonan(Long.parseLong(idPermohonan));
-			subUrusanStatusFail.setIdFail(Long.parseLong(idFail));
-			subUrusanStatusFail.setAktif("0");
-				
-			Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
-			long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah,idSubUrusan,"=");
-			subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
-			subUrusanStatusFailN.setAktif("1");
-			subUrusanStatusFailN.setUrl("-");
-			subUrusanStatusFailN.setIdMasuk(Long.parseLong(idUser));
-			return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN));
-						
-		} catch (Exception e) {
-			throw new Exception(getIHTP().getErrorHTML("Ralat Permohonan Pajakan, kemaskiniSimpanStatusSelesai:"+e.getMessage()));
-		}
-			
-	}
-	
-	private void getSenaraiSemakFail(String idPermohonan) throws Exception{
-		FrmSemakan fs = new FrmSemakan();
-		context.put("SenaraiSemak", fs.getSenaraiSemakanAttach("pajakanmycoid",idPermohonan));
-		context.put("semakclass", new FrmSemakan());
-	}
-	
+		 
 	private IOnline getIOnline(){
 		if(iOnline==null){
 			iOnline = new OnlineBean();
@@ -539,19 +475,6 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		return iOnline;
 	}
 
-	private IHtp getIHTP(){
-		if(iHTP== null)
-			iHTP = new HtpBean();
-		return iHTP;
-	}	
 
-	private IHTPStatus getStatus(){
-		if(iStatus==null){
-			iStatus = new HTPStatusBean();
-		}
-		return iStatus;
-	
-	}
 
-	
 }

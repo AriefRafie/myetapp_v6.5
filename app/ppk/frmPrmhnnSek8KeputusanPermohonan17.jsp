@@ -27,17 +27,6 @@
 
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 
-<!-- arief add 5 JUTA OPEN-->
-#foreach ($Listflag5juta in $flag5juta)
-	#set($check5juta = $Listflag5juta.flag_5juta )
-#end
-
-#if($check5juta=='T')
-	#set($nilaiHartaMaximum = 5000000)
-#else
-	#set($nilaiHartaMaximum = 2000000)
-#end
-<!-- arief add 5 JUTA CLOSE-->
 
 #set ($tarikh_Hantar_BorangB = "")
 #set ($tarikh_Terima_BorangC = "")
@@ -58,8 +47,6 @@
 #set ($namaUnit = "")
 #set ($jumHta = "")
 #set ($jumHa = "")
-#set ($jumHa2 = "")<!-- arief add untuk SD -->
-
 #set ($Overall = "")
 #set ($jenisborangc = "")
 #set ($catatan = "")
@@ -69,16 +56,8 @@
 #set ($check3 = "")
 #set ($check4 = "")
 #set ($check5 = "")
-#set ($check6 = "")<!-- arief add untuk SD -->
-#set ($check7 = "")<!-- arief add untuk SD -->
 #set ($check8 = "")
 #set ($check9 = "")
-#set ($check10 = "")<!-- arief add untuk SD -->
-#set ($check11 = "")<!-- arief add untuk SD -->
-#set ($check12 = "")<!-- arief add untuk SD -->
-#set ($check13 = "")<!-- arief add untuk SD -->
-#set ($check14 = "")<!-- arief add untuk SD -->
-
 
 #set ($failawal = "")
 #set ($mohonawal = "")
@@ -101,7 +80,10 @@
  #set($daerahmahkamahX = "")
 
 #set ($tujuanPindah = "") <!-- razman add -->
-
+#set ($namaDoC = "")
+#foreach($listSupportingDoc in $ViewSupportingDoc)
+#set($namaDoC = $listSupportingDoc.NAMA_DOKUMEN)
+#end
 
 
 #foreach ($ListFail in $ViewFail)
@@ -175,8 +157,7 @@
     
 	
 		#set ($jumHa = $Util.formatDecimal($ListData.jumHaTarikhMohon))
-		#set ($maxHa = 600000)
-        #set ($jumHaX = $ListData.jumHaTarikhMohon)
+         #set ($jumHaX = $ListData.jumHaTarikhMohon)
         #set ($jumHaX1 = $Util.formatDecimal($jumHaX))
         
 	
@@ -410,74 +391,7 @@
     #set ($setMode5 = "")<!-- razman remove disable -->
     #set ($setMode6 = "")
     
-	<!-- arief add Summary Distribution OPEN --> 
-	#elseif ($keputusan == "115")
-		#if ($check10 == "checked")
-			#set ($check7 = "checked")
-			#set ($check6 = "checked")
-			#set ($check11 = "disabled")
-			#set ($check12 = "disabled")
-			#set ($check13 = "disabled")
-			#set ($check14 = "disabled")
-			
-			#set ($setMode8 = "checked")
-    		#set ($setMode7 = "checked")
-    		#set ($setMode11 = "checked")
-    		#set ($setMode12 = "disabled")
-    		#set ($setMode13 = "disabled")
-    		#set ($setMode14 = "disabled")
-    		#set ($setMode15 = "disabled")
-    	
-    	#elseif ($check11 == "checked")
-    		#set ($check6 = "checked")
-			#set ($check7 = "checked")
-			#set ($check10 = "")
-			#set ($check12 = "")
-			#set ($check13 = "")
-			#set ($check14 = "")
-			
-			#set ($setMode7 = "disabled")
-    		#set ($setMode8 = "disabled")
-    		#set ($setMode11 = "")
-    		#set ($setMode12 = "disabled")
-    		#set ($setMode13 = "")
-    		#set ($setMode14 = "")
-    		#set ($setMode15 = "")
-    		
-    	#elseif ($check12 == "checked")
-    		#set ($check6 = "checked")
-			#set ($check7 = "checked")
-			#set ($check10 = "")
-			#set ($check11 = "")
-			#set ($check13 = "")
-			#set ($check14 = "")
-			
-			#set ($setMode7 = "disabled")
-    		#set ($setMode8 = "disabled")
-    		#set ($setMode11 = "")
-    		#set ($setMode12 = "")
-    		#set ($setMode13 = "disabled")
-    		#set ($setMode14 = "")
-    		#set ($setMode15 = "")
-    		
-    	#else
-    		#set ($check6 = "checked")
-			#set ($check7 = "")
-			#set ($check10 = "")
-			#set ($check11 = "")
-			#set ($check12 = "")
-			#set ($check13 = "checked")
-			#set ($check14 = "checked")
-			
-			#set ($setMode7 = "disabled")
-    		#set ($setMode8 = "")
-    		#set ($setMode11 = "")
-    		#set ($setMode12 = "")
-    		#set ($setMode13 = "")
-    		#set ($setMode14 = "disabled")
-    		#set ($setMode15 = "disabled")
-    	#end
-	<!-- arief add Summary Distribution CLOSE --> 
+    
     
     #elseif ($keputusan == "151")
 	#set ($check0 = "checked")
@@ -486,7 +400,7 @@
     #set ($setMode = "")
     #set ($setMode1 = "")
     
-    #if($Overalldum >= 2000000)
+    #if($Overalldum > 2000000)
     #if($id_taraf_mohon == "6")
      #set ($setMode2 = "")
     #else
@@ -539,7 +453,7 @@
     
   
     
-    #if($Overalldum >= 2000000)
+    #if($Overalldum > 2000000)
     
     #if($id_taraf_mohon == "6")
     #set ($setMode2 = "")
@@ -600,7 +514,7 @@
    
 #elseif ($keputusan == "70")
 
-    #if($Overalldum >= 2000000)
+    #if($Overalldum > 2000000)
     
     #set ($check5 = "checked")
     #set ($check1 = "")
@@ -765,7 +679,7 @@
  #set ($EventStatus = 0)  
  #set($dum=$Overalldum)
 
-    #if($dum >= 2000000)   
+    #if($dum > 2000000)   
  
     #set ($check8 = "checked")
     #set  ($check3 = "") 
@@ -1152,7 +1066,6 @@ document.getElementById("header_lama").style.display="block";
       -->
        <input type="hidden" name="txtJumKeseluruhan2" id="txtJumKeseluruhan2" style="text-align: right;" value="$harta_terdahulu_takalih_DC" class="disabled" readonly />
        <input type="hidden" name="txtJumKeseluruhan3" id="txtJumKeseluruhan3" style="text-align: right;" value="$harta_terdahulu_alih_DC" class="disabled" readonly />
-       <input type="hidden" name="txdflag5juta" style="visibility:hidden" value="$flag5juta"/> <!-- arief add 5 Juta -->
       <tr>
       
       
@@ -1260,78 +1173,8 @@ document.getElementById("header_lama").style.display="block";
              <input type="hidden" name="viewcheckJ3" id="viewcheckJ3" value="$viewcheckJ3"  />
 
      <input type="hidden" name="jenis_pej" id="jenis_pej" value="$jenis_pej" />
-      <input type="hidden" name="jenis_pej_id" id="jenis_pej_id" value="$jenis_pej_id" /></td>
+        <input type="hidden" name="jenis_pej_id" id="jenis_pej_id" value="$jenis_pej_id" />        </td>
       </tr>
-      <!-- arief add Summary Distribution OPEN -->
-    #set ($jumHa2 = $harta_terbaru_alih_SC + $harta_terdahulu_alih_DC)
-    #set ($maxHa = 600000)
-  	#if ($jumHa2 < $maxHa)
-  	<tr id="sd_main">
-  		<td scope="row">&nbsp;</td>
-  		<td scope="row">&nbsp;</td>
-    	<td><table width="100%"><tbody><tr>
-           	<div align="center"></div>
-        	<td><label>
-          		<input type="radio" name="sorPenentuanBidangKuasa" id="sorPenentuanBidangKuasa" value="115" $check6 $setMode7 onClick="selectRadioSD()" />
-          		<input name="setMode7" id="setMode7" type="hidden" value="$setMode7">Summary Distribution</label>
-        	</td>
-    	</tr>
-    	<tr>
-        	<td>
-        	<table width="100%" border="0">
-          		<tbody>
-          		<tr id="sd1">
-            		<td width="2%"><div align="right">
-            			<input name="cbsemaks" type="radio" id="cbsemaks8" value="115" $check7 $setMode8 onclick="checkit1();checkit_melaluiSD()">
-            			<input name="setMode8" id="setMode8" type="hidden" value="$setMode8">
-            		</div></td>
-            		<td width="3%">Melalui Summary Distribution</td>
-          		</tr>
-          		<tr id="anak1_sd1">
-            		<td width="2%"><div align="center"></div></td>
-            		<td width="3%">
-            			<input name="cbsemaks" type="radio" id="cbsemaks10" value="115" $check10 $setMode11 onclick="checkit2();checkit_melaluiSD()">Batal Pemegang Amanah
-            			<input name="setMode11" id="setMode11" type="hidden" value="$setMode11">
-            		</td>
-          		</tr>
-          		<tr id="anak2_sd1">
-            		<td width="2%"><div align="center"></div></td>
-            		<td width="3%">
-            			<input name="cbsemaks" type="radio" id="cbsemaks10" value="115" $check11 $setMode12 onclick="checkit3();checkit_melaluiSD()">Nilaian Keseluruhan Harta Alih
-            			<input name="setMode12" id="setMode12" type="hidden" value="$setMode12">	
-            		</td>
-          		</tr>
-          		<tr id="anak3_sd1">
-            		<td width="2%"><div align="center"></div></td>
-            		<td width="3%">
-            			<input name="cbsemaks" type="radio" id="cbsemaks11" value="115" $check12 $setMode13 onclick="checkit4();checkit_melaluiSD()">Batal Kaveat
-            			<input name="setMode13" id="setMode13" type="hidden" value="$setMode13">
-            		</td>
-          		</tr>
-          		<tr id="sd2">
-            		<td width="2%"><div align="right">
-              			<input name="cbsemaks" type="radio" id="cbsemaks1" value="115" $check13 $setMode14 onclick="checkit5();checkit_selainSD()"></div>
-              			<input name="setMode14" id="setMode14" type="hidden" value="$setMode14">
-              		</td>
-            		<td width="3%">Selain Summary Distribution</td>
-          		</tr>
-          		<tr id="anak1_sd2">
-            		<td width="2%"><div align="center"></div></td>
-            		<td width="28%">
-            			<input name="cbsemaks" type="radio" id="cbsemaks10" value="115" $check14 $setMode15 onclick="checkit6();checkit_selainSD()">Perintah
-            			<input name="setMode15" id="setMode15" type="hidden" value="$setMode15">
-            		</td>
-          		</tr>
-         	</tbody>
-        </table>
-      </td>
-	</tbody>
-	</table>
-	</td>
-	</tr>
-	#end
-    <!-- arief add Summary Distribution CLOSE -->
-      
       <tr>
         <td scope="row">&nbsp;</td>
         <td>&nbsp;</td>
@@ -1378,20 +1221,11 @@ Pindah ke Mahkamah Tinggi</td>
       <td width="70%">
        #if($setMode == "disabled")
        
-       <!-- arief add 5 JUTA -->
-       #if($nilaiHartaMaximum == 5000000)
-			#if($tujuanPindah == "2")
-       			Wasiat
-       		#else
-       			Jumlah Harta > RM 5,000,000
-       		#end
-		#else
-			#if($tujuanPindah == "2")
-       			Wasiat
-       		#else
-       			Jumlah Harta > RM 2,000,000
-       		#end
-		#end
+       #if($tujuanPindah == "2")
+       	Wasiat
+       #else
+       	Jumlah Harta > RM 2,000,000
+       #end
        
        <input  type="hidden" name="tujuanPindah" id="tujuanPindah" value="$tujuanPindah" >
        
@@ -1406,7 +1240,7 @@ Pindah ke Mahkamah Tinggi</td>
        #set($setModeTujuan2 = "")
        
        
-       #if($Overalldum >= 2000000)        
+       #if($Overalldum > 2000000)        
     <!--   ----- kurang -->
         #set($setModeTujuan1 = "")
        	#set($setModeTujuan2 = "")      
@@ -1421,7 +1255,7 @@ Pindah ke Mahkamah Tinggi</td>
        	 #set($selectedTujuan1 = "")
        	 #set($selectedTujuan2 = "checked")
        #else
-       	 #if($Overalldum < 2000000)
+       	 #if($Overalldum <= 2000000)
              #set($selectedTujuan1 = "")
              #set($selectedTujuan2 = "checked")
          #else
@@ -1430,19 +1264,16 @@ Pindah ke Mahkamah Tinggi</td>
          #end
        #end
        
-    <!-- arief add 5 JUTA -->
-    #if($nilaiHartaMaximum == 5000000)
-		<input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan1 $setModeTujuan1 value="1"   />     
-        	Harta Melebihi 5 Juta
-      	<input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan2 $setModeTujuan2 value="2"  />
-        	Wasiat
-	#else
-		<input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan1 $setModeTujuan1 value="1"   />     
-        	Harta Melebihi 2 Juta
-      	<input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan2 $setModeTujuan2 value="2"  />
-        	Wasiat
-	#end
-    #end
+     
+      
+      <input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan1 $setModeTujuan1 value="1"   />     
+        Harta Melebihi 2 Juta
+      <input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan2 $setModeTujuan2 value="2"  />
+        Wasiat
+      
+      
+      
+      #end
       </td>
       </tr>
    <!-- razman add close -->
@@ -1731,7 +1562,13 @@ Pindah ke Mahkamah Tinggi</td>
   <tr>
     <td><span class="style5"></span>
       </table>
-</fieldset>    </td>
+</fieldset>    
+
+
+
+
+
+</td>
   </tr>
 </table>
 </div> 
@@ -2052,6 +1889,46 @@ Batal Permohonan (Lain - lain kes)</td>
       </tr>
     </table>
     </fieldset>
+    
+     <fieldset>
+    <legend>DOKUMEN SOKONGAN</legend>
+    <table width="60%" border="0">
+    <tr>
+     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+        <td width="1%" scope="col">:</td>
+        <td width="74%" colspan="2" scope="col">
+         <input type="text" disabled value=$!namaDoC>&nbsp;
+         #if ($namaDoC != '')
+         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$idPermohonan','$idSimati')"/>&nbsp;
+         #else
+         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$idPermohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '')
+         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         #end
+         
+         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
+         
+        
+   		 
+   		 #if ($namaDoC != '')
+   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
+   		 
+   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 
+   		 
+       
+        </td>
+    </tr>
+    <tr>
+    
+    </tr>
+    
+    </table>
+    
+    </fieldset>
+    
     </td>
   </tr>
 </table>
@@ -2087,6 +1964,7 @@ Batal Permohonan (Lain - lain kes)</td>
                                 #end 
       
     #if($id_Status == "50")
+    <input type="button" name="cmdBorangI" id="cmdBorangI" value="Hantar ke Mahkamah Tinggi (Borang I)" onClick="semakMTBorangI()"/>
       <input type="button" name="button" id="button" value="Cetak" onClick="javascript:setTable('tableReport')" />
     #end
     
@@ -2134,11 +2012,12 @@ Batal Permohonan (Lain - lain kes)</td>
     
     <input type="hidden" name="id_permohonan"  value="$idPermohonan"/>   
 	<input name="id_status" type="hidden"  value="$id_Status"/>  
+	<input type="hidden" name="idSimati" value="$idSimati"/>
     
     
     #if ($EventStatus != 0)
     #if ($id_Status == 70)
-    <input type="button" name="cmdKembali" id="cmdKembali" value="Cetak" onClick="javascript:cetakSuratBatalPermohonan_LK('$noFail')"/>
+    <input type="button" name="cmdKembali" id="cmdKembali" value="Cetak" onClick="javascript:cetakSuratBatalPermohonan_LK('$noFail','$seksyen')"/>
     #end
     #end
     
@@ -2168,12 +2047,23 @@ Batal Permohonan (Lain - lain kes)</td>
         <td ><a href="#" class="style2" onClick="javascript:cetak('$noFail')">Kulit Fail</a></td>
       </tr>
       -->
+      
+      #if ($tujuanPindah == "2")
+      <tr>
+        <td ><a href="#" class="style2" onClick="javascript:cetakSuratPindahMT2('$noFail')">Surat Pindah Mahkamah Tinggi</a></td>
+      </tr>
+            <tr>
+        <td ><a href="#" class="style2" onClick="javascript:cetakBorangIWasiat('$noFail')">Borang I</a></td>
+      </tr>
+      #else
       <tr>
         <td ><a href="#" class="style2" onClick="javascript:cetakSuratPindahMT('$noFail')">Surat Pindah Mahkamah Tinggi</a></td>
       </tr>
       <tr>
         <td ><a href="#" class="style2" onClick="javascript:cetakBorangI('$noFail')">Borang I</a></td>
       </tr>
+      #end
+      
        <tr>
         <td ><a href="#" class="style2" onClick="javascript:buktiPenyampaian('$noFail','$idFail')">Bukti Penyampaian (Mahkamah Tinggi)</a></td>
       </tr>
@@ -2287,24 +2177,12 @@ function getBatal() {
 	document.f1.submit();
 }
 function getSimpan() {
-
-	//arief add 5 Juta
-	var check5juta = document.f1.txdflag5juta;
-	var nilaimax = document.f1.nilaiHartaMaximum;
-
-	if (check5juta == "T"){
-		nilaimax = 5000000;
-	}
-	else{
-		nilaimax = 2000000;
-	}
-	
 	var check_batal = document.f1.sorPenentuanBidangKuasa[2].checked;
 	
-	var d1 = document.f1.txdTarikhHantarBorangB
-	var d2 = document.f1.txdTarikhTerimaBorangC
-	var d3 = document.f1.txdTarikhHantarNilaian
-	var d4 = document.f1.txdTarikhTerimaNilaian
+var d1 = document.f1.txdTarikhHantarBorangB
+var d2 = document.f1.txdTarikhTerimaBorangC
+var d3 = document.f1.txdTarikhHantarNilaian
+var d4 = document.f1.txdTarikhTerimaNilaian
 
 
     var currentTime = new Date();
@@ -2353,7 +2231,7 @@ function getSimpan() {
     var date5 = new Date(yr5, mon5, dt5);//txdTarikhTerimaNilaian
    
    
-       if(document.f1.sorPenentuanBidangKuasa[0].checked != true && document.f1.sorPenentuanBidangKuasa[1].checked != true && document.f1.sorPenentuanBidangKuasa[2].checked != true && document.f1.sorPenentuanBidangKuasa[3].checked != true && && document.f1.sorPenentuanBidangKuasa[4].checked != true)
+       if(document.f1.sorPenentuanBidangKuasa[0].checked != true && document.f1.sorPenentuanBidangKuasa[1].checked != true && document.f1.sorPenentuanBidangKuasa[2].checked != true && document.f1.sorPenentuanBidangKuasa[3].checked != true)
 	   {
 	   alert("Sila pilih penentuan bidang kuasa");
 	   return
@@ -2516,8 +2394,7 @@ function selectRadio1() {
 if(document.f1.sorPenentuanBidangKuasa[0].checked == true)
 {
 
-//if(document.f1.jumlah.value >= 2000000) arief commend
-if(document.f1.jumlah.value >= nilaimax)
+if(document.f1.jumlah.value > 2000000)
 {
 document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
 document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = true;
@@ -2533,8 +2410,6 @@ document.f1.sorPenentuanBidangKuasa[1].checked = false;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
-
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
 document.getElementById('tableReportX').style.display="none";//razman add
 }
 
@@ -2572,8 +2447,6 @@ document.f1.sorPenentuanBidangKuasa[1].checked = false;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
-
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
 document.getElementById('tableReportX').style.display="none"; //razman add
 }
 }
@@ -2591,8 +2464,6 @@ document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
 
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
-
 document.getElementById('tableReportX').style.display="none";// razman add
 }
 
@@ -2609,8 +2480,6 @@ document.f1.sorPenentuanBidangKuasa[0].checked = false;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
-
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
 
 document.getElementById('tableReportX').style.display="none"; //razman add
 }
@@ -2630,9 +2499,6 @@ document.f1.sorPenentuanBidangKuasa[0].checked = false;
 document.f1.sorPenentuanBidangKuasa[1].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
-
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
-
 document.getElementById('tableReportX').style.display="block"; //razman edit add block
 }
 
@@ -2651,8 +2517,6 @@ document.f1.sorPenentuanBidangKuasa[1].checked = false;
 
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
-
 document.getElementById('tableReportX').style.display="none";//razman add
 
 }
@@ -2668,63 +2532,35 @@ document.f1.tempatmohonawal.value = "";
 
 }
 
-//arief add SD OPEN
-function selectRadioSD(){
-	if(document.f1.sorPenentuanBidangKuasa[4].checked == true){
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = false;
-
-		document.f1.sorPenentuanBidangKuasa[0].checked = false;
-
-		document.f1.sorPenentuanBidangKuasa[1].checked = false;
-
-		document.f1.sorPenentuanBidangKuasa[2].checked = false;
-
-		document.f1.sorPenentuanBidangKuasa[3].checked = false;
-		
-		document.getElementById('tableReportX').style.display="none";
-	}
-}
-//arief add SD CLOSE
-
 function putih(){
-	//arief add 5 juta
-	var check5juta = document.f1.txdflag5juta;
-	var nilaimax = document.f1.nilaiHartaMaximum;
-
-	if (check5juta == "T")
-		nilaimax = 5000000;
-	else
-		nilaimax = 2000000;
-
-	//if(document.f1.jumlah.value >= 2000000) arief commend
-	if(document.f1.jumlah.value >= nilaimax)
-	{
-		document.f1.sorKeputusanBorangC[0].checked = true;
-		document.f1.sorKeputusanBorangC[1].checked = false;
 
 
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = false;
-		document.f1.sorPenentuanBidangKuasa[0].checked = false;
-		document.f1.sorPenentuanBidangKuasa[1].checked = false;
-		document.f1.sorPenentuanBidangKuasa[2].checked = true;
-		document.f1.sorPenentuanBidangKuasa[3].checked = false;
-	
-		document.f1.sorPenentuanBidangKuasa[0].disabled = true;
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = true;
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = true;
-		document.f1.sorPenentuanBidangKuasa[1].disabled = true;
-		document.f1.sorPenentuanBidangKuasa[2].disabled = false;
-		document.f1.sorPenentuanBidangKuasa[3].disabled = false;
-		document.f1.sorPenentuanBidangKuasa[4].disabled = false; //arief add
+if(document.f1.jumlah.value > 2000000)
+{
+document.f1.sorKeputusanBorangC[0].checked = true;
+document.f1.sorKeputusanBorangC[1].checked = false;
 
-		document.f1.setMode1.value = "disabled";
-		document.f1.setMode2.value = "disabled";
-		document.f1.setMode3.value = "disabled";
-		document.f1.setMode4.value = "disabled";
-		document.f1.setMode5.value = "";
-		document.f1.setMode6.value = "";
+
+document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
+document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = false;
+document.f1.sorPenentuanBidangKuasa[0].checked = false;
+document.f1.sorPenentuanBidangKuasa[1].checked = false;
+document.f1.sorPenentuanBidangKuasa[2].checked = true;
+document.f1.sorPenentuanBidangKuasa[3].checked = false;
+
+document.f1.sorPenentuanBidangKuasa[0].disabled = true;
+document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = true;
+document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = true;
+document.f1.sorPenentuanBidangKuasa[1].disabled = true;
+document.f1.sorPenentuanBidangKuasa[2].disabled = false;
+document.f1.sorPenentuanBidangKuasa[3].disabled = false;
+
+document.f1.setMode1.value = "disabled";
+document.f1.setMode2.value = "disabled";
+document.f1.setMode3.value = "disabled";
+document.f1.setMode4.value = "disabled";
+document.f1.setMode5.value = "";
+document.f1.setMode6.value = "";
 
 
         
@@ -2748,7 +2584,6 @@ document.f1.sorPenentuanBidangKuasa[0].checked = false;
 document.f1.sorPenentuanBidangKuasa[1].checked = true;
 document.f1.sorPenentuanBidangKuasa[2].checked = false;
 document.f1.sorPenentuanBidangKuasa[3].checked = false;
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
 
 document.f1.sorPenentuanBidangKuasa[0].disabled = true;
 document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = true;
@@ -2757,7 +2592,6 @@ document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = true;
 document.f1.sorPenentuanBidangKuasa[1].disabled = false;
 document.f1.sorPenentuanBidangKuasa[2].disabled = false; // razman add false
 document.f1.sorPenentuanBidangKuasa[3].disabled = false;
-document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
 
 document.f1.setMode1.value = "disabled";
 document.f1.setMode2.value = "disabled";
@@ -2775,118 +2609,114 @@ document.f1.setMode6.value = "";
 }
 
 function kuning(){
-	if(document.f1.id_taraf_mohon.value != "")
-	{var idm = document.f1.id_taraf_mohon.value;}
-	else
-	{idm="";}
+if(document.f1.id_taraf_mohon.value != "")
+{var idm = document.f1.id_taraf_mohon.value;}
+else
+{idm="";}
 
-	//arief add 5 juta
-	var check5juta = document.f1.txdflag5juta;
-	var nilaimax = document.f1.nilaiHartaMaximum;
-
-	if (check5juta == "T")
-		nilaimax = 5000000;
-	else
-		nilaimax = 2000000;
-	
-	//if(document.f1.jumlah.value >= 2000000) arief commend
-	if(document.f1.jumlah.value >= nilaimax)
-	{
-		document.f1.sorKeputusanBorangC[0].checked = false;
-		document.f1.sorKeputusanBorangC[1].checked = true;
-		//document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
-		//document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = true;
-	if(idm == 6)
-	{
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = false;
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = true;
-	}
-	else
-	{
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = true;
-	}
-
-	document.f1.sorPenentuanBidangKuasa[0].checked = true;
-	document.f1.sorPenentuanBidangKuasa[1].checked = false;
-	document.f1.sorPenentuanBidangKuasa[2].checked = false;
-	document.f1.sorPenentuanBidangKuasa[3].checked = false;
-	document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
-
-	document.f1.sorPenentuanBidangKuasa[0].disabled = false;
-
-	//document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = true;
-	//document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = false;
-	if(idm == 6)
-	{
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = false;
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = false;
-	}
-	else
-	{
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = true;
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = false;
-	}
-	document.f1.sorPenentuanBidangKuasa[1].disabled = true;
-	document.f1.sorPenentuanBidangKuasa[2].disabled = true;
-	document.f1.sorPenentuanBidangKuasa[3].disabled = false;
-	document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
-
-	document.f1.setMode1.value = "";
-	//document.f1.setMode2.value = "disabled";
-	if(idm == 6)
-	{
-		document.f1.setMode2.value = "";
-	}
-	else
-	{
-		document.f1.setMode2.value = "disabled";
-	}
-	document.f1.setMode3.value = "";
-	document.f1.setMode4.value = "disabled";
-	document.f1.setMode5.value = "disabled";
-	document.f1.setMode6.value = "";
+if(document.f1.jumlah.value > 2000000)
+{
 
 
-	document.f1.txtCatatan.value = "";
-  //  #set($catatan="Pindah ke Mahkamah Tinggi kerana nilai harta melebihi 2 juta ringgit")
-    
-	}
+document.f1.sorKeputusanBorangC[0].checked = false;
+document.f1.sorKeputusanBorangC[1].checked = true;
 
-	else
-	{
 
-		document.f1.sorKeputusanBorangC[0].checked = false;
-		document.f1.sorKeputusanBorangC[1].checked = true;
-
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = true;
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = false;
-		document.f1.sorPenentuanBidangKuasa[0].checked = true;
-		document.f1.sorPenentuanBidangKuasa[1].checked = false;
-		document.f1.sorPenentuanBidangKuasa[2].checked = false;
-		document.f1.sorPenentuanBidangKuasa[3].checked = false;
-		document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
-
-		document.f1.sorPenentuanBidangKuasa[0].disabled = false;
-		document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = false;
-		document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = false;
-		document.f1.sorPenentuanBidangKuasa[1].disabled = true;
-		document.f1.sorPenentuanBidangKuasa[2].disabled = true;
-		document.f1.sorPenentuanBidangKuasa[3].disabled = false;
-		document.f1.sorPenentuanBidangKuasa[4].checked = false; //arief add
-
-		document.f1.setMode1.value = "";
-		document.f1.setMode2.value = "";
-		document.f1.setMode3.value = "";
-		document.f1.setMode4.value = "disabled";
-		document.f1.setMode5.value = "disabled";
-		document.f1.setMode6.value = "";
-
-//document.f1.txtCatatan.value ;
+//document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
+//document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = true;
+if(idm == 6)
+{
+document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = false;
+document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = true;
+}else
+{
+document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = false;
+document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = true;
 }
 
+document.f1.sorPenentuanBidangKuasa[0].checked = true;
+document.f1.sorPenentuanBidangKuasa[1].checked = false;
+document.f1.sorPenentuanBidangKuasa[2].checked = false;
+document.f1.sorPenentuanBidangKuasa[3].checked = false;
 
-	}
+
+document.f1.sorPenentuanBidangKuasa[0].disabled = false;
+
+//document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = true;
+//document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = false;
+if(idm == 6)
+{
+document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = false;
+document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = false;
+}
+else
+{
+document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = true;
+document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = false;
+}
+document.f1.sorPenentuanBidangKuasa[1].disabled = true;
+document.f1.sorPenentuanBidangKuasa[2].disabled = true;
+document.f1.sorPenentuanBidangKuasa[3].disabled = false;
+
+document.f1.setMode1.value = "";
+//document.f1.setMode2.value = "disabled";
+if(idm == 6)
+{
+document.f1.setMode2.value = "";
+}
+else
+{
+document.f1.setMode2.value = "disabled";
+}
+document.f1.setMode3.value = "";
+document.f1.setMode4.value = "disabled";
+document.f1.setMode5.value = "disabled";
+document.f1.setMode6.value = "";
+
+
+document.f1.txtCatatan.value = "";
+
+
+
+
+
+   
+  //  #set($catatan="Pindah ke Mahkamah Tinggi kerana nilai harta melebihi 2 juta ringgit")
+    
+}
+
+else
+{
+
+document.f1.sorKeputusanBorangC[0].checked = false;
+document.f1.sorKeputusanBorangC[1].checked = true;
+
+
+document.f1.sorPenentuanBidangKuasaTeruskan[0].checked = true;
+document.f1.sorPenentuanBidangKuasaTeruskan[1].checked = false;
+document.f1.sorPenentuanBidangKuasa[0].checked = true;
+document.f1.sorPenentuanBidangKuasa[1].checked = false;
+document.f1.sorPenentuanBidangKuasa[2].checked = false;
+document.f1.sorPenentuanBidangKuasa[3].checked = false;
+
+
+document.f1.sorPenentuanBidangKuasa[0].disabled = false;
+document.f1.sorPenentuanBidangKuasaTeruskan[0].disabled = false;
+document.f1.sorPenentuanBidangKuasaTeruskan[1].disabled = false;
+document.f1.sorPenentuanBidangKuasa[1].disabled = true;
+document.f1.sorPenentuanBidangKuasa[2].disabled = true;
+document.f1.sorPenentuanBidangKuasa[3].disabled = false;
+
+document.f1.setMode1.value = "";
+document.f1.setMode2.value = "";
+document.f1.setMode3.value = "";
+document.f1.setMode4.value = "disabled";
+document.f1.setMode5.value = "disabled";
+document.f1.setMode6.value = "";
+
+//document.f1.txtCatatan.value = "";
+
+}
 
 /*
 if(document.f1.jumlah.value > 2000000)
@@ -2958,6 +2788,15 @@ function cetakSuratPindahMT(noFail) {
     if (hWnd.focus != null) hWnd.focus();
 }
 
+function cetakSuratPindahMT2(noFail) {
+	 //   var url = "../servlet/ekptg.report.ppk.SuratPindahMT?nofail="+noFail;
+	 var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratPindahMTII&flagReport=S";
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
+
 function cetakSuratBatalPermohonan(noFail) {
  //   var url = "../servlet/ekptg.report.ppk.SuratPindahMT?nofail="+noFail;
  var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratBatalPermohonan&flagReport=S";
@@ -2978,10 +2817,29 @@ function cetakBorangI(noFail) {
     if (hWnd.focus != null) hWnd.focus();
 }
 
+function cetakBorangIWasiat(noFail) {
+    //var url = "../servlet/ekptg.report.ppk.BorangI?nofail="+noFail;
+	
+	var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=BorangIWasiat&flagReport=B";
+	
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function semakMTBorangI() {
+    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiMT?idFail=$idFail&command=hantarBorangI";
+	var hWnd = window.open(url,'Cetak','width=625,height=480, resizable=yes,scrollbars=no');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
 function buktiPenyampaian(noFail,idfail)
 {
 
-    var url = "../servlet/ekptg.report.ppk.BuktiPenyampaianMT?nofail="+noFail+"&idfail="+idfail;  
+    var url = "../servlet/ekptg.report.ppk.BuktiPenyampaianMT?nofail="+noFail+"&idfail="+idfail+"&template=BuktiPenyampaianMT";  
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -3147,20 +3005,20 @@ else if(document.f1.sorKeputusanBorangC[0].checked == true && document.getElemen
 	   //razman add close
 	   
 	   
-	    if(document.f1.jumlah.value >= 2000000)
+	    if(document.f1.jumlah.value > 2000000)
 		{	
 		document.getElementById(idx).style.display="block";
 		document.getElementById(id).style.display="none";
 		}
 		
-		if(document.f1.jumlah.value < 2000000)
-		{
+		//if(document.f1.jumlah.value <= 2000000)
+		//{
 	
 		
 		//document.getElementById(idx).style.display="none"; //razman comment
 		//document.getElementById(id).style.display="none"; //razman comment
 		
-		}
+		//}
 		
 		
 }
@@ -3197,7 +3055,7 @@ else
 
 
 
-if(document.f1.jumlah.value >= 2000000)
+if(document.f1.jumlah.value > 2000000)
 {
 
 document.getElementById(idx).style.display="block";
@@ -3601,9 +3459,9 @@ function cetakSuratBatalPermohonanMT(noFail) {
     if (hWnd.focus != null) hWnd.focus();
 }
 
-function cetakSuratBatalPermohonan_LK(noFail) {
+function cetakSuratBatalPermohonan_LK(noFail,seksyen) {
  //   var url = "../servlet/ekptg.report.ppk.SuratPindahMT?nofail="+noFail;
- var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratBatalPermohonanLainKes&flagReport=S";
+ var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&report=SuratBatalPermohonanLainKes&flagReport=S&seksyen="+seksyen;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -3623,6 +3481,47 @@ function cetakSuratBatalPermohonan_ARB(noFail) {
 function ForView(noFail) {
 	document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailSek8ForView&txtNoFail="+noFail;
 	document.f1.submit();
+}
+
+function uploadSuppDoc(id,IdSimati)
+{
+	
+	var url = "../x/${securityToken}/ekptg.view.ppk.SkrinPopupUploadDokumen?&id_Permohonan="+id+"&IdSimati="+IdSimati+"&id_jenisDoc=99205";
+	var hWnd = window.open(url,'printuser','width=350,height=200, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+	
+	
+}
+
+function doOpen(id) {
+	//alert('id : '+id);
+    var url = "../servlet/ekptg.view.ppk.DisplayBuktiKematian?id="+id+"&jenisDoc=99205";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function deleteSuppDoc()
+{
+	input_box = confirm("Adakah anda pasti?");
+	if (input_box == true) {
+	document.f1.method = "POST";
+	document.f1.command.value = "deleteSuppDocMode";
+	//document.f1.mode.value = "";
+	
+	document.f1.action="?_portal_module=FrmSenaraiFailKeputusanPermohonanInternal17";
+	document.f1.submit();
+	}
+	else
+		{
+		return
+		}
+	
+	
 }
 
 function keNilaian_Harta(jenis_permohonan,idPermohonan,idPemohon,idSimati,id_Permohonansimati)

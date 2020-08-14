@@ -29,6 +29,7 @@ import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.intergration.IIntegrasi;
 import ekptg.intergration.IntegrasiGISBean;
+import ekptg.model.admin.EmailConfig;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmRekodPembangunanImejData;
 import ekptg.model.htp.FrmRekodPembangunanPentadbiranData;
@@ -40,7 +41,12 @@ import ekptg.model.htp.IHTPStatus;
 import ekptg.model.htp.IHtp;
 import ekptg.model.htp.entity.HakMilik;
 import ekptg.model.htp.entity.HakmilikAgensi;
+import ekptg.model.htp.entity.HtpPerjanjian;
 import ekptg.model.htp.entity.Pajakan;
+import ekptg.model.htp.entity.Pemohon;
+import ekptg.model.htp.entity.Penyewaan;
+import ekptg.model.htp.entity.Permohonan;
+import ekptg.model.htp.entity.PfdFail;
 import ekptg.model.htp.rekod.FrmHakmilikRizabBean;
 import ekptg.model.htp.rekod.FrmHakmilikUrusanPajakanBean;
 import ekptg.model.htp.rekod.FrmHakmilikUrusanPenswastaanBean;
@@ -62,7 +68,6 @@ import ekptg.model.htp.rekod.ITanahDaftar;
 import ekptg.model.htp.rekod.ITanahKementerian;
 import ekptg.model.htp.utiliti.HTPSusulanBean;
 import ekptg.model.htp.utiliti.IHTPSusulan;
-import ekptg.model.utils.emel.EmailConfig;
 
 public class FrmRekodTanah extends AjaxBasedModule {
 

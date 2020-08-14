@@ -29,14 +29,14 @@
       <legend><b>CARIAN</b></legend>
       <table width="100%" align="center" border="0">
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No. Fail : </td>
+          <td width="30%" height="24" scope="row" align="right">No Fail : </td>
           <td width="70%"><input name="txtNoFail" id="txtNoFail" type="text" value="$txtNoFail" size="50" maxlength="50" style="text-transform:uppercase;" >
             <input type="hidden" name="idFail" />
             <input type="hidden" name="idStatus" />
             #if($flagDetail == '') <a href="javascript:bukaCarian();" class="style1">Buka Carian Terperinci </a> #else <a href="javascript:tutupCarian();" class="style1">Tutup Carian Terperinci </a> #end </td>
         </tr>
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No. Fail Negeri : </td>
+          <td width="30%" height="24" scope="row" align="right">No Fail Negeri : </td>
           <td width="70%"><input name="txtNoFailNegeri" id="txtNoFailNegeri" type="text" value="$txtNoFailNegeri" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
         </tr>
         <tr>
@@ -113,8 +113,8 @@
       <table align="center" width="100%">
         <tr class="table_header" align="center">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="15%"><strong>No. Fail</strong></td>
-          <td width="15%"><strong>No. Fail Negeri</strong></td>
+          <td width="15%"><strong>No Fail</strong></td>
+          <td width="15%"><strong>No Fail Negeri</strong></td>
           <td width="18%"><strong>Nama Pemohon</strong></td>
           <td width="6%" align="center"><strong>Tarikh Terima</strong></td>
           <td width="6%" align="center"><strong>Tarikh Daftar</strong></td>

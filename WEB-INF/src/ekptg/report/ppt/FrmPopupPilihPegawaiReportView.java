@@ -306,7 +306,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	  //function
 	  		String submit = getParam("command");
 	      	myLogger.info("submit : " + submit);
-	      	
+	    
 			if ("simpanAcc".equals(submit)) {
 				if (showG_ARB.equals("yes")) {
 					Hashtable getAccAmanah = getAccAmanahRaya(id_negeri, "1");
@@ -330,7 +330,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 				}
 				context.put("sorSelectNoFail", getParam("sorSelectNoFail"));
 			}
-		
+	    
 	  	String nama_amanah = "";
 		String namaBank_amanah= "";
 		String noAkaun_amanah = "";
@@ -370,9 +370,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			namaBankMT = namaBank_mahkamah;
 			namaMT = nama_mahkamah;
 			noAkaunMT = noAkaun_mahkamah;
-			
-		}	else	{
-			
+		}else{
 			if(id_negeri.equals("10")){
 				namaBankMT = "Affin Bank (Cawangan Shah Alam)";
 				noAkaunMT = "1059-9000-3766";				
@@ -551,7 +549,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
     	context.put("id_hakmilikpb",id_hakmilikpb);
     	context.put("id_bayaran", id_bayaran);
     	// END
-    	
+    	    	
 		//screen
 		vm = "app/ppt/frmPopupCetakLaporan.jsp";
 		return vm;

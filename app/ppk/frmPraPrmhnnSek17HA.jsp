@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -9,7 +11,6 @@
 -->
 <style type="text/css">
 <!--
-.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -437,11 +438,6 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
               
 
       <fieldset><legend>MAKLUMAT HARTA ALIH</legend>
-      
-      <div id="info_skrin_daftar_sek17"></div>
-      <script>
- 						parent.document.getElementById("info_skrin_daftar_sek17").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink>Wang tunai,saham, simpanan bank, KWSP, insurans, kenderaan, senjata api, barang kemas dan barang-barang berharga.</b></div>";
- 			</script>
       
       <table width="100%" border="0">
         <tr>
@@ -1088,27 +1084,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                   <td>:</td>
                   <td>
                   #if ($socJenisHa == "1" || $socJenisHa == "2" || $socJenisHa == "3" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "6" || $socJenisHa == "13" )
-				      <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  /> 
-				 	  
-				 	  #if($!skrin_online_17 == "yes")
-				 	  	#if($socJenisHa == "3")
-				 	  	<a href="javascript:info('geran_kereta')" class="help" title="info">					
-							<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-						</a>
-					  #end 
-							
-					  #if($socJenisHa == "2")
-				 	  	<a href="javascript:info('agensi')" class="help" title="info">					
-							<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-						</a>#end
-					  #end
-				 	  
-				 	  #else
-				      <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  />	  
-				      #end      
-				    </td> 
-				</tr>
-				#end
+      <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  /> 
+ 	  #else
+      <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  />	  
+      #end      </td> 
+        </tr>
+      #end
                 
              
              #if ($socJenisHa == "2" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "1" || $socJenisHa == "3" || $socJenisHa == "6" || $socJenisHa == "98" || $socJenisHa == "13")   
@@ -1192,21 +1173,8 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                   <td>
                   #if ($socJenisHa == 1 || $socJenisHa == 4 || $socJenisHa == 3 || $socJenisHa == 5 || $socJenisHa == 6) 
       	<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />  
-	      #if($!skrin_online_17 == "yes")
-	      		#if ($socJenisHa == "3")
-	      		<a href="javascript:info('daftar')" class="help" title="info">					
-					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-				</a> 
-				#end 
-		  #end
-      
       #elseif ($socJenisHa == 2 || $socJenisHa == "13")
       <input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;"  value="$norujukan" size="20" maxlength="30" onblur="this.value=this.value.toUpperCase()" $disabledR class="$disabled"  /> 
-       #if($!skrin_online_17 == "yes")
-	   		<a href="javascript:info('akaun')" class="help" title="info">					
-						<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-			</a> 
-	   #end
       #else
       
           <input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />      
@@ -1889,10 +1857,9 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
 
 </tr>
 <tr class="table_header">
-<td width="3%"><div align="center">Bil</div></td>
-<td width="40%">Jenis Harta Alih</td>
+<td width="5%"><div align="center">Bil</div></td>
+<td width="70%">Jenis Harta Alih</td>
 <td width="25%">No Rujukan UPT / No Daftar / No Akaun / No Ahli</td>
-<td width="32%">Dokumen</td>
 </tr>
 
 
@@ -2027,42 +1994,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
 <td class="row1"><div align="center">$cnt</div></td>
 <td class="row1">  <div align="left" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:edit_hartaalih('$id3')" class="style4"> $list.Keterangan <span class="style10">$cat</span></a></div> </td>
 <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$list.noDaftar</div></td>
-<td class="row1">  
-	#if($id_Status != "169" 
-        && $id_Status != "21" 
-		&& $id_Status != "64" 
-        && $id_Status != "163" 
-        && $id_Status != "164" 
-        && $id_Status != "165")	 
-        #if($open_button_online == "yes")
-		<a href = "javascript:lampiranHartaHA('$list.id_Ha','$!paramOnline');">
-			<img border="0" src="../img/plus.gif" width="20" height="15"/>
-		</a><br>
-		#end
-	#end
-		$list.lampirans
-</td>
 </tr>
 #else
 <tr bgcolor="white">
 <td class="row2"><div align="center">$cnt</div></td>
 <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:edit_hartaalih('$id3')" class="style4">$list.Keterangan  <span class="style10">$cat</span></a></div>  </td>
 <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$list.noDaftar</div></td>
-<td class="row1">  
-	#if($id_Status != "169" 
-        && $id_Status != "21" 
-		&& $id_Status != "64" 
-        && $id_Status != "163" 
-        && $id_Status != "164" 
-        && $id_Status != "165")	 
-        #if($open_button_online == "yes")
-		<a href = "javascript:lampiranHartaHA('$list.id_Ha','$!paramOnline');">
-			<img border="0" src="../img/plus.gif" width="20" height="15"/>
-		</a><br>
-		#end
-	#end
-		$list.lampirans
-</td>
 </tr>
 
 #end
@@ -3115,52 +3052,6 @@ function samakan()
 document.f1.txtNilaiTarikhMati.value=document.f1.txtNilaiTarikhMohon.value
  
                  
-}
-
-function info(jenis) {
-    //
-	var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=no,scrollbars=no');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus(); /**/
-    //
-    var title = 'Info';
-	var w =1024;
-	var h = 800;
-    var left = (screen.width/2)-(w/2);
-    //var top = (screen.height/2)-(h/2);
-    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-}
-
-
-function lampiranHartaHA(idHarta) {
-	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHA&actionPopup=paparHA&idHarta="+idHarta+"&flagOnline=$!flagOnline";
-    //
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus(); /**/
-    //
-    var title = 'Cetakan';
-	var w =1024;
-	var h = 800;
-    var left = (screen.width/2)-(w/2);
-    //var top = (screen.height/2)-(h/2);
-    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-}
-
-function lampiranHartaPapar(id_){
-	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=ha";
-	//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=ha";
-    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener=document.window;
-    if (hWnd.focus != null) hWnd.focus();
 }
 
 

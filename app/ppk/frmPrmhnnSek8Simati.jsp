@@ -44,10 +44,15 @@ resetOnBlur:false
 
 <body  onload="submitForm();jeniswaktu2();qryHowOld();calculateTarikhLahirSimati()" >
 <form name="f1" method="post" action=""  >
-	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-	<input type="hidden" name="v_tab" id="v_tab" value="" />
-	<input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
- 	<input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
+
+<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+
+ 
+<input type="hidden" name="v_tab" id="v_tab" value="" />
+<input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
+ <input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
+
+
 
 #foreach($list in $View)
 #set($noFail = $list.noFail)
@@ -57,17 +62,22 @@ resetOnBlur:false
 
 #parse("app/ppk/paging_sek8.jsp")
 
-	<input name="eventStatus" id="eventStatus" type="hidden" />
+<input name="eventStatus" id="eventStatus" type="hidden" />
+
 
 #parse("app/ppk/bil_fail.jsp") 
 
-	<table width="100%" border="0">
-		<input type="hidden" name="command" value="">
-	 	<input type="hidden" name="mode" value=""> 
-	 	<input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
-	 	<input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$selectedTabtengah"/>
-	 	<input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
-	 	<input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
+
+<table width="100%" border="0">
+
+
+ <input type="hidden" name="command" value="">
+ <input type="hidden" name="mode" value="">
+ 
+ <input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
+ <input name="tabIdtengah" type="hidden" id="tabIdtengah" value="$selectedTabtengah"/>
+ <input name="tabIdbawah" type="hidden" id="tabIdbawah" value="$selectedTabbawah"/>
+ <input name="tabIdtepi" type="hidden" id="tabIdtepi" value="$selectedTabtepi"/>
 
 #foreach($list in $View)
     #set ($id = $list.idPermohonan)
@@ -75,17 +85,20 @@ resetOnBlur:false
     #set ($idSimati = $list.idSimati)
     #set($id_Status = $list.id_Status)
     
-    	<input name="idPermohonanp" type="hidden"  value="$list.idPermohonan"/>
-     	<input name="idpermohonan" type="hidden"  value="$id"/>
+    <input name="idPermohonanp" type="hidden"  value="$list.idPermohonan"/>
+     <input name="idpermohonan" type="hidden"  value="$id"/>
     
-    	<input name="idPermohonan" type="hidden"  value="$id"/>
-     	<input name="idPemohon" type="hidden"  value="$idPemohon"/>
-      	<input name="idSimati" type="hidden"  value="$idSimati"/>
-       	<input name="idtemp" type="hidden"  value="$id"/>
-            
-		<input name="id_Suburusanstatus" type="hidden"  value="$list.id_Suburusanstatus"/>
-		<input name="id_Suburusanstatusfail" type="hidden"  value="$list.id_Suburusanstatusfail"/>
-		<input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
+    <input name="idPermohonan" type="hidden"  value="$id"/>
+     <input name="idPemohon" type="hidden"  value="$idPemohon"/>
+      <input name="idSimati" type="hidden"  value="$idSimati"/>
+       <input name="idtemp" type="hidden"  value="$id"/>
+       
+        
+<input name="id_Suburusanstatus" type="hidden"  value="$list.id_Suburusanstatus"/>
+<input name="id_Suburusanstatusfail" type="hidden"  value="$list.id_Suburusanstatusfail"/>
+<input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
+
+
 
 #set($listnoFail = $list.noFail)
 #set($listidnegeri = $list.idnegeri)
@@ -101,8 +114,11 @@ resetOnBlur:false
  
 #end
 
-		<tr>
-			<td>
+
+<tr>
+<td>
+
+
 
 #parse("app/ppk/maklumat_sek8.jsp")
 
@@ -137,30 +153,22 @@ resetOnBlur:false
 
 
 #set($md=$listtarikhMohon)
-              	<input type="hidden" name="txdTarikhMohon" value="$listtarikhMohon" readonly="true"/>
-          	 	<input type="hidden" name="txtSeksyen" value="$listseksyen" readonly="true"/>
-             	<input type="hidden" name="txtNamaPemohon" value="$listnamaPemohon" readonly="true"/>
-            	<input type="hidden" name="idSimati" value="$listidSimati" readonly="true"/>
+                    <input type="hidden" name="txdTarikhMohon" value="$listtarikhMohon" readonly="true"/>
+                     <input type="hidden" name="txtSeksyen" value="$listseksyen" readonly="true"/>
+                    <input type="hidden" name="txtNamaPemohon" value="$listnamaPemohon" readonly="true"/>
+            <input type="hidden" name="idSimati" value="$listidSimati" readonly="true"/>
 
-			</td>
-		</tr>
+</td>
+</tr>
 
-  		<tr>
-    		<td>
-    			<div id="div_warning" class="TabbedPanels_">
-    			
-				</div>
-			</td>	
-		</tr>		
-				
-  		<tr>
-    		<td>
-    			<div id="TabbedPanels1" class="TabbedPanels">
+  <tr>
+    <td>
+    <div id="TabbedPanels1" class="TabbedPanels">
     <ul class="TabbedPanelsTabGroup">
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,0,0,0);SimatiView()" >PERMOHONAN</li>
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(1,0,0,0);HtaamView()">HARTA TAK ALIH</li>
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(2,0,0,0);HAview()" >HARTA ALIH</li>
-       #if($!skrin_online != "yes")
+        #if($!skrin_online != "yes")
       <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(3,0,0,0);NAview()" >NILAIAN HARTA</li>
       #else
       #if($!hideTabPengesahan == "show")
@@ -187,9 +195,6 @@ resetOnBlur:false
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,4,0,0);SaksiView()">SAKSI</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,5,0,0);PemiutangView()">PEMIUTANG</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,6,0,0);PenghutangView()">PENGHUTANG</li>
-             #if( ($!skrin_online == "yes") && ($!skrin_deraf == "") )
-            <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,7,0,0);TukarPemohonView()">PERTUKARAN PEMOHON</li>
-            #end
           </ul>
           
           
@@ -759,9 +764,12 @@ resetOnBlur:false
                                 <td>:</td>
                                 <td>
                                 
-                                #if($listmati.idBuktimati=="")
+                    
+                                
+                                 #if($listmati.idBuktimati=="")
                                 #set($bukti="") 
                                 #end
+                                
                                 
                                 #foreach($listbuk in $listbuktimati)  
                                                            
@@ -769,35 +777,64 @@ resetOnBlur:false
                                 #set($bukti="$listbuk.kod - $listbuk.keterangan")  
                                 #end
                                 
+                                
+                               
+                                
+                                
                                 #end
                  
+                                
                                 #if($readmode=="disabled")  
+                                
+                                                              
+                                
                                 
                                   <input name="txtBuktiKematian" type="text" id="textfield" value="$bukti"  $readmodeR class="$readmode" size="34" onBlur="this.value=this.value.toUpperCase()"  />
                                   <input name="socBuktiKematianSimati" type="hidden" onBlur="this.value=this.value.toUpperCase()" id="textfield" value="$listmati.idbuktikematian"  size="30" $readmodeR class="$readmode" />
                                   
-                                #else
+                                  #else
                                   
-                                #if($listmati.idBuktimati!="")
-                                  <select name="socBuktiKematianSimati" class="autoselect" onChange="jenis_hutangU(this.value)" >
+                                  
+                                  #if($listmati.idBuktimati!="")
+                                  
+                                  
+                                   <select name="socBuktiKematianSimati" class="autoselect" onChange="jenis_hutangU(this.value)" >
                                       <option value="$listmati.idBuktimati">$bukti</option>                         
-                                     
-                                #foreach($listbuk in $listbuktimati)                                 
-                                #if($listmati.idBuktimati!=$listbuk.id_Buktimati)
+                              
+                                        
+                                  #foreach($listbuk in $listbuktimati)                                 
+                                  #if($listmati.idBuktimati!=$listbuk.id_Buktimati)
                                     <option value="$listbuk.id_Buktimati">$listbuk.kod -  $listbuk.keterangan</option>
-                                #end    
-	                              #end
+                                  #end    
+	                               #end
+                                  
                                   </select>
-                                #else
+                                  #else
                                   
                                   <select name="socBuktiKematianSimati" class="autoselect" onChange="jenis_hutangU(this.value)" >
                                     <option value="">SILA PILIH BUKTI MATI</option>
                                     
+                            
+                                    
                                   #foreach($listbuk in $listbuktimati)
-                                 		<option value="$listbuk.id_Buktimati">$listbuk.keterangan</option>
+                                 
+                                 
+	                               
+                                      
+                              
+                                    <option value="$listbuk.id_Buktimati">$listbuk.keterangan</option>
+                                    
+                              
+                                      
+                                   
                                     
 	                               #end
                                   
+                                  
+                                  
+                                  
+                                    
+                            
                                   </select>
                                   #end
                                   
@@ -831,13 +868,9 @@ resetOnBlur:false
                               
                                 #if($readmode == "disabled")
                                  <input name="txtNoSijilMatiSimati" onBlur="this.value=this.value.toUpperCase()" type="text" id="txtNoSijilMatiSimati" style="text-transform:uppercase;" value="$listmati.noSijilMati" size="30" maxlength="100" $readmodeR class="$readmode"/>
-																	#else
+                                #else
                                   <input name="txtNoSijilMatiSimati" onBlur="this.value=this.value.toUpperCase()" type="text" id="txtNoSijilMatiSimati" style="text-transform:uppercase;" value="$listmati.noSijilMati" size="30" maxlength="15" $readmodesy />
                                 #end
-                                #if($!skrin_online == "yes")
-                                <a href="javascript:info('sijil')" class="help" title="info">					
-																	<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-																</a>#end
                                 </label></td>
                               </tr>
                               
@@ -878,11 +911,7 @@ resetOnBlur:false
 	                                  <input name="mohondate" type="hidden" id="mohondate" value="$md" size="10" maxlength="10" $readmode  />
                                   	#if($readmode != "disabled" )
                                   		<span class="style52">dd/mm/yyyy</span>
-                                  	#end
-                                  	#if($!skrin_online == "yes")
-                                  	<a href="javascript:info('tarikh')" class="help" title="info">					
-									                        <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                  </a>#end                               
+                                  	#end                                  
 								</td>
                               </tr>
                               <tr>
@@ -976,17 +1005,18 @@ resetOnBlur:false
                               <td width="70%" style="text-transform:uppercase;"><label>
                                                    
                               <textarea name="txtTempatMatiSimati" id="patMatiSimati"   cols="31" rows="3"    $readmodeR class="$readmode" >$listmati.tempatMati</textarea>
-                              </label>
-                              #if($!skrin_online == "yes")
-                              <a href="javascript:info('tempat')" class="help" title="info">					
-									                <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									            </a>#end </td>
+                              </label></td>
                             </tr>
                             <tr>
                               <!-- <td class="style38" valign="top" > -->
                               <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
-                                 </td>
+                              
+                             
                                  
+                                 
+                                 
+                                 
+                                 </td>
                               <td class="style38" valign="top">
                                 <div align="left">#if($readmode == "disabled")
                                   Sebab Kematian
@@ -996,12 +1026,7 @@ resetOnBlur:false
                                 </div>
                                 <div align="left">#end                              </div></td>
                               <td valign="top">:</td>
-                              <td><textarea name="txtSebabKematianSimati" cols="31" rows="3" id="txtSebabKematian"   $readmodeR class="$readmode" >$listmati.sebabMati</textarea>
-                             	#if($!skrin_online == "yes")
-                              <a href="javascript:info('sebab')" class="help" title="info">					
-									                <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									            </a>#end
-                              </td>
+                              <td><textarea name="txtSebabKematianSimati" cols="31" rows="3" id="txtSebabKematian"   $readmodeR class="$readmode" >$listmati.sebabMati</textarea></td>
                             </tr>
                             <tr>
                               <!-- <td class="style38">&nbsp;</td> -->
@@ -1012,12 +1037,7 @@ resetOnBlur:false
                               <td >:</td>
                               <td ><label>
                                 <input name="txtAlamatTerakhir1Simati" type="text" id="txtAlamatTerakhir" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" value="$listmati.alamat1" size="34" maxlength="50"    $readmodeR class="$readmode"  />
-                              </label>
-                              #if($!skrin_online == "yes")
-                              <a href="javascript:info('alamat')" class="help" title="info">					
-									                <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									            </a>#end
-                              </td>
+                              </label></td>
                             </tr>
                             <tr>
                               <td class="style38">&nbsp;</td>
@@ -1300,9 +1320,9 @@ resetOnBlur:false
                     
                     </fieldset>
                     <p> #end </p>                </tr>
-	
-	#if($!skrin_online != "yes") 
-		<tr>
+                    
+#if($!skrin_online != "yes" && $!skrin_online_17 != "yes")                    
+<tr>
             <td><fieldset>
               <legend>DOKUMEN SOKONGAN</legend>
               <table width="100%" border="0">
@@ -1333,10 +1353,10 @@ resetOnBlur:false
                   #end
                     </td>
                 </tr>
-	#end
                  </table>
                  </fieldset></td>
             </tr>
+#end
                 
                 
                  <tr>
@@ -1354,7 +1374,7 @@ resetOnBlur:false
              
                 #if($boleh_kemaskini == "yes")
                 #end  
-                #if($!skrin_online != "yes") 
+                                                                                                                                                                                                                                                #if($!skrin_online != "yes") 
                 <input type="button" name="cmdKemaskini1" id="cmdKemaskini1" value="Kemaskini" onClick="setSelected(0,0,0,0);kemaskini_simati()" />
                  #if($flag_kemaskini_selesai != "yes")
                 <script>
@@ -1446,23 +1466,7 @@ resetOnBlur:false
 </form>
 
 <script>
-function info(jenis) {
-    //
-	var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=no,scrollbars=no');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus(); /**/
-    //
-    var title = 'Info';
-	var w =1024;
-	var h = 800;
-    var left = (screen.width/2)-(w/2);
-    //var top = (screen.height/2)-(h/2);
-    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 
-}
 
 selectPelbagaiNegara(document.f1.socNegeriSimati.value,'div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');
 <!-- TAB -->
@@ -1530,29 +1534,6 @@ document.f1.action = "";
 	document.f1.command.value = "nilai_harta";
 	document.f1.submit();
 }
-
-<!-- syafiqah add -->
-// function TukarPemohonView(){
-// 	document.f1.action = "";
-// 	document.f1.mode.value = "TukarPemohonview";
-// 	document.f1.command.value = "Tukarpemohon";
-// 	document.f1.submit();
-// }
-
-function TukarPemohonView() {
-	if('$!skrin_online' == 'yes')
-{
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
-}
-else
-{
-document.f1.action = "";
-}
-	document.f1.mode.value = "TukarPemohonview";
-	document.f1.command.value = "Tukarpemohon";
-	document.f1.submit();
-}
-<!-- syafiqah add end -->
 
 function PenghutangView() {
 	if('$!skrin_online' == 'yes')

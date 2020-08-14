@@ -11,11 +11,9 @@
     <td><fieldset>
       <legend><b>SENARAI DOKUMEN</b></legend>
       <table align="center" width="100%">
-        #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
         <tr>
           <td colspan="9" scope="row"><input name="cmdTambah" type="button" value="Tambah" onclick="javascript:doDaftarMaklumatKJT()"/></td>
         </tr>
-        #end
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="60%"><strong>Agensi</strong></td>

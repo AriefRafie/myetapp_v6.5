@@ -34,22 +34,23 @@ import ekptg.model.ppt.PPTHeader;
 import ekptg.view.ppt.email.EmailOnline;
 
 
+
+
 public class FrmPenarikanBalikInternalOnline extends AjaxBasedModule{	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 590483814003750088L;
 	static Logger myLogger = Logger.getLogger(FrmPembatalanInternal.class);
 	
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
+	
 			
 	FrmPermohonanUPTData model = new FrmPermohonanUPTData();
 	FrmPermohonanUPTOnlineData modelOnline = new FrmPermohonanUPTOnlineData();
 	FrmPembatalanInternalData logic = new FrmPembatalanInternalData();
 	
+	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
-	public String doTemplate2() throws Exception{		
+	public String doTemplate2() throws Exception{
+		
 		HttpSession session = request.getSession();		
 		String vm = ""; 
 		
@@ -418,7 +419,7 @@ public class FrmPenarikanBalikInternalOnline extends AjaxBasedModule{
     			updateFlag(session,"1");
 				
 				if (bolehsimpan.equals("yes")){
-					sendEmail(namaProjek,"","","",id_user,"hantarSemakanPenarikan",session);    	
+					sendEmail(namaProjek,"","","",id_user,"hantarSemakanPenarikan");    	
 				}
     	
     			maklumat_pembatalan = logic.maklumat_penarikan(getParam("id_pembatalan"));
@@ -458,7 +459,7 @@ public class FrmPenarikanBalikInternalOnline extends AjaxBasedModule{
     			updateFlag(session,"2");
 				
     			if (bolehsimpan.equals("yes")){
-					sendEmail(namaProjek,"","","",id_user,"hantarLulusPenarikan",session);    	
+					sendEmail(namaProjek,"","","",id_user,"hantarLulusPenarikan");    	
 				}
     
     			maklumat_pembatalan = logic.maklumat_penarikan(getParam("id_pembatalan"));
@@ -1299,11 +1300,11 @@ public class FrmPenarikanBalikInternalOnline extends AjaxBasedModule{
 	
 }
 
-	private void sendEmail(String nama_projek,String tarikh_permohonan,String userIdKementerian, String id_jawatan_user, String id_user
-			, String purpose,HttpSession session) throws Exception{
+	@SuppressWarnings({ "static-access" })
+	private void sendEmail(String nama_projek,String tarikh_permohonan,String userIdKementerian, String id_jawatan_user, String id_user, String purpose) throws Exception{
+
 		EmailOnline et = new EmailOnline();
-		et.setEmail("","",purpose,"",nama_projek,tarikh_permohonan,"",userIdKementerian, id_jawatan_user, id_user
-				,String.valueOf(session.getAttribute("portal_username")));
+		et.setEmail("","",purpose,"",nama_projek,tarikh_permohonan,"",userIdKementerian, id_jawatan_user, id_user);
 		
 	}//close sendEmail
 	

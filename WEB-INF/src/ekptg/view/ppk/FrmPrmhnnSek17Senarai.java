@@ -7081,7 +7081,8 @@ public class FrmPrmhnnSek17Senarai extends VTemplate {
 			this.context.put("nokppemohon", "");
 			Carix = "1";
 			this.context.put("carix", Carix);
-			list17Senarai = logic_E.setList17Senarai((String) session.getAttribute("_ekptg_user_id"));
+			list17Senarai = logic_E.setList17Senarai((String) session
+					.getAttribute("_ekptg_user_id"));
 
 			this.context.put("Senaraifail", list17Senarai);
 			// System.out.println("SIZE 17!!--" + list17Senarai.size());

@@ -27,11 +27,13 @@ public class FrmPrmhnnSek8SenaraiSemakInternalData {
 	    String sql = "INSERT INTO Tblsemakanhantar " +
 	    		"(id_Semakanhantar, id_semakansenarai, id_permohonan, catatan, tarikh_pelbagai, tarikh_masuk)  " +
 	    		"VALUES ("+idSemakanhantar+", "+idsemakan+", "+idListSemakan+", '"+txtbox+"', to_date('" + tarikhresit + "','dd/MM/yyyy'), sysdate) ";
-	    myLogger.info("SQL SEMAKANADD17 dalam FrmPrmhnnSek8SenaraiSemakInternalData "+sql);
+	    System.out.println("SQL SEMAKANADD17 dalam FrmPrmhnnSek8SenaraiSemakInternalData "+sql);
 	    
 	    String sqlbayaran ="";
 	    String sqlM ="";
 	    try {
+
+      
 	      String idPermohonan = idListSemakan;
 	      int idSemakan = Integer.parseInt(idsemakan);
 	      String tarikh_resit = tarikhresit;	

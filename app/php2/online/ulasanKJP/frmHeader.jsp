@@ -11,7 +11,7 @@
             <td width="63%"><font color="blue">$beanHeader.noFail</font></td>
           </tr>
           <tr>
-            <td width="36%" align="right">Urusan</td>
+            <td width="36%" align="right">Suburusan</td>
             <td width="1%">:</td>
             <td width="63%"><font color="blue">$beanHeader.subUrusan</font></td>
           </tr>
@@ -26,17 +26,10 @@
             <td><font color="blue">$beanHeader.tarikhTerima</font></td>
           </tr>
           <tr>
-            <td align="right">Status Permohonan</td>
-            <td>:</td>
-            <td><font color="green">$beanHeader.status</font></td>
-          </tr>
-          <tr>
             <td align="right" valign="top">Perkara</td>
             <td valign="top">:</td>
             <td rowspan="5" valign="top"><font color="blue">$beanHeader.tajukFail</font></td>
           </tr>
-           
-          <tr>
           <tr>
             <td align="right">&nbsp;</td>
             <td>&nbsp;</td>

@@ -5,7 +5,7 @@
 }
 -->
 </style>
-<!-- test 14/8/2020 -->
+
 #set($saizTxtPerkara="1000")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
