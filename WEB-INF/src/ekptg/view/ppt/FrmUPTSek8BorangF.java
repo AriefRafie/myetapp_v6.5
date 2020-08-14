@@ -738,12 +738,11 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 		myLogger.info("updateBorangEInBulk cbsemaks.length = " +cbsemaks.length);
 		if(cbsemaks != null){
 			for (int i = 0; i < cbsemaks.length; i++) { 				
-//				FrmUPTSek8BorangFData.deleteListCB_byHakmilik(cbsemaks[j],db);
-				
+//				FrmUPTSek8BorangFData.deleteListCB_byHakmilik(cbsemaks[j],db);				
 //				FrmUPTSek8BorangFData.simpanBorangEInBulk(h,cbsemaks[j],Utils.parseLong(id_borange),db);
-				myLogger.info(j+",simpanBorangEInBulk by cbsemaks: " +cbsemaks[j]);
+//				myLogger.info(j+",simpanBorangEInBulk by cbsemaks: " +cbsemaks[j]);
 //				myLogger.info("simpanBorangEInBulk by  2: " +h);
-				myLogger.info("simpanBorangEInBulk by txtMasaSiasatan: " +txtMasaSiasatan[j]);
+//				myLogger.info("simpanBorangEInBulk by txtMasaSiasatan: " +txtMasaSiasatan[j]);
 
 			}
 		} //close cbsemaks

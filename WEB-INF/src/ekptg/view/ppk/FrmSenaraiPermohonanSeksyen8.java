@@ -1,6 +1,8 @@
 /**
  * 
  */
+
+/*
 package ekptg.view.ppk;
 
 import java.util.ArrayList;
@@ -15,11 +17,55 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.HTML;
 import ekptg.model.ppk.FrmSenaraiPermohonanSeksyen8Data;
+*/
+package ekptg.view.ppk;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
-/**
+import lebah.db.Db;
+import lebah.portal.AjaxBasedModule;
+
+import org.apache.log4j.Logger;
+
+import ekptg.model.RazTemplete;
+import ekptg.model.ppk.MyInfoPPKModel;
+
+/*
+ * author : RAZMAN MD ZAINAL
+ * date start : 02/06/2018 9.00 PM
+ * description : 
+ * Class controllwe untuk myinfo PPK versi baru. Merupakan modul/skrin carian unmum untuk fail2 ppk.
+ * Tujuan untuk menggantikan myinfo yg sedia ada yang sangat melembabkan kerana ia menyumbang masalah performance system
  * 
- *
+ * Additional info : 1st pilot modul/skrin menggunakan kaedah ajax + RazTemplete, bertujuan untuk preparation myetapp v8
+ * 
+ * **TERM [STANDARD] : merujukan, pekara2 standard/perlu di guna pakai untuk every modul/skrin yg ingin mengunakan kaedah ajax + RazTemplete
+ */
+
+
+
+/*
+ * instruction
+ * 
+ * 1-perlu create model dalam folder model, untuk manipulating data or setupSkrin
+ * 2-Standardkan nama module 'nama controller'+'Model'
+ */
+
+//FrmSenaraiPermohonanSeksyen8
+//reference contoh modul/skrin menggunakan kaedah Ajax menggunakan RazTemplete
+public class FrmSenaraiPermohonanSeksyen8 extends AjaxBasedModule {
+	/*[STANDARD]
+	 * bertujuan untuk get apa2 setting yang related
+	 */
+	//public ResourceBundle rbRaz = ResourceBundle.getBundle("RazTemplete");
+	
+	/*[STANDARD]
+	>>wajib guna kaedah logger untuk println dalam console
+	>>System.out.println adalah diharamkan sama sekali
+	*/
 	public Logger myLogger = Logger.getLogger(FrmSenaraiPermohonanSeksyen8.class);
 	
 	/*[STANDARD] call model class*/
@@ -209,43 +255,4 @@ import ekptg.model.ppk.FrmSenaraiPermohonanSeksyen8Data;
 		return skrin_name;
 	}
 	
-}
-	/*
-	public void setupPage(HttpSession session,String action,Vector list) {
-		try {
-		this.context.put("totalRecords",list.size());
-		int page = getParam("page") == "" ? 1:getParamAsInteger("page");
-		
-		int itemsPerPage;
-		if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
-			itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
-		} else {
-			itemsPerPage = (Integer)this.context.get("itemsPerPage");
-		}
-	    
-	    if ("getNext".equals(action)) {
-	    	page++;
-	    } else if ("getPrevious".equals(action)) {
-	    	page--;
-	    } else if ("getPage".equals(action)) {
-	    	page = getParamAsInteger("value");
-	    } else if ("doChangeItemPerPage".equals(action)) {
-	       itemsPerPage = getParamAsInteger("itemsPerPage");
-	    }
-	    	
-	    Paging paging = new Paging(session,list,itemsPerPage);
-		
-		if (page > paging.getTotalPages()) page = 1; //reset page number
-		this.context.put("SenaraiFail",paging.getPage(page));
-	    this.context.put("page", new Integer(page));
-	    this.context.put("itemsPerPage", new Integer(itemsPerPage));
-	    this.context.put("totalPages", new Integer(paging.getTotalPages()));
-	    this.context.put("startNumber", new Integer(paging.getTopNumber()));
-	    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
-	    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
-	        
-		} catch (Exception e) {
-			e.printStackTrace();
-			this.context.put("error",e.getMessage());
-		}	
 }

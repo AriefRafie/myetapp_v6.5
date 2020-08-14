@@ -5,10 +5,10 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.action.AjaxModule;
 import ekptg.engine.EmailSender;
 import ekptg.engine.EmailProperty;
-import ekptg.model.htp.HTPEmelPermohonanBean;
 import ekptg.model.htp.HTPEmelSemakBean;
 import ekptg.model.htp.IHTPEmel;
 import ekptg.model.htp.IHtp;
+import ekptg.model.htp.utiliti.HTPEmelPermohonanBean;
 
 public class SendMail extends AjaxModule {
 		private IHtp iHTP = null;  

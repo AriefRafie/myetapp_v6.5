@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
@@ -28,12 +29,40 @@ import com.Ostermiller.util.Base64;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujdokumen;
+import ekptg.model.utils.Fungsi;
 import ekptg.model.utils.lampiran.ILampiran;
 
 public class LampiranBean implements ILampiran{
 	private static Logger myLog = Logger.getLogger(ekptg.model.ppt.util.LampiranBean.class);
 	Connection conn = null;
-	
+	Vector<Tblrujdokumen> lampiran = null;
+	public StringBuffer sb = new StringBuffer("");
+
+	public String getLampirans(String idRujukan,String jenisDokumen,String js) throws Exception {
+		sb = new StringBuffer("");
+		lampiran = getLampirans(idRujukan,jenisDokumen);
+		for (int i = 0; i < lampiran.size(); i++) {
+			Tblrujdokumen mo = lampiran.get(i);	
+			if(!js.equals(""))
+				sb.append("<a href=\"javascript:"+js+"("+mo.getIdDokumen()+")\"");
+			else
+				sb.append("<a href=\"javascript:paparLampiran("+mo.getIdDokumen()+")\"");
+
+			sb.append(" onkeypress=\"window.open(this.href); return false;\">"); 
+			sb.append("<div class=\"pautan\">"+mo.getNamaDokumen()+"</div>");
+
+			if(lampiran.size()==1 || (i == (lampiran.size()-1) && lampiran.size() != 1) )
+				sb.append(" </a>");
+			else
+				sb.append(" </a>,");
+
+			sb.append("<br>");
+
+		}
+		return sb.toString();
+		
+	}
+
 	public void uploadFiles(Hashtable<String,String> hash,HttpServletRequest request) throws Exception {		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 	    ServletFileUpload upload = new ServletFileUpload(factory);
@@ -89,7 +118,33 @@ public class LampiranBean implements ILampiran{
 		}
 				
 	}
-	
+	public void simpan(FileItem item,HttpServletRequest request) throws Exception {
+  		Db db = null;
+        try {
+        	db = new Db();
+        	long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
+        	Connection con = db.getConnection();
+        	con.setAutoCommit(false);
+        	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
+        			"(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,tajuk,keterangan) " +
+        			"values(?,?,?,?,?,?,?)");
+        	ps.setLong(1, id_Dokumen);
+        	ps.setString(2, request.getParameter("id_permohonan"));
+        	ps.setString(3,item.getName());
+        	ps.setString(4,item.getContentType());
+        	ps.setBinaryStream(5,item.getInputStream(),(int)item.getSize());
+        	ps.setString(6, request.getParameter("nama_dokumen"));
+        	ps.setString(7, request.getParameter("keterangan"));
+        	ps.executeUpdate();
+            con.commit();
+            
+	    }catch (SQLException se) { 
+	    	throw new Exception("Ralat : Masalah muatnaik fail");
+	    }finally {
+		      if (db != null) db.close();
+	    }
+        
+	}
 	private void saveData(FileItem item,HttpServletRequest request) throws Exception {
   		Db db = null;
         try {
@@ -189,10 +244,12 @@ public class LampiranBean implements ILampiran{
 					r.add("NAMA_FAIL");
 				else
 					r.add(colNama);
+				
 				if(colJenis==null)
 					r.add("JENIS_MIME");
 				else
 					r.add(colJenis);
+				
 				if(colCon==null)
 					r.add("CONTENT");
 				else
@@ -241,7 +298,53 @@ public class LampiranBean implements ILampiran{
 			return dokumen;
 			    
 		 }	 
-
+	
+	public Vector<Tblrujdokumen> getLampirans(String idRujukan,String jenis) throws Exception {				
+	    Db db = null;
+	    String sql = "";			  	    
+	    Vector<Tblrujdokumen> listDokumen_bantahan = new Vector<Tblrujdokumen>();
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      sql = " SELECT "+
+	      		" A.ID_BANTAHAN,A.ID_DOKUMEN, A.JENIS_DOKUMEN, A.NAMA_FAIL, A.JENIS_MIME, A.TAJUK, A.KETERANGAN,"+ 
+				" A.CONTENT "+
+				" FROM TBLPPTDOKUMEN A"+
+				" WHERE A.ID_BANTAHAN = '"+idRujukan+"' "+
+	    		" AND A.JENIS_DOKUMEN = '"+jenis+"' "+
+				"";
+//	      myLogger.info("getLampirans :sql="+sql);
+	      ResultSet rs = stmt.executeQuery(sql);   
+	      Tblrujdokumen h = null;
+//	      Hashtable h;
+	      int bil = 0;
+	    
+	      while (rs.next()) {    	
+	    	  bil = bil + 1;
+	    	  h = new Tblrujdokumen();
+	    	  //h = new Hashtable();
+	    	  h.setIdDokumen(rs.getString("ID_DOKUMEN")== null?"":rs.getString("ID_DOKUMEN"));
+	    	  h.setNamaDokumen(rs.getString("NAMA_FAIL")== null?"":rs.getString("NAMA_FAIL"));
+	    	  h.setDokumen(rs.getString("TAJUK")== null?"":rs.getString("TAJUK"));
+	    	  h.setCatatan(rs.getString("KETERANGAN")== null?"":rs.getString("KETERANGAN"));
+	    	  //h.put("BIL", bil);
+	    	  //h.put("ID_BANTAHAN",rs.getString("ID_BANTAHAN")== null?"":rs.getString("ID_BANTAHAN"));
+	    	  //h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN")== null?"":rs.getString("ID_DOKUMEN"));
+	    	  //h.put("NAMA_FAIL", rs.getString("NAMA_FAIL")== null?"":rs.getString("NAMA_FAIL"));
+//	    	  h.put("JENIS_MIME",rs.getString("JENIS_MIME")== null?"":rs.getString("JENIS_MIME"));
+//	    	  h.put("TAJUK",rs.getString("TAJUK")== null?"":rs.getString("TAJUK"));
+//	    	  h.put("KETERANGAN",rs.getString("KETERANGAN")== null?"":rs.getString("KETERANGAN"));
+	    	  //h.put("JENIS_DOKUMEN",rs.getString("JENIS_DOKUMEN")== null?"":rs.getString("JENIS_DOKUMEN"));  
+	    	  listDokumen_bantahan.addElement(h);
+	    	  
+	      }		      
+	      
+	    } finally {
+	      if (db != null) db.close();
+	    }	
+	    return listDokumen_bantahan;
+	    
+	}
 	public String getLampirans(String idHarta) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		Vector<Hashtable<String, String>> dokumens = lampiranMengikutHarta(idHarta, null,false);
@@ -335,6 +438,41 @@ public class LampiranBean implements ILampiran{
 			else
 				sql = r.getSQLDelete("TBLPPKDOKUMENHTA");
 			
+			myLog.info("hapusLampiran:Tblpfddokumen::sql="+sql);
+			stmt.executeUpdate(sql);
+			
+			conn.commit();
+			
+		} catch (SQLException ex) { 
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah menghapus data " + ex.getMessage());
+	    	
+	    } finally {
+			if (db != null)
+				db.close();
+		}	
+		
+	}
+	
+	public void hapus(String idDokumen) throws Exception {
+		//myLog.info("hapusLampiran");
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();	
+			//Tblpfdrujlampiran a,Tblpfddokumen			
+			//TBLHTPGAMBAR
+			r.add("ID_DOKUMEN", idDokumen);
+			sql = r.getSQLDelete("TBLPHPDOKUMEN");
 			myLog.info("hapusLampiran:Tblpfddokumen::sql="+sql);
 			stmt.executeUpdate(sql);
 			
@@ -489,6 +627,62 @@ public class LampiranBean implements ILampiran{
 		return sb.toString();
 		
 	}
+	public String javascriptUpload(String jsUpload,String jsPapar
+			,String idDokumen,HttpSession session,String skrin) throws Exception {
+			Fungsi.setWin800600();
+			
+			sb = new StringBuffer("");
+			sb.append("<script>");
+			if(jsUpload.equals(""))
+				sb.append("function paparLampiran(idDokumen){");
+			else
+				sb.append("function "+jsPapar+"(idDokumen){");
 
+			//sb.append("function "+jsPapar+"(){");
+			sb.append("var url = '../servlet/ekptg.model.utils.DisplayBlob?id='+idDokumen+'&tablename=tblphpdokumen';");
+			sb.append("var hWnd=window.open(url,'Cetak','width="+Fungsi.lebar+",height="+Fungsi.tinggi+", resizable=yes,scrollbars=yes,menubar=1');");
+			sb.append("if ((document.window != null) && (!hWnd.opener))");
+			sb.append("hWnd.opener=document.window;");
+			sb.append("if (hWnd.focus != null) hWnd.focus();");
+			sb.append("}");
+			
+			Fungsi.setWin400300();
+			if(jsUpload.equals(""))
+				sb.append("function onlineAttach(idPermohonan,idSenarai,idJenisDokumen) {");
+			else
+				sb.append("function "+jsUpload+"(idPermohonan,idSenarai,idJenisDokumen) {");
+		
+			sb.append("param = 'actionrefresh=php"+skrin+"&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
+//			sb.append("param = 'actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
+			sb.append("param += '&rujukan='+idPermohonan+'&jenisdokumen='+idJenisDokumen+'&idsenarai='+idSenarai;");
+			sb.append("var url = '../x/"+session.getAttribute("securityToken")+"/ekptg.view.online.UploadDokumenSemak?'+param;");
+			sb.append("var hWnd = window.open(url,'printuser','width="+Fungsi.lebar+",height="+Fungsi.tinggi+", resizable=yes,scrollbars=yes');");
+			sb.append("if ((document.window != null) && (!hWnd.opener))");
+			sb.append("hWnd.opener=document.window;");
+			sb.append("if (hWnd.focus != null) hWnd.focus();");
+			sb.append("}");
+			//sb.append(javascriptUpload(sb));
+			sb.append("</script>");
+			return sb.toString();
+		 
+	}
+	public String javascriptUpload(String jsUpload,String jsPapar
+			,String idDokumen,HttpSession session) throws Exception {
+			Fungsi.setWin800600();
+			
+			sb = new StringBuffer("");
+			sb.append("<script>");
+			sb.append("function "+jsPapar+"(idDokumen){");
+//			sb.append("function "+jsPapar+"(){");
+			sb.append("var url = '../servlet/ekptg.model.utils.DisplayBlob?id='+idDokumen+'&tablename=tblphpdokumen';");
+			sb.append("var hWnd=window.open(url,'Cetak','width="+Fungsi.lebar+",height="+Fungsi.tinggi+", resizable=yes,scrollbars=yes,menubar=1');");
+			sb.append("if ((document.window != null) && (!hWnd.opener))");
+			sb.append("hWnd.opener=document.window;");
+			sb.append("if (hWnd.focus != null) hWnd.focus();");
+			sb.append("}");
+			sb.append("</script>");
+			return sb.toString();
+		 
+		}
 	
 }

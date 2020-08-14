@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
 
 import ekptg.intergration.XEkptgEmailSender;
 
-public class Email_PenarikanBalik {
-	static Logger myLogger = Logger.getLogger(Email_PenarikanBalik.class);
+public class Email_PenarikanBalik_bak20200619 {
+	static Logger myLogger = Logger.getLogger(Email_PenarikanBalik_bak20200619.class);
 	
 	public static void main(String args []){		
 	}
