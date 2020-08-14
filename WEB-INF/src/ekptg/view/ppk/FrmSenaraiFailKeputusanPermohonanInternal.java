@@ -4908,7 +4908,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 				db.close();
 		}
 	
-	
+	  
 }
 	
 	private void headerppk_baru(HttpSession session, String id_permohonan,
