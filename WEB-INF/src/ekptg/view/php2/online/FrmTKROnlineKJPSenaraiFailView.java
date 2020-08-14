@@ -1,7 +1,3 @@
-/**
- *
- */
-// test 13/8/2020
 package ekptg.view.php2.online;
 
 import java.sql.Connection;
@@ -276,10 +272,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
 
-
-		myLog.info("submit="+submit);
-		myLog.info("submit2="+submit2);
-		myLog.info("hitButton="+hitButton);
 		this.context.put("errorPeganganHakmilik", "");
 
 		try {

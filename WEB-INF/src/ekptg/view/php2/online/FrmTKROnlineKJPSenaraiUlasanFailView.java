@@ -1,6 +1,3 @@
-/**
- *
- */
 package ekptg.view.php2.online;
 
 import java.sql.Connection;
