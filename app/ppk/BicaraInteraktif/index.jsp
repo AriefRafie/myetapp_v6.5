@@ -125,9 +125,7 @@
   -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
   box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
 }
-
 /* Animation */
-
 @-webkit-keyframes spinner {
   0% {
     -webkit-transform: rotate(0deg);
@@ -1835,7 +1833,6 @@ function selectJenisBatal(flag_batal,mode,skrinName,ID_SIMATI,ID_PERMOHONAN,ID_P
 	}
 	
 }
-
 function selectJenisTangguh(flag_tangguh,mode,skrinName,ID_SIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PERMOHONANSIMATI,command)
 {	//divSkrinSuplimentTangguh
 	//alert("flag_tangguh : "+flag_tangguh);	
@@ -1887,22 +1884,11 @@ function selectJenisTangguh(flag_tangguh,mode,skrinName,ID_SIMATI,ID_PERMOHONAN,
 		
 		
 	doDivAjaxCall$formname('divSkrinSuplimentTangguhBatal','viewSuplimentTangguh','FLAG_TANGGUH='+flag_tangguh+'&NAMA_TABLE='+nama_table+'&FIELD_PK='+field_pk+'&mode='+mode+'&ID_SIMATI='+ID_SIMATI+'&ID_PERBICARAAN='+ID_PERBICARAAN+'&ID_PERMOHONAN='+ID_PERMOHONAN+'&ID_PERMOHONANSIMATI='+ID_PERMOHONANSIMATI+'&skrinName='+skrinName+'&scrolPosition='+getPageLocation());
-	//document.getElementById('row'+skrinName+'SEBAB_TANGGUH').style.display = "none";
-	//document.getElementById('trword'+skrinName+'SEBAB_TANGGUH').style.display = "none";
-	//document.getElementById(skrinName+'SEBAB_TANGGUH').value = "";
-	//document.getElementById('row'+skrinName+'KEPUTUSAN_MAHKAMAH').style.display = "none";
-	//document.getElementById('trword'+skrinName+'KEPUTUSAN_MAHKAMAH').style.display = "none";
-	//document.getElementById(skrinName+'KEPUTUSAN_MAHKAMAH').value = "";
 	}
 	else
 	{
 		$jquery("#divSkrinSuplimentTangguhBatal").html("");
 		$jquery("#divSkrinSuplimentTangguhBatal_ListPB").html("");
-		//document.getElementById('trword'+skrinName+'SEBAB_TANGGUH').style.display = "";		
-		//document.getElementById('row'+skrinName+'SEBAB_TANGGUH').style.display = "";
-		//document.getElementById('trword'+skrinName+'KEPUTUSAN_MAHKAMAH').style.display = "";
-		//document.getElementById('row'+skrinName+'KEPUTUSAN_MAHKAMAH').style.display = "";
-	}
 }
 
 function salinAlamatPemohon(skrinName,ID_PERMOHONAN)

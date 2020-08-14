@@ -51,8 +51,6 @@ public class BicaraInteraktif extends AjaxBasedModule {
 	FrmPrmhnnSek8BicaraData modelBicaraData = new FrmPrmhnnSek8BicaraData();
 	public RazTemplete RT = new RazTemplete();
 	FrmHeaderPpk mainheader = new FrmHeaderPpk();
-	//private final String BASENAME = "dbconnection";
-	//private ResourceBundle rb = ResourceBundle.getBundle(BASENAME);
 	public String fontSize = rbCetakan.getString("fontSizeCetakan");
 	//public String fontSize = "font-size: 16px;";
 	String checkedSelesai = "";//arief add
@@ -78,15 +76,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		Vector getrecord_perintah = new Vector(); //arief add
 		String idpermohonan = getParam("idpermohonan");//arief add
 		String idNegeriMhn = "";//arief add
-		Vector list = new Vector();//arief add
-		/*
-		if(USER_ID_SYSTEM == null)
-		{
-			skrin_name = "app/blankSessionOut.jsp";
-		}
-		else
-		{
-		*/			
+		Vector list = new Vector();//arief add		
+			
 			Map getDetailUsers = modelBI.getDetailUsers(session, "", USER_ID_SYSTEM, "", null);
 			String id_jawatan_login = "";
 			String id_negeri_login = "";
@@ -6747,9 +6738,6 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				        }
 				        ps.setString(3, catatKeputusanPerbicaraan);
 				        ps.setString(4, INTRO_CATATAN);
-				        
-				        
-				        
 				        ps.setString(5, CATATAN_DOCKIV);       
 				        ps.setString(6, return_ID_PERINTAH);			       
 				        ps.executeUpdate();

@@ -5034,20 +5034,7 @@ public class BicaraInteraktifData {
 			sql = r.getSQLInsert("TBLPPKKOLATERALDTL",db1);			
 			myLogger.info("INSERT TBLPPKKOLATERALDTL : "+sql);				
 			stmt.executeUpdate(sql);
-			/*
-		}
-		catch (Exception re) {
-			throw re;
-		}finally {
-			if(db==null)
-			{
-				if (db1 != null)
-					db1.close();
-			}
-		}
-		*/
 	}
-	
 	public void simpanKehadiran(HttpSession session, String keterangan, String nota_pegawai, String id_bikehadiran, String id_perbicaraan, 
 			String nama, String hubungan, 
 			String pengenalan, String status, String umur,
@@ -5123,7 +5110,6 @@ public class BicaraInteraktifData {
 			}
 		}
 	}
-	
 	//arief add tidak hadir
 	public void simpanTidakHadir(HttpSession session, String id_bitidakhadir, String id_perbicaraan, 
 			String nama, String hubungan, 
@@ -5192,7 +5178,6 @@ public class BicaraInteraktifData {
 			}
 		}
 	}
-	
 	//arief add tidak hadir
 	public Map viewTidakHadir(HttpSession session, String id_bitidakhadir, Db db)throws Exception {
 		Db db1 = null;
@@ -5224,7 +5209,6 @@ public class BicaraInteraktifData {
 			}
 		}
 	}
-	
 	//arief add tidak hadir
 	public String queryListTidakHadir(String id_perbicaraan,String id_bitidakhadir)
 	{
@@ -5265,7 +5249,6 @@ public class BicaraInteraktifData {
 		return h;	
 		
 	}
-	
 	//arief add
 	public String setDataList(HttpSession session,String NamaDataList, String skrinName, String column_name,
 			String TABLE_NAME,String PK_FIELD, String KOD_FIELD, Db db)throws Exception {

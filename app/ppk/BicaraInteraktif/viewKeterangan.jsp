@@ -345,9 +345,7 @@
 		reAssignFieldEditorContent('NOTA_PEGAWAI_$ID_OBPERMOHONAN'); 
 		
 		</script>
-        
-        
-        
+
         <div id="infobuttonNotaPegawai$ID_OBPERMOHONAN" style="display:none"><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keterangan'</font> akan dipaparkan.</i></div>
 </td></tr>
 

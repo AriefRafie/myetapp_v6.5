@@ -173,7 +173,6 @@
                
                </a>	   
                </span>
-				
                 <script type="text/javascript">
 				if('$pr.ID_BIKEHADIRAN' != "")
 				{
@@ -219,9 +218,8 @@
 </fieldset>
 </td>
 </tr>
-
 <!-- arief add Saksi OPEN-->
-<!----><tr  >
+<tr  >
 <td >
 </td>
 <td >
