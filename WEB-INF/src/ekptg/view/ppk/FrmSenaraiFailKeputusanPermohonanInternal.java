@@ -79,7 +79,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		logic_F = new FrmPrmhnnSek8KeputusanPermohonanInternalData();
 		myLogger.info(":::::::::::::::9::::::::::::::");
 		mainheader = new FrmHeaderPpk();
-		myLogger.info(":::::::::::::::10::::::::::::::");
+		Vector flag5juta =  new Vector(); //arief add 5 juta
 		this.context.put("seksyen_kp", "8");
 		Vector listSupportingDoc = null;
 
@@ -195,7 +195,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			// System.out.println("SIZE LIST C: " + listC.size());
 			// this.context.put("listC", listC);
 		}
-
+		
+		FrmPrmhnnSek8KeputusanPermohonanInternalData.checkFlag5Juta(id); 
+		flag5juta = FrmPrmhnnSek8KeputusanPermohonanInternalData.getFlag5Juta();
+		this.context.put("flag5juta", flag5juta);
+		
 		if ("paparKeputusan".equals(submit)) {
 			System.out.println("~~~~~~~~ paparKeputusan ~~~~~~~~~~~~~~~~~~~");
 			String idPermohonan = getParam("idPermohonan");
@@ -3958,18 +3962,18 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					Vector checkIdKeputusan = FrmPrmhnnSek8KeputusanPermohonanInternalData
 							.getSemakIdKeputusan();
 					Hashtable j = (Hashtable) checkIdKeputusan.get(0);
-					String idKeputusanPermohonan = j.get("cntid").toString();
-					System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
+					//String idKeputusanPermohonan = j.get("cntid").toString();
+					//System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
 					
-					check_tblppksd(idKeputusanPermohonan);
+					//check_tblppksd(idKeputusanPermohonan);
 					Vector checktblppksd = FrmPrmhnnSek8KeputusanPermohonanInternalData
 							.getsemaktblppksd();
 					Hashtable k = (Hashtable) checktblppksd.get(0);
-					String cntResultppksd = k.get("cntid").toString();
+					//String cntResultppksd = k.get("cntid").toString();
 					
-					System.out.println("-------cntResultppksd----"+cntResultppksd);
+					//System.out.println("-------cntResultppksd----"+cntResultppksd);
 					
-					updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
+					//updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
 					if (ARB.equals("YES"))
 						{
 							System.out.println("-------ARB keputusan2----"+ARB);
