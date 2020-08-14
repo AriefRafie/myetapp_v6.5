@@ -50,19 +50,19 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	private String readonly = "disabled class = \"disabled\"";
 	static Logger myLog = Logger.getLogger(FrmTKROnlineKJPSenaraiFailView.class);
 	private ILampiran iLampiran = null;
+	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
+	private ekptg.model.utils.emel.IEmel emelSemak = null;
+	private IUserPegawai iUser = null;
+	private String idSuburusan = "33";
+	private IOnline iOnline = null;
+	private IHtp iHTP = null;
+	private String templateDir = "app/php2/online/ulasanKJP/tkr";
 
 	FrmTKRHeaderData logicHeader = new FrmTKRHeaderData();
 	FrmTKRJabatanTeknikalData logicJabatanTeknikal = new FrmTKRJabatanTeknikalData();
 	FrmTKROnlineKJPSenaraiFailData logic = new FrmTKROnlineKJPSenaraiFailData();
-	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
-	private ekptg.model.utils.emel.IEmel emelSemak = null;
-	private IUserPegawai iUser = null;
-	private String templateDir = "app/php2/online/ulasanKJP/tkr";
-	private String idSuburusan = "33";
+	
 	String idJawatan = "";
-	private IOnline iOnline = null;
-	private IHtp iHTP = null;
-
 	
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -80,8 +80,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		String vm = "";
 		String submit = getParam("command");
 		String submit2 = getParam("submit2");
-		String flagPopup = getParam("flagPopup");
-		String modePopup = getParam("modePopup");
+		//String flagPopup = getParam("flagPopup");
+		//String modePopup = getParam("modePopup");
 		String mode = getParam("mode");
         if (mode.isEmpty()){
         	mode = "view";
@@ -115,9 +115,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		String namaKementerian = "";
 		String namaAgensi = "";
 
-
-
-
 		// VECTOR
 		Vector beanMaklumatPermohonan = null;
 		Vector beanMaklumatPemohon = null;
@@ -150,7 +147,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			idKementerian = "99999";
 		}
 		String idAgensi = getParam("socAgensi");
-		myLog.info("idAgensi "+idAgensi);
 		if (idAgensi == null || idAgensi.trim().length() == 0) {
 			idAgensi = "99999";
 		}
@@ -172,8 +168,12 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 		this.context.put("errorPeganganHakmilik", "");
 
-		userRole = logic.getUserRole(userId);
-		userJawatan = logic.getUserJawatan(userId);
+		Hashtable hUser = getIUser().getPengguna(userId);
+		//userRole = logic.getUserRole(userId);
+//		userJawatan = logic.getUserJawatan(userId);
+		userJawatan = String.valueOf(hUser.get("idJawatan"));
+		idJawatan = userJawatan;
+		idKementerian =  String.valueOf(hUser.get("idKementerian"));
 
 		if ("24".equals(userJawatan)) {
 			layerKJP = "1";
@@ -190,7 +190,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		this.context.put("userJawatan", userJawatan);
 		this.context.put("layerKJP", layerKJP);
 
-		listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
+		/*listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
 
 		if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
 			Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
@@ -202,10 +202,10 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			myLog.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
 
 		}
-
-		Hashtable hUser = getIUser().getPengguna(userId);
-		userJawatan = String.valueOf(hUser.get("userJawatan"));
-		idJawatan = String.valueOf(hUser.get("idjawatan"));
+*/
+		//Hashtable hUser = getIUser().getPengguna(userId);
+		//userJawatan = String.valueOf(hUser.get("userJawatan"));
+		//idJawatan = String.valueOf(hUser.get("idjawatan"));
 		context.put("idjawatan", idJawatan);
 
 

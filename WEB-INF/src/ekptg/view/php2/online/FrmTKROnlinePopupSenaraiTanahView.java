@@ -13,7 +13,7 @@ import ekptg.helpers.Paging;
 import ekptg.model.php2.online.FrmTKRPopupSenaraiTanahOnlineData;
 
 public class FrmTKROnlinePopupSenaraiTanahView extends AjaxBasedModule {
-	// test 14/8/2020
+	// test 14/8/2020  //
 	private static final long serialVersionUID = 1L;
 	
 	FrmTKRPopupSenaraiTanahOnlineData logic = new FrmTKRPopupSenaraiTanahOnlineData();
