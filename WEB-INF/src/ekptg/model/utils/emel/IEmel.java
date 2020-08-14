@@ -1,6 +1,5 @@
 package ekptg.model.utils.emel;
 
-
 public interface IEmel {
 
 	// class IEmel
