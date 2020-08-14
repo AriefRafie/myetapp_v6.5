@@ -389,3 +389,7 @@
 2020-08-14 18:47:22,599 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
 2020-08-14 18:47:30,556 - Null reference [template 'app/admin/UV3/showFieldMyCOID.jsp', line 12, column 248] : $jquery cannot be resolved.
 2020-08-14 18:47:30,559 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-08-14 20:28:05,044 - ResourceManager : found vtl/main/_portal.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-08-14 20:28:05,050 - ResourceManager : found portal/content.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-08-14 20:28:05,054 - ResourceManager : found portal/utama.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-08-14 20:28:05,054 - Null reference [template 'portal/utama.jsp', line 21, column 13] : $jquery cannot be resolved.
