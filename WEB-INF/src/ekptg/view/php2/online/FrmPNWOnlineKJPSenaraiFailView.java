@@ -24,8 +24,6 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
-import ekptg.model.entities.UserKementerian;
-import ekptg.model.htp.FrmJRPSenaraiPermohonanData;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmUtilData;
 import ekptg.model.htp.HtpBean;
@@ -35,7 +33,7 @@ import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.php2.online.FrmPNWOnlineKJPSenaraiFailData;
 import ekptg.model.php2.utiliti.LampiranBean;
 import ekptg.model.utils.IUserPegawai;
-import ekptg.model.utils.UserBean;
+import ekptg.model.utils.UserKJPBean;
 import ekptg.model.utils.emel.EmailConfig;
 import ekptg.model.utils.emel.IEmel;
 import ekptg.model.utils.lampiran.ILampiran;
@@ -48,15 +46,11 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 	private IOnline iOnline = null;
 	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
 	private IHtp iHTP = null;
-	private String userId = null;
-	private UserKementerian uk = null;
 	private ekptg.model.utils.emel.IEmel emelSemak = null;
 	private IUserPegawai iUser = null;
 	private String idSubUrusan = "32";
 	private ILampiran iLampiran = null;
-
 	String idJawatan = "";
-
 	
 	FrmPNWOnlineKJPSenaraiFailData logic = new FrmPNWOnlineKJPSenaraiFailData();
 	static Logger myLog = Logger.getLogger(FrmPNWOnlineKJPSenaraiFailView.class);
@@ -83,10 +77,12 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		String idHakmilikAgensi = getParam("idHakmilikAgensi");
 		String idHakmilikSementara = null;
 		idHakmilikSementara = getParam("idHakmilikSementara");
+		String idHakmilikAgensiPopup = null;
+		idHakmilikAgensiPopup = getParam("idHakmilikAgensiPopup");
 		String idPPTBorangK = getParam("idPPTBorangK");
 		String idHakmilikUrusan = getParam("idHakmilikUrusan");
 		String idPHPBorangK = getParam("idPHPBorangK");
-		String idUlasanTeknikal = getParam("idUlasanTeknikal");
+//		String idUlasanTeknikal = getParam("idUlasanTeknikal");
 		String langkah = getParam("langkah");
 
 		String idFailSession = "";
@@ -129,7 +125,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		String idDokumen = getParam("idDokumen");
 		String idKategoriPemohon = "";
 		String idJenisTanah = "1";
-		String namaJenisTanah = "TANAH MILIK PERSEKUTUAN";
+//		String namaJenisTanah = "TANAH MILIK PERSEKUTUAN";
 		String namaKementerian = "";
 		String kategori = getParam("kategori");
 
@@ -180,8 +176,12 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 		this.context.put("errorPeganganHakmilik", "");
 
-		userRole = logic.getUserRole(userId);
-		userJawatan = logic.getUserJawatan(userId);
+		Hashtable hUser = getIUser().getPengguna(userId);
+		//userRole = logic.getUserRole(userId);
+//		userJawatan = logic.getUserJawatan(userId);
+		userJawatan = String.valueOf(hUser.get("idJawatan"));
+		idJawatan = userJawatan;
+		idKementerian =  String.valueOf(hUser.get("idKementerian"));
 
 		if ("24".equals(userJawatan)) {
 			layerKJP = "1";
@@ -193,27 +193,22 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			layerKJP = "1";
 		}
 
-		this.context.put("userRole", userRole);
-		this.context.put("userJawatan", userJawatan);
+		//this.context.put("userRole", userRole);
+		//this.context.put("userJawatan", userJawatan);
 		this.context.put("layerKJP", layerKJP);
 
+//		listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
+//		if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
+//			Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
+//			idNegeriPemohon = hashRayuanDB.get("idNegeri").toString();
+//			idKementerian = hashRayuanDB.get("idKementerian").toString();
+//			idAgensi = hashRayuanDB.get("idAgensi").toString();
+//			myLog.info("JAWATAN="+userJawatan);
+//			myLog.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
+//
+//		}
 
-		listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
-
-		if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
-			Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
-			idNegeriPemohon = hashRayuanDB.get("idNegeri").toString();
-			idKementerian = hashRayuanDB.get("idKementerian").toString();
-			idAgensi = hashRayuanDB.get("idAgensi").toString();
-
-			myLog.info("JAWATAN="+userJawatan);
-			myLog.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
-
-		}
-
-		Hashtable hUser = getIUser().getPengguna(userId);
-		userJawatan = String.valueOf(hUser.get("userJawatan"));
-		idJawatan = String.valueOf(hUser.get("idjawatan"));
+//		userJawatan = String.valueOf(hUser.get("userJawatan"));
 		context.put("idjawatan", idJawatan);
 
 		this.context.put("idNegeriPemohon", idNegeriPemohon);
@@ -223,8 +218,8 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		this.context.put("completed", false);
 
 		// DATE
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				Date currentDate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date currentDate = new Date();
 
 		// HITBUTTON
 		if (postDB) {
@@ -475,6 +470,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 			// MODE VIEW
 			if ("view".equals(mode)) {
+				myLog.info("baca view!!");
     			String id = getParam("id_kemaskini");
     			logic.setMaklumatHeader(idFail);
     			beanHeader = logic.getBeanMaklumatHeader();
@@ -525,17 +521,17 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
     			this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian,
     					Long.parseLong(idAgensi), "disabled", " class=\"disabled\""));
     			
-    			logic.getIdNegeriKJPByUserId(userId);
-    			Hashtable hashList = (Hashtable) listDetailKJP.get(0);
-    			listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
-    			idNegeriPemohon = hashList.get("idNegeri").toString();
-    			namaPemohon = (String) hashList.get("namaPemohon");
-    			userId = (String) hashList.get("userId");
-
-    			this.context.put("ListdetailKJP", listDetailKJP);
-    			this.context.put("namaPemohon", namaPemohon);
-    			this.context.put("userId", userId);
-    			myLog.info("namaPemohon:: " + namaPemohon);
+//    			logic.getIdNegeriKJPByUserId(userId);
+//    			Hashtable hashList = (Hashtable) listDetailKJP.get(0);
+//    			listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
+//    			idNegeriPemohon = hashList.get("idNegeri").toString();
+//    			namaPemohon = (String) hashList.get("namaPemohon");
+//    			userId = (String) hashList.get("userId");
+//
+//    			this.context.put("ListdetailKJP", listDetailKJP);
+//    			this.context.put("namaPemohon", namaPemohon);
+//    			this.context.put("userId", userId);
+//    			myLog.info("namaPemohon:: " + namaPemohon);
 
     			String semakMode = "";
     			String statusSemasa = "1";
@@ -769,7 +765,6 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 			// MODE UPDATE
 			else if ("update".equals(mode)) {
-
 				this.context.put("readonly", "");
 				this.context.put("inputTextClass", "");
 				this.context.put("disabled", "");
@@ -778,6 +773,9 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 					// MAKLUMAT TANAH
 					beanMaklumatTanah = new Vector();
+					if(idHakmilikAgensiPopup!="") {
+						idHakmilikAgensi=idHakmilikAgensiPopup;
+					}
 					logic.setMaklumatTanah(idHakmilikAgensi);
 					beanMaklumatTanah = logic.getBeanMaklumatTanah();
 					this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
@@ -798,12 +796,25 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 							this.context.put("errorPeganganHakmilik", "Hakmilik tidak wujud.");
 						}
 					} else if ("doChangeMaklumatTanah".equals(submit)) {
+						
+						beanMaklumatAgensi = new Vector();
+						logic.setMaklumatAgensi(idAgensi);
+						beanMaklumatAgensi = logic.getBeanMaklumatAgensi();
+						this.context.put("idKategoriPemohon", idKategoriPemohon);
+						this.context.put("idAgensi", idAgensi);
+						this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);
+						
+						
 						beanMaklumatTanah = new Vector();
 						idHakmilikAgensi = getParam("idHakmilikAgensi");
+						if(idHakmilikAgensiPopup!="") {
+							idHakmilikAgensi=idHakmilikAgensiPopup;
+						}
 						logic.setMaklumatTanah(idHakmilikAgensi);
 						beanMaklumatTanah = logic.getBeanMaklumatTanah();
 						this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 						this.context.put("idHakmilikAgensi", idHakmilikAgensi);
+			
 					}
 
 				} else if ("1".equals(selectedTabUpper)) {
@@ -943,6 +954,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}
 
 		}else {
+			myLog.info("baca else");
 
 			String jenisHakmilik = getParam("socJenisHakmilik");
 			if (jenisHakmilik == null || jenisHakmilik.trim().length() == 0) {
@@ -1167,7 +1179,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 	}
 	private IUserPegawai getIUser(){
 		if(iUser==null){
-			iUser = new UserBean();
+			iUser = new UserKJPBean();
 		}
 		return iUser;
 			
@@ -1179,4 +1191,5 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		return iLampiran;
 				
 	}
+	
 }

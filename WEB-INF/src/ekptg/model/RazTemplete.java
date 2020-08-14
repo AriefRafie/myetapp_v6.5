@@ -81,17 +81,17 @@ import ekptg.helpers.Paging2;
 
 public class RazTemplete extends VTemplate {
 	
-		public Logger myLogger = Logger.getLogger(ekptg.model.RazTemplete.class);
-		public ResourceBundle rbRaz = ResourceBundle.getBundle("RazTemplete");
-		public String currentSQL = "";  
-		public String loadingMsg = "";
-		public HttpSession session;
-		public String modul = "";
+	public Logger myLogger = Logger.getLogger(ekptg.model.RazTemplete.class);
+	public ResourceBundle rbRaz = ResourceBundle.getBundle("RazTemplete");
+	public String currentSQL = "";  
+	public String loadingMsg = "";
+	public HttpSession session;
+	public String modul = "";
 		//public Db dbMain = null;
 		//public Connection conn = null;
 		
-		public void setEnvironmentRT(VelocityEngine engine, VelocityContext context, HttpServletRequest request, HttpServletResponse response,HttpSession session, String modul)
-	    {
+	public void setEnvironmentRT(VelocityEngine engine
+		, VelocityContext context, HttpServletRequest request, HttpServletResponse response,HttpSession session, String modul){
 	        this.engine = engine;
 	        this.context = context;
 	        this.request = request;

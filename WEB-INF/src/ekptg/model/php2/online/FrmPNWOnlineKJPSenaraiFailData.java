@@ -21,7 +21,6 @@ import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
 import ekptg.view.php2.emel.EmailOnline;
-import ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView;
 
 public class FrmPNWOnlineKJPSenaraiFailData {
 
@@ -203,8 +202,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 					sql = sql + " AND I.ID_AGENSI = F.ID_AGENSI";
 				}
 			}
-			myLog.info("carianFail: " + sql);
-			myLog.info("senaraiFail: " + sql);
+			myLog.info("carianFail: sql=" + sql);
 
 			sql = sql + " ORDER BY B.ID_PERMOHONAN DESC";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -2210,4 +2208,6 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 	public Vector<Hashtable<String, Object>> getBeanMaklumatPemohon() {
 		return beanMaklumatPemohon;
 	}
+	
+
 }
