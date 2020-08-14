@@ -1,4 +1,3 @@
-
 <style type="text/css">
 <!--
 .style1 {
@@ -14,53 +13,20 @@
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
-  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
-   <input name="idPermohonanLama" type="hidden" id="idPermohonanLama" value="$idPermohonanLama"/>
-   <input name="checkId" type="hidden" id="checkId" value="$checkId"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
-  <input name="idJenisPermohonan" type="hidden" id="idJenisPermohonan" value="$idJenisPermohonan"/>
   <input name="idNegeriPemohon" type="hidden" id="idNegeriPemohon" value="$idNegeriPemohon"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-	#if ($checkId != '')	
- <tr>  
+<tr>  
   	<td colspan="2"><fieldset>
   	  <legend><strong>JENIS PERMOHONAN</strong></legend>
   	  <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  	<!--  <tr>
+  		<tr>
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td valign="top">Jenis Permohonan</td>
           <td width="1%">:</td>
           <td width="70%">$selectJenisPermohonan</td>
-        </tr> 
-        -->
-        #if ($idStatus == '')
-        <tr>
-        <td width="1%">&nbsp;</td>
-  		<td>Jenis Permohonan</td>
-  		<td width = "1%">:</td>
-  		<td width ="70%">PERMOHONAN BARU</td>		
-  	</tr>
-  	#end
-  	#if ($idStatus == '1610207')
-  	 <tr>
-        <td width="1%">&nbsp;</td>
-  		<td>Jenis Permohonan</td>
-  		<td width = "1%">:</td>
-  		<td width ="70%">PEMBAHARUAN LESEN</td>		
-  	</tr>
-  	
-  	 <tr>
-        <td width="1%">&nbsp;</td>
-  		<td>No. Fail Lama</td>
-  		<td width = "1%">:</td>
-  		<td width ="70%">$!noFailLama</td>		
-  	</tr>
-  	 
-  	#end
-  	  
-        
-      <!-- 
+        </tr>
         #if ($idJenisPermohonan == '1')
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
@@ -73,21 +39,20 @@
           </td>
         </tr>
         #end
-        #elseif ($idJenisPermohonan == '2') -->
-<!--         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan) -->
-      <!--    <tr>
+        #elseif ($idJenisPermohonan == '2')
+        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+        <tr>
           <td width="1%">&nbsp;</td>
           <td valign="top">No. Fail Lama</td>
           <td>:</td>
-          <td>$!c.get("noFailLama")
+          <td>
           	<input type="text" name="txtNoFailLama" id="txtNoFailLama" size="43" value="$beanMaklumatPermohonan.noFail" 
           		onblur="this.value=this.value.toUpperCase();doChangeNoFailAPB();" $readonly class="$inputTextClass"/>
           </td>
           </td>
-        </tr> -->
-<!--         #end -->
-     <!--     #end
-         -->
+        </tr>
+        #end
+        #end
   	  </table>
   	</td>
   </tr>
@@ -182,7 +147,7 @@
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-       <!--  <tr>
+        <tr>
           <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Permohonan</td>
           <td width="1%" >:</td>
@@ -190,15 +155,6 @@
             <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
             <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
         </tr>
-         -->
-         #if ($idStatus != '')
-        <tr>
-        <td width="1%">&nbsp;</td>
-  		<td>No. Permohonan</td>
-  		<td width = "1%">:</td>
-  		<td width ="70%">$!noPermohonan</td>		
-  	</tr>
-  	#end
         <tr>
           <td>&nbsp;</td>
           <td >Urusan</td>
@@ -214,10 +170,10 @@
           <td>$selectJenisLesen</td>
         </tr>
         <tr>
-           <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          <td>Jenis Tujuan</td>
-          <td>:</td>
-          <td width="70%">$selectJenisTujuan</td>
+          <td width="1%">&nbsp;</td>
+          <td width="28%">Jenis Tujuan</td>
+          <td width="1%">:</td>
+          <td width="70%">MENGOREK</td>
         </tr>
         <tr>
           <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
@@ -325,41 +281,28 @@
     <td colspan="2"><fieldset>
       <legend><strong>KAWASAN PERMOHONAN</strong></legend>
      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)        
+        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
-        	<td width="1%">&nbsp;</td>
-        	<td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          <td width="28%" valign="top">Luar Perairan Negeri</td>
-          <td width="1%">:</td>
-          <td width="70%"><strong>$selectFlagLuar </strong>
-          </td>
+          <td width="1%">&nbsp;</td>
+          <td width="29%">Luar Perairan Negeri</td>
+          <td width="70%">:$selectFlagLuar</td>
         </tr>
-        
         <tr>
-          <td></td>
-          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td>&nbsp;</td>
           <td>Negeri</td>
-          <td width="1%">:</td>
-          <td width="70%"><strong>$selectNegeri</strong>
-          </td>
+          <td>: 
+            $selectNegeri</td>
         </tr>
-        
         <tr>
           <td>&nbsp;</td>
-          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Lokasi</td>
-          <td width="1%">:</td>
-          <td width="top">
-            <input name="txtLokasi" type="text" class="$inputTextClass" id="txtLokasi"  value="$beanMaklumatPermohonan.lokasi" size="43" maxlength="250" $readonly />
-            </td>
+          <td>:
+            <input name="txtLokasi" type="text" class="$inputTextClass" id="txtLokasi"  value="$beanMaklumatPermohonan.lokasi" size="43" maxlength="250" $readonly /></td>
         </tr>
-        
         <tr>
           <td>&nbsp;</td>
-          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td>Luas Dipohon</td>
-          <td width="1%">:</td>
-          <td width="top">
+          <td>:
             <input type="text" name="txtLuas" id="txtLuas" size="10" onkeyup="validateNumber(this,this.value);" maxlength="10" value="$beanMaklumatPermohonan.luas" $readonly class="$inputTextClass"/>
             $selectLuas</td>
         </tr>
@@ -375,13 +318,12 @@
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%">       
-      #if (($mode == 'new' && $idStatus == '1610207') || ($mode == 'new' && $idStatus == ''))
+      #if ($mode == 'new')
       <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onclick="daftarBaru()"/>
       <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
       #end 
       </td>
   </tr>
-  #end
 </table>
 <script>
 function doChangeJenisPermohonan() {
@@ -391,12 +333,6 @@ function doChangeNoFailAPB() {
 	doAjaxCall${formName}("doChangeNoFailAPB");
 }
 function daftarBaru() {
-
-	if(document.${formName}.socJenisLesen.value == ""){
-		alert('Sila pilih Jenis Lesen.');
-  		document.${formName}.socJenisLesen.focus(); 
-		return; 
-	}
 	if(document.${formName}.socKaitanTujuan.value == ""){
 		alert('Sila pilih Kaitan Tujuan.');
   		document.${formName}.socKaitanTujuan.focus(); 
@@ -417,36 +353,10 @@ function daftarBaru() {
   		document.${formName}.txtRingkasanPengalaman.focus(); 
 		return; 
 	}
-	if(document.${formName}.socFlagLuar.value == ""){
-		alert('Sila masukkan Luar Perairan Negeri.');
-  		document.${formName}.socFlagLuar.focus(); 
-		return; 
-	}
-	if(document.${formName}.socNegeri.value == ""){
-		alert('Sila pilih Negeri.');
-  		document.${formName}.socNegeri.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtLokasi.value == ""){
-		alert('Sila masukkan lokasi.');
-  		document.${formName}.txtLokasi.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtLuas.value == ""){
-		alert('Sila masukkan Luas dipohon.');
-  		document.${formName}.txtLuas.focus(); 
-		return; 
-	}
-	if(document.${formName}.socLuas.value == ""){
-		alert('Sila pilih jenis luas.');
-  		document.${formName}.socLuas.focus();
-		return; 
-	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionOnline.value = "daftarBaru";
 		return;
 	}
-
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.hitButton.value = "daftarBaru";
 	document.${formName}.mode.value = "view";

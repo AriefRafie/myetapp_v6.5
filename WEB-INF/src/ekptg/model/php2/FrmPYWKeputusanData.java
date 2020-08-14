@@ -1,5 +1,5 @@
 /**
- *
+ * 
  */
 package ekptg.model.php2;
 
@@ -23,13 +23,12 @@ import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 
 /**
- *
+ * 
  *
  */
 public class FrmPYWKeputusanData {
 
 	private Vector beanMaklumatKeputusan = null;
-	private Vector beanMaklumatHasil = null;
 	private Vector beanMaklumatPerjanjian = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -98,7 +97,7 @@ public class FrmPYWKeputusanData {
 			}
 
 			conn.commit();
-
+			
 			AuditTrail.logActivity("1610206", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -120,7 +119,7 @@ public class FrmPYWKeputusanData {
 
 	private void insertPerjanjian(String idPermohonan,
 			String txtTarikhMulaDasar, String txtTempohDasar, String txtTarikhTamatDasar,
-			String txtTarikhMula, String txtTempoh, String txtTarikhTamat, String socJenisKadarSewa,
+			String txtTarikhMula, String txtTempoh, String txtTarikhTamat, String socJenisKadarSewa, 
 			String txtKadarSewa, String txtRoyalti, String txtCagaran, Db db,
 			String userId) throws Exception {
 
@@ -271,37 +270,6 @@ public class FrmPYWKeputusanData {
 		}
 	}
 
-	public void setMaklumatHasil(String idFail) throws Exception {
-		Db db = null;
-		String sql = "";
-		System.out.println("idFail >>>> "+idFail);
-
-		try {
-			beanMaklumatHasil = new Vector();
-			db = new Db();
-			Statement stmt = db.getStatement();
-
-			sql = "SELECT FAIL.ID_FAIL, FAIL.NO_FAIL, HASIL.ID_HASIL FROM TBLPFDFAIL FAIL, TBLPHPHASIL HASIL"
-					+ " WHERE FAIL.ID_FAIL = HASIL.ID_FAIL AND FAIL.NO_FAIL = '" + idFail + "'";
-			System.out.println("sql >> "+sql);
-			ResultSet rs = stmt.executeQuery(sql);
-
-			Hashtable h;
-			int bil = 1;
-			while (rs.next()) {
-				h = new Hashtable();
-				h.put("idHasil",
-						rs.getString("ID_HASIL") == null ? "" : rs
-								.getString("ID_HASIL"));
-				beanMaklumatHasil.addElement(h);
-				bil++;
-			}
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-
 	public void updateStatus(String idFail, String idPermohonan,
 			String idKeputusan, String idSuburusan, HttpSession session)
 			throws Exception {
@@ -369,110 +337,12 @@ public class FrmPYWKeputusanData {
 			stmt.executeUpdate(sql);
 
 			// //TODO GENERATE FAIL HASIL
-			 /*if (validateGenerateFailHasil(idPermohonan, idSuburusan, db)){
-				 generateFailHasil(idFail, idPermohonan, db, session, userId);
-			 }*/
-
-			conn.commit();
-
-			if (("L".equals(idKeputusan)) || ("D".equals(idKeputusan))) {
-				AuditTrail.logActivity("1610214", "4", null, session, "INS",
-						"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
-								+ "] PROSES SETERUSNYA"); // PERJANJIAN
-			} else if ("T".equals(idKeputusan)) {
-				AuditTrail.logActivity("1610208", "4", null, session, "INS",
-						"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
-								+ "] PROSES SETERUSNYA"); // TOLAK
-			}
-
-		} catch (SQLException ex) {
-			try {
-				conn.rollback();
-			} catch (SQLException e) {
-				throw new Exception("Rollback error : " + e.getMessage());
-			}
-			throw new Exception("Ralat : Masalah penyimpanan data "
-					+ ex.getMessage());
-
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-
-	public void updateHasil(String idFail, String idPermohonan,
-			String idKeputusan, String idSuburusan, HttpSession session)
-			throws Exception {
-		Db db = null;
-		Connection conn = null;
-		String userId = (String) session.getAttribute("_ekptg_user_id");
-		String sql = "";
-
-		try {
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-
-			// TBLPERMOHONAN
-			/*r.update("ID_PERMOHONAN", idPermohonan);
-			if (("L".equals(idKeputusan)) || ("D".equals(idKeputusan))) {
-				r.add("ID_STATUS", "1610214"); // PERJANJIAN
-			} else if ("T".equals(idKeputusan)) {
-				r.add("ID_STATUS", "1610208"); // TOLAK
-			}
-
-			r.add("ID_KEMASKINI", userId);
-			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-			sql = r.getSQLUpdate("TBLPERMOHONAN");
-			stmt.executeUpdate(sql);
-
-			// TBLRUJSUBURUSANSTATUSFAIL
-			r = new SQLRenderer();
-			r.update("ID_PERMOHONAN", idPermohonan);
-			r.update("AKTIF", "1");
-
-			r.add("AKTIF", "0");
-
-			r.add("ID_KEMASKINI", userId);
-			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-			sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
-			stmt.executeUpdate(sql);
-
-			r = new SQLRenderer();
-			long idSuburusanstatusfail = DB
-					.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
-			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
-			r.add("ID_PERMOHONAN", idPermohonan);
-			if ("L".equals(idKeputusan)) {
-				r.add("ID_SUBURUSANSTATUS",
-						getIdSuburusanstatus(idSuburusan, "1610214")); // PERJANJIAN
-			} else if ("T".equals(idKeputusan)) {
-				r.add("ID_SUBURUSANSTATUS",
-						getIdSuburusanstatus(idSuburusan, "1610208")); // TOLAK
-			}
-
-			r.add("AKTIF", "1");
-			r.add("ID_FAIL", idFail);
-
-			r.add("ID_MASUK", userId);
-			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-			r.add("ID_KEMASKINI", userId);
-			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
-			stmt.executeUpdate(sql);*/
-
-			// //TODO GENERATE FAIL HASIL
 			 if (validateGenerateFailHasil(idPermohonan, idSuburusan, db)){
 				 generateFailHasil(idFail, idPermohonan, db, session, userId);
 			 }
 
-			/*conn.commit();
-
+			conn.commit();
+			
 			if (("L".equals(idKeputusan)) || ("D".equals(idKeputusan))) {
 				AuditTrail.logActivity("1610214", "4", null, session, "INS",
 						"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
@@ -481,8 +351,8 @@ public class FrmPYWKeputusanData {
 				AuditTrail.logActivity("1610208", "4", null, session, "INS",
 						"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 								+ "] PROSES SETERUSNYA"); // TOLAK
-			}*/
-
+			}
+			
 		} catch (SQLException ex) {
 			try {
 				conn.rollback();
@@ -665,7 +535,7 @@ public class FrmPYWKeputusanData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, ROYALTI, CAGARAN, TARIKH_MULA_DASAR, "
+			sql = "SELECT TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, ROYALTI, CAGARAN, TARIKH_MULA_DASAR, " 
 					+ " TEMPOH_DASAR, TARIKH_TAMAT_DASAR, JENIS_KADAR_SEWA FROM TBLPHPPERJANJIAN"
 					+ " WHERE ID_PERJANJIAN = '" + idPerjanjian + "'";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -782,7 +652,7 @@ public class FrmPYWKeputusanData {
 				/**
 				 * Kemaskini pada : 29/01/2020
 				 * Kemaskini oleh : Nurul Ain
-				 * Keterangan 	  : No. fail sewa sama dengan hasil
+				 * Keterangan 	  : No. fail sewa sama dengan hasil 
 				 */
 //				if (noFail.contains("JKPTG/SPHP/931/")) {
 //					noFail = noFail.replaceAll("JKPTG/SPHP/931/",
@@ -1078,13 +948,5 @@ public class FrmPYWKeputusanData {
 
 	public void setBeanMaklumatPerjanjian(Vector beanMaklumatPerjanjian) {
 		this.beanMaklumatPerjanjian = beanMaklumatPerjanjian;
-	}
-
-	public Vector getBeanMaklumatHasil() {
-		return beanMaklumatHasil;
-	}
-
-	public void BeanMaklumatHasil(Vector beanMaklumatHasil) {
-		this.beanMaklumatHasil = beanMaklumatHasil;
 	}
 }

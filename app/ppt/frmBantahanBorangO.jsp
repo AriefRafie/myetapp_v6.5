@@ -11,6 +11,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
     </div>
 #end -->
 
+
 #if ($clearForm == "yes")
 	#set ($txdTkhBrgO = "")
     #set ($txtAlamatMahkamah1 = "")
@@ -198,7 +199,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
     </table>
 </fieldset>
 
-<br/>
+<br />
 
 <fieldset>
 <legend>Maklumat Penghantar Borang O</legend>
@@ -243,73 +244,13 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
         </tr>          
     </table>
 </fieldset>
-<br/>
-<!-- PPT-35 (ii) -->
-<!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
-
-	<input type="hidden" name="nama_skrin" id="nama_skrin" value="borangO"  />
-	<fieldset id="senarai_dokumen" >
-	<legend>Senarai Dokumen</legend>
-    
-    <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
-#if($listDokumen_size > 0)
-	<input name="cmdHapusDokumen" type="button" value="Hapus" onClick="hapusDokumenMaster('$!readmode')" title="Sila tick untuk hapus dokumen" >
-#end
-    <table width="100%">
-  		<tr class="table_header">
-    		<td width="3%">Bil</td>
-    		<td width="30%">Nama Dokumen</td>
-    		<td width="30%">Keterangan</td>
-    		<td width="30%">Dokumen Sokongan (Papar)</td>
-      		<td width="7%">
-    	#if($listDokumen_size > 0)
-      			<div align="center">
-      			<input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
-      			</div>
-      	#end
-      		</td>
-  		</tr>
-#if($listDokumen_size > 0)
-	
-	#foreach($list1 in $listDokumen)
-		#set( $i = $velocityCount )
-		#if ( ($i % 2) != 1 )
-			#set( $row = "row2" )
-		#else
-			#set( $row = "row1" )
-		#end
-
-		<tr class="$row" >  
-			<td >$list1.BIL</td>
-			<td ><a href="javascript:viewLampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
-		    <td >$list1.KETERANGAN</td>
-		    <td ><a href="javascript:paparLampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
-		    <td ><div align="center">
-		       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
-		     </div>
-		 	</td>
-	  </tr>
-  	#end
-  
-  #else
-  	 	<tr>
-   			<td colspan="5">Tiada Rekod</td>    
- 	 	</tr>
-  #end
-	</table>
-	</fieldset>
-<!-- PPT-35 (ii) -->
-<br/>
 
 <!------------------------------------ END MAKLUMAT BANTAHAN ------------------------------------------> 
         <div align="center">  
-     	#if ($button=="view")       
+          #if ($button=="view")       
           <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniBorangO()" /> 
           <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" />
-      	<!-- INTEGRASI MAHKAMAH TINGGI -->
-		<input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
- 	  	<!-- END INTEGRASI MAHKAMAH -->  
- 		#end
+          #end
           
           #if ($button=="edit")
           <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanBorangO()" /> 
@@ -317,7 +258,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           #end
           
           <input type="button" name="cmdkembali" id="cmdkembali" value="Kembali" onclick="javascript:kembaliList()" />
-                         
+          
+               
         </div>     
     </div>
     
@@ -331,6 +273,76 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type=hidden name=selectedtab />
 <!--------------------------------------- END TAB BANTAHAN ------------------------------------------->
 </fieldset>
+
+<!-- PPT-35 (ii) -->
+<!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
+
+<!-- :::upload -->
+<input type="hidden" name="nama_skrin" id="nama_skrin" value="borangO"  />
+<fieldset id="senarai_dokumen" >
+<!-- jenis dokumen = '$jenisDoc' -->
+<!-- jenis skrin = '$nama_skrin' -->
+<!-- id bantahan = '$id_bantahan' -->
+<!-- listDokumen =  $listDokumen -->
+<legend>Senarai Dokumen Yang Disertakan</legend>
+    
+    <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
+    #if($listDokumen_size > 0)
+     <input name="cmdHapusDokumen" type="button" value="Hapus" onClick="hapusDokumenMaster('$!readmode')" title="Sila tick untuk hapus dokumen" >
+    #end
+    <table width="100%">
+  <tr class="table_header">
+    <td width="5%">Bil</td>
+    <td width="30%">Nama Dokumen</td>
+    <td width="30%">Keterangan</td>
+    <td width="30%">Dokumen Sokongan (Papar)</td>
+	
+    #if($listDokumen_size > 0)
+      <td width="5%">
+      	<div align="center">
+      	<input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
+      </div>
+      </td>
+      #end
+  </tr>
+
+
+<!-- Start Fetch BorangO -->
+#if($listDokumen_size > 0)
+	#set ($cnt=0)
+	#foreach($list1 in $listDokumen)
+		#set( $i = $velocityCount )
+		#if ( ($i % 2) != 1 )
+			#set( $row = "row2" )
+		#else
+			#set( $row = "row1" )
+#end
+
+#if($list1.JENIS_DOKUMEN == 'borangO')   <!-- PPT-35 (ii) -->  
+	#set ($cnt = 1)
+<!-- Ending Fetch BorangO -->
+
+	<tr>  
+		<td class="$row" >$list1.BIL</td>
+		<td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
+	    <td class="$row" >$list1.KETERANGAN</td>
+	    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
+	    <td class="$row" ><div align="center">
+	       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
+	     </div></td>
+	  </tr>
+	#end
+  #end
+  #else
+  <tr>
+    <td colspan="5">Tiada Rekod</td>    
+  </tr>
+  #end
+</table>
+</fieldset>
+<!-- PPT-35 (ii) -->
+
+
 
 <!------------------------------------------ OUTPUT LAPORAN/SURAT ----------------------------------------------->
 <br/>
@@ -412,40 +424,6 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type="hidden" name="id_borange" id="id_borange" value="$!id_borange" />
 
 <script type="text/javascript">
-	
-
-	function hantarBantahan() {	
-		var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
-		var idFail = "&idfail=$!id_fail";
-		var idHarta  = "&idharta="+$jquery('#id_hakmilikpb').val();
-		var idPermohonan  = "&idpermohonan="+$jquery('#id_permohonan').val();
-		var idSiasatan  = "&idsiasatan="+$jquery('#id_siasatan').val();
-		var idWarta  = "&idwarta=$!idWarta";
-		var mahkamah  = "&idmt=$!idMT";
-		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan+mahkamah;
-		//alert(param);
-		var url = "../x/${securityToken}/ekptg.view.ppt.bantahan.IntegrasiMT?"+param+"&command=bantahanpb&frmFrom=FrmBantahanSenaraiCarian";
-		var hWnd = window.open(url,'Cetak','width=625,height=575, resizable=no,scrollbars=yes');
-		if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener = document.window;
-	    if (hWnd.focus != null) hWnd.focus();	
-	
-	} 
-	function viewLampiran(id_dokumen) {
-	    var id_bantahan = document.${formName}.id_bantahan.value ;
-		var id_permohonan = document.${formName}.id_permohonan.value ;		
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=view_Dokumen_Details&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=maklumat_dokumen&point=maklumat_dokumen&id_dokumen="+id_dokumen;		
-		document.${formName}.submit();
-	}
-
-	function paparLampiran(id_dokumen) {
-	    var url = "../servlet/ekptg.view.ppt.DisplayBlob?id="+id_dokumen;
-	    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
-	    if ((document.window != null) && (!hWnd.opener))
-	    hWnd.opener = document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-	}
-
 function open_header(id){
 	if(document.getElementById(id).style.display=="none"){
 		document.getElementById(id).style.display="block";

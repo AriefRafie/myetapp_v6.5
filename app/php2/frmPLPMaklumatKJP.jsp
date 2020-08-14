@@ -207,7 +207,6 @@
       <input name="cmdBatal" type="button" onClick="doBatalKemaskiniMaklumatKJP()" value="Batal">
       #end
       #if ($modePopup == 'view')
-      #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
       #if ($flagAktif != 'T')
       <input name="cmdKemaskini" type="button" onClick="doKemaskiniMaklumatKJP()" value="Kemaskini">
       <input name="cmdHapus" type="button" onClick="doHapusMaklumatKJP()" value="Hapus">

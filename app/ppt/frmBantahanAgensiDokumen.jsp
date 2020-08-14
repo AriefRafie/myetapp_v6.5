@@ -135,12 +135,12 @@
     #end
     <table width="100%">
   <tr class="table_header">
-    <td width="3%">Bil</td>
+    <td width="5%">Bil</td>
     <td width="30%">Nama Dokumen</td>
     <td width="30%">Keterangan</td>
     <td width="30%">Dokumen Sokongan (Papar)</td>
      #if($listDokumen_size > 0)
-      <td width="7%">
+      <td width="5%">
      
       <div align="center">
       <input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
@@ -151,14 +151,15 @@
   </tr>
  
   
-#if($listDokumen_size > 0)
-  #foreach($list1 in $listDokumen)                   
-  	#set( $i = $velocityCount )
-    #if ( ($i % 2) != 1 )
-   		#set( $row = "row2" )
-  	#else
-       	#set( $row = "row1" )
-   	#end
+ #if($listDokumen_size > 0)
+  #foreach($list1 in $listDokumen)        
+           
+             #set( $i = $velocityCount )
+         		#if ( ($i % 2) != 1 )
+              		 #set( $row = "row2" )
+         		#else
+               		 #set( $row = "row1" )
+         		#end
   <tr>  
     <td class="$row" >$list1.BIL</td>
     <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
@@ -168,7 +169,7 @@
        <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
      </div></td>
   </tr>
-  	#end
+  #end
   #else
   <tr>  
     <td colspan="5">Tiada Rekod</td>    
@@ -348,15 +349,15 @@ input_box = confirm("Adakah anda pasti?");
 	}
 }
 
-	function Kembali(){
-		var id_bantahan = document.${formName}.id_bantahan.value ;
-		var id_permohonan = document.${formName}.id_permohonan.value ;	
-		var senarai_dokumen = document.${formName}.senarai_dokumen.value ;
-		
+function Kembali()
+{
+	var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;	
+	var senarai_dokumen = document.${formName}.senarai_dokumen.value ;
+	
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=$nama_skrin&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
-		document.${formName}.submit();
-
-	}
+	document.${formName}.submit();
+}
 //:::upload
 function KembaliPerintah(r){
 

@@ -13,7 +13,7 @@
 			<fieldset><legend><strong>CARIAN</strong></legend>
 				<table border="0" width="100%">
 					<tr>
-					    <td width="29%"><div align="right">NO. RUJUKAN <i>ONLINE</i></div></td>
+					    <td width="29%"><div align="right">NO. FAIL SEKSYEN</div></td>
 					    <td width="1%">:</td>
 					    <td width="70%"><input name="NoFail" type="text" id="NoFail" size="43" maxlength="40" value="$!carianNoFail" onkeyup="this.value=this.value.toUpperCase();"></td>
 			  		</tr>
@@ -83,7 +83,7 @@
   <table border="0" cellpadding="2" cellspacing="1" width="100%">
       <tr class="table_header">
         <td width="3%"><b>Bil.</b></td>
-        <td width="20%"><b>No. Rujukan <i>Online</i></b></td>
+        <td width="20%"><b>No Fail</b></td>
         <td width="37%"><b>Tajuk Fail</b></td>
         <td width="17%"><b>Negeri</b></td>
         <td width="23%"><b>Status</b></td>
@@ -116,7 +116,6 @@
   <!--
   <input type="hidden" name="idFail">
   <input type="hidden" name="noFail">
-  <input type="hidden" name="keterangan">
 -->
  
   
@@ -200,6 +199,12 @@ function fGS2A_Simpan() {
 	if(document.${formName}.socTajuk.value == ""){
 		alert('Sila pilih " Tajuk " terlebih dahulu.');
   		document.${formName}.txtTajuk.focus(); 
+		return; 
+	}
+	
+	if(document.${formName}.txtNoFailSek.value == ""){
+		alert('Sila masukkan No Fail Seksyen terlebih dahulu.');
+  		document.${formName}.txtNoFailSek.focus(); 
 		return; 
 	}
 	
@@ -311,12 +316,8 @@ function fGPHA_Kembali() {
 	doAjaxCall${formName}("SenaraiPermohonan");
 }
 
-
 function fGPHA_seterusnya() {
 	doAjaxCall${formName}("Hakmilik","mode=hakmilikview");
-}
-function fGPHA_seterusnyaHantar() {
-	doAjaxCall${formName}("pengesahan","mode=hantarselesai");
 }
 
 function fGPHA_Kemaskini() {
@@ -533,9 +534,6 @@ function fGHA_BatalHakmilik() {
 function fGHA_KembaliHakmilik() {
 	doAjaxCall${formName}("SenaraiPermohonan");
 }
-function fGHA_KembaliHantar() {
-	doAjaxCall${formName}("SenaraiPemilikPeguam");
-}
 
 function fGHA_HakmilikView() {
 	doAjaxCall${formName}("Hakmilik","mode=hakmilikview");
@@ -668,19 +666,8 @@ function fGTG_BatalGeran(){
 	doAjaxCall${formName}("Hakmilik", "mode=batalgeran");
 }
 
-function fGTG_SimpanUpdate16a(){
-	doAjaxCall${formName}("Hakmilik", "mode=simpanupdate16a");
-}
 function fGTG_KemaskiniGeran(){
 	doAjaxCall${formName}("Hakmilik", "mode=kemaskinigeran");
-}
-function fGTG_Simpan16a(){
-	
-	doAjaxCall${formName}("Hakmilik", "mode=simpan16a");
-}
-
-function fGTG_Kemaskini16a(){
-	doAjaxCall${formName}("Hakmilik", "mode=kemaskini16a");
 }
 
 function fGTG_KembaliGeran(){

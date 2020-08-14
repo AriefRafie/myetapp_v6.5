@@ -152,9 +152,11 @@
   							<input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskini_penyediaan()">
                             
                             #if($ID_NEGERIPROJEK == "4" || $ID_NEGERIPROJEK == "5")          
-                            <input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah (Hantar Borang A)" onClick="popupEtanah('$id_fail','$id_permohonan','BorangA','')">
+                            <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Borang A)" onClick="popupEtanah('$id_fail','$id_permohonan','BorangA','')">
                             #end
-                  	<!-- <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah Deraf MMK (Syor Pentadbir Tanah)" onClick="popupEtanah('$id_fail','$id_permohonan','','MMK_S4','')"> -->
+                            <!--
+                            <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah Deraf MMK (Syor Pentadbir Tanah)" onClick="popupEtanah('$id_fail','$id_permohonan','','MMK_S4','')">
+                    -->
                             
   							#if($id_status!="31" && $id_status!="52")
        						<input name="cmdHapus" type="button" value="Hapus" onClick="deleteKertasMMK('$!id_mmk')">       			
@@ -512,16 +514,16 @@
 
 <script>
 
-	function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {	
-		var url = "../x/${securityToken}/etanah.ppt.sek4?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
-		//var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
-	    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
-	    if ((document.window != null) && (!hWnd.opener))
-	       hWnd.opener = document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-		hWnd.focus();
-		
-	}
+function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
+
+	var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
+    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+	
+}
 
 //ONLOAD
 window.onload = mmkItem,submitForm;

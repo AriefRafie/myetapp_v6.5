@@ -36,7 +36,7 @@
 					        <td width="36%">$selectNegeri</td>
 					        	<input name="id_negeri" type="hidden" value="$id_negeri"/>
 					        <td>&nbsp;</td>
-					        <td width="20%"><div align="left">No. Fail</div></td>
+					        <td width="20%"><div align="left">No. Fail Seksyen</div></td>
 					        <td width="1%"><div align="center">:</div></td>
 					        <td width="36%"><label>
 					          <input name="noFail" type="text" id="noFail" value="$noFail" size="30" readonly="readonly" class="disabled"/>

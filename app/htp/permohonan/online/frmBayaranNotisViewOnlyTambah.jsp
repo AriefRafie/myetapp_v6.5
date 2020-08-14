@@ -1,10 +1,6 @@
 		<fieldset><legend><strong>SENARAI NOTIS 5A KTN</strong></legend>
 		
-			#if($list_sizePPT > 5)
-        	<div style="width:100%;height:115;overflow:auto"> 
-    	#end	
-		
-		 	<table width="100%" cellspacing="2" cellpadding="1" border="0">
+			<table width="100%" border="0">
 			
   	  			<tr>
     				<td colspan="10">
@@ -12,10 +8,18 @@
   					</td> 
   				</tr>
   			
+  			<!--	<tr>	 		
+    				<td width="70%" align="right">
+    					Carian No.Fail :&nbsp;<input type="text" name="carianFail" value="$!carianFail" maxlength="50" size="35" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" ><a href="javascript:selectTab(0,'kemaskinipermohonan','MakAsasTanah',0)">&nbsp;<u>CARI</u></a>
+    				</td>
+    			</tr> -->
     		</table>
-    		</fieldset>
   	
-	 	
+	 	#if($list_sizePPT > 5)
+        	<div style="width:100%;height:115;overflow:auto"> 
+    	#end	
+		
+		 	<table width="100%" cellspacing="2" cellpadding="1" border="0">
   	<!-- <tr >
     	<td colspan="4">
     		<input class="stylobutton" type="button" name="TambahNotis5A" id="TambahNotis5A" value="Tambah" onclick="TambahNotis()">
@@ -59,7 +63,7 @@
         	  </div>
     	#end
      
-		
+		</fieldset>
 
 	<p id="Submit">&nbsp;</p>
 	<input type="hidden" value="$id_jenistanah" name="id_jenistanah"/>

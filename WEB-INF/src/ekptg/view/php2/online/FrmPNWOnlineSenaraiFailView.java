@@ -15,7 +15,6 @@ import lebah.portal.AjaxBasedModule;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
@@ -26,11 +25,12 @@ import ekptg.model.php2.online.FrmPNWOnlineSenaraiFailData;
 public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 	
 	private static final long serialVersionUID = 1L;
-	private static Logger myLog = Logger.getLogger(FrmPNWOnlineSenaraiFailView.class);
+	
 	FrmPNWOnlineSenaraiFailData logic = new FrmPNWOnlineSenaraiFailData();
 
 	@Override
 	public String doTemplate2() throws Exception {
+
 		HttpSession session = this.request.getSession();
 		
 		Boolean postDB = false;
@@ -67,9 +67,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		String userRole = "";
 		String userJawatan = "";
 		String layerKJP = "";
-		String idNegeriPemohon = ""; 
-		String idAgensi = ""; 
-		String idKementerian = "";
+		String idNegeriPemohon = "", idAgensiPmhn = "", idKementerianPmhn = "";
 		String idPermohonan = getParam("idPermohonan");
 		String idPermohonanPelepasan = getParam("idPermohonanPelepasan");
 		String idTanahGanti = getParam("idTanahGanti");
@@ -121,69 +119,81 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("userRole", userRole);
 		this.context.put("userJawatan", userJawatan);
 		this.context.put("layerKJP", layerKJP);
-			
+		
+		
 		listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
 		
 		if(!listDetailKJP.isEmpty() && listDetailKJP.size()> 0) {
     		Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
     		idNegeriPemohon = hashRayuanDB.get("idNegeri").toString();
-    		idKementerian= hashRayuanDB.get("idKementerian").toString();
-    		idAgensi= hashRayuanDB.get("idAgensi").toString();
+    		idKementerianPmhn= hashRayuanDB.get("idKementerian").toString();
+    		idAgensiPmhn= hashRayuanDB.get("idAgensi").toString();
     		
-		}
+    	  }
 		
 		this.context.put("idNegeriPemohon", idNegeriPemohon);
-		this.context.put("idKementerian", idKementerian);
-		this.context.put("idAgensi", idAgensi);	
+		this.context.put("idKementerianPmhn", idKementerianPmhn);
+		this.context.put("idAgensiPmhn", idAgensiPmhn);	
 		this.context.put("onload", "");
 		this.context.put("completed", false);
 		
-		myLog.info("hitButton="+hitButton+",actionOnline="+actionOnline);
 		//HITBUTTON
 		if (postDB) {
-			if (hitButton.equals("doDaftarBaru")){
-           		idFail = logic.daftarBaru(userRole,idKementerian,idAgensi, getParam("idHakmilikAgensi"), session);
-        	}else if (hitButton.equals("doSimpanKemaskiniMaklumatTnh")){
+			if ("doDaftarBaru".equals(hitButton)){
+
+           		idFail = logic.daftarBaru(userRole,idKementerianPmhn,idAgensiPmhn, getParam("idHakmilikAgensi"), session);
+        	}
+			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
         		logic.updateTanah(idPermohonan,idHakmilikAgensi,session);	
-            }else if (hitButton.equals("doSimpanKemaskiniMaklumatPelepasan")){
+            }
+			if ("doSimpanKemaskiniMaklumatPelepasan".equals(hitButton)){
         		logic.updatePermohonanPenawaran(idPermohonanPelepasan,
 						idLuasKegunaan, idLuas, getParam("txtLuasMohon1"),
 						getParam("txtLuasMohon2"), getParam("txtLuasMohon3"),
 						getParam("txtLuasBersamaan"), getParam("txtBakiLuas"),
 						session);
-        	}else if (hitButton.equals("doHantarSemakan")){				
+        	}
+			if ("doHantarSemakan".equals(hitButton)){
+				
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
-					logic.updatePermohonanSemakan(idPermohonan, idKementerian, session);
+					logic.updatePermohonanSemakan(idPermohonan, idKementerianPmhn, session);
 				}				
-			}else if (hitButton.equals("doHantarKelulusan")){			
+			}
+			if ("doHantarKelulusan".equals(hitButton)){
+				
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
-					logic.updatePermohonanKelulusan(idPermohonan, idKementerian, session);
+					logic.updatePermohonanKelulusan(idPermohonan, idKementerianPmhn, session);
 				}				
-			}else if (hitButton.equals("doHantarEmel")){			
+			}
+			if ("doHantarEmel".equals(hitButton)){
+				
 				if (logic.checkMaklumatPenawaranLengkap(idPermohonan)){
     				this.context.put("onload", " \"alert('Masih terdapat maklumat penawaran yang belum lengkap.')\"");	
 				} else {
 					logic.updatePermohonanEmel(idFail,idPermohonan,session);
-				}		
-				
-			}else if (hitButton.equals("doHapus")){
+				}				
+			}
+			if ("doHapus".equals(hitButton)){
 				logic.hapusPermohonan(idFail);
-			}else if (hitButton.equals("simpanDokumen")) {
-				uploadFiles(idPermohonan, session);
-			}else if (hitButton.equals("simpanKemaskiniDokumen")) {
-				logic.simpanKemaskiniDokumen(idDokumen, getParam("txtNamaImej"), getParam("txtCatatanImej"), session);
-			}else if (hitButton.equals("hapusDokumen")) {
-				logic.hapusDokumen(idDokumen);
 			}
 			
+			if ("simpanDokumen".equals(hitButton)) {
+				uploadFiles(idPermohonan, session);
+			}
+			if ("simpanKemaskiniDokumen".equals(hitButton)) {
+				logic.simpanKemaskiniDokumen(idDokumen, getParam("txtNamaImej"), getParam("txtCatatanImej"), session);
+			}
+			if ("hapusDokumen".equals(hitButton)) {
+				logic.hapusDokumen(idDokumen);
+			}
 		}
-	
 		
 		if ("papar".equals(actionOnline)) {
+
 			// GO TO VIEW PENAWARAN
 		    vm = "app/php2/online/frmPNWDaftarManual.jsp";
 		    
@@ -204,6 +214,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 
 		} else if ("daftarBaru".equals(actionOnline)) {
+
 			// GO TO DAFTAR BARU PENAWARAN
 			vm = "app/php2/online/frmPNWDaftarManual.jsp";
 		
@@ -221,7 +232,7 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 			
 			//MAKLUMAT HAKMILIK
 			if ("doChangePeganganHakmilik".equals(submit)) {
-				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerian, idAgensi, getParam("txtPeganganHakmilik"));
+				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerianPmhn, idAgensiPmhn, getParam("txtPeganganHakmilik"));
 				if (idHakmilikAgensi.isEmpty()) {
 					this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
 				}
@@ -232,7 +243,8 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 			beanMaklumatTanah = logic.getBeanMaklumatTanah();
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 
-		} else if ("seterusnya".equals(actionOnline)){        	
+		} else if ("seterusnya".equals(actionOnline)){
+        	
         	// GO TO MAKLUMAT PERMOHONAN  
 			vm = "app/php2/online/frmPNWMaklumatPermohonan.jsp";
 			
@@ -322,14 +334,13 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
         		 
 	        		if ("doChangePeganganHakmilik1".equals(submit)){
 	    				beanMaklumatTanah = new Vector();
-	    				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerian, idAgensi, getParam("txtPeganganHakmilik1"));
+	    				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(idKementerianPmhn, idAgensiPmhn, getParam("txtPeganganHakmilik1"));
 	    				logic.setMaklumatTanah(idHakmilikAgensi);
 	    				beanMaklumatTanah = logic.getBeanMaklumatTanah();
 	    				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 	    				this.context.put("idHakmilikAgensi", idHakmilikAgensi);
 	    				this.context.put("idKementerian", getParam("idKementerian"));
 	    				this.context.put("kodKementerian", getParam("kodKementerian"));
-
 	    				this.context.put("idNegeriTanah", getParam("idNegeriTanah"));
 	    				this.context.put("kodNegeriTanah", getParam("kodNegeriTanah"));
 	    				if (idHakmilikAgensi.isEmpty()){
@@ -343,7 +354,8 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 	        			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 	    			}
         		
-        		} else if ("1".equals(selectedTabUpper)){	        		
+        		} else if ("1".equals(selectedTabUpper)){
+	        		
         			//MAKLUMAT PENAWARAN
 	            	beanMaklumatPenawaran = new Vector();
 	        		logic.setMaklumatPenawaran(idPermohonan);
@@ -399,7 +411,8 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 	        		this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " onChange=\"doChangeLuasKegunaan()\" style=\"width:auto\""));
 	    		
         		} 
-    		}    		
+    		}
+    		
    			
     		//OPEN POPUP DOKUMEN
 	        if ("openPopupDokumen".equals(flagPopup)){
@@ -587,7 +600,6 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		}
 	}
 
-
 	private void saveData(FileItem item, String idPermohonan, HttpSession session) throws Exception {
 
 		Db db = null;
@@ -624,4 +636,3 @@ public class FrmPNWOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("completed", true);
 	}
 }
-

@@ -1,6 +1,6 @@
 package ekptg.view.ppt.bantahan;
 
-//import integrasi.utils.IntLogManager;
+import integrasi.utils.IntLogManager;
 import integrasi.ws.mt.reg.DeceaseInfoType;
 import integrasi.ws.mt.reg.MTRegManager;
 import integrasi.ws.mt.reg.PartyType;
@@ -32,12 +32,17 @@ import ekptg.model.utils.FrmNegeriData;
 import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.model.entities.Tblrujdokumen;
+import ekptg.model.entities.Tblrujnegeri;
+import ekptg.model.entities.Tblrujpejabat;
+import ekptg.model.htp.FrmUtilData;
 import ekptg.model.ppt.BantahanAgensiDaftar;
 import ekptg.model.ppt.BantahanDaftar;
 import ekptg.model.ppt.util.LampiranBean;
+import ekptg.model.utils.rujukan.DBPPT;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanMT;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanPTGD;
 
-//public class IntegrasiMT extends VTemplate{
+
 public class IntegrasiMT extends AjaxBasedModule{
 
 	private static final long serialVersionUID = 1L;
@@ -51,44 +56,46 @@ public class IntegrasiMT extends AjaxBasedModule{
 
 	@Override
 	public String doTemplate2() throws Exception {
-		
-		Hashtable<String,String> bdata = null;
-		String transactionID = "";
-		String kodmt ="";
-		String jenisPembantah =""; //1, 2
-		String jenisRef ="";
-		String idRujukanPB = "";	
-		String socmt =""; 
-		Vector<Hashtable<String,String>> list = null;
-
-		MTRegManager im = null;
-		PartyType[] party = null;
-		PartyType pt = null;	
-		
-		BantahanAgensiDaftar model = new BantahanAgensiDaftar();	
-		BantahanDaftar modelBantahanPB = new BantahanDaftar();	
 		HttpSession session = this.request.getSession();
 		//String user = (String) session.getAttribute("_portal_login");
+		Hashtable<String,String> bdata = null;
+		String idUser = (String) session.getAttribute("_ekptg_user_id");
+		this.context.put("usid", idUser);
+
+		String vm = "app/integrasi/PendaftaranMT.jsp";
+		String submit = request.getParameter("command");
+		
 		String idBantahan = getParam("idbantahan");
 		String idFail = getParam("idfail");
 		String idHarta = getParam("idharta");
 		String idPermohonan = getParam("idpermohonan");
 		String idSiasatan = getParam("idsiasatan");
-		String idUser = (String) session.getAttribute("_ekptg_user_id");
 		String idWarta = getParam("idwarta");
-		String submit = request.getParameter("command");
-		String vm = "app/integrasi/PendaftaranMT.jsp";
 		
+		String transactionID = "";
+		String kodmt ="";
+		String jenisPembantah =""; //1, 2
+		String jenisRef ="";
+		String idRujukanPB = "";
+		MTRegManager im = null;
+
+		PartyType[] party = null;
+		PartyType pt = null;
+		myLog.info("submit = "+submit+",mode="+ ("mode"));
+
+		String socmt =""; 
+//		String socPejabat =""; 
+
 		context.put("idBantahan", idBantahan);
 		context.put("idFail", idFail);
 		context.put("idHarta", idHarta);
 		context.put("idPermohonan", idPermohonan);
 		context.put("idSiasatan", idSiasatan);
-		context.put("idWarta", idWarta);		
-		this.context.put("usid", idUser);
-		myLog.info("submit = "+submit+",mode="+ request.getParameter("mode"));
-//		String socPejabat =""; 
+		context.put("idWarta", idWarta);
 
+		BantahanAgensiDaftar model = new BantahanAgensiDaftar();	
+		BantahanDaftar modelBantahanPB = new BantahanDaftar();	
+		Vector<Hashtable<String,String>> list = null;
 		if (submit.equals("bantahanap")) 
 			list = model.getMaklumatBantahanAP(idPermohonan,idHarta,idSiasatan,idWarta);
 		else
@@ -104,14 +111,12 @@ public class IntegrasiMT extends AjaxBasedModule{
 			jenisPembantah = String.valueOf(bdata.get("jenis_pembantah"));
 			myLog.info("Pembantah:"+jenisPembantah);
 			String id_bantahan = String.valueOf(bdata.get("id_bantahan"));
-//			String idNegeriPer = String.valueOf(bdata.get("id_negeri"));
+			String idNegeriPer = String.valueOf(bdata.get("id_negeri"));
 			jenisRef = String.valueOf(bdata.get("id_jenispb")); //2=Syarikat, 10-Pertubuhan
 			idRujukanPB = String.valueOf(bdata.get("idRujukanPB"));
 			
 			if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-//				Vector<Tblrujdokumen> listDokumen = getDoc().getLampirans(id_bantahan,"pptbantahan");
-	     		Vector listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan,"pptbantahan");
-//	     		Vector listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan);
+	     		Vector listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan,"bantahan");
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	
 	    		
@@ -121,20 +126,17 @@ public class IntegrasiMT extends AjaxBasedModule{
 			
 			}
 			
-			String pejabatMT = getParam("idmt");
 //			Vector<Hashtable<String, Object>> vecMT 
 //				= ekptg.helpers.DB.getMahkamahByNegeri(Long.parseLong(idNegeriPer));
-			if(pejabatMT.equals("")) {
 //			if(vecMT.isEmpty() || vecMT.size() > 1) {
 					socmt = getPilihan().Pilihan("socmt", "onchange = \'pilihMT()\'");
 		
 //			Tujuan Pengujian
-			}else {
-				im = new MTRegManager();
-				socmt = getPilihan().Pilihan("socmt",pejabatMT, "disabled");
+//			}else {
+//				im = new MTRegManager();
 //				socmt = String.valueOf(vecMT.get(0).get("namaPejabat"));
-				kodmt = im.getKodMT(pejabatMT);
-			}
+//				kodmt = im.getKodMT(String.valueOf(vecMT.get(0).get("id")));
+//			}
 			
 //			Vector<Tblrujpejabat> vecPejabat = DBPPT.getMTByPermohonan(idPermohonan);
 //			if(vecPejabat.size() > 1) {
@@ -158,7 +160,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			}
 			
 			String DISABILITY = "";
-			Hashtable<String,String> pendaftaran = getPendaftaran(idBantahan);
+			Hashtable pendaftaran = getPendaftaran(idBantahan);
 			if(pendaftaran != null) {
 				DISABILITY = " disabled class=\"disabled\" ";
 				socmt = getPilihan().Pilihan("socmt",String.valueOf(pendaftaran.get("idPejabat")),"onchange = \'pilihMT()\' "+DISABILITY);
@@ -177,7 +179,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			context.put("noKes", noKes_);
 			
 			String DISABILITY = "";
-			Hashtable<String,String> pendaftaran = getPendaftaran(idBantahan);
+			Hashtable pendaftaran = getPendaftaran(idBantahan);
 			if(pendaftaran != null) {
 				DISABILITY = " disabled class=\"disabled\" ";
 				
@@ -267,25 +269,27 @@ public class IntegrasiMT extends AjaxBasedModule{
 //				umur ="0";
 //				refType = "OT";
 			}
-			
-			im = new MTRegManager("MTREG");
-			
-			Hashtable<String,String> daftar = new Hashtable<String,String>();
-			daftar.put("idFail",idFail);
-			daftar.put("idRujukan",idBantahan);
-			daftar.put("kodMT",kodMT);
-			daftar.put("gen",gen);
-			daftar.put("umur",String.valueOf(umur));
-			daftar.put("tarikHantar",sdf.format(cal.getTime()));
-			daftar.put("idUser",String.valueOf(umur));
-			daftar.put("transactionID",transactionID);
-			daftar.put("jenisTraksaksi","15");
-			daftar.put("idUser",idUser);
 
-			im.simpanPendaftaran(daftar);
+			r.add("ID_FAIL", idFail);
+			r.add("ID_RUJUKAN", idBantahan);
+			r.add("KOD_MT", kodMT);
+			r.add("JANTINA", gen);
+			r.add("UMUR", umur);
+			
+			r.add("JENIS_TRANSAKSI","15");
+			r.add("TARIKH_HANTAR", r.unquote("to_date('" + sdf.format(cal.getTime()) + "','DD/MM/YYYY')"));
+			
+			r.add("ID_MASUK", idUser);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("ID_TRANSAKSI", transactionID);
+			sql = r.getSQLInsert("TBLINTMTPENDAFTARAN");
+			myLog.info("sql="+sql);
+			stmt.executeUpdate(sql);
+
+			im = new MTRegManager("MTREG");
 	        //MTRegManager manager = new MTRegManager("15");
 			myLog.info("sql="+sql);
-			if(jenisPembantah.equals("2")){
+			if(jenisPembantah.equals("1")){
 				pt = MTRegManager.getPartyPerayuGov(idRujukanPB //id rujukan party
 					,name
 					,add,add2,add3,postcode,stateCode,city);
@@ -337,14 +341,17 @@ public class IntegrasiMT extends AjaxBasedModule{
 				String details = returnMessage.substring(2);
 
 				if (code.equals("0")) {
-					daftar = new Hashtable<String,String>();
-					daftar.put("idRujukan",idBantahan);
+					r = new SQLRenderer();
+					//r.setUpdate("ID_TRANSAKSI", transactionID);
+					r.update("ID_RUJUKAN", idBantahan);
+			
 					if (MTRegManager.getReferenceNo() != null) {
-						daftar.put("noKes",MTRegManager.getReferenceNo());
-					}					
-					daftar.put("catatan",idBantahan);
-					daftar.put("idUser",idUser);
-					im.kemaskiniPendaftaran(daftar);
+						r.add("NO_KES", MTRegManager.getReferenceNo());
+					}
+					r.add("CATATAN",returnMessage);
+					sql = r.getSQLUpdate("TBLINTMTPENDAFTARAN");
+					myLog.info("getSQLUpdate:sql="+sql);
+					stmt.executeUpdate(sql);
 
 					vm = "app/integrasi/MahkamahTinggiSuccess.jsp";
 					//IntLogManager.recordLogMT(noFail, "I", "O", "Y", "SUCCESS");

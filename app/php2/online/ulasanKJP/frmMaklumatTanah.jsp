@@ -8,15 +8,15 @@
         </tr>
         <tr>
           <td align="right">NO. LOT :</td>
-          <td>$beanMaklumatTanah.noLot</td>
+          <td>$beanMaklumatTanah.lot</td>
         </tr>
         <tr>
           <td align="right">LUAS. LOT :</td>
-          <td>$beanMaklumatTanah.luasBersamaan</td>
+          <td>$beanMaklumatTanah.luas</td>
         </tr>
         <tr>
           <td align="right">NO. HAKMILIK :</td>
-          <td>$beanMaklumatTanah.noHakmilik</td>
+          <td>$beanMaklumatTanah.hakmilik</td>
         </tr>
         <tr>
           <td align="right">NO. WARTA :</td>

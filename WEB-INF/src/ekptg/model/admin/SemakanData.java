@@ -64,7 +64,7 @@ public class SemakanData {
 		    	  h.put("id", rs.getString("id_semakansenarai"));
 		    	  h.put("idSemakan", rs.getString("id_semakan"));
 		    	  h.put("idUrusan", rs.getString("id_urusan"));
-		    	  h.put("idSubUrusan", Utils.isNull(rs.getString("id_suburusan")));
+		    	  h.put("idSubUrusan", rs.getString("id_suburusan"));
 		    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
 		    	  h.put("keterangan", rs.getString("perihal"));
 		    	  h.put("urusan", rs.getString("nama_urusan"));
@@ -193,7 +193,7 @@ public class SemakanData {
 		      r.add("i.ID_SEMAKAN",r.unquote("SJD.ID_SEMAKAN(+)"));
 		      r.add("SJD.ID_JENISDOKUMEN",r.unquote("JD.ID_JENISDOKUMEN(+)"));
 		      if(!kodForm.equals(""))
-		    	  r.add("s.perihal","%"+kodForm+"%","like");
+		    	  r.add("i.kod_form","%"+kodForm+"%","like");
 		      if(!idUrusan.equals("0"))
 		    	  r.add("i.id_urusan",idUrusan);
 		      if(!idSuburusan.equals("0"))

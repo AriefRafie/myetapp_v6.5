@@ -11,8 +11,6 @@
 -->
 <style type="text/css">
 <!--
-
-.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -373,23 +371,13 @@
 						                       		<tr>
 						                            	<td>
 						                              	<fieldset><legend>HARTA TAK ALIH(TIADA HAKMILIK)</legend>
-						                              	#if($!skrin_online == "yes")
-					                          					<div id="info_skrin_daftar_sek8"></div>
-																				      <script>
-																				 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><table><tr><b><blink>*</blink> Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Tiada Hakmilik) : Harta tak alih yang tidak mempunyai hakmilik/geran yang berdaftar nama si mati dan kepentingan si mati berdasarkan surat perjanjian jual beli.</br></b></div>";
-																				 			</script> #end
 						                                	<input name="noradio" type="hidden" />
 						                                   	<table width="70%" align="center">
 										                        <tr>
 				                                        			<td><span class="style36">
 					                                              		<input name="radioHtaamViewX" id="radioHtaamViewX1" type="radio" onclick="setSelected(1,0,0,1);HtaamViewX1()"   $checked1 value="1" />
 					                                                   
-					                                                  Perjanjian Jual Beli</span>
-					                                                  #if($!skrin_online == "yes")
-					                                                  <a href="javascript:info('perjanjian')" class="help" title="info">					
-									                															<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									           															  </a>#end
-					                                                  </td>
+					                                                  Perjanjian Jual Beli</span></td>
 					                                          	</tr>
 					                                   			<tr>
 					                                                <td><span class="style36">
@@ -447,7 +435,7 @@
                                    	<tr>
                            				<td>&nbsp;</td>
                                        	<td><div align="right" class="style43">
-                                              <div align="left">Alamat Harta 1</div>
+                                              <div align="left">Alamat Harta</div>
                                      	</div></td>
                                     	<td><div align="right">:</div></td>
                                    		<td><input name="txtAlamatHarta1HtaamX" type="text" id="textfield57" value="$alamathta1" size="34" $readmode style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"/></td>
@@ -645,7 +633,7 @@
                       			<tr>
                                               <td><span class="style56"></span></td>
                                               <td><div align="right" class="style57">
-                                                <div align="left">Kategori Tanah 1</div>
+                                                <div align="left">Kategori Tanah</div>
                                               </div></td>
                                               <td><div align="right">:</div></td>
                                               <td>
@@ -1066,7 +1054,7 @@
 								   	<tr>                                  
 								       	<td>
 								     	<script>
-								 function check_jenis_hta1(){
+							 function check_jenis_hta1(){
 								 if(document.f1.radioJenisHTA_update[0].checked == true){
 									 document.f1.radioHtaamViewX_update[0].checked = false;
 									 document.f1.radioHtaamViewX_update[1].checked = false;
@@ -1095,26 +1083,7 @@
 							                                      		<div align="left">#if($readmodenegeri != "disabled")Negeri#else Negeri#end</div>
 							                                      	</div></td>
 							                                      	<td width="1%"><div align="right" class="style43">:</div></td>
-							                                      	<td width="70%">
-							                                      	#if($readmode == "disabled")
-							                                      	
-							                                      		#foreach($listN in $listnegeri)
-										                             		#if($listam.negeri==$listN.id_Negeri)
-										                                    	#set($negerikodpemoP=$listN.kod_Negeri)
-										                                  		#set($negeriketeranganpemoP=$listN.nama_Negeri)
-										                                  	#end 
-									                       				#end
-							                                      	
-							                                      		#if($listam.negeri!="" && $listam.negeri!="0" )
-								                                      		<input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-								                                      	#else
-								                                      		<input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-								                                      	#end
-							                                      		
-							                                      	#else
-							                                      		$!socNegeri
-							                                      	#end
-							                                      	</td>
+							                                      	<td width="70%">$!socNegeri</td>
 							                               	</tr>
                             	
 							                            	<tr>
@@ -1123,26 +1092,7 @@
 							                                       		<div align="left">#if($readmodedaerah != "disabled")Daerah#else Daerah#end</div>
 							                                       	</div></td>
 							                                    	<td width="1%"><div align="right" class="style43">:</div></td>
-							                                       	<td>
-							                                       	#if($readmode == "disabled")
-							                                       	
-							                                       		#foreach($listD in $listdaerah)
-														                    #if($listam.daerah==$listD.id)
-															                    #set($listDaerahK=$listD.kod)
-															                    #set($listDaerahN=$listD.nama)
-															                #end
-														                #end
-														                
-														                #if($listam.daerah!="" && $listam.daerah!="0" )
-								                                      		<input name="d" value="$listDaerahK - $listDaerahN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-										                                #else
-										                                     <input name="d" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode"/>
-										                                #end
-														                
-							                                       	#else
-							                                       		$!socDaerah
-							                                       	#end
-							                                       	</td>
+							                                       	<td>$!socDaerah</td>
 							                               	</tr>
                                 
 							                              	<tr>
@@ -1151,26 +1101,7 @@
 							                                       		<div align="left">#if($readmodemukim != "disabled")Mukim#else Mukim#end</div>
 							                                      	</div></td>
 							                                       	<td width="1%"><div align="right" class="style43">:</div></td>
-							                                       	<td>
-							                                       	#if($readmode == "disabled")
-							                                       	
-							                                       		#foreach($listM in $listmukim)
-														                    #if($listam.mukim==$listM.id)
-															                    #set($listMukimK=$listM.kod)
-															                    #set($listMukimN=$listM.nama)
-															                #end
-														                #end
-							                                       		
-							                                       		#if($listam.mukim!="" && $listam.mukim!="0" )
-									                                    	<input name="m" value="$listMukimK - $listMukimN" size="34" $readmodeR class="$readmode" style="text-transform:uppercase;" />
-									                                  	#else
-									                                      	<input name="m" value="" size="34" $readmodeR class="$readmode" style="text-transform:uppercase;" />
-									                             		#end
-									                             		
-							                                       	#else
-							                                       		$!socMukim
-							                                       	#end
-							                                       	</td>
+							                                       	<td>$!socMukim</td>
 							                       			</tr>										
 							                 #if($listam.flag=="1")
 							                             	<tr>
@@ -1212,25 +1143,7 @@
 							                                      		<div align="left">Bandar</div>
 							                                    	</div></td>
 							                                  		<td><div align="right"><span class="style38">:</span></div></td>
-							                                    	<td>
-						                                    		#if($readmode == "disabled")
-						                                    		
-																		#foreach($listB in $listbandar)
-														                    #if($listam.bandar==$listB.id)
-															                    #set($listBandar=$listB.nama)
-															                #end
-														                #end
-							                                    
-							                                     		#if($listam.bandar!="" && $listam.bandar!="0" )
-							                                     			<input name="ntbb2" value="$listBandar" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-							                                     		#else
-							                                     			<input name="ntbb3" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-							                                     		#end  
-							                                     		                   
-							                                   		#else                             
-							                                  			$!socBandar
-																	#end
-							                                    	</td>
+							                                    	<td>$!socBandar</td>
 							                            	</tr>
                                          	#end                                  	
 							                             	<tr>
@@ -1304,26 +1217,7 @@
 							                                       		<div align="left">Negeri</div>
 							                                        </div></td>
 							                                       	<td width="1%"><div align="right" class="style43">:</div></td>
-							                                 		<td>
-							                                 		#if($readmode == "disabled")
-							                                 			
-							                                 			#foreach($listN in $listnegeri)
-										                             		#if($listam.negeripemaju==$listN.id_Negeri)
-										                                    	#set($negerikodpemoP=$listN.kod_Negeri)
-										                                  		#set($negeriketeranganpemoP=$listN.nama_Negeri)
-										                                  	#end 
-									                       				#end
-							                                      	
-							                                      		#if($listam.negeripemaju!="" && $listam.negeripemaju!="0" )
-								                                      		<input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-								                                      	#else
-								                                      		<input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-								                                      	#end
-							                                 			
-							                                 		#else
-							                                 			$!socNegeriAdd
-							                                 		#end
-							                                 		</td>
+							                                 		<td>$!socNegeriAdd</td>
 							                          		</tr>
                              		
 							                            	<tr>
@@ -1332,25 +1226,7 @@
 							                                      		<div align="left">Bandar</div>
 							                                    	</div></td>
 							                                   		<td><div align="right"><span class="style38">:</span></div></td>
-							                                    	<td>
-						                                    		#if($readmode == "disabled")
-						                                    		
-						                                    			#foreach($listB in $listbandar)
-														                    #if($listam.bandarpemaju==$listB.id)
-															                    #set($listBandarP=$listB.nama)
-															                #end
-														                #end
-														                
-														                #if($listam.bandarpemaju!="" && $listam.bandarpemaju!="0" )
-							                                     			<input name="" value="$listBandarP" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-							                                     		#else
-							                                     			<input name="" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-							                                     		#end
-														                
-														            #else
-						                                    			$!socBandarAdd
-						                                    		#end
-							                                    	</td>
+							                                    	<td>$!socBandarAdd</td>
 							                             	</tr>
 										#if($listam.flag=="1")
 							                       			<tr>
@@ -1434,41 +1310,24 @@
 							                      			<tr>
 							                               		<td><div align="left"><span class="style43"></span></div></td>
 							                                    <td><div align="right" class="style57">
-							                                    	<div align="left">Kategori Tanah</div>
+							                                    	<div align="left">Kategori Tanah </div>
 							                                 	</div></td>
 							                                 	<td width="1%"><div align="right" class="style43">:</div></td>
 							                                  	<td>
-									                        	#if($listam.kategori == "2")
-									                            	#set($meterhektar = "Hektar")
-									                            #elseif($listam.kategori == "1" 
-									                            	|| $listam.kategori == "3" 
-									                            	|| $listam.kategori == "4" 
-									                            	|| $listam.kategori == "5" 
-									                            	|| $listam.kategori == "6"
-									                            	|| $listam.kategori == "7" 
-									                            	|| $listam.kategori == "8")
-									                             	#set($meterhektar = "Meter Persegi")
-									                             #else
-									                         		#set($meterhektar = "")
-									                            #end
-									                            
-									                            #if($readmode == "disabled")
-									                            
-									                            	#foreach($listK in $listkategori)
-													                    #if($listam.kategori==$listK.id)
-														                    #set($listKategoriTanah=$listK.keterangan)
-														                #end
-													                #end
-													                
-													                #if($listam.kategori!="" && $listam.kategori!="0" )
-						                                     			<input name="" value="$listKategoriTanah" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-						                                     		#else
-						                                     			<input name="" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-						                                     		#end
-													                
-									                            #else
-							                                    	$socKaTanah
-							                                    #end       
+							                        	#if($listam.kategori == "2")
+							                            	#set($meterhektar = "Hektar")
+							                            #elseif($listam.kategori == "1" 
+							                            	|| $listam.kategori == "3" 
+							                            	|| $listam.kategori == "4" 
+							                            	|| $listam.kategori == "5" 
+							                            	|| $listam.kategori == "6"
+							                            	|| $listam.kategori == "7" 
+							                            	|| $listam.kategori == "8")
+							                             	#set($meterhektar = "Meter Persegi")
+							                             #else
+							                         		#set($meterhektar = "")
+							                            #end
+							                                    $socKaTanah           
 							                         			</td>
 							                           		</tr>
 							                               	
@@ -1509,26 +1368,7 @@
 							                                   		<div align="left">Jenis Luas</div>
 							                                   	</div></td>
 							                               		<td width="1%"><div align="right" class="style43">:</div></td>
-							                            		<td>
-							                            		#if($readmode == "disabled")
-							                            		
-							                            			#foreach($listluashta in $listluas) 
-								                                    	#if($listam.jenisluas==$listluashta.id)    
-								                                          	#set($listluasK=$listluashta.kod)
-								                                          	#set($listluasN=$listluashta.nama)
-								                             			#end 
-								                            		#end
-								                            		
-								                            		 #if($listam.jenisluas!="" && $listam.jenisluas!="0" )
-						                                     			<input name="" value="$listluasK - $listluasN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-						                                     		#else
-						                                     			<input name="" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-						                                     		#end
-								                            		
-							                            		#else
-							                            			$!socLuas
-							                            		#end
-							                            		</td>
+							                            		<td>$!socLuas</td>
 							                               	</tr>
                                           
 					                              			<tr id="tr_luasharta" style="display:none;">
@@ -1652,25 +1492,7 @@
 							                                                  <div align="left">Status Pemilikan</div>
 							                                                </div></td>
 							                                                <td width="1%"><div align="right" class="style43">:</div></td>
-							                                                <td>
-							                                                #if($readmode=="disabled")
-							                                                
-							                                                	#foreach($listpemilik in $listpemilikan)
-							                                                		#if($listam.pemilikan==$listpemilik.id)
-								                                                		#set($listpemilikK=$listpemilik.kod)
-								                                                		#set($listpemilikN=$listpemilik.keterangan)
-								                                                	#end 
-								                                                #end
-								                            		
-											                            		#if($listam.pemilikan!="" && $listam.pemilikan!="0" )
-									                                     			<input name="" value="$listpemilikK - $listpemilikN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-									                                     		#else
-									                                     			<input name="" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-									                                     		#end
-							                                                #else
-							                                                	$!socPB
-							                                                #end
-							                                                </td>
+							                                                <td>$!socPB</td>
 							                            	</tr>
 							                                              
 							                              	<tr>
@@ -2007,11 +1829,11 @@
 									                        && $id_Status != "163" 
 									                      	&& $id_Status != "164" 
 									                      	&& $id_Status != "165")	 									                 		
-									                 	#if($open_button_online == "yes")
+									                 	##if($open_button_online == "yes")
 										                   		<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
-														#end
+														##end
 														#end
 															 	$listam.lampirans
 									                  		</td>
@@ -2228,24 +2050,6 @@
 </form>
 
 <script>
-function info(jenis) {
-	    //
-		var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
-	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=no,scrollbars=no');
-	    if ((document.window != null) && (!hWnd.opener))
-	       hWnd.opener = document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-		hWnd.focus(); /**/
-	    //
-	    var title = 'Info';
-		var w =1024;
-		var h = 800;
-	    var left = (screen.width/2)-(w/2);
-	    //var top = (screen.height/2)-(h/2);
-	    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-	}
-
 <!-- TAB -->
 if(document.f1.selectedHartaTakAlih.value.length>0){
 	var selectHTAs = document.getElementsByName('selectHTATH');
@@ -4298,7 +4102,7 @@ var dt=document.f1.txtTarikhPerjanjianHtaamX
 }
 	//Mula Lampiran
 	function lampiranHarta(idHarta) {
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline="+flagOnline;
 	    //
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
@@ -4315,8 +4119,7 @@ var dt=document.f1.txtTarikhPerjanjianHtaamX
 
 	}
 	function lampiranHartaPapar(id_){
-		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=hta";
-		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
+		var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
 	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener=document.window;

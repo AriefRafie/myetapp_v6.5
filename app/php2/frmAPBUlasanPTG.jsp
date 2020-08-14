@@ -66,14 +66,6 @@
   </tr>
 </table>
 <script>
-function doDaftarNotifikasi(){
-	document.${formName}.flagPopup.value = "openPTG";
-	document.${formName}.modePopup.value = "view";
-	document.${formName}.flagNotifikasi.value = "openNotifikasi";
-	//document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView";
-	//document.${formName}.method="POST";
-	document.${formName}.submit();
-}
 function calcDate(){
 	if (document.${formName}.txtTarikhHantar.value != "" && document.${formName}.txtJangkaMasa.value != ""){
 		

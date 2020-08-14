@@ -162,27 +162,25 @@ a.nav:visited {
                       <td width="15%" align="center" valign="top"><img  src="../img/main.png" width="30" height="30" align="center"/></td>
                       <td width="85%"><table width="100%">
                           <tr>
-                            <td><b>Tugasan <i>Internal</i></b> </td>
+                            <td><b>Tugasan</b> </td>
                           </tr>
                           <tr>
                             <td><a href="javascript:gotoSenaraiTugasan()" class="help" title="Fail Tugasan"> <font color="blue">
-                              <li>&nbsp;Carian Tugasan</li>
+                              <li>&nbsp;Carian</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
                     </tr>
-                </table></td>
+                  </table></td>
                 <td width="50%" valign="top"><table width="100%" >
                     <tr>
-                      <td width="15%" align="center" valign="top"><img  src="../img/main.png" width="30" height="30" align="center"/></td>
+                      <td width="15%" align="center" valign="top">&nbsp;</td>
                       <td width="85%"><table width="100%">
                           <tr>
-                            <td><b>Tugasan <i>Online</i></b></td>
+                            <td>&nbsp;</td>
                           </tr>
                           <tr>
-                            <td><a href="javascript:gotoOnline()" class="help" title="Fail Tugasan Online"> <font color="blue">
-                              <li>&nbsp;Semakan Permohonan <i>Online</i>
-                              </font> </a> </td>
+                            <td>&nbsp;</td>
                           </tr>
                         </table></td>
                     </tr>

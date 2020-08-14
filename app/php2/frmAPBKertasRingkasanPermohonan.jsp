@@ -442,7 +442,9 @@ function doChangeSyor() {
 	document.${formName}.mode.value = "update";
 	if(document.${formName}.socSyor.value=="LB"){
 		document.${formName}.paparan.value = "lulusbersyarat";
-		document.${formName}.submit();
+	}else{
+		document.${formName}.paparan.value = "";
 	}
+	document.${formName}.submit();
 }
 </script>

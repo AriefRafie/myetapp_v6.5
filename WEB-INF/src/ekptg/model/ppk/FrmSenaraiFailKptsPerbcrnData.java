@@ -22,24 +22,6 @@ public class FrmSenaraiFailKptsPerbcrnData {
 	private static Vector list = new Vector();
 	private static Vector list17 = new Vector();
 	private static Vector checkingNilaian = new Vector();
-	private static Vector nilaianSebenar = new Vector(); //arief add
-	
-	//arief add
-	public static Vector getNilaianSebenar() {
-		return nilaianSebenar;
-	}
-	
-	//arief add
-	public static void setNilaianSebenar(String usid) throws Exception{
-		Db db = null;
-		nilaianSebenar.clear();
-		String sql="";
-		try {
-			
-		}finally {
-			if(db != null) db.close();			
-		}
-	}
 	
 	
 	public static Vector getList(){
@@ -56,6 +38,7 @@ public class FrmSenaraiFailKptsPerbcrnData {
 		String sql = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
+		
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      
@@ -117,6 +100,8 @@ public class FrmSenaraiFailKptsPerbcrnData {
 			if(db != null) db.close();			
 		}
 	}
+
+
 	//List permohonan seksyen 17
 	public static void setList17(String usid)throws Exception {	    
 		Db db = null;

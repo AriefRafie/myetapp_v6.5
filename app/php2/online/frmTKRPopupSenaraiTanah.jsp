@@ -10,7 +10,7 @@
 }
 </style>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($idKategoriPemohon == $idKategoriPemohon)
+  #if ($idKategoriPemohon == '3')
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT PEMOHON</strong></legend>
@@ -43,7 +43,6 @@
             </select>
             <input type="hidden" name="actionPopup"/>
             <input type="hidden" name="idHakmilikAgensi"/>
-            <input type="hidden" name="idHakmilikSementara"/>
             <input type="hidden" name="idKategoriPemohon" value="$idKategoriPemohon"/>
             <input type="hidden" name="idAgensiPemohon" value="$idAgensiPemohon"/>
           </td>
@@ -148,16 +147,13 @@
         #end
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row"><a href="javascript:papar('$list.idHakmilikAgensi','$list.idHakmilikSementara')"class="style1">$list.peganganHakmilik</a></td>
+          <td class="$row"><a href="javascript:papar('$list.idHakmilikAgensi')" class="style1">$list.peganganHakmilik</a></td>
           <td class="$row">$list.lot</td>
           <td class="$row">$list.noHakmilik</td>
           <td class="$row">$list.noWarta</td>
           <td class="$row">$list.mukim, $list.daerah, $list.negeri </td>
-          #if ($list.agensi != "")
-          <td class="$row">$list.agensi, $list.kementerian</td>
-          #else
-          <td class="$row">&nbsp;</td>
-          #end </tr>
+          <td class="$row">$list.agensi</td>
+        </tr>
         #end
         #else
         <tr>
@@ -223,12 +219,11 @@ function kosongkan(idNegeriJKPTG,idKategoriPemohon) {
 	document.${formName}.socMukim.value = "";
 	document.${formName}.socKementerian.value = "";
 	document.${formName}.socAgensi.value = "";
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlinePopupSenaraiTanahView";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKRPopupSenaraiTanahOnlineView";
 	document.${formName}.submit();
 }
-function papar(idHakmilikAgensi, idHakmilikSementara) {	
+function papar(idHakmilikAgensi) {	
 	document.${formName}.idHakmilikAgensi.value = idHakmilikAgensi;
-	document.${formName}.idHakmilikSementara.value = idHakmilikSementara;
 	document.${formName}.actionPopup.value = "papar";
 	document.${formName}.submit();
 }

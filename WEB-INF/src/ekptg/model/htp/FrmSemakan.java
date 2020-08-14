@@ -10,29 +10,18 @@ import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
 import org.apache.log4j.Logger;
-import org.apache.velocity.VelocityContext;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblsemakan;
-import ekptg.model.php2.utiliti.LampiranBean;
-import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmSemakan {
 	
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.FrmSemakan.class);
-	private ILampiran iLampiran = null;
-	private ILampiran iLampiranPHP = null;
-	private static Db db = null;
-	private static String sql = "";
-	public String mode = "";
 
-//	VelocityContext context_ = null;
-	
-//	FrmSemakan(VelocityContext context) {
-//		context_ = context;
-//	}
 	public static Vector<Tblsemakan> getSemakan(String idSemakan,String semakan) throws Exception {
+		Db db = null;
+		String sql = "";
 		Vector<Tblsemakan> list = new Vector<Tblsemakan>();
 		    
 		try {
@@ -56,7 +45,11 @@ public class FrmSemakan {
 //	          myLog.info("getSemakan : sql=" + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Tblsemakan h;
+<<<<<<< WEB-INF/src/ekptg/model/htp/FrmSemakan.java
+		      
+=======
 		      int bil = 1;
+>>>>>>> WEB-INF/src/ekptg/model/htp/FrmSemakan.java
 		      while (rs.next()) {
 		    	  h = new Tblsemakan();
 		    	  h.setBil(bil++);
@@ -80,8 +73,11 @@ public class FrmSemakan {
 		  
 	}
 
-	public static Vector<Hashtable<String,String>> getSenaraiSemakan(String kodForm) throws Exception {
-		 Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
+	 public static Vector<Hashtable<String,String>> getSenaraiSemakan(String kodForm) throws Exception {
+	    Db db = null;
+	    String sql = "";
+	    Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
+	    
 	    try {
 	      db = new Db();
 	      Statement stmt = db.getStatement();
@@ -119,11 +115,12 @@ public class FrmSemakan {
 	    return list;
 	 }
 	 
-	 public static Vector<Hashtable<String,String>> getSenaraiSemakanByIDAttach(String idSenarai
-		,String idSimati,String idPermohonanSimati) throws Exception {
-	    Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
+	 public static Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm) throws Exception {
+		    Db db = null;
+		    String sql = "";
+		    Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
 		    
-	    try {
+		    try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
@@ -136,42 +133,21 @@ public class FrmSemakan {
 		      r.add("i.id_semakan",r.unquote("s.id_semakan"));
 		      r.add("i.id_semakan",r.unquote("sjd.id_semakan(+)"));
 		      r.add("sjd.id_jenisdokumen",r.unquote("jd.id_jenisdokumen(+)"));
-
-//		    	  r.add("i.id_semakansenarai",("+idSenarai+"),"in");
+ 
+		      if(!kodForm.equals("0"))
+		    	  r.add("i.kod_form",kodForm);
 		      sql = " tblsemakan s,tblsemakansenarai i,TBLSEMAKANJENISDOKUMEN SJD,TBLRUJJENISDOKUMEN JD";
-		    	  
-		      sql = r.getSQLSelect(sql);
-		      //sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
-		      if(!idSenarai.equals("0"))
-		    	  sql += " and i.id_semakansenarai in ("+idSenarai+")";
-		      
-	          myLog.info("getSenaraiSemakanByIDAttach :sql= " + sql);
+		      sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
+	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable<String,String> h;
-		      ekptg.model.ppk.util.LampiranBean lb = new ekptg.model.ppk.util.LampiranBean();
+
 		      while (rs.next()) {
-		    	  String lampiran = "lampiran";
 		    	  h = new Hashtable<String,String>();
-		    	  String jenis =rs.getString("jenis_dokumen");
 		    	  h.put("id", rs.getString("id_semakansenarai"));
 		    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
 		    	  h.put("keterangan", rs.getString("perihal"));
-		    	  h.put("jenisDokumen", jenis);
-		    	  
-		    	  if(jenis.equals("99201")) {
-		    		  lampiran = lb.getLampiranSimatiPapari(idSimati,jenis);
-			    	  h.put("lampirans", lampiran);
-		    	  
-		    	  }else if(jenis.equals("99202")){
-		    		  lampiran = lb.getLampiranSimatiPapari(idSimati,jenis);
-		    		  h.put("lampirans", lampiran);
-		    	  
-		    	  }else if(jenis.equals("99204")){
-		    		  lampiran = lb.getLampirans(idSimati,"paparLampiran");
-		    		  h.put("lampirans", lampiran);
-
-		    	  }
-		    	  //myLog.info("getSenaraiSemakanByIDAttach:jenis="+jenis+","+lampiran);
+		    	  h.put("jenisDokumen", rs.getString("jenis_dokumen"));
 
 		    	  list.addElement(h);
 		    	  
@@ -186,94 +162,14 @@ public class FrmSemakan {
 		    }	    
 		    return list;
 		  
-	 }
- 
-	public Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm,String idPermohonan) 
-		throws Exception {
-		//public Vector<Hashtable<String,String>> getSenaraiSemakanAttach(String kodForm) throws Exception {
-		Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
-//        myLog.info("getSenaraiSemakanAttach :kodForm= " + kodForm.substring(0,3));
-
-		    try {
-		      db = new Db();
-		      Statement stmt = db.getStatement();
-		      SQLRenderer r = new SQLRenderer();
-		      r.add("DISTINCT i.aturan");
-		      r.add("i.id_semakansenarai");
-	    	  r.add("i.kod_form");
-	    	  r.add("s.perihal");
-		      r.add("NVL(SJD.ID_JENISDOKUMEN,0) jenis_dokumen");
-		      r.add("NVL(JD.KETERANGAN,'TIADA') nama_dokumen");
-		      r.add("CASE "+
-		    		  "WHEN sh.ID_SEMAKANHANTAR IS NULL "+
-		    		  "	THEN 'N' "+
-		    		  "ELSE 'Y'	"+
-		    		 "END FLAG ");
-		      r.add("i.id_semakan",r.unquote("s.id_semakan"));
-		      r.add("i.id_semakan",r.unquote("sjd.id_semakan(+)"));
-		      r.add("sjd.id_jenisdokumen",r.unquote("jd.id_jenisdokumen(+)"));
-		      r.add("i.id_semakansenarai",r.unquote("sh.id_semakansenarai(+)"));
-
-		      if(!kodForm.equals("0"))
-		    	  r.add("i.kod_form",kodForm);
-		      sql = " tblsemakan s,tblsemakansenarai i,tblsemakanjenisdokumen sjd,tblrujjenisdokumen jd,tblsemakanhantar sh";
-		      sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
-//	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
-		      ResultSet rs = stmt.executeQuery(sql);
-		      Hashtable<String,String> h;
-		      String lampiran = "-";
-		      while (rs.next()) {
-		    	  h = new Hashtable<String,String>();
-		    	  h.put("id", rs.getString("id_semakansenarai"));
-		    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
-		    	  h.put("keterangan", rs.getString("perihal"));
-		    	  h.put("jenisDokumen", rs.getString("jenis_dokumen"));
-		    	  h.put("flag", rs.getString("flag"));
-		    	  if(!rs.getString("jenis_dokumen").equals("0")) {
-		    		  lampiran = setLampiran(kodForm.substring(0,3),idPermohonan,rs.getString("id_semakansenarai"),rs.getString("jenis_dokumen"));
-//		    		  lampiran = "X";
-		    	  }else {
-		    		  lampiran = "";
-		    	  }
-		    	  h.put("lampirans", lampiran);
-					
-		    	  list.addElement(h);
-		    	  
-		      }
-		      
-	   }catch(Exception e){
-		   e.printStackTrace();
-	   }finally {
-		   if (db != null){
-			   db.close();
-		   }
-	   }	    
-	    return list;
-		  
-	}
-		  
-	private String setLampiran(String modul,String rujukan,String idSenarai,String jenisDokumen) throws Exception {		
-		StringBuffer sb = new StringBuffer("");	
-		if(!mode.equals("view")) {
-			sb.append("<a href=\"javascript:onlineAttach('"+rujukan+"','"+idSenarai+"','"+jenisDokumen+"');\">");
-			sb.append("<img border='0' src='../img/plus.gif' width='20' height='15'/>");
-//			sb.append("</a>");
-			sb.append("</a><br>");
-			
-		}
-		 if(modul.equals("php"))
-			 sb.append(getDocPHP().getLampirans(rujukan, jenisDokumen,""));
-		 else
-			 sb.append(getDoc().getLampirans(rujukan, jenisDokumen,""));
-
-		 //lampiran = lb.getLampirans(idSimati,"paparLampiran");
-		 return sb.toString();
+		 }
 		 
-	}
-//	
-	 public static Vector getSenaraiSemakan(String kodForm,String aktif) throws Exception {
-		 Vector list = new Vector();
-		 try {
+	 
+	 public static Vector getSenaraiSemakan(String kodForm,String aktif)throws Exception {
+		    Db db = null;
+		    String sql = "";
+		    Vector list = new Vector();
+		    try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
@@ -297,20 +193,22 @@ public class FrmSemakan {
 		    	  list.addElement(h);
 		      }
 		      
-		 }catch(Exception e){
+		    }
+		    catch(Exception e){
 		    	e.printStackTrace();
+		    }
+		    finally {
+		      if (db != null) db.close();
+		    }
 		    
-		 }finally {
-			 if (db != null) db.close();
-		 }
-		    
-		 return list;
-		  
-	 }	 
+		    return list;
+		  }	 
 	 
 	 public static Vector getSenaraiSemakanHantar(String idpermohonan)throws Exception {
-		 Vector list = new Vector();
-		 try {
+		    Db db = null;
+		    String sql = "";
+		    Vector list = new Vector();
+		    try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
@@ -332,19 +230,24 @@ public class FrmSemakan {
 		    	  list.addElement(h);
 		      }
 		      
-		 }catch(Exception e){
+		    } 
+		    catch(Exception e){
 		    	e.printStackTrace();
-		 }finally {
+		    }
+		    
+		    finally {
 		      if (db != null) db.close();
-		 }
-		 return list;
-		 
-	 }
+		    }
+		    
+		    return list;
+		  }
 	 
 	 /** Semakan yang dihantar*/
-	 public static boolean isSemakan(String idpermohonan,String idsemakansenarai) throws Exception {
-		 boolean rValue = false;
-		 try {
+	 public static boolean isSemakan(String idpermohonan,String idsemakansenarai)throws Exception {
+		 	Db db = null;
+		    String sql = "";
+		    boolean rValue = false;
+		    try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
@@ -354,7 +257,8 @@ public class FrmSemakan {
 		      //fir modify 19022010
 		      if(idpermohonan.equalsIgnoreCase("") || idpermohonan.equalsIgnoreCase(null)){
 		    	  r.add("i.id_permohonan",idpermohonan);
-		      }else{
+		      }
+		      else{
 		    	  r.add("i.id_permohonan",r.unquote(idpermohonan));
 		      }
 		      
@@ -368,44 +272,53 @@ public class FrmSemakan {
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Vector list = new Vector();
 		      Hashtable h;
+
 		      while (rs.next()) {
 		    	  h = new Hashtable();
 		    	  h.put("id", rs.getString("id_semakansenarai"));
 		    	  list.addElement(h);
 		    	  rValue=true;
-		      
 		      }
 		      
-		 }catch(Exception e){
-		    	e.printStackTrace();
-		 }finally {
-			 if (db != null) db.close();
+		    }
 		    
-		 }
-		 return rValue;
+		    catch(Exception e){
+		    	e.printStackTrace();
+		    }
+		    		    
+		    finally {
+		      if (db != null) db.close();
+		    }
+		    
+		    return rValue;
 		 
 	 }
 
-	 public void semakanHapusByPermohonan(String idpermohonan) throws Exception {	
-		 try {
+	 public void semakanHapusByPermohonan(String idpermohonan) throws Exception {
+		    Db db = null;
+		    //int idPermohonan= Integer.parseInt(idpermohonan);
+		    String sql = "";
+		    try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
 		      r.add("id_permohonan", r.unquote(idpermohonan));
 		      sql = r.getSQLDelete("tblsemakanhantar");
 		      stmt.executeUpdate(sql);
-		 
-		 }catch(Exception e){
+		    }catch(Exception e){
 		    	e.printStackTrace();
-		 
-		 }finally	{
+		    }  
+		    finally	{
 		      if (db != null) db.close();
-		 }
-	  
-	 }
+	    	}
+	  }
 	 
 	 public void semakanHapusByPermohonan(String idPermohonan,String idSemakanSenarai) throws Exception {
-		 try {
+		    Db db = null;
+		    //int idPermohonan = Integer.parseInt(idpermohonan);
+		    //int idSemakanSenarai = Integer.parseInt(idsemakansenarai);
+		    String sql = "";
+		    try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
@@ -413,56 +326,42 @@ public class FrmSemakan {
 		      r.add("id_semakansenarai", idSemakanSenarai);
 		      sql = r.getSQLDelete("tblsemakanhantar");
 		      stmt.executeUpdate(sql);
-		    
-		 }catch(Exception e){
+		    }
+		    catch(Exception e){
 		    	e.printStackTrace();
+		    }
 		    
-		 }finally	{
+		    finally	{
 		      if (db != null) db.close();
-	    }
-	  
-	 }
+	    	}
+	  }
 	 
 	 public static void semakanTambah(String idsemakan, String idpermohonan) throws Exception {
-		 try {
+		    Db db = null;
+		    String sql = "";
+		    try {
 		      long idSemakanhantar = DB.getNextID("TBLSEMAKANHANTAR_SEQ");
 		      String idPermohonan = idpermohonan;
 		      String idSemakan = idsemakan;
-//		      int idKementerian = 1;
-//		      int idNegeri = 1;
+		      int idKementerian = 1;
+		      int idNegeri = 1;
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
-		      r.add("id_semakanhantar", idSemakanhantar);
+		      r.add("id_Semakanhantar", idSemakanhantar);
 		      r.add("id_permohonan", idPermohonan);
 		      r.add("id_semakansenarai", idSemakan);
-		      sql = r.getSQLInsert("tblsemakanhantar");
+		      sql = r.getSQLInsert("Tblsemakanhantar");
 		      myLog.info("semakanTambah : "+sql);
 		      stmt.executeUpdate(sql);
-		 
-		 }catch(Exception e){
+		    }
+		    catch(Exception e){
 		    	e.printStackTrace();
-		 }finally {
-			 if (db != null) db.close();
-		 }
-		  
-	 }
-		
-	 private ILampiran getDocPHP(){
-		if(iLampiranPHP == null){
-			iLampiranPHP = new LampiranBean();
-		}
-		return iLampiranPHP;
-				
-	 }
-	 
-	 private ILampiran getDoc(){
-		if(iLampiran == null){
-			iLampiran = new ekptg.model.utils.lampiran.LampiranBean();
-		}
-		return iLampiran;
-				
-	}
+		    }
+		    finally {
+		      if (db != null) db.close();
+		    }
+		  }
 
-	
-}
+
+	}

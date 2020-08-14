@@ -13338,7 +13338,7 @@ try {
         	ps.setString(7, user_id);
         	ps.executeUpdate();
             con.commit();
-            myLogger.info("PreparedStatement "+ps);
+            
 	    }catch (SQLException se) { 
 	    	throw new Exception("Ralat : Masalah simpan rekod");
 	    }finally {

@@ -68,14 +68,15 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		String idPenceroboh = getParam("idPenceroboh");
 		String idPegawaiLaporanTanah = getParam("idPegawaiLaporanTanah");
 		String idDokumen = getParam("idDokumen");
+
 		String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
 		String idKementerianTanah = getParam("idKementerianTanah");
 		String idAgensiTanah = getParam("idAgensiTanah");
 		String flagStatus = getParam("flagStatus");
 		String flagAktif = getParam("flagAktif");
-		String flagSuratKe = getParam("idSuratKe");	
-		String jenisImejan = getParam("socJenisImej");
+		String flagSuratKe = getParam("idSuratKe");
+		String socJenisImej = getParam("socJenisImej");
 		String idHakmilik = "";
 
 		this.context.put("completed", false);
@@ -239,7 +240,8 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		this.context.put("BeanHeader", beanHeader);
 
 		if (beanHeader.size() != 0) {
-			Hashtable hashHeader = (Hashtable) logicHeader.getBeanMaklumatPermohonan().get(0);
+			Hashtable hashHeader = (Hashtable) logicHeader
+					.getBeanMaklumatPermohonan().get(0);
 			idFail = (String) hashHeader.get("idFail");
 			idPermohonan = (String) hashHeader.get("idPermohonan");
 			idStatus = (String) hashHeader.get("idStatus");
@@ -251,7 +253,9 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		}
 
 		// GET FLAG OPEN DETAIL
-		flagOpenDetail = logicHeader.getFlagOpenDetail(idStatus, 7); // 7 = LAPORAN OPERASI
+		flagOpenDetail = logicHeader.getFlagOpenDetail(idStatus, 7); // 7 =
+																		// LAPORAN
+																		// OPERASI
 
 		vm = "app/php2/frmCRBSenaraiOperasiPenguatkuasaan.jsp";
 
@@ -314,8 +318,10 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 
 						beanMaklumatKehadiran = new Vector();
 						logic.setMaklumatKehadiran(idPegawaiLaporanTanah);
-						beanMaklumatKehadiran = logic.getBeanMaklumatKehadiran();
-						this.context.put("BeanMaklumatKehadiran", beanMaklumatKehadiran);
+						beanMaklumatKehadiran = logic
+								.getBeanMaklumatKehadiran();
+						this.context.put("BeanMaklumatKehadiran",
+								beanMaklumatKehadiran);
 
 					} else {
 
@@ -324,8 +330,10 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 
 						beanMaklumatKehadiran = new Vector();
 						logic.setMaklumatKehadiran(idPegawaiLaporanTanah);
-						beanMaklumatKehadiran = logic.getBeanMaklumatKehadiran();
-						this.context.put("BeanMaklumatKehadiran", beanMaklumatKehadiran);
+						beanMaklumatKehadiran = logic
+								.getBeanMaklumatKehadiran();
+						this.context.put("BeanMaklumatKehadiran",
+								beanMaklumatKehadiran);
 					}
 
 					// SENARAI KEHADIRAN
@@ -343,13 +351,15 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 
 							this.context.put("readonlyPopup", "");
 							this.context.put("inputTextClassPopup", "");
-							
+
 							beanMaklumatImejan = new Vector();
 							Hashtable hashMaklumatImejan = new Hashtable();
+							hashMaklumatImejan.put("jenisImej", "");
 							hashMaklumatImejan.put("namaImej", "");
 							hashMaklumatImejan.put("catatanImej", "");
 							beanMaklumatImejan.addElement(hashMaklumatImejan);
-							this.context.put("BeanMaklumatImejan", beanMaklumatImejan);
+							this.context.put("BeanMaklumatImejan",
+									beanMaklumatImejan);
 
 						} else if ("update".equals(modePopup)) {
 
@@ -358,15 +368,14 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 
 							// MAKLUMAT DOKUMEN
 							beanMaklumatImejan = new Vector();
-							//logic.setMaklumatImej(idDokumen);
-							//beanMaklumatImejan = logic.getBeanMaklumatImejan();
-							//Hashtable hashMaklumatImejanDB = (Hashtable) logic.getBeanMaklumatImejan().get(0);
+							logic.setMaklumatImej(idDokumen);
+							beanMaklumatImejan = logic.getBeanMaklumatImejan();
+							Hashtable hashMaklumatImejanDB = (Hashtable) logic.getBeanMaklumatImejan().get(0);
 							Hashtable hashMaklumatImejan = new Hashtable();
-							hashMaklumatImejan.put("namaImej", getParam("txtNamaImej"));
-							hashMaklumatImejan.put("catatanImej", getParam("txtCatatanImej"));
 							hashMaklumatImejan.put("jenisImej", getParam("socJenisImej"));
 							beanMaklumatImejan.addElement(hashMaklumatImejan);
-							this.context.put("BeanMaklumatImejan", beanMaklumatImejan);			
+							this.context.put("BeanMaklumatImejan",
+									beanMaklumatImejan);
 
 						} else if ("view".equals(modePopup)) {
 
@@ -377,13 +386,8 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 							beanMaklumatImejan = new Vector();
 							logic.setMaklumatImej(idDokumen);
 							beanMaklumatImejan = logic.getBeanMaklumatImejan();
-							this.context.put("BeanMaklumatImejan", beanMaklumatImejan);
-							
-							if (beanMaklumatImejan.size() != 0) {
-								Hashtable hashMaklumatImejanDB = (Hashtable) logic.getBeanMaklumatImejan().get(0);
-								jenisImejan = (String) hashMaklumatImejanDB.get("jenisImej"); 
-							}
-							
+							this.context.put("BeanMaklumatImejan",
+									beanMaklumatImejan);
 						}
 					}
 
@@ -413,14 +417,19 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 					this.context.put("readonlyS", "");
 					this.context.put("inputTextClassS", "");
 
-					this.context.put("selectNegeri", HTML.SelectNegeri( "socNegeri", Long.parseLong(idNegeri), "", " onChange=\"doChangeNegeri();\""));
-					this.context.put("selectPejabat", HTML.SelectPejabatByIdNegeriAndJenisPejabat("socPejabat", Long.parseLong(idPejabat),
-									"", " onChange=\"doChangePejabat();\"", idNegeri, "2"));
+					this.context.put("selectNegeri", HTML.SelectNegeri(
+							"socNegeri", Long.parseLong(idNegeri), "",
+							" onChange=\"doChangeNegeri();\""));
+					this.context.put("selectPejabat", HTML
+							.SelectPejabatByIdNegeriAndJenisPejabat(
+									"socPejabat", Long.parseLong(idPejabat),
+									"", " onChange=\"doChangePejabat();\"",
+									idNegeri, "2"));
 
-					if ("doChangeSuratKe".equals(submit) || "doChangeNegeri".equals(submit)) {
+					if ("doChangeSuratKe".equals(submit)
+							|| "doChangeNegeri".equals(submit)) {
 						idPejabat = "99999";
 					}
-					
 					if ("".equals(submit)) {
 
 						beanMaklumatSuratPenghargaan = new Vector();
@@ -428,8 +437,10 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 						hashMaklumatNotis.put("tarikhHantar", "");
 						hashMaklumatNotis.put("jangkamasa", "");
 						hashMaklumatNotis.put("tarikhJangkaTerima", "");
-						beanMaklumatSuratPenghargaan.addElement(hashMaklumatNotis);
-						this.context.put("BeanMaklumatSuratPenghargaan", beanMaklumatSuratPenghargaan);
+						beanMaklumatSuratPenghargaan
+								.addElement(hashMaklumatNotis);
+						this.context.put("BeanMaklumatSuratPenghargaan",
+								beanMaklumatSuratPenghargaan);
 
 						idNegeri = "99999";
 						idPejabat = "99999";
@@ -438,11 +449,16 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 
 						beanMaklumatSuratPenghargaan = new Vector();
 						Hashtable hashMaklumatNotis = new Hashtable();
-						hashMaklumatNotis.put("tarikhHantar", getParam("txtTarikhHantar"));
-						hashMaklumatNotis.put("jangkamasa", getParam("txtJangkaMasa"));
-						hashMaklumatNotis.put("tarikhJangkaTerima", getParam("txtTarikhJangkaTerima"));
-						beanMaklumatSuratPenghargaan.addElement(hashMaklumatNotis);
-						this.context.put("BeanMaklumatSuratPenghargaan", beanMaklumatSuratPenghargaan);
+						hashMaklumatNotis.put("tarikhHantar",
+								getParam("txtTarikhHantar"));
+						hashMaklumatNotis.put("jangkamasa",
+								getParam("txtJangkaMasa"));
+						hashMaklumatNotis.put("tarikhJangkaTerima",
+								getParam("txtTarikhJangkaTerima"));
+						beanMaklumatSuratPenghargaan
+								.addElement(hashMaklumatNotis);
+						this.context.put("BeanMaklumatSuratPenghargaan",
+								beanMaklumatSuratPenghargaan);
 					}
 
 					if ("99999".equals(idNegeri) && !"".equals(idNegeriTanah)) {
@@ -450,24 +466,36 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 					}
 
 					if ("PTD".equals(flagSuratKe)) {
-						this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri", Long.parseLong(idNegeri), "", " onChange=\"doChangeNegeri();\""));
-						this.context.put("selectPejabat", HTML.SelectPejabatByIdNegeriAndJenisPejabat("socPejabat", Long.parseLong(idPejabat), "",
-										" onChange=\"doChangePejabat();\"", idNegeri, "2"));
+						this.context.put("selectNegeri", HTML.SelectNegeri(
+								"socNegeri", Long.parseLong(idNegeri), "",
+								" onChange=\"doChangeNegeri();\""));
+						this.context.put("selectPejabat", HTML
+								.SelectPejabatByIdNegeriAndJenisPejabat(
+										"socPejabat",
+										Long.parseLong(idPejabat), "",
+										" onChange=\"doChangePejabat();\"",
+										idNegeri, "2"));
 
 						beanMaklumatPejabat = new Vector();
 						logic.setMaklumatPejabat(idPejabat);
 						beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-						this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
-						
+						this.context.put("BeanMaklumatPejabat",
+								beanMaklumatPejabat);
 					} else if ("JKPTG".equals(flagSuratKe)) {
-						this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri", Long.parseLong(idNegeri), "", " onChange=\"doChangeNegeri();\""));
-						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat),
-										""," onChange=\"doChangePejabat();\"", idNegeri, "4"));
+						this.context.put("selectNegeri", HTML.SelectNegeri(
+								"socNegeri", Long.parseLong(idNegeri), "",
+								" onChange=\"doChangeNegeri();\""));
+						this.context.put("selectPejabat", HTML
+								.SelectPejabatKPTGByIdNegeriIdSeksyen(
+										"socPejabat", Long.parseLong(idPejabat),
+										""," onChange=\"doChangePejabat();\"",
+										idNegeri, "4"));
 
 						beanMaklumatPejabat = new Vector();
 						logic.setMaklumatPejabatJKPTG(idPejabat);
 						beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-						this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
+						this.context.put("BeanMaklumatPejabat",
+								beanMaklumatPejabat);
 					}
 
 				} else if ("newUlangan".equals(modePopup)) {
@@ -484,42 +512,58 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 						hashMaklumatNotis.put("tarikhHantar", "");
 						hashMaklumatNotis.put("jangkamasa", "");
 						hashMaklumatNotis.put("tarikhJangkaTerima", "");
-						beanMaklumatSuratPenghargaan.addElement(hashMaklumatNotis);
-						this.context.put("BeanMaklumatSuratPenghargaan", beanMaklumatSuratPenghargaan);
+						beanMaklumatSuratPenghargaan
+								.addElement(hashMaklumatNotis);
+						this.context.put("BeanMaklumatSuratPenghargaan",
+								beanMaklumatSuratPenghargaan);
 
 					} else {
 
 						beanMaklumatSuratPenghargaan = new Vector();
 						Hashtable hashMaklumatNotis = new Hashtable();
-						hashMaklumatNotis.put("tarikhHantar", getParam("txtTarikhHantar"));
-						hashMaklumatNotis.put("jangkamasa", getParam("txtJangkaMasa"));
-						hashMaklumatNotis.put("tarikhJangkaTerima", getParam("txtTarikhJangkaTerima"));
-						beanMaklumatSuratPenghargaan.addElement(hashMaklumatNotis);
-						this.context.put("BeanMaklumatSuratPenghargaan", beanMaklumatSuratPenghargaan);
+						hashMaklumatNotis.put("tarikhHantar",
+								getParam("txtTarikhHantar"));
+						hashMaklumatNotis.put("jangkamasa",
+								getParam("txtJangkaMasa"));
+						hashMaklumatNotis.put("tarikhJangkaTerima",
+								getParam("txtTarikhJangkaTerima"));
+						beanMaklumatSuratPenghargaan
+								.addElement(hashMaklumatNotis);
+						this.context.put("BeanMaklumatSuratPenghargaan",
+								beanMaklumatSuratPenghargaan);
 					}
 
 					if ("99999".equals(idNegeri) && !"".equals(idNegeriTanah)) {
 						idNegeri = idNegeriTanah;
 					}
-					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri", Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
+					this.context.put("selectNegeri", HTML.SelectNegeri(
+							"socNegeri", Long.parseLong(idNegeri), "disabled",
+							" class=\"disabled\""));
 
 					if ("PTD".equals(flagSuratKe)) {
-						this.context.put("selectPejabat", HTML.SelectPejabatByIdNegeriAndJenisPejabat("socPejabat", Long.parseLong(idPejabat), "disabled",
+						this.context.put("selectPejabat", HTML
+								.SelectPejabatByIdNegeriAndJenisPejabat(
+										"socPejabat",
+										Long.parseLong(idPejabat), "disabled",
 										" class=\"disabled\"", idNegeri, "2"));
 
 						beanMaklumatPejabat = new Vector();
 						logic.setMaklumatPejabat(idPejabat);
 						beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-						this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
-						
+						this.context.put("BeanMaklumatPejabat",
+								beanMaklumatPejabat);
 					} else if ("JKPTG".equals(flagSuratKe)) {
-						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat),
-										"disabled"," class=\"disabled\"", idNegeri, "4"));
+						this.context.put("selectPejabat", HTML
+								.SelectPejabatKPTGByIdNegeriIdSeksyen(
+										"socPejabat", Long.parseLong(idPejabat),
+										"disabled"," class=\"disabled\"",
+										idNegeri, "4"));
 
 						beanMaklumatPejabat = new Vector();
 						logic.setMaklumatPejabatJKPTG(idPejabat);
 						beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-						this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
+						this.context.put("BeanMaklumatPejabat",
+								beanMaklumatPejabat);
 					}
 
 				} else if ("view".equals(modePopup)) {
@@ -532,32 +576,43 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 					beanMaklumatSuratPenghargaan = new Vector();
 					logic.setMaklumatKJT(idUlasanTeknikal);
 					beanMaklumatSuratPenghargaan = logic.getBeanMaklumatKJT();
-					this.context.put("BeanMaklumatSuratPenghargaan", beanMaklumatSuratPenghargaan);
+					this.context.put("BeanMaklumatSuratPenghargaan",
+							beanMaklumatSuratPenghargaan);
 
 					if (beanMaklumatSuratPenghargaan.size() != 0) {
-						Hashtable hashMaklumatKJT = (Hashtable) logic.getBeanMaklumatKJT().get(0);
+						Hashtable hashMaklumatKJT = (Hashtable) logic
+								.getBeanMaklumatKJT().get(0);
 						idNegeri = (String) hashMaklumatKJT.get("idNegeri");
 						idPejabat = (String) hashMaklumatKJT.get("idPejabat");
 						flagStatus = (String) hashMaklumatKJT.get("flagStatus");
 						flagAktif = (String) hashMaklumatKJT.get("flagAktif");
 						flagSuratKe = (String) hashMaklumatKJT.get("flagKJP");
 					}
-					this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri", Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
+					this.context.put("selectNegeri", HTML.SelectNegeri(
+							"socNegeri", Long.parseLong(idNegeri), "disabled",
+							" class=\"disabled\""));
 					if ("PTD".equals(flagSuratKe)) {
-						this.context.put("selectPejabat", HTML.SelectPejabatByIdNegeriAndJenisPejabat("socPejabat", Long.parseLong(idPejabat), "disabled",
+						this.context.put("selectPejabat", HTML
+								.SelectPejabatByIdNegeriAndJenisPejabat(
+										"socPejabat",
+										Long.parseLong(idPejabat), "disabled",
 										" class=\"disabled\"", idNegeri, "2"));
 						beanMaklumatPejabat = new Vector();
 						logic.setMaklumatPejabat(idPejabat);
 						beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-						this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
-						
+						this.context.put("BeanMaklumatPejabat",
+								beanMaklumatPejabat);
 					} else if ("JKPTG".equals(flagSuratKe)) {
-						this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat),
-										"disabled"," class=\"disabled\"", idNegeri, "4"));
+						this.context.put("selectPejabat", HTML
+								.SelectPejabatKPTGByIdNegeriIdSeksyen(
+										"socPejabat", Long.parseLong(idPejabat),
+										"disabled"," class=\"disabled\"", 
+										idNegeri, "4"));
 						beanMaklumatPejabat = new Vector();
 						logic.setMaklumatPejabatJKPTG(idPejabat);
 						beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-						this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
+						this.context.put("BeanMaklumatPejabat",
+								beanMaklumatPejabat);
 					}
 
 				} else if ("update".equals(modePopup)) {
@@ -565,75 +620,111 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 					this.context.put("inputTextClassPopup", "");
 					this.context.put("disabled", "");
 
-					if ("doChangeSuratKe".equals(submit) || "doChangeNegeri".equals(submit)) {
+					if ("doChangeSuratKe".equals(submit)
+							|| "doChangeNegeri".equals(submit)) {
 						idPejabat = "99999";
 					}
 
 					beanMaklumatSuratPenghargaan = new Vector();
 					Hashtable hashMaklumatNotis = new Hashtable();
-					hashMaklumatNotis.put("tarikhHantar", getParam("txtTarikhHantar"));
-					hashMaklumatNotis.put("jangkamasa", getParam("txtJangkaMasa"));
-					hashMaklumatNotis.put("tarikhJangkaTerima", getParam("txtTarikhJangkaTerima"));
-					hashMaklumatNotis.put("tarikhTerima", getParam("txtTarikhTerima"));
-					hashMaklumatNotis.put("tarikhSurat", getParam("txtTarikhSurat"));
-					hashMaklumatNotis.put("noRujukan", getParam("txtNoRujukanSurat"));
+					hashMaklumatNotis.put("tarikhHantar",
+							getParam("txtTarikhHantar"));
+					hashMaklumatNotis.put("jangkamasa",
+							getParam("txtJangkaMasa"));
+					hashMaklumatNotis.put("tarikhJangkaTerima",
+							getParam("txtTarikhJangkaTerima"));
+					hashMaklumatNotis.put("tarikhTerima",
+							getParam("txtTarikhTerima"));
+					hashMaklumatNotis.put("tarikhSurat",
+							getParam("txtTarikhSurat"));
+					hashMaklumatNotis.put("noRujukan",
+							getParam("txtNoRujukanSurat"));
 					hashMaklumatNotis.put("ulasan", getParam("txtUlasan"));
-					hashMaklumatNotis.put("namaPegawai", getParam("txtNamaPegawai"));
+					hashMaklumatNotis.put("namaPegawai",
+							getParam("txtNamaPegawai"));
 					hashMaklumatNotis.put("jawatan", getParam("txtJawatan"));
 					beanMaklumatSuratPenghargaan.addElement(hashMaklumatNotis);
-					this.context.put("BeanMaklumatSuratPenghargaan", beanMaklumatSuratPenghargaan);
+					this.context.put("BeanMaklumatSuratPenghargaan",
+							beanMaklumatSuratPenghargaan);
 
 					if ("1".equals(flagStatus)) {
 						this.context.put("readonlyS", "");
 						this.context.put("inputTextClassS", "");
 
-						if ("99999".equals(idNegeri) && !"".equals(idNegeriTanah)) {
+						if ("99999".equals(idNegeri)
+								&& !"".equals(idNegeriTanah)) {
 							idNegeri = idNegeriTanah;
 						}
 
 						if ("PTD".equals(flagSuratKe)) {
-							this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri", Long.parseLong(idNegeri), "", " onChange=\"doChangeNegeri();\""));
-							this.context.put("selectPejabat", HTML.SelectPejabatByIdNegeriAndJenisPejabat("socPejabat", Long.parseLong(idPejabat), "",
-											" onChange=\"doChangePejabat();\"", idNegeri, "2"));
+							this.context.put("selectNegeri", HTML.SelectNegeri(
+									"socNegeri", Long.parseLong(idNegeri), "",
+									" onChange=\"doChangeNegeri();\""));
+							this.context.put("selectPejabat", HTML
+									.SelectPejabatByIdNegeriAndJenisPejabat(
+											"socPejabat",
+											Long.parseLong(idPejabat), "",
+											" onChange=\"doChangePejabat();\"",
+											idNegeri, "2"));
 
 							beanMaklumatPejabat = new Vector();
 							logic.setMaklumatPejabat(idPejabat);
-							beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-							this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
-							
+							beanMaklumatPejabat = logic
+									.getBeanMaklumatPejabat();
+							this.context.put("BeanMaklumatPejabat",
+									beanMaklumatPejabat);
 						} else if ("JKPTG".equals(flagSuratKe)) {
-							this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri", Long.parseLong(idNegeri), "", " onChange=\"doChangeNegeri();\""));
-							this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "",
-											" onChange=\"doChangePejabat();\"", idNegeri, "4"));
+							this.context.put("selectNegeri", HTML.SelectNegeri(
+									"socNegeri", Long.parseLong(idNegeri), "",
+									" onChange=\"doChangeNegeri();\""));
+							this.context.put("selectPejabat", HTML
+									.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat",
+											Long.parseLong(idPejabat), "",
+											" onChange=\"doChangePejabat();\"",
+											idNegeri, "4"));
 
 							beanMaklumatPejabat = new Vector();
 							logic.setMaklumatPejabatJKPTG(idPejabat);
-							beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-							this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
+							beanMaklumatPejabat = logic
+									.getBeanMaklumatPejabat();
+							this.context.put("BeanMaklumatPejabat",
+									beanMaklumatPejabat);
 						}
 
 					} else {
 						this.context.put("readonlyS", "readonly");
 						this.context.put("inputTextClassS", "disabled");
 
-						if ("99999".equals(idNegeri) && !"".equals(idNegeriTanah)) {
+						if ("99999".equals(idNegeri)
+								&& !"".equals(idNegeriTanah)) {
 							idNegeri = idNegeriTanah;
 						}
 
 						if ("PTD".equals(flagSuratKe)) {
-							this.context.put("selectPejabat", HTML.SelectPejabatByIdNegeriAndJenisPejabat("socPejabat",
-											Long.parseLong(idPejabat), "disabled", " class=\"disabled\"", idNegeri, "2"));
+							this.context.put("selectPejabat", HTML
+									.SelectPejabatByIdNegeriAndJenisPejabat(
+											"socPejabat",
+											Long.parseLong(idPejabat),
+											"disabled", " class=\"disabled\"",
+											idNegeri, "2"));
 							beanMaklumatPejabat = new Vector();
 							logic.setMaklumatPejabat(idPejabat);
-							beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-							this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
+							beanMaklumatPejabat = logic
+									.getBeanMaklumatPejabat();
+							this.context.put("BeanMaklumatPejabat",
+									beanMaklumatPejabat);
 						} else if ("JKPTG".equals(flagSuratKe)) {
-							this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat),
-											"disabled"," class=\"disabled\"", idNegeri, "4"));
+							this.context.put("selectPejabat", HTML
+									.SelectPejabatKPTGByIdNegeriIdSeksyen(
+											"socPejabat", Long.parseLong(idPejabat),
+											"disabled"," class=\"disabled\"", 
+											idNegeri, "4"));
 							beanMaklumatPejabat = new Vector();
 							logic.setMaklumatPejabatJKPTG(idPejabat);
-							beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
-							this.context.put("BeanMaklumatPejabat", beanMaklumatPejabat);
+							beanMaklumatPejabat = logic
+									.getBeanMaklumatPejabat();
+							this.context.put("BeanMaklumatPejabat",
+									beanMaklumatPejabat);
 						}
 					}
 				}
@@ -643,7 +734,8 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 			senaraiSuratPenghargaan = new Vector();
 			logic.setSenaraiSuratPenghargaan(idPermohonan);
 			senaraiSuratPenghargaan = logic.getListSuratPenghargaan();
-			this.context.put("SenaraiSuratPenghargaan", senaraiSuratPenghargaan);
+			this.context
+					.put("SenaraiSuratPenghargaan", senaraiSuratPenghargaan);
 		}
 
 		if ("selesaiPermohonan".equals(step)) {
@@ -667,6 +759,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		this.context.put("idPegawaiLaporanTanah", idPegawaiLaporanTanah);
 		this.context.put("idUlasanTeknikal", idUlasanTeknikal);
 		this.context.put("idDokumen", idDokumen);
+
 		this.context.put("idKementerianTanah", idKementerianTanah);
 		this.context.put("idAgensiTanah", idAgensiTanah);
 		this.context.put("idDokumen", idDokumen);
@@ -674,7 +767,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		this.context.put("flagAktif", flagAktif);
 		this.context.put("idSuratKe", flagSuratKe);
 		this.context.put("actionCRB", actionCRB);
-		this.context.put("socJenisImej", jenisImejan);
+		this.context.put("socJenisImej", socJenisImej);
 
 		this.context.put("flagOpenDetail", flagOpenDetail);
 		this.context.put("status", status.toUpperCase());
@@ -687,7 +780,6 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		
 		if (isMultipart != false) {
 			List items = upload.parseRequest(request);
 			Iterator itr = items.iterator();
@@ -704,7 +796,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 	private void saveData(FileItem item, String idLaporanTanah, String idPermohonan, HttpSession session) throws Exception {
 
 		Db db = null;
-		String userId = (String) session.getAttribute("_ekptg_user_id");  
+		String userId = (String) session.getAttribute("_ekptg_user_id");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 		try {
 			db = new Db();
 
@@ -714,7 +806,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 			con.setAutoCommit(false);
 			PreparedStatement ps = con
 					.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
-							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_LAPORANTANAH,FLAG_DOKUMEN,ID_PERMOHONAN,JENIS_IMEJ) "
+							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_LAPORANTANAH,FLAG_DOKUMEN,ID_PERMOHONAN, JENIS_IMEJ) "
 							+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?,?,?)");
 			ps.setLong(1, idDokumen);
 			ps.setString(2, getParam("namaImej"));
@@ -726,7 +818,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 			ps.setString(8, idLaporanTanah);
 			ps.setString(9, "I");
 			ps.setString(10, idPermohonan);
-			ps.setString(11, getParam("jenisImej"));
+			ps.setString(11, getParam("socJenisImej"));
 			ps.executeUpdate();
 
 			con.commit();

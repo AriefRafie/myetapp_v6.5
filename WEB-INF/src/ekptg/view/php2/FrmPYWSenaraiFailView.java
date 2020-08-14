@@ -413,7 +413,9 @@ public class FrmPYWSenaraiFailView extends AjaxBasedModule {
 		} else {
 			this.context.put("errMsg", "");
 		}
-				
+		
+//		System.out.println("keluarkan value : " +session.getAttribute("MSG"));
+		
 		return vm;
 	}
 	

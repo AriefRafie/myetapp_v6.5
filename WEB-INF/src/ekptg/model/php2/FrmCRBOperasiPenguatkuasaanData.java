@@ -250,7 +250,7 @@ public class FrmCRBOperasiPenguatkuasaanData {
 			listImejan = new Vector();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, JENIS_IMEJ, CATATAN FROM TBLPHPDOKUMEN"
+			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN"
 					+ " WHERE ID_LAPORANTANAH = '" + idLaporanTanah + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -261,12 +261,8 @@ public class FrmCRBOperasiPenguatkuasaanData {
 				h = new Hashtable();
 				h.put("bil", bil);
 				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
-				h.put("jenisImej", rs.getString("JENIS_IMEJ"));
 				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
 						: rs.getString("NAMA_DOKUMEN"));
-				h.put("catatan",
-						rs.getString("CATATAN") == null ? "" : rs
-								.getString("CATATAN"));
 				h.put("catatan",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));

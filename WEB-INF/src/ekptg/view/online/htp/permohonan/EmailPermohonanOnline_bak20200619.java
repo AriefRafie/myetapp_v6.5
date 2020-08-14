@@ -14,8 +14,8 @@ import ekptg.model.ppt.MyInfoPPTData;
 ////import ekptg.view.ppt.email.EkptgEmailSender;
 //import ekptg.intergration.EkptgEmailSender;
 
-public class EmailPermohonanOnline_bak20200619 {
-	static Logger myLog = Logger.getLogger(ekptg.view.online.htp.permohonan.EmailPermohonanOnline_bak20200619.class);
+public class EmailPermohonanOnline {
+	static Logger myLog = Logger.getLogger(ekptg.view.online.htp.permohonan.EmailPermohonanOnline.class);
 	private ekptg.model.htp.IHTPEmel iEmel = null;
 
 	public static void main(String args []){

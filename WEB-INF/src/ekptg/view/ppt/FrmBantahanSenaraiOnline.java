@@ -32,10 +32,6 @@ import ekptg.model.ppt.FrmUPTSek8BorangFData;
 import ekptg.model.ppt.PPTHeader;
 
 public class FrmBantahanSenaraiOnline extends AjaxBasedModule {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6180324014456793132L;
 	static Logger myLogger = Logger.getLogger(FrmBantahanSenaraiOnline.class);
 	
 	// MODEL
@@ -615,7 +611,7 @@ public class FrmBantahanSenaraiOnline extends AjaxBasedModule {
 				String flag_pampasan = (String)b.get("flag_pampasan");
 
 				if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-		     		listDokumen = model.senaraiDokumenBantahan(id_bantahan);
+		     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
 		    		context.put("listDokumen", listDokumen);
 		    		context.put("listDokumen_size", listDokumen.size());	    		
 				}else{				
@@ -1943,7 +1939,7 @@ public class FrmBantahanSenaraiOnline extends AjaxBasedModule {
     		context.put("id_bantahan",id_bantahan);
     		
     		if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senaraiDokumenBantahan(id_bantahan);
+	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -1983,7 +1979,7 @@ public class FrmBantahanSenaraiOnline extends AjaxBasedModule {
             this.context.put("display_error_message","no");	
             
             if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senaraiDokumenBantahan(id_bantahan);
+	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2012,7 +2008,7 @@ public class FrmBantahanSenaraiOnline extends AjaxBasedModule {
             this.context.put("display_error_message","no");	
            	
             if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senaraiDokumenBantahan(id_bantahan);
+	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2040,7 +2036,7 @@ public class FrmBantahanSenaraiOnline extends AjaxBasedModule {
 			}
 			
            if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senaraiDokumenBantahan(id_bantahan);
+	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2072,7 +2068,7 @@ public class FrmBantahanSenaraiOnline extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));	
 	
             if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senaraiDokumenBantahan(id_bantahan);
+	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				
@@ -2109,7 +2105,7 @@ public class FrmBantahanSenaraiOnline extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));	
 	
             if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
-	     		listDokumen = model.senaraiDokumenBantahan(id_bantahan);
+	     		listDokumen = model.senarai_dokumen_bantahan(id_bantahan);
 	    		context.put("listDokumen", listDokumen);
 	    		context.put("listDokumen_size", listDokumen.size());	    		
 			}else{				

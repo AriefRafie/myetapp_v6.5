@@ -278,12 +278,7 @@
 							                                        <div align="left">Negeri</div>
 							                                   	</div></td>
 							                                    <td width="1%"><div align="right">:</div></td>
-							                                    <td width="70%">$!socNegeri
-							                                    #if($!skrin_online == "yes")
-																									<a href="javascript:info('maklumat_tanah')" class="help" title="info">					
-									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                            			</a>#end 
-							                                    </td>
+							                                    <td width="70%">$!socNegeri</td>
                                   							</tr>
                                   							<tr>
 							                                    <td valign="top" class="style47" >*</td>
@@ -308,12 +303,7 @@
 								                                        <div align="left">Jenis Hakmilik</div>
 								                                      </div></td>
 								                                    <td><div align="right">:</div></td>
-								                                    <td>$!socJenisHakmilik
-								                                    #if($!skrin_online == "yes")
-						                                    	<a href="javascript:info('tanah')" class="help" title="info">
-						                                    	<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-						                                    	</a>#end
-						                                    	</td>
+								                                    <td>$!socJenisHakmilik</td>
 								                               	</tr>
 								                              	<tr>
 								                                    <td valign="top" class="style47">*</td>
@@ -323,12 +313,7 @@
 								                                    <td><div align="right">:</div></td>
 								                                    <td><label>
 								                                      <input name="txtNoHakmilikHtaam" type="text" id="txtNoHakmilikHtaam" value="$noHakmilik"  size="20" maxlength="50" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"/>
-								                                      </label>
-								                                      #if($!skrin_online == "yes")
-						                                      	<a href="javascript:info('hakmilik')" class="help" title="info">					
-									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                            			</a>#end
-									                            			</td>
+								                                      </label></td>
 								                              	</tr>
 				                                                <tr>
 				                                                  <td valign="top" class="style47">*</td>
@@ -339,12 +324,7 @@
 				                                                  <td><label>
 				                                                    <input name="txtNoPTHtaam" type="text" id="txtNoPTHtaam" value="$nopt" size="15"  maxlength="50" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"  onkeyup="no_lot1();checklot()" />
 				                                                    </label>
-				                                                    <span id="checklot" style="color:red" ></span>
-				                                                    #if($!skrin_online == "yes")
-						                                      				<a href="javascript:info('lot')" class="help" title="info">					
-									                            						<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                            						</a>#end
-				                                                     </td>
+				                                                    <span id="checklot" style="color:red" ></span> </td>
 				                                                </tr>
                                        <!-- Salnizam edit starts --> 
                                                            
@@ -414,10 +394,6 @@
 								                                    <td><input name="txtBahagianSimati1" type="text" id="txtBahagianSimati1" onKeyUp="javascript:validateIC(event,this,this.value,'txtBahagianSimati1')" style="text-align:right;text-transform:uppercase;" value="$basimati" size="14" maxlength="14" onblur="bahagiansimati()"/>
 								                                      /
 								                                      <input name="txtBahagianSimati2" type="text" id="txtBahagianSimati2" onKeyUp="javascript:validateIC(event,this,this.value,'txtBahagianSimati2')" style="text-align:left;text-transform:uppercase;" value="$bbsimati" size="14" maxlength="14" onblur="bahagiansimati()"/>
-								                                     #if($!skrin_online == "yes")
-								                                    <a href="javascript:info('bahagian')" class="help" title="info">					
-									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                            				</a>#end
 								                                    </td>
 								                              	</tr>
 								                              	<tr>
@@ -593,10 +569,6 @@
 							                                        <option value="4">BUKAN TANAH GSA</option>
 							                                      	</select>
         	#end
-        															#if($!skrin_online == "yes")
-																 	  	<a href="javascript:info('Tanah_gsa')" class="help" title="info">					
-																					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-																			</a>#end
 							                                      </td>
 							                                  	</tr>
 							                                  	<tr>
@@ -986,12 +958,7 @@
 					                                    <td valign="top">:</td>
 					                                    <td><label>
 					                                      <textarea name="txtSyaratNyata" id="txtSyaratNyata" $readmodeR class="$readmode" value="$listamid.syaratNyata" cols="31" rows="5"  onblur="this.value=this.value.toUpperCase()">$listamid.syaratNyata</textarea>
-					                                      </label>
-					                                      #if($!skrin_online == "yes")
-																						 	  	<a href="javascript:info('syarat')" class="help" title="info">					
-																											<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-																									</a>#end
-					                                      </td>
+					                                      </label></td>
 					                            	</tr>
                                 				</table>
                                 			</td>
@@ -1685,23 +1652,6 @@
   #parse("app/ppk/headerppk_script.jsp")
 </form>
 <script>
-function info(jenis) {
-    //
-	var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
-    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=no,scrollbars=no');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus(); /**/
-    //
-    var title = 'Info';
-	var w =1024;
-	var h = 800;
-    var left = (screen.width/2)-(w/2);
-    //var top = (screen.height/2)-(h/2);
-    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-}
 	function lampiranHarta(idHarta) {
 		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTA&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
 	    //

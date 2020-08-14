@@ -5,6 +5,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 </script>
 #end -->
 
+
 #foreach ( $senarai in $Header )
 	#set ($nama_kementerian=$senarai.nama_kementerian)
     #set ($id_kementerian=$senarai.id_kementerian)
@@ -374,7 +375,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1  />
           #end          </td>
           
-          <td width="76%">Ukuran Luas Tanah Tersebut</td>
+          <td width="76%">Ukuran Luas Tanah Tersebut;</td>
         </tr>
         <tr>
           <td width="1%"></td>
@@ -397,7 +398,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
           #end          </td>
           
-          <td>Jumlah Pampasan</td>
+          <td>Jumlah Pampasan;</td>
         </tr>
         <tr>
           <td width="1%"></td>
@@ -421,7 +422,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19"  $TEMPchecked3 />
           #end          </td>
           
-          <td>Orang-orang yang  menerima pampasan</td>
+          <td>Orang-orang yang  menerima pampasan;</td>
         </tr>
         <tr>
           <td width="1%"></td>
@@ -451,7 +452,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <td>:</td>
           <td colspan="2">
           #if ($mode=="disabled")
-          <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!txtAmaunTuntutanF" maxlength="12" class="disabled" readonly />
+          <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!Util.formatDecimal($!txtAmaunTuntutan)" maxlength="12" class="disabled" readonly />
           #else
           <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$txtAmaunTuntutan" maxlength="12" onblur="validateNumber(this,this.value);validateModal(this,this.value,'$txtAmaunTuntutan')" onkeyup="validateNumber(this,this.value);"  />          
           #end          </td>
@@ -498,52 +499,55 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type="hidden" name="nama_skrin" id="nama_skrin" value="main"  />
 
 <fieldset id="senarai_dokumen" >
-<legend>Senarai Dokumen</legend>    
+<legend>Senarai Dokumen Yang Disertakan</legend>
+    
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
     #if($listDokumen_size > 0)
      <input name="cmdHapusDokumen" type="button" value="Hapus" onClick="hapusDokumenMaster('$!readmode')" title="Sila tick untuk hapus dokumen" >
     #end
     <table width="100%">
-	  	<tr class="table_header">
-	    <td width="3%">Bil</td>
-	    <td width="30%">Nama Dokumen</td>
-	    <td width="30%">Keterangan</td>
-	    <td width="30%">Dokumen Sokongan (Papar)</td>
-	     #if($listDokumen_size > 0)
-	      <td width="7%">
-	     
-	      <div align="center">
-	      <input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
-	      </div>
-	      
-	      </td>
-	      #end
-	  	</tr>
- #if($listDokumen_size > 0)
- 	#foreach($list1 in $listDokumen)                   
-    	#set( $i = $velocityCount )
-      	#if ( ($i % 2) != 1 )
-      		#set( $row = "row2" )
-    	#else
-        	#set( $row = "row1" )
-      	#end
-		<tr>  
-		    <td class="$row" >$list1.BIL</td>
-		    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
-		    <td class="$row" >$list1.KETERANGAN</td>
-		    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
-		    <td class="$row" ><div align="center">
-		       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
-		     </div></td>
-		</tr>
-  	#end
+  <tr class="table_header">
+    <td width="5%">Bil</td>
+    <td width="30%">Nama Dokumen</td>
+    <td width="30%">Keterangan</td>
+    <td width="30%">Dokumen Sokongan (Papar)</td>
+     #if($listDokumen_size > 0)
+      <td width="5%">
+     
+      <div align="center">
+      <input type="checkbox" name="all1" id="all1" onclick="doCheckAll1()" title="Semak untuk pilih semua" />
+      </div>
+      
+      </td>
+      #end
+  </tr>
+ 
   
+ #if($listDokumen_size > 0)
+  #foreach($list1 in $listDokumen)        
+           
+             #set( $i = $velocityCount )
+         		#if ( ($i % 2) != 1 )
+              		 #set( $row = "row2" )
+         		#else
+               		 #set( $row = "row1" )
+         		#end
+  <tr>  
+    <td class="$row" >$list1.BIL</td>
+    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
+    <td class="$row" >$list1.KETERANGAN</td>
+    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
+    <td class="$row" ><div align="center">
+       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
+     </div></td>
+  </tr>
+  #end
   #else
-	  	<tr>  
-	    	<td colspan="5">Tiada Rekod</td>    
+  <tr>  
+    <td colspan="5">Tiada Rekod</td>    
 	  	</tr>
   #end
-	</table>
+</table>
   
 </fieldset> 
 -->
@@ -615,21 +619,6 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 	/**
 	Fungsi hantar maklumat bantahan ke MT
 	*/
-	function hantarBantahan2() {
-		var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
-		var idFail = "&idfail=$!id_fail";
-		var idHarta  = "&idharta="+$jquery('#id_hakmilik').val();
-		var idPermohonan  = "&idpermohonan="+$jquery('#id_permohonan').val();
-		var idSiasatan  = "&idsiasatan="+$jquery('#id_siasatan').val();
-		var idWarta  = "&idwarta=$!idWarta";
-		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
-		
-		document.${formName}.command.value = "bantahanap";
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian"+param;
-		document.${formName}.submit();	
-		
-	}
-	
 	function hantarBantahan() {	
 		var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
 		var idFail = "&idfail=$!id_fail";
@@ -639,9 +628,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 		var idWarta  = "&idwarta=$!idWarta";
 		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
 		//alert(param);
-		//var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiPerintah?idfail=99201196628&command=borangPerintah";
 		var url = "../x/${securityToken}/ekptg.view.ppt.bantahan.IntegrasiMT?"+param+"&command=bantahanap&frmFrom=frmPrmhnnSek8DaftarSek8";
-		
 		var hWnd = window.open(url,'Cetak','width=625,height=575, resizable=no,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -828,14 +815,14 @@ function simpanBantahan() {
 	
 }
 
-	function tambahDokumen(id_permohonan,id_bantahan,id_hakmilik) {
-		var id_bantahan = document.${formName}.id_bantahan.value ;
-		var id_permohonan = document.${formName}.id_permohonan.value ;
-		var id_hakmilik = document.${formName}.id_hakmilik.value ;	
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilik="+id_hakmilik+"&location=maklumat_dokumen&point=txtnamadokumen";	
-		document.${formName}.submit();
-	
-	}
+function tambahDokumen(id_permohonan,id_bantahan,id_hakmilik) {
+
+	var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;
+	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilik="+id_hakmilik+"&location=maklumat_dokumen&point=txtnamadokumen";	
+	document.${formName}.submit();
+}
 
 function view_Lampiran(id_dokumen) {
     var id_bantahan = document.${formName}.id_bantahan.value ;

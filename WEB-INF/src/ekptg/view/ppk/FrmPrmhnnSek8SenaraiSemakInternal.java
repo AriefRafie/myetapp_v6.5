@@ -83,7 +83,7 @@ public class FrmPrmhnnSek8SenaraiSemakInternal extends VTemplate {
 		mainheader = new FrmHeaderPpk();
 
 		headerppk_baru_default();
-		
+		System.out.println("read here&*&*&*&*");
 		int flagno = 0;
 		int idFlag = 0;
 		int flag_no = 0;
@@ -288,7 +288,7 @@ Vector listabc = null;
 		this.context.put("val_tab", v_tab);
 		
 		
-		myLogger.info("vm======="+submit);
+		System.out.println("vm======="+vm);
 
 		if ("Kemaskini".equals(submit)) {
 			String tempid = getParam("idtemp");
@@ -419,7 +419,6 @@ Vector listabc = null;
 						
 						String txtbox = "";
 						String tarikhresit = "";
-						String tarikhperintah = "";
 						if (cbsemaks[i].equals("5")) {
 							txtbox = getParam("txtNomborSijil");
 						} else if (cbsemaks[i].equals("8")) {
@@ -437,7 +436,7 @@ Vector listabc = null;
 						}
 						// if(bolehsimpan.equals("yes")){
 						logic_C.semakanAdd(cbsemaks[i], String.valueOf(idPermohonan), String.valueOf(txtbox),
-								String.valueOf(tarikhresit),String.valueOf(tarikhperintah), buktimati, uu);
+								String.valueOf(tarikhresit), buktimati, uu);
 						// }
 
 					}
@@ -7289,7 +7288,73 @@ Vector listabc = null;
 		}
 
 		String usid = "";
-				
+		// usid="81"; //kelantan
+		// session.setAttribute("_ekptg_user_id", usid);
+		// this.context.put("usid",usid);
+
+		
+		/*
+		usid = (String) session.getAttribute("_ekptg_user_id");
+		this.context.put("usid", usid);
+
+		this.context.put("DATEUTIL", new DateUtil());
+
+		listnegeri = logic_A.getListnegeri();
+		this.context.put("listnegeri", listnegeri);
+
+		Vector count_dunia = logic_A.getNofaildunia(2, 1, 8);
+		this.context.put("count_dunia", count_dunia);
+
+		Vector listtaraf = logic_A.getListtaraf();
+		this.context.put("listtaraf", listtaraf);
+
+		Vector listsaudara = logic_A.getListsaudara();
+		this.context.put("listsaudara", listsaudara);
+
+		Vector listbuktimati = logic_A.getListbuktimati();
+		this.context.put("listbuktimati", listbuktimati);
+
+		listdaerah = logic_A.getListDaerah();
+		this.context.put("listdaerah", listdaerah);
+
+		Vector listluas = logic_A.getListLuas();
+		this.context.put("listluas", listluas);
+
+		String statuspemilik = "Y";
+		Vector listpemilikan = logic_A.getListStatusPemilik(statuspemilik);
+		this.context.put("listpemilikan", listpemilikan);
+
+		Vector listtanah = logic_A.getListJenisTanah();
+		this.context.put("listtanah", listtanah);
+
+		listmukim = logic_A.getListMukim();
+		this.context.put("listmukim", listmukim);
+
+		String statushak = "Y";
+		Vector listjenishakmilik = logic_A.getListJenisHakMilik(statushak);
+		this.context.put("listJenisHakMilik", listjenishakmilik);
+
+		Vector listkategori = logic_A.getListKategori();
+		this.context.put("listkategori", listkategori);
+
+		this.context.put("flagFromSenaraiFailSek8", flagFromSenaraiFailSek8);
+		this.context.put("flagForView", flagForView);
+		this.context.put("flagFromSenaraiPermohonanSek8",
+				flagFromSenaraiPermohonanSek8);
+		
+		
+		Vector kenegaraan = null;
+		kenegaraan = mainheader.kenegaraan();
+		this.context.put("kenegaraan", kenegaraan);
+		
+		
+		FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamahARB();
+		Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
+				.getMaklumatMahkamahARB();
+		this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
+		*/
+		
+		
 		Db db = null;
 		try {
 		db = new Db();
@@ -7364,7 +7429,7 @@ Vector listabc = null;
 		}
 		
 		Template template = this.engine.getTemplate(vm);
-		myLogger.info("vm : " + vm);
+		System.out.println("vm : " + vm);
 		return template;
 
 	}
@@ -8583,6 +8648,75 @@ Vector listabc = null;
 		
 		logic.updateHtaam(h);
 	}
+
+	/*
+	 * private void updateHtaam(HttpSession session) throws Exception {
+	 * 
+	 * Vector v = new Vector(); Hashtable h = new Hashtable();
+	 * 
+	 * h.put("idhta",getParam("id_htaam"));
+	 * 
+	 * h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
+	 * h.put("idSimati",getParam("idSimati")); h.put("nopt",
+	 * getParam("txtNoPTHtaamUp"));
+	 * 
+	 * h.put("nilai_Hta_memohon",getParam("txtNilaiTarikhMohonHt"));
+	 * 
+	 * h.put("nilai_Hta_mati",getParam("txtNilaiTarikhMatiHtaamUpd"));
+	 * 
+	 * 
+	 * if (getParam("socKategoriTanahHtaamUp") != "") { h.put("kategori",
+	 * Integer .parseInt(getParam("socKategoriTanahHtaamUp"))); } else {
+	 * h.put("kategori", 0); }
+	 * 
+	 * 
+	 * 
+	 * if (getParam("socJenisHakmilikHtaamUp") != "") { h.put("jenishakmilik",
+	 * Integer .parseInt(getParam("socJenisHakmilikHtaamUp"))); } else {
+	 * h.put("jenishakmilik", 0); }
+	 * 
+	 * h.put("pemilikan", getParam("socStatusPemilikanHtaamUpd"));
+	 * 
+	 * if (getParam("socNegeriHtaamUp") != "") { h.put("negeri",
+	 * Integer.parseInt(getParam("socNegeriHtaamUp"))); } else { h.put("negeri",
+	 * 0); }
+	 * 
+	 * if (getParam("socDaerahHtaamUp") != "") { h.put("daerah",
+	 * Integer.parseInt(getParam("socDaerahHtaamUp"))); } else { h.put("daerah",
+	 * 0); }
+	 * 
+	 * if (getParam("socMukimHtaamUp") != "") { h.put("mukim",
+	 * Integer.parseInt(getParam("socMukimHtaamUp"))); } else { h.put("mukim",
+	 * 0); }
+	 * 
+	 * h.put("luashmp", getParam("txtLuasHMpHtaamUpd")); h.put("luasasal",
+	 * getParam("txtLuasAsalHtaamUpd")); h.put("nopajakan",
+	 * getParam("txtNoPajakanUp")); h.put("jenistanah",
+	 * getParam("socJenisTanahHtaamUpd"));
+	 * 
+	 * if (getParam("txtBahagianSimati1Up") != "") { h.put("basimati",
+	 * getParam("txtBahagianSimati1Up")); } else { h.put("basimati", "0"); }
+	 * 
+	 * if (getParam("txtBahagianSimati2Up") != "") {
+	 * h.put("bbsimati",getParam("txtBahagianSimati2Up")); } else {
+	 * h.put("bbsimati", "0"); }
+	 * 
+	 * if (getParam("socJenisLuasHtaamUpd") != "") { h.put("jenisluas", Integer
+	 * .parseInt(getParam("socJenisLuasHtaamUpd"))); } else { h.put("jenisluas",
+	 * 0); }
+	 * 
+	 * h.put("tanggungan", getParam("txtTanggunganHtaamUp"));
+	 * 
+	 * h.put("catatan", getParam("txtCatatanHt")); h.put("noperserahan",
+	 * getParam("txtNoPersHtaamUp"));
+	 * 
+	 * h.put("id_Kemaskini", (String) session.getAttribute("_ekptg_user_id"));
+	 * h.put("tarikh_Kemaskini", currentDate);
+	 * 
+	 * logic.updateHtaam(h);
+	 * 
+	 * }
+	 */
 
 	public void addHtaamX(HttpSession session) throws Exception {
 

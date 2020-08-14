@@ -28,8 +28,6 @@ public class FrmTKRPopupSenaraiTanahOnlineView extends AjaxBasedModule {
 		HttpSession session = this.request.getSession();
 
 		//GET DEFAULT PARAM
-		String idHakmilikSementara = null;
-		idHakmilikSementara = getParam("idHakmilikSementara");
 	    String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
 	    String vm = "";
 	    String actionPopup = getParam("actionPopup");
@@ -84,7 +82,7 @@ public class FrmTKRPopupSenaraiTanahOnlineView extends AjaxBasedModule {
         	vm = "app/php2/online/frmTKRPopupMaklumatTanah.jsp";
         	
         	beanMaklumatTanah = new Vector();
-			logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
+			logic.setMaklumatTanah(idHakmilikAgensi);
 			beanMaklumatTanah = logic.getBeanMaklumatTanah();
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 	    	

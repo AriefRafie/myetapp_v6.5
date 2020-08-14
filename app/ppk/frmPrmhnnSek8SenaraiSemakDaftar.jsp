@@ -136,9 +136,9 @@
 		#if ($List.idsemakansenarai == "24")
 			#set ($checked24 = "checked")
 		#end
-		#if ($List.idsemakansenarai == "26") <!-- arief add -->
+		<!--#if ($List.idsemakansenarai == "26")  arief add 
 			#set ($checked26 = "checked")
-		#end
+		#end-->
 	#end
 #end
 </head>
@@ -589,18 +589,19 @@
             <td width="10%" >&nbsp;</td>
              <td width="1%" valign="top" >#if($chkmode != "disabled")<span class="style2"></span> #end</td>
             <td width="3%" ><input type="checkbox" name="cbsemaks" id="cbsemaks19" $chkmode value="24" $checked24 onClick="ReadOnlyCheckBox(this);checkit_harta_cancel()" />            </td>
-            <td width="86%"> #if($chkmode != "disabled") Memiliki Harta Tak Alih #else
+            <td width="86%">#if($chkmode != "disabled") Memiliki Harta Tak Alih #else  
               Memiliki Harta Tak Alih
               #end </td>
           </tr>
-          <!--  <tr>
+           <!-- arief add Memiliki Harta Alih
+          <tr>
             <td width="10%" >&nbsp;</td>
              <td width="1%" valign="top" >#if($chkmode != "disabled")<span class="style2"></span> #end</td>
-            <td width="3%" ><input type="checkbox" name="cbsemaks" id="cbsemaks20" $chkmode value="26" $checked26 onClick="ReadOnlyCheckBox(this);checkit_ha_cancel()" />            </td>
+            <td width="3%" ><input type="checkbox" name="cbsemaks" id="cbsemaks21" $chkmode value="26" $checked26 onClick="ReadOnlyCheckBox(this);checkit_ha_cancel()" />            </td>
             <td width="86%"> #if($chkmode != "disabled") Memiliki Harta Alih #else
               Memiliki Harta Alih
               #end </td>
-          </tr>-->
+          </tr> --> 
         </table></td>
       </tr>
        <tr>
@@ -1288,6 +1289,7 @@ function checkit16()
 	{	
 	document.f1.cbsemaks[17].checked = true;
 	document.f1.cbsemaks[18].checked = true;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[16].checked == false)
@@ -1298,6 +1300,7 @@ function checkit16()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
+	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}	
 
@@ -1311,6 +1314,7 @@ function checkit17()
 	{	
 	document.f1.cbsemaks[16].checked = true;
 	document.f1.cbsemaks[18].checked = true;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[17].checked == false)
@@ -1320,12 +1324,14 @@ function checkit17()
 	{	
 	document.f1.cbsemaks[19].checked = false;
 	document.f1.cbsemaks[18].checked = false;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}
 	else if (document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false && document.f1.cbsemaks[21].checked == false)
 	{	
 	document.f1.cbsemaks[19].checked = false;
 	document.f1.cbsemaks[18].checked = false;	
-	document.f1.cbsemaks[16].checked = false;	
+	document.f1.cbsemaks[16].checked = false;
+	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	
@@ -1341,6 +1347,7 @@ function checkit18()
 	{	
 	document.f1.cbsemaks[16].checked = true;
 	document.f1.cbsemaks[17].checked = true;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[18].checked == false)
@@ -1351,6 +1358,7 @@ function checkit18()
 	document.f1.cbsemaks[19].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[17].checked = false;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}
 	else if (document.f1.cbsemaks[19].checked == false && document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false && document.f1.cbsemaks[21].checked == false)
 	{	
@@ -1361,6 +1369,7 @@ function checkit18()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
+	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	
@@ -1378,6 +1387,7 @@ function checkit19()
 	{	
 	document.f1.cbsemaks[16].checked = true;
 	document.f1.cbsemaks[17].checked = true;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[19].checked == false)
@@ -1388,6 +1398,7 @@ function checkit19()
 	document.f1.cbsemaks[19].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[17].checked = false;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}
 	else if (document.f1.cbsemaks[18].checked == false && document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false && document.f1.cbsemaks[21].checked == false)
 	{	
@@ -1398,6 +1409,7 @@ function checkit19()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
+	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	
@@ -1412,6 +1424,7 @@ function checkit20()
  if (document.f1.cbsemaks[20].checked == true)
 	{	
 	document.f1.cbsemaks[16].checked = true;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[20].checked == false)
@@ -1425,6 +1438,7 @@ function checkit20()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
+	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	}
@@ -1436,6 +1450,7 @@ function checkit21()
  if (document.f1.cbsemaks[21].checked == true)
 	{	
 	document.f1.cbsemaks[16].checked = true;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
 	if (document.f1.cbsemaks[21].checked == false)
@@ -1449,6 +1464,7 @@ function checkit21()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
+	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLainTujuan.value="";
 	}
 	}
@@ -1461,6 +1477,7 @@ function checkit22()
  if (document.f1.cbsemaks[22].checked == true)
 	{	
 	document.f1.cbsemaks[16].checked = true;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	document.f1.txtLainLain.focus();	
 	}	
 	
@@ -1475,6 +1492,7 @@ function checkit22()
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
+	//document.f1.cbsemaks[25].checked = false;//arief add
 	}
 	}
 }
@@ -1486,6 +1504,7 @@ function checkitD()
 	{	
 	document.f1.cbsemaks[16].checked = true;
 	document.f1.cbsemaks[22].checked = true;
+	//document.f1.cbsemaks[25].checked = true;//arief add
 	}	
 	
  if (document.f1.txtLainLain.value == "")
@@ -1500,11 +1519,13 @@ if (document.f1.cbsemaks[19].checked == false && document.f1.cbsemaks[20].checke
 	document.f1.cbsemaks[20].checked = false;
 	document.f1.cbsemaks[21].checked = false;
 	document.f1.cbsemaks[22].checked = false;
+	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLain.value="";
 	}
 	else
 	{
 	document.f1.cbsemaks[22].checked = false;
+	//document.f1.cbsemaks[25].checked = false;//arief add
 	document.f1.txtLainLain.value="";
 	}
 	
@@ -1584,7 +1605,7 @@ function DoTheCheck() {
 		dm.focus()
 		return false
 	}
-	//arief add ::--  && document.f1.cbsemaks[25].checked == false
+	//arief add ::--  && document.f1.cbsemaks[16].checked == false
 	else if (document.f1.cbsemaks[23].checked == false && document.f1.cbsemaks[16].checked == false ) { 
 		alert("Sila masukkan Memiliki Harta Tidak Alih ATAU Harta Alih");
 		
@@ -1822,7 +1843,7 @@ document.f1.cbsemaks[15].checked = false;
 }	
 }
 //arief add checkit_ha()
-/*function checkit_ha()
+/**function checkit_ha()
 {
 	if (document.f1.cbsemaks[17].checked == true || document.f1.cbsemaks[18].checked == true || document.f1.cbsemaks[19].checked == true || document.f1.cbsemaks[20].checked == true || document.f1.cbsemaks[21].checked == true || document.f1.cbsemaks[22].checked == true)
 	{
@@ -1832,9 +1853,9 @@ document.f1.cbsemaks[15].checked = false;
 	{
 		document.f1.cbsemaks[26].checked = false;
 	}		
-}*/
+}**/
 //arief add checkit_ha_cancel()
-/*function checkit_ha_cancel()
+/**function checkit_ha_cancel()
 {
 	if (document.f1.cbsemaks[26].checked == false)
 	{
@@ -1846,5 +1867,5 @@ document.f1.cbsemaks[15].checked = false;
 		document.f1.cbsemaks[22].checked = false;
 		document.f1.txtLainLainTujuan.value="";
 	}
-}*/
+}**/
 </script>

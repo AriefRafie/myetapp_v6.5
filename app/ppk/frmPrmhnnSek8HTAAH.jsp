@@ -224,7 +224,8 @@ $listnegeri -->
                   <div class="TabbedPanelsContent"> #parse("app/ppk/info_berjaya_disimpan.jsp")
                     <table width="100%" border="0" align="center">
                       <tr>
-                        <td width="50%"> #if($show_htaa_add_table=="yes")
+                        <td width="50%"> 
+                        #if($show_htaa_add_table=="yes")
                           <fieldset>
                           <legend>HARTA TAK ALIH (ADA HAKMILIK)</legend>
                           <table width="100%" border="0">
@@ -234,80 +235,87 @@ $listnegeri -->
                     	  </tr>
                     	  #end
                             <tr>
-                              <td width="50%" valign="top"><table width="100%" border="0">
-                                  <tr>
-                                    <td valign="top" class="style45">*</td>
-                                    <!-- Tambah -->
-                                    <td width="29%" class="style38"><div align="right" class="style44">
-                                        <div align="left">Negeri</div>
-                                      </div></td>
-                                    <td width="1%"><div align="right">:</div></td>
-                                    <td width="70%"> #foreach($listnegpomo in $listnegeri)
-                                      
-                                      #if($negeri==$listnegpomo.id_Negeri)
-                                      
-                                      #set($negerikodpemoP=$listnegpomo.kod_Negeri)
-                                      #set($negeriketeranganpemoP=$listnegpomo.nama_Negeri)
-                                      
-                                      
-                                      
-                                      #end 
-                                      #end
-                                      #if($negeri!="")
-                                      <select name="socNegeriHtaam" class="autoselect" $readmodenegeri onchange="setSelected(1,0,0,0);negerichange('socDaerahHtaam')" style="text-transform:uppercase;" onblur="uppercase()">
-                                        <option value="$negeri">$negerikodpemoP - $negeriketeranganpemoP</option>
+                            	<td width="50%" valign="top"><table width="100%" border="0">
+                                	<tr>
+                                    	<td valign="top" class="style45">*</td>
+                                    	<!-- Tambah -->
+                                    	<td width="29%" class="style38">
+                                    		<div align="right" class="style44">
+                                        	<div align="left">Negeri</div>
+                                      		</div>
+                                      	</td>
+                                    	<td width="1%"><div align="right">:</div></td>
+                                    	<td width="70%">
+                                	#foreach($listnegpomo in $listnegeri)                                  
+                                   		#if($negeri==$listnegpomo.id_Negeri)                                    
+                                      		#set($negerikodpemoP=$listnegpomo.kod_Negeri)
+                                      		#set($negeriketeranganpemoP=$listnegpomo.nama_Negeri)
+                                                                       
+                                      	#end 
+                                	
+                                	#end
+                                	
+                                	#if($negeri!="")
+                                    	<select name="socNegeriHtaam" class="autoselect" $readmodenegeri onchange="setSelected(1,0,0,0);negerichange('socDaerahHtaam')" style="text-transform:uppercase;" onblur="uppercase()">
+                                        	<option value="$negeri">$negerikodpemoP - $negeriketeranganpemoP</option>
 
-                                  #foreach($listnegpomo in $listnegeri)
-                                  #if($negeri!=$listnegpomo.id_Negeri)
-										<option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
-                                  #end
-	                              #end
-                                      </select>
-                                      #else
-                                      <select name="socNegeriHtaam" class="autoselect" $readmodenegeri onchange="setSelected(1,0,0,0);negerichange('socDaerahHtaam')" style="text-transform:uppercase;" onblur="uppercase()">
-                                        <option value="">Sila Pilih Negeri</option>
-                                  #foreach($listnegpomo in $listnegeri)
-                                        <option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
-	                               #end
-                                      </select>
-                                      #end </td>
-                                  </tr>
-                                  <tr>
-                                    <td valign="top" class="style45" >*</td>
-                                    <!-- Tambah Rekod Baru -->
-                                    <td class="style38" ><div align="right" class="style44">
+                                  		#foreach($listnegpomo in $listnegeri)
+                                  			#if($negeri!=$listnegpomo.id_Negeri)
+											<option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
+                                  			#end
+	                            	
+	                            		#end
+                                      	</select>
+                                 	#else
+                                      	<select name="socNegeriHtaam" class="autoselect" $readmodenegeri onchange="setSelected(1,0,0,0);negerichange('socDaerahHtaam')" style="text-transform:uppercase;" onblur="uppercase()">
+                                        	<option value="">Sila Pilih Negeri</option>
+		                              	#foreach($listnegpomo in $listnegeri)
+		                                  	<option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
+			                          	#end
+                                      	</select>
+                                 	#end 
+                           				</td>
+                         			</tr>
+                                  	<tr>
+                                    	<td valign="top" class="style45" >*</td>
+                                    	<!-- Tambah Rekod Baru -->
+                                    	<td class="style38" >
+                                    	<div align="right" class="style44">
                                         <div align="left">Daerah</div>
-                                      </div></td>
+                                      	</div>
+                                  	</td>
                                     <td><div align="right">:</div></td>
-                                    <td>#foreach($listdaerah in $listDaerahbyNegeri)
+                                    <td> 
+                                    #foreach($listdaerah in $listDaerahbyNegeri)
+                                   		#if($daerah==$listdaerah.id)
+                                      		#set($listDaerahbyNegeriK=$listdaerah.kod)
+                                      		#set($listDaerahbyNegeriN=$listdaerah.nama)
                                       
-                                      #if($daerah==$listdaerah.id)
+                                      	#end 
+                               		#end 
+                               		#if($daerah!="") 
+                                   		<select name="socDaerahHtaam" id="socDaerahHtaam" class="autoselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchange('socMukimHtaam');daerah_harta();check_harta()" style="text-transform:uppercase;" onblur="uppercase()"  onclick="CheckDaerah()" >
+                                        	<option value="$daerah">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
+                                   		#foreach($listdaerah in $listDaerahbyNegeri)
+                                  			#if($daerah!=$listdaerah.id)
+                                        	<option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
+                                  			#end
+	                              		
+	                              		#end
+                                      	</select>
                                       
-                                      #set($listDaerahbyNegeriK=$listdaerah.kod)
-                                      #set($listDaerahbyNegeriN=$listdaerah.nama)
-                                      
-                                      
-                                      
-                                      #end 
-                                      #end
-                                      #if($daerah!="")
-                                      <select name="socDaerahHtaam" id="socDaerahHtaam" class="autoselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchange('socMukimHtaam');daerah_harta();check_harta()" style="text-transform:uppercase;" onblur="uppercase()"  onclick="CheckDaerah()" >
-                                        <option value="$daerah">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
-                                  #foreach($listdaerah in $listDaerahbyNegeri)
-                                  #if($daerah!=$listdaerah.id)
-                                        <option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
-                                  #end
-	                              #end
-                                      </select>
                                       #else
-                                      <select name="socDaerahHtaam" id="socDaerahHtaam" class="mediumselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchange('socMukimHtaam');daerah_harta();check_harta()" style="text-transform:uppercase;" onblur="uppercase()"  onclick="CheckDaerah()" >
-                                        <option value="">Sila Pilih Daerah</option>
-                                  #foreach($listDaerah in $listDaerahbyNegeri)
-                                        <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
-	                               #end
-                                      </select>
-                                      #end <span id="check_daerah_harta" style="color:red" ></span> </td>
-                                  </tr>
+                                      	<select name="socDaerahHtaam" id="socDaerahHtaam" class="mediumselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchange('socMukimHtaam');daerah_harta();check_harta()" style="text-transform:uppercase;" onblur="uppercase()"  onclick="CheckDaerah()" >
+                                        	<option value="">Sila Pilih Daerah</option>
+                                  		#foreach($listDaerah in $listDaerahbyNegeri)
+                                        	<option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
+	                               		#end
+                                      	</select>
+                                      #end 
+                           
+                                      	<span id="check_daerah_harta" style="color:red" ></span> 
+                           			</td>
+                            	</tr>
                                   <tr>
                                     <td valign="top" class="style45" >*</td>
                                     <td class="style38" ><div align="right" class="style44">
@@ -572,7 +580,7 @@ $listnegeri -->
                                   <tr>
                                     <td valign="top" class="style45">&nbsp;</td>
                                     <td class="style38" valign="top"><div align="right" class="style44">
-                                        <div align="left">Sekatan</div>
+                                        <div align="left">Sekatan Kepentingan</div>
                                       </div></td>
                                     <td valign="top"><div align="right">:</div></td>
                                     <td valign="top"><label>
@@ -871,6 +879,7 @@ $listnegeri -->
                                       <input name="meterhektar" type="text" id="meterhektar" value="$meterhektar" size="15" readonly class="disabled" />
                                       </label></td>
                                   </tr>
+                                  #if($!skrin_online != "yes")
                                   <tr>
                                     <td class="style38"><div align="left">Nilai Tarikh Mohon (RM)</div></td>
                                     <td><div align="right">:</div></td>
@@ -882,7 +891,7 @@ $listnegeri -->
                                       #set($n4=$nilai_Hta_memohon)                                             
                                       #end
                                       <input name="txtNilaiTarikhMohonHtaa" type="text" id="txtNilaiTarikhMohonHtaa" $readmode value="$n4"  onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMohonHtaa')"   onblur="validateModal(this,this.value,'$n4');" />
-                                      <!--
+                                      
                                              #if($nilai_Hta_memohon=="" || $nilai_Hta_memohon=="0")
                                              #set($nhtam="0.00")
                                             
@@ -895,9 +904,11 @@ $listnegeri -->
                                               <label>
                                               <input name="txtNilaiTarikhMohonHtaa" type="text" id="txtNilaiTarikhMohonHtaa" value="$nhtam" size="15" maxlength="8" onKeyUp="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMohonHtaa')"  />
                                               </label>
-                                              -->
+                                             
                                     </td>
                                   </tr>
+                                  #end
+                                  #if($!skrin_online != "yes")
                                   <tr>
                                     <td class="style38"><div align="left">Nilai Tarikh Mati(RM) </div></td>
                                     <td><div align="right">:</div></td>
@@ -911,8 +922,9 @@ $listnegeri -->
                                       <input name="txtNilaiTarikhMatiHtaam" type="text" id="txtNilaiTarikhMatiHtaam" $readmode value="$n3"  onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMatiHtaam')"   onblur="validateModal(this,this.value,'$n3');" />
                                     </td>
                                   </tr>
+                                  #end
                                   <tr>
-                                    <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Status Pemilikan</div></td> <!-- arief add mandatori -->
+                                    <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Status Pemilikan </div></td>
                                     <td><div align="right">:</div></td>
                                     <td>#foreach($listpemilik in $listpemilikan)
                                       
@@ -1036,59 +1048,51 @@ $listnegeri -->
                                   <tr>
                                     <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Jenis Tanah</div></td>
                                     <td width="1%"><div align="right">:</div></td>
-                                    <td><label> #if($jenistanah!="" && $jenistanah!="0")
-                                      <select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()">
-                                        
-                                        
-                                              
-                                              #if($jenistanah=="3")
-                                                  
-                                        
-                                        <!--<option value="1">TANAH RIZAB</option>  -->
-                                        <!-- <option value="2">TANAH ADAT</option>  -->
-                                        <option value="3">TANAH GSA</option>
-                                        <option value="4">BUKAN TANAH GSA</option>
-                                        
-                                        
-                                                  
-                                              #end
-                                               #if($jenistanah=="4")
-                                                
+                                    <td><label> 
+                               		#if($jenistanah!="" && $jenistanah!="0")
+                                   		<select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()">
+                                   		
+										#if($jenistanah=="3")  
+										<option value="0">Sila Pilih Jenis Tanah</option>
+                                        	<!--<option value="1">TANAH RIZAB</option>  -->
+                                       	 	<!-- <option value="2">TANAH ADAT</option>  -->
+                                        	<option value="3">TANAH GSA</option>
+                                        	<option value="4">BUKAN TANAH GSA</option>
+										#end
+                                       	#if($jenistanah=="4")                                               
                                         <!-- 
                                         <option value="2">TANAH ADAT</option>
                                         <option value="1">TANAH RIZAB</option>
                                          -->
-                                        <option value="4">BUKAN TANAH GSA</option>
-                                        <option value="3">TANAH GSA</option>
-                                        
-                                                  
-                                              #end
+                                         <option value="0">Sila Pilih Jenis Tanah</option>
+                                        	<option value="4">BUKAN TANAH GSA</option>
+                                        	<option value="3">TANAH GSA</option>
+                               			#end
                                         <!--       
-                                               #if($jenistanah=="3")
-                                                 
-                                        
+											#if($jenistanah=="3")
                                         <option value="3">TANAH GSA</option>
                                         <option value="1">TANAH RIZAB</option>
                                         <option value="2">TANAH ADAT</option>
                                         <option value="0">TIDAK DINYATAKAN</option>
-                                        
-                                        
                                                   
                                               #end
                                          -->
-                                      </select>
-                                      #else
-                                      <select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()">
-                                        <option value="0">Sila Pilih Jenis Tanah</option>
+                                      	</select>
+                                      	#else
+                                      	<select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()">
+                                      		<option value="0">Sila Pilih Jenis Tanah</option>
                                         <!-- 
                                         <option value="1">TANAH RIZAB</option>
                                         <option value="2">TANAH ADAT</option>
                                          -->
-                                         <option value="4">BUKAN TANAH GSA</option>
-                                        <option value="3">TANAH GSA</option>
-                                        
-                                      </select>
-                                      #end </label></td>
+	                                     	<option value="3">TANAH GSA</option>
+	                                        <option value="4">BUKAN TANAH GSA</option>
+                        				</select>
+                                      #end 
+                                      #if($!skrin_online == "yes") 
+                                      <font style="cursor:help" align="left" class="font2" title="info" onMouseOut="close_window()"  onMouseOver="open_new_window_online('1','');this.style.cursor='help'" >#parse("app/ppk/infoblink_ppkonline.jsp")</font>
+                                      #end
+                                      </label></td>
                                   </tr>
                                   <tr>
                                     <td class="style38" valign="top"><div align="left">Catatan</div></td>
@@ -1313,6 +1317,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             <tr>
                               <input type="hidden" name="id_htaam" id="id_htaam" value="$listamid.idhta" />
                               #set($idhta = $listamid.idhta)
+                              
                               <td valign="top" width="50%"><table width="100%" border="0">
                                   <tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")<span class="style41">*</span>#end</td>
@@ -1328,169 +1333,90 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       	#end 
                         			#end
                                       
+									#if($readmode == "disabled")
                                       
-                                      #if($readmode == "disabled")
+                                    	#if($listamid.negeri!="" && $listamid.negeri!="0" )
+                                      	<input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      	#else
+                                      	<input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      	#end
                                       
-                                      #if($listamid.negeri!="" && $listamid.negeri!="0" )
-                                      <input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                                      #else
-                                      <input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                                      #end
+                                 	#else
                                       
-                                      #else
-                                      #if($listamid.negeri!="")
-                                      <select name="socNegeriHtaamUp" class="autoselect" $readmodenegeri  onchange="negerichangeup('socDaerahHtaamUp')"  style="text-transform:uppercase;" onblur="uppercase()">
-                                        <option value="$listamid.negeri">$negerikodpemoP - $negeriketeranganpemoP</option>
-                                		#foreach($listnegpomo in $listnegeri)
-											#if($listamid.negeri!=$listnegpomo.id_Negeri)
-                                    	    	<option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
-                                  			#end
-	                              		 #end
-                                      </select>
-                                      #else
-                                      <select name="socNegeriHtaamUp" class="autoselect" $readmodenegeri onchange="negerichangeup('socDaerahHtaamUp')" style="text-transform:uppercase;" onblur="uppercase()" >
-                                        <option value="">Sila Pilih Negeri</option>
-                                        
-                                        
-    
-                                            
-                                              
-                                  #foreach($listnegpomo in $listnegeri)
-                                 
-                                
-	                               
-                                              
-                                            
-    
-                                        
-                                        <option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
-                                        
-                                        
-    
-                                            
-                                              
-                                   
-                                 
-	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-  
-                                      
-                                      </select>
-                                      #end          #end </td>
-                                  </tr>
-                                  <tr>
+                                   		#if($listamid.negeri!="")
+	                                      	<select name="socNegeriHtaamUp" class="autoselect" $readmodenegeri  onchange="negerichangeup('socDaerahHtaamUp')"  style="text-transform:uppercase;" onblur="uppercase()">
+	                                        <option value="$listamid.negeri">$negerikodpemoP - $negeriketeranganpemoP</option>
+	                                		#foreach($listnegpomo in $listnegeri)
+												#if($listamid.negeri!=$listnegpomo.id_Negeri)
+	                                    	    	<option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
+	                                  			#end
+		                              		 #end
+	                                      	</select>
+                                      	#else
+                                      		<select name="socNegeriHtaamUp" class="autoselect" $readmodenegeri onchange="negerichangeup('socDaerahHtaamUp')" style="text-transform:uppercase;" onblur="uppercase()" >
+                                        	<option value="">Sila Pilih Negeri</option>
+                                   			#foreach($listnegpomo in $listnegeri)
+                                         	<option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
+                   
+	                               			#end
+                                       </select>
+                                      	#end          
+                                  	#end 
+                                  	</td>
+                          	    </tr>
+                     			<tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")<span class="style41">*</span>#end</td>
                                    <!-- Kemaskini -->
                                     <td class="style38" ><div align="right" class="style44">
                                         <div align="left">#if($readmodedaerah != "disabled")Daerah#else Daerah#end</div>
                                       </div></td>
                                     <td>:</td>
-                                    <td>#foreach($listdaerah in $listdaerah)
+                                    <td>
+                                    #foreach($listdaerah in $listdaerah)
                                       
-                                      #if($listamid.daerah==$listdaerah.id)
+                                      	#if($listamid.daerah==$listdaerah.id)
                                       
-                                      #set($listDaerahbyNegeriK=$listdaerah.kod)
-                                      #set($listDaerahbyNegeriN=$listdaerah.nama)
-                                      
-                                      
-                                      
-                                      #end 
-                                      #end
-                                      
-                                      #if($readmode == "disabled")
-                                      
-                                      #if($listamid.daerah!="" && $listamid.daerah!="0" )
-                                      <input name="d" value="$listDaerahbyNegeriK - $listDaerahbyNegeriN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                                      #else
-                                      <input name="d" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                                      #end
-                                      
-                                      #else
-                                      
-                                      
-                                      #if($listamid.daerah!="")
-                                      <select name="socDaerahHtaamUp" class="autoselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()" id="socDaerahHtaamUp" style="text-transform:uppercase;" onblur="uppercase()">
-                                        <option value="$listamid.daerah">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                              
-                                  #foreach($listdaerah in $listDaerahbyNegeri)
-                                 
-                                  #if($listamid.daerah!=$listdaerah.id)
-                                    
-	                               
-                                              
-                                            
-                                            
-                                
-                                        
-                                        <option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                              
-                                   
-                                  #end    
-	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                          
-                              
-                                      
-                                      </select>
-                                      #else
-                                      <select name="socDaerahHtaamUp" id="socDaerahHtaamUp" class="autoselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()" style="text-transform:uppercase;" onblur="uppercase()">
-                                        <option value="">Sila Pilih Daerah</option>
-                                        
-                                        
-    
-                                            
-  
-                                              
-                                  #foreach($listDaerah in $listDaerahbyNegeri)
-                                 
-                                
-	                               
-                                              
-  
-                                            
-    
-                                        
-                                        <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
-                                        
-                                        
-    
-                                            
-  
-                                              
-                                   
-                                 
-	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
+                                      		#set($listDaerahbyNegeriK=$listdaerah.kod)
+                                      		#set($listDaerahbyNegeriN=$listdaerah.nama)
 
-                                          
-  
+                                      	#end 
+                                	
+                                	#end
                                       
-                                      </select>
-                                      #end           #end 
+                           			#if($readmode == "disabled")
+                                      
+                                      	#if($listamid.daerah!="" && $listamid.daerah!="0" )
+                                      	<input name="d" value="$listDaerahbyNegeriK - $listDaerahbyNegeriN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      	#else
+                                      	<input name="d" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      	#end
+                                      
+                                	#else
+                                       
+                                       #if($listamid.daerah!="")
+                                      	<select name="socDaerahHtaamUp" class="autoselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()" id="socDaerahHtaamUp" style="text-transform:uppercase;" onblur="uppercase()">
+                                        	<option value="$listamid.daerah">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
+                                  			#foreach($listdaerah in $listDaerahbyNegeri)
+                                 
+                                  				#if($listamid.daerah!=$listdaerah.id)
+                                        	<option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
+                                   				#end    
+	                               			
+	                               			#end
+                                       	</select>
+                                      	#else
+                                      	<select name="socDaerahHtaamUp" id="socDaerahHtaamUp" class="autoselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()" style="text-transform:uppercase;" onblur="uppercase()">
+                                        	<option value="">Sila Pilih Daerah</option>
+                                               
+                                  			#foreach($listDaerah in $listDaerahbyNegeri)
+                                         
+                                        		<option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
+ 	                               			#end
+	                     
+                                      	</select>
+                                      	#end           
+                                      
+                              		#end 
                                       
                                       #if($readmode != "disabled") <span id="check_daerah_harta" style="color:red" ></span> #end </td>
                                   </tr>
@@ -1741,7 +1667,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                   <tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")<span class="style41">*</span>#end</td>
                                     <td class="style38"><div align="right" class="style44">
-                                        <div align="left">#if($readmode != "disabled")No PT / No Lot#else No PT / No Lot #end </div>
+                                        <div align="left">#if($readmode != "disabled")No PT / No Lot #else No PT / No Lot #end </div>
                                       </div></td>
                                     <td>:</td>
                                     <td><label>
@@ -1942,7 +1868,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                   <tr>
                                     <td class="style38" valign="top">&nbsp;</td>
                                     <td class="style38" valign="top"><div align="right" class="style44">
-                                        <div align="left">Sekatan</div>
+                                        <div align="left">Sekatan Kepentingan</div>
                                       </div></td>
                                     <td valign="top">:</td>
                                     <td valign="top"><label>
@@ -2301,6 +2227,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       <input name="meterhektar" type="text" id="meterhektar" value="$meterhektar" size="15" readonly class="disabled" />
                                       </label></td>
                                   </tr>
+                                  #if($!skrin_online != "yes")
                                   <tr>
                                     <td class="style38"><div align="left">Nilai Tarikh Mohon (RM)</div></td>
                                     <td>:</td>
@@ -2315,6 +2242,8 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       <input name="txtNilaiTarikhMohonHt" type="text" value="$listamidnilai_Hta_memohon" size="15"  onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMohonHt')" $readmodeR class="$readmode" onblur="validateModal(this,this.value,'$listamidnilai_Hta_memohon')" />
                                       #end </label></td>
                                   </tr>
+                                  #end
+                                  #if($!skrin_online != "yes")
                                   <tr>
                                     <td class="style38"><div align="left">Nilai Tarikh Mati (RM)</div></td>
                                     <td>:</td>
@@ -2330,6 +2259,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       <input name="txtNilaiTarikhMatiHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMatiHtaamUpd')" type="text" id="txtNilaiTarikhMatiHtaam2" value="$listamidnilai_Hta_mati" size="15" $readmodeR class="$readmode" onblur="validateModal(this,this.value,'$listamidnilai_Hta_mati');" />
                                       #end </label></td>
                                   </tr>
+                                  #end
                                   <tr>
                                     <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Status Pemilikan</div></td>
                                     <td>:</td>
@@ -2539,19 +2469,20 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                         <option value="0">TIDAK DINYATAKAN</option>
                                         <option value="1">TANAH RIZAB</option>
                                           -->
+                                          <option value="0">Sila Pilih Jenis Tanah</option>
                                         <option value="3">TANAH GSA</option>
                                          <option value="4">BUKAN TANAH GSA</option>
                                                   
                                               #end
                                               
                                               #if($listamid.jenistanah=="4")
-                                        
+                                        <option value="0">Sila Pilih Jenis Tanah</option>
                                          <option value="4">BUKAN TANAH GSA</option>
                                          <option value="3">TANAH GSA</option>         
                                               #end
                                               
                                          #if($listamid.jenistanah!="4" && $listamid.jenistanah!="3"))
-                                        
+                                        <option value="0">Sila Pilih Jenis Tanah</option>
                                          <option value="3">TANAH GSA</option> 
                                          <option value="4">BUKAN TANAH GSA</option>
                                                  
@@ -2561,6 +2492,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       </select>
                                       #else
                                       <select name="socJenisTanahHtaamUpd" class="autoselect" $readmode id="socJenisTanahHtaam2" style="text-transform:uppercase;" onblur="uppercase()">
+                                       <option value="0">Sila Pilih Jenis Tanah</option>
                                        <!-- <option value="0">TIDAK DINYATAKAN</option> -->
                                        <!-- <option value="1">TANAH RIZAB</option> -->
                                        <!-- <option value="2">TANAH ADAT</option> -->
@@ -2568,7 +2500,11 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                         <option value="3">TANAH GSA</option> 
                                         
                                       </select>
-                                      #end            #end </label></td>
+                                      #end            #end
+                                      #if($!skrin_online == "yes") 
+                                      <font style="cursor:help" align="left" class="font2" title="info" onMouseOut="close_window()"  onMouseOver="open_new_window_online('1','');this.style.cursor='help'" >#parse("app/ppk/infoblink_ppkonline.jsp")</font>
+                                      #end
+                                      </label></td>
                                   </tr>
                                   <tr>
                                     <td class="style38" valign="top"><div align="left">Catatan</div></td>
@@ -2659,10 +2595,9 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
 		      	</table>
 		      </fieldset> -->
 		      
-              <div id='divLampiranHTAAH'>
-		      #parse("app/ppk/frmPrmhnnSek8HTAAHLampiran.jsp")
-                
-                </div>
+   			<div id='divLampiranHTAAH'>
+		      ##parse("app/ppk/frmPrmhnnSek8HTAAHLampiran.jsp")               
+         	</div>
                            
                           #if($readmode != "disabled")
                           <table width="100%">
@@ -2716,6 +2651,9 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                 #end
                                 
                                 #if($!skrin_online != "yes")
+                                
+                                
+                                
                                 <input type="submit" name="button8" id="button8" value="Kemaskini"  onclick="setSelected(1,0,0,0);edit_Htaam('$idhta')" />
                                 #if($flag_kemaskini_selesai != "yes")
                                 <script>
@@ -2766,8 +2704,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                       </tr>
                       #end
                       <tr>
-                        <td><fieldset>
-                          <legend>SENARAI HARTA TAK ALIH (ADA HAKMILIK) </legend>
+                        <td><fieldset><legend>SENARAI HARTA TAK ALIH (ADA HAKMILIK) </legend>
                           <table width="100%">
                             <tr>
                               <td align="left"><div align="left"> #if($tambahharta == "yes")
@@ -2824,7 +2761,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             </tr>  --> 
                           </table>
                           </fieldset>
-                          #if($listHTA.size()!=0 )
+               		#if($listHTA.size()!=0 )
                           <table width="100%">
                             <tr  class="table_header">
                             
@@ -2832,174 +2769,59 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             	<input type="checkbox" name="selectallHTA" id="selectallHTA" onClick="doCheckAll1_HTA()" />
 						      </td>
                             
-                              <td width="5%"><div align="center">NO</div></td>
-                              <!--
-                                        <td width="10%"><div align="center">ID HTA</div></td>
-                                        -->
-                                       
-                              <td width="20%"><div align="left">NEGERI</div></td>
-                              <td width="20%"><div align="left">DAERAH</div></td>
-                              <td width="20%"><div align="left">MUKIM</div></td>
+                              <td width="3%"><div align="center">NO</div></td>
+                              <td width="15%"><div align="left">NEGERI</div></td>
+                              <td width="15%"><div align="left">DAERAH</div></td>
+                              <td width="15%"><div align="left">MUKIM</div></td>
                               <td width="10%"><div align="left">NO HAKMILIK</div></td>
                               <td width="10%"><div align="left">NO PT/NO LOT</div></td>
                               <td width="5%"><div align="center">BAHAGIAN SIMATI</div></td>
-                              <td width="5%"><strong>Dokumen</strong></td>
+                              <td width="27%"><div align="left">DOKUMEN</div></td>
                             </tr>
                             #set($plko=0)
                             
-                            #foreach($listam in $listHTA)
-                            
-                            
-                            #set($plko=$plko+1)
-                            #if($plko%2!=0)
-                            <tr bgcolor="white">
-                            
-                            <td class="row1">
-                            	<input type="checkbox" name="selectHTA" id="selectHTA" value="$listam.idhta" />
-                              </td> 
-                            
-                              <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()">$plko</div></td>
-                              <!--
-    <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:get_htaam($listam.idhta)" class="style42">$listam.idhta </a></div></td>
-    -->
-                              #if($listam.negeri=="")
-                              
-                              #set($nama_negeri="")
-                              #else
-                              #foreach($ln in $listnegeri)                                                                      
-                              #if($ln.id_Negeri==$listam.negeri)
-                              #set($nama_negeri=$ln.nama_Negeri)
-                              
-                              #end
-                              #end
-                              
-                              #end
-                           <!--    <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:get_htaam($listam.idhta)" class="style42">$nama_negeri</a></div></td> -->
-                              <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"><a href="javascript:get_htaam('$idPermohonanSimati','$listam.idhta','$listam.idDokumen')" class="style42">$nama_negeri</a></div></td>
-                              #if($listam.daerah=="")
-                              
-                              #set($nama_daerah="")
-                              #else
-                              #foreach($ld in $listdaerah)                                                                      
-                              #if($ld.id==$listam.daerah)
-                              #set($nama_daerah=$ld.nama)
-                              
-                              #end
-                              #end
-                              
-                              #end
-                              <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$nama_daerah</div></td>
-                              #if($listam.mukim=="")
-                              
-                              #set($nama_mukim="")
-                              #else
-                              #foreach($lm in $listmukim)                                                                      
-                              #if($lm.id==$listam.mukim)
-                              #set($nama_mukim=$lm.nama)
-                              
-                              #end
-                              #end
-                              
-                              #end
-                              <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$nama_mukim</div></td>
-                              #if($listam.noHakmilik != "" && $listam.kod_hakmilik != ""  && $listam.kod_hakmilik != "00")    
-                              #set($Z =  "$listam.kod_hakmilik${listam.noHakmilik}")    
-                              #else
-                              #set($Z =  $listam.noHakmilik)
-                              #end
-                              <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$Z</div></td>
-                              <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$listam.nopt</div></td>
-                              #if($listam.basimati!="" && $listam.bbsimati!="")
-                              <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$listam.basimati / $listam.bbsimati</div></td>
-                              #else
-                              <td class="row1"></td>
-                              #end 
-                               #if($listam.idDokumen != "" )
-                               <td class="row1"><div align="center"><a onclick="javascript:cetakImej($listam.idDokumen)" href="#" style="color: #0000FF"> lihat </a></div></td>
-                              #else
-                              <td class="row1">  </td>
-                             #end
-                               </tr>
-                            #else
-                            <tr class="table_header">
-                             <td class="row2">
-                            	<input type="checkbox" name="selectHTA" id="selectHTA" value="$listam.idhta" />
-                              </td> 
-                              <td class="row2"><div align="center">$plko</div></td>
-                              <!--
-    <td class="row2"><div align="center" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:get_htaam($listam.idhta)" class="style42">$listam.idhta</a></div></td>
-    -->
-                              #if($listam.negeri=="")
-                              
-                              #set($nama_negeri="")
-                              #else
-                              #foreach($ln in $listnegeri)                                                                      
-                              #if($ln.id_Negeri==$listam.negeri)
-                              #set($nama_negeri=$ln.nama_Negeri)
-                              
-                              #end
-                              #end
-                              
-                              #end
-                             <!--  <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:get_htaam($listam.idhta)" class="style42">$nama_negeri</a></div></td> -->
-                                <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"><a href="javascript:get_htaam('$idPermohonanSimati','$listam.idhta','$listam.idDokumen')" class="style42">$nama_negeri</a></div></td>
-                              #if($listam.daerah=="")
-                              
-                              #set($nama_daerah="")
-                              #else
-                              #foreach($ld in $listdaerah)                                                                      
-                              #if($ld.id==$listam.daerah)
-                              #set($nama_daerah=$ld.nama)
-                              
-                              #end
-                              #end
-                              
-                              #end
-                              <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$nama_daerah</div></td>
-                              #if($listam.mukim=="")
-                              
-                              #set($nama_mukim="")
-                              #else
-                              #foreach($lm in $listmukim)                                                                      
-                              #if($lm.id==$listam.mukim)
-                              #set($nama_mukim=$lm.nama)
-                              
-                              #end
-                              #end
-                              
-                              #end
-                              <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$nama_mukim</div></td>
-                              #if($listam.noHakmilik != "" && $listam.kod_hakmilik != "")    
-                              #set($Z =  "$listam.kod_hakmilik${listam.noHakmilik}")    
-                              #else
-                              #set($Z =  $listam.noHakmilik)
-                              #end
-                              <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$Z</div></td>
-                              <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$listam.nopt</div></td>
-                              #if($listam.basimati!="" && $listam.bbsimati!="")
-                              <td class="row2"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$listam.basimati / $listam.bbsimati</div></td>
-                              #else
-                              <td class="row2"></td>
-                              #end
-                               #if($listam.idDokumen != "" )
-                               <td class="row2"><div align="center"><a onclick="javascript:cetakImej($listam.idDokumen)" href="#" style="color: #0000FF"> lihat </a></div></td>
-                              #else
-                              <td class="row2">  </td>
-                             #end
-                              </tr>
-                            #end
-                            #end
+	                  	#foreach($listam in $listHTA)
+	  						#set( $i = $velocityCount )
+					    	#if ( ($i % 2) != 1 )
+					       		#set( $row = "row2" )
+					    	#else
+					       		#set( $row = "row1" )
+					    	#end      
+	                        <tr bgcolor="white" class="$row">
+					    	   	<td><input type="checkbox" name="selectHTA" id="selectHTA" value="$listam.idhta" /></td>
+	                           	<td><div align="center" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()">$!i</div></td>
+	                           	<td><div align="left" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"> <a href="javascript:get_htaam('$!idPermohonanSimati','$!listam.idhta','$!listam.idDokumen')" class="style42">$!listam.namaNegeri</a></div></td>
+	                           	<td><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$!listam.namaDaerah</div></td>
+	                           	<td><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$!listam.namaMukim</div></td>
+	                     	#if($listam.noHakmilik != "" && $listam.kod_hakmilik != ""  && $listam.kod_hakmilik != "00")    
+	                              #set($Z =  "$listam.kod_hakmilik${listam.noHakmilik}")    
+	                      	#else
+	                       		#set($Z =  $listam.noHakmilik)
+	                      	#end
+	                     		<td><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$Z</div></td>
+	                      		<td><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$listam.nopt</div></td>
+	                       	#if($listam.basimati!="" && $listam.bbsimati!="")
+	                    		<td><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$listam.basimati / $listam.bbsimati</div></td>
+	                  		#else
+	                  			<td></td>
+	                     	#end 
+	                     		<td>  
+		                        	<a href = "javascript:lampiranHarta('$listam.idhta');">
+										<img border="0" src="../img/plus.gif" width="20" height="15"/>
+									</a><br>
+							 		$listam.lampirans
+	                  			</td>
+	                 		</tr>    
+	                    	             
+                    	#end
                           </table>
-                          #else
+                 	#else
                           <table width="100%">
                             <tr  class="table_header">
-                              <td width="5%"><div align="center">NO</div></td>
-                              <!--
-                                        <td width="10%"><div align="center">ID HTA</div></td>
-                                        -->
-                              <td width="20%"><div align="center">NEGERI</div></td>
-                              <td width="20%"><div align="center">DAERAH</div></td>
-                              <td width="20%"><div align="center">MUKIM</div></td>
+                              <td width="3%"><div align="center">NO</div></td>
+                              <td width="15%"><div align="center">NEGERI</div></td>
+                              <td width="15%"><div align="center">DAERAH</div></td>
+                              <td width="15%"><div align="center">MUKIM</div></td>
                               <td width="10%"><div align="center">NO HAK MILIK</div></td>
                               <td width="10%"><div align="center">NO PT/NO LOT</div></td>
                               <td width="5%"><div align="center">BAHAGIAN SIMATI</div></td>
@@ -3014,11 +2836,11 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                           </fieldset></td>
                         <input type="hidden" name="idhtaam" value="$idhta" />
                         <input type="hidden" name="idhtaamid" value="$idhtaam" />
-                         <input type="hidden" name="idDokumen" value="$idDokumen" />
-                          <input type="hidden" name="idPelan" value="$idPelan" />
+                      	<input type="hidden" name="idDokumen" value="$idDokumen" />
+                      	<input type="hidden" name="idPelan" value="$idPelan" />
                         <input type="hidden" name="idhtaamXid" value="$idhtaam" />
-                          <input type="hidden" name="selectHTATH" id="selectHTATH" />
-					   <input type="hidden" name="selectedHartaTakAlih" id="selectedHartaTakAlih" value="$!selectedHartaTakAlih"/>
+                       	<input type="hidden" name="selectHTATH" id="selectHTATH" />
+					   	<input type="hidden" name="selectedHartaTakAlih" id="selectedHartaTakAlih" value="$!selectedHartaTakAlih"/>
 					    <input type="hidden" name="selectedHartaAlih" id="selectedHartaAlih" />
                       </tr>
                       <tr>
@@ -3034,7 +2856,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                     <td width="20%">&nbsp;</td>
                     #if($!skrin_online != "yes")
                     <td width="5%"><input type="button" name="cmdSimpan9" id="cmdSimpan8" value="Batal" onclick="cancel()"/></td>
-                    <td width="5%"><input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianHTA('$id', '$idhta')" disabled/> </td>
+                    <td width="5%"><input disabled type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianHTA('$id','$idhta')" /> </td>
                    	#end
                     <td width="20%">&nbsp;</td>
                     <td width="10%">&nbsp;</td>
@@ -3086,6 +2908,11 @@ if(document.f1.selectedHartaTakAlih.value.length>0){
 	}
 }
 
+function close_window()
+{
+new_window.close();
+}
+
 function doChangeMaklumat() {
 	document.f1.command.value = "doChangeMaklumat";
 	document.f1.action = "";
@@ -3100,17 +2927,18 @@ function cancel() {
 	}
 	}
 
-function sendNilaianHTA(idPermohonan,noFail) {
-	var selectHTAs = document.getElementsByName('selectHTA');
-	var selectedHartaTakAlihAdaHakmilik = setHartaTakAlih();
-     
-	  if (!window.confirm("Adakah anda pasti?")) return;
+	function sendNilaianHTA(idPermohonan,noFail) {
+		var selectHTAs = document.getElementsByName('selectHTA');
+		var selectedHartaTakAlihAdaHakmilik = setHartaTakAlih();
+	     
+		if (!window.confirm("Adakah anda pasti?")) return;
 		var idPermohonan = document.f1.idPermohonan.value;
 		var idSimati = document.f1.aaa.value;
-	  
-	  document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.integrasi.FrmViewNilaianHartaTakAlih&selectedHartaTakAlih="+selectedHartaTakAlihAdaHakmilik+"&idSimati="+idSimati+"&idPermohonan="+idPermohonan+"&action2=viewNilaianHTA&method=post&command=nilai_harta&mode=simpan_HTAHA";
-	  document.f1.submit();
-  }
+		  
+		document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.integrasi.FrmViewNilaianHartaTakAlih&selectedHartaTakAlih="+selectedHartaTakAlihAdaHakmilik+"&idSimati="+idSimati+"&idPermohonan="+idPermohonan+"&action2=viewNilaianHTA&method=post&command=nilai_harta&mode=simpan_HTAHA";
+		document.f1.submit();
+		  
+	  }
   
 function doCheckAll1_HTA(){    
     if (document.f1.selectallHTA.checked == true){
@@ -3479,20 +3307,41 @@ new_window.document.write("<body bgcolor=\"#FFFFFF\">");
 
 new_window.document.write("<b><font color='blue'>Tujuan fungsi ini adalah memberi kemudahan kepada pengguna untuk menyalin semula maklumat-maklumat hakmilik yang pernah wujud didalam sistem berdasarkan maklumat negeri, daerah, mukim, jenis hakmilik, no. hakmilik dan no. lot/PT.</font></b><br>");
 
+new_window.document.write("<br>");
+new_window.document.write("</body></html>");
+new_window.document.close(); 
+}
 
+function open_new_window_online(jenis_popup,nama_suburusan) 
+{
+ var width  = 300;
+ var height = 200;
+
+ var left   = (screen.width  - width)/2;
+ var top    = (screen.height - height)/2;
+ var params = 'width='+width+', height='+height;
+ params += ', top='+top+', left='+left;
+ params += ', directories=no';
+ params += ', location=front';
+ params += ', menubar=no';
+ params += ', resizable=no';
+ params += ', scrollbars=no';
+ params += ', status=no';
+ params += ', toolbar=no';
+
+new_window = open("","title",params);
+
+new_window.document.open();
+
+new_window.document.write("<html><title>JavaScript New Window</title>");
+new_window.document.write("<body bgcolor=\"#FFFFFF\">");
+
+new_window.document.write("<b><font color='blue'>Tanah GSA : <br>Tanah Rancangan FELDA, Tanah Rancangan FELCRA, Rancangan Tanah Pinggir (RTP)</font></b><br>");
 
 new_window.document.write("<br>");
 new_window.document.write("</body></html>");
 new_window.document.close(); 
-
-
-
-
-
-
-
 }
-
 
 function daerahchange(v_t){
 		document.f1.command.value="Htaam";
@@ -3837,15 +3686,32 @@ function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
 		    document.f1.idDokumen.value=idDokumen;
 		    document.f1.idSimati.value=idSimati;
 		    document.f1.idhtaam.value=idhta;
-		   // document.f1.command.value="Htaam";
-		  //  alert("Htaam >>> "+document.f1.command.value);
-			document.f1.mode.value="simpanHtaam";
-			//alert("simpanHtaam >>> "+document.f1.mode.value);
-			//document.f1.upload.value="simpanUpload";
-			//alert("simpanUpload >>> "+document.f1.upload.value);
- 		    
- 	   		document.f1.enctype="multipart/form-data";
- 	  		document.f1.encoding="multipart/form-data";
+		    
+		    
+		    
+		    //lama
+		    document.f1.command.value="Htaam";
+			document.f1.mode.value="simpanHtaam";	
+			//document.f1.upload.value="simpanUpload";	
+// 		    var x = create_request_string(document.f1);
+// 	   		document.f1.enctype="multipart/form-data";
+// 	  		document.f1.encoding="multipart/form-data"; 
+
+// 			var path = window.location.href;
+					
+// 			if(path.indexOf("FrmPrmhnnBorangAMaklumatPemohon")> -1){
+// 				document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon&"+x;
+// 			}else if(path.indexOf("FrmPrmhnnSek8InternalKutipan")> -1){
+// 				document.f1.action = "?_portal_module=FrmPrmhnnSek8InternalKutipan&"+x;
+// 			}else if(path.indexOf("FrmPrmhnnSek8Internal")> -1){
+// 				document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnSek8Internal&"+x;
+// 			}
+		    //end lama
+		    
+		    
+		
+			/*document.f1.mode.value="simpanHtaam";
+			
  	  		document.f1.command.value="Htaam";
  			var path = window.location.href;
  			var x = create_request_string(document.f1);			//alert("path ::: "+path+" x ::: "+x);	
@@ -3856,11 +3722,11 @@ function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
  			}else if(path.indexOf("FrmPrmhnnSek8Internal")> -1){
  				document.f1.action = "?_portal_module=FrmPrmhnnSek8Internal&"+x;
  		
- 			}
+ 			}*/
 
   		    //document.f1.action = "?_portal_module=FrmPrmhnnSek8Internal&"+x;
 			//document.f1.command.value="Htaam";
-			//document.f1.action="";
+			document.f1.action="";
 		    document.f1.submit();
 		
 		}
@@ -5145,6 +5011,47 @@ function cetakDokumen(id){
 	hWnd.opener=document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
+	//Lampiran
+	function doChangeJumlahLampiranHTATH(IDJadualLampiran,j,a) {		
+		if (j.value < 1) {
+			alert("Sila masukkan nombor yang sah");
+			j.value = 1;
+			return;
+		}
+		document.f1.command.value="Htaam";
+		document.f1.mode.value="kemaskiniHtaam";
+		document.f1.mode_.value="bilampiran";	
+		document.f1.action="";	
+		//document.f1.v_tab.value = v_t;
+		document.f1.submit();
+		
+	}	
+	function lampiranHarta(idHarta) {
+	    //
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTA&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
+	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus(); /**/
+	    //
+	    var title = 'Cetakan';
+		var w =1024;
+		var h = 800;
+	    var left = (screen.width/2)-(w/2);
+	    //var top = (screen.height/2)-(h/2);
+	    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+
+	}
+	function lampiranHartaPapar(id_){
+		var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
+	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener=document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}	
+
 </script>
 </body>
 </html>

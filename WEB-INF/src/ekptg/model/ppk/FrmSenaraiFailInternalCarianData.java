@@ -7,14 +7,15 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import lebah.db.Db;
+import lebah.db.DbException;
 
 import org.apache.log4j.Logger;
 
 
 public class FrmSenaraiFailInternalCarianData {
-	private static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8SecaraOnlineData.class);	
-	private  Vector list = new Vector();
+	private static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8SecaraOnlineData.class);
 	
+	private  Vector list = new Vector();
 	public  void  setCarianFail(String usid,String noFail, String namaPemohon, String namaSimati, String icSimati, String JenisIc)throws Exception {
 	    Db db = null;
 	    list.clear();
@@ -417,7 +418,7 @@ public class FrmSenaraiFailInternalCarianData {
 			  return listKutipan;
 		  }
 		 
-		 //yati edit 7/7/2020
+		 
 		 private  Vector list17_online = new Vector();
 			public  void  setCarianFail17_online(String NoFail, String NoKPBaru, String NoKPLama, String NoKPLain)throws Exception {
 			    Db db = null;
@@ -434,11 +435,7 @@ public class FrmSenaraiFailInternalCarianData {
 			     
 
 
-					sql = "SELECT DISTINCT F.ID_FAIL,  " 
-							+ "CASE WHEN (SELECT NO_FAIL FROM TBLPFDFAIL  " 
-					+ "WHERE TAJUK_FAIL = UPPER('" + chkNoFail + "')  "
-					+ "AND NO_FAIL  NOT IN UPPER('" + chkNoFail + "') ) IS NULL THEN F.NO_FAIL ELSE '' END AS NO_FAIL," 					 
-					+ "A.NO_SUBJAKET, A.ID_PERMOHONAN, A.TARIKH_MOHON, A.TARIKH_MASUK, F.TARIKH_DAFTAR_FAIL,"
+					sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL,A.NO_SUBJAKET, A.ID_PERMOHONAN, A.TARIKH_MOHON, A.TARIKH_MASUK, F.TARIKH_DAFTAR_FAIL,"
 		                + " S.KETERANGAN, P.ID_SIMATI, P.NAMA_SIMATI, A.ID_DAERAHMHN, A.TARIKH_MOHON_ONLINE, A.NO_PERMOHONAN_ONLINE, PM.NAMA_PEMOHON,"
 		                + " PM.NO_KP_BARU, PM.ID_PEMOHON, P.NO_KP_BARU, P.NO_KP_BARU"
 					+" FROM TBLPPKPERMOHONAN A, TBLPFDFAIL F, TBLRUJSTATUS S, TBLPPKSIMATI P,"
@@ -467,7 +464,7 @@ public class FrmSenaraiFailInternalCarianData {
 			      //NO FAIL
 			      if (chkNoFail != "") {
 						if (!chkNoFail.trim().equals("")) {
-							sql = sql + " AND UPPER(F.NO_FAIL) LIKE '%" + chkNoFail.toUpperCase() + "%'";
+							sql = sql + " AND UPPER(F.NO_FAIL) = '" + chkNoFail.toUpperCase() + "'";
 						}
 					}
 			      
@@ -492,7 +489,7 @@ public class FrmSenaraiFailInternalCarianData {
 			      sql = sql + " AND f.no_fail is not null ORDER BY F.ID_FAIL DESC";
 
 			      
-			      myLogger.info("SQL cCHECK KP xXXXXXXXXXXXXXX :: "+sql);
+			      myLogger.info("SQL CHECK KP XXXXXXXXXXXXXX :: "+sql);
 			      ResultSet rs = stmt.executeQuery(sql);
 			      Hashtable h;
 			      int bil = 1;
@@ -697,7 +694,8 @@ sql += "                   ) A, "+
 		      sql += "               ORDER BY A.ID_FAIL DESC "+
 		    		  "               ) ";
 
-		      myLogger.info(" SENARAI S17 : sql="+sql);
+		      System.out.println(" SENARAI S17 : "+sql);
+		      //System.out.println("sql--->>>>>"+sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable h;
 		      int bil = 1;
