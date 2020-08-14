@@ -8,10 +8,10 @@ import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
-import ekptg.model.admin.EmailConfig;
 import ekptg.model.htp.HtpPeringatanBean;
 import ekptg.model.htp.IHtpPeringatan;
 import ekptg.model.htp.entity.HtpPermohonan;
+import ekptg.model.utils.emel.EmailConfig;
 
 public class FrmPajakanUtamaSenaraiPeringatan extends AjaxBasedModule{
 	/**

@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.model.admin.EmailConfig;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmSenaraiFailTerimaPohonData;
@@ -33,6 +32,7 @@ import ekptg.model.htp.pembelian.IPemilik;
 import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.htp.pembelian.PemilikBean;
 import ekptg.model.htp.rekod.FrmRekodUtilData;
+import ekptg.model.utils.emel.EmailConfig;
 import ekptg.model.htp.HTPStatusBean;
 
 public class SenaraiFailModule extends AjaxModule {
@@ -53,6 +53,7 @@ public class SenaraiFailModule extends AjaxModule {
 	private final String IDJENISTANAH = "4"; //TANAH MILIK - TM
 	private final String URUSAN_TANAH = "01";
 	private final String URUSAN_BANGUNAN = "03";
+	private final String ID_URUSAN = "2";
 	private final String ID_URUSANTANAH = "24";
 	private final String ID_URUSANTANAH1 = "25";
 	
@@ -97,7 +98,8 @@ public class SenaraiFailModule extends AjaxModule {
 			context.put("mode", mode);
 			context.put("pageMode", "edit");
 			context.put("socNegeri",HTML.SelectNegeri("socNegeri"));
-			context.put("selectSuburusan", UtilHTML.SelectSuburusanByIdUrusan("2","23,25", "socSuburusan", null,""));
+			context.put("selectSuburusan", UtilHTML.SelectSuburusanByIdUrusan(ID_URUSAN,null,"socSuburusan", null,""));
+//			context.put("selectSuburusan", UtilHTML.SelectSuburusanByIdUrusan("2","23,25", "socSuburusan", null,""));
 			context.put("statusTanah", UtilHTML.SelectJenisTanah("socStatusTanah", Long.parseLong(IDJENISTANAH), "",IDJENISTANAH));
 			context.put("socTarafKeselamatan", HTML.SelectTarafKeselamatan("socTarafKeselamatan", null, "") );
 			context.remove("htpPermohonan");
@@ -121,8 +123,8 @@ public class SenaraiFailModule extends AjaxModule {
 		    context.put("selectKementerian",socKementerian);
 			context.put("selectAgensi",socAgensi);
 			context.put("socNegeri",socNegeri);
-			//context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan("2", "socSuburusan",fail.getIdSubUrusan(),""));
-			context.put("selectSuburusan", UtilHTML.SelectSuburusanByIdUrusan("2","23,25", "socSuburusan", null,""));
+			context.put("selectSuburusan", UtilHTML.SelectSuburusanByIdUrusan("2",null,"socSuburusan", null,""));
+			//context.put("selectSuburusan", UtilHTML.SelectSuburusanByIdUrusan("2","23,25", "socSuburusan", null,""));
 			//context.put("statusTanah", HTML.SelectJenisTanah("socStatusTanah", htpPermohonan.getIdJenisTanah(), ""));
 			context.put("statusTanah", UtilHTML.SelectJenisTanah("socStatusTanah", htpPermohonan.getIdJenisTanah(), "",IDJENISTANAH));
 			context.put("socTarafKeselamatan", HTML.SelectTarafKeselamatan("socTarafKeselamatan", fail.getIdTarafKeselamatan(), "") );
@@ -984,7 +986,8 @@ private void getValuesPemilik(){
 	    context.put("selectKementerian",socKementerian);
 		context.put("selectAgensi",socAgensi);
 		context.put("socNegeri",socNegeri);
-		context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan("2", "socSuburusan",htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),readonly));
+		context.put("selectSuburusan", UtilHTML.SelectSuburusanByIdUrusan("2",null,"socSuburusan", null,""));
+//		context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan("2", "socSuburusan",htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),readonly));
 		context.put("statusTanah", HTML.SelectJenisTanah("socStatusTanah", htpPermohonan.getIdJenisTanah(),readonly));
 		context.put("socTarafKeselamatan", HTML.SelectTarafKeselamatan("socTarafKeselamatan", htpPermohonan.getPermohonan().getPfdFail().getIdTarafKeselamatan(),readonly) );
 	}

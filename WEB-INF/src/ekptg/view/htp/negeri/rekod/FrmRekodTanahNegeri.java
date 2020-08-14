@@ -28,7 +28,6 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.InternalUserUtil;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
-import ekptg.model.admin.EmailConfig;
 import ekptg.model.entities.InternalUser;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmRekodPembangunanImejData;
@@ -62,6 +61,7 @@ import ekptg.model.htp.rekod.ITanahCarian;
 import ekptg.model.htp.rekod.ITanahDaftar;
 import ekptg.model.htp.utiliti.HTPSusulanBean;
 import ekptg.model.htp.utiliti.IHTPSusulan;
+import ekptg.model.utils.emel.EmailConfig;
 
 public class FrmRekodTanahNegeri extends AjaxBasedModule {
 	

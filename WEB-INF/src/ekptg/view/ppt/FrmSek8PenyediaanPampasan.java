@@ -165,7 +165,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     	String screenMainPage2 = "app/ppt/frmSek8BentukBayaranAward.jsp";
     	String screenMainPage3 = "app/ppt/frmSek8BayaranPampasan.jsp";
     	String screenMainPage4 = "app/ppt/frmSek8PenerimaanCek.jsp";
-    	
+    
     	//default list
     	//listPageDepan = model.getListPermohonan(userIdNeg);
     	
@@ -384,11 +384,10 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		//GET NO_LOT
 				
     	String submit = getParam("command");
-    	myLogger.info("submit : " + submit);
-    	
+    	myLogger.info("submit : " + submit);    	
     	if("sendEmail".equals(submit)){
-    		
-    		sendEmail(namaProjek,"","","",id_user,"mintaBayaranPampasan");    
+   		
+    		sendEmail(namaProjek,"","","",id_user,"mintaBayaranPampasan",session);    
      		
     		//screen
 //    		vm = listHakmilik;
@@ -1884,7 +1883,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
         	vm = screenMainPage3;
     		
     	}//close viewDataEFT
-    	
+ 	
     	else 
     	if("hapusEFT".equals(submit)){
     			
@@ -1967,14 +1966,21 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 	
 //--METHOD--//	
 	
-	@SuppressWarnings({ "static-access" })
-	private void sendEmail(String nama_projek,String tarikh_permohonan,String userIdKementerian, String id_jawatan_user, String id_user, String purpose) throws Exception{
-
+//	@SuppressWarnings({ "static-access" })
+//	private void sendEmail(String nama_projek,String tarikh_permohonan,String userIdKementerian, String id_jawatan_user, String id_user, String purpose) throws Exception{
+//
+//		EmailOnline_bak20200613 et = new EmailOnline_bak20200613();
+//		et.setEmail("","",purpose,"",nama_projek,tarikh_permohonan,"",userIdKementerian, id_jawatan_user, id_user);
+//		
+//	}//close sendEmail
+	private void sendEmail(String nama_projek,String tarikh_permohonan,String userIdKementerian, String id_jawatan_user, String id_user
+			, String purpose,HttpSession session) throws Exception{
 		EmailOnline et = new EmailOnline();
-		et.setEmail("","",purpose,"",nama_projek,tarikh_permohonan,"",userIdKementerian, id_jawatan_user, id_user);
+		et.setEmail("","",purpose,"",nama_projek,tarikh_permohonan,"",userIdKementerian, id_jawatan_user, id_user
+				,String.valueOf(session.getAttribute("portal_username")));
 		
 	}//close sendEmail
-	
+
 	private void valHideAst() throws Exception{
     	
 		String socJenisSerah = getParam("socJenisSerah");
