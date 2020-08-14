@@ -73,7 +73,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 					+ " AND A.ID_MASUK = H.USER_ID(+)"
 					+ " AND B.ID_STATUS != '999'";
 
-			
+
 
 			// noFail
 			if (noFail != null) {
@@ -317,7 +317,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 
 			sql = sql + " ORDER BY F.TARIKH_MASUK DESC ";
 
-			
+
 			myLogger.info("getSenaraiFail :::: sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -355,7 +355,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			sql = "SELECT USER_ROLE  FROM USERS WHERE USER_ID = '" + userId + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
-	
+
 
 			if (rs.next()){
 				return rs.getString("USER_ROLE").toString();
@@ -403,8 +403,9 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT C.ID_NEGERI, B.ID_KEMENTERIAN, B.ID_AGENSI FROM USERS A, USERS_KEMENTERIAN B, TBLRUJAGENSI C, TBLRUJKEMENTERIAN D "
-				+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '" + userId + "'";
-
+				+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '"
+					+ userId + "'";
+			myLogger.info(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()){
