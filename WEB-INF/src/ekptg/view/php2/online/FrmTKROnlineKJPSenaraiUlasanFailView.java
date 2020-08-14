@@ -37,7 +37,7 @@ import ekptg.model.php2.utiliti.LampiranBean;
 import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmTKROnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
-
+//test 14/8/2020
 	private static final long serialVersionUID = 1L;
 	private String readonly = "disabled class = \"disabled\"";
 	static Logger myLog = Logger.getLogger(FrmTKROnlineKJPSenaraiUlasanFailView.class);
