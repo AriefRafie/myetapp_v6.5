@@ -704,12 +704,18 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 	@SuppressWarnings("unchecked")
 	private void updateBorangEInBulk(HttpSession session,String id_borange, Db db) throws Exception{
 		
+<<<<<<< HEAD
+//		PPT-06
+		String[] socJenisWaktu = request.getParameterValues("socJenisWaktu");
 //	    if(txtMasaSiasatan != null) {
 //	    	for(int i = 0; i < txtMasaSiasatan.length; i++) {
 //	    		myLogger.info("updateBorangEInBulk Masa_Siasatan = " +txtMasaSiasatan[i]);
 //	    		myLogger.info("updateBorangEInBulk Jenis_Waktu = " +socJenisWaktu[i]);
 	    
 	    Hashtable h = new Hashtable();
+=======
+		Hashtable h = new Hashtable();
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
 		
 		h.put("id_borange", id_borange);
 		h.put("socBandar", getParam("socBandar"));
@@ -717,8 +723,15 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 		h.put("txdTarikhBorangE", getParam("txdTarikhBorangE"));
     	h.put("txdTarikhBorangF", getParam("txdTarikhBorangF"));
     	h.put("txdTarikhSiasatan", getParam("txdTarikhSiasatan"));
+<<<<<<< HEAD
 //    	h.put("txtMasaSiasatan", txtMasaSiasatan[i]); // PPT-06
 //    	h.put("socJenisWaktu", socJenisWaktu[i]); // PPT-06
+//    	h.put("txtMasaSiasatan", getParam("txtMasaSiasatan"));
+//    	h.put("socJenisWaktu", getParam("socJenisWaktu"));
+=======
+    	h.put("txtMasaSiasatan", getParam("txtMasaSiasatan"));
+    	h.put("socJenisWaktu", getParam("socJenisWaktu"));
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
     	h.put("txtAlamat1", getParam("txtAlamat1"));
     	h.put("txtAlamat2", getParam("txtAlamat2"));
     	h.put("txtAlamat3", getParam("txtAlamat3"));
@@ -735,9 +748,10 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 		String[] txtMasaSiasatan = request.getParameterValues("txtMasaSiasatan");
 		myLogger.info("updateBorangEInBulk txtMasaSiasatan.length = " +txtMasaSiasatan.length);
 		String[] cbsemaks = request.getParameterValues("cbsemaks");
+<<<<<<< HEAD
 		myLogger.info("updateBorangEInBulk cbsemaks.length = " +cbsemaks.length);
 		if(cbsemaks != null){
-			for (int i = 0; i < cbsemaks.length; i++) { 				
+			for (int j = 0; j < cbsemaks.length; j++) {
 //				FrmUPTSek8BorangFData.deleteListCB_byHakmilik(cbsemaks[j],db);
 				
 //				FrmUPTSek8BorangFData.simpanBorangEInBulk(h,cbsemaks[j],Utils.parseLong(id_borange),db);
@@ -750,6 +764,14 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 	  
 //	    	}
 //	  } //close jenisWaktu, MasaSiasatan PPT-06
+=======
+    	if(cbsemaks!=null){
+			for (int i = 0; i < cbsemaks.length; i++) { 				
+				FrmUPTSek8BorangFData.deleteListCB_byHakmilik(cbsemaks[i],db); 
+				FrmUPTSek8BorangFData.simpanBorangEInBulk(h,cbsemaks[i],Utils.parseLong(id_borange),db);
+			}
+		}
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
 		
 	}//close updateBorangEInBulk
 	

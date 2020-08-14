@@ -323,6 +323,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
 		
 		}else if ("Simpan".equals(submit)) {
+			myLogger.info("Simpan");
 			String eventstatus = getParam("eventStatus");
 			eventStatus = Integer.parseInt(eventstatus);
 			if (eventStatus == 0) {

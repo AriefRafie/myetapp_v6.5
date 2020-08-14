@@ -543,9 +543,15 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
   </tr>
   #end
   #else
+<<<<<<< HEAD
+	  	<tr>  
+	    	<td colspan="5">Tiada Rekod</td>    
+	  	</tr>
+=======
   <tr>  
     <td colspan="5">Tiada Rekod</td>    
-	  	</tr>
+  </tr>
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
   #end
 </table>
   
@@ -559,8 +565,12 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
       
       	  #if($button=="view")
           <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniBantahan()" /> 
+<<<<<<< HEAD
           <!-- <input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
           <input type="button" name="cmdintegrasimt1" id="cmdintegrasimt1" value="..." onclick="javascript:hantarBantahan2()" />  -->
+=======
+          <input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
           <!--<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> -->
           #end
           

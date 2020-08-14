@@ -349,15 +349,27 @@ input_box = confirm("Adakah anda pasti?");
 	}
 }
 
+<<<<<<< HEAD
+	function Kembali(){
+		var id_bantahan = document.${formName}.id_bantahan.value ;
+		var id_permohonan = document.${formName}.id_permohonan.value ;	
+		var senarai_dokumen = document.${formName}.senarai_dokumen.value ;
+		
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=$nama_skrin&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
+		document.${formName}.submit();
+
+	}
+=======
 function Kembali()
 {
 	var id_bantahan = document.${formName}.id_bantahan.value ;
 	var id_permohonan = document.${formName}.id_permohonan.value ;	
 	var senarai_dokumen = document.${formName}.senarai_dokumen.value ;
 	
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=$nama_skrin&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=dalamProses&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
 	document.${formName}.submit();
 }
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
 //:::upload
 function KembaliPerintah(r){
 

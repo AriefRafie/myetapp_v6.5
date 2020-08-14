@@ -1052,7 +1052,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 					sql += " AND D.CARA_BAYAR = G.ID_CARABAYAR ";
 					sql += " AND C.ID_HAKMILIKPB = '"+id_hakmilikpb+"' ";
 					ResultSet rs = stmt.executeQuery(sql);
-					myLogger.info("SQL getMaklumatPampasan :: "+sql);
+//					myLogger.info("SQL getMaklumatPampasan :: "+sql);
 					Hashtable h;			    
 			     while (rs.next()) {
 			    	h = new Hashtable();

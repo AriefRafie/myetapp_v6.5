@@ -1404,10 +1404,10 @@ function paparCukai(ID_NEGERI,ID_DAERAH,ID_MUKIM,ID_KEMENTERIAN,NO_HAKMILIK,ID_J
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 }
-function doReadCukai(ID_CUKAITEMP){
-	document.getElementById('div_listCukai').style.display="";		
-	doDivAjaxCall$formname('div_listCukai','doReadCukai','id_cukaitemp='+ID_CUKAITEMP);
-}
+	function doReadCukai(ID_CUKAITEMP){
+		document.getElementById('div_listCukai').style.display="";		
+		doDivAjaxCall$formname('div_listCukai','doReadCukai','id_cukaitemp='+ID_CUKAITEMP);
+	}
 
 function paparDetailHakmilik(idHakmilik,noHakmilik,statusSah){
 	var params = "&idHakmilikDashboard="+idHakmilik+"&statusSahDashboard="+statusSah+"&fromDashboard=yes&noHakmilikDashboard="+noHakmilik;

@@ -200,12 +200,18 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				idStatus = hashHeader.get("idStatus").toString();
 				subUrusan = hashHeader.get("subUrusan").toString();
 			}
-			log.info("mode = " + mode);
-
+<<<<<<< HEAD
+//			log.info("mode = " + mode);
+			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(idUser);
+			this.context.put("namaPemohon", vec.get(0).get("namaPemohon"));
+        	
 			 if(FrmSemakan.getSenaraiSemakanHantar(idPermohonan).size()==0)
 				 mode="update";
 
 			getSenaraiSemak(idPermohonan,mode);
+=======
+			log.info("mode = " + mode);
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
 
 			//MODE VIEW
 			log.info("mode = " + mode);
@@ -228,8 +234,12 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
 				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 				
-				getSenaraiSemakFail(idPermohonan);
+<<<<<<< HEAD
+		
+=======
+				senaraiSemak = logicMaklumat.getSenaraiSemak(idPermohonan, kategori);
     			this.context.put("SenaraiSemak", senaraiSemak);
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
     	    }
 			else if ("update".equals(mode)){
 				
@@ -476,7 +486,33 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		return getIOnline().addMasuk(h);
 			    
 	}
-		 
+<<<<<<< HEAD
+		
+	private String kemaskiniSimpanStatusSelesai(String idFail
+		,String idPermohonan
+		,String idSubUrusan
+		,String langkah) throws Exception {
+		
+		try {				
+			Tblrujsuburusanstatusfail subUrusanStatusFail = new Tblrujsuburusanstatusfail();
+			subUrusanStatusFail.setIdPermohonan(Long.parseLong(idPermohonan));
+			subUrusanStatusFail.setIdFail(Long.parseLong(idFail));
+			subUrusanStatusFail.setAktif("0");
+				
+			Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
+			long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah,idSubUrusan,"=");
+			subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
+			subUrusanStatusFailN.setAktif("1");
+			subUrusanStatusFailN.setUrl("-");
+			subUrusanStatusFailN.setIdMasuk(Long.parseLong(idUser));
+			return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN));
+						
+		} catch (Exception e) {
+			throw new Exception(getIHTP().getErrorHTML("Ralat Permohonan Pajakan, kemaskiniSimpanStatusSelesai:"+e.getMessage()));
+		}
+			
+	}
+	
 	private void getSenaraiSemak(String idPermohonan,String mode) throws Exception{
 		FrmSemakan fs = new FrmSemakan();
 		fs.mode = mode;
@@ -484,6 +520,9 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		context.put("semakclass", new FrmSemakan());
 	}
 	
+=======
+		 
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
 	private IOnline getIOnline(){
 		if(iOnline==null){
 			iOnline = new OnlineBean();
@@ -491,6 +530,14 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		return iOnline;
 	}
 
+
+<<<<<<< HEAD
+	private IHTPStatus getStatus(){
+		if(iStatus==null){
+			iStatus = new HTPStatusBean();
+		}
+		return iStatus;
+	
 	}
 	private ILampiran getDocHTP(){
 		if(iLampiran == null){
@@ -498,6 +545,8 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		}
 		return iLampiran;
 				
-
+	}
+=======
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
 
 }

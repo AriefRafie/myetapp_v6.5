@@ -147,6 +147,7 @@
 	<properties>
 	
 	<!-- DB LOCAL  -->
+<<<<<<< HEAD
 	<!-- <property name="javax.persistence.jdbc.user" value="ekptghq"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghq"/>
 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:49161/xe"/>  -->
@@ -156,10 +157,20 @@
 	<!-- <property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghqv6live"/>
 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.0.135:1521/ekptglocal"/> -->
+	<!-- DB POC  -->
+	<property name="javax.persistence.jdbc.user" value="ekptghquat"/>
+	<property name="javax.persistence.jdbc.password" value="ekptghquat"/>
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/> <!-- --> 
+=======
+	<property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
+	<property name="javax.persistence.jdbc.password" value="ekptghqlive"/>
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/myetapp"/>
+	
 	<!-- DB UAT [make sure connect to Local WiFi -->
 <!-- 	<property name="javax.persistence.jdbc.user" value="ekptghquat"/> -->
 <!-- 	<property name="javax.persistence.jdbc.password" value="ekptghquat"/> -->
-	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/> <!-- --> 
+<!-- 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/>     -->
+>>>>>>> 0fed0cf7a90bded21bea5fd8352e7f22b16b3250
 	
 	<!-- DB LOCAL | DELL -->
 	<property name="javax.persistence.jdbc.user" value="ekptghq"/>
@@ -170,6 +181,7 @@
 	 <!--<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.43.135:1521/orclocal"/>  -->
 	
 	<!----><property name="javax.persistence.jdbc.user" value="ekptghquat"/>
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/>    
 	<!-- DB TEST -->
 	<!--<property name="javax.persistence.jdbc.user" value="ekptghqtest"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghqtest"/>	
