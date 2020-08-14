@@ -4909,7 +4909,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		}
 	
 	  
-}
+}  
 	
 	private void headerppk_baru(HttpSession session, String id_permohonan,
 			String flag_permohonan, String id_fail, String flag_fail)
