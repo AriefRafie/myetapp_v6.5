@@ -1,5 +1,6 @@
 package ekptg.view.admin;
 
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -11,8 +12,10 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.HTML;
 import ekptg.model.admin.SemakanData;
+import ekptg.model.htp.FrmCukaiPenyataData;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.utils.IUtilHTMLPilihan;
+import ekptg.model.kpi.FrmKPIData;
 import ekptg.model.kpi.FrmKPIHTML;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisDokumen;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanSemakan;
@@ -34,10 +37,10 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 		 
 	    HttpSession session = this.request.getSession();
 	    String template_name = "";
-      	//String disability = "disabled";
-    	//String readability = "";
-    	//String style1 = "";
-		//String style2 = "";
+      	String disability = "disabled";
+    	String readability = "";
+    	String style1 = "";
+		String style2 = "";
 
 		this.context.put("Util", new lebah.util.Util());
 
@@ -50,7 +53,6 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 	    Vector senaraiFail = null;
 		String action = getParam("action");
 	    String submit = getParam("command");
-	    this.context.put("submitInternal", submit);
 //	    this.context.put(this.className+":command", submit);
 	    String pageMode = getParam("pagemode");
 //	    this.context.put(this.className+":pagemode", pageMode);
@@ -64,7 +66,7 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 	    String idSemakan = null;
 	    String semakan = null;
 
-	    //Vector list = new Vector();
+	    Vector list = new Vector();
     	mylog.info("command="+submit+",pagemode="+pageMode);
     	template_name = "app/admin/checklist/index.jsp";	        
 	    
@@ -160,9 +162,8 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 	    	}else if ("delete".equals(pageMode)) {
 				deleteKeteranganStatus(session);	 		
 			}
-	   	 	String desc = (getParam("keteranganstatus")=="") ? "" : getParam("keteranganstatus");
-    	    this.context.put("desc", desc);  
-    	    senaraiDesc = SemakanData.getSenaraiJenisDokumen(idUrusan,idSubUrusan,desc);
+			
+    	    senaraiDesc = SemakanData.getSenaraiJenisDokumen(idUrusan,idSubUrusan,"");
     	    this.context.put("senaraidescstatus", senaraiDesc);  
 	    	senaraiFail = senaraiDesc;	    	
 			
@@ -178,11 +179,6 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 				senaraiFail = FrmSemakan.getSemakan(idSemakan, semakan);
 			else if(selectedTab.equals("1"))
 				senaraiFail = SemakanData.getSenaraiSemakan(idUrusan,idSubUrusan,skrin,semakan);
-			else if(selectedTab.equals("2")) {
-	    	    senaraiDesc = SemakanData.getSenaraiJenisDokumen(idUrusan,idSubUrusan,"");
-		    	senaraiFail = senaraiDesc;	    	
-
-			}
 
 		}
 		setupPage(session,action,senaraiFail);

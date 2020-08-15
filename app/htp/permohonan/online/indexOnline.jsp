@@ -211,7 +211,7 @@
 		
 		var command = 'kemaskinipermohonan';
 		var mode = 'Notis5A';
-		var button = 'SimpanNotis';
+		var button = "SimpanNotis";
 		var tabId = 5;
 		var butang3 = '8';
 		var tabmode = 1;
@@ -404,14 +404,6 @@
 		
 		}
 	}
-	function doOpen(id) {
-		
-	    var url = "../servlet/ekptg.view.online.htp.permohonan.DisplayBayaranNotis?id="+id;
-	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-	    if ((document.window != null) && (!hWnd.opener))
-	    hWnd.opener = document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-	}
 	//simpan maklumat dokumen
 	function simpanMD(id_permohonan, mode){
 		
@@ -541,8 +533,6 @@
 	function doChangeNegeriX() {
 	doAjaxCall${formName}("","mode=changeNegeri");
 	}
-	
-	
 	
 	function doChanges2(t) {
 		var command = 'kemaskinipermohonan';

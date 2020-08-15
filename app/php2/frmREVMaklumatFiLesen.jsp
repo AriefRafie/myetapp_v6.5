@@ -5,18 +5,8 @@
   </tr>
   <tr>
   	<td>&nbsp; </td>
-  </tr>
-  #end
-  <tr>
-    <td><fieldset>
-      <legend><strong>SENARAI CETAKAN</strong></legend>
-      <table align="center" width="100%">
-        <tr>
-          <td><a href="#" class="style2" onclick="javascript:janaPenyataAkaun('$idJadualPertama')"> Penyata Akaun </a></td>
-        </tr>
-      </table>
-      </fieldset></td>
-  </tr>
+  </tr>  
+  #end  
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT FI LESEN</strong></legend>
@@ -46,7 +36,7 @@
         #set( $row = "row1" )
         #elseif (($list.bil % 2) != 0)
         #set( $row = "row1" )
-        #else
+        #else 
         #set( $row = "row2" )
         #end
         <tr>
@@ -55,10 +45,10 @@
           <td class="$row" align="center"><a href="javascript:paparBayaranFiLesen('$list.idAkaun')" class="style2">$list.tarikh</a></td>
           #else
           <td class="$row" align="center">$list.tarikh</td>
-          #end
-          <td class="$row" align="center">$list.tarikhResit</td>
+          #end        
+          <td class="$row" align="center">$list.tarikhResit</td>  
           <td class="$row">$list.noResit</td>
-          <td class="$row" align="center">$list.tarikhCek</td>
+          <td class="$row" align="center">$list.tarikhCek</td>  
           <td class="$row">$list.noRujukan</td>
           <td class="$row">#if ($!list.butiran == '') $!list.jenisBayaran #else $!list.butiran #end</td>
           ##<td class="$row" align="right">$list.debit</td>
@@ -92,7 +82,7 @@
           <td align="right">&nbsp;</td>
           <td align="right"><strong>JUMLAH</strong></td>
           ##<td align="right">&nbsp;</td>
-          ##<td align="right">&nbsp;</td>
+          ##<td align="right">&nbsp;</td>          
           <td align="right"><strong>RM $total</strong></td>
         </tr>
       </table>

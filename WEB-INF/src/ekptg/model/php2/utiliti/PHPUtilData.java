@@ -10,8 +10,6 @@ import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
 import ekptg.model.entities.Tblpfdfail;
-import ekptg.model.entities.Tblphprujjenistujuan;
-import ekptg.model.entities.Tblphprujtujuankaitan;
 import ekptg.model.entities.Tblrujsubsuburusan;
 
 
@@ -79,31 +77,6 @@ public class PHPUtilData {
 				t.setIdFail(rs.getLong("id_fail"));
 				t.setNoFail(rs.getString("no_fail"));
 				v.addElement(t);
-			}
-			return v;
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
-	public static Vector<Tblphprujjenistujuan> getJenistujuanAPB() throws Exception { //yati tambah 24/7/2020
-		Db db = null;
-		String sql = "Select id_JenisTujuan, upper(kod_JenisTujuan) as kod_JenisTujuan, upper(keterangan) as keterangan from tblphprujjenistujuan order by id_JenisTujuan asc";
-		myLogger.info("sql :"+sql);
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			Vector<Tblphprujjenistujuan> v = new Vector<Tblphprujjenistujuan>();
-			Tblphprujjenistujuan s = null;
-			while (rs.next()) {
-				s = new Tblphprujjenistujuan();
-				s.setIdJenistujuan(rs.getLong(1));
-				s.setKodJenistujuan(rs.getString(2));
-				s.setKeterangan(rs.getString(3));
-				
-				v.addElement(s);
 			}
 			return v;
 		} finally {

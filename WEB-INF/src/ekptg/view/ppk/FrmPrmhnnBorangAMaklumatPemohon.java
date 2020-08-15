@@ -345,6 +345,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
 		
 		}else if ("Simpan".equals(submit)) {
+			myLogger.info("Simpan");
 			String eventstatus = getParam("eventStatus");
 			eventStatus = Integer.parseInt(eventstatus);
 			if (eventStatus == 0) {
@@ -395,9 +396,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 				view_get_userid(session);
 				listUserid = logic_A.getUserIds();
-				listDaerahByUser = logic_A
-						.getDaerahByNegeriUser((String) session
-								.getAttribute("_ekptg_user_id"));
+				listDaerahByUser = logic_A.getDaerahByNegeriUser((String) session.getAttribute("_ekptg_user_id"));
 				
 				// comment dulu sebab online xleh dapat user id internal
 				view_get_userid(session);
@@ -417,6 +416,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				listSemak = logic_C.getListSemakan();
 				this.context.put("ListSemakan", listSemak);
 				this.context.put("ViewFail", "");
+				
+				/** Majlis Agama & Baitulmal*/
+				
 			
 			}else {
 				this.context.put("tarikhmohon", currentDate);

@@ -9,16 +9,6 @@
   #end
   <tr>
     <td><fieldset>
-      <legend><strong>SENARAI CETAKAN</strong></legend>
-      <table align="center" width="100%">
-        <tr>
-          <td><a href="#" class="style2" onclick="javascript:janaPenyataAkaun('$idJadualPertama')"> Penyata Akaun </a></td>
-        </tr>
-      </table>
-      </fieldset></td>
-  </tr>
-  <tr>
-    <td><fieldset>
       <legend><strong>MAKLUMAT ROYALTI PASIR</strong></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
@@ -48,7 +38,7 @@
         #set( $row = "row1" )
         #elseif (($list.bil % 2) != 0)
         #set( $row = "row1" )
-        #else
+        #else 
         #set( $row = "row2" )
         #end
         <tr>

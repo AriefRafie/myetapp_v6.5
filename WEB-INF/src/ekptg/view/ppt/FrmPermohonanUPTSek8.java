@@ -647,7 +647,8 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
         if("tambahHakmilik".equals(submit)){
             	
         	//form validation
-    		context.put("mode","new");    		
+    		context.put("mode","new");
+    		
     		//clear value
     		clearValueHM();
     		
@@ -2249,11 +2250,6 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	//pengambilan segera
     	h.put("socPSegera", getParam("socPSegera"));
     	
-//    	PPT-03 Strata
-    	h.put("txtNoBangunan", getParam("txtNoBangunan"));
-    	h.put("txtNoTingkat", getParam("txtNoTingkat"));
-    	h.put("txtNoPetak", getParam("txtNoPetak"));
-    	
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 		
 		FrmUPTSek8HakmilikData.simpanHM(h,flagSubjaket);
@@ -2307,12 +2303,6 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	h.put("txtLain", getParam("txtLain"));
     	h.put("txtNoWartaRizab", getParam("txtNoWartaRizab"));
     	h.put("txdTarikhWarta", getParam("txdTarikhWarta"));
-    	
-    	// PPT-03 Strata
-    	h.put("no_bangunan", getParam("txtNoBangunan"));
-    	h.put("no_tingkat", getParam("txtNoTingkat"));
-    	h.put("no_petak", getParam("txtNoPetak"));
-    	myLogger.info("View updateHM no bangunan: " +getParam("txtNoBangunan"));
 		
     	//pengambilan segera
     	h.put("socPSegera", getParam("socPSegera"));
@@ -2846,11 +2836,6 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 		context.put("txtLuasLotAmbil2", getParam("txtLuasLotAmbil2"));
 		context.put("txtLuasLotAmbil3", getParam("txtLuasLotAmbil3"));
 		
-		//penambahan v7-yati
-		context.put("txtNoBangunan", getParam("txtNoBangunan"));
-		context.put("txtNoTingkat", getParam("txtNoTingkat"));
-		context.put("txtNoPetak", getParam("txtNoPetak"));
-		
 		if(resetRadio.equals("1")){
 			context.put("sorJenisRizab", "");
 		}else{
@@ -2900,10 +2885,6 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 		context.put("txtLuasLotAmbilSebelumConvert", "");
 		context.put("sorDropdownUnitAmbil", "");
 		
-		//penambahan v7 -yati
-		context.put("txtNoBangunan", "");
-		context.put("txtNoTingkat", "");
-		context.put("txtNoPetak", "");
 	}//close clearValueHM
 	
 	@SuppressWarnings("unchecked")

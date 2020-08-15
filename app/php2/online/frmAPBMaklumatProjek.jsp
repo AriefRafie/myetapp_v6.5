@@ -33,7 +33,7 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'newProjek')
       <input type="button" name="cmdSimpanProjek" id="cmdSimpanProjek" value="Simpan" onClick="simpanProjek()"/>
-      <input type="button" name="cmdBatalProjek" id="cmdBatalProjek" value="Batal/Kembali" onClick="batalProjek()"/>
+      <input type="button" name="cmdBatalProjek" id="cmdBatalProjek" value="Batal" onClick="batalProjek()"/>
       #end
       #if ($mode == 'viewProjek')
       <input type="button" name="cmdKemaskiniProjek" id="cmdKemaskiniProjek" value="Kemaskini" onClick="kemaskiniProjek()"/>

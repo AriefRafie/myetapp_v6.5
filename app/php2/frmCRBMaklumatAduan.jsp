@@ -27,7 +27,6 @@
   <input name="idHakmilikAgensi" type="hidden" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
   <input name="flagBorangK" type="hidden" id="flagBorangK" value="$flagBorangK"/>
   <input name="idBorangK" type="hidden" id="idBorangK" value="$idBorangK"/>
-  <input name="userRole" type="hidden" id="userRole" value="$userRole"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
@@ -183,26 +182,19 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td> 
-                  #if ($mode == 'view')
-                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+                <td> #if ($mode == 'view')
                   <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
                   #if ($idStatus == '1610198')
                   <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
                   <input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
                   <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
                   #end
-                  #end
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
                   #end
                   #if ($mode == 'update')
                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatAduan()"/>
                   <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
-                  #end 
-                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
-                  <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
-                  #end
-                </td>
+                  #end </td>
               </tr>
               #end
             </table>

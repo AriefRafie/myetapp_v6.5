@@ -66,7 +66,7 @@
   </tr>
   <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-    <td>Nama Menteri KeTSA</td>
+    <td>Nama Menteri NRE</td>
     <td>:</td>
     <td><input name="txtNamaMenteri" type="text" class="$inputTextClass" id="txtNamaMenteri" value="$beanMaklumatPerakuanKeputusan.namaMenteri" size="50" maxlength="80" $readonly /></td>
   </tr>

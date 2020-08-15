@@ -830,7 +830,7 @@ function kembali() {
 }
 
 function cekTarikhTerima(elmnt) {
-	//CHECK DATE   
+//CHECK DATE   
 	var str1  = document.${formName}.tarikhTerima.value;		   
 	var dt1   = parseInt(str1.substring(0,2),10);
 	var mon1  = parseInt(str1.substring(3,5),10)-1;

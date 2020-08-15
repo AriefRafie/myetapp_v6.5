@@ -120,8 +120,8 @@
                   <table align="center" width="100%">
                     #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                     <tr>
-                      <td colspan="8" scope="row"><input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan')"/>
-                        <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan')"/></td>
+                      <td colspan="8" scope="row"><input name="cmdDaftar" type="button" value="Daftar Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan')"/>
+                        <input name="cmdDaftar" type="button" value="Daftar Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan')"/></td>
                     </tr>
                     #end
                     <tr class="table_header">
@@ -1218,6 +1218,7 @@ function gotoSenaraiFailKeseluruhan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailKeseluruhanView";
 	document.${formName}.submit();
 }
+
 function doSetujuTolakRingkas(idPermohonan) {
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;

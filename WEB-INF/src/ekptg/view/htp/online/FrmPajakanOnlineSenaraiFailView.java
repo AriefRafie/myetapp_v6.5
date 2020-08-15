@@ -43,6 +43,8 @@ import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.IPemilik;
 import ekptg.model.htp.pembelian.PembelianBean;
+import ekptg.model.php2.utiliti.LampiranBean;
+import ekptg.model.utils.lampiran.ILampiran;
 /**
  * 
  *
@@ -55,6 +57,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 	FrmOnlinePajakanHeaderData logicHeader = new FrmOnlinePajakanHeaderData();
 	FrmOnlinePajakanSenaraiFailData logic = new FrmOnlinePajakanSenaraiFailData();
 	FrmOnlineMaklumatPajakanData logicMaklumat = new FrmOnlineMaklumatPajakanData();
+	private ILampiran iLampiran = null;
 	
 	private static Logger log = Logger.getLogger(ekptg.view.htp.online.FrmPajakanOnlineSenaraiFailView.class);
 	
@@ -189,7 +192,8 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				logic.hapusPermohonan(idFail);
 			}
     	}
-		
+		this.context.put("javascriptLampiran", getDocHTP().javascriptUpload("uploadLampiran", "paparLampiran", "idDokumen",session));
+
 		if ("paparMaklumatPajakan".equals(actionPajakan)){
 			//GO TO PAPAR PAJAKAN 
 			vm = "app/htp/online/frmOnlineMaklumatPajakan.jsp";
@@ -215,6 +219,11 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(idUser);
 			this.context.put("namaPemohon", vec.get(0).get("namaPemohon"));
         	
+			 if(FrmSemakan.getSenaraiSemakanHantar(idPermohonan).size()==0)
+				 mode="update";
+
+			getSenaraiSemak(idPermohonan,mode);
+
 			//MODE VIEW
 			log.info("mode = " + mode);
 			if ("view".equals(mode)){	
@@ -252,7 +261,6 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
 				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 				
-				getSenaraiSemakFail(idPermohonan);
 		
     	    }
 			else if ("update".equals(mode)){
@@ -526,9 +534,10 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 			
 	}
 	
-	private void getSenaraiSemakFail(String idPermohonan) throws Exception{
+	private void getSenaraiSemak(String idPermohonan,String mode) throws Exception{
 		FrmSemakan fs = new FrmSemakan();
-		context.put("SenaraiSemak", fs.getSenaraiSemakanAttach("pajakanmycoid",idPermohonan));
+		fs.mode = mode;
+		context.put("SenaraiSemak", fs.getSenaraiSemakanAttach("htppajakanmycoid",idPermohonan));
 		context.put("semakclass", new FrmSemakan());
 	}
 	
@@ -551,6 +560,13 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 		}
 		return iStatus;
 	
+	}
+	private ILampiran getDocHTP(){
+		if(iLampiran == null){
+			iLampiran = new ekptg.model.utils.lampiran.LampiranBean();
+		}
+		return iLampiran;
+				
 	}
 
 	

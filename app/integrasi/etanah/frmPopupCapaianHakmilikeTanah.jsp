@@ -9,15 +9,6 @@ color: #0000FF
 	color: #FF0000
 }
 -->
-#elseif ($!modul == 'ppt')
-<!--
-#parse("css/eTapp_PPT.css") .style1 {
-color: #0000FF
-}
-.style2 {
-	color: #FF0000
-}
--->
 
 #else
 <!--
@@ -69,7 +60,7 @@ color: #0000FF
         <tr>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><input name="cmdSimpan" id="cmdSimpan" value="Semak" type="button" onclick="javascript:hantar()">
+          <td><input name="cmdSimpan" id="cmdSimpan" value="Hantar" type="button" onclick="javascript:hantar()">
             <input name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" type="reset" onclick="javascript:kosongkan()"/></td>
         </tr>
       </table>
@@ -84,11 +75,11 @@ color: #0000FF
       #parse("app/utils/record_paging_popup.jsp")
       <table align="center" width="100%">
         <tr class="table_header">
-          <td scope="row" width="3%" align="center"><strong>Bil</strong></td>
-          <td width="25%"><strong>ID Hakmilik</strong></td>
-          <td width="25%"><strong>No. Resit</strong></td>
-          <td width="25%"><strong>Tarikh Terima</strong></td>
-          <td width="22%"><strong>Status Hakmilik</strong></td>
+          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+          <td width="10%"><strong>ID Hakmilik</strong></td>
+          <td width="15%"><strong>No. Resit</strong></td>
+          <td width="15%"><strong>Tarikh Terima</strong></td>
+          <td width="10%"><strong>Status Hakmilik</strong></td>
         </tr>
         #set ($senaraiCarianRasmi = "")
         #if ($SenaraiCarianRasmi.size() > 0)
@@ -101,8 +92,8 @@ color: #0000FF
         #set( $row = "row2" )
         #end
         <tr>
-          <td class="$row" align="center">$senaraiCarianRasmi.bil .</td>
-          <td class="$row"><a href="javascript:papar('$senaraiCarianRasmi.idMT')" class="style1">$senaraiCarianRasmi.idHakmilik</a></td>
+          <td class="$row" align="center">$senaraiCarianRasmi.bil</td>
+          <td class="$row"><a href="javascript:papar('$senaraiCarianRasmi.idPPKHTA')" class="style1">$senaraiCarianRasmi.idHakmilik</a></td>
           <td class="$row">$senaraiCarianRasmi.noResit</td>
           <td class="$row">$senaraiCarianRasmi.tarikhTerima</td>
           #if ($senaraiCarianRasmi.flagAktif == 'Y')

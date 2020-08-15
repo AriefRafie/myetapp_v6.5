@@ -88,8 +88,9 @@ public class FrmSek8PermintaanUkurData {
 			}		
 		}
 		
-	return sql;
+		
 	
+	return sql;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -282,14 +283,13 @@ public class FrmSek8PermintaanUkurData {
 				
 				sql  = "SELECT DISTINCT A.ID_HAKMILIK, B.ID_PERMINTAANUKUR, B.NO_PU, B.TARIKH_SURAT_PTG, B.NO_HAKMILIK_SAMBUNG,";
 				sql += " B.TARIKH_HANTAR_JUPEM, B.TARIKH_PU, B.TARIKH_TERIMA_PA, B.NO_PA, B.CATATAN, B.LUAS_AMBIL_SAMBUNG, ";
-				sql += " B.TARIKH_TERIMA_SA, B.NO_JUPEM, B.TARIKH_SELESAI, B.LUAS_PU, B.BEZA_LUAS, B.JENIS_PELARASAN, ";
-				sql += " B.BIL_SURAT, B.TARIKH_SURAT_SUSULAN, B.TEMPOH_AKHIR_CEK, B.TARIKH_TERIMA_AGENSI, ";
-				sql	+= " A.NO_SUBJAKET, B.NO_LOT_BARU, B.TARIKH_BAYARAN_TAMBAHAN ";
+				sql += " B.TARIKH_TERIMA_SA, B.TARIKH_SELESAI, B.LUAS_PU, B.BEZA_LUAS, B.JENIS_PELARASAN, ";
+				sql += " B.BIL_SURAT, B.TARIKH_SURAT_SUSULAN, B.TEMPOH_AKHIR_CEK, B.TARIKH_TERIMA_AGENSI, A.NO_SUBJAKET, B.NO_LOT_BARU, B.TARIKH_BAYARAN_TAMBAHAN ";
 				sql += " FROM TBLPPTHAKMILIK A, TBLPPTPERMINTAANUKUR B ";
 				sql += " WHERE B.ID_HAKMILIK = A.ID_HAKMILIK ";
 				sql += " AND B.ID_HAKMILIK = '"+idHakmilik+"'";
 				
-				myLogger.info("SQ MAKLUMAT PU setDataPermintaanUkur : "+sql);
+				myLogger.info("SQ MAKLUMAT PU : "+sql);
 				ResultSet rs = stmt.executeQuery(sql);	
 				Hashtable h;
 				
@@ -300,7 +300,6 @@ public class FrmSek8PermintaanUkurData {
 					h.put("no_subjaket", rs.getString("NO_SUBJAKET")==null?"":rs.getString("NO_SUBJAKET"));
 					h.put("id_permintaanukur", rs.getString("ID_PERMINTAANUKUR")==null?"":rs.getString("ID_PERMINTAANUKUR"));
 					//h.put("no_pelan", rs.getString("NO_PELAN")==null?"":rs.getString("NO_PELAN"));
-					h.put("no_jupem", rs.getString("NO_JUPEM")==null?"":rs.getString("NO_JUPEM")); //PPT-33
 					h.put("no_pu", rs.getString("NO_PU")==null?"":rs.getString("NO_PU"));
 					h.put("tarikh_surat_ptg", rs.getDate("TARIKH_SURAT_PTG")==null?"":Format.format(rs.getDate("TARIKH_SURAT_PTG")));
 					h.put("tarikh_hantar_jupem", rs.getDate("TARIKH_HANTAR_JUPEM")==null?"":Format.format(rs.getDate("TARIKH_HANTAR_JUPEM")));
@@ -364,10 +363,9 @@ public class FrmSek8PermintaanUkurData {
 	    		String id_user = (String)data.get("id_user");	    	    		
 	    		String id_hakmilik = (String)data.get("id_hakmilik");
 	    		String id_permohonan = (String)data.get("id_permohonan");
-	    		
+	   		
 	    		String txdTarikhSuratPTG = (String)data.get("txdTarikhSuratPTG");	 
-	    		String txtNoPelan = (String)data.get("txtNoPelan");
-	    		String txtNoJUPEM = (String)data.get("txtNoJUPEM");
+	    		String txtNoPelan = (String)data.get("txtNoPelan");	 
 	    		String txdTarikhHantarJUPEM = (String)data.get("txdTarikhHantarJUPEM");	 
 	    		String txtNoPU = (String)data.get("txtNoPU");	 
 	    		String txdTarikhBorangPU = (String)data.get("txdTarikhBorangPU");	 
@@ -383,8 +381,7 @@ public class FrmSek8PermintaanUkurData {
 	    		SQLRenderer r = new SQLRenderer();
 	    		r.add("id_permintaanukur",id_permintaanukur);
 	    		r.add("id_hakmilik", id_hakmilik);
-	    		r.add("no_jupem", txtNoJUPEM);
-	    		r.add("no_pu", txtNoPU);
+	    		r.add("no_pu", txtNoPU);	
 	    		r.add("tarikh_surat_ptg",r.unquote(TSP));
 	    		r.add("tarikh_hantar_jupem",r.unquote(THJ));
 	    		r.add("tarikh_pu",r.unquote(TBP));
@@ -392,10 +389,9 @@ public class FrmSek8PermintaanUkurData {
 	    		r.add("no_lot_baru", txtLotBaru);
 	    		r.add("no_hakmilik_sambung", txtNoHakmilik);
 	    		r.add("luas_ambil_sambung", txtLuasLotAmbil);
-	    		r.add("id_masuk",id_user);
+	    		r.add("id_masuk",id_user);    		
 	    		sql = r.getSQLInsert("Tblpptpermintaanukur");
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("simpanMaklumatPU tblpptpermintaanukur " +sql);
     	
 	    		if(txtNoPelan != ""){
 	
@@ -410,7 +406,6 @@ public class FrmSek8PermintaanUkurData {
 	    			r.add("id_masuk",id_user);    		
 	    			sql = r.getSQLInsert("Tblpptnopelan");
 	    			stmt.executeUpdate(sql);
-	    			myLogger.info("simpanMaklumatPU Tblpptnopelan " +sql);
 	    		
 	    			r.clear();
 	    		
@@ -420,8 +415,6 @@ public class FrmSek8PermintaanUkurData {
 	    			r.add("id_masuk",id_user);    		
 	    			sql = r.getSQLInsert("Tblpptnopelanpu");
 	    			stmt.executeUpdate(sql);
-	    			myLogger.info("simpanMaklumatPU Tblpptnopelanpu " +sql);
-	    			
 	    		
 	    		}//close if nopelan != ""
 	    		
@@ -454,7 +447,6 @@ public class FrmSek8PermintaanUkurData {
     			r.add("id_masuk",id_user);    		
     			sql = r.getSQLInsert("Tblpptnopelanpu");
     			stmt.executeUpdate(sql);
-    			myLogger.info("simpanNoPelanLain Tblpptnopelanpu" +sql);
     	
 	    }//close try 
 	    finally {
@@ -476,7 +468,6 @@ public class FrmSek8PermintaanUkurData {
 	    		String id_permintaanukur = (String)data.get("id_permintaanukur");	    	
 	    		String sql = "DELETE FROM TBLPPTNOPELANPU WHERE ID_PERMINTAANUKUR = '"+id_permintaanukur+"' ";
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("deleteNoPelanLain TBLPPTNOPELANPU: " +sql);
 	    		
 	    }//close try 
 	    finally {
@@ -502,7 +493,6 @@ public class FrmSek8PermintaanUkurData {
 	    		
 	    		String txdTarikhSuratPTG = (String)data.get("txdTarikhSuratPTG");	 
 	    		String txtNoPelan = (String)data.get("txtNoPelan");	 
-	    		String txtNoJUPEM = (String)data.get("txtNoJUPEM");	 
 	    		String txdTarikhHantarJUPEM = (String)data.get("txdTarikhHantarJUPEM");	 
 	    		String txtNoPU = (String)data.get("txtNoPU");	 
 	    		String txdTarikhBorangPU = (String)data.get("txdTarikhBorangPU");
@@ -516,8 +506,7 @@ public class FrmSek8PermintaanUkurData {
 	    		
 	    		SQLRenderer r = new SQLRenderer();
 	    		r.update("id_permintaanukur", id_permintaanukur);
-//	    		r.add("no_pelan", txtNoPelan);
-	    		r.add("no_jupem", txtNoJUPEM);	
+	    		//r.add("no_pelan", txtNoPelan);
 	    		r.add("no_pu", txtNoPU);	
 	    		r.add("tarikh_surat_ptg",r.unquote(TSP));
 	    		r.add("tarikh_hantar_jupem",r.unquote(THJ));
@@ -529,7 +518,6 @@ public class FrmSek8PermintaanUkurData {
 	    		r.add("luas_ambil_sambung", luas_ambil_sambung);
 	    		sql = r.getSQLUpdate("Tblpptpermintaanukur");
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("updateMaklumatPU: " +sql);
 
 	    		if(txtNoPelan != ""){
 	    			
@@ -544,7 +532,6 @@ public class FrmSek8PermintaanUkurData {
 	    			r.add("id_masuk",id_user);    		
 	    			sql = r.getSQLInsert("Tblpptnopelan");
 	    			stmt.executeUpdate(sql);
-	    			myLogger.info("updateMaklumatPU Tblpptnopelan: " +sql);
 	    		
 	    			r.clear();
 	    		
@@ -554,7 +541,6 @@ public class FrmSek8PermintaanUkurData {
 	    			r.add("id_masuk",id_user);    		
 	    			sql = r.getSQLInsert("Tblpptnopelanpu");
 	    			stmt.executeUpdate(sql);
-	    			myLogger.info("updateMaklumatPU Tblpptnopelanpu: " +sql);
 	    		
 	    		}//close if nopelan != ""
 	    		
@@ -603,7 +589,6 @@ public class FrmSek8PermintaanUkurData {
 	    		r.add("id_kemaskini",id_user);    		
 	    		sql = r.getSQLUpdate("Tblpptpermintaanukur");
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("updatePenyelesaian Tblpptpermintaanukur: " +sql);
     	
 	    	}//close try 
 	    	finally {
@@ -646,8 +631,8 @@ public class FrmSek8PermintaanUkurData {
 	    		
 	    		sql = r.getSQLUpdate("Tblpptpermintaanukur");
 	    		
+	    		myLogger.info("updatePelarasanLuas :::::::::"+sql);
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("updatePelarasanLuas Tblpptpermintaanukur: "+sql);
     	
 	    	}//close try 
 	    	finally {
@@ -835,7 +820,6 @@ public class FrmSek8PermintaanUkurData {
 	    		r.add("id_kemaskini",id_user);    
 	    		sql = r.getSQLUpdate("Tblpptaward");
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("updatePelarasanPB Tblpptaward: " +sql);
     	
 	    	}//close try 
 	    	finally {
@@ -880,7 +864,6 @@ public class FrmSek8PermintaanUkurData {
 	    		r.add("id_kemaskini",id_user);    		
 	    		sql = r.getSQLUpdate("Tblpptpermintaanukur");
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("updateSusulan Tblpptpermintaanukur: " +sql);
     	
 	    	}//close try 
 	    	finally {

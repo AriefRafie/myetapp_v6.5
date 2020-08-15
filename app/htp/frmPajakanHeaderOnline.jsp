@@ -1,11 +1,6 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <tr>
-  #foreach($beanHeader in $BeanHeader)
-      #set($negeri = $beanHeader.negeri)
-      #set($kementerian = $beanHeader.kementerian)
-      #set($agensi = $beanHeader.agensi)
-  
-  	#set($idFail = $beanHeader.idFail) 	
+  <tr>#foreach($beanHeader in $BeanHeader)
+  	#set($idFail = $beanHeader.idFail)
     #set($idNegeriTanah = $beanHeader.idNegeriTanah)
     #set($idKementerian = $beanHeader.idKementerian)
     #set($idPermohonan = $beanHeader.idPermohonan)
@@ -27,12 +22,12 @@
           <tr>
             <td width="36%" align="right">NEGERI</td>
             <td width="1%">:</td>
-            <td width="63%"><font color="blue">$negeri</font></td>
+            <td width="63%"><font color="blue">$idNegeriTanah</font></td>
           </tr>
           <tr>
             <td align="right">KEMENTERIAN</td>
             <td>:</td>
-            <td><font color="blue">$kementerian</font></td>
+            <td><font color="blue">$idKementerian</font></td>
           </tr>
           <tr>
             <td align="right">AGENSI</td>
@@ -71,11 +66,11 @@
           </tr>--->
           <tr>
             <td align="right">TARIKH SURAT PEMOHON :</td>
-            <td><font color="blue">$!tarikhSuratPemohon</font></td>
+            <td><font color="blue">$tarikhSuratPemohon</font></td>
           </tr>
           <tr>
             <td align="right">JENIS FAIL :</td>
-            <td><font color="blue">$!idJenisFail</font></td>
+            <td><font color="blue">$idJenisFail</font></td>
           </tr>
           <tr>
             <td align="right">STATUS :</td>

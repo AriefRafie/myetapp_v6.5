@@ -65,7 +65,7 @@ public class FrmStatusPermohonanSewa extends AjaxBasedModule {
 			
 		if(flag_penyewaan.equals("PermohonanSewa"))
 		{
-			status_PermohonanSewa = logic.statusPermohonanSewa(findNoFail, findNoHakmilik,"", findNoLot, id_user);
+			status_PermohonanSewa = logic.statusPermohonanSewa(findNoFail, findNoHakmilik, findNoLot, id_user);
 			this.context.put("status_PermohonanSewa", status_PermohonanSewa);
 			System.out.println(" status_PermohonanSewa :"+status_PermohonanSewa);
 		}

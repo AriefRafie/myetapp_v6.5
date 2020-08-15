@@ -114,24 +114,22 @@ public class FrmOnlinePajakanHeaderData {
 			beanMaklumatPemohon = new Vector<Hashtable<String, String>>();
 			db = new Db();
 			Statement stmt = db.getStatement();
+			int bil = 1;
 			Hashtable<String, String> h;
 			
-			sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UO.NO_KP_BARU, UO.NO_FAX, UO.NO_HP, UO.EMEL"+
-				", UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3,NVL(UO.ID_NEGERI,0) ID_NEGERI,NVL(UO.ID_BANDAR,0) ID_BANDAR  " +
-				", UO.POSKOD, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI  " +
-				  " FROM USERS U,USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
-				  " WHERE U.USER_ID = UO.USER_ID "+
-				  " AND UO.ID_BANDAR = RB.ID_BANDAR(+) "+
-				  " AND UO.ID_NEGERI = RN.ID_NEGERI(+) " +
+			sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UO.NO_KP_BARU, UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3, " +
+				  " UO.POSKOD, UO.NO_FAX, UO.NO_HP, UO.EMEL, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI FROM USERS U, " +
+				  " USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
+				  " WHERE U.USER_ID = UO.USER_ID "
+				  + "AND UO.ID_BANDAR = RB.ID_BANDAR(+) "
+				  + "AND UO.ID_NEGERI = RN.ID_NEGERI(+) " +
 				  " AND U.USER_ID = '" + idUser + "'";
 					
-			myLog.info("setMaklumatPermohonan : " + sql);
+			//myLog.info("setMaklumatPermohonan : " + sql);
 			ResultSet rs = stmt.executeQuery(sql);	
 			while (rs.next()) {
-				h = new Hashtable<String, String>();
+				h = new Hashtable();
 				h.put("iduser", rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
-				h.put("idBandar", rs.getString("ID_BANDAR"));
-				h.put("idNegeri", rs.getString("ID_NEGERI") == null ? "" : rs.getString("USER_ID"));
 				h.put("kategoriPemohon", rs.getString("KATEGORI") == null ? "" : rs.getString("KATEGORI").toUpperCase());
 				h.put("namaPemohon", rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME").toUpperCase());
 				h.put("noPengenalan", rs.getString("NO_KP_BARU") == null ? "" : rs.getString("NO_KP_BARU").toUpperCase());
@@ -146,7 +144,7 @@ public class FrmOnlinePajakanHeaderData {
 				h.put("emel", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
 					
 				beanMaklumatPemohon.addElement(h);
-				
+				bil++;	
 			}
 
 		} finally {

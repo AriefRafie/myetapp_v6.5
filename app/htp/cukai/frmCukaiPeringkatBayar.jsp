@@ -27,7 +27,7 @@
 			  	<td>Bil.</td>
 			  	<td>Negeri</td>
 			  	<td>Peringkat Bayaran</td>
-			  	<td>No. Fail</td>
+			  	<td>No. Fail Seksyen</td>
 			  	<td>Status Fail</td>
 			  </tr>
 			  

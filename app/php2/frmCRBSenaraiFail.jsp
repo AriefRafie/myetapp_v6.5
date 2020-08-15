@@ -8,9 +8,6 @@
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
-  <input name="flagFrom" type="hidden" id="flagFrom"/>
-  <input name="initiateFlagBuka" type="hidden" id="initiateFlagBuka"/>
-  <input name="idNegeriUser" type="hidden" id="idNegeriUser" value="$idNegeriUser"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -116,10 +113,8 @@
       <table align="center" width="100%">
         <tr>
           <td colspan="6" scope="row">
-          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
           	<input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onClick="javascript:daftarBaru()"/>
             &nbsp;
-            #end
             <input name="cmdSemakan" type="button" value="Semakan Maklumat Tanah" onclick="javascript:semakanMaklumatTanah()"/>
             <input name="cmdCetak" type="button" value="Cetak Senarai Fail" onclick="javascript:cetakSenaraiFail('$flagDetail')"/></td>
         </tr>
@@ -146,7 +141,7 @@
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a></td>
           <td class="$row">$list.namaKementerian</td>
           <td class="$row">$list.kodHakmilik  $list.noHakmilik$list.koma $list.keteranganLot $list.noLot$list.koma
-            $list.namaMukim$list.koma $list.namaDaerah$list.koma $list.namaNegeri</td>
+            $list.namaMukim$list.koma $list.namaDaerah$list.koma $list.namaNegeri </td>
           <td class="$row" align="center">$list.tarikhTerima</td>
           <td class="$row">$list.status</td>
         </tr>

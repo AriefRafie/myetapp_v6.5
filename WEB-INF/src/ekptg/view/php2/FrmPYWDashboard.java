@@ -51,8 +51,6 @@ public class FrmPYWDashboard extends AjaxBasedModule {
 		context.put("check_notifikasi_aduan", getNotifikasiAduan("", user_negeri_login, userId, "", "NO"));
 		context.put("check_notifikasi_inbox", getNotifikasiInbox(userId));
 		context.put("check_notifikasi_tugasan", getNotifikasiTugasan(userId, role, user_negeri_login));
-		context.put("check_notifikasi_tugasan_plp", getNotifikasiTugasanPLP(userId, role, user_negeri_login));
-		context.put("check_notifikasi_tugasan_crb", getNotifikasiTugasanCRB(userId, role, user_negeri_login));
 		
 		//list_memo_aktif = logicPengumuman.getMemo("", "Aktif","1","0");
 		list_memo_aktif = logicPengumuman.getMemo("", "Aktif","1","","","","","0");
@@ -310,18 +308,19 @@ public class FrmPYWDashboard extends AjaxBasedModule {
 			SQLRenderer r = new SQLRenderer();
 			
 			sql = "SELECT COUNT(*) AS BIL"
-				+ " FROM TBLPHPLOGTUGASAN, TBLPFDFAIL WHERE TBLPHPLOGTUGASAN.ID_FAIL = TBLPFDFAIL.ID_FAIL"
-				+ " AND TBLPHPLOGTUGASAN.FLAG_AKTIF = 'Y' AND TBLPHPLOGTUGASAN.FLAG_BUKA = 'T'"
-				+ " AND TBLPFDFAIL.ID_URUSAN IN (7,12,13) AND TBLPHPLOGTUGASAN.ROLE = '" + userRole + "'";
+				+ " FROM TBLPHPLOGTUGASAN WHERE FLAG_AKTIF = 'Y' AND FLAG_BUKA = 'T'"
+				+ " AND ROLE = '" + userRole + "'";
 			
 			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole) || "(PHP)PYWPenolongPegawaiTanahHQ".equals(userRole)){
-				sql = sql + " AND TBLPHPLOGTUGASAN.ID_PEGAWAI = '" + userId + "'";
+				sql = sql + " AND ID_PEGAWAI = '" + userId + "'";
 			}
 			
 			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole) || "(PHP)PYWPenolongPengarahNegeri".equals(userRole) || "(PHP)PYWPengarahNegeri".equals(userRole)){
-				sql = sql + " AND TBLPHPLOGTUGASAN.ID_NEGERI = '" + idNegeri + "'";
+				sql = sql + " AND ID_NEGERI = '" + idNegeri + "'";
 			}
 		
+			
+
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 			return rs.getInt("BIL");
@@ -331,71 +330,4 @@ public class FrmPYWDashboard extends AjaxBasedModule {
 				db.close();
 		}
 	}
-	
-	public Integer getNotifikasiTugasanPLP(String userId, String userRole, String idNegeri) throws Exception {
-
-		Db db = null;
-		String sql = "";
-
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			
-			sql = "SELECT COUNT(*) AS BIL"
-				+ " FROM TBLPHPLOGTUGASAN, TBLPFDFAIL WHERE TBLPHPLOGTUGASAN.ID_FAIL = TBLPFDFAIL.ID_FAIL"
-				+ " AND TBLPHPLOGTUGASAN.FLAG_AKTIF = 'Y' AND TBLPHPLOGTUGASAN.FLAG_BUKA = 'T' AND TBLPFDFAIL.ID_URUSAN = '6'"
-				+ " AND TBLPFDFAIL.ID_SUBURUSAN = '34' AND TBLPHPLOGTUGASAN.ROLE = '" + userRole + "'";
-			
-			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole) || "(PHP)PYWPenolongPegawaiTanahHQ".equals(userRole)){
-				sql = sql + " AND TBLPHPLOGTUGASAN.ID_PEGAWAI = '" + userId + "'";
-			}
-			
-			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole) || "(PHP)PYWPenolongPengarahNegeri".equals(userRole) || "(PHP)PYWPengarahNegeri".equals(userRole)){
-				sql = sql + " AND TBLPHPLOGTUGASAN.ID_NEGERI = '" + idNegeri + "'";
-			}
-		
-			ResultSet rs = stmt.executeQuery(sql);
-			rs.next();
-			return rs.getInt("BIL");
-			
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
-	public Integer getNotifikasiTugasanCRB(String userId, String userRole, String idNegeri) throws Exception {
-
-		Db db = null;
-		String sql = "";
-
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			
-			sql = "SELECT COUNT(*) AS BIL"
-				+ " FROM TBLPHPLOGTUGASAN, TBLPFDFAIL WHERE TBLPHPLOGTUGASAN.ID_FAIL = TBLPFDFAIL.ID_FAIL"
-				+ " AND TBLPHPLOGTUGASAN.FLAG_AKTIF = 'Y' AND TBLPHPLOGTUGASAN.FLAG_BUKA = 'T' AND TBLPFDFAIL.ID_URUSAN = '8'"
-				+ " AND TBLPFDFAIL.ID_SUBURUSAN = '56' AND TBLPHPLOGTUGASAN.ROLE = '" + userRole + "'";
-			
-			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole) || "(PHP)PYWPenolongPegawaiTanahHQ".equals(userRole)){
-				sql = sql + " AND TBLPHPLOGTUGASAN.ID_PEGAWAI = '" + userId + "'";
-			}
-			
-			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole) || "(PHP)PYWPenolongPengarahNegeri".equals(userRole) || "(PHP)PYWPengarahNegeri".equals(userRole)){
-				sql = sql + " AND TBLPHPLOGTUGASAN.ID_NEGERI = '" + idNegeri + "'";
-			}
-		
-			ResultSet rs = stmt.executeQuery(sql);
-			rs.next();
-			return rs.getInt("BIL");
-			
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
 }

@@ -4,13 +4,12 @@ import java.util.Date;
 
 /**
  * Tblrujsuburusanstatusfail entity.
- *
+ * 
  * @author MyEclipse Persistence Tools
  */
 public class Tblrujsuburusanstatusfail extends
 		AbstractTblrujsuburusanstatusfail implements java.io.Serializable {
 
-	// class Tblrujsuburusanstatusfail
 	// Constructors
 
 	/** default constructor */
@@ -35,4 +34,5 @@ public class Tblrujsuburusanstatusfail extends
 				, idKemaskini, tarikhKemaskini, tarikhKemaskiniStr
 				,idFail);
 	}
+
 }

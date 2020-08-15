@@ -121,16 +121,16 @@
 						#if(!$list.getStatusPermohonan().contains('TOLAK')) 
 			    			
 						#if ($!list.permohonan.pfdFail.getIdUrusan() == '1' || $!list.permohonan.pfdFail.getIdUrusan()=='10') 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya01" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Proses" 
 			    			onclick="permohonanSimpanPengesahan($!list.permohonan.pfdFail.getIdFail())">
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '5' ) 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya02" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Proses" 
 			    			onclick="perletakhakanSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan','$list.idSuburusanStatusFail')">			    		
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '2' ) 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya03" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Proses" 
 			    			onclick="pembelianSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan')">			    		
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '3' ) 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya04" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Proses" 
 			    			onclick="pajakanSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan','$list.idSuburusanStatusFail')">			    		
 			    		#end
 			    		

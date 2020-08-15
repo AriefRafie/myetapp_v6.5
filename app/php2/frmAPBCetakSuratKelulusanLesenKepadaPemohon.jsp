@@ -50,7 +50,7 @@
     <div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LESEN</li>         
-          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">LESEN DAN PELAN</li>
+          <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">LESEN DAN PELAN</li>       
         </ul>
       <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">
@@ -164,7 +164,6 @@
 		          <td>#if ($mode == 'view')
 		            <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
 		            <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-		            <input type="button" name="cmdSejarahMaklumatLesen" id="cmdSejarahMaklumatLesen" value="Sejarah Maklumat Lesen" onClick="doPaparSejarah()"/>
 		            #if($idStatus =='1610239')
 		            <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
 		            <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
@@ -173,12 +172,11 @@
 		            #if ($mode == 'update')
 		            <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSuratKelulusanLesenKepadaPemohon()"/>
 		            <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
-		            <input type="button" name="cmdSejarahMaklumatLesen" id="cmdSejarahMaklumatLesen" value="Sejarah Maklumat Lesen" onClick="doPaparSejarah()"/>
 		            #end </td>
 		        </tr>
 		     #end
     		</table>
-</fieldset>
+      	  </fieldset>
           <br>
       	  <fieldset id="tableReport" style="display:none;">
 		    <legend><strong>SENARAI DOKUMEN</strong></legend>
@@ -334,8 +332,6 @@ function cetakSyaratKelulusan(idFail,idPermohonan) {
 }
 </script>
 <input name="step" type="hidden" id="step"/>
-<input name="actionPopup" type="hidden" id="actionPopup"/>
-<input name="idPemohon" type="hidden" id="idPemohon"/>
 <script>
 function gotoSelesaiPermohonan(){	
 	document.${formName}.step.value = "selesaiPermohonan";
@@ -344,13 +340,5 @@ function gotoSelesaiPermohonan(){
 function gotoBatalPermohonan(){	
 	document.${formName}.step.value = "batalPermohonan";
 	document.${formName}.submit();
-}
-function doPaparSejarah() {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmAPBPopupSejarahMaklumatLesen";
-    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
 }
 </script>

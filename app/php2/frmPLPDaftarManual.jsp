@@ -558,12 +558,12 @@
           <td>:</td>
           <td>PELEPASAN / PENYERAHANBALIK</td>
         </tr>
-<!--         <tr> -->
-<!--           <td width="1%">&nbsp;</td> -->
-<!--           <td valign="top">Suburusan</td> -->
-<!--           <td>:</td> -->
-<!--           <td>PELEPASAN / PENYERAHANBALIK</td> -->
-<!--         </tr> -->
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td valign="top">Suburusan</td>
+          <td>:</td>
+          <td>PELEPASAN / PENYERAHANBALIK</td>
+        </tr>
         <tr>
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td valign="top">Tarikh Terima</td>

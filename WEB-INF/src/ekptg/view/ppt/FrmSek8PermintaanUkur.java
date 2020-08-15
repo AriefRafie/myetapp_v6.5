@@ -1990,21 +1990,21 @@ public class FrmSek8PermintaanUkur extends AjaxBasedModule {
 
 		Hashtable h = new Hashtable();
 		
-		long id_permintaanukur = DB.getNextID("TBLPPTPERMINTAANUKUR_SEQ");
-		
+		long id_permintaanukur = DB.getNextID("TBLPPTPERMINTAANUKUR_SEQ");    
 		h.put("id_permintaanukur", String.valueOf(id_permintaanukur));
+		
 		h.put("id_permohonan", id_permohonan);
 		h.put("id_hakmilik", getParam("id_hakmilik"));		
 		h.put("txdTarikhSuratPTG", getParam("txdTarikhSuratPTG"));
 		h.put("txtNoPelan", getParam("txtNoPelan"));
-		h.put("txtNoJUPEM", getParam("txtNoJUPEM"));
-		h.put("txdTarikhHantarJUPEM", getParam("txdTarikhHantarJUPEM"));	
+		h.put("txdTarikhHantarJUPEM", getParam("txdTarikhHantarJUPEM"));		
 		h.put("txtNoPU", getParam("txtNoPU"));
 		h.put("txdTarikhBorangPU", getParam("txdTarikhBorangPU"));
 		h.put("txtNoHakmilik", getParam("txtNoHakmilik"));
 		h.put("txtLotBaru", getParam("txtLotBaru"));
 		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));
-		h.put("txtLuasLotAmbilSebelumConvert", getParam("txtLuasLotAmbilSebelumConvert"));
+		h.put("txtLuasLotAmbilSebelumConvert",
+				getParam("txtLuasLotAmbilSebelumConvert"));
 		h.put("sorDropdownUnitAmbil", getParam("sorDropdownUnitAmbil"));
 		h.put("txtLuasLotAmbil", Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
 
@@ -2037,8 +2037,7 @@ public class FrmSek8PermintaanUkur extends AjaxBasedModule {
 		h.put("id_permintaanukur", getParam("id_permintaanukur"));		
 		h.put("txdTarikhSuratPTG", getParam("txdTarikhSuratPTG"));
 		h.put("txtNoPelan", getParam("txtNoPelan"));
-		h.put("txtNoJUPEM", getParam("txtNoJUPEM"));
-		h.put("txdTarikhHantarJUPEM", getParam("txdTarikhHantarJUPEM"));
+		h.put("txdTarikhHantarJUPEM", getParam("txdTarikhHantarJUPEM"));		
 		h.put("txtNoPU", getParam("txtNoPU"));
 		h.put("txdTarikhBorangPU", getParam("txdTarikhBorangPU"));
 		h.put("txtNoHakmilik", getParam("txtNoHakmilik"));

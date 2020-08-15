@@ -92,7 +92,7 @@ public class DB extends EkptgCache implements Serializable {
 		String sql = "select " + statecode + " || to_char(sysdate,'YY') || " + seqName + ".NEXTVAL  FROM DUAL ";
 		try {
 			Statement stmt = db.getStatement();
-			myLogger.info(seqName+" :sql="+sql);
+			myLogger.info("TBLPPKPERMOHONANSIMATI_PK :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 			return rs.getLong(1);
@@ -971,9 +971,7 @@ public class DB extends EkptgCache implements Serializable {
 		} else {
 			Db db = null;
 			String sql = "Select a.id_SubSubSuburusan,a.kod_SubSubSuburusan,a.nama_SubSubSuburusan"
-					+ " from tblrujsubsubsuburusan a, tblrujsubsuburusan b where a.id_subsuburusan = b.id_subsuburusan "
-					+ " "
-					+ " order by a.kod_SubSubSuburusan ";
+					+ " from tblrujsubsubsuburusan a, tblrujsubsuburusan b where a.id_subsuburusan = b.id_subsuburusan order by a.kod_SubSubSuburusan ";
 
 			try {
 				db = new Db();
@@ -1020,7 +1018,7 @@ public class DB extends EkptgCache implements Serializable {
 				r.add("id_suburusan");
 				r.add("kod_suburusan");
 				r.add("nama_suburusan");
-				r.add("flag_aktif","1");
+				//r.add("flag_aktif","1");
 				r.add("id_urusan", Integer.parseInt(idUrusan));
 				v = new Vector<Tblrujsuburusan>();				
 				sql = r.getSQLSelect("tblrujsuburusan", "nama_suburusan ASC");
@@ -2364,8 +2362,7 @@ public class DB extends EkptgCache implements Serializable {
 			r.add("no_fax");
 			r.add("id_seksyen", idSeksyen);
 			r.add("id_negeri", idNegeri);
-			if(!idDaerah.equals("0"))
-				r.add("id_daerah", idDaerah);
+			r.add("id_daerah", idDaerah);
 
 			sql = r.getSQLSelect("tblrujpejabatjkptg");
 			myLogger.info("getPejabatJKPTG:sql="+sql);
@@ -3427,17 +3424,15 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-	/** by rosli on 30/05/2009
-	 * 27/06/2020, hapus filter kod_agensi not in ('09','10','11')
-	 * @param idKementerian
-	 * @return
-	 * @throws Exception
-	 */
+
+	// by rosli on 30/05/2009
 	public static Vector<Tblrujagensi> getAgensiByKementerian(String idKementerian) throws Exception {
 		Db db = null;
-		String sql = "select id_agensi,kod_agensi,nama_agensi "
-				+ " from tblrujagensi where id_kementerian= '" + idKementerian + "'"
-				+ " order by lpad(kod_Agensi,10)"; 
+		String sql = "Select id_Agensi,kod_Agensi,nama_Agensi from " + "tblrujagensi where id_kementerian= '" + idKementerian
+				+ "' and kod_agensi not in ('09','10','11') order by lpad(kod_Agensi,10)"; // KOD
+																							// AGENSI
+																							// LAUT
+																							// BERUBAH
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -3450,14 +3445,12 @@ public class DB extends EkptgCache implements Serializable {
 				f.setKodAgensi(rs.getString(2));
 				f.setNamaAgensi(rs.getString(3));
 				list.addElement(f);
-				
 			}
 			return list;
 		} finally {
 			if (db != null)
 				db.close();
 		}
-		
 	}
 
 	public static Vector<Tblrujbandar> getBandar() throws Exception {
@@ -4320,12 +4313,17 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-	/** By elly (120709), getMahkamah from Tblrujpejabat */
+
+	// ** getMahkamah from Tblrujpejabat
+	// ** by elly (120709)
+
 	public static Vector<Tblrujpejabat> getMahkamah() throws Exception {
 		Db db = null;
 		String sql = "";
 		sql = "SELECT id_pejabat,id_jenispejabat,nama_pejabat,kod_pejabat,id_negeri FROM Tblrujpejabat WHERE id_jenispejabat = 08 ORDER BY id_pejabat";
-//		myLogger.info("getMahkamah >> " + sql);
+		myLogger.info("getMahkamah >> " + sql);
+		// Db db = null;
+		// String sql = "";
 		try {
 
 			db = new Db();
@@ -6331,7 +6329,7 @@ public class DB extends EkptgCache implements Serializable {
 		Db db = null;
 		String sql = "";
 		sql = "SELECT ID_KATEGORIPEMOHON, KOD_KATEGORIPEMOHON, KETERANGAN FROM TBLRUJKATEGORIPEMOHON"
-				+ " WHERE ID_KATEGORIPEMOHON IN (4,5,8) ORDER BY KOD_KATEGORIPEMOHON ASC";
+				+ " WHERE ID_KATEGORIPEMOHON IN (1,2,3,4,5,6,7,8) ORDER BY KOD_KATEGORIPEMOHON ASC";
 
 		try {
 			db = new Db();
@@ -7235,7 +7233,7 @@ public class DB extends EkptgCache implements Serializable {
 			return (Vector<Tblrujbulan>) cachedObject.getObjectValue();
 		} else {
 			Db db = null;
-			String sql = " select id_bulan,kod_bulan,nama_bulan from tblrujbulan ";
+			String sql = " Select id_bulan,kod_bulan,nama_bulan from tblrujbulan ";
 			try {
 				db = new Db();
 				Statement stmt = db.getStatement();

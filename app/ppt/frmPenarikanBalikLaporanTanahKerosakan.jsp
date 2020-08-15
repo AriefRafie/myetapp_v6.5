@@ -50,7 +50,7 @@
 #end
 
 
-<!--  Tab Laporan Kerosakan  -->
+
 #foreach($maklumatam in $maklumat_am_tanah)
 #set($id_tanahumum = $maklumatam.ID_TANAHUMUM)
 #set($txtKerosakanTanah = $maklumatam.KEROSAKAN_TANAH)
@@ -259,7 +259,6 @@
   		<div id="txtKosDitanggung_check" class="alert_msg" ></div>                    </td>
             </tr>
     </table>
-    
     </fieldset>    </td>
   </tr>
   <tr>
@@ -267,16 +266,6 @@
   </tr>
 </table>
 
-
-<!-- START PPT-44 (ii) Muatnaik Dokumen -->
-<!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
-<!-- :::upload -->
-<fieldset id="senarai_dokumen" >
-<legend> Senarai Dokumen Yang Disertakan Bagi Kerosakan </legend>
-	
-	<a href="javascript:popupCarianDokumen('$id_pembatalan', '$id_hakmilik')"><font color="blue">>> SKRIN SENARAI DOKUMEN</font></a>   
-    
-<br />
         
         
 </div>
@@ -404,6 +393,8 @@ checking_validation(document.${formName}.txtKeseluruhanLot,'txtKeseluruhanLot_ch
 */
 }
 
+
+
 function doCheckAll1(){    
     if (document.${formName}.all1.checked == true){
         if (document.${formName}.ids1.length == null){
@@ -423,7 +414,6 @@ function doCheckAll1(){
         }
     }
 }
-
 function doUpdateCheckAll1(){  
 var c = 0;
 if(document.${formName}.ids1.length > 1)
@@ -889,18 +879,33 @@ function PerihalTanah(id_hakmilik,id_pembatalan)
 }
 
 
-function simpan()	{
+
+
+function simpan()
+{
 var c = 0;
 
-if(document.${formName}.validation_field != null  )	{
-   if (document.${formName}.validation_field.length == null)	{	
-   		if(document.${formName}.validation_field.value == "invalid")	{  
-   		c++;	
-   }
-}	else	{
+if(document.${formName}.validation_field != null  )
+{
+
+   if (document.${formName}.validation_field.length == null)
+   {	
+    
+   if(document.${formName}.validation_field.value == "invalid")
+   {  
    
-        for (i = 0; i < document.${formName}.validation_field.length; i++)	{		
-			if(document.${formName}.validation_field[i].value == "invalid")	{
+   c++;	
+   } 
+   	
+   } 
+   
+   else 
+   {
+   
+        for (i = 0; i < document.${formName}.validation_field.length; i++)
+		{		
+			if(document.${formName}.validation_field[i].value == "invalid")
+			{
 			
                c++;	 
 			}  	
@@ -912,48 +917,56 @@ if(document.${formName}.validation_field != null  )	{
 if(c>0){
 alert("Sila pastikan maklumat yang diisi adalah lengkap dan sah");
 return;
-}	else	{
+}
+else
+{
 input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
-		document.${formName}.command.value = "Laporan_Tanah";
-		document.${formName}.sub_command.value = "Laporan_Kerosakan";
-		document.${formName}.subminor_command.value = "Simpan";	
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
-		document.${formName}.location.value = "maklumat_am";
-		document.${formName}.point.value = "maklumat_am";
-		document.${formName}.submit();
-		}
+	document.${formName}.command.value = "Laporan_Tanah";
+	document.${formName}.sub_command.value = "Laporan_Kerosakan";
+	document.${formName}.subminor_command.value = "Simpan";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
+	document.${formName}.location.value = "maklumat_am";
+	document.${formName}.point.value = "maklumat_am";
+	document.${formName}.submit();
+	}
 	}
 }
 
-function hapus()	{
+function hapus()
+{
 input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
-		document.${formName}.command.value = "Laporan_Tanah";
-		document.${formName}.sub_command.value = "Laporan_Kerosakan";
-		document.${formName}.subminor_command.value = "Hapus";	
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
-		document.${formName}.location.value = "maklumat_am";
-		document.${formName}.point.value = "maklumat_am";
-		document.${formName}.submit();
-		}
-	}
-
-
-function batal()	{
-input_box = confirm("Adakah anda pasti?");
-	if (input_box == true) {
-		document.${formName}.command.value = "Laporan_Tanah";
-		document.${formName}.sub_command.value = "Laporan_Kerosakan";
-		document.${formName}.subminor_command.value = "Batal";	
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
-		document.${formName}.location.value = "maklumat_am";
-		document.${formName}.point.value = "maklumat_am";
-		document.${formName}.submit();
+	
+	document.${formName}.command.value = "Laporan_Tanah";
+	document.${formName}.sub_command.value = "Laporan_Kerosakan";
+	document.${formName}.subminor_command.value = "Hapus";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
+	document.${formName}.location.value = "maklumat_am";
+	document.${formName}.point.value = "maklumat_am";
+	document.${formName}.submit();
 	}
 }
 
-function kemaskini()	{
+
+function batal()
+{
+input_box = confirm("Adakah anda pasti?");
+	if (input_box == true) {
+	
+	document.${formName}.command.value = "Laporan_Tanah";
+	document.${formName}.sub_command.value = "Laporan_Kerosakan";
+	document.${formName}.subminor_command.value = "Batal";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
+	document.${formName}.location.value = "maklumat_am";
+	document.${formName}.point.value = "maklumat_am";
+	document.${formName}.submit();
+
+	}
+}
+
+function kemaskini()
+{
     document.${formName}.command.value = "Laporan_Tanah";
 	document.${formName}.sub_command.value = "Laporan_Kerosakan";
 	document.${formName}.subminor_command.value = "Kemaskini";	
@@ -961,6 +974,8 @@ function kemaskini()	{
 	document.${formName}.location.value = "maklumat_am";
 	document.${formName}.point.value = "txtKerosakanTanah";
 	document.${formName}.submit();
+
+
 }
 
 
@@ -978,7 +993,11 @@ hp = document.getElementById(tab);
 		hp.style.display = "none";
 		hp.style.visibility = "collapse";
 	}
+	
+
 }
+
+
 
 
 function setTable(id){
@@ -993,7 +1012,8 @@ function setTable(id){
 }
 
 
-function check_length(my_form,maxLen,alert_field,text_num,jenis_field,mandatory,value_field)	{
+function check_length(my_form,maxLen,alert_field,text_num,jenis_field,mandatory,value_field)
+{
 
 	   var lepas_or_xlepas = 1;
        if(jenis_field == "normal")
@@ -1034,7 +1054,8 @@ $jquery("#"+text_num).html(maxLen+"");
 
 
 
-function selesai()	{
+function selesai()
+{
    document.${formName}.command.value = "Laporan_Tanah";
 	document.${formName}.sub_command.value = "Laporan_Kerosakan";
 	document.${formName}.subminor_command.value = "UpdateSuburusan";	
@@ -1044,7 +1065,12 @@ function selesai()	{
 	document.${formName}.submit();
 }
 
-function laporantanah(id_tanah,nama_pegawai)	{
+	
+
+
+function laporantanah(id_tanah,nama_pegawai)
+{
+
 
 var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPenarikanBalik?id_tanah="+id_tanah+"&report=laporan_tanah&id_permohonan="+document.${formName}.id_permohonan.value;
     var hWnd = window.open(url,'printuser','width=800,height=300, resizable=yes,scrollbars=yes');
@@ -1127,18 +1153,4 @@ function close_window()
 {
 new_window.close();
 }
-
-
-//Skrin Popup
-function popupCarianDokumen(id_penarikanbalik,id_hakmilik)	{
-
-	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupUploadDokumen?&id_penarikanbalik="+id_penarikanbalik+"&id_hakmilik="+id_hakmilik;
-	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();		
-	
-}
-
   </script>

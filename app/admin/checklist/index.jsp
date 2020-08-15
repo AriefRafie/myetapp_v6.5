@@ -1,5 +1,5 @@
 #if ( $SimpanStatus == "success" )
-    <table style="width:100%">
+    <table width="100%" border="0">
         <tr>
             <td>
             <font color="blue">
@@ -17,23 +17,24 @@
 
  #end
 
+
 <br>
 <fieldset>
 <legend>Maklumat Semakan</legend>
-<table style="width:100%">
+<table width="100%">
 
-<!--     <tr>
+    <tr>
     	<td>
         	<hr size="2" width="100%" align="center" />
         </td>
-    </tr> -->
+    </tr>
     <tr>
     	<td>
             <div id="TabbedPanels1" class="TabbedPanels">
               <ul class="TabbedPanelsTabGroup">
-                <li class="TabbedPanelsTab" title="Maklumat Semakan" onclick="setSelected(0);byDefault()"><strong><font size="1">Maklumat Semakan</font></strong></li>
-                <li class="TabbedPanelsTab" title="Semakan vs Skrin" onclick="setSelected(1);byUrusan()"><strong><font size="1">Semakan vs Skrin</font></strong></li>
-                <li class="TabbedPanelsTab" title="Semakan vs Jenis Dokumen" onclick="setSelected(2);byStatus()"><strong><font size="1">Semakan vs Jenis Dokumen</font></strong></li>
+                <li class="TabbedPanelsTab" title="Maklumat Keterangan" onclick="setSelected(0);"><strong><font size="1">Maklumat Semakan</font></strong></li>
+                <li class="TabbedPanelsTab" title="Keterangan vs Urusan" onclick="setSelected(1);byUrusan()"><strong><font size="1">Semakan vs Skrin</font></strong></li>
+                <li class="TabbedPanelsTab" title="Keterangan vs Status" onclick="setSelected(2);byStatus()"><strong><font size="1">Keterangan vs Status</font></strong></li>
                 <!-- <li class="TabbedPanelsTab" title="Peguam" onclick="setSelected(3);PeguamView()"><strong><font size="1">Peguam Yang Dilantik</font></strong></li> -->
               </ul>
               <div class="TabbedPanelsContentGroup">
@@ -60,50 +61,25 @@
 					#set ($btnNamePeguam = "value='Batal'")
 				#end
                <!-- Bahagian Keterangan-->
-                <table width="100%" >
-                  		<tr>
-                            			<td width="50%">
-                            				<div align="right"><strong>Keterangan :</strong></div>         				
-                            			</td>
-                            			<td width="50%">
-                            				<div align="left"><input type="text" name="txtdesc" id="txtdesc" value="$!txtDesc" /></div>
-                            			</td>
-                            			
-                        </tr>                                     
-                      	<tr>
-                       		<td colspan="2"><div align="center">
-	                       		<input type="button" name="btncari" id="btncari" value="Cari" onclick="byDefault()" class="button">
-                          	</div></td>
-                  		</tr>      
-                          <tr>
-                            <td colspan="2"><div align="left">
-                            </div></td>
-                          </tr>                  		       
+                <table width="100%" border="0">
                         <tr>
                             <td colspan="2"><div align="left">
-                              <fieldset >
-                            	<table width="100%" >
-                            	  #if($SenaraiFail.size() != 0 )                          	
-                  					<tr>
-                            			<td colspan="2">
-                  								#parse("app/utils/record_paging.jsp")
-                            			</td>
-                  					</tr>
-                  				#end	
+                              <fieldset>
+                            	<table width="100%" border="0">
                           			<tr>
-                            			<td colspan="2">
-                            				<div align="left"> 
-                              				<table width="100%">
-                              					<tr class="table_header">
-								      			    <td width="3%" align="center"><strong>#</strong></td>
-								        			<td width="62%" align="center"><strong>Keterangan</strong></td>
-								       				<td width="15%" align="center"><strong>Tarikh Kemasukan</strong></td>
-								       				<td width="15%" align="center"><strong>Tarikh Kemaskini</strong></td>
-								      			    <td width="5%" align="center"></td>
-								        		</tr>
+                            			<td colspan="2"><div align="left">
+                              				<table width="100%" border="0">
+                 
+                                		<tr class="table_header">
+						      			    <td width="5%" align="center"><strong>#</strong></td>
+						        			<td width="60%" align="center"><strong>Keterangan</strong></td>
+						       				<td width="15%" align="center"><strong>Tarikh Kemasukan</strong></td>
+						       				<td width="15%" align="center"><strong>Tarikh Kemaskini</strong></td>
+						      			    <td width="5%" align="center"></td>
+						        		</tr>
                                                 #set ($count = 0)
                                                 #set ($keterangan = "")
-                								#foreach ( $desc in $SenaraiFail )
+                								#foreach ( $desc in $senarais )
                                                 #set ($count = $count+1)
                                                   #set( $i = $velocityCount )
                                                   #if ( ($i % 2) != 1 )
@@ -111,26 +87,25 @@
                                                   #else
                                                        #set( $row = "row1" )
                                                   #end
-                                				
                                 				<tr>
-                                  				  	<td class="$row" scope="row">$desc.getBil().</td>
-                                                  	<td class="$row">$desc.perihal</td>
-                                                  	<td class="$row">$desc.tarikhMasukf</td>
-                                                  	<td class="$row">$desc.tarikhKemaskinif</td>
-                                                  	<td class="$row" align="right">
-														<a href="javascript:editKeterangan('$desc.idSemakan','$desc.perihal')"><img src="../img/edit.gif" border="0"></a>
-							                        	<a href="javascript:deleteKeterangan('$desc.idSemakan')"><img src="../img/delete.gif" border="0"></a>
-							                 		</td>
+                                  				  <td class="$row" scope="row">$count</td>
+                                                  <td class="$row">$desc.perihal</td>
+                                                  <td class="$row">$desc.tarikhMasukf</td>
+                                                  <td class="$row">$desc.tarikhKemaskinif</td>
+                                                  <td class="$row" align="right">
+													<a href="javascript:editKeterangan('$desc.idSemakan','$desc.perihal')"><img src="../img/edit.gif" border="0"></a>
+							                        <a href="javascript:deleteKeterangan('$desc.idSemakan')"><img src="../img/delete.gif" border="0"></a>
+							                 	</td>
                                          		</tr>
                                                 #end
                                               	#if ($count == 0)
                                               	<tr> 
-                                                	<td colspan="5" scope="row"><font color="#FF0000">Tiada Rekod.</font></td>
+                                                	<td colspan="4" scope="row"><font color="#FF0000">Tiada Rekod.</font></td>
                                               	</tr>
                                               	#end
-                                        	</table>                                           
-                                    	</div></td>
-                                	</tr>
+                                              </table>
+                                            </div></td>
+                                          </tr>
 								</table>
                               </fieldset>
 							</div></td>
@@ -173,6 +148,24 @@
   					<input type="hidden" name="style2" value="$Style2">
                 </div>
                 <div class="TabbedPanelsContent">
+                #set ($IdPeguam = "")
+                #set ($pNama = "")
+                #set ($pAlamat1 = "")
+                #set ($pAlamat2 = "")
+                #set ($pAlamat3 = "")
+                #set ($pPoskod = "")
+                #set ($pNoTel = "")
+                #set ($pNoFax = "")
+                #foreach ( $peguam in $Peguam )
+                	#set ($IdPeguam = $peguam.IdPeguam)
+                	#set ($pNama = $peguam.Nama)
+                    #set ($pAlamat1 = $peguam.Alamat1)
+                    #set ($pAlamat2 = $peguam.Alamat2)
+                    #set ($pAlamat3 = $peguam.Alamat3)
+                    #set ($pPoskod = $peguam.Poskod)
+                    #set ($pNoTel = $peguam.NoTel)
+                    #set ($pNoFax = $peguam.NoFax)
+                #end
                 
                 #set ($btnNamePeguam = "value='Kosongkan'")
 				#if ($IdPeguam != "")
@@ -181,6 +174,11 @@
 				
 <!--Keterangan mengikut urusan -->
                 <table width="100%" border="0">
+                        <tr>
+                            <td colspan="2"><div align="left">
+                              <fieldset>
+								<legend>Pilihan Skrin</legend>
+                            	<table width="100%" border="0">
   									<tr>
                             			<td width="30%"><div align="right"><strong>Urusan :</strong></div></td>
                             			<td width="70%">$socurusan</td>
@@ -193,25 +191,15 @@
                             			<td><div align="right"><strong>Skrin :</strong></div></td>
                             			<td><input type="text" name="txtskrin" id="txtskrin" value="$!txtSkrin" /> </td>
                           			</tr>
-                           			<tr>
-                            			<td><div align="right"><strong>Keterangan :</strong></div></td>
-                            			<td><input type="text" name="txtdesc" id="txtdesc" value="$!txtDesc" /> </td>
-                          			</tr>                          			
                           			<tr>
                             			<td colspan="2"><div align="center">
 	                            			<input type="button" name="btncari" id="btncari" value="Cari" onclick="byUrusan()" class="button">
                             			</div></td>
                   					</tr>
-                          			<!-- <tr>
+                          			<tr>
                             			<td><div align="right"><strong></strong></div></td>
                             			<td>&nbsp;</td>
-                  					</tr>   -->              
-                        <tr>
-                            <td colspan="2"><div align="left">
-                              <fieldset>
-								<legend>Pilihan Skrin</legend>
-                            	<table width="100%" border="0">
-
+                  					</tr>
                   					<tr>
                             			<td colspan="2">
                   								#parse("app/utils/record_paging.jsp")
@@ -224,9 +212,8 @@
                                 				<tr class="table_header">
                                   					<td scope="col" width="3%"><strong>#</strong></td>
                                  					<td scope="col" width="42%"><strong>Keterangan</strong></td>
-                                  					<td scope="col" width="17%"><strong>Urusan/ Suburusan</strong></td>
+                                  					<td scope="col" width="20%"><strong>Urusan/ Suburusan</strong></td>
                                   					<td scope="col" width="10%"><strong>Skrin</strong></td>
-                                  					<td scope="col" width="3%"><strong>Seq</strong></td>
                                   					<td scope="col" width="10%"><strong>Tarikh Kemasukan</strong></td>
                                   					<td scope="col" width="10%"><strong>Tarikh Kemaskini</strong></td>
                                   					<td scope="col" width="5%"></td>
@@ -246,12 +233,11 @@
                                                   <td class="$row">$tanah.keterangan</td>
                                                   <td class="$row">$tanah.urusan</td>
                                                   <td class="$row">$tanah.kod</td>
-                                               	  <td class="$row">$tanah.aturan</td>
-                                                  <td class="$row">$!tanah.tarikhmasuk</td>
-                                                  <td class="$row">$!tanah.tarikhkemaskini</td>
+                                                  <td class="$row">$tanah.tarikhmasuk</td>
+                                                  <td class="$row">$tanah.tarikhkemaskini</td>
                                                   <td class="$row">
-                                                  	<a href="javascript:editKeteranganvs('$tanah.id','$!tanah.idUrusan','$!tanah.idSubUrusan','$tanah.idSemakan','$tanah.aturan','$tanah.kod')"><img src="../img/edit.gif" border="0"></a>
-							                        <a href="javascript:deleteKeteranganvs('$tanah.id')"><img src="../img/delete.gif" border="0"></a>
+                                                  	<a href="javascript:editKeteranganvs('$tanah.idkpiurusan','$tanah.idkpiketerangan','$tanah.sasaranmasa','$tanah.idsasaran','$tanah.giliran','$tanah.aturan','$tanah.pilihan')"><img src="../img/edit.gif" border="0"></a>
+							                        <a href="javascript:deleteKeteranganvs('$tanah.idkpiurusan')"><img src="../img/delete.gif" border="0"></a>
                                                   </td>
                                      
                                 				</tr>
@@ -278,7 +264,6 @@
                             			<td width="30%"><div align="right"><strong>Keterangan :</strong></div></td>
                             			<td width="70%">$socdesc</td>
                           			</tr>
-  									<!--  
   									<tr>
                             			<td width="30%"><div align="right"><strong>Sasaran Masa :</strong></div></td>
                             			<td width="70%">
@@ -293,6 +278,11 @@
 												#end
 												<option value="$y" $selected>$y</option>
 											#end
+										        <!--<option value="1">1</option>
+										        <option value="2">2</option>
+										        <option value="3">3</option>
+										        <option value="4">4</option>
+										        <option value="5">5</option>-->
 										    </select>
 										    <select class="autoselect" name="socjsasaran" >
 										        <option value="0">Sila Pilih</option>
@@ -312,7 +302,7 @@
 										        <option value="4"><30 Hari</option>
 										    </select>
                             			</td>
-                          			</tr>  -->                       			                          			
+                          			</tr>                         			                          			
   									<tr>
                             			<td width="30%"><div align="right"><strong>Aturan :</strong></div></td>
                             			<td width="70%">
@@ -366,7 +356,34 @@
                     <input type="hidden" name="style1" value="$Style1">
   					<input type="hidden" name="style2" value="$Style2">
                 </div>
-                <div class="TabbedPanelsContent">            
+                <div class="TabbedPanelsContent">
+                #set ($IdPihakberkepentingan = "")
+                #set ($IdBebanan = "")
+               	#set ($NamaPemaju = "")
+                #set ($NoRuj = "")
+                #set ($Alamat1 = "")
+                #set ($Alamat2 = "")
+                #set ($Alamat3 = "")
+                #set ($Poskod = "")
+                #set ($NoTel = "")
+                #set ($NoFax = "")
+                #foreach ( $pemilik in $Pemilik )
+                	#set ($IdPihakberkepentingan = $pemilik.IdPihakberkepentingan)
+                    #set ($IdBebanan = $pemilik.IdBebanan)
+                	#set ($NamaPemaju = $pemilik.Nama)
+                    #set ($NoRuj = $pemilik.noRujukan)
+                    #set ($Alamat1 = $pemilik.Alamat1)
+                    #set ($Alamat2 = $pemilik.Alamat2)
+                    #set ($Alamat3 = $pemilik.Alamat3)
+                    #set ($Poskod = $pemilik.Poskod)
+                    #set ($NoTel = $pemilik.NoTel)
+                    #set ($NoFax = $pemilik.NoFax)
+                #end
+                
+                #set ($idNegeri = "")
+                #foreach ($negeri in $Info)
+                	#set ($idNegeri = $negeri.idNegeri)
+                #end
                 
                 #set ($btnNamePemilik = "value='Kosongkan'")
 				#if ($IdPihakberkepentingan != "")
@@ -377,12 +394,9 @@
                 <table width="99%" border="0">
                 	<tr>
                 		<td>           			
-             				<fieldset><legend>Senarai</legend>					
+             				<fieldset><legend>Pilihan Urusan</legend>					
                 			<table width="100%" border="0">
-								<tr>
-			                		<td width="30%"><div align="right"><strong>Seksyen :</strong></div></td>
-			                        <td width="70%">$socSeksyen</td>
-								</tr>					
+					
 								<tr>
 			                		<td width="30%"><div align="right"><strong>Urusan :</strong></div></td>
 			                        <td width="70%">$socurusanstatus</td>
@@ -390,41 +404,22 @@
 								<tr>
 			                		<td width="30%"><div align="right"><strong>Sub Urusan :</strong></div></td>
 			                        <td width="70%">$socsuburusanstatus</td>
-								</tr>            
-									<tr>
-                            			<td colspan="2"><div align="center">
-	                            			<input type="button" name="btncari" id="btncari" value="Cari" onclick="byStatus()" class="button">
-                            			</div></td>
-                  					</tr>    
-		                  		<!-- <tr>
-		                            			<td width="30%">
-		                            				<div align="right"><strong>Keterangan :</strong></div>         				
-		                            			</td>
-		                            			<td width="70%">
-		                            				<div align="left"><input type="text" name="txtdesc" id="txtdesc" value="$!txtDesc" /></div>
-		                            			</td>
-		                            			
-		                         </tr>-->                          
-                  					<tr>
-                            			<td colspan="2">
-                  								#parse("app/utils/record_paging.jsp")
-                            			</td>
-                  					</tr>
-                  					<tr>
+								</tr>                
+                          
+	                          			<tr>
 	                            			<td colspan="2"><div align="left"><strong></strong>
 	                              				<table width="100%" border="0">
 	                                				<tr class="table_header">
 	                                  					<td scope="col" width="3%"><strong>#</strong></td>
 	                                 					<td scope="col" width="62%"><strong>Keterangan</strong></td>
 	                                  					<!--<td scope="col" width="20%"><strong>Status</strong></td>-->
-	                                  					<td scope="col" width="30%"><strong>Jenis Dokumen</strong></td>
-	                                  					<!-- <td scope="col" width="10%"><strong>Tarikh Kemasukan</strong></td>
-	                                  					<td scope="col" width="10%"><strong>Tarikh Kemaskini</strong></td> -->
+	                                  					<td scope="col" width="10%"><strong>Status</strong></td>
+	                                  					<td scope="col" width="10%"><strong>Tarikh Kemasukan</strong></td>
+	                                  					<td scope="col" width="10%"><strong>Tarikh Kemaskini</strong></td>
 	                                  					<td scope="col" width="5%"></td>
 	                                				</tr>
 	                                                #set ($count = 0)
-	                                                #foreach ( $tanah in $SenaraiFail )
-	                                                ##foreach ( $tanah in $senaraidescstatus )
+	                                                #foreach ( $tanah in $senaraidescstatus )
 	                                                #set ($count = $count+1)
 	                                                  #set( $i = $velocityCount )
 	                                                  #if ( ($i % 2) != 1 )
@@ -434,20 +429,15 @@
 	                                                  #end
 	                                				<tr>
 	                                  				  <td class="$row" scope="row">$count.</td>
-	                                                  <td class="$row">$!tanah.keterangan</td>
-	                                                  <td class="$row">$!tanah.namaDok</td>
+	                                                  <td class="$row">$tanah.keterangan</td>
+	                                                  <td class="$row">$tanah.status</td>
 	                                                  <!--<td class="$row">$tanah.sasaranmasa $tanah.jenissasaran</td> -->
-	                                               <!--    <td class="$row">$!tanah.tarikhmasuk</td>
-	                                                  <td class="$row">$!tanah.tarikhkemaskini</td> -->
+	                                                  <td class="$row">$tanah.tarikhmasuk</td>
+	                                                  <td class="$row">$tanah.tarikhkemaskini</td>
 	                                                  <td class="$row">
-	                                                 	#if ($!tanah.id == '')
-	                                                  	<a href="javascript:addKeteranganStatus('$tanah.keterangan','$tanah.idSemakan')"><img src="../img/plus.gif" border="0"></a>
-	                                          			#end
-	                                          			#if ($!tanah.id != '')
-	                                                  	
-	                                                  	<a href="javascript:editKeteranganStatus('$tanah.keterangan','$tanah.id','$tanah.idSemakan','$tanah.jenis')"><img src="../img/edit.gif" border="0"></a>
-								                        #end
-								                        <a href="javascript:deleteKeteranganStatus('$tanah.id')"><img src="../img/delete.gif" border="0"></a>
+	                                                  	<a href="javascript:addKeteranganStatus('$tanah.keterangan','$tanah.idkpiurusan')"><img src="../img/plus.gif" border="0"></a>
+	                                                  	<a href="javascript:editKeteranganStatus('$tanah.keterangan','$tanah.idkpistatus','$tanah.idsuburusanstatus')"><img src="../img/edit.gif" border="0"></a>
+								                        <a href="javascript:deleteKeteranganStatus('$tanah.idkpistatus')"><img src="../img/delete.gif" border="0"></a>
 	                                                  </td>                               
 	                                				</tr>
 	                                                #end
@@ -463,17 +453,17 @@
 							
 	                	</td>                                     
 	                            <tr>
-	                            <td width="35%" valign="top"><div align="right"><strong><font color="#FF0000"></font>Keterangan :</strong></div></td>
+	                            <td width="35%"><div align="right"><strong><font color="#FF0000"></font>Keterangan :</strong></div></td>
 	                            <td width="65%">
 	                            <label>
-	                  				<textarea name="keteranganstatus" cols="45" rows="3" >$!desc</textarea>
+	                  				<textarea name="keteranganstatus" cols="45" rows="3" ></textarea>
 	                			</label>
 	                			</td>
 	                          </tr>                                          
 	                                          
 	                                          
 	                            <tr>
-	                            <td width="35%"><div align="right"><strong><font color="#FF0000">*</font>Jenis Dokumen :</strong></div></td>
+	                            <td width="35%"><div align="right"><strong><font color="#FF0000">*</font>Status Fail :</strong></div></td>
 	                            <td width="65%">$senaraistatus</td>
 	                          </tr>
 	                                 <tr>
@@ -513,7 +503,6 @@
                   	<input type="hidden" name="style1" value="$Style1">
   					<input type="hidden" name="style2" value="$Style2">
       				<input type="hidden" name="idkpiketerangan" >
-      				<input type="hidden" name="idsemakan" >
                   
                   
                 </div>
@@ -522,14 +511,9 @@
          </td>
       </tr>
 </table>
-</fieldset>
+
 
 <script type="text/javascript">
-
-//document.${formName}.command.value = "$!submitInternal";
-	function byStatus() {
-	 	doAjaxCall${formName}("bystatus");
-	}
 
 function tambahKeterangan() {
 
@@ -568,9 +552,6 @@ function deleteKeterangan(id) {
 /* 	function carian() {
 	 	doAjaxCall${formName}("byurusandefault");
 	} */
-	function byDefault() {
-	 	doAjaxCall${formName}("");
-	}
 	function byUrusan() {
 	 	doAjaxCall${formName}("byurusandefault");
 	}
@@ -620,18 +601,17 @@ function tambahKeteranganvs() {
 	document.${formName}.submit();
 }
 
-	function editKeteranganvs(id,idUrusan,idSubUrusan,desc,a,kod) {
-		//document.${formName}.idkpiketerangan.focus();
-		document.${formName}.idkpiketerangan.value = id;
-		document.${formName}.socDesc.value = desc;
- 		document.${formName}.txtskrin.value = kod;
-		document.${formName}.socaturan.value = a;
-		document.${formName}.socUrusan.value = idUrusan;
-		document.${formName}.socSuburusan.value = idSubUrusan;
-		/*document.${formName}.socpilihan.value = pilih;*/
-		document.${formName}.btnsubmitvs.value = "Kemaskini"; 
-	
-	}
+function editKeteranganvs(id,desc,idsasaran,idjsasaran,gilir,a,pilih) {
+	//document.${formName}.idkpiketerangan.focus();
+	document.${formName}.idkpiketerangan.value = id;
+	document.${formName}.socsasaran.value = idsasaran;
+	document.${formName}.socjsasaran.value = idjsasaran;
+	document.${formName}.socgiliran.value = gilir;
+	document.${formName}.socDesc.value = desc;
+	document.${formName}.socaturan.value = a;
+	document.${formName}.socpilihan.value = pilih;
+	document.${formName}.btnsubmitvs.value = "Kemaskini";
+}
 
 function deleteKeteranganvs(id) {
 	if ( !window.confirm("Adakah anda pasti?") ) return;
@@ -642,9 +622,9 @@ function deleteKeteranganvs(id) {
 	document.${formName}.submit();
 }
 
-	function byStatus() {
-	 	doAjaxCall${formName}("bystatus");
-	}
+function byStatus() {
+ 	doAjaxCall${formName}("bystatus");
+}
 
 function doChangeUrusanStatus() {
 	if(document.${formName}.socUrusanStatus.value=="")
@@ -660,46 +640,44 @@ function doChangeSubUrusanStatus() {
 	doAjaxCall${formName}("bystatus");
 }
 
-	function addKeteranganStatus(desc, id) {
-		document.${formName}.idkpiketerangan.focus();
-		document.${formName}.idkpiketerangan.value = id;
-		document.${formName}.keteranganstatus.value = desc;
-		
-	}
-
-	function simpanStatus() {
+function addKeteranganStatus(desc, id) {
+	document.${formName}.idkpiketerangan.focus();
+	document.${formName}.idkpiketerangan.value = id;
+	document.${formName}.keteranganstatus.value = desc;
 	
-		document.${formName}.command.value = "bystatus";
-		if ( document.${formName}.btnsubmitstatus.value == "Kemaskini" ) {
-			document.${formName}.pagemode.value = "kemaskinistatus";
-		} else {
-			document.${formName}.pagemode.value = "tambahstatus";
-		}
-				
-/* 		if(document.${formName}.socSubUrusanStatus.value == ""){
-			alert('Sila pilih maklumat Sub Urusan terlebih dahulu');
-			document.${formName}.socSubUrusanStatus.focus();
-			return;
-		}
-		if(document.${formName}.idstatus.value == ""){
-			alert('Sila pilih maklumat Status terlebih dahulu');
-			document.${formName}.idstatus.focus();
-			return;
-		} */
-		if ( !window.confirm("Adakah anda pasti?") ) return;
-			
-		document.${formName}.action = "";
-		document.${formName}.submit();
-	}
+}
 
-	function editKeteranganStatus(desc,id,idsemakan,idc) {
-		document.${formName}.idkpiketerangan.value = id;
-		document.${formName}.keteranganstatus.value = desc;
-		document.${formName}.idstatus.value = idc;
-		document.${formName}.idsemakan.value = idsemakan;
-	document.${formName}.btnsubmitstatus.value = "Kemaskini";
-		
+function simpanStatus() {
+
+	document.${formName}.command.value = "bystatus";
+	if ( document.${formName}.btnsubmitstatus.value == "Kemaskini" ) {
+		document.${formName}.pagemode.value = "kemaskinistatus";
+	} else {
+		document.${formName}.pagemode.value = "tambahstatus";
 	}
+			
+	if(document.${formName}.socSubUrusanStatus.value == ""){
+		alert('Sila pilih maklumat Sub Urusan terlebih dahulu');
+		document.${formName}.socSubUrusanStatus.focus();
+		return;
+	}
+	if(document.${formName}.idstatus.value == ""){
+		alert('Sila pilih maklumat Status terlebih dahulu');
+		document.${formName}.idstatus.focus();
+		return;
+	}
+	if ( !window.confirm("Adakah anda pasti?") ) return;
+		
+	document.${formName}.action = "";
+	document.${formName}.submit();
+}
+
+function editKeteranganStatus(desc, id,idc) {
+	document.${formName}.idkpiketerangan.value = id;
+	document.${formName}.keteranganstatus.value = desc;
+	document.${formName}.idstatus.value = idc;
+	document.${formName}.btnsubmitstatus.value = "Kemaskini";
+}
 
 function deleteKeteranganStatus(id) {
 	if ( !window.confirm("Adakah anda pasti?") ) return;
@@ -715,6 +693,7 @@ function setSelected(tabId) {
 
     document.${formName}.tabId.value = tabId;
 }
+
 
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTab});
 

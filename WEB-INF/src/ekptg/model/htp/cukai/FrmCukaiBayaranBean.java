@@ -3047,7 +3047,10 @@ public class FrmCukaiBayaranBean implements ICukai {
 		SimpleDateFormat formatter =  new SimpleDateFormat("yyyy");
 		String TBF = "to_date('" + formatter.format(now) + "','yyyy')";
 		
-	    try{	    	
+		Db db = null;
+	    String sql = "";
+	    try{
+	    	
 	    	db = new Db();
 	    	conn = db.getConnection();
 	    	conn.setAutoCommit(false);
@@ -3074,9 +3077,9 @@ public class FrmCukaiBayaranBean implements ICukai {
 	     		r.add("TARIKH_RESIT",r.unquote(tarikhResit));		
 	     	}
 	    	
-	     	/** PENAMBAHBAIKAN, NOTIFIKASI UNIT REKOD JIKA ADA KEMASKINI BY SYAZ
-	     	*NEW = JIKA KEMASKINI
-	     	*READ = JIKA UNIT REKOD CHECK TELAH TERIMA/BACA */
+	     	//PENAMBAHBAIKAN. 25/11/2014. SYAZ. NOTIFY UNIT REKOD JIKA ADA KEMASKINI
+	     	//NEW = JIKA KEMASKINI
+	     	//READ = JIKA UNIT REKOD CHECK TELAH TERIMA/BACA
 	     	r.add("FLAG_KEMASKINI_CUKAI", "NEW");
 	     	
 	    	sql = r.getSQLUpdate("tblhtpcukaitemp");
@@ -3087,8 +3090,8 @@ public class FrmCukaiBayaranBean implements ICukai {
 	    	 * PENAMBAHBAIKAN.
 	    	 * UPDATE CUKAI, REKOD JUGAK UPDATE
 	    	 * SYAZ. 03/12/2014
-	    	 * kalau cukai tak sama dengan rekod, add and update rekod
 	    	 */
+	    	/***kalau cukai tak sama dengan rekod, add and update rekod***/
 	    	String sql1 = "SELECT * FROM TBLHTPCUKAITEMP WHERE ID_CUKAITEMP = "+id;
 	    	
 	    	ResultSet rs1 = stmt.executeQuery(sql1);	      
@@ -3097,7 +3100,6 @@ public class FrmCukaiBayaranBean implements ICukai {
 	 	    	no_hakmilik = rs1.getString("NO_HAKMILIK");
 	 	    	no_lot = rs1.getString("NO_LOT");
 	 	    	id_permohonan = rs1.getString("ID_PERMOHONAN");
-
 	 	    }
 	    	
 	    	String sql2 = " SELECT * "+
@@ -3115,13 +3117,13 @@ public class FrmCukaiBayaranBean implements ICukai {
 	 	    	cukai_terkini = rs2.getString("CUKAI_TERKINI")==null?"0":rs2.getString("CUKAI_TERKINI");
 	 	    	id_hakmilikcukai = rs2.getString("ID_HAKMILIKCUKAI");
 	 	    	id_hakmilik = rs2.getString("ID_HAKMILIK");
-	 	    
 	 	    }
 	 	    
 	    	String sqlCukai = "";
 	    	String sqlhakmilik = "";
 	    	
-	    	if(jumlah != (Utils.parseDouble(cukai_terkini))){	
+	    	if(jumlah != (Utils.parseDouble(cukai_terkini))){
+	    		
 	    		SQLRenderer r1 = new SQLRenderer();
 	    		r1.update("ID_HAKMILIKCUKAI",r1.unquote(String.valueOf(id_hakmilikcukai))); 
 		    	r1.add("STATUS","N");
@@ -3166,6 +3168,7 @@ public class FrmCukaiBayaranBean implements ICukai {
 	    }	
 		
 	}
+	
 	@Override
 	public Vector salinCukai(String idnegeri,String iddaerah,String idmukim,String socTahun) {
 		Db db = null;
@@ -3845,7 +3848,7 @@ public class FrmCukaiBayaranBean implements ICukai {
 	    
 	}	
 	
-	public Vector<Hashtable<String, String>> getSenaraiNegeriXPenyata(String tahun) throws Exception {
+	public Vector<Hashtable<String, Comparable>> getSenaraiNegeriXPenyata(String tahun) throws Exception {
 		Db db = null;
 		String sql = "SELECT RN.ID_NEGERI,RN.NAMA_NEGERI " +
 		   			 " FROM TBLRUJNEGERI RN " +
@@ -3858,13 +3861,13 @@ public class FrmCukaiBayaranBean implements ICukai {
 		   			 "";
 		try {
 			db = new Db();
-		      Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>(); 
+		      Vector<Hashtable<String, Comparable>> v = new Vector<Hashtable<String, Comparable>>(); 
 		      Statement stmt = db.getStatement();
 		      ResultSet rs = stmt.executeQuery(sql);
-		      Hashtable<String, String> h;
+		      Hashtable<String, Comparable> h;
 		      while (rs.next()) {
-		    	  h = new Hashtable<String, String>();
-		    	  h.put("idNegeri",rs.getString("ID_NEGERI")); 
+		    	  h = new Hashtable<String, Comparable>();
+		    	  h.put("idNegeri",rs.getLong("ID_NEGERI")); 
 		    	  h.put("nama",rs.getString("NAMA_NEGERI"));  
 		    	  v.addElement(h);
 		      }		      

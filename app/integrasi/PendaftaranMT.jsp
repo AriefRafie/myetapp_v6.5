@@ -72,7 +72,7 @@
 					          <td colspan="2"><input type="text" name="txtNamaPembantah" id="txtNamaPembantah" value="$!pembantah.get('nama')" size="50" class="disabled" tabindex="12" />
 					          <input type="hidden" name="txtIdKementerian" id="txtIdKementerian" value="$!txtIdKementerian" /></td>
 					        </tr>
- 					#if(!$!jenis_pembantah.equals("2"))		        
+ 					#if(!$!jenis_pembantah.equals("0"))		        
  					        <tr>
 					          <td width="1%"></td>
 					          <td>$!labelNoRef</td>
@@ -119,7 +119,7 @@
 					          #if($!txtUmur != "0")
 					          	<input type="number" name="umur" id="umur" value="$!txtUmur" size="3" maxlength="2" tabindex="12" class="disabled" readonly/>
 					          #else
-					       		<input type="number" name="umur" id="umur" value="$!txtUmur" size="3" maxlength="2" tabindex="12" $!classRead/>
+					       		<input type="number" name="umur" id="umur" value="$!txtUmur" size="3" maxlength="2" tabindex="12" />
 					          #end
 					          </td>
 					        </tr>         		
@@ -257,16 +257,7 @@
 					               		 #set( $row = "row1" )
 					         		#end
 					  <tr>  
-					  <!--   <td class="$row" >$i</td>
-					    <td class="$row" >$list1.getDokumen()</td>
-					    <td class="$row" >$list1.getCatatan()</td>
-					    <td class="$row" >$list1.getNamaDokumen()</td>   
-					    <td class="$row" >
-					    	<div align="center">
-				       			<input type="checkbox" name="cb" id="ids1" onclick="" value="$list1.getIdDokumen()" >
-				     		</div>
-				     	</td> -->
-				     	<td class="$row" >$list1.BIL</td>
+					    <td class="$row" >$list1.BIL</td>
 					    <td class="$row" >$list1.TAJUK</td>
 					    <td class="$row" >$list1.KETERANGAN</td>
 					    <td class="$row" >$list1.NAMA_FAIL</td>   
@@ -308,9 +299,9 @@
 							<tr>
 							<div id="divmahkhamah">
       							<td width="1%"></td>
-					          	<td width="29%"><!-- Kod Mahkamah --></td>
-					          	<td><!-- : --></td>
-					          	<td><input type="hidden" name="kodmt" id="kodmt" value="$!kodmt" class="disabled" readonly></td>
+					          	<td width="29%">Kod Mahkamah</td>
+					          	<td>:</td>
+					          	<td><input type="text" name="kodmt" id="kodmt" value="$!kodmt" class="disabled" readonly></td>
 							</div>
 							</tr>
 							    	
@@ -358,10 +349,9 @@
 		document.${formName}.method="post";
 		document.${formName}.action="?"+params+"&mode=getmahkamah";	
 		//document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian";
-		//landing|popup
-		//document.${formName}.command.value = "bantahanpb";	
 		//
-		document.${formName}.command.value = "getmahkamah";
+		document.${formName}.command.value = "getmahkamah";	
+		//
 		document.${formName}.submit();
 		//doDivAjaxCall${formName}('getmahkamah','divmahkhamah','mode=terimapohoncarian');		
 		
@@ -452,7 +442,7 @@
 			return;	
 			
 		}
-		//alert('2.'+document.${formName}.cb.length);
+		alert('2.'+document.${formName}.cb.length);
 		if(document.${formName}.cb.length > 0){
 			bilangan = document.${formName}.cb.length;
 		}else{
@@ -478,11 +468,8 @@
 			if (input_box == true) {
 				//alert("data ="+data);
 				document.${formName}.method="post";
-				//landing|popup
-				//document.${formName}.command.value = "bantahanpb";	
-				//
 				document.${formName}.command.value = "hantarpermohonan";	
-				document.${formName}.action="?"+params+"&mode=hantarpermohonan";	
+				document.${formName}.action="?"+params+"&mode=getmahkamah";	
 				document.${formName}.submit();			
 				
 			}

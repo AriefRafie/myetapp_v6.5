@@ -25,23 +25,13 @@ public class HTPajakanLaporanPemantauan extends AjaxBasedModule {
 	static Logger myLog = Logger.getLogger(ekptg.view.htp.laporan.HTPajakanLaporanPemantauan.class);
 	String socNegeri = "";
 	String socUnit = "";
-	String socSuburusan = "";
 	Vector<?> vecHash = null;
 	Vector<?> vecRekod = null;
-	String socAgensi = "";
+	String socDaerah = "";
 	String socDaerahBaru = "";
-	String sorTempoh = "1";
-    String tarikhMula = "";		
-    String tarikhAkhir = "";	
-    String tarikhMulaTahun = "";		
-    String tarikhAkhirTahun = "";		
-	
+
 	public String doTemplate2() throws Exception {
 	    HttpSession session = this.request.getSession();
-    	String checkBulan = "";
-    	String checkTahun = "";
-    	String checkTempoh = "";
-
 		String vm = PATH+"pemantauanIndex.jsp";
    		String submit = getParam("command");
 		String userId = (String)session.getAttribute("_portal_login");
@@ -52,79 +42,71 @@ public class HTPajakanLaporanPemantauan extends AjaxBasedModule {
     	if (idSuburusan == null || idSuburusan.trim().length() == 0){
     		idSuburusan = "99999";
     	}		
-       String defaulTahun = lebah.util.Util.getDateTime(new Date(), "yyyy");
-		Long defaultBulan = Long.parseLong(lebah.util.Util.getDateTime(new Date(), "MM"));
-    	myLog.info("defaulTahun="+defaulTahun+",defaultBulan="+defaultBulan);
+        String tarikhMula = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");		
+        String tarikhAkhir = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");	
 
-        //Carian
-        setSOC(tempIdNegeri,idSuburusan);
-
-		sorTempoh = getParam("sorTempoh");   	
-
-    	myLog.info("submit="+submit);
     	if ("PilihNegeri".equals(submit)){
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
-	        setSOC(tempIdNegeri,idSuburusan);
-
+			displayNegeriUnit(tempIdNegeri,0L);
+			socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru");
+   			socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(getParam("socUnit")==""?"0":getParam("socUnit")), null, "onChange=\"doChangeUnit()\" style=\"width:400\"");
+			socDaerah = HTML.SelectAgensiByKementerian("socDaerah","0",Long.parseLong("1"),"style=\"width:400\"");
+			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
     		if(!"".equals(getParam("txdMula"))){
-    			defaultBulan = Long.parseLong(getParam("txdMula"));
-    			defaulTahun = getParam("txdTahunMula");
-    			tarikhMula = HTML.SelectBulan("txdMula",defaultBulan," style=\"width: 100px;\"");
-    			tarikhMulaTahun = HTML.SelectTahun("txdTahunMula",defaulTahun," style=\"width: 100px;\"",null);
-   
+    			tarikhMula = getParam("txdMula");
     		}
     		if(!"".equals(getParam("txdAkhir"))){
-    			Long defaultBulanh = Long.parseLong(getParam("txdAkhir"));
-    			String defaulTahunh = getParam("txdTahunAkhir");
-    			setAkhir(defaultBulanh,defaulTahunh);
-
+    			tarikhAkhir = getParam("txdAkhir");
     		}
-//  			vecHash = getILaporan().getLaporanMengikutUrusanLike("7,17,18",null,"L","Negeri");
+    		//paparanRekod(userLevel,userId);
+    		//public Vector<Hashtable<String, Comparable>> getLaporanMengikutUrusanLike
+			//(String suburusan, String level, String jlaporan,String template) throws Exception {
+			vecHash = getILaporan().getLaporanMengikutUrusanLike("7,17,18",null,"L","Negeri");
 
     	}else if ("PilihUnit".equals(submit)) {
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
-			String tempIdDaerah = getParam("socDaerahBaru").equals("")?"0":getParam("socDaerahBaru");
-	        setSOC(tempIdNegeri,idSuburusan,tempIdDaerah);
-
-	        if(!"".equals(getParam("txdMula"))){
-    			defaultBulan = Long.parseLong(getParam("txdMula"));
-    			defaulTahun = getParam("txdTahunMula");
-    			tarikhMula = HTML.SelectBulan("txdMula",defaultBulan," style=\"width: 100px;\"");
-    			tarikhMulaTahun = HTML.SelectTahun("txdTahunMula",defaulTahun," style=\"width: 100px;\"",null);
-     		}
+			Long tempIdDaerah = Long.parseLong(getParam("socNegeri"));
+ 			String id_kementerian = getParam("socUnit");
+			displayNegeriUnitXNegeri(tempIdNegeri,Long.parseLong(id_kementerian));  	
+			socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(""+tempIdNegeri,"socDaerahBaru",tempIdDaerah, "");
+   			socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(id_kementerian), null, "onChange=\"doChangeUnit()\" style=\"width:400\"");
+			socDaerah = HTML.SelectAgensiByKementerian("socDaerah",id_kementerian,Long.parseLong("1")," style=\"width:400\"");
+			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
+    		if(!"".equals(getParam("txdMula"))){
+    			tarikhMula = getParam("txdMula");
+    		}
     		if(!"".equals(getParam("txdAkhir"))){
-    			Long defaultBulanh = Long.parseLong(getParam("txdAkhir"));
-    			String defaulTahunh = getParam("txdTahunAkhir");
-    			
-    			setAkhir(defaultBulanh,defaulTahunh);
-//    			tarikhAkhir = HTML.SelectBulan("txdAkhir",defaultBulanh," style=\"width: 100px;\"");
-//    			tarikhAkhirTahun = HTML.SelectTahun("txdTahunAkhir",defaulTahunh," style=\"width: 100px;\"",null);
+    			tarikhAkhir = getParam("txdAkhir");
     		}
 			paparanRekod(userLevel,userId);
      	
-    	}else if (submit.equals("pilihtempoh")) {
-        	myLog.info("sorTempoh="+sorTempoh);
-			tempIdNegeri = Long.parseLong(getParam("socNegeri"));			
-			String tempIdDaerah = getParam("socDaerahBaru").equals("")?"0":getParam("socDaerahBaru");
-			String idAgensi = !getParam("socDaerah").equals("-1")?getParam("socDaerah"):"0";
-				
-			setSOC(tempIdNegeri,idSuburusan,tempIdDaerah,idAgensi);		
-//			setSOC(tempIdNegeri,idSuburusan,tempIdDaerah);
-
-			if(sorTempoh.equals("1")) {				
-				tarikhMula = HTML.SelectBulan("txdAkhir",defaultBulan," style=\"width: 100px;\"");
-				tarikhMulaTahun = HTML.SelectTahun("txdTahunMula",defaulTahun," style=\"width: 100px;\"",null);
-			}else if(sorTempoh.equals("2")) {
-				tarikhMulaTahun = HTML.SelectTahun("txdAkhir",defaulTahun," style=\"width: 100px;\"",null);
-			}else if(sorTempoh.equals("3")) {
-				tarikhMula = HTML.SelectBulan("txdMula",defaultBulan," style=\"width: 100px;\"");
-    			tarikhMulaTahun = HTML.SelectTahun("txdTahunMula",defaulTahun," style=\"width: 100px;\"",null);
-    			tarikhAkhir = HTML.SelectBulan("txdAkhir",defaultBulan," style=\"width: 100px;\"");
-    			tarikhAkhirTahun = HTML.SelectTahun("txdTahunAkhir",defaulTahun," style=\"width: 100px;\"",null);
-	
-			}
+//    	}else if ("PilihUnitLevel".equals(submit)) {
+//			vm = "app/ppk/frmSenaraiLaporanPUnit.jsp";			
+// 			String idPejabat = getParam("socUnit");
+//			Tblrujpejabatjkptg pej = null;
+//			pej = (Tblrujpejabatjkptg)PPKUtilData.getPejabatMengikutId(user.getId_pejabatjkptg());
+// 			displayNegeriUnit(pej.getIdNegeri(),Long.parseLong(idPejabat));  		
+// 			socDaerah =  UtilHTML.SelectDaerahByUnitPPKXKod("socDaerah", null, "style=width:340", "", idPejabat);
      	
     	}else{
+//			if(userLevel==1){
+//    			vm = "app/ppk/frmSenaraiLaporanHTPUnit.jsp";
+//     			socDaerah =  UtilHTML.SelectDaerahByUnitPPKXKod("socDaerah", null, "style=width:340", "", user.getId_pejabatjkptg());
+//    		}else if(userLevel==2){
+//    			vm = "app/ppk/frmSenaraiLaporanPUnit.jsp";			
+//    			Tblrujpejabatjkptg pej = null;
+//    			pej = (Tblrujpejabatjkptg)PPKUtilData.getPejabatMengikutId(user.getId_pejabatjkptg());
+//     			socUnit = PPKUtilHTML.SelectUnitPPK("socUnit",null," style=width:340 "," onChange=\"doChangeUnit()\"",""+pej.getIdNegeri());   			
+//    			socDaerah =  UtilHTML.SelectDaerahByNegeri(""+pej.getIdNegeri(),"socDaerah");
+//    		}else if(userLevel==6){
+//      			displayNegeriUnitAll(tempIdNegeri);
+//    			socDaerah = UtilHTML.SelectDaerah("socDaerah",null,"style=width:340");
+//    		}else{
+   				displayNegeri(0L);
+     			socDaerahBaru = UtilHTML.SelectDaerah("socDaerahBaru",null,"");
+     			socUnit = UtilHTML.selectKementerianLaporan("socUnit", null, null, "onChange=\"doChangeUnit()\" style=\"width:400\"");
+    			socDaerah = HTML.SelectAgensiByKementerian("socDaerah","0",Long.parseLong("1")," style=\"width:400\"");
+    			this.context.put("selectSuburusan",UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,Long.parseLong(idSuburusan), "", ""));
     			paparanRekod(userLevel,userId);
 
 //    		}
@@ -135,7 +117,6 @@ public class HTPajakanLaporanPemantauan extends AjaxBasedModule {
     	String checkA = "";
     	String checkB = "";
     	String checkC = "";
-    	String checkD = "";
     	if(sorLaporan.equals("1")){
 			//checked laporan
     		checkA = "checked";		
@@ -145,100 +126,24 @@ public class HTPajakanLaporanPemantauan extends AjaxBasedModule {
 		}else if(sorLaporan.equals("3")){		
 			//checked
     		checkC = "checked";		
-		}else if(sorLaporan.equals("4")){		
-			//checked
-    		checkD = "checked";	
-    	}
+		}
 		context.put("checkA",checkA);
 		context.put("checkB",checkB);
 		context.put("checkC",checkC);
-		context.put("checkD",checkD);
-
-		//
-    	if(sorTempoh.equals("1")){
-    		checkBulan = "checked";		
-		}else if(sorTempoh.equals("2")){			
-			checkTahun = "checked";		
-		}else if(sorTempoh.equals("3")){		
-			checkTempoh = "checked";	    		
-		}
-
-		context.put("checkBulan",checkBulan);
-		context.put("checkTahun",checkTahun);
-		context.put("checkTempoh",checkTempoh);
-
+   	
 		context.put("senaraiLaporan",vecHash);
 		context.put("senaraiRekod",vecRekod);
   		
    		//dropdown
-		context.put("selectSuburusan",socSuburusan);
 		context.put("selectNegeri",socNegeri);
-		context.put("selectKementerian",socUnit);
-		context.put("selectAgensi",socAgensi);
+		context.put("selectUnit",socUnit);
+		context.put("selectDaerah",socDaerah);
 		context.put("selectDaerahBaru",socDaerahBaru);
-//		this.context.put("txdMula", tarikhMula);  
-//		this.context.put("txdAkhir", tarikhAkhir); 
-		
-		context.put("socTarikhMula",tarikhMula);
-		context.put("socTarikhTamat",tarikhAkhir);
-		context.put("socTahunMula",tarikhMulaTahun);
-		context.put("socTahunTamat",tarikhAkhirTahun);
+		this.context.put("txdMula", tarikhMula);  
+		this.context.put("txdAkhir", tarikhAkhir);  
 
 		return vm;
 		
-	}
-	
-	public void setAkhir(Long defaultBulanh,String defaulTahunh) throws Exception{		
-		if(sorTempoh.equals("1")) {				
-			tarikhMula = HTML.SelectBulan("txdAkhir",defaultBulanh," style=\"width: 100px;\"");
-			tarikhMulaTahun = HTML.SelectTahun("txdTahunMula",defaulTahunh," style=\"width: 100px;\"",null);
-	
-		}else if(sorTempoh.equals("2")) {
-			tarikhMulaTahun = HTML.SelectTahun("txdAkhir",defaulTahunh," style=\"width: 100px;\"",null);
-
-		}else if(sorTempoh.equals("3")) {
-			tarikhAkhir = HTML.SelectBulan("txdAkhir",defaultBulanh," style=\"width: 100px;\"");
-			tarikhAkhirTahun = HTML.SelectTahun("txdTahunAkhir",defaulTahunh," style=\"width: 100px;\"",null);
-		
-		}
-
-	}
-	
-	public void setSOC(Long tempIdNegeri,String idSuburusan) throws Exception{		
-		socSuburusan = UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,idSuburusan, "", "");
-		displayNegeri(tempIdNegeri);
-		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru");
-		
-		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(getParam("socUnit")==""?"-1":getParam("socUnit")), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
-		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah","-1","-1"," style=\"width:400\"","");
-
-	}
-	public void setSOC(Long tempIdNegeri,String idSuburusan,String idDaerah) throws Exception{		
-		Long tempIdDaerah = Long.parseLong(idDaerah);
-		String idKementerian = getParam("socUnit")==""?"-1":getParam("socUnit");
-		String idAgen = getParam("socDaerah")==""?"-1":getParam("socDaerah");
-
-		socSuburusan = UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,idSuburusan, "", "");
-		displayNegeri(tempIdNegeri);
-		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
-
-		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(idKementerian), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
-		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,idAgen," style=\"width:400\"","");
-		
-	}
-	public void setSOC(Long tempIdNegeri,String idSuburusan,String idDaerah,String idAgen) throws Exception{		
-		Long tempIdDaerah = Long.parseLong(idDaerah);
-		String idKementerian = getParam("socUnit")==""?"-1":getParam("socUnit");
-		//String idAgen = getParam("socDaerah")==""?"-1":getParam("socDaerah");
-
-
-		socSuburusan = UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,idSuburusan, "", "");
-		displayNegeri(tempIdNegeri);
-		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
-
-		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(getParam("socUnit")==""?"-1":getParam("socUnit")), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
-		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,idAgen," style=\"width:400\"","");
-
 	}
 	
 	public void displayNegeri(Long tempIdNegeri) throws Exception{		
@@ -267,7 +172,34 @@ public class HTPajakanLaporanPemantauan extends AjaxBasedModule {
 	}
 	
 	private void paparanRekod(int userLevel,String login) throws Exception{
-		vecHash = getILaporan().getLaporanMengikutUrusan("7,17,18",null,"L");			
+//		if(userLevel==1){
+//   			vecHash = FrmUtilData.getLaporanMengikutSeksyen("","daerah","L");
+//			vecRekod = FrmUtilData.getLaporanMengikutSeksyen("","daerah","R");
+//		}else if(userLevel==2){
+//			vecHash = FrmUtilData.getLaporanMengikutSeksyen("","unit","L");
+//			vecRekod = FrmUtilData.getLaporanMengikutSeksyen("","unit","R");
+//		}else if(userLevel==6){
+//			vecHash = FrmUtilData.getLaporanMengikutSeksyen("",null,"L");
+//			vecRekod = FrmUtilData.getLaporanMengikutSeksyen("",null,"R");
+//		}else{
+//			Vector<?> v = FrmUtilData.getSubUrusanByRole(login);
+//			Tblrujsuburusan f = null;
+//			String s = "TIADA";
+//			for (int i = 0; i < v.size(); i++) {
+//				f = (Tblrujsuburusan) v.get(i);				
+//				
+//				if (i==0) {
+//					s = ""+f.getIdSuburusan();
+//				} else {
+//					s += ","+f.getIdSuburusan();
+//				}
+//			}
+			//public Vector<Hashtable<String, Comparable>> getLaporanMengikutUrusanLike
+			//(String suburusan, String level, String jlaporan,String template) throws Exception {
+	
+			vecHash = getILaporan().getLaporanMengikutUrusan("7,17,18",null,"L");
+			
+//		}
 		
 	}
 	

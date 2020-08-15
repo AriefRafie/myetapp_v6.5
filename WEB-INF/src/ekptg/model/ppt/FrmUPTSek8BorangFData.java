@@ -327,7 +327,8 @@ public class FrmUPTSek8BorangFData {
 	  }//close simpanPenerima
 	
 	@SuppressWarnings("unchecked")
-	public static void simpanBorangE(Hashtable data,long id_borange,Db db) throws Exception  {
+	public static void simpanBorangE(Hashtable data,long id_borange,Db db) throws Exception
+	  {
 		
 	 //   Db db = null;
 	    String sql = "";
@@ -343,8 +344,8 @@ public class FrmUPTSek8BorangFData {
 	    		String socBandar = (String)data.get("socBandar");
 	    		String socNegeri = (String)data.get("socNegeri");
 	    		
-//	    		String txtMasaSiasatan = (String)data.get("txtMasaSiasatan");
-//	    		String socJenisWaktu = (String)data.get("socJenisWaktu");
+	    		String txtMasaSiasatan = (String)data.get("txtMasaSiasatan");
+	    		String socJenisWaktu = (String)data.get("socJenisWaktu");
 	    		String txtAlamat1 = (String)data.get("txtAlamat1");
 	    		String txtAlamat2 = (String)data.get("txtAlamat2");
 	    		String txtAlamat3 = (String)data.get("txtAlamat3");
@@ -362,8 +363,8 @@ public class FrmUPTSek8BorangFData {
 	    		
 	    		SQLRenderer r = new SQLRenderer();
 	    		r.add("id_borange", id_borange);
-//	    		r.add("masa_siasatan",txtMasaSiasatan);
-//	    		r.add("jenis_waktu", socJenisWaktu); 	
+	    		r.add("masa_siasatan",txtMasaSiasatan);
+	    		r.add("jenis_waktu", socJenisWaktu); 	
 	    		r.add("alamat1",txtAlamat1);
 	    		r.add("alamat2", txtAlamat2); 	
 	    		r.add("alamat3",txtAlamat3);
@@ -406,8 +407,8 @@ public class FrmUPTSek8BorangFData {
 	    		String socBandar = (String)data.get("socBandar");
 	    		String socNegeri = (String)data.get("socNegeri");
 	    		
-//	    		String txtMasaSiasatan = (String)data.get("txtMasaSiasatan");
-//	    		String socJenisWaktu = (String)data.get("socJenisWaktu");
+	    		String txtMasaSiasatan = (String)data.get("txtMasaSiasatan");
+	    		String socJenisWaktu = (String)data.get("socJenisWaktu");
 	    		String txtAlamat1 = (String)data.get("txtAlamat1");
 	    		String txtAlamat2 = (String)data.get("txtAlamat2");
 	    		String txtAlamat3 = (String)data.get("txtAlamat3");
@@ -429,8 +430,8 @@ public class FrmUPTSek8BorangFData {
 	    		
 	    		SQLRenderer r = new SQLRenderer();
 	    		r.update("id_borange", id_borange);
-//	    		r.add("masa_siasatan",txtMasaSiasatan);
-//	    		r.add("jenis_waktu", socJenisWaktu); 	
+	    		r.add("masa_siasatan",txtMasaSiasatan);
+	    		r.add("jenis_waktu", socJenisWaktu); 	
 	    		r.add("alamat1",txtAlamat1);
 	    		r.add("id_hakmilik",id_hakmilik);
 	    		r.add("alamat2", txtAlamat2); 	
@@ -595,29 +596,14 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
 	    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
 	    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";  
-	    		sql += "  )AS TARIKH_BORANGE ";
-
-//	    		PPT-06	Jenis Waktu
-	    		sql += " ,(SELECT DISTINCT A1.JENIS_WAKTU AS JW FROM	TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
-	    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
-	    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";
-	    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";
-	    		sql += " )AS JENIS_WAKTU ";
-	    		
-//	    		PPT-06 Masa Siasatan
-	    		sql += " ,(SELECT DISTINCT A1.MASA_SIASATAN AS MS FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
-	    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
-	    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";
-	    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";
-	    		sql += " )AS MASA_SIASATAN ";
-	    		
+	    		sql += "  )AS TARIKH_BORANGE "; 
 	    		
 	    		sql += " FROM TBLPPTPERMOHONAN P, TBLRUJLOT LT, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLRUJJENISHAKMILIK JH ";  
 	    		sql += " WHERE M.ID_PERMOHONAN = P.ID_PERMOHONAN(+) ";   
 	    		sql += " AND M.ID_NEGERI = N.ID_NEGERI ";  
 	    		sql += " AND M.ID_JENISHAKMILIK = JH.ID_JENISHAKMILIK(+) ";
 	    		sql += " AND M.ID_LOT = LT.ID_LOT(+) "; 
-	    		sql += " AND M.ID_MUKIM = MK.ID_MUKIM(+) ";
+	    		sql += " AND M.ID_MUKIM = MK.ID_MUKIM(+) ";   
 	    		
 	    		if(mode.equals("new")){
 	    		sql += " AND M.ID_HAKMILIK NOT IN (SELECT M1.ID_HAKMILIK FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
@@ -643,7 +629,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		Hashtable h;
 	    		int bil = 1;
 	    		
-	    		while (rs.next()) {
+	    		while (rs.next()) {	    	  
 	    			h = new Hashtable();
 	    			h.put("bil", bil);
 	    			h.put("selectedcb", rs.getInt("SELECTEDCB")== 0?0:rs.getInt("SELECTEDCB"));
@@ -655,8 +641,6 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    			h.put("seksyen", rs.getString("SEKSYEN")== null?"":rs.getString("SEKSYEN"));
 	    			h.put("no_subjaket", rs.getString("NO_SUBJAKET")== null?"":rs.getString("NO_SUBJAKET"));
 	    			h.put("TARIKH_BORANGE", rs.getString("TARIKH_BORANGE")== null?"":rs.getString("TARIKH_BORANGE"));
-//	    			h.put("MASA_SIASATAN", rs.getString("MASA_SIASATAN")== null?"":rs.getString("txtMasaSiasatan")); // PPT-06
-//	    			h.put("JENIS_WAKTU", rs.getString("JENIS_WAKTU")== null?"":rs.getString("socJenisWaktu")); // PPT-06
 	    			listHakmilikBorangEInBulk.addElement(h);
 	    			bil++;
 	    	}			    
@@ -670,11 +654,15 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	@SuppressWarnings("unchecked")
 	public static void simpanBorangEInBulk(Hashtable data,String idHakmilik,long id_borange, Db db) throws Exception{
 		
-//	    Db db = null;
+	  //  Db db = null;
 	    String sql = "";
-	    myLogger.info("simpanBorangEInBulk ID_BorangE " +id_borange);
+	    
+	    //myLogger.info("id_borange:::::::::::"+id_borange);
 	    
 	    try{
+	    	
+	    	
+	    	
 	    		//db = new Db();
 	    		
 	    		long id_borangehakmilik = getNextID("TBLPPTBORANGEHAKMILIK_SEQ",db);
@@ -682,23 +670,16 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		Statement stmt = db.getStatement();
 	    		
 	    		String id_user = (String)data.get("id_user");
-	    		String txtMasaSiasatan = (String)data.get("txtMasaSiasatan"); // PPT-06
-	    		String socJenisWaktu = (String)data.get("socJenisWaktu"); // PPT-06
-	    		
-	    		myLogger.info("simpanBorangEInBulk Masa_Siasatan [INSERT Value] = " +txtMasaSiasatan);
-	    		myLogger.info("simpanBorangEInBulk Jenis Waktu [INSERT Value] = " +socJenisWaktu);
-	    		
+	    	
 	    		SQLRenderer r = new SQLRenderer();
 	    		r.add("id_borangehakmilik", id_borangehakmilik);
 	    		r.add("id_borange", id_borange);
-	    		r.add("id_hakmilik", idHakmilik);
+	    		r.add("id_hakmilik", idHakmilik);	
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
-	    		r.add("id_masuk",id_user);
-	    		r.add("masa_siasatan",txtMasaSiasatan); // PPT-06 
-	    		r.add("jenis_waktu",socJenisWaktu); // PPT-06
+	    		r.add("id_masuk",id_user);	    		
 	    		sql = r.getSQLInsert("tblpptborangehakmilik",db);
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("SQL simpanBorangEInBulk tblpptborangehakmilik = " +sql);
+	    	
 	    }//close try 
 	    finally {
 	   //   if (db != null) db.close();
@@ -760,8 +741,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 		      
 		    		Hashtable h = null;
 		    		int bil = 1;
-		    		
-		    		myLogger.info("getListHM --Senarai Pilihan Hakmilik--");
+	
 		    		while (rs.next()) {
 		    			h = new Hashtable();
 		    			h.put("bil", bil);	
@@ -787,8 +767,6 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	@SuppressWarnings("unchecked")
 	public static void setDataBorangEInBulk(String id_borange,String id_hakmilik)throws Exception {
 	    
-		myLogger.info("setDataBorangEInBulk---nakViewBalik---");
-		
 		dataBorangEInBulk = new Vector();
 		
 		Db db = null;
@@ -799,7 +777,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();
 	      
-	    		sql =  " SELECT DISTINCT A.ID_HAKMILIK, A.MASA_SIASATAN, A.JENIS_WAKTU, B.ID_BORANGE, B.TARIKH_BORANGF, B.TARIKH_BORANGE, B.TARIKH_SIASATAN,  "; // B.MASA_SIASATAN, B.JENIS_WAKTU,
+	    		sql =  " SELECT DISTINCT A.ID_HAKMILIK, B.ID_BORANGE, B.TARIKH_BORANGF, B.TARIKH_BORANGE, B.TARIKH_SIASATAN, B.MASA_SIASATAN, B.JENIS_WAKTU, ";
 				sql += " B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_BANDAR, B.ID_NEGERI, B.TARIKH_CETAK, B.TARIKH_AKHIR_TAMPAL ";
 	    		sql += " FROM TBLPPTBORANGEHAKMILIK A, TBLPPTBORANGE B, TBLPPTHAKMILIK C ";
 	    		sql += " WHERE A.ID_BORANGE = B.ID_BORANGE ";
@@ -810,12 +788,11 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    			sql += " AND C.ID_HAKMILIK = '"+id_hakmilik+"'";
 	    		}
 	    		
-	    		myLogger.info("sql[dataBorangEInBulk]: "+sql);
+	    		myLogger.info("sql[dataBorangEInBulk] : "+sql);
 	    		ResultSet rs = stmt.executeQuery(sql);
 	     
 	    		Hashtable h;
 	    		
-	    		myLogger.info("sql[dataBorangEInBulk]--Start retreive Maklumat Borang E--- : ");
 	    		while (rs.next()) {	    	  
 	    			h = new Hashtable();
 	    			h.put("id_borange", rs.getString("ID_BORANGE")==null?"":rs.getString("ID_BORANGE"));
@@ -859,7 +836,6 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		
 	    		sql = "DELETE FROM tblpptborangehakmilik WHERE id_hakmilik = '"+id_hakmilik+"'";
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("deleteListCB_byHakmilik tblpptborangehakmilik: " +sql);
 	    		
 	    	//	conn.commit();
 	    		
@@ -1029,7 +1005,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	      if (db != null) db.close();
 	    }//close finally
 	   
-	  }//close simpanBorangFInBulk
+	  }//close simpanBorangEInBulk
 	
 	@SuppressWarnings("unchecked")
 	public int getListBorangFInBulk_count(String id_hakmilik)throws Exception {

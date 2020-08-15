@@ -191,24 +191,7 @@ a.nav:visited {
                           </tr>
                           <tr>
                             <td><a href="javascript:gotoSenaraiTugasanPelepasan()" class="help" title="Fail Tugasan"> <font color="blue">
-                              <li> 
-                              	#if($!check_notifikasi_tugasan_plp > 0)
-                                  <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_tugasan_plp</blink></font></b> </label>
-                                  &nbsp;
-                                #end 
-                                Pelepasan
-                              </li>
-                              </font> </a> </td>
-                          </tr>
-                          <tr>
-                            <td><a href="javascript:gotoSenaraiTugasanPenguatkuasaan()" class="help" title="Fail Tugasan"> <font color="blue">
-                              <li> 
-                                #if($!check_notifikasi_tugasan_crb > 0)
-                                  <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_tugasan_crb</blink></font></b> </label>
-                                  &nbsp;
-                                #end
-                                Penguatkusaan
-                              </li>
+                              <li> Pelepasan</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -249,11 +232,6 @@ a.nav:visited {
                           <tr>
                             <td><a href="javascript:gotoPelepasan()" class="help" title="Permohonan Baru Pelepasan"> <font color="blue">
                               <li>&nbsp;Pelepasan</li>
-                              </font> </a> </td>
-                          </tr> 
-                          <tr>
-                            <td><a href="javascript:gotoPenguatkuasaan()" class="help" title="Permohonan Baru Penguatkuasaan"> <font color="blue">
-                              <li>&nbsp;Penguatkuasaan</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -345,18 +323,8 @@ a.nav:visited {
                             <td><b>Bilik Fail</b></td>
                           </tr>
                           <tr>
-                            <td><a href="javascript:gotoPYWSenaraiFailKeseluruhan()" class="help" title="Senarai Fail Penyewaan"> <font color="blue">
+                            <td><a href="javascript:gotoSenaraiFailKeseluruhan()" class="help" title="Senarai Fail Penyewaan"> <font color="blue">
                               <li>&nbsp;Senarai Fail Penyewaan</li>
-                              </font> </a> </td>
-                          </tr>
-                          <tr>
-                            <td><a href="javascript:gotoPLPSenaraiFailKeseluruhan()" class="help" title="Senarai Fail Pelepasan"> <font color="blue">
-                              <li>&nbsp;Senarai Fail Pelepasan</li>
-                              </font> </a> </td>
-                          </tr>
-                          <tr>
-                            <td><a href="javascript:gotoCRBSenaraiFailKeseluruhan()" class="help" title="Senarai Fail Penguatkuasaan"> <font color="blue">
-                              <li>&nbsp;Senarai Fail Penguatkuasaan</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -372,11 +340,6 @@ a.nav:visited {
                           <tr>
                             <td><a href="javascript:gotoLaporanTanah()" class="help" title="Senarai Laporan Tanah"> <font color="blue">
                               <li>&nbsp;Laporan Tanah</li>
-                              </font> </a> </td>
-                          </tr>
-                          <tr>
-                            <td><a href="javascript:gotoLaporanTanah()" class="help" title="Senarai Laporan Tanah"> <font color="blue">
-                              <li>&nbsp;Senarai Laporan Tanah Penguatkuasaan</li>
                               </font> </a> </td>
                           </tr>
                         </table></td>
@@ -537,12 +500,12 @@ function gotoSenaraiTugasanPenyewaan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailView";
 	document.${formName}.submit();
 }
-function gotoSenaraiTugasanPelepasan() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailView";
+function gotoSenaraiAduanPenguatkuasaan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiAduanPenguatkuasaan";
 	document.${formName}.submit();
 }
-function gotoSenaraiTugasanPenguatkuasaan() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiFailView";
+function gotoSenaraiTugasanPelepasan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailView";
 	document.${formName}.submit();
 }
 function gotoOnline() {
@@ -557,10 +520,6 @@ function gotoPelepasan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailView&actionPelepasan=daftarBaru";
 	document.${formName}.submit();
 }
-function gotoPenguatkuasaan() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiFailView&actionPengkuatkuasaan=daftarBaru";
-	document.${formName}.submit();
-}
 function gotoKutipanPYW() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWKutipanDataView";
 	document.${formName}.submit();
@@ -573,16 +532,8 @@ function gotoLaporanTanah() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.php2.FrmSenaraiLaporanTanahView";
 	document.${formName}.submit();
 }
-function gotoPYWSenaraiFailKeseluruhan() {
+function gotoSenaraiFailKeseluruhan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailKeseluruhanView";
-	document.${formName}.submit();
-}
-function gotoPLPSenaraiFailKeseluruhan() {
-	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
-	document.${formName}.submit();
-}
-function gotoCRBSenaraiFailKeseluruhan() {
-	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiFailKeseluruhanView";
 	document.${formName}.submit();
 }
 function gotoFLMS() {

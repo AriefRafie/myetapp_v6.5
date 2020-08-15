@@ -10,7 +10,9 @@
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idSuburusan" type="hidden" id="idSuburusan" value="$idSuburusan"/>
+  
   <input name="step" type="hidden" id="step" value="$step"/>
+  
   <input name="hitButton" type="hidden" id="hitButton" />
 
 <body onLoad = $onload >

@@ -192,7 +192,7 @@
           <td>:</td>
           <td>$beanMaklumatTanah.kegunaanTanah
             <input type="hidden" name="kegunaanTanah" id="kegunaanTanah" value="$beanMaklumatTanah.kegunaanTanah" />
-            <input type="hidden" name="statusRizab" id="statusRizab" value="$beanMaklumatTanah.statusRizab" /></td>
+              <input type="hidden" name="statusRizab" id="statusRizab" value="$beanMaklumatTanah.statusRizab" /></td>
         </tr>
         #end
       </table>
