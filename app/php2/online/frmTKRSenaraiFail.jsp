@@ -23,7 +23,7 @@
         <tr>
           <td width="30%" height="24" scope="row" align="right">No Fail : </td>
           <td width="70%"><input name="txtNoFail" id="txtNoFail" type="text" value="$txtNoFail" size="50" maxlength="50" style="text-transform:uppercase;" >
-            #if($flagDetail == '') 
+            #if($flagDetail == '')
             <a href="javascript:bukaCarian();" class="style1">Buka Carian Terperinci </a>
             #else
             <a href="javascript:tutupCarian();" class="style1">Tutup Carian Terperinci </a>
@@ -113,7 +113,7 @@
         #set( $row = "row1" )
         #elseif (($list.bil % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
         <tr>
@@ -160,13 +160,13 @@ function tutupCarian(){
 	document.${formName}.txdTarikhPermohonan.value = "";
 	document.${formName}.txtNoPegangan.value = "";
 	document.${formName}.socJenisHakmilik.value = "";
-	document.${formName}.txtNoHakmilik.value = "";	
+	document.${formName}.txtNoHakmilik.value = "";
 	document.${formName}.txtNoWarta.value = "";
 	document.${formName}.socJenisLot.value = "";
-	document.${formName}.txtNoLot.value = "";		
+	document.${formName}.txtNoLot.value = "";
 	document.${formName}.socNegeriC.value = "";
 	document.${formName}.socDaerahC.value = "";
-	document.${formName}.socMukimC.value = "";		
+	document.${formName}.socMukimC.value = "";
 	doAjaxCall${formName}("");
 }
 function carian(){
@@ -181,13 +181,13 @@ function kosongkan(flagDetail) {
 	if (flagDetail == 'buka'){
 		document.${formName}.txtNoPegangan.value = "";
 		document.${formName}.socJenisHakmilik.value = "";
-		document.${formName}.txtNoHakmilik.value = "";	
+		document.${formName}.txtNoHakmilik.value = "";
 		document.${formName}.txtNoWarta.value = "";
 		document.${formName}.socJenisLot.value = "";
-		document.${formName}.txtNoLot.value = "";		
+		document.${formName}.txtNoLot.value = "";
 		document.${formName}.socNegeriC.value = "";
 		document.${formName}.socDaerahC.value = "";
-		document.${formName}.socMukimC.value = "";		
+		document.${formName}.socMukimC.value = "";
 	}
 	doAjaxCall${formName}("");
 }
@@ -195,7 +195,7 @@ function papar(idFail,idStatus) {
 
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idStatus.value = idStatus;
-	document.${formName}.actionOnline.value = "seterusnya";	
+	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.submit();
 }
 function daftarBaru(){

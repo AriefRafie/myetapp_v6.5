@@ -12,12 +12,12 @@
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 </p>
 
-<div id="divMainForm">  
+<div id="divMainForm">
   #if ($!command == 'paparFail')
   	#parse("$templateDir/paparFail.jsp")
-  #else 
+  #else
   		#parse("$templateDir/senaraiFail.jsp")
-  #end 
+  #end
 </div>
-  
-#parse("$templateDir/script.jsp") 
+
+#parse("$templateDir/script.jsp")
