@@ -30,10 +30,12 @@ import ekptg.view.ppt.email.EmailOnline;
 
 
 public class FrmPembatalanInternalOnline extends AjaxBasedModule{	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5999870695353676007L;
 	static Logger myLogger = Logger.getLogger(FrmPembatalanInternal.class);
-	
-	
-	
+		
 	FrmPembatalanInternalData logic = new FrmPembatalanInternalData();
 	FrmPermohonanUPTOnlineData modelOnline = new FrmPermohonanUPTOnlineData();
 	FrmPermohonanUPTData model = new FrmPermohonanUPTData();
@@ -358,7 +360,7 @@ public class FrmPembatalanInternalOnline extends AjaxBasedModule{
     			updateFlag(session,"1");
 				
     			if (bolehsimpan.equals("yes")){
-					sendEmail(namaProjek,"","","",id_user,"hantarSemakanPembatalan");    	
+					sendEmail(namaProjek,"","","",id_user,"hantarSemakanPembatalan",session);    	
 				}
     
     			maklumat_pembatalan = logic.maklumat_pembatalan(getParam("id_pembatalan"));
@@ -396,7 +398,7 @@ public class FrmPembatalanInternalOnline extends AjaxBasedModule{
     			updateFlag(session,"2");
 				
     			if (bolehsimpan.equals("yes")){
-					sendEmail(namaProjek,"","","",id_user,"hantarLulusPembatalan");    	
+					sendEmail(namaProjek,"","","",id_user,"hantarLulusPembatalan",session);    	
 				}
     			
     			maklumat_pembatalan = logic.maklumat_pembatalan(getParam("id_pembatalan"));
@@ -1141,11 +1143,11 @@ public class FrmPembatalanInternalOnline extends AjaxBasedModule{
 		
 	}
 	
-	@SuppressWarnings({ "static-access" })
-	private void sendEmail(String nama_projek,String tarikh_permohonan,String userIdKementerian, String id_jawatan_user, String id_user, String purpose) throws Exception{
-
+	private void sendEmail(String nama_projek,String tarikh_permohonan,String userIdKementerian, String id_jawatan_user, String id_user
+		, String purpose,HttpSession session) throws Exception{
 		EmailOnline et = new EmailOnline();
-		et.setEmail("","",purpose,"",nama_projek,tarikh_permohonan,"",userIdKementerian, id_jawatan_user, id_user);
+		et.setEmail("","",purpose,"",nama_projek,tarikh_permohonan,"",userIdKementerian, id_jawatan_user, id_user
+			,String.valueOf(session.getAttribute("portal_username")));
 		
 	}//close sendEmail
 	
