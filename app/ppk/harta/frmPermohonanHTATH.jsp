@@ -1558,8 +1558,10 @@
 				                                                </div></td>
 				                                             	<td width="1%" valign="top"><div align="right" class="style43">:</div></td>
 				                            					<td>
-				                            						<textarea name="txtCatatanHtaamX" id="txtCatatanHtaam2" cols="31" rows="5" $readmodeR class="$readmode" >$listam.catatan</textarea>
+				                            						<textarea name="txtCatatanHtaamX" id="txtCatatanHtaam2" cols="31" rows="5" $readmodeR class="$readmode" >
+				                            						#if($!listam.catatan != "null") $!listam.catatan #else #end</textarea>
 				                            					</td>
+				                            					
 				                            				</tr>
                                               
 							                           		<tr id="tr_flag_daftar"  style="display:none">
