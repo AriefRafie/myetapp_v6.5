@@ -313,17 +313,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("ID_PERMOHONAN", ID_PERMOHONAN);
 			String ID_PERMOHONANSIMATI = getParam("ID_PERMOHONANSIMATI");
 			this.context.put("ID_PERMOHONANSIMATI", ID_PERMOHONANSIMATI);
-			
-			/*
-			this.context.put("headerppk", mainheader.getHeaderData(session,
-					ID_PERMOHONAN, "Y", "", "T"));			
-			Vector list_sub = null;
-			list_sub = mainheader.carianFail(ID_PERMOHONAN, "Y","", "T");
-			this.context.put("list_sub_header", list_sub);
-			*/
-			
-			
-			
+						
 			Db db = null;			
 			try {
 				db = new Db();
@@ -342,10 +332,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				|| command.equals("saveTukarPegawaiMultiple") 
 				|| command.equals("resetTukarPegawaiMultiple") 
 				|| command.equals("lulusTukarPegawaiMultiple") || command.equals("tolakTukarPegawaiMultiple")
-				/*|| command.equals("editTukarPegawai") 
-				|| command.equals("resetTukarPegawai") 
-				|| command.equals("saveTukarPegawai") || command.equals("lulusTukarPegawai") || command.equals("tolakTukarPegawai")
-				*/)
+				)
 		{
 			
 			String setupSkrin = "";

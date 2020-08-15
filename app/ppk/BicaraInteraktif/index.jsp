@@ -5845,7 +5845,8 @@ function getTimeAutoSave(divUnique_id,unique_id,action,ID_BIKEHADIRAN)
 		{
 			command = "autoSaveKeterangan";		
 		}
-			
+		//perlu penambahan bagi autoSaveKeteranganSaksi :: arief 15/8/2020
+		//kena cari apa yang dimaksudkan dengan unique_id
 				
 		if((flagDahFocusKeyin[divUnique_id] == undefined || flagDahFocusKeyin[divUnique_id] == null) && action=="KEYUP" )
 		{
@@ -6218,9 +6219,6 @@ $jquery("#inputMinify").on("input", function() {
 
 </script>
 
-
-
-
 #if($command == "viewPerbicaraanFromPerintah")
 <script>
 $jquery(document).ready(function () {
@@ -6228,7 +6226,6 @@ $jquery(document).ready(function () {
 });
 </script>
 #end
-
 
 <div id="loadWholePage"></div>
 

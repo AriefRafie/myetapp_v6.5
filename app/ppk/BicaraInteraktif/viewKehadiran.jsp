@@ -24,13 +24,6 @@
 
 	<table border="0" cellspacing="1" cellpadding="3" width="100%" > 
 	#if($listKehadiran.size()>0)
-    <!--
-	<tr >
-		   <td  align="left" valign="top" colspan="14" >
-		   #parse("app/ppk/BicaraInteraktif/recordPageList.jsp")
-		   </td>		     
-	</tr>
-    -->
 	#end 
 	<tr class="table_header" >
 		   <td   align="center" valign="top" width="5%">Bil.</td>
@@ -219,8 +212,8 @@
 </td>
 </tr>
 <!-- arief add Saksi OPEN-->
-<tr  >
-<td >
+<tr>
+<td>
 </td>
 <td >
 <fieldset>
@@ -238,12 +231,11 @@
 </td>
 </tr>
 <!-- arief add Saksi CLOSE-->
-
 <!-- arief add Tidak Hadir OPEN-->
-<tr  >
-<td >
+<tr>
+<td>
 </td>
-<td >
+<td>
 <fieldset>
 <legend>Waris / Orang Berkepentingan Tidak Hadir</legend>
 <div id="view_tidakhadir">

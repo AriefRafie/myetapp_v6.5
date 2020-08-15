@@ -48,30 +48,6 @@
 
       
         <h4>Keterangan Oleh : 
-        
-       			<!--
-        
-        	   #if($pr.UMUR_INT != 0 && $pr.UMUR_INT < 18)
-               
-               
-               #if($pr.PENJAGA != "") 
-               $pr.PENJAGA 
-               <br />
-               adalah <b>PENJAGA</b> kepada
-               <br />               
-               #else
-               <i><span class="red">Perhatian </span>: Sila lantik penjaga pada skrin 
-                <a href="javascript:papar_header('$mainID.ID_PERMOHONAN','18','','$mainID.ID_PERMOHONANSIMATI','$mainID.TARIKH_MOHON','','$mainID.SEKSYEN','$mainID.ID_SIMATI')" > <span class="blue"><u>'Notis Perbicaraan'</u></span></a>
-               </i> 
-               <br />
-               #end
-               
-               <span class="blue">$pr.NAMA</span> 
-               
-               #else
-               $pr.NAMA 
-               #end
-               -->
               
                #if($ID_OBPERMOHONANMINOR != "")
                	#if($LISTPENJAGA != "")
@@ -87,8 +63,7 @@
                         <a href="javascript:papar_header('$mainID.ID_PERMOHONAN','18','','$mainID.ID_PERMOHONANSIMATI','$mainID.TARIKH_MOHON','','$mainID.SEKSYEN','$mainID.ID_SIMATI')" > <span class="blue"><u>'Notis Perbicaraan'</u></span></a>
                        </i> 
                        <br />
-                #end    
-                          
+                #end               
                #else
                <span class="blue">
                $NAMA        
@@ -222,7 +197,6 @@
 			document.getElementById('infobuttonKeterangan$ID_OBPERMOHONAN').style.display = "";
 			$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";			
 		}
-		
 		var resizeIframeBlur = function() {
 			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");	
 			getTimeAutoSave("timer_KETERANGAN_$ID_OBPERMOHONAN","$ID_OBPERMOHONAN","BLUR","$ID_BIKEHADIRAN");
@@ -230,7 +204,6 @@
 			document.getElementById('infobuttonKeterangan$ID_OBPERMOHONAN').style.display = "none";
 			$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";										
 		}		
-		
 		var resizeIframeKeyUp = function() {
 			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");	
 			getTimeAutoSave("timer_KETERANGAN_$ID_OBPERMOHONAN","$ID_OBPERMOHONAN","KEYUP","$ID_BIKEHADIRAN");
@@ -243,7 +216,6 @@
 				$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";
 			}								
 		}
-		
 		var wordCount = function() {
 			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");			
 		}

@@ -5212,12 +5212,7 @@ public class BicaraInteraktifData {
 	//arief add tidak hadir
 	public String queryListTidakHadir(String id_perbicaraan,String id_bitidakhadir)
 	{
-		String sql = " SELECT " +
-				//"B.KETERANGAN," +
-				//"B.NOTA_PEGAWAI " +				
-				//"TRIM(REGEXP_REPLACE(KP.KETERANGAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS KETERANGAN, " +
-				//"TRIM(REGEXP_REPLACE(KP.NOTA_PEGAWAI, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS NOTA_PEGAWAI,  " +				
-				"* FROM TBLPPKBITIDAKHADIR KP WHERE KP.ID_BITIDAKHADIR IS NOT NULL ";
+		String sql = "SELECT * FROM TBLPPKBITIDAKHADIR KP WHERE KP.ID_BITIDAKHADIR IS NOT NULL ";
 		if(!id_perbicaraan.equals(""))
 		{
 			sql +=" AND KP.JENIS_HADIR = 'T' AND KP.ID_PERBICARAAN = '"+id_perbicaraan+"' ";
