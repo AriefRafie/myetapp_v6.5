@@ -138,7 +138,14 @@ padding:0 0.25em;
 		//document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=papar&hitButton=hapus&iDokumen="+iDokumen;
 		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;
-
+		}else if('$!jenisdokumen' == '99203'){ 
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
+		}else if('$!jenisdokumen' == '99204'){
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
+		}else if('$!jenisdokumen' == '99210'){
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
+		}else if('$!jenisdokumen' == '99211'){
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
 		}
 		
 		else{
@@ -181,8 +188,26 @@ padding:0 0.25em;
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"
 									+"&rujukan=$!idRujukan"
 									+"&actionrefresh=$!actionRefresh"+actExt;
+		}else if('$!jenisdokumen' == '99204'){
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanlampiran&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
 
+		}
+		else if('$!jenisdokumen' == '99210'){
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanlampiran&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
 
+		}
+		else if('$!jenisdokumen' == '99211'){
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanboranga&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
+
+		}
+		else{
+			
 		}else{
 
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup="+document.${formName}.actionPopup.value
@@ -261,7 +286,11 @@ padding:0 0.25em;
 		
 		}else if('lampiransimati'=='$!actionRefresh'){
 			window.opener.semakLampiran('socBandar');
-			
+		}else if('borangP' == '$!actionRefresh'){
+			window.opener.semakLampiran();
+		
+		}else if('dokumenA' == '$!actionRefresh'){
+			window.opener.semakLampiran();	
 
 		}
 		
