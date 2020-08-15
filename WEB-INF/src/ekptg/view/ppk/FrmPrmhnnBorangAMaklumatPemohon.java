@@ -3947,6 +3947,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			context.put("hideTabPengesahan_pemohon", hideTabPengesahan_pemohon);
 			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
+			
+			//Lampiran
+			String simati = getParam("idSimati");
+			myLogger.info("Syafiqah test :" +simati);
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans", lBean.getLampiranSimatiPapar(simati, "99211"));
 
 			vm = "app/ppk/frmPrmhnnSek8NilaianHarta.jsp";
 
@@ -6875,14 +6881,14 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			Hashtable hash = sm.elementAt(i);
 			String idsemakansenarai = String.valueOf(hash.get("id"));
 			
-//			if(idsemakansenarai.equals("20")) {
-//				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-//					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-//		
-//			} else if (hash.get("id").equals("11")) {
-//				
-//			} else {
-//			}
+			if(idsemakansenarai.equals("4")) {
+				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
+					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
+		
+			} else if (hash.get("id").equals("11")) {
+				
+			} else {
+			}
 		}
 		
 	}
