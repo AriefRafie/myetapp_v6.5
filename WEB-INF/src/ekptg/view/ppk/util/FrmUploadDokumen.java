@@ -90,7 +90,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			l.lampiranSimati(request,idRujukan,"99202",idUser);
 			hitButton = "";
 			//this.context.put("num_files", jumLampiran);
-	
+
 		}
 
 		//myLog.info("actionPopup="+actionPopup);
@@ -112,6 +112,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			}
 			dokumens = l.lampiranMengikutHarta(idHarta, null,false);
 			// end Lampiran
+
 
 	    }else if (actionPopup.equals("paparHA")){
 			disability = "";
