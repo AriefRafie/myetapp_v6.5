@@ -46,7 +46,8 @@ public class FrmCRBSenaraiFailData {
 			String idDaerah, String idMukim, String idJenisHakmilik,
 			String noHakmilik, String noWarta, String idLot, String noLot,
 			String noPegangan, String idStatus, String idKementerianTanah,
-			String idAgensiTanah, String kegunaanTnh) throws Exception {
+			String idAgensiTanah, String kegunaanTnh, String userId, String idNegeriUser, String userRole) 
+			throws Exception {
 
 		Db db = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -59,15 +60,29 @@ public class FrmCRBSenaraiFailData {
 
 			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, F.ID_NEGERI, F.ID_DAERAH, "
 					+ "F.ID_MUKIM, F.NO_HAKMILIK, F.ID_LOT, F.NO_LOT, B.ID_STATUS, J.KOD_JENIS_HAKMILIK, K.KETERANGAN AS KETERANGANLOT, "
-					+ " L.NAMA_MUKIM, M.NAMA_DAERAH, N.NAMA_NEGERI, I.NAMA_AGENSI, H.NAMA_KEMENTERIAN "
+					+ " L.NAMA_MUKIM, M.NAMA_DAERAH, N.NAMA_NEGERI, I.NAMA_AGENSI, H.NAMA_KEMENTERIAN, O.FLAG_BUKA, O.FLAG_MT, O.FLAG_PINDAAN, O.FLAG_PEMBETULAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F,"
-					+ " TBLRUJKEMENTERIAN H, TBLRUJAGENSI I , TBLRUJJENISHAKMILIK J,TBLRUJLOT K, TBLRUJMUKIM L, TBLRUJDAERAH M, TBLRUJNEGERI N"
+					+ " TBLRUJKEMENTERIAN H, TBLRUJAGENSI I , TBLRUJJENISHAKMILIK J,TBLRUJLOT K, TBLRUJMUKIM L, TBLRUJDAERAH M, TBLRUJNEGERI N, TBLPHPLOGTUGASAN O"
 					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '8' AND A.ID_SUBURUSAN = '56' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS"
 					+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND A.NO_FAIL IS NOT NULL AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+)"
 					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
 					+ " AND F.ID_KEMENTERIAN = H.ID_KEMENTERIAN(+) AND F.ID_AGENSI = I.ID_AGENSI(+) AND F.ID_JENISHAKMILIK = J.ID_JENISHAKMILIK(+)"
 					+ " AND F.ID_LOT = K.ID_LOT(+) AND F.ID_MUKIM = L.ID_MUKIM(+) AND F.ID_DAERAH = M.ID_DAERAH(+) AND F.ID_NEGERI = N.ID_NEGERI(+) ";
 
+			// SENARAI TUGASAN
+			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole)
+					|| "(PHP)PYWPenolongPegawaiTanahHQ".equals(userRole)
+					|| "PenyemakNegeri".equals(userRole)) {
+				sql = sql + " AND O.ID_PEGAWAI = '" + userId
+						+ "' AND O.ID_NEGERI = '" + idNegeriUser + "'"
+						+ " AND O.ROLE = '" + userRole
+						+ "' AND O.ID_FAIL = A.ID_FAIL AND O.FLAG_AKTIF = 'Y'";
+			} else {
+				sql = sql + " AND O.ID_NEGERI = '" + idNegeriUser + "'"
+						+ " AND O.ROLE = '" + userRole
+						+ "' AND O.ID_FAIL = A.ID_FAIL AND O.FLAG_AKTIF = 'Y'";
+			}
+			
 			// noFail
 			if (noFail != null) {
 				if (!noFail.trim().equals("")) {
@@ -677,6 +692,9 @@ public class FrmCRBSenaraiFailData {
 		Db db = null;
 		Connection conn = null;
 		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String idNegeriUser = (String) session
+				.getAttribute("_ekptg_user_negeri");
+		String userRole = (String) session.getAttribute("myrole");
 		String sql = "";
 		String idFailString = "";
 		String noFail = "";
@@ -718,6 +736,7 @@ public class FrmCRBSenaraiFailData {
 			r.add("FLAG_JENIS_FAIL", "1"); // DATA BARU ETAPP
 			r.add("ID_NEGERI", idNegeriTanah);
 			r.add("ID_KEMENTERIAN", idKementerianTanah);
+			r.add("ID_NEGERI_BUKAFAIL", getIDDBNegeri());
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -1044,6 +1063,21 @@ public class FrmCRBSenaraiFailData {
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+			
+			// INSERT ON TUGASAN TBLPHPLOGTUGASAN
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_PEGAWAI", userId);
+			r.add("ID_NEGERI", idNegeriUser);
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("ROLE", userRole);
+			r.add("FLAG_BUKA", "Y");
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
 			stmt.executeUpdate(sql);
 
 			conn.commit();
@@ -2151,6 +2185,30 @@ public class FrmCRBSenaraiFailData {
 
 			if (rs.next()) {
 				return (String) rs.getString("ID_HAKMILIKURUSAN");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getIDDBNegeri() throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT TBLRUJNEGERI.ID_NEGERI FROM TBLLOOKUPSTATE, TBLRUJNEGERI WHERE TBLLOOKUPSTATE.KOD_NEGERI = TBLRUJNEGERI.KOD_NEGERI";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("ID_NEGERI");
 			} else {
 				return "";
 			}
