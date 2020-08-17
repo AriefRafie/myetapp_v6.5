@@ -19,6 +19,9 @@
 .style4 {
 	color: #0000FF
 }
+.pautan {
+	color: #0000FF
+}
 -->
 </style>
 </head>
@@ -28,8 +31,9 @@
     #else
     <body onload="submitForm()">
     #end
-
-
+    
+    
+    <!-- 13/8/2020 -->
 <form id="form1" name="f1" method="post" action="">
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
@@ -1099,9 +1103,6 @@ kod :: $listhath.kod_hakmilik
  <br /> 
  
  #end  
-<fieldset>
-
-
 
 <fieldset><legend><strong>SENARAI SEMAKAN</strong></legend>     
 <table width="100%" border="0">
@@ -1133,7 +1134,6 @@ kod :: $listhath.kod_hakmilik
 				        	<input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked disabled/>
 				        
 				    #end
-					
 	</td>
 	<td width="92%">$i. $semak.keterangan</td>
 	<td width="5%">$semak.lampirans</td>
@@ -1143,7 +1143,7 @@ kod :: $listhath.kod_hakmilik
 </table>	
 </fieldset>
 
-
+<fieldset>
 <legend>PENGESAHAN PERMOHONAN</legend>
 <!--
 <font color="#FF0000" size="2">
@@ -1414,9 +1414,11 @@ kod :: $listhath.kod_hakmilik
 <!--  syafiqah add 140820 -->
 <tr>
 	<td></td>
-	<td>Muatnaik Borang A</td>
+	<td>Borang A</td>
 	<td>:</td>
-	<td><input type="button" name="boranga" id="boranga" size="40" value="Borang A" size="40" onClick="lampiran('$!idSimati','dokumenA')"/>
+	<td>#if($!skrin_deraf == "yes")
+			<input type="button" name="boranga" id="boranga" size="40" value="Muatnaik Borang A" size="40" onClick="lampiran('$!idSimati','dokumenA')"/>
+		#end
 		<br>
 		#if($lampirans != "")
 			<input type="hidden" name="namaDoc1" value="1" />
@@ -1435,22 +1437,24 @@ kod :: $listhath.kod_hakmilik
         #set ($jenis_pemohon = $View.jenis_pemohon)
         #set ($noKpBaruPemohon = $View.noKpBaruPemohon)
     #end
-    skrin_deraf= $skrin_deraf
+    <!--  skrin_deraf= $skrin_deraf-->
     #if($!skrin_deraf == "yes")
-<tr><td>
+	<tr><td>
     		<td width="1%" valign="top"></td>
     		#if ($idStatus == "150")
-    		<td width="3%"><input type="checkbox" name='namecb1' id='namecb1'></td>
+    		<td width="3%" valign="top"><input type="checkbox" name='namecb1' id='namecb1'></td>
     		#else
-    		<td width="3%"><input type="checkbox" name='namecb1' id='namecb1' checked disabled></td>
+    		<td width="3%" valign="top"><input type="checkbox" name='namecb1' id='namecb1' checked disabled></td>
     		#end
-
-      	#if ($jenis_pemohon == "2")
+    		
+    	#if ($jenis_pemohon == "2")
       	<td width="89%">Saya $!namaPemohon MyID $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
 		#elseif($jenis_pemohon == "1")
 		<td width="89%">Kami $!namaPemohon dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-</td></tr>#end
-
+		
+		
+	</td>#end</tr>
+	#end
   	
 <tr>
 <td></td>
@@ -1468,12 +1472,9 @@ kod :: $listhath.kod_hakmilik
 <input name="idStatus" type="hidden" value="$idStatus">
 <input type="hidden" name="nopermohonanonline" id="nopermohonanonline" value="$!no_fail_online">
 
-
-
 <p align="center">
 
 #if ($idStatus == "150")
-
 	#if($!namapejabat != "")
 <!-- 	<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()"> -->
 	<input type="button" name="cmdBorangA" value="Cetak Borang A" onClick="javascript:cetakBorangA('$id','$!no_fail_online')">
@@ -1497,36 +1498,6 @@ kod :: $listhath.kod_hakmilik
 <!-- 	<input type="button" name="cmdBorangA" value="Cetak Borang A" onClick="javascript:cetakBorangA('$id','$!no_fail_online')"> -->
 	<input type="button" name="cmdPengesahanA" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahan()">
 	<div align="left">
-
-
-#if($!namapejabat != "")
-<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()">
-<input type="button" name="cmdHantar" value="Hantar ke $!namapejabat" onClick="javascript:getUnitPPK('$id','$nopermohonanonline')">
-<!--<input type="button" name="cmdKosongkan" value="Kosongkan" onClick="PengesahanView('3','0','0','0')">-->
-
-
-#else
-<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()">
-
-#end
-
-#else
-
-#if ($skrin_online_popup == "yes")
-#if ($kemaskini_pejabat != "yes")
-
-<input type="button" name="cmdHantar" value="Kemaskini" onClick="javascript:kemaskini_pejabat('$id','$nopermohonanonline')">
-
-#else
-<input type="button" name="cmdHantar" value="Simpan" onClick="javascript:simpan_pejabat('$id','$nopermohonanonline')">
-#end
-#end
-
-
-<input type="button" name="cmdBorangA" value="Cetak Borang A" onClick="javascript:cetakBorangA('$id','$!no_fail_online')">
-<input type="button" name="cmdPengesahanA" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahan()">
-<div   align="left">
->>>>>>> 0f15247f2a333ed07c0f9cafa0a5bbcca9b0dd15
 
 <table width="100%" border="0">
 <tr>
