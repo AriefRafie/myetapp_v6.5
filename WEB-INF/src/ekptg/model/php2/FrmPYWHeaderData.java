@@ -28,8 +28,8 @@ public class FrmPYWHeaderData {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-	public void setMaklumatPermohonan(String idFail, String initiateFlagBuka,
-			HttpSession session) throws Exception {
+	public void setMaklumatPermohonan(String idFail, String initiateFlagBuka,HttpSession session) 
+		throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -678,8 +678,8 @@ public class FrmPYWHeaderData {
 			if (db != null)
 				db.close();
 		}
-	
 		return beanMaklumatPemohon;
+		
 	}	
 	
 	public Vector<Hashtable> getMaklumatPermohonan(String idFail, HttpSession session) throws Exception {
@@ -781,6 +781,7 @@ public class FrmPYWHeaderData {
 			
 		}
 		return beanMaklumatPermohonann;
+		
 	}
 
 	public Vector getBeanMaklumatPermohonan() {
@@ -799,4 +800,5 @@ public class FrmPYWHeaderData {
 		this.beanMaklumatHakmilik = beanMaklumatHakmilik;
 	}
 		
+	
 }

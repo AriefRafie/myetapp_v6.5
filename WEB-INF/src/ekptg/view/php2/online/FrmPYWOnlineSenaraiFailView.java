@@ -27,7 +27,6 @@ import ekptg.helpers.Utils;
 import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.online.FrmPYWOnlineSenaraiFailData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
-import ekptg.view.ppt.FrmBantahanSenaraiOnline;
 
 public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 
@@ -197,9 +196,8 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			this.context.put("namaPemohon", namaPemohon);
 			
 			vm = "app/php2/online/frmStatusPermohonanSewa.jsp";
-		}
-		else if ("paparMaklumatPenyewaan".equals(actionPenyewaan)){
-			
+		
+		}else if ("paparMaklumatPenyewaan".equals(actionPenyewaan)){			
 			// GO TO MAKLUMAT PERMOHONAN  
 			vm = "app/php2/online/frmPYWMaklumatPermohonan.jsp";
 			
@@ -221,8 +219,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     		}
     		
     		// MODE VIEW
-    		if("view".equals(mode)){
-    			
+    		if("view".equals(mode)){		
     			this.context.put("readonly", "readonly");
     			this.context.put("inputTextClass", "disabled");
     			this.context.put("disabled", "disabled");
@@ -306,6 +303,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     						logic.setMaklumatLampiran(idDokumen);
     						beanMaklumatLampiran = logic.getBeanMaklumatLampiran();
     						this.context.put("BeanMaklumatLampiran", beanMaklumatLampiran);
+    						
     	        		}
     	        	} 
     			}
@@ -314,11 +312,9 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			logic.setSenaraiLampiran(idPermohonan);
     			senaraiLampiran = logic.getListLampiran();
     			this.context.put("SenaraiLampiran", senaraiLampiran);
-    		}
-    		
+ 
     		// MODE UPDATE
-    		else if("update".equals(mode)){
-    			
+   			}else if("update".equals(mode)){    			
     			this.context.put("readonly", "");
         		this.context.put("inputTextClass", "");
         		this.context.put("disabled", "");        		
@@ -328,6 +324,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     				idPHPBorangK = "";
     				idPPTBorangK = "";
     				idHakmilikUrusan = "";
+    				
     			}
         		
         		//MAKLUMAT TANAH
@@ -350,12 +347,14 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     				if (idHakmilikAgensi.isEmpty()){
     					this.context.put("errorPeganganHakmilik", "Hakmilik tidak wujud.");
     				}
+    				
     			} else if ("doChangeMaklumatTanah".equals(submit)){
     				beanMaklumatTanah = new Vector();
     				idHakmilikAgensi = getParam("idHakmilikAgensiPopup");
         			logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
         			beanMaklumatTanah = logic.getBeanMaklumatTanah();
         			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
+        			
     			}
         		
         		//MAKLUMAT PENYEWAAN
@@ -374,6 +373,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     				hashMaklumatSewa.put("luas3", "");
     				hashMaklumatSewa.put("luasBersamaan", "");
     				hashMaklumatSewa.put("luasBaki", "");
+    				
     			} else {
     				hashMaklumatSewa.put("luas1", getParam("txtLuasMohon1"));
     				hashMaklumatSewa.put("luas2", getParam("txtLuasMohon2"));
@@ -385,6 +385,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     					hashMaklumatSewa.put("luasBersamaan", getParam("txtLuasBersamaan"));			
     					hashMaklumatSewa.put("luasBaki", getParam("txtBakiLuas"));		
     				}
+    				
     			}
     			hashMaklumatSewa.put("flagTempohSewa", getParam("socTempohSewa"));
     			beanMaklumatSewa.addElement(hashMaklumatSewa);
@@ -398,8 +399,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     		}
 			
     	  //PAPAR MAKLUMAT
-		} else if ("papar".equals(actionPenyewaan)){
-			
+		} else if ("papar".equals(actionPenyewaan)){			
 			vm = "app/php2/online/frmPYWDaftarOnline.jsp";
 			
 			mode = "view";
@@ -423,6 +423,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				idSuburusan = (String) hashPermohonan.get("idSuburusan");
 				idSubsuburusan = (String) hashPermohonan.get("idTujuan");
 				idPermohonan= (String) hashPermohonan.get("idPermohonan");
+			
 			}
 			this.context.put("selectUrusan",HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " class=\"disabled\""));
 			this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "disabled", " class=\"disabled\""));
@@ -455,8 +456,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			}		
 			
 		//DAFTAR PERMOHONAN BARU
-		} else if ("daftarBaru".equals(actionPenyewaan)) {
-			
+		} else if ("daftarBaru".equals(actionPenyewaan)) {			
 			vm = "app/php2/online/frmPYWDaftarOnline.jsp";
 			
 			mode = "new";

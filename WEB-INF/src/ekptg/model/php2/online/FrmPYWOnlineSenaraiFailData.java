@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package ekptg.model.php2.online;
 
 import java.sql.Connection;
@@ -21,16 +19,12 @@ import lebah.db.SQLRenderer;
 import lebah.util.Util;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
 import org.apache.log4j.Logger;
 
-import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
-import ekptg.intergration.XEkptgEmailSender;
-import ekptg.model.ppt.FrmSek8PampasanData;
 import ekptg.model.utils.emel.EmailConfig;
 
 /**
@@ -3200,5 +3194,6 @@ public class FrmPYWOnlineSenaraiFailData {
 	public void setListLampiran(Vector listLampiran) {
 		this.listLampiran = listLampiran;
 	}
+	
 	
 }

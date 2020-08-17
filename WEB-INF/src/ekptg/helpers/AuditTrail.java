@@ -16,19 +16,18 @@ public class AuditTrail {
 	public AuditTrail() {	}
 	
 	public static void logActivity(String jenis_aktiviti,String keterangan) 
-	throws Exception {
+		throws Exception {
 		logActivity("","","",null,null,jenis_aktiviti,keterangan,null);
 	}
 	
 	public static void logActivity(VTemplate module,HttpSession session,
-			String jenis_aktiviti,String keterangan) 
-	throws Exception {
+		String jenis_aktiviti,String keterangan) 
+		throws Exception {
 		logActivity("","","",module,session,jenis_aktiviti,keterangan,null);
 	}
 	
 	public static void logActivity(VTemplate module,HttpSession session,
-			String jenis_aktiviti,String keterangan,Db db) 
-	throws Exception {
+		String jenis_aktiviti,String keterangan,Db db) throws Exception {
 		logActivity("","","",module,session,jenis_aktiviti,keterangan,db);
 	}
 	
@@ -39,11 +38,14 @@ public class AuditTrail {
 		logActivity("",id_status,id_seksyen,module,session,jenis_aktiviti,keterangan,null);
 	}
 	
-	public static void logActivity(String id_suburusan,String id_status,String id_seksyen,VTemplate module,HttpSession session,
-			String jenis_aktiviti,String keterangan) 
-	throws Exception {
-		logActivity(id_suburusan,id_status,id_seksyen,module,session,
-				jenis_aktiviti,keterangan,null);
+	public static void logActivity(String id_suburusan
+		,String id_status
+		,String id_seksyen
+		,VTemplate module
+		,HttpSession session,
+		String jenis_aktiviti
+		,String keterangan) throws Exception {
+		logActivity(id_suburusan,id_status,id_seksyen,module,session,jenis_aktiviti,keterangan,null);
 	}
 	
 	public static void logActivity(String id_suburusan
@@ -132,7 +134,5 @@ public class AuditTrail {
 	
 	}
 	
-	
-
 	
 }
