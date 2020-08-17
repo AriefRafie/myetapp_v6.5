@@ -165,11 +165,11 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 					"no");
 			
 			// maklumat pemohon
-			Vector<Hashtable<String,String>> vec = logic3.setMaklumatPemohon(usid);
-			Hashtable<String,String> hash = vec.get(0);
+//			Vector<Hashtable<String,String>> vec = logic3.setMaklumatPemohon(usid);
+//			Hashtable<String,String> hash = vec.get(0);
 			
 			// MAKLUMAT 
-			this.context.put("pemohon", hash);
+			// this.context.put("pemohon", hash);
 			this.context.put("nowpast", "now");
 			myLogger.info("masuk skrin bantah NOW");
 			
@@ -213,9 +213,9 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 					"no");
 			
 			// maklumat pemohon
-			Vector<Hashtable<String,String>> vec = logic3.setMaklumatPemohon(usid);
-			Hashtable<String,String> hash = vec.get(0);
-			this.context.put("pemohon", hash);
+//			Vector<Hashtable<String,String>> vec = logic3.setMaklumatPemohon(usid);
+//			Hashtable<String,String> hash = vec.get(0);
+//			this.context.put("pemohon", hash);
 			
 			
 			this.context.put("nowpast", "past");
