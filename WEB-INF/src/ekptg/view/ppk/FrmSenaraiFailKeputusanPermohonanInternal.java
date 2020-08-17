@@ -25,7 +25,7 @@ import ekptg.helpers.HTML;
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8InternalData;
-import ekptg.model.ppk.FrmPrmhnnSek8KeputusanPermohonanInternalData;
+import ekptg.model.ppk.FrmPrmhnnSek8KeputusanPermohonanInternalData; 
 import ekptg.model.ppk.FrmPrmhnnSek8KptsanBicaraData;
 import ekptg.model.ppk.FrmPrmhnnSek8SenaraiHTATHInternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8SenaraiSemakInternalData;
