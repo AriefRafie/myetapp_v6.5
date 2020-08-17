@@ -88,9 +88,9 @@ padding:0 0.25em;
 				    <td valign="top" width="1%"><span class="style1">&nbsp;</span></td>
 				    <td valign="top">Muatnaik Lampiran</td>
 				    <td valign="top">:</td>
-				    <td>
+				    <td><!-- accept="image/x-png,image/gif,image/jpeg"-->
 				    #foreach( $i in [1..$num_files] )							
-						<input type="file" id="dokumen" name="dokumen" size="40" class="texts" $!readOnly  /></br>
+						<input type="file" id="dokumen" name="dokumen" size="40" accept=".pdf" class="texts" $!readOnly  /></br>
 					#end
 					</td/>
 				</tr>
@@ -136,7 +136,7 @@ padding:0 0.25em;
 	/* 	document.${formName}.actionPopup.value = "papar";
 		document.${formName}.hitButton.value = "hapus"; */
 		//document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=papar&hitButton=hapus&iDokumen="+iDokumen;
-		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){
+		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){ 
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;
 		}else if('$!jenisdokumen' == '99203'){ 
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
@@ -154,14 +154,7 @@ padding:0 0.25em;
 			}else{
 				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=papar&hitButton=hapus&iDokumen="+iDokumen;
 			}
-
-		}else{
-		if('paparHA'=='$!actionRefresh'){
-			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusHA&iDokumen="+iDokumen;
-		}else{
-			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=papar&hitButton=hapus&iDokumen="+iDokumen;
 		}
-	}
 		document.${formName}.enctype="multipart/form-data";
 	    document.${formName}.encoding="multipart/form-data";
 		document.${formName}.submit();
@@ -188,6 +181,11 @@ padding:0 0.25em;
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"
 									+"&rujukan=$!idRujukan"
 									+"&actionrefresh=$!actionRefresh"+actExt;
+		}else if('$!jenisdokumen' == '99203'){
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanlampiran&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
+
 		}else if('$!jenisdokumen' == '99204'){
 			actExt ="&jenisdokumen=$!jenisdokumen";
 			actExt +="&actionPopup=$!actionPopup&hitButton=simpanlampiran&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
@@ -207,9 +205,6 @@ padding:0 0.25em;
 
 		}
 		else{
-			
-		}else{
-
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup="+document.${formName}.actionPopup.value
 									+"&hitButton="+document.${formName}.hitButton.value
 									+"&idHarta=$!idHarta"
@@ -286,12 +281,13 @@ padding:0 0.25em;
 		
 		}else if('lampiransimati'=='$!actionRefresh'){
 			window.opener.semakLampiran('socBandar');
+			
 		}else if('borangP' == '$!actionRefresh'){
 			window.opener.semakLampiran();
 		
 		}else if('dokumenA' == '$!actionRefresh'){
-			window.opener.semakLampiran();	
-
+			window.opener.semakLampiran();
+		
 		}
 		
 		
