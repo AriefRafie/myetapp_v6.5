@@ -242,6 +242,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}
 			//SENARAI SEMAK
 			if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
+				myLog.info("id Permohonan ros senarai semaka 2>>>> "+idPermohonan);
 	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
 	    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
 
@@ -947,28 +948,30 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					this.context.put("idKementerian", idKementerian);
 
 					langkah2 = "2";
+					//email remove bler push
+					/*
 
 					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
 
 					if(!getEmelSemak().checkEmail(userId).equals(""))
 						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 
-					//email remove bler push
-					/*ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+					ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
 							, "9"
 							, String.valueOf(String.valueOf(idKementerian))
 							, emelSubjek, kandungan);*/
 
 				}else if (idJawatan.equals("9")){
 					langkah2 = "3";
+					//email remove bler push
+					/*
 
 					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
 
 					if(!getEmelSemak().checkEmail(userId).equals(""))
 						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 
-					//email remove bler push
-					/*ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+					ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
 							, "4"
 							, String.valueOf(String.valueOf(idKementerian))
 							, emelSubjek, kandungan);*/
@@ -977,12 +980,13 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					langkah2 = "4";
 					emelSubjek = ec.tajukHantarPermohonan + "Tukar Guna";
 
-					kandungan = getEmelSemak().setKandungan(String.valueOf(String.valueOf(permohonan2.get("tajukFail")))
-								,String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
-								,String.valueOf(String.valueOf(permohonan2.get("noPermohonan"))));
+					//email remove bler push
+					//kandungan = getEmelSemak().setKandungan(String.valueOf(String.valueOf(permohonan2.get("tajukFail")))
+					//			,String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
+					//			,String.valueOf(String.valueOf(permohonan2.get("noPermohonan"))));
 
-					if(!getEmelSemak().checkEmail(userId).equals(""))
-						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+					//if(!getEmelSemak().checkEmail(userId).equals(""))
+					//	getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 					//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
 
 					//email remove bler push
