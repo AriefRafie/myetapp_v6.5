@@ -1,7 +1,7 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2"><fieldset>
-      <legend>MAKLUMAT KJP</legend>
+      <legend>MAKLUMAT SURAT LAPORAN TAPAK</legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
           <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>

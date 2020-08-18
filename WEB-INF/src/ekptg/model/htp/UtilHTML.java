@@ -1181,7 +1181,43 @@ public class UtilHTML {
 		}
 		return sb.toString();
 	
-	}	
+	}
+	
+	public static String selectStatusLaporanPenyewaan(
+			String idSeksyen,String selectName, String selectedValue,String disability,String jsFunction) 
+			throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+
+			sb.append("<option value=\"-1\">SILA PILIH </option>\n");
+			Vector<Tblrujstatus> v = DB.getStatusByIdSeksyen(idSeksyen);
+			Tblrujstatus f = null;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				f = (Tblrujstatus) v.get(i);
+				if (String.valueOf(f.getIdStatus()).equals(selectedValue)) {
+					s = "selected";
+				} else {
+					s = "";
+				}
+				sb.append("<option " + s + " value=" + f.getIdStatus() + ">"
+						+ f.getKeterangan()+ "</option>\n");
+			}
+			sb.append("</select>");
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+		return sb.toString();
+	}
+	
 	/**
 	 * Dibuat Oleh : Mohamad Rosli
 	 * Dibuat Pada : 28/01/2017

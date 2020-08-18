@@ -281,11 +281,11 @@ a.nav:visited {
                               <li>&nbsp;Semakan Permohonan Online</li>
                               </font> </a> </td> 
                           </tr>
-                          <tr>
-                            <td><a href="javascript:gotoOnline()" class="help" title="Semakan Status Permohonan"> <font color="blue">
-                              <li>&nbsp;Senarai Permohonan Dikembalikan</li>
-                              </font> </a> </td> 
-                          </tr>
+<!--                           <tr> -->
+<!--                             <td><a href="" class="help" title="Semakan Status Permohonan"> <font color="blue"> -->
+<!--                               <li>&nbsp;Senarai Permohonan Dikembalikan</li> -->
+<!--                               </font> </a> </td>  -->
+<!--                           </tr> -->
                         </table></td>
                     </tr>
                   </table></td>

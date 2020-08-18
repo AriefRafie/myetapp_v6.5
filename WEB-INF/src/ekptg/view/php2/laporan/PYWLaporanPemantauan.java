@@ -23,11 +23,13 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 	private final String PATH="app/php2/laporan/pyw/";
 	private static final long serialVersionUID = 1L;
 	static Logger myLog = Logger.getLogger(ekptg.view.php2.laporan.PYWLaporanPemantauan.class);
-	String socNegeri = "";
-	String socUnit = "";
-	String socSuburusan = "";
+	
 	Vector<?> vecHash = null;
 	Vector<?> vecRekod = null;
+	
+	String socNegeri = "";
+	String socUnit = "";
+	String socStatus = "";
 	String socAgensi = "";
 	String socDaerahBaru = "";
 	String sorTempoh = "1";
@@ -37,6 +39,7 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
     String tarikhAkhirTahun = "";		
 	
 	public String doTemplate2() throws Exception {
+		
 	    HttpSession session = this.request.getSession();
     	String checkBulan = "";
     	String checkTahun = "";
@@ -45,46 +48,44 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		String vm = PATH+"pemantauanIndex.jsp";
    		String submit = getParam("command");
 		String userId = (String)session.getAttribute("_portal_login");
-		int userLevel = 0;
 		Long tempIdNegeri = -1L;
-	
-    	String idSuburusan = getParam("socsuburusan");
-    	if (idSuburusan == null || idSuburusan.trim().length() == 0){
-    		idSuburusan = "99999";
-    	}		
-       String defaulTahun = lebah.util.Util.getDateTime(new Date(), "yyyy");
+		int userLevel = 0;
+
+    	String idStatus = getParam("socStatus");
+    	if (idStatus == null || idStatus.trim().length() == 0){
+    		idStatus = "99999";
+    	}	
+    	
+        String defaulTahun = lebah.util.Util.getDateTime(new Date(), "yyyy");
 		Long defaultBulan = Long.parseLong(lebah.util.Util.getDateTime(new Date(), "MM"));
-    	myLog.info("defaulTahun="+defaulTahun+",defaultBulan="+defaultBulan);
 
         //Carian
-        setSOC(tempIdNegeri,idSuburusan);
+        setSOC(tempIdNegeri,idStatus);
 
 		sorTempoh = getParam("sorTempoh");   	
 
     	myLog.info("submit="+submit);
     	if ("PilihNegeri".equals(submit)){
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
-	        setSOC(tempIdNegeri,idSuburusan);
+	        setSOC(tempIdNegeri, idStatus);
 
     		if(!"".equals(getParam("txdMula"))){
     			defaultBulan = Long.parseLong(getParam("txdMula"));
     			defaulTahun = getParam("txdTahunMula");
     			tarikhMula = HTML.SelectBulan("txdMula",defaultBulan," style=\"width: 100px;\"");
     			tarikhMulaTahun = HTML.SelectTahun("txdTahunMula",defaulTahun," style=\"width: 100px;\"",null);
-   
     		}
     		if(!"".equals(getParam("txdAkhir"))){
     			Long defaultBulanh = Long.parseLong(getParam("txdAkhir"));
     			String defaulTahunh = getParam("txdTahunAkhir");
     			setAkhir(defaultBulanh,defaulTahunh);
-
     		}
 //  			vecHash = getILaporan().getLaporanMengikutUrusanLike("7,17,18",null,"L","Negeri");
 
-    	}else if ("PilihUnit".equals(submit)) {
+    	} else if ("PilihUnit".equals(submit)) {
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
 			String tempIdDaerah = getParam("socDaerahBaru").equals("")?"0":getParam("socDaerahBaru");
-	        setSOC(tempIdNegeri,idSuburusan,tempIdDaerah);
+	        setSOC(tempIdNegeri,idStatus,tempIdDaerah);
 
 	        if(!"".equals(getParam("txdMula"))){
     			defaultBulan = Long.parseLong(getParam("txdMula"));
@@ -102,29 +103,30 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
     		}
 			paparanRekod(userLevel,userId);
      	
-    	}else if (submit.equals("pilihtempoh")) {
+    	} else if (submit.equals("pilihtempoh")) {
         	myLog.info("sorTempoh="+sorTempoh);
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));			
 			String tempIdDaerah = getParam("socDaerahBaru").equals("")?"0":getParam("socDaerahBaru");
 			String idAgensi = !getParam("socDaerah").equals("-1")?getParam("socDaerah"):"0";
 				
-			setSOC(tempIdNegeri,idSuburusan,tempIdDaerah,idAgensi);		
+			setSOC(tempIdNegeri,idStatus,tempIdDaerah,idAgensi);		
 //			setSOC(tempIdNegeri,idSuburusan,tempIdDaerah);
 
 			if(sorTempoh.equals("1")) {				
 				tarikhMula = HTML.SelectBulan("txdAkhir",defaultBulan," style=\"width: 100px;\"");
 				tarikhMulaTahun = HTML.SelectTahun("txdTahunMula",defaulTahun," style=\"width: 100px;\"",null);
-			}else if(sorTempoh.equals("2")) {
+				
+			} else if(sorTempoh.equals("2")) {
 				tarikhMulaTahun = HTML.SelectTahun("txdAkhir",defaulTahun," style=\"width: 100px;\"",null);
-			}else if(sorTempoh.equals("3")) {
+				
+			} else if(sorTempoh.equals("3")) {
 				tarikhMula = HTML.SelectBulan("txdMula",defaultBulan," style=\"width: 100px;\"");
     			tarikhMulaTahun = HTML.SelectTahun("txdTahunMula",defaulTahun," style=\"width: 100px;\"",null);
     			tarikhAkhir = HTML.SelectBulan("txdAkhir",defaultBulan," style=\"width: 100px;\"");
     			tarikhAkhirTahun = HTML.SelectTahun("txdTahunAkhir",defaulTahun," style=\"width: 100px;\"",null);
-	
 			}
      	
-    	}else{
+    	} else{
     			paparanRekod(userLevel,userId);
 
 //    		}
@@ -171,7 +173,7 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		context.put("senaraiRekod",vecRekod);
   		
    		//dropdown
-		context.put("selectSuburusan",socSuburusan);
+		context.put("selectStatus",socStatus);
 		context.put("selectNegeri",socNegeri);
 		context.put("selectKementerian",socUnit);
 		context.put("selectAgensi",socAgensi);
@@ -193,19 +195,18 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 			tarikhMula = HTML.SelectBulan("txdAkhir",defaultBulanh," style=\"width: 100px;\"");
 			tarikhMulaTahun = HTML.SelectTahun("txdTahunMula",defaulTahunh," style=\"width: 100px;\"",null);
 	
-		}else if(sorTempoh.equals("2")) {
+		} else if(sorTempoh.equals("2")) {
 			tarikhMulaTahun = HTML.SelectTahun("txdAkhir",defaulTahunh," style=\"width: 100px;\"",null);
 
-		}else if(sorTempoh.equals("3")) {
+		} else if(sorTempoh.equals("3")) {
 			tarikhAkhir = HTML.SelectBulan("txdAkhir",defaultBulanh," style=\"width: 100px;\"");
 			tarikhAkhirTahun = HTML.SelectTahun("txdTahunAkhir",defaulTahunh," style=\"width: 100px;\"",null);
 		
 		}
-
 	}
 	
-	public void setSOC(Long tempIdNegeri,String idSuburusan) throws Exception{		
-		socSuburusan = UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,idSuburusan, "", "");
+	public void setSOC(Long tempIdNegeri,String idStatus) throws Exception{		
+		socStatus = UtilHTML.selectStatusLaporanPenyewaan("4", "socStatus" ,idStatus, "", "");
 		displayNegeri(tempIdNegeri);
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru");
 		
@@ -213,12 +214,13 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah","-1","-1"," style=\"width:400\"","");
 
 	}
-	public void setSOC(Long tempIdNegeri,String idSuburusan,String idDaerah) throws Exception{		
+	
+	public void setSOC(Long tempIdNegeri, String idStatus, String idDaerah) throws Exception{		
 		Long tempIdDaerah = Long.parseLong(idDaerah);
 		String idKementerian = getParam("socUnit")==""?"-1":getParam("socUnit");
 		String idAgen = getParam("socDaerah")==""?"-1":getParam("socDaerah");
 
-		socSuburusan = UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,idSuburusan, "", "");
+		socStatus = UtilHTML.selectStatusLaporanPenyewaan("4", "socStatus" ,idStatus, "", "");
 		displayNegeri(tempIdNegeri);
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
@@ -226,13 +228,13 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,idAgen," style=\"width:400\"","");
 		
 	}
-	public void setSOC(Long tempIdNegeri,String idSuburusan,String idDaerah,String idAgen) throws Exception{		
+	
+	public void setSOC(Long tempIdNegeri, String idStatus, String idDaerah, String idAgen) throws Exception{		
 		Long tempIdDaerah = Long.parseLong(idDaerah);
 		String idKementerian = getParam("socUnit")==""?"-1":getParam("socUnit");
 		//String idAgen = getParam("socDaerah")==""?"-1":getParam("socDaerah");
 
-
-		socSuburusan = UtilHTML.selectSuburusanLaporan("3", "socsuburusan" ,idSuburusan, "", "");
+		socStatus = UtilHTML.selectSuburusanLaporan("4", "socStatus" ,idStatus, "", "");
 		displayNegeri(tempIdNegeri);
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
@@ -277,7 +279,5 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		}
 		return iLaporan;
 		
-	}
-	
-	
+	}	
 }

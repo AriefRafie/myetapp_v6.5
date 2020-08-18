@@ -24,9 +24,9 @@
 						<table border="0" align="center" width="60%">
 							<!-- Kemaskini by Mohamad Rosli 22/16/2020 -->
 							<tr>
-								<td scope="row" align="left">&nbsp;Jenis Penyewaan</td>
+								<td scope="row" align="left">&nbsp;Status Penyewaan</td>
 								<td>:&nbsp;</td>
-								<td>$!selectSuburusan</td>
+								<td>$!selectStatus</td>
 							</tr>
 							<tr>
 								<td scope="row" align="left">&nbsp;Negeri</td>
@@ -58,23 +58,23 @@
 					       		</td>
 					      	</tr>	
 					      	
-					    #if($!checkBulan != "")					      	
+					    	#if($!checkBulan != "")					      	
 							<tr>
 								<td scope="row" align="left">&nbsp;Bulan</td>
 								<td>:&nbsp;</td>
 								<td>$!socTarikhMula</td>
 							</tr>						
-						#end
+							#end
 						
-						#if($!checkBulan != "" || $!checkTahun != "")					      	
+							#if($!checkBulan != "" || $!checkTahun != "")					      	
 							<tr>
 								<td scope="row" align="left">&nbsp;Tahun</td>
 								<td>:&nbsp;</td>
 								<td>$!socTahunMula</td>
 							</tr>							
-						#end
+							#end
 						
-					    #if($!checkTempoh != "")	
+					    	#if($!checkTempoh != "")	
 					    	<tr> 
 						        <td scope="row" align="left">&nbsp;Bulan</td>
 						        <td>:&nbsp;</td>
@@ -84,7 +84,8 @@
 						     		<label>$!socTarikhTamat</label>
 						 
 					 			</td>
-			      			</tr> 		
+			      			</tr> 
+			      					
 			      			<tr> 
 						        <td scope="row" align="left">&nbsp;Tahun</td>
 						        <td>:&nbsp;</td>
@@ -95,8 +96,8 @@
 						 
 					 			</td>
 			      			</tr> 		      								
-					#end
-						
+							#end
+							
 						</table>
 						</fieldset>
 					</td>
@@ -137,7 +138,7 @@
 				
 				<tr> 
 			        <td align="center">	          			
-			        <input class="stylobutton100" name="cmdcetak" value="Cetak" id="cmdcetak" type="button" onClick="openLaporan('ekptg.report.LaporanPermohonan','IDSUBURUSAN=0','lainpemantauan','PYWLaporanPemantauan');">
+			        <input class="stylobutton100" name="cmdcetak" value="Cetak" id="cmdcetak" type="button" onClick="openLaporan('ekptg.report.LaporanPermohonan','IDSTATUS=0','lainpemantauan','PYWLaporanPemantauan');">
 			      </td>
 			  	</tr>
 			</table>
@@ -216,7 +217,7 @@
 		//alert(jenisLaporan+":"+laporan);
 
 		if(jenisPajakan=="-1"){
-			alert("Sila pilih \"Jenis Pajakan\" terlebih dahulu.");
+			alert("Sila pilih \"Jenis Penyewaan\" terlebih dahulu.");
 			document.${formName}.socsuburusan.focus(); 
 			return;
 		

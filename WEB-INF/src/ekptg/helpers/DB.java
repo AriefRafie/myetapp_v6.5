@@ -1049,6 +1049,49 @@ public class DB extends EkptgCache implements Serializable {
 	}
 
 	// end altered 210609 by mansur
+	
+	@SuppressWarnings("unchecked")
+	public static Vector<Tblrujstatus> getStatusByIdSeksyen(String idSeksyen) throws Exception {
+		String key = "DB.getIdStatus";
+		Element cachedObject = myCache.get(key);
+		if (cachedObject != null) {
+			return (Vector<Tblrujstatus>) cachedObject.getObjectValue();
+			
+		} else {
+			Db db = null;
+			String sql = "";
+			
+			sql = "SELECT ID_SEKSYEN, ID_STATUS, KOD_STATUS, KETERANGAN AS NAMA_STATUS "
+				+ "FROM TBLRUJSTATUS WHERE ID_SEKSYEN = 4 "
+				+ "AND ID_STATUS IN (1610198, 1610201, 1610206, 1610214) ORDER BY KOD_STATUS";
+			
+			Vector<Tblrujstatus> v = null;
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				ResultSet rs = stmt.executeQuery(sql);
+				v = new Vector<Tblrujstatus>();
+				Tblrujstatus s = null;
+				while (rs.next()) {
+					s = new Tblrujstatus();
+					s.setIdSeksyen(rs.getLong("ID_SEKSYEN"));
+					s.setIdStatus(rs.getLong("ID_STATUS"));
+					s.setKodStatus(rs.getString("KOD_STATUS"));
+					s.setKeterangan(rs.getString("NAMA_STATUS"));
+					v.addElement(s);
+				}
+				
+				myCache.put(new Element(key, v));
+				return v;
+				
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+	}
+	
 
 	// dat 17072010
 	public static Vector<Tblrujsuburusan> getSubUrusanPelepasan(String idUrusan) throws Exception {

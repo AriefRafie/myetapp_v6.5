@@ -11,7 +11,7 @@
     <td><fieldset>
       <legend><b>SENARAI DOKUMEN</b></legend>
       <table align="center" width="100%">
-        #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+        #if ($userRole == '(PHP)PYWPenolongPengarahHQ' || $userRole == '(PHP)PYWPengarahHQ' || $userRole == '(PHP)PYWPengarahNegeri')
         <tr>
           <td colspan="9" scope="row"><input name="cmdTambah" type="button" value="Tambah" onclick="javascript:doDaftarMaklumatKJT()"/></td>
         </tr>
