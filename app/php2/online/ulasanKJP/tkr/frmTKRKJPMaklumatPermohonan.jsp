@@ -280,7 +280,7 @@
               #end
             </table>
             <div class="TabbedPanelsContent">
-              <table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <!-- <table width="100%" border="0" cellspacing="2" cellpadding="2">
                 <tr>
                   <td><fieldset>
                       <legend><b>SENARAI TANAH</b></legend>
@@ -335,7 +335,7 @@
                       </table>
                     </fieldset></td>
                 </tr>
-              </table>
+              </table> -->
             </div>
           </div>
           <!-- END MAKLUMAT TUKARGUNA -->
@@ -364,45 +364,44 @@
 		<input type="hidden" name="buttonSend"  value="$buttonSend"/>
            	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            	<td valign="top">
-           	<input type="checkbox" name="pengesahan" id="pengesahan">
-           	<!-- #if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
-           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td> -->
-           	<td>
-        	Saya, $!pemohon.get("namaPemohon"), $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
-   			<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
-      		</td>
            	<tr>
            	<td colspan=2 align="center">
            	#if($semakMode == "update")
    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1"))
-   				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+           	<td>
+           	<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
+        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+   			<p align="center"> <input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
+			</td>
+			
 			#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("2"))
-   				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+           	<td>
+           	<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
+        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+      		<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
+      		</td>
 
 			#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
-   				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+           	<td>
+           	<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
+        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+      		<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
+      		</td>
 
-             		#end
-
-             	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> -->
-   		#else
-   		#end
-
-                 #if ($idStatus !='')
-                <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+             	
+            #else
+           	#if($!statussemasa.equals("2") || $!statussemasa.equals("3"))	
            		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
             	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
-   		#end
-           <!-- 	#if ($userJawatan == '24')
-           		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar Untuk Semakan" onClick="doHantarEmel()"/>
-            	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
             #else
-            #if ($idStatus !='')
-            	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-            #end -->
-            #end
+            	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" />
+            	#end
+   			#end
+   			#end
+   			#end
             </td>
            	</tr>
            	</table>
@@ -410,7 +409,6 @@
         </div>
       </div></td>
   </tr>
-  #end
 </table>
 <!-- <div id="calculateTotalPercentPengarah_result"></div>
 <fieldset id="tableReport" style="display:none;"-->
@@ -1119,6 +1117,13 @@ function tutup() {
 	//
 	window.close();
 	refresh('Y');
+}
+
+function papar(idFail,idStatus) {
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idStatus.value = idStatus;
+	document.${formName}.submit2.value = "seterusnya";
+	document.${formName}.submit();
 }
 </script>
 $javascriptLampiran
