@@ -404,7 +404,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						getParam("idSuratKe"), idKementerianTanah,
 						idAgensiTanah, getParam("txtNamaPegawai"), 
 						getParam("txtJawatan"), getParam("txtEmel"),session);
-				logic.sendEmail(idPermohonan, idKementerianTanah, session);
+				//logic.sendEmail(idPermohonan, idKementerianTanah, session);
 			}
 		}
 
