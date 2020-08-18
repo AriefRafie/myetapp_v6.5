@@ -1082,7 +1082,7 @@ function cetakBorangPermohonan(idPermohonan) {
 	hWnd.focus();
 }
 function cetakPengesahanPermohonan(idPermohonan) {
-	var url = "../servlet/ekptg.report.php2.online.PYWPengesahanPermohonanOnline?ID_PERMOHONAN="+idPermohonan;
+	var url = "../servlet/ekptg.report.php2.online.TKRPengesahanPermohonanOnline?ID_PERMOHONAN="+idPermohonan;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

@@ -242,6 +242,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}
 			//SENARAI SEMAK
 			if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
+				myLog.info("id Permohonan ros senarai semaka 2>>>> "+idPermohonan);
 	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
 	    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
 
