@@ -142,7 +142,7 @@
           #if ($list.noSambungan != '' && $list.noSambungan != '0')
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a>&nbsp;(SAMBUNGAN)
           &nbsp;&nbsp;
-          #if($list.flagBuka == 'T')
+          #if($list.flagBuka == 'Y')
           	#if($list.flagMT == 'Y')
           	<span class="style1"><blink><strong>MAKLUMAT TAMBAHAN</strong></blink></span>
           	#elseif($list.flagPindaan == 'Y')
@@ -157,7 +157,7 @@
           #else
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a>
           &nbsp;&nbsp;
-          #if($list.flagBuka == 'T')
+          #if($list.flagBuka == 'Y')
           	#if($list.flagMT == 'Y')
           	<span class="style1"><blink><strong>MAKLUMAT TAMBAHAN</strong></blink></span>
           	#elseif($list.flagPindaan == 'Y')

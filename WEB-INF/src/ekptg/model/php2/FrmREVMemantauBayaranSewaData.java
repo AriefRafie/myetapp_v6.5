@@ -2205,9 +2205,17 @@ public class FrmREVMemantauBayaranSewaData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT * FROM TBLPHPBAYARANPERLUDIBAYAR WHERE ID_HASIL = '"
+			/*sql = "SELECT * FROM TBLPHPBAYARANPERLUDIBAYAR WHERE ID_HASIL = '"
 					+ idHasil
-					+ "' AND (FLAG_PERJANJIAN = 'U' OR FLAG_PERJANJIAN IS NULL) ORDER BY TARIKH_MULA ASC";
+					+ "' AND (FLAG_PERJANJIAN = 'U' OR FLAG_PERJANJIAN IS NULL) ORDER BY TARIKH_MULA ASC";*/
+
+			sql ="SELECT A.ID_BAYARANPERLUDIBAYAR,A.ID_HASIL,A.TARIKH_MULA,A.TARIKH_TAMAT,A.BAYARAN,A.DEPOSIT,A.FLAG_AKTIF, A.ID_PERMOHONAN,"+
+					"A.ID_MASUK,A.TARIKH_MASUK, A.ID_KEMASKINI,A.TARIKH_KEMASKINI,A.ID_FAIL,"+
+					"A.TEMPOH,A.STATUS,A.FLAG_LULUSDASAR,A.FLAG_PERJANJIAN, A.CATATAN,A.MOD_CAJ_SEWAAN,A.NO_RUJUKAN,B.NO_SIRI "+
+					"FROM TBLPHPBAYARANPERLUDIBAYAR A,TBLPHPPERJANJIAN B WHERE ID_HASIL = '"
+					+ idHasil
+					+ "' AND (A.FLAG_PERJANJIAN = 'U' OR A.FLAG_PERJANJIAN IS NULL) AND A.ID_PERMOHONAN=B.ID_PERMOHONAN ORDER BY A.TARIKH_MULA ASC";
+
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 			int bil = 1;
@@ -2221,7 +2229,8 @@ public class FrmREVMemantauBayaranSewaData {
 						rs.getString("ID_HASIL") == null ? "" : rs
 								.getString("ID_HASIL"));
 				h.put("noSiri",
-						rs.getString("NO_RUJUKAN") == null ? "" : rs
+						rs.getString("NO_RUJUKAN") == null || rs.getString("NO_RUJUKAN").equals("TIADA") ? rs.getString("NO_SIRI") == null ? "" : rs
+								.getString("NO_SIRI") : rs
 								.getString("NO_RUJUKAN"));
 				h.put("tarikhMula", rs.getDate("TARIKH_MULA") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_MULA")));
@@ -2241,6 +2250,9 @@ public class FrmREVMemantauBayaranSewaData {
 				h.put("catatan",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
 				senaraiPerjanjian.addElement(h);
 				bil++;
 			}

@@ -12,9 +12,8 @@ public class PNWPengesahanPermohonanOnline extends EkptgReportServlet {
 
 	public PNWPengesahanPermohonanOnline() {
 		super.setReportName("PNWPengesahanPermohonanOnline");
-		super.setFolderName("php2\\ONLINE");
+		super.setFolderName("php2\\online");
 	}
-	
 
 	@Override
 	public void doProcessing(HttpServletRequest request,

@@ -159,15 +159,6 @@
 </table>
 
 <script>
-
-function pajakanTerima(id){
-	var mode = 'pajakanditerima';
-	//doAjaxCall${formName}("pajakanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
-	document.${formName}.command.value = mode;
-	document.${formName}.actionPajakan.value = "";
-	document.${formName}.action = "$EkptgUtil.getTabID('Pajakan',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&actionPerletakhakan=papar&idfail="+id;
-	document.${formName}.submit();
-}
 	
 function doChangeKementerian() {
 	doAjaxCall${formName}("doChangeKementerian");

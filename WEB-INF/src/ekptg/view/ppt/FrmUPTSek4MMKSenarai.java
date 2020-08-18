@@ -21,6 +21,9 @@ import ekptg.model.ppt.PPTHeader;
 import ekptg.model.ppt.Seksyen4MMK;
 import ekptg.view.ppt.email.EmailTester;
 
+
+
+
 public class FrmUPTSek4MMKSenarai extends AjaxBasedModule {
 	
 	private static final long serialVersionUID = 1L;
@@ -31,7 +34,12 @@ public class FrmUPTSek4MMKSenarai extends AjaxBasedModule {
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
 	FrmPembatalanInternalData modelPembatalan = new FrmPembatalanInternalData();
 	MyInfoPPTData myInfo = new MyInfoPPTData();
-
+	
+	
+	
+		
+	
+	
 	FrmSek8LaporanAwalTanahData modelLaporanTanah = new FrmSek8LaporanAwalTanahData();
 	
 	@SuppressWarnings({ "unchecked", "static-access" })

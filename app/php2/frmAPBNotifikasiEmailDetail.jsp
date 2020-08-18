@@ -34,30 +34,7 @@
 		  <td>&nbsp;</td>
 		  <td>&nbsp;</td>
       	  <td>
-      	   #if ($flagPopup == 'openJUPEM')
       	  <input name="cmdSimpanNotis" type="button" onClick="doSimpanRekodEmailJUPEM()" value="Simpan">
-      	   #end      	  
-      	   #if ($flagPopup == 'openJAS')
-      	  <input name="cmdSimpanNotis" type="button" onClick="doSimpanRekodEmailJAS()" value="Simpan">
-      	   #end
-      	   #if ($flagPopup == 'openJMG')
-      	  <input name="cmdSimpanNotis" type="button" onClick="doSimpanRekodEmailJMG()" value="Simpan">
-      	   #end
-      	   #if ($flagPopup == 'openJP')
-      	  <input name="cmdSimpanNotis" type="button" onClick="doSimpanRekodEmailJP()" value="Simpan">
-      	   #end
-      	   #if ($flagPopup == 'openJLM')
-      	  <input name="cmdSimpanNotis" type="button" onClick="doSimpanRekodEmailJLM()" value="Simpan">
-      	   #end
-      	   #if ($flagPopup == 'openPHM')
-      	  <input name="cmdSimpanNotis" type="button" onClick="doSimpanRekodEmailPHM()" value="Simpan">
-      	   #end
-      	   #if ($flagPopup == 'openJPS')
-      	  <input name="cmdSimpanNotis" type="button" onClick="doSimpanRekodEmailJPS()" value="Simpan">
-      	   #end
-      	   #if ($flagPopup == 'openPTG')
-      	  <input name="cmdSimpanNotis" type="button" onClick="doSimpanRekodEmailPTG()" value="Simpan">
-      	   #end
       	  <input name="cmdBatal" type="button" onClick="doBatalSimpanRekodEmailJUPEM()" value="Batal">
     	  </td>
         </tr>

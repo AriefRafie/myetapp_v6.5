@@ -8,7 +8,6 @@
 .style3 {font-size: 9px}
 .style36 {font-size: 12}
 .style51 {color: #0000FF; font-size: 9px; }
-.pautan {color: #0000FF}
 -->
 </style>
 
@@ -61,6 +60,7 @@
 #if ($idAlert == "0")
 
 
+
 #set ($idAlert = "")
 #set ($getDaerahx = "")
 #set ($tarikhmohonx = "")
@@ -92,7 +92,7 @@
 #set ($taraf_penting = "")
 #set ($no_tel = "")
 #set ($nama_pelbagainegara = "")
-#set ($jenisWarga = "1")
+#set ($jenisWarga = "")
 #set ($no_hp = "")
 #set ($emel = "")
 #set ($jenis_pemohon = "2")
@@ -168,7 +168,6 @@
 #set ($poskod = "")
 #set ($bandar = "")
 #set ($setmode2 = "")
-#set ($jenisWarga = "1")
 
 
 
@@ -243,7 +242,7 @@
 	#set ($setmode = "disabled")
 #end
 
-<body onLoad="submitForm();calcDate();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();pilih_taraf();check_kp_pemohon_onload();sorok_fieldset('$IdFail');selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');alamatwarga('$jenis_warga','alamatwarga','tr_nama_warga','$nama_pelbagainegara');checkSumaICsimati('$command');">
+<body onLoad="submitForm();calcDate();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();pilih_taraf();check_kp_pemohon_onload();sorok_fieldset('$IdFail');selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');checkSumaICsimati('$command');">
 
 <form id="form1" name="f1" method="post" action="">
 
@@ -636,29 +635,30 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                 <div align="left"> Taraf Kepentingan </div>
               </div></td>
             <td class="style36"><span class="style38">:</span></td>
-            <td> #if($taraf_penting=="")                                          
-              #set($taraf_penting="")                                                          
+            <td> 
+    	#if($taraf_penting=="")                                          
+        	#set($taraf_penting="")                                                          
+         	#set($tarafkePemohonan="")
+          	#set($tarafkePemohonanid="")
               
-              #set($tarafkePemohonan="")
-              #set($tarafkePemohonanid="")
-              #else
-              #foreach($listtar in $listtaraf)
+      	#else
+       		#foreach($listtar in $listtaraf)
               
-              #if($taraf_penting==$listtar.id_Tarafkptg)
+         		#if($taraf_penting==$listtar.id_Tarafkptg)
+              		#set($tarafkePemohonan="$listtar.kod - $listtar.keterangan")
+              		#set($tarafkePemohonanid="$listtar.id_Tarafkptg")
               
-              #set($tarafkePemohonan="$listtar.kod - $listtar.keterangan")
-              #set($tarafkePemohonanid="$listtar.id_Tarafkptg")
+              	#end  
               
-              #end  
+        	#end
               
-              #end
-              #end
+     	#end
               
-              #if($taraf_penting!="" && $taraf_penting!=0 && $taraf_penting!="null" )
-              #set($dahada="ada")
-              #else
-              #set($dahada="Xada")
-              #end
+     	#if($taraf_penting!="" && $taraf_penting!=0 && $taraf_penting!="null" )
+        	#set($dahada="ada")
+      	#else
+       		#set($dahada="Xada")
+      	#end
               <!--::::::: ID TARAF :$listpemohon.idTarafkptg   
                   ::::::: ADA TARAF-->
                   
@@ -678,7 +678,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
               
               #if($taraf_penting!="")
               <input type="hidden" name="socTarafKePemohonanpp2" value="$taraf_penting" />
-              <select name="taraf_penting" id="taraf_penting" class="largeselect;disabled" style="text-transform:uppercase;"  onblur="uppercase()" onChange="pilih_taraf();pilih_amanah();default_amanah();pilih_majlisagama()" >
+              <select name="taraf_penting" id="taraf_penting" class="largeselect;disabled" style="text-transform:uppercase;"  onblur="uppercase()" onChange="pilih_taraf();pilih_amanah();default_amanah()" >
                 <option value="$taraf_penting" style="text-transform:uppercase;"  onblur="uppercase()">$tarafkePemohonan</option>
                                                                          
                                           #foreach($listtar in $listtaraf)
@@ -873,7 +873,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                    <option value="1">01-Agensi</option>
            #end  
            </select>
-         		</span>               
+                    </span>               
            <span id="jenis_pemohon_dis">
            <input type="text" name="jenis_pemohon_display"  id="jenis_pemohon_display" readonly class="disabled" >    
            </span>                
@@ -885,35 +885,37 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             <td >&nbsp; </td>
             <td >Majlis Agama Islam Negeri</td>
             <td >:</td>
-            <td ><select name="jenis_pej3" id="jenis_pej3" class="largeselect" $setMode style="text-transform:uppercase;" onChange="pilih_majlisagama()" >
+            <td ><select name="jenis_pej3" id="jenis_pej3" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >
                 
-          #if($!jenis_pej == "" || $!jenis_pej == "0") 
+		#if($!jenis_pej == "" || $!jenis_pej == "0") 
           
                 <option value="">SILA PILIH </option>
-                
-           #else
-           #foreach($listJ in $listMaklumatMahkamahJ)
-           #if( $listJ.id_Pejabat == $jenis_pej )              
-           #set($listJid_Pejabat = $listJ.id_Pejabat)
-           #set($listJnama_pejabat=$listJ.nama_pejabat)
-           #set($listJdaerah = $listJ.daerah)  
-           #set($nama_bandar = $listJ.namabandar)         
-           #end
+     	#else
+        	#foreach($listJ in $listMaklumatMahkamahJ)
+           		#if( $listJ.id_Pejabat == $jenis_pej )              
+           			#set($listJid_Pejabat = $listJ.id_Pejabat)
+           			#set($listJnama_pejabat=$listJ.nama_pejabat)
+           			#set($listJdaerah = $listJ.daerah)  
+           			#set($nama_bandar = $listJ.namabandar)         
+           
+           		#end
+           
            #end
            
                 <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>
                             
-           #end        
-                                  #foreach($listJ in $listMaklumatMahkamahJ)
-                                  #if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '62' )
-	                          
+     	#end        
+        	
+      	#foreach($listJ in $listMaklumatMahkamahJ)
+       		#if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '62' )              
                 <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
-                  #end 
-                  #end 
+        	#end 
                   
-                  #if($!jenis_pej != "" || $!jenis_pej != "0"))
-                <option value="">SILA PILIH </option>
-                 #end                            
+     	#end 
+                  
+     	#if($!jenis_pej != "" || $!jenis_pej != "0"))
+       		<!-- <option value="">SILA PILIH </option> -->
+     	#end                            
               </select></td>
           </tr>
           
@@ -923,8 +925,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
   <div align="left"><span class="style38">Warganegara</span></div>
   </div></td>
   <td width="1%" class="style36" valign="top"><span class="style38">:</span></td>
-  <td class="style36" valign="top">
-  #if($readmode=="disabled")
+  <td class="style36" valign="top">#if($readmode=="disabled")
                                           
      #if($jenisWarga == "1")
      #set($wrp = "Warganegara")
@@ -941,46 +942,54 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
      <input name="socWarganegaraPe" type="text" id="textfield" value="$wrp" style="text-transform:uppercase;" onblur="uppercase()" size="34" $readmodeR class="$readmode" />
      #end
      <input name="socWarganegaraPemohon" type="hidden" id="textfield" style="text-transform:uppercase;" onblur="uppercase()" value="$jenisWarga"  size="30" $readmodeR class="$readmode" />
-     
-  #else
-  <select name="socWarganegaraPemohon" id="select4" class="autoselect" style="text-transform:uppercase;" 
-   onchange="alamatwarga(this.value,'alamatwarga','tr_nama_warga','nama_pelbagainegara')" onblur="uppercase();alamatwarga(this.value,'alamatwarga','tr_nama_warga','nama_pelbagainegara')">
-     
+     #else
+     <select name="socWarganegaraPemohon" id="select4" class="autoselect" style="text-transform:uppercase;" 
+      onchange="alamatwarga(this.value,'alamatwarga','tr_pelbagainegara','$nama_pelbagainegara')" onblur="uppercase();alamatwarga(this.value,'alamatwarga','tr_nama_warga','$nama_pelbagainegara')">
      #if($jenisWarga=="1")
 	   <option value="1" style="text-transform:uppercase;" onblur="uppercase()">Warganegara</option>
      <option value="2" style="text-transform:uppercase;" onblur="uppercase()">Bukan Warganegara</option>
                                                  
-     #elseif($jenisWarga=="2")      
+     #elseif($jenisWarga=="2")
+	                               
      <option value="2" style="text-transform:uppercase;" onblur="uppercase()">Bukan Warganegara</option>
      <option value="1" style="text-transform:uppercase;" onblur="uppercase()">Warganegara</option>
      
     #else
-    
      <option value="1" style="text-transform:uppercase;" onblur="uppercase()">Warganegara</option>
      <option value="2" style="text-transform:uppercase;" onblur="uppercase()">Bukan Warganegara</option>
-   
    #end
    </select>
-   
    <div id="alamatwarga"></div>
    #end                                          
    </td>
    </tr>
         
-        <tr id="tr_nama_warga">
-            <td valign="top" ></td>
-            <td>
-              <div align="left" class="style38">
-               Negara                                          
-              </div></td>
-            <td width="1%" class="style36" valign="top"><span class="style38">:</span></td>
-            <td class="style36">
-            <input type = 'text' id = 'nama_pelbagainegara' name = 'nama_pelbagainegara' size='30' maxlength='200'  list = 'datalist'  value="$nama_pelbagainegara" />
-            <datalist id = 'datalist'>#foreach($ja in $kenegaraan)<option label='$!ja.NAMA_WARGA' value = '$!ja.NAMA_WARGA'></option>#end
-            </datalist>   
-            </td>
-        </tr>
         
+        <tr id="tr_mesej_pelbagainegara">
+          <td valign="top">
+        </td>
+        <td valign="top">
+        </td>
+        <td valign="top">
+        </td>
+        <td valign="top"  >
+        <div id="div_mesejpelbagagainegara"></div>
+        </td>        
+        </tr> 
+        
+        
+        <tr id="tr_pelbagainegara">
+        	<td valign="top" ></td>
+        	<td>Negara</td>
+        	<td >:</td>
+        	<td >
+        	<input type = 'text' id = 'nama_pelbagainegara' name = 'nama_pelbagainegara' size='30' maxlength='200' class="$setmode" $readmodeR list = 'datalist'  value="$nama_pelbagainegara"    />
+        	<datalist id = 'datalist'>
+        	#foreach($ja in $kenegaraan)
+        	<option label='$!ja.NAMA_WARGA' value = '$!ja.NAMA_WARGA'></option>
+       	 	#end </datalist>
+        	</td>
+        </tr>
           
           <tr id="kp1" >
           <td valign="top" width="2%">#if($setmode != "disabled")
@@ -1336,7 +1345,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             #if($negeri!="" && $negeri!="0"  )
             
             <span id="socNegeri_1a">
-						<select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati()" style="text-transform:uppercase;" onBlur="uppercase()">
+<select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati()" style="text-transform:uppercase;" onBlur="uppercase()">
                           <option value="$negeri">$negerikodpemoP - $negeriketeranganpemoP</option>
                                   #foreach($listnegpomo in $listnegeri)                                 
                                   #if($negeri!=$listnegpomo.id_Negeri)
@@ -1378,7 +1387,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
         </tr>        
                 
         <tr>
-          <td valign="top">#if($setmode != "disabled")#end</td>
+          <td valign="top">#if($setmode != "disabled") <span class="style1">*</span> #end</td>
           <td class="style38" ><div align="left">#if($setmode != "disabled") Bandar #else
             Bandar
             #end </div></td>
@@ -1432,7 +1441,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
           <span id="socBandar_1a">
         
           
- 				 <select name="socBandar" id="socBandar" class="autoselect" $setmode   style="text-transform:uppercase;" onBlur="uppercase()" onclick="CheckBandar()" >
+  <select name="socBandar" id="socBandar" class="autoselect" $setmode   style="text-transform:uppercase;" onBlur="uppercase()" onclick="CheckBandar()" >
                           <option value="$daerah">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
                                   #foreach($listdaerah in $listBandarbyNegeri)                                 
                                   #if($daerah!=$listdaerah.id)
@@ -1461,33 +1470,8 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             </span>
             #end
             #end </td>
-        </tr> 
-        
-        <tr id="tr_mesej_pelbagainegara">
-        	<td valign="top">
-        	</td>
-       		<td valign="top">
-       	 	</td>
-        	<td valign="top">
-        	</td>
-        	<td valign="top"  >
-        	<div id="div_mesejpelbagagainegara"></div>
-        	</td>        
-        </tr>  
-        
-        <tr id="tr_pelbagainegara">
-               <td valign="top" ></td>
-               <td>Negara (Alamat)</td>
-               <td >:</td>
-               <td >
-               <input type = 'text' id = 'nama_pelbagainegara' name = 'nama_pelbagainegara' size='30' maxlength='200' $setmodeR class="$setmode" list = 'datalist'  value="$nama_pelbagainegara"    />
-               <datalist id = 'datalist'>
-               #foreach($ja in $kenegaraan)
-               <option label='$!ja.NAMA_WARGA' value = '$!ja.NAMA_WARGA'></option>
-               #end </datalist>
-               </td>
         </tr>
-        
+         
          <tr>
           <td class="style38" valign="top" >&nbsp;</td>
           <td class="style38" >No Tel (R/P)</td>
@@ -1970,36 +1954,24 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             </tr>
             <tr>
 		            	<td valign="top" width="2%">
-		            	<span class="style1">*</span>
 		              	</td>
 		             	<td width="28%"> Muatnaik MyID </td>
 		             	<td width="1%">:</td> 
 		             	<td width="9%">
-							<input type="button" id="uploadmyid" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'MyID')" />
+							<input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'MyID')">
 							<br>
-							#if($lampirans != "")
-								<input type="hidden" name="namaDoc1" value="1" />
-							#else
-								<input type="hidden" name="namaDoc1" value="0" />
-							#end
 							$!lampirans
 						</td>
              		</tr>
 					
 					<tr>            
 				    	<td valign="top" width="2%">
-				    	<span class="style1">*</span>
 				      	</td>
-				     	<td width="28%"> Muatnaik Sijil Mati / Surat Akuan / Anggapan Kematian / Permit Pengkuburan </td>
+				     	<td width="28%"> Muatnaik Sijil Mati </td>
 				     	<td width="1%">:</td> 
 				     	<td width="9%">
-							<input type="button" id="fileupload" name="fileupload" value="Lampiran" onClick="lampiran(this.value,'cod')">
+							<input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'cod')">
 							<br>
-							#if($lampiranSijil != "")
-								<input type = "hidden" name="namaDoc2" id="namaDoc2" value="1" />
-							#else
-								<input type = "hidden" name="namaDoc2" id="namaDoc2" value="0" />
-							#end
 							$!lampiranSijil     
 						</td>
       				</tr>            
@@ -2123,11 +2095,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 <script>
 selectPelbagaiNegara(document.f1.socNegeri_1a.value,'tr_mesej_pelbagainegara','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');
 selectPelbagaiNegara(document.f1.socNegeri_2a.value,'listnegpomo','listnegeri','nama_negeri');
-alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga','$nama_pelbagainegara');
-	
-	function showNegara(){
-		alert('test');
-	}
+alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_pelbagainegara','$nama_pelbagainegara');
 
   function paparLampiran(id_){
   	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
@@ -2296,10 +2264,10 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
       alert("Sila pilih negeri");
       document.f1.socNegeri.focus();
     }
-    //else if (document.f1.socBandar[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
-    //  alert("Sila pilih bandar");
-    //  document.f1.socBandar.focus();
-    //}
+    else if (document.f1.socBandar[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
+      alert("Sila pilih bandar");
+      document.f1.socBandar.focus();
+    }
     else if (document.f1.txtPoskod[0] != 'null' && document.f1.txtPoskod[0].value != "" && document.f1.txtPoskod[0].value.length < 5 && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20") ) {
       alert("Sila masukkan nombor poskod dengan lengkapnya");
       document.f1.txtPoskod[0].focus();
@@ -2400,6 +2368,8 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
     else if (document.f1.txtNoKPLainSimati.value!="" && document.f1.socJenisKPLainSimati.value=="0") {
       alert("Sila pilih jenis MyID Lain Simati");
     }
+    
+    
     else if (document.f1.txtNamaSimati != 'null' && document.f1.txtNamaSimati.value=="" 
         //&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
         ) {
@@ -2415,17 +2385,16 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
     }else if (date1 > currentTime){
       alert("Sila pastikan tarikh mati tidak melebihi dari tarikh hari ini.");
       document.f1.txtTarikhMati.focus();
-    }
-
-    else if(document.f1.namaDoc1.value == "0" && document.f1.namaDoc2.value =="1"){
-    	alert('Sila muatnaik MyID simati.');
-     	document.f1.uploadmyid.focus(); 
-    }
-    else if(document.f1.namaDoc2.value == "0" && document.f1.namaDoc1.value =="1"){
-      alert('Sila muatnaik Sijil Mati.');
-    document.f1.fileupload.focus(); 
-   	}
-    else{
+ 
+    //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
+     // alert('Sila muatnaik MyID simati.');
+      //document.f1.fileupload.focus(); 
+    //}
+    //else if(document.f1.fileupload != 'null' && document.f1.fileupload.value==""){
+    //  alert('Sila muatnaik Sijil Mati.');
+  //  document.f1.fileupload.focus(); 
+  
+    }else{
       input_box = confirm("Adakah anda pasti?");
       if (input_box == true) {
         document.f1.method = "POST";
@@ -3009,35 +2978,6 @@ if(document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == 
     }
 }
 
-  function pilih_majlisagama()
-  {
-	  if(document.f1.taraf_penting.value == '6')
-	  {
-	  document.f1.jenis_pej.value = document.f1.jenis_pej1.value;
-	  }
-	  if(document.f1.taraf_penting.value == '8')
-	  {
-	  document.f1.jenis_pej.value = document.f1.jenis_pej2.value;
-	  }
-	  if(document.f1.taraf_penting.value == '20')
-	  {
-	  document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
-	  }
-
-
-	  if('$!skrin_online_popup' == "yes")
-	  {
-	  url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
-	  }
-	  else
-	  {
-	  url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-	  }
-	    actionName = "getalamat_raya";
-	    target = "add_alamat_raya";
-	    doAjaxUpdater(document.f1, url, target, actionName);
-
-	  }
 
 function alamat_raya()
 {

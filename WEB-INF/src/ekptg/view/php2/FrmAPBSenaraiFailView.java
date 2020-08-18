@@ -47,12 +47,11 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
         String idFail = getParam("idFail");
         String idStatus = getParam("idStatus");
         String idPermohonan = "";
-        String idPemohon = getParam("idPemohon");;
+        String idPemohon = "";
         String idFailLama = "";
         
         //VECTOR
         Vector<Hashtable<String,String>> list = null;
-        Vector<Hashtable<String,String>> listSyarikat = null;
         
         Vector beanMaklumatPermohonan = null;
         Vector beanMaklumatPemohon = null;
@@ -376,7 +375,7 @@ public class FrmAPBSenaraiFailView extends AjaxBasedModule {
          	list = logic.getCarianFail(getParam("txtNoFail"),getParam("txtPemohon"), getParam("txtNoPengenalan"), getParam("txdTarikhTerima"),getParam("txtNoLesen"), idStatusC);
          	//logic.carianFail(getParam("txtNoFail"),getParam("txtPemohon"), getParam("txtNoPengenalan"), getParam("txdTarikhTerima"),getParam("txtNoLesen"), idStatusC);
 			//list = logic.getSenaraiFail();
-			this.context.put("SenaraiFail", list);	
+			this.context.put("SenaraiFail", list);			
 			
 			this.context.put("txtNoFail", getParam("txtNoFail"));
 			this.context.put("txtPemohon", getParam("txtPemohon"));

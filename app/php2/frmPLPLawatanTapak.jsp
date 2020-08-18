@@ -151,14 +151,10 @@
   </tr>  
   <tr>
     <td align="center">
-    	#if($idStatus == '1610200')
-    	<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
-    	<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-    	#end
-    	#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
-        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
-        #end
-    </td>
+    #if($idStatus == '1610200')
+    <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
+    <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+    #end</td>
   </tr>
    #end
 </table>
@@ -188,10 +184,6 @@ function seterusnya(){
 }
 function gotoBatalPermohonan(){	
 	document.${formName}.step.value = "batalPermohonan";
-	document.${formName}.submit();
-}
-function gotoSenaraiFailKeseluruhan() {
-	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
 	document.${formName}.submit();
 }
 </script>

@@ -53,10 +53,13 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 	
 	public Vector getDataPPSPP() {
 		return list;
+		
 	}
 	
+
 	public Vector getPerubahanAkta() {
 		return listUbah;
+		
 	}
 	
 	public  Vector setPerubahanAkta() throws Exception {
@@ -204,6 +207,14 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 							"TBLPPKPERMOHONANSIMATI MOSI" 
 							//", USERS_INTERNAL UR  "
 					+ " WHERE " +
+					//		"F.ID_NEGERI = N.ID_NEGERI(+)  "
+					// +" AND N.ID_NEGERI = PM.ID_NEGERISURAT(+)"
+					//+ " AND P.ID_DAERAHMHN = D.ID_DAERAH(+) "
+					//+ " AND UR.USER_ID  = '"
+					//+ userid
+					//+ "' "
+					//+ " AND UR.ID_PEJABATJKPTG = U.ID_PEJABATJKPTG "
+					//+ " AND " +
 							"P.ID_FAIL = F.ID_FAIL"
 					// + " AND PM.ID_PERMOHONAN = P.ID_PERMOHONAN(+) "
 					+ " AND P.ID_PEMOHON = PM.ID_PEMOHON(+) "
@@ -2935,7 +2946,6 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			
 			
 			String no_hp = (String) data.get("no_hp");
-			String emel = (String) data.get("emel");
 			String taraf_penting = (String) data.get("taraf_penting");
 			String jenis_pemohon = (String) data.get("jenis_pemohon");
 			String adaob = (String) data.get("adaob");
@@ -3079,7 +3089,6 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				r.add("umur", txtUmurPemohon);
 				r.add("jantina", socJantinaPemohon);
 				r.add("no_hp", no_hp);
-				r.add("emel",emel);
 			} else {
 				r.add("no_kp_baru", "");
 				r.add("no_kp_lama", "");
@@ -3088,7 +3097,6 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				r.add("umur", "");
 				r.add("jantina", "");
 				r.add("no_hp", "");
-				r.add("emel",emel);
 
 			}
 			r.add("nama_pemohon", nama_pemohon.toUpperCase());
@@ -10082,13 +10090,6 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				h.put("butiran",
 						rs.getString("butiran") == null ? "" : rs
 								.getString("butiran"));
-				
-				//SYAFIQAH ADD UNTUK PAPAR LAMPIRAN 230720
-				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
-				h.put("lampirans", l.getLampiransHA(rs.getString("id_Ha")));
-				
-				System.out.println(h);
-				
 				listDataHa.addElement(h);
 				bil++;
 			}
@@ -10337,10 +10338,6 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				h.put("butiran",
 						rs.getString("butiran") == null ? "" : rs
 								.getString("butiran"));
-				
-				//SYAFIQAH ADD UNTUK PAPAR LAMPIRAN 230720
-				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
-				h.put("lampirans", l.getLampirans(rs.getString("id_Ha")));
 
 				listDataHadulu_pilihan.addElement(h);
 				bil++;
@@ -11262,10 +11259,8 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 		Db db = null;
 		listChckId.clear();
 		String sql = "Select count(p.id_pemohon) as ids from tblppkpemohon pm, tblppkpermohonan p " +
-				"where p.id_pemohon = pm.id_pemohon and p.id_permohonan = '"
-				+ id + "'";
-		myLogger.info("COUNT :" + sql);
-
+				" where p.id_pemohon = pm.id_pemohon and p.id_permohonan = '"+ id + "'";
+//		myLogger.info("COUNT :" + sql);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			db = new Db();
@@ -11277,8 +11272,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("count_id",
-						rs.getString("ids") == null ? "" : rs.getString("ids"));
-
+				rs.getString("ids") == null ? "" : rs.getString("ids"));
 				listChckId.addElement(h);
 				bil++;
 			}

@@ -242,7 +242,7 @@
   <tr>
     <td align="center">
 	#if (!$!jenisAkses.equals('Readonly'))
-    	#if($pagemode == "3" )
+    	#if($pagemode == "" )
 		<input class="stylobutton" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="tambahMaklumatsewaansimpan('$permohonanInfo.idpermohonan')" />
 		#end
 				
@@ -251,9 +251,9 @@
 		<input class="stylobutton" type="reset" name="cmdReset" id="cmdReset" value="Kosongkan" />
 		#elseif($pagemode == "4")
 		<input  class="stylobutton"type="button" name="cmdKemaskini" id="cmdsblm" value="Kemaskini" onclick="kemaskiniMaklumatSewaan()" />
-		
+		<!-- Komen pada 15/06/2010
 		<input class="stylobutton" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="backPre('$permohonanInfo.idfail','$permohonanInfo.idpermohonan')" />
-		<input  class="stylobutton"type="button" name="cmdSeterusnya" id="cmdsblm" value="Seterusnya" onclick="nexti8('$permohonanInfo.idpermohonan')" />
+		<input  class="stylobutton"type="button" name="cmdSeterusnya" id="cmdsblm" value="Seterusnya" onclick="nexti8('$permohonanInfo.idpermohonan')" /> -->
         #else
         <input class="stylobutton" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="updateMaklumatSewaan('$permohonanInfo.idpermohonan')" />
         <!-- Komen pada 15/06/2010

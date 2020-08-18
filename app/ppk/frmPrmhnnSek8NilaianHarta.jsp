@@ -1126,7 +1126,14 @@ kod :: $listhath.kod_hakmilik
 	               	#else
 	                           #set ( $checked = "" )
 	             	#end
-	                        <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked $modeSoc>
+<!-- 	                <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked $modeSoc> -->
+					#if($!skrin_deraf == "yes")
+						
+				        	<input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked />
+				        #else
+				        	<input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked disabled/>
+				        
+				    #end
 	</td>
 	<td width="92%">$i. $semak.keterangan</td>
 	<td width="5%">$semak.lampirans</td>
@@ -1404,11 +1411,31 @@ kod :: $listhath.kod_hakmilik
 </tr>
 #end
 
+<!--  syafiqah add 140820 -->
+<tr>
+	<td></td>
+	<td>Borang A</td>
+	<td>:</td>
+	<td>#if($!skrin_deraf == "yes")
+			<input type="button" name="boranga" id="boranga" size="40" value="Muatnaik Borang A" size="40" onClick="lampiran('$!idSimati','dokumenA')"/>
+		#end
+		<br>
+		#if($lampirans != "")
+			<input type="hidden" name="namaDoc1" value="1" />
+		#else
+			<input type="hidden" name="namaDoc1" value="0" />
+		#end
+		$!lampirans
+	</td>
+</tr>
+
 #foreach($View in $View_pengesahan_pemohonan)
         #set ($namaPemohon = $View.namaPemohon)
         #set ($noKpBaruPemohon1 = $View.noKpBaruPemohon1)
         #set ($noKpBaruPemohon2 = $View.noKpBaruPemohon2)
         #set ($noKpBaruPemohon3 = $View.noKpBaruPemohon3)
+        #set ($jenis_pemohon = $View.jenis_pemohon)
+        #set ($noKpBaruPemohon = $View.noKpBaruPemohon)
     #end
     <!--  skrin_deraf= $skrin_deraf-->
     #if($!skrin_deraf == "yes")
@@ -1419,8 +1446,14 @@ kod :: $listhath.kod_hakmilik
     		#else
     		<td width="3%" valign="top"><input type="checkbox" name='namecb1' id='namecb1' checked disabled></td>
     		#end
-      	<td width="89%">Saya $!namaPemohon no.k/p $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-	</td></tr>
+    		
+    	#if ($jenis_pemohon == "2")
+      	<td width="89%">Saya $!namaPemohon MyID $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+		#elseif($jenis_pemohon == "1")
+		<td width="89%">Kami $!namaPemohon dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+		
+		
+	</td>#end</tr>
 	#end
   	
 <tr>
@@ -1443,12 +1476,14 @@ kod :: $listhath.kod_hakmilik
 
 #if ($idStatus == "150")
 	#if($!namapejabat != "")
-	<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()">
+<!-- 	<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()"> -->
+	<input type="button" name="cmdBorangA" value="Cetak Borang A" onClick="javascript:cetakBorangA('$id','$!no_fail_online')">
 	<input type="button" name="cmdHantar" value="Hantar ke $!namapejabat" onClick="javascript:getUnitPPK('$id','$nopermohonanonline')">
 <!--<input type="button" name="cmdKosongkan" value="Kosongkan" onClick="PengesahanView('3','0','0','0')">-->
 	
 	#else
-	<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()">
+<!-- 	<input type="button" name="cmdBorangADraf" value="Cetak Draf Borang A" onClick="javascript:cetakBorangADraf()"> -->
+	<input type="button" name="cmdBorangA" value="Cetak Borang A" onClick="javascript:cetakBorangA('$id','$!no_fail_online')">
 	#end
 
 #else
@@ -1460,7 +1495,7 @@ kod :: $listhath.kod_hakmilik
 		#end
 	
 	#end
-	<input type="button" name="cmdBorangA" value="Cetak Borang A" onClick="javascript:cetakBorangA('$id','$!no_fail_online')">
+<!-- 	<input type="button" name="cmdBorangA" value="Cetak Borang A" onClick="javascript:cetakBorangA('$id','$!no_fail_online')"> -->
 	<input type="button" name="cmdPengesahanA" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahan()">
 	<div align="left">
 
@@ -1861,9 +1896,18 @@ function getUnitPPK(idpermohonan,nopermohonanonline) {
 			alert("Sila pilih Daerah");
 			socDaerahPengesahan.focus();
 		}
+// 		else if (document.f1.boranga.value=="")
+// 		{
+// 			alert("Sila cetak dan muatnaik semula Borang A untuk meneruskan permohonan");
+// 			boranga.focus();
+// 		}
+		 else if(document.f1.namaDoc1.value == "0"){
+	    	alert('Sila muatnaik Borang A untuk meneruskan permohonan.');
+	     	document.f1.uploadmyid.focus(); 
+	    }
 		else if(namecb1.checked == false)
  		{
-    	alert('Sila tanda pada checkbox untuk teruskan permohonan');
+    	alert('Sila tanda pada checkbox untuk teruskan permohonan.');
     	return;
  		}
 		else
@@ -2209,6 +2253,37 @@ document.f1.txtHaNilaiTarikhMati.value = document.f1.txtHaNilaiTarikhMohon.value
 }
 
 
+}
+
+function lampiran(idSimati,jenisUpload) {	
+	// console.log("syafiqah :"+idPermohonan);
+	jenisUpload = "paparboranga";
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenA&actionPopup="+jenisUpload+"&rujukan="+idSimati+"&flagOnline=$!flagOnline";
+    url +="&jenisdokumen=99211";
+		
+	//
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Lampiran';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+
+}
+
+function semakLampiran(){
+  	document.f1.command.value="nilai_harta";
+	document.f1.mode.value="ppkAddressView";
+	//document.f1.tabIdatas.value="4";
+	//document.f1.tabIdtengah.value="0";
+	//document.f1.tabIdbawah.value="0";
+	//document.f1.tabIdtepi.value="0";
+	document.f1.action.value="";	
+	document.f1.submit();
 }
 
 </script>

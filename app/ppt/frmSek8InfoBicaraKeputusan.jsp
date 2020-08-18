@@ -1207,7 +1207,7 @@ Lain - Lain Kos</td>
 <legend><strong>SENARAI LAPORAN</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
       <tr>  
-      	 <td><a href="#" onClick="javascript:cetakNotaSiasatan('$!id_siasatan','$!id_permohonan','$!id_hakmilik')"><font color="blue">Nota Siasatan</font></a></td>
+      	 <td><a href="#" onClick="javascript:cetakNotaSiasatan('$!id_siasatan','$!id_permohonan')"><font color="blue">Nota Siasatan</font></a></td>
       </tr>  
       <tr>  
       	 <td><a href="#" onClick="javascript:cetakIringanARB('$!id_siasatan','$!id_permohonan')"><font color="blue">Surat Iringan Amanah Raya Berhad</font></a></td>
@@ -5554,9 +5554,9 @@ function cetakSiasatanAPPBUlang(idfail) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-function cetakNotaSiasatan(id_siasatan,idpermohonan,id_hakmilik) {
+function cetakNotaSiasatan(id_siasatan,idpermohonan) {
 
-	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_siasatan="+id_siasatan+"&id_hakmilik="+id_hakmilik+"&report=NotaSiasatanSek8&selectNoFail=yes";
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_siasatan="+id_siasatan+"&report=NotaSiasatanSek8&selectNoFail=yes";
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

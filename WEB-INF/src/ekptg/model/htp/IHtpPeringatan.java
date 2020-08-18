@@ -1,6 +1,5 @@
 package ekptg.model.htp;
 
-import java.util.Hashtable;
 import java.util.Vector;
 
 import ekptg.model.htp.entity.HtpPermohonan;
@@ -15,7 +14,5 @@ public interface IHtpPeringatan {
 	throws Exception ;
 	public Vector getSenaraiPeringatan15(String search,String idUrusan,String tbl
 			, String hantar,String terima)throws Exception ;
-//	public Vector<HtpPermohonan> getSenaraiPeringatanHari(String search,String idUrusan,String tbl
-//			, String hantar,String terima)throws Exception ;
 
 }

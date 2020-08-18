@@ -10,8 +10,6 @@
 -->
 <style type="text/css">
 <!--
-
-.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -222,11 +220,6 @@
                         				<td width="50%"> 
               						#if($show_htaa_add_table=="yes")
                           					<fieldset><legend>HARTA TAK ALIH (ADA HAKMILIK)</legend>
-                          					#if($!skrin_online == "yes")
-                          					<div id="info_skrin_daftar_sek8"></div>
-															      <script>
-															 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><table><tr><b><blink>*</blink> Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Ada Hakmilik): Harta tak alih yang mempunyai hakmilik/geran yang berdaftar nama si mati sebagai pemilik.</br></b></div>";
-															 			</script> #end
                           					<table width="100%" border="0">
 					                  		#if($!skrin_online != "yes") 
 					                          	<tr>
@@ -245,12 +238,7 @@
 						                                      		</div>
 						                                      	</td>
                                     							<td width="1%"><div align="right">:</div></td>
-                                    							<td width="70%">$!socNegeri
-																										#if($!skrin_online == "yes")
-																									<a href="javascript:info('maklumat_tanah')" class="help" title="info">					
-									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                            			</a>#end                                    							
-                                    							</td>
+                                    							<td width="70%">$!socNegeri</td>
                          									</tr>
 						                                  	
 						                                  	<tr>
@@ -282,12 +270,7 @@
 						                                        <div align="left">Jenis Hakmilik</div>
 						                                      	</div></td>
 						                                    	<td><div align="right">:</div></td>
-						                                    	<td>$!socJenisHakmilik
-																									#if($!skrin_online == "yes")
-						                                    	<a href="javascript:info('tanah')" class="help" title="info">
-						                                    	<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-						                                    	</a>#end
-						                                    	</td>
+						                                    	<td>$!socJenisHakmilik</td>
 						                                  	</tr>
 						                                  
 						                                  	<tr>
@@ -299,10 +282,9 @@
 						                                    	<td><label>
 						                                      		<input name="txtNoHakmilikHtaam" type="text" id="txtNoHakmilikHtaam" value="$!noHakmilik"  size="30" maxlength="50" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"/>
 						                                      	</label>
-						                                      	#if($!skrin_online == "yes")
-						                                      	<a href="javascript:info('hakmilik')" class="help" title="info">					
-									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                            			</a>#end
+						                                      	<a href="javascript:info('tanah')" class="help" title="info">							
+									                            <b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									                            </a>
 						                                      	</td>
 						                                  	</tr>
 						                                  
@@ -318,10 +300,7 @@
 						                                      #if($!skrin_online != "yes")
 						                                      		<input type="button" name="checkLotWujud" id="checkLotWujud" value="Semak" onclick="setSelected(1,0,0,0);checkWujudLot('txtNoPTHtaam');"/>
 						                                      		<font  color="blue"  onMouseOver="this.style.cursor='help'" onClick="open_new_window('1','');" ><img src="../img/info.png"  align="center" /></font> #end
-						                                      	#if($!skrin_online == "yes")
-						                                      	<a href="javascript:info('lot')" class="help" title="info">					
-									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                            			</a>#end
+						                                      
 						                                      #if($CheckWujudLot != "")
 						                                      #if($CheckWujudLot == "Y") <br />
 						                                      		<span id="CheckWujudLot" style="color:blue" >Maklumat Hakmilik telah disalin</span> #end
@@ -329,8 +308,7 @@
 						                                      		<span id="CheckWujudLot" style="color:red" >Hakmilik ini tidak pernah wujud didalam pengkalan data!</span> #end
 						                                      #end <br />
 						                                      	<span id="checklot" style="color:red" >
-						                                      	</span>
-						                                      	</td>
+						                                      	</span> </td>
 						                                  	</tr>                                  
                                    <!-- Salnizam edit starts --> 
       						                             	<tr>
@@ -405,10 +383,6 @@
 								                                    <td><input name="txtBahagianSimati1" type="text" id="txtBahagianSimati1" onKeyUp="javascript:validateIC(event,this,this.value,'txtBahagianSimati1')" style="text-align:right;text-transform:uppercase;" value="$basimati" size="14" maxlength="14" onblur="bahagiansimati()"/>
 								                                      /
 								                                      <input name="txtBahagianSimati2" type="text" id="txtBahagianSimati2" onKeyUp="javascript:validateIC(event,this,this.value,'txtBahagianSimati2')" style="text-align:left;text-transform:uppercase;" value="$bbsimati" size="14" maxlength="14" onblur="bahagiansimati()"/>
-								                                    #if($!skrin_online == "yes")
-								                                    <a href="javascript:info('bahagian')" class="help" title="info">					
-									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-									                            				</a>#end
 								                                    </td>
 							                                  	</tr>
 							                                  
@@ -584,12 +558,7 @@
 	                                        <option value="4">BUKAN TANAH GSA</option>
                         				</select>
                                   	#end 
-                                      </label>
-                                      #if($!skrin_online == "yes")
-																 	  	<a href="javascript:info('Tanah_gsa')" class="help" title="info">					
-																					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-																			</a>#end
-                                      </td>
+                                      </label></td>
                              	</tr>
                                   <!-- <tr>
                                     <td class="style38" valign="top"><div align="left">Catatan</div></td>
@@ -609,11 +578,6 @@
                                     <td width="1%" valign="top"><div align="right">:</div></td>
                                     <td valign="top">
                                       <textarea name="txtSyaratNyata" id="txtSyaratNyata" cols="31" rows="5" onblur="this.value=this.value.toUpperCase()">$syaratNyata</textarea>
-                                 	
-																#if($!skrin_online == "yes")
-																 	  	<a href="javascript:info('syarat')" class="help" title="info">					
-																					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
-																			</a>#end
                                  	</td>
                           		</tr>                                  
                                   
@@ -747,7 +711,7 @@
 		                                     	</td>
 		                                    	<td  width="60%"><span class="style36">
 		                                      		<input name="radioJenisHTA_update" id="radioJenisHTA_update" type="radio" onclick="setSelected(1,0,0,1);check_jenis_hta2();tukarjenis_HtaamX();"   $radioJenisHTA_update_checked2 value="2" />
-		                                      		<font color="BLUE" ><b>HARTA TAK ALIH (TIADA HAKMILIK)</b></font> </span>
+		                                      		<font color="BLUE" ><b>HARTA TAK ALIH (TIADA HAKMILIK)</b></font> </span> 
 		                                     	</td>
 		                                  	</tr>
 		                                  	
@@ -1266,8 +1230,7 @@
                                     <td valign="top">:</td>
                                     <td valign="top"><label>
                                       <textarea name="txtSyaratNyata" id="txtSyaratNyata" $readmodeR class="$readmode" value="$!htaHash.syaratNyata" cols="31" rows="5"  onblur="this.value=this.value.toUpperCase()">$!htaHash.syaratNyata</textarea>
-                                    </label> 
-																			</td>
+                                    </label></td>
                               	</tr>                                  
                        		
                        		<tr id="tr_flag_daftar"  style="display:none">
@@ -1477,20 +1440,20 @@
 	                  				<td></td>
 	                     		#end 
 	                     			<td>  
-                              		#if($tambahharta == "yes")
+                              		##if($tambahharta == "yes")
                           				#if($id_Status != "169" 
                           					&& $id_Status != "21" 
                           					&& $id_Status != "64" 
                           					&& $id_Status != "163" 
                           					&& $id_Status != "164" 
                           					&& $id_Status != "165")
-	                              			#if($open_button_online == "yes")
-			                        		<a href = "javascript:lampiranHarta('$listam.idhta');">
-												<img border="0" src="../img/plus.gif" width="20" height="15"/>
-											</a><br>
-											#end	
+                              			##if($open_button_online == "yes")
+		                        		<a href = "javascript:lampiranHarta('$listam.idhta');">
+											<img border="0" src="../img/plus.gif" width="20" height="15"/>
+										</a><br>
+										##end	
 										#end
-									#end	
+									##end	
 							 			$listam.lampirans
 	                  				</td>
 	                 			</tr>    	                    	             
@@ -3500,7 +3463,7 @@ function cetakDokumen(id){
 	}	
 	function lampiranHarta(idHarta) {
 	    //
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=paparHTA&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTA&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;
@@ -3516,8 +3479,7 @@ function cetakDokumen(id){
 
 	}
 	function lampiranHartaPapar(id_){
-		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=hta";
-		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
+		var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=hta";
 	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener=document.window;

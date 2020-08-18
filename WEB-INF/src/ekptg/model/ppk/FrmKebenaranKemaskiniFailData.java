@@ -178,7 +178,8 @@ public class FrmKebenaranKemaskiniFailData {
 	}
 	
 public Hashtable getMainFail(String ID_FAIL) throws Exception {
-		
+	
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Db db = null;
 		String sql = "";
 		try {
@@ -186,8 +187,8 @@ public Hashtable getMainFail(String ID_FAIL) throws Exception {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			sql = " SELECT P.ID_PEGAWAI_MOHON_EDIT,P.ID_PEMOHON_MOHON_EDIT, P.CATATAN_KEBENARAN_EDIT,U.USER_NAME,P.USER_ID_KEBENARAN_EDIT,P.FLAG_KEBENARAN_EDIT,P.ID_STATUS," +
-					" F.ID_FAIL,P.ID_PERMOHONAN,F.NO_FAIL,F.ID_SUBURUSAN,UP.USER_NAME AS NAMA_PEGAWAI_EDIT,UM.USER_NAME AS NAMA_PEMOHON_EDIT, P.TUJUAN_PINDAAN  " +
-					" FROM TBLPFDFAIL F,TBLPPKPERMOHONAN P,USERS U, USERS UP, USERS UM "+
+					" F.ID_FAIL,P.ID_PERMOHONAN,F.NO_FAIL,F.ID_SUBURUSAN,UP.USER_NAME AS NAMA_PEGAWAI_EDIT,UM.USER_NAME AS NAMA_PEMOHON_EDIT, P.TUJUAN_PINDAAN, P.TARIKH_MULA_PINDA, P.TARIKH_AKHIR_PINDA,  " +
+					" P.TARIKH_SELESAI_PINDA, P.FLAG_PINDA_SELESAI FROM TBLPFDFAIL F,TBLPPKPERMOHONAN P,USERS U, USERS UP, USERS UM "+
 				  " WHERE F.ID_FAIL = P.ID_FAIL AND F.ID_FAIL = '"+ID_FAIL+"' AND P.USER_ID_KEBENARAN_EDIT = U.USER_ID(+) " +
 				  		" AND P.ID_PEGAWAI_MOHON_EDIT = UP.USER_ID(+) AND P.ID_PEMOHON_MOHON_EDIT = UM.USER_ID(+)  ";	
 			
@@ -321,6 +322,30 @@ public Hashtable getMainFail(String ID_FAIL) throws Exception {
 					h.put("TUJUAN_PINDAAN", "");
 				} else {
 					h.put("TUJUAN_PINDAAN", rs.getString("TUJUAN_PINDAAN"));
+				}
+				
+				if (rs.getString("TARIKH_MULA_PINDA") == null) {
+					h.put("TARIKH_MULA_PINDA", "");
+				} else {
+					h.put("TARIKH_MULA_PINDA", sdf.format(rs.getDate("TARIKH_MULA_PINDA")));
+				}
+				
+				if (rs.getString("TARIKH_AKHIR_PINDA") == null) {
+					h.put("TARIKH_AKHIR_PINDA", "");
+				} else {
+					h.put("TARIKH_AKHIR_PINDA", sdf.format(rs.getDate("TARIKH_AKHIR_PINDA")));
+				}
+				
+				if (rs.getString("TARIKH_SELESAI_PINDA") == null) {
+					h.put("TARIKH_SELESAI_PINDA", "");
+				} else {
+					h.put("TARIKH_SELESAI_PINDA", sdf.format(rs.getDate("TARIKH_SELESAI_PINDA")));
+				}
+				
+				if (rs.getString("FLAG_PINDA_SELESAI") == null) {
+					h.put("FLAG_PINDA_SELESAI", "");
+				} else {
+					h.put("FLAG_PINDA_SELESAI", rs.getString("FLAG_PINDA_SELESAI"));
 				}
 				
 			}
@@ -1889,6 +1914,57 @@ public Hashtable getMainFail(String ID_FAIL) throws Exception {
 				h.put("USER_ROLE",
 						rs.getString("USER_ROLE") == null ? "" : rs
 								.getString("USER_ROLE"));
+				listTechTeam_aduan.addElement(h);
+			}
+			return listTechTeam_aduan;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
+	
+	public Vector senarai_pegawai_PPKNegeri(String idNegeri,String role,String user_id,String flag_all,String id_fail)
+			throws Exception {
+		listTechTeam_aduan = new Vector();
+		Db db = null;
+		listTechTeam_aduan.clear();
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			sql = "SELECT ID_UNITPSK, USER_ID, NVL(KOD,'') KOD, upper(NAMA_PEGAWAI) NAMA_PEGAWAI,STATUS_PEG " + 
+					" ,case " + 
+					" 	when STATUS_PEG=1 then '(Aktif)' "+ 
+					" 	else '(Tidak Aktif)' " + " " +
+					" end AS CATATAN " + 
+					" FROM TBLPPKRUJUNIT WHERE ID_NEGERI = '" + idNegeri+ "' " +
+					" ORDER BY STATUS_PEG desc ,NAMA_PEGAWAI asc";
+			
+			
+			
+			myLogger.info("SQL TEAM TECHNICAL xxxxxx :" + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int bil = 0;
+			while (rs.next()) {
+				bil = bil + 1;
+				h = new Hashtable();
+				h.put("BIL", bil);
+				
+				h.put("user_name",
+						rs.getString("NAMA_PEGAWAI") == null ? "" : rs
+								.getString("NAMA_PEGAWAI"));				
+				h.put("user_id",
+						rs.getString("ID_UNITPSK") == null ? "" : rs
+								.getString("ID_UNITPSK"));
+				h.put("catatan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				h.put("userID",
+						rs.getString("USER_ID") == null ? "" : rs
+								.getString("USER_ID"));
+				
 				listTechTeam_aduan.addElement(h);
 			}
 			return listTechTeam_aduan;

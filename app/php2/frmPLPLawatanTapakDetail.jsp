@@ -67,11 +67,8 @@
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td> 
-      #if ($mode == 'view')
-      #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+    <td> #if ($mode == 'view')
       <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskiniMaklumatLaporanTanah()"/>
-      #end
       <input type="button" name="cmKembali" id="cmKembali" value="Kembali" onclick="kembali()"/>
       #end
       #if ($mode == 'update')

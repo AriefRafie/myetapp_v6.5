@@ -35,6 +35,7 @@ import ekptg.helpers.HTML;
 import ekptg.model.integrasi.FrmModelNilaianHartaAlihKenderaan;
 import ekptg.model.integrasi.FrmModelNilaianHartaTakAlih;
 import ekptg.model.ppk.FrmHeaderPpk;
+import ekptg.model.ppk.FrmKebenaranKemaskiniFailData;
 import ekptg.model.ppk.FrmPermohonanDaftarData;
 import ekptg.model.ppk.FrmPermohonanHTAData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
@@ -58,7 +59,7 @@ import ekptg.ws.mb.MbManager;
 import ekptg.ws.ssm.SsmManager;
 
 public class FrmPrmhnnSek8Internal extends VTemplate {
-
+	         
 	private static final long serialVersionUID = 7374422683199881990L;
 	static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8Internal.class);
 	protected DbPersistence db = new DbPersistence();
@@ -69,10 +70,17 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 
 	FrmPermohonanHTAData permohonanInternal = null;
 	FrmPermohonanDaftarData permohonanDaftar = null;
+	FrmKebenaranKemaskiniFailData logic = new FrmKebenaranKemaskiniFailData();
 	Vector senaraiNegeribydaerah = null;
 	Vector senaraiMukim = null;
 	String page = ""; 
 	String bolehsimpan_ = "";
+	String role = "";
+	String user_negeri_login = "";
+	String userId = "";
+	HttpSession session = null;
+	String pilihpegawai = "";
+	String flag_pengesahanPegawai = "";
 
 	//END 25/08/2017
 //IL start
@@ -114,11 +122,17 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		FrmModelNilaianHartaTakAlih modelNilaianHartaTakAlih = new FrmModelNilaianHartaTakAlih();//IL
 		FrmModelNilaianHartaAlihKenderaan modelNilaianHartaAlihKenderaan = new FrmModelNilaianHartaAlihKenderaan();//IL
 		String submit = "";
+		String commandPN = "";
 		String mode = "";
 		String idAlert = "";
 		String modeIntegrasi = "false";//IL
 		String printOption = "";
 		submit = getParam("command");
+		commandPN = getParam("commandPN");
+		if ("cariPN".equals(commandPN)) 
+		{
+			submit = "cariPN";
+		}
 		mode = getParam("mode");
 		myLogger.info("**********************************submit"+submit);
 		myLogger.info("MODE = "+mode);
@@ -130,7 +144,11 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		String upload = getParam("upload");
 //		String idSimati2 = getParam("idSimati");
 		headerppk_baru_default();
-
+		session = request.getSession();
+		userId = (String) session.getAttribute("_ekptg_user_id");
+		user_negeri_login = (String) session.getAttribute("_ekptg_user_negeri");
+		Vector listTechTeam_aduan = null;
+		context.put("listTechTeam_aduan", "");
 		this.context.put("skrin_online_17", "");
 		this.context.put("skrin_online", "");
 		this.context.put("skrin_online_popup", "");
@@ -145,7 +163,8 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		} else {
 			bolehsimpan = "yes";
 		}
-
+		role = (String) session.getAttribute("myrole");
+		this.context.put("USER_ROLE", role);
 		String flagFromSenaraiFailSek8 = getParam("flagFromSenaraiFailSek8");
 		String flagFromSenaraiPermohonanSek8 = getParam("flagFromSenaraiPermohonanSek8");
 		String flagForView = getParam("flagForView");
@@ -310,6 +329,25 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			String JenisIc = getParam("jenisIc");
 			String usid = (String) session.getAttribute("_ekptg_user_id");
 			logic_D.setCarianFail(usid, noFail, namaPemohon, namaSimati, icSimati, JenisIc);
+			list1 = logic_D.getList();
+			listDaerahByUser = logic_A.getDaerahByNegeriUser((String) session.getAttribute("_ekptg_user_id"));
+			this.context.put("ListDaerahByUserX", listDaerahByUser);
+			int countList1 = list1.size();
+			this.context.put("Senaraifail", list1);
+			this.context.put("CountList", countList1);
+			prepareItemForDisplay(session, list1, 25, "first");
+			vm = "app/ppk/frmSenaraiFailPusakaKecil.jsp";
+		}
+		else if ("cariPN".equals(submit)) {
+			Carix = "1";
+			this.context.put("carix", Carix);
+			String noFail = getParam("txtNoFail");
+			String namaPemohon = getParam("txtPemohon");
+			String namaSimati = getParam("txtSimati");
+			String icSimati = getParam("txtIcSimati");
+			String JenisIc = getParam("jenisIc");
+			String usid = (String) session.getAttribute("_ekptg_user_id");
+			logic_D.setcarianPN(usid);
 			list1 = logic_D.getList();
 			listDaerahByUser = logic_A.getDaerahByNegeriUser((String) session.getAttribute("_ekptg_user_id"));
 			this.context.put("ListDaerahByUserX", listDaerahByUser);
@@ -4943,6 +4981,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			logic_A.updateDataNilai(id, mati, (String) session.getAttribute("_ekptg_user_id"));
 			vm = "app/ppk/frmPrmhnnSek8HA.jsp";
 		}else if ("nilai_harta".equals(submit)) {
+			String idPermohonan = getParam("idPermohonan");
 			myLogger.info("submit="+submit);
 			myLogger.info("mode="+mode);
 			this.context.put("id", "");
@@ -4954,6 +4993,30 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 			this.context.put("show_batal_button", "");
 			this.context.put("EventStatus", "");
 			this.context.put("tutup", "");
+			String id_fail_atheader = getParam("id_fail_atheader");
+			String idNegeri = "";
+			logic_internal.setDataSimati(idPermohonan);
+			listSimati = logic_internal.getDataSimati();
+			this.context.put("listSimati", listSimati);
+			
+			Hashtable h2 = (Hashtable) listSimati.get(0);
+			if (h2.get("idnegeri").toString() != "" && h2.get("idnegeri").toString() != "0") {
+				//Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(h2.get("idnegeri").toString()));
+				idNegeri = h2.get("idnegeri").toString();
+			}
+			//String idNegeri = getParam("listidnegeri");
+			myLogger.info("idNegeri="+idNegeri);
+			/*if (idNegeri != "") {
+				context.put("selectPegawai", HTML
+						.SelectPegawaiPengendaliByNegeri(idNegeri,
+								"socPegawai", null, "style=width:305"));
+			} else {
+				context.put("selectPegawai", HTML.SelectPegawaiPengendali(
+						"socPegawai", null, "style=width:305"));
+			}*/
+			listTechTeam_aduan = logic.senarai_pegawai_PPKNegeri(idNegeri,
+					role, userId,"all",id_fail_atheader);
+			context.put("listTechTeam_aduan", listTechTeam_aduan);
 			if (getParam("printOption").equals("hantar"))
 			{
 				String idPermohonanSimati2 = getParam("idpermohonansimati");
@@ -4972,12 +5035,23 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 				String id2 = getParam("idPemohon");
 				String id1 = getParam("idSimati");
 				String mati = getParam("id_Permohonansimati");
-
+				
 				id1 = getParam("idSimati");
 				if (bolehsimpan.equals("yes")) {
 					logic_A.updateDataNilai(id, mati, (String) session.getAttribute("_ekptg_user_id"));
 				}
-
+				
+				//check pengesahan pegawai
+				
+				Hashtable namaPegawai = (Hashtable) checkPengesahanPegawai(id);
+				pilihpegawai = (String) namaPegawai.get("PENGESAHAN_NILAIANHARTA");
+				flag_pengesahanPegawai = (String) namaPegawai.get("FLAG_PENGESAHANNILAIANHARTA");
+				myLogger.info("pegawai session = "+(String) session.getAttribute("_ekptg_user_id"));
+				myLogger.info("pilihpegawai = "+pilihpegawai);
+				this.context.put("pilihpegawai", pilihpegawai);
+				this.context.put("flag_pengesahanPegawai", flag_pengesahanPegawai);
+				this.context.put("userID", (String) session.getAttribute("_ekptg_user_id"));
+				
 				this.context.put("id", id);
 				this.context.put("id2", id2);
 				this.context.put("id1", id1);
@@ -5233,6 +5307,168 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 				this.context.put("listHtaht2", listppkhtath);
 				int countListhtath = listppkhtath.size();
 				this.context.put("jumListHtaht", countList);
+			}
+			else if ("simpanPengesahan".equals(mode)) {
+				String pilihpegawai = getParam("pilihpegawai");
+				String id = getParam("idPermohonan");
+				String id2 = getParam("idPemohon");
+				String id1 = getParam("idSimati");
+				String mati = getParam("id_Permohonansimati");
+				this.context.put("EventStatus", 1);
+				this.context.put("id", id);
+				this.context.put("id1", id1);
+				String[] idHta = this.request.getParameterValues("idHta");
+				String[] idHa = this.request.getParameterValues("idHa");
+				String[] HtaNilaiTarikhMohon = this.request.getParameterValues("txtHtaNilaiTarikhMohon");
+				String[] HtaNilaiTarikhMati = this.request.getParameterValues("txtHtaNilaiTarikhMati");
+				String[] HaNilaiTarikhMohon = this.request.getParameterValues("txtHaNilaiTarikhMohon");
+				String[] HaNilaiTarikhMati = this.request.getParameterValues("txtHaNilaiTarikhMati");
+				if (idHta != null) {
+					for (int i = 0; i < idHta.length; i++) {
+						for (int i2 = 0; i2 < HtaNilaiTarikhMohon.length; i2++) {
+							for (int i3 = 0; i3 < HtaNilaiTarikhMati.length; i3++) {
+								logic_internal.updateNilaiHartaBaruHta(
+										idHta[i], HtaNilaiTarikhMohon[i],
+										HtaNilaiTarikhMati[i], String.valueOf(mati), String.valueOf(id));
+							}
+						}
+					}
+				}
+				if (idHa != null) {
+					for (int i = 0; i < idHa.length; i++) {
+						for (int i2 = 0; i2 < HaNilaiTarikhMohon.length; i2++) {
+							for (int i3 = 0; i3 < HaNilaiTarikhMati.length; i3++) {
+								logic_internal.updateNilaiHartaBaruHa(idHa[i],
+										HaNilaiTarikhMohon[i],
+										HaNilaiTarikhMati[i], String.valueOf(mati), String.valueOf(id));
+							}
+						}
+					}
+				}
+				logic_A.updateDataNilai(id, mati, (String) session.getAttribute("_ekptg_user_id"));
+				logic_A.setSumDataHta(mati);
+				sumppkhta = logic_A.getSumDataHta();
+				this.context.put("jumppkhta", sumppkhta);
+				logic_A.setOverallSumHta(mati);
+				sumoverallppkhta = logic_A.getOverallSumHta();
+				this.context.put("jumoverallppkhta", sumoverallppkhta);
+				logic_A.setDataHa(mati);
+				listppkha = logic_A.getDataHa();
+				this.context.put("listHa", listppkha);
+				int countList = listppkha.size();
+				this.context.put("jumList", countList);
+				logic_A.setSumDataHa(mati);
+				sumppkha = logic_A.getSumDataHa();
+				this.context.put("jumppkha", sumppkha);
+				logic_B.setDataHta(id);
+				listppkhta = logic_B.getDataHta();
+				this.context.put("listhta2", listppkhta);
+				int countListhta = listppkhta.size();
+				this.context.put("jumListhta2", countList);
+				logic_B.setDataHa(id);
+				listppkha2 = logic_B.getHa2();
+				this.context.put("listHa2", listppkha2);
+				int countListha2 = listppkha2.size();
+				this.context.put("jumListHa2", countListha2);
+
+				logic_A.setOverallSum(mati);
+				overallnilai = logic_A.getOverallSum();
+				this.context.put("overall", overallnilai);
+
+				logic_A.setOverallSumMati(mati);
+				overallnilaimati = logic_A.getOverallSumMati();
+				this.context.put("overallmati", overallnilaimati);
+
+				logic_B.setDataHtath(id);
+				listppkhtath = logic_B.getHtath();
+				this.context.put("listHtaht2", listppkhtath);
+				int countListhtath = listppkhtath.size();
+				this.context.put("jumListHtaht", countList);
+				
+				setSimpanPengesahan(pilihpegawai,getParam("idPermohonan"));
+				this.context.put("pilihpegawai", pilihpegawai);
+				this.context.put("buttonSimpanDisable", "disabled");
+			}
+			else if ("simpanPengesahan2".equals(mode)) {
+				
+				String id = getParam("idPermohonan");
+				String id2 = getParam("idPemohon");
+				String id1 = getParam("idSimati");
+				String mati = getParam("id_Permohonansimati");
+				this.context.put("EventStatus", 1);
+				this.context.put("id", id);
+				this.context.put("id1", id1);
+				String[] idHta = this.request.getParameterValues("idHta");
+				String[] idHa = this.request.getParameterValues("idHa");
+				String[] HtaNilaiTarikhMohon = this.request.getParameterValues("txtHtaNilaiTarikhMohon");
+				String[] HtaNilaiTarikhMati = this.request.getParameterValues("txtHtaNilaiTarikhMati");
+				String[] HaNilaiTarikhMohon = this.request.getParameterValues("txtHaNilaiTarikhMohon");
+				String[] HaNilaiTarikhMati = this.request.getParameterValues("txtHaNilaiTarikhMati");
+				if (idHta != null) {
+					for (int i = 0; i < idHta.length; i++) {
+						for (int i2 = 0; i2 < HtaNilaiTarikhMohon.length; i2++) {
+							for (int i3 = 0; i3 < HtaNilaiTarikhMati.length; i3++) {
+								logic_internal.updateNilaiHartaBaruHta(
+										idHta[i], HtaNilaiTarikhMohon[i],
+										HtaNilaiTarikhMati[i], String.valueOf(mati), String.valueOf(id));
+							}
+						}
+					}
+				}
+				if (idHa != null) {
+					for (int i = 0; i < idHa.length; i++) {
+						for (int i2 = 0; i2 < HaNilaiTarikhMohon.length; i2++) {
+							for (int i3 = 0; i3 < HaNilaiTarikhMati.length; i3++) {
+								logic_internal.updateNilaiHartaBaruHa(idHa[i],
+										HaNilaiTarikhMohon[i],
+										HaNilaiTarikhMati[i], String.valueOf(mati), String.valueOf(id));
+							}
+						}
+					}
+				}
+				logic_A.updateDataNilai(id, mati, (String) session.getAttribute("_ekptg_user_id"));
+				logic_A.setSumDataHta(mati);
+				sumppkhta = logic_A.getSumDataHta();
+				this.context.put("jumppkhta", sumppkhta);
+				logic_A.setOverallSumHta(mati);
+				sumoverallppkhta = logic_A.getOverallSumHta();
+				this.context.put("jumoverallppkhta", sumoverallppkhta);
+				logic_A.setDataHa(mati);
+				listppkha = logic_A.getDataHa();
+				this.context.put("listHa", listppkha);
+				int countList = listppkha.size();
+				this.context.put("jumList", countList);
+				logic_A.setSumDataHa(mati);
+				sumppkha = logic_A.getSumDataHa();
+				this.context.put("jumppkha", sumppkha);
+				logic_B.setDataHta(id);
+				listppkhta = logic_B.getDataHta();
+				this.context.put("listhta2", listppkhta);
+				int countListhta = listppkhta.size();
+				this.context.put("jumListhta2", countList);
+				logic_B.setDataHa(id);
+				listppkha2 = logic_B.getHa2();
+				this.context.put("listHa2", listppkha2);
+				int countListha2 = listppkha2.size();
+				this.context.put("jumListHa2", countListha2);
+
+				logic_A.setOverallSum(mati);
+				overallnilai = logic_A.getOverallSum();
+				this.context.put("overall", overallnilai);
+
+				logic_A.setOverallSumMati(mati);
+				overallnilaimati = logic_A.getOverallSumMati();
+				this.context.put("overallmati", overallnilaimati);
+
+				logic_B.setDataHtath(id);
+				listppkhtath = logic_B.getHtath();
+				this.context.put("listHtaht2", listppkhtath);
+				int countListhtath = listppkhtath.size();
+				this.context.put("jumListHtaht", countList);
+				
+				setSimpanPengesahan2(getParam("idPermohonan"));
+				this.context.put("buttonSimpanDisable", "disabled");
+				this.context.put("flag_pengesahanPegawai", "Y");
 			}
 			String id = getParam("idPermohonan");
 			list = logic_A.setData(id, (String) session.getAttribute("_ekptg_user_id"));
@@ -7494,6 +7730,136 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		this.context.put("list_sub_header", "");
 		this.context.put("flag_jenis_vm", "vtemplate");
 		this.context.put("kenegaraan", "");
+	}
+	
+	public Hashtable checkPengesahanPegawai(String id_permohonan) throws Exception {
+
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = " SELECT PENGESAHAN_NILAIANHARTA, FLAG_PENGESAHANNILAIANHARTA FROM TBLPPKPERMOHONAN WHERE ID_PERMOHONAN = '" + id_permohonan
+					+ "'";
+			myLogger.info("checkPengesahanPegawai = " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			h = new Hashtable();
+			while (rs.next()) {
+				if (rs.getString("PENGESAHAN_NILAIANHARTA") == null) {
+					h.put("PENGESAHAN_NILAIANHARTA", "");
+				} else {
+					h.put("PENGESAHAN_NILAIANHARTA", rs.getString("PENGESAHAN_NILAIANHARTA"));
+				}
+				if (rs.getString("FLAG_PENGESAHANNILAIANHARTA") == null) {
+					h.put("FLAG_PENGESAHANNILAIANHARTA", "");
+				} else {
+					h.put("FLAG_PENGESAHANNILAIANHARTA", rs.getString("FLAG_PENGESAHANNILAIANHARTA"));
+				}
+			}
+			return h;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	
+	
+	private void setSimpanPengesahan(String id_pegawai, String id_permohonan) throws Exception {
+		Connection conn = null;
+		Db db = null;
+		String sql1 = "";
+		String user_id_login = (String) session.getAttribute("_ekptg_user_id");
+		
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r.update("ID_PERMOHONAN", id_permohonan);
+			r.add("PENGESAHAN_NILAIANHARTA", id_pegawai);				
+			
+			
+			sql1 = r.getSQLUpdate("TBLPPKPERMOHONAN");
+			myLogger.info("UPDATE PEGAWAI PENGESAH NILAIAN HARTA" + sql1);
+			stmt.executeUpdate(sql1);			
+			conn.commit();
+			
+			
+			
+			
+			
+			
+		} catch (SQLException se) {
+			try {
+				conn.rollback();
+			} catch (SQLException se2) {
+				throw new Exception("Rollback error:" + se2.getMessage());
+			}
+			se.printStackTrace();
+			throw new Exception("Ralat Simpan Pengesahan:" + se.getMessage());
+			
+			
+			
+		} finally {
+			if (conn != null)
+				conn.close();
+			if (db != null)
+				db.close();
+		}
+
+	}
+	
+	private void setSimpanPengesahan2(String id_permohonan) throws Exception {
+		Connection conn = null;
+		Db db = null;
+		String sql1 = "";
+		String user_id_login = (String) session.getAttribute("_ekptg_user_id");
+		
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r.update("ID_PERMOHONAN", id_permohonan);
+			r.add("FLAG_PENGESAHANNILAIANHARTA", "Y");				
+			
+			
+			sql1 = r.getSQLUpdate("TBLPPKPERMOHONAN");
+			myLogger.info("UPDATE PEGAWAI PENGESAH NILAIAN HARTA setSimpanPengesahan2" + sql1);
+			stmt.executeUpdate(sql1);			
+			conn.commit();
+			
+			
+			
+			
+			
+			
+		} catch (SQLException se) {
+			try {
+				conn.rollback();
+			} catch (SQLException se2) {
+				throw new Exception("Rollback error:" + se2.getMessage());
+			}
+			se.printStackTrace();
+			throw new Exception("Ralat Simpan Pengesahan:" + se.getMessage());
+			
+			
+			
+		} finally {
+			if (conn != null)
+				conn.close();
+			if (db != null)
+				db.close();
+		}
+
 	}
 
 //IL start

@@ -89,7 +89,6 @@
     <td width="70%"> #if ($mode == 'newPembeliPasir')
       <input type="button" name="cmdSimpanPembeliPasir" id="cmdSimpanPembeliPasir" value="Simpan" onClick="simpanPembeliPasir()"/>
       <input type="button" name="cmdBatalPembeliPasir" id="cmdBatalPembeliPasir" value="Batal" onClick="batalPembeliPasir()"/>
-      <input type="button" name="cmdBatalPembeliPasir" id="cmdBatalPembeliPasir" value="Kembali" onClick="batalPembeliPasir()"/>
       #end
       #if ($mode == 'viewPembeliPasir')
       <input type="button" name="cmdKemaskiniPembeliPasir" id="cmdKemaskiniPembeliPasir" value="Kemaskini" onClick="kemaskiniPembeliPasir()"/>

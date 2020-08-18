@@ -1,5 +1,5 @@
-<!-- frmJRPTindakanSenarai.jsp -->
-<!--<strong>[CL-02-0405] JRP/Bangunan</strong>
+<!-- frmPajakanKecilTindakanSenarai.jsp -->
+<!--<strong>[CL-02-0405] Pajakan Kecil Tanah/Bangunan</strong>
 <br><br>
 -->
 <style type="text/css">
@@ -82,38 +82,12 @@
 					</tr>
 				</table>
 			</fieldset>
-			
-			<p align="center">
-				<div align="center">
-		   	
-		    		
-		    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1"))
-		    				<input type="button" name="cmdSimpan" id="cmdSimpan" value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan')" />
-						
-						#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("2"))
-		    				<input type="button" name="cmdSimpan" id="cmdSimpan" value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan')" />
-						
-						#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
-		    				<input type="button" name="cmdSimpan" id="cmdSimpan" value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan')" />
-                		
-                		
-                		
-                	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step2Online($!htpPermohonan.permohonan.getIdPermohonan())" />
-		    		#else
-                    <input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:cetakPengesahan('$!htpPermohonan.permohonan.getIdPermohonan()');" />
-               		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step2Online($!htpPermohonan.permohonan.getIdPermohonan())" />
-		    		#end
-		    		 
- 	
-		    	</div>
-			</p> 
-			<!--  
+
 			<p align="center">
 				<div align="center">
         			<input class="stylobutton100" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="skrinKemaskiniPermohonan('$permohonanInfo.idpermohonan')">
   				</div>
 			</p> 
-			-->
 		   	<input type="hidden" name="id_kemaskini">
 		    <input type="hidden" name="fail" >
 		   	<input type="hidden" name="pagemode" >

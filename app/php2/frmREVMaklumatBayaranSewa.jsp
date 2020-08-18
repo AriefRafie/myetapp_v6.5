@@ -22,6 +22,7 @@
   <input name="anchor" type="hidden" id="anchor"/>
   <input type="hidden" name="txtNamaPemohon" id="txtNamaPemohon" value="$txtNamaPemohon"/>
   <input type="hidden" name="txtNoFail" id="txtNoFail" value="$txtNoFail"/>
+  <input type="hidden" name="idPermohonan"  id="idPermohonan" value="$idPermohonan"/>
 
 </p>
 
@@ -753,9 +754,9 @@ function batalKemaskiniPelarasan(){
 }
 
 <!-- MAKLUMAT PERJANJIAN -->
-function daftarPerjanjian(idFail, idHasil, flagSkrin) {
+function daftarPerjanjian(idFail, idHasil, idPermohonan,flagSkrin) {
 
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupPerjanjianSewaView?actionPopup=new&idFail="+idFail+"&idHasil="+idHasil+"&flagSkrin="+flagSkrin;
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupPerjanjianSewaView?actionPopup=new&idFail="+idFail+"&idHasil="+idHasil+"&idPermohonan="+idPermohonan+"&flagSkrin="+flagSkrin;
     var hWnd = window.open(url,'printuser','width=1000,height=400, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -763,8 +764,8 @@ function daftarPerjanjian(idFail, idHasil, flagSkrin) {
 	hWnd.focus();
 }
 
-function paparPerjanjian(idPerjanjian,idHasil, idFail, flagSkrin) {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupPerjanjianSewaView?idPerjanjian="+idPerjanjian+"&idHasil="+idHasil+"&idFail="+idFail+"&flagSkrin="+flagSkrin;
+function paparPerjanjian(idPerjanjian,idHasil, idFail,idPermohonan, flagSkrin) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupPerjanjianSewaView?idPerjanjian="+idPerjanjian+"&idHasil="+idHasil+"&idFail="+idFail+"&idPermohonan="+idPermohonan+"&flagSkrin="+flagSkrin;
     var hWnd = window.open(url,'printuser','width=1000,height=400, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

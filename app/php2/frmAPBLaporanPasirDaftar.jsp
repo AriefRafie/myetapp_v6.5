@@ -62,12 +62,8 @@
     #end
     
     <!-- <input type="hidden" name="jumKuantitiHidden" id="jumKuantitiHidden" value="$!txtJumKuantiti" /> -->
-    #if ($mode=="disabled")
-    x RM <select name="socRoyalti" id="socRoyalti" style="width:50px;" class="disabled" readonly><option value="3">3.00</option><option value="0.7" selected="selected">0.70</option></select> 
-    #else
-    x RM <select name="socRoyalti" id="socRoyalti" onchange="getAnggaranRoyalti()" style="width:50px;" class=$mode><option value="3">3.00</option><option value="0.7" selected="selected">0.70</option></select> 
-    #end
     
+    x RM $!Util.formatDecimal($!txtKadarRoyalti) 
      <input type="hidden" name="txtKadarRoyalti" id="txtKadarRoyalti" value="$!txtKadarRoyalti" /> </td>
   </tr>
  
@@ -512,8 +508,7 @@ function RemoveNonNumeric( strString )
 function getAnggaranRoyalti(){
 
 	var KT  = document.getElementById("txtJumKuantiti").value;	
-	//var KR  = document.getElementById("txtKadarRoyalti").value;
-	var KR  = document.getElementById("socRoyalti").value;
+	var KR  = document.getElementById("txtKadarRoyalti").value;
 	//alert(KR);
 	var AnggaranRoyalti = "";
 	//var fee = "0.70"
@@ -539,14 +534,5 @@ function paparMaklumatDokumen(id_dokumen) {
 	document.${formName}.actionLaporanPasir.value = "paparDokumen";
 	document.${formName}.submit();
 }
-function calculateRoyalti()
-{
-	//papar royalti dalam dropdown
-	var kuantiti  = document.getElementById("txtJumKuantiti").value;	
-	var anggaranRoyalti  = document.getElementById("txtJumRoyalti").value;
-	var royalti = "";
-	royalti = anggaranRoyalti/kuantiti;
-	document.getElementById("socRoyalti").value=royalti;
-}
-calculateRoyalti();
+
 </script>

@@ -1,4 +1,3 @@
-
 <style type="text/css">
 <!--
 .style1 {
@@ -29,7 +28,6 @@
   <input name="kategori" type="hidden" id="kategori" value="$!pemohon.get("kategoriPemohon")"/>
   <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
 </p>
-
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
@@ -44,7 +42,7 @@
           <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
           <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMBELI PASIR</li>
           <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-<!--           <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li> -->
+          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
           <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN PERMOHONAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
@@ -55,122 +53,40 @@
             #parse("app/php2/online/frmAPBMaklumatPermohonanPembeliPasir.jsp")
             #end </div>
   				<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
-						#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") 
+						#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") </td>
 						#end</div>
-<!-- 					<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3') -->
-<!--   					#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp") -->
-<!--   					#end</div> -->
+					<div class="TabbedPanelsContent"> #if ($selectedTabUpper == '3')
+  					#parse("app/php2/online/frmAPBMaklumatLampiranOnline.jsp")
+  					#end</div>
 					<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
-					
-	<fieldset>	
-				<legend>
-				PENGESAHAN PERMOHONAN
-				</legend>
-				<table width="100%" border="0">
-				<tr>
-					<td width="5%"></td>
-					<td width="28%" >Negeri</td>
-					<td width="1%">:</td>
-					<td width="70%"><strong>$!maklumatPejabat.get("negeri")</strong></td>
-	</tr>
-	  <tr>
-		<td></td>
-		<td >Daerah</td>
-		<td>:</td>
-		<td><strong>$!maklumatPejabat.get("daerah")</strong></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td >Pejabat</td>
-		<td>:</td>
-		<td><span style="font-weight: bold">$!maklumatPejabat.get("namaPejabat")</span></td>
-	</tr>
-
-	<tr>
-		<td width="1%">&nbsp;</td>
-		<td width="28%">Alamat</td>
-		<td width="1%">:</td>
-		<td width="70%"><strong>$!maklumatPejabat.get("alamat1")</strong></td>
-	</tr>
-
-	<tr>
-		<td width="1%">&nbsp;</td>
-		<td width="28%">&nbsp;</td>
-		<td width="1%">&nbsp;</td>
-		<td width="70%"><strong>$!maklumatPejabat.get("alamat2")</strong></td>
-	</tr>
-	
-	<tr>
-		<td width="1%">&nbsp;</td>
-		<td width="28%">&nbsp;</td>
-		<td width="1%">&nbsp;</td>
-		<td width="70%"><strong>$!maklumatPejabat.get("alamat3")</strong></td>
-	</tr>
-	
-	<tr>
-		<td width="1%">&nbsp;</td>
-		<td width="28%">Poskod</td>
-		<td width="1%">:</td>
-		<td width="70%"><strong>$!maklumatPejabat.get("poskod")</strong></td>
-	</tr>
-	
-	<tr>
-		<td width="1%">&nbsp;</td>
-		<td width="28%">No. Telefon</td>
-		<td width="1%">:</td>
-		<td width="70%"><strong>$!maklumatPejabat.get("noTel")</strong></td>
-	</tr>
-	
-	<tr>
-		<td width="1%">&nbsp;</td>
-		<td width="28%">No. Faks</td>
-		<td width="1%">:</td>
-		<td width="70%"><strong>$!maklumatPejabat.get("noFax")</strong></td>
+           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+           	<td valign="top">
+           	#if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan">#end
+           	#if ($idStatus != '')<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end</td>
+           	<td>Saya, $!pemohon.get("namaPemohon"), dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
+           	<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</td> 
+           	<tr>
+           	<td colspan=2 align="center">
+           	#if ($idStatus == '')
+           		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
+            	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
+            #else
+            #if ($idStatus !='')
+            	<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            #end
+            #end
+            </td>
+           	</tr>          	        	
+           	</table>
+           	#end
+         </div>
+         </div></td>
+      </div>
   </tr>
-  
-	<tr>
-		<td width="1%">&nbsp;</td>
-		<td width="28%">Emel</td>
-		<td width="1%">:</td>
-		<td ><strong>$!maklumatPejabat.get("emel")</strong></td>
-	</tr>
-	
-	<tr>
-	<td></td>
-		<td ></td>
-		<td valign="top">
-        #if ($idStatus == '')<input type="checkbox" name="pengesahan" id="pengesahan" >#end
-        
-        #if ($idStatus != '')
-        <input type="checkbox" name="pengesahan" id="pengesahan" checked disabled>#end</td>
-        <td>Kami $!pemohon.get("namaPemohon"), MyCOID $!pemohon.get("noPengenalan") dengan ini maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-	</tr>
-	
-	<tr>
-	<td></td>
-  	<td></td>
-		<td valign="top" colspan=2>
-	#if ($idStatus == '')
-    <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-    <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
-    <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-    #else
-    #if($idStatus == '1610207') <!-- 1610207 -->
-    <input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan') "/>       	 
-    #else
-    #if ($idStatus !='' && $idStatus != '1610207')
-    <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
-    <input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-    #end
-    #end
-    #end
-	</td>
-	</tr>
-				</table>
-				</fieldset>
-#end
-</td></tr>#end</table>
-</div>
+  #end
+  </table>
 
 <!--<div id="calculateTotalPercentPengarah_result"></div>
 <fieldset id="tableReport" style="display:;"-->
@@ -189,20 +105,17 @@
 </script>
 <script>
 function doChangeTab(tabId) {
-	//document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "view";
 	document.${formName}.selectedTabUpper.value = tabId;
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function doBacklist() {
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
 }
 function doChangeNegeri() {
-// 	document.${formName}.submit("doChangeNegeri");
- 	doAjaxCall${formName}("doChangeNegeri");
+	doAjaxCall${formName}("doChangeNegeri");
 }
 function validateCurrency(elmnt,content,content2) {
 	content = content.replace(/,/g,'');
@@ -230,21 +143,18 @@ function seterusnya(){
 	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSeterusnya";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 </script>
 <!-- PEMBELI PASIR -->
 <script>
 function tambahPembeliPasir() {
 	document.${formName}.mode.value = "newPembeliPasir";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalPembeliPasir() {
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 
 function simpanPembeliPasir(){
@@ -291,13 +201,11 @@ function simpanPembeliPasir(){
 }
 function batalPembeliPasir(){
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function kemaskiniPembeliPasir(){
 	document.${formName}.mode.value = "updatePembeliPasir";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniPembeliPasir(){
 
@@ -339,13 +247,11 @@ function simpanKemaskiniPembeliPasir(){
 	
 	document.${formName}.mode.value = "viewPembeliPasir";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniPembeliPasir";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniPembeliPasir(){
 	document.${formName}.mode.value = "viewPembeliPasir";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function hapusPembeliPasir(){
 
@@ -356,40 +262,34 @@ function hapusPembeliPasir(){
 	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapusPembeliPasir";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function paparPembeliPasir(idPembeliPasir){
 	document.${formName}.idPembeliPasir.value = idPembeliPasir;
 	document.${formName}.mode.value = "viewPembeliPasir";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 </script>
 <!-- PEMOHON -->
 <script>
 function kemaskiniPemohon() {
 	document.${formName}.mode.value = "update";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniPemohon() {
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 </script>
 <!-- PENGARAH -->
 <script>
 function tambahPengarah() {
 	document.${formName}.mode.value = "newPengarah";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalPengarah() {
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 
 function checkPercentage(){;
@@ -419,18 +319,15 @@ function simpanPengarah(){
 	
 	document.${formName}.mode.value = "newPengarah";
 	document.${formName}.hitButton.value = "doSimpanPengarah";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalPengarah(){
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function kemaskiniPengarah(){
 	document.${formName}.mode.value = "updatePengarah";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniPengarah(){
 
@@ -451,13 +348,11 @@ function simpanKemaskiniPengarah(){
 	
 	document.${formName}.mode.value = "newPengarah";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniPengarah";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniPengarah(){
 	document.${formName}.mode.value = "viewPengarah";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function hapusPengarah(){
 
@@ -468,14 +363,12 @@ function hapusPengarah(){
 	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapusPengarah";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function paparPengarah(idPengarah){
 	document.${formName}.idPengarah.value = idPengarah;
 	document.${formName}.mode.value = "viewPengarah";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function calculateTotalPercentPengarah() {
 	url = "../servlet/ekptg.view.php2.FrmAPBServlet?command=calculateTotalPercentPengarah";
@@ -493,13 +386,11 @@ function popupMsg(){
 function kemaskiniPermohonan() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
-	document.${formName}.submit();	
-// 	doAjaxCall${formName}("");//comment jap ye
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniPermohonan() {
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniPermohonan() {
 	
@@ -540,8 +431,7 @@ function simpanKemaskiniPermohonan() {
 
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniPermohonan";
-	document.${formName}.submit();
-	// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function cekTarikhTerima(elmnt) {
 //CHECK DATE   
@@ -595,13 +485,11 @@ function cekTarikhSurat(elmnt) {
 <script>
 function tambahProjek() {
 	document.${formName}.mode.value = "newProjek";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalProjek() {
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function simpanProjek(){
 	
@@ -618,13 +506,11 @@ function simpanProjek(){
 	
 	document.${formName}.mode.value = "newProjek";
 	document.${formName}.hitButton.value = "doSimpanProjek";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function kemaskiniProjek(){
 	document.${formName}.mode.value = "updateProjek";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniProjek(){
 
@@ -641,13 +527,11 @@ function simpanKemaskiniProjek(){
 	
 	document.${formName}.mode.value = "viewProjek";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniProjek";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniProjek(){
 	document.${formName}.mode.value = "viewProjek";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function hapusProjek(){
 
@@ -663,21 +547,18 @@ function hapusProjek(){
 function paparProjek(idProjek){
 	document.${formName}.idProjek.value = idProjek;
 	document.${formName}.mode.value = "viewProjek";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 </script>
 <!-- PAKAR -->
 <script>
 function tambahPakar() {
 	document.${formName}.mode.value = "newPakar";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalPakar() {
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function simpanPakar(){
 	
@@ -694,13 +575,11 @@ function simpanPakar(){
 	
 	document.${formName}.mode.value = "newPakar";
 	document.${formName}.hitButton.value = "doSimpanPakar";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function kemaskiniPakar(){
 	document.${formName}.mode.value = "updatePakar";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniPakar(){
 
@@ -717,13 +596,11 @@ function simpanKemaskiniPakar(){
 	
 	document.${formName}.mode.value = "viewPakar";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniPakar";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniPakar(){
 	document.${formName}.mode.value = "viewPakar";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function hapusPakar(){
 
@@ -734,27 +611,23 @@ function hapusPakar(){
 	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapusPakar";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function paparPakar(idPakar){
 	document.${formName}.idPakar.value = idPakar;
 	document.${formName}.mode.value = "viewPakar";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 </script>
 <!-- KOORDINAT -->
 <script>
 function tambahKoordinat() {
 	document.${formName}.mode.value = "newKoordinat";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalKoordinat() {
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function simpanKoordinat(){
 	
@@ -801,13 +674,11 @@ function simpanKoordinat(){
 	
 	document.${formName}.mode.value = "newKoordinat";
 	document.${formName}.hitButton.value = "doSimpanKoordinat";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function kemaskiniKoordinat(){
 	document.${formName}.mode.value = "updateKoordinat";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniKoordinat(){
 
@@ -854,13 +725,11 @@ function simpanKemaskiniKoordinat(){
 	
 	document.${formName}.mode.value = "viewKoordinat";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniKoordinat";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniKoordinat(){
 	document.${formName}.mode.value = "viewKoordinat";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function hapusKoordinat(){
 
@@ -871,14 +740,12 @@ function hapusKoordinat(){
 	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapusKoordinat";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function paparKoordinat(idKoordinat){
 	document.${formName}.idKoordinat.value = idKoordinat;
 	document.${formName}.mode.value = "viewKoordinat";
-	document.${formName}.submit();
-// 	doAjaxCall${formName}("");
+	doAjaxCall${formName}("");
 }
 function textCounter(field, countfield, maxlimit) {
    if (field.value.length > maxlimit) // if too long...trim it!
@@ -913,7 +780,6 @@ function doHapus(){
 	document.${formName}.submit();
 }
 </script>
-
 <script>
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
@@ -923,7 +789,7 @@ function setTable(id){
 		document.getElementById(id).style.display="none";
 	}
 }
-//Copy dari Sewa, belum ada borang
+//Copy dari Sewa
 function cetakBorangPermohonan(idPermohonan) {
 	var url = "../servlet/ekptg.report.php2.online.PYWBorangPermohonan?ID_PERMOHONAN="+idPermohonan;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
@@ -970,18 +836,4 @@ function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
-function daftarPembaharuan(idFail,idPermohonan) {	
-
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
-	document.${formName}.idFail.value = idFail;
-	document.${formName}.idPermohonan.value = idPermohonan;
-	//document.${formName}.idPermohonanLama.value = idPermohonanLama;
-	document.${formName}.actionOnline = "daftarBaruLesen";
-	document.${formName}.mode.value = "new";	
-	document.${formName}.submit();
-
-}
-
-
 </script>
-$javascriptLampiran

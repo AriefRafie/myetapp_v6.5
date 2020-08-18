@@ -19,17 +19,11 @@
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-          <tr>
-          <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
-          <td width="28%">Jenis Lesen</td>
-          <td width="1%">:</td>
-          <td width="70%">$selectJenisLesen</td>
-        </tr>
         <tr>
-          <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+          <td width="1%">&nbsp;</td>
           <td width="28%">Jenis Tujuan</td>
           <td width="1%">:</td>
-          <td width="70%">$selectJenisTujuan</td>
+          <td width="70%">MENGOREK</td>
         </tr>
         <tr>
           <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>

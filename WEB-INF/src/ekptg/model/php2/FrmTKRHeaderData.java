@@ -323,7 +323,7 @@ public class FrmTKRHeaderData {
 				db.close();
 		}
 	}
-	
+
 	public String getIdHakmilikAgensiByIdFail(String idFail)
 			throws Exception {
 		Db db = null;

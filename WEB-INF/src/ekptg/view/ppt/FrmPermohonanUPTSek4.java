@@ -402,15 +402,15 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     	else 
     	if("addMaklumatTanah".equals(submit))
     	{
-    		//myLogger.info("masukk");
+    		//System.out.println("masukk");
     		//if (doPost.equals("true")) { //yati comment
-    			myLogger.info("addMaklumatTanah: ------");
+    			//System.out.println("axxxx");
     			//simpan data
         		add_maklumat_tanah(session);
      		//}
 
     		maklumatPageHakMilik(session,idpermohonan,noLOT);
-    		
+    		   
     		//form validation
     		context.put("semakTanah", "no");
     		
@@ -1289,7 +1289,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
   			}
   			context.put("existDaerah", nama_daerah);
 	    	context.put("id_existDaerah", id_daerah);
-	    	
+	    				
   			model.setListPohon2(idpermohonan);
   			listPohon2 = model.getListPohon2();
   			String nama_projekNegeri = "";
@@ -2113,7 +2113,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	private void add_maklumat_tanah(HttpSession session) throws Exception{
 	    
 			Hashtable h = new Hashtable();
-			
+	    
     		h.put("sorJenisRizab", "");
 	    	h.put("txtLain", "");
 	    	h.put("txtNoWartaRizab", "");	    	
@@ -2138,16 +2138,10 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	    	h.put("anggaran_luas", "");
 	    	h.put("socKategoriTanah", "");
 	    	
-//	    	PPT-03 Penambahan Strata
-	    	myLogger.info("No. Bangunan = "+getParam("txtNoBangunan"));
-	    	h.put("txtNoBangunan", getParam("txtNoBangunan"));
-	    	h.put("txtNoTingkat", getParam("txtNoTingkat"));
-	    	h.put("txtNoPetak", getParam("txtNoPetak"));
-	    	
 	    	h.put("id_user", session.getAttribute("_ekptg_user_id"));
 	    	
 	    	FrmPermohonanUPTData.add_maklumat_tanah(h);
-	    	myLogger.info("NO_LOT--"+h.put("txtnolot", getParam("txtnolot")));
+	    	System.out.println("NO_LOT--"+h.put("txtnolot", getParam("txtnolot")));
 	    
 	   }//close add_maklumat_tanah
 	
@@ -2224,9 +2218,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	 
 	@SuppressWarnings("unchecked")
 	private void updateMaklumatTanah(HttpSession session) throws Exception{
-		 	
+		 
 		 	Hashtable i = new Hashtable();
-		 	
+
 		    i.put("id_hakmilik", getParam("id_hakmilik"));
 		    i.put("editNegeri", getParam("id_existNegeri"));
 		    i.put("editDaerah", getParam("id_existDaerah"));
@@ -2245,12 +2239,6 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 		    
 		    i.put("editJenisHakmilik", getParam("socJenisHakmilik"));
 	    	i.put("edit_no_hakmilik", getParam("txtNoHakmilik"));
-	    	
-	    	// PPT-03 Penambahan Strata
-	    	i.put("no_bangunan", getParam("txtNoBangunan"));
-	    	i.put("no_petak", getParam("txtNoPetak"));
-	    	i.put("no_tingkat", getParam("txtNoTingkat"));
-//	    	myLogger.info("no_bangunan :" +getParam("txtNoBangunan"));
 	    	
 		    i.put("editLot", getParam("editLot"));	
 		    i.put("editLuas", "");

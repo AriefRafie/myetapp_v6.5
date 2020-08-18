@@ -182,10 +182,8 @@
             <input name="cmdBatal" type="button" value="Batal" onClick="batalMesyuarat()" />
             #end
             #if ($modePopup == 'view')
-            #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
             <input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniMesyuarat()" >
             <input name="cmdHapus" type="button" value="Hapus" onClick="hapusMesyuarat()" >
-            #end
             <input name="cmdKembali" type="button" value="Kembali" onClick="kembali()" >
             #if($beanMaklumatMesyuarat.flagSyor == 'G')
       		<input name="cmdCetak" type="button" onClick="cetakPLPSuratLulusBersyarat('$idFail')" value="Cetak Surat Lulus Bersyarat">

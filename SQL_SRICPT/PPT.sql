@@ -1,14 +1,3 @@
-14072020	PPT-33
-ALTER TABLE TBLPPTPERMINTAANUKUR ADD NO_JUPEM VARCHAR(400);
-
-----------------------------------------------------------------------------------
-
-14072020	PPT-06
-ALTER TABLE TBLPPTBORANGEHAKMILIK ADD MASA_SIASATAN VARCHAR2(5);
-ALTER TABLE TBLPPTBORANGEHAKMILIK ADD JENIS_WAKTU VARCHAR(2);
-
-----------------------------------------------------------------------------------
-
 
 20200609 UAT--------------------------------------------------------------------------------
 
@@ -379,9 +368,3 @@ INSERT INTO EKPTGHQLIVE.TBLSEMAKANSENARAI
 VALUES(275, 193, 1, 'pptjenispemilikan', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-// Tambah Column SEMAK10 dan SEMAK20
-ALTER TABLE TBLPPTSENARAISEMAK ADD (
-    SEMAK10 VARCHAR(1 byte),
-    SEMAK20 VARCHAR(1 byte)
-);

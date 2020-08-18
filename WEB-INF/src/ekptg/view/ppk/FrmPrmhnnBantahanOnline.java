@@ -1,5 +1,6 @@
 package ekptg.view.ppk;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import lebah.db.Db;
 import lebah.portal.AjaxBasedModule;
 import lebah.util.DateUtil;
 
@@ -24,7 +26,9 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.ppk.FrmBorangPSek17OnlineData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8Data;
+import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8Data;
+import ekptg.model.ppk.FrmPrmhnnSek8KeputusanPermohonanInternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8SecaraOnlineData;
 import ekptg.model.ppk.FrmPrmhnnSek8SenaraiHTATHData;
 import ekptg.model.ppk.FrmPrmhnnStatusPengunaOnlineData;
@@ -40,6 +44,7 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 	FrmBorangPSek17OnlineData logic = new FrmBorangPSek17OnlineData();
 	FrmPrmhnnSek8Data logic3 = new FrmPrmhnnSek8Data();
 	FrmTukaranStatus model = new FrmTukaranStatus();
+	FrmPrmhnnSek8DaftarSek8InternalData logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -61,6 +66,8 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		this.context.put("Util", new lebah.util.Util()); 
 		Vector senaraiFail = new Vector();
 		Vector senaraiBantah = new Vector();
+		Vector v = null;
+		Vector listnegeri = null;
 		
 		String USER_LOGIN_SYSTEM = (String)session.getAttribute("_portal_login");
 
@@ -158,14 +165,26 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 					"no");
 			
 			// maklumat pemohon
-			Vector<Hashtable<String,String>> vec = logic3.setMaklumatPemohon(usid);
-			Hashtable<String,String> hash = vec.get(0);
+//			Vector<Hashtable<String,String>> vec = logic3.setMaklumatPemohon(usid);
+//			Hashtable<String,String> hash = vec.get(0);
 			
 			// MAKLUMAT 
-			
-			this.context.put("pemohon", hash);
+			// this.context.put("pemohon", hash);
 			this.context.put("nowpast", "now");
 			myLogger.info("masuk skrin bantah NOW");
+			
+			
+//			if ("getBandar".equals(mode)) {
+//			
+//
+//				if (getParam("socNegeriSimati") != "" && getParam("socNegeriSimati") != "0") {
+//					Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(getParam("socNegeriSimati")));
+//					this.context.put("listBandarTetapbyNegeri", s3);
+//				} else {
+//					this.context.put("listBandarTetapbyNegeri", "");
+//				}
+//
+//			}
 			
 			
 			vm = "app/ppk/frmSkrinBantahanOnline.jsp";
@@ -194,9 +213,9 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 					"no");
 			
 			// maklumat pemohon
-			Vector<Hashtable<String,String>> vec = logic3.setMaklumatPemohon(usid);
-			Hashtable<String,String> hash = vec.get(0);
-			this.context.put("pemohon", hash);
+//			Vector<Hashtable<String,String>> vec = logic3.setMaklumatPemohon(usid);
+//			Hashtable<String,String> hash = vec.get(0);
+//			this.context.put("pemohon", hash);
 			
 			
 			this.context.put("nowpast", "past");
@@ -267,6 +286,21 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		context.put("IDpemohon", USER_LOGIN_SYSTEM);
 		this.context.put("kppemohon", getParam("kppemohon"));
 		this.context.put("kpsimati", getParam("kpsimati"));
+		
+		
+		Db db = null;
+		try {
+			db = new Db();
+	
+			listnegeri = logic_A.getListnegeriDb(db);
+			this.context.put("listnegeri", listnegeri);
+			
+		}catch (SQLException se2) {
+			throw new Exception("Error:" + se2.getMessage());
+		}finally {		
+			if (db != null)
+				db.close();
+		}
 
 		Template template = this.engine.getTemplate(vm);
 		myLogger.debug("vm:" + vm);

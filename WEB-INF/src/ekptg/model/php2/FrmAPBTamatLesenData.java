@@ -717,20 +717,18 @@ public class FrmAPBTamatLesenData {
 		return beanMaklumatMesyuarat;
 	}
 	
-	public void setMaklumatNotis(String idUlasanTeknikal) throws Exception {
+	public void setMaklumatNotis(String idMohonTamat) throws Exception {
 		Db db = null;
 		String sql = "";
 
 		try {
-			beanMaklumatNotis = new Vector();
+			beanMaklumatMohonTamat = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_ULASANTEKNIKAL, A.ID_NEGERI, A.ID_PEJABAT, D.KETERANGAN AS NAMA_DOKUMEN,A.TARIKH_HANTAR,A.JANGKAMASA, A.TARIKH_JANGKA_TERIMA, A.FLAG_STATUS, D.ID_DOKUMEN,"
-					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
-					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLPHPRUJDOKUMEN D,TBLRUJPEJABAT E WHERE "
-					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_DOKUMEN = D.ID_DOKUMEN(+) AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
-					+ " AND A.ID_ULASANTEKNIKAL = '" + idUlasanTeknikal + "'";
+			sql = "SELECT ID_MOHONTAMAT,TARIKH_SURAT, TARIKH_TERIMA, RUJUKAN, SEBAB_TAMAT, FLAG_PERMOHONAN_DARI "
+					+ " FROM TBLPHPAPBMOHONTAMAT WHERE ID_MOHONTAMAT = '"
+					+ idMohonTamat + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -738,54 +736,23 @@ public class FrmAPBTamatLesenData {
 			int bil = 1;
 			while (rs.next()) {
 				h = new Hashtable();
-				h.put("bil", bil);
-				h.put("idUlasanTeknikal",
-						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
-								.getString("ID_ULASANTEKNIKAL"));
-				h.put("idDokumen",
-						rs.getString("ID_DOKUMEN") == null ? "" : rs
-								.getString("ID_DOKUMEN"));
-				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
-						: rs.getString("NAMA_DOKUMEN"));
-				h.put("idNegeri",
-						rs.getString("ID_NEGERI") == null ? "" : rs
-								.getString("ID_NEGERI"));
-				h.put("idPejabat",
-						rs.getString("ID_PEJABAT") == null ? "" : rs
-								.getString("ID_PEJABAT"));
-				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
-						: rs.getString("NAMA_PEJABAT").toUpperCase());
-				h.put("namaPejabatPTGPTD",
-						rs.getString("PEJABATPTGPTD") == null ? "" : rs
-								.getString("PEJABATPTGPTD").toUpperCase());
-				h.put("flagKJP",
-						rs.getString("FLAG_KJP") == null ? "" : rs
-								.getString("FLAG_KJP"));
-				h.put("jangkamasa",
-						rs.getString("JANGKAMASA") == null ? "" : rs
-								.getString("JANGKAMASA"));
-				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
-						: sdf.format(rs.getDate("TARIKH_HANTAR")));
-				h.put("tarikhJangkaTerima",
-						rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf
-								.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
-				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
-						: rs.getString("FLAG_STATUS"));
-				if ("1".equals(rs.getString("FLAG_STATUS"))) {
-					h.put("status", "TELAH DIHANTAR");
-				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
-					h.put("status", "DITERIMA");
-				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
-					h.put("status", "TIADA JAWAPAN");
-				} else {
-					h.put("status", "");
-				}
-				h.put("flagAktif",
-						rs.getString("FLAG_AKTIF") == null ? "" : rs
-								.getString("FLAG_AKTIF"));
-				h.put("bilUlangan", rs.getString("BIL_ULANGAN") == null ? ""
-						: rs.getString("BIL_ULANGAN"));
-				beanMaklumatNotis.addElement(h);
+				h.put("idMohonTamat",
+						rs.getString("ID_MOHONTAMAT") == null ? "" : rs
+								.getString("ID_MOHONTAMAT"));
+				h.put("socFlagDari",
+						rs.getString("FLAG_PERMOHONAN_DARI") == null ? "" : rs
+								.getString("FLAG_PERMOHONAN_DARI"));
+				h.put("rujukan",
+						rs.getString("RUJUKAN") == null ? "" : rs
+								.getString("RUJUKAN"));
+				h.put("sebabTamat", rs.getString("SEBAB_TAMAT") == null ? ""
+						: rs.getString("SEBAB_TAMAT"));
+				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_SURAT")));
+				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_TERIMA")));
+
+				beanMaklumatMohonTamat.addElement(h);
 				bil++;
 			}
 
@@ -897,7 +864,7 @@ public class FrmAPBTamatLesenData {
 				db.close();
 		}
 	}
-	public String simpanMaklumatNotis(String idPermohonan, String idJenisDokumen, String idPejabat,
+	public String simpanMaklumatNotis(String idPermohonan, String idPejabat,
 			String idNegeri, String txtTarikhHantar, String txtJangkaMasa,
 			String txtTarikhJangkaTerima, String idSuratKe,
 			String idKementerianTanah, String idAgensiTanah, HttpSession session)
@@ -921,8 +888,7 @@ public class FrmAPBTamatLesenData {
 			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
 			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			//r.add("ID_DOKUMEN", "8");
-			r.add("ID_DOKUMEN", idJenisDokumen);
+			r.add("ID_DOKUMEN", "8");
 			r.add("FLAG_KJP", idSuratKe);
 			r.add("ID_NEGERI", idNegeri);
 			r.add("ID_PEJABAT", idPejabat);
@@ -1034,6 +1000,7 @@ public class FrmAPBTamatLesenData {
 			r.add("FLAG_AKTIF", "Y");
 			r.add("BIL_ULANGAN", bilUlangan);
 			r.add("ID_PARENT", idUlasanTeknikalLama);
+
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
@@ -1157,7 +1124,7 @@ public class FrmAPBTamatLesenData {
 			sql = "SELECT A.ID_ULASANTEKNIKAL, D.KETERANGAN AS NAMA_DOKUMEN,A.TARIKH_HANTAR, A.TARIKH_JANGKA_TERIMA, A.FLAG_STATUS, D.ID_DOKUMEN,"
 					+ " B.NAMA_PEJABAT, A.FLAG_AKTIF, A.BIL_ULANGAN, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP"
 					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLPHPRUJDOKUMEN D,TBLRUJPEJABAT E WHERE "
-					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_DOKUMEN = D.ID_DOKUMEN(+) AND (A.ID_DOKUMEN = '15' OR A.ID_DOKUMEN = '16' OR A.ID_DOKUMEN = '17') AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
+					+ " A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_DOKUMEN = D.ID_DOKUMEN(+) AND A.ID_DOKUMEN = 8 AND A.ID_PEJABAT = E.ID_PEJABAT(+) "
 					+ " AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -1216,65 +1183,5 @@ public class FrmAPBTamatLesenData {
 	
 	public Vector getListNotis() {
 		return listNotis;
-	}
-	
-	public void hapusMaklumatKJPKJT(String idUlasanTeknikal, HttpSession session) throws Exception {
-
-		Db db = null;
-		Connection conn = null;
-		String sql = "";
-		String idParent = "";
-
-		try {
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-
-			sql = "SELECT ID_PARENT FROM TBLPHPULASANTEKNIKAL WHERE ID_ULASANTEKNIKAL = '"
-					+ idUlasanTeknikal + "'";
-			ResultSet rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				if (rs.getString("ID_PARENT") != null
-						&& !"".equals(rs.getString("ID_PARENT"))) {
-					// TBLPHPULASANTEKNIKAL
-					idParent = rs.getString("ID_PARENT");
-					r = new SQLRenderer();
-					r.update("ID_ULASANTEKNIKAL", idParent);
-					r.add("FLAG_STATUS", "1");
-					r.add("FLAG_AKTIF", "Y");
-
-					sql = r.getSQLUpdate("TBLPHPULASANTEKNIKAL");
-					stmt.executeUpdate(sql);
-				}
-			}
-
-			// TBLPHPULASANTEKNIKAL
-			r = new SQLRenderer();
-			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
-
-			sql = r.getSQLDelete("TBLPHPULASANTEKNIKAL");
-			stmt.executeUpdate(sql);
-
-			conn.commit();
-			
-			AuditTrail.logActivity("1610199", "4", null, session, "DEL",
-					"FAIL [" + idUlasanTeknikal
-							+ "] DIHAPUSKAN");
-
-		} catch (SQLException ex) {
-			try {
-				conn.rollback();
-			} catch (SQLException e) {
-				throw new Exception("Rollback error : " + e.getMessage());
-			}
-			throw new Exception("Ralat : Masalah menghapus data "
-					+ ex.getMessage());
-
-		} finally {
-			if (db != null)
-				db.close();
-		}
 	}
 }

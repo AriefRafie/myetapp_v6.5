@@ -12,10 +12,10 @@ import ekptg.model.htp.FrmRekodTransaksiCukaiData;
 
 public class FrmRekodTransaksiCukai extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
-//	private static Logger myLog = Logger.getLogger(ekptg.view.htp.FrmRekodTransaksiCukai.class);
-	
+	private static Logger myLog = Logger.getLogger(ekptg.view.htp.FrmRekodTransaksiCukai.class);
 	@Override
-	public String doTemplate2() throws Exception {	
+	public String doTemplate2() throws Exception {
+		
 		String vm = "";
 		HttpSession session = this.request.getSession();		
 		vm = "app/htp/frmRekodTransaksiCukai.jsp";
@@ -27,11 +27,9 @@ public class FrmRekodTransaksiCukai extends AjaxBasedModule {
 
 	// VIEW TRANSAKSI CUKAI BY ID
 	private void view_modeTransaksiCukai(HttpSession session) throws Exception {
-		String idString = getParam("idHakmilik");
+		int id = Integer.parseInt(getParam("idHakmilik"));
 		Vector list =null;
-		list = FrmRekodTransaksiCukaiData.getTransaksiCukaiById(idString);
+		list = FrmRekodTransaksiCukaiData.getTransaksiCukaiById(id);
 		this.context.put("SenaraiTransaksi",list);
-		
 	}
-	
 }

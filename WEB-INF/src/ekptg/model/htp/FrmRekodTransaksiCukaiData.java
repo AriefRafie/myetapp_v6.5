@@ -14,17 +14,18 @@ import ekptg.helpers.Utils;
 
 public class FrmRekodTransaksiCukaiData {
 	private static Logger log = Logger.getLogger(FrmRekodTransaksiCukaiData.class);
-	private static Vector<Hashtable<String,String>> listCukai = null;
+	private static Vector listCukai = null;
 	
 	// PAPAR TRANSAKSI CUKAI BY ID
-	public static Vector<Hashtable<String,String>> getTransaksiCukaiById(String id) throws Exception {
+	public static Vector getTransaksiCukaiById(int id) throws Exception {
+
 		Db db = null;
 		String sql = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		try {
 			db = new Db();
-			listCukai = new Vector<Hashtable<String,String>>();
+			listCukai = new Vector();
 			Statement stmt = db.getStatement();
 			
 			sql = "SELECT TBLHTPHAKMILIKCUKAI.ID_HAKMILIKCUKAI,TBLHTPHAKMILIKCUKAI.ID_HAKMILIK,TBLHTPHAKMILIKCUKAI.CUKAI_TERKINI, TBLHTPHAKMILIKCUKAI.TARIKH_MASUK "+
@@ -34,12 +35,12 @@ public class FrmRekodTransaksiCukaiData {
 		       			
 			ResultSet rs = stmt.executeQuery(sql);
 			log.info("transaksi cukai :"+sql);
-			Hashtable<String,String> h;
+			Hashtable h;
 
 	      	int bil = 1;
 	      	int count = 0;
 			while (rs.next()) {
-				h = new Hashtable<String,String>();
+				h = new Hashtable();
 				h.put("bil", bil+".");
 				h.put("idHakmilik", rs.getString("ID_HAKMILIK")==null ? "" :rs.getString("ID_HAKMILIK"));
 				h.put("idHakmilikCukai", rs.getString("ID_HAKMILIKCUKAI")==null ? "" :rs.getString("ID_HAKMILIKCUKAI"));
@@ -48,17 +49,16 @@ public class FrmRekodTransaksiCukaiData {
 				listCukai.addElement(h);
 				bil++;
 				count++;
-				
 			}
-			if(count==0){
-				h = new Hashtable<String,String>();
+			if(count==0)
+			{
+				h = new Hashtable();
 				h.put("bil","");
 				h.put("idHakmilik","");
 				h.put("idHakmilikCukai","");
 				h.put("cukaiTerkini", "Tiada Rekod.");
 				h.put("tarikhTransaksi","");
 				listCukai.addElement(h);
-				
 			}
 			
 		} finally {
@@ -66,9 +66,6 @@ public class FrmRekodTransaksiCukaiData {
 				db.close();
 		}
 		return listCukai;
-		
 	}
-	
-	
 
 }

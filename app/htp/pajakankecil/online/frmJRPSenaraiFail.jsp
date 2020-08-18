@@ -33,11 +33,11 @@
 				#parse("app/utils/record_paging.jsp")
 			  	<table width="100%" cellspacing="2" cellpadding="1" border="0">
 			  		<tr class="table_header">
-						<td width="3%"><strong>Bil.</strong></td>
-						<td width="20%"><strong>No. Rujukan <i>Online</i></strong></td>
-						<td width="37%"><strong>Tajuk Fail</strong></td>
-						<td width="17%"><strong>Negeri</strong></td>
-						<td width="23%"><strong>Status</strong></td>		  	
+						<td width="3%"><strong>BIL.</strong></td>
+						<td width="20%"><strong>NO. FAIL</strong></td>
+						<td width="37%"><strong>TAJUK FAIL</strong></td>
+						<td width="17%"><strong>NEGERI</strong></td>
+						<td width="23%"><strong>STATUS</strong></td>		  	
 	  	
 			  		</tr>
 			  
@@ -870,12 +870,6 @@ function skrinSenaraiHakmilikPemilik(id) {
 	document.${formName}.id_kemaskini.value = id;
 	doAjaxCall${formName}("pksemakanseterus");
 }
-//Skrin Maklumat Sewaan
-
-function skrinMaklumatSewaan(id) {
-	document.${formName}.id_kemaskini.value = id;
-	doAjaxCall${formName}("pkpemilikseterus");
-}
 
 function nexti2(id) {
 	//document.${formName}.command.value = "pksemakanseterus";
@@ -1040,10 +1034,9 @@ function haha() {
 //modified by Rosli on 2010/02/11
 function nexti8(id) {
 	//doAjaxCall${formName}("pkmaklumatseterus","id_kemaskini="+id);	
-	//document.${formName}.pagemode.value = 0;
-	//document.${formName}.pagemode.value = 'pengesahan';
-	//document.${formName}.semakMode.value = 'update';
-	doAjaxCall${formName}('pengesahan','idpermohonan='+id);
+	document.${formName}.pagemode.value = 0;	
+	
+	doAjaxCall${formName}('semakanPKP','idpermohonan='+id);
 }
 
 

@@ -3,7 +3,6 @@
  */
 package ekptg.model.php2;
 
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +22,7 @@ import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
-//test 13/8/2020
+
 /**
  * 
  *
@@ -58,8 +57,6 @@ public class FrmTKRJabatanTeknikalData {
 					+ " AND A.ID_PEJABAT = C.ID_PEJABATJKPTG(+) AND A.ID_DOKUMEN = D.ID_DOKUMEN(+) AND A.FLAG_KJP = 'KJT' AND A.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
 
-			
-			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;

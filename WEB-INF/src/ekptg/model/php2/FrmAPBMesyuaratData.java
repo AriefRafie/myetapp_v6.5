@@ -580,17 +580,11 @@ public class FrmAPBMesyuaratData {
 			stmt.executeUpdate(sql);
 			
 			// TBLPHPKERTASKERJAAPB
-			sql = "SELECT FLAG_KERTAS FROM TBLPHPKERTASKERJAAPB WHERE ID_PERMOHONAN = '"
-					+ idPermohonan + "' AND FLAG_KERTAS=2";
-			ResultSet rj = stmt.executeQuery(sql);
-			
-			if (rj.next()) {
-				r = new SQLRenderer();
-				r.update("ID_PERMOHONAN", idPermohonan);
-				r.update("FLAG_KERTAS", "2");
-				sql = r.getSQLDelete("TBLPHPKERTASKERJAAPB");
-				stmt.executeUpdate(sql);
-			}
+			r = new SQLRenderer();
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.update("FLAG_KERTAS", "2");
+			sql = r.getSQLDelete("TBLPHPKERTASKERJAAPB");
+			stmt.executeUpdate(sql);
 			
 			// TBLPHPKERTASKERJAAPB
 			long idKertasKerja = DB.getNextID("TBLPHPKERTASKERJAAPB_SEQ");			

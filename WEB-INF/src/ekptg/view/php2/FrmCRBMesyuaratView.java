@@ -73,7 +73,6 @@ public class FrmCRBMesyuaratView extends AjaxBasedModule {
 		Vector beanMaklumatPengerusi = null;
 		Vector senaraiImejan = null;
 		Vector beanMaklumatImejan = null;
-		Vector senaraiNotifikasi = null;
 
 		// GET DROPDOWN PARAM
 		String idJamDari = getParam("socJamDari");
@@ -212,7 +211,8 @@ public class FrmCRBMesyuaratView extends AjaxBasedModule {
 		}
 
 		// GET FLAG OPEN DETAIL
-		flagOpenDetail = logicHeader.getFlagOpenDetail(idStatus, 5); // 5 = MESYUARAT
+		flagOpenDetail = logicHeader.getFlagOpenDetail(idStatus, 5); // 5 =
+																		// MESYUARAT
 
 		if ("daftarBaru".equals(actionCRB)) {
 
@@ -244,35 +244,6 @@ public class FrmCRBMesyuaratView extends AjaxBasedModule {
 			vm = "app/php2/frmCRBMesyuaratDetail.jsp";
 
 			if ("1".equals(selectedTabUpper)) {
-				
-				if ("update".equals(modePopup)) {
-					
-					this.context.put("readonlyPopup", "");
-					this.context.put("inputTextClassPopup", "");
-
-					beanMaklumatKehadiran = new Vector();
-					logic.setMaklumatKehadiran(idKehadiran);
-					beanMaklumatKehadiran = logic.getBeanMaklumatKehadiran();
-					this.context.put("BeanMaklumatKehadiran",
-							beanMaklumatKehadiran);
-					
-					senaraiNotifikasi = new Vector();
-					logic.setSenaraiNotifikasi(idMesyuarat);
-					senaraiNotifikasi = logic.getListNotifikasi();
-					this.context.put("SenaraiNotifikasiEmel", senaraiNotifikasi);
-				} else {
-					
-					this.context.put("readonlyPopup", "readonly");
-					this.context.put("inputTextClassPopup", "disabled");
-
-					beanMaklumatKehadiran = new Vector();
-					logic.setMaklumatKehadiran(idKehadiran);
-					beanMaklumatKehadiran = logic.getBeanMaklumatKehadiran();
-					this.context.put("BeanMaklumatKehadiran",
-							beanMaklumatKehadiran);
-				}
-				
-			} else if ("2".equals(selectedTabUpper)) {
 
 				if ("update".equals(modePopup)) {
 
@@ -302,7 +273,7 @@ public class FrmCRBMesyuaratView extends AjaxBasedModule {
 				senaraiKehadiran = logic.getListKehadiran();
 				this.context.put("SenaraiKehadiran", senaraiKehadiran);
 
-			} else if ("4".equals(selectedTabUpper)) {
+			} else if ("3".equals(selectedTabUpper)) {
 
 				// OPEN POPUP DOKUMEN
 				if ("openPopupDokumen".equals(flagPopup)) {

@@ -20,7 +20,6 @@ public class Pajakan implements java.io.Serializable {
 	private Date tarikhTamatPajakan;
 	private String caraBayar;
 	private String kategoriCukai;
-	private String tarikhBayar;
 	private Double kadarCukai;
 	private Double kadarPajakan;
 	private Long idMasuk;
@@ -90,13 +89,6 @@ public class Pajakan implements java.io.Serializable {
 		this.tarikhTamatPajakan = tarikhTamatpajakan;
 	}
 
-	public String getTarikhBayarString() {
-		return this.tarikhBayar==null?"01/01/1900":sdf.format(this.tarikhBayar);
-	}
-
-	public void setTarikhBayarString(String tarikhBayar) {
-		this.tarikhBayar = tarikhBayar;
-	}
 	public String getCaraBayar() {
 		return this.caraBayar;
 	}

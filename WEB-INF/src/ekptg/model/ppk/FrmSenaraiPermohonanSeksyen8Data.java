@@ -30,7 +30,7 @@ public class FrmSenaraiPermohonanSeksyen8Data extends EkptgCache {
 			.getLogger(FrmSenaraiPermohonanSeksyen8Data.class);
 
 	// private Vector senaraiFail = null;
- 
+
 	public List carianFail(String noFail, String namaPemohon,
 			String namaSimati, String jenisKp, String noKp,
 			HttpSession session, String tarikhMohon, String status,
@@ -220,15 +220,7 @@ public class FrmSenaraiPermohonanSeksyen8Data extends EkptgCache {
 			" 		                        D.NAMA_PEMOHON, D.NO_KP_BARU, D.NO_KP_LAMA, "+
 			" 		                        D.NO_KP_LAIN, G.KETERANGAN, G.ID_STATUS AS ID_STATUS2, "+
 			" 		                        H.ID_PERMOHONANSIMATI, A.FLAG_JENIS_FAIL, "+
-			" 		                        " +
-			//" K.USER_LOGIN, " +
-			//" K.USER_NAME,  " +
-			
- 			" PEND.USER_LOGIN, "+
- 			" PEND.PENDAFTAR AS USER_NAME, "+
-			
-			
-			" C.NO_SIJIL_MATI "+
+			" 		                        K.USER_LOGIN, K.USER_NAME,  C.NO_SIJIL_MATI "+
 			" 		                   FROM TBLPFDFAIL A,                    "+    
 			" 		                        (                           "+
 			" 		                        SELECT DISTINCT ID_PERMOHONAN,TARIKH_MOHON,ID_FAIL, SEKSYEN, ID_STATUS, ID_MASUK,ID_PEMOHON,TARIKH_MASUK, ID_DAERAHMHN,ID_NEGERIMHN "+ 
@@ -288,11 +280,7 @@ public class FrmSenaraiPermohonanSeksyen8Data extends EkptgCache {
 			" 		                        TBLRUJDAERAH J, "+
 			" 		                        USERS K"+
 			",tblrujsuburusanstatusfail rsusd "+
-			" ,(SELECT SUTF.ID_FAIL, UU.USER_NAME AS PENDAFTAR, UU.USER_LOGIN "+
-			" FROM USERS UU,  TBLRUJSUBURUSANSTATUSFAIL SUTF  "+
-			" WHERE UU.USER_ID = SUTF.ID_MASUK AND SUTF.ID_SUBURUSANSTATUS IN (340,430)) PEND "+
 			" 		                  WHERE A.ID_FAIL = B.ID_FAIL "+
-			" AND A.ID_FAIL = PEND.ID_FAIL(+)  "+
 			" 		                    AND A.NO_FAIL = MAHKAMAH_BORANGC.PETISYEN_NO(+) "+
 			" 		                    AND H.ID_PERMOHONAN = B.ID_PERMOHONAN "+
 			" 		                    AND H.ID_SIMATI = C.ID_SIMATI "+
@@ -477,20 +465,13 @@ public class FrmSenaraiPermohonanSeksyen8Data extends EkptgCache {
 			if (setLimit) { // RESERVED BY AZAM
 				//sql = sql + " WHERE ROWNUM <= 50 ";
 			}
-
-
-			myLogger.info("FAIL TUGASAN:" + sql);
-			/*
 			sql = getSQLCarianFail(noFail
 					,namaPemohon, jenisKpPemohon, noKpPemohon
 					,namaSimati, jenisKp, noKp, noSijilMati
 					,tarikhMohon, status
 					,noHakmilik, noLot
 					, tarikhBicara, userId);
-					
 			System.out.println("FAIL TUGASAN:" + sql);
-			*/
-			
 			stmt.setFetchSize(10);
 			rs = stmt.executeQuery(sql);
 
@@ -872,8 +853,7 @@ public class FrmSenaraiPermohonanSeksyen8Data extends EkptgCache {
 		}
 
 		sql +=" ORDER BY p.tarikh_mohon DESC";
-		
-		System.out.println("getSQLCarianFail = "+sql);
+
 		return sql;
 		
 	}

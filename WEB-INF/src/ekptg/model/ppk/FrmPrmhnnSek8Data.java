@@ -14,10 +14,6 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import ekptg.model.php2.FrmPYWHeaderData;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
@@ -51,8 +47,6 @@ public class FrmPrmhnnSek8Data {
 	private Vector listWarisLapisanIdMatiDelete = new Vector();
 	private Vector listCheckPeguam = new Vector();
 	private Vector listPenghutangbyIDOB = new Vector();
-	private Vector<Hashtable<String,String>> beanMaklumatPemohon = null;
-	private static final Log log = LogFactory.getLog(FrmPrmhnnSek8Data.class);
 
 	private static SimpleDateFormat formatter = new SimpleDateFormat(
 			"dd/MM/yyyy");
@@ -696,60 +690,6 @@ public class FrmPrmhnnSek8Data {
 			if (db != null)
 				db.close();
 		}
-	}
-	
-	public Vector<Hashtable<String,String>> setMaklumatPemohon(String usid) throws Exception {
-		Db db = null;
-		String sql = "";
-	
-		try {
-			beanMaklumatPemohon = new Vector<Hashtable<String,String>> ();
-			db = new Db();
-			Statement stmt = db.getStatement();
-			int bil = 1;
-			Hashtable h;
-			SQLRenderer r = new SQLRenderer();
-			
-			sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UO.NO_KP_BARU, UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3, " +
-					  " UO.POSKOD, UO.NO_FAX, UO.NO_HP, UO.EMEL, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI FROM USERS U, " +
-					  " USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
-					  " WHERE U.USER_ID = UO.USER_ID AND UO.ID_BANDAR = RB.ID_BANDAR(+) AND UO.ID_NEGERI = RN.ID_NEGERI" +
-					  " AND U.USER_ID = '" + usid + "'";
-			log.info("header:sql="+sql);
-			ResultSet rs = stmt.executeQuery(sql);
-	
-			if (rs.next()) {
-				h = new Hashtable();
-				h.put("iduser", rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
-				h.put("kategoriPemohon", rs.getString("KATEGORI") == null ? "" : rs.getString("KATEGORI").toUpperCase());
-				h.put("namaPemohon", rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME").toUpperCase());
-				h.put("noPengenalan", rs.getString("NO_KP_BARU") == null ? "" : rs.getString("NO_KP_BARU").toUpperCase());
-				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs.getString("ALAMAT1").toUpperCase());
-				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs.getString("ALAMAT2").toUpperCase());
-				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs.getString("ALAMAT3").toUpperCase());
-				h.put("poskod", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD").toUpperCase());
-				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI").toUpperCase());
-				h.put("bandar", rs.getString("NAMA_BANDAR") == null ? "" : rs.getString("NAMA_BANDAR").toUpperCase());
-				h.put("noTel", rs.getString("NO_HP") == null ? "" : rs.getString("NO_HP").toUpperCase());	
-				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs.getString("NO_FAX").toUpperCase());
-				h.put("emel", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
-				//h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS").toUpperCase());
-	
-				
-				beanMaklumatPemohon.addElement(h);
-				bil++;
-			}
-			//session.setAttribute("ID_FAIL", rs.getString("ID_FAIL"));
-			
-		} catch (Exception re) {
-			log.error("Error: ", re);
-			throw re;
-			} finally {
-			if (db != null)
-				db.close();
-		}
-	
-		return beanMaklumatPemohon;
 	}
 
 	public static void updatepemohon(Hashtable data) throws Exception {
