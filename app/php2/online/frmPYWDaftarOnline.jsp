@@ -121,9 +121,9 @@
        			<select name="socJenisPermohonan" id="socJenisPermohonan" onchange="doChangeJenisPermohonan()"
 						$inputTextClass class="$inputTextClass">
 					<option $selected_0 value="0">SILA PILIH</option>
-					<option $selected_1 value="1">PERMOHONAN BARU</option>
+					<option $selected_1 value="1">PERMOHONAN BAHARU</option>
 					<option $selected_2 value="2">PERMOHONAN PERLANJUTAN</option>
-					<option $selected_3 value="3">PERMOHONAN PENGURANGAN KADAR SEWA</option>
+					<!-- <option $selected_3 value="3">PERMOHONAN PENGURANGAN KADAR SEWA</option>  -->
 				</select>
 			</td>
   		</tr>

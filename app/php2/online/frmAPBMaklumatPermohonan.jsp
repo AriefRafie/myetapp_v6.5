@@ -1,5 +1,3 @@
-
-<style type="text/css">
 <!--
 .style1 {
 	color: #FF0000
@@ -28,6 +26,10 @@
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
   <input name="kategori" type="hidden" id="kategori" value="$!pemohon.get("kategoriPemohon")"/>
   <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
+  <input name="namaPemohon" type="hidden" id="namaPemohon" value="$namaPemohon"/>
+  <input name="noLesen" type="hidden" id="noLesen" value="$noLesen"/>
+  <input name="idJadualKeduaLesen" type="hidden" id="idJadualKeduaLesen" value="$idJadualKeduaLesen"/>
+  
 </p>
 
 <body onLoad = $onload >
@@ -156,7 +158,9 @@
     <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
     #else
     #if($idStatus == '1610207') <!-- 1610207 -->
-    <input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan') "/>       	 
+    <input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan','$!idStatus') "/>  
+    <input type="button" name="cmdBorangA" id="cmdBorangA" value="Pembaharuan Borang A" onClick="javascript:daftarPembaharuanBorangA('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>   
+    <input type="button" name="cmdBorangB" id="cmdBorangB" value="Pembaharuan Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon') "/>    	 
     #else
     #if ($idStatus !='' && $idStatus != '1610207')
     <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
@@ -190,7 +194,7 @@
 <script>
 function doChangeTab(tabId) {
 	//document.${formName}.actionOnline.value = "seterusnya";
-	document.${formName}.actionOnline.value = "seterusnya";
+	//document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "view";
 	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.submit();
@@ -221,7 +225,7 @@ function validateCurrency(elmnt,content,content2) {
 		return;
 	}
 }
-function seterusnya(){
+/*function seterusnya(){
 
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";
@@ -232,7 +236,7 @@ function seterusnya(){
 	document.${formName}.hitButton.value = "doSeterusnya";
 	document.${formName}.submit();
 // 	doAjaxCall${formName}("");
-}
+}*/
 </script>
 <!-- PEMBELI PASIR -->
 <script>
@@ -494,7 +498,7 @@ function kemaskiniPermohonan() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
 	document.${formName}.submit();	
-// 	doAjaxCall${formName}("");//comment jap ye
+ //	doAjaxCall${formName}("");//comment jap ye
 }
 function batalKemaskiniPermohonan() {
 	document.${formName}.mode.value = "view";
@@ -948,7 +952,7 @@ function cetakPengesahanPermohonan(idPermohonan) {
 function daftarLampiran() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
 	document.${formName}.method="POST";
-	document.${formName}.actionOnline = "seterusnya";
+	//document.${formName}.actionOnline = "seterusnya";
 	document.${formName}.mode.value = "view";	
 	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.mode.value = "new";
@@ -970,16 +974,43 @@ function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
-function daftarPembaharuan(idFail,idPermohonan) {	
 
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
+function daftarPembaharuan(idFail,idPermohonan,idStatus){
+	document.${formName}.actionOnline.value = "daftarBaruLesen";
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idPermohonan.value = idPermohonan;
-	//document.${formName}.idPermohonanLama.value = idPermohonanLama;
-	document.${formName}.actionOnline = "daftarBaruLesen";
-	document.${formName}.mode.value = "new";	
+	document.${formName}.idStatus.value = idStatus;
 	document.${formName}.submit();
-
+}
+function daftarPembaharuanBorangA(idFail,idPermohonan,idStatus,namaPemohon,idJadualKeduaLesen,noLesen){
+	
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBBorangAOnlineSenaraiFailView";
+	alert("1");
+	document.${formName}.method="POST";
+	/*document.${formName}.actionLesen.value = "daftarBaruBorangA";
+	alert("2");
+	document.${formName}.idFail.value = idFail;
+	alert("3");
+	document.${formName}.idPermohonan.value = idPermohonan;
+	alert("4");
+	document.${formName}.idStatus.value = idStatus;
+	alert("5");
+	document.${formName}.namaPemohon.value = namaPemohon;
+	alert("6");
+	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
+	alert("7");
+	document.${formName}.noLesen.value = noLesen;
+	alert("8");*/
+	document.${formName}.submit();
+}
+function daftarPembaharuanBorangB(idFail,idPermohonan,idStatus,namaPemohon){
+	
+	document.${formName}.actionLesen.value = "daftarBaruBorangB";
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idPermohonan.value = idPermohonan;
+	document.${formName}.idStatus.value = idStatus;
+	document.${formName}.namaPemohon.value = namaPemohon;
+	document.${formName}.submit();
 }
 
 

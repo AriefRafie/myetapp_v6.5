@@ -41,15 +41,35 @@
 		     	</td>
 	      	</tr>  
 	      	<tr>
-		      	<td width="30%">No. Tel</td>
-		      	<td width="1%">:</td>
-		      	<td >$!pemohon.get("noTel")</td>
-      		</tr>  
-      		<tr>
-		      	<td width="30%">No. Faks</td>
-		      	<td width="1%">:</td>
-		      	<td >$!pemohon.get("noFax")</td>
-      		</tr>
+  		<td>Poskod</td>
+  		<td>:</td>
+  		<td>$!pemohon.get("poskod")</td>
+  	</tr>
+  	<tr>
+  		<td>Negeri</td>
+  		<td>:</td>
+  		<td>$!pemohon.get("negeri")</td>
+  	</tr>
+  	<tr>
+  		<td>Bandar</td>
+  		<td>:</td>
+  		<td>$!pemohon.get("bandar")</td>
+  	</tr>
+  	<tr>
+  		<td>No. Tel</td>
+  		<td>:</td>
+  		<td>$!pemohon.get("noTel")</td>
+  	</tr>
+  	<tr>
+  		<td>No. Faks</td>
+  		<td>:</td>
+  		<td>$!pemohon.get("noFax")</td>
+  	</tr>
+  	  	<tr>
+  		<td>Emel</td>
+  		<td>:</td>
+  		<td>$!pemohon.get("emel")</td>
+  	</tr>
       	</table>
       </fieldset>
      </td>

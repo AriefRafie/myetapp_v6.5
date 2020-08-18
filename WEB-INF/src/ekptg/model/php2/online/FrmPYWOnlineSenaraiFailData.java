@@ -1715,6 +1715,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		String IdKategoriUser = "";
 		String emelUser = "";
 		String TT = "to_date('" + tarikhTerima + "','dd/MM/yyyy')";
+		String TS = "to_date('" + tarikhSurat + "','dd/MM/yyyy')";
 
 		try {
 			db = new Db();
@@ -1804,7 +1805,7 @@ public class FrmPYWOnlineSenaraiFailData {
 
 			sql = r.getSQLInsert("TBLPHPPEMOHON");
 			stmt.executeUpdate(sql);
-			
+			log.info("INSERT : "+sql);	
 			String idPejabatJKPTG = "";
 			sql = "SELECT ID_PEJABATJKPTG, ID_NEGERI FROM TBLRUJPEJABATJKPTG "
 					+ " WHERE ID_SEKSYEN = '4' AND ID_NEGERI = '" + idNegeriHakmilik + "'";
@@ -1821,9 +1822,9 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_JKPTG", idPejabatJKPTG);
 			r.add("ID_FAIL", idFail);
-			r.add("ID_STATUS", "");
+			r.add("ID_STATUS", "161");
 			r.add("NO_RUJ_SURAT",noRujukanSurat);
-			r.add("TARIKH_SURAT",tarikhSurat);
+			r.add("TARIKH_SURAT", r.unquote(TS));
 			r.add("TARIKH_TERIMA", r.unquote(TT));
 			
 			Calendar currentDate = new GregorianCalendar();			
@@ -1837,7 +1838,7 @@ public class FrmPYWOnlineSenaraiFailData {
 
 			sql = r.getSQLInsert("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
-			
+			log.info("INSERT : "+sql);	
 			//TBLPHPHAKMILIKPERMOHONAN
 			r = new SQLRenderer();
 			long idhakmilikPermohonan = DB.getNextID("TBLPHPHAKMILIKPERMOHONAN_SEQ");
@@ -1853,14 +1854,14 @@ public class FrmPYWOnlineSenaraiFailData {
 
 			sql = r.getSQLInsert("TBLPHPHAKMILIKPERMOHONAN");
 			stmt.executeUpdate(sql);
-			
+			log.info("INSERT : "+sql);	
 			//TBLPHPPERMOHONANSEWA
 			String namaTujuan = getNamaTujuan(idSubsuburusan);
-			
+
 			r = new SQLRenderer();
 			long idPHPPermohonanSewa = DB.getNextID("TBLPHPPERMOHONANSEWA_SEQ");
 			r.add("ID_PHPPERMOHONANSEWA", idPHPPermohonanSewa);
-			r.add("ID_PERMOHONAN", idPermohonan);			
+			r.add("ID_PERMOHONAN", idPermohonan);	
 			r.add("ID_LUASASAL", idLuas);
 			r.add("LUAS_ASAL", luas);
 			r.add("ID_JENIS_PERMOHONAN", idJenisPermohonan);
@@ -1874,8 +1875,8 @@ public class FrmPYWOnlineSenaraiFailData {
 			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+		
 			r.add("ID_PERMOHONANLAMA", idPermohonanLama);	
-
 			sql = r.getSQLInsert("TBLPHPPERMOHONANSEWA");
 			stmt.executeUpdate(sql);
 			log.info("INSERT : "+sql);

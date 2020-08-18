@@ -108,7 +108,14 @@ function papar(idFail,idStatus,idPemohon) {
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idStatus.value = idStatus;
 	document.${formName}.idPemohon.value = idPemohon;
+	
+	//if(idStatus == "1610207"){
+	//document.${formName}.actionOnline.value = "daftarBaruLesen"; 	
+	//document.${formName}.actionOnline.value = "default"; 	
+	//}
+	//else{
 	document.${formName}.actionOnline.value = "seterusnya"; 	
+	//}
 	document.${formName}.submit();
 }
 function paparRenewLesen(idFail,idStatus,idPemohon,idPermohonanLama) {
