@@ -50,6 +50,7 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		String userId = (String)session.getAttribute("_portal_login");
 		Long tempIdNegeri = -1L;
 		int userLevel = 0;
+		String idNegeri="";
 
     	String idStatus = getParam("socStatus");
     	if (idStatus == null || idStatus.trim().length() == 0){
@@ -67,7 +68,9 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
     	myLog.info("submit="+submit);
     	if ("PilihNegeri".equals(submit)){
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
-	        setSOC(tempIdNegeri, idStatus);
+			String tempIdDaerah = getParam("socDaerahBaru").equals("")?"0":getParam("socDaerahBaru");
+
+	        setSOC(tempIdNegeri,idStatus,tempIdDaerah);
 
     		if(!"".equals(getParam("txdMula"))){
     			defaultBulan = Long.parseLong(getParam("txdMula"));
@@ -85,7 +88,9 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
     	} else if ("PilihUnit".equals(submit)) {
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
 			String tempIdDaerah = getParam("socDaerahBaru").equals("")?"0":getParam("socDaerahBaru");
-	        setSOC(tempIdNegeri,idStatus,tempIdDaerah);
+			String idKementerian = !getParam("socUnit").equals("-1")?getParam("socUnit"):"0";
+			String idAgensi = !getParam("socDaerah").equals("-1")?getParam("socDaerah"):"0";
+	        setSOC(tempIdNegeri,idStatus,tempIdDaerah,idAgensi,idKementerian);
 
 	        if(!"".equals(getParam("txdMula"))){
     			defaultBulan = Long.parseLong(getParam("txdMula"));
@@ -108,8 +113,9 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
 			String tempIdDaerah = getParam("socDaerahBaru").equals("")?"0":getParam("socDaerahBaru");
 			String idAgensi = !getParam("socDaerah").equals("-1")?getParam("socDaerah"):"0";
+			String idKementerian = !getParam("socUnit").equals("-1")?getParam("socUnit"):"0";
 
-			setSOC(tempIdNegeri,idStatus,tempIdDaerah,idAgensi);
+			setSOC(tempIdNegeri,idStatus,tempIdDaerah,idAgensi,idKementerian);
 //			setSOC(tempIdNegeri,idSuburusan,tempIdDaerah);
 
 			if(sorTempoh.equals("1")) {
@@ -225,12 +231,11 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
 		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(idKementerian), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
-		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,idAgen," style=\"width:400\"","");
+		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
 
 	}
 
 	public void setSOC(Long tempIdNegeri, String idStatus, String idDaerah, String idAgen) throws Exception{
-		System.out.println("masuk sini ker?");
 		Long tempIdDaerah = Long.parseLong(idDaerah);
 		String idKementerian = getParam("socUnit")==""?"-1":getParam("socUnit");
 		//String idAgen = getParam("socDaerah")==""?"-1":getParam("socDaerah");
@@ -240,7 +245,23 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
 		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(getParam("socUnit")==""?"-1":getParam("socUnit")), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
-		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,idAgen," style=\"width:400\"","");
+		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
+
+	}
+
+	public void setSOC(Long tempIdNegeri, String idStatus, String idDaerah, String idAgen,String idKementerian) throws Exception{
+		System.out.println("tempIdNegeri >>> "+tempIdNegeri+" idStatus >>>> "+idStatus+" idDaerah >>> "
+	+idDaerah+" idAgen >>> "+idAgen+" idKementerian >> "+idKementerian);
+		Long tempIdDaerah = Long.parseLong(idDaerah);
+		//String idKementerian = getParam("socUnit")==""?"-1":getParam("socUnit");
+		//String idAgen = getParam("socDaerah")==""?"-1":getParam("socDaerah");
+
+		socStatus = UtilHTML.selectStatusLaporanPenyewaan("4", "socStatus" ,idStatus, "", "");
+		displayNegeri(tempIdNegeri);
+		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
+
+		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(idKementerian), null, "");
+		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
 
 	}
 

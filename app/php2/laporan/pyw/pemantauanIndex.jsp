@@ -138,7 +138,7 @@
 	function doChangeNegeri() {
 		//if(document.${formName}.socNegeri.value=="-1")
 		//	return;
-		document.${formName}.sorLaporan.value = document.${formName}.sorLaporan_.value;
+		//document.${formName}.sorLaporan.value = document.${formName}.sorLaporan_.value;
 		doAjaxCall${formName}("PilihNegeri");
 	}
 	function doChangeKementerian2() {
@@ -147,7 +147,7 @@
 	function doChangeKementerian() {
 		//if(document.${formName}.socUnit.value=="-1")
 		//	return;
-		document.${formName}.sorLaporan.value = document.${formName}.sorLaporan_.value;
+		//document.${formName}.sorLaporan.value = document.${formName}.sorLaporan_.value;
 		doAjaxCall${formName}("PilihUnit");
 	}
 	function doChangeSelect02() {
@@ -160,6 +160,7 @@
 		doAjaxCall${formName}("PilihLain");
 	}
 	function openLaporan(urli,param,laporan,tem){
+		var status = document.${formName}.socStatus.value;
 		var negeri = document.${formName}.socNegeri.value;
 		var unit = document.${formName}.socUnit.value;
 		var daerah = document.${formName}.socDaerah.value;
@@ -167,109 +168,113 @@
 		var pnegeri = "&ID_NEGERI=0";
 		var ptahun = "&TAHUN=";
 		var ptem = "&template="+tem;
-		var pbulanmula = "&BULANTAHUN=0";
+		var pbulanmula = "&BULANTAHUNMULA=0";
 		var pbulantamat = "&BULANTAHUNTMT=0";
-		var pdaerah = "&ID=0";
-		var punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0"+"&bulan=1";
+		var pdaerah = "&ID_DAERAH=0";
+		var punit = "&ID_KEMENTERIAN="+unit;
+		var pagensi = "&ID_AGENSI=0";
 		var masa = document.${formName}.sorTempoh.value;
 		var folder = "&fol=php2/PYW/"
+		var pmasa = "&TYPE="+masa;
+		var pbulantahun = "&BULANTAHUN=0";
 
-		alert('masa >> '+masa);
+		var	pstatus = "&ID_STATUS="+status;
 
 		if(masa==""){
 			alert("Sila pilih \"Bulan/ Tahun/ Tempoh\" terlebih dahulu.");
 			document.${formName}.sorTempoh.focus();
 			return;
-
 		}
+
+		if(negeri=="-1"){
+			alert("Sila pilih \"Negeri\" terlebih dahulu.");
+			document.${formName}.socNegeri.focus();
+			return;
+		}else if(negeri=="0"){
+		}else{
+			ptem = '&template='+tem;
+			pnegeri = "&ID_NEGERI="+negeri;
+		}
+
+		if(unit=="-1"){
+			alert("Sila pilih \"Kementerian\" terlebih dahulu");
+			document.${formName}.socUnit.focus();
+			return;
+		}else if(unit=="0"){
+		}else{
+			ptem = '&template='+tem;
+			punit = "&ID_KEMENTERIAN="+unit;
+		}
+
+		if(daerahbaru=="-1"){
+			alert("Sila pilih \"Daerah\" terlebih dahulu");
+			document.${formName}.socDaerahBaru.focus();
+			return;
+		}else if(daerahbaru=="0"){
+		}else{
+			ptem = '&template='+tem;
+			pdaerah = "&ID_DAERAH="+daerahbaru;
+		}
+
+		if(daerah=="-1"){
+			alert("Sila pilih \"Agensi\" terlebih dahulu");
+			document.${formName}.socDaerah.focus();
+			return;
+		}else if(daerah=="0"){
+		}else{
+			ptem = '&template='+tem;
+			pagensi = "&ID_AGENSI="+daerah;
+		}
+
 		var range_akhir = document.${formName}.txdAkhir.value;
-		//alert('masa='+document.${formName}.sorTempoh);
 		if(masa == 1 || masa == 3){
 			if(range_akhir == ""){
 				alert("Sila pilih \"Bulan\" terlebih dahulu.");
 				document.${formName}.txdAkhir.focus();
 				return;
-
 			}
 		}
 
-		if(range_akhir==""){
-				if(negeri=="-1"){
-					alert("Sila pilih \"Negeri\" terlebih dahulu.");
-					document.${formName}.socNegeri.focus();
-					return;
-				}else if(negeri=="0"){
-				}else{
-					ptem = '&template='+tem;
-					pnegeri = "&ID_NEGERI="+negeri+"&bulan=1";
-					/* if(jenisPajakan != "-1"){
-						ptem = "&template=HTPPajakanSenaraiMengikutNegeriJenis";
-						param += "&IDSUBURUSAN1="+jenisPajakan;
-					} */
-					if(unit != "-1"){
-						ptem = '&template='+tem;
-						punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0";
-					}
-				}
-				// 2017/03/30
-				if(unit=="-1"){
-					alert("Sila pilih \"Kementerian\" terlebih dahulu");
-					document.${formName}.socUnit.focus();
-					return;
-				}else if(unit=="0"){
-				}else{
-					ptem = '&template='+tem;
-					punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0"+"&bulan=1";
-					if(negeri != "-1" && negeri != "0"){
-						ptem = '&template='+tem;
-						pnegeri = "&ID_NEGERI="+negeri;
-					}
-				}
-			}else{
-				ptem = "&template="+tem;
+	  	var temRange = "";
+		if(masa == 1){
+			temRange = "BlnThn";
+				mula_tahun = document.${formName}.txdTahunMula.value;
+				//ptahun = "&TAHUN="+mula_tahun;
+				pbulantahun = "&BULANTAHUN="+range_akhir+"/"+mula_tahun;
+			ptem = '&template='+tem;
+		}else if(masa == 3){
+			var tarikhsemasa = new Date();
+			var day_ = tarikhsemasa.getDate();
+	  		akhir_hari = day_;
+			akhir_bulan = document.${formName}.txdAkhir.value;
+	  		akhir_tahun = document.${formName}.txdTahunAkhir.value;
+			var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun;
+	 		mula_hari = day_;
+	  		mula_bulan = document.${formName}.txdMula.value;
+	  		mula_tahun = document.${formName}.txdTahunMula.value;
+			var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
+			temRange = "BlnThnRange";
+			//ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
+			pbulanmula = "&BULANTAHUNMULA="+mula_bulan+"/"+mula_tahun+"&bulan="+mula_bulan;
+			pbulantamat = "&BULANTAHUNTMT="+akhir_bulan+"/"+akhir_tahun+"&bulantamat="+akhir_bulan;
+			var mula = Date.parse(mulatemp);
+			var akhir = Date.parse(akhirtemp);
+		  	if(akhir<mula){
+		    	alert("Sila pastikan Tarikh Akhir tidak melebihi dari Tarikh Mula.");
+		    	return;
+		  	}
+		  	if(akhir>tarikhsemasa){
+		    	alert("Sila pastikan Tarikh Akhir tidak melebihi dari Tarikh Semasa.");
+		    	return;
+		  	}
+		}else{
+			ptem = '&template='+tem;
+			ptahun = "&TAHUN="+range_akhir;
+			if(mulatemp != "" && akhirtemp != ""){
+				ptem = '&template='+tem;
 			}
-		  	var temRange = "";
- 			if(masa == 1){
-				temRange = "BlnThn";
- 				mula_tahun = document.${formName}.txdTahunMula.value;
- 				ptahun = "&TAHUN="+mula_tahun;
- 				pbulanmula = "&bulan="+range_akhir;
-				ptem = '&template='+tem+'MengikutTahun';
-			}else if(masa == 3){
-				var tarikhsemasa = new Date();
-				var day_ = tarikhsemasa.getDate();
-		  		akhir_hari = day_;
-				akhir_bulan = document.${formName}.txdAkhir.value;
-		  		akhir_tahun = document.${formName}.txdTahunAkhir.value;
-				var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun;
-		 		mula_hari = day_;
-		  		mula_bulan = document.${formName}.txdMula.value;
-		  		mula_tahun = document.${formName}.txdTahunMula.value;
-				var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
-				temRange = "BlnThnRange";
-				ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
-				pbulanmula = "&BULANTAHUN="+mula_bulan+"/"+mula_tahun+"&bulan="+mula_bulan;
-				pbulantamat = "&BULANTAHUNTMT="+akhir_bulan+"/"+akhir_tahun+"&bulantamat="+akhir_bulan;
-				var jenisPajakan = document.${formName}.socsuburusan.value;
-				var mula = Date.parse(mulatemp);
-				var akhir = Date.parse(akhirtemp);
-			  	if(akhir<mula){
-			    	alert("Sila pastikan Tarikh Akhir tidak melebihi dari Tarikh Mula.");
-			    	return;
-			  	}
-			  	if(akhir>tarikhsemasa){
-			    	alert("Sila pastikan Tarikh Akhir tidak melebihi dari Tarikh Semasa.");
-			    	return;
-			  	}
-			}else{
-					ptem = '&template='+tem;
-					ptahun = "&TAHUN="+range_akhir;
-					if(mulatemp != "" && akhirtemp != ""){
-						ptem = '&template='+tem;
-					}
-			}
- 			alert('ptahun >>> '+ptahun);
-		var url = "../servlet/"+urli+"?"+param+pnegeri+ptahun+ptem+pbulanmula+pbulantamat+punit+pdaerah+folder;
+		}
+		var url = "../servlet/"+urli+"?"+param+ptem+pstatus+pnegeri+pdaerah+ptahun+pbulantahun+pbulanmula+pbulantamat+punit+pagensi+pmasa+folder;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
