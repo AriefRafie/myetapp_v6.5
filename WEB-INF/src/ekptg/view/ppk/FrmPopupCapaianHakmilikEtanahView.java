@@ -52,15 +52,13 @@ public class FrmPopupCapaianHakmilikEtanahView extends AjaxBasedModule {
 				manager.getMaklumatHakmilikFromEtanah(idPermohonanSimati, noResit, idHakmilik, kodNegeri);
 				this.context.put("flagMsg", manager.getFlagMsg());
 				this.context.put("outputMsg", manager.getOutputMsg());
-			
-			}else if ("14".equals(kodNegeri)){
+			}
+			if ("14".equals(kodNegeri)){
 				EtanahWPKLPPKManager manager = new EtanahWPKLPPKManager();
 				manager.getMaklumatHakmilikFromEtanah(idPermohonanSimati, noResit, idHakmilik, idPengguna);
 				this.context.put("flagMsg", manager.getFlagMsg());
 				this.context.put("outputMsg", manager.getOutputMsg());
-			
-			}
-			
+			}			
 		}	
 		
 		if (hitButt.equals("daftar")){

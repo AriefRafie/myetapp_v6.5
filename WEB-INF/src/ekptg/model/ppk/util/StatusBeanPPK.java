@@ -442,29 +442,25 @@ public class StatusBeanPPK implements IStatus {
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();	    		
 	    		sql = "SELECT " +
-	    		" TO_CHAR (P.TARIKH_MASUK, 'DD/MM/YYYY') TARIKH_MASUK"+
-	    		" ,TO_CHAR (P.TARIKH_MOHON_ONLINE, 'DD/MM/YYYY') TARIKH_MOHON_ONLINE,P.SEKSYEN "+
-	    		" , UPPER (PM.NAMA_PEMOHON) AS NAMA_PEMOHON "+
-	    		" ,S.KETERANGAN  "+
-	    		" ,SM.NAMA_SIMATI"+
-	    		" ,ST.ID_SUBURUSANSTATUS,ST.ID_SUBURUSAN "+
-	    		" ,STF.ID_SUBURUSANSTATUSFAIL, STF.AKTIF,STF.URL CATATAN" +
+	    		//	"distinct f.no_fail,F.ID_MASUK, a.id_status,  ";
+	    		" S.KETERANGAN,ST.ID_SUBURUSANSTATUS "+
+	    		" ,STF.ID_SUBURUSANSTATUSFAIL, STF.AKTIF,ST.ID_SUBURUSAN,STF.URL CATATAN" +
 	    		" ,TO_CHAR(STF.TARIKH_MASUK,'dd/mm/yyyy') TARIKH_MASUK " +
 	    		" ,TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI" +
 	    		" ,STF.ID_PERMOHONAN,STF.ID_FAIL " +
 	    	    " FROM " +
-	    	    " TBLPFDFAIL F,TBLPPKPERMOHONAN P,TBLPPKPEMOHON PM   "+
-	    		" ,TBLPPKPERMOHONANSIMATI PSM,TBLPPKSIMATI SM "+
-	    		" ,TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLRUJSUBURUSANSTATUSFAIL STF "+
+	    	    " TBLPPKPERMOHONAN P, TBLPFDFAIL F,  "+
+//	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLHTPRUJSUBURUSANSTATUSFAIL STF "+
+	    		" TBLRUJSTATUS S, TBLRUJSUBURUSANSTATUS ST, TBLRUJSUBURUSANSTATUSFAIL STF "+
 	    		" WHERE "+
 	    		" F.ID_FAIL = P.ID_FAIL "+
 	    		" AND F.ID_FAIL = STF.ID_FAIL "+
 	    		" AND P.ID_PERMOHONAN = STF.ID_PERMOHONAN "+
 	    		" AND ST.ID_STATUS = S.ID_STATUS "+
 	    		" AND STF.ID_SUBURUSANSTATUS = ST.ID_SUBURUSANSTATUS "+
-	    		" AND P.ID_PERMOHONAN = PSM.ID_PERMOHONAN "+
-	    		" AND PSM.ID_SIMATI = SM.ID_SIMATI "+
-	    		" AND PM.ID_PEMOHON = P.ID_PEMOHON  "+
+	    		//" AND stf.id_permohonan = a.id_permohonan ";
+	    		//sql += " AND stf.ID_FAIL = A.ID_FAIL ";
+	    		//sql += " AND F.id_status <> '999' ";
 	    		" AND ST.LANGKAH = '"+langkah+"'"+
 	    		" AND STF.aktif = 1 "+
 	    		//" AND STF.ID_FAIL = '" + idHakmilik + "'" +
@@ -472,7 +468,7 @@ public class StatusBeanPPK implements IStatus {
 	    		if(!idUrusan.equals("")){
 	    			sql+=" AND ST.ID_SUBURUSAN IN " +
 	    					"(SELECT ID_SUBURUSAN FROM TBLRUJSUBURUSAN " +
-	    					" WHERE ID_URUSAN IN ("+idUrusan+") )";
+	    					" WHERE ID_URUSAN ='"+idUrusan+"')";
 	    		}
 	    		if(!idUser.equals("")){
 	    			sql+=" AND F.ID_MASUK = "+idUser;	    		
@@ -492,25 +488,9 @@ public class StatusBeanPPK implements IStatus {
 	    				//h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
 	    				//h.put("no_fail", rs.getString("no_fail")==null?"":rs.getString("no_fail"));
 	    				h.put("catatan", Utils.isNull(rs.getString("CATATAN")));
-		    		    h.put("nama_pemohon", rs.getString("NAMA_PEMOHON")==null?"":rs.getString("NAMA_PEMOHON"));
-		    		    h.put("nama_simati", rs.getString("NAMA_SIMATI")==null?"":rs.getString("NAMA_SIMATI"));
-	    		    	h.put("seksyen", rs.getString("SEKSYEN")==null?"":rs.getString("SEKSYEN"));
-		    		    h.put("status", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
-	    		    	//h.put("status", rs.getString("STATUS")==null?"":rs.getString("STATUS")); senarai deraf
-
-	    		    	h.put("tarikhmasuk", rs.getString("TARIKH_MASUK")==null?"":rs.getString("TARIKH_MASUK"));
-		    		    h.put("tarikh_mohon_online", rs.getString("TARIKH_MOHON_ONLINE")==null?"":rs.getString("TARIKH_MOHON_ONLINE"));
+	    				h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
 	    				h.put("tarikhSelesai", Utils.isNull(rs.getString("TARIKH_SELESAI")));
 	    				senaraiMaklumat.addElement(h);
-//	    				  h.put("tarikhMohon", rs.getString("TARIKH_MOHON")==null?"":rs.getString("TARIKH_MOHON"));
-//	    		    	  h.put("idFail", rs.getString("ID_FAIL")==null?"":rs.getString("ID_FAIL"));
-//	    		    	  h.put("nofail", rs.getString("NO_FAIL")==null?"":rs.getString("NO_FAIL"));
-//	    		    	  h.put("no", rs.getString("NO_PERMOHONAN_ONLINE")==null?"":rs.getString("NO_PERMOHONAN_ONLINE"));
-//	    		    	  h.put("id_Permohonan", rs.getString("ID_PERMOHONAN")==null?"":rs.getString("ID_PERMOHONAN"));
-//	    		    	  h.put("icSimati", rs.getString("MYID_SIMATI")==null?"":rs.getString("MYID_SIMATI"));
-//	    		    	  h.put("icPemohon", rs.getString("MYID_PEMOHON")==null?"":rs.getString("MYID_PEMOHON"));
-//	    		    	  h.put("id_pemohon", rs.getString("ID_PEMOHON")==null?"":rs.getString("ID_PEMOHON"));
-//	    		    	  h.put("status", rs.getString("STATUS")==null?"":rs.getString("STATUS"));
 	    				bil++;
 
 	    		}

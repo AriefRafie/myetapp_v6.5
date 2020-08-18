@@ -30,7 +30,7 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 	 */
 	private static final long serialVersionUID = 1L;
 	private final String PATH="app/htp/cukai/";
-	private static Logger myLog = Logger.getLogger(ekptg.view.htp.FrmCukaiPendaftaran.class);
+	private static Logger mylog = Logger.getLogger(ekptg.view.htp.FrmCukaiPendaftaran.class);
 	private static String idUrusan = "11";
 	private static String idSubUrusan = "43";
 	String idMasuk = null;
@@ -64,12 +64,13 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 
 	    this.context.put("util", new lebah.util.Util());
 	    //socNegeri = HTML.SelectNegeri("socNegeri");
+	    System.out.println("idNegeri : "+idNegeri);
 	    socNegeri = HTML.SelectNegeri("socNegeri",idNegeri.equals("")?0L:Long.parseLong(idNegeri),"","onchange=\"doChangeNegeri()\"");
 
-	   	myLog.info(": equals(submit)="+submit +",pageMode="+pageMode);
+	   	mylog.info(": equals(submit)="+submit +":pageMode="+pageMode);
 	    if(submit.equals("cukaifailbaru")){
 		   	template_name = PATH+"frmCukaiPendaftaran.jsp";
-//		   	mylog.info("FrmCukaiPendaftaran: equals(submit)::cukaifailbaru");
+		   	mylog.info("FrmCukaiPendaftaran: equals(submit)::cukaifailbaru");
 		   	String strOperation = "";
 		    this.context.put("socSeksyen","3");
 		    
@@ -95,7 +96,6 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 			    this.context.put("socUrusan",socUrusan);
 			    			    
 			    pageMode = "2";
-		    
 		    }else if(pageMode.equals("3")){
 			    String id = getParam("id_kemaskini");
 
@@ -108,7 +108,6 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 		    	this.context.put("socUrusan",socUrusan);
 			    	
 		    	pageMode = "4";
-		    
 		    }else{
 		    	String id = getParam("id_kemaskini");
 		    	System.out.println("FrmPajakanKecilA: equals(submit)::pkfailbaru:::else|id"+id);
@@ -130,7 +129,6 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 			    semakanSenarai = FrmSemakan.getSenaraiSemakan("frmSewaanSemakPermoh","aktif");
 			    this.context.put("senaraiSemakan",semakanSenarai );
 		    	pageMode = "2";
-		    
 		    }
 		    this.context.put("operation",strOperation);  
 		    this.context.put("socNegeri",socNegeri);
@@ -138,9 +136,10 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 		    this.context.put("socAgensi",socAgensi);
 		    this.context.put("pageMode",pageMode);
     	
-	    }else{ // !=submit
+	    }
+	    else{ // !=submit
 	    	strTitle = "FAIL CUKAI";
-//	        System.out.println("FrmCukaiPendaftaran: !=submit::else:::user_id="+session.getAttribute("_ekptg_user_id"));
+	        System.out.println("FrmCukaiPendaftaran: !=submit::else:::user_id="+session.getAttribute("_ekptg_user_id"));
     		template_name = PATH+"frmCukaiPendaftaran.jsp";
 	        
 	    	String strdate = "";
@@ -162,23 +161,22 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 		   		Vector vecNegeri = (Vector)DB.getNegeri(idNegeri); 
 		   		Tblrujnegeri n = (Tblrujnegeri)vecNegeri.elementAt(0);
 			  	this.context.put("tajukTemp",strTitle+" "+n.getNamaNegeri());
-//			  	mylog.info("doChange:getICukai().isFailCukaiSelesai(idNegeri)="+getICukai().isFailCukaiSelesai(idNegeri));
+			  	mylog.info("doChange:getICukai().isFailCukaiSelesai(idNegeri)="+getICukai().isFailCukaiSelesai(idNegeri));
 			  	this.context.put("tambahdisable",getICukai().isFailCukaiSelesai(idNegeri));
-		   	
 		   	}
-		   	
 	    }
 	  	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong(idUrusan),"disabled");
-	  	this.context.put("socNegeri", socNegeri);
-//	  	this.context.put("socNegeri", HTML.SelectNegeri("socNegeri",null,"","onchange=\"doChangeNegeri()\""));
-	  	this.context.put("socUrusan",socUrusan);
+	  	this.context.put("socNegeri", HTML.SelectNegeri("socNegeri",null,"","onchange=\"doChangeNegeri()\""));
+    	this.context.put("socUrusan",socUrusan);
     	this.context.put("idurusan",idUrusan);
 	   	this.context.put("idsuburusan",idSubUrusan);
+	   	//System.out.println(template_name);
 	    return template_name;
 	    
-	}
+	  }
 
-	private void simpanFail(HttpSession session, Long idFail) throws Exception {		  
+	private void simpanFail(HttpSession session, Long idFail) throws Exception {
+		  
 		  Hashtable h = null;
 		  h = new Hashtable();
 		  String kodNegeriMampu = "";
@@ -248,19 +246,19 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 	  }
 	  
 	  private String simpanPermohonan(HttpSession session,String idFail, int flag)throws Exception {
-		  Hashtable<String,String> data = null;
-		  data = new Hashtable<String,String>();
+		  Hashtable data = null;
+		  data = new Hashtable();
 		  String txdBukafail = "";
-//		  int idNegeri = 0;
-//		  int idStatus = 7;/**AKTIF*/
-//		  int idFaharasat = 1;
-		  String  idAgensi = "0";
+		  int idNegeri = 0;
+		  int idAgensi = 0;
+		  int idFaharasat = 1;
+		  int idStatus = 7;/**AKTIF*/
 		  String tajuk = "TIADA";
 		  String strTiada = "TIADA";
 		  txdBukafail = getParam("txdbukafail"); 
 		  tajuk = getParam("txttajuk");
-		  
-		  idAgensi = getParam("idagensi");
+		
+		  idAgensi = Integer.parseInt(getParam("idagensi"));
 		  
 		  if(flag==0){
 			  //data.put("IdFail", fail);
@@ -274,7 +272,7 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 			  data.put("tajuk",tajuk);
 			  data.put("tarikh_Masuk", txdBukafail);
 	    	  data.put("id_Agensi", idAgensi);
-	    	  data.put("id_Jenistanah", "1");
+	    	  data.put("id_Jenistanah", 1);
 	    	  data.put("id_Pegawai", idMasuk);
 	    	  data.put("no_Failkjp", strTiada);
 	    	  data.put("no_Faillain", strTiada);
@@ -282,7 +280,7 @@ public class FrmCukaiPendaftaran extends AjaxBasedModule{
 
 	    	  data.put("id_Masuk", idMasuk);
 		  }		  
-		  return FrmUtilData.simpanPermohonanHTPStr(data);
+		  return FrmUtilData.simpanPermohonanHTP(data);
 		  
 	  }
 	  

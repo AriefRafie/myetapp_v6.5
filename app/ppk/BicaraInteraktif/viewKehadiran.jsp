@@ -219,26 +219,6 @@
 </fieldset>
 </td>
 </tr>
-<!-- arief add Tidak Hadir OPEN-->
-<!--<tr  >
-<td >
-</td>
-<td >
-<fieldset>
-<legend>Waris / Orang Berkepentingan Tidak Hadir</legend>
-<div id="view_tidakhadir">
-
-  <script> 
-	$jquery(document).ready(function () {
-		//alert("x1");	
-	doDivAjaxCall$formname('view_tidakhadir','show_tidakhadir','ID_PERBICARAAN=$ID_PERBICARAAN&ID_PERMOHONAN=$ID_PERMOHONAN&scrolPosition='+getPageLocation());			 	  
-	});
-</script
-</div>
-</fieldset>
-</td>
-</tr>-->
-<!-- arief add Tidak Hadir CLOSE-->
 <!-- arief add Saksi OPEN-->
 <!----><tr  >
 <td >
@@ -259,6 +239,28 @@
 </td>
 </tr>
 <!-- arief add Saksi CLOSE-->
+
+<!-- arief add Tidak Hadir OPEN-->
+<!----><tr  >
+<td >
+</td>
+<td >
+<fieldset>
+<legend>Waris / Orang Berkepentingan Tidak Hadir</legend>
+<div id="view_tidakhadir">
+
+  <script> 
+	$jquery(document).ready(function () {
+		//alert("x1");	
+	doDivAjaxCall$formname('view_tidakhadir','show_tidakhadir','ID_PERBICARAAN=$ID_PERBICARAAN&ID_PERMOHONAN=$ID_PERMOHONAN&scrolPosition='+getPageLocation());			 	  
+	});
+</script>
+</div>
+</fieldset>
+</td>
+</tr>
+<!-- arief add Tidak Hadir CLOSE-->
+
 
 </table>
 

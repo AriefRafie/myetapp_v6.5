@@ -1,6 +1,7 @@
 /**
  *
  */
+// test 13/8/2020
 package ekptg.view.php2.online;
 
 import java.sql.Connection;
@@ -14,9 +15,6 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
-import lebah.db.Db;
-import lebah.portal.AjaxBasedModule;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -29,7 +27,6 @@ import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmUtilData;
-import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
 import ekptg.model.htp.online.IOnline;
@@ -44,8 +41,10 @@ import ekptg.model.utils.emel.EmailConfig;
 import ekptg.model.utils.emel.IEmel;
 import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.view.htp.online.jrp.HTPEmelJRPBean;
-import ekptg.model.htp.online.IOnline;
+import lebah.db.Db;
+import lebah.portal.AjaxBasedModule;
 
+//test 13/8/2020
 public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
@@ -64,6 +63,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	String idJawatan = "";
 	private IOnline iOnline = null;
 	private IHtp iHTP = null;
+
 
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -141,7 +141,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		if (idUrusan == null || idUrusan.trim().length() == 0) {
 			idUrusan = "99999";
 		}
-		
+
 		String idSubsuburusan = getParam("socSubsuburusan");
 		if (idSubsuburusan == null || idSubsuburusan.trim().length() == 0) {
 			idSubsuburusan = "99999";
@@ -167,7 +167,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
 			idLuasKegunaan = "99999";
 		}
-		
+
 		this.context.put("command", submit);
 		this.context.put("templateDir", templateDir);
 
@@ -234,7 +234,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 						getParam("txtTujuanKegunaan"), getParam("idKementerianTanah"), getParam("idNegeriTanah"),
 						getParam("idLuasTanah"), getParam("luasTanah"), idHakmilikSementara, session);
 
-				
+
 			}
 			if("doSimpanSenaraiSemak".equals(hitButton)){
 				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"),
@@ -242,6 +242,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}
 			//SENARAI SEMAK
 			if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
+				myLog.info("id Permohonan ros senarai semaka 2>>>> "+idPermohonan);
 	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
 	    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
 
@@ -947,28 +948,30 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					this.context.put("idKementerian", idKementerian);
 
 					langkah2 = "2";
+					//email remove bler push
+					/*
 
 					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
 
 					if(!getEmelSemak().checkEmail(userId).equals(""))
 						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 
-					//email remove bler push
-					/*ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+					ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
 							, "9"
 							, String.valueOf(String.valueOf(idKementerian))
 							, emelSubjek, kandungan);*/
 
 				}else if (idJawatan.equals("9")){
 					langkah2 = "3";
+					//email remove bler push
+					/*
 
 					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
 
 					if(!getEmelSemak().checkEmail(userId).equals(""))
 						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 
-					//email remove bler push
-					/*ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+					ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
 							, "4"
 							, String.valueOf(String.valueOf(idKementerian))
 							, emelSubjek, kandungan);*/
@@ -977,12 +980,13 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					langkah2 = "4";
 					emelSubjek = ec.tajukHantarPermohonan + "Tukar Guna";
 
-					kandungan = getEmelSemak().setKandungan(String.valueOf(String.valueOf(permohonan2.get("tajukFail")))
-								,String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
-								,String.valueOf(String.valueOf(permohonan2.get("noPermohonan"))));
+					//email remove bler push
+					//kandungan = getEmelSemak().setKandungan(String.valueOf(String.valueOf(permohonan2.get("tajukFail")))
+					//			,String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
+					//			,String.valueOf(String.valueOf(permohonan2.get("noPermohonan"))));
 
-					if(!getEmelSemak().checkEmail(userId).equals(""))
-						getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+					//if(!getEmelSemak().checkEmail(userId).equals(""))
+					//	getIHTP().getErrorHTML("[ONLINE-HTP TUKAR GUNA] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 					//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
 
 					//email remove bler push
@@ -1073,6 +1077,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				vm = "/senaraiFail.jsp";
 			}
 			else {
+
 				myLog.info("masuk else");
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);

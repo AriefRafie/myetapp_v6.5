@@ -25,12 +25,12 @@ public class BantahanAgensiDaftarOperations {
 	private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void add_bantahanAP (HttpSession session,String txtNoBantahan,String txdTkhMasuk,String txdTkhTerimaBrgN,String txdBrgN,String txtNoLot,String txtNoPt,
-		String txdTkhBrgH,String txdTkhAward,String txtNoHakmilik,String txtIdKementerian,String txtNamaPembantah,String txtAlamat1,String txtAlamat2,String txtAlamat3,String txtPoskod,String txtIdNegeri,
-		String txtKptgnAtasTnh,String txtAlasanBantahan,String usid,String idAgensi,String id_hakmilik,
-		String jenis_pembantah,String flag_syarat,String ukuran_luas,String amaun_pampasan,
-		String terima_pampasan,String umpuk_pampasan,String txtAmaunTuntutan,String id_permohonan,String txtMaklumatBantahanTamat) throws Exception {	
-	 	
-		Db db = null;	 	
+			String txdTkhBrgH,String txdTkhAward,String txtNoHakmilik,String txtIdKementerian,String txtNamaPembantah,String txtAlamat1,String txtAlamat2,String txtAlamat3,String txtPoskod,String txtIdNegeri,
+			String txtKptgnAtasTnh,String txtAlasanBantahan,String usid,String idAgensi,String id_hakmilik,
+			String jenis_pembantah,String flag_syarat,String ukuran_luas,String amaun_pampasan,
+			String terima_pampasan,String umpuk_pampasan,String txtAmaunTuntutan,String id_permohonan,String txtMaklumatBantahanTamat) throws Exception {
+		
+	 	Db db = null;	 	
 	 	Connection conn = null;
 	    String sql = "";
 	    Date now = new Date();
@@ -39,18 +39,19 @@ public class BantahanAgensiDaftarOperations {
     	String tahun = sdf.format(now);    
 	    String no_bantahan = tahun+"-"+String.format("%06d",getSeqNoBantahan(id_stat));	
 	    
-	    try{			    	  
-	    	long id_bantahan = DB.getNextID("TBLPPTBANTAHAN_SEQ");
-	    	String TT = "to_date('" + txdTkhTerimaBrgN + "','dd/MM/yyyy')";
-	    	String TBN = "to_date('" + txdBrgN + "','dd/MM/yyyy')";	
-	    	String TTW = "to_date('" + txdTkhAward + "','dd/MM/yyyy')";
-	    	db = new Db();
-	    	conn = db.getConnection();
-	    	conn.setAutoCommit(false);
-	    	Statement stmt = db.getStatement();
-	    	SQLRenderer r = new SQLRenderer();
+	    try
+	    {			    	  
+	    	  long id_bantahan = DB.getNextID("TBLPPTBANTAHAN_SEQ");
+	    	  String TT = "to_date('" + txdTkhTerimaBrgN + "','dd/MM/yyyy')";
+	    	  String TBN = "to_date('" + txdBrgN + "','dd/MM/yyyy')";	
+	    	  String TTW = "to_date('" + txdTkhAward + "','dd/MM/yyyy')";
+		      db = new Db();
+	          conn = db.getConnection();
+	          conn.setAutoCommit(false);
+		      Statement stmt = db.getStatement();
+		      SQLRenderer r = new SQLRenderer();
 	    	
-	    	//TBLPPTBANTAHAN
+		      //TBLPPTBANTAHAN
 		      r = new SQLRenderer();
 		      r.add("id_bantahan",id_bantahan);
 		      r.add("no_bantahan",no_bantahan);		      
@@ -82,8 +83,8 @@ public class BantahanAgensiDaftarOperations {
 		      //24022012
 			  r.add("maklumat_bantahan_tamat_tempoh",txtMaklumatBantahanTamat);
 				
-		      sql = r.getSQLInsert("tblpptbantahan");
-		      myLogger.info("INSERT Tblpptbantahan :sql="+sql);
+		      sql = r.getSQLInsert("Tblpptbantahan");
+		      myLogger.info("INSERT Tblpptban/tahan ::"+sql);
 		      stmt.executeUpdate(sql);
 		      
 		      r.clear();
@@ -664,28 +665,30 @@ public class BantahanAgensiDaftarOperations {
 		    	}				
 		}
 		
-	public void updateFiles(String usid, String id_dokumen, String txtnamadokumen, String txtketerangandokumen) 
-		throws Exception {
-		Db db = null;
-		String sql = "";		   
-		try{
-			db = new Db();			      
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();			      
-			r.update("ID_DOKUMEN", id_dokumen);		  
-			r.add("TAJUK", txtnamadokumen);
-			r.add("KETERANGAN", txtketerangandokumen);			     		    
-			r.add("ID_KEMASKINI", usid);			     
-			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));     			      
-			sql = r.getSQLUpdate("tblpptdokumen");			      
-			myLogger.info("UPDATE DOKUMEN AP :"+sql.toUpperCase());
-			stmt.executeUpdate(sql);		    	
-		
-		}finally {
-			if (db != null) db.close();			      
-		}    
-		
-	}
+		public void updateFiles(String usid, String id_dokumen, String txtnamadokumen, 
+				String txtketerangandokumen)throws Exception {
+
+		    Db db = null;
+		    String sql = "";		   
+			    try
+			    {
+			    	  db = new Db();			      
+				      Statement stmt = db.getStatement();
+				      SQLRenderer r = new SQLRenderer();			      
+				      r.update("ID_DOKUMEN", id_dokumen);		  
+				      r.add("TAJUK", txtnamadokumen);
+				      r.add("KETERANGAN", txtketerangandokumen);			     		    
+				      r.add("ID_KEMASKINI", usid);			     
+				      r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));     			      
+				      sql = r.getSQLUpdate("tblpptdokumen");			      
+				      myLogger.info("UPDATE DOKUMEN AP :"+sql.toUpperCase());
+				      stmt.executeUpdate(sql);		    	
+			    }
+			    finally {
+				      if (db != null) db.close();			      
+				}    		
+		}
+
 		public void deleteDokumen(String id_dokumen) throws Exception {
 			Db db = null;
 			try {

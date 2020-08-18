@@ -34,6 +34,8 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	private static Vector listWaris17 = new Vector();
 	private static Vector listBayaran = new Vector();
 	private static Vector listBayaran17 = new Vector();
+	private static Vector listBayaranDendaLewatPendaftaran = new Vector(); // arief add
+	private static Vector maklumatBayaranDendaLewat = new Vector (); //arief add
 	private static Vector MaklumatPermohonan17 = new Vector();	
 	private static Vector MaklumatBayaran = new Vector();
 	private static Vector MaklumatPerintah = new Vector();
@@ -71,14 +73,7 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	private static Vector dataKeputusanBayaran = new Vector();	
 	private static Vector listPerintahTangguhMufti = new Vector();
 	private static Vector dataFlagTangguh = new Vector();		
-	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");
-	private static Vector listDendaLewat = new Vector();//arief add
-	private static Vector dataFlagDendaLewat = new Vector();//arief add
-	
-	//arief add getFlagDendaLewat
-	public static Vector getFlagDendaLewat(){
-		return dataFlagDendaLewat;
-	 }	
+	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");	
 
 	 public static Vector getFlagTangguh(){
 		return dataFlagTangguh;
@@ -164,7 +159,14 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	 public static Vector getListSemakWithData(){
 		return listSemakWithData;
 	 }
-
+	 //arief add OPEN
+	 public static Vector getListBayaranDendaLewatPendaftaran() {
+		 return listBayaranDendaLewatPendaftaran;
+	 }
+	 public static Vector getMaklumatBayaranDendaLewat() {
+		 return maklumatBayaranDendaLewat;
+	 }
+	 //arief add CLOSE
 	 
 	 
 	public static void setData(String id) throws Exception{
@@ -844,6 +846,42 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      if (db != null) db.close();
 		    }
 		}
+/** 13/1/2020: arief add bagi lewat pendaftaran	(function ini akan beroperasi selepas 1 tahun daripada tarikh Akta dikuatkuasakan)**/	
+		public static Vector listBayaranDendaLewatPendaftaran (String tarikhmohon) throws Exception
+		{
+			Db db = null;
+		    listBayaranDendaLewatPendaftaran.clear();
+		    String sql = "";
+		    try {
+		      Vector localVector1;
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      SQLRenderer r = new SQLRenderer();
+		      
+		      r.add("jumlahBayaranDendaLewatPendaftaran");		      
+		      r.add("tarikh_mohon", tarikhmohon);
+
+		      sql = r.getSQLSelect("Tblppkpermohonan");
+		      myLogger.info("TARIKH PERMOHONAN ::"+sql);
+		      ResultSet rs = stmt.executeQuery(sql);
+		   
+		      Hashtable h;
+		      int bilDendaLewat = 1;
+		      
+		      
+		      while (rs.next()) {
+		    	 h = new Hashtable();
+		    	 h.put("tarikh_mohon", rs.getString("tarikh_mohon")==null?"":Integer.parseInt(rs.getString("tarikh_mohon")));
+		    	 
+		    	 listBayaranDendaLewatPendaftaran.addElement(h);
+		    	 bilDendaLewat++;
+		      }
+		      return listBayaranDendaLewatPendaftaran;
+		    }
+		    finally {
+		      if (db != null) db.close();
+		    }
+		}
 
 		public static Vector setJumlahBayaran(String idpermohonan) throws Exception {
 			
@@ -855,7 +893,11 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
-		      r.add("jumlah_harta_tarikhmohon");
+		      
+		      //r.add("jumlahBayaranDendaLewatPendaftaran");
+		      r.add("jumlah_harta_tarikhmohon");		      
+
+		      //r.add("tarikh_mohon", tarikhmohon);
 		      r.add("id_permohonan",idpermohonan);
 
 		      sql = r.getSQLSelect("Tblppkpermohonan");
@@ -876,40 +918,7 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 		    finally {
 		      if (db != null) db.close();
 		    }
-		}	
-		
-		//arief add setDendaLewat
-		/**public static Vector setDendaLewat(String idpermohonan) throws Exception{
-			
-			Db db = null;
-			listDendaLewat.clear();
-			String sql = "";
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		    try {
-		    	db = new Db();
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();
-		    	sql = "SELECT * FROM TBLPPKPERMOHONAN WHERE ID_PERMOHONAN = '" + idpermohonan
-					+ "'";
-		    	ResultSet rs = stmt.executeQuery(sql);
-		    	Hashtable h;
-		    	while (rs.next()) {
-					h = new Hashtable();
-					h.put("id_permohonan",
-							rs.getString("id_permohonan") == null ? "" : rs
-									.getString("id_permohonan"));
-					h.put("id_fail",
-							rs.getString("id_fail") == null ? "" : rs
-									.getString("id_fail"));
-
-					listDendaLewat.addElement(h);
-				}
-		    	return listDendaLewat;
-			}
-		    finally {
-			      if (db != null) db.close();
-			}
-		}**/
+		}			
 		
 		public static void setJumlahBayaran17(String id_permohonansimati) throws Exception {
 			Db db = null;
@@ -991,6 +1000,25 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 //					String TTP = "to_date('" + txdTarikhPerintah + "','dd/MM/yyyy')";
 					String TBP = "to_date('" + txdTarikhBayaranPerintah + "','dd/MM/yyyy')";		
 					
+				  //------------------------------- TBLPPKPERINTAH ------------------------------------
+				    
+//					db = new Db();
+//					Statement stmt = db.getStatement();
+//					SQLRenderer r = new SQLRenderer();
+//					r.add("id_perintah",id_perintah);
+//					r.add("id_perbicaraan",id_perbicaraan);
+//					r.add("tarikh_perintah", r.unquote(TTP));
+//					r.add("id_unitpsk",EDITsocPegawaiPengendali);
+//					r.add("flag_jenis_keputusan",flag_jenis_keputusan);
+//					r.add("catatan",txtCatatanSelesai);
+//					r.add("id_masuk",usid);
+//					r.add("tarikh_masuk",r.unquote("sysdate"));
+//
+//					sql = r.getSQLInsert("Tblppkperintah");		
+//					myLogger.info("SQL INSERT TBLPPKPERINTAH = "+sql);
+//					stmt.executeUpdate(sql);
+								
+					//--------------------------------- TBLPPKBAYARAN -----------------------------------------
 					db = new Db();
 					Statement stmt2 = db.getStatement();
 					SQLRenderer r2 = new SQLRenderer();
@@ -1060,6 +1088,31 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 								 check_kiv, date_kiv, catatan_kiv);
 					 }
 					 
+					 
+					
+					/*
+					String TTP = "to_date('" + txdTarikhPerintah + "','dd/MM/yyyy')";						
+					
+				  //------------------------------- TBLPPKPERINTAH ------------------------------------				    
+					db = new Db();
+					Statement stmt = db.getStatement();
+					SQLRenderer r = new SQLRenderer();
+					r.add("id_perintah",id_perintah);
+					r.add("id_perbicaraan",id_perbicaraan);
+					r.add("tarikh_perintah", r.unquote(TTP));
+					r.add("id_unitpsk",EDITsocPegawaiPengendali);
+					r.add("flag_jenis_keputusan",flag_jenis_keputusan);
+					r.add("catatan",txtCatatanSelesai);
+					r.add("id_masuk",usid);
+					r.add("tarikh_masuk",r.unquote("sysdate"));
+
+					sql = r.getSQLInsert("Tblppkperintah");		
+					myLogger.info("INSERT TBLPPKPERINTAH = "+sql);
+					stmt.executeUpdate(sql);*/
+					
+					
+					
+					
 				}finally {
 					if(db != null) db.close();
 				}			

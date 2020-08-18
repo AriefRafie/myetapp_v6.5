@@ -63,11 +63,9 @@
     		  <td><fieldset>
       			<legend><strong>SENARAI MESYUARAT</strong></legend>
       			<table align="center" width="100%">
-	        		#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
 	        		<tr>
 	          			<td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMesyuarat()"/></td>
 	        		</tr>
-	        		#end
 	        		<tr class="table_header">
 				    	<td scope="row" width="5%" align="center"><strong>Bil</strong></td>
 				        <td width="60%"><strong>Tajuk Mesyuarat</strong></td>
@@ -115,22 +113,17 @@
   #end
   <tr>
     <td align="center">
-    	#if($idStatus == '1610201')
-    	<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
-    	<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-    	#end
-    	#if ($mode == 'view' && $selectedTabUpper == '1')
-    	#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-    	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniPampasan()"/>
-    	#end
-    	#end
-    	#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
-        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
-        #end
-    	#if ($mode == 'update')
-    	<input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="simpanKemaskiniPampasan()"/>
-    	<input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalPampasan()"/>
-      	#end 
+    #if($idStatus == '1610201')
+    <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
+    <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+    #end
+    #if ($mode == 'view' && $selectedTabUpper == '1')
+      <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniPampasan()"/>
+      #end
+    #if ($mode == 'update')
+      <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="simpanKemaskiniPampasan()"/>
+      <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalPampasan()"/>
+      #end 
     </td>
   </tr>
 </table>
@@ -412,9 +405,5 @@ function doSimpanRekodNotifikasiEmail(){
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanRekodNotifikasiEmail";
 	doAjaxCall${formName}("");
-}
-function gotoSenaraiFailKeseluruhan() {
-	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
-	document.${formName}.submit();
 }
 </script>

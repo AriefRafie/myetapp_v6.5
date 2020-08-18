@@ -889,30 +889,30 @@ public class PembelianBean implements IPembelian {
 			conn = db.getConnection();
 			Statement stmt = db.getStatement();
 			r = new SQLRenderer();
-			r.add("id_permohonan");	
-			r.add("pegangan_hakmilik");
-			r.add("id_negeri");
-			r.add("id_daerah");
-			r.add("id_mukim");
-			r.add("id_jenisHakmilik");
-			r.add("no_hakmilik");
-			r.add("no_lot");
-			r.add("NVL(id_lot,0) id_lot");
-			r.add("no_bangunan");
-		    r.add("no_tingkat");
-		    r.add("no_petak");
+			r.add("id_Permohonan");	
+			r.add("pegangan_Hakmilik");
+			r.add("id_Negeri");
+			r.add("id_Daerah");
+			r.add("id_Mukim");
+			r.add("id_JenisHakmilik");
+			r.add("no_Hakmilik");
+			r.add("no_Lot");
+			r.add("id_Lot");
+			r.add("no_Bangunan");
+		    r.add("no_Tingkat");
+		    r.add("no_Petak");
 		    r.add("TO_CHAR(Tarikh_Mula,'DD/MM/YYYY') AS Tarikh_Mula");
 			r.add("TO_CHAR(Tarikh_Luput,'DD/MM/YYYY') AS Tarikh_Luput");
-			r.add("luas");
-			r.add("id_luas");
-			r.add("no_pelan");
+			r.add("Luas");
+			r.add("id_Luas");
+			r.add("no_Pelan");
 			r.add("NVL(id_Jenisrizab,0) id_Jenisrizab");
 			r.add("NVL(id_Kategori,0) id_Kategori");
-			r.add("id_subkategori");
-			r.add("id_hakmilikurusan");
+			r.add("id_Subkategori");
+			r.add("id_Hakmilikurusan");
 			r.add("status_tanah");
-			r.set("id_hakmilikurusan", hakmilikUrusanId);
-			String sql = r.getSQLSelect("tblhtphakmilikurusan");
+			r.set("id_Hakmilikurusan", hakmilikUrusanId);
+			String sql = r.getSQLSelect("Tblhtphakmilikurusan");
 			
 			ResultSet rs = stmt.executeQuery(sql);
 			if(rs.next()){
@@ -993,14 +993,12 @@ public class PembelianBean implements IPembelian {
 			r.add("D.keterangan as jenis_keterangan");
 			r.add("D.KOD_JENIS_HAKMILIK as jenis_hakmilik");
 			r.add("(SELECT NAMA FROM TBLHTPPIHAKBERKEPENTINGAN WHERE ID_HAKMILIKURUSAN=A.id_Hakmilikurusan) NAMA");
-//			r.add("A.id_Lot",r.unquote("B.ID_LOT"));
-			r.add("A.id_Lot",r.unquote("B.ID_LOT(+)"));
+			r.add("A.id_Lot",r.unquote("B.ID_LOT"));
 			r.add("A.id_luas",r.unquote("C.id_luas"));
 			r.add("A.id_JenisHakmilik",r.unquote("D.id_JenisHakmilik"));
 			r.set("A.id_Permohonan", idPermohonan);
-			String sql = r.getSQLSelect("tblhtphakmilikurusan A, tblrujlot B,tblrujluas C,tblrujjenishakmilik D");
+			String sql = r.getSQLSelect("Tblhtphakmilikurusan A, TBLRUJLOT B,TBLRUJLUAS C,tblrujjenishakmilik D");
 			//
-			myLog.info("getHakmilikList:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
 				HakmilikUrusan urusan = new HakmilikUrusan();

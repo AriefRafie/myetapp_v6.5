@@ -15,7 +15,6 @@
   		<ul class="TabbedPanelsTabGroup">
     		<li class="TabbedPanelsTab" onClick="javascript:setSelected(0);maklumatSuratAgensi('$!id_hakmilik','$!id_siasatan')" tabindex="1">Pembayaran Melalui Cek</li>
 			<li class="TabbedPanelsTab" onClick="javascript:setSelected(1);viewListEFT()" tabindex="1">Melalui EFT</li>
-    	
     	</ul>
     	
     	
@@ -42,20 +41,7 @@
 			            <td>:</td>
 			            <td><input name="txdTarikhSurat" id="txdTarikhSurat" size="11" type="text" value="" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
 			            <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhSurat',false,'dmy');">&nbsp;$!frmtdate</td>
-					</tr>	
-					<tr>
-						<td>&nbsp;</td>
-			            <td>Tarikh Kuatkuasa Caj Lewat</td>
-			            <td>:</td>
-			            <td><input name="txdTarikhLewat" id="txdTarikhLewat" size="11" type="text" value="" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-			            <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLewat',false,'dmy');">&nbsp;$!frmtdate</td>
-					</tr>
-					<tr>
-  						<td>&nbsp;</td>
-  						<td>Caj Bayaran Lewat</td>
-  						<td>:</td>
-  						<td>&nbsp;RM&nbsp;<input type="text" name="txtCekLewat" id="txtCekLewat" value="$!Utils.RemoveSymbol($!txtCekLewat)" size="10" maxlength="8" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtCekLewat')" ></td>
-  					</tr>	
+					</tr>		
 					<tr>
 						<td>&nbsp;</td>
 						<td>Tarikh Terima</td>
@@ -132,26 +118,7 @@
 			            <td>:</td>
 			            <td><input $disability $disabilityx name="txdTarikhSurat" id="txdTarikhSurat" size="11" type="text" value="$!txdTarikhSurat" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
 			            #if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhSurat',false,'dmy');">&nbsp;$!frmtdate#end</td>
-					</tr>	
-						<tr>
-						<td>&nbsp;</td>
-			            <td>Tarikh Kuatkuasa Caj Lewat</td>
-			            <td>:</td>
-			            <td><input $disability $disabilityx name="txdTarikhLewat" id="txdTarikhLewat" size="11" type="text" value="$!txdTarikhLewat" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
-			            #if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLewat',false,'dmy');">&nbsp;$!frmtdate#end</td>
-					</tr>	
-					<tr>
-  						<td>&nbsp;</td>
-  						<td>Caj Bayaran Lewat</td>
-  						<td>:</td>
-                        <td>
-  						#if($isEdit=="no")
-  						&nbsp;RM&nbsp;<input $disability $disabilityx type="text" name="txtCekLewat" id="txtCekLewat" value="$!Utils.format2Decimal($txtCekLewat)" size="10" maxlength="8" style="text-align:right">
-  						#else
-  						&nbsp;RM&nbsp;<input $disability $disabilityx type="text" name="txtCekLewat" id="txtCekLewat" value="$!txtCekLewat" size="10" maxlength="8" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtCekLewat')" >
-  						#end
-                        </td>
-  					</tr>
+					</tr>		
 					<tr>
 						<td>&nbsp;</td>
 						<td>Tarikh Terima</td>
@@ -715,10 +682,6 @@
   			<!-- END TAB 2 -->
   			
   			
-  			
-  			
-  			
-  			
   		
   		</div>
   	</div>
@@ -894,7 +857,6 @@ function getPBEFT() {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8PenyediaanPampasan";
 	document.${formName}.submit();
 }
-
 function viewListEFT() {
 	document.${formName}.tabId.value = "1";
 	document.${formName}.pagingPampasan.value = "3";
@@ -903,7 +865,6 @@ function viewListEFT() {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8PenyediaanPampasan";
 	document.${formName}.submit();
 }
-
 function viewPenerimaanCek(id_bayaran,id_terimabayaran,id_hakmilikpb,flagCBayar) {
 	document.${formName}.ScreenLocation.value = "TabbedPanels1";
 	document.${formName}.id_terimabayaran.value = id_terimabayaran;

@@ -17,7 +17,7 @@
 			<fieldset> <legend style="font-variant:small-caps">Carian</legend>
   				<table border="0" width="100%">
   					<tr>
-					    <td width="29%"><div align="right">No. Fail</div></td>
+					    <td width="29%"><div align="right">No Fail</div></td>
 					    <td width="1%">:</td>
 					    <td width="70%"><input name="NoFail" type="text" id="NoFail" size="43" maxlength="40" value="$!carianNoFail" onkeyup="this.value=this.value.toUpperCase();"></td>
 			  		</tr>
@@ -172,7 +172,7 @@ function fGS2A_Simpan() {
 	}
 	
 	if(document.${formName}.txtNoFailSek.value == ""){
-		alert('Sila masukkan No. Fail terlebih dahulu.');
+		alert('Sila masukkan No Fail Seksyen terlebih dahulu.');
   		document.${formName}.txtNoFailSek.focus(); 
 		return; 
 	}

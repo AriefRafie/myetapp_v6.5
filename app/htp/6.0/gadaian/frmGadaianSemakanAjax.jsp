@@ -101,7 +101,7 @@
         						<td width="1%">
         						</td>
 				            	<td width="34%" style="text-transform:uppercase;" >
-				                	<div align="left">No. Fail </div>
+				                	<div align="left">No. Fail Seksyen</div>
 				               	</td>
 				                <td width="1%" >:</td>            
 				                <td width="64%">

@@ -277,7 +277,20 @@ $ch.FLAG_HADIR == "1") #set($hadir = "HADIR") #set($txtPBhadir = "1")
 													class="alert_msg"></span> #end
 												</td>
 											</tr>
-											
+											<tr>
+												<td>&nbsp;</td>
+												<td>Umur</td>
+												<td>:</td>
+												<td>
+													<!-- $list.NAMA_KP  --> #if($readmode == "view") $!txtUmur
+													<input name="txtUmur" type="hidden" id="txtUmur"
+													value="$!txtUmur" $readonlymode> #else <input
+													name="txtUmur" type="text" class="$disabledmode"
+													id="txtUmur" onBlur="validateNumber(this,this.value)"
+													onkeyup="validateNumber(this,this.value)" value="$!txtUmur"
+													size="5" maxlength="3" $readonlymode> #end
+												</td>
+											</tr>
 
 											<tr>
 												<td></td>
@@ -295,7 +308,7 @@ $ch.FLAG_HADIR == "1") #set($hadir = "HADIR") #set($txtPBhadir = "1")
 												</td>
 											</tr>
 											<tr>
-												<td>#parse("app/ppt/mandatory_pembatalan.jsp")</td>
+												<td>&nbsp;</td>
 												<td>Jenis No. Pengenalan PB</td> 
 												<td>:</td>
 												<td>
@@ -346,7 +359,7 @@ $ch.FLAG_HADIR == "1") #set($hadir = "HADIR") #set($txtPBhadir = "1")
 												</td>
 											</tr>
 											<tr>
-												<td>#parse("app/ppt/mandatory_pembatalan.jsp")</td>
+												<td>&nbsp;</td>
 												<td>No. Pengenalan PB</td>
 												<td>:</td>
 												<td>
@@ -371,22 +384,6 @@ $ch.FLAG_HADIR == "1") #set($hadir = "HADIR") #set($txtPBhadir = "1")
 												<input type="button" name="cmdCapaian" id="cmdCapaian" value="Capaian myIDENTITY" onClick="viewMyIdentity()">
 												</td>
 											</tr>
-											
-											<tr>
-												<td>#parse("app/ppt/mandatory_pembatalan.jsp")</td>
-												<td>Umur</td>
-												<td>:</td>
-												<td>
-													<!-- $list.NAMA_KP  --> #if($readmode == "view") $!txtUmur
-													<input name="txtUmur" type="hidden" id="txtUmur"
-													value="$!txtUmur" $readonlymode> #else <input
-													name="txtUmur" type="text" class="$disabledmode"
-													id="txtUmur" onBlur="validateNumber(this,this.value)"
-													onkeyup="validateNumber(this,this.value)" value="$!txtUmur"
-													size="5" maxlength="3" $readonlymode> #end
-												</td>
-											</tr>
-											
 											<tr>
 												<td>&nbsp;</td>
 												<td>Bangsa</td>
@@ -634,7 +631,7 @@ $ch.FLAG_HADIR == "1") #set($hadir = "HADIR") #set($txtPBhadir = "1")
 
 
 											<tr>
-												<td>#parse("app/ppt/mandatory_pembatalan.jsp")</td>
+												<td>&nbsp;</td>
 												<td>Alamat PB</td>
 												<td>:</td>
 												<td>
@@ -3444,30 +3441,6 @@ else if(document.${formName}.txtNamaPB.value == "")
 {
 		alert("Sila pastikan nama PB diisi");
 		document.${formName}.txtNamaPB.focus();
-		return
-}
-else if(document.${formName}.socJenisNOPB.value == "") 
-{
-		alert("Sila pastikan Jenis No.Pengenalan PB diisi");
-		document.${formName}.socJenisNOPB.focus();
-		return
-}
-else if(document.${formName}.txtNoPB.value == "") 
-{
-		alert("Sila pastikan No.Pengenalan PB diisi");
-		document.${formName}.txtNoPB.focus();
-		return
-}
-else if(document.${formName}.txtUmur.value == "") 
-{
-		alert("Sila pastikan umur PB diisi");
-		document.${formName}.txtUmur.focus();
-		return
-}
-else if(document.${formName}.txtAlamat1PB.value == "") 
-{
-		alert("Sila pastikan Alamat PB diisi");
-		document.${formName}.txtAlamat1PB.focus();
 		return
 }
 else if (((valA != "") && (valB !="")) && (sA > sB)) 

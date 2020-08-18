@@ -39,8 +39,8 @@
 		#set($txtSekatanKepentingan=$maklumat_Hakmilik_Salin.sekatan_kepentingan)
 		#set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)
 		
-		<!-- PPT-03  -->
-		<!-- #set($txtNoBangunan=$maklumat_Hakmilik_Salin.no_bangunan)
+		<!-- PPT-03 
+		#set($txtNoBangunan=$maklumat_Hakmilik_Salin.no_bangunan)
 		#set($txtNoTingkat=$maklumat_Hakmilik_Salin.no_tingkat)
 		#set($txtNoPetak=$maklumat_Hakmilik_Salin.no_petak)-->
         
@@ -142,25 +142,12 @@
 				<td width="1%">:</td>
 				<td width="75%">$!selectJenisHakmilik</td>
 			</tr>	
-			
 			<tr>
 				<td><font color="red">*</font></td>
-				<td>No. Hakmilik </td>
+				<td>No. Hakmilik</td>
 				<td>:</td>
 				<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50" ></td>
 			</tr>
-			
-			<tr>
-				<td>&nbsp;</td>
-				<td> No. Strata</td>
-				<td>:</td>
-				<td>
-                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
-  				</td>
-			</tr>
-			
 			<tr>
 				<td>&nbsp;</td>
 				<td>Tarikh Daftar</td>
@@ -242,7 +229,7 @@
 			</tr>
             
             <tr>
-            	<td><font color="red">*</font></td>
+            	<td>&nbsp;</td>
             	<td>No.LOT</td>
             	<td>:</td>
                 <td>
@@ -374,6 +361,26 @@
 				</td>
 			</tr>
 			#end
+			
+			<!-- PPT-03-->
+			<tr>
+				<td>&nbsp;</td>
+				<td>No. Bangunan</td>
+				<td>:</td>
+				<td><input type="text" name="txtNoBangunan" id="txtNoBangunan" value="" size="12" maxlength="100"   ></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>No. Tingkat</td>
+				<td>:</td>
+				<td><input type="text" name="txtNoTingkat" id="txtNoTingkat" value="" size="12" maxlength=""100""   ></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>No. Petak</td>
+				<td>:</td>
+				<td><input type="text" name="txtNoPetak" id="txtNoPetak" value="" size="12" maxlength=""100""   ></td>
+			</tr>
 			
         </table>
      </fieldset>	
@@ -595,19 +602,6 @@
 				<td>:</td>
 				<td><input $disability $disabilityx type="text" name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik" size="12" maxlength="50"   ></td>
 			</tr>
-			
-			
-			<tr>
-				<td>&nbsp;</td>
-				<td> No. Strata</td>
-				<td>:</td>
-				<td>
-                   	<span class="labelinput">No.Bang</span>&nbsp;<input $disability $disabilityx name="txtNoBangunan" type="text" class="$disabled" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Ting</span>&nbsp;<input $disability $disabilityx name="txtNoTingkat" type="text" class="$disabled" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Petak</span>&nbsp;<input $disability $disabilityx name="txtNoPetak" type="text" class="$disabled" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3 onkeyup="this.value=this.value.toUpperCase();"/>
-  				</td>
-			</tr>
-			
 			<tr>
 				<td>&nbsp;</td>
 				<td>Tarikh Daftar</td>
@@ -817,6 +811,26 @@
 			</tr>
 			#end
 			
+			 <!-- PPT-03  -->
+			<tr>
+				<td><font color="red">$!M</font></td>
+				<td>No. Bangunan</td>
+				<td>:</td>
+				<td><input $disability $disabilityx type="text" name="txtNoBangunan" id="txtNoBangunan" value="$!txtNoBangunan" size="12" maxlength="50"   ></td>
+			</tr>
+			<tr>
+				<td><font color="red">$!M</font></td>
+				<td>No. Tingkat</td>
+				<td>:</td>
+				<td><input $disability $disabilityx type="text" name="txtNoTingkat" id="txtNoTingkat" value="$!txtNoTingkat" size="12" maxlength="50"   ></td>
+			</tr>
+			<tr>
+				<td><font color="red">$!M</font></td>
+				<td>No. Petak</td>
+				<td>:</td>
+				<td><input $disability $disabilityx type="text" name="txtNoPetak" id="txtNoPetak" value="$!txtNoPetak" size="12" maxlength="50"   ></td>
+			</tr>
+			
         </table>
      </fieldset>	
      
@@ -917,10 +931,7 @@
         <tr align="center">
           <td>
             ##if($mode=="view")
-            #if($!id_negeriprojek == "4")
-        		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('ppt','$id_permohonan')">
-          	#end  
-<!--             <input type="button" name="cmdCapaianETanah" value ="Capaian Maklumat Hakmilik" onClick="javascript:viewEtanah('$!id_hakmilik')"> -->
+            <input type="button" name="cmdCapaianETanah" value ="Capaian Maklumat Hakmilik" onClick="javascript:viewEtanah('$!id_hakmilik')">
             <input type="button" name="cmdETanah" value ="Semakan Maklumat Hakmilik" onClick="javascript:checkWSHM('$!id_hakmilik')">
             <input type="button" name="cmdSPTB" value ="Semakan Maklumat Geran" onClick="javascript:viewSPTB('$!id_fail','$!id_hakmilik','1')">
 			##end
@@ -1911,10 +1922,12 @@ function viewHM(idHakmilik,mode){
 function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,mode){
 	
 	var alert_lot = "N";	
-	if (document.${formName}.check_lot == null || document.${formName}.check_lot == undefined) {	
+	if (document.${formName}.check_lot == null || document.${formName}.check_lot == undefined) 
+	{	
 	alert_lot = "N";	
-	}	else	{
-		alert_lot =	document.${formName}.check_lot.value;
+	}else
+	{
+	alert_lot =	document.${formName}.check_lot.value;
 	}
 	
 	
@@ -3168,7 +3181,7 @@ function viewSPTB(ID_FAIL,ID_HAKMILIK,ID_SEKSYEN) {
 	document.${formName}.submit();
 }
 function checkWSHM(ID_HAKMILIK) {
-	// 20100906 - kmie 
+	// kmie, 20100906
 	// check hakmilik status with eTanah
     var url = "../x/${securityToken}/ekptg.view.integrasi.FrmViewETanah?action2=checkHM&isPPT=1&ID_HAKMILIK=" + ID_HAKMILIK;
     var hWnd = window.open(url, 'Semakan Status Hakmilik di Sistem eTanah', 'width=800,height=500, resizable=yes,scrollbars=yes');

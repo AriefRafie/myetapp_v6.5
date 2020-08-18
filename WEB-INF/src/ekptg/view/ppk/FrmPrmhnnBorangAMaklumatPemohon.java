@@ -345,6 +345,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
 		
 		}else if ("Simpan".equals(submit)) {
+			myLogger.info("Simpan");
 			String eventstatus = getParam("eventStatus");
 			eventStatus = Integer.parseInt(eventstatus);
 			if (eventStatus == 0) {
@@ -395,9 +396,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 				view_get_userid(session);
 				listUserid = logic_A.getUserIds();
-				listDaerahByUser = logic_A
-						.getDaerahByNegeriUser((String) session
-								.getAttribute("_ekptg_user_id"));
+				listDaerahByUser = logic_A.getDaerahByNegeriUser((String) session.getAttribute("_ekptg_user_id"));
 				
 				// comment dulu sebab online xleh dapat user id internal
 				view_get_userid(session);
@@ -417,6 +416,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				listSemak = logic_C.getListSemakan();
 				this.context.put("ListSemakan", listSemak);
 				this.context.put("ViewFail", "");
+				
+				/** Majlis Agama & Baitulmal*/
+				
 			
 			}else {
 				this.context.put("tarikhmohon", currentDate);
@@ -3947,6 +3949,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			context.put("hideTabPengesahan_pemohon", hideTabPengesahan_pemohon);
 			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
+			
+			//Lampiran
+			String simati = getParam("idSimati");
+			myLogger.info("Syafiqah test :" +simati);
+			LampiranBean lBean = new LampiranBean();
+			this.context.put("lampirans", lBean.getLampiranSimatiPapar(simati, "99211"));
 
 			vm = "app/ppk/frmPrmhnnSek8NilaianHarta.jsp";
 
@@ -6875,14 +6883,14 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			Hashtable hash = sm.elementAt(i);
 			String idsemakansenarai = String.valueOf(hash.get("id"));
 			
-//			if(idsemakansenarai.equals("20")) {
-//				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
-//					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-//		
-//			} else if (hash.get("id").equals("11")) {
-//				
-//			} else {
-//			}
+			if(idsemakansenarai.equals("4")) {
+				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
+					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
+		
+			} else if (hash.get("id").equals("11")) {
+				
+			} else {
+			}
 		}
 		
 	}

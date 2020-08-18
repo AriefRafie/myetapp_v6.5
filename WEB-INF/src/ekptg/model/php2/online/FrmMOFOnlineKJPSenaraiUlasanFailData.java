@@ -8,10 +8,14 @@ import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.servlet.http.HttpSession;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
 import org.apache.log4j.Logger;
+
+import ekptg.helpers.AuditTrail;
 
 public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 	
@@ -219,7 +223,87 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 		
 		return flagStatus;
 	}
-	
+	public void simpanKemaskiniMinitKewangan(String idPermohonan,
+			String txtTarikhTerima, String socKeputusan, String txtUlasan,
+			String socKeputusanPemohon, String txtUlasanPemohon, HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPKERTASKERJAPELEPASAN
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.update("FLAG_KERTAS", "2");
+
+			if (!"".equals(txtTarikhTerima)) {
+				r.add("TARIKH_TERIMA_KEWANGAN",
+						r.unquote("to_date('" + txtTarikhTerima
+								+ "','dd/MM/yyyy')"));
+			}
+			r.add("KEPUTUSAN_KEWANGAN", socKeputusan);
+			r.add("ULASAN_KEWANGAN", txtUlasan);
+			r.add("FLAG_KEPUTUSAN_PEMOHON", socKeputusanPemohon);
+			r.add("ULASAN_PEMOHON", txtUlasanPemohon);
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPKERTASKERJAPELEPASAN");
+			stmt.executeUpdate(sql);
+			conn.commit();
+			
+			AuditTrail.logActivity("1610203", "4", null, session, "UPD",
+					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIKEMASKINI");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	public String getNoFailByIdPermohonan(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT TBLPFDFAIL.NO_FAIL FROM TBLPFDFAIL, TBLPERMOHONAN"
+					+ " WHERE TBLPFDFAIL.ID_FAIL = TBLPERMOHONAN.ID_FAIL"
+					+ " AND TBLPERMOHONAN.ID_PERMOHONAN = '" + idPermohonan
+					+ "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("NO_FAIL");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	public String hantarUlasan(String idUlasanTeknikal, String txtTarikhSurat,
 			String txtNoRujukanSurat, String txtUlasan, String txtKeputusan,
 			String txtNamaPengulas, String txtNoTelPengulas, String userId) {

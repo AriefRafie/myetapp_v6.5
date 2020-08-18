@@ -43,8 +43,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	FrmUPTSek8BorangFData modelBorangE = new FrmUPTSek8BorangFData();
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
 	PPTHeader header = new PPTHeader();
-	//Kegunaan Lampiran
-	private String jenisDokumen = "pptbantahan";
 
 	String checkedsbcBantahan1 = "";
 	String checkedsbcBantahan2 = "";
@@ -59,6 +57,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 	String checkedStatusPemulangan3 = "";
 	String checkedStatusPemulangan4 = "";
 
+	@SuppressWarnings("unchecked")
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
 
@@ -594,14 +593,14 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				context.put("status", true);
 			}
 
-			vm = skrinBantahanMaster;	
+			vm = skrinBantahanMaster;
 
 		} else if (("dalamProses".equals(submit)) || ("bantahan".equals(submit))) {
 			jenisDoc = "bantahan";
 			selectedtab = "0";
 			context.put("selectedtab", selectedtab);
 			context.put("idWarta", id_warta);
-			myLogger.info("check error 1 [id hakmilikpb] :: " + id_hakmilikpb);
+//			myLogger.info("check error 1 [id hakmilikpb] :: " + id_hakmilikpb);
 
 			// CHECKING JUMLAH PAMPASAN SEKSYEN 8
 			listA = model.getMaklumatPampasan(id_hakmilikpb);
@@ -610,7 +609,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				Hashtable d = (Hashtable) listA.get(0);
 				amaun_bayaran = Double.parseDouble(d.get("amaun_bayaran").toString());
 			}
-			myLogger.info("check error 2 [amaun bayaran] :: " + amaun_bayaran);
+			myLogger.info("check error 2 [amaun bayaran]=" + amaun_bayaran);
 
 			// PAMPASAN <= 3000.00 : ALASAN 3 DAN 4
 			if (amaun_bayaran <= 3000.00) {
@@ -674,7 +673,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				String id_status_bantahan = (String) b.get("id_status_bantahan");
 
 				if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-					listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+					listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 					context.put("listDokumen", listDokumen);
 					context.put("listDokumen_size", listDokumen.size());
 				} else {
@@ -1390,9 +1389,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanDeposit.jsp";
 
 		} else if ("borangO".equals(submit)) {
-			jenisDokumen = "pptbantahan";
+			jenisDoc = "borangO";
 			selectedtab = "2";
-			context.put("idWarta", id_warta);
 			context.put("selectedtab", selectedtab);
 
 			id_fail = getParam("id_fail");
@@ -1400,17 +1398,19 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			list = model.getMaklumatBantahan(id_hakmilikpb, _MaxIdSiasatan, id_warta);
 			context.put("getMaklumatBantahan", list);
-			String id_bantahan = "";			
+			String id_bantahan = "";
+			
 			
 			if (list.size() != 0) {
 				Hashtable a = (Hashtable) list.get(0);
 				id_bantahan = (String) a.get("id_bantahan");
+
 				// get JENIS_DOKUMEN
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
-				myLogger.info("ID Bantahan borangO >>> "+id_bantahan+",Jenis Dokumen borangO >>> "+jenisDoc);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
+				myLogger.info("ID Bantahan borangO >>> "+id_bantahan);
+				myLogger.info("Jenis Dokumen borangO >>> "+jenisDoc);// Logger sahaja
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
-				
 			} else {
 				context.put("status", true);
 			}
@@ -1431,8 +1431,9 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 							"style=width:auto onChange=\"doChangeAlamatMahkamah();\" "));
 				}
 
-				context.put("selectBandarMahkamah",HTML.SelectBandar("socBandarMahkamah", null, "style=width:auto disabled "));
-				context.put("selectNegeriMahkamah",HTML.SelectNegeri("socNegeri", null, "style=width:auto disabled "));
+				context.put("selectBandarMahkamah",
+						HTML.SelectBandar("socBandarMahkamah", null, "style=width:auto disabled "));
+				context.put("selectNegeriMahkamah", HTML.SelectNegeri("socNegeri", null, "style=width:auto disabled "));
 
 				context.put("mode", "");
 				context.put("clearForm", "yes");
@@ -1440,6 +1441,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				context.put("button", "edit");
 
 			} else {
+
 //				myLogger.info("ADA MAKLUMAT BORANG O >>>> ");
 				Hashtable getIdBorangO = model.getIdBorangO(id_hakmilikpb, id_bantahan);
 				String idBorangO = getIdBorangO.get("id_borango").toString();
@@ -1492,7 +1494,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				context.put("button", "view");
 
 			}
-			context.put("idMT", _cIdMahkamah);
 
 			vm = "app/ppt/frmBantahanBorangO.jsp";
 
@@ -1890,7 +1891,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 //				myLogger.info("id bantahan >>> "+id_bantahan);
 				// :::upload
 				if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-					listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+					listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 //					myLogger.info("Jenis Dokumen susulanBantahan >>> "+jenisDoc);
 					context.put("listDokumen", listDokumen);
 					context.put("listDokumen_size", listDokumen.size());
@@ -2379,7 +2380,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				id_bantahan = (String) a.get("id_bantahan");
 
 				// Get jenisDoc
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 //				myLogger.info("Jenis Dokumen batalBantahan MT >>> "+jenisDoc);
 //				myLogger.info("ID Bantahan batalBantahan MT >>> "+id_bantahan);
 				context.put("listDokumen", listDokumen);
@@ -2495,6 +2496,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanPembatalan.jsp";
 
 		} else if ("upload_dokumen".equals(submit)) { // upload document function
+
 			list = model.getMaklumatBantahan(id_hakmilikpb, _MaxIdSiasatan, id_warta);
 			String id_bantahan = "";
 			if (list.size() != 0) {
@@ -2520,7 +2522,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			context.put("id_fail", id_fail);
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2536,6 +2538,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanDokumen.jsp";
 
 		} else if ("kemaskini_dokumen".equals(submit)) {
+
 			String id_dokumen = getParam("id_dokumen");
 			view_details_dokumen = model.view_details_dokumen(id_dokumen);
 
@@ -2564,7 +2567,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("display_error_message", "no");
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2574,7 +2577,8 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			vm = "app/ppt/frmBantahanDokumen.jsp";
 
-		} else if (submit.equals("tambah_dokumen")) {
+		} else if ("tambah_dokumen".equals(submit)) {
+			System.out.println("jenisDoc = "+ jenisDoc);
 			list = model.getMaklumatBantahan(id_hakmilikpb, _MaxIdSiasatan, id_warta);
 			context.put("getMaklumatBantahan", list);
 			String id_bantahan = "";
@@ -2591,7 +2595,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("display_error_message", "no");
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2618,7 +2622,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			}
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2650,7 +2654,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2660,8 +2664,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			vm = "app/ppt/frmBantahanDokumen.jsp";
 
+		}
 		// :::upload
-		}else if ("hapusDokumenMasterPerintah".equals(submit)) {
+		else if ("hapusDokumenMasterPerintah".equals(submit)) {
+
 			selectedtab = "3";
 			context.put("selectedtab", selectedtab);
 
@@ -2685,7 +2691,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2695,8 +2701,10 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 
 			vm = "app/ppt/frmBantahanSusulan.jsp";
 
+		}
 		// :::upload PPT-39(ii)
-		}else if ("hapusDokumenMasterPembatalan".equals(submit)) {
+		else if ("hapusDokumenMasterPembatalan".equals(submit)) {
+
 			selectedtab = "7";
 			context.put("selectedtab", selectedtab);
 
@@ -2720,7 +2728,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -2755,7 +2763,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("readmode", getParam("readmode"));
 
 			if ((!id_bantahan.equals("")) && (!id_bantahan.equals(null))) {
-				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 			} else {
@@ -3114,8 +3122,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		Db db = null;
 		try {
 
-    		String id_jenisDoc = "1530";
-    		long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
+			long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
 			String userId = (String) session.getAttribute("_ekptg_user_id");
 			db = new Db();
 
@@ -3123,33 +3130,18 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			con.setAutoCommit(false);
 			SQLRenderer r = new SQLRenderer();
 			PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN "
-        			+ "(id_dokumen,id_bantahan,nama_fail,jenis_mime,content,tajuk,keterangan,id_masuk"
-        			+ ",id_jenisdokumen,id_kemaskini,jenis_dokumen"
-        			+ ",tarikh_masuk,tarikh_kemaskini) " 
-        			+ "values(?"
-        			+ ",?"
-        			+ ",?"
-        			+ ",?"
-        			+ ",?"
-        			+ ",?"
-        			+ ",?"
-        			+ ",?"
-        			+ ",?"
-        			+ ",?"
-        			+ ",?"
-        			+ ",SYSDATE"
-        			+ ",SYSDATE)");
-    	        	ps.setLong(1, id_Dokumen);
-    	        	ps.setString(2, getParam("id_bantahan"));
-    	        	ps.setString(3,item.getName());
-    	        	ps.setString(4,item.getContentType());
-    	        	ps.setBinaryStream(5,item.getInputStream(),(int)item.getSize());
-    	        	ps.setString(6, getParam("txtnamadokumen"));
-    	        	ps.setString(7, getParam("txtketerangandokumen"));	        	
-    	        	ps.setString(8,(String) session.getAttribute("_ekptg_user_id"));	        	      	
-    	        	ps.setString(9, id_jenisDoc);  
-     	        	ps.setString(10,(String) session.getAttribute("_ekptg_user_id"));
-     	        	ps.setString(11,jenisDokumen);
+					+ "(id_Dokumen,id_bantahan,nama_Fail,jenis_Mime,content,tajuk,keterangan,id_masuk,id_kemaskini,jenis_dokumen) "
+					+ "values(?,?,?,?,?,?,?,?,?,?)"); // PPT-38
+			ps.setLong(1, id_Dokumen);
+			ps.setString(2, getParam("id_bantahan"));
+			ps.setString(3, item.getName());
+			ps.setString(4, item.getContentType());
+			ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
+			ps.setString(6, getParam("txtnamadokumen"));
+			ps.setString(7, getParam("txtketerangandokumen"));
+			ps.setString(8, userId);
+			ps.setString(9, userId);
+			ps.setString(10, getParam("nama_skrin"));
 			ps.executeUpdate();
 			con.commit();
 
@@ -3760,6 +3752,5 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		return total;
 
 	}
-	
-	
+
 }

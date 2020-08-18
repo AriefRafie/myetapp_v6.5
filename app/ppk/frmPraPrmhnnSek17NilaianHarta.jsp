@@ -3715,29 +3715,6 @@ $Util.formatDecimal($sumjumlahmatid)</b>
 </tr>
 #end
 
-#foreach($View in $View_pengesahan_pemohonan_17)
-	#set ($namaPemohon = $View.namaPemohon)
-    #set ($noKpBaruPemohon1 = $View.noKpBaruPemohon1)
-    #set ($noKpBaruPemohon2 = $View.noKpBaruPemohon2)
-    #set ($noKpBaruPemohon3 = $View.noKpBaruPemohon3)
-#end
-
-#if ($idStatus == "160" || $idStatus == "21" )
-	<tr><td>
-    		<td width="1%" valign="top"></td>
-    		<td width="3%" valign="top"><input type="checkbox" name='namecb1' id='namecb1'></td>
-      	<td width="89%">Saya $!namaPemohon NO.K/P $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-	</td></tr>
-#elseif ($idStatus == "171")
-	<tr><td>
-    		<td width="1%" valign="top"></td>
-    		
-    		
-    		<td width="3%" valign="top"><input type="checkbox" name='namecb1' id='namecb1' checked disabled></td>
-      	<td width="89%">Saya $!namaPemohon NO.K/P $!noKpBaruPemohon1 $!noKpBaruPemohon2 $!noKpBaruPemohon3 dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
-	</td></tr>
-#end
-
 </table>
 
 
@@ -3874,19 +3851,14 @@ function NAview() {
 }
 
 function pengesahan() {
-	if(namecb1.checked == false){
-		alert('Sila tanda pada checkbox untuk teruskan permohonan');
-		return;
-	}
-	else {
-		input_box=confirm("Adakah anda pasti?");
-			if (input_box == true) {
-			document.f1.method="post";
-			document.f1.action = "";
-			document.f1.mode.value = "pengesahan";
-			document.f1.command.value = "nilai_harta";
-			document.f1.submit();
-		}
+input_box=confirm("Adakah anda pasti?");
+		if (input_box == true) 
+		{
+	document.f1.method="post";
+	document.f1.action = "";
+	document.f1.mode.value = "pengesahan";
+	document.f1.command.value = "nilai_harta";
+	document.f1.submit();
 	}
 }
 

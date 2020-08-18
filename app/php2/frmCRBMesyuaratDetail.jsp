@@ -35,14 +35,12 @@
     <td><div id="TabbedPanels" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT MESYUARAT</li>
-          <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">PANGGILAN MESYUARAT</li>
-          <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">KEHADIRAN</li>
-          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
-          <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">MINIT MESYUARAT</li>
+          <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">KEHADIRAN</li>
+          <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">KEPUTUSAN</li>
+          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">MINIT MESYUARAT</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> #parse("app/php2/frmCRBMaklumatMesyuarat.jsp") </div>
-          <div class="TabbedPanelsContent"> #parse("app/php2/frmCRBPanggilanMesyuarat.jsp") </div>
           <div class="TabbedPanelsContent"> #parse("app/php2/frmCRBSenaraiKehadiran.jsp") </div>
           <div class="TabbedPanelsContent"> #parse("app/php2/frmCRBKeputusanMesyuarat.jsp") </div>
           <div class="TabbedPanelsContent"> #parse("app/php2/frmCRBSenaraiMinitMesyuarat.jsp") </div>
@@ -161,12 +159,8 @@ function hapusKehadiran(idKehadiran){
 	document.${formName}.hitButton.value = "hapusKehadiran";
 	doAjaxCall${formName}("");
 }
-function daftarNotifikasi(){
-	document.${formName}.flagPopup.value = "openPanggilMesyuarat";
-	document.${formName}.modePopup.value = "new";
-	doAjaxCall${formName}("");
-}
 </script>
+
 <script>
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){

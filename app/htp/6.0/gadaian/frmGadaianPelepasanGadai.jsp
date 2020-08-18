@@ -169,7 +169,7 @@ function fGS2A_Simpan() {
 	}
 	
 	if(document.${formName}.txtNoFailSek.value == ""){
-		alert('Sila masukkan No. Fail terlebih dahulu.');
+		alert('Sila masukkan No Fail Seksyen terlebih dahulu.');
   		document.${formName}.txtNoFailSek.focus(); 
 		return; 
 	}

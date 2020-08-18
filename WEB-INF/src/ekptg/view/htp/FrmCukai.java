@@ -93,7 +93,364 @@ public class FrmCukai extends AjaxBasedModule{
 		tahunParam = (!getParam("tahun_cukai").equals("")?getParam("tahun_cukai"):lebah.util.Util.getDateTime(new Date(), "yyyy"));
 		
 		if("cukaiperingkatbayar".equals(submit)){
-	
+//			myLog.info("cukaiperingkatbayar:"+pageMode);
+//		    template_name = PATH+"frmCukaiPenyata.jsp";
+//		    Hashtable permohonan = getICukai().getPermohonanInfo(idPermohonan);
+//		    int idNegeriInt = Integer.parseInt(getParam("idNegeri"));		
+//			String negeri = getParam("negeri");
+//			String Daerah = getParam("socDaerah")==""?"0":getParam("socDaerah");
+//			long idDaerah = Long.parseLong(Daerah);
+//			statusPeringkatBayar = false;
+//
+//			//vector = (Vector)FrmCukaiPenyataData.getList("11", "", (String)permohonan.get("fail"), Utils.parseLong((String)permohonan.get("idnegeri")));
+//			vector = getICukaiPenyata().getPenyata("11", "",String.valueOf(permohonan.get("fail")), String.valueOf(permohonan.get("idnegeri")),null);
+//			myLog.info("vector.isEmpty()="+vector.isEmpty());
+//			CukaiPenyata cPenyata = null;
+//			if(vector.isEmpty() == false){
+//				cPenyata = (CukaiPenyata)vector.get(0);
+//				//idPeringkatBayaran = String.valueOf(hPeringkatBayar.get("idPeringkatBayaran"));
+//				idPeringkatBayaran = String.valueOf(cPenyata.getId());
+//				myLog.info("idPeringkatBayaran="+idPeringkatBayaran);
+//				if(!idPeringkatBayaran.equals("0")){
+//					//peringkatBayar = String.valueOf(hPeringkatBayar.get("peringkatBayaran"));
+//					peringkatBayar = cPenyata.getNoRujukan();
+//					statusPeringkatBayar = true;
+//				}
+//			}
+//			myLog.info("peringkatBayar="+peringkatBayar);
+//			myLog.info("idPeringkatBayaran="+idPeringkatBayaran);
+//			myLog.info("statusPeringkatBayar="+statusPeringkatBayar);
+////			String idBayaran = getParam("peringkat_bayaran");
+////	    	if(!pen.get("peringkatBayaran").equals("TIADA")){ 	
+////	    		idBayaran = (String)pen.get("peringkatBayaran");
+////	    	}
+//    		
+//    		//year = lebah.util.Util.getDateTime(new Date(), "yyyy");
+//    		
+//			this.context.put("info", permohonan);
+//    		this.context.put("idbayaran", peringkatBayar);
+//    		//this.context.put("idPeringkatbayaran", pen.get("idPeringkatBayaran"));  
+//    		this.context.put("tahun_cukai", tahunParam);
+//    		this.context.put("tahuncukai", Integer.parseInt(tahunParam));
+//    		this.context.put("pageMode", pageMode); 
+//    		this.context.put("statusPeringkatBayar", statusPeringkatBayar);
+//			//by rosli
+////			this.context.put("senaraiLangkah", FrmUtilData.getLangkahByPermohonan("11","43",""+idPermohonan,(String)session.getAttribute("_portal_role")));
+//			//idPeringkatBayaran = String.valueOf(pen.get("idPeringkatBayaran"));
+//			//peringkatBayar = String.valueOf(pen.get("peringkatBayaran"));
+//			
+//			if("simpanPenyata".equals(pageMode)){
+//				myLog.info("simpanPenyata");
+//				selectedTab = "0";
+//				readability = "readonly";
+//				disability = "disabled";
+//				style2 = "none";
+//				vector = getICukai().getSenaraiPenyata(String.valueOf(idNegeri), tahunParam);
+//				simpanPenyata(session,idPermohonan,vector);
+//			    DataPenyata(session,idNegeriInt,disability,readability,style1,style2);			    
+//			    this.context.put("peringkat_bayaran", peringkatBayar);
+//			    this.context.put("SimpanStatus", "success");
+//				this.context.put("ResultSimpan", result); 
+//				
+//			}else if("penyataview".equals(pageMode)){
+//				myLog.info("penyataview");
+//				selectedTab = "0";
+//			    readability = "readonly";
+//				disability = "disabled";
+//				style2 = "none";
+//				DataPenyata(session,idNegeriInt,disability,readability,style1,style2);
+//				myLog.info("penyataview:peringkatBayar="+peringkatBayar);
+//				int bilCukaiUtama=0;
+//				if(statusPeringkatBayar){
+////					peringkatBayar = getParam("socbayaran")==null||getParam("socbayaran").equals("")?getParam("peringkat_bayaran"):getParam("socbayaran");
+//					cu = getICukai().getCukaiUtama(idPeringkatBayaran);
+//					if(cu!=null){
+//						myLog.info("bilHakmilik="+cu.getBilanganHakmilik()+",="+cu.getJumlahCukai());
+//						this.context.put("bilHakmilik", String.valueOf(cu.getBilanganHakmilik()));
+//						this.context.put("jumlahCukai", String.valueOf(cu.getJumlahCukai()));
+//						bilCukaiUtama = 1;
+//					}
+//					
+//				}else{
+//					if(vector.size() != 0){			    
+//						statusPeringkatBayar = true;
+//						//cu = null;
+//					}					
+//				}
+//				this.context.put("cukaiUtama",bilCukaiUtama);	
+//	    		//this.context.put("tahun_cukai", year);
+//				myLog.info("statusPeringkatBayar: "+statusPeringkatBayar);
+//				
+////				EkptgEmailSender email = EkptgEmailSender.getInstance();
+////				email.FROM ="etapp_webmaster@ekptg.gov.my";
+////				email.SUBJECT="EMAIL DARI CUKAI";
+////				email.MESSAGE = setSign();
+////				email.MULTIPLE_RECIEPIENT = new String[1];
+////				email.MULTIPLE_RECIEPIENT[0] = "roslizakaria@gmail.com";
+////				//email.MULTIPLE_RECIEPIENT[1]="wfaresh@gmail.com";
+////				//email.MULTIPLE_RECIEPIENT[2]="cipon.it@gmail.com";				
+////				email.TO_CC = new String[1];
+////				email.TO_CC[0]  = "rosli@hla-group.com";
+////				email.sendEmail();
+//				
+//			}else if("baucerview".equals(pageMode)){
+//				selectedTab = "0";
+////				myLog.info("baucerview:selectedTab="+selectedTab);
+//				if(statusPeringkatBayar){
+//					//idPeringkatBayaran = String.valueOf(pen.get("idPeringkatBayaran"));
+//					//peringkatBayar = String.valueOf(pen.get("peringkatBayaran"));
+//					selectedTab = "1";
+//					int peringkat_bayaran = Integer.parseInt(getParam("peringkat_bayaran"));
+//		    		//int idPeringkatbayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
+//		    		//idNegeri = Integer.parseInt(getParam("idNegeri"));
+//					readability = "readonly";
+//					disability = "disabled";
+//					style2 = "none";
+//					viewBaucer(session,idNegeri,idPeringkatBayaran,peringkatBayar,disability,readability,style1,style2);
+//				
+//		    		this.context.put("idPermohonan",idPermohonan);		
+//					this.context.put("idNegeri", idNegeri);
+//					//this.context.put("peringkat_bayaran", peringkat_bayaran);
+//		    		this.context.put("idbayaran", getParam("socbayaran"));
+//		    		//this.context.put("idPeringkatbayaran", idPeringkatbayaran);
+//	    		
+//				}
+//				myLog.info("baucerview:selectedTab="+selectedTab);
+//
+//			}else if("cukaiBayaran".equals(pageMode)){
+//				myLog.info("cukaiBayaran");
+//				selectedTab = "0";
+//				if(statusPeringkatBayar){
+//					selectedTab = "2";
+//					ViewBayaran(session,idNegeriInt,disability,readability,style1,style2);
+//			    	this.context.put("idbayaran", getParam("socbayaran"));   
+//					Vector<?> v = FrmUtilData.getListBaucer(idPeringkatBayaran);  
+////					myLog.info("bayaranStatus:size="+v.size());
+//					this.context.put("bayaranStatus", v.size());
+//				}
+////				myLog.info("cukaiBayaran:selectedTab="+selectedTab);
+//			
+//			}
+//			this.context.put("idNegeri", idNegeri);
+//			this.context.put("negeri", negeri);
+			
+//		}else if("tambahBaucer".equals(submit)){
+//			myLog.info("tambahBaucer = "+submit);
+//			selectedTab = "1";
+//	    	template_name = PATH+"frmCukaiTambahBaucer.jsp";
+//	    	int idNegeri = Integer.parseInt(getParam("idNegeri"));	
+//		    int idPermohonan = Integer.parseInt(getParam("idPermohonan"));
+//			this.context.put("idNegeri", idNegeri);
+//			this.context.put("idPermohonan", idPermohonan);
+//			this.context.put("negeri", getParam("negeri"));
+////			this.context.put("peringkat_bayaran", getParam("peringkat_bayaran"));
+//			int idBaucer;
+//			int idDaerah;
+//		    int idPeringkatbayaran;
+//		    if (getParam("idPeringkatbayaran") != "0")
+//		    	idPeringkatbayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
+//		    else
+//	    		idPeringkatbayaran = 0;
+//		    this.context.put("idPeringkatbayaran", idPeringkatbayaran);
+//		    
+//		    String id_daerah = getParam("socDaerah");
+//			if (id_daerah == null || id_daerah.trim().length() == 0){
+//				id_daerah = "0";
+//			}
+//
+//			if("simpanB".equals(pageMode)){
+//				myLog.info("tambahBaucer : pageMode:simpanB="+pageMode);
+//				readability = "readonly";
+//			    disability = "disabled";
+//			    style2 = "none";
+//			    idBaucer = SimpanTBaucer(session,idPeringkatbayaran);
+//			    this.context.put("idBaucer", idBaucer);
+//			    //System.out.println("CukaiProcess::simpan:::idBaucer"+idBaucer);			    
+//			    if(getParam("socDaerah") != ""){
+//			    	idDaerah = Integer.parseInt(getParam("socDaerah"));
+//			    	//System.out.println("CukaiProcess::Baucer::simpanB::idDaerah::"+idDaerah);
+//			    }else{
+//			    	idDaerah = Integer.parseInt(getParam("idDaerah"));
+//			    	//System.out.println("CukaiProcess::Baucer::simpanB::idDaerah::"+idDaerah);
+//			    }
+//			    
+//				//DataTBaucer(session,idNegeri,idBaucer,idPeringkatbayaran,disability,readability,style1,style2);
+//				this.context.put("idPeringkatbayaran", idPeringkatbayaran);
+//				this.context.put("idDaerah", idDaerah);
+//				this.context.put("SimpanStatus", "success");
+//				this.context.put("ResultSimpan", result);				
+//				
+//			}else if("baru".equals(pageMode)){
+//				myLog.info("tambahBaucer : baru:peringkat_bayaran="+getParam("peringkat_bayaran"));
+//				
+//				style1 = "none";
+//				DataTBaucerBaru(session,idNegeri,disability,readability,style1,style2);
+//				if(peringkatBayar.equals("1")){
+//					this.context.put("selectDaerah",utilHTML.SelectNegeriByCukai(tahunParam,String.valueOf(idPeringkatbayaran),"socDaerah",Long.parseLong(id_daerah),"onChange=\"doChangeDaerah();\" style=\"width:200\"",null));				
+//				}else{
+//					this.context.put("selectDaerah",utilHTML.SelectDaerahByCukai(tahunParam,String.valueOf(idPeringkatbayaran),"socDaerah",Long.parseLong(id_daerah),"onChange=\"doChangeDaerah();\" style=\"width:200\"",null));
+//				}
+//				list = FrmCukaiPenyataData.getAmaunCukai(id_daerah,idPeringkatbayaran);			
+//					
+//				if (list.size() == 0){
+//					Hashtable hash = new Hashtable();
+//					hash.put("jumlahCukai", "");
+//					hash.put("idDaerah", "");
+//					hash.put("idPeringkatbayaran", "");
+//					list.addElement(hash);
+//				}			
+//				//this.context.put("idPeringkatbayaran", idPeringkatbayaran);
+//				this.context.put("AmaunCukai", list);
+//		  		this.context.put("tahun_cukai", tahunParam);
+//	    		this.context.put("tahuncukai", Integer.parseInt(tahunParam));
+//	 
+//			}else if("view".equals(pageMode)){
+//				myLog.info("tambahBaucer : pageMode="+pageMode);
+//				idBaucer = Integer.parseInt(getParam("idBaucer"));
+//				this.context.put("idPeringkatbayaran", idPeringkatbayaran);
+//				this.context.put("idBaucer", idBaucer);
+//				this.context.put("idDaerah", getParam("idDaerah"));
+//				style2 = "none";
+//				DataTBaucer(session,idNegeri,idBaucer,idPeringkatbayaran,disability,readability,style1,style2);
+//
+//			}
+//			
+//		}else if("cukaiBayaran".equals(submit)){
+//			myLog.info("cukaiBayaran:selectedTab="+selectedTab);
+//			//selectedTab = "2";
+//			//template_name = "app/htp/frmCukaiBayaran.jsp";
+//			template_name = PATH+"frmCukaiPenyata.jsp";
+//			//int idPermohonan = Integer.parseInt(getParam("idPermohonan"));
+//			int idNegeri = Integer.parseInt(getParam("idNegeri"));
+//			ViewBayaran(session,idNegeri,disability,readability,style1,style2);
+//			    
+//			//this.context.put("idPermohonan", idPermohonan);
+//			this.context.put("idNegeri", idNegeri);
+//	    	this.context.put("negeri", getParam("negeri"));
+//			//this.context.put("selectedTab",selectedTab);
+//			//this.context.put("peringkat_bayaran", getParam("peringkat_bayaran"));
+//	    	this.context.put("idbayaran", getParam("socbayaran"));   
+//			Vector<?> v = FrmUtilData.getListBaucer(idPeringkatBayaran);  
+//			myLog.info("bayaranStatus:size="+v.size());
+//			this.context.put("bayaranStatus", v.size());
+//			
+//		}else if("tambahBayaran".equals(submit)){
+//			myLog.info("cukaiBayaran:selectedTab="+selectedTab);
+//			//selectedTab = "2";
+//		   	template_name = PATH+"frmCukaiTambahBayaran.jsp";
+//			this.context.put("idNegeri", idNegeri);
+//	    	this.context.put("negeri", getParam("negeri"));
+//	    	this.context.put("idbayaran", getParam("socbayaran")); 			
+//			int idBayaranCukai;
+//			int idBaucer;
+//		    //int idPeringkatbayaran;
+////		    if(getParam("idPeringkatbayaran") != "0")
+////		    	idPeringkatBayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
+////		    else
+////	    		idPeringkatbayaran = 0;
+//			    
+//		    //
+//			Vector<?> v = FrmUtilData.getListBaucer(idPeringkatBayaran);  
+//			myLog.info("bayaranStatus:size="+v.size());
+//			this.context.put("bayaranStatus", v.size());
+//		    //System.out.println("cukaiBayaran::tambahBayaran::idPeringkatbayaran:::"+idPeringkatbayaran);			    
+//		    String id_baucer = getParam("socBaucer");
+//			if (id_baucer == null || id_baucer.trim().length() == 0){
+//	    		id_baucer = "0";
+//			}
+//			if("simpanBay".equals(pageMode)){
+//				myLog.info("CukaiProcess::Bayaran::simpanBayaran");
+//				readability = "readonly";
+//				disability = "disabled";
+//				style2 = "none";
+//				String idBayaran = simpanBayaran(session,idPeringkatBayaran);
+//				//System.out.println("CukaiProcess::Bayaran::simpanBay::socBaucer:xxxxxxxxx:"+getParam("socBaucer"));
+//				if(getParam("socBaucer") != ""){
+//					idBaucer = Integer.parseInt(getParam("socBaucer"));
+//				    //System.out.println("CukaiProcess::Bayaran::simpanBay::idBaucer::"+idBaucer);
+//				}else{
+//				  	idBaucer = Integer.parseInt(getParam("idBaucer"));
+//			    	//System.out.println("CukaiProcess::Bayaran::simpanBay::idBaucer::"+idBaucer);
+//				}
+//				//bayaranView(session,String.valueOf(idNegeri),idBayaran,idPeringkatBayaran,disability,readability,style1,style2);
+//				BayaranCukai bCukai = null;
+//				bCukai = getICukai().bayaranView(idBayaran);
+//				this.context.put("bcukai", bCukai);
+//				this.context.put("idBayaranCukai", idBayaran);
+//				this.context.put("idBaucer", idBaucer);
+//				this.context.put("SimpanStatus", "success");
+//				this.context.put("ResultSimpan", result);
+//	    		this.context.put("pagemode", "viewBay"); 
+//		
+//			}else if("baruBay".equals(pageMode)){
+//				myLog.info("CukaiProcess::Bayaran::Baru");
+//				//this.context.put("peringkat_bayaran", peringkat_bayaran);
+//				//this.context.put("idPeringkatbayaran", idPeringkatbayaran);
+//				viewBayaranBaru(session,idNegeri,disability,readability,style1,style2);
+//				//this.context.put("selectBaucer",UtilHTML.SelectBaucer(idPeringkatbayaran,"socBaucer",Long.parseLong(id_baucer),"onChange=\"doChangeBaucer();\"",null));
+//				this.context.put("selectBaucer",utilHTML.selectBaucer(peringkatBayar,idPeringkatBayaran,"socBaucer",Long.parseLong(id_baucer)," style=\"width:200\"",null));
+//				list = FrmCukaiBayaranData.getAmaunBaucer(id_baucer);			
+//				if (list.size() == 0){
+//					Hashtable hash = new Hashtable();
+//					hash.put("amaun", "");
+//					hash.put("idBaucer", "");
+//					list.addElement(hash);
+//				}
+//				this.context.put("AmaunBaucer", list);
+//			
+//			}else if("viewBay".equals(pageMode)){
+////			    Hashtable permohonan = getICukai().getPermohonanInfo(idPermohonan);
+////				this.context.put("info", permohonan);	    	
+//				myLog.info("CukaiProcess::Bayaran::BayaranView");
+//				idBayaranCukai = Integer.parseInt(getParam("idBayaranCukai"));
+//				String idBayaran = getParam("idBayaranCukai");
+//				idBaucer = Integer.parseInt(getParam("idBaucer"));
+//				//this.context.put("idPeringkatbayaran", idPeringkatbayaran);
+//				this.context.put("idBayaranCukai", idBayaranCukai);
+//				this.context.put("idBaucer", idBaucer);
+//				style2 = "none";
+////				bayaranView(session,idNegeri,idBayaran,idPeringkatBayaran,disability,readability,style1,style2);
+//				//System.out.println("CukaiProcess::Bayaran::view::idBayaranCukai:::"+idBayaranCukai);
+//				//System.out.println("CukaiProcess::Bayaran::view::idBaucer:::"+idBaucer);
+//				BayaranCukai bCukai = null;
+//				bCukai = getICukai().bayaranView(idBayaran);
+//				this.context.put("bcukai", bCukai);
+//				
+//			}else if("kemaskinibayaran".equals(pageMode)){
+//				myLog.info("CukaiProcess::Bayaran::kemaskinibayaran");
+//				String idBayaran = getParam("idBayaranCukai");
+//				style2 = "none";
+//				BayaranCukai bCukai = null;
+//				bCukai = getICukai().bayaranView(idBayaran);
+//				this.context.put("bcukai", bCukai);
+//		  		this.context.put("tahun_cukai", tahunParam);
+//	    		this.context.put("tahuncukai", Integer.parseInt(tahunParam));
+//				
+//			}else if("kemaskinisimpanbayaran".equals(pageMode)){
+//				myLog.info("CukaiProcess::Bayaran::BayaranView");
+//				idBayaranCukai = Integer.parseInt(getParam("idBayaranCukai"));
+//				String idBayaran = getParam("idBayaranCukai");
+//				idBaucer = Integer.parseInt(getParam("idBaucer"));
+//				this.context.put("idBayaranCukai", idBayaranCukai);
+//				this.context.put("idBaucer", idBaucer);
+//				style2 = "none";
+//				simpanBayaran(session,idPeringkatBayaran);
+//
+//				BayaranCukai bCukai = null;
+//				bCukai = getICukai().bayaranView(idBayaran);
+//				this.context.put("bcukai", bCukai);
+//	    		this.context.put("pagemode", "viewBay"); 
+//		
+//					
+//			} else if("hapusbayaran".equals(pageMode)){
+//				getICukai().hapusBayaranCukai(getParam("idBayaranCukai"));
+//
+//				this.context.put("command1", "cukaiperingkatbayar");
+//	    		this.context.put("pagemode", "cukaiBayaran"); 
+//		  		this.context.put("tahun_cukai", tahunParam);
+//	    		this.context.put("tahuncukai", Integer.parseInt(tahunParam));
+//				
+//			} 	
 		
 		}else if("penyata".equals(submit)){
 			selectedTab = "0";
@@ -440,7 +797,9 @@ public class FrmCukai extends AjaxBasedModule{
 		myLog.info("idPermohonan="+idPermohonan);
 		myLog.info("idPeringkatBayaran="+idPeringkatBayaran);
 		myLog.info("peringkatBayar="+peringkatBayar);
-		myLog.info("selectedTab = "+selectedTab); 		
+		myLog.info("selectedTab = "+selectedTab);
+		
+  		
 		return template_name;
 		
 	}

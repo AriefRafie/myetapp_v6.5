@@ -22,11 +22,9 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
     <td><fieldset>
       <legend><strong>SENARAI Lampiran</strong></legend>
       <table align="center" width="100%">
-        #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
         <tr>
           <td colspan="2" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarLampiran()"/></td>
         </tr>
-        #end
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td><strong>Nama Lampiran</strong></td>

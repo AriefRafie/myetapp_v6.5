@@ -274,8 +274,7 @@ public class File implements Serializable  {
 		
 		return seqno;
 	
-	}
-	
+	}	
 	//00 - 10
 	public static synchronized int getSeqNo(Db db
 		,int id_seksyen
@@ -287,35 +286,35 @@ public class File implements Serializable  {
 		,boolean getNoSubjaket
 		,int tahun
 		,int bulan) throws DbException  {		
-			myLog.debug("File SEQNO:"+id_seksyen+"-"+id_urusan);			
+		myLog.debug("File SEQNO:"+id_seksyen+"-"+id_urusan);			
 			//Db db = null;
 			//Connection conn = null;
-			File f = null;
-			StringBuffer sb = new StringBuffer();
-			int seqno=0;
-			try {
+		File f = null;
+		StringBuffer sb = new StringBuffer();
+		int seqno=0;
+		try {
 //				 db = new Db();
 //			     conn = db.getConnection();
 //			     conn.setAutoCommit(false);
 			     
-	       	  	 f = new File();
-				 boolean found = false;
+       	  	 f = new File();
+			 boolean found = false;
 				 
-				 sb.append("SELECT NO_TURUTAN,NO_TURUTAN_JILID,NO_TURUTAN_SUBJAKET FROM "+SEQ_TABLE+" WHERE ");
-				 sb.append("id_seksyen=" +id_seksyen);
-				 sb.append(" AND id_urusan=" +id_urusan);
-				 sb.append(" AND id_kementerian=" +id_kementerian);
-				 sb.append(" AND id_negeri=" +id_negeri);
-				 sb.append(" AND id_daerah=" +id_daerah);
-				 if (tahun > 0) sb.append(" AND tahun=" +tahun);
-				 if (bulan > 0) sb.append(" AND bulan=" +bulan);
+			 sb.append("SELECT NO_TURUTAN,NO_TURUTAN_JILID,NO_TURUTAN_SUBJAKET FROM "+SEQ_TABLE+" WHERE ");
+			 sb.append("id_seksyen=" +id_seksyen);
+			 sb.append(" AND id_urusan=" +id_urusan);
+			 sb.append(" AND id_kementerian=" +id_kementerian);
+			 sb.append(" AND id_negeri=" +id_negeri);
+			 sb.append(" AND id_daerah=" +id_daerah);
+			 if (tahun > 0) sb.append(" AND tahun=" +tahun);
+			 if (bulan > 0) sb.append(" AND bulan=" +bulan);
 				 
-				  //myLogger.debug("");
-	 	          ResultSet rs = db.getStatement().executeQuery(sb.toString()); 
+			  //myLogger.debug("");
+	          ResultSet rs = db.getStatement().executeQuery(sb.toString()); 
 		          
-		          if (rs.next()) found = true;
-		          if (found) {
-		        	  f.increaseSeq(db
+	          if (rs.next()) found = true;
+	          if (found) {
+	        	  f.increaseSeq(db
 		        			  ,id_seksyen
 		        			  ,id_urusan
 		        			  ,id_kementerian
@@ -325,25 +324,24 @@ public class File implements Serializable  {
 		        			  ,getNoSubjaket
 		        			  ,bulan
 		        			  ,tahun);     
-		          } else {
-		        	  f.addNew(db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,tahun,bulan);	        	  
-		          }
-		          ResultSet rs2 = db.getStatement().executeQuery(sb.toString());
-		          if ( rs2.next() ) {
-		        	  if (getNoJilid) {
-		        		  seqno = rs2.getInt("NO_TURUTAN_JILID");
-		        	  }else if (getNoSubjaket) {
-		        		  seqno = rs2.getInt("NO_TURUTAN_SUBJAKET");
-		        	  }
-		        	  else {
-		        		  seqno = rs2.getInt("NO_TURUTAN");
-		        	  }
-		          }
+	          } else {
+	        	  f.addNew(db,id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,tahun,bulan);	        	  
+	          }
+	          
+	          ResultSet rs2 = db.getStatement().executeQuery(sb.toString());
+		      if ( rs2.next() ) {
+		    	  if (getNoJilid) {
+		    		  seqno = rs2.getInt("NO_TURUTAN_JILID");
+		    	  }else if (getNoSubjaket) {
+		    		  seqno = rs2.getInt("NO_TURUTAN_SUBJAKET");
+		    	  }else {
+		    		  seqno = rs2.getInt("NO_TURUTAN");
+		    	  }
+		      }
 		          //conn.commit();
-				
-			}  catch (Exception ex) {
-				throw new DbException(ex.getMessage() + ": " + sb.toString());
-			}
+		}  catch (Exception ex) {
+			throw new DbException(ex.getMessage() + ": " + sb.toString());
+		}
 //			catch (Exception ex) {
 //			      try {
 //			          conn.rollback(); } catch (SQLException localSQLException1) {
@@ -353,11 +351,10 @@ public class File implements Serializable  {
 //			finally {
 //		      if (db != null) db.close();
 //		    }
-			myLog.debug("seqno="+seqno);			
-			
-			return seqno;
+		myLog.debug("seqno="+seqno);			
+		return seqno;
 		
-		}
+	}
 	
 	public static synchronized int getSeqNoPPK(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
 		int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int tahun) throws DbException  {

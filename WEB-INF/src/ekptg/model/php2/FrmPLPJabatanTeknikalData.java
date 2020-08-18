@@ -1040,10 +1040,8 @@ public class FrmPLPJabatanTeknikalData {
 					//add by aishah 08062017 - untuk dapatkan nama pegawai yang memberi ulasan
 					+ " A.NAMA_PEGAWAI, A.NO_TELEFON"
 					
-					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE "
-					//+ "A.ID_MENTERI = B.ID_KEMENTERIAN"
-					//+ " AND A.ID_AGENSI = C.ID_AGENSI "
-					+ "A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"' "
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE A.ID_MENTERI = B.ID_KEMENTERIAN"
+					+ " AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"' "
 					+ " AND A.ID_PERMOHONAN = '"+idPermohonan+"' ";
 
 			ResultSet rs = stmt.executeQuery(sql);

@@ -170,7 +170,7 @@ alert("Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentinga
          	#end
          	
          	
-         	#if($userIdNeg=="10") <!-- untuk selangor sahaja-->
+         	#if($userIdNeg=="10")
      		<tr>
          		<td>&nbsp;</td>
             	<td>Jenis Kod Daerah</td>
