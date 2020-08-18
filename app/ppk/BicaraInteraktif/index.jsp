@@ -3125,6 +3125,53 @@ function simpanTurutHadir(id_bikehadiran,id_perbicaraan,id_permohonan,lokasi,row
 	}
 }
 
+//arief add Saksi
+function simpanSaksi(id_bikehadiran,id_perbicaraan,id_permohonan,lokasi,rowCss,BIL)
+{	
+	var nama = document.getElementById("NAMA_SAKSI_"+id_bikehadiran);	
+	if(nama.value == "")
+	{
+		alert('Sila masukkan nama!');
+		nama.focus();
+		return;
+	}
+	else
+	{	
+		if(id_bikehadiran == "")
+		{
+			doDivAjaxCall$formname('view_saksi','tambah_saksi','ID_BIKEHADIRAN='+id_bikehadiran+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&scrolPosition='+lokasi+'&rowCss='+rowCss+'&BIL='+BIL);
+		}
+		else
+		{
+			doDivAjaxCall$formname('rowSaksi_'+id_bikehadiran,'saveSaksi','ID_BIKEHADIRAN='+id_bikehadiran+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&scrolPosition='+lokasi+'&rowCss='+rowCss+'&BIL='+BIL);
+		}
+	}
+}
+
+//arief add Tidak Hadir
+function simpanTidakHadir(id_bitidakhadir,id_perbicaraan,id_permohonan,lokasi,rowCss,BIL)
+{	
+	var nama = document.getElementById("NAMA_TIDAKHADIR_"+id_bitidakhadir);	
+	if(nama.value == "")
+	{
+		alert('Sila masukkan nama!');
+		nama.focus();
+		return;
+	}
+	else
+	{	
+		if(id_bitidakhadir == "")
+		{
+			doDivAjaxCall$formname('view_tidakhadir','tambah_tidakhadir','ID_BITIDAKHADIR='+id_bitidakhadir+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&scrolPosition='+lokasi+'&rowCss='+rowCss+'&BIL='+BIL);
+		}
+		else
+		{
+			doDivAjaxCall$formname('rowTidakHadir_'+id_bitidakhadir,'saveTidaktHadir','ID_BITIDAKHADIR='+id_bitidakhadir+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&scrolPosition='+lokasi+'&rowCss='+rowCss+'&BIL='+BIL);
+		}
+	}
+}
+
+
 function showTDK(skrinName,mode,statusOB)
 {
 	if(statusOB=="3")
