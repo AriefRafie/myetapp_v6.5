@@ -13,42 +13,42 @@
 			<fieldset><legend><strong>CARIAN</strong></legend>
 				<table border="0" width="100%">
 					<tr>
-					    <td width="29%"><div align="right">NO. FAIL SEKSYEN</div></td>
+					    <td width="29%"><div align="right">No. Fail</div></td>
 					    <td width="1%">:</td>
 					    <td width="70%"><input name="NoFail" type="text" id="NoFail" size="43" maxlength="40" value="$!carianNoFail" onkeyup="this.value=this.value.toUpperCase();"></td>
 			  		</tr>
 			  		<tr>
-					    <td><div align="right">NO. FAIL UPT</div></td>
+					    <td><div align="right">No. Fail UPT</div></td>
 					    <td>:</td>
 					    <td><input name="NoFailUpt" type="text" id="NoFailUpt" size="43" maxlength="40" value="$!carianNoFailUpt" onkeyup="this.value=this.value.toUpperCase();"></td>
 			  		</tr>
 			  		<tr>
-					    <td><div align="right">NO. FAIL PTG</div></td>
+					    <td><div align="right">No. Fail PTG</div></td>
 					    <td>:</td>
 					    <td><input name="NoFailPtg" type="text" id="NoFailPtg" size="43" maxlength="40" value="$!carianNoFailPtg" onkeyup="this.value=this.value.toUpperCase();"></td>
 			  		</tr>
 			  		<tr>
-					    <td><div align="right">NO. FAIL PTD</div></td>
+					    <td><div align="right">No. Fail PTD</div></td>
 					    <td>:</td>
 					    <td><input name="NoFailPtd" type="text" id="NoFailPtd" size="43" maxlength="40" value="$!carianNoFailPtd" onkeyup="this.value=this.value.toUpperCase();"></td>
 			  		</tr>
   					<tr>
-					    <td><div align="right">TAJUK FAIL</div></td>
+					    <td><div align="right">Tajuk Fail</div></td>
 					    <td>:</td>
 					    <td><input name="NamaFail" type="text" id="NamaFail" size="43" maxlength="300" value="$!carian" onkeyup="this.value=this.value.toUpperCase();"></td>
 			  		</tr>
   					<tr>
-					    <td><div align="right">NEGERI</div></td>
+					    <td><div align="right">Negeri</div></td>
 					    <td>:</td>
 					    <td>$selectNegeri</td>
 			  		</tr>
 					<tr>
-					    <td><div align="right">NAMA PEMILIK</div></td>
+					    <td><div align="right">Nama Pemilik</div></td>
 					    <td>:</td>
 					    <td><input name="NamaPemilik" type="text" id="NamaPemilik" size="43" maxlength="80" value="$!carianPemilik" onkeyup="this.value=this.value.toUpperCase();"></td>
 			  		</tr>
 			  		<tr>
-					    <td><div align="right">NO. KP / SYARIKAT / RUJUKAN</div></td>
+					    <td><div align="right">No. KP / Syarikat / Rujukan</div></td>
 					    <td>:</td>
 					    <td><input name="NoRujukan" type="text" id="NoRujukan" size="43" maxlength="20" value="$!carianNoRujukan" onkeyup="this.value=this.value.toUpperCase();"></td>
 			  		</tr>
@@ -203,7 +203,7 @@ function fGS2A_Simpan() {
 	}
 	
 	if(document.${formName}.txtNoFailSek.value == ""){
-		alert('Sila masukkan No Fail Seksyen terlebih dahulu.');
+		alert('Sila masukkan No. Fail terlebih dahulu.');
   		document.${formName}.txtNoFailSek.focus(); 
 		return; 
 	}

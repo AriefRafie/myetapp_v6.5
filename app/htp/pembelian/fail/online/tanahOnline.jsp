@@ -1,4 +1,4 @@
-##parse('app/htp/pembelian/fail/online/pagingOnline.jsp')
+ ##parse('app/htp/pembelian/fail/online/pagingOnline.jsp')
 <!-- <fieldset>
 <legend><strong>MAKLUMAT PEMBELIAN ONLINE</strong> </legend> -->
  <table width="100%">

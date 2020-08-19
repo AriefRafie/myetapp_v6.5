@@ -67,7 +67,7 @@
 					        	</td>				        
 	                        	<td width="30%">
 	                            	<div align="left">
-	                            		<span class="labelinput">No. Fail Seksyen</span>
+	                            		<span class="labelinput">No. Fail</span>
 	                            	</div>
 	                        	</td>
 	                  			<td width="1%" class="labelinput" >:</td>
@@ -697,7 +697,7 @@
 					        	</td>				        
 	                        	<td width="30%">
 	                            	<div align="left">
-	                            		<span class="labelinput">No. Fail Seksyen</span>
+	                            		<span class="labelinput">No. Fail</span>
 	                            	</div>
 	                        	</td>
 	                  			<td width="1%" class="labelinput" >:</td>

@@ -999,7 +999,6 @@ public class FrmPYWJabatanTeknikalData {
 			}
 			r.add("NO_RUJUKAN", txtNoRujukan);
 			r.add("ULASAN", txtUlasan);
-			;
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));

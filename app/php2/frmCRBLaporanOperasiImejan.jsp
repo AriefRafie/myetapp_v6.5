@@ -22,11 +22,6 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
     <td><fieldset>
       <legend><strong>SENARAI IMEJ</strong></legend>
       <table align="center" width="100%">
-        <!-- kmie, 20100812 (MacGDI) -->
-		<!--         <tr> -->
-		<!--           <td colspan="2" scope="row"><a href="http://g4nre.mygeoportal.gov.my" target="_blank" style="color:#0000FF">MacGDI</a></td> -->
-		<!--         </tr> -->
-        <!-- end edit (kmie) -->
         #if ($flagPopup == '')
         <tr>
           <td colspan="2" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarDokumen()"/></td>
@@ -35,6 +30,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td><strong>Nama Imej</strong></td>
+          <td><strong>Jenis Imej</strong></td>
         </tr>
         #set ($senaraiImejan = "")
         #if ($SenaraiImejan.size() > 0)
@@ -49,6 +45,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
         <tr>
           <td class="$row" align="center">$senaraiImejan.bil</td>
           <td class="$row"><a href="javascript:paparDokumen($senaraiImejan.idDokumen)" class="style2">$senaraiImejan.namaDokumen</a></td>
+          <td class="$row">$senaraiImejan.jenisImej</td>
         </tr>
         #end
         #else

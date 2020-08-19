@@ -112,7 +112,7 @@
   </tr>
   <tr>
     <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-    <td width="28%">Nama Ketua Setiausaha NRE</td>
+    <td width="28%">Nama Ketua Setiausaha KeTSA</td>
     <td width="1%">:</td>
     <td width="70%"><input name="txtNamaKSU" type="text" class="$inputTextClass" id="txtNamaKSU" value="$beanMaklumatPerakuanKeputusan.namaKSU" size="40" maxlength="80" $readonly ></td>
   </tr>

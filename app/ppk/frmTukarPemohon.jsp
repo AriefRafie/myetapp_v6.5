@@ -63,7 +63,7 @@ Semak Maklumat Pemohon</b></legend>
         <br>
         <fieldset>
         <table width="97%"  cellpadding="1" cellspacing="2" border="0">
-<tr >
+			<tr>
                 <td class="table_header" width="5%" style="display:none"><b></b></td>
       		    <td class="table_header" width="10%" style="display:none"><b>ID FAIL</b></td>
                 <td class="table_header" width="20%"><b>NO FAIL</b></td>
@@ -71,8 +71,6 @@ Semak Maklumat Pemohon</b></legend>
                 <td class="table_header" width="20%"><b>NAMA PEMOHON</b></td>
                 <td class="table_header" width="10%"><b>TARIKH MOHON</b></td>
                 <td class="table_header" width="15%"><b>STATUS SEMASA</b></td>
-                
-                          
     		</tr>
     		
             #if($list_fail.size() > 0)

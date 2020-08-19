@@ -219,6 +219,7 @@
 </fieldset>
 </td>
 </tr>
+
 <!-- arief add Saksi OPEN-->
 <!----><tr  >
 <td >
@@ -241,7 +242,7 @@
 <!-- arief add Saksi CLOSE-->
 
 <!-- arief add Tidak Hadir OPEN-->
-<!----><tr  >
+<!--<tr  >
 <td >
 </td>
 <td >
@@ -258,9 +259,8 @@
 </div>
 </fieldset>
 </td>
-</tr>
+</tr>-->
 <!-- arief add Tidak Hadir CLOSE-->
-
 
 </table>
 

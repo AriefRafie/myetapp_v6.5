@@ -101,7 +101,7 @@
         						<td width="1%">
         						</td>
 				            	<td width="34%" style="text-transform:uppercase;" >
-				                	<div align="left">No. Fail Seksyen</div>
+				                	<div align="left">No. Rujukan <i>Online</i></div>
 				               	</td>
 				                <td width="1%" >:</td>            
 				                <td width="64%">
@@ -126,7 +126,7 @@
         					  		<span class="labelmandatory">#if ($pagemode == 'baru' || $pagemode == 'kemaskini') * #end </span>
         						</td>
 				            	<td width="34%" style="text-transform:uppercase;">
-				                	<div align="left">Tarikh Surat KJP</div>
+				                	<div align="left">Tarikh Surat Iringan</div>
 				               	</td>
 				                <td width="1%" >:</td>            
 				                <td width="64%">
@@ -139,7 +139,7 @@
         					  		<span class="labelmandatory">#if ($pagemode == 'baru' || $pagemode == 'kemaskini') * #end </span>
         						</td>
 				            	<td width="34%" style="text-transform:uppercase;" >
-				                	<div align="left">Tarikh Permohonan</div>
+				                	<div align="left">Tarikh Dihantar</div>
 				               	</td>
 				                <td width="1%" >:</td>            
 				                <td width="64%">
@@ -157,7 +157,7 @@
 				               	</td>
 				                <td width="1%" >:</td>            
 				                <td width="64%">
-				                	<input type="text" name="txdTarikhBukaFail" id="txdTarikhBukaFail" size="15" value="$datenow" readonly="readonly" $classDis >
+				                	<input type="text" name="txdTarikhBukaFail" id="txdTarikhBukaFail" size="15" class="disabled" value="$datenow" readonly="readonly" $classDis >
                 					<input type="button" style="display:none" onClick="displayDatePicker('txdTarikhBukaFail',false,'dmy');" value="Kalendar" $modeSoc/>          
 				   				</td>			              	
 			              	</tr>               				

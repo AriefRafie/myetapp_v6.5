@@ -22,8 +22,8 @@ import org.apache.log4j.Logger;
 public class DisplayBlob implements IServlet2{
 	
 	
-	static Logger myLogger = Logger.getLogger(DisplayBlob.class);
-	
+	static Logger myLogger = Logger.getLogger(ekptg.model.utils.DisplayBlob.class);
+	String sql ="";
 	public void doService(HttpServletRequest request, HttpServletResponse response,
 			ServletContext context) throws IOException, ServletException {
 			//Security checking should be added later
@@ -31,8 +31,17 @@ public class DisplayBlob implements IServlet2{
 			 try {
 		            db = new Db();
 		            Connection con = db.getConnection();
-		            PreparedStatement ps = con.prepareStatement("select content,jenis_mime from " +
-		            		"tblinboxattach where id_inboxattach = ?");
+		            
+					String tableNameReq = request.getParameter("tablename");
+
+					if(tableNameReq.equals("tblphpdokumen"))
+						sql = "select content,jenis_mime from tblphpdokumen where id_dokumen = ?";
+					else if(tableNameReq.equals("simati"))
+						sql = "select content,jenis_mime from tblinboxattach where id_dokumen = ?";
+					else
+						sql = "select content,jenis_mime from tblinboxattach where id_inboxattach = ?";
+
+		            PreparedStatement ps = con.prepareStatement(sql);
 		            String id = request.getParameter("id");
 		            ps.setString(1,id);
 		            ResultSet rs = ps.executeQuery();

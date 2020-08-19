@@ -78,7 +78,7 @@ public class HTML {
 	public static String SelectNegeri(String selectName, String jsFunction)
 			throws Exception {
 		return SelectNegeri(selectName, null, null, jsFunction);
-	}
+	} 
 
 	public static String SelectNegeri(String selectName, Long selectedValue)
 			throws Exception {
@@ -4204,17 +4204,17 @@ public class HTML {
 			if (selectedValue.intValue() == 2) {
 				sb.append("<option selected value = 2> BORANG 2</option>\n");
 			} else {
-				sb.append("<option value = 2> BORANG 2</option>\n");
+				sb.append("<option value = 2> BORANG 2(LESEN PASIR)</option>\n");
 			}
 			if (selectedValue.intValue() == 3) {
 				sb.append("<option selected value = 3> BORANG 3</option>\n");
 			} else {
-				sb.append("<option value = 3> BORANG 3</option>\n");
+				sb.append("<option value = 3> BORANG 3(LESEN MENJELAJAH/MENCARIGALI/MENGGEREK SELAIN PASIR)</option>\n");
 			}
 			if (selectedValue.intValue() == 4) {
 				sb.append("<option selected value = 4> BORANG 4</option>\n");
 			} else {
-				sb.append("<option value = 4> BORANG 4</option>\n");
+				sb.append("<option value = 4> BORANG 4(LESEN GALIAN SELAIN PASIR)</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {

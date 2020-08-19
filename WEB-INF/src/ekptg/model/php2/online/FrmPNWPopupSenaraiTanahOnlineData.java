@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import lebah.db.Db;
 import ekptg.helpers.Utils;
 
@@ -23,9 +25,11 @@ public class FrmPNWPopupSenaraiTanahOnlineData {
 	private Vector beanMaklumatAgensi = null;
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	static Logger myLog = Logger.getLogger(FrmPNWPopupSenaraiTanahOnlineData.class);
 
-	public void carianTanah(String idJenisTanah, String peganganHakmilik, String jenisHakmilik, String noHakmilik, String jenisLot,
-			String lot, String noWarta, String tarikhWarta, String idNegeri, String idDaerah, String idMukim, String idKementerian, String idAgensi) throws Exception {
+	public void carianTanah(String idJenisTanah, String peganganHakmilik, String jenisHakmilik, String noHakmilik,
+			String jenisLot, String lot, String noWarta, String tarikhWarta, String idNegeri, String idDaerah,
+			String idMukim, String idKementerian, String idAgensi) throws Exception {
 
 		Db db = null;
 		String sql = "";
@@ -143,7 +147,9 @@ public class FrmPNWPopupSenaraiTanahOnlineData {
 			}
 						
 			sql = sql + " ORDER BY A.ID_HAKMILIK ASC";
-
+			
+			
+			myLog.info("CARIAN TANAH: "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 			int bil = 1;
@@ -187,6 +193,7 @@ public class FrmPNWPopupSenaraiTanahOnlineData {
 				+ " WHERE A.ID_HAKMILIK = L.ID_HAKMILIK AND A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) AND A.ID_MUKIM = E.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = F.ID_JENISHAKMILIK(+)"
 				+ " AND A.ID_SUBKATEGORI = G.ID_SUBKATEGORI(+) AND G.ID_KATEGORI = H.ID_KATEGORI(+) AND L.ID_KEMENTERIAN = I.ID_KEMENTERIAN(+) AND L.ID_AGENSI = J.ID_AGENSI(+) AND L.ID_LUAS_BERSAMAAN = K.ID_LUAS(+)"
 				+ " AND L.ID_HAKMILIKAGENSI = '" + idHakmilikAgensi + "'";
+			
 			
 			ResultSet rs = stmt.executeQuery(sql);
 

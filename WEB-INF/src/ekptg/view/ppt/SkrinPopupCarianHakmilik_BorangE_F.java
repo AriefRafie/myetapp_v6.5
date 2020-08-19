@@ -584,25 +584,16 @@ public class SkrinPopupCarianHakmilik_BorangE_F extends AjaxBasedModule {
 				bil = bil + 1;
 				Hashtable h = new Hashtable();
 				h.put("bil", bil);
-				h.put("ID_BORANGE", rs.getString("ID_BORANGE") == null ? ""
-						: rs.getString("ID_BORANGE"));
+				h.put("ID_BORANGE", rs.getString("ID_BORANGE") == null ? ""	: rs.getString("ID_BORANGE"));
 				/*
 				h.put("ID_HAKMILIK", rs.getString("ID_HAKMILIK") == null ? ""
 						: rs.getString("ID_HAKMILIK"));
 						*/
-				h.put("TARIKH_BORANGE",
-						rs.getDate("TARIKH_BORANGE") == null ? "" : Format
-								.format(rs.getDate("TARIKH_BORANGE")));
-				h.put("TARIKH_SIASATAN",
-						rs.getDate("TARIKH_SIASATAN") == null ? "" : Format
-								.format(rs.getDate("TARIKH_SIASATAN")));
-				h.put("TOTALHM",
-						rs.getString("TOTALHM") == null ? "" : rs
-								.getString("TOTALHM"));
+				h.put("TARIKH_BORANGE",	rs.getDate("TARIKH_BORANGE") == null ? "" : Format.format(rs.getDate("TARIKH_BORANGE")));
+				h.put("TARIKH_SIASATAN", rs.getDate("TARIKH_SIASATAN") == null ? "" : Format.format(rs.getDate("TARIKH_SIASATAN")));
+				h.put("TOTALHM", rs.getString("TOTALHM") == null ? "" : rs.getString("TOTALHM"));
+				h.put("TARIKH_MASUK", rs.getDate("TARIKH_MASUK") == null ? "" : Format.format(rs.getDate("TARIKH_MASUK")));
 				
-				h.put("TARIKH_MASUK", rs.getDate("TARIKH_MASUK") == null ? ""
-						: Format.format(rs.getDate("TARIKH_MASUK")));
-						
 				list_hakmilik.addElement(h);
 			}
 			return list_hakmilik;
@@ -797,16 +788,20 @@ public class SkrinPopupCarianHakmilik_BorangE_F extends AjaxBasedModule {
     		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
     		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
     		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ) AS TARIKH_SIASATAN "; 
-    		    		
-    		sql += " ,(SELECT B1.MASA_SIASATAN FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
-    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
-    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
-    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ) AS MASA_SIASATAN "; 
     		
-    		sql += " ,(SELECT B1.JENIS_WAKTU FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
-    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
-    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
-    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ) AS JENIS_WAKTU "; 
+//    		PPT-06
+    		sql += " ,(SELECT DISTINCT A1.JENIS_WAKTU AS JW FROM	TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
+    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
+    		sql += "AND A1.ID_BORANGE = B1.ID_BORANGE ";
+    		sql += "AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";
+    		sql += ")AS JENIS_WAKTU ";
+    		
+//    		PPT-06
+    		sql += ",(SELECT DISTINCT A1.MASA_SIASATAN AS MS FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
+    		sql += "WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
+    		sql += "AND A1.ID_BORANGE = B1.ID_BORANGE ";
+    		sql += "AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";
+    		sql += ")AS MASA_SIASATAN ";
     		
     		sql += " ,(SELECT DISTINCT TO_CHAR(B1.TARIKH_BORANGE,'DD/MM/YYYY') AS TARIKH_BORANGE FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
     		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  

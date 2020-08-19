@@ -5,7 +5,7 @@
 .style1 {color: #FF0000}
 -->
 </style>
-<input type="hidden" name="idpermohonan" value="$!idpermohonan" /> 
+<input type="hidden" name="idpermohonan" value="$!idPermohonan" /> 
 <input type="hidden" name="idfail" value="$!idFail" /> 
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 ##parse ("app/htp/permohonan/paging_permohonan.jsp") 
@@ -27,7 +27,7 @@
 					        <td width="1%"><div align="center">:</div></td>
 					        <td width="36%">$socNegeri          </td>
 					        <td>&nbsp;</td>
-					        <td width="20%"><div align="left">No. Fail Seksyen</div></td>
+					        <td width="20%"><div align="left">No. Fail</div></td>
 					        <td width="1%"><div align="center">:</div></td>
 					        <td width="36%"><label>
 					          <input name="noFail" type="text" id="noFail" value="$!noFail" size="30" $inputstyleread/>
@@ -193,6 +193,8 @@
 #else
 	<tr>
 		<td align="center">
+			<input type="button" name="cmdTolakPermohonan" value="Kembalikan Permohonan" onClick="javascript:tolakPermohonanOnline('$!idPermohonan','yes')">
+		
 			<input class="stylobutton100" type="button" onclick="javascript:permohonanTerima($!idfail);" value="Simpan & Email" />
 			<!-- <input class="stylobutton" type="button" onclick="javascript:permohonanTolak($!idfail);" value="Tolak" /> -->
 			
@@ -204,3 +206,48 @@
 #end
 	
 </table>
+<script>
+//PAJAKAN
+
+//PERLETAKHAKAN
+
+//PEMBELIAN
+
+//PERMOHONAN
+
+	function permohonanTerima(idPermohonan){
+		param = "idpermohonan=$idPermohonan&modul=htp&kandungan=&perkara=";
+		alert(param);
+		var url = "../x/${securityToken}/ekptg.view.utils.emel.FrmPopupEmel?"+param;	
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	
+	}
+	function permohonanTerima_(id){
+		//var mode = 'viewMaklumatPermohonan';
+		//doAjaxCall${formName}("permohonanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
+
+		//document.${formName}.command.value = 'permohonanviewmaklumat';
+		//document.${formName}.action = "$EkptgUtil.getTabID('Permohonan',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&idfail="+idFail;
+		//document.${formName}.submit();
+	}
+	//guna
+	function tolakPermohonanOnline(id_permohonan,formnew) {	
+
+		var w =400;
+		var h = 200;
+		var left = (screen.width/2)-(w/2);
+		var top = (screen.height/2)-(h/2);
+		var url = "../x/${securityToken}/FrmPopupTolakPermohonan?id_permohonan="+id_permohonan+"&formnew="+formnew+"&modul=htp&jenisTolak=internal";
+		
+		var hWnd = window.open(url, "Permohonan Online Dikembalikan", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		
+	}
+</script>
+	

@@ -6,11 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import lebah.db.Db;
 import ekptg.model.views.FrmEkptgViewsModel;
 
 public class FrmMaklumatTanahDanLaporanTanahData {
 
+	private static Logger myLog = Logger.getLogger(ekptg.model.utils.FrmMaklumatTanahDanLaporanTanahData.class);
 	FrmEkptgViewsModel model = new FrmEkptgViewsModel();
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private Vector beanMaklumatTanahDanLaporanTanah = null;
@@ -28,7 +31,7 @@ public class FrmMaklumatTanahDanLaporanTanahData {
 	
 	
 	
-public void carian(String noFail,String idNegeri,String idDaerah,String noHakmilik,String kodLot, String idKementerian , String idMukim) throws Exception{
+	public void carian(String noFail,String idNegeri,String idDaerah,String noHakmilik,String kodLot, String idKementerian , String idMukim) throws Exception{
 		
 		Db db = null;
 		String sql = "";
@@ -115,7 +118,7 @@ public void carian(String noFail,String idNegeri,String idDaerah,String noHakmil
 								sql = sql + " AND A.KOD_LOT = '" + kodLot.trim() + "'";
 							}
 						}
-			
+			myLog.info("carian:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			int bil = 1;

@@ -420,6 +420,66 @@ public class MTRegManager {
 	    
 	}
 
+	public void simpanPendaftaran(Hashtable<String,String> daftar) throws Exception{
+	    Db db = null;
+	    String sql = "";
+	    try {
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	SQLRenderer r = new SQLRenderer();
+
+			r.add("ID_FAIL", daftar.get("idFail"));
+			r.add("ID_RUJUKAN", daftar.get("idRujukan"));
+			r.add("KOD_MT", daftar.get("kodMT"));
+			r.add("JANTINA", daftar.get("gen"));
+			r.add("UMUR", daftar.get("umur"));			
+			r.add("JENIS_TRANSAKSI",daftar.get("jenisTraksaksi"));
+			r.add("TARIKH_HANTAR", r.unquote("to_date('" + daftar.get("tarikHantar") + "','DD/MM/YYYY')"));			
+			r.add("ID_MASUK", daftar.get("idUser"));
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("ID_TRANSAKSI", daftar.get("transactionID"));
+			sql = r.getSQLInsert("TBLINTMTPENDAFTARAN");
+			myLog.info("sql="+sql);
+			stmt.executeUpdate(sql);
+				   		
+		  
+	    } catch (Exception e) {
+	    	myLog.info(e.getMessage());
+	    	//return null;
+	    }finally {
+	      if (db != null) db.close();
+	    }
+	    //return code;
+	    
+	}
+	
+	public void kemaskiniPendaftaran(Hashtable<String,String> daftar) throws Exception{
+	    Db db = null;
+	    String sql = "";
+	    try {
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	SQLRenderer r = new SQLRenderer();
+
+			r.update("ID_RUJUKAN", daftar.get("idRujukan"));
+			r.add("NO_KES", daftar.get("noKes"));
+			r.add("CATATAN", daftar.get("catatan"));
+			r.add("ID_KEMASKINI", daftar.get("idUser"));
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLINTMTPENDAFTARAN");
+			myLog.info("sql="+sql);
+			stmt.executeUpdate(sql);				   		
+		  
+	    } catch (Exception e) {
+	    	myLog.info(e.getMessage());
+	    	//return null;
+	    }finally {
+	      if (db != null) db.close();
+	    }
+	    //return code;
+	    
+	}
+	
 	public String getKodMT(String idPejabat) throws Exception{
 	    Db db = null;
 	    String sql = "";
@@ -449,6 +509,7 @@ public class MTRegManager {
 	    return code;
 	    
 	}
+
 	
 	public static String getReferenceNo() {
 		return caseNo;

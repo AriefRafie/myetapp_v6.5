@@ -620,8 +620,8 @@ public class OnlineBean implements IOnline {
 	
 	@Override
 	public Vector<HtpPermohonan> findFailOnlineUrusan(String carian
-		,String noFail
-		,String idNegeri
+		, String noFail
+		, String idNegeri
 		,String idKementerian
 		,String idUrusan) {
 		Db db = null;
@@ -630,27 +630,26 @@ public class OnlineBean implements IOnline {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			String sql = "SELECT distinct p.no_permohonan,p.tujuan,p.id_permohonan" +
-					", f.id_fail, f.no_fail, f.tajuk_fail,f.id_urusan" +
+			String sql = "SELECT distinct p.no_permohonan,p.tujuan,p.id_Permohonan" +
+					",  f.id_Fail, f.no_Fail, f.tajuk_Fail,f.id_urusan" +
 					", s.keterangan" +
-					", n.nama_negeri, n.kod_mampu,n.id_negeri" +
+					", n.nama_Negeri, n.kod_Mampu,n.id_Negeri" +
 					", h.id_htppermohonan ";
 			sql +=" FROM tblpfdfail f, tblpermohonan p, tblrujsuburusanstatusfail sf, tblrujsuburusanstatus ss, tblrujstatus s, tblrujnegeri n, tblhtppermohonan h ";
-			sql +=" ";
-			sql +=" WHERE f.id_fail = p.id_fail AND p.id_permohonan = sf.id_permohonan AND n.id_negeri = f.id_negeri AND h.id_permohonan = p.id_permohonan  ";
-			sql +=" AND sf.id_suburusanstatus = ss.id_suburusanstatus AND ss.id_status = s.id_status ";
-			sql +=" AND sf.aktif = '1' AND f.tajuk_fail LIKE '%"+carian+"%' ";
+			sql +=" WHERE f.id_Fail = p.id_Fail AND p.id_Permohonan = sf.id_Permohonan AND n.id_Negeri = f.id_Negeri AND h.id_Permohonan = p.id_Permohonan  ";
+			sql +=" AND sf.id_Suburusanstatus = ss.id_Suburusanstatus AND ss.id_Status = s.id_Status ";
+			sql +=" AND sf.aktif = '1' AND f.tajuk_Fail LIKE '%"+carian+"%' ";
 			//sql +=" AND ( F.ID_STATUS <> 999 OR F.ID_STATUS IS null) ";
 			//sql +=" AND ( nvl(no_fail,' ') = ' ' OR F.NO_FAIL IS null ) ";
 			//sql +=" AND f.no_Fail LIKE '%"+noFail+"%' ";
-			if(idNegeri != null && !idNegeri.equals("") && !idNegeri.equals("0") && !idNegeri.equals("99999"))
-				sql +=" AND f.id_negeri = "+idNegeri;
+			if(idNegeri != null && !idNegeri.equals("") && !idNegeri.equals("0")&& !idNegeri.equals("99999"))
+	    	  sql +=" AND f.id_Negeri = "+idNegeri;
 			if(idKementerian != null && !idKementerian.equals("") && !idKementerian.equals("0") && !idKementerian.equals("99999"))
-				sql +=" AND f.id_kementerian = "+idKementerian;
+		    	  sql +=" AND f.ID_KEMENTERIAN = "+idKementerian;
 			if(idUrusan != null && !idUrusan.equals("") && !idUrusan.equals("0") && !idUrusan.equals("99999"))
-				sql +=" AND f.id_urusan IN ("+idUrusan+")";
+		    	  sql +=" AND f.id_urusan IN ("+idUrusan+")";
 			//sql +=" ORDER BY n.kod_Mampu";
-			sql +=" ORDER BY p.id_permohonan DESC";
+			sql +=" order by p.id_Permohonan desc";
 			myLog.info("findFailOnline:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
@@ -658,13 +657,13 @@ public class OnlineBean implements IOnline {
 				fail = new PfdFail();
 				htpPermohonan = new HtpPermohonan();
 				
-				fail.setIdFail(rs.getLong("id_fail"));
-				fail.setIdUrusan(rs.getLong("id_urusan"));
-				permohonan.setNamaNegeri(rs.getString("nama_negeri"));
-				permohonan.setIdPermohonan(rs.getLong("id_permohonan"));
-				permohonan.setNoPermohonan(rs.getString("no_permohonan"));
-				fail.setNoFail(rs.getString("no_fail"));
-				permohonan.setTujuan(rs.getString("tujuan"));
+				fail.setIdFail(rs.getLong("id_Fail"));
+				fail.setIdUrusan(rs.getLong("ID_URUSAN"));
+				permohonan.setNamaNegeri(rs.getString("nama_Negeri"));
+				permohonan.setIdPermohonan(rs.getLong("id_Permohonan"));
+				permohonan.setNoPermohonan(rs.getString("NO_PERMOHONAN"));
+				fail.setNoFail(rs.getString("no_Fail"));
+				permohonan.setTujuan(rs.getString("TUJUAN"));
 				//permohonan.setTujuan(rs.getString("tajuk_Fail"));
 				htpPermohonan.setIdHtpPermohonan(rs.getString("id_htppermohonan"));
 				htpPermohonan.setStatusPermohonan(rs.getString("keterangan"));
@@ -675,15 +674,16 @@ public class OnlineBean implements IOnline {
 				v.addElement(htpPermohonan);
 			}
 			
-		}catch(Exception e){
+		}
+		catch(Exception e){
 			e.printStackTrace();
-		}finally{
+		}
+		finally{
 			 if (db != null){
 		    	  db.close();
 		      }
 		}
 		return v;
-		
 	}
 	
 	@Override

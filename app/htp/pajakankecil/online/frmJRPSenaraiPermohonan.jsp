@@ -20,11 +20,11 @@
 			#end
 			  	<table width="100%" cellspacing="2" cellpadding="1" border="0">
 				  	<tr class="table_header">
-						<td width="3%"><b>BIL.</b></td>
-						<td width="20%"><b>NO FAIL</b></td>
+						<td width="3%"><b>Bil.</b></td>
+						<td width="20%"><b>No. Rujukan <i>Online</i></b></td>
 						<!--<td width="17%"><b>NEGERI</b></td>-->
-						<td width="54%"><b>NAMA FAIL</b></td>
-						<td width="23%"><b>STATUS</b></td>
+						<td width="54%"><b>Nama Fail</b></td>
+						<td width="23%"><b>Status</b></td>
 			  		</tr>			  
 			  	#set ( $cnt = 0 )			
 			  	#foreach ( $senarai in $senaraiList )

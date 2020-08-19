@@ -386,24 +386,23 @@ public class UserKJPBean implements IUserPegawai {
 		try {	
 			db = new Db();
 			Statement stmt = db.getStatement();
-			sql = "SELECT DISTINCT(U.USER_NAME) USER_NAME,UI.EMEL,UI.ID_JAWATAN "+
-				" ,RJ.KETERANGAN "+
-				" FROM USERS U,USERS_INTERNAL UI,TBLRUJJAWATAN RJ "+
+			sql = "SELECT DISTINCT(U.USER_NAME) USER_NAME,NVL(UK.EMEL,UI.EMEL) EMEL,UI.ID_JAWATAN,RJ.KETERANGAN "+
+				",UK.ID_KEMENTERIAN"+
+				" FROM USERS U,USERS_INTERNAL UI, USERS_KEMENTERIAN UK,TBLRUJJAWATAN RJ "+
 				" WHERE " +
 				" UI.USER_ID = U.USER_ID "+
 				" AND RJ.ID_JAWATAN = UI.ID_JAWATAN "+
+				" AND U.USER_ID = UK.USER_ID "+
 				" AND U.USER_ID = "+idPengguna;
 			//mylog.info(sql);
 			ResultSet rs = stmt.executeQuery(sql);		
 			while (rs.next()) {
-				h.put("idpegawai", rs.getString("ID_PEGAWAI") == null ? "" : rs.getString("ID_PEGAWAI"));
-				h.put("namapegawai", rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
-				//h.put("notelefon", rs.getString("NO_TEL_PEJABAT") == null ? "" : rs.getString("NO_TEL_PEJABAT"));
-				h.put("email", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
-				//h.put("kodseksyen", rs.getString("KOD_SEKSYEN") == null ? "" : rs.getString("KOD_SEKSYEN"));
-				//h.put("namaseksyen", rs.getString("NAMA_SEKSYEN") == null ? "" : rs.getString("NAMA_SEKSYEN"));
-				h.put("idjawatan", rs.getString("ID_JAWATAN") == null ? "" : rs.getString("ID_JAWATAN"));
+				h.put("emel", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
+				h.put("idJawatan", rs.getString("ID_JAWATAN") == null ? "" : rs.getString("ID_JAWATAN"));
+				h.put("idKementerian", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
+				//h.put("idPegawai", rs.getString("ID_PEGAWAI") == null ? "" : rs.getString("ID_PEGAWAI"));
 				h.put("jawatan", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				h.put("nama", rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
 			}
 			
 		} finally {

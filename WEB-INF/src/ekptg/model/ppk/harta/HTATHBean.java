@@ -288,12 +288,12 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 			r.add("jenis_tnh", jenistanah);
 			r.add("ba_simati", basimati);
 			r.add("bb_simati", bbsimati);
-			//if(!tanggungan.equals("")){
+			if(!tanggungan.equals("")){
 				r.add("tanggungan", tanggungan);
-			//}
-			//if(!jenisluas.equals("")){
+			}
+			if(!jenisluas.equals("")){
 				r.add("id_luas", r.unquote(jenisluas));
-			//}
+			}
 			r.add("catatan", catatan);
 			r.add("no_perserahan", noperserahan);
 			
@@ -321,14 +321,14 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 				r.add("id_bandarhta", r.unquote(bandarhta));
 			}
 			r.add("no_Perjanjian", noperjanjian);
-			//if(!tarikhperja.equals("")){
+			if(!tarikhperja.equals("")){
 				r.add("tarikh_Perjanjian", r.unquote(tarikhperjanjian));
-			//}
+			}
 			r.add("nama_Rancangan", namarancangan);
 			r.add("no_Roh", noroh);
-			//if(!nolot.equals("")){
+			if(!nolot.equals("")){
 				r.add("no_Lot_Id", nolot);
-			//}
+			}
 			r.add("no_Cagaran", nocagaran);
 			r.add("jenis_Kepentingan", jeniskepentingan);
 			r.add("flag_kategori_hta", flag);
@@ -489,7 +489,7 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 		h.put("alamatpemaju3", String.valueOf(data.get("txtAlamatPemaju3HtaamX")));
 		h.put("poskodpemaju", String.valueOf(data.get("txtPoskodPemaju1HtaamX")));
 		h.put("bandarpemaju", String.valueOf(data.get("txtBandarPemaju1HtaamX")));
-		h.put("negeripemaju", String.valueOf(data.get("txtBandarPemaju1HtaamX")));
+		h.put("negeripemaju", String.valueOf(data.get("socNegeriPemajuHtaamX")));
 
 		h.put("alamathta1", String.valueOf(data.get("txtAlamatHarta1HtaamX")));
 		h.put("alamathta2", String.valueOf(data.get("txtAlamatHarta2HtaamX")));
@@ -1146,8 +1146,7 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 			tambahbutton =YES;
 			kembalibutton =YES;
 
-		}else if ("getHtaamX".equals(mode)) {
-			myLog.info("lalu A");
+		}else if ("getHtaamX".equals(mode)) {	
 			idHarta =  fnc.getParam(request,"idhtaamXid");
 
 			Hashtable<String,String> b = permohonanInternal.getDataHTAX(idHarta,mati);
@@ -2091,8 +2090,7 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 //				logic_A.htaamstatus(session, id,idUser, id_sub, id_Fail);
 //			}
 			
-		}else if ("getHtaamX".equals(mode)) {
-			myLog.info("lalu B");
+		}else if ("getHtaamX".equals(mode)) {				
 //			String idhtaam = getParam("idhtaamXid");
 			Hashtable<String,String> b = permohonanInternal.getDataHTAX(idhtaam,mati);
 			Hashtable hashSoc = setSocParamValues(String.valueOf(b.get("negeri")),String.valueOf(b.get("negeriAdd"))
@@ -3124,8 +3122,7 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 //				logic_A.htaamstatus(session, id,idUser, id_sub, id_Fail);
 //			}
 			
-		}else if ("getHtaamX".equals(mode)) {
-			myLog.info("lalu C");
+		}else if ("getHtaamX".equals(mode)) {				
 //			String idhtaam = getParam("idhtaamXid");
 			Hashtable<String,String> b = permohonanInternal.getDataHTAX(idhtaam,mati);
 			Hashtable hashSoc = setSocParamValues(String.valueOf(b.get("negeri")),String.valueOf(b.get("negeriAdd"))

@@ -11,7 +11,7 @@
           <td width="63%"><font color="blue">$beanHeader.noFail</font></td>
         </tr>
         <tr>
-          <td width="36%" align="right">Suburusan</td>
+          <td width="36%" align="right">Urusan</td>
           <td width="1%">:</td>
           <td width="63%"><font color="blue">$beanHeader.subUrusan</font></td>
         </tr>
@@ -55,7 +55,7 @@
         </tr>-->
       </table>
       </fieldset></td>
-    <td width="50%" valign="top"><fieldset>
+      <td width="50%" valign="top"><fieldset>
       <legend><strong>MAKLUMAT PEMOHON</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr valign="top">

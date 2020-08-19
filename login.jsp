@@ -18,7 +18,7 @@
 <script type="text/javascript" src="library/scriptaculous/controls.js" ></script>
 <script type="text/javascript" src="library/scriptaculous/ajax.js" ></script>
 <!-- JQuery -->
-<script type="text/javascript" src="library/js/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="library/js/jquery-1.8.0.js">
 <!-- <script type="text/javascript" src="library/js/jquery-1.3.2.min.js"></script> -->
 <script>var $jquery = jQuery.noConflict();</script>
 <script type="text/javascript" src="library/js/jquery.pstrength-min.1.2.js"></script>
@@ -310,33 +310,37 @@ function submitLogin() {
     document.flogin.submit();
 }
 
-	function submitenter(myfield,e){
-		var keycode;
-		if (window.event) keycode = window.event.keyCode;
-		else if (e) keycode = e.which;
-		else return true;
+function submitenter(myfield,e)
+{
+var keycode;
+if (window.event) keycode = window.event.keyCode;
+else if (e) keycode = e.which;
+else return true;
 
-		if (keycode == 13){
-			document.flogin.submit();
-			return false;
-		}else
-	   		return true;
-	}
-	
-	function OnKeyPressGotoNextTabIndex(field, event){
-		if (event.keyCode == 13) {
-			for (i = 0; i < field.form.elements.length; i++)
-				if (field.form.elements[i].tabIndex == field.tabIndex+1) {
-					field.form.elements[i].focus();
-					if (field.form.elements[i].type == "text")
-						field.form.elements[i].select();
-					break;
-				}
-			return false;
-		}
-		return true;
-		
-	}
+if (keycode == 13)
+{
+	document.flogin.submit();
+	return false;
+}
+else
+   return true;
+}
+
+
+function OnKeyPressGotoNextTabIndex(field, event)
+{
+if (event.keyCode == 13) {
+for (i = 0; i < field.form.elements.length; i++)
+if (field.form.elements[i].tabIndex == field.tabIndex+1) {
+field.form.elements[i].focus();
+if (field.form.elements[i].type == "text")
+field.form.elements[i].select();
+break;
+}
+return false;
+}
+return true;
+}
 
 </script>
 </body>

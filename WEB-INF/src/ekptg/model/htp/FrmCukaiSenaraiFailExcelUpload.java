@@ -20,8 +20,7 @@ import ekptg.model.htp.cukai.entity.CukaiTemp;
 
 public class FrmCukaiSenaraiFailExcelUpload {
 
-	static Logger myLog = Logger
-			.getLogger(ekptg.model.htp.FrmCukaiSenaraiFailExcelUpload.class);
+	static Logger myLog = Logger.getLogger(ekptg.model.htp.FrmCukaiSenaraiFailExcelUpload.class);
 
 	public static CukaiTemp getCukaiTemp(String idCukaiTemp) {
 		CukaiTemp temp = null;
@@ -29,7 +28,7 @@ public class FrmCukaiSenaraiFailExcelUpload {
 		String sql = "";
 		try {
 			db = new Db();
-			SQLRenderer r = new SQLRenderer();
+			//SQLRenderer r = new SQLRenderer();
 			sql = "select ID_CUKAITEMP,ID_NEGERI,ID_DAERAH, ID_MUKIM,ID_JENISHAKMILIK, NO_HAKMILIK,ID_LOT, NO_LOT,KEGUNAAN_TANAH, CUKAI_KENA_BAYAR, TUNGGAKAN,"
 					+ "cukai_taliair,cukai_parit,DENDA, PENGURANGAN, CUKAI_PERLU_BAYAR, ID_NEGERI, ID_DAERAH, NO_HAKMILIKUPLOAD,CUKAI_LAIN,lebihan,"
 					+ "NO_LOTUPLOAD, TARIKH_MASUK from TBLHTPCUKAITEMP WHERE ID_CUKAITEMP=?";
@@ -77,7 +76,7 @@ public class FrmCukaiSenaraiFailExcelUpload {
 		String sql = "";
 		try {
 			db = new Db();
-			SQLRenderer r = new SQLRenderer();
+			//SQLRenderer r = new SQLRenderer();
 			sql = "select ID_CUKAITEMP,ID_NEGERI,ID_DAERAH, ID_MUKIM,ID_JENISHAKMILIK, NO_HAKMILIK,ID_LOT, NO_LOT,KEGUNAAN_TANAH, CUKAI_KENA_BAYAR, TUNGGAKAN,"
 					+ "cukai_taliair,cukai_parit,DENDA, PENGURANGAN, CUKAI_PERLU_BAYAR, ID_NEGERI, ID_DAERAH, NO_HAKMILIKUPLOAD,CUKAI_LAIN,lebihan,"
 					+ "NO_LOTUPLOAD, TARIKH_MASUK from TBLHTPCUKAITEMP";
@@ -119,13 +118,13 @@ public class FrmCukaiSenaraiFailExcelUpload {
 		return temp;
 	}
 
-	public static Vector getCukaiTempByTahun(String tahun) {
-		Vector v = new Vector();
+	public static Vector<CukaiTemp> getCukaiTempByTahun(String tahun) {
+		Vector<CukaiTemp> v = new Vector<CukaiTemp>();
 		Db db = null;
 		String sql = "";
 		try {
 			db = new Db();
-			SQLRenderer r = new SQLRenderer();
+//			SQLRenderer r = new SQLRenderer();
 			sql = " SELECT M.NAMA_MUKIM, T.ID_CUKAITEMP,T.ID_NEGERI,T.ID_DAERAH, T.ID_MUKIM,T.ID_JENISHAKMILIK" +
 				",T.NO_HAKMILIK,T.ID_LOT, T.NO_LOT,KEGUNAAN_TANAH" +
 				",T.CUKAI_KENA_BAYAR, T.TUNGGAKAN, T.cukai_taliair,T.cukai_parit,T.DENDA, T.PENGURANGAN" +
@@ -209,11 +208,10 @@ public class FrmCukaiSenaraiFailExcelUpload {
 	 * @return
 	 * @throws Exception
 	 */
-
-	public static Vector CukaigetSenaraiTahunFail() throws Exception {
+	public static Vector<Hashtable<String,String>> CukaigetSenaraiTahunFail() throws Exception {
 		Db db = null;
 		String sql = "";
-		Vector list = new Vector();
+		Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -221,7 +219,7 @@ public class FrmCukaiSenaraiFailExcelUpload {
 			//
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				Hashtable h = new Hashtable();
+				Hashtable<String,String> h = new Hashtable<String,String>();
 				h.put("tahunFail", rs.getString("tahun") == null ? "" : rs.getString("tahun"));
 				h.put("Counttahun", rs.getString("counttahun") == null ? "": rs.getString("counttahun"));
 				list.addElement(h);
@@ -248,7 +246,7 @@ public class FrmCukaiSenaraiFailExcelUpload {
 			// System.out.println("Fail search in Model::" + search);
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+			//SQLRenderer r = new SQLRenderer();
 
 			sql = "select ID_CUKAITEMP, NAMA_MUKIM, NO_HAKMILIK, NO_LOT, CUKAI_KENA_BAYAR, TUNGGAKAN,"
 					+ "cukai_taliair,cukai_parit,DENDA, PENGURANGAN, CUKAI_PERLU_BAYAR, ID_NEGERI, ID_DAERAH, NO_HAKMILIKUPLOAD,"
@@ -641,83 +639,17 @@ public class FrmCukaiSenaraiFailExcelUpload {
 			if (db != null)
 				db.close();
 		}
-		}	
+		
+	}	
 
-		public static Vector<Hashtable<String, String>> getCukaiKemaskiniList() throws Exception {
+	public static Vector<Hashtable<String, String>> getCukaiKemaskiniList() throws Exception {
 			Db db = null;
 			String sql = "";
 			try {
 				db = new Db();
 				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();
-
-			// sql="SELECT distinct htpct.BAYARAN_LAIN,htpct.CUKAI_PERLU_BAYAR,htpct.PENGECUALIAN,HTPCT.denda,HTPCT.TUNGGAKAN,HTPHC.ID_HAKMILIKCUKAI,u.CUKAI_TERKINI as cukaiterkini, HTPHC.cukai_taliair as cukai_taliair2, HTPHC.cukai_parit as cukai_parit2, HTPCT.NO_HAKMILIKUPLOAD, HTPCT.cukai_taliair,HTPCT.cukai_parit,HTPCT.cukai_kena_bayar,HTPHC.cukai_parit, "
-			// +
-			// " RN.Id_Negeri,RN.NAMA_NEGERI,RD.Id_Daerah,RD.NAMA_DAERAH,RM.Id_Mukim,RM.NAMA_MUKIM , "
-			// +
-			// " u.Id_Jenishakmilik,H.KOD_JENIS_HAKMILIK,U.NO_HAKMILIK,HTPCT.NO_HAKMILIK, LOT.KETERANGAN KETERANGAN_LOT,U.NO_LOT , "
-			// +
-			// " u.TARIKH_LUPUT,u.CUKAI,u.CUKAI_TERKINI,u.LOKASI,LUAS.ID_LUAS,LUAS.KOD_LUAS,U.LUAS , "
-			// +
-			// " U.TARIKH_WARTA,U.NO_WARTA,U.NO_PELAN,U.NO_SYIT,RK.ID_KATEGORI,RK.KOD_KATEGORI,RK.KETERANGAN,U.SYARAT,U.SEKATAN,HTPHP.KEGUNAAN_TANAH , "
-			// +
-			// " HTPHC.PENGECUALIAN,HTPHC.PENGURANGAN,NVL(U.NO_FAIL,'TIADA') NO_FAIL,NVL(U.NO_FAIL_PTG,'TIADA') NO_FAIL_PTG,HTPCT.KEGUNAAN_TANAH"
-			// + //,u.ID_HAKMILIK,htphc.ID_HAKMILIKCUKAI ,u.Id_Permohonan
-			// " FROM Tblhtphakmilik u, Tblrujjenishakmilik h, Tblrujlot lot, Tblrujluas luas, TBLRUJNEGERI RN,TBLRUJDAERAH RD , "
-			// +
-			// " TBLRUJMUKIM RM,TBLRUJKATEGORI RK,TBLHTPHAKMILIKPERIHAL HTPHP,TBLHTPHAKMILIKCUKAI HTPHC, TBLHTPCUKAITEMP HTPCT "
-			// +
-			// " where u.Id_Jenishakmilik=h.Id_Jenishakmilik " +
-			// " AND u.Id_Lot=lot.Id_Lot " +
-			// " AND u.Id_Luas=luas.Id_Luas " +
-			// " AND U.ID_KATEGORI=RK.ID_KATEGORI " +
-			// " AND U.ID_MUKIM=RM.ID_MUKIM " +
-			// " AND RM.ID_DAERAH=RD.ID_DAERAH " +
-			// " AND RD.ID_NEGERI=RN.ID_NEGERI " +
-			// " AND U.ID_HAKMILIK=HTPHP.ID_HAKMILIK " +
-			// " AND U.ID_HAKMILIK=HTPHC.ID_HAKMILIK " +
-			// " AND U.NO_LOT = HTPCT.NO_LOT " +
-			// " AND LTRIM(U.NO_HAKMILIK,0)=HTPCT.NO_HAKMILIK " +
-			// " AND u.ID_HAKMILIK in((select hc.ID_HAKMILIK from tblhtpcukaiterperinci ct,tblhtphakmilikcukai hc "
-			// +
-			// " where hc.ID_HAKMILIKCUKAI=ct.ID_HAKMILIKCUKAI))";
-
-			// keluar double sql =
-			// "SELECT distinct  TERP.TUNGGAKAN,TERP.DENDA,TERP.PENGECUALIAN,TERP.CUKAI_KENA_BAYAR,htpct.CUKAI_PERLU_BAYAR,HTPHC.ID_HAKMILIKCUKAI, "
-			// +
-			// "u.CUKAI_TERKINI as cukaiterkini,  HTPCT.NO_HAKMILIKUPLOAD, HTPCT.cukai_taliair,HTPCT.cukai_parit,HTPCT.cukai_kena_bayar, "
-			// +
-			// "RN.Id_Negeri,RN.NAMA_NEGERI,RD.Id_Daerah,RD.NAMA_DAERAH,RM.Id_Mukim,RM.NAMA_MUKIM , "
-			// +
-			// "u.Id_Jenishakmilik,H.KOD_JENIS_HAKMILIK, LOT.KETERANGAN KETERANGAN_LOT,U.NO_LOT , "
-			// +
-			// "u.TARIKH_LUPUT,u.CUKAI,u.CUKAI_TERKINI,u.LOKASI,LUAS.ID_LUAS,LUAS.KOD_LUAS,U.LUAS ,  "
-			// +
-			// "U.NO_PELAN,U.NO_SYIT,RK.ID_KATEGORI,RK.KOD_KATEGORI,RK.KETERANGAN,HTPHP.KEGUNAAN_TANAH , "
-			// +
-			// "NVL(U.NO_FAIL,'TIADA') NO_FAIL,NVL(U.NO_FAIL_PTG,'TIADA') NO_FAIL_PTG,HTPCT.KEGUNAAN_TANAH   "
-			// +
-			// "FROM Tblhtphakmilik u, Tblrujjenishakmilik h, Tblrujlot lot, Tblrujluas luas, TBLRUJNEGERI RN,TBLRUJDAERAH RD ,  "
-			// +
-			// "TBLRUJMUKIM RM,TBLRUJKATEGORI RK,TBLHTPHAKMILIKPERIHAL HTPHP,TBLHTPHAKMILIKCUKAI HTPHC, TBLHTPCUKAITEMP HTPCT , TBLHTPCUKAITERPERINCI TERP, tblhtpcukaiterperinci ct "
-			// +
-			// "where u.Id_Jenishakmilik=h.Id_Jenishakmilik  " +
-			// " AND u.Id_Lot=lot.Id_Lot  " +
-			// " AND u.Id_Luas=luas.Id_Luas  " +
-			// " AND U.ID_KATEGORI=RK.ID_KATEGORI " +
-			// " AND U.ID_MUKIM=RM.ID_MUKIM  " +
-			// " AND RM.ID_DAERAH=RD.ID_DAERAH  " +
-			// " AND RD.ID_NEGERI=RN.ID_NEGERI  " +
-			// " AND U.ID_HAKMILIK=HTPHP.ID_HAKMILIK  " +
-			// " AND U.ID_HAKMILIK=HTPHC.ID_HAKMILIK  " +
-			// "	and HTPHC.ID_HAKMILIKCUKAI=ct.ID_HAKMILIKCUKAI"+
-			// " AND U.NO_LOT = HTPCT.NO_LOT  " +
-			// " AND LTRIM(U.NO_HAKMILIK,0)=HTPCT.NO_HAKMILIK  " +
-			// " AND u.ID_HAKMILIK in((select hc.ID_HAKMILIK from tblhtpcukaiterperinci ct,tblhtphakmilikcukai hc  "
-			// +
-			// " where hc.ID_HAKMILIKCUKAI=ct.ID_HAKMILIKCUKAI)) " ;
-
-			sql = "SELECT distinct  ct.TUNGGAKAN,ct.DENDA,ct.PENGECUALIAN,ct.CUKAI_KENA_BAYAR,HTPHC.ID_HAKMILIKCUKAI, "
+				//SQLRenderer r = new SQLRenderer();
+				sql = "SELECT distinct  ct.TUNGGAKAN,ct.DENDA,ct.PENGECUALIAN,ct.CUKAI_KENA_BAYAR,HTPHC.ID_HAKMILIKCUKAI, "
 					+ " u.CUKAI_TERKINI as cukaiterkini, ct.cukai_parit, ct.cukai_taliair,HTPCT.NO_HAKMILIKUPLOAD, "
 					+ " RN.Id_Negeri,RN.NAMA_NEGERI,RD.Id_Daerah,RD.NAMA_DAERAH,RM.Id_Mukim,RM.NAMA_MUKIM ,"
 					+ " u.Id_Jenishakmilik,H.KOD_JENIS_HAKMILIK, LOT.KETERANGAN KETERANGAN_LOT,U.NO_LOT ,"
@@ -783,6 +715,7 @@ public class FrmCukaiSenaraiFailExcelUpload {
 			if (db != null)
 				db.close();
 		}
+			
 	}
 
 	public static Vector<Hashtable<String, String>> CukaigetSenaraiFailExcel2(
@@ -880,5 +813,6 @@ public class FrmCukaiSenaraiFailExcelUpload {
 		return v;
 
 	}
+	
 
 }

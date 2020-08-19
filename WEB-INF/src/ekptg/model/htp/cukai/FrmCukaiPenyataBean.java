@@ -3658,7 +3658,7 @@ public class FrmCukaiPenyataBean implements ICukai {
 	    //return pk;
 	    
 	}		
-	public Vector<Hashtable<String, Comparable>> getSenaraiNegeriXPenyata(String tahun) throws Exception {
+	public Vector<Hashtable<String, String>> getSenaraiNegeriXPenyata(String tahun) throws Exception {
 		Db db = null;
 		String sql = "SELECT RN.ID_NEGERI,RN.NAMA_NEGERI " +
 		   			 " FROM TBLRUJNEGERI RN " +
@@ -3671,13 +3671,13 @@ public class FrmCukaiPenyataBean implements ICukai {
 		   			 "";
 		try {
 			db = new Db();
-		      Vector<Hashtable<String, Comparable>> v = new Vector<Hashtable<String, Comparable>>(); 
+		      Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>(); 
 		      Statement stmt = db.getStatement();
 		      ResultSet rs = stmt.executeQuery(sql);
-		      Hashtable<String, Comparable> h;
+		      Hashtable<String, String> h;
 		      while (rs.next()) {
-		    	  h = new Hashtable<String, Comparable>();
-		    	  h.put("idNegeri",rs.getLong("ID_NEGERI")); 
+		    	  h = new Hashtable<String, String>();
+		    	  h.put("idNegeri",rs.getString("ID_NEGERI")); 
 		    	  h.put("nama",rs.getString("NAMA_NEGERI"));  
 		    	  v.addElement(h);
 		      }		      

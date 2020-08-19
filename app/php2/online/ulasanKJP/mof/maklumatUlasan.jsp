@@ -82,12 +82,12 @@
                     <td width="70%"><input name="txtTarikhSurat" type="text" id="txtTarikhSurat" onBlur="check_date(this)" value="$!maklumatUlasan.tarikhSurat" size="9" maxlength="10">
                       <a href="javascript:displayDatePicker('txtTarikhSurat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
                   </tr>
-                 <!--  <tr>
+                  <tr>
                     <td><font color="#ff0000">*</font></td>
                     <td>No Rujukan Surat</td>
                     <td>:</td>
                     <td><input type="text" name="txtNoRujukanSurat" id="txtNoRujukanSurat" size="50" value="$!maklumatUlasan.noRujukan" onblur="this.value=this.value.toUpperCase();"/></td>
-                  </tr> -->
+                  </tr>
                   <tr>
                     <td valign="top">&nbsp;</td>
                     <td valign="top">Ulasan</td>
