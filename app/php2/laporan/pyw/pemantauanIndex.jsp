@@ -165,7 +165,6 @@
 		var unit = document.${formName}.socUnit.value;
 		var daerah = document.${formName}.socDaerah.value;
 		var daerahbaru = document.${formName}.socDaerahBaru.value;
-		alert("daerahbaru >> "+daerahbaru);
 		var pnegeri = "&ID_NEGERI=0";
 		var ptahun = "&TAHUN=";
 		var ptahuntamat = "&TAHUN_TAMAT=0";
