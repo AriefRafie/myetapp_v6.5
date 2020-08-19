@@ -1,3 +1,9 @@
+# eclipse project file
+.settings/
+.classpath
+.project
+.metadata/
+
 # ignore all logs
 velocity.log
 velocity.log.1
