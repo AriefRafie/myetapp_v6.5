@@ -2961,7 +2961,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			r.add("ID_FAIL", id_fail);
 			r.add("NO_FAIL", no_fail);
 			r.add("NO_KP_BARU", no_kp_baru);
-			r.add("TARIKH_HANTAR", tarikh_hantar);
+			r.add("TARIKH_HANTAR", r.unquote("sysdate"));
 			r.add("ID_PERBICARAAN", id_perbicaraan);
 			
 			
