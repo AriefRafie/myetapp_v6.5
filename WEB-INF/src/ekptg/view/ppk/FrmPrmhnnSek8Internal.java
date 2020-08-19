@@ -1,6 +1,6 @@
 package ekptg.view.ppk;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -108,7 +108,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 	SkrinPopupUploadDokumen logic_F = null;
 	FrmHeaderPpk mainheader = null;
 
-	@Override
+	@Override 
 	public Template doTemplate() throws Exception {
 		
 		logic_internal = new FrmPrmhnnSek8InternalData();
