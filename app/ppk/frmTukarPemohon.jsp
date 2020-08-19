@@ -63,7 +63,7 @@ Semak Maklumat Pemohon</b></legend>
         <br>
         <fieldset>
         <table width="97%"  cellpadding="1" cellspacing="2" border="0">
-			<tr>
+<tr >
                 <td class="table_header" width="5%" style="display:none"><b></b></td>
       		    <td class="table_header" width="10%" style="display:none"><b>ID FAIL</b></td>
                 <td class="table_header" width="20%"><b>NO FAIL</b></td>
@@ -71,6 +71,8 @@ Semak Maklumat Pemohon</b></legend>
                 <td class="table_header" width="20%"><b>NAMA PEMOHON</b></td>
                 <td class="table_header" width="10%"><b>TARIKH MOHON</b></td>
                 <td class="table_header" width="15%"><b>STATUS SEMASA</b></td>
+                
+                          
     		</tr>
     		
             #if($list_fail.size() > 0)
@@ -383,9 +385,9 @@ Semak Maklumat Pemohon</b></legend>
          
           <td valign="top"  align="center" >  
           #if($list.ID_OB == $idPemohonBaharu)
-          <input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$list.ID_OB" checked>
+          <input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$list.ID_OB" disabled checked>
           #else
-        <input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$list.ID_OB" >
+        <input type="radio" id="id_ob_pemohon" name="id_ob_pemohon" value="$list.ID_OB" disabled >
         #end
          </td>
           </tr>
@@ -409,9 +411,9 @@ Semak Maklumat Pemohon</b></legend>
      
      <td>
      #if($sebabTukar == "kematian")
-     	<input type="radio" name="sebab" value="kematian" checked>
+     	<input type="radio" name="sebab" value="kematian" checked disabled>
      #else
-     	<input type="radio" name="sebab" value="kematian">
+     	<input type="radio" name="sebab" value="kematian" disabled>
      #end
      <input type="hidden" name="id_permohonansimati" id="id_permohonansimati" value="$!getPemohonData2.ID_PERMOHONANSIMATI"/> 
      </td>
@@ -421,9 +423,9 @@ Semak Maklumat Pemohon</b></legend>
      <tr>
      <td>
      #if($sebabTukar == "kesihatan")
-     	<input type="radio" name="sebab" value="kesihatan" checked> 
+     	<input type="radio" name="sebab" value="kesihatan" checked disabled> 
      #else
-     	<input type="radio" name="sebab" value="kesihatan"> 
+     	<input type="radio" name="sebab" value="kesihatan" disabled> 
      #end
      </td>
      <td>MASALAH KESIHATAN</td>
@@ -863,7 +865,7 @@ function sama_ob()
 	check_format_alert_field(document.getElementById('no_kp_baru_pemohon1'),'alert_baru_pemohon1')
 	}
 	
-	if(field_pemohon_lama_temp!="")
+	if(field_pemohon_lama_temp!="")  
 	{
 	document.getElementById('no_kp_lama_pemohon1').value = field_pemohon_lama_temp.substring(0,field_pemohon_lama_temp.length);
 	}
