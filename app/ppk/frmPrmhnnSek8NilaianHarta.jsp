@@ -1122,18 +1122,19 @@ kod :: $listhath.kod_hakmilik
 	<tr class="$row">
 	<td width="3%">
 					#if ( $semakclass.isSemakan("$IdPermohonan", "$semak.id" ))
+					##if ($semak.lampirans != "")
 	                            #set ( $checked = "checked" )
 	               	#else
 	                           #set ( $checked = "" )
 	             	#end
 <!-- 	                <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked $modeSoc> -->
-					#if($!skrin_deraf == "yes")
-						
-				        	<input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked />
-				        #else
-				        	<input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked disabled/>
-				        
+
+					#if($!idStatus == "150")
+				        <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked />
+				    #else
+				        <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked disabled/>
 				    #end
+				    
 	</td>
 	<td width="92%">$i. $semak.keterangan</td>
 	<td width="5%">$semak.lampirans</td>
@@ -1417,7 +1418,9 @@ kod :: $listhath.kod_hakmilik
 	<td>Borang A</td>
 	<td>:</td>
 	<td>#if($!skrin_deraf == "yes")
+			#if ($idStatus == "150")
 			<input type="button" name="boranga" id="boranga" size="40" value="Muatnaik Borang A" size="40" onClick="lampiran('$!idSimati','dokumenA')"/>
+			#end
 		#end
 		<br>
 		#if($lampirans != "")

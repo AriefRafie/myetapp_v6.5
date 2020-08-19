@@ -2788,7 +2788,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
 					       		#set( $row = "row1" )
 					    	#end      
 	                        <tr bgcolor="white" class="$row">
-					    	   	<td><input type="checkbox" name="selectHTA" id="selectHTA" value="$listam.idhta" /></td>
+					    	   	<td><input type="checkbox" name="selectHTA" id="selectHTA" value="$listam.idhta" /></td>R
 	                           	<td><div align="center" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()">$!i</div></td>
 	                           	<td><div align="left" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"> <a href="javascript:get_htaam('$!idPermohonanSimati','$!listam.idhta','$!listam.idDokumen')" class="style42">$!listam.namaNegeri</a></div></td>
 	                           	<td><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$!listam.namaDaerah</div></td>

@@ -53,16 +53,17 @@ import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisPBPPK;
 
 public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
-	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	Date date = new Date();
-	String currentDate = dateFormat.format(date);
-	static Logger myLogger = Logger.getLogger(FrmPrmhnnBorangAMaklumatPemohon.class);
-
+	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");     
+	Date date = new Date();      
+	String currentDate = dateFormat.format(date);   
+	static Logger myLogger = Logger.getLogger(FrmPrmhnnBorangAMaklumatPemohon.class); 
+	
+	
 	private static final long serialVersionUID = 1L;
 	
 	private String idUser = "";
 	FrmPermohonanHTAData permohonanInternal = null;
-	FrmPrmhnnSek8InternalData logic = null;
+	FrmPrmhnnSek8InternalData logic = null;  
 	FrmPrmhnnSek8DaftarSek8InternalData logic_A = null;
 	FrmPrmhnnSek8SenaraiHTATHInternalData logic_B = null;
 	FrmPrmhnnSek8SenaraiSemakInternalData logic_C = null;
@@ -6873,7 +6874,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 
 	private void getSenaraiSemak(String idSimati,String idPermohonan) throws Exception{
-		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("4,1,17",idSimati,idPermohonan);
+		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("1,4",idSimati,idPermohonan); //17,24
 		// 4 Bukti kematian
 		// 11 Dokumen hakmilik semua harta yang dituntut
 		context.put("senaraiSemakan", sm);
@@ -6892,7 +6893,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			} else {
 			}
 		}
-		
 	}
 	
 	private IMaklumatHarta getHTA(){
