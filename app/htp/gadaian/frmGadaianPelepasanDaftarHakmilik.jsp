@@ -56,12 +56,12 @@
 <legend><strong>MAKLUMAT FAIL</strong></legend>
 <table width="100%" border="0">
   <tr>
-    <td>No Fail Seksyen</td>
+    <td>No. Fail</td>
     <td>:</td>
     <td><font color="blue">$NoFail</font></td>
   </tr>
   <tr>
-    <td>No Fail Lain</td>
+    <td>No. Fail Lain</td>
     <td>:</td>
     <td><font color="blue">$NoRujukanLain</font></td>
   </tr>

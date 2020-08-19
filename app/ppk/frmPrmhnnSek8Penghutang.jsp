@@ -361,7 +361,7 @@
      <tr>
                                          <td>
                                           <fieldset>
-                                          <legend>MAKLUMAT PENGHUTANG (Pihak yang menerima hutang daripada Simati)</legend>
+                                          <legend>MAKLUMAT PENGHUTANG</legend>
                                          #if($!skrin_online != "yes") 
 #if($readmode == "disabled")
 #set($readmodeR = "readonly")
@@ -1573,7 +1573,7 @@
                             <td width="100%">
                             
                             <fieldset>
-                            <legend>MAKLUMAT PENGHUTANG (Pihak yang menerima hutang daripada Simati)</legend>
+                            <legend>MAKLUMAT PENGHUTANG (SIMATI MEMBERI HUTANG)</legend>
                             
                             <table width="100%" border="0">
                               <tr>
@@ -4408,7 +4408,7 @@ document.getElementById("kp4").style.display="none";
 document.getElementById("agama").style.display="none";
 document.getElementById("warga").style.display="none";
 }
-  
+
 }
 
 

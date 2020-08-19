@@ -467,6 +467,10 @@
                                            		<td><span class="style36">
                                                		<input name="radioHtaamViewX" id="radioHtaamViewX1" type="radio" onclick="setSelected(1,0,0,1);HtaamViewX1()"   $checked1 value="1" />
                                              		Perjanjian Jual Beli</span>
+                                             		#if($!skrin_online == "yes")
+					                                         <a href="javascript:info('perjanjian')" class="help" title="info">					
+									                									<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									           											 </a>#end
                                             	</td>
                                           	</tr>
                                            	<tr>
@@ -2453,17 +2457,6 @@
                                     
                                     
                                     #end
-                                    
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-             
-                                  
-                                 
                                   <input type="hidden" name="idhtaam" value="$listamid.idhta" />
                     </fieldset>
                            #end      
@@ -2501,6 +2494,23 @@
 </form>
 
 <script>
+function info(jenis) {
+    //
+	var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=no,scrollbars=no');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Info';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+    //var top = (screen.height/2)-(h/2);
+    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+
+}
 <!-- TAB -->
 	function HtaamViewX() {
 		document.f1.action = "";

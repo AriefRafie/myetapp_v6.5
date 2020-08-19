@@ -369,9 +369,9 @@ public class FrmPYWKeputusanData {
 			stmt.executeUpdate(sql);
 
 			// //TODO GENERATE FAIL HASIL
-			 if (validateGenerateFailHasil(idPermohonan, idSuburusan, db)){
+			 /*if (validateGenerateFailHasil(idPermohonan, idSuburusan, db)){
 				 generateFailHasil(idFail, idPermohonan, db, session, userId);
-			 }
+			 }*/
 
 			conn.commit();
 

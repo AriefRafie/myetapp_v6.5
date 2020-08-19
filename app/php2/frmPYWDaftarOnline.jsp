@@ -193,13 +193,13 @@
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%">No Fail</td>
+          <td width="28%">No. Fail</td>
           <td width="1%">:</td>
           <td width="70%"><strong>$beanMaklumatPermohonan.noFail </strong></td>
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Permohonan</td>
+          <td width="28%" valign="top">No. Rujukan Online</td>
           <td width="1%" >:</td>
           <td width="70%">$beanMaklumatPermohonan.noPermohonan </td>
         </tr>
@@ -233,7 +233,7 @@
         </tr>
         <tr>
           <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Perkara</td>
+          <td valign="top">Tajuk</td>
           <td valign="top">:</td>
           <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" onBlur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.perkara</textarea>
             #if ($mode == 'new')
@@ -274,6 +274,7 @@
             <input type="button" name="cmdDaftar" id="cmdDaftar" value="Daftar" onclick="daftar()"/>
             <input type="button" name="cmdKembali" id="cmdKembali" value="Batal" onclick="kembali()"/>
             #else
+            <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
             <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
             #end </td>
         </tr>
@@ -296,6 +297,11 @@ function daftar() {
 	document.${formName}.hitButton.value = "daftarBaru";
 	document.${formName}.submit();
 }
+function seterusnya() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailView";
+	document.${formName}.actionPenyewaan = "";
+	document.${formName}.submit();
+}
 function kembali() {	
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
@@ -311,14 +317,14 @@ function janaTajuk() {
 
 	var strTajuk = " ";
 	var milikOrRizab = " ";
-	var strTujuan = document.${formName}.namaTujuan.value;
 	var str1  = document.${formName}.noLotTanah.value;
 	var str2  = document.${formName}.noMilikTanah.value;
 	var str3  = document.${formName}.namaMukimTanah.value;
 	var str4  = document.${formName}.namaDerahTanah.value;	
 	var str5  = document.${formName}.namaNegeriTanah.value;	
-	var namaPemohon = document.${formName}.namaPemohon.value;
 	var str6 = document.${formName}.noWartaTanah.value;
+	var strTujuan = document.${formName}.namaTujuan.value;
+	var namaPemohon = document.${formName}.namaPemohon.value;
 	var statusRizabTnh = document.${formName}.statusRizab.value;
 	
 	if(statusRizabTnh == 'MILIK') {
@@ -329,14 +335,14 @@ function janaTajuk() {
 
 	if(document.${formName}.socUrusan.value == "7"){
 		if(document.${formName}.socSuburusan.value == "35"){
-			strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + "UNTUK TUJUAN " + strTujuan ;
+			strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH" + namaPemohon + "UNTUK TUJUAN " + strTujuan ;
 		} else {
-			strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
+			strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH" + namaPemohon + " UNTUK TUJUAN " + strTujuan;
 		}
 	} else if(document.${formName}.socUrusan.value == "12"){ 
-		strTajuk = "PERMOHONAN MENGELUARKAN HASIL " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
+		strTajuk = "PERMOHONAN MENGELUARKAN HASIL " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH" + namaPemohon + " UNTUK TUJUAN " + strTujuan;
 	} else if(document.${formName}.socUrusan.value == "13"){
-		strTajuk = "PERMOHONAN MENGELUARKAN " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan;
+		strTajuk = "PERMOHONAN MENGELUARKAN " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH" + namaPemohon + " UNTUK TUJUAN " + strTujuan;
 	} else {
 	    strTajuk;
 	 }

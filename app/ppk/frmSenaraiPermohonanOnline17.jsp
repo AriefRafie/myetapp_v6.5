@@ -89,7 +89,7 @@
       <td width="15%"><div align="center">No. KP Pemohon</div></td>
       
      <td width="15%"><div align="center">Cetak Borang P</div></td>
-     <td width="15%"><div align="center">Kemaskini Borang A</div></td>
+     <td width="15%"><div align="center">Kemaskini Borang P</div></td>
     </tr>
     
      #set ($noFail = "")
@@ -312,8 +312,8 @@ function cetakBorangP(idfail,idfaillama,idpermohonanbaru) {
 
 
 
-
-function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {
+//arief comment
+/**function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {
 
 
  var url = "../x/${securityToken}/ekptg.view.ppk.FrmBorangPSek17Online?command=Simati&mode=Simatiview&idPermohonan="+idPermohonan+"&idpermohonan="+idPermohonan+"&idPemohon="+idpemohon+"&idSimati="+idSimati+"&no_subjaket="+(parseInt(RemoveNonNumericX(no_subjaket)) - 1);
@@ -323,7 +323,21 @@ function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {
 hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 
-			
+		
+}**/
+
+//arief add
+function papar(idPermohonan,idSimati,seksyen,idpemohon,no_subjaket) {
+
+
+ var url = "../x/${securityToken}/ekptg.view.ppk.FrmPrmhnnBorangPOnline?command=Simati&mode=Simatiview&idPermohonan="+idPermohonan+"&idpermohonan="+idPermohonan+"&idPemohon="+idpemohon+"&idSimati="+idSimati+"&no_subjaket="+(parseInt(RemoveNonNumericX(no_subjaket)) - 1);
+ 
+   var hWnd = window.open(url,'Cetak','width=1000,height=600, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+
+		
 }
 
 function RemoveNonNumericX( strString )

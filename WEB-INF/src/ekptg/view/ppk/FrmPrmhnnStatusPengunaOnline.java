@@ -51,6 +51,7 @@ public class FrmPrmhnnStatusPengunaOnline extends AjaxBasedModule {
 		String readability2 = "";
 		this.context.put("Util", new lebah.util.Util());
 		Vector senaraiFail = new Vector();
+		Vector senaraiPraPerbicaraan = new Vector();
 		
 		String USER_LOGIN_SYSTEM = (String)session.getAttribute("_portal_login");
 
@@ -4305,8 +4306,15 @@ public class FrmPrmhnnStatusPengunaOnline extends AjaxBasedModule {
 				(String) session.getAttribute("_ekptg_user_id"),
 				(String) session.getAttribute("_portal_role"),
 				getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, "no");
+		
+		senaraiPraPerbicaraan = FrmPrmhnnStatusPengunaOnlineData.getMaklumatPraPerbicaraan("",
+				(String) session.getAttribute("_ekptg_user_id"),
+				(String) session.getAttribute("_portal_role"), USER_LOGIN_SYSTEM, "no");
+		
+		
+		
 		System.out.println("USER_LOGIN_SYSTEM >>> "+USER_LOGIN_SYSTEM);
-		// context.put("senaraiFail",senaraiFail);
+		this.context.put("senaraiPraPerbicaraan",senaraiPraPerbicaraan);
 		setupPage(session, action, senaraiFail);
 
 		context.put("IDpemohon", USER_LOGIN_SYSTEM);

@@ -33,6 +33,7 @@ public class UserBean implements IUserPegawai {
 		List<Map<String,String>> listPengunaByRoleNegeri = null;
 		String sql = "";
 		
+		
 		try {
 			db = new Db();
 			stmt = db.getStatement();	

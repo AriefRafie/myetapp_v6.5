@@ -226,7 +226,7 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 			}
 		}
 		
-		idJenisTujuan = logic.getIdTujuanByIdPermohonanSewa(idPermohonanSewa);
+		//idJenisTujuan = logic.getIdTujuanByIdPermohonanSewa(idPermohonanSewa);
 
 		String flagMT = logic.getFlagMT(idFail, userId);
 		this.context.put("flagMT", flagMT);

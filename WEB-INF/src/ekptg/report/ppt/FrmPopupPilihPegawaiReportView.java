@@ -106,7 +106,9 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String txtNamaPentadbir = getParam("txtNamaPentadbir");
 		String id_buktipenyampaian = getParam("id_buktipenyampaian");
 		String id_borangh = getParam("id_borangh");
-					
+		String usid = (String) session.getAttribute("_portal_username");
+		context.put("username", usid);
+		myLogger.info("usid : "+usid);
 		myLogger.info("--------- report :"+report);
 		
 		String bydate = getParam("bydate");
@@ -585,6 +587,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		}
 		
 	}
+	
 	
 	public void updateTableAcc(String id_negeri,String NAMA_BANK,String NAMA_AKAUN,String NO_AKAUN,String jenis) 
 		throws Exception {

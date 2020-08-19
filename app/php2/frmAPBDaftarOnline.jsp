@@ -6,6 +6,7 @@
 -->
 </style>
 #set($saizPerkara="1000")
+
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
@@ -15,6 +16,9 @@
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idUrusan" type="hidden" id="idUrusan" value="$idUrusan"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+  ##<input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
+  <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" />
+  <input name="noPermohonanLama" type="hidden" id="noPermohonanLama" value="$noPermohonanLama"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -22,21 +26,43 @@
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+          <input name="noFailLama" type="hidden" id="noFailLama" value="$beanMaklumatPermohonan.noFailLama"/>
+          <input name="idPermohonanLama" type="hidden" id="idPermohonanLama" value="$beanMaklumatPermohonan.idPermohonanLama"/>
+          <input name="noPermohonanLama" type="hidden" id="noPermohonanLama" value="$beanMaklumatPermohonan.noPermohonanLama"/>
+        
         <tr>
           <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Fail</td>
           <td width="1%" >:</td>
-          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong>
-            <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
-            <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong></td>
+          ##<td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" value="$noFailOnline">
+          ##<a href="javascript:generateNoFailAPB('txtNoFail');"><img border="0" src="../img/plus.gif"/>    
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Permohonan</td>
+          <td width="28%" valign="top">Jenis Permohonan</td>
           <td width="1%" >:</td>
-          <td width="70%">$beanMaklumatPermohonan.noPermohonan
-            </td>
+          #if ($beanMaklumatPermohonan.jenisPermohonan == '1')
+          <td width="70%"><strong>PERMOHONAN LESEN</strong></td>
+          #elseif ($beanMaklumatPermohonan.jenisPermohonan == '2')
+          <td width="70%"><strong>PEMBAHARUAN LESEN</strong></td>
+          #end
+
         </tr>
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%" valign="top">No. Rujukan <i>Online</i></td>
+          <td width="1%" >:</td>
+          <td width="70%">$beanMaklumatPermohonan.noPermohonan</td>
+        </tr>
+        #if ($beanMaklumatPermohonan.jenisPermohonan == '2')
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%" valign="top">No. Permohonan Lama</td>
+          <td width="1%" >:</td>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noPermohonanLama</strong></td>    
+        </tr>
+        #end
         <tr>
           <td width="1%">&nbsp;</td>
           <td valign="top">Urusan</td>
@@ -92,7 +118,7 @@
           <td>&nbsp;</td>
           <td>No. Pengenalan / Pendaftaran</td>
           <td>:</td>
-          <td>$beanMaklumatPemohon.noPendaftaran </td>
+          <td>$beanMaklumatPemohon.noPengenalan</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -146,7 +172,7 @@
           <td>&nbsp;</td>
           <td>No. Faks</td>
           <td>:</td>
-          <td>$beanMaklumatPemohon.noFaks </td>
+          <td>$beanMaklumatPemohon.noFax </td>
         </tr>
         #end
       </table>
@@ -164,8 +190,14 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> 
       #if ($mode != 'view')
-      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar" onClick="daftarBaru()"/>
-      <input type="button" name="cmdKembali" id="cmdKembali" value="Batal" onClick="kembali()"/>
+	      #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+	      	#if ($beanMaklumatPermohonan.jenisPermohonan == 1)
+	      		<input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar" onClick="daftarBaru()"/>
+	      	#elseif ($beanMaklumatPermohonan.jenisPermohonan == 2)
+	      		<input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar Sambung" onClick="daftarSambung()"/>
+	      	#end
+	      #end
+       <input type="button" name="cmdKembali" id="cmdKembali" value="Batal" onClick="kembali()"/>
       #else
        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="kembali()"/>
       #end
@@ -189,6 +221,24 @@ function daftarBaru() {
 	document.${formName}.hitButton.value = "daftarBaru";
 	document.${formName}.submit();
 }
+
+function daftarSambung() {
+
+	if(document.${formName}.txtPerkara.value == ""){
+		alert('Sila masukkan Perkara.');
+  		document.${formName}.txtPerkara.focus(); 
+		return; 
+	}
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.actionOnline.value = "daftar";
+		return;
+	}
+	
+	document.${formName}.actionOnline.value = "papar";
+	document.${formName}.hitButton.value = "daftarSambung";
+	document.${formName}.submit();
+}
+
 function kembali() {	
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
@@ -196,6 +246,11 @@ function kembali() {
 function janaTajuk(){	
 	var strTajuk = "Permohonan Untuk Mendapatkan Lesen Bagi Mengeluarkan Pasir Dasar Laut Di Bawah Seksyen 4, Akta Pelantar Benua 1966 P.U 2009 di Kawasan Luar Perairan ";
 	document.${formName}.txtPerkara.value = strTajuk;
+}
+
+function generateNoFailAPB(){	
+	document.${formName}.hitButton.value = "generateNoFailAPBOnline";
+	document.${formName}.submit();
 }
 function textCounter(field, countfield, maxlimit) {
    if (field.value.length > maxlimit) // if too long...trim it!

@@ -464,8 +464,10 @@ public class HTPSubmodulGadaian extends AjaxBasedModule {
 				this.context.put("carianNoRujukan", keyNo_rujukan);
 				
 				Long idNegeri = Long.parseLong(Negeri);
-				list = ListFail(session, key_cari, keyNo_cari, idNegeri, keyNo_upt, keyNo_ptg, keyNo_ptd, keyNo_pemilik, keyNo_rujukan);
-		    	//list = FrmSenaraiFailGadaianData.getList();
+				list = FrmSenaraiFailGadaianData.getSenarai(key_cari, keyNo_cari
+						, Negeri, keyNo_upt, keyNo_ptg, keyNo_ptd
+						, keyNo_pemilik, keyNo_rujukan);
+				//				list = ListFail(session, key_cari, keyNo_cari, idNegeri, keyNo_upt, keyNo_ptg, keyNo_ptd, keyNo_pemilik, keyNo_rujukan);
 			    this.context.put("lists", list);
 				//doListing(session,action,"",mode,list);
 				setupPage(session,action,list);
@@ -732,11 +734,27 @@ public class HTPSubmodulGadaian extends AjaxBasedModule {
 		return senarai;
 	}
 	
+	public Vector getPermohonan(HttpSession session, String idFail,String noFail, String carian) throws Exception{
+		Vector vector = null;
+//		getSenarai(String carian, String noFail
+//				, Long idNegeri, String keyNo_upt, String keyNo_ptg, String keyNo_ptd
+//				, String keyNo_pemilik, String keyNo_rujukan)
+		try{
+			vector = FrmSenaraiFailGadaianData.getSenarai(carian,noFail
+					,null,"","",""
+					,"",carian);		
+	}catch(Exception e){
+			myLog.error("Error : " + e.getMessage());
+		}
+		return vector;
+		
+	}
+	
 	//** Senarai Permohonan Controller */
 	public void ListPermohonan(HttpSession session, String idFail,String noFail, String carian) throws Exception{
 		try{
 			FrmGadaianSenaraiPermohonanData.setListPermohonan(idFail,noFail,carian);		
-		}catch(Exception e){
+	}catch(Exception e){
 			myLog.error("Error : " + e.getMessage());
 		}
 		
@@ -2885,7 +2903,7 @@ public class HTPSubmodulGadaian extends AjaxBasedModule {
 	public void doListing(HttpSession session,String action,String submit,String mode,Vector v) throws Exception {		
 		this.context.put("senaraiList1", v); 
 		this.context.put("submit", submit); 
-		setupPage2(session,action,v);
+		setupPage(session,action,v);
 		
 	}
 	

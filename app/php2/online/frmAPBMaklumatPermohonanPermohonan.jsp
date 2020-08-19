@@ -10,6 +10,7 @@
 -->
 </style>
 
+
 #set($saizTxtTujuanPengambilan="500")
 #set($saizTxtRingkasanPengalaman="900")
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -19,11 +20,17 @@
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+          <tr>
+          <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+          <td width="28%">Jenis Lesen</td>
+          <td width="1%">:</td>
+          <td width="70%">$selectJenisLesen</td>
+        </tr>
         <tr>
-          <td width="1%">&nbsp;</td>
+          <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
           <td width="28%">Jenis Tujuan</td>
           <td width="1%">:</td>
-          <td width="70%">MENGOREK</td>
+          <td width="70%">$selectJenisTujuan</td>
         </tr>
         <tr>
           <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
@@ -435,7 +442,8 @@ TAHUN </td>
   </tr>
   #end
   <tr>
-    <td colspan="2" align="center"> #if ($idStatus == '')
+    <td colspan="2" align="center"> 
+    #if ($idStatus == '')
       #if ($mode == 'view')
       <input type="button" name="cmdKemaskiniPermohonan" id="cmdKemaskiniPermohonan" value="Kemaskini" onclick="kemaskiniPermohonan()"/>
       <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onclick="doBacklist()"/>
@@ -443,10 +451,13 @@ TAHUN </td>
       #if ($mode == 'update')
       <input type="button" name="cmdSimpanKemaskiniPermohonan" id="cmdSimpanKemaskiniPermohonan" value="Simpan" onclick="simpanKemaskiniPermohonan()"/>
       <input type="button" name="cmdBatalKemaskiniPermohonan" id="cmdSimpanKemaskiniPermohonan" value="Batal" onclick="batalKemaskiniPermohonan()"/>
-      #end
-      #else
+      #end      
+     #else
       <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-      #end </td>
+  	 #end
+  	
+      </td>
+      
   </tr>
 </table>
 <script>
@@ -460,4 +471,5 @@ function validateCurrency(elmnt,content,content2) {
 	elmnt.value = num.toFixed(2);
 	return;
 }
+
 </script>

@@ -274,64 +274,6 @@ public class LampiranBean {
 		
 	}
 	
-	//syafiqah add 140820
-	public void lampiranBorangA(HttpServletRequest request
-			,String idRujukan
-			,String jenisDok
-			,String idUser) throws Exception {
-		    DiskFileItemFactory factory = new DiskFileItemFactory();
-		    ServletFileUpload upload = new ServletFileUpload(factory);
-		    List items = upload.parseRequest(request);
-		    Iterator itr = items.iterator();	   
-		    while (itr.hasNext()) {    	
-		      FileItem item = (FileItem)itr.next();
-		      //myLog.info("item.getName()="+item.getName());
-		      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {	    	  
-		    	  simpanLampiranBorangA("TBLPPKDOKUMENSIMATI",idRujukan,item,jenisDok,idUser);
-		      }
-		    }
-		  }
-	
-	public void simpanLampiranBorangA(String namaTable
-			,String idRujukan
-			,FileItem item
-			,String jenisDok
-			,String idUser) throws Exception {
-			Db db = null;
-			String sql="";
-			try {
-				db = new Db();
-				sql = "INSERT INTO "+namaTable
-						+ " (NO_RUJUKAN,ID_JENISDOKUMEN,NAMA_DOKUMEN,FORMAT,SAIZ,KANDUNGAN,ID_MASUK,TARIKH_MASUK,ID_SIMATI) " 
-						+ "VALUES(?,"+jenisDok+",?,?,?,?,?,SYSDATE,?)";
-				Connection con = db.getConnection();
-				con.setAutoCommit(false);
-				PreparedStatement ps = con.prepareStatement(sql);
-				myLog.info("simpanLampiranBorang:sql="+ps.toString());
-			ps.setString(1, idRujukan);
-			myLog.info("simpanLampiranBorang2:sql="+ps.toString());
-			ps.setString(2, item.getName());
-				ps.setString(3, item.getContentType());
-				myLog.info("simpanLampiranBorang3:sql="+ps.toString());
-			ps.setLong(4, item.getSize());
-				ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
-				myLog.info("simpanLampiranBorang4:sql="+ps.toString());
-		ps.setString(6, idUser);
-				myLog.info("simpanLampiranBorang5:sql="+ps.toString());
-				ps.setString(7, idRujukan);
-				myLog.info("simpanLampiranBorang6:sql="+ps.toString());
-				ps.executeUpdate();
-
-				con.commit();
-
-			} finally {
-				if (db != null)
-					db.close();
-			}
-			
-		}
-	// syafiqah add ends
-	
 	public void lampiranSimati(HttpServletRequest request
 		,String idRujukan
 		,String jenisDok
@@ -429,50 +371,6 @@ public class LampiranBean {
 		return listLampiran;
 			    
 	}
-	
-	//syafiqah add 140820
-	public Vector<Hashtable<String, String>> getLampiranBorangA(String id, String iDokumen,String jenisDokumen) 
-			throws Exception {
-			Db db = null;
-			String sql = "";
-			Vector<Hashtable<String, String>> listLampiran = new Vector<Hashtable<String, String>>();
-			try {
-				db = new Db();
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();
-				r.add("D.ID_DOKUMEN");
-				r.add("D.NAMA_DOKUMEN");
-				r.add("D.FORMAT");
-				r.add("D.ID_SIMATI");
-				r.add("D.NO_RUJUKAN",id);
-				r.add("D.ID_JENISDOKUMEN",jenisDokumen);
-				if(iDokumen != null){
-					r.add("D.ID_DOKUMEN",iDokumen);
-				}
-				sql = r.getSQLSelect("TBLPPKDOKUMENSIMATI D");
-				//
-				myLog.info(sql);
-				ResultSet rs = stmt.executeQuery(sql);
-				Hashtable<String, String> h;
-				int bil = 1;
-				while (rs.next()) {
-					h = new Hashtable<String, String>();
-					h.put("bil",String.valueOf(bil));
-					h.put("idDokumen",rs.getString("id_dokumen"));
-					h.put("namaFail", Utils.isNull(rs.getString("nama_dokumen")));
-					h.put("jenisMime", Utils.isNull(rs.getString("format")));
-					h.put("simati", Utils.isNull(rs.getString("id_simati")));
-					listLampiran.addElement(h);
-					bil++;
-				      
-				}
-
-			} finally {
-				if (db != null) db.close();
-			}
-			return listLampiran;
-				    
-		}
 	
 	// syafiqah add 2/7/2020
 	public Vector<Hashtable<String, String>> getBantahanMaklumat(String id, String iDokumen,String jenisDokumen) 
@@ -671,37 +569,6 @@ public class LampiranBean {
 			sb.append("\n<script>");
 			sb.append("\nfunction paparLampiran(idDokumen){");
 			sb.append("\nvar url = '../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen='+idDokumen+'&tablename=hta';");
-			sb.append("\nvar hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');");
-			sb.append("\nif ((document.window != null) && (!hWnd.opener))");
-			sb.append("\nhWnd.opener=document.window;");
-			sb.append("\nif (hWnd.focus != null) hWnd.focus();");
-			sb.append("\n}");
-			sb.append("\n</script>");
-	
-		return sb.toString();
-		
-	}
-	
-	public String getLampiranSimatiPaparSimati(String idRujukan,String idJenis) throws Exception {
-		StringBuffer sb = new StringBuffer("");
-		Vector<Hashtable<String, String>> dokumens = getLampiranSimatii(idRujukan,null,idJenis);
-//		myLog.info("getLampiranSimatiPapari: size="+dokumens.size());
-		for (int i = 0; i < dokumens.size(); i++) {
-			Hashtable<String, String> mo = (Hashtable<String, String>) dokumens.get(i);			
-			sb.append("<a class=\"style4\" href=\"javascript:paparLampiran("+mo.get("idDokumen")+")\"");
-			sb.append(" onclick=\"paparLampiran("+mo.get("idDokumen")+"); return false;\"");
-			sb.append(" onkeypress=\"window.open(this.href); return false;\">"); 
-			//sb.append(" onclick=\"cetakImej("+mo.get("idDokumen")+"); return false;\""); 
-			sb.append("<div class=\"pautan\">"+mo.get("namaFail")+"</div>");
-			if(dokumens.size()==1 || (i == (dokumens.size()-1) && dokumens.size() != 1) )
-				sb.append(" </a>");
-			else
-				sb.append(" </a>,");
-			sb.append("<br>");
-		}
-			sb.append("\n<script>");
-			sb.append("\nfunction paparLampiran(idDokumen){");
-			sb.append("\nvar url = '../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen='+idDokumen+'&tablename=simati';");
 			sb.append("\nvar hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');");
 			sb.append("\nif ((document.window != null) && (!hWnd.opener))");
 			sb.append("\nhWnd.opener=document.window;");

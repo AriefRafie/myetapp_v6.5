@@ -142,7 +142,6 @@ public class HtpPeringatanBean implements IHtpPeringatan {
 	    }
 	  }
 
-
 	@Override
 	public Vector<HtpPermohonan> getPeringatanJenisBayaran(String search,String idUrusan,String tahunBayaran, String jenisBayaran)
 		throws Exception {
@@ -157,7 +156,7 @@ public class HtpPeringatanBean implements IHtpPeringatan {
 	      r.add("F.NO_FAIL");
 	      r.add("F.TAJUK_FAIL TUJUAN");
 	      r.add("P.ID_PERMOHONAN");
-	      r.add("p.id_Fail",r.unquote("f.id_Fail"));
+	      r.add("P.ID_FAIL",r.unquote("F.ID_FAIL"));
 	      r.add("F.ID_URUSAN",idUrusan);
 	      r.add("P.ID_STATUS",71);
 	      sql = r.getSQLSelect("TBLPERMOHONAN P, TBLPFDFAIL F");
@@ -196,7 +195,8 @@ public class HtpPeringatanBean implements IHtpPeringatan {
 	    } finally {
 	      if (db != null) db.close();
 	    }
-	  }
+	  
+	}
 	
 	@Override
 	public Vector<HtpPermohonan> getPeringatanJenisBayaranPer(String search,String idUrusan,String tahunBayaran, String jenisBayaran)
@@ -256,6 +256,54 @@ public class HtpPeringatanBean implements IHtpPeringatan {
 	    }
 	  }
 	
+//	@Override
+//	public Vector<HtpPermohonan> getSenaraiPeringatanHari(String search,String idUrusan,String tbl, String hantar,String terima)
+//		throws Exception {
+//	    Db db = null;
+//	    String sql = "";
+//	    try {
+//	      db = new Db();
+//	      Statement stmt = db.getStatement();
+//	      SQLRenderer r = new SQLRenderer();
+//	      String tblBaru = tbl.equals("")?"TBLHTPULASANKJP":tbl;
+//	      r.add("F.ID_FAIL");
+//	      r.add("F.NO_FAIL");
+//	      r.add("F.TAJUK_FAIL TUJUAN");
+//	      r.add("P.ID_PERMOHONAN");
+//	      r.add("p.id_Fail",r.unquote("f.id_Fail"));
+//	      r.add("F.ID_URUSAN",idUrusan);
+//	      sql = r.getSQLSelect("TBLPERMOHONAN P, TBLPFDFAIL F");
+//		  sql += " AND P.ID_PERMOHONAN IN " +
+//		  		" (SELECT TPU.ID_PERMOHONAN FROM " +
+//		  		""+tblBaru+" TPU " +
+//		  		" WHERE " +
+//		  		" TPU.TARIKH_TERIMA IS NULL " +
+//		  		" AND (SYSDATE-TPU.TARIKH_HANTAR)>15) ";
+//	      myLog.info(sql);
+//	      ResultSet rs = stmt.executeQuery(sql);
+//	      Vector<HtpPermohonan> list = new Vector<HtpPermohonan>();
+//	      while (rs.next()) {
+//				permohonan = new Permohonan();
+//				fail = new PfdFail();
+//				htpPermohonan = new HtpPermohonan();
+//				
+//				fail.setIdFail(rs.getLong("ID_FAIL"));
+//				fail.setNoFail(rs.getString("NO_FAIL"));
+//
+//				permohonan.setTujuan(rs.getString("TUJUAN"));
+//				permohonan.setIdPermohonan(rs.getLong("id_Permohonan"));
+//				permohonan.setPfdFail(fail);
+//				htpPermohonan.setPermohonan(permohonan);
+//				list.addElement(htpPermohonan);
+//				
+//	      }
+//	      return list;
+//	      
+//	    } finally {
+//	      if (db != null) db.close();
+//	    }
+//	    
+//	}	
 	@Override
 	public Vector<HtpPermohonan> getSenaraiPeringatan15(String search,String idUrusan,String tbl, String hantar,String terima)
 		throws Exception {

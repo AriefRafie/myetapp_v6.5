@@ -77,15 +77,15 @@
         #end
         
         <tr align="center">
-          <td class="$row">$!list.bil</td>
-          <td class="$row">$!list.TARIKH_TERIMA</td>
+          <td class="$row">$list.bil</td>
+          <td class="$row">$list.TARIKH_TERIMA</td>
           <td class="$row">
           	<!-- <a id="hoverover" style="cursor:pointer; color:#0000FF" onClick="ShowPopup(this,$list.bil);" title="Klik untuk maklumat lengkap">$list.NO_PERMOHONAN</a>-->
           	<a href="javascript:ShowInfo('$list.ID_FAIL')" class="style1" title="Klik untuk maklumat lengkap">$list.NO_PERMOHONAN</a>
           </td>
-          <td class="$row">$!list.NO_FAIL</td>
-          <td class="$row">$!list.STATUS</td>
-          <td class="$row">$!list.NAMA_PEJABAT</td>
+          <td class="$row">$list.NO_FAIL</td>
+          <td class="$row">$list.STATUS</td>
+          <td class="$row">$list.NAMA_PEJABAT</td>
         </tr>
         
         <tr><td colspan="7"><fieldset id="$list.bil" style="visibility:collapse; display:none;" >

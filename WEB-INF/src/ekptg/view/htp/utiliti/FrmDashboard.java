@@ -1,4 +1,6 @@
-
+/**
+ * 
+ */
 package ekptg.view.htp.utiliti;
 
 import java.sql.Connection;
@@ -66,11 +68,11 @@ public class FrmDashboard extends AjaxBasedModule {
 	private IHTPStatus iStatus = null;
 	private IStatus iStatusOnline = null;
 	private IOnline iOnline = null;
-	//private Vector<HtpPermohonan> vecSenaraiOnline = null;
+	private Vector<HtpPermohonan> vecSenaraiOnline = null;
 	private Db db = null;
 	private Connection conn = null;
 	private String sql = "";
-	//private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	List listFail = null;
 	List listHakmilik = null;
 	List listKemaskiniCukai = null;
@@ -110,7 +112,8 @@ public class FrmDashboard extends AjaxBasedModule {
 			return doGetListCukai(session);
 		}else if (command.equals("doCloseListCukai")) {
 			return doCloseListCukai(session);
-		}else if (command.equals("doReadCukai")) {			
+		}else if (command.equals("doReadCukai")) {
+			
 			String id_cukaitemp = getParam("id_cukaitemp");
 			
 			if(id_cukaitemp!=""){
@@ -121,7 +124,6 @@ public class FrmDashboard extends AjaxBasedModule {
 			listCukai = DBListKemaskiniCukai(session);
 			this.context.put("listCukai", listCukai);
 			return PATH+"/div_listCukai.jsp";
-			
 		}
 		
 				
@@ -1138,12 +1140,10 @@ public class FrmDashboard extends AjaxBasedModule {
 		    	throw new Exception("Rollback error:"+se2.getMessage());
 		    }
 		    throw new Exception("Ralat : UPDATE FLAG READ ");
-		
-	    }finally {
+		}finally {
 	      if (db != null) db.close();
 	      if (stmt != null)stmt.close();
-	  
-		}//close finally
+	    }//close finally
 		  
 	}
 	

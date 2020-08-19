@@ -169,7 +169,7 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> 
     #if ($!command != "hantarUlasan" || ($!command == "hantarUlasan" && $!flagStatus == "T"))
-      <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onClick="simpanKemaskiniKewangan()">
+      <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onClick="simpanUlasan()">
       <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar" onClick="hantarUlasan()">
       #end
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="doDivAjaxCall$formname('divMainForm','','');"/></td>

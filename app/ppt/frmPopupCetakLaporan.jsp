@@ -1,9 +1,11 @@
-
+<style>
+body{
+background: #f4eff4 !important;
+}
+</style>
+<!-- 18/8/2020 -->
 	<!-- SEKSYEN 4 DAN 8 --><strong></strong>
-
-	
-	
-
+<!-- test xxxxx -->
 #set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
 	
 	<input name="id_borange" type="hidden" id="id_borange" value="$!id_borange"/> 
@@ -56,10 +58,14 @@
    
    <input name="id_buktipenyampaian" type="hidden" id="id_buktipenyampaian" value="$!id_buktipenyampaian"/> 
    
+  <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+  <input type="hidden" name="user" value='$!{session.getAttribute("_portal_username")}'>
 
+  <input name="tabId" type="text" id="tabId" value="$selectedTab"/>
+  
 
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
-        	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+        	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
         	
               <tr>
               	<td width="1%">&nbsp;</td>
@@ -92,11 +98,18 @@
               #end    
               
               #if($selectNoFail == 'yes')
+             
+               <tr>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">Nama Pegawai</td>
+                <td valign="top">:</td>
+                <td>$!username</td>
+              </tr>
               
               <tr>
-                <td valign="top"><font color="red">*</font></td>
-                <td valign="top">No. Fail</td>
-                <td valign="top">:</td>
+                <td><font color="red">*</font></td>
+                <td>No. Fail</td>
+                <td>:</td>
                 <td><select name="sorSelectNoFail" class="autoselect">
       		
 		      			#if($sorSelectNoFail=="1")
@@ -191,8 +204,11 @@
               && $report != 'NotaSiasatanSek8' && $report != 'borangAkta486' && $report != 'KertasMinitMB' && $report != 'BuktiPenyampaianRamai' && $report != 'BuktiPenyampaianRamaiH' && $report != 'BuktiPenyampaianRamaiK' 
               && $report != 'BorangL' && $report != 'SuratAkuanPenerimaanCekLainKos' && $report != 'borangAkta486Penarikan' 
               && $report != 'coveringPU' && $report != 'coveringPU_SA' && $report != 'borangPU' && $report != 'lampiranAPU' && $report != 'lampiranBPU'
-              && $report != 'BuktiPenyampaianL' && $report != 'SuratPengosonganTanah' && $report != 'SuratEndorsanBorangK' && $report != 'SuratIringanAgensiPemohon' 
-              && $report != 'coveringSijilPU' && $report != 'minitSijilPU' && $report != 'cetakNotis' && $report != 'senaraiKehadiran' && $report != 'senaraiKehadiranKosong' && $report != 'BayaranLainKos_Nofail' && $report != 'sabpn_notis_awam_sek4' && $report != 'sabpn_notis_awam_sek8'  && $report != 'sabpn_notis_borange'  && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh')
+              && $report != 'BorangL' && $report != 'SuratEndorsanBorangK' && $report != 'SuratIringanAgensiPemohon' 
+              && $report != 'coveringSijilPU' && $report != 'minitSijilPU' && $report != 'cetakNotis' && $report != 'senaraiKehadiran' 
+              && $report != 'senaraiKehadiranKosong' && $report != 'BayaranLainKos_Nofail' && $report != 'sabpn_notis_awam_sek4' && $report != 'sabpn_notis_awam_sek8'  && $report != 'sabpn_notis_borange'  
+              && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh')
+<!--               || $report == 'SuratPengosonganTanah' || -->
               <!-- PPT-27 & PPT-30-->
               <tr>
                 <td><font color="red">*</font></td>
@@ -836,11 +852,11 @@
             
         </fieldset>
         
-        #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes'))||$report=='Surat_Iringan_Mohon_Bayaran')
+        #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes'))||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
         
         <fieldset>
             <table width="100%" border="0" cellspacing="2" cellpadding="2">            
-            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_MT=='yes')||$report=='Surat_Iringan_Mohon_Bayaran')
+            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_MT=='yes')||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
             	<tr class="table_header">
             		<td colspan="4"><b>Maklumat Akaun Mahkamah Tinggi</b></td>
             	</tr>
@@ -864,7 +880,7 @@
             	</tr>            	
             	
             #end
-            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_ARB=='yes')||$report=='Surat_Iringan_Mohon_Bayaran')	
+            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_ARB=='yes')||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')	
             	<tr class="table_header">
             		<td colspan="4"><b>Maklumat Akaun Amanah Raya Berhad</b></td>
             	</tr>
@@ -1009,7 +1025,7 @@
                 	#end
                 	
                 	#if($report == 'NotaSiasatanSek8')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakNotaSiasatan('$!id_siasatan','$!nama_pengarah','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakNotaSiasatan('$!id_siasatan','$!nama_pengarah','$!nama_pegawai','$!id_hakmilik')">
                 	#end
                 	
                 	#if($report == 'IringanARB')
@@ -1114,7 +1130,7 @@
                 	#end
                 	
                 	#if($report == 'Surat_Iringan_Pembayaran')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanPembayaran('$!id_hakmilikpb','$!id_fail','$!nama_pegawai','$!id_jawatan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanPembayaran('$!id_hakmilikpb','$!id_fail','$!nama_pegawai','$!id_jawatan','$!no_fail','$!id_negeri')">
                 	#end
                 	<!-- PPT-26 (ii) END-->
                 	
@@ -1291,7 +1307,7 @@
                 	#end
                 	
                     #if($report == 'SuratPengosonganTanah')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPengosonganTanah('$!selectNoFail','$!id_permohonan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPengosonganTanah('$!id_permohonan','$!id_fail','$!id_hakmilik','$!nama_pegawai')">
                 	#end
                 	
                 	#if($report == 'SuratEndorsanBorangK')
@@ -1299,7 +1315,7 @@
                 	#end
                 	
                 	#if($report == 'SuratIringanAgensiPemohon')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanAgensiPemohon('$!selectNoFail','$!id_permohonan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak1" onclick="javascript:cetakSuratIringanAgensiPemohon('$!selectNoFail','$!id_permohonan')">
                 	#end
                 	<!-- PPT-30 END -->
                 	#if($report == 'laporanTanahSS8')
@@ -1440,6 +1456,10 @@
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangM('$!id_fail','$!id_hakmilikpb')">
                 	#end                                       
                     
+                    <!-- PPT 43i-->
+                    #if($report == 'SuratBayaranAgensi')
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMohonBayaranAgensi('$!id_fail','$!nama_pegawai','$!no_fail','$!id_hakmilik')">
+                	#end
                     
                     <!-- END REPORT SEMENTARA ------------->
                     
@@ -1463,7 +1483,7 @@
                 	#end 
                     
                     #if($report == 'suratKepadaAPSupayaMembayarPampasanTambahan')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetaksuratKepadaAPSupayaMembayarPampasanTambahan('$!id_fail','$id_bantahan','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetaksuratKepadaAPSupayaMembayarPampasanTambahan('$!id_fail','$id_bantahan','$!nama_pegawai','$!id_negeri')">
                 	#end 
                     
                     #if($report == 'suratKepadaAPSupayaMembayarPampasanTambahan_AP')
@@ -3357,7 +3377,7 @@ function cetakIringanARB(id_siasatan,idjawatan,nama_pegawai) {
     	if (hWnd.focus != null) hWnd.focus();
 	}
 }
-function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai) {
+function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai,id_hakmilik) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -3386,7 +3406,7 @@ function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-    	var url = "../../servlet/ekptg.report.ppt.NotaSiasatanSek8?id_siasatan="+id_siasatan+"&namaPegawai=''&namaPengarah=''&no_fail="+nofail;
+    	var url = "../../servlet/ekptg.report.ppt.NotaSiasatanSek8?id_siasatan="+id_siasatan+"&namaPegawai=''&namaPengarah=''&no_fail="+nofail+"&id_hakmilik="+id_hakmilik;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3577,7 +3597,7 @@ function cetakBuktiPenyampaianL(idhakmilik,flag) {
 	}
 }
 
-function cetakSuratPengosonganTanah(idhakmilik,idpermohonan) {
+function cetakSuratPengosonganTanah(idpermohonan,idfail,idhakmilik,nama_pegawai) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -3601,7 +3621,7 @@ function cetakSuratPengosonganTanah(idhakmilik,idpermohonan) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-		var url = "../../servlet/ekptg.report.ppt.SuratPengosonganTanah?ID_BAYARAN="+idbayaran+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.SuratPengosonganTanah?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&no_fail="+nofail+"&nama_pegawai="+nama_pegawai;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5296,7 +5316,7 @@ function cetakSuratMintaDepositDalam30HariAP(idfail,id_bantahan,id_hakmilik,id_s
 }
 
 
-function cetaksuratKepadaAPSupayaMembayarPampasanTambahan(idfail,id_bantahan,nama_pegawai) {
+function cetaksuratKepadaAPSupayaMembayarPampasanTambahan(idfail,id_bantahan,nama_pegawai,id_negeri) {
 
 	if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
@@ -5660,6 +5680,33 @@ function cetakSementaraMMKKL(idfail,nama_pengarah,no_fail,id_negeri) {
 	if (hWnd.focus != null) hWnd.focus();
 }
 
+//PPT-43(i)
+function cetakMohonBayaranAgensi(id_fail,nama_pengarah,no_fail,id_hakmilik) {
+	if(document.${formName}.socPegawai.value == ""){
+		alert('Sila pilih nama pegawai terlebih dahulu.');
+		document.${formName}.socPegawai.focus(); 
+		return; 
+	}else{
+		var bankMT = document.${formName}.txtNamaBankMT.value;
+		var noMT = document.${formName}.txtNomborAkaunMT.value;
+		var akaunMT = document.${formName}.txtNamaAkaunMT.value; 
+								
+		var bankARB = document.${formName}.txtNamaBankARB.value;
+		var noARB = document.${formName}.txtNomborAkaunARB.value;
+		var akaunARB = document.${formName}.txtNamaAkaunARB.value;
+			
+		var item1 = "idfail="+id_fail+"&id_hakmilik="+id_hakmilik+"&namaPegawai="+nama_pengarah;
+		var item2 = "&bankMT="+bankMT+"&noMT="+noMT+"&akaunMT="+akaunMT;
+		var item3 = "&bankARB="+bankARB+"&noARB="+noARB+"&akaunARB="+akaunARB;
+			
+	    var url = "../../servlet/ekptg.report.ppt.SuratMohonBayaranAgensi?"+item1+item2+item3;
+	    			
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+			hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
+}
 
 <!-- END REPORT SEMENTARA -->
 
@@ -5767,23 +5814,6 @@ function cetakSuratIringanAfidavit(idhakmilikpb,id_negeri,id_fail,id_pegawai,no_
 }
 
 function cetakSuratIringanMohonBayaran(idhakmilikpb,id_negeri,id_fail,id_pegawai,no_fail,nama_pegawai) {
-
-	//alert(idhakmilikpb);
-	
-	/*if(document.${formName}.socPegawai.value == ""){
-		alert('Sila pilih nama pegawai terlebih dahulu.');
-  		document.${formName}.socPegawai.focus(); 
-		return; 
-	}else{
-
-		var id_pegawai = document.${formName}.socPegawai.value;
-	
-		var url = "../../servlet/ekptg.report.ppt.SuratMohonBayaran?id_hakmilikpb="+idhakmilikpb+"&id_jawatan="+id_pegawai;
-		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-		if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener = document.window;
-		if (hWnd.focus != null) hWnd.focus();
-	}*/
 	
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -5837,10 +5867,8 @@ function cetakSuratIringanMohonBayaran(idhakmilikpb,id_negeri,id_fail,id_pegawai
 }
 
 
-function cetakSuratIringanPembayaran(id_hakmilikpb,id_fail,nama_pegawai,id_jawatan) {
+function cetakSuratIringanPembayaran(idhakmilikpb,id_fail,nama_pegawai,id_jawatan,no_fail,id_negeri) {
 
-	//alert(idhakmilikpb);
-	
 	if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
@@ -5849,12 +5877,13 @@ function cetakSuratIringanPembayaran(id_hakmilikpb,id_fail,nama_pegawai,id_jawat
 
 		var id_pegawai = document.${formName}.socPegawai.value;
 	
-		var url = "../../servlet/ekptg.report.ppt.SuratPengosonganTanah?id_hakmilikpb="+id_hakmilikpb+"&id_jawatan="+id_pegawai+"&nama_pegawai="+nama_pegawai;
+		var url = "../../servlet/ekptg.report.ppt.SuratIringanPembayaran?id_hakmilikpb="+idhakmilikpb+"&id_jawatan="+id_pegawai+"&idFail="+id_fail+"&no_fail="+no_fail+"&namaPengarah="+nama_pegawai;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
 	}
+	
 }
 //PPT-26 (ii) END
 

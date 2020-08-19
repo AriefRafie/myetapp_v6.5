@@ -2732,7 +2732,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 			    		sql += " WHERE ID_TERIMABAYARAN = '"+id_terimabayaran+"'";
 
 						ResultSet rs = stmt.executeQuery(sql);
-			      
+						myLogger.info("SQL LIST BAYARAN CEK : "+sql);
 			    		Hashtable h;
 			    		
 			    		while (rs.next()) {

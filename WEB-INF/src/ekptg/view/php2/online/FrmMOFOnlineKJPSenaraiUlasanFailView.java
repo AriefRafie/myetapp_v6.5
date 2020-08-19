@@ -57,7 +57,6 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 		
 		context.put("templateDir", templateDir);
 
-		String idPermohonan = getParam("idPermohonan");
 		String idFail = getParam("idFail");
 		String idUlasanTeknikal = getParam("idUlasanTeknikal");
 		String idKementerian = "";
@@ -149,9 +148,6 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 				
 				vm = "/maklumatUlasan.jsp";
 			
-			} else if ("simpanKemaskiniMinitKewangan".equals(command)){
-				logic.simpanKemaskiniMinitKewangan(idPermohonan, getParam("txtTarikhTerima"), getParam("socKeputusan"),
-						getParam("txtUlasan"), getParam("socKeputusanPemohon"), getParam("txtUlasanPemohon"), session);
 			} else if ("paparFail".equals(command)) {
 				//TO CLEAR CONTEXT
 				context.remove("BeanHeader");

@@ -472,4 +472,4 @@ function doHapus(idFail,idPermohonan) {
 	doAjaxCall${formName}("doHapus");
 	document.${formname}.submit();
 }
-</script> 
+</script>

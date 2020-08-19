@@ -267,7 +267,6 @@ public class FrmRynSek8SemakPenerimaan {
 	    	  db = new Db();
 	    	  Statement stmt = db.getStatement();
 	    	  
-	    	  
 	    	  //id	
 		      String id_rayuan = (String)data.get("id_rayuan");
 		      String id_permohonan = (String)data.get("id_permohonan");
@@ -518,7 +517,6 @@ public class FrmRynSek8SemakPenerimaan {
 	    
 	  }//close data bayaran
 	
-	
 	//update Keputusan Mahkamah [tblppkrayuan]
 	public static void updateKeputusanMahkamah(HttpSession session,Hashtable data) throws Exception{
 		
@@ -532,7 +530,6 @@ public class FrmRynSek8SemakPenerimaan {
 	    		
 	    	  db = new Db();
 	    	  Statement stmt = db.getStatement();
-	    	 
 	    	 
 	    	  //id	
 		      String id_rayuan = (String)data.get("id_rayuan");
@@ -563,8 +560,7 @@ public class FrmRynSek8SemakPenerimaan {
 		      sql = r.getSQLUpdate("Tblppkrayuan");
 		      System.out.println(" ------------- Tblppkrayuan : "+sql);
 		      stmt.executeUpdate(sql);
-	     	   
-		      
+	     	 
 		      if(idS!=166) {     
 		      
 		    	  if(id_stat==166){
@@ -599,28 +595,7 @@ public class FrmRynSek8SemakPenerimaan {
 		
 		
 		   if(!id_status.equals(sorKeputusanM)){			
-			 /*  
-		      if(idS==164 || idS==166 || idS==167 || idS==180){
-		    	  //update status 
-		    	  SQLRenderer r2 = new SQLRenderer();
-		    	  r2.update("id_permohonan", id_permohonan);
-		    	  r2.add("id_status", sorKeputusanM);   
-		    	  r2.add("id_kemaskini",id_kemaskini);
-		    	  r2.add("tarikh_kemaskini", r2.unquote("sysdate"));	      
-		    	  sql = r2.getSQLUpdate("Tblppkpermohonan");
-		    	  stmt.executeUpdate(sql);
-		      }
-	      
-		      //update n add tblrujsuburusanstatus
-		      SQLRenderer r6 = new SQLRenderer();
-		      r6.update("id_Suburusanstatusfail",id_suburusanstatusfail);	
-		      r6.add("AKTIF",0);
-		      r6.add("ID_KEMASKINI",id_kemaskini);
-		      r6.add("TARIKH_KEMASKINI",r6.unquote("sysdate"));
-		      sql6 = r6.getSQLUpdate("tblrujsuburusanstatusfail");
-		      stmt.executeUpdate(sql6);
-		      */	 
-	      
+			 	      
 		      int no = 0;
 		      if(id_stat==166){
 		    	  //no = 470;
@@ -640,22 +615,6 @@ public class FrmRynSek8SemakPenerimaan {
 		    	  FrmPrmhnnSek8DaftarSek8InternalData logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 				  logic_A.kemaskiniSubUrusanStatusFail(session,id_permohonan,id_kemaskini,"164","467",id_fail);
 		      }
-			  /*
-		      long id_suburusSFail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
-			
-		      SQLRenderer r5 = new SQLRenderer();
-		      r5.add("ID_SUBURUSANSTATUSFAIL",id_suburusSFail);
-		      r5.add("ID_PERMOHONAN",id_permohonan);
-		      r5.add("ID_FAIL",id_fail);
-		      r5.add("ID_SUBURUSANSTATUS",no);
-		      r5.add("AKTIF",1);
-		      r5.add("ID_MASUK",id_kemaskini);
-		      r5.add("ID_KEMASKINI",id_kemaskini);
-		      r5.add("TARIKH_MASUK",r5.unquote("sysdate"));
-		      r5.add("TARIKH_KEMASKINI",r5.unquote("sysdate"));
-		      sql5 = r5.getSQLInsert("tblrujsuburusanstatusfail");
-		      stmt.executeUpdate(sql5);
-		      */
 		      
 	    	}
 	    }//close try 

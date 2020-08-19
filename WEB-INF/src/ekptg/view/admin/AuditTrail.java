@@ -29,8 +29,10 @@ public class AuditTrail extends AjaxBasedModule {
 	@Override
 	public String doTemplate2() throws Exception {
 		
+		List auditTrail = null;
+		
+		
 		HttpSession session = this.request.getSession();
-		List auditTrail = null;		
 		String command = getParam("command");
 		
 		//Initialize
@@ -409,8 +411,8 @@ public class AuditTrail extends AjaxBasedModule {
 			this.context.put("error", e.getMessage());
 		}
 	}
-	
-	public void setupPageDefaultPut(){
+	public void setupPageDefaultPut()
+	{
 		this.context.put("page_mula", "");
 		this.context.put("page", "");
 		this.context.put("itemsPerPage", "");
@@ -424,7 +426,4 @@ public class AuditTrail extends AjaxBasedModule {
 		this.context.put("div", "");
 		this.context.put("totalRecords", "");
 	}
-	
-	
-	
 }

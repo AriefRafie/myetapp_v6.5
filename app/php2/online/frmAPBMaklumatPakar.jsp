@@ -40,7 +40,7 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'newPakar')
       <input type="button" name="cmdSimpanPakar" id="cmdSimpanPakar" value="Simpan" onClick="simpanPakar()"/>
-      <input type="button" name="cmdBatalPakar" id="cmdBatalPakar" value="Batal" onClick="batalPakar()"/>
+      <input type="button" name="cmdBatalPakar" id="cmdBatalPakar" value="Batal/Kembali" onClick="batalPakar()"/>
       #end
       #if ($mode == 'viewPakar')
       <input type="button" name="cmdKemaskiniPakar" id="cmdKemaskiniPakar" value="Kemaskini" onClick="kemaskiniPakar()"/>

@@ -447,7 +447,7 @@
                                    	<tr>
                            				<td>&nbsp;</td>
                                        	<td><div align="right" class="style43">
-                                              <div align="left">Alamat Harta</div>
+                                              <div align="left">Alamat Harta 1</div>
                                      	</div></td>
                                     	<td><div align="right">:</div></td>
                                    		<td><input name="txtAlamatHarta1HtaamX" type="text" id="textfield57" value="$alamathta1" size="34" $readmode style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"/></td>
@@ -645,7 +645,7 @@
                       			<tr>
                                               <td><span class="style56"></span></td>
                                               <td><div align="right" class="style57">
-                                                <div align="left">Kategori Tanah</div>
+                                                <div align="left">Kategori Tanah 1</div>
                                               </div></td>
                                               <td><div align="right">:</div></td>
                                               <td>
@@ -1736,10 +1736,8 @@
 				                                                </div></td>
 				                                             	<td width="1%" valign="top"><div align="right" class="style43">:</div></td>
 				                            					<td>
-				                            						<textarea name="txtCatatanHtaamX" id="txtCatatanHtaam2" cols="31" rows="5" $readmodeR class="$readmode" >
-				                            						#if($!listam.catatan != "null") $!listam.catatan #else #end</textarea>
+				                            						<textarea name="txtCatatanHtaamX" id="txtCatatanHtaam2" cols="31" rows="5" $readmodeR class="$readmode" >$listam.catatan</textarea>
 				                            					</td>
-				                            					
 				                            				</tr>
                                               
 							                           		<tr id="tr_flag_daftar"  style="display:none">
@@ -1962,9 +1960,9 @@
 						                	#end
               								#if($xjumpa_beli =="no")
 								           				<tr class="table_header">
-<!-- 								                       		<td width="2%"> -->
-<!-- 										                 		<input type="checkbox" name="selectallHTATH" id="selectallHTATH" onClick="doCheckAll1_HTATH()" /> -->
-<!-- 															</td> -->
+								                       		<td width="2%">
+										                 		<input type="checkbox" name="selectallHTATH" id="selectallHTATH" onClick="doCheckAll1_HTATH()" />
+															</td>
 								                    		<td width="3%"><div align="center">NO</div></td>
 								                           	<td width="15%"><div align="left">NEGERI</div></td>
 								                          	<td width="15%"><div align="left">DAERAH</div></td>
@@ -1987,7 +1985,7 @@
 														#set( $row = "row1" )
 													#end                       		
 									                  	<tr bgcolor="white" class="$row">
-<!-- 													 		<td><input type="checkbox" name="selectHTATH" id="selectHTATH" value="$listam.idhta" /></td> -->
+													 		<td><input type="checkbox" name="selectHTATH" id="selectHTATH" value="$listam.idhta" /></td>
 									                   		<td><div align="center" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()">$plko</div></td>
 									                      	<td><div align="left" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"><a href="javascript:get_htaam('$!idPermohonanSimati','$!listam.idhta','$!listam.idDokumen')" class="style42">$!listam.namaNegeri</a></div></td>
 									                      	<td><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$!listam.namaDaerah</div></td>

@@ -7,15 +7,14 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import lebah.db.Db;
-import lebah.db.DbException;
 
 import org.apache.log4j.Logger;
 
 
 public class FrmSenaraiFailInternalCarianData {
-	private static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8SecaraOnlineData.class);
-	
+	private static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8SecaraOnlineData.class);	
 	private  Vector list = new Vector();
+	
 	public  void  setCarianFail(String usid,String noFail, String namaPemohon, String namaSimati, String icSimati, String JenisIc)throws Exception {
 	    Db db = null;
 	    list.clear();
@@ -136,83 +135,6 @@ public class FrmSenaraiFailInternalCarianData {
 	 public  Vector getList(){
 		  return list;
 	  }
-	 
-	 public  void  setcarianPN(String usid)throws Exception {
-		    Db db = null;
-		    list.clear();
-		    String sql = "";
-		    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		    try {
-		      db = new Db();
-		      Statement stmt = db.getStatement();
-		     
-		      /*
-		      sql = "Select f.id_fail,f.no_fail,f.tarikh_daftar_fail,a.id_permohonan,a.tarikh_Mohon,a.tarikh_Masuk,s.keterangan,p.id_simati,p.nama_simati,pp.nama_pemohon "+
-		      	"from Tblppkpermohonan a, Tblpfdfail f, Tblrujstatus s, Tblppksimati p, Tblppkpemohon pp, Tblppkpermohonansimati ms "+
-		      	"where a.id_status = s.id_status(+) and a.id_fail = f.id_fail(+) and a.id_permohonan = pp.id_permohonan(+) and ms.id_permohonan = a.id_permohonan  and a.id_status = 8 and a.seksyen = 8 and a.id_masuk = '"+usid+"'  and ms.id_simati = p.id_simati";
-		      */
-		      sql = "SELECT F.ID_FAIL, F.NO_FAIL, A.ID_PERMOHONAN, A.TARIKH_MOHON, A.TARIKH_MASUK, F.TARIKH_DAFTAR_FAIL,"
-		              + " S.KETERANGAN, P.ID_SIMATI, P.NAMA_SIMATI, A.ID_DAERAHMHN, A.TARIKH_MOHON_ONLINE, A.NO_PERMOHONAN_ONLINE, PM.NAMA_PEMOHON,"
-		              + " PM.NO_KP_BARU, PM.ID_PEMOHON, P.NO_KP_BARU, P.NO_KP_BARU"
-					+" FROM TBLPPKPERMOHONAN A, TBLPFDFAIL F, TBLRUJSTATUS S, TBLPPKSIMATI P,"
-					+" TBLPPKPEMOHON PM, TBLPPKPERMOHONANSIMATI MS,TBLRUJSUBURUSANSTATUS ST, TBLRUJSUBURUSANSTATUSFAIL STA, TBLRUJDAERAH D"
-					+" WHERE"
-					+" A.PENGESAHAN_NILAIANHARTA = '"+usid+"' AND A.FLAG_PENGESAHANNILAIANHARTA IS NULL ";
-					
-					 
-					
-					sql += " AND ST.ID_STATUS = S.ID_STATUS(+)"
-					+" AND STA.ID_SUBURUSANSTATUS = ST.ID_SUBURUSANSTATUS(+)"
-				//	+" AND PM.ID_PERMOHONAN = A.ID_PERMOHONAN(+)"
-					+" AND A.ID_PEMOHON = PM.ID_PEMOHON(+)"
-					+" AND A.ID_FAIL = F.ID_FAIL(+)"
-					+" AND A.ID_DAERAHMHN = D.ID_DAERAH"
-					+" AND A.ID_PERMOHONAN = MS.ID_PERMOHONAN"
-					+" AND A.ID_PERMOHONAN = STA.ID_PERMOHONAN"
-					+" AND P.ID_SIMATI = MS.ID_SIMATI"
-					+" AND A.ID_STATUS <> '999'"
-					+" AND (STA.ID_SUBURUSANSTATUS = 340 OR STA.ID_SUBURUSANSTATUS = 342 OR STA.ID_SUBURUSANSTATUS = 553)"
-					+" AND A.SEKSYEN = 8"
-					+" AND STA.AKTIF = 1"
-					+" AND (A.FLAG_JENIS_PERMOHONAN = 1)"
-					+" AND (F.FLAG_JENIS_FAIL = 1 OR F.FLAG_JENIS_FAIL = 2)"
-					//+" AND F.FLAG_JENIS_FAIL = 1"
-				//	+" ORDER BY F.ID_FAIL DESC"
-					+"";
-
-
-
-			      
-			   
-			   
-			  sql = sql + " AND f.no_fail is not null ORDER BY F.ID_FAIL DESC";
-		      System.out.println("sql Pengesahan Nilaian--->>>>>"+sql);
-		      ResultSet rs = stmt.executeQuery(sql);
-		      Hashtable h;
-		      int bil = 1;
-
-		      while (rs.next()) {
-		    	  h = new Hashtable();
-		    	    h.put("bil", bil);
-					h.put("id_Permohonan", rs.getString("id_Permohonan"));
-					h.put("id_Fail", rs.getString("id_Fail")==null?"":rs.getString("id_Fail"));
-					h.put("no_Fail", rs.getString("no_Fail")==null?"":rs.getString("no_Fail"));
-					h.put("tarikhmohon", rs.getString("tarikh_Mohon")==null?"":sdf.format(rs.getDate("tarikh_Mohon")));
-					h.put("tarikhMasuk", rs.getString("tarikh_Masuk")==null?"":sdf.format(rs.getDate("tarikh_Masuk")));
-					h.put("tarikhDaftar", rs.getDate("tarikh_daftar_fail")==null?"":sdf.format(rs.getDate("tarikh_daftar_fail")));
-					h.put("keterangan",rs.getString("keterangan")==null?"":rs.getString("keterangan"));
-					h.put("id_simati", rs.getString("id_Simati"));
-					h.put("namasimati", rs.getString("nama_simati")==null?"":rs.getString("nama_simati"));
-					//System.out.println("cari data---->>>"+h);
-					list.addElement(h);
-					bil++;
-
-		      }
-		    } finally {
-		      if (db != null) db.close();
-		    }
-		}
-		
 
 
 		private  Vector listRPP = new Vector();
@@ -495,7 +417,7 @@ public class FrmSenaraiFailInternalCarianData {
 			  return listKutipan;
 		  }
 		 
-		 
+		 //yati edit 7/7/2020
 		 private  Vector list17_online = new Vector();
 			public  void  setCarianFail17_online(String NoFail, String NoKPBaru, String NoKPLama, String NoKPLain)throws Exception {
 			    Db db = null;
@@ -512,7 +434,11 @@ public class FrmSenaraiFailInternalCarianData {
 			     
 
 
-					sql = "SELECT DISTINCT F.ID_FAIL, F.NO_FAIL,A.NO_SUBJAKET, A.ID_PERMOHONAN, A.TARIKH_MOHON, A.TARIKH_MASUK, F.TARIKH_DAFTAR_FAIL,"
+					sql = "SELECT DISTINCT F.ID_FAIL,  " 
+							+ "CASE WHEN (SELECT NO_FAIL FROM TBLPFDFAIL  " 
+					+ "WHERE TAJUK_FAIL = UPPER('" + chkNoFail + "')  "
+					+ "AND NO_FAIL  NOT IN UPPER('" + chkNoFail + "') ) IS NULL THEN F.NO_FAIL ELSE '' END AS NO_FAIL," 					 
+					+ "A.NO_SUBJAKET, A.ID_PERMOHONAN, A.TARIKH_MOHON, A.TARIKH_MASUK, F.TARIKH_DAFTAR_FAIL,"
 		                + " S.KETERANGAN, P.ID_SIMATI, P.NAMA_SIMATI, A.ID_DAERAHMHN, A.TARIKH_MOHON_ONLINE, A.NO_PERMOHONAN_ONLINE, PM.NAMA_PEMOHON,"
 		                + " PM.NO_KP_BARU, PM.ID_PEMOHON, P.NO_KP_BARU, P.NO_KP_BARU"
 					+" FROM TBLPPKPERMOHONAN A, TBLPFDFAIL F, TBLRUJSTATUS S, TBLPPKSIMATI P,"
@@ -541,7 +467,7 @@ public class FrmSenaraiFailInternalCarianData {
 			      //NO FAIL
 			      if (chkNoFail != "") {
 						if (!chkNoFail.trim().equals("")) {
-							sql = sql + " AND UPPER(F.NO_FAIL) = '" + chkNoFail.toUpperCase() + "'";
+							sql = sql + " AND UPPER(F.NO_FAIL) LIKE '%" + chkNoFail.toUpperCase() + "%'";
 						}
 					}
 			      
@@ -566,7 +492,7 @@ public class FrmSenaraiFailInternalCarianData {
 			      sql = sql + " AND f.no_fail is not null ORDER BY F.ID_FAIL DESC";
 
 			      
-			      myLogger.info("SQL CHECK KP XXXXXXXXXXXXXX :: "+sql);
+			      myLogger.info("SQL cCHECK KP xXXXXXXXXXXXXXX :: "+sql);
 			      ResultSet rs = stmt.executeQuery(sql);
 			      Hashtable h;
 			      int bil = 1;
@@ -771,8 +697,7 @@ sql += "                   ) A, "+
 		      sql += "               ORDER BY A.ID_FAIL DESC "+
 		    		  "               ) ";
 
-		      System.out.println(" SENARAI S17 : "+sql);
-		      //System.out.println("sql--->>>>>"+sql);
+		      myLogger.info(" SENARAI S17 : sql="+sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable h;
 		      int bil = 1;

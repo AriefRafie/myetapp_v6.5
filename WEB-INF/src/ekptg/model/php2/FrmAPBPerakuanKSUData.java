@@ -288,6 +288,17 @@ public class FrmAPBPerakuanKSUData {
 
 			if ("L".equals(kelulusan)) {
 				// TBLPHPBYRNSYRTKLLSNLESENAPB
+				sql = "SELECT ID_PERMOHONAN FROM TBLPHPBYRNSYRTKLLSNLESENAPB WHERE ID_PERMOHONAN = '"
+						+ idPermohonan + "'";
+				ResultSet rst = stmt.executeQuery(sql);
+				
+				if (rst.next()) {
+					sql = "DELETE FROM TBLPHPBYRNSYRTKLLSNLESENAPB WHERE ID_PERMOHONAN = '"
+							+ idPermohonan + "'";
+					stmt.executeQuery(sql);
+				}
+				
+				// TBLPHPBYRNSYRTKLLSNLESENAPB
 				r = new SQLRenderer();
 				long id = DB.getNextID("TBLPHPBYRNSYRTKLLSN_SEQ");
 				r.add("ID_BYRNSYRTKLLSNLESENAPB", id);

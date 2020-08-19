@@ -605,7 +605,7 @@ public class FrmPermohonanUPTData {
 	    	 String id_user = (String)data.get("id_user");
 	    	 String id_hakmilik = (String)data.get("id_hakmilik");
 	      
-	    	 //seksyen 4 & 8
+	    	 //seksyen 4 & 8 
 	    	 String negeri = (String)data.get("editNegeri");
 	    	 String daerah = (String)data.get("editDaerah");
 	    	 String mukim = (String)data.get("editMukim");
@@ -619,7 +619,7 @@ public class FrmPermohonanUPTData {
 	    	 String txtLain = (String)data.get("txtLain");
 	    	 String txtNoWartaRizab = (String)data.get("txtNoWartaRizab");
 	    	 String txdTarikhWarta = (String)data.get("txdTarikhWarta");
-
+	    	 
 	    	 String daerahpenggawa = (String)data.get("daerahpenggawa");
 	    	 
 	    	 //seksyen 8
@@ -631,6 +631,11 @@ public class FrmPermohonanUPTData {
 	    	 String edit_anggaran_luas = (String)data.get("edit_anggaran_luas");
 	    	 String socKategoriTanah = (String)data.get("socKategoriTanah");
 	    	 
+//	    	PPT-03 Penambahan Strata
+	    	String no_bangunan = (String)data.get("no_bangunan");
+	    	String no_tingkat = (String)data.get("no_tingkat");
+	    	String no_petak = (String)data.get("no_petak");
+	    	
 	    	 String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 	    	 
 	    	 SQLRenderer r = new SQLRenderer();
@@ -656,8 +661,15 @@ public class FrmPermohonanUPTData {
 	    	 r.add("id_kategoritanah",socKategoriTanah);
 	    	 r.add("tarikh_kemaskini",r.unquote("sysdate"));
 		     r.add("id_kemaskini",id_user);
+		     
+//	    	PPT-03 Penambahan Strata
+	    	r.add("no_bangunan",no_bangunan);
+	    	r.add("no_tingkat",no_tingkat);
+	    	r.add("no_petak",no_petak);
+		     
 	    	 sql = r.getSQLUpdate("tblppthakmilik");
 	    	 stmt.executeUpdate(sql);
+	    	 myLogger.info("updateMaklumatTanah TBLPPTHAKMILIK   :"+sql);
 	    	 
 	    } catch (Exception re) {
 	    	log.error("Error: ", re);
@@ -776,7 +788,7 @@ public class FrmPermohonanUPTData {
 	   	   //untuk n9 shj [27042011]
 		     	r.add("tujuan_bi",txtTujuanBI);
 	    		sql = r.getSQLUpdate("tblpptpermohonan");	    
-	    		//myLogger.info("UPDATE TBLPPTPERMOHONAN  :"+sql);
+	    		myLogger.info("UPDATE TBLPPTPERMOHONAN  :"+sql);
 	    		stmt.executeUpdate(sql);
 
 	    		//projek negeri
@@ -1098,11 +1110,10 @@ public class FrmPermohonanUPTData {
 	}//close list pohon2
 	
 	
-	
 	@SuppressWarnings("unchecked")
 	public static void add_maklumat_tanah(Hashtable data) throws Exception
 	  {
-		//System.out.println("DATA---"+data);
+//		System.out.println("DATA---"+data);
 	    Db db = null;
 	    String sql = "";
 	    
@@ -1111,7 +1122,7 @@ public class FrmPermohonanUPTData {
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();
 	    		String id_user = (String)data.get("id_user");
-	    	
+	    		
 	    		//seksyen 4 & 8
 	    		String id_permohonan = (String)data.get("id_permohonan");
 	    		String id_negeri = (String)data.get("negeri");
@@ -1128,7 +1139,7 @@ public class FrmPermohonanUPTData {
 	    		String txtLain = (String)data.get("txtLain");
 	    		String txtNoWartaRizab = (String)data.get("txtNoWartaRizab");
 	    		String txdTarikhWarta = (String)data.get("txdTarikhWarta");
-	  
+	    		
 	    		//seksyen 8
 	    		String id_jenishakmilik = (String)data.get("jenisHakMilik");	 
 	    		String no_hakmilik = (String)data.get("no_hakmilik");
@@ -1137,6 +1148,11 @@ public class FrmPermohonanUPTData {
 	    		String luas_lot = (String)data.get("luas_lot");
 	    		String luas_ambil = (String)data.get("anggaran_luas");	
 	    		String socKategoriTanah = (String)data.get("socKategoriTanah");
+	    		
+	    		//PPT-03 Penambahan Strata
+	    		String no_bangunan = (String)data.get("txtNoBangunan");
+	    		String no_tingkat = (String)data.get("txtNoTingkat");
+	    		String no_petak = (String)data.get("txtNoPetak");
 	    		
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 	    		
@@ -1164,11 +1180,17 @@ public class FrmPermohonanUPTData {
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);	 
 	    		
-	    		
-	    		
+//	    		PPT-03 Penambahan Strata
+	    		r.add("no_bangunan",no_bangunan);
+	    		r.add("no_tingkat",no_tingkat);
+	    		r.add("no_petak",no_petak);
+//	    		r.add("column_name", String.valueOf(data.get("")));
+//	    		r.add("no_bangunan",String.valueOf(data.get("txtNoBangunan"))); 
+//	    		r.add("no_tingkat", String.valueOf(data.get("txtNoTingkat")));
+//	    		r.add("no_petak", String.valueOf(data.get("txtNoPetak")));
+	    		myLogger.info("Simpan maklumat no bangunan, tingkat dan petak");
 	    		
 	    		sql = r.getSQLInsert("tblppthakmilik");
-	    		
 	    		
 	    		myLogger.info("ADD HAKMILIK SEK 4 :"+sql.toUpperCase());
 	    		
@@ -2242,11 +2264,6 @@ public void setListMaklumatTanahSeksyen8(String idPermohonan,String lot,String i
 				//sql += " ORDER BY LPAD(m.no_subjaket,20) asc, LPAD(m.no_lot,20) asc, LPAD(m.no_pt,20) asc, LPAD(no_lotpt,20) asc, mk.nama_mukim asc ";
 				//Susunan di ubah ke mukim,lot,subjaket
 				sql += " ORDER BY mk.nama_mukim asc, LPAD(m.no_lot,20) asc, LPAD(m.no_pt,20) asc, LPAD(no_lotpt,20) asc, LPAD(m.no_subjaket,20) asc";
-				
-				
-				
-				
-				
 				
 				sql += ") ";
 				
@@ -3438,7 +3455,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			db = new Db();
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT DISTINCT hk.flag_segera_sebahagian, f.id_fail,f.id_suburusan, jhk.kod_jenis_hakmilik, hk.id_hakmilik, ls.id_luas as id_unitluaslot, lam.id_luas as id_unitluasambil, p.id_permohonan, jhk.id_jenishakmilik, n.id_negeri, "; 
+			sql = "SELECT DISTINCT hk.flag_segera_sebahagian, f.id_fail,f.id_suburusan, jhk.kod_jenis_hakmilik, hk.id_hakmilik, ls.id_luas as id_unitluaslot, lam.id_luas as id_unitluasambil, p.id_permohonan, jhk.id_jenishakmilik, n.id_negeri, ";
 			
 			sql += " (select count(a.id_borangh) ";
 			sql += " from tblpptborangh a, tblpptborangg b, tblppthakmilikpb c";
@@ -3447,7 +3464,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			sql += " and c.id_hakmilik = hk.id_hakmilik) as flag_status_borang_h, ";
 			
 			sql += " hk.id_lot, d.id_daerah, mk.id_mukim, hk.luas_ambil, hk.no_hakmilik, hk.no_lot, ";
-			sql += " hk.luas_lot, hk.no_pt, n.nama_negeri, d.nama_daerah, ls.keterangan, mk.nama_mukim, jhk.keterangan as jenis_hakmilik, hk.catatan, hk.seksyen, ";  
+			sql += " hk.luas_lot, hk.no_pt, n.nama_negeri, d.nama_daerah, ls.keterangan, mk.nama_mukim, jhk.keterangan as jenis_hakmilik, hk.catatan, hk.seksyen, ";
 			sql += " hk.tarikh_daftar, hk.tarikh_luput, hk.tempoh_luput, ";
 			sql += " hk.lokasi,hk.syarat_nyata,hk.syarat_khas,hk.sekatan_hak,hk.sekatan_kepentingan,hk.no_syit,hk.id_kategoritanah, ";
 			sql += " mk.nama_mukim, d.nama_daerah, n.nama_negeri, kt.keterangan as kategori_tanah, hk.id_daerahpenggawa, ";
@@ -3455,34 +3472,34 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			sql += " hk.flag_jenis_rizab, hk.nama_lain_rizab, hk.no_warta_rizab, hk.tarikh_warta_rizab, hk.id_pegawai, ";
 			sql += " hk.id_unitluaslot_convert, hk.id_unitluasambil_convert, hk.nama_luas_asal, hk.nama_luas_ambil, ";
 			
-			sql += " hk.no_bangunan, hk.no_tingkat, hk.no_petak, "; //PPT-03 
-
+			sql += " hk.no_bangunan, hk.no_tingkat, hk.no_petak, "; //PPT-03 Penambahan Strata
+			
 			sql += " CASE ";
 			sql += " WHEN hk.no_lot IS NOT NULL AND hk.no_pt IS NULL THEN hk.no_lot "; 
 			sql += " WHEN hk.no_lot IS NULL AND hk.no_pt IS NULL THEN lt.keterangan || hk.no_pt ";
 			sql += " WHEN hk.no_lot IS NULL AND hk.no_pt IS NOT NULL THEN  lt.keterangan || hk.no_pt "; 
 			sql += " WHEN hk.no_lot IS NOT NULL AND hk.no_pt IS NOT NULL THEN lt.keterangan || hk.no_pt || CHR(32) || CHR(40) || hk.no_lot || CHR(41) ";
 			sql += " ELSE '' ";
-			sql += " END AS NO_LOTPT ";  
+			sql += " END AS NO_LOTPT ";
 			
-			sql += " FROM Tblpfdfail f,Tblppthakmilik hk, Tblrujjenishakmilik jhk, Tblrujmukim mk, Tblrujluas ls, Tblrujdaerah d, "; 
+			sql += " FROM Tblpfdfail f,Tblppthakmilik hk, Tblrujjenishakmilik jhk, Tblrujmukim mk, Tblrujluas ls, Tblrujdaerah d, ";
 			sql += " Tblrujnegeri n, Tblpptpermohonan p, Tblrujkategori kt, Tblrujluas lam, Tblrujlot lt ";
-			sql += " WHERE n.id_negeri(+) = hk.id_negeri "; 
-			sql += " AND d.id_daerah(+) = p.id_daerah "; 
+			sql += " WHERE n.id_negeri(+) = hk.id_negeri ";
+			sql += " AND d.id_daerah(+) = p.id_daerah ";
 			sql += " AND p.id_fail = f.id_fail(+)";
-			sql += " AND ls.id_luas(+) = hk.id_unitluaslot ";  
-			sql += " AND lam.id_luas(+) = hk.id_unitluasambil ";  
-			sql += " AND mk.id_mukim(+) = hk.id_mukim "; 
-			sql += " AND kt.id_kategori(+) = hk.id_kategoritanah "; 
+			sql += " AND ls.id_luas(+) = hk.id_unitluaslot ";
+			sql += " AND lam.id_luas(+) = hk.id_unitluasambil ";
+			sql += " AND mk.id_mukim(+) = hk.id_mukim ";
+			sql += " AND kt.id_kategori(+) = hk.id_kategoritanah ";
 			sql += " AND hk.id_lot = lt.id_lot(+)";
-			sql += " AND jhk.id_jenishakmilik(+) = hk.id_jenishakmilik ";  
-			sql += " AND p.id_permohonan = hk.id_permohonan ";  
+			sql += " AND jhk.id_jenishakmilik(+) = hk.id_jenishakmilik ";
+			sql += " AND p.id_permohonan = hk.id_permohonan ";
 			sql += " AND hk.id_hakmilik = '"+idHakmilik+"'";
 			myLogger.info("GET MAKLUMAT HAKMILIK :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-	
+			
 			Hashtable h;
-		
+			
 			while(rs.next()) {
 			h = new Hashtable();
 			h.put("flag_segera_sebahagian", rs.getString("flag_segera_sebahagian")==null?"":rs.getString("flag_segera_sebahagian"));
@@ -3571,7 +3588,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			h.put("jenis_hakmilik", rs.getString("jenis_hakmilik")==null?"":rs.getString("jenis_hakmilik"));
 			h.put("kategori_tanah", rs.getString("kategori_tanah")==null?"":rs.getString("kategori_tanah"));
 			
-			//PPT-03 
+			//PPT-03 Penambahan Strata
 			h.put("no_bangunan", rs.getString("no_bangunan")==null?"":rs.getString("no_bangunan"));
 			h.put("no_tingkat", rs.getString("no_tingkat")==null?"":rs.getString("no_tingkat"));
 			h.put("no_petak", rs.getString("no_petak")==null?"":rs.getString("no_petak"));
@@ -3711,16 +3728,16 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			h.put("no_lot", rs.getString("no_lot")==null?"":rs.getString("no_lot"));
 			h.put("no_hakmilik", rs.getString("no_hakmilik")==null?"":rs.getString("no_hakmilik"));
 			h.put("catatan", rs.getString("catatan")==null?"":rs.getString("catatan"));
-			h.put("seksyen", rs.getString("seksyen")==null?"":rs.getString("seksyen"));			
+			h.put("seksyen", rs.getString("seksyen")==null?"":rs.getString("seksyen"));
 			h.put("tarikh_daftar", rs.getDate("tarikh_daftar")==null?"":Format.format(rs.getDate("tarikh_daftar")));
 			h.put("tarikh_luput", rs.getDate("tarikh_luput")==null?"":Format.format(rs.getDate("tarikh_luput")));
-			h.put("tempoh_luput", rs.getString("tempoh_luput")==null?"":rs.getString("tempoh_luput"));			
+			h.put("tempoh_luput", rs.getString("tempoh_luput")==null?"":rs.getString("tempoh_luput"));
 			h.put("lokasi", rs.getString("lokasi")==null?"":rs.getString("lokasi"));
 			h.put("syarat_nyata", rs.getString("syarat_nyata")==null?"":rs.getString("syarat_nyata"));
 			h.put("syarat_khas", rs.getString("syarat_khas")==null?"":rs.getString("syarat_khas"));			
 			h.put("sekatan_hak", rs.getString("sekatan_hak")==null?"":rs.getString("sekatan_hak"));
 			h.put("sekatan_kepentingan", rs.getString("sekatan_kepentingan")==null?"":rs.getString("sekatan_kepentingan"));
-			h.put("no_syit", rs.getString("no_syit")==null?"":rs.getString("no_syit"));			
+			h.put("no_syit", rs.getString("no_syit")==null?"":rs.getString("no_syit"));
 			h.put("id_kategoritanah", rs.getString("id_kategoritanah")==null?"":rs.getString("id_kategoritanah"));
 			
 			h.put("nama_mukim", rs.getString("nama_mukim")==null?"":rs.getString("nama_mukim"));
