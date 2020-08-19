@@ -1281,6 +1281,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 						"T", "", db);
 				viewSaksi = modelBI.viewSaksi(session, ID_BIKEHADIRAN, db);
 			}
+			//arief saja try comment
 			finally {
 				if (db != null)
 					db.close();
