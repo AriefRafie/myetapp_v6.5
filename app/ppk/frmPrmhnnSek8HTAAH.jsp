@@ -2989,6 +2989,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                               </tr>
                             #end
                             #end
+>>>>>>> 25d3c22e41d57fad9c327c29c031f54e8120701c
                           </table>
                           #else
                           <table width="100%">

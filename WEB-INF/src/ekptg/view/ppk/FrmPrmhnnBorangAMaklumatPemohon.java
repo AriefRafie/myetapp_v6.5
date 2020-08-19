@@ -6955,6 +6955,5 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		return jenisPB;
 				
 	}
-	
-	
+
 }

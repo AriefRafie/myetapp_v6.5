@@ -2214,3 +2214,4 @@ document.f1.txtHaNilaiTarikhMati.value = document.f1.txtHaNilaiTarikhMohon.value
 </script>
 </body>
 </html>
+>>>>>>> 25d3c22e41d57fad9c327c29c031f54e8120701c
