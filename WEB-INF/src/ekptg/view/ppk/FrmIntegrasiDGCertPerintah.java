@@ -279,6 +279,49 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 			
 			if (idjenispejabat.equals("22")) {
+				// dropdown pejabat jkptg
+//				if (idPejabatJKPTG != "") {
+//					if (idpejabat != "") {
+//						context
+//								.put(
+//										"showBicara",
+//										HTML
+//												.SelectTempatBicaraByPejabatJKPTG(
+//														idPejabatJKPTG,
+//														"editTempatBicara",
+//														Utils
+//																.parseLong(idpejabat),
+//														null,
+//														"style=width:400 class=disabled disabled "));
+//					} else {
+//						context
+//								.put(
+//										"showBicara",
+//										HTML
+//												.SelectTempatBicaraByPejabatJKPTG(
+//														idPejabatJKPTG,
+//														"editTempatBicara",
+//														null, null,
+//														"style=width:400 class=disabled disabled "));
+//					}
+//				} 
+//				else {
+//					if (idpejabat != "") {
+//						context.put("showBicara", HTML.SelectTempatBicara(
+//								"editTempatBicara", Utils.parseLong(idpejabat),
+//								null,
+//								"style=width:400 onChange=\"doChangeidTempatBicara();\" class=disabled disabled "));
+//					} else {
+//						context.put("showBicara", HTML.SelectTempatBicara(
+//								"editTempatBicara", null, null,
+//								"style=width:400 onChange=\"doChangeidTempatBicara();\" class=disabled disabled "));
+//					}
+//				}
+
+				// radio button
+//				context.put("checkP1", "checked");
+//				context.put("checkP2", "");
+//				context.put("checkP3", "");
 
 			} else if (idjenispejabat.equals("2")) {
 				// dropdown pejabat tanah
@@ -488,6 +531,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 			context.put("NOalertBIL", bil);
 
+			String idPerintah="";
 			String idperbicaraan = "";
 			String idpsk = "";
 			String idNeg = "";
@@ -654,10 +698,6 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 				context.put("checkP1", "checked");
 				context.put("checkP2", "");
 				context.put("checkP3", "");
-			}
-			
-			if (idjenispejabat.equals("22")) {
-				
 			} else if (idjenispejabat.equals("2")) {
 				// dropdown pejabat tanah
 				
@@ -768,7 +808,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 			
 			//GET SIGNEDDATA
-			String dataDahSign = modelPerintah.getSignedData(idperbicaraan);
+			String dataDahSign = modelPerintah.getSignedData(idPerintah);
 			System.out.println("dataDahSign    "+dataDahSign);
 			context.put("dataDahSign", dataDahSign);
 
@@ -795,14 +835,12 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 				db = new Db();
 				Connection con = db.getConnection();
 				con.setAutoCommit(false);
-				PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKPERBICARAAN SET SIGNED_TEXT  = ? WHERE ID_PERBICARAAN = ? ");
+				PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKPERINTAH SET SIGNED_TEXT  = ? WHERE ID_PERBICARAAN = ? ");
 	        	ps.setString(1, signedText);
 	        	ps.setString(2, idperbicaraan);       
 	        	System.out.println("sql b4---");
 	        	ps.executeUpdate();  
-	        	System.out.println("sql--------UPDATE TBLPPKPERBICARAAN SET SIGNED_TEXT  = "+signedText+" WHERE ID_PERBICARAAN = "+idperbicaraan+"");
-				con.commit();
-				modelPerintah.insertPenghantaranNotisReal(idperbicaraan,idfail,session,application,request,response);
+	        	System.out.println("sql--------UPDATE TBLPPKPERINTAH SET SIGNED_TEXT  = "+signedText+" WHERE ID_PERBICARAAN = "+idperbicaraan+"");
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {

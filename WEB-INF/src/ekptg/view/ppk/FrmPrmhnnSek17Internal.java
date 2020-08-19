@@ -458,6 +458,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 			if (eventStatus == 0) {
 				long idPermohonan = DB.getNextID("TBLPPKPERMOHONAN_SEQ");
 				// String buktimati = getParam("cbsemakradio");
+				myLogger.info("idPermohonan = "+idPermohonan);
 				String tempid = Long.toString(idPermohonan);
 				if (bolehsimpan.equals("yes")) {
 					delete_semakan(session, tempid);
@@ -1394,6 +1395,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 		}
 
 		else if ("Simpanx".equals(submit)) {
+			myLogger.info("Simpanx");
 			check_mode_permohonan(session);
 			chkId = logic_A.getId();
 			Hashtable b = (Hashtable) chkId.get(0);
@@ -1814,6 +1816,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 
 			vm = "app/ppk/frmPraPrmhnnSek17SenaraiSemak.jsp";
 		} else if ("seterusnya".equals(submit)) {
+			myLogger.info("Seterusnya");
 			readability1 = " ";
 			readability2 = "readonly";
 			disability1 = "disabled";
@@ -6920,9 +6923,13 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 		kenegaraan = mainheader.kenegaraanDb(db);
 		this.context.put("kenegaraan", kenegaraan);
 		FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamahARBDb(db);
+		FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatPentadbirTanah(db);
 		Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
 				.getMaklumatMahkamahARB();
-		this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);		
+		Vector listMaklumatPentadbirTanah = FrmPrmhnnSek8KeputusanPermohonanInternalData
+				.getMaklumatPentadbirTanah();
+		this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
+		this.context.put("listMaklumatPentadbirTanah", listMaklumatPentadbirTanah);
 		this.context.put("flagFromSenaraiFailSek8", flagFromSenaraiFailSek8);
 		this.context.put("flagForView", flagForView);
 		this.context.put("flagFromSenaraiPermohonanSek8",flagFromSenaraiPermohonanSek8);
@@ -6943,6 +6950,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 
 	private void delete_semakan(HttpSession session, String idPermohonan)
 			throws Exception {
+		myLogger.info("delete semakan");
 		FrmPrmhnnSek8SenaraiSemakInternalData frmonline = new FrmPrmhnnSek8SenaraiSemakInternalData();
 		frmonline.semakanDelete(idPermohonan);
 	}
@@ -6960,6 +6968,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 	private void addPermohonan(HttpSession session, String userIdNeg,
 			String userIdPejabat, String userIdKodDaerah, String userIdKodNegeri)
 			throws Exception {
+		myLogger.info("addPermohonan");
 		String id_Fail = getParam("id_Fail");
 		String txtNoFail = getParam("txtNoFail");
 		String IdPermohonan = getParam("idPermohonan");
@@ -8908,6 +8917,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 		} else {
 			h.put("bandarhta", getParam("txtBandarHartaHtaamX"));
 		}
+			
 		h.put("noperjanjian", getParam("txtNoPerjanjianHtaamX"));
 		h.put("tarikhperjanjian", getParam("txtTarikhPerjanjianHtaamX"));
 
