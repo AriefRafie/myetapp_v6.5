@@ -28,7 +28,7 @@ import ekptg.model.online.aduan.ComplaintType;
 public class Portal implements IServlet2 {
 	static Logger myLogger = Logger.getLogger(Portal.class);
 
-	@Override
+	//@Override
 	public void doService(HttpServletRequest request
 		,HttpServletResponse response
 		,ServletContext context) throws IOException, ServletException {
@@ -41,6 +41,7 @@ public class Portal implements IServlet2 {
 		String NoKPBaru = request.getParameter("txtNoKPBaru");
 		String submit = request.getParameter("command");
 		String id_negeri = request.getParameter("id_negeri");
+		String id_negara = request.getParameter("id_negara");
 		String idKategori = request.getParameter("idKategori");
 		String username = "";
 		
@@ -70,13 +71,14 @@ public class Portal implements IServlet2 {
 				out.println("Maaf, No.KP \"" + NoKPBaru + "\" sudah wujud!");
 				session.setAttribute("doCheckNoKp", context);
 			}
+			myLogger.info("submit="+submit);
 		} else if ("doRegister".equals(submit)) {
 			String code = (String) session.getAttribute("verification.code");
 			String attempt = request.getParameter("txtCaptChar");
-			// myLogger.info("doRegister");
+			 myLogger.info("doRegister");
 			if (code.equals(attempt)) {
 				FrmKemaskiniPenggunaData userdata = FrmKemaskiniPenggunaData.getInstance();
-				// myLogger.info("code match");
+				 myLogger.info("code match");
 				try {
 					String xIndividu = request.getParameter("idsyarikat");
 					myLogger.info("xIndividu="+xIndividu);
