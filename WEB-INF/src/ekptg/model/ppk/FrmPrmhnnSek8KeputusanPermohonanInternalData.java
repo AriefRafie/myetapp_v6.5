@@ -1,9 +1,9 @@
 /**
  * 
  */
-package ekptg.model.ppk;
+package ekptg.model.ppk;     
 
-import java.sql.Connection;
+import java.sql.Connection;    
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +12,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.Vector;   
+
 
 import javax.servlet.http.HttpSession;
 

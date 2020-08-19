@@ -263,7 +263,7 @@ public class FrmTukarPemohon extends AjaxBasedModule{
 				myLogger.info("UPDATE TBLPPKSIMATI :"+sql1);
 					stmt.executeUpdate(sql1);								
 		conn.commit();
-	} catch (SQLException se) {
+	} catch (SQLException se) {  
 		try {
 			conn.rollback();
 		} catch (SQLException se2) {
