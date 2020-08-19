@@ -185,7 +185,10 @@
       #if ($modePopup == 'update')
       <input name="cmdSimpan2" type="button" onclick="doSimpanKemaskiniMaklumatJUPEM()" value="Simpan" />
       <input name="cmdBatal" type="button" onClick="doBatalKemaskiniMaklumatJUPEM()" value="Batal">
-      #end </td>
+      #end 
+      <input name="cmdTambah" type="button" value="Tambah" onClick="doTerimaJUPEM1()"/>
+      </td>
+      
   </tr>
 </table>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -201,9 +204,9 @@
 		    <td>&nbsp;</td>
 		  </tr>
   		#end
-        <tr>
-          <td colspan="9" scope="row"><input name="cmdTambah" type="button" value="Tambah" onClick="javascript:doDaftarNotifikasi()"/></td>
-        </tr>
+        ##<tr>
+        ##  <td colspan="9" scope="row"><input name="cmdTambah" type="button" value="Tambah" onClick="javascript:doDaftarNotifikasi()"/></td>
+        ##</tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="25%"><strong>Nama Pegawai</strong></td>

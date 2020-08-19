@@ -83,7 +83,7 @@ public class FrmPLPSenaraiFailData {
 			}
 			
 			// noFail
-			if (noFail != null) {
+			if (noFail != null || noFail != "") {
 				if (!noFail.trim().equals("")) {
 					sql = sql + " AND UPPER(A.NO_FAIL) LIKE '%' ||'"
 							+ noFail.trim().toUpperCase() + "'|| '%'";
@@ -91,7 +91,7 @@ public class FrmPLPSenaraiFailData {
 			}
 			
 			// noFailNegeri
-			if (noFailNegeri != null) {
+			if (noFailNegeri != null || noFailNegeri != "") {
 				if (!noFailNegeri.trim().equals("")) {
 					sql = sql + " AND UPPER(A.NO_FAIL_NEGERI) LIKE '%' ||'"
 							+ noFailNegeri.trim().toUpperCase() + "'|| '%'";
@@ -99,7 +99,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// tajukFail
-			if (tajukFail != null) {
+			if (tajukFail != null || tajukFail != "") {
 				if (!tajukFail.trim().equals("")) {
 					sql = sql + " AND UPPER(A.TAJUK_FAIL) LIKE '%' ||'"
 							+ tajukFail.trim().toUpperCase() + "'|| '%'";
@@ -107,7 +107,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// namaPemohon
-			if (namaPemohon != null) {
+			if (namaPemohon != null || namaPemohon != "") {
 				if (!namaPemohon.trim().equals("")) {
 					sql = sql + " AND UPPER(C.NAMA) LIKE '%' ||'"
 							+ namaPemohon.trim().toUpperCase() + "'|| '%'";
@@ -115,7 +115,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// noPengenalan
-			if (noPengenalan != null) {
+			if (noPengenalan != "" || noPengenalan != "") {
 				if (!noPengenalan.trim().equals("")) {
 					sql = sql + " AND UPPER(C.NO_PENGENALAN) LIKE '%' ||'"
 							+ noPengenalan.trim().toUpperCase() + "'|| '%'";
@@ -125,7 +125,7 @@ public class FrmPLPSenaraiFailData {
 			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
 
 			// tarikhTerima
-			if (tarikhTerima != null) {
+			if (tarikhTerima != null || tarikhTerima != "") {
 				if (!tarikhTerima.toString().trim().equals("")) {
 					sql = sql
 							+ " AND TO_CHAR(B.TARIKH_TERIMA,'dd-MON-YY') = '"
@@ -135,7 +135,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// idNegeri
-			if (idNegeri != null) {
+			if (idNegeri != null || idNegeri != "") {
 				if (!idNegeri.trim().equals("")
 						&& !idNegeri.trim().equals("99999")) {
 					sql = sql + " AND F.ID_NEGERI = '" + idNegeri.trim() + "'";
@@ -143,7 +143,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// idDaerah
-			if (idDaerah != null) {
+			if (idDaerah != null || idDaerah != "") {
 				if (!idDaerah.trim().equals("")
 						&& !idDaerah.trim().equals("99999")) {
 					sql = sql + " AND F.ID_DAERAH = '" + idDaerah.trim() + "'";
@@ -151,7 +151,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// idMukim
-			if (idMukim != null) {
+			if (idMukim != null || idMukim != "") {
 				if (!idMukim.trim().equals("")
 						&& !idMukim.trim().equals("99999")) {
 					sql = sql + " AND F.ID_MUKIM = '" + idMukim.trim() + "'";
@@ -159,7 +159,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// idKementerian
-			if (idKementerian != null) {
+			if (idKementerian != null || idKementerian != "") {
 				if (!idKementerian.trim().equals("")
 						&& !idKementerian.trim().equals("99999")) {
 					sql = sql + " AND F.ID_KEMENTERIAN = '"
@@ -168,7 +168,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// idAgensi
-			if (idAgensi != null) {
+			if (idAgensi != null || idAgensi != "") {
 				if (!idAgensi.trim().equals("")
 						&& !idAgensi.trim().equals("99999")) {
 					sql = sql + " AND F.ID_AGENSI = '" + idAgensi.trim() + "'";
@@ -176,7 +176,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// idJenisHakmilik
-			if (idJenisHakmilik != null) {
+			if (idJenisHakmilik != null || idJenisHakmilik != "") {
 				if (!idJenisHakmilik.trim().equals("")
 						&& !idJenisHakmilik.trim().equals("99999")) {
 					sql = sql + " AND F.ID_JENISHAKMILIK = '"
@@ -185,7 +185,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// jenis Tanah - Asna
-			if (checkTanah != null) {
+			if (checkTanah != null || checkTanah != "") {
 				if (!checkTanah.trim().equals("") && checkTanah.equals("1")) {
 					sql = sql + " AND NO_HAKMILIK IS NOT NULL";
 				} else if (!checkTanah.trim().equals("")
@@ -195,7 +195,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// noHakmilik
-			if (noHakmilik != null) {
+			if (noHakmilik != null || noHakmilik != "") {
 				if (!noHakmilik.trim().equals("")) {
 					sql = sql + " AND UPPER(F.NO_HAKMILIK) LIKE '%' ||'"
 							+ noHakmilik.trim().toUpperCase() + "'|| '%'";
@@ -203,7 +203,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// noWarta
-			if (noWarta != null) {
+			if (noWarta != null || noWarta != "") {
 				if (!noWarta.trim().equals("")) {
 					sql = sql + " AND UPPER(F.NO_WARTA) LIKE '%' ||'"
 							+ noWarta.trim().toUpperCase() + "'|| '%'";
@@ -211,21 +211,21 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// idLot
-			if (idLot != null) {
+			if (idLot != null || idLot != "") {
 				if (!idLot.trim().equals("") && !idLot.trim().equals("99999")) {
 					sql = sql + " AND F.ID_LOT = '" + idLot.trim() + "'";
 				}
 			}
 
 			// noLot
-			if (noLot != null) {
+			if (noLot != null || noLot != "") {
 				if (!noLot.trim().equals("")) {
 					sql = sql + " AND UPPER(F.NO_LOT) LIKE '%' ||'"
 							+ noLot.trim().toUpperCase() + "'|| '%'";
 				}
 			}
 			// noPegangan
-			if (noPegangan != null) {
+			if (noPegangan != null || noPegangan != "") {
 				if (!noPegangan.trim().equals("")) {
 					sql = sql + " AND UPPER(F.PEGANGAN_HAKMILIK) LIKE '%' ||'"
 							+ noPegangan.trim().toUpperCase() + "'|| '%'";
@@ -233,7 +233,7 @@ public class FrmPLPSenaraiFailData {
 			}
 
 			// idStatus
-			if (idStatus != null) {
+			if (idStatus != null || idStatus != "") {
 				if (!idStatus.trim().equals("")
 						&& !idStatus.trim().equals("99999")) {
 					sql = sql + " AND B.ID_STATUS = '" + idStatus.trim() + "'";

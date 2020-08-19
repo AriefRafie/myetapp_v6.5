@@ -154,6 +154,15 @@
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakMemo('$idFail')"> Cetak Memo </a></td>
   </tr>
+  <tr>
+    <td ><a href="#" class="style2" onClick="javascript:cetakLesenPasir('$idFail')"> Lesen Pasir </a></td>
+  </tr>
+  <tr>
+    <td ><a href="#" class="style2" onClick="javascript:cetakLesenMenjelajah('$idFail')"> Lesen Menjelajah </a></td>
+  </tr>
+  <tr>
+    <td ><a href="#" class="style2" onClick="javascript:cetakLesenLain('$idFail')"> Lesen Melombong Selain Pasir</a></td>
+  </tr>
 </table>
 </fieldset>
 <script>
@@ -201,6 +210,30 @@ function setTable(id){
 	}
 }
 function cetakMemo(idFail) {
+	var url = "..//servlet/ekptg.report.php2.APBMemoMenteri?ID_FAIL="+idFail;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakLesenPasir(idFail) {
+	var url = "..//servlet/ekptg.report.php2.APBLesenPasir?ID_FAIL="+idFail;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakLesenMenjelajah(idFail) {
+	var url = "..//servlet/ekptg.report.php2.APBMemoMenteri?ID_FAIL="+idFail;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakLesenLain(idFail) {
 	var url = "..//servlet/ekptg.report.php2.APBMemoMenteri?ID_FAIL="+idFail;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
