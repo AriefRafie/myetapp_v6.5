@@ -250,7 +250,7 @@ public class FrmTukarPemohon extends AjaxBasedModule{
 		try {
 			db = new Db();
 			conn = db.getConnection();
-			conn.setAutoCommit(false);				
+			conn.setAutoCommit(false);				 
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();					
 					r.update("ID_SIMATI",id_simati);

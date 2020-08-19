@@ -8,7 +8,7 @@ tr.tr_class td {
 #set($sebabTukar = "")
 #set($idPemohonBaharu = "")
 
-#set ($namaDoC = "")
+#set ($namaDoC = "")  
 #foreach($listSupportingDoc in $ViewSupportingDoc)
 #set($namaDoC = $listSupportingDoc.NAMA_DOKUMEN)
 #end
@@ -865,7 +865,7 @@ function sama_ob()
 	check_format_alert_field(document.getElementById('no_kp_baru_pemohon1'),'alert_baru_pemohon1')
 	}
 	
-	if(field_pemohon_lama_temp!="")  
+	if(field_pemohon_lama_temp!="")
 	{
 	document.getElementById('no_kp_lama_pemohon1').value = field_pemohon_lama_temp.substring(0,field_pemohon_lama_temp.length);
 	}
