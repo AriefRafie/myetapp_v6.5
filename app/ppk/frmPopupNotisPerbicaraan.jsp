@@ -26,7 +26,7 @@
     			<legend><strong>Maklumat Notis Perbicaraan</strong></legend>
 	    		<table align="left" width="100%" cellspacing="2" cellpadding="1" border="0">
 	    			<tr>
-				  		<td width='20%'>Tarikh Notis</td>
+				  		<td>Tarikh Notis</td>
 				  		<td> : </td>
 				  		<td><b>$tarikh_notis</b></td>
 				  	</tr>

@@ -794,7 +794,6 @@ public class HTABean implements IMaklumatHarta {
 		,HttpServletRequest request
 		,HttpSession session
 		,org.apache.velocity.VelocityContext context) throws Exception{
-		myLog.info("getHTAAH:hParam="+hParam);
 		//int idnegerii = 0;
 		String add_new_harta = "";
 		String buttonhtaam = "";
@@ -831,11 +830,11 @@ public class HTABean implements IMaklumatHarta {
 		Vector listmukim = null;
 		Vector v = null;
 		Vector listHTAid = null;
-		
+		Vector listHTA = null;
 		Hashtable hashHTAid = null;
 		
 		//PARAM
-		String bolehsimpan = String.valueOf(hParam.get("bolehsimpan"));
+		String bolehsimpan = String.valueOf(hParam.get("bolehSimpan"));
 		userID = String.valueOf(session.getAttribute("_ekptg_user_id"));
 		String idPermohonan = String.valueOf(hParam.get("idPermohonan"));
 		idSimati = String.valueOf(hParam.get("idSimati"));
@@ -1200,6 +1199,7 @@ public class HTABean implements IMaklumatHarta {
 			tambahharta = "yes";
 			
 		} else if ("getHtaam".equals(mode)) {
+			myLog.info("ehh testing lalu sini");
 			idHarta = idhtaamid;
 			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
 
@@ -1211,6 +1211,10 @@ public class HTABean implements IMaklumatHarta {
 				context.put("listBandarSuratbyNegeri", "");
 			}		
 //			this.context.put("idhtaam", idhtaam);
+//			context.put("listHTAid", permohonanHarta.getDataHTA());
+			idhtaamid = idhtaam;
+			listHTA = senaraiHTA;
+			listHTAid = permohonanHarta.getDataHTA();
 			show_kemaskini_htaam = YES;
 			show_hapus_htaam = YES;
 			show_kembali_htaam = YES;
@@ -1300,10 +1304,12 @@ public class HTABean implements IMaklumatHarta {
 			tambahharta = YES;
 			
 		} else if ("simpanHtaam".equals(mode)) {
+			myLog.info("UPDATE: STEP 1");
 //			String idhtaam = getParam("idhtaam");//IL
 			if (bolehsimpan.equals("yes")) {
 //				updateHtaam(session);
 				updateHtaam(hParam,logic_internal);
+				myLog.info("UPDATE: STEP 2");
 			}
 			//IL start
 			if (upload.equals("simpanUpload")) {
@@ -1851,6 +1857,7 @@ public class HTABean implements IMaklumatHarta {
 			tambahharta = "yes";
 			
 		} else if ("getHtaam".equals(mode)) {
+			myLog.info("testing lalu sini");
 //			String idhtaam = getParam("idhtaam");
 //			String mati = getParam("id_Permohonansimati");
 			idPermohonanSimati = mati;
