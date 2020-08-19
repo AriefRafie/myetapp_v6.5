@@ -82,7 +82,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         String idPemohon = getParam("idPemohon");
         String idAkaun = getParam("idAkaun");
         String idNotis = getParam("idNotis");
-        String idPermohonan= getParam("idPermohonan");
 
 		String idJenisPelarasan = getParam("socJenisPelarasan");
 		if (idJenisPelarasan == null || idJenisPelarasan.trim().length() == 0){
@@ -971,13 +970,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
                 logic.setListPerjanjian(idHasil);
                 senaraiPerjanjian = logic.getSenaraiPerjanjian();
         		this.context.put("SenaraiPerjanjian", senaraiPerjanjian);
-        		if (logic.getSenaraiPerjanjian().size() != 0){
-    				Hashtable hashPerjanjian = (Hashtable) logic.getSenaraiPerjanjian().get(0);
-    				idPermohonan = (String) hashPerjanjian.get("idPermohonan");
-    			}
-
-        		this.context.put("idPermohonan", idPermohonan);
-        		System.out.println("idPermohonan  ros >>> "+idPermohonan);
 
         		//PERJANJIAN TAMBAHAN
         		Vector senaraiPerjanjianTambahan = new Vector();

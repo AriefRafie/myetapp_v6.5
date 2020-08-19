@@ -58,10 +58,10 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         String idPakar = getParam("idPakar");
         String idKoordinat = getParam("idKoordinat");
         String idKategoriPemohon = getParam("idKategoriPemohon");
+        String noPermohonan = getParam("noPermohonan");
         
         //VECTOR
         Vector beanHeader = null;
-        
         Vector senaraiPengarah = null;
         Vector senaraiPembeliPasir = null;
         Vector senaraiProjek = null;
@@ -153,6 +153,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			Hashtable hashHeader = (Hashtable) logicHeader.getBeanMaklumatPermohonan().get(0);
 			idFail = (String) hashHeader.get("idFail");
 			idPermohonan =(String)hashHeader.get("idPermohonan");
+			noPermohonan =(String)hashHeader.get("noPermohonan");
 			idPemohon = (String)hashHeader.get("idPemohon");
 			idStatus =(String) hashHeader.get("idStatus");	
 			idKategoriPemohon =(String)hashHeader.get("idKategoriPemohon");	

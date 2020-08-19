@@ -1879,6 +1879,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				out.println("No Fail : " + this.nofail + " version saved<br><br>");
 				out.println("<a href=" + new_url + "?idfail=" + this.idfail + "&flagVersion=no&" + qS + ">Cetak</a><br>");
 				if (hasVersionHistory(this.idfail, this.borang)) {
+					
 					doListing(request, response, this.idfail, this.borang);
 				}
 				out.println("</center>");

@@ -36,9 +36,8 @@
           <td class="$row" align="center"><input id="txtNilaiTanahPohon" name="txtNilaiTanahPohon" type="text" value="$list.nilaian" style="text-align:right" $readonly class="$inputTextClass" onblur="total()" >
           <td class="$row" align="center"><input id="txtNilaiBangunanPohon" name="txtNilaiBangunanPohon" type="text" value="$list.nilaianB" style="text-align:right" $readonly class="$inputTextClass" onblur="total()">
           <td class="$row" align="center">
-          <input id="txtNilaianTotal" name="txtNilaianTotal" type="text" style="text-align:right" $total() value = "$list.nilaianTotal" readonly="readonly" class="$inputTextClass" >
-          <input name="idHakmilikPermohonan" type="hidden" value="$list.idHakmilikPermohonan">
-         
+          	<input id="txtNilaianTotal" name="txtNilaianTotal" type="text" style="text-align:right" $total() value = "$list.nilaianTotal" readonly="readonly" class="$inputTextClass" >
+          	<input name="idHakmilikPermohonan" type="hidden" value="$list.idHakmilikPermohonan">
           </td>
         </tr>
         #end
@@ -124,19 +123,25 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td align="center"> #if ($mode == 'view')
+    <td align="center"> 
+      #if ($mode == 'view')
+      #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
       <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskiniNilaian()"/>
+      #end
       #if ($idStatus == '1610199')
       #if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
       <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar ke Ibu Pejabat" onClick="hantarkeHQ()"/>
-<!--       <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/> -->
 	  #end
       #end
       #end
       #if ($mode == 'update')
       <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="simpanKemaskiniNilaian()"/>
       <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalNilaian()"/>
-      #end </td>
+      #end
+      #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+      #end
+    </td>
   </tr>
 </table>
 <script>

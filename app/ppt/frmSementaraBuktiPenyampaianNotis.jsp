@@ -293,7 +293,7 @@
 	#end
 	
 	<fieldset id="top">
-	<legend><strong>Penyampaian Notis Borang E</strong></legend>
+	<legend><strong>Penyampaian Notis Borang Q</strong></legend>
 	<table width="100%" border="0">
 		<tr>
 			<td width="1%">#if($isEdit=="yes")<font color="red">*</font>#end</td>
@@ -573,7 +573,7 @@
 
 
 	<fieldset id="bottom">
-	<legend><strong>Senarai Penerima Notis Borang E</strong></legend>
+	<legend><strong>Senarai Penerima Notis Borang Q</strong></legend>
 	
 		#if($mode=="view")
 		<table width="100%" border="0">   

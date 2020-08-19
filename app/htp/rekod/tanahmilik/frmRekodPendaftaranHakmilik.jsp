@@ -43,7 +43,7 @@
 				        	</td>				        
                         	<td width="30%">
                             	<div align="left">
-                            		<span class="labelinput">No. Fail Seksyen</span>
+                            		<span class="labelinput">No. Fail</span>
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
@@ -1044,6 +1044,22 @@
 								    </select>
 	  							</td>
                 		</tr> 
+                			#if($socStatus == 'P')
+                		<tr>
+  							<td width="1%" >
+				        	</td>				        
+                        	<td width="30%" valign="top" >
+                            	<div align="left">
+                            		<span class="labelinput">Catatan Pelepasan</span>
+                            	</div>
+                        	</td>
+                  			<td width="1%" class="labelinput" valign="top" >:</td>
+                   			<td width="68%" class="labeldisplay" >
+								<textarea name="txtpelepasan" cols="27" rows="5" class="$disabled" id="txtpelepasan" $readonly="$readonly">$!txtPelepasan</textarea>  							
+							</td>
+                		</tr>
+							#end
+							
                 		#else
                 			<tr>
 		  							<td width="1%"  >
@@ -1203,11 +1219,11 @@
 	        </p>
 	    </div></td>
 	  	</tr>
-		<tr>
+<!-- 		<tr>
 	    	<td colspan="2" ><div align="right">	  
 	  			CL-02-69
 	  		</td>
-		</tr>
+		</tr> -->
 	</table>
 </fieldset>
 #parse("app/htp/paging_pendaftaranhakmilikrizab.jsp")

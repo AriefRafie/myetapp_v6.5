@@ -180,7 +180,7 @@
            <tr>
              <td style="text-transform:uppercase">Agensi</td>
              <td>:</td>
-             <td>$!nama_agensi<input type="hidden" name="id_agensi" id="id_agensi" value="$!id_agensi" /> </td>
+             <td>$!nama_agensi<input type="text" name="id_agensi" id="id_agensi" value="$!id_agensi" /> </td>
            </tr>           
            <tr>
              <td style="text-transform:uppercase">Tarikh Dikehendaki</td>

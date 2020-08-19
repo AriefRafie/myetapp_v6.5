@@ -81,7 +81,7 @@ import ekptg.model.entities.Users;
 
 public class DB extends EkptgCache implements Serializable {
 	/**
-	 *
+	 * 
 	 */
 	private static final long serialVersionUID = 5809670899489908145L;
 	static Logger myLogger = Logger.getLogger(ekptg.helpers.DB.class);
@@ -92,11 +92,11 @@ public class DB extends EkptgCache implements Serializable {
 		String sql = "select " + statecode + " || to_char(sysdate,'YY') || " + seqName + ".NEXTVAL  FROM DUAL ";
 		try {
 			Statement stmt = db.getStatement();
-			myLogger.info("TBLPPKPERMOHONANSIMATI_PK :"+sql);
+			myLogger.info(seqName+" :sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 			return rs.getLong(1);
-
+		
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw ex;
@@ -118,7 +118,7 @@ public class DB extends EkptgCache implements Serializable {
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 			return rs.getLong(1);
-
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw ex;
@@ -126,9 +126,9 @@ public class DB extends EkptgCache implements Serializable {
 			if (db != null)
 				db.close();
 		}
-
+		
 	}
-
+		
 	public synchronized static long getNextID_DB(String seqName,Db db) throws Exception {
 		//Db db = null;
 		// original
@@ -143,7 +143,7 @@ public class DB extends EkptgCache implements Serializable {
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 			return rs.getLong(1);
-
+	
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw ex;
@@ -151,7 +151,7 @@ public class DB extends EkptgCache implements Serializable {
 			//if (db != null)
 			//	db.close();
 		}
-
+	
 	}
 
 	public static Vector<Tblrujnegeri> getNegeriExcludePelbagaiNegeri() throws Exception {
@@ -174,7 +174,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodNegeri(rs.getString(2));
 					s.setNamaNegeri(rs.getString(3));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
@@ -183,7 +183,7 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
 
 	public static Vector<Tblrujnegeri> getNegeri() throws Exception {
@@ -206,7 +206,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodNegeri(rs.getString(2));
 					s.setNamaNegeri(rs.getString(3));
 					v.addElement(s);
-
+					
 				}
 				myLogger.info("SQL LIST NEGERI :"+sql);
 				myCache.put(new Element(key, v));
@@ -238,7 +238,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodNegeri(rs.getString(2));
 					s.setNamaNegeri(rs.getString(3));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
@@ -279,7 +279,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodNegeri(rs.getString("kod_Negeri"));
 					s.setNamaNegeri(rs.getString("nama_Negeri"));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
@@ -288,9 +288,9 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
-
+	
 	public static Vector<Tblrujdaerah> getDaerah(String id_Daerah) throws Exception {
 		String key = "DB.getDaerah" + id_Daerah;
 		Element cachedObject = myCache.get(key);
@@ -321,7 +321,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodDaerah(rs.getString("kod_Daerah"));
 					s.setNamaDaerah(rs.getString("nama_Daerah"));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
@@ -331,7 +331,7 @@ public class DB extends EkptgCache implements Serializable {
 			}
 		}
 	}
-
+	
 	public static Vector<Tblrujbandar> getBandar(String id_Bandar) throws Exception {
 		String key = "DB.getBandar" + id_Bandar;
 		Element cachedObject = myCache.get(key);
@@ -362,7 +362,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodBandar(rs.getString("kod_Bandar"));
 					s.setKeterangan(rs.getString("keterangan"));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
@@ -371,7 +371,7 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
 
 	// * GET NEGERI FILTER BY ADA MAHKAMAH - ELLY 130909
@@ -396,7 +396,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodNegeri(rs.getString(2));
 					s.setNamaNegeri(rs.getString(3));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
@@ -405,7 +405,7 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
 
 	public static Vector<Tblrujnegeri> getNegeriByMahkamah(String id_Negeri) throws Exception {
@@ -438,7 +438,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodNegeri(rs.getString("kod_Negeri"));
 					s.setNamaNegeri(rs.getString("nama_Negeri"));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
@@ -473,7 +473,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodNegeri(rs.getString(2));
 					s.setNamaNegeri(rs.getString(3));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
@@ -482,7 +482,7 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
 
 	public static Vector<Tblrujnegeri> getNegeriByMahkamahSyariah(String id_Negeri) throws Exception {
@@ -515,7 +515,7 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodNegeri(rs.getString("kod_Negeri"));
 					s.setNamaNegeri(rs.getString("nama_Negeri"));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
@@ -524,7 +524,7 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
 	// * CLOSE
 
@@ -551,13 +551,13 @@ public class DB extends EkptgCache implements Serializable {
 					list.addElement(f);
 				}
 				return list;
-
+				
 			} finally {
 				if (db != null)
 					db.close();
 			}
 		}
-
+		
 	}
 	/*
 	 * @author : firzan 21012010
@@ -586,13 +586,13 @@ public class DB extends EkptgCache implements Serializable {
 				}
 				myCache.put(new Element(key, list));
 				return list;
-
+				
 			} finally {
 				if (db != null)
 					db.close();
 			}
 		}
-
+		
 	}
 
 	/*
@@ -622,7 +622,7 @@ public class DB extends EkptgCache implements Serializable {
 				}
 				myCache.put(new Element(key, list));
 				return list;
-
+				
 			} finally {
 				if (db != null)
 					db.close();
@@ -663,7 +663,7 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
 
 	public static Vector<Tblrujdaerah> getDaerah() throws Exception {
@@ -695,7 +695,7 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
 
 	public static Vector<Tblrujdaerah> getDaerahByNegeri(String idnegeri) throws Exception {
@@ -710,7 +710,7 @@ public class DB extends EkptgCache implements Serializable {
 			if (idnegeri.equals("13")) {
 				sql = "Select id_Daerah,kod_Daerah,nama_Daerah from tblrujdaerah" + " where id_negeri='" + idnegeri + "'"
 						+ "and kod_Daerah not in (10,13,14,15) ORDER BY lpad(kod_Daerah,10)";
-
+			
 			}else {
 				sql = "Select id_Daerah,kod_Daerah,nama_Daerah from tblrujdaerah" + " where id_negeri='" + idnegeri + "'"
 						+ " ORDER BY lpad(kod_Daerah,10)";
@@ -736,9 +736,9 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
-
+	
 	public static Vector<Tblrujdaerah> getDaerahByNegeri_KPP(String idnegeri, String idPegawai, boolean kpp_hq) throws Exception {
 		String key = "DB.getDaerahByNegeri" + idnegeri;
 		Element cachedObject = null;//myCache.get(key);
@@ -747,8 +747,8 @@ public class DB extends EkptgCache implements Serializable {
 		} else {
 			Db db = null;
 			Vector<Tblrujdaerah> list = null;
-			String sql = "";
-
+			String sql = "";			
+			
 			if (idnegeri.equals("13")) {
 				sql = "Select id_Daerah,kod_Daerah,nama_Daerah from tblrujdaerah" + " where id_negeri='" + idnegeri + "'"
 						+ "and kod_Daerah not in (10,13,14,15) ORDER BY lpad(kod_Daerah,10)";
@@ -759,16 +759,16 @@ public class DB extends EkptgCache implements Serializable {
 						" Select id_Daerah,kod_Daerah,nama_Daerah, id_negeri from tblrujdaerah where id_Daerah in " +
 						" (SELECT DISTINCT U.ID_DAERAHURUS FROM TBLRUJPEJABATURUSAN U, USERS_INTERNAL UR WHERE U.ID_PEJABATJKPTG = UR.ID_PEJABATJKPTG AND UR.USER_ID = '" + idPegawai + "')" +
 						" order by id_negeri, nama_daerah";
-			}else {
+			}else {	
 				sql = "Select id_Daerah,kod_Daerah,nama_Daerah from tblrujdaerah" + " where id_negeri='" + idnegeri + "'"
 						+ " ORDER BY lpad(kod_Daerah,10)";
 			}
 			try {
 				db = new Db();
 				Statement stmt = db.getStatement();
-
+				
 				ResultSet rs = stmt.executeQuery(sql);
-
+			
 				list = new Vector<Tblrujdaerah>();
 				Tblrujdaerah f = null;
 				while (rs.next()) {
@@ -785,7 +785,7 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+		
 	}
 
 	public static Vector<Tblrujurusan> getUrusan() throws Exception {
@@ -820,7 +820,7 @@ public class DB extends EkptgCache implements Serializable {
 					db.close();
 			}
 		}
-
+	
 	}
 
 	public static Vector<Tblrujurusan> getUrusanPHPPenyewaan() throws Exception {
@@ -971,7 +971,9 @@ public class DB extends EkptgCache implements Serializable {
 		} else {
 			Db db = null;
 			String sql = "Select a.id_SubSubSuburusan,a.kod_SubSubSuburusan,a.nama_SubSubSuburusan"
-					+ " from tblrujsubsubsuburusan a, tblrujsubsuburusan b where a.id_subsuburusan = b.id_subsuburusan order by a.kod_SubSubSuburusan ";
+					+ " from tblrujsubsubsuburusan a, tblrujsubsuburusan b where a.id_subsuburusan = b.id_subsuburusan "
+					+ " "
+					+ " order by a.kod_SubSubSuburusan ";
 
 			try {
 				db = new Db();
@@ -1018,9 +1020,9 @@ public class DB extends EkptgCache implements Serializable {
 				r.add("id_suburusan");
 				r.add("kod_suburusan");
 				r.add("nama_suburusan");
-				//r.add("flag_aktif","1");
+				r.add("flag_aktif","1");
 				r.add("id_urusan", Integer.parseInt(idUrusan));
-				v = new Vector<Tblrujsuburusan>();
+				v = new Vector<Tblrujsuburusan>();				
 				sql = r.getSQLSelect("tblrujsuburusan", "nama_suburusan ASC");
 //				sql = r.getSQLSelect("Tblrujsuburusan", "lpad(kod_Suburusan,10)");
 //				System.out.println(" sql TEST SUBURUSAN EMPTY : "+sql);
@@ -1033,11 +1035,11 @@ public class DB extends EkptgCache implements Serializable {
 					s.setKodSuburusan(rs.getString("kod_suburusan"));
 					s.setNamaSuburusan(rs.getString("nama_suburusan"));
 					v.addElement(s);
-
+					
 				}
 				myCache.put(new Element(key, v));
 				return v;
-
+				
 			} finally {
 				if (db != null)
 					db.close();
@@ -1047,48 +1049,6 @@ public class DB extends EkptgCache implements Serializable {
 	}
 
 	// end altered 210609 by mansur
-
-	@SuppressWarnings("unchecked")
-	public static Vector<Tblrujstatus> getStatusByIdSeksyen(String idSeksyen) throws Exception {
-		String key = "DB.getIdStatus";
-		Element cachedObject = myCache.get(key);
-		if (cachedObject != null) {
-			return (Vector<Tblrujstatus>) cachedObject.getObjectValue();
-
-		} else {
-			Db db = null;
-			String sql = "";
-
-			sql = "SELECT ID_SEKSYEN, ID_STATUS, KOD_STATUS, KETERANGAN AS NAMA_STATUS "
-				+ "FROM TBLRUJSTATUS WHERE ID_SEKSYEN = 4 "
-				+ "AND ID_STATUS IN (1610198, 1610201, 1610206, 1610214) ORDER BY KOD_STATUS";
-
-			Vector<Tblrujstatus> v = null;
-			try {
-				db = new Db();
-				Statement stmt = db.getStatement();
-
-				ResultSet rs = stmt.executeQuery(sql);
-				v = new Vector<Tblrujstatus>();
-				Tblrujstatus s = null;
-				while (rs.next()) {
-					s = new Tblrujstatus();
-					s.setIdSeksyen(rs.getLong("ID_SEKSYEN"));
-					s.setIdStatus(rs.getLong("ID_STATUS"));
-					s.setKodStatus(rs.getString("KOD_STATUS"));
-					s.setKeterangan(rs.getString("NAMA_STATUS"));
-					v.addElement(s);
-				}
-
-				myCache.put(new Element(key, v));
-				return v;
-
-			} finally {
-				if (db != null)
-					db.close();
-			}
-		}
-	}
 
 	// dat 17072010
 	public static Vector<Tblrujsuburusan> getSubUrusanPelepasan(String idUrusan) throws Exception {
@@ -1464,7 +1424,7 @@ public class DB extends EkptgCache implements Serializable {
 			}
 		}
 	}
-
+	
 	public static Vector<Tblrujlot> getLotTanah() throws Exception {
 		String key = "DB.getLot";
 		Element cachedObject = myCache.get(key);
@@ -1537,7 +1497,7 @@ public class DB extends EkptgCache implements Serializable {
 			}
 		}
 	}
-
+	
 	public static Vector<Tblrujmukim> getMukim(String id_Mukim) throws Exception {
 		String key = "DB.getMukim" + id_Mukim;
 		Element cachedObject = myCache.get(key);
@@ -1578,7 +1538,7 @@ public class DB extends EkptgCache implements Serializable {
 			}
 		}
 	}
-
+	
 	public static Vector<Tblrujjenishakmilik> getJenishakmilik(String id_Jenishakmilik) throws Exception {
 		String key = "DB.getJenishakmilik" + id_Jenishakmilik;
 		Element cachedObject = myCache.get(key);
@@ -1910,8 +1870,8 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
-
+	
+	
 	public static Vector<Tblrujstatus> getStatusFailGadaian() throws Exception {
 		Db db = null;
 		String sql = "select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -1936,8 +1896,8 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
-
+	
+	
 	public static Vector<Tblrujstatus> getStatusFailHapus() throws Exception {
 		Db db = null;
 		String sql = "Select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -1962,8 +1922,8 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
-
+	
+	
 	public static Vector<Tblrujstatus> getStatusFailPerletakhakan() throws Exception {
 		Db db = null;
 		String sql = "Select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -1988,7 +1948,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujstatus> getStatusFailPenswastaan() throws Exception {
 		Db db = null;
 		String sql = "Select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -2013,7 +1973,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujstatus> getStatusFailPajakanKecil() throws Exception {
 		Db db = null;
 		String sql = "Select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -2038,7 +1998,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujstatus> getStatusFailPembelian() throws Exception {
 		Db db = null;
 		String sql = "Select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -2063,8 +2023,8 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
-
+	
+	
 	public static Vector<Tblrujstatus> getStatusFailPajakan() throws Exception {
 		Db db = null;
 		String sql = "Select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -2089,8 +2049,8 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
-
+	
+	
 	public static Vector<Tblrujstatus> getStatusFailPerizapan() throws Exception {
 		Db db = null;
 		String sql = "Select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -2115,8 +2075,8 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
-
+	
+	
 	public static Vector<Tblrujstatus> getStatusFailPemberimilikan() throws Exception {
 		Db db = null;
 		String sql = "Select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -2141,7 +2101,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujstatus> getStatusFailKeseluruhan() throws Exception {
 		Db db = null;
 		String sql = "Select distinct s.id_Status, s.keterangan from tblpfdfail f1, tblrujstatus s "+
@@ -2166,8 +2126,8 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
-
+	
+	
 
 	public static Vector<Tblpfdrujlokasifail> getLokasiFail() throws Exception {
 		Db db = null;
@@ -2404,7 +2364,8 @@ public class DB extends EkptgCache implements Serializable {
 			r.add("no_fax");
 			r.add("id_seksyen", idSeksyen);
 			r.add("id_negeri", idNegeri);
-			r.add("id_daerah", idDaerah);
+			if(!idDaerah.equals("0"))
+				r.add("id_daerah", idDaerah);
 
 			sql = r.getSQLSelect("tblrujpejabatjkptg");
 			myLogger.info("getPejabatJKPTG:sql="+sql);
@@ -2470,7 +2431,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Hashtable<String, String>> getNamaPejabat(String noFail) throws Exception {
 		Db db = null;
 		Vector<Hashtable<String, String>> v = null;
@@ -2480,9 +2441,9 @@ public class DB extends EkptgCache implements Serializable {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			sql = "SELECT ID_PEJABAT , NAMA_PEJABAT FROM TBLRUJPEJABAT PEJ, TBLPHPHAKMILIK HKMILIK, TBLPHPHAKMILIKPERMOHONAN HKMPER, TBLPERMOHONAN MOHON, TBLPFDFAIL FAIL "
-					+ "WHERE PEJ.ID_NEGERI = HKMILIK.ID_NEGERI "
+					+ "WHERE PEJ.ID_NEGERI = HKMILIK.ID_NEGERI " 
 					+ "AND PEJ.ID_JENISPEJABAT = 25 "
-					+ "AND HKMILIK.ID_HAKMILIKPERMOHONAN  = HKMPER.ID_HAKMILIKPERMOHONAN "
+					+ "AND HKMILIK.ID_HAKMILIKPERMOHONAN  = HKMPER.ID_HAKMILIKPERMOHONAN " 
 					+ "AND HKMPER.ID_PERMOHONAN = MOHON.ID_PERMOHONAN "
 					+ "AND MOHON.ID_FAIL = FAIL.ID_FAIL "
 					+ "AND FAIL.NO_FAIL = '" + noFail + "' ";
@@ -2511,18 +2472,18 @@ public class DB extends EkptgCache implements Serializable {
 
 			db = new Db();
 			Statement stmt = db.getStatement();
-			sql = "SELECT DISTINCT PEJ.NAMA_PEJABAT, HKMILIK.ID_NEGERI, PEJ.POSKOD, NEGERI.NAMA_NEGERI, DAERAH.NAMA_DAERAH, PEJ.ID_PEJABAT , "
-				  + " PEJ.ALAMAT1 , PEJ.ALAMAT2 , PEJ.ALAMAT3 "
-				  + "FROM TBLRUJPEJABAT PEJ, TBLPHPHAKMILIK HKMILIK, TBLPHPHAKMILIKPERMOHONAN HKMPER, TBLPERMOHONAN MOHON, TBLPFDFAIL FAIL, "
+			sql = "SELECT DISTINCT PEJ.NAMA_PEJABAT, HKMILIK.ID_NEGERI, PEJ.POSKOD, NEGERI.NAMA_NEGERI, DAERAH.NAMA_DAERAH, PEJ.ID_PEJABAT , " 
+				  + " PEJ.ALAMAT1 , PEJ.ALAMAT2 , PEJ.ALAMAT3 " 
+				  + "FROM TBLRUJPEJABAT PEJ, TBLPHPHAKMILIK HKMILIK, TBLPHPHAKMILIKPERMOHONAN HKMPER, TBLPERMOHONAN MOHON, TBLPFDFAIL FAIL, " 
 				  + "TBLRUJJENISPEJABAT JENISPEJABAT, TBLRUJNEGERI NEGERI, TBLRUJDAERAH DAERAH "
-				  + "WHERE PEJ.ID_NEGERI = HKMILIK.ID_NEGERI "
-				  + "AND HKMILIK.ID_HAKMILIKPERMOHONAN  = HKMPER.ID_HAKMILIKPERMOHONAN "
-				  + "AND HKMPER.ID_PERMOHONAN = MOHON.ID_PERMOHONAN "
+				  + "WHERE PEJ.ID_NEGERI = HKMILIK.ID_NEGERI " 
+				  + "AND HKMILIK.ID_HAKMILIKPERMOHONAN  = HKMPER.ID_HAKMILIKPERMOHONAN " 
+				  + "AND HKMPER.ID_PERMOHONAN = MOHON.ID_PERMOHONAN " 
 				  + "AND MOHON.ID_FAIL = FAIL.ID_FAIL "
-				  + "AND PEJ.ID_JENISPEJABAT = JENISPEJABAT.ID_JENISPEJABAT "
-				  + "AND NEGERI.ID_NEGERI = PEJ.ID_NEGERI "
-				  + "AND DAERAH.ID_DAERAH = PEJ.ID_DAERAH ";
-
+				  + "AND PEJ.ID_JENISPEJABAT = JENISPEJABAT.ID_JENISPEJABAT " 
+				  + "AND NEGERI.ID_NEGERI = PEJ.ID_NEGERI " 
+				  + "AND DAERAH.ID_DAERAH = PEJ.ID_DAERAH "; 
+			
 			if(idJenisPejabat!=null && idJenisPejabat.length()>0){
 				sql = sql+" AND PEJ.ID_JENISPEJABAT="+idJenisPejabat;
 			}
@@ -2532,9 +2493,9 @@ public class DB extends EkptgCache implements Serializable {
 			if(idPejabat!=null && idPejabat.length()>0){
 				sql = sql+" AND PEJ.ID_PEJABAT="+idPejabat;
 			}
-
+			
 			ResultSet rs = stmt.executeQuery(sql);
-
+					
 			v = new Vector<Hashtable<String, String>>();
 			Hashtable<String, String> h;
 			while (rs.next()) {
@@ -2558,7 +2519,7 @@ public class DB extends EkptgCache implements Serializable {
 		}
 		return v;
 	}
-
+	
 	public static Vector<Users> getPegawaiJKPTG(String idnegeri) throws Exception {
 		Db db = null;
 		String sql = " SELECT DISTINCT A.USER_ID, A.ID_JAWATAN,B.KOD_JAWATAN,B.KETERANGAN,C.USER_NAME "
@@ -2863,7 +2824,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujjenisnopb> getRujJenisNoPB() throws Exception {
 		Db db = null;
 		String sql = "Select id_jenisnopb, kod_jenis_nopb, keterangan from "
@@ -2911,7 +2872,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujjenisnopb> getRujJenisNoPBIndividuLain() throws Exception {
 		Db db = null;
 		String sql = "Select id_jenisnopb, kod_jenis_nopb, keterangan from "
@@ -3021,7 +2982,7 @@ public class DB extends EkptgCache implements Serializable {
 	/**
 	 * added by peje to cater pemohon pelepasan for syarikat, persatuan and
 	 * pertubuhan
-	 *
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -3076,7 +3037,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujkategoripemohon> getKategoriPemohonOrganisasiAndSyarikat() throws Exception {
 		Db db = null;
 		String sql = "";
@@ -3102,7 +3063,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujkategoripemohon> getKategoriIndividu() throws Exception {
 		Db db = null;
 		String sql = "";
@@ -3128,7 +3089,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujkategoripemohon> getKategoriIndividuBukanIndividu() throws Exception {
 		Db db = null;
 		String sql = "";
@@ -3466,15 +3427,17 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
-	// by rosli on 30/05/2009
+	/** by rosli on 30/05/2009
+	 * 27/06/2020, hapus filter kod_agensi not in ('09','10','11')
+	 * @param idKementerian
+	 * @return
+	 * @throws Exception
+	 */
 	public static Vector<Tblrujagensi> getAgensiByKementerian(String idKementerian) throws Exception {
 		Db db = null;
-		String sql = "Select id_Agensi,kod_Agensi,nama_Agensi from " + "tblrujagensi where id_kementerian= '" + idKementerian
-				+ "' and kod_agensi not in ('09','10','11') order by lpad(kod_Agensi,10)"; // KOD
-																							// AGENSI
-																							// LAUT
-																							// BERUBAH
+		String sql = "select id_agensi,kod_agensi,nama_agensi "
+				+ " from tblrujagensi where id_kementerian= '" + idKementerian + "'"
+				+ " order by lpad(kod_Agensi,10)"; 
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -3487,12 +3450,14 @@ public class DB extends EkptgCache implements Serializable {
 				f.setKodAgensi(rs.getString(2));
 				f.setNamaAgensi(rs.getString(3));
 				list.addElement(f);
+				
 			}
 			return list;
 		} finally {
 			if (db != null)
 				db.close();
 		}
+		
 	}
 
 	public static Vector<Tblrujbandar> getBandar() throws Exception {
@@ -3548,7 +3513,7 @@ public class DB extends EkptgCache implements Serializable {
 	/**
 	 * //----------DB.java added by elly to cater status/penerangan no fail for
 	 * UPT(PPT)
-	 *
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -3612,7 +3577,7 @@ public class DB extends EkptgCache implements Serializable {
 	/**
 	 * //----------DB.java added by elly to cater status/penerangan no fail for
 	 * PPTHakmilikSek4
-	 *
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -4014,7 +3979,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblphprujdokumen> getPHPRujDokumenPanggilMesyuarat() throws Exception {
 		Db db = null;
 		String sql = "Select id_dokumen,kod_dokumen, keterangan from tblphprujdokumen " + " where id_dokumen in (13,14)";
@@ -4355,17 +4320,12 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
-	// ** getMahkamah from Tblrujpejabat
-	// ** by elly (120709)
-
+	/** By elly (120709), getMahkamah from Tblrujpejabat */
 	public static Vector<Tblrujpejabat> getMahkamah() throws Exception {
 		Db db = null;
 		String sql = "";
 		sql = "SELECT id_pejabat,id_jenispejabat,nama_pejabat,kod_pejabat,id_negeri FROM Tblrujpejabat WHERE id_jenispejabat = 08 ORDER BY id_pejabat";
-		myLogger.info("getMahkamah >> " + sql);
-		// Db db = null;
-		// String sql = "";
+//		myLogger.info("getMahkamah >> " + sql);
 		try {
 
 			db = new Db();
@@ -4691,7 +4651,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Tblrujjenisbayaran> getJenisBayaranFiAPB() throws Exception {
 		Db db = null;
 		String sql = "Select id_Jenisbayaran,kod_Jenis_Bayaran,keterangan from tblrujjenisbayaran where id_Jenisbayaran IN (11,19)";
@@ -4865,7 +4825,7 @@ public class DB extends EkptgCache implements Serializable {
 		sql += " ORDER BY lpad(id_pejabatjkptg,10)";
 		//kemaskini pada 2017/10/26
 		/*sql = "SELECT "+
-			"RP.ID_PEJABAT, RP.KOD_PEJABAT, RP.NAMA_PEJABAT, RP.ID_JENISPEJABAT "+
+			"RP.ID_PEJABAT, RP.KOD_PEJABAT, RP.NAMA_PEJABAT, RP.ID_JENISPEJABAT "+ 
 			"FROM "+
 			"TBLRUJPEJABAT RP "+
 			",TBLRUJPEJABATURUSAN RPU "+
@@ -4904,7 +4864,7 @@ public class DB extends EkptgCache implements Serializable {
 			if (db != null)
 				db.close();
 		}
-
+		
 	}
 
 	public static Vector<Tblrujpejabat> getPejabatTanahByJKPTG(String id_jkptg) throws Exception {
@@ -5345,7 +5305,7 @@ public class DB extends EkptgCache implements Serializable {
 		//String sql = "SELECT ID_UNITPSK, KOD, NAMA_PEGAWAI,STATUS_PEG" + ",case " + " when STATUS_PEG=1 then '(Aktif)' "
 		//		+ " else '(Tidak Aktif)' " + " end AS CATATAN " + "FROM TBLPPKRUJUNIT WHERE ID_NEGERI = '" + idNegeri
 		//		+ "' ORDER BY LPAD(KOD,100)";
-
+		 
 		String sql = "SELECT ID_UNITPSK, KOD, NAMA_PEGAWAI,STATUS_PEG" + ",case " + " when STATUS_PEG=1 then '(Aktif)' "
 				+ " else '(Tidak Aktif)' " + " end AS CATATAN " + "FROM TBLPPKRUJUNIT "
 				+ "ORDER BY LPAD(KOD,100)";
@@ -5497,7 +5457,7 @@ public class DB extends EkptgCache implements Serializable {
 			return v;
 		}
 	}
-
+	
 	public static Vector<Hashtable<String, Integer>> getTahunH() throws Exception {
 		String key = "DB.getTahun";
 		Element cachedObject = myCache.get(key);
@@ -5522,7 +5482,7 @@ public class DB extends EkptgCache implements Serializable {
 			return v;
 		}
 	}
-
+	
 
 	public static Vector<Hashtable<String, Comparable>> getHTAByIdSimati(String idSimati) throws Exception {
 		Db db = null;
@@ -6212,7 +6172,7 @@ public class DB extends EkptgCache implements Serializable {
 
 	/**
 	 * added by peje to cater pemohon pelepasan for PTG, PTD and JKPTG
-	 *
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -6241,7 +6201,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Hashtable<String, Comparable>> getPejabatKJP() throws Exception {
 		Db db = null;
 		String sql = "";
@@ -6317,7 +6277,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Hashtable<String, Comparable>> getPejabatKPTGByIdNegeriIdSeksyen(String idNegeri, String idSeksyen) throws Exception {
 		Db db = null;
 		String sql = "SELECT ID_PEJABATJKPTG, KOD_JKPTG, NAMA_PEJABAT FROM TBLRUJPEJABATJKPTG WHERE ID_SEKSYEN = '" + idSeksyen +"'"
@@ -6418,7 +6378,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Hashtable<String, Comparable>> getKategoriPemohonPNW() throws Exception {
 		Db db = null;
 		String sql = "";
@@ -7081,7 +7041,7 @@ public class DB extends EkptgCache implements Serializable {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-
+			
 			myLogger.info("SQL : "+sql);
 			Vector<Users> list = new Vector<Users>();
 			Users f = null;
@@ -7275,7 +7235,7 @@ public class DB extends EkptgCache implements Serializable {
 			return (Vector<Tblrujbulan>) cachedObject.getObjectValue();
 		} else {
 			Db db = null;
-			String sql = " Select id_bulan,kod_bulan,nama_bulan from tblrujbulan ";
+			String sql = " select id_bulan,kod_bulan,nama_bulan from tblrujbulan ";
 			try {
 				db = new Db();
 				Statement stmt = db.getStatement();
@@ -7909,13 +7869,13 @@ public class DB extends EkptgCache implements Serializable {
 			}
 		}
 	}
-
+	
 	public static Vector<Hashtable<String, String>> getPegawaiUnitPelepasan() throws Exception {
 		Db db = null;
 		//BY AIN 09052017
 		String sql = " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C"
-				+ " WHERE A.USER_ID = B.USER_ID"
+				+ " WHERE A.USER_ID = B.USER_ID" 
 				+ " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 				+ " AND A.USER_ROLE IN ('(PHP)UserPelepasan')"
 				+ " AND B.FLAG_AKTIF = '1'"
@@ -7932,14 +7892,14 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_SEKSYEN = '4'"
 				+ " AND B.ID_NEGERI = '16'"
 				+ " ORDER BY USER_NAME ASC";
-
+				
 		try {
-
+	
 			db = new Db();
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
-
+	
 			Hashtable<String, String> h;
 			while (rs.next()) {
 				h = new Hashtable<String, String>();
@@ -7953,7 +7913,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Hashtable<String, String>> getPegawaiUnitHasil() throws Exception {
 		Db db = null;
 		//BY AIN 09052017
@@ -7976,14 +7936,14 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_SEKSYEN = '4'"
 				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " ORDER BY USER_NAME ASC";
-
+		
 		try {
-
+	
 			db = new Db();
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
-
+	
 			Hashtable<String, String> h;
 			while (rs.next()) {
 				h = new Hashtable<String, String>();
@@ -7997,7 +7957,7 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 	}
-
+	
 	public static Vector<Hashtable<String, String>> getPegawaiUnitPenguatkuasaan() throws Exception {
 		Db db = null;
 		//BY AIN 25072017
@@ -8020,14 +7980,14 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.ID_SEKSYEN = '4'"
 				+ " AND B.ID_PEJABATJKPTG = '116'"
 				+ " ORDER BY USER_NAME ASC";
-
+				
 		try {
-
+	
 			db = new Db();
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
-
+	
 			Hashtable<String, String> h;
 			while (rs.next()) {
 				h = new Hashtable<String, String>();
@@ -8062,14 +8022,14 @@ public class DB extends EkptgCache implements Serializable {
 				+ " AND B.FLAG_AKTIF = '1'"
 				+ " AND B.ID_SEKSYEN = '4'"
 				+ " ORDER BY USER_NAME ASC";
-
+				
 		try {
-
+	
 			db = new Db();
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
-
+	
 			Hashtable<String, String> h;
 			while (rs.next()) {
 				h = new Hashtable<String, String>();
@@ -8086,10 +8046,10 @@ public class DB extends EkptgCache implements Serializable {
 
 	public static Vector<Hashtable<String, String>> getPegawaiUnitPenyewaanByNegeri(String idNegeri) throws Exception {
 		Db db = null;
-		//BY AIN 09052017
+		//BY AIN 09052017		
 		String sql = " SELECT DISTINCT A.USER_NAME, B.USER_ID, B.ID_JAWATAN, B.ID_NEGERI"
 				+ " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C"
-				+ " WHERE A.USER_ID = B.USER_ID"
+				+ " WHERE A.USER_ID = B.USER_ID" 
 			    + " AND B.ID_JAWATAN = C.ID_JAWATAN(+)"
 			    + " AND A.USER_ROLE IN ('(PHP)PYWPengarahHQ', '(PHP)PYWPenolongPengarahHQ',"
 				+ " '(PHP)PYWPenolongPegawaiTanahHQ', '(PHP)PYWPengarahNegeri',"
@@ -8111,7 +8071,7 @@ public class DB extends EkptgCache implements Serializable {
 			    + " AND B.ID_NEGERI = '" + idNegeri + "'"
 			    + " AND B.ID_SEKSYEN = '4'"
 			    + " AND C.ID_JAWATAN IN (4, 5, 9, 161738)"
-			    + " ORDER BY USER_NAME ASC";
+			    + " ORDER BY USER_NAME ASC";	
 
 		try {
 
@@ -8209,7 +8169,7 @@ public class DB extends EkptgCache implements Serializable {
 		sql += " AND a.id_hakmilik = '" + idhakmilik + "'";
 		sql += " AND a.id_jenispb not in (40,41,42)";
 		sql += " ORDER BY b.nama_pb";
-
+		
 
 		try {
 			db = new Db();
@@ -8626,7 +8586,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 			//sql += " AND ID_SEKSYEN = '1'";
 			String sql = "SELECT A.ID_PEJABATJKPTG , A.ID_NEGERI, N.NAMA_NEGERI" +
 					" FROM TBLRUJPEJABATJKPTG A, TBLRUJNEGERI N" +
-					" WHERE A.ID_NEGERI = N.ID_NEGERI " +
+					" WHERE A.ID_NEGERI = N.ID_NEGERI " + 
 					" AND A.ID_SEKSYEN ='1' " +
 					" AND A.ID_JENISPEJABAT IN ('22','21')";
 
@@ -8721,7 +8681,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 		sql += " WHERE U.USER_ID = UI.USER_ID ";
 		sql += " AND UI.ID_SEKSYEN = '1' ";
 		sql += " AND (u.user_role = '(PPT)PengarahUnit'  or ui.id_jawatan IN (4, 29) ) ";
-
+		
 
 		if (!idNegeri.equals("")) {
 			if (idNegeri.equals("15") || idNegeri.equals("16")) {
@@ -8954,7 +8914,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 		sql += " WHERE U.USER_ID = UI.USER_ID ";
 		sql += " AND UI.ID_SEKSYEN = '1' "; */
 		// sql += " AND UI.ID_JAWATAN IN (7,9) ";
-
+		
 		String sql = " SELECT DISTINCT U.USER_ID AS ID_PEGAWAI,  (UPPER(U.USER_NAME) || ' (' || "+
 				" (CASE WHEN UI.FLAG_AKTIF = 1 THEN 'AKTIF' "+
 				" WHEN UI.FLAG_AKTIF = 2 THEN 'TIDAK AKTIF' "+
@@ -8995,7 +8955,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 	// select pegawai ppt by negeri 22/03/2010
 	public static Vector<Users> getSenaraiPegawaiPPTByNegeriExceptPPdanPgh(String idNegeri) throws Exception {
 		Db db = null;
-
+		
 		/*
 		String sql = " SELECT DISTINCT U.USER_ID AS ID_PEGAWAI, " +
 				" ('(' || U.USER_LOGIN || ') ' || U.USER_NAME) AS NAMA_PEGAWAI " +
@@ -9011,11 +8971,11 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 		} else {
 			sql += " AND UI.ID_NEGERI = '" + idNegeri + "'";
 		}
-		//sql += " AND (UI.FLAG_AKTIF = '1' ";
+		//sql += " AND (UI.FLAG_AKTIF = '1' ";		
 		sql += " ORDER BY LPAD(U.USER_NAME,10) ";
 		*/
-
-		//RAZMAN BUAT BARU
+		
+		//RAZMAN BUAT BARU		
 		String sql = " SELECT DISTINCT U.USER_ID AS ID_PEGAWAI,  (UPPER(U.USER_NAME) || ' (' || "+
 				" (CASE WHEN UI.FLAG_AKTIF = 1 THEN 'AKTIF' "+
 				" WHEN UI.FLAG_AKTIF = 2 THEN 'TIDAK AKTIF' "+
@@ -9024,17 +8984,17 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				" FROM USERS U, USERS_INTERNAL UI  WHERE U.USER_ID = UI.USER_ID  " +
 				" AND UI.ID_SEKSYEN NOT IN (2,0)  "+
 				" AND UI.ID_JAWATAN IN (9,33,161738,4,13,5)   ";
-
+				
 				if (idNegeri.equals("15") || idNegeri.equals("16")) {
 					sql += " AND UI.ID_NEGERI = '14'";
 				} else {
 					sql += " AND UI.ID_NEGERI = '" + idNegeri + "'";
 				}
-
+		
 				sql += " ORDER BY (CASE WHEN UI.FLAG_AKTIF = 1 THEN 'AKTIF' "+
 				" WHEN UI.FLAG_AKTIF = 2 THEN 'TIDAK AKTIF' "+
 				" ELSE 'AKTIF' END), U.USER_NAME  ";
-
+		
 		myLogger.info("LIST PENTADBIR"+sql);
 		try {
 			db = new Db();
@@ -9250,7 +9210,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 	}
 	public static String getUrlAgensi(String kodIntegrasi) throws Exception {
 		String url = "";
-
+		
 		Db db = null;
 		String sql = "";
 		db = new Db();
@@ -9261,12 +9221,12 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 		if (rs.next()) {
 			url = rs.getString("url");
 		}
-
+		
 		return url;
 	}
 	public static String getUrlAgensiHartaAlih(String kodHa) throws Exception {
 		String url = "";
-
+		
 		Db db = null;
 		String sql = "";
 		db = new Db();
@@ -9277,18 +9237,18 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 		if (rs.next()) {
 			url = rs.getString("int_url");
 		}
-
+		
 		return url;
 	}
-
+	
 
 	/*public static Vector<Hashtable<String, String>> getSenaraiPegawaiPTG(String idNegeri) throws Exception {
 		Db db = null;
-
-
+		
+		
 		String sql = "SELECT ID_PEJABAT, KOD_PEJABAT, NAMA_PEJABAT FROM TBLRUJPEJABAT WHERE ID_JENISPEJABAT = '01' "
 			        + " AND ID_NEGERI = '" + idNegeri + "' ORDER BY KOD_PEJABAT ASC";
-
+	
 
 //		String sql = "SELECT PEJ.NAMA_PEJABAT AS PTG, PEJ.ID_PEJABAT AS ID_PTG " +
 //				"FROM TBLRUJPEJABAT PEJ, TBLPHPHAKMILIK HAKMILIK, TBLPHPHAKMILIKPERMOHONAN HAKMILIKPERMOHONAN, TBLPERMOHONAN PERMOHONAN, TBLPFDFAIL FAIL " +
@@ -9318,7 +9278,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 
 	/*public static Vector<Hashtable<String, String>> getSenaraiPegawaiPTD(String idNegeri) throws Exception {
 		Db db = null;
-
+		
 		String sql = "SELECT ID_PEJABAT, KOD_PEJABAT, NAMA_PEJABAT FROM TBLRUJPEJABAT WHERE ID_JENISPEJABAT = '02'"
 		        + " AND ID_NEGERI = '" + idNegeri + "' ORDER BY KOD_PEJABAT ASC";
 
@@ -9348,7 +9308,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				db.close();
 		}
 	}*/
-
+	
 	/*public static Vector<Hashtable<String, String>> getSenaraiPegawaiPBT(String noFail) throws Exception {
 		Db db = null;
 
@@ -9377,13 +9337,13 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				db.close();
 		}
 	}*/
-
+			
 	/*public static Vector<Hashtable<String, String>> getSenaraiPegawaiJKPTG(String idNegeri) throws Exception {
 		Db db = null;
 		String sql = "SELECT ID_PEJABATJKPTG, KOD_JKPTG, NAMA_PEJABAT FROM TBLRUJPEJABATJKPTG " +
 				"WHERE ID_SEKSYEN = '2'" + " AND ID_JENISPEJABAT = '24' " +
 				"AND ID_NEGERI = '" + idNegeri + "' ORDER BY KOD_JKPTG ASC";
-
+		
 //		String sql = "SELECT ID_PEJABATJKPTG, F.NAMA_PEJABAT, F.ALAMAT1, F.ALAMAT2, F.ALAMAT3, F.POSKOD, F.ID_NEGERI " +
 //				"FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANPELEPASAN C, TBLPHPHAKMILIKPERMOHONAN D, TBLPHPHAKMILIK E, TBLRUJPEJABATJKPTG F " +
 //				"WHERE B.ID_FAIL = A.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_PERMOHONAN = D.ID_PERMOHONAN AND D.ID_HAKMILIKPERMOHONAN = E.ID_HAKMILIKPERMOHONAN " +
@@ -9408,7 +9368,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				db.close();
 		}
 	}*/
-
+	
 	/*public static Vector<Hashtable<String, String>> getSenaraiPegawaiKJP(String noFail) throws Exception {
 		Db db = null;
 		String sql = "SELECT B.ID_AGENSI, B.NAMA_AGENSI FROM TBLRUJKEMENTERIAN A, TBLRUJAGENSI B WHERE A.ID_KEMENTERIAN = B.ID_KEMENTERIAN";
@@ -9432,7 +9392,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				db.close();
 		}
 	}*/
-
+	
 	public static Vector<Hashtable<String, String>> getSenaraiPegawaiLainlain(String noFail) throws Exception {
 		Db db = null;
 		String sql = "SELECT ID_PEJABAT, NAMA_PEJABAT FROM TBLRUJPEJABAT WHERE KOD_PEJABAT IN ('TNB','SYB')";
@@ -9442,13 +9402,13 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
 			Hashtable<String, String> h;
-
+			
 			while (rs.next()) {
 				h = new Hashtable<String, String>();
 				h.put("ID_PEJABAT", rs.getString("ID_PEJABAT") == null ? "" : rs.getString("ID_PEJABAT"));
 				h.put("NAMA_PEJABAT", rs.getString("NAMA_PEJABAT") == null ? "" : rs.getString("NAMA_PEJABAT").toUpperCase());
 				v.addElement(h);
-
+				
 			}
 			return v;
 		} finally {
@@ -9456,7 +9416,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				db.close();
 		}
 	}
-
+	
 	//sort negeri sarawak ikut list yg diminta
 	public static Vector<Tblrujdaerah> getSortDaerahByNegeri(String idnegeri) throws Exception {
 		String key = "DB.getDaerahByNegeri" + idnegeri;
@@ -9512,9 +9472,9 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 					db.close();
 			}
 		}
-
+		
 	}
-
+	
 	//ADDED BY YATI 7/2/2018
 	public static Vector<Tblrujdaerah> getDaerahLaporanByIdPejabatJKPTGPPT(String id_pejabatjkptg) throws Exception {
 
@@ -9551,7 +9511,7 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				db.close();
 		}
 
-
+		
 	}
 
 

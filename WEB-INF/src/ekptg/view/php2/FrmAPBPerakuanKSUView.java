@@ -76,6 +76,7 @@ public class FrmAPBPerakuanKSUView extends AjaxBasedModule {
 						getParam("txtNamaMenteri"),
 						getParam("txtUlasanKeputusan"),
 						getParam("txtTarikhHantarMenteri"), session);
+				logic.updateStatus(idFail, idPermohonan, session);
 			}
 
 			if ("doBatalPermohonan".equals(hitButton)) {

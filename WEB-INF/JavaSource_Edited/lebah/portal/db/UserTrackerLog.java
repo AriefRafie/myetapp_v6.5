@@ -105,7 +105,7 @@ public class UserTrackerLog {
 			r.add("module_name", !"".equals(moduleName) ? moduleName : module);
 			
 			String sql = r.getSQLInsert("user_tracker");
-			myLog.info("sql=" + sql);
+			//myLog.info("sql=" + sql);
 			stmt.executeUpdate(sql);
 			
 		} catch ( Exception ex ) {

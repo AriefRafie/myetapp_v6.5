@@ -479,10 +479,8 @@ public class PPTHeader {
 		}
 	}
 	
-	public static void setDataHeaderBaru(String id_permohonan)throws Exception {
-	    
-		dataHeader = new Vector();
-		
+	public static void setDataHeaderBaru(String id_permohonan)throws Exception {	    
+		dataHeader = new Vector();	
 		Db db = null;
 	    dataHeader.clear();
 	    String sql = "";
@@ -490,30 +488,19 @@ public class PPTHeader {
 	    Hashtable getFlagLot = null;
 	    
 	    try{
-	    		db = new Db();
-			 
-	    	    if(!id_permohonan.equals(""))
-	    		{	    
+	    	db = new Db(); 
+	    	if(!id_permohonan.equals("")){	    
 	    	    myLogger.info("id_permohonan :::::::::"+id_permohonan);
 	    	    getFlagLot = getFlagLot(id_permohonan,db);		
 	    	    flagLot = getFlagLot.get("FLAG_REMOVE_LOG").toString();
 	    	    myLogger.info("getFlagLot ::::::::: "+getFlagLot.get("FLAG_REMOVE_LOG").toString());
-	    		}
+	    		
+	    	}
     	    
-	    		if(!id_permohonan.equals(""))
-	    		{	    
-	    	    myLogger.info("id_permohonan :::::::::"+id_permohonan);
-	    	    getFlagLot = getFlagLot(id_permohonan,db);		
-	    	    flagLot = getFlagLot.get("FLAG_REMOVE_LOG").toString();
-	    	    myLogger.info("getFlagLot ::::::::: "+getFlagLot.get("FLAG_REMOVE_LOG").toString());
-	    		}
-	    		
-	    		Statement stmt = db.getStatement();
-	    		
-	    		if(flagLot.equals("") && !id_permohonan.equals(""))
-	    		{
+	    	Statement stmt = db.getStatement();
+	    	if(flagLot.equals("") && !id_permohonan.equals("")){
 	    		updateLOT(id_permohonan,db);
-	    		}
+	    	}
 	      
 	    		sql = "SELECT DISTINCT (select count(a.id_borangk) from tblpptborangk a where a.id_permohonan = p.id_permohonan)as flag_status_borang_k, ";
 	    		sql += " (select count(b.id_permintaanukur) from tblpptpermintaanukur b, tblppthakmilik c where b.id_hakmilik(+) = c.id_hakmilik and c.id_permohonan(+) = p.id_permohonan)as flag_status_permintaanukur, ";
@@ -604,8 +591,7 @@ public class PPTHeader {
 	    		sql += " and (px.id_permohonan IN (SELECT M.ID_PERMOHONAN FROM TBLPPTMMK M, TBLPPTMMKKEPUTUSAN K "+
 	    				" WHERE M.ID_MMK = K.ID_MMK  AND K.STATUS_KEPUTUSAN = 1 AND M.ID_PERMOHONAN = p.id_permohonan) ";    
 	    		sql += " OR px.id_permohonan in (select distinct wx.id_permohonan from Tblpptwarta wx ";
-	    		sql += " where wx.id_permohonan = p.id_permohonan)))as flag_open_paging7, ";
-	    		
+	    		sql += " where wx.id_permohonan = p.id_permohonan)))as flag_open_paging7, ";	    		
 	    		
 	    		/**OPEN PAGING 8*/
 	    		sql += " (select count(*) from Tblpptpermohonan px ";
@@ -625,9 +611,7 @@ public class PPTHeader {
 	    		sql += " AND (px.id_permohonan in (select distinct hx.id_permohonan from Tblppttandakawasan hx "; 
 	    		sql += " where hx.id_permohonan = p.id_permohonan) ";
 	    		sql += " OR px.id_permohonan in (select distinct wx.id_permohonan from Tblpptwarta wx ";
-	    		sql += " where wx.id_permohonan = p.id_permohonan)))as flag_open_paging9, ";
-	    		
-	    		
+	    		sql += " where wx.id_permohonan = p.id_permohonan)))as flag_open_paging9, ";	    		
 	    				  
 	    		/**OPEN PAGING 5,6,7,8,9*/
 	    		/*
@@ -651,8 +635,7 @@ public class PPTHeader {
 	    		sql += " AND (px.id_permohonan in (select distinct hx.id_permohonan from Tblppttandakawasan hx "; 
 	    		sql += " where hx.id_permohonan = p.id_permohonan) ";
 	    		sql += " OR px.id_permohonan in (SELECT DISTINCT HM.ID_PERMOHONAN FROM TBLPPTTANAH TN, TBLPPTHAKMILIK HM " +
-	    				" WHERE TN.ID_HAKMILIK = HM.ID_HAKMILIK AND HM.ID_PERMOHONAN = p.id_permohonan)))as flag_open_paging11, ";
-	    		
+	    				" WHERE TN.ID_HAKMILIK = HM.ID_HAKMILIK AND HM.ID_PERMOHONAN = p.id_permohonan)))as flag_open_paging11, ";	    		
 	    		
 	    		/**OPEN PAGING 12*/
 	    		sql += " (select count(*) from Tblpptpermohonan px ";
@@ -674,18 +657,13 @@ public class PPTHeader {
 	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.flag_endosan in ('1','2')) ";
 	    		sql += " OR px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptborange bx, Tblpptborangehakmilik beh "; 
 	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = beh.id_hakmilik and beh.id_borange = bx.id_borange)))as flag_open_paging13, ";
-
-	    		
-	    		
 	    		
 	    		/**OPEN PAGING 14*/
 	    		sql += " (select count(*) from Tblpptpermohonan px ";
 	    		sql += " where px.id_permohonan = p.id_permohonan ";
-	    		
-	    		
+	    	  		
 	    		sql += " and (";
-	    		
-	    		
+	    		    		
 	    		/*"px.id_status='54' ";   
 	    		sql += " OR px.id_status='52' "; 
 	    		sql += " OR " +*/
@@ -698,9 +676,7 @@ public class PPTHeader {
 	    		//close komen temp by razman
 	    		
 	    		sql += " ))as flag_open_paging14, ";
-	    		
-	    		
-	    		
+	    			    		
 	    		/**OPEN PAGING 15*/
 	    		sql += " (select count(*) from Tblpptpermohonan px ";
 	    		sql += " where px.id_permohonan = p.id_permohonan ";
@@ -720,7 +696,7 @@ public class PPTHeader {
 	    		sql += " where px.id_permohonan = p.id_permohonan ";
 	    		
 	    		//open komen temp by razman
-	    		//sql += " and " +
+	    		//sql += " and " 
 	    		//close komen temp by razman
 	    				/*"px.id_status='38' ";   
 	    		sql += " OR px.id_status='62' ";
@@ -731,16 +707,15 @@ public class PPTHeader {
 	    		sql += " OR " +*/
 	    		
 	    		//open komen temp by razman
-	    				//sql += " px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptborange bx, Tblpptborangehakmilik beh "; 
-	    	    		//sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = beh.id_hakmilik and beh.id_borange = bx.id_borange) ";
+	    				sql += " and px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptborange bx, Tblpptborangehakmilik beh "; 
+	    	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = beh.id_hakmilik and beh.id_borange = bx.id_borange) ";
 	    	    //close komen temp by razman	
 	    	    		
 	    		/*sql += " OR px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptbuktipenyampaian bpx "; 
 	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = bpx.id_hakmilik ";
 	    		sql += " and flag_jenis_bukti = '1'))" +*/
 	    	    		sql += 	" ) as flag_open_paging16, "; 
-	    		
-
+	    
 	    		/**OPEN PAGING 17*/                    
 	    		sql += " (select count(*) from Tblpptpermohonan px ";
 	    		sql += " where px.id_permohonan = p.id_permohonan ";
@@ -843,9 +818,7 @@ public class PPTHeader {
 	    		sql += " OR px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptpermintaanukur pux "; 
 	    		sql += " where hx.id_permohonan = p.id_permohonan and pux.id_hakmilik = hx.id_hakmilik) ";                        
 	    		sql += " OR px.id_permohonan in (select distinct bkx.id_permohonan from Tblpptborangk bkx "; 
-	    		sql += " where bkx.id_permohonan = p.id_permohonan)))as flag_open_paging23, ";  
-	    				        		            	    		
-
+	    		sql += " where bkx.id_permohonan = p.id_permohonan)))as flag_open_paging23, ";  	    				        		            	    	
 	    		
 	    		sql += " p.id_kemaskini, p.id_status,ag.nama_agensi,p.id_permohonan, p.tujuan, initcap(p.tujuan) as tujuanInit, p.tarikh_borangf, f.id_negeri as id_projeknegeri, p.id_negeri, initcap(pn.nama_negeri) as projek_negeri,p.no_permohonan, ";  
 	    		sql += " p.id_fail, f.no_fail, f.id_suburusan,  p.tarikh_permohonan, p.id_status, f.id_kementerian, p.id_agensi, p.flag_peruntukan, p.flag_segera, "; 
@@ -978,17 +951,12 @@ public class PPTHeader {
 	    				"P.CATATAN_BORANGK_PTD, P.CATATAN_ENDOSAN_PTG, P.CATATAN_ENDOSAN_PTD, P.FLAG_STATUS_ONLINE," +
 	    				"P.CATATAN_STATUS_ONLINE, P.TARIKH_SURAT,AG.NAMA_AGENSI,PNK.NAMA_NEGERI, P.FLAG_SEMAKAN_ONLINE";
 	    		*/
-				myLogger.info(":::::::::::::::::::::::::::: NEW MAIN HEADER:::::"+sql.toUpperCase());
-				
+				myLogger.info(":::::::::::::::::::::::::::: NEW MAIN HEADER:::::"+sql.toUpperCase());				
 	    		ResultSet rs = stmt.executeQuery(sql);
 	     
 	    		Hashtable h;
-
-	    		while (rs.next()) {
-	    	  
-	    			h = new Hashtable();
-	    			
-   			
+	    		while (rs.next()) {	    	  
+	    			h = new Hashtable(); 			
 	    			h.put("flag_open_paging2", rs.getInt("flag_open_paging2")== 0?0:rs.getInt("flag_open_paging2"));
 	    			h.put("flag_open_paging3", rs.getInt("flag_open_paging3")== 0?0:rs.getInt("flag_open_paging3"));
 	    			h.put("flag_open_paging4", rs.getInt("flag_open_paging4")== 0?0:rs.getInt("flag_open_paging4"));
@@ -1010,8 +978,7 @@ public class PPTHeader {
 	    			h.put("flag_open_paging20", rs.getInt("flag_open_paging20")== 0?0:rs.getInt("flag_open_paging20"));
 	    			h.put("flag_open_paging21", rs.getInt("flag_open_paging21")== 0?0:rs.getInt("flag_open_paging21"));
 	    			h.put("flag_open_paging22", rs.getInt("flag_open_paging22")== 0?0:rs.getInt("flag_open_paging22"));
-	    			h.put("flag_open_paging23", rs.getInt("flag_open_paging23")== 0?0:rs.getInt("flag_open_paging23"));
-	    			
+	    			h.put("flag_open_paging23", rs.getInt("flag_open_paging23")== 0?0:rs.getInt("flag_open_paging23"));	    			
 	    			
 	    			//add 08022012
 	    			h.put("flag_semakan_online", rs.getString("flag_semakan_online")== null?"":rs.getString("flag_semakan_online"));
@@ -1114,81 +1081,69 @@ public class PPTHeader {
 	    			dataHeader.addElement(h);
 	    	}			    
 	     
-	    }
-	    catch (SQLException se) { 
+	    }catch (SQLException se) { 
 	    	se.printStackTrace();
 	    	throw new Exception("Ralat Jana Fail:"+se.getMessage());
-	    }
-	    finally {
+	    
+	    }finally {
 	      if (db != null) db.close();
 	    }
 	    
 	}//close setDataHeader
 	
-	
-	public static void setDataHeaderLama(String id_permohonan)throws Exception {
-	    
-		dataHeader = new Vector();
-		
+	public static void setDataHeaderLama(String id_permohonan)throws Exception {	    
+		dataHeader = new Vector();		
 		Db db = null;
 	    dataHeader.clear();
 	    String sql = "";
 	    String flagLot = "";
 	    Hashtable getFlagLot = null;
-	   
-	   
-	    
-	    
+	   	    
 	    try{
-	    		db = new Db();
+	    	db = new Db();
 	    		
-	    		Statement stmt = db.getStatement();
-	    		if(!id_permohonan.equals(""))
-	    		{	    
+	    	Statement stmt = db.getStatement();
+	    	if(!id_permohonan.equals("")){	    
 	    	    myLogger.info("id_permohonan :::::::::"+id_permohonan);
 	    	    getFlagLot = getFlagLot(id_permohonan,db);		
 	    	    flagLot = getFlagLot.get("FLAG_REMOVE_LOG").toString();
 	    	    myLogger.info("getFlagLot ::::::::: "+getFlagLot.get("FLAG_REMOVE_LOG").toString());
-	    		}
+	    	}
 
-	    	    
-	    		if(!id_permohonan.equals(""))
-	    		{	    
+	    	if(!id_permohonan.equals("")){	    
 	    	    myLogger.info("id_permohonan :::::::::"+id_permohonan);
 	    	    getFlagLot = getFlagLot(id_permohonan,db);		
 	    	    flagLot = getFlagLot.get("FLAG_REMOVE_LOG").toString();
 	    	    myLogger.info("getFlagLot ::::::::: "+getFlagLot.get("FLAG_REMOVE_LOG").toString());
-	    		}
 	    		
-	    		if(flagLot.equals("") && !id_permohonan.equals(""))
-	    		{
+	    	}
+	    		
+	    	if(flagLot.equals("") && !id_permohonan.equals("")){
 	    		updateLOT(id_permohonan,db);
-	    		}
 	    		
+	    	}
 	    		
-	    		
-	      
-	    		sql = "SELECT DISTINCT (select count(a.id_borangk) from tblpptborangk a where a.id_permohonan = p.id_permohonan)as flag_status_borang_k, ";
-	    		sql += " (select count(b.id_permintaanukur) from tblpptpermintaanukur b, tblppthakmilik c where b.id_hakmilik(+) = c.id_hakmilik and c.id_permohonan(+) = p.id_permohonan)as flag_status_permintaanukur, ";
+	    	sql = "SELECT DISTINCT (select count(a.id_borangk) from tblpptborangk a where a.id_permohonan = p.id_permohonan)as flag_status_borang_k, ";
+	    	sql += " (select count(b.id_permintaanukur) from tblpptpermintaanukur b, tblppthakmilik c where b.id_hakmilik(+) = c.id_hakmilik and c.id_permohonan(+) = p.id_permohonan)as flag_status_permintaanukur, ";
 	    	
-	    		sql += " (select count(*) from Tblppthakmilik a ";
-	    		sql += " where nvl(a.flag_pembatalan_keseluruhan,0) <> 'Y' ";
-	    		sql += " and nvl(a.flag_penarikan_keseluruhan,0) <> 'Y' ";
-	    		sql += " and a.id_permohonan = p.id_permohonan)as totalHakmilik, ";
+	    	sql += " (select count(*) from Tblppthakmilik a ";
+	    	sql += " where nvl(a.flag_pembatalan_keseluruhan,0) <> 'Y' ";
+	    	sql += " and nvl(a.flag_penarikan_keseluruhan,0) <> 'Y' ";
+	    	sql += " and a.id_permohonan = p.id_permohonan)as totalHakmilik, ";
 	    		
-	    		sql += " (select count(*) from Tblppthakmilikborangk a, Tblppthakmilik b ";
-	    		sql += " where a.id_hakmilik = b.id_hakmilik ";
-	    		sql += " and nvl(b.flag_pembatalan_keseluruhan,0) <> 'Y' ";
-	    		sql += " and nvl(b.flag_penarikan_keseluruhan,0) <> 'Y' ";
-	    		sql += " and b.id_permohonan = p.id_permohonan ";
-	    		sql += " and b.flag_endosan_borangk is not null )as totalHakmilikBorangK, ";
+	    	sql += " (select count(*) from Tblppthakmilikborangk a, Tblppthakmilik b ";
+	   		sql += " where a.id_hakmilik = b.id_hakmilik ";
+	    	sql += " and nvl(b.flag_pembatalan_keseluruhan,0) <> 'Y' ";
+	    	sql += " and nvl(b.flag_penarikan_keseluruhan,0) <> 'Y' ";
+	    	sql += " and b.id_permohonan = p.id_permohonan ";
+	    	sql += " and b.flag_endosan_borangk is not null )as totalHakmilikBorangK, ";
 
-	    		sql += " (select count(c.id_award) "; 
-	    		sql += " from tblpptaward c, tblpptsiasatan d, tblppthakmilik e ";
-	    		sql += " where c.id_siasatan(+) = d.id_siasatan ";
-	    		sql += " and d.id_hakmilik(+) = e.id_hakmilik ";
-	    		sql += " and e.id_permohonan = p.id_permohonan ";
-	    		sql += " AND d.id_siasatan = (SELECT MAX(d1.id_siasatan) FROM TBLPPTSIASATAN d1 WHERE d1.ID_HAKMILIK = e.ID_HAKMILIK))as flag_status_pampasan, ";
+	    	sql += " (select count(c.id_award) "; 
+	    	sql += " from tblpptaward c, tblpptsiasatan d, tblppthakmilik e ";
+	    	sql += " where c.id_siasatan(+) = d.id_siasatan ";
+	    	sql += " and d.id_hakmilik(+) = e.id_hakmilik ";
+	    	sql += " and e.id_permohonan = p.id_permohonan ";
+	    	sql += " AND d.id_siasatan = (SELECT MAX(d1.id_siasatan) FROM TBLPPTSIASATAN d1 WHERE d1.ID_HAKMILIK = e.ID_HAKMILIK))as flag_status_pampasan, ";
 	    		
 	    		/**QUERY UNTUK PAGING*/
 	    		/**OPEN PAGING 2*/
@@ -1400,16 +1355,14 @@ public class PPTHeader {
 				sql += " AND p.id_endosan_borangk_ptd = rk2.id_pejabat(+) ";
 				sql += " AND p.id_permohonan = '"+id_permohonan+"'";
 	    	
-				myLogger.info(":::::::::::::::::::::::::::: MAIN HEADER:::::"+sql.toUpperCase());
-				
-	    		ResultSet rs = stmt.executeQuery(sql);
-	     
-	    		Hashtable h;
-
-	    		while (rs.next()) {
-	    	  
-	    			h = new Hashtable();
-	    			
+			myLogger.info(":::::::::::::::::::::::::::: MAIN HEADER:::::"+sql.toUpperCase());
+			ResultSet rs = stmt.executeQuery(sql);
+			//Hashtable<String,String> h;	
+			Hashtable h;	
+			while (rs.next()) {
+//				h = new Hashtable<String,String>();
+				h = new Hashtable();
+   			
 	    			//paging 2 - 13
 	    			h.put("flag_open_paging2", rs.getInt("flag_open_paging2")== 0?0:rs.getInt("flag_open_paging2"));
 	    			h.put("flag_open_paging3", rs.getInt("flag_open_paging3")== 0?0:rs.getInt("flag_open_paging3"));
@@ -1646,7 +1599,7 @@ public class PPTHeader {
 			stmt = db.getStatement();
 			String ID_SUBURUSAN="";
 			sql = " SELECT F.ID_SUBURUSAN FROM TBLPPTPERMOHONAN P, TBLPFDFAIL F WHERE F.ID_FAIL = P.ID_FAIL AND P.ID_PERMOHONAN = '"+id_permohonan+"' ";	
-			myLogger.info(" getIdSubUrusan :" + sql.toUpperCase());
+//			myLogger.info(" getIdSubUrusan :" + sql.toUpperCase());
 				rs = stmt.executeQuery(sql);				
 				while (rs.next()) {				
 					

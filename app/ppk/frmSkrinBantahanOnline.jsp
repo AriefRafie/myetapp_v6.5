@@ -151,33 +151,16 @@
 		          </tr>
 		           <tr>
 		           	  <td width="1%" valign="top"><span class="style1">*</span></td>
-		             <td width="17%">Negeri</td>
+		              <td width="17%">Bandar</td>
 		              <td width="1%">:</td>
-		              <td width="80%">
-<!-- 		              	<input name="txtNegeri" type="text" id="txtNegeri" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()"  size="50"  maxlength="200" /> -->
-		              	<select name="txtNegeri" class="autoselect" onchange="getBandarTetap('txtBandarSimati')">
-                        	<option value="" >SILA PILIH NEGERI</option>
-                             #foreach($listneg in $listnegeri)
-                   			<option value="$listneg.nama_Negeri" style="text-transform:uppercase;" onBlur="uppercase()">$listneg.kod_Negeri - $listneg.nama_Negeri</option>
-                             #end
-                        </select>
-		              </td>
+		              <td width="80%"><input name="txtBandar" type="text" id="txtBandar" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200"/></td>
 		          </tr>
 		           <tr>
 		           	  <td width="1%" valign="top"><span class="style1">*</span></td>
-		              <td width="17%">Bandar</td>
+		             <td width="17%">Negeri</td>
 		              <td width="1%">:</td>
-		              <td width="80%">
-		              	<input name="txtBandar" type="text" id="txtBandar" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()" size="50"  maxlength="200"/>
-<!-- 		              	<select name="txtBandarSimati" id="txtBandarSimati" class="autoselect" $readmode  style="text-transform:uppercase;" onBlur="uppercase()" onclick="CheckBandarTetap()" > -->
-<!--                         	<option value="">Sila Pilih Bandar</option> -->
-<!--                             #foreach($listDaerah in $listBandarTetapbyNegeri) -->
-<!--                             <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option> -->
-<!--                             #end -->
-<!--                         </select> -->
-		              </td>
+		              <td width="80%"><input name="txtNegeri" type="text" id="txtNegeri" style="text-transform:uppercase;"  onblur="this.value=this.value.toUpperCase()"  size="50"  maxlength="200" /></td>
 		          </tr>
-		          
 		           <tr>
 		           	  <td width="1%" valign="top"><span class="style1">*</span></td>
 		              <td width="17%">No. Telefon</td>
@@ -209,7 +192,7 @@
 	            	<tr>
 	            		<td width="1%" valign="top"></td>
 <!-- 	    				<td colspan="3"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled> &nbsp;Saya $!pemohon.namaPemohon No.K/P $!pemohon.noPengenalan dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td> -->
-	      				<td colspan="3"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled> Saya <input style="border:none;background:transparent;" name="nameD" id="nameD" readonly/> No.K/P <input style="border:none;background:transparent;" name="no_kpD" id="no_kpD" readonly/> dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
+	      				<td colspan="3"><input type="checkbox" name='cbDisclaimer' id='cbDisclaimer' class=disabled> Saya <input style="border:none;background:transparent;" name="nameD" id="nameD"/> No.K/P <input style="border:none;background:transparent;" name="no_kpD" id="no_kpD"/> dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.</td>
 	      			</tr>
 	            </table>
 			</fieldset>
@@ -376,39 +359,39 @@ function lampiran(idPermohonan,jenisUpload) {
 function Simpan(){
 	if (document.${formName}.txtNama.value == "0" || document.${formName}.txtNama.value == "") {
 	      alert("Sila masukkan Nama Pembantah");
-	      document.${formName}.txtNama.focus();
+	      document.f1.catatan.focus();
 	}
 	else if (document.${formName}.txtNoKPLamaPemohon.value == "0" || document.${formName}.txtNoKPLamaPemohon.value == "") {
 	      alert("Sila masukkan No MyID");
-	      document.${formName}.txtNoKPLamaPemohon.focus();
+	      document.f1.catatan.focus();
 	}
 	else if (document.${formName}.txtAlamat1.value == "0" || document.${formName}.txtAlamat1.value == "") {
 	      alert("Sila masukkan Alamat Pembantah");
-	      document.${formName}.txtAlamat1.focus();
+	      document.f1.catatan.focus();
 	}
 	else if (document.${formName}.txtPoskod.value == "0" || document.${formName}.txtPoskod.value == "") {
 	      alert("Sila masukkan Poskod");
-	      document.${formName}.txtPoskod.focus();
+	      document.f1.catatan.focus();
 	}
 	else if (document.${formName}.txtBandar.value == "0" || document.${formName}.txtBandar.value == "") {
 	      alert("Sila masukkan Bandar");
-	      document.${formName}.txtBandar.focus();
+	      document.f1.catatan.focus();
 	}
 	else if (document.${formName}.txtNegeri.value == "0" || document.${formName}.txtNegeri.value == "") {
 	      alert("Sila masukkan Negeri");
-	      document.${formName}.txtNegeri.focus();
+	      document.f1.catatan.focus();
 	}
 	else if (document.${formName}.txtNoTel.value == "0" || document.${formName}.txtNoTel.value == "") {
 	      alert("Sila masukkan No. Telefon");
-	      document.${formName}.txtNoTel.catatan.focus();
+	      document.f1.catatan.focus();
 	}
 	else if (document.${formName}.txtEmel.value == "0" || document.${formName}.txtEmel.value == "") {
 	      alert("Sila masukkan Emel");
-	      document.${formName}.txtEmel.catatan.focus();
+	      document.f1.catatan.focus();
 	}
 	else if (document.${formName}.catatan.value == "0" || document.${formName}.catatan.value == "") {
 	      alert("Sila masukkan Sebab Bantah");
-	      document.${formName}.catatan.focus();
+	      document.f1.catatan.focus();
 	      return;
 	}
 	else if (cbDisclaimer.checked == false) {
@@ -439,11 +422,11 @@ function tukarInput(){
 function changeHantar(){
 	if (document.${formName}.txtNama.value == "0" || document.${formName}.txtNama.value == "") {
 	      alert("Sila masukkan Nama Pembantah");
-	      document.${formName}.txtNama.focus();
+	      document.f1.catatan.focus();
 	}
 	else if (document.${formName}.txtNoKPLamaPemohon.value == "0" || document.${formName}.txtNoKPLamaPemohon.value == "") {
 	      alert("Sila masukkan No MyID");
-	      document.${formName}.txtNoKPLamaPemohon.focus();
+	      document.f1.catatan.focus();
 	}
 	else {
 		var name = document.getElementById("txtNama").value;
@@ -461,33 +444,9 @@ function changeHantar(){
 }  */
 
 function showDisclaimer(name,no_kp){
+	
 	alert(name+no_kp); 
 }
-
-function getBandarTetap(bandarSimati){
-	alert(getParam(""));
-	if('$!skrin_online' == 'yes') {
-		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBantahanOnline";
-	}
-	else {
-		document.${formName}.action = "";
-	}
-	
-	document.${formName}.mode.value = "getBandar";
-	document.${formName}.command.value = "skrinBantahNow";
-	// document.${formName}.v_tab.value = v_t;
-	//document.f1.bandar_event.value = "yes";	
-	document.${formName}.submit();
-}
-
-function CheckBandarTetap() {
-	if(document.${formName}.socNegeriSimati.value == "" || document.${formName}.socNegeriSimati.value == "0") {
-		alert("Sila pilih negeri terlebih dahulu.");
-		document.${formName}.socNegeriSimati.focus();
-		return;
-	}
-}
-
 
 
 function NowView(idfail,nofail,simati,ic) {

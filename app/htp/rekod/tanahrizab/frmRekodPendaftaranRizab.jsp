@@ -48,7 +48,7 @@
 					        	</td>				        
 	                        	<td width="30%">
 	                            	<div align="left">
-	                            		<span class="labelinput">No. Fail Seksyen</span>
+	                            		<span class="labelinput">No. Fail</span>
 	                            	</div>
 	                        	</td>
 	                  			<td width="1%" class="labelinput" >:</td>
@@ -199,8 +199,8 @@
 	                        	</td>
 	                  			<td width="1%" class="labelinput" >:</td>
 	                   			<td width="68%" class="labeldisplay" >
-		    						<input type="radio" name="socJenisTanahtemp" value="1" $checkedMilik  onclick="cari()"/>Berwarta
-					 				<input type="radio" name="socJenisTanahtemp" value="2" $checkedRizab  onclick="cari()"/>Tidak Berwarta
+		    						<input type="radio" name="socJenisTanahtemp" value="1" $checkedMilik onclick="TanahWarta()"/>Berwarta
+					 				<input type="radio" name="socJenisTanahtemp" value="2" $checkedRizab  onclick="TanahXWarta()"/>Tidak Berwarta
 								</td>
 	                	</tr>
 	                   	<tr>
@@ -603,35 +603,51 @@
 									#end
 									$!sstatus 
 								#else
-									<select name="socStatusDaftar" style="width:200px;" $readonly class="$disabled" $disabled>
+									<select name="socStatusDaftar" style="width:200px;" $readonly class="$disabled" $disabled onChange="doChangeTarafRizab()">
 							            #if($socStatus == 'D')
 							          		<option value="">SILA PILIH</option>
 							            	<option value="D" selected="selected">D - DAFTAR</option>
 								        	<option value="P">P - BATAL (PELEPASAN)</option>
-								        	<option value="Q">Q - BATAL (PERMOHONAN)</option>
+								        	<option value="Q">Q - BATAL (PEMBERIMILIKAN)</option>
 								        	
 							         	#elseif($socStatus == 'P')						                
 								        	<option value="">SILA PILIH</option>
 								        	<option value="D">D - DAFTAR</option>
 								        	<option value="P" selected="selected" >P - BATAL (PELEPASAN)</option>
-								        	<option value="Q"> bhy6tgvfc </option>
+								        	<option value="Q">Q - BATAL (PEMBERIMILIKAN</option>
 							         	
 							         	#elseif($socStatus == 'Q')						                
 								        	<option value="">SILA PILIH</option>
 								        	<option value="D">D - DAFTAR</option>
 								        	<option value="P" >P - BATAL (PELEPASAN)</option>
-								        	<option value="Q" selected="selected" >Q - BATAL (PERMOHONAN)</option>
+								        	<option value="Q" selected="selected" >Q - BATAL (PEMBERIMILIKAN)</option>
 								        
 							            #else 
 							                <option value="">SILA PILIH</option>
 							                <option value="D">D - DAFTAR</option>
 								        	<option value="P">P - BATAL (PELEPASAN)</option>
-							        	   	<option value="Q">Q - BATAL (PERMOHONAN)</option>
+							        	   	<option value="Q">Q - BATAL (PEMBERIMILIKAN)</option>
 							        	#end
 							        </select> 
 							     #end   
         	      				</td>
 	                		</tr>
+	                			#if($socStatus == 'P')
+							<tr>
+	  							<td width="1%" >
+					        	</td>				        
+	                        	<td width="30%" valign="top" >
+	                            	<div align="left">
+	                            		<span class="labelinput">Catatan Pelepasan</span>
+	                            	</div>
+	                        	</td>
+	                  			<td width="1%" class="labelinput" valign="top" >:</td>
+	                   			<td width="68%" class="labeldisplay" >
+									<textarea name="txtpelepasan" cols="27" rows="5" class="$disabled" id="txtpelepasan" style="text-transform:uppercase;" $readonly="$readonly">$!txtPelepasan</textarea>  							
+								</td>	                		
+	                		</tr>
+	                			#end
+	                		
 	                		#else
 	                   		<tr>
 	  							<td width="1%"  >
@@ -659,18 +675,7 @@
 	      						</td>
 	                		</tr>
       						#end
-      						<tr>
-	  							<td width="1%" >
-					        	</td>				        
-	                        	<td width="30%" valign="top" >
-	                            	<div align="left">
-	                            		<span class="labelinput">Catatan Pelepasan</span>
-	                            	</div>
-	                        	</td>
-	                  			<td width="1%" class="labelinput" valign="top" >:</td>
-	                   			<td width="68%" class="labeldisplay" >
-									<textarea name="txtpelepasan" cols="27" rows="5" class="$disabled" id="txtpelepasan" style="text-transform:uppercase;" $readonly="$readonly">$!txtPelepasan</textarea>  							
-								</td>
+      
 	                		<tr>
 	  							<td width="1%"  >
 					        	</td>				        

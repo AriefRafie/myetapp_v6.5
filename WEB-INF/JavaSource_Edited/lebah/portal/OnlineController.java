@@ -142,9 +142,9 @@ public class OnlineController extends VServlet implements Serializable{
         session.setAttribute("form_token", form_token);
         String app_path = getServletContext().getRealPath("/");
         app_path = app_path == null ? "" : app_path.replace('\\', '/');
-        //System.out.println("WARNING: app_path is null.");
         if("".equals(app_path))
-        	session.setAttribute("_portal_app_path", app_path);
+            System.out.println("WARNING: app_path is null.");
+        session.setAttribute("_portal_app_path", app_path);
         
         context.put("ip_address", req.getRemoteAddr());
 		session.setAttribute("ip_address", req.getRemoteAddr());
@@ -179,8 +179,8 @@ public class OnlineController extends VServlet implements Serializable{
         String module = req.getParameter("_portal_module") == null ? "" : req.getParameter("_portal_module");
         if(session.getAttribute("_portal_module") != null && (module == null || "".equals(module)))
             module = (String)session.getAttribute("_portal_module");
-        
-        if("anon".equals(session.getAttribute("_portal_role")) && "false".equals(session.getAttribute("_portal_islogin"))){
+        if("anon".equals(session.getAttribute("_portal_role")) && "false".equals(session.getAttribute("_portal_islogin")))
+        {
             String visitor = req.getParameter("visitor") == null ? session.getAttribute("_portal_visitor") == null ? "anon" : (String)session.getAttribute("_portal_visitor") : req.getParameter("visitor");
             if(!"anon".equals(visitor) && "anon".equals(PrepareUser.getRole(visitor))){
                 session.setAttribute("_portal_login", visitor);

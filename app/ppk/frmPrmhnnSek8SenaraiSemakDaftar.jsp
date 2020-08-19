@@ -15,12 +15,12 @@
 #set ($checked4 = "")
 #set ($checked5 = "")
 #set ($txtchecked5 = "")
-#set ($txtchecked6 = "")
+ #set ($txtchecked6 = "") <!-- arief commend -->
 #set ($txtchecked8 = "")
 #set ($txtchecked9 = "")
 #set ($txtchecked9d = "")
-#set ($checked6 = "")
-#set ($checked7 = "")
+ #set ($checked6 = "") <!-- arief commend -->
+ #set ($checked7 = "") <!-- arief commend -->
 #set ($checked8 = "")
 #set ($checked9 = "")
 #set ($checked10 = "")
@@ -39,6 +39,7 @@
 #set ($checked23 = "")
 #set ($checked24 = "")
 #set ($checked25 = "")
+#set ($checked26 = "") <!-- arief add -->
 #set ($txtchecked23 = "")
 #set ($txtchecked24 = "")
 #set ($chkmode = "")
@@ -68,7 +69,8 @@
 			#set ($checked5 = "checked")
 			#set ($txtchecked5 = $List.Catatan)
 		#end
-		#if ($List.idsemakansenarai == "6")
+		<!-- arief commend -->
+		 #if ($List.idsemakansenarai == "6")
 			#set ($checked6 = "checked")
 			#set ($txtchecked6 = $List.Catatan)
 		#end
@@ -133,7 +135,10 @@
 		#end
 		#if ($List.idsemakansenarai == "24")
 			#set ($checked24 = "checked")
-		#end	
+		#end
+		#if ($List.idsemakansenarai == "26") <!-- arief add -->
+			#set ($checked26 = "checked")
+		#end
 	#end
 #end
 </head>
@@ -163,7 +168,7 @@
   #set($id_Simati="$ls.id_Simati")
   #end
   
-  
+<!-- arief comment -->
   #if($ls.idsemakansenarai=="6")
   #set($buktimati="2")
   #set($id_Simati="$ls.id_Simati")
@@ -281,6 +286,8 @@
                     <input type="text" name="txtNomborSijil" id="txtNomborSijil" maxlength="25" $chkmodeR  class="$chkmode" value="$txtchecked5" onKeyUp="checkitA()" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
                   </label></td>
           </tr>
+          <!-- arief comment -->
+          
           <tr>
             <td>&nbsp;</td>
             <td ><div align="center">
@@ -303,7 +310,7 @@
               </label>
             </td>
           </tr>
-          <tr>
+           <tr>
             <td>&nbsp;</td>
             <td valign="top"><div align="center">
               <input type="radio" name="cbsemakradio" $chkmode id="radio3" value="7" $checked7 onClick="checkit7()"/>
@@ -515,7 +522,7 @@
           <tr>
             <td width="10%" >&nbsp;</td>
             <td width="1%" >&nbsp;</td>
-            <td width="3%" ><input name="cbsemaks" type="checkbox" id="cbsemaks12" $chkmode value="17" $checked17 onClick="ReadOnlyCheckBox(this);checkit16()"/>            </td>
+            <td width="3%" ><input name="cbsemaks" type="checkbox" id="cbsemaks12" $chkmode value="17" $checked17 onClick="checkit16();checkit_ha()"/>            </td>
             <td width="86%"> Salinan dokumen sokongan bagi Harta Alih</td>
           </tr>
         </table></td>
@@ -525,40 +532,40 @@
           <tr>
             <td width="22%" >&nbsp;</td>
             <td width="3%" ><div align="center">
-              <input name="cbsemaks" type="checkbox" id="cbsemaks13" $chkmode value="18" $checked18 onClick="ReadOnlyCheckBox(this);checkit17()"/>
+              <input name="cbsemaks" type="checkbox" id="cbsemaks13" $chkmode value="18" $checked18 onClick="checkit17();checkit_ha()"/>
             </div></td>
             <td width="75%"> Wang Simpanan</td>
           </tr>
           <tr>
             <td >&nbsp;</td>
             <td ><div align="center"></div></td>
-            <td ><input name="cbsemaks" type="checkbox" id="cbsemaks17" $chkmode  value="19" $checked19 onClick="checkit18()"/>
+            <td ><input name="cbsemaks" type="checkbox" id="cbsemaks17" $chkmode  value="19" $checked19 onClick="checkit18();checkit_ha()"/>
               Akaun / Penyata Bank</td>
           </tr>
           <tr>
             <td  >&nbsp;</td>
             <td><div align="center"></div></td>
-            <td><input name="cbsemaks" type="checkbox" id="cbsemaks18" $chkmode value="20" $checked20 onClick="checkit19()"/>
+            <td><input name="cbsemaks" type="checkbox" id="cbsemaks18" $chkmode value="20" $checked20 onClick="checkit19();checkit_ha()"/>
               Penyata Tabung Haji</td>
           </tr>
           <tr>
             <td >&nbsp;</td>
             <td ><div align="center">
-              <input name="cbsemaks" type="checkbox" id="cbsemaks14" $chkmode value="21" $checked21 onClick="checkit20()"/>
+              <input name="cbsemaks" type="checkbox" id="cbsemaks14" $chkmode value="21" $checked21 onClick="checkit20();checkit_ha()"/>
             </div></td>
             <td> Saham</td>
           </tr>
           <tr>
             <td >&nbsp;</td>
             <td ><div align="center">
-              <input name="cbsemaks" type="checkbox" id="cbsemaks15" $chkmode value="22" $checked22 onClick="checkit21()"/>
+              <input name="cbsemaks" type="checkbox" id="cbsemaks15" $chkmode value="22" $checked22 onClick="checkit21();checkit_ha()"/>
             </div></td>
             <td> Perakuan Pendaftaran Kenderaan / Geran</td>
           </tr>
           <tr>
             <td >&nbsp;</td>
             <td ><div align="center">
-              <input name="cbsemaks" type="checkbox" id="cbsemaks16" $chkmode value="23" $checked23 onClick="checkit22()"/>
+              <input name="cbsemaks" type="checkbox" id="cbsemaks16" $chkmode value="23" $checked23 onClick="checkit22();checkit_ha()"/>
             </div></td>
             <td> Lain - lain</td>
           </tr>
@@ -580,12 +587,20 @@
         <td><table width="100%" border="0">
           <tr>
             <td width="10%" >&nbsp;</td>
-             <td width="1%" valign="top" >#if($chkmode != "disabled")<span class="style2">*</span> #end</td>
+             <td width="1%" valign="top" >#if($chkmode != "disabled")<span class="style2"></span> #end</td>
             <td width="3%" ><input type="checkbox" name="cbsemaks" id="cbsemaks19" $chkmode value="24" $checked24 onClick="ReadOnlyCheckBox(this);checkit_harta_cancel()" />            </td>
             <td width="86%"> #if($chkmode != "disabled") Memiliki Harta Tak Alih #else
               Memiliki Harta Tak Alih
               #end </td>
           </tr>
+          <!--  <tr>
+            <td width="10%" >&nbsp;</td>
+             <td width="1%" valign="top" >#if($chkmode != "disabled")<span class="style2"></span> #end</td>
+            <td width="3%" ><input type="checkbox" name="cbsemaks" id="cbsemaks20" $chkmode value="26" $checked26 onClick="ReadOnlyCheckBox(this);checkit_ha_cancel()" />            </td>
+            <td width="86%"> #if($chkmode != "disabled") Memiliki Harta Alih #else
+              Memiliki Harta Alih
+              #end </td>
+          </tr>-->
         </table></td>
       </tr>
        <tr>
@@ -783,7 +798,7 @@ function checkit5(){
 		
 	}
 }
-
+/* arief commend*/
 function checkit6(){
 
 	if (document.f1.cbsemakradio[1].checked == true){	
@@ -1569,8 +1584,10 @@ function DoTheCheck() {
 		dm.focus()
 		return false
 	}
-	else if (document.f1.cbsemaks[23].checked == false) {
-		alert("Sila masukkan Memiliki Harta Tak Alih");
+	//arief add ::--  && document.f1.cbsemaks[25].checked == false
+	else if (document.f1.cbsemaks[23].checked == false && document.f1.cbsemaks[16].checked == false ) { 
+		alert("Sila masukkan Memiliki Harta Tidak Alih ATAU Harta Alih");
+		
 	}
 	else if (document.f1.lepassatusept.value == "no" && ( date1 > currentTime )){
 	
@@ -1804,6 +1821,30 @@ document.f1.cbsemaks[14].checked = false;
 document.f1.cbsemaks[15].checked = false;
 }	
 }
-
-
+//arief add checkit_ha()
+/*function checkit_ha()
+{
+	if (document.f1.cbsemaks[17].checked == true || document.f1.cbsemaks[18].checked == true || document.f1.cbsemaks[19].checked == true || document.f1.cbsemaks[20].checked == true || document.f1.cbsemaks[21].checked == true || document.f1.cbsemaks[22].checked == true)
+	{
+		document.f1.cbsemaks[26].checked = true;
+	}
+	else
+	{
+		document.f1.cbsemaks[26].checked = false;
+	}		
+}*/
+//arief add checkit_ha_cancel()
+/*function checkit_ha_cancel()
+{
+	if (document.f1.cbsemaks[26].checked == false)
+	{
+		document.f1.cbsemaks[17].checked = false;
+		document.f1.cbsemaks[18].checked = false;
+		document.f1.cbsemaks[19].checked = false;
+		document.f1.cbsemaks[20].checked = false;
+		document.f1.cbsemaks[21].checked = false;
+		document.f1.cbsemaks[22].checked = false;
+		document.f1.txtLainLainTujuan.value="";
+	}
+}*/
 </script>

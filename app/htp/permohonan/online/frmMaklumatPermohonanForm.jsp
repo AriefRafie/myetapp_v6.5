@@ -125,7 +125,7 @@
 					               	<td width="35%" valign="top" align="left">TAJUK</td>
 					                <td width="1%" valign="top">:</td>
 					                <td width="63%">
-					                	<textarea $readOnly class="$disabled" name="txtTajuk" id="txtTajuk" cols="41" rows="5" onblur="this.value=this.value.toUpperCase();">$!txtTajuk</textarea>               	
+					                	<textarea $readOnly class="$disabled" name="txtTajuk" id="txtTajuk" cols="41" rows="5" onkeyup="this.value=this.value.toUpperCase();" onblur="this.value=this.value.toUpperCase();">$!txtTajuk</textarea>               	
 									</td>					        						
 			              		</tr>		
 

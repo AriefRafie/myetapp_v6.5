@@ -10,6 +10,8 @@
 -->
 <style type="text/css">
 <!--
+
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -299,7 +301,11 @@
 	#end 
 
 			<fieldset><legend>MAKLUMAT HARTA ALIH</legend>
-      		
+			#if($!skrin_online == "yes")
+			<div id="info_skrin_daftar_sek8"></div>
+      <script>
+ 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink>Wang tunai,saham, simpanan bank, KWSP, insurans, kenderaan, senjata api, barang kemas dan barang-barang berharga.</b></div>";
+ 			</script> #end
       		<table width="100%" border="0">
         		<tr>
           			<td>
@@ -1006,7 +1012,7 @@
                       #elseif ($socJenisHa == "2")
                       Agensi
                       #elseif ($socJenisHa == "3")
-                      Jenis dan Jenama                      
+                      Jenis dan Jenama                 
                       #elseif ($socJenisHa == "4")
                       No. Hakmilik, No. Lot dan Mukim
                       #elseif ($socJenisHa == "5")
@@ -1023,9 +1029,21 @@
                   <td>
                   #if ($socJenisHa == "1" || $socJenisHa == "2" || $socJenisHa == "3" || $socJenisHa == "4" || $socJenisHa == "5" || $socJenisHa == "6" )
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  /> 
- 	  #else
+ 	  	#if($!skrin_online == "yes")
+ 	  	#if($socJenisHa == "3")
+ 	  	<a href="javascript:info('geran_kereta')" class="help" title="info">					
+					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+			</a>#end 
+			
+			#if($socJenisHa == "2")
+ 	  	<a href="javascript:info('agensi')" class="help" title="info">					
+					<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+			</a>#end
+			#end
+			
+ 	  	#else
       <input  name="txtAgensi" type="text" class="$disabled" id="txtAgensi" style="text-transform:uppercase; text-align: left;" onblur="this.value=this.value.toUpperCase()" value="$agensi" size="50" maxlength="150" $disabledR  />	  
-      #end      </td> 
+      #end 	</td> 
         </tr>
       #end
                 
@@ -1107,8 +1125,17 @@
              	<td>
         	#if ($socJenisHa == 1 || $socJenisHa == 4 || $socJenisHa == 3 || $socJenisHa == 5 || $socJenisHa == 6) 
       				<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />  
+      		#if($!skrin_online == "yes")
+      		#if ($socJenisHa == "3")
+      		<a href="javascript:info('daftar')" class="help" title="info">					
+								<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+					</a> #end #end
       		#elseif ($socJenisHa == 2)
       				<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;"  value="$norujukan" size="20" maxlength="30" onblur="this.value=this.value.toUpperCase()" $disabledR class="$disabled"  /> 
+      		#if($!skrin_online == "yes")
+      		<a href="javascript:info('akaun')" class="help" title="info">					
+								<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+					</a> #end
       		#else
       
           			<input name="txtNoRujukan" type="text" id="txtNoRujukan" style="width: 150px; text-transform:uppercase; text-align: left;" value="$norujukan" size="20" maxlength="30" $disabledR class="$disabled"  onblur="this.value=this.value.toUpperCase()" />      
@@ -1323,7 +1350,7 @@
                   #end
                   
                    <td>
-                   <input  name="txtNilaiTarikhMohon" id="txtNilaiTarikhMohon" type="text" style="width: 150px; text-align: right; text-transform:uppercase;" value="$nilaitarikhmohon" $disabledR class="$disabled"  onblur="validateModal(this,this.value,'$nilaitarikhmohon')"  onKeyUp="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMohon')" />
+                   <input  name="txtNilaiTarikhMohon" id="txtNilaiTarikhMohon" type="text" style="width: 150px; text-align: right; text-transform:uppercase;" value="0.00" $disabledR class="$disabled"  onblur="validateModal(this,this.value,'$nilaitarikhmohon')"  onKeyUp="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMohon')" />
                    </td>
                 </tr>
                 #if( $socJenisHa != 98 )
@@ -1358,10 +1385,10 @@
                   #set($nilaitarikhmati="")
                   #end
                   
-                  <td><input name="txtNilaiTarikhMati" id="txtNilaiTarikhMati" type="text" style="width: 150px; text-align: right; text-transform:uppercase;" value="$nilaitarikhmati" $disabledR class="$disabled"  onblur="validateModal(this,this.value,'$nilaitarikhmati');" onKeyUp="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMati')"/></td>
+                  <td><input name="txtNilaiTarikhMati" id="txtNilaiTarikhMati" type="text" style="width: 150px; text-align: right; text-transform:uppercase;" value="0.00" $disabledR class="$disabled"  onblur="validateModal(this,this.value,'$nilaitarikhmati');" onKeyUp="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMati')"/></td>
                 </tr>
                 #else
-                <input name="txtNilaiTarikhMati" id="txtNilaiTarikhMati" type="hidden" style="width: 150px; text-align: right; text-transform:uppercase;" value="$nilaitarikhmati" $disabledR class="$disabled"  onblur="validateModal(this,this.value,'$nilaitarikhmati');" onKeyUp="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMati')"/>
+                <input name="txtNilaiTarikhMati" id="txtNilaiTarikhMati" type="hidden" style="width: 150px; text-align: right; text-transform:uppercase;" value="0.00" $disabledR class="$disabled"  onblur="validateModal(this,this.value,'$nilaitarikhmati');" onKeyUp="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMati')"/>
                 
                 #end
                
@@ -1856,10 +1883,12 @@
 				                          					&& $id_Status != "64" 
 				                          					&& $id_Status != "163" 
 				                          					&& $id_Status != "164" 
-				                          					&& $id_Status != "165")	  
+				                          					&& $id_Status != "165")	
+				                          					#if($open_button_online == "yes")  
 										                   		<a href = "javascript:lampiranHartaHA('$list.idha','$!paramOnline');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
+															#end
 														#end		
 															 	$list.lampirans
 									             	</td>
@@ -1875,11 +1904,13 @@
 				                          					&& $id_Status != "64" 
 				                          					&& $id_Status != "163" 
 				                          					&& $id_Status != "164" 
-				                          					&& $id_Status != "165")	   
+				                          					&& $id_Status != "165")	  
+				                          					#if($open_button_online == "yes")   
 										                   		<a href = "javascript:lampiranHartaHA('$list.idha','$!paramOnline');">
 																	<img border="0" src="../myetapp65/img/jkptg.png" width="20" height="15"/>
 																</a><br>
-															#end	
+															#end
+														#end	
 															 	$list.lampirans
 									             	</td>
 												</tr>
@@ -1949,6 +1980,24 @@
 </body>
 
 <script>
+function info(jenis) {
+    //
+	var url = "../x/${securityToken}/ekptg.view.utils.FormInfo?jenis="+jenis;
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=no,scrollbars=no');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Info';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+    //var top = (screen.height/2)-(h/2);
+    //return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+
+}
+
 	<!-- TAB -->
 
 function jumptoKeputusan(jenis_permohonan,idPermohonan,idPemohon,idSimati,id_Permohonansimati,negeriARB)
@@ -2940,7 +2989,7 @@ document.f1.txtNilaiTarikhMati.value=document.f1.txtNilaiTarikhMohon.value
 }
 
 	function lampiranHartaHA(idHarta) {
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHA&actionPopup=paparHA&idHarta="+idHarta+"&flagOnline=$!flagOnline";
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=paparHA&actionPopup=paparHA&idHarta="+idHarta+"&flagOnline=$!flagOnline";
 	    //
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
@@ -2957,7 +3006,8 @@ document.f1.txtNilaiTarikhMati.value=document.f1.txtNilaiTarikhMohon.value
 	
 	}
 	function lampiranHartaPapar(id_){
-		var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=ha";
+		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=ha";
+		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=ha";
 	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener=document.window;

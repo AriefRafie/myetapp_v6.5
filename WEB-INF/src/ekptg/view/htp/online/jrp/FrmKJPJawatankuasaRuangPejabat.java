@@ -29,22 +29,33 @@ import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmSenaraiFailPajakanKecilData;
 import ekptg.model.htp.FrmSewaanDerafData;
 import ekptg.model.htp.FrmUtilData;
+import ekptg.model.htp.HTPPermohonanBean;
 import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.htp.HakmilikUrusan;
 import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHTPPermohonan;
 import ekptg.model.htp.IHTPStatus;
 import ekptg.model.htp.IHtp;
 import ekptg.model.htp.IPenggunaKementerian;
 import ekptg.model.htp.PenggunaKementerianBean;
 import ekptg.model.htp.PihakBerkepentingan;
 import ekptg.model.htp.UtilHTML;
+import ekptg.model.htp.entity.HtpPermohonan;
+import ekptg.model.htp.entity.Permohonan;
+import ekptg.model.htp.online.IOnline;
+import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.htp.pajakankecil.HTPPajakanKecilFailBean;
 import ekptg.model.htp.pembelian.IPemilik;
 import ekptg.model.htp.pembelian.PemilikBean;
+import ekptg.model.htp.utiliti.HTPEmelSemakanBean;
 import ekptg.model.htp.utiliti.HTPSusulanBean;
 import ekptg.model.htp.utiliti.IHTPSusulan;
 import ekptg.model.htp.utiliti.fail.HTPFailBean;
 import ekptg.model.htp.utiliti.fail.IHTPFail;
+import ekptg.model.utils.IUserPegawai;
+import ekptg.model.utils.UserBean;
+import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.emel.IEmel;
 
 public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{	
 	/**
@@ -60,8 +71,13 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 	private IHTPStatus iStatus = null;
 	private IHTPSusulan iSusulan = null;
 	private IPemilik iPemilik = null;
+	private IOnline iOnline = null;
+	private IHTPPermohonan iHTPPermohonan = null;
+	private ekptg.model.utils.emel.IEmel emelSemak = null;
+	
 	private Long idHakmilikUrusan = 0L;
 	private PihakBerkepentingan pemilik = null;
+	private HtpPermohonan htpPermohonan = null;
 	private String idUrusan = "14";
 	private String idSubUrusan = "9920122";
 	private String idFailN = null;
@@ -85,9 +101,12 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
  	String idKementerian = "";
  	String idAgensi = "";
  	String noFail = "";
+ 	String jawatan = "";
+	String idJawatan = "";
  	private IHtp iHTP = null;  
  	private UserKementerian uk = null;
  	private IPenggunaKementerian iPengguna = null;
+ 	private IUserPegawai iUser = null;
 
 	public String doTemplate2()throws Exception {
 		 
@@ -138,6 +157,14 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				id_kementerian = String.valueOf(uk.getAgensi().getKementerian().getIdKementerian());
 				//System.out.println("+++++"+id_kementerian);
 			}
+			Hashtable hUser = getIUser().getPengguna(userId);
+			jawatan = String.valueOf(hUser.get("jawatan"));
+			idJawatan = String.valueOf(hUser.get("idjawatan"));
+			context.put("idjawatan", idJawatan);
+
+			myLog.info("JAWATAN="+jawatan);
+			myLog.info("JAWATAN="+hUser.get("idjawatan"));
+			myLog.info("idSubUrusan====="+idSubUrusan);
 			if (!("".equals(submit))) {
 				
 		    	this.context.put("idsuburusan",idSubUrusan);
@@ -152,7 +179,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				 	idMukim = getParam("socMukim");
 				 	
 				 	maklumatCarian();
-		    		socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian),"onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
+		    		socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),"disabled class=disabled","onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
 				    this.context.put("socKementerian",socKementerian);
 		    		//senaraiFail = FrmSenaraiFailPajakanKecilData.getList(nofail.trim(),txtTajukCarian,idNegeri,idKementerian,idAgensi,"");      			    		
 //				    senaraiFail =  getIHTPPKFail().getSenaraiFail(
@@ -236,6 +263,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    if(pageMode.equals("0")){
 				    	//myLog.info("pageMode::0"+pageMode);
 					    this.context.put("socSeksyen","3");
+					    socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian),"onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
 					    socUrusan = HTML.SelectSuburusan("socUrusan",Long.parseLong(idSubUrusan),disability);
 					    //socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong(idUrusan),disability);
 				    	this.context.put("socUrusan",socUrusan);
@@ -247,7 +275,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    	this.context.put("sekarang",strdate);
 					    this.context.put("pageMode", "0");  
 					    this.context.put("nofail", "");  
-					    socKementerian = HTML.SelectKementerian("sockementerian", (id_kementerian == "") ? null : Long.parseLong(id_kementerian), "disabled class=disabled", "onChange=\"doChangeKementerian()\" style=\"width:400\"");
+					    socKementerian = HTML.SelectKementerian("sockementerian", (id_kementerian == "") ? null : Long.parseLong(id_kementerian), disability, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
 					    socAgensi = HTML.SelectAgensiByKementerian("socAgensi",id_kementerian,Long.parseLong("1")," style=\"width:400\"");
 					    this.context.put("socNegeri",socNegeri);
 					    this.context.put("socKementerian",socKementerian);
@@ -284,10 +312,9 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 						myLog.info("fir hash after saved : " + permohonan);				
 						this.context.put("permohonanInfo", permohonan);
 					    this.context.put("semakclass", new ekptg.model.htp.FrmSemakan());				    
-					    socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),"disabled class=disabled");
 				    	socKementerian = HTML.SelectKementerian("sockementerian",Long.parseLong(permohonan.get("idkementerian").toString()),"disabled class=disabled");
 				    	socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(permohonan.get("idagensi").toString()),"disabled='disabled' class='disabled'");
-				    	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("309"),"disabled='disabled' class='disabled'");
+				    	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("14"),"disabled='disabled' class='disabled'");
 				    	this.context.put("socUrusan",socUrusan);		    
 					    // Senarai semakan
 					    // 24/10/2010
@@ -305,7 +332,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					    socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),"disabled class=disabled");
 				    	socKementerian = HTML.SelectKementerian("sockementerian",Long.parseLong(permohonan.get("idkementerian").toString()),"disabled class=disabled");
 				    	socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(permohonan.get("idagensi").toString()),"disabled='disabled' class='disabled'");
-				    	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("309"),"disabled='disabled' class='disabled'");
+				    	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("14"),"disabled='disabled' class='disabled'");
 				    	this.context.put("socUrusan",socUrusan);	    
 					    // Senarai semakan
 					    // 24/10/2010
@@ -341,7 +368,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					    socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),"disabled class=disabled");
 				    	socKementerian = HTML.SelectKementerian("sockementerian",Long.parseLong(permohonan.get("idkementerian").toString()),"disabled class=disabled");
 				    	socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(permohonan.get("idagensi").toString()),"disabled class=disabled");
-				    	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("309"),"disabled='disabled' class='disabled'");
+				    	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("14"),"disabled='disabled' class='disabled'");
 				    	this.context.put("socUrusan",socUrusan);				    
 					    // Senarai semakan
 					    //24/10/2010
@@ -369,7 +396,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	socKementerian = HTML.SelectKementerian("sockementerian", (id_kementerian == "") ? null : Long.parseLong(id_kementerian), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
 			    	socAgensi = HTML.SelectAgensiByKementerian("socAgensi",id_kementerian,Long.parseLong("1")," style=\"width:400\"");
 					
-				    socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("309"),disability);
+				    socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("14"),disability);
 			    	this.context.put("socUrusan",socUrusan);
 			    	String strdate = "";
 			    	strdate = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");
@@ -387,7 +414,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    this.context.put("socAgensi",socAgensi);
 		
 		    	}else if(submit.equals("pkpendaftaranseterus")) {
-			    	template_name = "app/htp/frmJRPSenaraiPemilik.jsp";
+			    	template_name = "app/htp/pajakankecil/online/frmJRPSenaraiPemilik.jsp";
 		    		myLog.info("FrmPajakanKecilA: equals(submit)::pkpendaftaranseterus");
 				    //readability = "readonly";
 				    disability = "disabled";
@@ -792,7 +819,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 						//fir implement 
 						viewHakmilikPermilik(senaraiHakmilik);
 						
-	//			    	template_name = "app/htp/frmJRPSenaraiHakmilikPemilik.jsp";
+	//			    	template_name = "app/htp/pajakankecil/online/frmJRPSenaraiHakmilikPemilik.jsp";
 						socDaerah = HTML.SelectDaerahByNegeri((String)permohonan.get("idnegeri"),"socDaerah",pihak.getIdDaerah(),disability);				    	    
 			    	    pageMode = "2";
 			    	    
@@ -1131,7 +1158,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					template_name = PATH+"frmJRPMaklumat.jsp";
 					myLog.info("KemaskiniSewaan ::"+template_name);
 			    	disability = "disabled class=disabled";
-			    	skrin = "2";
+			    	skrin = "3";
 			    	String permohonanId = getParam("id_kemaskini");
 			    	String hakMilikBangunanId = getParam("idHakmilikBangunan");
 			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(permohonanId);
@@ -1148,9 +1175,9 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					this.context.put("pageMode",pageMode);
 			    	
 			    }else if(submit.equals("updateSewaanSewaan")){
-					template_name = "app/htp/frmJRPMaklumat.jsp";
+					template_name = "app/htp/pajakankecil/online/frmJRPMaklumat.jsp";
 			    	myLog.info("updateSewaanSewaan ::"+template_name);
-			    	skrin = "2";	
+			    	skrin = "3";	
 			    	String permohonanId = getParam("id_kemaskini");
 			    	String hakMilikBangunanId = getParam("idHakmilikBangunan");
 			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(permohonanId);
@@ -1211,7 +1238,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    //String socNegeri = "";
 				    socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
 					if(pageMode.equals("0")){
-						//template_name = "app/htp/frmPajakanKecilMaklumat.jsp";
+						//template_name = "app/htp/pajakankecil/online/frmPajakanKecilMaklumat.jsp";
 						int month = 0;
 						int year = 0;
 						String  strmonth  = getParam("txtbulan");
@@ -1255,12 +1282,12 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					    data.put("tempoh", "150");
 						FrmUtilData.tambahPeringatan(data);					
 				    	hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(id);
-				    	String socLuas = HTML.SelectLuas("socLuas",Long.parseLong(hakmilikbangunan.get("idluas").toString()),disability);
+				    	//String socLuas = HTML.SelectLuas("socLuas",Long.parseLong(hakmilikbangunan.get("idluas").toString()),disability);
 				    	String socPegawai = HTML.SelectPegawai("socPegawai",Long.parseLong(hakmilikbangunan.get("idpegawai").toString()) ,disability);
 				    	//socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(hakmilikbangunan.get("idnegeri").toString()),disability);
 				    	socDaerah = HTML.SelectDaerahByNegeri((String)hakmilikbangunan.get("idnegeri"),"socDaerah",Long.parseLong(hakmilikbangunan.get("iddaerah").toString()),disability);
 				    	
-				    	this.context.put("socLuas",socLuas);
+				    	//this.context.put("socLuas",socLuas);
 				    	//this.context.put("socNegeri",socNegeri);
 				    	this.context.put("socDaerah",socDaerah);
 						this.context.put("socPegawai",socPegawai);
@@ -1327,12 +1354,12 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	this.context.put("senaraiSemakan",semakanSenarai );
 			
 			    }else if(submit.equals("semakanPKP"))    {
+			    	String id = getParam("id_kemaskini");
+			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 			    	template_name = PATH+"frmJRPSemakanPKP.jsp";
 			    	//skrin = "3";
 			    	skrin = "4";
-		    	    myLog.info("semakanPKP:id::"+id +",idpermohonan:"+getParam("idpermohonan")+",pageMode:"+pageMode);			    	
-					String id = getParam("id_kemaskini");
-					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
+		    	    myLog.info("semakanPKP:id::"+id +",idpermohonan:"+getParam("idpermohonan")+",pageMode:"+pageMode);
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
 					socKementerian = HTML.SelectKementerian("socKementerian",Long.parseLong(permohonan.get("idkementerian").toString()),disability);
 			    	socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(permohonan.get("idagensi").toString()),disability);
@@ -1392,7 +1419,166 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	this.context.put("senaraiSemakan",semakanSenarai );
 				    this.context.put("semakclass", new ekptg.model.htp.FrmSemakan());
 	
-			    }  else if(submit.equals("pksemakanpkpseterus")) {
+				    //shiqa - pengesahan 25062020
+			    }else if(submit.equalsIgnoreCase("pengesahan")){
+			    	String id = getParam("id_kemaskini");
+			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
+					myLog.info("pengesahan ::idpermohonan="+FrmJRPSenaraiPermohonanData.getPermohonanInfo(id));	
+					//getSemakanPerakuanPembelian();
+					skrin = "4";
+					String semakMode="";
+					String statusSemasa="1";
+//					if(getIOnline().isHantar(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),htpPermohonan.getPermohonan().getIdPermohonan()
+//							,htpPermohonan.getPermohonan().getPfdFail().getIdFail(),"4"))
+					
+					if (getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan.get("idSuburusan"))),
+							Long.parseLong(String.valueOf(permohonan.get("idpermohonan"))),
+							Long.parseLong(String.valueOf(permohonan.get("idfail"))), "4"))
+					{
+						semakMode = "xupdate";			
+					}else{
+						
+						myLog.info("idpermohonan::"+FrmJRPSenaraiPermohonanData.getPermohonanInfo(id));
+						semakMode = "update";
+						if(getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idSuburusan"))),
+								Long.parseLong(String.valueOf(permohonan.get("idpermohonan"))),
+								Long.parseLong(String.valueOf(permohonan.get("idfail"))), "1")){
+							statusSemasa = "1";	
+		 
+
+						
+						}else if(getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idSuburusan"))),
+								Long.parseLong(String.valueOf(permohonan.get("idpermohonan"))),
+								Long.parseLong(String.valueOf(permohonan.get("idfail"))), "2")){
+							statusSemasa = "2";
+
+
+							
+						}else if(getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idSuburusan"))),
+								Long.parseLong(String.valueOf(permohonan.get("idpermohonan"))),
+								Long.parseLong(String.valueOf(permohonan.get("idfail"))), "3")){
+							statusSemasa = "3";	
+
+							
+						}
+					}
+					//myLog.info("semakMode="+semakMode);
+					context.put("semakMode", semakMode);
+					myLog.info("statusSemasa:"+statusSemasa);
+					context.put("statussemasa", statusSemasa);
+					context.put("fail",(String.valueOf(permohonan.get("idfail"))));
+					context.put("buttonSend", "disabled");
+					context.put("idpermohonan", Long.parseLong(String.valueOf(permohonan.get("idpermohonan"))));
+
+					template_name = PATH+"frmJRPSemakanPKP.jsp";
+					
+					//shiqa - simpanpengesahan 25062020
+				}  else if(submit.equalsIgnoreCase("simpanpengesahan2")){
+					String id = getParam("idpermohonan");
+			    	Hashtable<?, ?> permohonan2 = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
+					myLog.info("simpanpengesahan1 ::id_permohonan="+permohonan2);	
+			    	myLog.info("simpanpengesahan2 ::idpermohonan="+FrmJRPSenaraiPermohonanData.getPermohonanInfo(id));	
+			    	myLog.info("id_kementerian="+uk.getAgensi().getKementerian().getIdKementerian());
+					String semakMode="";
+					/*
+					 * 1 untuk status - Pra-daftar
+					 * 2 untuk status - Tindakan Penyemak 
+					 * 3 untuk status - Tindakan Pelulus
+					 * 4 untuk status - Permohonan Online (Pengesahan) 
+					 * 5  untuk status - Penerimaan Permohonan
+					*/
+					String langkah2 = "2";
+					EmailConfig ec = new EmailConfig();
+
+					//myLog.info("from="+email.FROM);
+					String emelSubjek = ec.tajukSemakan+"Jawatankuasa Ruang Pejabat";
+					String kandungan = "";
+					if(idJawatan.equals("20")||idJawatan.equals("24")){
+						myLog.info("BACA SINIIIII============"+uk.getAgensi().getKementerian().getIdKementerian());
+						
+						langkah2 = "2";
+						
+						kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
+		    			
+						if(!getEmelSemak().checkEmail(userId).equals(""))
+							getIHTP().getErrorHTML("[ONLINE-HTP JRP] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+						ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+								, "9"
+								, String.valueOf(String.valueOf(permohonan2.get("idkementerian")))
+								, emelSubjek, kandungan);
+
+					}else if (idJawatan.equals("9")){
+						langkah2 = "3";				
+						
+						kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
+		    			
+						if(!getEmelSemak().checkEmail(userId).equals(""))
+							getIHTP().getErrorHTML("[ONLINE-HTP JRP] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+						ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+								, "4"
+								, String.valueOf(String.valueOf(permohonan2.get("idkementerian")))
+								, emelSubjek, kandungan);
+									
+					}else if (idJawatan.equals("4")){
+						langkah2 = "4";
+						emelSubjek = ec.tajukHantarPermohonan + "Perakuan Pembelian";
+								
+						kandungan = getEmelSemak().setKandungan(String.valueOf(String.valueOf(permohonan2.get("tajukfail")))
+									,String.valueOf(String.valueOf(permohonan2.get("idkementerian")))
+									,String.valueOf(String.valueOf(permohonan2.get("noP"))));
+		    			
+						if(!getEmelSemak().checkEmail(userId).equals(""))
+							getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+						//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
+
+						ec.hantarPermohonan(getEmelSemak().checkEmail(userId), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
+										
+					}
+					Hashtable<?, ?> permohonan3 = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
+					String idPermohonan = String.valueOf(permohonan3.get("idpermohonan"));
+
+
+					/*
+					subUrusanStatusFail = new Tblrujsuburusanstatusfail();
+					subUrusanStatusFail.setIdPermohonan(Long.parseLong(idPermohonan));
+					
+					subUrusanStatusFail.setIdFail(Long.parseLong(idFail));
+					subUrusanStatusFail.setAktif("0");*/
+				
+					Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
+					myLog.info("Langkah=="+langkah2);
+					long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,idSubUrusan,"=");
+					rsusf.setIdPermohonan(Long.parseLong(idPermohonan));
+					myLog.info("idFail="+idFail+",idPermohonan="+idPermohonan);
+					rsusf.setIdFail(Long.parseLong(idFail));
+					rsusf.setIdSuburusanstatusfail(Long.parseLong(idSubUrusan));
+					rsusf.setIdSuburusanstatus(setIdSuburusanstatus);
+					rsusf.setUrl("-");
+					simpanPengesahan(rsusf,langkah2);
+					myLog.info("userId=="+userId);
+					rsusf.setIdMasuk(Long.parseLong(userId));
+
+					
+					if(getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan3.get("idSuburusan"))),
+							Long.parseLong(String.valueOf(permohonan3.get("idpermohonan"))),
+							Long.parseLong(String.valueOf(permohonan3.get("idfail"))),langkah)){
+						semakMode = "xupdate";			
+					}else{
+						semakMode = "update";
+					}
+					myLog.info("selectedTab=======");
+					context.put("semakMode", semakMode);
+					skrin = "4";
+					//context.put("selectedTab", 4);
+					template_name = PATH+"frmJRPsemakanPKP.jsp";	
+					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
+					
+					
+					
+				
+				}else if(submit.equals("pksemakanpkpseterus")) {
 			    	template_name = PATH+"frmJRPDeraf.jsp";	
 			    	myLog.info("pksemakanpkpseterus ::"+template_name);
 			    	//skrin = "4";		    	
@@ -1408,7 +1594,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		   		    this.context.put("senaraideraf",senarais );
 		   	
 //			    }else if("pkderafseterus".equals(submit)){	
-//			    	template_name = "app/htp/frmPajakanKecilSenaraiSurat.jsp";
+//			    	template_name = "app/htp/pajakankecil/online/frmPajakanKecilSenaraiSurat.jsp";
 //			    	myLog.info("pkderafseterus ::"+template_name);
 //			    	
 		    	}else if(submit.equals("simpanpermohonan")){	
@@ -1444,7 +1630,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
 			    	socKementerian = HTML.SelectKementerian("socKementerian",Long.parseLong(permohonan.get("idkementerian").toString()),disability);
 			    	socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(permohonan.get("idagensi").toString()),disability);	
-			    	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("309"),disability);
+			    	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("14"),disability);
 			    	this.context.put("socUrusan",socUrusan);
 			    
 				    // Senarai semakan
@@ -1617,6 +1803,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    	senaraiTindakan = getISusulan().getMaklumat(idPermohonan);
 				    	this.context.put("senaraiTindakan",senaraiTindakan);
 						
+				    	//shiqa - simpanpengarah 25062020
 			    	}else if(pageMode.equals("simpanpengesahan")){
 			    		Hashtable hInsert = null;
 			    		if(portal_role.contains("PenggunaNegeri")){
@@ -1744,11 +1931,11 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	String strdate = "";
 			    	strdate = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");
 					this.context.put("socSeksyen","3");
-					socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("309"),"disabled class=disabled");
+					socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("14"),"disabled class=disabled");
 				    this.context.put("socUrusan",socUrusan);	
 				    //perjanjian 44
-				    this.context.put("idsuburusan","44");
-				    this.context.put("idurusan","309");			     	
+				    this.context.put("idsuburusan","9920122");
+				    this.context.put("idurusan","14");			     	
 			    	this.context.put("sekarang",strdate);
 				    this.context.put("pageMode", "0");  
 				    this.context.put("nofail", "");  
@@ -2348,7 +2535,8 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			socNegeri = HTML.SelectNegeri("socNegeri",Utils.parseLong(idNegeri),null,"onChange=doChangeKementerianCarian();");
 			socDaerah = HTML.SelectDaerahByNegeri(idNegeri, "socDaerah",Utils.parseLong(idDaerah),null, "onChange=\"doChangeKementerianCarian()\"");
 			socMukim = HTML.SelectMukimByDaerah(idDaerah, "socMukim", Utils.parseLong(idMukim) , "");
-		    socKementerian = HTML.SelectKementerian("socKementerian", "onChange=\"doChangeKementerianCarian() \" style=\"width:400\"");
+		    //socKementerian = HTML.SelectKementerian("socKementerian", "onChange=\"doChangeKementerianCarian() \" style=\"width:400\"");
+		    socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian),"disabled class=disabled","onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
 		 	socAgensi = HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Utils.parseLong(idAgensi), "","style=\"width:400\"");
 		  
 		    this.context.put("socNegeri",socNegeri);
@@ -2423,6 +2611,30 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			  this.context.put("tarikhHantar", h.get("tarikh"));
 			
 		  }
+		  //shiqa - simpanpengesahan 25062020
+	private void simpanPengesahan(Tblrujsuburusanstatusfail rsusf, String langkah2) throws Exception {
+		try {
+			subUrusanStatusFail = new Tblrujsuburusanstatusfail();
+			subUrusanStatusFail.setIdPermohonan(rsusf.getIdPermohonan());
+			subUrusanStatusFail.setIdFail(rsusf.getIdFail());
+			subUrusanStatusFail.setAktif("0");
+
+			Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
+			long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,
+					String.valueOf(rsusf.getIdSuburusanstatusfail()), "=");
+			subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
+			subUrusanStatusFailN.setAktif("1");
+			subUrusanStatusFailN.setUrl(Utils.isNull(rsusf.getUrl()));
+			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
+			subUrusanStatusFailN.setIdKemaskini(Long.parseLong(userId));
+			getIHTP().kemaskiniSimpanStatusPermohonanAktif(subUrusanStatusFail, subUrusanStatusFailN);
+
+		} catch (Exception e) {
+			// throw new Exception("Ralat FrmGadaian[554]:"+e.getCause());
+			getIHTP().getErrorHTML(e.toString());
+
+		}
+	}
 	
 		  
 		  private IPemilik getIPemilik(){
@@ -2480,7 +2692,32 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			iHTPPKFail = new HTPPajakanKecilFailBean();
 			}
 		return iHTPPKFail;
-	}			
+	}	
+	
+	private IUserPegawai getIUser(){
+		if(iUser==null){
+			iUser = new UserBean();
+		}
+		return iUser;
+			
+	}
+	private IOnline getIOnline(){
+		if(iOnline==null){
+			iOnline = new OnlineBean();
+		}
+		return iOnline;
+			
+	}
+	private IEmel getEmelSemak(){
+		if(emelSemak == null)
+			emelSemak = new HTPEmelJRPBean();
+		return emelSemak;
+	}
+	private IHTPPermohonan getIHTPPermohonan(){
+		if(iHTPPermohonan== null)
+			iHTPPermohonan = new HTPPermohonanBean();
+		return iHTPPermohonan;
+	}
 	
 
 }

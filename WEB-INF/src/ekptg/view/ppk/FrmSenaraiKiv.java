@@ -31,7 +31,7 @@ import ekptg.model.ppk.FrmSenaraiPermohonanSeksyen8Data;
  */
 
 public class FrmSenaraiKiv extends AjaxBasedModule {
-	static Logger myLogger = Logger.getLogger(FrmSenaraiKiv.class);
+	static Logger myLogger = Logger.getLogger(FrmSenaraiPermohonanSeksyen8.class);
 
 	FrmSenaraiPermohonanSeksyen8Data logic = null;
 	//Vector list = null;

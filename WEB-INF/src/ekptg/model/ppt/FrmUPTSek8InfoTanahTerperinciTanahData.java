@@ -565,10 +565,9 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	    }//close finally
 	   
 	  }//close updateStatus
-	
-	
+
 	@SuppressWarnings("unchecked")
-	public static void simpanTanahTerperinci(Hashtable data, long id_tanah) throws Exception
+	public static void simpanTanahTerperinciSwasta(Hashtable data, long id_tanah) throws Exception //PPT-42
 	  {
 		
 	    Db db = null;
@@ -759,6 +758,180 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	}//close simpanTanahTerperinci
 	
 	@SuppressWarnings("unchecked")
+	public static void simpanTanahTerperinci(Hashtable data, long id_tanah) throws Exception
+	  {
+		
+	    Db db = null;
+	    String sql = "";
+	    
+	    try{
+	      
+	    		db = new Db();
+	    		Statement stmt = db.getStatement();
+	    		
+	    		String id_user = (String)data.get("id_user");
+	    	
+	    		String id_hakmilik = (String)data.get("id_hakmilik");
+	    		
+	    		//insert tblppttanah
+	    		String txtPendahuluan = (String)data.get("txtPendahuluan");
+	    		String txtJenisPisah = (String)data.get("txtJenisPisah");
+	    		String txtStatusTanah = (String)data.get("txtStatusTanah");
+	    		String txdTarikhUlasan = (String)data.get("txdTarikhUlasan");
+	    		String txdTarikhLawatMula = (String)data.get("txdTarikhLawatMula");
+	    		String txdTarikhLawatAkhir = (String)data.get("txdTarikhLawatAkhir");
+	    		String txtJalanUtama = (String)data.get("txtJalanUtama");
+	    		String txtJalanMasuk = (String)data.get("txtJalanMasuk");
+	    		String txtNamaTempat = (String)data.get("txtNamaTempat");
+	    		String txtPerumahan = (String)data.get("txtPerumahan");
+	    		String txtIndustri = (String)data.get("txtIndustri");
+	    		String sorSaliran = (String)data.get("sorSaliran");
+	    		//String socUnitLuasLot = (String)data.get("socUnitLuasLot");
+	    		//String socUnitLuasAmbil = (String)data.get("socUnitLuasAmbil");
+	    		//String txtLuasLot = (String)data.get("txtLuasLot");
+	    		//String txtLuasAmbil = (String)data.get("txtLuasAmbil");
+	    		String txtLokasi = (String)data.get("txtLokasi");
+	    		String txtJarak = (String)data.get("txtJarak");	    		
+	    		//String idPelapor = (String)data.get("idPelapor");
+	    		//String txtPelapor = (String)data.get("txtPelapor");	 
+	    		String txtUlasanPegawai = (String)data.get("txtUlasanPegawai");
+	    		String txtHargaBorangG = (String)data.get("txtHargaBorangG");
+	    		String socUnitHargaG = (String)data.get("socUnitHargaG");
+	    		String txtKenaikanJP = (String)data.get("txtKenaikanJP");
+	    		String txtPecahJP = (String)data.get("txtPecahJP");
+	    		String txtPenjejasanJP = (String)data.get("txtPenjejasanJP");
+	    		String txtHargaPasaranJP = (String)data.get("txtHargaPasaranJP");
+	    		String txtHargaSeunitJP = (String)data.get("txtHargaSeunitJP");
+	    		String socUnitHargaJP = (String)data.get("socUnitHargaJP");
+	    		String txtKenaikanSO = (String)data.get("txtKenaikanSO");
+	    		String txtPecahSO = (String)data.get("txtPecahSO");
+	    		String txtPenjejasanSO = (String)data.get("txtPenjejasanSO");
+	    		String txtHargaPasaranSO = (String)data.get("txtHargaPasaranSO");
+	    		String txtHargaSeunitSO = (String)data.get("txtHargaSeunitSO");
+	    		String socUnitHargaSO = (String)data.get("socUnitHargaSO");	    		
+	    		String txtSempadanBarat = (String)data.get("txtSempadanBarat");
+	    		String txtSempadanTimur = (String)data.get("txtSempadanTimur");
+	    		String txtSempadanSelatan = (String)data.get("txtSempadanSelatan");
+	    		String txtSempadanUtara = (String)data.get("txtSempadanUtara");
+	    		String txtKemudahan = (String)data.get("txtKemudahan");
+	    		String txtTanaman = (String)data.get("txtTanaman");
+	    		String txtHalangan = (String)data.get("txtHalangan");
+	    		String txtPerihalKeadaan = (String)data.get("txtPerihalKeadaan");
+	    		String flagSemak = (String)data.get("flagSemak");
+	    		String flagBelukar = (String)data.get("flagBelukar");
+	    		String flagHutan = (String)data.get("flagHutan");
+	    		String flagTerbiar = (String)data.get("flagTerbiar");
+	    		String flagLapang = (String)data.get("flagLapang");	    		
+	    		String flagUsaha = (String)data.get("flagUsaha");
+	    		String txtPerihalRupabumi = (String)data.get("txtPerihalRupabumi");
+	    		String flagLembah = (String)data.get("flagLembah");
+	    		String flagLurah = (String)data.get("flagLurah");
+	    		String flagBerpaya = (String)data.get("flagBerpaya");
+	    		String flagRendah = (String)data.get("flagRendah");	    		
+	    		String flagRata = (String)data.get("flagRata");
+	    		String flagLandai = (String)data.get("flagLandai");
+	    		String flagBukit = (String)data.get("flagBukit");
+	    		String sorRizab = (String)data.get("sorRizab");
+	    		String txtNamaPBT = (String)data.get("txtNamaPBT");
+	    		String sorPBT = (String)data.get("sorPBT");
+	
+	    		String txtStrukturBangunanSO = (String)data.get("txtStrukturBangunanSO");
+	    		String txtStrukturBangunan = (String)data.get("txtStrukturBangunan");
+
+	    		String socPegawai = (String)data.get("socPegawai");	    		
+	    		
+	    		String TU = "to_date('" + txdTarikhUlasan + "','dd/MM/yyyy')";
+	    		String TLM = "to_date('" + txdTarikhLawatMula + "','dd/MM/yyyy')";
+	    		String TLA = "to_date('" + txdTarikhLawatAkhir + "','dd/MM/yyyy')";
+	    			    		
+	    		SQLRenderer r = new SQLRenderer();
+	    		r.add("id_tanah",id_tanah);
+	    		r.add("id_pelapor",socPegawai);
+	    		r.add("id_hakmilik", id_hakmilik);	   
+	    		r.add("pecah_pisah",txtJenisPisah);
+	    		r.add("lokasi_tanah",txtLokasi);
+	    		r.add("pendahuluan",txtPendahuluan);  
+	    		r.add("flag_saliran",sorSaliran);
+	    		r.add("status_tanah",txtStatusTanah);	    		
+	    		r.add("jalan_utama",txtJalanUtama);
+	    		r.add("jalan_masuk",txtJalanMasuk);
+	    		r.add("nama_tempat",txtNamaTempat);
+	    		r.add("perumahan",txtPerumahan);
+	    		r.add("industri",txtIndustri);
+	    		//r.add("luas_ambil",txtLuasAmbil);
+	    		//r.add("luas_terkini",txtLuasLot);
+	    		//r.add("id_unitluasambil",socUnitLuasAmbil);
+	    		//r.add("id_unitluasterkini",socUnitLuasLot);
+	    		r.add("amaun_penjejasan_jpph",txtPenjejasanJP);
+	    		r.add("amaun_pecahpisah_jpph",txtPecahJP);
+	    		r.add("naik_nilai_jpph",txtKenaikanJP);
+	    		r.add("unit_harga_akhir",socUnitHargaG);
+	    		r.add("harga_seunit_akhir",txtHargaBorangG);
+	    		r.add("ulasan_pegawai",txtUlasanPegawai);
+	    		//r.add("nama_pelapor",txtPelapor);	    		
+	    		r.add("jarak_bandar",txtJarak);
+	    		r.add("sempadan_barat",txtSempadanBarat);
+	    		r.add("unit_harga_so",socUnitHargaSO);
+	    		r.add("harga_seunit_so",txtHargaSeunitSO);
+	    		r.add("harga_pasaran_so",txtHargaPasaranSO);
+	    		r.add("bayar_penjejasan",txtPenjejasanSO);
+	    		r.add("bayar_pecahpisah",txtPecahSO);
+	    		r.add("bayar_naik_nilaiso",txtKenaikanSO);
+	    		r.add("unit_harga",socUnitHargaJP);
+	    		r.add("harga_seunit_jpph",txtHargaSeunitJP);
+	    		r.add("harga_pasaran",txtHargaPasaranJP);
+	    		r.add("flag_lapang",flagLapang);
+	    		r.add("flag_terbiar",flagTerbiar);
+	    		r.add("flag_hutan",flagHutan);
+	    		r.add("flag_belukar",flagBelukar);
+	    		r.add("flag_semak",flagSemak);
+	    		r.add("keadaan_tanah",txtPerihalKeadaan);
+	    		r.add("halangan",txtHalangan);
+	    		r.add("tanaman",txtTanaman);
+	    		r.add("kemudahan_awam",txtKemudahan);
+	    		r.add("sempadan_utara",txtSempadanUtara);
+	    		r.add("sempadan_selatan",txtSempadanSelatan);
+	    		r.add("sempadan_timur",txtSempadanTimur);
+	    		r.add("flag_pbt",sorPBT);
+	    		r.add("nama_pbt",txtNamaPBT);
+	    		r.add("flag_rezab_melayu",sorRizab);
+	    		r.add("flag_bukit",flagBukit);
+	    		r.add("flag_landai",flagLandai);
+	    		r.add("flag_rata",flagRata);
+	    		r.add("flag_rendah",flagRendah);
+	    		r.add("flag_paya",flagBerpaya);
+	    		r.add("flag_lurah",flagLurah);
+	    		r.add("flag_lembah",flagLembah);
+	    		r.add("rupabumi",txtPerihalRupabumi);
+	    		r.add("flag_diusaha",flagUsaha);	
+	    		r.add("tarikh_ulasan",r.unquote(TU));
+	    		r.add("tarikh_mula_lawat",r.unquote(TLM));
+	    		r.add("tarikh_akhir_lawat",r.unquote(TLA));	    		
+	    		r.add("tarikh_masuk",r.unquote("sysdate"));
+	    		r.add("id_masuk",id_user);    	
+	    		
+	    		if(txtStrukturBangunanSO!=null)
+	    		{
+	    		r.add("struktur_bangunan_so",txtStrukturBangunanSO);
+	    		}
+	    		if(txtStrukturBangunan!=null)
+	    		{
+	    		r.add("struktur_bangunan",txtStrukturBangunan);
+	    		}
+	    		
+	    		sql = r.getSQLInsert("tblppttanah");
+	    		
+	    		myLogger.info("simpanTanahTerperinci :"+sql);
+	    		stmt.executeUpdate(sql);
+    	
+	    }//close try 
+	    finally {
+	      if (db != null) db.close();
+	    }//close finally
+	   
+	}//close simpanTanahTerperinci
+	
+	@SuppressWarnings("unchecked")
 	public static void updateHMtanah(Hashtable data) throws Exception
 	  {
 		
@@ -809,7 +982,7 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	
 	//PPT-42
 	@SuppressWarnings("unchecked")
-	public static void updateTanahTerperinci(Hashtable data) throws Exception
+	public static void updateTanahTerperinciSwasta(Hashtable data) throws Exception
 	  {
 		
 	    Db db = null;
@@ -983,6 +1156,171 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 	    		
 	    		System.out.println("CHECK ::: "+sql);
 	    		
+	    		stmt.executeUpdate(sql);
+	    		
+	    }//close try 
+	    finally {
+	      if (db != null) db.close();
+	    }//close finally
+	   
+	}//close updateTanahTerperinci
+	@SuppressWarnings("unchecked")
+	public static void updateTanahTerperinci(Hashtable data) throws Exception
+	  {
+		
+	    Db db = null;
+	    String sql = "";
+	    
+	    try{
+	      
+	    		db = new Db();
+	    		Statement stmt = db.getStatement();
+	    		
+	    		String id_user = (String)data.get("id_user");
+	    	
+	    		String id_tanah = (String)data.get("id_tanah");
+	    		
+	    		//insert tblppttanah
+	    		String txtPendahuluan = (String)data.get("txtPendahuluan");
+	    		String txtJenisPisah = (String)data.get("txtJenisPisah");
+	    		String txtStatusTanah = (String)data.get("txtStatusTanah");
+	    		String txdTarikhUlasan = (String)data.get("txdTarikhUlasan");
+	    		String txdTarikhLawatMula = (String)data.get("txdTarikhLawatMula");
+	    		String txdTarikhLawatAkhir = (String)data.get("txdTarikhLawatAkhir");	
+	    		String txtJalanUtama = (String)data.get("txtJalanUtama");
+	    		String txtJalanMasuk = (String)data.get("txtJalanMasuk");
+	    		String txtNamaTempat = (String)data.get("txtNamaTempat");
+	    		String txtPerumahan = (String)data.get("txtPerumahan");
+	    		String txtIndustri = (String)data.get("txtIndustri");
+	    		String sorSaliran = (String)data.get("sorSaliran");
+	    		//String socUnitLuasLot = (String)data.get("socUnitLuasLot");
+	    		//String socUnitLuasAmbil = (String)data.get("socUnitLuasAmbil");
+	    		//String txtLuasLot = (String)data.get("txtLuasLot");
+	    		//String txtLuasAmbil = (String)data.get("txtLuasAmbil");
+	    		String txtLokasi = (String)data.get("txtLokasi");
+	    		String txtJarak = (String)data.get("txtJarak");	    		
+	    		//String idPelapor = (String)data.get("idPelapor");
+	    		//String txtPelapor = (String)data.get("txtPelapor");
+	    		String txtUlasanPegawai = (String)data.get("txtUlasanPegawai");
+	    		String txtHargaBorangG = (String)data.get("txtHargaBorangG");
+	    		String socUnitHargaG = (String)data.get("socUnitHargaG");
+	    		String txtKenaikanJP = (String)data.get("txtKenaikanJP");
+	    		String txtPecahJP = (String)data.get("txtPecahJP");
+	    		String txtPenjejasanJP = (String)data.get("txtPenjejasanJP");
+	    		String txtHargaPasaranJP = (String)data.get("txtHargaPasaranJP");
+	    		String txtHargaSeunitJP = (String)data.get("txtHargaSeunitJP");
+	    		String socUnitHargaJP = (String)data.get("socUnitHargaJP");
+	    		String txtKenaikanSO = (String)data.get("txtKenaikanSO");
+	    		String txtPecahSO = (String)data.get("txtPecahSO");
+	    		String txtPenjejasanSO = (String)data.get("txtPenjejasanSO");
+	    		String txtHargaPasaranSO = (String)data.get("txtHargaPasaranSO");
+	    		String txtHargaSeunitSO = (String)data.get("txtHargaSeunitSO");
+	    		String socUnitHargaSO = (String)data.get("socUnitHargaSO");
+	    		String txtSempadanBarat = (String)data.get("txtSempadanBarat");
+	    		String txtSempadanTimur = (String)data.get("txtSempadanTimur");
+	    		String txtSempadanSelatan = (String)data.get("txtSempadanSelatan");
+	    		String txtSempadanUtara = (String)data.get("txtSempadanUtara");
+	    		String txtKemudahan = (String)data.get("txtKemudahan");
+	    		String txtTanaman = (String)data.get("txtTanaman");
+	    		String txtHalangan = (String)data.get("txtHalangan");
+	    		String txtPerihalKeadaan = (String)data.get("txtPerihalKeadaan");
+	    		String flagSemak = (String)data.get("flagSemak");
+	    		String flagBelukar = (String)data.get("flagBelukar");
+	    		String flagHutan = (String)data.get("flagHutan");
+	    		String flagTerbiar = (String)data.get("flagTerbiar");
+	    		String flagLapang = (String)data.get("flagLapang");	    		
+	    		String flagUsaha = (String)data.get("flagUsaha");
+	    		String txtPerihalRupabumi = (String)data.get("txtPerihalRupabumi");
+	    		String flagLembah = (String)data.get("flagLembah");
+	    		String flagLurah = (String)data.get("flagLurah");
+	    		String flagBerpaya = (String)data.get("flagBerpaya");
+	    		String flagRendah = (String)data.get("flagRendah");	    		
+	    		String flagRata = (String)data.get("flagRata");
+	    		String flagLandai = (String)data.get("flagLandai");
+	    		String flagBukit = (String)data.get("flagBukit");
+	    		String sorRizab = (String)data.get("sorRizab");
+	    		String txtNamaPBT = (String)data.get("txtNamaPBT");
+	    		String sorPBT = (String)data.get("sorPBT");
+		
+	    		String txtStrukturBangunanSO = (String)data.get("txtStrukturBangunanSO");
+	    		String txtStrukturBangunan = (String)data.get("txtStrukturBangunan");
+	    		
+	    		String socPegawai = (String)data.get("socPegawai");
+	    		
+	    		String TU = "to_date('" + txdTarikhUlasan + "','dd/MM/yyyy')";
+	    		String TLM = "to_date('" + txdTarikhLawatMula + "','dd/MM/yyyy')";
+	    		String TLA = "to_date('" + txdTarikhLawatAkhir + "','dd/MM/yyyy')";
+	    		
+	    		SQLRenderer r = new SQLRenderer();
+	    		r.update("id_tanah", id_tanah);	   
+	    		r.add("id_pelapor",socPegawai);
+	    		r.add("pecah_pisah",txtJenisPisah);
+	    		r.add("lokasi_tanah",txtLokasi);
+	    		r.add("pendahuluan",txtPendahuluan);    		
+	    		r.add("status_tanah",txtStatusTanah);
+	    		r.add("flag_saliran",sorSaliran);
+	    		r.add("jalan_utama",txtJalanUtama);
+	    		r.add("jalan_masuk",txtJalanMasuk);
+	    		r.add("nama_tempat",txtNamaTempat);
+	    		r.add("perumahan",txtPerumahan);
+	    		r.add("industri",txtIndustri);
+	    		//r.add("luas_ambil",txtLuasAmbil);
+	    		//r.add("luas_terkini",txtLuasLot);
+	    		//r.add("id_unitluasambil",socUnitLuasAmbil);
+	    		//r.add("id_unitluasterkini",socUnitLuasLot);
+	    		r.add("amaun_penjejasan_jpph",txtPenjejasanJP);
+	    		r.add("amaun_pecahpisah_jpph",txtPecahJP);
+	    		r.add("naik_nilai_jpph",txtKenaikanJP);
+	    		r.add("unit_harga_akhir",socUnitHargaG);
+	    		r.add("harga_seunit_akhir",txtHargaBorangG);
+	    		r.add("ulasan_pegawai",txtUlasanPegawai);
+	    		//r.add("nama_pelapor",txtPelapor);
+	    		r.add("jarak_bandar",txtJarak);
+	    		r.add("sempadan_barat",txtSempadanBarat);
+	    		r.add("unit_harga_so",socUnitHargaSO);
+	    		r.add("harga_seunit_so",txtHargaSeunitSO);
+	    		r.add("harga_pasaran_so",txtHargaPasaranSO);
+	    		r.add("bayar_penjejasan",txtPenjejasanSO);
+	    		r.add("bayar_pecahpisah",txtPecahSO);
+	    		r.add("bayar_naik_nilaiso",txtKenaikanSO);
+	    		r.add("unit_harga",socUnitHargaJP);
+	    		r.add("harga_seunit_jpph",txtHargaSeunitJP);
+	    		r.add("harga_pasaran",txtHargaPasaranJP);
+	    		r.add("flag_lapang",flagLapang);
+	    		r.add("flag_terbiar",flagTerbiar);
+	    		r.add("flag_hutan",flagHutan);
+	    		r.add("flag_belukar",flagBelukar);
+	    		r.add("flag_semak",flagSemak);
+	    		r.add("keadaan_tanah",txtPerihalKeadaan);
+	    		r.add("halangan",txtHalangan);
+	    		r.add("tanaman",txtTanaman);
+	    		r.add("kemudahan_awam",txtKemudahan);
+	    		r.add("sempadan_utara",txtSempadanUtara);
+	    		r.add("sempadan_selatan",txtSempadanSelatan);
+	    		r.add("sempadan_timur",txtSempadanTimur);
+	    		r.add("flag_pbt",sorPBT);
+	    		r.add("nama_pbt",txtNamaPBT);
+	    		r.add("flag_rezab_melayu",sorRizab);
+	    		r.add("flag_bukit",flagBukit);
+	    		r.add("flag_landai",flagLandai);
+	    		r.add("flag_rata",flagRata);
+	    		r.add("flag_rendah",flagRendah);
+	    		r.add("flag_paya",flagBerpaya);
+	    		r.add("flag_lurah",flagLurah);
+	    		r.add("flag_lembah",flagLembah);
+	    		r.add("rupabumi",txtPerihalRupabumi);
+	    		r.add("flag_diusaha",flagUsaha);	
+	    		r.add("tarikh_ulasan",r.unquote(TU));
+	    		r.add("tarikh_mula_lawat",r.unquote(TLM));
+	    		r.add("tarikh_akhir_lawat",r.unquote(TLA));	    		
+	    		r.add("tarikh_kemaskini",r.unquote("sysdate"));
+	    		r.add("id_kemaskini",id_user);    	
+	    		   
+	    		r.add("struktur_bangunan_so",txtStrukturBangunanSO);
+	    		r.add("struktur_bangunan",txtStrukturBangunan);	
+	    		
+	    		sql = r.getSQLUpdate("tblppttanah");
+	    		    		
 	    		stmt.executeUpdate(sql);
 	    		
 	    }//close try 

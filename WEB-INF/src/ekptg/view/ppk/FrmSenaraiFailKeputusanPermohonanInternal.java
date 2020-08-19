@@ -26,7 +26,7 @@ import ekptg.helpers.HTML;
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8InternalData;
-import ekptg.model.ppk.FrmPrmhnnSek8KeputusanPermohonanInternalData; 
+import ekptg.model.ppk.FrmPrmhnnSek8KeputusanPermohonanInternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8KptsanBicaraData;
 import ekptg.model.ppk.FrmPrmhnnSek8SenaraiHTATHInternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8SenaraiSemakInternalData;
@@ -37,7 +37,6 @@ import ekptg.model.ppk.FrmSenaraiFailKeputusanPermohonanInternalData;
 public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 	private static final long serialVersionUID = 1L;
 	static Logger myLogger = Logger.getLogger(PendaftaranCheck.class);
-	
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
 	String currentDate = dateFormat.format(date);
@@ -58,32 +57,23 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Template doTemplate() throws Exception { 
-		myLogger.info("::::::::::FrmSenaraiFailKeputusanPermohonanInternal:::::::::::::::::::");
+	public Template doTemplate() throws Exception {
+		
 		logic_internal = new FrmPrmhnnSek8KeputusanPermohonanInternalData();
-		myLogger.info(":::::::::::::::1::::::::::::::");
 		logicKeputusanPrmhnn = new FrmPrmhnnSek8KeputusanPermohonanInternalData();
-		myLogger.info(":::::::::::::::2::::::::::::::");
 		logicKeputusan = new FrmSenaraiFailKeputusanPermohonanInternalData();
 		logic = new FrmPrmhnnSek8InternalData();
-		myLogger.info(":::::::::::::::3::::::::::::::");
 		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
-		myLogger.info(":::::::::::::::4::::::::::::::");
 		logic_B = new FrmPrmhnnSek8SenaraiHTATHInternalData();
-		myLogger.info(":::::::::::::::5::::::::::::::");
 		logic_C = new FrmPrmhnnSek8SenaraiSemakInternalData();
-		myLogger.info(":::::::::::::::6::::::::::::::");
 		logic_D = new FrmSenaraiFailInternalCarianData();
-		myLogger.info(":::::::::::::::7::::::::::::::");
 		logic_E = new FrmSenaraiFailInternalData();
-		myLogger.info(":::::::::::::::8::::::::::::::");
 		logic_F = new FrmPrmhnnSek8KeputusanPermohonanInternalData();
-		myLogger.info(":::::::::::::::9::::::::::::::");
 		mainheader = new FrmHeaderPpk();
-		myLogger.info(":::::::::::::::10::::::::::::::");
+		Vector flag5juta =  new Vector(); //arief add 5 juta
 		this.context.put("seksyen_kp", "8");
 		Vector listSupportingDoc = null;
-
+		
 		HttpSession session = this.request.getSession();
 		String submit = "";
 		submit = getParam("command");
@@ -196,7 +186,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 			// System.out.println("SIZE LIST C: " + listC.size());
 			// this.context.put("listC", listC);
 		}
-
+		
+		FrmPrmhnnSek8KeputusanPermohonanInternalData.checkFlag5Juta(id);
+		flag5juta = FrmPrmhnnSek8KeputusanPermohonanInternalData.getFlag5Juta();
+		this.context.put("flag5juta", flag5juta);
+		
 		if ("paparKeputusan".equals(submit)) {
 			System.out.println("~~~~~~~~ paparKeputusan ~~~~~~~~~~~~~~~~~~~");
 			String idPermohonan = getParam("idPermohonan");
@@ -3920,31 +3914,14 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					System.out.println("-------getSimpan_keputusan1----");
 					System.out.println("-------ARB----"+ARB);
 					insertBorang(session,checkSD);
-					if("107".equals(checkSD)) {
-						System.out.println("-------107----");
-						//insertSDTable(session);
-						check_idkeputusan(session);
-						Vector checkIdKeputusan = FrmPrmhnnSek8KeputusanPermohonanInternalData
-								.getSemakIdKeputusan();
-						Hashtable j = (Hashtable) checkIdKeputusan.get(0);
-						String idKeputusanPermohonan = j.get("cntid").toString();
-						System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
-						
-						check_tblppksd(idKeputusanPermohonan);
-						Vector checktblppksd = FrmPrmhnnSek8KeputusanPermohonanInternalData
-								.getsemaktblppksd();
-						Hashtable k = (Hashtable) checktblppksd.get(0);
-						String cntResultppksd = k.get("cntid").toString();
-						
-						System.out.println("-------cntResultppksd----"+cntResultppksd);
-						
-						updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
-					}
+					/*if((checkSD=="107")) {
+						insertSDTable(session);
+					}*/
 					
 					if (ARB == "YES")
 						{
 							checkdulusamadaARBtelahwujudataubelumInsert(session);
-						insertARB(session);
+						//insertARB(session);
 						}
 					
 				} else {
@@ -3956,21 +3933,21 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					System.out.println("-------getSimpan_keputusan2----");
 					System.out.println("-------ARB----"+ARB);
 					check_idkeputusan(session);
-					Vector checkIdKeputusan = FrmPrmhnnSek8KeputusanPermohonanInternalData
-							.getSemakIdKeputusan();
-					Hashtable j = (Hashtable) checkIdKeputusan.get(0);
-					String idKeputusanPermohonan = j.get("cntid").toString();
-					System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
+					/*Vector checkIdKeputusan = FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.getSemakIdKeputusan();*/
+					/*Hashtable j = (Hashtable) checkIdKeputusan.get(0);*/
+					//String idKeputusanPermohonan = j.get("cntid").toString();
+					//System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
 					
-					check_tblppksd(idKeputusanPermohonan);
-					Vector checktblppksd = FrmPrmhnnSek8KeputusanPermohonanInternalData
-							.getsemaktblppksd();
-					Hashtable k = (Hashtable) checktblppksd.get(0);
-					String cntResultppksd = k.get("cntid").toString();
+					//check_tblppksd(idKeputusanPermohonan);
+					/*Vector checktblppksd = FrmPrmhnnSek8KeputusanPermohonanInternalData
+							.getsemaktblppksd();*/
+					/*Hashtable k = (Hashtable) checktblppksd.get(0);*/
+					//String cntResultppksd = k.get("cntid").toString();
 					
-					System.out.println("-------cntResultppksd----"+cntResultppksd);
+					//System.out.println("-------cntResultppksd----"+cntResultppksd);
 					
-					updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
+					//updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
 					if (ARB.equals("YES"))
 						{
 							System.out.println("-------ARB keputusan2----"+ARB);
@@ -4161,7 +4138,6 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 	
 	
 	private void check_idkeputusan(HttpSession session) throws Exception {
-		myLogger.info("check_idkeputusan");
 		String id = getParam("idPermohonan");
 		FrmPrmhnnSek8KeputusanPermohonanInternalData.semakIdKeputusan(id);
 	}
@@ -4201,7 +4177,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		FrmPrmhnnSek8KeputusanPermohonanInternalData.updateDataMahkamah(h);
 	}
 	
-	private void insertSDTable(HttpSession session) throws Exception {
+	/*private void insertSDTable(HttpSession session) throws Exception {
 
 		
 		Hashtable h = null;
@@ -4215,10 +4191,10 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		String uid = (String) session.getAttribute("_ekptg_user_id");
 		FrmPrmhnnSek8KeputusanPermohonanInternalData.insertSDTable(session, h,"8");
 		FrmPrmhnnSek8KptsanBicaraData.add_maklumatPerintah("99991111111",uid,"","","","","","","");
-	}
+	}*/
 
 	private void insertBorang(HttpSession session, String checkSD) throws Exception {
-		System.out.println("-------insertBorang----");
+
 		String check = getParam("sorPenentuanBidangKuasa");
 		String checkterus = getParam("sorPenentuanBidangKuasaTeruskan");
 		String tarikhsuratARB = getParam("tarikhsuratARB");
@@ -4252,7 +4228,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		h.put("catatan", getParam("txtCatatan"));
 		h.put("IdPermohonan", getParam("idPermohonan"));
 		h.put("txtCatatanSD", getParam("txtCatatanSD"));
-		myLogger.info("txtCatatanSD = "+getParam("txtCatatanSD"));
+
 		// id_sta 151,152
 		h.put("nofailawal", getParam("nofailawal"));
 		h.put("namapemohonawal", getParam("namapemohonawal"));

@@ -162,7 +162,6 @@ public class FrmPLPOnlineKJPSenaraiFailData {
 		} finally {
 			if (db != null ) db.close();
 		}
-		
 		return listFail;
 	}
 
@@ -222,7 +221,7 @@ public class FrmPLPOnlineKJPSenaraiFailData {
 			String txtNoRujukanSurat, String txtUlasan, String txtKeputusan,
 			String txtNamaPengulas, String txtNoTelPengulas, String userId) {
 
-		String flagStatus = "T";
+		String flagStatus = "T"; 
 		Db db = null;
 		Connection conn = null;
 		String sql = "";
