@@ -542,16 +542,14 @@ $!maklumat_mmk
 	#set($senarai_lot_terlibat = "Senarai Lot Yang Terlibat")
 #end
 
-<b>$senarai_lot_terlibat</b>
- </td>
-</tr>
+		<b>$senarai_lot_terlibat</b>
+ 		</td>
+	</tr>
 </table>
          #parse("app/utils/record_paging_popup.jsp")
-        <table align="center" width="100%" cellspacing="2" cellpadding="2" class="dashboard_sub"> 
         
-       
-          
-            <tr class="table_header">
+<table align="center" width="100%" cellspacing="2" cellpadding="2" class="dashboard_sub"> 
+	<tr class="table_header">
               <td scope="row"  align="center"><strong><font color="white">Bil.</font></strong></td>
               <td ><strong><font color="white">No. Hakmilik</font></strong></td>
               <td ><strong><font color="white">No. Lot</font></strong></td>
@@ -567,7 +565,7 @@ $!maklumat_mmk
                             <td align="center" ><b><font color="white">Tarikh Borang K</font></b></td>
                             <td align="center" ><b><font color="white">Jenis Pengambilan</font></b></td>
                 #end
-            </tr>
+  	</tr>
           #set ($list = "")
           #set ($counter = 0)
           #foreach ($list in $SenaraiFail)
@@ -580,7 +578,7 @@ $!maklumat_mmk
                 #set( $row = "row2" )
             #end           
            
-          <tr>
+	<tr>
             <td class="$row" align="center">
 			$list.BIL
 			</td>
@@ -606,26 +604,24 @@ $!maklumat_mmk
                            #else
                            
                            #end
-                           
-                           
+                                                  
                            </td>
                             
                             #end
-            </tr>
+	</tr>
           #end
           
            #if($counter == 0)
-            <tr>
+ 	<tr>
            
             <td colspan="10" class="row">
            Tiada rekod
            </td>
-           </tr>
+	</tr>
            #end 
           
-        </table>
-		
-        
+</table>
+		        
 <br />
 
 #end
@@ -633,7 +629,7 @@ $!maklumat_mmk
 #parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_muat_naik.jsp")
       
 <table border="0" width="100%"  class="nav"> 
-<tr  >
+<tr >
 <td valign="top" >
 <b>Senarai Dokumen Yang Terlibat</b>
  </td>
@@ -647,12 +643,7 @@ $!maklumat_mmk
 			                <td width="35%"><b><font color="white">Dokumen</font></b></td>
                             <td width="20%"><b><font color="white">Jenis Fail</font></b></td>
                             <td width="20%" ><b><font color="white">Kategori Lampiran</font></b></td>
-                            
-                          
-  
-			                
-			                <td  align="center" style="display:none"></td>
-			                
+ 			                <td  align="center" style="display:none"></td>			                
 			            </tr>
 			              
 			         #if($listSenaraiDokumen_size!=0)
@@ -740,76 +731,48 @@ $!maklumat_mmk
 
   </div> 
      
-     <script>
-	 /*
-	$jquery(document).ready(function(e) {
-		var newheight = $jquery("#mainContainer").height() - $jquery("#pinnedFooter").height()-100;	
-		var overallheight = $jquery("#mainContainer").height() + $jquery("#pinnedFooter").height();	
-		alert("overallheight :"+overallheight);
-		alert("client :"+$jquery("#divAllPopup").clientHeight-);
-		
-		if(overallheight > ($jquery("#divAllPopup").clientHeight-50))
-		{
-		$jquery("#mainContainer").css({ 
-					  'height' : 100
-				});
-		}
-		
-		
-	});
-	 
-	 */
-	 
-	 
+<script>
 	 
     function simpan(id_penarikan,id_permohonan,jenis_skrin) {
 	
-	if(document.${formName}.tajuk.value == ""){
-		alert('Sila pastikan tajuk dokumen diisi.');
-  		document.${formName}.tajuk.focus(); 
-		return; 
-	}
+		if(document.${formName}.tajuk.value == ""){
+			alert('Sila pastikan tajuk dokumen diisi.');
+	  		document.${formName}.tajuk.focus(); 
+			return; 
+		}
+		
+		if(document.${formName}.kategori_lampiran.value == ""){
+			alert('Sila pastikan kategori lampiran diisi.');
+	  		document.${formName}.kategori_lampiran.focus(); 
+			return; 
+		}
+		
+		if(document.${formName}.fileupload.value == ""){
+			alert('Sila pilih Lampiran yang Ingin Dimuatnaik.');
+	  		document.${formName}.fileupload.focus(); 
+			return; 
+		}
 	
-	if(document.${formName}.kategori_lampiran.value == ""){
-		alert('Sila pastikan kategori lampiran diisi.');
-  		document.${formName}.kategori_lampiran.focus(); 
-		return; 
-	}
+		var dp = document.${formName}.form_token_Pop.value ;
+		var dopost = "&form_token_Pop="+dp;
+		var id_permohonan_set =  document.${formName}.id_permohonan.value;
+		var id_fail_set =  document.${formName}.id_fail.value;
+		var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
+		var tajuk_set =  document.${formName}.tajuk.value;
+		var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
+		var kategori_lampiran_set =  document.${formName}.kategori_lampiran.value;
+		
+		document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
+		//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
+		
+		document.${formName}.method="post";
+		document.${formName}.enctype="multipart/form-data";
+	    document.${formName}.encoding="multipart/form-data";
+		document.${formName}.submit();
+
+		disableALLbutton('cmdUploadDokumen');
 	
-	if(document.${formName}.fileupload.value == ""){
-		alert('Sila pilih Lampiran yang Ingin Dimuatnaik.');
-  		document.${formName}.fileupload.focus(); 
-		return; 
-	}
-	
-	var dp = document.${formName}.form_token_Pop.value ;
-	var dopost = "&form_token_Pop="+dp;
-	var id_permohonan_set =  document.${formName}.id_permohonan.value;
-	var id_fail_set =  document.${formName}.id_fail.value;
-	var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
-	var tajuk_set =  document.${formName}.tajuk.value;
-	var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
-	var kategori_lampiran_set =  document.${formName}.kategori_lampiran.value;
-	
-	
-	
-	document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
-	
-	document.${formName}.method="post";
-	document.${formName}.enctype="multipart/form-data";
-    document.${formName}.encoding="multipart/form-data";
-	document.${formName}.submit();
-	/*
-	document.${formName}.cmdUploadDokumen.value = "Sila Tunggu....";
-	
-	var nodes = document.getElementById("divAllPopup").getElementsByTagName('*');
-	for(var i = 0; i < nodes.length; i++)
-	{
-		 nodes[i].disabled = true;
-	}
-	*/
-	disableALLbutton('cmdUploadDokumen');
-}
+    }
 
 function hapusDokumen(id_dokumen,id_button) {
 	
@@ -827,7 +790,8 @@ function hapusDokumen(id_dokumen,id_button) {
 	var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
 	var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
 	//alert("2");
-	document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=hapusDokumen&id_dokumen="+id_dokumen+""+dopost+"&id_permohonan="+id_permohonan_set+"&jenis_skrin="+jenis_skrin_set+"&id_fail="+id_fail_set+"&id_hakmilik="+id_hakmilik_set;
+	document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=hapusDokumen&id_dokumen="+id_dokumen+""+dopost+"&id_permohonan="+id_permohonan_set+"&jenis_skrin="+jenis_skrin_set+"&id_fail="+id_fail_set+"&id_hakmilik="+id_hakmilik_set;
+	//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=hapusDokumen&id_dokumen="+id_dokumen+""+dopost+"&id_permohonan="+id_permohonan_set+"&jenis_skrin="+jenis_skrin_set+"&id_fail="+id_fail_set+"&id_hakmilik="+id_hakmilik_set;
 	
 	document.${formName}.method="post";
 	//document.${formName}.enctype="multipart/form-data";
@@ -854,8 +818,9 @@ function hapusDokumenEtanah(id_dokumen,id_button) {
 	var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
 	var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
 	//alert("2");
-	document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=hapusDokumenEtanah&id_dokumen="+id_dokumen+""+dopost+"&id_permohonan="+id_permohonan_set+"&jenis_skrin="+jenis_skrin_set+"&id_fail="+id_fail_set+"&id_hakmilik="+id_hakmilik_set;
-	
+	document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=hapusDokumenEtanah&id_dokumen="+id_dokumen+""+dopost+"&id_permohonan="+id_permohonan_set+"&jenis_skrin="+jenis_skrin_set+"&id_fail="+id_fail_set+"&id_hakmilik="+id_hakmilik_set;
+	//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=hapusDokumenEtanah&id_dokumen="+id_dokumen+""+dopost+"&id_permohonan="+id_permohonan_set+"&jenis_skrin="+jenis_skrin_set+"&id_fail="+id_fail_set+"&id_hakmilik="+id_hakmilik_set;
+
 	document.${formName}.method="post";
 	//document.${formName}.enctype="multipart/form-data";
     //document.${formName}.encoding="multipart/form-data";
@@ -866,31 +831,30 @@ function hapusDokumenEtanah(id_dokumen,id_button) {
 }
 
 
-function hantar(id_permohonan,jenis_skrin,id_penarikan) {
-	
-	
+	function hantar(id_permohonan,jenis_skrin,id_penarikan) {		
 
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		return;
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			return;
+		}
+	
+		var dp = document.${formName}.form_token_Pop.value ;
+		var dopost = "&form_token_Pop="+dp;
+		var id_permohonan_set =  document.${formName}.id_permohonan.value;
+		var id_fail_set =  document.${formName}.id_fail.value;
+		var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
+		var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
+		
+		document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=hantarData"+dopost+"&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+"&id_fail="+id_fail_set+"&id_hakmilik="+id_hakmilik_set;
+		//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=hantarData"+dopost+"&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+"&id_fail="+id_fail_set+"&id_hakmilik="+id_hakmilik_set;
+	
+		document.${formName}.method="post";
+		document.${formName}.enctype="multipart/form-data";
+	    document.${formName}.encoding="multipart/form-data";
+		document.${formName}.submit();
+		
+		disableALLbutton('cmdHantarRekod');
+		
 	}
-	
-	var dp = document.${formName}.form_token_Pop.value ;
-	var dopost = "&form_token_Pop="+dp;
-	var id_permohonan_set =  document.${formName}.id_permohonan.value;
-	var id_fail_set =  document.${formName}.id_fail.value;
-	var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
-	var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
-	
-	document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=hantarData"+dopost+"&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+"&id_fail="+id_fail_set+"&id_hakmilik="+id_hakmilik_set;
-	
-	document.${formName}.method="post";
-	document.${formName}.enctype="multipart/form-data";
-    document.${formName}.encoding="multipart/form-data";
-	document.${formName}.submit();
-	
-	disableALLbutton('cmdHantarRekod');
-	
-}
 
 
 

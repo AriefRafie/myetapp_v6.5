@@ -203,24 +203,9 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 				
 				h.put("poskod", rs.getString("poskod")==null?"":rs.getString("poskod"));
 								
-				//h.put("no_tel", rs.getString("no_Tel")==null?"":rs.getString("no_Tel"));
-				//h.put("no_fax", rs.getString("no_Fax")==null?"":rs.getString("no_Fax"));
-				
 				h.put("daerah", rs.getString("id_daerah")==null?"":rs.getString("id_daerah"));
 				h.put("negeri", rs.getString("id_negeri")==null?"":rs.getString("id_negeri"));
 				
-				/*
-				 * r.add("kp.id_Permohonan");
-			r.add("pej.nama_Pejabat");
-			r.add("pej.alamat1");
-			r.add("pej.alamat2");
-			r.add("pej.alamat3");
-			r.add("pej.poskod");
-			r.add("pej.no_Tel");
-			r.add("pej.no_Fax");
-			r.add("d.nama_Daerah");
-			r.add("n.nama_Negeri");
-				 */
 				
 				listMaklumatMahkamah.addElement(h);
 			}}
@@ -1197,20 +1182,11 @@ private static Vector semakMahkamah = new Vector();
 		    String sql = "";
 		    String sql5 = "";
 		    String sql6 = "";
-		    String tarikhsuratARB = "";
 		    try
 		    {
 		    	long idKeputusanPermohonan = DB.getNextID("TBLPPKKEPUTUSANPERMOHONAN_SEQ");    	
 		    	long idKaveatPeguam = DB.getNextID("TBLPPKKAVEATPEGUAM_SEQ");  
-		    	if (data.get("tarikhsuratARB") != null) {
-		    		tarikhsuratARB = (String)data.get("tarikhsuratARB");
-				}
-		    	else
-		    	{
-		    		tarikhsuratARB = "";
-		    	}
-				
-		    	//String tarikhsuratARB = (String)data.get("tarikhsuratARB");
+		    	String tarikhsuratARB = (String)data.get("tarikhsuratARB");
 		    	myLogger.info("tarikhsuratARB = "+tarikhsuratARB);
 		    	String tarikhHantarBorangB=(String)data.get("tarikhHantarBorangB");
 		    	String tarikhTerimaBorangC=(String)data.get("tarikhTerimaBorangC");
@@ -1220,7 +1196,6 @@ private static Vector semakMahkamah = new Vector();
 		    	String penentuanBidangKuasa=(String)data.get("penentuanBidangKuasa");
 		    	String salinanArahan=(String)data.get("salinanArahan");
 		    	String txtCatatanSD=(String)data.get("txtCatatanSD");
-		    	myLogger.info("txtCatatanSD = "+txtCatatanSD);
 		    //	String penentuanBidangKuasaTeruskan=(String)data.get("penentuanBidangKuasaTeruskan");
 		    	String catatan=(String)data.get("catatan");
 		    	String IdPermohonan=(String)data.get("IdPermohonan");
@@ -1289,7 +1264,6 @@ private static Vector semakMahkamah = new Vector();
 				r.add("FLAG_SEBABPINDAHMAHKAMAH",tujuanPindah); //razman add
 				r.add("catatan", catatan);
 				r.add("TARIKH_SURATARB",tarikhsuratARB);
-				r.add("CATATAN_SD",txtCatatanSD);
 				sql = r.getSQLInsert("tblppkkeputusanpermohonan");		
 				
 				System.out.println("----1-----");
@@ -1299,21 +1273,19 @@ private static Vector semakMahkamah = new Vector();
 				
 				if(penentuanBidangKuasa.equals("107"))
 				{
-					Hashtable h = null;
-					h = new Hashtable();
-					h.put("jenisSD", "107");
-					h.put("txtCatatanSD", txtCatatanSD);
-					h.put("IdPermohonan", IdPermohonan);
-					h.put("userId", session.getAttribute("_ekptg_user_id"));
-					h.put("id_Masuk", session.getAttribute("_ekptg_user_id"));
-					h.put("id_Fail", id_Fail);
-					h.put("idKeputusanPermohonan", idKeputusanPermohonanString);
-					String uid = (String) session.getAttribute("_ekptg_user_id");
 					
-					insertSDTable(session, h, "8");
+					insertSDTable(session, idKeputusanPermohonanString,txtCatatanSD,IdPermohonan,id_Masuk,id_Fail);
 					
 
-					
+					/*Hashtable h = null;
+					h = new Hashtable();
+					h.put("jenisSD", getParam("sorPenentuanBidangKuasa"));
+					h.put("txtCatatanSD", getParam("txtCatatanSD"));
+					h.put("IdPermohonan", getParam("idPermohonan"));
+					h.put("userId", session.getAttribute("_ekptg_user_id"));
+					h.put("id_Masuk", session.getAttribute("_ekptg_user_id"));
+					h.put("id_Fail", getParam("id_Fail"));
+					String uid = (String) session.getAttribute("_ekptg_user_id");*/
 				}
 			
 			     if(jenis_pej.equals("99"))
@@ -1480,7 +1452,7 @@ private static Vector semakMahkamah = new Vector();
 		    	}
 		  	}
 		
-		public static void insertSDTable(HttpSession session, Hashtable data, String seksyen) throws Exception
+		public static void insertSDTable(HttpSession session, String idKeputusanPermohonan,String txtCatatanSD,String IdPermohonan,String id_Masuk,String id_Fail) throws Exception
 		  {
 			myLogger.info("insertSDTable-->");
 		    Db db = null;
@@ -1488,7 +1460,7 @@ private static Vector semakMahkamah = new Vector();
 		    String sql = "";
 		    String sql5 = "";
 		    String sql6 = "";
-		    
+		    String Seksyen = "8";
 		    try
 		    {
 		    	long idSD = DB.getNextID("TBLPPKSD_SEQ");    	  	
@@ -1496,13 +1468,6 @@ private static Vector semakMahkamah = new Vector();
 		    	
 				
 				String sql9 ="";
-				String IdPermohonan = (String) data.get("IdPermohonan");
-				String id_Masuk = (String) data.get("id_Masuk");
-				String txtCatatanSD = (String) data.get("txtCatatanSD");
-				String idKeputusanPermohonan = (String) data.get("idKeputusanPermohonan");
-				String id_Fail = (String) data.get("id_Fail");
-				
-				
 				
 				db = new Db();
 				Statement stmt = db.getStatement();
@@ -1521,8 +1486,12 @@ private static Vector semakMahkamah = new Vector();
 				
 				stmt.executeUpdate(sql);
 				System.out.println("----2-----");
-				      
-			      if(seksyen.equals("8"))
+			
+			     
+			    	
+				 
+			      
+			      if(Seksyen.equals("8"))
 			      {
 			      	//SEKSYEN 8
 			        FrmPrmhnnSek8DaftarSek8InternalData logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
@@ -1532,7 +1501,7 @@ private static Vector semakMahkamah = new Vector();
 					
 			      }
 			      
-			      else if(seksyen.equals("17"))
+			      else if(Seksyen.equals("17"))
 			      {
 				      	
 				      }
@@ -1998,7 +1967,7 @@ private static Vector semakMahkamah = new Vector();
 				r.add("tarikh_Kemaskini",r.unquote("sysdate"));	
 		    	
 				r.add("catatan", catatan);
-				r.add("catatan_sd", txtCatatanSD);
+				//r.add("catatan_sd", txtCatatanSD);
 				//r.add("tarikh_suratarb",tarikhsuratARB);
 				sql = r.getSQLUpdate("tblppkkeputusanpermohonan");
 			    System.out.println("sql update-->"+sql);
@@ -2066,34 +2035,16 @@ private static Vector semakMahkamah = new Vector();
 					{
 			    	  if (idKeputusanPermohonan2.equals(""))
 			    		{
-			    		  Hashtable h = null;
-							h = new Hashtable();
-							h.put("jenisSD", "107");
-							h.put("txtCatatanSD", txtCatatanSD);
-							h.put("IdPermohonan", IdPermohonan);
-							h.put("userId", session.getAttribute("_ekptg_user_id"));
-							h.put("id_Masuk", session.getAttribute("_ekptg_user_id"));
-							h.put("id_Fail", id_Fail);
-							String uid = (String) session.getAttribute("_ekptg_user_id");
 						
 						
 							System.out.println("-------checkdulusamadaSDtelahwujudataubelum2----");
-							insertSDTable(session, h, "8");
+							insertSDTable(session, idKeputusanPermohonan2,txtCatatanSD,IdPermohonan,id_Masuk,id_Fail);
 						}
 						else
 						{
 							if(cntResultppksd.equals("0")) //salnizam
 							{
-								Hashtable h = null;
-								h = new Hashtable();
-								h.put("jenisSD", "107");
-								h.put("txtCatatanSD", txtCatatanSD);
-								h.put("IdPermohonan", IdPermohonan);
-								h.put("userId", session.getAttribute("_ekptg_user_id"));
-								h.put("id_Masuk", session.getAttribute("_ekptg_user_id"));
-								h.put("id_Fail", id_Fail);
-								String uid = (String) session.getAttribute("_ekptg_user_id");
-								insertSDTable(session, h, "8");
+								insertSDTable(session, idKeputusanPermohonan2,txtCatatanSD,IdPermohonan,id_Masuk,id_Fail);
 								String idperbicaraan = addNotis(idKeputusanPermohonan2,id_Masuk);
 								System.out.println("-------idperbicaraan----"+idperbicaraan);
 								add_maklumatPerintah(idperbicaraan,id_Masuk);
@@ -2101,11 +2052,9 @@ private static Vector semakMahkamah = new Vector();
 							else
 							{
 								updateSDTable(session, idKeputusanPermohonan2,txtCatatanSD,IdPermohonan,id_Masuk,id_Fail);
-								//komen dahulu part kat bawah ni.. sebab tak perlu insert tarikh bicara yang baharu utk SD yang diupdate,
-								//dan tak perlu juga utk create perintah yang baharu jugak
-//								String idperbicaraan = addNotis(idKeputusanPermohonan2,id_Masuk);
-//								System.out.println("-------idperbicaraan----"+idperbicaraan);
-//								add_maklumatPerintah(idperbicaraan,id_Masuk);
+								String idperbicaraan = addNotis(idKeputusanPermohonan2,id_Masuk);
+								System.out.println("-------idperbicaraan----"+idperbicaraan);
+								add_maklumatPerintah(idperbicaraan,id_Masuk);
 							}
 						}
 						
@@ -2426,8 +2375,8 @@ private static Vector semakMahkamah = new Vector();
 				r.add("id_perbicaraan", id_perbicaraan);
 				r.add("id_keputusanpermohonan", id_keputusanpermohonan);
 				r.add("catatan", "Summary Distribution");
-				r.add("id_masuk", id_masuk);
-				r.add("tarikh_masuk", r.unquote("sysdate"));
+				
+
 				
 				sql = r.getSQLInsert("Tblppkperbicaraan");
 				stmt.executeUpdate(sql);

@@ -28,7 +28,6 @@
 	<input name="hitButton" type="hidden" id="hitButton" /> 
 	<input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper" /> 
 	<input name="selectedTabLower" type="hidden" id="selectedTabLower" value="$selectedTabLower" />
-	<input name="socJenisImej" type="text" id="socJenisImej" value="$socJenisImej" />
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	#if ($idFail != '')
@@ -555,7 +554,7 @@ function simpanDokumen(idLaporanTanah,idPermohonan) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmCRBOperasiPenguatkuasaanView&hitButton=simpanDokumen&namaImej="+namaImej+"&catatanImej="+catatanImej+"&socJenisImej="+socJenisImej+"&idLaporanTanah="+idLaporanTanah+"&idPermohonan="+idPermohonan+"&selectedTabUpper=0&selectedTabLower=2&actionCRB=viewLaporanOperasi"+dopost;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmCRBOperasiPenguatkuasaanView&hitButton=simpanDokumen&namaImej="+namaImej+"&catatanImej="+catatanImej+"&jenisImej="+jenisImej+"&idLaporanTanah="+idLaporanTanah+"&idPermohonan="+idPermohonan+"&selectedTabUpper=0&selectedTabLower=2&actionCRB=viewLaporanOperasi"+dopost;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";

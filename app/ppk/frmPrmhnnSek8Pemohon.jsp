@@ -161,6 +161,11 @@
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,4,0,0);SaksiView()">SAKSI</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,5,0,0);PemiutangView()">PEMIUTANG</li>
             <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,6,0,0);PenghutangView()">PENGHUTANG</li>
+          
+            #if( ($!skrin_online == "yes") && ($!skrin_deraf == "") )
+            <li class="TabbedPanelsTab style1 style3" tabindex="0" onClick="setSelected(0,7,0,0);TukarPemohonView()">PERTUKARAN PEMOHON</li>
+            #end
+	          
           </ul>
           
           <div class="TabbedPanelsContentGroup">
@@ -187,9 +192,10 @@
               <div id="TabbedPanels3" class="TabbedPanelsContentVisible">
                 <ul class="TabbedPanelsTabGroup">
                   <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,1,0,0);PemohonView()" id="tab_Pemohon" >PEMOHON</li>
-          #if($show_peguam_tab=="yes") 
+          		  #if($show_peguam_tab=="yes") 
                   <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,1,1,0);PeguamView()">PEGUAM</li>
                    #end
+<!--                   <li class="TabbedPanelsTab style1 style3" tabindex="0" onclick="setSelected(0,1,2,0);TukarPemohonView()">TUKAR PEMOHON</li> -->
                 </ul>
                 <div class="TabbedPanelsContentGroup">
                 
@@ -1724,6 +1730,16 @@ function PeguamView() {
 	document.f1.command.value = "Peguam";
 	document.f1.submit();
 }
+
+<!-- syafiqah add -->
+function TukarPemohonView(){
+	document.f1.action = "";
+	document.f1.mode.value = "TukarPemohonview";
+	document.f1.command.value = "Tukarpemohon";
+	document.f1.submit();
+}
+<!-- syafiqah add end -->
+
 function HtaamView() {
 	document.f1.action = "";
 	document.f1.mode.value = "Htaamview";
@@ -1743,6 +1759,15 @@ function NAview() {
 	document.f1.command.value = "nilai_harta";
 	document.f1.submit();
 }
+
+<!-- syafiqah add -->
+function TukarPemohonView(){
+	document.f1.action = "";
+	document.f1.mode.value = "TukarPemohonview";
+	document.f1.command.value = "Tukarpemohon";
+	document.f1.submit();
+}
+<!-- syafiqah add end -->
 
 function PenghutangView() {
 	document.f1.action = "";

@@ -9,8 +9,8 @@
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idUlasanTeknikal" type="hidden" id="idUlasanTeknikal" value="$idUlasanTeknikal"/>
   <input name="report" type="hidden" id="report" value="$report"/>  
-  <input name="noFailNegeri" type="hidden" id="noFailNegeri" value="$noFailNegeri"/>
-  <input name="noFailHQ" type="hidden" id="noFailHQ" value="$noFailHQ"/>
+  <input name="noFailNegeri" type="hidden" id="noFailNegeri" value="$!noFailNegeri"/>
+  <input name="noFailHQ" type="hidden" id="noFailHQ" value="$!noFailHQ"/>
 </p>
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
   <tr>

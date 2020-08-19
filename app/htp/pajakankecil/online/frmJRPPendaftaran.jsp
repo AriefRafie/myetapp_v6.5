@@ -101,7 +101,7 @@
 					        		<td width="30%" valign="top"><div align="left">Tajuk</div></td>
 					        		<td width="1%" valign="top"><div align="center">:</div></td>
 					        		<td width="68%">
-										<textarea name="txttajuk" cols="41" rows="5" onblur="this.value=this.value.toUpperCase();"  $classDis>$tajuk</textarea>					        		
+										<textarea name="txttajuk" cols="41" rows="5" onkeyup="this.value=this.value.toUpperCase();" onblur="this.value=this.value.toUpperCase();"  $classDis>$tajuk</textarea>					        		
 					        		</td>					
 			              		</tr>			              			        		
 		              		</table>
@@ -113,7 +113,7 @@
 			        		<table width="100%" border="0">
 			              		<tr>
 						      		<td width="1%"></td>
-					        		<td width="30%"><div align="left">No. Fail</div></td>
+					        		<td width="30%"><div align="left">No. Rujukan <i>Online</i></div></td>
 					        		<td width="1%"><div align="center">:</div></td>
 					        		<td width="68%"><input type="text" name="txtNoFailSek" class="disabled" size="30" value="$nofailseksyen"  $inputstylerep onblur="this.value=this.value.toUpperCase();" disabled></td>							              			
 		              			</tr>		

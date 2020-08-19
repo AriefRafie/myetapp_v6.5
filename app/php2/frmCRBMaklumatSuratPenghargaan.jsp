@@ -7,20 +7,21 @@
           <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
           <td width="28%">Surat Ke</td>
           <td width="1%">:</td>
-          <td width="70%"><select name="idSuratKe" id="idSuratKe" style="width:100px;" $readonlyS class="$inputTextClassS" $inputTextClassS onChange="doChangeSuratKe()" >
-   #if($idSuratKe == 'PTD')               
+          <td width="70%">
+          	<select name="idSuratKe" id="idSuratKe" style="width:100px;" $readonlyS class="$inputTextClassS" $inputTextClassS onChange="doChangeSuratKe()" >
+   			#if($idSuratKe == 'PTD')               
               <option value="">SILA PILIH</option>
               <option value="PTD" selected="selected"> 1 - PTD </option>
               <option value="JKPTG"> 2 - JKPTG </option>
-    #elseif($idSuratKe == 'JKPTG') 
+    		#elseif($idSuratKe == 'JKPTG') 
               <option value="">SILA PILIH</option>
               <option value="PTD"> 1 - PTD </option>
               <option value="JKPTG" selected="selected"> 2 - JKPTG </option>      
-    #else
+   			#else
               <option value="" selected="selected">SILA PILIH</option>
               <option value="PTD"> 1 - PTD </option>
               <option value="JKPTG"> 2 - JKPTG </option>  
-	#end            
+			#end            
             </select>
           </td>
         </tr>

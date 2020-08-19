@@ -337,9 +337,9 @@ public class FrmSenaraiFailOnlineData {
 			sql = "SELECT F.ID_FAIL, F.NO_FAIL, A.ID_PERMOHONAN, A.TARIKH_MOHON, A.TARIKH_MASUK, F.TARIKH_DAFTAR_FAIL," 
 				+ " S.KETERANGAN, P.ID_SIMATI, P.NAMA_SIMATI, A.ID_DAERAHMHN, A.TARIKH_MOHON_ONLINE, A.NO_PERMOHONAN_ONLINE, PM.NAMA_PEMOHON," 
                 + " PM.NO_KP_BARU, PM.ID_PEMOHON, P.NO_KP_BARU, P.NO_KP_BARU,A.SEKSYEN,A.NO_SUBJAKET" 
-                +" ,( TO_DATE(SYSDATE,'dd/mm/yyyy') -  TO_DATE(A.TARIKH_MOHON_ONLINE,'dd/mm/yyyy')) HARI, docSimati.id_dokumen, docSimati.id_jenisdokumen"                 
+                +" ,( TO_DATE(SYSDATE,'dd/mm/yyyy') -  TO_DATE(A.TARIKH_MOHON_ONLINE,'dd/mm/yyyy')) HARI"                 
                 +" FROM TBLPPKPERMOHONAN A, TBLPFDFAIL F, TBLRUJSTATUS S, TBLPPKSIMATI P," 
-                +" TBLPPKPEMOHON PM, TBLPPKPERMOHONANSIMATI MS,TBLRUJSUBURUSANSTATUS ST, TBLRUJSUBURUSANSTATUSFAIL STA, tblppkdokumensimati docSimati, TBLRUJDAERAH D" 
+                +" TBLPPKPEMOHON PM, TBLPPKPERMOHONANSIMATI MS,TBLRUJSUBURUSANSTATUS ST, TBLRUJSUBURUSANSTATUSFAIL STA, TBLRUJDAERAH D" 
                 +" WHERE" 
                 +" D.id_daerah in ( select distinct u.id_daerahurus from"
                 +" TBLRUJPEJABATURUSAN u, users_internal ur where u.id_pejabatjkptg=ur.id_pejabatjkptg and ur.user_id='"+userid+"' ";
@@ -362,13 +362,11 @@ public class FrmSenaraiFailOnlineData {
                 +" AND A.ID_PERMOHONAN = MS.ID_PERMOHONAN" 
                 +" AND A.ID_PERMOHONAN = STA.ID_PERMOHONAN" 
                 +" AND P.ID_SIMATI = MS.ID_SIMATI" 
-                +" AND p.id_simati = docSimati.id_simati(+) "
                 +" AND A.ID_STATUS <> '999'"
                 +" AND STA.ID_SUBURUSANSTATUS = 614" 
                 +" AND A.SEKSYEN = 8"  
                 +" AND STA.AKTIF = 1" 
                 +" AND A.FLAG_JENIS_PERMOHONAN = 0" 
-                +" AND (docsimati.id_jenisdokumen IS NULL OR docsimati.id_jenisdokumen = 99211)"
                // +" AND ( TO_DATE(SYSDATE,'dd/mm/yyyy') -  TO_DATE(A.TARIKH_MOHON_ONLINE,'dd/mm/yyyy')) <= 21 " 
                 //+" ORDER BY STA.ID_SUBURUSANSTATUSFAIL"
                 +" ORDER BY A.TARIKH_MOHON_ONLINE DESC"
@@ -401,8 +399,6 @@ public class FrmSenaraiFailOnlineData {
 				h.put("daerahmohon", rs.getString("ID_DAERAHMHN")==null?"":rs.getString("ID_DAERAHMHN"));				
 				h.put("seksyen", rs.getString("SEKSYEN")==null?"":rs.getString("SEKSYEN"));
 				h.put("no_subjaket", rs.getString("NO_SUBJAKET")==null?"":rs.getString("NO_SUBJAKET"));
-				h.put("id_dokumen", rs.getString("ID_DOKUMEN")==null?"":rs.getString("ID_DOKUMEN"));
-				h.put("id_jenisdokumen", rs.getString("ID_JENISDOKUMEN")==null?"":rs.getString("ID_JENISDOKUMEN"));
 				list.addElement(h);
 				bil++;	
 			

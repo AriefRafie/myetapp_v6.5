@@ -52,6 +52,7 @@ public class FrmBorangPSek17Online extends VTemplate {
 	FrmBorangPSek17OnlineData logic_17 = null;
 	FrmHeaderPpk mainheader = null;
 	FrmSemakHartaSek17 FrmSemakHartaSek17 = null;
+	private String umurWaris = "0";
 
 	static Logger myLogger = Logger.getLogger(FrmBorangPSek17OnlineData.class);
 
@@ -74,6 +75,7 @@ public class FrmBorangPSek17Online extends VTemplate {
 		int simpanStatus = 0;
 		int eventStatus = 0;
 		int backstatus = 0;
+		
 		String selectedTabatas = "";
 		String selectedTabtengah = "";
 		String selectedTabbawah = "";
@@ -2313,7 +2315,11 @@ public class FrmBorangPSek17Online extends VTemplate {
 
 			String id2 = getParam("idPemohon");
 			String id1 = getParam("idSimati");
-			int s1 = Integer.parseInt(getParam("no_subjaket"));
+			String no_subjacket = getParam("no_subjaket");
+			int s1 = 0;
+			if(!no_subjacket.equals("NaN")){
+			 s1 = Integer.parseInt(getParam("no_subjaket"));
+			}
 			this.context.put("no_subjaket", s1);
 			readability2 = "readonly";
 			disability1 = "disabled";
@@ -5987,7 +5993,9 @@ public class FrmBorangPSek17Online extends VTemplate {
 			this.context.put("EventStatus", "");
 			this.context.put("tutup", "");
 
-			list = logiconline.semakDataSimati(getParam("id_Permohonan_terdahulu"));
+			String idm = getParam("idpermohonan");
+			
+			list = logiconline.semakDataSimati(idm);
 			this.context.put("View", list);
 			Hashtable n = (Hashtable) list.get(0);
 
@@ -6929,14 +6937,15 @@ public class FrmBorangPSek17Online extends VTemplate {
 		if (getParam("socTarafKePemohonanPemohon") != "" && getParam("socTarafKePemohonanPemohon") != "0") {
 			k.put("taraf", Integer.parseInt(getParam("socTarafKePemohonanPemohon")));
 		}
-
+		k.put("umur", umurWaris);
 		if (getParam("txtUmurPemohon") != "") {
-			k.put("umur", Integer.parseInt(getParam("txtUmurPemohon")));
+			k.put("umur", getParam("txtUmurPemohon"));
+//			k.put("umur", Integer.parseInt(getParam("txtUmurPemohon")));
 		}
-		int umu = 0;
-		if (getParam("txtUmurPemohon") == "") {
-			k.put("umur", umu);
-		}
+//		int umu = 0;
+//		if (getParam("txtUmurPemohon") == "") {
+//			k.put("umur", umu);
+//		}
 
 		k.put("nofaks", getParam("txtNoFaksPemohon"));
 		k.put("notelefon", getParam("txtNoTelefonPemohon"));

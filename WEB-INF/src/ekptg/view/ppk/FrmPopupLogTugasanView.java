@@ -8,11 +8,14 @@ import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import lebah.db.Db;
 import lebah.portal.AjaxBasedModule;
 
 public class FrmPopupLogTugasanView extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
+	static Logger myLogger = Logger.getLogger(PendaftaranCheck.class);
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	@Override
 	public String doTemplate2() throws Exception {
@@ -58,7 +61,9 @@ public class FrmPopupLogTugasanView extends AjaxBasedModule {
 					+ " WHERE TBLPPKLOGTUGASAN.ID_PEGAWAI_SEBELUM = PEGAWAI_SEBELUM.USER_ID(+)"
 					+ " AND TBLPPKLOGTUGASAN.ID_PEGAWAI = PEGAWAI_TUGASAN.USER_ID (+)"
 					+ " AND TBLPPKLOGTUGASAN.FLAG_AKTIF = 'Y' AND TBLPPKLOGTUGASAN.ID_FAIL = '" + idFail + "'";			
-			sql = sql + " ORDER BY TBLPPKLOGTUGASAN.TARIKH_DITUGASKAN DESC";			
+			sql = sql + " ORDER BY TBLPPKLOGTUGASAN.TARIKH_DITUGASKAN DESC";
+			myLogger.info("sql Get Tugasan Semasa: " + sql);
+			this.context.put("sql = ", sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {	
 				tugasanSemasa = new Hashtable();
@@ -76,6 +81,7 @@ public class FrmPopupLogTugasanView extends AjaxBasedModule {
 		return tugasanSemasa;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private Vector getSenaraiLogTugasan(String idFail) {
 		String sql = "";
 		Vector listLogTugasan = null;
@@ -85,14 +91,15 @@ public class FrmPopupLogTugasanView extends AjaxBasedModule {
 			listLogTugasan = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
-			sql = "SELECT PEGAWAI_SEBELUM.USER_NAME AS PEGAWAI_SEBELUM, PEGAWAI_TUGASAN.USER_NAME AS PEGAWAI_TUGASAN, TBLPHPLOGTUGASAN.ROLE,"
+			sql = "SELECT PEGAWAI_SEBELUM.USER_NAME AS PEGAWAI_SEBELUM, PEGAWAI_TUGASAN.USER_NAME AS PEGAWAI_TUGASAN, TBLPPKLOGTUGASAN.ROLE,"
 					+ " TBLPPKLOGTUGASAN.TARIKH_DITUGASKAN"
 					+ " FROM TBLPPKLOGTUGASAN, USERS PEGAWAI_SEBELUM, USERS PEGAWAI_TUGASAN"
 					+ " WHERE TBLPPKLOGTUGASAN.ID_PEGAWAI_SEBELUM = PEGAWAI_SEBELUM.USER_ID(+)"
 					+ " AND TBLPPKLOGTUGASAN.ID_PEGAWAI = PEGAWAI_TUGASAN.USER_ID (+)"
 					+ " AND TBLPPKLOGTUGASAN.FLAG_AKTIF = 'T' AND TBLPPKLOGTUGASAN.ID_FAIL = '" + idFail + "'";			
 			sql = sql + " ORDER BY TBLPPKLOGTUGASAN.TARIKH_DITUGASKAN DESC";
-			System.out.println(sql);
+			myLogger.info("sql Get Senarai Log Tugasan: " + sql);
+			this.context.put("sql = ", sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				h = new Hashtable();

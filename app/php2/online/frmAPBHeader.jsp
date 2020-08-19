@@ -8,7 +8,9 @@
     #set($idStatus = $beanHeader.idStatus) 
     #set($status = $beanHeader.status)    
     #set($noFail = $beanHeader.noFail)
+    #set($noFailLama = $beanHeader.noFailLama)
     #set($tujuanPengambilan = $beanHeader.tujuanPengambilan)
+    #set($noLesen = $beanHeader.noLesen)
     #end
     <td width="50%" valign="top" ><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
@@ -17,6 +19,11 @@
           <td width="30%">No Permohonan </td>
           <td width="1%">:</td>
           <td ><font color="blue">$noPermohonan</font></td>
+        </tr>
+         <tr>
+          <td width="30%">No Fail Lama </td>
+          <td width="1%">:</td>
+          <td ><font color="blue">$noFailLama</font></td>
         </tr>
         <tr>
           <td width="30%">No Fail </td>
@@ -37,6 +44,11 @@
           <td width="30%">Status Permohonan </td>
           <td width="1%">:</td>
           <td><font color="green">$status</font></td>
+        </tr>
+         <tr>
+          <td width="30%">No.Lesen </td>
+          <td width="1%">:</td>
+          <td><font color="blue">$noLesen</font></td>
         </tr>
       </table>
       </fieldset></td>
@@ -77,6 +89,11 @@
       <td width="30%">No. Faks</td>
       <td width="1%">:</td>
       <td >$!pemohon.get("noFax")</td>
+      </tr>
+      <tr>
+      <td width="30%">Emel</td>
+      <td width="1%">:</td>
+      <td >$!pemohon.get("emel")</td>
       </tr>
       </table>
       </fieldset>

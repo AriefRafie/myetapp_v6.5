@@ -24,7 +24,6 @@ public abstract class AbstractDokumen implements java.io.Serializable {
 	private Date tarikhKemaskini;
 
 	// Constructors
-
 	/** default constructor */
 	public AbstractDokumen() {
 	}
@@ -125,5 +124,6 @@ public abstract class AbstractDokumen implements java.io.Serializable {
 	public void setTarikhKemaskini(Date tarikhKemaskini) {
 		this.tarikhKemaskini = tarikhKemaskini;
 	}
+	
 
 }

@@ -323,7 +323,7 @@ public class FrmMMKSek8 extends AjaxBasedModule {
     		myLogger.info("MMK id_status : "+id_status);
     		if(id_status.equals("22") || id_status.equals("147") || id_status.equals("148") 
     				//|| id_status.equals("132")
-    				//|| id_status.equals("16")
+    				|| id_status.equals("16") // open untuk v7
     				){
  			
     			//sub mmk
@@ -885,7 +885,7 @@ public class FrmMMKSek8 extends AjaxBasedModule {
 	}//close dataHeaderStatus
 	
 	@SuppressWarnings("unchecked")
-	private void simpanPenyediaan(HttpSession session) throws Exception{
+	private void simpanPenyediaan(HttpSession session) throws Exception{ //yati
 
 		
 		
@@ -1461,6 +1461,7 @@ public class FrmMMKSek8 extends AjaxBasedModule {
 		Hashtable h = new Hashtable();
 		
 		String id_mmk = getParam("id_mmk");
+		
 		String id_user = (String) session.getAttribute("_ekptg_user_id");
 		
 		h.put("id_mmk", id_mmk);

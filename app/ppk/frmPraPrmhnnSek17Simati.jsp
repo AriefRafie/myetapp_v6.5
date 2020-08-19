@@ -1237,7 +1237,7 @@ selectPelbagaiNegara(document.f1.socNegeriSimati.value,'div_mesejpelbagagainegar
 function HtaamViewX() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1251,7 +1251,7 @@ document.f1.action = "";
 function HtaamView() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1264,7 +1264,7 @@ document.f1.action = "";
 function HAview() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1278,7 +1278,7 @@ document.f1.action = "";
 function NAview() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1292,7 +1292,7 @@ document.f1.action = "";
 function PenghutangView() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1305,7 +1305,7 @@ document.f1.action = "";
 function PemiutangView() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1318,7 +1318,7 @@ document.f1.action = "";
 function SaksiView() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1332,7 +1332,7 @@ document.f1.action = "";
 function PentingView() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1346,7 +1346,7 @@ document.f1.action = "";
 function WarisView() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1359,7 +1359,7 @@ document.f1.action = "";
 function SimatiView() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1374,7 +1374,7 @@ document.f1.action = "";
 function PemohonView() {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1387,7 +1387,7 @@ document.f1.action = "";
 function kembali_simati(){
 if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1423,7 +1423,7 @@ function kemaskini_simati(){
 
 if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1655,7 +1655,7 @@ function SimpanSimati() {
 		
 		if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -1695,7 +1695,7 @@ input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
 	if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -2085,7 +2085,7 @@ function kembalix() {
 
 if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -2100,7 +2100,7 @@ function kembalidaftar()
 {
 if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -2116,7 +2116,7 @@ function kembaliSenaraiFail(noFail) {
 
 if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -2131,7 +2131,7 @@ function kembaliSenaraiPermohonan(noFail) {
 
 if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -2146,7 +2146,7 @@ function Kembali(){
 
 if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {
@@ -2163,7 +2163,7 @@ function getBandarTetap(v_t)
 {
     if('$!skrin_online_17' == 'yes')
 {
-document.f1.action = "?_portal_module=ekptg.view.ppk.FrmBorangPSek17Online";
+document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangPOnline";
 }
 else
 {

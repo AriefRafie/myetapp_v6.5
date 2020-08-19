@@ -3,7 +3,7 @@
 <script type="text/javascript" src="../../img"></script>
 <script type="text/javascript" src="../../library/js/jquery-1.3.2.min.js" ></script>
 <script>var $jquery = jQuery.noConflict();</script>
-<!-- <link rel="stylesheet" type="text/css" href="../../css/SpryTabbedPanels.css"> -->
+<link rel="stylesheet" type="text/css" href="../../css/SpryTabbedPanels.css">
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPT.css">
 <!--
 POPUP HAKMILIK
@@ -23,26 +23,30 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td>
-		<fieldset>
-		<legend>CARIAN</legend>
-		<table width="100%" border="0" cellspacing="2" cellpadding="2">
+<fieldset>
+<legend>CARIAN
+</legend>
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
 
-		<tr>
-          	<td width="1%">&nbsp;</td>
-          	<td width="25%" align="left" valign="top">NO. LOT/ NO. PT</td>
-          	<td width="1%" valign="top">:</td>
-          	<td width="73%" valign="top">          
-          		<input name="NO_LOT" type="text" id="NO_LOT"  value="$NO_LOT" size="80" maxlength="500"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" />          
-       		</td>
-        </tr>        
-		<tr >
+<tr>
+          <td width="1%">&nbsp;</td>
+          <td width="25%" align="left" valign="top">NO. LOT/ NO. PT</td>
+          <td width="1%" valign="top">:</td>
+          <td width="73%" valign="top">          
+          <input name="NO_LOT" type="text" id="NO_LOT"  value="$NO_LOT" size="80" maxlength="500"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" />          
+           </td>
+        </tr>
+        
+<tr >
           <td>&nbsp;</td>
           <td align="left" valign="top">NAMA PB</td>
           <td valign="top">:</td>
           <td valign="top">          
           <input name="NAMA_PB" type="text" id="NAMA_PB" value="$NAMA_PB" size="80" maxlength="1000"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" />         
           </td>
-        </tr>      
+        </tr> 
+        
+        
         <tr >
           <td>&nbsp;</td>
           <td align="left" valign="top">MYID PB</td>
@@ -51,35 +55,43 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
           <input name="NO_PB" type="text" id="NO_PB" value="$NO_PB" size="80" maxlength="1000"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" />         
           </td>
         </tr>        
-		<tr>
-	  	<td  ></td>
-	  	<td align="left" valign="top" ></td>
-	  	<td valign="top" ></td>
-	  	<td valign="top" >	   
-	    	<input type="button" id="cariHakmilik" name="cariHakmilik" value="CARI" onclick="carian()"/>
-	    	<input type="button" id="kosongHariHakmilik" name="kosongHariHakmilik" value="RESET" onclick="kosongkan()"/>    
-	    </td>
-		</tr>
-		</table>
-		</fieldset>
-	</td>
+        
+
+<tr>
+  <td  ></td>
+  <td align="left" valign="top" ></td>
+  <td valign="top" ></td>
+  <td valign="top" >
+   
+   
+    <input type="button" id="cariHakmilik" name="cariHakmilik" value="CARI" onclick="carian()"/>
+    <input type="button" id="kosongHariHakmilik" name="kosongHariHakmilik" value="RESET" onclick="kosongkan()"/>
+    
+    </td>
+  
+  
+  
+  
+</tr>
+</table>
+</fieldset>
+</td>
   </tr>
-<!-- </table> -->
+</table>
 
-	<tr>
-		<td>
-		<fieldset>
 
-		<!-- PPT-07 -->
-		<div id="TabbedPanels1" class="TabbedPanels" style="padding : 0 5px">
-			<ul class="TabbedPanelsTabGroup">
-		 		<li class="TabbedPanelsTab" onClick="javascript:setSelected(0);" tabindex="0">SENARAI BORANG E</li>
-				<li class="TabbedPanelsTab" onClick="javascript:setSelected(1);" tabindex="1">RINGKASAN SIASATAN</li>
-				<li class="TabbedPanelsTab" onClick="javascript:setSelected(2);" tabindex="2">KEMASKINI</li>
-			</ul>
-		  		
-		  	<div class="TabbedPanelsContentGroup">
-<!-- TAB 1 -->
+<!-- PPT-07 -->
+
+<div id="TabbedPanels1" class="TabbedPanels" style="padding : 0 5px">
+	<ul class="TabbedPanelsTabGroup">
+ 		<li class="TabbedPanelsTab" onClick="javascript:setSelected(0);" tabindex="0">SENARAI BORANG E</li>
+		<li class="TabbedPanelsTab" onClick="javascript:setSelected(1);" tabindex="1">RINGKASAN SIASATAN</li>
+		<li class="TabbedPanelsTab" onClick="javascript:setSelected(2);" tabindex="2">KEMASKINI</li>
+	</ul>
+  		
+  	<div class="TabbedPanelsContentGroup">
+  	
+  		<!-- TAB 1 -->
     	<div class="TabbedPanelsContent">
 			<table width="100%" border="0" cellspacing="2" cellpadding="2">
 			  <tr>
@@ -140,8 +152,10 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 			  </tr>
 			</table>
    		</div>
-<!-- END TAB 1 -->		  	
-<!-- TAB 2 -->
+    	<!-- END TAB 1 -->
+    	
+    	
+    	<!-- TAB 2 -->
     	<div class="TabbedPanelsContent">
 			<!-- PPT-07 -->   
 				<table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -187,10 +201,10 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 														<td class="$row">Sj.$!listR.no_subjaket</td>
 													#end
 													<td class="$row">$!listR.tarikh_siasatan</td>
-													<td class="$row">$!listR.masa_siasatan
-														#if($!listR.jenis_waktu== '1') PAGI  #end
-														#if($!listR.jenis_waktu== '2') TENGAH HARI  #end
-														#if($!listR.jenis_waktu== '3') PETANG  #end
+													<td class="$row">$!txtMasaSiasatan
+														#if($!socJenisWaktu == '1') PAGI  #end
+														#if($!socJenisWaktu == '2') TENGAH HARI  #end
+														#if($!socJenisWaktu == '3') PETANG  #end
 													</td>
 												</tr>
 								           	#end
@@ -212,8 +226,9 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 				</table> 
 			<!-- PPT-07 END -->
     	</div>
-<!-- END TAB 2 -->		     	
-<!-- TAB 3 -->
+    	<!-- END TAB 2 -->
+    	
+    	<!-- TAB 3 -->
     	<div class="TabbedPanelsContent">
 			<!-- PPT-08 -->   
 				<table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -236,7 +251,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 				                            	<td align="center" ><b><font color="white">NO. SUBJAKET</font></b></td> 
 				                            #end 
 				                            <td align="center"><b><font color="white">TARIKH SIASATAN</font></b></td>
-					                  		<td align="center"><b><font color="white">MASA SIASATAN</font></b></td>    
+					                  		<td align="center"><b><font color="white">MASA SIASATAN amek query ni</font></b></td>    
 				           		 		</tr>
 						
 							         	#if($SenaraiRingkasan.size()>0)
@@ -252,15 +267,16 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 													<td class="$row">$!listR.nama_mukim
 														#if($listR.seksyen!="")
 															<font style="font-size: 10px">Seksyen $listR.seksyen</font>
-															
 														#end
 													</td> 
 													#if($!flag_subjaket!="")
 														<td class="$row">Sj.$!listR.no_subjaket</td>
 													#end
+													
 													<td class="$row">
 														<input type="text" name="txtTarikhSiasatan" id="txtTarikhSiasatan" value="$!listR.tarikh_siasatan" onblur="validateNumber(this,this.value);checkDigit()" maxlength="12" size="12" />
 													</td>
+													
 													<td class="$row">
 														<input type="text" name="txtMasaSiasatan" id="txtMasaSiasatan" value="$!listR.masa_siasatan" onblur="validateNumber(this,this.value);checkDigit()" onkeyup="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" maxlength="4" size="4" />
 													
@@ -271,9 +287,9 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 																	<option value="2" #if($!listR.jenis_waktu== '2') selected=selected #end>TENGAH
 																		HARI</option>
 																	<option value="3" #if($!listR.jenis_waktu== '3') selected=selected #end>PETANG</option>
-											
 														</select>
 													</td>
+													
 												</tr>
 								           	#end
 										#else
@@ -294,194 +310,284 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 				</table> 
 			<!-- PPT-08 END -->
    		</div>
-<!-- END TAB 3 -->
+    	<!-- END TAB 3 -->
     	
-		   </div> <!-- TabbedPanelsContentGroup -->
-		   
-		</div> <!-- PPT-07 -->
+    	
 
-		</fieldset>
-	</td>
+    	
+   </div> 
+   <!-- TabbedPanelsContentGroup -->
+   
+</div>
+<!-- PPT-07 -->
+		
+
+
+<!-- table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td><fieldset>
+      <legend><b>SENARAI BORANG E</b></legend-->          
+		<!-- #parse("app/utils/record_pagingPopup.jsp") -->
+<!-- 
+        #set ($count = 0) 
+       
+        <table align="center" width="100%" cellspacing="1" cellpadding="0">
+    
+        
+        <tr class="table_header">
+        
+                  		<td align="center" ><b><font color="white">NO</font></b></td>
+                  		<td  ><b><font color="white">SENARAI REKOD/TARIKH DAFTAR</font></b></td>
+                  		<td  align="center"><b><font color="white">TARIKH BORANG E</font></b></td>            
+                  		<td  align="center"><b><font color="white">SENARAI LOT</font></b></td>
+                  		<td  align="center" ><b><font color="white"></font></b></td>
+                                 
+           		 	</tr>
+        
+        
+        #if($SenaraiFail.size()>0)
+
+                    #foreach ( $listN in $SenaraiFail )
+                    #set ($count = $count+1)
+                    #set( $i = $velocityCount )
+                    #if ( ($i % 2) != 1 )
+                    #set( $rowx = "row2" )
+                    #else
+                    #set( $rowx = "row1" )
+                    #end
+                     <tr>
+           	<td class="$rowx" align="center">$!listN.bil</td>
+            <td class="$rowx">
+            <a href="javascript:viewBorangEInBulk('$!listN.ID_BORANGE','$flag_skrin')"><font color="blue">Rekod $!listN.bil - $!listN.TARIKH_MASUK</font></a></td>
+			<td class="$rowx" align="center">$!listN.TARIKH_BORANGE</td>  
+			<td align="center" class="$rowx"><a href="javascript:viewPopupLot('$!listN.ID_BORANGE','$!id_permohonan','papar_lot_borangE')"><font color="blue"><b>$!listN.TOTALHM</b></font></a></td>   
+        	<td align="center" class="$rowx"><input type="button" name="cmdBorangF" value="Kemasukan Maklumat Borang F" onClick="javascript:kemasukanF('$!listN.ID_BORANGE','$!id_permohonan','kemasukan_borangF');">
+            <input type="button" name="cmdHaspusBorangE" value="Hapus Borang E" onClick="javascript:hapusBorangE('$!listN.ID_BORANGE','$!id_permohonan','$flag_skrin');">
+            </td>
+        </tr>
+                      #end
+                      
+                     
+          #else
+          <tr>  
+            <td colspan="8"><font color="red">TIADA REKOD</font></td>    
+          </tr>
+          
+          #end            
+          </table>
+
+      
+      </fieldset>
+      
+      </td>
   </tr>
 </table>
+-->
 
-<script>
-	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$!selectedTab});
-	
-	//PPT-07
-	function setSelected(tabId) {
-		document.${formName}.tabId.value = tabId;	
-	}
-
-
+ 
 #if($refreshHakmilik == "yes")
+<script>
 
-	$jquery(document).ready(function(){
-		refreshSkrinHakmilik('$id_permohonan');
-		
-	});
+		$jquery(document).ready(function()
+		{
+			refreshSkrinHakmilik('$id_permohonan');
+		});
 
+</script>
 #end
 
-	//PPT-07
-	function hapusBorangE(id_borange,id_permohonan,flag_skrin) {	
-		if ( !window.confirm("Adakah Anda Pasti?") ) return;
-		document.${formName}.command.value = "hapusBorangE";
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.SkrinPopupCarianHakmilik_BorangE_F?id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin+"&id_borange="+id_borange;
-		document.${formName}.submit();
-	}
-	
-	function viewPopupLot(id_borange,id_permohonan,flag_skrin){
-		var url = "../${securityToken}/ekptg.view.ppt.SkrinPopupCarianHakmilik?id_borange="+id_borange+"&type=borange&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
-		var hWnd = window.open(url,'Senarai Lot','width=800,height=600, resizable=yes,scrollbars=yes');	
-		if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener = document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-	}	
-	
-	function kemasukanF(id_borange,id_permohonan,flag_skrin){
+<script>
+
+//PPT-07
+function setSelected(tabId) {
+	document.${formName}.tabId.value = tabId;	
+}
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$!selectedTab});
+// PPT-07
+
+
+function hapusBorangE(id_borange,id_permohonan,flag_skrin) {	
+	if ( !window.confirm("Adakah Anda Pasti?") ) return;
+	document.${formName}.command.value = "hapusBorangE";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.SkrinPopupCarianHakmilik_BorangE_F?id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin+"&id_borange="+id_borange;
+	document.${formName}.submit();
+}
+
+function viewPopupLot(id_borange,id_permohonan,flag_skrin){
+	var url = "../${securityToken}/ekptg.view.ppt.SkrinPopupCarianHakmilik?id_borange="+id_borange+"&type=borange&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
+	var hWnd = window.open(url,'Senarai Lot','width=800,height=600, resizable=yes,scrollbars=yes');	
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+
+function kemasukanF(id_borange,id_permohonan,flag_skrin){
 		try {
-			window.opener.maklumatBorangF(id_borange);			
+		window.opener.maklumatBorangF(id_borange);	
+			}
+	catch (err) {}
+   	window.close();	
+    return false;
+}
+
+
+
+
+
+//refreshSkrinHakmilik(id_permohonan,flag_skrin);
+
+function tambahBG(id_hakmilik,flag_skrin)
+{
+	try {
+	window.opener.viewInfoTanah(id_hakmilik);
+	}
+	catch (err) {}
+    window.close();
+    return false;
+}
+
+
+function refreshSkrinHakmilik(id_permohonan,flag_skrin)
+{
+	window.opener.refreshHakmilik(id_permohonan);
+}
+
+function simpanSj(id_permohonan,flag_skrin) {	
+	if ( !window.confirm("Adakah Anda Pasti?") ) return;
+	document.${formName}.command.value = "simpanSj";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.SkrinPopupCarianHakmilik?id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
+	document.${formName}.submit();
+}
+
+function janaSubjaketManual(id_permohonan,flag_skrin){	
+	document.${formName}.command.value = "janaSubjaketManual";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.SkrinPopupCarianHakmilik?id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
+	document.${formName}.submit();
+}
+
+function janaSubjaket(id_permohonan,flag_skrin){
+
+	if ( !window.confirm("Adakah Anda Pasti? Sebarang penambahan hakmilik selepas ini memerlukan subjaket dikesemua hakmilik dijana semula") ) return;
+	document.${formName}.command.value = "janaSubjaket";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.SkrinPopupCarianHakmilik?id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
+	document.${formName}.submit();
+}
+
+if('$tutup_skrin_popup' == "yes")
+{
+	kembaliKeSkrinUtama('$id_permohonan');
+}
+
+
+
+
+function carian() 
+ {	
+	document.${formName}.command.value = "cari";
+	document.${formName}.submit();			
+				
+ }	
+ 
+ function kosongkan() 
+ {
+	document.${formName}.NO_LOT.value = "";	
+	document.${formName}.NO_PB.value = "";
+	document.${formName}.NAMA_PB.value = "";
+	document.${formName}.command.value = "cari";
+	document.${formName}.submit();							
+ }	
+
+
+
+function paparHakmilik(id_hakmilik,id_permohonan,flag_skrin){
+	try {
+		if(flag_skrin=="daftar_sek8")
+		{
+		window.opener.viewHM(id_hakmilik);
 		}
-		catch (err) {}
-	   	window.close();	
-	    return false;
+		else if(flag_skrin=="skrin_hakmilik_sek8")
+		{
+		window.opener.viewHM(id_hakmilik);
+		}
+		else if(flag_skrin=="skrin_list_hakmilik_pb_sek8")
+		{
+		window.opener.viewHM(id_hakmilik);
+		}
+		else if(flag_skrin=="skrin_hakmilik_pb_sek8")
+		{
+		window.opener.viewHM(id_hakmilik);	
+		}
+		else if(flag_skrin=="laporan_tanah_terperinci")
+		{
+		window.opener.viewHM(id_hakmilik);	
+		}
+		/*
+		else if(flag_skrin=="laporan_bangunan")
+		{    
+        var url = "../${securityToken}/ekptg.view.ppt.SkrinPopupBangunan?&id_permohonan="+id_permohonan+"&id_hakmilik="+id_hakmilik+"&flag_skrin="+flag_skrin;
+        var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
+        if ((document.window != null) && (!hWnd.opener))
+           hWnd.opener = document.window;
+        if (hWnd.focus != null) hWnd.focus();
+        hWnd.focus();
+		}
+        */
+		else if(flag_skrin=="laporan_bangunan")
+		{    
+        window.opener.viewHM(id_hakmilik);	
+		}
+
+		
+		
 	}
-	//TAB 1
-	function viewBorangEInBulk(id_borangE,flag_skrin){
-		try {
+	catch (err) {}
+   	window.close();	
+    return false;
+}
+
+
+
+function viewBorangEInBulk(id_borangE,flag_skrin)
+{
+	try {
 			window.opener.viewBorangEInBulk(id_borangE);
-			
-		}catch (err) {}
-	    window.close();
-	    return false;
-	
-	}
-	
-	function carian() {	
-		document.${formName}.command.value = "cari";
-		document.${formName}.submit();			
-						
-	}	
-	 
-	function kosongkan() {
-		document.${formName}.NO_LOT.value = "";	
-		document.${formName}.NO_PB.value = "";
-		document.${formName}.NAMA_PB.value = "";
-		document.${formName}.command.value = "cari";
-		document.${formName}.submit();							
-	
-	}
-	
-	function tambahBG(id_hakmilik,flag_skrin){
-		try {
-		window.opener.viewInfoTanah(id_hakmilik);
-		}
-		catch (err) {}
-	    window.close();
-	    return false;
-	}
-
-	function refreshSkrinHakmilik(id_permohonan,flag_skrin){
-		window.opener.refreshHakmilik(id_permohonan);
-	}
-
-	function simpanSj(id_permohonan,flag_skrin) {	
-		if ( !window.confirm("Adakah Anda Pasti?") ) return;
-		document.${formName}.command.value = "simpanSj";
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.SkrinPopupCarianHakmilik?id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
-		document.${formName}.submit();
-	}
-
-	function janaSubjaketManual(id_permohonan,flag_skrin){	
-		document.${formName}.command.value = "janaSubjaketManual";
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.SkrinPopupCarianHakmilik?id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
-		document.${formName}.submit();
-	}
-
-	function janaSubjaket(id_permohonan,flag_skrin){
-
-		if ( !window.confirm("Adakah Anda Pasti? Sebarang penambahan hakmilik selepas ini memerlukan subjaket dikesemua hakmilik dijana semula") ) return;
-		document.${formName}.command.value = "janaSubjaket";
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.SkrinPopupCarianHakmilik?id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin;
-		document.${formName}.submit();
-	}
-
-	if('$tutup_skrin_popup' == "yes")
-	{
-		kembaliKeSkrinUtama('$id_permohonan');
-	}
-
 		
+	}
+	catch (err) {}
+    window.close();
+    return false;
+}
 
-
-
-	function paparHakmilik(id_hakmilik,id_permohonan,flag_skrin){
-		try {
-			if(flag_skrin=="daftar_sek8")
-			{
-			window.opener.viewHM(id_hakmilik);
-			}
-			else if(flag_skrin=="skrin_hakmilik_sek8")
-			{
-			window.opener.viewHM(id_hakmilik);
-			}
-			else if(flag_skrin=="skrin_list_hakmilik_pb_sek8")
-			{
-			window.opener.viewHM(id_hakmilik);
-			}
-			else if(flag_skrin=="skrin_hakmilik_pb_sek8")
-			{
-			window.opener.viewHM(id_hakmilik);	
-			}
-			else if(flag_skrin=="laporan_tanah_terperinci")
-			{
-			window.opener.viewHM(id_hakmilik);	
-			}
-			/*
-			else if(flag_skrin=="laporan_bangunan")
-			{    
-	        var url = "../${securityToken}/ekptg.view.ppt.SkrinPopupBangunan?&id_permohonan="+id_permohonan+"&id_hakmilik="+id_hakmilik+"&flag_skrin="+flag_skrin;
-	        var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
-	        if ((document.window != null) && (!hWnd.opener))
-	           hWnd.opener = document.window;
-	        if (hWnd.focus != null) hWnd.focus();
-	        hWnd.focus();
-			}
-	        */
-			else if(flag_skrin=="laporan_bangunan")
-			{    
-	        window.opener.viewHM(id_hakmilik);	
-			}			
-			
+function tambahPbPopup(id_hakmilik,flag_skrin)
+{
+	try {
+		if(flag_skrin=="skrin_list_hakmilik_pb_sek8" || flag_skrin=="skrin_hakmilik_pb_sek8")
+		{
+			window.opener.tambahWakil(id_hakmilik);
 		}
-		catch (err) {}
-	   	window.close();	
-	    return false;
 	}
-	
-	function tambahPbPopup(id_hakmilik,flag_skrin){
-		try {
-			if(flag_skrin=="skrin_list_hakmilik_pb_sek8" || flag_skrin=="skrin_hakmilik_pb_sek8")
-			{
-				window.opener.tambahWakil(id_hakmilik);
-			}
-		}
-		catch (err) {}
-	    window.close();
-	    return false;
-	}
+	catch (err) {}
+    window.close();
+    return false;
+}
 
-	function kembaliKeSkrinUtama(id_permohonan) {
-		
-		try {
-			//simpanDisemak(ID_PLA);
-	        window.opener.HandlePopup_from_copy_hakmilik(id_permohonan);		
-	    }
-	    catch (err) {}
-	    window.close();
-	    return false;
-		document.${formName}.cmdKembaliSkrinUtama.value = "Sila Tunggu....";		
-	}
+
+
+function kembaliKeSkrinUtama(id_permohonan) {
 	
+	try {
+		//simpanDisemak(ID_PLA);
+        window.opener.HandlePopup_from_copy_hakmilik(id_permohonan);		
+    }
+    catch (err) {}
+    window.close();
+    return false;
+	document.${formName}.cmdKembaliSkrinUtama.value = "Sila Tunggu....";		
+}
+
+
 </script>
+
+
+

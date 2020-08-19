@@ -82,9 +82,12 @@
       <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
     #end
     #end
+    #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+    <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+    #end
     </td>
   </tr>
-</table>
+</table>  
 <script>
 function calcDate(){
 	if (document.${formName}.txtTarikhHantar.value != "" && document.${formName}.txtJangkaMasa.value != ""){

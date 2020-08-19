@@ -13,7 +13,7 @@
               <td width="10%" valign="top">&nbsp;</td>
               <td width="20%">Nama Pegawai</td>
               <td width="1%">:&nbsp;</td>
-              <td width="69%">$nama_peg_pengendali</td>
+              <td width="69%">$!nama_peg_pengendali</td>
             </tr>
             
             <tr>

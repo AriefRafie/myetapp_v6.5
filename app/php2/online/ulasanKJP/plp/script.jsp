@@ -31,33 +31,6 @@ function simpanUlasan(){
 	}
 	doDivAjaxCall$formname('divUlasan','simpanUlasan','');
 }
-function simpanKemaskiniKewangan(){
-
-	if(document.${formName}.txtTarikhTerima.value == ""){
-		alert('Sila masukkan Tarikh Terima');
-  		document.${formName}.txtTarikhTerima.focus(); 
-		return; 
-	}
-	if(document.${formName}.socKeputusan.value == ""){
-		alert('Sila masukkan Keputusan');
-  		document.${formName}.socKeputusan.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtUlasan.value == ""){
-		alert('Sila masukkan Ulasan');
-  		document.${formName}.txtUlasan.focus(); 
-		return; 
-	}
-	
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		document.${formName}.mode.value = "update";
-		return;
-	}
-	
-	document.${formName}.mode.value = "view";
-	document.${formName}.hitButton.value = "simpanKemaskiniMinitKewangan";
-	document.${formName}.submit();
-}
 function hantarUlasan(){	
 
 	if(document.${formName}.txtTarikhSurat.value == ""){
