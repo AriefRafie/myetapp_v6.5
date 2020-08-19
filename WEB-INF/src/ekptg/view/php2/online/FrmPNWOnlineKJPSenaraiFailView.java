@@ -177,8 +177,8 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		this.context.put("errorPeganganHakmilik", "");
 
 		Hashtable hUser = getIUser().getPengguna(userId);
-		//userRole = logic.getUserRole(userId);
-//		userJawatan = logic.getUserJawatan(userId);
+		userRole = logic.getUserRole(userId);
+		userJawatan = logic.getUserJawatan(userId);
 		userJawatan = String.valueOf(hUser.get("idJawatan"));
 		idJawatan = userJawatan;
 		idKementerian =  String.valueOf(hUser.get("idKementerian"));
