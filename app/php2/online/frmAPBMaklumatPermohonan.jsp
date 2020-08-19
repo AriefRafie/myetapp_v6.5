@@ -791,7 +791,7 @@ function setTable(id){
 }
 //Copy dari Sewa
 function cetakBorangPermohonan(idPermohonan) {
-	var url = "../servlet/ekptg.report.php2.online.PYWBorangPermohonan?ID_PERMOHONAN="+idPermohonan;
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBPengesahanPermohonanOnline&folder=ONLINE&ID_PERMOHONAN="+idPermohonan;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -799,14 +799,14 @@ function cetakBorangPermohonan(idPermohonan) {
 	hWnd.focus();
 }
 //YG ASAL
-function cetakPengesahanPermohonan(idPermohonan) {
-	var url = "../servlet/ekptg.report.php2.online.APBPengesahanPermohonanOnline?ID_PERMOHONAN="+idPermohonan;
-    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
-}
+	function cetakPengesahanPermohonan(idPermohonan) {
+		var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBPengesahanPermohonanOnline&folder=ONLINE&ID_PERMOHONAN="+idPermohonan;
+	    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	}
 </script>
 
 <script>
