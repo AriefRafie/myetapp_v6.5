@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -4899,7 +4896,7 @@ if(document.f1.socTarafKepentinganPenting.value == '6')
 
 }
 
-if(document.f1.socTarafKepentinganPenting.value == '30')
+if(document.f1.socTarafKepentinganPenting.value == '20')
 {
 	
 		
@@ -5606,7 +5603,7 @@ if(document.f1.socTarafKepentinganPentingU.value == '6')
 
 }
 
-if(document.f1.socTarafKepentinganPentingU.value == '30')
+if(document.f1.socTarafKepentinganPentingU.value == '20')
 {
 
         if(document.f1.read_mode.value != "disabled")
@@ -6122,7 +6119,7 @@ function pilih_amanah()
 
 
 
-if((document.f1.socTarafKepentinganPenting.value == "6" || document.f1.socTarafKepentinganPenting.value == "16" || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "17" || document.f1.socTarafKepentinganPenting.value == "21") || document.f1.socTarafKepentinganPenting.value == "30" && document.f1.txtNamaOBPenting!= null){
+if((document.f1.socTarafKepentinganPenting.value == "6" || document.f1.socTarafKepentinganPenting.value == "16" || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "17" || document.f1.socTarafKepentinganPenting.value == "21") || document.f1.socTarafKepentinganPenting.value == "20" && document.f1.txtNamaOBPenting!= null){
 	
 							document.f1.socNegeriPenting.value = '';
 					 		document.f1.socNegeriPenting_D.value = '';
@@ -6182,13 +6179,13 @@ if(document.f1.socTarafKepentinganPenting.value == '16')
 {
 document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
 }
-if(document.f1.socTarafKepentinganPenting.value == '30')
+if(document.f1.socTarafKepentinganPenting.value == '20')
 {
 document.f1.jenis_pej.value = document.f1.jenis_pej5.value;
 }
 
 
-if(document.f1.jenis_pej.value != "" && document.f1.read_mode.value != "disabled" && document.f1.txtNamaOBPenting != null && (document.f1.socTarafKepentinganPenting.value == "6"  || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "16"  || document.f1.socTarafKepentinganPenting.value == "30") )
+if(document.f1.jenis_pej.value != "" && document.f1.read_mode.value != "disabled" && document.f1.txtNamaOBPenting != null && (document.f1.socTarafKepentinganPenting.value == "6"  || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "16"  || document.f1.socTarafKepentinganPenting.value == "20") )
 {
 //alert("alamat_raya 1")
 if('$!skrin_online_popup' == "yes")
@@ -6224,13 +6221,13 @@ if(document.f1.socTarafKepentinganPenting.value == '16')
 document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
 } 
 
-if(document.f1.socTarafKepentinganPenting.value == '30')
+if(document.f1.socTarafKepentinganPenting.value == '20')
 {
 document.f1.jenis_pej.value = document.f1.jenis_pej5.value;
 }
 
 
-if(document.f1.jenis_pej.value != "" && document.f1.read_mode.value != "disabled"  && document.f1.txtNamaOBPentingU != null && (document.f1.socTarafKepentinganPentingU.value == "6" || document.f1.socTarafKepentinganPentingU.value == "8" || document.f1.socTarafKepentinganPentingU.value == "16" || document.f1.socTarafKepentinganPentingU.value == "30") )
+if(document.f1.jenis_pej.value != "" && document.f1.read_mode.value != "disabled"  && document.f1.txtNamaOBPentingU != null && (document.f1.socTarafKepentinganPentingU.value == "6" || document.f1.socTarafKepentinganPentingU.value == "8" || document.f1.socTarafKepentinganPentingU.value == "16" || document.f1.socTarafKepentinganPentingU.value == "20") )
 {
 	alert("document.f1.socTarafKepentinganPentingU.value = "+document.f1.socTarafKepentinganPentingU.value);
 if('$!skrin_online_popup' == "yes")
