@@ -296,6 +296,15 @@ public class FrmDashboard extends AjaxBasedModule {
 		vm=  "app/ppk/showNotifikasi_BU.jsp";
 		}
 		
+		else if(command.equals("showNotifikasi_PengesahanNilaian"))
+		{
+			myLogger.info("USER_UNIT :"+USER_UNIT);	
+			myLogger.info("userId :"+userId);	
+			myLogger.info("USER_NEGERI :"+USER_NEGERI);
+		context.put("check_notifikasi_PengesahanNilaian", notifikasi_PengesahanNilaian(portal_role,userId,USER_NEGERI));
+		vm=  "app/ppk/showNotifikasi_PengesahanNilaian.jsp";
+		}
+		
 		else if(command.equals("showNotifikasi_Aduan"))
 		{
 		context.put("check_notifikasi_aduan", notifikasi_Aduan(role, user_negeri_login, "", "", userId, "NO"));
@@ -1836,6 +1845,45 @@ public String getNegeriServer(String user_id) throws Exception {
 
 
 			}
+			return jumlah_notifikasi;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Integer notifikasi_PengesahanNilaian(String USER_ROLE,String USER_UNIT,String USER_NEGERI) throws Exception {
+
+		Db db = null;
+		String sql = "";
+		String sqlOLD = "";
+		Integer jumlah_notifikasi = 0;
+		
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			myLogger.info("USER_NEGERI ::::::::::;: "+USER_NEGERI);
+			
+			
+			sql = " SELECT COUNT (*) AS JUMLAH_PN FROM TBLPPKPERMOHONAN WHERE PENGESAHAN_NILAIANHARTA = '"+userId+"' AND FLAG_PENGESAHANNILAIANHARTA IS NULL";
+				myLogger.info("notifikasi_PengesahanNilaian : "+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h = null;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				
+				if(rs.getString("JUMLAH_PN") != null)
+				{
+					jumlah_notifikasi = rs.getInt("JUMLAH_PN");
+				}
+				
+
+
+			}
+			myLogger.info("count PengesahanNilaian : "+jumlah_notifikasi);
 			return jumlah_notifikasi;
 		} finally {
 			if (db != null)
