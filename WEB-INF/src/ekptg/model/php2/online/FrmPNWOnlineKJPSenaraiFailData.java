@@ -458,7 +458,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
-
+	//SHIQA daftarBaru
 	public String daftarBaru(String idJenisTanah, String tarikhTerima, String tarikhSurat, String noRujukanSurat,
 			String idKategori, String idKementerian, String idAgensi, String idLuasKegunaan, String txtTujuanKegunaan,
 			String idHakmilikAgensi, String idPPTBorangK, String idHakmilikUrusan, String idPHPBorangK,
