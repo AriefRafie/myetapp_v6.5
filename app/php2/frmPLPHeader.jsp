@@ -8,7 +8,11 @@
         <tr>
           <td width="36%" align="right">No Fail</td>
           <td width="1%">:</td>
-          <td width="63%"><font color="blue">$beanHeader.noFail</font></td>
+          <td width="63%">
+          	<font color="blue">$beanHeader.noFail</font>
+          	&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" name="cmdLogTugasan" id="cmdLogTugasan" value="LOG TUGASAN FAIL" onclick="paparLogTugasan('$idFail')"/>
+          </td>
         </tr>
         <tr>
           <td width="36%" align="right">Urusan</td>
@@ -123,15 +127,23 @@
 </table>
 #end 
 
-<!--<script>
-function arkibWindow(noFail){
+<script>
+function paparLogTugasan(idFail) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmPYWPopupLogTugasanView?idFail="+idFail;
+    var hWnd = window.open(url,'printuser','width=1000,height=400, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+}
+
+/* function arkibWindow(noFail){
 		var url = "../x/${securityToken}/ekptg.view.integrasi.sid.FrmPopupPaparArkibDokumen?kodModul=PHP&noFail="+noFail;
-		
 		var hWnd = window.open(url,"printuser","scrollbars=1,width=800,height=700");
 		 if ((document.window != null) && (!hWnd.opener))
 		       hWnd.opener = document.window;
 		    if (hWnd.focus != null) hWnd.focus();
 			hWnd.focus();
 			
-	}
-</script>-->
+} */
+</script>
