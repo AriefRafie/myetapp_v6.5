@@ -151,8 +151,13 @@
       </tr>      
       <tr>
         <td>  
-      
         <a href="javascript:cetakRingkasan('$!jenisTempoh')" class="style2" ><font color="blue">Laporan Ringkasan Projek
+ </font></a></td>
+      </tr> 
+      <!-- PPT-51 TAMBAH RINGKASAN LAPORAN BORANG A -->
+      <tr>
+        <td>  
+        <a href="javascript:cetakRingkasanBorangA('$!jenisTempoh')" class="style2" ><font color="blue">Ringkasan Lampiran A
  </font></a></td>
       </tr>       
       
@@ -609,5 +614,121 @@ function setTable(id){
 	}
 }
 
+function cetakRingkasanBorangA(jenisTempoh){
 
+	if(document.${formName}.socPejabat.value == ""){
+	   	alert("Sila pilih \"Pejabat JKPTG\" terlebih dahulu.");
+		document.${formName}.socPejabat.focus();
+		return;
+	//Sehingga	
+	}else if((jenisTempoh=="sehingga" || jenisTempoh=="julat") && document.${formName}.socBulan.value == ""){
+		alert("Sila pilih \"Bulan\" terlebih dahulu.");
+		document.${formName}.socBulan.focus();
+		return;
+
+	}else if((jenisTempoh=="sehingga" || jenisTempoh=="julat") && document.${formName}.socTahun.value == ""){
+		alert("Sila pilih \"Tahun\" terlebih dahulu.");
+		document.${formName}.socTahun.focus();
+		return;
+	//julat	
+	}else if(jenisTempoh=="julat" && document.${formName}.socBulanSehingga.value == ""){
+		alert("Sila pilih \"Bulan\" terlebih dahulu.");
+		document.${formName}.socBulanSehingga.focus();
+		return;
+
+	}else if(jenisTempoh=="julat" && document.${formName}.socTahunSehingga.value == ""){
+		alert("Sila pilih \"Tahun\" terlebih dahulu.");
+		document.${formName}.socTahunSehingga.focus();
+		return;
+
+	}else{		
+
+		var bulanSE = "00";
+		var bulanSE2 = "00";
+		var tahunSE = "";
+		var bulantahunSE = "";
+		var type = "";
+		if(jenisTempoh=="julat"){
+			bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+			bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
+			tahunSE = document.${formName}.socTahunSehingga.value;
+			bulantahunSE = bulanSE+"/"+tahunSE
+			type = "2";
+			
+		}else if(jenisTempoh=="sehingga"){
+			type = "1";
+		}else{
+			type = "3";
+		}
+	
+		var id_pejabat = document.${formName}.id_pejabat.value;
+		var id_daerah = document.${formName}.id_daerah.value;
+		var bulan = document.${formName}.bulan.value;
+		var tahun = document.${formName}.tahun.value;
+		var projek = document.${formName}.projek.value;
+		var no_fail = document.${formName}.no_fail.value;
+	
+		//alert("JGCGHSCGHVDH :"+projek.trim());		
+		if(projek!=""){
+			projek = document.${formName}.projek.value;
+		}else{		
+			//projek = "NONE";	
+			projek = "";	
+		}	
+		
+		if(no_fail!=""){
+			no_fail = document.${formName}.no_fail.value;
+		}else{		
+			//projek = "NONE";	
+			no_fail = "";	
+		}	
+		// kemaskini oleh Mohamd Rosli pada 25/07/2013
+		var template = "Ringkasan_Laporan_All";	
+		//alert(template);
+		if(id_daerah != '000')
+			template = "LaporanBulananPengambilanTanahMengikutProjekDaerah";
+		else	
+			template = "LaporanBulananPengambilanTanahMengikutProjekNegeri";
+
+		if(type != '1' && type != '3'){
+			template += "Selang";
+			if(bulanSE2 =='00')
+				bulanSE2 = bulan;
+			if(tahunSE == '')
+				tahunSE = tahun;
+		}
+		else if(type == '3'){
+			
+			var d = new Date();
+			var n = d.getFullYear();
+			var m = d.getMonth() + 1 
+			
+			var tahun = '';
+			
+			if(tahun == '')
+				tahun = n;
+			
+			if(tahunSE == '')
+				tahunSE = n;
+			
+			if(bulanSE == '' || '00')
+				bulanSE = m;
+			
+			//alert(bulanSE);
+			//alert(tahunSE);
+			
+		}
+		//alert(jenisTempoh);
+		//alert(template);
+		var bulantahun = bulan+"/"+tahun;			
+		var item = "template="+template+"&ID_PEJABAT="+id_pejabat+"&BULANSE="+bulanSE2+"&TAHUNSE="+tahunSE+"&BULAN="+bulan+"&type="+type+"&TAHUN="+tahun+"&bulantahun='"+bulantahun+"'&ID_DAERAH="+id_daerah+"&jenisTempoh='"+jenisTempoh+"'&bulantahunSE='"+bulantahunSE+"'"+"&projek="+projek+"&no_fail="+no_fail+"";				
+		var url = "../servlet/ekptg.report.ppt.RingkasanLampiranA?"+item 
+		var hWnd = window.open(url,'Cetak','full=yes, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	    
+	}
+
+}
 </script>

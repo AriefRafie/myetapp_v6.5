@@ -1422,7 +1422,56 @@ public class PendaftaranCheckModel {
 		return alamat_raya;
 		
 	}
-
+	
+	public Vector<Hashtable<String,String>> getPejabat(String idPejabat) throws Exception {
+		Db db = null;
+		alamat_raya.clear();
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			sql = "SELECT PEJ.ID_PEJABAT,PEJ.NAMA_PEJABAT, PEJ.ALAMAT1, PEJ.ALAMAT2, PEJ.ALAMAT3 "
+					+ ",PEJ.POSKOD, PEJ.ID_BANDAR, PEJ.ID_NEGERI, PEJ.NO_TEL, PEJ.NO_FAX,PEJ.EMEL "
+					+ ",NEG.NAMA_NEGERI, NEG.KOD_NEGERI"
+					+ ",BAN.KOD_BANDAR, BAN.KETERANGAN AS NAMA_BANDAR "
+					+ "FROM TBLRUJPEJABAT PEJ, TBLRUJNEGERI NEG,TBLRUJBANDAR BAN "
+					+ "WHERE PEJ.ID_JENISPEJABAT IN ('9','61','62','141782') "
+					+ "AND PEJ.ID_NEGERI = NEG.ID_NEGERI(+) "
+					+ "AND PEJ.ID_BANDAR = BAN.ID_BANDAR(+) "
+					+ "AND ID_PEJABAT = '" + idPejabat + "'";
+			myLogger.info("SQL="+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while (rs.next()) {
+				Hashtable<String,String> h = new Hashtable<String,String>();
+				h.put("nama_pejabat", rs.getString("NAMA_PEJABAT") == null ? "": rs.getString("NAMA_PEJABAT"));
+				h.put("id_Pejabat", rs.getString("ID_PEJABAT") == null ? "": rs.getString("ID_PEJABAT"));
+				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs.getString("ALAMAT1"));
+				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs.getString("ALAMAT2"));
+				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs.getString("ALAMAT3"));
+				h.put("poskod", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD"));
+				h.put("no_tel", rs.getString("NO_TEL") == null ? "" : rs.getString("NO_TEL"));
+				h.put("no_fax", rs.getString("NO_FAX") == null ? "" : rs.getString("NO_FAX"));
+				h.put("nama_negeri", rs.getString("NAMA_NEGERI") == null ? "": rs.getString("NAMA_NEGERI"));
+				h.put("id_negeri", rs.getString("id_Negeri") == null ? "" : rs.getString("id_Negeri"));
+				h.put("kod_negeri", rs.getString("KOD_NEGERI") == null ? "": rs.getString("KOD_NEGERI"));
+				h.put("nama_bandar", rs.getString("NAMA_BANDAR") == null ? "": rs.getString("NAMA_BANDAR"));
+				h.put("id_bandar", rs.getString("ID_BANDAR") == null ? "" : rs.getString("ID_BANDAR"));
+				h.put("kod_bandar", rs.getString("KOD_BANDAR") == null ? "": rs.getString("KOD_BANDAR"));
+				h.put("emel", rs.getString("EMEL") == null ? "": rs.getString("EMEL"));
+				alamat_raya.addElement(h);
+				
+			}
+		} catch (DbException e) {
+			e.printStackTrace();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return alamat_raya;
+		
+	}
+	
 	static Vector MT1 = null;
 
 	public static Vector List_KP_Baru_Simati2(String idp, String kpbaru,

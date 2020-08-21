@@ -206,6 +206,18 @@ input[readonly]{
               <td width="20%">No Kad Pengenalan</td>
                <td width="1%" valign="top">:&nbsp;</td>
               <td width="78%">&nbsp;<b> $!userlogin </b><input name="noKP" type="hidden" maxlength="12" id="noKP" value="$!userlogin" ></td>
+ <!--               <tr>
+              <td valign="center"><font color="red">*</font></td>
+              <td  valign="center">Id</td>
+               <td valign="center">:&nbsp;</td>
+              <td valign="center">&nbsp; <input type="text" name="certID" id="certID" value="$!certID"/></td>
+            </tr> 
+                <tr>
+              <td valign="center"><font color="red">*</font></td>
+              <td  valign="center">Pin</td>
+               <td valign="center">:&nbsp;</td>
+              <td valign="center">&nbsp; <input type="password" name="pin" id="pin" size="10"/></td>
+            </tr>-->
               </table>
 			</fieldset>	
 			
