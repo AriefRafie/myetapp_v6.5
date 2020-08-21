@@ -966,9 +966,9 @@ function kembaliKeSkrinUtama(id_permohonan) {
 
 // PPT-11 Cetak Surat Pelupusan Hakmilik
 function cetakSuratPelupusanHakmilik(id_hakmilik, id_fail, id_permohonan, bilLot) {
-	alert(document.querySelectorAll('input[type="checkbox"]:checked').length);
 	var bilLot = document.querySelectorAll('input[type="checkbox"]:checked').length;
 	// var count = document.querySelectorAll('input[type="checkbox"]:checked').length;
+	// alert(document.querySelectorAll('input[type="checkbox"]:checked').length);
 	
 	var checkSelected = false;
 	if(document.${formName}.cbsemaks.length > 1){

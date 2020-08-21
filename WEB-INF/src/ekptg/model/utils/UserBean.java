@@ -34,6 +34,7 @@ public class UserBean implements IUserPegawai {
 		String sql = "";
 		
 		
+		
 		try {
 			db = new Db();
 			stmt = db.getStatement();	

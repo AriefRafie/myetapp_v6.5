@@ -1,4 +1,4 @@
-
+<!-- 21/08/2020 by nizam -->
     
 <script type="text/javascript" src="../library/online/prototype.js"></script>
 <script type="text/javascript" src="../library/online/scriptaculous/scriptaculous.js"></script>
@@ -7,7 +7,7 @@
     <script src="../RGraph/libraries/RGraph.common.dynamic.js" ></script>
     <script src="../RGraph/libraries/RGraph.common.tooltips.js" ></script>
     <script src="../RGraph/libraries/RGraph.common.effects.js" ></script>
-    <script src="../RGraph/libraries/RGraph.hbar.js" ></script>
+    <script src="../RGraph/libraries/RGraph.hbar.js" ></script>     
     <script src="../RGraph/libraries/RGraph.pie.js" ></script>   
 
 <!--
@@ -202,6 +202,16 @@ bagi modul yang ada tugas spesifik untuk penguna yang login
 <a href="javascript:cetakSlipPendengaran('','')" class="help" title="Cetak Slip Pendengaran">
 							<font color="blue"><li>&nbsp;Cetak Slip Pendengaran</li></font>						
 						</a>
+</td>
+</tr>
+
+<tr>
+<td id="showCountPengesahanNilaian" >
+<script>
+$jquery(document).ready(function () {
+	doDivAjaxCall$formname('showCountPengesahanNilaian','showNotifikasi_PengesahanNilaian','');					
+});
+</script>
 </td>
 </tr>
 <!-- 
@@ -853,7 +863,7 @@ $jquery(document).ready(function () {
 <input type="hidden" id="idsimati" name="idsimati" value="">
 <input type="hidden" id="id_Simati" name="id_Simati" value="">
 <input type="hidden" id="idSimati" name="idSimati" value="">
-
+<input type="hidden" id="commandPN" name="commandPN" value="">
 
 
 
@@ -1285,6 +1295,12 @@ function gotoOT() {
 
 function gotoBU() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.PermohonanBantuUnit";
+	document.${formName}.submit();
+}
+
+function gotoPN() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=FrmPrmhnnSek8Internal";
+	document.${formName}.commandPN.value = "cariPN";
 	document.${formName}.submit();
 }
 

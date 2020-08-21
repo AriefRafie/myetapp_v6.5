@@ -35,6 +35,8 @@ public class FrmSemakan {
 	public static Vector<Tblsemakan> getSemakan(String idSemakan,String semakan) throws Exception {
 		Vector<Tblsemakan> list = new Vector<Tblsemakan>();
 		    
+		
+		
 		try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
@@ -159,17 +161,23 @@ public class FrmSemakan {
 		    	  h.put("jenisDokumen", jenis);
 		    	  
 		    	  if(jenis.equals("99201")) {
-		    		  lampiran = lb.getLampiranSimatiPapari(idSimati,jenis);
+		    		  lampiran = lb.getLampiranSimatiPaparSimati(idSimati,jenis);
 			    	  h.put("lampirans", lampiran);
 		    	  
 		    	  }else if(jenis.equals("99202")){
-		    		  lampiran = lb.getLampiranSimatiPapari(idSimati,jenis);
+		    		  lampiran = lb.getLampiranSimatiPaparSimati(idSimati,jenis);
+		    		  h.put("lampirans", lampiran);
+		    	  
+		    	  }else if(jenis.equals("99211")){
+		    		  lampiran = lb.getLampiranSimatiPaparSimati(idSimati,jenis);
 		    		  h.put("lampirans", lampiran);
 		    	  
 		    	  }else if(jenis.equals("99204")){
 		    		  lampiran = lb.getLampirans(idSimati,"paparLampiran");
 		    		  h.put("lampirans", lampiran);
-
+		    	  }
+		    	  else {
+		    		  h.put("lampirans", "");
 		    	  }
 		    	  //myLog.info("getSenaraiSemakanByIDAttach:jenis="+jenis+","+lampiran);
 

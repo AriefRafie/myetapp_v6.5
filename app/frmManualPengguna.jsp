@@ -35,7 +35,7 @@
 					</tr>
 					<tr>	
 						<td>&nbsp;</td>
-						<td> <a href="javascript:openManualPHP('UserManualJKPTGOnlinePHP')" class=style1><b>Panduan Permohonan Secara Online - APB</b></a>	
+						<td> <a href="javascript:openManualPHP('UserManualJKPTGOnlinePHP')" class=style1><b>Panduan Permohonan Secara Online - PHP</b></a>	
 						</td>
 					</tr>
 					<!-- <tr>	

@@ -2429,6 +2429,69 @@ public class PendaftaranCheck implements IServlet2 {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+		}else if ("getPejabat".equals(submit)) {
+			PendaftaranCheckModel userdata = PendaftaranCheckModel.getInstance();
+			Vector<Hashtable<String,String>> alamat_raya = new Vector<Hashtable<String,String>>();
+			try {
+				if (!jenis_pej.equals("")) {
+					alamat_raya = userdata.getPejabat(jenis_pej);
+					Hashtable<String,String> k = (Hashtable<String,String>) alamat_raya.get(0);
+					out.println("" + "  <script type='text/javascript'> "
+									//+ " alert('getPejabat'); "
+									+ "document.f1.txtPoskod[1].value = '"
+									+ k.get("poskod").toString()
+									+ "';"
+									+ " document.f1.txtNamaPemohon[1].value = '"
+									+ k.get("nama_pejabat").toString()
+									+ "';"
+									+ " document.f1.socNegeri_dis.value = '"
+									+ k.get("nama_negeri").toString()
+									+ "'; "
+									+ " document.f1.socBandar_dis.value = '"
+									+ k.get("nama_bandar").toString()
+									+ "'; "
+									+ " document.f1.socBandar[1].value = '"
+									+ k.get("id_bandar").toString()
+									+ "'; "
+									+ " document.f1.socNegeri[1].value = '"
+									+ k.get("id_negeri").toString()
+									+ "'; "
+									+ " document.f1.no_tel[1].value = '"
+									+ k.get("no_tel").toString()
+									+ "'; "
+									+ " document.f1.txtAlamat3[1].value = '"
+									+ removeSymbol(k.get("alamat3").toString())
+									+ "'; "
+									+ " document.f1.txtAlamat2[1].value = '"
+									+ removeSymbol(k.get("alamat2").toString())
+									+ "'; "
+									+ " document.f1.txtAlamat1[1].value = '"
+									+ removeSymbol(k.get("alamat1").toString())
+									+ "'; "
+									+ " document.f1.txtEmelPemohon[1].value = '"
+									+ k.get("emel").toString()
+									+ "'; "
+									+" document.f1.txtNamaPemohon[0].disabled = 'disabled';"
+									+ " document.f1.txtAlamat1[0].disabled = 'disabled';"
+									+ " document.f1.txtAlamat2[0].disabled = 'disabled'; "
+									+ " document.f1.txtAlamat3[0].disabled = 'disabled'; "
+									+ " document.f1.txtPoskod[0].disabled = 'disabled'; "
+									+ " document.f1.no_tel[0].disabled = 'disabled'; "
+									+ " document.f1.socNegeri[0].disabled = 'disabled'; "
+									+ " document.f1.socBandar[0].disabled = 'disabled'; "
+									+
+
+									"</script> ");
+					// }
+
+				} else {
+					out.println("");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 
 	}

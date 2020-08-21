@@ -31,6 +31,7 @@ import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
 public class OnlineBean implements IOnline {
+	
 	//private HakmilikInterface hakmilikInterface = null;
  	private IHtp iHTP = null;  
 	private static final String KOD_JABATAN ="JKPTG";
