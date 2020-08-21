@@ -211,7 +211,7 @@
 
 <script> 
 	$jquery(document).ready(function () {
-		//alert("x");	
+		//alert("view_turuthadir");	
 	doDivAjaxCall$formname('view_turuthadir','show_turuthadir','ID_PERBICARAAN=$ID_PERBICARAAN&ID_PERMOHONAN=$ID_PERMOHONAN&scrolPosition='+getPageLocation());			 	  
 	});
 </script>
@@ -231,7 +231,7 @@
 
   <script> 
 	$jquery(document).ready(function () {
-		//alert("x3");	
+		//alert("view_saksi");	
 	doDivAjaxCall$formname('view_saksi','show_saksi','ID_PERBICARAAN=$ID_PERBICARAAN&ID_PERMOHONAN=$ID_PERMOHONAN&scrolPosition='+getPageLocation());			 	  
 	});
 </script>
@@ -242,7 +242,7 @@
 <!-- arief add Saksi CLOSE-->
 
 <!-- arief add Tidak Hadir OPEN-->
-<!--<tr  >
+<!----><tr  >
 <td >
 </td>
 <td >
@@ -252,14 +252,14 @@
 
   <script> 
 	$jquery(document).ready(function () {
-		//alert("x1");	
+		//alert("view_tidakhadir");	
 	doDivAjaxCall$formname('view_tidakhadir','show_tidakhadir','ID_PERBICARAAN=$ID_PERBICARAAN&ID_PERMOHONAN=$ID_PERMOHONAN&scrolPosition='+getPageLocation());			 	  
 	});
 </script>
 </div>
 </fieldset>
 </td>
-</tr>-->
+</tr>
 <!-- arief add Tidak Hadir CLOSE-->
 
 </table>
