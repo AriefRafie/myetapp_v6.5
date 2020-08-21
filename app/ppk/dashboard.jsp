@@ -15,7 +15,7 @@
 	<tr>
 		<td width="1%">
 		
-		</td>
+		</td> 
 		<td><blink ><FONT color="RED" size="+1"><b>SILA ABAIKAN SKRIN INI, SKRIN INI DIDALAM PROSES PEMBANGUNAN DAN PENGUJIAN, TERIMA KASIH!</b></FONT></blink></td>
 	</tr>
 	

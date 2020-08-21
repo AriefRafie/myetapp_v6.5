@@ -1,9 +1,9 @@
 
 <style type="text/css">
 <!--
-.style1 {color: #0033FF}
+.style1 {color: #0033FF} 
 -->
-</style>
+</style> 
 
 
 <form name="f1" method="post">
