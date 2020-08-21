@@ -7,6 +7,7 @@ import java.util.Vector;
 
 public interface IUserPegawai {
 
+	
 	// class IUserPegawai
 	// test 13/8/2020
 

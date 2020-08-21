@@ -14,6 +14,7 @@ public interface IOnline {
 	// class IOnline
 	// test 13/8/2020
 
+	
 	public HtpPermohonan simpanPermohonan(HtpPermohonan htpPermohonan)throws Exception;
 	public HtpPermohonan simpanPermohonanOnline(HtpPermohonan htpPermohonan)throws Exception;
 	public HtpPermohonan kemaskiniPermohonan(HtpPermohonan htpPermohonan,String ipPermohonan,String idHtpPermohonan)throws Exception;

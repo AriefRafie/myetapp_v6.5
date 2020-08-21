@@ -69,6 +69,7 @@ import ekptg.model.entities.Users;
 import ekptg.model.ppk.PPKUtilHTML;
 
 public class HTML {
+	
 	static Logger myLogger = Logger.getLogger(HTML.class);
 
 	public static String SelectNegeri(String selectName) throws Exception {
