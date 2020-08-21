@@ -7,6 +7,7 @@ import ekptg.model.entities.Tblrujsuburusanstatusfail;
 
 public interface IStatus {
 	
+	
 	public void hapusSubUrusanStatusPermohonan(Tblrujsuburusanstatusfail rsus) throws Exception;
 	public void kemaskiniStatus(Tblrujsuburusanstatusfail s) throws Exception;
 //	public void kemaskiniStatusPermohonan(String idPermohonan, String suburusan, String langkah,String userId) 
