@@ -35,6 +35,8 @@ public class FrmSemakan {
 	public static Vector<Tblsemakan> getSemakan(String idSemakan,String semakan) throws Exception {
 		Vector<Tblsemakan> list = new Vector<Tblsemakan>();
 		    
+		
+		
 		try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();

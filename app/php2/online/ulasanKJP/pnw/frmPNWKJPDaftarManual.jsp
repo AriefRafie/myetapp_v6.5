@@ -226,12 +226,6 @@
           <td width="1%">&nbsp;</td>
           <td valign="top">Urusan</td>
           <td>:</td>
-          <td>PELEPASAN / PENYERAHANBALIK</td>
-        </tr>
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td valign="top">Suburusan</td>
-          <td>:</td>
           <td>PENAWARAN</td>
         </tr>
         <tr>
