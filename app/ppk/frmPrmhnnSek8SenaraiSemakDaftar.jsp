@@ -5,7 +5,7 @@
 <!--
 .style2 {color: #FF0000}
 .style3 {font-size: 9px}
-.style5 {font-style: italic}
+.style5 {font-style: italic} 
 .style6 {color: #0000FF}
 -->
 </style> 
