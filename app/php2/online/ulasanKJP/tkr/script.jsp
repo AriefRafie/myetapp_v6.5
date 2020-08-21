@@ -150,13 +150,13 @@ function daftarBaru() {
 		alert('Sila pilih Agensi.');
 		document.${formName}.socAgensi.focus();
 		return;
-	}
+	}/*
 	if(document.${formName}.idHakmilikAgensi.value == "" && document.${formName}.idHakmilikSementara.value == ""){
 		alert(document.${formName}.idHakmilikAgensi.value);
 		alert(document.${formName}.idHakmilikSementara.value);
 		alert('Sila pilih Pegangan Hakmilik.');
 		return;
-	}
+	} */
 	if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila masukkan Luas Kegunaan.');
   		document.${formName}.socLuasKegunaan.focus();
@@ -189,6 +189,7 @@ function doChangeJenisTanah() {
 	doAjaxCall${formName}("doChangeJenisTanah");
 }
 function doChangePeganganHakmilik() {
+	document.${formName}.submit2.value = "doChangePeganganHakmilik";
 	doAjaxCall${formName}("doChangePeganganHakmilik");
 }
 function doChangeKategori() {
@@ -271,6 +272,7 @@ function kembali() {
 	document.${formName}.submit();
 }
 function seterusnya(){
+	alert('masuk sini ros');
 	//alert('BACA SETERUSNYAAA'+document.${formName}.idFail.value+' idHakmilik agensi '+document.${formName}.idHakmilikAgensi.value);
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
@@ -287,7 +289,7 @@ function doBacklist() {
 function doKemaskini() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 	document.${formName}.submit();
