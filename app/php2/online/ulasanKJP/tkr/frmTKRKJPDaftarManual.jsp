@@ -9,11 +9,11 @@
 
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
- 
+
   <input name="command" type="hidden" id="command" value="$command"/>
   <!-- <input name="submit" type="hidden" id="command" value="$command"/> -->
  <input name="submit2" type="hidden" id="submit2" />
-  
+
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
@@ -102,10 +102,106 @@
         </tr>
         #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
         <tr>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td width="28%">Hakmilik</td>
+          <td width="1%">:</td>
+          <td width="70%">
+          #if ($mode == 'new')
+            <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();">
+          #else
+            <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
+          #end
+            <input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi">
+            <span class="style1">$errorPeganganHakmilik</span>
+            <span class="style4"><i><font color="#ff0000">Contoh</font> : </i><span class="style5">160140GRN00000576</span></span>
+            </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Lot</td>
+          <td>:</td>
+          <td>$!beanMaklumatTanah.lot
+          <input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.lot" /></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Luas Lot</td>
+          <td>:</td>
+          <td>$!beanMaklumatTanah.luasLot
+          <input type="hidden" name="idLuasTanah" id="idLuasTanah" value="$beanMaklumatTanah.idLuas" />
+          <input type="hidden" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luasBersamaan" /></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Hakmilik</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.noHakmilik
+          <input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /></td>
+        </tr>
+        <!-- <tr>
+          <td>&nbsp;</td>
+          <td>No. Warta</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.noWarta
+          <input type="hidden" name="noWartaTanah" id="noWartaTanah" value="$beanMaklumatTanah.noWarta"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Tarikh Warta</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.tarikhWarta</td>
+        </tr> -->
+        <tr>
+          <td>&nbsp;</td>
+          <td>Mukim</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.mukim
+          <input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Daerah</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.daerah
+          <input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Negeri</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.negeri
+            <input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
+            <input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Kementerian</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.kementerian
+            <input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatTanah.idKementerian">
+            <input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian">
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Agensi</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.agensi</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Kegunaan Tanah</td>
+          <td>:</td>
+          <td>$beanMaklumatTanah.kegunaanTanah
+          <input type="hidden" name="kegunaanTanah" id="kegunaanTanah" value="$beanMaklumatTanah.kegunaanTanah" />
+          <input type="hidden" name="statusRizab" id="statusRizab" value="$beanMaklumatTanah.statusRizab" /></td>
+        </tr>
+        <!-- <tr>
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td width="28%">Pegangan Hakmilik</td>
           <td width="1%">:</td>
-          <td width="70%"> 
+          <td width="70%">
           	#if ($mode == 'new')
           	 #if ($idAgensi != '' && $idAgensi != '99999')
               <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();"/>
@@ -195,7 +291,7 @@
           <td>$beanMaklumatTanah.kegunaanTanah
             <input type="hidden" name="kegunaanTanah" id="kegunaanTanah" value="$beanMaklumatTanah.kegunaanTanah" />
               <input type="hidden" name="statusRizab" id="statusRizab" value="$beanMaklumatTanah.statusRizab" /></td>
-        </tr>
+        </tr> -->
         #end
         </table>
   	</fieldset></td>
@@ -240,12 +336,6 @@
           <td width="1%">&nbsp;</td>
           <td valign="top">Urusan</td>
           <td>:</td>
-          <td>PELEPASAN / PENYERAHANBALIK</td>
-        </tr>
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td valign="top">Suburusan</td>
-          <td>:</td>
           <td>TUKARGUNA</td>
         </tr>
         <tr>
@@ -272,7 +362,7 @@
       </table>
       </fieldset></td>
   </tr>
-  
+
   #if ($mode != 'view')
   <tr>
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i> </td>

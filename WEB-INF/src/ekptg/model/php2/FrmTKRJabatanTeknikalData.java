@@ -1,8 +1,5 @@
-/**
- * 
- */
-package ekptg.model.php2;
 
+package ekptg.model.php2;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,10 +21,7 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 //test 13/8/2020
-/**
- * 
- *
- */
+
 public class FrmTKRJabatanTeknikalData {
 
 	private Vector listKJT = null;
@@ -57,11 +51,8 @@ public class FrmTKRJabatanTeknikalData {
 					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJAGENSI B, TBLRUJPEJABATJKPTG C, TBLPHPRUJDOKUMEN D WHERE A.ID_AGENSI = B.ID_AGENSI(+)"
 					+ " AND A.ID_PEJABAT = C.ID_PEJABATJKPTG(+) AND A.ID_DOKUMEN = D.ID_DOKUMEN(+) AND A.FLAG_KJP = 'KJT' AND A.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
-
-			
 			
 			ResultSet rs = stmt.executeQuery(sql);
-
 			Hashtable h;
 			int bil = 1;
 			while (rs.next()) {
@@ -2468,4 +2459,6 @@ public class FrmTKRJabatanTeknikalData {
 	public void setBeanMaklumatJPPH(Vector beanMaklumatJPPH) {
 		this.beanMaklumatJPPH = beanMaklumatJPPH;
 	}
+	
+	
 }
