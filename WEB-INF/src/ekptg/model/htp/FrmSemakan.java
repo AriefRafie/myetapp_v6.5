@@ -29,11 +29,10 @@ public class FrmSemakan {
 //	FrmSemakan(VelocityContext context) {
 //		context_ = context;
 //	}
+	
 	public static Vector<Tblsemakan> getSemakan(String idSemakan,String semakan) throws Exception {
 		Vector<Tblsemakan> list = new Vector<Tblsemakan>();
-		    
-		
-		
+		    		
 		try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
@@ -49,7 +48,6 @@ public class FrmSemakan {
 		    	  r.add("s.id_semakan",idSemakan);
 		      if(semakan != null)
 		    	  r.add("s.perihal","%"+semakan+"%","like ");
-
 		    	  
 		      sql = r.getSQLSelect("tblsemakan s"," s.perihal ");
 //	          myLog.info("getSemakan : sql=" + sql);
@@ -431,8 +429,6 @@ public class FrmSemakan {
 		      long idSemakanhantar = DB.getNextID("TBLSEMAKANHANTAR_SEQ");
 		      String idPermohonan = idpermohonan;
 		      String idSemakan = idsemakan;
-//		      int idKementerian = 1;
-//		      int idNegeri = 1;
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
