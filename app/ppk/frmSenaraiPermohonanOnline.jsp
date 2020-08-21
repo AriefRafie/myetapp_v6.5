@@ -118,12 +118,12 @@
    #set ($idFlag = 2)
     #set ($bil = "")
    
-                         #if($SenaraiFail.size()==0)
+                         #if($Senaraifail.size()==0)
                          <tr>
 				         <td  colspan="6" align="center"><div align="left">Tiada Rekod </div></td>
 				         </tr>
                          #else
-	                       #foreach($fail in $SenaraiFail)
+	                       #foreach($fail in $Senaraifail)
                           
                            #set ($bilno = $fail.bil)
                            
@@ -148,12 +148,15 @@
                           </div></td>
 				          <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$fail.nokppemohon</div></td>
                            <td class="row1"><div align="center">
-                             <input name="cetak" type="button" value="Cetak Borang A" onclick="cetakBorangA('$fail.id_Permohonan')" />
+                             <!-- <input name="cetak" type="button" value="Cetak Borang A" onclick="cetakBorangA('$fail.id_Permohonan')" /> -->
+                             #if($fail.id_jenisdokumen == "99211")
+                             	<input name="cetak" type="button" value="Cetak Borang A" onclick="paparLampiran('$fail.id_dokumen')" />
+                             #end
                            </div></td>
 						   <td class="row1"><div align="center">
-                         
+                           #if($fail.id_jenisdokumen == "99211") 
                              <input name="kemaskini" type="button" value="Kemaskini Borang A" onclick="papar('$fail.id_Permohonan','$fail.id_Simati','$fail.seksyen','$fail.id_Pemohon','$fail.no_subjaket')" /> 
-                            
+                           #end  
                              
                            </div></td>
 				          </tr>
@@ -178,12 +181,15 @@
                           </td>
 				          <td class="row2"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$fail.nokppemohon</div></td>
                           <td class="row2"><div align="center">
-                            <input name="cetak" type="button" value="Cetak Borang A" onclick="cetakBorangA('$fail.id_Permohonan')" />
+                            <!-- <input name="cetak" type="button" value="Cetak Borang A" onclick="cetakBorangA('$fail.id_Permohonan')" /> -->
+                          #if($fail.id_jenisdokumen == "99211")
+                             	<input name="cetak" type="button" value="Cetak Borang A" onclick="paparLampiran('$fail.id_dokumen')" />
+                             #end
                           </div></td>
 						  <td class="row2"><div align="center">
-                            
+                          #if($fail.id_jenisdokumen == "99211") 
                               <input name="kemaskini" type="button" value="Kemaskini Borang A" onclick="papar('$fail.id_Permohonan','$fail.id_Simati','$fail.seksyen','$fail.id_Pemohon','$fail.no_subjaket')" />
-                          
+                          #end
                           </div></td>
 				          </tr>
                           
@@ -287,6 +293,16 @@
 	
 	function cetakBorangA(id_Permohonan) {
 	    var url = "../servlet/ekptg.report.ppk.BorangAOnline?idPermohonan="+id_Permohonan;
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+		
+	    if (hWnd.focus != null) hWnd.focus();
+	    
+	}
+	
+	function paparLampiran(id_Dokumen) {
+	    var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_Dokumen+"&tablename=simati";
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;

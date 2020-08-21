@@ -698,6 +698,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 		}
 
 		else if ("Seterusnya".equals(submit)) {
+			myLogger.info("Seterusnya1");
 			String idSimati = getParam("idSimati");
 			String ids = idSimati;
 			int no_sj = 0;
@@ -710,7 +711,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 			Vector list4 = logic_A.getDataLama();
 			this.context.put("ViewBaruNoFailLama", list4);
 
-			// System.out.println("list4.size():" + list4.size());
+			myLogger.info("list4.size():" + list4.size());
 
 			chkId = logic_A.getId();
 			/*
@@ -723,7 +724,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 			if (list4.size() == 0) {
 
 				String idt = getParam("idtempTerdahulu");
-
+				myLogger.info("idt = "+idt);
 				logic_A.setDataFail(idt);
 				listFail = logic_A.getDataFail();
 				this.context.put("ViewFail", listFail);
@@ -815,6 +816,7 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 				this.context.put("id_Permohonan_terdahulu", idt);
 
 				String id = getParam("idPermohonan");
+				myLogger.info("id = "+id);
 				String idSimatim = getParam("idSimati");
 
 				Vector list3 = logic_A.setData(id, (String) session.getAttribute("_ekptg_user_id"));
@@ -8913,9 +8915,10 @@ public class FrmPrmhnnSek17Internal extends VTemplate {
 		// h.put("bandarhta",getParam("txtBandarHartaHtaamX"));
 
 		if (getParam("txtBandarHartaHtaamX").equals("")) {
-			h.put("bandarhta", "0");
+			h.put("bandarhta", 0);
 		} else {
-			h.put("bandarhta", getParam("txtBandarHartaHtaamX"));
+			h.put("bandarhta", Integer
+					.parseInt(getParam("txtBandarHartaHtaamX")));
 		}
 			
 		h.put("noperjanjian", getParam("txtNoPerjanjianHtaamX"));

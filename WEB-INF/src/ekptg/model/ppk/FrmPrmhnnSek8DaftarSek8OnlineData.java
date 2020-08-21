@@ -19,6 +19,7 @@ import lebah.db.SQLRenderer;
 
 import org.apache.log4j.Logger;
 
+import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.view.admin.Push;
@@ -860,7 +861,15 @@ public class FrmPrmhnnSek8DaftarSek8OnlineData {
 				java.util.Calendar calendar = java.util.Calendar.getInstance();
 				int getYear = calendar.get(java.util.Calendar.YEAR);
 				
-				String X = String.format("%04d",File.getSeqNo(2,382,0,Integer.parseInt(userIdNeg),Integer.parseInt(no_daerah),false,false,getYear));
+				String X = "";
+				if(nofail.equals(""))
+				{
+					X = String.format("%04d",File.getSeqNoPPK(session,2,382,0,Integer.parseInt(userIdNeg),Integer.parseInt(no_daerah),false,false,getYear));
+					
+					AuditTrail at = new AuditTrail();
+					//at.logActivity("","2",null,session,"","CREATE NO FAIL ONLINE : ID_SEKSYEN = '"+2+"';ID_URUSAN = '"+382+"';ID_KEMENTERIAN = '"+0+"';ID_NEGERI = '"+Integer.parseInt(userIdNeg)+"';ID_DAERAH = '"+Integer.parseInt(no_daerah)+"';TAHUN = '"+getYear+"'; SEQ : "+X);
+					at.logActivity(382+"","","2",null,session,"","CREATE NO FAIL ONLINE : ID_SEKSYEN = '"+2+"';ID_URUSAN = '"+382+"';ID_KEMENTERIAN = '"+0+"';ID_NEGERI = '"+Integer.parseInt(userIdNeg)+"';ID_DAERAH = '"+Integer.parseInt(no_daerah)+"';TAHUN = '"+getYear+"'; SEQ : "+X+"; idFail : "+idFail);
+				}
 				
 				if (no_daerah.length() < 1){
 					no_daerah = "0"+no_daerah;

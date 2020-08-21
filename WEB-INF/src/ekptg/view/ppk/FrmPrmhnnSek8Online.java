@@ -38,10 +38,6 @@ import ekptg.model.ppk.FrmSenaraiFailOnlineData;
 //import ekptg.model.ppk.FrmSenaraiFailInternalData;
 
 public class FrmPrmhnnSek8Online extends VTemplate {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6113281434052842359L;
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
 	String currentDate = dateFormat.format(date);
@@ -67,7 +63,7 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		String flagForView = getParam("flagForView");
 
 		headerppk_baru_default();
-
+		Vector listSupportingDoc = null;
 		this.context.put("skrin_online_17", "");
 		this.context.put("skrin_online", "");
 		this.context.put("skrin_online_popup", "");
@@ -82,7 +78,7 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		HttpSession session = this.request.getSession();
 		String doPost = (String) session.getAttribute("doPost");
 		idUser = String.valueOf(session.getAttribute("_ekptg_user_id"));
-		
+
 		Calendar cal = Calendar.getInstance();
 		Calendar currentcal = Calendar.getInstance();
 		cal.set(2009, Calendar.SEPTEMBER, 1);
@@ -111,7 +107,9 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		String idAlert = getParam("idAlert");
 		String action = getParam("action");
 
-		myLogger.info("submit:" + submit+",mode:" + mode);
+		System.out.println("submit:" + submit);
+		System.out.println("mode:" + mode);
+
 		// int simpanStatus = 2;
 		// int eventStatus = 0;
 		// int backstatus = 1;
@@ -884,7 +882,11 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			logic.setDataPemohonOB(idpp);
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-
+			
+			logic_A.setSupportingDoc(idpp, "99201");
+			listSupportingDoc = logic_A.setSupportingDoc(idpp, "99201");
+			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			
 			vm = "app/ppk/frmPraPrmhnnSek8DaftarSek8.jsp";
 
 		} else if ("kembali_simati".equals(submit)) {
@@ -6651,7 +6653,8 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 
 		}
 		
-//		System.out.println("vm FrmPrmhnnSek8Online >>> "+vm);
+		System.out.println("vm FrmPrmhnnSek8Online >>> "+vm);
+
 		this.context.put("DATEUTIL", new DateUtil());
 
 		Db db = null;

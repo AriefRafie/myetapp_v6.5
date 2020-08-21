@@ -204,6 +204,16 @@ bagi modul yang ada tugas spesifik untuk penguna yang login
 						</a>
 </td>
 </tr>
+
+<tr>
+<td id="showCountPengesahanNilaian" >
+<script>
+$jquery(document).ready(function () {
+	doDivAjaxCall$formname('showCountPengesahanNilaian','showNotifikasi_PengesahanNilaian','');					
+});
+</script>
+</td>
+</tr>
 <!-- 
 <tr>
 <td id="showCountOT" >
@@ -853,7 +863,7 @@ $jquery(document).ready(function () {
 <input type="hidden" id="idsimati" name="idsimati" value="">
 <input type="hidden" id="id_Simati" name="id_Simati" value="">
 <input type="hidden" id="idSimati" name="idSimati" value="">
-
+<input type="hidden" id="commandPN" name="commandPN" value="">
 
 
 
@@ -1285,6 +1295,12 @@ function gotoOT() {
 
 function gotoBU() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.PermohonanBantuUnit";
+	document.${formName}.submit();
+}
+
+function gotoPN() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Seksyen 8",$portal_role)?_portal_module=FrmPrmhnnSek8Internal";
+	document.${formName}.commandPN.value = "cariPN";
 	document.${formName}.submit();
 }
 
