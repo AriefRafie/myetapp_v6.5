@@ -28,8 +28,8 @@ public class FrmPYWHeaderData {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-	public void setMaklumatPermohonan(String idFail, String initiateFlagBuka,
-			HttpSession session) throws Exception {
+	public void setMaklumatPermohonan(String idFail, String initiateFlagBuka,HttpSession session) 
+		throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -44,7 +44,6 @@ public class FrmPYWHeaderData {
 			if ("".equals(idFail) && session.getAttribute("ID_FAIL") != null) {
 				idFail = (String) session.getAttribute("ID_FAIL");
 			}
-			
 			if ("Y".equals(initiateFlagBuka)) {
 				updateFlagBuka(idFail, session);
 			}
@@ -641,10 +640,19 @@ public class FrmPYWHeaderData {
 			Hashtable h;
 			SQLRenderer r = new SQLRenderer();
 			
-			sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UO.NO_KP_BARU, UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3, " +
-					  " UO.POSKOD, UO.NO_FAX, UO.NO_HP, UO.EMEL, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI FROM USERS U, " +
-					  " USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
-					  " WHERE U.USER_ID = UO.USER_ID AND UO.ID_BANDAR = RB.ID_BANDAR AND UO.ID_NEGERI = RN.ID_NEGERI" +
+			sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UPPER(UO.SUBKATEGORI) AS SUBKATEGORI, UO.NO_KP_BARU, UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3, " +
+					  " UO.POSKOD, UO.NO_FAX, UO.NO_HP, UO.EMEL"+
+					  ", RB.KETERANGAN AS NAMA_BANDAR"+
+					  ", RN.NAMA_NEGERI  "+
+					  ",NVL(RP.ID_PEJABAT,0) ID_PEJABAT " +
+					  " FROM USERS U,USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB "+
+					  ",( 	SELECT RP.ID_PEJABAT,UPPER(RP.NAMA_PEJABAT) NAMA_PEJABAT, RP.ID_JENISPEJABAT" + 
+					  "	FROM TBLRUJPEJABAT RP WHERE RP.ID_JENISPEJABAT IN (61) " + 
+					  ") RP" +
+					  " WHERE U.USER_ID = UO.USER_ID "+
+					  " AND UO.ID_NEGERI = RN.ID_NEGERI "+
+					  " AND UO.ID_BANDAR = RB.ID_BANDAR(+) " +
+					  " AND U.USER_NAME = RP.NAMA_PEJABAT(+) "+
 					  " AND U.USER_ID = '" + idUser + "'";
 			log.info("header:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
@@ -653,6 +661,7 @@ public class FrmPYWHeaderData {
 				h = new Hashtable();
 				h.put("iduser", rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
 				h.put("kategoriPemohon", rs.getString("KATEGORI") == null ? "" : rs.getString("KATEGORI").toUpperCase());
+				h.put("subKategoriPemohon", rs.getString("SUBKATEGORI") == null ? "" : rs.getString("SUBKATEGORI").toUpperCase());
 				h.put("namaPemohon", rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME").toUpperCase());
 				h.put("noPengenalan", rs.getString("NO_KP_BARU") == null ? "" : rs.getString("NO_KP_BARU").toUpperCase());
 				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs.getString("ALAMAT1").toUpperCase());
@@ -664,7 +673,7 @@ public class FrmPYWHeaderData {
 				h.put("noTel", rs.getString("NO_HP") == null ? "" : rs.getString("NO_HP").toUpperCase());
 				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs.getString("NO_FAX").toUpperCase());
 				h.put("emel", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
-				//h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS").toUpperCase());
+				h.put("idPejabat", rs.getString("ID_PEJABAT"));
 	
 				
 				beanMaklumatPemohon.addElement(h);
@@ -679,8 +688,8 @@ public class FrmPYWHeaderData {
 			if (db != null)
 				db.close();
 		}
-	
 		return beanMaklumatPemohon;
+		
 	}	
 	
 	public Vector<Hashtable> getMaklumatPermohonan(String idFail, HttpSession session) throws Exception {
@@ -782,6 +791,7 @@ public class FrmPYWHeaderData {
 			
 		}
 		return beanMaklumatPermohonann;
+		
 	}
 
 	public Vector getBeanMaklumatPermohonan() {
@@ -800,4 +810,5 @@ public class FrmPYWHeaderData {
 		this.beanMaklumatHakmilik = beanMaklumatHakmilik;
 	}
 		
+	
 }

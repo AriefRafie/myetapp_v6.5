@@ -154,7 +154,11 @@
         <tr>
           <td width="35%" style="text-transform:uppercase;"><div align="right">No Fail :</div></td>
           <td width="65%" style="text-transform:uppercase;"><div align="left" class="style40 style42">$listnoFail</div></td>
-        </tr>
+
+
+
+
+	  </tr>
         <tr>
           <td valign="top" style="text-transform:uppercase;"><div align="right">Negeri :</div></td>
            #foreach($listnegori in $listnegeri)      
@@ -4317,5 +4321,7 @@ function calculateUmurOB(){
 </script>
 <!-- END ADD BY PEJE -->
 
+
+<!-- syafiqah -->
 </body>
 </html>
