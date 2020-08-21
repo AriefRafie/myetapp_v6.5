@@ -148,7 +148,7 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 				uploadFiles(idLaporanTanah, idPermohonan, session);
 			}
 			if ("simpanKemaskiniDokumen".equals(hitButton)) {
-				logic.simpanKemaskiniDokumen(idDokumen,
+				logic.simpanKemaskiniDokumen(idDokumen, getParam("socJenisImej"),
 						getParam("txtNamaImej"), getParam("txtCatatanImej"),
 						session);
 			}
@@ -219,7 +219,6 @@ public class FrmCRBOperasiPenguatkuasaanView extends AjaxBasedModule {
 			}
 
 			if ("doSelesaiPermohonan".equals(hitButton)) {
-				//System.out.println("cek status dalam selesai =" + idStatus);
 				logicHeader.doSelesaiPermohonan(idFail, idPermohonan, idStatus,
 						getParam("tarikhSelesai"), getParam("txtSebab"),
 						session);

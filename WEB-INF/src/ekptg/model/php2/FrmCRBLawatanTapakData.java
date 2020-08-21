@@ -1982,6 +1982,70 @@ public class FrmCRBLawatanTapakData {
 		}
 	}
 	
+	public void doSimpanAgihanTugas(String idFail, String idPegawai,
+			String catatan, String idNegeriUser, HttpSession session)
+			throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPLOGTUGASAN
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("FLAG_AKTIF", "Y");
+
+			r.add("FLAG_AKTIF", "T");
+
+			sql = r.getSQLUpdate("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			r = new SQLRenderer();
+			long idTugasan = DB.getNextID("TBLPHPLOGTUGASAN_SEQ");
+			r.add("ID_TUGASAN", idTugasan);
+			r.add("ID_PEGAWAI", idPegawai);
+			r.add("ID_NEGERI", "16"); // HQ
+			r.add("TARIKH_DITUGASKAN", r.unquote("SYSDATE"));
+			r.add("ID_FAIL", idFail);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("ROLE", "(PHP)PYWPenolongPegawaiTanahHQ");
+			r.add("CATATAN", catatan);
+			r.add("FLAG_BUKA", "T");
+
+			r.add("ID_PEGAWAI_SEBELUM", userId);
+			r.add("ID_NEGERI_SEBELUM", idNegeriUser);
+
+			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610213", "4", null, session, "INS",
+					"FAIL [" + idFail
+							+ "] TELAH DITUGASKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public Vector getBeanMaklumatPejabat() {
 		return beanMaklumatPejabat;
 	}

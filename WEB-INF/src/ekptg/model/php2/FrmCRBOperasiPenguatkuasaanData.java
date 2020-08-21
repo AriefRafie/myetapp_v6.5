@@ -251,7 +251,7 @@ public class FrmCRBOperasiPenguatkuasaanData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, JENIS_IMEJ, CATATAN FROM TBLPHPDOKUMEN"
-					+ " WHERE ID_LAPORANTANAH = '" + idLaporanTanah + "'";
+					+ " WHERE ID_LAPORANTANAH = '" + idLaporanTanah + "' ORDER BY ID_DOKUMEN DESC";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -261,7 +261,13 @@ public class FrmCRBOperasiPenguatkuasaanData {
 				h = new Hashtable();
 				h.put("bil", bil);
 				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
-				h.put("jenisImej", rs.getString("JENIS_IMEJ"));
+				if("SB".equals(rs.getString("JENIS_IMEJ"))) {
+					h.put("jenisImej", "IMEJ SEBELUM OPERASI");
+				} else if("SM".equals(rs.getString("JENIS_IMEJ"))){
+					h.put("jenisImej", "IMEJ SEMASA OPERASI");
+				} else if("SL".equals(rs.getString("JENIS_IMEJ"))){
+					h.put("jenisImej", "IMEJ SELEPAS OPERASI");
+				}
 				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
 						: rs.getString("NAMA_DOKUMEN"));
 				h.put("catatan",
@@ -311,7 +317,7 @@ public class FrmCRBOperasiPenguatkuasaanData {
 		}
 	}
 
-	public void simpanKemaskiniDokumen(String idDokumen, String txtNamaImej,
+	public void simpanKemaskiniDokumen(String idDokumen, String socJenisImej, String txtNamaImej,
 			String txtCatatan, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -327,6 +333,7 @@ public class FrmCRBOperasiPenguatkuasaanData {
 
 			// TBLPHPDOKUMEN
 			r.update("ID_DOKUMEN", idDokumen);
+			r.add("JENIS_IMEJ", socJenisImej);
 			r.add("NAMA_DOKUMEN", txtNamaImej);
 			r.add("CATATAN", txtCatatan);
 
