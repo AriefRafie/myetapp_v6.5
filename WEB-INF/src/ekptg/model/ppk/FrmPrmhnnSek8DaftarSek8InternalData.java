@@ -36,7 +36,7 @@ import ekptg.view.ppk.PendaftaranCheck;
 //import ekptg.view.ppk.socDaerahHtaam;
 
 
-public class FrmPrmhnnSek8DaftarSek8InternalData {
+public class FrmPrmhnnSek8DaftarSek8InternalData { 
 	//private static final HttpServletRequest  = null;
 	//private static final HttpServletRequest request = null;
 	protected HttpServletRequest request;
@@ -53,10 +53,13 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 	
 	public Vector getDataPPSPP() {
 		return list;
+		
 	}
 	
+
 	public Vector getPerubahanAkta() {
 		return listUbah;
+		
 	}
 	
 	public  Vector setPerubahanAkta() throws Exception {
@@ -204,6 +207,14 @@ public class FrmPrmhnnSek8DaftarSek8InternalData {
 							"TBLPPKPERMOHONANSIMATI MOSI" 
 							//", USERS_INTERNAL UR  "
 					+ " WHERE " +
+					//		"F.ID_NEGERI = N.ID_NEGERI(+)  "
+					// +" AND N.ID_NEGERI = PM.ID_NEGERISURAT(+)"
+					//+ " AND P.ID_DAERAHMHN = D.ID_DAERAH(+) "
+					//+ " AND UR.USER_ID  = '"
+					//+ userid
+					//+ "' "
+					//+ " AND UR.ID_PEJABATJKPTG = U.ID_PEJABATJKPTG "
+					//+ " AND " +
 							"P.ID_FAIL = F.ID_FAIL"
 					// + " AND PM.ID_PERMOHONAN = P.ID_PERMOHONAN(+) "
 					+ " AND P.ID_PEMOHON = PM.ID_PEMOHON(+) "
@@ -502,7 +513,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 							"" +
 							"P.SEKSYEN, "
 					+ " ST.KETERANGAN, P.ID_STATUS, " +
-						//	"U.NAMA_PEJABAT, " +    
+						//	"U.NAMA_PEJABAT, " +
 							" MOSI.ID_PERMOHONANSIMATI, "
 					+ " S.UMUR as umursimati, S.JANTINA as jantinasimati,  PM.UMUR as umurpemohon, PM.JANTINA as jantinapemohon," +
 							//"U.ID_PEJABATJKPTG, " +
@@ -793,7 +804,7 @@ public Vector setData_online_17(String id, String userid) throws Exception {
 			if (db != null)
 				db.close();
 		}
-	}
+	}         
 
 	
 
@@ -837,18 +848,18 @@ public Vector setDataNoKP(String idpp) throws Exception {
 	}
 }
 
-public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
+public Vector setSupportingDoc(String id, String jenisDoc) throws Exception { 
 	myLogger.info("******** setSupportingDoc ");
 	Db db = null;
 	listSupportingDoc.clear();
 	String sql = "";
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
+  
 	try {
 		db = new Db();
 		Statement stmt = db.getStatement();
 		SQLRenderer r = new SQLRenderer();
-		
+		//tutup kejap
 		sql = "SELECT NAMA_DOKUMEN FROM TBLPPKDOKUMENSIMATI WHERE ID_SIMATI = (SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = '" + id + "') AND ID_JENISDOKUMEN = '"+jenisDoc+"'";
 
 		//myLogger.info("SQL FAR" + sql);
@@ -858,7 +869,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 		ResultSet rs = stmt.executeQuery(sql);
 		Hashtable h;
 
-		
+		  
 		
 		while (rs.next()) {
 			h = new Hashtable();

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ekptg.model.php2.online;
 
 import java.sql.Connection;
@@ -30,13 +27,8 @@ import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
 import ekptg.intergration.XEkptgEmailSender;
-import ekptg.model.ppt.FrmSek8PampasanData;
 import ekptg.model.utils.emel.EmailConfig;
 
-/**
- * 
- *
- */
 public class FrmPYWOnlineSenaraiFailData {
 	
 	private Vector senaraiFail = null;	

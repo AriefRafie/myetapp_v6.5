@@ -12,6 +12,7 @@ import ekptg.model.utils.UserKJPBean;
 
 public class EmailConfig {
 	
+	
 	static Logger myLog = Logger.getLogger(ekptg.model.utils.emel.EmailConfig.class);
 	public EmailSender mail = null;
 	public String tajuk = "";

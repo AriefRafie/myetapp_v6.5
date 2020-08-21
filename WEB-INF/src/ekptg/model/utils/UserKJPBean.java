@@ -27,6 +27,7 @@ public class UserKJPBean implements IUserPegawai {
 	 * Senarai emel mengikut role KJP
 	 * 
 	 * */
+	
 	public List<Map<String,String>> getPenggunaMengikutRole(String role,String idKementerian) throws Exception {
 		Db db = null;
 		ResultSet rs = null;

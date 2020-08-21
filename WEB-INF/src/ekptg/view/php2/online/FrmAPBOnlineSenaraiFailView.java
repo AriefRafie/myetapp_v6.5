@@ -25,12 +25,10 @@ import ekptg.model.php2.utiliti.PHPUtilHTML;
 import ekptg.helpers.Paging;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmAPBHeaderData;
-import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.online.FrmAPBOnlineSenaraiFailData;
 import ekptg.model.php2.utiliti.LampiranBean;
 import ekptg.model.utils.lampiran.ILampiran;
-import ekptg.report.ppk.FrmPopupPilihPegawaiReportData;
-import ekptg.view.ppk.FrmPopupTAC;
+
 
 public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 

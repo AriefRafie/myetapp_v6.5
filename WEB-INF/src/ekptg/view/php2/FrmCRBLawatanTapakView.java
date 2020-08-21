@@ -299,6 +299,12 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
     			vm = "app/php2/frmPYWAgihanTugas.jsp";
             
     		} 
+			if ("doSimpanAgihanTugas".equals(hitButton)){
+	    		logic.doSimpanAgihanTugas(idFail, idPegawai, getParam("txtCatatan"), idNegeriUser, session);
+	    		session.removeAttribute("ID_FAIL");
+				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PEGAWAI");
+	    		this.context.put("onload", "gotoSenaraiFail();");
+			}
 		}// END POSTDB
 
 		// HEADER

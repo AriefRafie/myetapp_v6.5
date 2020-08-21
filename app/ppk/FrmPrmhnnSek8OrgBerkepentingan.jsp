@@ -465,33 +465,7 @@
           <td ><span class="style38">Baitulmal</span></td>
           <td >:</td>
           <td >      
-     <!--
-          <select name="jenis_pej2" id="jenis_pej2" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya_up()" >         
-          #if($!jenis_pej == "" || $!jenis_pej == "0") 
-          <option value="">SILA PILIH </option>   
-                 
-           #else
-           #foreach($listJ in $listMaklumatMahkamahJ)
-           #if( $listJ.id_Pejabat == $jenis_pej )              
-           #set($listJid_Pejabat = $listJ.id_Pejabat)
-           #set($listJnama_pejabat=$listJ.nama_pejabat)
-           #set($listJdaerah = $listJ.daerah)  
-           #set($nama_bandar = $listJ.namabandar)         
-           #end
-           #end
-           <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>           
-           #end        
-                                  #foreach($listJ in $listMaklumatMahkamahJ)
-                                  #if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '8' )
-	                              <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
-                                  #end 
-                                  #end 
-                                   #if($!jenis_pej != "" || $!jenis_pej != "0")     
-                                  <option value="">SILA PILIH </option>
-                                  #end                                       
-          </select>       
-          
-          -->
+     
           
           
           
@@ -524,7 +498,49 @@
           
           
              </td>
-        </tr>     
+        </tr>   
+        
+ <tr id="majlisagama" >
+    
+        
+          <td >&nbsp;</td>
+          <td ><span class="style38">Majlis Agama Islam </span></td>
+          <td >:</td>
+          <td >      
+     
+          
+          
+          
+          <select name="jenis_pej5" id="jenis_pej5" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya_up()" >         
+          #if($!jenis_pej == "" || $!jenis_pej == "0") 
+          <option value="">SILA PILIH</option>   
+                 
+           #else
+           #foreach($listJ in $listMaklumatMahkamahJ)
+           #if( $listJ.id_Pejabat == $jenis_pej )              
+           #set($listJid_Pejabat = $listJ.id_Pejabat)
+           #set($listJnama_pejabat=$listJ.nama_pejabat)
+           #set($listJdaerah = $listJ.daerah)  
+           #set($nama_bandar = $listJ.namabandar)         
+           #end
+           #end
+           <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>           
+           #end        
+                                  #foreach($listJ in $listMaklumatMahkamahJ)
+                                  #if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '61' )
+	                              <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
+                                  #end 
+                                  #end 
+                                   #if($!jenis_pej != "" || $!jenis_pej != "0")     
+                                  <!-- <option value="">SILA PILIH</option> -->
+                                  #end                                       
+          </select>       
+          
+          
+          
+          
+             </td>
+        </tr>   
  
           <tr id="j_pemohon"  >
             <td >&nbsp;</td>
@@ -2099,7 +2115,41 @@
                                   <!-- <option value="">SILA PILIH</option> -->
                                   #end                                       
           </select>          </td>
-        </tr>    
+        </tr>  
+        
+        <tr id="majlisagama" >
+    
+        
+          <td >&nbsp;</td>
+          <td ><span class="style38">Majlis Agama Islam </span></td>
+          <td >: </td>
+          <td >      
+     
+          <select name="jenis_pej5" id="jenis_pej5" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >         
+          #if($!jenis_pej == "" || $!jenis_pej == "0") 
+          <option value="">SILA PILIH</option>   
+                 
+           #else
+           #foreach($listJ in $listMaklumatMahkamahJ)
+           #if( $listJ.id_Pejabat == $jenis_pej )              
+           #set($listJid_Pejabat = $listJ.id_Pejabat)
+           #set($listJnama_pejabat=$listJ.nama_pejabat)
+           #set($listJdaerah = $listJ.daerah)  
+           #set($nama_bandar = $listJ.namabandar)         
+           #end
+           #end
+           <option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>           
+           #end        
+                                  #foreach($listJ in $listMaklumatMahkamahJ)
+                                  #if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '62' )
+	                              <option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
+                                  #end 
+                                  #end 
+                                   #if($!jenis_pej != "" || $!jenis_pej != "0")     
+                                  <!-- <option value="">SILA PILIH</option> -->
+                                  #end                                       
+          </select>          </td>
+        </tr>      
         
         <tr id="Insolvensi">
         <td >&nbsp;</td>
@@ -2131,8 +2181,9 @@
                                   #end                                       
           </select>          </td>
         </tr>
-        
-        
+                                  
+                                       
+ 
           <tr id="j_pemohon"  >
             <td >&nbsp;</td>
             <td class="style38 style38" >Jenis Pemohon</td>
@@ -4772,12 +4823,14 @@ if(document.f1.socTarafKepentinganPenting.value == '6')
 		document.getElementById("amanah").style.display="";	
 		document.getElementById('baitulmal').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";
+		document.getElementById('majlisagama').style.display="none";
 		}
 		else
 		{
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";
+		document.getElementById('majlisagama').style.display="none";
 		}
 		
 		document.getElementById("j_pemohon").style.display="";	
@@ -4845,6 +4898,93 @@ if(document.f1.socTarafKepentinganPenting.value == '6')
 		
 
 }
+
+if(document.f1.socTarafKepentinganPenting.value == '30')
+{
+	
+		
+		
+		if(document.f1.read_mode.value != "disabled")
+		{
+		document.getElementById("amanah").style.display="none";	
+		document.getElementById('baitulmal').style.display="none";
+		document.getElementById('Insolvensi').style.display="none";
+		document.getElementById('majlisagama').style.display="";
+		}
+		else
+		{
+		document.getElementById("amanah").style.display="none";	
+		document.getElementById('baitulmal').style.display="none";
+		document.getElementById('Insolvensi').style.display="none";
+		document.getElementById('majlisagama').style.display="none";
+		}
+		
+		document.getElementById("j_pemohon").style.display="";	
+		
+		
+		document.getElementById("kp_baru").style.display="none";	
+		document.getElementById("kp_lama").style.display="none";	
+		document.getElementById("kp_jenis").style.display="none";	
+		document.getElementById("kp_lain").style.display="none";	
+		document.getElementById("jantina").style.display="none";	
+		document.getElementById("agama").style.display="none";	
+		document.getElementById("umur").style.display="none";	
+		document.getElementById("warga").style.display="none";	
+		document.getElementById("dob").style.display="none";	
+		document.getElementById("status_ob").style.display="none";	
+		document.getElementById("no_surat").style.display="none";
+		document.getElementById("no_hp").style.display="none";	
+		document.getElementById("no_hp_info").style.display="none";	
+		document.getElementById("no_tel_info").style.display="none";	
+		document.getElementById("no_fax").style.display="";
+		document.getElementById("chk_tr").style.display="none";
+		
+		
+		
+		document.getElementById("nama_1").style.display="none";
+		document.getElementById("nama_2").style.display="";
+		
+		document.getElementById("jenis_pemohon_dis").style.display="";
+		document.getElementById("jenis_pemohon_drop").style.display="none";	
+		document.f1.jenis_pemohon.value = "1";
+		document.f1.jenis_pemohon_display.value = "01-AGENSI";
+		
+		document.getElementById("alamattetap1_a").style.display="none";
+		document.getElementById("alamattetap2_a").style.display="none";
+		document.getElementById("alamattetap3_a").style.display="none";
+		document.getElementById("alamattetap1_b").style.display="";
+		document.getElementById("alamattetap2_b").style.display="";
+		document.getElementById("alamattetap3_b").style.display="";
+		document.getElementById("poskodtetap_a").style.display="none";
+		document.getElementById("poskodtetap_b").style.display="";
+		document.getElementById("negeritetap_a").style.display="none";
+		document.getElementById("negeritetap_b").style.display="";
+		document.getElementById("bandartetap_a").style.display="none";
+		document.getElementById("bandartetap_b").style.display="";
+		
+		
+		document.getElementById("alamatsurat1_a").style.display="none";
+		document.getElementById("alamatsurat2_a").style.display="none";
+		document.getElementById("alamatsurat3_a").style.display="none";
+		document.getElementById("alamatsurat1_b").style.display="";
+		document.getElementById("alamatsurat2_b").style.display="";
+		document.getElementById("alamatsurat3_b").style.display="";	
+		document.getElementById("poskodsurat_a").style.display="none";
+		document.getElementById("poskodsurat_b").style.display="";
+		document.getElementById("negerisurat_a").style.display="none";
+		document.getElementById("negerisurat_b").style.display="";
+		document.getElementById("bandarsurat_a").style.display="none";
+		document.getElementById("bandarsurat_b").style.display="";
+		
+		
+		document.getElementById("notel_a").style.display="none";
+		document.getElementById("notel_b").style.display="";
+		document.getElementById("nofax_a").style.display="none";
+		document.getElementById("nofax_b").style.display="";
+		
+
+}
+
 //alert("d")
 
 else if(document.f1.socTarafKepentinganPenting.value == '4')
@@ -4854,6 +4994,7 @@ else if(document.f1.socTarafKepentinganPenting.value == '4')
 		document.getElementById('baitulmal').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";
 		document.getElementById("j_pemohon").style.display="";	
+		document.getElementById('majlisagama').style.display="none";
 		
 		if(document.f1.jenis_pemohon.value == '1')
 		{
@@ -4964,12 +5105,14 @@ else if(document.f1.socTarafKepentinganPenting.value == '8' )
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="";
 		document.getElementById('Insolvensi').style.display="none";
+		document.getElementById('majlisagama').style.display="none";
 		}
 		else
 		{
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";
+		document.getElementById('majlisagama').style.display="none";
 		}
 
 
@@ -5029,15 +5172,96 @@ else if(document.f1.socTarafKepentinganPenting.value == '8' )
 		document.getElementById("nofax_b").style.display="";
 }
 
+else if(document.f1.socTarafKepentinganPenting.value == '16' )
+{
+
+
+
+        if(document.f1.read_mode.value != "disabled")
+		{
+		document.getElementById("amanah").style.display="none";	
+		document.getElementById('baitulmal').style.display="none";
+		document.getElementById('Insolvensi').style.display="";
+		document.getElementById('majlisagama').style.display="none";
+		}
+		else
+		{
+		document.getElementById("amanah").style.display="none";	
+		document.getElementById('baitulmal').style.display="none";
+		document.getElementById('Insolvensi').style.display="none";		
+		document.getElementById('majlisagama').style.display="none";
+		}
+
+
+	
+		document.getElementById("j_pemohon").style.display="";	
+		
+		
+		document.getElementById("kp_baru").style.display="none";	
+		document.getElementById("kp_lama").style.display="none";	
+		document.getElementById("kp_jenis").style.display="none";	
+		document.getElementById("kp_lain").style.display="none";	
+		document.getElementById("jantina").style.display="none";	
+		document.getElementById("agama").style.display="none";	
+		document.getElementById("umur").style.display="none";	
+		document.getElementById("warga").style.display="none";	
+		document.getElementById("dob").style.display="none";	
+		document.getElementById("status_ob").style.display="none";	
+		document.getElementById("no_surat").style.display="none";
+		document.getElementById("no_hp").style.display="none";	
+		document.getElementById("no_hp_info").style.display="none";	
+		document.getElementById("no_tel_info").style.display="none";	
+		document.getElementById("no_fax").style.display="";
+		document.getElementById("chk_tr").style.display="none";
+		document.getElementById("nama_1").style.display="none";
+		document.getElementById("nama_2").style.display="";		
+		document.getElementById("jenis_pemohon_dis").style.display="";
+		document.getElementById("jenis_pemohon_drop").style.display="none";	
+		document.f1.jenis_pemohon.value = "1";
+		document.f1.jenis_pemohon_display.value = "01-AGENSI";		
+		document.getElementById("alamattetap1_a").style.display="none";
+		document.getElementById("alamattetap2_a").style.display="none";
+		document.getElementById("alamattetap3_a").style.display="none";
+		document.getElementById("alamattetap1_b").style.display="";
+		document.getElementById("alamattetap2_b").style.display="";
+		document.getElementById("alamattetap3_b").style.display="";
+		document.getElementById("poskodtetap_a").style.display="none";
+		document.getElementById("poskodtetap_b").style.display="";
+		document.getElementById("negeritetap_a").style.display="none";
+		document.getElementById("negeritetap_b").style.display="";
+		document.getElementById("bandartetap_a").style.display="none";
+		document.getElementById("bandartetap_b").style.display="";
+		
+		
+		document.getElementById("alamatsurat1_a").style.display="none";
+		document.getElementById("alamatsurat2_a").style.display="none";
+		document.getElementById("alamatsurat3_a").style.display="none";
+		document.getElementById("alamatsurat1_b").style.display="";
+		document.getElementById("alamatsurat2_b").style.display="";
+		document.getElementById("alamatsurat3_b").style.display="";	
+		document.getElementById("poskodsurat_a").style.display="none";
+		document.getElementById("poskodsurat_b").style.display="";
+		document.getElementById("negerisurat_a").style.display="none";
+		document.getElementById("negerisurat_b").style.display="";
+		document.getElementById("bandarsurat_a").style.display="none";
+		document.getElementById("bandarsurat_b").style.display="";
+		
+		
+		document.getElementById("notel_a").style.display="none";
+		document.getElementById("notel_b").style.display="";
+		document.getElementById("nofax_a").style.display="none";
+		document.getElementById("nofax_b").style.display="";
+}
+
 //arief add Majlis Agama Islam Negeri sebagai Pemegang Amanah 
 else if(document.f1.socTarafKepentinganPenting.value == '10')
 {
-//alert(document.f1.jenis_pemohon.value)
+
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";
 		document.getElementById("j_pemohon").style.display="";	
-		
+		document.getElementById('majlisagama').style.display="none";
 		if(document.f1.jenis_pemohon.value == '1') //01. AGENSI
 		{
 		document.getElementById("kp_baru").style.display="none";	
@@ -5122,7 +5346,7 @@ else if(document.f1.socTarafKepentinganPenting.value == '10')
 		document.getElementById("notel_b").style.display="none";	
 }
 
-else if(document.f1.socTarafKepentinganPenting.value == '16' )
+else if(document.f1.socTarafKepentinganPenting.value == '17' || document.f1.socTarafKepentinganPenting.value == '21')
 {
 
 
@@ -5131,94 +5355,15 @@ else if(document.f1.socTarafKepentinganPenting.value == '16' )
 		{
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
-		document.getElementById('Insolvensi').style.display="";
-		}
-		else
-		{
-		document.getElementById("amanah").style.display="none";	
-		document.getElementById('baitulmal').style.display="none";
-		document.getElementById('Insolvensi').style.display="none";		
-		}
-
-
-	
-		document.getElementById("j_pemohon").style.display="";	
-		
-		
-		document.getElementById("kp_baru").style.display="none";	
-		document.getElementById("kp_lama").style.display="none";	
-		document.getElementById("kp_jenis").style.display="none";	
-		document.getElementById("kp_lain").style.display="none";	
-		document.getElementById("jantina").style.display="none";	
-		document.getElementById("agama").style.display="none";	
-		document.getElementById("umur").style.display="none";	
-		document.getElementById("warga").style.display="none";	
-		document.getElementById("dob").style.display="none";	
-		document.getElementById("status_ob").style.display="none";	
-		document.getElementById("no_surat").style.display="none";
-		document.getElementById("no_hp").style.display="none";	
-		document.getElementById("no_hp_info").style.display="none";	
-		document.getElementById("no_tel_info").style.display="none";	
-		document.getElementById("no_fax").style.display="";
-		document.getElementById("chk_tr").style.display="none";
-		document.getElementById("nama_1").style.display="none";
-		document.getElementById("nama_2").style.display="";		
-		document.getElementById("jenis_pemohon_dis").style.display="";
-		document.getElementById("jenis_pemohon_drop").style.display="none";	
-		document.f1.jenis_pemohon.value = "1";
-		document.f1.jenis_pemohon_display.value = "01-AGENSI";		
-		document.getElementById("alamattetap1_a").style.display="none";
-		document.getElementById("alamattetap2_a").style.display="none";
-		document.getElementById("alamattetap3_a").style.display="none";
-		document.getElementById("alamattetap1_b").style.display="";
-		document.getElementById("alamattetap2_b").style.display="";
-		document.getElementById("alamattetap3_b").style.display="";
-		document.getElementById("poskodtetap_a").style.display="none";
-		document.getElementById("poskodtetap_b").style.display="";
-		document.getElementById("negeritetap_a").style.display="none";
-		document.getElementById("negeritetap_b").style.display="";
-		document.getElementById("bandartetap_a").style.display="none";
-		document.getElementById("bandartetap_b").style.display="";
-		
-		
-		document.getElementById("alamatsurat1_a").style.display="none";
-		document.getElementById("alamatsurat2_a").style.display="none";
-		document.getElementById("alamatsurat3_a").style.display="none";
-		document.getElementById("alamatsurat1_b").style.display="";
-		document.getElementById("alamatsurat2_b").style.display="";
-		document.getElementById("alamatsurat3_b").style.display="";	
-		document.getElementById("poskodsurat_a").style.display="none";
-		document.getElementById("poskodsurat_b").style.display="";
-		document.getElementById("negerisurat_a").style.display="none";
-		document.getElementById("negerisurat_b").style.display="";
-		document.getElementById("bandarsurat_a").style.display="none";
-		document.getElementById("bandarsurat_b").style.display="";
-		
-		
-		document.getElementById("notel_a").style.display="none";
-		document.getElementById("notel_b").style.display="";
-		document.getElementById("nofax_a").style.display="none";
-		document.getElementById("nofax_b").style.display="";
-}
-
-else if(document.f1.socTarafKepentinganPenting.value == '17')
-{
-	
-
-		
-        if(document.f1.read_mode.value != "disabled")
-		{
-		document.getElementById("amanah").style.display="none";	
-		document.getElementById('baitulmal').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";
-		
+		document.getElementById('majlisagama').style.display="none";
 		}
 		else
 		{
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";
-		
+		document.getElementById('majlisagama').style.display="none";
 		}
 
 
@@ -5277,60 +5422,8 @@ else if(document.f1.socTarafKepentinganPenting.value == '17')
 		document.getElementById("nofax_a").style.display="";
 		document.getElementById("nofax_b").style.display="none";
 }
-//arief add
-else if (document.f1.socTarafKepentinganPenting.value == '18' || document.f1.socTarafKepentinganPenting.value == '20' || document.f1.socTarafKepentinganPenting.value == '21'){
-	document.getElementById("j_pemohon").style.display="";	
-	document.getElementById("kp_baru").style.display="none";	
-	document.getElementById("kp_lama").style.display="none";	
-	document.getElementById("kp_jenis").style.display="none";	
-	document.getElementById("kp_lain").style.display="none";	
-	document.getElementById("jantina").style.display="none";	
-	document.getElementById("agama").style.display="none";	
-	document.getElementById("umur").style.display="none";	
-	document.getElementById("warga").style.display="none";	
-	document.getElementById("dob").style.display="none";	
-	document.getElementById("status_ob").style.display="none";	
-	document.getElementById("no_surat").style.display="none";
-	document.getElementById("no_hp").style.display="none";	
-	document.getElementById("no_hp_info").style.display="none";	
-	document.getElementById("no_tel_info").style.display="none";	
-	document.getElementById("no_fax").style.display="";
-	document.getElementById("chk_tr").style.display="none";
-	document.getElementById("nama_1").style.display="";
-	document.getElementById("nama_2").style.display="none";		
-	document.getElementById("jenis_pemohon_dis").style.display="";
-	document.getElementById("jenis_pemohon_drop").style.display="none";	
-	document.f1.jenis_pemohon.value = "1";
-	document.f1.jenis_pemohon_display.value = "01-AGENSI";		
-	document.getElementById("alamattetap1_a").style.display="";
-	document.getElementById("alamattetap2_a").style.display="";
-	document.getElementById("alamattetap3_a").style.display="";
-	document.getElementById("alamattetap1_b").style.display="none";
-	document.getElementById("alamattetap2_b").style.display="none";
-	document.getElementById("alamattetap3_b").style.display="none";
-	document.getElementById("poskodtetap_a").style.display="";
-	document.getElementById("poskodtetap_b").style.display="none";
-	document.getElementById("negeritetap_a").style.display="";
-	document.getElementById("negeritetap_b").style.display="none";
-	document.getElementById("bandartetap_a").style.display="";
-	document.getElementById("bandartetap_b").style.display="none";
-	document.getElementById("alamatsurat1_a").style.display="";
-	document.getElementById("alamatsurat2_a").style.display="";
-	document.getElementById("alamatsurat3_a").style.display="";
-	document.getElementById("alamatsurat1_b").style.display="none";
-	document.getElementById("alamatsurat2_b").style.display="none";
-	document.getElementById("alamatsurat3_b").style.display="none";	
-	document.getElementById("poskodsurat_a").style.display="";
-	document.getElementById("poskodsurat_b").style.display="none";
-	document.getElementById("negerisurat_a").style.display="";
-	document.getElementById("negerisurat_b").style.display="none";
-	document.getElementById("bandarsurat_a").style.display="";
-	document.getElementById("bandarsurat_b").style.display="none";
-	document.getElementById("notel_a").style.display="";
-	document.getElementById("notel_b").style.display="none";
-	document.getElementById("nofax_a").style.display="";
-	document.getElementById("nofax_b").style.display="none";
-}
+
+
 else
 {
 
@@ -5338,6 +5431,7 @@ else
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";
+		document.getElementById('majlisagama').style.display="none";
 		document.getElementById("j_pemohon").style.display="";
 		document.getElementById("kp_baru").style.display="";	
 		document.getElementById("kp_lama").style.display="";	
@@ -5437,12 +5531,14 @@ if(document.f1.socTarafKepentinganPentingU.value == '6')
 		document.getElementById("amanah").style.display="";	
 		document.getElementById('baitulmal').style.display="none";		
 		document.getElementById('Insolvensi').style.display="none";	
+		document.getElementById('majlisagama').style.display="none";
 		}
 		else
 		{
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";	
+		document.getElementById('majlisagama').style.display="none";
 		}
 		
 		document.getElementById("j_pemohon").style.display="";	
@@ -5510,11 +5606,95 @@ if(document.f1.socTarafKepentinganPentingU.value == '6')
 
 }
 
-else if(document.f1.socTarafKepentinganPentingU.value == '4' || document.f1.socTarafKepentinganPenting.value == '10')
+if(document.f1.socTarafKepentinganPentingU.value == '30')
+{
+
+        if(document.f1.read_mode.value != "disabled")
+		{
+		document.getElementById("amanah").style.display="none";	
+		document.getElementById('baitulmal').style.display="none";		
+		document.getElementById('Insolvensi').style.display="none";	
+		document.getElementById('majlisagama').style.display="";
+		}
+		else
+		{
+		document.getElementById("amanah").style.display="none";	
+		document.getElementById('baitulmal').style.display="none";
+		document.getElementById('Insolvensi').style.display="none";	
+		document.getElementById('majlisagama').style.display="none";
+		}
+		
+		document.getElementById("j_pemohon").style.display="";	
+		document.getElementById("kp_baru").style.display="none";	
+		document.getElementById("kp_lama").style.display="none";	
+		document.getElementById("kp_jenis").style.display="none";	
+		document.getElementById("kp_lain").style.display="none";	
+		document.getElementById("jantina").style.display="none";	
+		document.getElementById("agama").style.display="none";	
+		document.getElementById("umur").style.display="none";	
+		document.getElementById("warga").style.display="none";	
+		document.getElementById("dob").style.display="none";	
+		document.getElementById("status_ob").style.display="none";	
+		document.getElementById("no_surat").style.display="none";
+		document.getElementById("no_hp").style.display="none";	
+		if(document.f1.read_mode.value != "disabled"){
+		document.getElementById("no_hp_info").style.display="none";	
+		document.getElementById("no_tel_info").style.display="none";}	
+		document.getElementById("no_fax").style.display="";
+		document.getElementById("chk_tr").style.display="none";
+		
+	
+		
+		document.getElementById("nama_1").style.display="none";
+		document.getElementById("nama_2").style.display="";
+		
+		document.getElementById("jenis_pemohon_dis").style.display="";
+		document.getElementById("jenis_pemohon_drop").style.display="none";	
+		document.f1.jenis_pemohon.value = "1";
+		document.f1.jenis_pemohon_display.value = "01-AGENSI";
+		
+		document.getElementById("alamattetap1_a").style.display="none";
+		document.getElementById("alamattetap2_a").style.display="none";
+		document.getElementById("alamattetap3_a").style.display="none";
+		document.getElementById("alamattetap1_b").style.display="";
+		document.getElementById("alamattetap2_b").style.display="";
+		document.getElementById("alamattetap3_b").style.display="";
+		document.getElementById("poskodtetap_a").style.display="none";
+		document.getElementById("poskodtetap_b").style.display="";
+		document.getElementById("negeritetap_a").style.display="none";
+		document.getElementById("negeritetap_b").style.display="";
+		document.getElementById("bandartetap_a").style.display="none";
+		document.getElementById("bandartetap_b").style.display="";
+		
+		
+		document.getElementById("alamatsurat1_a").style.display="none";
+		document.getElementById("alamatsurat2_a").style.display="none";
+		document.getElementById("alamatsurat3_a").style.display="none";
+		document.getElementById("alamatsurat1_b").style.display="";
+		document.getElementById("alamatsurat2_b").style.display="";
+		document.getElementById("alamatsurat3_b").style.display="";	
+		document.getElementById("poskodsurat_a").style.display="none";
+		document.getElementById("poskodsurat_b").style.display="";
+		document.getElementById("negerisurat_a").style.display="none";
+		document.getElementById("negerisurat_b").style.display="";
+		document.getElementById("bandarsurat_a").style.display="none";
+		document.getElementById("bandarsurat_b").style.display="";
+		
+		
+		document.getElementById("notel_a").style.display="none";
+		document.getElementById("notel_b").style.display="";
+		document.getElementById("nofax_a").style.display="none";
+		document.getElementById("nofax_b").style.display="";
+		
+
+}
+
+else if(document.f1.socTarafKepentinganPentingU.value == '4')
 {
 //alert(document.f1.jenis_pemohon.value)
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
+		document.getElementById('majlisagama').style.display="none";
 		document.getElementById("j_pemohon").style.display="";	
 		
 		if(document.f1.jenis_pemohon.value == '1')
@@ -5612,118 +5792,32 @@ else if(document.f1.socTarafKepentinganPentingU.value == '4' || document.f1.socT
 		
 		
 		document.getElementById("notel_a").style.display="";
-		document.getElementById("notel_b").style.display="none";	
+		document.getElementById("notel_b").style.display="none";
+		
+		
+		
+		
+		
+
+	
 }
 
-//arief add Majlis Agama Islam Negeri sebagai Pemegang Amanah 
-else if(document.f1.socTarafKepentinganPenting.value == '10')
-{
-//alert(document.f1.jenis_pemohon.value)
-		document.getElementById("amanah").style.display="none";	
-		document.getElementById('baitulmal').style.display="none";
-		document.getElementById('Insolvensi').style.display="none";
-		document.getElementById("j_pemohon").style.display="";	
-		
-		if(document.f1.jenis_pemohon.value == '1') //01. AGENSI
-		{
-		document.getElementById("kp_baru").style.display="none";	
-		document.getElementById("kp_lama").style.display="none";	
-		document.getElementById("kp_jenis").style.display="none";	
-		document.getElementById("kp_lain").style.display="none";	
-		document.getElementById("jantina").style.display="none";	
-		document.getElementById("agama").style.display="none";	
-		document.getElementById("umur").style.display="none";	
-		document.getElementById("warga").style.display="none";	
-		document.getElementById("dob").style.display="none";	
-		document.getElementById("status_ob").style.display="none";	
-		document.getElementById("no_surat").style.display="none";
-		document.getElementById("no_hp").style.display="none";	
-		document.getElementById("no_hp_info").style.display="none";	
-		document.getElementById("no_tel_info").style.display="";	
-		document.getElementById("no_fax").style.display="";
-		
-		document.getElementById("nofax_a").style.display="";
-		document.getElementById("nofax_b").style.display="none";
-		
-		}
-		else
-		{
-		
-		document.getElementById("kp_baru").style.display="";	
-		document.getElementById("kp_lama").style.display="";	
-		document.getElementById("kp_jenis").style.display="";	
-		document.getElementById("kp_lain").style.display="";	
-		document.getElementById("jantina").style.display="";	
-		document.getElementById("agama").style.display="";	
-		document.getElementById("umur").style.display="";	
-		document.getElementById("warga").style.display="";	
-		document.getElementById("dob").style.display="";	
-		document.getElementById("status_ob").style.display="";	
-		document.getElementById("no_surat").style.display="";
-		document.getElementById("no_hp").style.display="";	
-		document.getElementById("no_hp_info").style.display="";	
-		document.getElementById("no_tel_info").style.display="";	
-		document.getElementById("no_fax").style.display="none";
-		
-		document.getElementById("nofax_a").style.display="none";
-		document.getElementById("nofax_b").style.display="none";
-		}
-		document.getElementById("chk_tr").style.display="";
-		document.getElementById("nama_1").style.display="";
-		document.getElementById("nama_2").style.display="none";
-		document.getElementById("jenis_pemohon_dis").style.display="none";
-		document.getElementById("jenis_pemohon_drop").style.display="";	
-		//document.f1.jenis_pemohon.value = "1";
-		document.f1.jenis_pemohon_display.value = "";
-		
-		document.getElementById("alamattetap1_a").style.display="";
-		document.getElementById("alamattetap2_a").style.display="";
-		document.getElementById("alamattetap3_a").style.display="";
-		document.getElementById("alamattetap1_b").style.display="none";
-		document.getElementById("alamattetap2_b").style.display="none";
-		document.getElementById("alamattetap3_b").style.display="none";
-		document.getElementById("poskodtetap_a").style.display="";
-		document.getElementById("poskodtetap_b").style.display="none";
-		document.getElementById("negeritetap_a").style.display="";
-		document.getElementById("negeritetap_b").style.display="none";
-		document.getElementById("bandartetap_a").style.display="";
-		document.getElementById("bandartetap_b").style.display="none";
-		
-		
-		document.getElementById("alamatsurat1_a").style.display="";
-		document.getElementById("alamatsurat2_a").style.display="";
-		document.getElementById("alamatsurat3_a").style.display="";
-		document.getElementById("alamatsurat1_b").style.display="none";
-		document.getElementById("alamatsurat2_b").style.display="none";
-		document.getElementById("alamatsurat3_b").style.display="none";	
-		document.getElementById("poskodsurat_a").style.display="";
-		document.getElementById("poskodsurat_b").style.display="none";
-		document.getElementById("negerisurat_a").style.display="";
-		document.getElementById("negerisurat_b").style.display="none";
-		document.getElementById("bandarsurat_a").style.display="";
-		document.getElementById("bandarsurat_b").style.display="none";
-		
-		
-		document.getElementById("notel_a").style.display="";
-		document.getElementById("notel_b").style.display="none";	
-}
-
-
-else if(document.f1.socTarafKepentinganPenting.value == '17' )
+else if(document.f1.socTarafKepentinganPentingU.value == '16')
 {
 
-		
         if(document.f1.read_mode.value != "disabled")
 		{
 		document.getElementById("amanah").style.display="none";	
-		document.getElementById('baitulmal').style.display="none";
-		document.getElementById('Insolvensi').style.display="none";
+		document.getElementById('baitulmal').style.display="none";	
+		document.getElementById('majlisagama').style.display="none";
+		document.getElementById('Insolvensi').style.display="";	
 		}
 		else
 		{
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
-		document.getElementById('Insolvensi').style.display="none";
+		document.getElementById('Insolvensi').style.display="none";	
+		document.getElementById('majlisagama').style.display="none";
 		}
 		
 		document.getElementById("j_pemohon").style.display="";	
@@ -5801,12 +5895,14 @@ else if(document.f1.socTarafKepentinganPentingU.value == '8')
 		{
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="";	
+		document.getElementById('majlisagama').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";	
 		}
 		else
 		{
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
+		document.getElementById('majlisagama').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";	
 		}
 	
@@ -5877,60 +5973,6 @@ else if(document.f1.socTarafKepentinganPentingU.value == '8')
 
 	
 }
-//arief add
-else if (document.f1.socTarafKepentinganPenting.value == '18' || document.f1.socTarafKepentinganPenting.value == '20' || document.f1.socTarafKepentinganPenting.value == '21'){
-	document.getElementById("j_pemohon").style.display="";	
-	document.getElementById("kp_baru").style.display="none";	
-	document.getElementById("kp_lama").style.display="none";	
-	document.getElementById("kp_jenis").style.display="none";	
-	document.getElementById("kp_lain").style.display="none";	
-	document.getElementById("jantina").style.display="none";	
-	document.getElementById("agama").style.display="none";	
-	document.getElementById("umur").style.display="none";	
-	document.getElementById("warga").style.display="none";	
-	document.getElementById("dob").style.display="none";	
-	document.getElementById("status_ob").style.display="none";	
-	document.getElementById("no_surat").style.display="none";
-	document.getElementById("no_hp").style.display="none";	
-	document.getElementById("no_hp_info").style.display="none";	
-	document.getElementById("no_tel_info").style.display="none";	
-	document.getElementById("no_fax").style.display="";
-	document.getElementById("chk_tr").style.display="none";
-	document.getElementById("nama_1").style.display="";
-	document.getElementById("nama_2").style.display="none";		
-	document.getElementById("jenis_pemohon_dis").style.display="";
-	document.getElementById("jenis_pemohon_drop").style.display="none";	
-	document.f1.jenis_pemohon.value = "1";
-	document.f1.jenis_pemohon_display.value = "01-AGENSI";		
-	document.getElementById("alamattetap1_a").style.display="";
-	document.getElementById("alamattetap2_a").style.display="";
-	document.getElementById("alamattetap3_a").style.display="";
-	document.getElementById("alamattetap1_b").style.display="none";
-	document.getElementById("alamattetap2_b").style.display="none";
-	document.getElementById("alamattetap3_b").style.display="none";
-	document.getElementById("poskodtetap_a").style.display="";
-	document.getElementById("poskodtetap_b").style.display="none";
-	document.getElementById("negeritetap_a").style.display="";
-	document.getElementById("negeritetap_b").style.display="none";
-	document.getElementById("bandartetap_a").style.display="";
-	document.getElementById("bandartetap_b").style.display="none";
-	document.getElementById("alamatsurat1_a").style.display="";
-	document.getElementById("alamatsurat2_a").style.display="";
-	document.getElementById("alamatsurat3_a").style.display="";
-	document.getElementById("alamatsurat1_b").style.display="none";
-	document.getElementById("alamatsurat2_b").style.display="none";
-	document.getElementById("alamatsurat3_b").style.display="none";	
-	document.getElementById("poskodsurat_a").style.display="";
-	document.getElementById("poskodsurat_b").style.display="none";
-	document.getElementById("negerisurat_a").style.display="";
-	document.getElementById("negerisurat_b").style.display="none";
-	document.getElementById("bandarsurat_a").style.display="";
-	document.getElementById("bandarsurat_b").style.display="none";
-	document.getElementById("notel_a").style.display="";
-	document.getElementById("notel_b").style.display="none";
-	document.getElementById("nofax_a").style.display="";
-	document.getElementById("nofax_b").style.display="none";
-}
 
 
 else
@@ -5940,6 +5982,7 @@ else
 //alert(document.f1.jenis_pemohon.value)
 		document.getElementById("amanah").style.display="none";	
 		document.getElementById('baitulmal').style.display="none";
+		document.getElementById('majlisagama').style.display="none";
 		document.getElementById('Insolvensi').style.display="none";
 		document.getElementById("j_pemohon").style.display="";	
 
@@ -6079,7 +6122,7 @@ function pilih_amanah()
 
 
 
-if((document.f1.socTarafKepentinganPenting.value == "6" || document.f1.socTarafKepentinganPenting.value == "16" || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "17" || document.f1.socTarafKepentinganPenting.value == "19" || document.f1.socTarafKepentinganPenting.value == "20") && document.f1.txtNamaOBPenting!= null){
+if((document.f1.socTarafKepentinganPenting.value == "6" || document.f1.socTarafKepentinganPenting.value == "16" || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "17" || document.f1.socTarafKepentinganPenting.value == "21") || document.f1.socTarafKepentinganPenting.value == "30" && document.f1.txtNamaOBPenting!= null){
 	
 							document.f1.socNegeriPenting.value = '';
 					 		document.f1.socNegeriPenting_D.value = '';
@@ -6139,9 +6182,13 @@ if(document.f1.socTarafKepentinganPenting.value == '16')
 {
 document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
 }
+if(document.f1.socTarafKepentinganPenting.value == '30')
+{
+document.f1.jenis_pej.value = document.f1.jenis_pej5.value;
+}
 
 
-if(document.f1.jenis_pej.value != "" && document.f1.read_mode.value != "disabled" && document.f1.txtNamaOBPenting != null && (document.f1.socTarafKepentinganPenting.value == "6"  || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "16") )
+if(document.f1.jenis_pej.value != "" && document.f1.read_mode.value != "disabled" && document.f1.txtNamaOBPenting != null && (document.f1.socTarafKepentinganPenting.value == "6"  || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "16"  || document.f1.socTarafKepentinganPenting.value == "30") )
 {
 //alert("alamat_raya 1")
 if('$!skrin_online_popup' == "yes")
@@ -6177,9 +6224,15 @@ if(document.f1.socTarafKepentinganPenting.value == '16')
 document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
 } 
 
-
-if(document.f1.jenis_pej.value != "" && document.f1.read_mode.value != "disabled"  && document.f1.txtNamaOBPentingU != null && (document.f1.socTarafKepentinganPentingU.value == "6" || document.f1.socTarafKepentinganPentingU.value == "8" || document.f1.socTarafKepentinganPentingU.value == "16") )
+if(document.f1.socTarafKepentinganPenting.value == '30')
 {
+document.f1.jenis_pej.value = document.f1.jenis_pej5.value;
+}
+
+
+if(document.f1.jenis_pej.value != "" && document.f1.read_mode.value != "disabled"  && document.f1.txtNamaOBPentingU != null && (document.f1.socTarafKepentinganPentingU.value == "6" || document.f1.socTarafKepentinganPentingU.value == "8" || document.f1.socTarafKepentinganPentingU.value == "16" || document.f1.socTarafKepentinganPentingU.value == "30") )
+{
+	alert("document.f1.socTarafKepentinganPentingU.value = "+document.f1.socTarafKepentinganPentingU.value);
 if('$!skrin_online_popup' == "yes")
 {
 url = "../../servlet/ekptg.view.ppk.PendaftaranCheck";
@@ -6203,6 +6256,7 @@ document.f1.jenis_pej1.value = "";
 document.f1.jenis_pej2.value = "";
 document.f1.jenis_pej.value = "";
 document.f1.jenis_pej3.value = "";
+document.f1.jenis_pej5.value = "";
 }
 
 

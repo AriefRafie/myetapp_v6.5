@@ -301,7 +301,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 		myLog.info("submit=" + submit);
 		myLog.info("mode=" + mode);
 		
-		//SENARAI SEMAK SCRIPT 29072020
+		//SHIQA SENARAI SEMAK SCRIPT 29072020
 		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session, "phppnw"));
 
 
