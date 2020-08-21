@@ -45,7 +45,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
         <tr>
           <td class="$row" align="center">$senaraiImejan.bil</td>
           <td class="$row"><a href="javascript:paparDokumen($senaraiImejan.idDokumen)" class="style2">$senaraiImejan.namaDokumen</a></td>
-          <td class="$row">$senaraiImejan.jenisImej</td>
+          <td class="$row">$senaraiImejan.jenisImej</td>          
         </tr>
         #end
         #else
