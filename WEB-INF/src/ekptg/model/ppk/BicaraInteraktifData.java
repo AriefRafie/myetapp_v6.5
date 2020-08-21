@@ -5125,7 +5125,10 @@ public class BicaraInteraktifData {
 	}
 	
 	//arief add tidak hadir
-	public void simpanTidakHadir(HttpSession session, String id_bitidakhadir, String id_perbicaraan, String nama, String hubungan, String pengenalan, String status, String umur, Db db) throws Exception {
+	public void simpanKehadiran(HttpSession session, String id_bitidakhadir, String id_perbicaraan, 
+			String nama, String hubungan, 
+			String pengenalan, String status, String umur,
+			String jenis_tidakhadir, String id_tidakhadir, Db db) throws Exception {
 		Db db1 = null;
 		String sql = "";
 		String USER_ID_SYSTEM = (String)session.getAttribute("_ekptg_user_id");	
@@ -5162,6 +5165,8 @@ public class BicaraInteraktifData {
 			r.add("STATUS", status.toUpperCase());
 			r.add("UMUR", umur.toUpperCase());
 			r.add("PENGENALAN", pengenalan.toUpperCase());
+			r.add("JENIS_TIDAKHADIR", jenis_tidakhadir);
+			r.add("ID_TIDAKHADIR", id_tidakhadir);
 			
 			if(!id_bitidakhadir.equals(""))
 			{
@@ -5177,7 +5182,6 @@ public class BicaraInteraktifData {
 			}
 			myLogger.info("INSERT TBLPPKBITIDAKHADIR : "+sql);				
 			stmt.executeUpdate(sql);
-			
 		}
 		catch (Exception re) {
 			throw re;
@@ -5225,19 +5229,14 @@ public class BicaraInteraktifData {
 	//arief add tidak hadir
 	public String queryListTidakHadir(String id_perbicaraan,String id_bitidakhadir)
 	{
-		String sql = " SELECT " +
-				//"B.KETERANGAN," +
-				//"B.NOTA_PEGAWAI " +				
-				//"TRIM(REGEXP_REPLACE(KP.KETERANGAN, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS KETERANGAN, " +
-				//"TRIM(REGEXP_REPLACE(KP.NOTA_PEGAWAI, '([[:space:]][[:space:]]+)|([[:cntrl:]]+)', ' ')) AS NOTA_PEGAWAI,  " +				
-				"* FROM TBLPPKBITIDAKHADIR KP WHERE KP.ID_BITIDAKHADIR IS NOT NULL ";
+		String sql = " SELECT * FROM TBLPPKBITIDAKHADIR KP WHERE KP.ID_BITIDAKHADIR IS NOT NULL ";
 		if(!id_perbicaraan.equals(""))
 		{
-			sql +=" AND KP.JENIS_HADIR = 'T' AND KP.ID_PERBICARAAN = '"+id_perbicaraan+"' ";
+			sql +=" AND KP.JENIS_TIDAKHADIR = 'T' AND KP.ID_PERBICARAAN = '"+id_perbicaraan+"' ";
 		}
 		if(!id_bitidakhadir.equals(""))
 		{
-			sql +=" AND KP.ID_BIKEHADIRAN = '"+id_bitidakhadir+"' ";
+			sql +=" AND KP.ID_BITIDAKHADIR = '"+id_bitidakhadir+"' ";
 		}
 		sql += "ORDER BY NAMA ";
 		return sql;
@@ -5260,8 +5259,8 @@ public class BicaraInteraktifData {
 		//h.put("CATATAN",rs == null ? "" :rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN").toUpperCase());
 		//h.put("KETERANGAN",rs == null ? "" :rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
 		//h.put("NOTA_PEGAWAI",rs == null ? "" :rs.getString("NOTA_PEGAWAI") == null ? "" : rs.getString("NOTA_PEGAWAI"));
-		//h.put("JENIS_HADIR",rs == null ? "" :rs.getString("JENIS_HADIR") == null ? "" : rs.getString("JENIS_HADIR").toUpperCase());
-		//h.put("ID_HADIR",rs == null ? "" :rs.getString("ID_HADIR") == null ? "" : rs.getString("ID_HADIR").toUpperCase());
+		h.put("JENIS_TIDAKHADIR",rs == null ? "" :rs.getString("JENIS_TIDAKHADIR") == null ? "" : rs.getString("JENIS_TIDAKHADIR").toUpperCase());
+		h.put("ID_TIDAKHADIR",rs == null ? "" :rs.getString("ID_TIDAKHADIR") == null ? "" : rs.getString("ID_TIDAKHADIR").toUpperCase());
 		return h;	
 		
 	}
@@ -5311,7 +5310,7 @@ public class BicaraInteraktifData {
 		}
   }
 	//arief add tidak hadir
-	public void deleteTidakHadir(HttpSession session,String id_bitidakhadir,String id_perbicaraan,Db db) throws Exception {
+	public void deleteTidakHadir(HttpSession session,String id_bitidakhadir,String id_perbicaraan, String jenis_tidakhadir,Db db) throws Exception {
 		Db db1 = null;
 		String sql = "";
 		try {
@@ -5349,6 +5348,56 @@ public class BicaraInteraktifData {
 	
 	//arief add tidak hadir
 	public List listTidakHadir(HttpSession session,String id_permohonansimati,String id_permohonan, String id_perbicaraan,String id_pemohon, Db db)throws Exception {
+		Db db1 = null;
+		ResultSet rs = null;
+		Statement stmt = null;
+		List listTidakHadir = null;
+		String sql = "";	
+		
+		try{
+			
+		if(db != null)
+		{
+			db1 = db;
+		}
+		else
+		{
+			db1 = new Db();
+		}
+		
+		stmt = db1.getStatement();			
+		sql += queryListTidakHadir(id_perbicaraan,"");		
+		myLogger.info(" BICARA INTERAKTIF : SQL listTidakHadir :"+ sql);		
+		rs = stmt.executeQuery(sql);
+		listTidakHadir = Collections.synchronizedList(new ArrayList());
+		
+		Map h = null;
+		int bil = 0;
+		while (rs.next()) {
+			h = Collections.synchronizedMap(new HashMap());
+			bil++;
+			String rowCss = "";
+			if ( (bil % 2) == 0 )
+			{
+				rowCss = "row2";
+			}
+	        else
+	        {
+	        	rowCss = "row1";
+	        }			
+			listTidakHadir.add(getHashMapTidakHadir(session,rs,rowCss,bil+"",db));
+		}
+		} finally {
+			if (db == null)
+			{
+				db1.close();
+			}
+		}
+		return listTidakHadir;
+	}
+	
+	//arief add tidak hadir
+	public List listTidakHadir(HttpSession session,String id_perbicaraan, Db db)throws Exception {
 		Db db1 = null;
 		ResultSet rs = null;
 		Statement stmt = null;
