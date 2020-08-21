@@ -2,7 +2,6 @@ package ekptg.model.htp;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -10,12 +9,11 @@ import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
 import org.apache.log4j.Logger;
-import org.apache.velocity.VelocityContext;
+//import org.apache.velocity.VelocityContext;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblsemakan;
-import ekptg.model.php2.utiliti.LampiranBean;
 import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmSemakan {
@@ -26,9 +24,8 @@ public class FrmSemakan {
 	private static Db db = null;
 	private static String sql = "";
 	public String mode = "";
-
+	public static Vector<Hashtable<String,String>> senarai = null;
 //	VelocityContext context_ = null;
-	
 //	FrmSemakan(VelocityContext context) {
 //		context_ = context;
 //	}
@@ -279,8 +276,8 @@ public class FrmSemakan {
 		 
 	}
 //	
-	 public static Vector getSenaraiSemakan(String kodForm,String aktif) throws Exception {
-		 Vector list = new Vector();
+	 public static Vector<Hashtable<String,String>> getSenaraiSemakan(String kodForm,String aktif) throws Exception {
+		 Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
 		 try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
@@ -296,10 +293,10 @@ public class FrmSemakan {
 		      sql = r.getSQLSelect("tblsemakan s,tblsemakansenarai i");
 		      ResultSet rs = stmt.executeQuery(sql);
 		      
-		      Hashtable h;
+		      Hashtable<String,String> h;
 
 		      while (rs.next()) {
-		    	  h = new Hashtable();
+		    	  h = new Hashtable<String,String>();
 		    	  h.put("id", rs.getString("id_semakansenarai"));
 		    	  h.put("keterangan", rs.getString("perihal"));
 		    	  list.addElement(h);
@@ -316,8 +313,8 @@ public class FrmSemakan {
 		  
 	 }	 
 	 
-	 public static Vector getSenaraiSemakanHantar(String idpermohonan)throws Exception {
-		 Vector list = new Vector();
+	 public static Vector<Hashtable<String,String>> getSenaraiSemakanHantar(String idpermohonan)throws Exception {
+		 Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
 		 try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
@@ -331,10 +328,10 @@ public class FrmSemakan {
 		      ResultSet rs = stmt.executeQuery(sql);
 		    
 		      //Tblsemakanhantar h=null;
-		      Hashtable h = null;
+		      Hashtable<String,String> h = null;
 
 		      while (rs.next()) {
-		    	  h = new Hashtable();
+		    	  h = new Hashtable<String,String>();
 		    	  h.put("IdSemakansenarai",rs.getString("id_semakansenarai"));
 		    	  h.put("IdSemakanhantari",rs.getString("id_semakanhantar"));
 		    	  list.addElement(h);
@@ -371,15 +368,13 @@ public class FrmSemakan {
 		      sql = r.getSQLSelect("tblsemakanhantar i");
 	    	  //log.info("FrmSemakan:isSemakan("+idpermohonan+","+idsemakansenarai+")::sql:::"+sql);
 		      
-		      //fir
-		      //log.info("sql semakan : " + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
-		      Vector list = new Vector();
-		      Hashtable h;
+		      senarai = new Vector<Hashtable<String,String>>();
+		      Hashtable<String,String> h;
 		      while (rs.next()) {
-		    	  h = new Hashtable();
+		    	  h = new Hashtable<String,String>();
 		    	  h.put("id", rs.getString("id_semakansenarai"));
-		    	  list.addElement(h);
+		    	  senarai.addElement(h);
 		    	  rValue=true;
 		      
 		      }
@@ -458,7 +453,7 @@ public class FrmSemakan {
 		
 	 private ILampiran getDocPHP(){
 		if(iLampiranPHP == null){
-			iLampiranPHP = new LampiranBean();
+			iLampiranPHP = new ekptg.model.php2.utiliti.LampiranBean();
 		}
 		return iLampiranPHP;
 				
