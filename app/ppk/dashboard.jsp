@@ -1,4 +1,4 @@
-
+<!-- 21/08/2020 by nizam -->
     
 <script type="text/javascript" src="../library/online/prototype.js"></script>
 <script type="text/javascript" src="../library/online/scriptaculous/scriptaculous.js"></script>
@@ -7,7 +7,7 @@
     <script src="../RGraph/libraries/RGraph.common.dynamic.js" ></script>
     <script src="../RGraph/libraries/RGraph.common.tooltips.js" ></script>
     <script src="../RGraph/libraries/RGraph.common.effects.js" ></script>
-    <script src="../RGraph/libraries/RGraph.hbar.js" ></script>
+    <script src="../RGraph/libraries/RGraph.hbar.js" ></script>     
     <script src="../RGraph/libraries/RGraph.pie.js" ></script>   
 
 <!--
