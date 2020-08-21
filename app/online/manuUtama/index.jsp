@@ -269,9 +269,9 @@
 <!-- 					</tr> -->
 					<tr>
 						<td>
-							<a href="javascript:goTo('dikembalikan')" class="help" title="Penyewaan">
+							<a href="javascript:goTo('dikembalikan')" class="help" title="Permohonan Dikembalikan">
 								<font color="blue"><li>
-									##if($jumlah_notifikasi_penyewaan > 0)
+									#if($jumlah_notifikasi_penyewaan > 0)
 								<label style="background-color:blue" align="center" valign="top" > 
 								<b><font color="WHITE"><blink>$!bilPPKkembali</blink></font></b>
 								</label>&nbsp;
