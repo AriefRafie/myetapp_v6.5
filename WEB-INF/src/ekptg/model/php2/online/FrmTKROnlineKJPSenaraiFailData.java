@@ -73,8 +73,6 @@ public class FrmTKROnlineKJPSenaraiFailData {
 					+ " AND A.ID_MASUK = H.USER_ID(+)"
 					+ " AND B.ID_STATUS != '999'";
 
-
-
 			// noFail
 			if (noFail != null) {
 				if (!noFail.trim().equals("")) {
@@ -313,7 +311,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				}
 			}
 
-			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
+			//SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
 
 			sql = sql + " ORDER BY F.TARIKH_MASUK DESC ";
 
@@ -2842,4 +2840,6 @@ public class FrmTKROnlineKJPSenaraiFailData {
 	public void setBeanMaklumatTukarguna(Vector beanMaklumatTukarguna) {
 		this.beanMaklumatTukarguna = beanMaklumatTukarguna;
 	}
+	
+	
 }

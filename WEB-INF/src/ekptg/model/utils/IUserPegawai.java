@@ -6,11 +6,6 @@ import java.util.Map;
 import java.util.Vector;
 
 public interface IUserPegawai {
-
-	
-	// class IUserPegawai
-	// test 13/8/2020
-
 	public boolean delete(String id);
 	public boolean insert(Hashtable<?, ?> parameters,String uid);
 	public boolean update(Hashtable<?, ?> parameters,String id);
@@ -27,8 +22,7 @@ public interface IUserPegawai {
 	public Vector<Hashtable<String, String>> getSenaraiPegawaiMapping(String idNegeri) throws Exception;
 	public Vector<Hashtable<String, String>> getSenaraiUsersByNegeri(String idNegeri) throws Exception;
 
-	//public HakmilikUrusan simpanHakmilik(HakmilikUrusan urusan);
-	//public HakmilikUrusan updateHakmilik(HakmilikUrusan urusan);
-	//public void deleteHakmilik(String idHakmilikUrusan) throws Exception;
-}
 
+}
+// 2020/08/21
+// 13/8/2020

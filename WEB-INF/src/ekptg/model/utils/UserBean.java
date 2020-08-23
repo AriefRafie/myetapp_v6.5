@@ -31,10 +31,7 @@ public class UserBean implements IUserPegawai {
 		ResultSet rs = null;
 		Statement stmt = null;
 		List<Map<String,String>> listPengunaByRoleNegeri = null;
-		String sql = "";
-		
-		
-		
+		String sql = "";		
 		try {
 			db = new Db();
 			stmt = db.getStatement();	
@@ -460,4 +457,6 @@ public class UserBean implements IUserPegawai {
 		return h;
 	}
 	
+	
 }
+//2020/08/21
