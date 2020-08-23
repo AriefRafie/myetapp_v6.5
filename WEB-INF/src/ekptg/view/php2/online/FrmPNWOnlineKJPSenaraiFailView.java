@@ -406,13 +406,13 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 					this.context.put("errorPeganganHakmilik", "Hakmilik tidak wujud.");
 				}
 			}
-
+			
 			// MAKLUMAT KEGUNAAN TANAH
 
 			beanMaklumatTanah = new Vector();
 			logic.setMaklumatTanah(idHakmilikAgensi);
 			beanMaklumatTanah = logic.getBeanMaklumatTanah();
-			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " "));
+			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong("1"), "disabled", "class=\"disabled\""));
 			this.context.put("idHakmilikAgensi", idHakmilikAgensi);
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 			this.context.put("idFail", idFail);
