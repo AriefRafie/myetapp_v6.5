@@ -28,3 +28,4 @@ public class Fungsi {
 	}
 	
 }
+// 20200822
