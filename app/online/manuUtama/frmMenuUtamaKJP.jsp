@@ -221,18 +221,15 @@ function toggle_div(id) {
 														</tr> -->
 														<tr>
 															<td>
-																<a href="javascript:pelepasan()" class="help" title="Ulasan Pelepasan">
+																<a href="javascript:penawaran()" class="help" title="Permohonan Penawaran">
 																	<font color="blue"><li>
-																	#if($jumlah_notifikasi_pelepasan > 0)
+																	#if($jumlah_notifikasi_penawaran > 0)
 																	<label style="background-color:blue" align="center" valign="top" >
-																		<b><font color="WHITE"><blink>$jumlah_notifikasi_pelepasan</blink></font></b>
+																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penawaran</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Ulasan Pelepasan</li></font>
+																	Permohonan Penawaran</li></font>
 																</a>
-																<!-- <a href="javascript:pelepasan()" class="help" title="Pelepasan">
-																	<font color="blue"><li>&nbsp;Pelepasan</li></font>
-																</a> -->
 															</td>
 														</tr>
 														<tr>
@@ -248,6 +245,23 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
+														<tr>
+															<td>
+																<a href="javascript:pelepasan()" class="help" title="Ulasan Pelepasan">
+																	<font color="blue"><li>
+																	#if($jumlah_notifikasi_pelepasan > 0)
+																	<label style="background-color:blue" align="center" valign="top" >
+																		<b><font color="WHITE"><blink>$jumlah_notifikasi_pelepasan</blink></font></b>
+																	</label>&nbsp;
+																	#end
+																	Ulasan Pelepasan</li></font>
+																</a>
+																<!-- <a href="javascript:pelepasan()" class="help" title="Pelepasan">
+																	<font color="blue"><li>&nbsp;Pelepasan</li></font>
+																</a> -->
+															</td>
+														</tr>
+														
 														<tr>
 															<td>
 																<a href="javascript:tukarGunaUlasan()" class="help" title="Ulasan Tukar Guna">
@@ -274,19 +288,7 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
-														<tr>
-															<td>
-																<a href="javascript:penawaran()" class="help" title="Permohonan Penawaran">
-																	<font color="blue"><li>
-																	#if($jumlah_notifikasi_penawaran > 0)
-																	<label style="background-color:blue" align="center" valign="top" >
-																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penawaran</blink></font></b>
-																	</label>&nbsp;
-																	#end
-																	Permohonan Penawaran</li></font>
-																</a>
-															</td>
-														</tr>
+														
 														<tr>
 															<td>
 																<a href="javascript:aktapelantarbenua()" class="help" title="Akta Pelantar Benua">
@@ -309,7 +311,7 @@ function toggle_div(id) {
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_MOF</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Ulasan Kertas Kewangan</li></font>
+																	Ulasan Menteri Kewangan</li></font>
 																</a>
 															</td>
 														</tr>
