@@ -1256,7 +1256,7 @@ function arkibWindow(noFail){
 <script>
 function viewLogTugasanFail()
 {
-	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupLogTugasanView?idFail=$idFail"; //&command=LogTugasanView";
+	var url = "../x/ekptg.view.ppk.FrmPopupLogTugasanView?idFail=$idFail"; //&command=LogTugasanView";
 	var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=yes,scrollbars=no');
 	if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;
