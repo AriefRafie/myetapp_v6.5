@@ -157,13 +157,6 @@ a.nav:visited {
                             <li> Maklumat GIS</li>
                             </a></td>
                           </tr>
-                          #if ($role == '(PHP)PYWPenolongPegawaiTanahNegeri')
-                          <tr>
-                            <td><a href="javascript:gotoSenaraiAduanPenguatkuasaan()" class="help" title="Fail Aduan Penguatkuasaan">
-                            <font color="blue"><li> Aduan Urusan Penguatkuasaan</li></font>
-                            </a></td>
-                          </tr>
-                          #end
                         </table></td>
                     </tr>
                   </table></td>
