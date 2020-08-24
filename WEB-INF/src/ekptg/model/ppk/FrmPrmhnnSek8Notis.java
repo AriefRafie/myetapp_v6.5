@@ -59,6 +59,7 @@ public class FrmPrmhnnSek8Notis {
 	// seksyen 8 (ada campur utk seksyen 17)
 	private static Vector list = new Vector();
 	private static Vector listOB = new Vector();
+	private static Vector listPra = new Vector();
 	private static Vector listSemuaOB = new Vector();
 	private static Vector listOB18 = new Vector();
 	private static Vector listDefault = new Vector();
@@ -213,6 +214,10 @@ public class FrmPrmhnnSek8Notis {
 
 	public static Vector getListSemuaOB() {
 		return listSemuaOB;
+	}
+	
+	public static Vector getListPraPerbicaraan() {
+		return listPra;
 	}
 
 	public static Vector getPenghantarNotisByJkptg() {
@@ -1439,10 +1444,41 @@ public class FrmPrmhnnSek8Notis {
 
 			// tukar status permohonan diteruskan => notis perbicaraan
 			int status_notisperbicaraan = 18;
+
+			/*
+			 * SQLRenderer rP = new SQLRenderer();
+			 * rP.update("id_permohonan",id_permohonan); rP.add("id_status",
+			 * status_notisperbicaraan); rP.add("id_kemaskini",id_masuk);
+			 * rP.add("tarikh_kemaskini", rP.unquote("sysdate")); sql =
+			 * rP.getSQLUpdate("Tblppkpermohonan"); stmt.executeUpdate(sql);
+			 */
+
+			// update n add tblrujsuburusanstatus
+			/*
+			 * SQLRenderer r6 = new SQLRenderer();
+			 * r6.update("id_Suburusanstatusfail",id_suburusanstatusfail);
+			 * r6.add("AKTIF",0); r6.add("ID_KEMASKINI",id_masuk);
+			 * r6.add("TARIKH_KEMASKINI",r6.unquote("sysdate")); sql6 =
+			 * r6.getSQLUpdate("tblrujsuburusanstatusfail");
+			 * stmt.executeUpdate(sql6);
+			 * 
+			 * 
+			 * SQLRenderer r5 = new SQLRenderer();
+			 * r5.add("ID_SUBURUSANSTATUSFAIL"
+			 * ,DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ"));
+			 * r5.add("ID_PERMOHONAN",id_permohonan); r5.add("ID_FAIL",id_fail);
+			 * r5.add("ID_SUBURUSANSTATUS",354); r5.add("AKTIF",1);
+			 * r5.add("ID_MASUK",id_masuk); r5.add("id_kemaskini",id_masuk);
+			 * r5.add("TARIKH_MASUK",r5.unquote("sysdate"));
+			 * r5.add("TARIKH_KEMASKINI",r5.unquote("sysdate")); sql5 =
+			 * r5.getSQLInsert("tblrujsuburusanstatusfail");
+			 * stmt.executeUpdate(sql5);
+			 */
+
 			conn.commit();
 
 			Statement stmtfail = db.getStatement();
-			SQLRenderer rfail = new SQLRenderer();			
+			SQLRenderer rfail = new SQLRenderer();
 			String sql_fail = "SELECT F.NO_FAIL, S.NAMA_SIMATI  FROM  TBLPPKPERBICARAAN B, " +
 					" TBLPPKKEPUTUSANPERMOHONAN KP,TBLPPKPERMOHONAN P,TBLPFDFAIL F , TBLPPKSIMATI S, TBLPPKPERMOHONANSIMATI M " +
 					" WHERE B.ID_KEPUTUSANPERMOHONAN = KP.ID_KEPUTUSANPERMOHONAN " +
@@ -1531,6 +1567,14 @@ public class FrmPrmhnnSek8Notis {
 			
 			/** END ADD BY PEJE - REGISTER EVENT TO MYCALENDAR TABLE **/
 
+//			 addCalendarNotis(session, event_id, event_text, tarikh_bicara,id_ppkrujunit, id_perbicaraan + "");
+			// saveActivityEvent(session,"09:00 AM","09:30 AM",event_text,nama_pejabat,
+			// remark,
+			// tarikh_bicara,user_login);
+			//########################## end insert calendar #############################
+			// :::SUB
+			// ID_STATUS : status_notisperbicaraan
+			// ID_SUBURUSAN : 354
 			FrmPrmhnnSek8DaftarSek8InternalData logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 			logic_A.kemaskiniSubUrusanStatusFail(session, id_permohonan,
 					id_masuk, status_notisperbicaraan + "", "354", id_fail);
@@ -1542,6 +1586,9 @@ public class FrmPrmhnnSek8Notis {
 			 if ((tarikh_bicara.compareTo(formatter.format(date)) > 0 ) || (tarikh_bicara.compareTo(formatter.format(date)) == 0 ) ){
 				 myLogger.info("send email  >>>>>> tarikh_bicara : ");
 				 hantarEmelTTPegawai(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
+				 
+				//###############add send email#########################
+				//hantarEmel(session,Long.toString(id_perbicaraan),no_fail,nama_simati);
 			 }
 		
 
@@ -2259,6 +2306,270 @@ public class FrmPrmhnnSek8Notis {
 				db.close();
 		}
 	}// close OB
+	
+	//
+	public static void setTblppkpraperbicaraan(String idPermohonan) throws Exception {
+		Db db = null;
+		listPra.clear();
+		String sql = "";
+
+		try {
+
+			db = new Db();
+
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT * FROM TBLPPKPRAPERBICARAAN WHERE ID_PERMOHONAN = "+idPermohonan;
+			
+			myLogger.info("setTblppkpraperbicaraan :" + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+
+			while (rs.next()) {
+
+				h = new Hashtable();
+
+				h.put("tarikh_inkuiri", rs.getDate("tarikh_inkuiri") == null ? ""
+						: Format.format(rs.getDate("tarikh_inkuiri")));
+				h.put("sebab_inkuiri", rs.getString("sebab_inkuiri") == null ? ""
+						: rs.getString("sebab_inkuiri"));
+				h.put("catatan_sebabinkuiri", rs.getString("catatan_sebabinkuiri") == null ? ""
+						: rs.getString("catatan_sebabinkuiri"));
+				h.put("catatan_notis", rs.getString("catatan_notis") == null ? "" : rs
+						.getString("catatan_notis"));
+				h.put("alamat1", rs.getString("alamat_bicara1") == null ? "" : rs
+						.getString("alamat_bicara1"));
+				h.put("alamat2", rs.getString("alamat_bicara2") == null ? "" : rs
+						.getString("alamat_bicara2"));
+				h.put("alamat3", rs.getString("alamat_bicara3") == null ? "" : rs
+						.getString("alamat_bicara3"));
+				h.put("poskod", rs.getString("poskod_bicara") == null ? "" : rs
+						.getString("poskod_bicara"));
+				h.put("idnegeri", rs.getString("idnegeri_bicara") == null ? "" : rs
+						.getString("idnegeri_bicara"));
+				h.put("masa_bicara", rs.getString("masa_bicara") == null ? "" : rs
+						.getString("masa_bicara"));
+				h.put("jenis_masa_bicara", rs.getString("jenis_masa_bicara") == null ? "" : rs
+						.getString("jenis_masa_bicara"));
+				h.put("keputusan_praperbicaraan", rs.getString("keputusan_praperbicaraan") == null ? "" : rs
+						.getString("keputusan_praperbicaraan"));
+				h.put("catatan_keputusan", rs.getString("catatan_keputusan") == null ? "" : rs
+						.getString("catatan_keputusan"));
+				
+
+				listPra.addElement(h);
+				bil++;
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public static void setTblppkpraperbicaraan2(String idFail) throws Exception {
+		Db db = null;
+		listPra.clear();
+		String sql = "";
+
+		try {
+
+			db = new Db();
+
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT * FROM TBLPPKPRAPERBICARAAN WHERE ID_PERMOHONAN in (SELECT ID_PERMOHONAN FROM TBLPPKPERMOHONAN WHERE ID_FAIL = "+idFail+")";
+			
+			myLogger.info("setTblppkpraperbicaraan :" + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+
+			while (rs.next()) {
+
+				h = new Hashtable();
+
+				h.put("tarikh_inkuiri", rs.getDate("tarikh_inkuiri") == null ? ""
+						: Format.format(rs.getDate("tarikh_inkuiri")));
+				h.put("id_praperbicaraan", rs.getInt("id_praperbicaraan"));
+				h.put("sebab_inkuiri", rs.getString("sebab_inkuiri") == null ? ""
+						: rs.getString("sebab_inkuiri"));
+				h.put("catatan_sebabinkuiri", rs.getString("catatan_sebabinkuiri") == null ? ""
+						: rs.getString("catatan_sebabinkuiri"));
+				h.put("catatan_notis", rs.getString("catatan_notis") == null ? "" : rs
+						.getString("catatan_notis"));
+				h.put("alamat1", rs.getString("alamat_bicara1") == null ? "" : rs
+						.getString("alamat_bicara1"));
+				h.put("alamat2", rs.getString("alamat_bicara2") == null ? "" : rs
+						.getString("alamat_bicara2"));
+				h.put("alamat3", rs.getString("alamat_bicara3") == null ? "" : rs
+						.getString("alamat_bicara3"));
+				h.put("poskod", rs.getString("poskod_bicara") == null ? "" : rs
+						.getString("poskod_bicara"));
+				h.put("idnegeri", rs.getString("idnegeri_bicara") == null ? "" : rs
+						.getString("idnegeri_bicara"));
+				h.put("masa_bicara", rs.getString("masa_bicara") == null ? "" : rs
+						.getString("masa_bicara"));
+				h.put("jenis_masa_bicara", rs.getString("jenis_masa_bicara") == null ? "" : rs
+						.getString("jenis_masa_bicara"));
+				
+
+				listPra.addElement(h);
+				bil++;
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	
+	//INSERT NOTIS PRAPERBICARAAN
+	
+	public static void addNotisPraPerbicaraan(Hashtable data) throws Exception {
+
+		
+		
+		Db db = null;
+
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			long id_notispraperbicaraan = DB.getNextID("TBLPPKPRAPERBICARAAN_SEQ");
+
+			// id login
+			String id_masuk = (String) data.get("id_masuk");
+			if (id_masuk == null){
+				id_masuk = (String) data.get("id_kemaskini");
+			}
+			String socJenisWaktu = (String) data.get("socJenisWaktu");
+			String txtMasaBicara = (String) data.get("txtMasaBicara");
+			String tarikhInkuiri = (String) data.get("txdTarikhInkuiri");
+			String sebabInkuiri = (String) data.get("socSebab");
+			String txtSebabsebabLain = (String) data.get("txtSebabsebabLain");
+			String txtCatatan = (String) data.get("txtCatatan");
+			String id_kemaskini = (String) data.get("id_kemaskini");
+			String idPermohonan = (String) data.get("idPermohonan");
+			String alamat_bicara1 = (String) data.get("alamat_bicara1");
+			String alamat_bicara2 = (String) data.get("alamat_bicara2");
+			String alamat_bicara3 = (String) data.get("alamat_bicara3");
+			String poskod_bicara = (String) data.get("poskod_bicara");
+			String negeri_bicara = (String) data.get("negeri_bicara");
+			
+			String TI = "to_date('" + tarikhInkuiri + "','dd/MM/yyyy')";
+			
+			// insert data into Tblppkpraperbicaraan
+			Statement stmtS = db.getStatement();
+			
+			
+			
+			SQLRenderer r = new SQLRenderer();
+
+			r.add("id_notispraperbicaraan", id_notispraperbicaraan);
+			r.add("jenis_masa_bicara", socJenisWaktu);
+			r.add("masa_bicara", txtMasaBicara);
+			r.add("id_praperbicaraan", id_notispraperbicaraan);
+			r.add("id_masuk", id_masuk);
+			r.add("tarikh_masuk", r.unquote("sysdate"));
+			r.add("tarikh_inkuiri",  r.unquote(TI));
+			r.add("sebab_inkuiri", sebabInkuiri);
+			r.add("catatan_notis", txtCatatan);
+			r.add("id_permohonan", idPermohonan);
+			r.add("ALAMAT_BICARA1", alamat_bicara1);
+			r.add("ALAMAT_BICARA2", alamat_bicara2);
+			r.add("ALAMAT_BICARA3", alamat_bicara3);
+			r.add("POSKOD_BICARA", poskod_bicara);
+			r.add("IDNEGERI_BICARA", negeri_bicara);
+			
+			sql = r.getSQLInsert("Tblppkpraperbicaraan");
+			myLogger.info("addNotisPraPerbicaraan : " + sql);
+			stmt.executeUpdate(sql);
+			
+			
+			
+			
+			
+
+		}
+		finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
+	
+	public static void updateNotisPraPerbicaraan(Hashtable data) throws Exception {
+
+		Db db = null;
+		String sql = "";
+		String keputusan = "";
+		String catatan_keputusan = "";
+		try {
+
+			db = new Db();
+			Statement stmt = db.getStatement();
+			String id_masuk = (String) data.get("id_masuk");
+			if (id_masuk == null){
+				id_masuk = (String) data.get("id_kemaskini");
+			}
+			String socJenisWaktu = (String) data.get("socJenisWaktu");
+			String txtMasaBicara = (String) data.get("txtMasaBicara");
+			String id_praperbicaraan = (String) data.get("id_praperbicaraan");
+			String tarikhInkuiri = (String) data.get("txdTarikhInkuiri");
+			String sebabInkuiri = (String) data.get("socSebab");
+			String txtSebabsebabLain = (String) data.get("txtSebabsebabLain");
+			String txtCatatan = (String) data.get("txtCatatan");
+			String id_kemaskini = (String) data.get("id_kemaskini");
+			String idPermohonan = (String) data.get("idPermohonan");
+			String alamat_bicara1 = (String) data.get("alamat_bicara1");
+			String alamat_bicara2 = (String) data.get("alamat_bicara2");
+			String alamat_bicara3 = (String) data.get("alamat_bicara3");
+			String poskod_bicara = (String) data.get("poskod_bicara");
+			String negeri_bicara = (String) data.get("negeri_bicara");
+			keputusan = (String) data.get("socKeputusan");
+			catatan_keputusan = (String) data.get("catatan_keputusan");
+			
+			String TI = "to_date('" + tarikhInkuiri + "','dd/MM/yyyy')";
+			
+			// insert data into Tblppkpraperbicaraan
+			Statement stmtS = db.getStatement();
+			
+			
+			
+			SQLRenderer r = new SQLRenderer();
+
+			r.update("id_praperbicaraan", id_praperbicaraan);
+			r.add("jenis_masa_bicara", socJenisWaktu);
+			r.add("masa_bicara", txtMasaBicara);
+			r.add("id_kemaskini", id_masuk);
+			r.add("tarikh_kemaskini", r.unquote("sysdate"));
+			r.add("tarikh_inkuiri",  r.unquote(TI));
+			r.add("sebab_inkuiri", sebabInkuiri);
+			r.add("catatan_notis", txtCatatan);
+			r.add("id_permohonan", idPermohonan);
+			r.add("ALAMAT_BICARA1", alamat_bicara1);
+			r.add("ALAMAT_BICARA2", alamat_bicara2);
+			r.add("ALAMAT_BICARA3", alamat_bicara3);
+			r.add("POSKOD_BICARA", poskod_bicara);
+			r.add("IDNEGERI_BICARA", negeri_bicara);
+			r.add("KEPUTUSAN_PRAPERBICARAAN", keputusan);
+			r.add("CATATAN_KEPUTUSAN", catatan_keputusan);
+			sql = r.getSQLUpdate("Tblppkpraperbicaraan");
+			myLogger.info("updateNotisPraPerbicaraan : " + sql);
+			stmt.executeUpdate(sql);
+
+		}
+		finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
 
 	// LIST OB :: SEKSYEN 8 & SEKSYEN 17 ::
 	public static void setListSemuaOB(String id_permohonansimati,
@@ -2280,87 +2591,7 @@ public class FrmPrmhnnSek8Notis {
 
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			/*
-			 * sql =
-			 * "SELECT ob.id_ob, ob.id_simati, ob.nama_ob, ob.no_kp_baru, ob.no_kp_lama, "
-			 * ; sql +=
-			 * "ob.status_hidup, ob.jenis_kp, ob.no_kp_lain, ob.no_surat_beranak, "
-			 * ; sql +=
-			 * "ob.tarikh_lahir, ob.jantina, ob.id_tarafkptg, ob.umur, tr.keterangan, ob.status_ob "
-			 * ; sql +=
-			 * "FROM Tblppkob ob, Tblppkpermohonansimati sm, Tblppkrujtarafkptg tr, Tblppkpermohonan p "
-			 * ; sql +=
-			 * "WHERE ob.id_permohonansimati = sm.id_permohonansimati "; sql +=
-			 * "AND ob.id_tarafkptg = tr.id_tarafkptg "; sql +=
-			 * "AND sm.id_permohonan = p.id_permohonan "; sql +=
-			 * " AND NVL(ob.status_hidup,0) = 0 "; sql +=
-			 * " AND p.id_status <> '169' "; sql += " AND ob.id_simati = '" +
-			 * id_simati + "' " ; if(!seksyen.equals("8")){ sql +=
-			 * " AND NVL(p.no_subjaket,0) <= '" +
-			 * getNoSubjaketByIdPermohonan(getIdPermohonanByIdPermohonanSimati
-			 * (id_permohonansimati))+"'"; } //sql +=
-			 * " AND ob.id_permohonansimati <= '" + id_permohonansimati + "'";
-			 * sql += " ORDER BY ob.umur desc,ob.nama_ob asc ";
-			 */
 			
-			/*
-			
-			sql = "SELECT ob.id_ob, ob.id_simati, ob.nama_ob, ob.no_kp_baru, ob.no_kp_lama, ";
-			sql += "ob.status_hidup, ob.jenis_kp, ob.no_kp_lain, ob.no_surat_beranak, ";
-			sql += "ob.tarikh_lahir, ob.jantina, ob.id_tarafkptg, ob.umur, tr.keterangan, ob.status_ob, ob.emel ";
-			
-			
-			if (idperbicaraan != null && idperbicaraan.length() > 0){
-				sql += ", CASE WHEN ob.id_ob IN (SELECT id_ob from tblppknotisob where id_perbicaraan = '" + idperbicaraan + "') THEN 'Y' END AS flag ";
-			}
-			
-			sql += "FROM Tblppkobpermohonan ob,tblppkob ob1, Tblppkpermohonansimati sm, Tblppkrujtarafkptg tr, Tblppkpermohonan p ";
-			sql += "WHERE ob1.id_permohonansimati = sm.id_permohonansimati "
-					+ " and ob.id_ob = ob1.id_ob and ob.id_permohonansimati = '"
-					+ id_permohonansimati + "'";
-			sql += " AND ob.id_tarafkptg = tr.id_tarafkptg ";
-			sql += "AND sm.id_permohonan = p.id_permohonan ";
-			sql += " AND NVL(ob.status_hidup,0) = 0 ";
-			sql += " AND p.id_status <> '169' ";
-			sql += " AND ob.id_simati = '" + id_simati + "' ";
-
-			
-			sql += " AND ob.id_tarafkptg NOT IN (2,14) ";
-
-			if (!seksyen.equals("8")) {
-				sql += " AND NVL(p.no_subjaket,0) <= '"
-						+ getNoSubjaketByIdPermohonan(getIdPermohonanByIdPermohonanSimati(id_permohonansimati))
-						+ "'";
-			}
-			
-			sql += "UNION ";
-			
-			
-			sql += "SELECT ob.id_ob, ob.id_simati, ob.nama_ob, ob.no_kp_baru, ob.no_kp_lama, ";
-			sql += "ob.status_hidup, ob.jenis_kp, ob.no_kp_lain, ob.no_surat_beranak, ";
-			sql += "ob.tarikh_lahir, ob.jantina, ob.id_tarafkptg, ob.umur, tr.keterangan, ob.status_ob,ob.emel ";
-			
-			
-			if (idperbicaraan != null && idperbicaraan.length() > 0){
-				sql += ", CASE WHEN ob.id_ob IN (SELECT id_ob from tblppknotisob where id_perbicaraan = '" + idperbicaraan + "') THEN 'Y' END AS flag ";
-			}
-			
-			sql += "FROM Tblppkobpermohonan ob,tblppkob ob1, Tblppkpermohonansimati sm, Tblppkrujtarafkptg tr, Tblppkpermohonan p ";
-			sql += "WHERE ob1.id_permohonansimati = sm.id_permohonansimati "
-					+ " and ob.id_ob = ob1.id_ob and ob.id_permohonansimati = '" + id_permohonansimati + "'";
-			sql += " and ob1.id_permohonansimati = '" + id_permohonansimati + "'";
-			sql += " AND ob.id_tarafkptg = tr.id_tarafkptg ";
-			sql += "AND sm.id_permohonan = p.id_permohonan ";
-			sql += " AND NVL(ob.status_hidup,0) = 0 ";
-			sql += " AND p.id_status <> '169' ";
-			sql += " AND ob.id_simati = '" + id_simati + "' ";
-			sql += " AND ob.id_tarafkptg = 14 ";
-
-			sql += " ORDER BY umur DESC, nama_ob ASC ";
-			*/
-			
-			
-			//RAZMAN UBAH, QUERY ASAL ADA SELECT DALAM SELECT!!!!!!!! 
 			
 			if (idperbicaraan == null)
 			{
@@ -2771,7 +3002,7 @@ public class FrmPrmhnnSek8Notis {
 
 			String id_obminor = (String) data.get("id_obminor");
 			String id_ob = (String) data.get("id_ob");
-
+			
 			String id_pegawai = (String) data.get("id_pegawai");
 			String idNegeri = (String) data.get("socNegeri");
 
@@ -2791,7 +3022,8 @@ public class FrmPrmhnnSek8Notis {
 			String txtbandar = (String) data.get("txtbandar");
 			String txtposkod = (String) data.get("txtposkod");
 			String txtcatatan = (String) data.get("txtcatatan");
-
+			String txtTarikhPerlantikanPenjaga = (String) data.get("tarikhPerlantikanPenjaga");
+			myLogger.info("txtTarikhPerlantikanPenjaga = " + txtTarikhPerlantikanPenjaga);
 			// int idOB = 0;
 			//		      
 			// int idOBMINOR = Integer.parseInt(id_obminor);
@@ -2833,6 +3065,7 @@ public class FrmPrmhnnSek8Notis {
 			r.add("poskod", txtposkod);
 			r.add("catatan", txtcatatan);
 			r.add("bil_penjaga", bil);
+			r.add("tarikh_perlantikanpenjaga",txtTarikhPerlantikanPenjaga);
 
 			r.add("tarikh_masuk", r.unquote("sysdate"));
 			r.add("id_masuk", idPeg);
@@ -3116,7 +3349,7 @@ public class FrmPrmhnnSek8Notis {
 			r.add("pen.catatan");
 
 			r.add("bil_penjaga");
-
+			r.add("tarikh_perlantikanpenjaga");
 			r.add("pen.id_penjaga", id_penjaga);
 			sql = r.getSQLSelect("Tblppkpenjaga pen");
 
@@ -3176,7 +3409,10 @@ public class FrmPrmhnnSek8Notis {
 						: rs.getString("bil_penjaga"));
 				// h.put("id_negeri",
 				// rs.getString("id_negeri")==null?"":rs.getString("id_negeri"));
-
+				h.put("tarikh_perlantikanpenjaga", rs.getString("bil_penjaga") == null ? ""
+						: rs.getString("bil_penjaga"));
+				h.put("tarikh_perlantikanpenjaga", rs.getDate("TARIKH_PERLANTIKANPENJAGA") == null ? ""
+						: Format.format(rs.getDate("TARIKH_PERLANTIKANPENJAGA")));
 				if (rs.getString("id_negeri") == null) {
 					h.put("id_negeri", "0");
 				} else {
@@ -8572,81 +8808,6 @@ public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id
 	}// close finally
 
 }// close simpanSemakanK2
-
-	public static void addHantarLaporanNotis(Hashtable data, String id_ob, String id_perbicaraan) throws Exception {
-		Db db = null;
-		String sql = "";
-
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-
-			long id_notisobmst = DB.getNextID("TBLPPKNOTISOBMST_SEQ");
-			String id_masuk = (String) data.get("id_masuk");
-		
-			SQLRenderer r = new SQLRenderer();
-			r.add("id_notisobmst", id_notisobmst);
-			r.add("tarikh_serahan", r.unquote("sysdate"));
-			r.add("status_serah", data.get("status_serah"));
-			r.add("jenis_serah", data.get("jenis_serah"));
-			r.add("catatan", "");
-			r.add("nama_penghantar_notis", data.get("nama_penghantar_notis"));
-			r.add("id_penghantarnotis", data.get("id_penghantarnotis"));
-			r.add("id_masuk", id_masuk);
-			r.add("tarikh_masuk", r.unquote("sysdate"));
-			r.add("id_kemaskini", id_masuk);
-			r.add("tarikh_kemaskini", r.unquote("sysdate"));
-		
-			if(data.get("jenis_serah").equals("3")){
-				r.add("tarikh_emel", r.unquote("sysdate"));
-				r.add("emel", data.get("alamatEmel"));
-			}
-		
-			r.add("NAMA_PENGHANTAR_LAIN", data.get("NAMA_PENGHANTAR_LAIN"));
-			sql = r.getSQLInsert("TBLPPKNOTISOBMST");
-		
-			stmt.executeUpdate(sql);
-		
-			// create Tblppknotisperbicaraan
-			SQLRenderer r1 = new SQLRenderer();
-			r1.add("id_perbicaraan", id_perbicaraan);
-			r1.add("id_notisobmst", id_notisobmst);
-			r1.add("flag_jenis_notis", 0);
-			r1.add("id_masuk", id_masuk);
-			r1.add("tarikh_masuk", r1.unquote("sysdate"));
-			sql = r1.getSQLInsert("Tblppknotisperbicaraan");
-			stmt.executeUpdate(sql);
-		
-			//create TBLPPKNOTISOBDTL
-			SQLRenderer rDTL = new SQLRenderer();
-			rDTL.add("id_ob", id_ob);
-			rDTL.add("id_notisobmst", id_notisobmst);
-		/*		rDTL.add("nama_penerima",data.get("nama_obs") );
-				rDTL.add("no_kp_baru", data.get("no_kp_baru"));
-				rDTL.add("no_kp_lama", data.get("no_kp_lama"));
-				rDTL.add("no_kp_lain", data.get("no_kp_lain"));*/
-			rDTL.add("id_masuk", id_masuk);
-			rDTL.add("tarikh_masuk", rDTL.unquote("sysdate"));
-
-			sql = rDTL.getSQLInsert("TBLPPKNOTISOBDTL");
-			stmt.executeUpdate(sql);
-		
-		//email
-		if(data.get("jenis_serah").equals("3")){
-			//hantar emel
-			//hantarNotisByEmel((String) data.get("id_fail"),id_ob);
-			//ada attachment dlm emel
-			//hantarNotisByEmel(session,(String) data.get("id_fail"),id_ob,application,request,response);
-		}
-		
-
-		}// close try
-		finally {
-		if (db != null)
-			db.close();
-		}// close finally
-
-	}// close simpanSemakanK2
 
 
 //hide attachment
