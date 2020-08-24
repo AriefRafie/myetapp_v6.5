@@ -98,7 +98,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 Hashtable get_notifikasi_apb = null;
 		 get_notifikasi_apb = (Hashtable) notifikasi_apb(user_id);
 		 String jumlah_notifikasi_apb = (String)get_notifikasi_apb.get("JUMLAHPERMOHONAN");
-		 context.put("jumlah_notifikasi_tukarguna1", Long.parseLong(jumlah_notifikasi_apb));
+		 context.put("jumlah_notifikasi_apb", Long.parseLong(jumlah_notifikasi_apb));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
 		 //return Permohonan 4
 		 //PPT
@@ -299,7 +299,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				   + " AND tblphphakmilikpermohonan.flag_hakmilik = 'U' "
 				   + " AND tblpermohonan.id_status NOT IN (1610212, 1610207, 1610208) "
 				   + " AND users.user_id = users_kementerian.user_id "
-				   + " AND users_kementerian.id_agensi = tblphpulasanteknikal.id_agensi "
+				   //+ " AND users_kementerian.id_agensi = tblphpulasanteknikal.id_agensi "
 				   + " AND users.user_id = '" + userID + "') AS jumlahpermohonan "
 				  + " FROM DUAL ";
 
@@ -471,19 +471,19 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT (SELECT COUNT (*) "
-					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
-					+ " ,USERS_KEMENTERIAN UK, USERS H "
-					+ " ,TBLRUJSTATUS RS, tblphppemohon C, tblhtphakmilikagensi D,"
-					+ " tblphphakmilikpermohonan E"
+					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P,USERS_KEMENTERIAN UK,TBLRUJSTATUS RS "
+					//+ " ,USERS H "
+					//+ " ,tblphppemohon C, tblhtphakmilikagensi D,"
+					//+ " tblphphakmilikpermohonan E"
 					+ " WHERE F.ID_FAIL = P.ID_FAIL"
 					+ " AND F.ID_SUBURUSAN = '33'"
 					+ " AND P.ID_STATUS = RS.ID_STATUS "
 					+ " AND P.ID_STATUS NOT IN (1610199)"
-					+ " AND F.ID_KEMENTERIAN = UK.ID_KEMENTERIAN "
-					+ " AND P.ID_PEMOHON = C.ID_PEMOHON "
-					+ " AND P.ID_PERMOHONAN = E.ID_PERMOHONAN "
-					+ " AND H.USER_ID = UK.USER_ID "
-					+ " AND E.ID_HAKMILIKAGENSI = D.ID_HAKMILIKAGENSI "
+					//+ " AND F.ID_KEMENTERIAN = UK.ID_KEMENTERIAN "
+					//+ " AND P.ID_PEMOHON = C.ID_PEMOHON "
+					//+ " AND P.ID_PERMOHONAN = E.ID_PERMOHONAN "
+					//+ " AND H.USER_ID = UK.USER_ID "
+					//+ " AND E.ID_HAKMILIKAGENSI = D.ID_HAKMILIKAGENSI "
 					+ " AND UK.USER_ID = '" + userID + "') AS jumlahpermohonan "
 					+ " FROM DUAL ";
 
