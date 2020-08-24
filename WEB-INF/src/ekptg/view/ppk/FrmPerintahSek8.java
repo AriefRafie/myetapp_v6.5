@@ -94,7 +94,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 
 		String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
         
-        //GET VALUE PARAM
+        //GET VALUE PARAM 
 		String idPermohonanSimati = getParam("idPermohonanSimati");
         String idPermohonan = getParam("idPermohonan");
         String idPerintah = getParam("idPerintah");
@@ -123,7 +123,9 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		String flagFromSenaraiPermohonanSek8 = getParam("flagFromSenaraiPermohonanSek8");
 		
 		String flagSelesaiHTA = getParam("flagSelesaiHTA");
-		String flagSelesaiHA = getParam("flagSelesaiHA");
+		String flagSelesaiHA = "";//getParam("flagSelesaiHA");
+		String flagSelesaiHAARB = getParam("flagSelesaiHAARB");
+		String adaKIV = "";
 		
 		String flagSelesaiPembahagian = "Y";
 		this.context.put("systemMsg", "");
@@ -143,6 +145,9 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         Vector listHTATH = new Vector();
         Vector beanMaklumatHTATH = new Vector();
         Vector listHA = new Vector();
+        Vector listHAARB = new Vector();
+        Vector listIdPerintahhaobmst = new Vector();
+        Vector listOBARB = new Vector();        
         Vector beanMaklumatHA = new Vector();
         Vector listHAPopup = new Vector();
         
@@ -160,6 +165,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		penghantarNotisByJkptg.clear();
 		
 		listHTA.clear();
+		listHAARB.clear();
         beanMaklumatHTA.clear();
         listHTAPopup.clear();
         listHTATH.clear();
@@ -413,7 +419,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			context.put("penerima", penerima);
 			context.put("selectionBox",selectionBox);
 			}
-			 
+			context.put("userRole", role); 
 			vm = "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 			return vm;
  
@@ -577,57 +583,75 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				}
 			paparLaporanSerahan(noFail2);
 			//<-------------------- SELESAI PERMOHONAN --------------------------->
-        	
+			if (logic.checkPerintahKIV(idPerintah)){
+				adaKIV = "1";
+				this.context.put("adaKIV", adaKIV);
+				myLogger.info("checkHAYangBelumDibahagikanARB");
+			}
         	if (hitButt.equals("selesaiPermohonan")){
-        		
+        		myLogger.info("selesaiPermohonan");
         		//CHECK ALL HTA YANG BELUM DIDAFTARKAN
 				if (logic.checkHTAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
+					myLogger.info("logic.checkHTAYangBelumDibahagikan");
 					this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Tidak Alih (Ada Hakmilik) Simati Yang Belum Didaftarkan Perintahnya.')\"");
 					return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 				}				
 				//CHECK ALL HA YANG BELUM DIDAFTARKAN
 				if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
+					myLogger.info("logic.checkHAYangBelumDibahagikan");
 					this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Alih Simati Yang Belum Didaftarkan Perintahnya.')\"");
 					return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 				}
 				//check all HTAPT telah dibahagikan sepenuhnya bagi perintah terus
 				if (getParam("flagAdaHTAPT").equals("1")){
+					myLogger.info("flagAdaHTAPT");
 					if (logic.checkPembahagianHTAPTLengkap(idPerintah)){
+						myLogger.info("logic.checkPembahagianHTAPTLengkap");
 						this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Tidak Alih Yang Belum Dibahagikan Sepenuhnya Bagi Perintah Terus.')\"");
 						return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 					}
 				}
 				//check all HAPT telah dibahagikan sepenuhnya
 				if (getParam("flagAdaHAPT").equals("1")){
+					myLogger.info("flagAdaHAPT");
 					if (logic.checkPembahagianHAPTLengkap(idPerintah)){
+						myLogger.info("logic.checkPembahagianHAPTLengkap");
 						this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Alih Yang Belum Dibahagikan Sepenuhnya Bagi Perintah Terus.')\"");
 						return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 					}
 				}
 				//check all HTA telah dibahagikan sepenuhnya bagi perintah kuasa tadbir
 				if (getParam("flagAdaHTAPKT").equals("1")){
+					myLogger.info("flagAdaHTAPKT");
 					if (logic.checkPembahagianHTAPKTLengkap(idPerintah)){
+						myLogger.info("logic.checkPembahagianHTAPKTLengkap");
 						this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Tidak Alih Perintah Kuasa Pentadbir Yang Belum Dilantik Pentadbir.')\"");
 						return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 					}
 				}
 				//check all HA telah dibahagikan sepenuhnya bagi perintah kuasa tadbir
 				if (getParam("flagAdaHAPKT").equals("1")){
+					myLogger.info("flagAdaHAPKT***");
 					if (logic.checkPembahagianHAPKTLengkap(idPerintah)){
+						myLogger.info("logic.checkPembahagianHAPKTLengkap");
 						this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Alih Perintah Kuasa Pentadbir Yang Belum Dilantik Pentadbir.')\"");
 						return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 					}
 				}
 				//check all HTA telah dikemaskini bagi perintah lelong
 				if (getParam("flagAdaHTAPL").equals("1")){
+					myLogger.info("flagAdaHTAPL***");
 					if (logic.checkPembahagianHTAPLLengkap(idPerintah)){
+						myLogger.info("logic.checkPembahagianHTAPLLengkap***");
 						this.context.put("onload", " \"javascript:alert('Masih Terdapat Maklumat Harta Tidak Alih Yang Belum Dikemaskini Bagi Perintah Lelong.')\"");
 						return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 					}
 				}
 				//check all HA telah dikemaskini bagi perintah lelong
 				if (getParam("flagAdaHAPL").equals("1")){
+					myLogger.info("flagAdaHAPL***");
 					if (logic.checkPembahagianHAPLLengkap(idPerintah)){
+						myLogger.info("checkPembahagianHAPLLengkap###***");
 						this.context.put("onload", " \"javascript:alert('Masih Terdapat Maklumat Harta Alih Yang Belum Dikemaskini Bagi Perintah Lelong.')\"");
 						return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 					}
@@ -641,7 +665,9 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				}
 				//check all waris yang belum dewasa/kurang waras under ha perintah terus is registered dia punya pa
 				if (getParam("flagAdaHAPT").equals("1")){
+					myLogger.info("flagAdaHAPT***");
 					if (logic.checkWarisYangPerluAdaPAHAPT(idPerintah)){
+						myLogger.info("logic.checkWarisYangPerluAdaPAHAPT***");
 						this.context.put("onload", " \"javascript:alert('Masih Terdapat Waris Yang Belum Didaftarkan Pemegang Amanah Bagi Harta Alih Untuk Perintah Terus.')\"");
 						return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 					}
@@ -655,7 +681,9 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				}
 				//check all waris yang belum dewasa/kurang waras under ha perintah terus is registered dia punya pt
 				if (getParam("flagAdaHAPT").equals("1")){
+					myLogger.info("flagAdaHAPT***");
 					if (logic.checkWarisYangPerluAdaPTHAPT(idPerintah)){
+						myLogger.info("logic.checkWarisYangPerluAdaPTHAPT***");
 						this.context.put("onload", " \"javascript:alert('Masih Terdapat Waris Yang Hilang Belum Didaftarkan Pentadbir Bagi Harta Alih Untuk Perintah Terus.')\"");
 						return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 					}
@@ -836,6 +864,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
                         } else {
                             this.context.put("onload"," \"javascript:generateNotisKeluarGeran('" + getParam("idFail") + "')\"");
                         }
+                        
 					}
 				}
 				
@@ -1671,10 +1700,11 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				flagAdaHA = "1";
 			}
 			
-			//AUTOMATIC REGISTER HTATH INTO PERINTAH KUASA TADBIR IF EXIST
+			//DISABLEKAN SEKEJAP 17/6/2020
+			/*//AUTOMATIC REGISTER HTATH INTO PERINTAH KUASA TADBIR IF EXIST
 			if (flagAdaHTATH.equals("1")){
 				logic.registerHTATHIntoPKT(idPerintah, idPermohonanSimati, session);
-			}
+			}*/
 			
 			//GET LIST HARTA TAK ALIH (ADA HAKMILIK)
 			if (flagAdaHTA.equals("1")){
@@ -1701,16 +1731,83 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			}
 			
 			//GET LIST HARTA ALIH
+			myLogger.info("flagAdaHA == "+flagAdaHA);
+			myLogger.info("flagSelesaiHA == "+flagSelesaiHA);
 			if (flagAdaHA.equals("1")){
 				logic.setDataSenaraiHA(idPerintah,idPermohonanSimati);
 				listHA = logic.getSenaraiHA();
 				this.context.put("SenaraiHA", listHA);
 				
 				//CHECK ALL HA YANG BELUM DIDAFTARKAN
-				if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
+				/*if (logic.checkHAYangDiselesaikanARBBelumDibahagikan(idPermohonanSimati, idPerintah)){
 					flagSelesaiHA = "";
+					myLogger.info("flagSelesaiHA");
 				} else {
 					flagSelesaiHA = "Y";
+					myLogger.info("flagSelesaiHA--Y");
+				}*/
+				flagSelesaiHA = "Y";
+				myLogger.info("&&&&******");
+				if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
+					myLogger.info("logic.checkHAYangBelumDibahagikan");
+					flagSelesaiHA = "";
+					myLogger.info("flagSelesaiHA"+flagSelesaiHA);
+					//this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Alih Simati Yang Belum Didaftarkan Perintahnya.')\"");
+					//return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
+				}
+				
+				//CHECK ADA KIV 
+				if (logic.checkPerintahKIV(idPerintah)){
+					adaKIV = "1";
+					this.context.put("adaKIV", adaKIV);
+					myLogger.info("checkHAYangBelumDibahagikanARB");
+				}
+				//CHECK HA YANG DISELESAIKAN OLEH ARB TETAPI BELUM DIDAFTARKAN 
+				if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
+					flagSelesaiHAARB = "";
+					myLogger.info("checkHAYangBelumDibahagikanARB");
+					logic.setDataSenaraiHAARB(idPerintah,idPermohonanSimati);
+					listHAARB = logic.getSenaraiHAARB();
+					String id_HAARB = "";
+					String id_OBARB = "";
+					String id_perintahhaobmst = "";
+					myLogger.info("listHAARB.size="+listHAARB.size());
+					if (listHAARB.size() != 0) {
+     	     			Hashtable lsHAARB = (Hashtable) listHAARB.get(0);
+     	     			id_HAARB = lsHAARB.get("ID_HA").toString();
+					
+					
+					myLogger.info("Sini1");
+					//disablekan dulu sbb semua HA dia register perintah secara auto
+					//logic.saveHA("1", "", id_HAARB, idPerintah, idPermohonan, idSimati, idPermohonanSimati, session);
+					myLogger.info("Sini2");
+					}
+					//cari perintahhaobmst
+					logic.findIDPerintahHAOBMST(id_HAARB);
+					listIdPerintahhaobmst = logic.getSenaraiPerintahHAARB();
+					if (listIdPerintahhaobmst.size() != 0) {
+     	     			Hashtable lslistIdPerintahhaobmst = (Hashtable) listIdPerintahhaobmst.get(0);
+     	     			id_perintahhaobmst = lslistIdPerintahhaobmst.get("ID_PERINTAHHAOBMST").toString();
+					}
+					
+					//cari idOB Amanah Raya Berhad
+					logic.findIdObARB(idPermohonanSimati);
+					listOBARB = logic.getSenaraiOBARB();
+					//SELECT ID_OB FROM TBLPPKOB WHERE ID_SIMATI in (SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONANSIMATI = '99191149646') AND NAMA_OB LIKE '%AMANAH RAYA%'
+					if (listOBARB.size() != 0) {
+						Hashtable lsOBARB = (Hashtable) listOBARB.get(0);
+						id_OBARB = lsOBARB.get("ID_OB").toString();
+						//logic.updateHAPT(idHA, ids[i], status[i], BA[i], BB[i], idPerintah, session);
+						logic.updateHAPT(id_perintahhaobmst, id_OBARB, id_HAARB, "1", "1", idPerintah, session);
+					}
+				
+					
+						idJenisPerintahHA = "0";
+					
+				}
+				else {
+					flagSelesaiHAARB = "Y";
+					myLogger.info("flagSelesaiHAARB");
 				}
 			}
 			
@@ -1890,7 +1987,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         if (!anchor.equals("")){
         	this.context.put("onload", " \"javascript:goToAnchor('" + anchor + "')\"");
         }
-	    
+        context.put("userRole", role); 
         System.out.println("vm perintah ==="+vm);
 		return vm;
 	}

@@ -3774,9 +3774,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (temp.equals("")) {
 					temp = "0";
 				}
+				
 				String temp2 = getParam("socDaerahPengesahan");
-				if(temp2.equals("1613161"))
-				{
+				if(temp2.equals("1613161")){
 					temp2 = "121";
 					//System.out.println("temp2 >>> "+temp2);
 				}
@@ -3785,18 +3785,18 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				int idnegeri = Integer.parseInt(temp);
 				int iddaerah = Integer.parseInt(temp2);
+				myLogger.info("temp >>> "+idnegeri+"|temp2 >>> "+iddaerah);
+
 				this.context.put("selNegeri", getParam("socNegeriPengesahan"));
 				this.context.put("selDaerah", getParam("socDaerahPengesahan"));
-				context.put("disabledDropdown",
-						"disabled readonly class = \"disabled\"");
+				context.put("disabledDropdown","disabled readonly class = \"disabled\"");
 				context.put("readonly", "readonly");
 				Vector idfail = logiconline.getIdFail(idPermohonan);
 				Hashtable t = (Hashtable) idfail.get(0);
+				
 				if (bolehsimpan.equals("yes")) {
 					logiconline.insertDaerahMohon(idnegeri, iddaerah,
-							idPermohonan, (String) session
-									.getAttribute("_ekptg_user_id"), (String) t
-									.get("noidfail"));
+							idPermohonan, (String) session.getAttribute("_ekptg_user_id"), (String) t.get("noidfail"));
 					this.context.put("appear_skrin_info", "hantar");
 				}
 				Vector getAddressPpk = logiconline.getAddress(iddaerah);
@@ -6289,6 +6289,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		this.context.put("selectedTabtengah", getParam("tabIdtengah"));
 		this.context.put("selectedTabbawah", getParam("tabIdbawah"));
 		this.context.put("selectedTabtepi", getParam("tabIdtepi"));
+		
 	}
 
 	public void initInputPpkPengesahan() {
