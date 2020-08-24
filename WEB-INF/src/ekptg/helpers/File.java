@@ -285,8 +285,17 @@ public class File implements Serializable  {
 		,boolean getNoSubjaket
 		,int tahun
 		,int bulan) throws DbException  {		
-			myLog.debug("File SEQNO:"+id_seksyen+"-"+id_urusan);			
-			//Db db = null;
+		//myLog.debug("File SEQNO:"+id_seksyen+"-"+id_urusan);			
+		myLog.debug("File SEQNO:"+id_seksyen);			
+		myLog.debug("File SEQNO 2:"+id_urusan);			
+		myLog.debug("File SEQNO 3:"+id_kementerian);			
+		myLog.debug("File SEQNO 4:"+id_negeri);			
+		myLog.debug("File SEQNO 5:"+id_daerah);	
+		myLog.debug("File SEQNO 6:"+getNoJilid);			
+		myLog.debug("File SEQNO 7:"+getNoSubjaket);			
+		myLog.debug("File SEQNO 8:"+tahun);	
+		myLog.debug("File SEQNO 9:"+bulan);	
+		//Db db = null;
 			//Connection conn = null;
 			File f = null;
 			StringBuffer sb = new StringBuffer();
@@ -308,7 +317,7 @@ public class File implements Serializable  {
 				 if (tahun > 0) sb.append(" AND tahun=" +tahun);
 				 if (bulan > 0) sb.append(" AND bulan=" +bulan);
 				 
-				  //myLogger.debug("");
+				  myLog.info("found="+sb.toString());
 	 	          ResultSet rs = db.getStatement().executeQuery(sb.toString()); 
 		          
 		          if (rs.next()) found = true;
@@ -868,8 +877,8 @@ public class File implements Serializable  {
 		sb.append("id_seksyen = '"+id_seksyen+"' AND ");
 		sb.append("id_urusan = '"+id_urusan+"' AND ");
 		sb.append("id_kementerian = '"+id_kementerian+"' AND ");
-		sb.append("id_negeri = '"+id_negeri+"'");		
-		sb.append(" AND id_daerah = '"+id_daerah+"'");
+		sb.append("id_negeri = '"+id_negeri+"' AND ");		
+		sb.append("id_daerah = '"+id_daerah+"'");
 	
 		try {
 				//db = new Db();
@@ -887,9 +896,9 @@ public class File implements Serializable  {
 //			}
 	}
 		
-	AuditTrail at = new AuditTrail();
 	public void increaseSeqPPK(HttpSession session, Db db,int id_seksyen,int id_urusan,int id_kementerian,
-			   int id_negeri,int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int bulan,int tahun) throws Exception  {
+		int id_negeri,int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int bulan,int tahun) throws Exception  {
+		AuditTrail at = new AuditTrail();
 
 		//Db db = null;
 		
@@ -1075,4 +1084,5 @@ public class File implements Serializable  {
 	
 	
 }
+//20200824 14:12
 //20200823

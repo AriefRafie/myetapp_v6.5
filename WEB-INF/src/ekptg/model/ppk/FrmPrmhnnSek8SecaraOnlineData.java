@@ -21,10 +21,8 @@ import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.model.entities.Tblrujdaerah;
 
-//Updated on 17/8/2010
 public class FrmPrmhnnSek8SecaraOnlineData {
-	private static Logger myLogger = Logger
-			.getLogger(FrmPrmhnnSek8SecaraOnlineData.class);
+	private static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8SecaraOnlineData.class);
 	Vector list = null;
 	Vector listARB = null;
 	Vector listBaitul = null;
@@ -511,13 +509,11 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String NoKPLama = ((String) data.get("noKPLama")).toUpperCase();
 			String JenisKPLain = (String) data.get("jenisKPLain");
 			String NoKpLain = (String) data.get("noKpLain");
-			String NamaPemohon = ((String) data.get("namaPemohon"))
-					.toUpperCase();
+			String NamaPemohon = ((String) data.get("namaPemohon")).toUpperCase();
 			String socWaris = (String) data.get("SocWaris");
 			String socOB = (String) data.get("SocOB");
 			String NoKPBaruSimati = (String) data.get("noKPBaruSimati");
-			String NoKPLamaSimati = ((String) data.get("noKPLamaSimati"))
-					.toUpperCase();
+			String NoKPLamaSimati = ((String) data.get("noKPLamaSimati")).toUpperCase();
 			String JenisKPLainSimati = (String) data.get("jenisKPLainSimati");
 			String NoKpLainSimati = (String) data.get("noKpLainSimati");
 			String namaSimati = ((String) data.get("namaSimati")).toUpperCase();
@@ -4484,21 +4480,31 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 	}
 
 	public void insertDaerahMohon(int idnegeri, int iddaerah,
-			String idpermohonan, String userid, String idFail) throws Exception {
+		String idpermohonan, String userid, String idFail) throws Exception {
 		Db db = null;
 		String sql = "";
 		java.util.Calendar calendar = java.util.Calendar.getInstance();
 		int getYear = calendar.get(java.util.Calendar.YEAR);
+//		public static synchronized int getSeqNo(Db db
+//				,int id_seksyen =2 BPP
+//				,int id_urusan	= 382
+//				,int id_kementerian = 18 Kem Tenaga, Sumber Asli KeTSA
+//				,int id_negeri 0
+//				,int id_daerah	0
+//				,boolean getNoJilid false 
+//				,boolean getNoSubjaket false
+//				,int tahun	Tahun semasa
+//				,int bulan) 0
 		try {
 
 			db = new Db();
-
-			String X = String.format("%06d", File.getSeqNo(db, 2, 01, 18, 0, 0,
-					false, false, 0, 0));
+			String X = String.format("%06d", File.getSeqNo(db, 2, 382, 0, 0, 0,
+					false, false, getYear, 0));
+			myLogger.info("X="+X);
 			String no_fail_online = "JKPTG/PK/01/" + getYear + "/" + X;
 
 			Statement stmtG = db.getStatement();
-			String sql8 = "Update tblrujsuburusanstatusfail set AKTIF = '0',ID_KEMASKINI='"
+			String sql8 = "update tblrujsuburusanstatusfail set AKTIF = '0',ID_KEMASKINI='"
 					+ userid
 					+ "',TARIKH_KEMASKINI=sysdate where ID_PERMOHONAN = '"
 					+ idpermohonan
@@ -4510,8 +4516,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			// db = new Db();
 			Statement stmtF = db.getStatement();
 			SQLRenderer r5 = new SQLRenderer();
-			r5.add("ID_SUBURUSANSTATUSFAIL", DB
-					.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ"));
+			r5.add("ID_SUBURUSANSTATUSFAIL", DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ"));
 			r5.add("ID_PERMOHONAN", idpermohonan);
 			r5.add("ID_SUBURUSANSTATUS", 614); // 436 status utk permohonan
 												// online
@@ -4523,7 +4528,6 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			r5.add("TARIKH_KEMASKINI", r5.unquote("sysdate"));
 			String sql2 = r5.getSQLInsert("tblrujsuburusanstatusfail");
 			stmtF.executeUpdate(sql2);
-
 
 			// db = new Db();
 			Statement stmtT = db.getStatement();
@@ -4539,7 +4543,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			stmtT.executeUpdate(sql);
 			
 			Statement stmtFail = db.getStatement();
-			String noFail = getNoFail(db,String.valueOf(idnegeri),String.valueOf(iddaerah),X,getYear);
+			String noFail = getNoFail(db,idnegeri,iddaerah,X,getYear);
 			sql = "update tblpfdfail set "
 					+ "NO_FAIL = '"+ noFail+"'"
 					+ " where id_fail="+idFail
@@ -4551,10 +4555,10 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			if (db != null)
 				db.close();
 		}
+		
 	}
-
-	// added by cipon for fixing bugs when submitted for pengesahan cetak button
-	// was not apprear
+	/** added by cipon for fixing bugs when submitted for pengesahan cetak button
+	was not appear */
 	public String getIdStatus(String idPermohonan) {
 		Db db = null;
 		try {
@@ -5348,30 +5352,27 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		}
 	}
 	
-	private String getNoFail(Db db,String idNegeri,String idDaerah,String XX,int getYear) throws Exception {
-		
-		String X = String.format("%04d",File.getSeqNo(db,2,382,0,Integer.parseInt(idNegeri),Integer.parseInt(idDaerah),false,false,getYear,0));
-		
-//		if (idDaerah.length() < 1){
-//			idDaerah = "0"+idDaerah;
-//		}else{
-//			idDaerah = idDaerah;
-//		}
-		Vector<Tblrujdaerah> vecDaerah = DB.getDaerahByIdDaerah(idDaerah);
+	private String getNoFail(Db db,int idNegeri,int idDaerah,String XX,int getYear) throws Exception {	
+		String strNegeri = String.valueOf(idNegeri);
+		String X = String.format("%04d",File.getSeqNo(db,2,382,0,idNegeri,idDaerah,false,false,getYear,0));
+//		String X = String.format("%04d",File.getSeqNo(db,2,382,0,Integer.parseInt(idNegeri),Integer.parseInt(idDaerah),false,false,getYear,0));
+		myLogger.info("getNoFail:X="+X);
+		Vector<Tblrujdaerah> vecDaerah = DB.getDaerahByIdDaerah(String.valueOf(idDaerah));
 		Tblrujdaerah rd = vecDaerah.get(0);
 
-		if (idNegeri.length() < 1){
-			idNegeri = "0"+idNegeri;
+		if (strNegeri.length() < 1){
+			strNegeri = "0"+strNegeri;
 		}else{
-			idNegeri = idNegeri;
+			strNegeri = strNegeri;
 		}
-//		if (negeri.equals("")){
-//			negeri = "0";
-//		}
-		String getFile = "JKPTG/PK/"+ idNegeri + "/"+ rd.getKodDaerah() + "/"+X+"/"+getYear;				
+
+		String getFile = "JKPTG/PK/"+ strNegeri + "/"+ rd.getKodDaerah() + "/"+X+"/"+getYear;				
 		return getFile;
 		
 	}
 	
 	
 }
+//20200824 16:44
+//Updated on 17/8/2010
+
