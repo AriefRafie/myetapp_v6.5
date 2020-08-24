@@ -205,15 +205,9 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                     #set( $rowx = "row1" )
                     #end
                     
-                    
-                    
-
-                    
-                    
-                    
                       <tr>
                         <!-- PPT-30 -->
-                        <td class="$rowx" align="center"><input type="checkbox" $checkedCB name="cbsemaks" id="cbsemaks" onclick="doUpdateCheckAll()" value="$!listTanah.id_hakmilik"></td>
+                        <td class="$rowx" align="center"><input type="checkbox" class="idHakmilik" $checkedCB name="cbsemaks" id="cbsemaks" onclick="doUpdateCheckAll()" value="$!listTanah.id_hakmilik"></td>
                 		<td class="$rowx" align="center">$!listTanah.rn</td>
                         <!--
                 		#if($showLinkHM=="yes" || ($ModuleName=="ekptg.view.ppt.FrmSek8PermintaanUkur" && $listTanah.flagPU == "yes"))
@@ -422,21 +416,12 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         </td>
                         #end
 
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                		
+
             		</tr>
                     
               #set ($count_check = $count_check + 1)      
                     
                       #end
-                      
                       
           #else
           <tr>  
@@ -573,29 +558,11 @@ function checkDuplicated(value,div_id,bil,div_alert)
 						
 						$jquery("#"+i+"alert").html("");
 					}
-			
-			
-					
-					
-												
-                
             }
     }	
-	 
-	 
-	 
-	
 }
 
-
-
 //refreshSkrinHakmilik(id_permohonan,flag_skrin);
-
-
-
-
-
-
 
 function paparByAgensi(id_hakmilik,status_bantahan_ap,id_permohonan,flag_skrin)
 {
@@ -986,14 +953,52 @@ function cetakSuratIringan(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempo
 }
 
 
-function cetakSuratEndorsanBorangK(idpermohonan,idhakmilik) {
+function cetakSuratEndorsanBorangK(idpermohonan, idhakmilik) {
 	
-	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratEndorsanBorangK&selectNoFail=yes";
-	//var url = "../servlet/ekptg.report.ppt.BuktiPenyampaian?idHakmilik="+idhakmilik+"&flagJenisSuratCara=E";
-    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
+	// var idhakmilik = document.querySelectorAll('input[type="checkbox"]:checked').length;
+	// alert(document.querySelectorAll('input[type="checkbox"]:checked').length);
+	// var count = document.querySelectorAll('input[type="checkbox"]:checked').length;
+	
+	var checkSelected = false;
+	if(document.${formName}.cbsemaks.length > 1){
+		for(var i = 0 ; i < document.${formName}.cbsemaks.length; i++)	{ 
+    		if (document.${formName}.cbsemaks[i].checked)  	{
+  				checkSelected=true;
+  			}
+		}
+	}	else	{
+		if (document.${formName}.cbsemaks.checked)	{
+			checkSelected=true;
+    	}
+	}
+	
+	 if(!checkSelected){
+		alert("Sila semak pada \"Kotak Semakan\" bagi mencetak Surat Endorsan Borang K.");
+		return;
+		
+	}	else	{
+
+	var selected = new Array();
+	var inputElements = document.getElementsByClassName("idHakmilik"); // ClassName from cbsemaks
+	for(var i = 0; i < inputElements.length; i++) {
+		if (inputElements[i].checked)	{
+			selected.push(inputElements[i].value);
+		}
+	}
+	
+	if (selected.length > 0) {
+		idhakmilik = selected.join(",");
+		// alert(idhakmilik);
+	}
+	
+	 var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratEndorsanBorangK&selectNoFail=yes";
+	// var url = "../servlet/ekptg.report.ppt.BuktiPenyampaian?idHakmilik="+idhakmilik+"&flagJenisSuratCara=E"; // takpakai
+     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+     if ((document.window != null) && (!hWnd.opener))
+	 Wnd.opener = document.window;
+     if (hWnd.focus != null) hWnd.focus();
+    
+    }
 }
 
 
