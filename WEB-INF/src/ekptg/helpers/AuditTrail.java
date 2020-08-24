@@ -40,10 +40,9 @@ public class AuditTrail {
 	}
 	
 	public static void logActivity(String id_suburusan,String id_status,String id_seksyen,VTemplate module,HttpSession session,
-			String jenis_aktiviti,String keterangan) 
-	throws Exception {
-		logActivity(id_suburusan,id_status,id_seksyen,module,session,
-				jenis_aktiviti,keterangan,null);
+		String jenis_aktiviti,String keterangan) 
+		throws Exception {
+		logActivity(id_suburusan,id_status,id_seksyen,module,session,jenis_aktiviti,keterangan,null);
 	}
 	
 	public static void logActivity(String id_suburusan
@@ -53,11 +52,10 @@ public class AuditTrail {
 		,HttpSession session
 		,String jenis_aktiviti
 		,String keterangan
-		,Db db) throws Exception {
+		,Db db) throws Exception {		
 		
 		String module_session = "-";
-		myLogger.info(" module_session ::session= "+session);
-		
+		//myLogger.info(" module_session ::session= "+session);	
 		String module_name = module_session;
 		if (module != null) { 
 			module_name = module.getClass().getName();
@@ -65,20 +63,18 @@ public class AuditTrail {
 		String user_id = "1";
 		String ip_address = "-";
 		if (session != null) {
-			user_id = (String)session.getAttribute("_ekptg_user_id");
-			ip_address = (String)session.getAttribute("ip_address");
-			module_session = session.getAttribute("_portal_module").toString();
+			user_id = String.valueOf(session.getAttribute("_ekptg_user_id"));
+			ip_address = String.valueOf(session.getAttribute("ip_address"));
+			module_session = String.valueOf(session.getAttribute("_portal_module"));
+		
 		}
 		 
 		String sql = "";
 		Db db1 = null;
 		try {
-			if(db == null)
-			{
+			if(db == null){
 				db1 = new Db(); 
-			}
-			else 
-			{
+			}else {
 				db1 = db;
 			}
 			Statement stmt = db1.getStatement();
@@ -98,28 +94,8 @@ public class AuditTrail {
 			r.add("ID_KEMASKINI", user_id);
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 			sql = r.getSQLInsert("TBLAUDITTRAIL",db1);		
-			//myLogger.info("V3 : INSERT TBLAUDITTRAIL : "+sql);
+//			myLogger.info("V3 : INSERT TBLAUDITTRAIL : "+sql);
 			stmt.executeUpdate(sql);
-			/*
-			sql = "INSERT INTO TBLAUDITTRAIL (ID_SUBURUSAN,ID_STATUS,ID_SEKSYEN,MODULE_NAME,JENIS_AKTIVITI," +
-				  "TARIKH_AKTIVITI,KETERANGAN,IP_ADDRESS," +
-				  "ID_MASUK,TARIKH_MASUK,ID_KEMASKINI,TARIKH_KEMASKINI) VALUES "+
-				  "('"+id_suburusan+"',"+
-				  " '"+id_status+"',"+
-				  " '"+id_seksyen+
-				  "','"+module_name+
-				  "','"+jenis_aktiviti
-				  +"'," +
-				  "sysdate,"+
-				  "'"+keterangan+
-				  "','"+ip_address+
-				  "','"+user_id+
-				  "',sysdate,"+
-				  "'"+user_id+
-				  "',sysdate)";
-			myLogger.info(sql);
-			//db.getStatement().executeQuery(sql); 
-			 */
 			
 		} catch (Exception e) {
 			throw new Exception ("error log activity :"+e.getMessage());
@@ -132,7 +108,5 @@ public class AuditTrail {
 	
 	}
 	
-	
-
-	
 }
+//20200824 20:36
