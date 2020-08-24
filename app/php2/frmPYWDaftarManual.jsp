@@ -542,7 +542,7 @@
 						<td valign="top">Tujuan</td>
 						<td valign="top">:</td>
 						<td>$selectJenisTujuan
-							<input type="text" name="namatujuan" id="namatujuan" value="$namatujuan" />
+							<input type="hidden" name="namatujuan" id="namatujuan" value="$namatujuan" />
 						</td>
 					</tr>
 					#if($idJenisTujuan == '32' || $idJenisTujuan == '38' ||
