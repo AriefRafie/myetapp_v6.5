@@ -63,7 +63,7 @@
                 <td width="28%">Pegangan Hakmilik</td>
                 <td width="1%">:</td>
                 <td width="70%"> #if ($mode == 'update')
-                  <input type="text" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik" onBlur="doChangePeganganHakmilik1();">
+                  <input type="text" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik" onBlur="doChangePeganganHakmilik();">
                   #else
                   <input type="text" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
                   #end
@@ -155,8 +155,8 @@
                 <td>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                  </td>
-                 
-                 #if ($mode == 'view')
+
+                <!--  #if ($mode == 'view')
                   #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
                   <input type="button" name="cmdKmskiniTnh" id="cmdKmskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
                   <input type="button" name="cmdHapus2" id="cmdHapus2" value="Hapus" onClick="doHapus()"/>
@@ -172,10 +172,10 @@
                   <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                 #end  </td>
-                 
-                 
-                 
+                 #end  </td> -->
+
+
+
               </tr>
               #end
             </table>
@@ -395,29 +395,36 @@
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
    			<p align="center"> <input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
 			</td>
-			
+
 			#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("2"))
-			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
            	<td>
+			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
         	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
-      		</td>
    			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
-
+      		</td>
 			#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
-			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
            	<td>
+			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
         	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
-      		</td>
    			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
+      		</td>
 
-            
 
              	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> -->
             #else
+
+           	<td>
                 <!-- <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/> -->
+                <input type="checkbox" name="pengesahan" id="pengesahan" checked disabled>&nbsp&nbsp
+
+        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+      		<p align="center">
            		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            	<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+            	</p>
             	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> -->
    			#end
    			#end

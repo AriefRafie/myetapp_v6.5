@@ -6,7 +6,6 @@
 #parse("css/eTapp_PHP.css")
 -->
 </style>
-<
 <input type="hidden" name="actionPopup" value="$actionPopup"/>
 <input type="hidden" name="hitButton"/>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
