@@ -407,7 +407,7 @@ document.getElementById("header_lama").style.display="block";
               #end </td>
           </tr>
           <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
-          <!-- --><tr>
+          <!-- <tr>
             <td><div align="left"><font color="red">*</font>&nbsp;Jumlah Bayaran Sebenar&nbsp;(RM)</div></td>
             <td><div align="right">: </div></td>
             
@@ -419,7 +419,7 @@ document.getElementById("header_lama").style.display="block";
               #if ( $FlagtarikhMohon == 1 )
               <input type="text" size="15" name="txtJumBayaranSebenar" id="txtJumBayaranSebenar" onblur="validateNumber(this,this.value);validateModal(this,this.value,$!txtJumBayaranPusakaSebenar)" onkeyup="validateNumber(this,this.value);" />
               #end </td>
-          </tr> <!---->
+          </tr>--> <!---->
           <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
           <!-- arief add Pengecualian Bayaran OPEN -->
            <tr>
@@ -1327,13 +1327,13 @@ document.getElementById("header_lama").style.display="block";
             </label></td>
         </tr>
         <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
-        <!-- --><tr>
+        <!-- <tr>
           <td><div align="left">Jumlah Bayaran Sebenar&nbsp;&nbsp;(RM)</div></td>
           <td><div align="right">:</div></td>
           <td><label>
             <input type="text" size="15" name="txtJumBayaranSebenar" id="txtJumBayaranSebenar" readonly class="disabled" value="$!Util.formatDecimal($!bayaran_perintah_sebenar)" />
             </label></td>
-        </tr> <!---->
+        </tr> --><!---->
         <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
         <!-- arief add Pengecualian Bayaran OPEN -->
          <tr>
@@ -2213,14 +2213,14 @@ document.getElementById("header_lama").style.display="block";
               </label></td>
           </tr>
           <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
-          <!-- --> <tr>
+          <!--  <tr>
           	<td><div align="left">Jumlah Bayaran Sebenar&nbsp;&nbsp;(RM)</div></td>
           	<td><div align="right">:</div></td>
           	<td><label>
             	<input type="text" size="15" name="txtJumBayaranSebenarEDIT" id="txtJumBayaranSebenarEDIT" value="$!Util.formatDecimal($!bayaran_perintah_sebenar)" onblur="validateNumber(this,this.value);validateModal(this,this.value,$!txtJumBayaranPusakaSebenar)" onkeyup="validateNumber(this,this.value);" />
             	<input type="hidden" size="12" name="txtJumBayaranSebenarEDIT" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaranSebenarEDIT" style="text-transform:uppercase;" readonly class="disabled" value="$!bayaran_perintah_sebenar" />
             	</label></td>
-        </tr><!---->
+        </tr>--><!---->
         <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
           <!-- arief add Pengecualian Bayaran OPEN -->
           <tr>
