@@ -2885,15 +2885,13 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 
 			long idPermohonan = Long.parseLong((String) data.get("IdPermohonan"));
 			
-			long idSubUrusanStatus = DB.getNextID(db,
-					"TBLRUJSUBURUSANSTATUS_SEQ");
+			long idSubUrusanStatus = DB.getNextID(db,"TBLRUJSUBURUSANSTATUS_SEQ");
 
 			//int UserIdPejabat = Integer.parseInt((String) data.get("userIdPejabat"));
 			String userIdNeg = (String) data.get("userIdNeg");
 			String userId = (String) data.get("userId");
 			String NegId = (String) data.get("negId");
 			String id_Fail = (String) data.get("id_Fail");
-
 			String no_daerah = (String) data.get("no_daerah");
 
 			int id_d = Integer.parseInt(no_daerah);
@@ -2919,8 +2917,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 
 			String userIdKodNegeri = (String) data.get("userIdKodNegeri");
 			String tarikh_simati = (String) data.get("tarikh_simati");
-			String sel_jeniskp_pemohon = (String) data
-					.get("sel_jeniskp_pemohon");
+			String sel_jeniskp_pemohon = (String) data.get("sel_jeniskp_pemohon");
 			String no_kplain_pemohon = (String) data.get("no_kplain_pemohon");
 			String nama_pemohon = (String) data.get("nama_pemohon");
 			String alamat1 = (String) data.get("alamat1");
@@ -3232,10 +3229,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				sqlOB = rOB.getSQLInsert("tblppkob");
 				// myLogger.info(sqlOB);
 				stmtOB.executeUpdate(sqlOB);
-				
-				
-				
-				
+							
 				rOB.clear();
 				rOB.add("id_ob", id_ob);
 				rOB.add("id_Simati", idsimati);
@@ -3290,6 +3284,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				
 				sqlOB = rOB.getSQLInsert("tblppkobpermohonan");
 				stmtOB.executeUpdate(sqlOB);
+				
 			}
 
 			/*
@@ -3430,6 +3425,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			if (db != null)
 				db.close();
 		}
+		
 	}
 
 	public Vector checkwaris(String idob) throws Exception {
@@ -14758,3 +14754,4 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 	
 	
 }
+//20200824

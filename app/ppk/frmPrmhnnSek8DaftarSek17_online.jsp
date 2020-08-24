@@ -95,6 +95,7 @@
 #set ($no_tel = $no_tel)
 #set ($nama_pelbagainegara = $nama_pelbagainegara)
 #set ($no_hp = $no_hp)
+#set ($emel = $emel)
 #set ($jenis_pej = $jenis_pej)
 #set ($jenis_pemohon = $jenis_pemohon)
 
@@ -208,23 +209,17 @@
          #set ($no_tel = $View.no_tel)
          #set ($jenis_pemohon = $View.jenis_pemohon)
          #set ($no_hp = $View.no_hp)
+         #set ($emel = $View.emel)
          #set ($jenis_pej = $View.jenis_pej)
          
          #end
           
          
-       
-        
-        <!--
-         
-        #if ($View.idDaerah != "")
+        <!--#if ($View.idDaerah != "")
         	#set ($setmode2 = "disabled")
         #else
         	#set ($setmode2 = "")
-        #end
-        
-        
-        -->
+        #end-->
         
          
         #if ($View.idDaerah != "")
@@ -247,9 +242,6 @@
  
  #end
 
-
-
-
     #foreach($View in $ViewBaru)
     
      #set ($no_fail_online = $View.no_fail_online)
@@ -268,8 +260,6 @@
          
          #set ($id_Permohonan_terdahulu = $View.id_permohonanterdahulu)
          
-         
-        
         #set ($umursimati = $View.umursimati)
          #set ($jantinasimati = $View.jantinasimati)
           #set ($umurpemohon = $View.umurpemohon)
@@ -277,8 +267,6 @@
                
       
         <!--#set ($noFailBaru = $View.noFail)-->
-        
-        
         
         #set ($noFailBaru = $View.no_fail_online)
         
@@ -306,6 +294,7 @@
         #set ($alamat3 = $View.alamat3)
         #set ($poskod = $View.poskod)
         #set ($bandar = $View.bandar)
+        #set ($emel = $View.emel)
        
         #set ($idDaerahx = $View.idDaerah)
   
@@ -323,7 +312,7 @@
           #set ($no_tel = "")
           #set ($jenis_pemohon = "2")
           #set ($no_hp = "")
-#set ($jenis_pej = "")
+		  #set ($jenis_pej = "")
           
           #else
         
@@ -331,11 +320,11 @@
          #set ($no_tel = $View.no_tel)
          #set ($jenis_pemohon = $View.jenis_pemohon)
          #set ($no_hp = $View.no_hp)
+         #set ($emel = $View.emel)
          #set ($jenis_pej = $View.jenis_pej)
          
          #end
           
-     
         
         #if ($View.idDaerah != "")
         	#set ($setmode2 = "disabled")
@@ -908,12 +897,8 @@ $Listkp.keterangan
         
         
         
-        <fieldset><legend>MAKLUMAT PEMOHON ttt</legend>
+        <fieldset><legend>MAKLUMAT PEMOHON</legend>
         
-     
-     
-        
-       
          <table width="100%" border="0">
          
    
@@ -939,6 +924,7 @@ $Listkp.keterangan
             #set($poskod = "")
             #set($negeri = "")
             #set($daerah = "")
+            #set($emel = "")
             #set ($nama_pelbagainegara = "")
             
             #set ($taraf_penting = "1")
@@ -1006,14 +992,10 @@ $Listkp.keterangan
             #set ($jenis_pemohon = "$LX.status_pemohon")
             #set ($idpemohonsimati = "$LX.idPemohon")
             #set ($socSaudaraWaris = "$LX.socSaudaraWaris")
+            #set ($emel = "LX.emel")
             
-            
-         
             #end
             #end
-            
-          
-            
             
             <tr>
               <td>&nbsp;</td>
@@ -1536,20 +1518,12 @@ $Listkp.keterangan
             
             #end
             
-           
-            
-            
-            
              #else
              
               #set($setmod1="")
               #set($setmod1R = "")
             
-            
-            
             #end
-            
-         
             
             <input name="txtNoKPLainPemohon" id="txtNoKPLainPemohon" onBlur="this.value=this.value.toUpperCase();kp_lain_pemohon()" style="width: 90px; text-transform:uppercase;" type="text" value="$noKpLainPemohonx" $setmod1R class="$setmod1" maxlength="25" size="9"/>
             <div id="check_kp_p3" style="color:red" ></div>
@@ -1769,8 +1743,6 @@ $Listkp.keterangan
             #set($negerikodpemoP=$listnegpomo.kod_Negeri)
             #set($negeriketeranganpemoP=$listnegpomo.nama_Negeri)
             
-            
-            
             #end 
             #end
             
@@ -1780,12 +1752,11 @@ $Listkp.keterangan
             #set($readmodenegeri="")
             #end
             
-           
             
             #if($negeri!="" && $negeri!="0"  )
             
             <span id="socNegeri_1a">
-<select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati()" style="text-transform:uppercase;" onBlur="uppercase()">
+				<select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati()" style="text-transform:uppercase;" onBlur="uppercase()">
                           <option value="$negeri">$negerikodpemoP - $negeriketeranganpemoP</option>
                                   #foreach($listnegpomo in $listnegeri)                                 
                                   #if($negeri!=$listnegpomo.id_Negeri)
@@ -1796,8 +1767,8 @@ $Listkp.keterangan
                     </select>
                     </span>
                         
-                        <span id="socNegeri_1b">                        
-                          #foreach($listnegpomo in $listnegeri)            
+               <span id="socNegeri_1b">                        
+         #foreach($listnegpomo in $listnegeri)            
             #if($negeri==$listnegpomo.id_Negeri)            
             #set($negerikodpemoP1=$listnegpomo.kod_Negeri)
             #set($negeriketeranganpemoP1=$listnegpomo.nama_Negeri)           
@@ -1839,20 +1810,19 @@ $Listkp.keterangan
         </tr>  
         
         <tr id="tr_pelbagainegara">
-                                    <td valign="top" ></td>
-                                    <td>Negara</td>
-                                    <td >:</td>
-                                    <td >
-                                    <input type = 'text' id = 'nama_pelbagainegara' name = 'nama_pelbagainegara' size='30' maxlength='200' $setmodeR class="$setmode" list = 'datalist'  value="$nama_pelbagainegara"    />
-                                    <datalist id = 'datalist'>
-                                    #foreach($ja in $kenegaraan)
-                                    <option label='$!ja.NAMA_WARGA' value = '$!ja.NAMA_WARGA'></option>
-                                    #end </datalist>
-                                    </td>
+           <td valign="top" ></td>
+           <td>Negara</td>
+           <td >:</td>
+           <td >
+           <input type = 'text' id = 'nama_pelbagainegara' name = 'nama_pelbagainegara' size='30' maxlength='200' $setmodeR class="$setmode" list = 'datalist'  value="$nama_pelbagainegara"    />
+           <datalist id = 'datalist'>
+           #foreach($ja in $kenegaraan)
+           <option label='$!ja.NAMA_WARGA' value = '$!ja.NAMA_WARGA'></option>
+           #end </datalist>
+           </td>
         </tr>
           
           
-       
         <tr>
           <td valign="top" class="style38 style5" >#if($setmode != "disabled") #end</td>
           <td class="style38" ><div align="left">#if($setmode != "disabled") Bandar #else
@@ -1860,13 +1830,10 @@ $Listkp.keterangan
             #end </div></td>
             
          
-            
           <td><div align="right">:</div></td>
           <td>
            <div id="check_bandar" ></div>
         
-       
-          
           #if($setmode == "disabled")
             #foreach($listdaerah in $listBandarbyNegeri)            
             
@@ -1940,11 +1907,6 @@ $Listkp.keterangan
         </tr>
         
         
-       
-        
-        
-        
-        
          <tr>
           <td class="style38" valign="top" >&nbsp;</td>
           <td class="style38" >No Tel (R/P)</td>
@@ -1962,10 +1924,8 @@ $Listkp.keterangan
         </tr>
         
         
-        
-        
         <tr id="tr_hp">
-          <td class="style38" valign="top" >&nbsp;</td>
+          <td class="style38" valign="top" >#if($setmode != "disabled") <span class="style5">*</span> #end</td>
           <td class="style38" >No Tel (HP)</td>
           <td>:</td>
           <td>
@@ -1980,6 +1940,29 @@ $Listkp.keterangan
              </td>
         </tr>
         
+        <tr>
+	      	<td class="style38" valign="top" >#if($setmode != "disabled") <span class="style5">*</span> #end</td>
+	      	<td>Email</td>
+	      	<td>:</td>  
+	      	<td>
+	      		<span id="emel_1a">
+	      			<input name="txtEmelPemohon" id="txtEmelPemohon" type="text" style="text-transform:toLowerCase;"  onblur="toLowerCase()" value="$emel" size="50" maxlength="200" class="$setmode" $setmodeR class="$setmode"/>
+	      		</span> 
+	            
+	      		<span id="emel_1b">
+	      			<input name="txtEmelPemohon" id="txtEmelPemohon" type="text" class="disabled" style="text-transform:toLowerCase;"  onblur="toLowerCase()" value="$emel" size="50" maxlength="200" readonly />
+	      		</span>
+	      	</td>
+	      </tr>
+      
+      #if($readmode != "disabled" )
+      <tr>
+       <td class="style38" valign="top">&nbsp;</td>
+       <td class="style38" valign="top"><div align="left"></div></td>
+       <td valign="top">&nbsp;</td>
+       <td valign="top" height="1"><em><span class="style1">cth: abc@email.com </span></em></td>
+       </tr>
+      #end   
         #end
       </table>
         </fieldset></td>
@@ -2186,7 +2169,10 @@ function Kemaskini() {
 
 function Simpan() {
 //alert(document.f1.jenis_pemohon.value)
-  var dt=document.f1.txtTarikhMati
+	var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    var em = document.f1.txtEmelPemohon.value;
+    
+  	var dt=document.f1.txtTarikhMati
 	var dm=document.f1.txdTarikhMohon
 	
 	var dob_code = document.f1.txtNoKPBaruSimati1.value;
@@ -2283,7 +2269,6 @@ function Simpan() {
 		document.f1.jenis_pej2.focus();
 	}
 	
-	
 	else if (document.f1.pemohonsimatikp1 != null && document.f1.pemohonsimatikp1.value == "1") {
 		alert("No. MyID baru simati dan pemohon adalah sama. \nSila pastikan simati dan pemohon adalah individu yang berbeza");
 		document.f1.txtNoKPBaruPemohon3.focus();		
@@ -2321,6 +2306,10 @@ function Simpan() {
 		alert("Sila masukkan MyID Baru Pemohon dengan lengkapnya");
 		document.f1.txtNoKPBaruPemohon3.focus();
 	}
+	else if (document.f1.taraf_penting.value == "1" && document.f1.socSaudaraWaris.value == "") {
+      alert("Sila pilih Talian Persaudaraan Dengan Simati");
+      document.f1.socSaudaraWaris.focus();
+    }
 	else if (document.f1.txtNoKPBaruPemohon1.value=="" && document.f1.txtNoKPBaruPemohon2.value=="" && document.f1.txtNoKPBaruPemohon3.value=="" && document.f1.txtNoKPLamaPemohon.value=="" && document.f1.socJenisKPLainPemohon.value=="0" && document.f1.txtNoKPLainPemohon.value=="" && document.f1.jenis_pemohon.value == "2") {
 		alert("Sila masukkan salah satu MyID Pemohon.");
 		document.f1.txtNoKPBaruPemohon1.focus();
@@ -2367,8 +2356,6 @@ function Simpan() {
 		document.f1.txtNamaPemohon[0].focus();
 	} 
 	
-	
-	
 	else if (document.f1.txtPoskod[0] != 'null' && document.f1.txtPoskod[0].value != "" && document.f1.txtPoskod[0].value.length < 5 && document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") {
 		alert("Sila masukkan nombor poskod dengan lengkapnya");
 		document.f1.txtPoskod[0].focus();
@@ -2401,15 +2388,11 @@ function Simpan() {
 		return;
 	}
 	
-
-	
 	else if ((document.f1.txtAlamat1[0].value == "" || document.f1.socNegeri[0].value == "" || document.f1.socNegeri[0].value == "0" || document.f1.txtPoskod[0].value == "" ) && document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") {
 		alert("Sila masukkan alamat tetap pemohon dengan lengkap");
 		document.f1.txtAlamat1[0].focus();
 		return;
 	}
-	
-	
 	
 	else if ((document.f1.txtAlamat1[1].value == "" || document.f1.socNegeri[1].value == "" || document.f1.socNegeri[1].value == "0" || document.f1.txtPoskod[1].value == "" )&& (document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == "8")) {
 	
@@ -2417,13 +2400,21 @@ function Simpan() {
 		document.f1.txtAlamat1[1].focus();
 		return;
 	}
-
-	
 	
 	else if (document.f1.jenis_pemohon.value == "2" && document.f1.txtNoKPBaruPemohon1.value != "" && isIc(tt1)==false){
 		document.f1.txtNoKPBaruPemohon1.focus()
 		return false
 	}
+	
+	else if (document.f1.no_hp[0] != 'null' && document.f1.no_hp[0].value=="" && document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8"){
+      alert("Sila masukkan No. Tel (HP)");
+      document.f1.no_hp.focus();
+    }
+    
+	else if (document.f1.txtEmelPemohon[0].value == "" && (document.f1.txtEmelPemohon.value != "6" && document.f1.taraf_penting.value != "8")){
+      alert("Sila masukkan Email");
+      document.f1.txtEmelPemohon.focus();
+    }
 	/*
 	else if (document.f1.jenis_pemohon.value == "2"  && document.f1.txtNoKPBaruPemohon2.value != "" &&(negeri_code1!="01" && negeri_code1!="21" && negeri_code1!="22" && negeri_code1!="23" && negeri_code1!="24" && negeri_code1!="02" && negeri_code1!="25" && negeri_code1!="26" && negeri_code1!="27" && negeri_code1!="03" && negeri_code1!="28" && negeri_code1!="29" && negeri_code1!="04" && negeri_code1!="30" && negeri_code1!="05" && negeri_code1!="31" && negeri_code1!="59" && negeri_code1!="06" && negeri_code1!="32" && negeri_code1!="33" && negeri_code1!="07" && negeri_code1!="34" && negeri_code1!="35" && negeri_code1!="08" && negeri_code1!="36" && negeri_code1!="37" && negeri_code1!="38" && negeri_code1!="39"  && negeri_code1!="09" && negeri_code1!="40" && negeri_code1!="10" && negeri_code1!="41" && negeri_code1!="42" && negeri_code1!="43" && negeri_code1!="44" && negeri_code1!="11" && negeri_code1!="45" && negeri_code1!="46" && 
 		negeri_code1!="12" && negeri_code1!="47" && negeri_code1!="48" && negeri_code1!="49" &&
@@ -3156,7 +3147,10 @@ if(document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != 
 		document.getElementById('no_hp_1a').style.display="";
 		document.getElementById('no_hp_1b').style.display="none";
 		}	
-		
+		if(document.getElementById('emel_1a') != null){
+        document.getElementById('emel_1a').style.display="";
+        document.getElementById('emel_1b').style.display="none";
+      	}
 		
 		document.getElementById('tr_hp').style.display="";
 	
@@ -3522,21 +3516,10 @@ document.getElementById('amanah').style.display="";
 		document.getElementById('no_hp_1a').style.display="none";
 		document.getElementById('no_hp_1b').style.display="none";
 		}	
-		
-		
-		
 	
-	  
-
-
 }
 
-
-
-
-else
-{
-
+else{
 
 }
 
@@ -3682,7 +3665,10 @@ if(document.f1.taraf_penting.value != "1")
 		document.getElementById('no_hp_1a').style.display="";
 		document.getElementById('no_hp_1b').style.display="none";
 		}	
-		
+		if(document.getElementById('emel_1a') != null){
+        document.getElementById('emel_1a').style.display="";
+        document.getElementById('emel_1b').style.display="none";
+      	}
 		
 		document.getElementById('tr_hp').style.display="";
 		document.getElementById('tr_pelbagainegara').style.display="";
@@ -4111,20 +4097,9 @@ document.getElementById('baitulmal').style.display="none";
 		document.getElementById('no_hp_1b').style.display="none";
 		}	
 		
-		
-		
-	
-	  
-
-
 }
 
-
-
-
-else
-{
-
+else{
 
 }
 
@@ -4138,7 +4113,6 @@ document.f1.txtNamaPemohon[0].disabled = '';
 					 		 document.f1.socBandar[0].disabled = ''; 
 
 }
-
 
 
 
