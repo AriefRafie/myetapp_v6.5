@@ -1466,8 +1466,7 @@
                                         </tr>
                                         #end
                                         <tr id="no_hp">
-                                          <td class="style38" >&nbsp;</td>
-                                       
+                                       	  <td class="style38" valign="top"> <span class="style44">*</span> </td>
                                           <td class="style38" ><div align="left">No Telefon Bimbit</div></td>
                                            <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>
                                           <td><input name="txtNoTelefonBimbitPemohon" onkeyup="javascript:validateIC(event,this,this.value,'txtNoTelefonBimbitPemohon')" type="text" id="txtNoTelefonBimbitPemohon" style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.noHp" size="14" maxlength="14" $readmodeR class="$readmode" /></td>
@@ -3072,6 +3071,14 @@ else if (document.f1.status_pemohon.value == "2" && document.f1.txtnoKpBaru2Pemo
 	document.f1.txtAlamatTerakhir1PemohonSurat.focus()
 	return;
 	}
+	else if (document.f1.txtNoTelefonBimbitPemohon.value=="") {
+      alert("Sila masukkan No. Tel (HP)");
+      document.f1.txtNoTelefonBimbitPemohon.focus();
+    }
+    else if (document.f1.txtEmelPemohon.value=="") {
+      alert("Sila masukkan email yang lengkap");
+      document.f1.txtEmelPemohon.focus();
+    }
 	/*
 	else if (document.f1.txtNoTelefonPemohon.value == "" && document.f1.txtNoTelefonBimbitPemohon.value == "" )
 	{
