@@ -794,14 +794,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
 		}else if ("Simpanx".equals(submit)) {
-
 			String passvalue = getParam("passvalue");
 			this.context.put("duplicate", "");
 
 			String IdPermohonan = getParam("idPermohonan");
 			String Idppp = getParam("idpermohonan");
 
-			System.out.println("IdPermohonan"+IdPermohonan);
+			myLogger.info("IdPermohonan="+IdPermohonan);
 			check_mode_permohonan(session);
 			chkId = logic_A.getId();
 			Hashtable b = (Hashtable) chkId.get(0);
@@ -904,8 +903,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					String negri = getParam("socNegeri");
 
 					// Hashtable h = (Hashtable)list2.get(0);
-					if (negri == "") {
-						
+					if (negri == "") {						
 						this.context.put("negeri", "");
 						this.context.put("daerah", "");
 
@@ -915,6 +913,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 						Vector s1 = logic_A.getListBandarByNegeri(Integer.parseInt(negri));
 						this.context.put("listBandarbyNegeri", s1);
 					}
+					
 					if (getParam("socBandar") == "") {
 						this.context.put("daerah", "");
 
@@ -1030,8 +1029,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					k.put("jenis_pemohon", getParam("jenis_pemohon"));
 					k.put("socSaudaraWaris", getParam("socSaudaraWaris"));
 					k.put("emel", getParam("txtEmelPemohon"));
-
-
 					v.addElement(k);
 					this.context.put("View", v);
 
@@ -1080,9 +1077,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (cntID == 0) {
 					// addPermohonan(session,userIdNeg,userIdPejabat,userIdKodDaerah,userIdKodNegeri);
 					if (bolehsimpan.equals("yes")) {
-						System.out.println("Bolehsimpan");
+						myLogger.info("Bolehsimpan");
 						addPermohonan(session);
 						this.context.put("appear_skrin_info", "simpan_daftar");
+						
 					}
 				} else {
 					if (bolehsimpan.equals("yes")) {
@@ -1169,8 +1167,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
-		}
-		else if ("getBandar".equals(submit)||submit.equals("getlampiran")) {
+		}else if ("getBandar".equals(submit)||submit.equals("getlampiran")) {
 			String IdPermohonan = getParam("idPermohonan");
 			String Idppp = getParam("idpermohonan");
 
@@ -3777,9 +3774,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (temp.equals("")) {
 					temp = "0";
 				}
+				
 				String temp2 = getParam("socDaerahPengesahan");
-				if(temp2.equals("1613161"))
-				{
+				if(temp2.equals("1613161")){
 					temp2 = "121";
 					//System.out.println("temp2 >>> "+temp2);
 				}
@@ -3788,18 +3785,18 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				int idnegeri = Integer.parseInt(temp);
 				int iddaerah = Integer.parseInt(temp2);
+				myLogger.info("temp >>> "+idnegeri+"|temp2 >>> "+iddaerah);
+
 				this.context.put("selNegeri", getParam("socNegeriPengesahan"));
 				this.context.put("selDaerah", getParam("socDaerahPengesahan"));
-				context.put("disabledDropdown",
-						"disabled readonly class = \"disabled\"");
+				context.put("disabledDropdown","disabled readonly class = \"disabled\"");
 				context.put("readonly", "readonly");
 				Vector idfail = logiconline.getIdFail(idPermohonan);
 				Hashtable t = (Hashtable) idfail.get(0);
+				
 				if (bolehsimpan.equals("yes")) {
 					logiconline.insertDaerahMohon(idnegeri, iddaerah,
-							idPermohonan, (String) session
-									.getAttribute("_ekptg_user_id"), (String) t
-									.get("noidfail"));
+							idPermohonan, (String) session.getAttribute("_ekptg_user_id"), (String) t.get("noidfail"));
 					this.context.put("appear_skrin_info", "hantar");
 				}
 				Vector getAddressPpk = logiconline.getAddress(iddaerah);
@@ -6110,7 +6107,6 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 
 	private void addPermohonan(HttpSession session) throws Exception {
-
 		Db db = null;
 	    Connection conn = null;
 		db = new Db();
@@ -6215,7 +6211,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("no_hp", getParam("no_hp"));
 		h.put("taraf_penting", taraf_penting);
 		myLogger.info("taraf_penting 6212");
-	h.put("jenis_pemohon", jenis_pemohon);
+		h.put("jenis_pemohon", jenis_pemohon);
 		h.put("adaob", getParam("adaob"));
 		h.put("jenis_pej", getParam("jenis_pej"));
 		h.put("tahun", getParam("tahun"));
@@ -6224,16 +6220,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		
 		myLogger.info("*****READ HERE2******"); 
 		String nokp = null;
-		if (no_kpbaru_simati != null)
-		{
+		if (no_kpbaru_simati != null){
 			nokp = no_kpbaru_simati;
-		}
-		else if (no_kplama_simati != null)
-		{
+		}else if (no_kplama_simati != null){
 			nokp = no_kplama_simati;
-		}
-		else if (no_kplain_simati != null)
-		{
+		}else if (no_kplain_simati != null){
 			nokp = no_kplain_simati;
 		}
 
@@ -6298,6 +6289,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		this.context.put("selectedTabtengah", getParam("tabIdtengah"));
 		this.context.put("selectedTabbawah", getParam("tabIdbawah"));
 		this.context.put("selectedTabtepi", getParam("tabIdtepi"));
+		
 	}
 
 	public void initInputPpkPengesahan() {
@@ -6951,3 +6943,4 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	
 	
 }
+//20200824

@@ -1104,7 +1104,7 @@ function kosongkanLOT(idpermohonan,mode,idhakmilik) {
 	document.${formName}.submit();
 }
 
-
+ 
 function tambah() {
 	
 	document.${formName}.ScreenLocation.value = "changeTanah";
