@@ -73,7 +73,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	String checkedBatal = "";
 	
 	int maxTahun = 20; //arief add
-	double bayaranDenda = 0.00; // arief add
+	double bayaranDenda; // arief add
 	boolean flagDenda = true; //arief add
 	int bilHari = 365; //arief add
 	int bilHariSebenar = 370; //arief add
@@ -84,7 +84,8 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	
 	
 	public String doTemplate2() throws Exception
-    {
+    {	bayaranDenda = 0.00;
+		myLogger.info("bayaranDenda0 = "+bayaranDenda);
 		HttpSession session = request.getSession();
 		String doPost = (String)session.getAttribute("doPost");
     	String vm = "";
@@ -403,6 +404,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       			    		
       			    		//arief add
       			    		bezaTahun = tahunDaftar - tahunAktifDenda;
+      			    		myLogger.info("bayaranDenda1 = "+bayaranDenda);
       			    		if (bilHariSebenar > bilHari) {
       			    			if (bezaTahun == 20){
       			    				bayaranDenda = 1000;
@@ -469,6 +471,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
           					}
       			    		
       			    		bezaTahun = tahunDaftar - tahunAktifDenda;
+      			    		myLogger.info("bayaranDenda2 = "+bayaranDenda);
       			    		if (bilHariSebenar > bilHari) {
       			    			if (bezaTahun == 20){
       			    				bayaranDenda = 1000;
@@ -3955,6 +3958,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 							bayaranYuran = getBundaranBayaran(bayaranYuran);
 						}**/
 			    		bezaTahun = tahunDaftar - tahunAktifDenda;
+			    		myLogger.info("bayaranDenda3 = "+bayaranDenda);
 			    		if (bilHariSebenar > bilHari) {
 			    			if (bezaTahun == 20){
 			    				bayaranDenda = 1000;
@@ -4007,6 +4011,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 						}
 		    		
 		    		bezaTahun = tahunDaftar - tahunAktifDenda;
+		    		myLogger.info("bayaranDenda4 = "+bayaranDenda);
 			    		if (bilHariSebenar > bilHari) {
 			    			if (bezaTahun == 20){
 			    				bayaranDenda = 1000;
