@@ -80,11 +80,14 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	int bezaTahun = 0; //arief add
 	int tahunAktifDenda = 2020; // arief add
 	int tahunDaftar = 2021; //arief add
+	double bayaranSebenar;
 	
 	
 	
 	public String doTemplate2() throws Exception
-    {	bayaranDenda = 0.00;
+    {	
+		bayaranDenda = 0.00;
+		bayaranSebenar = 0.00;
 		myLogger.info("bayaranDenda0 = "+bayaranDenda);
 		HttpSession session = request.getSession();
 		String doPost = (String)session.getAttribute("doPost");
@@ -414,7 +417,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
   	      							}
   	      						}
   	      					}
-  	      					bayaranYuran = bayaranYuran + bayaranDenda;
+  	      					bayaranSebenar = bayaranYuran + bayaranDenda;
       			    		
       			    		//String t_mohon = logic_A.getTarikhMohon(idpermohonan);
   	      					//String tarikhAktifFlagDendaLewat = "14/07/2020";
@@ -441,6 +444,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       			    		
   	      					this.context.put("txtJumDendaLewat", bayaranDenda);
       			    		this.context.put("txtJumBayaran", bayaranYuran);
+      			    		this.context.put("txtJumBayaranSebenar", bayaranSebenar);
       			    		this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
       						this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlahHartaDeductNilaianAmanahRaya); //arief add
       						System.out.println("txtJumBayaran = "+bayaranYuran);
@@ -481,7 +485,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
   	      							}
   	      						}
   	      					}
-  	      					bayaranYuran = bayaranYuran + bayaranDenda;
+  	      					bayaranSebenar = bayaranYuran + bayaranDenda;
       			    			
       			    			/**yang asal
       			    			 * 
@@ -497,6 +501,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       			    		this.context.put("txtJumBayaran", bayaranYuran);
       			    		this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
       			    		this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlah_harta_tarikhmohon);//arief add
+      			    		this.context.put("txtJumBayaranSebenar", bayaranSebenar);//arief add
       			    		
       			    		System.out.println("txtJumBayaran = "+bayaranYuran);
       			    		System.out.println("txtJumHarta = "+jumlah_harta_tarikhmohon);
@@ -505,6 +510,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       							
       					}
       				}
+      				
       				//*end
       				
       				//arief add bayaran denda lewat
@@ -3968,9 +3974,10 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     							}
     						}
     					}
-    					bayaranYuran = bayaranYuran + bayaranDenda;
+    					bayaranSebenar = bayaranYuran + bayaranDenda;
 			    	
 						this.context.put("txtJumBayaran", bayaranYuran); //Yuran Perintah
+						this.context.put("txtJumBayaranSebenar", bayaranSebenar); //arief add
 						this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
 						this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlahHartaDeductNilaianAmanahRaya);
 						System.out.println("txtJumBayaran = "+bayaranYuran);
@@ -4021,9 +4028,10 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     							}
     						}
     					}
-    				bayaranYuran = bayaranYuran + bayaranDenda;
+    				bayaranSebenar = bayaranYuran + bayaranDenda;
     				
 		    		this.context.put("txtJumBayaran", bayaranYuran);
+		    		this.context.put("txtJumBayaranSebenar", bayaranSebenar);//arief add
 					this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
 					this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlah_harta_tarikhmohon);
 					System.out.println("txtJumBayaran = "+bayaranYuran);
