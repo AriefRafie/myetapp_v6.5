@@ -430,8 +430,13 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
           
           #end            
           </table>
+          </br>
+          
+      </fieldset>
+      
       
 <!-- PPT - 30(ii) -->
+<!--
 		<table width="100%" border="0">
 			<tr align="center">
 				<td>
@@ -447,6 +452,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
       </td>
   </tr>
 </table>
+-->
 
 <!-- PPT-30 (ii) -->
 #if($flag_skrin == "hakmilik_borangk")
@@ -955,10 +961,6 @@ function cetakSuratIringan(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempo
 
 function cetakSuratEndorsanBorangK(idpermohonan, idhakmilik) {
 	
-	// var idhakmilik = document.querySelectorAll('input[type="checkbox"]:checked').length;
-	// alert(document.querySelectorAll('input[type="checkbox"]:checked').length);
-	// var count = document.querySelectorAll('input[type="checkbox"]:checked').length;
-	
 	var checkSelected = false;
 	if(document.${formName}.cbsemaks.length > 1){
 		for(var i = 0 ; i < document.${formName}.cbsemaks.length; i++)	{ 
@@ -1004,12 +1006,46 @@ function cetakSuratEndorsanBorangK(idpermohonan, idhakmilik) {
 
 function cetakSuratIringanAgensiPemohon(idpermohonan,idhakmilik) {
 	
+	var checkSelected = false;
+	if(document.${formName}.cbsemaks.length > 1){
+		for(var i = 0 ; i < document.${formName}.cbsemaks.length; i++)	{ 
+    		if (document.${formName}.cbsemaks[i].checked)  	{
+  				checkSelected=true;
+  			}
+		}
+	}	else	{
+		if (document.${formName}.cbsemaks.checked)	{
+			checkSelected=true;
+    	}
+	}
+	
+	 if(!checkSelected){
+		alert("Sila semak pada \"Kotak Semakan\" bagi mencetak Surat Iringan Agensi Pemohon.");
+		return;
+		
+	}	else	{
+
+	var selected = new Array();
+	var inputElements = document.getElementsByClassName("idHakmilik"); // ClassName from cbsemaks
+	for(var i = 0; i < inputElements.length; i++) {
+		if (inputElements[i].checked)	{
+			selected.push(inputElements[i].value);
+		}
+	}
+	
+	if (selected.length > 0) {
+		idhakmilik = selected.join(",");
+		// alert(idhakmilik);
+	}
+	
 	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratIringanAgensiPemohon&selectNoFail=yes";
 	//var url = "../servlet/ekptg.report.ppt.BuktiPenyampaian?idHakmilik="+idhakmilik+"&flagJenisSuratCara=E";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
+    
+    }
 }
 //PPT-30(ii)
 
