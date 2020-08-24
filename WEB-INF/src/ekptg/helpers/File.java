@@ -40,8 +40,7 @@ public class File implements Serializable  {
 	/** NO_TURUTAN_ADUAN */
 	public static synchronized int getSeqNoAduanOnline(int id_jenisaduan) throws DbException {
 		return getSeqNoAduan(id_jenisaduan);
-	}
-	
+	}	
 	/** NO_TURUTAN_FPX */
 	public static synchronized int getSeqNoFPXOnline(int id_Jenisbayaran) throws DbException {
 		return getSeqNoFPX(id_Jenisbayaran);
@@ -50,8 +49,7 @@ public class File implements Serializable  {
 	public static synchronized int getSeqNoInternetBankOnline(int id_Jenisbayaran) throws DbException {
 		return getSeqNoInternetBank(id_Jenisbayaran);
 	}
-	/**   NO_TURUTAN_SUBJAKET */
-	
+	/**   NO_TURUTAN_SUBJAKET */	
 //	public static synchronized int getSeqNoSubjaket(HttpSession session, int id_seksyen,int id_urusan,int id_kementerian,int id_negeri) throws DbException {
 //		return getSeqNo(session, id_seksyen, id_urusan, id_kementerian, id_negeri,0,false,true);
 //	}
@@ -85,8 +83,8 @@ public class File implements Serializable  {
 //	}
 	
 	//00
-	public static synchronized int getSeqNoJilid(int id_seksyen,int id_urusan,int id_kementerian,int id_negeri,
-			   int id_daerah) throws DbException {
+	public static synchronized int getSeqNoJilid(int id_seksyen,int id_urusan,int id_kementerian
+		,int id_negeri,int id_daerah) throws DbException {
 		return getSeqNo(id_seksyen, id_urusan, id_kementerian, id_negeri,id_daerah,true,false);
 	}
 	
@@ -681,7 +679,7 @@ public class File implements Serializable  {
 	
 	//Db parameter added
 	public void addNew(Db db,int id_seksyen,int id_urusan,int id_kementerian,
-							   int id_negeri,int id_daerah,int tahun,int bulan) throws DbException {		
+		int id_negeri,int id_daerah,int tahun,int bulan) throws DbException {		
 		//Db db = null;
 		StringBuffer sb = new StringBuffer();
 		sb.append("INSERT INTO "+SEQ_TABLE+" (id_seksyen,id_urusan,id_kementerian,id_negeri,id_daerah,");
@@ -1077,3 +1075,4 @@ public class File implements Serializable  {
 	
 	
 }
+//20200823
