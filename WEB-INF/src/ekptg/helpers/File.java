@@ -26,8 +26,7 @@ public class File implements Serializable  {
 			// Sample
 //			System.out.println("SeqNo1:"+File.getSeqNoByYearMonth(session, 5,1,2008,7));
 //			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(session, 5,1,2009,8));
-//			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(session, 5,1,2008,6));
-			
+//			System.out.println("SeqNo2:"+File.getSeqNoByYearMonth(session, 5,1,2008,6));			
 			/*System.out.println("Jilid SeqNo2:"+File.getSeqNoJilid(5,1,1,1));
 			System.out.println("Subjaket SeqNo2:"+File.getSeqNoSubjaket(5,1,1,1));
 			System.out.println("SeqNo3:"+File.getSeqNo(5,1,1,1));
@@ -36,6 +35,7 @@ public class File implements Serializable  {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		
 	}
 	/** NO_TURUTAN_ADUAN */
 	public static synchronized int getSeqNoAduanOnline(int id_jenisaduan) throws DbException {
@@ -838,9 +838,7 @@ public class File implements Serializable  {
 			//db = new Db();
 			try{
 				db.getStatement().executeUpdate(sb.toString());
-			
-				AuditTrail at = new AuditTrail();
-				at.logActivity(id_urusan+"","","2",null,session,"","increaseSeq CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ");
+				AuditTrail.logActivity(id_urusan+"","","2",null,session,"","increaseSeq CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ");
 			
 			} catch (SQLException x) {x.printStackTrace();}
 		
@@ -862,7 +860,7 @@ public class File implements Serializable  {
 		,boolean getNoSubjaket
 		,int tahun
 		,int bulan) throws DbException  {
-			//Db db = null;
+		//Db db = null;
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("UPDATE "+SEQ_TABLE+"  SET "); 
@@ -879,16 +877,19 @@ public class File implements Serializable  {
 		sb.append("id_kementerian = '"+id_kementerian+"' AND ");
 		sb.append("id_negeri = '"+id_negeri+"' AND ");		
 		sb.append("id_daerah = '"+id_daerah+"'");
-	
+//		myLog.info("increaseSeq 1");
 		try {
-				//db = new Db();
-			try{
-				db.getStatement().executeUpdate(sb.toString());
-				AuditTrail.logActivity(id_urusan+"","","2",null,null,"","increaseSeq CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ");
+//			db = new Db();
+//			myLog.info("increaseSeq 2");
+		try{
+			db.getStatement().executeUpdate(sb.toString());
+			AuditTrail.logActivity(id_urusan+"","","2",null,null,"","increaseSeq CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ");
 				
-			} catch (SQLException x) {x.printStackTrace();}
+		} catch (SQLException x) {x.printStackTrace();}
+//			myLog.info("increaseSeq 3");
 			
 		}catch (Exception ex) {
+			ex.printStackTrace();
 			throw new DbException(ex.getMessage() + ": " + sb.toString());
 		}
 //			finally {
@@ -898,8 +899,6 @@ public class File implements Serializable  {
 		
 	public void increaseSeqPPK(HttpSession session, Db db,int id_seksyen,int id_urusan,int id_kementerian,
 		int id_negeri,int id_daerah,boolean getNoJilid,boolean getNoSubjaket,int bulan,int tahun) throws Exception  {
-		AuditTrail at = new AuditTrail();
-
 		//Db db = null;
 		
 		StringBuffer sb = new StringBuffer();
@@ -926,11 +925,10 @@ public class File implements Serializable  {
 		try {
 			//db = new Db();
 			try{
-			myLog.info("UPDATE SEQ BARU >>>>>>>>>>>>>>>>>>>>>>>> "+sb.toString());
 			db.getStatement().executeUpdate(sb.toString());
 						
 			//at.logActivity("","2",null,null,"","increaseSeqPPK CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ",db);
-			at.logActivity(id_urusan+"","","2",null,session,"","increaseSeqPPK CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ",db); 
+			AuditTrail.logActivity(id_urusan+"","","2",null,session,"","increaseSeqPPK CREATE NO FAIL INSIDE : ID_SEKSYEN = '"+id_seksyen+"';ID_URUSAN = '"+id_urusan+"';ID_KEMENTERIAN = '"+id_kementerian+"';ID_NEGERI = '"+id_negeri+"';ID_DAERAH = '"+id_daerah+"';TAHUN = '"+tahun+"' ",db); 
 			
 			} catch (SQLException x) {x.printStackTrace();}
 		}catch (Exception ex) {
@@ -1028,6 +1026,7 @@ public class File implements Serializable  {
 		finally {
 		if (db != null) db.close();
 		}
+		
 	}
 	
 	public void increaseSeqInternetBank(int id_jenisbayaran) throws DbException  {
@@ -1049,6 +1048,7 @@ public class File implements Serializable  {
 		finally {
 		if (db != null) db.close();
 		}
+		
 	}
 	
 	public static synchronized String getIDFailByPermohonan(String idPermohonan) throws DbException  {
@@ -1063,7 +1063,7 @@ public class File implements Serializable  {
 			sb.append("SELECT F.ID_FAIL ");
 			sb.append("FROM TBLPFDFAIL F, TBLPERMOHONAN P WHERE ");
 			sb.append("P.ID_FAIL=F.ID_FAIL AND P.ID_PERMOHONAN = " +idPermohonan);	
-			myLog.info("getIDFailByPermohonan:sql="+sb.toString());
+//			myLog.info("getIDFailByPermohonan:sql="+sb.toString());
 			ResultSet rs = db.getStatement().executeQuery(sb.toString()); 
 			
 			if ( rs.next() ) {
@@ -1084,5 +1084,5 @@ public class File implements Serializable  {
 	
 	
 }
-//20200824 14:12
-//20200823
+//20200824 20:36
+

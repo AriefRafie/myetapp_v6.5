@@ -4498,9 +4498,8 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		try {
 
 			db = new Db();
-			String X = String.format("%06d", File.getSeqNo(db, 2, 382, 0, 0, 0,
-					false, false, getYear, 0));
-			myLogger.info("X="+X);
+			String X = String.format("%06d", File.getSeqNo(db, 2, 382, 0, 0, 0,false, false, getYear, 0));
+//			myLogger.info("X="+X);
 			String no_fail_online = "JKPTG/PK/01/" + getYear + "/" + X;
 
 			Statement stmtG = db.getStatement();
@@ -5356,7 +5355,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		String strNegeri = String.valueOf(idNegeri);
 		String X = String.format("%04d",File.getSeqNo(db,2,382,0,idNegeri,idDaerah,false,false,getYear,0));
 //		String X = String.format("%04d",File.getSeqNo(db,2,382,0,Integer.parseInt(idNegeri),Integer.parseInt(idDaerah),false,false,getYear,0));
-		myLogger.info("getNoFail:X="+X);
+//		myLogger.info("getNoFail:X="+X);
 		Vector<Tblrujdaerah> vecDaerah = DB.getDaerahByIdDaerah(String.valueOf(idDaerah));
 		Tblrujdaerah rd = vecDaerah.get(0);
 
@@ -5373,6 +5372,4 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 	
 	
 }
-//20200824 16:44
-//Updated on 17/8/2010
-
+//20200824 20:36
