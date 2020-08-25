@@ -2,9 +2,7 @@ package ekptg.model.utils.emel;
 
 public interface IEmel {
 
-	// class IEmel
-
-	
+	// IEMEL
 	public String setKandungan(String tajuk,String daripada);
 	public String setKandungan(String tajuk,String daripada,String noRujukan);
 	public String seTajuk(String namaSubmodul);
