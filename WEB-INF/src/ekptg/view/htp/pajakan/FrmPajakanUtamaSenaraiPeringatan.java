@@ -8,8 +8,8 @@ import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
-import ekptg.model.htp.HtpPeringatanBean;
-import ekptg.model.htp.IHtpPeringatan;
+import ekptg.model.htp.HTPeringatanBean;
+import ekptg.model.htp.IHTPeringatan;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.utils.emel.EmailConfig;
 
@@ -18,7 +18,7 @@ public class FrmPajakanUtamaSenaraiPeringatan extends AjaxBasedModule{
 	 * 
 	 */
 	private final String PATH="app/htp/pajakan/";
-	private IHtpPeringatan iHTPP = null;  
+	private IHTPeringatan iHTPP = null;  
 	private static final long serialVersionUID = 3879148285213314850L;
 	Long idHakmilikUrusan = 0L;
 	static Logger myLog = Logger.getLogger(ekptg.view.htp.pajakan.FrmPajakanUtamaSenaraiPeringatan.class);
@@ -28,14 +28,12 @@ public class FrmPajakanUtamaSenaraiPeringatan extends AjaxBasedModule{
 	public String doTemplate2()throws Exception {
 		 
 	    String template_name = PATH+"peringatan/index.jsp";
-//	    String socNegeri = "";
-
 	    this.context.put("util", new lebah.util.Util());
 
 	    Vector<HtpPermohonan> senaraiFail = null;
 //	    socNegeri = FrmPajakanKecilPendaftaranData.SelectNegeri("socNegeri");
 	    
-//        String id_kementerian = getParam("sockementerian");
+//      String id_kementerian = getParam("sockementerian");
 	    String submit = getParam("command");
 	    String idFail = getParam("fail");
 //	    String pageMode = getParam("pagemode");
@@ -68,8 +66,8 @@ public class FrmPajakanUtamaSenaraiPeringatan extends AjaxBasedModule{
 	    	}
 
 	    }else{
-	    	myLog.info("Tahun:"+sdfTahun.format(new Date()));
-	    	myLog.info("Bulan:"+sdfBulan.format(new Date()));
+//	    	myLog.info("Tahun:"+sdfTahun.format(new Date()));
+//	    	myLog.info("Bulan:"+sdfBulan.format(new Date()));
 	    	if (sdfBulan.format(new Date()).equals("12")){
 		    	//myLog.info("Bulan:"+sdfBulan.format(new Date()));
 	    		senaraiFail = getIHTPP().getSenaraiPeringatanBayaran("", "3",String.valueOf(tahunHadapan));
@@ -87,10 +85,9 @@ public class FrmPajakanUtamaSenaraiPeringatan extends AjaxBasedModule{
 	    
 	}
 
-
-	private IHtpPeringatan getIHTPP(){
+	private IHTPeringatan getIHTPP(){
 		if(iHTPP== null)
-			iHTPP = new HtpPeringatanBean();
+			iHTPP = new HTPeringatanBean();
 		return iHTPP;
 	}	
 	

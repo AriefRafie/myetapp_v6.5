@@ -38,11 +38,11 @@ import ekptg.model.htp.HTPFailBayaranBean;
 import ekptg.model.htp.HTPStatusBean;
 import ekptg.model.htp.HakmilikUrusan;
 import ekptg.model.htp.HtpBean;
-import ekptg.model.htp.HtpPeringatanBean;
+import ekptg.model.htp.HTPeringatanBean;
 import ekptg.model.htp.IBayaranBean;
 import ekptg.model.htp.IHTPStatus;
 import ekptg.model.htp.IHtp;
-import ekptg.model.htp.IHtpPeringatan;
+import ekptg.model.htp.IHTPeringatan;
 import ekptg.model.htp.UtilHTML;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Pajakan;
@@ -99,7 +99,7 @@ public class FrmPajakanSenaraiFailBayaran extends AjaxBasedModule {
 	FrmPajakanPendaftaranData logicp = new FrmPajakanPendaftaranData();
 	FrmPenswastaan2SenaraiFailData swastaData = new FrmPenswastaan2SenaraiFailData();
 
-	private IHtpPeringatan iHTPP = null;  	
+	private IHTPeringatan iHTPP = null;  	
     //MJM
 	FrmPajakanMemorandumJemaahMenteriData logicmjm = new FrmPajakanMemorandumJemaahMenteriData();
     private Pemohon pemohon = null;
@@ -2123,9 +2123,9 @@ public class FrmPajakanSenaraiFailBayaran extends AjaxBasedModule {
 		return iHTPFB;
 	}	
 
-	private IHtpPeringatan getIHTPP(){
+	private IHTPeringatan getIHTPP(){
 		if(iHTPP== null)
-			iHTPP = new HtpPeringatanBean();
+			iHTPP = new HTPeringatanBean();
 		return iHTPP;
 	}
 	
