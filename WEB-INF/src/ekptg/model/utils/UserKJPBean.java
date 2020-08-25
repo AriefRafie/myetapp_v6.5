@@ -28,6 +28,7 @@ public class UserKJPBean implements IUserPegawai {
 	 * 
 	 * */
 	public List<Map<String,String>> getPenggunaMengikutRole(String role,String idKementerian) throws Exception {
+		
 		Db db = null;
 		ResultSet rs = null;
 		Statement stmt = null;

@@ -22,6 +22,7 @@ public class EmelSemakanBean implements IEmel {
 	private String tajukDefault = "Pengujian MyeTaPP : Semakan/ Pengesahan Permohonan ";
 
 	
+	
 	@Override
 	public String checkEmail(String userId) throws Exception {
 		String returnValue = "";
