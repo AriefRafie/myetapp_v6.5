@@ -4,7 +4,7 @@ tr.tr_class td {
 	font-weight:bold;
 	color:white;
 }
-</style>
+</style> 
 <!-- 
 list_fail = $list_fail  -->
 #foreach($list in $list_fail)
@@ -277,7 +277,7 @@ Semakan Permohonan</b></legend>
  <tr>
               <td valign="top"><font color="red">*</font>Tarikh Inkuiri</td>
               <td>:</td>
-              <td><input type="text" name="txdTarikhInkuiri"  id="txdTarikhInkuiri" value="$!tarikh_inkuiri" size="11" maxlength="10" onblur="check_date(this);getTarikhNotis();validateTarikh(this,this.value);checkCutiAm(this.value);"  />
+              <td><input type="text" name="txdTarikhInkuiri"  $disability $disabilityCSS id="txdTarikhInkuiri" value="$!tarikh_inkuiri" size="11" maxlength="10" onblur="check_date(this);getTarikhNotis();validateTarikh(this,this.value);checkCutiAm(this.value);"  />
                     <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhInkuiri',false,'dmy');">&nbsp;<i><font color="blue" style="font-size:10px">dd/mm/yyyy</font></i>
                     <input type="hidden" name="id_praperbicaraan" id="id_praperbicaraan" value="$!id_praperbicaraan" />
                     </td>
@@ -286,11 +286,11 @@ Semakan Permohonan</b></legend>
  <tr>
               <td valign="top"><font color="red">*</font>Masa Bicara</td>
               <td>:</td>
-              <td><input type="text" name="txtMasaBicara"  id="txtMasaBicara" value="$!txtMasaBicara" onkeyup="validateNumber(this,this.value);" onblur="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" maxlength="4" size="4" />
+              <td><input type="text" name="txtMasaBicara"  $disability $disabilityCSS id="txtMasaBicara" value="$!txtMasaBicara" onkeyup="validateNumber(this,this.value);" onblur="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" maxlength="4" size="4" />
                     
                     <!-- &nbsp;<font color="blue" style="font-size:10px"><i>format 12 jam (HHMM)</i></font> -->
                     
-                 <select name="socJenisWaktu" id="socJenisWaktu" style="width:auto" >
+                 <select name="socJenisWaktu" id="socJenisWaktu" $disability1 $disabilityCSS style="width:auto" >
                  	#if($jenisWaktu=="")
                  		#set($_jenisWaktu="")
                  	#else
@@ -327,7 +327,7 @@ Semakan Permohonan</b></legend>
  <td>:</td>
  #if($edit != "no" && $proses != "kemaskini")
  <td>
- <select name="socSebab" id="socSebab" onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab" $disability1 onchange="checkSebabLain()">
  <option value=""  style="text-transform:uppercase;">Sila Pilih</option>
  <option value="1" style="text-transform:uppercase;">Perlantikan Sahabat/Penjaga</option>
  <option value="2" style="text-transform:uppercase;">Bukti Kematian Yang Diragui</option>
@@ -340,7 +340,7 @@ Semakan Permohonan</b></legend>
  #else
  #if($sebab_inkuiri == "1" && $proses != "kemaskini")
  <td>
- <select name="socSebab" id="socSebab"  onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab"  $disability1 onchange="checkSebabLain()">
  <option value="1" style="text-transform:uppercase;">Perlantikan Sahabat/Penjaga</option>
  </select>
  </td>
@@ -348,7 +348,7 @@ Semakan Permohonan</b></legend>
  
  #if($sebab_inkuiri == "2" && $proses != "kemaskini")
  <td>
- <select name="socSebab" id="socSebab"  onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab"  $disability1 onchange="checkSebabLain()">
  <option value="2" style="text-transform:uppercase;">Bukti Kematian Yang Diragui</option>
  </select>
  </td>
@@ -356,7 +356,7 @@ Semakan Permohonan</b></legend>
  
  #if($sebab_inkuiri == "3" && $proses != "kemaskini")
  <td>
- <select name="socSebab" id="socSebab"  onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab"  $disability1 onchange="checkSebabLain()">
  <option value="3" style="text-transform:uppercase;">Perbezaan Nama Simati Dalam Bukti Kematian</option>
  </select>
  </td>
@@ -364,7 +364,7 @@ Semakan Permohonan</b></legend>
  
  #if($sebab_inkuiri == "4" && $proses != "kemaskini")
  <td>
- <select name="socSebab" id="socSebab"  onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab"  $disability1 onchange="checkSebabLain()">
  <option value="4" style="text-transform:uppercase;">Keperluan Mendapatkan Maklumat Tambahan</option>
  </select>
  </td>
@@ -372,7 +372,7 @@ Semakan Permohonan</b></legend>
  
   #if($sebab_inkuiri == "5" && $proses != "kemaskini")
  <td>
- <select name="socSebab" id="socSebab"  onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab"  $disability1 onchange="checkSebabLain()">
  <option value="5" style="text-transform:uppercase;">Sebab-sebab Lain</option>
  </select>
  </td>
@@ -381,7 +381,7 @@ Semakan Permohonan</b></legend>
  
  #if($edit == "yes" && $sebab_inkuiri == "1")
  <td>
- <select name="socSebab" id="socSebab" onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab" $disability1 onchange="checkSebabLain()">
  <option value="1" style="text-transform:uppercase;">Perlantikan Sahabat/Penjaga</option>
  <option value=""  style="text-transform:uppercase;">Sila Pilih</option> 
  <option value="2" style="text-transform:uppercase;">Bukti Kematian Yang Diragui</option>
@@ -394,7 +394,7 @@ Semakan Permohonan</b></legend>
  #end
  #if($edit == "yes" && $sebab_inkuiri == "2")
  <td>
- <select name="socSebab" id="socSebab" onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab" $disability1 onchange="checkSebabLain()">
  <option value="2" style="text-transform:uppercase;">Bukti Kematian Yang Diragui</option>
  <option value=""  style="text-transform:uppercase;">Sila Pilih</option> 
  <option value="1" style="text-transform:uppercase;">Perlantikan Sahabat/Penjaga</option>
@@ -408,7 +408,7 @@ Semakan Permohonan</b></legend>
 #end
  #if($edit == "yes" && $sebab_inkuiri == "3")
  <td>
- <select name="socSebab" id="socSebab" onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab" $disability1 onchange="checkSebabLain()">
  <option value="3" style="text-transform:uppercase;">Perbezaan Nama Simati Dalam Bukti Kematian</option> 
  <option value=""  style="text-transform:uppercase;">Sila Pilih</option> 
  <option value="1" style="text-transform:uppercase;">Perlantikan Sahabat/Penjaga</option>
@@ -422,7 +422,7 @@ Semakan Permohonan</b></legend>
  #end
  #if($edit == "yes" && $sebab_inkuiri == "4")
  <td>
- <select name="socSebab" id="socSebab" onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab" $disability1 onchange="checkSebabLain()">
  <option value="4" style="text-transform:uppercase;">Keperluan Mendapatkan Maklumat Tambahan</option> 
  <option value=""  style="text-transform:uppercase;">Sila Pilih</option> 
  <option value="1" style="text-transform:uppercase;">Perlantikan Sahabat/Penjaga</option>
@@ -436,7 +436,7 @@ Semakan Permohonan</b></legend>
   #end
  #if($edit == "yes" && $sebab_inkuiri == "5")
  <td>
- <select name="socSebab" id="socSebab" onchange="checkSebabLain()">
+ <select name="socSebab" id="socSebab" $disability1 onchange="checkSebabLain()">
  <option value="4" style="text-transform:uppercase;">Keperluan Mendapatkan Maklumat Tambahan</option> 
  <option value=""  style="text-transform:uppercase;">Sila Pilih</option> 
  <option value="1" style="text-transform:uppercase;">Perlantikan Sahabat/Penjaga</option>
@@ -480,31 +480,31 @@ Semakan Permohonan</b></legend>
 <tr>
 <td valign="top"><font color="red">*</font>Alamat</td>
 <td>:</td>
-<td><input $!addressReadonly $!addressReadonlyClass  type="text" size="52" name="txtAlamatBicara1" id="txtAlamatBicara1" value="$!alamat1" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+<td><input $!addressReadonly $!addressReadonlyClass  $disability $disabilityCSS type="text" size="52" name="txtAlamatBicara1" id="txtAlamatBicara1" value="$!alamat1" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
 </tr>
 
 <tr>
 <td>&nbsp;</td>
 <td>:</td>
-<td><input $!addressReadonly $!addressReadonlyClass  type="text"  size="52" name="txtAlamatBicara2" id="txtAlamatBicara2" value="$!alamat2" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+<td><input $!addressReadonly $!addressReadonlyClass $disability $disabilityCSS type="text"  size="52" name="txtAlamatBicara2" id="txtAlamatBicara2" value="$!alamat2" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
 </tr>
 <tr>
 <td>&nbsp;</td>
 <td>:</td>
-<td><input type="text" $!addressReadonlyClass $!addressReadonly size="52" name="txtAlamatBicara3" id="txtAlamatBicara3" value="$!alamat3" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
+<td><input type="text" $!addressReadonlyClass $!addressReadonly $disability $disabilityCSS size="52" name="txtAlamatBicara3" id="txtAlamatBicara3" value="$!alamat3" maxlength="80"  style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td>
 </tr>
 
 <tr>
 <td valign="top"><font color="red">*</font>Poskod</td>
 <td>:</td>
-<td><input type="text" name="txtPoskod" id="txtPoskod"  $!addressReadonlyClass $!addressReadonly onblur="validateNumber(this,this.value);" onkeyup="validateNumber(this,this.value);" maxlength="5" size="5" value="$!poskod" /></td>
+<td><input type="text" name="txtPoskod" id="txtPoskod"  $disability $disabilityCSS $!addressReadonlyClass $!addressReadonly onblur="validateNumber(this,this.value);" onkeyup="validateNumber(this,this.value);" maxlength="5" size="5" value="$!poskod" /></td>
 </tr>
                 
 <tr>
 <td valign="top"><font color="red">*</font>Negeri</td>
 <td>:</td>
 <td>
-<select name="socNegeriBicara" class="autoselect" id="socNegeriBicara" >
+<select name="socNegeriBicara" class="autoselect" id="socNegeriBicara" $disability1>
 <option value="" style="text-transform:uppercase;" onblur="uppercase()">SILA PILIH</option>
 #if($idnegeri == "1")
 	<option value="1" selected>JOHOR</option>
@@ -591,7 +591,7 @@ Semakan Permohonan</b></legend>
  <tr>
  <td>Catatan</td>
  <td>:</td>
- <td><textarea name="txtCatatan" cols="60%"   rows="7" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase();" >$!catatan_notis</textarea></td>
+ <td><textarea name="txtCatatan" cols="60%"  $disability $disabilityCSS rows="7" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase();" >$!catatan_notis</textarea></td>
  </tr>
  </table>
  

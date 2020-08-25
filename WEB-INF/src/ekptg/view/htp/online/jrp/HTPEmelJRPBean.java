@@ -18,6 +18,7 @@ import ekptg.model.utils.emel.IEmel;
 
 public class HTPEmelJRPBean implements IEmel {
 	
+	
  	private IHtp iHTP = null;  
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.utiliti.HTPEmelSemakanBean.class);
 	private Vector checkEmail = null;
@@ -84,7 +85,6 @@ public class HTPEmelJRPBean implements IEmel {
 		return bff.toString();
 		
 	}
-	
 	
 	@Override
 	public String setEmailSign(String noFail,String tajuk, String dari){		
