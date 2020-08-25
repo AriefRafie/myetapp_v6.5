@@ -81,11 +81,12 @@ public class SemakanData {
 		    	  db.close();
 		      }
 		    }	    
-		    return list;
+		return list;
 		  
-		 }
+	}
 
-	public static Vector<Hashtable<String, Comparable>> getSenaraiKeterangan(String idUrusan,String idSuburusan)throws Exception {
+	public static Vector<Hashtable<String, Comparable>> getSenaraiKeterangan(String idUrusan,String idSuburusan) 
+		throws Exception {
 		 Db db = null;
 		 String sql = "";
 		 try {
@@ -151,7 +152,8 @@ public class SemakanData {
 		    } finally {
 		      if (db != null) db.close();
 		    }
-		  }
+		  
+	}
 	 
 	public static Vector<Hashtable<String, String>> getSenaraiJenisDokumen(
 		String idUrusan,String idSuburusan,String kodForm) throws Exception {
@@ -238,9 +240,7 @@ public class SemakanData {
 		  
 	}
 	 
-
-	 
-	 public static Vector<Hashtable<String, Comparable>> getStatusByKPISuburusan(String id)throws Exception {
+	public static Vector<Hashtable<String, Comparable>> getStatusByKPISuburusan(String id)throws Exception {
 		 Db db = null;
 		 String sql = "";
 		 try {
@@ -295,11 +295,10 @@ public class SemakanData {
 		    } finally {
 		      if (db != null) db.close();
 		    }
-		  }
-
-
+		  
+	} 
 	 
-	 public static Vector<Hashtable<String, Comparable>> getKeteranganTerperinci(String idUrusan,String idSuburusan)throws Exception {
+	public static Vector<Hashtable<String, Comparable>> getKeteranganTerperinci(String idUrusan,String idSuburusan)throws Exception {
 		 Db db = null;
 		 String sql = "";
 		 try {
@@ -1914,9 +1913,9 @@ public class SemakanData {
 			    
 		 }	 
 		 
-		 public static int getKPIGiliranBilanganMengikutPejabat( 
-				 String idSuburusanstatus,String strQuery,String idNegeri,String idPejabat
-				 ,String tarikhMula,String tarikhTamat)throws Exception {
+	public static int getKPIGiliranBilanganMengikutPejabat( 
+		String idSuburusanstatus,String strQuery,String idNegeri,String idPejabat
+		,String tarikhMula,String tarikhTamat) throws Exception {
 			 Db db = null;
 			 int returnValue=0;
 			 String sql = "select menunggu,hari,tk from ( "+
@@ -1972,4 +1971,4 @@ public class SemakanData {
 			  }	 
 		 
 		 
-	}
+}
