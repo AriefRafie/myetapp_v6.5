@@ -8,10 +8,12 @@ import java.util.Set;
  * 
  * @author MyEclipse Persistence Tools
  */
-public class Tblsemakan extends AbstractTblsemakan implements
-		java.io.Serializable {
-
+public class Tblsemakan extends AbstractTblsemakan implements java.io.Serializable {
 	// Constructors
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4073049528942021778L;
 
 	/** default constructor */
 	public Tblsemakan() {
@@ -29,5 +31,6 @@ public class Tblsemakan extends AbstractTblsemakan implements
 		super(idSemakan, idParent, kodSemak, perihal, lainLain, idMasuk,
 				tarikhMasuk, idKemaskini, tarikhKemaskini, tblsemakansenarais);
 	}
+
 
 }
