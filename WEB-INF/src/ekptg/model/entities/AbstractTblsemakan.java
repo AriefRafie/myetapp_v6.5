@@ -13,9 +13,10 @@ import java.util.Set;
  */
 
 public abstract class AbstractTblsemakan implements java.io.Serializable {
-
-	// Fields
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2788984866636892387L;
 	private Long idSemakan;
 	private Long idParent;
 	private String kodSemak;
@@ -163,4 +164,5 @@ public abstract class AbstractTblsemakan implements java.io.Serializable {
 		this.tblsemakansenarais = tblsemakansenarais;
 	}
 
+	
 }
