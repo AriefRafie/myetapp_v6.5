@@ -25,7 +25,7 @@ import ekptg.model.ppk.FrmTukaranStatus;
 import ekptg.model.ppk.PPKUtilHTML;
 
 /**
- * @author Salnizam
+ * @author Salnizam 
  *
  */
 public class FrmPraPerbicaraan extends AjaxBasedModule{
@@ -118,7 +118,7 @@ public class FrmPraPerbicaraan extends AjaxBasedModule{
     	}
 		
 		
-		else if("kemaskini".equals(submit)){
+		else if("kemaskini".equals(submit)){ 
 			modelNotis.setTblppkpraperbicaraan2(getParam("id_fail_carian"));
 			listPra = modelNotis.getListPraPerbicaraan();
 			if (listPra.size() != 0) {
