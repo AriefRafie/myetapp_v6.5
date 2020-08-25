@@ -27,7 +27,6 @@ public class UserKJPBean implements IUserPegawai {
 	 * Senarai emel mengikut role KJP
 	 * 
 	 * */
-	
 	public List<Map<String,String>> getPenggunaMengikutRole(String role,String idKementerian) throws Exception {
 		Db db = null;
 		ResultSet rs = null;
@@ -388,7 +387,7 @@ public class UserKJPBean implements IUserPegawai {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			sql = "SELECT DISTINCT(U.USER_NAME) USER_NAME,NVL(UK.EMEL,UI.EMEL) EMEL,UI.ID_JAWATAN,RJ.KETERANGAN "+
-				",UK.ID_KEMENTERIAN,UK.ID_AGENSI "+
+				",UK.ID_KEMENTERIAN"+
 				" FROM USERS U,USERS_INTERNAL UI, USERS_KEMENTERIAN UK,TBLRUJJAWATAN RJ "+
 				" WHERE " +
 				" UI.USER_ID = U.USER_ID "+
@@ -401,7 +400,7 @@ public class UserKJPBean implements IUserPegawai {
 				h.put("emel", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
 				h.put("idJawatan", rs.getString("ID_JAWATAN") == null ? "" : rs.getString("ID_JAWATAN"));
 				h.put("idKementerian", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
-				h.put("idAgensi", rs.getString("ID_AGENSI") == null ? "" : rs.getString("ID_AGENSI"));
+				//h.put("idPegawai", rs.getString("ID_PEGAWAI") == null ? "" : rs.getString("ID_PEGAWAI"));
 				h.put("jawatan", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
 				h.put("nama", rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
 			}
