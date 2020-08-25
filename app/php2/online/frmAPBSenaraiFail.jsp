@@ -47,7 +47,7 @@
   
   <tr>
     <td><fieldset>
-      <legend><b>SENARAI PERMOHONAN</b></legend>
+      <legend><b>SENARAI PERMOHONAN AKTA PELANTAR BENUA</b></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
         <tr>

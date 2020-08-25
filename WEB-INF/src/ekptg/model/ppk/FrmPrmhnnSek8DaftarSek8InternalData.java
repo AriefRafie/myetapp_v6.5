@@ -1352,7 +1352,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP AS JENISKP_SIMATI, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU AS NO_KP_BARU_PM, "
 					+ " PM.NO_KP_LAMA AS NO_KP_LAMA_PM, PM.JENIS_KP AS JENIS_KP_PM, PM.NO_KP_LAIN AS NO_KP_LAIN_PM, " +
-							"PM.ALAMAT_1, PM.ALAMAT_2, PM.ALAMAT_3, "
+							"PM.ALAMAT_1, PM.ALAMAT_2, PM.ALAMAT_3, PM.EMEL"
 					+ " PM.POSKOD, PM.BANDAR, N.ID_NEGERI, N.NAMA_NEGERI, D.NAMA_DAERAH, P.SEKSYEN, "
 					+ " ST.KETERANGAN, P.ID_STATUS," +
 						//	" U.NAMA_PEJABAT, " +
@@ -1515,6 +1515,9 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 						: rs.getString("nama_Pemohon"));
 				h.put("noKpBaruPemohon1", rs.getString("NO_KP_BARU_PM") == null ? "" : rs
 						.getString("NO_KP_BARU_PM").substring(0, 6));
+				h.put("emel",
+						rs.getString("emel") == null ? "" : rs
+								.getString("EMEL"));
 
 				//myLogger.debug("rs.getString(15):" + rs.getString(15));
 

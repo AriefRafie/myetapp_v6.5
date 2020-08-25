@@ -119,6 +119,14 @@ public class FrmPermohonanUPTData {
 		return checkExistLot;
 	}
 	
+	//penambahbaikan yati 24082020
+	@SuppressWarnings("unchecked")
+	private  Vector dataPermohonan = new Vector();
+	
+	@SuppressWarnings("unchecked")
+	public Vector getDataPermohonan(){
+		return dataPermohonan;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public static void setMalayDateByDate(String stgdate) throws Exception {
@@ -6615,5 +6623,112 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		
 	}//close list pohon2
 	
+	//penambahbaikan yati -v7
+	@SuppressWarnings("unchecked")
+	public void setDataPermohonan(String idpermohonan) throws Exception {
+		
+		Db db = null;
+		dataPermohonan.clear();
+		String sql = "";
+		
+		try{
+				db = new Db();
+				Statement stmt = db.getStatement();
+				
+				sql = " SELECT DISTINCT p.jumlah_hakmilik, p.id_permohonan, p.id_status, ";
+				sql += " p.flag_jenispermohonan, p.no_permohonan, f.no_fail, f.id_fail, "; 
+				sql += " n.nama_negeri, p.tarikh_permohonan_kjp, p.tarikh_permohonan, p.tujuan, "; 
+				sql += " k.nama_kementerian, k.id_kementerian, s.keterangan, "; 
+				sql += " d.nama_daerah, d.id_daerah, p.tarikh_kehendaki, ";
+				sql += " p.tarikh_surat, p.id_agensi, p.no_rujukan_surat, "; 
+				sql += " p.flag_peruntukan, p.flag_segera, p.id_mukim, "; 
+				sql += " p.flag_jenis_projek, p.tarikh_sahkan, us.nama_suburusan, "; 
+				sql += " us.id_suburusan, p.no_rujukan_ptg, p.no_rujukan_ptd, ";
+				sql += " p.no_permohonan_online, p.no_rujukan_upt, k.alamat1, "; 
+				sql += " k.alamat2, k.alamat3, k.poskod, k.id_negeri, p.flag_semak, "; 
+				sql += " n2.id_negeri AS idprojeknegeri, n2.nama_negeri AS nama_negeriprojek";
+						//", ut.ulasanjt "; 
+				sql += " FROM tblrujsuburusan us, tblpfdfail f, tblrujdaerah d, ";
+				sql += " tblrujnegeri n, tblrujkementerian k, tblrujstatus s, "; 
+				sql += " tblpptpermohonan p, tblrujnegeri n2";
+					//	", tblpptulasanteknikal ut "; 
+				sql += " WHERE f.id_fail = p.id_fail AND k.id_kementerian = f.id_kementerian "; 
+				sql += " AND n.id_negeri(+) = k.id_negeri AND n2.id_negeri = f.id_negeri ";
+				sql += " AND s.id_status(+) = p.id_status AND d.id_daerah = p.id_daerah "; 
+				sql += " AND us.id_suburusan(+) = f.id_suburusan ";
+						//" AND p.id_permohonan(+)= ut.id_permohonan ";
+				sql += " AND p.id_permohonan = '"+idpermohonan+"'";
+				
+				System.out.println("***SQL setDataPermohonan = "+sql);
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h;
+		
+				while(rs.next()) {
+					h = new Hashtable();
+					h.put("jumlah_hakmilik", rs.getString("jumlah_hakmilik")==null?"0":rs.getString("jumlah_hakmilik"));
+					h.put("no_permohonan_online", rs.getString("no_permohonan_online")==null?"":rs.getString("no_permohonan_online"));
+					h.put("flag_jenis_projek", rs.getString("flag_jenis_projek")==null?"":rs.getString("flag_jenis_projek"));
+					h.put("nama_negeriprojek", rs.getString("nama_negeriprojek")==null?"":rs.getString("nama_negeriprojek"));
+					h.put("flag_semak", rs.getString("flag_semak")==null?"":rs.getString("flag_semak"));
+					h.put("idPermohonan", rs.getString("id_Permohonan")==null?"":rs.getString("id_Permohonan"));
+					h.put("idProjekNegeri", rs.getString("idProjekNegeri")==null?"":rs.getString("idProjekNegeri"));
+					h.put("id_status", rs.getString("id_status")==null?"":rs.getString("id_status"));
+					h.put("id_mukim", rs.getString("id_mukim")==null?"":rs.getString("id_mukim"));
+					h.put("idNegeri", rs.getString("id_negeri")==null?"":rs.getString("id_negeri"));
+					h.put("alamat1", rs.getString("alamat1")==null?"":rs.getString("alamat1"));
+					h.put("alamat2", rs.getString("alamat2")==null?"":rs.getString("alamat2"));
+					h.put("alamat3", rs.getString("alamat3")==null?"":rs.getString("alamat3"));
+					h.put("poskod", rs.getString("poskod")==null?"":rs.getString("poskod"));
+					h.put("idFail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
+					h.put("idDaerah", rs.getString("id_daerah")==null?"":rs.getString("id_daerah"));
+					h.put("idSuburusan", rs.getString("id_suburusan")==null?"":rs.getString("id_suburusan"));
+					h.put("idAgensi", rs.getString("id_agensi")==null?"0":rs.getString("id_agensi"));
+					h.put("idKementerian", rs.getString("id_kementerian")==null?"":rs.getString("id_kementerian"));
+					h.put("noPermohonan", rs.getString("no_permohonan")==null?"<b>BELUM DIHANTAR</b>":rs.getString("no_permohonan"));
+					h.put("no_fail", rs.getString("no_fail")==null?"BELUM DISAHKAN":rs.getString("no_fail"));
+					h.put("namaNegeri", rs.getString("nama_negeri")==null?"":rs.getString("nama_negeri"));
+					h.put("tarikh_permohonan_kjp", rs.getDate("tarikh_permohonan_kjp")==null?"":Format.format(rs.getDate("tarikh_permohonan_kjp")));
+					h.put("tarikh_permohonan", rs.getDate("tarikh_permohonan")==null?"":Format.format(rs.getDate("tarikh_permohonan")));
+					h.put("tarikh_sahkan", rs.getDate("tarikh_sahkan")==null?"":Format.format(rs.getDate("tarikh_sahkan")));
+					h.put("tujuan", rs.getString("tujuan")==null?"":rs.getString("tujuan"));
+					h.put("nama_kementerian", rs.getString("nama_kementerian")==null?"":rs.getString("nama_kementerian"));
+					h.put("status", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
+					h.put("daerah", rs.getString("nama_daerah")==null?"":rs.getString("nama_daerah"));
+					h.put("tarikh_kehendaki", rs.getDate("tarikh_kehendaki")==null?"":Format.format(rs.getDate("tarikh_kehendaki")));
+					h.put("tarikh_surat", rs.getDate("tarikh_surat")==null?"":Format.format(rs.getDate("tarikh_surat")));
+					h.put("no_rujukan_surat", rs.getString("no_rujukan_surat")==null?"":rs.getString("no_rujukan_surat"));
+					h.put("flag_peruntukan", rs.getString("flag_peruntukan")==null?"":rs.getString("flag_peruntukan"));
+					h.put("flag_segera", rs.getString("flag_segera")==null?"":rs.getString("flag_segera"));
+					h.put("nama_suburusan", rs.getString("nama_suburusan")==null?"":rs.getString("nama_suburusan"));
+					h.put("no_rujukan_ptg", rs.getString("no_rujukan_ptg")==null?"":rs.getString("no_rujukan_ptg"));
+					h.put("no_rujukan_ptd", rs.getString("no_rujukan_ptd")==null?"":rs.getString("no_rujukan_ptd"));
+					h.put("no_rujukan_upt", rs.getString("no_rujukan_upt")==null?"":rs.getString("no_rujukan_upt"));
+				//	h.put("ulasanjt", rs.getString("ulasanjt")==null?"":rs.getString("ulasanjt"));
+					
+					if(rs.getString("flag_jenispermohonan") != null && rs.getString("flag_jenispermohonan") != ""){
+						
+						if(rs.getString("flag_jenispermohonan").equals("1")){
+							h.put("flag_jenispermohonan","PERMOHONAN ONLINE");
+						}else if(rs.getString("flag_jenispermohonan").equals("2")){
+							h.put("flag_jenispermohonan","PERMOHONAN KAUNTER");
+						}else{
+							h.put("flag_jenispermohonan","");
+						}
+						
+					}else{
+						h.put("flag_jenispermohonan","");
+					}
+			
+					dataPermohonan.addElement(h);
+				}
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+			}
+		finally {
+			if(db != null) db.close();
+		}
+		
+	}//close setDataPermohonan
 	
 }//close class

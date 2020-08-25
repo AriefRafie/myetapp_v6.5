@@ -507,7 +507,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         	//GO TO MAKLUMAT PERMOHONAN  
        		vm = "app/php2/online/frmAPBMaklumatPermohonan.jsp";
        		
-       		log.info("vm : "+vm);
+       		
         	//HEADER
             beanHeader = new Vector();
             logic.setMaklumatHeader(idFail);
@@ -647,6 +647,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		//this.context.put("idJenisPermohonan", idJenisPermohonan);
 		this.context.put("idDokumen", idDokumen);
 
+		log.info("vm : "+vm);
 		return vm;
 	}
 	
