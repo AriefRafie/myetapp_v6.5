@@ -103,6 +103,8 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String txtBilKertas = getParam("txtBilKertas");
 		String txtBilSalinan = getParam("txtBilSalinan");
 		
+		String bilLot = getParam("bilLot");
+		
 		String txtNamaPentadbir = getParam("txtNamaPentadbir");
 		String id_buktipenyampaian = getParam("id_buktipenyampaian");
 		String id_borangh = getParam("id_borangh");
@@ -481,6 +483,8 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		context.put("report", report);
 		context.put("flagReport", flagReport);
 		context.put("bilDokumen", bilDokumen);	
+		
+		context.put("bilLot", bilLot);
 		
 		//date in malay dy date
 		String sysdateMalaytarikhBorangL = "";
