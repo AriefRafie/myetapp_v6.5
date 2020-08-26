@@ -39,6 +39,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 	/**
 	 * 
 	 */
+	//deploy 26082020
 	private static final long serialVersionUID = 5355029536510446896L;
 	static Logger myLog = Logger.getLogger(ekptg.model.htp.FrmUtilData.class);
 	private static IHtp iHTP = null;  
