@@ -44,6 +44,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	private Vector listProjek = null;
 	private Vector listKoordinat = null;
 	private Vector listPakar = null;
+	private Vector beanMaklumatAmbilPasir = null;
 	
 	private Vector beanMaklumatPemohon = null;
 	private Vector beanMaklumatPermohonan = null;
@@ -55,6 +56,13 @@ public class FrmAPBOnlineSenaraiFailData {
 	private Vector beanMaklumatKawasanMohon = null;
 	private Vector beanMaklumatLampiran = null;
 	private Vector listLampiran = null;
+	
+	
+	private Vector beanMaklumatPermohonanBorangA = null;
+	
+	private Vector beanMaklumatBarge = null;
+	private Vector senaraiBarge = null;
+	
 	private Vector<Hashtable<String,String>> beanMaklumatPejabat = null;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
@@ -557,6 +565,67 @@ public Vector setIdJadualKeduaLesen(String idFail) throws Exception {
 		if (db != null)	db.close();
 	}
 }
+
+//yati tambah borang A
+public void setMaklumatPermohonanBorangA(String idJadualKeduaLesen) throws Exception {
+	Db db = null;
+	String sql = "";
+
+	try {
+		beanMaklumatPermohonanBorangA = new Vector();
+		db = new Db();
+		Statement stmt = db.getStatement();
+		int bil = 1;
+		Hashtable h;
+
+		sql = "SELECT A.ID_JADUALKEDUALESENAPB, A.NO_SIRI_LESEN, B.NAMA, B.ALAMAT1_TETAP, B.ALAMAT2_TETAP, B.ALAMAT3_TETAP, B.NO_TEL_PEJABAT"
+				+ " FROM TBLPHPJADUALKEDUALESENAPB A, TBLPHPPEMEGANG B"
+				+ " WHERE A.ID_JADUALKEDUALESENAPB = B.ID_JADUALKEDUALESENAPB "
+				+ " AND A.ID_JADUALKEDUALESENAPB = '" + idJadualKeduaLesen + "'";
+
+		ResultSet rs = stmt.executeQuery(sql);
+		myLog.info("SQL headaer pasir : "+sql);
+
+		while (rs.next()) {
+			h = new Hashtable();
+			h.put("idJadualKedua",
+					rs.getString("ID_JADUALKEDUALESENAPB") == null ? ""
+							: rs.getString("ID_JADUALKEDUALESENAPB"));
+			h.put("noLesen", rs.getString("NO_SIRI_LESEN") == null ? ""
+					: rs.getString("NO_SIRI_LESEN").toUpperCase());
+			h.put("namaPelesen", rs.getString("NAMA") == null ? "" : rs
+					.getString("NAMA").toUpperCase());
+			h.put("alamat1", rs.getString("ALAMAT1_TETAP") == null ? ""
+					: rs.getString("ALAMAT1_TETAP").toUpperCase());
+			h.put("alamat2", rs.getString("ALAMAT2_TETAP") == null ? ""
+					: rs.getString("ALAMAT2_TETAP").toUpperCase());
+			h.put("alamat3", rs.getString("ALAMAT3_TETAP") == null ? ""
+					: rs.getString("ALAMAT3_TETAP").toUpperCase());
+			h.put("noTel", rs.getString("NO_TEL_PEJABAT") == null ? "" : rs
+					.getString("NO_TEL_PEJABAT").toUpperCase());
+
+			beanMaklumatPermohonanBorangA.addElement(h);
+			bil++;
+		}
+
+		if (bil == 1) {
+			h = new Hashtable();
+			h.put("idJadualKedua", "");
+			h.put("noLesen", "");
+			h.put("namaPelesen", "");
+			h.put("alamat1", "");
+			h.put("alamat2", "");
+			h.put("alamat3", "");
+			h.put("noTel", "");
+			beanMaklumatPermohonanBorangA.addElement(h);
+		}
+
+	} finally {
+		if (db != null)
+			db.close();
+	}
+}
+
 
 
 public void setSenaraiProjek(String idPermohonan) throws Exception {
@@ -2771,6 +2840,13 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 	public void setBeanMaklumatPermohonan(Vector beanMaklumatPermohonan) {
 		this.beanMaklumatPermohonan = beanMaklumatPermohonan;
 	}
+	public Vector getBeanMaklumatPermohonanBorangA() { //yati
+		return beanMaklumatPermohonanBorangA;
+	}
+
+	public void setBeanMaklumatPermohonanBorangA(Vector beanMaklumatPermohonanBorangA) {
+		this.beanMaklumatPermohonanBorangA = beanMaklumatPermohonanBorangA;
+	}
 
 	public Vector getBeanMaklumatHeader() {
 		return beanMaklumatHeader;
@@ -2884,8 +2960,33 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 	public void setSenaraiFailBorangA(Vector senaraiFailBorangA) {
 		this.senaraiFailBorangA = senaraiFailBorangA;
 	}
+	public Vector getBeanMaklumatAmbilPasir() {
+		return beanMaklumatAmbilPasir;
+	}
+	public void setBeanMaklumatAmbilPasir(Vector beanMaklumatAmbilPasir) {
+		this.beanMaklumatAmbilPasir = beanMaklumatAmbilPasir;
+	}
+	
+	public Vector getBeanMaklumatBarge() {
+		return beanMaklumatBarge;
+	}
+
+	public void setBeanMaklumatBarge(Vector beanMaklumatBarge) {
+		this.beanMaklumatBarge = beanMaklumatBarge;
+	}
+	
+	public Vector getSenaraiBarge() {
+		return senaraiBarge;
+	}
+
+	public void setSenaraiBarge(Vector senaraiBarge) {
+		this.senaraiBarge = senaraiBarge;
+	}
+	
+
+
 	//yati tambah
-	public void carianFailBorangA(String namaPelesen, String noLesen) throws Exception {
+	public void carianFailBorangA(String namaPelesen, String noLesen, String idJadualKeduaLesen) throws Exception {
 
 		Db db = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -2896,42 +2997,30 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_JADUALKEDUALESENAPB, A.NO_SIRI_LESEN, B.NAMA"
-					+ " FROM TBLPHPJADUALKEDUALESENAPB A, TBLPHPPEMEGANG B"
-					+ " WHERE A.ID_JADUALKEDUALESENAPB = B.ID_JADUALKEDUALESENAPB ";
+			sql = "SELECT A.ID_BORANGA, A.ID_JADUALKEDUALESENAPB, A.TAHUN, B.NAMA_BULAN"
+					+ " FROM TBLPHPBORANGA A, TBLRUJBULAN B "
+					+ " WHERE A.BULAN = B.ID_BULAN AND A.ID_JADUALKEDUALESENAPB = '"
+					+ idJadualKeduaLesen + "'";
 
-			// namaPelesen
-			if (namaPelesen != null) {
-				if (!namaPelesen.trim().equals("")) {
-					sql = sql + " AND UPPER(B.NAMA) LIKE '%' ||'"
-							+ namaPelesen.trim().toUpperCase() + "'|| '%'";
-				}
-			}
 
-			// namaPemohon
-			if (noLesen != null) {
-				if (!noLesen.trim().equals("")) {
-					sql = sql + " AND UPPER(A.NO_SIRI_LESEN) LIKE '%' ||'"
-							+ noLesen.trim().toUpperCase() + "'|| '%'";
-				}
-			}
-
-			sql = sql + " ORDER BY A.ID_JADUALKEDUALESENAPB DESC";
-
+			sql = sql + " ORDER BY ID_BORANGA DESC";
 			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("sql lesen senarai : "+sql);
 
 			Hashtable h;
 			int bil = 1;
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("bil", bil);
-				h.put("idJadualKedua",
-						rs.getString("ID_JADUALKEDUALESENAPB") == null ? ""
-								: rs.getString("ID_JADUALKEDUALESENAPB"));
-				h.put("namaPelesen", rs.getString("NAMA") == null ? "" : rs
-						.getString("NAMA").toUpperCase());
-				h.put("noLesen", rs.getString("NO_SIRI_LESEN") == null ? ""
-						: rs.getString("NO_SIRI_LESEN"));
+				h.put("idBorangA",
+						rs.getString("ID_BORANGA") == null ? "" : rs
+								.getString("ID_BORANGA"));
+				h.put("bulan",
+						rs.getString("NAMA_BULAN") == null ? "" : rs
+								.getString("NAMA_BULAN"));
+				h.put("tahun",
+						rs.getString("TAHUN") == null ? "" : rs
+								.getString("TAHUN"));
 				senaraiFailBorangA.addElement(h);
 				bil++;
 			}
@@ -3006,6 +3095,368 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					db.close();
 			}
 		}
+		
+		//yati tambah
+		public void setMaklumatAmbilPasir(String idBorangA) throws Exception {
+			Db db = null;
+			String sql = "";
+
+			try {
+				beanMaklumatAmbilPasir = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT ID_BORANGA,ID_JADUALKEDUALESENAPB, TUJUAN, DESTINASI, ISIPADU, ANGGARAN_ROYALTI, BULAN, TAHUN, KONTRAKTOR,"
+						+ " PEMBELI_PASIR, TARIKH_MULA_OPERASI, TARIKH_TAMAT_OPERASI, LALUAN_VESSEL, KAEDAH_PASIR, KAWASAN_PELUPUSAN"
+						+ " FROM TBLPHPBORANGA WHERE ID_BORANGA = '"
+						+ idBorangA
+						+ "'";
+
+				ResultSet rs = stmt.executeQuery(sql);
+				myLog.info("sql : "+sql);
+				Hashtable h;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("idBorangA", rs.getString("ID_BORANGA") == null ? "" : rs.getString("ID_BORANGA"));
+					h.put("idJadualKedua", rs.getString("ID_JADUALKEDUALESENAPB") == null ? "" : rs.getString("ID_JADUALKEDUALESENAPB"));
+					h.put("tujuanAmbil", rs.getString("TUJUAN") == null ? "" : rs.getString("TUJUAN"));
+					h.put("destinasiHantar", rs.getString("DESTINASI") == null ? "" : rs.getString("DESTINASI"));
+					h.put("jumlahPasir", rs.getString("ISIPADU") == null ? "" : rs.getString("ISIPADU"));
+					h.put("jumlahRoyalti", rs.getString("ANGGARAN_ROYALTI") == null ? "" : Util.formatDecimal(Double.valueOf(rs.getString("ANGGARAN_ROYALTI"))));
+					h.put("bulan", rs.getString("BULAN") == null ? "" : rs.getString("BULAN"));
+					h.put("tahun", rs.getString("TAHUN") == null ? "" : rs.getString("TAHUN"));
+					
+					h.put("kontraktor", rs.getString("KONTRAKTOR") == null ? "" : rs.getString("KONTRAKTOR"));
+					h.put("pembeli", rs.getString("PEMBELI_PASIR") == null ? "" : rs.getString("PEMBELI_PASIR"));
+					h.put("tarikhMula", rs.getDate("TARIKH_MULA_OPERASI") == null ? "" : sdf.format(rs.getDate("TARIKH_MULA_OPERASI")));
+					h.put("tarikhTamat", rs.getDate("TARIKH_TAMAT_OPERASI") == null ? "" : sdf.format(rs.getDate("TARIKH_TAMAT_OPERASI")));
+					h.put("laluan", rs.getString("LALUAN_VESSEL") == null ? "" : rs.getString("LALUAN_VESSEL"));
+					h.put("kaedah", rs.getString("KAEDAH_PASIR") == null ? "" : rs.getString("KAEDAH_PASIR"));
+					h.put("kawasan", rs.getString("KAWASAN_PELUPUSAN") == null ? "" : rs.getString("KAWASAN_PELUPUSAN"));
+
+					beanMaklumatAmbilPasir.addElement(h);
+					bil++;
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+		//YATI TAMBAH
+		public String simpanMaklumatAmbilPasir(String idJadualKedua,
+				String idBulan, String tahun, String tujuanAmbil,
+				String destinasiHantar, String jumlahPasir, String jumlahRoyalti,
+				String kontraktor, String pembeli, String tarikhMula, String tarikhTamat, String laluan, 
+				String kaedah, String kawasan, HttpSession session) throws Exception {
+
+			Db db = null;
+			Connection conn = null;
+			String userId = (String) session.getAttribute("_ekptg_user_id");
+			String sql = "";
+			String idBorangAString = "";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				// TBLPHPBORANGA
+				long idBorangA = DB.getNextID("TBLPHPBORANGA_SEQ");
+				r.add("ID_BORANGA", idBorangA);
+				idBorangAString = String.valueOf(idBorangA);
+				r.add("ID_JADUALKEDUALESENAPB", idJadualKedua);
+
+				r.add("TUJUAN", tujuanAmbil);
+				r.add("BULAN", idBulan);
+				r.add("TAHUN", tahun);
+				r.add("DESTINASI", destinasiHantar);
+				r.add("ISIPADU", jumlahPasir);
+				r.add("ANGGARAN_ROYALTI", jumlahRoyalti);
+				
+				r.add("KONTRAKTOR", kontraktor);
+				r.add("PEMBELI_PASIR", pembeli);
+
+				String mula = "to_date('" + tarikhMula + "','dd/MM/yyyy')";
+				String tamat = "to_date('" + tarikhTamat + "','dd/MM/yyyy')";
+				
+				r.add("TARIKH_MULA_OPERASI", r.unquote(mula));
+				r.add("TARIKH_TAMAT_OPERASI", r.unquote(tamat));
+				r.add("LALUAN_VESSEL", laluan);
+				r.add("KAEDAH_PASIR", kaedah);
+				r.add("KAWASAN_PELUPUSAN", kawasan);
+
+				r.add("ID_MASUK", userId);
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+				sql = r.getSQLInsert("TBLPHPBORANGA");
+				stmt.executeUpdate(sql);
+
+				conn.commit();
+
+			} catch (SQLException ex) {
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					throw new Exception("Rollback error : " + e.getMessage());
+				}
+				throw new Exception("Ralat : Masalah penyimpanan data "
+						+ ex.getMessage());
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+			return idBorangAString;
+		}
+		
+		//yati tambah
+		public void simpanKemaskiniMaklumatPasir(String idBorangA, String idBulan,
+				String tahun, String tujuanAmbil, String destinasiHantar,
+				String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli,
+				String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan, HttpSession session)
+				throws Exception {
+
+			Db db = null;
+			Connection conn = null;
+			String userId = (String) session.getAttribute("_ekptg_user_id");
+			String sql = "";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				// TBLPHPBORANGA
+				r.update("ID_BORANGA", idBorangA);
+
+				r.add("BULAN", idBulan);
+				r.add("TAHUN", tahun);
+				r.add("TUJUAN", tujuanAmbil);
+				r.add("DESTINASI", destinasiHantar);
+				r.add("ISIPADU", jumlahPasir);
+				r.add("ANGGARAN_ROYALTI", jumlahRoyalti);
+				
+				r.add("KONTRAKTOR", kontraktor);
+				r.add("PEMBELI_PASIR", pembeli);
+				
+				String mula = "to_date('" + tarikhMula + "','dd/MM/yyyy')";
+				String tamat = "to_date('" + tarikhTamat + "','dd/MM/yyyy')";
+				
+				r.add("TARIKH_MULA_OPERASI", r.unquote(mula));
+				r.add("TARIKH_TAMAT_OPERASI", r.unquote(tamat));
+				r.add("LALUAN_VESSEL", laluan);
+				r.add("KAEDAH_PASIR", kaedah);
+				r.add("KAWASAN_PELUPUSAN", kawasan);
+				r.add("ID_KEMASKINI", userId);
+				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+				sql = r.getSQLUpdate("TBLPHPBORANGA");
+				stmt.executeUpdate(sql);
+
+				conn.commit();
+
+			} catch (SQLException ex) {
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					throw new Exception("Rollback error : " + e.getMessage());
+				}
+				throw new Exception("Ralat : Masalah penyimpanan data "
+						+ ex.getMessage());
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+
+
+		public String simpanMaklumatBarge(String idBorangA, String namaDidaftarkan,
+				String noPendaftaran, String kapasiti, String jenis, String noTel, HttpSession session)
+				throws Exception {
+
+			Db db = null;
+			Connection conn = null;
+			String userId = (String) session.getAttribute("_ekptg_user_id");
+			String sql = "";
+			String idBargeString = "";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				// TBLPHPBARGE
+				long idBarge = DB.getNextID("TBLPHPBARGE_SEQ");
+				r.add("ID_BARGE", idBarge);
+				idBargeString = String.valueOf(idBarge);
+				r.add("ID_BORANGA", idBorangA);
+
+				r.add("NAMA_BARGE", namaDidaftarkan);
+				r.add("NO_PENDAFTARAN", noPendaftaran);
+				r.add("MUATAN", kapasiti);
+				
+				r.add("JENIS_BARGE", jenis);
+				r.add("NO_TEL", noTel);
+
+				r.add("ID_MASUK", userId);
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+				sql = r.getSQLInsert("TBLPHPBARGE");
+				stmt.executeUpdate(sql);
+				myLog.info("sql barge : "+sql);
+				conn.commit();
+
+			} catch (SQLException ex) {
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					throw new Exception("Rollback error : " + e.getMessage());
+				}
+				throw new Exception("Ralat : Masalah penyimpanan data "
+						+ ex.getMessage());
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+			return idBargeString;
+		}
+
+		public void simpanKemaskiniMaklumatBarge(String idBarge,
+				String namaDidaftarkan, String noPendaftaran, String kapasiti, String jenis, String noTel,
+				HttpSession session) throws Exception {
+
+			Db db = null;
+			Connection conn = null;
+			String userId = (String) session.getAttribute("_ekptg_user_id");
+			String sql = "";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				// TBLPHPBARGE
+				r.update("ID_BARGE", idBarge);
+
+				r.add("NAMA_BARGE", namaDidaftarkan);
+				r.add("NO_PENDAFTARAN", noPendaftaran);
+				r.add("MUATAN", kapasiti);
+				r.add("JENIS_BARGE", jenis);
+				r.add("NO_TEL", noTel);
+				r.add("ID_KEMASKINI", userId);
+				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+				sql = r.getSQLUpdate("TBLPHPBARGE");
+				stmt.executeUpdate(sql);
+
+				conn.commit();
+
+			} catch (SQLException ex) {
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					throw new Exception("Rollback error : " + e.getMessage());
+				}
+				throw new Exception("Ralat : Masalah penyimpanan data "
+						+ ex.getMessage());
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+		
+
+		public void carianBarge(String idBorangA) throws Exception {
+
+			Db db = null;
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			String sql = "";
+
+			try {
+				senaraiBarge = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT A.ID_BARGE, A.ID_BORANGA, A.NAMA_BARGE"
+						+ " FROM TBLPHPBARGE A, TBLPHPBORANGA B"
+						+ " WHERE A.ID_BORANGA = B.ID_BORANGA AND A.ID_BORANGA = '"
+						+ idBorangA + "'";
+
+				sql = sql + " ORDER BY ID_BARGE DESC";
+				ResultSet rs = stmt.executeQuery(sql);
+
+				Hashtable h;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("bil", bil);
+					h.put("idBarge",
+							rs.getString("ID_BARGE") == null ? "" : rs
+									.getString("ID_BARGE"));
+					h.put("namaDidaftarkan",
+							rs.getString("NAMA_BARGE") == null ? "" : rs.getString(
+									"NAMA_BARGE").toUpperCase());
+					senaraiBarge.addElement(h);
+					bil++;
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+
+		public void setMaklumatBarge(String idBarge) throws Exception {
+			Db db = null;
+			String sql = "";
+
+			try {
+				beanMaklumatBarge = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT ID_BARGE,ID_BORANGA, NAMA_BARGE, NO_PENDAFTARAN, MUATAN, NO_TEL, JENIS_BARGE"
+						+ " FROM TBLPHPBARGE WHERE ID_BARGE = '" + idBarge + "'";
+
+				ResultSet rs = stmt.executeQuery(sql);
+				myLog.info("sql Barge : "+sql);
+				Hashtable h;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("idBarge", rs.getString("ID_BARGE") == null ? "" : rs.getString("ID_BARGE"));
+					h.put("idBorangA", rs.getString("ID_BORANGA") == null ? "" : rs.getString("ID_BORANGA"));
+					h.put("namaDidaftarkan", rs.getString("NAMA_BARGE") == null ? "" : rs.getString("NAMA_BARGE"));
+					h.put("noPendaftaran", rs.getString("NO_PENDAFTARAN") == null ? "" : rs.getString("NO_PENDAFTARAN"));
+					h.put("kapasiti", rs.getString("MUATAN") == null ? "" : rs.getString("MUATAN"));
+					
+					h.put("noTel", rs.getString("NO_TEL") == null ? "" : rs.getString("NO_TEL"));
+					h.put("jenis", rs.getString("JENIS_BARGE") == null ? "" : rs.getString("JENIS_BARGE"));
+
+					beanMaklumatBarge.addElement(h);
+					bil++;
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+
+
 
 
 

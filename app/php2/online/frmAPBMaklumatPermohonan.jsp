@@ -984,9 +984,8 @@ function daftarPembaharuan(idFail,idPermohonan,idStatus){
 }
 function daftarPembaharuanBorangA(idFail,idPermohonan,idStatus,namaPemohon,idJadualKeduaLesen,noLesen){
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBBorangAOnlineSenaraiFailView";
-	alert("1");
-	document.${formName}.method="POST";
+	//document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBBorangAOnlineSenaraiFailView";
+	//document.${formName}.method="POST";
 	/*document.${formName}.actionLesen.value = "daftarBaruBorangA";
 	alert("2");
 	document.${formName}.idFail.value = idFail;
@@ -1001,7 +1000,12 @@ function daftarPembaharuanBorangA(idFail,idPermohonan,idStatus,namaPemohon,idJad
 	alert("7");
 	document.${formName}.noLesen.value = noLesen;
 	alert("8");*/
+	document.${formName}.actionOnline.value = "daftarBaruBorangA";
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idPermohonan.value = idPermohonan;
+	document.${formName}.idStatus.value = idStatus;
 	document.${formName}.submit();
+  
 }
 function daftarPembaharuanBorangB(idFail,idPermohonan,idStatus,namaPemohon){
 	

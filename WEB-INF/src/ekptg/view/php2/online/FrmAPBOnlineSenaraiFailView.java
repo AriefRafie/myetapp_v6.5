@@ -23,6 +23,7 @@ import ekptg.model.php2.utiliti.PHPUtilData;
 import ekptg.helpers.HTML;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
 import ekptg.helpers.Paging;
+import ekptg.helpers.Utils;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmAPBHeaderData;
 import ekptg.model.php2.online.FrmAPBOnlineSenaraiFailData;
@@ -108,6 +109,11 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         Vector senaraiLampiran = null;
         Vector senaraiSemak = null;
         Vector beanMaklumatPejabat = null; //BARU TAMBAH
+        Vector beanHeaderBorangA = null;
+        Vector beanMaklumatBarge = null;
+        Vector listBorangA = null;
+        
+        Vector senaraiBarge = null;
         
         
         //GET DROPDOWN PARAM
@@ -168,6 +174,21 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		log.info("flagPopup : " +flagPopup);
 		
 		FrmSemakan semak = null;
+		//MAKLUMAT BORANG A
+		String idJadualKedua = getParam("idJadualKedua");
+		String idBorangA = getParam("idBorangA");
+		String idBarge = getParam("idBarge");
+		
+		//GET DROPDOWN PARAM
+        String idBulan = getParam("socBulan");
+		if (idBulan == null || idBulan.trim().length() == 0){
+			idBulan = "99999";
+		}
+		String idBulanList = getParam("socBulanList");
+		if (idBulanList == null || idBulanList.trim().length() == 0){
+			idBulanList = "99999";
+		}
+
 		
 		//SAVE TO DB		
 		if (postDB){
@@ -292,7 +313,48 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				if ("hapusLampiran".equals(hitButton)) {
 					logic.hapusLampiran(idDokumen, session);
 				}
-        }
+				// HITBUTTON FOR POPUP MAKLUMAT KJPKJT
+		
+					if ("simpanMaklumatAmbilPasir".equals(hitButton)) {
+
+					//	idJadualKedua = getParam("idJadualKedua");
+						//Log.info("idJadualKeduaxx :"+idJadualKedua);
+						idBorangA = logic.simpanMaklumatAmbilPasir(getParam("idJadualKedua"),
+								idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"),
+								getParam("txtDestinasiDihantar"),
+								getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"),
+								getParam("txtPembeli"),getParam("txtTarikhMula"),getParam("txtTarikhTamat"),getParam("txtLaluan"),
+								getParam("txtKaedah"),getParam("txtKawasan"),
+								session);
+					}
+
+					if ("simpanKemaskiniMaklumatPasir".equals(hitButton)) {
+
+						logic.simpanKemaskiniMaklumatPasir(idBorangA,
+								idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"),
+								getParam("txtDestinasiDihantar"),
+								getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"),
+								getParam("txtPembeli"),getParam("txtTarikhMula"),getParam("txtTarikhTamat"),getParam("txtLaluan"),
+								getParam("txtKaedah"),getParam("txtKawasan"),
+								session);
+
+					}
+					if ("simpanMaklumatBarge".equals(hitButton)) {
+
+						idBarge = logic.simpanMaklumatBarge(idBorangA,
+								getParam("txtNamaDaftar"),
+								getParam("txtNoPendaftaran"), getParam("txtKapasiti"), getParam("txtJenis"), getParam("txtNoTel"), 
+								session);
+					}
+					if ("simpanKemaskiniMaklumatBarge".equals(hitButton)) {
+
+						logic.simpanKemaskiniMaklumatBarge(idBarge,
+								getParam("txtNamaDaftar"),
+								getParam("txtNoPendaftaran"), getParam("txtKapasiti"), getParam("txtJenis"), getParam("txtNoTel"), 
+								session);
+
+					}
+		}
 		
 	//	this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
 		//daftar Baru
@@ -403,9 +465,12 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		String noPermohonan = getParam("txtNoPermohonan");
 		//String noFailOnline = getParam();
 		beanMaklumatPermohonan = new Vector();
-		idFailLama = logic.getIdFailByNoFail(noFailLama);   		
+		idFailLama = logic.getIdFailByNoFail(noFailLama);   
 		noFailLama = logic.getNoFail(idFail);
+		Log.info("noFailLama : "+noFailLama);
+		if(noFailLama != "") {
 		context.put("noFailLama", noFailLama);
+		}
 		noPermohonan = logic.getNoFailPermohonan(idFail);
 		context.put("noPermohonan", noPermohonan);
 		
@@ -469,20 +534,24 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		else if ("daftarBaruBorangA".equals(actionOnline)){
 			
 			log.info("daftar Baru Borang A");
-			vm = "app/php2/frmAPBBorangASenaraiBorang.jsp";
+			vm = "app/php2/online/frmAPBBorangAOnlineSenaraiBorang.jsp";
 			
-			logic.carianFailBorangA(getParam("txtNamaPelesen"),getParam("txtNoLesen"));
+			log.info("namaPemohon"+namaPemohon);
+			log.info("noLesen"+noLesen);
+			logic.carianFailBorangA(namaPemohon,noLesen, idJadualKeduaLesen);
 			list = new Vector();
 			list = logic.getSenaraiFailBorangA();
 
-			this.context.put("SenaraiFail", list);
+			this.context.put("SenaraiFailBorangA", list);
 
-			this.context.put("txtNamaPelesen", getParam("txtNamaPelesen"));
-			this.context.put("txtNoLesen", getParam("txtNoLesen"));
+			log.info("SenaraiFailBorangA : "+list);
+			this.context.put("txtNamaPelesen", namaPemohon);
+			this.context.put("txtNoLesen", noLesen);
 
 			setupPage(session, action, list);
 
 	}
+		
 		else if ("daftarBaruBorangB".equals(actionOnline)){
 			
 			log.info("daftar Baru Borang B");
@@ -506,14 +575,14 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         	
         	//GO TO MAKLUMAT PERMOHONAN  
        		vm = "app/php2/online/frmAPBMaklumatPermohonan.jsp";
-       		
-       		
+       		       		
         	//HEADER
             beanHeader = new Vector();
             logic.setMaklumatHeader(idFail);
             beanHeader = logic.getBeanMaklumatHeader();
     		this.context.put("BeanHeader", beanHeader);
-    		
+    		log.info("BeanHeader : "+beanHeader);
+    	
     		Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);
 			this.context.put("pemohon", vec.get(0));
     		
@@ -605,8 +674,206 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    		this.context.put("namaPemohon",namaPemohon);
 	    		this.context.put("noLesen",noLesen);
 	    		this.context.put("idJadualKeduaLesen",idJadualKeduaLesen);
+	   	
 			
         } 
+        	else if ("doMaklumatPasir".equals(actionOnline)) {
+			
+		
+			Vector beanMaklumatAmbilPasir = null;
+		
+			idJadualKeduaLesen = getParam("idJadualKeduaLesen");
+			idBorangA = getParam("idBorangA");
+			// HEADER
+			beanHeaderBorangA = new Vector();
+			log.info("jadual kedua :"+idJadualKeduaLesen);
+			logic.setMaklumatPermohonanBorangA(idJadualKeduaLesen);
+			beanHeaderBorangA = logic.getBeanMaklumatPermohonanBorangA();
+			
+			this.context.put("beanHeaderBorangA", beanHeaderBorangA);
+			
+			log.info("beanHeaderBorangA : "+beanHeaderBorangA);
+			
+			vm = "app/php2/online/frmAPBBorangAOnlineMaklumatAmbilPasir.jsp";
+			
+			if("new".equals(mode)){
+
+				
+				this.context.put("readonly", "");
+				this.context.put("inputTextClass", "");
+				
+				beanMaklumatAmbilPasir = new Vector();
+				 Hashtable hashMaklumatAmbilPasir = new Hashtable();
+				 hashMaklumatAmbilPasir.put("tujuanAmbil",getParam("txtTujuanAmbil") == null ? "": getParam("txtTujuanAmbil"));
+				 hashMaklumatAmbilPasir.put("destinasiHantar",getParam("txtDestinasiDihantar") == null ? "": getParam("txtDestinasiDihantar"));
+				 hashMaklumatAmbilPasir.put("jumlahPasir",getParam("txtAnggaranPasir") == null ? "": getParam("txtAnggaranPasir"));
+				 hashMaklumatAmbilPasir.put("jumlahRoyalti",getParam("txtJumlahRoyalti")== null ? "": getParam("txtJumlahRoyalti"));
+				 hashMaklumatAmbilPasir.put("bulan",getParam("txtBulan") == null ?"": getParam("txtBulan"));
+				 hashMaklumatAmbilPasir.put("tahun",getParam("txtTahun") == null ? "": getParam("txtTahun"));
+				 
+				 hashMaklumatAmbilPasir.put("kontraktor",getParam("txtKontraktor") == null ? "": getParam("txtKontraktor"));
+				 hashMaklumatAmbilPasir.put("pembeli",getParam("txtPembeli") == null ? "": getParam("txtPembeli"));
+				 hashMaklumatAmbilPasir.put("tarikhMula",getParam("txtTarikhMula") == null ? "": getParam("txtTarikhMula"));
+				 hashMaklumatAmbilPasir.put("tarikhTamat",getParam("txtTarikhTamat")== null ? "": getParam("txtTarikhTamat"));
+				 hashMaklumatAmbilPasir.put("laluan",getParam("txtLaluan") == null ?"": getParam("txtLaluan"));
+				 hashMaklumatAmbilPasir.put("kaedah",getParam("txtKaedah") == null ? "": getParam("txtKaedah"));
+				 hashMaklumatAmbilPasir.put("kawasan",getParam("txtKawasan") == null ? "": getParam("txtKawasan"));
+
+				 beanMaklumatAmbilPasir.addElement(hashMaklumatAmbilPasir);
+				
+				 this.context.put("BeanMaklumatAmbilPasir",beanMaklumatAmbilPasir);
+			
+				 this.context.put("selectBulan",HTML.SelectBulan("socBulan", Long.parseLong(idBulan), ""));
+				 
+			}
+			
+			if ("view".equals(mode)) {
+									
+				 this.context.put("readonly", "readonly");
+				 this.context.put("inputTextClass", "disabled");
+				
+				 beanMaklumatAmbilPasir = new Vector();
+				 logic.setMaklumatAmbilPasir(idBorangA);
+				 beanMaklumatAmbilPasir = logic.getBeanMaklumatAmbilPasir();
+				 this.context.put("BeanMaklumatAmbilPasir",beanMaklumatAmbilPasir);		
+				 
+				 this.context.put("idBorangA", idBorangA);
+				 log.info("idBorangA : "+idBorangA);
+				 log.info("BEAN PASIR VIEWWWW : "+beanMaklumatAmbilPasir);
+				 idJadualKeduaLesen = getParam("idJadualKeduaLesen");
+					// HEADER
+					beanHeaderBorangA = new Vector();
+					log.info("jadual kedua :"+idJadualKeduaLesen);
+					logic.setMaklumatPermohonanBorangA(idJadualKeduaLesen);
+					beanHeaderBorangA = logic.getBeanMaklumatPermohonanBorangA();
+					
+					this.context.put("beanHeaderBorangA", beanHeaderBorangA);
+				
+				
+				 
+				 if (logic.getBeanMaklumatAmbilPasir().size() != 0){
+					 Hashtable hashPasir = (Hashtable) logic.getBeanMaklumatAmbilPasir().get(0);
+					 idBulan = (String) hashPasir.get("bulan");
+					 }
+				 
+				 this.context.put("selectBulan",HTML.SelectBulan("socBulan", Long.parseLong(idBulan), "disabled", " class=\"disabled\""));
+				 }
+			
+			if ("update".equals(mode)) {
+				
+				 this.context.put("readonly", "");
+				 this.context.put("inputTextClass", "");
+				
+				 beanMaklumatAmbilPasir = new Vector();
+				 logic.setMaklumatAmbilPasir(idBorangA);
+				 
+				 Hashtable hashMaklumatAmbilPasir = new Hashtable();
+				 hashMaklumatAmbilPasir.put("tujuanAmbil",getParam("txtTujuanAmbil")== null ? "": getParam("txtTujuanAmbil"));
+				 hashMaklumatAmbilPasir.put("destinasiHantar",getParam("txtDestinasiDihantar") == null ? "": getParam("txtDestinasiDihantar"));
+				 hashMaklumatAmbilPasir.put("jumlahPasir",getParam("txtAnggaranPasir")== null ? "": getParam("txtAnggaranPasir"));
+				 hashMaklumatAmbilPasir.put("jumlahRoyalti",getParam("txtJumlahRoyalti")== null ? "": getParam("txtJumlahRoyalti"));
+				 hashMaklumatAmbilPasir.put("tahun",getParam("txtTahun") == null ? "": getParam("txtTahun"));
+				 hashMaklumatAmbilPasir.put("kontraktor",getParam("txtKontraktor") == null ? "": getParam("txtKontraktor"));
+				 hashMaklumatAmbilPasir.put("pembeli",getParam("txtPembeli") == null ? "": getParam("txtPembeli"));
+				 hashMaklumatAmbilPasir.put("tarikhMula",getParam("txtTarikhMula") == null ? "": getParam("txtTarikhMula"));
+				 hashMaklumatAmbilPasir.put("tarikhTamat",getParam("txtTarikhTamat")== null ? "": getParam("txtTarikhTamat"));
+				 hashMaklumatAmbilPasir.put("laluan",getParam("txtLaluan") == null ?"": getParam("txtLaluan"));
+				 hashMaklumatAmbilPasir.put("kaedah",getParam("txtKaedah") == null ? "": getParam("txtKaedah"));
+				 hashMaklumatAmbilPasir.put("kawasan",getParam("txtKawasan") == null ? "": getParam("txtKawasan"));
+				
+				 beanMaklumatAmbilPasir.addElement(hashMaklumatAmbilPasir);
+				 this.context.put("BeanMaklumatAmbilPasir",beanMaklumatAmbilPasir);
+				 
+				 this.context.put("selectBulan",HTML.SelectBulan("socBulan", Long.parseLong(idBulan), ""));
+				 }
+			
+			if("newBarge".equals(mode)){
+				
+				this.context.put("readonly", "");
+				this.context.put("inputTextClass", "");
+				
+				idJadualKeduaLesen = getParam("idJadualKedua");
+				// HEADER
+				beanHeaderBorangA = new Vector();
+				log.info("jadual kedua :"+idJadualKeduaLesen);
+				logic.setMaklumatPermohonanBorangA(idJadualKeduaLesen);
+				beanHeaderBorangA = logic.getBeanMaklumatPermohonanBorangA();
+				
+				this.context.put("beanHeaderBorangA", beanHeaderBorangA);
+			
+				
+				beanMaklumatBarge = new Vector();
+				Hashtable hashMaklumatBarge = new Hashtable();
+				hashMaklumatBarge.put("namaDidaftarkan",getParam("txtNamaDaftar") == null ? "": getParam("txtNamaDaftar"));
+				hashMaklumatBarge.put("noPendaftaran",getParam("txtNoPendaftaran") == null ? "": getParam("txtNoPendaftaran"));
+				hashMaklumatBarge.put("kapasiti",getParam("txtKapasiti") == null ? "": getParam("txtKapasiti"));
+				
+				hashMaklumatBarge.put("jenis",getParam("txtJenis") == null ? "": getParam("txtJenis"));
+				hashMaklumatBarge.put("noTel",getParam("txtNoTel") == null ? "": getParam("txtNoTel"));
+
+				beanMaklumatBarge.addElement(hashMaklumatBarge);
+				
+				 this.context.put("BeanMaklumatBarge",beanMaklumatBarge);
+			}
+			
+	
+			if ("viewBarge".equals(mode)) {
+									
+				 this.context.put("readonly", "readonly");
+				 this.context.put("inputTextClass", "disabled");
+				 
+
+					idJadualKeduaLesen = getParam("idJadualKedua");
+					// HEADER
+					beanHeaderBorangA = new Vector();
+					log.info("jadual kedua :"+idJadualKeduaLesen);
+					logic.setMaklumatPermohonanBorangA(idJadualKeduaLesen);
+					beanHeaderBorangA = logic.getBeanMaklumatPermohonanBorangA();
+					
+					this.context.put("beanHeaderBorangA", beanHeaderBorangA);
+									
+				 beanMaklumatBarge = new Vector();
+				 logic.setMaklumatBarge(idBarge);
+				 beanMaklumatBarge = logic.getBeanMaklumatBarge();
+				 
+				 this.context.put("BeanMaklumatBarge",beanMaklumatBarge);
+				
+				 }
+				
+				 if ("updateBarge".equals(mode)) {
+				
+				 this.context.put("readonly", "");
+				 this.context.put("inputTextClass", "");
+				
+				 logic.setMaklumatBarge(idBarge);
+				 beanMaklumatBarge = new Vector();
+				 Hashtable hashMaklumatBarge = new Hashtable();
+				 hashMaklumatBarge.put("namaDidaftarkan",getParam("txtNamaDaftar")== null ? "": getParam("txtNamaDaftar"));
+				 hashMaklumatBarge.put("noPendaftaran",getParam("txtNoPendaftaran") == null ? "": getParam("txtNoPendaftaran"));
+				 hashMaklumatBarge.put("kapasiti",getParam("txtKapasiti") == null ? "": getParam("txtKapasiti"));
+				 
+				 hashMaklumatBarge.put("jenis",getParam("txtJenis") == null ? "": getParam("txtJenis"));
+				 hashMaklumatBarge.put("noTel",getParam("txtNoTel") == null ? "": getParam("txtNoTel"));
+									
+				 beanMaklumatBarge.addElement(hashMaklumatBarge);
+				 this.context.put("BeanMaklumatBarge",beanMaklumatBarge);
+				
+				 }
+								
+			
+			
+			//LIST BARGE
+			senaraiBarge = new Vector();
+			senaraiBarge = logic.getSenaraiBarge();
+
+			logic.carianBarge(idBorangA);
+			senaraiBarge = logic.getSenaraiBarge();
+			
+			this.context.put("SenaraiBarge", senaraiBarge);
+			setupPage2(session, action, senaraiBarge);
+		
+			
+		}
 		else{
 		//default screen
 		//GO TO LIST FAIL APB  
@@ -1129,6 +1396,51 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 					}
 				       return idJadualKeduaLesen;        	        		
 				} 
+			//yati tambah	
+				public void setupPage2(HttpSession session, String action, Vector list) {
+
+					try {
+
+						this.context.put("totalRecords", list.size());
+						int page = getParam("page") == "" ? 1 : getParamAsInteger("page");
+
+						int itemsPerPage;
+						if (this.context.get("itemsPerPage") == null
+								|| this.context.get("itemsPerPage") == "") {
+							itemsPerPage = getParam("itemsPerPage") == "" ? 10
+									: getParamAsInteger("itemsPerPage");
+						} else {
+							itemsPerPage = (Integer) this.context.get("itemsPerPage");
+						}
+
+						if ("getNext".equals(action)) {
+							page++;
+						} else if ("getPrevious".equals(action)) {
+							page--;
+						} else if ("getPage".equals(action)) {
+							page = getParamAsInteger("value");
+						} else if ("doChangeItemPerPage".equals(action)) {
+							itemsPerPage = getParamAsInteger("itemsPerPage");
+						}
+
+						Paging paging = new Paging(session, list, itemsPerPage);
+
+						if (page > paging.getTotalPages())
+							page = 1; // reset page number
+						this.context.put("SenaraiBarge", paging.getPage(page));
+						this.context.put("page", new Integer(page));
+						this.context.put("itemsPerPage", new Integer(itemsPerPage));
+						this.context.put("totalPages", new Integer(paging.getTotalPages()));
+						this.context.put("startNumber", new Integer(paging.getTopNumber()));
+						this.context.put("isFirstPage", new Boolean(paging.isFirstPage()));
+						this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+
+					} catch (Exception e) {
+						e.printStackTrace();
+						this.context.put("error", e.getMessage());
+					}
+				}
+
 
 
 }
