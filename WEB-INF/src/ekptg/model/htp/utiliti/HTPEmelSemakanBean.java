@@ -18,6 +18,7 @@ import ekptg.model.utils.emel.IEmel;
 
 public class HTPEmelSemakanBean implements IEmel {
 	
+	//HTPEmelSemakanBean
  	private IHtp iHTP = null;  
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.utiliti.HTPEmelSemakanBean.class);
 	private Vector checkEmail = null;

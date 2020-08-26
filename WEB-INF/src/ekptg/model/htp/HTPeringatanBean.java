@@ -13,9 +13,9 @@ import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
-public class HtpPeringatanBean implements IHtpPeringatan {
+public class HTPeringatanBean implements IHTPeringatan {
 	
-	static Logger myLog = Logger.getLogger(HtpPeringatanBean.class);
+	static Logger myLog = Logger.getLogger(HTPeringatanBean.class);
 	PfdFail fail = null;
 	Permohonan permohonan = null;
 	HtpPermohonan htpPermohonan = null;
@@ -84,6 +84,8 @@ public class HtpPeringatanBean implements IHtpPeringatan {
 	    } finally {
 	      if (db != null) db.close();
 	    }
+	    
+	    
 	  }
 	
 	@Override
