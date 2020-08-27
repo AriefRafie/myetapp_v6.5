@@ -23,7 +23,7 @@ import ekptg.helpers.DB;
  */
 
 public class FrmTukaranStatus {
-	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy"); 
+	private static SimpleDateFormat Format =  new SimpleDateFormat("dd/MM/yyyy");
 	static Logger myLogger = Logger.getLogger(FrmTukaranStatus.class);	
 	
 	private static Vector list = new Vector();
@@ -802,7 +802,7 @@ public class FrmTukaranStatus {
 			SQLRenderer r = new SQLRenderer();
 			
 			sql = " SELECT ST.KETERANGAN AS NAMA_STATUS, ST.ID_STATUS, F.ID_FAIL,F.NO_FAIL,P.ID_PERMOHONAN,PM.NO_KP_BARU,PM.NO_KP_LAMA," +
-					  " TO_CHAR(P.TARIKH_MOHON,'DD/MM/YYYY') AS TARIKH_MOHON,S.NAMA_SIMATI,PM.NAMA_PEMOHON,D.NAMA_DAERAH || ', '|| N.NAMA_NEGERI AS LOKASI_PERMOHONAN "+
+					  " TO_CHAR(P.TARIKH_MOHON,'DD/MM/YYYY') AS TARIKH_MOHON,S.NAMA_SIMATI,S.ID_SIMATI, PS.ID_PERMOHONANSIMATI, PM.NAMA_PEMOHON,D.NAMA_DAERAH || ', '|| N.NAMA_NEGERI AS LOKASI_PERMOHONAN "+
 					  " FROM TBLPFDFAIL F,TBLPPKPERMOHONAN P,TBLPPKPERMOHONANSIMATI PS,TBLPPKSIMATI S,TBLPPKPEMOHON PM,TBLRUJSTATUS ST, TBLRUJDAERAH D, TBLRUJNEGERI N "+
 					  " WHERE F.ID_FAIL = P.ID_FAIL "+
 					  " AND P.ID_PERMOHONAN = PS.ID_PERMOHONAN ";
@@ -911,6 +911,16 @@ public class FrmTukaranStatus {
 					h.put("NAMA_PEMOHON", "");
 				} else {
 					h.put("NAMA_PEMOHON", rs.getString("NAMA_PEMOHON"));
+				}
+				if (rs.getString("ID_SIMATI") == null) {
+					h.put("ID_SIMATI", "");
+				} else {
+					h.put("ID_SIMATI", rs.getString("ID_SIMATI"));
+				}
+				if (rs.getString("ID_PERMOHONANSIMATI") == null) {
+					h.put("ID_PERMOHONANSIMATI", "");
+				} else {
+					h.put("ID_PERMOHONANSIMATI", rs.getString("ID_PERMOHONANSIMATI"));
 				}
 				
 				
@@ -4065,6 +4075,46 @@ public Hashtable getMainFail_bicara_semula(String ID_FAIL) throws Exception {
 				}
 			}
 			
+			public Hashtable IDpermohonanSimati2(String id_permohonan) throws Exception {
+				myLogger.info("IDpermohonanSimati");
+				list_IDpermohonanSimati = new Vector();
+				list_IDpermohonanSimati.clear();
+				Db db = null;
+				String sql = "";
+				Hashtable h = new Hashtable();
+			try {
+				 
+					db = new Db();
+					Statement stmt = db.getStatement();
+					SQLRenderer r = new SQLRenderer();
+					
+									
+					sql = " SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = "+id_permohonan;
+					
+					myLogger.info("SQL IDpermohonanSimati :"+sql);
+					
+				   
+					ResultSet rs = stmt.executeQuery(sql);
+					while (rs.next()) {
+						
+												
+						if (rs.getString("ID_SIMATI") == null) {
+							h.put("ID_SIMATI", "");
+						} else {
+							h.put("ID_SIMATI", rs.getString("ID_SIMATI"));
+						}
+						
+						
+						
+						//list_IDpermohonanSimati.addElement(h);
+					}
+					return h;
+				} finally {
+					if (db != null)
+						db.close();
+				}
+			}
+			
 			Vector papar_list_ob = null;
 			public Vector papar_list_ob(String id_fail) throws Exception {
 				papar_list_ob = new Vector();
@@ -4135,46 +4185,6 @@ public Hashtable getMainFail_bicara_semula(String ID_FAIL) throws Exception {
 			} catch (Exception er) {
 				myLogger.error(er);
 				throw er;
-				} finally {
-					if (db != null)
-						db.close();
-				}
-			}
-			
-			public Hashtable IDpermohonanSimati2(String id_permohonan) throws Exception {
-				myLogger.info("IDpermohonanSimati");
-				list_IDpermohonanSimati = new Vector();
-				list_IDpermohonanSimati.clear();
-				Db db = null;
-				String sql = "";
-				Hashtable h = new Hashtable();
-			try {
-				 
-					db = new Db();
-					Statement stmt = db.getStatement();
-					SQLRenderer r = new SQLRenderer();
-					
-									
-					sql = " SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = "+id_permohonan;
-					
-					myLogger.info("SQL IDpermohonanSimati :"+sql);
-					
-				   
-					ResultSet rs = stmt.executeQuery(sql);
-					while (rs.next()) {
-						
-												
-						if (rs.getString("ID_SIMATI") == null) {
-							h.put("ID_SIMATI", "");
-						} else {
-							h.put("ID_SIMATI", rs.getString("ID_SIMATI"));
-						}
-						
-						
-						
-						//list_IDpermohonanSimati.addElement(h);
-					}
-					return h;
 				} finally {
 					if (db != null)
 						db.close();

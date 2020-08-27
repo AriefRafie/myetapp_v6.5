@@ -1538,7 +1538,7 @@
                                           <td><input name="txtNoFaksPemohon" type="text" id="txtNoFaksPemohon" style="text-transform:uppercase;" onblur="uppercase()" value="$listpemohon.noFax" size="14" maxlength="12" $readmodeR class="$readmode" onkeyup="javascript:validateIC(event,this,this.value,'txtNoFaksPemohon')" /></td>
                                         </tr>
                                         <tr>
-                                          <td class="style38" >#if($readmode != "disabled" && $flagEmail != "F" ) <span class="style38 style44">*</span>
+                                          <td class="style38" >#if($readmode != "disabled" && $flagEmail != "F" )<span class="style44">*</span>
                                             #end</td>
                                           <td class="style38" ><div align="left">Emel</div></td>
                                           <td width="1%" class="style36"><div align="right"><span class="style38">:</span></div></td>                                        
@@ -2057,6 +2057,12 @@ else if (document.f1.status_pemohon.value == "2" && document.f1.txtnoKpBaru2Pemo
 	
 	}
 	*/
+	//arief add
+	else if  (document.f1.txtEmelPemohon.value == "" && document.f1.txtEmelPemohon.value == "" ){
+		alert("Sila masukkan email yang lengkap");
+		document.f1.txtEmelPemohon.focus()
+		return;
+	}
 	
 	
 		

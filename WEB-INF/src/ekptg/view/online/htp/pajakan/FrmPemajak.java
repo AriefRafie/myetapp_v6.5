@@ -16,8 +16,8 @@ import ekptg.helpers.Paging;
 import ekptg.model.htp.FrmPajakanHeaderData;
 import ekptg.model.htp.FrmPajakanSenaraiFailData;
 import ekptg.model.htp.HakmilikUrusan;
-import ekptg.model.htp.HtpPeringatanBean;
-import ekptg.model.htp.IHtpPeringatan;
+import ekptg.model.htp.HTPeringatanBean;
+import ekptg.model.htp.IHTPeringatan;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
@@ -29,7 +29,7 @@ import ekptg.model.htp.pembelian.PembelianBean;
 public class FrmPemajak extends AjaxBasedModule {
 
 	private final String PATH="app/htp/pajakan/online/";
-	private IHtpPeringatan iHTPP = null;  
+	private IHTPeringatan iHTPP = null;  
 	private IOnline iOnline = null;
 	private static final long serialVersionUID = 1L;
 
@@ -320,9 +320,9 @@ public class FrmPemajak extends AjaxBasedModule {
 		
 	}
 
-	private IHtpPeringatan getIHTPP(){
+	private IHTPeringatan getIHTPP(){
 		if(iHTPP== null)
-			iHTPP = new HtpPeringatanBean();
+			iHTPP = new HTPeringatanBean();
 		return iHTPP;
 	}
 	

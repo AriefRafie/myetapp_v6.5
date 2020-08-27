@@ -1045,6 +1045,7 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 			k.put("no_hp", getParam("no_hp"));
 			k.put("jenis_pej", getParam("jenis_pej"));
 			k.put("socSaudaraWaris", getParam("socSaudaraWaris"));
+			k.put("emel", getParam("txtEmelPemohon"));
 
 			v.addElement(k);
 			// this.context.put("ViewLama",v);
@@ -1212,6 +1213,7 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 			k.put("jenis_pej", getParam("jenis_pej"));
 			k.put("jenis_pemohon", getParam("jenis_pemohon"));
 			k.put("socSaudaraWaris", getParam("socSaudaraWaris"));
+			k.put("emel", getParam("txtEmelPemohon"));
 			v.addElement(k);
 			// this.context.put("ViewLama",v);
 
@@ -1536,6 +1538,7 @@ public class FrmPrmhnnBorangPOnline extends VTemplate {
 					k.put("jenis_pej", getParam("jenis_pej"));
 					k.put("jenis_pemohon", getParam("jenis_pemohon"));
 					k.put("socSaudaraWaris", getParam("socSaudaraWaris"));
+					k.put("emel", getParam("txtEmelPemohon"));
 
 					v.addElement(k);
 					// this.context.put("ViewLama",v);

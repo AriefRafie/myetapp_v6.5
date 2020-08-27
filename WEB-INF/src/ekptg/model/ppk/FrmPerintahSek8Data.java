@@ -209,7 +209,7 @@ public class FrmPerintahSek8Data {
 						" AND B.ID_DAERAHMHN = J.ID_DAERAH  " +
 						//" AND E.AKTIF = 1 " +
 						//" AND F.ID_STATUS IN (41,21,25) AND B.SEKSYEN = 8  "+
-						" AND B.ID_STATUS IN (41,21,25) AND B.SEKSYEN = 8  "+
+						" AND B.ID_STATUS IN (41,21,25,107) AND B.SEKSYEN = 8  "+
 						" AND B.FLAG_JENIS_PERMOHONAN = 1 " +
 						//" AND B.ID_STATUS != 999   "+
 						" AND PT.ID_PERBICARAAN = BIC.ID_PERBICARAAN AND  BIC.ID_KEPUTUSANPERMOHONAN = KP.ID_KEPUTUSANPERMOHONAN AND KP.ID_PERMOHONAN = B.ID_PERMOHONAN "+
@@ -561,6 +561,7 @@ System.out.println("sini======="+sql);
 			r.add("C.FLAG_JENIS_KEPUTUSAN", "0");
 
 			sql = r.getSQLSelect("TBLPPKKEPUTUSANPERMOHONAN A, TBLPPKPERBICARAAN B, TBLPPKPERINTAH C");
+			myLogger.info("getIdPerintah = "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 
@@ -671,7 +672,7 @@ System.out.println("sini======="+sql);
 			sql = "SELECT A1.ID_HA FROM TBLPPKHA A1,TBLPPKHAPERMOHONAN A " +
 					" WHERE A1.ID_HA = A.ID_HA AND A.ID_PERMOHONANSIMATI = A1.ID_PERMOHONANSIMATI " +
 					" AND A1.ID_PERMOHONANSIMATI = '" + idPermohonanSimati + "'";
-	
+			myLogger.info("checkExistHA");
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if (rs.next()){
@@ -5947,7 +5948,31 @@ System.out.println("sini======="+sql);
 					"(SELECT ID_HA FROM TBLPPKPERINTAHHAOBMST WHERE ID_PERINTAH = '" + idPerintah + "')";
 	
 			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("checkHAYangBelumDibahagikan = "+sql);
+			if (rs.next()){
+				return true;
+			} else {
+				return false;
+			}
 			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public boolean checkPerintahKIV(String idPerintah) throws Exception{
+		Db db = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+		
+			sql = "SELECT CHECK_KIV FROM TBLPPKPERINTAH WHERE ID_PERINTAH = '" + idPerintah + "'";
+	
+			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("checkKIV = "+sql);
 			if (rs.next()){
 				return true;
 			} else {

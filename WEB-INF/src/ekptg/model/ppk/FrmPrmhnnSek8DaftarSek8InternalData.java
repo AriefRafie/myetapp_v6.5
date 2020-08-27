@@ -1352,7 +1352,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 					+ " S.NO_KP_BARU, S.NO_KP_LAMA, S.JENIS_KP AS JENISKP_SIMATI, S.NO_KP_LAIN, S.ID_SIMATI, "
 					+ " S.NAMA_SIMATI, S.TARIKH_MATI, PM.ID_PEMOHON, PM.NAMA_PEMOHON, PM.NO_KP_BARU AS NO_KP_BARU_PM, "
 					+ " PM.NO_KP_LAMA AS NO_KP_LAMA_PM, PM.JENIS_KP AS JENIS_KP_PM, PM.NO_KP_LAIN AS NO_KP_LAIN_PM, " +
-							"PM.ALAMAT_1, PM.ALAMAT_2, PM.ALAMAT_3, "
+							"PM.ALAMAT_1, PM.ALAMAT_2, PM.ALAMAT_3, PM.EMEL,"
 					+ " PM.POSKOD, PM.BANDAR, N.ID_NEGERI, N.NAMA_NEGERI, D.NAMA_DAERAH, P.SEKSYEN, "
 					+ " ST.KETERANGAN, P.ID_STATUS," +
 						//	" U.NAMA_PEJABAT, " +
@@ -1515,6 +1515,9 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 						: rs.getString("nama_Pemohon"));
 				h.put("noKpBaruPemohon1", rs.getString("NO_KP_BARU_PM") == null ? "" : rs
 						.getString("NO_KP_BARU_PM").substring(0, 6));
+				h.put("emel",
+						rs.getString("emel") == null ? "" : rs
+								.getString("EMEL"));
 
 				//myLogger.debug("rs.getString(15):" + rs.getString(15));
 
@@ -2885,15 +2888,13 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 
 			long idPermohonan = Long.parseLong((String) data.get("IdPermohonan"));
 			
-			long idSubUrusanStatus = DB.getNextID(db,
-					"TBLRUJSUBURUSANSTATUS_SEQ");
+			long idSubUrusanStatus = DB.getNextID(db,"TBLRUJSUBURUSANSTATUS_SEQ");
 
 			//int UserIdPejabat = Integer.parseInt((String) data.get("userIdPejabat"));
 			String userIdNeg = (String) data.get("userIdNeg");
 			String userId = (String) data.get("userId");
 			String NegId = (String) data.get("negId");
 			String id_Fail = (String) data.get("id_Fail");
-
 			String no_daerah = (String) data.get("no_daerah");
 
 			int id_d = Integer.parseInt(no_daerah);
@@ -2919,8 +2920,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 
 			String userIdKodNegeri = (String) data.get("userIdKodNegeri");
 			String tarikh_simati = (String) data.get("tarikh_simati");
-			String sel_jeniskp_pemohon = (String) data
-					.get("sel_jeniskp_pemohon");
+			String sel_jeniskp_pemohon = (String) data.get("sel_jeniskp_pemohon");
 			String no_kplain_pemohon = (String) data.get("no_kplain_pemohon");
 			String nama_pemohon = (String) data.get("nama_pemohon");
 			String alamat1 = (String) data.get("alamat1");
@@ -3232,10 +3232,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				sqlOB = rOB.getSQLInsert("tblppkob");
 				// myLogger.info(sqlOB);
 				stmtOB.executeUpdate(sqlOB);
-				
-				
-				
-				
+							
 				rOB.clear();
 				rOB.add("id_ob", id_ob);
 				rOB.add("id_Simati", idsimati);
@@ -3290,6 +3287,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				
 				sqlOB = rOB.getSQLInsert("tblppkobpermohonan");
 				stmtOB.executeUpdate(sqlOB);
+				
 			}
 
 			/*
@@ -3430,6 +3428,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 			if (db != null)
 				db.close();
 		}
+		
 	}
 
 	public Vector checkwaris(String idob) throws Exception {
@@ -14758,3 +14757,4 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 	
 	
 }
+//20200824

@@ -302,6 +302,7 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
+														#if ($idKementerian == '13')
 														<tr>
 															<td>
 																<a href="javascript:ulasanKertasKewangan()" class="help" title="Ulasan Kertas Kewangan">
@@ -315,6 +316,7 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
+														#end
 													</table>
 												</td>
 												#end

@@ -1,4 +1,4 @@
-<!--<form autocomplete="off" action="/action_page.php">  arief add bagi tujuan autocomplete bila Pegawai masukkan nama Waris / OB di Keterangan diambil-->
+<form autocomplete="off" action="/app/ppk/BicaraInteraktif/viewKeterangan.jsp"> <!-- arief add bagi tujuan autocomplete bila Pegawai masukkan nama Waris / OB di Keterangan diambil-->
 <div class="viewKeterangan" class="autocomplete" > <!-- arief add class="autocomplete"  -->
 <table class="tableEditor classFade" width="100%"  >
 <tr><td colspan="2">

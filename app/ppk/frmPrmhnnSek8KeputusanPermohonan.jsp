@@ -2474,7 +2474,7 @@ Batal Permohonan (Lain - lain kes)</td>
     </table>
     </fieldset>
     
-    <!-- comment dulu untuk POC
+     #if(($jumHa < 60000) && (($jumHta < 60000) || ($jumHta == '')))
     <fieldset>
     <legend>SUMMARY DISTRIBUTION </legend>
     <table width="100%" border="0">
@@ -2495,7 +2495,8 @@ Batal Permohonan (Lain - lain kes)</td>
         </td>
     </tr>
     </table>
-    </fieldset> -->
+    </fieldset>
+    #end
     
     <fieldset>
     <legend>DOKUMEN SOKONGAN</legend>

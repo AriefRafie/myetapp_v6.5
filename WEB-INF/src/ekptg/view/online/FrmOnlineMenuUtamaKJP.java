@@ -29,10 +29,25 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 	private IHtp iErr = null;
 	//return Permohonan 1
 	private IStatus iStatus = null;
+	String idKementerian = "";
+	Vector listDetailKJP = null;
 
 	@Override
 	public String doTemplate2() throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = this.request.getSession();
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		listDetailKJP = getIdNegeriKJPByUserId(userId);
+		if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
+			Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
+			idKementerian = hashRayuanDB.get("idKementerian").toString();
+			myLog.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
+
+		}
+
+		this.context.put("idKementerian", idKementerian);
+		
+		
+		
 		Pengumuman logic = new Pengumuman();
 		// String portal_role = (String) session.getAttribute("_portal_role");
 		// razman comment
@@ -98,7 +113,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 Hashtable get_notifikasi_apb = null;
 		 get_notifikasi_apb = (Hashtable) notifikasi_apb(user_id);
 		 String jumlah_notifikasi_apb = (String)get_notifikasi_apb.get("JUMLAHPERMOHONAN");
-		 context.put("jumlah_notifikasi_tukarguna1", Long.parseLong(jumlah_notifikasi_apb));
+		 context.put("jumlah_notifikasi_apb", Long.parseLong(jumlah_notifikasi_apb));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
 		 //return Permohonan 4
 		 //PPT
@@ -108,6 +123,45 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
 		return vm;
 
+	}
+	
+	
+	
+	public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
+		Db db = null;
+		String sql = "";
+		Hashtable h;
+		Vector listDetailKJP = new Vector();
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.USER_ID, A.USER_NAME, C.ID_NEGERI, B.ID_KEMENTERIAN, B.ID_AGENSI FROM USERS A, USERS_KEMENTERIAN B, TBLRUJAGENSI C, TBLRUJKEMENTERIAN D "
+					+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '"
+					+ userId + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("listDetailKJP::::: "+sql);
+
+			if (rs.next()) {
+				h = new Hashtable();
+				h.put("userId", rs.getString("USER_ID").toString());
+				h.put("idNegeri", rs.getString("ID_NEGERI").toString());
+				h.put("idKementerian", rs.getString("ID_KEMENTERIAN").toString());
+				h.put("idAgensi", rs.getString("ID_AGENSI").toString());
+				h.put("namaPemohon", rs.getString("USER_NAME").toString());
+				listDetailKJP.addElement(h);
+
+				return listDetailKJP;
+			} else {
+				return listDetailKJP;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 
 	public Hashtable notifikasi_permohonan(String userID, long jawatan)
@@ -299,7 +353,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				   + " AND tblphphakmilikpermohonan.flag_hakmilik = 'U' "
 				   + " AND tblpermohonan.id_status NOT IN (1610212, 1610207, 1610208) "
 				   + " AND users.user_id = users_kementerian.user_id "
-				   + " AND users_kementerian.id_agensi = tblphpulasanteknikal.id_agensi "
+				   //+ " AND users_kementerian.id_agensi = tblphpulasanteknikal.id_agensi "
 				   + " AND users.user_id = '" + userID + "') AS jumlahpermohonan "
 				  + " FROM DUAL ";
 
@@ -471,19 +525,19 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT (SELECT COUNT (*) "
-					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
-					+ " ,USERS_KEMENTERIAN UK, USERS H "
-					+ " ,TBLRUJSTATUS RS, tblphppemohon C, tblhtphakmilikagensi D,"
-					+ " tblphphakmilikpermohonan E"
+					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P,USERS_KEMENTERIAN UK,TBLRUJSTATUS RS "
+					//+ " ,USERS H "
+					//+ " ,tblphppemohon C, tblhtphakmilikagensi D,"
+					//+ " tblphphakmilikpermohonan E"
 					+ " WHERE F.ID_FAIL = P.ID_FAIL"
 					+ " AND F.ID_SUBURUSAN = '33'"
 					+ " AND P.ID_STATUS = RS.ID_STATUS "
 					+ " AND P.ID_STATUS NOT IN (1610199)"
-					+ " AND F.ID_KEMENTERIAN = UK.ID_KEMENTERIAN "
-					+ " AND P.ID_PEMOHON = C.ID_PEMOHON "
-					+ " AND P.ID_PERMOHONAN = E.ID_PERMOHONAN "
-					+ " AND H.USER_ID = UK.USER_ID "
-					+ " AND E.ID_HAKMILIKAGENSI = D.ID_HAKMILIKAGENSI "
+					//+ " AND F.ID_KEMENTERIAN = UK.ID_KEMENTERIAN "
+					//+ " AND P.ID_PEMOHON = C.ID_PEMOHON "
+					//+ " AND P.ID_PERMOHONAN = E.ID_PERMOHONAN "
+					//+ " AND H.USER_ID = UK.USER_ID "
+					//+ " AND E.ID_HAKMILIKAGENSI = D.ID_HAKMILIKAGENSI "
 					+ " AND UK.USER_ID = '" + userID + "') AS jumlahpermohonan "
 					+ " FROM DUAL ";
 

@@ -2376,7 +2376,7 @@ function convertNilaiAmbil(boxAmbil2,boxAmbil3){
 
 </script>
 
-
+ 
 <!-- CARIAN dan KOSONGKAN -->
 <script>
 function cariLOT(idpermohonan,mode,idhakmilik) {

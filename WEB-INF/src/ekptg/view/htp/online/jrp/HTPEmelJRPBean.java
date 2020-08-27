@@ -18,8 +18,9 @@ import ekptg.model.utils.emel.IEmel;
 
 public class HTPEmelJRPBean implements IEmel {
 	
+	
  	private IHtp iHTP = null;  
-	private static Logger myLog = Logger.getLogger(ekptg.model.htp.utiliti.HTPEmelSemakanBean.class);
+	private static Logger myLog = Logger.getLogger(ekptg.view.htp.online.jrp.HTPEmelJRPBean.class);
 	private Vector checkEmail = null;
 	private String tajukDefault = "MyeTaPP : Semakan/ Pengesahan Permohonan ";
 
@@ -84,7 +85,6 @@ public class HTPEmelJRPBean implements IEmel {
 		return bff.toString();
 		
 	}
-	
 	
 	@Override
 	public String setEmailSign(String noFail,String tajuk, String dari){		
