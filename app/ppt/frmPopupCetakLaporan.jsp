@@ -33,6 +33,7 @@ background: #f4eff4 !important;
    <input name="listLOTHM" type="hidden" id="listLOTHM" value="$!listLOTHM"/> 
    <input name="id_negeri" type="hidden" id="id_negeri" value="$!id_negeri"/> 
    <input name="totalHM" type="hidden" id="totalHM" value="$!totalHM"/> 
+   <input name="bilLot" type="text" id="bilLot" value="$!bilLot"/> 
    <input name="flagJenisSuratCara" type="hidden" id="flagJenisSuratCara" value="$!flagJenisSuratCara"/> 
    
    <input name="flagCetakJPBD" type="hidden" id="flagCetakJPBD" value="$!flagCetakJPBD"/> 
@@ -1431,7 +1432,7 @@ background: #f4eff4 !important;
                 	
                 	<!-- PPT-11 -->
                 	#if($report == 'suratPelupusanHakmilik')
-                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Surat Pelupusan" onclick="javascript:suratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot')">
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Surat Pelupusan" onclick="javascript:suratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot','$!nama_pengarah')">
                 	#end
                     
                     <!-- END REPORT SEKSYEN 4 & 8 --------->
@@ -6049,12 +6050,12 @@ function cetakSuratIringanPembayaran(idhakmilikpb,id_fail,nama_pegawai,id_jawata
 
 
 // PPT-11 CETAK SURAT PELUPUSAN
-function suratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot)	{
+function suratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot, nama_pegawai)	{
 	
 	// Get bitLot from URL
-	var url_string = (window.location.href).toLowerCase();
-	var url = new URL(url_string);
-	var bilLot = url.searchParams.get("bilLot");
+	//var url_string = (window.location.href).toLowerCase();
+	//var url = new URL(url_string);
+	//var bilLot = url.searchParams.get("bilLot");
 	
 	var id_pegawai = document.${formName}.socPegawai.value;
 	nofail = document.${formName}.no_fail.value;
@@ -6066,7 +6067,8 @@ function suratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot)	{
 	
 	}	else	{
 	
-	var url = "../../servlet/ekptg.report.ppt.SuratPelupusanHakmilik?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail;
+	var url = "../../servlet/ekptg.report.ppt.SuratPelupusanHakmilik?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail+"&bilLot="+bilLot+
+	"&namaPengarah="+nama_pegawai;
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
