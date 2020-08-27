@@ -1,11 +1,10 @@
 package ekptg.model.htp;
 
-import java.util.Hashtable;
 import java.util.Vector;
 
 import ekptg.model.htp.entity.HtpPermohonan;
 
-public interface IHtpPeringatan {	
+public interface IHTPeringatan {	
 
 	public Vector<HtpPermohonan> getSenaraiPeringatanBayaran(String search,String idUrusan,String tahunBayaran)throws Exception ;
 	public Vector getSenaraiPeringatanBayaranPer(String search,String idUrusan,String tahunBayaran)throws Exception ;

@@ -133,10 +133,8 @@ public class FrmSemakan {
 		      r.add("i.id_semakan",r.unquote("s.id_semakan"));
 		      r.add("i.id_semakan",r.unquote("sjd.id_semakan(+)"));
 		      r.add("sjd.id_jenisdokumen",r.unquote("jd.id_jenisdokumen(+)"));
-
-//		    	  r.add("i.id_semakansenarai",("+idSenarai+"),"in");
-		      sql = " tblsemakan s,tblsemakansenarai i,TBLSEMAKANJENISDOKUMEN SJD,TBLRUJJENISDOKUMEN JD";
-		    	  
+		      //		    	  r.add("i.id_semakansenarai",("+idSenarai+"),"in");
+		      sql = " tblsemakan s,tblsemakansenarai i,TBLSEMAKANJENISDOKUMEN SJD,TBLRUJJENISDOKUMEN JD";	  
 		      sql = r.getSQLSelect(sql);
 		      //sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
 		      if(!idSenarai.equals("0"))
@@ -187,7 +185,7 @@ public class FrmSemakan {
 		    	  db.close();
 		      }
 		    }	    
-		    return list;
+	    return list;
 		  
 	 }
  
@@ -244,13 +242,13 @@ public class FrmSemakan {
 		    	  
 		      }
 		      
-	   }catch(Exception e){
-		   e.printStackTrace();
-	   }finally {
-		   if (db != null){
+		 }catch(Exception e){
+			 e.printStackTrace();
+		 }finally {
+			 if (db != null){
 			   db.close();
 		   }
-	   }	    
+	   	}	    
 	    return list;
 		  
 	}
@@ -264,10 +262,10 @@ public class FrmSemakan {
 			sb.append("</a><br>");
 			
 		}
-		 if(modul.equals("php"))
-			 sb.append(getDocPHP().getLampirans(rujukan, jenisDokumen,""));
-		 else
-			 sb.append(getDoc().getLampirans(rujukan, jenisDokumen,""));
+		if(modul.equals("php"))
+			sb.append(getDocPHP().getLampirans(rujukan, jenisDokumen,""));
+		else
+			sb.append(getDoc().getLampirans(rujukan, jenisDokumen,""));
 
 		 //lampiran = lb.getLampirans(idSimati,"paparLampiran");
 		 return sb.toString();
@@ -298,6 +296,7 @@ public class FrmSemakan {
 		    	  h.put("id", rs.getString("id_semakansenarai"));
 		    	  h.put("keterangan", rs.getString("perihal"));
 		    	  list.addElement(h);
+		      
 		      }
 		      
 		 }catch(Exception e){

@@ -33,6 +33,7 @@ background: #f4eff4 !important;
    <input name="listLOTHM" type="hidden" id="listLOTHM" value="$!listLOTHM"/> 
    <input name="id_negeri" type="hidden" id="id_negeri" value="$!id_negeri"/> 
    <input name="totalHM" type="hidden" id="totalHM" value="$!totalHM"/> 
+   <input name="bilLot" type="text" id="bilLot" value="$!bilLot"/> 
    <input name="flagJenisSuratCara" type="hidden" id="flagJenisSuratCara" value="$!flagJenisSuratCara"/> 
    
    <input name="flagCetakJPBD" type="hidden" id="flagCetakJPBD" value="$!flagCetakJPBD"/> 
@@ -773,9 +774,8 @@ background: #f4eff4 !important;
                 	<td>
                     
                     #if($report == 'MMKSek8WPKL' || $report == 'MMKSek4WPKL')
-                    Tarikh Kertas MMK Dicetak
+                    	Tarikh Kertas MMK Dicetak
                     #else
-                    
                     
                     
                     Tarikh Surat Dicetak
@@ -1396,12 +1396,11 @@ background: #f4eff4 !important;
                 	
                 	#if($report == 'BorangL')
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangL('$!id_hakmilik','$!totalHM')">
-                	#end
-                	
+					#end
+					
                 	#if($report == 'coveringPU')
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakCoveringPU('$!id_permintaanukur','$!nama_pengarah')">
                 	#end
-                    
                     
                     #if($report == 'CoveringPU_SA') 
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakCoveringPU_SA('$!id_permintaanukur','$!nama_pengarah')">
@@ -1431,6 +1430,11 @@ background: #f4eff4 !important;
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMinitSijilPU('$!id_permintaanukur','$!nama_pengarah')">
                 	#end
                 	
+                	<!-- PPT-11 -->
+                	#if($report == 'suratPelupusanHakmilik')
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Surat Pelupusan" onclick="javascript:suratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot','$!nama_pengarah')">
+                	#end
+                    
                     <!-- END REPORT SEKSYEN 4 & 8 --------->
                     
                     
@@ -2254,6 +2258,8 @@ function cetakBorangAkta486Penarikan(id_fail,idmmk,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakBorangAkta486(idfail,mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2287,6 +2293,7 @@ function cetakBorangAkta486(idfail,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
 
 function cetakWartaPNMB(idfail,nama_pegawai,id_jawatan,mukim) {
 
@@ -2330,6 +2337,8 @@ function cetakWartaPNMB(idfail,nama_pegawai,id_jawatan,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratAPBayarTambahan(idhakmilik,nama_pegawai,id_jawatan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2372,6 +2381,8 @@ function cetakSuratAPBayarTambahan(idhakmilik,nama_pegawai,id_jawatan) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratPUBayarBalik(idhakmilikpb,nama_pegawai,id_jawatan,mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2414,6 +2425,8 @@ function cetakSuratPUBayarBalik(idhakmilikpb,nama_pegawai,id_jawatan,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakEndorsanKPTD(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2456,6 +2469,8 @@ function cetakEndorsanKPTD(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakEndorsanKPTDSeluruh(idfail,nama_pegawai,id_jawatan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2498,6 +2513,8 @@ function cetakEndorsanKPTDSeluruh(idfail,nama_pegawai,id_jawatan) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakEndorsanKSUK(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2540,6 +2557,8 @@ function cetakEndorsanKSUK(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakEndorsanKHQ(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2582,6 +2601,8 @@ function cetakEndorsanKHQ(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakEndorsanKSUKSeluruh(idfail,nama_pegawai,id_jawatan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2624,6 +2645,8 @@ function cetakEndorsanKSUKSeluruh(idfail,nama_pegawai,id_jawatan) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakBorangK(idfail,idhakmilik) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2656,6 +2679,8 @@ function cetakBorangK(idfail,idhakmilik) {
 	}
 	
 }
+
+
 function cetakAfidavit(idhakmilikpb) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2692,6 +2717,8 @@ function cetakAfidavit(idhakmilikpb) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakAfidavitExParte(idhakmilikpb) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2728,6 +2755,8 @@ function cetakAfidavitExParte(idhakmilikpb) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakAfidavitPerintah(idhakmilikpb) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2765,6 +2794,8 @@ function cetakAfidavitPerintah(idhakmilikpb) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratCajLewat(idhakmilik,nama_pegawai,id_jawatan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2811,6 +2842,8 @@ function cetakSuratCajLewat(idhakmilik,nama_pegawai,id_jawatan) {
 	}
 	
 }
+
+
 function cetakSuratMaklumanSerahBayaranPampasanKpdAP(idfail,nama_pegawai) {
 
 
@@ -2850,6 +2883,8 @@ function cetakSuratMaklumanSerahBayaranPampasanKpdAP(idfail,nama_pegawai) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratAkuanPenerimaanCekLainKos(idbayaran) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2881,6 +2916,8 @@ function cetakSuratAkuanPenerimaanCekLainKos(idbayaran) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratAkuanPenerimaanCek(idbayaran) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2912,6 +2949,8 @@ function cetakSuratAkuanPenerimaanCek(idbayaran) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratAkuanPenerimaanCekBayaranLewat(idbayaran) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2943,6 +2982,8 @@ function cetakSuratAkuanPenerimaanCekBayaranLewat(idbayaran) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratPanggilPBTerimaPampasan_LainKos(idfail,idbayaran,nama_pengarah,nama_pegawai,id_jawatan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -2975,6 +3016,8 @@ function cetakSuratPanggilPBTerimaPampasan_LainKos(idfail,idbayaran,nama_pengara
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratPanggilPBTerimaPampasan(idfail,idbayaran,nama_pengarah,nama_pegawai,id_jawatan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3007,6 +3050,8 @@ function cetakSuratPanggilPBTerimaPampasan(idfail,idbayaran,nama_pengarah,nama_p
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratLainKos(idhakmilik,nama_pegawai,id_jawatan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3086,7 +3131,6 @@ function cetakBayaranLainKosKedah(idhakmilik) {
 }
 
 
-
 function cetakBorangH(idfail,idhakmilik,id_negeri,showG_MT,showG_ARB) {
 	
 	var mula = document.${formName}.mulaPB.value;
@@ -3145,6 +3189,8 @@ function cetakBorangH(idfail,idhakmilik,id_negeri,showG_MT,showG_ARB) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakBorangG(idpermohonan,idfail,idhakmilik,showG_MT,showG_ARB,bydate) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3199,6 +3245,8 @@ function cetakBorangG(idpermohonan,idfail,idhakmilik,showG_MT,showG_ARB,bydate) 
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakMohonBayaran(idhakmilik,nama_pegawai,id_jawatan,mukim,id_negeri) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3255,6 +3303,8 @@ function cetakMohonBayaran(idhakmilik,nama_pegawai,id_jawatan,mukim,id_negeri) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSiasatanPBUlang(idfail,idhakmilik,nama_pegawai,id_jawatan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3295,6 +3345,8 @@ function cetakSiasatanPBUlang(idfail,idhakmilik,nama_pegawai,id_jawatan) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSiasatanAPPBUlang(idfail,idhakmilik,nama_pegawai,id_jawatan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3335,6 +3387,8 @@ function cetakSiasatanAPPBUlang(idfail,idhakmilik,nama_pegawai,id_jawatan) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakIringanARB(id_siasatan,idjawatan,nama_pegawai) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3377,6 +3431,8 @@ function cetakIringanARB(id_siasatan,idjawatan,nama_pegawai) {
     	if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai,id_hakmilik) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3413,6 +3469,8 @@ function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai,id_hakmilik) {
     	if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakBorangF(idhakmilik,nama_pengarah) {
 
 
@@ -3451,6 +3509,8 @@ function cetakBorangF(idhakmilik,nama_pengarah) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakBorangE(id_borange,nama_pengarah) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3484,12 +3544,14 @@ function cetakBorangE(id_borange,nama_pengarah) {
 	}
 }
 
+
 function cetakBuktiPenyampaianH(idhakmilik,flag) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
+		
 	}
 	else{
 
@@ -3528,8 +3590,7 @@ function cetakBuktiPenyampaianK(idhakmilik,flag) {
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
-	else{
+	}	else	{
 
 		var valType = document.${formName}.sorSelectNoFail.value;
 		var nofail = "";
@@ -3559,6 +3620,7 @@ function cetakBuktiPenyampaianK(idhakmilik,flag) {
 	}
 }
 
+
 //PPT-30(i)
 function cetakBuktiPenyampaianL(idhakmilik,flag) {
 
@@ -3566,8 +3628,8 @@ function cetakBuktiPenyampaianL(idhakmilik,flag) {
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
-	else{
+		
+	}	else	{
 
 		var valType = document.${formName}.sorSelectNoFail.value;
 		var nofail = "";
@@ -3596,6 +3658,7 @@ function cetakBuktiPenyampaianL(idhakmilik,flag) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
 
 function cetakSuratPengosonganTanah(idpermohonan,idfail,idhakmilik,nama_pegawai) {
 
@@ -3629,6 +3692,7 @@ function cetakSuratPengosonganTanah(idpermohonan,idfail,idhakmilik,nama_pegawai)
 	}
 }
 
+
 function cetakSuratEndorsanBorangK(idhakmilik,idpermohonan) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3660,6 +3724,7 @@ function cetakSuratEndorsanBorangK(idhakmilik,idpermohonan) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
 
 function cetakSuratIringanAgensiPemohon(idhakmilik,idpermohonan) {
 
@@ -3693,6 +3758,7 @@ function cetakSuratIringanAgensiPemohon(idhakmilik,idpermohonan) {
 	}
 }
 //PPT-30(i) END
+
 
 function cetakBuktiPenyampaian(idhakmilik,flag,id_borange) {
 
@@ -3730,6 +3796,7 @@ function cetakBuktiPenyampaian(idhakmilik,flag,id_borange) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
 
 function cetakBuktiPenyampaianRamaiH(idhakmilik,flag,id_borange) {
 
@@ -3828,6 +3895,8 @@ function cetakBuktiPenyampaianRamai(idhakmilik,flag,id_borange) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSiasatanAP(id_fail,id_borange,nama_pegawai,id_jawatan,flagCetakSiasatan,mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3892,6 +3961,8 @@ function cetakSiasatanAP(id_fail,id_borange,nama_pegawai,id_jawatan,flagCetakSia
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakEndosanDPTD(idfail,nama_pegawai,id_jawatan,mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3934,6 +4005,8 @@ function cetakEndosanDPTD(idfail,nama_pegawai,id_jawatan,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakEndosanDSUK(idfail,nama_pegawai,id_jawatan,mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4102,6 +4175,8 @@ function cetakPerkara4PEKELILING(idfail) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakJPPH(idfail,nama_pegawai,id_jawatan,mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4151,6 +4226,8 @@ function cetakJPPH(idfail,nama_pegawai,id_jawatan,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakPerkara3KSU(idfail,nama_pegawai,id_jawatan,mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4193,6 +4270,8 @@ function cetakPerkara3KSU(idfail,nama_pegawai,id_jawatan,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakPerkara2PTD(idfail,nama_pegawai,id_jawatan,mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4235,6 +4314,8 @@ function cetakPerkara2PTD(idfail,nama_pegawai,id_jawatan,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSiasatanJPPH(idpermohonan,nama_pegawai,id_jawatan,id_borange) {
 
 	
@@ -4284,6 +4365,8 @@ function cetakSiasatanJPPH(idpermohonan,nama_pegawai,id_jawatan,id_borange) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakJPBDkeJPPH(idpermohonan,nama_pegawai,id_jawatan,mukim) {
 
 	
@@ -4333,6 +4416,8 @@ function cetakJPBDkeJPPH(idpermohonan,nama_pegawai,id_jawatan,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakPerancangJPPH(idfail,idpermohonan,nama_pegawai,id_jawatan,mukim) {
 
 	
@@ -4382,6 +4467,8 @@ function cetakPerancangJPPH(idfail,idpermohonan,nama_pegawai,id_jawatan,mukim) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratJPBD(idpermohonan,mukim,flagCetakJPBD) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4418,6 +4505,7 @@ function cetakSuratJPBD(idpermohonan,mukim,flagCetakJPBD) {
 	}
 }
 
+
 function cetakBorangD(idfail,totalhm) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4453,6 +4541,8 @@ function cetakBorangD(idfail,totalhm) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakSuratIringanMMK(idfail,nama_pegawai,id_jawatan,id_negeri) {
 
 	
@@ -4505,6 +4595,8 @@ function cetakSuratIringanMMK(idfail,nama_pegawai,id_jawatan,id_negeri) {
 	}
 	
 }
+
+
 function cetakLaporanTanahSS8(idfail,id_hakmilik) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4536,6 +4628,8 @@ function cetakLaporanTanahSS8(idfail,id_hakmilik) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakPerkara1JPBD(idfail,nama_pegawai,id_jawatan,mukim,totalHM) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4579,6 +4673,8 @@ function cetakPerkara1JPBD(idfail,nama_pegawai,id_jawatan,mukim,totalHM) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakBorangB(idfail,namaPengarah) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4613,6 +4709,8 @@ function cetakBorangB(idfail,namaPengarah) {
 	}
 
 }
+
+
 function cetakMBSelangor(idfail,nama2Mukim) {
 
 	var bil = document.${formName}.txtBil.value;
@@ -4626,6 +4724,8 @@ function cetakMBSelangor(idfail,nama2Mukim) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMBPerak(idfail,nama2Mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4659,6 +4759,8 @@ function cetakMBPerak(idfail,nama2Mukim) {
 	}
 	
 }
+
+
 function cetakBorangA(idfail,nama2mukim) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4693,6 +4795,8 @@ function cetakBorangA(idfail,nama2mukim) {
 	}
 
 }
+
+
 function cetakLaporanTanah(id_tanahumuum,nama_pegawai) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4729,6 +4833,8 @@ function cetakLaporanTanah(id_tanahumuum,nama_pegawai) {
 	}
 
 }
+
+
 function cetakLaporanAwalSS8(id_tanahumum,id_negeri) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -4760,6 +4866,7 @@ function cetakLaporanAwalSS8(id_tanahumum,id_negeri) {
 	}
 }
 
+
 function cetakMMKSek4Kelantan(idfail,mukim,no_fail) {
 	
 	var namaPTG = document.${formName}.socPengarah.value;
@@ -4773,6 +4880,8 @@ function cetakMMKSek4Kelantan(idfail,mukim,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek8Pahang(idfail,no_fail) {
 	
 	var kertasBil = document.${formName}.txtKertasBil.value;
@@ -4789,6 +4898,8 @@ function cetakMMKSek8Pahang(idfail,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek8Kelantan(idfail,mukim,no_fail) {
 	
 	var namaPTG = document.${formName}.socPengarah.value;
@@ -4802,6 +4913,8 @@ function cetakMMKSek8Kelantan(idfail,mukim,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek8Terengganu(idfail,mukim,no_fail) {
 	
 	var namaPTG = document.${formName}.txtNamaPTG.value;
@@ -4812,6 +4925,8 @@ function cetakMMKSek8Terengganu(idfail,mukim,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek4Terengganu(idfail,mukim,no_fail) {
 	
 	var namaPTG = document.${formName}.txtNamaPTG.value;
@@ -4822,6 +4937,8 @@ function cetakMMKSek4Terengganu(idfail,mukim,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakSuratKPTG(selectNoFail,idfail,nama_pegawai,id_jawatan) {
 
 	if (selectNoFail == "yes" && document.${formName}.sorSelectNoFail.value == ""){
@@ -4863,6 +4980,7 @@ function cetakSuratKPTG(selectNoFail,idfail,nama_pegawai,id_jawatan) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
 
 function cetakMMKSek8Perlis(idfail,no_fail) {
 
@@ -4922,6 +5040,8 @@ function cetakMMKSek4Perlis(idfail,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakBorangDBI(idfail,mukim,bilhakmilik,selectNoFail) {
 
 	var namaPTG = document.${formName}.txtNamaPTG.value;
@@ -4964,6 +5084,8 @@ function cetakBorangDBI(idfail,mukim,bilhakmilik,selectNoFail) {
 	}
 	
 }
+
+
 function cetakMMKSek8Kedah(idfail,nama_pengarah,no_fail) {
 	
 	var kertasNo = document.${formName}.txtKertasNo.value;
@@ -4981,6 +5103,8 @@ function cetakMMKSek8Kedah(idfail,nama_pengarah,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek8PPinang(idfail,no_fail) {
 
 	var kertasBil = document.${formName}.txtKertasBil.value;
@@ -4993,6 +5117,8 @@ function cetakMMKSek8PPinang(idfail,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek8Perak(idfail,no_fail) {
 
 	var namaMB = document.${formName}.txtNamaMB.value;
@@ -5007,6 +5133,8 @@ function cetakMMKSek8Perak(idfail,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek4Perak(idfail,no_fail) {
 
 	var namaMB = document.${formName}.txtNamaMB.value;
@@ -5018,6 +5146,8 @@ function cetakMMKSek4Perak(idfail,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek4Kedah(idfail,nama_pengarah,no_fail) {
 	
 	var kertasNo = document.${formName}.txtKertasNo.value;
@@ -5028,6 +5158,7 @@ function cetakMMKSek4Kedah(idfail,nama_pengarah,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
 
 function cetakMMKSek8WPKL(idfail,no_fail,nama_pegawai,nama_pegawai1,nama_pegawai2) {
 	
@@ -5061,6 +5192,7 @@ function cetakMMKSek8WPKL(idfail,no_fail,nama_pegawai,nama_pegawai1,nama_pegawai
 	if (hWnd.focus != null) hWnd.focus();
 }
 
+
 function cetakMMKSek4WPKL(idfail,no_fail,nama_pegawai,nama_pegawai1,nama_pegawai2,id_mmk) {
 	
 	var namaPentadbir = document.${formName}.txtNamaPentadbir.value;	
@@ -5083,15 +5215,13 @@ function cetakMMKSek4WPKL(idfail,no_fail,nama_pegawai,nama_pegawai1,nama_pegawai
 			nofail = document.${formName}.no_fail.value;
 		}	
 		
-			
-	
-	
 	var url = "../../servlet/ekptg.report.ppt.MMKSek4WPKL?idFail="+idfail+"&namaPentadbir="+namaPentadbir+"&no_fail="+nofail+"&nama_pegawai="+nama_pegawai+"&nama_pegawai1="+nama_pegawai1+"&nama_pegawai2="+nama_pegawai2+"&txtBilKertas="+txtBilKertas+"&txtBilSalinan="+txtBilSalinan+"&txtTarikhSuratCetak="+txtTarikhSuratCetak+"&idMMK="+id_mmk;
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
 
 /*
 function cetakMMKSek4WPKL(idfail,no_fail) {
@@ -5117,6 +5247,8 @@ function cetakMMKSek8Melaka(idfail,mukim,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek8NSembilan(idfail,mukim,no_fail) {
 	
 	var bil = document.${formName}.txtBil.value;
@@ -5131,6 +5263,8 @@ function cetakMMKSek8NSembilan(idfail,mukim,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek8Selangor(idfail,nama_pengarah,no_fail,id_negeri) {
 	
 	var bil = document.${formName}.txtBil.value;
@@ -5147,6 +5281,8 @@ function cetakMMKSek8Selangor(idfail,nama_pengarah,no_fail,id_negeri) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek4Melaka(idfail,mukim,no_fail) {
 	
 	var namaPTG = document.${formName}.txtNamaPTG.value;
@@ -5157,6 +5293,8 @@ function cetakMMKSek4Melaka(idfail,mukim,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek4Selangor(idfail,nama_pengarah,no_fail,id_negeri) {
 	
 	var bil = document.${formName}.txtBil.value;
@@ -5172,6 +5310,8 @@ function cetakMMKSek4Selangor(idfail,nama_pengarah,no_fail,id_negeri) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMMKSek4NSembilan(idfail,mukim,no_fail) {
 	
 	var bil = document.${formName}.txtBil.value;
@@ -5186,6 +5326,8 @@ function cetakMMKSek4NSembilan(idfail,mukim,no_fail) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function doChangePegawai() {
 	document.${formName}.command.value = "doChangePegawai";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupPilihPegawaiReportView"; 
@@ -5206,6 +5348,7 @@ function doChangePegawai2() {
 	document.${formName}.submit();
 }
 
+
 function cetakAfidavitSijilPerakuan(idhakmilikpb) {
 
 	if(document.${formName}.socPegawai.value == ""){
@@ -5224,6 +5367,7 @@ function cetakAfidavitSijilPerakuan(idhakmilikpb) {
 	}
 }
 
+
 function cetakKertasMinitMB(idfail,namaPengarah) {
 
 	var url = "../../servlet/ekptg.report.ppt.KertasMinitMB?idfail="+idfail+"&namaPengarah="+namaPengarah;
@@ -5232,6 +5376,8 @@ function cetakKertasMinitMB(idfail,namaPengarah) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
+
 function cetakMBSelangorSS8(idfail,mukim) {
 
 	var bil = document.${formName}.txtBil.value;
@@ -5245,6 +5391,7 @@ function cetakMBSelangorSS8(idfail,mukim) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
 
 function cetakLampiranA(idfail,nama2Mukim,nama_pegawai,jawatan) {
 
@@ -5263,6 +5410,8 @@ function cetakLampiranA(idfail,nama2Mukim,nama_pegawai,jawatan) {
     	if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+
 function cetakLampiranA8(idfail,nama2Mukim,nama_pegawai,jawatan) {
 
 	if(document.${formName}.socPegawai.value == ""){
@@ -5282,9 +5431,7 @@ function cetakLampiranA8(idfail,nama2Mukim,nama_pegawai,jawatan) {
 }
 
 
-
 <!-- REPORT BANTAHAN -->
-
 function cetakSuratMintaDepositDalam30Hari(idfail,id_bantahan,id_hakmilikpb,nama_pegawai) {
 
 	if(document.${formName}.socPegawai.value == ""){
@@ -5299,6 +5446,7 @@ function cetakSuratMintaDepositDalam30Hari(idfail,id_bantahan,id_hakmilikpb,nama
     	if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
 
 function cetakSuratMintaDepositDalam30HariAP(idfail,id_bantahan,id_hakmilik,id_siasatan,nama_pegawai) {
 
@@ -5331,6 +5479,7 @@ function cetaksuratKepadaAPSupayaMembayarPampasanTambahan(idfail,id_bantahan,nam
 	}
 }
 
+
 function cetaksuratKepadaAPSupayaMembayarPampasanTambahan_AP(idfail,id_bantahan,nama_pegawai) {
 
 	if(document.${formName}.socPegawai.value == ""){
@@ -5345,7 +5494,6 @@ function cetaksuratKepadaAPSupayaMembayarPampasanTambahan_AP(idfail,id_bantahan,
     	if (hWnd.focus != null) hWnd.focus();
 	}
 }
-
 
 
 function cetakSuratIringanBorangO_AP(idfail,id_bantahan,id_hakmilik,nama_pegawai) {
@@ -5371,6 +5519,7 @@ function cetakSuratIringanBorangO_AP(idfail,id_bantahan,id_hakmilik,nama_pegawai
     	if (hWnd.focus != null) hWnd.focus();
 }
 
+
 function cetakSuratIringanBorangO(idfail,id_bantahan,id_hakmilikpb,nama_pegawai,id_jawatan) {
 
 	var id_pejabat = document.${formName}.socPejabatJPPH.value;
@@ -5395,6 +5544,7 @@ function cetakSuratIringanBorangO(idfail,id_bantahan,id_hakmilikpb,nama_pegawai,
 	
 }
 
+
 function cetaksuratUtkPanggilanTerimaPampasanKpdPB_bantahan(id_bayaran,idfail,nama_pegawai) {
 
 	if(document.${formName}.socPegawai.value == ""){
@@ -5409,6 +5559,7 @@ function cetaksuratUtkPanggilanTerimaPampasanKpdPB_bantahan(id_bayaran,idfail,na
     	if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
 
 function cetaksuratMaklumanSerahBayaranPampasanKpdAP_bantahan(id_bayaran,idfail,id_hakmilikpb,nama_pegawai) {
 
@@ -5448,7 +5599,6 @@ function cetakSuratKepadaJPPHSupayaMenghadiriPerundingan(idfail,nama_pegawai) {
 		hWnd.opener = document.window;
     	if (hWnd.focus != null) hWnd.focus();
 }
-
 
 
 function cetakSuratPanggilanPerundinganSementara(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik) {
@@ -5579,7 +5729,6 @@ function cetakSuratPanggilanPerundinganSambunganSementara(idfail,nama_pegawai,id
 }
 
 
-
 function cetakSuratKpdAPRundingan(idfail,id_hakmilik,nama_pegawai) {
 
 	if(document.${formName}.socPegawai.value == ""){
@@ -5595,6 +5744,7 @@ function cetakSuratKpdAPRundingan(idfail,id_hakmilik,nama_pegawai) {
 	}
 }
 
+
 function cetakAkuanPenerimaanCek_bantahan(id_bayaran,idfail,id_hakmilikpb,id_bantahan,nama_pegawai) {
 
 	if(document.${formName}.socPegawai.value == ""){
@@ -5609,11 +5759,10 @@ function cetakAkuanPenerimaanCek_bantahan(id_bayaran,idfail,id_hakmilikpb,id_ban
     	if (hWnd.focus != null) hWnd.focus();
 	}
 }
-
 <!-- END REPORT BANTAHAN -->
 
-<!-- REPORT SEMENTARA -->
 
+<!-- REPORT SEMENTARA -->
 function cetakBorangM(idfail,id_hakmilikpb) {
 	var namaPengarahNeg = document.${formName}.txtNamaPengarahNeg.value;
 		
@@ -5623,6 +5772,7 @@ function cetakBorangM(idfail,id_hakmilikpb) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
 
 function cetaksuratMaklumanSerahBayaranPampasanKpdAP(idfail,id_bayaran,nama_pegawai) {
 
@@ -5639,6 +5789,7 @@ function cetaksuratMaklumanSerahBayaranPampasanKpdAP(idfail,id_bayaran,nama_pega
 	}
 }
 
+
 function cetaksuratUtkPanggilanTerimaPampasanKpdPB(idfail,id_bayaran,nama_pegawai) {
 
 	if(document.${formName}.socPegawai.value == ""){
@@ -5654,6 +5805,7 @@ function cetaksuratUtkPanggilanTerimaPampasanKpdPB(idfail,id_bayaran,nama_pegawa
 	}
 }
 
+
 function cetakSementaraMMKSelangor(idfail,nama_pengarah,no_fail,id_negeri) {
 	
 	var bil = document.${formName}.txtBil.value;
@@ -5667,6 +5819,7 @@ function cetakSementaraMMKSelangor(idfail,nama_pengarah,no_fail,id_negeri) {
 	if (hWnd.focus != null) hWnd.focus();
 }
 
+
 function cetakSementaraMMKKL(idfail,nama_pengarah,no_fail,id_negeri) {
 	
 	var bil = document.${formName}.txtBil.value;
@@ -5679,6 +5832,7 @@ function cetakSementaraMMKKL(idfail,nama_pengarah,no_fail,id_negeri) {
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 }
+
 
 //PPT-43(i)
 function cetakMohonBayaranAgensi(id_fail,nama_pengarah,no_fail,id_hakmilik) {
@@ -5707,11 +5861,9 @@ function cetakMohonBayaranAgensi(id_fail,nama_pengarah,no_fail,id_hakmilik) {
 	    if (hWnd.focus != null) hWnd.focus();
 	}
 }
-
 <!-- END REPORT SEMENTARA -->
 
 </script>
-
 
 
 <!-- Other -->
@@ -5719,6 +5871,8 @@ function cetakMohonBayaranAgensi(id_fail,nama_pengarah,no_fail,id_hakmilik) {
 function keluar() {
 	window.close();
 }
+
+
 function validateNumber(elmnt,content) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
@@ -5730,6 +5884,8 @@ function validateNumber(elmnt,content) {
 		}
 	}
 }
+
+
 function RemoveNonNumeric( strString ){
       var strValidCharacters = "1234567890";
       var strReturn = "";
@@ -5747,6 +5903,8 @@ function RemoveNonNumeric( strString ){
       }
       return strReturn;
 }
+
+
 function validateTarikh(elmnt,content) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
@@ -5754,8 +5912,9 @@ function validateTarikh(elmnt,content) {
 		return;
 	}
 }
-function RemoveNonNumeric2( strString )
-{
+
+
+function RemoveNonNumeric2( strString )	{
       var strValidCharacters = "1234567890/.";
       var strReturn = "";
       var strBuffer = "";
@@ -5792,6 +5951,7 @@ function BorangCLebih_TGANU(idfail) {
     	if (hWnd.focus != null) hWnd.focus();
 }
 
+
 //PPT-26 (ii) 
 
 function cetakSuratIringanAfidavit(idhakmilikpb,id_negeri,id_fail,id_pegawai,no_fail,nama_pegawai) {
@@ -5812,6 +5972,7 @@ function cetakSuratIringanAfidavit(idhakmilikpb,id_negeri,id_fail,id_pegawai,no_
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
 
 function cetakSuratIringanMohonBayaran(idhakmilikpb,id_negeri,id_fail,id_pegawai,no_fail,nama_pegawai) {
 	
@@ -5886,5 +6047,34 @@ function cetakSuratIringanPembayaran(idhakmilikpb,id_fail,nama_pegawai,id_jawata
 	
 }
 //PPT-26 (ii) END
+
+
+// PPT-11 CETAK SURAT PELUPUSAN
+function suratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot, nama_pegawai)	{
+	
+	// Get bitLot from URL
+	//var url_string = (window.location.href).toLowerCase();
+	//var url = new URL(url_string);
+	//var bilLot = url.searchParams.get("bilLot");
+	
+	var id_pegawai = document.${formName}.socPegawai.value;
+	nofail = document.${formName}.no_fail.value;
+	
+	if (document.${formName}.socPegawai.value == ""){
+	alert("Sila pilih \"Nama Pegawai\" terlebih dahulu.");
+	document.${formName}.socPegawai.focus(); 
+	return;
+	
+	}	else	{
+	
+	var url = "../../servlet/ekptg.report.ppt.SuratPelupusanHakmilik?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail+"&bilLot="+bilLot+
+	"&namaPengarah="+nama_pegawai;
+	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
+	
+	}
+}
 
 </script>

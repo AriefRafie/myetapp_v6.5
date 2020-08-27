@@ -12,15 +12,15 @@ import org.apache.log4j.Logger;
 import ekptg.model.htp.FrmPajakanKecilPendaftaranData;
 import ekptg.model.htp.FrmPajakanKecilSenaraiPermohonanData;
 import ekptg.model.htp.FrmSenaraiFailPajakanKecilData;
-import ekptg.model.htp.HtpPeringatanBean;
-import ekptg.model.htp.IHtpPeringatan;
+import ekptg.model.htp.HTPeringatanBean;
+import ekptg.model.htp.IHTPeringatan;
 
 public class FrmPajakanUtamaPeringatanJPPH extends AjaxBasedModule{
 	/**
 	 * 
 	 */
 	private final String PATH="app/htp/pajakan/";
-	private IHtpPeringatan iHTPP = null;  
+	private IHTPeringatan iHTPP = null;  
 	private static final long serialVersionUID = 3879148285213314850L;
 	Long idHakmilikUrusan = 0L;
 	static Logger myLog = Logger.getLogger(ekptg.view.htp.pajakan.FrmPajakanUtamaPeringatanJPPH.class);
@@ -80,9 +80,9 @@ public class FrmPajakanUtamaPeringatanJPPH extends AjaxBasedModule{
 	  }
 
 
-	private IHtpPeringatan getIHTPP(){
+	private IHTPeringatan getIHTPP(){
 		if(iHTPP== null)
-			iHTPP = new HtpPeringatanBean();
+			iHTPP = new HTPeringatanBean();
 		return iHTPP;
 	}	
 	

@@ -5343,7 +5343,7 @@ else if(document.f1.socTarafKepentinganPenting.value == '10')
 		document.getElementById("notel_b").style.display="none";	
 }
 
-else if(document.f1.socTarafKepentinganPenting.value == '17' || document.f1.socTarafKepentinganPenting.value == '21')
+else if(document.f1.socTarafKepentinganPenting.value == '17' || document.f1.socTarafKepentinganPenting.value == '21' || document.f1.socTarafKepentinganPenting.value == '18') //arief add document.f1.socTarafKepentinganPenting.value == '18'
 {
 
 

@@ -19,9 +19,9 @@ import ekptg.model.htp.FrmPajakanHeaderData;
 import ekptg.model.htp.FrmPajakanPendaftaranData;
 import ekptg.model.htp.FrmPenswastaan2SenaraiFailData;
 import ekptg.model.htp.HtpBean;
-import ekptg.model.htp.HtpPeringatanBean;
+import ekptg.model.htp.HTPeringatanBean;
 import ekptg.model.htp.IHtp;
-import ekptg.model.htp.IHtpPeringatan;
+import ekptg.model.htp.IHTPeringatan;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.view.htp.utiliti.HtpEmailServices;
 
@@ -30,7 +30,7 @@ public class FrmPajakanPendaftaranView extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.pajakan.FrmPajakanPendaftaranView.class);
 	private final String PATH="app/htp/pajakan/fail/";
-	private IHtpPeringatan iHTPP = null;  	
+	private IHTPeringatan iHTPP = null;  	
 	private HtpPermohonan htpPermohonan = null;
 	private IHtp iHTP = null;
 	private String idFail = "";
@@ -254,9 +254,9 @@ public class FrmPajakanPendaftaranView extends AjaxBasedModule {
 			return iHTP;
 		}
 
-		private IHtpPeringatan getIHTPP(){
+		private IHTPeringatan getIHTPP(){
 			if(iHTPP== null)
-				iHTPP = new HtpPeringatanBean();
+				iHTPP = new HTPeringatanBean();
 			return iHTPP;
 		}
 }

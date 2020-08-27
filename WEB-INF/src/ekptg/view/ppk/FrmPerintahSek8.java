@@ -2346,7 +2346,6 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			this.context.put("error",e.getMessage());
 		}	
 	}	
-	
 	private void headerppk_baru(HttpSession session,String id_permohonan,String flag_permohonan,String id_fail,String flag_fail) throws Exception {
 		//hashtable maklumat header
 		this.context.put("headerppk",mainheader.getHeaderData(session,id_permohonan,flag_permohonan,id_fail,flag_fail));
@@ -2363,13 +2362,18 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		this.context.put("flag_jenis_vm","ajax");
 	}
 }
-
-/**List fail-fail Tandatangan Digital di Perintah:
-1.	FrmPerintahSek8.java
-2.	FrmPerintahMaklumatPerintahSek8.jsp
-3.	tindakanPegawaiPerintahSek8.jsp
-4.	FrmIntegrasiDGCertPerintah.java
-5.	DGCertPerintah.jsp
-6.	FrmPerintahSek8Data.java
-7.	TandatanganSuccessPerintah.jsp
+/**List fail-fail Perintah dan T/T Digital :
+Perintah
+1.	ekptg.view.ppk.FrmPerintahSek8
+2.	ekptg.model.ppk.FrmPerintahSek8Data
+3.	ekptg.model.ppk.FrmPrmhnnSek8Notis
+4.	ekptg.model.ppk.FrmHeaderPpk
+5.	ekptg.model.ppk.FrmPrmhnnSek8InternalData
+6.	app/ppk/frmPerintahMaklumatPerintahSek8.jsp
+7.	app/ppk/frmSenaraiFailPerintahSek8.jsp
+8.	app/ppk/tindakanPegawaiPerintahSek8.jsp
+9.	FrmIntegrasiDGCertPerintah.java
+10.	app/ppk/DGCertPerintah.jsp
+11.	FrmPerintahSek8Data.java
+12.	app/ppk/TandatanganSuccessPerintah.jsp
 */

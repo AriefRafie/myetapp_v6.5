@@ -29,11 +29,11 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.Utils;
 import ekptg.model.htp.HTPPermohonanBean;
 import ekptg.model.htp.HtpBean;
-import ekptg.model.htp.HtpPeringatanBean;
+import ekptg.model.htp.HTPeringatanBean;
 import ekptg.model.htp.IHTPPermohonan;
 import ekptg.model.htp.IHTPStatus;
 import ekptg.model.htp.IHtp;
-import ekptg.model.htp.IHtpPeringatan;
+import ekptg.model.htp.IHTPeringatan;
 import ekptg.model.htp.cukai.CukaiBean;
 import ekptg.model.htp.cukai.CukaiPenyataBean;
 import ekptg.model.htp.cukai.ICukai;
@@ -78,7 +78,7 @@ public class FrmDashboard extends AjaxBasedModule {
 	List listKemaskiniCukai = null;
 	List listCukai = null;
 	
-	private IHtpPeringatan iHTPP = null;  
+	private IHTPeringatan iHTPP = null;  
 	SimpleDateFormat sdfTahun = new SimpleDateFormat("yyyy");
 	SimpleDateFormat sdfBulan = new SimpleDateFormat("MM");
 
@@ -1175,9 +1175,9 @@ public class FrmDashboard extends AjaxBasedModule {
 		return iErr;
 	}
 
-	private IHtpPeringatan getIHTPP(){
+	private IHTPeringatan getIHTPP(){
 		if(iHTPP== null)
-			iHTPP = new HtpPeringatanBean();
+			iHTPP = new HTPeringatanBean();
 		return iHTPP;
 	}
 	
