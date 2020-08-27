@@ -677,14 +677,14 @@
 	#end
 	<tr>
 		<td width="30%">&nbsp;</td>
-		<td width="70%">#if ($mode == 'new') <input type="button"
-			name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar"
-			onclick="daftarBaru()" /> <input type="button" name="cmdBatal"
-			id="cmdBatal" value="Batal" onclick="kembali()" /> #end #if ($mode
-			== 'view') <input type="button" name="cmdSeterusnya"
-			id="cmdSeterusnya" value="Seterusnya"
-			onclick="seterusnya('$idStatus')" /> <input type="button"
-			name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()" />
+		<td width="70%">
+			#if ($mode == 'new') 
+				<input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar" onclick="daftarBaru()" /> 
+				<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()" /> 
+			#end 
+			#if ($mode == 'view') 
+				<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya('$idStatus')" /> 
+				<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()" />
 			#end
 		</td>
 	</tr>
