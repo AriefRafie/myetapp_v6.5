@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -62,6 +63,14 @@ public class FrmAPBOnlineSenaraiFailData {
 	
 	private Vector beanMaklumatBarge = null;
 	private Vector senaraiBarge = null;
+	
+	private Vector listCarianLaporan = null;
+	private Vector getListLaporan = null;
+	
+	private static Vector MaklumatLaporan = null;
+	private Vector getListPasir = null;
+	
+	private Vector listCarian = null;
 	
 	private Vector<Hashtable<String,String>> beanMaklumatPejabat = null;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -2983,6 +2992,15 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 		this.senaraiBarge = senaraiBarge;
 	}
 	
+	public static Vector getMaklumatLaporan() {
+		return MaklumatLaporan;
+	}
+	// RETURN VALUES
+		public Vector getListCarian() {
+			return listCarian;
+		}
+
+	
 
 
 	//yati tambah
@@ -3039,7 +3057,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			this.senaraiFailBorangB = senaraiFailBorangB;
 		}
 	//yati tambah
-		public void carianFailBorangB(String namaPelesen, String noLesen) throws Exception {
+		public void carianFailBorangB(String namaPelesen, String noLesen, String idJadualKeduaLesen) throws Exception {
 
 			Db db = null;
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -3050,42 +3068,52 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				db = new Db();
 				Statement stmt = db.getStatement();
 
-				sql = "SELECT A.ID_JADUALKEDUALESENAPB, A.NO_SIRI_LESEN, B.NAMA"
-						+ " FROM TBLPHPJADUALKEDUALESENAPB A, TBLPHPPEMEGANG B"
-						+ " WHERE A.ID_JADUALKEDUALESENAPB = B.ID_JADUALKEDUALESENAPB ";
 
+				sql = " SELECT A.ID_LAPORANPASIR,B.NAMA_BULAN,A.TAHUN_PENGAMBILAN,A.BULAN_PENGAMBILAN, A.ID_JADUALKEDUALESENAPB, ";
+				sql += " A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI ";
+				sql += " FROM TBLPHPLAPORANPASIR A, TBLRUJBULAN B ";
+				sql += " WHERE A.BULAN_PENGAMBILAN = B.ID_BULAN ";
+				sql += " AND A.ID_JADUALKEDUALESENAPB = '" + idJadualKeduaLesen
+						+ "' ";
+				sql += " ORDER BY A.TAHUN_PENGAMBILAN ASC, A.BULAN_PENGAMBILAN ASC ";
+
+				myLog.info("SQL getListLaporan :: " + sql);
+
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h = null;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("bil", bil);
+					h.put("id_jadualkedualesenAPB",
+							rs.getString("ID_JADUALKEDUALESENAPB") == null ? ""
+									: rs.getString("ID_JADUALKEDUALESENAPB"));
+					h.put("id_laporanpasir",
+							rs.getString("ID_LAPORANPASIR") == null ? "" : rs
+									.getString("ID_LAPORANPASIR"));
+					h.put("nama_bulan", rs.getString("NAMA_BULAN") == null ? ""
+							: rs.getString("NAMA_BULAN"));
+					h.put("tahun_pengambilan",
+							rs.getString("TAHUN_PENGAMBILAN") == null ? "" : rs
+									.getString("TAHUN_PENGAMBILAN"));
+					h.put("bulan_pengambilan",
+							rs.getString("BULAN_PENGAMBILAN") == null ? "" : rs
+									.getString("BULAN_PENGAMBILAN"));
+					h.put("jumlah_kuantiti",
+							rs.getString("JUMLAH_KUANTITI") == null ? "" : rs
+									.getString("JUMLAH_KUANTITI"));
+					h.put("jumlah_royalti",
+							rs.getString("JUMLAH_ROYALTI") == null ? "" : rs
+									.getString("JUMLAH_ROYALTI"));
 				// namaPelesen
-				if (namaPelesen != null) {
+			/*	if (namaPelesen != null) {
 					if (!namaPelesen.trim().equals("")) {
 						sql = sql + " AND UPPER(B.NAMA) LIKE '%' ||'"
 								+ namaPelesen.trim().toUpperCase() + "'|| '%'";
 					}
 				}
-
-				// namaPemohon
-				if (noLesen != null) {
-					if (!noLesen.trim().equals("")) {
-						sql = sql + " AND UPPER(A.NO_SIRI_LESEN) LIKE '%' ||'"
-								+ noLesen.trim().toUpperCase() + "'|| '%'";
-					}
-				}
-
-				sql = sql + " ORDER BY A.ID_JADUALKEDUALESENAPB DESC";
-
-				ResultSet rs = stmt.executeQuery(sql);
-
-				Hashtable h;
-				int bil = 1;
-				while (rs.next()) {
-					h = new Hashtable();
-					h.put("bil", bil);
-					h.put("idJadualKedua",
-							rs.getString("ID_JADUALKEDUALESENAPB") == null ? ""
-									: rs.getString("ID_JADUALKEDUALESENAPB"));
-					h.put("namaPelesen", rs.getString("NAMA") == null ? "" : rs
-							.getString("NAMA").toUpperCase());
-					h.put("noLesen", rs.getString("NO_SIRI_LESEN") == null ? ""
-							: rs.getString("NO_SIRI_LESEN"));
+	*/
+			
 					senaraiFailBorangB.addElement(h);
 					bil++;
 				}
@@ -3456,7 +3484,340 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			}
 		}
 
+		// getMaklumatLaporan
+		public static void getMaklumatLaporan(String id_laporanpasir)
+				throws Exception {
+			Db db = null;
+			String sql = "";
+			try {
+				MaklumatLaporan = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
 
+				sql = " SELECT A.ID_LAPORANPASIR,A.BULAN_PENGAMBILAN,A.TAHUN_PENGAMBILAN,A.JUMLAH_KUANTITI, A.KONTRAKTOR, A.PEMBELI_PASIR,";
+				sql += " A.JUMLAH_ROYALTI,A.ID_UNITISIPADU ";
+				sql += " FROM TBLPHPLAPORANPASIR A ";
+				sql += " WHERE A.ID_LAPORANPASIR = '" + id_laporanpasir + "' ";
+
+				myLog.info("SQL MaklumatLaporan :: " + sql);
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h;
+
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("id_laporanpasir", rs.getString("id_laporanpasir") == null ? "" : rs.getString("id_laporanpasir"));
+					h.put("bulan_pengambilan", rs.getString("bulan_pengambilan") == null ? "" : rs.getString("bulan_pengambilan"));
+					h.put("tahun_pengambilan", rs.getString("tahun_pengambilan") == null ? "" : rs.getString("tahun_pengambilan"));
+					h.put("jumlah_kuantiti", rs.getString("jumlah_kuantiti") == null ? "" : rs.getString("jumlah_kuantiti"));
+					
+					h.put("kontraktor", rs.getString("KONTRAKTOR") == null ? "" : rs.getString("KONTRAKTOR"));
+					h.put("pembeli", rs.getString("PEMBELI_PASIR") == null ? "" : rs.getString("PEMBELI_PASIR"));
+					h.put("jumlah_royalti", rs.getString("jumlah_royalti") == null ? "" : Double.parseDouble(rs.getString("jumlah_royalti")));
+					h.put("id_unitisipadu", rs.getString("id_unitisipadu") == null ? "" : rs.getString("id_unitisipadu"));
+					MaklumatLaporan.addElement(h);
+				}
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}// CLOSE getMaklumatLaporan
+		
+		// getListLaporan
+		public Vector getListPasir(String id_laporanpasir) throws Exception {
+			Db db = null;
+			String sql = "";
+			try {
+				getListPasir = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = " SELECT A.ID_BORANGK2K3,A.ID_LAPORANPASIR,A.TARIKH_HANTAR,A.NAMA_BARGE,A.LOKASI_DIBEKALKAN,A.AKUAN_KASTAM, A.HARI_HANTAR, A.JAM_HANTAR, A.MINIT_HANTAR,";
+				sql += " A.KUANTITI,A.ANGGARAN_ROYALTI,A.NO_KASTAM ";
+				sql += " FROM TBLPHPBORANGK2K3 A ";
+				sql += " WHERE A.ID_LAPORANPASIR = '" + id_laporanpasir + "' ";
+
+				myLog.info("SQL getListPasir :: " + sql);
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h = null;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("bil", bil);
+					h.put("id_borangk2k3", rs.getString("ID_BORANGK2K3") == null ? "" : rs.getString("ID_BORANGK2K3"));
+					h.put("id_laporanpasir", rs.getString("ID_LAPORANPASIR") == null ? "" : rs.getString("ID_LAPORANPASIR"));
+					h.put("tarikh_hantar", rs.getString("TARIKH_HANTAR") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTAR")));
+					h.put("nama_barge", rs.getString("NAMA_BARGE") == null ? "" : rs.getString("NAMA_BARGE"));
+					h.put("lokasi_dibekalkan", rs.getString("LOKASI_DIBEKALKAN") == null ? "" : rs.getString("LOKASI_DIBEKALKAN"));
+					h.put("akuan_kastam", rs.getString("AKUAN_KASTAM") == null ? "" : rs.getString("AKUAN_KASTAM"));
+					h.put("kuantiti", rs.getString("KUANTITI") == null ? "" : rs.getString("KUANTITI"));
+					h.put("anggaran_royalti", rs.getString("ANGGARAN_ROYALTI") == null ? "" : Double.parseDouble(rs.getString("ANGGARAN_ROYALTI")));
+					h.put("no_kastam", rs.getString("NO_KASTAM") == null ? "" : rs.getString("NO_KASTAM"));
+					
+					h.put("lokasi_dibekalkan", rs.getString("LOKASI_DIBEKALKAN") == null ? "" : rs.getString("LOKASI_DIBEKALKAN"));
+					h.put("akuan_kastam", rs.getString("AKUAN_KASTAM") == null ? "" : rs.getString("AKUAN_KASTAM"));
+					getListPasir.addElement(h);
+					bil++;
+				}
+				return getListPasir;
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}// CLOSE getListPasir
+
+		public String simpanLaporan(String usid,
+				String id_jadualkedualesenAPB, String txtJumKuantiti,
+				String txtJumRoyalti, String socBulan, String txtTahun)
+				throws Exception {
+
+			Db db = null;
+			Connection conn = null;
+			String sql = "";
+			String output = "";
+			Date now = new Date();			
+			String id_laporanpasir = "";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				long id_laporanpasirLong = DB.getNextID("TBLPHPLAPORANPASIR_SEQ");
+			
+				// TBLPHPLAPORANPASIR
+				r = new SQLRenderer();
+				r.add("id_laporanpasir", id_laporanpasirLong);
+				id_laporanpasir = String.valueOf(id_laporanpasirLong);
+				r.add("id_jadualkedualesenAPB", id_jadualkedualesenAPB);
+				r.add("bulan_pengambilan", socBulan);
+				r.add("tahun_pengambilan", txtTahun);
+				r.add("jumlah_kuantiti", txtJumKuantiti);
+				r.add("id_unitisipadu", 3); // 3 = METER PERSEGI
+				r.add("jumlah_royalti", txtJumRoyalti);
+				/*r.add("kontraktor", txtKontraktor);*/
+				/*r.add("pembeli_pasir", txtPembeli);*/
+				r.add("id_masuk", usid);
+				r.add("tarikh_masuk", r.unquote("sysdate"));
+				r.add("id_kemaskini", usid);
+				r.add("tarikh_kemaskini", r.unquote("sysdate"));
+				sql = r.getSQLInsert("Tblphplaporanpasir");
+				myLog.info("INSERT Tblphplaporanpasir ::" + sql);
+				
+				stmt.executeUpdate(sql);
+			
+				myLog.info("sql laporan b : "+sql);
+				conn.commit();
+
+			} catch (SQLException ex) {
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					throw new Exception("Rollback error : " + e.getMessage());
+				}
+				throw new Exception("Ralat : Masalah penyimpanan data "
+						+ ex.getMessage());
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+			return id_laporanpasir;
+		}
+	
+		// getListLaporan
+		public Vector getListLaporan(String id_jadualkedualesenAPB)
+				throws Exception {
+			Db db = null;
+			String sql = "";
+			try {
+				getListLaporan = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = " SELECT A.ID_LAPORANPASIR,B.NAMA_BULAN,A.TAHUN_PENGAMBILAN,A.BULAN_PENGAMBILAN, A.ID_JADUALKEDUALESENAPB, ";
+				sql += " A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI ";
+				sql += " FROM TBLPHPLAPORANPASIR A, TBLRUJBULAN B ";
+				sql += " WHERE A.BULAN_PENGAMBILAN = B.ID_BULAN ";
+				sql += " AND A.ID_JADUALKEDUALESENAPB = '" + id_jadualkedualesenAPB
+						+ "' ";
+				sql += " ORDER BY A.TAHUN_PENGAMBILAN ASC, A.BULAN_PENGAMBILAN ASC ";
+
+				myLog.info("SQL getListLaporan :: " + sql);
+
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h = null;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("bil", bil);
+					h.put("id_jadualkedualesenAPB",
+							rs.getString("ID_JADUALKEDUALESENAPB") == null ? ""
+									: rs.getString("ID_JADUALKEDUALESENAPB"));
+					h.put("id_laporanpasir",
+							rs.getString("ID_LAPORANPASIR") == null ? "" : rs
+									.getString("ID_LAPORANPASIR"));
+					h.put("nama_bulan", rs.getString("NAMA_BULAN") == null ? ""
+							: rs.getString("NAMA_BULAN"));
+					h.put("tahun_pengambilan",
+							rs.getString("TAHUN_PENGAMBILAN") == null ? "" : rs
+									.getString("TAHUN_PENGAMBILAN"));
+					h.put("bulan_pengambilan",
+							rs.getString("BULAN_PENGAMBILAN") == null ? "" : rs
+									.getString("BULAN_PENGAMBILAN"));
+					h.put("jumlah_kuantiti",
+							rs.getString("JUMLAH_KUANTITI") == null ? "" : rs
+									.getString("JUMLAH_KUANTITI"));
+					h.put("jumlah_royalti",
+							rs.getString("JUMLAH_ROYALTI") == null ? "" : rs
+									.getString("JUMLAH_ROYALTI"));
+					getListLaporan.addElement(h);
+					bil++;
+				}
+				return getListLaporan;
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}// CLOSE getListLaporan
+
+		// setCarianLaporan
+		public Vector setCarianLaporan(String socBulan, String txtTahun,
+				String id_jadualkedualesenAPB) throws Exception {
+			Db db = null;
+			String sql = "";
+
+			try {
+				listCarianLaporan = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
+				txtTahun = txtTahun.trim();
+
+				sql = " SELECT A.ID_LAPORANPASIR,B.NAMA_BULAN,A.TAHUN_PENGAMBILAN, A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI ";
+				sql += " FROM TBLPHPLAPORANPASIR A, ";
+				sql += " TBLRUJBULAN B ";
+				sql += " WHERE A.BULAN_PENGAMBILAN = B.ID_BULAN ";
+				sql += " AND A.ID_JADUALKEDUALESENAPB = '" + id_jadualkedualesenAPB
+						+ "' ";
+
+				// BULAN
+				if (socBulan != null) {
+					if (!socBulan.trim().equals("") && !socBulan.trim().equals("0")) {
+						sql = sql + " AND A.BULAN_PENGAMBILAN = '" + socBulan
+								+ "'  ";
+					}
+				}
+
+				// TAHUN
+				if (txtTahun != null) {
+					if (!txtTahun.trim().equals("")) {
+						sql = sql + " AND UPPER(A.TAHUN_PENGAMBILAN) LIKE '%"
+								+ txtTahun + "%'";
+					}
+				}
+
+				// SORTING
+				sql += " ORDER BY A.TAHUN_PENGAMBILAN ASC, A.BULAN_PENGAMBILAN ASC ";
+
+				myLog.info("SQL CARIAN LAPORAN :: " + sql);
+				ResultSet rs = stmt.executeQuery(sql);
+
+				Hashtable h;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("bil", bil);
+					h.put("id_laporanpasir",
+							rs.getString("id_laporanpasir") == null ? "-" : rs
+									.getString("id_laporanpasir"));
+					h.put("nama_bulan", rs.getString("nama_bulan") == null ? "-"
+							: rs.getString("nama_bulan"));
+					h.put("tahun_pengambilan",
+							rs.getString("tahun_pengambilan") == null ? "-" : rs
+									.getString("tahun_pengambilan"));
+					h.put("jumlah_kuantiti", rs.getString("JUMLAH_KUANTITI") == null ? ""
+							: rs.getString("JUMLAH_KUANTITI"));
+					h.put("jumlah_royalti",
+							rs.getString("JUMLAH_ROYALTI") == null ? "" : rs
+									.getString("JUMLAH_ROYALTI"));
+					listCarianLaporan.addElement(h);
+					bil++;
+				}
+				return listCarianLaporan;
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}// CLOSE setCarianLaporan
+		
+		// setCarianFail
+		public Vector setCarianFail(String txtNamaPelesen, String txtNoLesen,String idJadualKeduaLesen)
+				throws Exception {
+			Db db = null;
+			String sql = "";
+
+			try {
+				listCarian = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
+				txtNamaPelesen = txtNamaPelesen.trim();
+				txtNoLesen = txtNoLesen.trim();
+
+				sql = " SELECT A.ID_JADUALKEDUALESENAPB,B.NAMA,A.NO_SIRI_LESEN ";
+				sql += " FROM TBLPHPJADUALKEDUALESENAPB A, ";
+				sql += " TBLPHPPEMEGANG B ";
+				sql += " WHERE A.ID_JADUALKEDUALESENAPB = B.ID_JADUALKEDUALESENAPB ";
+				sql += " AND A.ID_JADUALKEDUALESENAPB = '" + idJadualKeduaLesen
+						+ "' ";
+
+				// NAMA PELESEN
+			/*	if (txtNamaPelesen != null) {
+					if (!txtNamaPelesen.trim().equals("")) {
+						sql = sql + " AND UPPER(B.NAMA) LIKE '%"
+								+ txtNamaPelesen.toUpperCase() + "%'";
+					}
+				}
+*/
+				// NO LESEN
+				if (txtNoLesen != null) {
+					if (!txtNoLesen.trim().equals("")) {
+						sql = sql + " AND UPPER(A.NO_SIRI_LESEN) LIKE '%"
+								+ txtNoLesen.toUpperCase() + "%'";
+					}
+				}
+
+				// SORTING
+				sql += " ORDER BY A.TARIKH_KEMASKINI DESC ";
+
+				myLog.info("SQL CARIAN SENARAI :: " + sql);
+				ResultSet rs = stmt.executeQuery(sql);
+
+				Hashtable h;
+				int bil = 1;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("bil", bil);
+					h.put("id_jadualkedualesenAPB",
+							rs.getString("id_jadualkedualesenAPB") == null ? "-"
+									: rs.getString("id_jadualkedualesenAPB"));
+					h.put("nama",
+							rs.getString("nama") == null ? "-" : rs
+									.getString("nama"));
+					if (rs.getString("no_siri_lesen") == null) {
+						h.put("no_siri_lesen", "No Lesen Tiada");
+					} else {
+						h.put("no_siri_lesen", rs.getString("no_siri_lesen"));
+					}
+					listCarian.addElement(h);
+					bil++;
+				}
+				return listCarian;
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}// CLOSE setCarianFail
 
 
 

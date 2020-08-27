@@ -160,7 +160,7 @@
     #if($idStatus == '1610207') <!-- 1610207 -->
     <input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan','$!idStatus') "/>  
     <input type="button" name="cmdBorangA" id="cmdBorangA" value="Pembaharuan Borang A" onClick="javascript:daftarPembaharuanBorangA('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>   
-    <input type="button" name="cmdBorangB" id="cmdBorangB" value="Pembaharuan Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon') "/>    	 
+    <input type="button" name="cmdBorangB" id="cmdBorangB" value="Pembaharuan Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>    	 
     #else
     #if ($idStatus !='' && $idStatus != '1610207')
     <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
@@ -983,23 +983,7 @@ function daftarPembaharuan(idFail,idPermohonan,idStatus){
 	document.${formName}.submit();
 }
 function daftarPembaharuanBorangA(idFail,idPermohonan,idStatus,namaPemohon,idJadualKeduaLesen,noLesen){
-	
-	//document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBBorangAOnlineSenaraiFailView";
-	//document.${formName}.method="POST";
-	/*document.${formName}.actionLesen.value = "daftarBaruBorangA";
-	alert("2");
-	document.${formName}.idFail.value = idFail;
-	alert("3");
-	document.${formName}.idPermohonan.value = idPermohonan;
-	alert("4");
-	document.${formName}.idStatus.value = idStatus;
-	alert("5");
-	document.${formName}.namaPemohon.value = namaPemohon;
-	alert("6");
-	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
-	alert("7");
-	document.${formName}.noLesen.value = noLesen;
-	alert("8");*/
+
 	document.${formName}.actionOnline.value = "daftarBaruBorangA";
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idPermohonan.value = idPermohonan;
@@ -1007,9 +991,10 @@ function daftarPembaharuanBorangA(idFail,idPermohonan,idStatus,namaPemohon,idJad
 	document.${formName}.submit();
   
 }
-function daftarPembaharuanBorangB(idFail,idPermohonan,idStatus,namaPemohon){
+function daftarPembaharuanBorangB(idFail,idPermohonan,idStatus,namaPemohon,idJadualKeduaLesen,noLesen){
 	
-	document.${formName}.actionLesen.value = "daftarBaruBorangB";
+	alert(idJadualKeduaLesen);
+	document.${formName}.actionOnline.value = "daftarBaruBorangB";
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idPermohonan.value = idPermohonan;
 	document.${formName}.idStatus.value = idStatus;
