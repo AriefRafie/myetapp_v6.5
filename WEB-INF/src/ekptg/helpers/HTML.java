@@ -2024,7 +2024,16 @@ public class HTML {
 			String disability) throws Exception {
 		return SelectLot(selectName, selectedValue, disability, null);
 	}
-
+	/**
+	 * 
+	 * @param selectName
+	 * @param selectedValue
+	 * @param disability
+	 * @param jsFunction
+	 * @return
+	 * @throws Exception
+	 * 26/08/2020, paparan Keterangan sahaja
+	 */
 	public static String SelectLot(String selectName, Long selectedValue,
 			String disability, String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
@@ -2047,7 +2056,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdLot() + ">"
-						+ f.getKodLot() + " - " + f.getKeterangan()
+						+ f.getKeterangan() 
+//						+ f.getKodLot() + " - " + f.getKeterangan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");

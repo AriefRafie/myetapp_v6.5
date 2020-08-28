@@ -7,12 +7,6 @@ import javax.servlet.http.HttpSession;
 import lebah.db.Db;
 import lebah.portal.AjaxBasedModule;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.AuditTrail;
@@ -20,8 +14,11 @@ import ekptg.model.RazTemplete;
 import ekptg.model.ppk.FrmSemakanPPKModel;
 
 
-
 public class FrmSemakanPPK extends AjaxBasedModule {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5508639393374451508L;
 	public Logger myLogger = Logger.getLogger(FrmSemakanPPK.class);
 	public FrmSemakanPPKModel MP = new FrmSemakanPPKModel();
 	public RazTemplete RT = new RazTemplete();
@@ -257,6 +254,8 @@ public class FrmSemakanPPK extends AjaxBasedModule {
 				
 		myLogger.info("::: SKRIN NAME : "+skrin_name);
 		return skrin_name;
+		
 	}
+	
 	
 }
