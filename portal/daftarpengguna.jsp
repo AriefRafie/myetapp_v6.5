@@ -1090,9 +1090,22 @@
  		
  		if (document.f1.idKategori.value == "Syarikat") {
  			// alert("ffff");
+ 			if (document.f1.xsyarikatsub.value == "") { 
+ 				alert('Sila pastikan pilih jenis agensi organisasi');
+ 				document.f1.xsyarikatsub.focus();
+ 				doRefreshCaptcha();
+ 			return;
+ 			}
+ 			if (document.f1.txtNoRuj.value == "") { 
+ 				alert('Sila pastikan No. Rujukan / Bil. Daftar / No. SSM dimasukkan dengan lengkap');
+ 				document.f1.txtNoRuj.focus();
+ 				doRefreshCaptcha();
+ 			return;
+ 			}
+ 			
  			if (document.f1.nama.value == "") { 
- 			alert("namaorga = "+ document.f1.nama.value);
- 				alert('Sila pastikan nama organisasi dimasukkan');
+ 			// alert("namaorga = "+ document.f1.nama.value);
+ 				alert('Sila pastikan nama nOrganisasi dimasukkan');
  				document.f1.nama.focus();
  				doRefreshCaptcha();
  			return;
