@@ -1,3 +1,8 @@
+/**
+ * 25/08/2020    
+ *
+ */
+
 package ekptg.view.ppk;
 
 import java.sql.Connection;
@@ -21,7 +26,7 @@ import ekptg.helpers.Utils;
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8Notis;
 import ekptg.model.ppk.FrmSenaraiFailSek8ForViewData;
-import ekptg.model.ppk.FrmTukaranStatus;
+import ekptg.model.ppk.FrmTukaranStatus; 
 import ekptg.model.ppk.PPKUtilHTML;
 
 /**
@@ -53,7 +58,7 @@ public class FrmPraPerbicaraan extends AjaxBasedModule{
 		}
 		myLogger.info("bolehsimpan :"+bolehsimpan);
 		
-		FrmTukaranStatus model = new FrmTukaranStatus();
+		FrmTukaranStatus model = new FrmTukaranStatus();     
 		FrmSenaraiFailSek8ForViewData logic = new FrmSenaraiFailSek8ForViewData();
 		String usid=(String)session.getAttribute("_ekptg_user_id");
 		String vm = "app/ppk/frmPraPerbicaraan.jsp";
@@ -71,7 +76,7 @@ public class FrmPraPerbicaraan extends AjaxBasedModule{
     	String command2= getParam("command2");
     	String command3= getParam("command3");
     	context.put("ScrollX",getParam("ScrollX"));
-    	context.put("ScrollY",getParam("ScrollY"));
+    	context.put("ScrollY",getParam("ScrollY")); 
     	
     	context.put("listSemak","");
 		context.put("listSemak_size","");
@@ -343,7 +348,7 @@ public class FrmPraPerbicaraan extends AjaxBasedModule{
 			modelNotis.setTblppkpraperbicaraan2(getParam("id_fail_carian"));
 			listPra = modelNotis.getListPraPerbicaraan();
 			if (listPra.size() != 0) {
-				this.context.put("edit", "no");
+				this.context.put("edit", "no"); 
 				this.context.put("buttonKemaskini", "yes");
 				this.context.put("buttonSimpan", "no");
 			}

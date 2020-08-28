@@ -29,10 +29,25 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 	private IHtp iErr = null;
 	//return Permohonan 1
 	private IStatus iStatus = null;
+	String idKementerian = "";
+	Vector listDetailKJP = null;
 
 	@Override
 	public String doTemplate2() throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = this.request.getSession();
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		listDetailKJP = getIdNegeriKJPByUserId(userId);
+		if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
+			Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
+			idKementerian = hashRayuanDB.get("idKementerian").toString();
+			myLog.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
+
+		}
+
+		this.context.put("idKementerian", idKementerian);
+		
+		
+		
 		Pengumuman logic = new Pengumuman();
 		// String portal_role = (String) session.getAttribute("_portal_role");
 		// razman comment
@@ -108,6 +123,45 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
 		return vm;
 
+	}
+	
+	
+	
+	public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
+		Db db = null;
+		String sql = "";
+		Hashtable h;
+		Vector listDetailKJP = new Vector();
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.USER_ID, A.USER_NAME, C.ID_NEGERI, B.ID_KEMENTERIAN, B.ID_AGENSI FROM USERS A, USERS_KEMENTERIAN B, TBLRUJAGENSI C, TBLRUJKEMENTERIAN D "
+					+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '"
+					+ userId + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("listDetailKJP::::: "+sql);
+
+			if (rs.next()) {
+				h = new Hashtable();
+				h.put("userId", rs.getString("USER_ID").toString());
+				h.put("idNegeri", rs.getString("ID_NEGERI").toString());
+				h.put("idKementerian", rs.getString("ID_KEMENTERIAN").toString());
+				h.put("idAgensi", rs.getString("ID_AGENSI").toString());
+				h.put("namaPemohon", rs.getString("USER_NAME").toString());
+				listDetailKJP.addElement(h);
+
+				return listDetailKJP;
+			} else {
+				return listDetailKJP;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 
 	public Hashtable notifikasi_permohonan(String userID, long jawatan)

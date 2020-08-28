@@ -13,8 +13,8 @@ import lebah.servlets.IServlet2;
 
 import org.apache.log4j.Logger;
 
-public class PendaftaranSimatiCheck implements IServlet2 {
-	static Logger myLogger = Logger.getLogger(PendaftaranSimatiCheck.class);
+public class PendaftaranSimatiSemak implements IServlet2 {
+	static Logger myLogger = Logger.getLogger(PendaftaranSimatiSemak.class);
 
 	@Override
 	public void doService(HttpServletRequest request,
@@ -43,3 +43,4 @@ public class PendaftaranSimatiCheck implements IServlet2 {
 	
 	
 }
+// 2020082
