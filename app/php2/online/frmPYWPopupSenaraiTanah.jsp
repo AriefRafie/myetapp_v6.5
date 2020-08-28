@@ -3,8 +3,11 @@
 .style1 {
 	color: #0000FF
 }
+#parse("css/eTapp_PHP.css")
 -->
 </style>
+<input type="hidden" name="actionPopup"/>
+<input type="hidden" name="idHakmilikAgensi"/>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>

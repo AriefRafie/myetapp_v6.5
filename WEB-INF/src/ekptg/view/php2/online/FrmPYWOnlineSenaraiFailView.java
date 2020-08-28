@@ -406,6 +406,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     				if (idHakmilikAgensi.isEmpty()){
     					this.context.put("errorPeganganHakmilik", "Hakmilik tidak wujud.");
     				}
+    				
     			} else if ("doChangeMaklumatTanah".equals(submit)){
     				beanMaklumatTanah = new Vector();
     				idHakmilikAgensi = getParam("idHakmilikAgensiPopup");
@@ -581,34 +582,6 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			this.context.put("pemohon", vec1.get(0));
         	}
 
-			//MAKLUMAT HAKMILIK
-			if ("doChangePeganganHakmilik".equals(submit)) {
-				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(getParam("txtPeganganHakmilik").trim());
-				if (idHakmilikAgensi.isEmpty()) {
-					this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
-				}
-			}
-			
-			beanMaklumatTanah = new Vector();
-			logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
-			beanMaklumatTanah = logic.getBeanMaklumatTanah();
-			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
-			
-			//MAKLUMAT BORANG K
-			if ("doChangePeganganHakmilikBorangK".equals(submit)) {
-				idPHPBorangK = logic.getIdPHPBorangKByPeganganHakmilik(getParam("txtPeganganHakmilik"));
-				if (idPHPBorangK.isEmpty()) {
-					idHakmilikUrusan = logic.getIdHakmilikUrusanByPeganganHakmilik(getParam("txtPeganganHakmilik"));
-					if (idHakmilikUrusan.isEmpty()) {
-						this.context.put("errorPeganganHakmilik","Maklumat Borang K tidak wujud.");
-					}					
-				}
-			}			
-			
-			beanMaklumatBorangK = new Vector();
-			logic.setMaklumatBorangK(idPPTBorangK, idHakmilikUrusan, idPHPBorangK);
-			beanMaklumatBorangK = logic.getBeanMaklumatBorangK();
-			this.context.put("BeanMaklumatBorangK", beanMaklumatBorangK);
 			if ("doChangeJenisTanah".equals(submit)){
 				idHakmilikAgensi = "";
 				idPPTBorangK = "";
@@ -652,6 +625,35 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			this.context.put("selected4", "");
     			this.context.put("idJenisTanah", 0);
             }
+			
+			//MAKLUMAT HAKMILIK
+			if ("doChangePeganganHakmilik".equals(submit)) {
+				idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(getParam("txtPeganganHakmilik").trim());
+				if (idHakmilikAgensi.isEmpty()) {
+					this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
+				}
+			}
+			
+			beanMaklumatTanah = new Vector();
+			logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
+			beanMaklumatTanah = logic.getBeanMaklumatTanah();
+			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
+			
+			//MAKLUMAT BORANG K
+			if ("doChangePeganganHakmilikBorangK".equals(submit)) {
+				idPHPBorangK = logic.getIdPHPBorangKByPeganganHakmilik(getParam("txtPeganganHakmilik"));
+				if (idPHPBorangK.isEmpty()) {
+					idHakmilikUrusan = logic.getIdHakmilikUrusanByPeganganHakmilik(getParam("txtPeganganHakmilik"));
+					if (idHakmilikUrusan.isEmpty()) {
+						this.context.put("errorPeganganHakmilik","Maklumat Borang K tidak wujud.");
+					}					
+				}
+			}			
+						
+			beanMaklumatBorangK = new Vector();
+			logic.setMaklumatBorangK(idPPTBorangK, idHakmilikUrusan, idPHPBorangK);
+			beanMaklumatBorangK = logic.getBeanMaklumatBorangK();
+			this.context.put("BeanMaklumatBorangK", beanMaklumatBorangK);
 
 		} else{
 			
