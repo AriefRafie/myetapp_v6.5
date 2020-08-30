@@ -1,4 +1,3 @@
-xxx
 <style type="text/css">
 <!--
 .style52 {font-size: 9px; font-style: italic; color: #0000FF; }
@@ -6,8 +5,8 @@ xxx
 </style>
 <p>
 	<input type="hidden" name="actionOnline" id="actionOnline" value="$actionOnline"/>
-	<input type="text" name="idJadualKeduaLesen" id="idJadualKeduaLesen" value="$idJadualKeduaLesen" />
-	<input type="text" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
+	<input type="hidden" name="idJadualKeduaLesen" id="idJadualKeduaLesen" value="$idJadualKeduaLesen" />
+	<input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
 	<input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
 </p>
@@ -49,7 +48,7 @@ xxx
     <table width="100%">
   <tr>
     <td align="left" width="39%">
-    $button
+
       #if ($button=="view")
       &nbsp;&nbsp;&nbsp;Kuantiti (meter padu)
       #else
@@ -205,7 +204,7 @@ xxx
     #if ($button=="view")
     	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniLaporan('$id_laporanpasir')"/>
     	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusLaporan('$id_laporanpasir')"/> 
-        <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" />    
+    <!--    <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" />  -->    
     #end        
     
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen('$id_jadualkedualesenAPB')" />    
@@ -307,6 +306,7 @@ xxx
 
 <!------------------------------------------ OUTPUT LAPORAN/SURAT ----------------------------------------------->
 <br/>
+<!--
 <fieldset id="tableReport1" style="display:none;">
 <legend><strong>Senarai Laporan</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -315,6 +315,7 @@ xxx
       </tr>           
     </table>
 </fieldset>
+  -->
 <!------------------------------------------ END OUTPUT LAPORAN/SURAT ------------------------------------------>
 
 

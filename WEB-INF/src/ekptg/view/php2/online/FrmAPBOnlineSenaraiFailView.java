@@ -409,9 +409,9 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
     	//JENIS PERMOHONAN
 		//this.context.put("selectJenisPermohonan", HTML.SelectJenisPermohonanAPB("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "", " onChange=\"doChangeJenisPermohonan();\""));
     	
-		//String noFailLama = getParam("txtNoFailLama");
-		//beanMaklumatPermohonan = new Vector();
-		//idFailLama = logic.getIdFailByNoFail(noFailLama);
+		String noFailLama = getParam("txtNoFailLama");
+		beanMaklumatPermohonan = new Vector();
+		idFailLama = logic.getIdFailByNoFail(noFailLama);
 		
 		if ("doChangeNoFailAPB".equals(submit)){
 			

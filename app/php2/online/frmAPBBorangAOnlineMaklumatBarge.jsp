@@ -74,7 +74,7 @@ function daftarMaklumatBarge(idJadualKedua,idBorangA){
 	document.${formName}.mode.value = "newBarge";
 	document.${formName}.idJadualKedua.value = idJadualKedua;
 	document.${formName}.idBorangA.value = idBorangA;
-	alert(idJadualKedua);
+	//alert(idJadualKedua);
 	document.${formName}.submit();
 }
 function doSimpanMaklumatBarge(){

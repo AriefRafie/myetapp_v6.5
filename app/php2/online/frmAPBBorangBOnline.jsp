@@ -1,4 +1,3 @@
-ff
 <style type="text/css">
 <!--
 .kaler_biru {color: #0000FF}
@@ -7,7 +6,7 @@ ff
 
 <p>
 <input type="hidden" name="actionOnline" id="actionOnline" value="$actionOnline"/>
-<input type="text" name="idJadualKeduaLesen" id="idJadualKeduaLesen" value="$idJadualKeduaLesen" />
+<input type="hidden" name="idJadualKeduaLesen" id="idJadualKeduaLesen" value="$idJadualKeduaLesen" />
 <input type="hidden" name="id_laporanpasir" id="id_laporanpasir" />
 <input type="hidden" name="bulan_pengambilan" id="bulan_pengambilan" />
 <input type="hidden" name="mode" id="mode" value="$mode"/>

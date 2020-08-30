@@ -153,7 +153,7 @@
   	<td></td>
 		<td valign="top" colspan=2>
 	#if ($idStatus == '')
-    <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+   <!-- <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>  --> 
     <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
     <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
     #else
@@ -993,7 +993,7 @@ function daftarPembaharuanBorangA(idFail,idPermohonan,idStatus,namaPemohon,idJad
 }
 function daftarPembaharuanBorangB(idFail,idPermohonan,idStatus,namaPemohon,idJadualKeduaLesen,noLesen){
 	
-	alert(idJadualKeduaLesen);
+	//alert(idJadualKeduaLesen);
 	document.${formName}.actionOnline.value = "daftarBaruBorangB";
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idPermohonan.value = idPermohonan;
@@ -1004,4 +1004,6 @@ function daftarPembaharuanBorangB(idFail,idPermohonan,idStatus,namaPemohon,idJad
 
 
 </script>
+
 $javascriptLampiran
+</script>
