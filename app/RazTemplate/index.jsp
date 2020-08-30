@@ -1,7 +1,5 @@
 
-
 <style>
-
 
 .popup-lightbox {
 overflow: auto;
@@ -426,25 +424,23 @@ function setingTrDivTR(fieldFlagName,divID)
 	//alert("3");
 }
 
-
-function openCrudSkrinRT(skrinName,seqName,tableName,filter,pkField)
-{
-	if(document.getElementById("flag_"+skrinName).value == "close")
-	{
-		$jquery("#icon_"+skrinName).html("< ");
-		document.getElementById("flag_"+skrinName).value = "open";
-		$jquery(document).ready(function () {
-		doDivAjaxCall$formname('viewCrud'+skrinName,'openCrudSkrin','seqName='+seqName+'&skrinName='+skrinName+'&pkField='+pkField+'&tableName='+tableName+'&scrolPosition='+getPageLocation()+'&div=viewCrud'+skrinName+filter+'&filterDB='
-		+filter.replace("&",""));  
-		});
+	function openCrudSkrinRT(skrinName,seqName,tableName,filter,pkField){
+		if(document.getElementById("flag_"+skrinName).value == "close")
+		{
+			$jquery("#icon_"+skrinName).html("< ");
+			document.getElementById("flag_"+skrinName).value = "open";
+			$jquery(document).ready(function () {
+			doDivAjaxCall$formname('viewCrud'+skrinName,'openCrudSkrin','seqName='+seqName+'&skrinName='+skrinName+'&pkField='+pkField+'&tableName='+tableName+'&scrolPosition='+getPageLocation()+'&div=viewCrud'+skrinName+filter+'&filterDB='
+			+filter.replace("&",""));  
+			});
+		}
+		else
+		{
+			$jquery("#icon_"+skrinName).html("> ");
+			document.getElementById("flag_"+skrinName).value = "close";
+			$jquery("#viewCrud"+skrinName).html("");
+		}	
 	}
-	else
-	{
-		$jquery("#icon_"+skrinName).html("> ");
-		document.getElementById("flag_"+skrinName).value = "close";
-		$jquery("#viewCrud"+skrinName).html("");
-	}	
-}
 
 
 </script>

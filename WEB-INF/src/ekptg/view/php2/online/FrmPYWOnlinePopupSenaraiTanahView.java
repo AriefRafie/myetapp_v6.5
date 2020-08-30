@@ -36,7 +36,6 @@ public class FrmPYWOnlinePopupSenaraiTanahView extends AjaxBasedModule {
 	    
 	    //VECTOR
         Vector list = null;
-        
         Vector beanMaklumatTanah = null;
 	    
 	    //GET DROPDOWN PARAM

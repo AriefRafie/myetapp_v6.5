@@ -120,63 +120,72 @@ public class FrmFailLainKemaskiniData{
 		return paparAgenda;
 	}
 	 
-	 public static int add(Hashtable<String,String> data)throws Exception {			
+	 public static String add(Hashtable<String,String> data)throws Exception {			
 		 Db db = null;
 		 String sql = "";
 		 try	{	 
-		    	  long idAgendamesyuarat = DB.getNextID("TBLHTPFAILLAIN_SEQ");
-		    	  String idMesyuarat = (String)data.get("id_Mesyuarat");
-			      String agendaMsyrt = (String)data.get("agenda");
-			      String idmasuk = (String)data.get("idmasuk");
+			 long idFaiLain = DB.getNextID("TBLHTPFAILLAIN_SEQ");
+			 String idFail = (String)data.get("id_Mesyuarat");
+			 String agendaMsyrt = (String)data.get("agenda");
+			 String idmasuk = (String)data.get("idmasuk");
+			 String con = String.valueOf(data.get("con"));
 			     			      
-			      db = new Db();
-			      Statement stmt = db.getStatement();
-			      SQLRenderer r = new SQLRenderer();
+			 db = new Db();
+			 Statement stmt = db.getStatement();
+			 SQLRenderer r = new SQLRenderer();
+			 if(!con.equals("")) {
+				 r.update("id_fail",idFail);
+				 r.add("flag_aktif","N");
+				 sql = r.getSQLUpdate("tblhtpfaillain");
+				 stmt.executeUpdate(sql);
+				 
+			 }
 			      
-			      r.add("ID_HTPFAILLAIN",idAgendamesyuarat);
-			      r.add("ID_FAIL",idMesyuarat);
-			      r.add("NO_FAIL_LAIN", agendaMsyrt);
-			      r.add("ID_MASUK",r.unquote(idmasuk));				      
-			      r.add("TARIKH_MASUK",r.unquote("sysdate")); 
-			      r.add("ID_KEMASKINI",r.unquote(idmasuk));				      
-			      r.add("TARIKH_KEMASKINI",r.unquote("sysdate")); 
+			 r = new SQLRenderer();
+			 r.add("ID_HTPFAILLAIN",idFaiLain);
+			 r.add("ID_FAIL",idFail);
+			 r.add("NO_FAIL_LAIN", agendaMsyrt);
+			 r.add("ID_MASUK",r.unquote(idmasuk));				      
+			 r.add("TARIKH_MASUK",r.unquote("sysdate")); 
+			 r.add("ID_KEMASKINI",r.unquote(idmasuk));				      
+			 r.add("TARIKH_KEMASKINI",r.unquote("sysdate")); 
 			      
-			      sql = r.getSQLInsert("tblhtpfaillain");  
-			      mylog.info("add:"+sql);
-			      stmt.executeUpdate(sql);
-			      return (int)idAgendamesyuarat;
-			    } finally {
-			      if (db != null) db.close();
-			    }
-
-		}
-		public static int update(Hashtable<String,String> data) throws Exception {
-			Db db = null;
-		    String sql = "";
-		    try{
-		    	int idAgendamesyuarat = Integer.parseInt(data.get("idAgendamesyuarat"));
-		    	String agendaMsyrt = (String)data.get("agenda");
-		    	String idmasuk = (String)data.get("idmasuk");
+			 sql = r.getSQLInsert("tblhtpfaillain");  
+			 mylog.info("add:"+sql);
+			 stmt.executeUpdate(sql);
+			 return String.valueOf(idFaiLain);
+			      
+		 } finally {
+			 if (db != null) db.close();
+		 }
+	 
+	 }
+	 
+	public static String update(Hashtable<String,String> data) throws Exception {
+		Db db = null;
+	    String sql = "";
+	    try{
+		   	String idAgendamesyuarat = String.valueOf(data.get("idAgendamesyuarat"));
+		    String agendaMsyrt = (String)data.get("agenda");
+		   	String idmasuk = (String)data.get("idmasuk");
 			     				  
-		    	db = new Db();
-		    	Statement stmt = db.getStatement();
-		    	SQLRenderer r = new SQLRenderer();
-		    	r.update("ID_HTPFAILLAIN", idAgendamesyuarat);
-			      r.add("NO_FAIL_LAIN", agendaMsyrt);
-			      r.add("ID_KEMASKINI",r.unquote(idmasuk));				      
-			      r.add("TARIKH_KEMASKINI",r.unquote("sysdate")); 
-			     
-				
-				  sql = r.getSQLUpdate("tblhtpfaillain");
-			      mylog.info("update:"+sql);
-			      stmt.executeUpdate(sql);
-			      return idAgendamesyuarat;
-			    }
-			    finally {
-			      if (db != null) db.close();
-			    }
-		    }
-	
+		    db = new Db();
+		   	Statement stmt = db.getStatement();
+		   	SQLRenderer r = new SQLRenderer();
+		   	r.update("ID_HTPFAILLAIN", idAgendamesyuarat);
+		   	r.add("NO_FAIL_LAIN", agendaMsyrt);
+		   	r.add("ID_KEMASKINI",r.unquote(idmasuk));				      
+		   	r.add("TARIKH_KEMASKINI",r.unquote("sysdate")); 
+		   	sql = r.getSQLUpdate("tblhtpfaillain");
+		   	mylog.info("update:"+sql);
+		   	stmt.executeUpdate(sql);
+		   	return idAgendamesyuarat;
+			    
+	    }finally {
+	    	if (db != null) db.close();
+	    	}
+		
+	}
 		
 		  public static void deleteFailLain(String uid) throws Exception {
 		    Db db = null;

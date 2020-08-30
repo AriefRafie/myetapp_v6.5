@@ -1,3 +1,8 @@
+<style type="text/css">
+<!--
+#parse("css/eTapp_PHP.css")
+-->
+</style>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>
@@ -129,7 +134,9 @@ function kembali() {
 	document.${formName}.submit();
 }
 function pilihTanah(idHakmilikAgensi) {
+	alert($idHakmilikAgensi);
 	window.opener.refreshFromPilihTanah(idHakmilikAgensi);
+	alert('2');
 	window.close();
 }
 </script>
