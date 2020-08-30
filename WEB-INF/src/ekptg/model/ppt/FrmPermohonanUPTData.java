@@ -1196,7 +1196,7 @@ public class FrmPermohonanUPTData {
 //	    		r.add("no_bangunan",String.valueOf(data.get("txtNoBangunan"))); 
 //	    		r.add("no_tingkat", String.valueOf(data.get("txtNoTingkat")));
 //	    		r.add("no_petak", String.valueOf(data.get("txtNoPetak")));
-	    		myLogger.info("Simpan maklumat no bangunan, tingkat dan petak");
+
 	    		
 	    		sql = r.getSQLInsert("tblppthakmilik");
 	    		
@@ -2530,7 +2530,8 @@ public void setListMaklumatTanahSeksyen8(String idPermohonan,String lot,String i
 				sql += " AND m.id_lot = lt.id_lot(+) "; 
 				sql += " AND m.id_jenishakmilik = jh.id_jenishakmilik(+)";
 				sql += " AND p.id_Permohonan = '"+idPermohonan+"'";				
-				ResultSet rl2 = stmt.executeQuery(sql);					
+				ResultSet rl2 = stmt.executeQuery(sql);
+				myLogger.info("sql :"+sql);
 				String LotPT = "";
 				String LotPTHM = "";
 				int bilLOT = 0;				
