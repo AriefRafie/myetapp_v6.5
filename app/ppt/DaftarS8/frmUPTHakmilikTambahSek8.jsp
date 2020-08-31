@@ -60,7 +60,6 @@
 		
 		#end
     
-    
 	<fieldset id="top">
 	<legend><strong>Maklumat Hakmilik</strong></legend>	
 		

@@ -106,7 +106,7 @@ function mohonTAC(idFail,id_Permohonan) {
 }
 function hantarTAC(idFail,id_Permohonan) {
 		//alert(idFail);
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupTAC&command=hantar";	
+		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC&command=hantar";	
 		document.${formName}.submit();	
 		//alert(document.${formName}.command);
 		
