@@ -213,7 +213,7 @@ background: #f4eff4 !important;
               <!-- PPT-27 & PPT-30-->
               <tr>
                 <td><font color="red">*</font></td>
-                <td>Nama Pegawai</td>
+                <td>Nama Pegawai $!id_fail</td>
                 <td>:</td>
                 <td>$!selectPegawai</td>
               </tr>
@@ -1315,7 +1315,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'SuratIringanAgensiPemohon')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak1" onclick="javascript:cetakSuratIringanAgensiPemohon('$!selectNoFail','$!id_permohonan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanAgensiPemohon('$!selectNoFail','$!id_permohonan')">
                 	#end
                 	<!-- PPT-30 END -->
                 	#if($report == 'laporanTanahSS8')
@@ -1432,7 +1432,7 @@ background: #f4eff4 !important;
                 	
                 	<!-- PPT-11 -->
                 	#if($report == 'suratPelupusanHakmilik')
-                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Surat Pelupusan" onclick="javascript:suratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot','$!nama_pengarah')">
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Surat Pelupusan" onclick="javascript:cetakSuratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot','$!nama_pengarah')">
                 	#end
                     
                     <!-- END REPORT SEKSYEN 4 & 8 --------->
@@ -3693,15 +3693,16 @@ function cetakSuratPengosonganTanah(idpermohonan,idfail,idhakmilik,nama_pegawai)
 }
 
 
-function cetakSuratEndorsanBorangK(idhakmilik,idpermohonan) {
+function cetakSuratEndorsanBorangK(idhakmilik, idfail, idpermohonan, nofail) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
+		
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
-	else{
-
+		
+	}	else	{
+		
 		var valType = document.${formName}.sorSelectNoFail.value;
 		var nofail = "";
 		
@@ -3717,11 +3718,13 @@ function cetakSuratEndorsanBorangK(idhakmilik,idpermohonan) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-		var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK?ID_BAYARAN="+idbayaran+"&no_fail="+nofail;
+		alert("Servlet to choose ");	// id fail, idhakmilik.
+		var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK_Perak?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
+		
 	}
 }
 
@@ -6050,25 +6053,24 @@ function cetakSuratIringanPembayaran(idhakmilikpb,id_fail,nama_pegawai,id_jawata
 
 
 // PPT-11 CETAK SURAT PELUPUSAN
-function suratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot, nama_pegawai)	{
+function cetakSuratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot, nama_pegawai)	{
 	
 	// Get bitLot from URL
-	//var url_string = (window.location.href).toLowerCase();
-	//var url = new URL(url_string);
-	//var bilLot = url.searchParams.get("bilLot");
+	// var url_string = (window.location.href).toLowerCase();
+	// var url = new URL(url_string);
+	// var bilLot = url.searchParams.get("bilLot");
 	
 	var id_pegawai = document.${formName}.socPegawai.value;
 	nofail = document.${formName}.no_fail.value;
 	
-	if (document.${formName}.socPegawai.value == ""){
+	if (document.${formName}.socPegawai.value == "")	{
 	alert("Sila pilih \"Nama Pegawai\" terlebih dahulu.");
-	document.${formName}.socPegawai.focus(); 
+	document.${formName}.socPegawai.focus();
 	return;
 	
 	}	else	{
 	
-	var url = "../../servlet/ekptg.report.ppt.SuratPelupusanHakmilik?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail+"&bilLot="+bilLot+
-	"&namaPengarah="+nama_pegawai;
+	var url = "../../servlet/ekptg.report.ppt.SuratPelupusanHakmilik?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail+"&bilLot="+bilLot+"&namaPengarah="+nama_pegawai;
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
