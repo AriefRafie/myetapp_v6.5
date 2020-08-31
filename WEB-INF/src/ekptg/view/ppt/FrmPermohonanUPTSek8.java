@@ -88,7 +88,6 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	context.put("showFieldAmbilBeforeConvert", "no");
     	context.put("showDropdownUnitAsal", "no");
     	context.put("showDropdownUnitAmbil", "no");
-    	
 
 		this.context.put("maklumat_PB_Salin", "");
 		this.context.put("id_hakmilikpb_salin", "");

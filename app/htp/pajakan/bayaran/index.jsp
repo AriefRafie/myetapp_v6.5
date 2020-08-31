@@ -190,6 +190,8 @@
 			          <td colspan="8" scope="col">
 			          	<input class="stylobutton100" type="button" name="cmdDaftar" id="cmdDaftar" value="Daftar Baru" onclick="javascript:daftarBaruBayaran()" />
 			          	<input class="stylobutton100" type="button" name="cmdcetak" id="cmdcetak" value="Cetak" onclick="javascript:cetakSuratBayaran('$!idPermohonan')" />
+        				
+        				<a href="javascript:tambahFailLain('$idFail','tambah','jilid')" class="style1">...</a>
 			          </td>
 			        </tr>
 			        #end
