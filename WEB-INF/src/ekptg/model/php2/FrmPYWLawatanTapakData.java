@@ -346,7 +346,6 @@ public class FrmPYWLawatanTapakData {
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 			sql = r.getSQLUpdate("TBLPHPLAPORANTANAH");
-
 			stmt.executeUpdate(sql);
 
 			conn.commit();
