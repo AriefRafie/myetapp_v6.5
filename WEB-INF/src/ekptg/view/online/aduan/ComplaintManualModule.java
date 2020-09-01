@@ -46,9 +46,9 @@ public class ComplaintManualModule extends AjaxModule {
 				viewComplaint();
 			}
 			this.context.put("mode", mode);
-			
+
 			getJenisAduan();
-	
+
 		}
 		else if(command.equals("simpanComplaint")){
 			simpanComplaint();
@@ -59,13 +59,13 @@ public class ComplaintManualModule extends AjaxModule {
 		else if(command.equals("simpanKemaskiniComplaint")){
 			simpanKemaskiniComplaint();
 			vm = PATH+"view.jsp";
-			//search();	
+			//search();
 		}
 		else{
 
 			vm = PATH+"index.jsp";
 			search();
-			
+
 			context.remove("UPDATEDMESSAGE");
 		}
 		return vm;
@@ -83,7 +83,7 @@ public class ComplaintManualModule extends AjaxModule {
 		System.out.println("no aduan " + noAduan);
 		if(!"".equals(noAduan) && noAduan!=null){
 		complaint.setId(noAduan);
-		} 
+		}
 		complaint.setStatus(statusAduan);
 		complaint.setTarikhAduan(tarikhAduan);
 		Vector<Complaint> v = getHandler().search(noAduanString, statusAduan, tarikhAduan);
@@ -112,8 +112,8 @@ public class ComplaintManualModule extends AjaxModule {
 		complaint.setLoginName(userId);
 		complaint =getHandler().processComplaint(complaint);
 		context.put("complaint", complaint);
-		
-		
+
+
 	}
 	private void simpanKemaskiniComplaint() {
 		String id = getParam("idComplaint");
@@ -144,7 +144,7 @@ public class ComplaintManualModule extends AjaxModule {
 		complaint =getHandler().processUpdateComplaint(complaint);
 		context.put("complaint", complaint);
 		context.put("UPDATEDMESSAGE", "Aduan Berjaya Dikemaskini");
-		
+
 	}
 	private void viewComplaint()throws Exception{
 		String idComplaint = getParam("idComplaint");
@@ -152,11 +152,11 @@ public class ComplaintManualModule extends AjaxModule {
 		context.put("complaint", complaint);
 		//getHandler().processComplaint(complaint);
 	}
-	
+
 	private void getSeksyenList()throws Exception{
 		Vector v = DB.getSeksyen();
 		context.put("sections", v);
-		
+
 	}
 	private IEkptgManualComplaintHandler getHandler(){
 		if(handler == null)

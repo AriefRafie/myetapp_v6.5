@@ -16,15 +16,11 @@
 <br>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-	<tr><td></td></tr>
 	<tr>
     	<td>
     		<fieldset>
 			  <legend>Maklumat Permohonan</legend>
 				<table align="left" width="100%" border="0" cellspacing="2" cellpadding="1">
-					<tr>
-				 		<td>&nbsp;</td>
-				  	</tr>
 					<tr>
 				 		<td>No. Fail</td>
 				 		<td>:</td>
@@ -41,9 +37,43 @@
 				 		<td><b>$!status</b></td>
 				  	</tr>
 				  	<tr>
-				 		<td>Sebab Batal</td>
-				 		<td>:</td>
-				 		<td><font color="red"><b>PERMOHONAN TUAN/PUAN TELAH DIBATALKAN KERANA <br> $!catatan</b></font></td>
+				 		<td valign="top">Sebab Batal</td>
+				 		<td valign="top">:</td>
+				 		<td>
+				 			<table align="left" width="100%" border="0" cellspacing="2" cellpadding="1">
+				 				<tr>
+				 					<font color="red"><b>PERMOHONAN TUAN/PUAN TELAH DIBATALKAN KERANA <br> $!catatan</b></font>
+				 				</tr>
+				 				#if($!nofailawal != "undefined")
+				 				<tr><td colspan="3"><b><u>Maklumat Permohonan Awal</u></b></td></tr>
+				 				<tr>
+				 					<td>No Fail Awal</td>
+				 					<td>:</td>
+				 					<td>$!nofailawal</td>
+				 				</tr>
+				 				<tr>
+				 					<td>Pemohon Awal</td>
+				 					<td>:</td>
+				 					<td>$!namapemohonawal</td>
+				 				</tr>
+				 				<tr>
+				 					<td>Tempat Permohonan Awal</td>
+				 					<td>:</td>
+				 					<td>
+				 					#foreach($listJ in $listMaklumatMahkamahJ)
+										#if( $listJ.id_Pejabat == $pejabatawal) 
+											#set($listJid_Pejabat = $listJ.id_Pejabat)
+											#set($listJnama_pejabat=$listJ.nama_pejabat)
+											#set($listJdaerah = $listJ.daerah)
+									    #end
+								    #end
+								    #set($alam = "$listJnama_pejabat, $listJdaerah")
+				 					$!alam
+				 					</td>
+				 				</tr>
+				 				#end
+				 			</table>
+				 		</td>
 				  	</tr>
 				  	<tr>
 				 		<td>&nbsp;</td>
