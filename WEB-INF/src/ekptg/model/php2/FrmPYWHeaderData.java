@@ -54,10 +54,8 @@ public class FrmPYWHeaderData {
 					+ " MOHONSEWA.FLAG_PROSESFAIL, MOHON.NO_SAMBUNGAN, RUJURUSAN.NAMA_URUSAN, RUJSUBURUSAN.NAMA_SUBURUSAN, MOHONSEWA.FLAG_PERMOHONANDARI, FAIL.ID_URUSAN, FAIL.ID_SUBURUSAN,"
 					+ " MOHONSEWA.KEPUTUSAN, MOHON.CATATAN_BATAL, MOHON.TARIKH_BATAL, MOHON.FLAG_AKTIF, FAIL.FLAG_JENIS_FAIL"
 					+ ", MOHONSEWA.ID_PHPPERMOHONANSEWA, MOHONSEWA.FLAG_SEBAB_TAMAT, MOHONSEWA.FLAG_TEMPOHSEWA "
-
 					+ " FROM TBLPFDFAIL FAIL, TBLPERMOHONAN MOHON, TBLRUJSTATUS RUJSTATUS, TBLPHPPEMOHON PEMOHON, TBLRUJNEGERI RUJNEGERI, TBLRUJBANDAR RUJBANDAR,"
 					+ " TBLPHPPERMOHONANSEWA MOHONSEWA, TBLRUJURUSAN RUJURUSAN, TBLRUJSUBURUSAN RUJSUBURUSAN"
-
 					+ " WHERE FAIL.ID_FAIL = MOHON.ID_FAIL(+) AND MOHON.ID_STATUS = RUJSTATUS.ID_STATUS(+) AND MOHON.ID_PEMOHON = PEMOHON.ID_PEMOHON(+)"
 					+ " AND PEMOHON.ID_BANDARTETAP = RUJBANDAR.ID_BANDAR(+) AND PEMOHON.ID_NEGERITETAP = RUJNEGERI.ID_NEGERI(+)"
 					+ " AND MOHON.ID_PERMOHONAN = MOHONSEWA.ID_PERMOHONAN"
@@ -129,13 +127,11 @@ public class FrmPYWHeaderData {
 						.getString("EMEL"));
 				h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs
 						.getString("ID_STATUS").toUpperCase());
-				
 				h.put("idKeputusan", rs.getString("KEPUTUSAN") == null ? ""
 						: rs.getString("KEPUTUSAN"));
 				h.put("flagAktif",
 						rs.getString("FLAG_AKTIF") == null ? "" : rs
 								.getString("FLAG_AKTIF"));
-
 				h.put("flagPermohonanDari",
 						rs.getString("FLAG_PERMOHONANDARI") == null ? "" : rs
 								.getString("FLAG_PERMOHONANDARI"));
@@ -166,10 +162,8 @@ public class FrmPYWHeaderData {
 				h.put("catatanBatal",
 						rs.getString("CATATAN_BATAL") == null ? "" : rs
 								.getString("CATATAN_BATAL").toUpperCase());
-
 				h.put("catatanMT", getCatatanMT(idFail));
 				h.put("catatanPindaan", getCatatanPindaan(idFail));
-
 				h.put("flagJenisFail",
 						rs.getString("FLAG_JENIS_FAIL") == null ? "" : rs
 								.getString("FLAG_JENIS_FAIL").toUpperCase());
