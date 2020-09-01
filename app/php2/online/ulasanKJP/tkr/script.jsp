@@ -272,7 +272,6 @@ function kembali() {
 	document.${formName}.submit();
 }
 function seterusnya(){
-	alert('masuk sini ros');
 	//alert('BACA SETERUSNYAAA'+document.${formName}.idFail.value+' idHakmilik agensi '+document.${formName}.idHakmilikAgensi.value);
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
 	document.${formName}.method="POST";
