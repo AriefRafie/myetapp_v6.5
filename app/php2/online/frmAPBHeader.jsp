@@ -12,6 +12,7 @@
     #set($tujuanPengambilan = $beanHeader.tujuanPengambilan)
     #set($noLesen = $beanHeader.noLesen)
     #end
+    
     <td width="50%" valign="top" ><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
