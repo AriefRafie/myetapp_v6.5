@@ -28,20 +28,25 @@ public class FrmFailLainKemaskini extends AjaxBasedModule{
 		 String readability = "";
 		 String vm = "";
 		 String idFail = getParam("idFailLama");
+		 String userId = String.valueOf(session.getAttribute("_ekptg_user_id"));
 		 myLog.info("idfail:"+idFail);
-		 myLog.info("command,command1,mode:"+command+","+command1+","+mode);
+		 myLog.info("command="+command+",command1="+command1+",mode:"+mode);
 		 if ("tambah".equals(command)){
 			 
 			 vm = "app/htp/frmFailLainKemaskini.jsp";
-				 
+			 String jilid = getParam("con").equals("")?"":getParam("con");
+			 myLog.info("tambah:jilid="+jilid);
+			 this.context.put("con",jilid);
+
 			 if ("simpan".equals(command1)){
 				 
 				 if ("tambahBaru".equals(mode)){					
-					 simpanFail(session);
+					 simpanFail(userId,jilid);
 				 }
 		       	 if ("kemaskiniAgenda".equals(mode)){					
-		       		 simpanFail(session);
+		       		 simpanFail(userId,"");
 		       	 }
+		       	 
 			 }else if("hapus".equals(command1)){
 				 FrmFailLainKemaskiniData.deleteFailLain((String)getParam("idAgendamesyuarat")); 
 			 }
@@ -73,7 +78,7 @@ public class FrmFailLainKemaskini extends AjaxBasedModule{
 	       	}else if ("simpan".equals(command1)){
 	       		
 		       	 if ("kemaskiniAgenda".equals(mode)){					
-		       		simpanFail(session);
+		       		simpanFail(userId,"");
 				 }
 		       	 list = FrmFailLainKemaskiniData.getDataFailLain(idFail);
 		       	 this.context.put("AgendaMesyuarat",list);
@@ -104,33 +109,30 @@ public class FrmFailLainKemaskini extends AjaxBasedModule{
 	   
 	  }
 
-	private int simpanFail(HttpSession session) throws Exception {
-		 Db db = null;
-		 
-		 int idAgendamesyuarat;
-		
+	private String simpanFail(String userId,String con) throws Exception {
+		 Db db = null;	 
+		 String idFaiLain;
+		 Hashtable<String,String> h = null;
+				 
 		 if (getParam("idAgendamesyuarat") == "" || Integer.parseInt(getParam("idAgendamesyuarat")) == 0){
+			 h = new Hashtable<String,String>();
 			 
-			
-			 Hashtable h = new Hashtable();
-			 
+			 h.put("con",con);
 			 h.put("id_Mesyuarat",getParam("idMesyuarat"));
 			 h.put("agenda", getParam("txtAgenda"));
-			 h.put("idmasuk", (String)session.getAttribute("_ekptg_user_id"));
-			 idAgendamesyuarat = FrmFailLainKemaskiniData.add(h);
+			 h.put("idmasuk", userId);
+			 idFaiLain = FrmFailLainKemaskiniData.add(h);			 
+			 return idFaiLain;
 			 
-			 return idAgendamesyuarat;
 		 } else{
-			 
-			 Hashtable h = new Hashtable();
-			 
-			 h.put("idAgendamesyuarat", Integer.parseInt(getParam("idAgendamesyuarat")));
+			 h = new Hashtable<String,String>();			 
+			 h.put("idAgendamesyuarat", getParam("idAgendamesyuarat"));
 			 h.put("agenda", getParam("txtAgenda"));
-			 h.put("idmasuk", (String)session.getAttribute("_ekptg_user_id"));
+			 h.put("idmasuk", userId);
 			
-			 idAgendamesyuarat = FrmFailLainKemaskiniData.update(h);
+			 idFaiLain = FrmFailLainKemaskiniData.update(h);		 
+			 return idFaiLain;
 			 
-			 return idAgendamesyuarat;
 		 }
 	   
 	  }

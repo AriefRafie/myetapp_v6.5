@@ -1,7 +1,6 @@
 package ekptg.model;
 
 
-import java.io.StringReader;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,12 +15,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,8 +38,6 @@ import org.apache.velocity.app.VelocityEngine;
 import ekptg.engine.CacheManager;
 import ekptg.engine.CachedObject;
 import ekptg.engine.StateLookup;
-import ekptg.helpers.AuditTrail;
-import ekptg.helpers.DB;
 import ekptg.helpers.Paging2;
 
 /*
@@ -138,11 +133,8 @@ public class RazTemplete extends VTemplate {
 			return "app/RazTemplate/error.jsp";	
 			
 		}
-		
-		
-	
-		//setup paging untuk senarai
-		
+			
+		//setup paging untuk senarai	
 		public Map RTsetupPageList(List list,List selectedColumn, 
 				//String namaList, 
 				//String namaMap, 
