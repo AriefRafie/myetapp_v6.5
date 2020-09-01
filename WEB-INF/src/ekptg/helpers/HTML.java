@@ -4108,7 +4108,7 @@ public class HTML {
 					kodJawatan = "00";
 				}
 				sb.append("<option " + s + " value=" + f.getIdJawatan() + ">"
-						+ kodJawatan + " - "
+//						+ kodJawatan + " - "
 						+ f.getKeterangan().toUpperCase() + "</option>\n");
 			}
 			sb.append("</select>");
