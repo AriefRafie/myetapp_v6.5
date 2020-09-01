@@ -365,6 +365,41 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				this.context.put("readonly", "readonly");
 				this.context.put("inputTextClass", "disabled");
 
+				// HEADER
+				beanHeader = new Vector();
+				logic.setMaklumatHeader(idFail);
+				beanHeader = logic.getBeanMaklumatHeader();
+				this.context.put("BeanHeader", beanHeader);
+
+				if (beanHeader.size() != 0) {
+					Hashtable hashHeader = (Hashtable) logic.getBeanMaklumatHeader().get(0);
+					//idFail = (String) hashHeader.get("idFail");
+					idPermohonan = (String) hashHeader.get("idPermohonan");
+					idStatus = (String) hashHeader.get("idStatus");
+					idHakmilikAgensi = (String) hashHeader.get("idHakmilikAgensi");
+					idNegeriPemohon = (String) hashHeader.get("idNegeriPemohon");
+					nama = (String) hashHeader.get("namaKementerian");
+					namaAgensi = (String) hashHeader.get("namaAgensi");
+					alamat1 = (String) hashHeader.get("alamat1");
+					alamat2 = (String) hashHeader.get("alamat2");
+					alamat3 = (String) hashHeader.get("alamat3");
+					poskod = (String) hashHeader.get("poskod");
+					negeri = (String) hashHeader.get("negeri");
+					perkara = (String) hashHeader.get("perkara");
+					idKementerian = (String) hashHeader.get("idKementerian");
+					idAgensi = (String) hashHeader.get("idAgensi");
+					this.context.put("namaKementerian", nama);
+					this.context.put("namaAgensi", namaAgensi);
+					this.context.put("alamat1", alamat1);
+					this.context.put("alamat2", alamat2);
+					this.context.put("alamat3", alamat3);
+					this.context.put("poskod", poskod);
+					this.context.put("negeri", negeri);
+					this.context.put("perkara", perkara);
+					this.context.put("idKementerian", idKementerian);
+					this.context.put("idAgensi", idAgensi);
+				}
+
 				// MAKLUMAT PERMOHONAN
 				beanMaklumatPermohonan = new Vector();
 				logic.setMaklumatPermohonan(idFail);
@@ -382,8 +417,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					Hashtable hashPemohon = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
 					idKategoriPemohon = (String) hashPemohon.get("idKategoriPemohon");
 					idPejabat = (String) hashPemohon.get("idPejabat");
-					idKementerian = (String) hashPemohon.get("idKementerian");
-					idAgensi = (String) hashPemohon.get("idAgensi");
+					//idKementerian = (String) hashPemohon.get("idKementerian");
+					//idAgensi = (String) hashPemohon.get("idAgensi");
 				}
 				idKategoriPemohon = logic.getKategoriPemohonTukarguna();
 
@@ -725,8 +760,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				// MODE UPDATE
 				else if ("update".equals(mode)) {
 					myLog.info("baca mode update");
-
-					myLog.info("baca mode update idPermohonan >>> "+idPermohonan);
 					semak = new FrmSemakan();
 					semak.mode = mode;
 					senaraiSemak = semak.getSenaraiSemakanAttach("phptukar",idPermohonan);
@@ -808,23 +841,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				// MAKLUMAT KEGUNAAN TANAH
 				this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", " "));
 
-
-				/*//MAKLUMAT HAKMILIK
-				if ("doChangePeganganHakmilik".equals(submit)) {
-					idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(getParam("txtPeganganHakmilik"), "3", idAgensi);
-
-						if (idHakmilikAgensi.isEmpty()) {
-						this.context.put("errorPeganganHakmilik","Hakmilik tidak wujud.");
-						}
-
-				}
-
-				beanMaklumatTanah = new Vector();
-				myLog.info("idHakmilikAgensi: "+idHakmilikAgensi+" idHakmilikSementara: "+idHakmilikSementara);
-				logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
-				beanMaklumatTanah = logic.getBeanMaklumatTanah();
-				context.put("BeanMaklumatTanah", beanMaklumatTanah);*/
-				System.out.println("txtPeganganHakmilik ros >>>> "+getParam("txtPeganganHakmilik"));
 				//MAKLUMAT HAKMILIK
 				if ("doChangePeganganHakmilik".equals(submit2)) {
 					idHakmilikAgensi = logic.getIdHakmilikAgensiByPeganganHakmilik(getParam("txtPeganganHakmilik").trim());
