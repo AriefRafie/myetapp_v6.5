@@ -2,6 +2,7 @@
   <tr> #foreach($beanHeader in $BeanHeader)
     #set($idFail = $beanHeader.idFail)
     #set($noFail = $beanHeader.noFail)
+    #set($noFailNegeri = $beanHeader.noFailNegeri)
     #set($urusan = $beanHeader.urusan)
     #set($subUrusan = $beanHeader.subUrusan)
     #set($idPermohonan = $beanHeader.idPermohonan)
@@ -34,7 +35,12 @@
             <input type="button" name="cmdLogTugasan" id="cmdLogTugasan" value="LOG TUGASAN FAIL" onclick="paparLogTugasan('$idFail')"/>
           </td>
         </tr>
-         <tr>
+        <tr>
+          <td width="36%" align="right">No Fail Negeri</td>
+          <td width="1%">:</td>
+          <td width="63%"><font color="blue">$noFailNegeri</font></td>
+        </tr>
+        <tr>
           <td width="36%" align="right">Urusan</td>
           <td width="1%">:</td>
           <td width="63%"><font color="blue">$urusan</font></td>

@@ -107,10 +107,9 @@ function mohonTAC(idFail,id_Permohonan) {
 function hantarTAC(idFail,id_Permohonan) {
 		//alert(idFail);
 		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC&command=hantar";	
-		document.${formName}.submit();	
-		//alert(document.${formName}.command);
-		
- 		//var url = "../../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
+		document.${formName}.submit();			
+	
+ 		var url = "../../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
 		//var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
 		//var url = "../x/${securityToken}/ekptg.view.ppk.BorangF?idFail="+idFail+"&id_Permohonan="+id_Permohonan;
 		//var url = "../x/${securityToken}/ekptg.report.ppk.BorangF?idfail="+idFail;
@@ -119,7 +118,8 @@ function hantarTAC(idFail,id_Permohonan) {
 		       hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
 			hWnd.focus();
-	
+			
+		
 	}
 
 function cetakBorangD(noFail,idfail,idPerbicaraan) {

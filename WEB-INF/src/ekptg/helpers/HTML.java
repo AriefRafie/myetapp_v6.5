@@ -4108,7 +4108,7 @@ public class HTML {
 					kodJawatan = "00";
 				}
 				sb.append("<option " + s + " value=" + f.getIdJawatan() + ">"
-						+ kodJawatan + " - "
+//						+ kodJawatan + " - "
 						+ f.getKeterangan().toUpperCase() + "</option>\n");
 			}
 			sb.append("</select>");
@@ -11666,7 +11666,7 @@ public class HTML {
 			Hashtable h;
 			String s = "";
 			for (int i = 0; i < v.size(); i++) {
-				h = new Hashtable();
+				h = new Hashtable();   
 				h = (Hashtable) v.get(i);
 				if (h.get("ID_PEGAWAI").equals(selectedValue)) {
 					s = "selected";

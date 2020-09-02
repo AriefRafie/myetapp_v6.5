@@ -41,7 +41,7 @@ public class FrmCRBSenaraiFailData {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 
-	public void carianFail(String noFail, String namaPemohon,
+	public void carianFail(String noFail, String noFailNegeri, String namaPemohon,
 			String noPengenalan, String tarikhTerima, String idNegeri,
 			String idDaerah, String idMukim, String idJenisHakmilik,
 			String noHakmilik, String noWarta, String idLot, String noLot,
@@ -58,7 +58,7 @@ public class FrmCRBSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, F.ID_NEGERI, F.ID_DAERAH, "
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.NO_FAIL_NEGERI, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, F.ID_NEGERI, F.ID_DAERAH, "
 					+ "F.ID_MUKIM, F.NO_HAKMILIK, F.ID_LOT, F.NO_LOT, B.ID_STATUS, J.KOD_JENIS_HAKMILIK, K.KETERANGAN AS KETERANGANLOT, "
 					+ " L.NAMA_MUKIM, M.NAMA_DAERAH, N.NAMA_NEGERI, I.NAMA_AGENSI, H.NAMA_KEMENTERIAN, O.FLAG_BUKA, O.FLAG_MT, O.FLAG_PINDAAN, O.FLAG_PEMBETULAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F,"
@@ -71,8 +71,7 @@ public class FrmCRBSenaraiFailData {
 
 			// SENARAI TUGASAN
 			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole)
-					|| "(PHP)PYWPenolongPegawaiTanahHQ".equals(userRole)
-					|| "PenyemakNegeri".equals(userRole)) {
+					|| "(PHP)PYWPenolongPegawaiTanahHQ".equals(userRole)) {
 				sql = sql + " AND O.ID_PEGAWAI = '" + userId
 						+ "' AND O.ID_NEGERI = '" + idNegeriUser + "'"
 						+ " AND O.ROLE = '" + userRole
@@ -88,6 +87,14 @@ public class FrmCRBSenaraiFailData {
 				if (!noFail.trim().equals("")) {
 					sql = sql + " AND UPPER(A.NO_FAIL) LIKE '%' ||'"
 							+ noFail.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			
+			// noFailNegeri
+			if (noFailNegeri != null) {
+				if (!noFailNegeri.trim().equals("")) {
+					sql = sql + " AND UPPER(A.NO_FAIL_NEGERI) LIKE '%' ||'"
+							+ noFailNegeri.trim().toUpperCase() + "'|| '%'";
 				}
 			}
 
@@ -232,6 +239,9 @@ public class FrmCRBSenaraiFailData {
 								.getString("ID_PERMOHONAN"));
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
 						.getString("NO_FAIL").toUpperCase());
+				h.put("noFailNegeri",
+						rs.getString("NO_FAIL_NEGERI") == null ? "" : rs
+								.getString("NO_FAIL_NEGERI").toUpperCase());
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("idStatus",
@@ -684,7 +694,7 @@ public class FrmCRBSenaraiFailData {
 			String idBandar, String idNegeri, String emel, String noTel,
 			String noFaks, String idKementerianPemohon, String idAgensiPemohon,
 			String idPejabat, String idSeksyenJKPTG, String namaPengadu,
-			String idKementerianTanah, String idNegeriTanah,
+			String noFailNegeri, String idKementerianTanah, String idNegeriTanah,
 			String idHakmilikAgensi, String idPPTBorangK,
 			String idHakmilikUrusan, String idPHPBorangK,
 			String idHakmilikSementara, String txtPeganganHakmilik, HttpSession session) throws Exception {
@@ -732,6 +742,7 @@ public class FrmCRBSenaraiFailData {
 
 			r.add("NO_FAIL", noFail);
 			r.add("NO_FAIL_ROOT", noFail);
+			r.add("NO_FAIL_NEGERI", noFailNegeri);
 			r.add("ID_LOKASIFAIL", "2"); // UNIT PHP DI TINGKAT 2
 			r.add("FLAG_JENIS_FAIL", "1"); // DATA BARU ETAPP
 			r.add("ID_NEGERI", idNegeriTanah);
@@ -1184,7 +1195,7 @@ public class FrmCRBSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, B.FLAG_PELBAGAI"
+			sql = "SELECT A.ID_FAIL, A.NO_FAIL, A.NO_FAIL_NEGERI, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, B.FLAG_PELBAGAI"
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANKUATKUASA C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -1199,6 +1210,9 @@ public class FrmCRBSenaraiFailData {
 								.getString("ID_FAIL"));
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
 						.getString("NO_FAIL").toUpperCase());
+				h.put("noFailNegeri",
+						rs.getString("NO_FAIL_NEGERI") == null ? "" : rs
+								.getString("NO_FAIL_NEGERI").toUpperCase());
 				h.put("idPermohonan",
 						rs.getString("ID_PERMOHONAN") == null ? "" : rs
 								.getString("ID_PERMOHONAN"));
