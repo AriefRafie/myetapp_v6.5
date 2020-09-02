@@ -12,7 +12,7 @@
     #set($tujuanPengambilan = $beanHeader.tujuanPengambilan)
     #set($noLesen = $beanHeader.noLesen)
     #end
-    
+        
     <td width="50%" valign="top" ><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -21,11 +21,12 @@
           <td width="1%">:</td>
           <td ><font color="blue">$noPermohonan</font></td>
         </tr>
+        #if($status == 'LULUS')
          <tr>
           <td width="30%">No Fail Lama </td>
           <td width="1%">:</td>
           <td ><font color="blue">$noFailLama</font></td>
-        </tr>
+        </tr>#end
         <tr>
           <td width="30%">No Fail </td>
           <td width="1%">:</td>
