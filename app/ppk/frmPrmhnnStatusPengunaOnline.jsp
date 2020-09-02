@@ -365,8 +365,6 @@
 	}
 	
 function paparPraBicara(a){
-	// alert (a);
-	
 	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupPraPerbicaraan?idPraPerbicaraan="+a;
 	
 	var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
