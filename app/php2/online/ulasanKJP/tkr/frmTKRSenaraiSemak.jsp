@@ -61,6 +61,9 @@
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%">
+      #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
+      <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
+      #end
       #if ($mode == 'update')
       <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSenaraiSemak()"/>
       <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>

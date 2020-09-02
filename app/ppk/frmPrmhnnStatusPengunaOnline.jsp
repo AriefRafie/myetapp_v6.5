@@ -216,18 +216,21 @@
 				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','$!senarai.catatan')"><strong>$senarai.status </strong><small style="color:blue">(KLIK DI SINI)</small></a>
 				
 			#elseif($senarai.id_status == '152')
-				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','TELAH ADA PERMOHONAN AWAL.')"><strong>$senarai.status </strong><small style="color:blue">(KLIK DI SINI)</small></a>
+				<a href="#" title="Papar Maklumat Pembatalan" onClick="javascript:maklumatBatal('$!senarai.nofail.toUpperCase()','$!senarai.nama_simati','$!senarai.status','TELAH ADA PERMOHONAN AWAL','$!senarai.no_fail_awal', '$!senarai.nama_pemohon_awal', '$!senarai.id_pejabat_awal')"><strong>$senarai.status </strong><small style="color:blue">(KLIK DI SINI)</small></a>
 			
 			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
 				<strong>$senarai.status</strong>
 				<br>
-				<a href="#" onClick="javascript:cetakBorangF('$!senarai.idFail','$!senarai.id_Permohonan')"><font color="blue"> Cetak Perintah </font></a>
-				
-			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
-				<strong>$senarai.status</strong>
+				<a href="#" title="Permohonan Cetak Perintah" onClick="javascript:cetakBorangF('$!senarai.idFail','$!senarai.id_Permohonan')"><small style="color:blue"> CETAK PERINTAH </small></a>
+			
+			#elseif($senarai.id_status == '8')
+				<a href="#" title="Papar Surat Akuan Terima" onclick="javascript:cetakSuratAkuanTerima('$!senarai.nofail.toUpperCase()','$!senarai.idFail','S')"><strong>$senarai.status </strong><small style="color:blue">(KLIK DI SINI)</small></a>
+			
+			##elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
+				<!-- <strong>$senarai.status</strong>
 				<br>
-				<a href="#" onClick="javascript:cetakBorangE('$!senarai.idFail','$!senarai.id_Permohonan','$!senarai.id_simati','$idPerintahHTAOBMST')"><font color="blue"> Cetak Perintah </font></a>
-		
+				<a href="#" onClick="javascript:cetakBorangE('$!senarai.idFail','$!senarai.id_Permohonan','$!senarai.id_simati','$idPerintahHTAOBMST')"><small style="color:blue"> CETAK PERINTAH </small></a>
+				 -->
 			
 			#else
 	  			<strong>$senarai.status</strong>
@@ -292,12 +295,24 @@
 </body>
 
 <script>
-	function maklumatBatal(nofail,nama,status,catatan){
+// 	function maklumatBatal(nofail,nama,status,catatan){
+// 		console.log(catatan);
+		
+// 		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupMaklumatBatal?noFail="+nofail+"&namaS="+nama+"&status="+status+"&catatan="+catatan;
+		
+// 		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+// 		if ((document.window != null) && (!hWnd.opener))
+// 		       hWnd.opener = document.window;
+// 		if (hWnd.focus != null) hWnd.focus();
+// 			hWnd.focus();
+// 	}
+	
+	function maklumatBatal(nofail,nama,status,catatan, nofailawal,namapemohonawal,pejabatawal){
 		console.log(catatan);
 		
-		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupMaklumatBatal?noFail="+nofail+"&namaS="+nama+"&status="+status+"&catatan="+catatan;
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupMaklumatBatal?noFail="+nofail+"&namaS="+nama+"&status="+status+"&catatan="+catatan+"&nofailawal="+nofailawal+"&namapemohonawal="+namapemohonawal+"&pejabatawal="+pejabatawal;
 		
-		var hWnd = window.open(url,'printuser','width=580,height=220, resizable=yes,scrollbars=yes');
+		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		       hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
@@ -338,6 +353,15 @@
 		      hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
 			hWnd.focus();
+	}
+	
+	function cetakSuratAkuanTerima(noFail,idfail,flagReport) {
+		//window.close();
+	    var url = "../servlet/ekptg.report.ppk.SuratAkuanTerima?nofail="+noFail+"&idfail="+idfail+"&bilDokumen=01&idPegawai=0&flagReport="+flagReport; 
+	    var hWnd = window.open(url,'printuser','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
 	}
 	
 function paparPraBicara(a){

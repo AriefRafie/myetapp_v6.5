@@ -62,12 +62,14 @@
                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
                 <td width="28%">Pegangan Hakmilik</td>
                 <td width="1%">:</td>
-                <td width="70%"> #if ($mode == 'update')
-                  <input type="text" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik" onBlur="doChangePeganganHakmilik();">
+                <td width="70%">
+                #if ($mode == 'update')
+                  <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();">
                   #else
-                  <input type="text" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
+                  <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
                   #end
-                  <input type="hidden" name="idHakmilikAgensi1" id="idHakmilikAgensi1" value="$idHakmilikAgensi" />
+                  <input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi" />
+                   <input type="hidden" name="idHakmilik" id="idHakmilik" value="$beanMaklumatTanah.idHakmilik" />
                   <span class="style1">$errorPeganganHakmilik</span> </td>
               </tr>
               <tr>
@@ -153,26 +155,20 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                 </td>
-
-                <!--  #if ($mode == 'view')
+                #if ($mode == 'view')
                   #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
                   <input type="button" name="cmdKmskiniTnh" id="cmdKmskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
-                  <input type="button" name="cmdHapus2" id="cmdHapus2" value="Hapus" onClick="doHapus()"/>
                   #end
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   ##end
                   #if ($mode == 'update')
                   <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
-                  <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
                   #end
                   #else
                   <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
-                  <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                 #end  </td> -->
+                 #end
+                 </td>
 
 
 
@@ -282,10 +278,24 @@
               </tr>
               #end
               <tr>
+
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td>
+                #if ($mode == 'view')
+                  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
+                  <input type="button" name="cmdKmskiniTnh" id="cmdKmskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
+                  #end
+                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+                  ##end
+                  #if ($mode == 'update')
+                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+                  #end
+                  #else
+                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+                 #end</td>
               </tr>
               #if ($mode == 'update')
               <tr>
@@ -300,64 +310,6 @@
               </tr>
               #end
             </table>
-            <div class="TabbedPanelsContent">
-              <table width="100%" border="0" cellspacing="2" cellpadding="2">
-                <tr>
-                  <td><fieldset>
-                      <legend><b>SENARAI TANAH</b></legend>
-                      <table align="center" width="100%">
-                        <tr class="table_header">
-                          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-                          <td width="15%"><strong>Pegangan Hakmilik</strong></td>
-                          <td width="10%"><strong>Lot</strong></td>
-                          <td width="10%"><strong>No. Hakmilik</strong></td>
-                          <td width="10%"><strong>No. Warta</strong></td>
-                          <td width="15%"><strong>Mukim</strong></td>
-                          <td width="15%"><strong>Daerah</strong></td>
-                          <td width="15%"><strong>Negeri</strong></td>
-                        </tr>
-                        #set ($senaraiTanahSemua = "")
-                        #if ($SenaraiTanahSemua.size() > 0)
-                        #foreach ($senaraiTanahSemua in $SenaraiTanahSemua)
-                        #if ($senaraiTanahSemua.bil == '')
-                        #set( $row = "row1" )
-                        #elseif (($senaraiTanahSemua.bil % 2) != 0)
-                        #set( $row = "row1" )
-                        #else
-                        #set( $row = "row2" )
-                        #end
-                        <tr>
-                          <td class="$row" align="center">$senaraiTanahSemua.bil</td>
-                          <td class="$row"><a href="javascript:papar('$senaraiTanahSemua.idHakmilikPermohonan','$senaraiTanahSemua.flagHakmilik')" class="style2">$senaraiTanahSemua.peganganHakmilik</a></td>
-                          <td class="$row">$senaraiTanahSemua.noLot</td>
-                          <td class="$row">$senaraiTanahSemua.noHakmilik</td>
-                          <td class="$row">$senaraiTanahSemua.noWarta</td>
-                          <td class="$row">$senaraiTanahSemua.namaMukim</td>
-                          <td class="$row">$senaraiTanahSemua.namaDaerah</td>
-                          <td class="$row">$senaraiTanahSemua.namaNegeri</td>
-                        </tr>
-                        #end
-                        #else
-                        <tr>
-                          <td class="row1" align="center">&nbsp;</td>
-                          <td class="row1">Tiada Rekod</td>
-                          <td class="row1">&nbsp;</td>
-                          <td class="row1">&nbsp;</td>
-                          <td class="row1">&nbsp;</td>
-                          <td class="row1">&nbsp;</td>
-                          <td class="row1">&nbsp;</td>
-                          <td class="row1">&nbsp;</td>
-                          <td class="row1">&nbsp;</td>
-                        </tr>
-                        #end
-                        <tr>
-                          <td colspan="8">&nbsp;</td>
-                        </tr>
-                      </table>
-                    </fieldset></td>
-                </tr>
-              </table>
-            </div>
           </div>
           <!-- END MAKLUMAT TUKARGUNA -->
 
@@ -391,7 +343,7 @@
    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1"))
            	<td>
            	<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
-        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+        	Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
    			<p align="center"> <input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
 			</td>
@@ -399,14 +351,14 @@
 			#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("2"))
            	<td>
 			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
-        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+        	Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
    			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
       		</td>
 			#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
            	<td>
 			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
-        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+        	Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
    			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
       		</td>
@@ -419,7 +371,7 @@
                 <!-- <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/> -->
                 <input type="checkbox" name="pengesahan" id="pengesahan" checked disabled>&nbsp&nbsp
 
-        	Saya, <b>$!pemohon.get("namaPemohon")</b>, $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+        	Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
       		<p align="center">
            		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
@@ -495,24 +447,19 @@ function refreshFromPilihTanah(idHakmilikAgensi) {
 	doAjaxCall${formName}("doChangeMaklumatTanah");
 }
 function doSimpanKemaskiniMaklumatTnh() {
-
-	if(document.${formName}.idHakmilikAgensi1.value == ""){
-		alert('Sila pilih Pegangan Hakmilik.');
-		return;
-	}
-
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
+		document.${formName}.submit2.value = "seterusnya";
 		return;
 	}
 	document.${formName}.mode.value = "view";
 	document.${formName}.selectedTabUpper.value = 0;
-	document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
+	document.${formName}.submit2.value = "seterusnya";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatTnh";
 	document.${formName}.submit();
 }
-function doChangePeganganHakmilik1() {
-	doAjaxCall${formName}("doChangePeganganHakmilik1");
+function doChangePeganganHakmilik() {
+	document.${formName}.submit2.value = "seterusnya";
+	doAjaxCall${formName}("doChangePeganganHakmilik");
 }
 function doBacklist() {
 	document.${formName}.submit2.value = "";
