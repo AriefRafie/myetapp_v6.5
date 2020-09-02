@@ -518,7 +518,7 @@ background: #E0F2F7;
             </tr>
            	<tr>
            		<td>&nbsp;</td>
-            	<td>Tempoh Pendudukan (Bulan)</td>
+            	<td>Tempoh Pendudukan (Bulan X) </td>
             	<td>:</td>
             	<td><input type="text" name="txtTempohPendudukan" value="$!txtTempohPendudukan" size="15" class="disabled" readonly></td>
             </tr>
