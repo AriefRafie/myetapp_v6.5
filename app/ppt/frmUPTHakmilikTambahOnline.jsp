@@ -437,40 +437,6 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 </fieldset>
 #end
-<fieldset>
-	<table width="100%" border="0">
-		<tr>
-			<td width="1%"></td>
-			<td valign="top" width="23%">Tarikh Pembayaran </td>
-			<td valign="top" width="1%">:</td>
-			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran"
-				size="12" type="text" value="$!txdTarikhPembayaran"
-				onkeyup="validateTarikh(this,this.value)"
-				onblur="check_date(this);javascript:updatetxdTarikhPembayaran()">
-				<img src="../img/calendar.gif"
-				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<td valign="top" width="23%">Bukti Pembayaran (baucer)</td>
-			<td valign="top">:</td>
-			<td><input id="fileupload" name="fileupload" type=file size=40 /></td>
-			<br />
-		</tr>
-	</table>
-</fieldset>
-
-
-
-<table width="100%" border="0">
-	<tr>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>$!perhatian3</td>
-	</tr>
-</table>
-
 </fieldset>
 
 
