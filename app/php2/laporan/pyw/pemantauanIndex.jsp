@@ -219,6 +219,16 @@
 				ptem = '&template=PYWLaporanPemantauanKem';
 				punit = "&ID_KEMENTERIAN="+unit;
 			}
+		}else if(negeri && unit !="0" && !daerahbaru && daerah == "-1" ){
+			if(unit=="-1"){
+				alert("Sila pilih \"Kementerian\" terlebih dahulu");
+				document.${formName}.socUnit.focus();
+				return;
+			}else if(unit=="0"){
+			}else{
+				ptem = '&template=PYWLaporanPemantauanKem';
+				punit = "&ID_KEMENTERIAN="+unit;
+			}
 		}else if(negeri && unit !="0" && daerahbaru && daerah == "0" ){
 			if(daerahbaru=="-1"){
 				alert("Sila pilih \"Daerah\" terlebih dahulu");
@@ -246,7 +256,7 @@
 				document.${formName}.socDaerah.focus();
 				return;
 			}else{
-				ptem = '&template=PYWLaporanPemantauanAgensi';
+				ptem = '&template=PYWLaporanPemantauanKem';
 				pagensi = "&ID_AGENSI="+daerah;
 			}
 		}else if(negeri && unit !="0" && !daerahbaru && daerah != "0" ){

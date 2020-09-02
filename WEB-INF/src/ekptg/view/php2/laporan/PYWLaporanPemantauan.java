@@ -112,7 +112,7 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
         	myLog.info("sorTempoh="+sorTempoh);
 			tempIdNegeri = Long.parseLong(getParam("socNegeri"));
 			String tempIdDaerah = getParam("socDaerahBaru").equals("")?"0":getParam("socDaerahBaru");
-			String idAgensi = !getParam("socDaerah").equals("0")?getParam("socDaerah"):"0";
+			String idAgensi = !getParam("socDaerah").equals("-1")?getParam("socDaerah"):"0";
 			String idKementerian = !getParam("socUnit").equals("-1")?getParam("socUnit"):"0";
 
 			setSOC(tempIdNegeri,idStatus,tempIdDaerah,idAgensi,idKementerian);
