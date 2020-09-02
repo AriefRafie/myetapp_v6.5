@@ -258,10 +258,10 @@ padding:0 0.25em;
 			window.opener.semakLampiran('socBandar');
 
 		}else if('$!actionRefresh'=='phpapb'){
-			window.opener.doChangeTab('2');
-
-		}else if('$!actionRefresh'=='phppnw'){
-			alert("masuk actionRefresh phppnw");
+			window.opener.doChangeTab('2');			
+		}
+		else if('$!actionRefresh'=='phppnw'){
+		//	alert("masuk actionRefresh phppnw");
 			window.opener.doChangeTabUpper('2');
 		}
 		else if('$!actionRefresh'=='phpphptkr'){

@@ -265,6 +265,9 @@ public class FrmSementaraPermohonan extends AjaxBasedModule {
         		
         		String id_kementerian = getParam("socKementerian");
         		
+        		String txtTempohPendudukan = getParam("txtTempohPendudukan");
+        		context.put("txtTempohPendudukan", txtTempohPendudukan);
+        		myLogger.info("txtTempohPendudukan   :"+txtTempohPendudukan);
         		//get and set data
         		getAndSetDataOnchangeKementerian(id_kementerian,"new",userIdNeg);
         		
@@ -2710,6 +2713,7 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		context.put("sorFlagSegera", "");
 		context.put("sorJenisProjek", "");
 		context.put("txdTarikhPendudukanMula", getParam("txdTarikhPendudukanMula"));
+		context.put("txtTempohPendudukan", "");
 		
 		context.put("sorJenisKodDaerah", "");
 		

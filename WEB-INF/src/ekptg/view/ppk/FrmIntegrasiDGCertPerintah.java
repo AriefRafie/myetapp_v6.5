@@ -27,7 +27,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 	static Logger myLogger = Logger.getLogger(FrmIntegrasiDGCertPerintah.class);
 	
 	// model
-	FrmPerintahSek8Data modelPerintah = new FrmPerintahSek8Data();
+	FrmPerintahSek8Data logic = new FrmPerintahSek8Data();
 
 	@Override
 	public Template doTemplate() throws Exception {
@@ -40,21 +40,21 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 		myLogger.info("submit ::"+submit);
 		String fFrom = request.getParameter("frmFrom") != null ? (String) request.getParameter("frmFrom") : "";
 				
-				String usid = "";
-
+				String userId = "";
+				String idPerbicaraan = getParam("id_perbicaraan");
 				context.put("flagSimpan", "");
 				context.put("NO_FAIL", "");
-				context.put("id_perbicaraan", "");
+				context.put("id_perintah", "");
 				context.put("id_fail", "");
-				usid = (String) session.getAttribute("_ekptg_user_id");
-				this.context.put("usid", usid);
+				userId = (String) session.getAttribute("_ekptg_user_id");
+				this.context.put("usid", userId);
 				
 				String NO_FAIL = request.getParameter("nofail");
-				String id_perbicaraan = request.getParameter("idperbicaraan");
+				String id_perintah = request.getParameter("idperintah");
 				String id_fail = request.getParameter("idfail");
 				
 				context.put("NO_FAIL", NO_FAIL);
-				context.put("id_perbicaraan", id_perbicaraan);
+				context.put("id_perintah", id_perintah);
 				context.put("id_fail", id_fail);
 				
 				
@@ -80,10 +80,10 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
             ///System.out.println("inside userlogin ################"+userlogin);
 			//System.out.println("inside username ################"+username);
 			String id = getParam("id_permohonan");
-			usid = (String) session.getAttribute("_ekptg_user_id");
-			
+			userId = (String) session.getAttribute("_ekptg_user_id");
+			String idPermohonan = getParam("idPermohonan");
 			// get data keputusan permohonan
-			keputusanPermohonan = modelPerintah.getKeputusanPermohonan(id);
+			keputusanPermohonan = logic.getKeputusanPermohonan(idPermohonan);
 
 			Hashtable kp = new Hashtable();
 			String idkp = "";
@@ -94,8 +94,8 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 
 			// get info pemohon
-			modelPerintah.setListSemak(id, usid);
-			list = modelPerintah.getListSemak();
+			logic.setListSemak(idPermohonan, userId);
+			list = logic.getListSemak();
 			
 			String idSimati = "";
 			String idStatus = "";
@@ -117,8 +117,8 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			
 			
 			// --data notis
-			modelPerintah.setListSemakWithData(idkp);
-			dataNotis = modelPerintah.getListSemakWithData();
+			logic.setListSemakWithData(idkp);
+			dataNotis = logic.getListSemakWithData();
 			
 			
 			String bil = "";
@@ -441,11 +441,11 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 		} else if ("sahTandatangan".equals(submit)) {
 			
 			String NOFAIL = request.getParameter("NO_FAIL");
-			String idperbicaraan = request.getParameter("id_perbicaraan");
+			String idperintah = request.getParameter("id_perintah");
 			String idfail = request.getParameter("id_fail");
 		
 			context.put("NO_FAIL", NOFAIL);
-			context.put("id_perbicaraan", idperbicaraan);
+			context.put("idperintah", idperintah);
 			context.put("id_fail", idfail);
 			
 			//aishah add untuk pindah dr table TEMP ke table real
@@ -473,11 +473,12 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			context.put("username", username);
             ///System.out.println("inside userlogin ################"+userlogin);
 			//System.out.println("inside username ################"+username);
-			String id = getParam("id_permohonan");
-			usid = (String) session.getAttribute("_ekptg_user_id");
+			String idPermohonan = getParam("id_permohonan");
+			
+			userId = (String) session.getAttribute("_ekptg_user_id");
 			
 			// get data keputusan permohonan
-			keputusanPermohonan = modelPerintah.getKeputusanPermohonan(id);
+			keputusanPermohonan = logic.getKeputusanPermohonan(idPermohonan);
 
 			Hashtable kp = new Hashtable();
 			String idkp = "";
@@ -488,8 +489,8 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 
 			// get info pemohon
-			modelPerintah.setListSemak(id, usid);
-			list = modelPerintah.getListSemak();
+			logic.setListSemak(idPermohonan, userId);
+			list = logic.getListSemak();
 			
 			String idSimati = "";
 			String idStatus = "";
@@ -511,8 +512,8 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			
 			
 			// --data notis
-			modelPerintah.setListSemakWithData(idkp);
-			dataNotis = modelPerintah.getListSemakWithData();
+			logic.setListSemakWithData(idkp);
+			dataNotis = logic.getListSemakWithData();
 			
 			
 			String bil = "";
@@ -808,7 +809,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 			
 			//GET SIGNEDDATA
-			String dataDahSign = modelPerintah.getSignedData(idPerintah);
+			String dataDahSign = logic.getSignedData(idPerintah);
 			System.out.println("dataDahSign    "+dataDahSign);
 			context.put("dataDahSign", dataDahSign);
 
@@ -821,9 +822,9 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 		//String flagSimpan = "";
 			context.put("flagSimpan", "Y");
 			String NOFAIL = request.getParameter("NO_FAIL");
-			String idperbicaraan = request.getParameter("id_perbicaraan");
+			String idperintah = request.getParameter("id_perintah");
 			
-			System.out.println("idperbicaraan::::: "+idperbicaraan);
+			System.out.println("idperintah::::: "+idperintah);
 			String idfail = request.getParameter("id_fail");
 			String signedText = request.getParameter("signedText");
 			
@@ -835,12 +836,12 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 				db = new Db();
 				Connection con = db.getConnection();
 				con.setAutoCommit(false);
-				PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKPERINTAH SET SIGNED_TEXT  = ? WHERE ID_PERBICARAAN = ? ");
+				PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKPERINTAH SET SIGNED_TEXT  = ? WHERE ID_PERINTAH = ? ");
 	        	ps.setString(1, signedText);
-	        	ps.setString(2, idperbicaraan);       
+	        	ps.setString(2, idperintah);       
 	        	System.out.println("sql b4---");
 	        	ps.executeUpdate();  
-	        	System.out.println("sql--------UPDATE TBLPPKPERINTAH SET SIGNED_TEXT  = "+signedText+" WHERE ID_PERBICARAAN = "+idperbicaraan+"");
+	        	System.out.println("sql--------UPDATE TBLPPKPERINTAH SET SIGNED_TEXT  = "+signedText+" WHERE ID_PERINTAH = "+idperintah+"");
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -850,7 +851,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 
 		
 			context.put("NO_FAIL", NOFAIL);
-			context.put("id_perbicaraan", idperbicaraan);
+			context.put("id_perintah", idperintah);
 			context.put("id_fail", idfail);
 //			
 				vm = "app/ppk/integrasi/DGCertPerintah.jsp";

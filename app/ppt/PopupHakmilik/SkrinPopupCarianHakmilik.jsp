@@ -993,7 +993,7 @@ function cetakSuratEndorsanBorangK(idpermohonan, idhakmilik) {
 		// alert(idhakmilik);
 	}
 	
-	 var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratEndorsanBorangK&selectNoFail=yes";
+	 var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratEndorsanBorangK1";
 	// var url = "../servlet/ekptg.report.ppt.BuktiPenyampaian?idHakmilik="+idhakmilik+"&flagJenisSuratCara=E"; // takpakai
      var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
      if ((document.window != null) && (!hWnd.opener))

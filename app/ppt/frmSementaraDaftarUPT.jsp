@@ -179,7 +179,7 @@ background: #E0F2F7;
            		<td>&nbsp;</td>
             	<td>Tempoh Pendudukan (Bulan)</td>
             	<td>:</td>
-            	<td><input type="text" name="txtTempohPendudukan" value="" size="15" class="disabled" readonly></td>
+            	<td><input type="text" name="txtTempohPendudukan" value="$!txtTempohPendudukan" size="15" class="disabled" readonly></td>
             </tr>
      		<!-- END PPT-41 -->
         </table> 
@@ -343,6 +343,7 @@ background: #E0F2F7;
    			#set($txdTarikhSurat=$data.tarikh_surat)
    			#set($flagPermohonan=$data.flag_jenispermohonan)
    			#set($lblNoOnline=$data.no_permohonan_online)
+ 
    			<!-- PPT-41 -->
    			#set($txdTarikhPendudukanMula=$data.tarikh_pendudukan_mula)
    			#set($txdTarikhPendudukanAkhir=$data.tarikh_pendudukan_akhir)
@@ -517,7 +518,7 @@ background: #E0F2F7;
             </tr>
            	<tr>
            		<td>&nbsp;</td>
-            	<td>Tempoh Pendudukan (Bulan)</td>
+            	<td>Tempoh Pendudukan (Bulan X) </td>
             	<td>:</td>
             	<td><input type="text" name="txtTempohPendudukan" value="$!txtTempohPendudukan" size="15" class="disabled" readonly></td>
             </tr>

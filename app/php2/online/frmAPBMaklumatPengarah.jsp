@@ -63,7 +63,7 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'newPengarah')
       <input type="button" name="cmdSimpanPengarah" id="cmdSimpanPengarah" value="Simpan" onClick="simpanPengarah()"/>
-      <input type="button" name="cmdBatalPengarah" id="cmdBatalPengarah" value="Batal" onClick="batalPengarah()"/>
+      <input type="button" name="cmdBatalPengarah" id="cmdBatalPengarah" value="Batal/Kembali" onClick="batalPengarah()"/>
       #end
       #if ($mode == 'viewPengarah')
       <input type="button" name="cmdKemaskiniPengarah" id="cmdKemaskiniPengarah" value="Kemaskini" onClick="kemaskiniPengarah()"/>

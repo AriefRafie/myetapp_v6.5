@@ -46,7 +46,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	FrmAPBOnlineSenaraiFailData logic = new FrmAPBOnlineSenaraiFailData();
 	
 	FrmAPBHeaderData header = new FrmAPBHeaderData();
-	private String[] semaks;
+	//private String[] semaks;
 	
 	@Override
 	public String doTemplate2() throws Exception {
@@ -309,7 +309,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
 //	    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
 	    				
-	        		//String[] cbsemaks = this.request.getParameterValues("cbsemaks");
+//	        		String[] cbsemaks = this.request.getParameterValues("cbsemaks");
 	    			FrmSemakan frmSemak = new FrmSemakan();
 	    			frmSemak.semakanHapusByPermohonan(idPermohonan);
 	    			if (cbsemaks != null) {
@@ -390,7 +390,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 					
 		}
 		
-	//	this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
+		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
 		//daftar Baru
 		if ("daftarBaru".equals(actionOnline)){
 		log.info("masuk daftar Baru");
@@ -501,7 +501,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		beanMaklumatPermohonan = new Vector();
 		idFailLama = logic.getIdFailByNoFail(noFailLama);   
 		noFailLama = logic.getNoFail(idFail);
-		Log.info("noFailLama : "+noFailLama);
+		//Log.info("noFailLama : "+noFailLama);
 		if(noFailLama != "") {
 		context.put("noFailLama", noFailLama);
 		}
@@ -651,7 +651,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    			senaraiKoordinat = logic.getListKoordinat();
 	    			this.context.put("SenaraiKoordinat", senaraiKoordinat);
 	        		
-	        		//SENARAI TITIK KOORDINAT
+	        		//SENARAI PAKAR
 	    			logic.setSenaraiPakar(idPermohonan);
 	    			senaraiPakar = logic.getListPakar();
 	    			this.context.put("SenaraiPakar", senaraiPakar);
@@ -1525,6 +1525,72 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 			this.context.put("BeanMaklumatKoordinat", beanMaklumatKoordinat);			
 		}
 	}
+	//BARU TAMBAH21062020
+		//UPLOAD LAMPIRAN
+		private void uploadLampiran(String idPermohonan, HttpSession session) throws Exception {
+			log.info("lalu A");
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+				boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+				if (isMultipart != false) {
+					List items = upload.parseRequest(request);
+					Iterator itr = items.iterator();
+					while (itr.hasNext()) {
+						FileItem item = (FileItem) itr.next();
+						if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+							log.info("lalu B");
+							saveLampiran(item, idPermohonan, session);
+						}
+					}
+				}
+		}
+		
+		private void saveLampiran(FileItem item, String idPermohonan, HttpSession session) throws Exception {
+			log.info("lalu C");
+
+			Db db = null;
+				String userId = (String) session.getAttribute("_ekptg_user_id");
+					
+				try {
+					db = new Db();
+
+				// TBLPHPDOKUMEN
+				long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
+				Connection con = db.getConnection();
+				con.setAutoCommit(false);
+					PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
+								+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,FLAG_DOKUMEN,ID_PERMOHONAN) "
+								+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?)");
+					ps.setLong(1, idDokumen);
+					ps.setString(2, getParam("namaLampiran"));
+					ps.setString(3, getParam("catatanLampiran"));
+					ps.setString(4, userId);
+					ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
+					ps.setString(6, item.getContentType());
+					ps.setString(7, item.getName());
+					ps.setString(8, "L");
+					ps.setString(9, idPermohonan);
+					ps.executeUpdate();
+
+					con.commit();
+					log.info("lalu D");
+						
+					AuditTrail.logActivity("1610198", "4", null, session, "INS", "FAIL [" + idPermohonan + "] DIDAFTARKAN");
+						
+			} finally {
+				if (db != null)
+					db.close();
+			}
+			this.context.put("completed", true);
+		}
+		
+		private ILampiran getDocPHP(){
+			if(iLampiran == null){
+				iLampiran = new LampiranBean();
+			}
+			return iLampiran;
+					
+		}
 	//yati tambah
 	private static String namaPemohon(String idFail) throws Exception{
 	    

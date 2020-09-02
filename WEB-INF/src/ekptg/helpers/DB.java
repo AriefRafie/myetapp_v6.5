@@ -1357,14 +1357,14 @@ public class DB extends EkptgCache implements Serializable {
 				db = new Db();
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
-				r.add("id_Jenishakmilik");
-				r.add("kod_Jenis_Hakmilik");
-				r.add("Keterangan");
-				// sql = r.getSQLSelect("Tblrujjenishakmilik",
-				// "lpad(kod_Jenis_Hakmilik,100)");
-				sql = r.getSQLSelect("Tblrujjenishakmilik", "lpad(replace(kod_Jenis_Hakmilik,'00','A'),100)");
-
+				
+				sql += " SELECT ID_JENISHAKMILIK, KOD_JENIS_HAKMILIK, KETERANGAN "
+						+ " FROM TBLRUJJENISHAKMILIK "
+						+ " WHERE ID_JENISHAKMILIK NOT IN ('333')"
+						+ " ORDER BY LPAD (REPLACE (kod_jenis_hakmilik, '00', 'A'), 100)";
+				
 				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("Tblrujjenishakmilik====="+sql);
 				v = new Vector<Tblrujjenishakmilik>();
 				Tblrujjenishakmilik j = null;
 				while (rs.next()) {
@@ -1404,6 +1404,7 @@ public class DB extends EkptgCache implements Serializable {
 
 				sql += "SELECT id_Jenishakmilik, kod_Jenis_Hakmilik, Keterangan  " + " FROM Tblrujjenishakmilik "
 						+ " WHERE ID_JENISHAKMILIK IN (0,16,6,4,5,17,15,11,1,3,2,99,135,333) "
+						+ " AND ID_JENISHAKMILIK NOT IN ('333') "
 						+ " ORDER BY lpad(replace(kod_Jenis_Hakmilik,'00','A'),100)";
 
 				ResultSet rs = stmt.executeQuery(sql);

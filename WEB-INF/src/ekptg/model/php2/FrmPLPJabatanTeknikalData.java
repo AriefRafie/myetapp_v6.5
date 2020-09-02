@@ -23,7 +23,6 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.NumberToWords;
 import ekptg.helpers.Utils;
-import ekptg.model.utils.emel.EmailConfig;
 
 /**
  * modified by hilda
@@ -42,6 +41,7 @@ public class FrmPLPJabatanTeknikalData {
 	private Vector beanMaklumatPejabat = null;
 	private Vector listJPPH = null;
 	private Vector beanMaklumatJPPH = null;
+	private Vector beanMaklumatUlasanKJP = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -1040,10 +1040,8 @@ public class FrmPLPJabatanTeknikalData {
 					//add by aishah 08062017 - untuk dapatkan nama pegawai yang memberi ulasan
 					+ " A.NAMA_PEGAWAI, A.NO_TELEFON"
 					
-					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE "
-					//+ "A.ID_MENTERI = B.ID_KEMENTERIAN"
-					//+ " AND A.ID_AGENSI = C.ID_AGENSI "
-					+ "A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"' "
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE A.ID_MENTERI = B.ID_KEMENTERIAN"
+					+ " AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"' "
 					+ " AND A.ID_PERMOHONAN = '"+idPermohonan+"' ";
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -1111,6 +1109,46 @@ public class FrmPLPJabatanTeknikalData {
 			if (db != null)
 				db.close();
 		}
+	}
+	
+	public void setMaklumatUlasanKJP(String idUlasanTeknikal, String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatKJP = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT TARIKH_TERIMA_KEWANGAN, KEPUTUSAN_KEWANGAN, ULASAN_KEWANGAN, FLAG_KEPUTUSAN_PEMOHON, ULASAN_PEMOHON FROM TBLPHPKERTASKERJAPELEPASAN WHERE FLAG_KERTAS = '2' AND ID_PERMOHONAN = '"
+					+ idPermohonan + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("tarikhSurat",
+						rs.getDate("TARIKH_TERIMA_KEWANGAN") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_TERIMA_KEWANGAN")));
+				h.put("flagKeputusan",
+						rs.getString("KEPUTUSAN_KEWANGAN") == null ? "" : rs
+								.getString("KEPUTUSAN_KEWANGAN"));
+				h.put("ulasan", rs.getString("ULASAN_KEWANGAN") == null ? ""
+						: rs.getString("ULASAN_KEWANGAN"));
+				h.put("flagKeputusanPemohon",
+						rs.getString("FLAG_KEPUTUSAN_PEMOHON") == null ? "" : rs
+								.getString("FLAG_KEPUTUSAN_PEMOHON"));
+				h.put("ulasanPemohon", rs.getString("ULASAN_PEMOHON") == null ? ""
+						: rs.getString("ULASAN_PEMOHON"));
+				beanMaklumatKJP.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}		
 	}
 	
 	public void setLampiranKJP(String idPermohonan) throws Exception {
@@ -1462,7 +1500,7 @@ public class FrmPLPJabatanTeknikalData {
 
 			sql = r.getSQLUpdate("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
-			
+
 			// TBLRUJSUBURUSANSTATUSFAIL
 			r = new SQLRenderer();
 			r.update("ID_PERMOHONAN", idPermohonan);
@@ -2753,5 +2791,13 @@ public class FrmPLPJabatanTeknikalData {
 
 	public void setBeanMaklumatJPPH(Vector beanMaklumatJPPH) {
 		this.beanMaklumatJPPH = beanMaklumatJPPH;
+	}
+	
+	public Vector getBeanMaklumatUlasanKJP() {
+		return beanMaklumatUlasanKJP;
+	}
+
+	public void setBeanMaklumatUlasanKJP(Vector beanMaklumatUlasanKJP) {
+		this.beanMaklumatUlasanKJP = beanMaklumatUlasanKJP;
 	}
 }

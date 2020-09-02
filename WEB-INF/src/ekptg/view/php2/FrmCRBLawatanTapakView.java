@@ -35,7 +35,7 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 
 	// @Override
 	public String doTemplate2() throws Exception {
-
+                                
 		HttpSession session = this.request.getSession();
 
 		Boolean postDB = false;
@@ -305,7 +305,8 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PEGAWAI");
 	    		this.context.put("onload", "gotoSenaraiFail();");
 			}
-		}// END POSTDB
+		}
+		// END POSTDB
 
 		// HEADER
 		beanHeader = new Vector();
