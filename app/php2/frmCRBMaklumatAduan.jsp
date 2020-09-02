@@ -187,7 +187,7 @@
                   #if ($mode == 'view')
 	                  #if ($userRole != '(PHP)PYWPenolongPengarahNegeri' || $userRole != '(PHP)PYWPengarahNegeri')
 		                  <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
-		                  #if ($idStatus == '1610198')
+		                  #if ($idStatus == '1610198') 
 			                  <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
 			                  <input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
 			                  <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
