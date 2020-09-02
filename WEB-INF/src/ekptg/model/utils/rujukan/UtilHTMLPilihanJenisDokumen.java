@@ -67,6 +67,8 @@ public class UtilHTMLPilihanJenisDokumen implements IUtilHTMLPilihan{
 		String sql = "select id_jenisdokumen,kod_jenis_dokumen,keterangan" + " from tblrujjenisdokumen ";
 		if(!idSeksyen.equals("0"))
 			sql += " where id_seksyen="+ idSeksyen;
+		
+		sql +=" order by keterangan";
 		myLog.info("getJenisDokumen:sql="+sql);
 		try {
 			db = new Db();
