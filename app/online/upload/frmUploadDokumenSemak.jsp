@@ -230,7 +230,7 @@ padding:0 0.25em;
 		window.close();
 		refresh('$!flagOnline');
 	}
-	
+		
 	function cetakImej(id_){
 		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_;
 		var url = "../${securityToken}/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_;
@@ -241,7 +241,7 @@ padding:0 0.25em;
 	}
 	
 	function refresh(flagOnline) {
-		alert('$!actionRefresh');
+		//alert('$!actionRefresh');
 		if('paparHA'=='$!actionRefresh'){
 			window.opener.setSelected(2,0,0,0);
 			window.opener.HAview(flagOnline);
@@ -260,8 +260,9 @@ padding:0 0.25em;
 		}else if('$!actionRefresh'=='phpapb'){
 			window.opener.doChangeTab('2');
 			
-		}else if('$!actionRefresh'=='phppnw'){
-			alert("masuk actionRefresh phppnw");
+		}
+		else if('$!actionRefresh'=='phppnw'){
+		//	alert("masuk actionRefresh phppnw");
 			window.opener.doChangeTabUpper('2');
 		}
 		
