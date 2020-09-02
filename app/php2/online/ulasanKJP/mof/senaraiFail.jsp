@@ -8,7 +8,7 @@
 <p>
 
   <input type="hidden" name="submit2" />
-  <input type="hidden" name="idFail" />
+  <input type="hidden" name="idFail" value="" />
   <input type="hidden" name="idStatus" />
   <input type="hidden" name="idKementerian" />
 </p>

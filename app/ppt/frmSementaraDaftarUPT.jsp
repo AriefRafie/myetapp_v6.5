@@ -179,7 +179,7 @@ background: #E0F2F7;
            		<td>&nbsp;</td>
             	<td>Tempoh Pendudukan (Bulan)</td>
             	<td>:</td>
-            	<td><input type="text" name="txtTempohPendudukan" value="" size="15" class="disabled" readonly></td>
+            	<td><input type="text" name="txtTempohPendudukan" value="$!txtTempohPendudukan" size="15" class="disabled" readonly></td>
             </tr>
      		<!-- END PPT-41 -->
         </table> 
