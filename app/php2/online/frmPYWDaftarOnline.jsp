@@ -152,7 +152,7 @@
 			<input type="hidden" name="namatujuan" id="namatujuan" value="$namatujuan" />
 			
 		</tr>
-        <tr>
+        <!--  <tr>
         	<td></td>
         	<td>Tarikh Surat/Borang</td>
         	<td>:</td>
@@ -163,7 +163,7 @@
         			<img border="0" src="../img/calendar.gif" /></a>
         		#end
         	</td>
-        </tr>
+        </tr>-->
         <tr>
         	<td></td>
         	<td>No. Rujukan Surat</td>
@@ -189,7 +189,6 @@
       </fieldset></td>
   </tr>
   
-  <!-- PERMOHONAN PERLANJUTAN -->
   #if($idJenisPermohonan == '2')
   <tr>
     <td><fieldset>
@@ -238,7 +237,29 @@
   </tr>
   #end 
   
-  <!-- PERMOHONAN BAHARU -->
+  <!-- JENIS PERMOHONAN 
+  <tr>  
+  		<td colspan="2"><fieldset>
+  			<legend><strong>JENIS PERMOHONAN</strong></legend>
+  			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  				<tr>
+  					<td width="1%"><span class="style1">*</span></td>
+    				<td width="28%">Jenis Permohonan</td>
+       				<td width="1%">:</td>
+        			<td width="70%">
+        				<select name="socJenisPermohonan"
+							id="socJenisPermohonan" onchange="doChangeJenisPermohonan()"
+							$inputTextClass class="$inputTextClass">
+							<option $selected_0 value="0">SILA PILIH</option>
+							<option $selected_1 value="1">PERMOHONAN BARU</option>
+							<option $selected_2 value="2">PERMOHONAN PERLANJUTAN</option>
+							<option $selected_3 value="3">PERMOHONAN PENGURANGAN KADAR SEWA</option>
+						</select>
+					</td>
+  				</tr>
+  			</table>
+  		</td>
+  </tr>-->
   #if($idJenisPermohonan == '1')
   <!-- MAKLUMAT TANAH -->
   <tr>
@@ -268,16 +289,15 @@
           <td width="28%">Hakmilik</td>
           <td width="1%">:</td>
           <td width="70%"> 
-	          #if ($mode == 'new') 
-	          	<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik"
-						value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();" /> 
-				<input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah()" /> 
-			  #else
-			  	<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik"
-						value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled" /> 
-			  #end 
-		  	  <span class="style1">$errorPeganganHakmilik</span>
-		  </td>
+          #if ($mode == 'new')
+            <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();">
+          #else
+            <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
+          #end
+            <input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi">
+            <span class="style1">$errorPeganganHakmilik</span> 
+            <span class="style4"><i><font color="#ff0000">Contoh</font> : </i><span class="style5">160140GRN00000576</span></span>
+            </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -301,7 +321,7 @@
           <td>$beanMaklumatTanah.noHakmilik
           <input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /></td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>&nbsp;</td>
           <td>No. Warta</td>
           <td>:</td>
@@ -313,7 +333,7 @@
           <td>Tarikh Warta</td>
           <td>:</td>
           <td>$beanMaklumatTanah.tarikhWarta</td>
-        </tr>
+        </tr> -->
         <tr>
           <td>&nbsp;</td>
           <td>Mukim</td>
@@ -334,7 +354,7 @@
           <td>:</td>
           <td>$beanMaklumatTanah.negeri
             <input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
-            <input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$beanMaklumatTanah.negeri">
+            <input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
           </td>
         </tr>
         <tr>
@@ -362,6 +382,7 @@
         </tr>
         #end
         #end
+  		</tr>
   		
   		<!-- MAKLUMAT BORANG K -->
   		#if ($idJenisTanah == '3')
@@ -374,7 +395,7 @@
 				#if ($mode == 'new') 
 					<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" 
 					value="$beanMaklumatBorangK.peganganHakmilik" onblur="doChangePeganganHakmilikBorangK();" />
-					<input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Borang K" onclick="pilihBorangK()" />
+					<!--<input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Borang K" onclick="pilihBorangK()" />--> 
 				#else 
 					<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatBorangK.peganganHakmilik"
 					readonly="readonly" class="disabled" /> 
@@ -446,8 +467,7 @@
 		#end
 		</table>
 	</fieldset></td>
-  </tr> 
-  #end
+  </tr> #end
   
   #if ($mode != 'view')
   <tr>
@@ -476,7 +496,7 @@ function pilihTanah() {
 }
 function refreshFromPilihTanah(idHakmilikAgensi) {
 	document.${formName}.idHakmilikAgensi.value = idHakmilikAgensi;
-	doAjaxCall${formName}("doChangeMaklumatTanah");
+	doAjaxCall${formName}("");
 }
 function doChangeUrusan() {
 	doAjaxCall${formName}("doChangeUrusan");

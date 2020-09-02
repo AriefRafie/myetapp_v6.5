@@ -188,46 +188,97 @@
 			return;
 		}
 
-		if(negeri=="-1"){
-			alert("Sila pilih \"Negeri\" terlebih dahulu.");
-			document.${formName}.socNegeri.focus();
-			return;
-		}else if(negeri=="0"){
+		if(negeri && unit == "-1" && !daerahbaru && daerah == "-1"){
+			if(negeri=="-1"){
+				alert("Sila pilih \"Negeri\" terlebih dahulu.");
+				document.${formName}.socNegeri.focus();
+				return;
+			}else if(negeri=="0"){
+			}else{
+				ptem = '&template=PYWLaporanPemantauanNegeri';
+				pnegeri = "&ID_NEGERI="+negeri;
+			}
+		}else if(negeri && unit =="-1" && daerahbaru && daerah == "-1" ){
+			if(daerahbaru=="-1"){
+				alert("Sila pilih \"Daerah\" terlebih dahulu");
+				document.${formName}.socDaerahBaru.focus();
+				return;
+			}else if(daerahbaru=="0"){
+			}else if(daerahbaru==""){
+			}else{
+				ptem = '&template=PYWLaporanPemantauanDaerah';
+				pdaerah = "&ID="+daerahbaru;
+			}
+		}else if(negeri && unit !="0" && daerahbaru =="0" && daerah == "0" ){
+			if(unit=="-1"){
+				alert("Sila pilih \"Kementerian\" terlebih dahulu");
+				document.${formName}.socUnit.focus();
+				return;
+			}else if(unit=="0"){
+			}else{
+				ptem = '&template=PYWLaporanPemantauanKem';
+				punit = "&ID_KEMENTERIAN="+unit;
+			}
+		}else if(negeri && unit !="0" && !daerahbaru && daerah == "-1" ){
+			if(unit=="-1"){
+				alert("Sila pilih \"Kementerian\" terlebih dahulu");
+				document.${formName}.socUnit.focus();
+				return;
+			}else if(unit=="0"){
+			}else{
+				ptem = '&template=PYWLaporanPemantauanKem';
+				punit = "&ID_KEMENTERIAN="+unit;
+			}
+		}else if(negeri && unit !="0" && daerahbaru && daerah == "0" ){
+			if(daerahbaru=="-1"){
+				alert("Sila pilih \"Daerah\" terlebih dahulu");
+				document.${formName}.socDaerahBaru.focus();
+				return;
+			}else if(daerahbaru=="0"){
+			}else if(daerahbaru==""){
+			}else{
+				ptem = '&template=PYWLaporanPemantauanDaerahKem';
+				pdaerah = "&ID="+daerahbaru;
+			}
+		}else if(negeri && unit !="0" && !daerahbaru && daerah != "0" ){
+			if(daerah=="-1"){
+				alert("Sila pilih \"Agensi\" terlebih dahulu");
+				document.${formName}.socDaerah.focus();
+				return;
+			}else if(daerah=="0"){
+			}else{
+				ptem = '&template=PYWLaporanPemantauanAgensi';
+				pagensi = "&ID_AGENSI="+daerah;
+			}
+		}else if(negeri && unit !="0" && !daerahbaru && daerah == "0" ){
+			if(daerah=="-1"){
+				alert("Sila pilih \"Agensi\" terlebih dahulu");
+				document.${formName}.socDaerah.focus();
+				return;
+			}else{
+				ptem = '&template=PYWLaporanPemantauanKem';
+				pagensi = "&ID_AGENSI="+daerah;
+			}
+		}else if(negeri && unit !="0" && !daerahbaru && daerah != "0" ){
+			if(daerah=="-1"){
+				alert("Sila pilih \"Agensi\" terlebih dahulu");
+				document.${formName}.socDaerah.focus();
+				return;
+			}else if(daerah=="0"){
+			}else{
+				ptem = '&template=PYWLaporanPemantauanAgensi';
+				pagensi = "&ID_AGENSI="+daerah;
+			}
 		}else{
-			ptem = '&template='+tem;
+			ptem = '&template=PYWLaporanPemantauanAll';
+			pagensi = "&ID_AGENSI="+daerah;
+			pdaerah = "&ID="+daerahbaru;
+			punit = "&ID_KEMENTERIAN="+unit;
 			pnegeri = "&ID_NEGERI="+negeri;
 		}
 
-		if(unit=="-1"){
-			alert("Sila pilih \"Kementerian\" terlebih dahulu");
-			document.${formName}.socUnit.focus();
-			return;
-		}else if(unit=="0"){
-		}else{
-			ptem = '&template='+tem;
-			punit = "&ID_KEMENTERIAN="+unit;
-		}
 
-		if(daerahbaru=="-1"){
-			alert("Sila pilih \"Daerah\" terlebih dahulu");
-			document.${formName}.socDaerahBaru.focus();
-			return;
-		}else if(daerahbaru=="0"){
-		}else if(daerahbaru==""){
-		}else{
-			ptem = '&template='+tem;
-			pdaerah = "&ID="+daerahbaru;
-		}
 
-		if(daerah=="-1"){
-			alert("Sila pilih \"Agensi\" terlebih dahulu");
-			document.${formName}.socDaerah.focus();
-			return;
-		}else if(daerah=="0"){
-		}else{
-			ptem = '&template='+tem;
-			pagensi = "&ID_AGENSI="+daerah;
-		}
 
 		var range_akhir = document.${formName}.txdAkhir.value;
 		if(masa == 1 || masa == 3){
@@ -244,7 +295,7 @@
 				mula_tahun = document.${formName}.txdTahunMula.value;
 				//ptahun = "&TAHUN="+mula_tahun;
 				pbulantahun = "&BULANTAHUN="+range_akhir+"/"+mula_tahun;
-			ptem = '&template='+tem;
+			//ptem = '&template='+tem;
 		}else if(masa == 3){
 			var tarikhsemasa = new Date();
 			var day_ = tarikhsemasa.getDate();
@@ -271,11 +322,11 @@
 		    	return;
 		  	}
 		}else{
-			ptem = '&template='+tem;
+			//ptem = '&template='+tem;
 			ptahun = "&TAHUN="+range_akhir;
-			if(mulatemp != "" && akhirtemp != ""){
+			/* if(mulatemp != "" && akhirtemp != ""){
 				ptem = '&template='+tem;
-			}
+			} */
 		}
 		var url = "../servlet/"+urli+"?"+param+ptem+pstatus+pnegeri+pdaerah+ptahun+ptahuntamat+pbulantahun+pbulanmula+pbulantamat+punit+pagensi+pmasa+psuburusan+folder;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
