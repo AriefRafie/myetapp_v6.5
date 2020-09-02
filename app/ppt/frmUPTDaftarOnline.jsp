@@ -790,7 +790,9 @@ Maklumat Permohonan telah berjaya disimpan.
       <ul class="TabbedPanelsTabGroup">
         <li class="TabbedPanelsTab" onClick="javascript:setSelected(0);" tabindex="1">MAKLUMAT TANAH</li>
         <li class="TabbedPanelsTab" onClick="javascript:setSelected(1);" tabindex="1">MUATNAIK DOKUMEN</li>
+        #if($id_suburusan=="51" || $id_suburusan=="52")
         <li class="TabbedPanelsTab" onClick="javascript:setSelected(2);" tabindex="1">SENARAI SEMAKAN</li>
+        #end
       </ul>
       
       <div class="TabbedPanelsContentGroup">
@@ -1017,6 +1019,7 @@ Maklumat Permohonan telah berjaya disimpan.
       	<!-- END TAB 2 -->
       	
       	<!-- START TAB 3 -->
+      	#if($id_suburusan=="51" || $id_suburusan=="52")
  		<div class="TabbedPanelsContent">
     	
     	#set ($checked1 = "")
@@ -1147,6 +1150,7 @@ Maklumat Permohonan telah berjaya disimpan.
 				</table>
 				#end
 			</div> 
+			#end
         <!-- END TAB 3 -->
         
       	
