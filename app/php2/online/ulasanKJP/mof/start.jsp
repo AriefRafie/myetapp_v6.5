@@ -14,11 +14,11 @@
 </p>
 
 <div id="divMainForm">  
-  #if ($!submit == 'paparFail')
-  	#parse("$templateDir/paparFail.jsp")
+  #if ($!command == 'paparFail')
+  	#parse("app/php2/online/ulasanKJP/mof/paparFail.jsp")
   #else 
-  	#parse("$templateDir/senaraiFail.jsp")
+  	#parse("app/php2/online/ulasanKJP/mof/senaraiFail.jsp")
   #end 
 </div>
   
-#parse("$templateDir/script.jsp") 
+#parse("app/php2/online/ulasanKJP/mof/script.jsp") 
