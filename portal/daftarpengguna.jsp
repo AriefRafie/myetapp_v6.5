@@ -85,8 +85,8 @@
 		               <option value="Syarikat">Syarikat</option>
 		            </select> -->
 		            <div>
-		          		<input type='radio' id='individuwarga' name="individuwarga" value='warga' ><span class="style1">Warganegara</span>
-		          		<input type='radio' id='individuwarga' name="individux" value='wargax' onClick="toggleDisplay('individux')"><span class="style1">Bukan Warganegara</span>
+		          		<input type='radio' id='individuwarga' name="individuwarga" value='warga' onClick="toggleDisplay('individu_')" checked><span class="style1">Warganegara</span>
+		          		<input type='radio' id='individux' name="individuwarga" value='wargax' onClick="toggleDisplay('individux')"><span class="style1">Bukan Warganegara</span>
 					</div>
 	            </td>
             </tr>
@@ -94,15 +94,15 @@
             <tr id="katxindividu" style="display:none;">
 		        	<td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"></span></td>
 		        	<td><span class="style1">:</span></td>
-	    				<td>
-	    			  		<select id="xsyarikatsub" name="idsyarikat" style="width:100%" onchange="toggleDisplay('xsyarikatsub')">
-		              	<option value="-1" selected>Sila Pilih</option>
-		               	<option value="MAMP">Badan Berkanun</option>
-		               	<option value="ROS">Badan Bukan Kerajaan</option>
-		                <option value="PBN">Kerajaan Negeri/ Wilayah Persekutuan</option>
-		               	<option value="SKM">Koperasi</option>
-		               	<option value="SSM">Syarikat</option>
-		               	<option value="PBT">Lain-lain (Nyatakan)</option>
+	    			<td>
+	    			  	<select id="xsyarikatsub" name="idsyarikat" style="width:100%" onchange="toggleDisplay('xsyarikatsub')">
+			              	<option value="" selected>Sila Pilih</option>
+			               	<option value="MAMP">Badan Berkanun</option>
+			               	<option value="ROS">Badan Bukan Kerajaan</option>
+			                <option value="PBN">Kerajaan Negeri/ Wilayah Persekutuan</option>
+			               	<option value="SKM">Koperasi</option>
+			               	<option value="SSM">Syarikat</option>
+			               	<option value="PBT">Lain-lain (Nyatakan)</option>
 		            	</select>		
 	            </td>
             </tr>
@@ -131,69 +131,85 @@
 		          <div id="checknokp_result2" style="color:red"></div></td>
 			</tr>
 			
-			<tr id="PBN" style="display:none;">
-		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
+			<tr id="Syarikat" style="display:none;">
+		        <td id="PBN" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
+		        <td id="MAMP" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
+		        <td id="ROS" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
+		        <td id="SKM" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">Bil. Daftar</span></td>
+		        <td id="PBT" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">Lain-lain</span></td>
+		        <td id="SSM" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">No. SSM</span></td>
 		        <td><span class="style1">:</span></td>
                 <td>
 		        <input autocomplete="off" TABINDEX="1" name="txtNoRuj" id="txtNoRuj" value="" maxlength="10" type="text" />
-                <span class="style1"> 
+                <span id="PBN_" style="display:none;" class="style1"> 
                 <font color="blue">(cth:123456A)</font> </span>
-		        </td>
-			</tr>
-			<tr id="MAMP" style="display:none;">
-		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
-		        <td><span class="style1">:</span></td>
-                <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtNoRuj" id="txtNoRuj" value="" maxlength="10" type="text" />
-                <span class="style1"> 
+                <span id="MAMP_" style="display:none;" class="style1"> 
                 <font color="blue">(cth:123456A)</font> </span>
-		        </td>
-			</tr>
-			<tr id="ROS" style="display:none;">
-		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td>
-		        <td><span class="style1">:</span></td>
-                <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtNoRuj" id="txtNoRuj" value="" maxlength="10" type="text" />
-                <span class="style1"> 
+                <span id="ROS_" style="display:none;" class="style1"> 
                 <font color="blue">(cth:123456A)</font> </span>
-		        </td>
-			</tr>
-			<tr id="SKM" style="display:none;">
-		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">Bil. Daftar</span></td>
-		        <td><span class="style1">:</span></td>
-                <td>
-		        <input autocomplete="off" TABINDEX="1" name="txtbil" id="txtbil" value="" maxlength="10" type="text" />
-                <span class="style1"> 
+                <span id="SKM_" style="display:none;" class="style1"> 
                 <font color="blue">(cth:B-6-XXXX)</font> </span>
-		        </td>
-			</tr>
-			<tr id="PBT" style="display:none;">
-		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">Lain-lain</span></td>
-		        <td><span class="style1">:</span></td>
-            <td>
-		            <input autocomplete="off" TABINDEX="1" name="txtNoRuj" id="txtNoRuj" value="" maxlength="10" type="text" />
-		        </td>
-			</tr>
-
-			<tr id="SSM" style="display:none;">
-		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">No. SSM</span></td>
-		        <td><span class="style1">:</span></td>
-            <td>
-		            <input autocomplete="off" TABINDEX="1" name="txtNoRuj" id="txtNoRuj" value="" maxlength="10" type="text" />
-                <span class="style1"> 
+                <span id="PBT_" style="display:none;" class="style1"> 
+                <font color="blue"></font></span>
+                <span id="SSM_" style="display:none;" class="style1"> 
                 <font color="blue">(cth:SSM)</font> </span>
 		        </td>
 			</tr>
+<!-- 			<tr id="MAMP" style="display:none;"> -->
+<!-- 		        <td id="MAMP" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td> -->
+<!-- 		        <td><span class="style1">:</span></td> -->
+<!--                 <td> -->
+<!-- 		        <input autocomplete="off" TABINDEX="1" name="txtNoRuj" id="txtNoRuj" value="" maxlength="10" type="text" /> -->
+<!--                 <span class="style1">  -->
+<!--                 <font color="blue">(cth:123456A)</font> </span> -->
+<!-- 		        </td> -->
+<!-- 			</tr> -->
+<!-- 			<tr id="ROS" style="display:none;"> -->
+<!-- 		        <td id="ROS" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Rujukan</span></td> -->
+<!-- 		        <td><span class="style1">:</span></td> -->
+<!--                 <td> -->
+<!-- 		        <input autocomplete="off" TABINDEX="1" name="txtNoRuj" id="txtNoRuj" value="" maxlength="10" type="text" /> -->
+<!--                 <span class="style1">  -->
+<!--                 <font color="blue">(cth:123456A)</font> </span> -->
+<!-- 		        </td> -->
+<!-- 			</tr> -->
+<!-- 			<tr id="SKM" style="display:none;"> -->
+<!-- 		        <td id="SKM" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">Bil. Daftar</span></td> -->
+<!-- 		        <td><span class="style1">:</span></td> -->
+<!--                 <td> -->
+<!-- 		        <input autocomplete="off" TABINDEX="1" name="txtbil" id="txtbil" value="" maxlength="10" type="text" /> -->
+<!--                 <span class="style1">  -->
+<!--                 <font color="blue">(cth:B-6-XXXX)</font> </span> -->
+<!-- 		        </td> -->
+<!-- 			</tr> -->
+<!-- 			<tr id="PBT" style="display:none;"> -->
+<!-- 		        <td id="PBT" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">Lain-lain</span></td> -->
+<!-- 		        <td><span class="style1">:</span></td> -->
+<!--             <td> -->
+<!-- 		            <input autocomplete="off" TABINDEX="1" name="txtNoRuj" id="txtNoRuj" value="" maxlength="10" type="text" /> -->
+<!-- 		        </td> -->
+<!-- 			</tr> -->
+
+<!-- 			<tr id="SSM" style="display:none;"> -->
+<!-- 		        <td id="SSM" style="display:none;"><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1">No. SSM</span></td> -->
+<!-- 		        <td><span class="style1">:</span></td> -->
+<!--             <td> -->
+<!-- 		            <input autocomplete="off" TABINDEX="1" name="txtNoRuj" id="txtNoRuj" value="" maxlength="10" type="text" /> -->
+<!--                 <span class="style1">  -->
+<!--                 <font color="blue">(cth:SSM)</font> </span> -->
+<!-- 		        </td> -->
+<!-- 			</tr> -->
 			
 	
-			<tr id="NAMAO" style="display:none;">
-		        <td><span class="style1"><i><font color="#ff0000">* </font></i></span><span class="style1">Nama Organisasi</span></td>
-		        <td><span class="style1">:</span></td>
-		        <td><input tabindex="2"  class="namaorga" type="text" name="namaorga" size="50" maxlength="50" />        </td>
-			</tr>
+<!-- 			<tr> -->
+<!-- 		        <td id="NAMAO" style="display:none;"><span class="style1"><i><font color="#ff0000">* </font></i></span><span class="style1">Nama Organisasi</span></td> -->
+<!-- 		        <td><span class="style1">:</span></td> -->
+<!-- 		        <td><input tabindex="2"  class="namaorga" type="text" name="namaorga" size="50" maxlength="50" />        </td> -->
+<!-- 			</tr> -->
 			
-			<tr id="NAMAI">
-		        <td><span class="style1"><i><font color="#ff0000">* </font></i></span><span class="style1">Nama</span></td>
+			<tr>
+		        <td id="NAMAI"><span class="style1"><i><font color="#ff0000">* </font></i></span><span class="style1">Nama</span></td>
+		        <td id="NAMAO" style="display:none;"><span class="style1"><i><font color="#ff0000">* </font></i></span><span class="style1">Nama Organisasi</span></td>
 		        <td><span class="style1">:</span></td>
 		        <td><input tabindex="2"  class="nama" type="text" name="nama" size="50" maxlength="50" />        </td>
 			</tr>
@@ -889,16 +905,22 @@
 			if (element.value=='Syarikat') {
 				//document.getElementById('Syarikat').style.display='';
 				document.getElementById('Individu').style.display='none';
+				document.getElementById('individux_').style.display='none';
 				document.getElementById('NAMAI').style.display='none';
 				document.getElementById('NAMAO').style.display='';
 				document.getElementById('katindividu').style.display='none';
 				document.getElementById('katxindividu').style.display='';
+				document.getElementById('negeri').style.display='';
+				document.getElementById('negara').style.display='none';
+				document.getElementById("individuwarga").checked = true;
 		
 			}else if (element.value=='Individu') {
 				document.getElementById('Individu').style.display='';
 				document.getElementById('Syarikat').style.display='none';
 				document.getElementById('NAMAO').style.display='none';
 				document.getElementById('NAMAI').style.display='';
+				document.getElementById('katindividu').style.display='';
+				document.getElementById('katxindividu').style.display='none';
 			}
 				
  		}else if(e=="individux"){
@@ -907,63 +929,105 @@
 				document.getElementById('negeri').style.display='none';
 				document.getElementById('negara').style.display='';
 			
+		}else if(e=="individu_"){
+			document.getElementById('individux_').style.display='none';
+			document.getElementById('Individu').style.display='';
+			document.getElementById('negeri').style.display='';
+			document.getElementById('negara').style.display='none';
+		
 		}else if(e=="xsyarikatsub"){
 			el = document.getElementById(e);
 			//alert('X Individu='+el.value);
-			
+			document.getElementById('Syarikat').style.display='';
 			document.getElementById('individux_').style.display='none';
 			if (el.value=='PBN'){
 				document.getElementById('PBN').style.display='';
+				document.getElementById('PBN_').style.display='';
 				document.getElementById('MAMP').style.display='none';
+				document.getElementById('MAMP_').style.display='none';
 				document.getElementById('ROS').style.display='none';
+				document.getElementById('ROS_').style.display='none';
 				document.getElementById('SKM').style.display='none';
+				document.getElementById('SKM_').style.display='none';
 				document.getElementById('PBT').style.display='none';
+				document.getElementById('PBT_').style.display='none';
 				document.getElementById('SSM').style.display='none';
+				document.getElementById('SSM_').style.display='none';
 				document.getElementById('LAI').style.display='none';
 
 			}else if(el.value=='MAMP'){
 				document.getElementById('PBN').style.display='none';
+				document.getElementById('PBN_').style.display='none';
 				document.getElementById('MAMP').style.display='';
+				document.getElementById('MAMP_').style.display='';
 				document.getElementById('ROS').style.display='none';
+				document.getElementById('ROS_').style.display='none';
 				document.getElementById('SKM').style.display='none';
+				document.getElementById('SKM_').style.display='none';
 				document.getElementById('PBT').style.display='none';
+				document.getElementById('PBT_').style.display='none';
 				document.getElementById('SSM').style.display='none';
+				document.getElementById('SSM_').style.display='none';
 				document.getElementById('LAI').style.display='none';
 				
 			}else if(el.value=='ROS'){
 				document.getElementById('PBN').style.display='none';
+				document.getElementById('PBN_').style.display='none';
 				document.getElementById('MAMP').style.display='none';
-				document.getElementById('ROS').style.display='';			
+				document.getElementById('MAMP_').style.display='none';
+				document.getElementById('ROS').style.display='';
+				document.getElementById('ROS_').style.display='';
 				document.getElementById('SKM').style.display='none';
+				document.getElementById('SKM_').style.display='none';
 				document.getElementById('PBT').style.display='none';
+				document.getElementById('PBT_').style.display='none';
 				document.getElementById('SSM').style.display='none';
+				document.getElementById('SSM_').style.display='none';
 				document.getElementById('LAI').style.display='none';
 				
 			}else if(el.value=='SKM'){
 				document.getElementById('PBN').style.display='none';
+				document.getElementById('PBN_').style.display='none';
 				document.getElementById('MAMP').style.display='none';
+				document.getElementById('MAMP_').style.display='none';
 				document.getElementById('ROS').style.display='none';
+				document.getElementById('ROS_').style.display='none';
 				document.getElementById('SKM').style.display='';
+				document.getElementById('SKM_').style.display='';
 				document.getElementById('PBT').style.display='none';
+				document.getElementById('PBT_').style.display='none';
 				document.getElementById('SSM').style.display='none';
+				document.getElementById('SSM_').style.display='none';
 				document.getElementById('LAI').style.display='none';
 				
 			}else if(el.value=='PBT'){
 				document.getElementById('PBN').style.display='none';
+				document.getElementById('PBN_').style.display='none';
 				document.getElementById('MAMP').style.display='none';
+				document.getElementById('MAMP_').style.display='none';
 				document.getElementById('ROS').style.display='none';
+				document.getElementById('ROS_').style.display='none';
 				document.getElementById('SKM').style.display='none';
+				document.getElementById('SKM_').style.display='none';
 				document.getElementById('PBT').style.display='';
+				document.getElementById('PBT_').style.display='';
 				document.getElementById('SSM').style.display='none';
+				document.getElementById('SSM_').style.display='none';
 				document.getElementById('LAI').style.display='none';
 
 			}else if(el.value=='SSM'){
 				document.getElementById('PBN').style.display='none';
+				document.getElementById('PBN_').style.display='none';
 				document.getElementById('MAMP').style.display='none';
+				document.getElementById('MAMP_').style.display='none';
 				document.getElementById('ROS').style.display='none';
+				document.getElementById('ROS_').style.display='none';
 				document.getElementById('SKM').style.display='none';
+				document.getElementById('SKM_').style.display='none';
 				document.getElementById('PBT').style.display='none';
+				document.getElementById('PBT_').style.display='none';
 				document.getElementById('SSM').style.display='';
+				document.getElementById('SSM_').style.display='';
 				document.getElementById('LAI').style.display='none';
  			}
     	} 
@@ -1025,11 +1089,24 @@
  		var tt = "";
  		
  		if (document.f1.idKategori.value == "Syarikat") {
- 			alert("ffff");
- 			if (document.f1.namaorga.value == "") { 
- 			alert("namaorga = "+ document.f1.namaorga.value);
- 				alert('Sila pastikan nama organisasi dimasukkan');
- 				document.f1.namaorga.focus();
+ 			// alert("ffff");
+ 			if (document.f1.xsyarikatsub.value == "") { 
+ 				alert('Sila pastikan pilih jenis agensi organisasi');
+ 				document.f1.xsyarikatsub.focus();
+ 				doRefreshCaptcha();
+ 			return;
+ 			}
+ 			if (document.f1.txtNoRuj.value == "") { 
+ 				alert('Sila pastikan No. Rujukan / Bil. Daftar / No. SSM dimasukkan dengan lengkap');
+ 				document.f1.txtNoRuj.focus();
+ 				doRefreshCaptcha();
+ 			return;
+ 			}
+ 			
+ 			if (document.f1.nama.value == "") { 
+ 			// alert("namaorga = "+ document.f1.nama.value);
+ 				alert('Sila pastikan nama nOrganisasi dimasukkan');
+ 				document.f1.nama.focus();
  				doRefreshCaptcha();
  			return;
  			}
@@ -1140,16 +1217,16 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""	+dob
 		return;
 	}
 	
-	alert("meseh000");
+	// alert("meseh000");
 	var string = document.f1.password.value; 
-	alert("meseh11111");
+	// alert("meseh11111");
 	if (string.length < 6 ) { 
 		alert('Sila pastikan kata laluan anda dimasukkan dengan betul');
 		document.f1.password.focus();
 		doRefreshCaptcha();
 		return;
 	}	
-	alert("mes44444");
+	// alert("mes44444");
 	if (document.f1.password.value != document.f1.password2.value) {
 		alert('Sila pastikan kata laluan adalah sama');
 		document.f1.password2.focus();
@@ -1157,16 +1234,25 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""	+dob
 		return;
 	}
  		
-	/* if (document.f1.idKategori.value == "Individu") {
-		document.f1.txtNoKPBaru.value = document.f1.txtNoKPBaru1.value+""+ document.f1.txtNoKPBaru2.value+""+document.f1.txtNoKPBaru3.value;
+	if (document.f1.idKategori.value == "Individu") {
+		if (document.f1.individuwarga.value == "warga") {
+			document.f1.txtNoKPBaru.value = document.f1.txtNoKPBaru1.value+""+ document.f1.txtNoKPBaru2.value+""+document.f1.txtNoKPBaru3.value;
+			// alert(document.f1.txtNoKPBaru.value);
+		}
+		else {
+			document.f1.txtNoKPBaru.value = document.f1.pasport.value;
+			document.f1.id_negeri.value = '17';
+			// alert(document.f1.txtNoKPBaru.value);
+		}
 	} else {
-		document.f1.txtNoKPBaru.value = document.f1.txtNoKPCO.value
-	} */
-		alert("meseh2222");
-		url = "../servlet/ekptg.view.online.Portal";
-		actionName = "doRegister";
-		target = "doRegisterResult";
-		doAjaxUpdater(document.f1, url, target, actionName);
+		document.f1.txtNoKPBaru.value = document.f1.txtNoRuj.value;
+	}
+	
+	// alert("meseh2222");
+	url = "../servlet/ekptg.view.online.Portal";
+	actionName = "doRegister";
+	target = "doRegisterResult";
+	doAjaxUpdater(document.f1, url, target, actionName);
 	
 	}
 

@@ -12,6 +12,13 @@
 	   		hWnd.opener = document.window;
 	  	if (hWnd.focus != null) hWnd.focus();
 	}
+	function tambahFailLain(id,command,con){
+		var url = "../x/${securityToken}/ekptg.view.htp.FrmFailLainKemaskini?idFailLama="+id+"&command="+command+"&con="+con;
+	    var hWnd = window.open(url,'printuser','width=500,height=200, resizable=yes,scrollbars=yes,copyhistory=yes,location=no,directories=no,status=yes,toolbar=no,menubar=no');
+	  	if ((document.window != null) && (!hWnd.opener))
+	   		hWnd.opener = document.window;
+	  	if (hWnd.focus != null) hWnd.focus();
+	}
 
 	function paparPautan(idFail){
 		url = "../servlet/ekptg.view.htp.FrmPenswastaan2Servlet?command=papar&idFail="+idFail;

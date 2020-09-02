@@ -398,13 +398,16 @@
 
 
 		<tr>
-			<td><a href="#"
-				onClick="javascript:cetakBuktiPenyampaianRamai('$!id_permohonan','$!id_hakmilik','$!id_borange')"><font
-					color="blue">Bukti Penyampaian Borang E dan F - II</font></a></td>
+			<td><a href="#" onClick="javascript:cetakBuktiPenyampaianRamai('$!id_permohonan','$!id_hakmilik','$!id_borange')">
+			<font color="blue">Bukti Penyampaian Borang E dan F - II</font></a></td>
 		</tr>
-
-
+		
 		#end
+		
+		<!-- PPT-08 -->
+		<tr>
+			<td><a href="#" onClick="javascript:NotisBorangE('$!id_borange')"><font color="blue">Notis Borang E</font></a></td>
+		</tr>
 
 	</table>
 </fieldset>
@@ -460,8 +463,6 @@ function kosongkanLOT(idpermohonan,id_borange) {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmUPTSek8BorangF";
 	document.${formName}.submit();
 }
-
-
 
 function maklumatBorangF(id_borange){	
 	document.${formName}.ScreenLocation.value = "top";
@@ -723,6 +724,7 @@ function checkDigit() {
 		return;	
 	}
 }
+
 function validateJenisWaktu(elmnt,content) {
 
 	var length = parseInt(document.getElementById("txtMasaSiasatan").value.length);
@@ -753,6 +755,7 @@ function validateJenisWaktu(elmnt,content) {
 	}
 	
 }
+
 function checkALL() {
 
 	 if (document.${formName}.checkall.checked == true){
@@ -766,14 +769,14 @@ function checkALL() {
 	    } else {
 	        if (document.${formName}.cbsemaks.length == null){
 	            document.${formName}.cbsemaks.checked = false;
-	        } else {
+	     	} else {
 	            for (i = 0; i < document.${formName}.cbsemaks.length; i++){
 	                document.${formName}.cbsemaks[i].checked = false;	                
-	            }
-	            
 	        }
-	    }
+		}
+	}
 }
+
 function doUpdateCheckAll(){  
 
 	var c = 0;
@@ -810,6 +813,7 @@ var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$!s
 function setSelected(tabId) {
 	document.${formName}.tabId.value = tabId;	
 }
+
 function submitForm(){
 
 	if('$ScreenLocation' != ""){
@@ -828,6 +832,7 @@ function textCounter(field, countfield, maxlimit) {
 	else 
 		countfield.value = maxlimit - field.value.length;
 }
+
 function validateNumber(elmnt,content) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
@@ -835,6 +840,7 @@ function validateNumber(elmnt,content) {
 		return;
 	}
 }
+
 function RemoveNonNumeric( strString )
 {
       var strValidCharacters = "1234567890";
@@ -853,6 +859,7 @@ function RemoveNonNumeric( strString )
       }
       return strReturn;
 }
+
 function validateTarikh(elmnt,content) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
@@ -860,6 +867,7 @@ function validateTarikh(elmnt,content) {
 		return;
 	}
 }
+
 function RemoveNonNumeric2( strString )
 {
       var strValidCharacters = "1234567890/.";
@@ -878,6 +886,7 @@ function RemoveNonNumeric2( strString )
       }
       return strReturn;
 }
+
 var dtCh= "/";
 var minYear=1900;
 var maxYear=2100;
@@ -910,6 +919,7 @@ function daysInFebruary (year){
     // EXCEPT for centurial years which are not also divisible by 400.
     return (((year % 4 == 0) && ( (!(year % 100 == 0)) || (year % 400 == 0))) ? 29 : 28 );
 }
+
 function DaysArray(n) {
 	for (var i = 1; i <= n; i++) {
 		this[i] = 31
@@ -995,5 +1005,14 @@ function isIc(dtStr){
 		return false
 	}
 return true
+}
+
+function NotisBorangE(id_borange){
+
+	var url = "../servlet/ekptg.report.ppt.NotisBrgE?id_borange="+id_borange;
+	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 </script>

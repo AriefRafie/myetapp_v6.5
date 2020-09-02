@@ -1,3 +1,4 @@
+<style type="text/css">
 <!--
 .style1 {
 	color: #FF0000
@@ -160,7 +161,7 @@
     #if($idStatus == '1610207') <!-- 1610207 -->
     <input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan','$!idStatus') "/>  
     <input type="button" name="cmdBorangA" id="cmdBorangA" value="Pembaharuan Borang A" onClick="javascript:daftarPembaharuanBorangA('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>   
-    <input type="button" name="cmdBorangB" id="cmdBorangB" value="Pembaharuan Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon') "/>    	 
+    <input type="button" name="cmdBorangB" id="cmdBorangB" value="Pembaharuan Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>    	 
     #else
     #if ($idStatus !='' && $idStatus != '1610207')
     <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
@@ -191,10 +192,10 @@
 	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
 #end
 </script>
+
 <script>
 function doChangeTab(tabId) {
-	//document.${formName}.actionOnline.value = "seterusnya";
-	//document.${formName}.actionOnline.value = "seterusnya";
+	//document.${formName}.actionOnline.value = "seterusnya";]
 	document.${formName}.mode.value = "view";
 	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.submit();
@@ -238,6 +239,7 @@ function validateCurrency(elmnt,content,content2) {
 // 	doAjaxCall${formName}("");
 }*/
 </script>
+
 <!-- PEMBELI PASIR -->
 <script>
 function tambahPembeliPasir() {
@@ -303,6 +305,7 @@ function kemaskiniPembeliPasir(){
 	document.${formName}.submit();
 // 	doAjaxCall${formName}("");
 }
+
 function simpanKemaskiniPembeliPasir(){
 
 	if(document.${formName}.txtNamaPembeliPasir.value == ""){
@@ -346,6 +349,7 @@ function simpanKemaskiniPembeliPasir(){
 	document.${formName}.submit();
 // 	doAjaxCall${formName}("");
 }
+
 function batalKemaskiniPembeliPasir(){
 	document.${formName}.mode.value = "viewPembeliPasir";
 	document.${formName}.submit();
@@ -370,6 +374,7 @@ function paparPembeliPasir(idPembeliPasir){
 // 	doAjaxCall${formName}("");
 }
 </script>
+
 <!-- PEMOHON -->
 <script>
 function kemaskiniPemohon() {
@@ -383,6 +388,7 @@ function batalKemaskiniPemohon() {
 // 	doAjaxCall${formName}("");
 }
 </script>
+
 <!-- PENGARAH -->
 <script>
 function tambahPengarah() {
@@ -404,6 +410,7 @@ function checkPercentage(){;
 		return; 
 	}
 }
+
 function simpanPengarah(){
 	
 	if(document.${formName}.socWarganegara.value == ""){
@@ -426,16 +433,19 @@ function simpanPengarah(){
 	document.${formName}.submit();
 // 	doAjaxCall${formName}("");
 }
+
 function batalPengarah(){
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();
 // 	doAjaxCall${formName}("");
 }
+
 function kemaskiniPengarah(){
 	document.${formName}.mode.value = "updatePengarah";
 	document.${formName}.submit();
 // 	doAjaxCall${formName}("");
 }
+
 function simpanKemaskiniPengarah(){
 
 	if(document.${formName}.socWarganegara.value == ""){
@@ -458,11 +468,13 @@ function simpanKemaskiniPengarah(){
 	document.${formName}.submit();
 // 	doAjaxCall${formName}("");
 }
+
 function batalKemaskiniPengarah(){
 	document.${formName}.mode.value = "viewPengarah";
 	document.${formName}.submit();
 // 	doAjaxCall${formName}("");
 }
+
 function hapusPengarah(){
 
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -475,6 +487,7 @@ function hapusPengarah(){
 	document.${formName}.submit();
 // 	doAjaxCall${formName}("");
 }
+
 function paparPengarah(idPengarah){
 	document.${formName}.idPengarah.value = idPengarah;
 	document.${formName}.mode.value = "viewPengarah";
@@ -492,6 +505,7 @@ function popupMsg(){
 	document.${formName}.txtSaham.value = "";
 }
 </script>
+
 <!-- PERMOHONAN -->
 <script>
 function kemaskiniPermohonan() {
@@ -507,6 +521,11 @@ function batalKemaskiniPermohonan() {
 }
 function simpanKemaskiniPermohonan() {
 	
+	if(document.${formName}.socJenisTujuan.value == ""){
+		alert('Sila pilih Jenis Tujuan.');
+  		document.${formName}.socJenisTujuan.focus(); 
+		return; 
+	}
 	if(document.${formName}.socKaitanTujuan.value == ""){
 		alert('Sila pilih Kaitan Tujuan.');
   		document.${formName}.socKaitanTujuan.focus(); 
@@ -527,16 +546,16 @@ function simpanKemaskiniPermohonan() {
   		document.${formName}.txtRingkasanPengalaman.focus(); 
 		return; 
 	}
-	//if(document.${formName}.txtModalBenar.value == ""){
-//			alert('Sila masukkan Modal Dibenarkan.');
-//			document.${formName}.txtModalBenar.focus(); 
-//			return; 
-//		}
-//	if(document.${formName}.txtModalJelas.value == ""){
-//		alert('Sila masukkan Modal Jelas.');
-//		document.${formName}.txtModalJelas.focus(); 
-//		return; 
-//	}
+	if(document.${formName}.txtModalBenar.value == ""){
+		alert('Sila masukkan Modal Dibenarkan.');
+			document.${formName}.txtModalBenar.focus(); 
+			return; 
+		}
+	if(document.${formName}.txtModalJelas.value == ""){
+		alert('Sila masukkan Modal Jelas.');
+		document.${formName}.txtModalJelas.focus(); 
+		return; 
+	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
@@ -595,6 +614,7 @@ function cekTarikhSurat(elmnt) {
 	}
 }
 </script>
+
 <!-- PROJEK -->
 <script>
 function tambahProjek() {
@@ -671,6 +691,7 @@ function paparProjek(idProjek){
 // 	doAjaxCall${formName}("");
 }
 </script>
+
 <!-- PAKAR -->
 <script>
 function tambahPakar() {
@@ -748,6 +769,7 @@ function paparPakar(idPakar){
 // 	doAjaxCall${formName}("");
 }
 </script>
+
 <!-- KOORDINAT -->
 <script>
 function tambahKoordinat() {
@@ -927,9 +949,9 @@ function setTable(id){
 		document.getElementById(id).style.display="none";
 	}
 }
-//Copy dari Sewa, belum ada borang
+//Add pada 24/08/2020
 function cetakBorangPermohonan(idPermohonan) {
-	var url = "../servlet/ekptg.report.php2.online.PYWBorangPermohonan?ID_PERMOHONAN="+idPermohonan;
+	var url = "../servlet/ekptg.report.php2.online.APBBorangPermohonanOnline?idPermohonan="+idPermohonan;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -948,7 +970,7 @@ function cetakPengesahanPermohonan(idPermohonan) {
 </script>
 
 <script>
-<!-- MAKLUMAT LAMPIRAN -->
+<!-- MAKLUMAT LAMPIRAN 
 function daftarLampiran() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
 	document.${formName}.method="POST";
@@ -957,9 +979,11 @@ function daftarLampiran() {
 	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.mode.value = "new";
 	document.${formName}.submit();
-}
+}-->
+</script>
 
 <!-- SENARAI SEMAK -->
+<script>
 function doSimpanKemaskiniSenaraiSemak() {
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";
@@ -983,36 +1007,24 @@ function daftarPembaharuan(idFail,idPermohonan,idStatus){
 	document.${formName}.submit();
 }
 function daftarPembaharuanBorangA(idFail,idPermohonan,idStatus,namaPemohon,idJadualKeduaLesen,noLesen){
-	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBBorangAOnlineSenaraiFailView";
-	alert("1");
-	document.${formName}.method="POST";
-	/*document.${formName}.actionLesen.value = "daftarBaruBorangA";
-	alert("2");
-	document.${formName}.idFail.value = idFail;
-	alert("3");
-	document.${formName}.idPermohonan.value = idPermohonan;
-	alert("4");
-	document.${formName}.idStatus.value = idStatus;
-	alert("5");
-	document.${formName}.namaPemohon.value = namaPemohon;
-	alert("6");
-	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
-	alert("7");
-	document.${formName}.noLesen.value = noLesen;
-	alert("8");*/
-	document.${formName}.submit();
-}
-function daftarPembaharuanBorangB(idFail,idPermohonan,idStatus,namaPemohon){
-	
-	document.${formName}.actionLesen.value = "daftarBaruBorangB";
-	document.${formName}.idFail.value = idFail;
-	document.${formName}.idPermohonan.value = idPermohonan;
-	document.${formName}.idStatus.value = idStatus;
-	document.${formName}.namaPemohon.value = namaPemohon;
-	document.${formName}.submit();
-}
 
+	document.${formName}.actionOnline.value = "daftarBaruBorangA";
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idPermohonan.value = idPermohonan;
+	document.${formName}.idStatus.value = idStatus;
+	document.${formName}.submit();
+  
+}
+function daftarPembaharuanBorangB(idFail,idPermohonan,idStatus,namaPemohon,idJadualKeduaLesen,noLesen){
+	
+	//alert(idJadualKeduaLesen);
+	document.${formName}.actionOnline.value = "daftarBaruBorangB";
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idPermohonan.value = idPermohonan;
+	document.${formName}.idStatus.value = idStatus;
+	document.${formName}.namaPemohon.value = namaPemohon;
+	document.${formName}.submit();
+}
 
 </script>
 $javascriptLampiran

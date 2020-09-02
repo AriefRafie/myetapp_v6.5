@@ -10,6 +10,7 @@
 <input name="command1" type="hidden" />
 <input name="mode" type="hidden" value="$mode" />
 <input name="agendaMsyrt" type="hidden" value="$agendaMsyrt" />
+<input name="con" type="hidden" value="$!con" />
 &nbsp;
 <fieldset>
 <legend>MAKLUMAT FAIL</legend>
@@ -95,20 +96,25 @@ if ( !window.confirm("Anda Pasti?") ) return;
 	//parent.refresh12();
 }
 
-
-
 function simpan(){
 	if ( !window.confirm("Anda Pasti?") ) return;
 	document.${formName}.command1.value = "simpan";
-	if (document.${formName}.idAgendamesyuarat.value == "" || document.${formName}.idAgendamesyuarat.value == 0){		
-		document.${formName}.mode.value = "tambahBaru";
+	if (document.${formName}.idAgendamesyuarat.value == "" || document.${formName}.idAgendamesyuarat.value == 0){	
+		//if('$!con'== '')
+			document.${formName}.mode.value = "tambahBaru";
+		//else
+		//	document.${formName}.mode.value = "tambahjilid";
+	
 	}else{		
 		document.${formName}.command.value = "papar";		
 		document.${formName}.mode.value = "kemaskiniAgenda";
 	}
 	
 	document.${formName}.submit();
+	if('$!con'== ''){
 	fungsiRefresh();
+	}
+	
 }
 
 function hapus(){

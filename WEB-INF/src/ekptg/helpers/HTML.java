@@ -2024,7 +2024,16 @@ public class HTML {
 			String disability) throws Exception {
 		return SelectLot(selectName, selectedValue, disability, null);
 	}
-
+	/**
+	 * 
+	 * @param selectName
+	 * @param selectedValue
+	 * @param disability
+	 * @param jsFunction
+	 * @return
+	 * @throws Exception
+	 * 26/08/2020, paparan Keterangan sahaja
+	 */
 	public static String SelectLot(String selectName, Long selectedValue,
 			String disability, String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
@@ -2047,7 +2056,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdLot() + ">"
-						+ f.getKodLot() + " - " + f.getKeterangan()
+						+ f.getKeterangan() 
+//						+ f.getKodLot() + " - " + f.getKeterangan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -4098,7 +4108,7 @@ public class HTML {
 					kodJawatan = "00";
 				}
 				sb.append("<option " + s + " value=" + f.getIdJawatan() + ">"
-						+ kodJawatan + " - "
+//						+ kodJawatan + " - "
 						+ f.getKeterangan().toUpperCase() + "</option>\n");
 			}
 			sb.append("</select>");
@@ -11656,7 +11666,7 @@ public class HTML {
 			Hashtable h;
 			String s = "";
 			for (int i = 0; i < v.size(); i++) {
-				h = new Hashtable();
+				h = new Hashtable();   
 				h = (Hashtable) v.get(i);
 				if (h.get("ID_PEGAWAI").equals(selectedValue)) {
 					s = "selected";

@@ -152,7 +152,7 @@
 			<input type="hidden" name="namatujuan" id="namatujuan" value="$namatujuan" />
 			
 		</tr>
-        <tr>
+        <!--  <tr>
         	<td></td>
         	<td>Tarikh Surat/Borang</td>
         	<td>:</td>
@@ -163,7 +163,7 @@
         			<img border="0" src="../img/calendar.gif" /></a>
         		#end
         	</td>
-        </tr>
+        </tr>-->
         <tr>
         	<td></td>
         	<td>No. Rujukan Surat</td>
@@ -174,19 +174,6 @@
         	size="38" maxlength="50" />
 			</td>
         </tr>
-<!--         <tr> -->
-<!--         <td></td> -->
-<!--         <td valign="top">Perkara</td> -->
-<!--         <td valign="top">:</td> -->
-<!--         <td><textarea name="txtperkara" id="txtperkara" rows="5" -->
-<!-- 			cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" -->
-<!-- 			onKeyUp="textCounter(this.form.txtperkara,this.form.remLen1,$!saizTxtPerkara);" -->
-<!-- 			onKeyDown="textCounter(this.form.txtperkara,this.form.remLen1,$!saizTxtPerkara);">$beanMaklumatPermohonan.perkara</textarea> -->
-<!-- 			#if ($mode == 'new')  -->
-<!-- 			<input type="button" name="cmdDaftarBaru2" id="cmdDaftarBaru2" value="Jana Tajuk" onclick="janaTajuk()" /> -->
-<!-- 			#end -->
-<!-- 		</td> -->
-<!-- 		</tr> -->
 		#if ($mode != 'view')
 		<tr>
 			<td valign="top">&nbsp;</td>

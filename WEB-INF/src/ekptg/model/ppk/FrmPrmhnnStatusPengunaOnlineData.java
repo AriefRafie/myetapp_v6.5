@@ -427,7 +427,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	  	      " AND PERINTAH.ID_PERBICARAAN(+) = B.ID_PERBICARAAN AND P.ID_STATUS NOT IN ('150', '160') AND UO.USER_ID = '"+idMasuk+"' ";*/
 	      
 	       
-	      sql = " SELECT DISTINCT F.ID_FAIL, TO_CHAR(F.NO_FAIL) AS NO_FAIL, P.ID_PERMOHONAN, P.SEKSYEN, "+
+	      sql = " SELECT DISTINCT P.ID_PEJAWAL, F.ID_FAIL, TO_CHAR(F.NO_FAIL) AS NO_FAIL, P.ID_PERMOHONAN, P.SEKSYEN, "+
 	    		  " CASE WHEN P.NO_PERMOHONAN_ONLINE IS NOT NULL THEN P.NO_PERMOHONAN_ONLINE ELSE CASE WHEN P.ID_STATUS IN (150,160) THEN 'DERAF' ELSE '' END END NO_PERMOHONAN_ONLINE, "+
 	    		  " CASE WHEN P.NO_PERMOHONAN_ONLINE IS NOT NULL THEN TO_CHAR (P.TARIKH_MOHON_ONLINE,'DD/MM/YYYY') ELSE TO_CHAR (P.TARIKH_MOHON, 'DD/MM/YYYY') END AS TARIKH, P.TARIKH_MASUK, "+
 	    		  " TO_CHAR (P.TARIKH_MOHON_ONLINE,'DD/MM/YYYY') as TARIKH_MOHON_ONLINE, P.TARIKH_MOHON, "+
@@ -452,8 +452,8 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    		  " (CASE WHEN B.JENIS_MASA_BICARA = '1' THEN ' PAGI' WHEN B.JENIS_MASA_BICARA = '2' THEN ' TENGAH HARI' WHEN B.JENIS_MASA_BICARA = '3' THEN ' PETANG' ELSE '' END) AS MASA_BICARA, "+
 	    		  " B.TEMPAT_BICARA, UPPER (B.ALAMAT_BICARA1) AS ALAMAT_BICARA1, UPPER (B.ALAMAT_BICARA2) AS ALAMAT_BICARA2, UPPER (B.ALAMAT_BICARA3) AS ALAMAT_BICARA3, B.POSKOD, UPPER (B.BANDAR) AS BANDAR, B.ID_NEGERIBICARA, "+
 	    		  " UPPER (N.NAMA_NEGERI) AS NAMA_NEGERI, TO_CHAR (B.TARIKH_MASUK, 'DD/MM/YYYY') AS TARIKH_MASUK_BICARA, "+
-	    		  " PJ.NAMA_PEJABAT, TO_CHAR (B.TARIKH_NOTIS, 'DD/MM/YYYY') AS TARIKH_NOTIS "
-	    		  + ",B.ID_PERBICARAAN " +
+	    		  " PJ.NAMA_PEJABAT, TO_CHAR (B.TARIKH_NOTIS, 'DD/MM/YYYY') AS TARIKH_NOTIS, "+
+	    		  " B.ID_PERBICARAAN, P.NO_FAIL_AWAL, P.NAMA_PEMOHON_AWAL" +
 	    		  " FROM TBLPPKPERMOHONAN P, TBLPPKOBPERMOHONAN OBP, TBLPPKPERMOHONANSIMATI PSM, TBLPFDFAIL F, USERS_ONLINE UO, TBLPPKSIMATI SM, TBLPPKPEMOHON PM,  "+
 	    		  " TBLPPKKEPUTUSANPERMOHONAN KP, TBLPPKPERBICARAAN B, TBLPPKPERINTAH PERINTAH, TBLRUJSTATUS S, TBLRUJDAERAH D, TBLRUJNEGERI N, "+
 	    		  " TBLRUJPEJABATJKPTG PJ, TBLRUJPEJABATURUSAN PU"+
@@ -519,6 +519,9 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	  h.put("nama_negeri", rs.getString("NAMA_NEGERI")==null?"":rs.getString("NAMA_NEGERI"));
 	    	  h.put("idPerbicaraan", rs.getString("id_perbicaraan")==null?"":rs.getString("id_perbicaraan"));
 	    	  h.put("catatan", rs.getString("catatan")==null?"":rs.getString("catatan"));
+	    	  h.put("no_fail_awal", rs.getString("NO_FAIL_AWAL")==null?"":rs.getString("NO_FAIL_AWAL"));
+	    	  h.put("nama_pemohon_awal", rs.getString("NAMA_PEMOHON_AWAL")==null?"":rs.getString("NAMA_PEMOHON_AWAL"));
+	    	  h.put("id_pejabat_awal", rs.getString("ID_PEJAWAL")==null?"":rs.getString("ID_PEJAWAL"));
 
 	    	  /*
 	    	  h.put("id_permohonansimati", rs.getString("ID_PERMOHONANSIMATI")==null?"":rs.getString("ID_PERMOHONANSIMATI"));
