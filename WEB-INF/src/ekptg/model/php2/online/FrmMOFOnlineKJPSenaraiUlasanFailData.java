@@ -8,10 +8,14 @@ import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.servlet.http.HttpSession;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
 import org.apache.log4j.Logger;
+
+import ekptg.helpers.AuditTrail;
 
 public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 	
@@ -35,7 +39,7 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL, USERS_KEMENTERIAN.ID_KEMENTERIAN, TBLPFDFAIL.ID_FAIL, TBLPFDFAIL.NO_FAIL, TBLPFDFAIL.TAJUK_FAIL, TBLPHPULASANTEKNIKAL.TARIKH_HANTAR, TBLPHPULASANTEKNIKAL.TARIKH_JANGKA_TERIMA"
+			sql = "SELECT TBLPERMOHONAN.ID_STATUS, TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL, USERS_KEMENTERIAN.ID_KEMENTERIAN, TBLPFDFAIL.ID_FAIL, TBLPFDFAIL.NO_FAIL, TBLPFDFAIL.TAJUK_FAIL, TBLPHPULASANTEKNIKAL.TARIKH_HANTAR, TBLPHPULASANTEKNIKAL.TARIKH_JANGKA_TERIMA"
 					
 					+ " FROM TBLPHPULASANTEKNIKAL, TBLPERMOHONAN, TBLPHPPEMOHON, TBLPFDFAIL, TBLPHPHAKMILIKPERMOHONAN, TBLPHPHAKMILIK, USERS, USERS_KEMENTERIAN"
 					
@@ -155,6 +159,7 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 				h.put("TAJUK_FAIL", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL"));
 				h.put("TARIKH_HANTAR", rs.getDate("TARIKH_HANTAR") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTAR")));
 				h.put("TARIKH_JANGKA_TERIMA", rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
+				h.put("ID_STATUS", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 								
 				listFail.addElement(h);
 			}
@@ -168,13 +173,14 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 		return listFail;
 	}
 
-	public String simpanUlasan(String idUlasanTeknikal, String txtTarikhSurat,
-			String txtNoRujukanSurat, String txtUlasan, String txtKeputusan,
-			String txtNamaPengulas, String txtNoTelPengulas, String userId) {
+	public String simpanUlasan(String idPermohonan,
+			String txtTarikhTerima, String txtUlasan,
+			String txtKeputusan,  HttpSession session) {
 
 		String flagStatus = "T";
 		Db db = null;
 		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
 		String sql = "";
 
 		try {
@@ -184,27 +190,33 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
-			// TBLPHPULASANTEKNIKAL
-			r.update("ID_ULASANTEKNIKAL", idUlasanTeknikal);
-			if (!"".equals(txtTarikhSurat)) {
-				r.add("TARIKH_SURAT",
-						r.unquote("to_date('" + txtTarikhSurat
+			// TBLPHPKERTASKERJAPELEPASAN
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.update("FLAG_KERTAS", "2");
+			if (!"".equals(txtTarikhTerima)) {
+				r.add("TARIKH_TERIMA_KEWANGAN",
+						r.unquote("to_date('" + txtTarikhTerima
 								+ "','dd/MM/yyyy')"));
 			}
-			r.add("NO_RUJUKAN", txtNoRujukanSurat);
-			r.add("ULASAN", txtUlasan);
-			r.add("FLAG_KEPUTUSAN", txtKeputusan);
-			r.add("NAMA_PEGAWAI", txtNamaPengulas);
-			r.add("NO_TELEFON", txtNoTelPengulas);
+			r.add("ULASAN_KEWANGAN", txtUlasan);
+			r.add("KEPUTUSAN_KEWANGAN", txtKeputusan);
+			
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 			
-			sql = r.getSQLUpdate("TBLPHPULASANTEKNIKAL");
+			sql = r.getSQLUpdate("TBLPHPKERTASKERJAPELEPASAN");
+			myLogger.info("TBLPHPKERTASKERJAPELEPASAN================="+sql);
 			stmt.executeUpdate(sql);
 
 			conn.commit();
 			flagStatus = "Y";
+			
+			AuditTrail.logActivity("1610203", "4", null, session, "UPD",
+					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIKEMASKINI");
+			myLogger.info("ID_PERMOHONAN================="+idPermohonan);
+
 		} catch (Exception ex) {
 			try {
 				conn.rollback();
@@ -220,6 +232,30 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 		return flagStatus;
 	}
 	
+	
+	public String getIdPermohonan(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_PERMOHONAN FROM TBLPHPKERTASKERJAPELEPASAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("ID_PERMOHONAN");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	public String hantarUlasan(String idUlasanTeknikal, String txtTarikhSurat,
 			String txtNoRujukanSurat, String txtUlasan, String txtKeputusan,
 			String txtNamaPengulas, String txtNoTelPengulas, String userId) {
@@ -255,6 +291,7 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 			
 			sql = r.getSQLUpdate("TBLPHPULASANTEKNIKAL");
+			myLogger.info("hantarUlasan====="+sql);
 			stmt.executeUpdate(sql);
 
 			conn.commit();
@@ -387,6 +424,33 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 				return listDetailKJP;
 			} else {
 				return listDetailKJP;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getNoFailByIdPermohonan(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT TBLPFDFAIL.NO_FAIL FROM TBLPFDFAIL, TBLPERMOHONAN"
+					+ " WHERE TBLPFDFAIL.ID_FAIL = TBLPERMOHONAN.ID_FAIL"
+					+ " AND TBLPERMOHONAN.ID_PERMOHONAN = '" + idPermohonan
+					+ "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("NO_FAIL");
+			} else {
+				return "";
 			}
 
 		} finally {

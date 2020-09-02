@@ -6,27 +6,18 @@ function doChangeDaerah(){
 	doDivAjaxCall$formname('divMainForm','carian','');
 }
 function paparFail(idFail, idUlasanTeknikal){
-	alert('baca paparfail');
-	doDivAjaxCall$formname('divMainForm','paparFail','idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
+	document.${formName}.idFail.value=idFail;
+	doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
 }
 function simpanUlasan(){	
-alert('bacaSimpanUlasan');
 	if(document.${formName}.txtTarikhSurat.value == ""){
-		alert('Sila masukkan Tarikh Surat');
   		document.${formName}.txtTarikhSurat.focus(); 
 		return; 
 	}
-	if(document.${formName}.txtNoRujukanSurat.value == ""){
-		alert('Sila masukkan No Rujukan Surat');
-  		document.${formName}.txtNoRujukanSurat.focus(); 
-		return; 
-	}
 	if(document.${formName}.txtKeputusan.value == ""){
-		alert('Sila masukkan Keputusan');
   		document.${formName}.txtKeputusan.focus(); 
 		return; 
 	}
-	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
@@ -37,11 +28,6 @@ function hantarUlasan(){
 	if(document.${formName}.txtTarikhSurat.value == ""){
 		alert('Sila masukkan Tarikh Surat');
   		document.${formName}.txtTarikhSurat.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtNoRujukanSurat.value == ""){
-		alert('Sila masukkan No Rujukan Surat');
-  		document.${formName}.txtNoRujukanSurat.focus(); 
 		return; 
 	}
 	if(document.${formName}.txtKeputusan.value == ""){

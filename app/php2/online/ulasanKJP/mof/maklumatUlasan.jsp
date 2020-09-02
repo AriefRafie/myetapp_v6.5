@@ -1,29 +1,29 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 <tr>
-    <td colspan="2">#parse("app/php2/online/ulasanKJP/frmHeader.jsp")</td>
+    <td colspan="2">##parse("app/php2/online/ulasanKJP/frmHeader.jsp")</td>
   </tr>
   <tr>
     <td colspan="2"><fieldset>
         <legend>MAKLUMAT ULASAN</legend>
         <table width="100%" border="0" cellspacing="2" cellpadding="2">
-          #parse("$templateDir/status.jsp")
+          #parse("app/php2/online/ulasanKJP/mof/status.jsp")
           <tr>
             <td width="1%">&nbsp;</td>
             <td width="28%">Tarikh Ulasan</td>
             <td width="1%">:</td>
-            <td width="70%"><strong>$!maklumatUlasan.tarikhHantar</strong></td>
+            <td width="70%"><strong>$!maklumatUlasan1.tarikhHantar</strong></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td>Jangkamasa</td>
             <td>:</td>
-            <td><strong>$!maklumatUlasan.jangkamasa Hari</strong></td>
+            <td><strong>$!maklumatUlasan1.jangkamasa Hari</strong></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td>Tarikh Akhir Maklumbalas</td>
             <td>:</td>
-            <td><strong>$!maklumatUlasan.tarikhJangkaTerima</strong></td>
+            <td><strong>$!maklumatUlasan1.tarikhJangkaTerima</strong></td>
           </tr>
           <tr>
 		  	<td>&nbsp;</td>
@@ -83,12 +83,6 @@
                       <a href="javascript:displayDatePicker('txtTarikhSurat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
                   </tr>
                   <tr>
-                    <td><font color="#ff0000">*</font></td>
-                    <td>No Rujukan Surat</td>
-                    <td>:</td>
-                    <td><input type="text" name="txtNoRujukanSurat" id="txtNoRujukanSurat" size="50" value="$!maklumatUlasan.noRujukan" onblur="this.value=this.value.toUpperCase();"/></td>
-                  </tr>
-                  <tr>
                     <td valign="top">&nbsp;</td>
                     <td valign="top">Ulasan</td>
                     <td valign="top">:</td>
@@ -132,18 +126,6 @@
                       
                       </select></td>
                   </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>Nama Pengulas</td>
-                    <td>:</td>
-                    <td><input type="text" name="txtNamaPengulas" id="txtNamaPengulas"  size="50" value="$!maklumatUlasan.namaPengulas" onblur="this.value=this.value.toUpperCase();"/></td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>No. Telefon Pengulas</td>
-                    <td>:</td>
-                    <td><input type="text" name="txtNoTelPengulas" id="txtNoTelPengulas"  size="50" value="$!maklumatUlasan.noTelPengulas" onblur="this.value=this.value.toUpperCase();"/></td>
-                  </tr>
                   #if ($!maklumatUlasan.tarikhSurat != "")
                   <tr>
                     <td>&nbsp;</td>
@@ -152,7 +134,7 @@
                     <td>&nbsp;</td>
                   </tr>
                   <tr>
-                    <td colspan="4">#parse("$templateDir/muatNaikDokumenSokongan.jsp")</td>
+                    <td colspan="4">#parse("app/php2/online/ulasanKJP/mof/muatNaikDokumenSokongan.jsp")</td>
                   </tr>
                   #end
                 </table>

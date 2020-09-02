@@ -137,7 +137,7 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 						getParam("txtEmel"), getParam("txtNoTel"),
 						getParam("txtNoFaks"), idKementerian, idAgensi,
 						idPejabat, idSeksyenJKPTG, getParam("txtNamaPengadu"),
-						getParam("idKementerianTanah"),
+						getParam("txtNoFailNegeri"), getParam("idKementerianTanah"),
 						getParam("idNegeriTanah"), idHakmilikAgensi,
 						idPPTBorangK, idHakmilikUrusan, idPHPBorangK,
 						idHakmilikSementara, getParam("txtPeganganHakmilik"), session);
@@ -295,6 +295,7 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 			beanMaklumatPermohonan = new Vector();
 			Hashtable hashPermohonan = new Hashtable();
 			hashPermohonan.put("noFail", "");
+			hashPermohonan.put("noFailNegeri", getParam("txtNoFailNegeri") == null ? "": getParam("txtNoFailNegeri"));
 			hashPermohonan.put("jenisFail", getParam("jenisFail") == null ? "" : getParam("jenisFail"));
 			hashPermohonan.put("tarikhTerima", getParam("tarikhTerima") == null ? "" : getParam("tarikhTerima"));
 			hashPermohonan.put("tarikhSurat", getParam("tarikhSurat") == null ? "" : getParam("tarikhSurat"));
@@ -532,7 +533,7 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 			// GO TO LIST FAIL PENGUATKUASAAN
 			vm = "app/php2/frmCRBSenaraiFail.jsp";
 
-			logic.carianFail(getParam("txtNoFail"), getParam("txtPemohon"),
+			logic.carianFail(getParam("txtNoFail"), getParam("txtNoFailNegeri"), getParam("txtPemohon"),
 					getParam("txtNoPengenalan"), getParam("txdTarikhTerima"),
 					idNegeriC, idDaerahC, idMukimC, idJenisHakmilikC,
 					getParam("txtNoHakmilik"), getParam("txtNoWarta"), idLotC,
@@ -545,6 +546,7 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 			this.context.put("SenaraiFail", list);
 
 			this.context.put("txtNoFail", getParam("txtNoFail"));
+			this.context.put("txtNoFailNegeri", getParam("txtNoFailNegeri"));
 			this.context.put("txtPemohon", getParam("txtPemohon"));
 			this.context.put("txtNoPengenalan", getParam("txtNoPengenalan"));
 			this.context.put("txdTarikhTerima", getParam("txdTarikhTerima"));
