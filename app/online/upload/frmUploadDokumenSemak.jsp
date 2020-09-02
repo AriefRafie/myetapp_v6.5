@@ -230,11 +230,7 @@ padding:0 0.25em;
 		window.close();
 		refresh('$!flagOnline');
 	}
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> 9bde878e813319f45d059164419154d7017402e8
 	function cetakImej(id_){
 		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_;
 		var url = "../${securityToken}/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_;
@@ -262,17 +258,10 @@ padding:0 0.25em;
 			window.opener.semakLampiran('socBandar');
 
 		}else if('$!actionRefresh'=='phpapb'){
-			window.opener.doChangeTab('2');
-<<<<<<< HEAD
-			
+			window.opener.doChangeTab('2');			
 		}
 		else if('$!actionRefresh'=='phppnw'){
 		//	alert("masuk actionRefresh phppnw");
-=======
-
-		}else if('$!actionRefresh'=='phppnw'){
-			alert("masuk actionRefresh phppnw");
->>>>>>> 9bde878e813319f45d059164419154d7017402e8
 			window.opener.doChangeTabUpper('2');
 		}
 		else if('$!actionRefresh'=='phpphptkr'){
