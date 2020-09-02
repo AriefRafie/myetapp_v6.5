@@ -790,7 +790,9 @@ Maklumat Permohonan telah berjaya disimpan.
       <ul class="TabbedPanelsTabGroup">
         <li class="TabbedPanelsTab" onClick="javascript:setSelected(0);" tabindex="1">MAKLUMAT TANAH</li>
         <li class="TabbedPanelsTab" onClick="javascript:setSelected(1);" tabindex="1">MUATNAIK DOKUMEN</li>
+        #if($id_suburusan=="51" || $id_suburusan=="52")
         <li class="TabbedPanelsTab" onClick="javascript:setSelected(2);" tabindex="1">SENARAI SEMAKAN</li>
+        #end
       </ul>
       
       <div class="TabbedPanelsContentGroup">
@@ -1017,6 +1019,7 @@ Maklumat Permohonan telah berjaya disimpan.
       	<!-- END TAB 2 -->
       	
       	<!-- START TAB 3 -->
+      	#if($id_suburusan=="51" || $id_suburusan=="52")
  		<div class="TabbedPanelsContent">
     	
     	#set ($checked1 = "")
@@ -1027,8 +1030,8 @@ Maklumat Permohonan telah berjaya disimpan.
 		#set ($checked6 = "")
 		#set ($checked7 = "")
 		
-		#set ($checked10 = "")
-		#set ($checked20 = "")
+		##set ($checked10 = "")
+		##set ($checked20 = "")
     	
     	
     	#foreach($List in $senaraiSemakan) 
@@ -1041,8 +1044,8 @@ Maklumat Permohonan telah berjaya disimpan.
 		#if ($List.semak6 == "1")#set ($checked6 = "checked")#end		
 		#if ($List.semak7 == "1")#set ($checked7 = "checked")#end
 		
-		#if ($List.semak10 == "1")#set ($checked10 = "checked")#end		
-		#if ($List.semak20 == "1")#set ($checked20 = "checked")#end
+		##if ($List.semak10 == "1")#set ($checked10 = "checked")##end		
+		##if ($List.semak20 == "1")#set ($checked20 = "checked")##end
 		
     	#end
     	
@@ -1052,7 +1055,7 @@ Maklumat Permohonan telah berjaya disimpan.
 	
 		<br/>
 		
-		#if($sorUrusan=="52")                                                     
+		#if($sorUrusan=="51" || $sorUrusan=="52")                                                     
           <table width="100%" cellpadding="0" cellspacing="0">
     		<tr>
             	<td width="5%">&nbsp;</td>
@@ -1068,6 +1071,7 @@ Maklumat Permohonan telah berjaya disimpan.
      		 		2. Sijil Carian Rasmi/ Persendirian yang terkini.</td>
   			</tr>
   			
+  			#if($sorUrusan=="52")
   			<tr>
     			<td>&nbsp;</td>
     		 	<td><font color="red">$!M</font></td>
@@ -1102,8 +1106,11 @@ Maklumat Permohonan telah berjaya disimpan.
     			<td><input type="checkbox" name="cbsemaks7" $disability1 value="1" id="cbsemaks2" $checked7 >
      		 		7. Surat iringan permohonan rasmi dari agensi.</td>
   			</tr>
+  			#end
     	</table>
         #end
+        
+<!--
         #if($sorUrusan=="51")                                                     
           <table width="100%" cellpadding="0" cellspacing="0">
     		<tr>
@@ -1121,7 +1128,7 @@ Maklumat Permohonan telah berjaya disimpan.
   			</tr>
     	</table>
         #end
-
+-->
    		
     
 		</fieldset>
@@ -1147,6 +1154,7 @@ Maklumat Permohonan telah berjaya disimpan.
 				</table>
 				#end
 			</div> 
+			#end
         <!-- END TAB 3 -->
         
       	
