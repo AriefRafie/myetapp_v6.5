@@ -343,6 +343,7 @@ background: #E0F2F7;
    			#set($txdTarikhSurat=$data.tarikh_surat)
    			#set($flagPermohonan=$data.flag_jenispermohonan)
    			#set($lblNoOnline=$data.no_permohonan_online)
+ 
    			<!-- PPT-41 -->
    			#set($txdTarikhPendudukanMula=$data.tarikh_pendudukan_mula)
    			#set($txdTarikhPendudukanAkhir=$data.tarikh_pendudukan_akhir)
