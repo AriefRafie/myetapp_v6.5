@@ -56,7 +56,9 @@ background: #E0F2F7;
 
 </style>
 
-
+<p> 
+<input type="text" id="mode" name="mode" value="$!mode">
+</p>
 #parse("app/ppt/frmLabelSet.jsp")
 #parse("app/ppt/Sek4Paging.jsp")
 
@@ -1198,6 +1200,7 @@ function tambah() {
 	document.${formName}.ScreenLocation.value = "changeTanah";
 	//document.${formName}.command.value = "tambah";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4&command=tambah"; 
+	document.${formName}.mode.value = "new";
 	document.${formName}.submit();
 
 }

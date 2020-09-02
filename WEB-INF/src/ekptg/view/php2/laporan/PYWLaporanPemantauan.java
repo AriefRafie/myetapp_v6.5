@@ -216,7 +216,7 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		displayNegeri(tempIdNegeri);
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru");
 
-		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(getParam("socUnit")==""?"-1":getParam("socUnit")), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
+		socUnit = UtilHTML.selectKementerianLaporanPemantauan("socUnit", Long.parseLong(getParam("socUnit")==""?"-1":getParam("socUnit")), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
 		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah","-1","-1"," style=\"width:400\"","");
 
 	}
@@ -230,7 +230,7 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		displayNegeri(tempIdNegeri);
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
-		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(idKementerian), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
+		socUnit = UtilHTML.selectKementerianLaporanPemantauan("socUnit", Long.parseLong(idKementerian), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
 		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
 
 	}
@@ -246,7 +246,7 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
-		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(getParam("socUnit")==""?"-1":getParam("socUnit")), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
+		socUnit = UtilHTML.selectKementerianLaporanPemantauan("socUnit", Long.parseLong(getParam("socUnit")==""?"-1":getParam("socUnit")), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
 		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
 
 	}
@@ -262,13 +262,13 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		displayNegeri(tempIdNegeri);
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
-		socUnit = UtilHTML.selectKementerianLaporan("socUnit", Long.parseLong(idKementerian), null, "");
+		socUnit = UtilHTML.selectKementerianLaporanPemantauan("socUnit", Long.parseLong(idKementerian), null, "");
 		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
 
 	}
 
 	public void displayNegeri(Long tempIdNegeri) throws Exception{
-		socNegeri = UtilHTML.selectNegeriLaporan("socNegeri",tempIdNegeri, "", " onChange=\"doChangeNegeri()\"", null);
+		socNegeri = UtilHTML.selectNegeriLaporanPemantauan("socNegeri",tempIdNegeri, "", " onChange=\"doChangeNegeri()\"", null);
 	}
 
 	public void displayNegeriUnit(Long tempIdNegeri,Long idUnit) throws Exception{
