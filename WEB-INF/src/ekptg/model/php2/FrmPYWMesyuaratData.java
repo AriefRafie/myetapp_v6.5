@@ -56,7 +56,7 @@ public class FrmPYWMesyuaratData {
 						rs.getDate("TARIKH_MESYUARAT") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_MESYUARAT")));
 				if (rs.getString("BIL_MESYUARAT") != null) {
-					if ("L".equals(rs.getString("FLAG_SYOR"))) {
+					if ("L".equals(rs.getString("STATUS_MESYUARAT"))) {
 						h.put("syor", "LULUS");
 					} else if ("T".equals(rs.getString("STATUS_MESYUARAT"))) {
 						h.put("syor", "TOLAK");
@@ -102,7 +102,6 @@ public class FrmPYWMesyuaratData {
 			long idMesyuarat = DB.getNextID("TBLPHPMESYUARAT_SEQ");
 			idMesyuaratString = String.valueOf(idMesyuarat);
 			r.add("ID_MESYUARAT", idMesyuarat);
-			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("TAJUK", txtTajukMesyuarat);
 			r.add("BIL_MESYUARAT", txtBilMesyuarat);
 			if (!"".equals(txtTarikhMesyuarat)) {
@@ -116,13 +115,26 @@ public class FrmPYWMesyuaratData {
 			r.add("MINIT_HINGGA", idMinitHingga);
 			r.add("ID_LOKASI", idLokasi);
 			r.add("CATATAN", txtCatatan);
-			r.add("FLAG_SYOR", socSyor);
+			r.add("STATUS_MESYUARAT", socSyor);
 			r.add("FLAG_MESYUARAT", "1");
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPMESYUARAT");
+			stmt.executeUpdate(sql);
+			
+			// TBLPHPMESYUARATPERMOHONAN
+			r = new SQLRenderer();
+			long idMesyuaratMohon = DB.getNextID("TBLPHPMESYUARATPERMOHONAN_SEQ");
+			r.add("ID_MESYUARAT_PERMOHONAN", idMesyuaratMohon);
+			r.add("ID_MESYUARAT", idMesyuarat);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPMESYUARATPERMOHONAN");
 			stmt.executeUpdate(sql);
 
 			conn.commit();
@@ -471,9 +483,11 @@ public class FrmPYWMesyuaratData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TAJUK, BIL_MESYUARAT, TARIKH_MESYUARAT, JAM_DARI, MINIT_DARI, JAM_HINGGA, MINIT_HINGGA, ID_LOKASI, CATATAN, FLAG_SYOR"
-					+ " FROM TBLPHPMESYUARAT WHERE ID_MESYUARAT = '"
-					+ idMesyuarat + "'";
+			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, A.CATATAN, A.STATUS_MESYUARAT,"
+					   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+					   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
+					   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND ID_MESYUARAT = '" + idMesyuarat + "'";
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -506,8 +520,8 @@ public class FrmPYWMesyuaratData {
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
 				h.put("flagSyor",
-						rs.getString("FLAG_SYOR") == null ? "" : rs
-								.getString("FLAG_SYOR"));
+						rs.getString("STATUS_MESYUARAT") == null ? "" : rs
+								.getString("STATUS_MESYUARAT"));
 				beanMaklumatMesyuarat.addElement(h);
 				bil++;
 			}

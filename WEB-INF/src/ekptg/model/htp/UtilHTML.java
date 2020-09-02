@@ -612,6 +612,45 @@ public class UtilHTML {
 
 	}
 
+	public static String selectNegeriLaporanPemantauan(String selectName, Long selectedValue,
+			String disability, String jsFunction, String namaTable ) throws Exception {
+			StringBuffer sb = new StringBuffer("");
+			try {
+				sb.append("<select name='" + selectName + "'");
+				if (disability != null)
+					sb.append(disability);
+				if (jsFunction != null)
+					sb.append(jsFunction);
+				sb.append(" > ");
+				String s_ = "";
+				if(String.valueOf(selectedValue).equals("0"))
+					s_ = "selected";
+
+				sb.append("<option value=\"-1\">SILA PILIH</option>\n");
+
+				Vector<?> v = FrmUtilData.getNegeriDistinct(namaTable);
+				Tblrujnegeri f = null;
+				String s = "";
+				for (int i = 0; i < v.size(); i++) {
+					f = (Tblrujnegeri) v.get(i);
+					if (f.getIdNegeri().equals(selectedValue)) {
+						s = "selected";
+					} else {
+						s = "";
+					}
+					sb.append("<option " + s + " value=" + f.getIdNegeri() + ">"
+							+ f.getNamaNegeri()
+							+ "</option>\n");
+				}
+				sb.append("</select>");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				throw ex;
+			}
+			return sb.toString();
+
+		}
+
 	public static String SelectDaerahByUnitPPKXKod(String selectName, Long selectedValue, String disability, String jsFunction, String idPejabatJKPTG) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		try {
@@ -1386,6 +1425,45 @@ public class UtilHTML {
 		return sb.toString();
 
 	}
+
+	public static String selectKementerianLaporanPemantauan(String selectName,
+			Long selectedValue, String disability, String jsFunction) throws Exception {
+			StringBuffer sb = new StringBuffer("");
+			try {
+				sb.append("<select name='" + selectName + "'");
+				if (disability != null)
+					sb.append(disability);
+				if (jsFunction != null)
+					sb.append(jsFunction);
+				sb.append(" > ");
+				String s_ = "";
+				if(String.valueOf(selectedValue).equals("0"))
+					s_ = "selected";
+
+				sb.append("<option value=\"-1\">SILA PILIH</option>\n");
+
+				Vector<?> v = FrmUtilData.getKementerian();
+				Tblrujkementerian f = null;
+				String s = "";
+				for (int i = 0; i < v.size(); i++) {
+					f = (Tblrujkementerian) v.get(i);
+					if (f.getIdKementerian().equals(selectedValue)) {
+						s = "selected";
+					} else {
+						s = "";
+					}
+					sb.append("<option " + s + " value=" + f.getIdKementerian()
+							+ ">"
+							+ f.getNamaKementerian() + "</option>\n");
+				}
+				sb.append("</select>");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				throw ex;
+			}
+			return sb.toString();
+
+		}
 
 	public static String selectStatusLaporanPenyewaan(
 			String idSeksyen,String selectName, String selectedValue,String disability,String jsFunction)
