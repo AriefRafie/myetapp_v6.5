@@ -33,11 +33,21 @@
 	  		<tr>
 	          <td width="1%">&nbsp;</td>
 	          <td width="28%" valign="top">No. Fail</td>
-	          <td width="1%" >:</td>
+	          <td width="1%">:</td>
 	          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong>
 	            <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
 	            <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
 	        </tr>
+	        <tr>
+				<td width="1%">&nbsp;</td>
+				<td width="28%" valign="top">No. Fail Negeri</td>
+				<td width="1%">:</td>
+				<td width="70%">
+					<input name="txtNoFailNegeri" type="text" class="$inputTextClass" id="txtNoFailNegeri"
+						value="$beanMaklumatPermohonan.noFailNegeri" $readonly onblur="this.value=this.value.toUpperCase();" size="40"
+						maxlength="50" />
+				</td>
+			</tr>
 	        <!--tr>
 	          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
 	          <td>Jenis Fail</td>
@@ -65,12 +75,6 @@
 	          <td width="1%">:</td>
 	          <td width="70%">PENGUATKUASAAN</td>
 	        </tr>
-<!-- 	        <tr> -->
-<!-- 	          <td width="1%">&nbsp;</td> -->
-<!-- 	          <td width="28%" valign="top">Suburusan</td> -->
-<!-- 	          <td width="1%">:</td> -->
-<!-- 	          <td width="70%">PENGUATKUASAAN</td> -->
-<!-- 	        </tr> -->
 	        #end
   		</table>
   	</fieldset></td>

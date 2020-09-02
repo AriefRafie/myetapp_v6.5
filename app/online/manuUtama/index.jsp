@@ -269,7 +269,7 @@
 <!-- 					</tr> -->
 					<tr>
 						<td>
-							<a href="javascript:goTo('dikembalikan')" class="help" title="Permohonan Dikembalikan">
+							<a href="javascript:goTo('DIKEMBALIKAN')" class="help" title="Permohonan Dikembalikan">
 								<font color="blue"><li>
 									#if($bilPPKkembali > 0)
 								<label style="background-color:blue" align="center" valign="top" > 
@@ -477,7 +477,7 @@ document.${formName}.namatab.value = "";
 		    document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
 		    document.${formName}.submit();
 		
-		}else if(location=='dikembalikan'){
+		}else if(location=='DIKEMBALIKAN'){
 			actionParam = "&_portal_module=ekptg.view.ppk.FrmDraffPermohonanOnlinePPK&command="+location;
 			//1345099281439
 			//alert("$EkptgUtil.getTabID('Pusaka Kecil','ppk-online-user')");
@@ -615,8 +615,8 @@ else if(location=='HELP'){
 }
 
 else if(location=='HTP'){
-    document.${formName}.action = "?myrole=online";
-    //document.${formName}.action = "?myrole=htp-online-user";
+    //document.${formName}.action = "?myrole=online";
+    document.${formName}.action = "?myrole=htp-online-user";
 	document.${formName}.namatab.value = "Harta Tanah Persekutuan";
     document.${formName}.namamodul.value = "ekptg.view.htp.online.FrmPajakanOnlineSenaraiFailView";
     document.${formName}.submit();

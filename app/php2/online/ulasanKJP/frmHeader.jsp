@@ -1,4 +1,6 @@
-
+<input type="hidden" name="idUlasanTeknikal" id="idUlasanTeknikal" value='$!idUlasanTeknikal'>
+<input type="hidden" name="idPermohonan" id="idPermohonan" value='$!idPermohonan'>
+<input type="hidden" name="idFail" id="idFail" value='$!idFail'>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #foreach($beanHeader in $BeanHeader)
   <tr>
