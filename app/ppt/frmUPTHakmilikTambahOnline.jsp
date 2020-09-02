@@ -49,8 +49,9 @@ Maklumat Hakmilik telah berjaya disimpan.
 #set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)
 #set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
 
-
-
+#set($txtNoBangunan=$maklumat_Hakmilik_Salin.no_bangunan)
+#set($txtNoTingkat=$maklumat_Hakmilik_Salin.no_tingkat)
+#set($txtNoPetak=$maklumat_Hakmilik_Salin.no.petak)
 
 #set($showDropdownUnitAsal="yes") #set($showDropdownUnitAmbil="yes")
 
@@ -140,6 +141,18 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>:</td>
 			<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik"
 				value="$!txtNoHakmilik" size="12" maxlength="50"></td>
+		</tr>
+		
+		<!-- PPT-03 Penambahan Strata -->
+		<tr>
+			<td>&nbsp;</td>
+			<td>No. Strata </td>
+			<td>:</td>
+			<td>
+              	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+  			</td>
 		</tr>
 
 
@@ -475,17 +488,20 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 
 
-
-#if($mode=="view") #if($onchangeHM=="no") #foreach($data in
-$dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
-#set($nama_daerah=$data.nama_daerah) #set($txtSeksyen=$data.seksyen)
+#if($mode=="view") #if($onchangeHM=="no") #foreach($data in $dataMaklumatTanah) 
+#set($nama_negeriprojek=$data.nama_negeri)
+#set($nama_daerah=$data.nama_daerah) 
+#set($txtSeksyen=$data.seksyen)
 #set($txtNoHakmilik=$data.no_hakmilik)
 #set($txdTarikhLuput=$data.tarikh_luput)
 #set($txdTarikhDaftar=$data.tarikh_daftar)
-#set($txtBakiTempoh=$data.tempoh_luput) #set($txtNoSyit=$data.no_syit)
-#set($txtNoLot=$data.no_lot) #set($txtNoPT=$data.no_pt)
+#set($txtBakiTempoh=$data.tempoh_luput) 
+#set($txtNoSyit=$data.no_syit)
+#set($txtNoLot=$data.no_lot) 
+#set($txtNoPT=$data.no_pt)
 #set($txtLuasLotAmbil=$data.luas_ambil)
-#set($txtLuasLotAsal=$data.luas_lot) #set($txtCatatan=$data.catatan)
+#set($txtLuasLotAsal=$data.luas_lot) 
+#set($txtCatatan=$data.catatan)
 #set($txtNoWartaRizab=$data.no_warta_rizab)
 #set($txdTarikhWarta=$data.tarikh_warta_rizab)
 #set($txtLain=$data.nama_lain_rizab)
@@ -495,10 +511,16 @@ $dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
 #set($txtLuasLotAsalSebelumConvert=$data.nama_luas_asal)
 #set($txtLuasLotAmbilSebelumConvert=$data.nama_luas_ambil)
 #set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
+
+#set($txtNoBangunan=$data.no_bangunan)
+#set($txtNoTingkat=$data.no_tingkat)
+#set($txtNoPetak=$data.no_petak)
+
 #end #end #if($isEdit=="no") #set($disability = "readonly")
 #set($disabilityx = "class=disabled") #set($disability1 = "disabled")
 #set($M = "") #else #set($M = "*") #set($disability = "")
 #set($disabilityx = "") #set($disability1 = "") #end
+
 
 <fieldset id="top">
 	<legend>
@@ -565,6 +587,18 @@ $dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
 			<td><input $disability $disabilityx type="text"
 				name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik"
 				size="12" maxlength="50"></td>
+		</tr>
+		
+		<!-- PPT-03 Penambahan Strata -->
+		<tr>
+			<td>&nbsp;</td>
+			<td> No. Strata </td>
+			<td>:</td>
+			<td>
+               	<span class="labelinput">No.Bang</span>&nbsp;<input $disability $disabilityx  name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Ting</span>&nbsp;<input $disability $disabilityx  name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Petak</span>&nbsp;<input $disability $disabilityx  name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+  			</td>
 		</tr>
 
 		#if($hideFieldHakmilik=="no")
@@ -1690,10 +1724,12 @@ function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode)
 			document.${formName}.command2.value = "kemaskiniHM";
 			document.${formName}.command3.value = "updateHM";
 		}
-		//for upload function
+		
+		// for upload Function
 		var command = document.${formName}.command.value;
 		var command2 = document.${formName}.command2.value;
 		var command3 = document.${formName}.command3.value;
+		
 		var id_negeriprojek = document.${formName}.id_negeriprojek.value;
 		var id_daerah = document.${formName}.id_daerah.value;
 	    var socJenisHakmilik = document.${formName}.socJenisHakmilik.value;
@@ -1721,6 +1757,10 @@ function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode)
 		var txtLain = document.${formName}.txtLainHidden.value;
 		var txtNoWartaRizab = document.${formName}.txtNoWartaRizabHidden.value;
 		var txdTarikhWarta = document.${formName}.txdTarikhWartaHidden.value;
+		var txtNoBangunan = document.${formName}.txtNoBangunan.value;
+		var txtNoTingkat = document.${formName}.txtNoTingkat.value;
+		var txtNoPetak = document.${formName}.txtNoPetak.value;
+		
 		document.${formName}.enctype = "multipart/form-data";
 		document.${formName}.encoding = "multipart/form-data";
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command="+command+"&command2="+command2+
@@ -1731,7 +1771,7 @@ function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode)
 				"&txtLuasAmbil="+txtLuasAmbil+"&txtCatatan="+txtCatatan+"&txtSeksyen="+txtSeksyen+"&txdTarikhPembayaran="+txdTarikhPembayaran+"&unitLuas="+unitLuas+
 				"&txtLuasLotAsalSebelumConvert="+txtLuasLotAsalSebelumConvert+"&txtLuasLotAmbilSebelumConvert="+txtLuasLotAmbilSebelumConvert+
 				"&sorDropdownUnitAsal="+sorDropdownUnitAsal+"&sorDropdownUnitAmbil="+sorDropdownUnitAmbil+"&sorJenisRizab="+sorJenisRizab+"&txtLain="+txtLain+
-				"&txtNoWartaRizab="+txtNoWartaRizab+"&txdTarikhWarta="+txdTarikhWarta;
+				"&txtNoWartaRizab="+txtNoWartaRizab+"&txdTarikhWarta="+txdTarikhWarta+"&txtNoBangunan="+txtNoBangunan+"&txtNoTingkat="+txtNoTingkat+"&txtNoPetak="+txtNoPetak;
 		//end upload
 		document.${formName}.submit();
 	}
