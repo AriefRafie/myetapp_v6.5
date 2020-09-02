@@ -10,7 +10,6 @@ function paparFail(idFail, idUlasanTeknikal){
 	doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
 }
 function simpanUlasan(){	
-alert('bacaSimpanUlasan');
 	if(document.${formName}.txtTarikhSurat.value == ""){
   		document.${formName}.txtTarikhSurat.focus(); 
 		return; 
