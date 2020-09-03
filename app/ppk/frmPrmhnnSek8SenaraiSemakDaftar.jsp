@@ -1594,6 +1594,7 @@ function checkitX(){
 }
 
 function DoTheCheck() {
+	
     var currentTime = new Date();
     var month = currentTime.getMonth() + 1;
 	var day = currentTime.getDate();
@@ -1608,7 +1609,7 @@ function DoTheCheck() {
     var yr1   = parseInt(str1.substring(6,10),10);   
     var date1 = new Date(yr1, mon1, dt1);
 	
-	
+    
 	
 	if (document.f1.cbsemaks[0].checked == false) {
 		alert("Sila masukkan maklumat Borang A");
@@ -1621,9 +1622,9 @@ function DoTheCheck() {
 	else if (document.f1.cbsemakradio[0].checked == true && document.f1.txtNomborSijil.value == ""){
 		alert("Sila masukkan No. Sijil Kematian");
 	}
-	else if (document.f1.cbsemakradio[2].checked == true && document.f1.txtNomborPermit.value == ""){
+	/* else if (document.f1.cbsemakradio[2].checked == true && document.f1.txtNomborPermit.value == ""){
 		alert("Sila masukkan No. Permit");
-	}
+	} */
 	else if (document.f1.cbsemakradio[1].checked == true && document.f1.txtPerintahMahkamah.value == ""){
 		alert("Sila masukkan Tarikh Perintah Mahkamah");
 	}
@@ -1859,7 +1860,7 @@ return;
 
 function checkit_harta()
 {
-if (document.f1.cbsemaks[10].checked == true || document.f1.cbsemaks[11].checked == true || document.f1.cbsemaks[13].checked == true || document.f1.cbsemaks[14].checked == true)
+if (document.f1.cbsemaks[9].checked == true || document.f1.cbsemaks[10].checked == true || document.f1.cbsemaks[12].checked == true || document.f1.cbsemaks[13].checked == true)
  {
  document.f1.cbsemaks[21].checked = true;
  }

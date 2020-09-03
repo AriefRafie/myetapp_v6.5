@@ -45,6 +45,7 @@ import ekptg.model.ppk.FrmPrmhnnSek8SenaraiHTATHInternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8SenaraiSemakInternalData;
 import ekptg.model.ppk.FrmSenaraiFailInternalCarianData;
 import ekptg.model.ppk.FrmSenaraiFailInternalData;
+import ekptg.model.ppk.PendaftaranCheckModel;
 import ekptg.model.ppk.harta.HTABean;
 import ekptg.model.ppk.harta.IMaklumatHarta;
 import ekptg.ws.arb.AmanahRayaManager;
@@ -5487,6 +5488,37 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 
 			String mati = getParam("id_Permohonansimati");
 			logic_A.updateDataNilai(id, mati, (String) session.getAttribute("_ekptg_user_id"));
+			PendaftaranCheckModel userdata = PendaftaranCheckModel.getInstance();
+
+			try {
+				// if(no_lot_hta!= ""){
+				if (userdata.getDaerahByNegeriUserDariNilaianHTA((String) session.getAttribute("_ekptg_user_id"), idPermohonan) == false) {
+					this.context.put("daftarHTA", 0);
+					//out.println("<div>Sila masukkan maklumat harta berdasarkan unit jagaan terlebih dahulu!</div> <script type='text/javascript'> document.f1.save_harta.value = 'yes' </script> ");
+				} else {
+					this.context.put("daftarHTA", 1);
+					//out.println("<script type='text/javascript'> document.f1.save_harta.value = 'no' </script> ");
+				}
+
+				// }
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				// if(no_lot_hta!= ""){
+				if (userdata.getDaerahByNegeriUserDariNilaianHA((String) session.getAttribute("_ekptg_user_id"), idPermohonan) == false) {
+					this.context.put("daftarHA", 0);
+					//out.println("<div>Sila masukkan maklumat harta berdasarkan unit jagaan terlebih dahulu!</div> <script type='text/javascript'> document.f1.save_harta.value = 'yes' </script> ");
+				} else {
+					this.context.put("daftarHA", 1);
+					//out.println("<script type='text/javascript'> document.f1.save_harta.value = 'no' </script> ");
+				}
+
+				// }
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			vm = "app/ppk/frmPrmhnnSek8NilaianHarta.jsp";
 		}else if (("next".equals(submit)) || ("previous".equals(submit))) {
 			this.context.put("carix", 1);

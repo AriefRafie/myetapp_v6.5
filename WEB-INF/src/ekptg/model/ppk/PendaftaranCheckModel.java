@@ -1360,6 +1360,157 @@ public class PendaftaranCheckModel {
 				}
 
 			}
+			a = true;
+			return a;
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public boolean getDaerahByNegeriUserDariNilaianHTA(String userid, String idp) throws Exception {
+		Db db = null;
+		// Db db1 = null;
+		boolean a = false;
+		String sql = "SELECT SM.ID_PERMOHONANSIMATI, HTA.ID_NEGERI	, D.KOD_NEGERI,D.NAMA_NEGERI  FROM TBLPPKPERMOHONANSIMATI SM, "
+				+ "TBLPPKPERMOHONAN P,TBLPPKHTA HTA, TBLPPKSIMATI M,TBLRUJNEGERI D  "
+				+ "WHERE SM.ID_PERMOHONAN = P.ID_PERMOHONAN AND P.ID_PERMOHONAN = '"
+				+ idp
+				+ "' "
+				+ "AND SM.ID_SIMATI = M.ID_SIMATI "
+				+ "AND HTA.ID_SIMATI = SM.ID_SIMATI "
+				+ "AND HTA.ID_NEGERI = D.ID_NEGERI(+) "
+				+ "AND HTA.ID_NEGERI IN ( SELECT DISTINCT U.ID_NEGERIURUS "
+				+ "FROM TBLRUJPEJABATURUSAN U, USERS_INTERNAL UR "
+				+ "WHERE U.ID_PEJABATJKPTG=UR.ID_PEJABATJKPTG "
+				+ "AND U.ID_JENISPEJABAT != '3' AND UR.USER_ID='"
+				+ userid
+				+ "' ";
+				
+				 sql += " UNION "+                                                                            
+					" SELECT DISTINCT PBU_U.ID_NEGERIURUS  "+ 
+					" FROM TBLPERMOHONANBANTUUNIT PBU,TBLRUJPEJABATURUSAN PBU_U "+ 
+					" WHERE ID_STATUS = 2  "+ 
+					" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') >= TO_DATE(TO_CHAR(PBU.TARIKH_MULA,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
+					" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') <= TO_DATE(TO_CHAR(PBU.TARIKH_AKHIR,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
+					" AND PBU.ID_UNIT = PBU_U.ID_PEJABATJKPTG  "+ 
+					" AND PBU.ID_PEMOHON = "+userid+"  ";
+				
+				sql += " )";
+
+		/*if (!id_hta.equals("") && !id_hta.equals(null)) {
+			sql += "AND HTA.ID_HTA <> '" + id_hta + "'";
+		}
+*/
+		 System.out.println("HTA NEGERI LIST :" + sql.toUpperCase());
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			r.add("id_jenisnopb");
+			r.add("keterangan");
+
+			// sql = r.getSQLSelect(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector listDaerahByUser = new Vector();
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idnegeri", rs.getString("id_negeri") == null ? "" : rs
+						.getString("id_negeri"));
+				h.put("kodnegeri", rs.getString("kod_negeri") == null ? "" : rs
+						.getString("kod_negeri"));
+				h.put("namanegeri", rs.getString("nama_negeri") == null ? ""
+						: rs.getString("nama_negeri"));
+
+				listDaerahByUser.addElement(h);
+			}
+
+			if (listDaerahByUser.size() > 0) {
+				a = true;
+			} else {
+				a = false;
+			}
+			
+			return a;
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public boolean getDaerahByNegeriUserDariNilaianHA(String userid, String idp) throws Exception {
+		Db db = null;
+		// Db db1 = null;
+		boolean a = false;
+		String sql = "SELECT SM.ID_PERMOHONANSIMATI, HA.ID_NEGERI	, D.KOD_NEGERI,D.NAMA_NEGERI  FROM TBLPPKPERMOHONANSIMATI SM, "
+				+ "TBLPPKPERMOHONAN P,TBLPPKHA HA, TBLPPKSIMATI M,TBLRUJNEGERI D  "
+				+ "WHERE SM.ID_PERMOHONAN = P.ID_PERMOHONAN AND P.ID_PERMOHONAN = '"
+				+ idp
+				+ "' "
+				+ "AND SM.ID_SIMATI = M.ID_SIMATI "
+				+ "AND HA.ID_SIMATI = SM.ID_SIMATI "
+				+ "AND HA.ID_NEGERI = D.ID_NEGERI(+) "
+				+ "AND HA.ID_NEGERI IN ( SELECT DISTINCT U.ID_NEGERIURUS "
+				+ "FROM TBLRUJPEJABATURUSAN U, USERS_INTERNAL UR "
+				+ "WHERE U.ID_PEJABATJKPTG=UR.ID_PEJABATJKPTG "
+				+ "AND U.ID_JENISPEJABAT != '3' AND UR.USER_ID='"
+				+ userid
+				+ "' ";
+				
+				 sql += " UNION "+                                                                            
+					" SELECT DISTINCT PBU_U.ID_NEGERIURUS  "+ 
+					" FROM TBLPERMOHONANBANTUUNIT PBU,TBLRUJPEJABATURUSAN PBU_U "+ 
+					" WHERE ID_STATUS = 2  "+ 
+					" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') >= TO_DATE(TO_CHAR(PBU.TARIKH_MULA,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
+					" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') <= TO_DATE(TO_CHAR(PBU.TARIKH_AKHIR,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
+					" AND PBU.ID_UNIT = PBU_U.ID_PEJABATJKPTG  "+ 
+					" AND PBU.ID_PEMOHON = "+userid+"  ";
+				
+				sql += " )";
+
+		/*if (!id_hta.equals("") && !id_hta.equals(null)) {
+			sql += "AND HTA.ID_HTA <> '" + id_hta + "'";
+		}
+*/
+		 System.out.println("HA NEGERI LIST :" + sql.toUpperCase());
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			r.add("id_jenisnopb");
+			r.add("keterangan");
+
+			// sql = r.getSQLSelect(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector listDaerahByUserHA = new Vector();
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idnegeri", rs.getString("id_negeri") == null ? "" : rs
+						.getString("id_negeri"));
+				h.put("kodnegeri", rs.getString("kod_negeri") == null ? "" : rs
+						.getString("kod_negeri"));
+				h.put("namanegeri", rs.getString("nama_negeri") == null ? ""
+						: rs.getString("nama_negeri"));
+
+				listDaerahByUserHA.addElement(h);
+			}
+
+			if (listDaerahByUserHA.size() > 0) {
+				a = true;
+			} else {
+				a = false;
+			}
+			
 			return a;
 
 		} finally {

@@ -137,7 +137,7 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 				" ,H.BA_SIMATI, H.BB_SIMATI "+
 				" ,RN.NAMA_NEGERI,RD.NAMA_DAERAH,RM.NAMA_MUKIM" +
 				" ,RUJ.KOD_JENIS_HAKMILIK,RUJ.KETERANGAN  " +
-				" ,PS.ID_PERMOHONAN "+
+				" ,PS.ID_PERMOHONAN, H.ID_DAERAH, H.ID_MUKIM "+
 				//", H.ALAMAT_HTA1, H.ALAMAT_HTA2, H.ALAMAT_HTA3" +
 				//" , H.ID_JENISHM, H.ID_JENISPB, H.ID_DAERAH, H.ID_LUAS, H.ID_BANDARHTA, H.ID_MUKIM, H.LUAS_HMP,"+
 				//" ,H.ID_SIMATI, H.NILAI_HTA_TARIKHMOHON, H.NILAI_HTA_TARIKHMATI,H.ID_KATEGORI "+
@@ -182,8 +182,8 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 				h.put("negeri", rs.getString("id_Negeri") == null ? "" : rs.getString("id_Negeri")); 
 				h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN").toUpperCase());
 //				h.put("kategori", rs.getString("id_Kategori") == null ? "" : rs.getString("id_Kategori"));
-//				h.put("daerah", rs.getString("id_Daerah") == null ? "" : rs.getString("id_Daerah"));
-//				h.put("mukim", rs.getString("id_Mukim") == null ? "" : rs.getString("id_Mukim"));				
+				h.put("daerah", rs.getString("id_Daerah") == null ? "" : rs.getString("id_Daerah"));
+				h.put("mukim", rs.getString("id_Mukim") == null ? "" : rs.getString("id_Mukim"));				
 //				h.put("luashmp", rs.getString("luas_Hmp") == null ? "" : rs.getString("luas_Hmp"));				
 //				h.put("luasasal", rs.getString("luas") == null ? "" : rs.getString("luas"));				
 //				h.put("nocagaran", rs.getString("no_Cagaran") == null ? "" : rs.getString("no_Cagaran"));				
