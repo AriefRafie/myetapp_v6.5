@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 import com.sun.istack.internal.ByteArrayDataSource;
 
 public class EmailSender {
-	protected static Logger log = Logger.getLogger(EmailSender.class);
+	protected static Logger myLog = Logger.getLogger(EmailSender.class);
 	private static EmailSender singleton;
 	private static EmailProperty pro = EmailProperty.getInstance();
 	private static final String EMAIL_HOST= pro.getHost();
@@ -31,7 +31,7 @@ public class EmailSender {
 	private InternetAddress multipleTo [];
 	private InternetAddress multipleCC [];
 	private File fileAttachments[];
-	private byte[] fileAttachments_bytes[];
+//	private byte[] fileAttachments_bytes[];
 	public String FROM = pro.getFrom();
 	public String MESSAGE = null;
 	public String RECIEPIENT = null;
@@ -92,7 +92,7 @@ public class EmailSender {
 				if(to != null && !to.equals(""))
 					multipleTo[i]= new InternetAddress(MULTIPLE_RECIEPIENT[i]);
 			}
-			log.info("MULTIPLE EMAIL RECEIPIENT : "+multipleTo);
+			myLog.info("MULTIPLE EMAIL RECEIPIENT : "+multipleTo);
 		}
 		
 		if(TO_CC != null && TO_CC.length > 0){
@@ -103,7 +103,7 @@ public class EmailSender {
 					multipleCC[i] = new InternetAddress(TO_CC[i]);
 				}
 			}
-			log.info("MULTIPLE EMAIL CC : "+multipleCC);
+			myLog.info("MULTIPLE EMAIL CC : "+multipleCC);
 		}
 		if(ATTACHMENT != null && ATTACHMENT.length > 0){
 			int totalAttachment = ATTACHMENT.length;
@@ -164,8 +164,8 @@ public class EmailSender {
 	    if(multipleCC != null && multipleCC.length > 0){
 	    	msg.addRecipients(Message.RecipientType.CC, multipleCC);
 	    }
-	    log.info("EMAIL TO: "+RECIEPIENT);
-	    log.info("EMAIL CC: "+TO_CC);
+	    myLog.info("EMAIL TO: "+RECIEPIENT);
+	    myLog.info("EMAIL CC: "+TO_CC);
 	    return msg;
 
 	}
@@ -217,3 +217,4 @@ public class EmailSender {
 	
 	
 }
+//2020/09/02
