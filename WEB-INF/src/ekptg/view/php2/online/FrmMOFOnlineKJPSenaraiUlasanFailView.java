@@ -100,13 +100,13 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 			if ("refreshDokumenMuatNaik".equals(command)) {
 				
 				logicJabatanTeknikal.setMaklumatUlasanKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
-				this.context.put("maklumatUlasan1", maklumatUlasan1);
+				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
+				this.context.put("maklumatUlasan", maklumatUlasan);
 				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
 				
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
-				this.context.put("maklumatUlasan", maklumatUlasan);
+				logicJabatanTeknikal.setMaklumatKJPMOF(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJPMOF().get(0);
+				this.context.put("maklumatUlasan1", maklumatUlasan1);
 				
 				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				this.context.put("lampiran", lampiran);
@@ -136,13 +136,13 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 				this.context.put("flagStatus", flagStatus);
 				
 				logicJabatanTeknikal.setMaklumatUlasanKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
-				this.context.put("maklumatUlasan1", maklumatUlasan1);
+				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
+				this.context.put("maklumatUlasan", maklumatUlasan);
 				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
 				
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
-				this.context.put("maklumatUlasan", maklumatUlasan);
+				logicJabatanTeknikal.setMaklumatKJPMOF(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJPMOF().get(0);
+				this.context.put("maklumatUlasan1", maklumatUlasan1);
 				
 				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				this.context.put("lampiran", lampiran);
@@ -162,17 +162,16 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 						getParam("txtKeputusan"), session);
 				
 				logicJabatanTeknikal.setMaklumatUlasanKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
+				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
 				this.context.put("flagStatus", flagStatus);
 				
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
-				this.context.put("maklumatUlasan", maklumatUlasan);
+				logicJabatanTeknikal.setMaklumatKJPMOF(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJPMOF().get(0);
+				this.context.put("maklumatUlasan1", maklumatUlasan1);
 				
 				myLog.info("idPermohonan========="+idPermohonan);
 				
 				this.context.put("idPermohonan", idPermohonan);
-				this.context.put("maklumatUlasan1", maklumatUlasan1);
 				this.context.put("maklumatUlasan", maklumatUlasan);
 				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
 				
@@ -202,10 +201,10 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 				this.context.put("idKementerian", idKementerian);
 				
 				logicJabatanTeknikal.setMaklumatUlasanKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
+				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
 				
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
+				logicJabatanTeknikal.setMaklumatKJPMOF(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJPMOF().get(0);
 				
 				
 				Vector beanHeader = new Vector();

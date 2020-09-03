@@ -4381,7 +4381,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			     
 			    sql = "SELECT distinct p.id_status, p.id_permohonan, p.no_permohonan, f.id_fail, f.no_fail, p.tarikh_permohonan, "; 
 	    		sql +=" su.nama_suburusan, k.nama_kementerian, s.keterangan, p.tarikh_masuk, p.flag_semak, p.no_rujukan_ptg, p.no_rujukan_ptd, p.no_rujukan_upt, ";
-			    sql +=" p.FLAG_STATUS_ONLINE ";
+			    sql +=" p.flag_status_online,p.tujuan ";
 	    		sql +=" FROM Tblpptpermohonan p, Tblpfdfail f,Tblrujsuburusan su,Tblrujstatus s, Tblrujkementerian k ";
 	    		sql +=" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian ";
 	    		sql +=" AND p.id_status = s.id_status ";
@@ -4440,6 +4440,8 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			    	}else{
 			    		h.put("no_fail",rs.getString("no_fail"));
 			    	}
+		    		h.put("tajuk_fail",rs.getString("tujuan"));
+
 			    	list.addElement(h);
 			    	bil++;
 			    	  

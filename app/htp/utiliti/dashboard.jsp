@@ -200,6 +200,23 @@ bagi modul yang ada tugas spesifik untuk penguna yang login
 									</tr>
 									<tr>
 										<td>
+											<a href="javascript:senaraiPPT()" class="help" title="Fail PPT">
+												<font color="blue"><li>
+												#if($!senaraiPermohonanPPT.isEmpty() == false)                         
+													<label style="background-color:blue"  align="center" valign="top" > 
+													<b><font color="WHITE"><blink>$!senaraiPermohonanPPT.size()</blink></font></b>
+													</label>&nbsp;
+												#end Pendaftaran Pengambilan Tanah												
+													</li>
+												</font>						
+											</a>
+											<div  id="div_senaraifailppt"  style="width:40"></div>
+											
+										</td>
+									</tr>
+								
+									<tr>
+										<td>
 											<!-- <a href="javascript:myinfo_skrin_carian()" class="help" title="Fail Tugasan"> -->
 												<font color="blue"><li>
 												#if($!bil_borang5ABaru != '0')                         
@@ -1418,6 +1435,12 @@ function papar(ID_FAIL,ID_URUSAN,ID_STATUS,ID_PERMOHONAN,ID_HTPPERMOHONAN,NO_FAI
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 	
+}
+
+function senaraiPPT(){
+	//reset_jqueryCarian('div_listCukai');	
+	document.getElementById('div_senaraifailppt').style.display="";		
+	doDivAjaxCall$formname('div_senaraifailppt','getPPT','');
 }
 
 //Penambahbaikan. syaz. 26112014. notifikasi cukai
