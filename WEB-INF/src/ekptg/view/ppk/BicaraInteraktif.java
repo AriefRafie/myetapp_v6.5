@@ -6276,7 +6276,15 @@ public class BicaraInteraktif extends AjaxBasedModule {
 					+ "CATATAN_PERINTAH_BI\"><td></td><td></td><td></td><td align=\"right\">";
 			htmlPageSetup += "<div id=\"word" + skrinName + "CATATAN_PERINTAH_BI\"></div>";
 			htmlPageSetup += "</td></tr>";
+			
 			htmlPageSetup += modelBI.closeHTMLTable();
+			//arief add
+			htmlPageSetup += modelBI.openHTMLTable();
+			htmlPageSetup += "<tr  ><td colspan=\"4\" class=\"table_header\">Perintah Perbicaraan</td></tr>";
+			htmlPageSetup += modelBI.closeHTMLTable();
+			htmlPageSetup += "<iframe src = ?_portal_module=ekptg.view.ppk.FrmPerintahSek8 style=\"border: 1px none; margin-right: -35px; height: 812px; width: 1000px;\"</iframe>";
+			//perlu repair iframe bagi kegunaan daftar perintah di Bicara Interaktif :: 3/9/2020
+			//arief add
 
 		} finally {
 			if (db == null) {

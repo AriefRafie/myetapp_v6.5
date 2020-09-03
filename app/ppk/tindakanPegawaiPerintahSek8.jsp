@@ -26,7 +26,7 @@
             
              <tr>
              <td width="10%" valign="top">&nbsp;</td>
-             <td colspan=3 align=left>
+             <td colspan=3 align=justify>
              
             
              #if($!id_perintah!="")
