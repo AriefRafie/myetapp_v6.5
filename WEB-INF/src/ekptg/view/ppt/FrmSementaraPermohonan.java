@@ -2406,10 +2406,10 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		
 		
 		model.setListPohon(idpermohonan);
- 		dataPermohonan = model.getListPohon();
- 		
+ 		dataPermohonan = model.getListPohon();		
  		//data
  		context.put("dataPermohonan",dataPermohonan);
+ 		myLogger.info("dataPermohonan : "+dataPermohonan);
  		
 		if(dataPermohonan.size()!=0){
 			Hashtable dp = (Hashtable)dataPermohonan.get(0);
