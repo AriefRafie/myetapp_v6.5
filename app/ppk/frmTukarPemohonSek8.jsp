@@ -487,9 +487,9 @@ Click me</a>
 								     <td></td>
 								     <td><span class="style44">*</span> DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')" />	
 								     #if($lampirans != "")
-									 	<input type="text" name="namaDoc1" value="1" />
+									 	<input type="hidden" name="namaDoc1" value="1" />
 									 #else
-									 	<input type="text" name="namaDoc1" value="0" />
+									 	<input type="hidden" name="namaDoc1" value="0" />
 									 #end
 								     $!lampirans
 								     </td>
@@ -518,9 +518,9 @@ Click me</a>
 								     <td></td>
 								     <td><span class="style44">*</span> DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')" />
 								     #if($lampirans != "")
-									 	<input type="text" name="namaDoc2" value="1" />
+									 	<input type="hidden" name="namaDoc2" value="1" />
 									 #else
-									 	<input type="text" name="namaDoc2" value="0" />
+									 	<input type="hidden" name="namaDoc2" value="0" />
 									 #end
 								     $!lampirans
 								     </td>
@@ -4271,7 +4271,7 @@ function testSimpan(idSimati, id_permohonansimati, id_fail, no_fail, nama_butang
 	}
 	
 	if (document.f1.sebab.value == "") {
-		alert("Sila masukkan sebab penggantian terlebih dahulu."); 
+		alert("Sila pilih sebab penggantian terlebih dahulu."); 
 		return;
 	}
 	
@@ -4286,7 +4286,7 @@ function testSimpan(idSimati, id_permohonansimati, id_fail, no_fail, nama_butang
 	}
 	
 	if (document.f1.kesihatan.checked  && document.f1.namaDoc2.value == "0") {
-		alert("Sila masukkan Dokumen Sokongan terlebih dahulu."); 
+		alert("Sila masukkan dokumen sokongan terlebih dahulu."); 
 		return;
 	}
 	
